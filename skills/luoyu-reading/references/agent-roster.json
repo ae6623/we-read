@@ -106,6 +106,39 @@
       "last_completed_book": "挪威极夜：独处时才能成为自己（轻游记）",
       "last_current_book_read": "世界这么大，我想到处躺（至《半夜的旅馆》第一屏末尾；继续阅读中）",
       "last_output": "private note; 4m57s browser window, 11 forward turns; page count not shown"
+    },
+    {
+      "id": "weread-auto-cloud",
+      "display_name": "weread-auto（云端）",
+      "type": "code",
+      "implementation": "Playwright on WorkBuddy 云端沙箱；与本地 weread-auto 共享同一书目注册表，串行认领，互不重叠。",
+      "deployment": "cloud",
+      "schedule_basis": "云端内置调度器每日 06:00–07:00 与 19:00–20:00（北京时间）各自动执行一场；本机计划任务停用后由云端接管。",
+      "schedule": [
+        {
+          "slot": "morning",
+          "window_start": "06:00",
+          "window_end": "06:30",
+          "trigger_at": "06:00",
+          "behavior": "run_independently"
+        },
+        {
+          "slot": "evening",
+          "window_start": "18:00",
+          "window_end": "18:30",
+          "trigger_at": "18:00",
+          "behavior": "run_independently"
+        }
+      ],
+      "current_book": "住小房子的女人",
+      "book_completion": "in_progress",
+      "completed_books": [],
+      "run_status": "idle",
+      "current_book_slug": "zhu-xiao-fang-zi-de-nv-ren",
+      "book_progress": "12%",
+      "completion_rule": "只认最新进度 ≥ 100%；bookInfo.finished 对未读完的书也返回 1，不作数。",
+      "implementation_note": "与本地 weread-auto 同源（同一套代码，按部署前缀区分）；阅读员归属在笔记与注册表中标注为「weread-auto（云端）」，区别于本地「weread-auto（本机）」。",
+      "book_author": "纪静蓉"
     }
   ]
 }
