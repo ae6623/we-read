@@ -22,6 +22,8 @@ description: Multi-platform reading workflow for source-labeled whole-book previ
 
 先读 `references/agent-roster.json` 确认身份、实现类型、预留时段、当前书目和完读状态；该 JSON 是单一事实来源，避免在多个文档复制易过期的排班表。阅读计划的代码 Agent 只受 `references/automation-code-agent.md` 约束；浏览器/人工阅读 Agent 不需照搬其代码实现规则。新 Agent 加入时，在 roster 中登记类型和时段，并通过 `references/decisions.md` 记录用户决定；每次任务开始和结束都更新 `references/agent-communication.md`。时段冲突先协调，不同时间窗互不等待。
 
+每个实际阅读场次都为理解内容与拓展阅读量，在 **7–15 分钟（含两端）**内随机选取目标时长；根据内容难度和理解需要自然调整，不固定为 10 分钟。结束时报告实际发生的时长，不以目标时长替代实测值，也不把浏览窗口时长冒称平台有效阅读时长。该共同目标不规定 Agent 各自的翻页/实现细节。
+
 ## 工作流程
 
 1. **先核配置，再决定读什么。** 先确认用户指的书、作者和平台；开读前查看 `agent-roster.json`、最新交接记录与已有归档，确认当前时段无人冲突、没有同一书目的活动运行，并核对自己的 `current_book`、`completed_books` 与当天其他场次状态。若用户明确指定新书，按指定书目开始；未指定时，优先续读自己上次未完读的 `current_book`。当前书读完后，从用户书架中选择最近添加且未完读的书继续，不再默认限制同一作者。绝不重读 `completed_books` 里的书，除非用户明确要求重读；不确定时先停下并报告，不猜。检查归档索引、全书初版、日期笔记和完读汇编，避免重复创建或覆盖。
