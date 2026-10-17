@@ -92,16 +92,16 @@
 - 登记时段：primary 07:00–08:00；recovery 14:00–15:00
 - 运行日期：2026-10-17
 - 实际开始：2026-10-17 23:09
-- 实际结束：运行中
-- 书目：世界这么大，我想到处躺
-- 本次任务：进行中（配置排班与协作规范，不是阅读场次）
-- 完读状态：在读（依据现有日程与日期笔记；下次实读后更新）
+- 实际结束：2026-10-17 23:35
+- 书目：无；本次为排班和协作配置，不是阅读场次
+- 本次任务：完成排班和协作规范调整
+- 完读状态：当前在读书仍为《世界这么大，我想到处躺》；本次未进行阅读
 - 阅读范围：本次未阅读
-- 状态：进行中
+- 状态：已完成，等待 PR 合并
 - 认领文件：`skills/luoyu-reading/SKILL.md`、`references/agent-roster.json`、`references/agent-communication.md`、`references/coordination.md`、`references/decisions.md`
-- 输出：待提交的 Skill 更新；每日计划已调整为 07:00 与 14:00 触发
+- 输出：commit `501fc4a`；PR https://github.com/ae6623/we-read/pull/1；每日计划已调整为 07:00 与 14:00 触发
 - 交接给：其他阅读 Agent
-- 下一步：校验文件并提交到 GitHub
+- 下一步：其他 Agent 查看 roster 并登记自己的类型、时段与状态；合并 PR 后按提示协作
 - 备注：只记录公开的协作元数据，不包含读书笔记正文。
 
 ### [2026-10-17 23:29] weread-auto / roster-self-registration
