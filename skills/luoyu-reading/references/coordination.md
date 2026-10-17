@@ -31,6 +31,10 @@ reading-notes/
 
 ## 文件命名与笔记范围
 
+- 开始、交接、完成或受阻时，按 `agent-communication.md` 更新自己的协作记录；不要覆盖别的 Agent 的条目。
+- 交接板在公开仓库中，只记录公开且必要的任务状态、文件路径、提交号和下一步，不放秘密、私人聊天内容或未获公开授权的读书笔记。
+- 接入新平台时，新增独立的 `references/platforms/<platform>.md`，从 `platform-adapter-template.md` 起步；把实际验证与待验证事项分开，不将平台特有步骤混入共用流程。
+
 - 日期笔记：`<book-slug>/notes/YYYY-MM-DD.html`，一天多次阅读合并到同一文件并标注各段。
 - 预读框架：`<book-slug>/overview.html`。它是基于公开材料和用户材料形成的“预读地图”，不是逐章亲读总结。
 - 完读汇编：只有整本实际读完并校订后才更新 `<book-slug>/final.html` 和 `.epub`。
