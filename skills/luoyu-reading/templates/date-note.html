@@ -18,5 +18,12 @@
 <section><h2>思维导图</h2><div class="card mindmap">{{MINDMAP}}</div></section>
 <section><h2>与整书框架的连接</h2><p>{{FRAMEWORK_CONNECTION}}</p></section>
 <section><h2>可迁移的启发与问题</h2><ul>{{TAKEAWAYS_AND_QUESTIONS}}</ul></section>
+<!-- 以下区段在私有日期笔记中按 run_id 逐场追加；公开版本删除整个区段，问题正文不得进入公开仓库。未知字段写“待确认”，不从百分比估算。 -->
+<section data-visibility="private" data-run-id="{{RUN_ID}}"><h2>下次从这里继续</h2><div class="card">
+<p>场次：{{RUN_ID}} · {{ACTUAL_STARTED_AT}} — {{ACTUAL_ENDED_AT}}</p>
+<p>已确认续读点：{{RESUME_CHAPTER}} · {{RESUME_PAGE_OR_NOT_SHOWN}} · {{RESUME_POSITION}}</p>
+<p class="muted">确认状态：{{RESUME_CONFIRMATION_STATUS}} · 依据与确认时间：{{RESUME_SOURCE_AND_CONFIRMED_AT}}</p>
+<p>下次只带一个问题：{{ONE_NEXT_SESSION_QUESTION}}</p>
+</div></section>
 <section><h2>来源边界</h2><p class="muted">{{SOURCE_BOUNDARIES}}</p></section>
 </main></body></html>

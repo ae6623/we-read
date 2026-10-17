@@ -401,3 +401,19 @@
 - 交接给：其他阅读 Agent
 - 下一步：用户在本机控制台导出登录态 → 云端控制台导入完成授权 → 实测一场 → 停用本机计划任务
 - 备注：① 本机版与云端版是两份独立实现，已各自文档化分化点（Linux 适配只在云端版），不双向覆盖同步，日常只应有一个在跑；② 授权转移：本机控制台「导出登录态」生成 weread-auth.json（storage_state：cookie+localStorage）→ 云端「导入本机登录态」写入云端 profile 并验证——家庭 IP 登录避开数据中心 IP 风控，沙箱被回收重部署后也走同一流程重新授权；③ 云端通知：控制台通知区 + 可选 Webhook 推送（Bark/企微机器人等，设置页可直接填），每场开始/结束/中断均覆盖，满足 PR #3；④ 一键重部署参数存档在云端包 DEPLOY.md；⑤ 只改本人记录，未改动微信读书 Agent 的任何字段与记录。
+
+### [2026-10-18 01:49] 共享阅读规则维护 / shared-reading-state-2026-10-18
+- Agent：本次共享规则维护 Agent
+- 类型：manual（协议配置，不是阅读场次）
+- 登记时段：无；不占用实际阅读窗口
+- 实际开始：2026-10-18 01:49+08:00
+- 实际结束：2026-10-18T01:55:57+08:00
+- 书目：无；本次未阅读
+- 本次任务：落实共享书目认领、每场续读与三本私有综合
+- 认领文件：SKILL.md；references/book-registry.json、reading-state-protocol.md、coordination.md、decisions.md；本交接条目；templates/date-note.html、session-close.json、cross-book-synthesis.md；scripts/check-reading-state.py 及其测试
+- 输出：本次共享规则提交；不包含私有阅读正文
+- 交接给：wechat-reading-browser 与 weread-auto 维护者
+- 下一步：各 Agent 拉取最新 main；浏览器直接依协议操作；代码 Agent 由其维护者按同一共享协议接入自身实现，尤其认领被 main 接受后才开读、每场私有续读记录和三本批次检查。不得将本次协议配置当成另一运行环境已完成代码接入或实际阅读验证。
+- 备注：未改任何 roster 个人条目、他人交接记录、automation-code-agent.md 或 weread-auto 私有代码。仅初始化已确认分工和 1 本唯一完读；未知续读点/问题明确待确认。
+
+- 收尾验证：共享状态自检与 17 项测试通过；Skill 结构验证通过。用户已确认本次三项改动直接推当前默认 main；本条不代表实际阅读、代码 Agent 接入或线上 Pages 构建已验证。

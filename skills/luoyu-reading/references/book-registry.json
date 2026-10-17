@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "revision": 1,
+  "timezone": "Asia/Shanghai",
+  "authority": "latest origin/main; claims become effective only after serialized acceptance there",
+  "migration": {
+    "date": "2026-10-18",
+    "source": "agent-roster.json and confirmed user handoff",
+    "note": "Only confirmed assignments and completed titles imported; no personal agent records changed; not a reading session."
+  },
+  "books": [
+    {
+      "book_id": "zhu-xiao-fang-zi-de-nv-ren",
+      "title": "住小房子的女人",
+      "author": "纪静蓉",
+      "platform": "weread",
+      "platform_book_id": null,
+      "priority": "continue_current",
+      "status": "in_progress",
+      "owner_agent_id": "weread-auto",
+      "claim": {"state": "held", "source": "agent-roster.json existing assignment", "claimed_at": null},
+      "last_confirmed_progress": "12%",
+      "resume_point": {
+        "status": "needs-confirmation",
+        "chapter": null,
+        "page": null,
+        "position": null,
+        "source": "Roster confirms 12% only; exact next chapter/page not confirmed",
+        "confirmed_at": null
+      },
+      "next_question_status": "needs-confirmation",
+      "completion": null
+    },
+    {
+      "book_id": "world-is-wide",
+      "title": "世界这么大，我想到处躺",
+      "author": "猴面包的树",
+      "platform": "weread",
+      "platform_book_id": null,
+      "priority": "continue_current",
+      "status": "in_progress",
+      "owner_agent_id": "wechat-reading-browser",
+      "claim": {"state": "held", "source": "agent-roster.json existing assignment", "claimed_at": null},
+      "last_confirmed_progress": null,
+      "resume_point": {
+        "status": "confirmed",
+        "chapter": "印度折叠：黄金城与贫民窟",
+        "page": null,
+        "position": "开篇",
+        "source": "User-confirmed task handoff; corroborated by agent-communication.md manual-2026-10-17-0957",
+        "confirmed_at": null
+      },
+      "next_question_status": "needs-confirmation",
+      "completion": null
+    },
+    {
+      "book_id": "norway-night",
+      "title": "挪威极夜：独处时才能成为自己（轻游记）",
+      "author": "猴面包的树",
+      "platform": "weread",
+      "platform_book_id": null,
+      "priority": "none",
+      "status": "completed",
+      "owner_agent_id": null,
+      "claim": {"state": "released", "source": "agent-roster.json confirmed completed_books", "claimed_at": null},
+      "last_confirmed_progress": null,
+      "resume_point": {"status": "not-applicable", "chapter": null, "page": null, "position": null, "source": "Confirmed complete; do not reread without explicit request", "confirmed_at": null},
+      "next_question_status": "not-applicable",
+      "completion": {"event_id": "completed-norway-night-2026-10-17", "sequence": 1, "confirmed_by": "wechat-reading-browser", "completed_at": "2026-10-17", "evidence": "agent-roster.json completed_books; agent-communication.md manual-2026-10-17-0957"}
+    }
+  ],
+  "active_session": null,
+  "synthesis": {
+    "visibility": "private",
+    "batch_size": 3,
+    "unique_completed_count": 1,
+    "batches": []
+  }
+}
