@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": 3,
+  "revision": 4,
   "timezone": "Asia/Shanghai",
   "authority": "latest origin/main; claims become effective only after serialized acceptance there",
   "migration": {
@@ -18,7 +18,11 @@
       "priority": "continue_current",
       "status": "in_progress",
       "owner_agent_id": "weread-auto",
-      "claim": {"state": "held", "source": "agent-roster.json existing assignment", "claimed_at": null},
+      "claim": {
+        "state": "held",
+        "source": "agent-roster.json existing assignment",
+        "claimed_at": null
+      },
       "last_confirmed_progress": "12%",
       "resume_point": {
         "status": "needs-confirmation",
@@ -40,7 +44,11 @@
       "priority": "continue_current",
       "status": "in_progress",
       "owner_agent_id": "wechat-reading-browser",
-      "claim": {"state": "held", "source": "agent-roster.json existing assignment", "claimed_at": null},
+      "claim": {
+        "state": "held",
+        "source": "agent-roster.json existing assignment",
+        "claimed_at": null
+      },
       "last_confirmed_progress": null,
       "resume_point": {
         "status": "confirmed",
@@ -62,14 +70,63 @@
       "priority": "none",
       "status": "completed",
       "owner_agent_id": null,
-      "claim": {"state": "released", "source": "agent-roster.json confirmed completed_books", "claimed_at": null},
+      "claim": {
+        "state": "released",
+        "source": "agent-roster.json confirmed completed_books",
+        "claimed_at": null
+      },
       "last_confirmed_progress": null,
-      "resume_point": {"status": "not-applicable", "chapter": null, "page": null, "position": null, "source": "Confirmed complete; do not reread without explicit request", "confirmed_at": null},
+      "resume_point": {
+        "status": "not-applicable",
+        "chapter": null,
+        "page": null,
+        "position": null,
+        "source": "Confirmed complete; do not reread without explicit request",
+        "confirmed_at": null
+      },
       "next_question_status": "not-applicable",
-      "completion": {"event_id": "completed-norway-night-2026-10-17", "sequence": 1, "confirmed_by": "wechat-reading-browser", "completed_at": "2026-10-17", "evidence": "agent-roster.json completed_books; agent-communication.md manual-2026-10-17-0957"}
+      "completion": {
+        "event_id": "completed-norway-night-2026-10-17",
+        "sequence": 1,
+        "confirmed_by": "wechat-reading-browser",
+        "completed_at": "2026-10-17",
+        "evidence": "agent-roster.json completed_books; agent-communication.md manual-2026-10-17-0957"
+      }
+    },
+    {
+      "book_id": "da-zhuan-zhe--xian-dai-zhai-wu-yu-ke-chi-xu-de",
+      "title": "大转折：现代债务与可持续的增长",
+      "author": "",
+      "platform": "weread",
+      "platform_book_id": null,
+      "priority": "none",
+      "status": "in_progress",
+      "owner_agent_id": "weread-auto-cloud",
+      "claim": {
+        "state": "held",
+        "source": "weread-auto 自动选书认领",
+        "claimed_at": "2026-10-18T04:15:11+08:00"
+      },
+      "last_confirmed_progress": null,
+      "resume_point": {
+        "status": "needs-confirmation",
+        "chapter": null,
+        "page": null,
+        "position": null,
+        "source": "新书入队，尚未确认续读点",
+        "confirmed_at": null
+      },
+      "next_question_status": "needs-confirmation",
+      "completion": null
     }
   ],
-  "active_session": null,
+  "active_session": {
+    "run_id": "2026-10-18-cloud-041511",
+    "agent_id": "weread-auto-cloud",
+    "book_id": "da-zhuan-zhe--xian-dai-zhai-wu-yu-ke-chi-xu-de",
+    "slot": "cloud:manual_outside_registered_windows",
+    "started_at": "2026-10-18T04:15:11+08:00"
+  },
   "synthesis": {
     "visibility": "private",
     "batch_size": 3,
