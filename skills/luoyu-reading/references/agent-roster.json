@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "timezone": "Asia/Shanghai",
-  "updated_at": "2026-10-18T00:06:00+08:00",
+  "updated_at": "2026-10-18T00:20:00+08:00",
   "source_of_truth": true,
   "instructions": [
     "Read this roster before every scheduled reading run; work only inside the registered slot.",
@@ -22,31 +22,45 @@
       "display_name": "weread-auto（WorkBuddy 维护）",
       "type": "code",
       "implementation": "Playwright; see automation-code-agent.md",
-      "schedule_basis": "Declared in decisions.md; not independently verified by this browser Agent.",
+      "schedule_basis": "Declared in decisions.md 第 7 条；本 Agent 自登记：本机计划任务 WeReadDaily 06:00 与 18:00 双触发，每个登记时段都是独立阅读场次，即使当天另一场已完成也照常执行。",
       "schedule": [
         {
           "slot": "morning",
           "window_start": "06:00",
           "window_end": "06:30",
           "trigger_at": "06:00",
-          "behavior": "run"
+          "behavior": "run_independently"
         },
         {
           "slot": "evening",
           "window_start": "18:00",
           "window_end": "18:30",
           "trigger_at": "18:00",
-          "behavior": "run_even_if_morning_was_successful"
+          "behavior": "run_independently"
         }
       ],
-      "current_book": "unknown",
-      "book_completion": "unknown",
-      "completed_books": "unknown",
-      "run_status": "unknown",
-      "last_run_date": null,
-      "last_started_at": null,
-      "last_ended_at": null,
-      "last_output": "unknown"
+      "current_book": "住小房子的女人",
+      "book_completion": "in_progress",
+      "completed_books": [],
+      "run_status": "idle",
+      "last_run_date": "2026-10-17",
+      "last_started_at": "2026-10-17 23:00:06+08:00",
+      "last_ended_at": "2026-10-17 23:01:22+08:00",
+      "last_output": "站点日期笔记 notes/2026/2026-10-17-zhu-xiao-fang-zi-de-nv-ren.html（同日 3 场合并：6 分钟 / 11 次翻页 / 进度 12%）；本地精读笔记为私有归档，路径不入公开文件",
+      "current_book_slug": "zhu-xiao-fang-zi-de-nv-ren",
+      "book_progress": "12%",
+      "completion_rule": "只认最新进度 ≥ 100%；bookInfo.finished 对未读完的书也返回 1，不作数。",
+      "implementation_note": "同日多场（早/晚/手动）按天合并为站点与本地各一篇日期笔记；实现方式不约束其他 Agent。",
+      "last_run_status": "completed",
+      "next_run_status": "scheduled",
+      "last_slot": "manual_verification_outside_registered_windows",
+      "registered_windows_execution": {
+        "date": "2026-10-17",
+        "morning_06_00": "未执行（当日无该窗口的启动记录）",
+        "evening_18_00": "未执行（当日无该窗口的启动记录）",
+        "note": "据实登记，不把计划时间写成实际运行；当日实际运行为 08:00 一次旧触发的计划任务，以及多次手动/调试/验证触发（最近一次 23:00–23:01）。"
+      },
+      "book_author": "纪静蓉"
     },
     {
       "id": "wechat-reading-browser",
