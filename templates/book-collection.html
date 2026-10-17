@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{{BOOK_TITLE}} 整书主题汇编">
+  <title>{{BOOK_TITLE}}｜整书主题汇编</title>
+  <!-- 新建到 books/SLUG/ 时，将 {{ASSET_CSS_PATH}} 替换为 ../../assets/css/site.css -->
+  <link rel="stylesheet" href="{{ASSET_CSS_PATH}}">
+</head>
+<body>
+  <main class="template-page">
+    <header>
+      <p class="eyebrow eyebrow-dark">BOOK COLLECTION · {{COMPLETED_DATE}}</p>
+      <h1>{{BOOK_TITLE}}</h1>
+      <p class="meta">作者：{{AUTHOR}}　·　完成日期：{{COMPLETED_DATE}}</p>
+      <p><a href="{{HOME_PATH}}">← 返回阅读归档</a>　<a href="{{EPUB_PATH}}" download>下载 EPUB ↓</a></p>
+    </header>
+    <article>
+      <p><strong>阅读范围：</strong>{{ACTUAL_READING_SCOPE}}</p>
+      <p><strong>汇编方式：</strong>{{SYNTHESIS_METHOD}}</p>
+      <h2>全书主线</h2>
+      <p>{{CENTRAL_THREAD}}</p>
+      <h2>主题一：{{THEME_1}}</h2>
+      <p>{{THEME_1_SYNTHESIS}}</p>
+      <h2>主题二：{{THEME_2}}</h2>
+      <p>{{THEME_2_SYNTHESIS}}</p>
+      <h2>回看与延伸</h2>
+      <p>{{REFLECTION_AND_OPEN_QUESTIONS}}</p>
+      <h2>相关日期笔记</h2>
+      <ul>
+        <li><a href="{{RELATED_NOTE_PATH}}">{{NOTE_DATE}}：{{NOTE_LABEL}}</a></li>
+      </ul>
+    </article>
+    <footer>汇编只覆盖上述实际阅读范围；未读部分不作推断。<br><a href="{{HOME_PATH}}">返回首页</a></footer>
+  </main>
+</body>
+</html>
