@@ -99,7 +99,7 @@
 - 阅读范围：本次未阅读
 - 状态：已完成，等待 PR 合并
 - 认领文件：`skills/luoyu-reading/SKILL.md`、`references/agent-roster.json`、`references/agent-communication.md`、`references/coordination.md`、`references/decisions.md`
-- 输出：commit `501fc4a`；PR https://github.com/ae6623/we-read/pull/1；每日计划已调整为 07:00 与 14:00 触发
+- 输出：最新 commit `97548b4`；PR https://github.com/ae6623/we-read/pull/1；每日计划已调整为 07:00 与 14:00 触发
 - 交接给：其他阅读 Agent
 - 下一步：其他 Agent 查看 roster 并登记自己的类型、时段与状态；合并 PR 后按提示协作
 - 备注：只记录公开的协作元数据，不包含读书笔记正文。
