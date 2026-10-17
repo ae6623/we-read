@@ -9,6 +9,15 @@ description: Multi-platform reading workflow for source-labeled whole-book previ
 
 为用户把多本书读得更有效：开读即建立有来源边界的全书视角初版，再把每天真实读到的内容连回框架，完读后才做校订后的整书汇编。`references/agent-roster.json` 是类型、时段、在读书目与完读状态的唯一登记源；共享归档与 Git 规则见 `references/coordination.md`，跨 Agent 开始/结束记录见 `references/agent-communication.md`，用户最新决定见 `references/decisions.md`。使用某个平台前阅读对应的 `references/platforms/<platform>.md`（当前先有微信读书指南）。
 
+## 共享书目认领、精确续读与三本综合
+
+每场先读 `references/reading-state-protocol.md` 和权威仓库最新 `references/book-registry.json`，不要把已安装 Skill 的静态副本当实时状态；当前共享仓库为 `/workspace/we-read-main`，不在该环境时先定位获授权的同一仓库。roster 保留个人/排班登记，registry 单独负责按书去重的独占认领、续读点和综合批次；有冲突就停下核对，不代改他人记录。
+
+- 先认领再开读，用户指定书优先但不得抢占活动认领；未完书跨场次保留责任，确认完读后释放。所有共享写入按协议串行接受到 main 后才生效，不以本地或 PR 分支的拟认领冒充成功。
+- 每场结束按 `templates/session-close.json` 在私有归档记录精确且有依据的下一章/页/章节内位置，以及一个基于已读内容的下次问题；未知写 `needs-confirmation`，不把百分比猜成页码。同书同日仍合并一篇，但保留每场区段。
+- 所有 Agent 累计每 3 本唯一、已确认完读书，建立一个不重叠的私有综合批次；共同观点、分歧、互补关系和 3–5 个回忆问题按 `templates/cross-book-synthesis.md` 生成。迁移已有完读书计入去重总数；重读、重试、重复消息不重复计数。未满三本不生成，资料不足留待补充。
+- 跨书综合、私有问题与实读笔记正文不得进入 Git、Pages 或公开索引，既有 weread-auto 日产发布授权不覆盖这些综合。每场 Cue 起止通知、失败直报、07:00/14:00 独立且不重叠等原规则保持不变。
+
 ## Agent 类型与排班
 
 先读 `references/agent-roster.json` 确认身份、实现类型、预留时段、当前书目和完读状态；该 JSON 是单一事实来源，避免在多个文档复制易过期的排班表。阅读计划的代码 Agent 只受 `references/automation-code-agent.md` 约束；浏览器/人工阅读 Agent 不需照搬其代码实现规则。新 Agent 加入时，在 roster 中登记类型和时段，并通过 `references/decisions.md` 记录用户决定；每次任务开始和结束都更新 `references/agent-communication.md`。时段冲突先协调，不同时间窗互不等待。
@@ -66,6 +75,11 @@ description: Multi-platform reading workflow for source-labeled whole-book previ
 
 ## 资源
 
+- `references/book-registry.json`：共享书目队列、独占责任归属、确认续读点、唯一完读事件与私有综合批次元数据。
+- `references/reading-state-protocol.md`：所有 Agent 共用的认领状态机、串行写入、每场续读记录和三本综合协议。
+- `scripts/check-reading-state.py`：只读共享状态自检，不代替认领或实际阅读。
+- `templates/session-close.json`：每场结束的私有记录模板；问题正文不进入公开共享状态。
+- `templates/cross-book-synthesis.md`：三本一组的私有综合模板。
 - `references/decisions.md`：用户决定与 Agent 沟通记录（先行阅读，含最新授权）。
 - `references/agent-roster.json`：Agent 类型、排班窗口、当前书目、完读状态与运行状态的唯一登记源。
 - `references/coordination.md`：所有 Agent 共用的文件归档、冲突预防、Git 与公开发布规则。执行任何共享写入或发布前先读。
