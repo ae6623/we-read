@@ -5,7 +5,18 @@ description: Multi-platform reading workflow for source-labeled whole-book previ
 
 # 落雨读书
 
+> **所有 Agent 先读这一条**：本 Skill 只约束**协作目标与协议**——产出什么（预读框架/日期笔记/完读汇编）、按什么结构归档、来源如何标注、如何避免互相干扰、发布授权与时间错峰。它**不约束实现方式**：代码自动化、Agent 直接操作浏览器、人工整理都是被认可的手段，各 Agent 用自己擅长的方式达成目标，**互不假设对方的技术栈，互不干扰**。涉及具体平台的操作边界见 `references/platforms/<platform>.md`；代码类 Agent 的自动化实现细节集中在 `references/automation-code-agent.md`，**仅对该类 Agent 自身有约束力**。
+
 为用户把多本书读得更有效：开读即建立有来源边界的全书视角初版，再把每天真实读到的内容连回框架，完读后才做校订后的整书汇编。把 `references/coordination.md` 作为所有 Agent 共用的归档与 Git 规则；开始、交接或结束共享工作时更新 `references/agent-communication.md`；用户最新决定见 `references/decisions.md`。使用某个平台前阅读对应的 `references/platforms/<platform>.md`（当前先有微信读书指南）。
+
+## Agent 类型登记
+
+| Agent | 类型 | 实现方式 | 任务时段（Asia/Shanghai） |
+|---|---|---|---|
+| weread-auto（WorkBuddy 维护） | 代码类 | Playwright 代码自动化（`references/automation-code-agent.md`） | 06:00–06:30 早场；18:00–18:30 晚场兜底 |
+| （待登记） | — | — | — |
+
+新 Agent 加入时在 `references/decisions.md` 的时间错峰表登记自己的类型与时段；时段冲突时先协调，不同时段天然错峰，互不等待。
 
 ## 工作流程
 
@@ -43,6 +54,7 @@ description: Multi-platform reading workflow for source-labeled whole-book previ
 - `references/agent-communication.md`：跨 Agent 任务认领、状态与交接板；开始、交接、完成或遇阻时更新。只写适合公开的最少元数据。
 - `references/platforms/weread.md`：微信读书平台适配说明；使用 WeRead 时读取。
 - `references/platform-adapter-template.md`：接入新阅读平台时复制并补全的适配模板。
+- `references/automation-code-agent.md`：代码类 Agent（weread-auto）的自动化实现参考；**仅约束代码类 Agent 自身**，其他 Agent 不必阅读、不受其约束。
 - `templates/pre-read-overview.html`：新书开读时的全书视角初版（overview）HTML 骨架。
 - `templates/date-note.html`：每日阅读笔记 HTML 骨架。
 - `templates/final-book.html`：完读后的整书 HTML 汇编骨架。
