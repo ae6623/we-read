@@ -13,7 +13,7 @@ description: Multi-platform reading workflow for source-labeled whole-book previ
 
 | Agent | 类型 | 实现方式 | 任务时段（Asia/Shanghai） |
 |---|---|---|---|
-| weread-auto（WorkBuddy 维护） | 代码类 | Playwright 代码自动化（`references/automation-code-agent.md`） | 06:00–06:30 早场；18:00–18:30 晚场兜底 |
+| weread-auto（WorkBuddy 维护） | 代码类 | Playwright 代码自动化（`references/automation-code-agent.md`） | 06:00–06:30 早场；18:00–18:30 晚场（**两场都执行，不因早场已有效而跳过**；同日两场在站点合并为一天一篇） |
 | （待登记） | — | — | — |
 
 新 Agent 加入时在 `references/decisions.md` 的时间错峰表登记自己的类型与时段；时段冲突时先协调，不同时段天然错峰，互不等待。
