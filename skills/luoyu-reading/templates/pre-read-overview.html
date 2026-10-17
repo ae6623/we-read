@@ -3,19 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{{BOOK_TITLE}}｜预读版全书视角</title>
+<title>{{BOOK_TITLE}}｜全书视角初版</title>
 <style>
-:root{color-scheme:light;--ink:#26342f;--muted:#697870;--paper:#f6f7f2;--card:#fff;--accent:#286b52;--line:#dfe6df}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.75 system-ui,-apple-system,"Segoe UI",sans-serif}.wrap{max-width:900px;margin:auto;padding:clamp(20px,5vw,56px)}.eyebrow{color:var(--accent);letter-spacing:.12em;font-size:.8rem;text-transform:uppercase}h1{line-height:1.2;font-size:clamp(2rem,5vw,3.4rem);margin:.4rem 0}h2{margin-top:2.2rem;font-size:1.35rem}.meta,.notice{color:var(--muted)}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:clamp(18px,3vw,30px);margin:18px 0}.tag{display:inline-block;border-radius:99px;background:#e6f0e9;color:var(--accent);padding:2px 10px;font-size:.8rem}a{color:var(--accent)}ul{padding-left:1.3rem}.mindmap{white-space:pre-wrap;font-family:inherit}
+:root{color-scheme:light;--ink:#26342f;--muted:#697870;--paper:#f6f7f2;--card:#fff;--accent:#286b52;--line:#dfe6df}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.75 system-ui,-apple-system,"Segoe UI",sans-serif}.wrap{max-width:900px;margin:auto;padding:clamp(20px,5vw,56px)}.eyebrow{color:var(--accent);letter-spacing:.12em;font-size:.8rem;text-transform:uppercase}h1{line-height:1.2;font-size:clamp(2rem,5vw,3.4rem);margin:.4rem 0}h2{margin-top:2.2rem;font-size:1.35rem}.meta,.notice{color:var(--muted)}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:clamp(18px,3vw,30px);margin:18px 0}.tag{display:inline-block;border-radius:99px;background:#e6f0e9;color:var(--accent);padding:2px 10px;font-size:.8rem;margin:0 4px 4px 0}a{color:var(--accent)}ul{padding-left:1.3rem}.mindmap{white-space:pre-wrap;font-family:inherit}.src{font-size:.92rem}
 </style>
 </head>
 <body><main class="wrap">
-<p class="eyebrow">Reading map · Pre-read</p>
+<p class="eyebrow">Whole-book perspective · first pass</p>
 <h1>{{BOOK_TITLE}}</h1>
-<p class="meta">{{AUTHOR}} · 预读框架 · 创建于 {{DATE}}</p>
-<div class="card"><span class="tag">尚未亲读全书</span><p>{{COVERAGE_NOTE}}</p></div>
-<section><h2>一句话主旨假设</h2><p>{{THESIS_HYPOTHESIS}}</p></section>
-<section><h2>暂定结构与主题关系</h2><div class="card mindmap">{{MINDMAP}}</div></section>
+<p class="meta">{{AUTHOR}} · 全书视角初版 · 创建于 {{DATE}} · 更新于 {{UPDATED_AT}}</p>
+<div class="card"><span class="tag">全书视角初版 · 含推断</span><span class="tag">亲读进行中</span><p>{{COVERAGE_NOTE}}</p></div>
+<section><h2>一句话主旨</h2><p>{{THESIS}}</p></section>
+<section><h2>全书结构与主题关系</h2><div class="card mindmap">{{STRUCTURE_MAP}}</div></section>
+<section><h2>核心观点初判</h2>{{KEY_VIEWS}}</section>
 <section><h2>阅读时要验证的问题</h2><ul>{{READING_QUESTIONS}}</ul></section>
-<section><h2>来源与证据边界</h2><ul>{{SOURCES_AND_BOUNDARIES}}</ul></section>
-<p class="notice">阅读过程中只用实际读到的文本修订此框架；二手信息与推断保持标记。</p>
+<section><h2>来源与证据边界</h2><div class="card src">{{SOURCES_AND_BOUNDARIES}}</div></section>
+<section><h2>相关日期笔记</h2><ul>{{NOTE_LINKS}}</ul></section>
+<section><h2>更新记录</h2><div class="card src">{{UPDATE_LOG}}</div></section>
+<p class="notice">本页为开读时建立的全书视角初版：二手信息与推断均带来源标签，未经亲读确认的部分待验证；完读后校订升级为 final.html。</p>
 </main></body></html>
