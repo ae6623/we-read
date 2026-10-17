@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "timezone": "Asia/Shanghai",
-  "updated_at": "2026-10-18T00:00:00+08:00",
+  "updated_at": "2026-10-18T00:06:00+08:00",
   "source_of_truth": true,
   "instructions": [
     "Read this roster before every scheduled reading run; work only inside the registered slot.",
@@ -10,7 +10,7 @@
     "For any failure, interruption, access block, conflict, or uncertain result, notify the user immediately in the current Cue private conversation with what actually happened and the next recovery step. A repository update alone is not a notification.",
     "At run start, set run_status to running and record the actual start time, current book, and slot in agent-communication.md.",
     "At run end, update run_status, actual end time, book_completion, and a minimal output reference in both this roster and agent-communication.md.",
-    "At a recovery slot, skip if the same-day primary run completed; resume if it is confirmed failed, interrupted, or blocked. If its status is still running or unclear, verify it is no longer active before resuming; otherwise do not overlap and record the unresolved state.",
+    "Every configured time slot is an independent reading run and must read even if another slot on the same date completed. Never overlap an active run; if another run's status is unclear, verify it is no longer active before starting, or report the unresolved conflict.",
     "Same-book work from multiple slots on one date is merged into a single date note.",
     "If an agent misses a slot, record that fact; do not overlap another agent's window or claim the missed run happened.",
     "Use unknown/needs-confirmation rather than guessing a book, completion state, or execution result.",
@@ -56,18 +56,18 @@
       "schedule_basis": "本 Agent 的每日计划；Asia/Shanghai。",
       "schedule": [
         {
-          "slot": "primary",
+          "slot": "morning",
           "window_start": "07:00",
           "window_end": "08:00",
           "trigger_at": "07:00",
-          "behavior": "read_current_book"
+          "behavior": "read_current_book_independently"
         },
         {
-          "slot": "recovery",
+          "slot": "afternoon",
           "window_start": "14:00",
           "window_end": "15:00",
           "trigger_at": "14:00",
-          "behavior": "resume_only_if_same_day_primary_run_is_not_complete"
+          "behavior": "read_current_book_independently"
         }
       ],
       "book_author": "猴面包的树",
