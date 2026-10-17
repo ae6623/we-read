@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{BOOK_TITLE}}｜{{DATE}} 阅读笔记</title>
+<style>
+:root{color-scheme:light;--ink:#26342f;--muted:#697870;--paper:#f6f7f2;--card:#fff;--accent:#286b52;--line:#dfe6df}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.75 system-ui,-apple-system,"Segoe UI",sans-serif}.wrap{max-width:900px;margin:auto;padding:clamp(20px,5vw,56px)}.eyebrow{color:var(--accent);letter-spacing:.12em;font-size:.8rem}h1{line-height:1.2;font-size:clamp(2rem,5vw,3.4rem);margin:.4rem 0}h2{margin-top:2rem;font-size:1.3rem}.meta,.muted{color:var(--muted)}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:clamp(18px,3vw,30px);margin:16px 0}.tag{display:inline-block;border-radius:99px;background:#e6f0e9;color:var(--accent);padding:2px 10px;font-size:.8rem}.mindmap{white-space:pre-wrap;font-family:inherit}a{color:var(--accent)}
+</style>
+</head>
+<body><main class="wrap">
+<p class="eyebrow">Daily reading note</p>
+<h1>{{BOOK_TITLE}}</h1>
+<p class="meta">{{AUTHOR}} · {{DATE}} · {{SESSION_DURATION}}</p>
+<div class="card"><span class="tag">本次实读范围</span><p>{{READING_SCOPE}}</p></div>
+<section><h2>今天的核心理解</h2><p>{{CORE_UNDERSTANDING}}</p></section>
+<section><h2>思维导图</h2><div class="card mindmap">{{MINDMAP}}</div></section>
+<section><h2>与整书框架的连接</h2><p>{{FRAMEWORK_CONNECTION}}</p></section>
+<section><h2>可迁移的启发与问题</h2><ul>{{TAKEAWAYS_AND_QUESTIONS}}</ul></section>
+<section><h2>来源边界</h2><p class="muted">{{SOURCE_BOUNDARIES}}</p></section>
+</main></body></html>
