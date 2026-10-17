@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "timezone": "Asia/Shanghai",
+  "updated_at": "2026-10-18T00:06:00+08:00",
+  "source_of_truth": true,
+  "instructions": [
+    "Read this roster before every scheduled reading run; work only inside the registered slot.",
+    "Never read a title listed in the agent's completed_books unless the user explicitly requests a reread. Continue the current unfinished book; when it is complete, select the same author's next title not in completed_books.",
+    "Before starting, check the roster and latest communication record for the assigned slot, a running task, and conflicts; do not start if the active state is unclear.",
+    "For any failure, interruption, access block, conflict, or uncertain result, notify the user immediately in the current Cue private conversation with what actually happened and the next recovery step. A repository update alone is not a notification.",
+    "At run start, set run_status to running and record the actual start time, current book, and slot in agent-communication.md.",
+    "At run end, update run_status, actual end time, book_completion, and a minimal output reference in both this roster and agent-communication.md.",
+    "Every configured time slot is an independent reading run and must read even if another slot on the same date completed. Never overlap an active run; if another run's status is unclear, verify it is no longer active before starting, or report the unresolved conflict.",
+    "Same-book work from multiple slots on one date is merged into a single date note.",
+    "If an agent misses a slot, record that fact; do not overlap another agent's window or claim the missed run happened.",
+    "Use unknown/needs-confirmation rather than guessing a book, completion state, or execution result.",
+    "This public file records only minimal coordination metadata; never include passwords, tokens, private messages, or book-note content."
+  ],
+  "agents": [
+    {
+      "id": "weread-auto",
+      "display_name": "weread-auto（WorkBuddy 维护）",
+      "type": "code",
+      "implementation": "Playwright; see automation-code-agent.md",
+      "schedule_basis": "Declared in decisions.md; not independently verified by this browser Agent.",
+      "schedule": [
+        {
+          "slot": "morning",
+          "window_start": "06:00",
+          "window_end": "06:30",
+          "trigger_at": "06:00",
+          "behavior": "run"
+        },
+        {
+          "slot": "evening",
+          "window_start": "18:00",
+          "window_end": "18:30",
+          "trigger_at": "18:00",
+          "behavior": "run_even_if_morning_was_successful"
+        }
+      ],
+      "current_book": "unknown",
+      "book_completion": "unknown",
+      "completed_books": "unknown",
+      "run_status": "unknown",
+      "last_run_date": null,
+      "last_started_at": null,
+      "last_ended_at": null,
+      "last_output": "unknown"
+    },
+    {
+      "id": "wechat-reading-browser",
+      "display_name": "微信读书",
+      "type": "browser_non_code",
+      "implementation": "直接操作已授权的微信读书网页并整理阅读理解；不适用代码类 Agent 的实现细节。",
+      "schedule_basis": "本 Agent 的每日计划；Asia/Shanghai。",
+      "schedule": [
+        {
+          "slot": "morning",
+          "window_start": "07:00",
+          "window_end": "08:00",
+          "trigger_at": "07:00",
+          "behavior": "read_current_book_independently"
+        },
+        {
+          "slot": "afternoon",
+          "window_start": "14:00",
+          "window_end": "15:00",
+          "trigger_at": "14:00",
+          "behavior": "read_current_book_independently"
+        }
+      ],
+      "book_author": "猴面包的树",
+      "current_book": "世界这么大，我想到处躺",
+      "book_completion": "in_progress",
+      "run_status": "scheduled",
+      "completed_books": [
+        {
+          "title": "挪威极夜：独处时才能成为自己（轻游记）",
+          "author": "猴面包的树",
+          "completed_at": "2026-10-17"
+        }
+      ],
+      "next_run_status": "scheduled",
+      "last_run_status": "completed",
+      "last_run_date": "2026-10-17",
+      "last_slot": "manual_outside_registered_windows",
+      "last_started_at": "2026-10-17 09:57:26+08:00",
+      "last_ended_at": "2026-10-17 10:10:30+08:00",
+      "last_completed_book": "挪威极夜：独处时才能成为自己（轻游记）",
+      "last_current_book_read": "世界这么大，我想到处躺（开篇；继续阅读中）",
+      "last_output": "private; no book-note content stored here"
+    }
+  ]
+}
