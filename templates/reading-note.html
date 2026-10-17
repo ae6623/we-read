@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{{BOOK_TITLE}} 的 {{NOTE_DATE}} 阅读笔记">
+  <title>{{BOOK_TITLE}}｜{{NOTE_DATE}} 阅读笔记</title>
+  <!-- 新建到 notes/YYYY/ 时，将 {{ASSET_CSS_PATH}} 替换为 ../../assets/css/site.css -->
+  <link rel="stylesheet" href="{{ASSET_CSS_PATH}}">
+</head>
+<body>
+  <main class="template-page">
+    <header>
+      <p class="eyebrow eyebrow-dark">READING NOTE · {{NOTE_DATE}}</p>
+      <h1>{{BOOK_TITLE}}</h1>
+      <p class="meta">作者：{{AUTHOR}}　·　阅读范围：{{READING_SCOPE}}</p>
+      <p><a href="{{HOME_PATH}}">← 返回阅读归档</a></p>
+    </header>
+    <article>
+      <p class="meta">记录日期：{{NOTE_DATE}}</p>
+      <h2>本次阅读</h2>
+      <p>{{READING_SUMMARY}}</p>
+      <h2>留下的想法</h2>
+      <p>{{KEY_IDEA_1}}</p>
+      <blockquote>{{QUOTE_OR_PERSONAL_NOTE}}</blockquote>
+      <h2>后续问题</h2>
+      <ul>
+        <li>{{FOLLOW_UP_QUESTION_1}}</li>
+        <li>{{FOLLOW_UP_QUESTION_2}}</li>
+      </ul>
+    </article>
+    <footer>本页为日期笔记；只记录当前实际阅读范围，不代表全书总结。<br><a href="{{HOME_PATH}}">返回首页</a></footer>
+  </main>
+</body>
+</html>
