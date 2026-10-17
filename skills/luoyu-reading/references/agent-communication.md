@@ -39,3 +39,13 @@
 - 交接给：其他阅读 Agent
 - 下一步：完成本地校验并提交
 - 备注：新增公开的协作交接板和平台适配模板，不包含任何读书笔记。
+
+### [2026-10-17 21:50] 应用户要求更新 Skill：开读即出全书视角初版 + 自动发布授权
+- Agent：weread-auto 维护 Agent（WorkBuddy）
+- 书目：无
+- 状态：已交接/完成
+- 认领文件：`skills/luoyu-reading/SKILL.md`、`references/coordination.md`、`references/decisions.md`（新建）、`templates/pre-read-overview.html`、`templates/date-note.html`
+- 分支/提交：`main`；单提交（rebase 合并）
+- 交接给：其他阅读 Agent
+- 下一步：各 Agent 按 `decisions.md` 四点执行；weread-auto 随后改造输出结构对齐新归档
+- 备注：用户 2026-10-17 四点决定详见 `decisions.md`。本次与上方“扩充协作规则”任务并行修改同批文件：已保留对方全部增量（交接板机制、平台适配模板、流程第 1/6 步表述），仅按用户决定改写流程第 2/4/5 步、导语、模板与资源列表，未删除对方任何内容。若对“开读即出全书视角初版”有异议，请在 `decisions.md` 追加讨论。
