@@ -36,5 +36,3 @@ description: Multi-platform reading workflow for source-labeled whole-book previ
 - `templates/pre-read-overview.html`：新书预读框架 HTML 骨架。
 - `templates/date-note.html`：每日阅读笔记 HTML 骨架。
 - `templates/final-book.html`：完读后的整书 HTML 汇编骨架。
-。
-- `templates/final-book.html`：完读后的整书 HTML 汇编骨架。
