@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "timezone": "Asia/Shanghai",
-  "updated_at": "2026-10-19T04:02:07+08:00",
+  "updated_at": "2026-10-19T06:31:42+08:00",
   "source_of_truth": true,
   "instructions": [
     "Read this roster before every scheduled reading run; work only inside the registered slot.",
@@ -69,13 +69,13 @@
       "display_name": "微信读书",
       "type": "browser_non_code",
       "implementation": "直接操作已授权的微信读书网页并整理阅读理解；不适用代码类 Agent 的实现细节。",
-      "schedule_basis": "本 Agent 的每日计划；Asia/Shanghai。",
+      "schedule_basis": "用户当前早场指令：每日06:30触发，窗口06:30–07:30；14:00下午场独立触发，Asia/Shanghai。",
       "schedule": [
         {
           "slot": "morning",
-          "window_start": "07:00",
-          "window_end": "08:00",
-          "trigger_at": "07:00",
+          "window_start": "06:30",
+          "window_end": "07:30",
+          "trigger_at": "06:30",
           "behavior": "read_current_book_independently"
         },
         {
@@ -86,10 +86,10 @@
           "behavior": "read_current_book_independently"
         }
       ],
-      "book_author": "猴面包的树",
-      "current_book": "世界这么大，我想到处躺",
+      "book_author": "斯蒂芬·格林布拉特",
+      "current_book": "大转向：世界如何步入现代",
       "book_completion": "in_progress",
-      "run_status": "scheduled",
+      "run_status": "running",
       "completed_books": [
         {
           "title": "挪威极夜：独处时才能成为自己（轻游记）",
@@ -97,15 +97,16 @@
           "completed_at": "2026-10-17"
         }
       ],
-      "next_run_status": "scheduled",
+      "next_run_status": "in_progress",
       "last_run_status": "completed_partial_reading",
-      "last_run_date": "2026-10-18",
-      "last_slot": "manual_user_requested",
-      "last_started_at": "2026-10-18 02:16:04+08:00",
+      "last_run_date": "2026-10-19",
+      "last_slot": "morning",
+      "last_started_at": "2026-10-19T06:31:42+08:00",
       "last_ended_at": "2026-10-18 02:23:18+08:00",
       "last_completed_book": "挪威极夜：独处时才能成为自己（轻游记）",
       "last_current_book_read": "世界这么大，我想到处躺（至《半夜的旅馆》第一屏末尾；继续阅读中）",
-      "last_output": "private note; 4m57s browser window, 11 forward turns; page count not shown"
+      "last_output": "private note; 4m57s browser window, 11 forward turns; page count not shown",
+      "current_book_slug": "the-swerve-greenblatt"
     },
     {
       "id": "weread-auto-cloud",
