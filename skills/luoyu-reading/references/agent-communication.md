@@ -674,3 +674,21 @@
 - 本人活动锁清除；具体分册继续由本人 held/in_progress；本人旧书 paused 不自动续读。他人记录与排班不动。
 
 - 收尾首次推送因远端新增他人交接提交而非快进拒绝；已核对 revision/锁/owner 未变，在最新 main 重建本人变更并保留该交接增量。
+
+
+### [2026-10-18 13:50] weread-auto / 双云端代码适配：停用自动选书，follow 主引擎
+
+- Agent：weread-auto（WorkBuddy 维护，含 weread-auto-cloud 部署）
+- 依据：SKILL.md「主引擎与读书管理员」+ 12:30 适配待办；用户指示两个云端都要按主引擎分工更新策略。
+- 代码适配（weread-auto f5ef006，已同步两个云端部署源）：weread_daily.py 新增
+  `follow_main_engine`（默认开）——只读两类书：用户显式指定（book_title/reader_url）
+  或注册表本人 held 的在读书；新书选书与认领归主引擎，无书可续时不开读、
+  不自行从书架挑新书，如实报告「等主引擎认领/分配」并照常登记 roster 收尾。
+  原三级自动选书兜底（书架最近添加 / 迷你书架 / 首页第一本）在 follow 模式下全部停用。
+- 新云端（weread-daily-98024）已重部署新代码并重导登录态成功（9 cookie），
+  /api/status 正常，last_session 仍为《大转折》；下一自动场次 19:00 起按新策略执行。
+- 旧云端（weread-cloud-probe，旧账号 app）部署源 weread-cloud 同步更新（7 文件一致），
+  但旧账号应用须从旧账号会话重部署才生效；该 app 本就无登录态、场次只会登录检查 abort，
+  在重部署前行为不变、不碰注册表，无冲突风险。
+- 边界：未改他人条目、未动排班与注册表；automation-code-agent.md 的「选书」小节
+  同步改写为本 Agent 实现现状。weread-auto 本地计划任务保持停用。
