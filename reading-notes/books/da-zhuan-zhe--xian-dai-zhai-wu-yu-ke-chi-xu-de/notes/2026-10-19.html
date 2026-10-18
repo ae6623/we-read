@@ -53,6 +53,23 @@ section p{margin:.5em 0}
 .ch-body{padding:2px 0 12px 58px;animation:slideDown .2s ease}
 @keyframes slideDown{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
 .ch-body p{margin:.3em 0}
+.ch-secs{margin:.4em 0 .45em;padding:0;list-style:none;color:#5c574c;font-size:.78rem;line-height:1.65}
+.ch-secs li{display:flex;gap:8px;align-items:baseline;padding:3px 9px;margin:.15em 0;border:1px solid transparent;border-radius:7px}
+.ch-secs li::before{content:"";width:7px;height:7px;border-radius:50%;border:1.5px solid #cfc7b6;flex:none}
+.ch-secs .sec-t{flex:1;min-width:0}
+.ch-secs .sec-tag{flex:none;font-size:10.5px;font-weight:700;border-radius:5px;padding:0 6px;line-height:1.7}
+.ch-secs li.is-done{background:#244b40;border-color:#244b40;color:#f6f1e8;font-weight:600}
+.ch-secs li.is-done::before{background:#e8c48a;border-color:#e8c48a}
+.ch-secs li.is-done .sec-tag{background:#e8c48a;color:#3a2c14}
+.ch-secs li.is-stop{background:#2d5a4c;border-color:#bf8247;box-shadow:inset 0 0 0 1px #bf8247}
+.ch-secs li.is-stop::before{background:#bf8247;border-color:#bf8247;box-shadow:0 0 0 3px rgba(191,130,71,.22)}
+.ch-secs li.is-stop .sec-tag{background:#bf8247;color:#fffdf8}
+.ch-secs li.is-todo{color:#a9a29a}
+.ch-secs li.is-todo::before{border-style:dashed}
+.ch-prog-cap{display:flex;align-items:baseline;gap:8px;margin:.55em 0 .2em;padding:3px 0 3px 9px;border-left:3px solid #bf8247;font-size:11.5px;font-weight:700;color:#8a5a24;line-height:1.6}
+.ch-prog-cap .cap-k{flex:none;background:#f6e8d5;border:1px solid #e6cfae;border-radius:5px;padding:0 6px;font-size:10.5px;letter-spacing:.04em}
+.ch-prog-note{color:#8a8f99;font-size:11.5px;margin:.1em 0 .3em}
+.ch-secs:not(.ch-prog) li{padding:1px 9px;margin:.05em 0}
 .ch-src{color:var(--muted);font-size:.76rem}
 
 .qa ol{margin:6px 0;padding-left:20px}
@@ -120,7 +137,8 @@ section p{margin:.5em 0}
 <details class="ch-item">
 <summary><span class="ch-no">第21章</span><span class="ch-t">改变关税规则，应对中美贸易战</span><span class="badge" data-s="reading">部分阅读</span><span class="caret">›</span></summary>
 <div class="ch-body">
-<p>只读到第一节「从商品关税转为货币关税」：商品关税的空间用尽之后，摩擦会迁移到货币维度。本章其余小节未读到，不作概括，下次从这里继续。</p>
+<p>只读到「从商品关税转为货币关税」这一节（连章首「引言」共两节）：商品关税的空间用尽之后，摩擦会迁移到货币维度。本章其余三节未读到，不作概括，下次从这里继续。</p>
+<p class="ch-prog-cap"><span class="cap-k">官方目录</span><span>共 5 节 · 已读 2 节，停在「从商品关税转为货币关税」</span></p><ol class="ch-secs ch-prog"><li class="is-done"><span class="sec-t">引言</span><span class="sec-tag">已读</span></li><li class="is-done is-stop"><span class="sec-t">从商品关税转为货币关税</span><span class="sec-tag">停在这里</span></li><li class="is-todo"><span class="sec-t">货币关税的机制</span></li><li class="is-todo"><span class="sec-t">把商品国竞争变为货币国竞争</span></li><li class="is-todo"><span class="sec-t">结语</span></li></ol><p class="small ch-prog-note">下一次从「货币关税的机制」接着读；未读三节不写结论。</p>
 <p class="ch-src">导读依据：亲读 · 第 21 章「从商品关税转为货币关税」一节</p>
 </div>
 </details>
