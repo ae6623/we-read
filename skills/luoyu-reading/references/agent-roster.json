@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "timezone": "Asia/Shanghai",
-  "updated_at": "2026-10-18T10:14:13+08:00",
+  "updated_at": "2026-10-18T11:56:10+08:00",
   "source_of_truth": true,
   "instructions": [
     "Read this roster before every scheduled reading run; work only inside the registered slot.",
@@ -119,7 +119,7 @@
       "type": "code",
       "implementation": "Playwright on WorkBuddy 云端沙箱；与本地 weread-auto 共享同一书目注册表，串行认领，互不重叠。",
       "deployment": "cloud",
-      "schedule_basis": "云端内置调度器每日 06:00–07:00 与 19:00–20:00（北京时间）各自动执行一场；本机计划任务停用后由云端接管。；2026-10-18 云端沙箱容器回收导致长场次无法跑完（详见交接文档），登录态与修复已就位，待路线决策",
+      "schedule_basis": "云端内置调度器每日 06:00–07:00 与 19:00–20:00（北京时间）各自动执行一场；本机计划任务停用后由云端接管。；2026-10-18 探针破案：沙箱 12-25 分钟杀 app 主进程（detached 幸存），8 连死=git 卡死+僵尸+重启窗口三重叠加；11:40 场次 13 分钟完整跑完 session_end OK，自动场次可指望",
       "schedule": [
         {
           "slot": "morning",
@@ -141,7 +141,7 @@
       "completed_books": [],
       "run_status": "idle",
       "current_book_slug": "zhu-xiao-fang-zi-de-nv-ren",
-      "book_progress": "needs-confirmation",
+      "book_progress": "first-read-done-2026-10-18",
       "completion_rule": "只认最新进度 ≥ 100%；bookInfo.finished 对未读完的书也返回 1，不作数。",
       "implementation_note": "与本地 weread-auto 同源（同一套代码，按部署前缀区分）；阅读员归属在笔记与注册表中标注为「weread-auto（云端）」，区别于本地「weread-auto（本机）」。",
       "book_author": "纪静蓉",
