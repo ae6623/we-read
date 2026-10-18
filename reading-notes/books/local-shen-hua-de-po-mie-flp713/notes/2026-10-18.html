@@ -1,8 +1,9 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="zh-CN">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
 <title>神话的破灭｜增长为什么不能只靠旧路径｜2026-10-18 阅读笔记</title>
 <style>
 :root{color-scheme:light;--ink:#26342f;--muted:#697870;--paper:#f6f7f2;--card:#fff;--accent:#286b52;--line:#dfe6df}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.75 system-ui,-apple-system,"Segoe UI",sans-serif}.wrap{max-width:1000px;margin:auto;padding:clamp(20px,5vw,56px)}.eyebrow{color:var(--accent);letter-spacing:.12em;font-size:.8rem}h1{line-height:1.2;font-size:clamp(2rem,5vw,3.4rem);margin:.4rem 0}h2{margin-top:2rem;font-size:1.3rem}.meta,.muted{color:var(--muted)}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:clamp(18px,3vw,30px);margin:16px 0}.tag{display:inline-block;border-radius:99px;background:#e6f0e9;color:var(--accent);padding:2px 10px;font-size:.8rem}.mindmap{white-space:pre-wrap;font-family:inherit}a{color:var(--accent)}.reader{font-weight:600}/* 阅读员身份与实读指标：时长口径和未知值始终可见。 */
@@ -24,6 +25,29 @@
 .metrics-details p{margin:5px 0}.metrics-note{font-size:.78rem;color:#69766f;line-height:1.75;margin:12px 0 0}
 @media(max-width:680px){.metrics-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.metric{padding:14px 12px}}
 
+
+/* 章节导读：卡片分组 + 点标题下滑展开（2026-10-19 用户决定，与已发布笔记一致） */
+.toc-part{background:#fffefa;border:1px solid #e5e0d6;border-radius:14px;padding:14px 18px;margin:12px 0}
+.part-label{display:block;font:600 1rem/1.6 Georgia,"Songti SC",serif;color:#244b40;margin:0 0 6px}
+.ch-item{border-bottom:1px dashed #eee8dc}
+.ch-item:last-child{border-bottom:0}
+.ch-item summary{display:flex;gap:10px;align-items:baseline;padding:7px 0;cursor:pointer;list-style:none}
+.ch-item summary::-webkit-details-marker{display:none}
+.ch-no{color:#bf8247;font-weight:700;font-size:.82rem;min-width:48px;flex:none}
+.ch-t{flex:1;font-size:.92rem}
+.badge{font-size:.68rem;border-radius:6px;padding:1px 7px;font-weight:600;white-space:nowrap;flex:none}
+.badge[data-s="read"]{background:#e6f0e9;color:#286b52;border:1px solid #cbdace}
+.badge[data-s="reading"]{background:#f6edde;color:#805d36;border:1px solid #e6d4b8}
+.badge[data-s="unread"]{background:#f4f4f1;color:#8b8b84;border:1px solid #e4e4de}
+.caret{color:#69766f;font-size:1.05rem;flex:none;transition:transform .18s ease}
+.ch-item[open] .caret{transform:rotate(90deg)}
+.ch-body{padding:2px 0 12px 58px;animation:slideDown .2s ease}
+@keyframes slideDown{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.ch-body p{margin:.3em 0}
+.ch-src{color:#69766f;font-size:.76rem}
+
+
+.ch-t{min-width:0;overflow-wrap:anywhere}.ch-body{overflow-wrap:anywhere}
 </style>
 </head>
 <body><main class="wrap">
@@ -31,17 +55,11 @@
 <h1>神话的破灭｜增长为什么不能只靠旧路径</h1>
 <p class="meta">flp713（PDF 标题与正文署名） · 2026-10-18 · 阅读员：<span class="reader">Cue 本地试读</span>（文件只读／代码辅助理解）</p>
 <p class="muted">本地 PDF · 一次性试读 · 仅原创理解笔记，不附原文全文</p>
-<section class="reading-metrics" aria-labelledby="reading-metrics-title">
-<p class="metrics-kicker">READING / 本次实读</p><h2 id="reading-metrics-title">实际读了多少</h2>
-<dl class="metrics-grid">
-<div class="metric metric-primary"><dt>三篇共用的试读与整理窗口</dt><dd>7 分 33 秒</dd><small>从首次成功读取正文至本场理解整理结束；三篇使用同一窗口，不能相加。</small></div>
-<div class="metric"><dt>确认向前翻页</dt><dd>不适用</dd><small>未操作阅读器或桌面，按文件页序分批读取；翻页不等于页数。</small></div>
-<div class="metric"><dt>页码 / 页数</dt><dd>PDF 第 1–20 页</dd><small>按 pdftotext 原有分页符连续分为 20 页；是文件页序，不冒称纸书页码。</small></div>
-<div class="metric"><dt>全书进度</dt><dd>本文件 20 / 20 页</dd><small>已读至此 PDF 末；末页预告下次更新，原帖或整本作品是否完整未确认。</small></div>
-</dl>
+<section aria-labelledby="reading-metrics-title" class="reading-metrics">
+<p class="metrics-kicker">READING / 本次实读</p><h2 id="reading-metrics-title">实际读了什么</h2><dl class="metrics-grid"><div class="metric metric-primary"><dt>三篇共同试读与整理窗口</dt><dd>7分33秒</dd><small>20:25:17—20:32:50；不是本篇独占时长。</small></div><div class="metric"><dt>实际覆盖</dt><dd>本地文件正文至末；原帖完整性待核</dd><small>仅确认本地文件所载范围，不冒称原作完读。</small></div></dl>
 <div class="metrics-details"><p>阅读员：Cue 本地试读 · 文件只读／代码辅助理解</p><p>实际窗口：2026-10-18 20:25:17 — 20:32:50（UTC+08:00）</p><p>平台有效阅读时长：不适用：本地 PDF，不是微信读书有效阅读或打卡记录。</p></div>
-<p class="metrics-note">窗口包含文字提取、阅读理解、记笔记及必要的仓库核对；不宣称连续纯阅读时长，不以提取全文代表读完全文；未知写“未确认 / 未显示”，不用 0、0% 或进度条代替。浏览窗口不是平台有效阅读时长。</p>
-</section>
+<p class="metrics-note">三篇共享此窗口，未分篇测量；窗口包含文字提取、阅读理解、记笔记及必要的仓库核对；不宣称连续纯阅读时长，不以提取全文代表读完全文；未知写“未确认 / 未显示”，不用 0、0% 或进度条代替。浏览窗口不是平台有效阅读时长。</p>
+</section><section aria-labelledby="chapter-guide-title"><h2 id="chapter-guide-title">本次实读章节导读</h2><div class="toc-part"><span class="part-label">本篇已核实标题</span><details class="ch-item"><summary><span class="ch-no"></span><span class="ch-t">神话的破灭</span><span class="badge" data-s="reading">部分阅读</span><span class="caret">›</span></summary><div class="ch-body"><p>文章追问劳动力转移支撑的增长为何难以自动延续，再讨论利益约束、缓冲资源及就业支撑的城镇化。本地文件正文已读至末，末尾仍预告后续更新，故不视为原帖完读。</p><p class="ch-src">导读依据：亲读 · 本地文件题名与 2026-10-18 日期笔记。</p></div></details></div><p class="muted">本篇仅列既有记录确认的实读标题与部分范围；不代表全篇／整书完读。</p></section>
 <div class="card"><span class="tag">本次实读范围</span><p><strong>亲读：</strong>118 号《神话的破灭》本地 PDF，第 1–20 页全部正文。可见的署名更新日期从 2012-09-01 至 2012-11-27。第 20 页仍写到后续更新，因此这里只能确认这份 20 页文件读毕，不能称原帖完读。前置格式兼容排查不计入正文试读窗口。</p></div>
 <section><h2>今天的核心理解</h2><p><span class="tag">亲读 · 作者观点</span>文章真正要推翻的不是“经济还会增长”，而是“过去的增长机制能够自动延续”。作者先把高速增长解释为农村劳动力转向城市产业后的生产率提升，再追问两项条件：还有没有可转移的劳动力，城市还能不能提供工作（第 1–2 页）。</p>
 <p>接着，论证从经济机制转到改革的利益约束：政策不只取决于技术上是否可行，还取决于既有受益者愿不愿承担成本（第 3–6、10–12 页）。作者认为旧机制受阻，却又特意区分“旧模式失效”和“经济马上崩溃”；第 14–15 页以家庭收入下降但尚有积蓄作比喻，说明缓冲资源只是争取转型时间。</p>
@@ -59,6 +77,5 @@
 <li><strong>可迁移：</strong>资产储备能缓冲冲击，但可持续收入、工作机会和现金流是另一回事。对家庭或企业，也应把二者分开看。</li>
 <li><strong>保留意见：</strong>“制度必然如此”的总括解释容易包揽所有结果。应继续追问反例、可比较的数据，以及什么观察会让该解释失效。</li>
 <li><strong>承接问题：</strong>如果城镇化必须由产业和就业支撑，怎样区分真正改善生产率的项目与只把建设规模做大的项目？</li></ul></section>
-
 <section><h2>来源边界</h2><p class="muted">唯一内容来源是用户指定文件夹中的 <strong>118-神话的破灭-flp713.pdf</strong>。上述“亲读”表示实际读取该文件的文字，不表示作者断言已被独立证实；“综合推断”是阅读员的重组、判断和反思。本次未使用官方书目、公开评论、模型记忆补写未读内容，也未核对原帖完整性。所有数值与政策预测均处于原帖历史语境，不构成当下投资建议。常规读取使用电脑已有 pdftotext；Windows PDF 接口加载失败是兼容性现象，不能据此断定用户无法正常打开文件。</p></section>
-</main></body></html>
+<section><h2>当年与今天</h2><h3>当年作者能知道什么</h3><p>本篇依据 PDF 中实际读到的原帖与可见时间标记理解；作者当时可提出对相关市场、资产和未来走势的判断，但帖内预测仍是当时主张，不是已经验证的事实。原帖具体首发日期与文本完整性未独立核对，因此不能把转载时点当作发帖时点，也不以今日术语替作者补足当年的信息。</p><h3>后来才知道什么</h3><p>本次没有外查作者预测的兑现情况或相关资产后续表现；缺少可靠材料的后见事实一律待核实。可以确定的是，原文中被读到的数字、因果解释与风险判断属于作者当时的论证，不能因其语气肯定就当成后来事实。当前笔记只分析这些论证的前提与内部张力。</p><h3>今天对雨的启发</h3><p>读历史市场判断时，先分清数据、推测与修辞，再问结论依赖哪些条件、什么证据会使它失效。对具体资产要把风险、期限和承受能力放进判断，而非把旧帖当作今天的行情信号；此处没有提供投资建议。</p></section><section><h2>有意思的原文段落 Top 10</h2><p class="muted">已选 0/10 · 既有页面未提供可安全逐字核对的短摘录；不从转述或分析拼造原句。</p></section></main></body></html>
