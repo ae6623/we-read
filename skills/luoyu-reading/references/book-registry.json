@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": 18,
+  "revision": 19,
   "timezone": "Asia/Shanghai",
   "authority": "latest origin/main; claims become effective only after serialized acceptance there",
   "migration": {
@@ -163,33 +163,33 @@
       "platform": "local_pdf",
       "platform_book_id": null,
       "priority": "user_requested",
-      "status": "in_progress",
+      "status": "paused",
       "owner_agent_id": "local-pdf-reader",
       "claim": {
         "state": "held",
         "source": "用户明确指定本地续读；本次开始事件被main接受后生效",
         "claimed_at": "2026-10-19T00:04:46+08:00"
       },
-      "last_confirmed_progress": null,
+      "last_confirmed_progress": {
+        "chapter": "因为贱，所以生活艰辛／本地PDF结语",
+        "position": "本地PDF文本末尾已确认；不推定原帖版本完整性或整套汇编完读。",
+        "confirmed_at": "2026-10-19T00:16:11.226201+08:00",
+        "page": null
+      },
       "resume_point": {
         "status": "confirmed",
-        "chapter": "因为贱，所以生活艰辛",
-        "page": 61,
-        "position": "上场已确认续读位置；需在源文核验实际内部标题和段落",
-        "source": "2026-10-18成功本地阅读交接；页码仅作内部定位",
-        "confirmed_at": "2026-10-18"
+        "chapter": "因为贱，所以生活艰辛／本地PDF结语",
+        "page": null,
+        "position": "此本地文件已至末尾；不要回退旧点重读。下一篇未选定，原作品版本完整性未外核。",
+        "source": "本场非交互只读源文件，逐段提取与结语核对；仅确认当前PDF文本边界。",
+        "confirmed_at": "2026-10-19T00:16:11.226201+08:00"
       },
-      "next_question_status": "needs-confirmation",
-      "completion": null
+      "next_question_status": "confirmed",
+      "completion": null,
+      "pause_reason": "本场已结束且当前本地文件到末；作品级版本完整性未核对，下一篇尚未选定。不虚增唯一完读计数。"
     }
   ],
-  "active_session": {
-    "run_id": "local-pdf-20261019-0004",
-    "agent_id": "local-pdf-reader",
-    "book_id": "local-yin-wei-jian-dapeng",
-    "slot": "manual_user_requested",
-    "started_at": "2026-10-19T00:04:46+08:00"
-  },
+  "active_session": null,
   "synthesis": {
     "visibility": "private",
     "batch_size": 3,
