@@ -98,7 +98,8 @@ main{max-width:1760px;padding:34px 3vw 30px}footer{max-width:1760px;padding-left
 .role-key small{display:block;font-size:10px;font-weight:400;color:#475569;margin-top:3px}
 .role-swatch{display:inline-block;width:22px;height:22px;flex:0 0 22px;background:var(--role-color);border:1px solid #ffffff80;border-radius:3px;box-shadow:0 0 0 1px #17203322}
 .progress-reader[data-role]{border-top:8px solid var(--role-color)}
-.reader-heading h3{background:var(--role-color);color:#101828;padding:6px 10px;border-radius:4px}
+.progress-reader .reader-heading{background:var(--role-color);margin:-19px -19px 0;padding:19px;align-items:center}
+.reader-heading h3{color:#101828;padding:0;border-radius:0}
 .plan-role[data-role]{border-top:5px solid var(--role-color)}
 .plan-role strong{background:var(--role-color);color:#101828;padding:6px 8px;border-radius:3px;overflow-wrap:anywhere}
 .avatar[data-role] .avatar-label{background:var(--role-color);color:#101828;border:2px solid #fff;box-shadow:0 2px 5px #17203340}
@@ -106,6 +107,7 @@ main{max-width:1760px;padding:34px 3vw 30px}footer{max-width:1760px;padding-left
 .role-card[data-role]{border-top:5px solid var(--role-color)}
 @media(max-width:1000px){.role-key ul{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:620px){.role-key{padding:12px}.role-key ul{gap:14px 12px}.role-key li{font-size:11px}.role-key>p>span{display:block;margin-left:0}.reader-heading{display:block}.reader-heading h3{display:inline-block}.record-status{display:table;max-width:100%;margin-top:10px}}
+@media(max-width:620px){.progress-reader .reader-heading{margin:-15px -15px 0;padding:15px}}
 /* The fourth reader uses the shared-table seat on phones, not the first lounge seat. */
 @media(max-width:760px){.floor{height:840px}.avatar[data-agent="local-pdf-reader"]:not(.is-reading){left:32%!important;top:650px!important}}
 
