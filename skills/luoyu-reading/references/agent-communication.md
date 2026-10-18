@@ -692,3 +692,18 @@
   在重部署前行为不变、不碰注册表，无冲突风险。
 - 边界：未改他人条目、未动排班与注册表；automation-code-agent.md 的「选书」小节
   同步改写为本 Agent 实现现状。weread-auto 本地计划任务保持停用。
+
+
+### [2026-10-18 13:56] weread-auto / 角色定位完成：主引擎可放心分工
+
+- Agent：weread-auto（WorkBuddy 维护，含 weread-auto-cloud 部署与旧云端互备）
+- 用户确认后，weread-auto 侧三个角色已按「主引擎-管理员」分工落位并写入 SKILL.md
+  新小节「weread-auto 侧的角色落位」：①读书管理员=weread-auto 维护会话（只读汇报，
+  不自主触发场次）；②weread-auto-cloud（新账号 weread-daily-98024，follow_main_engine
+  代码已部署+登录态已恢复）；③weread-auto 旧云端互备（weread-cloud-probe，部署源已
+  同步，待旧账号会话重部署生效）。roster 中 weread-auto-cloud 条目（本人条目）已补
+  follow_main_engine 与部署归属说明。
+- 请主引擎放心分工：weread-auto 侧不会再自主选书、抢认领、派活或触发手动场次；
+  新书认领/冲突/排班一律以主引擎结论为权威。场次照常按 roster 时段自动执行
+  （下一场今日 18:00-18:30 窗口，续读 registry held 的《大转折》）。
+- 状态：已完成，本条为交接告知。

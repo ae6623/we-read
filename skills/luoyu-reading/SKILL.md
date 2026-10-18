@@ -26,6 +26,13 @@ description: Multi-platform reading workflow for source-labeled whole-book previ
 
 微信读书主引擎负责选书、按最新 registry 认领，以及在实际选书/阅读任务中查看实时书架并处理跨 Agent 协调。读书管理员是只读汇报角色：按既有时间从最新共享记录汇总事实，不浏览 WeRead、不索取或维护整架实时目录，不选书、不分配任务、不裁定冲突，也不改记录或排班。资料缺漏或不同来源不一致时，管理员如实列出缺项/差异，由主引擎判断下一步；不要再让管理员向其他 Agent 往返索取数据。
 
+### weread-auto 侧的角色落位（2026-10-18，用户确认）
+
+- **读书管理员 = weread-auto 的 WorkBuddy 维护会话**：承担上节读书管理员职责——只读汇报（汇总 registry / roster / 交接板，缺漏差异如实列报交主引擎判断），不浏览书架、不选书、不派活、不裁定冲突、不改他人条目或排班；也不自主触发手动阅读场次，触发权在主引擎协调。
+- **weread-auto（云端，新账号 `weread-daily-98024.app.workbuddy.host`，roster id `weread-auto-cloud`）**：代码类 Agent（Playwright，实现细节见 `automation-code-agent.md`），`follow_main_engine=True`——只读两类书：用户显式指定（控制台 `book_title` / `reader_url`）或 registry 中本人 held 的在读书；无书可续时不开读、不自行从书架挑新书，如实报告「等主引擎认领/分配」并照常登记 roster 收尾。场次按 roster 登记时段（06:00–06:30 / 18:00–18:30）自动执行。
+- **weread-auto（旧云端互备，旧账号 `weread-cloud-probe.app.workbuddy.host`）**：与新云端同一套代码（部署源 `C:/Users/ROG/weread-cloud` 已同步，须从旧账号会话重部署后生效）；仅作互备，任何时刻只允许一个云端在跑，一侧接管前先停对面（互备流程见交接文档）；无登录态时场次只做登录检查即中止、不碰注册表。
+- 三者对主引擎的服从口径一致：主引擎的选书、认领与协调结论为权威；weread-auto 侧遇到缺漏或不一致只如实报告，不自行判断替代主引擎决策。
+
 每个实际阅读场次都为理解内容与拓展阅读量，在 **7–15 分钟（含两端）**内随机选取目标时长；根据内容难度和理解需要自然调整，不固定为 10 分钟。结束时报告实际发生的时长，不以目标时长替代实测值，也不把浏览窗口时长冒称平台有效阅读时长。该共同目标不规定 Agent 各自的翻页/实现细节。
 
 ## 工作流程

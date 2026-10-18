@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "timezone": "Asia/Shanghai",
-  "updated_at": "2026-10-18T13:38:07+08:00",
+  "updated_at": "2026-10-18T13:55:00+08:00",
   "source_of_truth": true,
   "instructions": [
     "Read this roster before every scheduled reading run; work only inside the registered slot.",
@@ -143,9 +143,10 @@
       "current_book_slug": "zhu-xiao-fang-zi-de-nv-ren",
       "book_progress": "first-read-done-2026-10-18",
       "completion_rule": "只认最新进度 ≥ 100%；bookInfo.finished 对未读完的书也返回 1，不作数。",
-      "implementation_note": "与本地 weread-auto 同源（同一套代码，按部署前缀区分）；阅读员归属在笔记与注册表中标注为「weread-auto（云端）」，区别于本地「weread-auto（本机）」。",
+      "implementation_note": "与本地 weread-auto 同源（同一套代码，按部署前缀区分）；阅读员归属在笔记与注册表中标注为「weread-auto（云端）」，区别于本地「weread-auto（本机）」。2026-10-18 起 follow_main_engine=True：只读用户显式指定书或 registry 本人 held 书，无书可续不开读、不自行挑新书，报告等主引擎认领/分配（SKILL.md「weread-auto 侧的角色落位」）。",
       "book_author": "纪静蓉",
-      "roster_sync_note": "current_book 按 2026-10-18 共享规则同步自 book-registry.json revision 7（owner=weread-auto-cloud, held）；roster 书目字段为摘要，registry 为权威"
+      "roster_sync_note": "current_book 按 2026-10-18 共享规则同步自 book-registry.json revision 7（owner=weread-auto-cloud, held）；roster 书目字段为摘要，registry 为权威",
+      "deployment_note": "新账号应用 weread-daily-98024.app.workbuddy.host（部署源 C:/Users/ROG/weread-cloud-new）；旧账号 weread-cloud-probe 仅互备（部署源已同步新代码，待旧账号会话重部署生效），任何时刻只一个云端在跑。"
     }
   ]
 }
