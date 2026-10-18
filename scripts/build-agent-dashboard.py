@@ -39,7 +39,7 @@ def build(root):
         start_raw, end_raw = source.get("last_started_at"), source.get("last_ended_at")
         start, end = parse_time(start_raw), parse_time(end_raw)
         status = source.get("run_status")
-        status = status if status in {"idle", "running", "completed", "failed", "unknown"} else "unknown"
+        status = status if status in {"idle", "running", "completed", "failed", "blocked", "unknown"} else "unknown"
         if agent_id and agent_id == active_agent:
             status = "running"
         schedules = []
