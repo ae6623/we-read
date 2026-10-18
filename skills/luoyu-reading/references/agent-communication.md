@@ -1,10 +1,10 @@
 # 阅读 Agent 协作与交接板
 
-这里是跨 Agent 的持久交接记录，不是实时聊天。`agent-roster.json` 是类型、时间窗、当前书目、完读状态和运行状态的唯一登记源；本文件按次记录开始、结束与交接事件。先拉取最新 `main`，避免覆盖他人的更新。
+这里是跨 Agent 的持久交接记录，不是实时聊天。`agent-roster.json` 登记类型、时间窗和个人运行状态；书目责任归属、认领、完成状态与续读点以最新已接受到 `main` 的 `book-registry.json` 为准。本文件按次记录开始、结束与交接事件。先拉取最新 `main`，避免覆盖他人的更新。
 
 ## 使用规则
 
-1. 每次计划运行开始前查看 roster 和最新通信记录，核对自己的登记时段、当天状态、当前未完读书目与 `completed_books`；已完读书目不再打开，除非用户明确要求重读。若用户未指定新书，优先续读自己的上次未完读书目；读完后选用户书架最近添加的未完读书，不按作者限制。每个配置时段都是独立阅读场次，即使当天另一场已完成也照常执行；仅在登记窗口内工作，且不得与仍在运行的任务重叠。若运行状态不明，先确认任务已结束；若另一个 Agent 仍在同一本书上操作，先协调，不并行翻页或改同一文件。
+1. 每次计划运行开始前查看最新 registry、roster 和通信记录，核对登记时段、当天状态和 `active_session`。书目选择与完读状态以 registry 为准：若 registry 清楚标明该书 `in_progress`、owner 是自己且 claim 为 `held`，即使 roster 的个人书目摘要过期，也按 registry 继续；由该 Agent 维护者更新自己的 roster，不改他人个人条目。registry 中已完读的书不再打开，除非用户明确要求重读。未指定新书时，先续读 registry 中自己持有的未完书，再选书架最近添加且未完读、未被认领的书。registry owner/status 含糊、认领重复、活动锁冲突或状态无法确认时才停下并报告。每个配置时段都是独立阅读场次，即使当天另一场已完成也照常执行；仅在登记窗口内工作，不与仍在运行的任务重叠。
 2. 开始时追加一条记录，写实际开始时间、登记时段和书目，并在当前 Cue 私聊中给用户发简短开始通知；结束、受阻、被打断或未能开始时再追加对应记录，写实际结束时间和准确状态。不得把计划时间写成实际运行时间。失败或结果不确定时，先及时在当前 Cue 私聊中通知用户；只更新文件不算通知。
 3. 结束后同步更新 roster 中自己的 `run_status`、`last_run_date`、`last_started_at`、`last_ended_at`、`current_book`、`book_completion`、`completed_books` 与 `last_output`，并向用户发送结束简报：实际用时、可确认的页数/范围和基于本场实际阅读的简短思维导图。无可靠页数时说明未显示，改报明确章节或进度，不估算。确认一本书完读后，立即加入自己的 `completed_books`；之后不再安排该书。不代其他 Agent 推断或修改其状态。同一书目同一天的多个场次合并为一篇日期笔记；不同书籍即使同日阅读也分别记笔记。
 4. 只编辑自己的记录；其他 Agent 的记录只读。交接时用 commit/PR/输出路径说明结果，不复制书籍内容。
@@ -549,3 +549,11 @@
 - 交接给：weread-auto-cloud 维护者；本阅读员下午场重新独立检查
 - 下一步：请原责任阅读员对齐本人 roster 与 registry 的当前书目并补全场次收尾依据；未解决前不重叠开读
 - 备注：最新 main 的 registry revision 7、active_session=null；提交 625cb98 已记录原维护者核实并清除 05:03 残留场次。仍有独立矛盾：weread-auto-cloud roster 当前书为《住小房子的女人》，registry 持有《大转折：现代债务与可持续的增长》。依 reading-state-protocol 的状态矛盾停读规则处理；未改其他 Agent 条目、未清他人锁、未将旧阅读冒充早场完成。
+
+
+### [2026-10-18 09:51] 共享书目权威顺序已明确
+- 用户决定：书目 owner、claim、完读状态和续读点以最新已接受到 `main` 的 `book-registry.json` 为准；roster 中个人书目字段只是摘要。
+- 当前可见差异：registry revision 7 将《大转折：现代债务与可持续的增长》以 `held` 认领给 `weread-auto-cloud`，status 为 `in_progress`；该 Agent 的 roster `current_book` 仍显示《住小房子的女人》。
+- 处理：后续按 registry 的明确认领继续；请 `weread-auto-cloud` 维护者同步自己的 roster 摘要，不由其他 Agent 代改。此规则不覆盖 `active_session` 冲突；运行前仍须确认活动锁为空。
+- 交接给：weread-auto-cloud 维护者和所有阅读 Agent
+- 输出：本次共享规则修订，随本提交进入 main。
