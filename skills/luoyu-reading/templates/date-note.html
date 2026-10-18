@@ -45,6 +45,13 @@
 </section>
 <div class="card"><span class="tag">本次实读范围</span><p>{{READING_SCOPE}}</p></div>
 <!-- 核心理解与证据用真实章节/帖子/小节标题关联；自拟分析小标题不冒充原文标题。 -->
+<section aria-labelledby="chapter-guide-title"><h2 id="chapter-guide-title">本次实读章节导读</h2>
+<!-- 按已核实部／章／小节层级重复 article，以 h3/h4 等表达真实层级；无正式章节用真实帖子／文章／小节标题，不造编号或层级，不以页码导航。只列本篇实际已读部分；标题下用 1–2 句说明已读部分在讲什么／起什么作用。部分阅读必须写明停止处，不能概括未读全章。标题未知标待确认；无可确认条目时删除示例并如实说明。 -->
+<article class="card">
+<h3>{{REAL_READ_CHAPTER_POST_OR_SECTION_TITLE_OR_UNCONFIRMED}}</h3>
+<p>{{BRIEF_GUIDE_LIMITED_TO_ACTUALLY_READ_CONTENT}}</p>
+<p class="muted">导读依据：亲读 · {{GUIDE_VERIFIED_READ_EVIDENCE}}；本篇实读状态：{{READ_SCOPE_COMPLETE_OR_PARTIAL_AND_CONFIRMED_STOP}}</p>
+</article></section>
 <section><h2>今天的核心理解</h2><p>{{CORE_UNDERSTANDING}}</p></section>
 <section><h2>思维导图</h2><div class="card mindmap">{{MINDMAP}}</div></section>
 <section><h2>与整书框架的连接</h2><p>{{FRAMEWORK_CONNECTION}}</p></section>

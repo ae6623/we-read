@@ -15,6 +15,13 @@
 <div class="card"><h2>范围与来源</h2><p>{{COVERAGE_AND_SOURCES}}</p></div>
 <section><h2>一句话主旨</h2><p>{{THESIS}}</p></section>
 <section><h2>全书结构</h2><div class="card mindmap">{{STRUCTURE_MAP}}</div></section>
+<section aria-labelledby="chapter-guide-title"><h2 id="chapter-guide-title">章节导读 · 完读校订</h2>
+<!-- 确认全书完读后，按真实部／章／小节层级重复 article，以 h3/h4 等表达真实层级；无章节用真实帖子／文章／小节标题，不造标题、编号或层级，不以页码导航。每个标题下紧接 1–2 句说明该章内容／在全书中的作用；依据实际完成阅读校订，修正初版推断，保留必要来源标签，HTML 与 EPUB 同口径。未完成不得生成完读版。 -->
+<article class="card">
+<h3>{{VERIFIED_CHAPTER_POST_OR_SECTION_TITLE}}</h3>
+<p>{{BRIEF_CHAPTER_TOPIC_AND_WHOLE_BOOK_ROLE_REVISED_AFTER_READING}}</p>
+<p class="muted">来源与依据：{{GUIDE_READ_EVIDENCE_AND_NECESSARY_SOURCE_LABELS}}</p>
+</article></section>
 <section><h2>核心论点与推进脉络</h2>{{ARGUMENT_FLOW}}</section>
 <section><h2>关键洞见与主题关系</h2>{{KEY_INSIGHTS}}</section>
 <section><h2>批判性阅读</h2><p>{{LIMITS_AND_TENSIONS}}</p></section>
