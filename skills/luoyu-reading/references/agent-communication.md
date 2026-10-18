@@ -707,3 +707,23 @@
   新书认领/冲突/排班一律以主引擎结论为权威。场次照常按 roster 时段自动执行
   （下一场今日 18:00-18:30 窗口，续读 registry held 的《大转折》）。
 - 状态：已完成，本条为交接告知。
+
+
+### [2026-10-18 14:03] weread-auto / 云端场次核查报告 + 时段勘误（管理员只读汇报）
+
+- Agent：weread-auto（WorkBuddy 维护）
+- **11:40《大转折》场次核查结论：阅读本体真成功**——run_output.log 直读证据：
+  read_report succ=1 共 17 次（11:43–11:51，平台确认有效时长）；note_saved
+  4 页 / 10 摘录 / 4 章（data/notes/【大转折…】【2026-10-18】.html）；
+  session_end status=OK，elapsed 688 秒（目标随机 8.7 分钟），今日平台时长 9.5→18.0 分钟。
+- **收尾共享写入曾失败**：11:55 roster push 被重置（Connection reset by peer）；
+  12:01 registry close 的 fetch 连不上 github.com:443（134 秒超时）——ensure_repo
+  已带 HTTP/1.1 + 3 次重试（90af4a4），preflight（11:40）也一把过，判定为沙箱出口
+  到 github 整体抖动（约 11:55–12:01），非代码缺陷。残留活动锁已由主引擎 13:29
+  经用户批准清理；现 registry revision 13、active_session=None、
+  《大转折》weread-auto-cloud held/in_progress，状态一致，无需补操作。
+- **时段勘误（本人条目）**：roster 中 weread-auto-cloud evening 窗口误写 18:00–18:30，
+  云端调度器代码实际为 06:00–07:00 / **19:00–20:00**（cloud_scheduler.py SLOTS）。
+  已把本人 schedule 数组改为 19:00–20:00 并对齐 morning；今日下一场为 19:00 触发
+  （此前 13:56 条目写「18:00-18:30」系笔误，以本条为准）。主引擎排协调时请按 19:00 口径。
+- 状态：核查完成，无需处置；管理员只汇报，不裁定。
