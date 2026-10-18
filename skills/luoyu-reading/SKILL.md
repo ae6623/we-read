@@ -7,11 +7,11 @@ description: Multi-platform reading workflow for source-labeled whole-book previ
 
 > **所有 Agent 先读这一条**：本 Skill 只约束**协作目标与协议**——产出什么（预读框架/日期笔记/完读汇编）、按什么结构归档、来源如何标注、如何避免互相干扰、发布授权与时间错峰。它**不约束实现方式**：代码自动化、Agent 直接操作浏览器、人工整理都是被认可的手段，各 Agent 用自己擅长的方式达成目标，**互不假设对方的技术栈，互不干扰**。涉及具体平台的操作边界见 `references/platforms/<platform>.md`；代码类 Agent 的自动化实现细节集中在 `references/automation-code-agent.md`，**仅对该类 Agent 自身有约束力**。
 
-为用户把多本书读得更有效：开读即建立有来源边界的全书视角初版，再把每天真实读到的内容连回框架，完读后才做校订后的整书汇编。`references/agent-roster.json` 是类型、时段、在读书目与完读状态的唯一登记源；共享归档与 Git 规则见 `references/coordination.md`，跨 Agent 开始/结束记录见 `references/agent-communication.md`，用户最新决定见 `references/decisions.md`。使用某个平台前阅读对应的 `references/platforms/<platform>.md`（当前先有微信读书指南）。
+为用户把多本书读得更有效：开读即建立有来源边界的全书视角初版，再把每天真实读到的内容连回框架，完读后才做校订后的整书汇编。`references/agent-roster.json` 登记 Agent 类型、时段和个人运行状态；书目的归属、认领、完成状态与续读点以最新已进入 `main` 的 `references/book-registry.json` 为准。共享归档与 Git 规则见 `references/coordination.md`，跨 Agent 开始/结束记录见 `references/agent-communication.md`，用户最新决定见 `references/decisions.md`。使用某个平台前阅读对应的 `references/platforms/<platform>.md`（当前先有微信读书指南）。
 
 ## 共享书目认领、精确续读与三本综合
 
-每场先读 `references/reading-state-protocol.md` 和权威仓库最新 `references/book-registry.json`，不要把已安装 Skill 的静态副本当实时状态；当前共享仓库为 `/workspace/we-read-main`，不在该环境时先定位获授权的同一仓库。roster 保留个人/排班登记，registry 单独负责按书去重的独占认领、续读点和综合批次；有冲突就停下核对，不代改他人记录。
+每场先读 `references/reading-state-protocol.md` 和权威仓库最新 `references/book-registry.json`，不要把已安装 Skill 的静态副本当实时状态；当前共享仓库为 `/workspace/we-read-main`，不在该环境时先定位获授权的同一仓库。roster 保留个人/排班与运行状态，registry 决定书目归属、认领、完成状态和续读点。两者的书目字段不一致时，按 registry 选择书；由该 Agent 维护者同步自己的 roster，不改他人个人记录。只有 registry 本身的 owner/状态含糊、认领重复或活动锁冲突时才暂停并通知用户。
 
 - 先认领再开读，用户指定书优先但不得抢占活动认领；未完书跨场次保留责任，确认完读后释放。所有共享写入按协议串行接受到 main 后才生效，不以本地或 PR 分支的拟认领冒充成功。
 - 每场结束按 `templates/session-close.json` 在私有归档记录精确且有依据的下一章/页/章节内位置，以及一个基于已读内容的下次问题；未知写 `needs-confirmation`，不把百分比猜成页码。同书同日仍合并一篇，但保留每场区段。
@@ -26,7 +26,7 @@ description: Multi-platform reading workflow for source-labeled whole-book previ
 
 ## 工作流程
 
-1. **先核配置，再决定读什么。** 先确认用户指的书、作者和平台；开读前查看 `agent-roster.json`、最新交接记录与已有归档，确认当前时段无人冲突、没有同一书目的活动运行，并核对自己的 `current_book`、`completed_books` 与当天其他场次状态。若用户明确指定新书，按指定书目开始；未指定时，优先续读自己上次未完读的 `current_book`。当前书读完后，从用户书架中选择最近添加且未完读的书继续，不再默认限制同一作者。绝不重读 `completed_books` 里的书，除非用户明确要求重读；不确定时先停下并报告，不猜。检查归档索引、全书初版、日期笔记和完读汇编，避免重复创建或覆盖。
+1. **先核配置，再决定读什么。** 开读前查看最新 `book-registry.json`、`agent-roster.json`、交接记录与已有归档，先检查活动锁和冲突。书目归属、当前责任人及完读状态以 registry 为准；若 registry 明确显示某书 `in_progress` 且 `owner_agent_id` 是自己、claim 为 `held`，即使 roster 的 `current_book` 或 `completed_books` 仍是旧值，也按 registry 继续并让本人维护者同步自己的摘要。registry 显示 `completed` 的书不得重读，除非用户明确要求；若 registry 本身的 owner/状态含糊、重复认领或 `active_session` 与本场冲突，则暂停并报告。用户指定书目时遵守既有认领；未指定时，先续读 registry 中自己持有的未完书，再选书架最近添加、未完读且未被认领的书。检查归档索引、全书初版、日期笔记和完读汇编，避免重复创建或覆盖。
 2. **新书开读即产出全书视角初版（overview.html）。** 用户已明确决定：不要只给一张“预读地图”——开读时就应给出一份完整的全书视角。收集可验证的官方书目简介、目录、作者说明、用户提供的材料与可靠公开划线，结合模型自身对该作品的知识，产出全书主旨、结构、关键观点与主题关系；同时按四层来源标签（亲读 / 官方简介目录 / 用户材料 / 公开评论划线 / 综合推断）分清信息出处，并单列“阅读时要验证的问题”。它不是最终总结：未经亲读确认的部分保持推断标记，完读后校订升级为 `final.html`。没有可靠依据时，不装作掌握全书。
 3. **每日记下实际阅读并记录运行状态。** 日期笔记写实际范围、关键观点、作者如何展开、与整书框架的联系、理解变化和可迁移启发；同一本书同一天多场阅读合并为一篇，不同书籍分别建笔记；不编未读内容。日期笔记使用 `templates/date-note.html`：标出阅读员名称和 Agent 类型，并以醒目指标卡片呈现浏览时长、确认翻页、页码/页数、全书进度、平台有效阅读时长及其计时范围/来源。严格区分浏览窗口时长与平台确认的有效阅读时长；翻页次数不是页数（例如 11 次翻页不能写成 11 页）。只呈现有依据的值，未知写“未确认”或“未显示”，绝不以 0、0% 或伪进度条代替未知；若窗口包含恢复、记录等活动，应写明范围，不冒称有效阅读。开始时将自己的运行状态标为 `running` 并写实际开始时间与书目；结束时更新实际结束时间、阅读范围、完成状态和 `completed_books`。
 4. **失败要直接通知用户。** 登录失效、页面打不开、发生冲突、阅读中断或其他失败时，立即在当前 Cue 私聊中说明卡点、实际完成到哪、是否影响打卡及恢复方式；同时更新 roster 与交接记录，不能只把失败留在仓库里等用户发现。打卡状态不明确时如实说，不声称成功。
@@ -89,7 +89,7 @@ description: Multi-platform reading workflow for source-labeled whole-book previ
 - `templates/session-close.json`：每场结束的私有记录模板；问题正文不进入公开共享状态。
 - `templates/cross-book-synthesis.md`：三本一组的私有综合模板。
 - `references/decisions.md`：用户决定与 Agent 沟通记录（先行阅读，含最新授权）。
-- `references/agent-roster.json`：Agent 类型、排班窗口、当前书目、完读状态与运行状态的唯一登记源。
+- `references/agent-roster.json`：Agent 类型、排班窗口与个人运行状态登记；书目 owner、claim、完读状态和续读点以 `book-registry.json` 为准。
 - `references/coordination.md`：所有 Agent 共用的文件归档、冲突预防、Git 与公开发布规则。执行任何共享写入或发布前先读。
 - `references/agent-communication.md`：跨 Agent 任务认领、状态与交接板；开始、交接、完成或遇阻时更新。只写适合公开的最少元数据。
 - `references/platforms/weread.md`：微信读书平台适配说明；使用 WeRead 时读取。

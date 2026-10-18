@@ -6,6 +6,12 @@
 
 ---
 
+## 2026-10-18 · 书目选择以共享认领表为准
+
+用户明确要求：当个人 roster 的 `current_book` / `completed_books` 摘要与最新已接受到 `main` 的 `book-registry.json` 不同时，以共享认领表为准。若 registry 清楚显示某书为 `in_progress`、owner 是当前 Agent 且 claim 为 `held`，Agent 按该书继续；由该 Agent 的维护者同步自己的 roster，不改他人个人记录。registry 标记 `completed` 的书不重读，除非用户明确要求。只有 registry 本身的 owner/状态含糊、重复认领、活动锁冲突或最新 main 无法核对时才暂停并通知用户。此规则取代因 roster 与 registry 字段不一致而一律停止的旧处理。
+
+---
+
 ## 2026-10-18 · 微信读书早场改为 06:30–07:30
 
 用户确认将微信读书浏览器 Agent 的早场改为每日 06:30–07:30（Asia/Shanghai），14:00–15:00 下午场保留；两场都独立执行，且继续采用每场随机 7–15 分钟目标。检查最新 roster 后，weread-auto 与 weread-auto-cloud 的早场登记为 06:00–06:30，恰在 06:30 结束，与新时段不重叠；没有发现其他 Agent 登记在 06:30–07:30。因此仅调整微信读书 Agent 自己的时段，不改动其他 Agent 配置。
