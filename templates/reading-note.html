@@ -23,16 +23,17 @@
       <p class="meta">记录日期：{{NOTE_DATE}}</p>
       <!-- 类型只用 code / browser_non_code / manual / unknown；无证据写未知。时长须写明计时口径；未知值不用 0 或伪百分比。 -->
       <section class="reading-metrics" aria-labelledby="reading-metrics-title">
-        <p class="metrics-kicker">READING / 本次实读</p><h2 id="reading-metrics-title">实际读了多少</h2>
+        <p class="metrics-kicker">READING / 本次实读</p><h2 id="reading-metrics-title">实际读了什么</h2>
         <dl class="metrics-grid">
           <div class="metric metric-primary"><dt>{{DURATION_LABEL}}</dt><dd>{{DURATION_VALUE_OR_UNKNOWN}}</dd><small>{{DURATION_BASIS}}</small></div>
-          <div class="metric"><dt>确认向前翻页</dt><dd>{{PAGE_TURNS_OR_UNKNOWN}}</dd><small>含章节切换时注明；翻页不等于页数</small></div>
-          <div class="metric"><dt>页码 / 页数</dt><dd>{{PAGE_RANGE_OR_NOT_SHOWN}}</dd><small>{{PAGE_COUNT_BASIS}}</small></div>
+          <div class="metric"><dt>实读章节 / 帖子 / 小节</dt><dd>{{ACTUAL_SECTION_TITLES_OR_UNCONFIRMED}}</dd><small>使用原文标题，不编章节或编号</small></div>
+          <div class="metric"><dt>实际覆盖</dt><dd>{{ACTUAL_CONTENT_COVERAGE}}</dd><small>说明实际停止处；接触章节不等于读完整章</small></div>
           <div class="metric"><dt>全书进度</dt><dd>{{PROGRESS_OR_UNKNOWN}}</dd><small>{{BOOK_COMPLETION_STATUS}}</small></div>
         </dl>
         <div class="metrics-details"><p>阅读员：{{READER_NAME}} · {{READER_AGENT_TYPE_LABEL}}</p><p>实际窗口：{{ACTUAL_WINDOW_WITH_TIMEZONE_OR_UNKNOWN}}</p><p>平台有效阅读时长：{{EFFECTIVE_READING_TIME_OR_UNCONFIRMED}}</p></div>
         <p class="metrics-note">{{METRIC_SOURCE_AND_LIMITATIONS}}</p>
       </section>
+      <!-- 后续新阅读按真实章节/帖子/小节标题关联范围、观点与证据；未知标题如实说明，自拟分析标题不冒充原文，不以页码/页数导航。 -->
       <h2>本次阅读</h2>
       <p>{{READING_SUMMARY}}</p>
       <h2>留下的想法</h2>

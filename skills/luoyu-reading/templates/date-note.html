@@ -32,22 +32,24 @@
 <p class="meta">{{AUTHOR}} · {{DATE}} · 阅读员：<span class="reader">{{READER_NAME}}</span>（{{READER_AGENT_TYPE_LABEL}}）</p>
 <p class="muted"><a href="../overview.html">← 全书视角初版</a>{{NOTE_EXTRA_LINKS}}</p>
 <section class="reading-metrics" aria-labelledby="reading-metrics-title">
-<p class="metrics-kicker">READING / 本次实读</p><h2 id="reading-metrics-title">实际读了多少</h2>
+<!-- 后续新阅读以原文真实章节/帖子/小节标题导航；无标题则明确待确认，不编造。范围写清部分阅读，不以页码/页数或翻页数替代。 -->
+<p class="metrics-kicker">READING / 本次实读</p><h2 id="reading-metrics-title">实际读了什么</h2>
 <dl class="metrics-grid">
 <div class="metric metric-primary"><dt>{{DURATION_LABEL}}</dt><dd>{{DURATION_VALUE_OR_UNKNOWN}}</dd><small>{{DURATION_BASIS}}</small></div>
-<div class="metric"><dt>确认向前翻页</dt><dd>{{PAGE_TURNS_OR_UNKNOWN}}</dd><small>{{CHAPTER_SWITCH_NOTE}}；翻页不等于页数。</small></div>
-<div class="metric"><dt>页码 / 页数</dt><dd>{{PAGE_RANGE_OR_NOT_SHOWN}}</dd><small>{{PAGE_COUNT_BASIS}}</small></div>
+<div class="metric"><dt>实读章节 / 帖子 / 小节</dt><dd>{{ACTUAL_SECTION_TITLES_OR_UNCONFIRMED}}</dd><small>使用原文标题，不编章节或编号。</small></div>
+<div class="metric"><dt>实际覆盖</dt><dd>{{ACTUAL_CONTENT_COVERAGE}}</dd><small>说明从哪里读到哪里；接触章节不等于读完整章。</small></div>
 <div class="metric"><dt>全书进度</dt><dd>{{PROGRESS_OR_UNKNOWN}}</dd><small>{{BOOK_COMPLETION_STATUS}}</small></div>
 </dl>
 <div class="metrics-details"><p>阅读员：{{READER_NAME}} · {{READER_AGENT_TYPE_LABEL}}</p><p>实际窗口：{{ACTUAL_WINDOW_WITH_TIMEZONE_OR_UNKNOWN}}</p><p>平台有效阅读时长：{{EFFECTIVE_READING_TIME_OR_UNCONFIRMED}}</p></div>
 <p class="metrics-note">{{METRIC_SOURCE_AND_LIMITATIONS}}；未知写“未确认 / 未显示”，不用 0、0% 或进度条代替。浏览窗口不是平台有效阅读时长。</p>
 </section>
 <div class="card"><span class="tag">本次实读范围</span><p>{{READING_SCOPE}}</p></div>
+<!-- 核心理解与证据用真实章节/帖子/小节标题关联；自拟分析小标题不冒充原文标题。 -->
 <section><h2>今天的核心理解</h2><p>{{CORE_UNDERSTANDING}}</p></section>
 <section><h2>思维导图</h2><div class="card mindmap">{{MINDMAP}}</div></section>
 <section><h2>与整书框架的连接</h2><p>{{FRAMEWORK_CONNECTION}}</p></section>
 <section><h2>可迁移的启发与问题</h2><ul>{{TAKEAWAYS_AND_QUESTIONS}}</ul></section>
-<!-- 以下区段在私有日期笔记中按 run_id 逐场追加；公开版本删除整个区段，问题正文不得进入公开仓库。未知字段写“待确认”，不从百分比估算。 -->
+<!-- 以下区段在私有日期笔记中按 run_id 逐场追加；页码仅作内部辅助，不进入面向用户的导航；公开版本删除整个区段，问题正文不得进入公开仓库。未知字段写“待确认”，不从百分比估算。 -->
 <section data-visibility="private" data-run-id="{{RUN_ID}}"><h2>下次从这里继续</h2><div class="card">
 <p>场次：{{RUN_ID}} · {{ACTUAL_STARTED_AT}} — {{ACTUAL_ENDED_AT}}</p>
 <p>已确认续读点：{{RESUME_CHAPTER}} · {{RESUME_PAGE_OR_NOT_SHOWN}} · {{RESUME_POSITION}}</p>
