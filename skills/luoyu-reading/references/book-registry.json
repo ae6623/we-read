@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": 25,
+  "revision": 26,
   "timezone": "Asia/Shanghai",
   "authority": "latest origin/main; claims become effective only after serialized acceptance there",
   "migration": {
@@ -195,7 +195,7 @@
       "platform": "local_pdf",
       "platform_book_id": null,
       "priority": "user_authorized_selective_choice",
-      "status": "blocked",
+      "status": "paused",
       "owner_agent_id": "local-pdf-reader",
       "claim": {
         "state": "held",
@@ -218,7 +218,8 @@
       },
       "next_question_status": "confirmed",
       "completion": null,
-      "blocked_reason": "现有pymupdf与fitz标准命令入口均不可用；仅尝试单文件无联网读取，未扩大权限。"
+      "blocked_reason": "现有pymupdf与fitz标准命令入口均不可用；仅尝试单文件无联网读取，未扩大权限。",
+      "pause_reason": "用户要求工具不可用则跳过；保留原帖2014-05-24续读点，未完读。下一文件仅解析预检失败，未建立新阅读认领。"
     }
   ],
   "active_session": {
