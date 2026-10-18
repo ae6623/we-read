@@ -49,20 +49,6 @@
 <section><h2>思维导图</h2><div class="card mindmap">{{MINDMAP}}</div></section>
 <section><h2>与整书框架的连接</h2><p>{{FRAMEWORK_CONNECTION}}</p></section>
 <section><h2>可迁移的启发与问题</h2><ul>{{TAKEAWAYS_AND_QUESTIONS}}</ul></section>
-<!-- 今昔对照须关联实读标题；区分原作写作/首发与再版时点，未知写待确认。后续事实附时间与可核查来源，不用后见之明苛责作者。 -->
-<section aria-labelledby="then-now-title"><h2 id="then-now-title">当年与今天</h2>
-<p class="muted">对应实读标题：{{THEN_NOW_SECTION_TITLES}} · 原作时点与依据：{{ORIGINAL_TIME_AND_SOURCE_OR_UNCONFIRMED}}</p>
-<h3>当年作者能知道什么</h3><p>{{THEN_KNOWLEDGE_EXPERIENCE_ASSUMPTIONS_AND_READER_GAIN}}</p>
-<h3>后来才知道什么</h3><p>{{LATER_EVIDENCE_WITH_DATES_AND_SOURCES_OR_TO_VERIFY}}</p>
-<h3>今天对雨的启发</h3><p>{{TODAY_ANALYSIS_LIMITS_AND_CONDITIONAL_ACTION}}</p>
-</section>
-<section aria-labelledby="top10-title"><h2 id="top10-title">有意思的原文段落 Top 10 · 持续积累</h2>
-<p class="muted">已选 {{EXCERPT_COUNT}}/10 · {{EXCERPT_READ_COVERAGE_AND_LIMITS}}</p>
-<!-- 只从本篇声明的实读覆盖内选取；同日多场可去重增补并标所属场次。不足十条不凑数；无可核对原文时说明并删除下方示例条目。重复 li 至实际数量，每条仅最短必要片段，控制累计引用量，不能拼接大段；转述不算原文。 -->
-<ol class="excerpt-list">
-<li><figure class="card"><blockquote><p>{{VERIFIED_BRIEF_ORIGINAL_EXCERPT}}</p></blockquote><figcaption>原文出处：<cite>{{REAL_CHAPTER_POST_OR_SECTION_TITLE_OR_UNCONFIRMED}}</cite> · {{VERIFIED_WITHIN_SECTION_LOCATION_AND_SESSION}}</figcaption></figure>
-<p><strong>为什么有意思（分析）：</strong>{{WHY_INTERESTING_AND_CONTEXT}}</p></li>
-</ol></section>
 <!-- 以下区段在私有日期笔记中按 run_id 逐场追加；页码仅作内部辅助，不进入面向用户的导航；公开版本删除整个区段，问题正文不得进入公开仓库。未知字段写“待确认”，不从百分比估算。 -->
 <section data-visibility="private" data-run-id="{{RUN_ID}}"><h2>下次从这里继续</h2><div class="card">
 <p>场次：{{RUN_ID}} · {{ACTUAL_STARTED_AT}} — {{ACTUAL_ENDED_AT}}</p>
