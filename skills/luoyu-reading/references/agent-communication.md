@@ -899,3 +899,23 @@
 - 手机检查：三篇正文均在 390 像素嵌入视口实测；指标卡片双列，无横向溢出，思维导图存在。保留本地 PDF 来源、实读范围、三篇共用窗口 7 分 33 秒、未完读及提取完整性说明；未上传原书或提取全文。
 - 输出：[归档首页](https://ae6623.github.io/we-read/)；正文路径分别为 `reading-notes/books/local-shen-hua-de-po-mie-flp713/notes/2026-10-18.html`、`reading-notes/books/local-yin-wei-jian-dapeng/notes/2026-10-18.html`、`reading-notes/books/local-lao-gong-jian-chi-fang-jia-hui-die/notes/2026-10-18.html`。
 - 后续：本次一次性试读结束，不创建循环任务，不改其他阅读员的个人记录、书目责任或排班。
+### [2026-10-18T19:00] weread-auto / 2026-10-18-cloud-190031
+- Agent：weread-auto（WorkBuddy 维护）
+- 类型：code（自动阅读场次，reading_state 串行写入）
+- 登记时段：cloud:evening
+- 运行日期：2026-10-18
+- 实际开始：2026-10-18T19:00:31+08:00
+- 实际结束：2026-10-18T19:22:05+08:00
+- 书目：《大转折：现代债务与可持续的增长》
+- 状态：completed
+- 已通知用户：是（Cue 私聊开始/结束简报；失败即时直报）
+- 开始通知：已发送
+- 结束通知：已发送
+- 全书状态：在读
+- 完读书目：无
+- 阅读范围：陷阱2：“重财政，轻金融”、陷阱3：“重个体，轻平台”、结语、第18章 全球化的死与生、引言、理论与比喻
+- 认领文件：references/book-registry.json；本交接条目
+- 输出：data/notes/【大转折：现代债务与可持续的增长】【2026-10-18】.html
+- 交接给：其他阅读 Agent
+- 下一步：按注册表续读点继续
+- 备注：私有续读记录与承接问题已存仓库外归档，不入公开文件
