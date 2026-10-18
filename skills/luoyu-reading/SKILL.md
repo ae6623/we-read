@@ -1,9 +1,17 @@
 ---
 name: luoyu-reading
-description: Multi-platform reading workflow for source-labeled whole-book previews, daily comprehension notes, and final HTML/EPUB archives. Use when reading a user's book through WeRead or another authorized reading platform, recording a session, creating or updating a book overview, or coordinating shared reading archives across agents.
+description: Multi-platform reading workflow for source-labeled whole-book previews, daily comprehension notes, and final HTML/EPUB archives. Use when onboarding any reading Agent, reading a user's book through an authorized platform, recording reading-state events, delivering Cue reading notifications, or coordinating shared reading archives across agents.
 ---
 
 # 落雨读书
+
+## 所有 Agent（特别是新成员）先完成入门核对
+
+1. 首次接手及每场任务前，获取权威仓库 `ae6623/we-read` 最新 `main`，阅读本 Skill、`references/decisions.md`、`references/coordination.md`、`references/reading-state-protocol.md`、沟通索引及 Asia/Shanghai 今天的日文件；仅为跨日续接或证据追溯按需读相关旧日，事件按实际发生日追加，不写入索引。安装副本和旧对话不是实时状态。新成员先确认自身身份、权限、排班和通知通道，不擅自替其他 Agent 改个人记录或实现。
+2. **阅读开始、结束、被打断、受阻、失败或未能开始，均须把真实状态写入共享记录，并让事件提交说明包含字面标记 `reading-state:`，进入 `main`。** 统一将标记放在提交标题开头，例如 `reading-state: <Agent> 开始阅读 <书名>`、`reading-state: <Agent> 阅读结束 <书名>`、`reading-state: <Agent> 阅读受阻 <原因摘要>`。这些是格式示例，不可冒充真实事件。
+3. **Git 记录不等于 Cue 私聊通知。** 开始前、结束后仍须在当前 Cue 私聊通知用户；失败/受阻立即直报，不等待推送、PR 合并或监听。无私聊能力时立即向协调 Agent 交接待发送内容及实际状态，不把交接或 Git 提交写成“已通知”。
+4. 当前提醒监听 `ae6623/we-read` 的 `main` 分支 `github.commit_created`，只匹配提交文本中的 `reading-state:`。仅写本地文件、未合并分支、PR 描述、`reading-event:` 或 `notes:` 均不能代替该标记。走 PR/squash/merge 时，最终进入 `main` 的事件提交说明也必须保留标记；不要将起止事件积攒到场次结束才一起合并而失去及时性。
+5. 负责监听/转达的 Agent 命中事件后，先核对最新共享记录中的 Agent、书目、实际时间和状态，再向用户私聊；同一场次同一事件去重，不把迟到的开始消息当成当前仍在阅读。分别核验“进入 main”“命中监听”“私聊已送出”，无证据不声称完成。推送/权限/通知受阻时如实报告，不伪造成功、不靠改标题冒充新阅读。普通笔记、纯规则更新没有阅读状态变化时，不制造阅读事件。
 
 > **所有 Agent 先读这一条**：本 Skill 只约束**协作目标与协议**——产出什么（预读框架/日期笔记/完读汇编）、按什么结构归档、来源如何标注、如何避免互相干扰、发布授权与时间错峰。它**不约束实现方式**：代码自动化、Agent 直接操作浏览器、人工整理都是被认可的手段，各 Agent 用自己擅长的方式达成目标，**互不假设对方的技术栈，互不干扰**。涉及具体平台的操作边界见 `references/platforms/<platform>.md`；代码类 Agent 的自动化实现细节集中在 `references/automation-code-agent.md`，**仅对该类 Agent 自身有约束力**。
 
