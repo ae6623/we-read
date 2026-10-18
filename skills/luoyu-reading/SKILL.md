@@ -7,6 +7,8 @@ description: Multi-platform reading workflow for source-labeled whole-book previ
 
 > **所有 Agent 先读这一条**：本 Skill 只约束**协作目标与协议**——产出什么（预读框架/日期笔记/完读汇编）、按什么结构归档、来源如何标注、如何避免互相干扰、发布授权与时间错峰。它**不约束实现方式**：代码自动化、Agent 直接操作浏览器、人工整理都是被认可的手段，各 Agent 用自己擅长的方式达成目标，**互不假设对方的技术栈，互不干扰**。涉及具体平台的操作边界见 `references/platforms/<platform>.md`；代码类 Agent 的自动化实现细节集中在 `references/automation-code-agent.md`，**仅对该类 Agent 自身有约束力**。
 
+**沟通记录按需读取**：先读最新 main 的 [沟通索引](references/agent-communication.md)，再读 Asia/Shanghai 今天对应的 `references/agent-communication/YYYY/MM/YYYY-MM-DD.md`；仅为跨日续接、未解决交接或证据追溯打开相关旧日，不通读全历史。开始、交接、完成或遇阻等新事件按实际发生日期追加日文件，不再追加索引；新日期/月/年的目录维护及跨日补记规则见索引。
+
 为用户把多本书读得更有效：开读即建立有来源边界的全书视角初版，再把每天真实读到的内容连回框架，完读后才做校订后的整书汇编。`references/agent-roster.json` 是类型、时段、在读书目与完读状态的唯一登记源；共享归档与 Git 规则见 `references/coordination.md`，跨 Agent 开始/结束记录见 `references/agent-communication.md`，用户最新决定见 `references/decisions.md`。使用某个平台前阅读对应的 `references/platforms/<platform>.md`（当前先有微信读书指南）。
 
 ## 共享书目认领、精确续读与三本综合
@@ -20,7 +22,7 @@ description: Multi-platform reading workflow for source-labeled whole-book previ
 
 ## Agent 类型与排班
 
-先读 `references/agent-roster.json` 确认身份、实现类型、预留时段、当前书目和完读状态；该 JSON 是单一事实来源，避免在多个文档复制易过期的排班表。阅读计划的代码 Agent 只受 `references/automation-code-agent.md` 约束；浏览器/人工阅读 Agent 不需照搬其代码实现规则。新 Agent 加入时，在 roster 中登记类型和时段，并通过 `references/decisions.md` 记录用户决定；每次任务开始和结束都更新 `references/agent-communication.md`。时段冲突先协调，不同时间窗互不等待。
+先读 `references/agent-roster.json` 确认身份、实现类型、预留时段、当前书目和完读状态；该 JSON 是单一事实来源，避免在多个文档复制易过期的排班表。阅读计划的代码 Agent 只受 `references/automation-code-agent.md` 约束；浏览器/人工阅读 Agent 不需照搬其代码实现规则。新 Agent 加入时，在 roster 中登记类型和时段，并通过 `references/decisions.md` 记录用户决定；每次任务开始和结束都按沟通索引规则追加对应日期的日文件。时段冲突先协调，不同时间窗互不等待。
 
 ## 工作流程
 
@@ -89,7 +91,7 @@ description: Multi-platform reading workflow for source-labeled whole-book previ
 - `references/decisions.md`：用户决定与 Agent 沟通记录（先行阅读，含最新授权）。
 - `references/agent-roster.json`：Agent 类型、排班窗口、当前书目、完读状态与运行状态的唯一登记源。
 - `references/coordination.md`：所有 Agent 共用的文件归档、冲突预防、Git 与公开发布规则。执行任何共享写入或发布前先读。
-- `references/agent-communication.md`：跨 Agent 任务认领、状态与交接板；开始、交接、完成或遇阻时更新。只写适合公开的最少元数据。
+- `references/agent-communication.md`：紧凑沟通索引；先读它与今天的 `references/agent-communication/YYYY/MM/YYYY-MM-DD.md`，旧日按需读取，事件追加日文件而非索引。只写适合公开的最少元数据。
 - `references/platforms/weread.md`：微信读书平台适配说明；使用 WeRead 时读取。
 - `references/platform-adapter-template.md`：接入新阅读平台时复制并补全的适配模板。
 - `references/automation-code-agent.md`：代码类 Agent（weread-auto）的自动化实现参考；**仅约束代码类 Agent 自身**，其他 Agent 不必阅读、不受其约束。
