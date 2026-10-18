@@ -84,12 +84,12 @@ main{max-width:1760px;padding:34px 3vw 30px}footer{max-width:1760px;padding-left
 
 /* Fixed role identity palette. Status pills/dots deliberately keep their own rules.
    Shared by the legend, progress cards, target-plan cards, avatar shirts and labels.
-   White label text on each role color meets WCAG AA (at least 4.5:1). */
+   Google identity colors use dark label text for readable yellow/green labels. */
 [data-role]{--role-color:#475569}
-[data-role="wechat-reading-browser"]{--role-color:#2563eb}
-[data-role="weread-auto"]{--role-color:#c2410c}
-[data-role="weread-auto-cloud"]{--role-color:#7c3aed}
-[data-role="local-pdf-reader"]{--role-color:#047857}
+[data-role="wechat-reading-browser"]{--role-color:#4285F4}
+[data-role="weread-auto"]{--role-color:#EA4335}
+[data-role="weread-auto-cloud"]{--role-color:#FBBC05}
+[data-role="local-pdf-reader"]{--role-color:#34A853}
 .role-key{margin:0 0 20px;padding:15px;background:#f8fafc;color:#172033;border:1px solid #cbd5e1;border-radius:8px}
 .role-key>p{font-size:12px;font-weight:750;margin:0 0 12px;line-height:1.7}
 .role-key>p>span{font-weight:400;color:#475569;margin-left:10px}
@@ -98,13 +98,34 @@ main{max-width:1760px;padding:34px 3vw 30px}footer{max-width:1760px;padding-left
 .role-key small{display:block;font-size:10px;font-weight:400;color:#475569;margin-top:3px}
 .role-swatch{display:inline-block;width:22px;height:22px;flex:0 0 22px;background:var(--role-color);border:1px solid #ffffff80;border-radius:3px;box-shadow:0 0 0 1px #17203322}
 .progress-reader[data-role]{border-top:8px solid var(--role-color)}
-.reader-heading h3{background:var(--role-color);color:#fff;padding:6px 10px;border-radius:4px}
+.reader-heading h3{background:var(--role-color);color:#101828;padding:6px 10px;border-radius:4px}
 .plan-role[data-role]{border-top:5px solid var(--role-color)}
-.plan-role strong{background:var(--role-color);color:#fff;padding:6px 8px;border-radius:3px;overflow-wrap:anywhere}
-.avatar[data-role] .avatar-label{background:var(--role-color);color:#fff;border:2px solid #fff;box-shadow:0 2px 5px #17203340}
-.avatar[data-role] .avatar-qualifier{color:#fff}
+.plan-role strong{background:var(--role-color);color:#101828;padding:6px 8px;border-radius:3px;overflow-wrap:anywhere}
+.avatar[data-role] .avatar-label{background:var(--role-color);color:#101828;border:2px solid #fff;box-shadow:0 2px 5px #17203340}
+.avatar[data-role] .avatar-qualifier{color:#101828}
 .role-card[data-role]{border-top:5px solid var(--role-color)}
 @media(max-width:1000px){.role-key ul{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:620px){.role-key{padding:12px}.role-key ul{gap:14px 12px}.role-key li{font-size:11px}.role-key>p>span{display:block;margin-left:0}.reader-heading{display:block}.reader-heading h3{display:inline-block}.record-status{display:table;max-width:100%;margin-top:10px}}
 /* The fourth reader uses the shared-table seat on phones, not the first lounge seat. */
 @media(max-width:760px){.floor{height:840px}.avatar[data-agent="local-pdf-reader"]:not(.is-reading){left:32%!important;top:650px!important}}
+
+/* Light reading dashboard: identity colors are separate from record-status semantics. */
+:root{--paper:#f8fafc;--ink:#243247;--muted:#64748b;--line:#dce3eb}
+.topbar{background:#fff}.stats{background:#fff}.stats>div:last-child{background:#f0f5fa}
+.progress-screen{background:#f1f5f9;color:#243247;border-color:#d6dfe9;box-shadow:0 6px 0 #e2e8f0,inset 0 0 0 1px #fff}
+.progress-top .eyebrow{color:#52657b}.screen-intro{color:#526277}
+.screen-mode{color:#526277;border-color:#cbd5e1;background:#fff}
+.screen-meta{color:#526277;border-color:#d5dee8}
+.progress-reader{background:#fff;border-color:#d6dfe9}
+.progress-book{color:#202d40}.book-state{color:#536377}
+.record-status{color:#785718;border-color:#e7cf94;background:#fff7e4}
+.progress-facts>div{border-color:#e2e8f0}.progress-facts dt{color:#526277}.progress-facts dd{color:#243247}.progress-facts small{color:#5b6c80}
+.record-meta{color:#58697c}.record-stale .record-meta{color:#8a5b19}.record-note{color:#58697c}
+.reader-bottom{border-color:#cbd5e1;color:#58697c}.reader-bottom a{color:#1d4e9e}
+.daily-plan{border-color:#d1dbe6}.plan-heading h3{color:#243247}.plan-heading>span{color:#58697c}
+.plan-role{background:#fff;border-color:#d6dfe9}.plan-role>span{color:#243247}.plan-role.unscheduled>span{color:#58697c}
+.plan-caution,.screen-footnote{color:#58697c}.screen-footnote{border-color:#d5dee8}.screen-empty{color:#526277}
+.screen-heading .eyebrow{color:#526277}.plan-badge{color:#785718;border-color:#e7cf94;background:#fff7e4}
+.screen-slots li{border-color:#d5dee8}.screen-slots time{color:#243247}.slot-pending,.screen-note{color:#58697c}.screen-note a{color:#1d4e9e}
+.role-key{background:#fff;border-color:#d6dfe9}
+.room-layout{background:#f0f4f7;border-color:#d6dfe9}.agent-detail{background:#fff;border-color:#d6dfe9}
