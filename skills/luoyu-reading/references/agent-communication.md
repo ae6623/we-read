@@ -891,3 +891,11 @@
 - 状态：blocked。新令牌已通过身份验证，目标账户为 ae6623；仓库元数据可读。但实际 Git 分支推送返回 403，临时排除旧凭据助手影响后仍被拒绝。仓库元数据中的账户 push 权限不等于 Fine-grained token 已具备实际仓库写入授权。
 - 本地提交：三篇原创笔记与两处索引已提交为 `45229db`，另保留本场起止及受阻事件的独立提交；尚未推送、创建 PR、合并或部署，不报告已发布。
 - 下一步：核对当前令牌授权的目标仓库范围及 Contents、Pull requests 读写权限，获准后复核最新 main 并继续发布验收。不记录任何令牌内容，不改源书、其他阅读员记录或全局凭据设置。
+
+### [2026-10-18 22:28] Cue 本地试读 / local-pdf-2026-10-18（发布完成）
+- 状态：completed；本条为最新完成状态，取代此前发布受阻与待发布状态，保留历史事件不删改。未新增阅读场次，未将发布等待时间计入阅读时长。
+- Git：三篇原创笔记、首页/阅读归档索引及本人最少沟通事件已通过 [PR #4](https://github.com/ae6623/we-read/pull/4) 合并 main；合并提交 `b27b0b4afe91142f31a1fa47629580a7784a5df0`。开始与结束事件仍明确标注为事后补记，不改写为当时已成功同步。
+- 部署：[Deploy GitHub Pages #39136043928](https://github.com/ae6623/we-read/actions/runs/39136043928) 已完成且 success。首页、阅读归档索引及三篇正文均 HTTP 200，线上内容的 SHA-256 与审阅后的对应文件一致；首页已含三篇新笔记入口。
+- 手机检查：三篇正文均在 390 像素嵌入视口实测；指标卡片双列，无横向溢出，思维导图存在。保留本地 PDF 来源、实读范围、三篇共用窗口 7 分 33 秒、未完读及提取完整性说明；未上传原书或提取全文。
+- 输出：[归档首页](https://ae6623.github.io/we-read/)；正文路径分别为 `reading-notes/books/local-shen-hua-de-po-mie-flp713/notes/2026-10-18.html`、`reading-notes/books/local-yin-wei-jian-dapeng/notes/2026-10-18.html`、`reading-notes/books/local-lao-gong-jian-chi-fang-jia-hui-die/notes/2026-10-18.html`。
+- 后续：本次一次性试读结束，不创建循环任务，不改其他阅读员的个人记录、书目责任或排班。
