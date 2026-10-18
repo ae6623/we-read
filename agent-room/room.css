@@ -81,3 +81,30 @@ main{max-width:1760px;padding:34px 3vw 30px}footer{max-width:1760px;padding-left
 .screen-heading{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:16px}.screen-heading .eyebrow{color:#bdceab;font-size:10px;line-height:1.7}.screen-heading h3{font-size:22px;margin:0}.plan-badge{font-size:11px;color:#f5dd9e;border:1px solid #9caa77;padding:6px 9px;white-space:nowrap}
 .screen-slots{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:1fr 1fr;gap:10px 18px}.screen-slots li{display:grid;grid-template-columns:112px minmax(0,1fr);gap:5px 12px;border-top:1px solid #527261;padding:12px 0 4px}.screen-slots time{font:600 16px ui-monospace,monospace;color:#f1d898;white-space:nowrap}.screen-slots strong{font-size:13px;line-height:1.6;overflow-wrap:anywhere}.slot-pending{grid-column:2;font-size:10px;color:#c7d5af}.screen-note{font-size:11px;line-height:1.9;color:#c5d4ba;margin:14px 0 0}.screen-note a{color:#eee0b1}
 @media(max-width:1000px){.screen-slots li{grid-template-columns:102px minmax(0,1fr)}.screen-slots time{font-size:14px}}
+
+/* Fixed role identity palette. Status pills/dots deliberately keep their own rules.
+   Shared by the legend, progress cards, target-plan cards, avatar shirts and labels.
+   White label text on each role color meets WCAG AA (at least 4.5:1). */
+[data-role]{--role-color:#475569}
+[data-role="wechat-reading-browser"]{--role-color:#2563eb}
+[data-role="weread-auto"]{--role-color:#c2410c}
+[data-role="weread-auto-cloud"]{--role-color:#7c3aed}
+[data-role="local-pdf-reader"]{--role-color:#047857}
+.role-key{margin:0 0 20px;padding:15px;background:#f8fafc;color:#172033;border:1px solid #cbd5e1;border-radius:8px}
+.role-key>p{font-size:12px;font-weight:750;margin:0 0 12px;line-height:1.7}
+.role-key>p>span{font-weight:400;color:#475569;margin-left:10px}
+.role-key ul{list-style:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:0;padding:0}
+.role-key li{display:flex;align-items:flex-start;gap:9px;font-size:12px;font-weight:650;line-height:1.6;min-width:0;overflow-wrap:anywhere}
+.role-key small{display:block;font-size:10px;font-weight:400;color:#475569;margin-top:3px}
+.role-swatch{display:inline-block;width:22px;height:22px;flex:0 0 22px;background:var(--role-color);border:1px solid #ffffff80;border-radius:3px;box-shadow:0 0 0 1px #17203322}
+.progress-reader[data-role]{border-top:8px solid var(--role-color)}
+.reader-heading h3{background:var(--role-color);color:#fff;padding:6px 10px;border-radius:4px}
+.plan-role[data-role]{border-top:5px solid var(--role-color)}
+.plan-role strong{background:var(--role-color);color:#fff;padding:6px 8px;border-radius:3px;overflow-wrap:anywhere}
+.avatar[data-role] .avatar-label{background:var(--role-color);color:#fff;border:2px solid #fff;box-shadow:0 2px 5px #17203340}
+.avatar[data-role] .avatar-qualifier{color:#fff}
+.role-card[data-role]{border-top:5px solid var(--role-color)}
+@media(max-width:1000px){.role-key ul{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:620px){.role-key{padding:12px}.role-key ul{gap:14px 12px}.role-key li{font-size:11px}.role-key>p>span{display:block;margin-left:0}.reader-heading{display:block}.reader-heading h3{display:inline-block}.record-status{display:table;max-width:100%;margin-top:10px}}
+/* The fourth reader uses the shared-table seat on phones, not the first lounge seat. */
+@media(max-width:760px){.floor{height:840px}.avatar[data-agent="local-pdf-reader"]:not(.is-reading){left:32%!important;top:650px!important}}
