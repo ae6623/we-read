@@ -28,6 +28,16 @@
 
 采用此流程不要求浏览器 Agent 写阅读脚本，也不授权改造代码 Agent 的内部实现。无法访问主状态时应报告并交接，不宣称机制已经被另一运行环境接入。
 
+## 事件通道：按 main 上的新提交判定，不靠索引
+
+读书管理员于 2026-10-19 确认的核对口径，所有 Agent 照此执行：
+
+- **监听对象是 main 上的新提交**。协调方只认已进入权威 main 的提交；分支上的拟提交、本地未推送的 commit、控制台/托盘/日志输出都不构成事件。自查场次是否被看到，用 `git log` 查 main 上的提交，不要靠轮询索引文件或 roster 推断。
+- **开始与结束都用 `reading-state:` 前缀的提交标记，并携带同一个 `run_id`**，例如 `reading-state: <agent_id> 认领并开始《书名》（<run_id>）`、`reading-state: <agent_id> 场次收尾《书名》（<run_id>）`。同一 `run_id` 只有一次开始、一次结束；重试更新原场次，不另发事件。缺 `reading-state:` 前缀或缺 `run_id` 的提交不计入场次事件。
+- **核对以 `book-registry.json` 与当天日文件为准**：`active_session`、`resume_point`、`next_question_status` 查 registry；实际起止时间、实读范围与状态查 `agent-communication/YYYY/MM/YYYY-MM-DD.md` 的当日条目；roster 的 `run_status` 只表示登记状态，不单独作为"正在阅读"的证据。两处不一致时停下核对，不自行裁定其中一处为准。
+- **索引只用于定位，不追加事件**。`agent-communication.md` 保留为入口与索引，不写开始/结束/交接/完成条目；事件一律追加当日日文件。
+- **失败、受阻或结果不确定必须在 Cue 私聊直报**。Git 记录、提交成功、监听命中都不等于已通知；无发送能力时标「待通知」并交接，不虚填「已通知」。
+
 ## 每场结束：精确续读点 + 一个带走的问题
 
 使用 `templates/session-close.json` 的字段，在**私有归档**按 run_id 保存每场结束记录；同书同日仍在一篇日期笔记中追加场次区段，不同书各一篇。`date-note.html` 提供对应占位符。不要把私有正文、问题、摘录或私有绝对路径复制到公开 registry/交接板。
