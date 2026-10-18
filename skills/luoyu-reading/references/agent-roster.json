@@ -1,15 +1,12 @@
 {
   "schema_version": 1,
   "timezone": "Asia/Shanghai",
-  "updated_at": "2026-10-18T14:39:25+08:00",
+  "updated_at": "2026-10-18T15:06:58+08:00",
   "source_of_truth": true,
   "instructions": [
     "Read this roster before every scheduled reading run; work only inside the registered slot.",
-    "For book assignment, owner, claim, in-progress/completed status, and resume point, the latest accepted main book-registry.json is authoritative; current_book and completed_books in this roster are personal mirrored summaries, not a competing claim source.",
-    "When registry and roster book fields differ, follow an unambiguous registry entry: continue a book marked in_progress with owner_agent_id set to the current agent and claim.state held, even if the roster summary is stale; do not read a registry-completed book unless the user explicitly requests a reread. The responsible agent's maintainer syncs that agent's roster; never edit another agent's personal entry.",
-    "If the registry itself has an ambiguous owner/status, duplicate claim, inaccessible latest main, or conflicting/unclear active_session, stop before reading and notify the user; a roster summary mismatch alone is not a reason to stop.",
-    "If no new title is specified, continue the agent's last unfinished book as assigned in the registry; after completion, select the most recently added unread, unclaimed book on the user's bookshelf. Do not default to selecting by author.",
-    "Before starting, check the latest accepted registry, roster, and communication record for the assigned slot, active task, and conflicts; do not start if registry ownership or active state is unclear.",
+    "Never read a title listed in the agent's completed_books unless the user explicitly requests a reread. If the user does not specify a new title, continue the agent's last unfinished current_book first; after completion, select the most recently added unread book on the user's bookshelf, excluding completed_books. Do not default to selecting by author.",
+    "Before starting, check the roster and latest communication record for the assigned slot, a running task, and conflicts; do not start if the active state is unclear.",
     "For any failure, interruption, access block, conflict, or uncertain result, notify the user immediately in the current Cue private conversation with what actually happened and the next recovery step. A repository update alone is not a notification.",
     "At run start, set run_status to running and record the actual start time, current book, and slot in agent-communication.md.",
     "At run end, update run_status, actual end time, book_completion, and a minimal output reference in both this roster and agent-communication.md.",
@@ -19,7 +16,6 @@
     "Same-book work from multiple slots on one date is merged into a single date note; different books read on the same date each get their own date note.",
     "If an agent misses a slot, record that fact; do not overlap another agent's window or claim the missed run happened.",
     "Use unknown/needs-confirmation rather than guessing a book, completion state, or execution result.",
-    "For each actual reading run, select a random target duration from 7 to 15 minutes inclusive; adapt to comprehension and reading more. Report actual elapsed duration separately; do not treat a planned target or browser window as platform-confirmed effective reading time.",
     "This public file records only minimal coordination metadata; never include passwords, tokens, private messages, or book-note content."
   ],
   "agents": [
@@ -28,7 +24,7 @@
       "display_name": "weread-auto（WorkBuddy 维护）",
       "type": "code",
       "implementation": "Playwright; see automation-code-agent.md",
-      "schedule_basis": "Declared in decisions.md 第 7 条；本 Agent 自登记：本机计划任务 WeReadDaily 06:00 与 18:00 双触发，每个登记时段都是独立阅读场次，即使当天另一场已完成也照常执行。；2026-10-18 停用中（触发器保留，云端接管；可随时 Enable-ScheduledTask 恢复）",
+      "schedule_basis": "Declared in decisions.md 第 7 条；本 Agent 自登记：本机计划任务 WeReadDaily 06:00 与 18:00 双触发，每个登记时段都是独立阅读场次，即使当天另一场已完成也照常执行。",
       "schedule": [
         {
           "slot": "morning",
@@ -77,9 +73,9 @@
       "schedule": [
         {
           "slot": "morning",
-          "window_start": "06:30",
-          "window_end": "07:30",
-          "trigger_at": "06:30",
+          "window_start": "07:00",
+          "window_end": "08:00",
+          "trigger_at": "07:00",
           "behavior": "read_current_book_independently"
         },
         {
@@ -90,10 +86,10 @@
           "behavior": "read_current_book_independently"
         }
       ],
-      "book_author": "斯蒂芬·格林布拉特",
-      "current_book": "大转向：世界如何步入现代",
+      "book_author": "猴面包的树",
+      "current_book": "世界这么大，我想到处躺",
       "book_completion": "in_progress",
-      "run_status": "idle",
+      "run_status": "scheduled",
       "completed_books": [
         {
           "title": "挪威极夜：独处时才能成为自己（轻游记）",
@@ -102,16 +98,14 @@
         }
       ],
       "next_run_status": "scheduled",
-      "last_run_status": "completed_selective_reading",
+      "last_run_status": "completed_partial_reading",
       "last_run_date": "2026-10-18",
-      "last_slot": "afternoon",
-      "last_started_at": "2026-10-18T14:31:11+08:00",
-      "last_ended_at": "2026-10-18T14:38:27+08:00",
+      "last_slot": "manual_user_requested",
+      "last_started_at": "2026-10-18 02:16:04+08:00",
+      "last_ended_at": "2026-10-18 02:23:18+08:00",
       "last_completed_book": "挪威极夜：独处时才能成为自己（轻游记）",
-      "last_current_book_read": "大转向：世界如何步入现代（第二章正文至末、注释浏览；第三章开篇至西塞罗评价段末）",
-      "last_output": "下午独立场正文与注释浏览窗口14:31:11–14:38:27，共7分16秒（含逐屏核验与简短理解记录）；确认52次向前翻页，不等于页数。页码、整书进度、平台有效时长及打卡未确认。续读第三章当前屏右栏。",
-      "last_preflight_started_at": "2026-10-18T13:12:00+08:00",
-      "last_preflight_ended_at": "2026-10-18T13:13:12+08:00"
+      "last_current_book_read": "世界这么大，我想到处躺（至《半夜的旅馆》第一屏末尾；继续阅读中）",
+      "last_output": "private note; 4m57s browser window, 11 forward turns; page count not shown"
     },
     {
       "id": "weread-auto-cloud",
@@ -119,20 +113,20 @@
       "type": "code",
       "implementation": "Playwright on WorkBuddy 云端沙箱；与本地 weread-auto 共享同一书目注册表，串行认领，互不重叠。",
       "deployment": "cloud",
-      "schedule_basis": "云端内置调度器每日 06:00–07:00 与 19:00–20:00（北京时间）各自动执行一场；本机计划任务停用后由云端接管。；2026-10-18 探针破案：沙箱 12-25 分钟杀 app 主进程（detached 幸存），8 连死=git 卡死+僵尸+重启窗口三重叠加；11:40 场次 13 分钟完整跑完 session_end OK，自动场次可指望",
+      "schedule_basis": "云端内置调度器每日 06:00–07:00 与 19:00–20:00（北京时间）各自动执行一场；本机计划任务停用后由云端接管。",
       "schedule": [
         {
           "slot": "morning",
           "window_start": "06:00",
-          "window_end": "07:00",
+          "window_end": "06:30",
           "trigger_at": "06:00",
           "behavior": "run_independently"
         },
         {
           "slot": "evening",
-          "window_start": "19:00",
-          "window_end": "20:00",
-          "trigger_at": "19:00",
+          "window_start": "18:00",
+          "window_end": "18:30",
+          "trigger_at": "18:00",
           "behavior": "run_independently"
         }
       ],
@@ -141,12 +135,17 @@
       "completed_books": [],
       "run_status": "idle",
       "current_book_slug": "zhu-xiao-fang-zi-de-nv-ren",
-      "book_progress": "first-read-done-2026-10-18",
+      "book_progress": "65%",
       "completion_rule": "只认最新进度 ≥ 100%；bookInfo.finished 对未读完的书也返回 1，不作数。",
-      "implementation_note": "与本地 weread-auto 同源（同一套代码，按部署前缀区分）；阅读员归属在笔记与注册表中标注为「weread-auto（云端）」，区别于本地「weread-auto（本机）」。2026-10-18 起 follow_main_engine=True：只读用户显式指定书或 registry 本人 held 书，无书可续不开读、不自行挑新书，报告等主引擎认领/分配（SKILL.md「weread-auto 侧的角色落位」）。",
+      "implementation_note": "与本地 weread-auto 同源（同一套代码，按部署前缀区分）；阅读员归属在笔记与注册表中标注为「weread-auto（云端）」，区别于本地「weread-auto（本机）」。",
       "book_author": "纪静蓉",
-      "roster_sync_note": "current_book 按 2026-10-18 共享规则同步自 book-registry.json revision 7（owner=weread-auto-cloud, held）；roster 书目字段为摘要，registry 为权威",
-      "deployment_note": "新账号应用 weread-daily-98024.app.workbuddy.host（部署源 C:/Users/ROG/weread-cloud-new）；旧账号 weread-cloud-probe 仅互备（部署源已同步新代码，待旧账号会话重部署生效），任何时刻只一个云端在跑。"
+      "last_run_status": "completed",
+      "last_run_date": "2026-10-18",
+      "last_started_at": "2026-10-18 14:53:05+08:00",
+      "last_slot": "cloud:afternoon",
+      "last_ended_at": "2026-10-18 15:06:58+08:00",
+      "last_blocked_reason": "未能在书架选到书",
+      "last_output": "reading-notes/books/da-zhuan-zhe--xian-dai-zhai-wu-yu-ke-chi-xu-de/notes/2026-10-18.html"
     }
   ]
 }
