@@ -36,6 +36,24 @@ section p{margin:.5em 0}
 .maptree .lv2{color:var(--green2);font-weight:600;margin-top:6px}
 .maptree .lv3{color:#4a5b53;padding-left:1.6em}
 .qa{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px}
+.toc-part{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 18px;margin:12px 0}
+.part-label{display:block;font:600 1rem/1.6 var(--serif);color:var(--green);margin:0 0 6px}
+.ch-item{border-bottom:1px dashed #eee8dc}
+.ch-item:last-child{border-bottom:0}
+.ch-item summary{display:flex;gap:10px;align-items:baseline;padding:7px 0;cursor:pointer;list-style:none}
+.ch-item summary::-webkit-details-marker{display:none}
+.ch-no{color:var(--gold);font-weight:700;font-size:.82rem;min-width:48px;flex:none}
+.ch-t{flex:1;font-size:.92rem}
+.badge{font-size:.68rem;border-radius:6px;padding:1px 7px;font-weight:600;white-space:nowrap;flex:none}
+.badge[data-s="read"]{background:#e6f0e9;color:#286b52;border:1px solid #cbdace}
+.badge[data-s="reading"]{background:#f6edde;color:#805d36;border:1px solid #e6d4b8}
+.caret{color:var(--muted);font-size:1.05rem;transition:transform .18s ease;flex:none}
+.ch-item[open] .caret{transform:rotate(90deg)}
+.ch-body{padding:2px 0 12px 58px;animation:slideDown .2s ease}
+@keyframes slideDown{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.ch-body p{margin:.3em 0}
+.ch-src{color:var(--muted);font-size:.76rem}
+
 .qa ol{margin:6px 0;padding-left:20px}
 .qa ol li{margin:8px 0}
 .src{display:inline-block;font-size:.7rem;border-radius:6px;padding:1px 7px;margin-left:6px;vertical-align:middle;font-weight:600}
@@ -89,24 +107,34 @@ section p{margin:.5em 0}
 
     <section aria-labelledby="chapter-guide-title">
       <h2 id="chapter-guide-title">本次实读章节导读</h2>
-      <p class="small">先看结构，再看理解：本篇只覆盖第 19—21 章，其中第 21 章仅读到第一节。导读依据是亲读到的正文与阅读器章节标题，逐条标来源；没读到的部分不写。</p>
+      <p class="small">点章节标题展开导读。只覆盖本篇读到的章节，部分阅读写明停止处；没读到的部分不概括、不据标题推测。</p>
 
-      <article>
-        <h3>第 19 章　全球化背景下的资产负债表危机 <span class="src" data-k="read">亲读 · 整章</span></h3>
-        <p>把国家当成一张资产负债表来看。危机的起点不在某一笔贸易逆差，而在资产端与负债端于期限、币种、流动性上的错配；贸易差额只是留在表上的一道痕迹。这一章承担框架作用，后两章都在同一张表里展开。</p>
-      </article>
+      <div class="toc-part">
+        <span class="part-label">第 5 篇　全球化转型</span>
+        <details class="ch-item">
+          <summary><span class="ch-no">第19章</span><span class="ch-t">全球化背景下的资产负债表危机</span><span class="badge" data-s="read">整章</span><span class="caret">›</span></summary>
+          <div class="ch-body">
+            <p>把国家当成一张资产负债表来看。危机的起点不在某一笔贸易逆差，而在资产端与负债端于期限、币种、流动性上的错配；贸易差额只是留在表上的一道痕迹。这一章承担框架作用，后两章都在同一张表里展开。</p>
+            <p class="ch-src">导读依据：亲读 · 第 19 章整章</p>
+          </div>
+        </details>
+        <details class="ch-item">
+          <summary><span class="ch-no">第20章</span><span class="ch-t">日本的教训：正确理解经济泡沫</span><span class="badge" data-s="read">整章</span><span class="caret">›</span></summary>
+          <div class="ch-body">
+            <p>用日本作样本回答两件事：泡沫该不该捅破、破了该怎么救。判断落在钱去了哪里——资金若持续涌向抵押品而非生产率部门，「劣质资本驱逐优质资本」就会出现；救与不救的分界线，是流动性缺口还是清偿性缺口。</p>
+            <p class="ch-src">导读依据：亲读 · 第 20 章整章</p>
+          </div>
+        </details>
+        <details class="ch-item">
+          <summary><span class="ch-no">第21章</span><span class="ch-t">改变关税规则，应对中美贸易战</span><span class="badge" data-s="reading">部分阅读</span><span class="caret">›</span></summary>
+          <div class="ch-body">
+            <p>只读到第一节「从商品关税转为货币关税」：商品关税的空间用尽之后，摩擦会迁移到货币维度。本章其余小节未读到，不作概括，下次从这里继续。</p>
+            <p class="ch-src">导读依据：亲读 · 第 21 章「从商品关税转为货币关税」一节</p>
+          </div>
+        </details>
+      </div>
 
-      <article>
-        <h3>第 20 章　日本的教训：正确理解经济泡沫 <span class="src" data-k="read">亲读 · 整章</span></h3>
-        <p>用日本作样本回答两件事：泡沫该不该捅破、破了该怎么救。判断落在钱去了哪里——资金若持续涌向抵押品而非生产率部门，「劣质资本驱逐优质资本」就会出现；救与不救的分界线，是流动性缺口还是清偿性缺口。</p>
-      </article>
-
-      <article>
-        <h3>第 21 章　改变关税规则，应对中美贸易战 <span class="src" data-k="read">部分阅读</span></h3>
-        <p>只读到第一节「从商品关税转为货币关税」：商品关税的空间用尽之后，摩擦会迁移到货币维度。本章其余小节未读到，不作概括，下次从这里继续。</p>
-      </article>
-
-      <p class="muted">导读依据：亲读 · 第 19、20 章整章与第 21 章第一节；本篇实读状态：第 19—21 章，第 21 章为部分阅读，已确认停止于「从商品关税转为货币关税」。</p>
+      <p class="metrics-note">本篇实读状态：第 19—21 章；第 21 章为部分阅读，已确认停止于「从商品关税转为货币关税」。</p>
     </section>
 
     <section>
