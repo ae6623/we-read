@@ -25,6 +25,9 @@
 @keyframes slideDown{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
 .ch-body p{margin:.3em 0}
 .ch-src{color:#69766f;font-size:.76rem}
+.ch-empty{color:#69766f;font-size:.8rem;margin:.2em 0 .4em}
+.ch-secs{margin:0;padding-left:1.15em;color:#5c574c;font-size:.8rem;line-height:1.75}
+.ch-secs li{margin:.1em 0}
 
 </style>
 </head>
@@ -46,7 +49,12 @@
 <p class="ch-src">来源与依据：{{GUIDE_SOURCE_LABEL_AND_REFERENCE}} · {{GUIDE_ACTUAL_READ_STATUS_AND_PRELIMINARY_VERIFICATION_LABEL}}</p>
 </div>
 </details>
-<!-- 重复 details 至目录全部章节；依据不足的章节仍可列出但导读写「导读待阅读后补充」 -->
+<!-- 未读章的展开体：只放可核信息——出版方目录的小节清单（下面这种），或一句标「推断 · 目录导向」的初步阅读问题；不写内容总结
+<details class="ch-item"><summary><span class="ch-no">{{CHAPTER_NO}}</span><span class="ch-t">{{VERIFIED_CHAPTER_TITLE}}</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body"><p class="ch-empty">本机尚未读到本章。下列小节取自出版方目录，供先看结构；导读待亲读后补充，不据标题推测内容。</p>
+<ol class="ch-secs"><li>{{OFFICIAL_SECTION_TITLE}}</li><!-- 按官方目录逐条列出 --></ol></div></details>
+-->
+<!-- 重复 details 至目录全部章节：读过的章按上面「导读」写，未读的章按这段「小节清单」写，不许留成不可点击的纯文字行 -->
 </div>
 </section>
 <section><h2>核心观点初判</h2>{{KEY_VIEWS}}</section>
