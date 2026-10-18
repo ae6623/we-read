@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="大转折：现代债务与可持续的增长 全书视角初版">
-<title>《大转折：现代债务与可持续的增长》｜全书视角初版</title>
+<meta name="description" content="《大转折：现代债务与可持续的增长》开篇视角（全书视角初版）——5 篇 22 章的章节导航与来源标注">
+<title>《大转折：现代债务与可持续的增长》｜开篇视角（全书视角初版）</title>
 <link rel="stylesheet" href="../../../assets/css/site.css">
 <style>
 :root{--paper:#f6f3ed;--card:#fffefa;--ink:#24312e;--muted:#69766f;--green:#244b40;--green2:#315e50;--gold:#bf8247;--line:#e5e0d6;--sage:#dce8df;--serif:"Noto Serif SC","Songti SC",Georgia,serif;--sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
@@ -18,11 +18,10 @@ body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.8 var(--sans)
 .note-head a{color:var(--green);text-decoration:none;font-size:.88rem}
 .note-head a:hover{text-decoration:underline}
 section{margin:30px 0}
-section h2{font:600 1.3rem/1.5 var(--serif);color:var(--green);margin:0 0 12px;
-  padding-left:12px;border-left:4px solid var(--gold)}
+section h2{font:600 1.3rem/1.5 var(--serif);color:var(--green);margin:0 0 12px;padding-left:12px;border-left:4px solid var(--gold)}
+section h3{font:600 1.02rem/1.6 var(--serif);color:var(--green2);margin:18px 0 6px}
 section p{margin:.5em 0}
-blockquote{margin:14px 0;padding:12px 18px;background:#f5efe4;border-left:3px solid var(--gold);
-  border-radius:0 10px 10px 0;color:#4a4436;font-size:.95rem}
+blockquote{margin:14px 0;padding:12px 18px;background:#f5efe4;border-left:3px solid var(--gold);border-radius:0 10px 10px 0;color:#4a4436;font-size:.95rem}
 .chips{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
 .chip{font-size:.78rem;background:var(--sage);color:var(--green);border-radius:999px;padding:3px 12px}
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:14px 0}
@@ -33,8 +32,26 @@ blockquote{margin:14px 0;padding:12px 18px;background:#f5efe4;border-left:3px so
 .note-list li{margin:5px 0}
 .note-list a{color:var(--green)}
 .small{color:var(--muted);font-size:.84rem}
-.site-footer{margin-top:44px;padding-top:16px;border-top:1px dashed var(--line);
-  color:var(--muted);font-size:.8rem;text-align:center}
+.src{display:inline-block;font-size:.7rem;border-radius:6px;padding:1px 7px;margin-left:6px;vertical-align:middle;font-weight:600}
+.src[data-k="read"]{background:#e6f0e9;color:#286b52;border:1px solid #cbdace}
+.src[data-k="official"]{background:#eef1f8;color:#3f5b8a;border:1px solid #d3dbec}
+.src[data-k="infer"]{background:#f6edde;color:#805d36;border:1px solid #e6d4b8}
+.src[data-k="unknown"]{background:#f0f0ee;color:#6d6d68;border:1px solid #e0e0da}
+/* 章节导航：以篇—章为主轴，供人类按结构跳读 */
+.toc-part{border:1px solid var(--line);border-radius:14px;background:var(--card);padding:14px 18px;margin:12px 0}
+.toc-part h3{margin:0 0 8px;color:var(--green);font:600 1rem/1.5 var(--serif)}
+.ch-list{list-style:none;margin:0;padding:0}
+.ch-list li{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;padding:5px 0;border-bottom:1px dashed #eee8dc}
+.ch-list li:last-child{border-bottom:0}
+.ch-no{color:var(--gold);font-weight:700;font-size:.82rem;min-width:46px}
+.ch-t{flex:1;min-width:180px}
+.badge{font-size:.68rem;border-radius:6px;padding:1px 7px;font-weight:600;white-space:nowrap}
+.badge[data-s="read"]{background:#e6f0e9;color:#286b52;border:1px solid #cbdace}
+.badge[data-s="reading"]{background:#f6edde;color:#805d36;border:1px solid #e6d4b8}
+.badge[data-s="unread"]{background:#f4f4f1;color:#8b8b84;border:1px solid #e4e4de}
+.sec-note{color:var(--muted);font-size:.78rem;margin:4px 0 0}
+.notice{background:#fffefa;border:1px solid var(--e5e0d6,#e5e0d6);border-left:4px solid var(--gold);border-radius:0 12px 12px 0;padding:12px 16px;color:#4a4436;font-size:.9rem}
+.site-footer{margin-top:44px;padding-top:16px;border-top:1px dashed var(--line);color:var(--muted);font-size:.8rem;text-align:center}
 .reader-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;color:var(--muted);font-size:.82rem;margin:8px 0 0}
 .reader-type{display:inline-block;border:1px solid #cbdace;background:#eef4ee;color:#315e50;border-radius:6px;padding:2px 8px;font-size:.72rem;font-weight:600}
 .reader-type[data-agent-type="code"]{background:#f6edde;border-color:#e6d4b8;color:#805d36}
@@ -44,303 +61,176 @@ blockquote{margin:14px 0;padding:12px 18px;background:#f5efe4;border-left:3px so
 <body>
 <main class="page">
   <header class="note-head">
-    <p class="eyebrow">WHOLE-BOOK PERSPECTIVE · FIRST PASS · 2026-10-19</p>
-    <h1>《大转折：现代债务与可持续的增长》全书视角初版</h1>
-    <p class="meta">作者：赵燕菁　·　创建于开读首日　·　更新于 2026-10-19</p>
+    <p class="eyebrow">OPENING PERSPECTIVE · WHOLE-BOOK FIRST PASS</p>
+    <h1>《大转折：现代债务与可持续的增长》· 开篇视角</h1>
+    <p class="meta">作者：赵燕菁　·　中国人民大学出版社　·　出版 2026-04　·　创建 2026-10-18（开读首日）　·　更新 2026-10-19</p>
     <p class="reader-meta"><span class="reader-type" data-agent-type="code">代码自动化（Agent）</span><span>阅读员 · weread-auto（云端）</span></p>
-    <p><a href="../../../index.html">← 返回首页</a>　<a href="../../index.html">阅读归档索引</a></p>
-    <div class="chips"><span class="chip">全书视角初版 · 含推断</span><span class="chip">亲读进行中</span></div>
-    <div class="stats"><div class="stat"><b>2 天</b><span>阅读天数</span></div><div class="stat"><b>74%</b><span>当前进度</span></div></div>
+    <p><a href="../../../index.html">← 返回首页</a>　<a href="../../index.html">阅读归档索引</a>　<a href="notes/2026-10-19.html">最新日期笔记 →</a></p>
+    <div class="chips"><span class="chip">全书视角初版 · 含推断</span><span class="chip">亲读进行中</span><span class="chip">章节导航 · 5 篇 22 章</span></div>
+    <div class="stats">
+      <div class="stat"><b>2 天</b><span>阅读天数</span></div>
+      <div class="stat"><b>74%</b><span>全书进度（阅读器显示）</span></div>
+      <div class="stat"><b>第 21 章</b><span>当前读到</span></div>
+    </div>
+    <p class="small">本页是开读时建立的<b>开篇视角</b>：先用官方目录把全书骨架摆出来，再标出已亲读的位置，让每天读到的段落能挂回结构；未亲读部分一律标注为推断或待验证，完读后校订为 <a href="final.html">final.html</a>。</p>
   </header>
   <article>
+
     <section>
       <h2>一句话主旨</h2>
-      <p>本书从宏观资产负债表的角度出发，深入探讨了债务在宏观经济中的关键作用及其对经济增长的影响</p>
-      <p class="small">来源：官方简介首句；完读后在 final.html 校订。</p>
+      <p>本书用一张<b>宏观资产负债表</b>把中国经济重新讲一遍：总需求不是由收入高低或货币松紧决定，而是由宏观<b>债务端</b>的扩张与收缩决定——于是增长、房地产、地方债、城市化与全球化竞争，都成了同一张表上资产端与负债端如何配平的问题。<span class="src" data-k="infer">综合推断</span></p>
+      <p class="small">依据：官方简介（「总需求由宏观债务决定」）、官方目录（第 1 篇「债务与转型」到第 5 篇「全球化转型」的推进顺序）、以及已亲读的第 16—21 章。这不是作者原话，是我的初判；完读后按原文校订。</p>
     </section>
+
     <section>
-      <h2>全书结构与主题关系</h2>
-      <div class="chips"><span class="chip">文献综述</span><span class="chip">公共产品与平台企业</span><span class="chip">生产函数与垄断竞争</span><span class="chip">企业的结构矩阵</span><span class="chip">数据资源及其初始产权界定</span><span class="chip">结语</span><span class="chip">引言</span><span class="chip">陷阱1：“重国内，轻国际”</span><span class="chip">陷阱2：“重财政，轻金融”</span><span class="chip">陷阱3：“重个体，轻平台”</span></div>
-      <pre class="mindmap" style="white-space:pre-wrap;font-family:inherit">《
-大
-转
-折
-：
-现
-代
-债
-务
-与
-可
-持
-续
-的
-增
-长
-》
-
-
-
-
-└
-─
-
-文
-献
-综
-述
-
-
-
-
-└
-─
-
-公
-共
-产
-品
-与
-平
-台
-企
-业
-
-
-
-
-└
-─
-
-生
-产
-函
-数
-与
-垄
-断
-竞
-争
-
-
-
-
-└
-─
-
-企
-业
-的
-结
-构
-矩
-阵
-
-
-
-
-└
-─
-
-数
-据
-资
-源
-及
-其
-初
-始
-产
-权
-界
-定
-
-
-
-
-└
-─
-
-结
-语
-
-
-
-
-└
-─
-
-引
-言
-
-
-
-
-└
-─
-
-陷
-阱
-1
-：
-“
-重
-国
-内
-，
-轻
-国
-际
-”
-
-
-
-
-└
-─
-
-陷
-阱
-2
-：
-“
-重
-财
-政
-，
-轻
-金
-融
-”
-
-
-
-
-└
-─
-
-陷
-阱
-3
-：
-“
-重
-个
-体
-，
-轻
-平
-台
-”
-
-
-
-
-└
-─
-
-第
-1
-8
-章
-
-全
-球
-化
-的
-死
-与
-生
-
-
-
-
-└
-─
-
-理
-论
-与
-比
-喻
-
-
-
-
-└
-─
-
-反
-全
-球
-化
-的
-出
-现
-
-
-
-
-└
-─
-
-未
-来
-场
-景
-1
-：
-重
-启
-全
-球
-化
-
-
-
-
-└
-─
-
-…
-（
-其
-余
-章
-节
-待
-亲
-读
-补
-全
-）</pre>
+      <h2>全书结构与主题关系 · 5 篇 22 章</h2>
+      <p class="small">章节名与层级取自微信读书官方目录（247 条，含小节）；阅读状态取自云端场次记录（2026-10-18 三场、2026-10-19 两场）。<b>下面这张图就是导航</b>：点哪一章，就知道它在全书哪个位置、有没有读过。</p>
+
+      <div class="toc-part">
+        <h3>第 1 篇　债务与转型（第 1—4 章）</h3>
+        <ul class="ch-list">
+          <li><span class="ch-no">第1章</span><span class="ch-t">债务端革命</span><span class="badge" data-s="unread">未读</span></li>
+          <li><span class="ch-no">第2章</span><span class="ch-t">债务与增长重启</span><span class="badge" data-s="unread">未读</span></li>
+          <li><span class="ch-no">第3章</span><span class="ch-t">资本竞争与债务置换</span><span class="badge" data-s="unread">未读</span></li>
+          <li><span class="ch-no">第4章</span><span class="ch-t">危机中的地方政府</span><span class="badge" data-s="unread">未读</span></li>
+        </ul>
+        <p class="sec-note">这一段立地基：先说明「债务端」是什么、为什么它能决定总需求，再用地方债与债务置换作第一批检验。</p>
+      </div>
+
+      <div class="toc-part">
+        <h3>第 2 篇　增长与转型（第 5—8 章）</h3>
+        <ul class="ch-list">
+          <li><span class="ch-no">第5章</span><span class="ch-t">重新理解增长——一个基于会计学的宏观经济模型</span><span class="badge" data-s="unread">未读</span></li>
+          <li><span class="ch-no">第6章</span><span class="ch-t">劳动、资本与技术进步</span><span class="badge" data-s="unread">未读</span></li>
+          <li><span class="ch-no">第7章</span><span class="ch-t">城市化与中国经济增长</span><span class="badge" data-s="unread">未读</span></li>
+          <li><span class="ch-no">第8章</span><span class="ch-t">资本市场就是「基本面」！</span><span class="badge" data-s="unread">未读</span></li>
+        </ul>
+        <p class="sec-note">这一段换模型：用会计恒等式（资产＝负债＋所有者权益）重写增长函数，并给出「资本型增长 → 运营型增长」的两阶段划分。</p>
+      </div>
+
+      <div class="toc-part">
+        <h3>第 3 篇　房地产转型（第 9—11 章）</h3>
+        <ul class="ch-list">
+          <li><span class="ch-no">第9章</span><span class="ch-t">正确理解「止跌回稳」</span><span class="badge" data-s="unread">未读</span></li>
+          <li><span class="ch-no">第10章</span><span class="ch-t">十字路口的中国房地产</span><span class="badge" data-s="unread">未读</span></li>
+          <li><span class="ch-no">第11章</span><span class="ch-t">警惕房地产触发系统性风险</span><span class="badge" data-s="unread">未读</span></li>
+        </ul>
+        <p class="sec-note">这一段做诊断：把房地产从「行业问题」改写成「宏观资产负债表的资产端问题」。</p>
+      </div>
+
+      <div class="toc-part">
+        <h3>第 4 篇　城市化转型（第 12—17 章）</h3>
+        <ul class="ch-list">
+          <li><span class="ch-no">第12章</span><span class="ch-t">国土空间规划的国家定位</span><span class="badge" data-s="unread">未读</span></li>
+          <li><span class="ch-no">第13章</span><span class="ch-t">价值捕获与财富转移</span><span class="badge" data-s="unread">未读</span></li>
+          <li><span class="ch-no">第14章</span><span class="ch-t">城市更新的财务陷阱</span><span class="badge" data-s="unread">未读</span></li>
+          <li><span class="ch-no">第15章</span><span class="ch-t">城市增长转型的财务分析</span><span class="badge" data-s="unread">未读</span></li>
+          <li><span class="ch-no">第16章</span><span class="ch-t">平台经济的公共属性与市场边界</span><span class="badge" data-s="read">10-18 读完</span></li>
+          <li><span class="ch-no">第17章</span><span class="ch-t">财富函数与共同富裕</span><span class="badge" data-s="read">10-18 读完</span></li>
+        </ul>
+        <p class="sec-note">这一段讲「钱怎么在存量里分」：城市更新的财务陷阱、平台与数据的产权、以及三个陷阱式诊断（重国内轻国际／重财政轻金融／重个体轻平台）。</p>
+      </div>
+
+      <div class="toc-part">
+        <h3>第 5 篇　全球化转型（第 18—22 章）</h3>
+        <ul class="ch-list">
+          <li><span class="ch-no">第18章</span><span class="ch-t">全球化的死与生</span><span class="badge" data-s="reading">10-18 读到「理论与比喻」</span></li>
+          <li><span class="ch-no">第19章</span><span class="ch-t">全球化背景下的资产负债表危机</span><span class="badge" data-s="read">10-19 读完</span></li>
+          <li><span class="ch-no">第20章</span><span class="ch-t">日本的教训：正确理解经济泡沫</span><span class="badge" data-s="read">10-19 读完</span></li>
+          <li><span class="ch-no">第21章</span><span class="ch-t">改变关税规则，应对中美贸易战</span><span class="badge" data-s="reading">10-19 读到「从商品关税转为货币关税」</span></li>
+          <li><span class="ch-no">第22章</span><span class="ch-t">中概股回归与资本市场再造</span><span class="badge" data-s="unread">未读</span></li>
+        </ul>
+        <p class="sec-note">这一段把视角推到国与国之间：全球化有周期、危机落在跨境资产负债表上、日本的泡沫处置是反面教材、摩擦从商品关税转向货币维度。</p>
+      </div>
+
+      <div class="toc-part">
+        <h3>首尾与附录（非章节，用于定位）</h3>
+        <ul class="ch-list">
+          <li><span class="ch-no">前置</span><span class="ch-t">扉页 · 版权信息 · 序</span><span class="badge" data-s="unread">未读</span></li>
+          <li><span class="ch-no">末尾</span><span class="ch-t">结语</span><span class="badge" data-s="unread">未读</span></li>
+          <li><span class="ch-no">附录</span><span class="ch-t">附录 1　大家一起还债比一起挤兑还危险；附录 2　「居者有其屋」，中国房地产需要两条腿走路；附录 3　重新理解货币、分工与增长；附录 4　房地产是撼动宏观经济的震源</span><span class="badge" data-s="unread">未读</span></li>
+        </ul>
+      </div>
+
+      <h3>主题之间怎么连起来（初判）</h3>
+      <p>五篇不是并列，而是<b>一条链</b>：先立「债务端决定总需求」的口径（第 1 篇）→ 换成会计学增长模型，解释为什么增长会从资本型切到运营型（第 2 篇）→ 用房地产证明资产端一旦收缩会怎样拖垮需求（第 3 篇）→ 把同样的财务逻辑套到城市更新、平台与数据、分配上（第 4 篇）→ 最后放到全球化里，说明外部约束如何通过资产负债表传导（第 5 篇）。<span class="src" data-k="infer">综合推断</span></p>
+      <p class="small">这条链目前只有第 4 篇后半（第 16—17 章）与第 5 篇前半（第 18—21 章）经过亲读验证，前面几篇是我按官方目录与小节标题推的骨架，读完再改。</p>
     </section>
+
     <section>
-      <h2>核心观点初判（综合推断）</h2>
-      <ul class="note-list"><li>本书从宏观资产负债表的角度出发，深入探讨了债务在宏观经济中的关键作用及其对经济增长的影响</li><li>通过对地方债危机、债务置换和地方政府在危机中的角色的详细分析，揭示了债务对房地产市场的深远影响</li><li>同时，本书通过会计视角重新审视经济增长模型，分析了劳动、资本、技术进步在城市化和资本市场中的作用，强调了城市化对经济转型的影响</li><li>书中还探讨了房地产市场的调整与转型，分析了系统性风险及其对经济的影响</li></ul>
-      <p class="small">由官方简介自动整理的综合推断，待亲读验证。</p>
+      <h2>核心观点初判</h2>
+      <ul class="note-list">
+        <li><b>总需求由宏观债务决定，债务是消费的总开关。</b>判断内需不该先看收入或利率，而要先看债务端能不能扩张。<span class="src" data-k="official">官方简介 + 目录</span></li>
+        <li><b>经济体应当按资产负债表读，而不是按单项指标读。</b>资产＝负债＋所有者权益 被当作「元规则」，用来重写增长与危机。<span class="src" data-k="official">官方目录（第 5、6 章小节）</span></li>
+        <li><b>危机发生在资产负债表上，不发生在贸易账上。</b>期限、币种、流动性三重错配才是放大器，贸易差额只是表象。<span class="src" data-k="read">亲读第 19 章</span></li>
+        <li><b>泡沫的好坏取决于钱去了哪里，而不是涨了多少。</b>资本竞争会制造「格雷欣现象」：抵押品定价取代生产率成为融资基准，劣质资本驱逐优质资本。<span class="src" data-k="read">亲读第 20 章</span></li>
+        <li><b>救不救的分界是融资结构，不是跌幅。</b>靠新增借款付息＝清偿性问题，注资只会延后清算；只是折价导致的流动性紧张，注入才有效。<span class="src" data-k="read">亲读第 20 章</span></li>
+        <li><b>平台不是普通企业，数据不是普通要素。</b>平台的公共产品属性、数据的初始产权，决定监管边界在「定位」而不在「规模」。<span class="src" data-k="read">亲读第 16 章</span></li>
+        <li><b>摩擦会向阻力最小的维度迁移。</b>商品关税空间用尽后，转向货币维度（汇率、资本流动、国债持有结构）。<span class="src" data-k="read">亲读第 21 章</span></li>
+      </ul>
+      <p class="small">未亲读的第 1—15、22 章尚未给出任何观点判断——本书前半的论证细节我还不知道，不替作者总结。</p>
     </section>
-    <section><h2>公开点评摘录</h2><ul class="note-list"><li><b>Shawn（推荐）：</b>会计恒等式的重要性，被大大低估了。很多人以为它只是财务报表里一个简单的公式——翻开任何一本会计教材，第一页就能看到：资产=负债+所有者权益但这个等式里，藏着非常深刻的社会学、经济学底层逻辑。它是一个极其伟大的发现，堪比爱因斯坦的E=MC²，…</li><li><b>吴于勤（推荐）：</b>政府不但是城市的管理者也是运营商本书作者是真正的专家，有理论也有实践，作者认为在资产负债表增长框架中，“政府经营城市”是中国经济从增量城市化转向存量高质量增长的核心政策抓手。这一观点彻底区别于传统的城市管理思维，核心逻辑是：城市是国家最大的…</li><li><b>残荷听心雨（推荐）：</b>《大转折：现代债务与可持续的增长》作者直言，这本书是一套“武器”。“生存第一，胜利第一”，这样的措辞在经济学著作中极罕见，却是这本书的底色：为一场正在进行的经济战争提供弹药。传统经济学往往以客观中立的科学面目出现，仿佛理论的价值仅在于其解释…</li></ul><p class="small">来自微信读书书目页公开点评的限量摘录，仅作阅读参考，非本页观点。</p></section>
 
     <section>
       <h2>阅读时要验证的问题</h2>
-      <ul class="note-list"><li>文献综述：作者在这一部分如何展开？与全书主线的关系是什么？</li><li>公共产品与平台企业：作者在这一部分如何展开？与全书主线的关系是什么？</li><li>生产函数与垄断竞争：作者在这一部分如何展开？与全书主线的关系是什么？</li><li>企业的结构矩阵：作者在这一部分如何展开？与全书主线的关系是什么？</li><li>数据资源及其初始产权界定：作者在这一部分如何展开？与全书主线的关系是什么？</li><li>结语：作者在这一部分如何展开？与全书主线的关系是什么？</li></ul>
+      <p class="small">每条都指向具体章节，读完一条划掉一条；这也是我给自己留的检查表。</p>
+      <ul class="note-list">
+        <li>第 1 章「债务端革命」如何定义「债务端」？与第 19 章「总需求由宏观债务决定」是同一命题的两种讲法，还是有层级差别？</li>
+        <li>第 5 章的会计学增长模型与第 15 章「两阶段增长模型」如何衔接？判断一个经济体已经切换到运营型增长，看哪个指标？</li>
+        <li>第 6 章如何处理「技术进步」这个增长理论的老难题——把它放进资产端、负债端，还是当作外生变量？</li>
+        <li>第 9—11 章认定房地产政策「失败的原因」具体指什么？与第 19 章的资产负债表危机是同一机制吗？</li>
+        <li>第 16 章「企业的结构矩阵」用的是哪两个维度？我先假设是公共性 × 竞争性，待原文核对。</li>
+        <li>第 21 章「货币关税」具体指哪些工具？与通常说的「汇率操纵指控」如何区分？</li>
+        <li>第 22 章「中概股回归」与第 8 章「资本市场就是基本面」是同一主张的两端吗？</li>
+      </ul>
     </section>
+
+    <section>
+      <h2>当年与今天 · 初步对照</h2>
+      <p class="small">原作时点：2026-04 由中国人民大学出版社出版（微信读书书目页 publishTime；印次与写作完成时间待确认）。</p>
+      <h3>当年作者能知道什么</h3>
+      <p>写作时可得的材料：2025 年及之前的房地产调整与地方债化解过程、中国城市化从增量转存量的现实、2018 年以来中美关税摩擦的完整一轮，以及日本 1990 年代泡沫破裂后三十余年的处置经验。作者是厦门大学教授、曾任职城市规划部门，城市财政与土地金融是他的长期田野。<span class="src" data-k="official">官方简介</span><span class="src" data-k="infer">综合推断</span></p>
+      <h3>后来才知道什么</h3>
+      <p>本书 2026-04 出版之后的宏观数据与政策演进（债务置换的实际规模、房地产销售的恢复程度、关税与货币层面摩擦的具体走向），本页没有可核查来源，<b>不写具体事件与数字</b>，也不用后见之明评判作者判断对错；留待读到作者后续文章或可靠公开数据时再补，标注时间与出处。<span class="src" data-k="unknown">待核实</span></p>
+      <h3>今天对雨的启发</h3>
+      <p>可用的判断顺序：先看融资结构（谁在靠新增借款付息），再看资产价格，最后看政策规模；三者顺序颠倒时，容易把「流动性紧张」误判成「该救」，或把「清偿性缺口」误判成「再撑一下就好」。适用条件是雨关注的是宏观拐点与资产价格，不适用于个股与短线择时。<span class="src" data-k="infer">综合推断</span></p>
+    </section>
+
+    <section>
+      <h2>有意思的原文段落 Top 10 · 持续积累</h2>
+      <p class="small">已选 <b>0 / 10</b> · 累计亲读范围：第 16—17 章、第 18 章开头、第 19—20 章、第 21 章开头</p>
+      <div class="notice">本账号在该书暂无划线（微信读书划线接口返回空），且网页版阅读器正文为 canvas 渲染，DOM 取不到正文；<b>没有可核对的原文，就不列</b>——不拿目录片段或简介冒充金句，也不从记忆补写。等换到能取正文的通道再积累。</div>
+    </section>
+
     <section>
       <h2>来源与证据边界</h2>
-      <div class="card src"><span class="tag">亲读</span>：各日期笔记实际读到的内容<br><span class="tag">官方简介/目录</span>：微信读书书目页简介与章节信息<br><span class="tag">公开评论/划线</span>：书目页公开点评与账户划线（有则收录）<br><span class="tag">综合推断</span>：本页由自动流程基于上述材料整理，未经亲读确认，完读后以 final.html 校订为准</div>
+      <div class="card" style="background:#fffefa;border:1px solid #e5e0d6;border-radius:12px;padding:14px 18px">
+        <p><span class="src" data-k="read">亲读</span>：第 16、17、19、20 章全文与第 18、21 章开头，来自云端场次实际阅读记录（2026-10-18 三场、2026-10-19 两场）。</p>
+        <p><span class="src" data-k="official">官方简介 / 官方目录</span>：书目简介、出版信息与 5 篇 22 章 247 条目录，取自微信读书书目接口。</p>
+        <p><span class="src" data-k="infer">综合推断</span>：一句话主旨、主题链条、结构与各篇定位判断，未经亲读确认。</p>
+        <p><span class="src" data-k="unknown">待核实 / 待确认</span>：出版印次、写作完成时点、出版之后的后续事实。</p>
+        <p class="small">本页不使用页码或页数做导航：所有定位以「篇 · 章 · 小节标题」给出；章节名照原文，自拟的分析小标题不冒充原文章节。</p>
+      </div>
     </section>
+
     <section>
       <h2>相关日期笔记</h2>
-      <ul class="note-list"><li><a href="notes/2026-10-18.html">2026-10-18：文献综述、公共产品与平台企业、生产函数与垄断竞争</a></li><li><a href="notes/2026-10-19.html">2026-10-19：第19章 全球化背景下的资产负债表危机、引言、假说</a></li></ul>
+      <ul class="note-list">
+        <li><a href="notes/2026-10-18.html">2026-10-18</a>：第 16 章 平台经济的公共属性与市场边界 · 第 17 章 财富函数与共同富裕 · 第 18 章 全球化的死与生（读到「理论与比喻」）</li>
+        <li><a href="notes/2026-10-19.html">2026-10-19</a>：第 19 章 全球化背景下的资产负债表危机 · 第 20 章 日本的教训 · 第 21 章 改变关税规则（读到「从商品关税转为货币关税」）</li>
+      </ul>
     </section>
+
     <section>
       <h2>更新记录</h2>
-      <div class="card src">开读首日创建（简介/点评/划线打底）；2026-10-19 随阅读进度更新。</div>
+      <div class="card" style="background:#fffefa;border:1px solid #e5e0d6;border-radius:12px;padding:14px 18px">
+        <p><b>2026-10-18</b>　开读首日创建初版骨架。</p>
+        <p><b>2026-10-19</b>　按官方目录重建开篇视角：结构图换成「篇—章」档案式导航（原自动生成的结构图是逐字竖直的乱码），补齐「当年与今天」「Top 10」「来源与证据边界」；阅读状态按两日实际场次标注。</p>
+      </div>
     </section>
+
   </article>
-  <footer class="site-footer">本页为开读时建立的全书视角初版：二手信息与推断均带来源标签，未经亲读确认的部分待验证；
-  完读后校订升级为 <a href="final.html">final.html</a>。<br>
+  <footer class="site-footer">本页为开读时建立的开篇视角（全书视角初版）：二手信息与推断均带来源标签，未经亲读确认的部分待验证；完读后校订升级为 <a href="final.html">final.html</a>。<br>
   <a href="../../../index.html">返回首页</a></footer>
 </main>
 </body>
