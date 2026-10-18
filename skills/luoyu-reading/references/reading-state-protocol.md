@@ -1,6 +1,6 @@
 # 共享书目、续读点与三本综合
 
-适用于浏览器、代码和人工阅读 Agent；只规定协作结果，不规定阅读实现。每场开读前必须阅读本文件、最新 `book-registry.json`、`agent-roster.json` 和交接板。不得改其他 Agent 的个人记录或代码实现。
+适用于浏览器、代码和人工阅读 Agent；只规定协作结果，不规定阅读实现。每场开读前必须阅读本文件、最新 `book-registry.json`、`agent-roster.json`、[沟通索引](agent-communication.md) 与 Asia/Shanghai 今天的 `agent-communication/YYYY/MM/YYYY-MM-DD.md`；仅在跨日续接、未解决交接或追溯证据时再读相关旧日，不通读全部历史。交接事件按实际发生日期追加日文件，不追加索引。不得改其他 Agent 的个人记录或代码实现。
 
 ## 两类共享状态各司其职
 

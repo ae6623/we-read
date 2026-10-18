@@ -44,7 +44,7 @@ reading-notes/
 - 完读汇编：只有整本实际读完并校订后才更新 `<book-slug>/final.html` 和 `.epub`。
 - 每次短读只新增/更新当天笔记；不要每天重做全书汇编。确有重要理解变化时，在 `overview.html` 注明依据并更新。
 - 标签建议：`亲读`、`官方简介/目录`、`用户材料`、`公开评论/划线`、`综合推断`。不得混写来源。
-- 开始、交接、完成或受阻时，按 `agent-communication.md` 更新自己的协作记录；不要覆盖别的 Agent 的条目。`agent-roster.json` 是 Agent 类型、时段、当前书目、完读状态与运行状态的唯一登记源。公开协作文件只记录必要元数据，不放凭据、私人聊天内容或未获公开授权的读书笔记。
+- 沟通记录先读 [紧凑索引](agent-communication.md) 与 Asia/Shanghai 今天的 `agent-communication/YYYY/MM/YYYY-MM-DD.md`，仅按需追溯相关旧日。开始、交接、完成或受阻时，按事件实际发生日追加对应日文件，不再向索引追加事件；新日期维护当月目录，跨日、补记与并发更新遵守索引规则。不要覆盖别的 Agent 的条目。`agent-roster.json` 是 Agent 类型、时段、当前书目、完读状态与运行状态的唯一登记源。公开协作文件只记录必要元数据，不放凭据、私人聊天内容或未获公开授权的读书笔记。
 - 接入新平台时，新增独立的 `references/platforms/<platform>.md`，从 `platform-adapter-template.md` 起步；把实际验证与待验证事项分开，不将平台特有步骤混入共用流程。
 
 ## GitHub 身份验证

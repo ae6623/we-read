@@ -1,6 +1,6 @@
 # <平台名称> 适配
 
-本文件只记录该平台的来源和访问边界；共用阅读、笔记与归档流程见 `../SKILL.md`，跨 Agent 协作见 `coordination.md` 和 `agent-communication.md`。
+本文件只记录该平台的来源和访问边界；共用阅读、笔记与归档流程见 `../SKILL.md`，跨 Agent 协作见 `coordination.md` 和 [沟通索引](agent-communication.md)。每场只读索引与今天的 `agent-communication/YYYY/MM/YYYY-MM-DD.md`，相关旧日按需读取；运行与交接事件追加对应日文件，不追加索引。
 
 ## 适用范围
 
