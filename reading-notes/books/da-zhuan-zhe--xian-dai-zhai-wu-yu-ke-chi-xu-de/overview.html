@@ -42,6 +42,15 @@ blockquote{margin:14px 0;padding:12px 18px;background:#f5efe4;border-left:3px so
 .toc-part h3{margin:0 0 8px;color:var(--green);font:600 1rem/1.5 var(--serif)}
 .ch-list{list-style:none;margin:0;padding:0}
 .ch-list li{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;padding:5px 0;border-bottom:1px dashed #eee8dc}
+.ch-list li>details{flex:1 1 100%}
+.ch-item summary{display:flex;gap:10px;align-items:baseline;padding:1px 0;cursor:pointer;list-style:none}
+.ch-item summary::-webkit-details-marker{display:none}
+.caret{color:var(--muted);font-size:.95rem;flex:none;transition:transform .18s ease}
+.ch-item[open] .caret{transform:rotate(90deg)}
+.ch-body{padding:4px 0 10px 56px;animation:slideDown .2s ease}
+@keyframes slideDown{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.ch-body p{margin:.2em 0;color:#5c574c;font-size:.82rem;line-height:1.65}
+.ch-src{color:var(--muted);font-size:.74rem}
 .ch-list li:last-child{border-bottom:0}
 .ch-no{color:var(--gold);font-weight:700;font-size:.82rem;min-width:46px}
 .ch-t{flex:1;min-width:180px}
@@ -50,7 +59,6 @@ blockquote{margin:14px 0;padding:12px 18px;background:#f5efe4;border-left:3px so
 .badge[data-s="reading"]{background:#f6edde;color:#805d36;border:1px solid #e6d4b8}
 .badge[data-s="unread"]{background:#f4f4f1;color:#8b8b84;border:1px solid #e4e4de}
 .sec-note{color:var(--muted);font-size:.78rem;margin:4px 0 0}
-.ch-guide{flex-basis:100%;margin:0 0 4px;color:#5c574c;font-size:.8rem;line-height:1.6}
 .notice{background:#fffefa;border:1px solid var(--e5e0d6,#e5e0d6);border-left:4px solid var(--gold);border-radius:0 12px 12px 0;padding:12px 16px;color:#4a4436;font-size:.9rem}
 .site-footer{margin-top:44px;padding-top:16px;border-top:1px dashed var(--line);color:var(--muted);font-size:.8rem;text-align:center}
 .reader-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;color:var(--muted);font-size:.82rem;margin:8px 0 0}
@@ -184,8 +192,8 @@ blockquote{margin:14px 0;padding:12px 18px;background:#f5efe4;border-left:3px so
           <li><span class="ch-no">第13章</span><span class="ch-t">价值捕获与财富转移</span><span class="badge" data-s="unread">未读</span></li>
           <li><span class="ch-no">第14章</span><span class="ch-t">城市更新的财务陷阱</span><span class="badge" data-s="unread">未读</span></li>
           <li><span class="ch-no">第15章</span><span class="ch-t">城市增长转型的财务分析</span><span class="badge" data-s="unread">未读</span></li>
-          <li><span class="ch-no">第16章</span><span class="ch-t">平台经济的公共属性与市场边界</span><span class="badge" data-s="read">10-18 读过（推进至第 17 章）</span><p class="ch-guide">导读：平台不是普通企业，而是公共产品的提供者；分析要用生产函数与垄断竞争，落点在数据的初始产权界定。 <span class="src" data-k="read">亲读</span></p></li>
-          <li><span class="ch-no">第17章</span><span class="ch-t">财富函数与共同富裕</span><span class="badge" data-s="read">10-18 读完</span><p class="ch-guide">导读：把共同富裕还原成财富函数问题，再点出三种误判：重国内轻国际、重财政轻金融、重个体轻平台——三个陷阱是同一套诊断的三个切面。 <span class="src" data-k="read">亲读</span></p></li>
+          <li><details class="ch-item"><summary><span class="ch-no">第16章</span><span class="ch-t">平台经济的公共属性与市场边界</span><span class="badge" data-s="read">10-18 读过（推进至第 17 章）</span><span class="caret">›</span></summary><div class="ch-body"><p>平台不是普通企业，而是公共产品的提供者；分析要用生产函数与垄断竞争，落点在数据的初始产权界定。</p><p class="ch-src">导读依据：亲读本书记录；未标推断</p></div></details></li>
+          <li><details class="ch-item"><summary><span class="ch-no">第17章</span><span class="ch-t">财富函数与共同富裕</span><span class="badge" data-s="read">10-18 读完</span><span class="caret">›</span></summary><div class="ch-body"><p>把共同富裕还原成财富函数问题，再点出三种误判：重国内轻国际、重财政轻金融、重个体轻平台——三个陷阱是同一套诊断的三个切面。</p><p class="ch-src">导读依据：亲读本书记录；未标推断</p></div></details></li>
         </ul>
         <p class="sec-note">这一段讲「钱怎么在存量里分」：城市更新的财务陷阱、平台与数据的产权、以及三个陷阱式诊断（重国内轻国际／重财政轻金融／重个体轻平台）。</p>
       </div>
@@ -193,10 +201,10 @@ blockquote{margin:14px 0;padding:12px 18px;background:#f5efe4;border-left:3px so
       <div class="toc-part">
         <h3>第 5 篇　全球化转型（第 18—22 章）</h3>
         <ul class="ch-list">
-          <li><span class="ch-no">第18章</span><span class="ch-t">全球化的死与生</span><span class="badge" data-s="reading">10-18 读到「理论与比喻」</span><p class="ch-guide">导读：镜头从国内拉到全球化长周期，先交代用什么理论、打什么比方；本篇只读到开头两节。 <span class="src" data-k="read">亲读</span></p></li>
-          <li><span class="ch-no">第19章</span><span class="ch-t">全球化背景下的资产负债表危机</span><span class="badge" data-s="read">10-19 读完</span><p class="ch-guide">导读：全篇的框架章：危机起点在跨境表的期限、币种、流动性错配，贸易差额只是留在表上的痕迹。 <span class="src" data-k="read">亲读</span></p></li>
-          <li><span class="ch-no">第20章</span><span class="ch-t">日本的教训：正确理解经济泡沫</span><span class="badge" data-s="read">10-19 读完</span><p class="ch-guide">导读：用日本作样本回答泡沫该不该捅破、破了怎么救：钱流向抵押品还是生产率部门，决定「劣质资本驱逐优质资本」是否发生。 <span class="src" data-k="read">亲读</span></p></li>
-          <li><span class="ch-no">第21章</span><span class="ch-t">改变关税规则，应对中美贸易战</span><span class="badge" data-s="reading">10-19 读到「从商品关税转为货币关税」</span><p class="ch-guide">导读：商品关税空间用尽后，摩擦迁移到货币维度；本篇只读到第一节，其余小节未读到，不作概括。 <span class="src" data-k="read">亲读</span></p></li>
+          <li><details class="ch-item"><summary><span class="ch-no">第18章</span><span class="ch-t">全球化的死与生</span><span class="badge" data-s="reading">10-18 读到「理论与比喻」</span><span class="caret">›</span></summary><div class="ch-body"><p>镜头从国内拉到全球化长周期，先交代用什么理论、打什么比方；本篇只读到开头两节。</p><p class="ch-src">导读依据：亲读本书记录；未标推断</p></div></details></li>
+          <li><details class="ch-item"><summary><span class="ch-no">第19章</span><span class="ch-t">全球化背景下的资产负债表危机</span><span class="badge" data-s="read">10-19 读完</span><span class="caret">›</span></summary><div class="ch-body"><p>全篇的框架章：危机起点在跨境表的期限、币种、流动性错配，贸易差额只是留在表上的痕迹。</p><p class="ch-src">导读依据：亲读本书记录；未标推断</p></div></details></li>
+          <li><details class="ch-item"><summary><span class="ch-no">第20章</span><span class="ch-t">日本的教训：正确理解经济泡沫</span><span class="badge" data-s="read">10-19 读完</span><span class="caret">›</span></summary><div class="ch-body"><p>用日本作样本回答泡沫该不该捅破、破了怎么救：钱流向抵押品还是生产率部门，决定「劣质资本驱逐优质资本」是否发生。</p><p class="ch-src">导读依据：亲读本书记录；未标推断</p></div></details></li>
+          <li><details class="ch-item"><summary><span class="ch-no">第21章</span><span class="ch-t">改变关税规则，应对中美贸易战</span><span class="badge" data-s="reading">10-19 读到「从商品关税转为货币关税」</span><span class="caret">›</span></summary><div class="ch-body"><p>商品关税空间用尽后，摩擦迁移到货币维度；本篇只读到第一节，其余小节未读到，不作概括。</p><p class="ch-src">导读依据：亲读本书记录；未标推断</p></div></details></li>
           <li><span class="ch-no">第22章</span><span class="ch-t">中概股回归与资本市场再造</span><span class="badge" data-s="unread">未读</span></li>
         </ul>
         <p class="sec-note">这一段把视角推到国与国之间：全球化有周期、危机落在跨境资产负债表上、日本的泡沫处置是反面教材、摩擦从商品关税转向货币维度。</p>

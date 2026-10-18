@@ -36,6 +36,24 @@ section p{margin:.5em 0}
 .maptree .lv2{color:var(--green2);font-weight:600;margin-top:6px}
 .maptree .lv3{color:#4a5b53;padding-left:1.6em}
 .qa{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px}
+.toc-part{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 18px;margin:12px 0}
+.part-label{display:block;font:600 1rem/1.6 var(--serif);color:var(--green);margin:0 0 6px}
+.ch-item{border-bottom:1px dashed #eee8dc}
+.ch-item:last-child{border-bottom:0}
+.ch-item summary{display:flex;gap:10px;align-items:baseline;padding:7px 0;cursor:pointer;list-style:none}
+.ch-item summary::-webkit-details-marker{display:none}
+.ch-no{color:var(--gold);font-weight:700;font-size:.82rem;min-width:48px;flex:none}
+.ch-t{flex:1;font-size:.92rem}
+.badge{font-size:.68rem;border-radius:6px;padding:1px 7px;font-weight:600;white-space:nowrap;flex:none}
+.badge[data-s="read"]{background:#e6f0e9;color:#286b52;border:1px solid #cbdace}
+.badge[data-s="reading"]{background:#f6edde;color:#805d36;border:1px solid #e6d4b8}
+.caret{color:var(--muted);font-size:1.05rem;transition:transform .18s ease;flex:none}
+.ch-item[open] .caret{transform:rotate(90deg)}
+.ch-body{padding:2px 0 12px 58px;animation:slideDown .2s ease}
+@keyframes slideDown{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.ch-body p{margin:.3em 0}
+.ch-src{color:var(--muted);font-size:.76rem}
+
 .qa ol{margin:6px 0;padding-left:20px}
 .qa ol li{margin:8px 0}
 .src{display:inline-block;font-size:.7rem;border-radius:6px;padding:1px 7px;margin-left:6px;vertical-align:middle;font-weight:600}
@@ -90,24 +108,38 @@ section p{margin:.5em 0}
 
     <section aria-labelledby="chapter-guide-title">
       <h2 id="chapter-guide-title">本次实读章节导读</h2>
-      <p class="small">先看结构，再看理解：本篇覆盖第 16—18 章，其中第 18 章只读到开头两节。导读依据是亲读到的正文与阅读器章节标题，逐条标来源；未读到的部分不写。</p>
+      <p class="small">点章节标题展开导读。只覆盖本篇读到的章节，部分阅读写明停止处；没读到的部分不概括、不据标题推测。</p>
 
-      <article>
-        <h3>第 16 章　平台经济的公共属性与市场边界 <span class="src" data-k="read">亲读 · 整章</span></h3>
-        <p>从一个问题切入：平台算不算普通企业。作者的回答是不算——它提供的是公共产品，需要用生产函数与垄断竞争来刻画，再用「企业的结构矩阵」定位它落在哪一格；落到数据上，争点不在能不能用，而在初始产权怎么界定。</p>
-      </article>
+      <div class="toc-part">
+        <span class="part-label">第 4 篇　城市化转型</span>
+        <details class="ch-item">
+          <summary><span class="ch-no">第16章</span><span class="ch-t">平台经济的公共属性与市场边界</span><span class="badge" data-s="read">整章</span><span class="caret">›</span></summary>
+          <div class="ch-body">
+            <p>从一个问题切入：平台算不算普通企业。作者的回答是不算——它提供的是公共产品，需要用生产函数与垄断竞争来刻画，再用「企业的结构矩阵」定位它落在哪一格；落到数据上，争点不在能不能用，而在初始产权怎么界定。</p>
+            <p class="ch-src">导读依据：亲读 · 第 16 章整章</p>
+          </div>
+        </details>
+        <details class="ch-item">
+          <summary><span class="ch-no">第17章</span><span class="ch-t">财富函数与共同富裕</span><span class="badge" data-s="read">整章</span><span class="caret">›</span></summary>
+          <div class="ch-body">
+            <p>把共同富裕还原成「财富函数」的问题，随后点出三种常见误判：重国内轻国际、重财政轻金融、重个体轻平台。三个陷阱不是三件不相干的事，而是同一套诊断的三个切面。</p>
+            <p class="ch-src">导读依据：亲读 · 第 17 章整章</p>
+          </div>
+        </details>
+      </div>
 
-      <article>
-        <h3>第 17 章　财富函数与共同富裕 <span class="src" data-k="read">亲读 · 引言与三个陷阱</span></h3>
-        <p>把共同富裕还原成「财富函数」的问题，随后点出三种常见误判：重国内轻国际、重财政轻金融、重个体轻平台。三个陷阱不是三件不相干的事，而是同一套诊断的三个切面。</p>
-      </article>
+      <div class="toc-part">
+        <span class="part-label">第 5 篇　全球化转型</span>
+        <details class="ch-item">
+          <summary><span class="ch-no">第18章</span><span class="ch-t">全球化的死与生</span><span class="badge" data-s="reading">部分阅读</span><span class="caret">›</span></summary>
+          <div class="ch-body">
+            <p>只读到「引言」与「理论与比喻」：镜头从国内拉到全球化长周期，先交代要用什么理论、打什么比方。本章后续小节未读到，不作概括。</p>
+            <p class="ch-src">导读依据：亲读 · 第 18 章「引言」「理论与比喻」两节</p>
+          </div>
+        </details>
+      </div>
 
-      <article>
-        <h3>第 18 章　全球化的死与生 <span class="src" data-k="read">部分阅读</span></h3>
-        <p>只读到「引言」与「理论与比喻」：镜头从国内拉到全球化长周期，先交代要用什么理论、打什么比方。本章后续小节未读到，不作概括。</p>
-      </article>
-
-      <p class="muted">导读依据：亲读 · 第 16、17 章整章与第 18 章前两节；本篇实读状态：第 16—18 章，第 18 章为部分阅读，已确认停止于「理论与比喻」。</p>
+      <p class="metrics-note">本篇实读状态：第 16—18 章；第 18 章为部分阅读，已确认停止于「理论与比喻」。</p>
     </section>
 
     <section>
