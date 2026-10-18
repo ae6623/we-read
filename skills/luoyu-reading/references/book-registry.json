@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": 9,
+  "revision": 10,
   "timezone": "Asia/Shanghai",
   "authority": "latest origin/main; claims become effective only after serialized acceptance there",
   "migration": {
@@ -41,8 +41,8 @@
       "author": "猴面包的树",
       "platform": "weread",
       "platform_book_id": null,
-      "priority": "continue_current",
-      "status": "in_progress",
+      "priority": "none",
+      "status": "paused",
       "owner_agent_id": "wechat-reading-browser",
       "claim": {
         "state": "held",
@@ -59,7 +59,8 @@
         "confirmed_at": "2026-10-18T02:23:18+08:00"
       },
       "next_question_status": "confirmed",
-      "completion": null
+      "completion": null,
+      "pause_reason": "用户明确旧书不再进入新计划；按协议 paused 保留责任和续读点，不自动续读。"
     },
     {
       "book_id": "norway-night",
@@ -118,9 +119,45 @@
       },
       "next_question_status": "needs-confirmation",
       "completion": null
+    },
+    {
+      "book_id": "the-swerve-greenblatt",
+      "title": "大转向：世界如何步入现代",
+      "author": "斯蒂芬·格林布拉特",
+      "platform": "weread",
+      "platform_book_id": null,
+      "container_platform_book_id": "ce742543643425f464942355a4c35616634797637373337354f46476c306e74438",
+      "container_title": "甲骨文·世界史：大转向＋王的归程＋春之祭＋伟大的海＋东印度公司（全6册）",
+      "priority": "user_requested",
+      "status": "in_progress",
+      "owner_agent_id": "wechat-reading-browser",
+      "claim": {
+        "state": "held",
+        "source": "用户批准世界史优先；实时书架套装首列大转向；书名作者外部书目核对，套装版本与正文可用性待目录核对",
+        "claimed_at": "2026-10-18T13:32:22+08:00"
+      },
+      "last_confirmed_progress": null,
+      "resume_point": {
+        "status": "needs-confirmation",
+        "chapter": null,
+        "page": null,
+        "position": null,
+        "source": "尚未打开正文；等待开始通知及明确放行",
+        "confirmed_at": null
+      },
+      "next_question_status": "needs-confirmation",
+      "completion": null
     }
   ],
-  "active_session": null,
+  "active_session": {
+    "run_id": "manual-wechat-2026-10-18-chapter-calibration",
+    "agent_id": "wechat-reading-browser",
+    "book_id": "the-swerve-greenblatt",
+    "slot": "manual_chapter_calibration",
+    "started_at": "2026-10-18T13:32:22+08:00",
+    "phase": "reserved_waiting_start_release",
+    "reading_started_at": null
+  },
   "synthesis": {
     "visibility": "private",
     "batch_size": 3,
