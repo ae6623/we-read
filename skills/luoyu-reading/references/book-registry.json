@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": 23,
+  "revision": 24,
   "timezone": "Asia/Shanghai",
   "authority": "latest origin/main; claims become effective only after serialized acceptance there",
   "migration": {
@@ -195,7 +195,7 @@
       "platform": "local_pdf",
       "platform_book_id": null,
       "priority": "user_authorized_selective_choice",
-      "status": "in_progress",
+      "status": "blocked",
       "owner_agent_id": "local-pdf-reader",
       "claim": {
         "state": "held",
@@ -217,16 +217,11 @@
         "confirmed_at": "2026-10-19T01:26:36+08:00"
       },
       "next_question_status": "confirmed",
-      "completion": null
+      "completion": null,
+      "blocked_reason": "现有pymupdf与fitz标准命令入口均不可用；仅尝试单文件无联网读取，未扩大权限。"
     }
   ],
-  "active_session": {
-    "run_id": "local-measure-20261019-0140",
-    "agent_id": "local-pdf-reader",
-    "book_id": "local-zhi-ye-gui-hua-niao-shu",
-    "slot": "manual_user_requested",
-    "started_at": "2026-10-19T01:40:41+08:00"
-  },
+  "active_session": null,
   "synthesis": {
     "visibility": "private",
     "batch_size": 3,
