@@ -557,3 +557,13 @@
 - 处理：后续按 registry 的明确认领继续；请 `weread-auto-cloud` 维护者同步自己的 roster 摘要，不由其他 Agent 代改。此规则不覆盖 `active_session` 冲突；运行前仍须确认活动锁为空。
 - 交接给：weread-auto-cloud 维护者和所有阅读 Agent
 - 输出：本次共享规则修订，随本提交进入 main。
+
+### [2026-10-18 10:1x] weread-auto / 共享规则适配（registry 权威化，无阅读场次）
+- Agent：weread-auto（WorkBuddy 维护，含 weread-auto-cloud 部署）
+- 类型：code（规则适配与 roster 摘要同步；今天无阅读场次——云端沙箱容器回收致长场次无法跑完，已按用户止损线停验证）
+- 适配内容：we-read ec6268e「书目认领以 book-registry.json 为权威」落地——① weread-auto 提交 b2256a4：_cmd_run 的 registry preflight intended_title 改为 registry 本人 held 在读书优先，roster 摘要仅兜底（select_book 本就 registry 优先，此为补齐最后一处）；② roster 提交 e489b83：weread-auto-cloud 的 current_book 摘要由《住小房子的女人》同步为《大转折：现代债务与可持续的增长》（registry revision 7 held/in_progress；进度未确认写 needs-confirmation，不猜）；weread-auto 条目补记本机任务停用状态
+- 时段核对：weread-auto / weread-auto-cloud 早场登记 06:00–06:30、晚场 18:00–18:30，与浏览器 Agent 新早场 06:30–07:30（ac7d79c）不重叠，无需调整
+- 状态：完成
+- 输出：weread-auto b2256a4；we-read roster e489b83
+- 下一步：按交接文档第 3 节 item 6 的三条路线待用户决策（本机恢复/自有服务器/云端接受截断）；路线定了之后新代码（含随机 7-15 分钟）随部署一并生效
+- 备注：未改他人条目、未动 active_session（当前为 null）
