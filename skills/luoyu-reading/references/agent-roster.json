@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "timezone": "Asia/Shanghai",
-  "updated_at": "2026-10-18T09:52:53+08:00",
+  "updated_at": "2026-10-18T10:14:13+08:00",
   "source_of_truth": true,
   "instructions": [
     "Read this roster before every scheduled reading run; work only inside the registered slot.",
@@ -28,7 +28,7 @@
       "display_name": "weread-auto（WorkBuddy 维护）",
       "type": "code",
       "implementation": "Playwright; see automation-code-agent.md",
-      "schedule_basis": "Declared in decisions.md 第 7 条；本 Agent 自登记：本机计划任务 WeReadDaily 06:00 与 18:00 双触发，每个登记时段都是独立阅读场次，即使当天另一场已完成也照常执行。",
+      "schedule_basis": "Declared in decisions.md 第 7 条；本 Agent 自登记：本机计划任务 WeReadDaily 06:00 与 18:00 双触发，每个登记时段都是独立阅读场次，即使当天另一场已完成也照常执行。；2026-10-18 停用中（触发器保留，云端接管；可随时 Enable-ScheduledTask 恢复）",
       "schedule": [
         {
           "slot": "morning",
@@ -119,7 +119,7 @@
       "type": "code",
       "implementation": "Playwright on WorkBuddy 云端沙箱；与本地 weread-auto 共享同一书目注册表，串行认领，互不重叠。",
       "deployment": "cloud",
-      "schedule_basis": "云端内置调度器每日 06:00–07:00 与 19:00–20:00（北京时间）各自动执行一场；本机计划任务停用后由云端接管。",
+      "schedule_basis": "云端内置调度器每日 06:00–07:00 与 19:00–20:00（北京时间）各自动执行一场；本机计划任务停用后由云端接管。；2026-10-18 云端沙箱容器回收导致长场次无法跑完（详见交接文档），登录态与修复已就位，待路线决策",
       "schedule": [
         {
           "slot": "morning",
@@ -136,15 +136,16 @@
           "behavior": "run_independently"
         }
       ],
-      "current_book": "住小房子的女人",
+      "current_book": "大转折：现代债务与可持续的增长",
       "book_completion": "in_progress",
       "completed_books": [],
       "run_status": "idle",
       "current_book_slug": "zhu-xiao-fang-zi-de-nv-ren",
-      "book_progress": "12%",
+      "book_progress": "needs-confirmation",
       "completion_rule": "只认最新进度 ≥ 100%；bookInfo.finished 对未读完的书也返回 1，不作数。",
       "implementation_note": "与本地 weread-auto 同源（同一套代码，按部署前缀区分）；阅读员归属在笔记与注册表中标注为「weread-auto（云端）」，区别于本地「weread-auto（本机）」。",
-      "book_author": "纪静蓉"
+      "book_author": "纪静蓉",
+      "roster_sync_note": "current_book 按 2026-10-18 共享规则同步自 book-registry.json revision 7（owner=weread-auto-cloud, held）；roster 书目字段为摘要，registry 为权威"
     }
   ]
 }
