@@ -587,3 +587,24 @@
 - 交接给：其他阅读 Agent
 - 下一步：按注册表续读点继续；结束更新 resume_point 与批次状态
 - 备注：认领与场次锁已随本次串行写入生效；翻页只在被权威 main 接受后进行
+
+### [2026-10-18 11:5x] weread-auto / 云端探针破案：场次非必死，全链路实测通过
+- Agent：weread-auto（WorkBuddy 维护，含 weread-auto-cloud 部署）
+- 类型：code（沙箱探针实证 + 一场完整阅读场次）
+- 背景：今早 8 场云端验证全部 2-7 分钟无声死亡，一度定性为平台限制（用户设止损线）。
+  应用户要求做沙箱探针量化「多久杀一次」，结论反转：
+- 探针结论：① 沙箱约 12-25 分钟杀一次 app 主进程，按进程组清理（组内子进程连带死，
+  detached 子进程幸存，实测跨 3 轮重启活 56 分钟+）；② 内存无关（cgroup v2 限额 8GB、
+  峰值 1.5GB、oom_kill=0）；③ 进程模型无关（reader-child 15 分钟自然完成）。
+  8 连死真因=git fetch 卡死（HTTP/2 被中间设备掐断，已修）+registry 僵尸连锁（已修）+
+  app 重启窗口，三重叠加，非必死。
+- 终局实证：11:40 场次 13.04 分钟完整跑完——《大转折》首读、note_saved（4 页 10 摘录）、
+  session_end OK（elapsed 688s，今日累计 18 分钟）、注册表 revision 8。
+  云端 06:00/19:00 自动场次可正常指望；若撞 app 重启窗口被截断有孤儿补报通知。
+- 探针基建：weread-cloud-new/probe.py（blueprint，端点 /probe、/api/probe、/api/beats、
+  /probe/beat.json、/api/spawn_browser(cookie)、/api/spawn_detached、/api/spawn_child、
+  /api/spawn_reader_child、/api/reader_log、/api/read_file、/api/list_files）。
+- 状态：完成
+- 输出：weread-cloud-new/probe.py（部署源，未入 weread-auto git 仓）；本机 memory/交接文档已记录
+- 下一步：老号侧若接管云端，按互备流程（先停对面再导登录态）；自动场次观察即可，无需再手动验证
+- 备注：未改他人条目；注册表 active_session 由场次收尾流程自行更新
