@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": 19,
+  "revision": 20,
   "timezone": "Asia/Shanghai",
   "authority": "latest origin/main; claims become effective only after serialized acceptance there",
   "migration": {
@@ -187,9 +187,41 @@
       "next_question_status": "confirmed",
       "completion": null,
       "pause_reason": "本场已结束且当前本地文件到末；作品级版本完整性未核对，下一篇尚未选定。不虚增唯一完读计数。"
+    },
+    {
+      "book_id": "local-zhi-ye-gui-hua-niao-shu",
+      "title": "职业如何规划？大城市，小城市，如何抉择？我来说说我的个人经历和思考",
+      "author": "鸟树下睡懒觉的猪",
+      "platform": "local_pdf",
+      "platform_book_id": null,
+      "priority": "user_authorized_selective_choice",
+      "status": "in_progress",
+      "owner_agent_id": "local-pdf-reader",
+      "claim": {
+        "state": "held",
+        "source": "用户允许从指定文件夹选择下一篇未读作品；文件名已确认，正文尚未读取",
+        "claimed_at": "2026-10-19T01:00:20+08:00"
+      },
+      "last_confirmed_progress": null,
+      "resume_point": {
+        "status": "needs-confirmation",
+        "chapter": null,
+        "page": null,
+        "position": "尚未开始正文",
+        "source": "本次文件名核验",
+        "confirmed_at": null
+      },
+      "next_question_status": "needs-confirmation",
+      "completion": null
     }
   ],
-  "active_session": null,
+  "active_session": {
+    "run_id": "local-selective-20261019-0100",
+    "agent_id": "local-pdf-reader",
+    "book_id": "local-zhi-ye-gui-hua-niao-shu",
+    "slot": "manual_user_requested",
+    "started_at": "2026-10-19T01:00:20+08:00"
+  },
   "synthesis": {
     "visibility": "private",
     "batch_size": 3,
