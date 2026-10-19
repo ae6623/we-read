@@ -52,12 +52,12 @@
 <p class="meta">{{AUTHOR}} · {{DATE}} · 阅读员：<span class="reader">{{READER_NAME}}</span>（{{READER_AGENT_TYPE_LABEL}}）</p>
 <p class="muted"><a href="../overview.html">← 全书视角初版</a>{{NOTE_EXTRA_LINKS}}</p>
 <section class="reading-metrics" aria-labelledby="reading-metrics-title">
-<!-- 后续新阅读以原文真实章节/帖子/小节标题导航；无标题则明确待确认，不编造。范围写清部分阅读，不以页码/页数或翻页数替代。 -->
+<!-- 后续新阅读以原文真实章节/帖子/小节标题导航；无标题则明确待确认，不编造。ACTUAL_CONTENT_COVERAGE 与 READING_SCOPE 复用现有字段，分别标清完整阅读、选择性略读、跳过与未读范围及精确停止处；跳过必要时简述理由，不用连续范围掩盖中间空缺。无需逐字读，但不得省去理解核心主张的必要材料；选择性阅读不写成整章/全书完整读完，不以页码/页数或翻页数替代。 -->
 <p class="metrics-kicker">READING / 本次实读</p><h2 id="reading-metrics-title">实际读了什么</h2>
 <dl class="metrics-grid">
 <div class="metric metric-primary"><dt>{{DURATION_LABEL}}</dt><dd>{{DURATION_VALUE_OR_UNKNOWN}}</dd><small>{{DURATION_BASIS}}</small></div>
 <div class="metric"><dt>实读章节 / 帖子 / 小节</dt><dd>{{ACTUAL_SECTION_TITLES_OR_UNCONFIRMED}}</dd><small>使用原文标题，不编章节或编号。</small></div>
-<div class="metric"><dt>实际覆盖</dt><dd>{{ACTUAL_CONTENT_COVERAGE}}</dd><small>说明从哪里读到哪里；接触章节不等于读完整章。</small></div>
+<div class="metric"><dt>实际覆盖</dt><dd>{{ACTUAL_CONTENT_COVERAGE}}</dd><small>区分完整阅读、选择性略读与跳过，标清停止处；接触章节不等于读完整章。</small></div>
 <div class="metric"><dt>全书进度</dt><dd>{{PROGRESS_OR_UNKNOWN}}</dd><small>{{BOOK_COMPLETION_STATUS}}</small></div>
 </dl>
 <div class="metrics-details"><p>阅读员：{{READER_NAME}} · {{READER_AGENT_TYPE_LABEL}}</p><p>实际窗口：{{ACTUAL_WINDOW_WITH_TIMEZONE_OR_UNKNOWN}}</p><p>平台有效阅读时长：{{EFFECTIVE_READING_TIME_OR_UNCONFIRMED}}</p></div>
@@ -66,7 +66,7 @@
 <div class="card"><span class="tag">本次实读范围</span><p>{{READING_SCOPE}}</p></div>
 <!-- 核心理解与证据用真实章节/帖子/小节标题关联；自拟分析小标题不冒充原文标题。 -->
 <section aria-labelledby="chapter-guide-title"><h2 id="chapter-guide-title">本次实读章节导读</h2>
-<!-- 导航口径（2026-10-19）：按已核实部／章／小节层级，每个部（或分组）一个 .toc-part；每章用 details.ch-item 包住，点标题下滑展开导读。只列本篇实际已读部分；标题下 1–2 句说明已读部分讲什么／起什么作用。部分阅读写明停止处，不概括未读全章。无正式章节用真实帖子／文章／小节标题，不造编号或层级，不以页码导航。标题未知标待确认；无可确认条目时删除示例并如实说明。 -->
+<!-- 导航口径（2026-10-19）：按已核实部／章／小节层级，每个部（或分组）一个 .toc-part；每章用 details.ch-item 包住，点标题下滑展开导读。只列本篇实际阅读或略读的章；标题下 1–2 句限于实际覆盖，可抓问题、主张、必要证据与结论。仅略读或含跳过的章保持 reading/部分阅读，在实际覆盖及导读依据中说明，不能标整章；全部跳过的章不充当实读导读。部分阅读须按 references/chapter-guide-style.md 列出官方目录全部小节，保留 read/reading/unread 与小节已读/唯一停止处/未读标记，逐节据实区分略读或跳过，不由后读位置倒推前节已读。未读仅列官方标题，不概括内容。无正式章节用真实帖子／文章／小节标题，不造编号或层级，不以页码导航。标题未知标待确认；无可确认条目时删除示例并如实说明。 -->
 <div class="toc-part">
 <span class="part-label">{{PART_OR_SECTION_GROUP_TITLE_OR_UNCONFIRMED}}</span>
 <details class="ch-item">
