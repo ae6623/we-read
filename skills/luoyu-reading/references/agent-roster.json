@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "timezone": "Asia/Shanghai",
-  "updated_at": "2026-10-19T15:38:59+08:00",
+  "updated_at": "2026-10-20T01:16:28+08:00",
   "source_of_truth": true,
   "instructions": [
     "Read this roster before every scheduled reading run; work only inside the registered slot.",
@@ -176,7 +176,7 @@
       "id": "cue-qingyouji-reader",
       "display_name": "Cue 轻游记试读",
       "type": "browser_non_code",
-      "implementation": "使用已授权微信读书浏览器，直接精读或略读；当前仅登记活动锁，正文尚未开始。",
+      "implementation": "使用已授权微信读书浏览器直接精读或略读；登记、等待与正文实读分别记录。",
       "schedule_basis": "本次用户手动授权，无新增排班；不修改其他阅读员时段。",
       "schedule": [],
       "enabled": true,
@@ -185,14 +185,14 @@
       "book_author": "猴面包的树",
       "book_completion": "in_progress",
       "completed_books": [],
-      "run_status": "idle",
+      "run_status": "running",
       "last_run_status": "reserved_awaiting_start_notice",
-      "last_run_date": "2026-10-19",
-      "last_slot": "manual_user_requested_pre_read_reservation",
-      "last_started_at": "2026-10-19T13:41:58+08:00",
+      "last_run_date": "2026-10-20",
+      "last_slot": "daily_0100_authorized_makeup",
+      "last_started_at": "2026-10-20T01:16:28+08:00",
       "last_ended_at": "2026-10-19T13:46:43+08:00",
       "next_run_status": "awaiting_coordinator_start_notice",
-      "assignment_note": "独立身份，只持有本书；run_status=running表示独占活动锁，不表示已读正文。等协调者读前通知后才进入第一章；准备与等待不计实读。",
+      "assignment_note": "今日01:00场授权补开，用户01:15明确批准01:00–05:00禁读例外；不是新增场次。仅登记活动锁，正文未开始，等协调者私聊开始通知后从第二章确认点续读；不改他人排班。",
       "last_progress": "第一章顺序精读/略读至章末；第二章仅开篇；全书未完读，责任保留。"
     }
   ]
