@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": 44,
+  "revision": 45,
   "timezone": "Asia/Shanghai",
   "authority": "latest origin/main; claims become effective only after serialized acceptance there",
   "migration": {
@@ -280,16 +280,21 @@
         "claimed_at": "2026-10-19T13:38:37+08:00",
         "source": "用户指定轻游记亲读试读；独立书目作者及题名标识、授权阅读器目录已核实。本次仅认领与占锁，等待协调者读前通知，不进入正文。"
       },
-      "last_confirmed_progress": null,
+      "last_confirmed_progress": {
+        "scope": "第一章全段顺序选择性精读/略读；第二章仅开场引语与苦闷导入",
+        "chapter_status": "partial",
+        "source": "authorized_reader",
+        "confirmed_at": "2026-10-19T13:46:43+08:00"
+      },
       "resume_point": {
         "status": "confirmed",
-        "chapter": "1 朝圣之路：即使失去所有，你也要走自己的路。",
+        "chapter": "2 朝圣：你也只活了一次，凭什么说我选择的人生是错的？",
         "page": null,
-        "position": "下一步从第一章章首开始；当前仍停在封面、目录展开，尚未点击第一章或正文翻页。本字段确认下一阅读路径，不代表正文已定位或已读。",
-        "source": "2026-10-19 11:17授权微信读书阅读器目录现场核对",
-        "confirmed_at": "2026-10-19T11:17:33+08:00"
+        "position": "第二章开篇引语及苦闷导入段已接触；下次从该开场屏末之后继续，尚未进入K的展开故事。第一章章首至章末顺序选择性精读/略读，含略读仍属部分阅读。",
+        "source": "授权微信读书阅读器章节标题与正常翻页现场核对",
+        "confirmed_at": "2026-10-19T13:46:43+08:00"
       },
-      "next_question_status": "needs-confirmation",
+      "next_question_status": "confirmed",
       "completion": null,
       "catalog_evidence": {
         "source_url": "https://weread.qq.com/web/bookDetail/2a232a80813aba572g01473b",
@@ -297,23 +302,15 @@
         "first_chapter": "朝圣之路：即使失去所有，你也要走自己的路。",
         "second_chapter": "朝圣：你也只活了一次，凭什么说我选择的人生是错的？"
       },
-      "preflight_note": "仅封面与目录预检，正文未读；第一章不可跳过。推荐值89.8%、468人点评为公开书目快照，不作亲读结论。"
+      "preflight_note": "本场真实正文选择性阅读；全书未完读，完读计数不变。下次续读先核对活动窗口与当前屏。"
     }
   ],
-  "active_session": {
-    "run_id": "qingyouji-20261019-1339",
-    "agent_id": "cue-qingyouji-reader",
-    "book_id": "camino-qingyouji",
-    "slot": "manual_user_requested_pre_read_reservation",
-    "started_at": "2026-10-19T13:38:37+08:00",
-    "phase": "reserved_awaiting_start_notice",
-    "reading_started_at": null
-  },
+  "active_session": null,
   "synthesis": {
     "visibility": "private",
     "batch_size": 3,
     "unique_completed_count": 1,
     "batches": []
   },
-  "updated_at": "2026-10-19T13:38:37+08:00"
+  "updated_at": "2026-10-19T13:47:38+08:00"
 }
