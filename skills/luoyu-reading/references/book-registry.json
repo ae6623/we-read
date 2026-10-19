@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": 42,
+  "revision": 43,
   "timezone": "Asia/Shanghai",
   "authority": "latest origin/main; claims become effective only after serialized acceptance there",
   "migration": {
@@ -101,7 +101,7 @@
       "platform": "weread",
       "platform_book_id": null,
       "priority": "none",
-      "status": "in_progress",
+      "status": "paused",
       "owner_agent_id": "weread-auto-cloud",
       "claim": {
         "state": "held",
@@ -118,7 +118,8 @@
         "confirmed_at": "2026-10-19T04:00:08+08:00"
       },
       "next_question_status": "confirmed",
-      "completion": null
+      "completion": null,
+      "status_note": "2026-10-19 用户决定：云端先不要开始，后续本机阅读为主。云端 weread-auto-cloud 暂停运行，本书由 in_progress 转 paused，保留 held 归属与已确认续读点，不自动转交、不自动续读；若转由本机接手，须按认领流程并经用户确认后再改 owner。"
     },
     {
       "book_id": "the-swerve-greenblatt",
@@ -272,5 +273,6 @@
     "batch_size": 3,
     "unique_completed_count": 1,
     "batches": []
-  }
+  },
+  "updated_at": "2026-10-19T10:53:40+08:00"
 }
