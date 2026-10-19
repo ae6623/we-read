@@ -9,20 +9,20 @@ description: Multi-platform reading workflow for source-labeled whole-book previ
 
 **沟通记录按需读取**：先读最新 main 的 [沟通索引](references/agent-communication.md)，再读 Asia/Shanghai 今天对应的 `references/agent-communication/YYYY/MM/YYYY-MM-DD.md`；仅为跨日续接、未解决交接或证据追溯打开相关旧日，不通读全历史。开始、交接、完成或遇阻等新事件按实际发生日期追加日文件，不再追加索引；新日期/月/年的目录维护及跨日补记规则见索引。
 
-为用户把多本书读得更有效：开读即建立有来源边界的全书视角初版，再把每天真实读到的内容连回框架，完读后才做校订后的整书汇编。`references/agent-roster.json` 是类型、时段、在读书目与完读状态的唯一登记源；共享归档与 Git 规则见 `references/coordination.md`，跨 Agent 开始/结束记录见 `references/agent-communication.md`，用户最新决定见 `references/decisions.md`。使用某个平台前阅读对应的 `references/platforms/<platform>.md`（当前先有微信读书指南）。
+为用户把多本书读得更有效：开读即建立有来源边界的全书视角初版，再把每天真实读到的内容连回框架，完读后才做校订后的整书汇编。`references/book-registry.json` 是书目归属/认领、完读、`active_session` 与 `resume_point` 的权威来源；`references/agent-roster.json` 只登记身份、类型、排班及个人状态镜像，不作为书目或完读事实的唯一来源。共享归档与 Git 规则见 `references/coordination.md`，跨 Agent 开始/结束记录见 `references/agent-communication.md`，用户最新决定见 `references/decisions.md`。使用某个平台前阅读对应的 `references/platforms/<platform>.md`（当前先有微信读书指南）。
 
 ## 共享书目认领、精确续读与三本综合
 
-每场先读 `references/reading-state-protocol.md` 和权威仓库最新 `references/book-registry.json`，不要把已安装 Skill 的静态副本当实时状态；当前共享仓库为 `/workspace/we-read-main`，不在该环境时先定位获授权的同一仓库。roster 保留个人/排班登记，registry 单独负责按书去重的独占认领、续读点和综合批次；有冲突就停下核对，不代改他人记录。
+每场先读 `references/reading-state-protocol.md` 和权威仓库最新 `references/book-registry.json`，不要把已安装 Skill 的静态副本当实时状态；当前共享仓库为 `/workspace/we-read-main`，不在该环境时先定位获授权的同一仓库。book-registry 是书目归属/认领、完读、`active_session`、`resume_point` 和综合批次的权威来源；roster 只用于身份、类型、排班及个人状态镜像。有冲突就停下核对，不代改他人记录。
 
 - 先认领再开读，用户指定书优先但不得抢占活动认领；未完书跨场次保留责任，确认完读后释放。所有共享写入按协议串行接受到 main 后才生效，不以本地或 PR 分支的拟认领冒充成功。
 - 每场结束按 `templates/session-close.json` 在私有归档记录精确且有依据的下一章节/帖子/小节标题及其内部位置（页码仅可作内部辅助），以及一个基于已读内容的下次问题；未知写 `needs-confirmation`，不把百分比猜成页码。同书同日仍合并一篇，但保留每场区段。
 - 所有 Agent 累计每 3 本唯一、已确认完读书，建立一个不重叠的私有综合批次；共同观点、分歧、互补关系和 3–5 个回忆问题按 `templates/cross-book-synthesis.md` 生成。迁移已有完读书计入去重总数；重读、重试、重复消息不重复计数。未满三本不生成，资料不足留待补充。
-- 跨书综合、其私有问题及内部场次原始记录不得进入 Git、Pages 或公开索引；面向用户的此类微信读书阅读笔记按 2026-10-18 持续公开授权发布，该授权不覆盖跨书综合。每场 Cue 起止通知、失败直报、07:00/14:00 独立且不重叠等原规则保持不变。
+- 跨书综合、其私有问题及内部场次原始记录不得进入 Git、Pages 或公开索引；面向用户的此类微信读书阅读笔记按 2026-10-18 持续公开授权发布，该授权不覆盖跨书综合。每场 Cue 起止通知及失败直报保持不变；微信读书浏览器 Agent 的 06:30–07:30 与 14:00–15:00 两场各自独立且均启用，不因另一场完成而跳过。其他 Agent 时段不由此泛化。
 
 ## Agent 类型与排班
 
-先读 `references/agent-roster.json` 确认身份、实现类型、预留时段、当前书目和完读状态；该 JSON 是单一事实来源，避免在多个文档复制易过期的排班表。阅读计划的代码 Agent 只受 `references/automation-code-agent.md` 约束；浏览器/人工阅读 Agent 不需照搬其代码实现规则。新 Agent 加入时，在 roster 中登记类型和时段，并通过 `references/decisions.md` 记录用户决定；每次任务开始和结束都按沟通索引规则追加对应日期的日文件。时段冲突先协调，不同时间窗互不等待。
+先读 `references/agent-roster.json` 确认身份、实现类型和预留时段；书目归属/认领与完读以最新 `references/book-registry.json` 为准，roster 中的个人书目/完读字段仅为镜像。避免在多个文档复制易过期的排班表。浏览器微信读书 Agent 的 06:30–07:30 与 14:00–15:00 是两个独立且均启用的场次；此安排不改变其他 Agent 时段。阅读计划的代码 Agent 只受 `references/automation-code-agent.md` 约束；浏览器/人工阅读 Agent 不需照搬其代码实现规则。新 Agent 加入时，在 roster 中登记类型和时段，并通过 `references/decisions.md` 记录用户决定；每次任务开始和结束都按沟通索引规则追加对应日期的日文件。时段冲突先协调，不同时间窗互不等待。
 
 ## 后续新阅读：按章节与标题定位（2026-10-18 用户决定）
 
@@ -42,7 +42,7 @@ description: Multi-platform reading workflow for source-labeled whole-book previ
 
 ## 工作流程
 
-1. **先核配置，再决定读什么。** 先确认用户指的书、作者和平台；开读前查看 `agent-roster.json`、最新交接记录与已有归档，确认当前时段无人冲突、没有同一书目的活动运行，并核对自己的 `current_book`、`completed_books` 与当天其他场次状态。若用户明确指定新书，按指定书目开始；未指定时，优先续读自己上次未完读的 `current_book`。当前书读完后，从用户书架中选择最近添加且未完读的书继续，不再默认限制同一作者。绝不重读 `completed_books` 里的书，除非用户明确要求重读；不确定时先停下并报告，不猜。检查归档索引、全书初版、日期笔记和完读汇编，避免重复创建或覆盖。
+1. **先核配置，再决定读什么。** 先确认用户指的书、作者和平台；开读前查看最新 `book-registry.json`、`agent-roster.json`、最新交接记录与已有归档，确认当前时段无人冲突、没有同一书目的活动运行。以 registry 核对书目归属/认领、完读、`active_session` 与续读点；roster 仅核对身份、类型、排班及个人状态镜像，镜像不得覆盖或裁定 registry。按协议选择用户指定或应续读的书，绝不重读已确认完读书，除非用户明确要求重读；不确定时先停下并报告，不猜。检查归档索引、全书初版、日期笔记和完读汇编，避免重复创建或覆盖。
 2. **新书开读即产出全书视角初版（overview.html）。** 用户已明确决定：不要只给一张“预读地图”——开读时就应给出一份完整的全书视角。收集可验证的官方书目简介、目录、作者说明、用户提供的材料与可靠公开划线，结合模型自身对该作品的知识，产出全书主旨、结构、关键观点与主题关系；同时按四层来源标签（亲读 / 官方简介目录 / 用户材料 / 公开评论划线 / 综合推断）分清信息出处，并单列“阅读时要验证的问题”。它不是最终总结：未经亲读确认的部分保持推断标记，完读后校订升级为 `final.html`。没有可靠依据时，不装作掌握全书。
 3. **每日记下实际阅读并记录运行状态。** 日期笔记写实际范围、关键观点、作者如何展开、与整书框架的联系、理解变化和可迁移启发；同一本书同一天多场阅读合并为一篇，不同书籍分别建笔记；不编未读内容。日期笔记使用 `templates/date-note.html`：标出阅读员名称和 Agent 类型，以章节/帖子/小节标题和实际覆盖范围作为主要导航；指标卡片只突出实际时长、实读章节/标题、覆盖说明及有依据的全书状态，平台有效阅读时长注明计时范围/来源，不设置页码/页数或翻页数量卡片。严格区分浏览窗口时长与平台确认的有效阅读时长；翻页次数不是页数（例如 11 次翻页不能写成 11 页）。只呈现有依据的值，未知写“未确认”或“未显示”，绝不以 0、0% 或伪进度条代替未知；若窗口包含恢复、记录等活动，应写明范围，不冒称有效阅读。开始时将自己的运行状态标为 `running` 并写实际开始时间与书目；结束时更新实际结束时间、阅读范围、完成状态和 `completed_books`。
 4. **失败要直接通知用户。** 登录失效、页面打不开、发生冲突、阅读中断或其他失败时，立即在当前 Cue 私聊中说明卡点、实际完成到哪、是否影响打卡及恢复方式；同时更新 roster 与交接记录，不能只把失败留在仓库里等用户发现。打卡状态不明确时如实说，不声称成功。
@@ -117,7 +117,7 @@ description: Multi-platform reading workflow for source-labeled whole-book previ
 - `templates/session-close.json`：每场结束的私有记录模板；问题正文不进入公开共享状态。
 - `templates/cross-book-synthesis.md`：三本一组的私有综合模板。
 - `references/decisions.md`：用户决定与 Agent 沟通记录（先行阅读，含最新授权）。
-- `references/agent-roster.json`：Agent 类型、排班窗口、当前书目、完读状态与运行状态的唯一登记源。
+- `references/agent-roster.json`：Agent 身份、类型、排班窗口及个人状态镜像；不是书目归属/认领或完读的权威来源。
 - `references/coordination.md`：所有 Agent 共用的文件归档、冲突预防、Git 与公开发布规则。执行任何共享写入或发布前先读。
 - `references/agent-communication.md`：紧凑沟通索引；先读它与今天的 `references/agent-communication/YYYY/MM/YYYY-MM-DD.md`，旧日按需读取，事件追加日文件而非索引。只写适合公开的最少元数据。
 - `references/platforms/weread.md`：微信读书平台适配说明；使用 WeRead 时读取。
