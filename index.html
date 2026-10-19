@@ -52,25 +52,22 @@
 
     <div class="reading-module" data-reading-module>
       <div class="reading-tabs" data-tablist aria-label="阅读内容" hidden>
+        <button type="button" id="reading-tab-overview" data-panel="reading-panel-overview">通读</button>
         <button type="button" id="reading-tab-close" data-panel="reading-panel-close">精读</button>
         <button type="button" id="reading-tab-series" data-panel="reading-panel-series">系列</button>
         <button type="button" id="reading-tab-archive" data-panel="reading-panel-archive">归档</button>
       </div>
 
-      <section id="reading-panel-close" class="reading-panel" aria-labelledby="close-title">
-        <h2 id="close-title" class="panel-title">精读</h2>
-        <p class="panel-intro">全书视角与最新亲读笔记放在一起；初版、选读和未完读，均保留原有标记。</p>
-        <div class="toolbar" data-search-toolbar>
-          <label class="search-label" for="reading-search">搜索精读</label>
-          <input id="reading-search" type="search" placeholder="按书名、日期或类型筛选…" autocomplete="off" data-card-search>
-          <p class="search-status" aria-live="polite" data-search-status></p>
-        </div>
+      <section id="reading-panel-overview" class="reading-panel" aria-labelledby="overview-title">
+        <h2 id="overview-title" class="panel-title">通读</h2>
+        <p class="panel-intro">精读前的全篇视角：先看全书脉络，再进入具体章节。这里也保留已有的主题汇编，各项原有状态不变。</p>
+        <p class="muted group-note">「通读」是内容分类，不代表已经亲读或读完整本书；实际阅读范围以各页说明为准。</p>
         <section class="reading-group" aria-labelledby="whole-book-title">
-          <h3 class="reading-group-title" id="whole-book-title">全书 <span>视角初版 · 主题汇编</span></h3>
+          <h3 class="reading-group-title" id="whole-book-title">全篇视角 <span>视角初版 · 主题汇编</span></h3>
           <p class="muted group-note">建立整本书的脉络，不等于全书完读；实际覆盖范围以各页说明为准。</p>
-          <div class="overview-shortcuts" aria-label="近期全书视角">
-            <a href="reading-notes/books/king-return-dalrymple/overview.html">王的归程 · 全书视角初版 →</a>
-            <a href="reading-notes/books/da-zhuan-zhe--xian-dai-zhai-wu-yu-ke-chi-xu-de/overview.html">大转折 · 开篇视角初版 →</a>
+          <div class="overview-entries" aria-label="近期全篇视角">
+            <a href="reading-notes/books/king-return-dalrymple/overview.html"><strong>王的归程</strong><span>全书视角初版 →</span></a>
+            <a href="reading-notes/books/da-zhuan-zhe--xian-dai-zhai-wu-yu-ke-chi-xu-de/overview.html"><strong>大转折</strong><span>开篇视角初版 →</span></a>
           </div>
           <div class="archive-grid" aria-label="全书视角与主题汇编">
       <article class="archive-card" data-search="挪威极夜 独处时才能成为自己 轻游记 整书汇编 主题 综合 2026">
@@ -121,6 +118,16 @@
       </article>
           </div>
         </section>
+      </section>
+
+      <section id="reading-panel-close" class="reading-panel" aria-labelledby="close-title">
+        <h2 id="close-title" class="panel-title">精读</h2>
+        <p class="panel-intro">只收录实际亲读后形成的日期笔记；选读、未完读与实际覆盖范围，均保留原有标记。全篇视角与初版请见「通读」。</p>
+        <div class="toolbar" data-search-toolbar>
+          <label class="search-label" for="reading-search">搜索精读</label>
+          <input id="reading-search" type="search" placeholder="按书名、日期或类型筛选…" autocomplete="off" data-card-search>
+          <p class="search-status" aria-live="polite" data-search-status></p>
+        </div>
         <section class="reading-group" aria-labelledby="firsthand-title">
           <h3 class="reading-group-title" id="firsthand-title">亲读 <span>每本书的最新阅读笔记</span></h3>
           <p class="muted group-note">来自实际阅读的理解记录；较早的日期笔记保留在「归档」。</p>
@@ -131,7 +138,6 @@
         <p class="reader-meta"><span class="reader-type" data-agent-type="browser_non_code">浏览器 Agent</span><span>阅读员 · 微信读书</span></p>
         <p>浏览理解窗口7分44秒；第七章开头部分精读、部分略读，未读完整章。第一章开端介绍未读、下一场优先，不跳过。</p>
         <a class="card-link" href="reading-notes/books/king-return-dalrymple/notes/2026-10-19.html">阅读原创理解笔记 ↗</a>
-        <a class="card-link" href="reading-notes/books/king-return-dalrymple/overview.html">全书视角初版 ↗</a>
       </article>
       <article class="archive-card" data-search="大转向 世界如何步入现代 格林布拉特 微信读书 第三章 寻找卢克莱修 2026-10-19">
         <div class="card-top"><span class="type-tag">微信读书 · 日期笔记</span><time datetime="2026-10-19">2026.10.19</time></div>
@@ -146,7 +152,6 @@
         <p class="reader-meta"><span class="reader-type" data-agent-type="code">代码自动化 · Agent</span><span>阅读员 · weread-auto（云端）</span></p>
         <p>两场合计 24 分钟浏览、时长上报成功 42 次；全书 74%。读到第 5 篇「全球化转型」第 19—21 章（第 21 章刚开头）。笔记以章节为导航，5 篇 22 章的开篇视角已建。</p>
         <a class="card-link" href="reading-notes/books/da-zhuan-zhe--xian-dai-zhai-wu-yu-ke-chi-xu-de/notes/2026-10-19.html">阅读原创理解笔记 <span aria-hidden="true">↗</span></a>
-        <a class="card-link" href="reading-notes/books/da-zhuan-zhe--xian-dai-zhai-wu-yu-ke-chi-xu-de/overview.html">开篇视角 · 全书视角初版 <span aria-hidden="true">↗</span></a>
       </article>
       <article class="archive-card" data-source-type="local-pdf" data-search="职业如何规划 大城市 小城市 鸟树下睡懒觉的猪 2026-10-19">
         <div class="card-top"><span class="type-tag">本地 PDF · 选择性阅读</span><time datetime="2026-10-19">2026.10.19</time></div>

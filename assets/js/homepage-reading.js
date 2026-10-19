@@ -36,7 +36,8 @@
     });
   });
   // Every fresh page load starts on 精读; no stored tab or URL state overrides it.
-  activate(0);
+  const defaultIndex = tabs.findIndex((tab) => tab.id === 'reading-tab-close');
+  activate(defaultIndex >= 0 ? defaultIndex : 0);
   module.setAttribute('data-tabs-ready', '');
   list.hidden = false;
 
