@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": 41,
+  "revision": 42,
   "timezone": "Asia/Shanghai",
   "authority": "latest origin/main; claims become effective only after serialized acceptance there",
   "migration": {
@@ -238,34 +238,35 @@
         "source": "用户指定仅跳过本合集《大转向》，留在同一合集继续下一分册；合集显示标题将《王的归程》列在其后。此为当前责任登记，不是开读事件。",
         "claimed_at": "2026-10-19T09:02:49+08:00"
       },
-      "last_confirmed_progress": null,
-      "resume_point": {
-        "status": "needs-confirmation",
-        "chapter": null,
+      "last_confirmed_progress": {
+        "chapter": "第七章 秩序荡然无存",
+        "position": "章首至起义转攻营外仓储城堡段末；部分精读、部分略读，未完整读完本章。第一章尚未读、下场优先。",
+        "confirmed_at": "2026-10-19T09:38:15+08:00",
         "page": null,
-        "position": null,
-        "source": "尚未进入阅读器；下一实际场次须在授权阅读器核对可访问分册与准确起点。",
-        "confirmed_at": null
+        "progress": null
       },
-      "next_question_status": "needs-confirmation",
+      "resume_point": {
+        "status": "confirmed",
+        "chapter": "第一章 桀骜难驯之邦",
+        "page": null,
+        "position": "用户要求第一章不可跳过；下一场优先从第一章章首开始。当前阅读器仍停在第七章，不要直接下一页；先从目录选第一章。章名与目录入口已核实，第一章正文尚未读。",
+        "source": "用户本场追加指令＋微信读书官方阅读器目录；仅确认下一阅读路径，未声称已定位第一章正文。",
+        "confirmed_at": "2026-10-19T09:38:15+08:00"
+      },
+      "next_question_status": "confirmed",
       "completion": null,
       "catalog_evidence": {
         "title_author_source": "微信读书官方公开甲骨文系列书单",
         "source_url": "https://weread.qq.com/misc/booklist/10356854_7dmkDz3RV",
         "standalone_platform_book_id_status": "unverified",
-        "exact_bundle_toc_position_status": "unverified",
-        "selection_basis": "同一合集的显示标题将《王的归程》列在《大转向》之后；未独立核实合集目录顺序。"
+        "exact_bundle_toc_position_status": "verified_in_authorized_reader_2026-10-19",
+        "selection_basis": "授权阅读器真实目录确认：本分册在《大转向》之后，十章，无章下小节；作者与分册匹配，合集顶层作者名不用于本书。"
       },
-      "preflight_note": "仅完成下一分册认领，尚未进入阅读器、未开始阅读；先匹配授权阅读器中的准确可访问分册，不转入《甲骨文·西方通史》。"
+      "preflight_note": "授权阅读器目录确认准确分册及十章目录、章下无小节；本场第七章选择性阅读。下一场按用户追加指令先读第一章开端介绍，不直接续第七章。",
+      "platform_volume_title": "王的归程——阿富汗战记（1839-1842）"
     }
   ],
-  "active_session": {
-    "run_id": "browser-king-20261019-manual-0929",
-    "agent_id": "wechat-reading-browser",
-    "book_id": "king-return-dalrymple",
-    "slot": "manual_user_requested",
-    "started_at": "2026-10-19T09:28:51+08:00"
-  },
+  "active_session": null,
   "synthesis": {
     "visibility": "private",
     "batch_size": 3,
