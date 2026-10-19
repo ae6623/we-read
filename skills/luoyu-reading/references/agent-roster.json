@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "timezone": "Asia/Shanghai",
-  "updated_at": "2026-10-19T06:43:47+08:00",
+  "updated_at": "2026-10-19T10:53:40+08:00",
   "source_of_truth": true,
   "instructions": [
     "Read this roster before every scheduled reading run; work only inside the registered slot.",
@@ -24,7 +24,7 @@
       "display_name": "weread-auto（WorkBuddy 维护）",
       "type": "code",
       "implementation": "Playwright; see automation-code-agent.md",
-      "schedule_basis": "Declared in decisions.md 第 7 条；本 Agent 自登记：本机计划任务 WeReadDaily 06:00 与 18:00 双触发，每个登记时段都是独立阅读场次，即使当天另一场已完成也照常执行。",
+      "schedule_basis": "2026-10-19 用户决定：后续以本机阅读为主。本机 Windows 计划任务 WeReadDaily 06:00 与 18:00 双触发，每个登记时段都是独立阅读场次，即使当天另一场已完成也照常执行；云端 weread-auto-cloud 已暂停，不再与其互补。",
       "schedule": [
         {
           "slot": "morning",
@@ -62,7 +62,8 @@
         "evening_18_00": "未执行（当日无该窗口的启动记录）",
         "note": "据实登记，不把计划时间写成实际运行；当日实际运行为 08:00 一次旧触发的计划任务，以及多次手动/调试/验证触发（最近一次 23:00–23:01）。"
       },
-      "book_author": "纪静蓉"
+      "book_author": "纪静蓉",
+      "enabled": true
     },
     {
       "id": "wechat-reading-browser",
@@ -115,21 +116,21 @@
       "type": "code",
       "implementation": "Playwright on WorkBuddy 云端沙箱；与本地 weread-auto 共享同一书目注册表，串行认领，互不重叠。",
       "deployment": "cloud",
-      "schedule_basis": "云端内置调度器每日 06:00–07:00 与 19:00–20:00（北京时间）各自动执行一场；本机计划任务停用后由云端接管。",
+      "schedule_basis": "2026-10-19 用户决定停用：云端自动阅读不再启动，后续以本机 weread-auto 为主。云端内置调度器默认关闭（config cloud.enabled=false / WEREAD_CLOUD_SCHEDULER=off），重启沙箱也不会自动排班或补跑；恢复须用户明确指令并显式打开开关。",
       "schedule": [
         {
           "slot": "morning",
           "window_start": "06:00",
           "window_end": "06:30",
           "trigger_at": "06:00",
-          "behavior": "run_independently"
+          "behavior": "suspended_by_user_2026_10_19"
         },
         {
           "slot": "evening",
           "window_start": "18:00",
           "window_end": "18:30",
           "trigger_at": "18:00",
-          "behavior": "run_independently"
+          "behavior": "suspended_by_user_2026_10_19"
         }
       ],
       "current_book": "大转折：现代债务与可持续的增长",
@@ -147,7 +148,11 @@
       "last_slot": "local:manual_outside_registered_windows",
       "last_ended_at": "2026-10-19 04:00:08",
       "last_blocked_reason": "未能在书架选到书",
-      "last_output": "reading-notes/books/da-zhuan-zhe--xian-dai-zhai-wu-yu-ke-chi-xu-de/notes/2026-10-18.html"
+      "last_output": "reading-notes/books/da-zhuan-zhe--xian-dai-zhai-wu-yu-ke-chi-xu-de/notes/2026-10-18.html",
+      "enabled": false,
+      "suspended_at": "2026-10-19T10:55:00+08:00",
+      "suspended_reason": "用户决定：云端先不要开始，后面本机阅读为主。",
+      "assignment_note": "云端已暂停，不再产生场次与阅读事件。《大转折：现代债务与可持续的增长》转为 paused，保留已确认续读点与归属，不自动转交本机；转交须按 registry 认领流程并经用户确认。"
     },
     {
       "id": "local-pdf-reader",
