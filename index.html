@@ -8,6 +8,7 @@
   <title>读书笔记｜we-read</title>
   <link rel="stylesheet" href="assets/css/site.css">
   <link rel="stylesheet" href="assets/css/reading-metrics.css">
+  <link rel="stylesheet" href="assets/css/homepage-reading.css">
   <style>
     .office-entry-nav{display:flex;justify-content:flex-end;margin:0 0 16px}
     .office-entry{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;flex-shrink:0;border:1px solid #e4c89f;border-radius:50%;background:#e4c89f;color:#183c34;font-size:23px;line-height:1;text-decoration:none}
@@ -43,22 +44,87 @@
   <main id="main" class="layout">
     <section class="intro-row" aria-labelledby="archive-title">
       <div>
-        <p class="eyebrow eyebrow-dark">THE ARCHIVE</p>
-        <h2 id="archive-title">阅读归档</h2>
-        <p class="muted">以日期笔记记录当时的阅读，以主题汇编连接整本书的脉络。</p>
+        <p class="eyebrow eyebrow-dark">THE READING SHELF</p>
+        <h2 id="archive-title">阅读书架</h2>
+        <p class="muted">从全书脉络到亲读注脚，再按系列与日期回看。</p>
       </div>
-      <div class="archive-count"><strong>19</strong><span>个可浏览条目</span></div>
     </section>
 
-    <nav aria-label="阅读分类" style="display:flex;flex-wrap:wrap;gap:12px 20px;margin:18px 0;color:var(--green)"><a href="reading-notes/index.html">按书归档</a><a href="reading-notes/series/index.html">系列</a><a href="reading-notes/series/qingyouji/index.html">轻游记 · 20部候选导览（正文未读）</a></nav>
+    <div class="reading-module" data-reading-module>
+      <div class="reading-tabs" data-tablist aria-label="阅读内容" hidden>
+        <button type="button" id="reading-tab-close" data-panel="reading-panel-close">精读</button>
+        <button type="button" id="reading-tab-series" data-panel="reading-panel-series">系列</button>
+        <button type="button" id="reading-tab-archive" data-panel="reading-panel-archive">归档</button>
+      </div>
 
-    <section class="toolbar" aria-label="筛选归档内容">
-      <label class="search-label" for="archive-search">搜索笔记</label>
-      <input id="archive-search" type="search" placeholder="按书名、日期或类型筛选…" autocomplete="off">
-      <p id="search-status" class="search-status" aria-live="polite">显示全部 19 个条目</p>
-    </section>
+      <section id="reading-panel-close" class="reading-panel" aria-labelledby="close-title">
+        <h2 id="close-title" class="panel-title">精读</h2>
+        <p class="panel-intro">全书视角与最新亲读笔记放在一起；初版、选读和未完读，均保留原有标记。</p>
+        <div class="toolbar" data-search-toolbar>
+          <label class="search-label" for="reading-search">搜索精读</label>
+          <input id="reading-search" type="search" placeholder="按书名、日期或类型筛选…" autocomplete="off" data-card-search>
+          <p class="search-status" aria-live="polite" data-search-status></p>
+        </div>
+        <section class="reading-group" aria-labelledby="whole-book-title">
+          <h3 class="reading-group-title" id="whole-book-title">全书 <span>视角初版 · 主题汇编</span></h3>
+          <p class="muted group-note">建立整本书的脉络，不等于全书完读；实际覆盖范围以各页说明为准。</p>
+          <div class="overview-shortcuts" aria-label="近期全书视角">
+            <a href="reading-notes/books/king-return-dalrymple/overview.html">王的归程 · 全书视角初版 →</a>
+            <a href="reading-notes/books/da-zhuan-zhe--xian-dai-zhai-wu-yu-ke-chi-xu-de/overview.html">大转折 · 开篇视角初版 →</a>
+          </div>
+          <div class="archive-grid" aria-label="全书视角与主题汇编">
+      <article class="archive-card" data-search="挪威极夜 独处时才能成为自己 轻游记 整书汇编 主题 综合 2026">
+        <div class="card-top">
+          <span class="type-tag type-tag-gold">整书汇编</span>
+          <div class="card-top-meta">
+            <span class="subtle">HTML · EPUB</span>
+            <time class="updated-time" datetime="2026-10-17T16:53:00+08:00" aria-label="最后更新：2026年10月17日 16:53（UTC+8）">更新于 2026.10.17 16:53</time>
+          </div>
+        </div>
+        <h3>挪威极夜：主题汇编</h3>
+        <p class="reader-meta"><span class="reader-type" data-agent-type="browser_non_code">浏览器 Agent</span><span>阅读员 · 微信读书</span></p>
+        <p>将现有日期笔记与亲读覆盖内容汇总为一份可连续阅读的主题归档。</p>
+        <div class="card-actions">
+          <a class="card-link" href="books/norway-night/">打开 HTML <span aria-hidden="true">↗</span></a>
+          <a class="download-link" href="books/norway-night/collection.epub" download>下载 EPUB ↓</a>
+        </div>
+      </article>
+      <article class="archive-card" data-search="住小房子的女人 整书汇编 主题 综合 2026">
+        <div class="card-top"><span class="type-tag type-tag-gold">整书汇编</span><span class="subtle">HTML · EPUB</span><time datetime="2026-10-17">2026.10.17</time></div>
+        <h3>住小房子的女人：全书视角初版</h3>
+        <p class="reader-meta"><span class="reader-type" data-agent-type="code">代码 Agent</span><span>阅读员 · weread-auto</span></p>
+        <p>1 天阅读累计约 6 分钟的自动精读归档，开读即建。</p>
+        <div class="card-actions">
+          <a class="card-link" href="books/zhu-xiao-fang-zi-de-nv-ren/">打开 HTML <span aria-hidden="true">↗</span></a>
 
-    <section class="archive-grid" id="archive-grid" aria-label="阅读笔记列表">
+        </div>
+      </article>
+      <article class="archive-card" data-search="玉簟秋 整书汇编 主题 综合 2026">
+        <div class="card-top"><span class="type-tag type-tag-gold">整书汇编</span><span class="subtle">HTML · EPUB</span><time datetime="2026-10-17">2026.10.17</time></div>
+        <h3>玉簟秋：全书视角初版</h3>
+        <p class="reader-meta"><span class="reader-type" data-agent-type="code">代码 Agent</span><span>阅读员 · weread-auto</span></p>
+        <p>1 天阅读累计约 3 分钟的自动精读归档，开读即建。</p>
+        <div class="card-actions">
+          <a class="card-link" href="books/yu-dian-qiu/">打开 HTML <span aria-hidden="true">↗</span></a>
+
+        </div>
+      </article>
+      <article class="archive-card" data-search="时势 整书汇编 主题 综合 2026">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="subtle">HTML · EPUB</span><time datetime="2026-10-17">2026.10.17</time></div>
+        <h3>时势：全书视角初版</h3>
+        <p class="reader-meta"><span class="reader-type" data-agent-type="code">代码 Agent</span><span>阅读员 · weread-auto</span></p>
+        <p>1 天阅读累计约 3 分钟的自动精读归档，开读即建。</p>
+        <div class="card-actions">
+          <a class="card-link" href="reading-notes/books/shi-shi/overview.html">打开 HTML <span aria-hidden="true">↗</span></a>
+
+        </div>
+      </article>
+          </div>
+        </section>
+        <section class="reading-group" aria-labelledby="firsthand-title">
+          <h3 class="reading-group-title" id="firsthand-title">亲读 <span>每本书的最新阅读笔记</span></h3>
+          <p class="muted group-note">来自实际阅读的理解记录；较早的日期笔记保留在「归档」。</p>
+          <div class="archive-grid" aria-label="最新亲读笔记">
       <article class="archive-card" data-search="王的归程 阿富汗 达尔林普尔 第七章 秩序荡然无存 第一章 2026-10-19">
         <div class="card-top"><span class="type-tag">微信读书 · 选择性阅读</span><time datetime="2026-10-19">2026.10.19</time></div>
         <h3>王的归程：阿富汗战记（1839～1842）</h3>
@@ -103,13 +169,6 @@
         <p>PDF 第 1–20 页已读至文件末；原帖完整性未确认。旧增长条件、改革约束与转型。</p>
         <a class="card-link" href="reading-notes/books/local-shen-hua-de-po-mie-flp713/notes/2026-10-18.html">阅读原创理解笔记 <span aria-hidden="true">↗</span></a>
       </article>
-      <article class="archive-card" data-source-type="local-pdf" data-search="因为贱，所以生活艰辛 本地 PDF 原创理解 日期笔记 2026-10-18">
-        <div class="card-top"><span class="type-tag">本地 PDF · 日期笔记</span><time datetime="2026-10-18">2026.10.18</time></div>
-        <h3>因为贱，所以生活艰辛</h3>
-        <p class="reader-meta"><span class="reader-type" data-agent-type="code">代码辅助 · 文件只读</span><span>阅读员 · Cue 本地试读</span></p>
-        <p>PDF 第 1–60 / 185 页；未完读，续读点第 61 页。资源差异、技能与选择空间。</p>
-        <a class="card-link" href="reading-notes/books/local-yin-wei-jian-dapeng/notes/2026-10-18.html">阅读原创理解笔记 <span aria-hidden="true">↗</span></a>
-      </article>
       <article class="archive-card" data-source-type="local-pdf" data-search="老公坚持房价会跌，我现在一看房价就满嘴吐血。 本地 PDF 原创理解 日期笔记 2026-10-18">
         <div class="card-top"><span class="type-tag">本地 PDF · 日期笔记</span><time datetime="2026-10-18">2026.10.18</time></div>
         <h3>老公坚持房价会跌，我现在一看房价就满嘴吐血。</h3>
@@ -117,7 +176,6 @@
         <p>PDF 第 1–47 页可提取正文已读至末；字体映射警告，可能缺字。预测、共同决定与重新开始。</p>
         <a class="card-link" href="reading-notes/books/local-lao-gong-jian-chi-fang-jia-hui-die/notes/2026-10-18.html">阅读原创理解笔记 <span aria-hidden="true">↗</span></a>
       </article>
-
       <article class="archive-card featured" data-search="挪威极夜 独处时才能成为自己 轻游记 日期总结 阅读笔记 2026-10-17">
         <div class="card-top"><span class="type-tag">日期笔记</span><time datetime="2026-10-17">2026.10.17</time></div>
         <h3>挪威极夜：独处时才能成为自己（轻游记）</h3>
@@ -125,28 +183,69 @@
         <p>从旅途与独处出发，记录本次阅读中留下的想法与触动。</p>
         <a class="card-link" href="notes/2026/2026-10-17-norway-night.html">阅读日期总结 <span aria-hidden="true">↗</span></a>
       </article>
-      <article class="archive-card" data-search="挪威极夜 独处时才能成为自己 轻游记 整书汇编 主题 综合 2026">
-        <div class="card-top">
-          <span class="type-tag type-tag-gold">整书汇编</span>
-          <div class="card-top-meta">
-            <span class="subtle">HTML · EPUB</span>
-            <time class="updated-time" datetime="2026-10-17T16:53:00+08:00" aria-label="最后更新：2026年10月17日 16:53（UTC+8）">更新于 2026.10.17 16:53</time>
-          </div>
-        </div>
-        <h3>挪威极夜：主题汇编</h3>
-        <p class="reader-meta"><span class="reader-type" data-agent-type="browser_non_code">浏览器 Agent</span><span>阅读员 · 微信读书</span></p>
-        <p>将现有日期笔记与亲读覆盖内容汇总为一份可连续阅读的主题归档。</p>
-        <div class="card-actions">
-          <a class="card-link" href="books/norway-night/">打开 HTML <span aria-hidden="true">↗</span></a>
-          <a class="download-link" href="books/norway-night/collection.epub" download>下载 EPUB ↓</a>
-        </div>
-      </article>
       <article class="archive-card" data-search="世界这么大 我想到处躺 日期总结 部分阅读 读书笔记 2026-10-18">
         <div class="card-top"><span class="type-tag">日期笔记</span><time datetime="2026-10-18">2026.10.18</time></div>
         <h3>世界这么大，我想到处躺</h3>
         <p class="reader-meta"><span class="reader-type" data-agent-type="browser_non_code">浏览器 Agent</span><span>阅读员 · 微信读书</span></p>
         <p>远行的自由，也有边界：从德里初见、拒绝被安排，读到旅馆噪声中的自由与安宁。</p>
         <a class="card-link" href="notes/2026/2026-10-18-world-is-wide.html">阅读日期总结 <span aria-hidden="true">↗</span></a>
+      </article>
+      <article class="archive-card" data-search="住小房子的女人 2026-10-17 日期笔记 阅读笔记 纪静蓉">
+        <div class="card-top"><span class="type-tag">日期笔记</span><time datetime="2026-10-17">2026.10.17</time></div>
+        <h3>住小房子的女人</h3>
+        <p class="reader-meta"><span class="reader-type" data-agent-type="code">代码 Agent</span><span>阅读员 · weread-auto</span></p>
+        <p>本次阅读覆盖第一章 “嫁妆”和“招赘”、第二章 去父留子。开篇处读到：“32岁的离婚律师路佳与男友恋爱三年，因偷偷给自己…</p>
+        <a class="card-link" href="notes/2026/2026-10-17-zhu-xiao-fang-zi-de-nv-ren.html">阅读日期总结 <span aria-hidden="true">↗</span></a>
+      </article>
+      <article class="archive-card" data-search="玉簟秋 2026-10-17 日期笔记 阅读笔记 灵希">
+        <div class="card-top"><span class="type-tag">日期笔记</span><time datetime="2026-10-17">2026.10.17</time></div>
+        <h3>玉簟秋</h3>
+        <p class="reader-meta"><span class="reader-type" data-agent-type="code">代码 Agent</span><span>阅读员 · weread-auto</span></p>
+        <p>本次阅读覆盖版权信息。开篇处读到：“原来这世上终有些感情，赢了最初，败了最后。”收尾处读到：“当爱已经回不去，宿命是早就…</p>
+        <a class="card-link" href="notes/2026/2026-10-17-yu-dian-qiu.html">阅读日期总结 <span aria-hidden="true">↗</span></a>
+      </article>
+      <article class="archive-card" data-search="时势 2026-10-17 日期笔记 阅读笔记 小 Lin">
+        <div class="card-top"><span class="type-tag">日期笔记</span><time datetime="2026-10-17">2026.10.17</time></div>
+        <h3>时势</h3>
+        <p class="reader-meta"><span class="reader-type" data-agent-type="code">代码 Agent</span><span>阅读员 · weread-auto</span></p>
+        <p>本次阅读覆盖版权信息、序言 经济学是有温度的。开篇处读到：“通过分析这些国家的经济与金融事件，揭示了宏观经济中的周期性波…</p>
+        <a class="card-link" href="reading-notes/books/shi-shi/notes/2026-10-17.html">阅读日期总结 <span aria-hidden="true">↗</span></a>
+      </article>
+          </div>
+        </section>
+        <p class="empty-state" data-empty-state hidden>没有找到匹配的内容。试试书名或日期。</p>
+      </section>
+
+      <section id="reading-panel-series" class="reading-panel" aria-labelledby="series-title">
+        <h2 id="series-title" class="panel-title">系列</h2>
+        <p class="panel-intro">从系列、作者与主题找到下一本。公开资料导览与实际亲读笔记分别展示。</p>
+        <article class="series-preview">
+          <p class="eyebrow eyebrow-dark">QINGYOUJI · 轻游记</p>
+          <h3>轻游记（系列）</h3>
+          <p class="series-author">猴面包的树（作者）</p>
+          <span class="type-tag type-tag-gold">公开资料导览／正文未读</span>
+          <p>20 部新候选，按四个主题浏览公开资料与官方书目入口。这批候选正文亲读 0 本，不是系列完整书目，也不是 20 本阅读笔记或完读记录。</p>
+          <a class="card-link" href="reading-notes/series/qingyouji/index.html">进入轻游记系列导览 →</a>
+        </article>
+        <a class="panel-route" href="reading-notes/series/index.html">查看系列总览 →</a>
+      </section>
+
+      <section id="reading-panel-archive" class="reading-panel" aria-labelledby="history-title">
+        <h2 id="history-title" class="panel-title">归档</h2>
+        <p class="panel-intro">保留较早的日期笔记与归档说明，沿着时间回看阅读轨迹。</p>
+        <a class="panel-route" href="reading-notes/index.html">进入按书归档 →</a>
+        <div class="toolbar" data-search-toolbar>
+          <label class="search-label" for="archive-search">搜索归档</label>
+          <input id="archive-search" type="search" placeholder="按书名、日期或类型筛选…" autocomplete="off" data-card-search>
+          <p id="search-status" class="search-status" aria-live="polite" data-search-status></p>
+        </div>
+        <div class="archive-grid" id="archive-grid" aria-label="历史笔记与归档说明">
+      <article class="archive-card" data-source-type="local-pdf" data-search="因为贱，所以生活艰辛 本地 PDF 原创理解 日期笔记 2026-10-18">
+        <div class="card-top"><span class="type-tag">本地 PDF · 日期笔记</span><time datetime="2026-10-18">2026.10.18</time></div>
+        <h3>因为贱，所以生活艰辛</h3>
+        <p class="reader-meta"><span class="reader-type" data-agent-type="code">代码辅助 · 文件只读</span><span>阅读员 · Cue 本地试读</span></p>
+        <p>PDF 第 1–60 / 185 页；未完读，续读点第 61 页。资源差异、技能与选择空间。</p>
+        <a class="card-link" href="reading-notes/books/local-yin-wei-jian-dapeng/notes/2026-10-18.html">阅读原创理解笔记 <span aria-hidden="true">↗</span></a>
       </article>
       <article class="archive-card" data-search="世界这么大 我想到处躺 日期总结 部分阅读 读书笔记 2026-10-17">
         <div class="card-top"><span class="type-tag">日期笔记</span><time datetime="2026-10-17">2026.10.17</time></div>
@@ -161,59 +260,10 @@
         <p>日期笔记独立保存；整书完成后再汇编，保留实际阅读范围与来源边界。</p>
         <a class="card-link" href="README.md">查看站点与模板说明 <span aria-hidden="true">↗</span></a>
       </article>
-      <article class="archive-card" data-search="住小房子的女人 2026-10-17 日期笔记 阅读笔记 纪静蓉">
-        <div class="card-top"><span class="type-tag">日期笔记</span><time datetime="2026-10-17">2026.10.17</time></div>
-        <h3>住小房子的女人</h3>
-        <p class="reader-meta"><span class="reader-type" data-agent-type="code">代码 Agent</span><span>阅读员 · weread-auto</span></p>
-        <p>本次阅读覆盖第一章 “嫁妆”和“招赘”、第二章 去父留子。开篇处读到：“32岁的离婚律师路佳与男友恋爱三年，因偷偷给自己…</p>
-        <a class="card-link" href="notes/2026/2026-10-17-zhu-xiao-fang-zi-de-nv-ren.html">阅读日期总结 <span aria-hidden="true">↗</span></a>
-      </article>
-      <article class="archive-card" data-search="住小房子的女人 整书汇编 主题 综合 2026">
-        <div class="card-top"><span class="type-tag type-tag-gold">整书汇编</span><span class="subtle">HTML · EPUB</span><time datetime="2026-10-17">2026.10.17</time></div>
-        <h3>住小房子的女人：全书视角初版</h3>
-        <p class="reader-meta"><span class="reader-type" data-agent-type="code">代码 Agent</span><span>阅读员 · weread-auto</span></p>
-        <p>1 天阅读累计约 6 分钟的自动精读归档，开读即建。</p>
-        <div class="card-actions">
-          <a class="card-link" href="books/zhu-xiao-fang-zi-de-nv-ren/">打开 HTML <span aria-hidden="true">↗</span></a>
-
         </div>
-      </article>
-      <article class="archive-card" data-search="玉簟秋 2026-10-17 日期笔记 阅读笔记 灵希">
-        <div class="card-top"><span class="type-tag">日期笔记</span><time datetime="2026-10-17">2026.10.17</time></div>
-        <h3>玉簟秋</h3>
-        <p class="reader-meta"><span class="reader-type" data-agent-type="code">代码 Agent</span><span>阅读员 · weread-auto</span></p>
-        <p>本次阅读覆盖版权信息。开篇处读到：“原来这世上终有些感情，赢了最初，败了最后。”收尾处读到：“当爱已经回不去，宿命是早就…</p>
-        <a class="card-link" href="notes/2026/2026-10-17-yu-dian-qiu.html">阅读日期总结 <span aria-hidden="true">↗</span></a>
-      </article>
-      <article class="archive-card" data-search="玉簟秋 整书汇编 主题 综合 2026">
-        <div class="card-top"><span class="type-tag type-tag-gold">整书汇编</span><span class="subtle">HTML · EPUB</span><time datetime="2026-10-17">2026.10.17</time></div>
-        <h3>玉簟秋：全书视角初版</h3>
-        <p class="reader-meta"><span class="reader-type" data-agent-type="code">代码 Agent</span><span>阅读员 · weread-auto</span></p>
-        <p>1 天阅读累计约 3 分钟的自动精读归档，开读即建。</p>
-        <div class="card-actions">
-          <a class="card-link" href="books/yu-dian-qiu/">打开 HTML <span aria-hidden="true">↗</span></a>
-
-        </div>
-      </article>
-      <article class="archive-card" data-search="时势 2026-10-17 日期笔记 阅读笔记 小 Lin">
-        <div class="card-top"><span class="type-tag">日期笔记</span><time datetime="2026-10-17">2026.10.17</time></div>
-        <h3>时势</h3>
-        <p class="reader-meta"><span class="reader-type" data-agent-type="code">代码 Agent</span><span>阅读员 · weread-auto</span></p>
-        <p>本次阅读覆盖版权信息、序言 经济学是有温度的。开篇处读到：“通过分析这些国家的经济与金融事件，揭示了宏观经济中的周期性波…</p>
-        <a class="card-link" href="reading-notes/books/shi-shi/notes/2026-10-17.html">阅读日期总结 <span aria-hidden="true">↗</span></a>
-      </article>
-      <article class="archive-card" data-search="时势 整书汇编 主题 综合 2026">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="subtle">HTML · EPUB</span><time datetime="2026-10-17">2026.10.17</time></div>
-        <h3>时势：全书视角初版</h3>
-        <p class="reader-meta"><span class="reader-type" data-agent-type="code">代码 Agent</span><span>阅读员 · weread-auto</span></p>
-        <p>1 天阅读累计约 3 分钟的自动精读归档，开读即建。</p>
-        <div class="card-actions">
-          <a class="card-link" href="reading-notes/books/shi-shi/overview.html">打开 HTML <span aria-hidden="true">↗</span></a>
-
-        </div>
-      </article>
-    </section>
-    <p id="empty-state" class="empty-state" hidden>没有找到匹配的内容。试试书名或日期。</p>
+        <p id="empty-state" class="empty-state" data-empty-state hidden>没有找到匹配的内容。试试书名或日期。</p>
+      </section>
+    </div>
 
     <section class="principles" aria-labelledby="principles-title">
       <div class="principle-mark" aria-hidden="true">“</div>
@@ -229,6 +279,6 @@
     <span>we-read · 阅读札记归档</span>
     <span>静态页面 · 由 GitHub Pages 提供</span>
   </footer>
-  <script src="assets/js/site.js" defer></script>
+  <script src="assets/js/homepage-reading.js" defer></script>
 </body>
 </html>
