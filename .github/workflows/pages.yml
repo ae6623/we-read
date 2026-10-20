@@ -26,7 +26,9 @@ jobs:
       - name: Generate public reading room state
         run: python3 scripts/build-agent-dashboard.py
       - name: Verify progress screen and public snapshot
-        run: python3 scripts/check-agent-dashboard.py
+        run: |
+          python3 scripts/check-agent-dashboard.py
+          python3 scripts/check-team-book-links.py
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload static site
