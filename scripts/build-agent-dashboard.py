@@ -43,6 +43,21 @@ TARGET_SCHEDULES = {
 }
 
 
+def public_note_url(root, book_id):
+    """Return the newest existing public date note, never invent an archive path."""
+    if not isinstance(book_id, str) or not re.fullmatch(r"[a-z0-9-]+", book_id):
+        return None
+    candidates = list((root / "reading-notes/books" / book_id / "notes").glob("????-??-??.html"))
+    legacy_slug = {"norway-night": "norway-night", "world-is-wide": "world-is-wide", "zhu-xiao-fang-zi-de-nv-ren": "zhu-xiao-fang-zi-de-nv-ren"}.get(book_id)
+    if legacy_slug:
+        candidates.extend((root / "notes").glob(f"*/????-??-??-{legacy_slug}.html"))
+    candidates = [p for p in candidates if p.is_file() and re.match(r"\d{4}-\d{2}-\d{2}", p.name)]
+    if not candidates:
+        return None
+    latest = max(candidates, key=lambda p: (p.name[:10], p.as_posix()))
+    return "../" + latest.relative_to(root).as_posix()
+
+
 def build(root):
     refs = root / "skills/luoyu-reading/references"
     roster = json.loads((refs / "agent-roster.json").read_text(encoding="utf-8"))
@@ -184,7 +199,7 @@ def build(root):
         claim=source.get("claim") if isinstance(source.get("claim"),dict) else {}
         progress=source.get("last_confirmed_progress")
         safe_progress=progress.strip() if isinstance(progress,str) and re.fullmatch(r"\s*\d+(?:\.\d+)?%\s*",progress) else None
-        books.append({"id":source.get("book_id"),"title":source.get("title"),"author":source.get("author"),"status":source.get("status","unknown"),"owner":source.get("owner_agent_id"),"claimState":claim.get("state","unknown"),"priority":source.get("priority"),"progress":safe_progress})
+        books.append({"id":source.get("book_id"),"title":source.get("title"),"author":source.get("author"),"status":source.get("status","unknown"),"owner":source.get("owner_agent_id"),"claimState":claim.get("state","unknown"),"priority":source.get("priority"),"progress":safe_progress,"noteUrl":public_note_url(root, source.get("book_id"))})
     return {"schemaVersion":1,"generatedAt":now.isoformat(),"progressAsOf":day,"communicationDate":day,"rosterUpdatedAt":iso(roster.get("updated_at")),"revision":registry.get("revision"),"timezone":roster.get("timezone","unknown"),"agents":agents,"books":books}
 
 

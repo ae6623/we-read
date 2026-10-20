@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-18T19:39:44.420262+00:00",
-  "progressAsOf": "2026-10-19",
-  "communicationDate": "2026-10-19",
-  "rosterUpdatedAt": "2026-10-19T03:39:26+08:00",
-  "revision": 34,
+  "generatedAt": "2026-10-20T08:11:36.330938+00:00",
+  "progressAsOf": "2026-10-20",
+  "communicationDate": "2026-10-20",
+  "rosterUpdatedAt": "2026-10-20T16:01:24+08:00",
+  "revision": 54,
   "timezone": "Asia/Shanghai",
   "agents": [
     {
@@ -27,7 +27,7 @@
         }
       ],
       "scheduleBasis": "用户确认的目标计划；执行未据此推断",
-      "schedulePaused": true,
+      "schedulePaused": false,
       "progressDisplay": {
         "bookTitle": "住小房子的女人",
         "bookStatus": "in_progress",
@@ -42,11 +42,11 @@
     },
     {
       "id": "wechat-reading-browser",
-      "name": "微信读书",
+      "name": "阅读员-微信读书",
       "type": "browser_non_code",
-      "runStatus": "unknown",
-      "lastStartedAt": "2026-10-18T02:16:04+08:00",
-      "lastEndedAt": "2026-10-18T02:23:18+08:00",
+      "runStatus": "running",
+      "lastStartedAt": "2026-10-20T16:01:24+08:00",
+      "lastEndedAt": null,
       "schedule": [
         {
           "start": "06:30",
@@ -62,15 +62,16 @@
       "scheduleBasis": "用户确认的目标计划；执行未据此推断",
       "schedulePaused": false,
       "progressDisplay": {
-        "bookTitle": "大转向：世界如何步入现代",
+        "bookTitle": "王的归程：阿富汗战记（1839～1842）（甲骨文）",
         "bookStatus": "in_progress",
-        "recordedStatus": "最近已确认部分阅读 · 非当前在线状态",
-        "coverage": "第三章《寻找卢克莱修》开篇至西塞罗评价段末（截至 2026-10-18）",
+        "recordedStatus": "近期登记运行中 · 非在线探测",
+        "coverage": "已确认章节：《第二章 心意未决》；具体阅读位置不公开",
         "duration": "未知",
-        "durationScope": "未记录本段有效时长",
-        "recordedAt": "2026-10-18T14:38:27+08:00",
-        "sourceLabel": "注册表已确认边界",
-        "note": "最近已确认的书目覆盖如上；不根据计划推断正在阅读。旧书《世界这么大，我想到处躺》已暂停。"
+        "durationScope": "活动登记不等于实际阅读时长",
+        "recordedAt": "2026-10-20T16:01:24+08:00",
+        "sourceLabel": "注册表已确认进度",
+        "note": "以较新活动登记为准，未确认本场新增覆盖或结束结果。",
+        "runningConfirmed": true
       }
     },
     {
@@ -78,8 +79,8 @@
       "name": "weread-auto（云端）",
       "type": "code",
       "runStatus": "running",
-      "lastStartedAt": "2026-10-19T03:39:15+08:00",
-      "lastEndedAt": null,
+      "lastStartedAt": "2026-10-19T03:57:39+08:00",
+      "lastEndedAt": "2026-10-19T04:00:08+08:00",
       "schedule": [
         {
           "start": "10:00",
@@ -96,20 +97,19 @@
       "schedulePaused": false,
       "progressDisplay": {
         "bookTitle": "大转折：现代债务与可持续的增长",
-        "bookStatus": "in_progress",
-        "recordedStatus": "近期登记运行中 · 非在线探测",
+        "bookStatus": "paused",
+        "recordedStatus": "较新活动锁存在；运行状态待核验",
         "coverage": "《泡沫是好还是坏？》章内；未声称全书完成；注册表确认进度 74%",
         "duration": "未知",
-        "durationScope": "活动登记不等于实际阅读时长",
-        "recordedAt": "2026-10-19T03:39:15+08:00",
-        "sourceLabel": "今日通信（阅读事件待核验）",
-        "note": "以较新活动登记为准，未确认本场新增覆盖或结束结果。",
-        "runningConfirmed": true
+        "durationScope": "较新场次时长未知",
+        "recordedAt": "2026-10-19T04:00:08+08:00",
+        "sourceLabel": "较新运行登记",
+        "note": "较新记录优先；已确认的历史章节覆盖不代表本场新增阅读。"
       }
     },
     {
       "id": "local-pdf-reader",
-      "name": "Windows读书",
+      "name": "阅读员-Windows读书",
       "type": "code",
       "runStatus": "blocked",
       "lastStartedAt": "2026-10-19T01:40:41+08:00",
@@ -128,6 +128,79 @@
         "sourceLabel": "2026-10-19 沟通核实",
         "note": "本机工具及替代篇目预检受阻；保留已有续读点，未声称完成。"
       }
+    },
+    {
+      "id": "cue-qingyouji-reader",
+      "name": "阅读员-轻游记读书员",
+      "type": "browser_non_code",
+      "runStatus": "idle",
+      "lastStartedAt": "2026-10-20T01:16:28+08:00",
+      "lastEndedAt": "2026-10-20T01:24:59+08:00",
+      "schedule": [
+        {
+          "start": "01:00",
+          "end": "01:20",
+          "trigger": "01:00"
+        },
+        {
+          "start": "07:00",
+          "end": "07:20",
+          "trigger": "07:00"
+        },
+        {
+          "start": "09:00",
+          "end": "09:20",
+          "trigger": "09:00"
+        },
+        {
+          "start": "11:00",
+          "end": "11:20",
+          "trigger": "11:00"
+        },
+        {
+          "start": "13:00",
+          "end": "13:20",
+          "trigger": "13:00"
+        },
+        {
+          "start": "15:00",
+          "end": "15:20",
+          "trigger": "15:00"
+        },
+        {
+          "start": "17:00",
+          "end": "17:20",
+          "trigger": "17:00"
+        },
+        {
+          "start": "19:00",
+          "end": "19:20",
+          "trigger": "19:00"
+        },
+        {
+          "start": "21:00",
+          "end": "21:20",
+          "trigger": "21:00"
+        },
+        {
+          "start": "23:00",
+          "end": "23:20",
+          "trigger": "23:00"
+        }
+      ],
+      "scheduleBasis": "用户确认的目标计划；执行未据此推断",
+      "schedulePaused": false,
+      "progressDisplay": {
+        "bookTitle": "朝圣之路：即使失去所有，你也要走自己的路（轻游记）",
+        "bookStatus": "in_progress",
+        "recordedStatus": "已有确认进度；当前场次状态待核验",
+        "coverage": "已确认章节：《2 朝圣：你也只活了一次，凭什么说我选择的人生是错的？／章末附图之后》；具体阅读位置不公开",
+        "duration": "未知",
+        "durationScope": "没有本次场次的确认时长",
+        "recordedAt": "2026-10-20T01:24:59+08:00",
+        "sourceLabel": "注册表已确认进度",
+        "note": "书目归属按最新注册表；不沿用旧书阅读事实。"
+      }
     }
   ],
   "books": [
@@ -139,7 +212,8 @@
       "owner": "weread-auto",
       "claimState": "held",
       "priority": "continue_current",
-      "progress": "12%"
+      "progress": "12%",
+      "noteUrl": "../notes/2026/2026-10-17-zhu-xiao-fang-zi-de-nv-ren.html"
     },
     {
       "id": "world-is-wide",
@@ -149,7 +223,8 @@
       "owner": "wechat-reading-browser",
       "claimState": "held",
       "priority": "none",
-      "progress": null
+      "progress": null,
+      "noteUrl": "../notes/2026/2026-10-18-world-is-wide.html"
     },
     {
       "id": "norway-night",
@@ -159,27 +234,30 @@
       "owner": null,
       "claimState": "released",
       "priority": "none",
-      "progress": null
+      "progress": null,
+      "noteUrl": "../notes/2026/2026-10-17-norway-night.html"
     },
     {
       "id": "da-zhuan-zhe--xian-dai-zhai-wu-yu-ke-chi-xu-de",
       "title": "大转折：现代债务与可持续的增长",
       "author": "赵燕菁",
-      "status": "in_progress",
+      "status": "paused",
       "owner": "weread-auto-cloud",
       "claimState": "held",
       "priority": "none",
-      "progress": "74%"
+      "progress": "74%",
+      "noteUrl": "../reading-notes/books/da-zhuan-zhe--xian-dai-zhai-wu-yu-ke-chi-xu-de/notes/2026-10-19.html"
     },
     {
       "id": "the-swerve-greenblatt",
       "title": "大转向：世界如何步入现代",
       "author": "斯蒂芬·格林布拉特",
-      "status": "in_progress",
+      "status": "paused",
       "owner": "wechat-reading-browser",
       "claimState": "held",
       "priority": "user_requested",
-      "progress": null
+      "progress": null,
+      "noteUrl": "../reading-notes/books/the-swerve-greenblatt/notes/2026-10-19.html"
     },
     {
       "id": "local-yin-wei-jian-dapeng",
@@ -189,7 +267,8 @@
       "owner": "local-pdf-reader",
       "claimState": "held",
       "priority": "user_requested",
-      "progress": null
+      "progress": null,
+      "noteUrl": "../reading-notes/books/local-yin-wei-jian-dapeng/notes/2026-10-19.html"
     },
     {
       "id": "local-zhi-ye-gui-hua-niao-shu",
@@ -199,7 +278,30 @@
       "owner": "local-pdf-reader",
       "claimState": "held",
       "priority": "user_authorized_selective_choice",
-      "progress": null
+      "progress": null,
+      "noteUrl": "../reading-notes/books/local-zhi-ye-gui-hua-niao-shu/notes/2026-10-19.html"
+    },
+    {
+      "id": "king-return-dalrymple",
+      "title": "王的归程：阿富汗战记（1839～1842）（甲骨文）",
+      "author": "威廉·达尔林普尔",
+      "status": "in_progress",
+      "owner": "wechat-reading-browser",
+      "claimState": "held",
+      "priority": "user_requested",
+      "progress": null,
+      "noteUrl": "../reading-notes/books/king-return-dalrymple/notes/2026-10-20.html"
+    },
+    {
+      "id": "camino-qingyouji",
+      "title": "朝圣之路：即使失去所有，你也要走自己的路（轻游记）",
+      "author": "猴面包的树",
+      "status": "in_progress",
+      "owner": "cue-qingyouji-reader",
+      "claimState": "held",
+      "priority": "user_requested",
+      "progress": null,
+      "noteUrl": "../reading-notes/books/camino-qingyouji/notes/2026-10-20.html"
     }
   ]
 }

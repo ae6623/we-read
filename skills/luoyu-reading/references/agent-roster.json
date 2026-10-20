@@ -67,7 +67,7 @@
     },
     {
       "id": "wechat-reading-browser",
-      "display_name": "微信读书",
+      "display_name": "阅读员-微信读书",
       "type": "browser_non_code",
       "implementation": "直接操作已授权的微信读书网页并整理阅读理解；不适用代码类 Agent 的实现细节。",
       "schedule_basis": "2026-10-20 用户直接确认按管理员新规则替换旧排班：Asia/Shanghai 每日02:00–06:00禁读，微信读书负责00:00、06:00、08:00、10:00、12:00、14:00、16:00、18:00、20:00、22:00；每场约20分钟弹性目标，从下一个未到时段执行，漏场不补跑。",
@@ -273,7 +273,7 @@
     },
     {
       "id": "local-pdf-reader",
-      "display_name": "Windows读书",
+      "display_name": "阅读员-Windows读书",
       "type": "code",
       "implementation": "非交互只读本地文件，直接阅读与理解；不修改源书或控制桌面",
       "schedule_basis": "用户本次手动指定；无排班",
@@ -291,7 +291,7 @@
     },
     {
       "id": "cue-qingyouji-reader",
-      "display_name": "Cue 轻游记试读",
+      "display_name": "阅读员-轻游记读书员",
       "type": "browser_non_code",
       "implementation": "使用已授权微信读书浏览器直接精读或略读；登记、等待与正文实读分别记录。",
       "schedule_basis": "2026-10-20 用户最新规则由读书管理员转达，替换本人所有旧时段及禁读例外：Asia/Shanghai 每日02:00–06:00不读，本人负责01:00、07:00、09:00、11:00、13:00、15:00、17:00、19:00、21:00、23:00，各场独立、目标约20分钟（非实读计时或硬性结束线）。从2026-10-20 17:00起执行，不补跑已过时段。仅镜像协调会话已有ScheduleTask，不新增重复任务；协调会话已确认主任务active、旧08:40任务pause，本会话schedule status返回空对象，未独立复核调度状态。每场先核对最新main、registry、roster及浏览器冲突，有冲突或无明确可读范围则不开始并直报；实际开始前与结束后分别直接通知雨和管理员，计时范围如实记录。本人《朝圣之路》已选择性覆盖至书末、未确认全书完读且无下一正文，next_run_status仍为awaiting_next_scope_decision；不得回退重读或自行扩展书目，须先获得明确下一书目或可读范围。",
