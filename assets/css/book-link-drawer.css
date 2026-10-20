@@ -1,0 +1,20 @@
+/* Reading-entry drawer v1. Native details/summary; no JavaScript required. */
+.book-link-drawer{margin:16px 0 0;border:1px solid var(--line,#e5e0d6);border-radius:12px;background:var(--card,#fffefa);color:var(--ink,#24312e);font:400 .9rem/1.6 var(--sans,sans-serif);min-width:0;overflow-wrap:anywhere}
+.book-link-drawer>summary{display:flex;align-items:center;gap:10px;min-height:48px;padding:12px 14px;cursor:pointer;list-style:none;color:var(--green,#244b40);font-weight:700;border-radius:12px}
+.book-link-drawer>summary::-webkit-details-marker{display:none}
+.book-link-drawer>summary::after{content:"";width:7px;height:7px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg);margin:0 3px 4px auto;flex:none}
+.book-link-drawer[open]>summary::after{transform:rotate(225deg);margin-bottom:0}
+.book-link-drawer>summary:hover{background:var(--sage,#dce8df)}
+.book-link-drawer[open]>summary{border-bottom:1px solid var(--line,#e5e0d6);border-radius:12px 12px 0 0}
+.book-link-drawer .drawer-count{color:var(--muted,#69766f);font-size:.78rem;font-weight:400;font-variant-numeric:tabular-nums;white-space:nowrap}
+.book-link-drawer>.book-link-list{counter-reset:book-entry;list-style:none;padding:4px 14px;margin:0}
+.book-link-list>li{counter-increment:book-entry;display:grid;grid-template-columns:26px minmax(0,1fr);align-items:baseline;column-gap:10px;padding:10px 0;margin:0;border-bottom:1px solid var(--line,#e5e0d6)}
+.book-link-list>li:last-child{border-bottom:0}
+.book-link-list>li::before{content:counter(book-entry);display:flex;align-items:center;justify-content:center;min-width:26px;height:26px;border-radius:7px;background:var(--sage,#dce8df);color:var(--green,#244b40);font-size:.78rem;font-weight:700;font-variant-numeric:tabular-nums}
+.book-link-list .drawer-item{min-width:0}
+.book-link-list a{display:block;min-height:44px;padding:8px 0;color:var(--green,#244b40);font-weight:600;text-decoration:underline;text-underline-offset:4px;overflow-wrap:anywhere}
+.book-link-list .drawer-note{display:block;color:var(--muted,#69766f);font-size:.8rem;font-weight:400;margin:0 0 6px}
+.book-link-drawer>.drawer-empty{margin:0;padding:0 14px 14px;color:var(--muted,#69766f);font-size:.82rem}
+.book-link-drawer :is(summary,a):focus-visible{outline:3px solid var(--gold,#bf8247);outline-offset:3px}
+@media(max-width:380px){.book-link-drawer>summary{padding:11px 12px;gap:8px}.book-link-drawer>.book-link-list{padding:4px 12px}}
+@media print{.book-link-drawer>summary{display:none}.book-link-drawer>.book-link-list,.book-link-drawer>.drawer-empty{display:block!important}}
