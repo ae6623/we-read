@@ -178,8 +178,23 @@
       "display_name": "Cue 轻游记试读",
       "type": "browser_non_code",
       "implementation": "使用已授权微信读书浏览器直接精读或略读；登记、等待与正文实读分别记录。",
-      "schedule_basis": "本次用户手动授权，无新增排班；不修改其他阅读员时段。",
-      "schedule": [],
+      "schedule_basis": "用户明确批准：每日 Asia/Shanghai 01:00 左右、目标约15分钟；协调会话已启用 Daily ScheduleTask「轻游记读书员每日阅读」（cron 0 0 1 * * *，Asia/Shanghai）。本排班是该任务的镜像，不新增任务；01:00–05:00禁读规则的专属例外仅适用于本人。每场开始前核对最新main、全部状态与浏览器冲突，冲突则停读；本人认领和活动锁进入main后开读，直接发送起止通知、如实记录并发布笔记；不修改其他Agent时段。",
+      "schedule": [
+        {
+          "slot": "daily_0100",
+          "window_start": "01:00",
+          "window_end": "01:15",
+          "trigger_at": "01:00",
+          "behavior": "read_current_book_after_preflight_or_stop_on_conflict",
+          "timezone": "Asia/Shanghai",
+          "cron": "0 0 1 * * *",
+          "target_duration_minutes": 15,
+          "window_note": "约15分钟为弹性目标与排班镜像，不是历史实读时长；实际起止如实记录。",
+          "scheduler": "ScheduleTask",
+          "scheduler_title": "轻游记读书员每日阅读",
+          "scheduler_status": "active"
+        }
+      ],
       "enabled": true,
       "current_book": "朝圣之路：即使失去所有，你也要走自己的路（轻游记）",
       "current_book_slug": "camino-qingyouji",
@@ -196,7 +211,7 @@
       "assignment_note": "今日01:00场授权补开已自然收尾，仅清除本人活动锁；本书held责任保留、未确认完整完读。已选择性覆盖至书末，无下一正文，不自动回退重读；下一场先决定补读或暂停换册。",
       "last_progress": "累计两章已选择性精读/略读至书末；全书完整完读未确认，不增加唯一计数。",
       "last_current_book_read": "第二章《朝圣：你也只活了一次，凭什么说我选择的人生是错的？》导入末后至正文末、章末附图及全书完终页（精读＋略读，部分阅读）。",
-      "last_output": "reading-notes/books/camino-qingyouji/notes/2026-10-20.html（整理中，未声明上线）；本场正文浏览理解窗口3分49秒，终页累计显示5分钟但统计口径未确认。"
+      "last_output": "已上线：reading-notes/books/camino-qingyouji/notes/2026-10-20.html；reading-notes/books/camino-qingyouji/overview.html；reading-notes/series/qingyouji/index.html。本场正文浏览理解窗口3分49秒（含等待与随读记录，非纯阅读计时），终页累计显示5分钟但统计口径未确认；全书未确认完整完读。"
     }
   ]
 }
