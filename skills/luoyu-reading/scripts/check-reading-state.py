@@ -63,6 +63,8 @@ def validate(state, roster):
     synthesis = state.get("synthesis") or {}
     if synthesis.get("unique_completed_count") != count:
         errors.append(f"完读计数不一致: 实际 {count}，登记 {synthesis.get('unique_completed_count')}")
+    if synthesis.get("visibility") != "public":
+        errors.append("synthesis.visibility 必须为 public（2026-10-20 授权）")
     size = synthesis.get("batch_size")
     if size != 3:
         errors.append("synthesis.batch_size 必须为 3")
@@ -82,8 +84,8 @@ def validate(state, roster):
         wanted = [b["book_id"] for b in ordered[i*3:(i+1)*3]]
         if batch.get("book_ids") != wanted:
             errors.append(f"{expected_id}: 成员须按 completion.sequence 分组为 {wanted}")
-        if batch.get("visibility") != "private":
-            errors.append(f"{expected_id}: visibility 必须为 private")
+        if batch.get("visibility") != "public":
+            errors.append(f"{expected_id}: visibility 必须为 public")
         if batch.get("owner_agent_id") not in owners:
             errors.append(f"{expected_id}: owner_agent_id 无效")
         if batch.get("status") not in {"pending", "blocked", "completed", "needs-review"}:
