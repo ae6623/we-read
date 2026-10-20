@@ -49,6 +49,25 @@ def check():
         if '.git' in path.parts or 'templates' in path.parts or 'skills' in path.parts:
             continue
         root = Document(path.read_text()).root
+        cards = [n for n in root.all('article') if n.has('book-entry') and 'data-reading-status' in n.attrs]
+        for card in cards:
+            status = card.attrs.get('data-reading-status')
+            assert status in {'reading', 'unstarted'}, f'{path}: missing confirmed title state'
+            heading = next(card.all('h4'))
+            icon = next(n for n in heading.all() if n.has('book-reading-state'))
+            assert icon.attrs.get('data-reading-status') == status, path
+            assert icon.attrs.get('role') == 'img' and icon.attrs.get('aria-label') and icon.attrs.get('title'), path
+            svg = next(icon.all('svg'))
+            assert svg.attrs.get('aria-hidden') == 'true' and svg.attrs.get('focusable') == 'false', path
+            assert card.attrs.get('id') and list(heading.all('a')), f'{path}: lost book anchor or official link'
+            card_drawers = [n for n in card.all('details') if n.has('book-link-drawer')]
+            if status == 'unstarted':
+                assert not card_drawers or any(not link.attrs.get('href', '').startswith('#') for drawer in card_drawers for link in drawer.all('a')), f'{path}: unstarted candidate has an empty drawer'
+            else:
+                assert card_drawers, f'{path}: started book lost its resources'
+        if cards:
+            assert any(n.has('reading-state-legend') for n in root.all()), f'{path}: missing visible state legend'
+            assert '尚无本次亲读笔记' not in root.content(), f'{path}: repeated empty-state copy'
         drawers = [n for n in root.all('details') if n.has('book-link-drawer')]
         if not drawers:
             continue

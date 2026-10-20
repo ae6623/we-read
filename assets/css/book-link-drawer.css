@@ -18,3 +18,11 @@
 .book-link-drawer :is(summary,a):focus-visible{outline:3px solid var(--gold,#bf8247);outline-offset:3px}
 @media(max-width:380px){.book-link-drawer>summary{padding:11px 12px;gap:8px}.book-link-drawer>.book-link-list{padding:4px 12px}}
 @media print{.book-link-drawer>summary{display:none}.book-link-drawer>.book-link-list,.book-link-drawer>.drawer-empty{display:block!important}}
+/* Title state icons describe confirmed reading history, never live execution. */
+.book-reading-state{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;margin-inline-end:8px;border:1px solid currentColor;border-radius:8px;vertical-align:middle;flex:none;color:var(--green,#244b40);background:var(--sage,#dce8df)}
+.book-reading-state svg{display:block;width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.book-reading-state[data-reading-status="unstarted"]{color:#59655f;background:transparent;border-style:dashed}
+.reading-state-legend{display:flex;flex-wrap:wrap;align-items:center;gap:8px 18px;color:var(--muted,#69766f);font-size:.8rem;margin:12px 0 18px}
+.reading-state-legend>span{display:inline-flex;align-items:center;min-width:0}
+.reading-state-legend .book-reading-state{width:24px;height:24px;margin-inline-end:6px;border-radius:6px}
+.reading-state-legend .book-reading-state svg{width:16px;height:16px}
