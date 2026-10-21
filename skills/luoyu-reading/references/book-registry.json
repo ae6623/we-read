@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": 87,
+  "revision": 88,
   "timezone": "Asia/Shanghai",
   "authority": "latest origin/main; claims become effective only after serialized acceptance there",
   "migration": {
@@ -366,14 +366,61 @@
         "entry_control_status": "分册及一 巴黎为可点击目录条目，未点击；不声称正文可读。"
       },
       "preflight_note": "套装在当前书架；新书读前书评预筛选完成，均为二手依据、非亲读，暂判适合第一章短试。先前500仅套装详情页错误，原因未知，不能外推本分册不可读。"
+    },
+    {
+      "book_id": "baikal-qingyouji",
+      "title": "贝加尔湖：浪费时间没关系，无意义的人生也很美（轻游记）",
+      "author": "猴面包的树",
+      "platform": "weread",
+      "platform_book_id": "0db32860813abb511g010144",
+      "priority": "user_requested",
+      "status": "in_progress",
+      "owner_agent_id": "cue-qingyouji-reader",
+      "claim": {
+        "state": "held",
+        "claimed_at": "2026-10-22T04:21:57+08:00",
+        "source": "用户指定本书AI章节问答笔记；官方独立详情题名作者与书架链接已核实，系列题名含轻游记；本次06:00前一次例外，不逐页亲读。"
+      },
+      "last_confirmed_progress": {
+        "scope": "尚无本书亲读记录；AI尚未打开，登记/预检不算阅读。",
+        "chapter_status": "unread",
+        "source": "authorized_shelf_and_official_book_metadata",
+        "confirmed_at": "2026-10-22T04:21:57+08:00"
+      },
+      "resume_point": {
+        "status": "needs-confirmation",
+        "chapter": null,
+        "page": null,
+        "position": "待管理员明确已转达后，在本书核实官方目录与AI入口；按实际大章顺序AI问答，不读正文、不造章名。无法核目录或入口即停。",
+        "source": "授权书架与官方详情只提供题名作者简介，目录尚未显示",
+        "confirmed_at": "2026-10-22T04:21:57+08:00"
+      },
+      "next_question_status": "needs-confirmation",
+      "completion": null,
+      "catalog_evidence": {
+        "source_url": "https://weread.qq.com/web/bookDetail/0db32860813abb511g010144",
+        "reader_url": "https://weread.qq.com/web/reader/0db32860813abb511g010144",
+        "series_label": "轻游记",
+        "toc_status": "needs-confirmation"
+      },
+      "preflight_note": "官方简介：旅行随笔、冰湖感受与朋友相处，非攻略工具书。官方推荐值88.5%、314人点评仅为平台口碑元数据。详情页实际查看清岚与另一位读者的评论，支持短篇旅行/状态表达的兴趣预判，但不能代表普遍共识或内容事实；独立专业书评未取得。不把热门划线当本书亲读或已核金句。目录/AI入口须在转达后核实，尚未开候选阅读器。"
     }
   ],
-  "active_session": null,
+  "active_session": {
+    "run_id": "qingyouji-baikal-ai-20261022-042157",
+    "agent_id": "cue-qingyouji-reader",
+    "book_id": "baikal-qingyouji",
+    "slot": "manual_user_approved_ai_exception_before_0600",
+    "started_at": "2026-10-22T04:21:57+08:00",
+    "mode": "weread_ai_chapter_notes",
+    "phase": "registered_waiting_admin_relay",
+    "hard_stop_at": "2026-10-22T06:00:00+08:00"
+  },
   "synthesis": {
     "visibility": "private",
     "batch_size": 3,
     "unique_completed_count": 2,
     "batches": []
   },
-  "updated_at": "2026-10-22T04:18:17+08:00"
+  "updated_at": "2026-10-22T04:21:57+08:00"
 }
