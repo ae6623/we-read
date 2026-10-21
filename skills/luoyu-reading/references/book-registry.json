@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": 88,
+  "revision": 89,
   "timezone": "Asia/Shanghai",
   "authority": "latest origin/main; claims become effective only after serialized acceptance there",
   "migration": {
@@ -374,12 +374,14 @@
       "platform": "weread",
       "platform_book_id": "0db32860813abb511g010144",
       "priority": "user_requested",
-      "status": "in_progress",
-      "owner_agent_id": "cue-qingyouji-reader",
+      "status": "completed",
+      "owner_agent_id": null,
       "claim": {
-        "state": "held",
+        "state": "released",
         "claimed_at": "2026-10-22T04:21:57+08:00",
-        "source": "用户指定本书AI章节问答笔记；官方独立详情题名作者与书架链接已核实，系列题名含轻游记；本次06:00前一次例外，不逐页亲读。"
+        "source": "用户指定本书AI章节问答笔记；官方独立详情题名作者与书架链接已核实，系列题名含轻游记；本次06:00前一次例外，不逐页亲读。",
+        "released_at": "2026-10-22T04:30:24+08:00",
+        "release_reason": "用户批准的AI章节流程完成；未新增亲读。"
       },
       "last_confirmed_progress": {
         "scope": "尚无本书亲读记录；AI尚未打开，登记/预检不算阅读。",
@@ -396,31 +398,57 @@
         "confirmed_at": "2026-10-22T04:21:57+08:00"
       },
       "next_question_status": "needs-confirmation",
-      "completion": null,
+      "completion": {
+        "event_id": "completed-baikal-qingyouji-user-ai-20261022-043024",
+        "sequence": 3,
+        "confirmed_by": "user:雨（管理员2026-10-22T04:21:00+08:00转达，援引用户04:17明确批准AI笔记按章节完成计完读；最新main 701741c已纳入规范；cue-qingyouji-reader登记）",
+        "completed_at": "2026-10-22T04:30:24+08:00",
+        "mode": "AI阅读",
+        "evidence": "user-approved AI full-directory process; not additional firsthand reading. 官方目录仅扉页/版权信息/正文，6990字；唯一内容章正文的AI结构问答及全书四项、一题一次缺口补问均返回最终文本，章节型笔记与读后思考已完成并检查。来源微信读书AI问答；未核具体情节与背景保留缺口且不作为事实，金句未逐字核验不收录；不增加亲读范围、时长或章节亲读状态。",
+        "output": "reading-notes/books/baikal-qingyouji/overview.html"
+      },
       "catalog_evidence": {
         "source_url": "https://weread.qq.com/web/bookDetail/0db32860813abb511g010144",
         "reader_url": "https://weread.qq.com/web/reader/0db32860813abb511g010144",
         "series_label": "轻游记",
         "toc_status": "needs-confirmation"
       },
-      "preflight_note": "官方简介：旅行随笔、冰湖感受与朋友相处，非攻略工具书。官方推荐值88.5%、314人点评仅为平台口碑元数据。详情页实际查看清岚与另一位读者的评论，支持短篇旅行/状态表达的兴趣预判，但不能代表普遍共识或内容事实；独立专业书评未取得。不把热门划线当本书亲读或已核金句。目录/AI入口须在转达后核实，尚未开候选阅读器。"
+      "preflight_note": "官方简介：旅行随笔、冰湖感受与朋友相处，非攻略工具书。官方推荐值88.5%、314人点评仅为平台口碑元数据。详情页实际查看清岚与另一位读者的评论，支持短篇旅行/状态表达的兴趣预判，但不能代表普遍共识或内容事实；独立专业书评未取得。不把热门划线当本书亲读或已核金句。目录/AI入口须在转达后核实，尚未开候选阅读器。",
+      "ai_reading": {
+        "status": "completed",
+        "source": "微信读书AI问答",
+        "catalog": [
+          "扉页",
+          "版权信息",
+          "正文"
+        ],
+        "content_chapters_answered": [
+          "正文"
+        ],
+        "word_count": 6990,
+        "notes_status": "章节型笔记、固定四项、读后思考、AI完读汇编与EPUB已整理；未核情节背景保留缺项，未收录金句",
+        "firsthand_reading_added": false
+      }
     }
   ],
-  "active_session": {
-    "run_id": "qingyouji-baikal-ai-20261022-042157",
-    "agent_id": "cue-qingyouji-reader",
-    "book_id": "baikal-qingyouji",
-    "slot": "manual_user_approved_ai_exception_before_0600",
-    "started_at": "2026-10-22T04:21:57+08:00",
-    "mode": "weread_ai_chapter_notes",
-    "phase": "registered_waiting_admin_relay",
-    "hard_stop_at": "2026-10-22T06:00:00+08:00"
-  },
+  "active_session": null,
   "synthesis": {
     "visibility": "private",
     "batch_size": 3,
-    "unique_completed_count": 2,
-    "batches": []
+    "unique_completed_count": 3,
+    "batches": [
+      {
+        "batch_id": "batch-001",
+        "book_ids": [
+          "norway-night",
+          "camino-qingyouji",
+          "baikal-qingyouji"
+        ],
+        "status": "blocked",
+        "owner_agent_id": "cue-qingyouji-reader",
+        "visibility": "private"
+      }
+    ]
   },
-  "updated_at": "2026-10-22T04:21:57+08:00"
+  "updated_at": "2026-10-22T04:30:24+08:00"
 }
