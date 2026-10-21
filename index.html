@@ -19,7 +19,15 @@
     .hero-copy+.hero-copy{margin-top:16px}
     .hero-quote{margin-top:20px}
     .hero-quote cite{font-style:normal}
-    @media(max-width:680px){.hero-inner{padding-top:16px}}
+    .hero-description{font-size:.94rem;line-height:1.85}
+    .series-preview{max-width:none;margin:0;padding:22px 23px 20px;min-height:230px;display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:0 5px 18px #24312e08;transition:transform .18s ease,box-shadow .18s ease}
+    .series-preview:hover{transform:translateY(-2px);box-shadow:0 10px 26px #24312e10}
+    .series-preview h3{font:600 1.23rem/1.55 var(--serif);color:var(--green);margin:16px 0 5px}
+    .series-preview>p:not(.eyebrow):not(.series-author){font-size:.9rem;color:#65716b;margin:0 0 18px}
+    .series-preview .series-author{color:var(--muted);margin:0 0 15px;font-size:.9rem}
+    .series-preview .card-link{margin-top:auto}
+    @media(max-width:680px){.hero-inner{padding-top:16px}.hero-description{font-size:.875rem;line-height:1.9}.series-preview{padding:22px;min-height:205px}}
+    @media(max-width:380px){.series-preview{padding-right:18px;padding-left:18px}}
   </style>
 <link rel="stylesheet" href="assets/css/book-link-drawer.css">
 </head>
@@ -40,8 +48,8 @@
       <p class="eyebrow">WE READ · READING ARCHIVE</p>
       <h1>读过的书，<br><span>留下自己的注脚。</span></h1>
       <p class="hero-copy hero-quote"><q>尽信书，则不如无书。</q>——<cite><a href="https://www.chinakongzi.org/kzsf/lsjd/mengzi/200711/t20071120_28410.htm" aria-label="查看《孟子·尽心下》原文">《孟子·尽心下》</a></cite></p>
-      <p class="hero-copy">个人认知有限，AI认知无限，我们要借着 AI 的海量多维，利用精彩的书评与今日观古的宝贵经验，让书和作者的思考与我们的当下产生关联，持续精进。</p>
-      <p class="hero-copy">书分多种，长篇短篇各有千秋，几十万字的书需要AI站在高维去降维打击，几千字需要站在低维去向上对齐，我们个人的知识储备完不成这些，利用ai可以清楚的回测书本作者思路，知道他在写书的过去预判的现在是否正确，正确有何思路，不正确有何输入，思考，无所不能。</p>
+      <p class="hero-copy hero-description">个人认知有限，AI认知无限，我们要借着 AI 的海量多维，利用精彩的书评与今日观古的宝贵经验，让书和作者的思考与我们的当下产生关联，持续精进。</p>
+      <p class="hero-copy hero-description">书分多种，长篇短篇各有千秋，几十万字的书需要AI站在高维去降维打击，几千字需要站在低维去向上对齐，我们个人的知识储备完不成这些，利用ai可以清楚的回测书本作者思路，知道他在写书的过去预判的现在是否正确，正确有何思路，不正确有何输入，思考，无所不能。</p>
       <div class="hero-meta"><span>阅读归档</span><span>持续整理</span><span>独立静态页面</span></div>
       </div>
     <div class="hero-mark" aria-hidden="true">阅</div>
@@ -152,8 +160,7 @@
         </section>
       </section>
 
-      <section id="reading-panel-close" class="reading-panel" aria-labelledby="close-title">
-        <h2 id="close-title" class="panel-title">精读</h2>
+      <section id="reading-panel-close" class="reading-panel" aria-label="精读">
         <p class="panel-intro">只收录实际亲读后形成的日期笔记；选读、未完读与实际覆盖范围，均保留原有标记。读前内容请见「通读」中的「读前」。</p>
         <div class="toolbar" data-search-toolbar>
           <label class="search-label" for="reading-search">搜索精读</label>
@@ -265,36 +272,36 @@
         <p class="empty-state" data-empty-state hidden>没有找到匹配的内容。试试书名或日期。</p>
       </section>
 
-      <section id="reading-panel-series" class="reading-panel" aria-labelledby="series-title">
-        <h2 id="series-title" class="panel-title">系列</h2>
+      <section id="reading-panel-series" class="reading-panel" aria-label="系列">
         <p class="panel-intro">从系列、作者与主题找到下一本。公开资料导览与实际亲读笔记分别展示。</p>
+        <div class="archive-grid" aria-label="系列导览">
         <article class="series-preview">
           <p class="eyebrow eyebrow-dark">QINGYOUJI · 轻游记</p>
           <h3>轻游记（系列）</h3>
           <p class="series-author">猴面包的树（作者）</p>
-          <span class="type-tag type-tag-gold">公开资料导览／正文未读</span>
+          <div class="card-top"><span class="type-tag type-tag-gold">公开资料导览／正文未读</span></div>
           <p>20 部新候选，按四个主题浏览公开资料与官方书目入口。这批候选正文亲读 0 本，不是系列完整书目，也不是 20 本阅读笔记或完读记录。</p>
-          <a class="card-link" href="reading-notes/series/qingyouji/index.html">进入轻游记系列导览 →</a>
+          <div class="card-actions"><a class="card-link" href="reading-notes/series/qingyouji/index.html">进入轻游记系列导览 →</a></div>
         </article>
         <article class="series-preview">
           <p class="eyebrow eyebrow-dark">甲骨文 · 世界史</p>
           <h3>甲骨文·世界史</h3>
-          <span class="type-tag type-tag-gold">微信读书 · 部分阅读／未完读</span>
+          <div class="card-top"><span class="type-tag type-tag-gold">微信读书 · 部分阅读／未完读</span></div>
           <p>回看《春之祭》已发布的日期笔记：第一章「巴黎」部分阅读，全书未完读。</p>
-          <a class="card-link" href="reading-notes/series/index.html#oracle-world-history">进入甲骨文·世界史系列 →</a>
+          <div class="card-actions"><a class="card-link" href="reading-notes/series/index.html#oracle-world-history">进入甲骨文·世界史系列 →</a></div>
         </article>
         <article class="series-preview">
           <p class="eyebrow eyebrow-dark">本地 PDF · 长帖选读</p>
           <h3>天涯长帖选读（本地 PDF）</h3>
-          <span class="type-tag type-tag-gold">本导览收录4篇已发布原创笔记</span>
+          <div class="card-top"><span class="type-tag type-tag-gold">本导览收录4篇已发布原创笔记</span></div>
           <p>从职业选择、住房焦虑到经济转型，回看天涯长帖中的个人经历与现实思考。</p>
-          <a class="card-link" href="reading-notes/series/tianya/index.html">进入天涯长帖选读导览 →</a>
+          <div class="card-actions"><a class="card-link" href="reading-notes/series/tianya/index.html">进入天涯长帖选读导览 →</a></div>
         </article>
+        </div>
         <a class="panel-route" href="reading-notes/series/index.html">查看系列总览 →</a>
       </section>
 
-      <section id="reading-panel-archive" class="reading-panel" aria-labelledby="history-title">
-        <h2 id="history-title" class="panel-title">归档</h2>
+      <section id="reading-panel-archive" class="reading-panel" aria-label="归档">
         <p class="panel-intro">保留较早的日期笔记与归档说明，沿着时间回看阅读轨迹。</p>
         <a class="panel-route" href="reading-notes/index.html">进入按书归档 →</a>
         <div class="toolbar" data-search-toolbar>
