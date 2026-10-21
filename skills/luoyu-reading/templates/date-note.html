@@ -81,6 +81,11 @@
 <p class="muted">本篇实读状态：{{READ_SCOPE_COMPLETE_OR_PARTIAL_AND_CONFIRMED_STOP}}</p>
 </section>
 <section><h2>今天的核心理解</h2><p>{{CORE_UNDERSTANDING}}</p></section>
+<section aria-labelledby="claim-judgments-title"><h2 id="claim-judgments-title">作者观点判断</h2>
+<!-- 只挑本篇亲读内容中少数真正影响理解的主张，不逐句评分。拆开事实判断与价值取舍；每项写主张、判断、短理由/证据。标签可用：✅成立、⚖️有条件成立、⚖️价值取舍、❌不成立、暂无法判定（并说明缺少的关键证据）。证据不足不强判，未读内容不下定论；没有可判断的主张时删掉本节。 -->
+<article class="card"><h3>{{ACTUALLY_READ_AUTHOR_CLAIM}}</h3><p><strong>判断：{{✅成立|⚖️有条件成立|⚖️价值取舍|❌不成立|暂无法判定}}</strong></p><p>{{BRIEF_REASON_LINKED_TO_TEXT_EVIDENCE_OR_EXTERNAL_SOURCE}}</p></article>
+<!-- 按重要主张重复 article；不给无关细节硬贴标签。 -->
+</section>
 <section><h2>思维导图</h2><div class="card mindmap">{{MINDMAP}}</div></section>
 <section><h2>与整书框架的连接</h2><p>{{FRAMEWORK_CONNECTION}}</p></section>
 <section><h2>可迁移的启发与问题</h2><ul>{{TAKEAWAYS_AND_QUESTIONS}}</ul></section>
@@ -93,7 +98,7 @@
 </section>
 <section aria-labelledby="top10-title"><h2 id="top10-title">有意思的原文段落 Top 10 · 持续积累</h2>
 <p class="muted">已选 {{EXCERPT_COUNT}}/10 · {{EXCERPT_READ_COVERAGE_AND_LIMITS}}</p>
-<!-- 只从本篇声明的实读覆盖内选取；同日多场可去重增补并标所属场次。不足十条不凑数；无可核对原文时说明并删除下方示例条目。重复 li 至实际数量，每条仅最短必要片段，控制累计引用量，不能拼接大段；转述不算原文。 -->
+<!-- 只从本篇声明的实读覆盖内选取；同日多场可去重增补并标所属场次。不足十条不凑数；一条也没有时删除整个 section，不显示0/10或空解释。重复 li 至实际数量，每条仅最短必要片段，控制累计引用量，不能拼接大段；转述不算原文。 -->
 <ol class="excerpt-list">
 <li><figure class="card"><blockquote><p>{{VERIFIED_BRIEF_ORIGINAL_EXCERPT}}</p></blockquote><figcaption>原文出处：<cite>{{REAL_CHAPTER_POST_OR_SECTION_TITLE_OR_UNCONFIRMED}}</cite> · {{VERIFIED_WITHIN_SECTION_LOCATION_AND_SESSION}}</figcaption></figure>
 <p><strong>为什么有意思（分析）：</strong>{{WHY_INTERESTING_AND_CONTEXT}}</p></li>

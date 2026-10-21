@@ -65,7 +65,11 @@
 <!-- 重复 details 至目录全部章节：读过的章按上面「导读」写，未读的章按这段「小节清单」写，不许留成不可点击的纯文字行 -->
 </div>
 </section>
-<section><h2>核心观点初判</h2>{{KEY_VIEWS}}</section>
+<section aria-labelledby="claim-judgments-title"><h2 id="claim-judgments-title">核心观点初判</h2>
+<!-- 只列可从官方简介/目录或已打开的可靠材料定位的主张；未亲读时写待亲读检验，不能替作者补观点或冒充结论。拆开事实判断与价值取舍；每项说明判断和理由。标签可用：✅成立、⚖️有条件成立、⚖️价值取舍、❌不成立、待亲读验证、暂无法判定（说明缺少的证据）。没有可核实主张时可改列具体待验证问题。 -->
+<article class="card"><h3>{{SOURCE_VERIFIED_CLAIM_OR_TESTABLE_QUESTION}}</h3><p><strong>当前判断：{{待亲读验证|✅成立|⚖️有条件成立|⚖️价值取舍|❌不成立|暂无法判定}}</strong></p><p>{{BRIEF_REASON_OR_WHAT_READING_WOULD_TEST}}</p><p class="src">依据与状态：{{VERIFIED_SOURCE_AND_READ_STATUS}}</p></article>
+<!-- 按重要主张重复 article；不为未读章节写结论。 -->
+</section>
 <!-- 固定栏目：知识网络不是全知视角。外部判断先搜索并打开来源核对；逐项分开书中主张、外部证据与综合分析。初版假设不冒充亲读。书中所述历史不等于本书历史影响，后者须有传播／接受／引用等证据；无依据不拔高。与“当年与今天”交叉引用，避免重复。 -->
 <section class="card" aria-labelledby="higher-view-title" data-source="mixed-labeled">
 <h2 id="higher-view-title">用更高维度的知识看这本书 · 初步视角</h2>
@@ -97,7 +101,7 @@
 </section>
 <section aria-labelledby="top10-title"><h2 id="top10-title">有意思的原文段落 Top 10 · 持续积累</h2>
 <p class="notice">已选 {{EXCERPT_COUNT}}/10 · 累计亲读范围：{{EXCERPT_READ_COVERAGE_AND_LIMITS}}</p>
-<!-- 全书视角中的二手信息不赋予摘录资格；只随累计已亲读范围增长，不从未读章节或公开划线凑数。尚未亲读写“暂无可核对摘录”并删除示例条目。重复 li 至实际数量，核对原文与真实标题，只引最短必要片段，累计不拼成长段；转述不计入。 -->
+<!-- 全书视角中的二手信息不赋予摘录资格；只随累计已亲读范围增长，不从未读章节或公开划线凑数。尚无可核对摘录时删除整个 section，不显示空Top 10或“暂无可核对摘录”。重复 li 至实际数量，核对原文与真实标题，只引最短必要片段，累计不拼成长段；转述不计入。 -->
 <ol class="excerpt-list">
 <li><figure class="card"><blockquote><p>{{VERIFIED_BRIEF_ORIGINAL_EXCERPT}}</p></blockquote><figcaption>原文出处：<cite>{{REAL_CHAPTER_POST_OR_SECTION_TITLE_OR_UNCONFIRMED}}</cite> · {{VERIFIED_WITHIN_SECTION_LOCATION}}</figcaption></figure>
 <p><strong>为什么有意思（分析）：</strong>{{WHY_INTERESTING_AND_CONTEXT}}</p></li>
