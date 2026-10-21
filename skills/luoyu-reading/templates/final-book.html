@@ -23,6 +23,11 @@
 <p class="muted">来源与依据：{{GUIDE_READ_EVIDENCE_AND_NECESSARY_SOURCE_LABELS}}</p>
 </article></section>
 <section><h2>核心论点与推进脉络</h2>{{ARGUMENT_FLOW}}</section>
+<section aria-labelledby="claim-judgments-title"><h2 id="claim-judgments-title">作者观点判断</h2>
+<!-- 只挑真正影响全书理解的少数中心主张，不逐句评分。拆开事实判断与价值取舍；每项写主张、判断与证据/理由。标签可用：✅成立、⚖️有条件成立、⚖️价值取舍、❌不成立、暂无法判定（说明缺少的关键证据）。评估论证，不评作者人格；模型推理用通俗步骤说明参与者、选择、成本/收益、结果和对主张的作用，只保留影响结论的条件。无可判断的主张时删掉本节。 -->
+<article class="card"><h3>{{AUTHOR_CLAIM}}</h3><p><strong>判断：{{✅成立|⚖️有条件成立|⚖️价值取舍|❌不成立|暂无法判定}}</strong></p><p>{{BRIEF_REASON_AND_VERIFIED_EVIDENCE}}</p></article>
+<!-- 按重要主张重复 article；必要时列明结论成立的具体条件。 -->
+</section>
 <section><h2>关键洞见与主题关系</h2>{{KEY_INSIGHTS}}</section>
 <!-- 确认全书完读后校订初版高维视角，HTML／EPUB 同口径；完读不使外部判断自动成为事实。逐项区分书中主张、外部证据、综合分析，核对来源和反例；不把书中所述历史当本书历史作用，不凭宣传夸大影响。与“当年与今天”交叉引用避免重复。 -->
 <section class="card" aria-labelledby="higher-view-title" data-source="mixed-labeled">
@@ -57,7 +62,7 @@
 </section>
 <section aria-labelledby="top10-title"><h2 id="top10-title">有意思的原文段落 Top 10</h2>
 <p class="muted">已选 {{EXCERPT_COUNT}}/10 · {{EXCERPT_READ_COVERAGE_AND_LIMITS}}</p>
-<!-- 从已实读材料重新精选，材料足够时以十条为目标；不足说明原因，不凑数。每条核对短原文、真实章节/帖子/小节标题及定位；标题无法确认直说，不以页码导航。重复 li 至实际数量，无引文则删除示例条目；只引必要最短片段，兼顾累计引用量，不拼接连续大段；转述不计入。 -->
+<!-- 从已实读材料重新精选，材料足够时以十条为目标；不足不凑数。每条核对短原文、真实章节/帖子/小节标题及定位；标题无法确认直说，不以页码导航。重复 li 至实际数量；一条也没有时删除整个 section，不显示0/10或空说明；只引必要最短片段，兼顾累计引用量，不拼接连续大段；转述不计入。 -->
 <ol class="excerpt-list">
 <li><figure class="card"><blockquote><p>{{VERIFIED_BRIEF_ORIGINAL_EXCERPT}}</p></blockquote><figcaption>原文出处：<cite>{{REAL_CHAPTER_POST_OR_SECTION_TITLE_OR_UNCONFIRMED}}</cite> · {{VERIFIED_WITHIN_SECTION_LOCATION}}</figcaption></figure>
 <p><strong>为什么有意思（分析）：</strong>{{WHY_INTERESTING_AND_CONTEXT}}</p></li>
