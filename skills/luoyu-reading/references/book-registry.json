@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": 93,
+  "revision": 94,
   "timezone": "Asia/Shanghai",
   "authority": "latest origin/main; claims become effective only after serialized acceptance there",
   "migration": {
@@ -437,12 +437,14 @@
       "platform": "weread",
       "platform_book_id": "936328a0813ab9c41g012216",
       "priority": "user_requested",
-      "status": "in_progress",
-      "owner_agent_id": "cue-qingyouji-reader",
+      "status": "completed",
+      "owner_agent_id": null,
       "claim": {
-        "state": "held",
+        "state": "released",
         "claimed_at": "2026-10-22T07:05:31+08:00",
-        "source": "管理员2026-10-22T04:35:24+08:00指定07:00下一本，用户已授权系列AI笔记与缺书添加；本场官方详情核对作者/题名含轻游记，单次点击加入书架后已显示已加入书架，未点开始阅读。"
+        "source": "管理员2026-10-22T04:35:24+08:00指定07:00下一本，用户已授权系列AI笔记与缺书添加；本场官方详情核对作者/题名含轻游记，单次点击加入书架后已显示已加入书架，未点开始阅读。",
+        "released_at": "2026-10-22T07:11:54+08:00",
+        "release_reason": "本书唯一内容章AI笔记与读后思考已完成，按用户授权记AI阅读完读；未新增亲读。"
       },
       "last_confirmed_progress": {
         "scope": "尚无本书亲读或AI问答记录；目前只核官方详情、书架状态与公开书评。",
@@ -459,30 +461,47 @@
         "confirmed_at": "2026-10-22T07:05:31+08:00"
       },
       "next_question_status": "needs-confirmation",
-      "completion": null,
+      "completion": {
+        "event_id": "completed-alaska-qingyouji-user-ai-20261022-071154",
+        "sequence": 4,
+        "confirmed_by": "user:雨已批准轻游记AI章节笔记流程；管理员2026-10-22T07:06:06+08:00转达本场按新规则全流程完成可记AI阅读完成，cue-qingyouji-reader核对产出后登记",
+        "completed_at": "2026-10-22T07:11:54+08:00",
+        "mode": "AI阅读",
+        "evidence": "user-approved AI full-directory process; not additional firsthand reading. 官方目录扉页/版权信息/遗忘之地阿拉斯加，4715字，仅一个内容章；一题按章结构问答合并全书四项及一次缺口补问均完整返回，真实章节笔记和基于本书AI问答的读后思考已整理并通过独立只读复核。过强必要条件已撤回；第二人物及数字/自然现象仍未核，明确留缺，不作已核事实；金句未核不刊载。未逐页读正文，不增加亲读范围、章节状态、实读或AI时长；平台有效阅读时长未确认。",
+        "output": "reading-notes/books/alaska-qingyouji/overview.html"
+      },
       "catalog_evidence": {
         "source_url": "https://weread.qq.com/web/bookDetail/936328a0813ab9c41g012216",
         "series_label": "轻游记",
-        "toc_status": "needs-confirmation",
-        "ai_entry_status": "needs-confirmation",
-        "shelf_status": "已加入书架（本场获准添加后真实按钮确认）"
+        "toc_status": "confirmed",
+        "ai_entry_status": "confirmed",
+        "shelf_status": "已加入书架（本场获准添加后真实按钮确认）",
+        "word_count": 4715,
+        "confirmed_at": "2026-10-22T07:07:26+08:00"
       },
-      "preflight_note": "官方详情旅行随笔简介、推荐值85.7%/529人点评；现场已读纵倾及另两位公开点评，涉及自然/独处的吸引力与孤独、寒冷等门槛，适合按用户兴趣短试，非通用移居/户外风险建议。豆瓣π的2025-07-17系列读后感只作系列二手评价，不证明本册事实；独立专业本册书评未取得。不把热门划线或评论转引作为亲读/已核金句。"
+      "preflight_note": "官方详情旅行随笔简介、推荐值85.7%/529人点评；现场已读纵倾及另两位公开点评，涉及自然/独处的吸引力与孤独、寒冷等门槛，适合按用户兴趣短试，非通用移居/户外风险建议。豆瓣π的2025-07-17系列读后感只作系列二手评价，不证明本册事实；独立专业本册书评未取得。不把热门划线或评论转引作为亲读/已核金句。",
+      "ai_reading": {
+        "status": "completed",
+        "source": "微信读书AI问答",
+        "catalog": [
+          "扉页",
+          "版权信息",
+          "遗忘之地阿拉斯加"
+        ],
+        "content_chapters_answered": [
+          "遗忘之地阿拉斯加"
+        ],
+        "word_count": 4715,
+        "notes_status": "章节型AI笔记、全书四项、读后思考、同源AI汇编/EPUB已整理并核验；事实及第二人物缺口保留，未核金句不刊载",
+        "firsthand_reading_added": false
+      }
     }
   ],
-  "active_session": {
-    "run_id": "qingyouji-alaska-ai-20261022-070531",
-    "agent_id": "cue-qingyouji-reader",
-    "book_id": "alaska-qingyouji",
-    "slot": "daily_0700",
-    "started_at": "2026-10-22T07:05:31+08:00",
-    "mode": "weread_ai_chapter_notes",
-    "phase": "registered_waiting_admin_relay"
-  },
+  "active_session": null,
   "synthesis": {
     "visibility": "private",
     "batch_size": 3,
-    "unique_completed_count": 3,
+    "unique_completed_count": 4,
     "batches": [
       {
         "batch_id": "batch-001",
@@ -497,5 +516,5 @@
       }
     ]
   },
-  "updated_at": "2026-10-22T07:05:31+08:00"
+  "updated_at": "2026-10-22T07:11:54+08:00"
 }
