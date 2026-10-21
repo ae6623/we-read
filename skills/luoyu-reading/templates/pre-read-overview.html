@@ -46,6 +46,18 @@
 </section>
 <section><h2>一句话主旨</h2><p>{{THESIS}}</p></section>
 <section><h2>全书结构与主题关系</h2><div class="card mindmap">{{STRUCTURE_MAP}}</div></section>
+<!-- 固定栏目：微信读书可用时，实际点击 AI 问书「书籍亮点」「背景解读」「关键概念」并阅读、简明转述实际回答（不收录思考过程）；标注来源、获取时间及待验证状态。AI 输出不等于亲读事实，需亲读核验。其他平台无此功能时可按三问自主整理，但必须显著标为「自主整理（非微信读书返回结果）」。获取失败／未实际获取时如实写明，不得编造或以占位内容伪装答案。此栏目仅供未来新书输出，不回改旧书。 -->
+<section class="card" aria-labelledby="ai-ask-title" data-source="ai-ask-book">
+<h2 id="ai-ask-title">AI 问书</h2>
+<p><strong>来源与获取时间：</strong>{{WE_READ_AI_ASK_SOURCE_OR_OTHER_PLATFORM_SELF_COMPILED_EXPLICITLY_NOT_WE_READ_RESULT_OR_FAILED}} · {{ACTUAL_FETCHED_AT_OR_UNAVAILABLE}}</p>
+<p class="notice">{{待验证状态}}。AI 输出不等于亲读事实，不可替代原书核验；未实际获取的回答不得补写或编造。</p>
+<h3>书籍亮点</h3><p>{{AI_HIGHLIGHTS_ANSWER_OR_HONEST_MISSING_REASON}}</p>
+<p class="muted">来源／获取时间：{{AI_HIGHLIGHTS_SOURCE_AND_TIME}}；核验状态：{{AI_HIGHLIGHTS_VERIFICATION}}</p>
+<h3>背景解读</h3><p>{{AI_BACKGROUND_ANSWER_OR_HONEST_MISSING_REASON}}</p>
+<p class="muted">来源／获取时间：{{AI_BACKGROUND_SOURCE_AND_TIME}}；核验状态：{{AI_BACKGROUND_VERIFICATION}}</p>
+<h3>关键概念</h3><p>{{AI_CONCEPTS_ANSWER_OR_HONEST_MISSING_REASON}}</p>
+<p class="muted">来源／获取时间：{{AI_CONCEPTS_SOURCE_AND_TIME}}；核验状态：{{AI_CONCEPTS_VERIFICATION}}</p>
+</section>
 <section aria-labelledby="chapter-guide-title"><h2 id="chapter-guide-title">章节导读 · 初版</h2>
 <!-- 导航口径（2026-10-19）：按核实目录的部／章／小节层级，每个部一个 .toc-part；每章用 details.ch-item 包住，点标题下滑展开导读。无章节用真实帖子／文章／小节标题，不造标题、编号或层级，不以页码导航。标题下紧接 1–2 句说明讨论什么／在全书中起什么作用，逐项附来源与亲读状态：仅凭标题判断标「综合推断 · 初步导读，待亲读验证」，依据不足写「导读待阅读后补充」，已亲读标「亲读」并用 data-s="read"。未读不写成亲读，目录未知明确说明，不补造全书目录；无可确认条目时删除示例。 -->
 <div class="toc-part">
