@@ -5,15 +5,27 @@
   const tabs = [...list.querySelectorAll('button[data-panel]')];
   const panels = tabs.map((tab) => document.getElementById(tab.dataset.panel));
   if (panels.some((panel) => !panel)) return;
+  const hashByTabId = new Map([
+    ['reading-tab-overview', 'tongDu'],
+    ['reading-tab-close', 'jingDu'],
+    ['reading-tab-series', 'xiLie'],
+    ['reading-tab-archive', 'guiDang'],
+  ]);
+  const indexForHash = (hash) => tabs.findIndex((tab) => hashByTabId.get(tab.id) === hash);
+  const indexFromLocation = () => indexForHash(window.location.hash.slice(1));
 
   // Progressive enhancement: without JS, all sections and their links remain visible.
-  const activate = (index, focus = false) => {
+  const activate = (index, focus = false, updateUrl = false) => {
     tabs.forEach((tab, position) => {
       const selected = position === index;
       tab.setAttribute('aria-selected', String(selected));
       tab.tabIndex = selected ? 0 : -1;
       panels[position].hidden = !selected;
     });
+    if (updateUrl) {
+      const hash = hashByTabId.get(tabs[index].id);
+      if (hash && window.location.hash !== `#${hash}`) history.pushState(null, '', `#${hash}`);
+    }
     if (focus) tabs[index].focus();
   };
   list.setAttribute('role', 'tablist');
@@ -23,7 +35,7 @@
     panels[index].setAttribute('role', 'tabpanel');
     panels[index].setAttribute('aria-labelledby', tab.id);
     panels[index].tabIndex = 0;
-    tab.addEventListener('click', () => activate(index));
+    tab.addEventListener('click', () => activate(index, false, true));
     tab.addEventListener('keydown', (event) => {
       let next;
       if (event.key === 'ArrowRight') next = (index + 1) % tabs.length;
@@ -32,12 +44,19 @@
       else if (event.key === 'End') next = tabs.length - 1;
       else return;
       event.preventDefault();
-      activate(next, true);
+      activate(next, true, true);
     });
   });
-  // Every fresh page load starts on 精读; no stored tab or URL state overrides it.
+  const syncTabFromLocation = () => {
+    const index = indexFromLocation();
+    if (index >= 0) activate(index);
+  };
+  window.addEventListener('hashchange', syncTabFromLocation);
+  window.addEventListener('popstate', syncTabFromLocation);
+  // A recognized URL hash selects its tab; otherwise start on 精读.
   const defaultIndex = tabs.findIndex((tab) => tab.id === 'reading-tab-close');
-  activate(defaultIndex >= 0 ? defaultIndex : 0);
+  const hashIndex = indexFromLocation();
+  activate(hashIndex >= 0 ? hashIndex : (defaultIndex >= 0 ? defaultIndex : 0));
   module.setAttribute('data-tabs-ready', '');
   list.hidden = false;
 
