@@ -5,22 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{{BOOK_TITLE}}｜整书汇编</title>
 <style>
-:root{color-scheme:light;--ink:#26342f;--muted:#697870;--paper:#f6f7f2;--card:#fff;--accent:#286b52;--line:#dfe6df}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.75 system-ui,-apple-system,"Segoe UI",sans-serif}.wrap{max-width:900px;margin:auto;padding:clamp(20px,5vw,56px)}.eyebrow{color:var(--accent);letter-spacing:.12em;font-size:.8rem}h1{line-height:1.2;font-size:clamp(2rem,5vw,3.4rem);margin:.4rem 0}h2{margin-top:2.2rem;font-size:1.35rem}.meta,.muted{color:var(--muted)}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:clamp(18px,3vw,30px);margin:16px 0}.mindmap{white-space:pre-wrap;font-family:inherit}a{color:var(--accent)}
+:root{color-scheme:light;--ink:#26342f;--muted:#697870;--paper:#f6f7f2;--card:#fff;--accent:#286b52;--line:#dfe6df}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.75 system-ui,-apple-system,"Segoe UI",sans-serif}.wrap{max-width:900px;margin:auto;padding:clamp(20px,5vw,56px)}.eyebrow{color:var(--accent);letter-spacing:.12em;font-size:.8rem}h1{line-height:1.2;font-size:clamp(2rem,5vw,3.4rem);margin:.4rem 0}h2{margin-top:2.2rem;font-size:1.35rem}.meta,.muted{color:var(--muted)}.tag{display:inline-block;border:1px solid var(--accent);border-radius:999px;padding:0 .65em;color:var(--accent);font-size:.82em;font-weight:650;white-space:nowrap}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:clamp(18px,3vw,30px);margin:16px 0}.mindmap{white-space:pre-wrap;font-family:inherit}a{color:var(--accent)}
 </style>
 </head>
 <body><main class="wrap">
 <p class="eyebrow">Whole-book synthesis</p>
 <h1>{{BOOK_TITLE}}</h1>
-<p class="meta">{{AUTHOR}} · 完读汇编 · 更新于 {{UPDATED_AT}}</p>
+<p class="meta">{{AUTHOR}} · 完读汇编 · <span class="tag">{{AI阅读|亲读}}</span> · 更新于 {{UPDATED_AT}}</p>
 <div class="card"><h2>范围与来源</h2><p>{{COVERAGE_AND_SOURCES}}</p></div>
 <section><h2>一句话主旨</h2><p>{{THESIS}}</p></section>
 <section><h2>全书结构</h2><div class="card mindmap">{{STRUCTURE_MAP}}</div></section>
-<!-- 固定四项栏目：微信读书可用时，在本书 AI 对话一次输入并提交「书籍亮点+背景解读+关键概念+10个最佳金句语录」，不再逐个点击固定按钮；读取最终实际回答，不收录思考过程。逐项标来源、实际获取／整理时间和核验状态；缺项如实说明，不将提交等同取得。无平台 AI（含 Windows 本地 PDF）时基于已核实材料自主整理四项，显著标「AI 自主整理 · 非微信读书返回」。金句仅取可访问、可逐字核验且属于已读范围的短原文，实际几条写几条；不足说明原因，不凑十条，不从未读文本补引文，遵守全页累计短引限制。AI 内容不等于亲读，不改变阅读事实。本次只改未来模板，不回改旧笔记或现有 PR #34。 -->
+<!-- 固定四项栏目：微信读书可用时，在本书 AI 对话一次输入并提交「书籍亮点+背景解读+关键概念+10个最佳金句语录」，不再逐个点击固定按钮；读取最终实际回答，不收录思考过程。逐项标来源、实际获取／整理时间和核验状态；缺项如实说明，不将提交等同取得。无平台 AI（含 Windows 本地 PDF）时基于已核实材料自主整理四项，显著标「AI 自主整理 · 非微信读书返回」。金句仅取可访问、可逐字核验且属于真实亲读范围的短原文，实际几条写几条；不足说明原因，不凑十条，不从未读文本补引文，遵守全页累计短引限制。按流程完成规定AI章节笔记与读后思考可构成AI阅读完读，并在标签及来源中如实标明，不能改写为亲读。本次修改仅更新未来模板，不回改旧笔记。 -->
 <section class="card" aria-labelledby="ai-ask-title" data-source="ai-ask-book">
 <h2 id="ai-ask-title">AI 问书</h2>
 <p><strong>合并提示词：</strong>书籍亮点+背景解读+关键概念+10个最佳金句语录</p>
 <p><strong>实际来源与获取／整理时间：</strong>{{WE_READ_AI_ASK_SOURCE_OR_OTHER_PLATFORM_SELF_COMPILED_EXPLICITLY_NOT_WE_READ_RESULT_OR_FAILED}} · {{ACTUAL_FETCHED_OR_COMPILED_AT_OR_UNAVAILABLE}}</p>
-<p class="muted"><strong>{{待验证状态}}</strong>。AI 输出不等于亲读事实，不改变实际覆盖、时长或完读状态；无平台答复时可按已核实材料自主整理并标明非微信读书返回，不得伪称取得。金句须另核原文，10条不是必须凑足的配额。</p>
+<p class="muted"><strong>{{阅读方式与核验状态}}</strong>。AI输出不等于亲读事实，不改变实际覆盖或时长；按章节完成本书规定的AI笔记与「读后思考」可构成AI阅读完读，须在来源和上方标签中标明。无平台答复时可按已核实材料自主整理并标明非微信读书返回，不得伪称取得。金句须另核原文，10条不是必须凑足的配额。</p>
 <h3>书籍亮点</h3><p>{{AI_HIGHLIGHTS_ANSWER_OR_HONEST_MISSING_REASON}}</p>
 <p class="muted">来源／获取或整理时间：{{AI_HIGHLIGHTS_SOURCE_AND_TIME}}；核验状态：{{AI_HIGHLIGHTS_VERIFICATION}}</p>
 <h3>背景解读</h3><p>{{AI_BACKGROUND_ANSWER_OR_HONEST_MISSING_REASON}}</p>
@@ -37,8 +37,8 @@
 </ol>
 <p class="muted">{{AI_QUOTES_SHORTFALL_OR_NO_VERIFIABLE_QUOTES_REASON_OR_EMPTY}}</p>
 </section>
-<section aria-labelledby="chapter-guide-title"><h2 id="chapter-guide-title">章节导读 · 完读校订</h2>
-<!-- 确认全书完读后，按真实部／章／小节层级重复 article，以 h3/h4 等表达真实层级；无章节用真实帖子／文章／小节标题，不造标题、编号或层级，不以页码导航。每个标题下紧接 1–2 句说明该章内容／在全书中的作用；依据实际完成阅读校订，修正初版推断，保留必要来源标签，HTML 与 EPUB 同口径。未完成不得生成完读版。 -->
+<section aria-labelledby="chapter-guide-title"><h2 id="chapter-guide-title">章节导读 · 完读整理</h2>
+<!-- 确认按AI章节流程或亲读路径完读后，按真实部／章／小节层级重复 article，以 h3/h4 等表达真实层级；无章节用真实帖子／文章／小节标题，不造标题、编号或层级，不以页码导航。每项明确标来源是AI问答、亲读或两者；AI阅读完读不能把AI导览改成亲读章节状态。后续亲读仅补真实覆盖并另标来源，HTML 与 EPUB 同口径。 -->
 <article class="card">
 <h3>{{VERIFIED_CHAPTER_POST_OR_SECTION_TITLE}}</h3>
 <p>{{BRIEF_CHAPTER_TOPIC_AND_WHOLE_BOOK_ROLE_REVISED_AFTER_READING}}</p>
@@ -56,14 +56,14 @@
 <h2 id="higher-view-title">用更高维度的知识看这本书</h2>
 <p class="muted">本节把书放回知识与历史背景；外部证据和综合分析不是作者原话，也不代表全知定论。</p>
 <h3>放进更大的知识坐标</h3>
-<p><strong>书中问题与亲读依据：</strong>{{BOOK_PROBLEM_AND_VERIFIED_SECTION_WITH_READ_EVIDENCE}}</p>
+<p><strong>书中问题与材料依据：</strong>{{BOOK_PROBLEM_AND_VERIFIED_SECTION_WITH_SOURCE_TYPE}}</p>
 <p><strong>外部知识：</strong>{{RELEVANT_KNOWLEDGE_FRAMEWORK_WITH_VERIFIED_SOURCE_LINKS}}</p>
 <p><strong>综合分析：</strong>{{REVISED_SPECIFIC_CONNECTION_AND_EXPLANATORY_GAIN_NOT_FORCED_ANALOGY}}</p>
 <h3>这本书本身在历史中起了什么作用</h3>
 <p><strong>接受史证据：</strong>{{BOOK_RECEPTION_DIFFUSION_CITATION_OR_DEBATE_WITH_SCOPE_DATES_AND_SOURCE_LINKS_OR_INSUFFICIENT_EVIDENCE}}</p>
 <p><strong>综合分析：</strong>{{PROPORTIONATE_HISTORICAL_POSITION_NOT_HISTORY_DESCRIBED_IN_BOOK}}</p>
 <h3>它解释了什么，又解释不了什么</h3>
-<p><strong>书中主张与亲读依据：</strong>{{BOOK_EXPLANATION_WITH_VERIFIED_SECTION_AND_READ_EVIDENCE}}</p>
+<p><strong>书中主张与材料依据：</strong>{{BOOK_EXPLANATION_WITH_VERIFIED_SECTION_AND_SOURCE_TYPE}}</p>
 <p><strong>综合分析：</strong>{{REVISED_EXPLANATORY_POWER_LIMITS_COUNTEREXAMPLES_AND_CONDITIONS_WITH_EXTERNAL_EVIDENCE_LINKS}}</p>
 <h3>由此值得继续想什么</h3><p>{{FURTHER_THINKING_FROM_THE_ANALYSIS_NOT_AUTHOR_CLAIM}}</p>
 <h3>相似或互补的书 · 1–2本</h3>
