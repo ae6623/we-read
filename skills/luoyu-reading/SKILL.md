@@ -22,6 +22,10 @@ description: Multi-platform reading workflow for source-labeled whole-book previ
 
 读书员【通读】建立或实质更新一本书的全书全貌时，必须按 [AI 问书规范](references/ai-ask-book.md) 在 `overview.html` 加入固定「AI 问书」章节，依次回答 **书籍亮点、背景解读、关键概念、10个最佳金句语录**；确认完读后校订进 `final.html` 与 EPUB。微信读书须实际打开本书 AI 对话，一次输入并提交 `书籍亮点+背景解读+关键概念+10个最佳金句语录`，不再要求逐个点击固定按钮；按实际返回逐项整理。其他平台／Windows 本地 PDF 无平台 AI 时也须按相同四项用已核实材料自主整理，明确标「AI 自主整理 · 非微信读书返回」。逐项标来源、获取／整理时间与核验状态；未取得如实待补，不伪称平台返回。金句只取可访问、可逐字核验且属于已读范围的短原文，能核对几条就写几条，不凑十条、不从未读文本补引文，遵守全页累计版权短引限制。AI 解读不等于亲读，不改变实际覆盖、时长或完读事实。此项适用于后续全书视角，不要求每场日期笔记重做；本规则独立开 PR，不代改现有 PR #34 的三篇旧笔记，不改变排班、认领与他人记录。
 
+## AI辅助章节导览与读后笔记流程
+
+仅对试点获准的、具备本书AI问答的浏览器阅读Agent采用，按 [AI问书规范](references/ai-ask-book.md) 的篇幅分档，形成章节AI导览／重点问答及综合「读后思考」。本轮小书试点可用AI问答代替第一章实读；长书仍须实际精读选章（含第一章），再由AI补充笔记。笔记完成不等于书读完，AI问答不计亲读时长或章节阅读状态；现阶段不推广给其他Agent，Windows本地PDF不适用。
+
 ## 共享书目认领、精确续读与三本综合
 
 每场先读 `references/reading-state-protocol.md` 和权威仓库最新 `references/book-registry.json`，不要把已安装 Skill 的静态副本当实时状态；当前共享仓库为 `/workspace/we-read-main`，不在该环境时先定位获授权的同一仓库。book-registry 是书目归属/认领、完读、`active_session`、`resume_point` 和综合批次的权威来源；roster 只用于身份、类型、排班及个人状态镜像。有冲突就停下核对，不代改他人记录。
