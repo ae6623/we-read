@@ -16,6 +16,9 @@
     .office-entry:focus-visible{outline:3px solid white;outline-offset:4px}
     .office-entry-icon{display:block;width:24px;height:28px;flex-shrink:0;shape-rendering:crispEdges}
     .hero-inner{padding-top:24px}
+    .hero-copy+.hero-copy{margin-top:16px}
+    .hero-quote{margin-top:20px}
+    .hero-quote cite{font-style:normal}
     @media(max-width:680px){.hero-inner{padding-top:16px}}
   </style>
 <link rel="stylesheet" href="assets/css/book-link-drawer.css">
@@ -36,9 +39,11 @@
       </a></nav>
       <p class="eyebrow">WE READ · READING ARCHIVE</p>
       <h1>读过的书，<br><span>留下自己的注脚。</span></h1>
-      <p class="hero-copy">按书目与日期整理阅读札记、主题汇编和可下载版本。这里收录的是已完成整理并获准公开的内容。</p>
+      <p class="hero-copy">书有长短，读法也不必相同。长书，借 AI 从全局梳理，再提炼主线；短书，从细节出发，向上对齐更大的知识图景。个人所知有限，便借 AI 的海量知识关联，把书放进更广的知识脉络，连接书评与读者经验。</p>
+      <p class="hero-copy">也让今天的事实回测作者当年的预判：哪些仍然成立，原因何在；哪些已经失效，还缺什么信息？不止做一句话摘要，而是在核对与追问中，与作者的思路对话。</p>
+      <p class="hero-copy hero-quote"><q>尽信书，则不如无书。</q>——<cite><a href="https://www.chinakongzi.org/kzsf/lsjd/mengzi/200711/t20071120_28410.htm" aria-label="查看《孟子·尽心下》原文">《孟子·尽心下》</a></cite></p>
       <div class="hero-meta"><span>阅读归档</span><span>持续整理</span><span>独立静态页面</span></div>
-    </div>
+      </div>
     <div class="hero-mark" aria-hidden="true">阅</div>
   </header>
 
@@ -59,15 +64,30 @@
         <button type="button" id="reading-tab-archive" data-panel="reading-panel-archive">归档</button>
       </div>
 
-      <section id="reading-panel-overview" class="reading-panel" aria-labelledby="overview-title">
-        <h2 id="overview-title" class="panel-title">通读</h2>
+      <section id="reading-panel-overview" class="reading-panel" aria-label="通读">
         <section class="reading-group" aria-labelledby="whole-book-title">
           <h3 class="reading-group-title" id="whole-book-title">读前</h3>
-          <div class="overview-entries" aria-label="近期读前入口">
-            <a href="reading-notes/books/king-return-dalrymple/overview.html"><strong>王的归程</strong><span>读前 →</span></a>
-            <a href="reading-notes/books/da-zhuan-zhe--xian-dai-zhai-wu-yu-ke-chi-xu-de/overview.html"><strong>大转折</strong><span>读前 →</span></a>
-          </div>
           <div class="archive-grid" aria-label="读前内容">
+      <article class="archive-card">
+        <div class="card-top"><span class="type-tag type-tag-gold">读前</span></div>
+        <h3>王的归程</h3>
+        <details class="book-link-drawer">
+          <summary><span>阅读入口</span><span class="drawer-count">1 项</span></summary>
+          <ol class="book-link-list">
+            <li><div class="drawer-item"><a href="reading-notes/books/king-return-dalrymple/overview.html">打开《王的归程》读前 HTML <span aria-hidden="true">↗</span></a></div></li>
+          </ol>
+        </details>
+      </article>
+      <article class="archive-card">
+        <div class="card-top"><span class="type-tag type-tag-gold">读前</span></div>
+        <h3>大转折</h3>
+        <details class="book-link-drawer">
+          <summary><span>阅读入口</span><span class="drawer-count">1 项</span></summary>
+          <ol class="book-link-list">
+            <li><div class="drawer-item"><a href="reading-notes/books/da-zhuan-zhe--xian-dai-zhai-wu-yu-ke-chi-xu-de/overview.html">打开《大转折》读前 HTML <span aria-hidden="true">↗</span></a></div></li>
+          </ol>
+        </details>
+      </article>
       <article class="archive-card" data-search="住小房子的女人 整书汇编 主题 综合 2026">
         <div class="card-top"><span class="type-tag type-tag-gold">整书汇编</span><span class="subtle">HTML · EPUB</span><time datetime="2026-10-17">2026.10.17</time></div>
         <h3>住小房子的女人：全书视角初版</h3>
@@ -335,7 +355,7 @@
       <div>
         <p class="eyebrow eyebrow-dark">A SMALL PRINCIPLE</p>
         <h2 id="principles-title">先通读，再成册</h2>
-        <p>每篇日期笔记保留独立入口；只有整本书完成后才制作主题汇编，并明确写出覆盖范围。此类面向用户的微信读书阅读笔记已获持续公开授权；跨书综合与内部运行记录仍保持私有。</p>
+        <p>每篇日期笔记保留独立入口；只有整本书完成后才制作主题汇编，并明确写出覆盖范围。跨书综合与内部运行记录仍保持私有。</p>
       </div>
     </section>
   </main>
