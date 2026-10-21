@@ -46,17 +46,27 @@
 </section>
 <section><h2>一句话主旨</h2><p>{{THESIS}}</p></section>
 <section><h2>全书结构与主题关系</h2><div class="card mindmap">{{STRUCTURE_MAP}}</div></section>
-<!-- 固定栏目：微信读书可用时，实际点击 AI 问书「书籍亮点」「背景解读」「关键概念」并阅读、简明转述实际回答（不收录思考过程）；标注来源、获取时间及待验证状态。AI 输出不等于亲读事实，需亲读核验。其他平台无此功能时可按三问自主整理，但必须显著标为「自主整理（非微信读书返回结果）」。获取失败／未实际获取时如实写明，不得编造或以占位内容伪装答案。此栏目仅供未来新书输出，不回改旧书。 -->
+<!-- 固定四项栏目：微信读书可用时，在本书 AI 对话一次输入并提交「书籍亮点+背景解读+关键概念+10个最佳金句语录」，不再逐个点击固定按钮；读取最终实际回答，不收录思考过程。逐项标来源、实际获取／整理时间和核验状态；缺项如实说明，不将提交等同取得。无平台 AI（含 Windows 本地 PDF）时基于已核实材料自主整理四项，显著标「AI 自主整理 · 非微信读书返回」。金句仅取可访问、可逐字核验且属于已读范围的短原文，实际几条写几条；不足说明原因，不凑十条，不从未读文本补引文，遵守全页累计短引限制。AI 内容不等于亲读，不改变阅读事实。本次只改未来模板，不回改旧笔记或现有 PR #34。 -->
 <section class="card" aria-labelledby="ai-ask-title" data-source="ai-ask-book">
 <h2 id="ai-ask-title">AI 问书</h2>
-<p><strong>来源与获取时间：</strong>{{WE_READ_AI_ASK_SOURCE_OR_OTHER_PLATFORM_SELF_COMPILED_EXPLICITLY_NOT_WE_READ_RESULT_OR_FAILED}} · {{ACTUAL_FETCHED_AT_OR_UNAVAILABLE}}</p>
-<p class="notice">{{待验证状态}}。AI 输出不等于亲读事实，不可替代原书核验；未实际获取的回答不得补写或编造。</p>
+<p><strong>合并提示词：</strong>书籍亮点+背景解读+关键概念+10个最佳金句语录</p>
+<p><strong>实际来源与获取／整理时间：</strong>{{WE_READ_AI_ASK_SOURCE_OR_OTHER_PLATFORM_SELF_COMPILED_EXPLICITLY_NOT_WE_READ_RESULT_OR_FAILED}} · {{ACTUAL_FETCHED_OR_COMPILED_AT_OR_UNAVAILABLE}}</p>
+<p class="notice">{{待验证状态}}。AI 输出不等于亲读事实，不改变实际覆盖、时长或完读状态；无平台答复时可按已核实材料自主整理并标明非微信读书返回，不得伪称取得。金句须另核原文，10条不是必须凑足的配额。</p>
 <h3>书籍亮点</h3><p>{{AI_HIGHLIGHTS_ANSWER_OR_HONEST_MISSING_REASON}}</p>
-<p class="muted">来源／获取时间：{{AI_HIGHLIGHTS_SOURCE_AND_TIME}}；核验状态：{{AI_HIGHLIGHTS_VERIFICATION}}</p>
+<p class="muted">来源／获取或整理时间：{{AI_HIGHLIGHTS_SOURCE_AND_TIME}}；核验状态：{{AI_HIGHLIGHTS_VERIFICATION}}</p>
 <h3>背景解读</h3><p>{{AI_BACKGROUND_ANSWER_OR_HONEST_MISSING_REASON}}</p>
-<p class="muted">来源／获取时间：{{AI_BACKGROUND_SOURCE_AND_TIME}}；核验状态：{{AI_BACKGROUND_VERIFICATION}}</p>
+<p class="muted">来源／获取或整理时间：{{AI_BACKGROUND_SOURCE_AND_TIME}}；核验状态：{{AI_BACKGROUND_VERIFICATION}}</p>
 <h3>关键概念</h3><p>{{AI_CONCEPTS_ANSWER_OR_HONEST_MISSING_REASON}}</p>
-<p class="muted">来源／获取时间：{{AI_CONCEPTS_SOURCE_AND_TIME}}；核验状态：{{AI_CONCEPTS_VERIFICATION}}</p>
+<p class="muted">来源／获取或整理时间：{{AI_CONCEPTS_SOURCE_AND_TIME}}；核验状态：{{AI_CONCEPTS_VERIFICATION}}</p>
+<h3 id="ai-quotes-title">10个最佳金句语录</h3>
+<p class="muted">来源／获取或整理时间：{{AI_QUOTES_SOURCE_AND_TIME}}；核验状态：{{AI_QUOTES_VERIFICATION}}；已核验 {{AI_VERIFIED_QUOTE_COUNT}}/10 · 已读范围：{{AI_QUOTES_ACTUAL_READ_COVERAGE}}</p>
+<!-- 逐字核验后按实际数量重复 li，不能照抄AI候选或留十条占位。无可核句时删除 ol，保留本小节及真实原因（不显示空列表）；已有原文 Top 10 的同句可用真实锚点交叉引用代替重复摘录，两个栏目不是各十条的配额。 -->
+<ol class="excerpt-list">
+<li><figure><blockquote><p>{{AI_QUOTE_VERBATIM_VERIFIED_BRIEF_ORIGINAL}}</p></blockquote><figcaption>原文出处：<cite>{{AI_QUOTE_REAL_CHAPTER_POST_OR_SECTION_TITLE_OR_UNCONFIRMED}}</cite> · {{AI_QUOTE_VERIFIED_WITHIN_SECTION_LOCATION}}</figcaption></figure>
+<p class="muted">原文来源及逐字核验：{{AI_QUOTE_ORIGINAL_SOURCE_AND_VERBATIM_CHECK}}</p>
+<p><strong>入选理由（分析）：</strong>{{AI_QUOTE_BRIEF_REASON_AND_CONTEXT}}</p></li>
+</ol>
+<p class="muted">{{AI_QUOTES_SHORTFALL_OR_NO_VERIFIABLE_QUOTES_REASON_OR_EMPTY}}</p>
 </section>
 <section aria-labelledby="chapter-guide-title"><h2 id="chapter-guide-title">章节导读 · 初版</h2>
 <!-- 导航口径（2026-10-19）：按核实目录的部／章／小节层级，每个部一个 .toc-part；每章用 details.ch-item 包住，点标题下滑展开导读。无章节用真实帖子／文章／小节标题，不造标题、编号或层级，不以页码导航。标题下紧接 1–2 句说明讨论什么／在全书中起什么作用，逐项附来源与亲读状态：仅凭标题判断标「综合推断 · 初步导读，待亲读验证」，依据不足写「导读待阅读后补充」，已亲读标「亲读」并用 data-s="read"。未读不写成亲读，目录未知明确说明，不补造全书目录；无可确认条目时删除示例。 -->
