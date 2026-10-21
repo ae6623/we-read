@@ -18,6 +18,10 @@ description: Multi-platform reading workflow for source-labeled whole-book previ
 - 实际执行排班由各 Agent 自行维护其 roster 镜像；协调者只提出安排、交接与核对，不代改其他 Agent 的个人记录、续读点、个人排班镜像或阅读历史，也不干预其专属实现。
 - 做文章呈现、共享归档页面或组件前，先读 [唯一 UI 规范入口](references/archive-ui.md)。统一处理同类区块，不另建规范副本；设计权限不等于改写他人文章内容、阅读事实或历史笔记的权限，文件认领与审查仍按 [协作规则](references/coordination.md)。
 
+## 通读的 AI 问书（2026-10-21 用户决定）
+
+读书员【通读】建立或实质更新一本书的全书全貌时，必须按 [AI 问书规范](references/ai-ask-book.md) 在 `overview.html` 加入固定「AI 问书」章节，依次回答 **书籍亮点、背景解读、关键概念**；确认完读后校订进 `final.html` 与 EPUB。微信读书须实际打开本书 AI 问书并分别点击三个按钮、取得对应答案；其他平台／本地书也须按同样三问提交，使用真实平台答复或明确标记的「AI 自主整理 · 非微信读书返回」。未取得就如实标待补，不能伪称点击成功。逐项标来源、获取时间与核验状态，AI 解读不等于亲读，不替代实际阅读或完读证据。此项是后续全书视角的必备模块，不要求每场日期笔记重做，不回改旧笔记或改变排班、认领与他人记录。
+
 ## 共享书目认领、精确续读与三本综合
 
 每场先读 `references/reading-state-protocol.md` 和权威仓库最新 `references/book-registry.json`，不要把已安装 Skill 的静态副本当实时状态；当前共享仓库为 `/workspace/we-read-main`，不在该环境时先定位获授权的同一仓库。book-registry 是书目归属/认领、完读、`active_session`、`resume_point` 和综合批次的权威来源；roster 只用于身份、类型、排班及个人状态镜像。有冲突就停下核对，不代改他人记录。
