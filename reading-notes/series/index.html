@@ -8,11 +8,19 @@
 <link rel="stylesheet" href="../../assets/css/site.css">
 <link rel="stylesheet" href="series.css">
 <link rel="stylesheet" href="../../assets/css/book-link-drawer.css">
+<style>
+.series-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin-top:24px;align-items:start}
+.series-grid>section{min-width:0;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px;scroll-margin-top:20px}
+.series-grid h2{margin:0 0 14px;overflow-wrap:anywhere}
+.series-grid .book-entry{border:0;background:transparent;border-radius:0;margin:14px 0 0;padding:0;min-width:0}
+@media(max-width:600px){.series-grid{grid-template-columns:minmax(0,1fr)}.series-grid>section{padding:17px}}
+</style>
 </head>
 <body>
 <main class="series-page" id="main">
 <nav class="series-nav" aria-label="阅读导航"><a href="../../index.html">首页</a><a href="../index.html">阅读归档</a><a href="index.html" aria-current="page">系列</a></nav>
 <header class="series-head"><p class="eyebrow">READING SERIES · 系列</p><h1>按系列，找到下一本</h1><p>系列 → 作者 → 主题分类 → 单篇／书目入口。候选导览与实际亲读笔记分别展示，不混计阅读成果。</p></header>
+<div class="series-grid">
 <section aria-labelledby="qingyouji-title"><h2 id="qingyouji-title">轻游记（系列）</h2><article class="book-entry"><span class="type-tag">公开资料导览／正文未读</span><h3><a href="qingyouji/index.html">猴面包的树（作者）</a></h3><p>20部新候选，正文亲读0本；按四个主题浏览公开资料导览与微信读书官方书目入口。不是系列完整书目，不是20本阅读笔记或完读记录。</p><p><a class="card-link" href="qingyouji/index.html">进入轻游记系列导览 →</a></p></article></section>
 <section aria-labelledby="oracle-world-history-title" id="oracle-world-history"><h2 id="oracle-world-history-title">甲骨文·世界史</h2>
 <p>仅收录《春之祭》已发布的日期笔记，不列其他分册，不表示系列已读或完读。</p>
@@ -29,6 +37,7 @@
 </details>
 </article></section>
 <section aria-labelledby="tianya-title"><h2 id="tianya-title">天涯长帖选读（本地 PDF）</h2><article class="book-entry"><span class="type-tag">本导览收录4篇已发布原创笔记</span><h3>从真实笔记回看长帖</h3><p>从职业选择、住房焦虑到经济转型，回看天涯长帖中的个人经历与现实思考。</p><p><a class="card-link" href="tianya/index.html">进入天涯长帖选读导览 →</a></p></article></section>
+</div>
 <footer>现有单书笔记与阅读状态保持不变。<a href="../index.html">返回阅读归档</a></footer>
 </main>
 </body>
