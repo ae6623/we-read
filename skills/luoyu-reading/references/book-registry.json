@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": 114,
+  "revision": 115,
   "timezone": "Asia/Shanghai",
   "authority": "latest origin/main; claims become effective only after serialized acceptance there",
   "migration": {
@@ -671,11 +671,11 @@
       "platform_book_id": "3300021453",
       "container_platform_book_id": null,
       "priority": "none",
-      "status": "in_progress",
+      "status": "blocked",
       "owner_agent_id": "kDMz83g4XxhGbSEJQZeWUJ",
       "claim": {
         "state": "held",
-        "source": "2026-10-23 00:51 雨确认即时单次场后，从书架未读且未被认领的候选中随机抽取（官方接口只读核实 progress=0、无活动锁）；此为责任登记，不是开读事件。",
+        "source": "2026-10-23 00:51 雨确认即时单次场后，从书架未读且未被认领的候选中随机抽取（官方接口只读核实 progress=0、无活动锁）；此为责任登记，不是开读事件。 00:52 进入阅读器后页面显示“本书已下架，内容不再支持阅读”且页头为“登录”，未能开读，未阅读任何正文；保留本人 held 责任，待用户确认是否继续、换书或释放。",
         "claimed_at": "2026-10-23T00:51:45+08:00"
       },
       "last_confirmed_progress": null,
@@ -688,7 +688,12 @@
         "page": null
       },
       "next_question_status": "needs-confirmation",
-      "completion": null
+      "completion": null,
+      "blocked_reason": {
+        "run_id": "reading-duration-20261023-0051",
+        "recorded_at": "2026-10-23T00:53:31+08:00",
+        "summary": "页面显示本书已下架、内容不再支持阅读；未登录入口可见；未开读。"
+      }
     }
   ],
   "active_session": null,
@@ -733,19 +738,6 @@
       }
     ]
   },
-  "updated_at": "2026-10-23T00:51:45+08:00",
-  "active_sessions": [
-    {
-      "run_id": "reading-duration-20261023-0051",
-      "agent_id": "kDMz83g4XxhGbSEJQZeWUJ",
-      "book_id": "buffett-munger-mastermind-loe",
-      "slot": "manual_immediate_20261023",
-      "started_at": "2026-10-23T00:51:45+08:00",
-      "environment_id": "weread-shared-browser",
-      "reading_mode": "weread_browser",
-      "resource_ids": [
-        "browser:weread-shared"
-      ]
-    }
-  ]
+  "updated_at": "2026-10-23T00:53:31+08:00",
+  "active_sessions": []
 }
