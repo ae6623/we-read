@@ -57,7 +57,13 @@ class ReadingStateTests(unittest.TestCase):
 
     def third(self):
         s=copy.deepcopy(self.state)
-        template=copy.deepcopy(s["books"][2])
+        # Build exactly three completions, independent of the live registry count.
+        completed = next(b for b in s["books"] if b.get("completion"))
+        template = copy.deepcopy(completed)
+        template["completion"]["sequence"] = 1
+        s["books"] = [b for b in s["books"] if not b.get("completion")]
+        s["books"].append(template)
+        s["synthesis"]["batches"] = []
         for n in (2, 3):
             b=copy.deepcopy(template); b.update(book_id=f"third-{n}", title=f"Third {n}")
             b["completion"].update(event_id=f"event-{n}", sequence=n)

@@ -9,7 +9,7 @@ description: Multi-platform reading workflow for source-labeled whole-book previ
 
 **沟通记录按需读取**：先读最新 main 的 [沟通索引](references/agent-communication.md)，再读 Asia/Shanghai 今天对应的 `references/agent-communication/YYYY/MM/YYYY-MM-DD.md`；仅为跨日续接、未解决交接或证据追溯打开相关旧日，不通读全历史。开始、交接、完成或遇阻等新事件按实际发生日期追加日文件，不再追加索引；新日期/月/年的目录维护及跨日补记规则见索引。
 
-为用户把多本书读得更有效：开读即建立有来源边界的全书视角初版，再把每天真实读到的内容连回框架，完读后才做校订后的整书汇编。`references/book-registry.json` 是书目归属/认领、完读、`active_session` 与 `resume_point` 的权威来源；`references/agent-roster.json` 只登记身份、类型、排班及个人状态镜像，不作为书目或完读事实的唯一来源。共享归档与 Git 规则见 `references/coordination.md`，跨 Agent 开始/结束记录见 `references/agent-communication.md`，用户最新决定见 `references/decisions.md`。使用某个平台前阅读对应的 `references/platforms/<platform>.md`（当前先有微信读书指南）。
+为用户把多本书读得更有效：开读即建立有来源边界的全书视角初版，再把每天真实读到的内容连回框架，完读后才做校订后的整书汇编。`references/book-registry.json` 是书目归属/认领、完读、`active_sessions`（兼容旧锁 `active_session`） 与 `resume_point` 的权威来源；`references/agent-roster.json` 只登记身份、类型、排班及个人状态镜像，不作为书目或完读事实的唯一来源。共享归档与 Git 规则见 `references/coordination.md`，跨 Agent 开始/结束记录见 `references/agent-communication.md`，用户最新决定见 `references/decisions.md`。使用某个平台前阅读对应的 `references/platforms/<platform>.md`（当前先有微信读书指南）。
 
 ## 所有阅读员的公开内容原则（2026-10-22）
 
@@ -19,9 +19,9 @@ description: Multi-platform reading workflow for source-labeled whole-book previ
 
 用户要求 WorkBuddy 接手，或当前 Agent 因用量／连接中断需移交时，先读 [WorkBuddy 交接清单与可复制模板](references/workbuddy-handoff.md)。接手者必须从权威仓库最新 main、registry 及相关事件自检，不假设会话、浏览器登录、Skill 安装、Git 权限、活动锁或用户授权继承；只有用户明确授权／交接、锁与责任核清并满足最新状态协议后才继续。不得传递令牌或任何秘密，权限不足就回传无秘密补丁，由有既有获批通道的责任方处理，不绕过。管理员统筹使用独立的 [reading-admin Skill](../reading-admin/SKILL.md)；未安装或无权读取时先报告，不声称已接入。
 
-## 最新协调规则（2026-10-20，优先于旧排班与管理员只读规则）
+## 最新协调规则（2026-10-22，优先于旧全局锁、排班与管理员只读规则）
 
-- 按 **Asia/Shanghai 每日 02:00–06:00 禁读**；其余每小时全队错峰安排一场约20分钟阅读，不是每人每小时各一场。具体奇偶小时分工以 [最新决定](references/decisions.md) 顶部为准；两个浏览器 Agent 不得实际重叠，今天从下一个未到时段起执行、不补跑。
+- 按 **Asia/Shanghai 每日 02:00–06:00 禁读**；浏览器阅读按 [最新决定](references/decisions.md) 的整点／半点错峰执行、共享浏览器不得重叠，不补跑。Windows 独立本地 PDF 由责任 Agent 自主管理，不套用浏览器错峰或逐场转达门槛；按 [状态协议](references/reading-state-protocol.md) 核清书目、环境和资源后可与不同书的浏览器阅读并行。旧锁由原责任人安全收尾、相关写入端确认接入新格式之前，不启用并行；本次不改排班或启动阅读。
 - 管理员／协调者负责整体错峰排班、阅读任务分发及共享归档页面设计，**不读正文**。可在已授权队列与现有书目归属内协调任务，不替其他 Agent 认领、转交、开读或登记成果；书目归属始终以最新 `book-registry.json` 为准。
 - 实际执行排班由各 Agent 自行维护其 roster 镜像；协调者只提出安排、交接与核对，不代改其他 Agent 的个人记录、续读点、个人排班镜像或阅读历史，也不干预其专属实现。
 - 做文章呈现、共享归档页面或组件前，先读 [唯一 UI 规范入口](references/archive-ui.md)。统一处理同类区块，不另建规范副本；设计权限不等于改写他人文章内容、阅读事实或历史笔记的权限，文件认领与审查仍按 [协作规则](references/coordination.md)。
@@ -36,7 +36,7 @@ description: Multi-platform reading workflow for source-labeled whole-book previ
 
 ## 共享书目认领、精确续读与三本综合
 
-每场先读 `references/reading-state-protocol.md` 和权威仓库最新 `references/book-registry.json`，不要把已安装 Skill 的静态副本当实时状态；当前共享仓库为 `/workspace/we-read-main`，不在该环境时先定位获授权的同一仓库。book-registry 是书目归属/认领、完读、`active_session`、`resume_point` 和综合批次的权威来源；roster 只用于身份、类型、排班及个人状态镜像。有冲突就停下核对，不代改他人记录。
+每场先读 `references/reading-state-protocol.md` 和权威仓库最新 `references/book-registry.json`，不要把已安装 Skill 的静态副本当实时状态；当前共享仓库为 `/workspace/we-read-main`，不在该环境时先定位获授权的同一仓库。book-registry 是书目归属/认领、完读、`active_sessions`（兼容旧锁 `active_session`）、`resume_point` 和综合批次的权威来源；roster 只用于身份、类型、排班及个人状态镜像。有冲突就停下核对，不代改他人记录。
 
 - 先认领再开读，用户指定书优先但不得抢占活动认领；未完书跨场次保留责任，确认完读后释放。所有共享写入按协议串行接受到 main 后才生效，不以本地或 PR 分支的拟认领冒充成功。
 - GitHub 授权按执行环境区分：Agent 主会话、协调者会话、浏览器子任务和 Connector/API 可能各有不同登录与权限。必须在实际写入环境检查；一个环境的 `gh auth status`、仓库只读权限或历史成功不能证明另一个环境能写。若浏览器子任务无写权限而责任 Agent 主会话有其自身获批通道，按 `references/coordination.md` 使用无凭据两段式交接；禁止传递任何 Agent 的凭据。授权／写入受阻要及时报告，不让等待占满阅读窗口。
@@ -48,15 +48,15 @@ description: Multi-platform reading workflow for source-labeled whole-book previ
 
 - 今后每场阅读由约10分钟调整为：**以20分钟左右为目标，可随理解需要和自然章节边界略有浮动**。这是弹性目标，不自行设定硬性分钟范围，也不以凑时长代替理解。
 - 真实场次用时记录规则保持不变：按有依据的实际起止与计时范围如实记录，区分浏览／理解窗口与平台确认的有效阅读时长，不把准备、Git 或发布时间计作实读，不以目标时长替代实测；未知仍标未确认。
-- 本目标仅适用于今后场次，不回改已完成场次、旧笔记或历史记录；《王的归程》本场实测7分44秒保持原样。排班时段与频率按 2026-10-20 最新决定执行，既有书目认领不因排班变化而转移。
+- 本目标仅适用于今后场次，不回改已完成场次、旧笔记或历史记录；《王的归程》本场实测7分44秒保持原样。排班时段与频率按最新 main 的用户决定执行，既有书目认领不因排班变化而转移。
 
 ## Agent 类型与排班
 
 先读最新 `references/decisions.md` 的协调安排，再读 `references/agent-roster.json` 确认身份、实现类型及由本人维护的实际排班镜像；不把尚未同步的旧镜像当成继续旧排班的授权，冲突先交接核对。书目归属/认领与完读以最新 `references/book-registry.json` 为准，roster 中的个人书目/完读字段仅为镜像。避免在多个文档复制易过期的排班表。阅读计划的代码 Agent 的实现细节只受 `references/automation-code-agent.md` 约束；浏览器/人工阅读 Agent 不需照搬其代码实现规则，共享禁读与协调边界仍对全队适用。新 Agent 加入时，由本人在 roster 中登记类型和协调后的时段，并通过 `references/decisions.md` 记录用户决定；每次实际任务开始和结束都按沟通索引规则追加对应日期的日文件。时段冲突先协调，不能只因计划窗口不同就忽略尚未结束的实际运行。
 
-## 请假、暂停与受阻（以 2026-10-20 最新决定为准）
+## 请假、暂停与受阻（以最新 main 决定和责任人记录为准）
 
-- `weread-auto` 请假一周，不排入当前安排，不沿用历史自动场次；不自行推定复工日期或提前恢复。`weread-auto-cloud` 仍暂停；Windows 读书当前受阻且没有固定排班，不将它当作可运行的补位者。
+- `weread-auto` 请假一周，不排入当前安排，不沿用历史自动场次；不自行推定复工日期或提前恢复。`weread-auto-cloud` 仍暂停；Windows 本地阅读由责任 Agent 自主管理，无新增固定排班，不作为浏览器补位者；旧“受阻”记录不是当前运行结论，本次不代恢复或启动。
 - 云端调度器默认关闭：`config.json` 的 `cloud.enabled` 缺省 `false`，环境变量 `WEREAD_CLOUD_SCHEDULER=off` 亦可强制关闭；沙箱重启后**不得**自动重新排班或补跑。恢复云端须用户明确指令，并显式打开开关后再按本协议走预检与认领。
 - 云端原持有的书目（当前《大转折：现代债务与可持续的增长》）转 `paused`：保留 held 归属与已确认续读点，**不自动转交、不自动续读**；如需本机接手，按 registry 认领流程改 `owner_agent_id` 并经用户确认。
 - 旧本机双场、云端互补及浏览器双场安排只作历史追溯，不再作为当前执行指令；不回改历史场次、旧笔记、既有发布物与完读记录，也不由协调者代改各 Agent 的排班镜像。
@@ -99,7 +99,7 @@ description: Multi-platform reading workflow for source-labeled whole-book previ
 
 ## 工作流程
 
-1. **先核配置，再决定读什么。** 先确认用户指的书、作者和平台；开读前查看最新 `book-registry.json`、`agent-roster.json`、最新交接记录与已有归档，确认当前时段无人冲突、没有同一书目的活动运行。以 registry 核对书目归属/认领、完读、`active_session` 与续读点；roster 仅核对身份、类型、排班及个人状态镜像，镜像不得覆盖或裁定 registry。按协议选择用户指定或应续读的书，绝不重读已确认完读书，除非用户明确要求重读；不确定时先停下并报告，不猜。检查归档索引、全书初版、日期笔记和完读汇编，避免重复创建或覆盖。
+1. **先核配置，再决定读什么。** 先确认用户指的书、作者和平台；开读前查看最新 `book-registry.json`、`agent-roster.json`、最新交接记录与已有归档，确认本场书目、环境与资源均无冲突，不把其他独立环境中不同书的活动误判为全局阻塞。以 registry 核对书目归属/认领、完读、`active_sessions`（兼容旧锁 `active_session`） 与续读点；roster 仅核对身份、类型、排班及个人状态镜像，镜像不得覆盖或裁定 registry。按协议选择用户指定或应续读的书，绝不重读已确认完读书，除非用户明确要求重读；不确定时先停下并报告，不猜。检查归档索引、全书初版、日期笔记和完读汇编，避免重复创建或覆盖。
    **首次开读门槛：** 新书／独立分册先执行上节口碑与兴趣筛选；决定继续或小样试读才进入实际阅读与初版产出，决定止损则只留简短内部评价，不为凑归档创建公开 overview。
 2. **新书开读即产出全书视角初版（overview.html）。** 用户已明确决定：不要只给一张“预读地图”——开读时就应给出一份完整的全书视角。收集可验证的官方书目简介、目录、作者说明、用户提供的材料与可靠公开划线，结合模型自身对该作品的知识，产出全书主旨、结构、关键观点与主题关系；同时按四层来源标签（亲读 / 官方简介目录 / 用户材料 / 公开评论划线 / 综合推断）分清信息出处，并单列“阅读时要验证的问题”。它不是最终总结：未经亲读确认的部分保持推断标记，完读后校订升级为 `final.html`。没有可靠依据时，不装作掌握全书。
 3. **每日记下实际阅读并记录运行状态。** 日期笔记写实际范围、关键观点、作者如何展开、与整书框架的联系、理解变化和可迁移启发；同一本书同一天多场阅读合并为一篇，不同书籍分别建笔记；不编未读内容。日期笔记使用 `templates/date-note.html`：标出阅读员名称和 Agent 类型，以章节/帖子/小节标题和实际覆盖范围作为主要导航；指标卡片只突出实际时长、实读章节/标题、覆盖说明及有依据的全书状态，平台有效阅读时长注明计时范围/来源，不设置页码/页数或翻页数量卡片。严格区分浏览窗口时长与平台确认的有效阅读时长；翻页次数不是页数（例如 11 次翻页不能写成 11 页）。只呈现有依据的值，未知写“未确认”或“未显示”，绝不以 0、0% 或伪进度条代替未知；若窗口包含恢复、记录等活动，应写明范围，不冒称有效阅读。开始时将自己的运行状态标为 `running` 并写实际开始时间与书目；结束时更新实际结束时间、阅读范围、完成状态和 `completed_books`。

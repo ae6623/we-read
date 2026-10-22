@@ -18,15 +18,17 @@ description: WorkBuddy 管理员／总协调 Skill，负责排班核查、质量
 ## 开始任务前
 
 1. 取得获授权的同一仓库最新 `main`，核对仓库身份、commit 与工作树；从该版本读取相关 `luoyu-reading` 实时规范。至少按需读最新 `decisions.md`、`coordination.md`、`reading-state-protocol.md`、`agent-communication.md`；涉及公开笔记质量读 `ai-ask-book.md`，涉及共享 UI 只读唯一 `archive-ui.md`。若读取失败，停止相应工作并说明缺失证据。
-2. 仅核查授权范围内的共享状态。`book-registry` 是书目、owner、claim、`active_session`、`resume_point`、完读的权威记录；roster 仅是排班／身份／个人状态镜像，不可裁定书目事实。不得浏览正文或读取私人归档来补证。
+2. 仅核查授权范围内的共享状态。`book-registry` 是书目、owner、claim、`active_sessions`（兼容旧锁 `active_session`）、`resume_point`、完读的权威记录；roster 仅是排班／身份／个人状态镜像，不可裁定书目事实。不得浏览正文或读取私人归档来补证。
 3. 不将计划当成开始、完成、发布或通知。不得静态抄录排班表；根据同一 main 上最新决定与实际状态核对。
 
 ## 认领、锁与事件核验
 
 - 管理员只核查和协调；派任务不改 owner。只有 `book-registry` 最新 main 中被接受的 owner/claim 才是权威。不得代认领或替 owner 释放锁。
-- 活动场次核验必须交叉看最新 main 的 `reading-state:` commit、同一 `run_id`、registry 的 `active_session`／`resume_point`，以及按**实际发生日期**记录的日文件。开始、完成、发布、通知是不同事件，分别要求各自证据。roster、索引、分支、本地提交、控制台输出均不能单独证明实际开始或结束；索引只用于定位。
+- 活动场次核验必须交叉看最新 main 的 `reading-state:` commit、同一 `run_id`、registry 的 `active_sessions`（兼容旧锁 `active_session`）／`resume_point`，以及按**实际发生日期**记录的日文件。开始、完成、发布、通知是不同事件，分别要求各自证据。roster、索引、分支、本地提交、控制台输出均不能单独证明实际开始或结束；索引只用于定位。
 - 锁不得因超时自动抢占、解锁或转交。原 owner 未明确释放，或无法确认其运行已停止，均视为阻塞。转交前需用户明确授权，核清运行停止、锁责任与交接责任；不确定就停下升级给用户。
 - 计划、开始、完成、发布、在线可用、通知、安装／同步均分别报告。只有实际可核验证据支持时才使用相应完成措辞；无证据不得声称已发布、已通知或已安装。
+
+核查活动项时按同一 run_id 逐项交叉核对书目、environment_id 和 resource_ids；不同书且环境／资源独立不因另一场存在就阻塞。旧 active_session 非空仍全局独占，只由原责任人安全收尾；新旧格式不混跑，接入门槛见最新状态协议。Windows 本地阅读由责任 Agent 自主管理，不由管理员新增逐场转达门槛、固定排班或改造实现；共享写入仍串行。
 
 ## 排班与恢复
 

@@ -14,9 +14,9 @@
 - [ ] 确认用户明确授权的接手人、任务、书目、阅读／整理／发布范围及限制；只读核查与继续阅读分开。缺少授权则回报请求，不凭旧会话或管理员派活扩大权限。
 - [ ] 在本环境定位获授权的同一权威仓库，获取最新 `main` 并记完整 commit；无法获取就标“最新状态未核验”，不得用安装副本、本地旧分支或旧交接包裁定实时状态。不回退 main，不重建他人工作树。
 - [ ] 读取该 commit 的 [最新决定](decisions.md)、[状态协议](reading-state-protocol.md)、[协作规则](coordination.md)、[沟通索引](agent-communication.md) 与 Asia/Shanghai 当日日文件；只按需追溯未结事件。实际路径以权威仓库内本 Skill 目录为准，不假设本机安装位置即权威记录。
-- [ ] 对照官方书目核实 `book_id`、平台 ID、书名、作者、版本／译者。最新 `book-registry.json` 才是 owner、claim、active_session、resume_point 和 completion 的权威；`agent-roster.json` 仅登记身份、实现类型、排班及个人状态镜像。旧稿、网页或完成文件的存在不证明完读。
-- [ ] 核清全队活动场次与共享阅读器占用。开始／结束证据核对 main 上携同一 `run_id` 的 `reading-state:` 提交、registry 与实际日期日文件；不以排班、日志或 roster 单独断言运行。冲突、残留锁或旧任务是否已停不明就阻塞，不按超时抢占、不代清他人锁。
-- [ ] 转交须用户明确授权，且原 owner 依协议释放并确认无运行，新责任人再按串行协议认领；认领／活动登记进入权威 main，且满足最新协议要求的管理员转达后，才继续阅读。原 owner 失联且无法完成释放时，报告待用户和责任方核定的恢复事项，不冒充旧 owner、不擅改其记录。
+- [ ] 对照官方书目核实 `book_id`、平台 ID、书名、作者、版本／译者。最新 `book-registry.json` 才是 owner、claim、active_sessions（兼容旧 active_session）、resume_point 和 completion 的权威；`agent-roster.json` 仅登记身份、实现类型、排班及个人状态镜像。旧稿、网页或完成文件的存在不证明完读。
+- [ ] 核清 active_sessions 全集及兼容旧锁，按同书、同 environment_id 或 resource_ids 相交核冲突；不同书且环境／资源独立不阻塞，共享阅读器仍独占。开始／结束证据核对 main 上携同一 `run_id` 的 `reading-state:` 提交、registry 与实际日期日文件；不以排班、日志或 roster 单独断言运行。冲突、残留锁或旧任务是否已停不明就阻塞，不按超时抢占、不代清他人锁。
+- [ ] 转交须用户明确授权，且原 owner 依协议释放并确认无运行，新责任人再按串行协议认领；认领／活动登记进入权威 main，且浏览器场次满足最新协议要求的管理员转达后（Windows 独立本地 PDF 自主管理，不套此门槛），才继续阅读。原 owner 失联且无法完成释放时，报告待用户和责任方核定的恢复事项，不冒充旧 owner、不擅改其记录。
 - [ ] 在实际操作环境分别核对平台登录、目录／AI入口、Skill 及依赖是否可用、Git 身份与读写权限、公开范围和通知通道。**会话、浏览器登录、Skill 安装、Git 权限、活动锁和用户授权均不自动继承**；已有只读权限或别处成功写入不证明这里能写。
 - [ ] 权限不足时，只回传经脱敏且在授权范围内的补丁及基线，由有既有获批通道的责任方审查提交；不传令牌、Cookie、密码、验证码或任何秘密，不借其他 Agent 凭据、不绕过验证或权限。锁登记未进入 main 时不能先读后补。
 - [ ] 比较最新 main 与交接包，确认哪些成果已合入、哪些仍是本地草稿；只续未完部分。同一场重试沿用原 `run_id`，不重复计数、重发完成或重读；未能核实的发布／通知状态保持未知。恢复后重新核查最新规则，不自动恢复暂停任务或补跑漏场。
@@ -44,8 +44,8 @@
 规则定位：〈最新 decisions；状态协议；协调规则；平台规则〉
 关键权威记录：〈registry 路径与 revision；相关事件提交；当日日文件条目〉
 书目：〈book_id／平台ID；书名；作者；版本／译者；待确认项〉
-责任与锁：〈owner_agent_id；claim.state；active_session 的 run_id／agent_id 或空；核验依据〉
-转交门槛：〈用户确认；旧 owner 释放与任务停止证据；新认领是否已进 main；管理员转达状态〉
+责任与锁：〈owner_agent_id；claim.state；active_sessions 各项的 run_id／agent_id／environment_id／resource_ids 与兼容旧锁 active_session；核验依据〉
+转交门槛：〈用户确认；旧 owner 释放与任务停止证据；新认领是否已进 main；浏览器管理员转达状态／本地 PDF 不适用〉
 
 已完成：〈事项 → 证据／产物位置；是否已进 main〉
 未完成：〈事项 → 仍缺什么〉
