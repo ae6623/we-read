@@ -25,7 +25,7 @@ def fixture():
 
 def session(run, agent, book, env, mode="weread_browser", resources=None):
     resources = resources if resources is not None else [f"disk:{book}"]
-    if mode == "weread_browser" and checker.SHARED_WEREAD_RESOURCE not in resources:
+    if mode == "weread_browser" and resources == [f"disk:{book}"]:
         resources = resources + [checker.SHARED_WEREAD_RESOURCE]
     return {"run_id": run, "agent_id": agent, "book_id": book, "slot": "slot-1",
             "started_at": "2026-10-22T10:00:00+08:00", "environment_id": env,
@@ -56,6 +56,67 @@ class ActiveSessionTests(unittest.TestCase):
                 session("c", "agent-c", "book-3", "env-c"),
             ]
         self.assertTrue(any("resource_ids 与其他" in e for e in self.valid(change)))
+
+    def test_shared_and_duration_browsers_parallel_across_books_and_environments(self):
+        def change(s, r):
+            s["active_sessions"] = [
+                session("a", "agent-a", "book-1", "env-a", resources=["disk:book-1", "browser:weread-shared"]),
+                session("c", "agent-c", "book-3", "env-c", resources=["disk:book-3", "browser:weread-duration"]),
+            ]
+            r["agents"][0]["run_status"] = "running"
+            r["agents"][2]["run_status"] = "running"
+        self.assertEqual([], self.valid(change))
+
+    def test_same_browser_remains_exclusive_and_same_book_or_environment_refused(self):
+        base = session("a", "agent-a", "book-1", "env-a")
+        variants = [
+            (session("c", "agent-c", "book-3", "env-c"), "resource_ids 与其他"),
+            (session("c", "agent-c", "book-1", "env-c", "other"), "book_id 重复"),
+            (session("c", "agent-c", "book-3", "env-a", "other"), "environment_id 重复"),
+        ]
+        for second, expected in variants:
+            with self.subTest(expected=expected):
+                errors = self.valid(lambda s, r: s.update(active_sessions=[base, second]))
+                self.assertTrue(any(expected in e for e in errors))
+
+    def test_browser_resource_must_be_exactly_one_confirmed_resource(self):
+        invalid = [
+            ["disk:x", "browser:weread-unknown"],
+            ["disk:x"],
+            ["disk:x", "browser:weread-shared", "browser:weread-duration"],
+        ]
+        for resources in invalid:
+            with self.subTest(resources=resources):
+                item = session("r", "agent-a", "book-1", "env", resources=resources)
+                self.assertTrue(any("已确认浏览器资源" in e for e in self.valid(lambda s, r: s.update(active_sessions=[item]))))
+
+    def test_confirmed_shared_roles_cannot_use_duration_resource(self):
+        for agent in ("cue-qingyouji-reader", "wechat-reading-browser"):
+            state, roster = fixture()
+            roster["agents"][0]["id"] = agent
+            item = session("r", agent, "book-1", "env", resources=["browser:weread-duration"])
+            errors = checker.validate({**state, "active_sessions": [item]}, roster)
+            self.assertTrue(any("共享角色必须使用" in e for e in errors))
+
+    def test_local_pdf_and_both_browser_resources_can_run_in_parallel(self):
+        def change(s, r):
+            s["active_sessions"] = [
+                session("a", "agent-a", "book-1", "env-a", resources=["disk:book-1", "browser:weread-shared"]),
+                session("c", "agent-c", "book-3", "env-c", resources=["disk:book-3", "browser:weread-duration"]),
+                session("b", "agent-b", "book-2", "env-b", "local_pdf", ["local:pdf"]),
+            ]
+        self.assertEqual([], self.valid(change))
+
+    def test_local_pdf_rejects_any_browser_resource(self):
+        item = session("r", "agent-b", "book-2", "env", "local_pdf", ["browser:weread-duration"])
+        errors = self.valid(lambda s, r: s.update(active_sessions=[item]))
+        self.assertTrue(any("不得包含任何 browser:*" in e for e in errors))
+
+    def test_malformed_agent_id_fails_safely(self):
+        for agent in ([], {}, 1, None):
+            with self.subTest(agent_id=agent):
+                item = session("r", agent, "book-1", "env")
+                self.assertTrue(self.valid(lambda s, r: s.update(active_sessions=[item])))
 
     def test_malformed_book_id_and_null_claim_fail_safely(self):
         for bid in ([], {}, 1, None):
@@ -128,7 +189,7 @@ class ActiveSessionTests(unittest.TestCase):
 
     def test_mode_platform_and_shared_browser_resource_rules(self):
         cases = [
-            (session("r", "agent-a", "book-1", "e", "weread_browser", ["local:x"]), "必须包含"),
+            (session("r", "agent-a", "book-1", "e", "weread_browser", ["local:x"]), "必须且仅能"),
             (session("r", "agent-a", "book-1", "e", "other"), "必须使用 weread_browser"),
             (session("r", "agent-b", "book-2", "e", "local_pdf", ["browser:weread-shared"]), "不得包含"),
             (session("r", "agent-a", "book-1", "e", "local_pdf", ["local:x"]), "不得用于 weread"),
@@ -136,7 +197,7 @@ class ActiveSessionTests(unittest.TestCase):
         ]
         for item, expected in cases:
             with self.subTest(expected=expected):
-                if expected == "必须包含":
+                if expected == "必须且仅能":
                     item["resource_ids"] = ["local:x"]
                 self.assertTrue(any(expected in e for e in self.valid(lambda s, r: s.update(active_sessions=[item]))))
 

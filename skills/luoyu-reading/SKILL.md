@@ -19,9 +19,9 @@ description: Multi-platform reading workflow for source-labeled whole-book previ
 
 用户要求 WorkBuddy 接手，或当前 Agent 因用量／连接中断需移交时，先读 [WorkBuddy 交接清单与可复制模板](references/workbuddy-handoff.md)。接手者必须从权威仓库最新 main、registry 及相关事件自检，不假设会话、浏览器登录、Skill 安装、Git 权限、活动锁或用户授权继承；只有用户明确授权／交接、锁与责任核清并满足最新状态协议后才继续。不得传递令牌或任何秘密，权限不足就回传无秘密补丁，由有既有获批通道的责任方处理，不绕过。管理员统筹使用独立的 [reading-admin Skill](../reading-admin/SKILL.md)；未安装或无权读取时先报告，不声称已接入。
 
-## 最新协调规则（2026-10-22，优先于旧全局锁、排班与管理员只读规则）
+## 最新协调规则（2026-10-23，优先于旧全局锁、排班与管理员只读规则）
 
-- 按 **Asia/Shanghai 每日 02:00–06:00 禁读**；浏览器阅读按 [最新决定](references/decisions.md) 的整点／半点错峰执行、共享浏览器不得重叠，不补跑。Windows 独立本地 PDF 由责任 Agent 自主管理，不套用浏览器错峰或逐场转达门槛；按 [状态协议](references/reading-state-protocol.md) 核清书目、环境和资源后可与不同书的浏览器阅读并行。旧锁由原责任人安全收尾、相关写入端确认接入新格式之前，不启用并行；本次不改排班或启动阅读。
+- 按 **Asia/Shanghai 每日 02:00–06:00 禁读**；轻游记与微信读书共用浏览器按 [最新决定](references/decisions.md) 的整点／半点错峰执行，不重叠、不补跑；时长专员使用独立浏览器 profile／resource，不算上述共享浏览器占用。具体资源键及实际隔离核验只依 [状态协议](references/reading-state-protocol.md)，不能因同用微信读书就一律阻塞，也不能只改名绕锁。Windows 主要在自己的云端用本地 PDF，由责任 Agent 自主管理，不套用浏览器错峰或逐场转达门槛；按 [状态协议](references/reading-state-protocol.md) 核清书目、环境和资源后可与不同书的浏览器阅读并行。旧锁由原责任人安全收尾、相关写入端确认接入新格式之前，不启用并行；本次不改排班或启动阅读。
 - 管理员／协调者负责整体错峰排班、阅读任务分发及共享归档页面设计，**不读正文**。可在已授权队列与现有书目归属内协调任务，不替其他 Agent 认领、转交、开读或登记成果；书目归属始终以最新 `book-registry.json` 为准。
 - 实际执行排班由各 Agent 自行维护其 roster 镜像；协调者只提出安排、交接与核对，不代改其他 Agent 的个人记录、续读点、个人排班镜像或阅读历史，也不干预其专属实现。
 - 做文章呈现、共享归档页面或组件前，先读 [唯一 UI 规范入口](references/archive-ui.md)。统一处理同类区块，不另建规范副本；设计权限不等于改写他人文章内容、阅读事实或历史笔记的权限，文件认领与审查仍按 [协作规则](references/coordination.md)。
