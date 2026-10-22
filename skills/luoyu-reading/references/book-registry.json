@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": 120,
+  "revision": 121,
   "timezone": "Asia/Shanghai",
   "authority": "latest origin/main; claims become effective only after serialized acceptance there",
   "migration": {
@@ -742,7 +742,7 @@
       "platform": "local_pdf",
       "platform_book_id": null,
       "priority": "user_requested",
-      "status": "in_progress",
+      "status": "paused",
       "owner_agent_id": "local-pdf-reader",
       "claim": {
         "state": "held",
@@ -754,13 +754,14 @@
         "status": "needs-confirmation",
         "chapter": null,
         "page": null,
-        "position": "尚未读取正文；首次开读从目录核对章节标题",
-        "source": "文件元信息（433页、AES-256加密、copy:no、print:yes）",
+        "position": "尚未读取正文，下次从目录核对章节起点",
+        "source": "文件元信息与前两页字数统计，未读正文",
         "confirmed_at": null
       },
       "next_question_status": "needs-confirmation",
       "completion": null,
-      "pdf_source_note": "本地私有文件，不含路径；仅提炼本人摘要，不复制原文"
+      "pdf_source_note": "本地私有文件，不含路径；仅提炼本人摘要，不复制原文",
+      "pause_reason": "本场未抽取正文，文字层可识别但PDF标注禁止复制，按管理员指示暂停；保留本人责任，尚无正文阅读记录。"
     }
   ],
   "active_session": null,
@@ -805,19 +806,6 @@
       }
     ]
   },
-  "updated_at": "2026-10-23T01:50:00+08:00",
-  "active_sessions": [
-    {
-      "run_id": "local-pdf-20261023-0150-m123",
-      "agent_id": "local-pdf-reader",
-      "book_id": "local-modern-finance-housing-curgdbd",
-      "slot": "owner_directed_20261023",
-      "started_at": "2026-10-23T01:50:00+08:00",
-      "environment_id": "sandbox-local-pdf-reader",
-      "reading_mode": "local_pdf",
-      "resource_ids": [
-        "local_pdf:xpdf-reader"
-      ]
-    }
-  ]
+  "updated_at": "2026-10-23T01:54:00+08:00",
+  "active_sessions": []
 }
