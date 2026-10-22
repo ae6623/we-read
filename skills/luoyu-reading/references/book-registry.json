@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": 97,
+  "revision": 98,
   "timezone": "Asia/Shanghai",
   "authority": "latest origin/main; claims become effective only after serialized acceptance there",
   "migration": {
@@ -556,12 +556,14 @@
       "platform": "weread",
       "platform_book_id": "76a32c30813ab9c45g016789",
       "priority": "user_requested",
-      "status": "in_progress",
-      "owner_agent_id": "cue-qingyouji-reader",
+      "status": "completed",
+      "owner_agent_id": null,
       "claim": {
-        "state": "held",
+        "state": "released",
         "claimed_at": "2026-10-22T11:05:17+08:00",
-        "source": "管理员2026-10-22T11:01:39+08:00指定并转述用户同意旧书保留blocked、不再补问、继续系列。本册经真实站内搜索结果点击进入扉页核对；仅AI问答模式，不付费。"
+        "source": "管理员2026-10-22T11:01:39+08:00指定并转述用户同意旧书保留blocked、不再补问、继续系列。本册经真实站内搜索结果点击进入扉页核对；仅AI问答模式，不付费。",
+        "released_at": "2026-10-22T11:11:36+08:00",
+        "release_reason": "用户批准的AI章节问答、四项与读后思考流程完成，事实核验缺口保留；未新增亲读。"
       },
       "last_confirmed_progress": {
         "scope": "尚无本书正文亲读或AI问答；仅核官方搜索简介、独立题名作者和扉页元数据。",
@@ -577,31 +579,39 @@
         "confirmed_at": "2026-10-22T11:05:17+08:00"
       },
       "next_question_status": "needs-confirmation",
-      "completion": null,
+      "completion": {
+        "event_id": "completed-serbia-qingyouji-user-ai-20261022-111136",
+        "sequence": 5,
+        "confirmed_by": "user:雨已批准轻游记AI章节笔记流程；管理员2026-10-22T11:05:52+08:00转达本书规定全流程完整完成可记AI阅读完读，cue-qingyouji-reader核对产出并经独立只读复核后登记",
+        "completed_at": "2026-10-22T11:11:36+08:00",
+        "mode": "AI阅读",
+        "evidence": "user-approved AI full-directory process; not additional firsthand reading. 官方目录扉页/版权信息/塞尔维亚：他们都爱中国人，4105字，仅一个内容章。主问合并唯一内容章结构、全书四项，及一次针对性缺口补问均完整返回；章节型笔记、观点判断、基于本书微信读书AI问答的读后思考成稿并通过独立只读复核。没有截断、缺章或可证实串书/错配。稳定—自由逻辑矛盾补问仍未纠正，已剔除整条结论；人物归类冲突及未核背景如实留缺，未当事实或谎称核对成功。金句0/10，未核候选不刊载。未打开正文、未翻页，不新增或改写亲读进度、续读点、章节状态和任何时长；平台有效时长与打卡未确认。",
+        "output": "reading-notes/books/serbia-qingyouji/overview.html"
+      },
       "catalog_evidence": {
         "source_url": "https://weread.qq.com/web/reader/76a32c30813ab9c45g016789",
         "series_label": "轻游记",
         "word_count": 4105,
-        "toc_status": "needs-confirmation",
-        "ai_entry_status": "visible_icon_not_opened",
+        "toc_status": "confirmed",
+        "ai_entry_status": "本书AI问答实际可用，主问及唯一缺口补问完整返回，11:08:43停止平台操作。",
         "shelf_status": "本场缺书，经用户搜索添加授权单击加入书架；按钮转为带added图标的/web/shelf链接。",
         "readability_status": "授权扉页显示体验卡可读，未见购买/付费提示；未开正文，AI实际可用性待本场转达后核。",
-        "confirmed_at": "2026-10-22T11:05:17+08:00"
+        "confirmed_at": "2026-10-22T11:05:17+08:00",
+        "official_toc": [
+          "扉页",
+          "版权信息",
+          "塞尔维亚：他们都爱中国人"
+        ],
+        "toc_verified_at": "2026-10-22T11:06:22+08:00"
       },
       "preflight_note": "官方搜索简介为旅行见闻与生活满意度反差，扉页73.9%/344人点评仅为口碑元数据；点击推荐计数未展开评论，不能称取得具体本册书评。已核文学城芳提2025-01-11《另类旅游--猴面包的树》，仅作者层面公开读者推荐，非本册证据；独立专业/高赞本册评论未取得。短旅行随笔适合短试，标题中的都与简介的国家比较不是已核总体事实，应辨个体观察、归纳和证据边界。"
     }
   ],
-  "active_session": {
-    "run_id": "qingyouji-serbia-ai-20261022-110517",
-    "agent_id": "cue-qingyouji-reader",
-    "book_id": "serbia-qingyouji",
-    "slot": "daily_1100",
-    "started_at": "2026-10-22T11:05:17+08:00"
-  },
+  "active_session": null,
   "synthesis": {
     "visibility": "private",
     "batch_size": 3,
-    "unique_completed_count": 4,
+    "unique_completed_count": 5,
     "batches": [
       {
         "batch_id": "batch-001",
@@ -616,5 +626,5 @@
       }
     ]
   },
-  "updated_at": "2026-10-22T11:05:17+08:00"
+  "updated_at": "2026-10-22T11:11:36+08:00"
 }
