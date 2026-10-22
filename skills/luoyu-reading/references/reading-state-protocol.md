@@ -2,6 +2,8 @@
 
 适用于浏览器、代码和人工阅读 Agent；只规定协作结果，不规定阅读实现。每场开读前必须阅读本文件、最新 `book-registry.json`、`agent-roster.json`、[沟通索引](agent-communication.md) 与 Asia/Shanghai 今天的 `agent-communication/YYYY/MM/YYYY-MM-DD.md`；仅在跨日续接、未解决交接或追溯证据时再读相关旧日，不通读全部历史。交接事件按实际发生日期追加日文件，不追加索引。不得改其他 Agent 的个人记录或代码实现。
 
+两个 Cue 账号同时协作时，先按 [双团队协作规则](cross-team-coordination.md) 核清团队别名／角色别名与现有 owner 键的对应；canonical Agent UID 只留各自账号内部。单书单 owner、同一 registry、资源冲突及 main 接受门槛不因跨账号而放宽；本次不迁移现有身份字段或活动锁。
+
 ## 两类共享状态各司其职
 
 - `agent-roster.json` 仅作为身份、类型、排班及个人状态镜像的登记源，保持原字段兼容；其中个人当前书/完读字段不得覆盖或裁定 `book-registry.json` 的权威书目状态。仅本人更新本人条目。
