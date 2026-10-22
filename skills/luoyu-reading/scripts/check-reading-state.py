@@ -8,6 +8,37 @@ VALID_STATUSES = {"queued", "in_progress", "paused", "blocked", "completed"}
 READING_MODES = {"weread_browser", "local_pdf", "other"}
 SHARED_WEREAD_RESOURCE = "browser:weread-shared"
 
+# Owner-authorized one-run exception; never infer scope for other legacy locks.
+LEGACY_PDF_LOCK = {
+    "run_id": "browser-spring-20261022-2330-233216",
+    "agent_id": "wechat-reading-browser",
+    "book_id": "rites-of-spring-eksteins",
+    "slot": "daily_2330",
+    "started_at": "2026-10-22T23:32:16+08:00",
+}
+LEGACY_PDF_AGENT = "local-pdf-reader"
+LEGACY_PDF_BOOK = "local-modern-finance-housing-curgdbd"
+LEGACY_PDF_ENVIRONMENT = "windows:local-pdf-reader"
+LEGACY_PDF_RESOURCES = ["local_pdf:windows-reader"]
+LEGACY_EXCEPTION_FIELD = "legacy_exception_run_id"
+
+
+def legacy_pdf_exception(legacy, session, book):
+    """Exact allowlist only; normal ownership/shape checks still apply."""
+    return (
+        legacy == LEGACY_PDF_LOCK
+        and isinstance(session, dict)
+        and isinstance(book, dict)
+        and book.get("platform") == "local_pdf"
+        and session.get(LEGACY_EXCEPTION_FIELD) == LEGACY_PDF_LOCK["run_id"]
+        and session.get("agent_id") == LEGACY_PDF_AGENT
+        and session.get("book_id") == LEGACY_PDF_BOOK
+        and session.get("reading_mode") == "local_pdf"
+        and session.get("environment_id") == LEGACY_PDF_ENVIRONMENT
+        and session.get("resource_ids") == LEGACY_PDF_RESOURCES
+        and session.get("run_id") != LEGACY_PDF_LOCK["run_id"]
+    )
+
 
 def validate(state, roster):
     errors = []
@@ -116,7 +147,11 @@ def validate(state, roster):
     else:
         scoped_sessions = scoped_value
     if legacy_present and scoped_sessions:
-        errors.append("active_session 与 active_sessions 不得同时使用")
+        candidate = scoped_sessions[0] if len(scoped_sessions) == 1 else None
+        bid = candidate.get("book_id") if isinstance(candidate, dict) else None
+        book = book_by_id.get(bid) if isinstance(bid, str) else None
+        if not (legacy_valid and legacy_pdf_exception(legacy, candidate, book)):
+            errors.append("active_session 与 active_sessions 不得同时使用，除精确授权的临时 local_pdf 例外")
 
     valid_scoped = []
     unique_fields = {key: set() for key in ("run_id", "book_id", "agent_id", "environment_id")}
@@ -143,6 +178,11 @@ def validate(state, roster):
             malformed = True
         bid = session.get("book_id")
         book_for_mode = book_by_id.get(bid) if isinstance(bid, str) else None
+        if LEGACY_EXCEPTION_FIELD in session and not (
+            legacy_valid and legacy_pdf_exception(legacy, session, book_for_mode)
+        ):
+            errors.append(f"{label}: 临时例外无效或已随指定旧场次结束而失效")
+            malformed = True
         if book_for_mode is not None and book_for_mode.get("platform") == "weread" and mode != "weread_browser":
             errors.append(f"{label}: weread 平台书目必须使用 weread_browser")
             malformed = True
@@ -186,7 +226,9 @@ def validate(state, roster):
     if legacy_present:
         if legacy_valid:
             for agent in running_agents:
-                if agent.get("id") != legacy.get("agent_id"):
+                matches = [s for s in valid_scoped if s.get("agent_id") == agent.get("id")
+                           and legacy_pdf_exception(legacy, s, book_by_id.get(s["book_id"]))]
+                if agent.get("id") != legacy.get("agent_id") and len(matches) != 1:
                     errors.append(f"roster agent {agent.get('id')} running 与 active_session 锁冲突")
         elif running_agents:
             errors.append("roster 有 running agent 但无 active_session 或有效锁")
