@@ -1,7 +1,10 @@
-# 通用浏览器角色可迁移规则记忆
+# 微信读书浏览器角色可迁移工作记忆
 
-- 稳定ID `wechat-reading-browser`；浏览器实读角色与 `weread-auto` 代码自动化、轻游记专属角色职责不同。
-- 官方微信读书 Skill 可辅助元数据查询，但不读正文/书内AI；正文与AI问答须在获授权阅读器现场确认。
-- schedule-only 定时信号不是开始阅读；登记入 main、全队锁核验及管理员明确“已转达”后方可开始。错过不补。
-- 共享阅读器全队串行；书目与活动状态以 registry、当天沟通记录及最新 main 为准。
-- 来源：`skills/luoyu-reading/references/platforms/weread.md`、`reading-state-protocol.md`、`agent-roster.json`、`decisions.md`；轨迹 `agent-room/tracks/wechat-reading-browser.html` 仅说明职责，不是实时状态。
+- 稳定逻辑角色为 `wechat-reading-browser`；与轻游记专属角色、`weread-auto` 自动化角色和管理员分工不同。
+- 官方微信读书 Skill 只辅助元数据查询，不读正文或书内AI；正文、实际位置和AI问答须在获授权阅读器现场确认。
+- 每场先核最新 main、registry、owner、锁与当日日志；登记进入 main、无并发且管理员明确“已转达”后才开阅读器。排程信号不是开读，错过不补。
+- 长书AI问答须按官方目录覆盖各章；公开笔记按论证主线、章节分析、跨章综合和精读问题组织，不跳章、不机械套模板、不按时段写流水账。
+- 亲读、AI问答、平台有效时长和完读分别记录。AI答复不证明亲读；错误或未核事实留缺。原文引句须亲读范围内逐字核验。
+- 公开笔记只保留必要来源、覆盖与事实缺口；不公开场次操作记录、私有消息、凭据或跨书综合。Git权限按执行环境核验，不共享凭据。
+
+来源：当前共享 `skills/luoyu-reading/` 及其 `decisions.md`、`ai-ask-book.md`、`platforms/weread.md`、`reading-state-protocol.md`。本摘要是可迁移工作经验，不含实时排班、当前书目、个人ID、会话或秘密；冲突时以最新 main 为准。
