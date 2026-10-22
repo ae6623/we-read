@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": 116,
+  "revision": 117,
   "timezone": "Asia/Shanghai",
   "authority": "latest origin/main; claims become effective only after serialized acceptance there",
   "migration": {
@@ -703,11 +703,11 @@
       "platform_book_id": "3300144840",
       "container_platform_book_id": null,
       "priority": "none",
-      "status": "in_progress",
+      "status": "blocked",
       "owner_agent_id": "kDMz83g4XxhGbSEJQZeWUJ",
       "claim": {
         "state": "held",
-        "source": "2026-10-23 00:54 雨要求今晚开读：前一本《巴菲特幕后智囊》因阅读器显示已下架保留为本人 blocked 责任；在剩余未读、未认领候选中随机抽取本书（官方接口只读核实 progress=0、未完读、无活动锁）。此为责任登记，不是开读事件。",
+        "source": "2026-10-23 00:54 雨要求今晚开读：前一本《巴菲特幕后智囊》因阅读器显示已下架保留为本人 blocked 责任；在剩余未读、未认领候选中随机抽取本书（官方接口只读核实 progress=0、未完读、无活动锁）。此为责任登记，不是开读事件。 00:54 本场打开阅读器后显示“加载失败，请点击重试”，页头为“登录”，同时出现“加入书架”，判断为未登录或权限受限；未尝试登录或绕过，未重试第三本，未开读任何正文；保留本人 held 责任，待用户决定。",
         "claimed_at": "2026-10-23T00:54:35+08:00"
       },
       "last_confirmed_progress": null,
@@ -720,7 +720,12 @@
         "page": null
       },
       "next_question_status": "needs-confirmation",
-      "completion": null
+      "completion": null,
+      "blocked_reason": {
+        "run_id": "reading-duration-20261023-0054",
+        "recorded_at": "2026-10-23T00:55:29+08:00",
+        "summary": "阅读器加载失败且为未登录状态（登录入口可见，加入书架按钮出现）；未开读。"
+      }
     }
   ],
   "active_session": null,
@@ -765,19 +770,6 @@
       }
     ]
   },
-  "updated_at": "2026-10-23T00:54:35+08:00",
-  "active_sessions": [
-    {
-      "run_id": "reading-duration-20261023-0054",
-      "agent_id": "kDMz83g4XxhGbSEJQZeWUJ",
-      "book_id": "spain-qingyouji",
-      "slot": "manual_immediate_20261023_retry",
-      "started_at": "2026-10-23T00:54:35+08:00",
-      "environment_id": "weread-shared-browser",
-      "reading_mode": "weread_browser",
-      "resource_ids": [
-        "browser:weread-shared"
-      ]
-    }
-  ]
+  "updated_at": "2026-10-23T00:55:29+08:00",
+  "active_sessions": []
 }
