@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": 95,
+  "revision": 96,
   "timezone": "Asia/Shanghai",
   "authority": "latest origin/main; claims become effective only after serialized acceptance there",
   "migration": {
@@ -503,7 +503,7 @@
       "platform": "weread",
       "platform_book_id": "61632870813ab9cd1g016717",
       "priority": "user_requested",
-      "status": "in_progress",
+      "status": "blocked",
       "owner_agent_id": "cue-qingyouji-reader",
       "claim": {
         "state": "held",
@@ -529,21 +529,28 @@
       "catalog_evidence": {
         "source_url": "https://weread.qq.com/web/bookDetail/61632870813ab9cd1g016717",
         "series_label": "轻游记",
-        "toc_status": "needs-confirmation",
-        "ai_entry_status": "needs-confirmation",
+        "toc_status": "confirmed",
+        "ai_entry_status": "confirmed",
         "shelf_status": "已加入书架（本场详情实际显示；书架有准确题名卡片，未新增加书）",
-        "confirmed_at": "2026-10-22T09:04:08+08:00"
+        "confirmed_at": "2026-10-22T09:14:56+08:00",
+        "toc_titles": [
+          "扉页",
+          "版权信息",
+          "文前",
+          "骑行4000英里的陌生男人",
+          "爱上游牧民族的放马人",
+          "疫情中倾家荡产",
+          "父亲是个作家，热爱高于一切",
+          "我喜欢不稳定的人生"
+        ],
+        "word_count": 7294,
+        "ai_notes_status": "incomplete_missing_chapter_and_mismatch"
       },
-      "preflight_note": "官方简介为Vicky在巴塔哥尼亚选择不稳定生活的旅行人物随笔；79.0%/1171人点评仅作平台评价元数据。已打开网易号吴言坊2025-05-01《闲暇假期的废物文学》，其中明确讨论本册与价值观吸引力，是公开读者二手观点，非专业评论或原文证据。叙事性与自主选择主题适合短试；不把单人故事、评论转引或热门划线当普遍行动建议、亲读或已核金句；独立专业本册书评未取得。"
+      "preflight_note": "官方简介为Vicky在巴塔哥尼亚选择不稳定生活的旅行人物随笔；79.0%/1171人点评仅作平台评价元数据。已打开网易号吴言坊2025-05-01《闲暇假期的废物文学》，其中明确讨论本册与价值观吸引力，是公开读者二手观点，非专业评论或原文证据。叙事性与自主选择主题适合短试；不把单人故事、评论转引或热门划线当普遍行动建议、亲读或已核金句；独立专业本册书评未取得。",
+      "blocked_reason": "本场六个真实目录条目逐项AI提问；《爱上游牧民族的放马人》唯一补问后仍未取得，其他答复存在人物混淆、串章及细节归属矛盾。已保存带缺口的overview初版与阶段思考，不满足AI阅读完读；未开正文。后续先由管理员确认缺章/错配分流范围，不擅开正文或重复同题补问。"
     }
   ],
-  "active_session": {
-    "run_id": "qingyouji-unstable-ai-20261022-090408",
-    "agent_id": "cue-qingyouji-reader",
-    "book_id": "unstable-life-qingyouji",
-    "slot": "daily_0900",
-    "started_at": "2026-10-22T09:04:08+08:00"
-  },
+  "active_session": null,
   "synthesis": {
     "visibility": "private",
     "batch_size": 3,
@@ -562,5 +569,5 @@
       }
     ]
   },
-  "updated_at": "2026-10-22T09:04:08+08:00"
+  "updated_at": "2026-10-22T09:14:56+08:00"
 }
