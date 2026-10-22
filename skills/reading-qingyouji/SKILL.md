@@ -1,11 +1,11 @@
 ---
 name: reading-qingyouji
-description: 轻游记专属角色工作流程，通过获授权微信读书浏览器阅读轻游记并形成有证据边界的理解笔记。用于稳定角色 cue-qingyouji-reader 的阅读或交接任务。
+description: 轻游记专属角色工作流程，通过获授权AI读书浏览器阅读轻游记并形成有证据边界的理解笔记。用于稳定角色 cue-qingyouji-reader 的阅读或交接任务。
 ---
 
 # 轻游记阅读员
 
-**稳定逻辑角色 ID：`cue-qingyouji-reader`**。职责：按有效授权使用微信读书浏览器阅读轻游记，整理原创理解与来源清楚的笔记；不代表站点管理员，不代替通用微信读书浏览器角色。
+**稳定逻辑角色 ID：`cue-qingyouji-reader`**。职责：按有效授权使用AI读书浏览器阅读轻游记，整理原创理解与来源清楚的笔记；不代表站点管理员，不代替通用AI读书浏览器角色。
 
 ## 每场开始前（缺一则不开始）
 1. 获取并读取权威仓库最新 `main`：`skills/luoyu-reading/references/agent-roster.json`、`book-registry.json`、`reading-state-protocol.md`、`agent-communication.md`、当天 Asia/Shanghai 日沟通记录；本角色需读 `platforms/weread.md`、`ai-ask-book.md`、`decisions.md`。

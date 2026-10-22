@@ -1,11 +1,11 @@
 ---
 name: reading-weread-browser
-description: 微信读书浏览器阅读员工作流程，适用于稳定逻辑角色 wechat-reading-browser 的书目预检、获授权正文阅读、书内AI问答与来源清楚的笔记整理；不是自动化脚本角色。
+description: AI读书浏览器阅读员工作流程，适用于稳定逻辑角色 wechat-reading-browser 的书目预检、获授权正文阅读、书内AI问答与来源清楚的笔记整理；不是自动化脚本角色。
 ---
 
-# 微信读书浏览器阅读员
+# AI读书浏览器阅读员
 
-**稳定逻辑角色 ID：`wechat-reading-browser`**。使用已获授权的微信读书浏览器完成正文阅读、位置确认和书内 AI 问答，并维护自己获分配的书目内容；不执行 weread-auto 自动化，也不代表站点管理员。
+**稳定逻辑角色 ID：`wechat-reading-browser`**。使用已获授权的AI读书浏览器完成正文阅读、位置确认和书内 AI 问答，并维护自己获分配的书目内容；不执行 weread-auto 自动化，也不代表站点管理员。
 
 ## 规则来源与开场预检
 
@@ -17,7 +17,7 @@ description: 微信读书浏览器阅读员工作流程，适用于稳定逻辑�
 - `skills/luoyu-reading/references/agent-communication.md` 与 Asia/Shanghai 当日日志
 - `skills/luoyu-reading/references/reading-state-protocol.md`、`coordination.md`、`platforms/weread.md`、`ai-ask-book.md`
 
-书名、作者、版本、owner、权威续读点及 `active_session` 以最新 registry 为准；对照 roster、当日日志排除正在运行的场次。官方微信读书 Skill（如可用）只辅助查询书架、目录、进度和个人笔记，不提供正文或书内AI答复。若身份、范围、锁或规则有冲突，先停下交协调者，不用旧副本猜当前状态。
+书名、作者、版本、owner、权威续读点及 `active_session` 以最新 registry 为准；对照 roster、当日日志排除正在运行的场次。官方AI读书 Skill（如可用）只辅助查询书架、目录、进度和个人笔记，不提供正文或书内AI答复。若身份、范围、锁或规则有冲突，先停下交协调者，不用旧副本猜当前状态。
 
 ## 每场阅读流程
 

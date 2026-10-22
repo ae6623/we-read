@@ -50,8 +50,8 @@
 以上仅为空占位示例，不是当前场次或可直接提交的认领。所有标量字段须为非空字符串；`reading_mode` 仅可取 `weread_browser`、`local_pdf`、`other`，`resource_ids` 为非空、无重复的非空字符串数组。
 
 - `environment_id` 表示实际独占的阅读执行环境，不是 Agent 名、书名、run_id 或随场次变化的随机值。共用环境必须用同一稳定键；不得换名绕锁。环境和资源键只用协作别名，不写设备私有标识、路径、登录信息或凭据。
-- `resource_ids` 列出实际会操作的所有共享阅读资源；即使环境键不同，共享浏览器仍必须列相同资源键。现有微信读书共享浏览器统一使用 `browser:weread-shared`，`weread_browser` 模式必须含此键；新浏览器资源或环境对应关系未核清前，不自造别名分流。
-- Windows 独立本地 PDF 使用 `local_pdf`，登记自己的稳定环境键和本地阅读器资源别名，不带 `browser:weread-shared`；只要不操作微信读书共享浏览器、不同书且不共享其他资源，就不受该浏览器场次占用影响。`local_pdf` 不得用于 registry 平台为 `weread` 的书目，也不得伪装共享浏览器操作。`other` 不豁免实际资源登记；registry 平台为 `weread` 的新活动项须用 `weread_browser`，其他执行方式另行确认规范，不用模式改名绕过共享浏览器锁。
+- `resource_ids` 列出实际会操作的所有共享阅读资源；即使环境键不同，共享浏览器仍必须列相同资源键。现有AI读书共享浏览器统一使用 `browser:weread-shared`，`weread_browser` 模式必须含此键；新浏览器资源或环境对应关系未核清前，不自造别名分流。
+- Windows 独立本地 PDF 使用 `local_pdf`，登记自己的稳定环境键和本地阅读器资源别名，不带 `browser:weread-shared`；只要不操作AI读书共享浏览器、不同书且不共享其他资源，就不受该浏览器场次占用影响。`local_pdf` 不得用于 registry 平台为 `weread` 的书目，也不得伪装共享浏览器操作。`other` 不豁免实际资源登记；registry 平台为 `weread` 的新活动项须用 `weread_browser`，其他执行方式另行确认规范，不用模式改名绕过共享浏览器锁。
 - 全数组中 `run_id`、`agent_id`、`book_id`、`environment_id` 分别唯一；任意两项 `resource_ids` 不得相交。每项 Agent 必须为该书有效 owner，书目必须 held 且 in_progress。同一书跨平台别名仍沿用唯一 book_id，不靠另建条目绕过书目锁。
 - 开始写入、owner／claim、资源全集及 revision 必须基于最新 main 同一次核对；收尾仅移除自己的项，并更新自己书目与本人镜像。两个独立场次同时收尾仍按 Git 串行接受，不能用旧快照覆盖另一项。
 

@@ -14,7 +14,7 @@
 | [luoyu-reading/SKILL.md](luoyu-reading/SKILL.md) | 全队共享阅读、认领、来源、归档协议 | 所有成员必读 |
 | [reading-admin/SKILL.md](reading-admin/SKILL.md) | 管理员：错峰协调、质量与发布审核，不读正文 | 管理员／主协调者 |
 | [reading-qingyouji/SKILL.md](reading-qingyouji/SKILL.md) | 轻游记系列浏览器阅读与AI章节笔记 | `cue-qingyouji-reader` |
-| [reading-weread-browser/SKILL.md](reading-weread-browser/SKILL.md) | 通用微信读书浏览器阅读与AI章节笔记 | `wechat-reading-browser` |
+| [reading-weread-browser/SKILL.md](reading-weread-browser/SKILL.md) | 通用AI读书浏览器阅读与AI章节笔记 | `wechat-reading-browser` |
 | [reading-local-pdf/SKILL.md](reading-local-pdf/SKILL.md) | Windows本地授权PDF阅读 | `local-pdf-reader` |
 | [reading-weread-auto/SKILL.md](reading-weread-auto/SKILL.md) | WorkBuddy维护的代码自动化阅读，可移植实现边界 | `weread-auto` |
 

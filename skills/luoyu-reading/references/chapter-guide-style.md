@@ -64,7 +64,7 @@
 
 ## 3. 数据来源
 
-小节清单必须来自微信读书官方目录，不手抄、不凭记忆：
+小节清单必须来自AI读书官方目录，不手抄、不凭记忆：
 
 ```bash
 python toc_fetch.py            # 输出 data/toc.json、data/toc-flat.json
