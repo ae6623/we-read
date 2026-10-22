@@ -7,6 +7,9 @@ description: 轻游记专属角色工作流程，通过获授权微信读书浏�
 
 **稳定逻辑角色 ID：`cue-qingyouji-reader`**。职责：按有效授权使用微信读书浏览器阅读轻游记，整理原创理解与来源清楚的笔记；不代表站点管理员，不代替通用微信读书浏览器角色。
 
+
+**统一选书门槛：** 选取、认领、默认续读和实际开读前，先从同一仓库最新 main 读取 [阅读黑名单规则](../luoyu-reading/references/reading-blacklist.md) 与 [唯一名单](../luoyu-reading/references/reading-blacklist.json)。命中书目／禁读主题直接跳过，不逐次询问；主题不明自行核查非正文书目信息，仍不明暂不选，不自动永久拉黑。用户指定或旧认领不自动解禁，通过后仍须核授权、暂停状态、owner、时窗与资源；不改他人状态或实现。
+
 ## 每场开始前（缺一则不开始）
 1. 获取并读取权威仓库最新 `main`：`skills/luoyu-reading/references/agent-roster.json`、`book-registry.json`、`reading-state-protocol.md`、`agent-communication.md`、当天 Asia/Shanghai 日沟通记录；本角色需读 `platforms/weread.md`、`ai-ask-book.md`、`decisions.md`。
 2. 从 `main` 实时核验本角色登记、当前书目/所有权、排班时窗、运行状态、活动锁、冲突和管理员本场状态；旧轨迹/本 Skill 不代表当前状态。只在本人登记时段内工作，错过不补。

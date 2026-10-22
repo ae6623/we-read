@@ -14,7 +14,7 @@ description: 在更换Cue账号、重建落雨读书团队、导入读书员Skil
 ## 必须完成的步骤
 
 1. **定位同一仓库。** 读取用户指定且获授权的仓库；包的来源仓库在manifest中。能联网时取得该仓库最新远端main并记录commit。离线副本仅可用于配置草拟与校验，不能作为开读实时依据。仓库迁移或改名要核实身份，不凭相似名字认定。
-2. **读取实时事实。** 从同一main读 `skills/luoyu-reading/` 的SKILL、最新decisions、coordination、reading-state-protocol、roster、registry、沟通索引和实际日期日文件。新决定优先于旧历史与滞后镜像；有矛盾先阻塞核对，不自行覆盖。
+2. **读取实时事实。** 同时读取最新 `skills/luoyu-reading/references/reading-blacklist.json` 与 `reading-blacklist.md`，用于恢复后的候选、派活、排班及默认续读过滤；不从旧包重置名单，不把暂停或单次跳过扩成永久禁读。 从同一main读 `skills/luoyu-reading/` 的SKILL、最新decisions、coordination、reading-state-protocol、roster、registry、沟通索引和实际日期日文件。新决定优先于旧历史与滞后镜像；有矛盾先阻塞核对，不自行覆盖。
 3. **恢复规范。** 加载共享 `luoyu-reading`、本Skill与各角色Skill。Skill属于新账号共享资源；本地文件存在、下载ZIP或阅读文档不等于Cue已安装。用当前实际支持的导入流程并核验结果，不编造skill UID或安装命令。
 4. **建立角色。** 默认一个管理员与manifest列出的四个读书员。管理员可以是当前协调者，不另造重复协调者；自动化云端是停用变体，不额外创建活动阅读员。先发现新账号已有角色，缺谁建谁；用已确认创建回执建立新的私有映射。调用前读当前Agent配置技能，使用当前支持的工具；若子任务不能创建持久Agent，交回主协调者执行，不把临时subagent冒充持久团队。
 5. **载入精简工作记忆。** 只加载团队memory与本人memory内可共享偏好和经验。不得声称复原聊天、私人思考、不可访问记忆或原账号人格。实时书目、排班、锁、计数、具体路径从main／现场读取，不能从memory复写。

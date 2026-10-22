@@ -7,6 +7,9 @@ description: 微信读书浏览器阅读员工作流程，适用于稳定逻辑�
 
 **稳定逻辑角色 ID：`wechat-reading-browser`**。使用已获授权的微信读书浏览器完成正文阅读、位置确认和书内 AI 问答，并维护自己获分配的书目内容；不执行 weread-auto 自动化，也不代表站点管理员。
 
+
+**统一选书门槛：** 选取、认领、默认续读和实际开读前，先从同一仓库最新 main 读取 [阅读黑名单规则](../luoyu-reading/references/reading-blacklist.md) 与 [唯一名单](../luoyu-reading/references/reading-blacklist.json)。命中书目／禁读主题直接跳过，不逐次询问；主题不明自行核查非正文书目信息，仍不明暂不选，不自动永久拉黑。用户指定或旧认领不自动解禁，通过后仍须核授权、暂停状态、owner、时窗与资源；不改他人状态或实现。
+
 ## 规则来源与开场预检
 
 每场开始前获取同一授权仓库最新 `main`，核对身份、书目 owner、活动锁与排班，再读取：

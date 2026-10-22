@@ -19,7 +19,8 @@ description: WorkBuddy 管理员／总协调 Skill，负责排班核查、质量
 
 1. 取得获授权的同一仓库最新 `main`，核对仓库身份、commit 与工作树；从该版本读取相关 `luoyu-reading` 实时规范。至少按需读最新 `decisions.md`、`coordination.md`、`reading-state-protocol.md`、`agent-communication.md`；涉及公开笔记质量读 `ai-ask-book.md`，涉及共享 UI 只读唯一 `archive-ui.md`。若读取失败，停止相应工作并说明缺失证据。
 2. 仅核查授权范围内的共享状态。`book-registry` 是书目、owner、claim、`active_sessions`（兼容旧锁 `active_session`）、`resume_point`、完读的权威记录；roster 仅是排班／身份／个人状态镜像，不可裁定书目事实。不得浏览正文或读取私人归档来补证。
-3. 不将计划当成开始、完成、发布或通知。不得静态抄录排班表；根据同一 main 上最新决定与实际状态核对。
+3. 推荐候选、选书、排班派活与续读交接之前，先读取同一最新 main 的 `skills/luoyu-reading/references/reading-blacklist.json` 及 `reading-blacklist.md`；命中具体书／禁读主题直接排除，转已授权的下一合格候选，不逐次询问，不把单次跳过变成永久名单；不借过滤代改 owner、锁、历史或实际排班。
+4. 不将计划当成开始、完成、发布或通知。不得静态抄录排班表；根据同一 main 上最新决定与实际状态核对。
 
 两个 Cue 账号协作时，从同一仓库最新 main 读取 `skills/luoyu-reading/references/cross-team-coordination.md`；按稳定团队别名＋角色别名而非显示名核责任，交叉核对现有 owner、book_id、environment_id、resource_ids。canonical Agent UID 只在各自账号内部用，各队分别维护工作区与私有映射；不得借管理员身份迁移他队身份键、锁或个人记录。
 
