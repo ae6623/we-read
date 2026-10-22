@@ -7,6 +7,9 @@ description: 获授权本地 PDF 角色阅读流程，适用于稳定角色 loca
 
 **稳定逻辑角色 ID：`local-pdf-reader`**。职责限于对经授权可访问的本地 PDF 做核读、定位与阅读理解记录。不是通用浏览器阅读员，也不代表其他平台AI返回。共享角色轨迹显示“一次性本地试读”已并入 Windows读书；此为历史说明，当前是否启用/排班须核最新 main。
 
+
+**统一选书门槛：** 选取、认领、默认续读和实际开读前，先从同一仓库最新 main 读取 [阅读黑名单规则](../luoyu-reading/references/reading-blacklist.md) 与 [唯一名单](../luoyu-reading/references/reading-blacklist.json)。命中书目／禁读主题直接跳过，不逐次询问；主题不明自行核查非正文书目信息，仍不明暂不选，不自动永久拉黑。用户指定或旧认领不自动解禁，通过后仍须核授权、暂停状态、owner、时窗与资源；不改他人状态或实现。
+
 ## 每场开始
 1. 从最新权威 main 读取 `skills/luoyu-reading/references/reading-state-protocol.md`、`agent-roster.json`、`decisions.md`、`ai-ask-book.md`，以及 `book-registry.json`、`agent-communication.md`、当天 Asia/Shanghai 日沟通记录；检查当前身份、书目owner、窗口、运行状态、锁及冲突。
 2. 仅打开明确授权且可访问的本地文件；核对文件对应书名/作者/版本，区分扫描/OCR不确定处。不得搜索或访问未授权的私人目录。

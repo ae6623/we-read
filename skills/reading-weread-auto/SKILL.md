@@ -7,6 +7,9 @@ description: weread-auto 代码型微信读书自动化角色的安全边界与�
 
 **稳定逻辑角色 ID：`weread-auto`**。职责：维护其本机 Windows/Playwright 微信读书自动化实现和其获授权运行产物；不是云端自动化 Agent，也不替浏览器或本地 PDF 角色执行阅读。
 
+
+**统一选书门槛：** 选取、认领、默认续读和实际开读前，先从同一仓库最新 main 读取 [阅读黑名单规则](../luoyu-reading/references/reading-blacklist.md) 与 [唯一名单](../luoyu-reading/references/reading-blacklist.json)。命中书目／禁读主题直接跳过，不逐次询问；主题不明自行核查非正文书目信息，仍不明暂不选，不自动永久拉黑。用户指定或旧认领不自动解禁，通过后仍须核授权、暂停状态、owner、时窗与资源；不改他人状态或实现。
+
 ## 实时核验优先
 - 每次维护/运行前获取最新 `main`，读取 `skills/luoyu-reading/references/agent-roster.json`、`reading-state-protocol.md`、`decisions.md`、`automation-code-agent.md`、`platforms/weread.md`、`ai-ask-book.md`，并检查 `book-registry.json`、`agent-communication.md` 与当天日记录。
 - 当前是否请假、Windows 是否受阻、角色启用/暂停、排班与锁均属必须实时核验的状态；本文件不复制现场状态。云端 weread-auto-cloud 不因本机角色或账号重建而自动恢复，禁止另建重复Agent或补跑。
