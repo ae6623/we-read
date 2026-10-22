@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": 119,
+  "revision": 120,
   "timezone": "Asia/Shanghai",
   "authority": "latest origin/main; claims become effective only after serialized acceptance there",
   "migration": {
@@ -734,6 +734,33 @@
         "ai_qa": "not_started",
         "note_path": "reading-notes/books/spain-qingyouji/2026-10-23-partial-reading.md"
       }
+    },
+    {
+      "book_id": "local-modern-finance-housing-curgdbd",
+      "title": "现代金融的本质以及房价",
+      "author": "待确认（文件名标注 curgdbd，作者未核实）",
+      "platform": "local_pdf",
+      "platform_book_id": null,
+      "priority": "user_requested",
+      "status": "in_progress",
+      "owner_agent_id": "local-pdf-reader",
+      "claim": {
+        "state": "held",
+        "source": "用户2026-10-23指定跳过#129改读#123，并授权自主选书与开读；本次登记为本人责任",
+        "claimed_at": "2026-10-23T01:50:00+08:00"
+      },
+      "last_confirmed_progress": null,
+      "resume_point": {
+        "status": "needs-confirmation",
+        "chapter": null,
+        "page": null,
+        "position": "尚未读取正文；首次开读从目录核对章节标题",
+        "source": "文件元信息（433页、AES-256加密、copy:no、print:yes）",
+        "confirmed_at": null
+      },
+      "next_question_status": "needs-confirmation",
+      "completion": null,
+      "pdf_source_note": "本地私有文件，不含路径；仅提炼本人摘要，不复制原文"
     }
   ],
   "active_session": null,
@@ -778,6 +805,19 @@
       }
     ]
   },
-  "updated_at": "2026-10-23T01:22:26+08:00",
-  "active_sessions": []
+  "updated_at": "2026-10-23T01:50:00+08:00",
+  "active_sessions": [
+    {
+      "run_id": "local-pdf-20261023-0150-m123",
+      "agent_id": "local-pdf-reader",
+      "book_id": "local-modern-finance-housing-curgdbd",
+      "slot": "owner_directed_20261023",
+      "started_at": "2026-10-23T01:50:00+08:00",
+      "environment_id": "sandbox-local-pdf-reader",
+      "reading_mode": "local_pdf",
+      "resource_ids": [
+        "local_pdf:xpdf-reader"
+      ]
+    }
+  ]
 }
