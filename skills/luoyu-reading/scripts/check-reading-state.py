@@ -7,6 +7,9 @@ from pathlib import Path
 VALID_STATUSES = {"queued", "in_progress", "paused", "blocked", "completed"}
 READING_MODES = {"weread_browser", "local_pdf", "other"}
 SHARED_WEREAD_RESOURCE = "browser:weread-shared"
+DURATION_WEREAD_RESOURCE = "browser:weread-duration"
+CONFIRMED_WEREAD_RESOURCES = {SHARED_WEREAD_RESOURCE, DURATION_WEREAD_RESOURCE}
+SHARED_WEREAD_AGENTS = {"cue-qingyouji-reader", "wechat-reading-browser"}
 
 
 def validate(state, roster):
@@ -146,15 +149,20 @@ def validate(state, roster):
         if book_for_mode is not None and book_for_mode.get("platform") == "weread" and mode != "weread_browser":
             errors.append(f"{label}: weread 平台书目必须使用 weread_browser")
             malformed = True
-        if isinstance(mode, str) and mode == "weread_browser" and isinstance(resources, list) and SHARED_WEREAD_RESOURCE not in resources:
-            errors.append(f"{label}: weread_browser 必须包含 {SHARED_WEREAD_RESOURCE}")
-            malformed = True
+        if isinstance(mode, str) and mode == "weread_browser" and isinstance(resources, list):
+            browser_resources = [r for r in resources if isinstance(r, str) and r.startswith("browser:")]
+            if len(browser_resources) != 1 or browser_resources[0] not in CONFIRMED_WEREAD_RESOURCES:
+                errors.append(f"{label}: weread_browser 必须且仅能使用一个已确认浏览器资源（{SHARED_WEREAD_RESOURCE} 或 {DURATION_WEREAD_RESOURCE}）")
+                malformed = True
+            if isinstance(session.get("agent_id"), str) and session["agent_id"] in SHARED_WEREAD_AGENTS and browser_resources != [SHARED_WEREAD_RESOURCE]:
+                errors.append(f"{label}: 已确认共享角色必须使用 {SHARED_WEREAD_RESOURCE}")
+                malformed = True
         if isinstance(mode, str) and mode == "local_pdf":
             if book_for_mode is not None and book_for_mode.get("platform") == "weread":
                 errors.append(f"{label}: local_pdf 不得用于 weread 平台书目")
                 malformed = True
-            if isinstance(resources, list) and SHARED_WEREAD_RESOURCE in resources:
-                errors.append(f"{label}: local_pdf 不得包含 {SHARED_WEREAD_RESOURCE}")
+            if isinstance(resources, list) and any(isinstance(r, str) and r.startswith("browser:") for r in resources):
+                errors.append(f"{label}: local_pdf 不得包含任何 browser:* 资源")
                 malformed = True
         for key in unique_fields:
             value = session.get(key)
