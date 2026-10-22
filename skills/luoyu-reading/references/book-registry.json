@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": 122,
+  "revision": 123,
   "timezone": "Asia/Shanghai",
   "authority": "latest origin/main; claims become effective only after serialized acceptance there",
   "migration": {
@@ -727,12 +727,13 @@
         "summary": "阅读器加载失败且为未登录状态（登录入口可见，加入书架按钮出现）；未开读。"
       },
       "last_run": {
-        "run_id": "reading-duration-20261023-0110",
-        "started_at": "2026-10-23T01:10:02+08:00",
-        "ended_at": "2026-10-23T01:22:26+08:00",
-        "actual_read_note": "亲读约10分钟，其中截图可核对的正文约5分钟（造梦的小永 01:15-01:17，沧桑的老白 01:18-01:20）；AI问书未开始；未完读",
-        "ai_qa": "not_started",
-        "note_path": "reading-notes/books/spain-qingyouji/2026-10-23-partial-reading.md"
+        "run_id": "reading-duration-20261023-0540",
+        "started_at": "2026-10-23T05:41:25+08:00",
+        "ended_at": "2026-10-23T05:48:19+08:00",
+        "actual_read_note": "一次性例外运行，仅做 AI 问书；未做亲读段（阅读器仅用于进入 AI 问书面板，未读新正文）",
+        "ai_qa": "platform_partial_quotes_unverified",
+        "ai_qa_detail": "书籍亮点、背景解读、关键概念平台已返回（转述，部分解读待验证）；10条金句平台返回9条候选（已去重）+第10条无出处未收录；金句逐字核验未完成",
+        "note_path": "reading-notes/books/spain-qingyouji/2026-10-23-ai-ask-book.md"
       }
     },
     {
@@ -806,19 +807,6 @@
       }
     ]
   },
-  "updated_at": "2026-10-23T05:41:25+08:00",
-  "active_sessions": [
-    {
-      "run_id": "reading-duration-20261023-0540",
-      "agent_id": "kDMz83g4XxhGbSEJQZeWUJ",
-      "book_id": "spain-qingyouji",
-      "slot": "one-time-exception-20261023-0540-ai-ask",
-      "started_at": "2026-10-23T05:41:25+08:00",
-      "environment_id": "luoyu-duration-reader",
-      "reading_mode": "weread_browser",
-      "resource_ids": [
-        "browser:weread-shared"
-      ]
-    }
-  ]
+  "updated_at": "2026-10-23T05:48:19+08:00",
+  "active_sessions": []
 }
