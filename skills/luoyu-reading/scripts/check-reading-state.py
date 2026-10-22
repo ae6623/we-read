@@ -5,6 +5,8 @@ import json
 from pathlib import Path
 
 VALID_STATUSES = {"queued", "in_progress", "paused", "blocked", "completed"}
+READING_MODES = {"weread_browser", "local_pdf", "other"}
+SHARED_WEREAD_RESOURCE = "browser:weread-shared"
 
 
 def validate(state, roster):
@@ -88,24 +90,111 @@ def validate(state, roster):
             errors.append(f"{expected_id}: owner_agent_id 无效")
         if batch.get("status") not in {"pending", "blocked", "completed", "needs-review"}:
             errors.append(f"{expected_id}: 批次状态无效")
-    session = state.get("active_session")
-    if session is not None:
-        required = ("run_id", "agent_id", "book_id", "slot", "started_at")
-        if not isinstance(session, dict) or any(not session.get(k) for k in required):
-            errors.append("active_session 字段不完整")
+
+    book_by_id = {b.get("book_id"): b for b in books if isinstance(b, dict)}
+    legacy = state.get("active_session")
+    legacy_present = legacy is not None
+    legacy_valid = False
+    if legacy_present:
+        fields = ("run_id", "agent_id", "book_id", "slot", "started_at")
+        legacy_valid = isinstance(legacy, dict) and all(isinstance(legacy.get(k), str) and legacy[k].strip() for k in fields)
+        if not legacy_valid:
+            errors.append("active_session 字段不完整或格式无效")
         else:
-            book = next((b for b in books if b.get("book_id") == session["book_id"]), None)
-            if session["agent_id"] not in owners or book is None or book.get("owner_agent_id") != session["agent_id"]:
+            book = book_by_id.get(legacy["book_id"])
+            if legacy["agent_id"] not in owners or book is None or book.get("owner_agent_id") != legacy["agent_id"]:
                 errors.append("active_session 的书目 owner/agent 不匹配")
+                legacy_valid = False
             if book is not None and ((book.get("claim") or {}).get("state") != "held" or book.get("status") != "in_progress"):
                 errors.append("active_session 必须对应 held 且 in_progress 的书目")
+                legacy_valid = False
+
+    scoped_value = state.get("active_sessions", [])
+    if not isinstance(scoped_value, list):
+        errors.append("active_sessions 必须为数组")
+        scoped_sessions = []
+    else:
+        scoped_sessions = scoped_value
+    if legacy_present and scoped_sessions:
+        errors.append("active_session 与 active_sessions 不得同时使用")
+
+    valid_scoped = []
+    unique_fields = {key: set() for key in ("run_id", "book_id", "agent_id", "environment_id")}
+    used_resources = set()
+    for i, session in enumerate(scoped_sessions):
+        label = f"active_sessions[{i}]"
+        if not isinstance(session, dict):
+            errors.append(f"{label} 必须为对象")
+            continue
+        required = ("run_id", "agent_id", "book_id", "slot", "started_at", "environment_id", "reading_mode")
+        malformed = False
+        for key in required:
+            if not isinstance(session.get(key), str) or not session[key].strip():
+                errors.append(f"{label}: {key} 必须为非空字符串")
+                malformed = True
+        resources = session.get("resource_ids")
+        resources_ok = isinstance(resources, list) and bool(resources) and all(isinstance(r, str) and r.strip() for r in resources) and len(set(resources)) == len(resources)
+        if not resources_ok:
+            errors.append(f"{label}: resource_ids 必须为非空、无重复的非空字符串数组")
+            malformed = True
+        mode = session.get("reading_mode")
+        if isinstance(mode, str) and mode not in READING_MODES:
+            errors.append(f"{label}: reading_mode 无效")
+            malformed = True
+        bid = session.get("book_id")
+        book_for_mode = book_by_id.get(bid) if isinstance(bid, str) else None
+        if book_for_mode is not None and book_for_mode.get("platform") == "weread" and mode != "weread_browser":
+            errors.append(f"{label}: weread 平台书目必须使用 weread_browser")
+            malformed = True
+        if isinstance(mode, str) and mode == "weread_browser" and isinstance(resources, list) and SHARED_WEREAD_RESOURCE not in resources:
+            errors.append(f"{label}: weread_browser 必须包含 {SHARED_WEREAD_RESOURCE}")
+            malformed = True
+        if isinstance(mode, str) and mode == "local_pdf":
+            if book_for_mode is not None and book_for_mode.get("platform") == "weread":
+                errors.append(f"{label}: local_pdf 不得用于 weread 平台书目")
+                malformed = True
+            if isinstance(resources, list) and SHARED_WEREAD_RESOURCE in resources:
+                errors.append(f"{label}: local_pdf 不得包含 {SHARED_WEREAD_RESOURCE}")
+                malformed = True
+        for key in unique_fields:
+            value = session.get(key)
+            if isinstance(value, str) and value.strip():
+                if value in unique_fields[key]:
+                    errors.append(f"{label}: {key} 重复")
+                    malformed = True
+                unique_fields[key].add(value)
+        if resources_ok:
+            overlap = used_resources.intersection(resources)
+            if overlap:
+                errors.append(f"{label}: resource_ids 与其他活动场次冲突: {sorted(overlap)}")
+                malformed = True
+            used_resources.update(resources)
+        book = book_for_mode
+        if isinstance(session.get("agent_id"), str) and session.get("agent_id") not in owners:
+            errors.append(f"{label}: agent 无效")
+            malformed = True
+        if book is None or book.get("owner_agent_id") != session.get("agent_id"):
+            errors.append(f"{label}: 书目 owner/agent 不匹配")
+            malformed = True
+        elif (book.get("claim") or {}).get("state") != "held" or book.get("status") != "in_progress":
+            errors.append(f"{label}: 必须对应 held 且 in_progress 的书目")
+            malformed = True
+        if not malformed:
+            valid_scoped.append(session)
+
     running_agents = [a for a in agents if isinstance(a, dict) and a.get("run_status") == "running"]
-    if running_agents and session is None:
-        errors.append("roster 有 running agent 但无 active_session")
-    if session is not None:
+    if legacy_present:
+        if legacy_valid:
+            for agent in running_agents:
+                if agent.get("id") != legacy.get("agent_id"):
+                    errors.append(f"roster agent {agent.get('id')} running 与 active_session 锁冲突")
+        elif running_agents:
+            errors.append("roster 有 running agent 但无 active_session 或有效锁")
+    else:
         for agent in running_agents:
-            if not isinstance(session, dict) or agent.get("id") != session.get("agent_id"):
-                errors.append(f"roster agent {agent.get('id')} running 与 active_session 锁冲突")
+            matches = [s for s in valid_scoped if s.get("agent_id") == agent.get("id")]
+            if len(matches) != 1:
+                errors.append(f"roster 有 running agent 但无 active_session；agent {agent.get('id')} 必须有且只有一个有效 active_session")
     return errors
 
 
