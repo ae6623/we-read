@@ -21,6 +21,8 @@ description: WorkBuddy 管理员／总协调 Skill，负责排班核查、质量
 2. 仅核查授权范围内的共享状态。`book-registry` 是书目、owner、claim、`active_sessions`（兼容旧锁 `active_session`）、`resume_point`、完读的权威记录；roster 仅是排班／身份／个人状态镜像，不可裁定书目事实。不得浏览正文或读取私人归档来补证。
 3. 不将计划当成开始、完成、发布或通知。不得静态抄录排班表；根据同一 main 上最新决定与实际状态核对。
 
+两个 Cue 账号协作时，从同一仓库最新 main 读取 `skills/luoyu-reading/references/cross-team-coordination.md`；按稳定团队别名＋角色别名而非显示名核责任，交叉核对现有 owner、book_id、environment_id、resource_ids。canonical Agent UID 只在各自账号内部用，各队分别维护工作区与私有映射；不得借管理员身份迁移他队身份键、锁或个人记录。
+
 ## 认领、锁与事件核验
 
 - 管理员只核查和协调；派任务不改 owner。只有 `book-registry` 最新 main 中被接受的 owner/claim 才是权威。不得代认领或替 owner 释放锁。
