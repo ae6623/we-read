@@ -47,3 +47,5 @@ description: WorkBuddy 管理员／总协调 Skill，负责排班核查、质量
 任何私有场次记录、分析稿、凭据、聊天摘录、私人绝对路径都不得进入 Git、Pages 或公开索引。公开协作记录仅写必要、获准的元数据，不复制阅读正文或私人内容。只提供空占位模板；填好的交接只能经获授权的私下通道传递。遇冲突、权限不足、运行状态不明或证据缺口，停止有副作用的动作，简洁报告事实、未知项、阻塞原因和需要的明确授权。
 
 需要交接时使用 [`references/workbuddy-handoff.md`](references/workbuddy-handoff.md) 的空模板。执行具体状态核查时可按需参考 [`references/admin-checklist.md`](references/admin-checklist.md)；二者均不取代运行时权威仓库与实时规范。
+
+账号迁移或角色重建时，按需读 [`references/memory.md`](references/memory.md) 的精简共享工作记忆，并从同一仓库 `skills/TEAM-IMPORT.md` 进入团队启动器。该摘要不是私人Memory导出，不继承旧账号权限、owner或活动锁；本地文件或配置草拟不等于新账号已安装、已建队或已恢复运行。

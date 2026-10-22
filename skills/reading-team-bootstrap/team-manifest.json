@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "package_kind": "portable-reading-team-specification",
+  "source_repository": "https://github.com/ae6623/we-read",
+  "source_main_baseline": "bccea03",
+  "live_state_policy": "Fetch and verify the same authorized repository's latest main before any reading; never restore runtime state from this package.",
+  "launcher": "skills/TEAM-IMPORT.md",
+  "bootstrap_skill": "reading-team-bootstrap",
+  "shared_skill": "luoyu-reading",
+  "shared_memory": "skills/reading-team-bootstrap/references/team-memory.md",
+  "identity_policy": "Role keys below are logical repository names, not personal Cue Agent UIDs; account identity, permissions, ownership and resources require new verification.",
+  "roles": [
+    {
+      "role_key": "reading-admin",
+      "display_name": "读书管理员／主协调者",
+      "skill": "reading-admin",
+      "skill_file": "skills/reading-admin/SKILL.md",
+      "memory_file": "skills/reading-admin/references/memory.md",
+      "responsibility": "统筹错峰、核查状态、审查公开内容与发布；不读正文、不代认领。",
+      "reuse_current_coordinator": true
+    },
+    {
+      "role_key": "cue-qingyouji-reader",
+      "display_name": "轻游记WeRead浏览器阅读员",
+      "skill": "reading-qingyouji",
+      "skill_file": "skills/reading-qingyouji/SKILL.md",
+      "memory_file": "skills/reading-qingyouji/references/memory.md",
+      "responsibility": "获授权轻游记作品的浏览器阅读、逐章AI问答和原创笔记。"
+    },
+    {
+      "role_key": "wechat-reading-browser",
+      "display_name": "WeRead浏览器阅读员",
+      "skill": "reading-weread-browser",
+      "skill_file": "skills/reading-weread-browser/SKILL.md",
+      "memory_file": "skills/reading-weread-browser/references/memory.md",
+      "responsibility": "通用获授权作品的浏览器阅读与章节AI分析，保留精确续读证据。"
+    },
+    {
+      "role_key": "local-pdf-reader",
+      "display_name": "本地Windows PDF阅读员",
+      "skill": "reading-local-pdf",
+      "skill_file": "skills/reading-local-pdf/SKILL.md",
+      "memory_file": "skills/reading-local-pdf/references/memory.md",
+      "responsibility": "在获授权设备读取授权本地PDF，核实章节和文本，标明自主整理来源。"
+    },
+    {
+      "role_key": "weread-auto",
+      "display_name": "WorkBuddy代码自动化阅读员",
+      "skill": "reading-weread-auto",
+      "skill_file": "skills/reading-weread-auto/SKILL.md",
+      "memory_file": "skills/reading-weread-auto/references/memory.md",
+      "responsibility": "维护可审计的授权阅读自动化、互斥与停止机制；不伪造上报、不复制旧机器状态。"
+    }
+  ],
+  "legacy_variants": [
+    {"role_key": "weread-auto-cloud", "default_action": "do_not_create_or_enable", "note": "Historical implementation variant; consult latest main and explicit user authorization."}
+  ],
+  "excluded": ["personal_agent_uids", "credentials", "cookies_and_browser_profiles", "private_chats", "private_memory_exports", "private_reading_archives", "machine_bindings", "scheduler_ids"],
+  "default_effect": "prepare_and_preflight_only"
+}
