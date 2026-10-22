@@ -11,6 +11,14 @@ description: Multi-platform reading workflow for source-labeled whole-book previ
 
 为用户把多本书读得更有效：开读即建立有来源边界的全书视角初版，再把每天真实读到的内容连回框架，完读后才做校订后的整书汇编。`references/book-registry.json` 是书目归属/认领、完读、`active_session` 与 `resume_point` 的权威来源；`references/agent-roster.json` 只登记身份、类型、排班及个人状态镜像，不作为书目或完读事实的唯一来源。共享归档与 Git 规则见 `references/coordination.md`，跨 Agent 开始/结束记录见 `references/agent-communication.md`，用户最新决定见 `references/decisions.md`。使用某个平台前阅读对应的 `references/platforms/<platform>.md`（当前先有微信读书指南）。
 
+## 所有阅读员的公开内容原则（2026-10-22）
+
+公开笔记与归档卡摘要优先提供书籍介绍、论证主线、章节分析及跨章精读价值，给出有证据支撑的判断和可继续精读的问题；不要把时间窗／场次、浏览秒数、页数、后台续读点等过程记录塞进读者版正文或卡片，也不重复无用进度文案与流程免责声明。必要的来源、事实缺口、亲读／AI状态及实际覆盖仍须清晰保留；原始事实继续按协议保存在权威日志的最少元数据或仓库外私有材料，不因前台去冗余而删除。不回改旧页阅读事实。长书全章AI输入及专业精读输出见 [AI问书规范](references/ai-ask-book.md)，质量核查与统筹见 [管理员 Skill](../reading-admin/SKILL.md)；下方旧规则中的实际时长／逐场区段要求用于后台留证，不要求读者版按场次排版。
+
+## WorkBuddy 备用接手与沟通
+
+用户要求 WorkBuddy 接手，或当前 Agent 因用量／连接中断需移交时，先读 [WorkBuddy 交接清单与可复制模板](references/workbuddy-handoff.md)。接手者必须从权威仓库最新 main、registry 及相关事件自检，不假设会话、浏览器登录、Skill 安装、Git 权限、活动锁或用户授权继承；只有用户明确授权／交接、锁与责任核清并满足最新状态协议后才继续。不得传递令牌或任何秘密，权限不足就回传无秘密补丁，由有既有获批通道的责任方处理，不绕过。管理员统筹使用独立的 [reading-admin Skill](../reading-admin/SKILL.md)；未安装或无权读取时先报告，不声称已接入。
+
 ## 最新协调规则（2026-10-20，优先于旧排班与管理员只读规则）
 
 - 按 **Asia/Shanghai 每日 02:00–06:00 禁读**；其余每小时全队错峰安排一场约20分钟阅读，不是每人每小时各一场。具体奇偶小时分工以 [最新决定](references/decisions.md) 顶部为准；两个浏览器 Agent 不得实际重叠，今天从下一个未到时段起执行、不补跑。
@@ -24,7 +32,7 @@ description: Multi-platform reading workflow for source-labeled whole-book previ
 
 ## AI辅助章节导览与读后笔记流程
 
-仅在用户授权的AI阅读任务中，对具备本书AI问答的阅读Agent采用，按 [AI问书规范](references/ai-ask-book.md) 的篇幅分档，形成章节AI导览／重点问答及综合「读后思考」。小篇幅按官方目录逐章问答；大篇幅完成全书章节地图并实际精读选中的重点章节，再由AI深入补充笔记、其余章节作一行导览。微信读书书内AI问答仍须通过浏览器完成；可对具体缺口多轮追问，逐题等待完整答复，不机械重复同一句问题，并遵守平台验证／反自动化停止规则。按适用流程完成规定章节笔记及「读后思考」即可构成AI阅读完读，completion中标明AI完成依据，不冒称亲读；AI问答不计亲读时长或章节状态。Windows本地PDF仅按获授权材料流程执行，不假称平台AI来源。
+仅在用户授权的AI阅读任务中，对具备本书AI问答的阅读Agent采用，按 [AI问书规范](references/ai-ask-book.md) 的篇幅分档，形成章节分析及综合「读后思考」。小篇幅和长书均按官方目录逐章AI问答；长书不能用选章问答或一行导览替代全章输入，实际亲读仍按既有授权与第一章规则执行。公开输出按论证主线、章节分析、跨章综合与可精读问题组织，依内容灵活选角度，不机械套模板、不按场次排版。微信读书书内AI问答仍须通过浏览器完成；可对具体缺口多轮追问，逐题等待完整答复，不机械重复同一句问题，并遵守平台验证／反自动化停止规则。按适用流程完成规定章节笔记及「读后思考」即可构成AI阅读完读，completion中标明AI完成依据，不冒称亲读；AI问答不计亲读时长或章节状态。Windows本地PDF仅按获授权材料流程执行，不假称平台AI来源。
 
 ## 共享书目认领、精确续读与三本综合
 
