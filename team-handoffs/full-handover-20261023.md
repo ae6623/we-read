@@ -243,3 +243,16 @@
 安装状态：云端安装由子任务执行中，结果以 main 上的补充为准。本机由雨自行安装，完成后在群里回报即可。
 
 注意：安装时只用官方仓库地址；不执行未知脚本；不覆盖已有技能目录；不写入账号、token 或凭据；书籍内容不发到外部服务。
+
+### 云端安装结果（13:55，子任务核验）
+
+技能目录为 `/home/ubuntu/.manus/skills/`，每个技能独立子目录，没有覆盖已有目录。
+
+1. 记忆（claude-memory-skill）：上游没有 SKILL.md，只能读 `skill/mem.md`，不作为可导入技能使用。读书员的记忆仍按 `memory/README.md` 的文件结构维护。
+2. 技能编写与优化（sebastianwessel/skills）：7 个技能全部安装，SKILL.md 可读，与源文件一致。其中 agent-skill-architect 即“技能编写与优化”。
+3. 书转技能（book-to-skill）：已安装，SKILL.md 可读。注意：其 SKILL.md 含“把生成的技能发布到 GitHub”一步，会把书籍衍生内容发到外部，不得执行该步骤。
+4. 读书笔记知识库（claude-obsidian）：15 个技能全部安装。多个技能依赖仓库根目录的 scripts 与 docs，完整仓库副本在 `/home/ubuntu/.manus/skills/_support/claude-obsidian-repo/`，需要脚本的技能以它为根。
+5. superpowers：未重装，原位置 `/workspace/tools/superpowers` 的 15 个 SKILL.md 可读。
+
+以上只核验了文件可读和内容完整，未确认新会话中能否自动识别。
+本机的安装由雨自行完成，结果以群里回报为准。
