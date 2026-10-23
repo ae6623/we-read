@@ -178,3 +178,18 @@
 - OpenSpec（CLI 1.14.3，官方 npm 包 `@fission-ai/openspec`）：用于“先写清楚、再执行、再核对”的规则改动。试用安排：下一条规范变更先用它写变更说明（提案、任务、验收），再走 PR。它不接管读书登记、锁或排班，那些仍按 reading-state-protocol。
 - superpowers（官方仓库 obra/superpowers，当前 v7.0.1）：是编程 Agent 的技能集，偏写代码和调试。我们的读书流程暂不套用，除非后续有明确需要。
 - 装在云端的目录：工具放在 `/workspace/tools/`，与团队仓库分开，不改团队规则。
+
+## 七、成员交接：阅读员-轻游记（12:49 提交）
+
+1. 身份：阅读员-轻游记，公开称呼“金刚狼/轻游记”，registry 中的 owner 键为 `cue-qingyouji-reader`（不写 Agent UID）。
+2. 负责的书：《我只是喜欢不稳定的人生（轻游记）》，book_id `unstable-life-qingyouji`，owner 为本人，claim held，状态 in_progress。续读点未改。
+3. 当前状态：13:00 场登记已合入 main（PR #58，`2cb0653`），共享浏览器锁由本场占用，尚未开读。本场只补“放马人”章的 AI 答复和错配证据；拿不到的如实写“未完成”，不补写。时段到 13:20 为止。
+4. 收尾待办：推收尾记录与镜像 idle 到 main，报 commit，锁随之清掉。旧分支 `reading-state/qingyouji-unstable-20261023-1300`（a540f54）和 `-r2` 由管理员决定是否清理。
+5. 朝圣之路：汇编、EPUB 与 overview 已在 main（最新 `07cbddd` 中可见），不再需要另行推送；轻游记员之前报“本地提交未推送”的情况已过时。
+6. 经验与规则：
+   - AI读书只从页面点击进入书架、书与问答，不拼 URL，否则丢登录态。
+   - 只在登记时段内开读；未合入不开读；过期场次不补跑。
+   - 不借用他人凭据或登录态，也不互传令牌。
+   - GitHub 写入只用连接器 gh 的命令级 credential helper，推送后报 commit。
+   - Gemini 密钥只用已保存的 secret 名称引用，不写值。模型顺序：gemini-3.8-flash，额度用完换 gemini-3-flash-preview，两个都用完就跳过；3.8 连续出错超过 3 次才换；超时放宽到 150 秒。免费层每日 20 次，绑定计费后不受限。提纲初稿可用，但要人工核对。
+   - 公开内容一律用“AI读书”。
