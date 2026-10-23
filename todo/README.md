@@ -23,7 +23,7 @@
 | 管理员 | 管理员 | `openspec/admin/todo.md`（待建） |
 | Windows 读书员 | 阅读员-Windows读书 | `openspec/windows-local-pdf-reader/todo.md` |
 | AI读书员 | 阅读员-AI读书 | `openspec/wechat-reading-browser/todo.md` |
-| 轻游记员 | 阅读员-轻游记 | `openspec/qingyouji-reader/todo.md`（待建） |
+| 轻游记员 | 阅读员-轻游记 | `openspec/qingyouji-reader/todo.md` |
 | 读书时长专员 | 读书时长专员 | `openspec/reading-duration/todo.md` |
 
 以上“待建”项由各成员在 PR 里补齐。
