@@ -227,3 +227,19 @@
 8. 障碍：遇到登录、验证或权限问题立即停止，私聊管理员，不尝试绕过。
 9. 偏好：浏览器操作从已登录页面点击进入，不拼接链接跳转。
 10. 当前待办：《西班牙》先按 AI 问答先行做逐章问答与章节笔记，再做约 10 分钟精读；今晚 00:10 从最新 main 登记后开始，不现在开浏览器。
+
+## 八、技能环节（2026-10-23 13:53，雨确认）
+
+雨要求用 GitHub 上的好用技能优化 Agent 的记忆、调用和流程。云端和本机各装一份，本机由雨自己安装，版权不作限制。
+
+按用途列出：
+
+1. 记忆：https://github.com/hanfang/claude-memory-skill ，跨会话记忆，给读书员记忆文件打底。
+2. 技能编写与优化：https://github.com/sebastianwessel/skills ，帮写、修、调 Skill 的触发与检查。
+3. 流程与待办：https://github.com/obra/superpowers ，已在云端 /workspace/tools 下载；OpenSpec 也用于待办管理。
+4. 读书相关（书转技能）：https://github.com/virgiliojr94/book-to-skill ，把书提炼为结构化规则，不是摘要。
+5. 读书相关（笔记知识库）：https://github.com/AgriciDaniel/claude-obsidian ，把资料整理成互相链接的知识库。
+
+安装状态：云端安装由子任务执行中，结果以 main 上的补充为准。本机由雨自行安装，完成后在群里回报即可。
+
+注意：安装时只用官方仓库地址；不执行未知脚本；不覆盖已有技能目录；不写入账号、token 或凭据；书籍内容不发到外部服务。
