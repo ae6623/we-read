@@ -8,6 +8,15 @@
 - canonical Agent UID 仅在所属 Cue 账号内部使用。各队在自己的私有配置中维护“团队别名/角色别名 → 本账号 canonical Agent UID”的映射、工作区及实际配置回执；不把 UID、账号标识、私有路径或配置快照写入公开仓库，不拿另一账号的 UID 发消息或绑定任务。
 - 团队别名尚未约定、旧角色键无法唯一对应团队或责任不清时，标待确认并停止冲突写入；不得把同名当同一 Agent，也不得用新别名冒领旧 owner。
 
+## 已确认的本团队公开映射
+
+本团队公开别名为“金刚狼”。对外角色别名与已有公开 owner 键对应如下；这些别名仅用于识别，不改变权威字段：
+- `金刚狼/AI读书` → `wechat-reading-browser`
+- `金刚狼/轻游记` → `cue-qingyouji-reader`
+- `金刚狼/Windows读书` → `local-pdf-reader`
+
+读书时长专员当前沿用 UID 形态的既有 owner 键；为遵守不公开 canonical Agent UID 的规则，本表不抄录该键、不新造替代键。其他团队仍须自行确认唯一别名。
+
 ## 共用一份事实，保留既有锁
 
 书目归属、claim、活动项、续读点与完读计数只认同一最新 `main` 上的 registry，始终单书单 owner。两队按稳定 `book_id` 去重，按 `book_id`、`environment_id`、`resource_ids` 核冲突，具体字段与旧锁兼容依 [状态协议](reading-state-protocol.md)。不同账号不自动等于独立环境；实际共用浏览器或设备资源必须使用相同资源别名，不靠团队前缀改名绕锁。
