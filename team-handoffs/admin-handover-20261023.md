@@ -82,3 +82,9 @@
 4. Windows 读书员 roster 镜像已为 idle，活动项已清空。
 5. 每个新场次仍须先登记、后开读；收尾后补记录。
 6. 积分紧张，之后的新增决定都追加到本文件，方便接班。
+
+## 10. 第三个团队进场入口（2026-10-22 交接链接）
+
+- 重建入口（Git 内）：https://github.com/ae6623/we-read/blob/main/skills/TEAM-IMPORT.md
+- 管理员技能与交接包：https://github.com/ae6623/we-read/tree/main/skills/reading-admin
+- 接班时先读本文件，再从上面的重建入口进场；所有状态以 main 为准。
