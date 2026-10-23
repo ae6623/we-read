@@ -1,0 +1,173 @@
+# 读书团队完整接班包（2026-10-23，合并版）
+
+本文合并三部分：昨天的重建入口与管理员交接、拉起团队时踩过的坑和解决办法、今天新接的连接与规则。写于 2026-10-23 12:45（Asia/Shanghai）。接班后一切以最新 main 为准，本文只是起点。
+
+权威仓库：https://github.com/ae6623/we-read
+进场入口（昨天）：https://github.com/ae6623/we-read/blob/main/skills/TEAM-IMPORT.md
+管理员技能与交接包（昨天）：https://github.com/ae6623/we-read/tree/main/skills/reading-admin
+今天的管理员交接说明：https://github.com/ae6623/we-read/blob/main/team-handoffs/admin-handover-20261023.md
+
+---
+
+## 一、第一部分：昨天交接的要点
+
+1. 管理员职责：协调、排班核查、公开笔记审核、Git 发布、群里的 todo。不读书、不代读、不代认领、不转移 owner、不代释锁、不改他人的镜像、续读点或笔记。
+2. 权威状态只看 main 上两个文件：`skills/luoyu-reading/references/book-registry.json`（书目、活动项、续读点）和 `skills/luoyu-reading/references/agent-roster.json`（成员镜像）。`agent-room/state.json` 是 10-20 的旧快照，已过期，不要用。
+3. 成员（公开称呼）：管理员；阅读员-AI读书（有书架、目录、进度、AI 问答与精读，占共享浏览器）；阅读员-轻游记；阅读员-Windows读书（本地 PDF，不占浏览器）；读书时长专员（独立浏览器，每天 00:10 左右约 10 分钟精读）。
+4. 团队别名为“金刚狼”，公开角色写“金刚狼/AI读书”“金刚狼/轻游记”等。公开记录不写 Agent UID、群 ID 或私人路径。
+5. 每日 23:55（Asia/Shanghai）的公开交接日报定时由管理员负责：合格的日报自动合入，合并后私聊雨，不发群。
+
+---
+
+## 二、第二部分：拉起团队时遇到的坑和解决办法
+
+这一节是今天踩过的真实问题，每条后面是现在的做法。
+
+### 2.1 GitHub 写入（最常卡的一个）
+
+- 现象：同一个云端，不同会话的 GitHub 写入能力不一样。有的会话只能 fetch，推送报“无法读取用户名”。
+- 原因：写入依赖“连接器版 gh”或环境里的 GH_TOKEN。普通系统自带的 gh 往往未登录。
+- 解决：
+  1. 先确认 GitHub 连接器已启用。未启用就运行 `manus-config connector ensure "GitHub"`，按卡片授权，不要自己找 token。
+  2. 连接器版 gh 的路径是 `$MANUS_CONFIG_HOME/connectors/github/gh`。推送时用命令级 helper 临时指定，不写全局配置：`git -c credential.helper= -c "credential.helper=!$MANUS_CONFIG_HOME/connectors/github/gh auth git-credential" push ...`。
+  3. 普通 gh 设备登录（会把凭据明文存在本机）只作为最后手段；雨今天已确认保留这一条，但团队不共用，也不把它复制到其他会话。
+  4. 绝不把 token、设备码或凭据路径写进仓库、群、日志或交接文件。
+- 没有写入能力的子任务：让它只出无秘密补丁，由管理员或有凭据的主会话合入。不要借用别人的凭据。
+
+### 2.2 PR 的合并方式
+
+- 固定流程：fetch main → 从最新 main 建独立分支 → 只改必要文件 → `git diff --check` 和相关校验 → 普通推送 → 开 PR → squash 合并 → 回读 `origin/main` 确认。
+- 不强推，不改 main 历史。登记只改自己的记录。
+- 若基线已过时（分支不是 main 的祖先），不要直接合并，先在最新 main 上重做。今天有一次因此挡住了轻游记的登记。
+
+### 2.3 镜像与 registry 不一致
+
+- 现象：registry 的活动项已清，但某个成员的 roster 镜像还写着 active，于是后面的登记被挡住。
+- 解决：每次收尾，由该成员在最新 main 上只改自己的镜像（run_status 改 idle，填实际收尾时间，保留事件说明）。管理员核对两边一致后才同意下一场登记。
+
+### 2.4 浏览器登录态和资源锁
+
+- 登录态：每个浏览器 profile 只用自己已登录的状态。不借、不复制其他 Agent 的 cookie。发现登录页就停下，报告，不尝试代为登录。
+- “新进程没有登录”是常见原因：子进程不一定继承已登录的浏览器，要在对应 profile 里重新登录。
+- 操作方式：从已登录页面点进书架、书籍、AI 入口，不拼 URL，避免丢失登录。
+- 资源键：AI读书员与轻游记员共用 `browser:weread-shared`，错峰（轻游记整点，AI读书半点）。时长专员独占 `browser:weread-duration`。Windows 本地 PDF 用 `local_pdf:xpdf-reader`，不占浏览器。
+- 冲突只看同一本书、同一环境、同一资源。不要用“任何活动项都冲突”的全局判断。
+- 02:00–06:00 禁读，不补跑错过的窗口。
+
+### 2.5 先登记，后读书
+
+- 今天有两次违规：Windows 读书员在没登记时读了前 5 页并交给 Gemini 处理；另有一次误以为要“转达”才能开读。
+- 规则：每场都先从最新 main 登记 run，登记进 main 后再开读。收尾也要进 main。没有登记的阅读不计进度，要如实记事件说明。
+
+### 2.6 子任务与连接器
+
+- 子任务的 `enable_mcp` 必须显式设为 true，它才有连接器。今天有几次“Gemini 试用失败”，原因只是测试子任务没带连接器，不是 Gemini 不可用。
+- 子任务的执行位上限是 20。满了要先归档已结束的子任务，再创建新的。
+- 子任务不能看到你的私聊。要它做的事，把必要的上下文写清楚。
+
+### 2.7 密钥与表单
+
+- 用户要提供密钥时，用表单（coord-forms），保存为 secret，之后只用 `{{secret:名称.字段}}` 引用，不回显。
+- 表单按钮常在页面右上角，不是最下面的按钮；今天有人误点了“拒绝”，要重新发一次表单。
+- 表单若提示“已在其他地方更新”，就直接用已保存的 secret，不要再重复索要。
+
+### 2.8 Gemini（今天新接）
+
+- 用途：辅助校读和提炼，尤其是本地 PDF。雨确认：本地 PDF 可以整本交给 Gemini 处理（规则已在 main，PR #56）。
+- 模型顺序：先用 `gemini-3.8-flash`；遇到 429（免费层每日额度）就换 `gemini-3-flash-preview`；两个都用完就跳过 Gemini，照常读书。
+- 429 的原因：这把密钥所在的项目还在免费层。会员身份不自动套到 API 密钥上。要雨在 Google AI Studio 把密钥项目绑定付费账户后，3.8 才不受每天 20 次的限制。这一步要雨自己做。
+- 模型名以接口列出的为准，不要猜。
+- 输出：Gemini 的结论不是原文核验。解读、概括类笔记标注“AI/Gemini 解读，非原文核验”。
+- 金句：以 AI 问答或 Gemini 的原句为来源，标注“AI问答原句，未逐字核对原文”；人物原话、数字、时间等仍要对照可核材料。
+- 绝不在群里贴密钥。
+
+### 2.9 AI读书（官方 Skill 与 API）
+
+- 目录、书架、进度、笔记等可以先用官方 Skill 或 API 预检。
+- 正文阅读和书内 AI 问答必须从浏览器已登录页面操作。API 能成功，不代表正文或 AI 可用。
+- 官方 API 密钥是已保存的 secret，只用引用，不回显原始响应，不放进 Git。
+
+### 2.10 本地 PDF（Windows 读书员）
+
+- 只做页面显示和内部提炼。不复制、不导出原文（雨已放开整本给 Gemini，但仍不许对外发布原文长引）。
+- 密码或打不开就停下报告。
+- 未读正文前只看元信息（页数、大小、是否加密），不要抽取文字做统计。
+- 读完的草稿只在内部，先发标题和摘要给管理员审，审过才走 PR 发布。
+- 续读点写清“亲读的页码范围”，不写成完读。
+
+### 2.11 公开文字的规范
+
+- 公开仓库里统一用“AI读书”指代原平台，“AI问答”保持不变；不写平台的原始品牌名。
+- 不写 Agent UID、群 ID、私人路径、token、设备码、用户的私人邮箱或电话。
+- 书的“作者”若是页面署名，就写“页面署名”，不要自己补全。
+
+### 2.12 其它
+
+- 旧的代码维护角色已经移出群。新加入的成员用 `manus-config agents` 管理，职责写在它的 instruction 里。
+- 每日 todo：管理员在群里列编号清单，成员认领“认领 第几项”，完成后说一声，管理员核过 main 再关。
+- 群里只说需要全队协作的事。雨的日常进度只跟管理员私聊，管理员汇总进日报。
+
+---
+
+## 三、第三部分：今天的连接与当前状态（截至 12:45，main 以 `8a2681b` 之后为准）
+
+已连接或已确认：
+- GitHub 连接器：已登录，管理员可合并 PR。普通 gh 为明文登录（雨保留）。
+- Google Gemini：已启用，API 密钥是已保存的 secret。3.8 免费额度受限。
+- AI读书官方 API 密钥：已保存为 secret，只用于预检。
+- Windows 本地 PDF：xpdf 工具可用，只读元信息与页面。
+
+当前活动：
+- 轻游记员：`qingyouji-unstable-20261023-1300`，资源 `browser:weread-shared`，待收尾。它的任务是补《我只是喜欢不稳定的人生》的“放马人”缺章与错配证据，不改其他章节和 owner。
+- 其余成员无活动项。
+
+已完成（不用再做）：
+- 金刚狼别名映射：PR #51。
+- 双团队协作规则和分资源锁：先前合入。
+- 西班牙部分亲读 HTML 页面：a30a3f0。
+- 西班牙 AI 问答先行规则：PR #57（ab051c6）。
+- 本地 PDF 可整本交 Gemini：PR #56（9212ae9）。
+- Windows #123 笔记：PR #59（17bc502）；续读点修正 9326956。
+- 交接说明：PR #60、#61、#62。
+
+待办（按群里的编号）：
+1. 轻游记员 13:00 场收尾并推 main，报 commit。
+2. AI读书员：春之祭，锁已清，下一个正常窗口（13:30）先预检、再登记、后开读。
+3. 读书时长专员：《西班牙》先按 AI 问答先行做逐章问答和章节笔记，再做约 10 分钟精读。下一个正常窗口（今晚 00:10）登记后开始。
+4. 雨待定：Gemini 密钥项目是否绑定付费；是否保留本机普通 gh 登录（当前保留）；西班牙和其他书的排班顺序。
+
+---
+
+## 四、给接班管理员的提示词（可直接复制）
+
+```
+你是“读书团队”的管理员，负责协调、排班核查、公开笔记审核和 Git 发布。你不读书、不代读、不接管读书员的任务。
+
+权威仓库：https://github.com/ae6623/we-read 。每次行动前 fetch origin main，记录实际 commit。
+进场：先读 team-handoffs/full-handover-20261023.md（本文件），再读 skills/TEAM-IMPORT.md 与 skills/reading-admin/SKILL.md。
+
+规则：
+1. 状态只以 main 为准：skills/luoyu-reading/references/book-registry.json 与 agent-roster.json。不要用 agent-room/state.json（已过期）。
+2. 每场开读前，读书员必须从最新 main 登记 run，登记进 main 后才能读；收尾也要进 main。你不替他们登记、不替他们收尾、不代释锁。
+3. 冲突只按同一本书、同一环境、同一资源判断。共享浏览器 browser:weread-shared 由 AI读书员与轻游记员错峰使用；读书时长专员用 browser:weread-duration；Windows 本地 PDF 用 local_pdf:xpdf-reader，不占浏览器。
+4. 02:00–06:00 禁读。错过的窗口不补跑。
+5. 选书先过 skills/luoyu-reading/references/reading-blacklist.json，职业相关永久排除。
+6. Gemini：先 gemini-3.8-flash；429 则换 gemini-3-flash-preview；两者都用完则跳过 Gemini。密钥只用 {{secret:...}} 引用，绝不回显，绝不进仓库或群。
+7. GitHub 写入只用连接器版 gh，以命令级 helper 临时调用：git -c credential.helper= -c "credential.helper=!$MANUS_CONFIG_HOME/connectors/github/gh auth git-credential" push ...。不把 token 写进任何文件。
+8. 公开文字：不写“AI读书”，用“AI读书”；不写 Agent UID、群 ID、私人路径或凭据。
+9. 雨的日常进度只私聊你；群里只说需要全队协作的事。每天 23:55 的日报定时由你负责，合格的自动合入，合并后私聊雨。
+10. 群里 todo 用编号清单，成员认领，完成后说一声，你核过 main 再关。
+11. 需要雨决定时，一次问清楚，给 2–3 个选项。能按已授权范围推进的，直接推进。
+12. 每次新增决定追加到 team-handoffs/full-handover-20261023.md 末尾，不改上文。
+
+开工第一件事：fetch main，核 active_sessions 是否为空，核 roster 镜像与 registry 是否一致，然后把待办发到群里逐项认领。
+```
+
+---
+
+## 五、接班后的回报（请按顺序回给雨）
+
+1. 你的最新 commit 与 registry revision。
+2. 你核过的 active_sessions（应为空，或只剩一个正在进行的场次）。
+3. 群里 todo 的认领与完成情况。
+4. 雨待定事项的新答复。
