@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": 123,
+  "revision": 124,
   "timezone": "Asia/Shanghai",
   "authority": "latest origin/main; claims become effective only after serialized acceptance there",
   "migration": {
@@ -743,12 +743,12 @@
       "platform": "local_pdf",
       "platform_book_id": null,
       "priority": "user_requested",
-      "status": "paused",
+      "status": "in_progress",
       "owner_agent_id": "local-pdf-reader",
       "claim": {
         "state": "held",
-        "source": "用户2026-10-23指定跳过#129改读#123，并授权自主选书与开读；本次登记为本人责任",
-        "claimed_at": "2026-10-23T01:50:00+08:00"
+        "source": "用户2026-10-23确认继续本书；管理员确认仅亲读精读，笔记按实际读到的部分标注，不写通读或完读",
+        "claimed_at": "2026-10-23T10:13:00+08:00"
       },
       "last_confirmed_progress": null,
       "resume_point": {
@@ -761,8 +761,7 @@
       },
       "next_question_status": "needs-confirmation",
       "completion": null,
-      "pdf_source_note": "本地私有文件，不含路径；仅提炼本人摘要，不复制原文",
-      "pause_reason": "本场未抽取正文，文字层可识别但PDF标注禁止复制，按管理员指示暂停；保留本人责任，尚无正文阅读记录。"
+      "pdf_source_note": "本地私有文件，不含路径；仅提炼本人摘要，不复制原文"
     }
   ],
   "active_session": null,
@@ -807,6 +806,19 @@
       }
     ]
   },
-  "updated_at": "2026-10-23T05:48:19+08:00",
-  "active_sessions": []
+  "updated_at": "2026-10-23T10:13:00+08:00",
+  "active_sessions": [
+    {
+      "run_id": "local-pdf-20261023-1013-m123",
+      "agent_id": "local-pdf-reader",
+      "book_id": "local-modern-finance-housing-curgdbd",
+      "slot": "owner_directed_20261023",
+      "started_at": "2026-10-23T10:13:00+08:00",
+      "environment_id": "sandbox-local-pdf-reader",
+      "reading_mode": "local_pdf",
+      "resource_ids": [
+        "local_pdf:xpdf-reader"
+      ]
+    }
+  ]
 }
