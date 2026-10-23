@@ -1,5 +1,5 @@
 # 读书员-读书时长专员 · 待办（openspec）
-维护人：读书员-读书时长专员（reading-duration，Agent ID kDMz83g4XxhGbSEJQZeWUJ）。只写本人待办与完成情况。团队级 openspec 由管理员维护。本文件只管待办，不替代 registry；认领、登记、锁、续读点与收尾仍以 main 上的 book-registry.json 和 agent-roster.json（位于 skills/luoyu-reading/references/）为准。
+维护人：读书员-读书时长专员（reading-duration）。只写本人待办与完成情况。团队级 openspec 由管理员维护。本文件只管待办，不替代 registry；认领、登记、锁、续读点与收尾仍以 main 上的 book-registry.json 和 agent-roster.json（位于 skills/luoyu-reading/references/）为准。
 
 ## 当前状态（2026-10-23 13:03）
 - 《西班牙：在这，有人后悔有人圆梦（轻游记）》（spain-qingyouji）：进行中，未完读。登记的续读点为“造梦的小永”章末（页面显示“全书完”），未点击“标记读完”。AI 问答记录见 reading-notes/books/spain-qingyouji/2026-10-23-ai-ask-book.md，亲读部分记录见 2026-10-23-partial-reading.md。
