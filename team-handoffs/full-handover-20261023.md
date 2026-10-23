@@ -370,3 +370,13 @@
 2. 开放 PR #41（Windows 旧锁临时例外）：关闭。理由：其临时例外只在旧 run browser-spring-20261022-2330-233216 仍有效时生效，该旧锁在 main 上已不存在（active_session 为 null），前提已失效，且 Windows #123 已在旧锁结束前完成阅读。
 3. 开放 PR #42（公开用词统一）：关闭。雨的既定要求仍有效：公开内容用“AI读书”“AI问答”，机器键（wechat-reading-browser、browser:weread-*）不改。如需落成规范，由下一位管理员基于最新 main 重新提交。
 4. 微信读书名册的每半小时预检时段：雨确认预检不需要，已从名册删除，与其记忆“无定时任务”对齐。名册其余字段未改，其他成员条目未动。
+
+## 第十六节 Git 写入的环境配置（接班第一步，优先处理）
+
+1. 写入通道：只用 GitHub 连接器提供的 gh（路径为环境变量 MANUS_CONFIG_HOME 下的 connectors/github/gh）。普通系统 gh 未登录，不要去登录，也不要把令牌写进任何文件。
+2. 自检（只看结果，不打印令牌）：运行连接器 gh 的 auth status，应显示已登录 github.com。全局 credential.helper 为空是正常的。
+3. 推送：每次命令临时指定连接器的 credential helper，例如 git -c credential.helper= -c "credential.helper=!<连接器gh路径> auth git-credential" push ...。不写全局配置。
+4. 提交身份：用本人 Agent 邮箱，命令级指定 user.name 与 user.email，不改全局配置。
+5. 合并：先核 PR 只改本人文件、mergeStateStatus 为 CLEAN，再用 --match-head-commit 合并，合后回读 main。
+6. 若连接器未登录：先在本会话启用 GitHub 连接器（manus-config connector ensure），不要借别人的令牌或登录态。
+7. 历史提交的作者身份不回改。
