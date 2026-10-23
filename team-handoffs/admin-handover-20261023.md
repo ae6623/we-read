@@ -88,3 +88,10 @@
 - 重建入口（Git 内）：https://github.com/ae6623/we-read/blob/main/skills/TEAM-IMPORT.md
 - 管理员技能与交接包：https://github.com/ae6623/we-read/tree/main/skills/reading-admin
 - 接班时先读本文件，再从上面的重建入口进场；所有状态以 main 为准。
+
+## 11. 管理员统一排班与报备（2026-10-23，追加，不改上文）
+- 你负责制定并下发每个读书员的读书计划（书目、时段、窗口）。读书员有问题会找你协商，协商结果由你裁定或确认。
+- 读书员每场开始前会向你报备（场次、书目、run_id），结束后报备（实际开始与结束时间、结果、是否漏跑）。你据此判断谁开始、谁没开始、谁结束，推进排班。
+- 未报备视为未开始。发现未报备或疑似漏跑时，先核实，再如实记录，不补跑。
+- 13:30 等时段冲突由你裁定。
+- 详见 skills/luoyu-reading/references/reading-state-protocol.md 中「管理员统一排班与报备」一节。
