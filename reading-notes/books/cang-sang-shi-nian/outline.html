@@ -41,6 +41,8 @@ ul.quote>li{color:#4a4436;font-size:.93rem;margin:.2em 0;padding-left:10px;borde
 .site-footer{margin-top:44px;padding-top:16px;border-top:1px dashed var(--line);
   color:var(--muted);font-size:.8rem;text-align:center}
 @media print{body{background:#fff}details.ch{border:0}details.ch>summary::before{content:""}}
+/* 从目录点进来时，目标章给一下高亮，眼睛能立刻定位到 */
+details.ch:target>summary{background:#fbf3e3;border-radius:6px;padding-left:8px}
 </style>
 </head>
 <body>
@@ -5058,5 +5060,41 @@ ul.quote>li{color:#4a4436;font-size:.93rem;margin:.2em 0;padding-left:10px;borde
 </details>
   <p class="site-footer">由 weread-auto 导出 · 供读前通读与后续精读对照</p>
 </main>
+<script>(function(){
+  function openId(id){
+    if(!id) return null;
+    var el = document.getElementById(id);
+    if(!el) return null;
+    var d = (el.tagName === 'DETAILS') ? el : (el.closest ? el.closest('details') : null);
+    if(d && !d.open) d.open = true;      // 关键：目录跳过来时把这一章展开
+    return el;
+  }
+  function go(id){
+    var el = openId(id);
+    if(!el) return;
+    // 展开会改变文档高度，等一帧再滚，免得停在错误位置
+    setTimeout(function(){ el.scrollIntoView({block:'start'}); }, 10);
+  }
+  function fromHash(){
+    var h = (location.hash || '').replace(/^#/, '');
+    if(h) go(decodeURIComponent(h));
+  }
+  document.addEventListener('click', function(e){
+    var a = (e.target && e.target.closest) ? e.target.closest('a[href^="#"]') : null;
+    if(!a) return;
+    var id = (a.getAttribute('href') || '').slice(1);
+    if(id) go(id);
+  }, false);
+  window.addEventListener('hashchange', fromHash, false);
+  // 手动展开某章时把锚点写回地址栏：刷新或分享链接能直接落回这一章
+  document.addEventListener('toggle', function(e){
+    var t = e.target;
+    if(t && t.tagName === 'DETAILS' && t.open && t.id && location.hash !== '#' + t.id){
+      try { history.replaceState(null, '', '#' + t.id); } catch(err) {}
+    }
+  }, true);
+  fromHash();
+})();
+</script>
 </body>
 </html>
