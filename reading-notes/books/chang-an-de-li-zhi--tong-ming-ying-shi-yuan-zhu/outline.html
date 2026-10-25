@@ -58,12 +58,12 @@ details.ch:target>summary{background:#fbf3e3;border-radius:6px;padding-left:8px}
   </header>
   <div class="toc"><b>章节目录</b><ul><li><a href="#ch0">《长安的荔枝》序</a></li>
 <li><a href="#ch1">文后说明</a></li>
-<li><a href="#ch2">第一章</a></li>
-<li><a href="#ch3">第二章</a></li>
-<li><a href="#ch4">第三章</a></li>
-<li><a href="#ch5">第四章</a></li>
-<li><a href="#ch6">第五章</a></li>
-<li><a href="#ch7">第六章</a></li></ul></div>
+<li><a href="#ch2">第一章 · 李善德买房的过程</a></li>
+<li><a href="#ch3">第二章 · 李善德出发前的准备</a></li>
+<li><a href="#ch4">第三章 · 李善德发明脚程格眼</a></li>
+<li><a href="#ch5">第四章 · 李善德押运荔枝的路线和遭遇</a></li>
+<li><a href="#ch6">第五章 · 李善德与杨国忠的会面</a></li>
+<li><a href="#ch7">第六章 · 李善德的荔枝转运之旅</a></li></ul></div>
   <details class="ch" id="ch0"><summary>《长安的荔枝》序</summary>
 <div class="sec"><h4>《长安的荔枝》序</h4>
 <ul class="point">
@@ -144,7 +144,7 @@ details.ch:target>summary{background:#fbf3e3;border-radius:6px;padding-left:8px}
 </ul>
 </li>
 </ul></div>
-</details><details class="ch" id="ch2"><summary>第一章</summary>
+</details><details class="ch" id="ch2"><summary>第一章 · 李善德买房的过程</summary>
 <div class="sec"><h4>李善德买房的过程</h4>
 <ul class="point">
 <li><b>李善德看中了一间位于长安城南边的宅子，决定购买</b>
@@ -216,7 +216,7 @@ details.ch:target>summary{background:#fbf3e3;border-radius:6px;padding-left:8px}
 </ul>
 </li>
 </ul></div>
-</details><details class="ch" id="ch3"><summary>第二章</summary>
+</details><details class="ch" id="ch3"><summary>第二章 · 李善德出发前的准备</summary>
 <div class="sec"><h4>李善德出发前的准备</h4>
 <ul class="point">
 <li><b>李善德决定出发去岭南，韩洄向他面授机宜</b>
@@ -274,7 +274,7 @@ details.ch:target>summary{background:#fbf3e3;border-radius:6px;padding-left:8px}
 </ul>
 </li>
 </ul></div>
-</details><details class="ch" id="ch4"><summary>第三章</summary>
+</details><details class="ch" id="ch4"><summary>第三章 · 李善德发明脚程格眼</summary>
 <div class="sec"><h4>李善德发明脚程格眼</h4>
 <ul class="point">
 <li><b>李善德为了掌握荔枝的保鲜情况，发明了脚程格眼</b>
@@ -314,7 +314,7 @@ details.ch:target>summary{background:#fbf3e3;border-radius:6px;padding-left:8px}
 </ul>
 </li>
 </ul></div>
-</details><details class="ch" id="ch5"><summary>第四章</summary>
+</details><details class="ch" id="ch5"><summary>第四章 · 李善德押运荔枝的路线和遭遇</summary>
 <div class="sec"><h4>李善德押运荔枝的路线和遭遇</h4>
 <ul class="point">
 <li><b>李善德带领试验马队沿着天开路朝南安县赶去</b>
@@ -375,7 +375,7 @@ details.ch:target>summary{background:#fbf3e3;border-radius:6px;padding-left:8px}
 </ul>
 </li>
 </ul></div>
-</details><details class="ch" id="ch6"><summary>第五章</summary>
+</details><details class="ch" id="ch6"><summary>第五章 · 李善德与杨国忠的会面</summary>
 <div class="sec"><h4>李善德与杨国忠的会面</h4>
 <ul class="point">
 <li><b>李善德被杨国忠召见，却不知其用意</b>
@@ -451,7 +451,7 @@ details.ch:target>summary{background:#fbf3e3;border-radius:6px;padding-left:8px}
 </ul>
 </li>
 </ul></div>
-</details><details class="ch" id="ch7"><summary>第六章</summary>
+</details><details class="ch" id="ch7"><summary>第六章 · 李善德的荔枝转运之旅</summary>
 <div class="sec"><h4>李善德的荔枝转运之旅</h4>
 <ul class="point">
 <li><b>李善德为了完成荔枝转运的任务，不顾一切地努力工作</b>
@@ -542,29 +542,36 @@ details.ch:target>summary{background:#fbf3e3;border-radius:6px;padding-left:8px}
 <!-- gc-fill:begin -->
 <script>
 (function(){
+  /* GoatCounter 计数端点只吃 .json（.txt 会 400 unknown extension），
+     没数据的路径也返回 404 + {"count":0,"count_unique":0}，所以按文本解析。 */
   var C="ae6623", base="https://"+C+".goatcounter.com/counter";
-  function num(t){t=(t||"").trim();return /^\d+$/.test(t)?t:null;}
-  function put(id,v){var e=document.getElementById(id);if(e&&v)e.textContent=v;return !!e&&!!v;}
-  function txt(p){
-    return fetch(base+p+".txt",{credentials:"omit",cache:"no-store"})
-      .then(function(r){return r.ok?r.text():null})
-      .then(function(t){return num(t);})
-      .catch(function(){return null;});
+  function stat(p){
+    return fetch(base+p+".json",{credentials:"omit",cache:"no-store"})
+      .then(function(r){return r.text();})
+      .then(function(t){
+        try{
+          var d=JSON.parse(t), c=parseInt(d.count,10);
+          if(!isFinite(c))return null;
+          var u=parseInt(d.count_unique,10);
+          return {pv:String(c), uv:isFinite(u)?String(u):null};
+        }catch(e){return null}
+      })
+      .catch(function(){return null});
   }
-  var got=false;
-  txt("/*").then(function(v){
-    if(!v)return;
-    put("gc_site_pv_num",v);got=true;
-    return txt("/*unique");
-  }).then(function(u){
-    if(u){put("gc_site_uv_num",u);}
-    else{var d=document.querySelectorAll(".visit-badge-uv");
-         for(var i=0;i<d.length;i++)d[i].style.display="none";}
+  function put(id,v){var e=document.getElementById(id);if(e&&v!=null)e.textContent=v;}
+  stat("/*").then(function(d){
+    if(!d)return;
+    put("gc_site_pv_num",d.pv);
+    if(d.uv!=null){put("gc_site_uv_num",d.uv);}
+    else{var x=document.querySelectorAll(".visit-badge-uv");
+         for(var i=0;i<x.length;i++)x[i].style.display="none";}
   });
   var pp=document.getElementById("gc_page_pv");
   if(pp&&location.pathname){
-    txt(location.pathname.replace(/\/$/,"")).then(function(v){
-      if(v){put("gc_page_pv_num",v);pp.style.display="";}
+    var path=location.pathname;
+    if(path.length>1&&path.charAt(path.length-1)==="/")path=path.slice(0,-1);
+    stat(path).then(function(d){
+      if(d){put("gc_page_pv_num",d.pv);pp.style.display="";}
     });
   }
 })();
