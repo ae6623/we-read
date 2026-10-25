@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "timezone": "Asia/Shanghai",
-  "updated_at": "2026-10-26T00:41:31+08:00",
+  "updated_at": "2026-10-26T00:47:00+08:00",
   "source_of_truth": true,
   "instructions": [
     "Read this roster before every scheduled reading run; work only inside the registered slot.",
@@ -44,16 +44,16 @@
       "current_book": "文化苦旅",
       "book_completion": "in_progress",
       "completed_books": [],
-      "run_status": "running",
+      "run_status": "idle",
       "last_run_date": "2026-10-26",
-      "last_started_at": "2026-10-26 00:41:31+08:00",
-      "last_ended_at": "2026-10-26 00:40:04+08:00",
+      "last_started_at": "2026-10-26 00:41:38+08:00",
+      "last_ended_at": "2026-10-26 00:47:00+08:00",
       "last_output": "reading-notes/books/wen-hua-ku-lv/notes/2026-10-26.html",
       "current_book_slug": "zhu-xiao-fang-zi-de-nv-ren",
       "book_progress": "99%",
       "completion_rule": "只认最新进度 ≥ 100%；bookInfo.finished 对未读完的书也返回 1，不作数。",
       "implementation_note": "同日多场（早/晚/手动）按天合并为站点与本地各一篇日期笔记；实现方式不约束其他 Agent。",
-      "last_run_status": "running",
+      "last_run_status": "blocked",
       "next_run_status": "scheduled",
       "last_slot": "local:manual_outside_registered_windows",
       "registered_windows_execution": {
@@ -64,7 +64,7 @@
       },
       "book_author": "纪静蓉",
       "enabled": true,
-      "last_blocked_reason": "注册表开读前检查未通过：本人上一场次仍在活动（2026-10-26-local-001224，21 分钟前开始），不重叠启动"
+      "last_blocked_reason": "开读前冲突检查未通过：本人上次运行仍标记为 running（2026-10-26 00:41:38+08:00，5 分钟内），不重复启动"
     },
     {
       "id": "wechat-reading-browser",
