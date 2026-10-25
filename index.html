@@ -737,29 +737,36 @@
 <!-- gc-fill:begin -->
 <script>
 (function(){
+  /* GoatCounter 计数端点只吃 .json（.txt 会 400 unknown extension），
+     没数据的路径也返回 404 + {"count":0,"count_unique":0}，所以按文本解析。 */
   var C="ae6623", base="https://"+C+".goatcounter.com/counter";
-  function num(t){t=(t||"").trim();return /^\d+$/.test(t)?t:null;}
-  function put(id,v){var e=document.getElementById(id);if(e&&v)e.textContent=v;return !!e&&!!v;}
-  function txt(p){
-    return fetch(base+p+".txt",{credentials:"omit",cache:"no-store"})
-      .then(function(r){return r.ok?r.text():null})
-      .then(function(t){return num(t);})
-      .catch(function(){return null;});
+  function stat(p){
+    return fetch(base+p+".json",{credentials:"omit",cache:"no-store"})
+      .then(function(r){return r.text();})
+      .then(function(t){
+        try{
+          var d=JSON.parse(t), c=parseInt(d.count,10);
+          if(!isFinite(c))return null;
+          var u=parseInt(d.count_unique,10);
+          return {pv:String(c), uv:isFinite(u)?String(u):null};
+        }catch(e){return null}
+      })
+      .catch(function(){return null});
   }
-  var got=false;
-  txt("/*").then(function(v){
-    if(!v)return;
-    put("gc_site_pv_num",v);got=true;
-    return txt("/*unique");
-  }).then(function(u){
-    if(u){put("gc_site_uv_num",u);}
-    else{var d=document.querySelectorAll(".visit-badge-uv");
-         for(var i=0;i<d.length;i++)d[i].style.display="none";}
+  function put(id,v){var e=document.getElementById(id);if(e&&v!=null)e.textContent=v;}
+  stat("/*").then(function(d){
+    if(!d)return;
+    put("gc_site_pv_num",d.pv);
+    if(d.uv!=null){put("gc_site_uv_num",d.uv);}
+    else{var x=document.querySelectorAll(".visit-badge-uv");
+         for(var i=0;i<x.length;i++)x[i].style.display="none";}
   });
   var pp=document.getElementById("gc_page_pv");
   if(pp&&location.pathname){
-    txt(location.pathname.replace(/\/$/,"")).then(function(v){
-      if(v){put("gc_page_pv_num",v);pp.style.display="";}
+    var path=location.pathname;
+    if(path.length>1&&path.charAt(path.length-1)==="/")path=path.slice(0,-1);
+    stat(path).then(function(d){
+      if(d){put("gc_page_pv_num",d.pv);pp.style.display="";}
     });
   }
 })();
