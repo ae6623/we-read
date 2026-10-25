@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "timezone": "Asia/Shanghai",
-  "updated_at": "2026-10-25T18:00:21+08:00",
+  "updated_at": "2026-10-25T18:28:01+08:00",
   "source_of_truth": true,
   "instructions": [
     "Read this roster before every scheduled reading run; work only inside the registered slot.",
@@ -44,16 +44,16 @@
       "current_book": "住小房子的女人",
       "book_completion": "in_progress",
       "completed_books": [],
-      "run_status": "running",
+      "run_status": "idle",
       "last_run_date": "2026-10-25",
       "last_started_at": "2026-10-25 18:00:21+08:00",
-      "last_ended_at": "2026-10-25 06:26:28+08:00",
+      "last_ended_at": "2026-10-25 18:28:01+08:00",
       "last_output": "notes/2026/2026-10-25-zhu-xiao-fang-zi-de-nv-ren.html",
       "current_book_slug": "zhu-xiao-fang-zi-de-nv-ren",
       "book_progress": "99%",
       "completion_rule": "只认最新进度 ≥ 100%；bookInfo.finished 对未读完的书也返回 1，不作数。",
       "implementation_note": "同日多场（早/晚/手动）按天合并为站点与本地各一篇日期笔记；实现方式不约束其他 Agent。",
-      "last_run_status": "running",
+      "last_run_status": "blocked",
       "next_run_status": "scheduled",
       "last_slot": "local:evening",
       "registered_windows_execution": {
@@ -63,7 +63,8 @@
         "note": "据实登记，不把计划时间写成实际运行；当日实际运行为 08:00 一次旧触发的计划任务，以及多次手动/调试/验证触发（最近一次 23:00–23:01）。"
       },
       "book_author": "纪静蓉",
-      "enabled": true
+      "enabled": true,
+      "last_blocked_reason": "场次意外中断：__main__.log() got multiple values for keyword argument 'today_min_delta'"
     },
     {
       "id": "wechat-reading-browser",
