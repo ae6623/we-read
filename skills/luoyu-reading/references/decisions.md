@@ -415,4 +415,9 @@ weread-auto 每日自动阅读产出的新笔记/新书/更新，授权直接发
 - 归档网格 = 只放**已确认完读**的整书汇编（`final.html` + `final.epub`），一本书一张卡；在读期间不预建、不占位，暂无完读书目时给空态说明。
 - 旧卡片一律搬运不重建：只移动位置、纠正标签与分组标题，不改写他人手写的简介、统计与抽屉结构。
 
-实现同步（weread-auto 与 weread-cloud 两份代码）：`site_pub.update_index` 由「全塞 `#archive-grid`」改为按面板投放（`_grid_span` 分别定位精读／通读／归档网格），仍只追加本场 managed 的新条目，已有卡片一字不改。本条不回改历史笔记、阅读事实、registry／roster 与排班，也不改变 `reading-notes/index.html` 按书回看索引的收录范围。
+实现同步（weread-auto 与 weread-cloud 两份代码）：`site_pub.update_index` 由「全塞 `#archive-grid`」改为按面板投放（`_grid_span` 分别定位精读／通读／归档网格），仍只追加本场 managed 的新条目，已有卡片一字不改。本条不回改历史笔记、阅读事实、registry／roster 与排班。
+
+**同日追加（19:20）**：`reading-notes/index.html`（按书归档页）也改为**只收已完读的书**，判据是存在整书汇编产物（`final.html` 或旧结构 `collection.epub`），不看 `sessions` 里的 `finished` 标记（《住小房子的女人》被标过 finished 却没有 final）。当前在档 6 本，均为轻游记系列的「AI 阅读完读」，标注为「不等于亲读」；亲读书目暂无完读，读完后再补。`site_pub.update_reading_index` 同步加完读过滤，未完读的书不再生成「阅读中」卡片塞进归档页，其全书视角与日期笔记留在首页通读／精读。
+
+**同日追加（19:20）· 笔记守卫**：抓不到成段正文就不写笔记。`weread_blacklist.is_unreadable(stats)` 比 `judge` 宽（不看样本门槛）：本场有占位符且无成段散文、或占位符多而真实字数少，就跳过 `generate_session_note` 并记 `note_skipped_unreadable`。不写笔记不等于拉黑这本书——单页偶发不冤枉整本书，判黑名单仍走 `judge` 的原门槛。据此已删除 2026-10-25 三篇占位符笔记（《住小房子的女人》《大转折》《知乎神贴》各一篇）及首页对应卡片，其余页面引用一并清理；这三场的阅读事实仍留在 sessions 与私有归档，不追改。
+
