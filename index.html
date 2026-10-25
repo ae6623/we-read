@@ -38,9 +38,6 @@
   <a class="skip-link" href="#main">跳到内容</a>
   <header class="hero">
     <div class="hero-inner">
-      <!-- visit-badge:begin -->
-      <div class="visit-badge" role="group" aria-label="站点访问统计"><span class="visit-badge-item"><b class="visit-badge-num" id="busuanzi_value_site_pv">–</b><span class="visit-badge-unit">次访问</span></span><span class="visit-badge-div" aria-hidden="true"></span><span class="visit-badge-item"><b class="visit-badge-num" id="busuanzi_value_site_uv">–</b><span class="visit-badge-unit">位访客</span></span></div>
-      <!-- visit-badge:end -->
       <nav class="office-entry-nav" aria-label="首页快捷入口"><a class="office-entry" href="https://ae6623.github.io/we-read/agent-room/" aria-label="进入像素阅读室" title="进入像素阅读室">
         <svg class="office-entry-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="28" viewBox="0 0 24 28" aria-hidden="true" focusable="false">
           <path fill="#3f5145" d="M4 2h16v2h2v22H4v-2H2V4h2z"/>
@@ -523,7 +520,41 @@
     <span>we-read · 阅读札记归档</span>
     <span>静态页面 · 由 GitHub Pages 提供</span>
   </footer>
+  <!-- visit-badge:begin -->
+  <div class="visit-badge-row"><div class="visit-badge" role="group" aria-label="站点访问统计"><span class="visit-badge-item"><b class="visit-badge-num" id="gc_site_pv_num">–</b><span class="visit-badge-unit">次访问</span></span><span class="visit-badge-div visit-badge-uv" aria-hidden="true"></span><span class="visit-badge-item visit-badge-uv"><b class="visit-badge-num" id="gc_site_uv_num">–</b><span class="visit-badge-unit">位访客</span></span></div></div>
+  <!-- visit-badge:end -->
   <script src="assets/js/homepage-reading.js" defer></script>
-<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script data-goatcounter="https://ae6623.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<!-- gc-fill:begin -->
+<script>
+(function(){
+  var C="ae6623", base="https://"+C+".goatcounter.com/counter";
+  function num(t){t=(t||"").trim();return /^\d+$/.test(t)?t:null;}
+  function put(id,v){var e=document.getElementById(id);if(e&&v)e.textContent=v;return !!e&&!!v;}
+  function txt(p){
+    return fetch(base+p+".txt",{credentials:"omit",cache:"no-store"})
+      .then(function(r){return r.ok?r.text():null})
+      .then(function(t){return num(t);})
+      .catch(function(){return null;});
+  }
+  var got=false;
+  txt("/*").then(function(v){
+    if(!v)return;
+    put("gc_site_pv_num",v);got=true;
+    return txt("/*unique");
+  }).then(function(u){
+    if(u){put("gc_site_uv_num",u);}
+    else{var d=document.querySelectorAll(".visit-badge-uv");
+         for(var i=0;i<d.length;i++)d[i].style.display="none";}
+  });
+  var pp=document.getElementById("gc_page_pv");
+  if(pp&&location.pathname){
+    txt(location.pathname.replace(/\/$/,"")).then(function(v){
+      if(v){put("gc_page_pv_num",v);pp.style.display="";}
+    });
+  }
+})();
+</script>
+<!-- gc-fill:end -->
 </body>
 </html>
