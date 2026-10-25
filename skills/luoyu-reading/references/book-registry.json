@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": 192,
+  "revision": 193,
   "timezone": "Asia/Shanghai",
   "authority": "latest origin/main; claims become effective only after serialized acceptance there",
   "migration": {
@@ -804,12 +804,12 @@
       "platform": "weread",
       "platform_book_id": null,
       "priority": "none",
-      "status": "paused",
+      "status": "in_progress",
       "owner_agent_id": "weread-auto",
       "claim": {
-        "state": "released",
-        "source": "用户决定暂停（保留续读点，不转交他人）",
-        "claimed_at": "2026-10-26T00:12:24+08:00"
+        "state": "held",
+        "source": "weread-auto 继续认领本人的书",
+        "claimed_at": "2026-10-26T04:08:09+08:00"
       },
       "last_confirmed_progress": "60%",
       "resume_point": {
@@ -901,7 +901,13 @@
       }
     }
   ],
-  "active_session": null,
+  "active_session": {
+    "run_id": "2026-10-26-local-040809",
+    "agent_id": "weread-auto",
+    "book_id": "wen-hua-ku-lv",
+    "slot": "local:manual_outside_registered_windows",
+    "started_at": "2026-10-26T04:08:09+08:00"
+  },
   "last_session_recovery": {
     "run_id": "browser-spring-20261022-1630",
     "agent_id": "wechat-reading-browser",
