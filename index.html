@@ -82,7 +82,11 @@
       </div>
 
       <section id="reading-panel-overview" class="reading-panel" aria-label="通读">
-        <section class="reading-group" aria-labelledby="whole-book-title">
+      <div class="reading-tabs" data-subtablist aria-label="全书视角 / 即将上线">
+        <button type="button" id="subtab-whole" data-subpanel="panel-whole" aria-selected="true">全书视角</button>
+        <button type="button" id="subtab-soon" data-subpanel="panel-soon" aria-selected="false">即将上线</button>
+      </div>
+        <section id="panel-whole" class="reading-group subtab-panel" aria-labelledby="whole-book-title">
           <h3 class="reading-group-title" id="whole-book-title">全书视角 <span>开读即建，随精读校订</span></h3>
           <div class="archive-grid" aria-label="读前内容">
       <!-- preread-card:-yao-yuan-de-jiu-shi-zhu--zai-shuo-shen-me -->
@@ -530,7 +534,7 @@
       <!-- /preread-card -->
           </div>
         </section>
-        <section class="reading-group" aria-labelledby="soon-title">
+        <section id="panel-soon" class="reading-group subtab-panel" hidden aria-labelledby="soon-title">
           <h3 class="reading-group-title" id="soon-title">即将上线 <span>AI 大纲已就绪，通读页整理中</span></h3>
           <div class="archive-grid">
       <!-- preread-soon:huo-zhe -->

@@ -85,3 +85,21 @@
     update();
   });
 })();
+
+// 子 Tab：通读面板内的「全书视角 / 即将上线」切换（独立于顶层 Tab，避免互相干扰）
+(() => {
+  document.querySelectorAll('[data-subtablist]').forEach((list) => {
+    const btns = [...list.querySelectorAll('button[data-subpanel]')];
+    const panels = btns.map((b) => document.getElementById(b.dataset.subpanel));
+    if (panels.some((p) => !p)) return;
+    const activate = (i) => {
+      btns.forEach((b, j) => {
+        const selected = j === i;
+        b.setAttribute('aria-selected', String(selected));
+        panels[j].hidden = !selected;
+      });
+    };
+    btns.forEach((b, i) => b.addEventListener('click', () => activate(i)));
+    activate(0);
+  });
+})();
