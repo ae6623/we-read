@@ -19,7 +19,8 @@
 | `assets/css/book-link-drawer.css` | 书籍抽屉组件 | 各书页 |
 | `assets/css/reading-note.css` | **精读模板A** + 轻游记 overview（章节导读式） | `final.html`、轻游记 `overview.html` |
 | `assets/css/reading-note-rich.css` | **精读模板B**（baikal 的 hero/面包屑式） | baikal `final.html` |
-| `assets/css/reading-outline.css` | **AI 大纲页**（58 本完全一致） | `outline.html` |
+| `assets/css/reading-outline.css` | **AI 大纲页**模板一（原始 58 本） | `outline.html` |
+| `assets/css/reading-outline-entry.css` | **AI 大纲（读前通读入口页）**模板二（13 本新建入口页） | `outline.html` |
 
 > 注：`reading-note.css` 与轻游记 `overview.html` 的内联 CSS 完全相同，已可共用，勿再内联。
 
