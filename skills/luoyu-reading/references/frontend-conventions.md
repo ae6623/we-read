@@ -5,6 +5,8 @@
 > 生效时间：2026-10-27 起。所有 agent（含 LuoYu、微信读书 agent）提交前必须遵守。
 >
 > **Agent 间前端协作沟通走 [frontend-a2a.md](frontend-a2a.md)**：git 提交事件监听，含 START / DONE / SKIP 协议。改前端文件前先 `python3 scripts/a2a_frontend_check.py --alias <你> --update` 看有没有写给自己的协调消息。
+>
+> **开工前必须先登记待办**，见 [todo-protocol.md](todo-protocol.md)：写进 `openspec/<角色>/todo.md` 并提交，每完成一项立刻 `[x]` 并单独 commit（防崩溃丢进度）。工具链安装见 [tooling-setup.md](tooling-setup.md)。
 
 ## 1. 核心铁律：禁止页面内联 CSS
 
