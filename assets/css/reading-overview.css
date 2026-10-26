@@ -1,0 +1,139 @@
+/* reading-overview.css - 全书视角初版页共享样式（由 28 页内联CSS合并超集，2026-10-27 外置；统一调色板消除变量名碎片） */
+:root{color-scheme:light;--ink:#26342f;--muted:#697870;--paper:#f6f7f2;--card:#fff;--accent:#286b52;--line:#dfe6df;--green:#244b40;--green2:#315e50;--gold:#bf8247;--sage:#dce8df;--serif:"Noto Serif SC","Songti SC",Georgia,serif;--sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;--e5e0d6:#e5e0d6}
+*{box-sizing:border-box}
+.aiqa-item{margin:16px 0;padding:14px 18px;background:var(--card);border:1px solid var(--line);border-radius:10px}
+.aiqa-item h3{font:600 1.02rem/1.6 var(--serif);color:var(--green);margin:0 0 8px;padding-bottom:8px;border-bottom:1px dashed var(--line)}
+.aiqa-item p{line-height:1.9}
+.aiqa-item ul{margin:.5em 0;padding-left:20px;color:#3f4a46}
+.archive-card .reader-meta{margin:4px 0 16px}
+.badge{font-size:.68rem;border-radius:6px;padding:1px 7px;font-weight:600;white-space:nowrap;flex:none}
+.badge[data-s="outline"]{background:#eef1f8;color:#3f5b8a;border:1px solid #d3dbec}
+.badge[data-s="read"]{background:#e6f0e9;color:#286b52;border:1px solid #cbdace}
+.badge[data-s="reading"]{background:#f6edde;color:#805d36;border:1px solid #e6d4b8}
+.badge[data-s="unread"]{background:#f4f4f1;color:#8b8b84;border:1px solid #e4e4de}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:clamp(18px,3vw,30px);margin:18px 0}
+.card p{line-height:1.9}
+.caret{color:#69766f;font-size:1.05rem;flex:none;transition:transform .18s ease}
+.ch-body{padding:2px 0 12px 58px;animation:slideDown .2s ease}
+.ch-body p{margin:.3em 0}
+.ch-cap{color:var(--muted);font-size:.78rem;line-height:1.6}
+.ch-empty{line-height:1.85}
+.ch-item{border-bottom:1px dashed #eee8dc}
+.ch-item summary{display:flex;gap:10px;align-items:baseline;padding:7px 0;cursor:pointer;list-style:none}
+.ch-item summary::-webkit-details-marker{display:none}
+.ch-item:last-child{border-bottom:0}
+.ch-item[open] .caret{transform:rotate(90deg)}
+.ch-list{list-style:none;margin:0;padding:0}
+.ch-list li{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;padding:6px 0;border-bottom:1px dashed var(--line)}
+.ch-list li:last-child{border-bottom:0}
+.ch-list li>details{flex:1 1 100%}
+.ch-no{color:#bf8247;font-weight:700;font-size:.82rem;min-width:48px;flex:none}
+.ch-prog-cap{display:flex;align-items:baseline;gap:8px;margin:.55em 0 .2em;padding:3px 0 3px 9px;border-left:3px solid #bf8247;font-size:11.5px;font-weight:700;color:#8a5a24;line-height:1.6}
+.ch-prog-cap .cap-k{flex:none;background:#f6e8d5;border:1px solid #e6cfae;border-radius:5px;padding:0 6px;font-size:10.5px;letter-spacing:.04em}
+.ch-prog-note{color:#8a8f99;font-size:11.5px;margin:.1em 0 .3em}
+.ch-secs{margin:0;padding-left:1.15em;color:#5c574c;font-size:.8rem;line-height:1.75}
+.ch-secs .sec-t{flex:1;min-width:0}
+.ch-secs .sec-tag{flex:none;font-size:10.5px;font-weight:700;border-radius:5px;padding:0 6px;line-height:1.7}
+.ch-secs li{margin:.1em 0}
+.ch-secs li.is-done{background:#244b40;border-color:#244b40;color:#f6f1e8;font-weight:600}
+.ch-secs li.is-done .sec-tag{background:#e8c48a;color:#3a2c14}
+.ch-secs li.is-done::before{background:#e8c48a;border-color:#e8c48a}
+.ch-secs li.is-stop{background:#2d5a4c;border-color:#bf8247;box-shadow:inset 0 0 0 1px #bf8247}
+.ch-secs li.is-stop .sec-tag{background:#bf8247;color:#fffdf8}
+.ch-secs li.is-stop::before{background:#bf8247;border-color:#bf8247;box-shadow:0 0 0 3px rgba(191,130,71,.22)}
+.ch-secs li.is-todo{color:#a9a29a}
+.ch-secs li.is-todo::before{border-style:dashed}
+.ch-secs li::before{content:"";width:7px;height:7px;border-radius:50%;border:1.5px solid #cfc7b6;flex:none}
+.ch-secs:not(.ch-prog) li{padding:1px 9px;margin:.05em 0}
+.ch-src{color:var(--muted);font-size:.76rem}
+.ch-t{flex:1;font-size:.92rem}
+.chip{font-size:.78rem;background:var(--sage);color:var(--green);border-radius:999px;padding:3px 12px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.eyebrow{color:var(--accent);letter-spacing:.12em;font-size:.8rem;text-transform:uppercase}
+.meta,.muted{color:var(--muted)}
+.meta,.notice{color:var(--muted)}
+.meta,.notice,.src{color:var(--muted)}
+.metric{min-width:0;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin:12px 0}
+.metric dd{margin:0;color:#244b40;font-size:1.24rem;font-weight:700;line-height:1.5;font-variant-numeric:tabular-nums}
+.metric dt{font-size:.75rem;color:#69766f;margin-bottom:6px}
+.metric small{display:block;color:#69766f;font-size:.7rem;line-height:1.6;font-weight:400;margin-top:6px}
+.metric-primary{background:#244b40;border-color:#244b40}
+.metric-primary dd{color:#fffefa}
+.metric-primary dt,.metric-primary small{color:#dbe8df}
+.metric-unknown dd{font-size:1.1rem;color:#69766f}
+.metrics-details{border-top:1px solid #e5e0d6;padding-top:13px;font-size:.82rem;color:#52665b}
+.metrics-details p{margin:5px 0}
+.metrics-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:20px 0 16px}
+.metrics-kicker{font-size:.7rem;letter-spacing:.15em;color:#9a6b3d;font-weight:700;margin:0 0 4px}
+.metrics-note{font-size:.78rem;color:#69766f;line-height:1.75;margin:12px 0 0}
+.mindmap{white-space:pre-wrap;font-family:inherit}
+.muted{color:var(--muted)}
+.note-head{border-bottom:1px solid var(--line);padding-bottom:22px;margin-bottom:30px}
+.note-head .eyebrow{font-size:.72rem;letter-spacing:.18em;font-weight:700;color:var(--gold);margin:0 0 8px}
+.note-head .meta{color:var(--muted);font-size:.9rem;margin:0 0 4px}
+.note-head a{color:var(--green);text-decoration:none;font-size:.88rem}
+.note-head a:hover{text-decoration:underline}
+.note-head h1{font:600 2rem/1.4 var(--serif);color:var(--green);margin:0 0 10px}
+.note-list{margin:10px 0;padding-left:20px}
+.note-list a{color:var(--green)}
+.note-list li{line-height:1.95;margin:.62em 0;padding-left:.2em}
+.notice{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:10px;padding:12px 16px;margin:16px 0;color:var(--muted)}
+.page{max-width:860px;margin:0 auto;padding:48px 24px 72px}
+.part-label{display:block;font:600 1rem/1.6 Georgia,"Songti SC",serif;color:#244b40;margin:0 0 6px}
+.preread-bar{background:#f4f8f2;border:1px dashed #cbdace;border-radius:12px;padding:12px 18px 14px}
+.reader{font-weight:600}
+.reader-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;color:var(--muted);font-size:.82rem;margin:8px 0 0}
+.reader-type{display:inline-block;border:1px solid #cbdace;background:#eef4ee;color:#315e50;border-radius:6px;padding:2px 8px;font-size:.72rem;font-weight:600}
+.reader-type[data-agent-type="code"]{background:#f6edde;border-color:#e6d4b8;color:#805d36}
+.reading-metrics{background:#fffefa;border:1px solid #e5e0d6;border-radius:18px;padding:clamp(18px,4vw,28px);margin:22px 0;color:#24312e;overflow-wrap:anywhere}
+.reading-metrics h2{font-family:"Noto Serif SC","Songti SC",serif;font-size:1.4rem;color:#244b40;margin:0 0 10px}
+.sec-note{color:var(--muted);font-size:.78rem;margin:4px 0 0}
+.site-footer{margin-top:44px;padding-top:16px;border-top:1px dashed var(--line);color:var(--muted);font-size:.85rem}
+.small{color:var(--muted);font-size:.84rem}
+.src{font-size:.92rem}
+.src[data-k="infer"]{background:#f6edde;color:#805d36;border:1px solid #e6d4b8}
+.src[data-k="official"]{background:#eef1f8;color:#3f5b8a;border:1px solid #d3dbec}
+.src[data-k="read"]{background:#e6f0e9;color:#286b52;border:1px solid #cbdace}
+.src[data-k="unknown"]{background:#f0f0ee;color:#6d6d68;border:1px solid #e0e0da}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 16px}
+.stat b{display:block;color:var(--green);font-size:1rem}
+.stat span{color:var(--muted);font-size:.8rem}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:14px 0}
+.tag{margin-right:.25em;display:inline-block;margin-bottom:.25em}
+.toc-part{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 18px;margin:12px 0}
+.toc-part h3{margin:0 0 10px;color:var(--green);font:600 1.02rem/1.5 var(--serif)}
+.wrap{max-width:900px;margin:auto;padding:clamp(20px,5vw,56px)}
+/* 以下为按范例补入的类，确保 body 重写后样式一致 */
+.src{display:inline-block;font-size:.7rem;border-radius:6px;padding:1px 7px;margin-left:6px;vertical-align:middle;font-weight:600}
+/* 以下类名补全自已修好的《文化苦旅》范例，供 body 结构使用 */
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 18px}
+/* 官方目录小节清单：已读（深底）/ 停在这里（赭边）/ 未读（置灰）三段对比 */
+.ch-secs{margin:.4em 0 .45em;padding:0;list-style:none;color:#5c574c;font-size:.78rem;line-height:1.65}
+/* 概述页精修：按句号清爽分行，接近 AI 大纲观感 */
+section > p{line-height:1.9;margin:.75em 0;text-align:justify}
+/* 章节导航 */
+.toc-part{border:1px solid var(--line);border-radius:14px;background:var(--card);padding:14px 18px;margin:12px 0}
+/* 章节导航：以篇—章为主轴，供人类按结构跳读 */
+.toc-part{border:1px solid var(--line);border-radius:14px;background:var(--card);padding:14px 18px;margin:12px 0}
+/* 章节导读：卡片分组 + 点标题下滑展开（2026-10-19 用户决定，与已发布笔记一致） */
+.toc-part{background:#fffefa;border:1px solid #e5e0d6;border-radius:14px;padding:14px 18px;margin:12px 0}
+/* 阅读员身份与实读指标：时长口径和未知值始终可见。 */
+.reader-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;color:#52665b;font-size:.8rem;line-height:1.6}
+a{color:var(--accent)}
+blockquote{line-height:1.85}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.75 system-ui,-apple-system,"Segoe UI",sans-serif}
+h1{line-height:1.2;font-size:clamp(2rem,5vw,3.4rem);margin:.4rem 0}
+h1,h2,h3{color:var(--green)}
+h2{margin-top:2.2rem;font-size:1.35rem}
+h3{margin-top:1.15em}
+section{margin:30px 0}
+section h2{font:600 1.3rem/1.5 var(--serif);color:var(--green);margin:0 0 12px;padding-left:12px;border-left:4px solid var(--green)}
+section h3{font:600 1.04rem/1.6 var(--serif);color:var(--green2);margin:18px 0 6px}
+section p{margin:.5em 0}
+to{opacity:1;transform:none}
+ul{padding-left:1.3rem}
+ul.note-list{margin:.7em 0}
+@keyframes slideDown{from{opacity:0;transform:translateY(-4px)}
+@media print{body{background:#fff}}
+@media(max-width:520px){.ch-item summary{gap:6px}.badge{font-size:.62rem}}
+@media(max-width:680px){.metrics-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.metric{padding:14px 12px}}

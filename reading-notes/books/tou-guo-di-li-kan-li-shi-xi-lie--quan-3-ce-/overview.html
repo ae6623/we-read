@@ -5,83 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="透过地理看历史系列（全3册） 全书视角初版 · 重修版（含真实问答与章节导航）">
 <title>《透过地理看历史系列（全3册）》｜全书视角初版</title>
+<link rel="stylesheet" href="../../../assets/css/reading-overview.css">
 <link rel="stylesheet" href="../../../assets/css/site.css">
-<style>
-:root{--paper:#f6f3ed;--card:#fffefa;--ink:#24312e;--muted:#69766f;--green:#244b40;--green2:#315e50;--gold:#bf8247;--line:#e5e0d6;--sage:#dce8df;--serif:"Noto Serif SC","Songti SC",Georgia,serif;--sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
-*{box-sizing:border-box}
-body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.8 var(--sans)}
-.page{max-width:860px;margin:0 auto;padding:48px 24px 72px}
-.note-head{border-bottom:1px solid var(--line);padding-bottom:22px;margin-bottom:30px}
-.note-head .eyebrow{font-size:.72rem;letter-spacing:.18em;font-weight:700;color:var(--gold);margin:0 0 8px}
-.note-head h1{font:600 2rem/1.4 var(--serif);color:var(--green);margin:0 0 10px}
-.note-head .meta{color:var(--muted);font-size:.9rem;margin:0 0 4px}
-.note-head a{color:var(--green);text-decoration:none;font-size:.88rem}
-.note-head a:hover{text-decoration:underline}
-section{margin:30px 0}
-section h2{font:600 1.3rem/1.5 var(--serif);color:var(--green);margin:0 0 12px;
-  padding-left:12px;border-left:4px solid var(--gold)}
-section h3{font:600 1.04rem/1.6 var(--serif);color:var(--green2);margin:18px 0 6px}
-section p{margin:.5em 0}
-.aiqa-item{margin:16px 0;padding:14px 18px;background:var(--card);border:1px solid var(--line);border-radius:10px}
-.aiqa-item h3{font:600 1.02rem/1.6 var(--serif);color:var(--green);margin:0 0 8px;padding-bottom:8px;border-bottom:1px dashed var(--line)}
-.aiqa-item p{margin:.5em 0;color:#3f4a46}
-.aiqa-item ul{margin:.5em 0;padding-left:20px;color:#3f4a46}
-blockquote{margin:14px 0;padding:12px 18px;background:#f5efe4;border-left:3px solid var(--gold);
-  border-radius:0 10px 10px 0;color:#4a4436;font-size:.95rem}
-.chips{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
-.chip{font-size:.78rem;background:var(--sage);color:var(--green);border-radius:999px;padding:3px 12px}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:14px 0}
-.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 16px}
-.stat b{display:block;color:var(--green);font-size:1rem}
-.stat span{color:var(--muted);font-size:.8rem}
-.note-list{margin:10px 0;padding-left:20px}
-.note-list li{margin:5px 0}
-.note-list a{color:var(--green)}
-.small{color:var(--muted);font-size:.84rem}
-.site-footer{margin-top:44px;padding-top:16px;border-top:1px dashed var(--line);
-  color:var(--muted);font-size:.8rem;text-align:center}
-.reader-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;color:var(--muted);font-size:.82rem;margin:8px 0 0}
-.reader-type{display:inline-block;border:1px solid #cbdace;background:#eef4ee;color:#315e50;border-radius:6px;padding:2px 8px;font-size:.72rem;font-weight:600}
-.reader-type[data-agent-type="code"]{background:#f6edde;border-color:#e6d4b8;color:#805d36}
-.preread-bar{background:#f4f8f2;border:1px dashed #cbdace;border-radius:12px;padding:12px 18px 14px}
-/* 以下为按范例补入的类，确保 body 重写后样式一致 */
-.src{display:inline-block;font-size:.7rem;border-radius:6px;padding:1px 7px;margin-left:6px;vertical-align:middle;font-weight:600}
-.src[data-k="read"]{background:#e6f0e9;color:#286b52;border:1px solid #cbdace}
-.src[data-k="official"]{background:#eef1f8;color:#3f5b8a;border:1px solid #d3dbec}
-.src[data-k="infer"]{background:#f6edde;color:#805d36;border:1px solid #e6d4b8}
-.src[data-k="unknown"]{background:#f0f0ee;color:#6d6d68;border:1px solid #e0e0da}
-.tag{display:inline-block;font-size:.7rem;border-radius:6px;padding:1px 7px;margin-left:4px;background:#f0f0ee;color:#6d6d68;border:1px solid #e0e0da;font-weight:600}
-.notice{background:#fffefa;border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:0 12px 12px 0;padding:12px 16px;color:#4a4436;font-size:.9rem}
-.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 18px}
-/* 章节导航 */
-.toc-part{border:1px solid var(--line);border-radius:14px;background:var(--card);padding:14px 18px;margin:12px 0}
-.toc-part h3{margin:0 0 10px;color:var(--green);font:600 1.02rem/1.5 var(--serif)}
-.ch-list{list-style:none;margin:0;padding:0}
-.ch-list li{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;padding:6px 0;border-bottom:1px dashed #eee8dc}
-.ch-list li:last-child{border-bottom:0}
-.ch-no{color:var(--gold);font-weight:700;font-size:.82rem;min-width:64px;flex:none}
-.ch-t{flex:1;min-width:160px}
-.ch-cap{color:var(--muted);font-size:.78rem;line-height:1.6}
-.badge{font-size:.68rem;border-radius:6px;padding:1px 7px;font-weight:600;white-space:nowrap;flex:none}
-.badge[data-s="read"]{background:#e6f0e9;color:#286b52;border:1px solid #cbdace}
-.badge[data-s="reading"]{background:#f6edde;color:#805d36;border:1px solid #e6d4b8}
-.badge[data-s="unread"]{background:#f4f4f1;color:#8b8b84;border:1px solid #e4e4de}
-.badge[data-s="outline"]{background:#eef1f8;color:#3f5b8a;border:1px solid #d3dbec}
-@media print{body{background:#fff}}
-</style>
-<!-- ov-polish -->
-<style>
-/* 概述页精修：按句号清爽分行，接近 AI 大纲观感 */
-section > p{line-height:1.9;margin:.75em 0;text-align:justify}
-.note-list li{line-height:1.95;margin:.62em 0;padding-left:.2em}
-ul.note-list{margin:.7em 0}
-.aiqa-item p{line-height:1.9}
-.card p{line-height:1.9}
-blockquote{line-height:1.85}
-h3{margin-top:1.15em}
-.tag{margin-right:.25em;display:inline-block;margin-bottom:.25em}
-.ch-empty{line-height:1.85}
-</style>
+
 </head>
 <body>
 <main class="page">
