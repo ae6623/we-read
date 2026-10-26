@@ -230,3 +230,4 @@ description: Multi-platform reading workflow for source-labeled whole-book previ
 - `templates/pre-read-overview.html`：新书开读时的全书视角初版（overview）HTML 骨架。
 - `templates/date-note.html`：每日阅读笔记 HTML 骨架。
 - `templates/final-book.html`：完读后的整书 HTML 汇编骨架。
+- `scripts/overview_quality_gate.py`：overview.html 发布前质量门禁（对应 PRD 5.6.6）。生成 overview 后、commit 前运行 `python3 scripts/overview_quality_gate.py reading-notes/books/<slug>/overview.html`；任何 FAIL（空稿/机械占位/空白待补/AI问书来源缺失）必须修复后再提交，WARN（缺借来增强栏目、无来源标签）需人工确认。这是「去其糟粕」的硬卡点，自动化流程应把它接在发布前。
