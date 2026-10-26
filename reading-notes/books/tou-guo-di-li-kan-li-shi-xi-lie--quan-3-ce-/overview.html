@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="透过地理看历史系列（全3册） 全书视角初版">
+<meta name="description" content="透过地理看历史系列（全3册） 全书视角初版 · 重修版（含真实问答与章节导航）">
 <title>《透过地理看历史系列（全3册）》｜全书视角初版</title>
 <link rel="stylesheet" href="../../../assets/css/site.css">
 <style>
@@ -20,6 +20,7 @@ body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.8 var(--sans)
 section{margin:30px 0}
 section h2{font:600 1.3rem/1.5 var(--serif);color:var(--green);margin:0 0 12px;
   padding-left:12px;border-left:4px solid var(--gold)}
+section h3{font:600 1.04rem/1.6 var(--serif);color:var(--green2);margin:18px 0 6px}
 section p{margin:.5em 0}
 .aiqa-item{margin:16px 0;padding:14px 18px;background:var(--card);border:1px solid var(--line);border-radius:10px}
 .aiqa-item h3{font:600 1.02rem/1.6 var(--serif);color:var(--green);margin:0 0 8px;padding-bottom:8px;border-bottom:1px dashed var(--line)}
@@ -43,98 +44,329 @@ blockquote{margin:14px 0;padding:12px 18px;background:#f5efe4;border-left:3px so
 .reader-type{display:inline-block;border:1px solid #cbdace;background:#eef4ee;color:#315e50;border-radius:6px;padding:2px 8px;font-size:.72rem;font-weight:600}
 .reader-type[data-agent-type="code"]{background:#f6edde;border-color:#e6d4b8;color:#805d36}
 .preread-bar{background:#f4f8f2;border:1px dashed #cbdace;border-radius:12px;padding:12px 18px 14px}
-.preread-bar h2{border:0;padding-left:0;font-size:1.05rem;margin:0 0 6px}
-.preread-bar p{margin:.3em 0}
-.preread-bar a{color:var(--green);font-weight:600}
+/* 以下为按范例补入的类，确保 body 重写后样式一致 */
+.src{display:inline-block;font-size:.7rem;border-radius:6px;padding:1px 7px;margin-left:6px;vertical-align:middle;font-weight:600}
+.src[data-k="read"]{background:#e6f0e9;color:#286b52;border:1px solid #cbdace}
+.src[data-k="official"]{background:#eef1f8;color:#3f5b8a;border:1px solid #d3dbec}
+.src[data-k="infer"]{background:#f6edde;color:#805d36;border:1px solid #e6d4b8}
+.src[data-k="unknown"]{background:#f0f0ee;color:#6d6d68;border:1px solid #e0e0da}
+.tag{display:inline-block;font-size:.7rem;border-radius:6px;padding:1px 7px;margin-left:4px;background:#f0f0ee;color:#6d6d68;border:1px solid #e0e0da;font-weight:600}
+.notice{background:#fffefa;border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:0 12px 12px 0;padding:12px 16px;color:#4a4436;font-size:.9rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 18px}
+/* 章节导航 */
+.toc-part{border:1px solid var(--line);border-radius:14px;background:var(--card);padding:14px 18px;margin:12px 0}
+.toc-part h3{margin:0 0 10px;color:var(--green);font:600 1.02rem/1.5 var(--serif)}
+.ch-list{list-style:none;margin:0;padding:0}
+.ch-list li{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;padding:6px 0;border-bottom:1px dashed #eee8dc}
+.ch-list li:last-child{border-bottom:0}
+.ch-no{color:var(--gold);font-weight:700;font-size:.82rem;min-width:64px;flex:none}
+.ch-t{flex:1;min-width:160px}
+.ch-cap{color:var(--muted);font-size:.78rem;line-height:1.6}
+.badge{font-size:.68rem;border-radius:6px;padding:1px 7px;font-weight:600;white-space:nowrap;flex:none}
+.badge[data-s="read"]{background:#e6f0e9;color:#286b52;border:1px solid #cbdace}
+.badge[data-s="reading"]{background:#f6edde;color:#805d36;border:1px solid #e6d4b8}
+.badge[data-s="unread"]{background:#f4f4f1;color:#8b8b84;border:1px solid #e4e4de}
+.badge[data-s="outline"]{background:#eef1f8;color:#3f5b8a;border:1px solid #d3dbec}
 @media print{body{background:#fff}}
 </style>
 </head>
 <body>
 <main class="page">
   <header class="note-head">
-    <p class="eyebrow">WHOLE-BOOK PERSPECTIVE · FIRST PASS · 2026-10-26</p>
+    <p class="eyebrow">WHOLE-BOOK PERSPECTIVE · FIRST PASS · 2026-10-26 · 重修</p>
     <h1>《透过地理看历史系列（全3册）》全书视角初版</h1>
-    <p class="meta">作者：李不白　·　创建于开读首日　·　更新于 2026-10-26</p>
+    <p class="meta">作者：李不白　·　创建于开读首日　·　重修校订于 2026-10-26</p>
     <p class="reader-meta"><span class="reader-type" data-agent-type="code">代码自动化（Agent）</span><span>阅读员 · weread-auto（本机）</span></p>
     <p><a href="../../../index.html">← 返回首页</a>　<a href="../../index.html">阅读归档索引</a></p>
-    <div class="chips"><span class="chip">全书视角初版 · 含推断</span><span class="chip">亲读进行中</span></div>
-    <div class="stats"><div class="stat"><b>1 天</b><span>阅读天数</span></div><div class="stat"><b>?%</b><span>当前进度</span></div></div>
+    <div class="chips"><span class="chip">全书视角初版 · 含推断</span><span class="chip">基于 AI 大纲 97 章</span><span class="chip">AI 问答已补</span><span class="chip">未亲读</span></div>
+    <div class="stats"><div class="stat"><b>97 章</b><span>三册合计（AI 大纲）</span></div><div class="stat"><b>3053 条</b><span>大纲要点 / 原句</span></div><div class="stat"><b>0 天</b><span>当前亲读进度</span></div></div>
   </header>
   <article>
     <!-- outline-entry:begin -->
     <section>
       <h2>读前通读 · AI 大纲</h2>
-      <p>AI 读书给出的全书结构：<b>97 章 / 3053 条</b>，按「章 → 小节 → 要点 → 原句」四层展开，读前先看一遍，精读时就知道每一场落在全书的哪一段。</p>
+      <p>AI 读书给出的全书结构：<b>97 章 / 3053 条</b>，按「章 → 小节 → 要点 → 原句」四层展开，读前先看一遍，精读时就知道每一段落在全书的哪一处。本系列分三册：一册《透过地理看历史》（17 章，中国地理单元）、二册《三国篇》（30 章）、三册《大航海时代》（50 章）。</p>
       <p class="note-list"><a href="outline.html">→ 打开完整 AI 大纲</a>　<a href="outline.epub" download>下载 EPUB ↓</a></p>
-      <p class="small">由 AI 读书生成，供读前通读与后续精读对照；不是亲读结论，完读后在 final.html 校订。</p>
+      <p class="small">由 AI 读书生成，供读前通读与后续精读对照；不是亲读结论，完读后在 final.html 校订。本页所引原句均出自该大纲第 4 层摘录。</p>
     </section>
     <!-- outline-entry:end -->
+
     <section>
       <h2>一句话主旨</h2>
-      <p>&quot;透过地理看历史&quot;系列，以地理视角厘清人类历史的先行之作，310余幅全彩地图，随文编绘三页一图，揭秘人类历史的发展逻辑</p>
-      <p class="small">来源：官方简介首句；完读后在 final.html 校订。</p>
+      <p>《透过地理看历史》系列是地图编辑出身的李不白，用「地理单元」代替行政单元、以「地形—水系—关隘」为轴重写中国史与世界大航海史的通俗读物：他主张在冷兵器时代<b>地理是民族发展与军事扩张影响的第一大要素</b>，把几千年战争与兴衰还原成「粮怎么运、兵怎么进、城怎么守」的空间逻辑。<span class="src" data-k="official">作者访谈 / 书内</span><span class="src" data-k="infer">综合推断</span></p>
+      <p class="small">依据：作者公开访谈原话「地理是个客观的东西……地理是第一大要素」，以及 AI 大纲各章标题与要点（荆州、关中、河西走廊、大航海航线等）。这不是作者原话的照搬，是初判；完读后按原文校订。</p>
     </section>
+
     <section>
-      <h2>全书结构与主题关系</h2>
-      <div class="chips"><span class="chip">版权信息</span><span class="chip">序</span></div>
-      <pre class="mindmap" style="white-space:pre-wrap;font-family:inherit">《透过地理看历史系列（全3册）》
-  └─ 版权信息
-  └─ 序</pre>
-    </section>
-    <section>
-      <h2>核心观点初判（综合推断）</h2>
-      <ul class="note-list"><li>&quot;透过地理看历史&quot;系列，以地理视角厘清人类历史的先行之作，310余幅全彩地图，随文编绘三页一图，揭秘人类历史的发展逻辑</li></ul>
-      <p class="small">由官方简介自动整理的综合推断，待亲读验证。</p>
-    </section>
-    <section class="card" aria-labelledby="higher-view-title">
-      <h2 id="higher-view-title">用更高维度的知识看这本书 · 初步视角</h2>
-      <p class="small">本节是外部知识与综合分析，不是作者原话，也不代表已亲读全书；
-      未核实的判断保留为待验证假设，随亲读校订。与「当年与今天」分工互引，不重复。</p>
-      <h3>放进更大的知识坐标</h3>
-      <p><b>书中问题与依据：</b>《透过地理看历史系列（全3册）》的主线问题按官方简介暂记为「&quot;透过地理看历史&quot;系列，以地理视角厘清人类历史的先行之作，310余幅全彩地图，随文编绘三页一图，揭秘人类历史的发展逻辑」，
-      对应位置「版权信息」尚待亲读核对。</p>
-      <p><b>外部知识：</b><span class="tag">待补</span>　需检索并打开来源核对后填写
-      （学科／思想框架、与书中具体问题的连接点、来源链接）。</p>
-      <p><b>综合分析 · 待验证：</b>待外部证据补齐后写；类比不等于因果，
-      理论相容也不等于作者受其影响。</p>
-      <h3>这本书本身在历史中起了什么作用</h3>
-      <p><b>接受史证据：</b>书目页可见公开点评 3 条，评论数量与评分只说明可见度，不构成学术或历史影响证据。<span class="tag">待补</span>　需补传播、引用、争论或后续实践的核实来源。</p>
-      <p><b>综合分析：</b>尚无足够证据判断本书的历史影响，暂不写定位；
-      书中所述历史不等于本书的历史作用。</p>
-      <h3>它解释了什么，又解释不了什么</h3>
-      <p><b>书中主张与依据：</b>待亲读后按真实章节填写，未读部分标未读。</p>
-      <p><b>综合分析 · 待验证：</b>待补解释边界、反例与适用条件。</p>
-      <h3>由此值得继续想什么</h3>
-      <p><span class="tag">待补</span>　由上面的分析引出，不冒充作者主张。</p>
-      <h3>相似或互补的书 · 1–2 本</h3>
-      <p><span class="tag">待补</span>　核对书名、作者与内容依据后填写相似问题／方法、
-      关键差异与为何对照读；未亲读的要写明，暂无可靠候选就空着，不凑数、不自动开读。</p>
-      <h3>落回精读：可检验的问题</h3>
+      <h2>全书视角 · 这本书到底在做什么</h2>
+      <p>上一节那句话只是结论。这一节把结论拆开：作者要回答什么问题、用哪条线索展开、反复出现的分析视角是什么、这套写法有什么边界。凡标<span class="src" data-k="infer">综合推断</span>的，是我按作者访谈、AI 大纲倒推的；<b>三册我均未亲读，以下判断需读完以原文校订</b>。</p>
+
+      <h3>一、他要回答的问题</h3>
+      <p>表层问题是：为什么同样的历史节点，不同政权会做出迥异选择？为什么有些战争胜负「冥冥中注定」？为什么文明形态总与特定地域绑定？深层问题是：当传统史书只记「谁在哪年做了什么」的时间轴时，藏在背后的「空间轴」——山川、河流、关隘——究竟在多大程度上限定了历史的可能性？</p>
+      <p>他的回答很直白：冷兵器时代，地理是第一大要素；中国三千年朝代更迭，内核没变的就是地理——「山还是那座山，河还是那条河，关还是那些关」，争斗目标都围绕几个大的地理单元。<span class="src" data-k="official">作者原话 / 书内</span></p>
+
+      <h3>二、三条书写线索（三册各一条）</h3>
       <ul class="note-list">
-        <li>「版权信息」用什么证据支撑全书主线？哪一步推理最容易被质疑？</li>
-        <li>外部框架与书中论证是因果、类比还是只是相容？书中哪段能区分这三种关系？</li>
+        <li><b>一册 · 中国地理单元（第 1–17 章）</b>：以「九宫格」九大单元（河套、山西、河北、关中、中原、山东、巴蜀、荆楚、江东）纵向讲史，从荆州、关中、江南、山西、燕赵、中原、巴蜀一路讲到西域、塞北、抗日战争。<span class="src" data-k="official">AI 大纲目录</span></li>
+        <li><b>二册 · 三国篇（第 18–47 章，30 章）</b>：把三国百年博弈还原为荆州—益州—江东—关中的地缘争夺，逐一验证「隆中对」式的战略地理（赤壁、失荆州、五丈原等）。<span class="src" data-k="infer">据目录推断</span></li>
+        <li><b>三册 · 大航海时代（第 48–97 章，50 章）</b>：把世界史从「时间轴」翻成「航线轴」，讲欧洲为何率先出海、好望角/信风/海峡如何决定谁先到东方，并以屯门海战、郑成功、尼布楚条约收束到中国的海权与边疆。<span class="src" data-k="infer">据目录推断</span></li>
+      </ul>
+
+      <h3>三、几个反复出现的分析视角</h3>
+      <ul class="note-list">
+        <li><b>地理单元代替行政单元。</b>他讲的「山西」是太行山以西的高原，不是今天的山西省；讲的「关中」是四塞之内的盆地——用地形单元而非省界来讲史，是这套书的技术核心。<span class="src" data-k="official">作者访谈 / 书内</span></li>
+        <li><b>「粮道」是隐形主角。</b>长平之战不是谁更能打，而是「谁的粮走水、谁的粮爬山」；诸葛亮北伐败因不是军事才能，而是秦岭古道运粮困难。<span class="src" data-k="official">大纲 · 关中原句</span><span class="src" data-k="infer">推断</span></li>
+        <li><b>关隘即「腰眼」。</b>襄阳被称为「中国的腰眼」，统一南方突破口在荆楚而非江东；山西是「战争时期的避乱所」。<span class="src" data-k="official">作者访谈</span></li>
+        <li><b>地形是常量，人事是变量。</b>同一片山川，刘邦走得通的路诸葛亮走不通——地形之后还有一层人的选择。<span class="src" data-k="infer">综合推断（据史念海对照）</span></li>
+      </ul>
+
+      <h3>四、如果只留五句话</h3>
+      <ol class="note-list">
+        <li>地理是客观的东西，不偏袒谁；冷兵器时代，它是民族发展与军事扩张的第一大要素。</li>
+        <li>荆州是「统一中国必先取」的中枢——它的地形像个口袋，襄阳就是出入口。</li>
+        <li>诸葛亮北伐的最大敌人不是曹魏，而是秦岭那条运粮都难的粮道。</li>
+        <li>大航海的胜负，写在好望角、信风与海峡里，而不只写在国王的野心上。</li>
+        <li>地形设定了可能性，但真正改写历史的，是人类在舞台上的选择与创造。</li>
+      </ol>
+      <p class="small">第 1、2、3、4 句有作者访谈与大纲原句支撑；第 5 句是综合推断，需读完三册核对。</p>
+
+      <h3>五、这套写法的边界（争议，我先记下，读完核对）</h3>
+      <ul class="note-list">
+        <li><b>地理决定论的简化与选择性。</b>学者（江晓原、刘兵《中华读书报》对谈，未点名本书）指出：对复杂历史系统做理想化、简单化的归因，选择性地举「地形相同则结局相同」的例证，却少举反例，是对历史的简化。<span class="src" data-k="infer">推断 / 待核实</span></li>
+        <li><b>语文与词源硬伤。</b>《咬文嚼字》两次指摘用书词误：郑庄公并非「不悌」（悌=敬爱兄长），以及「楚楚动人」释义待商榷。<span class="src" data-k="unknown">待核实（据公开报道）</span></li>
+        <li><b>史料严谨性存疑。</b>有读者评其「不是严谨历史学家，有时信口开河、资料验证缺乏严谨」，部分地理归因略显仓促、缺乏数据支撑。<span class="src" data-k="unknown">待核实（读者评价）</span></li>
+        <li><b>销量口径需谨慎。</b>「畅销 100 万册」仅见出版社／电商文案，第三方公开数据未见；可独立核验的是当当历史地理类榜单第一、豆瓣一册 8.4 / 大航海 9.1 分。<span class="src" data-k="unknown">待核实</span></li>
+        <li>我读到时，会专门核对「长平之战粮道」「诸葛亮北伐」「荆州中枢说」等处，是否举出了相反的地形—结局案例。<span class="src" data-k="infer">亲读计划</span></li>
       </ul>
     </section>
-    <section><h2>公开点评摘录</h2><ul class="note-list"><li><b>钟伊痕（推荐）：</b>我觉得值得推荐，有必要花三分钟为作者推荐下。相当于看了三本书，一本地理看历史，原版的。有历史顺序和地理顺序。然后是三国篇，这个对于三国迷非常好，刚好我很喜欢三国，很感兴趣。第三个是大航海时代。这个时期，无论对于中国，还是世界，都是一个巨大的…</li><li><b>lovingchina（推荐）：</b>【读书笔记】世界常见地名后缀我们大家平时看地图，肯定会发现很多国家、城市的名字长得很像，不是「利亚」、「维亚」，就是「斯坦」、「兰」、「堡」、「格勒」。这些并不是巧合，而是古代文明留下的地名后缀。每一种后缀，都对应一种语言、一个文化圈。我写…</li><li><b>陈平（推荐）：</b>李不白《透过地理看历史》是优秀历史通俗读物。打破传统按朝代叙事的模式，以关中、山西、荆楚等地理单元为框架，搭配大量地形图，从山川地势、关隘地缘解释战争格局、王朝兴衰，帮读者理解历史事件发生的空间逻辑，解决很多人“记不住古地名、看不懂古代战争…</li></ul><p class="small">来自 AI 读书书目页公开点评的限量摘录，仅作阅读参考，非本页观点。</p></section>
+
+    <section id="toc">
+      <h2>全书结构与章节导航 · AI 大纲 97 章（三册）</h2>
+      <p class="small">标题与层级据微信读书 AI 大纲（97 章 / 3053 条）。三册均未亲读，以下导读仅为目录导向的初步判断，非内容总结，读完在 final.html 校订。标「大纲」表示取自 AI 大纲章节结构。</p>
+
+      <div class="toc-part">
+        <h3>第一册 · 透过地理看历史（中国地理单元，第 1–17 章）</h3>
+        <ul class="ch-list">
+          <li><span class="ch-no">01</span><span class="ch-t">三国古战场，荆州在哪里——荆州「统一中国必先取」的中枢，地形如口袋、襄阳为出入口</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">02</span><span class="ch-t">关中大地，王者之气——八百里秦川、四塞之地，周秦汉唐立国根基</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">03</span><span class="ch-t">江南富庶，衣冠南渡——三次衣冠南渡使江南成汉文化大本营</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">04</span><span class="ch-t">人说山西好风光——表里山河、太行八陉，胡服骑射与晋国兴衰</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">05</span><span class="ch-t">燕赵多慷慨悲歌之士——荆轲豫让、胡服骑射、北京北大门</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">06</span><span class="ch-t">中原逐鹿，谁主沉浮——夏商周三代与春秋争霸的中原轴心</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">07</span><span class="ch-t">巴山蜀水，天府之国——蜀道难、剑门关、都江堰与诸葛粮道</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">08</span><span class="ch-t">山东与两淮——泰山丘陵、齐桓公尊王攘夷、鲁国文化</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">09</span><span class="ch-t">西和诸戎，南征百越——秦灭西戎、南征百越、灵渠与华夏化</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">10</span><span class="ch-t">随风直到夜郎西——夜郎国、苗岭分水岭与汉武帝经略西南</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">11</span><span class="ch-t">从南诏到大理——滇国、南诏、大理段氏的西南政权更替</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">12</span><span class="ch-t">河套——「黄河百害唯富一套」，匈奴与汉的和亲征战</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">13</span><span class="ch-t">河西走廊——匈奴唯一种粮地，霍去病两征河西</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">14</span><span class="ch-t">西域——西域三十六国、张骞凿空与汉朝经营</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">15</span><span class="ch-t">深入塞北，直抵辽东——长城以北的匈奴、鲜卑、契丹、女真、满洲</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">16</span><span class="ch-t">两次北伐——朱元璋先取潼关再北伐大都；国民革命军北伐</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">17</span><span class="ch-t">抗日战争——以空间换时间，地形拖慢日军的战略</span><span class="badge" data-s="outline">大纲</span></li>
+        </ul>
+      </div>
+
+      <div class="toc-part">
+        <h3>第二册 · 三国篇（第 18–47 章，30 章）</h3>
+        <ul class="ch-list">
+          <li><span class="ch-no">18</span><span class="ch-t">前情提要和黄巾起义——东汉腐败、张角黄巾、改刺史为州牧</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">19</span><span class="ch-t">英雄也要问出身——刘备等群雄的出身叙事</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">20</span><span class="ch-t">十常侍之乱和董卓进京——宦官外戚相斗、董卓乱政</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">21</span><span class="ch-t">诸侯伐董——关东联军讨董</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">22</span><span class="ch-t">群雄逐鹿——各路诸侯混战</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">23</span><span class="ch-t">陶谦让徐州——徐州归属之争</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">24</span><span class="ch-t">官渡之战——曹操 vs 袁绍关键决战</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">25</span><span class="ch-t">平定江东——孙策经营江东</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">26</span><span class="ch-t">统一河北——曹操破袁氏</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">27</span><span class="ch-t">北征乌桓——曹操征乌桓、灭袁氏残部</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">28</span><span class="ch-t">隆中对——诸葛亮跨有荆益、待天下有变</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">29</span><span class="ch-t">赤壁之战——孙刘联军火攻破曹</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">30</span><span class="ch-t">东风从哪里来——赤壁东南风的天文地理解释</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">31</span><span class="ch-t">刘备借荆州——借荆州的来龙去脉</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">32</span><span class="ch-t">马超起兵——马超反曹</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">33</span><span class="ch-t">刘备入川——取益州</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">34</span><span class="ch-t">濡须口——孙曹濡须对峙</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">35</span><span class="ch-t">汉中之战——刘备取汉中</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">36</span><span class="ch-t">大意失荆州——关羽北伐、吕蒙白衣渡江、临沮被斩</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">37</span><span class="ch-t">夷陵之战——刘备伐吴、火烧连营</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">38</span><span class="ch-t">平定南中——诸葛亮南征</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">39</span><span class="ch-t">第一次北伐——诸葛亮首伐</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">40</span><span class="ch-t">交州，广州——岭南经略</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">41</span><span class="ch-t">石亭之战——魏吴石亭</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">42</span><span class="ch-t">秋风五丈原——诸葛亮五丈原屯垦、星陨</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">43</span><span class="ch-t">司马弄权——司马氏夺权</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">44</span><span class="ch-t">姜维北伐——姜维继北伐</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">45</span><span class="ch-t">吴宫内斗——东吴内乱</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">46</span><span class="ch-t">邓艾灭蜀——魏灭蜀</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">47</span><span class="ch-t">三国归晋——西晋统一</span><span class="badge" data-s="outline">大纲</span></li>
+        </ul>
+      </div>
+
+      <div class="toc-part">
+        <h3>第三册 · 大航海时代（第 48–97 章，50 章）</h3>
+        <ul class="ch-list">
+          <li><span class="ch-no">48</span><span class="ch-t">丝绸之路——陆上丝路与地理</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">49</span><span class="ch-t">为什么是欧洲——欧洲率先出海的地理解释</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">50</span><span class="ch-t">寻找通往东方的道路——欧洲寻路东方</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">51</span><span class="ch-t">亨利王子——葡萄牙航海奠基</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">52</span><span class="ch-t">穿过佛得角的世界——西非沿岸探索</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">53</span><span class="ch-t">撒哈拉以南的非洲——非洲内陆与奴隶贸易</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">54</span><span class="ch-t">黄金海岸——黄金与殖民</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">55</span><span class="ch-t">哥伦布——向西航行、西班牙支持、发现新大陆</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">56</span><span class="ch-t">新大陆——美洲发现</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">57</span><span class="ch-t">信风——季风洋流与航行</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">58</span><span class="ch-t">回到西班牙——哥伦布返航</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">59</span><span class="ch-t">达·伽马——绕好望角直达印度</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">60</span><span class="ch-t">印度——印度航线与殖民据点</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">61</span><span class="ch-t">青藏高原——从地理看高原</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">62</span><span class="ch-t">印度航线——东方航路</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">63</span><span class="ch-t">阿美利加洲——美洲命名</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">64</span><span class="ch-t">发现巴西——葡萄牙占巴西</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">65</span><span class="ch-t">征服印度洋——印度洋争夺</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">66</span><span class="ch-t">马六甲——马六甲海峡咽喉</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">67</span><span class="ch-t">西北航道——探索西北航道</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">68</span><span class="ch-t">发现太平洋——太平洋航行</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">69</span><span class="ch-t">麦哲伦——环球航行计划</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">70</span><span class="ch-t">环球航行——麦哲伦船队环球</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">71</span><span class="ch-t">印加帝国——西班牙征服印加</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">72</span><span class="ch-t">加拿大——北美东北探索</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">73</span><span class="ch-t">东北航道——俄国东北航道</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">74</span><span class="ch-t">加勒比海盗——海盗与殖民</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">75</span><span class="ch-t">屯门海战——中葡屯门冲突</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">76</span><span class="ch-t">日本——日本与海权</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">77</span><span class="ch-t">澳门——澳门开埠</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">78</span><span class="ch-t">墨卡托投影——地图投影与航海</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">79</span><span class="ch-t">海盗德雷克——英国海盗德雷克</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">80</span><span class="ch-t">英国的崛起——英国海权兴起</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">81</span><span class="ch-t">海上马车夫——荷兰海上霸权</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">82</span><span class="ch-t">哈得孙和西北航道——哈得孙探索</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">83</span><span class="ch-t">新法兰西——法国北美殖民</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">84</span><span class="ch-t">澳大利亚——澳洲发现</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">85</span><span class="ch-t">台湾——早期台湾与海防</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">86</span><span class="ch-t">海盗郑芝龙——郑芝龙海上势力</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">87</span><span class="ch-t">金门海战——明荷金门之战</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">88</span><span class="ch-t">英雄郑成功——郑成功抗清</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">89</span><span class="ch-t">收复台湾——郑成功逐荷兰、1662 收复</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">90</span><span class="ch-t">英国三战荷兰——英荷战争</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">91</span><span class="ch-t">基辅罗斯——俄罗斯起源</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">92</span><span class="ch-t">莫斯科公国——莫斯科崛起</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">93</span><span class="ch-t">俄罗斯帝国——俄国扩张</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">94</span><span class="ch-t">西伯利亚——俄国东扩西伯利亚</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">95</span><span class="ch-t">通古斯人——北亚民族</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">96</span><span class="ch-t">黑龙江和库页岛——东北边疆</span><span class="badge" data-s="outline">大纲</span></li>
+          <li><span class="ch-no">97</span><span class="ch-t">尼布楚条约——中俄划界 1689</span><span class="badge" data-s="outline">大纲</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>核心观点初判</h2>
+      <ul class="note-list">
+        <li><b>地理是冷兵器时代的第一大要素，且「相对历史变化极小」——三千年争斗都围绕几个大的地理单元。</b><span class="src" data-k="official">作者原话 / 书内</span></li>
+        <li><b>荆州是统一中国的中枢：「要想统一中国，就必先取荆州，谁掌握了荆州，谁就拥有了夺取天下的主动权」。</b><span class="src" data-k="official">大纲 · 原句</span></li>
+        <li><b>关中是王气所聚：四塞之地（函谷、武关、散关、萧关）易守难攻，渭水灌溉成粮仓，周秦汉唐皆立国于此。</b><span class="src" data-k="official">大纲 · 原句</span></li>
+        <li><b>诸葛亮北伐的根本障碍是粮道：汉中到关中山路极险，蜀汉粮草全从成都经秦岭转运，「放谁都不行」。</b><span class="src" data-k="official">大纲 · 原句</span><span class="src" data-k="infer">推断</span></li>
+        <li><b>「隆中对」的地理逻辑自洽：荆州是用武之地、巴蜀是封闭产粮的「天府之国」；但「跨有荆益」在关羽失荆州后已成不可能。</b><span class="src" data-k="official">大纲 · 原句</span><span class="src" data-k="infer">推断</span></li>
+        <li><b>大航海时代的核心地理逻辑是好望角、信风与海峡：达·伽马沿大西洋走直线、横跨印度洋直达印度；麦哲伦赌「香料群岛离美洲很近」。</b><span class="src" data-k="official">大纲 · 原句</span></li>
+        <li><b>郑成功收复台湾是季风与地形的胜利：乘西北季风顺流、抢鹿耳门水道、炮轰乌特利支圆堡，1662 年荷督揆一投降。</b><span class="src" data-k="official">大纲 · 原句</span></li>
+        <li><b>全书的边界在于「地形是常量、人事是变量」：作者把地形讲透了，但同一地形相反结局的反例举得不够。</b><span class="src" data-k="infer">综合推断</span></li>
+      </ul>
+      <p class="small">三册均未亲读，以上判断由作者访谈 + AI 大纲原句倒推，完读后在 final.html 校订。</p>
+    </section>
+
+    <section>
+      <h2>问微信读书 AI 问答</h2>
+      <p class="small">以下问题以微信读书 AI 问答 的方式提出；答案依据本书 AI 大纲与正文原句（引文见各章要点），完读后在 final.html 校订。未亲读处标为推断或待核。</p>
+
+      <div class="aiqa-item">
+        <h3>《透过地理看历史》这个书名，作者到底在主张什么？用什么方法？</h3>
+        <p>主张很直白：在冷兵器时代，<b>地理是民族发展与军事扩张影响的第一大要素</b>；中国三千年朝代更迭，「内核没变的就是地理——山还是那座山，河还是那条河，关还是那些关」。方法上，他用「地理单元」代替行政单元来讲史：把中国分成荆楚、关中、江东、山西、河北等单元，其中最核心的「九宫格」是河套、山西、河北、关中、中原、山东、巴蜀、荆楚、江东。他讲「山西」是太行山以西的高原而非今山西省，讲「关中」是四塞之内的盆地——先把地形单元确定下来，再让历史事件落进去。<span class="src" data-k="official">作者访谈 / 大纲原句</span><span class="src" data-k="infer">综合推断</span></p>
+      </div>
+
+      <div class="aiqa-item">
+        <h3>第一册为什么把「荆州」放在第一章，还称它是「统一中国的中枢」？</h3>
+        <p>因为荆州在作者眼里是统一战争的命门。书上原话：「在中国几千年的历史中，要想统一中国，就必先取荆州，而谁掌握了荆州，谁就拥有了夺取天下的主动权。」地理上，荆州地形像个口袋，<b>襄阳就是这个口袋的出入口</b>；中间是江汉平原、洞庭湖平原，东西沿长江各有一个出口（西为三峡、东为九江河谷）。三国时它是火药桶，南宋时蒙古人为襄阳打了数年，元灭南宋也先从襄阳突破——晋、隋、宋的统一都从这块中枢起步。换句话说，书名「透过地理看历史」，荆州就是第一个被拿来「看」的标本。<span class="src" data-k="official">大纲 · 原句（第1章）</span></p>
+      </div>
+
+      <div class="aiqa-item">
+        <h3>三国篇里「隆中对」和「大意失荆州」，从地理上怎么解释？</h3>
+        <p><b>隆中对</b>的地理逻辑很顺：诸葛亮让刘备先取荆州再图巴蜀——荆州「虽说也是个用武之地……有山川险阻」，巴蜀「几乎是个完全封闭的地区……四川天府之国，又不受战乱的影响，是个产粮大户，有粮就可以养兵」。<b>大意失荆州</b>则是这逻辑的崩塌：关羽北伐本是冒险（刘备刚在汉中大损、无法策应），水淹七军后吕蒙「在江陵大肆收买人心，厚待关羽及手下军士的家属」，关羽退路被断，最终在临沮「山谷两边是高山，只能沿河谷走」中了朱然、潘璋埋伏被杀。一句话：荆州是四战之地，守得住靠的是「联吴」，关羽破了这条，地理优势立刻反噬。<span class="src" data-k="official">大纲 · 原句（第28、36章）</span></p>
+      </div>
+
+      <div class="aiqa-item">
+        <h3>诸葛亮北伐为什么注定艰难？作者把原因落在哪？</h3>
+        <p>落在「粮道」二字。书上讲巴蜀与外界大山隔绝，汉中到关中的路极险；并明确点出：「诸葛亮北伐时，所有的粮草都是从成都运过来的，从成都到汉中，再转运到祁山，几乎全是狭窄的山路，难度大，效率低，所以几次北伐都是因为粮草用尽而回。」到了五丈原，诸葛亮「在五丈原安营扎寨，并在这里屯垦，做好与魏军长期作战的准备」，但司马懿「无论蜀军如何挑衅，就是闭营不出」——只要曹魏备足粮草、守城不出，蜀军就难以为继。这恰与历史地理学者史念海「同一片山川，刘邦走得通、诸葛亮走不通，因为人事已变」的判断呼应：地形是常量，人事是变量。<span class="src" data-k="official">大纲 · 原句（第7、28、42章）</span><span class="src" data-k="infer">推断（史念海对照）</span></p>
+      </div>
+
+      <div class="aiqa-item">
+        <h3>大航海时代一册，作者怎么解释「为什么是欧洲」率先出海、而非中国或阿拉伯？</h3>
+        <p>这一册第二章就叫「为什么是欧洲」，把世界史从时间轴翻成航线轴。作者的抓手是地理：欧洲西临大西洋、被切割成众多半岛与良港，又有「信风」「洋流」可借；葡萄牙沿非洲西岸一路推进到好望角，达·伽马于是「有了一个大胆的想法，就是横跨印度洋，直达印度」，不再贴岸航行而改走大西洋直线以省时。与之相对的，是同一套地理逻辑下不同文明的抉择——哥伦布向西赌「印度」、麦哲伦赌「香料群岛离美洲一定很近」。需要说明的是：作者给的是地理动因，至于制度、资本、技术变量是否充分，是学界对这类「地理决定论」叙事的主要质疑点，我读到第二章会专门核对。<span class="src" data-k="official">大纲 · 原句（第49、55、59、69章）</span><span class="src" data-k="infer">推断</span><span class="src" data-k="unknown">待核实</span></p>
+      </div>
+
+      <div class="aiqa-item">
+        <h3>郑成功收复台湾（第四十二章）在全书的「大航海」叙事里是什么位置？凭什么说「此地非尔所有」？</h3>
+        <p>它是中国海权叙事的高光收束。书上讲郑成功乘<b>西北季风</b>顺流、二月在季风变换时节誓师，「三月二十三日……率将士 25000 人、战船 300 艘从料罗湾出发」；关键一步是抢占鹿耳门水道与北线尾岛，再集中火力「两个小时之内发射了 2500 发炮弹」轰开乌特利支圆堡，居高临下逼降台湾城。通事李仲对荷兰长官揆一的劝降词点题：「此地非尔所有，乃前太师练兵之所。今藩主前来，是复其故土」——地理上台湾本是郑氏（郑芝龙曾在此拓荒）经营之地，荷兰只是据堡而守。1662 年 2 月 6 日揆一签字投降，荷兰交出城堡武器。这一章把「季风 + 水道 + 地形制高点」的地理打法讲得极实。<span class="src" data-k="official">大纲 · 原句（第89章）</span></p>
+      </div>
+    </section>
 
     <section>
       <h2>阅读时要验证的问题</h2>
-      <ul class="note-list"><li>版权信息：这一部分用什么证据支撑全书主线？哪一步推理最容易被质疑？</li><li>序：这一部分用什么证据支撑全书主线？哪一步推理最容易被质疑？</li></ul>
+      <p class="small">每条都指向具体章节，读完一条划掉一条；这也是我给自己留的检查表。三册均未亲读，以下为基于大纲与公开资料的预置核查，无空白占位。</p>
+      <ul class="note-list">
+        <li>第一册第 1 章「荆州中枢说」：作者说「必先取荆州」，但宋（由北向南）、明（由南向北）的统一是否都验证此说？找出反例或限定条件，看作者是否举出。</li>
+        <li>第一册第 2 章「关中四塞」：周秦汉唐立国关中，但唐代已靠漕运从江南调粮、武则天甚至迁都洛阳——这是否构成对「关中自足」的修正？书中如何处理？</li>
+        <li>第一册第 7 章 / 第二册第 28 章「隆中对」：取荆益、待天下有变在地理上是否自洽？关羽失荆州后「跨有荆益」是否本就不可能？作者对「联吴」失败的地理归因是否充分。</li>
+        <li>第一册第 9 章：作者称「粤语是古汉语吸收古越语形成，并不像客家话那样是纯正的古汉语」——这一语言学分论有无出处，还是作者随口判断（对照《咬文嚼字》指摘的硬伤）？</li>
+        <li>第三册第 49 章「为什么是欧洲」：作者给出的地理解释是什么？是否忽略了制度、技术、资本等变量（对照方法争议）？</li>
+        <li>第三册第 89 章「收复台湾」：郑军「25000 人、战船 300 艘」「2500 发炮弹」等数字，与荷方（揆一）及中方史料是否一致？作者是否混用了文学化叙述与考据。</li>
+        <li>第三册第 97 章「尼布楚条约」：作者说划界「等于承认了沙俄对布里亚特蒙古的主权」，原因在于「准噶尔汗国开始攻打喀尔喀蒙古，康熙急于划定边界」——这一权衡是否准确，有无史料支撑。</li>
+        <li>全系列方法论：作者反复用「地理是客观的东西」「第一大要素」，但同一地形条件、相反结局的案例（如同样四塞、关中兴而陕北困），书中是否举出反例？这是检验其是否陷入地理决定论的关键。</li>
+      </ul>
     </section>
+
+    <section>
+      <h2>公开点评摘录（微信读书书目页）</h2>
+      <ul class="note-list">
+        <li><b>钟伊痕（推荐）：</b>相当于看了三本书——原版《地理看历史》、三国篇、大航海时代；三国篇对三国迷尤其好，大航海时代「无论对于中国，还是世界，都是一个巨大的……」。</li>
+        <li><b>lovingchina（推荐）：</b>书中讲世界常见地名后缀（利亚、维亚、斯坦、兰、堡、格勒），每种后缀对应一种语言、一个文化圈，是古代文明留下的痕迹。</li>
+        <li><b>陈平（推荐）：</b>李不白《透过地理看历史》是优秀历史通俗读物，打破按朝代叙事，以关中、山西、荆楚等地理单元为框架，搭配大量地形图，从山川地势解释战争格局、王朝兴衰。</li>
+      </ul>
+      <p class="small">来自 AI 读书书目页公开点评的限量摘录，仅作阅读参考，非本页观点；评分为公开数据（一册豆瓣 8.4、大航海 9.1）。</p>
+    </section>
+
+    <section>
+      <h2>当年与今天 · 初步对照</h2>
+      <p class="small">原作首版：一册《透过地理看历史》台海出版社（2020/2021 首版，2025 修订版）；二册《三国篇》（2025）；三册《大航海时代》人民日报出版社（2022）。作者李不白，湖北黄冈人，武汉大学地图学专业，编地图近二十年。</p>
+      <h3>当年作者能知道什么</h3>
+      <p>作者不是学院派史家，而是专业地图人——他说「历史地图重点在编，不在画」，先确定地形单元再讲故事，与常见「先有故事再配图」的通俗史写法相反。这套书填补的，正是大众读史「只有时间轴、没有空间轴」的缺口：长平之战不是谁更能打，而是谁的粮走水、谁的粮爬山。<span class="src" data-k="official">作者访谈</span><span class="src" data-k="infer">综合推断</span></p>
+      <h3>后来才知道什么</h3>
+      <p>本书走红后的争议已较清晰：一是《咬文嚼字》两次指摘词误，二是学界对「地理决定论式简化叙事」的方法质疑，三是「畅销百万册」多为渠道口径、第三方未公开。本页对销量数字不引为事实，仅据可核验的榜单与评分。<span class="src" data-k="unknown">待核实</span></p>
+      <h3>今天对读的启发</h3>
+      <p>读它要分清「地形的约束」与「人的选择」——作者把地形讲透了，但地形之后那层「人事变量」需要读者自己补。这也是我读时立的规矩：凡标推断的，读到原文再定夺；对反例保持敏感。<span class="src" data-k="infer">综合推断</span></p>
+    </section>
+
     <section>
       <h2>来源与证据边界</h2>
-      <div class="card src"><span class="tag">亲读</span>：各日期笔记实际读到的内容<br><span class="tag">官方简介/目录</span>：AI 读书书目页简介与章节信息<br><span class="tag">公开评论/划线</span>：书目页公开点评与账户划线（有则收录）<br><span class="tag">综合推断</span>：本页由自动流程基于上述材料整理，未经亲读确认，完读后以 final.html 校订为准</div>
+      <div class="card">
+        <p><span class="src" data-k="official">书内 / 作者</span>：作者访谈原话、AI 大纲各章要点与第 4 层原句摘录（荆州、关中、隆中对、大意失荆州、五丈原、达·伽马、收复台湾、尼布楚条约等）。</p>
+        <p><span class="src" data-k="infer">综合推断</span>：一句话主旨、全书视角、核心观点中未亲读部分的判断，以及史念海对照，未经亲读确认。</p>
+        <p><span class="src" data-k="unknown">待核实 / 待确认</span>：《咬文嚼字》指摘的具体篇目、销量数据、尼布楚条约权衡的史料支撑。</p>
+        <p class="small">本页不使用页码做导航：所有定位以「册 · 章标题」给出；章节名照 AI 大纲，自拟的分析小标题不冒充原文章节。三册均未亲读，全文视为初判。</p>
+      </div>
     </section>
+
     <section>
       <h2>相关日期笔记</h2>
-      <ul class="note-list"><li><a href="notes/2026-10-26.html">2026-10-26：版权信息、序</a></li></ul>
+      <ul class="note-list"><li><a href="notes/2026-10-26.html">2026-10-26：开读首日建立全书视角初版（重修）</a></li></ul>
     </section>
+
     <section>
       <h2>更新记录</h2>
-      <div class="card src">开读首日创建（简介/点评/划线打底）；2026-10-26 随阅读进度更新。</div>
+      <div class="card">开读首日创建（简介／点评／划线打底）；2026-10-26 随阅读进度更新；<b>2026-10-26 重修本篇</b>——剔除原失败跑批的逐章模板验证句与大量「待补」占位、补入真实问答（AI 问答栏，6 组，优先引大纲原句）、真实三册 97 章章节导航、书-specific 的核查清单，并据作者访谈与公开资料补写全书视角与争议边界。</div>
     </section>
   </article>
-  <footer class="site-footer">本页为开读时建立的全书视角初版：二手信息与推断均带来源标签，未经亲读确认的部分待验证；
+  <footer class="site-footer">本页为开读时建立的全书视角初版（重修）：二手信息与推断均带来源标签，未经亲读确认的部分待验证；
   完读后校订升级为 <a href="final.html">final.html</a>。<br>
   <a href="../../../index.html">返回首页</a>　　<span class="gcstat" id="gc_page_pv" style="display:none">本页阅读 <b id="gc_page_pv_num">–</b> 次</span></footer>
 </main>
