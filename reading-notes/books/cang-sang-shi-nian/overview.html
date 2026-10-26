@@ -1,0 +1,1041 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>《沧桑十年》｜全书视角初版</title>
+<style>
+:root{color-scheme:light;--ink:#26342f;--muted:#697870;--paper:#f6f7f2;--card:#fff;--accent:#286b52;--line:#dfe6df}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.75 system-ui,-apple-system,"Segoe UI",sans-serif}.wrap{max-width:900px;margin:auto;padding:clamp(20px,5vw,56px)}.eyebrow{color:var(--accent);letter-spacing:.12em;font-size:.8rem;text-transform:uppercase}h1{line-height:1.2;font-size:clamp(2rem,5vw,3.4rem);margin:.4rem 0}h2{margin-top:2.2rem;font-size:1.35rem}.meta,.notice{color:var(--muted)}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:clamp(18px,3vw,30px);margin:18px 0}.tag{display:inline-block;border-radius:99px;background:#e6f0e9;color:var(--accent);padding:2px 10px;font-size:.8rem;margin:0 4px 4px 0}a{color:var(--accent)}ul{padding-left:1.3rem}.mindmap{white-space:pre-wrap;font-family:inherit}.src{font-size:.92rem}
+/* 章节导读：卡片分组 + 点标题下滑展开（2026-10-19 用户决定，与已发布笔记一致） */
+.toc-part{background:#fffefa;border:1px solid #e5e0d6;border-radius:14px;padding:14px 18px;margin:12px 0}
+.part-label{display:block;font:600 1rem/1.6 Georgia,"Songti SC",serif;color:#244b40;margin:0 0 6px}
+.ch-item{border-bottom:1px dashed #eee8dc}
+.ch-item:last-child{border-bottom:0}
+.ch-item summary{display:flex;gap:10px;align-items:baseline;padding:7px 0;cursor:pointer;list-style:none}
+.ch-item summary::-webkit-details-marker{display:none}
+.ch-no{color:#bf8247;font-weight:700;font-size:.82rem;min-width:48px;flex:none}
+.ch-t{flex:1;font-size:.92rem}
+.badge{font-size:.68rem;border-radius:6px;padding:1px 7px;font-weight:600;white-space:nowrap;flex:none}
+.badge[data-s="read"]{background:#e6f0e9;color:#286b52;border:1px solid #cbdace}
+.badge[data-s="reading"]{background:#f6edde;color:#805d36;border:1px solid #e6d4b8}
+.badge[data-s="unread"]{background:#f4f4f1;color:#8b8b84;border:1px solid #e4e4de}
+.caret{color:#69766f;font-size:1.05rem;flex:none;transition:transform .18s ease}
+.ch-item[open] .caret{transform:rotate(90deg)}
+.ch-body{padding:2px 0 12px 58px;animation:slideDown .2s ease}
+@keyframes slideDown{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.ch-body p{margin:.3em 0}
+.ch-src{color:#69766f;font-size:.76rem}
+.ch-empty{color:#69766f;font-size:.8rem;margin:.2em 0 .4em}
+.ch-secs{margin:0;padding-left:1.15em;color:#5c574c;font-size:.8rem;line-height:1.75}
+.ch-secs li{margin:.1em 0}
+
+</style>
+</head>
+<body><main class="wrap">
+<p class="eyebrow">Whole-book perspective · first pass</p>
+<h1>《沧桑十年》</h1>
+<p class="meta">马识途 · 全书视角初版 · 创建于 2026-10-27 · 更新于 2026-10-27</p>
+<div class="card"><span class="tag">全书视角初版 · 含推断</span><span class="tag">未亲读 · AI 大纲＋公开资料</span><p><strong>覆盖说明：</strong>本页不是亲读结论。事实来源只有两类：一是本书在微信读书的 AI 大纲（101 个条目，含二十个章标题与其下小节标题，与公开可见的本书目录基本一致）；二是 2026-10-27 检索到的出版信息与据称取自豆瓣的评分数据。未逐页阅读正文，没有取得实读时长与完读记录，故全书所有章节的亲读状态一律标「未读」。书中所述历史为作者亲历记述，本页只转述其作为一本书的内容，不对其中的历史事件另行评价。</p></div>
+<section class="card" aria-labelledby="pre-read-fit-title" data-source="public-review-secondary">
+<h2 id="pre-read-fit-title">读前口碑与兴趣判断</h2>
+<p><span class="tag">公开评论 · 二手依据</span><strong>初步建议：值得继续</strong> · 百度百科介绍《马识途文集（精编版）·沧桑十年》时称，该书在豆瓣评分为 9.2 分（基于 46 人评价，五星占 54.3%、四星 37.0%、三星 8.7%）；同一条目说明这只是该精编版的读者聚合数据，样本量小，不代表全部版本。</p>
+<p>这是一部第一人称回忆录，不是研究著作：它的价值在于具体的个人经历与当时的话语现场，局限也在于此——单一个人的视角、事后写成的记忆，需要与其他材料互相参照。读的成本是题材沉重、人名与机构称谓密集；读的收益是能拿到一份可直接引用的当事人记述。</p>
+<p class="src">口碑来源：<a href="https://baike.baidu.com/item/%E9%A9%AC%E8%AF%86%E9%80%94%E6%96%87%E9%9B%86%EF%BC%88%E7%B2%BE%E7%BC%96%E7%89%88%EF%BC%89%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/58651768">百度百科（精编版条目，引述豆瓣评分）</a>；<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科（1999 年初版条目，含目录与 ISBN）</a>；<a href="https://book.cppinfo.cn/Encyclopedias/home/index?id=3822289">国家出版发行信息公共服务平台书目信息</a>。查询时间 2026-10-27。</p>
+<p class="notice">仅作读前兴趣匹配，不证明书中实际内容或已亲读；不只按评分决定。口碑分歧但仍想读时，先挑少量有代表性的章节短试。</p>
+</section>
+<section><h2>一句话主旨</h2><p>一个省级宣传部门负责人突然被划成「反革命」之后，从批斗、抄家、失去家人，到逃亡、入狱、再被放出，最后在 1979 年 1 月 25 日彻底平反——作者要把这十年里他所亲历的人与事，连同当时的标语口号和说话方式，一并记下来，作为一份当事人留下的记录（<span class="tag">推断</span>依据出版方内容提要、公开目录与 AI 大纲归纳，待亲读验证）。</p></section>
+<section><h2>全书结构与主题关系</h2><div class="card mindmap">按出版方内容提要，全书时间轴：1966 年夏（自西南局宣传部岗位被下放）→ 1979 年 1 月 25 日（彻底平反）。
+
+二十章可归为四段（为整理者据目录归纳，非作者分段）：
+  一 获罪（第 1—3 章）：莫名其妙地变成反革命 / 大祸临头 / 祸从何来
+  二 家破（第 4 章）：家破人亡
+  三 流放与逃亡（第 5—7、9—13 章）：流放生活 / 风云突变 / 窗口西洋景 / 如今何处找好人 /
+      死人死人再死人 / 逍遥时刻 / 小将的丰采 / 百日之灾 / 逃出虎口
+  四 牢狱与平反（第 14—20 章）：初入监狱 / 狱友群像 / 狱中生活拾零 / 出狱又入狱 /
+      “解放” / 再度“走资” / 帷幕终于落下
+
+贯穿全书的三条线（整理者归纳）：
+  A 个人命运线：被划罪 → 失去家人 → 逃亡 → 入狱 → 恢复公职 → 平反
+  B 观察线：作者对周围人（批判者、狱友、干部、普通群众）的记名与不记名的观察
+  C 话语线：书中大量收录当时的标语、口号、会议用语；这是本书被称「文本资料」的原因
+</div></section>
+<section class="card" aria-labelledby="ai-ask-title" data-source="ai-ask-book">
+<h2 id="ai-ask-title">AI 问书</h2>
+<p><strong>合并提示词：</strong>书籍亮点+背景解读+关键概念+10个最佳金句语录</p>
+<p><strong>实际来源与获取／整理时间：</strong><span class="tag">AI 自主整理 · 非微信读书返回</span>本沙箱连不上微信读书 AI，未发起也未取得该合并提问的平台答复；以下四项为 2026-10-27 依据本书 AI 大纲与公开书目、百科资料自主整理，不代表平台返回结果 · 自主整理于 2026-10-27</p>
+<p class="notice">待验证状态：四项均为二手整理，未经亲读核实。AI 输出不等于亲读事实，不改变实际覆盖、时长或完读状态；无平台答复时按已核实材料自主整理并标明非微信读书返回，不伪称取得。金句须另核原文，10 条不是必须凑足的配额。</p>
+<h3>书籍亮点</h3><p>其一，<strong>材料的颗粒度</strong>：AI 大纲显示每一章下都有具体小节，且多数小节附着当时的原话（口号、批斗用语、楹联、狱友诗句），这类「原样收录」是回忆录少见的做法。其二，<strong>作者身份的特殊性</strong>：出版方称他凭借解放前的地下工作经验得以脱身，这条线索把「个人机智」写进了机构史叙述里。其三，<strong>笔法克制</strong>：多个版本的出版方简介都强调「文字简朴直白」「保持较为冷静的记述态度」，这与题材本身形成反差。</p>
+<p class="muted">来源／获取或整理时间：本书 AI 大纲 + <a href="https://book.cppinfo.cn/Encyclopedias/home/index?id=3822289">国家出版发行信息公共服务平台书目条目</a>、<a href="https://baike.baidu.com/item/%E9%A9%AC%E8%AF%86%E9%80%94%E6%96%87%E9%9B%86%EF%BC%88%E7%B2%BE%E7%BC%96%E7%89%88%EF%BC%89%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/58651768">百度百科条目</a>，整理于 2026-10-27；核验状态：推断 · 初步导读，待亲读验证。</p>
+<h3>背景解读</h3><p><strong>作者：</strong>马识途，原名马千木，1915 年生于重庆忠县，1938 年加入中国共产党，1945 年毕业于西南联大中文系，长期从事党政工作并坚持写作；著有长篇《清江壮歌》《夜谭十记》，纪实作品《在地下》《沧桑十年》《百岁拾忆》等（来源：<a href="https://search.megbook.com.tw/mall/detail.jsp?proID=3620659">出版物作者简介</a>、<a href="https://baike.baidu.com/item/%E9%A9%AC%E8%AF%86%E9%80%94%E6%96%87%E9%9B%86%EF%BC%88%E7%B2%BE%E7%BC%96%E7%89%88%EF%BC%89%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/58651768">百度百科</a>）。<strong>版本：</strong>本书最早为 1999 年 1 月中共中央党校出版社版（479 页，ISBN 9787503518904）；后收入《马识途文集》，有 2018 年 5 月四川文艺出版社的第十卷版（ISBN 9787541145407）和 2021 年四川文艺出版社精编版第七册（ISBN 9787541158445，出版月份有 3 月与 5 月两种记法）（来源：<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>、<a href="https://book.cppinfo.cn/Encyclopedias/home/index?id=3271813">书目平台（文集第十卷）</a>、<a href="https://book.cppinfo.cn/Encyclopedias/home/index?id=3822289">书目平台（精编版）</a>）。阅读时须先确认自己手上的是哪个版本。</p>
+<p class="muted">来源／获取或整理时间：上列链接，检索于 2026-10-27；核验状态：二手 · 待核对版权页。</p>
+<h3>关键概念</h3><p>本书是回忆录，没有作者自设术语；下列为整理者据目录与原话归纳的<strong>定位用概念</strong>，不是作者原话：①<strong>「罪名如何落到具体的人身上」</strong>——第 1—3 章追查的是「祸从何来」，作者把归因一直追到具体的工作分歧；②<strong>「殃及家人」</strong>——第 4 章标题即为「家破人亡」；③<strong>「话语现场」</strong>——标语与口号被原样保留——第 7 章「窗口西洋景」及其下「广播大战」「游斗」「陈尸游行」大量收录口号；④<strong>「狱友群像」</strong>——第 15 章按人物分小节写同监的人，使回忆录带上一部分群像色彩。</p>
+<p class="muted">来源／获取或整理时间：微信读书 AI 大纲与公开目录，整理于 2026-10-27；核验状态：整理者归纳 · 推断 · 待亲读确认。</p>
+<h3 id="ai-quotes-title">10个最佳金句语录</h3>
+<p class="muted">来源／获取或整理时间：本书 AI 大纲所录原文片段（对话/独白/诗句摘录），自主整理于 2026-10-27；核验状态：<strong>尚未与纸本逐字比对 · 待核验</strong>；已录 6/10 · 已读范围：<strong>未亲读正文</strong>，全部取自 AI 大纲，属二手摘录通道。</p>
+<ol class="excerpt-list">
+<li><figure><blockquote><p>不是我不想回来，是我回不来了。</p></blockquote><figcaption>原文出处：<cite>第一章 · 3「回不来了」</cite> · AI 大纲该小节条目</figcaption></figure>
+<p class="muted">原文来源及逐字核验：取自本书 AI 大纲所录对话；未与纸本逐字比对 · 待核验。</p>
+<p><strong>入选理由（分析）：</strong>一句话把「不能回来」的原因留在句子之外，是全书开局的收束语气。</p></li>
+<li><figure><blockquote><p>我肯信吹一口气，说几句空话，田里就长出粮食来了？</p></blockquote><figcaption>原文出处：<cite>第一章 · 2「天不从人愿」</cite> · AI 大纲该小节条目</figcaption></figure>
+<p class="muted">原文来源及逐字核验：取自本书 AI 大纲所录独白；未与纸本逐字比对 · 待核验。</p>
+<p><strong>入选理由（分析）：</strong>用农业生产的具体常识反对空话，说明后来的祸端起于工作分歧而非抽象立场。</p></li>
+<li><figure><blockquote><p>我们不是反革命，我相信总有一天搞清楚，党的政策，不冤枉一个好人。</p></blockquote><figcaption>原文出处：<cite>第四章 · 家破人亡</cite> · AI 大纲该章条目</figcaption></figure>
+<p class="muted">原文来源及逐字核验：取自本书 AI 大纲所录对话；未与纸本逐字比对 · 待核验。</p>
+<p><strong>入选理由（分析）：</strong>全书最沉的一章里最克制的句子；读此书要注意这句话是家人所说还是作者所说，须回原文确认。</p></li>
+<li><figure><blockquote><p>且喜此头堪一割</p></blockquote><figcaption>原文出处：<cite>第四章 · 3「斗争升级」</cite> · AI 大纲该小节所录诗句</figcaption></figure>
+<p class="muted">原文来源及逐字核验：取自本书 AI 大纲所录诗句；未与纸本逐字比对 · 待核验。</p>
+<p><strong>入选理由（分析）：</strong>作者在被斗争升级时用旧体诗自况，可见这十年的情绪并非只有控诉一种。</p></li>
+<li><figure><blockquote><p>尸体倒是真的，有的也的确是武斗打死的，不过有的却是从火葬场里弄来的。</p></blockquote><figcaption>原文出处：<cite>第七章 · 4「陈尸游行」</cite> · AI 大纲该小节条目</figcaption></figure>
+<p class="muted">原文来源及逐字核验：取自本书 AI 大纲所录原句；本页转写时已按原文语义还原，<strong>逐字核验待做</strong>。</p>
+<p><strong>入选理由（分析）：</strong>作者把「看起来的场面」与「实际来源」分开写，是本书作为亲历记录最能体现观察力的一句。</p></li>
+<li><figure><blockquote><p>以后天不亮时，我替你打扫吧。天明时你来用扫把舞它几下就算了。</p></blockquote><figcaption>原文出处：<cite>第八章 · 2「斯文扫地」</cite> · AI 大纲该小节条目</figcaption></figure>
+<p class="muted">原文来源及逐字核验：取自本书 AI 大纲所录对话；未与纸本逐字比对 · 待核验。</p>
+<p><strong>入选理由（分析）：</strong>同样是怕被人看见，有人选择替人把活干完；这句可为「也有人保持善意」这条线作证。</p></li>
+</ol>
+<p class="muted">不足十条的说明：本机未亲读正文，不能从未读章节补引文；可核对的短原文只来自 AI 大纲的摘录，故实际收录 6 条，缺的不凑。另需注意：书中大量口号与批斗用语是当时的语言材料，本页不把它们当作作者的「金句」收录，故不计入。</p>
+</section>
+<section aria-labelledby="chapter-guide-title"><h2 id="chapter-guide-title">章节导读 · 初版</h2>
+<p class="notice">口径说明：下列二十个「第 X 章」及其下小节标题与公开可见的本书目录一致（可核出版物目录），不是 AI 编造的结构；但本机尚未通读到任何一节正文，故全部标「未读」，导读一律为「推断 · 目录导向」。</p>
+<div class="toc-part">
+<span class="part-label">第一章 莫名其妙地变成反革命</span>
+<details class="ch-item">
+<summary><span class="ch-no">2</span><span class="ch-t">天不从人愿</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p>本节标题已见于公开目录，内容涉及作者对当时口号与实际农事之间落差的看法；AI 大纲保留了原话。具体情节待亲读。</p>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>）</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">3</span><span class="ch-t">“回不来了”</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p>全书中紧接第一节的收束——「回不来」意味着事情不可逆。此节标题见公开目录。</p>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>）</p>
+</div></details>
+</div>
+<div class="toc-part">
+<span class="part-label">第二章 大祸临头</span>
+<details class="ch-item">
+<summary><span class="ch-no">2</span><span class="ch-t">机关枪大炮，一起开火</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p>首次遭遇批量批判：大纲显示本节描述突然升级的批判方式。</p>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>）</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">3</span><span class="ch-t">批判勇士的嘴脸</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p>这一节写的是批判者而非作者本人——作者在此确立了「观察」的姿势。</p>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>）</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">4</span><span class="ch-t">“你这哪里是检讨的问题哟！”</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>作者在批判会后的心情与老陈的安慰</li>
+<li>作者在大厅看到的大字报</li>
+<li>老书记对作者的关怀与批评</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">5</span><span class="ch-t">以烂为烂</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p>标题本身是当时的一句俗话；AI 大纲记此节应对批判的态度转变。</p>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>）</p>
+</div></details>
+</div>
+<div class="toc-part">
+<span class="part-label">第三章 祸从何来</span>
+<details class="ch-item">
+<summary><span class="ch-no">2</span><span class="ch-t">国际间谍</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p>第三章追查「祸从何来」的一节：罪名升级到极重的说法。</p>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>）</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">3</span><span class="ch-t">冰冻三尺</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p>继续追问成因的一节，标题用成语概括长期积怨。</p>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>）</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">4</span><span class="ch-t">要问个明白</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>作者被调往南充的原因和过程</li>
+<li>作者对调往南充的困惑和反思</li>
+<li>作者与组织书记的矛盾</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">5</span><span class="ch-t">种棉花事件</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p>具体工作事件导致的具体后果——这是检验「是否归因于工作分歧」的关键小节。</p>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>）</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">6</span><span class="ch-t">水利方针争论</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p>另一处具体工作分歧，与上一节同属归因链条，值得连读。</p>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>）</p>
+</div></details>
+</div>
+<div class="toc-part">
+<span class="part-label">第四章 家破人亡</span>
+<details class="ch-item">
+<summary><span class="ch-no">2</span><span class="ch-t">但期来生复团圆</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>作者被隔离审查后的生活</li>
+<li>《毛主席语录》的滥用</li>
+<li>作者的文学创作</li>
+<li>作者的家庭遭遇</li>
+<li>作者的反思和期待</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">3</span><span class="ch-t">斗争升级</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p>第四章后半段的升级；AI 大纲保留了作者当时的诗句（如「且喜此头堪一割」）。</p>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>）</p>
+</div></details>
+</div>
+<div class="toc-part">
+<span class="part-label">第五章 流放生活</span>
+<details class="ch-item">
+<summary><span class="ch-no">2</span><span class="ch-t">苦中寻乐</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>峨眉山下的隐居生活</li>
+<li>诗歌创作与心情表达</li>
+<li>与三条汉子的关系变化</li>
+<li>登山体验与情感抒发</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">3</span><span class="ch-t">旧地重游</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>重登峨眉山</li>
+<li>重登华严寺</li>
+<li>峨眉山金顶的遗憾</li>
+<li>对峨眉山的看法</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">4</span><span class="ch-t">苗溪劳改农场遇胡风</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p>写在劳改农场遇到另一位知名人物的经过，是本书少见的人物交集记录。<span class="tag">待亲读验证</span></p>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>）</p>
+</div></details>
+</div>
+<div class="toc-part">
+<span class="part-label">第六章 风云突变</span>
+<details class="ch-item">
+<summary><span class="ch-no">2</span><span class="ch-t">在劫难逃</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>作者被划为反革命后的心态</li>
+<li>作者对革命造反派内部斗争的观察</li>
+<li>作者被新当权派批判后的心情</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">3</span><span class="ch-t">形势大变</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>作者被造反派实行专政并接受批判斗争</li>
+<li>形势大变，作者被转移到另一间小屋并接受“训话”</li>
+<li>作者的办公和家用物品被没收，特别是他的五柜子书</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">4</span><span class="ch-t">斗争示范</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>成都分院的造反示范</li>
+<li>成都的革命形势</li>
+<li>我的遭遇</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+</div>
+<div class="toc-part">
+<span class="part-label">第七章 窗口西洋景</span>
+<details class="ch-item">
+<summary><span class="ch-no">2</span><span class="ch-t">广播大战</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p>第七章的一节，AI 大纲显示原文收录大量当时的广播与口号内容——这是本书作为「语言材料」价值最高的一类小节。</p>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>）</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">3</span><span class="ch-t">“游斗”</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p>写批斗游街的形式；标题见公开目录。</p>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>）</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">4</span><span class="ch-t">陈尸游行</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p>第七章末节，AI 大纲录有一句关于尸体来源的原话；这是本页最想核对的一处。</p>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>）</p>
+</div></details>
+</div>
+<div class="toc-part">
+<span class="part-label">第八章 如今何处找好人</span>
+<details class="ch-item">
+<summary><span class="ch-no">2</span><span class="ch-t">斯文扫地</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>作者被分配劳役，扫大院和厕所</li>
+<li>老陈帮助作者打扫卫生</li>
+<li>作者对劳动的反思和感激</li>
+<li>作者打扫厕所的经历和感受</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">3</span><span class="ch-t">于危难处见真情</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>高奇才的救人行为</li>
+<li>何世珍的救人行为</li>
+<li>作者对两位救命恩人的感激之情</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+</div>
+<div class="toc-part">
+<span class="part-label">第九章 死人死人再死人</span>
+<details class="ch-item">
+<summary><span class="ch-no">2</span><span class="ch-t">彭德怀之死</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p>第九章的一节，记作者所听闻的人物结局；须注意此为作者所闻而非亲见，回原文确认叙述层级。</p>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>）</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">3</span><span class="ch-t">罗广斌之死</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p>同章另一节，写法与上一节相近；两节连读可判断作者如何处理传闻。</p>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>）</p>
+</div></details>
+</div>
+<div class="toc-part">
+<span class="part-label">第十章 逍遥时刻</span>
+<details class="ch-item">
+<summary><span class="ch-no">2</span><span class="ch-t">且向大街逍遥行</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>作者在“文化大革命”中的处境</li>
+<li>作者通过生病获得自由，开始观察外部世界</li>
+<li>作者对西南局机关大字报内容的观察和思考</li>
+<li>作者对第一把手的看法</li>
+<li>作者对“文化大革命”的反思</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">3</span><span class="ch-t">第二把手</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>第二把手的角色和影响力</li>
+<li>第二把手的个人品质</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">4</span><span class="ch-t">严重警告</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>作者被造反司令部严重警告</li>
+<li>老宋对作者的关心</li>
+<li>作者对“文化大革命”的理解</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+</div>
+<div class="toc-part">
+<span class="part-label">第十一章 小将的丰采</span>
+<details class="ch-item">
+<summary><span class="ch-no">2</span><span class="ch-t">并非铁板一块</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>红卫兵并非铁板一块，有各种各样的形象、性格和思想</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">3</span><span class="ch-t">有脑筋的红卫兵</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>红卫兵的多样性</li>
+<li>有脑筋的红卫兵的“继续革命论”</li>
+<li>作者对“继续革命论”的怀疑</li>
+<li>“文化大革命”的理论体系</li>
+<li>对“文化大革命”的反思</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+</div>
+<div class="toc-part">
+<span class="part-label">第十二章 百日之灾</span>
+<details class="ch-item">
+<summary><span class="ch-no">2</span><span class="ch-t">问题大得很</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>被红卫兵俘虏并关押</li>
+<li>尝试逃脱并失败</li>
+<li>与红卫兵的对话和抗议</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">3</span><span class="ch-t">“下威风”战役</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>作者被红卫兵抓来受审的原因</li>
+<li>“下威风战役”的经过</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">4</span><span class="ch-t">鸡蛋里挑骨头</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>红卫兵的审讯</li>
+<li>犯人对抗审讯</li>
+<li>红卫兵的审讯手段</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">5</span><span class="ch-t">“追穷寇”战役</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>对“追穷寇”战役的反思</li>
+<li>“追穷寇”战役的具体过程</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">6</span><span class="ch-t">“抓漏洞”战役</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>“抓漏洞”战役的过程和目的</li>
+<li>“抓漏洞”战役的失败和作者的应对</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">7</span><span class="ch-t">意外的收获</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>利用写作场合进行革命传统教育</li>
+<li>革命传统教育对青年的影响</li>
+<li>对红卫兵造反派的看法和应对策略</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">8</span><span class="ch-t">奇怪的纸板</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>红卫兵对作者进行监视和提问</li>
+<li>对面宿舍的学生进行侦察活动</li>
+<li>作者对红卫兵的应对策略</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">9</span><span class="ch-t">三杯清泪落窗前</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>红卫兵司令部的担忧</li>
+<li>隔壁房间的景色</li>
+<li>对自由的向往</li>
+<li>对家人的思念</li>
+<li>对周年忌日的祭奠</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+</div>
+<div class="toc-part">
+<span class="part-label">第十三章 逃出虎口</span>
+<details class="ch-item">
+<summary><span class="ch-no">2</span><span class="ch-t">精心策划</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>逃离囚禁环境的计划</li>
+<li>逃离囚禁环境的实施</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">3</span><span class="ch-t">逃出虎口</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>逃出虎口的过程</li>
+<li>逃出虎口后的心情</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">4</span><span class="ch-t">继续逃亡</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>逃回家中</li>
+<li>讨论逃亡计划</li>
+<li>准备出发</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">5</span><span class="ch-t">逃往贵阳</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>逃往贵阳的经历</li>
+<li>参观遵义会址</li>
+<li>在贵阳的生活</li>
+<li>离开贵阳</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">6</span><span class="ch-t">逃往北京</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>作者在桂林的游览经历</li>
+<li>作者在火车站的经历</li>
+<li>作者在衡阳和长沙的经历</li>
+<li>作者在北京的经历</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">7</span><span class="ch-t">在劫难逃</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>作者一家在北京的困境</li>
+<li>作者在姨妹家的生活</li>
+<li>作者的处境恶化</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">8</span><span class="ch-t">捉回成都</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>作者被捉回成都的原因</li>
+<li>作者被捉回成都的过程</li>
+<li>作者在成都是如何被对待的</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">9</span><span class="ch-t">做“高级囚徒”</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>作者被关押在锦江宾馆的经历</li>
+<li>作者被转移到六楼的经历</li>
+<li>作者在六楼的日常生活</li>
+<li>作者被转移到文明监狱的经历</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+</div>
+<div class="toc-part">
+<span class="part-label">第十四章 初入监狱</span>
+<details class="ch-item">
+<summary><span class="ch-no">2</span><span class="ch-t">荒唐</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>狱中生活</li>
+<li>狱中创作</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">3</span><span class="ch-t">严重的斗争</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>作者在监狱中的生活体验</li>
+<li>作者与蚊虫的斗争</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">4</span><span class="ch-t">天天读</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>昭觉寺拘留所的环境与惩罚</li>
+<li>“天天读”制度的实施与影响</li>
+<li>作者在“天天读”中的体验与感受</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">5</span><span class="ch-t">早请示，晚汇报</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>“新生红色政权”改造我们的方法</li>
+<li>早请示，晚汇报的仪式</li>
+<li>对早请示，晚汇报的理解和态度</li>
+<li>早请示，晚汇报的实际操作</li>
+<li>对早请示，晚汇报的困惑和无奈</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">6</span><span class="ch-t">“拉屎大解放”</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>改造圣地里的拉屎大解放</li>
+<li>作者对看守的不满和反抗</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">7</span><span class="ch-t">地下写作</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p>写作者在狱中坚持写作的情形（出版方简介也提到「囚室之内热情写就」），是全书少见的「生产性」段落。</p>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>）</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">8</span><span class="ch-t">写材料的风波</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>作者在监狱中写证明材料的情况</li>
+<li>作者与外调组的冲突</li>
+<li>作者与北京外调人员的冲突</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">9</span><span class="ch-t">御批要案</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p>本节涉及案件层级升级；具体所指须回原文确认。</p>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>）</p>
+</div></details>
+</div>
+<div class="toc-part">
+<span class="part-label">第十五章 狱友群像</span>
+<details class="ch-item">
+<summary><span class="ch-no">2</span><span class="ch-t">凌烟书记种瓜来——在狱中的杨超书记</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>杨超书记在狱中的生活</li>
+<li>杨超书记的遭遇</li>
+<li>杨超书记的“解放”</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">3</span><span class="ch-t">强女人和弱女人——在狱中的两位“第一夫人”</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>昭觉寺监狱中的两位“第一夫人”</li>
+<li>肖理和郑瑛在监狱中的不同表现</li>
+<li>肖理和郑瑛的自杀</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">4</span><span class="ch-t">在狱中的沙汀和艾芜</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p>狱友群像的一节，涉及两位真实作家；属可与其他材料交叉核对的部分。</p>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>）</p>
+</div></details>
+</div>
+<div class="toc-part">
+<span class="part-label">第十六章 狱中生活拾零</span>
+<details class="ch-item">
+<summary><span class="ch-no">2</span><span class="ch-t">平常中的不平常</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>高树朝朝歌好鸟</li>
+<li>野塘夜夜鼓群蛙</li>
+<li>有闲对镜拔白发</li>
+<li>小耗不屑我为邻</li>
+<li>“我今葬侬人笑痴，他年葬我知是谁”</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">3</span><span class="ch-t">建设厅长作工头</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>“文革”中监狱里的生活</li>
+<li>基本建设工程的提出与实施</li>
+<li>劳动成果与感受</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">4</span><span class="ch-t">“可以教育好的子女”</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>监狱中的犯人得知即将被释放的消息</li>
+<li>犯人的女儿来看他，并告诉他即将下乡插队</li>
+<li>犯人得知女儿下乡的地方后，感到担忧</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">5</span><span class="ch-t">差点落入圈套</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>作者在监狱中的经历</li>
+<li>作者的反思与后话</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+</div>
+<div class="toc-part">
+<span class="part-label">第十七章 出狱又入狱</span>
+<details class="ch-item">
+<summary><span class="ch-no">2</span><span class="ch-t">又进监狱</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>作者被关进监狱</li>
+<li>监狱环境恶劣</li>
+<li>老朋友重逢</li>
+<li>作者对监狱的不满</li>
+<li>监狱中的权力斗争</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">3</span><span class="ch-t">活受罪</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>作者在监狱中的生活</li>
+<li>作者对“新生红色政权”的观察和批判</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">4</span><span class="ch-t">“假党员”</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>作者被关进科学分院造反派私设的监狱</li>
+<li>作者的入党问题被质疑</li>
+<li>作者的入党手续被调查</li>
+<li>作者与钱瑛的对话</li>
+<li>作者的冤屈</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">5</span><span class="ch-t">劳动惩罚</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>昭觉寺监狱与造反派监狱的劳动惩罚对比</li>
+<li>作者在造反派监狱中的具体劳动经历</li>
+<li>作者对劳动惩罚的感受和看法</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">6</span><span class="ch-t">不可理喻</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>“文化大革命”中的政治斗争</li>
+<li>作者的个人遭遇</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+</div>
+<div class="toc-part">
+<span class="part-label">第十八章 “解放”</span>
+<details class="ch-item">
+<summary><span class="ch-no">2</span><span class="ch-t">久拖不“解放”</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>作者的检讨和“解放”过程</li>
+<li>作者对自由的理解和珍惜</li>
+<li>作者对过去政治运动的反思</li>
+<li>作者的等待和期盼</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">3</span><span class="ch-t">破家难圆</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>作者的解放后的生活</li>
+<li>作者的家庭情况</li>
+<li>作者的孤独和思念</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">4</span><span class="ch-t">寻找磨心</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>寻找磨心的过程</li>
+<li>作者与磨心的相处</li>
+<li>作者对未来的期待</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+</div>
+<div class="toc-part">
+<span class="part-label">第十九章 再度“走资”</span>
+<details class="ch-item">
+<summary><span class="ch-no">2</span><span class="ch-t">当“替死鬼”</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>作者到省委宣传部报到的经历</li>
+<li>作者在文艺处的经历</li>
+<li>作者对文艺工作的看法和期待</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">3</span><span class="ch-t">农村社教</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>农村社教背景</li>
+<li>农村社教中的问题</li>
+<li>作者在农村社教中的做法</li>
+<li>作者的困惑和祸事</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">4</span><span class="ch-t">复辟回潮</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>复辟回潮的出现和批判</li>
+<li>作者的处境和担忧</li>
+<li>大事的真相和作者的反思</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">5</span><span class="ch-t">红卫兵女政委</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>造反派的势衰力弱和众叛亲离</li>
+<li>红卫兵女政委的个性和转变</li>
+<li>“文化大革命”的反思</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">6</span><span class="ch-t">整顿和“反击右倾翻案风”</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>“文化大革命”中的“评水浒”</li>
+<li>邓小平的复出和整顿</li>
+<li>“反击右倾翻案风”</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">7</span><span class="ch-t">避难疗养院</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>作者住院治疗及转院疗养</li>
+<li>作者在疗养院的生活</li>
+<li>疗养院中的悼念周总理活动</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">8</span><span class="ch-t">是祸躲不脱</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>作者在疗养院的生活</li>
+<li>作者被卷入政治风波</li>
+<li>作者对拍反走资派电影的态度</li>
+<li>《寄托》电影的制作</li>
+<li>作者被揪斗</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+</div>
+<div class="toc-part">
+<span class="part-label">第二十章 帷幕终于落下</span>
+<details class="ch-item">
+<summary><span class="ch-no">2</span><span class="ch-t">报应到来</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>文化部会议的反走资派电影检查</li>
+<li>作者对“四人帮”被抓的喜悦和反思</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">3</span><span class="ch-t">无妄之灾</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>作者在北京的经历和传闻</li>
+<li>传闻的内容和影响</li>
+<li>“四人帮”的倒台过程</li>
+<li>“文革”中的其他事件</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">4</span><span class="ch-t">老章程又来了</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未通读到本章正文。下列条目取自本书 AI 大纲的要点结构，用于先看脉络；导读待亲读后补充，不据标题推断细节。</p>
+<ol class="ch-secs">
+<li>“四人帮”垮台后的全国性运动</li>
+<li>揭批运动的复杂性</li>
+<li>“四人帮”被打倒后的问题</li>
+<li>个人崇拜现象的重复出现</li>
+</ol>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>） · 推断 · 初步导读，待亲读验证</p>
+</div></details>
+<details class="ch-item">
+<summary><span class="ch-no">5</span><span class="ch-t">这一天</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p>第二十章的末节，与出版方所说的 1979 年 1 月 25 日平反时点相关，是全书时间轴的终点。</p>
+<p class="ch-src">来源与依据：本书 AI 大纲条目 + 公开目录（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>）</p>
+</div></details>
+</div>
+</section>
+<section aria-labelledby="claim-judgments-title"><h2 id="claim-judgments-title">核心观点初判</h2>
+<article class="card"><h3>本书的价值定位：亲历者记录，而非研究的结论</h3><p><strong>当前判断：✅成立（在出版方自我定位层面）</strong></p><p>多个版本的出版方内容提要把本书称为「国内关于『文革』记录的重要文本资料」，并强调其「文字简朴直白」「保持较为冷静的记述态度」。这是出版方的定位而非独立学术评价；把它当「重要的一手材料」可以，把它当「定论」不行。</p><p class="src">依据与状态：<a href="https://book.cppinfo.cn/Encyclopedias/home/index?id=3271813">书目平台内容提要</a>、<a href="https://baike.baidu.com/item/%E9%A9%AC%E8%AF%86%E9%80%94%E6%96%87%E9%9B%86%EF%BC%88%E7%B2%BE%E7%BC%96%E7%89%88%EF%BC%89%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/58651768">百度百科条目</a>（二手）· 未亲读。</p></article>
+<article class="card"><h3>待亲读验证：作者如何解释自己「为何被划成反革命」</h3><p><strong>当前判断：待亲读验证</strong></p><p>AI 大纲把归因指向具体的工作分歧（下乡与「四清」安排、水利方针争论、种棉花事件等）；这是本书作为自述文本的关键主张，须读原文确认作者是否明确归因，以及他给自己留了多少余地。</p><p class="src">依据与状态：本书 AI 大纲第 1—3 章条目 · 二手摘录 · 未亲读。</p></article>
+<article class="card"><h3>版本差异可能大于预期</h3><p><strong>当前判断：⚖️有条件成立</strong></p><p>1999 年中共中央党校出版社版（479 页）与 2018/2021 年四川文艺出版社版书名分别为《沧桑十年》与《马识途文集·沧桑十年》，篇幅、编排与附录都可能不同（公开条目提到初版含「附录」与「后记」）。本页所依据的 AI 大纲具体对应哪个版本<strong>尚未确认</strong>，因此章节对照可能在版本间失效。</p><p class="src">依据与状态：<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>、<a href="https://book.cppinfo.cn/Encyclopedias/home/index?id=3822289">精编版书目</a>（二手）· 未亲读。</p></article>
+<article class="card"><h3>回忆录的记忆可靠性是需要单独检验的问题</h3><p><strong>当前判断：暂无法判定</strong></p><p>本书 1979 年之后写成、1999 年首次出版（如果记谱可取），与事件之间隔了多年；具体对话是否逐字可据、日期是否精确到日，需要拿公开史料或其他人的记述交叉验证。本页不做验证，只保留问题。</p><p class="src">依据与状态：整理者提出的可证伪问题 · 推断 · 未亲读。</p></article>
+</section>
+<section class="card" aria-labelledby="higher-view-title" data-source="mixed-labeled">
+<h2 id="higher-view-title">用更高维度的知识看这本书 · 初步视角</h2>
+<p class="notice">本节是有来源的外部知识与综合分析，不是作者原话，也不代表已经亲读全书；未确认的判断保留为待验证假设。</p>
+<h3>放进更大的知识坐标</h3>
+<p><strong>书中问题与依据：</strong>第 7 章「窗口西洋景」及第 8 章「如今何处找好人」把当时的标语、口号、游斗形式单独成节记录；AI 大纲显示这些小节原文保留了大量原话。</p>
+<p><strong>外部知识：</strong>回忆录作为一种文体，其可靠性通常需要在「亲历」「事后追述」「公开史料」三者之间交叉核对，这是史料学的基本做法；相关通论可参考<a href="https://plato.stanford.edu/entries/memory/">斯坦福哲学百科 Memory 条目</a>与<a href="https://plato.stanford.edu/entries/testimony/">Testimony（证词）条目</a>对本页而言只作提示，未展开。</p>
+<p><strong>综合分析 · 待验证：</strong>如果本书真的把当时的语言原样收录，那么它的价值就不仅是「一个人经历了什么」，还在于「当时的话是怎么说的」——后者往往比当事人事后的判断更难追回。<span class="tag">推断 · 待亲读验证</span></p>
+<h3>这本书本身在历史中起了什么作用</h3>
+<p><strong>接受史证据：</strong>可核的接受信号有三：初版（1999 年，中共中央党校出版社，479 页）、2018 年收入《马识途文集》第十卷、2021 年精编版第七册，属多次再版/重编；读者聚合方面只有转引的豆瓣 9.2 分（46 人评价，样本小）。缺少销量、馆藏、引用、翻译等传播数据，<strong>证据不足，不拔高</strong>。</p>
+<p><strong>综合分析：</strong>就现有证据只能说：它在出版后二十余年间被多次重编，说明有持续的需求；至于它对同类写作或公共讨论有多大影响，本页没有可引用的证据，不作判断。</p>
+<h3>它解释了什么，又解释不了什么</h3>
+<p><strong>书中主张与依据：</strong>它解释的是一个具体的省级干部及其家庭在这一时期的遭遇（第 4 章起逐步落到家人身上），以及他在不同处境下的应对方式。</p>
+<p><strong>综合分析 · 待验证：</strong>它解释不了的是整体图景：一个人、一个省、一套机构的样本无法代表全部地区的差异；这也是阅读时需要另找材料对照的原因。</p>
+<h3>由此值得继续想什么</h3><p>一个也许值得追踪的问题是：当回忆录被反复重编（1999 / 2018 / 2021），正文有没有随版本变化？若有，变化本身也是一种材料。这需要拿到不同版本对照，本页未做到。</p>
+<h3>相似或互补的书 · 1–2本</h3>
+<ul><li><cite>《在地下》</cite> · 马识途：同作者的纪实作品，写地下工作时期；与本书构成作者一生的「前段—后段」关系，可用于判断作者在不同题材中的记述风格是否一致。<br>依据与阅读状态：见百科作者简介所列作品 · 该书与本册均未亲读。</li></ul>
+<p class="src">外部证据、争议与尚待确认：版本与出版月份存在 3 月/5 月两种记法；豆瓣评分系百科转引且样本仅 46 人；AI 大纲对应版本未确认。以上均未在亲读后核对。</p>
+</section>
+<section><h2>阅读时要验证的问题</h2><ul>
+<li><strong>归因链条：</strong>第 1—3 章里，作者把自己的遭遇归因到哪些具体工作分歧？这些归因在同一章里有没有被他自己反过来质疑？</li>
+<li><strong>家人这条线：</strong>第 4 章「家破人亡」写到家人遭遇时，作者是克制还是直陈？两者的比例决定这本书的气质。</li>
+<li><strong>口号的记录方式：</strong>第 7 章收录的大量标语是作者当时记下的笔记，还是事后补写的？这决定它们作为「语言材料」的价值。</li>
+<li><strong>狱友群像的可核性：</strong>第 15 章写到具体人物（书中涉及多位真实人物），这些记述与其他材料能否对上？这是验证全书可靠性的抓手。</li>
+</ul></section>
+<section aria-labelledby="then-now-title"><h2 id="then-now-title">当年与今天 · 初步对照</h2>
+<p class="notice">对应章节/小节标题与来源层级：二十个章标题与小节标题（与公开目录一致） · 原作时点与依据：所述时段始于 1966 年夏、终于 1979 年 1 月 25 日平反（出版方内容提要）；初版 1999 年 1 月（<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科初版条目</a>）。</p>
+<h3>当年作者能知道什么</h3><p>作者作为当事人，能知道的是自己岗位上发生的事、自己听见的话、自己遇到的人；他不可能知道上层决策的完整过程。这是这类回忆录的天然边界，读时需要区分「亲历」与「推测」两种句子。</p>
+<h3>后来才知道什么</h3><p>初版距事件约二十年，2018/2021 年的重编又过了二十年；这期间公开的史料与研究成果增多，可以与本书互校。本页未做这类交叉核对，仅提出问题。</p>
+<h3>今天对雨的启发</h3><p>可由本页给出的判断是：读亲历类回忆录时，值得把「他当时怎么想」与「事后怎么解释」分开记；这与前面用在小说上的读法不同，因为回忆录声称的是事实而非虚构。属整理者的分析，<span class="tag">推断</span>。</p>
+</section>
+<section class="card" aria-labelledby="apply-title" data-source="apply-action">
+<h2 id="apply-title">迁移与行动</h2>
+<p class="notice">本节把书中判断转成可检验的行动与可证伪的假设；未亲读处标待验证，不把作者结论当已验证事实。</p>
+<h3>正反论证（为什么可信 / 哪里可能错）</h3>
+<p><strong>支持证据：</strong>作者身份可核（1915 年生于重庆忠县、西南联大中文系、长期在党政系统工作），所述时段具有良好的「在场」条件；多个版本的出版方提要都把本书定位为一手的「文本资料」。<span class="tag">二手 · 未亲读</span></p>
+<p><strong>反方与边界：</strong>一是记忆变形——多年后的回忆在日期、对话与时间顺序上都可能失真；二是位置偏差——一位省级干部的视角与地方基层的视角不同；三是版本问题——本页所据 AI 大纲对应版本未确认。三条都会削弱「书里每一条细节都照单全收」的读法。</p>
+<h3>可落地的 SMART 行动</h3>
+<ol>
+<li>开读前先确认手上的版本（1999 / 2018 / 2021），并把本书与该版本的 ISBN 记在笔记里 · <span class="tag">可衡量</span>1 条 ISBN 记录。</li>
+<li>读第 1—4 章时，把「作者亲历的句子」与「作者的解释/推测」分两栏摘录 · <span class="tag">可衡量</span>每章至少 2 条。</li>
+<li>读完前十章以前，不为本书下「代表性」评价；先完成与另一份材料的对照 · <span class="tag">可衡量</span>1 份对照记录。<span class="tag">推断 · 待亲读验证</span></li>
+</ol>
+<p class="src">依据与状态：上述行动由本页在未亲读前提下据公开书目与 AI 大纲推断设计，验证前提是实际开始阅读；未完成之前不宣称结论。</p>
+</section>
+<section aria-labelledby="selftest-title"><h2 id="selftest-title">读完自测 3 问</h2>
+<ol>
+<li><strong>这本书真正想回答的问题是什么？我用一句话说清了吗？</strong> <span class="tag">待亲读后自答</span>（当前可核提示：出版方把时段界定为 1966 年夏至 1979 年 1 月 25 日平反，主题是作者本人的经历与见闻；本机未读正文，不能代答。）</li>
+<li><strong>哪个判断我最不确定、需要回到原文哪一节验证？</strong> 目前最不确定的是第 1—3 章的归因链条，以及第 7 章的口号是否为当时记录；须亲读这两处后自答。</li>
+<li><strong>如果只能把一条洞见讲给三个月后的自己，是哪条？为什么？</strong> <span class="tag">待亲读后自答</span>（候选：亲历类材料要先问版本、再问记忆，最后才是共鸣；此候选属推断，未验证。）</li>
+</ol>
+<p class="src">自测依据：本书 AI 大纲 + 公开书目与百科条目（二手）· 未亲读，答案均留空待自答。</p>
+</section>
+<section class="card" aria-labelledby="review-title" data-source="review-cadence">
+<h2 id="review-title">复习与记忆复利</h2>
+<p class="notice">标记最值得复现的 1–3 个条目与建议复习时点；仅限已核实、属已读范围的内容，不把推断当需复习事实。</p>
+<ul>
+<li>📌 「不是我不想回来，是我回不来了。」（第一章 · 3「回不来了」，AI 大纲摘录） — <span class="tag">建议复习</span>亲读该节后，间隔 7 天复述一次<span class="tag">待验证</span></li>
+<li>📌 「我们不是反革命，我相信总有一天搞清楚」（第四章 · 家破人亡，AI 大纲摘录） — <span class="tag">建议复习</span>亲读该章后，间隔 14 天复述一次<span class="tag">待验证</span></li>
+<li>📌 第 7 章「窗口西洋景」下「广播大战」「游斗」「陈尸游行」三节收录的当时话语 — <span class="tag">建议复习</span>亲读后，间隔 30 天重看一次并复核原句<span class="tag">待验证</span></li>
+</ul>
+<p class="src">复习标记依据：均为 AI 大纲摘录、尚未逐字核验；复习时点由本页拟定，属推断 · 未亲读。</p>
+</section>
+<section><h2>来源与证据边界</h2><div class="card src">
+<p><strong>一手（本机实际取得）：</strong>本书微信读书 AI 大纲（outline.json / outline.md，101 个条目，含二十个章标题与小节标题）。全部结构性陈述与引句均出自此处，属自动生成，未经人工核对。</p>
+<p><strong>二手（2026-10-27 检索）：</strong><a href="https://book.cppinfo.cn/Encyclopedias/home/index?id=3271813">国家出版发行信息公共服务平台 · 马识途文集第十卷</a>；<a href="https://book.cppinfo.cn/Encyclopedias/home/index?id=3822289">同平台 · 精编版</a>；<a href="https://baike.baidu.com/item/%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/12171018">百度百科 · 沧桑十年（1999 年初版）</a>；<a href="https://baike.baidu.com/item/%E9%A9%AC%E8%AF%86%E9%80%94%E6%96%87%E9%9B%86%EF%BC%88%E7%B2%BE%E7%BC%96%E7%89%88%EF%BC%89%E6%B2%A7%E6%A1%91%E5%8D%81%E5%B9%B4/58651768">百度百科 · 精编版</a>；<a href="https://search.megbook.com.tw/mall/detail.jsp?proID=3620659">书籍销售页作者简介</a>。</p>
+<p><strong>边界：</strong>①未亲读正文，无实读时长与完读记录；②引句未经纸本逐字比对；③AI 大纲对应的具体版本未确认；④豆瓣评分为百科转引且样本小（46 人），不代表全部版本；⑤本页不评价书中所涉历史事件本身，只对作为一本书的内容作转述与出处标注。</p>
+</div></section>
+<section><h2>相关日期笔记</h2><ul><li>本书暂无已归档的日期笔记：本机未生成任何带日期的阅读记录，此处不补造链接。待首次实际阅读后补登。</li></ul></section>
+<section><h2>更新记录</h2><div class="card src"><p>2026-10-27 · 初版：由本书 AI 大纲 + 2026-10-27 检索到的书目与百科资料生成全书视角；AI 问书栏标注「AI 自主整理 · 非微信读书返回」；全部章节标未读，引句标待逐字核验；版本差异问题保留待核。</p></div></section>
+<p class="notice">本页为开读时建立的全书视角初版：二手信息与推断均带来源标签，未经亲读确认的部分待验证；完读后校订升级为 final.html。</p>
+
+</main></body></html>
