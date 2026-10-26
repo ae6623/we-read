@@ -3,6 +3,8 @@
 > 目的：消除"每次改样式都要重写所有 HTML"和"多 agent 改同一批文件互相覆盖"的痛点。
 > 适用范围：本仓库所有静态页面（index.html、reading-notes/、books/、notes/ 下的 *.html）。
 > 生效时间：2026-10-27 起。所有 agent（含 LuoYu、微信读书 agent）提交前必须遵守。
+>
+> **Agent 间前端协作沟通走 [frontend-a2a.md](frontend-a2a.md)**：git 提交事件监听，含 START / DONE / SKIP 协议。改前端文件前先 `python3 scripts/a2a_frontend_check.py --alias <你> --update` 看有没有写给自己的协调消息。
 
 ## 1. 核心铁律：禁止页面内联 CSS
 
