@@ -86,7 +86,7 @@
   });
 })();
 
-// 子 Tab：通读面板内的「全书视角 / 即将上线」切换（独立于顶层 Tab，避免互相干扰）
+// 子 Tab：通读面板内的「全书视角 / 即将上线」分段切换（独立于顶层 Tab，互不干扰）
 (() => {
   document.querySelectorAll('[data-subtablist]').forEach((list) => {
     const btns = [...list.querySelectorAll('button[data-subpanel]')];
@@ -96,10 +96,39 @@
       btns.forEach((b, j) => {
         const selected = j === i;
         b.setAttribute('aria-selected', String(selected));
+        b.tabIndex = selected ? 0 : -1;
         panels[j].hidden = !selected;
       });
     };
-    btns.forEach((b, i) => b.addEventListener('click', () => activate(i)));
+    list.setAttribute('role', 'tablist');
+    btns.forEach((b, i) => {
+      const panel = panels[i];
+      b.setAttribute('role', 'tab');
+      b.setAttribute('aria-controls', panel.id);
+      panel.setAttribute('role', 'tabpanel');
+      panel.setAttribute('aria-labelledby', b.id);
+      panel.tabIndex = 0;
+      // 自动统计该面板卡片数并注入徽标，避免硬编码随增删漂移
+      const n = panel.querySelectorAll('.archive-card').length;
+      if (n > 0 && !b.querySelector('.count')) {
+        const c = document.createElement('span');
+        c.className = 'count';
+        c.textContent = n;
+        b.appendChild(c);
+      }
+      b.addEventListener('click', () => activate(i));
+      b.addEventListener('keydown', (e) => {
+        let next;
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') next = (i + 1) % btns.length;
+        else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') next = (i - 1 + btns.length) % btns.length;
+        else if (e.key === 'Home') next = 0;
+        else if (e.key === 'End') next = btns.length - 1;
+        else return;
+        e.preventDefault();
+        activate(next);
+        btns[next].focus();
+      });
+    });
     activate(0);
   });
 })();

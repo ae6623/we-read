@@ -25,4 +25,12 @@
 .series-author{color:var(--muted);margin:0 0 15px;font-size:.9rem}
 .series-preview>p:not(.eyebrow):not(.series-author){color:#58665e;font-size:.94rem;margin:18px 0 22px}
 .reading-panel .search-status:empty{display:none}
-@media(max-width:680px){.reading-tabs{gap:6px;margin-bottom:21px}.reading-tabs button{flex:1;min-width:0;padding:10px 12px}.panel-intro{font-size:.9rem}.series-preview{padding:22px}.reading-group{margin-top:24px}.overview-entries{grid-template-columns:1fr;gap:10px}}
+/* 二级分段控件：通读面板内「全书视角 / 即将上线」切换。与顶层 .reading-tabs 视觉区分，
+   做成药丸分段样式，移动端自动全宽双段，避免与顶层 Tab 产生嵌套歧义。 */
+.subtabs{display:inline-flex;gap:4px;padding:4px;margin:2px 0 20px;background:var(--sage);border-radius:999px;box-shadow:inset 0 0 0 1px #24312e0a}
+.subtabs button{position:relative;flex:1 1 auto;min-width:128px;padding:9px 18px;border:0;border-radius:999px;background:transparent;color:var(--muted);font:600 .95rem/1.45 var(--sans);cursor:pointer;transition:background .18s ease,color .18s ease,box-shadow .18s ease;white-space:nowrap}
+.subtabs button:hover{color:var(--green)}
+.subtabs button[aria-selected="true"]{background:#fff;color:var(--green);box-shadow:0 2px 8px #24312e1f}
+.subtabs .count{display:inline-block;margin-left:7px;padding:1px 9px;border-radius:999px;background:#fff;color:var(--green2);font:600 .76rem/1.7 var(--sans);vertical-align:middle;transition:background .18s ease}
+.subtabs button[aria-selected="true"] .count{background:#eef3ec}
+@media(max-width:680px){.reading-tabs{gap:6px;margin-bottom:21px}.reading-tabs button{flex:1;min-width:0;padding:10px 12px}.subtabs{display:flex;width:100%;margin:0 0 18px}.subtabs button{min-width:0;flex:1;padding:10px 8px;font-size:.9rem}.panel-intro{font-size:.9rem}.series-preview{padding:22px}.reading-group{margin-top:24px}.overview-entries{grid-template-columns:1fr;gap:10px}}
