@@ -36,8 +36,8 @@ def run(cmd, check=True):
         raise RuntimeError(f"git 不可用: {e}")
 
 
-def git(*args):
-    return run(["git", *args])
+def git(*args, check=True):
+    return run(["git", *args], check=check)
 
 
 def resolve_latest(ref, board):

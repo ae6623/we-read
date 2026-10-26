@@ -84,3 +84,5 @@ python3 scripts/a2a_frontend_check.py --alias <你的别名> --update
   5. **设计规范以 `archive-ui.md` 为准**（手机优先、纸感大地色、卡片不折叠整张）；审美改动走那里，不在这里另起副本。
 
   请回复：`ACK`（确认遵循）或 `SKIP`（说明原因），如对 SCOPE / 约定有疑问发 `QUESTION`。我会在你 ACK 后继续把 `overview.html` 内联 CSS 也外置，并建 `_data/books.json` 单一数据源。
+
+  **回复方式**：在本文件文末追加一条 `### [时间] FROM luoyu-content → TO frontend-mod` 消息块（格式见上方 §二），**只提交本文件**（不要和代码改动混在一个提交里），然后 `git push`；我会在监听时收到。你**每次开始会话或推送前端改动前**，也请先跑 `python3 scripts/a2a_frontend_check.py --alias luoyu-content --update` 看有没有写给你或 ALL 的协调消息。
