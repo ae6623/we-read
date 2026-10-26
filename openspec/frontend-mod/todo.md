@@ -5,11 +5,13 @@
 也不替代 [frontend-a2a.md](../../skills/luoyu-reading/references/frontend-a2a.md)（跨 agent 协调）。
 
 > 协议：[todo-protocol.md](../../skills/luoyu-reading/references/todo-protocol.md) —— 开工前先登记、每步即提交。
-> 最后更新：2026-10-27 05:20（本文件每次动作后立即更新并单独提交）
+> 最后更新：2026-10-27 05:30（本文件每次动作后立即更新并单独提交）
 
 ## 当前状态
 
-- 基线提交：`b870d10`（fix-publish → main）。
+- 基线提交：`72313f8`（fix-publish → main）。
+- **待办制度已生效**：`todo-protocol.md` 定规则，`openspec/<角色>/todo.md` 落文件，A2A 板已发 `PROTOCOL` 通告（等 ACK）。
+- **工具链已装**：`openspec` 1.15.0（全局）+ `openspec/config.yaml` + `.codebuddy/`（6 技能 6 命令，已入库）；`superpowers` 15 技能装在 `~/.workbuddy/skills`，vendor 在 `~/.workbuddy/vendor/superpowers`。复现方式见 `tooling-setup.md`。
 - 全仓库 `overview.html` / `outline.html` / `final.html` 的 `<style>` 已归零，样式统一在 `assets/css/` 下：
   `site.css`、`reading-note.css`、`reading-note-rich.css`、`reading-overview.css`、`reading-outline.css`、`reading-outline-entry.css`、`homepage-reading.css`、`book-link-drawer.css`。
 - 内容已结构化：`_data/books/*.json` 78 本（2.1MB）；大纲节点不入 JSON，留在各书 `outline.json`。
@@ -18,9 +20,11 @@
 ## 待办
 
 ### P0 · 进行中
-- [ ] 建立 todo 前置制度：本文件 + `todo-protocol.md` + A2A 通告（本轮）
-- [ ] 安装工具链并写复现文档：`openspec` CLI（1.15.0，已装）+ `superpowers` 技能包（15 个，已装）→ 产出 `tooling-setup.md`
-- [ ] A2A 通告 `luoyu-content`：开工前先写 `openspec/luoyu-content/todo.md`，并要求其建该文件
+- [x] 建立 todo 前置制度：本文件 + `todo-protocol.md` + A2A 通告（`b870d10`→`72313f8`）
+- [x] 安装工具链并写复现文档：`openspec` CLI（1.15.0，已装）+ `superpowers` 技能包（15 个，已装）→ `tooling-setup.md`
+- [x] A2A 通告 `luoyu-content`：开工前先写 `openspec/luoyu-content/todo.md`，并要求其建该文件
+- [ ] **等 `luoyu-content` 回 ACK**（确认其已建自己的 todo.md、已装工具链）；超一轮无回应则用监听脚本复查并在板上再提醒
+- [ ] 监听任务复核：现有每小时 A2A 监听 automation 是否把「检查对方 todo 是否有新登记」纳入动作
 
 ### P1 · 等待用户拍板
 - [ ] 13 个「大纲入口页」缺官方 `outline.json` → `_data` 里这些书 `ai_outline` 为空。需内容侧补抓，或前端降级展示
@@ -45,6 +49,8 @@
 
 ## 已完成
 
+- 2026-10-27：`2026-10-27` 待办制度落地：`openspec/frontend-mod/todo.md` + `todo-protocol.md` + `openspec/README.md`；A2A `PROTOCOL` 通告已发。
+- 2026-10-27：`openspec` 1.15.0 安装并 init（`config.yaml`/`changes`/`specs`/`.codebuddy`）；`superpowers` 15 技能安装；`tooling-setup.md` 复现文档。
 - 2026-10-27：精读页 5 篇内联 CSS 外置（`reading-note(.rich).css`）。
 - 2026-10-27：outline 58 篇 + 13 篇入口页外置（`reading-outline(.entry).css`）。
 - 2026-10-27：通读「全书视角/即将上线」改独立分段控件 `.subtabs`（带计数/键盘/移动端）；71 处 `HTML`→`网页版`。
