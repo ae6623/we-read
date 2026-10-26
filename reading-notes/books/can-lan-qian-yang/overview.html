@@ -1,0 +1,612 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>灿烂千阳｜全书视角初版</title>
+<style>
+:root{color-scheme:light;--ink:#26342f;--muted:#697870;--paper:#f6f7f2;--card:#fff;--accent:#286b52;--line:#dfe6df}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.75 system-ui,-apple-system,"Segoe UI",sans-serif}.wrap{max-width:900px;margin:auto;padding:clamp(20px,5vw,56px)}.eyebrow{color:var(--accent);letter-spacing:.12em;font-size:.8rem;text-transform:uppercase}h1{line-height:1.2;font-size:clamp(2rem,5vw,3.4rem);margin:.4rem 0}h2{margin-top:2.2rem;font-size:1.35rem}.meta,.notice{color:var(--muted)}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:clamp(18px,3vw,30px);margin:18px 0}.tag{display:inline-block;border-radius:99px;background:#e6f0e9;color:var(--accent);padding:2px 10px;font-size:.8rem;margin:0 4px 4px 0}a{color:var(--accent)}ul{padding-left:1.3rem}.mindmap{white-space:pre-wrap;font-family:inherit}.src{font-size:.92rem}
+/* 章节导读：卡片分组 + 点标题下滑展开（2026-10-19 用户决定，与已发布笔记一致） */
+.toc-part{background:#fffefa;border:1px solid #e5e0d6;border-radius:14px;padding:14px 18px;margin:12px 0}
+.part-label{display:block;font:600 1rem/1.6 Georgia,"Songti SC",serif;color:#244b40;margin:0 0 6px}
+.ch-item{border-bottom:1px dashed #eee8dc}
+.ch-item:last-child{border-bottom:0}
+.ch-item summary{display:flex;gap:10px;align-items:baseline;padding:7px 0;cursor:pointer;list-style:none}
+.ch-item summary::-webkit-details-marker{display:none}
+.ch-no{color:#bf8247;font-weight:700;font-size:.82rem;min-width:48px;flex:none}
+.ch-t{flex:1;font-size:.92rem}
+.badge{font-size:.68rem;border-radius:6px;padding:1px 7px;font-weight:600;white-space:nowrap;flex:none}
+.badge[data-s="read"]{background:#e6f0e9;color:#286b52;border:1px solid #cbdace}
+.badge[data-s="reading"]{background:#f6edde;color:#805d36;border:1px solid #e6d4b8}
+.badge[data-s="unread"]{background:#f4f4f1;color:#8b8b84;border:1px solid #e4e4de}
+.caret{color:#69766f;font-size:1.05rem;flex:none;transition:transform .18s ease}
+.ch-item[open] .caret{transform:rotate(90deg)}
+.ch-body{padding:2px 0 12px 58px;animation:slideDown .2s ease}
+@keyframes slideDown{from{opacity:0;transform:translateY(-4px)}
+to{opacity:1;transform:none}
+}
+.ch-body p{margin:.3em 0}
+.ch-src{color:#69766f;font-size:.76rem}
+.ch-empty{color:#69766f;font-size:.8rem;margin:.2em 0 .4em}
+.ch-secs{margin:0;padding-left:1.15em;color:#5c574c;font-size:.8rem;line-height:1.75}
+.ch-secs li{margin:.1em 0}
+
+</style>
+</head>
+<body><main class="wrap">
+<p class="eyebrow">Whole-book perspective · first pass</p>
+<h1>灿烂千阳</h1>
+<p class="meta">[美] 卡勒德·胡赛尼（Khaled Hosseini） · 全书视角初版 · 创建于 2026-10-27 · 更新于 2026-10-27</p>
+<div class="card"><span class="tag">全书视角初版 · 含推断</span><span class="tag">尚未开读 · 亲读范围 0%</span><p>本书是美籍阿富汗裔作家卡勒德·胡赛尼的第二部长篇小说，英文版 2007 年 5 月 22 日在美国首发，中文版由上海人民出版社于 2007 年 9 月引进（据公开资料，待核）。本页依据本书 outline.json（微信读书 AI 大纲，52 个一级条目 / 1558 条，含卷首「评论」条目 + 四部分五十一章）与出版方资料建立。<strong>全书尚未开读，亲读范围 0%</strong>。来源：上海人民出版社版内容提要、中国出版传媒商报、豆瓣条目（均二手，2026-10-27 查）。</p></div>
+<section class="card" aria-labelledby="pre-read-fit-title" data-source="public-review-secondary">
+<h2 id="pre-read-fit-title">读前口碑与兴趣判断</h2>
+<p><span class="tag">公开评论 · 二手依据</span><strong>初步建议：值得继续</strong> · 理由：出版方与多家媒体把它定位为"阿富汗三十年历史的揪心记录"、"关于家庭、友谊、信念和自我救赎的动人故事"（《出版商周刊》，见上海人民出版社版内容提要）；《洛杉矶时报》称其"不愧是胡赛尼继《追风筝的人》后的又一佳作"。需要预先知道的是：它的主题是战争、贫困与家庭暴力，阅读体验沉重。</p>
+<p>写法：双女主并行——玛丽雅姆（私生女、1970 年代）与莱拉（1990 年代出生的少女）先后成为鞋匠拉希德的妻子，从对立到相依。时间跨度约四十年，以喀布尔的政治变动（苏联入侵、圣战组织内讧、塔利班、美军）为外部骨架。主要保留意见：①出版方与媒体评价带宣传性质；②有评论认为"绝望与微弱的希望同时呈现"（亚马逊年度之书评语），情感强度高，需要自己把握阅读节奏。</p>
+<p class="src">口碑来源：上海人民出版社版内容提要（引《出版商周刊》《洛杉矶时报》、亚马逊网站评语）；中国出版传媒商报《2007 年度美国 10 大畅销小说》；豆瓣条目（评分 8.9，二手）；诚品书页（榜单与销量口径）</p>
+<p class="notice">仅作读前兴趣匹配，不证明书中实际内容或已亲读；不只按评分决定。口碑分歧但仍想读时，先挑少量有代表性的章节短试。</p>
+</section>
+<section><h2>一句话主旨</h2><p>一句话：两个相差十九岁的阿富汗女性，先后嫁给同一个男人，在战乱、贫困与家庭暴力的夹缝里从互相敌视走到情同母女；而当其中一个用生命换取另一个的生路时，"不可宽恕的时代"里仍然保存着"不可能的友谊与不可毁灭的爱"。（来源：上海人民出版社版内容提要；本书 AI 大纲第三部分第 45–47 章条目）</p></section>
+<section><h2>全书结构与主题关系</h2><div class="card mindmap">灿烂千阳 · 卷首评论 + 四部分五十一章（据 AI 大纲条目）
+
+评论（卷首 1 条）· 《出版商周刊》《洛杉矶时报》、亚马逊年度之书评语
+
+第一部分 · 第一—十五章：玛丽雅姆
+  · 童年与娜娜 → 对扎里勒的期待 → 母亲自杀 → 被嫁给拉希德 → 喀布尔的新生活
+  · 斋月、怀孕与流产 → 喀布尔起义与政变
+
+第二部分 · 第十六—二十六章：莱拉
+  · 日常与校园 → 塔里克 → 父母双亡 → 苏联撤军 → 圣战组织内讧
+  · 与塔里克分离 → 轰炸中失去家园
+
+第三部分 · 第二十七—四十七章：同一屋檐下
+  · 玛丽雅姆照料莱拉 → 阿兹莎出生 → 塔利班统治 → 恤孤院 → 逃亡被遣返
+  · 拉希德的暴力升级 → 塔里克归来 → 玛丽雅姆的反抗与结局
+
+第四部分 · 第四十八—五十一章：之后
+  · 穆里的生活 → 马苏德之死 → 回到喀布尔 → 恤孤院重建
+
+注：大纲第 47 章为玛丽雅姆在瓦拉雅特女子监狱的最后一日，是全书的情感顶点。</div></section>
+<!-- 固定四项栏目：微信读书可用时，在本书 AI 对话一次输入并提交「书籍亮点+背景解读+关键概念+10个最佳金句语录」，不再逐个点击固定按钮；读取最终实际回答，不收录思考过程。逐项标来源、实际获取／整理时间和核验状态；缺项如实说明，不将提交等同取得。无平台 AI（含 Windows 本地 PDF）时基于已核实材料自主整理四项，显著标「AI 自主整理 · 非微信读书返回」。金句仅取可访问、可逐字核验且属于已读范围的短原文，实际几条写几条；不足说明原因，不凑十条，不从未读文本补引文，遵守全页累计短引限制。AI 内容不等于亲读，不改变阅读事实。本次只改未来模板，不回改旧笔记或现有 PR #34。 -->
+<section class="card" aria-labelledby="ai-ask-title" data-source="ai-ask-book">
+<h2 id="ai-ask-title">AI 问书</h2>
+<p><strong>合并提示词：</strong>书籍亮点+背景解读+关键概念+10个最佳金句语录</p>
+<p>实际来源与获取／整理时间：AI 自主整理 · 非微信读书返回（本沙箱连不上微信读书 AI 问答入口，未向平台提交提示词、也未取得任何平台答复，以下四项全部为本地按大纲与公开资料自行整理） · 整理时间 2026-10-27（本页生成日）；平台 AI 获取时间：无（入口不可用）</p>
+<p class="notice">待验证 · 全书尚未开读，以下四项为本机依据本书 AI 大纲与公开资料自主整理，既非微信读书 AI 返回，也非亲读结论。AI 输出不等于亲读事实，不改变实际覆盖、时长或完读状态；无平台答复时可按已核实材料自主整理并标明非微信读书返回，不得伪称取得。金句须另核原文，10条不是必须凑足的配额。</p>
+<h3>书籍亮点</h3><p>它把宏大的政治史（苏联入侵、圣战组织、塔利班、美军）全部压进一个屋檐下：外面的政权换了一轮又一轮，屋里两个女人的关系却从敌意走到互相托付。这种"大历史落到小屋子里"的写法，是它最有力量的地方。来源：本书 AI 大纲第二部分第 22–23 章、第三部分第 35、37–38 章条目。</p>
+<p class="muted">来源／获取或整理时间：本书 outline.json AI 大纲 + 公开权威资料 · 2026-10-27 自主整理；核验状态：待亲读逐字核验（AI 自主整理 · 非微信读书返回）</p>
+<h3>背景解读</h3><p>作者卡勒德·胡赛尼 1965 年生于阿富汗喀布尔，后随父亲迁往美国，毕业于加州大学圣地亚哥医学系，现居加州。著有《追风筝的人》（2003）、《灿烂千阳》（2007）、《群山回唱》（2013），作品全球销量超过 4000 万册。2006 年获联合国人道主义奖，并受邀担任联合国难民署亲善大使。本书英文版 2007 年 5 月 22 日在美国首发，上市一周销量突破 100 万册（该数字另有"首周 125 万"的说法，口径不一，待核）。书名取自描写喀布尔的诗句（见「核心观点初判」第二条）。来源：上海人民出版社版作者简介、中国出版传媒商报、诚品书页（均二手）。</p>
+<p class="muted">来源／获取或整理时间：公开权威资料（出版方书页／百科词条／图书馆书目／媒体书评）· 2026-10-27 查；核验状态：二手来源，待一手核验（AI 自主整理 · 非微信读书返回）</p>
+<h3>关键概念</h3><p>①哈拉米（私生子）：玛丽雅姆的身份标签，也是她一生处境的起点；②布卡：女性在公共空间被要求遮蔽的制度性符号，大纲第一部分第十一章专门写了"玛丽雅姆在拉希德的帮助下适应布卡生活"；③忍耐：出版方内容提要称之为"一部阿富汗忍耐的历史"，是全书对两位女性的核心描述；④不可宽恕的时代、不可能的友谊、不可毁灭的爱：出版方对该书的三重定位；⑤外部政治的时间轴：苏联入侵与撤军（大纲第二部分第 22 章）、圣战组织内讧（第 23 章）、塔利班统治（第 37–38 章）、马苏德之死（第 49 章）。来源：本书 AI 大纲各章条目、上海人民出版社版内容提要。</p>
+<p class="muted">来源／获取或整理时间：本书 outline.json AI 大纲 + 出版方内容提要 · 2026-10-27 自主整理；核验状态：待亲读逐字核验（AI 自主整理 · 非微信读书返回）</p>
+<h3 id="ai-quotes-title">10个最佳金句语录</h3>
+<p class="muted">来源／获取或整理时间：本书 outline.json AI 大纲条目转引 · 2026-10-27 自主整理（非微信读书 AI 返回）；核验状态：待亲读逐字核验（未与纸本／电子原文比对）；已核验 0/10 · 已读范围：0%（全书尚未开读，本仓库无本书的日期笔记与阅读记录）</p>
+<!-- 逐字核验后按实际数量重复 li，不能照抄AI候选或留十条占位。无可核句时删除 ol，保留本小节及真实原因（不显示空列表）；已有原文 Top 10 的同句可用真实锚点交叉引用代替重复摘录，两个栏目不是各十条的配额。 -->
+<ol class="excerpt-list">
+<li><figure><blockquote><p>他抓过她的手，掰开她的指头，在她的掌心放了一把小石头。</p></blockquote><figcaption>原文出处：<cite>第一部分 · 第十五章 · 玛丽雅姆和拉希德的日常生活</cite> · 大纲条目原句</figcaption></figure>
+<p class="muted">原文来源及逐字核验：本书 outline.json AI 大纲条目转引 · 2026-10-27 自主整理（非微信读书 AI 返回）</p>
+<p><strong>入选理由（分析）：</strong>与第 37 章"如果你们通奸被发现，将会被石头投掷至死"形成全书最冷的呼应——私刑与公刑用了同一种东西。</p></li>
+<li><figure><blockquote><p>娜娜曾说过，像她这样的哈拉米永远得不到幸福，但在这种新生活中，她也许能找得到。</p></blockquote><figcaption>原文出处：<cite>第三部分 · 第三十五章 · 玛丽雅姆和莱拉共同做家务活</cite> · 大纲条目原句</figcaption></figure>
+<p class="muted">原文来源及逐字核验：本书 outline.json AI 大纲条目转引 · 2026-10-27 自主整理（非微信读书 AI 返回）</p>
+<p><strong>入选理由（分析）：</strong>母亲的诅咒第一次被当事人自己松动，是玛丽雅姆这条线的转折点。</p></li>
+<li><figure><blockquote><p>如果你们通奸被发现，将会被石头投掷至死。</p></blockquote><figcaption>原文出处：<cite>第三部分 · 第三十七章 · 玛丽雅姆和家人的经历</cite> · 大纲条目原句（塔利班的告示）</figcaption></figure>
+<p class="muted">原文来源及逐字核验：本书 outline.json AI 大纲条目转引 · 2026-10-27 自主整理（非微信读书 AI 返回）</p>
+<p><strong>入选理由（分析）：</strong>一句话把法律、宗教与性别压迫压到一起，也让第 15 章那把小石头有了回响。</p></li>
+</ol>
+<p class="muted">本页只收录 3 条可在本书 AI 大纲中逐字定位的短原文，它们属于大纲转引、尚未与纸本／电子原文比对，因此「已核验」计 0 条；10 条不是必须凑足的配额，不为凑数从未读文本补引文。本书为中译本（李继宏等译本，译名与句式版本差异大），回中译本逐字核对前不计入已核验；书名的出处诗句流传甚广，但本页未在大纲中定位到完整条目，故不收录、不臆补。</p>
+</section>
+<section aria-labelledby="chapter-guide-title"><h2 id="chapter-guide-title">章节导读 · 初版</h2>
+<!-- 导航口径（2026-10-19）：按核实目录的部／章／小节层级，每个部一个 .toc-part；每章用 details.ch-item 包住，点标题下滑展开导读。无章节用真实帖子／文章／小节标题，不造标题、编号或层级，不以页码导航。标题下紧接 1–2 句说明讨论什么／在全书中起什么作用，逐项附来源与亲读状态：仅凭标题判断标「综合推断 · 初步导读，待亲读验证」，依据不足写「导读待阅读后补充」，已亲读标「亲读」并用 data-s="read"。未读不写成亲读，目录未知明确说明，不补造全书目录；无可确认条目时删除示例。 -->
+<div class="toc-part">
+<span class="part-label">评论</span>
+<details class="ch-item">
+<summary><span class="ch-no"></span><span class="ch-t">评论</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未读到本章。下列小节取自本书 AI 大纲条目（微信读书 AI 读书生成，非出版方目录），供先看结构；导读待亲读后补充，不据标题推测内容。</p><ol class="ch-secs"><li>《灿烂千阳》的评论概述</li></ol>
+<p><strong>推断 · 目录导向：</strong>本章标题指向「评论」。待亲读验证的问题：它在全书主线里承担哪一步？作者为它提供了哪些可核对的论证、情节或材料支撑？</p>
+<p class="ch-src">来源与依据：本书 outline.json AI 大纲条目 · 未读 · 推断 · 初步导读，待亲读验证</p>
+</div>
+</details>
+</div>
+<div class="toc-part">
+<span class="part-label">第一部分</span>
+<details class="ch-item">
+<summary><span class="ch-no">第一章</span><span class="ch-t">玛丽雅姆的童年生活</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未读到本章。下列小节取自本书 AI 大纲条目（微信读书 AI 读书生成，非出版方目录），供先看结构；导读待亲读后补充，不据标题推测内容。</p><ol class="ch-secs"><li>玛丽雅姆的童年生活</li><li>玛丽雅姆对扎里勒的爱</li><li>娜娜对玛丽雅姆的歧视</li><li>玛丽雅姆的处境</li></ol>
+<p><strong>推断 · 目录导向：</strong>本章标题指向「玛丽雅姆的童年生活」。待亲读验证的问题：它在全书主线里承担哪一步？作者为它提供了哪些可核对的论证、情节或材料支撑？</p>
+<p class="ch-src">来源与依据：本书 outline.json AI 大纲条目 · 未读 · 推断 · 初步导读，待亲读验证</p>
+</div>
+</details>
+<details class="ch-item">
+<summary><span class="ch-no">第二章</span><span class="ch-t">娜娜对玛丽雅姆的出生和成长的不满</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未读到本章。下列小节取自本书 AI 大纲条目（微信读书 AI 读书生成，非出版方目录），供先看结构；导读待亲读后补充，不据标题推测内容。</p><ol class="ch-secs"><li>娜娜对玛丽雅姆的出生和成长的不满</li><li>娜娜的怀孕和分娩经历</li><li>玛丽雅姆对母亲和父亲的怀疑</li></ol>
+<p><strong>推断 · 目录导向：</strong>本章标题指向「娜娜对玛丽雅姆的出生和成长的不满」。待亲读验证的问题：它在全书主线里承担哪一步？作者为它提供了哪些可核对的论证、情节或材料支撑？</p>
+<p class="ch-src">来源与依据：本书 outline.json AI 大纲条目 · 未读 · 推断 · 初步导读，待亲读验证</p>
+</div>
+</details>
+<details class="ch-item">
+<summary><span class="ch-no">第三章</span><span class="ch-t">玛丽雅姆的童年生活</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未读到本章。下列小节取自本书 AI 大纲条目（微信读书 AI 读书生成，非出版方目录），供先看结构；导读待亲读后补充，不据标题推测内容。</p><ol class="ch-secs"><li>玛丽雅姆的童年生活</li><li>娜娜的形象与态度</li><li>法苏拉赫毛拉与玛丽雅姆的关系</li><li>玛丽雅姆对上学的渴望</li></ol>
+<p><strong>推断 · 目录导向：</strong>本章标题指向「玛丽雅姆的童年生活」。待亲读验证的问题：它在全书主线里承担哪一步？作者为它提供了哪些可核对的论证、情节或材料支撑？</p>
+<p class="ch-src">来源与依据：本书 outline.json AI 大纲条目 · 未读 · 推断 · 初步导读，待亲读验证</p>
+</div>
+</details>
+<details class="ch-item">
+<summary><span class="ch-no">第四章</span><span class="ch-t">玛丽雅姆对扎里勒的期待</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未读到本章。下列小节取自本书 AI 大纲条目（微信读书 AI 读书生成，非出版方目录），供先看结构；导读待亲读后补充，不据标题推测内容。</p><ol class="ch-secs"><li>玛丽雅姆对扎里勒的期待</li><li>玛丽雅姆与扎里勒的相处</li><li>玛丽雅姆对扎里勒的思念</li></ol>
+<p><strong>推断 · 目录导向：</strong>本章标题指向「玛丽雅姆对扎里勒的期待」。待亲读验证的问题：它在全书主线里承担哪一步？作者为它提供了哪些可核对的论证、情节或材料支撑？</p>
+<p class="ch-src">来源与依据：本书 outline.json AI 大纲条目 · 未读 · 推断 · 初步导读，待亲读验证</p>
+</div>
+</details>
+<details class="ch-item">
+<summary><span class="ch-no">第五章</span><span class="ch-t">玛丽雅姆的渴望与期待</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未读到本章。下列小节取自本书 AI 大纲条目（微信读书 AI 读书生成，非出版方目录），供先看结构；导读待亲读后补充，不据标题推测内容。</p><ol class="ch-secs"><li>玛丽雅姆的渴望与期待</li><li>娜娜的反对与威胁</li><li>玛丽雅姆的决定与行动</li><li>玛丽雅姆的反思与感悟</li></ol>
+<p><strong>推断 · 目录导向：</strong>本章标题指向「玛丽雅姆的渴望与期待」。待亲读验证的问题：它在全书主线里承担哪一步？作者为它提供了哪些可核对的论证、情节或材料支撑？</p>
+<p class="ch-src">来源与依据：本书 outline.json AI 大纲条目 · 未读 · 推断 · 初步导读，待亲读验证</p>
+</div>
+</details>
+<details class="ch-item">
+<summary><span class="ch-no">第六章</span><span class="ch-t">玛丽雅姆在古尔德曼村墓地的悲痛</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未读到本章。下列小节取自本书 AI 大纲条目（微信读书 AI 读书生成，非出版方目录），供先看结构；导读待亲读后补充，不据标题推测内容。</p><ol class="ch-secs"><li>玛丽雅姆在古尔德曼村墓地的悲痛</li><li>玛丽雅姆在新家的生活</li><li>妮洛法尔和玛丽雅姆的交流</li><li>碧碧来看望玛丽雅姆</li><li>法苏拉赫毛拉来访</li></ol>
+<p><strong>推断 · 目录导向：</strong>本章标题指向「玛丽雅姆在古尔德曼村墓地的悲痛」。待亲读验证的问题：它在全书主线里承担哪一步？作者为它提供了哪些可核对的论证、情节或材料支撑？</p>
+<p class="ch-src">来源与依据：本书 outline.json AI 大纲条目 · 未读 · 推断 · 初步导读，待亲读验证</p>
+</div>
+</details>
+<details class="ch-item">
+<summary><span class="ch-no">第七章</span><span class="ch-t">玛丽雅姆被求婚</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未读到本章。下列小节取自本书 AI 大纲条目（微信读书 AI 读书生成，非出版方目录），供先看结构；导读待亲读后补充，不据标题推测内容。</p><ol class="ch-secs"><li>玛丽雅姆被求婚</li><li>扎里勒和妻子的劝说</li><li>玛丽雅姆的绝望</li></ol>
+<p><strong>推断 · 目录导向：</strong>本章标题指向「玛丽雅姆被求婚」。待亲读验证的问题：它在全书主线里承担哪一步？作者为它提供了哪些可核对的论证、情节或材料支撑？</p>
+<p class="ch-src">来源与依据：本书 outline.json AI 大纲条目 · 未读 · 推断 · 初步导读，待亲读验证</p>
+</div>
+</details>
+<details class="ch-item">
+<summary><span class="ch-no">第八章</span><span class="ch-t">玛丽雅姆的婚礼</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未读到本章。下列小节取自本书 AI 大纲条目（微信读书 AI 读书生成，非出版方目录），供先看结构；导读待亲读后补充，不据标题推测内容。</p><ol class="ch-secs"><li>玛丽雅姆的婚礼</li></ol>
+<p><strong>推断 · 目录导向：</strong>本章标题指向「玛丽雅姆的婚礼」。待亲读验证的问题：它在全书主线里承担哪一步？作者为它提供了哪些可核对的论证、情节或材料支撑？</p>
+<p class="ch-src">来源与依据：本书 outline.json AI 大纲条目 · 未读 · 推断 · 初步导读，待亲读验证</p>
+</div>
+</details>
+<details class="ch-item">
+<summary><span class="ch-no">第九章</span><span class="ch-t">玛丽雅姆到达拉希德家</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未读到本章。下列小节取自本书 AI 大纲条目（微信读书 AI 读书生成，非出版方目录），供先看结构；导读待亲读后补充，不据标题推测内容。</p><ol class="ch-secs"><li>玛丽雅姆到达拉希德家</li><li>玛丽雅姆在拉希德家的感受</li><li>拉希德对玛丽雅姆的态度</li></ol>
+<p><strong>推断 · 目录导向：</strong>本章标题指向「玛丽雅姆到达拉希德家」。待亲读验证的问题：它在全书主线里承担哪一步？作者为它提供了哪些可核对的论证、情节或材料支撑？</p>
+<p class="ch-src">来源与依据：本书 outline.json AI 大纲条目 · 未读 · 推断 · 初步导读，待亲读验证</p>
+</div>
+</details>
+<details class="ch-item">
+<summary><span class="ch-no">第十章</span><span class="ch-t">玛丽雅姆在新家的生活</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未读到本章。下列小节取自本书 AI 大纲条目（微信读书 AI 读书生成，非出版方目录），供先看结构；导读待亲读后补充，不据标题推测内容。</p><ol class="ch-secs"><li>玛丽雅姆在新家的生活</li><li>拉希德对玛丽雅姆的期待和要求</li><li>玛丽雅姆在公共场合的遭遇</li><li>玛丽雅姆的第一次烹饪尝试</li></ol>
+<p><strong>推断 · 目录导向：</strong>本章标题指向「玛丽雅姆在新家的生活」。待亲读验证的问题：它在全书主线里承担哪一步？作者为它提供了哪些可核对的论证、情节或材料支撑？</p>
+<p class="ch-src">来源与依据：本书 outline.json AI 大纲条目 · 未读 · 推断 · 初步导读，待亲读验证</p>
+</div>
+</details>
+<details class="ch-item">
+<summary><span class="ch-no">第十一章</span><span class="ch-t">玛丽雅姆在拉希德的帮助下适应布卡生活</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未读到本章。下列小节取自本书 AI 大纲条目（微信读书 AI 读书生成，非出版方目录），供先看结构；导读待亲读后补充，不据标题推测内容。</p><ol class="ch-secs"><li>玛丽雅姆在拉希德的帮助下适应布卡生活</li><li>玛丽雅姆对喀布尔城市生活的惊奇和感受</li><li>玛丽雅姆与拉希德的关系和冲突</li></ol>
+<p><strong>推断 · 目录导向：</strong>本章标题指向「玛丽雅姆在拉希德的帮助下适应布卡生活」。待亲读验证的问题：它在全书主线里承担哪一步？作者为它提供了哪些可核对的论证、情节或材料支撑？</p>
+<p class="ch-src">来源与依据：本书 outline.json AI 大纲条目 · 未读 · 推断 · 初步导读，待亲读验证</p>
+</div>
+</details>
+<details class="ch-item">
+<summary><span class="ch-no">第十二章</span><span class="ch-t">玛丽雅姆的斋月经历</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未读到本章。下列小节取自本书 AI 大纲条目（微信读书 AI 读书生成，非出版方目录），供先看结构；导读待亲读后补充，不据标题推测内容。</p><ol class="ch-secs"><li>玛丽雅姆的斋月经历</li><li>开斋节的庆祝</li><li>拉希德和玛丽雅姆的关系</li><li>玛丽雅姆对拉希德房间的窥探</li><li>玛丽雅姆对拉希德和扎里勒的反思</li></ol>
+<p><strong>推断 · 目录导向：</strong>本章标题指向「玛丽雅姆的斋月经历」。待亲读验证的问题：它在全书主线里承担哪一步？作者为它提供了哪些可核对的论证、情节或材料支撑？</p>
+<p class="ch-src">来源与依据：本书 outline.json AI 大纲条目 · 未读 · 推断 · 初步导读，待亲读验证</p>
+</div>
+</details>
+<details class="ch-item">
+<summary><span class="ch-no">第十三章</span><span class="ch-t">玛丽雅姆怀孕的喜悦与担忧</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未读到本章。下列小节取自本书 AI 大纲条目（微信读书 AI 读书生成，非出版方目录），供先看结构；导读待亲读后补充，不据标题推测内容。</p><ol class="ch-secs"><li>玛丽雅姆怀孕的喜悦与担忧</li><li>玛丽雅姆对家庭生活的憧憬</li><li>玛丽雅姆的流产经历</li><li>玛丽雅姆的绝望与期待</li></ol>
+<p><strong>推断 · 目录导向：</strong>本章标题指向「玛丽雅姆怀孕的喜悦与担忧」。待亲读验证的问题：它在全书主线里承担哪一步？作者为它提供了哪些可核对的论证、情节或材料支撑？</p>
+<p class="ch-src">来源与依据：本书 outline.json AI 大纲条目 · 未读 · 推断 · 初步导读，待亲读验证</p>
+</div>
+</details>
+<details class="ch-item">
+<summary><span class="ch-no">第十四章</span><span class="ch-t">玛丽雅姆的悲哀</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未读到本章。下列小节取自本书 AI 大纲条目（微信读书 AI 读书生成，非出版方目录），供先看结构；导读待亲读后补充，不据标题推测内容。</p><ol class="ch-secs"><li>玛丽雅姆的悲哀</li><li>玛丽雅姆的内心矛盾</li><li>玛丽雅姆的葬礼决定</li></ol>
+<p><strong>推断 · 目录导向：</strong>本章标题指向「玛丽雅姆的悲哀」。待亲读验证的问题：它在全书主线里承担哪一步？作者为它提供了哪些可核对的论证、情节或材料支撑？</p>
+<p class="ch-src">来源与依据：本书 outline.json AI 大纲条目 · 未读 · 推断 · 初步导读，待亲读验证</p>
+</div>
+</details>
+<details class="ch-item">
+<summary><span class="ch-no">第十五章</span><span class="ch-t">玛丽雅姆和拉希德的日常生活</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未读到本章。下列小节取自本书 AI 大纲条目（微信读书 AI 读书生成，非出版方目录），供先看结构；导读待亲读后补充，不据标题推测内容。</p><ol class="ch-secs"><li>玛丽雅姆和拉希德的日常生活</li><li>喀布尔起义和政变</li><li>玛丽雅姆的恐惧和绝望</li></ol>
+<p><strong>推断 · 目录导向：</strong>本章标题指向「玛丽雅姆和拉希德的日常生活」。待亲读验证的问题：它在全书主线里承担哪一步？作者为它提供了哪些可核对的论证、情节或材料支撑？</p>
+<p class="ch-src">来源与依据：本书 outline.json AI 大纲条目 · 未读 · 推断 · 初步导读，待亲读验证</p>
+</div>
+</details>
+</div>
+<div class="toc-part">
+<span class="part-label">第二部分</span>
+<details class="ch-item">
+<summary><span class="ch-no">第十六章</span><span class="ch-t">莱拉的日常</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未读到本章。下列小节取自本书 AI 大纲条目（微信读书 AI 读书生成，非出版方目录），供先看结构；导读待亲读后补充，不据标题推测内容。</p><ol class="ch-secs"><li>莱拉的日常</li><li>莱拉的家庭</li><li>莱拉的学校生活</li><li>莱拉的思考和感受</li></ol>
+<p><strong>推断 · 目录导向：</strong>本章标题指向「莱拉的日常」。待亲读验证的问题：它在全书主线里承担哪一步？作者为它提供了哪些可核对的论证、情节或材料支撑？</p>
+<p class="ch-src">来源与依据：本书 outline.json AI 大纲条目 · 未读 · 推断 · 初步导读，待亲读验证</p>
+</div>
+</details>
+<details class="ch-item">
+<summary><span class="ch-no">第十七章</span><span class="ch-t">卡迪姆的欺凌</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未读到本章。下列小节取自本书 AI 大纲条目（微信读书 AI 读书生成，非出版方目录），供先看结构；导读待亲读后补充，不据标题推测内容。</p><ol class="ch-secs"><li>卡迪姆的欺凌</li><li>莱拉的痛苦</li><li>妈妈的回忆和期待</li></ol>
+<p><strong>推断 · 目录导向：</strong>本章标题指向「卡迪姆的欺凌」。待亲读验证的问题：它在全书主线里承担哪一步？作者为它提供了哪些可核对的论证、情节或材料支撑？</p>
+<p class="ch-src">来源与依据：本书 outline.json AI 大纲条目 · 未读 · 推断 · 初步导读，待亲读验证</p>
+</div>
+</details>
+<details class="ch-item">
+<summary><span class="ch-no">第十八章</span><span class="ch-t">莱拉在塔里克家的生活</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未读到本章。下列小节取自本书 AI 大纲条目（微信读书 AI 读书生成，非出版方目录），供先看结构；导读待亲读后补充，不据标题推测内容。</p><ol class="ch-secs"><li>莱拉在塔里克家的生活</li><li>莱拉和塔里克的友谊</li><li>塔里克帮助莱拉解决了问题</li></ol>
+<p><strong>推断 · 目录导向：</strong>本章标题指向「莱拉在塔里克家的生活」。待亲读验证的问题：它在全书主线里承担哪一步？作者为它提供了哪些可核对的论证、情节或材料支撑？</p>
+<p class="ch-src">来源与依据：本书 outline.json AI 大纲条目 · 未读 · 推断 · 初步导读，待亲读验证</p>
+</div>
+</details>
+<details class="ch-item">
+<summary><span class="ch-no">第十九章</span><span class="ch-t">莱拉的家庭遭遇变故</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未读到本章。下列小节取自本书 AI 大纲条目（微信读书 AI 读书生成，非出版方目录），供先看结构；导读待亲读后补充，不据标题推测内容。</p><ol class="ch-secs"><li>莱拉的家庭遭遇变故</li><li>莱拉对父母去世的反应</li><li>莱拉对家庭变故的处理</li></ol>
+<p><strong>推断 · 目录导向：</strong>本章标题指向「莱拉的家庭遭遇变故」。待亲读验证的问题：它在全书主线里承担哪一步？作者为它提供了哪些可核对的论证、情节或材料支撑？</p>
+<p class="ch-src">来源与依据：本书 outline.json AI 大纲条目 · 未读 · 推断 · 初步导读，待亲读验证</p>
+</div>
+</details>
+<details class="ch-item">
+<summary><span class="ch-no">第二十章</span><span class="ch-t">妈妈的病痛和困境</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未读到本章。下列小节取自本书 AI 大纲条目（微信读书 AI 读书生成，非出版方目录），供先看结构；导读待亲读后补充，不据标题推测内容。</p><ol class="ch-secs"><li>妈妈的病痛和困境</li><li>莱拉的责任和负担</li><li>妈妈对儿子的思念和期待</li><li>莱拉对妈妈的担忧和矛盾</li></ol>
+<p><strong>推断 · 目录导向：</strong>本章标题指向「妈妈的病痛和困境」。待亲读验证的问题：它在全书主线里承担哪一步？作者为它提供了哪些可核对的论证、情节或材料支撑？</p>
+<p class="ch-src">来源与依据：本书 outline.json AI 大纲条目 · 未读 · 推断 · 初步导读，待亲读验证</p>
+</div>
+</details>
+<details class="ch-item">
+<summary><span class="ch-no">第二十一章</span><span class="ch-t">旅行的开始和对阿富汗的期待</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未读到本章。下列小节取自本书 AI 大纲条目（微信读书 AI 读书生成，非出版方目录），供先看结构；导读待亲读后补充，不据标题推测内容。</p><ol class="ch-secs"><li>旅行的开始和对阿富汗的期待</li><li>巴米扬峡谷的壮丽和历史</li><li>爸爸对阿富汗的思念和对未来的期待</li><li>爸爸和莱拉在巴米扬峡谷的感悟</li></ol>
+<p><strong>推断 · 目录导向：</strong>本章标题指向「旅行的开始和对阿富汗的期待」。待亲读验证的问题：它在全书主线里承担哪一步？作者为它提供了哪些可核对的论证、情节或材料支撑？</p>
+<p class="ch-src">来源与依据：本书 outline.json AI 大纲条目 · 未读 · 推断 · 初步导读，待亲读验证</p>
+</div>
+</details>
+<details class="ch-item">
+<summary><span class="ch-no">第二十二章</span><span class="ch-t">莱拉和家人观看苏联军队撤出阿富汗</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未读到本章。下列小节取自本书 AI 大纲条目（微信读书 AI 读书生成，非出版方目录），供先看结构；导读待亲读后补充，不据标题推测内容。</p><ol class="ch-secs"><li>莱拉和家人观看苏联军队撤出阿富汗</li><li>塔里克和莱拉的对话与观影体验</li></ol>
+<p><strong>推断 · 目录导向：</strong>本章标题指向「莱拉和家人观看苏联军队撤出阿富汗」。待亲读验证的问题：它在全书主线里承担哪一步？作者为它提供了哪些可核对的论证、情节或材料支撑？</p>
+<p class="ch-src">来源与依据：本书 outline.json AI 大纲条目 · 未读 · 推断 · 初步导读，待亲读验证</p>
+</div>
+</details>
+<details class="ch-item">
+<summary><span class="ch-no">第二十三章</span><span class="ch-t">塔里克的父亲和哈西娜的情况</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未读到本章。下列小节取自本书 AI 大纲条目（微信读书 AI 读书生成，非出版方目录），供先看结构；导读待亲读后补充，不据标题推测内容。</p><ol class="ch-secs"><li>塔里克的父亲和哈西娜的情况</li><li>苏联分崩离析和圣战运动的结束</li><li>妈妈的宴会和莱拉的心情</li><li>塔里克的变化和他们的关系</li><li>圣战组织的内讧和阿富汗的混乱局面</li></ol>
+<p><strong>推断 · 目录导向：</strong>本章标题指向「塔里克的父亲和哈西娜的情况」。待亲读验证的问题：它在全书主线里承担哪一步？作者为它提供了哪些可核对的论证、情节或材料支撑？</p>
+<p class="ch-src">来源与依据：本书 outline.json AI 大纲条目 · 未读 · 推断 · 初步导读，待亲读验证</p>
+</div>
+</details>
+<details class="ch-item">
+<summary><span class="ch-no">第二十四章</span><span class="ch-t">莱拉和塔里克的生活</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未读到本章。下列小节取自本书 AI 大纲条目（微信读书 AI 读书生成，非出版方目录），供先看结构；导读待亲读后补充，不据标题推测内容。</p><ol class="ch-secs"><li>莱拉和塔里克的生活</li><li>莱拉对战争和暴力的感受</li><li>莱拉和爸爸的关系</li></ol>
+<p><strong>推断 · 目录导向：</strong>本章标题指向「莱拉和塔里克的生活」。待亲读验证的问题：它在全书主线里承担哪一步？作者为它提供了哪些可核对的论证、情节或材料支撑？</p>
+<p class="ch-src">来源与依据：本书 outline.json AI 大纲条目 · 未读 · 推断 · 初步导读，待亲读验证</p>
+</div>
+</details>
+<details class="ch-item">
+<summary><span class="ch-no">第二十五章</span><span class="ch-t">莱拉与塔里克的关系破裂</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未读到本章。下列小节取自本书 AI 大纲条目（微信读书 AI 读书生成，非出版方目录），供先看结构；导读待亲读后补充，不据标题推测内容。</p><ol class="ch-secs"><li>莱拉与塔里克的关系破裂</li><li>莱拉与塔里克在离别前的亲密时刻</li><li>塔里克离开后莱拉的心情</li></ol>
+<p><strong>推断 · 目录导向：</strong>本章标题指向「莱拉与塔里克的关系破裂」。待亲读验证的问题：它在全书主线里承担哪一步？作者为它提供了哪些可核对的论证、情节或材料支撑？</p>
+<p class="ch-src">来源与依据：本书 outline.json AI 大纲条目 · 未读 · 推断 · 初步导读，待亲读验证</p>
+</div>
+</details>
+<details class="ch-item">
+<summary><span class="ch-no">第二十六章</span><span class="ch-t">莱拉在喀布尔的炎热夏天</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未读到本章。下列小节取自本书 AI 大纲条目（微信读书 AI 读书生成，非出版方目录），供先看结构；导读待亲读后补充，不据标题推测内容。</p><ol class="ch-secs"><li>莱拉在喀布尔的炎热夏天</li><li>莱拉内心的战争</li><li>莱拉的家庭决定离开喀布尔</li><li>莱拉收拾物品，准备离开</li><li>莱拉在轰炸中的经历</li></ol>
+<p><strong>推断 · 目录导向：</strong>本章标题指向「莱拉在喀布尔的炎热夏天」。待亲读验证的问题：它在全书主线里承担哪一步？作者为它提供了哪些可核对的论证、情节或材料支撑？</p>
+<p class="ch-src">来源与依据：本书 outline.json AI 大纲条目 · 未读 · 推断 · 初步导读，待亲读验证</p>
+</div>
+</details>
+</div>
+<div class="toc-part">
+<span class="part-label">第三部分</span>
+<details class="ch-item">
+<summary><span class="ch-no">第二十七章</span><span class="ch-t">玛丽雅姆和女孩的相遇及照顾</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未读到本章。下列小节取自本书 AI 大纲条目（微信读书 AI 读书生成，非出版方目录），供先看结构；导读待亲读后补充，不据标题推测内容。</p><ol class="ch-secs"><li>玛丽雅姆和女孩的相遇及照顾</li><li>女孩的康复及回忆</li><li>阿卜杜拉·沙里夫的来访</li></ol>
+<p><strong>推断 · 目录导向：</strong>本章标题指向「玛丽雅姆和女孩的相遇及照顾」。待亲读验证的问题：它在全书主线里承担哪一步？作者为它提供了哪些可核对的论证、情节或材料支撑？</p>
+<p class="ch-src">来源与依据：本书 outline.json AI 大纲条目 · 未读 · 推断 · 初步导读，待亲读验证</p>
+</div>
+</details>
+<details class="ch-item">
+<summary><span class="ch-no">第二十八章</span><span class="ch-t">阿卜杜拉·沙里夫的自我介绍</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未读到本章。下列小节取自本书 AI 大纲条目（微信读书 AI 读书生成，非出版方目录），供先看结构；导读待亲读后补充，不据标题推测内容。</p><ol class="ch-secs"><li>阿卜杜拉·沙里夫的自我介绍</li><li>阿卜杜拉·沙里夫讲述穆罕默德·塔里克·瓦里扎伊的遭遇</li><li>莱拉得知塔里克去世的消息</li></ol>
+<p><strong>推断 · 目录导向：</strong>本章标题指向「阿卜杜拉·沙里夫的自我介绍」。待亲读验证的问题：它在全书主线里承担哪一步？作者为它提供了哪些可核对的论证、情节或材料支撑？</p>
+<p class="ch-src">来源与依据：本书 outline.json AI 大纲条目 · 未读 · 推断 · 初步导读，待亲读验证</p>
+</div>
+</details>
+<details class="ch-item">
+<summary><span class="ch-no">第二十九章</span><span class="ch-t">拉希德对玛丽雅姆的态度和看法</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未读到本章。下列小节取自本书 AI 大纲条目（微信读书 AI 读书生成，非出版方目录），供先看结构；导读待亲读后补充，不据标题推测内容。</p><ol class="ch-secs"><li>拉希德对玛丽雅姆的态度和看法</li><li>玛丽雅姆对拉希德的态度和看法</li><li>拉希德和玛丽雅姆的对话和决定</li></ol>
+<p><strong>推断 · 目录导向：</strong>本章标题指向「拉希德对玛丽雅姆的态度和看法」。待亲读验证的问题：它在全书主线里承担哪一步？作者为它提供了哪些可核对的论证、情节或材料支撑？</p>
+<p class="ch-src">来源与依据：本书 outline.json AI 大纲条目 · 未读 · 推断 · 初步导读，待亲读验证</p>
+</div>
+</details>
+<details class="ch-item">
+<summary><span class="ch-no">第三十章</span><span class="ch-t">莱拉与拉希德的关系变化</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未读到本章。下列小节取自本书 AI 大纲条目（微信读书 AI 读书生成，非出版方目录），供先看结构；导读待亲读后补充，不据标题推测内容。</p><ol class="ch-secs"><li>莱拉与拉希德的关系变化</li><li>莱拉的决定和困境</li><li>莱拉对过去的回忆和恐惧</li><li>莱拉的决定和行动</li></ol>
+<p><strong>推断 · 目录导向：</strong>本章标题指向「莱拉与拉希德的关系变化」。待亲读验证的问题：它在全书主线里承担哪一步？作者为它提供了哪些可核对的论证、情节或材料支撑？</p>
+<p class="ch-src">来源与依据：本书 outline.json AI 大纲条目 · 未读 · 推断 · 初步导读，待亲读验证</p>
+</div>
+</details>
+<details class="ch-item">
+<summary><span class="ch-no">第三十一章</span><span class="ch-t">玛丽雅姆与女孩的日常相遇与冲突</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未读到本章。下列小节取自本书 AI 大纲条目（微信读书 AI 读书生成，非出版方目录），供先看结构；导读待亲读后补充，不据标题推测内容。</p><ol class="ch-secs"><li>玛丽雅姆与女孩的日常相遇与冲突</li><li>玛丽雅姆对女孩的决定和态度</li></ol>
+<p><strong>推断 · 目录导向：</strong>本章标题指向「玛丽雅姆与女孩的日常相遇与冲突」。待亲读验证的问题：它在全书主线里承担哪一步？作者为它提供了哪些可核对的论证、情节或材料支撑？</p>
+<p class="ch-src">来源与依据：本书 outline.json AI 大纲条目 · 未读 · 推断 · 初步导读，待亲读验证</p>
+</div>
+</details>
+<details class="ch-item">
+<summary><span class="ch-no">第三十二章</span><span class="ch-t">莱拉的记忆</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未读到本章。下列小节取自本书 AI 大纲条目（微信读书 AI 读书生成，非出版方目录），供先看结构；导读待亲读后补充，不据标题推测内容。</p><ol class="ch-secs"><li>莱拉的记忆</li><li>莱拉与玛丽雅姆的关系</li></ol>
+<p><strong>推断 · 目录导向：</strong>本章标题指向「莱拉的记忆」。待亲读验证的问题：它在全书主线里承担哪一步？作者为它提供了哪些可核对的论证、情节或材料支撑？</p>
+<p class="ch-src">来源与依据：本书 outline.json AI 大纲条目 · 未读 · 推断 · 初步导读，待亲读验证</p>
+</div>
+</details>
+<details class="ch-item">
+<summary><span class="ch-no">第三十三章</span><span class="ch-t">玛丽雅姆观察到的家庭状况</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未读到本章。下列小节取自本书 AI 大纲条目（微信读书 AI 读书生成，非出版方目录），供先看结构；导读待亲读后补充，不据标题推测内容。</p><ol class="ch-secs"><li>玛丽雅姆观察到的家庭状况</li><li>玛丽雅姆对家庭状况的反思和感受</li><li>玛丽雅姆对婴儿的观察和感受</li></ol>
+<p><strong>推断 · 目录导向：</strong>本章标题指向「玛丽雅姆观察到的家庭状况」。待亲读验证的问题：它在全书主线里承担哪一步？作者为它提供了哪些可核对的论证、情节或材料支撑？</p>
+<p class="ch-src">来源与依据：本书 outline.json AI 大纲条目 · 未读 · 推断 · 初步导读，待亲读验证</p>
+</div>
+</details>
+<details class="ch-item">
+<summary><span class="ch-no">第三十四章</span><span class="ch-t">莱拉对阿兹莎的喜爱</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未读到本章。下列小节取自本书 AI 大纲条目（微信读书 AI 读书生成，非出版方目录），供先看结构；导读待亲读后补充，不据标题推测内容。</p><ol class="ch-secs"><li>莱拉对阿兹莎的喜爱</li><li>拉希德对阿兹莎的怀疑</li><li>莱拉对拉希德的恐惧和计划</li><li>玛丽雅姆的过去和现在</li><li>莱拉和玛丽雅姆的和解</li></ol>
+<p><strong>推断 · 目录导向：</strong>本章标题指向「莱拉对阿兹莎的喜爱」。待亲读验证的问题：它在全书主线里承担哪一步？作者为它提供了哪些可核对的论证、情节或材料支撑？</p>
+<p class="ch-src">来源与依据：本书 outline.json AI 大纲条目 · 未读 · 推断 · 初步导读，待亲读验证</p>
+</div>
+</details>
+<details class="ch-item">
+<summary><span class="ch-no">第三十五章</span><span class="ch-t">玛丽雅姆和莱拉共同做家务活</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未读到本章。下列小节取自本书 AI 大纲条目（微信读书 AI 读书生成，非出版方目录），供先看结构；导读待亲读后补充，不据标题推测内容。</p><ol class="ch-secs"><li>玛丽雅姆和莱拉共同做家务活</li><li>阿兹莎对玛丽雅姆的依赖和玛丽雅姆的感受</li><li>喀布尔战争的爆发和影响</li><li>玛丽雅姆对战争和生活的感受</li></ol>
+<p><strong>推断 · 目录导向：</strong>本章标题指向「玛丽雅姆和莱拉共同做家务活」。待亲读验证的问题：它在全书主线里承担哪一步？作者为它提供了哪些可核对的论证、情节或材料支撑？</p>
+<p class="ch-src">来源与依据：本书 outline.json AI 大纲条目 · 未读 · 推断 · 初步导读，待亲读验证</p>
+</div>
+</details>
+<details class="ch-item">
+<summary><span class="ch-no">第三十六章</span><span class="ch-t">莱拉和玛丽雅姆的逃亡</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未读到本章。下列小节取自本书 AI 大纲条目（微信读书 AI 读书生成，非出版方目录），供先看结构；导读待亲读后补充，不据标题推测内容。</p><ol class="ch-secs"><li>莱拉和玛丽雅姆的逃亡</li><li>莱拉和玛丽雅姆在警察局的遭遇</li><li>莱拉和阿兹莎的困境</li></ol>
+<p><strong>推断 · 目录导向：</strong>本章标题指向「莱拉和玛丽雅姆的逃亡」。待亲读验证的问题：它在全书主线里承担哪一步？作者为它提供了哪些可核对的论证、情节或材料支撑？</p>
+<p class="ch-src">来源与依据：本书 outline.json AI 大纲条目 · 未读 · 推断 · 初步导读，待亲读验证</p>
+</div>
+</details>
+<details class="ch-item">
+<summary><span class="ch-no">第三十七章</span><span class="ch-t">玛丽雅姆和家人的经历</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未读到本章。下列小节取自本书 AI 大纲条目（微信读书 AI 读书生成，非出版方目录），供先看结构；导读待亲读后补充，不据标题推测内容。</p><ol class="ch-secs"><li>玛丽雅姆和家人的经历</li><li>塔利班的统治</li></ol>
+<p><strong>推断 · 目录导向：</strong>本章标题指向「玛丽雅姆和家人的经历」。待亲读验证的问题：它在全书主线里承担哪一步？作者为它提供了哪些可核对的论证、情节或材料支撑？</p>
+<p class="ch-src">来源与依据：本书 outline.json AI 大纲条目 · 未读 · 推断 · 初步导读，待亲读验证</p>
+</div>
+</details>
+<details class="ch-item">
+<summary><span class="ch-no">第三十八章</span><span class="ch-t">塔利班的暴行</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未读到本章。下列小节取自本书 AI 大纲条目（微信读书 AI 读书生成，非出版方目录），供先看结构；导读待亲读后补充，不据标题推测内容。</p><ol class="ch-secs"><li>塔利班的暴行</li><li>拉希德对塔利班的看法</li><li>莱拉对阿兹莎的爱意</li></ol>
+<p><strong>推断 · 目录导向：</strong>本章标题指向「塔利班的暴行」。待亲读验证的问题：它在全书主线里承担哪一步？作者为它提供了哪些可核对的论证、情节或材料支撑？</p>
+<p class="ch-src">来源与依据：本书 outline.json AI 大纲条目 · 未读 · 推断 · 初步导读，待亲读验证</p>
+</div>
+</details>
+<details class="ch-item">
+<summary><span class="ch-no">第三十九章</span><span class="ch-t">玛丽雅姆和莱拉在塔利班的医院遭遇困境</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未读到本章。下列小节取自本书 AI 大纲条目（微信读书 AI 读书生成，非出版方目录），供先看结构；导读待亲读后补充，不据标题推测内容。</p><ol class="ch-secs"><li>玛丽雅姆和莱拉在塔利班的医院遭遇困境</li><li>玛丽雅姆陪同莱拉接受剖腹产手术</li></ol>
+<p><strong>推断 · 目录导向：</strong>本章标题指向「玛丽雅姆和莱拉在塔利班的医院遭遇困境」。待亲读验证的问题：它在全书主线里承担哪一步？作者为它提供了哪些可核对的论证、情节或材料支撑？</p>
+<p class="ch-src">来源与依据：本书 outline.json AI 大纲条目 · 未读 · 推断 · 初步导读，待亲读验证</p>
+</div>
+</details>
+<details class="ch-item">
+<summary><span class="ch-no">第四十章</span><span class="ch-t">莱拉和玛丽雅姆挖洞的原因和过程</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未读到本章。下列小节取自本书 AI 大纲条目（微信读书 AI 读书生成，非出版方目录），供先看结构；导读待亲读后补充，不据标题推测内容。</p><ol class="ch-secs"><li>莱拉和玛丽雅姆挖洞的原因和过程</li><li>察尔迈伊的生活和拉希德的态度</li><li>莱拉和阿兹莎的困境和决定</li></ol>
+<p><strong>推断 · 目录导向：</strong>本章标题指向「莱拉和玛丽雅姆挖洞的原因和过程」。待亲读验证的问题：它在全书主线里承担哪一步？作者为它提供了哪些可核对的论证、情节或材料支撑？</p>
+<p class="ch-src">来源与依据：本书 outline.json AI 大纲条目 · 未读 · 推断 · 初步导读，待亲读验证</p>
+</div>
+</details>
+<details class="ch-item">
+<summary><span class="ch-no">第四十一章</span><span class="ch-t">2000年夏天的喀布尔</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未读到本章。下列小节取自本书 AI 大纲条目（微信读书 AI 读书生成，非出版方目录），供先看结构；导读待亲读后补充，不据标题推测内容。</p><ol class="ch-secs"><li>2000年夏天的喀布尔</li><li>喀布尔的社会状况</li><li>玛丽雅姆与拉希德的关系</li><li>玛丽雅姆尝试联系扎里勒</li></ol>
+<p><strong>推断 · 目录导向：</strong>本章标题指向「2000年夏天的喀布尔」。待亲读验证的问题：它在全书主线里承担哪一步？作者为它提供了哪些可核对的论证、情节或材料支撑？</p>
+<p class="ch-src">来源与依据：本书 outline.json AI 大纲条目 · 未读 · 推断 · 初步导读，待亲读验证</p>
+</div>
+</details>
+<details class="ch-item">
+<summary><span class="ch-no">第四十二章</span><span class="ch-t">莱拉和阿兹莎的生活</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未读到本章。下列小节取自本书 AI 大纲条目（微信读书 AI 读书生成，非出版方目录），供先看结构；导读待亲读后补充，不据标题推测内容。</p><ol class="ch-secs"><li>莱拉和阿兹莎的生活</li><li>恤孤院的生活</li><li>莱拉和阿兹莎的见面</li><li>塔利班的威胁</li><li>莱拉和阿兹莎的思念</li></ol>
+<p><strong>推断 · 目录导向：</strong>本章标题指向「莱拉和阿兹莎的生活」。待亲读验证的问题：它在全书主线里承担哪一步？作者为它提供了哪些可核对的论证、情节或材料支撑？</p>
+<p class="ch-src">来源与依据：本书 outline.json AI 大纲条目 · 未读 · 推断 · 初步导读，待亲读验证</p>
+</div>
+</details>
+<details class="ch-item">
+<summary><span class="ch-no">第四十三章</span><span class="ch-t">察尔迈伊对篮球的执着</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未读到本章。下列小节取自本书 AI 大纲条目（微信读书 AI 读书生成，非出版方目录），供先看结构；导读待亲读后补充，不据标题推测内容。</p><ol class="ch-secs"><li>察尔迈伊对篮球的执着</li><li>玛丽雅姆的困惑和回忆</li></ol>
+<p><strong>推断 · 目录导向：</strong>本章标题指向「察尔迈伊对篮球的执着」。待亲读验证的问题：它在全书主线里承担哪一步？作者为它提供了哪些可核对的论证、情节或材料支撑？</p>
+<p class="ch-src">来源与依据：本书 outline.json AI 大纲条目 · 未读 · 推断 · 初步导读，待亲读验证</p>
+</div>
+</details>
+<details class="ch-item">
+<summary><span class="ch-no">第四十四章</span><span class="ch-t">塔里克的室友和他的表哥</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未读到本章。下列小节取自本书 AI 大纲条目（微信读书 AI 读书生成，非出版方目录），供先看结构；导读待亲读后补充，不据标题推测内容。</p><ol class="ch-secs"><li>塔里克的室友和他的表哥</li><li>塔里克的生活和遭遇</li><li>莱拉和塔里克的重逢</li></ol>
+<p><strong>推断 · 目录导向：</strong>本章标题指向「塔里克的室友和他的表哥」。待亲读验证的问题：它在全书主线里承担哪一步？作者为它提供了哪些可核对的论证、情节或材料支撑？</p>
+<p class="ch-src">来源与依据：本书 outline.json AI 大纲条目 · 未读 · 推断 · 初步导读，待亲读验证</p>
+</div>
+</details>
+<details class="ch-item">
+<summary><span class="ch-no">第四十五章</span><span class="ch-t">拉希德发现玛丽雅姆和察尔迈伊的背叛</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未读到本章。下列小节取自本书 AI 大纲条目（微信读书 AI 读书生成，非出版方目录），供先看结构；导读待亲读后补充，不据标题推测内容。</p><ol class="ch-secs"><li>拉希德发现玛丽雅姆和察尔迈伊的背叛</li><li>拉希德对莱拉的惩罚</li><li>玛丽雅姆的反抗</li></ol>
+<p><strong>推断 · 目录导向：</strong>本章标题指向「拉希德发现玛丽雅姆和察尔迈伊的背叛」。待亲读验证的问题：它在全书主线里承担哪一步？作者为它提供了哪些可核对的论证、情节或材料支撑？</p>
+<p class="ch-src">来源与依据：本书 outline.json AI 大纲条目 · 未读 · 推断 · 初步导读，待亲读验证</p>
+</div>
+</details>
+<details class="ch-item">
+<summary><span class="ch-no">第四十六章</span><span class="ch-t">莱拉的经历和感受</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未读到本章。下列小节取自本书 AI 大纲条目（微信读书 AI 读书生成，非出版方目录），供先看结构；导读待亲读后补充，不据标题推测内容。</p><ol class="ch-secs"><li>莱拉的经历和感受</li><li>玛丽雅姆的决定和行动</li><li>莱拉和察尔迈伊的未来生活</li></ol>
+<p><strong>推断 · 目录导向：</strong>本章标题指向「莱拉的经历和感受」。待亲读验证的问题：它在全书主线里承担哪一步？作者为它提供了哪些可核对的论证、情节或材料支撑？</p>
+<p class="ch-src">来源与依据：本书 outline.json AI 大纲条目 · 未读 · 推断 · 初步导读，待亲读验证</p>
+</div>
+</details>
+<details class="ch-item">
+<summary><span class="ch-no">第四十七章</span><span class="ch-t">玛丽雅姆在瓦拉雅特女子监狱的生活</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未读到本章。下列小节取自本书 AI 大纲条目（微信读书 AI 读书生成，非出版方目录），供先看结构；导读待亲读后补充，不据标题推测内容。</p><ol class="ch-secs"><li>玛丽雅姆在瓦拉雅特女子监狱的生活</li><li>玛丽雅姆的审判</li><li>玛丽雅姆在监狱的最后一日</li></ol>
+<p><strong>推断 · 目录导向：</strong>本章标题指向「玛丽雅姆在瓦拉雅特女子监狱的生活」。待亲读验证的问题：它在全书主线里承担哪一步？作者为它提供了哪些可核对的论证、情节或材料支撑？</p>
+<p class="ch-src">来源与依据：本书 outline.json AI 大纲条目 · 未读 · 推断 · 初步导读，待亲读验证</p>
+</div>
+</details>
+</div>
+<div class="toc-part">
+<span class="part-label">第四部分</span>
+<details class="ch-item">
+<summary><span class="ch-no">第四十八章</span><span class="ch-t">塔里克的头痛及其影响</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未读到本章。下列小节取自本书 AI 大纲条目（微信读书 AI 读书生成，非出版方目录），供先看结构；导读待亲读后补充，不据标题推测内容。</p><ol class="ch-secs"><li>塔里克的头痛及其影响</li><li>莱拉和塔里克的婚姻生活</li><li>莱拉在穆里的日常生活</li><li>莱拉和阿兹莎的关系</li><li>莱拉对察尔迈伊的照顾</li></ol>
+<p><strong>推断 · 目录导向：</strong>本章标题指向「塔里克的头痛及其影响」。待亲读验证的问题：它在全书主线里承担哪一步？作者为它提供了哪些可核对的论证、情节或材料支撑？</p>
+<p class="ch-src">来源与依据：本书 outline.json AI 大纲条目 · 未读 · 推断 · 初步导读，待亲读验证</p>
+</div>
+</details>
+<details class="ch-item">
+<summary><span class="ch-no">第四十九章</span><span class="ch-t">艾哈迈德·沙·马苏德的死亡及其影响</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未读到本章。下列小节取自本书 AI 大纲条目（微信读书 AI 读书生成，非出版方目录），供先看结构；导读待亲读后补充，不据标题推测内容。</p><ol class="ch-secs"><li>艾哈迈德·沙·马苏德的死亡及其影响</li><li>塔利克的反应和看法</li><li>莱拉的反应和看法</li></ol>
+<p><strong>推断 · 目录导向：</strong>本章标题指向「艾哈迈德·沙·马苏德的死亡及其影响」。待亲读验证的问题：它在全书主线里承担哪一步？作者为它提供了哪些可核对的论证、情节或材料支撑？</p>
+<p class="ch-src">来源与依据：本书 outline.json AI 大纲条目 · 未读 · 推断 · 初步导读，待亲读验证</p>
+</div>
+</details>
+<details class="ch-item">
+<summary><span class="ch-no">第五十章</span><span class="ch-t">莱拉和塔里克在穆里的生活</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未读到本章。下列小节取自本书 AI 大纲条目（微信读书 AI 读书生成，非出版方目录），供先看结构；导读待亲读后补充，不据标题推测内容。</p><ol class="ch-secs"><li>莱拉和塔里克在穆里的生活</li><li>莱拉对家乡的思念和决定</li><li>莱拉和塔里克的离开和旅程</li><li>莱拉在玛丽雅姆的家中的发现</li><li>莱拉收到扎里勒的信</li></ol>
+<p><strong>推断 · 目录导向：</strong>本章标题指向「莱拉和塔里克在穆里的生活」。待亲读验证的问题：它在全书主线里承担哪一步？作者为它提供了哪些可核对的论证、情节或材料支撑？</p>
+<p class="ch-src">来源与依据：本书 outline.json AI 大纲条目 · 未读 · 推断 · 初步导读，待亲读验证</p>
+</div>
+</details>
+<details class="ch-item">
+<summary><span class="ch-no">第五十一章</span><span class="ch-t">喀布尔河的恢复和人们的生活变化</span><span class="badge" data-s="unread">未读</span><span class="caret">›</span></summary>
+<div class="ch-body">
+<p class="ch-empty">本机尚未读到本章。下列小节取自本书 AI 大纲条目（微信读书 AI 读书生成，非出版方目录），供先看结构；导读待亲读后补充，不据标题推测内容。</p><ol class="ch-secs"><li>喀布尔河的恢复和人们的生活变化</li><li>莱拉和她的家庭</li><li>恤孤院的重建</li><li>莱拉的心理状态</li></ol>
+<p><strong>推断 · 目录导向：</strong>本章标题指向「喀布尔河的恢复和人们的生活变化」。待亲读验证的问题：它在全书主线里承担哪一步？作者为它提供了哪些可核对的论证、情节或材料支撑？</p>
+<p class="ch-src">来源与依据：本书 outline.json AI 大纲条目 · 未读 · 推断 · 初步导读，待亲读验证</p>
+</div>
+</details>
+</div>
+</section>
+<section aria-labelledby="claim-judgments-title"><h2 id="claim-judgments-title">核心观点初判</h2>
+<!-- 只列可从官方简介/目录或已打开的可靠材料定位的主张；未亲读时写待亲读检验，不能替作者补观点或冒充结论。拆开事实判断与价值取舍；每项说明判断和理由。标签可用：✅成立、⚖️有条件成立、⚖️价值取舍、❌不成立、待亲读验证、暂无法判定（说明缺少的证据）。没有可核实主张时可改列具体待验证问题。 -->
+<article class="card"><h3>玛丽雅姆与莱拉共侍一夫，从互相敌视走到情同母女。</h3><p><strong>当前判断：✅成立</strong></p><p>成立：上海人民出版社版内容提要明确写道"两名阿富汗女性各自带着属于不同时代的悲惨回忆，共同经受着战乱、贫困与家庭暴力的重压……让她们曾经水火不容，又让她们缔结情谊，如母女般相濡以沫"；本书 AI 大纲第三部分第 31–35 章条目（"玛丽雅姆与女孩的日常相遇与冲突"→"莱拉和玛丽雅姆的和解"→"阿兹莎对玛丽雅姆的依赖"）与之一致。</p><p class="src">依据与状态：上海人民出版社版内容提要 · 本书 AI 大纲第三部分第 31–35 章条目 · 未读，待亲读验证</p></article>
+<article class="card"><h3>书名取自 17 世纪波斯诗人描写喀布尔的诗句："人们数不清她的屋顶上有多少轮皎洁的月亮，也数不清她的墙壁之后那一千个灿烂的太阳。"</h3><p><strong>当前判断：⚖️有条件成立</strong></p><p>成立部分：多个来源一致转引此句，并称其出自"四百年前的一位叫做穆罕默德的诗人"（上海人民出版社版内容提要、今日头条转载、诚品书页）。保留部分：①诗人的全名与原文版本各处说法不一；②中译的"一千个灿烂的太阳"与英文书名 A Thousand Splendid Suns 的对应关系（splendid suns 的译法）属翻译选择；③该诗句未在本页可核的一手来源中出现，亦未在大纲条目中定位到，标注待核。</p><p class="src">依据与状态：上海人民出版社版内容提要、今日头条转载、诚品书页（均二手）· 未读，待亲读验证</p></article>
+<article class="card"><h3>小说跨越阿富汗 1960 年代至 2000 年代的战争与塔利班统治。</h3><p><strong>当前判断：✅成立</strong></p><p>成立：大纲条目的时间锚点清晰——第二部分第 22 章"莱拉和家人观看苏联军队撤出阿富汗"、第 23 章"苏联分崩离析和圣战运动的结束"、第 37 章"塔利班的统治"、第 38 章"塔利班的暴行"、第四部分第 49 章"艾哈迈德·沙·马苏德的死亡及其影响"（马苏德遇刺为 2001 年 9 月，属公开史实）、第 41 章"2000 年夏天的喀布尔"。出版方内容提要亦称其为"阿富汗三十年历史的揪心记录"。</p><p class="src">依据与状态：本书 AI 大纲第二部分第 22–23 章、第三部分第 37–38、41 章、第四部分第 49 章条目 · 上海人民出版社版内容提要 · 未读，待亲读验证</p></article>
+<article class="card"><h3>本书的销量与畅销榜表现：2007 年美国最畅销的成人小说，上市首周销量破百万。</h3><p><strong>当前判断：⚖️有条件成立</strong></p><p>多个二手来源一致记载它登上 2007 年美国畅销榜并长期位居前列，但具体数字口径不一：有"上市仅一周销量突破 100 万册"、"上市首周美国销售突破 125 万本"、"全美销售超过 350 万本"、"全球销量突破 600 万册"等不同说法（中国出版传媒商报、诚品书页、今日头条），统计截止时间亦不明。本页并列记录，不取单一数值。可核的一致事实：它获得了亚马逊 2007 年度之书、《时代》周刊与《人物》杂志 2007 年度十大好书、邦诺书店年度十大好书第一名（诚品书页列出，二手待核）。</p><p class="src">依据与状态：中国出版传媒商报《2007 年度美国 10 大畅销小说》、诚品书页、今日头条转载（均二手）· 待核实</p></article>
+<!-- 按重要主张重复 article；不为未读章节写结论。 -->
+</section>
+<!-- 固定栏目：知识网络不是全知视角。外部判断先搜索并打开来源核对；逐项分开书中主张、外部证据与综合分析。初版假设不冒充亲读。书中所述历史不等于本书历史影响，后者须有传播／接受／引用等证据；无依据不拔高。与“当年与今天”交叉引用，避免重复。 -->
+<section class="card" aria-labelledby="higher-view-title" data-source="mixed-labeled">
+<h2 id="higher-view-title">用更高维度的知识看这本书 · 初步视角</h2>
+<p class="notice">本节是有来源的外部知识与综合分析，不是作者原话，也不代表已经亲读全书；未确认的判断保留为待验证假设。</p>
+<h3>放进更大的知识坐标</h3>
+<p><strong>书中问题与依据：</strong>本书要处理的问题是：在一个女性被系统性剥夺行动权的时代与地方，两个女人如何在彼此身上重新获得行动的可能？（依据：上海人民出版社版内容提要；本书 AI 大纲第三部分条目；未读，推断）</p>
+<p><strong>外部知识：</strong>可对照的外部框架（均为通识，本页未引一手文献，标注待核）：①阿富汗 1978–2001 年的政治时间线（四月革命、苏联入侵 1979、撤军 1989、圣战组织内战 1992–1996、塔利班第一次执政 1996–2001）——与大纲第 22、23、37、41、49 章的时间锚点一致；②"结构性暴力"的概念：伤害并非来自某个坏人，而来自制度与贫困的合力，这与书中拉希德这一人物既是施暴者又是某种秩序产物的写法可对照；③女性主义文学中的"女性友谊作为生存策略"这一母题。来源：上海人民出版社版内容提要、大纲各章条目（二手）。</p>
+<p><strong>综合分析 · 待验证：</strong>一个具体、待验证的连接：全书把"忍耐"写成了一种能力而非美德——出版方称之为"一部阿富汗忍耐的历史"，而大纲条目显示忍耐的尽头是一次主动的抉择（第三部分第 45–46 章）。待验证：读到第 45–46 章时，记录这次抉择在法律与道德上分别被怎样描述——它是复仇、是自救，还是两者都不是。</p>
+<h3>这本书本身在历史中起了什么作用</h3>
+<p><strong>接受史证据：</strong>接受史证据（二手，待核）：亚马逊 2007 年度之书、《时代》周刊与《人物》杂志2007 年度十大好书、邦诺书店 2007 年度十大好书第一名；已售出 33 国版权；登上美国、英国、加拿大、澳大利亚、德国、法国等十四国畅销榜冠军（诚品书页，二手）。中文版方面：有资料称中文版权于 2007 年 8 月被上海人民出版社引进，"创下国内引进中文版的最快记录"（中国出版传媒商报）。这些数字口径不一，本页不取单一数值。</p>
+<p><strong>综合分析：</strong>保守判断：就一致出现的公开证据看，它是 2007 年全球范围内商业上最成功的英语小说之一，并让作者从"《追风筝的人》的作者"变为具有持续影响力的作家；2006 年作者获联合国人道主义奖并担任联合国难民署亲善大使（出版方作者简介）。至于它对阿富汗议题公共讨论的实际影响，本页未找到可靠研究，不作判断。</p>
+<h3>它解释了什么，又解释不了什么</h3>
+<p><strong>书中主张与依据：</strong>书中主张：战争与父权共同构成了阿富汗女性的处境；而女性之间的情谊与牺牲，是在"不可宽恕的时代"里仍然可能的救赎形式。（依据：上海人民出版社版内容提要；本书 AI 大纲第三部分第 45–47 章条目；未读，推断）</p>
+<p><strong>综合分析 · 待验证：</strong>解释得了：战争如何进入日常（大纲第 26 章"莱拉在轰炸中的经历"）、贫困如何限制选择（第 40 章"莱拉和玛丽雅姆挖洞"）、以及女性情谊如何在压迫中生成。解释不了（待验证的反例方向）：①它不解释阿富汗女性内部的阶层与族群差异——两位女主都是喀布尔的波斯语居民，视角有其位置；②它有明确的情感与道德取向（出版方亦称为"为妇女权利的呐喊"），这既是力量也是边界：它更像证词而非分析；③结局的"希望"是否有现实支撑，书中未给出可核验的依据。</p>
+<h3>由此值得继续想什么</h3><p>一个值得继续想、且可被现实检验的问题："忍耐"在什么条件下是生存策略，在什么条件下是对不义的维持？全书把这两者放在一起，却没有替读者做决定——这是它留给读者的问题。</p>
+<h3>相似或互补的书 · 1–2本</h3>
+<!-- 按实际候选重复 li，最多两本；核对书名、作者、内容依据。未亲读的推荐明确说明；无可靠候选写待补并删除示例，不自动开读或认领。相似性不等于影响关系。 -->
+<ul><li><cite>追风筝的人</cite> · [美] 卡勒德·胡赛尼（2003）：同作者前作，共享阿富汗背景与"救赎"主题；对照可看清本书把主角从男性友谊换成女性情谊之后，叙事与道德焦点发生了什么变化。<br>依据与阅读状态：上海人民出版社版作者简介、豆瓣条目（二手）· 未亲读</li><li><cite>群山回唱</cite> · [美] 卡勒德·胡赛尼（2013）：同作者的第三部长篇，同样以家庭离散与阿富汗为背景；对照可判断作者是否在重复同一套结构。<br>依据与阅读状态：上海人民出版社版作者简介（二手）· 未亲读</li></ul>
+<p class="src">外部证据、争议与尚待确认：本节外部判断全部来自出版方内容提要、作者简介、媒体报道与榜单转述（二手）；销量与首周数字存在多种口径，已并列待核；书名出处诗句为多处转引，诗人全名与原文版本说法不一，标注待核；阿富汗政治时间线为公开史实，本页只用于给大纲条目做时间定位，不作历史论述。</p>
+</section>
+<!-- 提炼2–3个可回原文检验高维判断的问题，并与原有精读问题合并去重；关联真实章节／段落，写什么证据会支持或反驳。标题未确认就如实说明，不造定位。 -->
+<section><h2>阅读时要验证的问题</h2><ul><li>第一部分第 15 章：拉希德往玛丽雅姆掌心放小石头——这一处在原文里是怎么写的？与第 37 章"用石头投掷至死"是作者有意呼应吗？（定位：大纲第 15 章、第 37 章条目）</li>
+<li>第三部分第 45–46 章：玛丽雅姆的抉择，在原文里被描述为复仇、自救，还是别的什么？作者给了多少个可以判断的线索？（定位：大纲第 45 章"拉希德发现背叛"、第 46 章"玛丽雅姆的决定和行动"）</li>
+<li>第四部分第 50–51 章：莱拉回到喀布尔后看到什么？"希望"是有条件的还是无条件的？（定位：大纲第 50 章"莱拉在玛丽雅姆的家中的发现"、第 51 章"恤孤院的重建"）</li>
+<li>全书两个女主的叙述视角是如何分配的？玛丽雅姆的内心在第几章开始向读者敞开？读完后列出三处具体的文本证据。</li>
+</ul></section>
+<!-- 初版对照保持来源标签；原作写作/首发与再版时点分开，未知写待确认。未亲读观点标为待验证，后续事实须附时间与来源，不倒灌为作者当时已知。 -->
+<section aria-labelledby="then-now-title"><h2 id="then-now-title">当年与今天 · 初步对照</h2>
+<p class="notice">对应章节/帖子/小节标题与来源层级：对应条目：本书 AI 大纲第二部分第 22–23 章（苏联撤军、圣战组织内讧）、第三部分第 37–38、41 章（塔利班统治、2000 年夏）、第四部分第 49、51 章（马苏德之死、喀布尔河恢复）；原作时点：英文版 2007 年 5 月 22 日美国首发（出版方与媒体资料，二手） · 原作时点与依据：原作时点：英文版 2007 年 5 月 22 日美国首发；中文版据公开资料为上海人民出版社 2007 年 9 月第 1 版（二手待核）。故事内时间为 1960 年代至 2000 年代，两者不可混算。</p>
+<h3>当年作者能知道什么</h3><p>作者当年能知道的：他 1965 年生于喀布尔、后迁居美国，2003 年已凭《追风筝的人》成名；本书写作时塔利班第一次执政已结束、美军仍在阿富汗。书中关于塔利班时期的具体规定（女性不得独自出门、通奸以石刑处死、焚书与关闭书店——见大纲第 37–38 章条目）属于作者可获得的公开信息。</p>
+<h3>后来才知道什么</h3><p>后来才知道的（待核）：2021 年塔利班重新执政后，书中描写的若干限制再度成为国际媒体报道的焦点——本页未检索并核验这些报道，故仅作为"待核实"列出，不作为本书影响力的证据。可核的有限事实：本书获亚马逊 2007 年度之书等多个年度好书（诚品书页，二手待核）。</p>
+<h3>今天对雨的启发</h3><p>今天的启发（受条件限制）：可迁移的不是同情，而是"忍耐不等于接受"这一区分——忍耐是活下去的方式，而接受是把不义当成秩序。具体动作：遇到长期不公时，分清自己是在忍耐（保存力量）还是已经接受（放弃判断）。不做的：不把这本书当作关于阿富汗的权威资料，它是小说。</p>
+</section>
+
+<!-- 取长补短·借 weread-summary：把“只分析”升级为“能用”。正反论证 + SMART 行动，初版可先列待验证假设，完读后补到可落地。 -->
+<section class="card" aria-labelledby="apply-title" data-source="apply-action">
+<h2 id="apply-title">迁移与行动</h2>
+<p class="notice">本节把书中判断转成可检验的行动与可证伪的假设；未亲读处标待验证，不把作者结论当已验证事实。</p>
+<h3>正反论证（为什么可信 / 哪里可能错）</h3>
+<p><strong>支持证据：</strong>出版方与多家媒体一致把本书定位为"阿富汗忍耐的历史"（上海人民出版社版内容提要、《出版商周刊》）；大纲条目显示忍耐的尽头是一次主动抉择（第 45–46 章），这为"忍耐 ≠ 接受"的区分提供了文本支点。状态：未亲读，据大纲与出版方提要推断。</p>
+<p><strong>反方与边界：</strong>①本书是小说，不是关于阿富汗的社会科学资料；②两位女主的视角限于喀布尔的波斯语居民，不覆盖阿富汗内部的族群与阶层差异；③出版方与媒体评价带宣传性质，"为妇女权利的呐喊"是定位而非结论；④结局的希望缺乏可核验的现实支撑，把它读成乐观会误读。什么时候会错：用它替代对当地现实的了解时。</p>
+<h3>可落地的 SMART 行动</h3>
+<ol>
+<li>读第一部分第 15 章（掌心的小石头）时，记下这个意象，并在读到第 37 章（石刑告示）时回看，写下两次"石头"的含义差别 · <span class="tag">可衡量</span>两段各 50 字的对照笔记</li>
+<li>读第三部分第 45–46 章时，判断玛丽雅姆的抉择属于复仇、自救还是别的，并列出支持你判断的三处文本 · <span class="tag">可衡量</span>一个判断 + 三处定位</li>
+<li>读完后回答：我现在处境里，哪些是"忍耐"（保存力量），哪些其实已经变成"接受"（放弃判断）？各写一条 · <span class="tag">可衡量</span>两条清单，读完当天写完</li>
+</ol>
+<p class="src">依据与状态：本书 AI 大纲各章条目 + 上海人民出版社版内容提要/作者简介 + 商报与书页榜单（均二手）· 全书未读，以上行动为待验证假设</p>
+</section>
+<!-- 取长补短·借 NotebookLM：费曼式自测。读完用自己话答 3 问，答不出即未真懂；初版可标“待亲读后自答”。 -->
+<section aria-labelledby="selftest-title"><h2 id="selftest-title">读完自测 3 问</h2>
+<ol>
+<li><strong>这本书真正想回答的问题是什么？我用一句话说清了吗？</strong> <span class="tag">待亲读后自答</span>待亲读后自答。目前的<strong>待验证版本</strong>：它要回答"在被系统性剥夺行动权的处境里，两个女人如何重新获得行动的可能"，答案是"在彼此身上"。是否成立要读完全书判断。</li>
+<li><strong>哪个判断我最不确定、需要回到原文哪一节验证？</strong> 待亲读后自答。最不确定的是第三部分第 45–46 章玛丽雅姆的抉择——回到原文，确认作者给的线索到底指向复仇、自救，还是两者都不是。</li>
+<li><strong>如果只能把一条洞见讲给三个月后的自己，是哪条？为什么？</strong> 待亲读后自答。目前候选：忍耐不等于接受——忍耐是活下去的方式，接受是把不义当成秩序。</li>
+</ol>
+<p class="src">自测依据：本书 AI 大纲条目 + 出版方内容提要/媒体评语（二手）· 全书未读，以上为待亲读后自答的预备版本</p>
+</section>
+<!-- 取长补短·借 Readwise：记忆复利。给核心观点/金句打“复习日”，让 M14 日报能把旧笔记捞回来复现，而非一次性消费。 -->
+<section class="card" aria-labelledby="review-title" data-source="review-cadence">
+<h2 id="review-title">复习与记忆复利</h2>
+<p class="notice">标记最值得复现的 1–3 个条目与建议复习时点；仅限已核实、属已读范围的内容，不把推断当需复习事实。</p>
+<ul>
+<li>📌 「他抓过她的手，掰开她的指头，在她的掌心放了一把小石头。」（第一部分第 15 章）——与第 37 章石刑告示的呼应 — <span class="tag">建议复习</span>读完第 37 章后复习一次，两处对读</li>
+<li>📌 「娜娜曾说过，像她这样的哈拉米永远得不到幸福，但在这种新生活中，她也许能找得到。」（第 35 章）——玛丽雅姆的转折点 — <span class="tag">建议复习</span>读完第 35 章后复习一次</li>
+<li>📌 忍耐与接受的区分：忍耐是活下去的方式，接受是把不义当成秩序 — <span class="tag">建议复习</span>读完全书后复习一次，与「迁移与行动」交叉看</li>
+</ul>
+<p class="src">复习标记依据：本书 AI 大纲条目（推断）· 全书未读，标记的是待验证的候选条目，不把推断当需复习的事实</p>
+</section>
+<section><h2>来源与证据边界</h2><div class="card src">①本书 outline.json（微信读书 AI 大纲，52 个一级条目 / 1558 条，含卷首「评论」条目 + 四部分五十一章）——章节结构与引句的直接来源，由 AI 生成，不等同于出版方目录或原文字句；②上海人民出版社版内容提要（引《出版商周刊》《洛杉矶时报》、亚马逊年度之书评语）与作者简介；③中国出版传媒商报《2007 年度美国 10 大畅销小说》；④诚品书页（榜单与销量口径）；⑤豆瓣条目（评分 8.9，二手）；⑥今日头条转载的书评。<br>边界：全书亲读范围 0%，本页不含亲读结论；引句为大纲转引，中译本译名与句式版本差异大，未与纸本比对；销量存在"首周 100 万／125 万""全美 350 万""全球 600 万"等多种口径，已并列待核；书名出处诗句为多处转引，诗人全名与原文版本说法不一，标注待核；本页不使用任何关于 2021 年后阿富汗局势的未核验说法。</div></section>
+<section><h2>相关日期笔记</h2><ul><li>暂无（本书在本仓库尚无日期笔记；开读后由日期笔记回填本栏）</li></ul></section>
+<section><h2>更新记录</h2><div class="card src">2026-10-27 · 初版：依据本书 outline.json（微信读书 AI 大纲）与公开权威资料建立全书视角；全书尚未开读，亲读范围 0%，全部判断标「推断 · 初步导读，待亲读验证」。AI 问书四项为自主整理，已标「非微信读书返回」。</div></section>
+<p class="notice">本页为开读时建立的全书视角初版：二手信息与推断均带来源标签，未经亲读确认的部分待验证；完读后校订升级为 final.html。</p>
+</main></body></html>
