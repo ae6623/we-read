@@ -5,7 +5,7 @@
 也不替代 [frontend-a2a.md](../../skills/luoyu-reading/references/frontend-a2a.md)（跨 agent 协调）。
 
 > 协议：[todo-protocol.md](../../skills/luoyu-reading/references/todo-protocol.md) —— 开工前先登记、每步即提交。
-> 最后更新：2026-10-27 15:52（本文件每次动作后立即更新并单独提交）
+> 最后更新：2026-10-27 17:25（本文件每次动作后立即更新并单独提交）
 
 ## 当前状态
 
@@ -33,10 +33,13 @@
 - [x] A2A 通告 `luoyu-content`：开工前先写 `openspec/luoyu-content/todo.md`，并要求其建该文件
 - [x] **`luoyu-content` 已回 ACK（2026-10-27 15:40）→ PROTOCOL 闭环**：`openspec/luoyu-content/todo.md` 已建并入库（`6181431`），登记了本轮任务；承诺每轮开工前先登记、推送前跑 `a2a_frontend_check.py --alias luoyu-content --update`、崩溃恢复含 `git fetch` + 读板 + 对照 todo。**催办 3 次后闭环，本项消账。**
 - [x] **`QUESTION` 根因答复已收（同一 ACK）**：其 outline 生成侧现只输出 `<link>` 不写内联；overview 走 `build_ov.py`，`<head>` 仅 `reading-overview.css` + `book-link-drawer.css`，零 `<style>`。并主动接受"下批再回潮直接 `CONFLICT`"的判定口径。**判定口径保持有效，下批新页仍是验伪点。**
-- [ ] **等 `luoyu-content` 的 8 本 `overview.html` `DONE`（B6/B7）**——收到后按序做三件事：
-  1. 跑 `extract_content.py --slug <slug>` 刷新 `_data/books/*.json` 并单独提交（C4 校验）
-  2. **`index.html` 只补链、不加卡**：8 本目标 slug 当前**每本都已有 1 张 `preread-card`（在 `panel-whole`）**——`yong-di-yi-xing-yuan-li-du-dong-ri-chang-50-ge`、`yue-liang-yu-liu-bian-shi`、`zai-xia-jiang-de-zhuan-wan-chu--chen-xing-jia-r`、`zhi-shen-shi-nei--zhong-guo-zheng-fu-yu-jing-ji`、`zhong-guo-wei-shen-me-bu-tong--chuan-yue-li-shi`、`yi-di-ji-mao--dian-cang-ban-`、`yi-ge-nv-ren-yi-sheng-de-er-shi-si-xiao-shi--ta`、`yi-ju-ding-yi-wan-ju-2022-xin-ban-`。overview 落地后只在对应卡里加「全书视角」入口并更新 subtle 文案，**新增重复卡属缺陷**
-  3. 全量跑 `check_site_invariants.py`（C1/C2/C4）+ 卡片链接唯一性与死链复核
+- [x] **B6/B7 八本 `overview.html` 已收账（2026-10-27 17:22）**，三步全部完成：
+  1. `extract_content.py --slug` 刷新 8 本 `_data/books/*.json`（`eca7107`）——`texts.overview` 各 9 段、`ai_outline` 只存元信息，C4 通过
+  2. `index.html` 8 本从「即将上线」升格为「全书视角·AI 问书」三入口卡（`625cdf0`）——**全书视角 39→46 / 即将上线 43→36**，跨面板零重复、166 条卡片链接唯一且 0 死链、重复 id 0、内联 style 0
+  3. `check_site_invariants.py`：C2/C3/C4 全过，C1 存量仍 29 页（本轮零新增）；顺带消 2 处存量 `subtle` 技术词
+  → **修正上轮判断**：8 本里 7 本原本在 `panel-soon`（占位卡，仅大纲入口），只有《在峡江》在 `panel-whole`；上轮"每本都已有 panel-whole 卡"是 `grep` 把两类别混统计导致的误判，已在 A2A 板更正
+- [ ] 监听下一批 `DONE`（对方 todo 剩 2 项：5 本 BOOK 配置 + 质量门，尚未推）
+  → 固定动作不变：`extract_content.py --slug` → 卡片只补链/升格不加卡 → `check_site_invariants.py` + 死链复核
 - [ ] 监听任务复核：现有每小时 A2A 监听 automation 是否把「检查对方 todo 是否有新登记」纳入动作
 
 ### P1 · 等待用户拍板
