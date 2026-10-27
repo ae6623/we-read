@@ -5,7 +5,7 @@
 也不替代 [frontend-a2a.md](../../skills/luoyu-reading/references/frontend-a2a.md)（跨 agent 协调）。
 
 > 协议：[todo-protocol.md](../../skills/luoyu-reading/references/todo-protocol.md) —— 开工前先登记、每步即提交。
-> 最后更新：2026-10-27 17:38（本文件每次动作后立即更新并单独提交）
+> 最后更新：2026-10-27 17:42（本文件每次动作后立即更新并单独提交）
 
 ## 当前状态
 
@@ -38,12 +38,12 @@
   2. `index.html` 8 本从「即将上线」升格为「全书视角·AI 问书」三入口卡（`625cdf0`）——**全书视角 39→46 / 即将上线 43→36**，跨面板零重复、166 条卡片链接唯一且 0 死链、重复 id 0、内联 style 0
   3. `check_site_invariants.py`：C2/C3/C4 全过，C1 存量仍 29 页（本轮零新增）；顺带消 2 处存量 `subtle` 技术词
   → **修正上轮判断**：8 本里 7 本原本在 `panel-soon`（占位卡，仅大纲入口），只有《在峡江》在 `panel-whole`；上轮"每本都已有 panel-whole 卡"是 `grep` 把两类别混统计导致的误判，已在 A2A 板更正
-- [ ] **【冻结中】`luoyu-content` 正在改首页 hero（`START homepage-brand-hero`，17:00）**——用户要品牌名「落雨阅读札记」+ 米纸质感头图。
-  - SCOPE：`index.html`（仅 `<header class="hero">` 区间 + `<head>` 加 1 行 link）、新增 `assets/css/homepage-hero.css`、新增 `assets/img/hero-qr.svg`
-  - **我冻结 `index.html` 与整个 `assets/css/` 到其 `DONE`/`SKIP`**：期间不加卡、不补链、不跑 `sync_preread_cards`、不刷 `_data`
-  - 已发 ACK 钉死：只许局部替换禁止整页重写（`6afd363` 事故根因）；禁区 = `archive-grid` 至 `panel-soon` 结束、`.subtabs` 结构、`<head>` 已有 4 个 link 顺序
-  - **回归基线（DONE 后先跑这 5 个数，任一变化按覆盖事故回滚）**：全书视角 **46** / 即将上线 **36** / 卡片链接 **166 条唯一 0 死链** / 内联 `<style>` **0** / 重复 `id` **0**
-  - 终检追加：hero 结构完整、`homepage-hero.css` 正常挂载、375px 窄屏 hero 不溢出
+- [x] **首页 hero 品牌头图改版已收账（`luoyu-content`，`a52bbe5`+`3eb3e9e`+DONE，17:55）**——品牌名「落雨阅读札记」、口号「通读交给 AI，精读留给自己」、米纸底、便签铅笔装饰、右下扫码卡。
+  - 终检 7 项全过：全书视角 **46** / 即将上线 **36** / 卡片链接 **166 唯一 0 死链** / 内联 `<style>` **0** / 重复 `id` **0** / 新资源 HTTP 200 / **卡片区与基线 `425b8c8` 逐字节一致**
+  - 结构：`header` 内 div 4 开 4 闭、figure 1 开 1 闭；Playwright 1366px + 375px 无溢出、无遮挡
+  - **冻结已解除**，`index.html` 维护权收回（但 hero 区间 + `homepage-hero.css` + `hero-qr.png` 仍归对方，我出问题只发 QUESTION）
+- [ ] **等对方修 `hero-qr.png` 的 quiet zone**（已发 QUESTION `b010e71`）：原图四边无白边，`cv2.QRCodeDetector` 直接解码返回空、detectable=False；补 ≥8px 白边后解出 `https://ae6623.github.io/we-read/`。页面靠卡片 7px padding ≈3.4 模块安静区（标准 4），部分手机会扫不出。已给出两条现成修复命令，**没替它改文件**
+  → 收到 DONE 后只复跑：二维码解码 + 5 项基线
 - [ ] 监听下一批内容 `DONE`（对方 todo 剩 2 项：5 本 BOOK 配置 + 质量门，尚未推）
   → 固定动作不变：`extract_content.py --slug` → 卡片只补链/升格不加卡 → `check_site_invariants.py` + 死链复核
   → 注意：hero 冻结期间若收到内容 `DONE`，`_data` 可以刷（不在冻结范围），但 `index.html` 卡片要等解冻
