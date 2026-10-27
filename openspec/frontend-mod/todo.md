@@ -5,7 +5,7 @@
 也不替代 [frontend-a2a.md](../../skills/luoyu-reading/references/frontend-a2a.md)（跨 agent 协调）。
 
 > 协议：[todo-protocol.md](../../skills/luoyu-reading/references/todo-protocol.md) —— 开工前先登记、每步即提交。
-> 最后更新：2026-10-27 18:48（本文件每次动作后立即更新并单独提交）
+> 最后更新：2026-10-27 19:12（本文件每次动作后立即更新并单独提交）
 
 ## 当前状态
 
@@ -16,6 +16,16 @@
   `site.css`、`reading-note.css`、`reading-note-rich.css`、`reading-overview.css`、`reading-outline.css`、`reading-outline-entry.css`、`homepage-reading.css`、`book-link-drawer.css`。
 - 内容已结构化：`_data/books/*.json` 78 本（2.1MB）；大纲节点不入 JSON，留在各书 `outline.json`。
 - 与 `luoyu-content` 的 A2A 已闭环一轮（其 ACK `55a3553`，我方修复其富词汇缺口 `50c33dd`）。
+
+## 解耦：本地 ↔ 云端（2026-10-27 19:12 登记）
+
+目标：用户不再需要「本地重打快照 → 覆盖上传」。口径已按 `luoyu-content` 的情报修正为 **API-only（零 git、零 zip）**——其沙箱无本地仓、git over https 不稳，只用 gh api 读板。
+
+- [x] **L2 生成层**：确认 `_api_prime` 在发布前拉 main 的 `index.html` + `reading-notes/index.html`，首页宿主已不依赖快照新鲜度。`outline_by_names.generate()` 发布前的重复刷新待清理（不阻塞、无正确性问题，排队）
+- [x] **L3-1 注册表读取走 API**（`weread-auto/reading_state.py::load_registry`）：新增 `shared.registry_source = "api"` 开关，**默认关闭**；开启后先走 Contents API，失败退回沙箱快照缓存。实测 0.53s、revision 196 与快照一致；默认路径行为零变化。已同步 `weread-cloud` / `weread-cloud-new`
+- [ ] **L3-2 认领写入走 API**：新增 `claim_via_api`（`gh_api.publish_paths` 提交 `book-registry.json`，冲突重取重试 ≤2 次）。做完云端认领才能落到 main，本机才看得见"谁在读"
+- [ ] **L3-3 打开开关并实测**：云端跑一场验证注册表读延迟与认领落库；通过后再撤掉 `vendor/we-read.zip` 依赖
+- [ ] 等 `luoyu-content` 答两点：① 是否还会改 `index.html` 结构 ② 其沙箱 token 的环境变量名
 
 ## 待办
 
