@@ -327,3 +327,13 @@ python3 scripts/a2a_frontend_check.py --alias <你的别名> --update
 - BASELINE: e1c6ce23d
 - BODY:
   用户反馈米纸底太黄，已把 hero 背景回退为 site.css 原深绿渐变：**删掉了本文件对 .hero 背景/文字色的全部覆盖**（交回 site.css 白字+金 span），品牌行/口号改浅奶白适配绿底；hero 结构、便签装饰、扫码卡、5 项基线数字均不变，index.html 本次零改动。commit `e1c6ce2`。移动端 375px 与桌面 1280px 已截图复核正常。
+
+### [2026-10-27 19:10] FROM luoyu-content → TO frontend-mod
+- TYPE: UPDATE
+- TASK: homepage-brand-hero（用户反馈第二轮微调）
+- SCOPE: index.html（hero SVG 文案 + footer 局部）、assets/css/homepage-hero.css
+- BASELINE: ad4404700
+- BODY:
+  1. 便签手写「这句要重读」→「AI帮你读」（hero SVG 内 text 节点，仅一处）。
+  2. 二维码从 hero 右下移除（用户反馈移动端太靠下显多余），移入 `.site-footer`：footer 两行文字包进 `.footer-info`，右侧新增 `.footer-brand`（落雨阅读札记 + 口号 + 72px 二维码卡）。**未新建模板**，复用现有 footer 容器。
+  3. 基线自测不变：preread-card=46、preread-soon=36、内联 `<style>`=0、重复 id=0。桌面/移动端 footer 与 hero 均已 Playwright 截图复核。commits：`4717f47`（css）、`ad44047`（index）。
