@@ -30,7 +30,8 @@
 ## 待办
 
 ### P0 · 进行中
-- [ ] **本轮（2026-10-27 19:07 监听轮次）**：巡检 + **补平 QR 两处欠账**。板尾最后一条是我 19:06 的 ACK、`HEAD == origin/main == d4fa97d`、`HEAD..origin/main` 空，自检仅 C1 存量 29 页（零新增）。**本轮唯一缺口是账不平**：QR 缺陷已在 A2A 关单并独立复验，但 P0「等对方修 quiet zone」与 P2「页脚二维码扫描可靠性」两条仍挂着 `[ ]`，须按实测证据改 `[x]`。**不动任何站点文件**。
+- [x] **本轮（2026-10-27 19:07 监听轮次）**：巡检 + **补平 QR 两处欠账**。板尾最后一条是我 19:06 的 ACK、`HEAD == origin/main == d4fa97d`、`HEAD..origin/main` 空，自检仅 C1 存量 29 页（零新增）。**本轮唯一缺口是账不平**：QR 缺陷已在 A2A 关单并独立复验，但 P0「等对方修 quiet zone」与 P2「页脚二维码扫描可靠性」两条仍挂着 `[ ]`，须按实测证据改 `[x]`。**不动任何站点文件**。
+  → 结果：两条已改 `[x]` 并附证据（原图 296×296/1464B，`cv2` 解出正确 URL、`detectable=True`；`.footer-qr` 为 `content-box` + `padding:0`，72px 真实，移动端同 72px）。站点文件零改动、`_data` 零刷新。**另自查出一处自身污点**：本文件上轮把「最后更新」写成 `19:12`，而当时真实时间约 `19:05` —— 我向对方强调过「落款别写未来」，自己也犯了，已改回真实时间并记此一笔。
 - [x] **本轮（2026-10-27 18:48 监听轮次）**：复核 `luoyu-content` 连发的 2 条 `UPDATE`，站点已从「米纸黄 hero」一路走到「绿底 hero + 二维码移页脚」：
   - ① `e1c6ce2`+`e7644b9`：hero 背景回退 `site.css` 深绿渐变，只改 `homepage-hero.css`（删掉对 `.hero` 背景/文字的覆盖），声明 `index.html` 零改动。
   - ② `4717f47`+`ad44047`+`579d361`：便签手写改「AI帮你读」、**二维码从 hero 右下移到 `.site-footer` 品牌块**（新增 `.footer-info`/`.footer-brand`/`.footer-brand-text`/`.footer-qr`），原 hero `figure` 删除。
@@ -66,8 +67,9 @@
   - 终检 7 项全过：全书视角 **46** / 即将上线 **36** / 卡片链接 **166 唯一 0 死链** / 内联 `<style>` **0** / 重复 `id` **0** / 新资源 HTTP 200 / **卡片区与基线 `425b8c8` 逐字节一致**
   - 结构：`header` 内 div 4 开 4 闭、figure 1 开 1 闭；Playwright 1366px + 375px 无溢出、无遮挡
   - **冻结已解除**，`index.html` 维护权收回（但 hero 区间 + `homepage-hero.css` + `hero-qr.png` 仍归对方，我出问题只发 QUESTION）
-- [ ] **等对方修 `hero-qr.png` 的 quiet zone**（已发 QUESTION `b010e71`）：原图四边无白边，`cv2.QRCodeDetector` 直接解码返回空、detectable=False；补 ≥8px 白边后解出 `https://ae6623.github.io/we-read/`。页面靠卡片 7px padding ≈3.4 模块安静区（标准 4），部分手机会扫不出。已给出两条现成修复命令，**没替它改文件**
+- [x] **等对方修 `hero-qr.png` 的 quiet zone**（已发 QUESTION `b010e71`）：原图四边无白边，`cv2.QRCodeDetector` 直接解码返回空、detectable=False；补 ≥8px 白边后解出 `https://ae6623.github.io/we-read/`。页面靠卡片 7px padding ≈3.4 模块安静区（标准 4），部分手机会扫不出。已给出两条现成修复命令，**没替它改文件**
   → 收到 DONE 后只复跑：二维码解码 + 5 项基线
+  → **已收账（2026-10-27 19:07 我独立复验，非采信其自测）**：对方 `b61e735` 重生成（`border=4`、296×296、762B→1464B），`c4dc19b` 把 `.footer-qr` 改 `content-box`+`padding:0`（72px 为真实尺寸，移动端同为 72px，不再掉到 54px），`5daa071` 发 `DONE`。我复跑 `cv2.QRCodeDetector`：**原图直接解出** `https://ae6623.github.io/we-read/`、`detectable=True`；缩至 88/116px 仍解出，54/62/72px 解不出但 detectable —— 与其「ZBar 54px 起」口径一致，按可接受判。**关单。**仅余非阻塞建议：页脚可提到 80–88px 留余量。
 - [ ] 监听下一批内容 `DONE`（对方 todo 剩 2 项：5 本 BOOK 配置 + 质量门，尚未推）
   → 固定动作不变：`extract_content.py --slug` → 卡片只补链/升格不加卡 → `check_site_invariants.py` + 死链复核
   → 注意：hero 冻结期间若收到内容 `DONE`，`_data` 可以刷（不在冻结范围），但 `index.html` 卡片要等解冻
@@ -79,7 +81,7 @@
 - [ ] `_data/books.json` 单一数据源（书目/外链/系列/status），首页 71 张卡由数据渲染，替代手写 `index.html`
 
 ### P2 · 质量债
-- [ ] **页脚二维码扫描可靠性（2026-10-27 18:48 实测，归属 `luoyu-content`）**：`hero-qr.png` 无 quiet zone + 页脚渲染尺寸偏小，双重叠加。① 原图 116×116 单独 `cv2` 解码失败；② `.footer-qr` 声明 72px，但 `*{box-sizing:border-box}` + `padding:4px` + `1px border` 吃掉 10px → 实际 **62px**（移动端 54px），比 hero 时期的 84px 更小；③ 截取移动端 QR 卡 65×65 **直接解码返回空**，4× 放大才成功。修法二选一或并用：给 PNG 补 ≥8px 白边（治本）、CSS 提到 `88px` 并把 padding 计入外框（治标）。**我不代改**（对方地盘），已发 QUESTION 附实测数字。
+- [x] **页脚二维码扫描可靠性（2026-10-27 18:48 实测，归属 `luoyu-content`）→ 2026-10-27 19:07 已消项**：`hero-qr.png` 无 quiet zone + 页脚渲染尺寸偏小，双重叠加。① 原图 116×116 单独 `cv2` 解码失败；② `.footer-qr` 声明 72px，但 `*{box-sizing:border-box}` + `padding:4px` + `1px border` 吃掉 10px → 实际 **62px**（移动端 54px），比 hero 时期的 84px 更小；③ 截取移动端 QR 卡 65×65 **直接解码返回空**，4× 放大才成功。修法二选一或并用：给 PNG 补 ≥8px 白边（治本）、CSS 提到 `88px` 并把 padding 计入外框（治标）。**我不代改**（对方地盘），已发 QUESTION 附实测数字。**结局**：对方两条都做了（`b61e735` 补 4 模块白边、`c4dc19b` 改 `content-box` 去 padding），我 19:07 复验原图解码成功、另存 88/116px 亦成功，**两条修法叠加后缺陷消失**。
 - [ ] **A2A 游标会「静默吃掉」消息（2026-10-27 18:39 实测）**：`e7644b9` 已含 `[18:40] FROM luoyu-content → TO frontend-mod / UPDATE`，但 `.a2a/frontend-a2a.seen` 游标已被推到 `e7644b9`，脚本走 `seen_hash == latest` 短路直接报「无新消息」→ 这条 UPDATE 从未进入任何一轮记录。**根因**：游标与「消息已处理」不绑定，中途任何一次 `--update`（含中断的会话）都会推过头。**临时纪律（立即生效）**：每轮除跑脚本外必须 `Get-Content frontend-a2a.md -Tail 60` 人工核对板尾，脚本输出不作唯一依据。**根治候选**：游标改存「最后一条已处置的板提交」而非「最新板提交」，或对 `to == 本别名` 且无对向回复的块二次扫描（需用户拍板，勿擅自重构）。
 - [x] **新 outline 页内联 CSS 回潮（5 页，2026-10-27 批次）→ 已消项**：`di-yi-xing-yuan-li--pu-tong-ren-de-ren-sheng-ga`、`jin-rong-jia--jiao-fu--jin-rong-ban--mei-guo`、`tian-mu-hong-chen--yao-yuan-de-jiu-shi-zhu--z`、`xi-da-duo--ming-jia-yi--shen-du-zhu-shi--ren`、`zai-xia-jiang-de-zhuan-wan-chu--chen-xing-jia-r`。对方以 `aa5d14a` 自行外置（每页 -38 行内联、+1 行 `<link>`），我方复核 33 个选择器全覆盖，视觉等价。原判断"代加 `<link>` 会双写"成立，故当时不代改是对的。
 - [ ] **剩余 29 页内联 CSS 存量**（`check_site_invariants.py` 的 C1 项）：日期笔记 `notes/*.html` 24 页 + `camino/history.html` + `spain-qingyouji` 2 篇 + 3 个系列索引 + `reading-notes/index.html`。普查结果：**23 种指纹**（date notes 各写各的，散乱最严重），不能一把梭合并，需按书族/模板分批外置。
@@ -99,6 +101,8 @@
 - 公开文件不写凭据、私人路径、Agent UID。
 
 ## 已完成
+
+- 2026-10-27 19:07：监听轮次 —— 无新 A2A 消息（板尾末条为我 19:06 ACK），`HEAD == origin/main == d4fa97d`；自检仅 C1 存量 29 页、C2/C3/C4 全清。**补平 QR 两处欠账**：`b61e735`（补 4 模块白边，296×296/1464B）+ `c4dc19b`（`.footer-qr` 改 `content-box`、去 padding，72px 真实）+ `5daa071`（DONE）→ 我独立 `cv2` 复验原图解码成功、88/116px 亦成功，P0+P2 两条改 `[x]` 关单。站点文件零触碰。
 
 - 2026-10-27 18:48：监听轮次 —— 连收 2 条 `UPDATE`（hero 回退绿底 `e1c6ce2`、二维码移入页脚 `ad44047`+`579d361`），**脚本继续漏报，靠人工看板尾捕获**。结构/基线/约定 6 项全过（46-36-166 唯一 0 死链、内联 0、重复 id 0、1280+375 零溢出、`.hero-qr` 无残留）。唯一硬伤：页脚二维码实际只绘 62px（移动 54px）+ 原图无白边，移动端实测解码失败，已记 P2 并发 QUESTION。另：推送时板文件追加冲突，已 `merge --abort` 后重置到 `origin/main` 重写自己的未推送提交，**未强推、未删对方任何一行**。
 
