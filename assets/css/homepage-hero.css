@@ -1,28 +1,11 @@
 /* ============================================================
-   homepage-hero.css — 首页品牌头图（米纸风）
-   2026-10-27 luoyu-content：配合 index.html header.hero 改版
-   加载顺序在 site.css / homepage-reading.css 之后，覆盖 hero 配色
-   参考：米纸质感、墨色衬线大标题、铅笔便签装饰、右下二维码
+   homepage-hero.css — 首页品牌头图（绿底版）
+   2026-10-27 luoyu-content：在 site.css 深绿 hero 之上，只叠加
+   品牌行 / 口号行 / 铅笔便签装饰 / 扫码卡，并做文字浅色适配。
+   背景与基础配色交回 site.css（#183c34→#78917b 深绿渐变 + 白字）。
    ============================================================ */
 
-/* ---- 头图整体：米纸底 + 细纹理 ---- */
-.hero{
-  background:
-    radial-gradient(120% 100% at 20% 0%, #f7f2e7 0%, #eee6d4 52%, #e2d7bf 100%);
-  color: #2b2b26;
-}
-.hero::before{
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: .55;
-  background:
-    repeating-linear-gradient(0deg, #00000006 0 1px, transparent 1px 3px),
-    repeating-linear-gradient(90deg, #00000004 0 1px, transparent 1px 4px);
-}
-
-/* ---- 顶部品牌行 ---- */
+/* ---- 顶部品牌行（浅奶白，绿底可读） ---- */
 .hero-brand{
   display: flex;
   align-items: center;
@@ -30,72 +13,40 @@
   margin: 0 0 16px;
   font: 700 1.05rem/1 var(--serif);
   letter-spacing: .1em;
-  color: #26251f;
+  color: #f2ead2;
 }
 .hero-brand::before{
   content: "";
   width: 13px;
   height: 13px;
-  background: #9a4a2e;
-  box-shadow: 0 0 0 1px #9a4a2e33;
+  background: #e3c99f;
+  box-shadow: 0 0 0 1px #e3c99f33;
   flex-shrink: 0;
 }
 .hero-brand small{
   font: 700 .62rem/1 var(--sans);
   letter-spacing: .22em;
-  color: #8a7d61;
+  color: #c8d2cb;
   margin-left: 4px;
   transform: translateY(1px);
 }
 
-/* ---- 眉行 / 大标题：改为墨色纸感 ---- */
-.hero .eyebrow{ color: #8a6f4a; }
-.hero h1{
-  color: #26251f;
-  letter-spacing: .03em;
-  text-shadow: 0 1px 0 #ffffff66;
-}
-.hero h1 span{
-  color: #26251f;
-  border-bottom: 6px solid #d9be8a;
-  padding-bottom: 3px;
-}
-
-/* ---- 口号行：通读交给 AI，精读留给自己 ---- */
+/* ---- 口号行：通读交给 AI，精读留给自己（浅色） ---- */
 .hero-slogan{
   margin: 20px 0 0;
   font-size: 1.08rem;
   font-weight: 600;
   letter-spacing: .14em;
-  color: #4a463c;
+  color: #e3ebe4;
 }
 
-/* ---- 引言：弱化为纸面注脚 ---- */
-.hero .hero-copy{ color: #6b675c; }
-.hero .hero-quote{ font-size: .92rem; margin-top: 14px; }
-.hero .hero-quote cite{ font-style: normal; color: #8a6f4a; }
-
-/* ---- 底部导航词：通读 · 精读 · 系列 · 归档 ---- */
-.hero .hero-meta{ gap: 0; margin-top: 26px; }
-.hero .hero-meta span{
-  border: 0;
-  padding: 0;
-  border-radius: 0;
-  color: #57534a;
-  font-size: .8rem;
-  letter-spacing: .22em;
-  background: none;
-}
-.hero .hero-meta span + span::before{
-  content: "·";
-  margin: 0 16px;
-  color: #b3a685;
+/* ---- 大标题金色 span 加淡金下划线点缀（颜色交回 site.css 的 #e4c89f） ---- */
+.hero h1 span{
+  border-bottom: 5px solid #e4c89f66;
+  padding-bottom: 3px;
 }
 
-/* ---- 背景大字「阅」：淡墨 ---- */
-.hero .hero-mark{ color: #2b2b260a; }
-
-/* ---- 右侧装饰：便签 + 铅笔 + 手写批注 ---- */
+/* ---- 右侧装饰：便签 + 铅笔 + 手写批注（绿底上的浅色便利贴） ---- */
 .hero-sketch{
   position: absolute;
   right: max(6vw, 35px);
@@ -107,7 +58,7 @@
 }
 .hero-sketch svg{ display: block; width: 100%; height: auto; }
 
-/* ---- 右下二维码卡 ---- */
+/* ---- 右下二维码卡（白底，绿底可读） ---- */
 .hero-qr{
   position: absolute;
   right: max(6vw, 35px);
@@ -117,7 +68,7 @@
   padding: 7px 7px 5px;
   background: #fdfcf7;
   border: 1px solid #d8cdb2;
-  box-shadow: 0 3px 10px #4a423018;
+  box-shadow: 0 3px 10px #00000022;
 }
 .hero-qr img{ display: block; width: 84px; height: 84px; }
 .hero-qr figcaption{
@@ -136,8 +87,6 @@
   .hero-brand{ margin-bottom: 12px; font-size: .98rem; }
   .hero-inner{ padding-top: 44px; padding-bottom: 156px; }
   .hero h1 span{ border-bottom-width: 4px; padding-bottom: 2px; }
-  .hero .hero-meta span{ letter-spacing: .14em; font-size: .74rem; }
-  .hero .hero-meta span + span::before{ margin: 0 10px; }
   .hero-qr{ right: 18px; bottom: 16px; padding: 5px 5px 3px; }
   .hero-qr img{ width: 64px; height: 64px; }
   .hero .hero-mark{ font-size: 11rem; }
