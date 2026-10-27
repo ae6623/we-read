@@ -46,6 +46,10 @@ description: Multi-platform reading workflow for source-labeled whole-book previ
 
 **对外文案口径**：站点上（大纲页、通读页、精读页、首页卡片、EPUB 元数据）一律写 **「AI 读书」**，不出现阅读平台品牌名；EPUB 的 `dc:creator` 同理。代码注释与内部日志不受此限。
 
+**改口径要连带改守卫（2026-10-28 踩过）**：`scripts/check-team-book-links.py` 里写死了 `agent-room` 的角色名期望值，`.github/workflows/pages.yml` 部署前会跑它和 `check-agent-dashboard.py`。只把 HTML 里的名字改掉、不改 `agent-room/state.json` 与守卫脚本，站点会**整体不部署**（Pages 连挂 3 次，线上还停在旧版本，很容易误判成「缓存没刷新」）。改口径的三件套：`agent-room/state.json` 的 `name`、`scripts/check-team-book-links.py` 的 `labels`、`scripts/build-agent-dashboard.py` 的 `role_terms`，改完本地跑一遍两个脚本再 push。
+
+**旧结构书目（页面在顶层 `books/<slug>/index.html`）**：`reading-notes/` 下的索引页引用它必须写 `../books/<slug>/...`，少一层就 404（挪威极夜就是这么从通读里「消失」的）。
+
 实现（weread-auto）：`weread_outline.py` 取大纲并渲染页面／EPUB；`site_pub.inject_outline_entries(book_dir)` 幂等注入上面 1、2 两处（用 `<!-- outline-entry -->` 标记包裹，重复执行只替换不叠加，大纲被移除时清理死链）；`site_pub.refresh_outline_cards(repo)` 负责第 3 处——首页索引是保守的（已有卡片不重写），所以补链／升级文案单独走这一步。手动补跑：`python tools/build_outline_assets.py 书名 [--id bookId] [--push]`。
 
 ## AI辅助章节导览与读后笔记流程
