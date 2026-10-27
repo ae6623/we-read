@@ -119,8 +119,10 @@ CREATE INDEX idx_outline_book ON book_outline(book);
 
 - **幂等要点**：章节区间用 `details` 标签**配对计数**定位（`_ch_item_spans`），不能用非贪婪正则——
   章节正文里的小节本身也是 `details`，非贪婪会在第一个小节闭合处截断，二次运行会把页面撑大。
-- 沙箱实测（2026-10-28）：56 本 / 2783 章 / 23930 条要点入库；单页最大 432KB，全站 overview 9.2MB。
-- 跳过 6 本：4 本大纲页无 `details.ch` 结构（解析为空），2 本通读页无「章节导读」区块。
+- 沙箱实测（2026-10-28）：**58 本 / 2918 章 / 25182 条要点 / 47947 条原句摘录**入库；单页最大 432KB，全站 overview 9.2MB。
+- 两类页面模板都覆盖：主模板（`chapter-guide-title` 章节导读）就地替换 `ch-body`；
+  `#toc` 平铺列表模板（一章一行）由 `--create-section` 在 toc 尾部插入「逐章详读」块（`<!-- ch-detail:begin/end -->` 包裹，可幂等替换）。
+- 未覆盖 5 本：4 本（`serbia-qingyouji` / `shi-shi` / `unstable-life-qingyouji` / `zhi-hu-shen-tie--ren-shi-zhen-xiang`）仓库内**本就没有 AI 大纲原文**（页面自述"未单独留存，由通读笔记整理"），需本机重新拉取；1 本（`yi-ri-wei-jing`）整本目录缺失。
 - `overview_gen/build_overview.py` 已同步去掉截断，本机重新生成不会回退到精简版。
 
 ## 5. 82 本书盘点（站点 `we-read/reading-notes/books`）

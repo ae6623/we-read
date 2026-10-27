@@ -256,6 +256,39 @@ def inject(html_text: str, chapters: list, budget: int = 500):
     return "".join(out), n
 
 
+def inject_create(html_text: str, chapters: list, budget: int = 500):
+    """#toc 平铺列表模板（一章一行、无章节导读区块）：在 #toc section 尾部插入逐章详读块。
+
+    块用 <!-- ch-detail:begin/end --> 包住，便于幂等替换。
+    """
+    html_text = re.sub(r"\s*<!-- ch-detail:begin -->[\s\S]*?<!-- ch-detail:end -->",
+                       "", html_text)
+    i = html_text.find('id="toc"')
+    if i < 0:
+        return html_text, 0
+    sec_end = html_text.find("</section>", i)
+    if sec_end < 0:
+        return html_text, 0
+
+    per, budget = _quota(len(chapters), budget)
+    parts = ['<!-- ch-detail:begin -->', '      <div class="toc-detail">',
+             '        <h3>逐章详读 · AI 大纲全文</h3>',
+             '        <p class="small">AI 大纲原始要点与书中原句摘录（第 4 层），点击章节展开。</p>']
+    used = 0
+    for c in chapters:
+        cap = min(per, budget - used)
+        body, cnt = build_ch_body(c, max(cap, 0))
+        used += cnt
+        parts.append('        <details class="ch-item"><summary>'
+                     '<span class="ch-no">%d</span><span class="ch-t">%s</span>'
+                     '<span class="caret">›</span></summary>' % (c["no"], esc(c["title"])))
+        parts.append('          <div class="ch-body">')
+        parts.append(body)
+        parts.append("          </div></details>")
+    parts += ["      </div>", "      <!-- ch-detail:end -->"]
+    return html_text[:sec_end] + "\n".join(parts) + "\n    " + html_text[sec_end:], len(chapters)
+
+
 # ------------------------------------------------------------------ 入库
 def save_local(slug: str, title: str, chapters: list) -> int:
     """写本地 JSON + SQLite（book_outline 表）。返回要点条数。"""
@@ -329,13 +362,15 @@ CSS_PATCH = """
 
 
 def ensure_css(site_repo: str, files: dict):
-    p = os.path.join(site_repo, "assets", "css", "reading-overview.css")
-    if not os.path.exists(p):
-        return
-    s = open(p, encoding="utf-8").read()
-    if "ch-sec>summary" in s:
-        return
-    files["assets/css/reading-overview.css"] = s.rstrip("\n") + "\n" + CSS_PATCH
+    """把 .ch-sec/.ch-quote 等样式补到两套模板的 CSS（幂等）。"""
+    for rel in ("assets/css/reading-overview.css", "assets/css/reading-note.css"):
+        p = os.path.join(site_repo, rel)
+        if not os.path.exists(p):
+            continue
+        s = open(p, encoding="utf-8").read()
+        if "ch-sec>summary" in s:
+            continue
+        files[rel] = s.rstrip("\n") + "\n" + CSS_PATCH
 
 
 def main(argv=None):
@@ -345,6 +380,8 @@ def main(argv=None):
     ap.add_argument("--limit", type=int, default=0, help="只处理前 N 本（试跑）")
     ap.add_argument("--budget", type=int, default=500,
                     help="每本书渲染要点总预算（章多则按章节数自动收紧每章配额）")
+    ap.add_argument("--create-section", action="store_true",
+                    help="对无「章节导读」区块、但有 #toc 平铺列表的页面，新建「逐章详读」块")
     ap.add_argument("--publish", action="store_true", help="提交发布到站点仓")
     ap.add_argument("--dry-run", action="store_true", help="不落盘不发布")
     a = ap.parse_args(argv)
@@ -367,6 +404,10 @@ def main(argv=None):
             continue
         html_text = open(ov, encoding="utf-8", errors="ignore").read()
         new_html, n = inject(html_text, chapters, a.budget)
+        if not n and a.create_section:
+            new_html, n = inject_create(html_text, chapters, a.budget)
+            if n:
+                print("  + %-46s 新建「逐章详读」区块 章=%d" % (slug[:46], n))
         if not n:
             print("  - %-46s 通读页无章节导读区块，跳过" % slug[:46])
             continue
