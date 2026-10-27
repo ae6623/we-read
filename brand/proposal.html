@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>落雨阅读札记 · 品牌标识提案</title>
+<style>
+:root{
+  --ink:#1F1B16; --ink2:#5C5346; --ink3:#8A8578;
+  --paper:#F7F5F0; --line:#E2DCCB; --card:#FFFDF8;
+  --gold:#C9A961; --gold2:#B08A3E;
+  --water:#0F1B26; --water2:#7FB3DD;
+  --serif:"Songti SC","Noto Serif SC","Source Han Serif SC","SimSun",serif;
+  --sans:-apple-system,"PingFang SC","Microsoft YaHei","Segoe UI",sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;-webkit-font-smoothing:antialiased}
+.wrap{max-width:960px;margin:0 auto;padding:0 28px 96px}
+header{padding:72px 0 40px;border-bottom:1px solid var(--line)}
+.eyebrow{font-size:12px;letter-spacing:.24em;color:var(--ink3);margin:0 0 20px}
+h1{font-family:var(--serif);font-size:40px;font-weight:400;letter-spacing:.08em;margin:0 0 14px}
+header .sub{font-size:14px;color:var(--ink2);margin:0;letter-spacing:.06em}
+section{padding:56px 0;border-bottom:1px solid var(--line)}
+section:last-of-type{border-bottom:0}
+h2{font-family:var(--serif);font-size:22px;font-weight:400;letter-spacing:.06em;margin:0 0 8px}
+.num{font-size:11px;letter-spacing:.2em;color:var(--gold2);display:block;margin-bottom:10px}
+.lead{font-size:14px;color:var(--ink2);margin:0 0 30px;max-width:660px}
+.grid{display:grid;gap:20px}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g2{grid-template-columns:repeat(2,1fr)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:28px;text-align:center}
+.card h3{font-size:13px;font-weight:500;letter-spacing:.1em;margin:18px 0 6px}
+.card p{font-size:12px;color:var(--ink3);margin:0;line-height:1.6}
+.mark{width:96px;height:96px;display:inline-block}
+.hero-mark{width:160px;height:160px}
+.hero-white{background:var(--water);border-radius:24px;padding:40px 56px;display:flex;justify-content:center;width:fit-content;margin:0 auto}
+.hero-combo{width:520px;max-width:100%;height:auto}
+.swatches{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:8px}
+.sw{border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+.sw .chip{height:84px}
+.sw .meta{padding:10px 12px;background:var(--card)}
+.sw .meta b{display:block;font-size:12px;font-weight:500}
+.sw .meta span{font-size:11px;color:var(--ink3);font-family:ui-monospace,Menlo,monospace;letter-spacing:.04em}
+.apps{display:flex;align-items:flex-end;gap:28px;flex-wrap:wrap;margin-top:6px}
+.app-item{text-align:center}
+.app-item small{display:block;font-size:11px;color:var(--ink3);margin-top:10px}
+table{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px}
+th,td{text-align:left;padding:12px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:11px;letter-spacing:.14em;color:var(--ink3);font-weight:400}
+td:first-child{width:120px;color:var(--gold2);white-space:nowrap}
+.hexa{font-family:var(--serif);color:var(--ink2)}
+ul.rules{margin:0;padding-left:18px;font-size:13px;color:var(--ink2)}
+ul.rules li{margin-bottom:8px}
+footer{padding-top:40px;font-size:12px;color:var(--ink3);text-align:center;letter-spacing:.08em}
+@media(max-width:720px){.g3,.g2,.swatches{grid-template-columns:1fr 1fr}.hero-white{flex-direction:column;padding:40px}h1{font-size:30px}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="mark-a" viewBox="0 0 120 120">
+    <rect width="120" height="120" rx="26" fill="#0F1B26"/>
+    <rect x="28" y="17" width="27" height="7" rx="1.5" fill="#7FB3DD"/>
+    <rect x="65" y="17" width="27" height="7" rx="1.5" fill="#7FB3DD"/>
+    <rect x="28" y="33" width="64" height="7" rx="1.5" fill="#7FB3DD"/>
+    <rect x="28" y="49" width="27" height="7" rx="1.5" fill="#7FB3DD"/>
+    <rect x="65" y="49" width="27" height="7" rx="1.5" fill="#7FB3DD"/>
+    <rect x="28" y="65" width="64" height="7" rx="1.5" fill="#C9A961"/>
+    <rect x="28" y="81" width="64" height="7" rx="1.5" fill="#C9A961"/>
+    <rect x="28" y="97" width="64" height="7" rx="1.5" fill="#C9A961"/>
+  </symbol>
+  <symbol id="mark-a-line" viewBox="0 0 120 120">
+    <rect x="3" y="3" width="114" height="114" rx="24" fill="none" stroke="#0F1B26" stroke-width="5"/>
+    <rect x="30" y="21" width="26" height="6.5" rx="1.5" fill="#2F6FA8"/>
+    <rect x="64" y="21" width="26" height="6.5" rx="1.5" fill="#2F6FA8"/>
+    <rect x="30" y="36" width="60" height="6.5" rx="1.5" fill="#2F6FA8"/>
+    <rect x="30" y="51" width="26" height="6.5" rx="1.5" fill="#2F6FA8"/>
+    <rect x="64" y="51" width="26" height="6.5" rx="1.5" fill="#2F6FA8"/>
+    <rect x="30" y="66" width="60" height="6.5" rx="1.5" fill="#B08A3E"/>
+    <rect x="30" y="81" width="60" height="6.5" rx="1.5" fill="#B08A3E"/>
+    <rect x="30" y="96" width="60" height="6.5" rx="1.5" fill="#B08A3E"/>
+  </symbol>
+  <symbol id="mark-a-mono" viewBox="0 0 120 120">
+    <rect x="28" y="17" width="27" height="7" rx="1.5" fill="#B08A3E"/>
+    <rect x="65" y="17" width="27" height="7" rx="1.5" fill="#B08A3E"/>
+    <rect x="28" y="33" width="64" height="7" rx="1.5" fill="#B08A3E"/>
+    <rect x="28" y="49" width="27" height="7" rx="1.5" fill="#B08A3E"/>
+    <rect x="65" y="49" width="27" height="7" rx="1.5" fill="#B08A3E"/>
+    <rect x="28" y="65" width="64" height="7" rx="1.5" fill="#B08A3E"/>
+    <rect x="28" y="81" width="64" height="7" rx="1.5" fill="#B08A3E"/>
+    <rect x="28" y="97" width="64" height="7" rx="1.5" fill="#B08A3E"/>
+  </symbol>
+  <symbol id="mark-b" viewBox="0 0 120 120">
+    <circle cx="60" cy="60" r="58" fill="#0F1B26"/>
+    <line x1="42" y1="34" x2="42" y2="54" stroke="#7FB3DD" stroke-width="5" stroke-linecap="round"/>
+    <line x1="60" y1="34" x2="60" y2="62" stroke="#7FB3DD" stroke-width="5" stroke-linecap="round"/>
+    <line x1="78" y1="34" x2="78" y2="50" stroke="#7FB3DD" stroke-width="5" stroke-linecap="round"/>
+    <path d="M30 78 Q60 66 90 78" fill="none" stroke="#C9A961" stroke-width="5" stroke-linecap="round"/>
+    <path d="M36 94 Q60 85 84 94" fill="none" stroke="#C9A961" stroke-width="4" stroke-linecap="round" opacity=".5"/>
+  </symbol>
+  <symbol id="mark-fav" viewBox="0 0 120 120">
+    <rect width="120" height="120" rx="24" fill="#0F1B26"/>
+    <circle cx="60" cy="32" r="15" fill="#C9A961"/>
+    <line x1="60" y1="50" x2="60" y2="66" stroke="#C9A961" stroke-width="6"/>
+    <path d="M24 84 Q60 68 96 84" fill="none" stroke="#7FB3DD" stroke-width="9" stroke-linecap="round"/>
+    <path d="M32 104 Q60 92 88 104" fill="none" stroke="#7FB3DD" stroke-width="7" stroke-linecap="round" opacity=".55"/>
+  </symbol>
+  <symbol id="mark-c" viewBox="0 0 120 120">
+    <rect width="120" height="120" rx="26" fill="#0F1B26"/>
+    <circle cx="60" cy="30" r="10" fill="#C9A961"/>
+    <line x1="60" y1="44" x2="60" y2="64" stroke="#C9A961" stroke-width="3"/>
+    <path d="M32 80 Q60 68 88 80" fill="none" stroke="#7FB3DD" stroke-width="5" stroke-linecap="round"/>
+    <path d="M38 96 Q60 86 82 96" fill="none" stroke="#7FB3DD" stroke-width="4" stroke-linecap="round" opacity=".55"/>
+  </symbol>
+</svg>
+
+<div class="wrap">
+<header>
+  <p class="eyebrow">BRAND MARK PROPOSAL · 2026</p>
+  <h1>落雨阅读札记</h1>
+  <p class="sub">水天需 · 上坎下乾 · 金水相生</p>
+</header>
+
+<section>
+  <span class="num">01 · 取象</span>
+  <h2>为什么是「需」</h2>
+  <p class="lead">六十四卦里金水两全的只有四卦：水天需、水泽节、天水讼、泽水困。讼与困卦义不吉，直接排除；节卦主收敛节制，气偏紧。唯「需」卦上坎为水、下乾为金，金为源、水为用，且卦辞全吉——<span class="hexa">有孚，光亨，贞吉，利涉大川</span>。</p>
+  <table>
+    <tr><th>卦象</th><th>结构</th><th>五行</th><th>取用</th></tr>
+    <tr><td>水天需</td><td>上坎下乾</td><td>上水下金</td><td>云上于天，待时而雨。吉。取为主标</td></tr>
+    <tr><td>水泽节</td><td>上坎下兑</td><td>上水下金</td><td>节制有度。可用作次级语言</td></tr>
+    <tr><td>天水讼</td><td>上乾下坎</td><td>上金下水</td><td>争讼之象，弃</td></tr>
+    <tr><td>泽水困</td><td>上兑下坎</td><td>上金下水</td><td>困顿之象，弃</td></tr>
+  </table>
+</section>
+
+<section>
+  <span class="num">02 · 主标</span>
+  <h2>六爻方章</h2>
+  <p class="lead">把卦符原样搬进标识：上三爻断开为坎，是雨；下三爻连贯为乾，是金。断与连的对比本身就是「水在落、金在承」，不需要再画任何具象的水滴或云纹。六爻即标识，标识即卦象。</p>
+  <div class="hero-white">
+    <svg class="hero-combo" viewBox="0 0 430 160">
+      <use href="#mark-a" x="0" y="0" width="160" height="160"/>
+      <text x="196" y="96" font-family="Songti SC,SimSun,serif" font-size="44" fill="#F2EEE3" letter-spacing="4">落雨阅读</text>
+      <text x="199" y="124" font-size="10" fill="#8FA8BC" letter-spacing="3">LUOYU · AI READING NOTES</text>
+    </svg>
+  </div>
+</section>
+
+<section>
+  <span class="num">03 · 三案</span>
+  <h2>三个方向</h2>
+  <p class="lead">A 是正统路线，直接用卦符，最接近传统机构徽标的语感；B、C 是把「金生水」抽象成图形，弱化卦象、强化直觉。</p>
+  <div class="grid g3">
+    <div class="card">
+      <svg class="mark"><use href="#mark-a"/></svg>
+      <h3>A · 六爻方章</h3>
+      <p>卦符直用，六爻上断下连。<br>最正统，缩至 32px 仍可辨</p>
+    </div>
+    <div class="card">
+      <svg class="mark"><use href="#mark-b"/></svg>
+      <h3>B · 雨落玄水</h3>
+      <p>三道雨丝落入金色水波。<br>具象、亲和，适合头图与封面</p>
+    </div>
+    <div class="card">
+      <svg class="mark"><use href="#mark-c"/></svg>
+      <h3>C · 金生水</h3>
+      <p>金点坠下化水波。<br>极简流线，适合 favicon 与角标</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <span class="num">04 · 变体</span>
+  <h2>三种底色</h2>
+  <div class="grid g3">
+    <div class="card">
+      <svg class="mark"><use href="#mark-a"/></svg>
+      <h3>玄水底</h3>
+      <p>主用，屏幕与深色场景</p>
+    </div>
+    <div class="card" style="background:#F7F5F0">
+      <svg class="mark"><use href="#mark-a-line"/></svg>
+      <h3>纸底描边</h3>
+      <p>浅色页、文档、印刷</p>
+    </div>
+    <div class="card">
+      <svg class="mark"><use href="#mark-a-mono"/></svg>
+      <h3>单色金</h3>
+      <p>烫金、钢印、单色印刷</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <span class="num">05 · 色</span>
+  <h2>金水色板</h2>
+  <p class="lead">水为主、金为点。比例约 六四开：水六、金三、白一。金只出现在下卦与点睛处，不铺大面积，避免「金多则燥」。</p>
+  <div class="swatches">
+    <div class="sw"><div class="chip" style="background:#0F1B26"></div><div class="meta"><b>玄水</b><span>#0F1B26</span></div></div>
+    <div class="sw"><div class="chip" style="background:#C9A961"></div><div class="meta"><b>秋金</b><span>#C9A961</span></div></div>
+    <div class="sw"><div class="chip" style="background:#7FB3DD"></div><div class="meta"><b>石青</b><span>#7FB3DD</span></div></div>
+    <div class="sw"><div class="chip" style="background:#EDE7D9"></div><div class="meta"><b>月白</b><span>#EDE7D9</span></div></div>
+    <div class="sw"><div class="chip" style="background:#F7F5F0"></div><div class="meta"><b>纸</b><span>#F7F5F0</span></div></div>
+  </div>
+</section>
+
+<section>
+  <span class="num">06 · 应用</span>
+  <h2>落地尺寸</h2>
+  <div class="apps">
+    <div class="app-item"><svg width="120" height="120" style="border-radius:50%;overflow:hidden"><use href="#mark-a"/></svg><small>社媒头像 120px</small></div>
+    <div class="app-item"><svg width="64" height="64"><use href="#mark-a"/></svg><small>列表 64px</small></div>
+    <div class="app-item"><svg width="32" height="32"><use href="#mark-a"/></svg><small>32px</small></div>
+    <div class="app-item"><svg width="16" height="16"><use href="#mark-fav"/></svg><small>favicon 16px</small></div>
+  </div>
+</section>
+
+<section>
+  <span class="num">07 · 用法</span>
+  <h2>三条硬规则</h2>
+  <ul class="rules">
+    <li>爻序不可改。上三爻必须断开、下三爻必须连贯，这是卦体本身，改一条就不是水天需。</li>
+    <li>金不上移。金只在下卦（下三爻），一旦金色占到上三爻，「金生水」的流向就反了。</li>
+    <li>不加装饰。不描边、不加光晕、不做立体投影——卦符本身就是最简形，多一笔即为噪音。</li>
+  </ul>
+</section>
+
+<footer>落雨阅读札记 · 水天需 · 金水相生</footer>
+</div>
+</body>
+</html>

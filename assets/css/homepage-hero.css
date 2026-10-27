@@ -30,6 +30,31 @@
   margin-left: 4px;
   transform: translateY(1px);
 }
+/* 品牌行可点击进入品牌页（brand/） */
+a.hero-brand{
+  text-decoration: none;
+  width: fit-content;
+  padding: 6px 0;
+  margin-top: -6px;
+  margin-bottom: 10px;
+  transition: color .18s ease;
+}
+a.hero-brand:hover{
+  color: #f3dcae;
+  background-image: linear-gradient(#e3c99f, #e3c99f);
+  background-size: 100% 1px;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+}
+a.hero-brand:hover::before{
+  background: #f3dcae;
+  box-shadow: 0 0 0 2px #e3c99f66;
+}
+a.hero-brand:focus-visible{
+  outline: 2px solid #e3c99f;
+  outline-offset: 5px;
+  border-radius: 3px;
+}
 
 /* ---- 口号行：通读交给 AI，精读留给自己（浅色） ---- */
 .hero-slogan{
