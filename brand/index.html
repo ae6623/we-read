@@ -15,8 +15,14 @@
 body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.75;-webkit-font-smoothing:antialiased}
 .page{max-width:800px;margin:0 auto;padding:0 32px 96px}
 .brand-head{display:flex;align-items:center;gap:26px;padding:76px 0 34px;border-bottom:1px solid var(--line)}
-.brand-logo{display:block;width:64px;height:84px;flex-shrink:0;text-decoration:none}
+.brand-logo{display:block;width:84px;height:84px;flex-shrink:0;text-decoration:none}
 .brand-logo svg{display:block;width:100%;height:100%}
+.sprite{position:absolute;width:0;height:0;overflow:hidden}
+.apps{display:flex;align-items:flex-end;gap:30px;flex-wrap:wrap;margin-top:28px}
+.app-item{text-align:center}
+.app-item small{display:block;font-size:11px;color:var(--ink3);margin-top:11px;letter-spacing:.08em;text-align:center}
+.app-item svg{display:block;margin:0 auto}
+.app-round{border-radius:50%;overflow:hidden}
 .brand-text{min-width:0}
 .eyebrow{font-size:11px;letter-spacing:.3em;color:var(--ink3);margin:0 0 16px}
 h1{font-family:var(--serif);font-size:44px;font-weight:400;letter-spacing:.1em;margin:0;line-height:1.3}
@@ -53,19 +59,30 @@ footer a:hover{color:var(--gold);border-color:var(--gold)}
 </style>
 </head>
 <body>
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <symbol id="sym-mark" viewBox="0 0 120 120">
+    <rect width="120" height="120" rx="26" fill="#0F1B26"/>
+    <rect x="28" y="17" width="27" height="7" rx="1.5" fill="#7FB3DD"/>
+    <rect x="65" y="17" width="27" height="7" rx="1.5" fill="#7FB3DD"/>
+    <rect x="28" y="33" width="64" height="7" rx="1.5" fill="#7FB3DD"/>
+    <rect x="28" y="49" width="27" height="7" rx="1.5" fill="#7FB3DD"/>
+    <rect x="65" y="49" width="27" height="7" rx="1.5" fill="#7FB3DD"/>
+    <rect x="28" y="65" width="64" height="7" rx="1.5" fill="#C9A961"/>
+    <rect x="28" y="81" width="64" height="7" rx="1.5" fill="#C9A961"/>
+    <rect x="28" y="97" width="64" height="7" rx="1.5" fill="#C9A961"/>
+  </symbol>
+  <symbol id="sym-fav" viewBox="0 0 120 120">
+    <rect width="120" height="120" rx="24" fill="#0F1B26"/>
+    <circle cx="60" cy="32" r="15" fill="#C9A961"/>
+    <line x1="60" y1="50" x2="60" y2="66" stroke="#C9A961" stroke-width="6"/>
+    <path d="M24 84 Q60 68 96 84" fill="none" stroke="#7FB3DD" stroke-width="9" stroke-linecap="round"/>
+    <path d="M32 104 Q60 92 88 104" fill="none" stroke="#7FB3DD" stroke-width="7" stroke-linecap="round" opacity=".55"/>
+  </symbol>
+</svg>
 <div class="page">
   <header class="brand-head">
     <a class="brand-logo" href="../index.html" aria-label="返回落雨阅读札记">
-      <svg viewBox="24 13 72 95" role="img" aria-label="落雨阅读札记标识">
-        <rect x="28" y="17" width="27" height="7" rx="1.5" fill="#B08A3E"/>
-        <rect x="65" y="17" width="27" height="7" rx="1.5" fill="#B08A3E"/>
-        <rect x="28" y="33" width="64" height="7" rx="1.5" fill="#B08A3E"/>
-        <rect x="28" y="49" width="27" height="7" rx="1.5" fill="#B08A3E"/>
-        <rect x="65" y="49" width="27" height="7" rx="1.5" fill="#B08A3E"/>
-        <rect x="28" y="65" width="64" height="7" rx="1.5" fill="#B08A3E"/>
-        <rect x="28" y="81" width="64" height="7" rx="1.5" fill="#B08A3E"/>
-        <rect x="28" y="97" width="64" height="7" rx="1.5" fill="#B08A3E"/>
-      </svg>
+      <svg viewBox="0 0 120 120" role="img" aria-label="落雨阅读札记标识"><use href="#sym-mark"/></svg>
     </a>
     <div class="brand-text">
       <p class="eyebrow">BRAND MARK · 2026</p>
@@ -127,7 +144,31 @@ footer a:hover{color:var(--gold);border-color:var(--gold)}
     </section>
 
     <section class="chapter">
-      <span class="num">五 · 用</span>
+      <span class="num">五 · 应用</span>
+      <h2>落地尺寸</h2>
+      <p>同一个符号，从社媒头像缩到浏览器标签，爻序不动。尺寸越小，断口按比例收窄，但断与连的比例关系始终成立。</p>
+      <div class="apps">
+        <div class="app-item">
+          <svg class="app-round" width="120" height="120" viewBox="0 0 120 120" role="img" aria-label="社媒头像尺寸"><use href="#sym-mark"/></svg>
+          <small>社媒头像 120px</small>
+        </div>
+        <div class="app-item">
+          <svg width="64" height="64" viewBox="0 0 120 120" role="img" aria-label="列表图标尺寸"><use href="#sym-mark"/></svg>
+          <small>列表 64px</small>
+        </div>
+        <div class="app-item">
+          <svg width="32" height="32" viewBox="0 0 120 120" role="img" aria-label="小图标尺寸"><use href="#sym-mark"/></svg>
+          <small>32px</small>
+        </div>
+        <div class="app-item">
+          <svg width="16" height="16" viewBox="0 0 120 120" role="img" aria-label="浏览器标签尺寸"><use href="#sym-fav"/></svg>
+          <small>favicon 16px</small>
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter">
+      <span class="num">六 · 用</span>
       <h2>不随场景改形</h2>
       <p>首页刊头、书封角标、社媒头像，用的都是这一个符号。可以换底色，可以退成单色，但爻序不动、金色不上移。</p>
       <p class="rule">上三爻断开、下三爻连贯，是卦体本身，改一条就不是水天需。</p>
