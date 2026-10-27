@@ -1,6 +1,6 @@
 # 阅读员-AI读书（金刚狼/AI读书）· 待办（openspec）
 
-维护人：阅读员-微信读书（逻辑角色键 `wechat-reading-browser`，公开身份“金刚狼/AI读书”）。只写本人待办与完成情况。认领、登记、锁、续读点与收尾仍以 main 上的 book-registry.json 和 agent-roster.json 为准，本文件不替代 registry。
+维护人：阅读员-AI读书（逻辑角色键 `wechat-reading-browser`，公开身份“金刚狼/AI读书”）。只写本人待办与完成情况。认领、登记、锁、续读点与收尾仍以 main 上的 book-registry.json 和 agent-roster.json 为准，本文件不替代 registry。
 
 ## 当前状态（2026-10-23 13:03，以 main 2d5e84b 为准）
 

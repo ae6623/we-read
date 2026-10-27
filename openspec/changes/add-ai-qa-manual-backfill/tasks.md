@@ -36,7 +36,7 @@
 
 ## 4. 验证
 
-- [!] 4.1 不启动阅读场次，点控制台按钮 → 日志出现 `ai_qa_plan` → `ai_qa_done`（≥1 ok）→ `ai_qa_saved` —— 原因：沙箱无微信读书登录态/浏览器/AI 额度，无法真实触发；代码路径已接（`run_session` 内部即打 `ai_qa_plan`/`ai_qa_done`，`_cmd_ai_qa` 打 `ai_qa_saved`），待本机运行核对
+- [!] 4.1 不启动阅读场次，点控制台按钮 → 日志出现 `ai_qa_plan` → `ai_qa_done`（≥1 ok）→ `ai_qa_saved` —— 原因：沙箱无AI读书登录态/浏览器/AI 额度，无法真实触发；代码路径已接（`run_session` 内部即打 `ai_qa_plan`/`ai_qa_done`，`_cmd_ai_qa` 打 `ai_qa_saved`），待本机运行核对
 - [!] 4.2 `data/ai_qa/<书名>.json` 中 `date == 今天` 的条数 == 询问数 —— 原因：同上，需真实运行
 - [!] 4.3 该书当日 `notes/<今天>.html` 出现 `<section class="aiqa">`，问句与落盘一致 —— 原因：同上，需真实运行
 - [!] 4.4 同一时刻连点两次，第二次返 409，不起第二个浏览器 —— 原因：需真实控制台 + `weread.lock` 并发验证

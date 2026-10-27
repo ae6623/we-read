@@ -10,7 +10,7 @@
 
 | 类别 | 载体 | 性质 | 迁移方式 |
 |------|------|------|----------|
-| **AI 大纲** `ai_outline` | `outline.json`（微信读书官方结构：扁平 `{level:1–4, text, uiIdx, range, chapterUid}`）+ `outline.md` / `.epub` / `.html` | **已是结构化数据**（level1=章、2=节、3=要点、4=原句摘录） | 直接入库为 `outline_nodes` 表；HTML 是它的渲染产物，可弃 |
+| **AI 大纲** `ai_outline` | `outline.json`（AI读书官方结构：扁平 `{level:1–4, text, uiIdx, range, chapterUid}`）+ `outline.md` / `.epub` / `.html` | **已是结构化数据**（level1=章、2=节、3=要点、4=原句摘录） | 直接入库为 `outline_nodes` 表；HTML 是它的渲染产物，可弃 |
 | **文本** `text` | `overview.html`（全书视角）、`final.html`（精读/AI阅读汇编）、`notes/YYYY-MM-DD.html`（日期笔记） | 正文是规整的 `<section aria-labelledby><h2>…` 结构，元信息在 `<header>` | 抽成 `{header, sections:[{id,heading,html}]}`，保真存 HTML 片段 |
 | **静态展示** `static` | `nav` / `footer` / `assets/css/*` / 首页卡片与索引 / `books/*/index.html` | 纯展示、无内容语义 | **模板渲染，不手改页面**；改样式只动共享 CSS，改卡片只动数据源（见下） |
 
