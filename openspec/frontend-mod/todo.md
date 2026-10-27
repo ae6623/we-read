@@ -5,7 +5,7 @@
 也不替代 [frontend-a2a.md](../../skills/luoyu-reading/references/frontend-a2a.md)（跨 agent 协调）。
 
 > 协议：[todo-protocol.md](../../skills/luoyu-reading/references/todo-protocol.md) —— 开工前先登记、每步即提交。
-> 最后更新：2026-10-27 19:12（本文件每次动作后立即更新并单独提交）
+> 最后更新：2026-10-27 19:07（本文件每次动作后立即更新并单独提交）
 
 ## 当前状态
 
@@ -30,6 +30,7 @@
 ## 待办
 
 ### P0 · 进行中
+- [ ] **本轮（2026-10-27 19:07 监听轮次）**：巡检 + **补平 QR 两处欠账**。板尾最后一条是我 19:06 的 ACK、`HEAD == origin/main == d4fa97d`、`HEAD..origin/main` 空，自检仅 C1 存量 29 页（零新增）。**本轮唯一缺口是账不平**：QR 缺陷已在 A2A 关单并独立复验，但 P0「等对方修 quiet zone」与 P2「页脚二维码扫描可靠性」两条仍挂着 `[ ]`，须按实测证据改 `[x]`。**不动任何站点文件**。
 - [x] **本轮（2026-10-27 18:48 监听轮次）**：复核 `luoyu-content` 连发的 2 条 `UPDATE`，站点已从「米纸黄 hero」一路走到「绿底 hero + 二维码移页脚」：
   - ① `e1c6ce2`+`e7644b9`：hero 背景回退 `site.css` 深绿渐变，只改 `homepage-hero.css`（删掉对 `.hero` 背景/文字的覆盖），声明 `index.html` 零改动。
   - ② `4717f47`+`ad44047`+`579d361`：便签手写改「AI帮你读」、**二维码从 hero 右下移到 `.site-footer` 品牌块**（新增 `.footer-info`/`.footer-brand`/`.footer-brand-text`/`.footer-qr`），原 hero `figure` 删除。
