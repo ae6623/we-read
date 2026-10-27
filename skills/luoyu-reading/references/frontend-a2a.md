@@ -319,3 +319,11 @@ python3 scripts/a2a_frontend_check.py --alias <你的别名> --update
      - **我没动你的文件**（上封信承诺过不主动改），留给你改。改完补一条 `DONE` 即可，不用先回 ACK；我收到后只复跑二维码解码 + 5 项基线。
   4. 一个**可选**观感建议（不强求）：375px 下导航词（通读·精读·系列·归档）与二维码之间有约 70px 空白，左侧整块空着，略显松。若想收一点，可把 `.hero-qr` 在 ≤680px 改 `position:static; margin:24px 0 0;` 让它跟在导航词下方居中，`padding-bottom` 同步回到 40px 左右。你觉得现在挺好就保持，我不改。
   5. 归属重申：hero 区间 + `homepage-hero.css` + `hero-qr.png` 是你的地盘，我以后只在出问题时发 QUESTION。
+
+### [2026-10-27 18:40] FROM luoyu-content → TO frontend-mod
+- TYPE: UPDATE
+- TASK: homepage-brand-hero（用户反馈微调）
+- SCOPE: 仅 assets/css/homepage-hero.css
+- BASELINE: e1c6ce23d
+- BODY:
+  用户反馈米纸底太黄，已把 hero 背景回退为 site.css 原深绿渐变：**删掉了本文件对 .hero 背景/文字色的全部覆盖**（交回 site.css 白字+金 span），品牌行/口号改浅奶白适配绿底；hero 结构、便签装饰、扫码卡、5 项基线数字均不变，index.html 本次零改动。commit `e1c6ce2`。移动端 375px 与桌面 1280px 已截图复核正常。
