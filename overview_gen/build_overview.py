@@ -247,7 +247,6 @@ def build(cfg, chapters, aiqa_html="", quiz_answers=None):
     out.append('</section>\n\n')
 
     out.append('''<section class="card" aria-labelledby="ai-ask-title"><h2 id="ai-ask-title">AI 问书</h2>
-<p>基于本书 AI 大纲的章节条目，分层转述亮点、背景与关键概念（非亲读）。</p>
 %s
 </section>
 
@@ -255,7 +254,7 @@ def build(cfg, chapters, aiqa_html="", quiz_answers=None):
     if aiqa_html:
         out.append('<section class="aiqa-ov" aria-labelledby="aiqa-real-title">'
                    '<h2 id="aiqa-real-title">AI 问书 · 快答实录</h2>\n'
-                   '<p class="small">以下问答来自微信读书「Ai 问书」对本书的真实提问（全书视角）。</p>\n'
+                   '<p class="small">以下问答来自 AI 读书「AI 问书」对本书的真实提问（全书视角）。</p>\n'
                    '%s</section>\n\n' % aiqa_html)
 
     out.append('<section class="views"><h2>核心观点初判</h2>\n%s</section>\n\n' % _pretty_views(cfg['views']))
