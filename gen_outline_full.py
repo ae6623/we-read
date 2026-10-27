@@ -348,16 +348,22 @@ def batch_publish(files: dict, message: str, dry_run: bool):
 
 # ------------------------------------------------------------------ 主流程
 CSS_PATCH = """
-/* AI 大纲全文通读（章节导读·完整版）：章节折叠 → 小节折叠，点击展开 */
-.ch-stat{margin:.2em 0 .5em;font-size:.76rem;color:var(--muted)}
-.ch-sec{margin:6px 0;border-left:2px solid var(--line);padding-left:10px}
-.ch-sec>summary{display:flex;gap:8px;align-items:baseline;cursor:pointer;list-style:none;font-size:.84rem;color:var(--green)}
-.ch-sec>summary::-webkit-details-marker{display:none}
+/* AI 大纲全文通读（章节导读·完整版）：章节折叠 → 小节折叠，点击展开
+   注：完整版式（页面加宽 / 板块卡片 / 疏朗间距）在 reading-overview.css 的「版式 v2」段，
+       这里只放最小必需样式，供其他模板兜底。 */
+.ch-stat{margin:0 0 14px;font-size:.79rem;color:var(--muted)}
+.ch-body .ch-sec{margin:14px 0;padding:0 16px;background:#fff;border:1px solid #e8e3d7;border-radius:10px}
+.ch-body .ch-sec>summary{display:flex;gap:10px;align-items:baseline;cursor:pointer;list-style:none;
+  padding:12px 0;font:600 .98rem/1.6 var(--serif);color:var(--green2)}
+.ch-body .ch-sec>summary::-webkit-details-marker{display:none}
 .sec-h{font-weight:600}
-.sec-count{margin-left:auto;font-size:.74rem;color:var(--muted);flex:none}
-.ch-quote{margin:.2em 0 .4em;padding-left:1em;list-style:none;border-left:2px dotted var(--line);font-size:.76rem;color:#8a8272}
-.ch-quote li{margin:.15em 0}
-.ch-more{font-size:.76rem;color:var(--muted);font-style:italic}
+.sec-count{margin-left:auto;flex:none;font:400 .74rem/1.6 var(--sans);color:var(--muted);
+  background:#f4f1e9;border-radius:999px;padding:1px 10px}
+.ch-body ol.ch-secs{margin:8px 0 16px;padding-left:1.8em;list-style:decimal outside;
+  color:#3a453f;font-size:.95rem;line-height:1.9}
+.ch-body ul.ch-quote{margin:.7em 0 .1em;padding:10px 14px;list-style:none;background:#fdf8ee;
+  border-left:3px solid var(--gold);border-radius:0 8px 8px 0;font-size:.9rem;line-height:1.85;color:#6b5c43}
+.ch-more{margin:6px 0 0;font-size:.82rem;color:var(--muted);font-style:italic}
 """
 
 

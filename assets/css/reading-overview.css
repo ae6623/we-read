@@ -130,10 +130,9 @@ section{margin:30px 0}
 section h2{font:600 1.3rem/1.5 var(--serif);color:var(--green);margin:0 0 12px;padding-left:12px;border-left:4px solid var(--green)}
 section h3{font:600 1.04rem/1.6 var(--serif);color:var(--green2);margin:18px 0 6px}
 section p{margin:.5em 0}
-to{opacity:1;transform:none}
 ul{padding-left:1.3rem}
 ul.note-list{margin:.7em 0}
-@keyframes slideDown{from{opacity:0;transform:translateY(-4px)}
+@keyframes slideDown{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
 @media print{body{background:#fff}}
 @media(max-width:520px){.ch-item summary{gap:6px}.badge{font-size:.62rem}}
 @media(max-width:680px){.metrics-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.metric{padding:14px 12px}}
@@ -155,13 +154,100 @@ ul.note-list{margin:.7em 0}
 .ch-item summary .ch-t{font:600 .98rem/1.6 var(--serif);color:var(--green)}
 .ch-item summary .caret{color:var(--gold);font-weight:700}
 
-/* AI 大纲全文通读（章节导读·完整版）：章节折叠 → 小节折叠，点击展开 */
-.ch-stat{margin:.2em 0 .5em;font-size:.76rem;color:var(--muted)}
-.ch-sec{margin:6px 0;border-left:2px solid var(--line);padding-left:10px}
-.ch-sec>summary{display:flex;gap:8px;align-items:baseline;cursor:pointer;list-style:none;font-size:.84rem;color:var(--green)}
-.ch-sec>summary::-webkit-details-marker{display:none}
-.sec-h{font-weight:600}
-.sec-count{margin-left:auto;font-size:.74rem;color:var(--muted);flex:none}
-.ch-quote{margin:.2em 0 .4em;padding-left:1em;list-style:none;border-left:2px dotted var(--line);font-size:.76rem;color:#8a8272}
-.ch-quote li{margin:.15em 0}
-.ch-more{font-size:.76rem;color:var(--muted);font-style:italic}
+/* ==========================================================================
+   读前通读 · 版式 v2（2026-10-28）
+   ① 画布加宽   ② 章节展开后疏朗（对齐 AI 大纲页层级观感）   ③ 板块独立成卡
+   ========================================================================== */
+
+/* ① 画布加宽：page / wrap 两套模板都覆盖 */
+.page{max-width:1120px;padding:56px clamp(20px,3vw,40px) 88px}
+.wrap{max-width:1120px;padding:clamp(24px,3.4vw,52px)}
+
+/* ③ 板块：每个 section 独立卡片，加深边框 + 标题色条 + 分隔线 + 拉开间距
+   注：模板差异大——有 section.card、有裸 section、还有包在 <article> 里的，都要兜住 */
+section.card,
+main.page>section, main.page article>section,
+main.wrap>section, main.wrap article>section{background:#fffefa;border:1px solid #d7e0d7;
+  border-radius:16px;padding:clamp(20px,2.6vw,34px) clamp(20px,2.8vw,36px);margin:30px 0;
+  box-shadow:0 1px 3px rgba(36,49,46,.05)}
+section.card>h2,
+main.page>section>h2, main.page article>section>h2,
+main.wrap>section>h2, main.wrap article>section>h2{font:600 1.34rem/1.5 var(--serif);
+  color:var(--green);margin:0 0 20px;padding:0 0 12px 14px;
+  border-left:5px solid var(--gold);border-bottom:1px solid var(--line)}
+section.card>h3,
+main.page>section>h3, main.page article>section>h3,
+main.wrap>section>h3, main.wrap article>section>h3{font:600 1.05rem/1.6 var(--serif);
+  color:var(--green2);margin:22px 0 8px}
+/* 卡片内部若还套了 .card 小卡，去掉重复外框，只留淡底 */
+main article>section>div.card{border-radius:12px;box-shadow:none;border-color:#ece7dc}
+
+/* ② 章节行：行距、悬停反馈、展开体分层 */
+.ch-list li{padding:0;border-bottom:0}
+.ch-item{border-bottom:1px solid #ece7dc}
+.ch-item:last-child{border-bottom:0}
+.ch-item>summary{display:flex;gap:12px;align-items:baseline;padding:12px 8px;
+  cursor:pointer;list-style:none;transition:background .15s ease}
+.ch-item>summary:hover{background:#faf7f0;border-radius:8px}
+.ch-item summary .ch-t{font:600 1rem/1.6 var(--serif);color:var(--green)}
+.ch-item[open]>summary{border-bottom:1px dashed var(--line)}
+.ch-item[open]>summary .ch-t{color:var(--green2)}
+
+/* 展开体：淡底整块托起，与未展开章节明显分层 */
+.ch-body{margin:0 0 6px;padding:16px 18px 18px;background:#fbfaf5;
+  border:1px solid #f0ebdf;border-top:0;border-radius:0 0 12px 12px}
+
+/* ② 小节：白卡片 + 金色箭头，间距 14px，不再挤成一坨 */
+.ch-body .ch-sec{margin:14px 0;padding:0 16px;background:#fff;
+  border:1px solid #e8e3d7;border-radius:10px}
+.ch-body .ch-sec>summary{display:flex;gap:10px;align-items:baseline;cursor:pointer;
+  list-style:none;padding:12px 0;font:600 .98rem/1.6 var(--serif);color:var(--green2)}
+.ch-body .ch-sec>summary::-webkit-details-marker{display:none}
+.ch-body .ch-sec>summary::before{content:"▸";flex:none;color:var(--gold);font-size:.78rem}
+.ch-body .ch-sec[open]>summary::before{content:"▾"}
+.ch-body .ch-sec[open]>summary{border-bottom:1px dashed var(--line)}
+.sec-count{margin-left:auto;flex:none;font:400 .74rem/1.6 var(--sans);color:var(--muted);
+  background:#f4f1e9;border-radius:999px;padding:1px 10px}
+
+/* ② 要点：字号回到正文尺度（.95rem / 1.9），列表符号金色 */
+.ch-body ol.ch-secs{margin:8px 0 16px;padding-left:1.8em;list-style:decimal outside;
+  color:#3a453f;font-size:.95rem;line-height:1.9}
+.ch-body ol.ch-secs>li{margin:.62em 0;padding-left:.35em}
+.ch-body ol.ch-secs>li::marker{color:var(--gold);font-weight:700}
+
+/* ② 原句摘录：米色小卡 + 金边，与要点一眼分开 */
+.ch-body ul.ch-quote{margin:.7em 0 .1em;padding:10px 14px;list-style:none;
+  background:#fdf8ee;border-left:3px solid var(--gold);border-radius:0 8px 8px 0;
+  font-size:.9rem;line-height:1.85;color:#6b5c43}
+.ch-body ul.ch-quote>li{margin:.3em 0}
+.ch-body ul.ch-quote>li+li{padding-top:.3em;border-top:1px dashed #eadfc9}
+
+/* 章头统计行 / 截断提示 */
+.ch-stat{margin:0 0 14px;font-size:.79rem;color:var(--muted);letter-spacing:.02em}
+.ch-more{margin:6px 0 0;font-size:.82rem;color:var(--muted);font-style:italic}
+
+/* #toc 平铺模板的「逐章详读」块，给个上边界 */
+.toc-detail{margin:22px 0 6px;padding-top:18px;border-top:1px solid var(--line)}
+.toc-detail>h3{margin:0 0 6px;font:600 1.06rem/1.6 var(--serif);color:var(--green)}
+/* 卡片内的篇目导航用淡底，避免白卡套白卡分不清 */
+main article>section .toc-part,
+main.page>section .toc-part{background:#fbfaf5;border-color:#ece7dc}
+
+/* 窄屏收敛：层层 padding 会吃掉宽度，逐层减 */
+@media(max-width:720px){
+  .page,.wrap{padding:32px 12px 56px}
+  section.card,
+  main.page>section, main.page article>section,
+  main.wrap>section, main.wrap article>section{padding:18px 14px;border-radius:12px;margin:20px 0}
+  section.card>h2,
+  main.page>section>h2, main.page article>section>h2,
+  main.wrap>section>h2, main.wrap article>section>h2{font-size:1.16rem;padding-left:10px;margin-bottom:14px}
+  .ch-body{padding:10px 10px 12px}
+  .ch-body .ch-sec{padding:0 11px;margin:10px 0}
+  .ch-body .ch-sec>summary{padding:10px 0;font-size:.94rem}
+  .ch-body ol.ch-secs{font-size:.92rem;padding-left:1.35em;line-height:1.85}
+  .ch-body ul.ch-quote{padding:8px 10px;font-size:.86rem}
+  .ch-item>summary{padding:11px 2px;gap:8px}
+  .ch-item summary .ch-t{font-size:.96rem}
+  .ch-no{min-width:30px}
+}
