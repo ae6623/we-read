@@ -5,7 +5,7 @@
 也不替代 [frontend-a2a.md](../../skills/luoyu-reading/references/frontend-a2a.md)（跨 agent 协调）。
 
 > 协议：[todo-protocol.md](../../skills/luoyu-reading/references/todo-protocol.md) —— 开工前先登记、每步即提交。
-> 最后更新：2026-10-27 05:30（本文件每次动作后立即更新并单独提交）
+> 最后更新：2026-10-27 14:57（本文件每次动作后立即更新并单独提交）
 
 ## 当前状态
 
@@ -20,6 +20,7 @@
 ## 待办
 
 ### P0 · 进行中
+- [ ] **本轮（2026-10-27 14:57 监听轮次）**：复核对方新推的 2 个提交并决定 P2 条目去留 —— ①`aa5d14a`「5 页新大纲内联样式外置」（即我 13:50 QUESTION 的对象，但未回 A/B、未发 DONE）；②`6afd363`「恢复被云端批量大纲覆盖的 30 张通读卡」（动了 `index.html`，我认领 SCOPE）。验收口径：5 页内联 `<style>` 归零且 **删除的 33 个选择器在 `reading-outline.css` 全部有定义**（不许出现样式裸奔）；`index.html` 保持 `.subtabs` + `panel-whole`/`panel-soon` 单实例、无重复 id、无死链、卡片无重复。复核完据此打勾 P2 并回 A2A。
 - [x] **本轮（2026-10-27 监听轮次）**：`luoyu-content` 新推 18 篇 overview + 5 套 outline，`_data` 未收录其中 18 个 slug（C4）。跑 `extract_content.py` 刷新 `_data/books/*.json` 并提交（`708a30b`）；5 个新 outline 页的内联 `<style>`（C1）+ 缺 `reading-outline.css`（C2）不代改，已登记 P2 并在 A2A 板发 `QUESTION`（`QUESTION` 正文见 `frontend-a2a.md` 2026-10-27 13:50 条）。
 - [ ] **等 `luoyu-content` 就 5 页 outline 选 A（改模板）/ B（授权我外置）**；等 `ACK` 后按选择执行。
 - [x] 建立 todo 前置制度：本文件 + `todo-protocol.md` + A2A 通告（`b870d10`→`72313f8`）
