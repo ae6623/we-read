@@ -20,10 +20,18 @@
 ## 待办
 
 ### P0 · 进行中
-- [ ] **本轮（2026-10-27 18:48 监听轮次）**：复核 `luoyu-content` 连发的 2 条 `UPDATE`，站点已从「米纸黄 hero」一路走到「绿底 hero + 二维码移页脚」：
+- [x] **本轮（2026-10-27 18:48 监听轮次）**：复核 `luoyu-content` 连发的 2 条 `UPDATE`，站点已从「米纸黄 hero」一路走到「绿底 hero + 二维码移页脚」：
   - ① `e1c6ce2`+`e7644b9`：hero 背景回退 `site.css` 深绿渐变，只改 `homepage-hero.css`（删掉对 `.hero` 背景/文字的覆盖），声明 `index.html` 零改动。
   - ② `4717f47`+`ad44047`+`579d361`：便签手写改「AI帮你读」、**二维码从 hero 右下移到 `.site-footer` 品牌块**（新增 `.footer-info`/`.footer-brand`/`.footer-brand-text`/`.footer-qr`），原 hero `figure` 删除。
-  - 验收口径：① 结构闭合（HTMLParser 无未闭合/错配）② 5 项基线 46/36/166 唯一 0 死链/内联 `<style>` 0/重复 id 0 ③ C1 不新增、C2/C3/C4 全清 ④ 1280px + 375px 无横向溢出、footer 不挤压 ⑤ `.hero-qr` 无残留规则、`.footer-qr` 有定义 ⑥ 二维码在页脚尺寸下**真的能扫**（不只是"看起来在"）。
+  - **结论：结构/基线/约定 6 项全过；但二维码「能扫」这条不过（新缺陷，比原来更差）。**
+  - ① 结构：`HTMLParser` 遍历 `index.html` → 未闭合 0、错配 0；`header` 1/1、`figure` 0/0（hero 的 figure 已随二维码一起移除，页脚改用裸 `<img>`）；`div` 开闭差 2 与改动前同为 −2（`<div` 正则会误吃 JS/注释内字面量，非真实缺口）。
+  - ② 基线：`preread-card` **46** / `preread-soon` **36** / `reading-notes/books/` 链接 **166 唯一 0 死链** / 内联 `<style>` **0** / 重复 `id` **0**。
+  - ③ 自检：`check_site_invariants.py` 仅 C1 存量 **29 页**（14:57 起第 5 轮零新增）；C2/C3/C4 全清，未跑 `--fix`。
+  - ④ 布局：1280px footer 1080×115（QR 卡 72×72 落在 `x1080..1152`，距右边界 28px）；375px footer 375×151（`.footer-brand` 212×64 内含 64px QR）；两档 `scrollWidth == innerWidth`，零横向溢出，`.footer-info` 在 ≤680px 转纵向不挤。
+  - ⑤ 样式死活：`.footer-info/.footer-brand/.footer-brand-text/.footer-qr` 在 `homepage-hero.css` 全部有定义（第 63/68/73/89 行）；`hero-qr` 全仓库仅剩第 61 行一条「已停用」注释，无悬挂规则；`--serif`/`--sans` 仍由 site.css `:root` 提供。
+  - ⑥ **二维码扫描不过（唯一硬伤）**：`assets/img/hero-qr.png` 仍是 762B 无白边原图（116×116，**单独解码仍然失败**）；且尺寸不升反降 —— hero 时期渲染 84px，现在 `.footer-qr` 声明 72px 但 `box-sizing:border-box` + `padding:4px` + `1px border` → 实际绘出 **62px**，移动端更只剩 **54px**。实测截取页脚 QR 卡：桌面 72×73 **解出** `https://ae6623.github.io/we-read/`；**移动端 65×65 直接解码返回空**，要 4× 放大才能解出。即"手机上翻到自己站点的页脚，再用另一台手机扫"这条真实路径不可靠。
+  - ⑦ 时钟：对方两条消息落款 `18:40`、`19:10`，我实际读到的时间分别约 `18:39`、`18:47`，**落款整体跑在未来**，已在 A2A 提醒按真实时间写，否则板子时序回溯会错位。
+
 
 - [x] **本轮（2026-10-27 14:57 监听轮次）复核：两项均通过，无新增质量债。**
   - ① `aa5d14a`：5 页 `<style>` 归零，改为 `site.css` + `reading-outline.css`（与既有 58 页写法一致）。**逐页比对删除的 33 个选择器，在 `reading-outline.css` 全部有定义**（`:root`/`.page`/`.note-head`/`.eyebrow`/`.chip`/`.toc`/`details.ch`/`.sec`/`.point`/`.quote`/`.small` 等，missing=NONE），无样式裸奔。C1+C2 消项，C1 存量 34→29。
@@ -60,6 +68,8 @@
 - [ ] `_data/books.json` 单一数据源（书目/外链/系列/status），首页 71 张卡由数据渲染，替代手写 `index.html`
 
 ### P2 · 质量债
+- [ ] **页脚二维码扫描可靠性（2026-10-27 18:48 实测，归属 `luoyu-content`）**：`hero-qr.png` 无 quiet zone + 页脚渲染尺寸偏小，双重叠加。① 原图 116×116 单独 `cv2` 解码失败；② `.footer-qr` 声明 72px，但 `*{box-sizing:border-box}` + `padding:4px` + `1px border` 吃掉 10px → 实际 **62px**（移动端 54px），比 hero 时期的 84px 更小；③ 截取移动端 QR 卡 65×65 **直接解码返回空**，4× 放大才成功。修法二选一或并用：给 PNG 补 ≥8px 白边（治本）、CSS 提到 `88px` 并把 padding 计入外框（治标）。**我不代改**（对方地盘），已发 QUESTION 附实测数字。
+- [ ] **A2A 游标会「静默吃掉」消息（2026-10-27 18:39 实测）**：`e7644b9` 已含 `[18:40] FROM luoyu-content → TO frontend-mod / UPDATE`，但 `.a2a/frontend-a2a.seen` 游标已被推到 `e7644b9`，脚本走 `seen_hash == latest` 短路直接报「无新消息」→ 这条 UPDATE 从未进入任何一轮记录。**根因**：游标与「消息已处理」不绑定，中途任何一次 `--update`（含中断的会话）都会推过头。**临时纪律（立即生效）**：每轮除跑脚本外必须 `Get-Content frontend-a2a.md -Tail 60` 人工核对板尾，脚本输出不作唯一依据。**根治候选**：游标改存「最后一条已处置的板提交」而非「最新板提交」，或对 `to == 本别名` 且无对向回复的块二次扫描（需用户拍板，勿擅自重构）。
 - [x] **新 outline 页内联 CSS 回潮（5 页，2026-10-27 批次）→ 已消项**：`di-yi-xing-yuan-li--pu-tong-ren-de-ren-sheng-ga`、`jin-rong-jia--jiao-fu--jin-rong-ban--mei-guo`、`tian-mu-hong-chen--yao-yuan-de-jiu-shi-zhu--z`、`xi-da-duo--ming-jia-yi--shen-du-zhu-shi--ren`、`zai-xia-jiang-de-zhuan-wan-chu--chen-xing-jia-r`。对方以 `aa5d14a` 自行外置（每页 -38 行内联、+1 行 `<link>`），我方复核 33 个选择器全覆盖，视觉等价。原判断"代加 `<link>` 会双写"成立，故当时不代改是对的。
 - [ ] **剩余 29 页内联 CSS 存量**（`check_site_invariants.py` 的 C1 项）：日期笔记 `notes/*.html` 24 页 + `camino/history.html` + `spain-qingyouji` 2 篇 + 3 个系列索引 + `reading-notes/index.html`。普查结果：**23 种指纹**（date notes 各写各的，散乱最严重），不能一把梭合并，需按书族/模板分批外置。
 - [ ] 卡片生成器源头治理：`HTML` 技术词反复回潮，需定位 `luoyu-content` 的生成脚本并改为 `网页版`（当前首页 0 处，靠脚本 C3 兜底）
@@ -78,6 +88,8 @@
 - 公开文件不写凭据、私人路径、Agent UID。
 
 ## 已完成
+
+- 2026-10-27 18:48：监听轮次 —— 连收 2 条 `UPDATE`（hero 回退绿底 `e1c6ce2`、二维码移入页脚 `ad44047`+`579d361`），**脚本继续漏报，靠人工看板尾捕获**。结构/基线/约定 6 项全过（46-36-166 唯一 0 死链、内联 0、重复 id 0、1280+375 零溢出、`.hero-qr` 无残留）。唯一硬伤：页脚二维码实际只绘 62px（移动 54px）+ 原图无白边，移动端实测解码失败，已记 P2 并发 QUESTION。另：推送时板文件追加冲突，已 `merge --abort` 后重置到 `origin/main` 重写自己的未推送提交，**未强推、未删对方任何一行**。
 
 - 2026-10-27 14:57：监听轮次 —— A2A 无新消息（游标 `72313f8`→`ec9fca1`，仅我自己的提交）；`check_site_invariants.py` 仅剩 C1 存量 29 页（C2/C3/C4 全清）。复核对方 `6afd363`（首页恢复 30 张通读卡）与 `aa5d14a`（5 页 outline 内联外置）均通过，详见 P0。
 - 2026-10-27 13:50：快进合并 `luoyu-content` 19 个提交（`6f59ccc..6538ba1`，零冲突）；18 篇新 overview **0 内联 0 技术词**；按 18 个 slug 重跑 `extract_content.py`，`_data` 与页面同步（C4 清零，commit `708a30b`）。
