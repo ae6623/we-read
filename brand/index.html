@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>落雨阅读札记 · 品牌</title>
-<meta name="description" content="落雨阅读札记的品牌标识取自水天需卦：上坎为水，下乾为金，金水相生。">
+<title>落雨 · 阅读札记｜品牌标识</title>
+<meta name="description" content="落雨 · 阅读札记的品牌标识取自水天需卦：上坎为水，下乾为金，金水相生。">
 <style>
 :root{
   --paper:#F7F5F0; --ink:#1F1B16; --ink2:#5C5346; --ink3:#8A8578;
@@ -14,20 +14,21 @@
 *{box-sizing:border-box}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.75;-webkit-font-smoothing:antialiased}
 .page{max-width:800px;margin:0 auto;padding:0 32px 96px}
-.brand-head{display:flex;align-items:center;gap:26px;padding:76px 0 34px;border-bottom:1px solid var(--line)}
-.brand-logo{display:block;width:84px;height:84px;flex-shrink:0;text-decoration:none}
-.brand-logo svg{display:block;width:100%;height:100%}
+.brand-head{padding:68px 0 32px;border-bottom:1px solid var(--line)}
+.brand-banner{display:block;text-decoration:none;border-radius:14px;overflow:hidden}
+.brand-banner img{display:block;width:100%;height:auto;border-radius:14px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 .sprite{position:absolute;width:0;height:0;overflow:hidden}
 .apps{display:flex;align-items:flex-end;gap:30px;flex-wrap:wrap;margin-top:28px}
 .app-item{text-align:center}
 .app-item small{display:block;font-size:11px;color:var(--ink3);margin-top:11px;letter-spacing:.08em;text-align:center}
 .app-item svg{display:block;margin:0 auto}
 .app-round{border-radius:50%;overflow:hidden}
-.brand-text{min-width:0}
-.eyebrow{font-size:11px;letter-spacing:.3em;color:var(--ink3);margin:0 0 16px}
+.std{margin:42px 0 0}
+.std img{display:block;width:100%;height:auto;border-radius:12px}
+.std figcaption{font-size:11px;color:var(--ink3);letter-spacing:.08em;margin-top:12px;text-align:center}
 h1{font-family:var(--serif);font-size:44px;font-weight:400;letter-spacing:.1em;margin:0;line-height:1.3}
-h1 .dot{color:var(--vermilion);padding:0 .06em;font-size:1.16em;font-weight:400;line-height:0}
-.sub{font-size:14px;color:var(--ink2);letter-spacing:.08em;margin:14px 0 0}
+.sub{font-size:14px;color:var(--ink2);letter-spacing:.08em;margin:18px 0 0;text-align:center}
 .chapter{padding:54px 0;border-bottom:1px solid var(--line)}
 .chapter:last-of-type{border-bottom:0}
 .num{display:block;font-size:12px;letter-spacing:.28em;color:var(--gold);margin-bottom:12px}
@@ -52,8 +53,7 @@ footer a{font-size:13px;color:var(--ink2);text-decoration:none;letter-spacing:.1
 footer a:hover{color:var(--gold);border-color:var(--gold)}
 @media(max-width:680px){
   .page{padding:0 22px 72px}
-  .brand-head{flex-direction:column;align-items:flex-start;gap:20px;padding:52px 0 28px}
-  h1{font-size:31px}
+  .brand-head{padding:36px 0 26px}
   .chapter{padding:42px 0}
   p{font-size:14.5px;line-height:1.95}
 }
@@ -82,14 +82,15 @@ footer a:hover{color:var(--gold);border-color:var(--gold)}
 </svg>
 <div class="page">
   <header class="brand-head">
-    <a class="brand-logo" href="../index.html" aria-label="返回落雨阅读札记">
-      <svg viewBox="0 0 120 120" role="img" aria-label="落雨阅读札记标识"><use href="#sym-mark"/></svg>
+    <a class="brand-banner" href="../index.html" aria-label="返回落雨 · 阅读札记">
+      <img src="luoyu-banner-1200.png"
+           srcset="luoyu-banner-800.png 800w, luoyu-banner-1200.png 1200w"
+           sizes="(max-width:680px) calc(100vw - 44px), 736px"
+           width="1200" height="260"
+           alt="落雨 · 阅读札记 — 通读交给 AI，精读留给自己">
     </a>
-    <div class="brand-text">
-      <p class="eyebrow">BRAND MARK · 2026</p>
-      <h1>落雨<span class="dot">·</span>阅读札记</h1>
-      <p class="sub">水天需 · 上坎下乾 · 金水相生</p>
-    </div>
+    <h1 class="sr-only">落雨 · 阅读札记</h1>
+    <p class="sub">水天需 · 上坎下乾 · 金水相生</p>
   </header>
 
   <main>
@@ -166,6 +167,12 @@ footer a:hover{color:var(--gold);border-color:var(--gold)}
           <small>favicon 16px</small>
         </div>
       </div>
+
+      <figure class="std">
+        <img src="luoyu-banner-1200.png" width="1200" height="260"
+             alt="落雨 · 阅读札记标准版：六爻标识、金色字标、通读交给 AI 精读留给自己与二维码">
+        <figcaption>标准版 · 1200 × 260（另有 1000 / 800 / 647 三档同版）</figcaption>
+      </figure>
     </section>
 
     <section class="chapter">
