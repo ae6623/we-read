@@ -15,7 +15,7 @@ openspec/<角色>/todo.md
 | 管理员（团队级） | `openspec/admin/todo.md` |
 | 轻游记读书员 | `openspec/qingyouji-reader/todo.md` |
 | 读书时长专员 | `openspec/reading-duration/todo.md` |
-| 微信读书员 | `openspec/wechat-reading-browser/todo.md` |
+| AI读书员 | `openspec/wechat-reading-browser/todo.md` |
 | Windows PDF 读书员 | `openspec/windows-local-pdf-reader/todo.md` |
 
 规则：**只写自己那一个文件**；别人的只读。开工前先登记，每完成一项立刻 `[x]` 并单独 commit。

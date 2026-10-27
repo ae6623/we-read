@@ -55,7 +55,7 @@
 
 - `environment_id` 表示实际独占的阅读执行环境，不是 Agent 名、书名、run_id 或随场次变化的随机值。共用环境必须用同一稳定键；不得换名绕锁。环境和资源键只用协作别名，不写设备私有标识、路径、登录信息或凭据。
 - `resource_ids` 列出实际会操作的所有阅读资源；即使环境键不同，共用浏览器仍须列相同资源键。`weread_browser` 表示阅读方式，**不等于全队共用一个浏览器**。当前确认的资源分组如下：
-  - 轻游记 `cue-qingyouji-reader` 与微信读书 `wechat-reading-browser` 共用 `browser:weread-shared`，二者场次（含书内 AI 问答）不得重叠，沿用既有整点／半点错峰。
+  - 轻游记 `cue-qingyouji-reader` 与AI读书 `wechat-reading-browser` 共用 `browser:weread-shared`，二者场次（含书内 AI 问答）不得重叠，沿用既有整点／半点错峰。
   - 读书时长专员使用独立浏览器 profile／resource，资源键为 `browser:weread-duration`；不得因其不同书、独立环境的活动项，阻塞上述共享浏览器，反之亦然。独立 profile 必须真实存在，不得只改登记键而继续操作共享浏览器。
   - Windows 读书员主要在自己的云端环境用本地 PDF 等工具阅读，几乎不使用浏览器；不默认登记任一浏览器资源，也不因独立浏览器有场次而受阻。
 - 每个 `weread_browser` 活动项须且仅须包含上述一个已确认浏览器键，可同时列出实际使用的其他非浏览器资源；校验器拒绝缺失、未知 `browser:*` 或同时包含两个浏览器键的场次。上述两位共享阅读员须用 shared，不能登记 duration 分流。其他浏览器／环境对应关系尚未确认时，先协调更新规范，不自造别名；资源键只表示互斥范围，不自动创建 profile、不证明登录态或运行端配置已隔离。

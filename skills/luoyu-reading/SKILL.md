@@ -9,7 +9,7 @@ description: Multi-platform reading workflow for source-labeled whole-book previ
 
 **沟通记录按需读取**：先读最新 main 的 [沟通索引](references/agent-communication.md)，再读 Asia/Shanghai 今天对应的 `references/agent-communication/YYYY/MM/YYYY-MM-DD.md`；仅为跨日续接、未解决交接或证据追溯打开相关旧日，不通读全历史。开始、交接、完成或遇阻等新事件按实际发生日期追加日文件，不再追加索引；新日期/月/年的目录维护及跨日补记规则见索引。
 
-为用户把多本书读得更有效：开读即建立有来源边界的全书视角初版，再把每天真实读到的内容连回框架，完读后才做校订后的整书汇编。`references/book-registry.json` 是书目归属/认领、完读、`active_sessions`（兼容旧锁 `active_session`） 与 `resume_point` 的权威来源；`references/agent-roster.json` 只登记身份、类型、排班及个人状态镜像，不作为书目或完读事实的唯一来源。共享归档与 Git 规则见 `references/coordination.md`，跨 Agent 开始/结束记录见 `references/agent-communication.md`，用户最新决定见 `references/decisions.md`。使用某个平台前阅读对应的 `references/platforms/<platform>.md`（当前先有微信读书指南）。
+为用户把多本书读得更有效：开读即建立有来源边界的全书视角初版，再把每天真实读到的内容连回框架，完读后才做校订后的整书汇编。`references/book-registry.json` 是书目归属/认领、完读、`active_sessions`（兼容旧锁 `active_session`） 与 `resume_point` 的权威来源；`references/agent-roster.json` 只登记身份、类型、排班及个人状态镜像，不作为书目或完读事实的唯一来源。共享归档与 Git 规则见 `references/coordination.md`，跨 Agent 开始/结束记录见 `references/agent-communication.md`，用户最新决定见 `references/decisions.md`。使用某个平台前阅读对应的 `references/platforms/<platform>.md`（当前先有AI读书指南）。
 
 ## 选书与排班先过滤阅读黑名单（2026-10-23）
 管理员推荐、排班派活及所有阅读员选书、认领、默认续读、实际开读前，先读同一权威仓库最新 main 的 [阅读黑名单规则](references/reading-blacklist.md) 与唯一 [黑名单数据](references/reading-blacklist.json)。命中的具体书或禁读主题直接排除，转下一本已获授权的合格候选，不再逐次询问；用户指定优先与旧认领不自动解除禁读决定。不为分类打开正文／书内 AI，主题不明由选书 Agent 核查非正文书目元数据，仍不明就暂不选，不反复打扰用户。单次跳过、暂停、受阻不自动成为永久黑名单；不改既有 owner、锁、续读点或阅读历史。可复用只读工具 `scripts/filter-reading-candidates.py`；通过黑名单后仍须走认领、暂停状态、时窗与资源预检。规则合入 main 不代表所有旧会话或独立执行器已热更新。
@@ -17,34 +17,20 @@ description: Multi-platform reading workflow for source-labeled whole-book previ
 
 公开笔记与归档卡摘要优先提供书籍介绍、论证主线、章节分析及跨章精读价值，给出有证据支撑的判断和可继续精读的问题；不要把时间窗／场次、浏览秒数、页数、后台续读点等过程记录塞进读者版正文或卡片，也不重复无用进度文案与流程免责声明。必要的来源、事实缺口、亲读／AI状态及实际覆盖仍须清晰保留；原始事实继续按协议保存在权威日志的最少元数据或仓库外私有材料，不因前台去冗余而删除。不回改旧页阅读事实。长书全章AI输入及专业精读输出见 [AI问书规范](references/ai-ask-book.md)，质量核查与统筹见 [管理员 Skill](../reading-admin/SKILL.md)；下方旧规则中的实际时长／逐场区段要求用于后台留证，不要求读者版按场次排版。
 
-## 公开内容禁词与占位提示（2026-10-28 用户决定，强制）
-
-**一、平台名不进读者可见内容。** 站点、通读页、日期笔记、归档卡片等一切读者能看到的地方，**不得出现我们所用读书平台的中文名（就是那两个字，WX）**，一律写作 `AI`：`WX读书` → `AI读书`，`WX公众号` → `AI公众号`，`由WX读书 AI 问书逐题补答` → `由 AI 问书逐题补答`。理由：站点对外展示不挂平台名，内容本身才是主体。原始平台名只允许留在仓库内的规范、日志与来源元数据里，不进页面正文。URL（如 `mp.weixin.qq.com` 的 `href`）不受影响，那是来源凭证。
-
-**二、内部操作步骤不写给读者。** 严禁出现这类文字：
-
-> 答案尚未生成：本机运行 `python weread_daily.py ai-qa --quiz --book "书名"`，由……逐题补答，答完自动渲染在这里。
-
-读者要的是答案，不是我们的待办。规则回到 2026-10-28 之前的既定口径：**「读完自测」区块只在有 AI 补答时渲染；没有答案就整块不出现**，不留占位、不留"待补"、不留命令行。
-
-**三、落地方式（不靠人记，靠代码卡）。** 生成侧净化只是第一道；真正的闸口是 `weread-auto/site_pub.py` 的 `write_html()` 调用的 `sanitize_public()`——任何写入站点的 HTML 都会：① 删除 `<p class="quiz-pending">…</p>`；② 若自测区既无题目也无 `quiz-ans`，整块 `<section … quiz-card>` 删除；③ 平台中文名批量替换为 `AI`。所以**即使生成器是旧版、或由第三方 Agent 写的页面，进站时一样会被清干净**。日志里会留一行 `public_sanitized` 便于追查来源。
-
-**四、历史清理。** 2026-10-28 一次性清理了 39 个 HTML：删 8 处占位提示、替换 90 处平台名。此前（同日更早）已清理过一轮，复发原因是「在已有页面追加补答时没有删掉旧占位」——这正是第三条要把闸口放在 `write_html` 而不是生成器的原因。
-
 ## WorkBuddy 备用接手与沟通
 
 用户要求 WorkBuddy 接手，或当前 Agent 因用量／连接中断需移交时，先读 [WorkBuddy 交接清单与可复制模板](references/workbuddy-handoff.md)。接手者必须从权威仓库最新 main、registry 及相关事件自检，不假设会话、浏览器登录、Skill 安装、Git 权限、活动锁或用户授权继承；只有用户明确授权／交接、锁与责任核清并满足最新状态协议后才继续。不得传递令牌或任何秘密，权限不足就回传无秘密补丁，由有既有获批通道的责任方处理，不绕过。管理员统筹使用独立的 [reading-admin Skill](../reading-admin/SKILL.md)；未安装或无权读取时先报告，不声称已接入。
 
 ## 最新协调规则（2026-10-23，优先于旧全局锁、排班与管理员只读规则）
 
-- 按 **Asia/Shanghai 每日 02:00–06:00 禁读**；轻游记与微信读书共用浏览器按 [最新决定](references/decisions.md) 的整点／半点错峰执行，不重叠、不补跑；时长专员使用独立浏览器 profile／resource，不算上述共享浏览器占用。具体资源键及实际隔离核验只依 [状态协议](references/reading-state-protocol.md)，不能因同用微信读书就一律阻塞，也不能只改名绕锁。Windows 主要在自己的云端用本地 PDF，由责任 Agent 自主管理，不套用浏览器错峰或逐场转达门槛；按 [状态协议](references/reading-state-protocol.md) 核清书目、环境和资源后可与不同书的浏览器阅读并行。旧锁由原责任人安全收尾、相关写入端确认接入新格式之前，不启用并行；本次不改排班或启动阅读。
+- 按 **Asia/Shanghai 每日 02:00–06:00 禁读**；轻游记与AI读书共用浏览器按 [最新决定](references/decisions.md) 的整点／半点错峰执行，不重叠、不补跑；时长专员使用独立浏览器 profile／resource，不算上述共享浏览器占用。具体资源键及实际隔离核验只依 [状态协议](references/reading-state-protocol.md)，不能因同用AI读书就一律阻塞，也不能只改名绕锁。Windows 主要在自己的云端用本地 PDF，由责任 Agent 自主管理，不套用浏览器错峰或逐场转达门槛；按 [状态协议](references/reading-state-protocol.md) 核清书目、环境和资源后可与不同书的浏览器阅读并行。旧锁由原责任人安全收尾、相关写入端确认接入新格式之前，不启用并行；本次不改排班或启动阅读。
 - 管理员／协调者负责整体错峰排班、阅读任务分发及共享归档页面设计，**不读正文**。可在已授权队列与现有书目归属内协调任务，不替其他 Agent 认领、转交、开读或登记成果；书目归属始终以最新 `book-registry.json` 为准。
 - 实际执行排班由各 Agent 自行维护其 roster 镜像；协调者只提出安排、交接与核对，不代改其他 Agent 的个人记录、续读点、个人排班镜像或阅读历史，也不干预其专属实现。
 - 做文章呈现、共享归档页面或组件前，先读 [唯一 UI 规范入口](references/archive-ui.md)。统一处理同类区块，不另建规范副本；设计权限不等于改写他人文章内容、阅读事实或历史笔记的权限，文件认领与审查仍按 [协作规则](references/coordination.md)。
 
 ## 通读的 AI 问书（2026-10-21 用户决定）
 
-读书员【通读】建立或实质更新一本书的全书全貌时，必须按 [AI 问书规范](references/ai-ask-book.md) 在 `overview.html` 加入固定「AI 问书」章节，依次回答 **书籍亮点、背景解读、关键概念、10个最佳金句语录**；按适用流程完成AI章节笔记与「读后思考」后，可按用户授权记为「AI阅读完读」，再整理 `final.html` 与 EPUB。微信读书须实际打开本书 AI 对话，一次输入并提交 `书籍亮点+背景解读+关键概念+10个最佳金句语录`，不再要求逐个点击固定按钮；按实际返回逐项整理。其他平台／Windows 本地 PDF 无平台 AI 时也须按相同四项用已核实材料自主整理，明确标「AI 自主整理 · 非微信读书返回」。逐项标来源、获取／整理时间与核验状态；未取得如实待补，不伪称平台返回。金句只取可访问、可逐字核验且属于真实亲读范围的短原文，能核对几条就写几条，不凑十条、不从未读文本补引文，遵守全页累计版权短引限制。AI内容不冒充亲读范围或时长；完读证据须标明AI路径。此项适用于后续全书视角，不要求每场日期笔记重做；不改变排班、认领与他人记录。
+读书员【通读】建立或实质更新一本书的全书全貌时，必须按 [AI 问书规范](references/ai-ask-book.md) 在 `overview.html` 加入固定「AI 问书」章节，依次回答 **书籍亮点、背景解读、关键概念、10个最佳金句语录**；按适用流程完成AI章节笔记与「读后思考」后，可按用户授权记为「AI阅读完读」，再整理 `final.html` 与 EPUB。AI读书须实际打开本书 AI 对话，一次输入并提交 `书籍亮点+背景解读+关键概念+10个最佳金句语录`，不再要求逐个点击固定按钮；按实际返回逐项整理。其他平台／Windows 本地 PDF 无平台 AI 时也须按相同四项用已核实材料自主整理，明确标「AI 自主整理 · 非AI读书返回」。逐项标来源、获取／整理时间与核验状态；未取得如实待补，不伪称平台返回。金句只取可访问、可逐字核验且属于真实亲读范围的短原文，能核对几条就写几条，不凑十条、不从未读文本补引文，遵守全页累计版权短引限制。AI内容不冒充亲读范围或时长；完读证据须标明AI路径。此项适用于后续全书视角，不要求每场日期笔记重做；不改变排班、认领与他人记录。
 
 ## AI 大纲：读前通读的第一素材（2026-10-26 用户决定）
 
@@ -64,7 +50,7 @@ description: Multi-platform reading workflow for source-labeled whole-book previ
 
 ## AI辅助章节导览与读后笔记流程
 
-仅在用户授权的AI阅读任务中，对具备本书AI问答的阅读Agent采用，按 [AI问书规范](references/ai-ask-book.md) 的篇幅分档，形成章节分析及综合「读后思考」。小篇幅和长书均按官方目录逐章AI问答；长书不能用选章问答或一行导览替代全章输入，实际亲读仍按既有授权与第一章规则执行。公开输出按论证主线、章节分析、跨章综合与可精读问题组织，依内容灵活选角度，不机械套模板、不按场次排版。微信读书书内AI问答仍须通过浏览器完成；可对具体缺口多轮追问，逐题等待完整答复，不机械重复同一句问题，并遵守平台验证／反自动化停止规则。按适用流程完成规定章节笔记及「读后思考」即可构成AI阅读完读，completion中标明AI完成依据，不冒称亲读；AI问答不计亲读时长或章节状态。Windows本地PDF仅按获授权材料流程执行，不假称平台AI来源。
+仅在用户授权的AI阅读任务中，对具备本书AI问答的阅读Agent采用，按 [AI问书规范](references/ai-ask-book.md) 的篇幅分档，形成章节分析及综合「读后思考」。小篇幅和长书均按官方目录逐章AI问答；长书不能用选章问答或一行导览替代全章输入，实际亲读仍按既有授权与第一章规则执行。公开输出按论证主线、章节分析、跨章综合与可精读问题组织，依内容灵活选角度，不机械套模板、不按场次排版。AI读书书内AI问答仍须通过浏览器完成；可对具体缺口多轮追问，逐题等待完整答复，不机械重复同一句问题，并遵守平台验证／反自动化停止规则。按适用流程完成规定章节笔记及「读后思考」即可构成AI阅读完读，completion中标明AI完成依据，不冒称亲读；AI问答不计亲读时长或章节状态。Windows本地PDF仅按获授权材料流程执行，不假称平台AI来源。
 
 ## 共享书目认领、精确续读与三本综合
 
@@ -74,7 +60,7 @@ description: Multi-platform reading workflow for source-labeled whole-book previ
 - GitHub 授权按执行环境区分：Agent 主会话、协调者会话、浏览器子任务和 Connector/API 可能各有不同登录与权限。必须在实际写入环境检查；一个环境的 `gh auth status`、仓库只读权限或历史成功不能证明另一个环境能写。若浏览器子任务无写权限而责任 Agent 主会话有其自身获批通道，按 `references/coordination.md` 使用无凭据两段式交接；禁止传递任何 Agent 的凭据。授权／写入受阻要及时报告，不让等待占满阅读窗口。
 - 每场结束按 `templates/session-close.json` 在私有归档记录精确且有依据的下一章节/帖子/小节标题及其内部位置（页码仅可作内部辅助），以及一个基于已读内容的下次问题；未知写 `needs-confirmation`，不把百分比猜成页码。同书同日仍合并一篇，但保留每场区段。
 - 所有 Agent 累计每 3 本唯一、已确认完读书（含完成规定AI章节流程并明确记为AI阅读完读的书），建立一个不重叠的私有综合批次；共同观点、分歧、互补关系和 3–5 个回忆问题按 `templates/cross-book-synthesis.md` 生成。迁移已有完读书计入去重总数；重读、重试、重复消息不重复计数。未满三本不生成，资料不足留待补充。
-- 跨书综合、其私有问题及内部场次原始记录不得进入 Git、Pages 或公开索引；面向用户的此类微信读书阅读笔记按 2026-10-18 持续公开授权发布，该授权不覆盖跨书综合。综合可引用亲读笔记、AI章节笔记或两者，但每项证据须标来源类型，不得把AI内容写成亲读。每场 Cue 起止通知及失败直报保持不变；按最新错峰安排逐场执行，不以同日另一场完成为由跳过，也不把计划当作实际阅读。
+- 跨书综合、其私有问题及内部场次原始记录不得进入 Git、Pages 或公开索引；面向用户的此类AI读书阅读笔记按 2026-10-18 持续公开授权发布，该授权不覆盖跨书综合。综合可引用亲读笔记、AI章节笔记或两者，但每项证据须标来源类型，不得把AI内容写成亲读。每场 Cue 起止通知及失败直报保持不变；按最新错峰安排逐场执行，不以同日另一场完成为由跳过，也不把计划当作实际阅读。
 
 ## 每场阅读目标时长（2026-10-19 用户决定）
 
@@ -138,7 +124,7 @@ description: Multi-platform reading workflow for source-labeled whole-book previ
 4. **失败要直接通知用户。** 登录失效、页面打不开、发生冲突、阅读中断或其他失败时，立即在当前 Cue 私聊中说明卡点、实际完成到哪、是否影响打卡及恢复方式；同时更新 roster 与交接记录，不能只把失败留在仓库里等用户发现。打卡状态不明确时如实说，不声称成功。
 5. **只在理解有变化时修正全书视角初版。** 不为每次短读重做整书汇编。将新增理解放进当天笔记；确有重要修正时，在 `overview.html` 中注明依据和更新时间。
 6. **完读并确认后生成最终整书汇编。** 确认整本已读后，把 `overview.html` 初版和所有日期笔记整合校订为更有解释力的全书视角：主旨、叙事/论证结构、关键观点间关系、重要转折、核心洞见、局限与可迁移启发。明确实际覆盖范围和外部来源；制作最终 HTML（`final.html`）与 EPUB（`final.epub`）。初版视角不能冒充最终整书总结。
-7. **交付并维护。** 用清晰简洁的 HTML（手机、桌面均可读）保存笔记；给用户可访问文件或站点链接。此类面向用户的微信读书阅读笔记默认公开，可直接发布到既有 GitHub Pages 并更新索引，无需逐篇询问；内部协调、原始 session-close/active-run 元数据及跨书综合仍保持私有。其他不在持续授权范围内的内容须另行授权。Git 仓库更新遵循 `references/coordination.md`；完成或受阻时更新交接板，发布后实际检查页面、资源和 Pages 构建。
+7. **交付并维护。** 用清晰简洁的 HTML（手机、桌面均可读）保存笔记；给用户可访问文件或站点链接。此类面向用户的AI读书阅读笔记默认公开，可直接发布到既有 GitHub Pages 并更新索引，无需逐篇询问；内部协调、原始 session-close/active-run 元数据及跨书综合仍保持私有。其他不在持续授权范围内的内容须另行授权。Git 仓库更新遵循 `references/coordination.md`；完成或受阻时更新交接板，发布后实际检查页面、资源和 Pages 构建。
 
 ## 阅读员归属与指标口径
 
@@ -170,7 +156,7 @@ description: Multi-platform reading workflow for source-labeled whole-book previ
 ## 自动化与发布授权（2026-10-18 用户扩展）
 
 - weread-auto 每日自动阅读产出的新日期笔记、新书 `overview.html` / `final.html` / `final.epub` 及索引更新，**授权直接发布并自动合并 `main`**，无需每次单独征求授权。
-- 2026-10-18 起，持续公开授权扩展至此类面向用户的微信读书阅读笔记，不限代码自动化或浏览器/手动来源，可发布到既有 Pages、更新索引并按已批准流程推进 `main`，无需逐篇再次询问。保留来源、实读范围和未完读等诚信说明；不把内部协调、原始 session-close/active-run 元数据或跨书综合混入公开笔记。超出该范围的内容仍按 `coordination.md` 单独授权。
+- 2026-10-18 起，持续公开授权扩展至此类面向用户的AI读书阅读笔记，不限代码自动化或浏览器/手动来源，可发布到既有 Pages、更新索引并按已批准流程推进 `main`，无需逐篇再次询问。保留来源、实读范围和未完读等诚信说明；不把内部协调、原始 session-close/active-run 元数据或跨书综合混入公开笔记。超出该范围的内容仍按 `coordination.md` 单独授权。
 - 发布后仍须实际检查线上页面、链接与 Pages 构建，未在线验证前不得声称"已发布"。
 - 完整决定记录见 `references/decisions.md`（各 Agent 沟通记录，先行阅读）。
 
@@ -238,7 +224,7 @@ description: Multi-platform reading workflow for source-labeled whole-book previ
 - `references/coordination.md`：所有 Agent 共用的文件归档、冲突预防、Git 与公开发布规则。执行任何共享写入或发布前先读。
 - `references/agent-communication.md`：紧凑沟通索引；先读它与今天的 `references/agent-communication/YYYY/MM/YYYY-MM-DD.md`，旧日按需读取，事件追加日文件而非索引。只写适合公开的最少元数据。
 - [references/archive-ui.md](references/archive-ui.md)：文章、共享归档页面及组件的唯一 UI 规范入口；设计或修改同类区块前必读，不在其他文档另建 UI 规范副本。
-- `references/platforms/weread.md`：微信读书平台适配说明；使用 WeRead 时读取。
+- `references/platforms/weread.md`：AI读书平台适配说明；使用 WeRead 时读取。
 - `references/platform-adapter-template.md`：接入新阅读平台时复制并补全的适配模板。
 - `references/automation-code-agent.md`：代码类 Agent（weread-auto）的自动化实现参考；**仅约束代码类 Agent 自身**，其他 Agent 不必阅读、不受其约束。
 - `templates/pre-read-overview.html`：新书开读时的全书视角初版（overview）HTML 骨架。
