@@ -125,6 +125,20 @@ CREATE INDEX idx_outline_book ON book_outline(book);
 - 未覆盖 5 本：4 本（`serbia-qingyouji` / `shi-shi` / `unstable-life-qingyouji` / `zhi-hu-shen-tie--ren-shi-zhen-xiang`）仓库内**本就没有 AI 大纲原文**（页面自述"未单独留存，由通读笔记整理"），需本机重新拉取；1 本（`yi-ri-wei-jing`）整本目录缺失。
 - `overview_gen/build_overview.py` 已同步去掉截断，本机重新生成不会回退到精简版。
 
+### 4.2 无 AI 大纲的 5 本（`gen_outline_flat.py`）
+
+这 5 本 `_data/books/*.json` 的 `ai_outline` 为 `None`（其余 58 本非空），按各自**已有素材**补，不编造：
+
+| 书 | 素材 | 处理 |
+|---|---|---|
+| `zhi-hu-shen-tie`（15 条）/ `yi-ri-wei-jing`（53 条） | `#toc` 的 `ch-list`（板块 h3 + 一章一行） | 转成「板块折叠块」，展开即该板块全部条目 |
+| `unstable-life-qingyouji` | `full-overview.md`（4277 字「各章核心」，比 html 详细） | 按章名并入对应 `ch-body`，标「整理要点（全貌 md）」 |
+| `serbia-qingyouji` | 页面「AI 问书」三小节（书籍亮点 / 背景 / 关键概念） | 并入该章 `ch-body`（该书仅 1 个内容章） |
+| `shi-shi` | 仅版权信息 + 序言（各约 70 字） | **不注入**：页面明确「完整目录尚未核实，不按简介编造篇章层级」 |
+
+**原则**：只搬运页面 / md 里已存在的信息，不生成虚构要点与原句摘录。
+这 5 本深度天然低于其余 58 本；要拉平需本机重新拉 AI 大纲后再跑 `gen_outline_full.py`。
+
 ## 5. 82 本书盘点（站点 `we-read/reading-notes/books`）
 
 | 数据 | 数量 / 82 | 缺口 |
