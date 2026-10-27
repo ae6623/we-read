@@ -286,6 +286,52 @@ def counts() -> list:
     return [dict(r) for r in rows]
 
 
+# ---------------------------------------------------------------- 精读笔记（2026-10-28 补）
+# 站内 15 本 / 22 篇精读笔记此前没有表承接：它们是「AI 大纲（机器产物）」与
+# 「人读后的判断」之间唯一的桥，跨书对照最值钱的一层就在这里。
+# 表是懒建的（不改进 _init），避免与并行改动冲突。
+_NOTE_DDL = """CREATE TABLE IF NOT EXISTS note (
+       slug       TEXT NOT NULL,   -- 站点 slug
+       date       TEXT NOT NULL,   -- 笔记日期 YYYY-MM-DD
+       title      TEXT,            -- 当篇标题
+       html       TEXT,            -- 正文 HTML（整页）
+       bytes      INTEGER NOT NULL DEFAULT 0,
+       has_aiqa   INTEGER NOT NULL DEFAULT 0,  -- 含 AI 问书区块
+       updated_at TEXT NOT NULL,
+       PRIMARY KEY (slug, date)
+   )"""
+
+
+def save_note(slug: str, date: str, title: str | None, html: str,
+              has_aiqa: bool = False) -> int:
+    """写入一篇精读笔记（按 slug+date 幂等）。返回字节数。"""
+    db = get_db()
+    db.execute(_NOTE_DDL)
+    now = datetime.now(CST).isoformat(timespec="seconds")
+    b = len((html or "").encode("utf-8"))
+    db.execute(
+        """INSERT INTO note (slug, date, title, html, bytes, has_aiqa, updated_at)
+           VALUES (?,?,?,?,?,?,?)
+           ON CONFLICT(slug, date) DO UPDATE SET
+             title=excluded.title, html=excluded.html, bytes=excluded.bytes,
+             has_aiqa=excluded.has_aiqa, updated_at=excluded.updated_at""",
+        (slug, date, title, html, b, 1 if has_aiqa else 0, now),
+    )
+    db.commit()
+    return b
+
+
+def load_notes(slug: str) -> list:
+    """返回某书的全部精读笔记（按日期升序）。"""
+    db = get_db()
+    db.execute(_NOTE_DDL)
+    rows = db.execute(
+        "SELECT date, title, html, bytes, has_aiqa FROM note"
+        " WHERE slug=? ORDER BY date ASC", (slug,)
+    ).fetchall()
+    return [dict(r) for r in rows]
+
+
 if __name__ == "__main__":
     print("DB:", DB_PATH)
     for c in counts():
