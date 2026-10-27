@@ -134,7 +134,7 @@ def build(root):
             labels = {"running":"较新登记运行中 · 非在线探测", "completed":"较新场次登记结束；成果待核验", "blocked":"较新记录受阻；实读结果待核验", "failed":"较新场次失败；实读结果待核验", "idle":"最近登记休息；阅读结果待核验"}
             fallback.update(recordedStatus=labels.get(status,"较新场次状态待确认"), duration="未知", durationScope="较新场次时长待核验", sourceLabel="较新运行登记", recordedAt=(end if end and end > start else start).isoformat(), note="较新记录优先；已确认的历史章节覆盖不代表本场新增阅读。")
         # Today’s appended communication can invalidate fallback certainty if it contains a newer reading event for the role.
-        role_terms = {"weread-auto-cloud": r"云端|weread-auto-cloud", "weread-auto": r"本机|weread-auto(?!-cloud)", "wechat-reading-browser": r"微信读书|wechat-reading-browser", "local-pdf-reader": r"本地试读|Windows读书|local-pdf-reader"}.get(agent_id, re.escape(str(agent_id)))
+        role_terms = {"weread-auto-cloud": r"云端|weread-auto-cloud", "weread-auto": r"本机|weread-auto(?!-cloud)", "wechat-reading-browser": r"AI读书|wechat-reading-browser", "local-pdf-reader": r"本地试读|Windows读书|local-pdf-reader"}.get(agent_id, re.escape(str(agent_id)))
         if fallback_time and comm_text:
             # Inspect dated event headings, not arbitrary mentions elsewhere in the daily file.
             for line in comm_text.splitlines():

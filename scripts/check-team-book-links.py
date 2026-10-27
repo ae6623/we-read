@@ -35,7 +35,7 @@ with tempfile.TemporaryDirectory() as d:
     for date in ['2026-10-19', '2026-10-20']:
         (notes / (date + '.html')).write_text('<h1>Public note</h1>')
     assert module.public_note_url(root, 'example').endswith('/2026-10-20.html')
-labels = {'wechat-reading-browser': '阅读员-微信读书', 'local-pdf-reader': '阅读员-Windows读书', 'cue-qingyouji-reader': '阅读员-轻游记读书员'}
+labels = {'wechat-reading-browser': '阅读员-AI读书', 'local-pdf-reader': '阅读员-Windows读书', 'cue-qingyouji-reader': '阅读员-轻游记读书员'}
 agents = {a['id']: a for a in state['agents']}
 for agent_id, label in labels.items():
     assert agents[agent_id]['name'] == label
