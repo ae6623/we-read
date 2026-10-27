@@ -60,3 +60,51 @@
     .type-tag-soon{background:#eef1ec;color:#7c8a80;border-color:#dde3dd}
     .archive-card-soon{opacity:.82}
     .card-link-muted{color:#9aa79d;cursor:default;pointer-events:none}
+
+/* ===== 精读卡片「一书一卡」：同一本书多篇日期笔记，卡内列出各日期入口 ===== */
+.card-dates{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:7px;
+  margin-top:auto;
+  padding-top:4px;
+}
+.card-dates .cd-label{
+  font-size:.74rem;
+  color:var(--muted);
+  letter-spacing:.02em;
+  margin-right:1px;
+}
+.card-dates a{
+  display:inline-block;
+  padding:6px 11px;
+  border:1px solid var(--line);
+  border-radius:99px;
+  background:#fffefa;
+  color:var(--green2);
+  font-size:.78rem;
+  font-weight:700;
+  line-height:1;
+  font-variant-numeric:tabular-nums;
+  text-decoration:none;
+  transition:border-color .15s ease,background .15s ease,color .15s ease;
+}
+.card-dates a span{
+  font-weight:400;
+  opacity:.5;
+  transition:opacity .15s ease,transform .15s ease;
+  display:inline-block;
+}
+.card-dates a:hover{
+  border-color:#72927e;
+  background:#f1f5ee;
+  color:#244b40;
+}
+.card-dates a:hover span{opacity:.85;transform:translate(1px,-1px)}
+.card-dates a[aria-current="true"]{
+  background:var(--sage);
+  border-color:transparent;
+  color:#244b40;
+}
+.card-dates a[aria-current="true"] span{opacity:.65}
