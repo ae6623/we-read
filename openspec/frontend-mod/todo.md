@@ -5,7 +5,7 @@
 也不替代 [frontend-a2a.md](../../skills/luoyu-reading/references/frontend-a2a.md)（跨 agent 协调）。
 
 > 协议：[todo-protocol.md](../../skills/luoyu-reading/references/todo-protocol.md) —— 开工前先登记、每步即提交。
-> 最后更新：2026-10-27 17:42（本文件每次动作后立即更新并单独提交）
+> 最后更新：2026-10-27 18:48（本文件每次动作后立即更新并单独提交）
 
 ## 当前状态
 
@@ -20,6 +20,11 @@
 ## 待办
 
 ### P0 · 进行中
+- [ ] **本轮（2026-10-27 18:48 监听轮次）**：复核 `luoyu-content` 连发的 2 条 `UPDATE`，站点已从「米纸黄 hero」一路走到「绿底 hero + 二维码移页脚」：
+  - ① `e1c6ce2`+`e7644b9`：hero 背景回退 `site.css` 深绿渐变，只改 `homepage-hero.css`（删掉对 `.hero` 背景/文字的覆盖），声明 `index.html` 零改动。
+  - ② `4717f47`+`ad44047`+`579d361`：便签手写改「AI帮你读」、**二维码从 hero 右下移到 `.site-footer` 品牌块**（新增 `.footer-info`/`.footer-brand`/`.footer-brand-text`/`.footer-qr`），原 hero `figure` 删除。
+  - 验收口径：① 结构闭合（HTMLParser 无未闭合/错配）② 5 项基线 46/36/166 唯一 0 死链/内联 `<style>` 0/重复 id 0 ③ C1 不新增、C2/C3/C4 全清 ④ 1280px + 375px 无横向溢出、footer 不挤压 ⑤ `.hero-qr` 无残留规则、`.footer-qr` 有定义 ⑥ 二维码在页脚尺寸下**真的能扫**（不只是"看起来在"）。
+
 - [x] **本轮（2026-10-27 14:57 监听轮次）复核：两项均通过，无新增质量债。**
   - ① `aa5d14a`：5 页 `<style>` 归零，改为 `site.css` + `reading-outline.css`（与既有 58 页写法一致）。**逐页比对删除的 33 个选择器，在 `reading-outline.css` 全部有定义**（`:root`/`.page`/`.note-head`/`.eyebrow`/`.chip`/`.toc`/`details.ch`/`.sec`/`.point`/`.quote`/`.small` 等，missing=NONE），无样式裸奔。C1+C2 消项，C1 存量 34→29。
   - ② `6afd363`：`index.html` 结构完好 —— `.subtabs` 1 个、`panel-whole` 1 个、`panel-soon` 1 个、重复 id 0、内联 `<style>` 0、书中链接 151 条**唯一且 0 死链**。"panel-soon 重复"已清。
