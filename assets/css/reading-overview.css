@@ -137,3 +137,20 @@ ul.note-list{margin:.7em 0}
 @media print{body{background:#fff}}
 @media(max-width:520px){.ch-item summary{gap:6px}.badge{font-size:.62rem}}
 @media(max-width:680px){.metrics-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.metric{padding:14px 12px}}
+
+/* ---- 读前通读 · 版式精修（2026-10-28）---- */
+/* 核心观点初判：逐句成行，加粗要点着色，与 AI 大纲条列样式对齐 */
+.views .v-item{margin:14px 0;padding:16px 20px}
+.views .v-item h3{margin:0 0 10px;font:600 1.05rem/1.6 var(--serif);color:var(--green)}
+.v-line{margin:.45em 0;padding-left:14px;border-left:3px solid var(--sage);font-size:.92rem;line-height:1.8;color:#3f4a46}
+.v-line strong{color:var(--green2)}
+/* 读完自测：AI 补答区块 */
+.quiz-ans{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line)}
+.quiz-ans h3{margin:0 0 10px;font:600 1rem/1.6 var(--serif);color:var(--green)}
+.quiz-pending{margin:12px 0 0;font-size:.82rem;color:var(--muted);font-style:italic}
+/* AI 问书 · 快答实录（通读页） */
+.aiqa-ov{margin:22px 0}
+.aiqa-ov .aiqa-item{margin:12px 0}
+/* 章节导读条目与 AI 大纲页对齐：衬线标题 + 金色箭头 */
+.ch-item summary .ch-t{font:600 .98rem/1.6 var(--serif);color:var(--green)}
+.ch-item summary .caret{color:var(--gold);font-weight:700}
