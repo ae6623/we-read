@@ -30,11 +30,17 @@
 ## 待办
 
 ### P0 · 进行中
-- [ ] **本轮（2026-10-27 20:10 监听轮次）**：**补 19:33–19:43 三个未记账提交**。
+- [x] **本轮（2026-10-27 20:10 监听轮次）**：**补 19:33–19:43 三个未记账提交** —— 5 项验收全过，站点文件零改动。
   发现：`HEAD == origin/main == 6f028d8`，比上一条落账（19:07 `8307b11`）多 3 个提交 —— `5ee9ab7`（新增 `brand/` + 首页品牌行改 `a[href=brand/]`）、`47908c5`（`brand/index.html` 刊头改玄水底彩色标识 84px）、`6f028d8`（`index.html` 精读面板 16 张日期卡按 `<time datetime>` 倒序重排，26+/27−）。
   归属判定：`5ee9ab7` 内同时提交了 A2A 板 `[19:35] FROM frontend-mod` 帖，帖内 SCOPE 与 diff stat 逐项吻合（`index.html` 2 行、`homepage-hero.css` +25、`brand/*` 10 文件）→ **三个提交均属我方**，是 19:33–19:43 那轮的工作但未写进本文件、也未写进 automation memory（连续第二轮「代码已上、账未记」，属流程缺陷，须在本轮补平）。
   本轮要验收：① `index.html` 卡片基线不退化（全书视角 46 / 即将上线 36 / 卡片链接唯一且 0 死链 / 内联 `<style>` 0 / 重复 `id` 0）；② 16 张日期卡**是移动不是复制**（`archive-card` 总数与 `data-search` 唯一性）；③ 卡片重排后日期仍严格倒序、无断层；④ `brand/` 新页资源零死链、390px 无横向溢出；⑤ `.hero-brand` 改 `a` 后不影响 hero 区间布局。**不改站点文件**，只补账 + 记录。
-  → 结果：（待填）
+  → 结果：**5 项全过，反推归属无争议**（`5ee9ab7` 的 diff stat 与板帖 SCOPE 逐项对上：`index.html` 2 行、`homepage-hero.css` +25、`brand/*` 10 文件；`6f028d8` 作者同为 ae6623，板帖缺记但内容与「我 19:35 帖里承诺的 hero 区以外不动」不冲突 —— 它动的是精读网格，本就是我方地盘）。
+  - ① **卡片基线零退化**（DOM 实测，非 grep）：`#panel-whole` 46 张 / `#panel-soon` 36 张 / `.archive-card` 100 / `card-link-strong` 46 / `preread-soon` 36，与 19:07 基线 `8307b11` 逐项相同；内联 `<style>` 0；25 个 `id` 无重复。
+  - ② **是移动不是复制**：精读网格 `archive-card` 总数重排前后同为 16；全页 `card-link` href 125 条**唯一 125 条**，零重复；本地链接 185 条唯一、**0 死链**。
+  - ③ **顺序修对了**：改前 `10-25…10-17` 后接 `10-26 ×3`、`10-27`（断层，倒序判定 False）；改后 `10-27 → 10-26×3 → 10-25 → 10-21 → 10-19×3 → 10-18×2 → 10-17×5`，严格倒序 True。卡内文案零改动（diff 26+/27−）。
+  - ④ **`brand/` 新页**：`index.html` 8957B、`proposal.html` 11334B，资源引用 0 死链（含 `../index.html` 回首页、2 个 `<symbol>` sprite、4 个落地尺寸示例）。Playwright：1200px / 390px 均 `scrollWidth == innerWidth`、零横向溢出；刊头 `84×84` 未越出 `.brand-head` 边界（390px 下 head 346px 宽、logo 在 `x22`）。**但两页各带 1 个内联 `<style>`**，见 P2 新增项。
+  - ⑤ **`hero-brand` 由 `p` 改 `a` 无副作用**：`homepage-hero.css` 主规则是无元素前缀的 `.hero-brand{…}`（第 9/18/26 行）+ 媒体查询第 137 行，换标签后仍命中；追加的 `a.hero-brand` 四组规则只管去下划线/点击区/hover/focus。实测桌面 `text-decoration:none`、`cursor:pointer`、`340×29` 落在 `<header>` 内，header 高 495px；375px 下 `332×28`、header 421px，两档 `scrollWidth == innerWidth`，hero 区未走形。
+  - **顺带查出根因（本轮真正的增量）**：`6f028d8` 的断层不是手误，是 `site_pub.update_index` **只追加**本场新条目（`decisions.md:418` 明写「只追加本场 managed 的新条目」），所以每新增一篇日期笔记就会再断一次。**该脚本不在本仓库**（在 `weread-auto` / `weread-cloud` 两份代码里），我只能治标（本次重排），治本需在生成器里改成「按 `<time datetime>` 有序插入」。已记 P2 并把判据定死：下次再出现新卡落在网格末尾，即视为生成器未改。
 - [x] **本轮（2026-10-27 19:07 监听轮次）**：巡检 + **补平 QR 两处欠账**。板尾最后一条是我 19:06 的 ACK、`HEAD == origin/main == d4fa97d`、`HEAD..origin/main` 空，自检仅 C1 存量 29 页（零新增）。**本轮唯一缺口是账不平**：QR 缺陷已在 A2A 关单并独立复验，但 P0「等对方修 quiet zone」与 P2「页脚二维码扫描可靠性」两条仍挂着 `[ ]`，须按实测证据改 `[x]`。**不动任何站点文件**。
   → 结果：两条已改 `[x]` 并附证据（原图 296×296/1464B，`cv2` 解出正确 URL、`detectable=True`；`.footer-qr` 为 `content-box` + `padding:0`，72px 真实，移动端同 72px）。站点文件零改动、`_data` 零刷新。**另自查出一处自身污点**：本文件上轮把「最后更新」写成 `19:12`，而当时真实时间约 `19:05` —— 我向对方强调过「落款别写未来」，自己也犯了，已改回真实时间并记此一笔。
 - [x] **本轮（2026-10-27 18:48 监听轮次）**：复核 `luoyu-content` 连发的 2 条 `UPDATE`，站点已从「米纸黄 hero」一路走到「绿底 hero + 二维码移页脚」：
@@ -89,6 +95,10 @@
 - [x] **页脚二维码扫描可靠性（2026-10-27 18:48 实测，归属 `luoyu-content`）→ 2026-10-27 19:07 已消项**：`hero-qr.png` 无 quiet zone + 页脚渲染尺寸偏小，双重叠加。① 原图 116×116 单独 `cv2` 解码失败；② `.footer-qr` 声明 72px，但 `*{box-sizing:border-box}` + `padding:4px` + `1px border` 吃掉 10px → 实际 **62px**（移动端 54px），比 hero 时期的 84px 更小；③ 截取移动端 QR 卡 65×65 **直接解码返回空**，4× 放大才成功。修法二选一或并用：给 PNG 补 ≥8px 白边（治本）、CSS 提到 `88px` 并把 padding 计入外框（治标）。**我不代改**（对方地盘），已发 QUESTION 附实测数字。**结局**：对方两条都做了（`b61e735` 补 4 模块白边、`c4dc19b` 改 `content-box` 去 padding），我 19:07 复验原图解码成功、另存 88/116px 亦成功，**两条修法叠加后缺陷消失**。
 - [ ] **A2A 游标会「静默吃掉」消息（2026-10-27 18:39 实测）**：`e7644b9` 已含 `[18:40] FROM luoyu-content → TO frontend-mod / UPDATE`，但 `.a2a/frontend-a2a.seen` 游标已被推到 `e7644b9`，脚本走 `seen_hash == latest` 短路直接报「无新消息」→ 这条 UPDATE 从未进入任何一轮记录。**根因**：游标与「消息已处理」不绑定，中途任何一次 `--update`（含中断的会话）都会推过头。**临时纪律（立即生效）**：每轮除跑脚本外必须 `Get-Content frontend-a2a.md -Tail 60` 人工核对板尾，脚本输出不作唯一依据。**根治候选**：游标改存「最后一条已处置的板提交」而非「最新板提交」，或对 `to == 本别名` 且无对向回复的块二次扫描（需用户拍板，勿擅自重构）。
 - [x] **新 outline 页内联 CSS 回潮（5 页，2026-10-27 批次）→ 已消项**：`di-yi-xing-yuan-li--pu-tong-ren-de-ren-sheng-ga`、`jin-rong-jia--jiao-fu--jin-rong-ban--mei-guo`、`tian-mu-hong-chen--yao-yuan-de-jiu-shi-zhu--z`、`xi-da-duo--ming-jia-yi--shen-du-zhu-shi--ren`、`zai-xia-jiang-de-zhuan-wan-chu--chen-xing-jia-r`。对方以 `aa5d14a` 自行外置（每页 -38 行内联、+1 行 `<link>`），我方复核 33 个选择器全覆盖，视觉等价。原判断"代加 `<link>` 会双写"成立，故当时不代改是对的。
+- [ ] **日期卡「追加式插入」导致精读网格断层（根因在生成器，跨仓库）**：`site_pub.update_index` 按 `decisions.md:418` 的约定「只追加本场 managed 的新条目」→ 新日期卡永远落在 `.archive-grid` 末尾，翻到底部又冒出一批新卡，观感像整页重复。`6f028d8` 只是按 `<time datetime>` 倒序重排 16 张（治标），**下次发布必然复现**。治本要改 `weread-auto` / `weread-cloud` 里的 `site_pub.update_index`：插入时定位到第一个 `datetime` 更早的卡之前，而不是无条件 append。判据：下次新笔记发布后若仍有卡落在网格末尾，即视为生成器未改，届时升级为对内容侧的 `QUESTION`。
+- [ ] **`brand/` 两页带内联 `<style>`，且落在自检脚本盲区**：`brand/index.html`（8957B）+ `brand/proposal.html`（11334B）各 1 个 `<style>`，是「单文件自包含」的刻意选择（独立配色 + sprite，不复用站点 chrome）。问题在于 `check_site_invariants.py` 的扫描范围写死为 `reading-notes/**/*.html` + `index.html`，**`brand/` 根本不被扫**，所以这条豁免是「意外逃逸」而不是「显式白名单」。两个选一个：① 把 `brand/` 加进扫描器的显式白名单并注明理由；② 外置到 `assets/css/brand.css`。现在不改代码，先记账；`brand/` 若长出第二个共用页（导航/footer 复用）就必须走 ②。
+- [ ] **连续两轮「代码已推、账未记」（流程缺陷，20:10 已止血）**：19:07 轮补的是上上轮的账，本轮补的又是 19:33–19:43 那轮的账 —— `brand/`、刊头 84px、日期卡重排三个提交上线 27 分钟后 todo 与本 automation memory 都还是 19:07 的状态。**新纪律（立即生效）**：每轮第 0 步恢复上下文后，先比对 `git log` 末条提交哈希与 todo 里最后一条已落账提交哈希；不一致就先补账再谈别的，绝不允许「先做新事、旧账后补」。
+
 - [ ] **剩余 29 页内联 CSS 存量**（`check_site_invariants.py` 的 C1 项）：日期笔记 `notes/*.html` 24 页 + `camino/history.html` + `spain-qingyouji` 2 篇 + 3 个系列索引 + `reading-notes/index.html`。普查结果：**23 种指纹**（date notes 各写各的，散乱最严重），不能一把梭合并，需按书族/模板分批外置。
 - [ ] 卡片生成器源头治理：`HTML` 技术词反复回潮，需定位 `luoyu-content` 的生成脚本并改为 `网页版`（当前首页 0 处，靠脚本 C3 兜底）
 - [ ] 38 本待生成 `overview` 的统一模板（共享 CSS + 统一词汇）落成模板文件，避免各写各的
@@ -106,6 +116,8 @@
 - 公开文件不写凭据、私人路径、Agent UID。
 
 ## 已完成
+
+- 2026-10-27 19:33–19:43（20:10 轮补记，此前未入账）：品牌页落地 —— `5ee9ab7` 新增 `brand/`（`index.html` + `proposal.html` + `logo-a/b/c`/`lockup`/`favicon` 五个 SVG）、`index.html` 第 29 行 `p.hero-brand` 改 `a[href=brand/]`、`homepage-hero.css` 追加 `a.hero-brand` 四组规则（原三条未动）；`47908c5` 刊头改玄水底彩色标识 84px + 补「落地尺寸」一节；`6f028d8` 精读网格 16 张日期卡按 `<time datetime>` 倒序重排（26+/27−，内容零改动）。A2A 板 `[19:35]` 已发帖说明范围。20:10 轮独立复核 5 项全过：46/36 基线零退化、卡片是移动非复制（16→16、125 href 全唯一）、倒序断言 True、`brand/` 两档零溢出、`a.hero-brand` 主规则无元素前缀故换标签不掉样式。
 
 - 2026-10-27 19:07：监听轮次 —— 无新 A2A 消息（板尾末条为我 19:06 ACK），`HEAD == origin/main == d4fa97d`；自检仅 C1 存量 29 页、C2/C3/C4 全清。**补平 QR 两处欠账**：`b61e735`（补 4 模块白边，296×296/1464B）+ `c4dc19b`（`.footer-qr` 改 `content-box`、去 padding，72px 真实）+ `5daa071`（DONE）→ 我独立 `cv2` 复验原图解码成功、88/116px 亦成功，P0+P2 两条改 `[x]` 关单。站点文件零触碰。
 
