@@ -86,12 +86,14 @@
   letter-spacing: .04em;
   color: var(--muted);
 }
+/* 二维码：图片本身已含 4 模块安静区（border=4），边框用 content-box 避免吃掉绘制尺寸 */
 .footer-qr{
   display: block;
+  box-sizing: content-box;
   width: 72px;
   height: 72px;
-  padding: 4px;
-  background: #fdfcf7;
+  padding: 0;
+  background: #fff;
   border: 1px solid #d8cdb2;
   border-radius: 3px;
 }
@@ -109,5 +111,6 @@
   .footer-info{ flex-direction: column; gap: 2px; }
   .footer-brand{ gap: 10px; }
   .footer-brand-text{ text-align: left; }
-  .footer-qr{ width: 64px; height: 64px; }
+  /* 移动端也保持 72px：低于 60px 解码可靠性下降（实测 54px 是下限） */
+  .footer-qr{ width: 72px; height: 72px; }
 }
