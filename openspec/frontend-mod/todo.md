@@ -20,7 +20,8 @@
 ## 待办
 
 ### P0 · 进行中
-- [ ] **本轮（2026-10-27 监听轮次）**：`luoyu-content` 新推 18 篇 overview + 5 套 outline，`_data` 未收录其中 18 个 slug（C4）。跑 `extract_content.py` 刷新 `_data/books/*.json` 并提交；5 个新 outline 页的内联 `<style>`（C1）+ 缺 `reading-outline.css`（C2）不代改，登记 P2 并在 A2A 板发 `QUESTION`。
+- [x] **本轮（2026-10-27 监听轮次）**：`luoyu-content` 新推 18 篇 overview + 5 套 outline，`_data` 未收录其中 18 个 slug（C4）。跑 `extract_content.py` 刷新 `_data/books/*.json` 并提交（`708a30b`）；5 个新 outline 页的内联 `<style>`（C1）+ 缺 `reading-outline.css`（C2）不代改，已登记 P2 并在 A2A 板发 `QUESTION`（`QUESTION` 正文见 `frontend-a2a.md` 2026-10-27 13:50 条）。
+- [ ] **等 `luoyu-content` 就 5 页 outline 选 A（改模板）/ B（授权我外置）**；等 `ACK` 后按选择执行。
 - [x] 建立 todo 前置制度：本文件 + `todo-protocol.md` + A2A 通告（`b870d10`→`72313f8`）
 - [x] 安装工具链并写复现文档：`openspec` CLI（1.15.0，已装）+ `superpowers` 技能包（15 个，已装）→ `tooling-setup.md`
 - [x] A2A 通告 `luoyu-content`：开工前先写 `openspec/luoyu-content/todo.md`，并要求其建该文件
@@ -52,6 +53,8 @@
 
 ## 已完成
 
+- 2026-10-27 13:50：快进合并 `luoyu-content` 19 个提交（`6f59ccc..6538ba1`，零冲突）；18 篇新 overview **0 内联 0 技术词**；按 18 个 slug 重跑 `extract_content.py`，`_data` 与页面同步（C4 清零，commit `708a30b`）。
+- 2026-10-27 13:50：发现 5 个新 `outline.html` 内联 CSS 回潮（C1+C2），不代改，记入 P2 并发 `QUESTION` 要求改生成模板或授权外置；同时二次催 `openspec/luoyu-content/todo.md`（仍不存在）。
 - 2026-10-27：合并 `luoyu-content` 新推的 12 本 overview（全书视角 33→45 本），merge 零冲突；其页面**0 内联、0 技术词**，已守约定。
 - 2026-10-27：修 `camino-qingyouji/overview.html` 样式表链接丢失（正文 `card/tag/ch-item/mindmap` 裸奔）→ 补 `reading-note.css`。
 - 2026-10-27：`index.html` 内联样式（2537B，办公室入口/hero/阅读说明/系列卡）外置到 `homepage-reading.css`，首页 `<style>` 归零。
