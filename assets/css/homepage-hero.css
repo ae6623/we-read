@@ -15,13 +15,16 @@
   letter-spacing: .1em;
   color: #f2ead2;
 }
-.hero-brand::before{
-  content: "";
-  width: 13px;
-  height: 13px;
-  background: #e3c99f;
-  box-shadow: 0 0 0 1px #e3c99f33;
+/* 品牌行左侧的六爻标识（与品牌页刊头同构，深绿底上用亮一档的金） */
+.hero-mark-icon{
+  display: block;
+  width: 22px;
+  height: 29px;
   flex-shrink: 0;
+}
+.hero-mark-icon rect{
+  fill: #e0b45f;
+  transition: fill .18s ease;
 }
 .hero-brand small{
   font: 700 .62rem/1 var(--sans);
@@ -55,9 +58,8 @@ a.hero-brand:hover{
   background-repeat: no-repeat;
   background-position: 0 100%;
 }
-a.hero-brand:hover::before{
-  background: #f3dcae;
-  box-shadow: 0 0 0 2px #e3c99f66;
+a.hero-brand:hover .hero-mark-icon rect{
+  fill: #f3dcae;
 }
 a.hero-brand:focus-visible{
   outline: 2px solid #e3c99f;
