@@ -20,13 +20,19 @@
 ## 待办
 
 ### P0 · 进行中
-- [ ] **本轮（2026-10-27 14:57 监听轮次）**：复核对方新推的 2 个提交并决定 P2 条目去留 —— ①`aa5d14a`「5 页新大纲内联样式外置」（即我 13:50 QUESTION 的对象，但未回 A/B、未发 DONE）；②`6afd363`「恢复被云端批量大纲覆盖的 30 张通读卡」（动了 `index.html`，我认领 SCOPE）。验收口径：5 页内联 `<style>` 归零且 **删除的 33 个选择器在 `reading-outline.css` 全部有定义**（不许出现样式裸奔）；`index.html` 保持 `.subtabs` + `panel-whole`/`panel-soon` 单实例、无重复 id、无死链、卡片无重复。复核完据此打勾 P2 并回 A2A。
+- [x] **本轮（2026-10-27 14:57 监听轮次）复核：两项均通过，无新增质量债。**
+  - ① `aa5d14a`：5 页 `<style>` 归零，改为 `site.css` + `reading-outline.css`（与既有 58 页写法一致）。**逐页比对删除的 33 个选择器，在 `reading-outline.css` 全部有定义**（`:root`/`.page`/`.note-head`/`.eyebrow`/`.chip`/`.toc`/`details.ch`/`.sec`/`.point`/`.quote`/`.small` 等，missing=NONE），无样式裸奔。C1+C2 消项，C1 存量 34→29。
+  - ② `6afd363`：`index.html` 结构完好 —— `.subtabs` 1 个、`panel-whole` 1 个、`panel-soon` 1 个、重复 id 0、内联 `<style>` 0、书中链接 151 条**唯一且 0 死链**。"panel-soon 重复"已清。
+  - 不加 `.gcstat` 样式：该 class 是页脚 PV 占位，自带 `display:none`，62 页一致，非缺陷。
 - [x] **本轮（2026-10-27 监听轮次）**：`luoyu-content` 新推 18 篇 overview + 5 套 outline，`_data` 未收录其中 18 个 slug（C4）。跑 `extract_content.py` 刷新 `_data/books/*.json` 并提交（`708a30b`）；5 个新 outline 页的内联 `<style>`（C1）+ 缺 `reading-outline.css`（C2）不代改，已登记 P2 并在 A2A 板发 `QUESTION`（`QUESTION` 正文见 `frontend-a2a.md` 2026-10-27 13:50 条）。
 - [ ] **等 `luoyu-content` 就 5 页 outline 选 A（改模板）/ B（授权我外置）**；等 `ACK` 后按选择执行。
+  → 实操上已由对方自行外置（`aa5d14a`），A/B 问题作废；但**未发 `DONE`、未回 A/B**，流程账仍挂着。
+- [ ] **根因未闭环**：5 页是"改成品"还是"改源"？仓库 `templates/` 只有 `book-collection` / `book-link-drawer` / `reading-note`，**无 outline 生成模板**，生成器在本仓库之外，我无法验证。判定口径：下批新 outline 若再带回内联 `<style>`，即证明只改成品没改源 → 直接升级 `CONFLICT`。
 - [x] 建立 todo 前置制度：本文件 + `todo-protocol.md` + A2A 通告（`b870d10`→`72313f8`）
 - [x] 安装工具链并写复现文档：`openspec` CLI（1.15.0，已装）+ `superpowers` 技能包（15 个，已装）→ `tooling-setup.md`
 - [x] A2A 通告 `luoyu-content`：开工前先写 `openspec/luoyu-content/todo.md`，并要求其建该文件
 - [ ] **等 `luoyu-content` 回 ACK**（确认其已建自己的 todo.md、已装工具链）；超一轮无回应则用监听脚本复查并在板上再提醒
+  → 已催 3 次（05:25 / 13:50 / 14:57），`openspec/luoyu-content/todo.md` **仍不存在**（约 9.5 小时）。对方期间推了 21 个 commit、零条 A2A 消息。流程账挂死，但**不阻塞我**：我改为以 `check_site_invariants.py` + 逐条复核 commit 兜底。
 - [ ] 监听任务复核：现有每小时 A2A 监听 automation 是否把「检查对方 todo 是否有新登记」纳入动作
 
 ### P1 · 等待用户拍板
@@ -35,8 +41,8 @@
 - [ ] `_data/books.json` 单一数据源（书目/外链/系列/status），首页 71 张卡由数据渲染，替代手写 `index.html`
 
 ### P2 · 质量债
-- [ ] **新 outline 页内联 CSS 回潮（5 页，2026-10-27 批次）**：`di-yi-xing-yuan-li--pu-tong-ren-de-ren-sheng-ga`、`jin-rong-jia--jiao-fu--jin-rong-ban--mei-guo`、`tian-mu-hong-chen--yao-yuan-de-jiu-shi-zhu--z`、`xi-da-duo--ming-jia-yi--shen-du-zhu-shi--ren`、`zai-xia-jiang-de-zhuan-wan-chu--chen-xing-jia-r` 的 `outline.html`。症状：只 `<link site.css>`、自带整段 `<style>`、未引 `reading-outline.css`（同时触发 C1+C2）。已发 `QUESTION` 等 `luoyu-content` 从生成模板改源，**不代改**（代加 `<link>` 会与其内联规则双写）。
-- [ ] **剩余 29 页内联 CSS 存量**（`check_site_invariants.py` 的 C1 项）：日期笔记 `notes/*.html` 24 页 + `camino/history.html` + 3 个系列索引 + `reading-notes/index.html`。普查结果：**23 种指纹**（date notes 各写各的，散乱最严重），不能一把梭合并，需按书族/模板分批外置
+- [x] **新 outline 页内联 CSS 回潮（5 页，2026-10-27 批次）→ 已消项**：`di-yi-xing-yuan-li--pu-tong-ren-de-ren-sheng-ga`、`jin-rong-jia--jiao-fu--jin-rong-ban--mei-guo`、`tian-mu-hong-chen--yao-yuan-de-jiu-shi-zhu--z`、`xi-da-duo--ming-jia-yi--shen-du-zhu-shi--ren`、`zai-xia-jiang-de-zhuan-wan-chu--chen-xing-jia-r`。对方以 `aa5d14a` 自行外置（每页 -38 行内联、+1 行 `<link>`），我方复核 33 个选择器全覆盖，视觉等价。原判断"代加 `<link>` 会双写"成立，故当时不代改是对的。
+- [ ] **剩余 29 页内联 CSS 存量**（`check_site_invariants.py` 的 C1 项）：日期笔记 `notes/*.html` 24 页 + `camino/history.html` + `spain-qingyouji` 2 篇 + 3 个系列索引 + `reading-notes/index.html`。普查结果：**23 种指纹**（date notes 各写各的，散乱最严重），不能一把梭合并，需按书族/模板分批外置。
 - [ ] 卡片生成器源头治理：`HTML` 技术词反复回潮，需定位 `luoyu-content` 的生成脚本并改为 `网页版`（当前首页 0 处，靠脚本 C3 兜底）
 - [ ] 38 本待生成 `overview` 的统一模板（共享 CSS + 统一词汇）落成模板文件，避免各写各的
 - [ ] `index.html` 顶层 Tab 与通读子 Tab 的键盘焦点顺序复核（移动端 + 读屏）
@@ -54,6 +60,7 @@
 
 ## 已完成
 
+- 2026-10-27 14:57：监听轮次 —— A2A 无新消息（游标 `72313f8`→`ec9fca1`，仅我自己的提交）；`check_site_invariants.py` 仅剩 C1 存量 29 页（C2/C3/C4 全清）。复核对方 `6afd363`（首页恢复 30 张通读卡）与 `aa5d14a`（5 页 outline 内联外置）均通过，详见 P0。
 - 2026-10-27 13:50：快进合并 `luoyu-content` 19 个提交（`6f59ccc..6538ba1`，零冲突）；18 篇新 overview **0 内联 0 技术词**；按 18 个 slug 重跑 `extract_content.py`，`_data` 与页面同步（C4 清零，commit `708a30b`）。
 - 2026-10-27 13:50：发现 5 个新 `outline.html` 内联 CSS 回潮（C1+C2），不代改，记入 P2 并发 `QUESTION` 要求改生成模板或授权外置；同时二次催 `openspec/luoyu-content/todo.md`（仍不存在）。
 - 2026-10-27：合并 `luoyu-content` 新推的 12 本 overview（全书视角 33→45 本），merge 零冲突；其页面**0 内联、0 技术词**，已守约定。
