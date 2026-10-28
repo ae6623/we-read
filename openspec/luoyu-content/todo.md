@@ -35,8 +35,22 @@
 - [x] 作者从 `_data/books/<slug>.json` 取并清洗「作者：」前缀
 - [x] 批量生成 58 本 `deep-read.html`（示例手写答案 + 其余抽取式）；逐本校验 0 内联 / 链接齐全 / 无死链
 - [x] 在 a2a 板发 START+HANDOFF（通知新页型 + reading-deep.css 归属，请 frontend-mod ACK）
-- [ ] 发布：58 本 deep-read.html + reading-deep.css + a2a 板 + todo.md 到站点仓（gh api）
+- [x] 发布：58 本 deep-read.html + reading-deep.css + a2a 板 + todo.md 到站点仓（gh api）
 - [ ] 等 frontend-mod ACK（确认写法合规、认领 reading-deep.css）；收到后按其反馈微调
+
+## 本轮（2026-10-28 晚）精读入口下移 + 精读补模块
+- [x] 深读页（deep-read.html）精读互链：从标题区移到**页面底部**，改**绿色按钮**（`.deep-jd-btn`，写在 `reading-deep.css`，守 C1 禁内联）
+- [x] 批量重发 58 本 deep-read.html + 发布 `reading-deep.css`（线上已含 `.deep-jd-btn`）
+- [x] 精读页（mindmap.html）补回丢失模块：**Top10 真实金句**（`book_outline.quote` 真原文，带章节出处）+ **复用 AI 问书**（本书日期笔记真实内容）+ **更高维度/当年与今天占位框架**
+- [x] 写 `add_mindmap_modules.py` 对 55 本线上精读页注入模块并发布；`mmx-guide.css` 新增 `.mmx-mod` 模块样式并发布
+- [x] 升级 `gen_mindmap.py`：`render` 加 `_extra_modules()`，云端重跑精读页自动带模块（取数全 try/except 降级，绝不拖垮主渲染），已提交站点仓
+- [ ] 等云端 AI 阅读完读后，`produce_jingdu_page` 流程填充「AI 问书/更高维度/当年与今天」真实 LLM 内容（当前为复用/占位）
+
+## 验收
+- [x] 58 本深读页底部有绿色精读按钮、标题区无互链；线上 CSS 已生效
+- [x] 55 本精读页含 Top10 真实金句 + 模块框架；`gen_mindmap` 升级保证云端一致不回退
+- [x] 模块样式走 `mmx-guide.css`（`.mmx-mod`），未碰 frontend-mod 的 `reading-overview.css`
+- [ ] a2a 板已发 DONE；等 frontend-mod 对绿色按钮 / 模块版式的 ACK
 
 ## 验收
 - [x] 58 本 deep-read.html 全部在线、0 内联、引用共享 CSS、摘录与逐章追问齐全
