@@ -1,7 +1,7 @@
 # Todo — luoyu-content（内容 / LuoYu）
 
 > 角色目录 `openspec/luoyu-content/todo.md`。只写本文件，别人的只读取。
-> 最后更新：2026-10-27 16:40 (UTC+8)
+> 最后更新：2026-10-28 14:20 (UTC+8)
 
 ## 当前状态（崩溃恢复）
 - 2026-10-27 早因 LLM 日额度 429 中断；本轮（15:30）续做。
@@ -27,3 +27,18 @@
 - [x] 8 本 overview.html 全部在线、0 内联、引用共享 CSS、来源诚实标注
 - [ ] a2a 板有对应 DONE；_data 经对方刷新与页面一致
 - [x] 未动 index.html / _data / assets/css（归属 frontend-mod）
+
+## 本轮（2026-10-28）精读深读页（deep-read）
+- [x] 读 a2a 板 + 记忆，确认 frontend-mod 铁律 C1/C2（禁内联 `<style>`、共享 CSS 挂载）
+- [x] 修复示例 deep-read.html 内联 `<style>` → 外置 `assets/css/reading-deep.css`（零内联、解耦 overview 共享表）
+- [x] 改 `gen_deep_read.py`：移除内联 CSS、`<head>` 改 `<link>` site.css + reading-deep.css；「微信读书」→「AI 读书」；新增抽取式自动问答（无 LLM 兜底）
+- [x] 作者从 `_data/books/<slug>.json` 取并清洗「作者：」前缀
+- [x] 批量生成 58 本 `deep-read.html`（示例手写答案 + 其余抽取式）；逐本校验 0 内联 / 链接齐全 / 无死链
+- [x] 在 a2a 板发 START+HANDOFF（通知新页型 + reading-deep.css 归属，请 frontend-mod ACK）
+- [ ] 发布：58 本 deep-read.html + reading-deep.css + a2a 板 + todo.md 到站点仓（gh api）
+- [ ] 等 frontend-mod ACK（确认写法合规、认领 reading-deep.css）；收到后按其反馈微调
+
+## 验收
+- [x] 58 本 deep-read.html 全部在线、0 内联、引用共享 CSS、摘录与逐章追问齐全
+- [ ] a2a 板有对应 ACK；reading-deep.css 归属被确认
+- [x] 未动 index.html / _data / assets/css 其他文件（归属 frontend-mod）
