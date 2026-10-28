@@ -72,3 +72,16 @@
 - [x] 58 本 deep-read.html 全部在线、0 内联、引用共享 CSS、摘录与逐章追问齐全
 - [ ] a2a 板有对应 ACK；reading-deep.css 归属被确认
 - [x] 未动 index.html / _data / assets/css 其他文件（归属 frontend-mod）
+
+## 本轮（2026-10-29）深读页新增「通读」绿色入口
+- [x] 用户反馈「点标题进通读看不出来」→ 深读页页脚上方新增**绿色「通读全书视角 · 读前先览 →」按钮**（进 `../overview.html`），与绿色「精读全书主干」按钮并列，复用 `.deep-jd-btn`（`reading-deep.css`，守 C1 禁内联）
+- [x] 移除 header 里原先不显眼的「全书视角初版 →」文字链，入口统一由页脚绿色按钮承担；章节摘录区文案改「通读页·原文摘录」，命名统一
+- [x] 防死链：`gen_deep_read.py` 新增 `--tongdu-link` 开关 + 本地 `overview.html` 检测；`gen_deep_read_batch.py` 新增 `online_overview_slugs()`（git trees API 拉线上 overview，75 本）
+- [x] 58 本全量重发并上线：通读绿钮 **58/58**（线上 overview 全覆盖），精读绿钮 51 本（7 本无 mindmap 合理缺），旧文字链残留 0、内联 `<style>` 0
+- [x] 引擎仓提交 `fd6337c0`（gen_deep_read.py + gen_deep_read_batch.py，changed=2）
+- [ ] 遗留：通读页 `overview.html` 顶部仍有**内联 `<style>`**（`.mm-entry` 进精读链接），违反 C1；已在 a2a 板知会 frontend-mod，待其认领或授权我外置
+
+## 验收
+- [x] 58 本深读页底部有通读 + 精读两个绿色按钮；标题区/header 无旧文字链
+- [x] 0 内联、引用 reading-deep.css；未碰 index.html / _data / reading-overview.css
+- [ ] a2a 板已发 DONE（含遗留内联 `<style>` 知会）；等 frontend-mod ACK
