@@ -251,3 +251,65 @@ python gen_outline_full.py --slug <slug>          # 不发布，只落盘
 | 8 | A2A | 缺口、两库分裂、schema 增补写进通信记录 |
 
 第 1–4 步不改任何站点文案、不动别人的生成器，只补数据与加表；第 5 步起才动运行时，需对方确认 schema 增量。
+
+---
+
+## 7 执行记录（2026-10-28 05:00–06:30）
+
+### 7.1 已完成
+
+| # | 动作 | 结果 |
+|---|---|---|
+| 1 | 补 4 本 `book_outline` + 注入 | 62 本 / 3288 章 / 27590 要点 / 52392 原句；通读页 62/62 有「逐章折叠」，0 处 `ch-pending` |
+| 2 | 回补 `quiz` | 168 → **180** 行 / 60 本；4 本缺答案的用 `gen_quiz_answer.py` 按库内大纲补齐（12 条） |
+| 3 | 回补 `ai_qa` | 9 行 / 3 本（站内仅 3 页有区块），`backfill=1` |
+| 4 | `note` 表 + 22 篇 | `note` 22 行 / 15 本 |
+| 5 | 全书导图 | **18 本**已上线（见 §7.3） |
+
+库文件：`we-read/data/we_read.db`（26MB，已 gitignore）。
+
+### 7.2 一个必须记下来的坑
+
+`gen_aiqa_from_outline.py --mode gemini` 给黑塞《悉达多》生成的答案是**阅读方法论**——
+上下文取错了，答的不是这本书。已回滚该页，改走 `gen_quiz_answer.py`（从 `book_outline` 取真实章节）。
+**结论：任何给"这本书"生成内容的链路，上下文必须来自库里的该书数据，不能来自页面字符串拼接。**
+
+### 7.3 导图进度与两种产出方式
+
+已上线 18 本：围城、1984、金融家、遥远的救世主、爱鸡尾酒与生化危机、低欲望社会、媚色无双、
+法治的细节、一个女人一生的二十四小时、长安的荔枝、日本泡沫后的三十年、一地鸡毛、
+动物农场、活着、快乐的死、认知觉醒、局外人、文化苦旅。
+
+三条产出路径，页面结构完全一致（同一 `render()`），差别只在 `data/mindmap/<slug>.json` 的来源：
+
+| 路径 | 命令 | 适用 |
+|---|---|---|
+| Gemini 两段式 | `gen_mindmap.py --slug X --write` | 有配额时批量；长书自动按 80 章分批 |
+| 人工提炼 | 写 JSON → `gen_mindmap.py --import-batch f.json --write` | 配额不可用时；质量最高 |
+| 仅重渲染 | `gen_mindmap.py --slug X --render-only` | 改版式，不重算 |
+
+**锚点不接受编造**：`--import-batch` 时 anchor 一律由脚本从该章首句原句取；
+Gemini 路径的 anchor 要过「字符串包含」校验，不命中就丢弃并计入 `bad_anchor`。
+十八本实测 bad_anchor = 0。
+
+### 7.4 明确排除的三本
+
+| slug | 章 | 原因 |
+|---|---|---|
+| `ba-bu-ya-xin-ji-nei-ya--sheng-zhe-chi-xia-shi-z` | 1 | 单章，做「全书主干」没有意义 |
+| `fang-si-qi-de-chu-lian-le-yuan--jing-bian-ban-` | 2 | 同上 |
+| `bai-ye-xing` | 13 | 13 个条目标题全是「1 · …」，AI 大纲只覆盖第一章，做成全书导图会误导 |
+
+### 7.5 剩余 41 本
+
+Gemini 免费配额耗尽（429，各模型共用同一项目配额），重置约在北京时间 15:00。
+恢复后一条命令补齐：
+
+```bash
+cd C:/Users/ROG/we-read
+python gen_mindmap.py --all --write --skip-existing
+python tools_link_mindmap.py --write
+git add -A reading-notes/books && git commit -m "feat(mindmap): 补齐其余书目" && git push origin fix-publish:main
+```
+
+长书（296/295/294/271 章四本网络小说 + 红楼梦 122 章）单本 3–4 次调用，全量约 100 次。
