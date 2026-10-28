@@ -89,3 +89,20 @@
 .mmx-pending{background:#f7f4ec;border:1px dashed #d8cfb8;border-radius:14px;padding:15px 20px;
   color:#6b6354;font-size:.9rem;line-height:1.85}
 .mmx-pending b{color:#5a5345}
+
+/* ── 一句话主旨 / 核心观点 / 阅读验证 / 来源边界（2026-10-29 按 outline.html 模块排序补回） ── */
+.mmx-oneline{font-size:1.08rem;line-height:1.9;color:#3a352c;margin:.4em 0 0;
+  padding:14px 18px;background:#fbfaf4;border-left:4px solid var(--green);border-radius:0 12px 12px 0}
+.mmx-views{list-style:none;padding:0;margin:.6em 0 0;counter-reset:v}
+.mmx-views li{position:relative;padding:.7em 0 .7em 1.8em;border-top:1px dashed #e3dccb;
+  line-height:1.8;color:#3a352c}
+.mmx-views li:first-child{border-top:0}
+.mmx-views li:before{counter-increment:v;content:"观点 "counter(v);position:absolute;left:0;top:.75em;
+  font-size:.7rem;font-weight:700;color:#6b7a4e;letter-spacing:.04em}
+.mmx-views li b{color:#2f3a33}
+.mmx-evib{background:#f7f4ec;border:1px solid var(--line);border-radius:14px;padding:14px 20px}
+.mmx-evib p{margin:.2em 0 .6em;line-height:1.85;color:#4a4236}
+.mmx-evib ul{margin:.3em 0 0;padding-left:1.2em;color:#5a5345}
+.mmx-evib li{line-height:1.9;margin:.2em 0}
+.mmx-evib b{color:#3a352c}
+/* 阅读时要验证的问题 复用 .mmx-pending（虚线框占位）即可，无需新类 */
