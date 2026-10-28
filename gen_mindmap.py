@@ -303,17 +303,40 @@ E = G.esc
 ROLE_CLS = {"铺垫": "r-pre", "立论": "r-th", "反证": "r-cnt", "案例": "r-case", "收束": "r-end"}
 
 
+def _chunks(s: str, per_line: int, max_lines: int = 2) -> list:
+    """按字数切行。中文按 1 字 1 位算，够用且可预测。"""
+    s = (s or "").strip()
+    if not s:
+        return [""]
+    lines = [s[i:i + per_line] for i in range(0, len(s), per_line)]
+    if len(lines) > max_lines:
+        keep = lines[:max_lines]
+        keep[-1] = keep[-1][:per_line - 1] + "…"
+        return keep
+    return lines
+
+
 def _svg_spine(d: dict) -> str:
-    """全书主干图：书名 → 5–7 条主干。规模恒定，长书也不会糊。"""
+    """全书主干图：书名 → 5–7 条主干。规模恒定，长书也不会糊。
+
+    行高按最长主干名自适应：主干名（15px）每行 17 字，最多两行，
+    不再硬截 10 字（早期版本会把「读前：书信、缘起与读法导引」切成半句）。
+    """
     sp = d["spine"]
     n = len(sp)
-    row_h = 62
+    LAB = 17                                  # 主干名单行字数（sw 内可容）
+    WHY = 30                                  # 右侧说明单行字数
+    lab_lines = [_chunks(s["label"], LAB) for s in sp]
+    why_lines = [_chunks(s.get("why", ""), WHY) for s in sp]
+    two = any(len(x) > 1 for x in lab_lines)
+    three = any(len(x) > 2 for x in why_lines) or any(len(x) > 2 for x in lab_lines)
+    row_h = 84 if three else (74 if two else 62)
     top = 30
-    h = top * 2 + row_h * n + 40
+    h = top * 2 + row_h * n + 36
     w = 1120
-    cx0, cw = 28, 250
-    sx, sw = 400, 250
-    bx, bw = 700, 380
+    cx0, cw = 28, 262
+    sx, sw = 400, 292
+    bx = 714
     cy = top + (row_h * n) / 2
 
     out = ['<svg class="mm-svg" viewBox="0 0 %d %d" xmlns="http://www.w3.org/2000/svg"'
@@ -328,31 +351,42 @@ def _svg_spine(d: dict) -> str:
            '.mm-svg .ln{stroke:#cfc6b4;stroke-width:1.4;fill:none}'
            '</style>']
 
-    # root
-    out.append('<rect x="%d" y="%d" width="%d" height="62" rx="10" fill="#3d372e"/>'
-               % (cx0, cy - 31, cw))
-    out.append('<text class="rt" x="%d" y="%d">%s</text>'
-               % (cx0 + 16, cy - 6, E(d["title"][:12])))
+    # root：书名最多两行（每行 17 字），下面一行统计
+    ti = _chunks(d["title"], 17)
+    rh = 34 + 18 * len(ti)
+    out.append('<rect x="%d" y="%d" width="%d" height="%d" rx="10" fill="#3d372e"/>'
+               % (cx0, cy - rh / 2, cw, rh))
+    for k, ln in enumerate(ti):
+        out.append('<text class="rt" x="%d" y="%d">%s</text>'
+                   % (cx0 + 16, cy - rh / 2 + 24 + k * 18, E(ln)))
     out.append('<text class="t3" x="%d" y="%d" style="fill:#c9c0ae">%d 章 · 主干 %d 条</text>'
-               % (cx0 + 16, cy + 14, len(d["chapters"]), n))
+               % (cx0 + 16, cy - rh / 2 + 24 + 18 * len(ti) + 2,
+                  len(d["chapters"]), n))
 
     for i, s in enumerate(sp):
         y = top + i * row_h + row_h / 2
+        ls = lab_lines[i]
+        bh_i = 38 + 17 * len(ls)          # 框高跟着这行的文字行数走，不留空挡
         out.append('<path class="ln" d="M%d %d C%d %d,%d %d,%d %d"/>'
                    % (cx0 + cw, cy, cx0 + cw + 60, cy, sx - 60, y, sx, y))
-        out.append('<rect x="%d" y="%d" width="%d" height="46" rx="8" fill="#f4efe3"'
-                   ' stroke="#d9d0bd"/>' % (sx, y - 23, sw))
-        out.append('<rect x="%d" y="%d" width="5" height="46" rx="2.5" fill="#8a9b6e"/>'
-                   % (sx, y - 23))
-        out.append('<text class="t1" x="%d" y="%d">%s %s</text>'
-                   % (sx + 16, y - 4, E(s["id"]), E(s["label"][:10])))
+        out.append('<rect x="%d" y="%d" width="%d" height="%d" rx="8" fill="#f4efe3"'
+                   ' stroke="#d9d0bd"/>' % (sx, y - bh_i / 2, sw, bh_i))
+        out.append('<rect x="%d" y="%d" width="5" height="%d" rx="2.5" fill="#8a9b6e"/>'
+                   % (sx, y - bh_i / 2, bh_i))
+        # 文字块整体垂直居中：label 若干行 + 章数一行
+        block = 17 * len(ls) + 14
+        y0 = y - block / 2 + 13
+        for k, ln in enumerate(ls):
+            txt = ("%s %s" % (s["id"], ln)) if k == 0 else ln
+            out.append('<text class="t1" x="%d" y="%d">%s</text>'
+                       % (sx + 16, y0 + k * 17, E(txt)))
         out.append('<text class="t3" x="%d" y="%d">%d 章</text>'
-                   % (sx + 16, y + 13, len(s["chapters"])))
-        out.append('<text class="t2" x="%d" y="%d">%s</text>'
-                   % (bx, y - 4, E(s["why"][:26])))
-        if len(s["why"]) > 26:
+                   % (sx + 16, y0 + 17 * len(ls) + 3, len(s["chapters"])))
+        ws = why_lines[i]
+        wy = y - (15 * len(ws)) / 2 + 4
+        for k, ln in enumerate(ws):
             out.append('<text class="t2" x="%d" y="%d">%s</text>'
-                       % (bx, y + 12, E(s["why"][26:52])))
+                       % (bx, wy + k * 15, E(ln)))
         out.append('<path class="ln" d="M%d %d L%d %d"/>' % (sx + sw, y, bx - 14, y))
     out.append("</svg>")
     return "\n".join(out)
