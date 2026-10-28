@@ -174,10 +174,15 @@ main.page>section .toc-part{background:#fbfaf5;border-color:#ece7dc}
 .mm-pt.mm-l2::before{left:20px;width:4px;height:4px;opacity:.5}
 
 .mm-subs{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:7px}
-.mm-sub{font-size:.85rem;line-height:1.6;color:#33403a;background:#f8f5ec;
-  border:1px solid #e9e2d0;border-left:3px solid var(--c);border-radius:6px;padding:5px 11px}
-.mm-sub.mm-dup{color:#8a8272;background:#fbf9f3;border-left-color:#ded7c6}
-.mm-sub.mm-more{color:#8a8272;background:#fbf9f3;border-left-color:#ded7c6;font-style:italic}
+.mm-sub{display:inline-flex;align-items:center;gap:7px;font-size:.85rem;line-height:1.6;
+  color:#33403a;background:#f8f5ec;border:1px solid #e9e2d0;border-radius:999px;
+  padding:5px 12px 5px 10px}
+.mm-sub::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--c);
+  flex:none;opacity:.85}
+.mm-sub.mm-dup{color:#8a8272;background:#fbf9f3}
+.mm-sub.mm-dup::before{background:#cfc7b6}
+.mm-sub.mm-more{color:#8a8272;background:#fbf9f3;font-style:italic}
+.mm-sub.mm-more::before{display:none}
 .mm-q{margin:10px 0 0;font-size:.75rem;color:#9a917e}
 .mm-group{--c:#2f6b52;--cb:#eaf2ec;margin:14px 0 0;padding:0 0 0 15px;
   border-left:3px solid var(--c)}
@@ -218,3 +223,42 @@ main.page>section .toc-part{background:#fbfaf5;border-color:#ece7dc}
    普通导读列表 li 不是 flex 容器，宽高失效后只剩一条 1.5px 边框 → 视觉上就是
    每个条目开头多一条竖线。这里按祖先类兜住。 */
 .ch-secs:not(.ch-prog) li::before{content:none;display:none}
+
+/* ===== 原文摘录模块（2026-10-28） ===== */
+#quotes .q-intro{margin:-2px 0 14px;font-size:.83rem;color:var(--muted);line-height:1.8}
+#quotes .q-intro b{color:var(--green2);font-weight:700}
+#quotes .q-wrap{display:grid;gap:9px}
+#quotes .q-ch{background:#fff;border:1px solid #ece7dc;border-radius:12px;overflow:hidden;
+  transition:border-color .15s,box-shadow .15s}
+#quotes .q-ch:hover{border-color:#e2d9c4;box-shadow:0 2px 8px rgba(80,70,40,.05)}
+#quotes .q-ch>summary{display:list-item;list-style:none;cursor:pointer;padding:0;
+  -webkit-tap-highlight-color:rgba(47,107,82,.06)}
+#quotes .q-ch>summary::-webkit-details-marker{display:none}
+#quotes .q-line{display:flex;align-items:baseline;gap:11px;padding:11px 14px}
+#quotes .q-no{flex:none;min-width:26px;height:23px;padding:0 6px;display:inline-grid;
+  place-items:center;border-radius:7px;background:#eaf2ec;color:#2f6b52;
+  font:700 .74rem/1 var(--sans)}
+#quotes .q-name{flex:1 1 auto;font:600 .95rem/1.6 var(--serif);color:#24332c;word-break:break-word}
+#quotes .q-cnt{flex:none;font-size:.71rem;color:#8a8272;background:#f6f3e9;border-radius:999px;
+  padding:2px 9px;white-space:nowrap}
+#quotes .q-ch[open]>summary{border-bottom:1px dashed #eee6d5}
+#quotes .q-body{padding:2px 16px 12px;background:#fbf8f0}
+#quotes .q-list{list-style:none;margin:0;padding:0;counter-reset:q}
+#quotes .q-item{position:relative;padding:11px 0 11px 28px;border-bottom:1px dotted #e9e1cf}
+#quotes .q-item:last-child{border-bottom:0}
+#quotes .q-item::before{counter-increment:q;content:counter(q);position:absolute;left:0;top:13px;
+  width:19px;height:19px;border-radius:50%;background:#eef3ef;color:#2f6b52;
+  font:700 .66rem/19px var(--sans);text-align:center}
+#quotes .q-text{margin:0;font:400 .94rem/1.9 var(--serif);color:#3a453f}
+#quotes .q-from{margin:5px 0 0;font-size:.73rem;color:#9a917e}
+#quotes .q-more{margin:9px 0 0;font-size:.76rem;color:#8a8272;font-style:italic}
+.mm-q a{color:inherit;text-decoration:underline;text-decoration-color:#d8cfb6;
+  text-underline-offset:3px}
+.mm-q a:hover{color:var(--green2);text-decoration-color:var(--green2)}
+@media(max-width:720px){
+  #quotes .q-line{padding:10px 12px;gap:9px}
+  #quotes .q-cnt{display:none}
+  #quotes .q-body{padding:2px 12px 10px}
+  #quotes .q-item{padding:10px 0 10px 25px}
+  #quotes .q-text{font-size:.9rem}
+}
