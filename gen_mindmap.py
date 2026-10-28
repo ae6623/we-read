@@ -45,7 +45,21 @@ import weread_store as S  # noqa: E402
 DB_OUT = HERE / "data" / "mindmap"
 BOOKS = HERE / "reading-notes" / "books"
 MODEL = "gemini-3.5-flash"
+# 2026-10-28：gemini-3.5-flash 等主力模型免费额度按项目共享，跑几本就整批 429；
+# lite 系列是独立额度。按此顺序轮询，前一个 429 就换下一个，避免整批中断。
+# 顺序原则：先质量后数量。gemini-3-flash-preview 能出但额度极小（实测 5 次即尽）。
+CANDIDATES = (
+    "gemini-3.5-flash",          # 配额恢复时最好，通常是第一个 429 的
+    "gemini-3-flash-preview",    # 完整 flash，额度小
+    "gemini-3.5-flash-lite",
+    "gemini-flash-lite-latest",
+    "gemini-3.1-flash-lite",
+    "gemma-4-26b-a4b-it",        # 兜底，质量差但几乎不限
+)
 BATCH = 80
+
+# 已确认耗尽的模型（本进程内不再试，省掉 429 往返）
+_DEAD = set()
 
 SYSTEM = """你是读书笔记的结构分析师。用户提供的是某本书的 AI 大纲条目（不是原文，是别人对原书的逐章梳理）。
 你的任务是**结构化重构**，不是复述、不是评价文笔、不是写读后感。
@@ -147,21 +161,43 @@ def _json_of(text: str):
             return None
 
 
-def llm(prompt: str, max_tokens: int = 4096, retry: int = 2):
+def _model_chain():
+    """可用模型顺序：--model 指定的优先，其余按 CANDIDATES 补；跳过已耗尽的。"""
+    head = [MODEL] if MODEL else []
+    return [m for m in (head + list(CANDIDATES)) if m not in _DEAD] or list(CANDIDATES)
+
+
+def llm(prompt: str, max_tokens: int = 4096, retry: int = 1):
+    """按模型链轮询。429/404/500 视为该模型不可用 → 立刻换下一个；
+       只有「模型通了但 JSON 不合规」才在同一模型上重试。"""
     import gemini_client as gc
-    for k in range(retry + 1):
-        r = gc.generate(prompt, system=SYSTEM, model=MODEL, timeout=180,
-                        max_tokens=max_tokens, temperature=0.35)
-        if r.get("ok"):
-            d = _json_of(r["text"])
-            if d is not None:
-                return d, None
-            err = "JSON 解析失败：" + (r.get("text") or "")[:120]
-        else:
-            err = str(r.get("error"))[:160]
-        if k < retry:
-            time.sleep(3 + 4 * k)
-    return None, err
+    errs = []
+    for m in _model_chain():
+        for k in range(retry + 1):
+            try:
+                r = gc.generate(prompt, system=SYSTEM, model=m, timeout=180,
+                                max_tokens=max_tokens, temperature=0.35,
+                                fallback=False)
+            except Exception as e:            # 网络抖动
+                r = {"ok": False, "error": "EXC " + str(e)[:120]}
+            if r.get("ok"):
+                d = _json_of(r["text"])
+                if d is not None:
+                    if m != MODEL:
+                        pass                  # 静默降级，调用方看日志里的 model
+                    return d, None
+                err = "JSON 解析失败：" + (r.get("text") or "")[:120]
+                errs.append("%s:%s" % (m, err))
+                time.sleep(2)
+                continue                       # 同模型重试
+            e = str(r.get("error") or "")
+            errs.append("%s:%s" % (m, e[:80].replace("\n", " ")))
+            if any(c in e for c in ("429", "404", "500", "503", "quota", "exceeded")):
+                _DEAD.add(m)                   # 这个模型这批别再试了
+            break                              # 换下一个模型
+        if all(x in _DEAD for x in CANDIDATES):
+            break
+    return None, " | ".join(errs[-4:])
 
 
 # ------------------------------------------------------------------ 提炼
@@ -570,7 +606,12 @@ def main(argv=None):
                     help="只打印还没生成导图的 N 本书的紧凑摘要（不调 LLM）")
     ap.add_argument("--import-batch", help="导入批量 JSON 并渲染：{slug:{thesis,spine,chapters}}")
     ap.add_argument("--cut", type=int, default=42, help="摘要里每条要点的截断长度")
+    ap.add_argument("--model", help="首选模型（失败自动按 CANDIDATES 降级）")
+    ap.add_argument("--budget", type=int, default=0,
+                    help="秒；跑够就停，留给下次调用（Bash 单条命令有上限）")
     a = ap.parse_args(argv)
+    if a.model:
+        globals()["MODEL"] = a.model
 
     if a.import_batch:
         raw = json.loads(Path(a.import_batch).read_text(encoding="utf-8"))
@@ -620,6 +661,15 @@ def main(argv=None):
             slugs = [s for s in slugs if s not in _skip]
         if a.limit:
             slugs = slugs[: a.limit]
+        if a.all and not a.render_only:
+            # 小书先出：单次命令有超时上限，先让短书成批落地
+            _sz = {}
+            for s in slugs:
+                try:
+                    _sz[s] = len(S.load_book_outline(s))
+                except Exception:
+                    _sz[s] = 9999
+            slugs.sort(key=lambda s: (_sz.get(s, 9999), s))
     print("待提炼：%d 本" % len(slugs))
     ok = 0
     if a.workers > 1 and not a.render_only:
@@ -652,7 +702,14 @@ def main(argv=None):
         print("完成 %d / %d" % (ok, len(slugs)))
         return 0
 
+    _t_start = time.time()
+    _left = []
     for i, s in enumerate(slugs, 1):
+        if a.budget and (time.time() - _t_start) > a.budget:
+            _left = slugs[i - 1:]
+            print("⏸ 预算用尽（%ds），本批完成 %d 本，剩 %d 本待下批"
+                  % (a.budget, ok, len(_left)))
+            break
         print("[%d/%d] %s" % (i, len(slugs), s))
         if a.render_only:
             p = DB_OUT / ("%s.json" % s)
@@ -666,6 +723,8 @@ def main(argv=None):
         if run_one(s, a.write, a.dry_run):
             ok += 1
     print("完成 %d / %d" % (ok, len(slugs)))
+    if _left:
+        print("剩余待跑：%d 本（重跑同一命令继续）" % len(_left))
     return 0
 
 

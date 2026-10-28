@@ -13,4 +13,6 @@ __pycache__/
 *.pyc
 
 # 本地 SQLite 与解析中间产物（可由 outline.html 重算，不入库）
-/data/
+/data/*
+# 例外：全书导图的提炼结果。重算要过 LLM（配额有限），且含人工修正，必须留存
+!/data/mindmap/
