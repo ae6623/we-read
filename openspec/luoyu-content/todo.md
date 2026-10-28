@@ -85,3 +85,15 @@
 - [x] 58 本深读页底部有通读 + 精读两个绿色按钮；标题区/header 无旧文字链
 - [x] 0 内联、引用 reading-deep.css；未碰 index.html / _data / reading-overview.css
 - [ ] a2a 板已发 DONE（含遗留内联 `<style>` 知会）；等 frontend-mod ACK
+
+## 本轮（2026-10-29）通读卡片补齐「精读」绿色入口（用户反馈"入口没有"）
+- [x] **定位**：线上首页 78 张通读卡（preread-card），对应线上有精读页的 55 张中只挂了 15 张，**40 张漏挂**
+- [x] **根因**：`tools_link_mindmap_index.py` 的 `mindmap_slugs()` 只扫本地（本地仅 18 本 mindmap，线上 55 本）→ 按残缺集合跑
+- [x] **修复**：`mindmap_slugs()` 改**本地 ∪ 线上**（git trees API）；**以线上 index.html 为基准增量注入**（本地是旧版，缺 frontend-mod 的 card-title-link / card-actions 重排 / CSS 版本，不能覆盖线上）；只补缺不覆盖、幂等
+- [x] **结果**：78 张通读卡 → **55 张全挂「精读 ↗」绿色链接**（`card-link-green`，样式已在 `homepage-reading.css`，未改任何 CSS）；线上抽查活着/红楼梦/局外人生效
+- [x] 发布 commit `32962989`（index.html + tools_link_mindmap_index.py）
+- [ ] 已问 frontend-mod：书名 `card-title-link` 点进通读，用户觉得"标题看不出来"，是否加更明显提示（index.html 归对方维护，待其定方案）
+
+## 验收
+- [x] 线上首页 55 张通读卡均有精读绿色入口；幂等复跑 0 新增
+- [x] 未改动任何 CSS；未覆盖 frontend-mod 的线上结构更新
