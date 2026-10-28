@@ -30,6 +30,7 @@ CSS_HEAD = '''<!doctype html>
 <meta name="description" content="《{title}》全书视角 · 读前通读（由 AI 大纲整理）">
 <title>《{title}》｜全书视角（读前通读）</title>
 <link rel="stylesheet" href="../../../assets/css/reading-overview.css">
+<link rel="stylesheet" href="../../../assets/css/start-here.css">
 <link rel="stylesheet" href="../../../assets/css/mmx-guide.css">
 <link rel="stylesheet" href="../../../assets/css/book-link-drawer.css">
 </head>
@@ -177,13 +178,16 @@ def build(cfg, chapters, aiqa_html="", quiz_answers=None):
     reset_split_state()
     out = [CSS_HEAD.format(title=cfg['title'])]
     out.append('''<header class="note-head">
-  <p class="eyebrow">全书视角 · 读前通读</p>
+  <p class="eyebrow">全书视角</p>
   <h1>《%s》</h1>
   <p class="meta">作者：%s　·　来源：AI 大纲整理　·　共 %d 章</p>
-  <div class="chips"><span class="chip">读前通读</span><span class="chip">AI 大纲</span><span class="chip">%s</span></div>
-  <p class="small">本页由本书 AI 大纲（章节要点与原文摘录）整理，供读前通读与后续精读对照，<b>不等同于已亲读</b>。%s</p>
+  <div class="chips"><span class="chip">全书视角</span><span class="chip">AI 大纲</span><span class="chip">%s</span></div>
+  <p class="small">本页由本书 AI 大纲（章节要点与原文摘录）整理，供全书视角与后续精读对照，<b>不等同于已亲读</b>。%s</p>
 </header>
 ''' % (cfg['title'], cfg['author'], len(chapters), cfg['chip'], cfg.get('head_note', '')))
+
+    # IA-05「从这里开始」导航块（首屏可见；链接按数据可用性，由 auto.py 填 cfg['start_here']）
+    out.append(cfg.get('start_here') or '')
 
     out.append('<section class="card"><h2>一句话主旨</h2>\n<p>%s</p></section>\n' % cfg['thesis'])
     # 「全书结构与主题关系」章节串联块已合并进章节导读（2026-10-28）：
