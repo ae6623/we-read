@@ -342,16 +342,16 @@ def _svg_spine(d: dict) -> str:
     bx = 714
     cy = top + (row_h * n) / 2
 
-    out = ['<svg class="mm-svg" viewBox="0 0 %d %d" xmlns="http://www.w3.org/2000/svg"'
+    out = ['<svg class="mmx-svg" viewBox="0 0 %d %d" xmlns="http://www.w3.org/2000/svg"'
            ' role="img" aria-label="%s 全书主干导图">' % (w, h, E(d["title"])),
            '<rect x="0" y="0" width="%d" height="%d" fill="none"/>' % (w, h),
            '<style>'
-           '.mm-svg text{font-family:"Noto Serif SC",Georgia,serif}'
-           '.mm-svg .t1{font-size:15px;fill:#2f2a24;font-weight:600}'
-           '.mm-svg .t2{font-size:12px;fill:#5c5347}'
-           '.mm-svg .t3{font-size:10.5px;fill:#8a8272}'
-           '.mm-svg .rt{font-size:13px;fill:#f7f3ea;font-weight:600}'
-           '.mm-svg .ln{stroke:#cfc6b4;stroke-width:1.4;fill:none}'
+           '.mmx-svg text{font-family:"Noto Serif SC",Georgia,serif}'
+           '.mmx-svg .t1{font-size:15px;fill:#2f2a24;font-weight:600}'
+           '.mmx-svg .t2{font-size:12px;fill:#5c5347}'
+           '.mmx-svg .t3{font-size:10.5px;fill:#8a8272}'
+           '.mmx-svg .rt{font-size:13px;fill:#f7f3ea;font-weight:600}'
+           '.mmx-svg .ln{stroke:#cfc6b4;stroke-width:1.4;fill:none}'
            '</style>']
 
     # root：书名最多两行（每行 17 字），下面一行统计
@@ -396,39 +396,42 @@ def _svg_spine(d: dict) -> str:
 
 
 def _chapter_html(c: dict, full: dict) -> str:
-    """一章 = 折叠态一行（章号·章名·功能），展开是通读页那套「小节 → 要点 → 原句」。
-    折叠不等于删内容：全部要点与原句都在本体里，与 overview.html 章节导读同源。"""
+    """一章 = 折叠态一行（章号·章名·功能·要点数），展开是「小节 → 要点 → 原句」。
+
+    样式完全自持（mmx- 前缀 + 页面内联 CSS），**不借用** reading-overview.css 里的
+    .ch-item/.ch-body/.ch-sec/.ch-secs/.ch-quote —— 那套归通读页，两边共用一套选择器
+    会互相牵制。要"看起来像"就照着写一份，不要去碰别人的组件。"""
     f = full.get(c["no"]) or {}
     secs = f.get("secs") or []
     n_pts = sum(len(s["points"]) for s in secs)
     n_q = sum(1 for s in secs for p in s["points"] for q in p["quotes"] if q)
-    chips = "".join('<span class="mm-chip">%s</span>' % E(x) for x in c["concepts"])
+    chips = "".join('<span class="mmx-chip">%s</span>' % E(x) for x in c["concepts"])
     stat = "共 %d 个小节 · %d 条要点 · %d 句原句摘录" % (len(secs), n_pts, n_q)
-    out = ['<details class="ch-item mm-cn">'
-           '<summary><span class="ch-no">%d</span>'
-           '<span class="ch-t">%s</span>'
-           '<span class="mm-role">%s</span>'
-           '<span class="mm-pnum">%d 条要点</span>'
-           '<span class="caret">›</span></summary>'
-           '<div class="ch-body">'
-           '<p class="ch-stat">%s</p>'
-           '<p class="mm-gist">%s</p>%s'
+    out = ['<details class="mmx-cn">'
+           '<summary><span class="mmx-no">%d</span>'
+           '<span class="mmx-name">%s</span>'
+           '<span class="mmx-role">%s</span>'
+           '<span class="mmx-pnum">%d 条</span>'
+           '<span class="mmx-caret">›</span></summary>'
+           '<div class="mmx-body">'
+           '<p class="mmx-stat">%s</p>'
+           '<p class="mmx-gist">%s</p>%s'
            % (c["no"], E(c["title"]), E(c["role"]), n_pts, stat, E(c["gist"]), chips)]
     for i, s in enumerate(secs):
-        out.append('<details class="ch-sec"%s>'
-                   '<summary><span class="sec-h">%s</span>'
-                   '<span class="sec-count">%d 条</span></summary>'
-                   '<ol class="ch-secs">'
+        out.append('<details class="mmx-sec"%s>'
+                   '<summary><span class="mmx-sech">%s</span>'
+                   '<span class="mmx-secc">%d 条</span></summary>'
+                   '<ol class="mmx-pts">'
                    % (" open" if i == 0 else "", E(s["h"] or "本节要点"),
                       len(s["points"])))
         for p in s["points"]:
             qs = "".join('<li>「%s」</li>' % E(q) for q in p["quotes"] if q)
-            out.append('<li>%s%s</li>'
+            out.append('<li><span class="mmx-pt">%s</span>%s</li>'
                        % (E(p["text"]),
-                          ('<ul class="ch-quote">%s</ul>' % qs) if qs else ""))
+                          ('<ul class="mmx-qt">%s</ul>' % qs) if qs else ""))
         out.append('</ol></details>')
     if not secs and c["anchor"]:
-        out.append('<span class="mm-quote">「%s」</span>' % E(c["anchor"]))
+        out.append('<p class="mmx-qt mmx-qt1">「%s」</p>' % E(c["anchor"]))
     out.append('</div></details>')
     return "".join(out)
 
@@ -448,37 +451,37 @@ def render(d: dict, ctx: dict = None) -> str:
     bar = int(round(density * 100))
 
     body = []
-    body.append('<section class="mm-thesis">')
-    body.append('<p class="mm-kicker">THIS BOOK ARGUES</p>')
-    body.append('<p class="mm-claim">%s</p>' % E(d["thesis"]["claim"] or "（未生成）"))
+    body.append('<section class="mmx-thesis">')
+    body.append('<p class="mmx-kicker">THIS BOOK ARGUES</p>')
+    body.append('<p class="mmx-claim">%s</p>' % E(d["thesis"]["claim"] or "（未生成）"))
     if d["thesis"]["boundary"]:
-        body.append('<p class="mm-bound"><b>边界</b> %s</p>' % E(d["thesis"]["boundary"]))
-    body.append('<p class="mm-evi">证据密度 <b>%d%%</b> · %d 条要点中 %d 条带原句 '
+        body.append('<p class="mmx-bound"><b>边界</b> %s</p>' % E(d["thesis"]["boundary"]))
+    body.append('<p class="mmx-evi">证据密度 <b>%d%%</b> · %d 条要点中 %d 条带原句 '
                 '（结构由 AI 大纲条目重算，非读后感）</p>'
                 % (bar, d["evidence"]["points"], d["evidence"]["with_quote"]))
-    body.append('<div class="mm-bar"><i style="width:%d%%"></i></div>' % bar)
+    body.append('<div class="mmx-bar"><i style="width:%d%%"></i></div>' % bar)
     body.append('</section>')
 
-    body.append('<section class="mm-svgwrap">%s</section>' % _svg_spine(d))
+    body.append('<section class="mmx-svgwrap">%s</section>' % _svg_spine(d))
 
-    body.append('<div class="mm-tools">'
-                '<button class="mm-btn" data-mm="open">展开全部要点</button>'
-                '<button class="mm-btn" data-mm="close">全部收起</button>'
-                '<span class="mm-tip">每章折叠态只占一行，点章名展开该章全部小节、要点与原句</span>'
+    body.append('<div class="mmx-tools">'
+                '<button class="mmx-btn" data-mmx="open">展开全部要点</button>'
+                '<button class="mmx-btn" data-mmx="close">全部收起</button>'
+                '<span class="mmx-tip">每章折叠态只占一行，点章名展开该章全部小节、要点与原句</span>'
                 '</div>')
 
     for s in sp:
         items = by_id.get(s["id"]) or []
-        body.append('<details class="mm-spine"%s>' % (" open" if s is sp[0] else ""))
-        body.append('<summary><span class="mm-id">%s</span>'
-                    '<span class="mm-label">%s</span>'
-                    '<span class="mm-cnt">%d 章</span></summary>'
+        body.append('<details class="mmx-spine"%s>' % (" open" if s is sp[0] else ""))
+        body.append('<summary><span class="mmx-id">%s</span>'
+                    '<span class="mmx-label">%s</span>'
+                    '<span class="mmx-cnt">%d 章</span></summary>'
                     % (E(s["id"]), E(s["label"]), len(items)))
-        body.append('<p class="mm-why">%s</p>' % E(s["why"]))
-        body.append('<ol class="mm-tree">')
+        body.append('<p class="mmx-why">%s</p>' % E(s["why"]))
+        body.append('<ol class="mmx-tree">')
         for c in items:
             # 章条目与通读页「逐章详读」同一套类名与视觉：无卡片、无彩条、虚线分隔。
-            # 一律避开 mm-ch / mm-chs —— reading-overview.css 里那两条是给通读页
+            # 类名统一 mmx- 前缀，与通读页那套 mm-ch/mm-chs 彻底隔开
             # 新版章节卡写的，撞上就会染色（手机上一屏看不到几章）。
             body.append(_chapter_html(c, full))
         body.append('</ol>')
@@ -575,55 +578,91 @@ PAGE = """<!doctype html>
 <title>《%(title)s》｜全书导图</title>
 <link rel="stylesheet" href="../../../assets/css/reading-overview.css">
 <style>
-.mm-wrap{max-width:1120px}
-.mm-kicker{font-size:.7rem;letter-spacing:.18em;color:var(--muted);margin:0 0 .3em}
-.mm-claim{font-size:1.16rem;line-height:1.75;margin:.1em 0 .5em;color:var(--ink)}
-.mm-bound{font-size:.86rem;color:#5c5347;line-height:1.8;margin:.2em 0}
-.mm-evi{font-size:.76rem;color:var(--muted);margin:.6em 0 .3em}
-.mm-bar{height:5px;background:#e6dfcf;border-radius:3px;overflow:hidden;margin-bottom:1.2em}
-.mm-bar i{display:block;height:100%%;background:linear-gradient(90deg,#8a9b6e,#c2b280)}
-.mm-svgwrap{overflow-x:auto;padding:.4em 0 1em;border-bottom:1px solid var(--line)}
-.mm-svg{width:100%%;height:auto;min-width:760px}
-.mm-spine{margin:1.15em 0;border-left:3px solid #ece4d3;padding:.1em 0 .1em .85em}
-.mm-spine[open]{border-left-color:#d8cdb4}
-.mm-spine>summary{display:flex;gap:.6em;align-items:baseline;cursor:pointer;
+.mmx-wrap{max-width:1120px}
+.mmx-kicker{font-size:.7rem;letter-spacing:.18em;color:var(--muted);margin:0 0 .3em}
+.mmx-claim{font-size:1.16rem;line-height:1.75;margin:.1em 0 .5em;color:var(--ink)}
+.mmx-bound{font-size:.86rem;color:#5c5347;line-height:1.8;margin:.2em 0}
+.mmx-evi{font-size:.76rem;color:var(--muted);margin:.6em 0 .3em}
+.mmx-bar{height:5px;background:#e6dfcf;border-radius:3px;overflow:hidden;margin-bottom:1.2em}
+.mmx-bar i{display:block;height:100%%;background:linear-gradient(90deg,#8a9b6e,#c2b280)}
+.mmx-svgwrap{overflow-x:auto;padding:.4em 0 1em;border-bottom:1px solid var(--line)}
+.mmx-svg{width:100%%;height:auto;min-width:760px}
+.mmx-spine{margin:1.15em 0;border-left:3px solid #ece4d3;padding:.1em 0 .1em .85em}
+.mmx-spine[open]{border-left-color:#d8cdb4}
+.mmx-spine>summary{display:flex;gap:.6em;align-items:baseline;cursor:pointer;
   list-style:none;padding:.35em 0}
-.mm-spine>summary::-webkit-details-marker{display:none}
-.mm-id{font-family:Georgia,serif;font-size:.8rem;color:#8a9b6e;border:1px solid #cfd8bd;
+.mmx-spine>summary::-webkit-details-marker{display:none}
+.mmx-id{font-family:Georgia,serif;font-size:.8rem;color:#8a9b6e;border:1px solid #cfd8bd;
   border-radius:4px;padding:0 .35em}
-.mm-label{font-weight:600;font-size:1rem;color:var(--ink)}
-.mm-cnt{margin-left:auto;font-size:.74rem;color:var(--muted)}
-.mm-why{font-size:.8rem;color:var(--muted);margin:.1em 0 .8em;line-height:1.7}
-.mm-tree{list-style:none;padding:0;margin:.15em 0 0}
-/* 章条目直接复用通读页 .ch-item / .ch-body / .ch-sec / .ch-secs / .ch-quote，
-   样式天然一致；这里只补几个导图专有的小件，不再自造一套章节卡。 */
-.mm-cn{margin:0;padding:0}
-.mm-role{flex:none;font-size:.68rem;color:#8a8272;line-height:1.6;white-space:nowrap;
-  border:1px solid #e7e0d0;border-radius:5px;padding:0 .35em;margin-left:.2em}
-.mm-pnum{flex:none;font-size:.68rem;color:#a9a294;line-height:1.6;white-space:nowrap}
-.mm-gist{margin:.1em 0 .45em;font-size:.84rem;line-height:1.75;color:#4a443b}
-.mm-chip{display:inline-block;font-size:.68rem;color:#6b6152;background:#f4f1e6;
-  border-radius:9px;padding:.05em .5em;margin:.1em .28em .35em 0}
-.mm-quote{display:block;margin:.3em 0 .1em;padding:7px 11px;background:#fdf8ee;
-  border-left:3px solid var(--gold);border-radius:0 8px 8px 0;
-  font-size:.8rem;line-height:1.75;color:#6b5c43}
-.mm-tools{display:flex;gap:.5em;align-items:center;flex-wrap:wrap;margin:.2em 0 1.1em}
-.mm-btn{font:inherit;font-size:.78rem;line-height:1.5;color:#5f5545;background:#f8f4ea;
+.mmx-label{font-weight:600;font-size:1rem;color:var(--ink)}
+.mmx-cnt{margin-left:auto;font-size:.74rem;color:var(--muted)}
+.mmx-why{font-size:.8rem;color:var(--muted);margin:.1em 0 .8em;line-height:1.7}
+.mmx-tree{list-style:none;padding:0;margin:.15em 0 0}
+
+/* ── 章条目：导图页自有组件（mmx-cn/body/sec/pts/qt）────────────────────────
+   不借用 reading-overview.css 的 .ch-* —— 那套归通读页，共用选择器会互相牵制。
+   缩进只留一层：章容器 → 小节卡(≤10px) → 要点序号(1.35em)。
+   最底层「原句」用负 margin 抵掉序号缩进，左边缘退回小节卡内边 = 章节那一层的容器，
+   不再层层内缩（原来 ch-body 18 + ch-sec 16 + ol 29 + ul 14 ≈ 77px，窄屏只剩半屏）。*/
+.mmx-cn{margin:0;padding:0;border-bottom:1px dashed #eee8dc}
+.mmx-cn:last-child{border-bottom:0}
+.mmx-cn>summary{display:flex;gap:9px;align-items:baseline;padding:9px 2px;
+  cursor:pointer;list-style:none}
+.mmx-cn>summary::-webkit-details-marker{display:none}
+.mmx-no{flex:none;min-width:1.5em;color:#bf8247;font-weight:700;font-size:.82rem;
+  font-variant-numeric:tabular-nums}
+.mmx-name{flex:1 1 auto;min-width:0;font-size:.93rem;line-height:1.6;color:var(--ink);
+  word-break:break-word}
+.mmx-role{flex:none;font-size:.68rem;color:#8a8272;line-height:1.6;white-space:nowrap;
+  border:1px solid #e7e0d0;border-radius:5px;padding:0 .35em}
+.mmx-pnum{flex:none;font-size:.68rem;color:#a9a294;line-height:1.6;white-space:nowrap}
+.mmx-caret{flex:none;color:#c0b394;font-size:1rem;line-height:1;transition:transform .18s}
+.mmx-cn[open] .mmx-caret{transform:rotate(90deg)}
+.mmx-body{padding:2px 0 12px}
+.mmx-stat{margin:0 0 .35em;font-size:.73rem;color:var(--muted);letter-spacing:.02em}
+.mmx-gist{margin:0 0 .45em;font-size:.86rem;line-height:1.75;color:#3f3a32}
+.mmx-chip{display:inline-block;font-size:.68rem;color:#6b6152;background:#f4f1e6;
+  border-radius:9px;padding:.05em .5em;margin:0 .28em .5em 0}
+/* 小节：不再套卡片，只在章这一层里加一条虚线分隔 —— 少一层容器就少一层左缩进 */
+.mmx-sec{margin:5px 0;padding:0}
+.mmx-sec>summary{display:flex;gap:8px;align-items:baseline;padding:7px 0;
+  border-top:1px dashed #efe9dc;cursor:pointer;list-style:none}
+.mmx-sec>summary::-webkit-details-marker{display:none}
+.mmx-sech{flex:1 1 auto;min-width:0;font-size:.85rem;line-height:1.6;font-weight:600;
+  color:#43604f}
+.mmx-sech::before{content:"▸";color:#c0a06a;margin-right:.4em;font-size:.76rem}
+.mmx-sec[open]>.mmx-sech::before{content:"▾"}
+.mmx-secc{flex:none;font-size:.7rem;color:#a49c8c;white-space:nowrap}
+.mmx-pts{list-style:decimal outside;margin:.3em 0 .2em;padding:0 0 0 1.25em;
+  font-size:.82rem;line-height:1.72;color:#4a443b}
+.mmx-pts>li{margin:.4em 0;padding-left:.1em}
+.mmx-pts>li::marker{color:#c0a06a;font-weight:700}
+/* 原句块：-1.25em 抵掉要点序号缩进，左边缘 = 章这一层容器的内边，通栏到底 */
+.mmx-qt{list-style:none;margin:.35em 0 .1em -1.25em;padding:7px 10px;
+  background:#fdf8ee;border-left:3px solid var(--gold);border-radius:0 8px 8px 0;
+  font-size:.79rem;line-height:1.72;color:#6b5c43}
+.mmx-qt>li+li{margin-top:.45em;padding-top:.45em;border-top:1px dashed #eadfc9}
+.mmx-qt1{margin-left:0}
+/* 桌面宽屏：正文限制可读行宽，不然一行 80 字。左边界不动，只收右边。 */
+@media(min-width:820px){
+  .mmx-gist,.mmx-pts,.mmx-qt{max-width:780px}
+}
+.mmx-tools{display:flex;gap:.5em;align-items:center;flex-wrap:wrap;margin:.2em 0 1.1em}
+.mmx-btn{font:inherit;font-size:.78rem;line-height:1.5;color:#5f5545;background:#f8f4ea;
   border:1px solid #e2dac6;border-radius:8px;padding:.3em .85em;cursor:pointer}
-.mm-btn:active{background:#efe7d4}
-.mm-tip{font-size:.74rem;color:var(--muted)}
+.mmx-btn:active{background:#efe7d4}
+.mmx-tip{font-size:.74rem;color:var(--muted)}
 @media(max-width:720px){
-  .mm-svg{min-width:640px}
-  .mm-gist{font-size:.83rem}
-  .ch-body{padding:10px 8px 14px}
-  .ch-body .ch-sec{padding:0 10px}
-  .ch-body ol.ch-secs{font-size:.82rem;padding-left:1.45em}
-  .ch-body ul.ch-quote{font-size:.78rem;padding:8px 10px}
+  .mmx-svg{min-width:640px}
+  .mmx-gist{font-size:.85rem}
+  .mmx-pts{font-size:.81rem}
+  .mmx-qt{font-size:.78rem}
+  .mmx-name{font-size:.9rem}
 }
 </style>
 </head>
 <body>
-<main class="wrap mm-wrap">
+<main class="wrap mmx-wrap">
 <header class="note-head">
   <p class="eyebrow">MIND MAP · AFTER THINKING</p>
   <h1>《%(title)s》全书导图</h1>
@@ -646,9 +685,9 @@ PAGE = """<!doctype html>
   var btns=document.querySelectorAll("[data-mm]");
   for(var i=0;i<btns.length;i++){(function(b){
     b.addEventListener("click",function(){
-      var open=b.getAttribute("data-mm")==="open";
-      document.querySelectorAll("details.mm-spine").forEach(function(d){d.open=open;});
-      document.querySelectorAll("details.mm-cn").forEach(function(d){d.open=open;});
+      var open=b.getAttribute("data-mmx")==="open";
+      document.querySelectorAll("details.mmx-spine").forEach(function(d){d.open=open;});
+      document.querySelectorAll("details.mmx-cn").forEach(function(d){d.open=open;});
       document.querySelectorAll("details.ch-sec").forEach(function(d){d.open=open;});
     });
   })(btns[i]);}
