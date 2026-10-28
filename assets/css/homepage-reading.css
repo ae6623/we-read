@@ -123,24 +123,22 @@
   transition:color .15s ease,border-color .15s ease}
 .book-jd-link:hover{color:#4d6b58;border-bottom-color:#4d6b58}
 
-/* ── IA-02 书架工具条：sticky 搜索 + 内容类型筛选（信息架构改版 v2，2026-10-29） ── */
-.shelf-toolbar{position:sticky;top:0;z-index:6;flex-wrap:wrap;gap:10px 12px;margin:0 0 18px;
-  padding:12px 14px;background:var(--card);border:1px solid var(--line);border-radius:14px;
-  box-shadow:0 3px 14px #24312e0f}
-.shelf-toolbar input{flex:1 1 180px;min-width:140px}
-.filter-bar{display:inline-flex;flex:0 0 auto;gap:4px;padding:4px;background:var(--sage);border-radius:999px}
-.filter-bar button{border:0;border-radius:999px;background:transparent;color:var(--muted);
-  font:600 .88rem/1.45 var(--sans);padding:7px 15px;cursor:pointer;white-space:nowrap;
-  transition:background .18s,color .18s}
-.filter-bar button:hover{color:var(--green)}
-.filter-bar button[aria-selected="true"]{background:#fff;color:var(--green);box-shadow:0 2px 8px #24312e1f}
-.filter-bar button:focus-visible{outline:2px solid var(--green2);outline-offset:2px}
-.link-button{border:0;background:none;padding:0;margin-left:6px;color:var(--green);
-  font:700 .88rem/1.5 var(--sans);text-decoration:underline;cursor:pointer}
+/* ── 书架头部搜索（标题右侧）+ 整卡可点（2026-10-29 用户拍板：去筛选条） ── */
+.shelf-head{align-items:end;flex-wrap:wrap;gap:14px 28px}
+.shelf-head-search{flex:0 1 340px;min-width:220px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.shelf-head-search input{flex:1 1 150px;min-width:130px;border:1px solid var(--line);border-radius:999px;
+  background:#fffefa;padding:9px 16px;font:inherit;font-size:.88rem;color:var(--ink);outline:none;
+  transition:border-color .15s,box-shadow .15s}
+.shelf-head-search input:focus{border-color:#72927e;box-shadow:0 0 0 3px #dce8df}
+.shelf-head-search .search-status{flex:1 0 100%;text-align:right;font-size:.74rem}
+.shelf-head-search .search-status:empty{display:none}
 @media(max-width:680px){
-  .shelf-toolbar{padding:10px 12px;gap:8px 10px}
-  .shelf-toolbar input{flex:1 1 100%;order:2}
-  .filter-bar{display:flex;width:100%;order:3}
-  .filter-bar button{flex:1;min-width:0;padding:9px 6px;font-size:.86rem}
-  .shelf-toolbar .search-status{margin-left:0;order:4;flex:1 0 100%}
+  .shelf-head-search{flex:1 0 100%;order:3}
+  .shelf-head-search .search-status{text-align:left}
 }
+/* 整卡可点：hover 提示 + 键盘可达 */
+.archive-card.card-clickable{cursor:pointer}
+.archive-card.card-clickable .card-title-link{text-decoration:none}
+.archive-card.card-clickable:hover .card-title-link,
+.archive-card.card-clickable:focus-within .card-title-link{text-decoration:underline;text-underline-offset:4px}
+.archive-card.card-clickable:focus-visible{outline:2px solid var(--green2);outline-offset:3px}

@@ -8,7 +8,7 @@
   <title>读书笔记｜we-read</title>
   <link rel="stylesheet" href="assets/css/site.css?v=20261028c">
   <link rel="stylesheet" href="assets/css/reading-metrics.css">
-  <link rel="stylesheet" href="assets/css/homepage-reading.css?v=20261029a">
+  <link rel="stylesheet" href="assets/css/homepage-reading.css?v=20261029b">
 <link rel="stylesheet" href="assets/css/book-link-drawer.css">
 <link rel="stylesheet" href="assets/css/homepage-hero.css">
 </head>
@@ -78,11 +78,16 @@
   </aside>
 
   <main id="main" class="layout">
-    <section class="intro-row" aria-labelledby="archive-title">
+    <section class="intro-row shelf-head" aria-labelledby="archive-title">
       <div>
         <p class="eyebrow eyebrow-dark">THE READING SHELF</p>
         <h2 id="archive-title">阅读书架</h2>
         <p class="muted">从全书脉络到亲读注脚，再按系列与日期回看。</p>
+      </div>
+      <div class="shelf-head-search">
+        <label class="search-label" for="shelf-search">搜索书架</label>
+        <input id="shelf-search" type="search" placeholder="按书名或作者筛选…" autocomplete="off" data-card-search data-search-panel="reading-panel-overview">
+        <p class="search-status" aria-live="polite" data-search-status for="shelf-search"></p>
       </div>
     </section>
 
@@ -99,17 +104,6 @@
         <button type="button" id="subtab-whole" data-subpanel="panel-whole" aria-selected="true" aria-controls="panel-whole">全书视角</button>
         <button type="button" id="subtab-soon" data-subpanel="panel-soon" aria-selected="false" aria-controls="panel-soon">即将上线</button>
       </div>
-                <div class="toolbar shelf-toolbar" data-search-toolbar>
-          <label class="search-label" for="shelf-search">搜索书架</label>
-          <input id="shelf-search" type="search" placeholder="按书名或作者筛选…" autocomplete="off" data-card-search>
-          <div class="filter-bar" data-filter-bar role="group" aria-label="按内容类型筛选">
-            <button type="button" data-filter="all" aria-selected="true">全部</button>
-            <button type="button" data-filter="whole" aria-selected="false">通读</button>
-            <button type="button" data-filter="jingdu" aria-selected="false">精读</button>
-            <button type="button" data-filter="archive" aria-selected="false">归档</button>
-          </div>
-          <p class="search-status" aria-live="polite" data-search-status></p>
-        </div>
 <section id="panel-whole" class="reading-group subtab-panel" aria-labelledby="whole-book-title">
           <h3 class="reading-group-title" id="whole-book-title">全书视角 <span>开读即建，随精读校订</span></h3>
           <div class="archive-grid" aria-label="读前内容">
@@ -1181,7 +1175,7 @@
   <!-- visit-badge:begin -->
   <div class="visit-badge-row"><div class="visit-badge" role="group" aria-label="站点访问统计"><span class="visit-badge-item"><b class="visit-badge-num" id="gc_site_pv_num">–</b><span class="visit-badge-unit">次访问</span></span><span class="visit-badge-div visit-badge-uv" aria-hidden="true"></span><span class="visit-badge-item visit-badge-uv"><b class="visit-badge-num" id="gc_site_uv_num">–</b><span class="visit-badge-unit">位访客</span></span></div></div>
   <!-- visit-badge:end -->
-  <script src="assets/js/homepage-reading.js" defer></script>
+  <script src="assets/js/homepage-reading.js?v=20261029b" defer></script>
 <script data-goatcounter="https://ae6623.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <!-- gc-fill:begin -->
 <script>

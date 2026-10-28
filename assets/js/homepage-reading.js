@@ -61,81 +61,54 @@
   list.hidden = false;
 
   const normalize = (value) => value.toLocaleLowerCase('zh-CN').replace(/[\s：:，,。.!！?？、-]/g, '');
-  // IA-02：搜索与「内容类型筛选」叠加生效；计数反映筛选后的卡片数（方案 8.5）
-  panels.forEach((panel) => {
-    const input = panel.querySelector('[data-card-search]');
-    const filterBar = panel.querySelector('[data-filter-bar]');
-    if (!input && !filterBar) return;
+  // 搜索框可位于模块外（书架面板的搜索在「阅读书架」标题右侧，属 .intro-row）：
+  // input 加 data-search-panel="<面板id>" 指定目标；缺省取最近的面板
+  document.querySelectorAll('[data-card-search]').forEach((input) => {
+    const panel = document.getElementById(input.dataset.searchPanel || '')
+      || input.closest('.reading-panel');
+    if (!panel) return;
     const cards = [...panel.querySelectorAll('.archive-card')];
-    const status = panel.querySelector('[data-search-status]');
+    const status = document.querySelector(`[data-search-status][for="${input.id}"]`)
+      || panel.querySelector('[data-search-status]');
     const empty = panel.querySelector('[data-empty-state]');
-    const clearBtn = panel.querySelector('[data-clear-filters]');
-    const filterBtns = filterBar ? [...filterBar.querySelectorAll('button[data-filter]')] : [];
-    let activeFilter = 'all';
-
-    const syncFilterButtons = () => {
-      filterBtns.forEach((b) => b.setAttribute('aria-selected', String(b.dataset.filter === activeFilter)));
-    };
-
     const update = () => {
-      const query = normalize(input ? input.value.trim() : '');
-      const filtering = query !== '' || activeFilter !== 'all';
+      const query = normalize(input.value.trim());
       let shown = 0;
       cards.forEach((card) => {
-        const modeOk = activeFilter === 'all'
-          || (card.dataset.mode || '').split(/\s+/).includes(activeFilter);
-        const textOk = !query
-          || normalize(`${card.dataset.search || ''} ${card.textContent || ''}`).includes(query);
-        const match = modeOk && textOk;
+        const match = !query || normalize(`${card.dataset.search || ''} ${card.textContent || ''}`).includes(query);
         card.hidden = !match;
         if (match) shown += 1;
       });
-      if (status) {
-        status.textContent = filtering
-          ? `找到 ${shown} 个匹配条目`
-          : `显示全部 ${cards.length} 个条目`;
-      }
+      if (status) status.textContent = query ? `找到 ${shown} 本` : `共 ${cards.length} 本`;
       if (empty) empty.hidden = shown > 0;
       panel.querySelectorAll('.reading-group').forEach((group) => {
-        group.hidden = filtering
-          && ![...group.querySelectorAll('.archive-card')].some((card) => !card.hidden);
+        group.hidden = query !== '' && ![...group.querySelectorAll('.archive-card')].some((card) => !card.hidden);
       });
     };
-
-    if (input) input.addEventListener('input', update);
-
-    filterBtns.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        activeFilter = btn.dataset.filter;
-        syncFilterButtons();
-        update();
-        btn.focus();
-      });
-      btn.addEventListener('keydown', (event) => {
-        let next;
-        if (event.key === 'ArrowRight') next = (filterBtns.indexOf(btn) + 1) % filterBtns.length;
-        else if (event.key === 'ArrowLeft') next = (filterBtns.indexOf(btn) - 1 + filterBtns.length) % filterBtns.length;
-        else return;
-        event.preventDefault();
-        activeFilter = filterBtns[next].dataset.filter;
-        syncFilterButtons();
-        update();
-        filterBtns[next].focus();
-      });
-    });
-
-    // 空结果给出清除入口（方案 8.5）
-    if (clearBtn) {
+    input.addEventListener('input', update);
+    update();
+    const clearBtn = panel.querySelector('[data-clear-filters]');
+    if (clearBtn && !clearBtn.dataset.clearBound) {
+      clearBtn.dataset.clearBound = '';
       clearBtn.addEventListener('click', () => {
-        activeFilter = 'all';
-        if (input) input.value = '';
-        syncFilterButtons();
+        input.value = '';
+        input.focus();
         update();
       });
     }
+  });
 
-    syncFilterButtons();
-    update();
+  // 整卡可点：点击卡片空白处等同点书名（书名即通读入口）；卡内真实链接不受影响
+  module.querySelectorAll('.archive-card').forEach((card) => {
+    const link = card.querySelector('.card-title-link');
+    if (!link || card.dataset.cardClickable) return;
+    card.dataset.cardClickable = '';
+    card.classList.add('card-clickable');
+    card.addEventListener('click', (event) => {
+      if (event.target.closest('a, button, input, select, textarea, label')) return;
+      if (event.selection && String(event.selection).length) return;
+      link.click();
+    });
   });
 })();
 
