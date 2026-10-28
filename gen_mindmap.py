@@ -131,6 +131,9 @@ def build_ctx(slug: str):
             "pts": len(pts), "with_q": sum(1 for p in pts if p["quotes"]),
             "quotes": quotes,
             "anchor_pool": quotes[:6] + [p["text"] for p in pts[:6]],
+            # 整章小节/要点/原句原样带下去：页面上的「不损失内容」靠它，
+            # 不能只留 brief —— brief 是给模型看的压缩摘要，人读会嫌少。
+            "secs": c["secs"],
         })
     return {"slug": slug, "title": title, "chapters": out}
 
@@ -392,12 +395,55 @@ def _svg_spine(d: dict) -> str:
     return "\n".join(out)
 
 
-def render(d: dict) -> str:
+def _chapter_html(c: dict, full: dict) -> str:
+    """一章 = 折叠态一行（章号·章名·功能），展开是通读页那套「小节 → 要点 → 原句」。
+    折叠不等于删内容：全部要点与原句都在本体里，与 overview.html 章节导读同源。"""
+    f = full.get(c["no"]) or {}
+    secs = f.get("secs") or []
+    n_pts = sum(len(s["points"]) for s in secs)
+    n_q = sum(1 for s in secs for p in s["points"] for q in p["quotes"] if q)
+    chips = "".join('<span class="mm-chip">%s</span>' % E(x) for x in c["concepts"])
+    stat = "共 %d 个小节 · %d 条要点 · %d 句原句摘录" % (len(secs), n_pts, n_q)
+    out = ['<details class="ch-item mm-cn">'
+           '<summary><span class="ch-no">%d</span>'
+           '<span class="ch-t">%s</span>'
+           '<span class="mm-role">%s</span>'
+           '<span class="mm-pnum">%d 条要点</span>'
+           '<span class="caret">›</span></summary>'
+           '<div class="ch-body">'
+           '<p class="ch-stat">%s</p>'
+           '<p class="mm-gist">%s</p>%s'
+           % (c["no"], E(c["title"]), E(c["role"]), n_pts, stat, E(c["gist"]), chips)]
+    for i, s in enumerate(secs):
+        out.append('<details class="ch-sec"%s>'
+                   '<summary><span class="sec-h">%s</span>'
+                   '<span class="sec-count">%d 条</span></summary>'
+                   '<ol class="ch-secs">'
+                   % (" open" if i == 0 else "", E(s["h"] or "本节要点"),
+                      len(s["points"])))
+        for p in s["points"]:
+            qs = "".join('<li>「%s」</li>' % E(q) for q in p["quotes"] if q)
+            out.append('<li>%s%s</li>'
+                       % (E(p["text"]),
+                          ('<ul class="ch-quote">%s</ul>' % qs) if qs else ""))
+        out.append('</ol></details>')
+    if not secs and c["anchor"]:
+        out.append('<span class="mm-quote">「%s」</span>' % E(c["anchor"]))
+    out.append('</div></details>')
+    return "".join(out)
+
+
+def render(d: dict, ctx: dict = None) -> str:
     sp = d["spine"]
     chs = d["chapters"]
     by_id = {}
     for c in chs:
         by_id.setdefault(c["spine"], []).append(c)
+    full = {c["no"]: c for c in ((ctx or {}).get("chapters") or [])}
+    n_pts_all = sum(sum(len(s["points"]) for s in (f.get("secs") or []))
+                    for f in full.values())
+    n_q_all = sum(1 for f in full.values() for s in (f.get("secs") or [])
+                  for p in s["points"] for q in p["quotes"] if q)
     density = d["evidence"]["density"]
     bar = int(round(density * 100))
 
@@ -415,6 +461,12 @@ def render(d: dict) -> str:
 
     body.append('<section class="mm-svgwrap">%s</section>' % _svg_spine(d))
 
+    body.append('<div class="mm-tools">'
+                '<button class="mm-btn" data-mm="open">展开全部要点</button>'
+                '<button class="mm-btn" data-mm="close">全部收起</button>'
+                '<span class="mm-tip">每章折叠态只占一行，点章名展开该章全部小节、要点与原句</span>'
+                '</div>')
+
     for s in sp:
         items = by_id.get(s["id"]) or []
         body.append('<details class="mm-spine"%s>' % (" open" if s is sp[0] else ""))
@@ -425,17 +477,10 @@ def render(d: dict) -> str:
         body.append('<p class="mm-why">%s</p>' % E(s["why"]))
         body.append('<ol class="mm-tree">')
         for c in items:
-            chips = "".join('<span class="mm-chip">%s</span>' % E(x) for x in c["concepts"])
-            quote = ('<span class="mm-quote">「%s」</span>' % E(c["anchor"])) if c["anchor"] else ""
-            # 章条目与通读页「逐章详读」同一套视觉语言：无卡片、无彩条、虚线分隔、密排。
-            # 类名一律避开 mm-ch / mm-chs —— reading-overview.css 里那两条是给通读页
-            # 新版章节卡写的，撞上就会把这里染成彩色左边条 + 白底圆角卡（手机上一屏看不到几章）。
-            body.append('<li class="mm-cn">'
-                        '<p class="mm-chead"><span class="mm-cno">%d</span>'
-                        '<span class="mm-cname">%s</span>'
-                        '<span class="mm-role">%s</span></p>'
-                        '<p class="mm-gist">%s</p>%s%s</li>'
-                        % (c["no"], E(c["title"]), E(c["role"]), E(c["gist"]), chips, quote))
+            # 章条目与通读页「逐章详读」同一套类名与视觉：无卡片、无彩条、虚线分隔。
+            # 一律避开 mm-ch / mm-chs —— reading-overview.css 里那两条是给通读页
+            # 新版章节卡写的，撞上就会染色（手机上一屏看不到几章）。
+            body.append(_chapter_html(c, full))
         body.append('</ol>')
         body.append('</details>')
 
@@ -444,6 +489,7 @@ def render(d: dict) -> str:
         "slug": E(d["slug"]),
         "body": "\n".join(body),
         "n": len(chs),
+        "pts": ("%d 条要点 · %d 句原句" % (n_pts_all, n_q_all)) if n_pts_all else "要点待补",
         "bad": len(d["bad_anchor"]),
     }
     return html
@@ -549,30 +595,30 @@ PAGE = """<!doctype html>
 .mm-cnt{margin-left:auto;font-size:.74rem;color:var(--muted)}
 .mm-why{font-size:.8rem;color:var(--muted);margin:.1em 0 .8em;line-height:1.7}
 .mm-tree{list-style:none;padding:0;margin:.15em 0 0}
-/* 章条目：与通读页 .ch-item 对齐（无卡片/无彩条/虚线分隔），行高按手机可读行数收紧 */
-.mm-cn{padding:8px 0;border-bottom:1px dashed #eee8dc}
-.mm-cn:last-child{border-bottom:0}
-.mm-chead{display:flex;flex-wrap:wrap;gap:2px 10px;align-items:baseline;margin:0}
-.mm-cno{flex:none;min-width:1.7em;color:#bf8247;font-weight:700;font-size:.82rem;
-  font-variant-numeric:tabular-nums}
-.mm-cname{flex:0 1 auto;min-width:0;font-size:.92rem;line-height:1.6;color:var(--ink);
-  word-break:break-word}
-.mm-role{flex:none;font-size:.68rem;color:#8a8272;line-height:1.6;white-space:nowrap}
-.mm-gist{margin:.15em 0 .2em;font-size:.86rem;line-height:1.75;color:#4a443b}
+/* 章条目直接复用通读页 .ch-item / .ch-body / .ch-sec / .ch-secs / .ch-quote，
+   样式天然一致；这里只补几个导图专有的小件，不再自造一套章节卡。 */
+.mm-cn{margin:0;padding:0}
+.mm-role{flex:none;font-size:.68rem;color:#8a8272;line-height:1.6;white-space:nowrap;
+  border:1px solid #e7e0d0;border-radius:5px;padding:0 .35em;margin-left:.2em}
+.mm-pnum{flex:none;font-size:.68rem;color:#a9a294;line-height:1.6;white-space:nowrap}
+.mm-gist{margin:.1em 0 .45em;font-size:.84rem;line-height:1.75;color:#4a443b}
 .mm-chip{display:inline-block;font-size:.68rem;color:#6b6152;background:#f4f1e6;
-  border-radius:9px;padding:.05em .5em;margin:.1em .28em .1em 0}
-/* 引文块取通读页 ul.ch-quote 的观感：浅米底 + 金色左线 */
+  border-radius:9px;padding:.05em .5em;margin:.1em .28em .35em 0}
 .mm-quote{display:block;margin:.3em 0 .1em;padding:7px 11px;background:#fdf8ee;
   border-left:3px solid var(--gold);border-radius:0 8px 8px 0;
   font-size:.8rem;line-height:1.75;color:#6b5c43}
+.mm-tools{display:flex;gap:.5em;align-items:center;flex-wrap:wrap;margin:.2em 0 1.1em}
+.mm-btn{font:inherit;font-size:.78rem;line-height:1.5;color:#5f5545;background:#f8f4ea;
+  border:1px solid #e2dac6;border-radius:8px;padding:.3em .85em;cursor:pointer}
+.mm-btn:active{background:#efe7d4}
+.mm-tip{font-size:.74rem;color:var(--muted)}
 @media(max-width:720px){
   .mm-svg{min-width:640px}
-  /* 手机：章条目再收紧一点，一屏多两行 */
-  .mm-cn{padding:7px 0}
-  .mm-chead{gap:8px}
-  .mm-cname{font-size:.9rem}
-  .mm-gist{font-size:.84rem;line-height:1.7}
-  .mm-quote{padding:6px 9px;font-size:.78rem}
+  .mm-gist{font-size:.83rem}
+  .ch-body{padding:10px 8px 14px}
+  .ch-body .ch-sec{padding:0 10px}
+  .ch-body ol.ch-secs{font-size:.82rem;padding-left:1.45em}
+  .ch-body ul.ch-quote{font-size:.78rem;padding:8px 10px}
 }
 </style>
 </head>
@@ -581,7 +627,7 @@ PAGE = """<!doctype html>
 <header class="note-head">
   <p class="eyebrow">MIND MAP · AFTER THINKING</p>
   <h1>《%(title)s》全书导图</h1>
-  <p class="meta">%(n)d 章 · 主干重排 · 章节功能定位 · 由本书 AI 大纲条目重算</p>
+  <p class="meta">%(n)d 章 · %(pts)s · 主干重排 · 章节功能定位 · 由本书 AI 大纲条目重算</p>
   <p class="links"><a href="../../../index.html">← 返回首页</a>
      <a href="../../index.html">阅读归档索引</a>
      <a href="overview.html">全书视角</a>
@@ -590,10 +636,24 @@ PAGE = """<!doctype html>
 %(body)s
 <footer class="site-footer">
   <p class="small">口径：主干由 AI 依章节要点重新归纳，章的功能（铺垫/立论/反证/案例/收束）是结构判断而非原文自述；
-  引文逐字来自 AI 大纲的原句摘录，未命中原句的章不标注引文（本次 %(bad)d 处）。</p>
+  每章展开后的「小节 → 要点 → 原句」逐字取自本书 AI 大纲，与「全书视角」页的章节导读同源，一条未删
+  （引文未命中原句的章不标注代表句，本次 %(bad)d 处）。</p>
   <p><a href="../../../index.html">← 返回首页</a>　<a href="overview.html">全书视角</a></p>
 </footer>
 </main>
+<script>
+(function(){
+  var btns=document.querySelectorAll("[data-mm]");
+  for(var i=0;i<btns.length;i++){(function(b){
+    b.addEventListener("click",function(){
+      var open=b.getAttribute("data-mm")==="open";
+      document.querySelectorAll("details.mm-spine").forEach(function(d){d.open=open;});
+      document.querySelectorAll("details.mm-cn").forEach(function(d){d.open=open;});
+      document.querySelectorAll("details.ch-sec").forEach(function(d){d.open=open;});
+    });
+  })(btns[i]);}
+})();
+</script>
 </body>
 </html>
 """
@@ -615,8 +675,8 @@ def run_one(slug: str, write: bool, dry: bool, log=print):
         (DB_OUT / ("%s.json" % slug)).write_text(
             json.dumps(d, ensure_ascii=False, indent=1), encoding="utf-8")
     if write:
-        html = render(d)
-        (BOOKS / slug / "mindmap.html").write_text(html, encoding="utf-8")
+        html = render(d, ctx)
+        (BOOKS / slug / "mindmap.html").write_text(html, encoding="utf-8", newline="\n")
     log("  ✓ %-44s 章=%3d 主干=%d 密度=%.0f%% 锚点缺=%d %.0fs"
         % (slug[:44], len(d["chapters"]), len(d["spine"]),
            d["evidence"]["density"] * 100, len(d["bad_anchor"]), time.time() - t0))
@@ -670,7 +730,8 @@ def main(argv=None):
             (DB_OUT / ("%s.json" % slug)).write_text(
                 json.dumps(d, ensure_ascii=False, indent=1), encoding="utf-8")
             if a.write:
-                (BOOKS / slug / "mindmap.html").write_text(render(d), encoding="utf-8")
+                (BOOKS / slug / "mindmap.html").write_text(
+                    render(d, ctx), encoding="utf-8", newline="\n")
             print("  ✓ %-44s 章=%3d 主干=%d 密度=%.0f%% 锚点缺=%d" % (
                 slug[:44], len(d["chapters"]), len(d["spine"]),
                 d["evidence"]["density"] * 100, len(d["bad_anchor"])))
@@ -734,7 +795,7 @@ def main(argv=None):
             (DB_OUT / ("%s.json" % s)).write_text(
                 json.dumps(d, ensure_ascii=False, indent=1), encoding="utf-8")
             if a.write:
-                (BOOKS / s / "mindmap.html").write_text(render(d), encoding="utf-8")
+                (BOOKS / s / "mindmap.html").write_text(render(d, ctx), encoding="utf-8", newline="\n")
             return ("✓ %-44s 章=%3d 主干=%d 密度=%.0f%% 锚点缺=%d" % (
                 s[:44], len(d["chapters"]), len(d["spine"]),
                 d["evidence"]["density"] * 100, len(d["bad_anchor"])))
@@ -762,7 +823,8 @@ def main(argv=None):
                 print("  - 无 JSON，跳过")
                 continue
             d = json.loads(p.read_text(encoding="utf-8"))
-            (BOOKS / s / "mindmap.html").write_text(render(d), encoding="utf-8")
+            (BOOKS / s / "mindmap.html").write_text(render(d, build_ctx(s)),
+                                                   encoding="utf-8", newline="\n")
             ok += 1
             continue
         if run_one(s, a.write, a.dry_run):
