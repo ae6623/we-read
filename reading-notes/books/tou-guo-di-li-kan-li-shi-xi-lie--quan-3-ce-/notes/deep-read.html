@@ -6,83 +6,7 @@
 <meta name="description" content="透过地理看历史系列（全3册） 精读深读 · 按全书大纲展开">
 <title>《透过地理看历史系列（全3册）》｜精读深读</title>
 <link rel="stylesheet" href="../../../../assets/css/site.css">
-<style>
-:root{--paper:#f6f3ed;--card:#fffefa;--ink:#24312e;--muted:#69766f;--green:#244b40;--green2:#315e50;--gold:#bf8247;--line:#e5e0d6;--sage:#dce8df;--serif:"Noto Serif SC","Songti SC",Georgia,serif;--sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
-*{box-sizing:border-box}
-body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.8 var(--sans)}
-.page{max-width:880px;margin:0 auto;padding:48px 24px 72px}
-.note-head{border-bottom:1px solid var(--line);padding-bottom:22px;margin-bottom:30px}
-.note-head .eyebrow{font-size:.72rem;letter-spacing:.18em;font-weight:700;color:var(--gold);margin:0 0 8px}
-.note-head h1{font:600 2rem/1.4 var(--serif);color:var(--green);margin:0 0 10px}
-.note-head .meta{color:var(--muted);font-size:.9rem;margin:0 0 4px}
-.note-head a{color:var(--green);text-decoration:none;font-size:.88rem}
-.note-head a:hover{text-decoration:underline}
-section{margin:30px 0}
-section h2{font:600 1.3rem/1.5 var(--serif);color:var(--green);margin:0 0 12px;
-  padding-left:12px;border-left:4px solid var(--gold)}
-section > p{line-height:1.9;margin:.75em 0;text-align:justify}
-a{color:var(--green)}
-/* 顶部卷/锚点导航 */
-.toc-nav{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 6px}
-.toc-nav a{font-size:.82rem;background:var(--card);border:1px solid var(--line);
-  border-radius:999px;padding:4px 14px;text-decoration:none;color:var(--green2)}
-.toc-nav a:hover{background:var(--sage)}
-/* Block1 全书导览 */
-.reading-metrics{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:clamp(18px,4vw,28px);margin:22px 0;color:var(--ink);overflow-wrap:anywhere}
-.metrics-kicker{font-size:.7rem;letter-spacing:.15em;color:var(--gold);font-weight:700;margin:0 0 4px}
-.reading-metrics h2{font-family:var(--serif);font-size:1.4rem;color:var(--green);margin:0 0 10px;border:0;padding:0}
-.metrics-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:20px 0 16px;padding:0}
-.metric{min-width:0;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px 13px;display:flex;flex-direction:column;margin:0}
-.metric dt{font-size:.75rem;color:var(--muted);margin-bottom:6px}
-.metric dd{margin:0;color:var(--green);font-size:1.24rem;font-weight:700;line-height:1.5;font-variant-numeric:tabular-nums}
-.metric small{display:block;color:var(--muted);font-size:.7rem;line-height:1.6;font-weight:400;margin-top:6px}
-.metric-primary{background:var(--green);border-color:var(--green)}
-.metric-primary dt,.metric-primary small{color:#dbe8df}
-.metric-primary dd{color:#fffefa}
-.metrics-note{font-size:.78rem;color:var(--muted);line-height:1.75;margin:12px 0 0}
-/* 卷标题 */
-.vol-h{display:flex;align-items:baseline;gap:12px;margin:34px 0 6px;
-  font:600 1.25rem/1.5 var(--serif);color:var(--green);
-  border-bottom:2px solid var(--gold);padding-bottom:8px}
-.vol-h .vol-tag{font-size:.8rem;color:#fff;background:var(--gold);border-radius:6px;padding:2px 10px;flex:none}
-/* Block2 分章精读卡 */
-.ch-item{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:6px 18px;margin:12px 0}
-.ch-item > summary{display:list-item;list-style:none;padding:10px 0;cursor:pointer}
-.ch-item > summary::-webkit-details-marker{display:none}
-.ch-item > summary .mm-line{display:flex;gap:10px;align-items:baseline}
-.ch-no{color:var(--gold);font-weight:700;font-size:.82rem;min-width:84px;flex:none}
-.ch-t{flex:1;font-size:1rem;font-weight:600;color:var(--green)}
-.badge{font-size:.68rem;border-radius:6px;padding:1px 7px;font-weight:600;white-space:nowrap;flex:none}
-.badge[data-s="read"]{background:#e6f0e9;color:#286b52;border:1px solid #cbdace}
-.badge[data-s="unread"]{background:#f4f4f1;color:#8b8b84;border:1px solid #e4e4de}
-.caret{color:var(--muted);font-size:1.05rem;flex:none;transition:transform .18s ease}
-.ch-item[open] .caret{transform:rotate(90deg)}
-.ch-body{padding:4px 0 14px 94px;border-top:1px dashed var(--line);margin-top:4px}
-.ch-body ul.ch-pts{margin:8px 0;padding-left:20px;font-size:.9rem;color:#3f4a46}
-.ch-body ul.ch-pts li{margin:4px 0;line-height:1.8}
-.aiqa-item{margin:14px 0;padding:14px 18px;background:var(--paper);border:1px solid var(--line);border-radius:10px}
-.aiqa-item .qa-tag{font-size:.68rem;font-weight:700;color:var(--gold);letter-spacing:.08em;display:block;margin:0 0 6px}
-.aiqa-item h3{font:600 1.02rem/1.6 var(--serif);color:var(--green);margin:0 0 6px}
-.aiqa-item p{margin:.4em 0;color:#3f4a46}
-/* 摘录 */
-.excerpt-list{padding-left:0;margin:14px 0 0;list-style:none;counter-reset:ex}
-.excerpt-list > li{margin:0 0 14px;position:relative;padding-left:30px;counter-increment:ex}
-.excerpt-list > li::before{content:counter(ex);position:absolute;left:0;top:2px;
-  width:22px;height:22px;border-radius:50%;background:var(--sage);color:var(--green);
-  font-size:.72rem;font-weight:700;display:flex;align-items:center;justify-content:center}
-.excerpt-list figure{margin:0}
-.excerpt-list blockquote{margin:0;padding:10px 14px;background:var(--paper);border-left:3px solid var(--green);border-radius:8px}
-.excerpt-list blockquote p{margin:0;line-height:1.9;color:#33403b}
-.excerpt-list figcaption{font-size:.78rem;color:var(--muted);margin-top:6px}
-.excerpt-list figcaption cite{font-style:normal;font-weight:600;color:var(--green2)}
-.excerpt-more{font-size:.78rem;color:var(--muted);margin:6px 0 0}
-/* Block3 主题问答 */
-.theme-grid{display:grid;gap:14px}
-.site-footer{margin-top:44px;padding-top:16px;border-top:1px dashed var(--line);
-  color:var(--muted);font-size:.8rem;text-align:center}
-@media(max-width:680px){.metrics-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.metric{padding:14px 12px}
-  .ch-body{padding-left:12px}.ch-no{min-width:74px}}
-</style>
+<link rel="stylesheet" href="../../../../assets/css/reading-deep.css">
 </head>
 <body>
 <main class="page">
@@ -97,7 +21,7 @@ a{color:var(--green)}
     <section class="reading-metrics" aria-labelledby="ov-title">
       <p class="metrics-kicker">OVERVIEW / 全书导览</p>
       <h2 id="ov-title">这本书怎么读</h2>
-      <dl class="metrics-grid"><div class="metric metric-primary"><dt>全书构成</dt><dd>3 册</dd><small>分册独立成卷，地理—历史主线贯通</small></div><div class="metric"><dt>章节</dt><dd>97 章</dd><small>含小节 422 个</small></div><div class="metric"><dt>原文摘录</dt><dd>1593 句</dd><small>已从微信读书正文落库</small></div><div class="metric"><dt>AI 大纲要点</dt><dd>76 条</dd><small>章级骨架，见 AI 大纲页</small></div></dl><p class="metrics-note">本页为「精读深读」：不再按日期罗列当日实读，而是<b>按全书大纲逐章展开</b>——每章以落库的<b>原文摘录</b>为精读主原料，叠加 agent 撰写的<b>逐章 AI 追问</b>与跨书<b>核心追问</b>，把通读大纲的骨架补全为可回味的细节。原文摘录来自微信读书正文，AI 问答为模型基于大纲与摘录的解读，与亲读分开，读后请以原书为准。</p>
+      <dl class="metrics-grid"><div class="metric metric-primary"><dt>全书构成</dt><dd>3 册</dd><small>分册独立成卷，地理—历史主线贯通</small></div><div class="metric"><dt>章节</dt><dd>97 章</dd><small>含小节 422 个</small></div><div class="metric"><dt>原文摘录</dt><dd>1593 句</dd><small>已从 AI 读书正文落库</small></div><div class="metric"><dt>AI 大纲要点</dt><dd>76 条</dd><small>章级骨架，见 AI 大纲页</small></div></dl><p class="metrics-note">本页为「精读深读」：不再按日期罗列当日实读，而是<b>按全书大纲逐章展开</b>——每章以落库的<b>原文摘录</b>为精读主原料，叠加 agent 撰写的<b>逐章 AI 追问</b>与跨书<b>核心追问</b>，把通读大纲的骨架补全为可回味的细节。原文摘录来自 AI 读书正文，AI 问答为模型基于大纲与摘录的解读，与亲读分开，读后请以原书为准。</p>
     </section>
     <span id="vol-0"></span>
 <span id="vol-1"></span>
@@ -112,7 +36,7 @@ a{color:var(--green)}
       <ol class="excerpt-list"><li><figure><blockquote><p>商鞅变法，受损最大的是原有的贵族。和楚国一样，等支持变法的秦孝公一死，秦国的贵族就起来讨伐商鞅；和吴起一样，商鞅最终也被车裂。但和楚国不一样的是，秦国并没有因为商鞅一死就把他那一套制度废弃了，而是延续下来继续执行。秦始皇统一天下后，又把这个制度推向全国。</p></blockquote><figcaption>原文出处：<cite>本书正文</cite></figcaption></figure></li><li><figure><blockquote><p>当时，晋国的心腹大患是中山国，中山国是白狄人建的国家，赵国后来费了很大的力气才把它吞并，但在春秋时期，有太行山挡着，它对晋国的威胁有限，反而时时要担心晋国过来打它。</p></blockquote><figcaption>原文出处：<cite>本书正文</cite></figcaption></figure></li><li><figure><blockquote><p>很多人认为，刘备死后，诸葛亮用人不当，一直到六出祁山时用的还是从荆州带过来的那些人，没有培养新人。这其实是跟地域有关，荆州是个四战之地，生于那里的人，看惯了南来北往的征伐，从小立志建功立业，平定中原。而生于巴蜀的人，从小安逸惯了，懒得费心思去琢磨这些事。</p></blockquote><figcaption>原文出处：<cite>本书正文</cite></figcaption></figure></li><li><figure><blockquote><p>公元前200年，就在大同的白登山，刘邦的三十万大军被匈奴四十万铁骑围困了七天七夜，死伤无数，刘邦也差点被俘，最后在陈平的建议下，贿赂了匈奴人的首领冒顿单于的阏氏(妻子)，才得以逃脱。</p></blockquote><figcaption>原文出处：<cite>本书正文</cite></figcaption></figure></li><li><figure><blockquote><p>领头的人叫张角，他和两个弟弟张宝、张梁创立了太平道，以太平道组织灾民，揭竿而起，头扎黄巾，打出“苍天已死，黄天当立，岁在甲子，天下大吉”的口号，所以称为黄巾起义。</p></blockquote><figcaption>原文出处：<cite>本书正文</cite></figcaption></figure></li><li><figure><blockquote><p>为了不让白马成为袁绍南下的据点，曹操把白马城中的百姓清撤一空，沿黄河向西而去。袁绍大军渡河，派文丑和刘备追击曹操。曹操当时手下只有六百来人，而袁军有五六千。情急之中，曹操让士兵解鞍放马，又沿路丢弃辎重，装出一副败逃的样子。袁军果然又上当了，只顾着哄抢财物，乱作一团。曹操令骑兵翻身上马，杀了个回马枪，袁军大败，文丑也死于乱军之中。</p></blockquote><figcaption>原文出处：<cite>本书正文</cite></figcaption></figure></li><li><figure><blockquote><p>刘备先派黄忠、卓膺南下攻占涪城，刘璋得到消息后，立即派刘璝、泠苞、张任、邓贤、吴懿等在涪水阻击刘备，结果都被刘备打败，吴懿投降。</p></blockquote><figcaption>原文出处：<cite>本书正文</cite></figcaption></figure></li><li><figure><blockquote><p>姜维把河关、临洮、狄道三个县城的百姓都迁入蜀地，然后撤兵了。其实仔细想想也不奇怪，这里土地贫瘠，粮产有限，养不活那么多军队，如果要守城，还需从蜀地运粮，这里的粮道比祁山还难，与其这样，还不如把这里有限的资源(人口)拿走，借以削弱对方的力量。</p></blockquote><figcaption>原文出处：<cite>本书正文</cite></figcaption></figure></li><li><figure><blockquote><p>北线从长安往西，沿陇山东麓而上，北出萧关之后，到达一个小盆地，即今固原所在地。从这里沿清水河而上，可以到达黄河，西渡黄河之后，就是河西走廊。从河西走廊出来后，有两个选择，一个是出阳关走塔里木盆地南线，一个是出玉门关走塔里木盆地北线。</p></blockquote><figcaption>原文出处：<cite>本书正文</cite></figcaption></figure></li><li><figure><blockquote><p>公元元年前后，位于中国云贵高原的西南夷人部分南迁，他们分为两支，一支沿伊洛瓦底江和萨尔温江往南，称为孟人；另一支沿湄公河而下，称为高棉人。</p></blockquote><figcaption>原文出处：<cite>本书正文</cite></figcaption></figure></li><li><figure><blockquote><p>在墨卡托地图上，航海家们只要在地图上画一条从甲到乙的直线，这条直线与所有经线的夹角是一致的，所以也称为等角航线，那么船队在实际行驶过程中，只需要保持与经线的夹角就可以到达目的地。</p></blockquote><figcaption>原文出处：<cite>本书正文</cite></figcaption></figure></li><li><figure><blockquote><p>在比较两国国土面积的时候，我们要采用方位投影，把投影的中心点放在中俄之间的东经100°、北纬45°之处，这样双方的变形比例相当，所得出的平面地图更接近二者的真实比例。</p></blockquote><figcaption>原文出处：<cite>本书正文</cite></figcaption></figure></li></ol><p class="excerpt-more">以上为各册最具代表性的原句，更多见分章精读。</p>
     </section>
   </article>
-  <footer class="site-footer">本页为精读深读（按大纲），由 weread-auto 生成；原文以微信读书 App 为准。</footer>
+  <footer class="site-footer">本页为精读深读（按大纲），由 weread-auto 生成；原文以 AI 读书 App 为准。</footer>
 </main>
 </body>
 </html>
