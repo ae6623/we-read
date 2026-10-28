@@ -343,7 +343,7 @@ def _svg_spine(d: dict) -> str:
     cy = top + (row_h * n) / 2
 
     out = ['<svg class="mmx-svg" viewBox="0 0 %d %d" xmlns="http://www.w3.org/2000/svg"'
-           ' role="img" aria-label="%s 全书主干导图">' % (w, h, E(d["title"])),
+           ' role="img" aria-label="%s 全书精读">' % (w, h, E(d["title"])),
            '<rect x="0" y="0" width="%d" height="%d" fill="none"/>' % (w, h),
            '<style>'
            '.mmx-svg text{font-family:"Noto Serif SC",Georgia,serif}'
@@ -574,8 +574,8 @@ PAGE = """<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="《%(title)s》全书主干导图 · 章节定位 · 跨章张力（由 AI 大纲条目结构化重算）">
-<title>《%(title)s》｜全书导图</title>
+<meta name="description" content="《%(title)s》全书精读 · 章节定位 · 跨章张力（由 AI 大纲条目结构化重算）">
+<title>《%(title)s》｜精读</title>
 <link rel="stylesheet" href="../../../assets/css/reading-overview.css">
 <link rel="stylesheet" href="../../../assets/css/mmx-guide.css">
 <style>
@@ -607,8 +607,8 @@ PAGE = """<!doctype html>
 <body>
 <main class="wrap mmx-wrap">
 <header class="note-head">
-  <p class="eyebrow">MIND MAP · AFTER THINKING</p>
-  <h1>《%(title)s》全书导图</h1>
+  <p class="eyebrow">CLOSE READING · AFTER THINKING</p>
+  <h1>《%(title)s》精读</h1>
   <p class="meta">%(n)d 章 · %(pts)s · 主干重排 · 章节功能定位 · 由本书 AI 大纲条目重算</p>
   <p class="links"><a href="../../../index.html">← 返回首页</a>
      <a href="../../index.html">阅读归档索引</a>

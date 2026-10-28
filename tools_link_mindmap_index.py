@@ -1,15 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""把「全书导图」入口挂到首页卡片上（幂等）。
+"""把「精读」（原全书导图，2026-10-28 改名）入口挂到首页卡片上（幂等）。
 
 背景：mindmap.html 生成后只在 overview.html 页面内部有 mm-entry 入口，
 首页 index.html 里一个 mindmap 链接都没有，读者从首页点不进去。
 
 本工具做两处挂载：
   1) 通读 tab 的 preread-card（`<!-- preread-card:<slug> -->` 注释包裹）：在该卡的
-     .card-actions 末尾追加「全书导图」链接。55 本有导图的书全部有通读卡。
+     .card-actions 末尾追加「精读」绿色链接。
   2) 精读 tab 的日期笔记卡（archive-card，靠 notes/ 链接识别 slug）：在 .card-dates
-     之前插入一行「全书导图」链接。读者看完某天笔记想跳去看全书结构。
+     书名改为链接（不再用胶囊），点书名直接进精读页。
 
 两处都只补缺，不覆盖已有链接；跑第二遍 diff 为空。
 
@@ -25,10 +25,10 @@ HERE = Path(__file__).resolve().parent
 INDEX = HERE / "index.html"
 BOOKS = HERE / "reading-notes" / "books"
 
-LINK = ('<a class="card-link card-link-strong" href="reading-notes/books/%s/mindmap.html">'
-        '全书导图 <span aria-hidden="true">↗</span></a>')
-NOTE_LINK = ('<a class="mm-note-link" href="reading-notes/books/%s/mindmap.html">'
-             '本书全书导图 <span aria-hidden="true">↗</span></a>')
+LINK = ('<a class="card-link card-link-green" href="reading-notes/books/%s/mindmap.html">'
+        '精读 <span aria-hidden="true">↗</span></a>')
+# 精读卡不再插胶囊：书名 <h3> 直接包链接（book-jd-link），点书名即进精读页。
+BOOK_NAME_LINK = '<h3><a class="book-jd-link" href="reading-notes/books/%s/mindmap.html">%s</a></h3>'
 
 
 def mindmap_slugs():
@@ -80,9 +80,11 @@ def patch_notes(html, have):
         if slug_m:
             slug = slug_m.group(1)
             if slug in have and "mindmap.html" not in block:
-                cd = block.rfind('<div class="card-dates"')
-                if cd > 0:
-                    block = block[:cd] + (NOTE_LINK % slug) + "\n        " + block[cd:]
+                h3 = re.search(r"<h3>(.*?)</h3>", block)
+                if h3:
+                    block = (block[:h3.start()]
+                             + BOOK_NAME_LINK % (slug, h3.group(1))
+                             + block[h3.end():])
                     added.append(slug)
         out.append(html[pos:m.start()])
         out.append(block)

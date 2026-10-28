@@ -13,7 +13,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 BOOKS = HERE / "reading-notes" / "books"
-LINE = ('<p class="mm-entry"><a href="mindmap.html">→ 全书导图：主干重排 · 章节功能 · 证据密度</a></p>')
+LINE = ('<p class="mm-entry"><a href="mindmap.html">→ 精读：主干重排 · 章节功能 · 证据密度</a></p>')
 STYLE = ('<style>.mm-entry{margin:.2em 0 1em;font-size:.82rem}'
          '.mm-entry a{color:#6b7a4e;text-decoration:none;border-bottom:1px dotted #8a9b6e}'
          '</style>')

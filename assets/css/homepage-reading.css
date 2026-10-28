@@ -112,21 +112,13 @@
 
 /* ===== 精读卡内的「本书全书导图」入口（tools_link_mindmap_index.py 插入） =====
    与 card-dates 的日期胶囊同排，用虚线边区分「日期笔记」与「二次提炼产物」 */
-.card-dates + .mm-note-link{order:-1}
-.mm-note-link{
-  display:inline-block;
-  margin-top:auto;
-  padding:6px 11px;
-  border:1px dashed #b9c9be;
-  border-radius:99px;
-  background:#f7faf7;
-  color:#4d6b58;
-  font-size:.78rem;
-  font-weight:700;
-  line-height:1;
-  text-decoration:none;
-  transition:border-color .15s ease,background .15s ease,color .15s ease;
-}
-.mm-note-link span{font-weight:400;opacity:.5;display:inline-block;transition:opacity .15s ease,transform .15s ease}
-.mm-note-link:hover{border-color:#72927e;background:#eef4ef;color:#33513f}
-.mm-note-link:hover span{opacity:.95;transform:translate(1px,-1px)}
+.card-dates + 
+
+/* 「精读」绿色链接（通读卡 card-actions 内，原全书导图 2026-10-28 改名） */
+.card-link-green{color:#4d6b58;border-bottom:2px solid #a7c0af;padding-bottom:2px}
+.card-link-green:hover{color:#33513f;border-bottom-color:#4d6b58}
+
+/* 精读 tab 书名链接：点书名直接进精读页 */
+.book-jd-link{color:inherit;text-decoration:none;border-bottom:1px dotted #9db3a5;
+  transition:color .15s ease,border-color .15s ease}
+.book-jd-link:hover{color:#4d6b58;border-bottom-color:#4d6b58}
