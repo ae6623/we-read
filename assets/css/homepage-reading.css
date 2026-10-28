@@ -142,3 +142,18 @@
 .archive-card.card-clickable:hover .card-title-link,
 .archive-card.card-clickable:focus-within .card-title-link{text-decoration:underline;text-underline-offset:4px}
 .archive-card.card-clickable:focus-visible{outline:2px solid var(--green2);outline-offset:3px}
+
+/* ── IA-03 首屏理念折叠（details/summary） ── */
+details.reading-explanation{display:block;max-width:1080px;margin:0 auto 6px;padding:0 28px;
+  background:transparent;border:0;border-radius:0;grid-template-columns:none;gap:0}
+details.reading-explanation .hero-description+.hero-description{border-left:0;padding-left:0;margin-top:8px}
+details.reading-explanation summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;
+  color:var(--muted);font-size:.82rem;font-weight:600;padding:9px 16px;border:1px solid var(--line);
+  border-radius:999px;background:#fffefa;transition:color .15s,border-color .15s}
+details.reading-explanation summary::-webkit-details-marker{display:none}
+details.reading-explanation summary:hover{color:var(--green);border-color:#72927e}
+details.reading-explanation summary:focus-visible{outline:2px solid var(--green2);outline-offset:2px}
+details.reading-explanation summary:after{content:"展开 ▾";font-size:.72rem;color:var(--gold)}
+details.reading-explanation[open] summary:after{content:"收起 ▴"}
+details.reading-explanation .hero-description{margin:14px 0 0;color:#58665e;font-size:.9rem;max-width:860px}
+@media(max-width:680px){details.reading-explanation{padding:0 18px}}
