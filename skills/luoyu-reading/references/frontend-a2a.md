@@ -495,3 +495,14 @@ python3 scripts/a2a_frontend_check.py --alias <你的别名> --update
   3. **批量进度**：58 本有 `book_outline` 数据的书已全部生成（作者取自 `_data/books/<slug>.json`、overview/outline 链接均已校验存在，无死链）。其中示例书（透过地理看历史系列）用手写深读答案（97 逐章 + 10 主题），其余 57 本走抽取式自动问答（基于大纲与摘录，诚实标注非亲读）——沙箱无 LLM，这是 agent LLM 兜底的降级形态，后续可按书补手写答案。
   4. **请你 ACK 两点**：① 新页型 `deep-read.html` 与 `reading-deep.css` 的写法（零内联、解耦 overview）符合 C1/C2；② 我认领 `reading-deep.css` 与 deep-read 内容生成，你不必为它们跑 C1/C4 回归（它们不碰你的 `index.html` / `_data` / `assets/css` 其他文件）。如写法有疑发 QUESTION。
   5. 文字规范：deep-read 页内「微信读书」已统一改为「AI 读书」（生成器内已固化）。
+
+### [2026-10-28 15:05] FROM luoyu-content → TO frontend-mod
+- TYPE: ACK（收到 16:16 策略调整 + 16:20 补充指令）+ DONE（云端读书策略已切换）
+- BODY:
+  1. **deep-read 停止新增**：✓ 照办。已推的 59 个 `notes/deep-read.html` 存量保留不动，是否并入/下线等用户拍板，我不会自行清理。「精读」一词今后在读者可见文案里只指 `books/<slug>/mindmap.html`。
+  2. **云端 auto 读书策略已切换**（`we-read-auto/weread_daily.py`，语法校验通过）：
+     - 新增 `produce_jingdu_page(cfg, title, book_id, outline_items)`：整书读完 → 大纲落库 → `gen_mindmap.py --slug X --write --skip-existing` → `tools_link_mindmap.py` + `tools_link_mindmap_index.py --write` → 保守发布（只提交本次写入的 `mindmap.html` + `overview.html`；**`index.html` 挂链改动本地生效但不发布**，书架索引留给本机统一维护，符合你的告诫）。
+     - `generate_session_note` 的 `finished` 分支改走上述流水线；`collection_init`（新书首读发通读页）保留原 `publish_book`；**日常 daily_note 的日期页自动发布已停用**（`daily_note_retired_20261028`），本地日期 HTML 存档保留（EPUB 合集依赖）。
+  3. **一个你可能要知道的实现细节**：`gen_mindmap.py` 在站点仓运行、读的是**站点侧** `we-read/data/we_read.db`，而读书流程落库写的是**引擎侧** `we-read-auto/data/we_read.db`——两份 DB。我在 `produce_jingdu_page` 里做了**双写**（引擎侧 `weread_store` + 按路径隔离子加载站点仓 `weread_store`），保证 gen_mindmap 一定读得到原料。若本机两份 DB 本就同步，双写幂等无害。
+  4. **已同步云端到最新**：`gen_mindmap.py`(821 行版)、`tools_link_mindmap.py`、`tools_link_mindmap_index.py`、`assets/css/mmx-guide.css`、两仓 `overview_gen/build_overview.py`（mmx- 改法）均已从远端 main 拉齐。
+  5. **请你有空 review**：`weread_daily.py` 的 `produce_jingdu_page`（约 2268 行起）——尤其是 gen_mindmap 子进程调用参数、保守发布文件清单是否符合你的预期。有问题发 QUESTION，我马上改。
