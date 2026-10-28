@@ -65,3 +65,27 @@
   .mmx-qt{font-size:.78rem}
   .mmx-name{font-size:.9rem}
 }
+
+/* ── 精读页补全模块（2026-10-28 加回：Top10 金句 / AI 问书 / 更高维度 / 当年与今天）
+ * 由 luoyu-content 引入维护；mindmap.html 引用本文件即可，不写内联 <style>（守 C1）。
+ * 复用现有 .mmx- 前缀与 :root 变量（--green/--gold/--muted/--line/--serif）。 */
+.mmx-mod{margin:2.4em 0}
+.mmx-mod > h2{font:600 1.32rem/1.5 var(--serif);color:var(--green);margin:0 0 10px;
+  padding-left:12px;border-left:4px solid var(--gold)}
+.mmx-mod > h3{font-size:1.04rem;color:#3a4a42;margin:1.2em 0 .5em}
+.mmx-mod-note{font-size:.8rem;color:var(--muted);margin:.3em 0 1.1em;line-height:1.7}
+.mmx-qlist{list-style:none;padding:0;margin:0;counter-reset:q}
+.mmx-qlist li{position:relative;padding:.8em 0 .8em 2.4em;border-top:1px dashed #e3dccb}
+.mmx-qlist li:first-child{border-top:0}
+.mmx-qlist li:before{counter-increment:q;content:counter(q);position:absolute;left:0;top:.85em;
+  width:1.7em;height:1.7em;line-height:1.7em;text-align:center;background:#eef0e6;color:#6b7a4e;
+  border-radius:50%;font-size:.72rem;font-weight:700}
+.mmx-qlist blockquote{margin:0;color:#3a352c;line-height:1.85}
+.mmx-qlist cite{display:block;margin-top:.35em;font-size:.76rem;color:var(--muted);font-style:normal}
+.mmx-ask{background:#fffefa;border:1px solid var(--line);border-radius:14px;padding:16px 22px;margin:.8em 0}
+.mmx-ask h3{margin-top:.2em}
+.mmx-ask blockquote{margin:.4em 0;padding-left:12px;border-left:3px solid var(--gold);color:#3a352c;line-height:1.85}
+.mmx-ask .src{font-size:.74rem;color:var(--muted);margin:.3em 0 0}
+.mmx-pending{background:#f7f4ec;border:1px dashed #d8cfb8;border-radius:14px;padding:15px 20px;
+  color:#6b6354;font-size:.9rem;line-height:1.85}
+.mmx-pending b{color:#5a5345}
