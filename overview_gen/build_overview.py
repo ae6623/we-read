@@ -30,6 +30,7 @@ CSS_HEAD = '''<!doctype html>
 <meta name="description" content="《{title}》全书视角 · 读前通读（由 AI 大纲整理）">
 <title>《{title}》｜全书视角（读前通读）</title>
 <link rel="stylesheet" href="../../../assets/css/reading-overview.css">
+<link rel="stylesheet" href="../../../assets/css/mmx-guide.css">
 <link rel="stylesheet" href="../../../assets/css/book-link-drawer.css">
 </head>
 <body>
@@ -185,7 +186,9 @@ def build(cfg, chapters, aiqa_html="", quiz_answers=None):
 ''' % (cfg['title'], cfg['author'], len(chapters), cfg['chip'], cfg.get('head_note', '')))
 
     out.append('<section class="card"><h2>一句话主旨</h2>\n<p>%s</p></section>\n' % cfg['thesis'])
-    out.append('<section><h2>全书结构与主题关系</h2>\n<div class="card mindmap">%s</div></section>\n' % cfg['mindmap'])
+    # 「全书结构与主题关系」章节串联块已合并进章节导读（2026-10-28）：
+    # 同一批章在三处出现（结构分组/章节导读/AI 大纲），满屏大纲感。
+    # 结构分组块删除，cfg['mindmap'] 保留但不再渲染；AI 大纲页继续作为完整版。
 
     out.append('<section aria-labelledby="chapter-guide-title"><h2 id="chapter-guide-title">章节导读</h2>\n')
 
@@ -207,38 +210,38 @@ def build(cfg, chapters, aiqa_html="", quiz_answers=None):
             secs = c.get('secs') or []
             npts = sum(len(s.get('points') or []) for s in secs)
             nq = sum(len(s.get('quotes') or []) for s in secs)
-            out.append('''    <details class="ch-item"><summary>
-        <span class="ch-no">%s</span><span class="ch-t">%s</span>
-        <span class="badge" data-s="unread">未读</span><span class="caret">›</span>
+            out.append('''    <details class="mmx-cn"><summary>
+        <span class="mmx-no">%s</span><span class="mmx-name">%s</span>
+        <span class="badge" data-s="unread">未读</span><span class="mmx-caret">›</span>
       </summary>
-      <div class="ch-body">
+      <div class="mmx-body">
 ''' % (no, esc(t)))
-            out.append('        <p class="ch-stat">共 %d 个小节 · %d 条要点 · %d 句原句摘录</p>\n'
+            out.append('        <p class="mmx-stat">共 %d 个小节 · %d 条要点 · %d 句原句摘录</p>\n'
                        % (len(secs), npts, nq))
             cap = min(per_ch, budget - used_total)
             if not secs:
-                out.append('        <p class="ch-empty">本章大纲未提供分层要点。</p>\n')
+                out.append('        <p class="mmx-empty">本章大纲未提供分层要点。</p>\n')
             elif cap <= 0:
-                out.append('        <p class="ch-more">（要点详见本书 AI 大纲页）</p>\n')
+                out.append('        <p class="mmx-more">（要点详见本书 AI 大纲页）</p>\n')
             else:
                 shown = 0
                 for si, s in enumerate(secs, 1):
                     pts = s.get('points') or []
                     if shown >= cap:
-                        out.append('        <p class="ch-more">（其余 %d 条要点见本书 AI 大纲页）</p>\n'
+                        out.append('        <p class="mmx-more">（其余 %d 条要点见本书 AI 大纲页）</p>\n'
                                    % (npts - shown))
                         break
                     take = pts[: cap - shown]
                     shown += len(take)
                     qs = [q for q in (s.get('quotes') or []) if 10 <= len(q) <= 200]
                     op = ' open' if (si == 1 or (len(secs) == 1 and not s.get('h'))) else ''
-                    out.append('        <details class="ch-sec"%s><summary>'
-                               '<span class="sec-h">%s</span><span class="sec-count">%d 条</span>'
+                    out.append('        <details class="mmx-sec"%s><summary>'
+                               '<span class="mmx-sech">%s</span><span class="mmx-secc">%d 条</span>'
                                '</summary>\n' % (op, esc(s.get('h') or '本章要点'), len(pts)))
-                    out.append('          <ol class="ch-secs">%s</ol>\n'
+                    out.append('          <ol class="mmx-pts">%s</ol>\n'
                                % ''.join('<li>%s</li>' % esc(trim(p)) for p in take))
                     if qs:
-                        out.append('          <ul class="ch-quote">%s</ul>\n'
+                        out.append('          <ul class="mmx-qt">%s</ul>\n'
                                    % ''.join('「%s」' % esc(trim(q, 92)) for q in qs[:6]))
                     out.append('        </details>\n')
                 used_total += shown
