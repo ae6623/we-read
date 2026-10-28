@@ -251,3 +251,77 @@ main.page>section .toc-part{background:#fbfaf5;border-color:#ece7dc}
   .ch-item summary .ch-t{font-size:.96rem}
   .ch-no{min-width:30px}
 }
+
+/* ===== 全书结构 v3：章节折叠树 / 分组要点（2026-10-28） ===== */
+.card.mindmap{white-space:normal;font-family:var(--sans);background:none;border:0;padding:0;margin:0}
+.mm-top{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;padding:13px 17px;
+  background:linear-gradient(180deg,#fbfaf5,#f7f4ea);border:1px solid #ebe4d3;border-radius:13px}
+.mm-t{margin:0;font:700 1.08rem/1.5 var(--serif);color:var(--green)}
+.mm-t small{margin-left:10px;font:400 .82rem/1.5 var(--sans);color:var(--muted)}
+.mm-meta{margin:0 0 0 auto;font-size:.79rem;color:#8a8272;letter-spacing:.02em}
+.mm-meta b{color:var(--green2);font-weight:700}
+.mm-tools{display:flex;gap:8px;margin:11px 0 12px}
+.mm-btn{font:400 .76rem/1 var(--sans);color:var(--green2);background:#fff;
+  border:1px solid #e3dcc9;border-radius:999px;padding:6px 12px;cursor:pointer;
+  transition:background .15s,border-color .15s}
+.mm-btn:hover{background:#f4f1e6;border-color:#d8cfb6}
+.mm-chs{list-style:none;margin:0;padding:0;display:grid;gap:7px}
+.mm-ch{--c:#2f6b52;--cb:#eaf2ec;border:1px solid #eee8d9;border-left:4px solid #bf8247;
+  border-radius:0 10px 10px 0;background:#fff;overflow:hidden;
+  transition:box-shadow .15s,border-color .15s}
+.mm-ch:hover{border-color:#e2d9c4;box-shadow:0 2px 8px rgba(80,70,40,.06)}
+.mm-ch>details>summary{display:flex;align-items:center;gap:11px;
+  padding:9px 13px 9px 10px;cursor:pointer;list-style:none}
+.mm-ch>details>summary::-webkit-details-marker{display:none}
+.mm-no{flex:none;min-width:29px;height:25px;padding:0 6px;display:inline-grid;place-items:center;
+  border-radius:7px;background:var(--c);color:#fff;
+  font:700 .77rem/1 var(--sans);letter-spacing:.02em;
+  box-shadow:0 1px 2px rgba(60,50,30,.16)}
+.mm-name{flex:1 1 auto;font:600 .95rem/1.55 var(--serif);color:#24332c;word-break:break-word}
+.mm-cnt{flex:none;font-size:.71rem;color:#8a8272;background:#f6f3e9;border-radius:999px;
+  padding:2px 9px;white-space:nowrap}
+.mm-arw{flex:none;display:inline-flex;color:var(--c);transition:transform .18s ease}
+.mm-ch details[open]{background:#fdfcf8}
+.mm-ch details[open] .mm-arw{transform:rotate(180deg)}
+.mm-ch details[open]>summary{border-bottom:1px dashed #eee6d5}
+.mm-body{padding:13px 15px 15px 50px;background:#fbf8f0}
+.mm-ch.mm-row{display:flex;align-items:center;gap:11px;padding:9px 13px 9px 10px}
+.mm-pt.mm-l2{padding-left:34px;font-size:.87rem;color:#4a564f}
+.mm-pt.mm-l2::before{left:20px;width:4px;height:4px;opacity:.5}
+
+.mm-subs{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:7px}
+.mm-sub{font-size:.85rem;line-height:1.6;color:#33403a;background:#f8f5ec;
+  border:1px solid #e9e2d0;border-left:3px solid var(--c);border-radius:6px;padding:5px 11px}
+.mm-sub.mm-dup{color:#8a8272;background:#fbf9f3;border-left-color:#ded7c6}
+.mm-sub.mm-more{color:#8a8272;background:#fbf9f3;border-left-color:#ded7c6;font-style:italic}
+.mm-q{margin:10px 0 0;font-size:.75rem;color:#9a917e}
+.mm-group{--c:#2f6b52;--cb:#eaf2ec;margin:14px 0 0;padding:0 0 0 15px;
+  border-left:3px solid var(--c)}
+.mm-gl{margin:0 0 7px;font:600 .96rem/1.6 var(--serif);color:var(--c)}
+.mm-pts{list-style:none;margin:0;padding:0}
+.mm-pt{position:relative;padding:6px 0 6px 16px;font-size:.9rem;line-height:1.85;
+  color:#3b4842;border-bottom:1px dotted #eee8d9}
+.mm-pt:last-child{border-bottom:0}
+.mm-pt::before{content:"";position:absolute;left:2px;top:16px;width:5px;height:5px;
+  border-radius:50%;background:var(--c);opacity:.65}
+.mm-note{margin:14px 0 0;padding-top:10px;border-top:1px dashed #e9e2d0;
+  font-size:.78rem;line-height:1.8;color:#8f8877}
+.mm-empty{font-size:.85rem;color:var(--muted);white-space:pre-wrap}
+/* 分组用 5 色区分板块；章节树回归统一深绿（章号不做彩虹循环） */
+.mm-c1{--c:#2f6b52;--cb:#eaf2ec}
+.mm-c2{--c:#7a6a2e;--cb:#f5f0dc}
+.mm-c3{--c:#9a5136;--cb:#f9ece4}
+.mm-c4{--c:#3f6484;--cb:#e9f0f6}
+.mm-c5{--c:#6b5177;--cb:#f3ecf5}
+.mm-ch{--c:#2f6b52;--cb:#eaf2ec}
+@media(max-width:720px){
+  .mm-top{padding:11px 13px}
+  .mm-t{font-size:1rem}
+  .mm-meta{width:100%;margin-left:0}
+  .mm-body{padding:10px 10px 12px}
+  .mm-name{font-size:.9rem}
+  .mm-cnt{display:none}
+  .mm-sub{font-size:.8rem}
+  .mm-pt{font-size:.86rem}
+  .mm-group{padding-left:11px}
+}
