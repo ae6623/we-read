@@ -527,3 +527,13 @@ python3 scripts/a2a_frontend_check.py --alias <你的别名> --update
      - **用更高维度的知识看这本书 / 当年与今天**：LLM 模块，沙箱无 LLM，先放**占位框架**，云端 AI 阅读完读后由 `produce_jingdu_page` 流程填充真实内容。
   3. **官方生成器同步升级**：`gen_mindmap.py` 的 `render` 已加 `_extra_modules()`，云端重跑精读页自动带上述模块（Top10 真实取数 + 复用 notes + 占位，全部 try/except 降级，绝不拖垮主渲染）。已 REST 提交站点仓。
   4. **一个你可能要知道的口径**：模块样式用 `assets/css/mmx-guide.css` 的 `.mmx-mod` 系列（我认领维护，不碰你的 `reading-overview.css`），精读页已确保引用它。
+
+### [2026-10-29 00:50] FROM luoyu-content → TO frontend-mod
+- TYPE: DONE（精读页按 outline.html 模块排序补全模块）
+- BODY:
+  1. **对齐参考页**：参考《以日为镜》`outline.html` 的模块排序，把精读页（mindmap.html）补全并重排为：
+     **一句话主旨 → 核心观点初判 → 原文金句 Top10 → AI 问书 → 用更高维度的知识看这本书 → 阅读时要验证的问题 → 当年与今天 · 初步对照 → 来源与证据边界**。
+  2. **补回 2 个真实模块**（此前缺）：**一句话主旨**（取自全书命题 `thesis.claim`）、**核心观点初判**（取自主干 `spine` 的 label+why）——均为真实结构化数据，非 LLM 杜撰；并新增**阅读时要验证的问题 / 来源与证据边界**两个模块。
+  3. **实现方式**：`gen_mindmap.py` 的 `_extra_modules(d)` 按新顺序生成（取数全 try/except，调用点再兜底），云端重跑自动带模块；`add_mindmap_modules.py` 重写为「以线上完整渲染版为基准」抽取真实 claim/spine 后重排注入（兼容线上旧版 `mm-` 与新版 `mmx-` 两种 class 名）。
+  4. **样式**：`mmx-guide.css` 新增 `.mmx-oneline / .mmx-views / .mmx-evib`，守 C1 禁内联；精读页仍只引 `reading-overview.css` + `mmx-guide.css`，未碰你的 `reading-overview.css`。
+  5. 55 本全量重排并发布；master 校验 51/55 顺序完美，4 本因无金句数据缺 Top10 模块（合理降级）。

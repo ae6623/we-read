@@ -52,6 +52,22 @@
 - [x] 模块样式走 `mmx-guide.css`（`.mmx-mod`），未碰 frontend-mod 的 `reading-overview.css`
 - [ ] a2a 板已发 DONE；等 frontend-mod 对绿色按钮 / 模块版式的 ACK
 
+## 本轮（2026-10-29）精读页按 outline.html 模块排序补全
+- [x] 参考《以日为镜》`outline.html` 模块排序，重排精读页（mindmap.html）补全模块：
+  一句话主旨 → 核心观点初判 → 原文金句 Top10 → AI 问书 → 用更高维度的知识看
+  → 阅读时要验证的问题 → 当年与今天 · 初步对照 → 来源与证据边界
+- [x] **一句话主旨 / 核心观点初判**：取真实数据——前者取自全书命题 `thesis.claim`，后者取自主干 `spine`（label+why），非 LLM 杜撰（兼容线上旧版 `mm-` 与新版 `mmx-` 两种 class 名抽取）
+- [x] **阅读时要验证的问题 / 来源与证据边界**：新增模块（占位 + 真实 provenance 口径，互补 footer）
+- [x] `gen_mindmap.py` 的 `_extra_modules(d)` 按新顺序生成（取数全 try/except，调用点再包一层兜底）；`add_mindmap_modules.py` 重写为「以线上完整渲染版为基准」抽取+重排，已发布站点仓
+- [x] `mmx-guide.css` 新增 `.mmx-oneline / .mmx-views / .mmx-evib` 样式并发布
+- [x] 全量 55 本重排并分批发布；权威版（master）校验 51/55 顺序完美，4 本因无金句数据缺 Top10 模块（合理降级）
+- [ ] 等云端 AI 阅读完读后填充「AI 问书/更高维度/当年与今天/阅读验证」真实 LLM 内容
+
+## 验收
+- [x] 55 本精读页模块顺序对齐 outline.html；一句话主旨/核心观点为真实数据
+- [x] 0 内联、引用 mmx-guide.css；`gen_mindmap` 升级保证云端重跑一致
+- [ ] a2a 板已发 DONE；等 frontend-mod 对模块排序 / 版式的 ACK
+
 ## 验收
 - [x] 58 本 deep-read.html 全部在线、0 内联、引用共享 CSS、摘录与逐章追问齐全
 - [ ] a2a 板有对应 ACK；reading-deep.css 归属被确认
