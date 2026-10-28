@@ -376,6 +376,77 @@ def render(d: dict) -> str:
     return html
 
 
+def _digest(ctx, cut=42, max_ch=0):
+    """紧凑摘要：章号 + 标题 + 首条要点。给人（或另一个模型）读的最小充分输入。"""
+    out = ["《%s》%d 章" % (ctx["title"], len(ctx["chapters"]))]
+    for c in ctx["chapters"][:max_ch or None]:
+        out.append("%d. %s | %s" % (c["no"], c["title"], c["brief"][:cut]))
+    return "\n".join(out)
+
+
+def first_anchor(c: dict) -> str:
+    """章内第一句原句（没有原句时用首条要点），保证逐字来自大纲。"""
+    for q in c["quotes"]:
+        if q and len(q) >= 6:
+            return q[:60]
+    pool = c["anchor_pool"]
+    return (pool[0][:60] if pool else "")
+
+
+def from_batch(slug: str, raw: dict, ctx: dict):
+    """把人工/模型给出的 {thesis, spine, chapters:[{no,role,gist}]} 补全为完整结果。
+
+    anchor 一律由脚本从该书原句里取（拒绝编造），evidence 由数据库算。
+    """
+    chs = ctx["chapters"]
+    by_no = {c["no"]: c for c in chs}
+    owner = {}
+    for s in raw.get("spine") or []:
+        for no in s.get("chapters") or []:
+            try:
+                owner[int(no)] = s["id"]
+            except Exception:
+                pass
+    given = {int(c["no"]): c for c in (raw.get("chapters") or [])
+             if str(c.get("no", "")).strip().isdigit()}
+    last = (raw.get("spine") or [{}])[0].get("id", "A")
+    out_ch = []
+    for c in chs:
+        g = given.get(c["no"]) or {}
+        role = (g.get("role") or "").strip()
+        if role not in ("铺垫", "立论", "反证", "案例", "收束"):
+            role = "立论"
+        gist = (g.get("gist") or "").strip() or (c["brief"][:40] or "(未生成)")
+        sp = owner.get(c["no"], last)
+        last = sp
+        out_ch.append({
+            "no": c["no"], "title": c["title"], "spine": sp,
+            "gist": gist, "role": role,
+            "concepts": [x for x in (g.get("concepts") or []) if x][:4],
+            "anchor": first_anchor(c), "anchor_ok": True,
+            "pts": c["pts"], "with_q": c["with_q"],
+        })
+    pts = sum(c["pts"] for c in out_ch)
+    wq = sum(c["with_q"] for c in out_ch)
+    th = raw.get("thesis") or {}
+    return {
+        "slug": slug, "title": ctx["title"],
+        "thesis": {"claim": (th.get("claim") or "").strip(),
+                   "boundary": (th.get("boundary") or "").strip()},
+        "spine": [{"id": s["id"], "label": (s.get("label") or "").strip(),
+                   "why": (s.get("why") or "").strip(),
+                   "chapters": [c["no"] for c in out_ch if c["spine"] == s["id"]]}
+                  for s in (raw.get("spine") or [])
+                  if [c["no"] for c in out_ch if c["spine"] == s["id"]]],
+        "chapters": out_ch,
+        "evidence": {"points": pts, "with_quote": wq,
+                     "density": round(wq / pts, 3) if pts else 0.0},
+        "bad_anchor": [],
+        "built_at": time.strftime("%Y-%m-%dT%H:%M:%S+08:00"),
+        "source": raw.get("_by") or "manual-llm",
+    }
+
+
 PAGE = """<!doctype html>
 <html lang="zh-CN">
 <head>
@@ -471,6 +542,19 @@ def run_one(slug: str, write: bool, dry: bool, log=print):
     return d
 
 
+def skip_set():
+    """docs/mindmap-skip.txt：不放行做导图的书（一行一个 slug，# 注释）。"""
+    p = HERE / "docs" / "mindmap-skip.txt"
+    if not p.exists():
+        return set()
+    out = set()
+    for ln in p.read_text(encoding="utf-8").splitlines():
+        ln = ln.split("#")[0].strip()
+        if ln:
+            out.add(ln)
+    return out
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--slug")
@@ -482,7 +566,47 @@ def main(argv=None):
     ap.add_argument("--render-only", action="store_true",
                     help="不调 LLM，用 data/mindmap/<slug>.json 重新渲染页面")
     ap.add_argument("--workers", type=int, default=1, help="并发数（网络请求并行）")
+    ap.add_argument("--digest", type=int, metavar="N",
+                    help="只打印还没生成导图的 N 本书的紧凑摘要（不调 LLM）")
+    ap.add_argument("--import-batch", help="导入批量 JSON 并渲染：{slug:{thesis,spine,chapters}}")
+    ap.add_argument("--cut", type=int, default=42, help="摘要里每条要点的截断长度")
     a = ap.parse_args(argv)
+
+    if a.import_batch:
+        raw = json.loads(Path(a.import_batch).read_text(encoding="utf-8"))
+        DB_OUT.mkdir(parents=True, exist_ok=True)
+        for slug, item in raw.items():
+            ctx = build_ctx(slug)
+            if not ctx:
+                print("  - %-44s 库中无大纲" % slug[:44])
+                continue
+            d = from_batch(slug, item, ctx)
+            (DB_OUT / ("%s.json" % slug)).write_text(
+                json.dumps(d, ensure_ascii=False, indent=1), encoding="utf-8")
+            if a.write:
+                (BOOKS / slug / "mindmap.html").write_text(render(d), encoding="utf-8")
+            print("  ✓ %-44s 章=%3d 主干=%d 密度=%.0f%% 锚点缺=%d" % (
+                slug[:44], len(d["chapters"]), len(d["spine"]),
+                d["evidence"]["density"] * 100, len(d["bad_anchor"])))
+        return 0
+
+    if a.import_batch is None and a.digest:
+        pool = ([a.slug] if a.slug else
+                sorted(p.name for p in BOOKS.iterdir()
+                       if p.is_dir() and (p / "overview.html").exists()
+                       and not (p / "mindmap.html").exists()))
+        got = 0
+        for s in pool:
+            ctx = build_ctx(s)
+            if not ctx:
+                continue
+            print("=" * 8, s, "=" * 8)
+            print(_digest(ctx, cut=a.cut))
+            got += 1
+            if got >= a.digest:
+                break
+        print("\n（还有 %d 本无导图）" % len(pool))
+        return 0
 
     if a.slug:
         slugs = [a.slug]
@@ -491,6 +615,9 @@ def main(argv=None):
                        if p.is_dir() and (p / "overview.html").exists())
         if a.skip_existing:
             slugs = [s for s in slugs if not (BOOKS / s / "mindmap.html").exists()]
+        _skip = skip_set()
+        if _skip:
+            slugs = [s for s in slugs if s not in _skip]
         if a.limit:
             slugs = slugs[: a.limit]
     print("待提炼：%d 本" % len(slugs))
