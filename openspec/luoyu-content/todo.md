@@ -97,3 +97,15 @@
 ## 验收
 - [x] 线上首页 55 张通读卡均有精读绿色入口；幂等复跑 0 新增
 - [x] 未改动任何 CSS；未覆盖 frontend-mod 的线上结构更新
+
+## 本轮（2026-10-29）信息架构改版（产品方案 v2 执行）
+- 基线：`docs/site-ia-redesign-2026-10-28.md`（产品方案 v2，已拍板）；执行拆分见 `openspec/changes/site-ia-redesign-2026-10-28/`（proposal/design/tasks/spec）
+- 角色分工：`[FE]` 首页结构·Tab·搜索·筛选·折叠·CSS·JS → frontend-mod；`[LC]` deep-read 合并·文案统一·来源标注·IA-05 文案 → 我（luoyu-content）
+- [x] 拉取方案到本地 `docs/`；建立 change 提案（4 文件）
+- [x] 确认协同现状：frontend-mod 尚未认领 IA 改版（openspec 与协同目录均无登记）
+- [ ] 第 1 批 `[FE]`：IA-01 Tab 改名 / IA-02 搜索+筛选+计数 / IA-04 卡片精简
+- [ ] 第 2 批：IA-03 首屏折叠 `[FE]`；IA-06 文案统一 `[LC]`
+- [ ] 第 3 批 `[LC]`：deep-read 58 页合并进精读（8.3 闸门：未处置数=0 才下线）+ 迁移页
+- [ ] 第 4 批：IA-05 单书页「从这里开始」（文案 `[LC]` / 结构 `[FE]`）
+- [ ] 补充：8.2 来源标注 `[LC]`；8.4 可访问性与体量、8.5 搜索筛选组合 `[FE]`
+- [ ] 待站主拍板：frontend-mod 未认领时 `[FE]` 项是否由我承接；EPUB 是否现在放回
