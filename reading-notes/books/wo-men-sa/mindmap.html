@@ -16,8 +16,8 @@
 .mm-bar i{display:block;height:100%;background:linear-gradient(90deg,#8a9b6e,#c2b280)}
 .mm-svgwrap{overflow-x:auto;padding:.4em 0 1em;border-bottom:1px solid var(--line)}
 .mm-svg{width:100%;height:auto;min-width:760px}
-.mm-spine{margin:.9em 0;border-left:3px solid #d9d0bd;padding:.1em 0 .1em .9em}
-.mm-spine[open]{border-left-color:#8a9b6e}
+.mm-spine{margin:1.15em 0;border-left:3px solid #ece4d3;padding:.1em 0 .1em .85em}
+.mm-spine[open]{border-left-color:#d8cdb4}
 .mm-spine>summary{display:flex;gap:.6em;align-items:baseline;cursor:pointer;
   list-style:none;padding:.35em 0}
 .mm-spine>summary::-webkit-details-marker{display:none}
@@ -26,24 +26,32 @@
 .mm-label{font-weight:600;font-size:1rem;color:var(--ink)}
 .mm-cnt{margin-left:auto;font-size:.74rem;color:var(--muted)}
 .mm-why{font-size:.8rem;color:var(--muted);margin:.1em 0 .8em;line-height:1.7}
-.mm-tree{list-style:none;padding:0;margin:0}
-.mm-tree li{position:relative;padding:.42em 0 .42em 1.1em;border-left:1px dotted #cfc6b4;
-  margin-left:.5em}
-.mm-tree li:before{content:"";position:absolute;left:0;top:1.05em;width:.7em;
-  border-top:1px dotted #cfc6b4}
-.mm-ch{margin:0;font-size:.92rem;color:var(--ink)}
-.mm-ch b{color:#a9a08d;font-weight:500;font-size:.8rem;margin-right:.4em}
-.mm-role{font-size:.68rem;padding:.05em .4em;border-radius:3px;margin-left:.5em;
-  vertical-align:.1em;white-space:nowrap}
-.r-pre{background:#eef0e6;color:#6b7a4e}.r-th{background:#eae7f0;color:#5f5578}
-.r-cnt{background:#f6e9e4;color:#946350}.r-case{background:#e8eff1;color:#4f7380}
-.r-end{background:#f2ecdf;color:#8a7442}
-.mm-gist{margin:.18em 0 .3em;font-size:.84rem;line-height:1.75;color:#4a443b}
-.mm-chip{display:inline-block;font-size:.68rem;color:#6b6152;background:#f2ecdf;
-  border-radius:9px;padding:.05em .5em;margin:.15em .25em .15em 0}
-.mm-anchor{display:block;font-size:.78rem;color:#8a8272;line-height:1.7;
-  border-left:2px dotted #d9d0bd;padding-left:.7em;margin-top:.3em}
-@media(max-width:720px){.mm-svg{min-width:640px}}
+.mm-tree{list-style:none;padding:0;margin:.15em 0 0}
+/* 章条目：与通读页 .ch-item 对齐（无卡片/无彩条/虚线分隔），行高按手机可读行数收紧 */
+.mm-cn{padding:8px 0;border-bottom:1px dashed #eee8dc}
+.mm-cn:last-child{border-bottom:0}
+.mm-chead{display:flex;flex-wrap:wrap;gap:2px 10px;align-items:baseline;margin:0}
+.mm-cno{flex:none;min-width:1.7em;color:#bf8247;font-weight:700;font-size:.82rem;
+  font-variant-numeric:tabular-nums}
+.mm-cname{flex:0 1 auto;min-width:0;font-size:.92rem;line-height:1.6;color:var(--ink);
+  word-break:break-word}
+.mm-role{flex:none;font-size:.68rem;color:#8a8272;line-height:1.6;white-space:nowrap}
+.mm-gist{margin:.15em 0 .2em;font-size:.86rem;line-height:1.75;color:#4a443b}
+.mm-chip{display:inline-block;font-size:.68rem;color:#6b6152;background:#f4f1e6;
+  border-radius:9px;padding:.05em .5em;margin:.1em .28em .1em 0}
+/* 引文块取通读页 ul.ch-quote 的观感：浅米底 + 金色左线 */
+.mm-quote{display:block;margin:.3em 0 .1em;padding:7px 11px;background:#fdf8ee;
+  border-left:3px solid var(--gold);border-radius:0 8px 8px 0;
+  font-size:.8rem;line-height:1.75;color:#6b5c43}
+@media(max-width:720px){
+  .mm-svg{min-width:640px}
+  /* 手机：章条目再收紧一点，一屏多两行 */
+  .mm-cn{padding:7px 0}
+  .mm-chead{gap:8px}
+  .mm-cname{font-size:.9rem}
+  .mm-gist{font-size:.84rem;line-height:1.7}
+  .mm-quote{padding:6px 9px;font-size:.78rem}
+}
 </style>
 </head>
 <body>
@@ -129,63 +137,63 @@
 <summary><span class="mm-id">A</span><span class="mm-label">梦境与失散</span><span class="mm-cnt">2 章</span></summary>
 <p class="mm-why">通过作者的梦境与独白，直接点出我们仨失散、家已不复存在的孤独主题。</p>
 <ol class="mm-tree">
-<li class="r-pre"><p class="mm-ch"><b>1</b> 第一部 我们俩老了<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">作者与锺书散步失散并陷入梦境孤独，由锺书安慰定调全书失散主题</p><span class="mm-chip">梦境</span><span class="mm-chip">失散</span><span class="mm-chip">孤独</span><span class="mm-anchor">「作者与锺书一同散步，锺书突然不见了」</span></li>
-<li class="r-th"><p class="mm-ch"><b>5</b> 第三部 我一个人思念我们仨<span class="mm-role r-th">立论</span></p><p class="mm-gist">总结我们仨失散导致家不复存在的痛苦，确立全书与世无求只求相守的核心诉求</p><span class="mm-chip">我们仨</span><span class="mm-chip">失散</span><span class="mm-chip">相守</span><span class="mm-anchor">「剩下我一个，又是老人，就好比日暮途穷的羁旅倦客。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">1</span><span class="mm-cname">第一部 我们俩老了</span><span class="mm-role">铺垫</span></p><p class="mm-gist">作者与锺书散步失散并陷入梦境孤独，由锺书安慰定调全书失散主题</p><span class="mm-chip">梦境</span><span class="mm-chip">失散</span><span class="mm-chip">孤独</span><span class="mm-quote">「作者与锺书一同散步，锺书突然不见了」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">5</span><span class="mm-cname">第三部 我一个人思念我们仨</span><span class="mm-role">立论</span></p><p class="mm-gist">总结我们仨失散导致家不复存在的痛苦，确立全书与世无求只求相守的核心诉求</p><span class="mm-chip">我们仨</span><span class="mm-chip">失散</span><span class="mm-chip">相守</span><span class="mm-quote">「剩下我一个，又是老人，就好比日暮途穷的羁旅倦客。」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">B</span><span class="mm-label">古驿道聚散</span><span class="mm-cnt">3 章</span></summary>
 <p class="mm-why">以古驿道为喻，描述了一家人相聚、等待以及阿圆生病面临离别的过程。</p>
 <ol class="mm-tree">
-<li class="r-case"><p class="mm-ch"><b>2</b> （一）走上古驿道<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过钱锺书与阿圆在家中充满童趣的玩耍与互动，引出离散前的聚首场景</p><span class="mm-chip">古驿道</span><span class="mm-chip">童趣</span><span class="mm-chip">聚散</span><span class="mm-anchor">「钱锺书和阿圆在家中玩耍，锺书被阿圆捉弄」</span></li>
-<li class="r-case"><p class="mm-ch"><b>3</b> （二）古驿道上相聚<span class="mm-role r-case">案例</span></p><p class="mm-gist">描述作者与阿圆在古驿道客栈与船上等待并最终与锺书相聚的过程</p><span class="mm-chip">古驿道</span><span class="mm-chip">客栈</span><span class="mm-chip">相聚</span><span class="mm-anchor">「作者和阿圆在古驿道上的客栈与锺书相聚」</span></li>
-<li class="r-cnt"><p class="mm-ch"><b>4</b> （三）古驿道上相失<span class="mm-role r-cnt">反证</span></p><p class="mm-gist">因阿圆腰椎病需休养及作者隐瞒病情，导致古驿道中相失的梦境浮现</p><span class="mm-chip">腰椎病</span><span class="mm-chip">隐瞒</span><span class="mm-chip">相失</span><span class="mm-anchor">「阿圆因腰椎病住院，医生建议休养半年到一年」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">2</span><span class="mm-cname">（一）走上古驿道</span><span class="mm-role">案例</span></p><p class="mm-gist">通过钱锺书与阿圆在家中充满童趣的玩耍与互动，引出离散前的聚首场景</p><span class="mm-chip">古驿道</span><span class="mm-chip">童趣</span><span class="mm-chip">聚散</span><span class="mm-quote">「钱锺书和阿圆在家中玩耍，锺书被阿圆捉弄」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">3</span><span class="mm-cname">（二）古驿道上相聚</span><span class="mm-role">案例</span></p><p class="mm-gist">描述作者与阿圆在古驿道客栈与船上等待并最终与锺书相聚的过程</p><span class="mm-chip">古驿道</span><span class="mm-chip">客栈</span><span class="mm-chip">相聚</span><span class="mm-quote">「作者和阿圆在古驿道上的客栈与锺书相聚」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">4</span><span class="mm-cname">（三）古驿道上相失</span><span class="mm-role">反证</span></p><p class="mm-gist">因阿圆腰椎病需休养及作者隐瞒病情，导致古驿道中相失的梦境浮现</p><span class="mm-chip">腰椎病</span><span class="mm-chip">隐瞒</span><span class="mm-chip">相失</span><span class="mm-quote">「阿圆因腰椎病住院，医生建议休养半年到一年」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">C</span><span class="mm-label">海外求学岁月</span><span class="mm-cnt">6 章</span></summary>
 <p class="mm-why">集中记录了作者夫妇在牛津、伦敦、巴黎的留学生涯及阿圆的诞生与成长。</p>
 <ol class="mm-tree">
-<li class="r-pre"><p class="mm-ch"><b>6</b> （一）<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">记述作者夫妇初到牛津大学做房客及各自进行学术补习的留学生涯起点</p><span class="mm-chip">牛津大学</span><span class="mm-chip">留学生涯</span><span class="mm-chip">房客</span><span class="mm-anchor">「我们离家远出，不复在父母庇荫之下，都有点战战兢兢；但有两人做伴，可相依为命。」</span></li>
-<li class="r-case"><p class="mm-ch"><b>7</b> （二）<span class="mm-role r-case">案例</span></p><p class="mm-gist">针对伙食变差与同住不便的问题，作者自主谋划租赁备有家具且伙食自理的房屋</p><span class="mm-chip">伙食</span><span class="mm-chip">租房</span><span class="mm-chip">生活</span><span class="mm-anchor">「锺书饮食习惯很保守，洋味儿的不大肯尝试，干酪怎么也不吃。」</span></li>
-<li class="r-case"><p class="mm-ch"><b>8</b> （三）<span class="mm-role r-case">案例</span></p><p class="mm-gist">记录两人在伦敦与巴黎的生活轨迹，及怀孕后锺书陪同定产院与专家的安排</p><span class="mm-chip">伦敦</span><span class="mm-chip">巴黎</span><span class="mm-chip">产院</span><span class="mm-anchor">「作者和锺书在伦敦的生活」</span></li>
-<li class="r-case"><p class="mm-ch"><b>9</b> （四）<span class="mm-role r-case">案例</span></p><p class="mm-gist">交代女儿得名健汝与号丽英的缘由，并记录百日后由牛津经多佛港跨海赴法的行程</p><span class="mm-chip">健汝</span><span class="mm-chip">丽英</span><span class="mm-chip">渡船</span><span class="mm-anchor">「我们不能接受这个美丽的号，而“钱健汝”叫来拗口，又叫不响。」</span></li>
-<li class="r-case"><p class="mm-ch"><b>10</b> （五）<span class="mm-role r-case">案例</span></p><p class="mm-gist">记述圆圆在船上因伙食差体重下降但与乘客熟悉，以及回上海后学习无锡话的过程</p><span class="mm-chip">船上伙食</span><span class="mm-chip">无锡话</span><span class="mm-chip">适应</span><span class="mm-anchor">「圆圆刚断奶两个月，船上二十多天，几乎顿顿吃土豆泥。」</span></li>
-<li class="r-case"><p class="mm-ch"><b>11</b> （六）<span class="mm-role r-case">案例</span></p><p class="mm-gist">记录圆圆在成长中学会爬楼梯、认字及背诵童谣的学习与认知发展</p><span class="mm-chip">成长</span><span class="mm-chip">识字</span><span class="mm-chip">童谣</span><span class="mm-anchor">「圆圆已经会自己爬楼梯上四楼了」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">6</span><span class="mm-cname">（一）</span><span class="mm-role">铺垫</span></p><p class="mm-gist">记述作者夫妇初到牛津大学做房客及各自进行学术补习的留学生涯起点</p><span class="mm-chip">牛津大学</span><span class="mm-chip">留学生涯</span><span class="mm-chip">房客</span><span class="mm-quote">「我们离家远出，不复在父母庇荫之下，都有点战战兢兢；但有两人做伴，可相依为命。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">7</span><span class="mm-cname">（二）</span><span class="mm-role">案例</span></p><p class="mm-gist">针对伙食变差与同住不便的问题，作者自主谋划租赁备有家具且伙食自理的房屋</p><span class="mm-chip">伙食</span><span class="mm-chip">租房</span><span class="mm-chip">生活</span><span class="mm-quote">「锺书饮食习惯很保守，洋味儿的不大肯尝试，干酪怎么也不吃。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">8</span><span class="mm-cname">（三）</span><span class="mm-role">案例</span></p><p class="mm-gist">记录两人在伦敦与巴黎的生活轨迹，及怀孕后锺书陪同定产院与专家的安排</p><span class="mm-chip">伦敦</span><span class="mm-chip">巴黎</span><span class="mm-chip">产院</span><span class="mm-quote">「作者和锺书在伦敦的生活」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">9</span><span class="mm-cname">（四）</span><span class="mm-role">案例</span></p><p class="mm-gist">交代女儿得名健汝与号丽英的缘由，并记录百日后由牛津经多佛港跨海赴法的行程</p><span class="mm-chip">健汝</span><span class="mm-chip">丽英</span><span class="mm-chip">渡船</span><span class="mm-quote">「我们不能接受这个美丽的号，而“钱健汝”叫来拗口，又叫不响。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">10</span><span class="mm-cname">（五）</span><span class="mm-role">案例</span></p><p class="mm-gist">记述圆圆在船上因伙食差体重下降但与乘客熟悉，以及回上海后学习无锡话的过程</p><span class="mm-chip">船上伙食</span><span class="mm-chip">无锡话</span><span class="mm-chip">适应</span><span class="mm-quote">「圆圆刚断奶两个月，船上二十多天，几乎顿顿吃土豆泥。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">11</span><span class="mm-cname">（六）</span><span class="mm-role">案例</span></p><p class="mm-gist">记录圆圆在成长中学会爬楼梯、认字及背诵童谣的学习与认知发展</p><span class="mm-chip">成长</span><span class="mm-chip">识字</span><span class="mm-chip">童谣</span><span class="mm-quote">「圆圆已经会自己爬楼梯上四楼了」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">D</span><span class="mm-label">归国动荡生活</span><span class="mm-cnt">3 章</span></summary>
 <p class="mm-why">记录了抗战及战后全家辗转回到上海与苏州，日常生活中的种种困难与团聚。</p>
 <ol class="mm-tree">
-<li class="r-case"><p class="mm-ch"><b>12</b> （七）<span class="mm-role r-case">案例</span></p><p class="mm-gist">记述锺书辗转经陆路海路返回上海与圆圆相见，并等待清华聘书的过程</p><span class="mm-chip">返回上海</span><span class="mm-chip">相见</span><span class="mm-chip">清华聘书</span><span class="mm-anchor">「锺书面目黧黑，头发也太长了，穿一件夏布长衫，式样很土，布也很粗。」</span></li>
-<li class="r-case"><p class="mm-ch"><b>13</b> （八）<span class="mm-role r-case">案例</span></p><p class="mm-gist">面对日占区劣质粮食与生活困难，记录全家在苏州生活及圆圆性格表现的细节</p><span class="mm-chip">日占区</span><span class="mm-chip">生活困难</span><span class="mm-chip">苏州</span><span class="mm-anchor">「日本人分配给市民吃的面粉和米质量极差」</span></li>
-<li class="r-case"><p class="mm-ch"><b>14</b> （九）<span class="mm-role r-case">案例</span></p><p class="mm-gist">随钱家返回七尺场老家后公公发现女孙，同时锺书任职中央图书馆并编辑刊物</p><span class="mm-chip">七尺场</span><span class="mm-chip">中央图书馆</span><span class="mm-chip">书林季刊</span><span class="mm-anchor">「这次再去，那间房子堆满了烂东西，都走不进人了。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">12</span><span class="mm-cname">（七）</span><span class="mm-role">案例</span></p><p class="mm-gist">记述锺书辗转经陆路海路返回上海与圆圆相见，并等待清华聘书的过程</p><span class="mm-chip">返回上海</span><span class="mm-chip">相见</span><span class="mm-chip">清华聘书</span><span class="mm-quote">「锺书面目黧黑，头发也太长了，穿一件夏布长衫，式样很土，布也很粗。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">13</span><span class="mm-cname">（八）</span><span class="mm-role">案例</span></p><p class="mm-gist">面对日占区劣质粮食与生活困难，记录全家在苏州生活及圆圆性格表现的细节</p><span class="mm-chip">日占区</span><span class="mm-chip">生活困难</span><span class="mm-chip">苏州</span><span class="mm-quote">「日本人分配给市民吃的面粉和米质量极差」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">14</span><span class="mm-cname">（九）</span><span class="mm-role">案例</span></p><p class="mm-gist">随钱家返回七尺场老家后公公发现女孙，同时锺书任职中央图书馆并编辑刊物</p><span class="mm-chip">七尺场</span><span class="mm-chip">中央图书馆</span><span class="mm-chip">书林季刊</span><span class="mm-quote">「这次再去，那间房子堆满了烂东西，都走不进人了。」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">E</span><span class="mm-label">清华岁月与游乐</span><span class="mm-cnt">2 章</span></summary>
 <p class="mm-why">记述了清华时期的工作、生活以及一家人常去公园游玩的闲适时光。</p>
 <ol class="mm-tree">
-<li class="r-case"><p class="mm-ch"><b>15</b> （十）<span class="mm-role r-case">案例</span></p><p class="mm-gist">1949年夏夫妇携女返回清华工作，因担心健康让圆圆休学，作者则坚持做散工</p><span class="mm-chip">清华</span><span class="mm-chip">休学</span><span class="mm-chip">散工</span><span class="mm-anchor">「锺书教什么课我已忘记，主要是指导研究生。」</span></li>
-<li class="r-case"><p class="mm-ch"><b>16</b> （十一）<span class="mm-role r-case">案例</span></p><p class="mm-gist">记录夫妇二人为避开假日游客与开会，常利用工作时间偷闲前往颐和园松堂与动物园游玩</p><span class="mm-chip">松堂</span><span class="mm-chip">动物园</span><span class="mm-chip">游玩</span><span class="mm-anchor">「那里的松树千姿百态，我们和一棵棵松树都认识了。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">15</span><span class="mm-cname">（十）</span><span class="mm-role">案例</span></p><p class="mm-gist">1949年夏夫妇携女返回清华工作，因担心健康让圆圆休学，作者则坚持做散工</p><span class="mm-chip">清华</span><span class="mm-chip">休学</span><span class="mm-chip">散工</span><span class="mm-quote">「锺书教什么课我已忘记，主要是指导研究生。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">16</span><span class="mm-cname">（十一）</span><span class="mm-role">案例</span></p><p class="mm-gist">记录夫妇二人为避开假日游客与开会，常利用工作时间偷闲前往颐和园松堂与动物园游玩</p><span class="mm-chip">松堂</span><span class="mm-chip">动物园</span><span class="mm-chip">游玩</span><span class="mm-quote">「那里的松树千姿百态，我们和一棵棵松树都认识了。」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">F</span><span class="mm-label">大字报与新居</span><span class="mm-cnt">4 章</span></summary>
 <p class="mm-why">涵盖了特殊时期对大字报的反应、生活环境的变换以及在简陋办公条件下的工作与新居分配。</p>
 <ol class="mm-tree">
-<li class="r-case"><p class="mm-ch"><b>17</b> （十二）<span class="mm-role r-case">案例</span></p><p class="mm-gist">面对大字报作者夫妇感到惊讶与舒畅，锺书因中南海听会认为属于真心号召鸣放</p><span class="mm-chip">大字报</span><span class="mm-chip">鸣放</span><span class="mm-chip">中南海</span><span class="mm-anchor">「“三反”之后，我们直以为人都变了。原来一点没变，我们俩的思想原来很一般，比大字报上流露的还平和些。」</span></li>
-<li class="r-case"><p class="mm-ch"><b>18</b> （十三）<span class="mm-role r-case">案例</span></p><p class="mm-gist">记述添置家具后居住宽舒，锺书参与英译毛选定稿享特殊供应，作者偶闻讥诮不安</p><span class="mm-chip">家具</span><span class="mm-chip">英译毛选</span><span class="mm-chip">特殊供应</span><span class="mm-anchor">「我们有四个房间，还有一间厨房、一间卫生间(包括厕所和澡房)，还有一个阳台。」</span></li>
-<li class="r-case"><p class="mm-ch"><b>19</b> （十四）<span class="mm-role r-case">案例</span></p><p class="mm-gist">在简陋办公室里安居乐业完成《管锥编》和翻译工作，并提及阿瑗面临婚事选择</p><span class="mm-chip">办公室</span><span class="mm-chip">管锥编</span><span class="mm-chip">翻译</span><span class="mm-anchor">「西尽头的走廊是我们的厨房兼堆煤饼。」</span></li>
-<li class="r-case"><p class="mm-ch"><b>20</b> （十五）<span class="mm-role r-case">案例</span></p><p class="mm-gist">经学部安排作者与女儿查看并入住三里河南沙沟寓所，锺书对新居格局感到技穷</p><span class="mm-chip">新居</span><span class="mm-chip">南沙沟</span><span class="mm-chip">寓所</span><span class="mm-anchor">「钥匙和汽车都是准备好的，让作者的女儿陪他同去。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">17</span><span class="mm-cname">（十二）</span><span class="mm-role">案例</span></p><p class="mm-gist">面对大字报作者夫妇感到惊讶与舒畅，锺书因中南海听会认为属于真心号召鸣放</p><span class="mm-chip">大字报</span><span class="mm-chip">鸣放</span><span class="mm-chip">中南海</span><span class="mm-quote">「“三反”之后，我们直以为人都变了。原来一点没变，我们俩的思想原来很一般，比大字报上流露的还平和些。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">18</span><span class="mm-cname">（十三）</span><span class="mm-role">案例</span></p><p class="mm-gist">记述添置家具后居住宽舒，锺书参与英译毛选定稿享特殊供应，作者偶闻讥诮不安</p><span class="mm-chip">家具</span><span class="mm-chip">英译毛选</span><span class="mm-chip">特殊供应</span><span class="mm-quote">「我们有四个房间，还有一间厨房、一间卫生间(包括厕所和澡房)，还有一个阳台。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">19</span><span class="mm-cname">（十四）</span><span class="mm-role">案例</span></p><p class="mm-gist">在简陋办公室里安居乐业完成《管锥编》和翻译工作，并提及阿瑗面临婚事选择</p><span class="mm-chip">办公室</span><span class="mm-chip">管锥编</span><span class="mm-chip">翻译</span><span class="mm-quote">「西尽头的走廊是我们的厨房兼堆煤饼。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">20</span><span class="mm-cname">（十五）</span><span class="mm-role">案例</span></p><p class="mm-gist">经学部安排作者与女儿查看并入住三里河南沙沟寓所，锺书对新居格局感到技穷</p><span class="mm-chip">新居</span><span class="mm-chip">南沙沟</span><span class="mm-chip">寓所</span><span class="mm-quote">「钥匙和汽车都是准备好的，让作者的女儿陪他同去。」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">G</span><span class="mm-label">日常相守与回忆</span><span class="mm-cnt">1 章</span></summary>
 <p class="mm-why">展现晚年二人静静读书工作、散步，以及对女儿归家聚首的回忆。</p>
 <ol class="mm-tree">
-<li class="r-end"><p class="mm-ch"><b>21</b> （十六）<span class="mm-role r-end">收束</span></p><p class="mm-gist">总结日常生活中各据书桌静静读书工作并在院内散步探险，以及阿瑗回家把玩石子的温情场景</p><span class="mm-chip">日常</span><span class="mm-chip">读书</span><span class="mm-chip">探险</span><span class="mm-anchor">「我们两人每天在起居室静静地各据一书桌，静静地读书工作。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">21</span><span class="mm-cname">（十六）</span><span class="mm-role">收束</span></p><p class="mm-gist">总结日常生活中各据书桌静静读书工作并在院内散步探险，以及阿瑗回家把玩石子的温情场景</p><span class="mm-chip">日常</span><span class="mm-chip">读书</span><span class="mm-chip">探险</span><span class="mm-quote">「我们两人每天在起居室静静地各据一书桌，静静地读书工作。」</span></li>
 </ol>
 </details>
 <footer class="site-footer">

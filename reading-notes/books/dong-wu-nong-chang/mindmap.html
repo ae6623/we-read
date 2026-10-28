@@ -16,8 +16,8 @@
 .mm-bar i{display:block;height:100%;background:linear-gradient(90deg,#8a9b6e,#c2b280)}
 .mm-svgwrap{overflow-x:auto;padding:.4em 0 1em;border-bottom:1px solid var(--line)}
 .mm-svg{width:100%;height:auto;min-width:760px}
-.mm-spine{margin:.9em 0;border-left:3px solid #d9d0bd;padding:.1em 0 .1em .9em}
-.mm-spine[open]{border-left-color:#8a9b6e}
+.mm-spine{margin:1.15em 0;border-left:3px solid #ece4d3;padding:.1em 0 .1em .85em}
+.mm-spine[open]{border-left-color:#d8cdb4}
 .mm-spine>summary{display:flex;gap:.6em;align-items:baseline;cursor:pointer;
   list-style:none;padding:.35em 0}
 .mm-spine>summary::-webkit-details-marker{display:none}
@@ -26,24 +26,32 @@
 .mm-label{font-weight:600;font-size:1rem;color:var(--ink)}
 .mm-cnt{margin-left:auto;font-size:.74rem;color:var(--muted)}
 .mm-why{font-size:.8rem;color:var(--muted);margin:.1em 0 .8em;line-height:1.7}
-.mm-tree{list-style:none;padding:0;margin:0}
-.mm-tree li{position:relative;padding:.42em 0 .42em 1.1em;border-left:1px dotted #cfc6b4;
-  margin-left:.5em}
-.mm-tree li:before{content:"";position:absolute;left:0;top:1.05em;width:.7em;
-  border-top:1px dotted #cfc6b4}
-.mm-ch{margin:0;font-size:.92rem;color:var(--ink)}
-.mm-ch b{color:#a9a08d;font-weight:500;font-size:.8rem;margin-right:.4em}
-.mm-role{font-size:.68rem;padding:.05em .4em;border-radius:3px;margin-left:.5em;
-  vertical-align:.1em;white-space:nowrap}
-.r-pre{background:#eef0e6;color:#6b7a4e}.r-th{background:#eae7f0;color:#5f5578}
-.r-cnt{background:#f6e9e4;color:#946350}.r-case{background:#e8eff1;color:#4f7380}
-.r-end{background:#f2ecdf;color:#8a7442}
-.mm-gist{margin:.18em 0 .3em;font-size:.84rem;line-height:1.75;color:#4a443b}
-.mm-chip{display:inline-block;font-size:.68rem;color:#6b6152;background:#f2ecdf;
-  border-radius:9px;padding:.05em .5em;margin:.15em .25em .15em 0}
-.mm-anchor{display:block;font-size:.78rem;color:#8a8272;line-height:1.7;
-  border-left:2px dotted #d9d0bd;padding-left:.7em;margin-top:.3em}
-@media(max-width:720px){.mm-svg{min-width:640px}}
+.mm-tree{list-style:none;padding:0;margin:.15em 0 0}
+/* 章条目：与通读页 .ch-item 对齐（无卡片/无彩条/虚线分隔），行高按手机可读行数收紧 */
+.mm-cn{padding:8px 0;border-bottom:1px dashed #eee8dc}
+.mm-cn:last-child{border-bottom:0}
+.mm-chead{display:flex;flex-wrap:wrap;gap:2px 10px;align-items:baseline;margin:0}
+.mm-cno{flex:none;min-width:1.7em;color:#bf8247;font-weight:700;font-size:.82rem;
+  font-variant-numeric:tabular-nums}
+.mm-cname{flex:0 1 auto;min-width:0;font-size:.92rem;line-height:1.6;color:var(--ink);
+  word-break:break-word}
+.mm-role{flex:none;font-size:.68rem;color:#8a8272;line-height:1.6;white-space:nowrap}
+.mm-gist{margin:.15em 0 .2em;font-size:.86rem;line-height:1.75;color:#4a443b}
+.mm-chip{display:inline-block;font-size:.68rem;color:#6b6152;background:#f4f1e6;
+  border-radius:9px;padding:.05em .5em;margin:.1em .28em .1em 0}
+/* 引文块取通读页 ul.ch-quote 的观感：浅米底 + 金色左线 */
+.mm-quote{display:block;margin:.3em 0 .1em;padding:7px 11px;background:#fdf8ee;
+  border-left:3px solid var(--gold);border-radius:0 8px 8px 0;
+  font-size:.8rem;line-height:1.75;color:#6b5c43}
+@media(max-width:720px){
+  .mm-svg{min-width:640px}
+  /* 手机：章条目再收紧一点，一屏多两行 */
+  .mm-cn{padding:7px 0}
+  .mm-chead{gap:8px}
+  .mm-cname{font-size:.9rem}
+  .mm-gist{font-size:.84rem;line-height:1.7}
+  .mm-quote{padding:6px 9px;font-size:.78rem}
+}
 </style>
 </head>
 <body>
@@ -110,40 +118,40 @@
 <summary><span class="mm-id">A</span><span class="mm-label">觉醒与起义</span><span class="mm-cnt">2 章</span></summary>
 <p class="mm-why">老少校的演讲给出理想，猪把它变成纲领，起义由此发生。</p>
 <ol class="mm-tree">
-<li class="r-pre"><p class="mm-ch"><b>1</b> 版权信息 · 一 · 老少校的演讲<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">老少校临终演讲，把动物的苦归纳成一套可传下去的道理</p><span class="mm-anchor">「老少校度过了漫长的一生，独自躺在圈中的大部分时间都在思考，他比现在还活着的任何动物都更加懂得生命的本质。」</span></li>
-<li class="r-th"><p class="mm-ch"><b>2</b> 版权信息 · 二 · 老少校的演讲与动物主义的诞生<span class="mm-role r-th">立论</span></p><p class="mm-gist">三头猪把演讲整理成动物主义，理想第一次变成纲领</p><span class="mm-anchor">「老少校预言的起义究竟何时会到来，他们并不知道，也没有理由相信这场起义会在他们有生之年内爆发。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">1</span><span class="mm-cname">版权信息 · 一 · 老少校的演讲</span><span class="mm-role">铺垫</span></p><p class="mm-gist">老少校临终演讲，把动物的苦归纳成一套可传下去的道理</p><span class="mm-quote">「老少校度过了漫长的一生，独自躺在圈中的大部分时间都在思考，他比现在还活着的任何动物都更加懂得生命的本质。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">2</span><span class="mm-cname">版权信息 · 二 · 老少校的演讲与动物主义的诞生</span><span class="mm-role">立论</span></p><p class="mm-gist">三头猪把演讲整理成动物主义，理想第一次变成纲领</p><span class="mm-quote">「老少校预言的起义究竟何时会到来，他们并不知道，也没有理由相信这场起义会在他们有生之年内爆发。」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">B</span><span class="mm-label">建场与扩张</span><span class="mm-cnt">2 章</span></summary>
 <p class="mm-why">劳作、丰收、向外传播，新政权的合法性建立在可见的增产上。</p>
 <ol class="mm-tree">
-<li class="r-case"><p class="mm-ch"><b>3</b> 版权信息 · 三 · 动物们的劳作与丰收<span class="mm-role r-case">案例</span></p><p class="mm-gist">动物辛勤劳作，收成超预期，新政权的成绩单</p><span class="mm-anchor">「动物们不知流了多少汗，才将牧草收割回来。」</span></li>
-<li class="r-case"><p class="mm-ch"><b>4</b> 版权信息 · 四 · 动物农场的起义传播<span class="mm-role r-case">案例</span></p><p class="mm-gist">派出鸽子向外传播起义，革命开始有了对外姿态</p><span class="mm-anchor">「到了夏末，动物农场所发生的事已传遍了半个郡。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">3</span><span class="mm-cname">版权信息 · 三 · 动物们的劳作与丰收</span><span class="mm-role">案例</span></p><p class="mm-gist">动物辛勤劳作，收成超预期，新政权的成绩单</p><span class="mm-quote">「动物们不知流了多少汗，才将牧草收割回来。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">4</span><span class="mm-cname">版权信息 · 四 · 动物农场的起义传播</span><span class="mm-role">案例</span></p><p class="mm-gist">派出鸽子向外传播起义，革命开始有了对外姿态</p><span class="mm-quote">「到了夏末，动物农场所发生的事已传遍了半个郡。」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">C</span><span class="mm-label">特权浮现</span><span class="mm-cnt">2 章</span></summary>
 <p class="mm-why">莫莉出走与加班加码，纪律开始单向收紧，特权第一次显形。</p>
 <ol class="mm-tree">
-<li class="r-cnt"><p class="mm-ch"><b>5</b> 版权信息 · 五 · 莫莉的行为变化<span class="mm-role r-cnt">反证</span></p><p class="mm-gist">莫莉迟到并最终出走，不愿放弃特权的人先离开</p><span class="mm-anchor">「她总是找各种借口逃避工作，跑到饮水池旁，站在那儿傻乎乎地盯着自己在水中的倒影。」</span></li>
-<li class="r-case"><p class="mm-ch"><b>6</b> 版权信息 · 六 · 动物们的辛勤劳作<span class="mm-role r-case">案例</span></p><p class="mm-gist">每周六十小时仍要加半天，承诺被一点点改成指标</p><span class="mm-anchor">「这半天的工作完全是自愿参加，但如果有动物缺勤，其口粮将会减半。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">5</span><span class="mm-cname">版权信息 · 五 · 莫莉的行为变化</span><span class="mm-role">反证</span></p><p class="mm-gist">莫莉迟到并最终出走，不愿放弃特权的人先离开</p><span class="mm-quote">「她总是找各种借口逃避工作，跑到饮水池旁，站在那儿傻乎乎地盯着自己在水中的倒影。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">6</span><span class="mm-cname">版权信息 · 六 · 动物们的辛勤劳作</span><span class="mm-role">案例</span></p><p class="mm-gist">每周六十小时仍要加半天，承诺被一点点改成指标</p><span class="mm-quote">「这半天的工作完全是自愿参加，但如果有动物缺勤，其口粮将会减半。」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">D</span><span class="mm-label">清洗与重建</span><span class="mm-cnt">2 章</span></summary>
 <p class="mm-why">风车反复重建、诫命被改写，暴力取得了内部合法性。</p>
 <ol class="mm-tree">
-<li class="r-case"><p class="mm-ch"><b>7</b> 版权信息 · 七 · 动物农场的风车重建工作<span class="mm-role r-case">案例</span></p><p class="mm-gist">风车反复重建，劳动被赋予意义以消化失败</p><span class="mm-anchor">「他们十分清楚外界都在注视着他们。」</span></li>
-<li class="r-cnt"><p class="mm-ch"><b>8</b> 版权信息 · 八 · 动物们记起第六条诫命<span class="mm-role r-cnt">反证</span></p><p class="mm-gist">动物记起第六条诫命，杀戮被追溯性地合法化</p><span class="mm-anchor">「因为显然处死那些与雪球勾结的叛徒，是有正当理由的。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">7</span><span class="mm-cname">版权信息 · 七 · 动物农场的风车重建工作</span><span class="mm-role">案例</span></p><p class="mm-gist">风车反复重建，劳动被赋予意义以消化失败</p><span class="mm-quote">「他们十分清楚外界都在注视着他们。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">8</span><span class="mm-cname">版权信息 · 八 · 动物们记起第六条诫命</span><span class="mm-role">反证</span></p><p class="mm-gist">动物记起第六条诫命，杀戮被追溯性地合法化</p><span class="mm-quote">「因为显然处死那些与雪球勾结的叛徒，是有正当理由的。」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">E</span><span class="mm-label">结局</span><span class="mm-cnt">2 章</span></summary>
 <p class="mm-why">拳击手被卖掉，猪与人同桌，循环在最后一页闭合。</p>
 <ol class="mm-tree">
-<li class="r-case"><p class="mm-ch"><b>9</b> 版权信息 · 九 · 拳击手的辛劳与牺牲<span class="mm-role r-case">案例</span></p><p class="mm-gist">拳击手不肯休息直至倒下，忠诚被系统按废料处理</p><span class="mm-anchor">「拳击手在胜利庆典结束后的第二天，动物们就开始了风车的重建工作。」</span></li>
-<li class="r-end"><p class="mm-ch"><b>10</b> 版权信息 · 十 · 动物农场的变迁<span class="mm-role r-end">收束</span></p><p class="mm-gist">猪与人同桌难分彼此，起义前的记忆已被抹平</p><span class="mm-anchor">「穆丽尔、蓝铃、杰西和品彻死了，琼斯先生也死了。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">9</span><span class="mm-cname">版权信息 · 九 · 拳击手的辛劳与牺牲</span><span class="mm-role">案例</span></p><p class="mm-gist">拳击手不肯休息直至倒下，忠诚被系统按废料处理</p><span class="mm-quote">「拳击手在胜利庆典结束后的第二天，动物们就开始了风车的重建工作。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">10</span><span class="mm-cname">版权信息 · 十 · 动物农场的变迁</span><span class="mm-role">收束</span></p><p class="mm-gist">猪与人同桌难分彼此，起义前的记忆已被抹平</p><span class="mm-quote">「穆丽尔、蓝铃、杰西和品彻死了，琼斯先生也死了。」</span></li>
 </ol>
 </details>
 <footer class="site-footer">

@@ -16,8 +16,8 @@
 .mm-bar i{display:block;height:100%;background:linear-gradient(90deg,#8a9b6e,#c2b280)}
 .mm-svgwrap{overflow-x:auto;padding:.4em 0 1em;border-bottom:1px solid var(--line)}
 .mm-svg{width:100%;height:auto;min-width:760px}
-.mm-spine{margin:.9em 0;border-left:3px solid #d9d0bd;padding:.1em 0 .1em .9em}
-.mm-spine[open]{border-left-color:#8a9b6e}
+.mm-spine{margin:1.15em 0;border-left:3px solid #ece4d3;padding:.1em 0 .1em .85em}
+.mm-spine[open]{border-left-color:#d8cdb4}
 .mm-spine>summary{display:flex;gap:.6em;align-items:baseline;cursor:pointer;
   list-style:none;padding:.35em 0}
 .mm-spine>summary::-webkit-details-marker{display:none}
@@ -26,24 +26,32 @@
 .mm-label{font-weight:600;font-size:1rem;color:var(--ink)}
 .mm-cnt{margin-left:auto;font-size:.74rem;color:var(--muted)}
 .mm-why{font-size:.8rem;color:var(--muted);margin:.1em 0 .8em;line-height:1.7}
-.mm-tree{list-style:none;padding:0;margin:0}
-.mm-tree li{position:relative;padding:.42em 0 .42em 1.1em;border-left:1px dotted #cfc6b4;
-  margin-left:.5em}
-.mm-tree li:before{content:"";position:absolute;left:0;top:1.05em;width:.7em;
-  border-top:1px dotted #cfc6b4}
-.mm-ch{margin:0;font-size:.92rem;color:var(--ink)}
-.mm-ch b{color:#a9a08d;font-weight:500;font-size:.8rem;margin-right:.4em}
-.mm-role{font-size:.68rem;padding:.05em .4em;border-radius:3px;margin-left:.5em;
-  vertical-align:.1em;white-space:nowrap}
-.r-pre{background:#eef0e6;color:#6b7a4e}.r-th{background:#eae7f0;color:#5f5578}
-.r-cnt{background:#f6e9e4;color:#946350}.r-case{background:#e8eff1;color:#4f7380}
-.r-end{background:#f2ecdf;color:#8a7442}
-.mm-gist{margin:.18em 0 .3em;font-size:.84rem;line-height:1.75;color:#4a443b}
-.mm-chip{display:inline-block;font-size:.68rem;color:#6b6152;background:#f2ecdf;
-  border-radius:9px;padding:.05em .5em;margin:.15em .25em .15em 0}
-.mm-anchor{display:block;font-size:.78rem;color:#8a8272;line-height:1.7;
-  border-left:2px dotted #d9d0bd;padding-left:.7em;margin-top:.3em}
-@media(max-width:720px){.mm-svg{min-width:640px}}
+.mm-tree{list-style:none;padding:0;margin:.15em 0 0}
+/* 章条目：与通读页 .ch-item 对齐（无卡片/无彩条/虚线分隔），行高按手机可读行数收紧 */
+.mm-cn{padding:8px 0;border-bottom:1px dashed #eee8dc}
+.mm-cn:last-child{border-bottom:0}
+.mm-chead{display:flex;flex-wrap:wrap;gap:2px 10px;align-items:baseline;margin:0}
+.mm-cno{flex:none;min-width:1.7em;color:#bf8247;font-weight:700;font-size:.82rem;
+  font-variant-numeric:tabular-nums}
+.mm-cname{flex:0 1 auto;min-width:0;font-size:.92rem;line-height:1.6;color:var(--ink);
+  word-break:break-word}
+.mm-role{flex:none;font-size:.68rem;color:#8a8272;line-height:1.6;white-space:nowrap}
+.mm-gist{margin:.15em 0 .2em;font-size:.86rem;line-height:1.75;color:#4a443b}
+.mm-chip{display:inline-block;font-size:.68rem;color:#6b6152;background:#f4f1e6;
+  border-radius:9px;padding:.05em .5em;margin:.1em .28em .1em 0}
+/* 引文块取通读页 ul.ch-quote 的观感：浅米底 + 金色左线 */
+.mm-quote{display:block;margin:.3em 0 .1em;padding:7px 11px;background:#fdf8ee;
+  border-left:3px solid var(--gold);border-radius:0 8px 8px 0;
+  font-size:.8rem;line-height:1.75;color:#6b5c43}
+@media(max-width:720px){
+  .mm-svg{min-width:640px}
+  /* 手机：章条目再收紧一点，一屏多两行 */
+  .mm-cn{padding:7px 0}
+  .mm-chead{gap:8px}
+  .mm-cname{font-size:.9rem}
+  .mm-gist{font-size:.84rem;line-height:1.7}
+  .mm-quote{padding:6px 9px;font-size:.78rem}
+}
 </style>
 </head>
 <body>
@@ -89,22 +97,22 @@
 <summary><span class="mm-id">A</span><span class="mm-label">第一部：拿到自由</span><span class="mm-cnt">5 章</span></summary>
 <p class="mm-why">从别墅到港口到情人，梅尔索一步步靠近那笔能换自由的钱。</p>
 <ol class="mm-tree">
-<li class="r-pre"><p class="mm-ch"><b>1</b> 第一部分 快乐的死 · 第一章 · 帕特里斯·梅尔索前往扎格勒斯的别墅<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">梅尔索走进扎格勒斯的别墅，财富与病体同时出现</p><span class="mm-anchor">「梅尔索在别墅门口停下，戴上手套，推开大门，走进别墅。」</span></li>
-<li class="r-pre"><p class="mm-ch"><b>2</b> 第一部分 快乐的死 · 第二章 · 阿尔及尔港口的繁忙景象<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">阿尔及尔港口扛麦袋的工人，劳动与身体被摆成对照</p><span class="mm-anchor">「火热的阳光晒得沥青发出浓烈的味道，与麻袋散发的灰尘味混杂在一起。」</span></li>
-<li class="r-case"><p class="mm-ch"><b>3</b> 第一部分 快乐的死 · 第三章 · 梅尔索与玛尔特的相遇与相爱<span class="mm-role r-case">案例</span></p><p class="mm-gist">与玛尔特相遇相爱，情爱成为自由的第一次试用</p><span class="mm-anchor">「玛尔特的美貌和优雅打动了他，他看着她一直如画中花朵一般静止不动的嘴唇变得鲜活起来，向他凑过来。」</span></li>
-<li class="r-th"><p class="mm-ch"><b>4</b> 第一部分 快乐的死 · 第四章 · 梅尔索与扎格勒斯的对话<span class="mm-role r-th">立论</span></p><p class="mm-gist">梅尔索厌世而扎格勒斯热爱生命，两种态度正面相撞</p><span class="mm-anchor">「梅尔索：“您看起来很疲惫。”扎格勒斯：“对，我感到厌烦。”。」</span></li>
-<li class="r-cnt"><p class="mm-ch"><b>5</b> 第一部分 快乐的死 · 第五章 · 箍桶匠卡多纳的孤独生活<span class="mm-role r-cnt">反证</span></p><p class="mm-gist">箍桶匠卡多纳的孤独，预告了自由也可能是一种囚禁</p><span class="mm-anchor">「卡多纳耳聋，半哑，恶毒又粗暴。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">1</span><span class="mm-cname">第一部分 快乐的死 · 第一章 · 帕特里斯·梅尔索前往扎格勒斯的别墅</span><span class="mm-role">铺垫</span></p><p class="mm-gist">梅尔索走进扎格勒斯的别墅，财富与病体同时出现</p><span class="mm-quote">「梅尔索在别墅门口停下，戴上手套，推开大门，走进别墅。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">2</span><span class="mm-cname">第一部分 快乐的死 · 第二章 · 阿尔及尔港口的繁忙景象</span><span class="mm-role">铺垫</span></p><p class="mm-gist">阿尔及尔港口扛麦袋的工人，劳动与身体被摆成对照</p><span class="mm-quote">「火热的阳光晒得沥青发出浓烈的味道，与麻袋散发的灰尘味混杂在一起。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">3</span><span class="mm-cname">第一部分 快乐的死 · 第三章 · 梅尔索与玛尔特的相遇与相爱</span><span class="mm-role">案例</span></p><p class="mm-gist">与玛尔特相遇相爱，情爱成为自由的第一次试用</p><span class="mm-quote">「玛尔特的美貌和优雅打动了他，他看着她一直如画中花朵一般静止不动的嘴唇变得鲜活起来，向他凑过来。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">4</span><span class="mm-cname">第一部分 快乐的死 · 第四章 · 梅尔索与扎格勒斯的对话</span><span class="mm-role">立论</span></p><p class="mm-gist">梅尔索厌世而扎格勒斯热爱生命，两种态度正面相撞</p><span class="mm-quote">「梅尔索：“您看起来很疲惫。”扎格勒斯：“对，我感到厌烦。”。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">5</span><span class="mm-cname">第一部分 快乐的死 · 第五章 · 箍桶匠卡多纳的孤独生活</span><span class="mm-role">反证</span></p><p class="mm-gist">箍桶匠卡多纳的孤独，预告了自由也可能是一种囚禁</p><span class="mm-quote">「卡多纳耳聋，半哑，恶毒又粗暴。」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">B</span><span class="mm-label">第二部：消化自由</span><span class="mm-cnt">5 章</span></summary>
 <p class="mm-why">旅行、阳光、驾驶与季节，全是把自由过成日常的尝试。</p>
 <ol class="mm-tree">
-<li class="r-case"><p class="mm-ch"><b>6</b> 第二部 有意识的死 · 第一章 · 梅尔索在布拉格的旅馆生活<span class="mm-role r-case">案例</span></p><p class="mm-gist">布拉格旅馆的陌生感，自由第一次变成无处安放</p><span class="mm-anchor">「男人用德语说：“我想要一间房。”。」</span></li>
-<li class="r-case"><p class="mm-ch"><b>7</b> 第二部 有意识的死 · 第二章 · 梅尔索的旅程<span class="mm-role r-case">案例</span></p><p class="mm-gist">火车上凝视双手，旅行把他带到自己之外</p><span class="mm-anchor">「暴风雨将至，厚重的乌云压得低低的，一路紧随疾驰的火车。」</span></li>
-<li class="r-case"><p class="mm-ch"><b>8</b> 第二部 有意识的死 · 第三章 · 帕特里斯和卡特琳娜在露台上享受阳光<span class="mm-role r-case">案例</span></p><p class="mm-gist">露台上的阳光与身体，快乐被还原成感官的当下</p><span class="mm-anchor">「卡特琳娜舔了舔帕特里斯的胳膊，然后躺下，抚摸着两肋。」</span></li>
-<li class="r-case"><p class="mm-ch"><b>9</b> 第二部 有意识的死 · 第四章 · 梅尔索的清晨驾驶<span class="mm-role r-case">案例</span></p><p class="mm-gist">沿海公路的清晨驾驶，速度成了确认存在的方式</p><span class="mm-anchor">「离开阿尔及尔以后，他赶上并超越了几辆送奶车。」</span></li>
-<li class="r-end"><p class="mm-ch"><b>10</b> 第二部 有意识的死 · 第五章<span class="mm-role r-end">收束</span></p><p class="mm-gist">割草与收割的月份推移，季节替他把结局说完</p><span class="mm-anchor">「杏子已经饱蓄夏日的气息。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">6</span><span class="mm-cname">第二部 有意识的死 · 第一章 · 梅尔索在布拉格的旅馆生活</span><span class="mm-role">案例</span></p><p class="mm-gist">布拉格旅馆的陌生感，自由第一次变成无处安放</p><span class="mm-quote">「男人用德语说：“我想要一间房。”。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">7</span><span class="mm-cname">第二部 有意识的死 · 第二章 · 梅尔索的旅程</span><span class="mm-role">案例</span></p><p class="mm-gist">火车上凝视双手，旅行把他带到自己之外</p><span class="mm-quote">「暴风雨将至，厚重的乌云压得低低的，一路紧随疾驰的火车。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">8</span><span class="mm-cname">第二部 有意识的死 · 第三章 · 帕特里斯和卡特琳娜在露台上享受阳光</span><span class="mm-role">案例</span></p><p class="mm-gist">露台上的阳光与身体，快乐被还原成感官的当下</p><span class="mm-quote">「卡特琳娜舔了舔帕特里斯的胳膊，然后躺下，抚摸着两肋。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">9</span><span class="mm-cname">第二部 有意识的死 · 第四章 · 梅尔索的清晨驾驶</span><span class="mm-role">案例</span></p><p class="mm-gist">沿海公路的清晨驾驶，速度成了确认存在的方式</p><span class="mm-quote">「离开阿尔及尔以后，他赶上并超越了几辆送奶车。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">10</span><span class="mm-cname">第二部 有意识的死 · 第五章</span><span class="mm-role">收束</span></p><p class="mm-gist">割草与收割的月份推移，季节替他把结局说完</p><span class="mm-quote">「杏子已经饱蓄夏日的气息。」</span></li>
 </ol>
 </details>
 <footer class="site-footer">

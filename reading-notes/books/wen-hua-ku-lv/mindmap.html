@@ -16,8 +16,8 @@
 .mm-bar i{display:block;height:100%;background:linear-gradient(90deg,#8a9b6e,#c2b280)}
 .mm-svgwrap{overflow-x:auto;padding:.4em 0 1em;border-bottom:1px solid var(--line)}
 .mm-svg{width:100%;height:auto;min-width:760px}
-.mm-spine{margin:.9em 0;border-left:3px solid #d9d0bd;padding:.1em 0 .1em .9em}
-.mm-spine[open]{border-left-color:#8a9b6e}
+.mm-spine{margin:1.15em 0;border-left:3px solid #ece4d3;padding:.1em 0 .1em .85em}
+.mm-spine[open]{border-left-color:#d8cdb4}
 .mm-spine>summary{display:flex;gap:.6em;align-items:baseline;cursor:pointer;
   list-style:none;padding:.35em 0}
 .mm-spine>summary::-webkit-details-marker{display:none}
@@ -26,24 +26,32 @@
 .mm-label{font-weight:600;font-size:1rem;color:var(--ink)}
 .mm-cnt{margin-left:auto;font-size:.74rem;color:var(--muted)}
 .mm-why{font-size:.8rem;color:var(--muted);margin:.1em 0 .8em;line-height:1.7}
-.mm-tree{list-style:none;padding:0;margin:0}
-.mm-tree li{position:relative;padding:.42em 0 .42em 1.1em;border-left:1px dotted #cfc6b4;
-  margin-left:.5em}
-.mm-tree li:before{content:"";position:absolute;left:0;top:1.05em;width:.7em;
-  border-top:1px dotted #cfc6b4}
-.mm-ch{margin:0;font-size:.92rem;color:var(--ink)}
-.mm-ch b{color:#a9a08d;font-weight:500;font-size:.8rem;margin-right:.4em}
-.mm-role{font-size:.68rem;padding:.05em .4em;border-radius:3px;margin-left:.5em;
-  vertical-align:.1em;white-space:nowrap}
-.r-pre{background:#eef0e6;color:#6b7a4e}.r-th{background:#eae7f0;color:#5f5578}
-.r-cnt{background:#f6e9e4;color:#946350}.r-case{background:#e8eff1;color:#4f7380}
-.r-end{background:#f2ecdf;color:#8a7442}
-.mm-gist{margin:.18em 0 .3em;font-size:.84rem;line-height:1.75;color:#4a443b}
-.mm-chip{display:inline-block;font-size:.68rem;color:#6b6152;background:#f2ecdf;
-  border-radius:9px;padding:.05em .5em;margin:.15em .25em .15em 0}
-.mm-anchor{display:block;font-size:.78rem;color:#8a8272;line-height:1.7;
-  border-left:2px dotted #d9d0bd;padding-left:.7em;margin-top:.3em}
-@media(max-width:720px){.mm-svg{min-width:640px}}
+.mm-tree{list-style:none;padding:0;margin:.15em 0 0}
+/* 章条目：与通读页 .ch-item 对齐（无卡片/无彩条/虚线分隔），行高按手机可读行数收紧 */
+.mm-cn{padding:8px 0;border-bottom:1px dashed #eee8dc}
+.mm-cn:last-child{border-bottom:0}
+.mm-chead{display:flex;flex-wrap:wrap;gap:2px 10px;align-items:baseline;margin:0}
+.mm-cno{flex:none;min-width:1.7em;color:#bf8247;font-weight:700;font-size:.82rem;
+  font-variant-numeric:tabular-nums}
+.mm-cname{flex:0 1 auto;min-width:0;font-size:.92rem;line-height:1.6;color:var(--ink);
+  word-break:break-word}
+.mm-role{flex:none;font-size:.68rem;color:#8a8272;line-height:1.6;white-space:nowrap}
+.mm-gist{margin:.15em 0 .2em;font-size:.86rem;line-height:1.75;color:#4a443b}
+.mm-chip{display:inline-block;font-size:.68rem;color:#6b6152;background:#f4f1e6;
+  border-radius:9px;padding:.05em .5em;margin:.1em .28em .1em 0}
+/* 引文块取通读页 ul.ch-quote 的观感：浅米底 + 金色左线 */
+.mm-quote{display:block;margin:.3em 0 .1em;padding:7px 11px;background:#fdf8ee;
+  border-left:3px solid var(--gold);border-radius:0 8px 8px 0;
+  font-size:.8rem;line-height:1.75;color:#6b5c43}
+@media(max-width:720px){
+  .mm-svg{min-width:640px}
+  /* 手机：章条目再收紧一点，一屏多两行 */
+  .mm-cn{padding:7px 0}
+  .mm-chead{gap:8px}
+  .mm-cname{font-size:.9rem}
+  .mm-gist{font-size:.84rem;line-height:1.7}
+  .mm-quote{padding:6px 9px;font-size:.78rem}
+}
 </style>
 </head>
 <body>
@@ -122,74 +130,74 @@
 <summary><span class="mm-id">A</span><span class="mm-label">从书斋到荒漠</span><span class="mm-cnt">5 章</span></summary>
 <p class="mm-why">自序交代「写不下去」的困境，随后四篇把镜头推到敦煌与西北，是全书的动机与第一现场。</p>
 <ol class="mm-tree">
-<li class="r-pre"><p class="mm-ch"><b>1</b> 第1章 自序<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">自序交代写史论的疲惫，决心离开书斋去看实物</p><span class="mm-anchor">「提笔就感觉到年岁陡增，笔下一派端肃板正。」</span></li>
-<li class="r-case"><p class="mm-ch"><b>2</b> 第2章 道士塔<span class="mm-role r-case">案例</span></p><p class="mm-gist">王道士把经卷卖给外人，文明流失被记在一个愚昧者名下</p><span class="mm-anchor">「他原是湖北麻城的农民，逃荒到甘肃，做了道士。」</span></li>
-<li class="r-case"><p class="mm-ch"><b>3</b> 第3章 莫高窟<span class="mm-role r-case">案例</span></p><p class="mm-gist">莫高窟的营造跨越千年，信仰被一层层堆成洞窟</p><span class="mm-anchor">「《山海经》记，“舜逐三苗子三危”。」</span></li>
-<li class="r-th"><p class="mm-ch"><b>4</b> 第4章 阳关雪<span class="mm-role r-th">立论</span></p><p class="mm-gist">文人把生僻角落写成故乡，文字比地理更能安放人</p><span class="mm-anchor">「他们褪色的青衫里，究竟藏着什么法术呢？。」</span></li>
-<li class="r-case"><p class="mm-ch"><b>5</b> 第5章 沙原隐泉<span class="mm-role r-case">案例</span></p><p class="mm-gist">沙原独行与月牙泉，走路的脚印成了对风景的确认</p><span class="mm-anchor">「远远看去，有几行歪歪扭扭的脚印。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">1</span><span class="mm-cname">第1章 自序</span><span class="mm-role">铺垫</span></p><p class="mm-gist">自序交代写史论的疲惫，决心离开书斋去看实物</p><span class="mm-quote">「提笔就感觉到年岁陡增，笔下一派端肃板正。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">2</span><span class="mm-cname">第2章 道士塔</span><span class="mm-role">案例</span></p><p class="mm-gist">王道士把经卷卖给外人，文明流失被记在一个愚昧者名下</p><span class="mm-quote">「他原是湖北麻城的农民，逃荒到甘肃，做了道士。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">3</span><span class="mm-cname">第3章 莫高窟</span><span class="mm-role">案例</span></p><p class="mm-gist">莫高窟的营造跨越千年，信仰被一层层堆成洞窟</p><span class="mm-quote">「《山海经》记，“舜逐三苗子三危”。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">4</span><span class="mm-cname">第4章 阳关雪</span><span class="mm-role">立论</span></p><p class="mm-gist">文人把生僻角落写成故乡，文字比地理更能安放人</p><span class="mm-quote">「他们褪色的青衫里，究竟藏着什么法术呢？。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">5</span><span class="mm-cname">第5章 沙原隐泉</span><span class="mm-role">案例</span></p><p class="mm-gist">沙原独行与月牙泉，走路的脚印成了对风景的确认</p><span class="mm-quote">「远远看去，有几行歪歪扭扭的脚印。」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">B</span><span class="mm-label">山河与工程</span><span class="mm-cnt">6 章</span></summary>
 <p class="mm-why">六篇都写「人造物如何被山水接纳」，从都江堰到三峡，工程、祠庙与贬官文人在此交织。</p>
 <ol class="mm-tree">
-<li class="r-case"><p class="mm-ch"><b>6</b> 第6章 柳侯祠<span class="mm-role r-case">案例</span></p><p class="mm-gist">夜宿柳侯祠，贬谪者的处境与祠堂的荒草互为注解</p><span class="mm-anchor">「床边似长出齐膝荒草，柳宗元跨过千年飘然孑立，青衫灰暗，神色孤伤。」</span></li>
-<li class="r-th"><p class="mm-ch"><b>7</b> 第7章 白莲洞<span class="mm-role r-th">立论</span></p><p class="mm-gist">白莲洞把远古人类的系脉接进当下的文明叙事</p><span class="mm-anchor">「两位古人类学家在白莲洞作野外考察，发现这个普通的溶洞，曾孕育过远古人类的一个重要系脉。」</span></li>
-<li class="r-th"><p class="mm-ch"><b>8</b> 第8章 都江堰<span class="mm-role r-th">立论</span></p><p class="mm-gist">都江堰比长城更伟大，因为它至今仍在灌溉</p><span class="mm-anchor">「长城虽然雄伟，但它的社会功用早已废弛，而都江堰至今还在为无数民众输送汩汩清流。」</span></li>
-<li class="r-case"><p class="mm-ch"><b>9</b> 第9章 三峡<span class="mm-role r-case">案例</span></p><p class="mm-gist">三峡既是航道也是诗路，李白的行迹被地理记住</p><span class="mm-anchor">「李白的那首名诗《早发白帝城》就在小学课本里就能读到。」</span></li>
-<li class="r-th"><p class="mm-ch"><b>10</b> 第10章 洞庭一角<span class="mm-role r-th">立论</span></p><p class="mm-gist">贬官与山水亲热，好文章往往从失意里长出来</p><span class="mm-anchor">「贬官失了宠，摔了跤，孤零零的，悲剧意识也就爬上了心头。」</span></li>
-<li class="r-case"><p class="mm-ch"><b>11</b> 第11章 庐山<span class="mm-role r-case">案例</span></p><p class="mm-gist">司马迁南登庐山，名山因一次记载而进入正史</p><span class="mm-anchor">「那时，佛学宗师慧远和道学宗师陆修静曾先后在庐山弘扬教义。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">6</span><span class="mm-cname">第6章 柳侯祠</span><span class="mm-role">案例</span></p><p class="mm-gist">夜宿柳侯祠，贬谪者的处境与祠堂的荒草互为注解</p><span class="mm-quote">「床边似长出齐膝荒草，柳宗元跨过千年飘然孑立，青衫灰暗，神色孤伤。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">7</span><span class="mm-cname">第7章 白莲洞</span><span class="mm-role">立论</span></p><p class="mm-gist">白莲洞把远古人类的系脉接进当下的文明叙事</p><span class="mm-quote">「两位古人类学家在白莲洞作野外考察，发现这个普通的溶洞，曾孕育过远古人类的一个重要系脉。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">8</span><span class="mm-cname">第8章 都江堰</span><span class="mm-role">立论</span></p><p class="mm-gist">都江堰比长城更伟大，因为它至今仍在灌溉</p><span class="mm-quote">「长城虽然雄伟，但它的社会功用早已废弛，而都江堰至今还在为无数民众输送汩汩清流。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">9</span><span class="mm-cname">第9章 三峡</span><span class="mm-role">案例</span></p><p class="mm-gist">三峡既是航道也是诗路，李白的行迹被地理记住</p><span class="mm-quote">「李白的那首名诗《早发白帝城》就在小学课本里就能读到。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">10</span><span class="mm-cname">第10章 洞庭一角</span><span class="mm-role">立论</span></p><p class="mm-gist">贬官与山水亲热，好文章往往从失意里长出来</p><span class="mm-quote">「贬官失了宠，摔了跤，孤零零的，悲剧意识也就爬上了心头。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">11</span><span class="mm-cname">第11章 庐山</span><span class="mm-role">案例</span></p><p class="mm-gist">司马迁南登庐山，名山因一次记载而进入正史</p><span class="mm-quote">「那时，佛学宗师慧远和道学宗师陆修静曾先后在庐山弘扬教义。」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">C</span><span class="mm-label">江南文脉</span><span class="mm-cnt">5 章</span></summary>
 <p class="mm-why">傩仪、道院、苏州、小镇、天柱山，写一种安静的、被低估的文化形态。</p>
 <ol class="mm-tree">
-<li class="r-case"><p class="mm-ch"><b>12</b> 第12章 贵池傩<span class="mm-role r-case">案例</span></p><p class="mm-gist">贵池傩仪把驱疫的仪式保留成一种活着的文化</p><span class="mm-anchor">「傩在训诂学上的假借、转义过程复杂，其普通意义，是指人们在特定季节驱逐疫鬼的祭仪。」</span></li>
-<li class="r-case"><p class="mm-ch"><b>13</b> 第13章 青云谱随想<span class="mm-role r-case">案例</span></p><p class="mm-gist">朱耷在青云谱作画，遗民的身世被写进笔墨</p><span class="mm-anchor">「朱耷，又叫八大山人，雪个等，是明太祖朱元璋第十七子宁献王朱权的后代。」</span></li>
-<li class="r-th"><p class="mm-ch"><b>14</b> 第14章 白发苏州<span class="mm-role r-th">立论</span></p><p class="mm-gist">苏州是中国文化宁谧的后院，地位长期被低估</p><span class="mm-anchor">「苏州的柔婉言语，姣好面容，精雅园林，幽深街道，处处给人以感官上的宁静和慰藉。」</span></li>
-<li class="r-th"><p class="mm-ch"><b>15</b> 第15章 江南小镇<span class="mm-role r-th">立论</span></p><p class="mm-gist">江南小镇是大隐隐于市的生活形态，安定的样本</p><span class="mm-anchor">「江南小镇的历史路程和现实风貌都显得平实而耐久，狭窄而悠长。」</span></li>
-<li class="r-case"><p class="mm-ch"><b>16</b> 第16章 寂寞天柱山<span class="mm-role r-case">案例</span></p><p class="mm-gist">李白苏轼王安石都想在天柱山安家，寂寞反成其价值</p><span class="mm-anchor">「李白在江上路过天柱山时，便立即把它选为自己的归宿地。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">12</span><span class="mm-cname">第12章 贵池傩</span><span class="mm-role">案例</span></p><p class="mm-gist">贵池傩仪把驱疫的仪式保留成一种活着的文化</p><span class="mm-quote">「傩在训诂学上的假借、转义过程复杂，其普通意义，是指人们在特定季节驱逐疫鬼的祭仪。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">13</span><span class="mm-cname">第13章 青云谱随想</span><span class="mm-role">案例</span></p><p class="mm-gist">朱耷在青云谱作画，遗民的身世被写进笔墨</p><span class="mm-quote">「朱耷，又叫八大山人，雪个等，是明太祖朱元璋第十七子宁献王朱权的后代。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">14</span><span class="mm-cname">第14章 白发苏州</span><span class="mm-role">立论</span></p><p class="mm-gist">苏州是中国文化宁谧的后院，地位长期被低估</p><span class="mm-quote">「苏州的柔婉言语，姣好面容，精雅园林，幽深街道，处处给人以感官上的宁静和慰藉。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">15</span><span class="mm-cname">第15章 江南小镇</span><span class="mm-role">立论</span></p><p class="mm-gist">江南小镇是大隐隐于市的生活形态，安定的样本</p><span class="mm-quote">「江南小镇的历史路程和现实风貌都显得平实而耐久，狭窄而悠长。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">16</span><span class="mm-cname">第16章 寂寞天柱山</span><span class="mm-role">案例</span></p><p class="mm-gist">李白苏轼王安石都想在天柱山安家，寂寞反成其价值</p><span class="mm-quote">「李白在江上路过天柱山时，便立即把它选为自己的归宿地。」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">D</span><span class="mm-label">藏书与城</span><span class="mm-cnt">5 章</span></summary>
 <p class="mm-why">从天一阁到上海人到五城记，把「保存」与「消耗」放在城与人身上对照。</p>
 <ol class="mm-tree">
-<li class="r-case"><p class="mm-ch"><b>17</b> 第17章 风雨天一阁<span class="mm-role r-case">案例</span></p><p class="mm-gist">范钦建天一阁，私人藏书成了文明最脆弱也最顽强的容器</p><span class="mm-anchor">「1976年春到宁波养病，老师盛钟健先生有心设法让作者到天一阁里去看一段时间书，但因手续烦人，作者没有读书的心绪，只得作罢」</span></li>
-<li class="r-th"><p class="mm-ch"><b>18</b> 第18章 西湖梦<span class="mm-role r-th">立论</span></p><p class="mm-gist">西湖被写尽之后，后人只能在旧题里另寻入口</p><span class="mm-anchor">「游览可以，贴近去却未免吃力。为了摆脱这种感受，有一年夏天，我跳到湖水中游泳，独个儿游了长长一程，算是与它有了触肤之亲。」</span></li>
-<li class="r-case"><p class="mm-ch"><b>19</b> 第19章 狼山脚下<span class="mm-role r-case">案例</span></p><p class="mm-gist">狼山的野拙与江淮文明对照，边地反而保住元气</p><span class="mm-anchor">「狼山在南通县境内，并不高，也并不美。」</span></li>
-<li class="r-th"><p class="mm-ch"><b>20</b> 第20章 上海人<span class="mm-role r-th">立论</span></p><p class="mm-gist">上海人是特殊群落，全国离不开又看不惯</p><span class="mm-anchor">「上海的古迹没有多少好看的，到上海旅行，领受最深的便是熙熙攘攘的上海人。」</span></li>
-<li class="r-case"><p class="mm-ch"><b>21</b> 第21章 五城记<span class="mm-role r-case">案例</span></p><p class="mm-gist">五座城各留下一个残迹，城市记忆靠最坚固的部分幸存</p><span class="mm-anchor">「开封就像我们整个民族，一再地在灾难的大漠上重新站立，立誓恢复淤泥下的昔日繁华。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">17</span><span class="mm-cname">第17章 风雨天一阁</span><span class="mm-role">案例</span></p><p class="mm-gist">范钦建天一阁，私人藏书成了文明最脆弱也最顽强的容器</p><span class="mm-quote">「1976年春到宁波养病，老师盛钟健先生有心设法让作者到天一阁里去看一段时间书，但因手续烦人，作者没有读书的心绪，只得作罢」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">18</span><span class="mm-cname">第18章 西湖梦</span><span class="mm-role">立论</span></p><p class="mm-gist">西湖被写尽之后，后人只能在旧题里另寻入口</p><span class="mm-quote">「游览可以，贴近去却未免吃力。为了摆脱这种感受，有一年夏天，我跳到湖水中游泳，独个儿游了长长一程，算是与它有了触肤之亲。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">19</span><span class="mm-cname">第19章 狼山脚下</span><span class="mm-role">案例</span></p><p class="mm-gist">狼山的野拙与江淮文明对照，边地反而保住元气</p><span class="mm-quote">「狼山在南通县境内，并不高，也并不美。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">20</span><span class="mm-cname">第20章 上海人</span><span class="mm-role">立论</span></p><p class="mm-gist">上海人是特殊群落，全国离不开又看不惯</p><span class="mm-quote">「上海的古迹没有多少好看的，到上海旅行，领受最深的便是熙熙攘攘的上海人。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">21</span><span class="mm-cname">第21章 五城记</span><span class="mm-role">案例</span></p><p class="mm-gist">五座城各留下一个残迹，城市记忆靠最坚固的部分幸存</p><span class="mm-quote">「开封就像我们整个民族，一再地在灾难的大漠上重新站立，立誓恢复淤泥下的昔日繁华。」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">E</span><span class="mm-label">乡土与器物</span><span class="mm-cnt">6 章</span></summary>
 <p class="mm-why">庙宇、夜航船、信客、酒公墓、老屋，写普通人如何靠一件器物维持体面。</p>
 <ol class="mm-tree">
-<li class="r-case"><p class="mm-ch"><b>22</b> 第22章 庙宇<span class="mm-role r-case">案例</span></p><p class="mm-gist">庙宇里诵经与纺纱并行，信仰与生计共用一间屋</p><span class="mm-anchor">「夏日午间，蝉声如潮，老太太们念佛的声音渐渐含糊，脑袋耷拉下来，猛然惊醒，深觉罪过，于是重新抖擞，再发朗声。」</span></li>
-<li class="r-th"><p class="mm-ch"><b>23</b> 第23章 夜航船<span class="mm-role r-th">立论</span></p><p class="mm-gist">夜航船是水乡苦途的象征，也是消息流通的管道</p><span class="mm-anchor">「每天深夜，总能听到笃笃笃的声音从河畔传来，这是夜航船来了。」</span></li>
-<li class="r-case"><p class="mm-ch"><b>24</b> 第24章 吴江船<span class="mm-role r-case">案例</span></p><p class="mm-gist">第一次坐老式夜航船，当代青年与旧式行旅正面相遇</p><span class="mm-anchor">「时间是本世纪70年代初，张岱死后280余年。」</span></li>
-<li class="r-case"><p class="mm-ch"><b>25</b> 第25章 信客<span class="mm-role r-case">案例</span></p><p class="mm-gist">信客不受机构管理，却是城乡之间最要紧的纽带</p><span class="mm-anchor">「信客要有一点文化，知道各大码头的情形，还要一副强健的筋骨，背得动重重的行李。」</span></li>
-<li class="r-case"><p class="mm-ch"><b>26</b> 第26章 酒公墓<span class="mm-role r-case">案例</span></p><p class="mm-gist">学逻辑的状元后代最终守着酒公墓，学问与生计错位</p><span class="mm-anchor">「张先生的祖父是全村唯一的识字人，父亲在上海学生意发达。」</span></li>
-<li class="r-case"><p class="mm-ch"><b>27</b> 第27章 老屋窗口<span class="mm-role r-case">案例</span></p><p class="mm-gist">老屋窗口承载几代人的记忆，卖屋等于拆掉一段家史</p><span class="mm-anchor">「作者认为老屋是自己出生和长大的地方，对老屋有情分。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">22</span><span class="mm-cname">第22章 庙宇</span><span class="mm-role">案例</span></p><p class="mm-gist">庙宇里诵经与纺纱并行，信仰与生计共用一间屋</p><span class="mm-quote">「夏日午间，蝉声如潮，老太太们念佛的声音渐渐含糊，脑袋耷拉下来，猛然惊醒，深觉罪过，于是重新抖擞，再发朗声。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">23</span><span class="mm-cname">第23章 夜航船</span><span class="mm-role">立论</span></p><p class="mm-gist">夜航船是水乡苦途的象征，也是消息流通的管道</p><span class="mm-quote">「每天深夜，总能听到笃笃笃的声音从河畔传来，这是夜航船来了。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">24</span><span class="mm-cname">第24章 吴江船</span><span class="mm-role">案例</span></p><p class="mm-gist">第一次坐老式夜航船，当代青年与旧式行旅正面相遇</p><span class="mm-quote">「时间是本世纪70年代初，张岱死后280余年。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">25</span><span class="mm-cname">第25章 信客</span><span class="mm-role">案例</span></p><p class="mm-gist">信客不受机构管理，却是城乡之间最要紧的纽带</p><span class="mm-quote">「信客要有一点文化，知道各大码头的情形，还要一副强健的筋骨，背得动重重的行李。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">26</span><span class="mm-cname">第26章 酒公墓</span><span class="mm-role">案例</span></p><p class="mm-gist">学逻辑的状元后代最终守着酒公墓，学问与生计错位</p><span class="mm-quote">「张先生的祖父是全村唯一的识字人，父亲在上海学生意发达。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">27</span><span class="mm-cname">第27章 老屋窗口</span><span class="mm-role">案例</span></p><p class="mm-gist">老屋窗口承载几代人的记忆，卖屋等于拆掉一段家史</p><span class="mm-quote">「作者认为老屋是自己出生和长大的地方，对老屋有情分。」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">F</span><span class="mm-label">写作与余篇</span><span class="mm-cnt">11 章</span></summary>
 <p class="mm-why">废墟、笔墨、藏书、腊梅收束全书，最后几篇回到作者自己的位置。</p>
 <ol class="mm-tree">
-<li class="r-th"><p class="mm-ch"><b>28</b> 第28章 废墟<span class="mm-role r-th">立论</span></p><p class="mm-gist">废墟是课本，毁灭本身也是选择的一部分</p><span class="mm-anchor">「时间的力量，理应在大地上留下痕迹；岁月的巨轮，理应在车道间碾碎凹凸。」</span></li>
-<li class="r-th"><p class="mm-ch"><b>29</b> 第29章 夜雨诗意<span class="mm-role r-th">立论</span></p><p class="mm-gist">夜雨让诗歌回到朴实与自身情感</p><span class="mm-anchor">「夜色中，各种色相都隐退了，一切色彩斑斓的词汇也就失去了效能。」</span></li>
-<li class="r-th"><p class="mm-ch"><b>30</b> 第30章 笔墨祭<span class="mm-role r-th">立论</span></p><p class="mm-gist">中国文人共用一副笔墨，工具塑造了表达方式</p><span class="mm-anchor">「笔是竹竿毛笔，墨由烟胶炼成。浓浓地磨好一砚，用笔一舔，便簌簌地写出满纸黑生生的象形文字来。」</span></li>
-<li class="r-case"><p class="mm-ch"><b>31</b> 第31章 藏书忧<span class="mm-role r-case">案例</span></p><p class="mm-gist">以书为壁的庄严，藏书人的焦虑在搬迁时全部显形</p><span class="mm-anchor">「书架直达壁顶，一架架连过去、围起来，造成了一种逼人身心的文化重压。」</span></li>
-<li class="r-th"><p class="mm-ch"><b>32</b> 第32章 腊梅<span class="mm-role r-th">立论</span></p><p class="mm-gist">人生是一划而过的线，值得留存的只是几个点</p><span class="mm-anchor">「步履再矫健的人也会有生病的时候，住医院对一个旅行者来说可能是心理反差最大的一件事。」</span></li>
-<li class="r-case"><p class="mm-ch"><b>33</b> 第33章 家住龙华<span class="mm-role r-case">案例</span></p><p class="mm-gist">家住殡仪馆旁，日常与死亡只隔一条街</p><span class="mm-anchor">「记得两年前学院宿舍初搬来时，许多朋友深感地处僻远，不便之处甚多。」</span></li>
-<li class="r-case"><p class="mm-ch"><b>34</b> 第34章 篇后附记<span class="mm-role r-case">案例</span></p><p class="mm-gist">龙华寺塔年代难考，附记补上考证的边界</p><span class="mm-anchor">「传说龙华塔由三国时代的孙权建于公元247年。」</span></li>
-<li class="r-case"><p class="mm-ch"><b>35</b> 第35章 三十年的重量<span class="mm-role r-case">案例</span></p><p class="mm-gist">补画一张贺年片，三十年的师生情被一件小事称量</p><span class="mm-anchor">「30年前的春节，作者曾与同班同学曹齐合作，画了一张贺年片送给他。」</span></li>
-<li class="r-case"><p class="mm-ch"><b>36</b> 第36章 漂泊者们<span class="mm-role r-case">案例</span></p><p class="mm-gist">荒岛上的漂泊者，把精神寄托放在可携带的东西上</p><span class="mm-anchor">「岛上有三两间简陋的店铺，一间废弃的小学，操场上壅塞着几十辆破旧轿车。」</span></li>
-<li class="r-th"><p class="mm-ch"><b>37</b> 第37章 华语情结<span class="mm-role r-th">立论</span></p><p class="mm-gist">华语是延绵最久的巨岳，使用者众多而处境各异</p><span class="mm-anchor">「一度与它一起称雄于世的其他古代语言大多已经风化、干缩，唯有它，竟历久不衰。」</span></li>
-<li class="r-end"><p class="mm-ch"><b>38</b> 第38章 这里真安静<span class="mm-role r-end">收束</span></p><p class="mm-gist">南洋的墓园最安静，离散者的结局被写在异乡</p><span class="mm-anchor">「这是日本人的坟地，碑下埋着的，是一万余名侵略东南亚的“皇军”的骨灰。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">28</span><span class="mm-cname">第28章 废墟</span><span class="mm-role">立论</span></p><p class="mm-gist">废墟是课本，毁灭本身也是选择的一部分</p><span class="mm-quote">「时间的力量，理应在大地上留下痕迹；岁月的巨轮，理应在车道间碾碎凹凸。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">29</span><span class="mm-cname">第29章 夜雨诗意</span><span class="mm-role">立论</span></p><p class="mm-gist">夜雨让诗歌回到朴实与自身情感</p><span class="mm-quote">「夜色中，各种色相都隐退了，一切色彩斑斓的词汇也就失去了效能。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">30</span><span class="mm-cname">第30章 笔墨祭</span><span class="mm-role">立论</span></p><p class="mm-gist">中国文人共用一副笔墨，工具塑造了表达方式</p><span class="mm-quote">「笔是竹竿毛笔，墨由烟胶炼成。浓浓地磨好一砚，用笔一舔，便簌簌地写出满纸黑生生的象形文字来。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">31</span><span class="mm-cname">第31章 藏书忧</span><span class="mm-role">案例</span></p><p class="mm-gist">以书为壁的庄严，藏书人的焦虑在搬迁时全部显形</p><span class="mm-quote">「书架直达壁顶，一架架连过去、围起来，造成了一种逼人身心的文化重压。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">32</span><span class="mm-cname">第32章 腊梅</span><span class="mm-role">立论</span></p><p class="mm-gist">人生是一划而过的线，值得留存的只是几个点</p><span class="mm-quote">「步履再矫健的人也会有生病的时候，住医院对一个旅行者来说可能是心理反差最大的一件事。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">33</span><span class="mm-cname">第33章 家住龙华</span><span class="mm-role">案例</span></p><p class="mm-gist">家住殡仪馆旁，日常与死亡只隔一条街</p><span class="mm-quote">「记得两年前学院宿舍初搬来时，许多朋友深感地处僻远，不便之处甚多。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">34</span><span class="mm-cname">第34章 篇后附记</span><span class="mm-role">案例</span></p><p class="mm-gist">龙华寺塔年代难考，附记补上考证的边界</p><span class="mm-quote">「传说龙华塔由三国时代的孙权建于公元247年。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">35</span><span class="mm-cname">第35章 三十年的重量</span><span class="mm-role">案例</span></p><p class="mm-gist">补画一张贺年片，三十年的师生情被一件小事称量</p><span class="mm-quote">「30年前的春节，作者曾与同班同学曹齐合作，画了一张贺年片送给他。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">36</span><span class="mm-cname">第36章 漂泊者们</span><span class="mm-role">案例</span></p><p class="mm-gist">荒岛上的漂泊者，把精神寄托放在可携带的东西上</p><span class="mm-quote">「岛上有三两间简陋的店铺，一间废弃的小学，操场上壅塞着几十辆破旧轿车。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">37</span><span class="mm-cname">第37章 华语情结</span><span class="mm-role">立论</span></p><p class="mm-gist">华语是延绵最久的巨岳，使用者众多而处境各异</p><span class="mm-quote">「一度与它一起称雄于世的其他古代语言大多已经风化、干缩，唯有它，竟历久不衰。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">38</span><span class="mm-cname">第38章 这里真安静</span><span class="mm-role">收束</span></p><p class="mm-gist">南洋的墓园最安静，离散者的结局被写在异乡</p><span class="mm-quote">「这是日本人的坟地，碑下埋着的，是一万余名侵略东南亚的“皇军”的骨灰。」</span></li>
 </ol>
 </details>
 <footer class="site-footer">

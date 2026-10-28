@@ -16,8 +16,8 @@
 .mm-bar i{display:block;height:100%;background:linear-gradient(90deg,#8a9b6e,#c2b280)}
 .mm-svgwrap{overflow-x:auto;padding:.4em 0 1em;border-bottom:1px solid var(--line)}
 .mm-svg{width:100%;height:auto;min-width:760px}
-.mm-spine{margin:.9em 0;border-left:3px solid #d9d0bd;padding:.1em 0 .1em .9em}
-.mm-spine[open]{border-left-color:#8a9b6e}
+.mm-spine{margin:1.15em 0;border-left:3px solid #ece4d3;padding:.1em 0 .1em .85em}
+.mm-spine[open]{border-left-color:#d8cdb4}
 .mm-spine>summary{display:flex;gap:.6em;align-items:baseline;cursor:pointer;
   list-style:none;padding:.35em 0}
 .mm-spine>summary::-webkit-details-marker{display:none}
@@ -26,24 +26,32 @@
 .mm-label{font-weight:600;font-size:1rem;color:var(--ink)}
 .mm-cnt{margin-left:auto;font-size:.74rem;color:var(--muted)}
 .mm-why{font-size:.8rem;color:var(--muted);margin:.1em 0 .8em;line-height:1.7}
-.mm-tree{list-style:none;padding:0;margin:0}
-.mm-tree li{position:relative;padding:.42em 0 .42em 1.1em;border-left:1px dotted #cfc6b4;
-  margin-left:.5em}
-.mm-tree li:before{content:"";position:absolute;left:0;top:1.05em;width:.7em;
-  border-top:1px dotted #cfc6b4}
-.mm-ch{margin:0;font-size:.92rem;color:var(--ink)}
-.mm-ch b{color:#a9a08d;font-weight:500;font-size:.8rem;margin-right:.4em}
-.mm-role{font-size:.68rem;padding:.05em .4em;border-radius:3px;margin-left:.5em;
-  vertical-align:.1em;white-space:nowrap}
-.r-pre{background:#eef0e6;color:#6b7a4e}.r-th{background:#eae7f0;color:#5f5578}
-.r-cnt{background:#f6e9e4;color:#946350}.r-case{background:#e8eff1;color:#4f7380}
-.r-end{background:#f2ecdf;color:#8a7442}
-.mm-gist{margin:.18em 0 .3em;font-size:.84rem;line-height:1.75;color:#4a443b}
-.mm-chip{display:inline-block;font-size:.68rem;color:#6b6152;background:#f2ecdf;
-  border-radius:9px;padding:.05em .5em;margin:.15em .25em .15em 0}
-.mm-anchor{display:block;font-size:.78rem;color:#8a8272;line-height:1.7;
-  border-left:2px dotted #d9d0bd;padding-left:.7em;margin-top:.3em}
-@media(max-width:720px){.mm-svg{min-width:640px}}
+.mm-tree{list-style:none;padding:0;margin:.15em 0 0}
+/* 章条目：与通读页 .ch-item 对齐（无卡片/无彩条/虚线分隔），行高按手机可读行数收紧 */
+.mm-cn{padding:8px 0;border-bottom:1px dashed #eee8dc}
+.mm-cn:last-child{border-bottom:0}
+.mm-chead{display:flex;flex-wrap:wrap;gap:2px 10px;align-items:baseline;margin:0}
+.mm-cno{flex:none;min-width:1.7em;color:#bf8247;font-weight:700;font-size:.82rem;
+  font-variant-numeric:tabular-nums}
+.mm-cname{flex:0 1 auto;min-width:0;font-size:.92rem;line-height:1.6;color:var(--ink);
+  word-break:break-word}
+.mm-role{flex:none;font-size:.68rem;color:#8a8272;line-height:1.6;white-space:nowrap}
+.mm-gist{margin:.15em 0 .2em;font-size:.86rem;line-height:1.75;color:#4a443b}
+.mm-chip{display:inline-block;font-size:.68rem;color:#6b6152;background:#f4f1e6;
+  border-radius:9px;padding:.05em .5em;margin:.1em .28em .1em 0}
+/* 引文块取通读页 ul.ch-quote 的观感：浅米底 + 金色左线 */
+.mm-quote{display:block;margin:.3em 0 .1em;padding:7px 11px;background:#fdf8ee;
+  border-left:3px solid var(--gold);border-radius:0 8px 8px 0;
+  font-size:.8rem;line-height:1.75;color:#6b5c43}
+@media(max-width:720px){
+  .mm-svg{min-width:640px}
+  /* 手机：章条目再收紧一点，一屏多两行 */
+  .mm-cn{padding:7px 0}
+  .mm-chead{gap:8px}
+  .mm-cname{font-size:.9rem}
+  .mm-gist{font-size:.84rem;line-height:1.7}
+  .mm-quote{padding:6px 9px;font-size:.78rem}
+}
 </style>
 </head>
 <body>
@@ -131,94 +139,94 @@
 <summary><span class="mm-id">A</span><span class="mm-label">玛丽雅姆的边缘童年</span><span class="mm-cnt">6 章</span></summary>
 <p class="mm-why">交代玛丽雅姆私生女身份带来的原生家庭创伤，以及她对父权认同的渴望与幻灭。</p>
 <ol class="mm-tree">
-<li class="r-pre"><p class="mm-ch"><b>1</b> 评论<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">评价《灿烂千阳》是阿富汗30年历史记录及关于家庭友谊的故事。</p><span class="mm-chip">阿富汗30年历史</span><span class="mm-chip">叙事能力</span><span class="mm-anchor">「《灿烂千阳》是一部“阿富汗30年历史的揪心记录，一部关于家庭、友谊、信念和因爱得救的极其动人的故事。”。」</span></li>
-<li class="r-case"><p class="mm-ch"><b>2</b> 第一部分 · 第一章 · 玛丽雅姆的童年生活<span class="mm-role r-case">案例</span></p><p class="mm-gist">描绘玛丽雅姆在泥屋的童年生活及其母亲的严厉态度。</p><span class="mm-chip">扎里勒的泥屋</span><span class="mm-chip">童年生活</span><span class="mm-anchor">「玛丽雅姆在扎里勒的泥屋度过星期四」</span></li>
-<li class="r-pre"><p class="mm-ch"><b>3</b> 第一部分 · 第二章 · 娜娜对玛丽雅姆的出生和成长的不满<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">阐述娜娜对玛丽雅姆出生的不满及自身的身体状况。</p><span class="mm-chip">出生不满</span><span class="mm-chip">与世隔绝</span><span class="mm-anchor">「娜娜认为玛丽雅姆的出生是对她的侮辱，扎里勒和他的家人把她当杂草对待」</span></li>
-<li class="r-case"><p class="mm-ch"><b>4</b> 第一部分 · 第三章 · 玛丽雅姆的童年生活<span class="mm-role r-case">案例</span></p><p class="mm-gist">展现玛丽雅姆的童年记忆与娜娜的戒备神态。</p><span class="mm-chip">独轮车声音</span><span class="mm-chip">戒备神色</span><span class="mm-anchor">「玛丽雅姆的记忆中有一段是独轮车的铁轮在石头上咔嗒、咔嗒响的声音」</span></li>
-<li class="r-case"><p class="mm-ch"><b>5</b> 第一部分 · 第四章 · 玛丽雅姆对扎里勒的期待<span class="mm-role r-case">案例</span></p><p class="mm-gist">记录玛丽雅姆对扎里勒到来的期待与共同活动的快乐。</p><span class="mm-chip">期待到来</span><span class="mm-chip">共同活动</span><span class="mm-anchor">「玛丽雅姆喜欢扎里勒，期待他的到来」</span></li>
-<li class="r-th"><p class="mm-ch"><b>6</b> 第一部分 · 第五章 · 玛丽雅姆的渴望与期待<span class="mm-role r-th">立论</span></p><p class="mm-gist">暴露玛丽雅姆渴望看电影与娜娜坚决反对的冲突。</p><span class="mm-chip">渴望看电影</span><span class="mm-chip">名声地位</span><span class="mm-anchor">「玛丽雅姆渴望看到扎里勒的电影院放映的卡通片」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">1</span><span class="mm-cname">评论</span><span class="mm-role">铺垫</span></p><p class="mm-gist">评价《灿烂千阳》是阿富汗30年历史记录及关于家庭友谊的故事。</p><span class="mm-chip">阿富汗30年历史</span><span class="mm-chip">叙事能力</span><span class="mm-quote">「《灿烂千阳》是一部“阿富汗30年历史的揪心记录，一部关于家庭、友谊、信念和因爱得救的极其动人的故事。”。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">2</span><span class="mm-cname">第一部分 · 第一章 · 玛丽雅姆的童年生活</span><span class="mm-role">案例</span></p><p class="mm-gist">描绘玛丽雅姆在泥屋的童年生活及其母亲的严厉态度。</p><span class="mm-chip">扎里勒的泥屋</span><span class="mm-chip">童年生活</span><span class="mm-quote">「玛丽雅姆在扎里勒的泥屋度过星期四」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">3</span><span class="mm-cname">第一部分 · 第二章 · 娜娜对玛丽雅姆的出生和成长的不满</span><span class="mm-role">铺垫</span></p><p class="mm-gist">阐述娜娜对玛丽雅姆出生的不满及自身的身体状况。</p><span class="mm-chip">出生不满</span><span class="mm-chip">与世隔绝</span><span class="mm-quote">「娜娜认为玛丽雅姆的出生是对她的侮辱，扎里勒和他的家人把她当杂草对待」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">4</span><span class="mm-cname">第一部分 · 第三章 · 玛丽雅姆的童年生活</span><span class="mm-role">案例</span></p><p class="mm-gist">展现玛丽雅姆的童年记忆与娜娜的戒备神态。</p><span class="mm-chip">独轮车声音</span><span class="mm-chip">戒备神色</span><span class="mm-quote">「玛丽雅姆的记忆中有一段是独轮车的铁轮在石头上咔嗒、咔嗒响的声音」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">5</span><span class="mm-cname">第一部分 · 第四章 · 玛丽雅姆对扎里勒的期待</span><span class="mm-role">案例</span></p><p class="mm-gist">记录玛丽雅姆对扎里勒到来的期待与共同活动的快乐。</p><span class="mm-chip">期待到来</span><span class="mm-chip">共同活动</span><span class="mm-quote">「玛丽雅姆喜欢扎里勒，期待他的到来」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">6</span><span class="mm-cname">第一部分 · 第五章 · 玛丽雅姆的渴望与期待</span><span class="mm-role">立论</span></p><p class="mm-gist">暴露玛丽雅姆渴望看电影与娜娜坚决反对的冲突。</p><span class="mm-chip">渴望看电影</span><span class="mm-chip">名声地位</span><span class="mm-quote">「玛丽雅姆渴望看到扎里勒的电影院放映的卡通片」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">B</span><span class="mm-label">包办婚姻下的压抑生存</span><span class="mm-cnt">10 章</span></summary>
 <p class="mm-why">描述玛丽雅姆被迫进入拉希德的家庭，在生育压力与暴力威胁下经历身份的彻底异化。</p>
 <ol class="mm-tree">
-<li class="r-case"><p class="mm-ch"><b>7</b> 第一部分 · 第六章 · 玛丽雅姆在古尔德曼村墓地的悲痛<span class="mm-role r-case">案例</span></p><p class="mm-gist">描写玛丽雅姆在墓地的悲痛及扎里勒的安慰安排。</p><span class="mm-chip">墓地悲痛</span><span class="mm-chip">扎里勒安慰</span><span class="mm-anchor">「玛丽雅姆在娜娜的墓边哭泣」</span></li>
-<li class="r-case"><p class="mm-ch"><b>8</b> 第一部分 · 第七章 · 玛丽雅姆被求婚<span class="mm-role r-case">案例</span></p><p class="mm-gist">叙述扎里勒妻子们向玛丽雅姆求婚的过程。</p><span class="mm-chip">求婚</span><span class="mm-chip">拒绝</span><span class="mm-anchor">「扎里勒的三个妻子向玛丽雅姆求婚」</span></li>
-<li class="r-case"><p class="mm-ch"><b>9</b> 第一部分 · 第八章 · 玛丽雅姆的婚礼<span class="mm-role r-case">案例</span></p><p class="mm-gist">举行从简的婚礼仪式确立玛丽雅姆的婚姻。</p><span class="mm-chip">婚礼仪式</span><span class="mm-chip">《古兰经》</span><span class="mm-anchor">「玛丽雅姆被带到棕色长桌所在的房间，桌子中间摆着的是一碗杏仁糖，一本《古兰经》，一条绿色面纱和一面镜子」</span></li>
-<li class="r-case"><p class="mm-ch"><b>10</b> 第一部分 · 第九章 · 玛丽雅姆到达拉希德家<span class="mm-role r-case">案例</span></p><p class="mm-gist">呈现玛丽雅姆初到拉希德家感到的陌生与窒息。</p><span class="mm-chip">拉希德家</span><span class="mm-chip">陌生窒息</span><span class="mm-anchor">「拉希德用普什图语和法尔西语向玛丽雅姆介绍他的家」</span></li>
-<li class="r-case"><p class="mm-ch"><b>11</b> 第一部分 · 第十章 · 玛丽雅姆在新家的生活<span class="mm-role r-case">案例</span></p><p class="mm-gist">表现玛丽雅姆在新家中充满恐惧的适应尝试。</p><span class="mm-chip">孤独不安</span><span class="mm-chip">适应环境</span><span class="mm-anchor">「玛丽雅姆初到拉希德家，感到孤独和不安」</span></li>
-<li class="r-case"><p class="mm-ch"><b>12</b> 第一部分 · 第十一章 · 玛丽雅姆在拉希德的帮助下适应布卡生活<span class="mm-role r-case">案例</span></p><p class="mm-gist">展示玛丽雅姆在拉希德帮助下穿布卡并体验城市生活。</p><span class="mm-chip">布卡生活</span><span class="mm-chip">城市体验</span><span class="mm-anchor">「玛丽雅姆在拉希德的帮助下穿上布卡，开始练习走路」</span></li>
-<li class="r-case"><p class="mm-ch"><b>13</b> 第一部分 · 第十二章 · 玛丽雅姆的斋月经历<span class="mm-role r-case">案例</span></p><p class="mm-gist">记录玛丽雅姆经历斋月及初见开斋节的感受。</p><span class="mm-chip">斋月经历</span><span class="mm-chip">开斋节</span><span class="mm-anchor">「玛丽雅姆第一次看到新月初升如何影响到整座城市」</span></li>
-<li class="r-th"><p class="mm-ch"><b>14</b> 第一部分 · 第十三章 · 玛丽雅姆怀孕的喜悦与担忧<span class="mm-role r-th">立论</span></p><p class="mm-gist">描绘玛丽雅姆怀孕的喜悦与面对丈夫期望的压力。</p><span class="mm-chip">怀孕喜悦</span><span class="mm-chip">性别期待</span><span class="mm-anchor">「玛丽雅姆怀孕后，拉希德对胎儿的性别充满期待」</span></li>
-<li class="r-th"><p class="mm-ch"><b>15</b> 第一部分 · 第十四章 · 玛丽雅姆的悲哀<span class="mm-role r-th">立论</span></p><p class="mm-gist">剖析玛丽雅姆失去孩子后的思念、嫉妒与怀疑。</p><span class="mm-chip">悲哀思念</span><span class="mm-chip">真主怀疑</span><span class="mm-anchor">「玛丽雅姆对未出生的孩子的思念和悲哀」</span></li>
-<li class="r-cnt"><p class="mm-ch"><b>16</b> 第一部分 · 第十五章 · 玛丽雅姆和拉希德的日常生活<span class="mm-role r-cnt">反证</span></p><p class="mm-gist">反映日常婚姻的不满冷漠及喀布尔爆发的游行。</p><span class="mm-chip">冷漠怨恨</span><span class="mm-chip">游行示威</span><span class="mm-anchor">「玛丽雅姆对拉希德的不满和恐惧」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">7</span><span class="mm-cname">第一部分 · 第六章 · 玛丽雅姆在古尔德曼村墓地的悲痛</span><span class="mm-role">案例</span></p><p class="mm-gist">描写玛丽雅姆在墓地的悲痛及扎里勒的安慰安排。</p><span class="mm-chip">墓地悲痛</span><span class="mm-chip">扎里勒安慰</span><span class="mm-quote">「玛丽雅姆在娜娜的墓边哭泣」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">8</span><span class="mm-cname">第一部分 · 第七章 · 玛丽雅姆被求婚</span><span class="mm-role">案例</span></p><p class="mm-gist">叙述扎里勒妻子们向玛丽雅姆求婚的过程。</p><span class="mm-chip">求婚</span><span class="mm-chip">拒绝</span><span class="mm-quote">「扎里勒的三个妻子向玛丽雅姆求婚」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">9</span><span class="mm-cname">第一部分 · 第八章 · 玛丽雅姆的婚礼</span><span class="mm-role">案例</span></p><p class="mm-gist">举行从简的婚礼仪式确立玛丽雅姆的婚姻。</p><span class="mm-chip">婚礼仪式</span><span class="mm-chip">《古兰经》</span><span class="mm-quote">「玛丽雅姆被带到棕色长桌所在的房间，桌子中间摆着的是一碗杏仁糖，一本《古兰经》，一条绿色面纱和一面镜子」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">10</span><span class="mm-cname">第一部分 · 第九章 · 玛丽雅姆到达拉希德家</span><span class="mm-role">案例</span></p><p class="mm-gist">呈现玛丽雅姆初到拉希德家感到的陌生与窒息。</p><span class="mm-chip">拉希德家</span><span class="mm-chip">陌生窒息</span><span class="mm-quote">「拉希德用普什图语和法尔西语向玛丽雅姆介绍他的家」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">11</span><span class="mm-cname">第一部分 · 第十章 · 玛丽雅姆在新家的生活</span><span class="mm-role">案例</span></p><p class="mm-gist">表现玛丽雅姆在新家中充满恐惧的适应尝试。</p><span class="mm-chip">孤独不安</span><span class="mm-chip">适应环境</span><span class="mm-quote">「玛丽雅姆初到拉希德家，感到孤独和不安」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">12</span><span class="mm-cname">第一部分 · 第十一章 · 玛丽雅姆在拉希德的帮助下适应布卡生活</span><span class="mm-role">案例</span></p><p class="mm-gist">展示玛丽雅姆在拉希德帮助下穿布卡并体验城市生活。</p><span class="mm-chip">布卡生活</span><span class="mm-chip">城市体验</span><span class="mm-quote">「玛丽雅姆在拉希德的帮助下穿上布卡，开始练习走路」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">13</span><span class="mm-cname">第一部分 · 第十二章 · 玛丽雅姆的斋月经历</span><span class="mm-role">案例</span></p><p class="mm-gist">记录玛丽雅姆经历斋月及初见开斋节的感受。</p><span class="mm-chip">斋月经历</span><span class="mm-chip">开斋节</span><span class="mm-quote">「玛丽雅姆第一次看到新月初升如何影响到整座城市」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">14</span><span class="mm-cname">第一部分 · 第十三章 · 玛丽雅姆怀孕的喜悦与担忧</span><span class="mm-role">立论</span></p><p class="mm-gist">描绘玛丽雅姆怀孕的喜悦与面对丈夫期望的压力。</p><span class="mm-chip">怀孕喜悦</span><span class="mm-chip">性别期待</span><span class="mm-quote">「玛丽雅姆怀孕后，拉希德对胎儿的性别充满期待」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">15</span><span class="mm-cname">第一部分 · 第十四章 · 玛丽雅姆的悲哀</span><span class="mm-role">立论</span></p><p class="mm-gist">剖析玛丽雅姆失去孩子后的思念、嫉妒与怀疑。</p><span class="mm-chip">悲哀思念</span><span class="mm-chip">真主怀疑</span><span class="mm-quote">「玛丽雅姆对未出生的孩子的思念和悲哀」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">16</span><span class="mm-cname">第一部分 · 第十五章 · 玛丽雅姆和拉希德的日常生活</span><span class="mm-role">反证</span></p><p class="mm-gist">反映日常婚姻的不满冷漠及喀布尔爆发的游行。</p><span class="mm-chip">冷漠怨恨</span><span class="mm-chip">游行示威</span><span class="mm-quote">「玛丽雅姆对拉希德的不满和恐惧」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">C</span><span class="mm-label">莱拉的成长与战争创伤</span><span class="mm-cnt">11 章</span></summary>
 <p class="mm-why">展现受教育女性莱拉在战火中失去亲人与爱人，从现代文明生活坠入生存绝境的过程。</p>
 <ol class="mm-tree">
-<li class="r-pre"><p class="mm-ch"><b>17</b> 第二部分 · 第十六章 · 莱拉的日常<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">交代莱拉渴望见到塔里克及父母经常争吵的日常。</p><span class="mm-chip">莱拉日常</span><span class="mm-chip">潘杰希尔</span><span class="mm-anchor">「莱拉每天早晨渴望见到她的朋友塔里克」</span></li>
-<li class="r-cnt"><p class="mm-ch"><b>18</b> 第二部分 · 第十七章 · 卡迪姆的欺凌<span class="mm-role r-cnt">反证</span></p><p class="mm-gist">讲述莱拉在学校遭受恶霸卡迪姆欺凌的痛苦。</p><span class="mm-chip">学校恶霸</span><span class="mm-chip">欺凌痛苦</span><span class="mm-anchor">「卡迪姆是莱拉学校的恶霸，经常欺负她」</span></li>
-<li class="r-case"><p class="mm-ch"><b>19</b> 第二部分 · 第十八章 · 莱拉在塔里克家的生活<span class="mm-role r-case">案例</span></p><p class="mm-gist">展现莱拉在塔里克家感受到的家庭温暖与友谊。</p><span class="mm-chip">塔里克家</span><span class="mm-chip">家庭温暖</span><span class="mm-anchor">「莱拉修补了纱门，整理了书籍，和塔里克家的家人一起度过了许多愉快的时光」</span></li>
-<li class="r-case"><p class="mm-ch"><b>20</b> 第二部分 · 第十九章 · 莱拉的家庭遭遇变故<span class="mm-role r-case">案例</span></p><p class="mm-gist">突发莱拉父母被带走及随后去世的家庭变故。</p><span class="mm-chip">家庭变故</span><span class="mm-chip">父母去世</span><span class="mm-anchor">「莱拉的父母被一个结实的男人带走，男人声称有潘杰希尔传来的消息」</span></li>
-<li class="r-case"><p class="mm-ch"><b>21</b> 第二部分 · 第二十章 · 妈妈的病痛和困境<span class="mm-role r-case">案例</span></p><p class="mm-gist">记录妈妈长期卧病在床导致莱拉肩负家务的困境。</p><span class="mm-chip">妈妈病痛</span><span class="mm-chip">家务活</span><span class="mm-anchor">「妈妈的身体出现了各种病痛，但医生没有找到具体的疾病」</span></li>
-<li class="r-case"><p class="mm-ch"><b>22</b> 第二部分 · 第二十一章 · 旅行的开始和对阿富汗的期待<span class="mm-role r-case">案例</span></p><p class="mm-gist">记述爸爸提议带家人前往巴米扬峡谷的旅行。</p><span class="mm-chip">旅行开始</span><span class="mm-chip">巴米扬峡谷</span><span class="mm-anchor">「爸爸提议出来玩，尽管薪水微薄，出来玩又需要很多钱」</span></li>
-<li class="r-case"><p class="mm-ch"><b>23</b> 第二部分 · 第二十二章 · 莱拉和家人观看苏联军队撤出阿富汗<span class="mm-role r-case">案例</span></p><p class="mm-gist">记录莱拉一家观看苏联军队撤出喀布尔的历史时刻。</p><span class="mm-chip">苏联撤军</span><span class="mm-chip">街头小贩</span><span class="mm-anchor">「莱拉、她的父母和哈西娜去看最后一批苏联军队撤出这座城市」</span></li>
-<li class="r-pre"><p class="mm-ch"><b>24</b> 第二部分 · 第二十三章 · 塔里克的父亲和哈西娜的情况<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">交代塔里克父亲中风及哈西娜远嫁拉合尔的近况。</p><span class="mm-chip">塔里克父亲</span><span class="mm-chip">哈西娜出嫁</span><span class="mm-anchor">「塔里克的父亲中过几次风，左手落得不听使唤，口齿也变得稍微有点不清」</span></li>
-<li class="r-th"><p class="mm-ch"><b>25</b> 第二部分 · 第二十四章 · 莱拉和塔里克的生活<span class="mm-role r-th">立论</span></p><p class="mm-gist">描绘莱拉与塔里克在喀布尔战争恐惧中的生活。</p><span class="mm-chip">恐惧不安</span><span class="mm-chip">救生索</span><span class="mm-anchor">「莱拉和塔里克在喀布尔的生活充满了恐惧和不安」</span></li>
-<li class="r-cnt"><p class="mm-ch"><b>26</b> 第二部分 · 第二十五章 · 莱拉与塔里克的关系破裂<span class="mm-role r-cnt">反证</span></p><p class="mm-gist">记录塔里克即将离开阿富汗及向莱拉求婚的绝望时刻。</p><span class="mm-chip">关系破裂</span><span class="mm-chip">求婚结婚</span><span class="mm-anchor">「塔里克要离开阿富汗，去巴基斯坦，然后可能是印度、伊朗」</span></li>
-<li class="r-case"><p class="mm-ch"><b>27</b> 第二部分 · 第二十六章 · 莱拉在喀布尔的炎热夏天<span class="mm-role r-case">案例</span></p><p class="mm-gist">描写莱拉在炎热夏天回忆与塔里克相处细节的日常。</p><span class="mm-chip">炎热夏天</span><span class="mm-chip">回忆细节</span><span class="mm-anchor">「莱拉在客厅的沙发上静静地躺着，汗水浸透了她的上衣。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">17</span><span class="mm-cname">第二部分 · 第十六章 · 莱拉的日常</span><span class="mm-role">铺垫</span></p><p class="mm-gist">交代莱拉渴望见到塔里克及父母经常争吵的日常。</p><span class="mm-chip">莱拉日常</span><span class="mm-chip">潘杰希尔</span><span class="mm-quote">「莱拉每天早晨渴望见到她的朋友塔里克」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">18</span><span class="mm-cname">第二部分 · 第十七章 · 卡迪姆的欺凌</span><span class="mm-role">反证</span></p><p class="mm-gist">讲述莱拉在学校遭受恶霸卡迪姆欺凌的痛苦。</p><span class="mm-chip">学校恶霸</span><span class="mm-chip">欺凌痛苦</span><span class="mm-quote">「卡迪姆是莱拉学校的恶霸，经常欺负她」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">19</span><span class="mm-cname">第二部分 · 第十八章 · 莱拉在塔里克家的生活</span><span class="mm-role">案例</span></p><p class="mm-gist">展现莱拉在塔里克家感受到的家庭温暖与友谊。</p><span class="mm-chip">塔里克家</span><span class="mm-chip">家庭温暖</span><span class="mm-quote">「莱拉修补了纱门，整理了书籍，和塔里克家的家人一起度过了许多愉快的时光」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">20</span><span class="mm-cname">第二部分 · 第十九章 · 莱拉的家庭遭遇变故</span><span class="mm-role">案例</span></p><p class="mm-gist">突发莱拉父母被带走及随后去世的家庭变故。</p><span class="mm-chip">家庭变故</span><span class="mm-chip">父母去世</span><span class="mm-quote">「莱拉的父母被一个结实的男人带走，男人声称有潘杰希尔传来的消息」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">21</span><span class="mm-cname">第二部分 · 第二十章 · 妈妈的病痛和困境</span><span class="mm-role">案例</span></p><p class="mm-gist">记录妈妈长期卧病在床导致莱拉肩负家务的困境。</p><span class="mm-chip">妈妈病痛</span><span class="mm-chip">家务活</span><span class="mm-quote">「妈妈的身体出现了各种病痛，但医生没有找到具体的疾病」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">22</span><span class="mm-cname">第二部分 · 第二十一章 · 旅行的开始和对阿富汗的期待</span><span class="mm-role">案例</span></p><p class="mm-gist">记述爸爸提议带家人前往巴米扬峡谷的旅行。</p><span class="mm-chip">旅行开始</span><span class="mm-chip">巴米扬峡谷</span><span class="mm-quote">「爸爸提议出来玩，尽管薪水微薄，出来玩又需要很多钱」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">23</span><span class="mm-cname">第二部分 · 第二十二章 · 莱拉和家人观看苏联军队撤出阿富汗</span><span class="mm-role">案例</span></p><p class="mm-gist">记录莱拉一家观看苏联军队撤出喀布尔的历史时刻。</p><span class="mm-chip">苏联撤军</span><span class="mm-chip">街头小贩</span><span class="mm-quote">「莱拉、她的父母和哈西娜去看最后一批苏联军队撤出这座城市」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">24</span><span class="mm-cname">第二部分 · 第二十三章 · 塔里克的父亲和哈西娜的情况</span><span class="mm-role">铺垫</span></p><p class="mm-gist">交代塔里克父亲中风及哈西娜远嫁拉合尔的近况。</p><span class="mm-chip">塔里克父亲</span><span class="mm-chip">哈西娜出嫁</span><span class="mm-quote">「塔里克的父亲中过几次风，左手落得不听使唤，口齿也变得稍微有点不清」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">25</span><span class="mm-cname">第二部分 · 第二十四章 · 莱拉和塔里克的生活</span><span class="mm-role">立论</span></p><p class="mm-gist">描绘莱拉与塔里克在喀布尔战争恐惧中的生活。</p><span class="mm-chip">恐惧不安</span><span class="mm-chip">救生索</span><span class="mm-quote">「莱拉和塔里克在喀布尔的生活充满了恐惧和不安」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">26</span><span class="mm-cname">第二部分 · 第二十五章 · 莱拉与塔里克的关系破裂</span><span class="mm-role">反证</span></p><p class="mm-gist">记录塔里克即将离开阿富汗及向莱拉求婚的绝望时刻。</p><span class="mm-chip">关系破裂</span><span class="mm-chip">求婚结婚</span><span class="mm-quote">「塔里克要离开阿富汗，去巴基斯坦，然后可能是印度、伊朗」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">27</span><span class="mm-cname">第二部分 · 第二十六章 · 莱拉在喀布尔的炎热夏天</span><span class="mm-role">案例</span></p><p class="mm-gist">描写莱拉在炎热夏天回忆与塔里克相处细节的日常。</p><span class="mm-chip">炎热夏天</span><span class="mm-chip">回忆细节</span><span class="mm-quote">「莱拉在客厅的沙发上静静地躺着，汗水浸透了她的上衣。」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">D</span><span class="mm-label">双雌并立与苦难共生</span><span class="mm-cnt">8 章</span></summary>
 <p class="mm-why">两代女性在同一屋檐下由敌对转向结盟，通过共同抚育后代与尝试逃亡建立深厚联结。</p>
 <ol class="mm-tree">
-<li class="r-case"><p class="mm-ch"><b>28</b> 第三部分 · 第二十七章 · 玛丽雅姆和女孩的相遇及照顾<span class="mm-role r-case">案例</span></p><p class="mm-gist">记述玛丽雅姆和拉希德收留并照顾因战争受伤女孩的经过。</p><span class="mm-chip">战争受伤</span><span class="mm-chip">照顾康复</span><span class="mm-anchor">「女孩因战争受伤，玛丽雅姆和拉希德负责照顾她」</span></li>
-<li class="r-th"><p class="mm-ch"><b>30</b> 第三部分 · 第二十九章 · 拉希德对玛丽雅姆的态度和看法<span class="mm-role r-th">立论</span></p><p class="mm-gist">展现拉希德对玛丽雅姆冷漠并基于自身利益的政局看法。</p><span class="mm-chip">冷漠态度</span><span class="mm-chip">局势看法</span><span class="mm-anchor">「拉希德对玛丽雅姆的态度冷漠，对阿富汗的局势有深刻的看法」</span></li>
-<li class="r-th"><p class="mm-ch"><b>31</b> 第三部分 · 第三十章 · 莱拉与拉希德的关系变化<span class="mm-role r-th">立论</span></p><p class="mm-gist">记录拉希德试图拉拢莱拉而莱拉决心逃往巴基斯坦的选择。</p><span class="mm-chip">新发型新西装</span><span class="mm-chip">去巴基斯坦</span><span class="mm-anchor">「拉希德为莱拉买新发型、新西装和结婚戒指」</span></li>
-<li class="r-cnt"><p class="mm-ch"><b>32</b> 第三部分 · 第三十一章 · 玛丽雅姆与女孩的日常相遇与冲突<span class="mm-role r-cnt">反证</span></p><p class="mm-gist">反映玛丽雅姆与受伤女孩在拉希德控制下的日常相处与防备。</p><span class="mm-chip">尴尬紧张</span><span class="mm-chip">防备仆人</span><span class="mm-anchor">「玛丽雅姆与女孩在白天和晚上的相遇充满尴尬和紧张气氛」</span></li>
-<li class="r-cnt"><p class="mm-ch"><b>33</b> 第三部分 · 第三十二章 · 莱拉的记忆<span class="mm-role r-cnt">反证</span></p><p class="mm-gist">回顾瓦吉玛讲述的往事并展现莱拉怀孕后与玛丽雅姆因家务争吵。</p><span class="mm-chip">淹死儿子的事情</span><span class="mm-chip">家务争吵</span><span class="mm-anchor">「莱拉记得妈妈请邻居到家里聚会，瓦吉玛讲述了拉希德酒后淹死儿子的事情」</span></li>
-<li class="r-case"><p class="mm-ch"><b>34</b> 第三部分 · 第三十三章 · 玛丽雅姆观察到的家庭状况<span class="mm-role r-case">案例</span></p><p class="mm-gist">观察拉希德对女孩与婴儿的态度及玛丽雅姆的怜悯。</p><span class="mm-chip">家庭状况</span><span class="mm-chip">照顾婴儿</span><span class="mm-anchor">「拉希德对女孩的紧张和关心，以及他对女孩的不满和愤怒」</span></li>
-<li class="r-case"><p class="mm-ch"><b>35</b> 第三部分 · 第三十四章 · 莱拉对阿兹莎的喜爱<span class="mm-role r-case">案例</span></p><p class="mm-gist">表达莱拉对女儿阿兹莎的喜爱及拉希德异样的眼神。</p><span class="mm-chip">喜爱阿兹莎</span><span class="mm-chip">异样眼神</span><span class="mm-anchor">「莱拉喜欢躺在阿兹莎身旁，脸贴着她女儿的脸。」</span></li>
-<li class="r-case"><p class="mm-ch"><b>36</b> 第三部分 · 第三十五章 · 玛丽雅姆和莱拉共同做家务活<span class="mm-role r-case">案例</span></p><p class="mm-gist">记录玛丽雅姆与莱拉共同劳作逐渐建立的愉快相处与幸福感。</p><span class="mm-chip">共同做家务</span><span class="mm-chip">阿兹莎依赖</span><span class="mm-anchor">「玛丽雅姆和莱拉在厨房和院子里共同劳动」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">28</span><span class="mm-cname">第三部分 · 第二十七章 · 玛丽雅姆和女孩的相遇及照顾</span><span class="mm-role">案例</span></p><p class="mm-gist">记述玛丽雅姆和拉希德收留并照顾因战争受伤女孩的经过。</p><span class="mm-chip">战争受伤</span><span class="mm-chip">照顾康复</span><span class="mm-quote">「女孩因战争受伤，玛丽雅姆和拉希德负责照顾她」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">30</span><span class="mm-cname">第三部分 · 第二十九章 · 拉希德对玛丽雅姆的态度和看法</span><span class="mm-role">立论</span></p><p class="mm-gist">展现拉希德对玛丽雅姆冷漠并基于自身利益的政局看法。</p><span class="mm-chip">冷漠态度</span><span class="mm-chip">局势看法</span><span class="mm-quote">「拉希德对玛丽雅姆的态度冷漠，对阿富汗的局势有深刻的看法」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">31</span><span class="mm-cname">第三部分 · 第三十章 · 莱拉与拉希德的关系变化</span><span class="mm-role">立论</span></p><p class="mm-gist">记录拉希德试图拉拢莱拉而莱拉决心逃往巴基斯坦的选择。</p><span class="mm-chip">新发型新西装</span><span class="mm-chip">去巴基斯坦</span><span class="mm-quote">「拉希德为莱拉买新发型、新西装和结婚戒指」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">32</span><span class="mm-cname">第三部分 · 第三十一章 · 玛丽雅姆与女孩的日常相遇与冲突</span><span class="mm-role">反证</span></p><p class="mm-gist">反映玛丽雅姆与受伤女孩在拉希德控制下的日常相处与防备。</p><span class="mm-chip">尴尬紧张</span><span class="mm-chip">防备仆人</span><span class="mm-quote">「玛丽雅姆与女孩在白天和晚上的相遇充满尴尬和紧张气氛」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">33</span><span class="mm-cname">第三部分 · 第三十二章 · 莱拉的记忆</span><span class="mm-role">反证</span></p><p class="mm-gist">回顾瓦吉玛讲述的往事并展现莱拉怀孕后与玛丽雅姆因家务争吵。</p><span class="mm-chip">淹死儿子的事情</span><span class="mm-chip">家务争吵</span><span class="mm-quote">「莱拉记得妈妈请邻居到家里聚会，瓦吉玛讲述了拉希德酒后淹死儿子的事情」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">34</span><span class="mm-cname">第三部分 · 第三十三章 · 玛丽雅姆观察到的家庭状况</span><span class="mm-role">案例</span></p><p class="mm-gist">观察拉希德对女孩与婴儿的态度及玛丽雅姆的怜悯。</p><span class="mm-chip">家庭状况</span><span class="mm-chip">照顾婴儿</span><span class="mm-quote">「拉希德对女孩的紧张和关心，以及他对女孩的不满和愤怒」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">35</span><span class="mm-cname">第三部分 · 第三十四章 · 莱拉对阿兹莎的喜爱</span><span class="mm-role">案例</span></p><p class="mm-gist">表达莱拉对女儿阿兹莎的喜爱及拉希德异样的眼神。</p><span class="mm-chip">喜爱阿兹莎</span><span class="mm-chip">异样眼神</span><span class="mm-quote">「莱拉喜欢躺在阿兹莎身旁，脸贴着她女儿的脸。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">36</span><span class="mm-cname">第三部分 · 第三十五章 · 玛丽雅姆和莱拉共同做家务活</span><span class="mm-role">案例</span></p><p class="mm-gist">记录玛丽雅姆与莱拉共同劳作逐渐建立的愉快相处与幸福感。</p><span class="mm-chip">共同做家务</span><span class="mm-chip">阿兹莎依赖</span><span class="mm-quote">「玛丽雅姆和莱拉在厨房和院子里共同劳动」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">E</span><span class="mm-label">极端主义下的生存抗争</span><span class="mm-cnt">11 章</span></summary>
 <p class="mm-why">在塔利班严酷统治下，女性面临极度贫困与暴力，最终通过反抗旧秩序实现悲剧性的解脱。</p>
 <ol class="mm-tree">
-<li class="r-cnt"><p class="mm-ch"><b>37</b> 第三部分 · 第三十六章 · 莱拉和玛丽雅姆的逃亡<span class="mm-role r-cnt">反证</span></p><p class="mm-gist">记录莱拉与玛丽雅姆试图逃离喀布尔但在车站被警察局分开审讯。</p><span class="mm-chip">逃亡喀布尔</span><span class="mm-chip">警察局审讯</span><span class="mm-anchor">「莱拉和玛丽雅姆准备逃离喀布尔」</span></li>
-<li class="r-case"><p class="mm-ch"><b>38</b> 第三部分 · 第三十七章 · 玛丽雅姆和家人的经历<span class="mm-role r-case">案例</span></p><p class="mm-gist">呈现塔利班攻占喀布尔并颁布严格法律的场景。</p><span class="mm-chip">塔利班攻占</span><span class="mm-chip">严格法律</span><span class="mm-anchor">「玛丽雅姆和莱拉被拉希德带到窗边，看到塔利班攻占了喀布尔」</span></li>
-<li class="r-cnt"><p class="mm-ch"><b>39</b> 第三部分 · 第三十八章 · 塔利班的暴行<span class="mm-role r-cnt">反证</span></p><p class="mm-gist">列举塔利班摧毁雕像、关闭大学及洗劫电影院的暴行。</p><span class="mm-chip">摧毁雕像</span><span class="mm-chip">暴行惩罚</span><span class="mm-anchor">「塔利班摧毁伊斯兰文明之前的雕像，关掉大学，打发学生回家」</span></li>
-<li class="r-cnt"><p class="mm-ch"><b>40</b> 第三部分 · 第三十九章 · 玛丽雅姆和莱拉在塔利班的医院遭遇困境<span class="mm-role r-cnt">反证</span></p><p class="mm-gist">暴露塔利班统治下医院设备短缺及莱拉需要剖腹产的困境。</p><span class="mm-chip">医院困境</span><span class="mm-chip">剖腹产手术</span><span class="mm-anchor">「医院已经不给女人看病，玛丽雅姆和莱拉被赶到拉比亚·巴尔奇医院」</span></li>
-<li class="r-case"><p class="mm-ch"><b>41</b> 第三部分 · 第四十章 · 莱拉和玛丽雅姆挖洞的原因和过程<span class="mm-role r-case">案例</span></p><p class="mm-gist">记录莱拉和玛丽雅姆为了躲避抢劫在硬地上辛苦挖洞的过程。</p><span class="mm-chip">挖洞躲避</span><span class="mm-chip">捉迷藏</span><span class="mm-anchor">「挖洞是为了躲避塔利班的抢劫」</span></li>
-<li class="r-case"><p class="mm-ch"><b>42</b> 第三部分 · 第四十一章 · 2000年夏天的喀布尔<span class="mm-role r-case">案例</span></p><p class="mm-gist">描绘2000年夏天喀布尔因大旱及火灾导致人们变卖财产的景象。</p><span class="mm-chip">大旱迁徙</span><span class="mm-chip">变卖财产</span><span class="mm-anchor">「大旱导致农民迁徙，牲口死亡，人们来到喀布尔」</span></li>
-<li class="r-cnt"><p class="mm-ch"><b>43</b> 第三部分 · 第四十二章 · 莱拉和阿兹莎的生活<span class="mm-role r-cnt">反证</span></p><p class="mm-gist">交代莱拉被迫将阿兹莎送往环境恶劣的恤孤院的经历。</p><span class="mm-chip">恤孤院</span><span class="mm-chip">生活艰苦</span><span class="mm-anchor">「莱拉的生活在父亲和塔里克去世后发生了翻天覆地的变化」</span></li>
-<li class="r-case"><p class="mm-ch"><b>44</b> 第三部分 · 第四十三章 · 察尔迈伊对篮球的执着<span class="mm-role r-case">案例</span></p><p class="mm-gist">反映察尔迈伊对篮球的执着及玛丽雅姆对塔里克的疑惑。</p><span class="mm-chip">篮球执着</span><span class="mm-chip">疑惑</span><span class="mm-anchor">「察尔迈伊对篮球的强烈占有欲」</span></li>
-<li class="r-case"><p class="mm-ch"><b>45</b> 第三部分 · 第四十四章 · 塔里克的室友和他的表哥<span class="mm-role r-case">案例</span></p><p class="mm-gist">记录塔里克的室友表哥因画火烈鸟遭鞭打及塔里克在避暑胜地的生活。</p><span class="mm-chip">火烈鸟画作</span><span class="mm-chip">避暑胜地</span><span class="mm-anchor">「塔里克的室友的表哥因为画火烈鸟而遭到公开的鞭打」</span></li>
-<li class="r-cnt"><p class="mm-ch"><b>46</b> 第三部分 · 第四十五章 · 拉希德发现玛丽雅姆和察尔迈伊的背叛<span class="mm-role r-cnt">反证</span></p><p class="mm-gist">揭露拉希德发现察尔迈伊背叛后用皮带残酷殴打莱拉的暴行。</p><span class="mm-chip">背叛发现</span><span class="mm-chip">皮带抽打</span><span class="mm-anchor">「拉希德发现玛丽雅姆和察尔迈伊在一起，脸色松开，皱纹变平」</span></li>
-<li class="r-case"><p class="mm-ch"><b>47</b> 第三部分 · 第四十六章 · 莱拉的经历和感受<span class="mm-role r-case">案例</span></p><p class="mm-gist">描述莱拉在遭受暴打后产生的恐惧幻觉与痛苦感受。</p><span class="mm-chip">恐惧恶心</span><span class="mm-chip">几何图案</span><span class="mm-anchor">「莱拉在天花板上看到了拉希德的脸，感到恐惧和恶心」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">37</span><span class="mm-cname">第三部分 · 第三十六章 · 莱拉和玛丽雅姆的逃亡</span><span class="mm-role">反证</span></p><p class="mm-gist">记录莱拉与玛丽雅姆试图逃离喀布尔但在车站被警察局分开审讯。</p><span class="mm-chip">逃亡喀布尔</span><span class="mm-chip">警察局审讯</span><span class="mm-quote">「莱拉和玛丽雅姆准备逃离喀布尔」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">38</span><span class="mm-cname">第三部分 · 第三十七章 · 玛丽雅姆和家人的经历</span><span class="mm-role">案例</span></p><p class="mm-gist">呈现塔利班攻占喀布尔并颁布严格法律的场景。</p><span class="mm-chip">塔利班攻占</span><span class="mm-chip">严格法律</span><span class="mm-quote">「玛丽雅姆和莱拉被拉希德带到窗边，看到塔利班攻占了喀布尔」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">39</span><span class="mm-cname">第三部分 · 第三十八章 · 塔利班的暴行</span><span class="mm-role">反证</span></p><p class="mm-gist">列举塔利班摧毁雕像、关闭大学及洗劫电影院的暴行。</p><span class="mm-chip">摧毁雕像</span><span class="mm-chip">暴行惩罚</span><span class="mm-quote">「塔利班摧毁伊斯兰文明之前的雕像，关掉大学，打发学生回家」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">40</span><span class="mm-cname">第三部分 · 第三十九章 · 玛丽雅姆和莱拉在塔利班的医院遭遇困境</span><span class="mm-role">反证</span></p><p class="mm-gist">暴露塔利班统治下医院设备短缺及莱拉需要剖腹产的困境。</p><span class="mm-chip">医院困境</span><span class="mm-chip">剖腹产手术</span><span class="mm-quote">「医院已经不给女人看病，玛丽雅姆和莱拉被赶到拉比亚·巴尔奇医院」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">41</span><span class="mm-cname">第三部分 · 第四十章 · 莱拉和玛丽雅姆挖洞的原因和过程</span><span class="mm-role">案例</span></p><p class="mm-gist">记录莱拉和玛丽雅姆为了躲避抢劫在硬地上辛苦挖洞的过程。</p><span class="mm-chip">挖洞躲避</span><span class="mm-chip">捉迷藏</span><span class="mm-quote">「挖洞是为了躲避塔利班的抢劫」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">42</span><span class="mm-cname">第三部分 · 第四十一章 · 2000年夏天的喀布尔</span><span class="mm-role">案例</span></p><p class="mm-gist">描绘2000年夏天喀布尔因大旱及火灾导致人们变卖财产的景象。</p><span class="mm-chip">大旱迁徙</span><span class="mm-chip">变卖财产</span><span class="mm-quote">「大旱导致农民迁徙，牲口死亡，人们来到喀布尔」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">43</span><span class="mm-cname">第三部分 · 第四十二章 · 莱拉和阿兹莎的生活</span><span class="mm-role">反证</span></p><p class="mm-gist">交代莱拉被迫将阿兹莎送往环境恶劣的恤孤院的经历。</p><span class="mm-chip">恤孤院</span><span class="mm-chip">生活艰苦</span><span class="mm-quote">「莱拉的生活在父亲和塔里克去世后发生了翻天覆地的变化」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">44</span><span class="mm-cname">第三部分 · 第四十三章 · 察尔迈伊对篮球的执着</span><span class="mm-role">案例</span></p><p class="mm-gist">反映察尔迈伊对篮球的执着及玛丽雅姆对塔里克的疑惑。</p><span class="mm-chip">篮球执着</span><span class="mm-chip">疑惑</span><span class="mm-quote">「察尔迈伊对篮球的强烈占有欲」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">45</span><span class="mm-cname">第三部分 · 第四十四章 · 塔里克的室友和他的表哥</span><span class="mm-role">案例</span></p><p class="mm-gist">记录塔里克的室友表哥因画火烈鸟遭鞭打及塔里克在避暑胜地的生活。</p><span class="mm-chip">火烈鸟画作</span><span class="mm-chip">避暑胜地</span><span class="mm-quote">「塔里克的室友的表哥因为画火烈鸟而遭到公开的鞭打」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">46</span><span class="mm-cname">第三部分 · 第四十五章 · 拉希德发现玛丽雅姆和察尔迈伊的背叛</span><span class="mm-role">反证</span></p><p class="mm-gist">揭露拉希德发现察尔迈伊背叛后用皮带残酷殴打莱拉的暴行。</p><span class="mm-chip">背叛发现</span><span class="mm-chip">皮带抽打</span><span class="mm-quote">「拉希德发现玛丽雅姆和察尔迈伊在一起，脸色松开，皱纹变平」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">47</span><span class="mm-cname">第三部分 · 第四十六章 · 莱拉的经历和感受</span><span class="mm-role">案例</span></p><p class="mm-gist">描述莱拉在遭受暴打后产生的恐惧幻觉与痛苦感受。</p><span class="mm-chip">恐惧恶心</span><span class="mm-chip">几何图案</span><span class="mm-quote">「莱拉在天花板上看到了拉希德的脸，感到恐惧和恶心」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">F</span><span class="mm-label">牺牲后的救赎与重建</span><span class="mm-cnt">5 章</span></summary>
 <p class="mm-why">玛丽雅姆以生命为代价换取莱拉的自由，莱拉在战后重建中延续了女性的爱与希望。</p>
 <ol class="mm-tree">
-<li class="r-case"><p class="mm-ch"><b>48</b> 第三部分 · 第四十七章 · 玛丽雅姆在瓦拉雅特女子监狱的生活<span class="mm-role r-case">案例</span></p><p class="mm-gist">记述玛丽雅姆在瓦拉雅特女子监狱中与其他女性共居的艰难环境。</p><span class="mm-chip">女子监狱</span><span class="mm-chip">露天院子</span><span class="mm-anchor">「玛丽雅姆和五个女人、四个孩子共居一室，监房里面没有家具，只有灰泥剥落的肮脏墙壁和开向院子的小小窗户」</span></li>
-<li class="r-case"><p class="mm-ch"><b>49</b> 第四部分 · 第四十八章 · 塔里克的头痛及其影响<span class="mm-role r-case">案例</span></p><p class="mm-gist">交代塔里克头痛加剧及与莱拉在穆里结婚的近况。</p><span class="mm-chip">偏头痛</span><span class="mm-chip">穆里结婚</span><span class="mm-anchor">「塔里克的头痛在纳西尔·巴格赫难民营就开始了，然后在监狱变得更加严重」</span></li>
-<li class="r-case"><p class="mm-ch"><b>50</b> 第四部分 · 第四十九章 · 艾哈迈德·沙·马苏德的死亡及其影响<span class="mm-role r-case">案例</span></p><p class="mm-gist">记录艾哈迈德·沙·马苏德在采访中遭遇炸弹袭击身亡的事件。</p><span class="mm-chip">炸弹袭击</span><span class="mm-chip">马苏德死亡</span><span class="mm-anchor">「马苏德在采访中遭炸弹袭击身亡」</span></li>
-<li class="r-case"><p class="mm-ch"><b>51</b> 第四部分 · 第五十章 · 莱拉和塔里克在穆里的生活<span class="mm-role r-case">案例</span></p><p class="mm-gist">描绘莱拉和塔里克在穆里生活安宁后决定返回喀布尔前往赫拉特。</p><span class="mm-chip">穆里生活</span><span class="mm-chip">返回喀布尔</span><span class="mm-anchor">「莱拉和塔里克在穆里的生活舒适而安宁」</span></li>
-<li class="r-end"><p class="mm-ch"><b>52</b> 第四部分 · 第五十一章 · 喀布尔河的恢复和人们的生活变化<span class="mm-role r-end">收束</span></p><p class="mm-gist">收束喀布尔河干旱结束及人们重建家园的生活变化。</p><span class="mm-chip">喀布尔河</span><span class="mm-chip">重建家园</span><span class="mm-anchor">「干旱结束，雨水冲走了泰坦尼克城」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">48</span><span class="mm-cname">第三部分 · 第四十七章 · 玛丽雅姆在瓦拉雅特女子监狱的生活</span><span class="mm-role">案例</span></p><p class="mm-gist">记述玛丽雅姆在瓦拉雅特女子监狱中与其他女性共居的艰难环境。</p><span class="mm-chip">女子监狱</span><span class="mm-chip">露天院子</span><span class="mm-quote">「玛丽雅姆和五个女人、四个孩子共居一室，监房里面没有家具，只有灰泥剥落的肮脏墙壁和开向院子的小小窗户」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">49</span><span class="mm-cname">第四部分 · 第四十八章 · 塔里克的头痛及其影响</span><span class="mm-role">案例</span></p><p class="mm-gist">交代塔里克头痛加剧及与莱拉在穆里结婚的近况。</p><span class="mm-chip">偏头痛</span><span class="mm-chip">穆里结婚</span><span class="mm-quote">「塔里克的头痛在纳西尔·巴格赫难民营就开始了，然后在监狱变得更加严重」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">50</span><span class="mm-cname">第四部分 · 第四十九章 · 艾哈迈德·沙·马苏德的死亡及其影响</span><span class="mm-role">案例</span></p><p class="mm-gist">记录艾哈迈德·沙·马苏德在采访中遭遇炸弹袭击身亡的事件。</p><span class="mm-chip">炸弹袭击</span><span class="mm-chip">马苏德死亡</span><span class="mm-quote">「马苏德在采访中遭炸弹袭击身亡」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">51</span><span class="mm-cname">第四部分 · 第五十章 · 莱拉和塔里克在穆里的生活</span><span class="mm-role">案例</span></p><p class="mm-gist">描绘莱拉和塔里克在穆里生活安宁后决定返回喀布尔前往赫拉特。</p><span class="mm-chip">穆里生活</span><span class="mm-chip">返回喀布尔</span><span class="mm-quote">「莱拉和塔里克在穆里的生活舒适而安宁」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">52</span><span class="mm-cname">第四部分 · 第五十一章 · 喀布尔河的恢复和人们的生活变化</span><span class="mm-role">收束</span></p><p class="mm-gist">收束喀布尔河干旱结束及人们重建家园的生活变化。</p><span class="mm-chip">喀布尔河</span><span class="mm-chip">重建家园</span><span class="mm-quote">「干旱结束，雨水冲走了泰坦尼克城」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">G</span><span class="mm-label">时空交织的真相揭示</span><span class="mm-cnt">1 章</span></summary>
 <p class="mm-why">作为全书关键的叙事转折点，通过第三方视角揭示塔里克的生存现状，驱动后续情节发展。</p>
 <ol class="mm-tree">
-<li class="r-case"><p class="mm-ch"><b>29</b> 第三部分 · 第二十八章 · 阿卜杜拉·沙里夫的自我介绍<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过阿卜杜拉·沙里夫交代塔里克在难民车遭遇枪战的情况。</p><span class="mm-chip">服装店生意</span><span class="mm-chip">难民车枪战</span><span class="mm-anchor">「阿卜杜拉·沙里夫是个生意人，开了一家服装店」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">29</span><span class="mm-cname">第三部分 · 第二十八章 · 阿卜杜拉·沙里夫的自我介绍</span><span class="mm-role">案例</span></p><p class="mm-gist">通过阿卜杜拉·沙里夫交代塔里克在难民车遭遇枪战的情况。</p><span class="mm-chip">服装店生意</span><span class="mm-chip">难民车枪战</span><span class="mm-quote">「阿卜杜拉·沙里夫是个生意人，开了一家服装店」</span></li>
 </ol>
 </details>
 <footer class="site-footer">

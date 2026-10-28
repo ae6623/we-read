@@ -16,8 +16,8 @@
 .mm-bar i{display:block;height:100%;background:linear-gradient(90deg,#8a9b6e,#c2b280)}
 .mm-svgwrap{overflow-x:auto;padding:.4em 0 1em;border-bottom:1px solid var(--line)}
 .mm-svg{width:100%;height:auto;min-width:760px}
-.mm-spine{margin:.9em 0;border-left:3px solid #d9d0bd;padding:.1em 0 .1em .9em}
-.mm-spine[open]{border-left-color:#8a9b6e}
+.mm-spine{margin:1.15em 0;border-left:3px solid #ece4d3;padding:.1em 0 .1em .85em}
+.mm-spine[open]{border-left-color:#d8cdb4}
 .mm-spine>summary{display:flex;gap:.6em;align-items:baseline;cursor:pointer;
   list-style:none;padding:.35em 0}
 .mm-spine>summary::-webkit-details-marker{display:none}
@@ -26,24 +26,32 @@
 .mm-label{font-weight:600;font-size:1rem;color:var(--ink)}
 .mm-cnt{margin-left:auto;font-size:.74rem;color:var(--muted)}
 .mm-why{font-size:.8rem;color:var(--muted);margin:.1em 0 .8em;line-height:1.7}
-.mm-tree{list-style:none;padding:0;margin:0}
-.mm-tree li{position:relative;padding:.42em 0 .42em 1.1em;border-left:1px dotted #cfc6b4;
-  margin-left:.5em}
-.mm-tree li:before{content:"";position:absolute;left:0;top:1.05em;width:.7em;
-  border-top:1px dotted #cfc6b4}
-.mm-ch{margin:0;font-size:.92rem;color:var(--ink)}
-.mm-ch b{color:#a9a08d;font-weight:500;font-size:.8rem;margin-right:.4em}
-.mm-role{font-size:.68rem;padding:.05em .4em;border-radius:3px;margin-left:.5em;
-  vertical-align:.1em;white-space:nowrap}
-.r-pre{background:#eef0e6;color:#6b7a4e}.r-th{background:#eae7f0;color:#5f5578}
-.r-cnt{background:#f6e9e4;color:#946350}.r-case{background:#e8eff1;color:#4f7380}
-.r-end{background:#f2ecdf;color:#8a7442}
-.mm-gist{margin:.18em 0 .3em;font-size:.84rem;line-height:1.75;color:#4a443b}
-.mm-chip{display:inline-block;font-size:.68rem;color:#6b6152;background:#f2ecdf;
-  border-radius:9px;padding:.05em .5em;margin:.15em .25em .15em 0}
-.mm-anchor{display:block;font-size:.78rem;color:#8a8272;line-height:1.7;
-  border-left:2px dotted #d9d0bd;padding-left:.7em;margin-top:.3em}
-@media(max-width:720px){.mm-svg{min-width:640px}}
+.mm-tree{list-style:none;padding:0;margin:.15em 0 0}
+/* 章条目：与通读页 .ch-item 对齐（无卡片/无彩条/虚线分隔），行高按手机可读行数收紧 */
+.mm-cn{padding:8px 0;border-bottom:1px dashed #eee8dc}
+.mm-cn:last-child{border-bottom:0}
+.mm-chead{display:flex;flex-wrap:wrap;gap:2px 10px;align-items:baseline;margin:0}
+.mm-cno{flex:none;min-width:1.7em;color:#bf8247;font-weight:700;font-size:.82rem;
+  font-variant-numeric:tabular-nums}
+.mm-cname{flex:0 1 auto;min-width:0;font-size:.92rem;line-height:1.6;color:var(--ink);
+  word-break:break-word}
+.mm-role{flex:none;font-size:.68rem;color:#8a8272;line-height:1.6;white-space:nowrap}
+.mm-gist{margin:.15em 0 .2em;font-size:.86rem;line-height:1.75;color:#4a443b}
+.mm-chip{display:inline-block;font-size:.68rem;color:#6b6152;background:#f4f1e6;
+  border-radius:9px;padding:.05em .5em;margin:.1em .28em .1em 0}
+/* 引文块取通读页 ul.ch-quote 的观感：浅米底 + 金色左线 */
+.mm-quote{display:block;margin:.3em 0 .1em;padding:7px 11px;background:#fdf8ee;
+  border-left:3px solid var(--gold);border-radius:0 8px 8px 0;
+  font-size:.8rem;line-height:1.75;color:#6b5c43}
+@media(max-width:720px){
+  .mm-svg{min-width:640px}
+  /* 手机：章条目再收紧一点，一屏多两行 */
+  .mm-cn{padding:7px 0}
+  .mm-chead{gap:8px}
+  .mm-cname{font-size:.9rem}
+  .mm-gist{font-size:.84rem;line-height:1.7}
+  .mm-quote{padding:6px 9px;font-size:.78rem}
+}
 </style>
 </head>
 <body>
@@ -116,80 +124,80 @@
 <summary><span class="mm-id">A</span><span class="mm-label">心智重塑</span><span class="mm-cnt">13 章</span></summary>
 <p class="mm-why">通过对自律、成长、专注等核心心智模式的拆解，确立从表象行为转向内在本质的认知框架。</p>
 <ol class="mm-tree">
-<li class="r-th"><p class="mm-ch"><b>1</b> 1 自律是习惯，不是意志力<span class="mm-role r-th">立论</span></p><p class="mm-gist">将自律从意志力范畴剥离，归位为低能耗的习惯养成。</p><span class="mm-chip">自律</span><span class="mm-chip">习惯</span><span class="mm-anchor">「自律是习惯，不是意志力的问题」</span></li>
-<li class="r-th"><p class="mm-ch"><b>2</b> 2 成长是反思，不是经历<span class="mm-role r-th">立论</span></p><p class="mm-gist">区分经历与成长的本质，指出反思是实现经验升华的关键。</p><span class="mm-chip">成长</span><span class="mm-chip">反思</span><span class="mm-anchor">「成长需要反思，在反思中把事情拆开看看，哪里做得好，哪里做得不够，下次遇到类似情况」</span></li>
-<li class="r-th"><p class="mm-ch"><b>3</b> 3 专注是放弃，不是克制<span class="mm-role r-th">立论</span></p><p class="mm-gist">将专注的本质从克制转向放弃，通过减少选项降低认知负担。</p><span class="mm-chip">专注</span><span class="mm-chip">放弃</span><span class="mm-anchor">「专注的第一性原理是放弃，不是克制」</span></li>
-<li class="r-th"><p class="mm-ch"><b>4</b> 4 情绪管理是接纳，不是控制<span class="mm-role r-th">立论</span></p><p class="mm-gist">指出情绪管理的误区，强调接纳而非压制才是情绪稳定的前提。</p><span class="mm-chip">情绪管理</span><span class="mm-chip">接纳</span><span class="mm-anchor">「情绪管理就是要使自己的情绪不再失控，并且很」</span></li>
-<li class="r-th"><p class="mm-ch"><b>5</b> 5 兴趣是内在驱动，不是喜欢<span class="mm-role r-th">立论</span></p><p class="mm-gist">界定兴趣的驱动力，强调内在参与感优于外在的喜欢与评价。</p><span class="mm-chip">兴趣</span><span class="mm-chip">内在驱动</span><span class="mm-anchor">「兴趣的第一性原理是内在驱动，不是喜欢」</span></li>
-<li class="r-th"><p class="mm-ch"><b>6</b> 6 慎独是不自欺，不是自律<span class="mm-role r-th">立论</span></p><p class="mm-gist">纠正慎独的定义，将其核心从自律转向不自欺的诚实。</p><span class="mm-chip">慎独</span><span class="mm-chip">不自欺</span><span class="mm-anchor">「慎独的第一性原理是不自欺，不是自律」</span></li>
-<li class="r-th"><p class="mm-ch"><b>7</b> 7 中庸是恰到好处，不是平庸<span class="mm-role r-th">立论</span></p><p class="mm-gist">澄清中庸的含义，将其从平庸的消极状态还原为恰到好处的平衡。</p><span class="mm-chip">中庸</span><span class="mm-chip">恰到好处</span><span class="mm-anchor">「中庸是既不会过于激进也不会过分保守，是恰到好处」</span></li>
-<li class="r-th"><p class="mm-ch"><b>8</b> 8 反内耗：行动，不是想通<span class="mm-role r-th">立论</span></p><p class="mm-gist">揭示内耗的根源，指出行动是打破反刍与纠结的唯一路径。</p><span class="mm-chip">内耗</span><span class="mm-chip">行动</span><span class="mm-anchor">「内耗的根源是想和做脱了节」</span></li>
-<li class="r-th"><p class="mm-ch"><b>9</b> 9 自我价值是内在确认，不是外在认可<span class="mm-role r-th">立论</span></p><p class="mm-gist">重构自我价值的来源，强调内在确认对抵御外在评价的重要性。</p><span class="mm-chip">自我价值</span><span class="mm-chip">内在确认</span><span class="mm-anchor">「自我价值的第一性原理是内在确认，不是外在认可」</span></li>
-<li class="r-th"><p class="mm-ch"><b>10</b> 10 松弛感是放下执念，不是躺平<span class="mm-role r-th">立论</span></p><p class="mm-gist">区分松弛感与躺平，指出放下对不可控结果的执念是松弛的来源。</p><span class="mm-chip">松弛感</span><span class="mm-chip">执念</span><span class="mm-anchor">「松弛感的第一性原理是放下执念，不是躺平」</span></li>
-<li class="r-th"><p class="mm-ch"><b>11</b> 11 无为是不妄为，不是无所作为<span class="mm-role r-th">立论</span></p><p class="mm-gist">阐释无为的本义，将其从无所作为修正为顺应自然的不妄为。</p><span class="mm-chip">无为</span><span class="mm-chip">不妄为</span><span class="mm-anchor">「无为的第一性原理是不妄为，不是无所作为」</span></li>
-<li class="r-th"><p class="mm-ch"><b>12</b> 12 认知升级是更新框架，不是堆积知识<span class="mm-role r-th">立论</span></p><p class="mm-gist">强调认知升级的核心在于处理信息的框架更新，而非知识量的堆积。</p><span class="mm-chip">认知升级</span><span class="mm-chip">框架</span><span class="mm-anchor">「认知升级的第一性原理，是框架，不是知识量的变化」</span></li>
-<li class="r-th"><p class="mm-ch"><b>13</b> 13 祛魅是看清真实，不是全盘否定<span class="mm-role r-th">立论</span></p><p class="mm-gist">界定祛魅的边界，指出其目的是看清真实，而非通过否定进行逃避。</p><span class="mm-chip">祛魅</span><span class="mm-chip">真实</span><span class="mm-anchor">「祛魅是揭开虚幻的面纱，认清事实真相。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">1</span><span class="mm-cname">1 自律是习惯，不是意志力</span><span class="mm-role">立论</span></p><p class="mm-gist">将自律从意志力范畴剥离，归位为低能耗的习惯养成。</p><span class="mm-chip">自律</span><span class="mm-chip">习惯</span><span class="mm-quote">「自律是习惯，不是意志力的问题」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">2</span><span class="mm-cname">2 成长是反思，不是经历</span><span class="mm-role">立论</span></p><p class="mm-gist">区分经历与成长的本质，指出反思是实现经验升华的关键。</p><span class="mm-chip">成长</span><span class="mm-chip">反思</span><span class="mm-quote">「成长需要反思，在反思中把事情拆开看看，哪里做得好，哪里做得不够，下次遇到类似情况」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">3</span><span class="mm-cname">3 专注是放弃，不是克制</span><span class="mm-role">立论</span></p><p class="mm-gist">将专注的本质从克制转向放弃，通过减少选项降低认知负担。</p><span class="mm-chip">专注</span><span class="mm-chip">放弃</span><span class="mm-quote">「专注的第一性原理是放弃，不是克制」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">4</span><span class="mm-cname">4 情绪管理是接纳，不是控制</span><span class="mm-role">立论</span></p><p class="mm-gist">指出情绪管理的误区，强调接纳而非压制才是情绪稳定的前提。</p><span class="mm-chip">情绪管理</span><span class="mm-chip">接纳</span><span class="mm-quote">「情绪管理就是要使自己的情绪不再失控，并且很」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">5</span><span class="mm-cname">5 兴趣是内在驱动，不是喜欢</span><span class="mm-role">立论</span></p><p class="mm-gist">界定兴趣的驱动力，强调内在参与感优于外在的喜欢与评价。</p><span class="mm-chip">兴趣</span><span class="mm-chip">内在驱动</span><span class="mm-quote">「兴趣的第一性原理是内在驱动，不是喜欢」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">6</span><span class="mm-cname">6 慎独是不自欺，不是自律</span><span class="mm-role">立论</span></p><p class="mm-gist">纠正慎独的定义，将其核心从自律转向不自欺的诚实。</p><span class="mm-chip">慎独</span><span class="mm-chip">不自欺</span><span class="mm-quote">「慎独的第一性原理是不自欺，不是自律」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">7</span><span class="mm-cname">7 中庸是恰到好处，不是平庸</span><span class="mm-role">立论</span></p><p class="mm-gist">澄清中庸的含义，将其从平庸的消极状态还原为恰到好处的平衡。</p><span class="mm-chip">中庸</span><span class="mm-chip">恰到好处</span><span class="mm-quote">「中庸是既不会过于激进也不会过分保守，是恰到好处」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">8</span><span class="mm-cname">8 反内耗：行动，不是想通</span><span class="mm-role">立论</span></p><p class="mm-gist">揭示内耗的根源，指出行动是打破反刍与纠结的唯一路径。</p><span class="mm-chip">内耗</span><span class="mm-chip">行动</span><span class="mm-quote">「内耗的根源是想和做脱了节」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">9</span><span class="mm-cname">9 自我价值是内在确认，不是外在认可</span><span class="mm-role">立论</span></p><p class="mm-gist">重构自我价值的来源，强调内在确认对抵御外在评价的重要性。</p><span class="mm-chip">自我价值</span><span class="mm-chip">内在确认</span><span class="mm-quote">「自我价值的第一性原理是内在确认，不是外在认可」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">10</span><span class="mm-cname">10 松弛感是放下执念，不是躺平</span><span class="mm-role">立论</span></p><p class="mm-gist">区分松弛感与躺平，指出放下对不可控结果的执念是松弛的来源。</p><span class="mm-chip">松弛感</span><span class="mm-chip">执念</span><span class="mm-quote">「松弛感的第一性原理是放下执念，不是躺平」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">11</span><span class="mm-cname">11 无为是不妄为，不是无所作为</span><span class="mm-role">立论</span></p><p class="mm-gist">阐释无为的本义，将其从无所作为修正为顺应自然的不妄为。</p><span class="mm-chip">无为</span><span class="mm-chip">不妄为</span><span class="mm-quote">「无为的第一性原理是不妄为，不是无所作为」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">12</span><span class="mm-cname">12 认知升级是更新框架，不是堆积知识</span><span class="mm-role">立论</span></p><p class="mm-gist">强调认知升级的核心在于处理信息的框架更新，而非知识量的堆积。</p><span class="mm-chip">认知升级</span><span class="mm-chip">框架</span><span class="mm-quote">「认知升级的第一性原理，是框架，不是知识量的变化」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">13</span><span class="mm-cname">13 祛魅是看清真实，不是全盘否定</span><span class="mm-role">立论</span></p><p class="mm-gist">界定祛魅的边界，指出其目的是看清真实，而非通过否定进行逃避。</p><span class="mm-chip">祛魅</span><span class="mm-chip">真实</span><span class="mm-quote">「祛魅是揭开虚幻的面纱，认清事实真相。」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">B</span><span class="mm-label">知行转化</span><span class="mm-cnt">8 章</span></summary>
 <p class="mm-why">聚焦学习、决策、复盘与职场表现，论证从知识获取到行动产出的转化逻辑，强调结果导向。</p>
 <ol class="mm-tree">
-<li class="r-th"><p class="mm-ch"><b>14</b> 14 学习是应用，不是记忆<span class="mm-role r-th">立论</span></p><p class="mm-gist">将学习的定义从记忆转向应用，引入费曼技巧作为能力转化的工具。</p><span class="mm-chip">学习</span><span class="mm-chip">应用</span><span class="mm-anchor">「学习的第一性原理是把不知道的东西变成能用的能力」</span></li>
-<li class="r-th"><p class="mm-ch"><b>15</b> 15 阅读是思考，不是浏览数量<span class="mm-role r-th">立论</span></p><p class="mm-gist">提出阅读的质量标准，强调思考深度远比浏览数量重要。</p><span class="mm-chip">阅读</span><span class="mm-chip">思考</span><span class="mm-anchor">「翻阅一本好书和看完一本好书，是两码事」</span></li>
-<li class="r-th"><p class="mm-ch"><b>16</b> 16 决策是目的，不是选项<span class="mm-role r-th">立论</span></p><p class="mm-gist">明确决策的逻辑起点，指出目的才是衡量选项的唯一标准。</p><span class="mm-chip">决策</span><span class="mm-chip">目的</span><span class="mm-anchor">「决策真正的起点，是我们想得到什么，也就是目的」</span></li>
-<li class="r-th"><p class="mm-ch"><b>17</b> 17 复盘是提炼规律，不是复述经过<span class="mm-role r-th">立论</span></p><p class="mm-gist">定义复盘的价值，强调提炼规律是复盘区别于简单复述的核心。</p><span class="mm-chip">复盘</span><span class="mm-chip">规律</span><span class="mm-anchor">「复盘的第一性原理是提炼规律，不是复述经过」</span></li>
-<li class="r-th"><p class="mm-ch"><b>18</b> 18 知行合一是知行一体，不是先知后行<span class="mm-role r-th">立论</span></p><p class="mm-gist">打破知行分离的认知，论证行动本身即是知识获取的入口。</p><span class="mm-chip">知行合一</span><span class="mm-chip">知行一体</span><span class="mm-anchor">「知行合一是一回事，不是一个分开的东西」</span></li>
-<li class="r-th"><p class="mm-ch"><b>19</b> 19 教育是培养能力，不是分数<span class="mm-role r-th">立论</span></p><p class="mm-gist">指出分数的局限性，强调教育的本质是培养解决问题的综合能力。</p><span class="mm-chip">教育</span><span class="mm-chip">能力</span><span class="mm-anchor">「教育的第一性原理，是培养能力，不是分数」</span></li>
-<li class="r-th"><p class="mm-ch"><b>20</b> 20 职场是价值，不是努力<span class="mm-role r-th">立论</span></p><p class="mm-gist">区分职场中的努力与价值，强调交付成果是职场评价的唯一维度。</p><span class="mm-chip">职场</span><span class="mm-chip">价值</span><span class="mm-anchor">「公司要的是结果，努力只是通往结果的一条路」</span></li>
-<li class="r-th"><p class="mm-ch"><b>21</b> 21 长期主义是复利积累，不是熬时间<span class="mm-role r-th">立论</span></p><p class="mm-gist">纠正长期主义的误区，强调复利积累而非单纯的时间堆积。</p><span class="mm-chip">长期主义</span><span class="mm-chip">复利</span><span class="mm-anchor">「长期主义实际上是看这段时间里有没有发生积累」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">14</span><span class="mm-cname">14 学习是应用，不是记忆</span><span class="mm-role">立论</span></p><p class="mm-gist">将学习的定义从记忆转向应用，引入费曼技巧作为能力转化的工具。</p><span class="mm-chip">学习</span><span class="mm-chip">应用</span><span class="mm-quote">「学习的第一性原理是把不知道的东西变成能用的能力」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">15</span><span class="mm-cname">15 阅读是思考，不是浏览数量</span><span class="mm-role">立论</span></p><p class="mm-gist">提出阅读的质量标准，强调思考深度远比浏览数量重要。</p><span class="mm-chip">阅读</span><span class="mm-chip">思考</span><span class="mm-quote">「翻阅一本好书和看完一本好书，是两码事」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">16</span><span class="mm-cname">16 决策是目的，不是选项</span><span class="mm-role">立论</span></p><p class="mm-gist">明确决策的逻辑起点，指出目的才是衡量选项的唯一标准。</p><span class="mm-chip">决策</span><span class="mm-chip">目的</span><span class="mm-quote">「决策真正的起点，是我们想得到什么，也就是目的」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">17</span><span class="mm-cname">17 复盘是提炼规律，不是复述经过</span><span class="mm-role">立论</span></p><p class="mm-gist">定义复盘的价值，强调提炼规律是复盘区别于简单复述的核心。</p><span class="mm-chip">复盘</span><span class="mm-chip">规律</span><span class="mm-quote">「复盘的第一性原理是提炼规律，不是复述经过」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">18</span><span class="mm-cname">18 知行合一是知行一体，不是先知后行</span><span class="mm-role">立论</span></p><p class="mm-gist">打破知行分离的认知，论证行动本身即是知识获取的入口。</p><span class="mm-chip">知行合一</span><span class="mm-chip">知行一体</span><span class="mm-quote">「知行合一是一回事，不是一个分开的东西」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">19</span><span class="mm-cname">19 教育是培养能力，不是分数</span><span class="mm-role">立论</span></p><p class="mm-gist">指出分数的局限性，强调教育的本质是培养解决问题的综合能力。</p><span class="mm-chip">教育</span><span class="mm-chip">能力</span><span class="mm-quote">「教育的第一性原理，是培养能力，不是分数」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">20</span><span class="mm-cname">20 职场是价值，不是努力</span><span class="mm-role">立论</span></p><p class="mm-gist">区分职场中的努力与价值，强调交付成果是职场评价的唯一维度。</p><span class="mm-chip">职场</span><span class="mm-chip">价值</span><span class="mm-quote">「公司要的是结果，努力只是通往结果的一条路」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">21</span><span class="mm-cname">21 长期主义是复利积累，不是熬时间</span><span class="mm-role">立论</span></p><p class="mm-gist">纠正长期主义的误区，强调复利积累而非单纯的时间堆积。</p><span class="mm-chip">长期主义</span><span class="mm-chip">复利</span><span class="mm-quote">「长期主义实际上是看这段时间里有没有发生积累」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">C</span><span class="mm-label">效能进阶</span><span class="mm-cnt">9 章</span></summary>
 <p class="mm-why">探讨管理、投资、资产配置与效率，论证在复杂外部环境中如何通过本质规律实现长期价值积累。</p>
 <ol class="mm-tree">
-<li class="r-th"><p class="mm-ch"><b>22</b> 22 管理是成就他人，不是管住人<span class="mm-role r-th">立论</span></p><p class="mm-gist">重构管理的定义，强调通过成就他人来实现团队目标。</p><span class="mm-chip">管理</span><span class="mm-chip">成就他人</span><span class="mm-anchor">「管理所要做的，是让每个人的积极性都调动起来，一起把事情做成」</span></li>
-<li class="r-th"><p class="mm-ch"><b>23</b> 23 反脆弱是从波动中受益，不是规避风险<span class="mm-role r-th">立论</span></p><p class="mm-gist">提出反脆弱的逻辑，强调从波动中获益而非被动规避风险。</p><span class="mm-chip">反脆弱</span><span class="mm-chip">波动</span><span class="mm-anchor">「反脆弱是越是在震荡里发展得越好」</span></li>
-<li class="r-th"><p class="mm-ch"><b>24</b> 24 时间管理是目标，不是效率<span class="mm-role r-th">立论</span></p><p class="mm-gist">指出时间管理的本质是目标导向，而非单纯追求执行效率。</p><span class="mm-chip">时间管理</span><span class="mm-chip">目标</span><span class="mm-anchor">「时间管理的根本就是目标，在有效的时间管理中必须有一个条件，时间要用来做有利于实现目标的事情」</span></li>
-<li class="r-th"><p class="mm-ch"><b>25</b> 25 匠心是合道，不是熟能生巧<span class="mm-role r-th">立论</span></p><p class="mm-gist">将匠心从熟练度提升至合道的高度，强调遵循规律的重要性。</p><span class="mm-chip">匠心</span><span class="mm-chip">合道</span><span class="mm-anchor">「匠心是掌握了这件事的本质和规律之后，每一步都朝对的方向走，越做越精」</span></li>
-<li class="r-th"><p class="mm-ch"><b>26</b> 26 投资是风险控制，不是高回报<span class="mm-role r-th">立论</span></p><p class="mm-gist">明确投资的首要原则，强调风险控制优于追求高回报。</p><span class="mm-chip">投资</span><span class="mm-chip">风险控制</span><span class="mm-anchor">「真正值得学习的，是行情不好的时候不亏钱」</span></li>
-<li class="r-th"><p class="mm-ch"><b>27</b> 27 断舍离是留下重要，不是扔东西<span class="mm-role r-th">立论</span></p><p class="mm-gist">澄清断舍离的重点，指出留下重要事物比单纯扔东西更关键。</p><span class="mm-chip">断舍离</span><span class="mm-chip">重要</span><span class="mm-anchor">「断舍离是留下重要，不是扔东西」</span></li>
-<li class="r-th"><p class="mm-ch"><b>28</b> 28 营销是价值交换，不是定位<span class="mm-role r-th">立论</span></p><p class="mm-gist">将营销还原为价值交换，指出定位只是手段而非目的。</p><span class="mm-chip">营销</span><span class="mm-chip">价值交换</span><span class="mm-anchor">「营销的目的，说到底就是让消费者愿意拿钱换取商品」</span></li>
-<li class="r-th"><p class="mm-ch"><b>29</b> 29 保险是互助，不是理财<span class="mm-role r-th">立论</span></p><p class="mm-gist">揭示保险的互助本质，指出应关注赔付额度而非返还理财属性。</p><span class="mm-chip">保险</span><span class="mm-chip">互助</span><span class="mm-anchor">「保险是一种互助分摊机制，通过大数法则将个人难以承担的损失分摊给所有投保人」</span></li>
-<li class="r-th"><p class="mm-ch"><b>30</b> 30 财富是资产，不是收入<span class="mm-role r-th">立论</span></p><p class="mm-gist">区分财富与收入，强调通过购买资产实现财富积累。</p><span class="mm-chip">财富</span><span class="mm-chip">资产</span><span class="mm-anchor">「财富是存下来的资产，收入是流进来的钱」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">22</span><span class="mm-cname">22 管理是成就他人，不是管住人</span><span class="mm-role">立论</span></p><p class="mm-gist">重构管理的定义，强调通过成就他人来实现团队目标。</p><span class="mm-chip">管理</span><span class="mm-chip">成就他人</span><span class="mm-quote">「管理所要做的，是让每个人的积极性都调动起来，一起把事情做成」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">23</span><span class="mm-cname">23 反脆弱是从波动中受益，不是规避风险</span><span class="mm-role">立论</span></p><p class="mm-gist">提出反脆弱的逻辑，强调从波动中获益而非被动规避风险。</p><span class="mm-chip">反脆弱</span><span class="mm-chip">波动</span><span class="mm-quote">「反脆弱是越是在震荡里发展得越好」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">24</span><span class="mm-cname">24 时间管理是目标，不是效率</span><span class="mm-role">立论</span></p><p class="mm-gist">指出时间管理的本质是目标导向，而非单纯追求执行效率。</p><span class="mm-chip">时间管理</span><span class="mm-chip">目标</span><span class="mm-quote">「时间管理的根本就是目标，在有效的时间管理中必须有一个条件，时间要用来做有利于实现目标的事情」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">25</span><span class="mm-cname">25 匠心是合道，不是熟能生巧</span><span class="mm-role">立论</span></p><p class="mm-gist">将匠心从熟练度提升至合道的高度，强调遵循规律的重要性。</p><span class="mm-chip">匠心</span><span class="mm-chip">合道</span><span class="mm-quote">「匠心是掌握了这件事的本质和规律之后，每一步都朝对的方向走，越做越精」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">26</span><span class="mm-cname">26 投资是风险控制，不是高回报</span><span class="mm-role">立论</span></p><p class="mm-gist">明确投资的首要原则，强调风险控制优于追求高回报。</p><span class="mm-chip">投资</span><span class="mm-chip">风险控制</span><span class="mm-quote">「真正值得学习的，是行情不好的时候不亏钱」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">27</span><span class="mm-cname">27 断舍离是留下重要，不是扔东西</span><span class="mm-role">立论</span></p><p class="mm-gist">澄清断舍离的重点，指出留下重要事物比单纯扔东西更关键。</p><span class="mm-chip">断舍离</span><span class="mm-chip">重要</span><span class="mm-quote">「断舍离是留下重要，不是扔东西」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">28</span><span class="mm-cname">28 营销是价值交换，不是定位</span><span class="mm-role">立论</span></p><p class="mm-gist">将营销还原为价值交换，指出定位只是手段而非目的。</p><span class="mm-chip">营销</span><span class="mm-chip">价值交换</span><span class="mm-quote">「营销的目的，说到底就是让消费者愿意拿钱换取商品」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">29</span><span class="mm-cname">29 保险是互助，不是理财</span><span class="mm-role">立论</span></p><p class="mm-gist">揭示保险的互助本质，指出应关注赔付额度而非返还理财属性。</p><span class="mm-chip">保险</span><span class="mm-chip">互助</span><span class="mm-quote">「保险是一种互助分摊机制，通过大数法则将个人难以承担的损失分摊给所有投保人」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">30</span><span class="mm-cname">30 财富是资产，不是收入</span><span class="mm-role">立论</span></p><p class="mm-gist">区分财富与收入，强调通过购买资产实现财富积累。</p><span class="mm-chip">财富</span><span class="mm-chip">资产</span><span class="mm-quote">「财富是存下来的资产，收入是流进来的钱」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">D</span><span class="mm-label">关系本质</span><span class="mm-cnt">10 章</span></summary>
 <p class="mm-why">剖析家庭、爱情、亲子与社交，重构人际关系中责任、承诺与边界的内在逻辑，剔除情感误区。</p>
 <ol class="mm-tree">
-<li class="r-th"><p class="mm-ch"><b>31</b> 31 家庭是责任，不是对错<span class="mm-role r-th">立论</span></p><p class="mm-gist">指出家庭关系的本质是责任，而非争论是非对错。</p><span class="mm-chip">家庭</span><span class="mm-chip">责任</span><span class="mm-anchor">「在不管对错的情况下先把生活继续下去」</span></li>
-<li class="r-th"><p class="mm-ch"><b>32</b> 32 爱情是承诺，不是浪漫<span class="mm-role r-th">立论</span></p><p class="mm-gist">将爱情的本质从浪漫外壳转向承诺，强调其在关系中的核心地位。</p><span class="mm-chip">爱情</span><span class="mm-chip">承诺</span><span class="mm-anchor">「爱情的第一性原理是承诺，不是浪漫」</span></li>
-<li class="r-th"><p class="mm-ch"><b>33</b> 33 亲子是陪伴，不是报班<span class="mm-role r-th">立论</span></p><p class="mm-gist">重构亲子关系，强调陪伴是核心，而非外包任务清单。</p><span class="mm-chip">亲子</span><span class="mm-chip">陪伴</span><span class="mm-anchor">「孩子最缺少的就是有人陪着」</span></li>
-<li class="r-th"><p class="mm-ch"><b>34</b> 34 友情是靠得住，不是玩得来<span class="mm-role r-th">立论</span></p><p class="mm-gist">界定友情的深度，强调靠得住的信任远比玩得来更重要。</p><span class="mm-chip">友情</span><span class="mm-chip">信任</span><span class="mm-anchor">「友情拆开来，是两个人没有血缘关系也没有契约约束，愿意给对方留出一片天地的关系」</span></li>
-<li class="r-th"><p class="mm-ch"><b>35</b> 35 社交是品质，不是数量<span class="mm-role r-th">立论</span></p><p class="mm-gist">将社交视为投资，强调投入心力于重要关系而非追求广度。</p><span class="mm-chip">社交</span><span class="mm-chip">品质</span><span class="mm-anchor">「社交的成败，取决于把有限的心力投在哪几段最重要的关系上」</span></li>
-<li class="r-th"><p class="mm-ch"><b>36</b> 36 识人是看人品，不是听言语<span class="mm-role r-th">立论</span></p><p class="mm-gist">指出识人的关键在于观察取舍时的品行，而非轻信言语。</p><span class="mm-chip">识人</span><span class="mm-chip">品行</span><span class="mm-anchor">「看一个人的品行，最好的办法是看他在面临取舍的时候如何做，利益摆在」</span></li>
-<li class="r-th"><p class="mm-ch"><b>37</b> 37 原生家庭是起点，不是宿命<span class="mm-role r-th">立论</span></p><p class="mm-gist">明确原生家庭的定位，强调其为起点而非不可更改的宿命。</p><span class="mm-chip">原生家庭</span><span class="mm-chip">起点</span><span class="mm-anchor">「原生家庭是一个固定的起点，不是一种被规定好的宿命」</span></li>
-<li class="r-th"><p class="mm-ch"><b>38</b> 38 提问是追问，不是要答案<span class="mm-role r-th">立论</span></p><p class="mm-gist">强调提问的本质是追问逻辑，而非索取标准答案。</p><span class="mm-chip">提问</span><span class="mm-chip">追问</span><span class="mm-anchor">「提问的第一性原理是追问，不是要答案」</span></li>
-<li class="r-th"><p class="mm-ch"><b>39</b> 39 边界感是分清你我，不是学会说不<span class="mm-role r-th">立论</span></p><p class="mm-gist">纠正边界感的理解，强调其核心是分清责任归属，而非简单说不。</p><span class="mm-chip">边界感</span><span class="mm-chip">责任</span><span class="mm-anchor">「边界感是知道自己的责任归属，哪些属于我，哪些不属于我」</span></li>
-<li class="r-th"><p class="mm-ch"><b>40</b> 40 情绪价值是接纳情绪，不是哄人开心<span class="mm-role r-th">立论</span></p><p class="mm-gist">定义情绪价值，强调接纳对方情绪是核心，而非单纯讨好。</p><span class="mm-chip">情绪价值</span><span class="mm-chip">接纳</span><span class="mm-anchor">「情绪价值是接纳情绪，不是哄人开心」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">31</span><span class="mm-cname">31 家庭是责任，不是对错</span><span class="mm-role">立论</span></p><p class="mm-gist">指出家庭关系的本质是责任，而非争论是非对错。</p><span class="mm-chip">家庭</span><span class="mm-chip">责任</span><span class="mm-quote">「在不管对错的情况下先把生活继续下去」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">32</span><span class="mm-cname">32 爱情是承诺，不是浪漫</span><span class="mm-role">立论</span></p><p class="mm-gist">将爱情的本质从浪漫外壳转向承诺，强调其在关系中的核心地位。</p><span class="mm-chip">爱情</span><span class="mm-chip">承诺</span><span class="mm-quote">「爱情的第一性原理是承诺，不是浪漫」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">33</span><span class="mm-cname">33 亲子是陪伴，不是报班</span><span class="mm-role">立论</span></p><p class="mm-gist">重构亲子关系，强调陪伴是核心，而非外包任务清单。</p><span class="mm-chip">亲子</span><span class="mm-chip">陪伴</span><span class="mm-quote">「孩子最缺少的就是有人陪着」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">34</span><span class="mm-cname">34 友情是靠得住，不是玩得来</span><span class="mm-role">立论</span></p><p class="mm-gist">界定友情的深度，强调靠得住的信任远比玩得来更重要。</p><span class="mm-chip">友情</span><span class="mm-chip">信任</span><span class="mm-quote">「友情拆开来，是两个人没有血缘关系也没有契约约束，愿意给对方留出一片天地的关系」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">35</span><span class="mm-cname">35 社交是品质，不是数量</span><span class="mm-role">立论</span></p><p class="mm-gist">将社交视为投资，强调投入心力于重要关系而非追求广度。</p><span class="mm-chip">社交</span><span class="mm-chip">品质</span><span class="mm-quote">「社交的成败，取决于把有限的心力投在哪几段最重要的关系上」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">36</span><span class="mm-cname">36 识人是看人品，不是听言语</span><span class="mm-role">立论</span></p><p class="mm-gist">指出识人的关键在于观察取舍时的品行，而非轻信言语。</p><span class="mm-chip">识人</span><span class="mm-chip">品行</span><span class="mm-quote">「看一个人的品行，最好的办法是看他在面临取舍的时候如何做，利益摆在」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">37</span><span class="mm-cname">37 原生家庭是起点，不是宿命</span><span class="mm-role">立论</span></p><p class="mm-gist">明确原生家庭的定位，强调其为起点而非不可更改的宿命。</p><span class="mm-chip">原生家庭</span><span class="mm-chip">起点</span><span class="mm-quote">「原生家庭是一个固定的起点，不是一种被规定好的宿命」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">38</span><span class="mm-cname">38 提问是追问，不是要答案</span><span class="mm-role">立论</span></p><p class="mm-gist">强调提问的本质是追问逻辑，而非索取标准答案。</p><span class="mm-chip">提问</span><span class="mm-chip">追问</span><span class="mm-quote">「提问的第一性原理是追问，不是要答案」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">39</span><span class="mm-cname">39 边界感是分清你我，不是学会说不</span><span class="mm-role">立论</span></p><p class="mm-gist">纠正边界感的理解，强调其核心是分清责任归属，而非简单说不。</p><span class="mm-chip">边界感</span><span class="mm-chip">责任</span><span class="mm-quote">「边界感是知道自己的责任归属，哪些属于我，哪些不属于我」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">40</span><span class="mm-cname">40 情绪价值是接纳情绪，不是哄人开心</span><span class="mm-role">立论</span></p><p class="mm-gist">定义情绪价值，强调接纳对方情绪是核心，而非单纯讨好。</p><span class="mm-chip">情绪价值</span><span class="mm-chip">接纳</span><span class="mm-quote">「情绪价值是接纳情绪，不是哄人开心」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">E</span><span class="mm-label">身心秩序</span><span class="mm-cnt">10 章</span></summary>
 <p class="mm-why">从健康、睡眠、幸福感及自我实现维度，论证个体如何通过内在一致性与自我选择，达成身心平衡与自由。</p>
 <ol class="mm-tree">
-<li class="r-th"><p class="mm-ch"><b>41</b> 41 健康是身心愉悦，不是不生病<span class="mm-role r-th">立论</span></p><p class="mm-gist">指出健康的本质是身心愉悦，而非仅仅是没有疾病。</p><span class="mm-chip">健康</span><span class="mm-chip">身心愉悦</span><span class="mm-anchor">「健康的第一性原理是身心愉悦，不」</span></li>
-<li class="r-th"><p class="mm-ch"><b>42</b> 42 减肥是摄入低于消耗，不是运动量<span class="mm-role r-th">立论</span></p><p class="mm-gist">揭示减肥的能量守恒原理，强调摄入与消耗的差额是关键。</p><span class="mm-chip">减肥</span><span class="mm-chip">能量守恒</span><span class="mm-anchor">「减肥是摄入低于消耗，不是运动量大小」</span></li>
-<li class="r-th"><p class="mm-ch"><b>43</b> 43 睡眠是规律，不是时长<span class="mm-role r-th">立论</span></p><p class="mm-gist">强调睡眠应遵循昼夜节律，而非单纯追求睡眠时长。</p><span class="mm-chip">睡眠</span><span class="mm-chip">规律</span><span class="mm-anchor">「人身体里有一个昼夜节律，跟着光线走，天黑了就启动」</span></li>
-<li class="r-th"><p class="mm-ch"><b>44</b> 44 饮食是均衡，不是进补<span class="mm-role r-th">立论</span></p><p class="mm-gist">指出饮食的核心是均衡，而非依赖单一进补。</p><span class="mm-chip">饮食</span><span class="mm-chip">均衡</span><span class="mm-anchor">「人体营养需求是几十种营养物质组成一个完整的食物网络」</span></li>
-<li class="r-th"><p class="mm-ch"><b>45</b> 45 运动是长期可持续，不是强度<span class="mm-role r-th">立论</span></p><p class="mm-gist">明确运动的原则，强调可持续的规律性优于高强度刺激。</p><span class="mm-chip">运动</span><span class="mm-chip">可持续</span><span class="mm-anchor">「运动的第一性原理是持久不断地进行下去，不是靠高强度来实现」</span></li>
-<li class="r-th"><p class="mm-ch"><b>46</b> 46 幸福是意义，不是拥有<span class="mm-role r-th">立论</span></p><p class="mm-gist">区分幸福与快感，强调意义感是持久幸福的来源。</p><span class="mm-chip">幸福</span><span class="mm-chip">意义</span><span class="mm-anchor">「幸福感是一种持久稳定的满足，不是中大奖、吃顿好的那种短暂喜悦」</span></li>
-<li class="r-th"><p class="mm-ch"><b>47</b> 47 心流是投入，不是专注<span class="mm-role r-th">立论</span></p><p class="mm-gist">界定心流的本质，强调忘我投入是进入心流的状态。</p><span class="mm-chip">心流</span><span class="mm-chip">投入</span><span class="mm-anchor">「心流是投入，不是专注」</span></li>
-<li class="r-th"><p class="mm-ch"><b>48</b> 48 自我实现是成为自己，不是变优秀<span class="mm-role r-th">立论</span></p><p class="mm-gist">区分自我实现与变优秀，强调向内走以成为自己。</p><span class="mm-chip">自我实现</span><span class="mm-chip">成为自己</span><span class="mm-anchor">「变优秀是向外求，成为自己是向内走」</span></li>
-<li class="r-th"><p class="mm-ch"><b>49</b> 49 自洽是内在一致，不是自我和解<span class="mm-role r-th">立论</span></p><p class="mm-gist">阐释自洽的逻辑，强调内在一致性而非简单的自我和解。</p><span class="mm-chip">自洽</span><span class="mm-chip">内在一致</span><span class="mm-anchor">「自洽的第一性原理是内在一致，不是自我和解」</span></li>
-<li class="r-th"><p class="mm-ch"><b>50</b> 50 自由是能选择，不是没人管<span class="mm-role r-th">立论</span></p><p class="mm-gist">重构自由的定义，强调选择权是自由的核心，而非无拘无束。</p><span class="mm-chip">自由</span><span class="mm-chip">选择</span><span class="mm-anchor">「机器的轰鸣声打破了田园的宁静，人们从土地的束缚中被抽离出来，选择的权利一点点在个体手中生长。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">41</span><span class="mm-cname">41 健康是身心愉悦，不是不生病</span><span class="mm-role">立论</span></p><p class="mm-gist">指出健康的本质是身心愉悦，而非仅仅是没有疾病。</p><span class="mm-chip">健康</span><span class="mm-chip">身心愉悦</span><span class="mm-quote">「健康的第一性原理是身心愉悦，不」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">42</span><span class="mm-cname">42 减肥是摄入低于消耗，不是运动量</span><span class="mm-role">立论</span></p><p class="mm-gist">揭示减肥的能量守恒原理，强调摄入与消耗的差额是关键。</p><span class="mm-chip">减肥</span><span class="mm-chip">能量守恒</span><span class="mm-quote">「减肥是摄入低于消耗，不是运动量大小」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">43</span><span class="mm-cname">43 睡眠是规律，不是时长</span><span class="mm-role">立论</span></p><p class="mm-gist">强调睡眠应遵循昼夜节律，而非单纯追求睡眠时长。</p><span class="mm-chip">睡眠</span><span class="mm-chip">规律</span><span class="mm-quote">「人身体里有一个昼夜节律，跟着光线走，天黑了就启动」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">44</span><span class="mm-cname">44 饮食是均衡，不是进补</span><span class="mm-role">立论</span></p><p class="mm-gist">指出饮食的核心是均衡，而非依赖单一进补。</p><span class="mm-chip">饮食</span><span class="mm-chip">均衡</span><span class="mm-quote">「人体营养需求是几十种营养物质组成一个完整的食物网络」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">45</span><span class="mm-cname">45 运动是长期可持续，不是强度</span><span class="mm-role">立论</span></p><p class="mm-gist">明确运动的原则，强调可持续的规律性优于高强度刺激。</p><span class="mm-chip">运动</span><span class="mm-chip">可持续</span><span class="mm-quote">「运动的第一性原理是持久不断地进行下去，不是靠高强度来实现」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">46</span><span class="mm-cname">46 幸福是意义，不是拥有</span><span class="mm-role">立论</span></p><p class="mm-gist">区分幸福与快感，强调意义感是持久幸福的来源。</p><span class="mm-chip">幸福</span><span class="mm-chip">意义</span><span class="mm-quote">「幸福感是一种持久稳定的满足，不是中大奖、吃顿好的那种短暂喜悦」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">47</span><span class="mm-cname">47 心流是投入，不是专注</span><span class="mm-role">立论</span></p><p class="mm-gist">界定心流的本质，强调忘我投入是进入心流的状态。</p><span class="mm-chip">心流</span><span class="mm-chip">投入</span><span class="mm-quote">「心流是投入，不是专注」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">48</span><span class="mm-cname">48 自我实现是成为自己，不是变优秀</span><span class="mm-role">立论</span></p><p class="mm-gist">区分自我实现与变优秀，强调向内走以成为自己。</p><span class="mm-chip">自我实现</span><span class="mm-chip">成为自己</span><span class="mm-quote">「变优秀是向外求，成为自己是向内走」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">49</span><span class="mm-cname">49 自洽是内在一致，不是自我和解</span><span class="mm-role">立论</span></p><p class="mm-gist">阐释自洽的逻辑，强调内在一致性而非简单的自我和解。</p><span class="mm-chip">自洽</span><span class="mm-chip">内在一致</span><span class="mm-quote">「自洽的第一性原理是内在一致，不是自我和解」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">50</span><span class="mm-cname">50 自由是能选择，不是没人管</span><span class="mm-role">立论</span></p><p class="mm-gist">重构自由的定义，强调选择权是自由的核心，而非无拘无束。</p><span class="mm-chip">自由</span><span class="mm-chip">选择</span><span class="mm-quote">「机器的轰鸣声打破了田园的宁静，人们从土地的束缚中被抽离出来，选择的权利一点点在个体手中生长。」</span></li>
 </ol>
 </details>
 <footer class="site-footer">

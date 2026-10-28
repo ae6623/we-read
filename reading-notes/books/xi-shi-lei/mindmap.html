@@ -16,8 +16,8 @@
 .mm-bar i{display:block;height:100%;background:linear-gradient(90deg,#8a9b6e,#c2b280)}
 .mm-svgwrap{overflow-x:auto;padding:.4em 0 1em;border-bottom:1px solid var(--line)}
 .mm-svg{width:100%;height:auto;min-width:760px}
-.mm-spine{margin:.9em 0;border-left:3px solid #d9d0bd;padding:.1em 0 .1em .9em}
-.mm-spine[open]{border-left-color:#8a9b6e}
+.mm-spine{margin:1.15em 0;border-left:3px solid #ece4d3;padding:.1em 0 .1em .85em}
+.mm-spine[open]{border-left-color:#d8cdb4}
 .mm-spine>summary{display:flex;gap:.6em;align-items:baseline;cursor:pointer;
   list-style:none;padding:.35em 0}
 .mm-spine>summary::-webkit-details-marker{display:none}
@@ -26,24 +26,32 @@
 .mm-label{font-weight:600;font-size:1rem;color:var(--ink)}
 .mm-cnt{margin-left:auto;font-size:.74rem;color:var(--muted)}
 .mm-why{font-size:.8rem;color:var(--muted);margin:.1em 0 .8em;line-height:1.7}
-.mm-tree{list-style:none;padding:0;margin:0}
-.mm-tree li{position:relative;padding:.42em 0 .42em 1.1em;border-left:1px dotted #cfc6b4;
-  margin-left:.5em}
-.mm-tree li:before{content:"";position:absolute;left:0;top:1.05em;width:.7em;
-  border-top:1px dotted #cfc6b4}
-.mm-ch{margin:0;font-size:.92rem;color:var(--ink)}
-.mm-ch b{color:#a9a08d;font-weight:500;font-size:.8rem;margin-right:.4em}
-.mm-role{font-size:.68rem;padding:.05em .4em;border-radius:3px;margin-left:.5em;
-  vertical-align:.1em;white-space:nowrap}
-.r-pre{background:#eef0e6;color:#6b7a4e}.r-th{background:#eae7f0;color:#5f5578}
-.r-cnt{background:#f6e9e4;color:#946350}.r-case{background:#e8eff1;color:#4f7380}
-.r-end{background:#f2ecdf;color:#8a7442}
-.mm-gist{margin:.18em 0 .3em;font-size:.84rem;line-height:1.75;color:#4a443b}
-.mm-chip{display:inline-block;font-size:.68rem;color:#6b6152;background:#f2ecdf;
-  border-radius:9px;padding:.05em .5em;margin:.15em .25em .15em 0}
-.mm-anchor{display:block;font-size:.78rem;color:#8a8272;line-height:1.7;
-  border-left:2px dotted #d9d0bd;padding-left:.7em;margin-top:.3em}
-@media(max-width:720px){.mm-svg{min-width:640px}}
+.mm-tree{list-style:none;padding:0;margin:.15em 0 0}
+/* 章条目：与通读页 .ch-item 对齐（无卡片/无彩条/虚线分隔），行高按手机可读行数收紧 */
+.mm-cn{padding:8px 0;border-bottom:1px dashed #eee8dc}
+.mm-cn:last-child{border-bottom:0}
+.mm-chead{display:flex;flex-wrap:wrap;gap:2px 10px;align-items:baseline;margin:0}
+.mm-cno{flex:none;min-width:1.7em;color:#bf8247;font-weight:700;font-size:.82rem;
+  font-variant-numeric:tabular-nums}
+.mm-cname{flex:0 1 auto;min-width:0;font-size:.92rem;line-height:1.6;color:var(--ink);
+  word-break:break-word}
+.mm-role{flex:none;font-size:.68rem;color:#8a8272;line-height:1.6;white-space:nowrap}
+.mm-gist{margin:.15em 0 .2em;font-size:.86rem;line-height:1.75;color:#4a443b}
+.mm-chip{display:inline-block;font-size:.68rem;color:#6b6152;background:#f4f1e6;
+  border-radius:9px;padding:.05em .5em;margin:.1em .28em .1em 0}
+/* 引文块取通读页 ul.ch-quote 的观感：浅米底 + 金色左线 */
+.mm-quote{display:block;margin:.3em 0 .1em;padding:7px 11px;background:#fdf8ee;
+  border-left:3px solid var(--gold);border-radius:0 8px 8px 0;
+  font-size:.8rem;line-height:1.75;color:#6b5c43}
+@media(max-width:720px){
+  .mm-svg{min-width:640px}
+  /* 手机：章条目再收紧一点，一屏多两行 */
+  .mm-cn{padding:7px 0}
+  .mm-chead{gap:8px}
+  .mm-cname{font-size:.9rem}
+  .mm-gist{font-size:.84rem;line-height:1.7}
+  .mm-quote{padding:6px 9px;font-size:.78rem}
+}
 </style>
 </head>
 <body>
@@ -117,58 +125,58 @@
 <summary><span class="mm-id">A</span><span class="mm-label">西施入吴与困境</span><span class="mm-cnt">4 章</span></summary>
 <p class="mm-why"></p>
 <ol class="mm-tree">
-<li class="r-pre"><p class="mm-ch"><b>1</b> 1 · 西施的生活与情感<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">西施在花溪的生活与情感习惯，展现其嗜花与梦兆特质</p><span class="mm-chip">花溪</span><span class="mm-chip">梦境</span><span class="mm-anchor">「西施喜欢看蓝天，看花，喜欢夜里躺在花溪中看星星」</span></li>
-<li class="r-pre"><p class="mm-ch"><b>2</b> 2 · 伯噽太宰与文种的对话<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">伯噽向文种索求勾践心事，并告知西施被选为吴国王妃</p><span class="mm-chip">伯噽</span><span class="mm-chip">文种</span><span class="mm-anchor">「伯噽太宰来到越国，要求文种说出越王勾践的心事」</span></li>
-<li class="r-th"><p class="mm-ch"><b>3</b> 3 · 西施在吴国的困境<span class="mm-role r-th">立论</span></p><p class="mm-gist">西施在吴国王宫中面对复杂语言与侍奉男人的生存困境</p><span class="mm-chip">吴国王宫</span><span class="mm-chip">郑旦</span><span class="mm-anchor">「西施看不懂吴国的世界，人们用语言战斗、攻击、掠夺、厮杀」</span></li>
-<li class="r-cnt"><p class="mm-ch"><b>5</b> 5 · 西施与夫差的关系及其影响<span class="mm-role r-cnt">反证</span></p><p class="mm-gist">夫差视西施为花精，而西施感受到身心分离的坠落感</p><span class="mm-chip">花精</span><span class="mm-chip">身心分离</span><span class="mm-anchor">「西施感到自己的身体与心灵不能再呼应了，她的心灵在沉，一点点儿沉向深渊」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">1</span><span class="mm-cname">1 · 西施的生活与情感</span><span class="mm-role">铺垫</span></p><p class="mm-gist">西施在花溪的生活与情感习惯，展现其嗜花与梦兆特质</p><span class="mm-chip">花溪</span><span class="mm-chip">梦境</span><span class="mm-quote">「西施喜欢看蓝天，看花，喜欢夜里躺在花溪中看星星」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">2</span><span class="mm-cname">2 · 伯噽太宰与文种的对话</span><span class="mm-role">铺垫</span></p><p class="mm-gist">伯噽向文种索求勾践心事，并告知西施被选为吴国王妃</p><span class="mm-chip">伯噽</span><span class="mm-chip">文种</span><span class="mm-quote">「伯噽太宰来到越国，要求文种说出越王勾践的心事」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">3</span><span class="mm-cname">3 · 西施在吴国的困境</span><span class="mm-role">立论</span></p><p class="mm-gist">西施在吴国王宫中面对复杂语言与侍奉男人的生存困境</p><span class="mm-chip">吴国王宫</span><span class="mm-chip">郑旦</span><span class="mm-quote">「西施看不懂吴国的世界，人们用语言战斗、攻击、掠夺、厮杀」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">5</span><span class="mm-cname">5 · 西施与夫差的关系及其影响</span><span class="mm-role">反证</span></p><p class="mm-gist">夫差视西施为花精，而西施感受到身心分离的坠落感</p><span class="mm-chip">花精</span><span class="mm-chip">身心分离</span><span class="mm-quote">「西施感到自己的身体与心灵不能再呼应了，她的心灵在沉，一点点儿沉向深渊」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">B</span><span class="mm-label">列国博弈与阴谋</span><span class="mm-cnt">4 章</span></summary>
 <p class="mm-why"></p>
 <ol class="mm-tree">
-<li class="r-case"><p class="mm-ch"><b>4</b> 4 · 夫差设计灭亡陈、蔡两国<span class="mm-role r-case">案例</span></p><p class="mm-gist">夫差命令西施参与并设计灭亡陈、蔡两国的阴谋宴会</p><span class="mm-chip">陈、蔡两国</span><span class="mm-chip">阴谋</span><span class="mm-anchor">「夫差让西施参与阴谋，设计灭亡陈、蔡两国」</span></li>
-<li class="r-case"><p class="mm-ch"><b>8</b> 8 · 晋平公与吴王的友好宴会<span class="mm-role r-case">案例</span></p><p class="mm-gist">夫差宴请并用毒酒加害访问吴国的晋平公及叔向</p><span class="mm-chip">晋平公</span><span class="mm-chip">毒酒</span><span class="mm-anchor">「晋平公带着大臣叔向访问吴王夫差，夫差命大摆宴席欢迎晋平公」</span></li>
-<li class="r-pre"><p class="mm-ch"><b>13</b> 13 · 伯噽在楚昭王营帐内见到美人<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">楚人伯噽在楚昭王营帐内劝说其考虑吴国未来</p><span class="mm-chip">楚昭王</span><span class="mm-chip">楚语楚歌</span><span class="mm-anchor">「伯噽是楚人，喜欢楚语楚歌」</span></li>
-<li class="r-case"><p class="mm-ch"><b>20</b> 20 · 文种出使楚国<span class="mm-role r-case">案例</span></p><p class="mm-gist">文种奉命出使楚国结盟并在受到侮辱时展示越王禾穗</p><span class="mm-chip">出使楚国</span><span class="mm-chip">禾穗</span><span class="mm-anchor">「文种接受勾践的任务，去楚国与楚昭王结盟」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">4</span><span class="mm-cname">4 · 夫差设计灭亡陈、蔡两国</span><span class="mm-role">案例</span></p><p class="mm-gist">夫差命令西施参与并设计灭亡陈、蔡两国的阴谋宴会</p><span class="mm-chip">陈、蔡两国</span><span class="mm-chip">阴谋</span><span class="mm-quote">「夫差让西施参与阴谋，设计灭亡陈、蔡两国」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">8</span><span class="mm-cname">8 · 晋平公与吴王的友好宴会</span><span class="mm-role">案例</span></p><p class="mm-gist">夫差宴请并用毒酒加害访问吴国的晋平公及叔向</p><span class="mm-chip">晋平公</span><span class="mm-chip">毒酒</span><span class="mm-quote">「晋平公带着大臣叔向访问吴王夫差，夫差命大摆宴席欢迎晋平公」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">13</span><span class="mm-cname">13 · 伯噽在楚昭王营帐内见到美人</span><span class="mm-role">铺垫</span></p><p class="mm-gist">楚人伯噽在楚昭王营帐内劝说其考虑吴国未来</p><span class="mm-chip">楚昭王</span><span class="mm-chip">楚语楚歌</span><span class="mm-quote">「伯噽是楚人，喜欢楚语楚歌」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">20</span><span class="mm-cname">20 · 文种出使楚国</span><span class="mm-role">案例</span></p><p class="mm-gist">文种奉命出使楚国结盟并在受到侮辱时展示越王禾穗</p><span class="mm-chip">出使楚国</span><span class="mm-chip">禾穗</span><span class="mm-quote">「文种接受勾践的任务，去楚国与楚昭王结盟」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">C</span><span class="mm-label">吴国内部的分裂</span><span class="mm-cnt">5 章</span></summary>
 <p class="mm-why"></p>
 <ol class="mm-tree">
-<li class="r-pre"><p class="mm-ch"><b>6</b> 6 · 西施与文种的相遇及越国的困境<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">文种带粮至越国与西施相遇并计划回家，西施杀吴卒报复村民</p><span class="mm-chip">上下花溪村</span><span class="mm-chip">吴军兵卒</span><span class="mm-anchor">「西施与文种在越国相遇，文种带来了粮食并计划帮助西施回家」</span></li>
-<li class="r-pre"><p class="mm-ch"><b>7</b> 7 · 夫差和伍子胥的衰老与变化<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">勾勒夫差与伍子胥的衰老变化及郑旦对夫差的吸引尝试</p><span class="mm-chip">衰老</span><span class="mm-chip">郑旦撒娇</span><span class="mm-anchor">「夫差变得懒懒洋洋，对什么都不在意」</span></li>
-<li class="r-pre"><p class="mm-ch"><b>9</b> 9 · 西施在吴国的生活<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">西施父母探望及展现西施在王宫中与夫差的亲密关系</p><span class="mm-chip">西施父母</span><span class="mm-chip">占有欲</span><span class="mm-anchor">「西施的父母来到吴国，西施担心他们衣着不够光鲜」</span></li>
-<li class="r-cnt"><p class="mm-ch"><b>11</b> 11 · 伍子胥的担忧和建议<span class="mm-role r-cnt">反证</span></p><p class="mm-gist">伍子胥建议吴王破坏越国送来的种子以防范越人</p><span class="mm-chip">种子</span><span class="mm-chip">防范</span><span class="mm-anchor">「伍子胥认为越国送来的种子不可用，因为越人心地阴险」</span></li>
-<li class="r-case"><p class="mm-ch"><b>12</b> 12 · 伍子胥求西施帮忙救郑旦母子<span class="mm-role r-case">案例</span></p><p class="mm-gist">伍子胥求助西施救郑旦母子，伯噽得知身份后决定放人</p><span class="mm-chip">郑旦母子</span><span class="mm-chip">放走</span><span class="mm-anchor">「伍子胥向西施求助，希望她能救出自己的儿子和郑旦」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">6</span><span class="mm-cname">6 · 西施与文种的相遇及越国的困境</span><span class="mm-role">铺垫</span></p><p class="mm-gist">文种带粮至越国与西施相遇并计划回家，西施杀吴卒报复村民</p><span class="mm-chip">上下花溪村</span><span class="mm-chip">吴军兵卒</span><span class="mm-quote">「西施与文种在越国相遇，文种带来了粮食并计划帮助西施回家」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">7</span><span class="mm-cname">7 · 夫差和伍子胥的衰老与变化</span><span class="mm-role">铺垫</span></p><p class="mm-gist">勾勒夫差与伍子胥的衰老变化及郑旦对夫差的吸引尝试</p><span class="mm-chip">衰老</span><span class="mm-chip">郑旦撒娇</span><span class="mm-quote">「夫差变得懒懒洋洋，对什么都不在意」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">9</span><span class="mm-cname">9 · 西施在吴国的生活</span><span class="mm-role">铺垫</span></p><p class="mm-gist">西施父母探望及展现西施在王宫中与夫差的亲密关系</p><span class="mm-chip">西施父母</span><span class="mm-chip">占有欲</span><span class="mm-quote">「西施的父母来到吴国，西施担心他们衣着不够光鲜」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">11</span><span class="mm-cname">11 · 伍子胥的担忧和建议</span><span class="mm-role">反证</span></p><p class="mm-gist">伍子胥建议吴王破坏越国送来的种子以防范越人</p><span class="mm-chip">种子</span><span class="mm-chip">防范</span><span class="mm-quote">「伍子胥认为越国送来的种子不可用，因为越人心地阴险」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">12</span><span class="mm-cname">12 · 伍子胥求西施帮忙救郑旦母子</span><span class="mm-role">案例</span></p><p class="mm-gist">伍子胥求助西施救郑旦母子，伯噽得知身份后决定放人</p><span class="mm-chip">郑旦母子</span><span class="mm-chip">放走</span><span class="mm-quote">「伍子胥向西施求助，希望她能救出自己的儿子和郑旦」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">D</span><span class="mm-label">越国的复仇行动</span><span class="mm-cnt">3 章</span></summary>
 <p class="mm-why"></p>
 <ol class="mm-tree">
-<li class="r-th"><p class="mm-ch"><b>10</b> 10 · 文种与三个老人的对话<span class="mm-role r-th">立论</span></p><p class="mm-gist">文种通过对话试探老人忠诚并因越国利益选择背叛越王</p><span class="mm-chip">三个老人</span><span class="mm-chip">背叛</span><span class="mm-anchor">「文种假装关心老人，实则试探他们的忠诚」</span></li>
-<li class="r-case"><p class="mm-ch"><b>14</b> 14 · 勾践得知烛庸逃走的消息<span class="mm-role r-case">案例</span></p><p class="mm-gist">勾践得知烛庸逃走后计划联合三国国君攻城拿下夫差</p><span class="mm-chip">烛庸</span><span class="mm-chip">三国国君</span><span class="mm-anchor">「勾践对烛庸的逃走感到愤怒和遗憾」</span></li>
-<li class="r-case"><p class="mm-ch"><b>15</b> 15 · 勾践的夺城之战<span class="mm-role r-case">案例</span></p><p class="mm-gist">勾践发起夺城之战并允许攻入城者抢掠，楚军城外呐喊</p><span class="mm-chip">夺城之战</span><span class="mm-chip">抢掠</span><span class="mm-anchor">「勾践披挂整齐，站在车上吼：夺下吴国，灭亡吴国」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">10</span><span class="mm-cname">10 · 文种与三个老人的对话</span><span class="mm-role">立论</span></p><p class="mm-gist">文种通过对话试探老人忠诚并因越国利益选择背叛越王</p><span class="mm-chip">三个老人</span><span class="mm-chip">背叛</span><span class="mm-quote">「文种假装关心老人，实则试探他们的忠诚」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">14</span><span class="mm-cname">14 · 勾践得知烛庸逃走的消息</span><span class="mm-role">案例</span></p><p class="mm-gist">勾践得知烛庸逃走后计划联合三国国君攻城拿下夫差</p><span class="mm-chip">烛庸</span><span class="mm-chip">三国国君</span><span class="mm-quote">「勾践对烛庸的逃走感到愤怒和遗憾」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">15</span><span class="mm-cname">15 · 勾践的夺城之战</span><span class="mm-role">案例</span></p><p class="mm-gist">勾践发起夺城之战并允许攻入城者抢掠，楚军城外呐喊</p><span class="mm-chip">夺城之战</span><span class="mm-chip">抢掠</span><span class="mm-quote">「勾践披挂整齐，站在车上吼：夺下吴国，灭亡吴国」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">E</span><span class="mm-label">战后清算与命运</span><span class="mm-cnt">5 章</span></summary>
 <p class="mm-why"></p>
 <ol class="mm-tree">
-<li class="r-end"><p class="mm-ch"><b>16</b> 16 · 勾践命人杀伯噽<span class="mm-role r-end">收束</span></p><p class="mm-gist">范蠡奉命将辱骂勾践的伯噽推入湖中沉水杀死</p><span class="mm-chip">伯噽</span><span class="mm-chip">范蠡</span><span class="mm-anchor">「伯噽骂勾践，认为勾践只会吃屎，没有资格做盟主」</span></li>
-<li class="r-pre"><p class="mm-ch"><b>17</b> 17 · 勾践与越王妃的对话<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">勾践对提醒功劳的越王妃感到厌恶并与美女作乐</p><span class="mm-chip">越王妃</span><span class="mm-chip">美女作乐</span><span class="mm-anchor">「越王妃提醒勾践，要他别忘了她的功劳」</span></li>
-<li class="r-th"><p class="mm-ch"><b>18</b> 18 · 西施的悲惨身世<span class="mm-role r-th">立论</span></p><p class="mm-gist">披露西施父母被越国所杀、曾被范蠡救出及勾践计划除根</p><span class="mm-chip">悲惨身世</span><span class="mm-chip">除恶</span><span class="mm-anchor">「西施的父母被越国人杀害」</span></li>
-<li class="r-pre"><p class="mm-ch"><b>19</b> 19 · 勾践与范蠡的对话<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">勾践向范蠡询问何时忘掉西施并对其表达期望</p><span class="mm-chip">忘掉西施</span><span class="mm-chip">范蠡叩头</span><span class="mm-anchor">「勾践询问范蠡何时能忘掉西施」</span></li>
-<li class="r-cnt"><p class="mm-ch"><b>21</b> 21 · 勾践的复仇与宫妃们的命运<span class="mm-role r-cnt">反证</span></p><p class="mm-gist">勾践惩罚宫妃并渴望西施，范蠡审视勾践的复仇行动</p><span class="mm-chip">宫妃命运</span><span class="mm-chip">复仇</span><span class="mm-anchor">「勾践对宫妃们的惩罚」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">16</span><span class="mm-cname">16 · 勾践命人杀伯噽</span><span class="mm-role">收束</span></p><p class="mm-gist">范蠡奉命将辱骂勾践的伯噽推入湖中沉水杀死</p><span class="mm-chip">伯噽</span><span class="mm-chip">范蠡</span><span class="mm-quote">「伯噽骂勾践，认为勾践只会吃屎，没有资格做盟主」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">17</span><span class="mm-cname">17 · 勾践与越王妃的对话</span><span class="mm-role">铺垫</span></p><p class="mm-gist">勾践对提醒功劳的越王妃感到厌恶并与美女作乐</p><span class="mm-chip">越王妃</span><span class="mm-chip">美女作乐</span><span class="mm-quote">「越王妃提醒勾践，要他别忘了她的功劳」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">18</span><span class="mm-cname">18 · 西施的悲惨身世</span><span class="mm-role">立论</span></p><p class="mm-gist">披露西施父母被越国所杀、曾被范蠡救出及勾践计划除根</p><span class="mm-chip">悲惨身世</span><span class="mm-chip">除恶</span><span class="mm-quote">「西施的父母被越国人杀害」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">19</span><span class="mm-cname">19 · 勾践与范蠡的对话</span><span class="mm-role">铺垫</span></p><p class="mm-gist">勾践向范蠡询问何时忘掉西施并对其表达期望</p><span class="mm-chip">忘掉西施</span><span class="mm-chip">范蠡叩头</span><span class="mm-quote">「勾践询问范蠡何时能忘掉西施」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">21</span><span class="mm-cname">21 · 勾践的复仇与宫妃们的命运</span><span class="mm-role">反证</span></p><p class="mm-gist">勾践惩罚宫妃并渴望西施，范蠡审视勾践的复仇行动</p><span class="mm-chip">宫妃命运</span><span class="mm-chip">复仇</span><span class="mm-quote">「勾践对宫妃们的惩罚」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">F</span><span class="mm-label">人物最终结局</span><span class="mm-cnt">1 章</span></summary>
 <p class="mm-why"></p>
 <ol class="mm-tree">
-<li class="r-end"><p class="mm-ch"><b>22</b> 22 · 范蠡变身陶朱公，成为商界的无敌人物<span class="mm-role r-end">收束</span></p><p class="mm-gist">范蠡化身陶朱公成为商界护卫首领并悼念死去的文种</p><span class="mm-chip">陶朱公</span><span class="mm-chip">商界</span><span class="mm-anchor">「范蠡带着黑虎和几千兵卒变成了商队的护卫」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">22</span><span class="mm-cname">22 · 范蠡变身陶朱公，成为商界的无敌人物</span><span class="mm-role">收束</span></p><p class="mm-gist">范蠡化身陶朱公成为商界护卫首领并悼念死去的文种</p><span class="mm-chip">陶朱公</span><span class="mm-chip">商界</span><span class="mm-quote">「范蠡带着黑虎和几千兵卒变成了商队的护卫」</span></li>
 </ol>
 </details>
 <footer class="site-footer">

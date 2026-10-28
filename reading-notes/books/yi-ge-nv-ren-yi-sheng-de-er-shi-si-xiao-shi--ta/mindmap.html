@@ -16,8 +16,8 @@
 .mm-bar i{display:block;height:100%;background:linear-gradient(90deg,#8a9b6e,#c2b280)}
 .mm-svgwrap{overflow-x:auto;padding:.4em 0 1em;border-bottom:1px solid var(--line)}
 .mm-svg{width:100%;height:auto;min-width:760px}
-.mm-spine{margin:.9em 0;border-left:3px solid #d9d0bd;padding:.1em 0 .1em .9em}
-.mm-spine[open]{border-left-color:#8a9b6e}
+.mm-spine{margin:1.15em 0;border-left:3px solid #ece4d3;padding:.1em 0 .1em .85em}
+.mm-spine[open]{border-left-color:#d8cdb4}
 .mm-spine>summary{display:flex;gap:.6em;align-items:baseline;cursor:pointer;
   list-style:none;padding:.35em 0}
 .mm-spine>summary::-webkit-details-marker{display:none}
@@ -26,24 +26,32 @@
 .mm-label{font-weight:600;font-size:1rem;color:var(--ink)}
 .mm-cnt{margin-left:auto;font-size:.74rem;color:var(--muted)}
 .mm-why{font-size:.8rem;color:var(--muted);margin:.1em 0 .8em;line-height:1.7}
-.mm-tree{list-style:none;padding:0;margin:0}
-.mm-tree li{position:relative;padding:.42em 0 .42em 1.1em;border-left:1px dotted #cfc6b4;
-  margin-left:.5em}
-.mm-tree li:before{content:"";position:absolute;left:0;top:1.05em;width:.7em;
-  border-top:1px dotted #cfc6b4}
-.mm-ch{margin:0;font-size:.92rem;color:var(--ink)}
-.mm-ch b{color:#a9a08d;font-weight:500;font-size:.8rem;margin-right:.4em}
-.mm-role{font-size:.68rem;padding:.05em .4em;border-radius:3px;margin-left:.5em;
-  vertical-align:.1em;white-space:nowrap}
-.r-pre{background:#eef0e6;color:#6b7a4e}.r-th{background:#eae7f0;color:#5f5578}
-.r-cnt{background:#f6e9e4;color:#946350}.r-case{background:#e8eff1;color:#4f7380}
-.r-end{background:#f2ecdf;color:#8a7442}
-.mm-gist{margin:.18em 0 .3em;font-size:.84rem;line-height:1.75;color:#4a443b}
-.mm-chip{display:inline-block;font-size:.68rem;color:#6b6152;background:#f2ecdf;
-  border-radius:9px;padding:.05em .5em;margin:.15em .25em .15em 0}
-.mm-anchor{display:block;font-size:.78rem;color:#8a8272;line-height:1.7;
-  border-left:2px dotted #d9d0bd;padding-left:.7em;margin-top:.3em}
-@media(max-width:720px){.mm-svg{min-width:640px}}
+.mm-tree{list-style:none;padding:0;margin:.15em 0 0}
+/* 章条目：与通读页 .ch-item 对齐（无卡片/无彩条/虚线分隔），行高按手机可读行数收紧 */
+.mm-cn{padding:8px 0;border-bottom:1px dashed #eee8dc}
+.mm-cn:last-child{border-bottom:0}
+.mm-chead{display:flex;flex-wrap:wrap;gap:2px 10px;align-items:baseline;margin:0}
+.mm-cno{flex:none;min-width:1.7em;color:#bf8247;font-weight:700;font-size:.82rem;
+  font-variant-numeric:tabular-nums}
+.mm-cname{flex:0 1 auto;min-width:0;font-size:.92rem;line-height:1.6;color:var(--ink);
+  word-break:break-word}
+.mm-role{flex:none;font-size:.68rem;color:#8a8272;line-height:1.6;white-space:nowrap}
+.mm-gist{margin:.15em 0 .2em;font-size:.86rem;line-height:1.75;color:#4a443b}
+.mm-chip{display:inline-block;font-size:.68rem;color:#6b6152;background:#f4f1e6;
+  border-radius:9px;padding:.05em .5em;margin:.1em .28em .1em 0}
+/* 引文块取通读页 ul.ch-quote 的观感：浅米底 + 金色左线 */
+.mm-quote{display:block;margin:.3em 0 .1em;padding:7px 11px;background:#fdf8ee;
+  border-left:3px solid var(--gold);border-radius:0 8px 8px 0;
+  font-size:.8rem;line-height:1.75;color:#6b5c43}
+@media(max-width:720px){
+  .mm-svg{min-width:640px}
+  /* 手机：章条目再收紧一点，一屏多两行 */
+  .mm-cn{padding:7px 0}
+  .mm-chead{gap:8px}
+  .mm-cname{font-size:.9rem}
+  .mm-gist{font-size:.84rem;line-height:1.7}
+  .mm-quote{padding:6px 9px;font-size:.78rem}
+}
 </style>
 </head>
 <body>
@@ -96,24 +104,24 @@
 <summary><span class="mm-id">A</span><span class="mm-label">从争论到注视</span><span class="mm-cnt">2 章</span></summary>
 <p class="mm-why">一场关于激情的辩论把叙述者推到C夫人身边，观察开始。</p>
 <ol class="mm-tree">
-<li class="r-pre"><p class="mm-ch"><b>1</b> 版权信息 · 1 · 争论的起因和过程<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">一场激烈争论升级为粗暴争执，为后文的激情主题定调</p><span class="mm-anchor">「大多数人其实都缺乏想象力，唯有那些直接攫住他们感官、如楔子般猛然楔入心灵的刺激，方能激起他们内心一丝波澜。」</span></li>
-<li class="r-pre"><p class="mm-ch"><b>2</b> 版权信息 · 2 · 辩论后的变化<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">争论后众人疏远，C夫人反而主动接近叙述者</p><span class="mm-anchor">「那对德国夫妇明显变得疏远冷淡。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">1</span><span class="mm-cname">版权信息 · 1 · 争论的起因和过程</span><span class="mm-role">铺垫</span></p><p class="mm-gist">一场激烈争论升级为粗暴争执，为后文的激情主题定调</p><span class="mm-quote">「大多数人其实都缺乏想象力，唯有那些直接攫住他们感官、如楔子般猛然楔入心灵的刺激，方能激起他们内心一丝波澜。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">2</span><span class="mm-cname">版权信息 · 2 · 辩论后的变化</span><span class="mm-role">铺垫</span></p><p class="mm-gist">争论后众人疏远，C夫人反而主动接近叙述者</p><span class="mm-quote">「那对德国夫妇明显变得疏远冷淡。」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">B</span><span class="mm-label">动机的翻转</span><span class="mm-cnt">2 章</span></summary>
 <p class="mm-why">追上赌徒不是爱而是恐惧与好奇，同情第一次被拆开看。</p>
 <ol class="mm-tree">
-<li class="r-th"><p class="mm-ch"><b>3</b> 版权信息 · 3 · C夫人的真实动机<span class="mm-role r-th">立论</span></p><p class="mm-gist">点破动机：追赌徒不是爱上他，而是好奇与恐惧驱动</p><span class="mm-anchor">「C夫人当时并未将他视作一个‘男人’来看待。」</span></li>
-<li class="r-case"><p class="mm-ch"><b>4</b> 版权信息 · 4 · C夫人的情绪爆发和解释<span class="mm-role r-case">案例</span></p><p class="mm-gist">C夫人情绪爆发，坦白自己从未与陌生人有过关系</p><span class="mm-anchor">「C夫人走到窗前沉默地望着窗外，或许只是将额头抵在冰冷的玻璃上静静地靠着。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">3</span><span class="mm-cname">版权信息 · 3 · C夫人的真实动机</span><span class="mm-role">立论</span></p><p class="mm-gist">点破动机：追赌徒不是爱上他，而是好奇与恐惧驱动</p><span class="mm-quote">「C夫人当时并未将他视作一个‘男人’来看待。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">4</span><span class="mm-cname">版权信息 · 4 · C夫人的情绪爆发和解释</span><span class="mm-role">案例</span></p><p class="mm-gist">C夫人情绪爆发，坦白自己从未与陌生人有过关系</p><span class="mm-quote">「C夫人走到窗前沉默地望着窗外，或许只是将额头抵在冰冷的玻璃上静静地靠着。」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">C</span><span class="mm-label">自述与余生</span><span class="mm-cnt">2 章</span></summary>
 <p class="mm-why">身世与那一夜的完整交代，解释了此后二十四小时的重复。</p>
 <ol class="mm-tree">
-<li class="r-case"><p class="mm-ch"><b>5</b> 版权信息 · 5 · C夫人的转变<span class="mm-role r-case">案例</span></p><p class="mm-gist">从痛苦到轻松的转变，她第一次感到自己被需要</p><span class="mm-anchor">「C夫人曾说过：丈夫去世后，我几乎彻底放弃了自己的生活。」</span></li>
-<li class="r-end"><p class="mm-ch"><b>6</b> 版权信息 · 6 · C夫人的讲述<span class="mm-role r-end">收束</span></p><p class="mm-gist">身世与遭遇全盘托出，二十四小时成为她余生的刻度</p><span class="mm-anchor">「C夫人曾向讲述者承诺，要彻底坦诚。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">5</span><span class="mm-cname">版权信息 · 5 · C夫人的转变</span><span class="mm-role">案例</span></p><p class="mm-gist">从痛苦到轻松的转变，她第一次感到自己被需要</p><span class="mm-quote">「C夫人曾说过：丈夫去世后，我几乎彻底放弃了自己的生活。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">6</span><span class="mm-cname">版权信息 · 6 · C夫人的讲述</span><span class="mm-role">收束</span></p><p class="mm-gist">身世与遭遇全盘托出，二十四小时成为她余生的刻度</p><span class="mm-quote">「C夫人曾向讲述者承诺，要彻底坦诚。」</span></li>
 </ol>
 </details>
 <footer class="site-footer">

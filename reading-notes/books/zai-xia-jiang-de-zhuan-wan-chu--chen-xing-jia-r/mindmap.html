@@ -16,8 +16,8 @@
 .mm-bar i{display:block;height:100%;background:linear-gradient(90deg,#8a9b6e,#c2b280)}
 .mm-svgwrap{overflow-x:auto;padding:.4em 0 1em;border-bottom:1px solid var(--line)}
 .mm-svg{width:100%;height:auto;min-width:760px}
-.mm-spine{margin:.9em 0;border-left:3px solid #d9d0bd;padding:.1em 0 .1em .9em}
-.mm-spine[open]{border-left-color:#8a9b6e}
+.mm-spine{margin:1.15em 0;border-left:3px solid #ece4d3;padding:.1em 0 .1em .85em}
+.mm-spine[open]{border-left-color:#d8cdb4}
 .mm-spine>summary{display:flex;gap:.6em;align-items:baseline;cursor:pointer;
   list-style:none;padding:.35em 0}
 .mm-spine>summary::-webkit-details-marker{display:none}
@@ -26,24 +26,32 @@
 .mm-label{font-weight:600;font-size:1rem;color:var(--ink)}
 .mm-cnt{margin-left:auto;font-size:.74rem;color:var(--muted)}
 .mm-why{font-size:.8rem;color:var(--muted);margin:.1em 0 .8em;line-height:1.7}
-.mm-tree{list-style:none;padding:0;margin:0}
-.mm-tree li{position:relative;padding:.42em 0 .42em 1.1em;border-left:1px dotted #cfc6b4;
-  margin-left:.5em}
-.mm-tree li:before{content:"";position:absolute;left:0;top:1.05em;width:.7em;
-  border-top:1px dotted #cfc6b4}
-.mm-ch{margin:0;font-size:.92rem;color:var(--ink)}
-.mm-ch b{color:#a9a08d;font-weight:500;font-size:.8rem;margin-right:.4em}
-.mm-role{font-size:.68rem;padding:.05em .4em;border-radius:3px;margin-left:.5em;
-  vertical-align:.1em;white-space:nowrap}
-.r-pre{background:#eef0e6;color:#6b7a4e}.r-th{background:#eae7f0;color:#5f5578}
-.r-cnt{background:#f6e9e4;color:#946350}.r-case{background:#e8eff1;color:#4f7380}
-.r-end{background:#f2ecdf;color:#8a7442}
-.mm-gist{margin:.18em 0 .3em;font-size:.84rem;line-height:1.75;color:#4a443b}
-.mm-chip{display:inline-block;font-size:.68rem;color:#6b6152;background:#f2ecdf;
-  border-radius:9px;padding:.05em .5em;margin:.15em .25em .15em 0}
-.mm-anchor{display:block;font-size:.78rem;color:#8a8272;line-height:1.7;
-  border-left:2px dotted #d9d0bd;padding-left:.7em;margin-top:.3em}
-@media(max-width:720px){.mm-svg{min-width:640px}}
+.mm-tree{list-style:none;padding:0;margin:.15em 0 0}
+/* 章条目：与通读页 .ch-item 对齐（无卡片/无彩条/虚线分隔），行高按手机可读行数收紧 */
+.mm-cn{padding:8px 0;border-bottom:1px dashed #eee8dc}
+.mm-cn:last-child{border-bottom:0}
+.mm-chead{display:flex;flex-wrap:wrap;gap:2px 10px;align-items:baseline;margin:0}
+.mm-cno{flex:none;min-width:1.7em;color:#bf8247;font-weight:700;font-size:.82rem;
+  font-variant-numeric:tabular-nums}
+.mm-cname{flex:0 1 auto;min-width:0;font-size:.92rem;line-height:1.6;color:var(--ink);
+  word-break:break-word}
+.mm-role{flex:none;font-size:.68rem;color:#8a8272;line-height:1.6;white-space:nowrap}
+.mm-gist{margin:.15em 0 .2em;font-size:.86rem;line-height:1.75;color:#4a443b}
+.mm-chip{display:inline-block;font-size:.68rem;color:#6b6152;background:#f4f1e6;
+  border-radius:9px;padding:.05em .5em;margin:.1em .28em .1em 0}
+/* 引文块取通读页 ul.ch-quote 的观感：浅米底 + 金色左线 */
+.mm-quote{display:block;margin:.3em 0 .1em;padding:7px 11px;background:#fdf8ee;
+  border-left:3px solid var(--gold);border-radius:0 8px 8px 0;
+  font-size:.8rem;line-height:1.75;color:#6b5c43}
+@media(max-width:720px){
+  .mm-svg{min-width:640px}
+  /* 手机：章条目再收紧一点，一屏多两行 */
+  .mm-cn{padding:7px 0}
+  .mm-chead{gap:8px}
+  .mm-cname{font-size:.9rem}
+  .mm-gist{font-size:.84rem;line-height:1.7}
+  .mm-quote{padding:6px 9px;font-size:.78rem}
+}
 </style>
 </head>
 <body>
@@ -123,49 +131,49 @@
 <summary><span class="mm-id">A</span><span class="mm-label">社会回响与再版价值</span><span class="mm-cnt">2 章</span></summary>
 <p class="mm-why">记录书籍出版后的社会影响，确立作者与读者通过AI平台交流的互动基调。</p>
 <ol class="mm-tree">
-<li class="r-pre"><p class="mm-ch"><b>1</b> 再版说明<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">确认作品的市场影响力并补充作者近年的公益实践修订。</p><span class="mm-chip">再版建议</span><span class="mm-chip">公益经历修订</span><span class="mm-anchor">「2024年底，我们邀请陈行甲先生重新审视过去几年的公益经历，并修订」</span></li>
-<li class="r-end"><p class="mm-ch"><b>12</b> 写给AI读书的读者朋友<span class="mm-role r-end">收束</span></p><p class="mm-gist">通过与读者的直接对话，归纳全书关于爱与成长的生命主题。</p><span class="mm-chip">生命轨迹</span><span class="mm-chip">成长记录</span><span class="mm-anchor">「本书是一本关于青春、爱、成长的书，记录了作者过往人生的轨迹。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">1</span><span class="mm-cname">再版说明</span><span class="mm-role">铺垫</span></p><p class="mm-gist">确认作品的市场影响力并补充作者近年的公益实践修订。</p><span class="mm-chip">再版建议</span><span class="mm-chip">公益经历修订</span><span class="mm-quote">「2024年底，我们邀请陈行甲先生重新审视过去几年的公益经历，并修订」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">12</span><span class="mm-cname">写给AI读书的读者朋友</span><span class="mm-role">收束</span></p><p class="mm-gist">通过与读者的直接对话，归纳全书关于爱与成长的生命主题。</p><span class="mm-chip">生命轨迹</span><span class="mm-chip">成长记录</span><span class="mm-quote">「本书是一本关于青春、爱、成长的书，记录了作者过往人生的轨迹。」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">B</span><span class="mm-label">他者视角下的生命质感</span><span class="mm-cnt">2 章</span></summary>
 <p class="mm-why">通过序言中他人的观察，勾勒作者从政坛“奇葩”到文学性人格的初步轮廓。</p>
 <ol class="mm-tree">
-<li class="r-th"><p class="mm-ch"><b>2</b> 序一 青山遮不住<span class="mm-role r-th">立论</span></p><p class="mm-gist">通过文学性评价扭转对官员写作的偏见，确立人生经历的厚度。</p><span class="mm-chip">文学性</span><span class="mm-chip">人生经历</span><span class="mm-anchor">「作者在夫人的提醒下，重新审视陈行甲的书，发现其文学性很强」</span></li>
-<li class="r-th"><p class="mm-ch"><b>3</b> 序二 我的“奇葩”同学陈行甲<span class="mm-role r-th">立论</span></p><p class="mm-gist">对比职业选择与政治姿态，刻画作者不趋利、敢直言的特质。</p><span class="mm-chip">职业选择</span><span class="mm-chip">实名回复</span><span class="mm-anchor">「陈行甲在巴东县委书记任上，实名在网上公开回复网友的犀利提问」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">2</span><span class="mm-cname">序一 青山遮不住</span><span class="mm-role">立论</span></p><p class="mm-gist">通过文学性评价扭转对官员写作的偏见，确立人生经历的厚度。</p><span class="mm-chip">文学性</span><span class="mm-chip">人生经历</span><span class="mm-quote">「作者在夫人的提醒下，重新审视陈行甲的书，发现其文学性很强」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">3</span><span class="mm-cname">序二 我的“奇葩”同学陈行甲</span><span class="mm-role">立论</span></p><p class="mm-gist">对比职业选择与政治姿态，刻画作者不趋利、敢直言的特质。</p><span class="mm-chip">职业选择</span><span class="mm-chip">实名回复</span><span class="mm-quote">「陈行甲在巴东县委书记任上，实名在网上公开回复网友的犀利提问」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">C</span><span class="mm-label">情感根基与生命底色</span><span class="mm-cnt">3 章</span></summary>
 <p class="mm-why">追溯母亲的言传身教、伴侣的长期扶持及父亲的精神遗产，夯实人生价值观。</p>
 <ol class="mm-tree">
-<li class="r-pre"><p class="mm-ch"><b>4</b> 第一记 我和我的母亲<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">追溯母辈苦难与求学意志，夯实作者人格形成的家庭根基。</p><span class="mm-chip">母辈苦难</span><span class="mm-chip">求学意志</span><span class="mm-anchor">「母亲从小就是家里做饭的主力，9岁那年再三坚持哭闹着想去学堂」</span></li>
-<li class="r-pre"><p class="mm-ch"><b>5</b> 第二记 关于我们的事，他们统统猜错<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">记述伴侣间的长期扶持，论证情感支撑对个体成长的意义。</p><span class="mm-chip">婚姻扶持</span><span class="mm-chip">情感根基</span><span class="mm-anchor">「陈行甲与霞在婚姻生活中，互相扶持，共同经历了许多人生的喜悦和苦涩」</span></li>
-<li class="r-end"><p class="mm-ch"><b>13</b> 原版跋 父亲的礼物<span class="mm-role r-end">收束</span></p><p class="mm-gist">回溯父辈的精神遗产，将个人事业升华为家族精神的自然延续。</p><span class="mm-chip">精神遗产</span><span class="mm-chip">家族延续</span><span class="mm-anchor">「作者认为父亲的事业是拜年的自然延伸。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">4</span><span class="mm-cname">第一记 我和我的母亲</span><span class="mm-role">铺垫</span></p><p class="mm-gist">追溯母辈苦难与求学意志，夯实作者人格形成的家庭根基。</p><span class="mm-chip">母辈苦难</span><span class="mm-chip">求学意志</span><span class="mm-quote">「母亲从小就是家里做饭的主力，9岁那年再三坚持哭闹着想去学堂」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">5</span><span class="mm-cname">第二记 关于我们的事，他们统统猜错</span><span class="mm-role">铺垫</span></p><p class="mm-gist">记述伴侣间的长期扶持，论证情感支撑对个体成长的意义。</p><span class="mm-chip">婚姻扶持</span><span class="mm-chip">情感根基</span><span class="mm-quote">「陈行甲与霞在婚姻生活中，互相扶持，共同经历了许多人生的喜悦和苦涩」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">13</span><span class="mm-cname">原版跋 父亲的礼物</span><span class="mm-role">收束</span></p><p class="mm-gist">回溯父辈的精神遗产，将个人事业升华为家族精神的自然延续。</p><span class="mm-chip">精神遗产</span><span class="mm-chip">家族延续</span><span class="mm-quote">「作者认为父亲的事业是拜年的自然延伸。」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">D</span><span class="mm-label">基层历练与自我突围</span><span class="mm-cnt">3 章</span></summary>
 <p class="mm-why">梳理从矿山安全员到考研深造、赴美留学的过程，展现个体向上生长的动力。</p>
 <ol class="mm-tree">
-<li class="r-case"><p class="mm-ch"><b>6</b> 第三记 如果有光，我就能看到你的眼睛<span class="mm-role r-case">案例</span></p><p class="mm-gist">还原基层矿山工作的艰辛，展示作者职业生涯初期的实干积累。</p><span class="mm-chip">基层历练</span><span class="mm-chip">实干积累</span><span class="mm-anchor">「作者在矿山公司的两年时间里，走熟了几个矿山的每一个巷道」</span></li>
-<li class="r-case"><p class="mm-ch"><b>7</b> 第四记 人生的巴颜喀拉山<span class="mm-role r-case">案例</span></p><p class="mm-gist">描述备考过程的突围，论证个体在平庸现状中向上跃迁的决心。</p><span class="mm-chip">自我突围</span><span class="mm-chip">考研决心</span><span class="mm-anchor">「不甘心于乡镇长的身份，决定考研」</span></li>
-<li class="r-case"><p class="mm-ch"><b>8</b> 第五记 密歇根湖上有一千种飞鸟<span class="mm-role r-case">案例</span></p><p class="mm-gist">记录海外求学见闻，将视野从地方基层拓展至宏观经济与全球文化。</p><span class="mm-chip">全球视野</span><span class="mm-chip">微观经济</span><span class="mm-anchor">「作者对微观经济学、谈判基础等课程的深刻印象」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">6</span><span class="mm-cname">第三记 如果有光，我就能看到你的眼睛</span><span class="mm-role">案例</span></p><p class="mm-gist">还原基层矿山工作的艰辛，展示作者职业生涯初期的实干积累。</p><span class="mm-chip">基层历练</span><span class="mm-chip">实干积累</span><span class="mm-quote">「作者在矿山公司的两年时间里，走熟了几个矿山的每一个巷道」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">7</span><span class="mm-cname">第四记 人生的巴颜喀拉山</span><span class="mm-role">案例</span></p><p class="mm-gist">描述备考过程的突围，论证个体在平庸现状中向上跃迁的决心。</p><span class="mm-chip">自我突围</span><span class="mm-chip">考研决心</span><span class="mm-quote">「不甘心于乡镇长的身份，决定考研」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">8</span><span class="mm-cname">第五记 密歇根湖上有一千种飞鸟</span><span class="mm-role">案例</span></p><p class="mm-gist">记录海外求学见闻，将视野从地方基层拓展至宏观经济与全球文化。</p><span class="mm-chip">全球视野</span><span class="mm-chip">微观经济</span><span class="mm-quote">「作者对微观经济学、谈判基础等课程的深刻印象」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">E</span><span class="mm-label">峡江治理的理想实践</span><span class="mm-cnt">1 章</span></summary>
 <p class="mm-why">聚焦巴东任职期间的硬核工作，体现作者在复杂社会矛盾中的担当与作为。</p>
 <ol class="mm-tree">
-<li class="r-case"><p class="mm-ch"><b>9</b> 第六记 在峡江的转弯处<span class="mm-role r-case">案例</span></p><p class="mm-gist">剖析巴东治理中的利益博弈，论证理想主义在基层实践的落地。</p><span class="mm-chip">峡江治理</span><span class="mm-chip">结穷亲</span><span class="mm-anchor">「陈行甲在巴东推动干部“结穷亲”，解决老百姓最关注最头疼的问题」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">9</span><span class="mm-cname">第六记 在峡江的转弯处</span><span class="mm-role">案例</span></p><p class="mm-gist">剖析巴东治理中的利益博弈，论证理想主义在基层实践的落地。</p><span class="mm-chip">峡江治理</span><span class="mm-chip">结穷亲</span><span class="mm-quote">「陈行甲在巴东推动干部“结穷亲”，解决老百姓最关注最头疼的问题」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">F</span><span class="mm-label">公益下半场的使命转型</span><span class="mm-cnt">2 章</span></summary>
 <p class="mm-why">详述从体制内转身公益后的探索，包括解决因病致贫难题及走向国际舞台的实践。</p>
 <ol class="mm-tree">
-<li class="r-case"><p class="mm-ch"><b>10</b> 第七记 你好，我的下半场<span class="mm-role r-case">案例</span></p><p class="mm-gist">阐述从政界转向公益的逻辑，确立解决社会痛点的转型目标。</p><span class="mm-chip">使命转型</span><span class="mm-chip">联爱工程</span><span class="mm-anchor">「公益的目标是探索“渔”，解决因病致贫社会难题」</span></li>
-<li class="r-case"><p class="mm-ch"><b>11</b> 第八记 再次的见面我们又经历了多少的路程<span class="mm-role r-case">案例</span></p><p class="mm-gist">展示公益事业走向国际舞台，验证民间组织参与全球治理的可能性。</p><span class="mm-chip">民间组织</span><span class="mm-chip">全球治理</span><span class="mm-anchor">「作为中国民间组织代表，参加联合国人权理事会第54届大会」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">10</span><span class="mm-cname">第七记 你好，我的下半场</span><span class="mm-role">案例</span></p><p class="mm-gist">阐述从政界转向公益的逻辑，确立解决社会痛点的转型目标。</p><span class="mm-chip">使命转型</span><span class="mm-chip">联爱工程</span><span class="mm-quote">「公益的目标是探索“渔”，解决因病致贫社会难题」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">11</span><span class="mm-cname">第八记 再次的见面我们又经历了多少的路程</span><span class="mm-role">案例</span></p><p class="mm-gist">展示公益事业走向国际舞台，验证民间组织参与全球治理的可能性。</p><span class="mm-chip">民间组织</span><span class="mm-chip">全球治理</span><span class="mm-quote">「作为中国民间组织代表，参加联合国人权理事会第54届大会」</span></li>
 </ol>
 </details>
 <footer class="site-footer">

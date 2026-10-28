@@ -16,8 +16,8 @@
 .mm-bar i{display:block;height:100%;background:linear-gradient(90deg,#8a9b6e,#c2b280)}
 .mm-svgwrap{overflow-x:auto;padding:.4em 0 1em;border-bottom:1px solid var(--line)}
 .mm-svg{width:100%;height:auto;min-width:760px}
-.mm-spine{margin:.9em 0;border-left:3px solid #d9d0bd;padding:.1em 0 .1em .9em}
-.mm-spine[open]{border-left-color:#8a9b6e}
+.mm-spine{margin:1.15em 0;border-left:3px solid #ece4d3;padding:.1em 0 .1em .85em}
+.mm-spine[open]{border-left-color:#d8cdb4}
 .mm-spine>summary{display:flex;gap:.6em;align-items:baseline;cursor:pointer;
   list-style:none;padding:.35em 0}
 .mm-spine>summary::-webkit-details-marker{display:none}
@@ -26,24 +26,32 @@
 .mm-label{font-weight:600;font-size:1rem;color:var(--ink)}
 .mm-cnt{margin-left:auto;font-size:.74rem;color:var(--muted)}
 .mm-why{font-size:.8rem;color:var(--muted);margin:.1em 0 .8em;line-height:1.7}
-.mm-tree{list-style:none;padding:0;margin:0}
-.mm-tree li{position:relative;padding:.42em 0 .42em 1.1em;border-left:1px dotted #cfc6b4;
-  margin-left:.5em}
-.mm-tree li:before{content:"";position:absolute;left:0;top:1.05em;width:.7em;
-  border-top:1px dotted #cfc6b4}
-.mm-ch{margin:0;font-size:.92rem;color:var(--ink)}
-.mm-ch b{color:#a9a08d;font-weight:500;font-size:.8rem;margin-right:.4em}
-.mm-role{font-size:.68rem;padding:.05em .4em;border-radius:3px;margin-left:.5em;
-  vertical-align:.1em;white-space:nowrap}
-.r-pre{background:#eef0e6;color:#6b7a4e}.r-th{background:#eae7f0;color:#5f5578}
-.r-cnt{background:#f6e9e4;color:#946350}.r-case{background:#e8eff1;color:#4f7380}
-.r-end{background:#f2ecdf;color:#8a7442}
-.mm-gist{margin:.18em 0 .3em;font-size:.84rem;line-height:1.75;color:#4a443b}
-.mm-chip{display:inline-block;font-size:.68rem;color:#6b6152;background:#f2ecdf;
-  border-radius:9px;padding:.05em .5em;margin:.15em .25em .15em 0}
-.mm-anchor{display:block;font-size:.78rem;color:#8a8272;line-height:1.7;
-  border-left:2px dotted #d9d0bd;padding-left:.7em;margin-top:.3em}
-@media(max-width:720px){.mm-svg{min-width:640px}}
+.mm-tree{list-style:none;padding:0;margin:.15em 0 0}
+/* 章条目：与通读页 .ch-item 对齐（无卡片/无彩条/虚线分隔），行高按手机可读行数收紧 */
+.mm-cn{padding:8px 0;border-bottom:1px dashed #eee8dc}
+.mm-cn:last-child{border-bottom:0}
+.mm-chead{display:flex;flex-wrap:wrap;gap:2px 10px;align-items:baseline;margin:0}
+.mm-cno{flex:none;min-width:1.7em;color:#bf8247;font-weight:700;font-size:.82rem;
+  font-variant-numeric:tabular-nums}
+.mm-cname{flex:0 1 auto;min-width:0;font-size:.92rem;line-height:1.6;color:var(--ink);
+  word-break:break-word}
+.mm-role{flex:none;font-size:.68rem;color:#8a8272;line-height:1.6;white-space:nowrap}
+.mm-gist{margin:.15em 0 .2em;font-size:.86rem;line-height:1.75;color:#4a443b}
+.mm-chip{display:inline-block;font-size:.68rem;color:#6b6152;background:#f4f1e6;
+  border-radius:9px;padding:.05em .5em;margin:.1em .28em .1em 0}
+/* 引文块取通读页 ul.ch-quote 的观感：浅米底 + 金色左线 */
+.mm-quote{display:block;margin:.3em 0 .1em;padding:7px 11px;background:#fdf8ee;
+  border-left:3px solid var(--gold);border-radius:0 8px 8px 0;
+  font-size:.8rem;line-height:1.75;color:#6b5c43}
+@media(max-width:720px){
+  .mm-svg{min-width:640px}
+  /* 手机：章条目再收紧一点，一屏多两行 */
+  .mm-cn{padding:7px 0}
+  .mm-chead{gap:8px}
+  .mm-cname{font-size:.9rem}
+  .mm-gist{font-size:.84rem;line-height:1.7}
+  .mm-quote{padding:6px 9px;font-size:.78rem}
+}
 </style>
 </head>
 <body>
@@ -110,35 +118,35 @@
 <summary><span class="mm-id">A</span><span class="mm-label">入局的代价</span><span class="mm-cnt">1 章</span></summary>
 <p class="mm-why">福生一线写清最底层的人如何被送进场，是全书残酷度的底座。</p>
 <ol class="mm-tree">
-<li class="r-case"><p class="mm-ch"><b>1</b> 番外：福生<span class="mm-role r-case">案例</span></p><p class="mm-gist">福生因家贫被送进宫，从受欺到站稳，写出入局的最低成本</p><span class="mm-anchor">「福生家孩子太多，实在养不活，被爹牵着去找了快刀李。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">1</span><span class="mm-cname">番外：福生</span><span class="mm-role">案例</span></p><p class="mm-gist">福生因家贫被送进宫，从受欺到站稳，写出入局的最低成本</p><span class="mm-quote">「福生家孩子太多，实在养不活，被爹牵着去找了快刀李。」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">B</span><span class="mm-label">前世的因果</span><span class="mm-cnt">1 章</span></summary>
 <p class="mm-why">把仇怨上溯到上一代，解释后宫对立为何无法调和。</p>
 <ol class="mm-tree">
-<li class="r-pre"><p class="mm-ch"><b>2</b> 番外：前世之初遇<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">常惠妃与赵家的嫌隙上溯前世，后宫对立有了代际根由</p><span class="mm-anchor">「赵家要和叛王来往，以致于常赵两家生了嫌隙。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">2</span><span class="mm-cname">番外：前世之初遇</span><span class="mm-role">铺垫</span></p><p class="mm-gist">常惠妃与赵家的嫌隙上溯前世，后宫对立有了代际根由</p><span class="mm-quote">「赵家要和叛王来往，以致于常赵两家生了嫌隙。」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">C</span><span class="mm-label">正文收束</span><span class="mm-cnt">1 章</span></summary>
 <p class="mm-why">主线在此落定：关系转平、权柄移交。</p>
 <ol class="mm-tree">
-<li class="r-end"><p class="mm-ch"><b>3</b> &amp;lt; 正文完结 &amp;gt;<span class="mm-role r-end">收束</span></p><p class="mm-gist">无双与纪昜关系转平并接手朝政，主线在此结账</p><span class="mm-anchor">「无双和皇帝胡闹弄出来的，只能说是不小心摔的。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">3</span><span class="mm-cname">&amp;lt; 正文完结 &amp;gt;</span><span class="mm-role">收束</span></p><p class="mm-gist">无双与纪昜关系转平并接手朝政，主线在此结账</p><span class="mm-quote">「无双和皇帝胡闹弄出来的，只能说是不小心摔的。」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">D</span><span class="mm-label">胜者的日常</span><span class="mm-cnt">1 章</span></summary>
 <p class="mm-why">帝后一家的番外，把权力斗争还原成育儿与相处的琐碎。</p>
 <ol class="mm-tree">
-<li class="r-case"><p class="mm-ch"><b>4</b> 番外之帝后一家子<span class="mm-role r-case">案例</span></p><p class="mm-gist">帝后一家的番外把权谋换成育儿日常，人物有了软处</p><span class="mm-anchor">「怡宁虽然人小，却十分倔强，明明跟不上姐姐，也不让宫女抱。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">4</span><span class="mm-cname">番外之帝后一家子</span><span class="mm-role">案例</span></p><p class="mm-gist">帝后一家的番外把权谋换成育儿日常，人物有了软处</p><span class="mm-quote">「怡宁虽然人小，却十分倔强，明明跟不上姐姐，也不让宫女抱。」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">E</span><span class="mm-label">梦里的补偿</span><span class="mm-cnt">1 章</span></summary>
 <p class="mm-why">以梦境给配角一次翻盘，暴露正文分配的不公。</p>
 <ol class="mm-tree">
-<li class="r-cnt"><p class="mm-ch"><b>5</b> 番外之郿无暇<span class="mm-role r-cnt">反证</span></p><p class="mm-gist">郿无暇在梦中当上太后并报复，正面写出正文没给的公平</p><span class="mm-anchor">「郿无暇看见自己披麻戴孝，转瞬间又穿上了太后的冠服，接受所有人的跪拜。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">5</span><span class="mm-cname">番外之郿无暇</span><span class="mm-role">反证</span></p><p class="mm-gist">郿无暇在梦中当上太后并报复，正面写出正文没给的公平</p><span class="mm-quote">「郿无暇看见自己披麻戴孝，转瞬间又穿上了太后的冠服，接受所有人的跪拜。」</span></li>
 </ol>
 </details>
 <footer class="site-footer">

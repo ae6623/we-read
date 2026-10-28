@@ -16,8 +16,8 @@
 .mm-bar i{display:block;height:100%;background:linear-gradient(90deg,#8a9b6e,#c2b280)}
 .mm-svgwrap{overflow-x:auto;padding:.4em 0 1em;border-bottom:1px solid var(--line)}
 .mm-svg{width:100%;height:auto;min-width:760px}
-.mm-spine{margin:.9em 0;border-left:3px solid #d9d0bd;padding:.1em 0 .1em .9em}
-.mm-spine[open]{border-left-color:#8a9b6e}
+.mm-spine{margin:1.15em 0;border-left:3px solid #ece4d3;padding:.1em 0 .1em .85em}
+.mm-spine[open]{border-left-color:#d8cdb4}
 .mm-spine>summary{display:flex;gap:.6em;align-items:baseline;cursor:pointer;
   list-style:none;padding:.35em 0}
 .mm-spine>summary::-webkit-details-marker{display:none}
@@ -26,24 +26,32 @@
 .mm-label{font-weight:600;font-size:1rem;color:var(--ink)}
 .mm-cnt{margin-left:auto;font-size:.74rem;color:var(--muted)}
 .mm-why{font-size:.8rem;color:var(--muted);margin:.1em 0 .8em;line-height:1.7}
-.mm-tree{list-style:none;padding:0;margin:0}
-.mm-tree li{position:relative;padding:.42em 0 .42em 1.1em;border-left:1px dotted #cfc6b4;
-  margin-left:.5em}
-.mm-tree li:before{content:"";position:absolute;left:0;top:1.05em;width:.7em;
-  border-top:1px dotted #cfc6b4}
-.mm-ch{margin:0;font-size:.92rem;color:var(--ink)}
-.mm-ch b{color:#a9a08d;font-weight:500;font-size:.8rem;margin-right:.4em}
-.mm-role{font-size:.68rem;padding:.05em .4em;border-radius:3px;margin-left:.5em;
-  vertical-align:.1em;white-space:nowrap}
-.r-pre{background:#eef0e6;color:#6b7a4e}.r-th{background:#eae7f0;color:#5f5578}
-.r-cnt{background:#f6e9e4;color:#946350}.r-case{background:#e8eff1;color:#4f7380}
-.r-end{background:#f2ecdf;color:#8a7442}
-.mm-gist{margin:.18em 0 .3em;font-size:.84rem;line-height:1.75;color:#4a443b}
-.mm-chip{display:inline-block;font-size:.68rem;color:#6b6152;background:#f2ecdf;
-  border-radius:9px;padding:.05em .5em;margin:.15em .25em .15em 0}
-.mm-anchor{display:block;font-size:.78rem;color:#8a8272;line-height:1.7;
-  border-left:2px dotted #d9d0bd;padding-left:.7em;margin-top:.3em}
-@media(max-width:720px){.mm-svg{min-width:640px}}
+.mm-tree{list-style:none;padding:0;margin:.15em 0 0}
+/* 章条目：与通读页 .ch-item 对齐（无卡片/无彩条/虚线分隔），行高按手机可读行数收紧 */
+.mm-cn{padding:8px 0;border-bottom:1px dashed #eee8dc}
+.mm-cn:last-child{border-bottom:0}
+.mm-chead{display:flex;flex-wrap:wrap;gap:2px 10px;align-items:baseline;margin:0}
+.mm-cno{flex:none;min-width:1.7em;color:#bf8247;font-weight:700;font-size:.82rem;
+  font-variant-numeric:tabular-nums}
+.mm-cname{flex:0 1 auto;min-width:0;font-size:.92rem;line-height:1.6;color:var(--ink);
+  word-break:break-word}
+.mm-role{flex:none;font-size:.68rem;color:#8a8272;line-height:1.6;white-space:nowrap}
+.mm-gist{margin:.15em 0 .2em;font-size:.86rem;line-height:1.75;color:#4a443b}
+.mm-chip{display:inline-block;font-size:.68rem;color:#6b6152;background:#f4f1e6;
+  border-radius:9px;padding:.05em .5em;margin:.1em .28em .1em 0}
+/* 引文块取通读页 ul.ch-quote 的观感：浅米底 + 金色左线 */
+.mm-quote{display:block;margin:.3em 0 .1em;padding:7px 11px;background:#fdf8ee;
+  border-left:3px solid var(--gold);border-radius:0 8px 8px 0;
+  font-size:.8rem;line-height:1.75;color:#6b5c43}
+@media(max-width:720px){
+  .mm-svg{min-width:640px}
+  /* 手机：章条目再收紧一点，一屏多两行 */
+  .mm-cn{padding:7px 0}
+  .mm-chead{gap:8px}
+  .mm-cname{font-size:.9rem}
+  .mm-gist{font-size:.84rem;line-height:1.7}
+  .mm-quote{padding:6px 9px;font-size:.78rem}
+}
 </style>
 </head>
 <body>
@@ -123,63 +131,63 @@
 <summary><span class="mm-id">A</span><span class="mm-label">青春的野蛮生长</span><span class="mm-cnt">6 章</span></summary>
 <p class="mm-why">通过街头斗殴、冰场社交与家庭冲突，展现了特殊时期北京青年的生存状态与价值观雏形。</p>
 <ol class="mm-tree">
-<li class="r-pre"><p class="mm-ch"><b>1</b> 第1章 引子<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">通过全球青年运动的共时性，确立时代背景下旧秩序面临瓦解的宏观叙事。</p><span class="mm-chip">时代背景</span><span class="mm-chip">旧秩序</span><span class="mm-anchor">「1968年，北京的大街小巷都用红油漆覆盖起来，上面写满了毛主席语录」</span></li>
-<li class="r-case"><p class="mm-ch"><b>2</b> 第2章 · 钟跃民、袁军和郑桐的街头生活<span class="mm-role r-case">案例</span></p><p class="mm-gist">刻画主角团在街头无所事事的生存状态，展示其作为边缘群体的行为模式。</p><span class="mm-chip">街头生活</span><span class="mm-chip">边缘群体</span><span class="mm-anchor">「钟跃民、袁军和郑桐无所事事地站在街头，正想办法寻开心」</span></li>
-<li class="r-case"><p class="mm-ch"><b>3</b> 第3章 · 袁军家被撬的原因和过程<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过撬门事件，揭示主角团在动荡时期试图通过非正规手段获取资源的心理动机。</p><span class="mm-chip">革命行动</span><span class="mm-chip">生存策略</span><span class="mm-anchor">「袁军家被撬是因为袁军和郑桐想要搞些“革命行动”」</span></li>
-<li class="r-th"><p class="mm-ch"><b>4</b> 第4章 · 什刹海冰场的社会背景<span class="mm-role r-th">立论</span></p><p class="mm-gist">将冰场定义为特定社会阶层的社交场域，阐释其在权力与地位博弈中的功能。</p><span class="mm-chip">社交场域</span><span class="mm-chip">份儿</span><span class="mm-anchor">「冰场除了具备玩耍和拔份儿的功能外，还有一种很重要的功能，那就是社交」</span></li>
-<li class="r-case"><p class="mm-ch"><b>5</b> 第5章 · 天桥剧场的混乱场景<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过剧场冲突，展示不同势力在公共空间内的对抗逻辑与暴力解决方式。</p><span class="mm-chip">冲突</span><span class="mm-chip">公共空间</span><span class="mm-anchor">「钟跃民和小浑蛋因为周晓白而发生冲突」</span></li>
-<li class="r-case"><p class="mm-ch"><b>6</b> 第6章 · 张海洋受伤事件<span class="mm-role r-case">案例</span></p><p class="mm-gist">以张海洋负伤为节点，呈现主角团与体制内权威（医生）的对立与摩擦。</p><span class="mm-chip">冲突</span><span class="mm-chip">权威对抗</span><span class="mm-anchor">「钟跃民等人对医生的质疑和挑衅」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">1</span><span class="mm-cname">第1章 引子</span><span class="mm-role">铺垫</span></p><p class="mm-gist">通过全球青年运动的共时性，确立时代背景下旧秩序面临瓦解的宏观叙事。</p><span class="mm-chip">时代背景</span><span class="mm-chip">旧秩序</span><span class="mm-quote">「1968年，北京的大街小巷都用红油漆覆盖起来，上面写满了毛主席语录」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">2</span><span class="mm-cname">第2章 · 钟跃民、袁军和郑桐的街头生活</span><span class="mm-role">案例</span></p><p class="mm-gist">刻画主角团在街头无所事事的生存状态，展示其作为边缘群体的行为模式。</p><span class="mm-chip">街头生活</span><span class="mm-chip">边缘群体</span><span class="mm-quote">「钟跃民、袁军和郑桐无所事事地站在街头，正想办法寻开心」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">3</span><span class="mm-cname">第3章 · 袁军家被撬的原因和过程</span><span class="mm-role">案例</span></p><p class="mm-gist">通过撬门事件，揭示主角团在动荡时期试图通过非正规手段获取资源的心理动机。</p><span class="mm-chip">革命行动</span><span class="mm-chip">生存策略</span><span class="mm-quote">「袁军家被撬是因为袁军和郑桐想要搞些“革命行动”」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">4</span><span class="mm-cname">第4章 · 什刹海冰场的社会背景</span><span class="mm-role">立论</span></p><p class="mm-gist">将冰场定义为特定社会阶层的社交场域，阐释其在权力与地位博弈中的功能。</p><span class="mm-chip">社交场域</span><span class="mm-chip">份儿</span><span class="mm-quote">「冰场除了具备玩耍和拔份儿的功能外，还有一种很重要的功能，那就是社交」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">5</span><span class="mm-cname">第5章 · 天桥剧场的混乱场景</span><span class="mm-role">案例</span></p><p class="mm-gist">通过剧场冲突，展示不同势力在公共空间内的对抗逻辑与暴力解决方式。</p><span class="mm-chip">冲突</span><span class="mm-chip">公共空间</span><span class="mm-quote">「钟跃民和小浑蛋因为周晓白而发生冲突」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">6</span><span class="mm-cname">第6章 · 张海洋受伤事件</span><span class="mm-role">案例</span></p><p class="mm-gist">以张海洋负伤为节点，呈现主角团与体制内权威（医生）的对立与摩擦。</p><span class="mm-chip">冲突</span><span class="mm-chip">权威对抗</span><span class="mm-quote">「钟跃民等人对医生的质疑和挑衅」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">B</span><span class="mm-label">知青时代的磨砺</span><span class="mm-cnt">6 章</span></summary>
 <p class="mm-why">记录了从城市到陕北农村的身份转换，通过生存考验与人际博弈，完成了从少年到青年的社会化过程。</p>
 <ol class="mm-tree">
-<li class="r-th"><p class="mm-ch"><b>7</b> 第7章 · 老三届的毕业与分配<span class="mm-role r-th">立论</span></p><p class="mm-gist">论证国家宏观政策调整如何强制性地改变了青年一代的生存轨迹。</p><span class="mm-chip">政策调整</span><span class="mm-chip">知青下乡</span><span class="mm-anchor">「1968年毕业的中学、初中学生全部被送到边疆的军垦农场或边远山区去插队」</span></li>
-<li class="r-pre"><p class="mm-ch"><b>8</b> 第8章 · 石川村的自然环境<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">描述恶劣的自然环境，为知青群体在物理层面的生存困境提供背景支撑。</p><span class="mm-chip">生存环境</span><span class="mm-chip">地理限制</span><span class="mm-anchor">「石川村位于毛乌素沙漠边缘，气候干旱，风沙大」</span></li>
-<li class="r-case"><p class="mm-ch"><b>9</b> 第9章 · 县城讨饭队伍的组成与行为<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过乞讨行为，论证知青群体在极度匮乏下对尊严与生存本能的妥协。</p><span class="mm-chip">生存本能</span><span class="mm-chip">尊严</span><span class="mm-anchor">「钟跃民和郑桐穿着借来的四处露棉花的破棉袄，腰里扎着草绳，一手端着破碗，一手拿着打狗棍」</span></li>
-<li class="r-th"><p class="mm-ch"><b>10</b> 第10章 · 知青们与村支书的冲突<span class="mm-role r-th">立论</span></p><p class="mm-gist">分析知青与基层管理者之间的权力博弈，揭示资源分配不均引发的矛盾。</p><span class="mm-chip">权力博弈</span><span class="mm-chip">资源分配</span><span class="mm-anchor">「钟跃民认为常贵此举虽然很可气，但石川村的现状就摆在这里，老乡们都穷怕了」</span></li>
-<li class="r-case"><p class="mm-ch"><b>11</b> 第11章 · 白店村知青点的炊事员轮换制<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过琐碎的轮换制度，展示知青在封闭环境下的情感萌动与人际互动。</p><span class="mm-chip">人际互动</span><span class="mm-chip">情感萌动</span><span class="mm-anchor">「钟跃民和秦岭在井台上相遇，秦岭请求钟跃民帮忙打水」</span></li>
-<li class="r-end"><p class="mm-ch"><b>12</b> 第12章 · 周晓白与钟跃民的关系及其影响<span class="mm-role r-end">收束</span></p><p class="mm-gist">论证个体情感在时代洪流下的无力感，以及角色从知青向军人的身份转换。</p><span class="mm-chip">身份转换</span><span class="mm-chip">情感无力</span><span class="mm-anchor">「钟跃民在新兵连度过了难熬的3个月训练期，他被分到军侦察营一连」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">7</span><span class="mm-cname">第7章 · 老三届的毕业与分配</span><span class="mm-role">立论</span></p><p class="mm-gist">论证国家宏观政策调整如何强制性地改变了青年一代的生存轨迹。</p><span class="mm-chip">政策调整</span><span class="mm-chip">知青下乡</span><span class="mm-quote">「1968年毕业的中学、初中学生全部被送到边疆的军垦农场或边远山区去插队」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">8</span><span class="mm-cname">第8章 · 石川村的自然环境</span><span class="mm-role">铺垫</span></p><p class="mm-gist">描述恶劣的自然环境，为知青群体在物理层面的生存困境提供背景支撑。</p><span class="mm-chip">生存环境</span><span class="mm-chip">地理限制</span><span class="mm-quote">「石川村位于毛乌素沙漠边缘，气候干旱，风沙大」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">9</span><span class="mm-cname">第9章 · 县城讨饭队伍的组成与行为</span><span class="mm-role">案例</span></p><p class="mm-gist">通过乞讨行为，论证知青群体在极度匮乏下对尊严与生存本能的妥协。</p><span class="mm-chip">生存本能</span><span class="mm-chip">尊严</span><span class="mm-quote">「钟跃民和郑桐穿着借来的四处露棉花的破棉袄，腰里扎着草绳，一手端着破碗，一手拿着打狗棍」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">10</span><span class="mm-cname">第10章 · 知青们与村支书的冲突</span><span class="mm-role">立论</span></p><p class="mm-gist">分析知青与基层管理者之间的权力博弈，揭示资源分配不均引发的矛盾。</p><span class="mm-chip">权力博弈</span><span class="mm-chip">资源分配</span><span class="mm-quote">「钟跃民认为常贵此举虽然很可气，但石川村的现状就摆在这里，老乡们都穷怕了」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">11</span><span class="mm-cname">第11章 · 白店村知青点的炊事员轮换制</span><span class="mm-role">案例</span></p><p class="mm-gist">通过琐碎的轮换制度，展示知青在封闭环境下的情感萌动与人际互动。</p><span class="mm-chip">人际互动</span><span class="mm-chip">情感萌动</span><span class="mm-quote">「钟跃民和秦岭在井台上相遇，秦岭请求钟跃民帮忙打水」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">12</span><span class="mm-cname">第12章 · 周晓白与钟跃民的关系及其影响</span><span class="mm-role">收束</span></p><p class="mm-gist">论证个体情感在时代洪流下的无力感，以及角色从知青向军人的身份转换。</p><span class="mm-chip">身份转换</span><span class="mm-chip">情感无力</span><span class="mm-quote">「钟跃民在新兵连度过了难熬的3个月训练期，他被分到军侦察营一连」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">C</span><span class="mm-label">军旅生涯的洗礼</span><span class="mm-cnt">4 章</span></summary>
 <p class="mm-why">通过军事训练与实战任务，将个体的野性转化为纪律与战斗力，探讨了战争环境下的友情与牺牲。</p>
 <ol class="mm-tree">
-<li class="r-case"><p class="mm-ch"><b>13</b> 第13章 · 军部大院小饭馆的聚餐<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过聚餐冲突，展示军旅内部等级制度与个体反叛性格的碰撞。</p><span class="mm-chip">等级制度</span><span class="mm-chip">反叛</span><span class="mm-anchor">「宁伟因为不满老兵的跋扈，用酒瓶砸伤了老兵」</span></li>
-<li class="r-th"><p class="mm-ch"><b>14</b> 第14章 · 宁伟的特点和潜力<span class="mm-role r-th">立论</span></p><p class="mm-gist">分析宁伟的性格特质，论证其作为个体在极端军事训练下的潜能释放。</p><span class="mm-chip">心理素质</span><span class="mm-chip">军事潜能</span><span class="mm-anchor">「宁伟具有出色的心理素质，出手快，气势凶狠」</span></li>
-<li class="r-case"><p class="mm-ch"><b>15</b> 第15章 · 张海洋的调动和特遣队的任务<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过特遣队任务，将个体命运与战争机器的运作逻辑深度绑定。</p><span class="mm-chip">战争机器</span><span class="mm-chip">军事任务</span><span class="mm-anchor">「特遣队的任务是占领203高地附近的4号大桥，为坦克集群打通道路」</span></li>
-<li class="r-end"><p class="mm-ch"><b>16</b> 第16章 · 袁军和金正宇的友情及金正宇的阵亡<span class="mm-role r-end">收束</span></p><p class="mm-gist">通过战友阵亡，论证战争对个体情感的摧毁与职业化冷酷的必要性。</p><span class="mm-chip">战争代价</span><span class="mm-chip">职业化</span><span class="mm-anchor">「袁军下令将被击毁的1号车撞下山涧，为后面的坦克纵队打通道路」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">13</span><span class="mm-cname">第13章 · 军部大院小饭馆的聚餐</span><span class="mm-role">案例</span></p><p class="mm-gist">通过聚餐冲突，展示军旅内部等级制度与个体反叛性格的碰撞。</p><span class="mm-chip">等级制度</span><span class="mm-chip">反叛</span><span class="mm-quote">「宁伟因为不满老兵的跋扈，用酒瓶砸伤了老兵」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">14</span><span class="mm-cname">第14章 · 宁伟的特点和潜力</span><span class="mm-role">立论</span></p><p class="mm-gist">分析宁伟的性格特质，论证其作为个体在极端军事训练下的潜能释放。</p><span class="mm-chip">心理素质</span><span class="mm-chip">军事潜能</span><span class="mm-quote">「宁伟具有出色的心理素质，出手快，气势凶狠」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">15</span><span class="mm-cname">第15章 · 张海洋的调动和特遣队的任务</span><span class="mm-role">案例</span></p><p class="mm-gist">通过特遣队任务，将个体命运与战争机器的运作逻辑深度绑定。</p><span class="mm-chip">战争机器</span><span class="mm-chip">军事任务</span><span class="mm-quote">「特遣队的任务是占领203高地附近的4号大桥，为坦克集群打通道路」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">16</span><span class="mm-cname">第16章 · 袁军和金正宇的友情及金正宇的阵亡</span><span class="mm-role">收束</span></p><p class="mm-gist">通过战友阵亡，论证战争对个体情感的摧毁与职业化冷酷的必要性。</p><span class="mm-chip">战争代价</span><span class="mm-chip">职业化</span><span class="mm-quote">「袁军下令将被击毁的1号车撞下山涧，为后面的坦克纵队打通道路」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">D</span><span class="mm-label">商海沉浮与转型</span><span class="mm-cnt">4 章</span></summary>
 <p class="mm-why">描述了从体制内向商业社会的转型，揭示了在复杂利益纠葛中，个人选择与社会规则的碰撞。</p>
 <ol class="mm-tree">
-<li class="r-th"><p class="mm-ch"><b>17</b> 第17章 · 钟跃民的转业决定<span class="mm-role r-th">立论</span></p><p class="mm-gist">论证个体在体制内寻求转型的必然性，标志着主角团告别军旅生涯。</p><span class="mm-chip">转型</span><span class="mm-chip">体制内</span><span class="mm-anchor">「钟跃民决定抓住这个机会，转业回北京」</span></li>
-<li class="r-case"><p class="mm-ch"><b>18</b> 第18章 · 钟跃民加入正荣集团<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过加入商业集团，展示主角团利用社会资源完成从军人到商人的身份跨越。</p><span class="mm-chip">商业转型</span><span class="mm-chip">社会资源</span><span class="mm-anchor">「李援朝看中钟跃民的社会资源，邀请他加入正荣集团」</span></li>
-<li class="r-case"><p class="mm-ch"><b>19</b> 第19章 · 周晓白和袁军的生活状态<span class="mm-role r-case">案例</span></p><p class="mm-gist">对比周晓白与钟跃民的生活状态，论证两人价值观与生活轨迹的不可调和。</p><span class="mm-chip">价值观差异</span><span class="mm-chip">生活轨迹</span><span class="mm-anchor">「周晓白对钟跃民仍有感情，但无法全身心投入」</span></li>
-<li class="r-case"><p class="mm-ch"><b>20</b> 第20章 · 钟跃民与何眉的矛盾<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过商业纠纷，揭示商海中信任危机与利益博弈的残酷性。</p><span class="mm-chip">信任危机</span><span class="mm-chip">利益博弈</span><span class="mm-anchor">「钟跃民发现何眉是内奸，何眉拿公司内部情报卖给武原正树」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">17</span><span class="mm-cname">第17章 · 钟跃民的转业决定</span><span class="mm-role">立论</span></p><p class="mm-gist">论证个体在体制内寻求转型的必然性，标志着主角团告别军旅生涯。</p><span class="mm-chip">转型</span><span class="mm-chip">体制内</span><span class="mm-quote">「钟跃民决定抓住这个机会，转业回北京」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">18</span><span class="mm-cname">第18章 · 钟跃民加入正荣集团</span><span class="mm-role">案例</span></p><p class="mm-gist">通过加入商业集团，展示主角团利用社会资源完成从军人到商人的身份跨越。</p><span class="mm-chip">商业转型</span><span class="mm-chip">社会资源</span><span class="mm-quote">「李援朝看中钟跃民的社会资源，邀请他加入正荣集团」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">19</span><span class="mm-cname">第19章 · 周晓白和袁军的生活状态</span><span class="mm-role">案例</span></p><p class="mm-gist">对比周晓白与钟跃民的生活状态，论证两人价值观与生活轨迹的不可调和。</p><span class="mm-chip">价值观差异</span><span class="mm-chip">生活轨迹</span><span class="mm-quote">「周晓白对钟跃民仍有感情，但无法全身心投入」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">20</span><span class="mm-cname">第20章 · 钟跃民与何眉的矛盾</span><span class="mm-role">案例</span></p><p class="mm-gist">通过商业纠纷，揭示商海中信任危机与利益博弈的残酷性。</p><span class="mm-chip">信任危机</span><span class="mm-chip">利益博弈</span><span class="mm-quote">「钟跃民发现何眉是内奸，何眉拿公司内部情报卖给武原正树」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">E</span><span class="mm-label">秩序与失控的博弈</span><span class="mm-cnt">6 章</span></summary>
 <p class="mm-why">以宁伟的犯罪与张海洋的执法为核心，对比了不同人生路径在社会法治化进程中的必然冲突。</p>
 <ol class="mm-tree">
-<li class="r-case"><p class="mm-ch"><b>21</b> 第21章 · 张海洋与魏虹的关系发展<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过情感攻势，展示张海洋在职业之外对个人生活秩序的重建尝试。</p><span class="mm-chip">情感重建</span><span class="mm-chip">秩序</span><span class="mm-anchor">「张海洋买花送给魏虹，魏虹反应热烈」</span></li>
-<li class="r-end"><p class="mm-ch"><b>22</b> 第22章 · 钟跃民从看守所释放<span class="mm-role r-end">收束</span></p><p class="mm-gist">通过释放与判刑的对比，论证不同个体在社会秩序与法律框架下的不同命运。</p><span class="mm-chip">法律框架</span><span class="mm-chip">个体命运</span><span class="mm-anchor">「宁伟因伤害案被判刑十五年」</span></li>
-<li class="r-th"><p class="mm-ch"><b>23</b> 第23章 · 泰岳餐厅的生意和钟跃民的生活<span class="mm-role r-th">立论</span></p><p class="mm-gist">论证钟跃民在经营餐厅过程中，试图通过世俗生活掩盖对动荡感的渴望。</p><span class="mm-chip">经营</span><span class="mm-chip">世俗生活</span><span class="mm-anchor">「宁伟越狱后，开始了新的生活，他决定不再回头」</span></li>
-<li class="r-th"><p class="mm-ch"><b>24</b> 第24章 · 钟跃民的餐厅经营状况及他的新想法<span class="mm-role r-th">立论</span></p><p class="mm-gist">论证个体对平庸生活的排斥，以及对持续性挑战与激情的内在需求。</p><span class="mm-chip">挑战</span><span class="mm-chip">激情</span><span class="mm-anchor">「钟跃民不喜欢过平静的生活，他需要一种时时能感受到新鲜感的生活方式」</span></li>
-<li class="r-case"><p class="mm-ch"><b>25</b> 第25章 · 张海洋的压力与求助<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过张海洋的求助，论证个人情感与职业职责在复杂社会案件中的冲突。</p><span class="mm-chip">职业职责</span><span class="mm-chip">冲突</span><span class="mm-anchor">「钟跃民拒绝加入专案组，认为自己是老百姓，没有执法权」</span></li>
-<li class="r-case"><p class="mm-ch"><b>26</b> 第26章 · 张海洋和魏虹的婚礼<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过婚礼与病危的消息，论证个体在社会关系网络中的脆弱与无常。</p><span class="mm-chip">社会关系</span><span class="mm-chip">无常</span><span class="mm-anchor">「钟跃民在婚礼当天接到李奎勇弟弟的电话，得知李奎勇被诊断出肺癌，已经是晚期」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">21</span><span class="mm-cname">第21章 · 张海洋与魏虹的关系发展</span><span class="mm-role">案例</span></p><p class="mm-gist">通过情感攻势，展示张海洋在职业之外对个人生活秩序的重建尝试。</p><span class="mm-chip">情感重建</span><span class="mm-chip">秩序</span><span class="mm-quote">「张海洋买花送给魏虹，魏虹反应热烈」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">22</span><span class="mm-cname">第22章 · 钟跃民从看守所释放</span><span class="mm-role">收束</span></p><p class="mm-gist">通过释放与判刑的对比，论证不同个体在社会秩序与法律框架下的不同命运。</p><span class="mm-chip">法律框架</span><span class="mm-chip">个体命运</span><span class="mm-quote">「宁伟因伤害案被判刑十五年」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">23</span><span class="mm-cname">第23章 · 泰岳餐厅的生意和钟跃民的生活</span><span class="mm-role">立论</span></p><p class="mm-gist">论证钟跃民在经营餐厅过程中，试图通过世俗生活掩盖对动荡感的渴望。</p><span class="mm-chip">经营</span><span class="mm-chip">世俗生活</span><span class="mm-quote">「宁伟越狱后，开始了新的生活，他决定不再回头」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">24</span><span class="mm-cname">第24章 · 钟跃民的餐厅经营状况及他的新想法</span><span class="mm-role">立论</span></p><p class="mm-gist">论证个体对平庸生活的排斥，以及对持续性挑战与激情的内在需求。</p><span class="mm-chip">挑战</span><span class="mm-chip">激情</span><span class="mm-quote">「钟跃民不喜欢过平静的生活，他需要一种时时能感受到新鲜感的生活方式」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">25</span><span class="mm-cname">第25章 · 张海洋的压力与求助</span><span class="mm-role">案例</span></p><p class="mm-gist">通过张海洋的求助，论证个人情感与职业职责在复杂社会案件中的冲突。</p><span class="mm-chip">职业职责</span><span class="mm-chip">冲突</span><span class="mm-quote">「钟跃民拒绝加入专案组，认为自己是老百姓，没有执法权」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">26</span><span class="mm-cname">第26章 · 张海洋和魏虹的婚礼</span><span class="mm-role">案例</span></p><p class="mm-gist">通过婚礼与病危的消息，论证个体在社会关系网络中的脆弱与无常。</p><span class="mm-chip">社会关系</span><span class="mm-chip">无常</span><span class="mm-quote">「钟跃民在婚礼当天接到李奎勇弟弟的电话，得知李奎勇被诊断出肺癌，已经是晚期」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">F</span><span class="mm-label">归于流浪的终局</span><span class="mm-cnt">1 章</span></summary>
 <p class="mm-why">以地理空间的跨越作为叙事终点，象征主角最终脱离既定社会轨道，回归纯粹的个人体验。</p>
 <ol class="mm-tree">
-<li class="r-end"><p class="mm-ch"><b>27</b> 第27章 尾声<span class="mm-role r-end">收束</span></p><p class="mm-gist">通过流浪的视角，论证个体最终回归虚无与自由的终极选择。</p><span class="mm-chip">流浪</span><span class="mm-chip">自由</span><span class="mm-anchor">「小高在塔里木盆地的旅行见闻」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">27</span><span class="mm-cname">第27章 尾声</span><span class="mm-role">收束</span></p><p class="mm-gist">通过流浪的视角，论证个体最终回归虚无与自由的终极选择。</p><span class="mm-chip">流浪</span><span class="mm-chip">自由</span><span class="mm-quote">「小高在塔里木盆地的旅行见闻」</span></li>
 </ol>
 </details>
 <footer class="site-footer">

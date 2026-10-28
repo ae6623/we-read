@@ -16,8 +16,8 @@
 .mm-bar i{display:block;height:100%;background:linear-gradient(90deg,#8a9b6e,#c2b280)}
 .mm-svgwrap{overflow-x:auto;padding:.4em 0 1em;border-bottom:1px solid var(--line)}
 .mm-svg{width:100%;height:auto;min-width:760px}
-.mm-spine{margin:.9em 0;border-left:3px solid #d9d0bd;padding:.1em 0 .1em .9em}
-.mm-spine[open]{border-left-color:#8a9b6e}
+.mm-spine{margin:1.15em 0;border-left:3px solid #ece4d3;padding:.1em 0 .1em .85em}
+.mm-spine[open]{border-left-color:#d8cdb4}
 .mm-spine>summary{display:flex;gap:.6em;align-items:baseline;cursor:pointer;
   list-style:none;padding:.35em 0}
 .mm-spine>summary::-webkit-details-marker{display:none}
@@ -26,24 +26,32 @@
 .mm-label{font-weight:600;font-size:1rem;color:var(--ink)}
 .mm-cnt{margin-left:auto;font-size:.74rem;color:var(--muted)}
 .mm-why{font-size:.8rem;color:var(--muted);margin:.1em 0 .8em;line-height:1.7}
-.mm-tree{list-style:none;padding:0;margin:0}
-.mm-tree li{position:relative;padding:.42em 0 .42em 1.1em;border-left:1px dotted #cfc6b4;
-  margin-left:.5em}
-.mm-tree li:before{content:"";position:absolute;left:0;top:1.05em;width:.7em;
-  border-top:1px dotted #cfc6b4}
-.mm-ch{margin:0;font-size:.92rem;color:var(--ink)}
-.mm-ch b{color:#a9a08d;font-weight:500;font-size:.8rem;margin-right:.4em}
-.mm-role{font-size:.68rem;padding:.05em .4em;border-radius:3px;margin-left:.5em;
-  vertical-align:.1em;white-space:nowrap}
-.r-pre{background:#eef0e6;color:#6b7a4e}.r-th{background:#eae7f0;color:#5f5578}
-.r-cnt{background:#f6e9e4;color:#946350}.r-case{background:#e8eff1;color:#4f7380}
-.r-end{background:#f2ecdf;color:#8a7442}
-.mm-gist{margin:.18em 0 .3em;font-size:.84rem;line-height:1.75;color:#4a443b}
-.mm-chip{display:inline-block;font-size:.68rem;color:#6b6152;background:#f2ecdf;
-  border-radius:9px;padding:.05em .5em;margin:.15em .25em .15em 0}
-.mm-anchor{display:block;font-size:.78rem;color:#8a8272;line-height:1.7;
-  border-left:2px dotted #d9d0bd;padding-left:.7em;margin-top:.3em}
-@media(max-width:720px){.mm-svg{min-width:640px}}
+.mm-tree{list-style:none;padding:0;margin:.15em 0 0}
+/* 章条目：与通读页 .ch-item 对齐（无卡片/无彩条/虚线分隔），行高按手机可读行数收紧 */
+.mm-cn{padding:8px 0;border-bottom:1px dashed #eee8dc}
+.mm-cn:last-child{border-bottom:0}
+.mm-chead{display:flex;flex-wrap:wrap;gap:2px 10px;align-items:baseline;margin:0}
+.mm-cno{flex:none;min-width:1.7em;color:#bf8247;font-weight:700;font-size:.82rem;
+  font-variant-numeric:tabular-nums}
+.mm-cname{flex:0 1 auto;min-width:0;font-size:.92rem;line-height:1.6;color:var(--ink);
+  word-break:break-word}
+.mm-role{flex:none;font-size:.68rem;color:#8a8272;line-height:1.6;white-space:nowrap}
+.mm-gist{margin:.15em 0 .2em;font-size:.86rem;line-height:1.75;color:#4a443b}
+.mm-chip{display:inline-block;font-size:.68rem;color:#6b6152;background:#f4f1e6;
+  border-radius:9px;padding:.05em .5em;margin:.1em .28em .1em 0}
+/* 引文块取通读页 ul.ch-quote 的观感：浅米底 + 金色左线 */
+.mm-quote{display:block;margin:.3em 0 .1em;padding:7px 11px;background:#fdf8ee;
+  border-left:3px solid var(--gold);border-radius:0 8px 8px 0;
+  font-size:.8rem;line-height:1.75;color:#6b5c43}
+@media(max-width:720px){
+  .mm-svg{min-width:640px}
+  /* 手机：章条目再收紧一点，一屏多两行 */
+  .mm-cn{padding:7px 0}
+  .mm-chead{gap:8px}
+  .mm-cname{font-size:.9rem}
+  .mm-gist{font-size:.84rem;line-height:1.7}
+  .mm-quote{padding:6px 9px;font-size:.78rem}
+}
 </style>
 </head>
 <body>
@@ -123,80 +131,80 @@
 <summary><span class="mm-id">A</span><span class="mm-label">战争初期的战术磨合</span><span class="mm-cnt">5 章</span></summary>
 <p class="mm-why">梳理李云龙在抗战相持阶段的战斗风格、人际关系建立及个人生活的初步展开。</p>
 <ol class="mm-tree">
-<li class="r-pre"><p class="mm-ch"><b>1</b> 版权信息 · 第1章 · 李云龙与水腰子兵工厂后勤部长张万和的谈判<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">通过李云龙与后勤部长的物资博弈，引出日军扫荡的背景。</p><span class="mm-chip">物资博弈</span><span class="mm-chip">根据地环境</span><span class="mm-anchor">「李云龙为了多弄点边区造的手榴弹，与张万和软磨硬泡」</span></li>
-<li class="r-pre"><p class="mm-ch"><b>2</b> 版权信息 · 第2章 · 中日战争进入相持阶段，华北形势严峻<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">梳理战争相持阶段的战略态势，明确各方武装力量的分布。</p><span class="mm-chip">相持阶段</span><span class="mm-chip">百团大战</span><span class="mm-anchor">「1940年华北八路军百团大战后，八路军竟变成了40万之众」</span></li>
-<li class="r-pre"><p class="mm-ch"><b>3</b> 版权信息 · 第3章 · 晋西北冬天的环境<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">刻画恶劣气候下的部队训练状态，展现人物的身体与意志考验。</p><span class="mm-chip">刺杀训练</span><span class="mm-chip">战斗素质</span><span class="mm-anchor">「李云龙命令分散在各地的连队进行刺杀训练，以御寒和提高战斗素质」</span></li>
-<li class="r-th"><p class="mm-ch"><b>4</b> 版权信息 · 第4章 · 李云龙的战斗理念<span class="mm-role r-th">立论</span></p><p class="mm-gist">确立李云龙的战斗原则，并引入其与秀芹的情感线索。</p><span class="mm-chip">战斗理念</span><span class="mm-chip">情感互动</span><span class="mm-anchor">「李云龙坚持只占便宜不许吃亏的原则」</span></li>
-<li class="r-case"><p class="mm-ch"><b>5</b> 版权信息 · 第5章 · 李云龙的婚礼<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过简陋的婚礼仪式，侧面反映部队的物质匮乏与扩充需求。</p><span class="mm-chip">物质匮乏</span><span class="mm-chip">部队扩充</span><span class="mm-anchor">「赵刚代表全团向秀芹嫂子提点希望，咱独立团要壮大，缺人呀」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">1</span><span class="mm-cname">版权信息 · 第1章 · 李云龙与水腰子兵工厂后勤部长张万和的谈判</span><span class="mm-role">铺垫</span></p><p class="mm-gist">通过李云龙与后勤部长的物资博弈，引出日军扫荡的背景。</p><span class="mm-chip">物资博弈</span><span class="mm-chip">根据地环境</span><span class="mm-quote">「李云龙为了多弄点边区造的手榴弹，与张万和软磨硬泡」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">2</span><span class="mm-cname">版权信息 · 第2章 · 中日战争进入相持阶段，华北形势严峻</span><span class="mm-role">铺垫</span></p><p class="mm-gist">梳理战争相持阶段的战略态势，明确各方武装力量的分布。</p><span class="mm-chip">相持阶段</span><span class="mm-chip">百团大战</span><span class="mm-quote">「1940年华北八路军百团大战后，八路军竟变成了40万之众」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">3</span><span class="mm-cname">版权信息 · 第3章 · 晋西北冬天的环境</span><span class="mm-role">铺垫</span></p><p class="mm-gist">刻画恶劣气候下的部队训练状态，展现人物的身体与意志考验。</p><span class="mm-chip">刺杀训练</span><span class="mm-chip">战斗素质</span><span class="mm-quote">「李云龙命令分散在各地的连队进行刺杀训练，以御寒和提高战斗素质」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">4</span><span class="mm-cname">版权信息 · 第4章 · 李云龙的战斗理念</span><span class="mm-role">立论</span></p><p class="mm-gist">确立李云龙的战斗原则，并引入其与秀芹的情感线索。</p><span class="mm-chip">战斗理念</span><span class="mm-chip">情感互动</span><span class="mm-quote">「李云龙坚持只占便宜不许吃亏的原则」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">5</span><span class="mm-cname">版权信息 · 第5章 · 李云龙的婚礼</span><span class="mm-role">案例</span></p><p class="mm-gist">通过简陋的婚礼仪式，侧面反映部队的物质匮乏与扩充需求。</p><span class="mm-chip">物质匮乏</span><span class="mm-chip">部队扩充</span><span class="mm-quote">「赵刚代表全团向秀芹嫂子提点希望，咱独立团要壮大，缺人呀」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">B</span><span class="mm-label">名将的崛起与转折</span><span class="mm-cnt">5 章</span></summary>
 <p class="mm-why">记录李云龙在平安县城之战后的声名鹊起，以及在复杂军事斗争中经历的挫折与人际互动。</p>
 <ol class="mm-tree">
-<li class="r-pre"><p class="mm-ch"><b>6</b> 版权信息 · 第6章 · 楚云飞得到日军小部队进入西集据点的情报<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">通过楚云飞对日军动向的侦察，预示针对李云龙的战术突袭。</p><span class="mm-chip">战术侦察</span><span class="mm-chip">情报判断</span><span class="mm-anchor">「楚云飞判断日军小部队的目的是冲李云龙去的」</span></li>
-<li class="r-case"><p class="mm-ch"><b>7</b> 版权信息 · 第7章 · 李云龙突围后，带领残存的三十多人撤往二营驻地桃树沟<span class="mm-role r-case">案例</span></p><p class="mm-gist">展示团部遇袭后的惨重损失，体现战争的残酷性与突发性。</p><span class="mm-chip">战争损失</span><span class="mm-chip">突围</span><span class="mm-anchor">「这次团部被袭，牺牲了五十多人，警卫排几乎全部阵亡」</span></li>
-<li class="r-th"><p class="mm-ch"><b>8</b> 版权信息 · 第8章 · 李云龙的声名大噪<span class="mm-role r-th">立论</span></p><p class="mm-gist">通过平安县城之战，确立李云龙在战场的战术地位与声望。</p><span class="mm-chip">战术能力</span><span class="mm-chip">声望</span><span class="mm-anchor">「李云龙在平安县城之战中声名大噪」</span></li>
-<li class="r-pre"><p class="mm-ch"><b>9</b> 版权信息 · 第9章 · 黑云寨二当家的梁二虎<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">交代黑云寨的组织结构与首领背景，为后续冲突埋下伏笔。</p><span class="mm-chip">组织结构</span><span class="mm-chip">人物背景</span><span class="mm-anchor">「梁二虎是黑云寨的二当家，因生活所迫落草为寇」</span></li>
-<li class="r-th"><p class="mm-ch"><b>10</b> 版权信息 · 第10章 · 李云龙与赵刚的关系及其在独立团的影响力<span class="mm-role r-th">立论</span></p><p class="mm-gist">通过降职后的权力运作与宴会交锋，展现李云龙的个人影响力。</p><span class="mm-chip">权力运作</span><span class="mm-chip">个人影响力</span><span class="mm-anchor">「李云龙在独立团还是一言九鼎，全团人包括赵刚始终拿他当团长」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">6</span><span class="mm-cname">版权信息 · 第6章 · 楚云飞得到日军小部队进入西集据点的情报</span><span class="mm-role">铺垫</span></p><p class="mm-gist">通过楚云飞对日军动向的侦察，预示针对李云龙的战术突袭。</p><span class="mm-chip">战术侦察</span><span class="mm-chip">情报判断</span><span class="mm-quote">「楚云飞判断日军小部队的目的是冲李云龙去的」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">7</span><span class="mm-cname">版权信息 · 第7章 · 李云龙突围后，带领残存的三十多人撤往二营驻地桃树沟</span><span class="mm-role">案例</span></p><p class="mm-gist">展示团部遇袭后的惨重损失，体现战争的残酷性与突发性。</p><span class="mm-chip">战争损失</span><span class="mm-chip">突围</span><span class="mm-quote">「这次团部被袭，牺牲了五十多人，警卫排几乎全部阵亡」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">8</span><span class="mm-cname">版权信息 · 第8章 · 李云龙的声名大噪</span><span class="mm-role">立论</span></p><p class="mm-gist">通过平安县城之战，确立李云龙在战场的战术地位与声望。</p><span class="mm-chip">战术能力</span><span class="mm-chip">声望</span><span class="mm-quote">「李云龙在平安县城之战中声名大噪」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">9</span><span class="mm-cname">版权信息 · 第9章 · 黑云寨二当家的梁二虎</span><span class="mm-role">铺垫</span></p><p class="mm-gist">交代黑云寨的组织结构与首领背景，为后续冲突埋下伏笔。</p><span class="mm-chip">组织结构</span><span class="mm-chip">人物背景</span><span class="mm-quote">「梁二虎是黑云寨的二当家，因生活所迫落草为寇」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">10</span><span class="mm-cname">版权信息 · 第10章 · 李云龙与赵刚的关系及其在独立团的影响力</span><span class="mm-role">立论</span></p><p class="mm-gist">通过降职后的权力运作与宴会交锋，展现李云龙的个人影响力。</p><span class="mm-chip">权力运作</span><span class="mm-chip">个人影响力</span><span class="mm-quote">「李云龙在独立团还是一言九鼎，全团人包括赵刚始终拿他当团长」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">C</span><span class="mm-label">解放战争的洗礼</span><span class="mm-cnt">8 章</span></summary>
 <p class="mm-why">描述李云龙在更大规模战争中的表现、负伤、婚姻建立以及对金门战役的遗憾。</p>
 <ol class="mm-tree">
-<li class="r-pre"><p class="mm-ch"><b>11</b> 版权信息 · 第11章 · 徐州战役的背景和规模<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">界定徐州战役的战略意义，通过阻击战展示战争的惨烈程度。</p><span class="mm-chip">战略决战</span><span class="mm-chip">阻击战</span><span class="mm-anchor">「赵庄阻击战是徐州战役中最惨烈的一场战斗，国民党军敢死队员们无一生还」</span></li>
-<li class="r-case"><p class="mm-ch"><b>12</b> 版权信息 · 第12章 · 黄百韬兵团在碾庄陷入重围<span class="mm-role r-case">案例</span></p><p class="mm-gist">分析碾庄战役的战术态势，展示国共双方的兵力部署与决策。</p><span class="mm-chip">战术包围</span><span class="mm-chip">兵力部署</span><span class="mm-anchor">「国共双方上百万兵力展开激战」</span></li>
-<li class="r-case"><p class="mm-ch"><b>13</b> 版权信息 · 第13章 · 李云龙的伤势及手术过程<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过手术过程，展示李云龙的伤情严重性及与医护人员的互动。</p><span class="mm-chip">战伤救治</span><span class="mm-chip">手术</span><span class="mm-anchor">「李云龙伤势极重，浑身是伤口，数了数，竟达18处伤，全是弹片伤。」</span></li>
-<li class="r-case"><p class="mm-ch"><b>14</b> 版权信息 · 第14章 · 李云龙的伤口恢复情况<span class="mm-role r-case">案例</span></p><p class="mm-gist">描述伤后恢复期的心理状态，体现其对敌对背景医生的复杂态度。</p><span class="mm-chip">战后恢复</span><span class="mm-chip">心理状态</span><span class="mm-anchor">「李云龙很反感武田医生，因为他是日本人」</span></li>
-<li class="r-case"><p class="mm-ch"><b>15</b> 版权信息 · 第15章 · 李云龙和田雨在战争后的相遇与相爱<span class="mm-role r-case">案例</span></p><p class="mm-gist">交代李云龙与田雨的相识过程，通过求婚冲突体现性格差异。</p><span class="mm-chip">情感发展</span><span class="mm-chip">性格冲突</span><span class="mm-anchor">「李云龙向田墨轩求婚，田墨轩最初拒绝，但在李云龙和田雨的坚持下，最终同意」</span></li>
-<li class="r-case"><p class="mm-ch"><b>16</b> 版权信息 · 第16章 · 李云龙和田雨的蜜月生活<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过蜜月期的短暂与离别，强调军人职业对个人生活的挤压。</p><span class="mm-chip">军人职业</span><span class="mm-chip">离别</span><span class="mm-anchor">「李云龙和田雨只在一起度过了三天的蜜月生活，就要分别了」</span></li>
-<li class="r-case"><p class="mm-ch"><b>17</b> 版权信息 · 第17章 · 李云龙的焦急和无奈<span class="mm-role r-case">案例</span></p><p class="mm-gist">描述李云龙错过金门战役的焦急，体现战场指挥的不可控性。</p><span class="mm-chip">战场指挥</span><span class="mm-chip">战役时效</span><span class="mm-anchor">「李云龙得知金门战役已经打响，自己无法及时赶到前线」</span></li>
-<li class="r-case"><p class="mm-ch"><b>18</b> 版权信息 · 第18章 · 李云龙的妻子田雨写给他的信<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过书信往来，展示战后家庭关系与社会人际网络的构建。</p><span class="mm-chip">家庭关系</span><span class="mm-chip">人际网络</span><span class="mm-anchor">「田雨对李云龙荣誉的骄傲」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">11</span><span class="mm-cname">版权信息 · 第11章 · 徐州战役的背景和规模</span><span class="mm-role">铺垫</span></p><p class="mm-gist">界定徐州战役的战略意义，通过阻击战展示战争的惨烈程度。</p><span class="mm-chip">战略决战</span><span class="mm-chip">阻击战</span><span class="mm-quote">「赵庄阻击战是徐州战役中最惨烈的一场战斗，国民党军敢死队员们无一生还」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">12</span><span class="mm-cname">版权信息 · 第12章 · 黄百韬兵团在碾庄陷入重围</span><span class="mm-role">案例</span></p><p class="mm-gist">分析碾庄战役的战术态势，展示国共双方的兵力部署与决策。</p><span class="mm-chip">战术包围</span><span class="mm-chip">兵力部署</span><span class="mm-quote">「国共双方上百万兵力展开激战」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">13</span><span class="mm-cname">版权信息 · 第13章 · 李云龙的伤势及手术过程</span><span class="mm-role">案例</span></p><p class="mm-gist">通过手术过程，展示李云龙的伤情严重性及与医护人员的互动。</p><span class="mm-chip">战伤救治</span><span class="mm-chip">手术</span><span class="mm-quote">「李云龙伤势极重，浑身是伤口，数了数，竟达18处伤，全是弹片伤。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">14</span><span class="mm-cname">版权信息 · 第14章 · 李云龙的伤口恢复情况</span><span class="mm-role">案例</span></p><p class="mm-gist">描述伤后恢复期的心理状态，体现其对敌对背景医生的复杂态度。</p><span class="mm-chip">战后恢复</span><span class="mm-chip">心理状态</span><span class="mm-quote">「李云龙很反感武田医生，因为他是日本人」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">15</span><span class="mm-cname">版权信息 · 第15章 · 李云龙和田雨在战争后的相遇与相爱</span><span class="mm-role">案例</span></p><p class="mm-gist">交代李云龙与田雨的相识过程，通过求婚冲突体现性格差异。</p><span class="mm-chip">情感发展</span><span class="mm-chip">性格冲突</span><span class="mm-quote">「李云龙向田墨轩求婚，田墨轩最初拒绝，但在李云龙和田雨的坚持下，最终同意」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">16</span><span class="mm-cname">版权信息 · 第16章 · 李云龙和田雨的蜜月生活</span><span class="mm-role">案例</span></p><p class="mm-gist">通过蜜月期的短暂与离别，强调军人职业对个人生活的挤压。</p><span class="mm-chip">军人职业</span><span class="mm-chip">离别</span><span class="mm-quote">「李云龙和田雨只在一起度过了三天的蜜月生活，就要分别了」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">17</span><span class="mm-cname">版权信息 · 第17章 · 李云龙的焦急和无奈</span><span class="mm-role">案例</span></p><p class="mm-gist">描述李云龙错过金门战役的焦急，体现战场指挥的不可控性。</p><span class="mm-chip">战场指挥</span><span class="mm-chip">战役时效</span><span class="mm-quote">「李云龙得知金门战役已经打响，自己无法及时赶到前线」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">18</span><span class="mm-cname">版权信息 · 第18章 · 李云龙的妻子田雨写给他的信</span><span class="mm-role">案例</span></p><p class="mm-gist">通过书信往来，展示战后家庭关系与社会人际网络的构建。</p><span class="mm-chip">家庭关系</span><span class="mm-chip">人际网络</span><span class="mm-quote">「田雨对李云龙荣誉的骄傲」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">D</span><span class="mm-label">和平时期的转型困境</span><span class="mm-cnt">8 章</span></summary>
 <p class="mm-why">展现李云龙从前线指挥官向军事学院学员及军长身份的转变，以及对新体制的不适应。</p>
 <ol class="mm-tree">
-<li class="r-pre"><p class="mm-ch"><b>19</b> 版权信息 · 第19章 · 李云龙被任命为副军长，主持军里工作<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">描述李云龙在和平时期的职务变化与生活环境的转型。</p><span class="mm-chip">职务转型</span><span class="mm-chip">生活环境</span><span class="mm-anchor">「李云龙认为这次他有绝对的把握，只要有足够的船只和炮火支援，他一个军拿下金门是没问题的。」</span></li>
-<li class="r-th"><p class="mm-ch"><b>20</b> 版权信息 · 第20章 · 李云龙的闲散与等待<span class="mm-role r-th">立论</span></p><p class="mm-gist">通过对入朝作战的渴望与被派往学习的落差，展现转型期的困境。</p><span class="mm-chip">转型困境</span><span class="mm-chip">职业规划</span><span class="mm-anchor">「李云龙等待入朝作战的机会，却得到去南京军事学院学习的通知」</span></li>
-<li class="r-case"><p class="mm-ch"><b>21</b> 版权信息 · 第21章 · 李云龙在南京军事学院的高级指挥系报到<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过在军事学院的冲突，展示旧式指挥官与正规化教育的矛盾。</p><span class="mm-chip">正规化教育</span><span class="mm-chip">指挥官矛盾</span><span class="mm-anchor">「李云龙对学院规定不满，故意不交枪，引发冲突」</span></li>
-<li class="r-th"><p class="mm-ch"><b>22</b> 版权信息 · 第22章 · 部队实行军衔制，李云龙、丁伟、孔捷等高级指挥系学员被<span class="mm-role r-th">立论</span></p><p class="mm-gist">通过军衔评定引发的争议，探讨军人对荣誉与地位的认知。</p><span class="mm-chip">军衔制</span><span class="mm-chip">荣誉认知</span><span class="mm-anchor">「李云龙对被授予少将军衔不满，认为自己应该授中将」</span></li>
-<li class="r-case"><p class="mm-ch"><b>23</b> 版权信息 · 第23章 · 李云龙和儿子的互动<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过家庭互动，展现李云龙在铁血外表下的温情一面。</p><span class="mm-chip">家庭互动</span><span class="mm-chip">个人情感</span><span class="mm-anchor">「李云龙把儿子举过头顶，像是举杠铃，数次之后，觉得意犹未尽」</span></li>
-<li class="r-th"><p class="mm-ch"><b>24</b> 版权信息 · 第24章 · 李云龙的毕业论文《论冷战时期的特种作战》<span class="mm-role r-th">立论</span></p><p class="mm-gist">通过毕业论文答辩，体现指挥官对冷战背景下特种作战的思考。</p><span class="mm-chip">特种作战</span><span class="mm-chip">军事理论</span><span class="mm-anchor">「李云龙的论文博了个满堂彩，连院长听了他的论文答辩，都微微点了点头」</span></li>
-<li class="r-case"><p class="mm-ch"><b>25</b> 版权信息 · 第25章 · 李云龙和赵刚在北京的聚会<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过战友聚会，展现和平时期老战友间的社会关系与政治顾虑。</p><span class="mm-chip">战友关系</span><span class="mm-chip">政治顾虑</span><span class="mm-anchor">「李云龙和赵刚与田雨和冯楠在书房密谈」</span></li>
-<li class="r-end"><p class="mm-ch"><b>26</b> 版权信息 · 第26章 · 李云龙就任军长，对领导班子搭配满意<span class="mm-role r-end">收束</span></p><p class="mm-gist">描述李云龙重回部队任职，体现其对领导班子建设的重视。</p><span class="mm-chip">部队管理</span><span class="mm-chip">领导班子</span><span class="mm-anchor">「李云龙对郑波很满意，读书人总是能获得他的尊重」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">19</span><span class="mm-cname">版权信息 · 第19章 · 李云龙被任命为副军长，主持军里工作</span><span class="mm-role">铺垫</span></p><p class="mm-gist">描述李云龙在和平时期的职务变化与生活环境的转型。</p><span class="mm-chip">职务转型</span><span class="mm-chip">生活环境</span><span class="mm-quote">「李云龙认为这次他有绝对的把握，只要有足够的船只和炮火支援，他一个军拿下金门是没问题的。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">20</span><span class="mm-cname">版权信息 · 第20章 · 李云龙的闲散与等待</span><span class="mm-role">立论</span></p><p class="mm-gist">通过对入朝作战的渴望与被派往学习的落差，展现转型期的困境。</p><span class="mm-chip">转型困境</span><span class="mm-chip">职业规划</span><span class="mm-quote">「李云龙等待入朝作战的机会，却得到去南京军事学院学习的通知」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">21</span><span class="mm-cname">版权信息 · 第21章 · 李云龙在南京军事学院的高级指挥系报到</span><span class="mm-role">案例</span></p><p class="mm-gist">通过在军事学院的冲突，展示旧式指挥官与正规化教育的矛盾。</p><span class="mm-chip">正规化教育</span><span class="mm-chip">指挥官矛盾</span><span class="mm-quote">「李云龙对学院规定不满，故意不交枪，引发冲突」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">22</span><span class="mm-cname">版权信息 · 第22章 · 部队实行军衔制，李云龙、丁伟、孔捷等高级指挥系学员被</span><span class="mm-role">立论</span></p><p class="mm-gist">通过军衔评定引发的争议，探讨军人对荣誉与地位的认知。</p><span class="mm-chip">军衔制</span><span class="mm-chip">荣誉认知</span><span class="mm-quote">「李云龙对被授予少将军衔不满，认为自己应该授中将」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">23</span><span class="mm-cname">版权信息 · 第23章 · 李云龙和儿子的互动</span><span class="mm-role">案例</span></p><p class="mm-gist">通过家庭互动，展现李云龙在铁血外表下的温情一面。</p><span class="mm-chip">家庭互动</span><span class="mm-chip">个人情感</span><span class="mm-quote">「李云龙把儿子举过头顶，像是举杠铃，数次之后，觉得意犹未尽」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">24</span><span class="mm-cname">版权信息 · 第24章 · 李云龙的毕业论文《论冷战时期的特种作战》</span><span class="mm-role">立论</span></p><p class="mm-gist">通过毕业论文答辩，体现指挥官对冷战背景下特种作战的思考。</p><span class="mm-chip">特种作战</span><span class="mm-chip">军事理论</span><span class="mm-quote">「李云龙的论文博了个满堂彩，连院长听了他的论文答辩，都微微点了点头」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">25</span><span class="mm-cname">版权信息 · 第25章 · 李云龙和赵刚在北京的聚会</span><span class="mm-role">案例</span></p><p class="mm-gist">通过战友聚会，展现和平时期老战友间的社会关系与政治顾虑。</p><span class="mm-chip">战友关系</span><span class="mm-chip">政治顾虑</span><span class="mm-quote">「李云龙和赵刚与田雨和冯楠在书房密谈」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">26</span><span class="mm-cname">版权信息 · 第26章 · 李云龙就任军长，对领导班子搭配满意</span><span class="mm-role">收束</span></p><p class="mm-gist">描述李云龙重回部队任职，体现其对领导班子建设的重视。</p><span class="mm-chip">部队管理</span><span class="mm-chip">领导班子</span><span class="mm-quote">「李云龙对郑波很满意，读书人总是能获得他的尊重」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">E</span><span class="mm-label">冷战背景下的内部冲突</span><span class="mm-cnt">8 章</span></summary>
 <p class="mm-why">聚焦金门对峙期间的心理战、大饥荒影响及内部管理矛盾，反映其职业生涯的压力。</p>
 <ol class="mm-tree">
-<li class="r-pre"><p class="mm-ch"><b>27</b> 版权信息 · 第27章 · 金门岛上的广播战<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">描述冷战背景下的心理战形式，体现海峡两岸的对峙状态。</p><span class="mm-chip">心理战</span><span class="mm-chip">两岸对峙</span><span class="mm-anchor">「对面金门岛上的广播站喇叭响了，一阵急骤而宏大的音乐声越过海峡铺天盖地而来」</span></li>
-<li class="r-case"><p class="mm-ch"><b>28</b> 版权信息 · 第28章 · 李云龙与田雨的关系紧张<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过家庭政治背景引发的婚姻危机，展现时代变迁对个人的冲击。</p><span class="mm-chip">政治冲击</span><span class="mm-chip">婚姻危机</span><span class="mm-anchor">「田雨与李云龙分居，李云龙搬到军部去住」</span></li>
-<li class="r-case"><p class="mm-ch"><b>29</b> 版权信息 · 第29章 · 梁山分队的出击<span class="mm-role r-case">案例</span></p><p class="mm-gist">描述特种分队的出击，体现军事技术与作战方式的演进。</p><span class="mm-chip">特种作战</span><span class="mm-chip">军事技术</span><span class="mm-anchor">「梁山分队装备了消音装置的快艇和先进的武器」</span></li>
-<li class="r-case"><p class="mm-ch"><b>30</b> 版权信息 · 第30章 · 中国1960年的大饥荒<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过大饥荒背景下的口粮缩减，展现极端环境对军人家庭的考验。</p><span class="mm-chip">生存危机</span><span class="mm-chip">口粮标准</span><span class="mm-anchor">「李云龙的家庭也受到饥饿的威胁，军官的口粮标准减为每月27斤」</span></li>
-<li class="r-case"><p class="mm-ch"><b>31</b> 版权信息 · 第31章 · 保卫处长对水泵失窃案的看法<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过对失窃案的定性分歧，体现政治化思维对日常事务的渗透。</p><span class="mm-chip">政治化思维</span><span class="mm-chip">日常事务</span><span class="mm-anchor">「保卫处长认为这是一起政治事件，可能是敌特分子干的」</span></li>
-<li class="r-case"><p class="mm-ch"><b>32</b> 版权信息 · 第32章 · 吴连生等人的叛逃计划<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过叛逃事件，展示部队内部矛盾与纪律崩坏的风险。</p><span class="mm-chip">部队纪律</span><span class="mm-chip">叛逃</span><span class="mm-anchor">「吴连生、阿增和张春海决定报复排长，并策划叛逃」</span></li>
-<li class="r-case"><p class="mm-ch"><b>33</b> 版权信息 · 第33章 · 李云龙的焦虑和赵刚的困境<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过战友受批斗的现状，揭示政治动荡对高级将领的威胁。</p><span class="mm-chip">政治动荡</span><span class="mm-chip">将领处境</span><span class="mm-anchor">「赵刚在批判会上发表演讲，表达了对党和军队现状的深深忧虑」</span></li>
-<li class="r-case"><p class="mm-ch"><b>34</b> 版权信息 · 第34章 · 梁军身着绿军装，引起几个青年的注意<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过退伍军人制服歹徒，展现军人素质在社会治安中的作用。</p><span class="mm-chip">军人素质</span><span class="mm-chip">社会治安</span><span class="mm-anchor">「梁军利用自己的机智和勇敢，成功制服了五个带刀的歹徒」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">27</span><span class="mm-cname">版权信息 · 第27章 · 金门岛上的广播战</span><span class="mm-role">铺垫</span></p><p class="mm-gist">描述冷战背景下的心理战形式，体现海峡两岸的对峙状态。</p><span class="mm-chip">心理战</span><span class="mm-chip">两岸对峙</span><span class="mm-quote">「对面金门岛上的广播站喇叭响了，一阵急骤而宏大的音乐声越过海峡铺天盖地而来」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">28</span><span class="mm-cname">版权信息 · 第28章 · 李云龙与田雨的关系紧张</span><span class="mm-role">案例</span></p><p class="mm-gist">通过家庭政治背景引发的婚姻危机，展现时代变迁对个人的冲击。</p><span class="mm-chip">政治冲击</span><span class="mm-chip">婚姻危机</span><span class="mm-quote">「田雨与李云龙分居，李云龙搬到军部去住」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">29</span><span class="mm-cname">版权信息 · 第29章 · 梁山分队的出击</span><span class="mm-role">案例</span></p><p class="mm-gist">描述特种分队的出击，体现军事技术与作战方式的演进。</p><span class="mm-chip">特种作战</span><span class="mm-chip">军事技术</span><span class="mm-quote">「梁山分队装备了消音装置的快艇和先进的武器」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">30</span><span class="mm-cname">版权信息 · 第30章 · 中国1960年的大饥荒</span><span class="mm-role">案例</span></p><p class="mm-gist">通过大饥荒背景下的口粮缩减，展现极端环境对军人家庭的考验。</p><span class="mm-chip">生存危机</span><span class="mm-chip">口粮标准</span><span class="mm-quote">「李云龙的家庭也受到饥饿的威胁，军官的口粮标准减为每月27斤」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">31</span><span class="mm-cname">版权信息 · 第31章 · 保卫处长对水泵失窃案的看法</span><span class="mm-role">案例</span></p><p class="mm-gist">通过对失窃案的定性分歧，体现政治化思维对日常事务的渗透。</p><span class="mm-chip">政治化思维</span><span class="mm-chip">日常事务</span><span class="mm-quote">「保卫处长认为这是一起政治事件，可能是敌特分子干的」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">32</span><span class="mm-cname">版权信息 · 第32章 · 吴连生等人的叛逃计划</span><span class="mm-role">案例</span></p><p class="mm-gist">通过叛逃事件，展示部队内部矛盾与纪律崩坏的风险。</p><span class="mm-chip">部队纪律</span><span class="mm-chip">叛逃</span><span class="mm-quote">「吴连生、阿增和张春海决定报复排长，并策划叛逃」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">33</span><span class="mm-cname">版权信息 · 第33章 · 李云龙的焦虑和赵刚的困境</span><span class="mm-role">案例</span></p><p class="mm-gist">通过战友受批斗的现状，揭示政治动荡对高级将领的威胁。</p><span class="mm-chip">政治动荡</span><span class="mm-chip">将领处境</span><span class="mm-quote">「赵刚在批判会上发表演讲，表达了对党和军队现状的深深忧虑」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">34</span><span class="mm-cname">版权信息 · 第34章 · 梁军身着绿军装，引起几个青年的注意</span><span class="mm-role">案例</span></p><p class="mm-gist">通过退伍军人制服歹徒，展现军人素质在社会治安中的作用。</p><span class="mm-chip">军人素质</span><span class="mm-chip">社会治安</span><span class="mm-quote">「梁军利用自己的机智和勇敢，成功制服了五个带刀的歹徒」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">F</span><span class="mm-label">动荡时期的终局</span><span class="mm-cnt">10 章</span></summary>
 <p class="mm-why">记录李云龙在特殊历史时期与马天生等人的矛盾激化，直至最终被捕、牺牲及结局。</p>
 <ol class="mm-tree">
-<li class="r-pre"><p class="mm-ch"><b>35</b> 版权信息 · 第35章 · 文化大革命期间的混乱局势<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">描述动荡时期的社会混乱，体现局部武装冲突的升级。</p><span class="mm-chip">社会动荡</span><span class="mm-chip">武装冲突</span><span class="mm-anchor">「广西告急，南宁、桂林等城市爆发激烈的战斗，双方动用重型火炮和坦克」</span></li>
-<li class="r-case"><p class="mm-ch"><b>36</b> 版权信息 · 第36章 · 李云龙家的后院成了武器试验场<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过后院射击训练，展现动荡时期军事化思维对下一代的影响。</p><span class="mm-chip">军事化思维</span><span class="mm-chip">家庭教育</span><span class="mm-anchor">「李云龙告诉孩子们射击方式叫自杀式射击，很危险」</span></li>
-<li class="r-th"><p class="mm-ch"><b>37</b> 版权信息 · 第37章 · 李云龙与马天生的矛盾<span class="mm-role r-th">立论</span></p><p class="mm-gist">通过与马天生的性格冲突，预示政治立场对立带来的危机。</p><span class="mm-chip">性格冲突</span><span class="mm-chip">政治立场</span><span class="mm-anchor">「李云龙与马天生在性格和处事方式上存在巨大差异」</span></li>
-<li class="r-case"><p class="mm-ch"><b>38</b> 版权信息 · 第38章 · 杜长海的异常表现<span class="mm-role r-case">案例</span></p><p class="mm-gist">描述行政人员在压力下的心理状态，体现动荡时期的社会焦虑。</p><span class="mm-chip">社会焦虑</span><span class="mm-chip">心理压力</span><span class="mm-anchor">「杜长海近来常常有种异样的感觉，神经中枢总处于一种高度兴奋的状态」</span></li>
-<li class="r-case"><p class="mm-ch"><b>39</b> 版权信息 · 第39章 · 马天生与李云龙的矛盾<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过调查山头主义，揭示政治斗争中对指挥官的针对性审查。</p><span class="mm-chip">政治审查</span><span class="mm-chip">山头主义</span><span class="mm-anchor">「马天生向老首长汇报李云龙的情况，老首长建议他调查李云龙的山头」</span></li>
-<li class="r-case"><p class="mm-ch"><b>40</b> 版权信息 · 第40章 · 泰山师师部被偷袭<span class="mm-role r-case">案例</span></p><p class="mm-gist">描述师部被偷袭的过程，体现动荡时期军事单位的脆弱性。</p><span class="mm-chip">军事偷袭</span><span class="mm-chip">单位脆弱性</span><span class="mm-anchor">「哨兵被偷袭者用公文包击倒」</span></li>
-<li class="r-case"><p class="mm-ch"><b>41</b> 版权信息 · 第41章 · 李云龙被中央“文革”小组逮捕<span class="mm-role r-case">案例</span></p><p class="mm-gist">描述逮捕过程，标志着政治斗争对李云龙个人的全面清算。</p><span class="mm-chip">政治清算</span><span class="mm-chip">逮捕</span><span class="mm-anchor">「李云龙被控镇压造反派，血债累累，罪大恶极」</span></li>
-<li class="r-case"><p class="mm-ch"><b>42</b> 版权信息 · 第42章 · 李云龙的被捕与审讯<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过审讯过程，展现李云龙在政治压力下的抵抗意志。</p><span class="mm-chip">政治审讯</span><span class="mm-chip">抵抗意志</span><span class="mm-anchor">「李云龙对审讯的抵抗」</span></li>
-<li class="r-pre"><p class="mm-ch"><b>43</b> 版权信息 · 第43章 · 集会会场布置<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">通过会场布置的细节，营造出政治批判大会的压抑氛围。</p><span class="mm-chip">政治批判</span><span class="mm-chip">会场氛围</span><span class="mm-anchor">「主席台上方悬挂领袖巨幅画像和领袖语录」</span></li>
-<li class="r-end"><p class="mm-ch"><b>44</b> 第44章 尾声<span class="mm-role r-end">收束</span></p><p class="mm-gist">通过主角的牺牲与结局，完成对人物命运的终极收束。</p><span class="mm-chip">人物命运</span><span class="mm-chip">终局</span><span class="mm-anchor">「李云龙在战斗中牺牲，马天生挖出弹头，脸色惨白，眼中闪出泪光。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">35</span><span class="mm-cname">版权信息 · 第35章 · 文化大革命期间的混乱局势</span><span class="mm-role">铺垫</span></p><p class="mm-gist">描述动荡时期的社会混乱，体现局部武装冲突的升级。</p><span class="mm-chip">社会动荡</span><span class="mm-chip">武装冲突</span><span class="mm-quote">「广西告急，南宁、桂林等城市爆发激烈的战斗，双方动用重型火炮和坦克」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">36</span><span class="mm-cname">版权信息 · 第36章 · 李云龙家的后院成了武器试验场</span><span class="mm-role">案例</span></p><p class="mm-gist">通过后院射击训练，展现动荡时期军事化思维对下一代的影响。</p><span class="mm-chip">军事化思维</span><span class="mm-chip">家庭教育</span><span class="mm-quote">「李云龙告诉孩子们射击方式叫自杀式射击，很危险」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">37</span><span class="mm-cname">版权信息 · 第37章 · 李云龙与马天生的矛盾</span><span class="mm-role">立论</span></p><p class="mm-gist">通过与马天生的性格冲突，预示政治立场对立带来的危机。</p><span class="mm-chip">性格冲突</span><span class="mm-chip">政治立场</span><span class="mm-quote">「李云龙与马天生在性格和处事方式上存在巨大差异」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">38</span><span class="mm-cname">版权信息 · 第38章 · 杜长海的异常表现</span><span class="mm-role">案例</span></p><p class="mm-gist">描述行政人员在压力下的心理状态，体现动荡时期的社会焦虑。</p><span class="mm-chip">社会焦虑</span><span class="mm-chip">心理压力</span><span class="mm-quote">「杜长海近来常常有种异样的感觉，神经中枢总处于一种高度兴奋的状态」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">39</span><span class="mm-cname">版权信息 · 第39章 · 马天生与李云龙的矛盾</span><span class="mm-role">案例</span></p><p class="mm-gist">通过调查山头主义，揭示政治斗争中对指挥官的针对性审查。</p><span class="mm-chip">政治审查</span><span class="mm-chip">山头主义</span><span class="mm-quote">「马天生向老首长汇报李云龙的情况，老首长建议他调查李云龙的山头」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">40</span><span class="mm-cname">版权信息 · 第40章 · 泰山师师部被偷袭</span><span class="mm-role">案例</span></p><p class="mm-gist">描述师部被偷袭的过程，体现动荡时期军事单位的脆弱性。</p><span class="mm-chip">军事偷袭</span><span class="mm-chip">单位脆弱性</span><span class="mm-quote">「哨兵被偷袭者用公文包击倒」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">41</span><span class="mm-cname">版权信息 · 第41章 · 李云龙被中央“文革”小组逮捕</span><span class="mm-role">案例</span></p><p class="mm-gist">描述逮捕过程，标志着政治斗争对李云龙个人的全面清算。</p><span class="mm-chip">政治清算</span><span class="mm-chip">逮捕</span><span class="mm-quote">「李云龙被控镇压造反派，血债累累，罪大恶极」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">42</span><span class="mm-cname">版权信息 · 第42章 · 李云龙的被捕与审讯</span><span class="mm-role">案例</span></p><p class="mm-gist">通过审讯过程，展现李云龙在政治压力下的抵抗意志。</p><span class="mm-chip">政治审讯</span><span class="mm-chip">抵抗意志</span><span class="mm-quote">「李云龙对审讯的抵抗」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">43</span><span class="mm-cname">版权信息 · 第43章 · 集会会场布置</span><span class="mm-role">铺垫</span></p><p class="mm-gist">通过会场布置的细节，营造出政治批判大会的压抑氛围。</p><span class="mm-chip">政治批判</span><span class="mm-chip">会场氛围</span><span class="mm-quote">「主席台上方悬挂领袖巨幅画像和领袖语录」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">44</span><span class="mm-cname">第44章 尾声</span><span class="mm-role">收束</span></p><p class="mm-gist">通过主角的牺牲与结局，完成对人物命运的终极收束。</p><span class="mm-chip">人物命运</span><span class="mm-chip">终局</span><span class="mm-quote">「李云龙在战斗中牺牲，马天生挖出弹头，脸色惨白，眼中闪出泪光。」</span></li>
 </ol>
 </details>
 <footer class="site-footer">

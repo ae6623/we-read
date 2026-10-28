@@ -16,8 +16,8 @@
 .mm-bar i{display:block;height:100%;background:linear-gradient(90deg,#8a9b6e,#c2b280)}
 .mm-svgwrap{overflow-x:auto;padding:.4em 0 1em;border-bottom:1px solid var(--line)}
 .mm-svg{width:100%;height:auto;min-width:760px}
-.mm-spine{margin:.9em 0;border-left:3px solid #d9d0bd;padding:.1em 0 .1em .9em}
-.mm-spine[open]{border-left-color:#8a9b6e}
+.mm-spine{margin:1.15em 0;border-left:3px solid #ece4d3;padding:.1em 0 .1em .85em}
+.mm-spine[open]{border-left-color:#d8cdb4}
 .mm-spine>summary{display:flex;gap:.6em;align-items:baseline;cursor:pointer;
   list-style:none;padding:.35em 0}
 .mm-spine>summary::-webkit-details-marker{display:none}
@@ -26,24 +26,32 @@
 .mm-label{font-weight:600;font-size:1rem;color:var(--ink)}
 .mm-cnt{margin-left:auto;font-size:.74rem;color:var(--muted)}
 .mm-why{font-size:.8rem;color:var(--muted);margin:.1em 0 .8em;line-height:1.7}
-.mm-tree{list-style:none;padding:0;margin:0}
-.mm-tree li{position:relative;padding:.42em 0 .42em 1.1em;border-left:1px dotted #cfc6b4;
-  margin-left:.5em}
-.mm-tree li:before{content:"";position:absolute;left:0;top:1.05em;width:.7em;
-  border-top:1px dotted #cfc6b4}
-.mm-ch{margin:0;font-size:.92rem;color:var(--ink)}
-.mm-ch b{color:#a9a08d;font-weight:500;font-size:.8rem;margin-right:.4em}
-.mm-role{font-size:.68rem;padding:.05em .4em;border-radius:3px;margin-left:.5em;
-  vertical-align:.1em;white-space:nowrap}
-.r-pre{background:#eef0e6;color:#6b7a4e}.r-th{background:#eae7f0;color:#5f5578}
-.r-cnt{background:#f6e9e4;color:#946350}.r-case{background:#e8eff1;color:#4f7380}
-.r-end{background:#f2ecdf;color:#8a7442}
-.mm-gist{margin:.18em 0 .3em;font-size:.84rem;line-height:1.75;color:#4a443b}
-.mm-chip{display:inline-block;font-size:.68rem;color:#6b6152;background:#f2ecdf;
-  border-radius:9px;padding:.05em .5em;margin:.15em .25em .15em 0}
-.mm-anchor{display:block;font-size:.78rem;color:#8a8272;line-height:1.7;
-  border-left:2px dotted #d9d0bd;padding-left:.7em;margin-top:.3em}
-@media(max-width:720px){.mm-svg{min-width:640px}}
+.mm-tree{list-style:none;padding:0;margin:.15em 0 0}
+/* 章条目：与通读页 .ch-item 对齐（无卡片/无彩条/虚线分隔），行高按手机可读行数收紧 */
+.mm-cn{padding:8px 0;border-bottom:1px dashed #eee8dc}
+.mm-cn:last-child{border-bottom:0}
+.mm-chead{display:flex;flex-wrap:wrap;gap:2px 10px;align-items:baseline;margin:0}
+.mm-cno{flex:none;min-width:1.7em;color:#bf8247;font-weight:700;font-size:.82rem;
+  font-variant-numeric:tabular-nums}
+.mm-cname{flex:0 1 auto;min-width:0;font-size:.92rem;line-height:1.6;color:var(--ink);
+  word-break:break-word}
+.mm-role{flex:none;font-size:.68rem;color:#8a8272;line-height:1.6;white-space:nowrap}
+.mm-gist{margin:.15em 0 .2em;font-size:.86rem;line-height:1.75;color:#4a443b}
+.mm-chip{display:inline-block;font-size:.68rem;color:#6b6152;background:#f4f1e6;
+  border-radius:9px;padding:.05em .5em;margin:.1em .28em .1em 0}
+/* 引文块取通读页 ul.ch-quote 的观感：浅米底 + 金色左线 */
+.mm-quote{display:block;margin:.3em 0 .1em;padding:7px 11px;background:#fdf8ee;
+  border-left:3px solid var(--gold);border-radius:0 8px 8px 0;
+  font-size:.8rem;line-height:1.75;color:#6b5c43}
+@media(max-width:720px){
+  .mm-svg{min-width:640px}
+  /* 手机：章条目再收紧一点，一屏多两行 */
+  .mm-cn{padding:7px 0}
+  .mm-chead{gap:8px}
+  .mm-cname{font-size:.9rem}
+  .mm-gist{font-size:.84rem;line-height:1.7}
+  .mm-quote{padding:6px 9px;font-size:.78rem}
+}
 </style>
 </head>
 <body>
@@ -116,45 +124,45 @@
 <summary><span class="mm-id">A</span><span class="mm-label">读前：卷首、版本与编注（非正文）</span><span class="mm-cnt">5 章</span></summary>
 <p class="mm-why">五章都是读前材料，不含情节；用来判断这本书值不值得读、该读哪个本子。</p>
 <ol class="mm-tree">
-<li class="r-pre"><p class="mm-ch"><b>1</b> 卷首语<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">借高层评价确立作品的政治与社会学地位</p><span class="mm-chip">现实主义</span><span class="mm-chip">文学价值</span><span class="mm-anchor">「毛泽东推荐《金瓶梅》」</span></li>
-<li class="r-th"><p class="mm-ch"><b>2</b> 作品简介<span class="mm-role r-th">立论</span></p><p class="mm-gist">界定作品现实主义本质并说明AI辅助阅读的科学性</p><span class="mm-chip">现实主义经典</span><span class="mm-chip">社会现实</span><span class="mm-anchor">「实写官僚、恶霸与富商狼狈为奸、巧取豪夺和纵情声色的社会现实，具有极高的文学价值」</span></li>
-<li class="r-pre"><p class="mm-ch"><b>3</b> 作者简介<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">论证作者身份的神秘性及其作为明代文学家的历史定位</p><span class="mm-chip">兰陵笑笑生</span><span class="mm-chip">身份成谜</span><span class="mm-anchor">「兰陵笑笑生的真实身份成谜，学界有多种说法」</span></li>
-<li class="r-pre"><p class="mm-ch"><b>4</b> 编注简介<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">通过编注者的学术背景为文本解析提供法学视角支撑</p><span class="mm-chip">刑法学</span><span class="mm-chip">民商法学</span><span class="mm-anchor">「钟书峰，江西龙南人，西南政法大学刑法学硕士，中国社会科学院大学民商法学博士。」</span></li>
-<li class="r-th"><p class="mm-ch"><b>5</b> 没读过《金瓶梅》的，都在骂它<span class="mm-role r-th">立论</span></p><p class="mm-gist">驳斥对作品的道德偏见，强调欲望背后的社会批判价值</p><span class="mm-chip">欲望</span><span class="mm-chip">社会现实</span><span class="mm-anchor">「《金瓶梅》是现实主义经典巨著，具有极高的文学价值。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">1</span><span class="mm-cname">卷首语</span><span class="mm-role">铺垫</span></p><p class="mm-gist">借高层评价确立作品的政治与社会学地位</p><span class="mm-chip">现实主义</span><span class="mm-chip">文学价值</span><span class="mm-quote">「毛泽东推荐《金瓶梅》」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">2</span><span class="mm-cname">作品简介</span><span class="mm-role">立论</span></p><p class="mm-gist">界定作品现实主义本质并说明AI辅助阅读的科学性</p><span class="mm-chip">现实主义经典</span><span class="mm-chip">社会现实</span><span class="mm-quote">「实写官僚、恶霸与富商狼狈为奸、巧取豪夺和纵情声色的社会现实，具有极高的文学价值」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">3</span><span class="mm-cname">作者简介</span><span class="mm-role">铺垫</span></p><p class="mm-gist">论证作者身份的神秘性及其作为明代文学家的历史定位</p><span class="mm-chip">兰陵笑笑生</span><span class="mm-chip">身份成谜</span><span class="mm-quote">「兰陵笑笑生的真实身份成谜，学界有多种说法」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">4</span><span class="mm-cname">编注简介</span><span class="mm-role">铺垫</span></p><p class="mm-gist">通过编注者的学术背景为文本解析提供法学视角支撑</p><span class="mm-chip">刑法学</span><span class="mm-chip">民商法学</span><span class="mm-quote">「钟书峰，江西龙南人，西南政法大学刑法学硕士，中国社会科学院大学民商法学博士。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">5</span><span class="mm-cname">没读过《金瓶梅》的，都在骂它</span><span class="mm-role">立论</span></p><p class="mm-gist">驳斥对作品的道德偏见，强调欲望背后的社会批判价值</p><span class="mm-chip">欲望</span><span class="mm-chip">社会现实</span><span class="mm-quote">「《金瓶梅》是现实主义经典巨著，具有极高的文学价值。」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">B</span><span class="mm-label">第一至二回：结网与勾情</span><span class="mm-cnt">2 章</span></summary>
 <p class="mm-why">西门庆先结十弟兄立人脉，潘金莲在帘下勾情；两条线同时起，后面所有事都从这里长出来。</p>
 <ol class="mm-tree">
-<li class="r-case"><p class="mm-ch"><b>10</b> 第一回 西门庆热结十弟兄 武二郎冷遇亲哥嫂<span class="mm-role r-case">案例</span></p><p class="mm-gist">对比西门庆的市井结义与武松的体制内晋升两条权力线索</p><span class="mm-chip">热结十弟兄</span><span class="mm-chip">巡捕都头</span><span class="mm-anchor">「西门庆与应伯爵、谢希大等人结拜」</span></li>
-<li class="r-case"><p class="mm-ch"><b>11</b> 第二回 俏潘娘帘下勾情 老王婆茶坊说技<span class="mm-role r-case">案例</span></p><p class="mm-gist">刻画潘金莲在家庭伦理中对武松产生的越界情感寄托</p><span class="mm-chip">勾情</span><span class="mm-chip">伦理</span><span class="mm-anchor">「那妇人见了，强如拾得金宝一般欢喜」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">10</span><span class="mm-cname">第一回 西门庆热结十弟兄 武二郎冷遇亲哥嫂</span><span class="mm-role">案例</span></p><p class="mm-gist">对比西门庆的市井结义与武松的体制内晋升两条权力线索</p><span class="mm-chip">热结十弟兄</span><span class="mm-chip">巡捕都头</span><span class="mm-quote">「西门庆与应伯爵、谢希大等人结拜」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">11</span><span class="mm-cname">第二回 俏潘娘帘下勾情 老王婆茶坊说技</span><span class="mm-role">案例</span></p><p class="mm-gist">刻画潘金莲在家庭伦理中对武松产生的越界情感寄托</p><span class="mm-chip">勾情</span><span class="mm-chip">伦理</span><span class="mm-quote">「那妇人见了，强如拾得金宝一般欢喜」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">C</span><span class="mm-label">第三至六回：设局到殒命</span><span class="mm-cnt">4 章</span></summary>
 <p class="mm-why">王婆定计、私挑成奸、鸩药杀武大、何九受贿瞒天——犯罪链条完整走一遍，收尾靠钱摆平。</p>
 <ol class="mm-tree">
-<li class="r-case"><p class="mm-ch"><b>6</b> 第三回 定挨光王婆受贿 设圈套浪子私挑<span class="mm-role r-case">案例</span></p><p class="mm-gist">拆解西门庆与王婆之间关于情欲买卖的利益交换逻辑</p><span class="mm-chip">挨光</span><span class="mm-chip">利益交换</span><span class="mm-anchor">「王婆提出“挨光”的五个条件，西门庆承诺全部具备」</span></li>
-<li class="r-case"><p class="mm-ch"><b>7</b> 第四回 赴巫山潘氏幽欢 闹茶坊郓哥义愤<span class="mm-role r-case">案例</span></p><p class="mm-gist">呈现王婆设计的密室空间如何完成从诱惑到通奸的转化</p><span class="mm-chip">幽欢</span><span class="mm-chip">调解</span><span class="mm-anchor">「王婆设计让西门庆与潘金莲独处」</span></li>
-<li class="r-case"><p class="mm-ch"><b>8</b> 第五回 捉奸情郓哥定计 饮鸩药武大遭殃<span class="mm-role r-case">案例</span></p><p class="mm-gist">论证弱势群体郓哥与武大在暴力威胁下的反击策略与失败</p><span class="mm-chip">捉奸</span><span class="mm-chip">鸩药</span><span class="mm-anchor">「武大与郓哥定计，郓哥先去惹王婆，武大再去捉奸」</span></li>
-<li class="r-case"><p class="mm-ch"><b>12</b> 第六回 何九受贿瞒天 王婆帮闲遇雨<span class="mm-role r-case">案例</span></p><p class="mm-gist">揭露西门庆利用金钱收买基层技术人员掩盖刑事犯罪真相</p><span class="mm-chip">受贿</span><span class="mm-chip">掩盖罪行</span><span class="mm-anchor">「西门庆给何九银子，让他帮忙处理武大郎的后事」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">6</span><span class="mm-cname">第三回 定挨光王婆受贿 设圈套浪子私挑</span><span class="mm-role">案例</span></p><p class="mm-gist">拆解西门庆与王婆之间关于情欲买卖的利益交换逻辑</p><span class="mm-chip">挨光</span><span class="mm-chip">利益交换</span><span class="mm-quote">「王婆提出“挨光”的五个条件，西门庆承诺全部具备」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">7</span><span class="mm-cname">第四回 赴巫山潘氏幽欢 闹茶坊郓哥义愤</span><span class="mm-role">案例</span></p><p class="mm-gist">呈现王婆设计的密室空间如何完成从诱惑到通奸的转化</p><span class="mm-chip">幽欢</span><span class="mm-chip">调解</span><span class="mm-quote">「王婆设计让西门庆与潘金莲独处」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">8</span><span class="mm-cname">第五回 捉奸情郓哥定计 饮鸩药武大遭殃</span><span class="mm-role">案例</span></p><p class="mm-gist">论证弱势群体郓哥与武大在暴力威胁下的反击策略与失败</p><span class="mm-chip">捉奸</span><span class="mm-chip">鸩药</span><span class="mm-quote">「武大与郓哥定计，郓哥先去惹王婆，武大再去捉奸」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">12</span><span class="mm-cname">第六回 何九受贿瞒天 王婆帮闲遇雨</span><span class="mm-role">案例</span></p><p class="mm-gist">揭露西门庆利用金钱收买基层技术人员掩盖刑事犯罪真相</p><span class="mm-chip">受贿</span><span class="mm-chip">掩盖罪行</span><span class="mm-quote">「西门庆给何九银子，让他帮忙处理武大郎的后事」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">D</span><span class="mm-label">第七至九回：另娶与并娶</span><span class="mm-cnt">3 章</span></summary>
 <p class="mm-why">娶孟玉楼拿到的是财产，偷娶潘金莲拿到的是人；婚姻在这本书里始终是资产重组。</p>
 <ol class="mm-tree">
-<li class="r-case"><p class="mm-ch"><b>9</b> 第七回 薛媒婆说娶孟三儿 杨姑娘气骂张四舅<span class="mm-role r-case">案例</span></p><p class="mm-gist">展示西门庆通过媒妁手段在宗族阻力下扩张财富与家室</p><span class="mm-chip">薛媒婆</span><span class="mm-chip">孟三儿</span><span class="mm-anchor">「张四企图阻止孟三儿出嫁，被孟三儿拒绝」</span></li>
-<li class="r-case"><p class="mm-ch"><b>13</b> 第八回 盼情郎佳人占鬼卦 烧夫灵和尚听淫声<span class="mm-role r-case">案例</span></p><p class="mm-gist">分析西门庆在多房妾室间的权力分配及其对潘金莲的冷落</p><span class="mm-chip">燕尔新婚</span><span class="mm-chip">冷落</span><span class="mm-anchor">「西门庆因娶孟玉楼陪了大姐，无暇顾及潘金莲」</span></li>
-<li class="r-case"><p class="mm-ch"><b>14</b> 第九回 西门庆偷娶潘金莲 武都头误打李皂隶<span class="mm-role r-case">案例</span></p><p class="mm-gist">完成对武大残余家庭势力的清理并实现潘金莲的身份重组</p><span class="mm-chip">偷娶</span><span class="mm-chip">身份重组</span><span class="mm-anchor">「西门庆娶妇人到家，收拾花园内楼下三间与他做房」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">9</span><span class="mm-cname">第七回 薛媒婆说娶孟三儿 杨姑娘气骂张四舅</span><span class="mm-role">案例</span></p><p class="mm-gist">展示西门庆通过媒妁手段在宗族阻力下扩张财富与家室</p><span class="mm-chip">薛媒婆</span><span class="mm-chip">孟三儿</span><span class="mm-quote">「张四企图阻止孟三儿出嫁，被孟三儿拒绝」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">13</span><span class="mm-cname">第八回 盼情郎佳人占鬼卦 烧夫灵和尚听淫声</span><span class="mm-role">案例</span></p><p class="mm-gist">分析西门庆在多房妾室间的权力分配及其对潘金莲的冷落</p><span class="mm-chip">燕尔新婚</span><span class="mm-chip">冷落</span><span class="mm-quote">「西门庆因娶孟玉楼陪了大姐，无暇顾及潘金莲」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">14</span><span class="mm-cname">第九回 西门庆偷娶潘金莲 武都头误打李皂隶</span><span class="mm-role">案例</span></p><p class="mm-gist">完成对武大残余家庭势力的清理并实现潘金莲的身份重组</p><span class="mm-chip">偷娶</span><span class="mm-chip">身份重组</span><span class="mm-quote">「西门庆娶妇人到家，收拾花园内楼下三间与他做房」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">E</span><span class="mm-label">第十回：发配与余波</span><span class="mm-cnt">1 章</span></summary>
 <p class="mm-why">武松复仇失败被充配，暴力路线出局，西门庆这条金钱路线暂时全胜——这是前十回的结论。</p>
 <ol class="mm-tree">
-<li class="r-end"><p class="mm-ch"><b>15</b> 第十回 义士充配孟州道 妻妾玩赏芙蓉亭<span class="mm-role r-end">收束</span></p><p class="mm-gist">论证司法腐败如何彻底切断武力复仇者的法律救济途径</p><span class="mm-chip">法律失灵</span><span class="mm-chip">贿赂</span><span class="mm-anchor">「馈送了知县一副金银酒器、五十两银子，上下吏典也使了许多钱」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">15</span><span class="mm-cname">第十回 义士充配孟州道 妻妾玩赏芙蓉亭</span><span class="mm-role">收束</span></p><p class="mm-gist">论证司法腐败如何彻底切断武力复仇者的法律救济途径</p><span class="mm-chip">法律失灵</span><span class="mm-chip">贿赂</span><span class="mm-quote">「馈送了知县一副金银酒器、五十两银子，上下吏典也使了许多钱」</span></li>
 </ol>
 </details>
 <footer class="site-footer">

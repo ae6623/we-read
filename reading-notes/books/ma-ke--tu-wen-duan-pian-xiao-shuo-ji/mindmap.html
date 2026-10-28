@@ -16,8 +16,8 @@
 .mm-bar i{display:block;height:100%;background:linear-gradient(90deg,#8a9b6e,#c2b280)}
 .mm-svgwrap{overflow-x:auto;padding:.4em 0 1em;border-bottom:1px solid var(--line)}
 .mm-svg{width:100%;height:auto;min-width:760px}
-.mm-spine{margin:.9em 0;border-left:3px solid #d9d0bd;padding:.1em 0 .1em .9em}
-.mm-spine[open]{border-left-color:#8a9b6e}
+.mm-spine{margin:1.15em 0;border-left:3px solid #ece4d3;padding:.1em 0 .1em .85em}
+.mm-spine[open]{border-left-color:#d8cdb4}
 .mm-spine>summary{display:flex;gap:.6em;align-items:baseline;cursor:pointer;
   list-style:none;padding:.35em 0}
 .mm-spine>summary::-webkit-details-marker{display:none}
@@ -26,24 +26,32 @@
 .mm-label{font-weight:600;font-size:1rem;color:var(--ink)}
 .mm-cnt{margin-left:auto;font-size:.74rem;color:var(--muted)}
 .mm-why{font-size:.8rem;color:var(--muted);margin:.1em 0 .8em;line-height:1.7}
-.mm-tree{list-style:none;padding:0;margin:0}
-.mm-tree li{position:relative;padding:.42em 0 .42em 1.1em;border-left:1px dotted #cfc6b4;
-  margin-left:.5em}
-.mm-tree li:before{content:"";position:absolute;left:0;top:1.05em;width:.7em;
-  border-top:1px dotted #cfc6b4}
-.mm-ch{margin:0;font-size:.92rem;color:var(--ink)}
-.mm-ch b{color:#a9a08d;font-weight:500;font-size:.8rem;margin-right:.4em}
-.mm-role{font-size:.68rem;padding:.05em .4em;border-radius:3px;margin-left:.5em;
-  vertical-align:.1em;white-space:nowrap}
-.r-pre{background:#eef0e6;color:#6b7a4e}.r-th{background:#eae7f0;color:#5f5578}
-.r-cnt{background:#f6e9e4;color:#946350}.r-case{background:#e8eff1;color:#4f7380}
-.r-end{background:#f2ecdf;color:#8a7442}
-.mm-gist{margin:.18em 0 .3em;font-size:.84rem;line-height:1.75;color:#4a443b}
-.mm-chip{display:inline-block;font-size:.68rem;color:#6b6152;background:#f2ecdf;
-  border-radius:9px;padding:.05em .5em;margin:.15em .25em .15em 0}
-.mm-anchor{display:block;font-size:.78rem;color:#8a8272;line-height:1.7;
-  border-left:2px dotted #d9d0bd;padding-left:.7em;margin-top:.3em}
-@media(max-width:720px){.mm-svg{min-width:640px}}
+.mm-tree{list-style:none;padding:0;margin:.15em 0 0}
+/* 章条目：与通读页 .ch-item 对齐（无卡片/无彩条/虚线分隔），行高按手机可读行数收紧 */
+.mm-cn{padding:8px 0;border-bottom:1px dashed #eee8dc}
+.mm-cn:last-child{border-bottom:0}
+.mm-chead{display:flex;flex-wrap:wrap;gap:2px 10px;align-items:baseline;margin:0}
+.mm-cno{flex:none;min-width:1.7em;color:#bf8247;font-weight:700;font-size:.82rem;
+  font-variant-numeric:tabular-nums}
+.mm-cname{flex:0 1 auto;min-width:0;font-size:.92rem;line-height:1.6;color:var(--ink);
+  word-break:break-word}
+.mm-role{flex:none;font-size:.68rem;color:#8a8272;line-height:1.6;white-space:nowrap}
+.mm-gist{margin:.15em 0 .2em;font-size:.86rem;line-height:1.75;color:#4a443b}
+.mm-chip{display:inline-block;font-size:.68rem;color:#6b6152;background:#f4f1e6;
+  border-radius:9px;padding:.05em .5em;margin:.1em .28em .1em 0}
+/* 引文块取通读页 ul.ch-quote 的观感：浅米底 + 金色左线 */
+.mm-quote{display:block;margin:.3em 0 .1em;padding:7px 11px;background:#fdf8ee;
+  border-left:3px solid var(--gold);border-radius:0 8px 8px 0;
+  font-size:.8rem;line-height:1.75;color:#6b5c43}
+@media(max-width:720px){
+  .mm-svg{min-width:640px}
+  /* 手机：章条目再收紧一点，一屏多两行 */
+  .mm-cn{padding:7px 0}
+  .mm-chead{gap:8px}
+  .mm-cname{font-size:.9rem}
+  .mm-gist{font-size:.84rem;line-height:1.7}
+  .mm-quote{padding:6px 9px;font-size:.78rem}
+}
 </style>
 </head>
 <body>
@@ -115,57 +123,57 @@
 <summary><span class="mm-id">A</span><span class="mm-label">人性与道德剖析</span><span class="mm-cnt">4 章</span></summary>
 <p class="mm-why">通过具体人物命运与抉择，探讨金钱、道德、谎言与生命恩赐对人性的考验。</p>
 <ol class="mm-tree">
-<li class="r-case"><p class="mm-ch"><b>1</b> 三万美元的遗产<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过记账员与遗嘱遗产设定，剖析财富预期对人性的扭曲</p><span class="mm-chip">三万美元的遗产</span><span class="mm-chip">记账员</span><span class="mm-chip">遗嘱</span><span class="mm-anchor">「蒂尔伯里·福斯特在遗嘱中留给他三万美元现金」</span></li>
-<li class="r-th"><p class="mm-ch"><b>3</b> 是天堂？还是地狱？<span class="mm-role r-th">立论</span></p><p class="mm-gist">展示严苛道德准则下谎言对家庭生活的瓦解</p><span class="mm-chip">双胞胎姑妈</span><span class="mm-chip">道德与行为准则</span><span class="mm-chip">谎言</span><span class="mm-anchor">「谎言在这里毫」</span></li>
-<li class="r-case"><p class="mm-ch"><b>8</b> 爱德华·米尔斯与乔治·本顿的故事<span class="mm-role r-case">案例</span></p><p class="mm-gist">对比两个性格迥异的养子在布兰特家的不同命运</p><span class="mm-chip">爱德华·米尔斯</span><span class="mm-chip">乔治·本顿</span><span class="mm-chip">远房表亲</span><span class="mm-anchor">「爱德华·米尔斯和乔治·本顿是远房表亲，被布兰特夫妇收养」</span></li>
-<li class="r-th"><p class="mm-ch"><b>9</b> 生命的五种恩赐<span class="mm-role r-th">立论</span></p><p class="mm-gist">逐一检视年轻人对享乐、爱情与名利的终极选择</p><span class="mm-chip">生命的五种恩赐</span><span class="mm-chip">享乐</span><span class="mm-chip">爱情</span><span class="mm-anchor">「年轻人迫不及待地选择了享乐，但那些快乐都转瞬即逝，令人失望至极，毫无意义且空虚不堪」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">1</span><span class="mm-cname">三万美元的遗产</span><span class="mm-role">案例</span></p><p class="mm-gist">通过记账员与遗嘱遗产设定，剖析财富预期对人性的扭曲</p><span class="mm-chip">三万美元的遗产</span><span class="mm-chip">记账员</span><span class="mm-chip">遗嘱</span><span class="mm-quote">「蒂尔伯里·福斯特在遗嘱中留给他三万美元现金」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">3</span><span class="mm-cname">是天堂？还是地狱？</span><span class="mm-role">立论</span></p><p class="mm-gist">展示严苛道德准则下谎言对家庭生活的瓦解</p><span class="mm-chip">双胞胎姑妈</span><span class="mm-chip">道德与行为准则</span><span class="mm-chip">谎言</span><span class="mm-quote">「谎言在这里毫」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">8</span><span class="mm-cname">爱德华·米尔斯与乔治·本顿的故事</span><span class="mm-role">案例</span></p><p class="mm-gist">对比两个性格迥异的养子在布兰特家的不同命运</p><span class="mm-chip">爱德华·米尔斯</span><span class="mm-chip">乔治·本顿</span><span class="mm-chip">远房表亲</span><span class="mm-quote">「爱德华·米尔斯和乔治·本顿是远房表亲，被布兰特夫妇收养」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">9</span><span class="mm-cname">生命的五种恩赐</span><span class="mm-role">立论</span></p><p class="mm-gist">逐一检视年轻人对享乐、爱情与名利的终极选择</p><span class="mm-chip">生命的五种恩赐</span><span class="mm-chip">享乐</span><span class="mm-chip">爱情</span><span class="mm-quote">「年轻人迫不及待地选择了享乐，但那些快乐都转瞬即逝，令人失望至极，毫无意义且空虚不堪」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">B</span><span class="mm-label">动物视角与反讽</span><span class="mm-cnt">4 章</span></summary>
 <p class="mm-why">借助狗、撒旦以及亚当夏娃的独特视角，对人类社会的盲目与虚伪进行辛辣反讽。</p>
 <ol class="mm-tree">
-<li class="r-cnt"><p class="mm-ch"><b>2</b> 狗的自述<span class="mm-role r-cnt">反证</span></p><p class="mm-gist">借狗的视角解构人类社会的虚荣与轻浮教养</p><span class="mm-chip">狗的自述</span><span class="mm-chip">虚荣</span><span class="mm-chip">轻浮</span><span class="mm-anchor">「狗的母亲的虚荣和轻浮」</span></li>
-<li class="r-cnt"><p class="mm-ch"><b>19</b> 来自撒旦的人道话语<span class="mm-role r-cnt">反证</span></p><p class="mm-gist">借撒旦之口讽刺慈善委员会接受特定捐款的虚伪性</p><span class="mm-chip">撒旦</span><span class="mm-chip">美国慈善委员会</span><span class="mm-chip">洛克菲勒</span><span class="mm-anchor">「撒旦认为美国慈善委员会接受他的捐款，也应该接受洛克菲勒先生的捐款」</span></li>
-<li class="r-case"><p class="mm-ch"><b>26</b> 《亚当日记》节选<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过亚当的视角记录对瀑布与怪物的原始烦恼</p><span class="mm-chip">亚当</span><span class="mm-chip">尼亚加拉瀑布</span><span class="mm-chip">避雨棚子</span><span class="mm-anchor">「亚当对怪物的厌恶和无奈」</span></li>
-<li class="r-end"><p class="mm-ch"><b>27</b> 夏娃日记<span class="mm-role r-end">收束</span></p><p class="mm-gist">通过夏娃的视角记录对世界万物的命名与亚当的相遇</p><span class="mm-chip">夏娃</span><span class="mm-chip">实验品</span><span class="mm-chip">亚当</span><span class="mm-anchor">「夏娃对自身存在和实验品的认识」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">2</span><span class="mm-cname">狗的自述</span><span class="mm-role">反证</span></p><p class="mm-gist">借狗的视角解构人类社会的虚荣与轻浮教养</p><span class="mm-chip">狗的自述</span><span class="mm-chip">虚荣</span><span class="mm-chip">轻浮</span><span class="mm-quote">「狗的母亲的虚荣和轻浮」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">19</span><span class="mm-cname">来自撒旦的人道话语</span><span class="mm-role">反证</span></p><p class="mm-gist">借撒旦之口讽刺慈善委员会接受特定捐款的虚伪性</p><span class="mm-chip">撒旦</span><span class="mm-chip">美国慈善委员会</span><span class="mm-chip">洛克菲勒</span><span class="mm-quote">「撒旦认为美国慈善委员会接受他的捐款，也应该接受洛克菲勒先生的捐款」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">26</span><span class="mm-cname">《亚当日记》节选</span><span class="mm-role">案例</span></p><p class="mm-gist">通过亚当的视角记录对瀑布与怪物的原始烦恼</p><span class="mm-chip">亚当</span><span class="mm-chip">尼亚加拉瀑布</span><span class="mm-chip">避雨棚子</span><span class="mm-quote">「亚当对怪物的厌恶和无奈」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">27</span><span class="mm-cname">夏娃日记</span><span class="mm-role">收束</span></p><p class="mm-gist">通过夏娃的视角记录对世界万物的命名与亚当的相遇</p><span class="mm-chip">夏娃</span><span class="mm-chip">实验品</span><span class="mm-chip">亚当</span><span class="mm-quote">「夏娃对自身存在和实验品的认识」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">C</span><span class="mm-label">社会观察与批判</span><span class="mm-cnt">6 章</span></summary>
 <p class="mm-why">聚焦日常现象与社会心理，揭示人类在财富崇拜、死亡认知、日常风险及行为规范上的盲区。</p>
 <ol class="mm-tree">
-<li class="r-case"><p class="mm-ch"><b>5</b> 加利福尼亚人的故事<span class="mm-role r-case">案例</span></p><p class="mm-gist">描绘荒凉矿区中主人公对美的执着与情感寄托</p><span class="mm-chip">加利福尼亚人</span><span class="mm-chip">对美的饥渴</span><span class="mm-chip">矿工</span><span class="mm-anchor">「加利福尼亚曾经人烟稠密，后来人们纷纷离去，只剩下荒凉的自然和矿工们简陋的生活」</span></li>
-<li class="r-case"><p class="mm-ch"><b>13</b> 华盛顿总司令的黑人亲随<span class="mm-role r-case">案例</span></p><p class="mm-gist">记录华盛顿黑人亲随半个世纪的服侍与记忆</p><span class="mm-chip">华盛顿总司令</span><span class="mm-chip">黑人亲随</span><span class="mm-chip">贴身仆人</span><span class="mm-anchor">「乔治是华盛顿将军最宠信的贴身仆人，服务了半个世纪」</span></li>
-<li class="r-th"><p class="mm-ch"><b>17</b> 修订讣告<span class="mm-role r-th">立论</span></p><p class="mm-gist">论证讣告应当由逝者亲自撰写以传递真实主观评价</p><span class="mm-chip">修订讣告</span><span class="mm-chip">逝者本人</span><span class="mm-chip">事实的解读</span><span class="mm-anchor">「马克·吐温认为讣告应由逝者本人亲自执笔，因为重要的并非事实本身，而是撰稿人对事实的解读、赋予的意义、得出的结论以及做出的评价。」</span></li>
-<li class="r-th"><p class="mm-ch"><b>21</b> 给小女孩儿的一些建议<span class="mm-role r-th">立论</span></p><p class="mm-gist">提出针对小女孩在对待师长和弱者时的行为建议</p><span class="mm-chip">小女孩</span><span class="mm-chip">老师</span><span class="mm-chip">暴力</span><span class="mm-anchor">「不因小错对老师出言不逊」</span></li>
-<li class="r-case"><p class="mm-ch"><b>23</b> 躺在床上的危险<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过意外险的购买经历批判人们对旅行风险的误判</p><span class="mm-chip">躺在床上的危险</span><span class="mm-chip">意外险</span><span class="mm-chip">旅途</span><span class="mm-anchor">「作者尝试购买意外险，但发现保险并不能降低实际风险」</span></li>
-<li class="r-th"><p class="mm-ch"><b>25</b> 人类真的崇拜贵族吗<span class="mm-role r-th">立论</span></p><p class="mm-gist">剖析人类对贵族与金钱地位盲目崇拜的普遍心理</p><span class="mm-chip">崇拜贵族</span><span class="mm-chip">金钱</span><span class="mm-chip">权势</span><span class="mm-anchor">「崇拜金钱的并非只有美国人，全人类皆是如此」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">5</span><span class="mm-cname">加利福尼亚人的故事</span><span class="mm-role">案例</span></p><p class="mm-gist">描绘荒凉矿区中主人公对美的执着与情感寄托</p><span class="mm-chip">加利福尼亚人</span><span class="mm-chip">对美的饥渴</span><span class="mm-chip">矿工</span><span class="mm-quote">「加利福尼亚曾经人烟稠密，后来人们纷纷离去，只剩下荒凉的自然和矿工们简陋的生活」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">13</span><span class="mm-cname">华盛顿总司令的黑人亲随</span><span class="mm-role">案例</span></p><p class="mm-gist">记录华盛顿黑人亲随半个世纪的服侍与记忆</p><span class="mm-chip">华盛顿总司令</span><span class="mm-chip">黑人亲随</span><span class="mm-chip">贴身仆人</span><span class="mm-quote">「乔治是华盛顿将军最宠信的贴身仆人，服务了半个世纪」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">17</span><span class="mm-cname">修订讣告</span><span class="mm-role">立论</span></p><p class="mm-gist">论证讣告应当由逝者亲自撰写以传递真实主观评价</p><span class="mm-chip">修订讣告</span><span class="mm-chip">逝者本人</span><span class="mm-chip">事实的解读</span><span class="mm-quote">「马克·吐温认为讣告应由逝者本人亲自执笔，因为重要的并非事实本身，而是撰稿人对事实的解读、赋予的意义、得出的结论以及做出的评价。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">21</span><span class="mm-cname">给小女孩儿的一些建议</span><span class="mm-role">立论</span></p><p class="mm-gist">提出针对小女孩在对待师长和弱者时的行为建议</p><span class="mm-chip">小女孩</span><span class="mm-chip">老师</span><span class="mm-chip">暴力</span><span class="mm-quote">「不因小错对老师出言不逊」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">23</span><span class="mm-cname">躺在床上的危险</span><span class="mm-role">案例</span></p><p class="mm-gist">通过意外险的购买经历批判人们对旅行风险的误判</p><span class="mm-chip">躺在床上的危险</span><span class="mm-chip">意外险</span><span class="mm-chip">旅途</span><span class="mm-quote">「作者尝试购买意外险，但发现保险并不能降低实际风险」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">25</span><span class="mm-cname">人类真的崇拜贵族吗</span><span class="mm-role">立论</span></p><p class="mm-gist">剖析人类对贵族与金钱地位盲目崇拜的普遍心理</p><span class="mm-chip">崇拜贵族</span><span class="mm-chip">金钱</span><span class="mm-chip">权势</span><span class="mm-quote">「崇拜金钱的并非只有美国人，全人类皆是如此」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">D</span><span class="mm-label">文学与艺术解构</span><span class="mm-cnt">9 章</span></summary>
 <p class="mm-why">集中探讨各类文体、交谈方式、幽默艺术及其荒诞表现形式，展现作者对文字与创作的思考。</p>
 <ol class="mm-tree">
-<li class="r-cnt"><p class="mm-ch"><b>4</b> 治忧郁的妙方<span class="mm-role r-cnt">反证</span></p><p class="mm-gist">批判早期文学对华丽辞藻与雄辩的盲目追求</p><span class="mm-chip">雄辩</span><span class="mm-chip">辞藻</span><span class="mm-chip">向日葵山</span><span class="mm-anchor">「麦克林托克对“雄辩”有着近乎狂热的追求，他偏爱华丽、精致、气势恢宏的辞藻」</span></li>
-<li class="r-cnt"><p class="mm-ch"><b>6</b> 无可奈何<span class="mm-role r-cnt">反证</span></p><p class="mm-gist">以一成不变的求助信件解构文学创作的套路化</p><span class="mm-chip">信件格式</span><span class="mm-chip">旧信</span><span class="mm-chip">出版商</span><span class="mm-anchor">「信件格式一成不变，内容从未变过」</span></li>
-<li class="r-th"><p class="mm-ch"><b>7</b> 一次电话交谈<span class="mm-role r-th">立论</span></p><p class="mm-gist">对比男女在电话交谈中的行为差异与逻辑特征</p><span class="mm-chip">电话交谈</span><span class="mm-chip">逻辑混乱</span><span class="mm-chip">简单说再见</span><span class="mm-anchor">「女性在电话交谈中往往无法轻言细语」</span></li>
-<li class="r-cnt"><p class="mm-ch"><b>11</b> 戏仿传记<span class="mm-role r-cnt">反证</span></p><p class="mm-gist">通过泰恩家族的显赫历史解构传统传记文学</p><span class="mm-chip">戏仿传记</span><span class="mm-chip">泰恩家族</span><span class="mm-chip">母系姓氏</span><span class="mm-anchor">「家族成员都沿用母系姓氏，偶尔也有人为免麻烦使用化名」</span></li>
-<li class="r-th"><p class="mm-ch"><b>12</b> 讲故事的艺术<span class="mm-role r-th">立论</span></p><p class="mm-gist">阐述美国幽默故事纯粹依赖讲述方式的艺术本质</p><span class="mm-chip">讲故事的艺术</span><span class="mm-chip">美国式幽默</span><span class="mm-chip">艺术家</span><span class="mm-anchor">「幽默故事是美国独有的，效果全靠讲述方式」</span></li>
-<li class="r-cnt"><p class="mm-ch"><b>15</b> 一篇有趣的文章<span class="mm-role r-cnt">反证</span></p><p class="mm-gist">批驳海外奇闻录作品中的无知与荒谬谎言</p><span class="mm-chip">海外奇闻录</span><span class="mm-chip">无知和谎言</span><span class="mm-chip">天真无知</span><span class="mm-anchor">「《海外奇闻录》是一本荒谬的作品」</span></li>
-<li class="r-cnt"><p class="mm-ch"><b>20</b> 《葡英会话新指南》导言<span class="mm-role r-cnt">反证</span></p><p class="mm-gist">评析《葡英会话新指南》作为荒诞之作的独特性</p><span class="mm-chip">葡英会话新指南</span><span class="mm-chip">天真无邪</span><span class="mm-chip">导言</span><span class="mm-anchor">「《葡英会话新指南》是举世无双的荒诞、天真无邪的作品」</span></li>
-<li class="r-cnt"><p class="mm-ch"><b>22</b> 死后的诗篇<span class="mm-role r-cnt">反证</span></p><p class="mm-gist">剖析死后悼念诗歌中公式化情感对死亡悲伤的消解</p><span class="mm-chip">死后的诗篇</span><span class="mm-chip">安慰意义</span><span class="mm-chip">悼念诗</span><span class="mm-anchor">「费城报纸上附有富有安慰意义的短诗，缓解人们的悲伤」</span></li>
-<li class="r-pre"><p class="mm-ch"><b>24</b> 国王威廉三世的肖像<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">表达对杂志历史名人肖像及艺术审美的痴迷追求</p><span class="mm-chip">国王威廉三世</span><span class="mm-chip">银河杂志</span><span class="mm-chip">肖像画</span><span class="mm-anchor">「作者对《银河》杂志刊登的历史名人肖像的热爱」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">4</span><span class="mm-cname">治忧郁的妙方</span><span class="mm-role">反证</span></p><p class="mm-gist">批判早期文学对华丽辞藻与雄辩的盲目追求</p><span class="mm-chip">雄辩</span><span class="mm-chip">辞藻</span><span class="mm-chip">向日葵山</span><span class="mm-quote">「麦克林托克对“雄辩”有着近乎狂热的追求，他偏爱华丽、精致、气势恢宏的辞藻」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">6</span><span class="mm-cname">无可奈何</span><span class="mm-role">反证</span></p><p class="mm-gist">以一成不变的求助信件解构文学创作的套路化</p><span class="mm-chip">信件格式</span><span class="mm-chip">旧信</span><span class="mm-chip">出版商</span><span class="mm-quote">「信件格式一成不变，内容从未变过」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">7</span><span class="mm-cname">一次电话交谈</span><span class="mm-role">立论</span></p><p class="mm-gist">对比男女在电话交谈中的行为差异与逻辑特征</p><span class="mm-chip">电话交谈</span><span class="mm-chip">逻辑混乱</span><span class="mm-chip">简单说再见</span><span class="mm-quote">「女性在电话交谈中往往无法轻言细语」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">11</span><span class="mm-cname">戏仿传记</span><span class="mm-role">反证</span></p><p class="mm-gist">通过泰恩家族的显赫历史解构传统传记文学</p><span class="mm-chip">戏仿传记</span><span class="mm-chip">泰恩家族</span><span class="mm-chip">母系姓氏</span><span class="mm-quote">「家族成员都沿用母系姓氏，偶尔也有人为免麻烦使用化名」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">12</span><span class="mm-cname">讲故事的艺术</span><span class="mm-role">立论</span></p><p class="mm-gist">阐述美国幽默故事纯粹依赖讲述方式的艺术本质</p><span class="mm-chip">讲故事的艺术</span><span class="mm-chip">美国式幽默</span><span class="mm-chip">艺术家</span><span class="mm-quote">「幽默故事是美国独有的，效果全靠讲述方式」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">15</span><span class="mm-cname">一篇有趣的文章</span><span class="mm-role">反证</span></p><p class="mm-gist">批驳海外奇闻录作品中的无知与荒谬谎言</p><span class="mm-chip">海外奇闻录</span><span class="mm-chip">无知和谎言</span><span class="mm-chip">天真无知</span><span class="mm-quote">「《海外奇闻录》是一本荒谬的作品」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">20</span><span class="mm-cname">《葡英会话新指南》导言</span><span class="mm-role">反证</span></p><p class="mm-gist">评析《葡英会话新指南》作为荒诞之作的独特性</p><span class="mm-chip">葡英会话新指南</span><span class="mm-chip">天真无邪</span><span class="mm-chip">导言</span><span class="mm-quote">「《葡英会话新指南》是举世无双的荒诞、天真无邪的作品」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">22</span><span class="mm-cname">死后的诗篇</span><span class="mm-role">反证</span></p><p class="mm-gist">剖析死后悼念诗歌中公式化情感对死亡悲伤的消解</p><span class="mm-chip">死后的诗篇</span><span class="mm-chip">安慰意义</span><span class="mm-chip">悼念诗</span><span class="mm-quote">「费城报纸上附有富有安慰意义的短诗，缓解人们的悲伤」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">24</span><span class="mm-cname">国王威廉三世的肖像</span><span class="mm-role">铺垫</span></p><p class="mm-gist">表达对杂志历史名人肖像及艺术审美的痴迷追求</p><span class="mm-chip">国王威廉三世</span><span class="mm-chip">银河杂志</span><span class="mm-chip">肖像画</span><span class="mm-quote">「作者对《银河》杂志刊登的历史名人肖像的热爱」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">E</span><span class="mm-label">个人经历与闲谈</span><span class="mm-cnt">4 章</span></summary>
 <p class="mm-why">记录作者个人在打字机使用、育儿观察及日常琐事中的真实体验与幽默牢骚。</p>
 <ol class="mm-tree">
-<li class="r-pre"><p class="mm-ch"><b>10</b> 第一台打字机<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">记录早期使用打字机的体验及其对文字冗余的修正</p><span class="mm-chip">第一台打字机</span><span class="mm-chip">马克·吐温</span><span class="mm-chip">波士顿</span><span class="mm-anchor">「打字机帮助马克·吐温节省时间和避免冗长辞藻」</span></li>
-<li class="r-cnt"><p class="mm-ch"><b>14</b> 婴儿妙语<span class="mm-role r-cnt">反证</span></p><p class="mm-gist">讽刺父母盲目记录并发表幼儿愚蠢言论的现象</p><span class="mm-chip">婴儿妙语</span><span class="mm-chip">聪明话</span><span class="mm-chip">报纸</span><span class="mm-anchor">「父母多半都是父母把这些幼稚又愚蠢的话记下来，登在报纸上给我们看」</span></li>
-<li class="r-pre"><p class="mm-ch"><b>16</b> 致财政大臣的一封信<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">以向财政大臣索要生活物资的幽默信件展现日常闲谈</p><span class="mm-chip">财政大臣</span><span class="mm-chip">取暖燃料</span><span class="mm-chip">烹饪用品</span><span class="mm-anchor">「马克·吐温请求财政大臣供应取暖燃料和烹饪用品」</span></li>
-<li class="r-case"><p class="mm-ch"><b>18</b> 亚当纪念碑<span class="mm-role r-case">案例</span></p><p class="mm-gist">记述达尔文争论下为亚当立碑的讽刺性社交玩笑</p><span class="mm-chip">亚当纪念碑</span><span class="mm-chip">人类的起源</span><span class="mm-chip">银行家</span><span class="mm-anchor">「作者和埃尔迈拉的朋友们开玩笑说，必须避免这种悲剧发生，而立一座纪念碑，就能达成这个目的」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">10</span><span class="mm-cname">第一台打字机</span><span class="mm-role">铺垫</span></p><p class="mm-gist">记录早期使用打字机的体验及其对文字冗余的修正</p><span class="mm-chip">第一台打字机</span><span class="mm-chip">马克·吐温</span><span class="mm-chip">波士顿</span><span class="mm-quote">「打字机帮助马克·吐温节省时间和避免冗长辞藻」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">14</span><span class="mm-cname">婴儿妙语</span><span class="mm-role">反证</span></p><p class="mm-gist">讽刺父母盲目记录并发表幼儿愚蠢言论的现象</p><span class="mm-chip">婴儿妙语</span><span class="mm-chip">聪明话</span><span class="mm-chip">报纸</span><span class="mm-quote">「父母多半都是父母把这些幼稚又愚蠢的话记下来，登在报纸上给我们看」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">16</span><span class="mm-cname">致财政大臣的一封信</span><span class="mm-role">铺垫</span></p><p class="mm-gist">以向财政大臣索要生活物资的幽默信件展现日常闲谈</p><span class="mm-chip">财政大臣</span><span class="mm-chip">取暖燃料</span><span class="mm-chip">烹饪用品</span><span class="mm-quote">「马克·吐温请求财政大臣供应取暖燃料和烹饪用品」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">18</span><span class="mm-cname">亚当纪念碑</span><span class="mm-role">案例</span></p><p class="mm-gist">记述达尔文争论下为亚当立碑的讽刺性社交玩笑</p><span class="mm-chip">亚当纪念碑</span><span class="mm-chip">人类的起源</span><span class="mm-chip">银行家</span><span class="mm-quote">「作者和埃尔迈拉的朋友们开玩笑说，必须避免这种悲剧发生，而立一座纪念碑，就能达成这个目的」</span></li>
 </ol>
 </details>
 <footer class="site-footer">

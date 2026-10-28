@@ -16,8 +16,8 @@
 .mm-bar i{display:block;height:100%;background:linear-gradient(90deg,#8a9b6e,#c2b280)}
 .mm-svgwrap{overflow-x:auto;padding:.4em 0 1em;border-bottom:1px solid var(--line)}
 .mm-svg{width:100%;height:auto;min-width:760px}
-.mm-spine{margin:.9em 0;border-left:3px solid #d9d0bd;padding:.1em 0 .1em .9em}
-.mm-spine[open]{border-left-color:#8a9b6e}
+.mm-spine{margin:1.15em 0;border-left:3px solid #ece4d3;padding:.1em 0 .1em .85em}
+.mm-spine[open]{border-left-color:#d8cdb4}
 .mm-spine>summary{display:flex;gap:.6em;align-items:baseline;cursor:pointer;
   list-style:none;padding:.35em 0}
 .mm-spine>summary::-webkit-details-marker{display:none}
@@ -26,24 +26,32 @@
 .mm-label{font-weight:600;font-size:1rem;color:var(--ink)}
 .mm-cnt{margin-left:auto;font-size:.74rem;color:var(--muted)}
 .mm-why{font-size:.8rem;color:var(--muted);margin:.1em 0 .8em;line-height:1.7}
-.mm-tree{list-style:none;padding:0;margin:0}
-.mm-tree li{position:relative;padding:.42em 0 .42em 1.1em;border-left:1px dotted #cfc6b4;
-  margin-left:.5em}
-.mm-tree li:before{content:"";position:absolute;left:0;top:1.05em;width:.7em;
-  border-top:1px dotted #cfc6b4}
-.mm-ch{margin:0;font-size:.92rem;color:var(--ink)}
-.mm-ch b{color:#a9a08d;font-weight:500;font-size:.8rem;margin-right:.4em}
-.mm-role{font-size:.68rem;padding:.05em .4em;border-radius:3px;margin-left:.5em;
-  vertical-align:.1em;white-space:nowrap}
-.r-pre{background:#eef0e6;color:#6b7a4e}.r-th{background:#eae7f0;color:#5f5578}
-.r-cnt{background:#f6e9e4;color:#946350}.r-case{background:#e8eff1;color:#4f7380}
-.r-end{background:#f2ecdf;color:#8a7442}
-.mm-gist{margin:.18em 0 .3em;font-size:.84rem;line-height:1.75;color:#4a443b}
-.mm-chip{display:inline-block;font-size:.68rem;color:#6b6152;background:#f2ecdf;
-  border-radius:9px;padding:.05em .5em;margin:.15em .25em .15em 0}
-.mm-anchor{display:block;font-size:.78rem;color:#8a8272;line-height:1.7;
-  border-left:2px dotted #d9d0bd;padding-left:.7em;margin-top:.3em}
-@media(max-width:720px){.mm-svg{min-width:640px}}
+.mm-tree{list-style:none;padding:0;margin:.15em 0 0}
+/* 章条目：与通读页 .ch-item 对齐（无卡片/无彩条/虚线分隔），行高按手机可读行数收紧 */
+.mm-cn{padding:8px 0;border-bottom:1px dashed #eee8dc}
+.mm-cn:last-child{border-bottom:0}
+.mm-chead{display:flex;flex-wrap:wrap;gap:2px 10px;align-items:baseline;margin:0}
+.mm-cno{flex:none;min-width:1.7em;color:#bf8247;font-weight:700;font-size:.82rem;
+  font-variant-numeric:tabular-nums}
+.mm-cname{flex:0 1 auto;min-width:0;font-size:.92rem;line-height:1.6;color:var(--ink);
+  word-break:break-word}
+.mm-role{flex:none;font-size:.68rem;color:#8a8272;line-height:1.6;white-space:nowrap}
+.mm-gist{margin:.15em 0 .2em;font-size:.86rem;line-height:1.75;color:#4a443b}
+.mm-chip{display:inline-block;font-size:.68rem;color:#6b6152;background:#f4f1e6;
+  border-radius:9px;padding:.05em .5em;margin:.1em .28em .1em 0}
+/* 引文块取通读页 ul.ch-quote 的观感：浅米底 + 金色左线 */
+.mm-quote{display:block;margin:.3em 0 .1em;padding:7px 11px;background:#fdf8ee;
+  border-left:3px solid var(--gold);border-radius:0 8px 8px 0;
+  font-size:.8rem;line-height:1.75;color:#6b5c43}
+@media(max-width:720px){
+  .mm-svg{min-width:640px}
+  /* 手机：章条目再收紧一点，一屏多两行 */
+  .mm-cn{padding:7px 0}
+  .mm-chead{gap:8px}
+  .mm-cname{font-size:.9rem}
+  .mm-gist{font-size:.84rem;line-height:1.7}
+  .mm-quote{padding:6px 9px;font-size:.78rem}
+}
 </style>
 </head>
 <body>
@@ -117,50 +125,50 @@
 <summary><span class="mm-id">A</span><span class="mm-label">作者创作缘起与救赎</span><span class="mm-cnt">1 章</span></summary>
 <p class="mm-why">交代作者因情感抒发与自我拯救而写作的背景。</p>
 <ol class="mm-tree">
-<li class="r-th"><p class="mm-ch"><b>1</b> 文学生活五十年（代序）<span class="mm-role r-th">立论</span></p><p class="mm-gist">阐述作者将文学创作作为情感宣泄与自我救赎的路径。</p><span class="mm-chip">自我救赎</span><span class="mm-chip">文学影响</span><span class="mm-anchor">「作者从小就喜欢读小说，但不是为了学习，而是拿它们消遣。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">1</span><span class="mm-cname">文学生活五十年（代序）</span><span class="mm-role">立论</span></p><p class="mm-gist">阐述作者将文学创作作为情感宣泄与自我救赎的路径。</p><span class="mm-chip">自我救赎</span><span class="mm-chip">文学影响</span><span class="mm-quote">「作者从小就喜欢读小说，但不是为了学习，而是拿它们消遣。」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">B</span><span class="mm-label">青年日常与新思潮启蒙</span><span class="mm-cnt">3 章</span></summary>
 <p class="mm-why">展现兄弟生活细节以及对新文学、新教员的热切期待。</p>
 <ol class="mm-tree">
-<li class="r-pre"><p class="mm-ch"><b>2</b> 家 · 1 · 风雪交加的街道<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">通过风雪街景与兄弟对话，确立旧时代压抑氛围下的亲情纽带。</p><span class="mm-chip">环境压抑</span><span class="mm-chip">手足情谊</span><span class="mm-anchor">「风刮得很紧，雪片像扯破了的棉絮一样在空中飞舞」</span></li>
-<li class="r-case"><p class="mm-ch"><b>3</b> 家 · 2 · 觉民和觉慧的回家<span class="mm-role r-case">案例</span></p><p class="mm-gist">展现家庭内部社交，引出新学堂招收女生这一社会变革信号。</p><span class="mm-chip">新旧交替</span><span class="mm-chip">女性教育</span><span class="mm-anchor">「琴对学堂招收女生表示期待，觉民告诉她这个消息」</span></li>
-<li class="r-case"><p class="mm-ch"><b>4</b> 家 · 3 · 觉民和琴讨论新学期课程和教员更换<span class="mm-role r-case">案例</span></p><p class="mm-gist">对比青年对新思想著作的渴求与对下层仆役的传统权力支配。</p><span class="mm-chip">思想启蒙</span><span class="mm-chip">阶层隔阂</span><span class="mm-anchor">「觉民和琴兴奋地讨论下学期要读托尔斯泰的《复活》」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">2</span><span class="mm-cname">家 · 1 · 风雪交加的街道</span><span class="mm-role">铺垫</span></p><p class="mm-gist">通过风雪街景与兄弟对话，确立旧时代压抑氛围下的亲情纽带。</p><span class="mm-chip">环境压抑</span><span class="mm-chip">手足情谊</span><span class="mm-quote">「风刮得很紧，雪片像扯破了的棉絮一样在空中飞舞」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">3</span><span class="mm-cname">家 · 2 · 觉民和觉慧的回家</span><span class="mm-role">案例</span></p><p class="mm-gist">展现家庭内部社交，引出新学堂招收女生这一社会变革信号。</p><span class="mm-chip">新旧交替</span><span class="mm-chip">女性教育</span><span class="mm-quote">「琴对学堂招收女生表示期待，觉民告诉她这个消息」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">4</span><span class="mm-cname">家 · 3 · 觉民和琴讨论新学期课程和教员更换</span><span class="mm-role">案例</span></p><p class="mm-gist">对比青年对新思想著作的渴求与对下层仆役的传统权力支配。</p><span class="mm-chip">思想启蒙</span><span class="mm-chip">阶层隔阂</span><span class="mm-quote">「觉民和琴兴奋地讨论下学期要读托尔斯泰的《复活》」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">C</span><span class="mm-label">公馆深处的阶层与困境</span><span class="mm-cnt">3 章</span></summary>
 <p class="mm-why">揭示大公馆下层人的压抑、旧式生活的无趣及觉新的妥协悲剧。</p>
 <ol class="mm-tree">
-<li class="r-pre"><p class="mm-ch"><b>5</b> 家 · 4 · 大公馆的夜晚<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">剖析公馆夜晚中人物卸下伪装后的孤独与底层婢女的生存现状。</p><span class="mm-chip">面具社会</span><span class="mm-chip">清闲的代价</span><span class="mm-anchor">「人们躺下来，取下他们白天里戴的面具，结算这一天的总账」</span></li>
-<li class="r-cnt"><p class="mm-ch"><b>6</b> 家 · 5 · 轿夫的艰难旅程<span class="mm-role r-cnt">反证</span></p><p class="mm-gist">通过轿夫的劳苦与贵妇的倦怠，强化阶层对立与变革前夜的张力。</p><span class="mm-chip">阶层温差</span><span class="mm-chip">变革期待</span><span class="mm-anchor">「轿夫们在寒冷的雪夜中艰难地行走」</span></li>
-<li class="r-case"><p class="mm-ch"><b>7</b> 家 · 6 · 高觉新的成长经历<span class="mm-role r-case">案例</span></p><p class="mm-gist">拆解长房长孙觉新在父权意志下牺牲个人理想与爱情的过程。</p><span class="mm-chip">包办婚姻</span><span class="mm-chip">幻梦破碎</span><span class="mm-anchor">「高觉新的幻梦被打破，父亲给他定下了亲事，年内就结婚」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">5</span><span class="mm-cname">家 · 4 · 大公馆的夜晚</span><span class="mm-role">铺垫</span></p><p class="mm-gist">剖析公馆夜晚中人物卸下伪装后的孤独与底层婢女的生存现状。</p><span class="mm-chip">面具社会</span><span class="mm-chip">清闲的代价</span><span class="mm-quote">「人们躺下来，取下他们白天里戴的面具，结算这一天的总账」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">6</span><span class="mm-cname">家 · 5 · 轿夫的艰难旅程</span><span class="mm-role">反证</span></p><p class="mm-gist">通过轿夫的劳苦与贵妇的倦怠，强化阶层对立与变革前夜的张力。</p><span class="mm-chip">阶层温差</span><span class="mm-chip">变革期待</span><span class="mm-quote">「轿夫们在寒冷的雪夜中艰难地行走」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">7</span><span class="mm-cname">家 · 6 · 高觉新的成长经历</span><span class="mm-role">案例</span></p><p class="mm-gist">拆解长房长孙觉新在父权意志下牺牲个人理想与爱情的过程。</p><span class="mm-chip">包办婚姻</span><span class="mm-chip">幻梦破碎</span><span class="mm-quote">「高觉新的幻梦被打破，父亲给他定下了亲事，年内就结婚」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">D</span><span class="mm-label">实业活动与学运爆发</span><span class="mm-cnt">3 章</span></summary>
 <p class="mm-why">描述实业背景以及学生面对压迫发起的请愿与罢课抗争。</p>
 <ol class="mm-tree">
-<li class="r-pre"><p class="mm-ch"><b>8</b> 家 · 7 · 觉新、觉民和觉慧在事务所的活动<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">描述青年一代在实业公司事务所的聚集，构建社会实践的空间。</p><span class="mm-chip">实业空间</span><span class="mm-chip">家族事业</span><span class="mm-anchor">「觉新服务的西蜀实业公司所经营的事业，除了商场铺面外，还有一个附设的小型发电厂」</span></li>
-<li class="r-case"><p class="mm-ch"><b>9</b> 家 · 8 · 觉慧和张惠如的对话及行动<span class="mm-role r-case">案例</span></p><p class="mm-gist">记录学运消息的传递与请愿行动的决策，完成从思想到行动的跨越。</p><span class="mm-chip">学生运动</span><span class="mm-chip">请愿决策</span><span class="mm-anchor">「学生们在少城公园集合，决定去督军署请愿」</span></li>
-<li class="r-cnt"><p class="mm-ch"><b>10</b> 家 · 9 · 学生罢课与请愿无果<span class="mm-role r-cnt">反证</span></p><p class="mm-gist">呈现罢课请愿在权力冷漠下的无果状态，揭示社会变革的阻力。</p><span class="mm-chip">权力冷漠</span><span class="mm-chip">联合会活动</span><span class="mm-anchor">「督军对罢课事件漠不关心，学生上街需约伴而行」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">8</span><span class="mm-cname">家 · 7 · 觉新、觉民和觉慧在事务所的活动</span><span class="mm-role">铺垫</span></p><p class="mm-gist">描述青年一代在实业公司事务所的聚集，构建社会实践的空间。</p><span class="mm-chip">实业空间</span><span class="mm-chip">家族事业</span><span class="mm-quote">「觉新服务的西蜀实业公司所经营的事业，除了商场铺面外，还有一个附设的小型发电厂」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">9</span><span class="mm-cname">家 · 8 · 觉慧和张惠如的对话及行动</span><span class="mm-role">案例</span></p><p class="mm-gist">记录学运消息的传递与请愿行动的决策，完成从思想到行动的跨越。</p><span class="mm-chip">学生运动</span><span class="mm-chip">请愿决策</span><span class="mm-quote">「学生们在少城公园集合，决定去督军署请愿」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">10</span><span class="mm-cname">家 · 9 · 学生罢课与请愿无果</span><span class="mm-role">反证</span></p><p class="mm-gist">呈现罢课请愿在权力冷漠下的无果状态，揭示社会变革的阻力。</p><span class="mm-chip">权力冷漠</span><span class="mm-chip">联合会活动</span><span class="mm-quote">「督军对罢课事件漠不关心，学生上街需约伴而行」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">E</span><span class="mm-label">思想觉醒与家庭隔阂</span><span class="mm-cnt">2 章</span></summary>
 <p class="mm-why">展现觉慧对学运的沉思、对封建家庭的反感以及冲突后的平息。</p>
 <ol class="mm-tree">
-<li class="r-th"><p class="mm-ch"><b>11</b> 家 · 10 · 觉慧对学运的关注和对家的不满<span class="mm-role r-th">立论</span></p><p class="mm-gist">深化觉慧对“家”的批判意识，并将其情感投射于跨阶层的互动。</p><span class="mm-chip">家庭批判</span><span class="mm-chip">跨阶层共鸣</span><span class="mm-anchor">「觉慧对家的不满，认为“家，这就是所谓甜蜜的家！”」</span></li>
-<li class="r-cnt"><p class="mm-ch"><b>12</b> 家 · 11 · 学生与军人的冲突平息，学校开始准备寒假<span class="mm-role r-cnt">反证</span></p><p class="mm-gist">描述学潮平息后的生活回归，论证旧秩序对激进运动的消解力。</p><span class="mm-chip">秩序回归</span><span class="mm-chip">运动消解</span><span class="mm-anchor">「学生在表面上是得到胜利了，罢课延长下去等于放寒假」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">11</span><span class="mm-cname">家 · 10 · 觉慧对学运的关注和对家的不满</span><span class="mm-role">立论</span></p><p class="mm-gist">深化觉慧对“家”的批判意识，并将其情感投射于跨阶层的互动。</p><span class="mm-chip">家庭批判</span><span class="mm-chip">跨阶层共鸣</span><span class="mm-quote">「觉慧对家的不满，认为“家，这就是所谓甜蜜的家！”」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">12</span><span class="mm-cname">家 · 11 · 学生与军人的冲突平息，学校开始准备寒假</span><span class="mm-role">反证</span></p><p class="mm-gist">描述学潮平息后的生活回归，论证旧秩序对激进运动的消解力。</p><span class="mm-chip">秩序回归</span><span class="mm-chip">运动消解</span><span class="mm-quote">「学生在表面上是得到胜利了，罢课延长下去等于放寒假」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">F</span><span class="mm-label">旧式家庭的过年礼教</span><span class="mm-cnt">2 章</span></summary>
 <p class="mm-why">通过筹备年货与吃年饭的场景，刻画封建大家庭的繁文缛节。</p>
 <ol class="mm-tree">
-<li class="r-pre"><p class="mm-ch"><b>13</b> 家 · 12 · 高家过年的准备<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">对比长辈忙于旧式礼教准备与青年私下阅读新文学的文化分裂。</p><span class="mm-chip">礼教仪式</span><span class="mm-chip">新文化渗透</span><span class="mm-anchor">「觉慧和觉民在事务所里买了几本新杂志，还买了一本商务印书馆出版的翻译小说《前夜》」</span></li>
-<li class="r-end"><p class="mm-ch"><b>14</b> 家 · 13 · 高家吃年饭的场景描述<span class="mm-role r-end">收束</span></p><p class="mm-gist">通过年饭座次的严苛等级，完成对旧式家族礼教结构的视觉化收束。</p><span class="mm-chip">家族等级</span><span class="mm-chip">祭祖仪式</span><span class="mm-anchor">「上面一桌坐的全是长辈，下面的一桌坐的是觉新和他的」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">13</span><span class="mm-cname">家 · 12 · 高家过年的准备</span><span class="mm-role">铺垫</span></p><p class="mm-gist">对比长辈忙于旧式礼教准备与青年私下阅读新文学的文化分裂。</p><span class="mm-chip">礼教仪式</span><span class="mm-chip">新文化渗透</span><span class="mm-quote">「觉慧和觉民在事务所里买了几本新杂志，还买了一本商务印书馆出版的翻译小说《前夜》」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">14</span><span class="mm-cname">家 · 13 · 高家吃年饭的场景描述</span><span class="mm-role">收束</span></p><p class="mm-gist">通过年饭座次的严苛等级，完成对旧式家族礼教结构的视觉化收束。</p><span class="mm-chip">家族等级</span><span class="mm-chip">祭祖仪式</span><span class="mm-quote">「上面一桌坐的全是长辈，下面的一桌坐的是觉新和他的」</span></li>
 </ol>
 </details>
 <footer class="site-footer">

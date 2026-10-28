@@ -16,8 +16,8 @@
 .mm-bar i{display:block;height:100%;background:linear-gradient(90deg,#8a9b6e,#c2b280)}
 .mm-svgwrap{overflow-x:auto;padding:.4em 0 1em;border-bottom:1px solid var(--line)}
 .mm-svg{width:100%;height:auto;min-width:760px}
-.mm-spine{margin:.9em 0;border-left:3px solid #d9d0bd;padding:.1em 0 .1em .9em}
-.mm-spine[open]{border-left-color:#8a9b6e}
+.mm-spine{margin:1.15em 0;border-left:3px solid #ece4d3;padding:.1em 0 .1em .85em}
+.mm-spine[open]{border-left-color:#d8cdb4}
 .mm-spine>summary{display:flex;gap:.6em;align-items:baseline;cursor:pointer;
   list-style:none;padding:.35em 0}
 .mm-spine>summary::-webkit-details-marker{display:none}
@@ -26,24 +26,32 @@
 .mm-label{font-weight:600;font-size:1rem;color:var(--ink)}
 .mm-cnt{margin-left:auto;font-size:.74rem;color:var(--muted)}
 .mm-why{font-size:.8rem;color:var(--muted);margin:.1em 0 .8em;line-height:1.7}
-.mm-tree{list-style:none;padding:0;margin:0}
-.mm-tree li{position:relative;padding:.42em 0 .42em 1.1em;border-left:1px dotted #cfc6b4;
-  margin-left:.5em}
-.mm-tree li:before{content:"";position:absolute;left:0;top:1.05em;width:.7em;
-  border-top:1px dotted #cfc6b4}
-.mm-ch{margin:0;font-size:.92rem;color:var(--ink)}
-.mm-ch b{color:#a9a08d;font-weight:500;font-size:.8rem;margin-right:.4em}
-.mm-role{font-size:.68rem;padding:.05em .4em;border-radius:3px;margin-left:.5em;
-  vertical-align:.1em;white-space:nowrap}
-.r-pre{background:#eef0e6;color:#6b7a4e}.r-th{background:#eae7f0;color:#5f5578}
-.r-cnt{background:#f6e9e4;color:#946350}.r-case{background:#e8eff1;color:#4f7380}
-.r-end{background:#f2ecdf;color:#8a7442}
-.mm-gist{margin:.18em 0 .3em;font-size:.84rem;line-height:1.75;color:#4a443b}
-.mm-chip{display:inline-block;font-size:.68rem;color:#6b6152;background:#f2ecdf;
-  border-radius:9px;padding:.05em .5em;margin:.15em .25em .15em 0}
-.mm-anchor{display:block;font-size:.78rem;color:#8a8272;line-height:1.7;
-  border-left:2px dotted #d9d0bd;padding-left:.7em;margin-top:.3em}
-@media(max-width:720px){.mm-svg{min-width:640px}}
+.mm-tree{list-style:none;padding:0;margin:.15em 0 0}
+/* 章条目：与通读页 .ch-item 对齐（无卡片/无彩条/虚线分隔），行高按手机可读行数收紧 */
+.mm-cn{padding:8px 0;border-bottom:1px dashed #eee8dc}
+.mm-cn:last-child{border-bottom:0}
+.mm-chead{display:flex;flex-wrap:wrap;gap:2px 10px;align-items:baseline;margin:0}
+.mm-cno{flex:none;min-width:1.7em;color:#bf8247;font-weight:700;font-size:.82rem;
+  font-variant-numeric:tabular-nums}
+.mm-cname{flex:0 1 auto;min-width:0;font-size:.92rem;line-height:1.6;color:var(--ink);
+  word-break:break-word}
+.mm-role{flex:none;font-size:.68rem;color:#8a8272;line-height:1.6;white-space:nowrap}
+.mm-gist{margin:.15em 0 .2em;font-size:.86rem;line-height:1.75;color:#4a443b}
+.mm-chip{display:inline-block;font-size:.68rem;color:#6b6152;background:#f4f1e6;
+  border-radius:9px;padding:.05em .5em;margin:.1em .28em .1em 0}
+/* 引文块取通读页 ul.ch-quote 的观感：浅米底 + 金色左线 */
+.mm-quote{display:block;margin:.3em 0 .1em;padding:7px 11px;background:#fdf8ee;
+  border-left:3px solid var(--gold);border-radius:0 8px 8px 0;
+  font-size:.8rem;line-height:1.75;color:#6b5c43}
+@media(max-width:720px){
+  .mm-svg{min-width:640px}
+  /* 手机：章条目再收紧一点，一屏多两行 */
+  .mm-cn{padding:7px 0}
+  .mm-chead{gap:8px}
+  .mm-cname{font-size:.9rem}
+  .mm-gist{font-size:.84rem;line-height:1.7}
+  .mm-quote{padding:6px 9px;font-size:.78rem}
+}
 </style>
 </head>
 <body>
@@ -123,87 +131,87 @@
 <summary><span class="mm-id">A</span><span class="mm-label">债务困局与破局</span><span class="mm-cnt">6 章</span></summary>
 <p class="mm-why">以罗家明破产为起点，引出叶子农介入债务处理，展现不同利益方在危机中的应对逻辑。</p>
 <ol class="mm-tree">
-<li class="r-pre"><p class="mm-ch"><b>1</b> 版权信息 · 第一章 · 罗家明在苏联的投资失败<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">揭示罗家明因依赖权力经济导致投资失败并自杀，引出债务困局。</p><span class="mm-chip">权力经济</span><span class="mm-chip">债务困局</span><span class="mm-anchor">「罗家明的投资是依托于苏共政权个别高官的“权力经济”而崩溃」</span></li>
-<li class="r-pre"><p class="mm-ch"><b>2</b> 版权信息 · 第二章 · 梁士乔前往巴黎参加戴梦岩的颁奖典礼<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">通过戴梦岩经纪人梁士乔的视角，确认罗家明死讯及债务无法挽回的现状。</p><span class="mm-chip">债务危机</span><span class="mm-chip">经纪人</span><span class="mm-anchor">「戴梦岩关心苏老师的债务，梁士乔认为债务没指望了」</span></li>
-<li class="r-pre"><p class="mm-ch"><b>3</b> 版权信息 · 第三章 · 林雪红在机场的等待与梁士乔的见面<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">林雪红在机场会见梁士乔，寻求其对处理罗家明债务问题的支持。</p><span class="mm-chip">债务处理</span><span class="mm-chip">协作</span><span class="mm-anchor">「林雪红向梁士乔表示感谢，并请求他的支持」</span></li>
-<li class="r-pre"><p class="mm-ch"><b>4</b> 版权信息 · 第四章 · 巴黎圣西蒙国际电影节颁奖典礼<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">展示戴梦岩在巴黎的社会地位与生活状态，作为后续债务博弈的背景。</p><span class="mm-chip">社会地位</span><span class="mm-chip">生活背景</span><span class="mm-anchor">「戴梦岩获得本届圣西蒙电影节最佳女主角」</span></li>
-<li class="r-th"><p class="mm-ch"><b>5</b> 版权信息 · 第五章 · 柏林债务会议的召开<span class="mm-role r-th">立论</span></p><p class="mm-gist">各方利益相关者在柏林召开债务会议，叶子农作为核心人物缺席。</p><span class="mm-chip">债务会议</span><span class="mm-chip">利益相关者</span><span class="mm-anchor">「林雪红向叶子农讲述罗家明的债务和孤儿寡母的生存绝境」</span></li>
-<li class="r-th"><p class="mm-ch"><b>6</b> 版权信息 · 第六章 · 布兰迪在柏林梅尔卡酒店等待钱主席等人签订抵押协议<span class="mm-role r-th">立论</span></p><p class="mm-gist">布兰迪在柏林等待债务协议签订，并寻找叶子农以推进后续事宜。</p><span class="mm-chip">抵押协议</span><span class="mm-chip">债务执行</span><span class="mm-anchor">「布兰迪向叶子农询问地址，并独自前往叶子农的住所」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">1</span><span class="mm-cname">版权信息 · 第一章 · 罗家明在苏联的投资失败</span><span class="mm-role">铺垫</span></p><p class="mm-gist">揭示罗家明因依赖权力经济导致投资失败并自杀，引出债务困局。</p><span class="mm-chip">权力经济</span><span class="mm-chip">债务困局</span><span class="mm-quote">「罗家明的投资是依托于苏共政权个别高官的“权力经济”而崩溃」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">2</span><span class="mm-cname">版权信息 · 第二章 · 梁士乔前往巴黎参加戴梦岩的颁奖典礼</span><span class="mm-role">铺垫</span></p><p class="mm-gist">通过戴梦岩经纪人梁士乔的视角，确认罗家明死讯及债务无法挽回的现状。</p><span class="mm-chip">债务危机</span><span class="mm-chip">经纪人</span><span class="mm-quote">「戴梦岩关心苏老师的债务，梁士乔认为债务没指望了」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">3</span><span class="mm-cname">版权信息 · 第三章 · 林雪红在机场的等待与梁士乔的见面</span><span class="mm-role">铺垫</span></p><p class="mm-gist">林雪红在机场会见梁士乔，寻求其对处理罗家明债务问题的支持。</p><span class="mm-chip">债务处理</span><span class="mm-chip">协作</span><span class="mm-quote">「林雪红向梁士乔表示感谢，并请求他的支持」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">4</span><span class="mm-cname">版权信息 · 第四章 · 巴黎圣西蒙国际电影节颁奖典礼</span><span class="mm-role">铺垫</span></p><p class="mm-gist">展示戴梦岩在巴黎的社会地位与生活状态，作为后续债务博弈的背景。</p><span class="mm-chip">社会地位</span><span class="mm-chip">生活背景</span><span class="mm-quote">「戴梦岩获得本届圣西蒙电影节最佳女主角」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">5</span><span class="mm-cname">版权信息 · 第五章 · 柏林债务会议的召开</span><span class="mm-role">立论</span></p><p class="mm-gist">各方利益相关者在柏林召开债务会议，叶子农作为核心人物缺席。</p><span class="mm-chip">债务会议</span><span class="mm-chip">利益相关者</span><span class="mm-quote">「林雪红向叶子农讲述罗家明的债务和孤儿寡母的生存绝境」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">6</span><span class="mm-cname">版权信息 · 第六章 · 布兰迪在柏林梅尔卡酒店等待钱主席等人签订抵押协议</span><span class="mm-role">立论</span></p><p class="mm-gist">布兰迪在柏林等待债务协议签订，并寻找叶子农以推进后续事宜。</p><span class="mm-chip">抵押协议</span><span class="mm-chip">债务执行</span><span class="mm-quote">「布兰迪向叶子农询问地址，并独自前往叶子农的住所」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">B</span><span class="mm-label">劳务输出的博弈</span><span class="mm-cnt">8 章</span></summary>
 <p class="mm-why">通过叶子农策划劳务输出计划，论证在双轨制环境下如何通过实事求是的手段解决具体生存问题。</p>
 <ol class="mm-tree">
-<li class="r-pre"><p class="mm-ch"><b>7</b> 版权信息 · 第七章 · 老九面王的背景<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">交代老九的背景与创业史，确立其作为劳务输出博弈参与者的身份。</p><span class="mm-chip">创业史</span><span class="mm-chip">劳务输出</span><span class="mm-anchor">「老九这辈仍是独子，父亲给他取名慕容久，意喻昌盛长久」</span></li>
-<li class="r-th"><p class="mm-ch"><b>8</b> 版权信息 · 第八章 · 叶子农在布达佩斯的准备工作<span class="mm-role r-th">立论</span></p><p class="mm-gist">叶子农在布达佩斯布局劳务输出计划，选定红川市为组织城市。</p><span class="mm-chip">劳务输出</span><span class="mm-chip">产业布局</span><span class="mm-anchor">「叶子农选择红川市作为劳务输出组织城市，并计划在布达佩斯建立方便面生产线」</span></li>
-<li class="r-pre"><p class="mm-ch"><b>9</b> 版权信息 · 第九章 · 方迪的工作和背景<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">引入方迪作为调查者，通过汇总叶子农相关资料，建立信息中转站。</p><span class="mm-chip">信息调查</span><span class="mm-chip">调查报告</span><span class="mm-anchor">「方迪需要把关于叶子农的传真文件和采访录音汇总、归纳，形成一份简明扼要的调查报告」</span></li>
-<li class="r-cnt"><p class="mm-ch"><b>10</b> 版权信息 · 第十章 · 布兰迪与戴维主席的沟通<span class="mm-role r-cnt">反证</span></p><p class="mm-gist">布兰迪向戴维和乔治提交立项申请，遭遇内部质疑，反映博弈阻力。</p><span class="mm-chip">立项申请</span><span class="mm-chip">内部博弈</span><span class="mm-anchor">「戴维主席对布兰迪的立项申请表示质疑」</span></li>
-<li class="r-th"><p class="mm-ch"><b>11</b> 版权信息 · 第十一章 · 红川市对外经济服务公司与亚欧实业有限公司的谈判<span class="mm-role r-th">立论</span></p><p class="mm-gist">叶子农与红川公司谈判，将劳务输出与工业设备引进挂钩。</p><span class="mm-chip">商务谈判</span><span class="mm-chip">劳务输出</span><span class="mm-anchor">「亚欧实业公司总经理叶子农与红川对外经济服务公司就方便面生产线和过路劳务的相关条件问题进行谈判」</span></li>
-<li class="r-pre"><p class="mm-ch"><b>12</b> 版权信息 · 第十二章 · 戴梦岩购买打火机的过程<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">戴梦岩购买打火机，通过隐匿身份的行为，刻画其与叶子农接触前的心理状态。</p><span class="mm-chip">身份隐匿</span><span class="mm-chip">心理状态</span><span class="mm-anchor">「戴梦岩决定不透露购买打火机的身份」</span></li>
-<li class="r-th"><p class="mm-ch"><b>13</b> 版权信息 · 第十三章 · 戴梦岩到访叶子农的住处<span class="mm-role r-th">立论</span></p><p class="mm-gist">戴梦岩以看房为由接触叶子农，两人产生初步认知碰撞。</p><span class="mm-chip">认知碰撞</span><span class="mm-chip">社交接触</span><span class="mm-anchor">「戴梦岩直言看上叶子农，叶子农感到惊讶」</span></li>
-<li class="r-cnt"><p class="mm-ch"><b>14</b> 版权信息 · 第十四章 · 叶子农和黄主任在红川机场送劳务输出人员登机<span class="mm-role r-cnt">反证</span></p><p class="mm-gist">叶子农在送行劳务人员时，意识到政策风险与法律危机。</p><span class="mm-chip">政策风险</span><span class="mm-chip">法律危机</span><span class="mm-anchor">「黄主任透露公安局已经立案了劳务输出是特大偷渡的事」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">7</span><span class="mm-cname">版权信息 · 第七章 · 老九面王的背景</span><span class="mm-role">铺垫</span></p><p class="mm-gist">交代老九的背景与创业史，确立其作为劳务输出博弈参与者的身份。</p><span class="mm-chip">创业史</span><span class="mm-chip">劳务输出</span><span class="mm-quote">「老九这辈仍是独子，父亲给他取名慕容久，意喻昌盛长久」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">8</span><span class="mm-cname">版权信息 · 第八章 · 叶子农在布达佩斯的准备工作</span><span class="mm-role">立论</span></p><p class="mm-gist">叶子农在布达佩斯布局劳务输出计划，选定红川市为组织城市。</p><span class="mm-chip">劳务输出</span><span class="mm-chip">产业布局</span><span class="mm-quote">「叶子农选择红川市作为劳务输出组织城市，并计划在布达佩斯建立方便面生产线」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">9</span><span class="mm-cname">版权信息 · 第九章 · 方迪的工作和背景</span><span class="mm-role">铺垫</span></p><p class="mm-gist">引入方迪作为调查者，通过汇总叶子农相关资料，建立信息中转站。</p><span class="mm-chip">信息调查</span><span class="mm-chip">调查报告</span><span class="mm-quote">「方迪需要把关于叶子农的传真文件和采访录音汇总、归纳，形成一份简明扼要的调查报告」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">10</span><span class="mm-cname">版权信息 · 第十章 · 布兰迪与戴维主席的沟通</span><span class="mm-role">反证</span></p><p class="mm-gist">布兰迪向戴维和乔治提交立项申请，遭遇内部质疑，反映博弈阻力。</p><span class="mm-chip">立项申请</span><span class="mm-chip">内部博弈</span><span class="mm-quote">「戴维主席对布兰迪的立项申请表示质疑」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">11</span><span class="mm-cname">版权信息 · 第十一章 · 红川市对外经济服务公司与亚欧实业有限公司的谈判</span><span class="mm-role">立论</span></p><p class="mm-gist">叶子农与红川公司谈判，将劳务输出与工业设备引进挂钩。</p><span class="mm-chip">商务谈判</span><span class="mm-chip">劳务输出</span><span class="mm-quote">「亚欧实业公司总经理叶子农与红川对外经济服务公司就方便面生产线和过路劳务的相关条件问题进行谈判」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">12</span><span class="mm-cname">版权信息 · 第十二章 · 戴梦岩购买打火机的过程</span><span class="mm-role">铺垫</span></p><p class="mm-gist">戴梦岩购买打火机，通过隐匿身份的行为，刻画其与叶子农接触前的心理状态。</p><span class="mm-chip">身份隐匿</span><span class="mm-chip">心理状态</span><span class="mm-quote">「戴梦岩决定不透露购买打火机的身份」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">13</span><span class="mm-cname">版权信息 · 第十三章 · 戴梦岩到访叶子农的住处</span><span class="mm-role">立论</span></p><p class="mm-gist">戴梦岩以看房为由接触叶子农，两人产生初步认知碰撞。</p><span class="mm-chip">认知碰撞</span><span class="mm-chip">社交接触</span><span class="mm-quote">「戴梦岩直言看上叶子农，叶子农感到惊讶」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">14</span><span class="mm-cname">版权信息 · 第十四章 · 叶子农和黄主任在红川机场送劳务输出人员登机</span><span class="mm-role">反证</span></p><p class="mm-gist">叶子农在送行劳务人员时，意识到政策风险与法律危机。</p><span class="mm-chip">政策风险</span><span class="mm-chip">法律危机</span><span class="mm-quote">「黄主任透露公安局已经立案了劳务输出是特大偷渡的事」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">C</span><span class="mm-label">认知冲突与渗透</span><span class="mm-cnt">10 章</span></summary>
 <p class="mm-why">展示叶子农的观点与西方思维、传统观念的碰撞，重点在于论证民主与市场经济的客观规律。</p>
 <ol class="mm-tree">
-<li class="r-cnt"><p class="mm-ch"><b>15</b> 版权信息 · 第十五章 · 布兰迪与叶子农的会面<span class="mm-role r-cnt">反证</span></p><p class="mm-gist">布兰迪试图以金钱诱导叶子农合作，被叶子农拒绝。</p><span class="mm-chip">合作意向</span><span class="mm-chip">价值判断</span><span class="mm-anchor">「叶子农认为他拿不了意向书中的酬金」</span></li>
-<li class="r-pre"><p class="mm-ch"><b>16</b> 版权信息 · 第十六章 · 方迪与高中同学的聚会<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">方迪通过同学聚会与老九餐馆的互动，串联起各方人物关系。</p><span class="mm-chip">人际网络</span><span class="mm-chip">信息交流</span><span class="mm-anchor">「方迪到老九面王餐馆补交昨天的餐费」</span></li>
-<li class="r-cnt"><p class="mm-ch"><b>17</b> 版权信息 · 第十七章 · 美国迪拉诺公司商务代表团访问巴西归来<span class="mm-role r-cnt">反证</span></p><p class="mm-gist">乔治与奥布莱恩讨论叶子农的影响力，反映外部势力对叶子农的关注。</p><span class="mm-chip">外部关注</span><span class="mm-chip">影响力</span><span class="mm-anchor">「乔治提到辛格将军对奥布莱恩的评价」</span></li>
-<li class="r-th"><p class="mm-ch"><b>18</b> 版权信息 · 第十八章 · 戴梦岩与叶子农的见面<span class="mm-role r-th">立论</span></p><p class="mm-gist">戴梦岩通过生活物资的供给，试图渗透叶子农的私人生活空间。</p><span class="mm-chip">认知渗透</span><span class="mm-chip">私人生活</span><span class="mm-anchor">「戴梦岩给叶子农带了咖啡、杯子和睡衣等生活物品」</span></li>
-<li class="r-th"><p class="mm-ch"><b>19</b> 版权信息 · 第十九章 · 叶子农抵达纽约，住进老九家<span class="mm-role r-th">立论</span></p><p class="mm-gist">叶子农入住老九家，将生活重心转移至纽约，加深双方信任。</p><span class="mm-chip">信任建立</span><span class="mm-chip">生活重心</span><span class="mm-anchor">「叶子农对住进老九家感到诧异，但老九表示欢迎」</span></li>
-<li class="r-th"><p class="mm-ch"><b>20</b> 版权信息 · 第二十章 · 方迪回到北京定做机器<span class="mm-role r-th">立论</span></p><p class="mm-gist">方迪回北京定做机器，推进老九项目的实体化进程。</p><span class="mm-chip">项目实体化</span><span class="mm-chip">生产设备</span><span class="mm-anchor">「方迪在机械制造厂了解了一些情况，但没有谈成」</span></li>
-<li class="r-th"><p class="mm-ch"><b>21</b> 版权信息 · 第二十一章 · 奥布莱恩的愤怒与决定<span class="mm-role r-th">立论</span></p><p class="mm-gist">奥布莱恩试图通过生活实践理解叶子农的观点，反映认知冲突的深度。</p><span class="mm-chip">认知冲突</span><span class="mm-chip">实践理解</span><span class="mm-anchor">「奥布莱恩决定采取行动，去理解叶子农的观点」</span></li>
-<li class="r-th"><p class="mm-ch"><b>22</b> 版权信息 · 第二十二章 · 方迪向老九提出合作意向<span class="mm-role r-th">立论</span></p><p class="mm-gist">方迪向老九提出合作意向，试图将个人参与转化为商业合作。</p><span class="mm-chip">商业合作</span><span class="mm-chip">项目参与</span><span class="mm-anchor">「方迪希望以合作的方式参与老九禅面的项目」</span></li>
-<li class="r-th"><p class="mm-ch"><b>23</b> 版权信息 · 第二十三章 · 叶子农与沃尔斯的相遇<span class="mm-role r-th">立论</span></p><p class="mm-gist">叶子农与沃尔斯探讨民主本质，阐述其对家天下思维的批判。</p><span class="mm-chip">民主本质</span><span class="mm-chip">家天下</span><span class="mm-anchor">「叶子农认为民主是家天下历史条件的产物，是主仆的思维」</span></li>
-<li class="r-th"><p class="mm-ch"><b>24</b> 版权信息 · 第二十四章 · 方迪在圣尼耶尔大学的听课经历<span class="mm-role r-th">立论</span></p><p class="mm-gist">方迪在大学听课，将企业成本调整理论与老九项目进行对比思考。</p><span class="mm-chip">成本调整</span><span class="mm-chip">理论实践</span><span class="mm-anchor">「方迪在听课过程中，对教授讲述的纺织企业调整成本的行为产生了兴趣」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">15</span><span class="mm-cname">版权信息 · 第十五章 · 布兰迪与叶子农的会面</span><span class="mm-role">反证</span></p><p class="mm-gist">布兰迪试图以金钱诱导叶子农合作，被叶子农拒绝。</p><span class="mm-chip">合作意向</span><span class="mm-chip">价值判断</span><span class="mm-quote">「叶子农认为他拿不了意向书中的酬金」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">16</span><span class="mm-cname">版权信息 · 第十六章 · 方迪与高中同学的聚会</span><span class="mm-role">铺垫</span></p><p class="mm-gist">方迪通过同学聚会与老九餐馆的互动，串联起各方人物关系。</p><span class="mm-chip">人际网络</span><span class="mm-chip">信息交流</span><span class="mm-quote">「方迪到老九面王餐馆补交昨天的餐费」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">17</span><span class="mm-cname">版权信息 · 第十七章 · 美国迪拉诺公司商务代表团访问巴西归来</span><span class="mm-role">反证</span></p><p class="mm-gist">乔治与奥布莱恩讨论叶子农的影响力，反映外部势力对叶子农的关注。</p><span class="mm-chip">外部关注</span><span class="mm-chip">影响力</span><span class="mm-quote">「乔治提到辛格将军对奥布莱恩的评价」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">18</span><span class="mm-cname">版权信息 · 第十八章 · 戴梦岩与叶子农的见面</span><span class="mm-role">立论</span></p><p class="mm-gist">戴梦岩通过生活物资的供给，试图渗透叶子农的私人生活空间。</p><span class="mm-chip">认知渗透</span><span class="mm-chip">私人生活</span><span class="mm-quote">「戴梦岩给叶子农带了咖啡、杯子和睡衣等生活物品」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">19</span><span class="mm-cname">版权信息 · 第十九章 · 叶子农抵达纽约，住进老九家</span><span class="mm-role">立论</span></p><p class="mm-gist">叶子农入住老九家，将生活重心转移至纽约，加深双方信任。</p><span class="mm-chip">信任建立</span><span class="mm-chip">生活重心</span><span class="mm-quote">「叶子农对住进老九家感到诧异，但老九表示欢迎」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">20</span><span class="mm-cname">版权信息 · 第二十章 · 方迪回到北京定做机器</span><span class="mm-role">立论</span></p><p class="mm-gist">方迪回北京定做机器，推进老九项目的实体化进程。</p><span class="mm-chip">项目实体化</span><span class="mm-chip">生产设备</span><span class="mm-quote">「方迪在机械制造厂了解了一些情况，但没有谈成」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">21</span><span class="mm-cname">版权信息 · 第二十一章 · 奥布莱恩的愤怒与决定</span><span class="mm-role">立论</span></p><p class="mm-gist">奥布莱恩试图通过生活实践理解叶子农的观点，反映认知冲突的深度。</p><span class="mm-chip">认知冲突</span><span class="mm-chip">实践理解</span><span class="mm-quote">「奥布莱恩决定采取行动，去理解叶子农的观点」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">22</span><span class="mm-cname">版权信息 · 第二十二章 · 方迪向老九提出合作意向</span><span class="mm-role">立论</span></p><p class="mm-gist">方迪向老九提出合作意向，试图将个人参与转化为商业合作。</p><span class="mm-chip">商业合作</span><span class="mm-chip">项目参与</span><span class="mm-quote">「方迪希望以合作的方式参与老九禅面的项目」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">23</span><span class="mm-cname">版权信息 · 第二十三章 · 叶子农与沃尔斯的相遇</span><span class="mm-role">立论</span></p><p class="mm-gist">叶子农与沃尔斯探讨民主本质，阐述其对家天下思维的批判。</p><span class="mm-chip">民主本质</span><span class="mm-chip">家天下</span><span class="mm-quote">「叶子农认为民主是家天下历史条件的产物，是主仆的思维」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">24</span><span class="mm-cname">版权信息 · 第二十四章 · 方迪在圣尼耶尔大学的听课经历</span><span class="mm-role">立论</span></p><p class="mm-gist">方迪在大学听课，将企业成本调整理论与老九项目进行对比思考。</p><span class="mm-chip">成本调整</span><span class="mm-chip">理论实践</span><span class="mm-quote">「方迪在听课过程中，对教授讲述的纺织企业调整成本的行为产生了兴趣」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">D</span><span class="mm-label">身份危机与舆论风暴</span><span class="mm-cnt">9 章</span></summary>
 <p class="mm-why">叶子农被卷入政治与舆论漩涡，揭示个体在复杂社会关系中如何保持独立判断与沉默应对。</p>
 <ol class="mm-tree">
-<li class="r-th"><p class="mm-ch"><b>25</b> 版权信息 · 第二十五章 · 上海军事安全研讨会<span class="mm-role r-th">立论</span></p><p class="mm-gist">叶子农被任命为民主联盟职位，引发身份危机与舆论关注。</p><span class="mm-chip">身份危机</span><span class="mm-chip">政治任命</span><span class="mm-anchor">「叶子农是已故叶辉将军的儿子，侨居柏林」</span></li>
-<li class="r-cnt"><p class="mm-ch"><b>26</b> 版权信息 · 第二十六章 · 叶子农被警方传唤<span class="mm-role r-cnt">反证</span></p><p class="mm-gist">叶子农遭刑事传唤，舆论风暴正式开启。</p><span class="mm-chip">刑事传唤</span><span class="mm-chip">舆论压力</span><span class="mm-anchor">「叶子农收到中国使馆的刑事传唤书」</span></li>
-<li class="r-cnt"><p class="mm-ch"><b>27</b> 版权信息 · 第二十七章 · 戴梦岩在首都机场的迎接<span class="mm-role r-cnt">反证</span></p><p class="mm-gist">戴梦岩高调迎接叶子农，加剧了舆论对叶子农身份的质疑。</p><span class="mm-chip">舆论风暴</span><span class="mm-chip">社会舆论</span><span class="mm-anchor">「叶子农对涉嫌组织非法越境的案子否认，认为自己只是适应了双轨制向市场经济过渡的阵痛」</span></li>
-<li class="r-cnt"><p class="mm-ch"><b>28</b> 版权信息 · 第二十八章 · 乔治对叶子农新闻的关注及处理方式<span class="mm-role r-cnt">反证</span></p><p class="mm-gist">乔治介入叶子农事件，试图通过布兰迪操控舆论走向。</p><span class="mm-chip">舆论操控</span><span class="mm-chip">危机处理</span><span class="mm-anchor">「乔治决定亲自处理叶子农的事情」</span></li>
-<li class="r-cnt"><p class="mm-ch"><b>29</b> 版权信息 · 第二十九章 · 戴梦岩在元宵节晚会被骂为汉奸婆<span class="mm-role r-cnt">反证</span></p><p class="mm-gist">戴梦岩因与叶子农的关联遭受公众攻击，身份危机波及个人声誉。</p><span class="mm-chip">声誉危机</span><span class="mm-chip">社会舆论</span><span class="mm-anchor">「戴梦岩在元宵节晚会上被观众怒吼为汉奸婆」</span></li>
-<li class="r-th"><p class="mm-ch"><b>30</b> 版权信息 · 第三十章 · 方迪和老九的见面及出行安排<span class="mm-role r-th">立论</span></p><p class="mm-gist">方迪协助老九在北京布局生产基地，推进项目落地。</p><span class="mm-chip">项目落地</span><span class="mm-chip">生产布局</span><span class="mm-anchor">「雷师傅热情地与老九握手，带他们去看面条机的情况」</span></li>
-<li class="r-cnt"><p class="mm-ch"><b>31</b> 版权信息 · 第三十一章 · 梁士乔和戴梦岩在巴黎见面<span class="mm-role r-cnt">反证</span></p><p class="mm-gist">戴梦岩聘请专业安保公司，应对日益严峻的外部威胁。</p><span class="mm-chip">安保措施</span><span class="mm-chip">外部威胁</span><span class="mm-anchor">「雷蒙诺公司是巴黎的老牌保安公司，大部分员工都是特种部队的退役军人」</span></li>
-<li class="r-th"><p class="mm-ch"><b>32</b> 版权信息 · 第三十二章 · 叶子农在柏林的生活<span class="mm-role r-th">立论</span></p><p class="mm-gist">叶子农以沉默应对舆论追堵，保持认知独立。</p><span class="mm-chip">认知独立</span><span class="mm-chip">舆论应对</span><span class="mm-anchor">「叶子农对记者的追堵，对策是沉默」</span></li>
-<li class="r-th"><p class="mm-ch"><b>33</b> 版权信息 · 第三十三章 · 老九从北京返回纽约，叶子农的托付<span class="mm-role r-th">立论</span></p><p class="mm-gist">叶子农将重要托付交给老九，为后续实践做准备。</p><span class="mm-chip">遗志传承</span><span class="mm-chip">托付</span><span class="mm-anchor">「老九被叶子农“赶走”后，带着叶子农的托付返回北京」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">25</span><span class="mm-cname">版权信息 · 第二十五章 · 上海军事安全研讨会</span><span class="mm-role">立论</span></p><p class="mm-gist">叶子农被任命为民主联盟职位，引发身份危机与舆论关注。</p><span class="mm-chip">身份危机</span><span class="mm-chip">政治任命</span><span class="mm-quote">「叶子农是已故叶辉将军的儿子，侨居柏林」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">26</span><span class="mm-cname">版权信息 · 第二十六章 · 叶子农被警方传唤</span><span class="mm-role">反证</span></p><p class="mm-gist">叶子农遭刑事传唤，舆论风暴正式开启。</p><span class="mm-chip">刑事传唤</span><span class="mm-chip">舆论压力</span><span class="mm-quote">「叶子农收到中国使馆的刑事传唤书」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">27</span><span class="mm-cname">版权信息 · 第二十七章 · 戴梦岩在首都机场的迎接</span><span class="mm-role">反证</span></p><p class="mm-gist">戴梦岩高调迎接叶子农，加剧了舆论对叶子农身份的质疑。</p><span class="mm-chip">舆论风暴</span><span class="mm-chip">社会舆论</span><span class="mm-quote">「叶子农对涉嫌组织非法越境的案子否认，认为自己只是适应了双轨制向市场经济过渡的阵痛」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">28</span><span class="mm-cname">版权信息 · 第二十八章 · 乔治对叶子农新闻的关注及处理方式</span><span class="mm-role">反证</span></p><p class="mm-gist">乔治介入叶子农事件，试图通过布兰迪操控舆论走向。</p><span class="mm-chip">舆论操控</span><span class="mm-chip">危机处理</span><span class="mm-quote">「乔治决定亲自处理叶子农的事情」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">29</span><span class="mm-cname">版权信息 · 第二十九章 · 戴梦岩在元宵节晚会被骂为汉奸婆</span><span class="mm-role">反证</span></p><p class="mm-gist">戴梦岩因与叶子农的关联遭受公众攻击，身份危机波及个人声誉。</p><span class="mm-chip">声誉危机</span><span class="mm-chip">社会舆论</span><span class="mm-quote">「戴梦岩在元宵节晚会上被观众怒吼为汉奸婆」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">30</span><span class="mm-cname">版权信息 · 第三十章 · 方迪和老九的见面及出行安排</span><span class="mm-role">立论</span></p><p class="mm-gist">方迪协助老九在北京布局生产基地，推进项目落地。</p><span class="mm-chip">项目落地</span><span class="mm-chip">生产布局</span><span class="mm-quote">「雷师傅热情地与老九握手，带他们去看面条机的情况」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">31</span><span class="mm-cname">版权信息 · 第三十一章 · 梁士乔和戴梦岩在巴黎见面</span><span class="mm-role">反证</span></p><p class="mm-gist">戴梦岩聘请专业安保公司，应对日益严峻的外部威胁。</p><span class="mm-chip">安保措施</span><span class="mm-chip">外部威胁</span><span class="mm-quote">「雷蒙诺公司是巴黎的老牌保安公司，大部分员工都是特种部队的退役军人」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">32</span><span class="mm-cname">版权信息 · 第三十二章 · 叶子农在柏林的生活</span><span class="mm-role">立论</span></p><p class="mm-gist">叶子农以沉默应对舆论追堵，保持认知独立。</p><span class="mm-chip">认知独立</span><span class="mm-chip">舆论应对</span><span class="mm-quote">「叶子农对记者的追堵，对策是沉默」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">33</span><span class="mm-cname">版权信息 · 第三十三章 · 老九从北京返回纽约，叶子农的托付</span><span class="mm-role">立论</span></p><p class="mm-gist">叶子农将重要托付交给老九，为后续实践做准备。</p><span class="mm-chip">遗志传承</span><span class="mm-chip">托付</span><span class="mm-quote">「老九被叶子农“赶走”后，带着叶子农的托付返回北京」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">E</span><span class="mm-label">遗志传承与实践</span><span class="mm-cnt">11 章</span></summary>
 <p class="mm-why">方迪通过“见路不走”完成论文，老九将理念转化为商业流程，体现思想在实践中的落地。</p>
 <ol class="mm-tree">
-<li class="r-th"><p class="mm-ch"><b>34</b> 版权信息 · 第三十四章 · 叶子农抵达巴黎并受到戴梦岩的严密保护<span class="mm-role r-th">立论</span></p><p class="mm-gist">叶子农抵达巴黎，在戴梦岩的严密保护下进入实践阶段。</p><span class="mm-chip">实践阶段</span><span class="mm-chip">安全保护</span><span class="mm-anchor">「叶子农被四个保镖围上，行李被保镖接过，其中一个保镖立即用对讲机呼叫车辆」</span></li>
-<li class="r-th"><p class="mm-ch"><b>35</b> 版权信息 · 第三十五章 · 方迪前往居委会取叶子农的东西<span class="mm-role r-th">立论</span></p><p class="mm-gist">方迪取回叶子农的物品，完成遗志传承的物资交接。</p><span class="mm-chip">遗志传承</span><span class="mm-chip">物资交接</span><span class="mm-anchor">「方迪表示叶子农不在北京，纽约，自己是九哥的朋友，替九哥保管东西」</span></li>
-<li class="r-cnt"><p class="mm-ch"><b>36</b> 版权信息 · 第三十六章 · 戴梦岩考察制衣厂并遇到沈彪<span class="mm-role r-cnt">反证</span></p><p class="mm-gist">沈彪试图通过渗透手段接触叶子农，反映遗志传承过程中的干扰。</p><span class="mm-chip">干扰因素</span><span class="mm-chip">渗透</span><span class="mm-anchor">「沈彪通过安检，进入叶子农的公寓」</span></li>
-<li class="r-th"><p class="mm-ch"><b>37</b> 版权信息 · 第三十七章 · 老九改变经营思路并完善操作流程<span class="mm-role r-th">立论</span></p><p class="mm-gist">老九完善操作流程，将叶子农的理念转化为可执行的商业标准。</p><span class="mm-chip">操作流程</span><span class="mm-chip">量化数据</span><span class="mm-anchor">「老九用了近半年时间完成了菜、卤、面的操作流程和量化数据。」</span></li>
-<li class="r-th"><p class="mm-ch"><b>38</b> 版权信息 · 第三十八章 · 戴梦岩在巴黎戴高乐国际机场接老九<span class="mm-role r-th">立论</span></p><p class="mm-gist">戴梦岩与老九在巴黎会合，协调各方资源以支持叶子农的实践。</p><span class="mm-chip">资源协调</span><span class="mm-chip">遗志实践</span><span class="mm-anchor">「戴梦岩介绍艾丽丝饭店，并解释叶子农不希望老九住那里」</span></li>
-<li class="r-th"><p class="mm-ch"><b>39</b> 版权信息 · 第三十九章 · 方迪的毕业论文答辩<span class="mm-role r-th">立论</span></p><p class="mm-gist">方迪通过毕业论文答辩，将“见路不走”的理念学术化。</p><span class="mm-chip">见路不走</span><span class="mm-chip">学术化</span><span class="mm-anchor">「方迪的毕业论文题目是《决策的法则──见路不走》」</span></li>
-<li class="r-cnt"><p class="mm-ch"><b>40</b> 版权信息 · 第四十章 · 戴梦岩与叶子农的冲突<span class="mm-role r-cnt">反证</span></p><p class="mm-gist">戴梦岩与叶子农在实践路径上产生冲突，反映认知差异。</p><span class="mm-chip">认知差异</span><span class="mm-chip">实践冲突</span><span class="mm-anchor">「戴梦岩和叶子农就叶子农是否应该去音乐会进行了激烈的争论」</span></li>
-<li class="r-th"><p class="mm-ch"><b>41</b> 版权信息 · 第四十一章 · 餐馆的装修与布置<span class="mm-role r-th">立论</span></p><p class="mm-gist">老九餐馆装修完成，将叶子农的理念转化为空间语言。</p><span class="mm-chip">空间语言</span><span class="mm-chip">理念转化</span><span class="mm-anchor">「方迪向员工鞠躬，感谢大家的支持和努力」</span></li>
-<li class="r-th"><p class="mm-ch"><b>42</b> 版权信息 · 第四十二章 · 戴梦岩与梁士乔的见面<span class="mm-role r-th">立论</span></p><p class="mm-gist">戴梦岩与梁士乔协调房产与资源，为后续终局做准备。</p><span class="mm-chip">资源协调</span><span class="mm-chip">终局准备</span><span class="mm-anchor">「戴梦岩与梁士乔在咖啡馆门口见面」</span></li>
-<li class="r-th"><p class="mm-ch"><b>43</b> 版权信息 · 第四十三章 · “久悟杠子面”总店开业<span class="mm-role r-th">立论</span></p><p class="mm-gist">餐馆开业，标志着叶子农的实践理念进入市场检验阶段。</p><span class="mm-chip">市场检验</span><span class="mm-chip">实践落地</span><span class="mm-anchor">「方迪对于开业的成败感到紧张，但内心也期待叶子的安危」</span></li>
-<li class="r-th"><p class="mm-ch"><b>44</b> 版权信息 · 第四十四章 · 戴梦岩接老九回巴黎<span class="mm-role r-th">立论</span></p><p class="mm-gist">戴梦岩与老九的互动，展示了在叶子农实践背景下各方的状态。</p><span class="mm-chip">实践背景</span><span class="mm-chip">人物状态</span><span class="mm-anchor">「叶子农穿了一套圆领套头式的白色运动卫衣，脚上一双运动鞋，显然是出门的准备」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">34</span><span class="mm-cname">版权信息 · 第三十四章 · 叶子农抵达巴黎并受到戴梦岩的严密保护</span><span class="mm-role">立论</span></p><p class="mm-gist">叶子农抵达巴黎，在戴梦岩的严密保护下进入实践阶段。</p><span class="mm-chip">实践阶段</span><span class="mm-chip">安全保护</span><span class="mm-quote">「叶子农被四个保镖围上，行李被保镖接过，其中一个保镖立即用对讲机呼叫车辆」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">35</span><span class="mm-cname">版权信息 · 第三十五章 · 方迪前往居委会取叶子农的东西</span><span class="mm-role">立论</span></p><p class="mm-gist">方迪取回叶子农的物品，完成遗志传承的物资交接。</p><span class="mm-chip">遗志传承</span><span class="mm-chip">物资交接</span><span class="mm-quote">「方迪表示叶子农不在北京，纽约，自己是九哥的朋友，替九哥保管东西」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">36</span><span class="mm-cname">版权信息 · 第三十六章 · 戴梦岩考察制衣厂并遇到沈彪</span><span class="mm-role">反证</span></p><p class="mm-gist">沈彪试图通过渗透手段接触叶子农，反映遗志传承过程中的干扰。</p><span class="mm-chip">干扰因素</span><span class="mm-chip">渗透</span><span class="mm-quote">「沈彪通过安检，进入叶子农的公寓」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">37</span><span class="mm-cname">版权信息 · 第三十七章 · 老九改变经营思路并完善操作流程</span><span class="mm-role">立论</span></p><p class="mm-gist">老九完善操作流程，将叶子农的理念转化为可执行的商业标准。</p><span class="mm-chip">操作流程</span><span class="mm-chip">量化数据</span><span class="mm-quote">「老九用了近半年时间完成了菜、卤、面的操作流程和量化数据。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">38</span><span class="mm-cname">版权信息 · 第三十八章 · 戴梦岩在巴黎戴高乐国际机场接老九</span><span class="mm-role">立论</span></p><p class="mm-gist">戴梦岩与老九在巴黎会合，协调各方资源以支持叶子农的实践。</p><span class="mm-chip">资源协调</span><span class="mm-chip">遗志实践</span><span class="mm-quote">「戴梦岩介绍艾丽丝饭店，并解释叶子农不希望老九住那里」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">39</span><span class="mm-cname">版权信息 · 第三十九章 · 方迪的毕业论文答辩</span><span class="mm-role">立论</span></p><p class="mm-gist">方迪通过毕业论文答辩，将“见路不走”的理念学术化。</p><span class="mm-chip">见路不走</span><span class="mm-chip">学术化</span><span class="mm-quote">「方迪的毕业论文题目是《决策的法则──见路不走》」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">40</span><span class="mm-cname">版权信息 · 第四十章 · 戴梦岩与叶子农的冲突</span><span class="mm-role">反证</span></p><p class="mm-gist">戴梦岩与叶子农在实践路径上产生冲突，反映认知差异。</p><span class="mm-chip">认知差异</span><span class="mm-chip">实践冲突</span><span class="mm-quote">「戴梦岩和叶子农就叶子农是否应该去音乐会进行了激烈的争论」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">41</span><span class="mm-cname">版权信息 · 第四十一章 · 餐馆的装修与布置</span><span class="mm-role">立论</span></p><p class="mm-gist">老九餐馆装修完成，将叶子农的理念转化为空间语言。</p><span class="mm-chip">空间语言</span><span class="mm-chip">理念转化</span><span class="mm-quote">「方迪向员工鞠躬，感谢大家的支持和努力」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">42</span><span class="mm-cname">版权信息 · 第四十二章 · 戴梦岩与梁士乔的见面</span><span class="mm-role">立论</span></p><p class="mm-gist">戴梦岩与梁士乔协调房产与资源，为后续终局做准备。</p><span class="mm-chip">资源协调</span><span class="mm-chip">终局准备</span><span class="mm-quote">「戴梦岩与梁士乔在咖啡馆门口见面」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">43</span><span class="mm-cname">版权信息 · 第四十三章 · “久悟杠子面”总店开业</span><span class="mm-role">立论</span></p><p class="mm-gist">餐馆开业，标志着叶子农的实践理念进入市场检验阶段。</p><span class="mm-chip">市场检验</span><span class="mm-chip">实践落地</span><span class="mm-quote">「方迪对于开业的成败感到紧张，但内心也期待叶子的安危」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">44</span><span class="mm-cname">版权信息 · 第四十四章 · 戴梦岩接老九回巴黎</span><span class="mm-role">立论</span></p><p class="mm-gist">戴梦岩与老九的互动，展示了在叶子农实践背景下各方的状态。</p><span class="mm-chip">实践背景</span><span class="mm-chip">人物状态</span><span class="mm-quote">「叶子农穿了一套圆领套头式的白色运动卫衣，脚上一双运动鞋，显然是出门的准备」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">F</span><span class="mm-label">终局与价值沉淀</span><span class="mm-cnt">7 章</span></summary>
 <p class="mm-why">以叶子农遇刺及遗物处理为终点，探讨个体生命终结后，其思想对生者认知与行为的影响。</p>
 <ol class="mm-tree">
-<li class="r-end"><p class="mm-ch"><b>45</b> 版权信息 · 第四十五章 · 餐厅运营情况<span class="mm-role r-end">收束</span></p><p class="mm-gist">餐馆运营步入正轨，同时叶子农遇刺的消息打破了实践的连续性。</p><span class="mm-chip">运营阶段</span><span class="mm-chip">突发事件</span><span class="mm-anchor">「方迪在开会前得知叶子农在巴黎遭枪杀的消息」</span></li>
-<li class="r-end"><p class="mm-ch"><b>46</b> 版权信息 · 第四十六章 · 戴梦岩的遇刺和后续事件<span class="mm-role r-end">收束</span></p><p class="mm-gist">戴梦岩利用叶子农遗嘱解决舆论质疑，完成价值沉淀的初步转化。</p><span class="mm-chip">遗嘱</span><span class="mm-chip">价值沉淀</span><span class="mm-anchor">「戴梦岩决定公布叶子农的遗嘱，以解决一些情况不给媒体一个交代的问题」</span></li>
-<li class="r-end"><p class="mm-ch"><b>47</b> 版权信息 · 第四十七章 · 方迪在生产基地的工作<span class="mm-role r-end">收束</span></p><p class="mm-gist">方迪在生产基地工作，将叶子农的遗物处理意见落实到运营中。</p><span class="mm-chip">遗物处理</span><span class="mm-chip">运营落实</span><span class="mm-anchor">「老九告诉方迪他在巴黎商量的关于叶子农遗物的处理意见。」</span></li>
-<li class="r-end"><p class="mm-ch"><b>48</b> 版权信息 · 第四十八章 · 梁士乔去沈彪的ZIPPO专卖店取打火机<span class="mm-role r-end">收束</span></p><p class="mm-gist">梁士乔取回打火机，象征着与叶子农相关联的物质线索的终结。</p><span class="mm-chip">物质线索</span><span class="mm-chip">终结</span><span class="mm-anchor">「沈彪拒绝给打火机，梁士乔表示理解并离开」</span></li>
-<li class="r-end"><p class="mm-ch"><b>49</b> 版权信息 · 第四十九章 · 方迪移交叶子农物品<span class="mm-role r-end">收束</span></p><p class="mm-gist">方迪移交叶子农遗物，完成对实践成果的最后归档。</p><span class="mm-chip">遗物移交</span><span class="mm-chip">归档</span><span class="mm-anchor">「方迪将叶子农的遗物交给张志诚」</span></li>
-<li class="r-end"><p class="mm-ch"><b>50</b> 版权信息 · 第五十章 · 戴梦岩与奥布莱恩的初次见面<span class="mm-role r-end">收束</span></p><p class="mm-gist">戴梦岩尝试与奥布莱恩沟通未果，标志着外部博弈的彻底终结。</p><span class="mm-chip">外部博弈</span><span class="mm-chip">终结</span><span class="mm-anchor">「老九送戴梦岩去曼哈顿东河码头登船，并给她鼓励」</span></li>
-<li class="r-end"><p class="mm-ch"><b>51</b> 版权信息 · 第五十一章 · 方迪第三次来墓地<span class="mm-role r-end">收束</span></p><p class="mm-gist">方迪清扫墓地，以仪式性的行为完成对叶子农价值的沉淀。</p><span class="mm-chip">价值沉淀</span><span class="mm-chip">仪式感</span><span class="mm-anchor">「方迪用扫帚将墓穴里的尘土仔仔细细扫成一堆，用撮箕撮出来倒掉，又用抹布将墓碑和墓穴擦拭几遍」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">45</span><span class="mm-cname">版权信息 · 第四十五章 · 餐厅运营情况</span><span class="mm-role">收束</span></p><p class="mm-gist">餐馆运营步入正轨，同时叶子农遇刺的消息打破了实践的连续性。</p><span class="mm-chip">运营阶段</span><span class="mm-chip">突发事件</span><span class="mm-quote">「方迪在开会前得知叶子农在巴黎遭枪杀的消息」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">46</span><span class="mm-cname">版权信息 · 第四十六章 · 戴梦岩的遇刺和后续事件</span><span class="mm-role">收束</span></p><p class="mm-gist">戴梦岩利用叶子农遗嘱解决舆论质疑，完成价值沉淀的初步转化。</p><span class="mm-chip">遗嘱</span><span class="mm-chip">价值沉淀</span><span class="mm-quote">「戴梦岩决定公布叶子农的遗嘱，以解决一些情况不给媒体一个交代的问题」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">47</span><span class="mm-cname">版权信息 · 第四十七章 · 方迪在生产基地的工作</span><span class="mm-role">收束</span></p><p class="mm-gist">方迪在生产基地工作，将叶子农的遗物处理意见落实到运营中。</p><span class="mm-chip">遗物处理</span><span class="mm-chip">运营落实</span><span class="mm-quote">「老九告诉方迪他在巴黎商量的关于叶子农遗物的处理意见。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">48</span><span class="mm-cname">版权信息 · 第四十八章 · 梁士乔去沈彪的ZIPPO专卖店取打火机</span><span class="mm-role">收束</span></p><p class="mm-gist">梁士乔取回打火机，象征着与叶子农相关联的物质线索的终结。</p><span class="mm-chip">物质线索</span><span class="mm-chip">终结</span><span class="mm-quote">「沈彪拒绝给打火机，梁士乔表示理解并离开」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">49</span><span class="mm-cname">版权信息 · 第四十九章 · 方迪移交叶子农物品</span><span class="mm-role">收束</span></p><p class="mm-gist">方迪移交叶子农遗物，完成对实践成果的最后归档。</p><span class="mm-chip">遗物移交</span><span class="mm-chip">归档</span><span class="mm-quote">「方迪将叶子农的遗物交给张志诚」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">50</span><span class="mm-cname">版权信息 · 第五十章 · 戴梦岩与奥布莱恩的初次见面</span><span class="mm-role">收束</span></p><p class="mm-gist">戴梦岩尝试与奥布莱恩沟通未果，标志着外部博弈的彻底终结。</p><span class="mm-chip">外部博弈</span><span class="mm-chip">终结</span><span class="mm-quote">「老九送戴梦岩去曼哈顿东河码头登船，并给她鼓励」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">51</span><span class="mm-cname">版权信息 · 第五十一章 · 方迪第三次来墓地</span><span class="mm-role">收束</span></p><p class="mm-gist">方迪清扫墓地，以仪式性的行为完成对叶子农价值的沉淀。</p><span class="mm-chip">价值沉淀</span><span class="mm-chip">仪式感</span><span class="mm-quote">「方迪用扫帚将墓穴里的尘土仔仔细细扫成一堆，用撮箕撮出来倒掉，又用抹布将墓碑和墓穴擦拭几遍」</span></li>
 </ol>
 </details>
 <footer class="site-footer">

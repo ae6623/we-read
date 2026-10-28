@@ -16,8 +16,8 @@
 .mm-bar i{display:block;height:100%;background:linear-gradient(90deg,#8a9b6e,#c2b280)}
 .mm-svgwrap{overflow-x:auto;padding:.4em 0 1em;border-bottom:1px solid var(--line)}
 .mm-svg{width:100%;height:auto;min-width:760px}
-.mm-spine{margin:.9em 0;border-left:3px solid #d9d0bd;padding:.1em 0 .1em .9em}
-.mm-spine[open]{border-left-color:#8a9b6e}
+.mm-spine{margin:1.15em 0;border-left:3px solid #ece4d3;padding:.1em 0 .1em .85em}
+.mm-spine[open]{border-left-color:#d8cdb4}
 .mm-spine>summary{display:flex;gap:.6em;align-items:baseline;cursor:pointer;
   list-style:none;padding:.35em 0}
 .mm-spine>summary::-webkit-details-marker{display:none}
@@ -26,24 +26,32 @@
 .mm-label{font-weight:600;font-size:1rem;color:var(--ink)}
 .mm-cnt{margin-left:auto;font-size:.74rem;color:var(--muted)}
 .mm-why{font-size:.8rem;color:var(--muted);margin:.1em 0 .8em;line-height:1.7}
-.mm-tree{list-style:none;padding:0;margin:0}
-.mm-tree li{position:relative;padding:.42em 0 .42em 1.1em;border-left:1px dotted #cfc6b4;
-  margin-left:.5em}
-.mm-tree li:before{content:"";position:absolute;left:0;top:1.05em;width:.7em;
-  border-top:1px dotted #cfc6b4}
-.mm-ch{margin:0;font-size:.92rem;color:var(--ink)}
-.mm-ch b{color:#a9a08d;font-weight:500;font-size:.8rem;margin-right:.4em}
-.mm-role{font-size:.68rem;padding:.05em .4em;border-radius:3px;margin-left:.5em;
-  vertical-align:.1em;white-space:nowrap}
-.r-pre{background:#eef0e6;color:#6b7a4e}.r-th{background:#eae7f0;color:#5f5578}
-.r-cnt{background:#f6e9e4;color:#946350}.r-case{background:#e8eff1;color:#4f7380}
-.r-end{background:#f2ecdf;color:#8a7442}
-.mm-gist{margin:.18em 0 .3em;font-size:.84rem;line-height:1.75;color:#4a443b}
-.mm-chip{display:inline-block;font-size:.68rem;color:#6b6152;background:#f2ecdf;
-  border-radius:9px;padding:.05em .5em;margin:.15em .25em .15em 0}
-.mm-anchor{display:block;font-size:.78rem;color:#8a8272;line-height:1.7;
-  border-left:2px dotted #d9d0bd;padding-left:.7em;margin-top:.3em}
-@media(max-width:720px){.mm-svg{min-width:640px}}
+.mm-tree{list-style:none;padding:0;margin:.15em 0 0}
+/* 章条目：与通读页 .ch-item 对齐（无卡片/无彩条/虚线分隔），行高按手机可读行数收紧 */
+.mm-cn{padding:8px 0;border-bottom:1px dashed #eee8dc}
+.mm-cn:last-child{border-bottom:0}
+.mm-chead{display:flex;flex-wrap:wrap;gap:2px 10px;align-items:baseline;margin:0}
+.mm-cno{flex:none;min-width:1.7em;color:#bf8247;font-weight:700;font-size:.82rem;
+  font-variant-numeric:tabular-nums}
+.mm-cname{flex:0 1 auto;min-width:0;font-size:.92rem;line-height:1.6;color:var(--ink);
+  word-break:break-word}
+.mm-role{flex:none;font-size:.68rem;color:#8a8272;line-height:1.6;white-space:nowrap}
+.mm-gist{margin:.15em 0 .2em;font-size:.86rem;line-height:1.75;color:#4a443b}
+.mm-chip{display:inline-block;font-size:.68rem;color:#6b6152;background:#f4f1e6;
+  border-radius:9px;padding:.05em .5em;margin:.1em .28em .1em 0}
+/* 引文块取通读页 ul.ch-quote 的观感：浅米底 + 金色左线 */
+.mm-quote{display:block;margin:.3em 0 .1em;padding:7px 11px;background:#fdf8ee;
+  border-left:3px solid var(--gold);border-radius:0 8px 8px 0;
+  font-size:.8rem;line-height:1.75;color:#6b5c43}
+@media(max-width:720px){
+  .mm-svg{min-width:640px}
+  /* 手机：章条目再收紧一点，一屏多两行 */
+  .mm-cn{padding:7px 0}
+  .mm-chead{gap:8px}
+  .mm-cname{font-size:.9rem}
+  .mm-gist{font-size:.84rem;line-height:1.7}
+  .mm-quote{padding:6px 9px;font-size:.78rem}
+}
 </style>
 </head>
 <body>
@@ -107,28 +115,28 @@
 <summary><span class="mm-id">A</span><span class="mm-label">职位诱饵与同侪孤立</span><span class="mm-cnt">1 章</span></summary>
 <p class="mm-why">展示高松年用升职许诺诱导方鸿渐，以及方鸿渐未收到聘约时的孤立处境。</p>
 <ol class="mm-tree">
-<li class="r-case"><p class="mm-ch"><b>1</b> 八 · 西洋赶驴子的人的故事<span class="mm-role r-case">案例</span></p><p class="mm-gist">高松年以升职诱惑方鸿渐，却延迟发放聘约使其陷于同侪孤立。</p><span class="mm-chip">西洋赶驴子的人的故事</span><span class="mm-chip">没尾巴的狐狸</span><span class="mm-anchor">「驴子不肯走，鞭子没有用，就把一串胡萝卜挂在驴子眼睛之前、唇吻之上」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">1</span><span class="mm-cname">八 · 西洋赶驴子的人的故事</span><span class="mm-role">案例</span></p><p class="mm-gist">高松年以升职诱惑方鸿渐，却延迟发放聘约使其陷于同侪孤立。</p><span class="mm-chip">西洋赶驴子的人的故事</span><span class="mm-chip">没尾巴的狐狸</span><span class="mm-quote">「驴子不肯走，鞭子没有用，就把一串胡萝卜挂在驴子眼睛之前、唇吻之上」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">C</span><span class="mm-label">婚后行止与家庭分歧</span><span class="mm-cnt">1 章</span></summary>
 <p class="mm-why">体现方孙两人结婚后，孙柔嘉在归家行程选择上与婆家产生的立场分歧。</p>
 <ol class="mm-tree">
-<li class="r-case"><p class="mm-ch"><b>2</b> 九 · 方鸿渐与孙柔嘉的订婚和结婚<span class="mm-role r-case">案例</span></p><p class="mm-gist">方鸿渐与孙柔嘉订婚结婚，引发方遯翁怒不满及归宿家庭分歧。</p><span class="mm-chip">订婚争议</span><span class="mm-chip">家庭分歧</span><span class="mm-anchor">「方鸿渐与孙柔嘉订婚，方遯翁夫妇惊异之后，继以懊恼」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">2</span><span class="mm-cname">九 · 方鸿渐与孙柔嘉的订婚和结婚</span><span class="mm-role">案例</span></p><p class="mm-gist">方鸿渐与孙柔嘉订婚结婚，引发方遯翁怒不满及归宿家庭分歧。</p><span class="mm-chip">订婚争议</span><span class="mm-chip">家庭分歧</span><span class="mm-quote">「方鸿渐与孙柔嘉订婚，方遯翁夫妇惊异之后，继以懊恼」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">D</span><span class="mm-label">小说创作的节奏与取材</span><span class="mm-cnt">1 章</span></summary>
 <p class="mm-why">梳理钱钟书创作《围城》时的日均字数、渴望反馈的心态以及虚构与取材的关系。</p>
 <ol class="mm-tree">
-<li class="r-th"><p class="mm-ch"><b>3</b> 一 钱钟书写《围城》<span class="mm-role r-th">立论</span></p><p class="mm-gist">说明钱钟书写作《围城》时的日均进度、读者反馈渴望及取材来源。</p><span class="mm-chip">创作节奏</span><span class="mm-chip">虚构与取材</span><span class="mm-anchor">「《围城》中的故事和人物全属虚构，但取材于真实的生活」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">3</span><span class="mm-cname">一 钱钟书写《围城》</span><span class="mm-role">立论</span></p><p class="mm-gist">说明钱钟书写作《围城》时的日均进度、读者反馈渴望及取材来源。</p><span class="mm-chip">创作节奏</span><span class="mm-chip">虚构与取材</span><span class="mm-quote">「《围城》中的故事和人物全属虚构，但取材于真实的生活」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">F</span><span class="mm-label">成长环境与抓周命名</span><span class="mm-cnt">1 章</span></summary>
 <p class="mm-why">呈现钱钟书在大家庭中与堂兄弟的感情，以及周岁抓周得书并据此命名的过程。</p>
 <ol class="mm-tree">
-<li class="r-pre"><p class="mm-ch"><b>4</b> 二 写《围城》的钱钟书<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">追溯钱钟书由伯父过继抚养、抓周命名及大家庭的成长环境。</p><span class="mm-chip">过继与抓周</span><span class="mm-chip">成长环境</span><span class="mm-anchor">「钟书周岁“抓周”，抓了一本书，因此取名“钟书”」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">4</span><span class="mm-cname">二 写《围城》的钱钟书</span><span class="mm-role">铺垫</span></p><p class="mm-gist">追溯钱钟书由伯父过继抚养、抓周命名及大家庭的成长环境。</p><span class="mm-chip">过继与抓周</span><span class="mm-chip">成长环境</span><span class="mm-quote">「钟书周岁“抓周”，抓了一本书，因此取名“钟书”」</span></li>
 </ol>
 </details>
 <footer class="site-footer">

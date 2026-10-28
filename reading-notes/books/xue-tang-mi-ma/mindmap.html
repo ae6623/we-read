@@ -16,8 +16,8 @@
 .mm-bar i{display:block;height:100%;background:linear-gradient(90deg,#8a9b6e,#c2b280)}
 .mm-svgwrap{overflow-x:auto;padding:.4em 0 1em;border-bottom:1px solid var(--line)}
 .mm-svg{width:100%;height:auto;min-width:760px}
-.mm-spine{margin:.9em 0;border-left:3px solid #d9d0bd;padding:.1em 0 .1em .9em}
-.mm-spine[open]{border-left-color:#8a9b6e}
+.mm-spine{margin:1.15em 0;border-left:3px solid #ece4d3;padding:.1em 0 .1em .85em}
+.mm-spine[open]{border-left-color:#d8cdb4}
 .mm-spine>summary{display:flex;gap:.6em;align-items:baseline;cursor:pointer;
   list-style:none;padding:.35em 0}
 .mm-spine>summary::-webkit-details-marker{display:none}
@@ -26,24 +26,32 @@
 .mm-label{font-weight:600;font-size:1rem;color:var(--ink)}
 .mm-cnt{margin-left:auto;font-size:.74rem;color:var(--muted)}
 .mm-why{font-size:.8rem;color:var(--muted);margin:.1em 0 .8em;line-height:1.7}
-.mm-tree{list-style:none;padding:0;margin:0}
-.mm-tree li{position:relative;padding:.42em 0 .42em 1.1em;border-left:1px dotted #cfc6b4;
-  margin-left:.5em}
-.mm-tree li:before{content:"";position:absolute;left:0;top:1.05em;width:.7em;
-  border-top:1px dotted #cfc6b4}
-.mm-ch{margin:0;font-size:.92rem;color:var(--ink)}
-.mm-ch b{color:#a9a08d;font-weight:500;font-size:.8rem;margin-right:.4em}
-.mm-role{font-size:.68rem;padding:.05em .4em;border-radius:3px;margin-left:.5em;
-  vertical-align:.1em;white-space:nowrap}
-.r-pre{background:#eef0e6;color:#6b7a4e}.r-th{background:#eae7f0;color:#5f5578}
-.r-cnt{background:#f6e9e4;color:#946350}.r-case{background:#e8eff1;color:#4f7380}
-.r-end{background:#f2ecdf;color:#8a7442}
-.mm-gist{margin:.18em 0 .3em;font-size:.84rem;line-height:1.75;color:#4a443b}
-.mm-chip{display:inline-block;font-size:.68rem;color:#6b6152;background:#f2ecdf;
-  border-radius:9px;padding:.05em .5em;margin:.15em .25em .15em 0}
-.mm-anchor{display:block;font-size:.78rem;color:#8a8272;line-height:1.7;
-  border-left:2px dotted #d9d0bd;padding-left:.7em;margin-top:.3em}
-@media(max-width:720px){.mm-svg{min-width:640px}}
+.mm-tree{list-style:none;padding:0;margin:.15em 0 0}
+/* 章条目：与通读页 .ch-item 对齐（无卡片/无彩条/虚线分隔），行高按手机可读行数收紧 */
+.mm-cn{padding:8px 0;border-bottom:1px dashed #eee8dc}
+.mm-cn:last-child{border-bottom:0}
+.mm-chead{display:flex;flex-wrap:wrap;gap:2px 10px;align-items:baseline;margin:0}
+.mm-cno{flex:none;min-width:1.7em;color:#bf8247;font-weight:700;font-size:.82rem;
+  font-variant-numeric:tabular-nums}
+.mm-cname{flex:0 1 auto;min-width:0;font-size:.92rem;line-height:1.6;color:var(--ink);
+  word-break:break-word}
+.mm-role{flex:none;font-size:.68rem;color:#8a8272;line-height:1.6;white-space:nowrap}
+.mm-gist{margin:.15em 0 .2em;font-size:.86rem;line-height:1.75;color:#4a443b}
+.mm-chip{display:inline-block;font-size:.68rem;color:#6b6152;background:#f4f1e6;
+  border-radius:9px;padding:.05em .5em;margin:.1em .28em .1em 0}
+/* 引文块取通读页 ul.ch-quote 的观感：浅米底 + 金色左线 */
+.mm-quote{display:block;margin:.3em 0 .1em;padding:7px 11px;background:#fdf8ee;
+  border-left:3px solid var(--gold);border-radius:0 8px 8px 0;
+  font-size:.8rem;line-height:1.75;color:#6b5c43}
+@media(max-width:720px){
+  .mm-svg{min-width:640px}
+  /* 手机：章条目再收紧一点，一屏多两行 */
+  .mm-cn{padding:7px 0}
+  .mm-chead{gap:8px}
+  .mm-cname{font-size:.9rem}
+  .mm-gist{font-size:.84rem;line-height:1.7}
+  .mm-quote{padding:6px 9px;font-size:.78rem}
+}
 </style>
 </head>
 <body>
@@ -122,53 +130,53 @@
 <summary><span class="mm-id">A</span><span class="mm-label">医学背景与定义</span><span class="mm-cnt">3 章</span></summary>
 <p class="mm-why">介绍作者背景、糖尿病历史演变及1型与2型糖尿病的本质区别。</p>
 <ol class="mm-tree">
-<li class="r-pre"><p class="mm-ch"><b>1</b> 作者简介<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">介绍作者医学背景及其在糖尿病治疗领域的专业地位。</p><span class="mm-chip">低碳高脂饮食</span><span class="mm-chip">间歇性断食</span><span class="mm-anchor">「杰森·冯是加拿大肾病专家、医学博士。」</span></li>
-<li class="r-pre"><p class="mm-ch"><b>3</b> 第一章 2型糖尿病为什么会成为流行病<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">追溯糖尿病从古至今的命名演变与流行病学历史。</p><span class="mm-chip">Diabetes</span><span class="mm-chip">Mellitus</span><span class="mm-anchor">「托马斯·威利斯在“diabetes”后面加上了“mellitus”一词，意思是“来自蜂蜜”。」</span></li>
-<li class="r-th"><p class="mm-ch"><b>4</b> 第二章 1型糖尿病和2型糖尿病的区别<span class="mm-role r-th">立论</span></p><p class="mm-gist">界定糖尿病的代谢紊乱本质并区分不同类型的共同特征。</p><span class="mm-chip">代谢紊乱</span><span class="mm-chip">高血糖症</span><span class="mm-anchor">「“Hyperglycemia”一词的前缀“hyper”意为“过度的”，后缀“emia”的意思是“在血液中”，所以这个术语」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">1</span><span class="mm-cname">作者简介</span><span class="mm-role">铺垫</span></p><p class="mm-gist">介绍作者医学背景及其在糖尿病治疗领域的专业地位。</p><span class="mm-chip">低碳高脂饮食</span><span class="mm-chip">间歇性断食</span><span class="mm-quote">「杰森·冯是加拿大肾病专家、医学博士。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">3</span><span class="mm-cname">第一章 2型糖尿病为什么会成为流行病</span><span class="mm-role">铺垫</span></p><p class="mm-gist">追溯糖尿病从古至今的命名演变与流行病学历史。</p><span class="mm-chip">Diabetes</span><span class="mm-chip">Mellitus</span><span class="mm-quote">「托马斯·威利斯在“diabetes”后面加上了“mellitus”一词，意思是“来自蜂蜜”。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">4</span><span class="mm-cname">第二章 1型糖尿病和2型糖尿病的区别</span><span class="mm-role">立论</span></p><p class="mm-gist">界定糖尿病的代谢紊乱本质并区分不同类型的共同特征。</p><span class="mm-chip">代谢紊乱</span><span class="mm-chip">高血糖症</span><span class="mm-quote">「“Hyperglycemia”一词的前缀“hyper”意为“过度的”，后缀“emia”的意思是“在血液中”，所以这个术语」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">B</span><span class="mm-label">病理机制解析</span><span class="mm-cnt">4 章</span></summary>
 <p class="mm-why">阐述胰岛素在能量储存中的作用，以及胰岛素抵抗如何引发全身并发症。</p>
 <ol class="mm-tree">
-<li class="r-cnt"><p class="mm-ch"><b>5</b> 第三章 全身的反应<span class="mm-role r-cnt">反证</span></p><p class="mm-gist">拆解高血糖对全身血管造成的破坏性并发症及其致盲风险。</p><span class="mm-chip">微血管病变</span><span class="mm-chip">大血管病变</span><span class="mm-anchor">「没有一个器官不会受到糖尿病的影响。」</span></li>
-<li class="r-th"><p class="mm-ch"><b>7</b> 第五章 胰岛素在能量储存中的作用<span class="mm-role r-th">立论</span></p><p class="mm-gist">阐明胰岛素作为能量储存激素如何直接驱动体重增减。</p><span class="mm-chip">胰岛素</span><span class="mm-chip">能量储存</span><span class="mm-anchor">「胰岛素的作用之一是促进细胞对葡萄糖的吸收，并从中获取能量。」</span></li>
-<li class="r-th"><p class="mm-ch"><b>8</b> 第六章 胰岛素抵抗：溢出现象<span class="mm-role r-th">立论</span></p><p class="mm-gist">将胰岛素抵抗定义为身体对能量溢出现象的防御性反应。</p><span class="mm-chip">胰岛素抵抗</span><span class="mm-chip">空腹胰岛素</span><span class="mm-anchor">「与体形偏瘦的患者相比，肥胖但其他方面正常(非糖尿病)的患者，胰岛素抵抗会明显增加。」</span></li>
-<li class="r-pre"><p class="mm-ch"><b>9</b> 第七章 糖尿病，一种具有双重缺陷的疾病<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">剖析糖尿病确诊前长达十余年的双重生理缺陷演变阶段。</p><span class="mm-chip">双重缺陷</span><span class="mm-chip">确诊前期</span><span class="mm-anchor">「第一种缺陷是胰岛素抵抗，这是一种溢出现象，是由脂肪浸润肝脏和肌肉引起的。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">5</span><span class="mm-cname">第三章 全身的反应</span><span class="mm-role">反证</span></p><p class="mm-gist">拆解高血糖对全身血管造成的破坏性并发症及其致盲风险。</p><span class="mm-chip">微血管病变</span><span class="mm-chip">大血管病变</span><span class="mm-quote">「没有一个器官不会受到糖尿病的影响。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">7</span><span class="mm-cname">第五章 胰岛素在能量储存中的作用</span><span class="mm-role">立论</span></p><p class="mm-gist">阐明胰岛素作为能量储存激素如何直接驱动体重增减。</p><span class="mm-chip">胰岛素</span><span class="mm-chip">能量储存</span><span class="mm-quote">「胰岛素的作用之一是促进细胞对葡萄糖的吸收，并从中获取能量。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">8</span><span class="mm-cname">第六章 胰岛素抵抗：溢出现象</span><span class="mm-role">立论</span></p><p class="mm-gist">将胰岛素抵抗定义为身体对能量溢出现象的防御性反应。</p><span class="mm-chip">胰岛素抵抗</span><span class="mm-chip">空腹胰岛素</span><span class="mm-quote">「与体形偏瘦的患者相比，肥胖但其他方面正常(非糖尿病)的患者，胰岛素抵抗会明显增加。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">9</span><span class="mm-cname">第七章 糖尿病，一种具有双重缺陷的疾病</span><span class="mm-role">铺垫</span></p><p class="mm-gist">剖析糖尿病确诊前长达十余年的双重生理缺陷演变阶段。</p><span class="mm-chip">双重缺陷</span><span class="mm-chip">确诊前期</span><span class="mm-quote">「第一种缺陷是胰岛素抵抗，这是一种溢出现象，是由脂肪浸润肝脏和肌肉引起的。」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">C</span><span class="mm-label">致病核心因素</span><span class="mm-cnt">3 章</span></summary>
 <p class="mm-why">论证肥胖、过量果糖摄入与代谢综合征是驱动糖尿病流行的关键诱因。</p>
 <ol class="mm-tree">
-<li class="r-th"><p class="mm-ch"><b>6</b> 第四章 糖尿病：热量欺骗<span class="mm-role r-th">立论</span></p><p class="mm-gist">论证肥胖与2型糖尿病在病理上的高度同质性与强相关性。</p><span class="mm-chip">肥胖</span><span class="mm-chip">身体质量指数</span><span class="mm-anchor">「“糖尿”和“肥胖”这两个术语组合起来构成的“糖尿病(diabesity)”。」</span></li>
-<li class="r-th"><p class="mm-ch"><b>10</b> 第八章 果糖—胰岛素抵抗的联系<span class="mm-role r-th">立论</span></p><p class="mm-gist">揭示过量果糖摄入通过肝脏代谢引发胰岛素抵抗的毒性路径。</p><span class="mm-chip">果糖</span><span class="mm-chip">单糖</span><span class="mm-anchor">「2009年，加州大学旧金山分校的儿科内分泌学家罗伯特·勒斯蒂格作了一个时长90分钟的讲座，题为《糖：苦涩的真相》。」</span></li>
-<li class="r-th"><p class="mm-ch"><b>11</b> 第九章 代谢综合征与糖尿病的关系<span class="mm-role r-th">立论</span></p><p class="mm-gist">串联代谢综合征各要素，论证其与糖尿病的内在共生关系。</p><span class="mm-chip">代谢综合征</span><span class="mm-chip">心脏病风险</span><span class="mm-anchor">「代谢综合征包括腹部肥胖、高密度脂蛋白水平低、甘油三酯水平高、高血压和空腹血糖高于100毫克/分升。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">6</span><span class="mm-cname">第四章 糖尿病：热量欺骗</span><span class="mm-role">立论</span></p><p class="mm-gist">论证肥胖与2型糖尿病在病理上的高度同质性与强相关性。</p><span class="mm-chip">肥胖</span><span class="mm-chip">身体质量指数</span><span class="mm-quote">「“糖尿”和“肥胖”这两个术语组合起来构成的“糖尿病(diabesity)”。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">10</span><span class="mm-cname">第八章 果糖—胰岛素抵抗的联系</span><span class="mm-role">立论</span></p><p class="mm-gist">揭示过量果糖摄入通过肝脏代谢引发胰岛素抵抗的毒性路径。</p><span class="mm-chip">果糖</span><span class="mm-chip">单糖</span><span class="mm-quote">「2009年，加州大学旧金山分校的儿科内分泌学家罗伯特·勒斯蒂格作了一个时长90分钟的讲座，题为《糖：苦涩的真相》。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">11</span><span class="mm-cname">第九章 代谢综合征与糖尿病的关系</span><span class="mm-role">立论</span></p><p class="mm-gist">串联代谢综合征各要素，论证其与糖尿病的内在共生关系。</p><span class="mm-chip">代谢综合征</span><span class="mm-chip">心脏病风险</span><span class="mm-quote">「代谢综合征包括腹部肥胖、高密度脂蛋白水平低、甘油三酯水平高、高血压和空腹血糖高于100毫克/分升。」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">D</span><span class="mm-label">传统疗法局限</span><span class="mm-cnt">2 章</span></summary>
 <p class="mm-why">分析单纯依赖胰岛素注射和口服降糖药为何无法从根本上解决2型糖尿病。</p>
 <ol class="mm-tree">
-<li class="r-cnt"><p class="mm-ch"><b>12</b> 第十章 胰岛素并非解决2型糖尿病问题的答案<span class="mm-role r-cnt">反证</span></p><p class="mm-gist">指出单纯依赖胰岛素注射无法从根本上解决2型糖尿病问题。</p><span class="mm-chip">胰岛素疗法</span><span class="mm-chip">并发症</span><span class="mm-anchor">「人工合成胰岛素是现代制药科学的伟大成就之一。」</span></li>
-<li class="r-cnt"><p class="mm-ch"><b>13</b> 第十一章 口服降糖药物，并非答案<span class="mm-role r-cnt">反证</span></p><p class="mm-gist">质疑口服降糖药物在疾病定义拓宽背景下的实际治疗效能。</p><span class="mm-chip">口服降糖药</span><span class="mm-chip">糖尿病前期</span><span class="mm-anchor">「这是一个新常态，导致出售胰岛素和类胰岛素成为千载难逢的赚钱机会。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">12</span><span class="mm-cname">第十章 胰岛素并非解决2型糖尿病问题的答案</span><span class="mm-role">反证</span></p><p class="mm-gist">指出单纯依赖胰岛素注射无法从根本上解决2型糖尿病问题。</p><span class="mm-chip">胰岛素疗法</span><span class="mm-chip">并发症</span><span class="mm-quote">「人工合成胰岛素是现代制药科学的伟大成就之一。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">13</span><span class="mm-cname">第十一章 口服降糖药物，并非答案</span><span class="mm-role">反证</span></p><p class="mm-gist">质疑口服降糖药物在疾病定义拓宽背景下的实际治疗效能。</p><span class="mm-chip">口服降糖药</span><span class="mm-chip">糖尿病前期</span><span class="mm-quote">「这是一个新常态，导致出售胰岛素和类胰岛素成为千载难逢的赚钱机会。」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">E</span><span class="mm-label">常规干预误区</span><span class="mm-cnt">2 章</span></summary>
 <p class="mm-why">反思低脂高碳饮食、单纯锻炼的失效，以及减肥手术对逆转病程的启示。</p>
 <ol class="mm-tree">
-<li class="r-cnt"><p class="mm-ch"><b>14</b> 第十二章 低热量食物和锻炼，不是答案<span class="mm-role r-cnt">反证</span></p><p class="mm-gist">批判传统低脂高碳饮食指南在控制血糖方面的逻辑谬误。</p><span class="mm-chip">低脂饮食</span><span class="mm-chip">饮食金字塔</span><span class="mm-anchor">「美国糖尿病协会首席医疗和科学官理查德·卡恩医生提出这样的建议。」</span></li>
-<li class="r-case"><p class="mm-ch"><b>15</b> 第十三章 减肥手术告诉我们什么<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过减肥手术的极端案例证明减少摄入对缓解尿糖的有效性。</p><span class="mm-chip">减肥手术</span><span class="mm-chip">尿糖</span><span class="mm-anchor">「这种限制性治疗最终没能成功，因为患者依然可以吃流食，足够的高热量含糖饮料会阻碍他们减肥。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">14</span><span class="mm-cname">第十二章 低热量食物和锻炼，不是答案</span><span class="mm-role">反证</span></p><p class="mm-gist">批判传统低脂高碳饮食指南在控制血糖方面的逻辑谬误。</p><span class="mm-chip">低脂饮食</span><span class="mm-chip">饮食金字塔</span><span class="mm-quote">「美国糖尿病协会首席医疗和科学官理查德·卡恩医生提出这样的建议。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">15</span><span class="mm-cname">第十三章 减肥手术告诉我们什么</span><span class="mm-role">案例</span></p><p class="mm-gist">通过减肥手术的极端案例证明减少摄入对缓解尿糖的有效性。</p><span class="mm-chip">减肥手术</span><span class="mm-chip">尿糖</span><span class="mm-quote">「这种限制性治疗最终没能成功，因为患者依然可以吃流食，足够的高热量含糖饮料会阻碍他们减肥。」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">F</span><span class="mm-label">逆转方案实践</span><span class="mm-cnt">3 章</span></summary>
 <p class="mm-why">提出以低碳饮食和间歇性断食为核心的非药物干预策略，实现疾病逆转。</p>
 <ol class="mm-tree">
-<li class="r-th"><p class="mm-ch"><b>2</b> 快速入门指南： 如何逆转和预防2型糖尿病<span class="mm-role r-th">立论</span></p><p class="mm-gist">否定糖尿病不可逆的传统认知，确立以减肥为核心的逆转逻辑。</p><span class="mm-chip">慢性进行性疾病</span><span class="mm-chip">逆转糖尿病</span><span class="mm-anchor">「2型糖尿病并非不可逆转，大多数治疗2型糖尿病的药物不但不会导致体重减轻，反而会让体重增加。」</span></li>
-<li class="r-case"><p class="mm-ch"><b>16</b> 第十四章 减碳饮食<span class="mm-role r-case">案例</span></p><p class="mm-gist">提出以减碳饮食取代传统低脂饮食作为逆转疾病的根本手段。</p><span class="mm-chip">低碳水化合物饮食</span><span class="mm-chip">根本原因</span><span class="mm-anchor">「一个三岁的得克萨斯女孩通过改变饮食，减掉了原来体重的25%，当血糖水平恢复正常时，她停用了所有药物。两年后，这个小女孩的」</span></li>
-<li class="r-end"><p class="mm-ch"><b>17</b> 第十五章 间歇性断食<span class="mm-role r-end">收束</span></p><p class="mm-gist">论证间歇性断食在热量控制与代谢调节中的显著临床效果。</p><span class="mm-chip">间歇性断食</span><span class="mm-chip">分量控制</span><span class="mm-anchor">「艾略特·乔斯林医生是史上最著名的糖尿病专家之一，他写下自己在1916年断食的经历。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">2</span><span class="mm-cname">快速入门指南： 如何逆转和预防2型糖尿病</span><span class="mm-role">立论</span></p><p class="mm-gist">否定糖尿病不可逆的传统认知，确立以减肥为核心的逆转逻辑。</p><span class="mm-chip">慢性进行性疾病</span><span class="mm-chip">逆转糖尿病</span><span class="mm-quote">「2型糖尿病并非不可逆转，大多数治疗2型糖尿病的药物不但不会导致体重减轻，反而会让体重增加。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">16</span><span class="mm-cname">第十四章 减碳饮食</span><span class="mm-role">案例</span></p><p class="mm-gist">提出以减碳饮食取代传统低脂饮食作为逆转疾病的根本手段。</p><span class="mm-chip">低碳水化合物饮食</span><span class="mm-chip">根本原因</span><span class="mm-quote">「一个三岁的得克萨斯女孩通过改变饮食，减掉了原来体重的25%，当血糖水平恢复正常时，她停用了所有药物。两年后，这个小女孩的」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">17</span><span class="mm-cname">第十五章 间歇性断食</span><span class="mm-role">收束</span></p><p class="mm-gist">论证间歇性断食在热量控制与代谢调节中的显著临床效果。</p><span class="mm-chip">间歇性断食</span><span class="mm-chip">分量控制</span><span class="mm-quote">「艾略特·乔斯林医生是史上最著名的糖尿病专家之一，他写下自己在1916年断食的经历。」</span></li>
 </ol>
 </details>
 <footer class="site-footer">

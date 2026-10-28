@@ -16,8 +16,8 @@
 .mm-bar i{display:block;height:100%;background:linear-gradient(90deg,#8a9b6e,#c2b280)}
 .mm-svgwrap{overflow-x:auto;padding:.4em 0 1em;border-bottom:1px solid var(--line)}
 .mm-svg{width:100%;height:auto;min-width:760px}
-.mm-spine{margin:.9em 0;border-left:3px solid #d9d0bd;padding:.1em 0 .1em .9em}
-.mm-spine[open]{border-left-color:#8a9b6e}
+.mm-spine{margin:1.15em 0;border-left:3px solid #ece4d3;padding:.1em 0 .1em .85em}
+.mm-spine[open]{border-left-color:#d8cdb4}
 .mm-spine>summary{display:flex;gap:.6em;align-items:baseline;cursor:pointer;
   list-style:none;padding:.35em 0}
 .mm-spine>summary::-webkit-details-marker{display:none}
@@ -26,24 +26,32 @@
 .mm-label{font-weight:600;font-size:1rem;color:var(--ink)}
 .mm-cnt{margin-left:auto;font-size:.74rem;color:var(--muted)}
 .mm-why{font-size:.8rem;color:var(--muted);margin:.1em 0 .8em;line-height:1.7}
-.mm-tree{list-style:none;padding:0;margin:0}
-.mm-tree li{position:relative;padding:.42em 0 .42em 1.1em;border-left:1px dotted #cfc6b4;
-  margin-left:.5em}
-.mm-tree li:before{content:"";position:absolute;left:0;top:1.05em;width:.7em;
-  border-top:1px dotted #cfc6b4}
-.mm-ch{margin:0;font-size:.92rem;color:var(--ink)}
-.mm-ch b{color:#a9a08d;font-weight:500;font-size:.8rem;margin-right:.4em}
-.mm-role{font-size:.68rem;padding:.05em .4em;border-radius:3px;margin-left:.5em;
-  vertical-align:.1em;white-space:nowrap}
-.r-pre{background:#eef0e6;color:#6b7a4e}.r-th{background:#eae7f0;color:#5f5578}
-.r-cnt{background:#f6e9e4;color:#946350}.r-case{background:#e8eff1;color:#4f7380}
-.r-end{background:#f2ecdf;color:#8a7442}
-.mm-gist{margin:.18em 0 .3em;font-size:.84rem;line-height:1.75;color:#4a443b}
-.mm-chip{display:inline-block;font-size:.68rem;color:#6b6152;background:#f2ecdf;
-  border-radius:9px;padding:.05em .5em;margin:.15em .25em .15em 0}
-.mm-anchor{display:block;font-size:.78rem;color:#8a8272;line-height:1.7;
-  border-left:2px dotted #d9d0bd;padding-left:.7em;margin-top:.3em}
-@media(max-width:720px){.mm-svg{min-width:640px}}
+.mm-tree{list-style:none;padding:0;margin:.15em 0 0}
+/* 章条目：与通读页 .ch-item 对齐（无卡片/无彩条/虚线分隔），行高按手机可读行数收紧 */
+.mm-cn{padding:8px 0;border-bottom:1px dashed #eee8dc}
+.mm-cn:last-child{border-bottom:0}
+.mm-chead{display:flex;flex-wrap:wrap;gap:2px 10px;align-items:baseline;margin:0}
+.mm-cno{flex:none;min-width:1.7em;color:#bf8247;font-weight:700;font-size:.82rem;
+  font-variant-numeric:tabular-nums}
+.mm-cname{flex:0 1 auto;min-width:0;font-size:.92rem;line-height:1.6;color:var(--ink);
+  word-break:break-word}
+.mm-role{flex:none;font-size:.68rem;color:#8a8272;line-height:1.6;white-space:nowrap}
+.mm-gist{margin:.15em 0 .2em;font-size:.86rem;line-height:1.75;color:#4a443b}
+.mm-chip{display:inline-block;font-size:.68rem;color:#6b6152;background:#f4f1e6;
+  border-radius:9px;padding:.05em .5em;margin:.1em .28em .1em 0}
+/* 引文块取通读页 ul.ch-quote 的观感：浅米底 + 金色左线 */
+.mm-quote{display:block;margin:.3em 0 .1em;padding:7px 11px;background:#fdf8ee;
+  border-left:3px solid var(--gold);border-radius:0 8px 8px 0;
+  font-size:.8rem;line-height:1.75;color:#6b5c43}
+@media(max-width:720px){
+  .mm-svg{min-width:640px}
+  /* 手机：章条目再收紧一点，一屏多两行 */
+  .mm-cn{padding:7px 0}
+  .mm-chead{gap:8px}
+  .mm-cname{font-size:.9rem}
+  .mm-gist{font-size:.84rem;line-height:1.7}
+  .mm-quote{padding:6px 9px;font-size:.78rem}
+}
 </style>
 </head>
 <body>
@@ -97,28 +105,28 @@
 <summary><span class="mm-id">A</span><span class="mm-label">讲故事的框架</span><span class="mm-cnt">2 章</span></summary>
 <p class="mm-why">自序与下乡采风，先确立「一个人讲自己一生」的叙述位置。</p>
 <ol class="mm-tree">
-<li class="r-pre"><p class="mm-ch"><b>1</b> 自序<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">自序谈写作如何让作家真实地了解自己与世界</p><span class="mm-anchor">「一旦了解了自己也就了解了世界。」</span></li>
-<li class="r-pre"><p class="mm-ch"><b>2</b> 版权信息 · 一 · 作者的游手好闲生活<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">下乡采风与老人相遇，叙述框架确立，故事有了讲述者</p><span class="mm-anchor">「作者整日张大嘴巴打着哈欠，散漫地走在田间小道上。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">1</span><span class="mm-cname">自序</span><span class="mm-role">铺垫</span></p><p class="mm-gist">自序谈写作如何让作家真实地了解自己与世界</p><span class="mm-quote">「一旦了解了自己也就了解了世界。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">2</span><span class="mm-cname">版权信息 · 一 · 作者的游手好闲生活</span><span class="mm-role">铺垫</span></p><p class="mm-gist">下乡采风与老人相遇，叙述框架确立，故事有了讲述者</p><span class="mm-quote">「作者整日张大嘴巴打着哈欠，散漫地走在田间小道上。」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">B</span><span class="mm-label">福贵的一生</span><span class="mm-cnt">4 章</span></summary>
 <p class="mm-why">从败家到送走所有亲人，苦难被写成连续的失去而非一次性打击。</p>
 <ol class="mm-tree">
-<li class="r-case"><p class="mm-ch"><b>3</b> 版权信息 · 二 · 福贵的经历<span class="mm-role r-case">案例</span></p><p class="mm-gist">福贵年轻时输光家产，败家成为他此后一生的起点</p><span class="mm-anchor">「福贵曾经是个阔少爷，可他嗜赌如命，很快就将家底败光了。」</span></li>
-<li class="r-case"><p class="mm-ch"><b>4</b> 版权信息 · 三 · 福贵和牛的劳作<span class="mm-role r-case">案例</span></p><p class="mm-gist">与老牛并肩劳作，家珍的辛劳写出一家人的日常秩序</p><span class="mm-anchor">「福贵给牛套上犁，牛老了也和人老了一样，饿了还得先歇一下，才吃得下去东西。」</span></li>
-<li class="r-case"><p class="mm-ch"><b>5</b> 版权信息 · 四 · 有庆的死亡和家珍的悲痛<span class="mm-role r-case">案例</span></p><p class="mm-gist">有庆被车撞死，家珍悲痛欲绝，第一次无法挽回的失去</p><span class="mm-anchor">「有庆是家珍活下去的唯一希望，他的死让家珍失去了生活的信念。」</span></li>
-<li class="r-case"><p class="mm-ch"><b>6</b> 版权信息 · 五 · 福贵对家珍之死的看法<span class="mm-role r-case">案例</span></p><p class="mm-gist">家珍死得平安干净，福贵对死亡的看法在此定型</p><span class="mm-anchor">「不像村里有些女人，死了还有人说闲话。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">3</span><span class="mm-cname">版权信息 · 二 · 福贵的经历</span><span class="mm-role">案例</span></p><p class="mm-gist">福贵年轻时输光家产，败家成为他此后一生的起点</p><span class="mm-quote">「福贵曾经是个阔少爷，可他嗜赌如命，很快就将家底败光了。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">4</span><span class="mm-cname">版权信息 · 三 · 福贵和牛的劳作</span><span class="mm-role">案例</span></p><p class="mm-gist">与老牛并肩劳作，家珍的辛劳写出一家人的日常秩序</p><span class="mm-quote">「福贵给牛套上犁，牛老了也和人老了一样，饿了还得先歇一下，才吃得下去东西。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">5</span><span class="mm-cname">版权信息 · 四 · 有庆的死亡和家珍的悲痛</span><span class="mm-role">案例</span></p><p class="mm-gist">有庆被车撞死，家珍悲痛欲绝，第一次无法挽回的失去</p><span class="mm-quote">「有庆是家珍活下去的唯一希望，他的死让家珍失去了生活的信念。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">6</span><span class="mm-cname">版权信息 · 五 · 福贵对家珍之死的看法</span><span class="mm-role">案例</span></p><p class="mm-gist">家珍死得平安干净，福贵对死亡的看法在此定型</p><span class="mm-quote">「不像村里有些女人，死了还有人说闲话。」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">C</span><span class="mm-label">作者自序四篇</span><span class="mm-cnt">4 章</span></summary>
 <p class="mm-why">韩文、日文、英文、麦田四版自序，交代这本书在不同语境里被怎样理解。</p>
 <ol class="mm-tree">
-<li class="r-th"><p class="mm-ch"><b>7</b> 韩文版自序<span class="mm-role r-th">立论</span></p><p class="mm-gist">韩文版自序：人与命运的友情，是最感人的友情</p><span class="mm-anchor">「他们互相感激，同时也互相仇恨。」</span></li>
-<li class="r-th"><p class="mm-ch"><b>8</b> 日文版自序<span class="mm-role r-th">立论</span></p><p class="mm-gist">日文版自序：写的是本人对经历的感受，不是旁观的评判</p><span class="mm-anchor">「福贵虽然历经苦难，但是他是在讲述自己的故事。」</span></li>
-<li class="r-th"><p class="mm-ch"><b>9</b> 英文版自序<span class="mm-role r-th">立论</span></p><p class="mm-gist">英文版自序：一首民歌引出这本书的写作动机</p><span class="mm-anchor">「老黑奴经历了一生的苦难，家人都先他而去，而他依然友好地对待这个世界，没有一句抱怨的话。」</span></li>
-<li class="r-end"><p class="mm-ch"><b>10</b> 麦田新版自序<span class="mm-role r-end">收束</span></p><p class="mm-gist">麦田新版自序交代再版缘起，把这本书交回读者</p><span class="mm-anchor">「《活着》在台湾出版十四年来，每年加印。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">7</span><span class="mm-cname">韩文版自序</span><span class="mm-role">立论</span></p><p class="mm-gist">韩文版自序：人与命运的友情，是最感人的友情</p><span class="mm-quote">「他们互相感激，同时也互相仇恨。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">8</span><span class="mm-cname">日文版自序</span><span class="mm-role">立论</span></p><p class="mm-gist">日文版自序：写的是本人对经历的感受，不是旁观的评判</p><span class="mm-quote">「福贵虽然历经苦难，但是他是在讲述自己的故事。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">9</span><span class="mm-cname">英文版自序</span><span class="mm-role">立论</span></p><p class="mm-gist">英文版自序：一首民歌引出这本书的写作动机</p><span class="mm-quote">「老黑奴经历了一生的苦难，家人都先他而去，而他依然友好地对待这个世界，没有一句抱怨的话。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">10</span><span class="mm-cname">麦田新版自序</span><span class="mm-role">收束</span></p><p class="mm-gist">麦田新版自序交代再版缘起，把这本书交回读者</p><span class="mm-quote">「《活着》在台湾出版十四年来，每年加印。」</span></li>
 </ol>
 </details>
 <footer class="site-footer">

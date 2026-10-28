@@ -16,8 +16,8 @@
 .mm-bar i{display:block;height:100%;background:linear-gradient(90deg,#8a9b6e,#c2b280)}
 .mm-svgwrap{overflow-x:auto;padding:.4em 0 1em;border-bottom:1px solid var(--line)}
 .mm-svg{width:100%;height:auto;min-width:760px}
-.mm-spine{margin:.9em 0;border-left:3px solid #d9d0bd;padding:.1em 0 .1em .9em}
-.mm-spine[open]{border-left-color:#8a9b6e}
+.mm-spine{margin:1.15em 0;border-left:3px solid #ece4d3;padding:.1em 0 .1em .85em}
+.mm-spine[open]{border-left-color:#d8cdb4}
 .mm-spine>summary{display:flex;gap:.6em;align-items:baseline;cursor:pointer;
   list-style:none;padding:.35em 0}
 .mm-spine>summary::-webkit-details-marker{display:none}
@@ -26,24 +26,32 @@
 .mm-label{font-weight:600;font-size:1rem;color:var(--ink)}
 .mm-cnt{margin-left:auto;font-size:.74rem;color:var(--muted)}
 .mm-why{font-size:.8rem;color:var(--muted);margin:.1em 0 .8em;line-height:1.7}
-.mm-tree{list-style:none;padding:0;margin:0}
-.mm-tree li{position:relative;padding:.42em 0 .42em 1.1em;border-left:1px dotted #cfc6b4;
-  margin-left:.5em}
-.mm-tree li:before{content:"";position:absolute;left:0;top:1.05em;width:.7em;
-  border-top:1px dotted #cfc6b4}
-.mm-ch{margin:0;font-size:.92rem;color:var(--ink)}
-.mm-ch b{color:#a9a08d;font-weight:500;font-size:.8rem;margin-right:.4em}
-.mm-role{font-size:.68rem;padding:.05em .4em;border-radius:3px;margin-left:.5em;
-  vertical-align:.1em;white-space:nowrap}
-.r-pre{background:#eef0e6;color:#6b7a4e}.r-th{background:#eae7f0;color:#5f5578}
-.r-cnt{background:#f6e9e4;color:#946350}.r-case{background:#e8eff1;color:#4f7380}
-.r-end{background:#f2ecdf;color:#8a7442}
-.mm-gist{margin:.18em 0 .3em;font-size:.84rem;line-height:1.75;color:#4a443b}
-.mm-chip{display:inline-block;font-size:.68rem;color:#6b6152;background:#f2ecdf;
-  border-radius:9px;padding:.05em .5em;margin:.15em .25em .15em 0}
-.mm-anchor{display:block;font-size:.78rem;color:#8a8272;line-height:1.7;
-  border-left:2px dotted #d9d0bd;padding-left:.7em;margin-top:.3em}
-@media(max-width:720px){.mm-svg{min-width:640px}}
+.mm-tree{list-style:none;padding:0;margin:.15em 0 0}
+/* 章条目：与通读页 .ch-item 对齐（无卡片/无彩条/虚线分隔），行高按手机可读行数收紧 */
+.mm-cn{padding:8px 0;border-bottom:1px dashed #eee8dc}
+.mm-cn:last-child{border-bottom:0}
+.mm-chead{display:flex;flex-wrap:wrap;gap:2px 10px;align-items:baseline;margin:0}
+.mm-cno{flex:none;min-width:1.7em;color:#bf8247;font-weight:700;font-size:.82rem;
+  font-variant-numeric:tabular-nums}
+.mm-cname{flex:0 1 auto;min-width:0;font-size:.92rem;line-height:1.6;color:var(--ink);
+  word-break:break-word}
+.mm-role{flex:none;font-size:.68rem;color:#8a8272;line-height:1.6;white-space:nowrap}
+.mm-gist{margin:.15em 0 .2em;font-size:.86rem;line-height:1.75;color:#4a443b}
+.mm-chip{display:inline-block;font-size:.68rem;color:#6b6152;background:#f4f1e6;
+  border-radius:9px;padding:.05em .5em;margin:.1em .28em .1em 0}
+/* 引文块取通读页 ul.ch-quote 的观感：浅米底 + 金色左线 */
+.mm-quote{display:block;margin:.3em 0 .1em;padding:7px 11px;background:#fdf8ee;
+  border-left:3px solid var(--gold);border-radius:0 8px 8px 0;
+  font-size:.8rem;line-height:1.75;color:#6b5c43}
+@media(max-width:720px){
+  .mm-svg{min-width:640px}
+  /* 手机：章条目再收紧一点，一屏多两行 */
+  .mm-cn{padding:7px 0}
+  .mm-chead{gap:8px}
+  .mm-cname{font-size:.9rem}
+  .mm-gist{font-size:.84rem;line-height:1.7}
+  .mm-quote{padding:6px 9px;font-size:.78rem}
+}
 </style>
 </head>
 <body>
@@ -128,75 +136,75 @@
 <summary><span class="mm-id">A</span><span class="mm-label">三人成局</span><span class="mm-cnt">3 章</span></summary>
 <p class="mm-why">肖亚文托孤、私募清盘、韩楚风上位，先把三个人的位置与利益关系摆好。</p>
 <ol class="mm-tree">
-<li class="r-pre"><p class="mm-ch"><b>1</b> 第一章 万里航线暗藏玄机：肖亚文的千里布局与“极品混混”初现<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">肖亚文跨洋托孤，把丁元英安置进古城，也把芮小丹拉进局中</p><span class="mm-anchor">「肖亚文为这小事耗费了两万元，要知道那可是95年啊。」</span></li>
-<li class="r-pre"><p class="mm-ch"><b>2</b> 第二章 私募帝国戛然而止！丁元英的“汉奸”争议与最后良知<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">私募基金戛然清盘，丁元英背「汉奸」之名退出，交代他的能力与边界</p><span class="mm-anchor">「这种私募模式起源于上世纪20年代的美国，有钱人通过私下的人脉介绍，把钱投到类似石油、钢铁、铁路等风险较大的新兴行业。」</span></li>
-<li class="r-pre"><p class="mm-ch"><b>3</b> 第三章 权力暗战终极法则：韩楚风“潜龙勿用”制胜，揭秘文化属性第一定律！<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">韩楚风借「潜龙勿用」上位，示范一次按规律办事的完整操作</p><span class="mm-anchor">「陈茹深知韩楚风身处正天集团总经理的高位，是不能轻易欠下人情的。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">1</span><span class="mm-cname">第一章 万里航线暗藏玄机：肖亚文的千里布局与“极品混混”初现</span><span class="mm-role">铺垫</span></p><p class="mm-gist">肖亚文跨洋托孤，把丁元英安置进古城，也把芮小丹拉进局中</p><span class="mm-quote">「肖亚文为这小事耗费了两万元，要知道那可是95年啊。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">2</span><span class="mm-cname">第二章 私募帝国戛然而止！丁元英的“汉奸”争议与最后良知</span><span class="mm-role">铺垫</span></p><p class="mm-gist">私募基金戛然清盘，丁元英背「汉奸」之名退出，交代他的能力与边界</p><span class="mm-quote">「这种私募模式起源于上世纪20年代的美国，有钱人通过私下的人脉介绍，把钱投到类似石油、钢铁、铁路等风险较大的新兴行业。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">3</span><span class="mm-cname">第三章 权力暗战终极法则：韩楚风“潜龙勿用”制胜，揭秘文化属性第一定律！</span><span class="mm-role">铺垫</span></p><p class="mm-gist">韩楚风借「潜龙勿用」上位，示范一次按规律办事的完整操作</p><span class="mm-quote">「陈茹深知韩楚风身处正天集团总经理的高位，是不能轻易欠下人情的。」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">B</span><span class="mm-label">文化属性立论</span><span class="mm-cnt">4 章</span></summary>
 <p class="mm-why">借酒桌与日常把「文化属性」讲成一套可操作的判断标准，是全书命题的正面陈述。</p>
 <ol class="mm-tree">
-<li class="r-th"><p class="mm-ch"><b>4</b> 第四章 酒后真言震碎三观：丁元英撕开“文化属性”的残酷真相<span class="mm-role r-th">立论</span></p><p class="mm-gist">酒桌上正面拆解「文化属性」：习惯与认知如何决定人的结局</p><span class="mm-anchor">「无论个人或国家，命运皆其文化属性的产物。」</span></li>
-<li class="r-case"><p class="mm-ch"><b>5</b> 第五章 古城隐居的“极品混混”：丁元英的蜗居生活与音响震撼<span class="mm-role r-case">案例</span></p><p class="mm-gist">古城蜗居与音响，用极端简朴的物质生活反证他对规律的依赖</p><span class="mm-anchor">「这是未曾入住、未经装修的房子，比毛坯房稍好。」</span></li>
-<li class="r-th"><p class="mm-ch"><b>6</b> 第六章 忠孝枷锁VS天道无情：丁元英的“不忠不孝”颠覆传统<span class="mm-role r-th">立论</span></p><p class="mm-gist">父亲病危时选择不抢救，把「忠孝」与「天道」摆成一道必须选边的题</p><span class="mm-anchor">「从传统角度看，丁元英被视为不忠不孝之人。」</span></li>
-<li class="r-th"><p class="mm-ch"><b>7</b> 第七章 弱势文化如何破局？丁元英的“实事求是”生存密码<span class="mm-role r-th">立论</span></p><p class="mm-gist">把传统文化判为弱势文化，提出「实事求是」是唯一的破局法</p><span class="mm-anchor">「只要一个民族能够存在并持续发展，就表明其文化具备适应外部变化并能做出调整的特性。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">4</span><span class="mm-cname">第四章 酒后真言震碎三观：丁元英撕开“文化属性”的残酷真相</span><span class="mm-role">立论</span></p><p class="mm-gist">酒桌上正面拆解「文化属性」：习惯与认知如何决定人的结局</p><span class="mm-quote">「无论个人或国家，命运皆其文化属性的产物。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">5</span><span class="mm-cname">第五章 古城隐居的“极品混混”：丁元英的蜗居生活与音响震撼</span><span class="mm-role">案例</span></p><p class="mm-gist">古城蜗居与音响，用极端简朴的物质生活反证他对规律的依赖</p><span class="mm-quote">「这是未曾入住、未经装修的房子，比毛坯房稍好。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">6</span><span class="mm-cname">第六章 忠孝枷锁VS天道无情：丁元英的“不忠不孝”颠覆传统</span><span class="mm-role">立论</span></p><p class="mm-gist">父亲病危时选择不抢救，把「忠孝」与「天道」摆成一道必须选边的题</p><span class="mm-quote">「从传统角度看，丁元英被视为不忠不孝之人。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">7</span><span class="mm-cname">第七章 弱势文化如何破局？丁元英的“实事求是”生存密码</span><span class="mm-role">立论</span></p><p class="mm-gist">把传统文化判为弱势文化，提出「实事求是」是唯一的破局法</p><span class="mm-quote">「只要一个民族能够存在并持续发展，就表明其文化具备适应外部变化并能做出调整的特性。」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">C</span><span class="mm-label">情与道的错位</span><span class="mm-cnt">4 章</span></summary>
 <p class="mm-why">鸿门宴与表白失败，把两个境界不对等的人放进同一段关系里，暴露「觉悟」不可赠予。</p>
 <ol class="mm-tree">
-<li class="r-case"><p class="mm-ch"><b>8</b> 第八章 鸿门宴上的满级嘲讽：丁元英一首《自嘲》击碎虚伪面具<span class="mm-role r-case">案例</span></p><p class="mm-gist">鸿门宴上以一首《自嘲》反杀，文化资本在饭桌上完成一次兑现</p><span class="mm-anchor">「冯世杰到酒店门口时还不知道饭局的具体情况，他原以为是自己请客，看到酒店档次担心带的钱不够，但既然来了只能随机应变。」</span></li>
-<li class="r-th"><p class="mm-ch"><b>9</b> 第九章 地狱之门or圣洁之爱？芮小丹“灵肉合一”的致命吸引<span class="mm-role r-th">立论</span></p><p class="mm-gist">芮小丹以「灵肉合一」逼近丁元英，两种境界的差距第一次显形</p><span class="mm-anchor">「太极图的关键在于如何将这理念用于现实生活：工作、学习、投资理财、个人成长及更客观看待问题等均有益处。」</span></li>
-<li class="r-th"><p class="mm-ch"><b>10</b> 第十章 心是愿望，神是境界：芮小丹与丁元英的灵魂碰撞<span class="mm-role r-th">立论</span></p><p class="mm-gist">心是愿望、神是境界，把「实事求是」拆成可执行的前提条件</p><span class="mm-anchor">「实际情况包含众多层面：内在的(如自身性格、能力)、外在的(如环境、资源)、个人的、环境的以及大趋势等。」</span></li>
-<li class="r-th"><p class="mm-ch"><b>11</b> 第十一章 核心铁律！丁元英断言：客观规律不以人的意志为转移<span class="mm-role r-th">立论</span></p><p class="mm-gist">表白被拒，抛出「客观规律不以人的意志为转移」这条硬约束</p><span class="mm-anchor">「芮小丹的行为是全然自在地顺应了生命本能的表达，而丁元英则出于由衷的敬佩选择了克制本能。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">8</span><span class="mm-cname">第八章 鸿门宴上的满级嘲讽：丁元英一首《自嘲》击碎虚伪面具</span><span class="mm-role">案例</span></p><p class="mm-gist">鸿门宴上以一首《自嘲》反杀，文化资本在饭桌上完成一次兑现</p><span class="mm-quote">「冯世杰到酒店门口时还不知道饭局的具体情况，他原以为是自己请客，看到酒店档次担心带的钱不够，但既然来了只能随机应变。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">9</span><span class="mm-cname">第九章 地狱之门or圣洁之爱？芮小丹“灵肉合一”的致命吸引</span><span class="mm-role">立论</span></p><p class="mm-gist">芮小丹以「灵肉合一」逼近丁元英，两种境界的差距第一次显形</p><span class="mm-quote">「太极图的关键在于如何将这理念用于现实生活：工作、学习、投资理财、个人成长及更客观看待问题等均有益处。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">10</span><span class="mm-cname">第十章 心是愿望，神是境界：芮小丹与丁元英的灵魂碰撞</span><span class="mm-role">立论</span></p><p class="mm-gist">心是愿望、神是境界，把「实事求是」拆成可执行的前提条件</p><span class="mm-quote">「实际情况包含众多层面：内在的(如自身性格、能力)、外在的(如环境、资源)、个人的、环境的以及大趋势等。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">11</span><span class="mm-cname">第十一章 核心铁律！丁元英断言：客观规律不以人的意志为转移</span><span class="mm-role">立论</span></p><p class="mm-gist">表白被拒，抛出「客观规律不以人的意志为转移」这条硬约束</p><span class="mm-quote">「芮小丹的行为是全然自在地顺应了生命本能的表达，而丁元英则出于由衷的敬佩选择了克制本能。」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">D</span><span class="mm-label">救赎的试验</span><span class="mm-cnt">3 章</span></summary>
 <p class="mm-why">从撬开王明阳到给王庙村布局，抽象的「得救之道」第一次落成具体计划。</p>
 <ol class="mm-tree">
-<li class="r-case"><p class="mm-ch"><b>12</b> 第十二章 冷血杀手的灵魂救赎：芮小丹如何让“冷面诸葛”开口忏悔？<span class="mm-role r-case">案例</span></p><p class="mm-gist">芮小丹从人性需求切入撬开王明阳，证明对话可以绕开对抗</p><span class="mm-anchor">「芮小丹说：“你我枪口对着对方脑袋的时候都没害怕，怎么现在害怕了？”。」</span></li>
-<li class="r-pre"><p class="mm-ch"><b>13</b> 第十三章 神话礼物降临：丁元英布局，叶冯刘的命运齿轮开始转动<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">神话礼物成形，叶冯刘三人被卷进同一场赌局</p><span class="mm-anchor">「芮小丹成功完成了对王明阳的审讯，丁元英提供的思路让王明阳找到了忏悔的理由，灵魂得到了安抚。」</span></li>
-<li class="r-th"><p class="mm-ch"><b>14</b> 第十四章 杀富济贫引爆争议！丁元英给国人的当头棒喝与生存法则<span class="mm-role r-th">立论</span></p><p class="mm-gist">「杀富济贫」被明确提出，扶贫同时被判为一次文化手术</p><span class="mm-anchor">「这打破了他沉寂的生活。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">12</span><span class="mm-cname">第十二章 冷血杀手的灵魂救赎：芮小丹如何让“冷面诸葛”开口忏悔？</span><span class="mm-role">案例</span></p><p class="mm-gist">芮小丹从人性需求切入撬开王明阳，证明对话可以绕开对抗</p><span class="mm-quote">「芮小丹说：“你我枪口对着对方脑袋的时候都没害怕，怎么现在害怕了？”。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">13</span><span class="mm-cname">第十三章 神话礼物降临：丁元英布局，叶冯刘的命运齿轮开始转动</span><span class="mm-role">铺垫</span></p><p class="mm-gist">神话礼物成形，叶冯刘三人被卷进同一场赌局</p><span class="mm-quote">「芮小丹成功完成了对王明阳的审讯，丁元英提供的思路让王明阳找到了忏悔的理由，灵魂得到了安抚。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">14</span><span class="mm-cname">第十四章 杀富济贫引爆争议！丁元英给国人的当头棒喝与生存法则</span><span class="mm-role">立论</span></p><p class="mm-gist">「杀富济贫」被明确提出，扶贫同时被判为一次文化手术</p><span class="mm-quote">「这打破了他沉寂的生活。」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">E</span><span class="mm-label">五台山问价</span><span class="mm-cnt">4 章</span></summary>
 <p class="mm-why">为「杀富济贫」寻求正当性，把全书从商业操作抬到伦理层面。</p>
 <ol class="mm-tree">
-<li class="r-th"><p class="mm-ch"><b>15</b> 第十五章 五台山问道终极禅机：丁元英的“罪与罚”与天道哲思<span class="mm-role r-th">立论</span></p><p class="mm-gist">上五台山问价，把商业计划和「罪与罚」摆到同一张桌上</p><span class="mm-anchor">「按照丁元英的计划执行，这两个目的都能达到。」</span></li>
-<li class="r-th"><p class="mm-ch"><b>16</b> 第十六章 佛门净地，一首词敲开高僧门<span class="mm-role r-th">立论</span></p><p class="mm-gist">一首词敲开山门，得救之道被界定为「觉悟」而非「给予」</p><span class="mm-anchor">「佛之道：佛是什么？为什么要修佛？以及怎样修佛？」</span></li>
-<li class="r-th"><p class="mm-ch"><b>17</b> 第十七章 得救之路：杀富济贫是解药还是毒药？<span class="mm-role r-th">立论</span></p><p class="mm-gist">追问杀富济贫是解药还是毒药，逼出「救主心态」本身的病灶</p><span class="mm-anchor">「这会造成所谓的“精神绝症”。」</span></li>
-<li class="r-th"><p class="mm-ch"><b>18</b> 第十八章 五台山论道：从“无欲不知”到“悟道知天命”<span class="mm-role r-th">立论</span></p><p class="mm-gist">论道后改「修行」为「方知」，把顿悟降格为认知的逐步到位</p><span class="mm-anchor">「九个字的改动，理虽同是，而意趣意境，却全然不同，即灭嗔怒我慢，直指究竟。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">15</span><span class="mm-cname">第十五章 五台山问道终极禅机：丁元英的“罪与罚”与天道哲思</span><span class="mm-role">立论</span></p><p class="mm-gist">上五台山问价，把商业计划和「罪与罚」摆到同一张桌上</p><span class="mm-quote">「按照丁元英的计划执行，这两个目的都能达到。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">16</span><span class="mm-cname">第十六章 佛门净地，一首词敲开高僧门</span><span class="mm-role">立论</span></p><p class="mm-gist">一首词敲开山门，得救之道被界定为「觉悟」而非「给予」</p><span class="mm-quote">「佛之道：佛是什么？为什么要修佛？以及怎样修佛？」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">17</span><span class="mm-cname">第十七章 得救之路：杀富济贫是解药还是毒药？</span><span class="mm-role">立论</span></p><p class="mm-gist">追问杀富济贫是解药还是毒药，逼出「救主心态」本身的病灶</p><span class="mm-quote">「这会造成所谓的“精神绝症”。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">18</span><span class="mm-cname">第十八章 五台山论道：从“无欲不知”到“悟道知天命”</span><span class="mm-role">立论</span></p><p class="mm-gist">论道后改「修行」为「方知」，把顿悟降格为认知的逐步到位</p><span class="mm-quote">「九个字的改动，理虽同是，而意趣意境，却全然不同，即灭嗔怒我慢，直指究竟。」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">F</span><span class="mm-label">商战与代价</span><span class="mm-cnt">13 章</span></summary>
 <p class="mm-why">格律诗以成本优势击穿乐圣，胜负揭开后代价落在具体的人身上。</p>
 <ol class="mm-tree">
-<li class="r-case"><p class="mm-ch"><b>19</b> 第十九章 丁元英四气之谜：三分贵气，一分痞气<span class="mm-role r-case">案例</span></p><p class="mm-gist">用「四气」给丁元英定性，人物判断标准被具体化</p><span class="mm-anchor">「静气对多数人最值得修炼也最常见，丁元英对物质生活要求不高，更看重精神享受。」</span></li>
-<li class="r-case"><p class="mm-ch"><b>20</b> 第二十章 刘牧师三问破防：了妄唯真即是神！<span class="mm-role r-case">案例</span></p><p class="mm-gist">刘牧师三问被反破，「了妄唯真即是神」把神还原为认知的彻底</p><span class="mm-anchor">「小说在这里着重描写了王庙村的生产环境、生产工序以及各个农户辛苦工作的场景。」</span></li>
-<li class="r-case"><p class="mm-ch"><b>21</b> 第二十一章 一顿天价饭局，揭开中国式人情潜规则<span class="mm-role r-case">案例</span></p><p class="mm-gist">天价饭局上，中国式人情被拆成可计价的交换结构</p><span class="mm-anchor">「芮小丹认为这不是简单与复杂的问题，而是生存境界的差异。」</span></li>
-<li class="r-case"><p class="mm-ch"><b>22</b> 第二十二章 叶晓明神操作：靠一张唱片征服行业大佬<span class="mm-role r-case">案例</span></p><p class="mm-gist">叶晓明凭一张唱片进入行业，弱势文化者的第一次跃迁及其局限</p><span class="mm-anchor">「他不像刘冰那样贪得无厌、不择手段，也不像冯世杰那样踏实憨厚、大智若愚。」</span></li>
-<li class="r-case"><p class="mm-ch"><b>23</b> 第二十三章 纯净与名利：柏林烟雾里的佛法较量<span class="mm-role r-case">案例</span></p><p class="mm-gist">柏林一行，佛法与名利在同一次出差里互相检验</p><span class="mm-anchor">「出发前，小丹接到局长的电话。王明阳将在当天执行死刑，希望在行刑前见小丹一面。小丹同意并目送了他的死亡。」</span></li>
-<li class="r-case"><p class="mm-ch"><b>24</b> 第二十四章 爱情永恒，圣地无言！丁、芮的觉悟之证<span class="mm-role r-case">案例</span></p><p class="mm-gist">测评与代理落定，爱情被写成一次「觉悟之证」</p><span class="mm-anchor">「詹妮花费重金11万马克委托柏林音响世界杂志组织专家测评。」</span></li>
-<li class="r-case"><p class="mm-ch"><b>25</b> 第二十五章 成本陷阱！乐圣的傲慢代价<span class="mm-role r-case">案例</span></p><p class="mm-gist">格律诗以成本结构奇袭，乐圣的傲慢开始计价</p><span class="mm-anchor">「格律诗公司向乐圣公司提出了为期一年、每月订购100套乐圣旗舰套件的合作意向。」</span></li>
-<li class="r-cnt"><p class="mm-ch"><b>26</b> 第二十六章 精神绝症爆发！退股背后的文化深渊<span class="mm-role r-cnt">反证</span></p><p class="mm-gist">三人退股，知行合一在利益面前现出原形，是全书最锋利的一次反证</p><span class="mm-anchor">「知和行，可以理解成认知和实践。认知啥？认知的是事物内在的本质规律，好比五行相克是规律，贪嗔痴慢疑阻碍个人发展也是规律。行」</span></li>
-<li class="r-case"><p class="mm-ch"><b>27</b> 第二十七章 认知变现！肖亚文的牌桌时刻<span class="mm-role r-case">案例</span></p><p class="mm-gist">肖亚文接手诉讼，认知差距直接兑换成股权与位置</p><span class="mm-anchor">「叶晓明依据之前商议的结果向欧阳雪提出退股要求，欧阳雪几乎立刻同意了。」</span></li>
-<li class="r-th"><p class="mm-ch"><b>28</b> 第二十八章 开天眼！神即道的终极顿悟<span class="mm-role r-th">立论</span></p><p class="mm-gist">芮小丹转向「觉他」，从理解一个人到理解更宏大的规律</p><span class="mm-anchor">「芮小丹最近陷入持续思考，反复琢磨王庙村事件。」</span></li>
-<li class="r-case"><p class="mm-ch"><b>29</b> 第二十九章 伯爵总裁的阳谋：650万收购是馅饼还是陷阱？<span class="mm-role r-case">案例</span></p><p class="mm-gist">伯爵高价收购，善意与算计在同一份报价里难以区分</p><span class="mm-anchor">「公司资产有2亿1000万，占了家庭影院市场27%的份额。」</span></li>
-<li class="r-cnt"><p class="mm-ch"><b>30</b> 第三十章 乐圣溃败真相：生产线竟在穷山沟！<span class="mm-role r-cnt">反证</span></p><p class="mm-gist">乐圣败于穷山沟里的生产线，规模化认知被成本现实击穿</p><span class="mm-anchor">「乐圣的矛(产品品质)非常锋利，在行业里是顶尖的，没人比得上。」</span></li>
-<li class="r-cnt"><p class="mm-ch"><b>31</b> 第三十一章 林雨峰绝命三问：杀富真能救贫吗？<span class="mm-role r-cnt">反证</span></p><p class="mm-gist">林雨峰三问后赴死，证明强势文化也会把人推到绝路</p><span class="mm-anchor">「生命的本质就是一场游戏，每个生命都是一次游戏体验。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">19</span><span class="mm-cname">第十九章 丁元英四气之谜：三分贵气，一分痞气</span><span class="mm-role">案例</span></p><p class="mm-gist">用「四气」给丁元英定性，人物判断标准被具体化</p><span class="mm-quote">「静气对多数人最值得修炼也最常见，丁元英对物质生活要求不高，更看重精神享受。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">20</span><span class="mm-cname">第二十章 刘牧师三问破防：了妄唯真即是神！</span><span class="mm-role">案例</span></p><p class="mm-gist">刘牧师三问被反破，「了妄唯真即是神」把神还原为认知的彻底</p><span class="mm-quote">「小说在这里着重描写了王庙村的生产环境、生产工序以及各个农户辛苦工作的场景。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">21</span><span class="mm-cname">第二十一章 一顿天价饭局，揭开中国式人情潜规则</span><span class="mm-role">案例</span></p><p class="mm-gist">天价饭局上，中国式人情被拆成可计价的交换结构</p><span class="mm-quote">「芮小丹认为这不是简单与复杂的问题，而是生存境界的差异。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">22</span><span class="mm-cname">第二十二章 叶晓明神操作：靠一张唱片征服行业大佬</span><span class="mm-role">案例</span></p><p class="mm-gist">叶晓明凭一张唱片进入行业，弱势文化者的第一次跃迁及其局限</p><span class="mm-quote">「他不像刘冰那样贪得无厌、不择手段，也不像冯世杰那样踏实憨厚、大智若愚。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">23</span><span class="mm-cname">第二十三章 纯净与名利：柏林烟雾里的佛法较量</span><span class="mm-role">案例</span></p><p class="mm-gist">柏林一行，佛法与名利在同一次出差里互相检验</p><span class="mm-quote">「出发前，小丹接到局长的电话。王明阳将在当天执行死刑，希望在行刑前见小丹一面。小丹同意并目送了他的死亡。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">24</span><span class="mm-cname">第二十四章 爱情永恒，圣地无言！丁、芮的觉悟之证</span><span class="mm-role">案例</span></p><p class="mm-gist">测评与代理落定，爱情被写成一次「觉悟之证」</p><span class="mm-quote">「詹妮花费重金11万马克委托柏林音响世界杂志组织专家测评。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">25</span><span class="mm-cname">第二十五章 成本陷阱！乐圣的傲慢代价</span><span class="mm-role">案例</span></p><p class="mm-gist">格律诗以成本结构奇袭，乐圣的傲慢开始计价</p><span class="mm-quote">「格律诗公司向乐圣公司提出了为期一年、每月订购100套乐圣旗舰套件的合作意向。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">26</span><span class="mm-cname">第二十六章 精神绝症爆发！退股背后的文化深渊</span><span class="mm-role">反证</span></p><p class="mm-gist">三人退股，知行合一在利益面前现出原形，是全书最锋利的一次反证</p><span class="mm-quote">「知和行，可以理解成认知和实践。认知啥？认知的是事物内在的本质规律，好比五行相克是规律，贪嗔痴慢疑阻碍个人发展也是规律。行」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">27</span><span class="mm-cname">第二十七章 认知变现！肖亚文的牌桌时刻</span><span class="mm-role">案例</span></p><p class="mm-gist">肖亚文接手诉讼，认知差距直接兑换成股权与位置</p><span class="mm-quote">「叶晓明依据之前商议的结果向欧阳雪提出退股要求，欧阳雪几乎立刻同意了。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">28</span><span class="mm-cname">第二十八章 开天眼！神即道的终极顿悟</span><span class="mm-role">立论</span></p><p class="mm-gist">芮小丹转向「觉他」，从理解一个人到理解更宏大的规律</p><span class="mm-quote">「芮小丹最近陷入持续思考，反复琢磨王庙村事件。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">29</span><span class="mm-cname">第二十九章 伯爵总裁的阳谋：650万收购是馅饼还是陷阱？</span><span class="mm-role">案例</span></p><p class="mm-gist">伯爵高价收购，善意与算计在同一份报价里难以区分</p><span class="mm-quote">「公司资产有2亿1000万，占了家庭影院市场27%的份额。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">30</span><span class="mm-cname">第三十章 乐圣溃败真相：生产线竟在穷山沟！</span><span class="mm-role">反证</span></p><p class="mm-gist">乐圣败于穷山沟里的生产线，规模化认知被成本现实击穿</p><span class="mm-quote">「乐圣的矛(产品品质)非常锋利，在行业里是顶尖的，没人比得上。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">31</span><span class="mm-cname">第三十一章 林雨峰绝命三问：杀富真能救贫吗？</span><span class="mm-role">反证</span></p><p class="mm-gist">林雨峰三问后赴死，证明强势文化也会把人推到绝路</p><span class="mm-quote">「生命的本质就是一场游戏，每个生命都是一次游戏体验。」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">G</span><span class="mm-label">审判与收束</span><span class="mm-cnt">2 章</span></summary>
 <p class="mm-why">小丹之死与刘冰的空白档案袋，把「文化属性」从论断变成判决。</p>
 <ol class="mm-tree">
-<li class="r-end"><p class="mm-ch"><b>32</b> 第三十二章 芮小丹最后一通电话：沉默是最残酷的回答<span class="mm-role r-end">收束</span></p><p class="mm-gist">芮小丹最后一通电话无回应，沉默成为最重的回答</p><span class="mm-anchor">「小说中三位主要角色林雨峰、芮小丹、刘冰都是自杀而亡，其中小丹的自杀最为令人心痛和无奈。」</span></li>
-<li class="r-end"><p class="mm-ch"><b>33</b> 第三十三章 刘冰跳楼瞬间：档案袋里竟然只有一叠白纸<span class="mm-role r-end">收束</span></p><p class="mm-gist">刘冰打开档案袋只看到白纸，投机者死于自己设定的规则</p><span class="mm-anchor">「他的利己主义不是那种包装得很好的精致利己，而是非常粗糙、浮在表面上的利己，一眼就能被人看穿。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">32</span><span class="mm-cname">第三十二章 芮小丹最后一通电话：沉默是最残酷的回答</span><span class="mm-role">收束</span></p><p class="mm-gist">芮小丹最后一通电话无回应，沉默成为最重的回答</p><span class="mm-quote">「小说中三位主要角色林雨峰、芮小丹、刘冰都是自杀而亡，其中小丹的自杀最为令人心痛和无奈。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">33</span><span class="mm-cname">第三十三章 刘冰跳楼瞬间：档案袋里竟然只有一叠白纸</span><span class="mm-role">收束</span></p><p class="mm-gist">刘冰打开档案袋只看到白纸，投机者死于自己设定的规则</p><span class="mm-quote">「他的利己主义不是那种包装得很好的精致利己，而是非常粗糙、浮在表面上的利己，一眼就能被人看穿。」</span></li>
 </ol>
 </details>
 <footer class="site-footer">

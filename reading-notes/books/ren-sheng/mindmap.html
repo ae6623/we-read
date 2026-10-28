@@ -16,8 +16,8 @@
 .mm-bar i{display:block;height:100%;background:linear-gradient(90deg,#8a9b6e,#c2b280)}
 .mm-svgwrap{overflow-x:auto;padding:.4em 0 1em;border-bottom:1px solid var(--line)}
 .mm-svg{width:100%;height:auto;min-width:760px}
-.mm-spine{margin:.9em 0;border-left:3px solid #d9d0bd;padding:.1em 0 .1em .9em}
-.mm-spine[open]{border-left-color:#8a9b6e}
+.mm-spine{margin:1.15em 0;border-left:3px solid #ece4d3;padding:.1em 0 .1em .85em}
+.mm-spine[open]{border-left-color:#d8cdb4}
 .mm-spine>summary{display:flex;gap:.6em;align-items:baseline;cursor:pointer;
   list-style:none;padding:.35em 0}
 .mm-spine>summary::-webkit-details-marker{display:none}
@@ -26,24 +26,32 @@
 .mm-label{font-weight:600;font-size:1rem;color:var(--ink)}
 .mm-cnt{margin-left:auto;font-size:.74rem;color:var(--muted)}
 .mm-why{font-size:.8rem;color:var(--muted);margin:.1em 0 .8em;line-height:1.7}
-.mm-tree{list-style:none;padding:0;margin:0}
-.mm-tree li{position:relative;padding:.42em 0 .42em 1.1em;border-left:1px dotted #cfc6b4;
-  margin-left:.5em}
-.mm-tree li:before{content:"";position:absolute;left:0;top:1.05em;width:.7em;
-  border-top:1px dotted #cfc6b4}
-.mm-ch{margin:0;font-size:.92rem;color:var(--ink)}
-.mm-ch b{color:#a9a08d;font-weight:500;font-size:.8rem;margin-right:.4em}
-.mm-role{font-size:.68rem;padding:.05em .4em;border-radius:3px;margin-left:.5em;
-  vertical-align:.1em;white-space:nowrap}
-.r-pre{background:#eef0e6;color:#6b7a4e}.r-th{background:#eae7f0;color:#5f5578}
-.r-cnt{background:#f6e9e4;color:#946350}.r-case{background:#e8eff1;color:#4f7380}
-.r-end{background:#f2ecdf;color:#8a7442}
-.mm-gist{margin:.18em 0 .3em;font-size:.84rem;line-height:1.75;color:#4a443b}
-.mm-chip{display:inline-block;font-size:.68rem;color:#6b6152;background:#f2ecdf;
-  border-radius:9px;padding:.05em .5em;margin:.15em .25em .15em 0}
-.mm-anchor{display:block;font-size:.78rem;color:#8a8272;line-height:1.7;
-  border-left:2px dotted #d9d0bd;padding-left:.7em;margin-top:.3em}
-@media(max-width:720px){.mm-svg{min-width:640px}}
+.mm-tree{list-style:none;padding:0;margin:.15em 0 0}
+/* 章条目：与通读页 .ch-item 对齐（无卡片/无彩条/虚线分隔），行高按手机可读行数收紧 */
+.mm-cn{padding:8px 0;border-bottom:1px dashed #eee8dc}
+.mm-cn:last-child{border-bottom:0}
+.mm-chead{display:flex;flex-wrap:wrap;gap:2px 10px;align-items:baseline;margin:0}
+.mm-cno{flex:none;min-width:1.7em;color:#bf8247;font-weight:700;font-size:.82rem;
+  font-variant-numeric:tabular-nums}
+.mm-cname{flex:0 1 auto;min-width:0;font-size:.92rem;line-height:1.6;color:var(--ink);
+  word-break:break-word}
+.mm-role{flex:none;font-size:.68rem;color:#8a8272;line-height:1.6;white-space:nowrap}
+.mm-gist{margin:.15em 0 .2em;font-size:.86rem;line-height:1.75;color:#4a443b}
+.mm-chip{display:inline-block;font-size:.68rem;color:#6b6152;background:#f4f1e6;
+  border-radius:9px;padding:.05em .5em;margin:.1em .28em .1em 0}
+/* 引文块取通读页 ul.ch-quote 的观感：浅米底 + 金色左线 */
+.mm-quote{display:block;margin:.3em 0 .1em;padding:7px 11px;background:#fdf8ee;
+  border-left:3px solid var(--gold);border-radius:0 8px 8px 0;
+  font-size:.8rem;line-height:1.75;color:#6b5c43}
+@media(max-width:720px){
+  .mm-svg{min-width:640px}
+  /* 手机：章条目再收紧一点，一屏多两行 */
+  .mm-cn{padding:7px 0}
+  .mm-chead{gap:8px}
+  .mm-cname{font-size:.9rem}
+  .mm-gist{font-size:.84rem;line-height:1.7}
+  .mm-quote{padding:6px 9px;font-size:.78rem}
+}
 </style>
 </head>
 <body>
@@ -115,65 +123,65 @@
 <summary><span class="mm-id">A</span><span class="mm-label">启程与中欧观察</span><span class="mm-cnt">5 章</span></summary>
 <p class="mm-why">记录旅行准备及对中欧经济形势的初步预判，确立了作者通过实地考察评估投资环境的视角。</p>
 <ol class="mm-tree">
-<li class="r-pre"><p class="mm-ch"><b>1</b> 飞向苏联<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">通过个人成长背景，确立作者具备强烈事业心与全球化视野的性格基调。</p><span class="mm-chip">事业心</span><span class="mm-chip">成长背景</span><span class="mm-anchor">「作者从小就表现出强烈的事业心」</span></li>
-<li class="r-pre"><p class="mm-ch"><b>2</b> 纽约<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">确立环球旅行计划，展示为实现目标而进行的物资准备与技能习得过程。</p><span class="mm-chip">环球旅行</span><span class="mm-chip">准备工作</span><span class="mm-anchor">「他们计划骑两辆摩托车，塔碧莎需要学习驾驶摩托车」</span></li>
-<li class="r-pre"><p class="mm-ch"><b>3</b> 穿越欧洲<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">通过具体的物资清单与路线规划，将环球旅行的构想转化为可执行的行动方案。</p><span class="mm-chip">物资筹备</span><span class="mm-chip">路线规划</span><span class="mm-anchor">「买了地图并规划好路线」</span></li>
-<li class="r-case"><p class="mm-ch"><b>4</b> 林茨<span class="mm-role r-case">案例</span></p><p class="mm-gist">以林茨演讲为例，论证作者对中欧经济衰退的悲观预测与市场现实间的博弈。</p><span class="mm-chip">经济预测</span><span class="mm-chip">市场反应</span><span class="mm-anchor">「作者在林茨的演讲中预测股市将下跌，引发听众质疑」</span></li>
-<li class="r-case"><p class="mm-ch"><b>5</b> 中欧<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过中欧边境的通行障碍，揭示地理边界与政治环境对跨国旅行的实际限制。</p><span class="mm-chip">地理边界</span><span class="mm-chip">通行障碍</span><span class="mm-anchor">「作者和塔碧莎在前往匈牙利的途中遇到了一系列问题」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">1</span><span class="mm-cname">飞向苏联</span><span class="mm-role">铺垫</span></p><p class="mm-gist">通过个人成长背景，确立作者具备强烈事业心与全球化视野的性格基调。</p><span class="mm-chip">事业心</span><span class="mm-chip">成长背景</span><span class="mm-quote">「作者从小就表现出强烈的事业心」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">2</span><span class="mm-cname">纽约</span><span class="mm-role">铺垫</span></p><p class="mm-gist">确立环球旅行计划，展示为实现目标而进行的物资准备与技能习得过程。</p><span class="mm-chip">环球旅行</span><span class="mm-chip">准备工作</span><span class="mm-quote">「他们计划骑两辆摩托车，塔碧莎需要学习驾驶摩托车」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">3</span><span class="mm-cname">穿越欧洲</span><span class="mm-role">铺垫</span></p><p class="mm-gist">通过具体的物资清单与路线规划，将环球旅行的构想转化为可执行的行动方案。</p><span class="mm-chip">物资筹备</span><span class="mm-chip">路线规划</span><span class="mm-quote">「买了地图并规划好路线」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">4</span><span class="mm-cname">林茨</span><span class="mm-role">案例</span></p><p class="mm-gist">以林茨演讲为例，论证作者对中欧经济衰退的悲观预测与市场现实间的博弈。</p><span class="mm-chip">经济预测</span><span class="mm-chip">市场反应</span><span class="mm-quote">「作者在林茨的演讲中预测股市将下跌，引发听众质疑」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">5</span><span class="mm-cname">中欧</span><span class="mm-role">案例</span></p><p class="mm-gist">通过中欧边境的通行障碍，揭示地理边界与政治环境对跨国旅行的实际限制。</p><span class="mm-chip">地理边界</span><span class="mm-chip">通行障碍</span><span class="mm-quote">「作者和塔碧莎在前往匈牙利的途中遇到了一系列问题」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">B</span><span class="mm-label">穿越欧亚与中国探索</span><span class="mm-cnt">5 章</span></summary>
 <p class="mm-why">从巴尔干半岛进入中国，对比不同体制下的经济活力与基础设施现状，重点关注中国企业家的潜力。</p>
 <ol class="mm-tree">
-<li class="r-case"><p class="mm-ch"><b>6</b> 前往伊斯坦布尔<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过贝尔格莱德的衰败景象，对比工业文明的维修需求与当地社会经济的停滞。</p><span class="mm-chip">社会衰败</span><span class="mm-chip">工业维修</span><span class="mm-anchor">「贝尔格莱德日益衰败，显得破落、沉闷、昏暗」</span></li>
-<li class="r-case"><p class="mm-ch"><b>7</b> 古老的土耳其斯坦<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过黑市汇率与边境检查，论证封闭经济体中非正式金融与行政管控的运作逻辑。</p><span class="mm-chip">黑市汇率</span><span class="mm-chip">行政管控</span><span class="mm-anchor">「在黑市上，我用1美元能兑换12~18卢布」</span></li>
-<li class="r-cnt"><p class="mm-ch"><b>8</b> 进入中国<span class="mm-role r-cnt">反证</span></p><p class="mm-gist">通过实地观察中国企业家精神，反证西方媒体对中国经济潜力的报道失实。</p><span class="mm-chip">企业家精神</span><span class="mm-chip">媒体偏见</span><span class="mm-anchor">「中国的企业家正全力以赴地经营企业，20年之后，他们将跻身世界上最优秀的企业家行列」</span></li>
-<li class="r-case"><p class="mm-ch"><b>9</b> 西安<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过西安的商业活力与历史底蕴，论证中国城市在现代化转型中的服务业潜力。</p><span class="mm-chip">商业活力</span><span class="mm-chip">服务业</span><span class="mm-anchor">「西安的饭菜丰盛，食材独特，体现了中国的饮食文化」</span></li>
-<li class="r-case"><p class="mm-ch"><b>10</b> 从西安到北京<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过遭遇行政干预与设备故障，揭示在特定体制下跨国旅行面临的官僚主义阻力。</p><span class="mm-chip">官僚主义</span><span class="mm-chip">行政干预</span><span class="mm-anchor">「旅游局的某位官员对我们驱车前往感到惊慌失措，并威胁说要请军队介入」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">6</span><span class="mm-cname">前往伊斯坦布尔</span><span class="mm-role">案例</span></p><p class="mm-gist">通过贝尔格莱德的衰败景象，对比工业文明的维修需求与当地社会经济的停滞。</p><span class="mm-chip">社会衰败</span><span class="mm-chip">工业维修</span><span class="mm-quote">「贝尔格莱德日益衰败，显得破落、沉闷、昏暗」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">7</span><span class="mm-cname">古老的土耳其斯坦</span><span class="mm-role">案例</span></p><p class="mm-gist">通过黑市汇率与边境检查，论证封闭经济体中非正式金融与行政管控的运作逻辑。</p><span class="mm-chip">黑市汇率</span><span class="mm-chip">行政管控</span><span class="mm-quote">「在黑市上，我用1美元能兑换12~18卢布」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">8</span><span class="mm-cname">进入中国</span><span class="mm-role">反证</span></p><p class="mm-gist">通过实地观察中国企业家精神，反证西方媒体对中国经济潜力的报道失实。</p><span class="mm-chip">企业家精神</span><span class="mm-chip">媒体偏见</span><span class="mm-quote">「中国的企业家正全力以赴地经营企业，20年之后，他们将跻身世界上最优秀的企业家行列」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">9</span><span class="mm-cname">西安</span><span class="mm-role">案例</span></p><p class="mm-gist">通过西安的商业活力与历史底蕴，论证中国城市在现代化转型中的服务业潜力。</p><span class="mm-chip">商业活力</span><span class="mm-chip">服务业</span><span class="mm-quote">「西安的饭菜丰盛，食材独特，体现了中国的饮食文化」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">10</span><span class="mm-cname">从西安到北京</span><span class="mm-role">案例</span></p><p class="mm-gist">通过遭遇行政干预与设备故障，揭示在特定体制下跨国旅行面临的官僚主义阻力。</p><span class="mm-chip">官僚主义</span><span class="mm-chip">行政干预</span><span class="mm-quote">「旅游局的某位官员对我们驱车前往感到惊慌失措，并威胁说要请军队介入」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">C</span><span class="mm-label">苏联体制的实地评估</span><span class="mm-cnt">8 章</span></summary>
 <p class="mm-why">深入苏联腹地，通过物资供应、工业产出与社会生活细节，剖析其庞大资源与落后体制的矛盾。</p>
 <ol class="mm-tree">
-<li class="r-case"><p class="mm-ch"><b>11</b> 日本：值得投资的国家<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过对比日本海关的秩序感与中国环境，论证不同体制对社会运行效率的影响。</p><span class="mm-chip">社会秩序</span><span class="mm-chip">运行效率</span><span class="mm-anchor">「美国人带着德国的摩托车从北京飞到东京，这对海关人员是有些复杂。」</span></li>
-<li class="r-case"><p class="mm-ch"><b>12</b> 在世界的边缘<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过纳霍德卡的物资匮乏与封闭状态，揭示苏联边境城市的经济孤立现状。</p><span class="mm-chip">物资匮乏</span><span class="mm-chip">经济孤立</span><span class="mm-anchor">「纳霍德卡的商店缺少商品供应，又缺少顾客」</span></li>
-<li class="r-th"><p class="mm-ch"><b>13</b> 穿越蛮荒之地<span class="mm-role r-th">立论</span></p><p class="mm-gist">通过西伯利亚恶劣路况对人的意志考验，论证实现宏大目标所需的心智投入。</p><span class="mm-chip">意志力</span><span class="mm-chip">目标导向</span><span class="mm-anchor">「作者认为对金钱和目标的追求需要全身心地投入」</span></li>
-<li class="r-case"><p class="mm-ch"><b>14</b> 西伯利亚<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过实地骑行经历，揭示西伯利亚基础设施的落后与地理环境的荒蛮。</p><span class="mm-chip">基础设施</span><span class="mm-chip">地理环境</span><span class="mm-anchor">「西伯利亚东部铺好的路少之又少」</span></li>
-<li class="r-case"><p class="mm-ch"><b>15</b> 乌兰乌德、济马和坎斯克<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过地方节日与民俗活动，论证苏联边疆地区文化传承与社会生活的独特性。</p><span class="mm-chip">民俗文化</span><span class="mm-chip">社会生活</span><span class="mm-anchor">「节日是传承了几个世纪的盛大宗族集会，充满宗教色彩和民族色彩」</span></li>
-<li class="r-th"><p class="mm-ch"><b>16</b> 新西伯利亚及其以西<span class="mm-role r-th">立论</span></p><p class="mm-gist">通过苏联资源产量的宏观数据，论证其在计划经济体制下的工业与资源规模优势。</p><span class="mm-chip">计划经济</span><span class="mm-chip">资源禀赋</span><span class="mm-anchor">「苏联蕴藏着全世界至少1/4的石油沉积物，40%的铁矿石，以及1/3的磷酸盐」</span></li>
-<li class="r-cnt"><p class="mm-ch"><b>17</b> 莫斯科<span class="mm-role r-cnt">反证</span></p><p class="mm-gist">通过汽车工业与农业物流的瓶颈，揭示苏联计划经济在供需匹配上的结构性失灵。</p><span class="mm-chip">结构性失灵</span><span class="mm-chip">供需矛盾</span><span class="mm-anchor">「苏联的农业产量大丰收，但农产品运输受阻，导致食品短缺」</span></li>
-<li class="r-cnt"><p class="mm-ch"><b>18</b> 前往爱尔兰<span class="mm-role r-cnt">反证</span></p><p class="mm-gist">通过波兰的市场化表现，对比苏联体制，论证货币自由兑换与商品供给对经济活力的驱动。</p><span class="mm-chip">市场化</span><span class="mm-chip">货币自由兑换</span><span class="mm-anchor">「波兰商品供应的丰富和货币的自由兑换」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">11</span><span class="mm-cname">日本：值得投资的国家</span><span class="mm-role">案例</span></p><p class="mm-gist">通过对比日本海关的秩序感与中国环境，论证不同体制对社会运行效率的影响。</p><span class="mm-chip">社会秩序</span><span class="mm-chip">运行效率</span><span class="mm-quote">「美国人带着德国的摩托车从北京飞到东京，这对海关人员是有些复杂。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">12</span><span class="mm-cname">在世界的边缘</span><span class="mm-role">案例</span></p><p class="mm-gist">通过纳霍德卡的物资匮乏与封闭状态，揭示苏联边境城市的经济孤立现状。</p><span class="mm-chip">物资匮乏</span><span class="mm-chip">经济孤立</span><span class="mm-quote">「纳霍德卡的商店缺少商品供应，又缺少顾客」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">13</span><span class="mm-cname">穿越蛮荒之地</span><span class="mm-role">立论</span></p><p class="mm-gist">通过西伯利亚恶劣路况对人的意志考验，论证实现宏大目标所需的心智投入。</p><span class="mm-chip">意志力</span><span class="mm-chip">目标导向</span><span class="mm-quote">「作者认为对金钱和目标的追求需要全身心地投入」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">14</span><span class="mm-cname">西伯利亚</span><span class="mm-role">案例</span></p><p class="mm-gist">通过实地骑行经历，揭示西伯利亚基础设施的落后与地理环境的荒蛮。</p><span class="mm-chip">基础设施</span><span class="mm-chip">地理环境</span><span class="mm-quote">「西伯利亚东部铺好的路少之又少」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">15</span><span class="mm-cname">乌兰乌德、济马和坎斯克</span><span class="mm-role">案例</span></p><p class="mm-gist">通过地方节日与民俗活动，论证苏联边疆地区文化传承与社会生活的独特性。</p><span class="mm-chip">民俗文化</span><span class="mm-chip">社会生活</span><span class="mm-quote">「节日是传承了几个世纪的盛大宗族集会，充满宗教色彩和民族色彩」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">16</span><span class="mm-cname">新西伯利亚及其以西</span><span class="mm-role">立论</span></p><p class="mm-gist">通过苏联资源产量的宏观数据，论证其在计划经济体制下的工业与资源规模优势。</p><span class="mm-chip">计划经济</span><span class="mm-chip">资源禀赋</span><span class="mm-quote">「苏联蕴藏着全世界至少1/4的石油沉积物，40%的铁矿石，以及1/3的磷酸盐」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">17</span><span class="mm-cname">莫斯科</span><span class="mm-role">反证</span></p><p class="mm-gist">通过汽车工业与农业物流的瓶颈，揭示苏联计划经济在供需匹配上的结构性失灵。</p><span class="mm-chip">结构性失灵</span><span class="mm-chip">供需矛盾</span><span class="mm-quote">「苏联的农业产量大丰收，但农产品运输受阻，导致食品短缺」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">18</span><span class="mm-cname">前往爱尔兰</span><span class="mm-role">反证</span></p><p class="mm-gist">通过波兰的市场化表现，对比苏联体制，论证货币自由兑换与商品供给对经济活力的驱动。</p><span class="mm-chip">市场化</span><span class="mm-chip">货币自由兑换</span><span class="mm-quote">「波兰商品供应的丰富和货币的自由兑换」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">D</span><span class="mm-label">非洲的动荡与机遇</span><span class="mm-cnt">8 章</span></summary>
 <p class="mm-why">跨越撒哈拉至南非，记录了从经济崩溃到资源垄断的多种社会形态，反映了非洲地区的复杂投资环境。</p>
 <ol class="mm-tree">
-<li class="r-case"><p class="mm-ch"><b>19</b> 非洲：征服撒哈拉<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过北非的文化冲突与历史遗迹，揭示地理跨越带来的社会认知差异。</p><span class="mm-chip">文化冲突</span><span class="mm-chip">历史遗迹</span><span class="mm-anchor">「迦太基是腓尼基泰尔城狄多女王建立的一个海上共和国」</span></li>
-<li class="r-case"><p class="mm-ch"><b>20</b> 撒哈拉以南<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过进入撒哈拉以南地区，论证地理环境改善对经济活动与基础设施建设的直接影响。</p><span class="mm-chip">地理环境</span><span class="mm-chip">基础设施</span><span class="mm-anchor">「越靠近阿尔利特，路就越好走」</span></li>
-<li class="r-case"><p class="mm-ch"><b>21</b> 顺河而下<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过驳船上的商贸活动，揭示在缺乏现代交通条件下，非正式贸易的生存逻辑。</p><span class="mm-chip">非正式贸易</span><span class="mm-chip">生存逻辑</span><span class="mm-anchor">「船上生活丰富多彩，商人们摆开临时市场，兜售各种商品」</span></li>
-<li class="r-case"><p class="mm-ch"><b>22</b> 愤怒的羔羊<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过扎伊尔的恶性通胀与动荡，论证政治不稳定对经济秩序的毁灭性打击。</p><span class="mm-chip">恶性通胀</span><span class="mm-chip">政治动荡</span><span class="mm-anchor">「扎伊尔经济崩溃，货币贬值，物价飞涨」</span></li>
-<li class="r-case"><p class="mm-ch"><b>23</b> 逃亡<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过逃离扎伊尔的经历，揭示在秩序崩溃地区，基础设施与公共服务完全失效的现实。</p><span class="mm-chip">秩序崩溃</span><span class="mm-chip">公共服务</span><span class="mm-anchor">「扎伊尔的一切都毫无章法，铁路服务也不例外」</span></li>
-<li class="r-case"><p class="mm-ch"><b>24</b> 赞比亚和大津巴布韦<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过赞比亚的边境管理，论证政治稳定与行政规范对跨国经济交流的保障作用。</p><span class="mm-chip">行政规范</span><span class="mm-chip">政治稳定</span><span class="mm-anchor">「赞比亚公路铺砌完好，人民理智，货币虽然贬值但还不至于崩溃」</span></li>
-<li class="r-case"><p class="mm-ch"><b>25</b> 博茨瓦纳<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过博茨瓦纳的货币自由兑换，论证开放的金融政策对吸引外部经济活动的价值。</p><span class="mm-chip">金融开放</span><span class="mm-chip">货币自由兑换</span><span class="mm-anchor">「博茨瓦纳货币可以自由兑换」</span></li>
-<li class="r-th"><p class="mm-ch"><b>26</b> 南非<span class="mm-role r-th">立论</span></p><p class="mm-gist">通过戴比尔斯公司的垄断案例，论证资源垄断对全球定价权的控制及其局限性。</p><span class="mm-chip">资源垄断</span><span class="mm-chip">定价权</span><span class="mm-anchor">「戴比尔斯公司通过垄断控制钻石价格，但现在垄断正在被打破」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">19</span><span class="mm-cname">非洲：征服撒哈拉</span><span class="mm-role">案例</span></p><p class="mm-gist">通过北非的文化冲突与历史遗迹，揭示地理跨越带来的社会认知差异。</p><span class="mm-chip">文化冲突</span><span class="mm-chip">历史遗迹</span><span class="mm-quote">「迦太基是腓尼基泰尔城狄多女王建立的一个海上共和国」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">20</span><span class="mm-cname">撒哈拉以南</span><span class="mm-role">案例</span></p><p class="mm-gist">通过进入撒哈拉以南地区，论证地理环境改善对经济活动与基础设施建设的直接影响。</p><span class="mm-chip">地理环境</span><span class="mm-chip">基础设施</span><span class="mm-quote">「越靠近阿尔利特，路就越好走」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">21</span><span class="mm-cname">顺河而下</span><span class="mm-role">案例</span></p><p class="mm-gist">通过驳船上的商贸活动，揭示在缺乏现代交通条件下，非正式贸易的生存逻辑。</p><span class="mm-chip">非正式贸易</span><span class="mm-chip">生存逻辑</span><span class="mm-quote">「船上生活丰富多彩，商人们摆开临时市场，兜售各种商品」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">22</span><span class="mm-cname">愤怒的羔羊</span><span class="mm-role">案例</span></p><p class="mm-gist">通过扎伊尔的恶性通胀与动荡，论证政治不稳定对经济秩序的毁灭性打击。</p><span class="mm-chip">恶性通胀</span><span class="mm-chip">政治动荡</span><span class="mm-quote">「扎伊尔经济崩溃，货币贬值，物价飞涨」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">23</span><span class="mm-cname">逃亡</span><span class="mm-role">案例</span></p><p class="mm-gist">通过逃离扎伊尔的经历，揭示在秩序崩溃地区，基础设施与公共服务完全失效的现实。</p><span class="mm-chip">秩序崩溃</span><span class="mm-chip">公共服务</span><span class="mm-quote">「扎伊尔的一切都毫无章法，铁路服务也不例外」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">24</span><span class="mm-cname">赞比亚和大津巴布韦</span><span class="mm-role">案例</span></p><p class="mm-gist">通过赞比亚的边境管理，论证政治稳定与行政规范对跨国经济交流的保障作用。</p><span class="mm-chip">行政规范</span><span class="mm-chip">政治稳定</span><span class="mm-quote">「赞比亚公路铺砌完好，人民理智，货币虽然贬值但还不至于崩溃」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">25</span><span class="mm-cname">博茨瓦纳</span><span class="mm-role">案例</span></p><p class="mm-gist">通过博茨瓦纳的货币自由兑换，论证开放的金融政策对吸引外部经济活动的价值。</p><span class="mm-chip">金融开放</span><span class="mm-chip">货币自由兑换</span><span class="mm-quote">「博茨瓦纳货币可以自由兑换」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">26</span><span class="mm-cname">南非</span><span class="mm-role">立论</span></p><p class="mm-gist">通过戴比尔斯公司的垄断案例，论证资源垄断对全球定价权的控制及其局限性。</p><span class="mm-chip">资源垄断</span><span class="mm-chip">定价权</span><span class="mm-quote">「戴比尔斯公司通过垄断控制钻石价格，但现在垄断正在被打破」</span></li>
 </ol>
 </details>
 <details class="mm-spine">
 <summary><span class="mm-id">E</span><span class="mm-label">美洲大陆的地理与经济</span><span class="mm-cnt">9 章</span></summary>
 <p class="mm-why">从澳大利亚转战南美至北美，考察泛美公路沿线的地缘经济，并以回到美国作为旅行与认知的终点。</p>
 <ol class="mm-tree">
-<li class="r-case"><p class="mm-ch"><b>27</b> 澳大利亚的长途跋涉<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过澳大利亚的地理与道路特征，论证不同地域经济发展模式与地理环境的适配性。</p><span class="mm-chip">地理特征</span><span class="mm-chip">经济模式</span><span class="mm-anchor">「澳大利亚的道路与世界上其他地方的道路都不同，却和美国的得克萨斯州十分相似」</span></li>
-<li class="r-th"><p class="mm-ch"><b>28</b> 世界尽头<span class="mm-role r-th">立论</span></p><p class="mm-gist">通过对火地岛旅游潜力的评估，论证地理边缘地带在经济全球化下的开发价值。</p><span class="mm-chip">旅游开发</span><span class="mm-chip">边缘地带</span><span class="mm-anchor">「乌斯怀亚的旅游业将来一定会兴旺发达」</span></li>
-<li class="r-case"><p class="mm-ch"><b>29</b> 布宜诺斯艾利斯<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过布宜诺斯艾利斯的城市活力，论证文化氛围与地理位置对城市经济吸引力的影响。</p><span class="mm-chip">城市活力</span><span class="mm-chip">文化氛围</span><span class="mm-anchor">「布宜诺斯艾利斯充满了激情与活力，夜生活丰富多彩」</span></li>
-<li class="r-case"><p class="mm-ch"><b>30</b> 智利与复活节岛<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过智利的严格入境检查，揭示国家在保护本土生态与经济安全时的行政边界。</p><span class="mm-chip">生态安全</span><span class="mm-chip">行政边界</span><span class="mm-anchor">「智利人的入境检查很严格，防止植物疾病」</span></li>
-<li class="r-case"><p class="mm-ch"><b>31</b> 走近印加<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过泛美公路的破旧现状与游击队活动，论证基础设施缺失对区域经济整合的阻碍。</p><span class="mm-chip">基础设施</span><span class="mm-chip">区域整合</span><span class="mm-anchor">「泛美公路一直到利马都是破旧的，警察的检查点很少，游击队来去自由」</span></li>
-<li class="r-th"><p class="mm-ch"><b>32</b> 沿着达尔文的足迹<span class="mm-role r-th">立论</span></p><p class="mm-gist">通过边境贸易的繁忙程度，论证开放度是衡量国家投资潜力与经济活力的核心指标。</p><span class="mm-chip">开放度</span><span class="mm-chip">投资潜力</span><span class="mm-anchor">「边境的繁忙表明该国的开放程度，如果我能找到一个股票交易所，我会在此投资的。」</span></li>
-<li class="r-th"><p class="mm-ch"><b>33</b> 达里恩地带<span class="mm-role r-th">立论</span></p><p class="mm-gist">通过达里恩地带的地理阻隔，论证物理基础设施的缺失如何限制区域经济的整体繁荣。</p><span class="mm-chip">地理阻隔</span><span class="mm-chip">基础设施</span><span class="mm-anchor">「达里恩地带是一条通向南美洲的路，势必会带来空前的旅游繁荣」</span></li>
-<li class="r-case"><p class="mm-ch"><b>34</b> 巴拿马运河<span class="mm-role r-case">案例</span></p><p class="mm-gist">通过巴拿马运河的技术滞后，论证早期重大基础设施在面对现代经济需求时的局限性。</p><span class="mm-chip">基础设施</span><span class="mm-chip">技术滞后</span><span class="mm-anchor">「巴拿马运河现在从技术上来看已经太落后了，太狭窄了，船只要花很长时间才能通过」</span></li>
-<li class="r-end"><p class="mm-ch"><b>35</b> 回家<span class="mm-role r-end">收束</span></p><p class="mm-gist">通过环球旅行的终结，总结长途跋涉对个人认知与内在世界的重塑作用。</p><span class="mm-chip">认知重塑</span><span class="mm-chip">环球旅行</span><span class="mm-anchor">「我内心深处已经出现变化，但是我说不出来」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">27</span><span class="mm-cname">澳大利亚的长途跋涉</span><span class="mm-role">案例</span></p><p class="mm-gist">通过澳大利亚的地理与道路特征，论证不同地域经济发展模式与地理环境的适配性。</p><span class="mm-chip">地理特征</span><span class="mm-chip">经济模式</span><span class="mm-quote">「澳大利亚的道路与世界上其他地方的道路都不同，却和美国的得克萨斯州十分相似」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">28</span><span class="mm-cname">世界尽头</span><span class="mm-role">立论</span></p><p class="mm-gist">通过对火地岛旅游潜力的评估，论证地理边缘地带在经济全球化下的开发价值。</p><span class="mm-chip">旅游开发</span><span class="mm-chip">边缘地带</span><span class="mm-quote">「乌斯怀亚的旅游业将来一定会兴旺发达」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">29</span><span class="mm-cname">布宜诺斯艾利斯</span><span class="mm-role">案例</span></p><p class="mm-gist">通过布宜诺斯艾利斯的城市活力，论证文化氛围与地理位置对城市经济吸引力的影响。</p><span class="mm-chip">城市活力</span><span class="mm-chip">文化氛围</span><span class="mm-quote">「布宜诺斯艾利斯充满了激情与活力，夜生活丰富多彩」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">30</span><span class="mm-cname">智利与复活节岛</span><span class="mm-role">案例</span></p><p class="mm-gist">通过智利的严格入境检查，揭示国家在保护本土生态与经济安全时的行政边界。</p><span class="mm-chip">生态安全</span><span class="mm-chip">行政边界</span><span class="mm-quote">「智利人的入境检查很严格，防止植物疾病」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">31</span><span class="mm-cname">走近印加</span><span class="mm-role">案例</span></p><p class="mm-gist">通过泛美公路的破旧现状与游击队活动，论证基础设施缺失对区域经济整合的阻碍。</p><span class="mm-chip">基础设施</span><span class="mm-chip">区域整合</span><span class="mm-quote">「泛美公路一直到利马都是破旧的，警察的检查点很少，游击队来去自由」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">32</span><span class="mm-cname">沿着达尔文的足迹</span><span class="mm-role">立论</span></p><p class="mm-gist">通过边境贸易的繁忙程度，论证开放度是衡量国家投资潜力与经济活力的核心指标。</p><span class="mm-chip">开放度</span><span class="mm-chip">投资潜力</span><span class="mm-quote">「边境的繁忙表明该国的开放程度，如果我能找到一个股票交易所，我会在此投资的。」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">33</span><span class="mm-cname">达里恩地带</span><span class="mm-role">立论</span></p><p class="mm-gist">通过达里恩地带的地理阻隔，论证物理基础设施的缺失如何限制区域经济的整体繁荣。</p><span class="mm-chip">地理阻隔</span><span class="mm-chip">基础设施</span><span class="mm-quote">「达里恩地带是一条通向南美洲的路，势必会带来空前的旅游繁荣」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">34</span><span class="mm-cname">巴拿马运河</span><span class="mm-role">案例</span></p><p class="mm-gist">通过巴拿马运河的技术滞后，论证早期重大基础设施在面对现代经济需求时的局限性。</p><span class="mm-chip">基础设施</span><span class="mm-chip">技术滞后</span><span class="mm-quote">「巴拿马运河现在从技术上来看已经太落后了，太狭窄了，船只要花很长时间才能通过」</span></li>
+<li class="mm-cn"><p class="mm-chead"><span class="mm-cno">35</span><span class="mm-cname">回家</span><span class="mm-role">收束</span></p><p class="mm-gist">通过环球旅行的终结，总结长途跋涉对个人认知与内在世界的重塑作用。</p><span class="mm-chip">认知重塑</span><span class="mm-chip">环球旅行</span><span class="mm-quote">「我内心深处已经出现变化，但是我说不出来」</span></li>
 </ol>
 </details>
 <footer class="site-footer">
