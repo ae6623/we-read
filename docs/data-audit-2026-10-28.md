@@ -300,16 +300,12 @@ Gemini 路径的 anchor 要过「字符串包含」校验，不命中就丢弃�
 | `fang-si-qi-de-chu-lian-le-yuan--jing-bian-ban-` | 2 | 同上 |
 | `bai-ye-xing` | 13 | 13 个条目标题全是「1 · …」，AI 大纲只覆盖第一章，做成全书导图会误导 |
 
-### 7.5 剩余 41 本
+### 7.5 剩余书目（已补齐，2026-10-28 12:00）
 
-Gemini 免费配额耗尽（429，各模型共用同一项目配额），重置约在北京时间 15:00。
-恢复后一条命令补齐：
+原计划「等配额重置」没用上：主力模型 429 是项目级共用配额，但 **lite 系列额度独立**，
+换模型就续上了，55 本在 40 分钟内跑完。执行细节、两类结构错误、二次分析路线图见
+[`docs/mindmap-exec-2026-10-28.md`](mindmap-exec-2026-10-28.md)。
 
-```bash
-cd C:/Users/ROG/we-read
-python gen_mindmap.py --all --write --skip-existing
-python tools_link_mindmap.py --write
-git add -A reading-notes/books && git commit -m "feat(mindmap): 补齐其余书目" && git push origin fix-publish:main
-```
-
-长书（296/295/294/271 章四本网络小说 + 红楼梦 122 章）单本 3–4 次调用，全量约 100 次。
+要点：`gen_mindmap.py` 现在按候选链轮询（某模型 429 就换下一个），
+`--budget` 让单条命令能跑满即停、重跑续上；`tools_fix_anchor.py` 把 153 处锚点缺失
+全部换成该书该章首句原句；`tools_respine.py` 修了 4 本模型判断不了的编排问题。
