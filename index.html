@@ -8,7 +8,7 @@
   <title>读书笔记｜we-read</title>
   <link rel="stylesheet" href="assets/css/site.css?v=20261028c">
   <link rel="stylesheet" href="assets/css/reading-metrics.css">
-  <link rel="stylesheet" href="assets/css/homepage-reading.css?v=20261028e">
+  <link rel="stylesheet" href="assets/css/homepage-reading.css?v=20261029a">
 <link rel="stylesheet" href="assets/css/book-link-drawer.css">
 <link rel="stylesheet" href="assets/css/homepage-hero.css">
 </head>
@@ -88,439 +88,450 @@
 
     <div class="reading-module" data-reading-module>
       <div class="reading-tabs" data-tablist aria-label="阅读内容" hidden>
-        <button type="button" id="reading-tab-overview" data-panel="reading-panel-overview">通读</button>
-        <button type="button" id="reading-tab-close" data-panel="reading-panel-close">精读</button>
-        <button type="button" id="reading-tab-series" data-panel="reading-panel-series">系列</button>
-        <button type="button" id="reading-tab-archive" data-panel="reading-panel-archive">归档</button>
+        <button type="button" id="reading-tab-overview" data-panel="reading-panel-overview" aria-label="书架">书架</button>
+        <button type="button" id="reading-tab-series" data-panel="reading-panel-series" aria-label="系列">系列</button>
+        <button type="button" id="reading-tab-close" data-panel="reading-panel-close" aria-label="精读">精读</button>
+        <button type="button" id="reading-tab-archive" data-panel="reading-panel-archive" aria-label="归档">归档</button>
       </div>
 
-      <section id="reading-panel-overview" class="reading-panel" aria-label="通读">
+      <section id="reading-panel-overview" class="reading-panel" aria-label="书架">
       <div class="subtabs" data-subtablist aria-label="全书视角 / 即将上线">
         <button type="button" id="subtab-whole" data-subpanel="panel-whole" aria-selected="true" aria-controls="panel-whole">全书视角</button>
         <button type="button" id="subtab-soon" data-subpanel="panel-soon" aria-selected="false" aria-controls="panel-soon">即将上线</button>
       </div>
-        <section id="panel-whole" class="reading-group subtab-panel" aria-labelledby="whole-book-title">
+                <div class="toolbar shelf-toolbar" data-search-toolbar>
+          <label class="search-label" for="shelf-search">搜索书架</label>
+          <input id="shelf-search" type="search" placeholder="按书名或作者筛选…" autocomplete="off" data-card-search>
+          <div class="filter-bar" data-filter-bar role="group" aria-label="按内容类型筛选">
+            <button type="button" data-filter="all" aria-selected="true">全部</button>
+            <button type="button" data-filter="whole" aria-selected="false">通读</button>
+            <button type="button" data-filter="jingdu" aria-selected="false">精读</button>
+            <button type="button" data-filter="archive" aria-selected="false">归档</button>
+          </div>
+          <p class="search-status" aria-live="polite" data-search-status></p>
+        </div>
+<section id="panel-whole" class="reading-group subtab-panel" aria-labelledby="whole-book-title">
           <h3 class="reading-group-title" id="whole-book-title">全书视角 <span>开读即建，随精读校订</span></h3>
           <div class="archive-grid" aria-label="读前内容">
       <!-- preread-card:ping-mian-guo -->
-      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="平面国 [英] 艾勃特 AI 读书 全书视角 AI 大纲">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="subtle">网页版</span><time datetime="2026-10-28">10.28</time></div>
+      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="平面国 [英] 艾勃特 AI 读书 全书视角 AI 大纲" data-mode="whole jingdu archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-28">10.28</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/ping-mian-guo/overview.html">平面国</a></h3>
         <p>[英] 艾勃特　·　22 章 / 446 条　·　全书视角初版，待亲读校订。</p>
-        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/ping-mian-guo/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/ping-mian-guo/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
           <a class="card-link card-link-green" href="reading-notes/books/ping-mian-guo/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
         </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:huo-zhe -->
-      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="活着 余华 AI 读书 全书视角 AI 大纲">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="subtle">网页版</span><time datetime="2026-10-28">10.28</time></div>
+      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="活着 余华 AI 读书 全书视角 AI 大纲" data-mode="whole jingdu archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-28">10.28</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/huo-zhe/overview.html">活着</a></h3>
         <p>余华　·　10 章 / 233 条　·　全书视角初版，待亲读校订。</p>
-        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/huo-zhe/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/huo-zhe/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
           <a class="card-link card-link-green" href="reading-notes/books/huo-zhe/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
         </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:kuai-le-de-si--guo-mai-jing-dian- -->
-      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="快乐的死 加缪（法） AI 读书 全书视角 AI 大纲">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="subtle">网页版</span><time datetime="2026-10-28">10.28</time></div>
+      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="快乐的死 加缪（法） AI 读书 全书视角 AI 大纲" data-mode="whole jingdu archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-28">10.28</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/kuai-le-de-si--guo-mai-jing-dian-/overview.html">快乐的死</a></h3>
         <p>加缪（法）　·　10 章 / 553 条　·　全书视角初版，待亲读校订。</p>
-        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/kuai-le-de-si--guo-mai-jing-dian-/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/kuai-le-de-si--guo-mai-jing-dian-/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
           <a class="card-link card-link-green" href="reading-notes/books/kuai-le-de-si--guo-mai-jing-dian-/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
         </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:ju-wai-ren--sa-te--yi-bu-li-xing-yu-jing-dian -->
-      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="局外人 [法]阿尔贝·加缪（依大纲作者栏标注） AI 读书 全书视角 AI 大纲">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="subtle">网页版</span><time datetime="2026-10-28">10.28</time></div>
+      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="局外人 [法]阿尔贝·加缪（依大纲作者栏标注） AI 读书 全书视角 AI 大纲" data-mode="whole jingdu archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-28">10.28</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/ju-wai-ren--sa-te--yi-bu-li-xing-yu-jing-dian/overview.html">局外人</a></h3>
         <p>[法]阿尔贝·加缪（依大纲作者栏标注）　·　11 章 / 382 条　·　全书视角初版，待亲读校订。</p>
-        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/ju-wai-ren--sa-te--yi-bu-li-xing-yu-jing-dian/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/ju-wai-ren--sa-te--yi-bu-li-xing-yu-jing-dian/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
           <a class="card-link card-link-green" href="reading-notes/books/ju-wai-ren--sa-te--yi-bu-li-xing-yu-jing-dian/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
         </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:jin-ping-mei--zhong-shu-feng-shuo-jing-dian-1 -->
-      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="金瓶梅·钟书峰说经典（1）（精彩插图版） [明]兰陵笑笑生 著 AI 读书 全书视角 AI 大纲">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="subtle">网页版</span><time datetime="2026-10-28">10.28</time></div>
+      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="金瓶梅·钟书峰说经典（1）（精彩插图版） [明]兰陵笑笑生 著 AI 读书 全书视角 AI 大纲" data-mode="whole jingdu archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-28">10.28</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/jin-ping-mei--zhong-shu-feng-shuo-jing-dian-1/overview.html">金瓶梅·钟书峰说经典（1）（精彩插图版）</a></h3>
         <p>[明]兰陵笑笑生 著　·　15 章 / 476 条　·　全书视角初版，待亲读校订。</p>
-        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/jin-ping-mei--zhong-shu-feng-shuo-jing-dian-1/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/jin-ping-mei--zhong-shu-feng-shuo-jing-dian-1/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
           <a class="card-link card-link-green" href="reading-notes/books/jin-ping-mei--zhong-shu-feng-shuo-jing-dian-1/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
         </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:jin-gang-jing--yuan-wen-yuan-yi-yu-xin-yi-xin-j -->
-      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="金刚经：原文原译与新译新解 [后秦]鸠摩罗什 原译 AI 读书 全书视角 AI 大纲">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="subtle">网页版</span><time datetime="2026-10-28">10.28</time></div>
+      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="金刚经：原文原译与新译新解 [后秦]鸠摩罗什 原译 AI 读书 全书视角 AI 大纲" data-mode="whole jingdu archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-28">10.28</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/jin-gang-jing--yuan-wen-yuan-yi-yu-xin-yi-xin-j/overview.html">金刚经：原文原译与新译新解</a></h3>
         <p>[后秦]鸠摩罗什 原译　·　106 章 / 1181 条　·　全书视角初版，待亲读校订。</p>
-        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/jin-gang-jing--yuan-wen-yuan-yi-yu-xin-yi-xin-j/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/jin-gang-jing--yuan-wen-yuan-yi-yu-xin-yi-xin-j/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
           <a class="card-link card-link-green" href="reading-notes/books/jin-gang-jing--yuan-wen-yuan-yi-yu-xin-yi-xin-j/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
         </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:ji-liu-san-bu-qu--jia--chun--qiu -->
-      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="激流三部曲：家、春、秋 巴金 AI 读书 全书视角 AI 大纲">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="subtle">网页版</span><time datetime="2026-10-28">10.28</time></div>
+      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="激流三部曲：家、春、秋 巴金 AI 读书 全书视角 AI 大纲" data-mode="whole jingdu archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-28">10.28</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/ji-liu-san-bu-qu--jia--chun--qiu/overview.html">激流三部曲：家、春、秋</a></h3>
         <p>巴金　·　14 章 / 435 条　·　全书视角初版，待亲读校订。</p>
-        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/ji-liu-san-bu-qu--jia--chun--qiu/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/ji-liu-san-bu-qu--jia--chun--qiu/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
           <a class="card-link card-link-green" href="reading-notes/books/ji-liu-san-bu-qu--jia--chun--qiu/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
         </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:hong-lou-meng -->
-      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="红楼梦 [清]曹雪芹（校注本；后四十回作者另有争议） AI 读书 全书视角 AI 大纲">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="subtle">网页版</span><time datetime="2026-10-28">10.28</time></div>
+      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="红楼梦 [清]曹雪芹（校注本；后四十回作者另有争议） AI 读书 全书视角 AI 大纲" data-mode="whole jingdu archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-28">10.28</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/hong-lou-meng/overview.html">红楼梦</a></h3>
         <p>[清]曹雪芹（校注本；后四十回作者另有争议）　·　122 章 / 4697 条　·　全书视角初版，待亲读校订。</p>
-        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/hong-lou-meng/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/hong-lou-meng/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
           <a class="card-link card-link-green" href="reading-notes/books/hong-lou-meng/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
         </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:ma-ke--tu-wen-duan-pian-xiao-shuo-ji -->
-      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="马克·吐温短篇小说集 [美] 马克·吐温 AI 读书 全书视角 AI 大纲">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="subtle">网页版</span><time datetime="2026-10-28">10.28</time></div>
+      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="马克·吐温短篇小说集 [美] 马克·吐温 AI 读书 全书视角 AI 大纲" data-mode="whole jingdu archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-28">10.28</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/ma-ke--tu-wen-duan-pian-xiao-shuo-ji/overview.html">马克·吐温短篇小说集</a></h3>
         <p>[美] 马克·吐温　·　27 章 / 648 条　·　全书视角初版，待亲读校订。</p>
-        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/ma-ke--tu-wen-duan-pian-xiao-shuo-ji/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/ma-ke--tu-wen-duan-pian-xiao-shuo-ji/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
           <a class="card-link card-link-green" href="reading-notes/books/ma-ke--tu-wen-duan-pian-xiao-shuo-ji/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
         </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:kai-zhe-fang-che--qu-gu-dai-tao-huang-zhong-tia -->
-      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="开着房车，去古代逃荒种田吧 东木禾 AI 读书 全书视角 AI 大纲">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="subtle">网页版</span><time datetime="2026-10-28">10.28</time></div>
+      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="开着房车，去古代逃荒种田吧 东木禾 AI 读书 全书视角 AI 大纲" data-mode="whole jingdu archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-28">10.28</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/kai-zhe-fang-che--qu-gu-dai-tao-huang-zhong-tia/overview.html">开着房车，去古代逃荒种田吧</a></h3>
         <p>东木禾　·　296 章 / 6605 条　·　全书视角初版，待亲读校订。</p>
-        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/kai-zhe-fang-che--qu-gu-dai-tao-huang-zhong-tia/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/kai-zhe-fang-che--qu-gu-dai-tao-huang-zhong-tia/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
           <a class="card-link card-link-green" href="reading-notes/books/kai-zhe-fang-che--qu-gu-dai-tao-huang-zhong-tia/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
         </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:liang-jian--tong-ming-dian-shi-ju-yuan-zhu- -->
-      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="亮剑 都梁 AI 读书 全书视角 AI 大纲">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="subtle">网页版</span><time datetime="2026-10-28">10.28</time></div>
+      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="亮剑 都梁 AI 读书 全书视角 AI 大纲" data-mode="whole jingdu archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-28">10.28</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/liang-jian--tong-ming-dian-shi-ju-yuan-zhu-/overview.html">亮剑</a></h3>
         <p>都梁　·　44 章 / 1648 条　·　全书视角初版，待亲读校订。</p>
-        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/liang-jian--tong-ming-dian-shi-ju-yuan-zhu-/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/liang-jian--tong-ming-dian-shi-ju-yuan-zhu-/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
           <a class="card-link card-link-green" href="reading-notes/books/liang-jian--tong-ming-dian-shi-ju-yuan-zhu-/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
         </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:mai-fang-rang-ri-ben-ren-xing-fu-le-ma--yi-wen -->
-      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="买房让日本人幸福了吗？ 榊淳司 AI 读书 全书视角 AI 大纲">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="subtle">网页版</span><time datetime="2026-10-28">10.28</time></div>
+      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="买房让日本人幸福了吗？ 榊淳司 AI 读书 全书视角 AI 大纲" data-mode="whole jingdu archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-28">10.28</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/mai-fang-rang-ri-ben-ren-xing-fu-le-ma--yi-wen/overview.html">买房让日本人幸福了吗？</a></h3>
         <p>榊淳司　·　94 章 / 1322 条　·　全书视角初版，待亲读校订。</p>
-        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/mai-fang-rang-ri-ben-ren-xing-fu-le-ma--yi-wen/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/mai-fang-rang-ri-ben-ren-xing-fu-le-ma--yi-wen/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
           <a class="card-link card-link-green" href="reading-notes/books/mai-fang-rang-ri-ben-ren-xing-fu-le-ma--yi-wen/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
         </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:nan-jing-da-tu-sha -->
-      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="南京大屠杀 张纯如 AI 读书 全书视角 AI 大纲">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="subtle">网页版</span><time datetime="2026-10-28">10.28</time></div>
+      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="南京大屠杀 张纯如 AI 读书 全书视角 AI 大纲" data-mode="whole archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-28">10.28</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/nan-jing-da-tu-sha/overview.html">南京大屠杀</a></h3>
         <p>张纯如　·　13 章 / 515 条　·　全书视角初版，待亲读校订。</p>
-        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/nan-jing-da-tu-sha/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
+        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/nan-jing-da-tu-sha/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:ren-sheng -->
-      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="人生 路遥（大纲标注） AI 读书 全书视角 AI 大纲">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="subtle">网页版</span><time datetime="2026-10-28">10.28</time></div>
+      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="人生 路遥（大纲标注） AI 读书 全书视角 AI 大纲" data-mode="whole jingdu archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-28">10.28</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/ren-sheng/overview.html">人生</a></h3>
         <p>路遥（大纲标注）　·　35 章 / 1242 条　·　全书视角初版，待亲读校订。</p>
-        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/ren-sheng/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/ren-sheng/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
           <a class="card-link card-link-green" href="reading-notes/books/ren-sheng/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
         </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:ren-sheng-hai-hai -->
-      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="人生海海 麦家 AI 读书 全书视角 AI 大纲">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="subtle">网页版</span><time datetime="2026-10-28">10.28</time></div>
+      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="人生海海 麦家 AI 读书 全书视角 AI 大纲" data-mode="whole jingdu archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-28">10.28</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/ren-sheng-hai-hai/overview.html">人生海海</a></h3>
         <p>麦家　·　20 章 / 916 条　·　全书视角初版，待亲读校订。</p>
-        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/ren-sheng-hai-hai/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/ren-sheng-hai-hai/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
           <a class="card-link card-link-green" href="reading-notes/books/ren-sheng-hai-hai/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
         </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:long-cang -->
-      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="龙藏 烟雨江南 AI 读书 全书视角 AI 大纲">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="subtle">网页版</span><time datetime="2026-10-28">10.28</time></div>
+      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="龙藏 烟雨江南 AI 读书 全书视角 AI 大纲" data-mode="whole jingdu archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-28">10.28</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/long-cang/overview.html">龙藏</a></h3>
         <p>烟雨江南　·　295 章 / 8307 条　·　全书视角初版，待亲读校订。</p>
-        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/long-cang/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/long-cang/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
           <a class="card-link card-link-green" href="reading-notes/books/long-cang/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
         </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:mei-se-wu-shuang -->
-      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="媚色无双 假面的盛宴 AI 读书 全书视角 AI 大纲">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="subtle">网页版</span><time datetime="2026-10-28">10.28</time></div>
+      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="媚色无双 假面的盛宴 AI 读书 全书视角 AI 大纲" data-mode="whole jingdu archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-28">10.28</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/mei-se-wu-shuang/overview.html">媚色无双</a></h3>
         <p>假面的盛宴　·　5 章 / 4848 条　·　全书视角初版，待亲读校订。</p>
-        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/mei-se-wu-shuang/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/mei-se-wu-shuang/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
           <a class="card-link card-link-green" href="reading-notes/books/mei-se-wu-shuang/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
         </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:ri-ben-pao-mo-hou-de-san-shi-nian--fu-yu-she-hu -->
-      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="日本泡沫后的三十年：富裕社会的慢性病 戚古卫 AI 读书 全书视角 AI 大纲">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="subtle">网页版</span><time datetime="2026-10-28">10.28</time></div>
+      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="日本泡沫后的三十年：富裕社会的慢性病 戚古卫 AI 读书 全书视角 AI 大纲" data-mode="whole jingdu archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-28">10.28</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/ri-ben-pao-mo-hou-de-san-shi-nian--fu-yu-she-hu/overview.html">日本泡沫后的三十年：富裕社会的慢性病</a></h3>
         <p>戚古卫　·　8 章 / 173 条　·　全书视角初版，待亲读校订。</p>
-        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/ri-ben-pao-mo-hou-de-san-shi-nian--fu-yu-she-hu/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/ri-ben-pao-mo-hou-de-san-shi-nian--fu-yu-she-hu/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
           <a class="card-link card-link-green" href="reading-notes/books/ri-ben-pao-mo-hou-de-san-shi-nian--fu-yu-she-hu/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
         </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:ren-zhi-jue-xing--kai-qi-zi-wo-gai-bian-de-yuan -->
-      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="认知觉醒：开启自我改变的原动力 周岭 AI 读书 全书视角 AI 大纲">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="subtle">网页版</span><time datetime="2026-10-28">10.28</time></div>
+      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="认知觉醒：开启自我改变的原动力 周岭 AI 读书 全书视角 AI 大纲" data-mode="whole jingdu archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-28">10.28</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/ren-zhi-jue-xing--kai-qi-zi-wo-gai-bian-de-yuan/overview.html">认知觉醒：开启自我改变的原动力</a></h3>
         <p>周岭　·　10 章 / 478 条　·　全书视角初版，待亲读校订。</p>
-        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/ren-zhi-jue-xing--kai-qi-zi-wo-gai-bian-de-yuan/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/ren-zhi-jue-xing--kai-qi-zi-wo-gai-bian-de-yuan/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
           <a class="card-link card-link-green" href="reading-notes/books/ren-zhi-jue-xing--kai-qi-zi-wo-gai-bian-de-yuan/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
         </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:wei-cheng -->
-      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="围城 钱钟书 AI 读书 全书视角 AI 大纲">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="subtle">网页版</span><time datetime="2026-10-28">10.28</time></div>
+      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="围城 钱钟书 AI 读书 全书视角 AI 大纲" data-mode="whole jingdu archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-28">10.28</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/wei-cheng/overview.html">围城</a></h3>
         <p>钱钟书　·　4 章 / 140 条　·　全书视角初版，待亲读校订。</p>
-        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/wei-cheng/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/wei-cheng/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
           <a class="card-link card-link-green" href="reading-notes/books/wei-cheng/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
         </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:shang-jie-2026-nian-di-10-qi- -->
-      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="商界（2026年第10期） 商界杂志社（本期多篇署名作者） AI 读书 全书视角 AI 大纲">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="subtle">网页版</span><time datetime="2026-10-28">10.28</time></div>
+      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="商界（2026年第10期） 商界杂志社（本期多篇署名作者） AI 读书 全书视角 AI 大纲" data-mode="whole jingdu archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-28">10.28</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/shang-jie-2026-nian-di-10-qi-/overview.html">商界（2026年第10期）</a></h3>
         <p>商界杂志社（本期多篇署名作者）　·　28 章 / 722 条　·　全书视角初版，待亲读校订。</p>
-        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/shang-jie-2026-nian-di-10-qi-/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/shang-jie-2026-nian-di-10-qi-/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
           <a class="card-link card-link-green" href="reading-notes/books/shang-jie-2026-nian-di-10-qi-/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
         </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:san-ti-quan-ji--quan-san-ce- -->
-      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="三体全集（全三册） 刘慈欣 AI 读书 全书视角 AI 大纲">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="subtle">网页版</span><time datetime="2026-10-28">10.28</time></div>
+      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="三体全集（全三册） 刘慈欣 AI 读书 全书视角 AI 大纲" data-mode="whole jingdu archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-28">10.28</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/san-ti-quan-ji--quan-san-ce-/overview.html">三体全集（全三册）</a></h3>
         <p>刘慈欣　·　91 章 / 2645 条　·　全书视角初版，待亲读校订。</p>
-        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/san-ti-quan-ji--quan-san-ce-/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/san-ti-quan-ji--quan-san-ce-/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
           <a class="card-link card-link-green" href="reading-notes/books/san-ti-quan-ji--quan-san-ce-/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
         </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:wo-men-sa -->
-      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="我们仨 杨绛 AI 读书 全书视角 AI 大纲">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="subtle">网页版</span><time datetime="2026-10-28">10.28</time></div>
+      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="我们仨 杨绛 AI 读书 全书视角 AI 大纲" data-mode="whole jingdu archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-28">10.28</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/wo-men-sa/overview.html">我们仨</a></h3>
         <p>杨绛　·　21 章 / 689 条　·　全书视角初版，待亲读校订。</p>
-        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/wo-men-sa/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/wo-men-sa/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
           <a class="card-link card-link-green" href="reading-notes/books/wo-men-sa/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
         </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:xiao-xiang-ren-jia--tong-ming-ying-shi-yuan-zhu -->
-      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="小巷人家（同名影视原著） 大米 AI 读书 全书视角 AI 大纲">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="subtle">网页版</span><time datetime="2026-10-28">10.28</time></div>
+      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="小巷人家（同名影视原著） 大米 AI 读书 全书视角 AI 大纲" data-mode="whole jingdu archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-28">10.28</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/xiao-xiang-ren-jia--tong-ming-ying-shi-yuan-zhu/overview.html">小巷人家（同名影视原著）</a></h3>
         <p>大米　·　19 章 / 659 条　·　全书视角初版，待亲读校订。</p>
-        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/xiao-xiang-ren-jia--tong-ming-ying-shi-yuan-zhu/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/xiao-xiang-ren-jia--tong-ming-ying-shi-yuan-zhu/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
           <a class="card-link card-link-green" href="reading-notes/books/xiao-xiang-ren-jia--tong-ming-ying-shi-yuan-zhu/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
         </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:shou-xi-yu-yi--shen-yi-guan-chang-liu-kai-shan -->
-      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="首席御医（神医官场流开山之作） 据通行版本为银河九天（待核实） AI 读书 全书视角 AI 大纲">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="subtle">网页版</span><time datetime="2026-10-28">10.28</time></div>
+      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="首席御医（神医官场流开山之作） 据通行版本为银河九天（待核实） AI 读书 全书视角 AI 大纲" data-mode="whole jingdu archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-28">10.28</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/shou-xi-yu-yi--shen-yi-guan-chang-liu-kai-shan/overview.html">首席御医（神医官场流开山之作）</a></h3>
         <p>据通行版本为银河九天（待核实）　·　271 章 / 7531 条　·　全书视角初版，待亲读校订。</p>
-        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/shou-xi-yu-yi--shen-yi-guan-chang-liu-kai-shan/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/shou-xi-yu-yi--shen-yi-guan-chang-liu-kai-shan/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
           <a class="card-link card-link-green" href="reading-notes/books/shou-xi-yu-yi--shen-yi-guan-chang-liu-kai-shan/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
         </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:xi-shi-lei -->
-      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="西施泪 高光 AI 读书 全书视角 AI 大纲">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="subtle">网页版</span><time datetime="2026-10-28">10.28</time></div>
+      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="西施泪 高光 AI 读书 全书视角 AI 大纲" data-mode="whole jingdu archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-28">10.28</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/xi-shi-lei/overview.html">西施泪</a></h3>
         <p>高光　·　22 章 / 931 条　·　全书视角初版，待亲读校订。</p>
-        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/xi-shi-lei/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/xi-shi-lei/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
           <a class="card-link card-link-green" href="reading-notes/books/xi-shi-lei/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
         </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:xue-tang-mi-ma -->
-      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="血糖密码 [加] 杰森·冯 著 AI 读书 全书视角 AI 大纲">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="subtle">网页版</span><time datetime="2026-10-28">10.28</time></div>
+      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="血糖密码 [加] 杰森·冯 著 AI 读书 全书视角 AI 大纲" data-mode="whole jingdu archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-28">10.28</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/xue-tang-mi-ma/overview.html">血糖密码</a></h3>
         <p>[加] 杰森·冯 著　·　17 章 / 802 条　·　全书视角初版，待亲读校订。</p>
-        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/xue-tang-mi-ma/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/xue-tang-mi-ma/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
           <a class="card-link card-link-green" href="reading-notes/books/xue-tang-mi-ma/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
         </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:yi-dao-guan-tu--shen-yi-guan-chang-liu-feng-she -->
-      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="医道官途 石章鱼 AI 读书 全书视角 AI 大纲">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="subtle">网页版</span><time datetime="2026-10-28">10.28</time></div>
+      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="医道官途 石章鱼 AI 读书 全书视角 AI 大纲" data-mode="whole jingdu archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-28">10.28</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/yi-dao-guan-tu--shen-yi-guan-chang-liu-feng-she/overview.html">医道官途</a></h3>
         <p>石章鱼　·　294 章 / 10643 条　·　全书视角初版，待亲读校订。</p>
-        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/yi-dao-guan-tu--shen-yi-guan-chang-liu-feng-she/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/yi-dao-guan-tu--shen-yi-guan-chang-liu-feng-she/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
           <a class="card-link card-link-green" href="reading-notes/books/yi-dao-guan-tu--shen-yi-guan-chang-liu-feng-she/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
         </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:xue-se-lang-man--liu-ye--sun-li-zhu-yan-tong-m -->
-      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="血色浪漫 都梁 AI 读书 全书视角 AI 大纲">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="subtle">网页版</span><time datetime="2026-10-28">10.28</time></div>
+      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="血色浪漫 都梁 AI 读书 全书视角 AI 大纲" data-mode="whole jingdu archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-28">10.28</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/xue-se-lang-man--liu-ye--sun-li-zhu-yan-tong-m/overview.html">血色浪漫</a></h3>
         <p>都梁　·　27 章 / 1607 条　·　全书视角初版，待亲读校订。</p>
-        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/xue-se-lang-man--liu-ye--sun-li-zhu-yan-tong-m/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/xue-se-lang-man--liu-ye--sun-li-zhu-yan-tong-m/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
           <a class="card-link card-link-green" href="reading-notes/books/xue-se-lang-man--liu-ye--sun-li-zhu-yan-tong-m/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
         </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:wo-dang-shang-di-na-xie-shi-er -->
-      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="我当上帝那些事儿 依网络连载通行署名（待核实） AI 读书 全书视角 AI 大纲">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="subtle">网页版</span><time datetime="2026-10-28">10.28</time></div>
+      <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="我当上帝那些事儿 依网络连载通行署名（待核实） AI 读书 全书视角 AI 大纲" data-mode="whole jingdu archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-28">10.28</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/wo-dang-shang-di-na-xie-shi-er/overview.html">我当上帝那些事儿</a></h3>
         <p>依网络连载通行署名（待核实）　·　82 章 / 2129 条　·　全书视角初版，待亲读校订。</p>
-        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/wo-dang-shang-di-na-xie-shi-er/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/wo-dang-shang-di-na-xie-shi-er/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
           <a class="card-link card-link-green" href="reading-notes/books/wo-dang-shang-di-na-xie-shi-er/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
         </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:jin-rong-jia--jiao-fu--jin-rong-ban--mei-guo -->
-      <article class="archive-card" data-ts="2026-10-28T04:35:13" data-search="金融家|《教父 [美]德莱塞 AI 读书 全书视角 AI 大纲">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="subtle">网页版</span><time datetime="2026-10-28">10.28</time></div>
+      <article class="archive-card" data-ts="2026-10-28T04:35:13" data-search="金融家|《教父 [美]德莱塞 AI 读书 全书视角 AI 大纲" data-mode="whole jingdu">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-28">10.28</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/jin-rong-jia--jiao-fu--jin-rong-ban--mei-guo/overview.html">金融家|《教父</a></h3>
         <p>[美]德莱塞　·　200 章 / 5017 条　·　全书视角初版，待亲读校订。</p>
-        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/jin-rong-jia--jiao-fu--jin-rong-ban--mei-guo/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/jin-rong-jia--jiao-fu--jin-rong-ban--mei-guo/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
           <a class="card-link card-link-green" href="reading-notes/books/jin-rong-jia--jiao-fu--jin-rong-ban--mei-guo/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
         </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:xi-da-duo--ming-jia-yi--shen-du-zhu-shi--ren -->
-      <article class="archive-card" data-ts="2026-10-28T04:35:13" data-search="悉达多（名家译、深度注释、人物关系图）心若安顿，便是归处 [德]赫尔曼·黑塞 AI 读书 全书视角 AI 大纲">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="subtle">网页版</span><time datetime="2026-10-28">10.28</time></div>
+      <article class="archive-card" data-ts="2026-10-28T04:35:13" data-search="悉达多（名家译、深度注释、人物关系图）心若安顿，便是归处 [德]赫尔曼·黑塞 AI 读书 全书视角 AI 大纲" data-mode="whole jingdu">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-28">10.28</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/xi-da-duo--ming-jia-yi--shen-du-zhu-shi--ren/overview.html">悉达多（名家译、深度注释、人物关系图）心若安顿，便是归处</a></h3>
         <p>[德]赫尔曼·黑塞　·　28 章 / 759 条　·　全书视角初版，待亲读校订。</p>
-        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/xi-da-duo--ming-jia-yi--shen-du-zhu-shi--ren/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/xi-da-duo--ming-jia-yi--shen-du-zhu-shi--ren/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
           <a class="card-link card-link-green" href="reading-notes/books/xi-da-duo--ming-jia-yi--shen-du-zhu-shi--ren/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
         </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:di-yi-xing-yuan-li--pu-tong-ren-de-ren-sheng-ga -->
-      <article class="archive-card" data-ts="2026-10-28T04:35:13" data-search="第一性原理：普通人的人生高效手册 武从文 AI 读书 全书视角 AI 大纲">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="subtle">网页版</span><time datetime="2026-10-28">10.28</time></div>
+      <article class="archive-card" data-ts="2026-10-28T04:35:13" data-search="第一性原理：普通人的人生高效手册 武从文 AI 读书 全书视角 AI 大纲" data-mode="whole jingdu">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-28">10.28</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/di-yi-xing-yuan-li--pu-tong-ren-de-ren-sheng-ga/overview.html">第一性原理：普通人的人生高效手册</a></h3>
         <p>武从文　·　72 章 / 1174 条　·　全书视角初版，待亲读校订。</p>
-        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/di-yi-xing-yuan-li--pu-tong-ren-de-ren-sheng-ga/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/di-yi-xing-yuan-li--pu-tong-ren-de-ren-sheng-ga/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
           <a class="card-link card-link-green" href="reading-notes/books/di-yi-xing-yuan-li--pu-tong-ren-de-ren-sheng-ga/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
         </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:tian-mu-hong-chen--yao-yuan-de-jiu-shi-zhu--z -->
-      <article class="archive-card" data-ts="2026-10-28T04:35:13" data-search="天幕红尘（《遥远的救世主 豆豆 AI 读书 全书视角 AI 大纲">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="subtle">网页版</span><time datetime="2026-10-28">10.28</time></div>
+      <article class="archive-card" data-ts="2026-10-28T04:35:13" data-search="天幕红尘（《遥远的救世主 豆豆 AI 读书 全书视角 AI 大纲" data-mode="whole jingdu">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-28">10.28</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/tian-mu-hong-chen--yao-yuan-de-jiu-shi-zhu--z/overview.html">天幕红尘（《遥远的救世主</a></h3>
         <p>豆豆　·　51 章 / 1442 条　·　全书视角初版，待亲读校订。</p>
-        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/tian-mu-hong-chen--yao-yuan-de-jiu-shi-zhu--z/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/tian-mu-hong-chen--yao-yuan-de-jiu-shi-zhu--z/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
           <a class="card-link card-link-green" href="reading-notes/books/tian-mu-hong-chen--yao-yuan-de-jiu-shi-zhu--z/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
         </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:yi-di-ji-mao--dian-cang-ban- -->
-      <article class="archive-card" data-ts="2026-10-27T17:18:00+08" data-search="一地鸡毛（典藏版） 刘震云 AI 读书 全书视角 AI 问书">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="type-tag">AI 问书</span><span class="subtle">网页版</span><time datetime="2026-10-27">10.27</time></div>
+      <article class="archive-card" data-ts="2026-10-27T17:18:00+08" data-search="一地鸡毛（典藏版） 刘震云 AI 读书 全书视角" data-mode="whole jingdu archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-27">10.27</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/yi-di-ji-mao--dian-cang-ban-/overview.html">一地鸡毛（典藏版）</a></h3>
-        <p>刘震云　·　8 章 / 539 条　·　全书视角初版，含 AI 问书，待亲读校订。</p>
-        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/yi-di-ji-mao--dian-cang-ban-/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+        <p>刘震云　·　8 章 / 539 条　·　全书视角初版，待亲读校订。</p>
+        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/yi-di-ji-mao--dian-cang-ban-/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
           <a class="card-link card-link-green" href="reading-notes/books/yi-di-ji-mao--dian-cang-ban-/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
         </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:yi-ge-nv-ren-yi-sheng-de-er-shi-si-xiao-shi--ta -->
-      <article class="archive-card" data-ts="2026-10-27T17:17:00+08" data-search="一个女人一生的二十四小时（她以为在救人，其实是为自己重活一次） [奥] 斯蒂芬·茨威格 AI 读书 全书视角 AI 问书">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="type-tag">AI 问书</span><span class="subtle">网页版</span><time datetime="2026-10-27">10.27</time></div>
+      <article class="archive-card" data-ts="2026-10-27T17:17:00+08" data-search="一个女人一生的二十四小时（她以为在救人，其实是为自己重活一次） [奥] 斯蒂芬·茨威格 AI 读书 全书视角" data-mode="whole jingdu archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-27">10.27</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/yi-ge-nv-ren-yi-sheng-de-er-shi-si-xiao-shi--ta/overview.html">一个女人一生的二十四小时（她以为在救人，其实是为自己重活一次）</a></h3>
-        <p>[奥] 斯蒂芬·茨威格　·　6 章 / 157 条　·　全书视角初版，含 AI 问书，待亲读校订。</p>
-        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/yi-ge-nv-ren-yi-sheng-de-er-shi-si-xiao-shi--ta/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+        <p>[奥] 斯蒂芬·茨威格　·　6 章 / 157 条　·　全书视角初版，待亲读校订。</p>
+        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/yi-ge-nv-ren-yi-sheng-de-er-shi-si-xiao-shi--ta/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
           <a class="card-link card-link-green" href="reading-notes/books/yi-ge-nv-ren-yi-sheng-de-er-shi-si-xiao-shi--ta/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
         </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:yi-ju-ding-yi-wan-ju-2022-xin-ban- -->
-      <article class="archive-card" data-ts="2026-10-27T17:16:00+08" data-search="一句顶一万句（2022新版） 刘震云 AI 读书 全书视角 AI 问书">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="type-tag">AI 问书</span><span class="subtle">网页版</span><time datetime="2026-10-27">10.27</time></div>
+      <article class="archive-card" data-ts="2026-10-27T17:16:00+08" data-search="一句顶一万句（2022新版） 刘震云 AI 读书 全书视角" data-mode="whole jingdu archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-27">10.27</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/yi-ju-ding-yi-wan-ju-2022-xin-ban-/overview.html">一句顶一万句（2022新版）</a></h3>
-        <p>刘震云　·　24 章 / 1101 条　·　全书视角初版，含 AI 问书，待亲读校订。</p>
-        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/yi-ju-ding-yi-wan-ju-2022-xin-ban-/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+        <p>刘震云　·　24 章 / 1101 条　·　全书视角初版，待亲读校订。</p>
+        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/yi-ju-ding-yi-wan-ju-2022-xin-ban-/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
           <a class="card-link card-link-green" href="reading-notes/books/yi-ju-ding-yi-wan-ju-2022-xin-ban-/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
         </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:yong-di-yi-xing-yuan-li-du-dong-ri-chang-50-ge -->
-      <article class="archive-card" data-ts="2026-10-27T17:15:00+08" data-search="用第一性原理读懂日常：50个生活问题的重新拆解 品成心理 AI 读书 全书视角 AI 问书">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="type-tag">AI 问书</span><span class="subtle">网页版</span><time datetime="2026-10-27">10.27</time></div>
+      <article class="archive-card" data-ts="2026-10-27T17:15:00+08" data-search="用第一性原理读懂日常：50个生活问题的重新拆解 品成心理 AI 读书 全书视角" data-mode="whole jingdu archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-27">10.27</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/yong-di-yi-xing-yuan-li-du-dong-ri-chang-50-ge/overview.html">用第一性原理读懂日常：50个生活问题的重新拆解</a></h3>
-        <p>品成心理　·　50 章 / 922 条　·　全书视角初版，含 AI 问书，待亲读校订。</p>
-        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/yong-di-yi-xing-yuan-li-du-dong-ri-chang-50-ge/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+        <p>品成心理　·　50 章 / 922 条　·　全书视角初版，待亲读校订。</p>
+        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/yong-di-yi-xing-yuan-li-du-dong-ri-chang-50-ge/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
           <a class="card-link card-link-green" href="reading-notes/books/yong-di-yi-xing-yuan-li-du-dong-ri-chang-50-ge/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
         </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:yue-liang-yu-liu-bian-shi -->
-      <article class="archive-card" data-ts="2026-10-27T17:14:00+08" data-search="月亮与六便士 [英] 威廉·萨默塞特·毛姆 AI 读书 全书视角 AI 问书">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="type-tag">AI 问书</span><span class="subtle">网页版</span><time datetime="2026-10-27">10.27</time></div>
+      <article class="archive-card" data-ts="2026-10-27T17:14:00+08" data-search="月亮与六便士 [英] 威廉·萨默塞特·毛姆 AI 读书 全书视角" data-mode="whole jingdu archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-27">10.27</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/yue-liang-yu-liu-bian-shi/overview.html">月亮与六便士</a></h3>
-        <p>[英] 威廉·萨默塞特·毛姆　·　62 章 / 1314 条　·　全书视角初版，含 AI 问书，待亲读校订。</p>
-        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/yue-liang-yu-liu-bian-shi/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+        <p>[英] 威廉·萨默塞特·毛姆　·　62 章 / 1314 条　·　全书视角初版，待亲读校订。</p>
+        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/yue-liang-yu-liu-bian-shi/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
           <a class="card-link card-link-green" href="reading-notes/books/yue-liang-yu-liu-bian-shi/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
         </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:zai-xia-jiang-de-zhuan-wan-chu--chen-xing-jia-r -->
-      <article class="archive-card" data-ts="2026-10-27T17:13:00+08" data-search="在峡江的转弯处：陈行甲人生笔记 陈行甲 AI 读书 全书视角 AI 问书">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="type-tag">AI 问书</span><span class="subtle">网页版</span><time datetime="2026-10-27">10.27</time></div>
+      <article class="archive-card" data-ts="2026-10-27T17:13:00+08" data-search="在峡江的转弯处：陈行甲人生笔记 陈行甲 AI 读书 全书视角" data-mode="whole jingdu archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-27">10.27</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/zai-xia-jiang-de-zhuan-wan-chu--chen-xing-jia-r/overview.html">在峡江的转弯处：陈行甲人生笔记</a></h3>
-        <p>陈行甲　·　13 章 / 408 条　·　全书视角初版，含 AI 问书，待亲读校订。</p>
-        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/zai-xia-jiang-de-zhuan-wan-chu--chen-xing-jia-r/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+        <p>陈行甲　·　13 章 / 408 条　·　全书视角初版，待亲读校订。</p>
+        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/zai-xia-jiang-de-zhuan-wan-chu--chen-xing-jia-r/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
           <a class="card-link card-link-green" href="reading-notes/books/zai-xia-jiang-de-zhuan-wan-chu--chen-xing-jia-r/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
         </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:zhi-shen-shi-nei--zhong-guo-zheng-fu-yu-jing-ji -->
-      <article class="archive-card" data-ts="2026-10-27T17:12:00+08" data-search="置身事内：中国政府与经济发展 兰小欢 AI 读书 全书视角 AI 问书">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="type-tag">AI 问书</span><span class="subtle">网页版</span><time datetime="2026-10-27">10.27</time></div>
+      <article class="archive-card" data-ts="2026-10-27T17:12:00+08" data-search="置身事内：中国政府与经济发展 兰小欢 AI 读书 全书视角" data-mode="whole archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-27">10.27</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/zhi-shen-shi-nei--zhong-guo-zheng-fu-yu-jing-ji/overview.html">置身事内：中国政府与经济发展</a></h3>
-        <p>兰小欢　·　45 章 / 1036 条　·　全书视角初版，含 AI 问书，待亲读校订。</p>
-        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/zhi-shen-shi-nei--zhong-guo-zheng-fu-yu-jing-ji/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
+        <p>兰小欢　·　45 章 / 1036 条　·　全书视角初版，待亲读校订。</p>
+        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/zhi-shen-shi-nei--zhong-guo-zheng-fu-yu-jing-ji/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:zhong-guo-wei-shen-me-bu-tong--chuan-yue-li-shi -->
-      <article class="archive-card" data-ts="2026-10-27T17:11:00+08" data-search="中国为什么不同：穿越历史理解我们身处的时代 布衣 AI 读书 全书视角 AI 问书">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="type-tag">AI 问书</span><span class="subtle">网页版</span><time datetime="2026-10-27">10.27</time></div>
+      <article class="archive-card" data-ts="2026-10-27T17:11:00+08" data-search="中国为什么不同：穿越历史理解我们身处的时代 布衣 AI 读书 全书视角" data-mode="whole jingdu archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-27">10.27</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/zhong-guo-wei-shen-me-bu-tong--chuan-yue-li-shi/overview.html">中国为什么不同：穿越历史理解我们身处的时代</a></h3>
-        <p>布衣　·　19 章 / 572 条　·　全书视角初版，含 AI 问书，待亲读校订。</p>
-        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/zhong-guo-wei-shen-me-bu-tong--chuan-yue-li-shi/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+        <p>布衣　·　19 章 / 572 条　·　全书视角初版，待亲读校订。</p>
+        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/zhong-guo-wei-shen-me-bu-tong--chuan-yue-li-shi/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
           <a class="card-link card-link-green" href="reading-notes/books/zhong-guo-wei-shen-me-bu-tong--chuan-yue-li-shi/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
         </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:yu-dian-qiu -->
       <article class="archive-card" data-ts="2026-10-27T12:00:00+08" data-search="玉簟秋 灵希 AI 读书 整书汇编">
-        <div class="card-top"><span class="type-tag type-tag-gold">整书汇编</span><span class="type-tag">已完读</span><span class="subtle">网页版</span><time datetime="2026-10-27">10.27</time></div>
+        <div class="card-top"><span class="type-tag type-tag-gold">整书汇编</span><span class="type-tag">已完读</span><time datetime="2026-10-27">10.27</time></div>
         <h3><a class="card-title-link" href="books/yu-dian-qiu/index.html">玉簟秋</a></h3>
         <p>灵希　·　完读后成册的主题汇编</p>
         <div class="card-actions">
@@ -530,7 +541,7 @@
       <!-- /preread-card -->
       <!-- preread-card:zhu-xiao-fang-zi-de-nv-ren -->
       <article class="archive-card" data-ts="2026-10-27T12:00:00+08" data-search="住小房子的女人 纪静蓉 AI 读书 整书汇编">
-        <div class="card-top"><span class="type-tag type-tag-gold">整书汇编</span><span class="type-tag">已完读</span><span class="subtle">网页版</span><time datetime="2026-10-27">10.27</time></div>
+        <div class="card-top"><span class="type-tag type-tag-gold">整书汇编</span><span class="type-tag">已完读</span><time datetime="2026-10-27">10.27</time></div>
         <h3><a class="card-title-link" href="books/zhu-xiao-fang-zi-de-nv-ren/index.html">住小房子的女人</a></h3>
         <p>纪静蓉　·　完读后成册的主题汇编</p>
         <div class="card-actions">
@@ -539,328 +550,328 @@
       </article>
       <!-- /preread-card -->
       <!-- preread-card:-yao-yuan-de-jiu-shi-zhu--zai-shuo-shen-me -->
-      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="《遥远的救世主》在说什么 刘芋麟 AI 读书 全书视角 AI 问书">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="type-tag">AI 问书</span><span class="subtle">网页版</span><time datetime="2026-10-27">10.27</time></div>
+      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="《遥远的救世主》在说什么 刘芋麟 AI 读书 全书视角" data-mode="whole jingdu archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-27">10.27</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/-yao-yuan-de-jiu-shi-zhu--zai-shuo-shen-me/overview.html">《遥远的救世主》在说什么</a></h3>
-        <p>刘芋麟　·　33 章　·　全书视角初版，含 AI 问书，待亲读校订。</p>
+        <p>刘芋麟　·　33 章　·　全书视角初版，待亲读校订。</p>
         <div class="card-actions">
           <a class="card-link card-link-green" href="reading-notes/books/-yao-yuan-de-jiu-shi-zhu--zai-shuo-shen-me/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
-          <a class="card-link card-link-strong" href="reading-notes/books/-yao-yuan-de-jiu-shi-zhu--zai-shuo-shen-me/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
+          <a class="card-link card-link-strong" href="reading-notes/books/-yao-yuan-de-jiu-shi-zhu--zai-shuo-shen-me/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:1984 -->
-      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="1984 [英]乔治·奥威尔 AI 读书 全书视角 AI 问书">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="type-tag">AI 问书</span><span class="subtle">网页版</span><time datetime="2026-10-27">10.27</time></div>
+      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="1984 [英]乔治·奥威尔 AI 读书 全书视角" data-mode="whole jingdu archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-27">10.27</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/1984/overview.html">1984</a></h3>
-        <p>[英]乔治·奥威尔　·　25 章　·　全书视角初版，含 AI 问书，待亲读校订。</p>
+        <p>[英]乔治·奥威尔　·　25 章　·　全书视角初版，待亲读校订。</p>
         <div class="card-actions">
           <a class="card-link card-link-green" href="reading-notes/books/1984/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
-          <a class="card-link card-link-strong" href="reading-notes/books/1984/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
+          <a class="card-link card-link-strong" href="reading-notes/books/1984/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:ai--ji-wei-jiu-yu-sheng-hua-wei-ji -->
-      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="爱，鸡尾酒与生化危机 赵艺恩 AI 读书 全书视角 AI 问书">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="type-tag">AI 问书</span><span class="subtle">网页版</span><time datetime="2026-10-27">10.27</time></div>
+      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="爱，鸡尾酒与生化危机 赵艺恩 AI 读书 全书视角" data-mode="whole jingdu archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-27">10.27</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/ai--ji-wei-jiu-yu-sheng-hua-wei-ji/overview.html">爱，鸡尾酒与生化危机</a></h3>
-        <p>赵艺恩　·　22 章　·　全书视角初版，含 AI 问书，待亲读校订。</p>
+        <p>赵艺恩　·　22 章　·　全书视角初版，待亲读校订。</p>
         <div class="card-actions">
           <a class="card-link card-link-green" href="reading-notes/books/ai--ji-wei-jiu-yu-sheng-hua-wei-ji/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
-          <a class="card-link card-link-strong" href="reading-notes/books/ai--ji-wei-jiu-yu-sheng-hua-wei-ji/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
+          <a class="card-link card-link-strong" href="reading-notes/books/ai--ji-wei-jiu-yu-sheng-hua-wei-ji/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:alaska-qingyouji -->
-      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="遗忘之地阿拉斯加  AI 读书 全书视角 AI 问书">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="type-tag">AI 问书</span><span class="subtle">网页版</span><time datetime="2026-10-27">10.27</time></div>
+      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="遗忘之地阿拉斯加 AI 读书 全书视角" data-mode="whole archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-27">10.27</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/alaska-qingyouji/overview.html">遗忘之地阿拉斯加</a></h3>
-        <p>全书视角初版，含 AI 问书，待亲读校订。</p>
+        <p>全书视角初版，待亲读校订。</p>
         <div class="card-actions">
-          <a class="card-link card-link-strong" href="reading-notes/books/alaska-qingyouji/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
+          <a class="card-link card-link-strong" href="reading-notes/books/alaska-qingyouji/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:ba-bu-ya-xin-ji-nei-ya--sheng-zhe-chi-xia-shi-z -->
-      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="巴布亚新几内亚：生者吃下逝者，食人旧俗里的爱与告别（轻游记） 猴面包的树 AI 读书 全书视角 AI 问书">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="type-tag">AI 问书</span><span class="subtle">网页版</span><time datetime="2026-10-27">10.27</time></div>
+      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="巴布亚新几内亚：生者吃下逝者，食人旧俗里的爱与告别（轻游记） 猴面包的树 AI 读书 全书视角" data-mode="whole archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-27">10.27</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/ba-bu-ya-xin-ji-nei-ya--sheng-zhe-chi-xia-shi-z/overview.html">巴布亚新几内亚：生者吃下逝者，食人旧俗里的爱与告别（轻游记）</a></h3>
-        <p>猴面包的树　·　1 章　·　全书视角初版，含 AI 问书，待亲读校订。</p>
+        <p>猴面包的树　·　1 章　·　全书视角初版，待亲读校订。</p>
         <div class="card-actions">
-          <a class="card-link card-link-strong" href="reading-notes/books/ba-bu-ya-xin-ji-nei-ya--sheng-zhe-chi-xia-shi-z/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
+          <a class="card-link card-link-strong" href="reading-notes/books/ba-bu-ya-xin-ji-nei-ya--sheng-zhe-chi-xia-shi-z/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:bai-ye-xing -->
-      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="白夜行 东野圭吾 AI 读书 全书视角 AI 问书">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="type-tag">AI 问书</span><span class="subtle">网页版</span><time datetime="2026-10-27">10.27</time></div>
+      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="白夜行 东野圭吾 AI 读书 全书视角" data-mode="whole archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-27">10.27</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/bai-ye-xing/overview.html">白夜行</a></h3>
-        <p>东野圭吾　·　13 章　·　全书视角初版，含 AI 问书，待亲读校订。</p>
+        <p>东野圭吾　·　13 章　·　全书视角初版，待亲读校订。</p>
         <div class="card-actions">
-          <a class="card-link card-link-strong" href="reading-notes/books/bai-ye-xing/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
+          <a class="card-link card-link-strong" href="reading-notes/books/bai-ye-xing/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:baikal-qingyouji -->
-      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="贝加尔湖  AI 读书 全书视角 AI 问书">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="type-tag">AI 问书</span><span class="subtle">网页版</span><time datetime="2026-10-27">10.27</time></div>
+      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="贝加尔湖 AI 读书 全书视角" data-mode="whole archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-27">10.27</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/baikal-qingyouji/overview.html">贝加尔湖</a></h3>
-        <p>全书视角初版，含 AI 问书，待亲读校订。</p>
+        <p>全书视角初版，待亲读校订。</p>
         <div class="card-actions">
-          <a class="card-link card-link-strong" href="reading-notes/books/baikal-qingyouji/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
+          <a class="card-link card-link-strong" href="reading-notes/books/baikal-qingyouji/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:camino-qingyouji -->
-      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="朝圣之路：即使失去所有，你也要走自己的路（轻游记）  AI 读书 全书视角 AI 问书">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="type-tag">AI 问书</span><span class="subtle">网页版</span><time datetime="2026-10-27">10.27</time></div>
+      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="朝圣之路：即使失去所有，你也要走自己的路（轻游记） AI 读书 全书视角" data-mode="whole archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-27">10.27</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/camino-qingyouji/overview.html">朝圣之路：即使失去所有，你也要走自己的路（轻游记）</a></h3>
-        <p>全书视角初版，含 AI 问书，待亲读校订。</p>
+        <p>全书视角初版，待亲读校订。</p>
         <div class="card-actions">
-          <a class="card-link card-link-strong" href="reading-notes/books/camino-qingyouji/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
+          <a class="card-link card-link-strong" href="reading-notes/books/camino-qingyouji/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:can-lan-qian-yang -->
-      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="灿烂千阳 卡勒德·胡赛尼 AI 读书 全书视角 AI 问书">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="type-tag">AI 问书</span><span class="subtle">网页版</span><time datetime="2026-10-27">10.27</time></div>
+      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="灿烂千阳 卡勒德·胡赛尼 AI 读书 全书视角" data-mode="whole jingdu archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-27">10.27</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/can-lan-qian-yang/overview.html">灿烂千阳</a></h3>
-        <p>卡勒德·胡赛尼　·　52 章　·　全书视角初版，含 AI 问书，待亲读校订。</p>
+        <p>卡勒德·胡赛尼　·　52 章　·　全书视角初版，待亲读校订。</p>
         <div class="card-actions">
           <a class="card-link card-link-green" href="reading-notes/books/can-lan-qian-yang/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
-          <a class="card-link card-link-strong" href="reading-notes/books/can-lan-qian-yang/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
+          <a class="card-link card-link-strong" href="reading-notes/books/can-lan-qian-yang/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:cang-lang-zhi-shui -->
-      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="《沧浪之水》 阎真 AI 读书 全书视角 AI 问书">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="type-tag">AI 问书</span><span class="subtle">网页版</span><time datetime="2026-10-27">10.27</time></div>
+      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="《沧浪之水》 阎真 AI 读书 全书视角" data-mode="whole jingdu archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-27">10.27</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/cang-lang-zhi-shui/overview.html">《沧浪之水》</a></h3>
-        <p>阎真　·　54 章　·　全书视角初版，含 AI 问书，待亲读校订。</p>
+        <p>阎真　·　54 章　·　全书视角初版，待亲读校订。</p>
         <div class="card-actions">
           <a class="card-link card-link-green" href="reading-notes/books/cang-lang-zhi-shui/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
-          <a class="card-link card-link-strong" href="reading-notes/books/cang-lang-zhi-shui/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
+          <a class="card-link card-link-strong" href="reading-notes/books/cang-lang-zhi-shui/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:cang-sang-shi-nian -->
-      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="《沧桑十年》 马识途 AI 读书 全书视角 AI 问书">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="type-tag">AI 问书</span><span class="subtle">网页版</span><time datetime="2026-10-27">10.27</time></div>
+      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="《沧桑十年》 马识途 AI 读书 全书视角" data-mode="whole archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-27">10.27</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/cang-sang-shi-nian/overview.html">《沧桑十年》</a></h3>
-        <p>马识途　·　101 章　·　全书视角初版，含 AI 问书，待亲读校订。</p>
+        <p>马识途　·　101 章　·　全书视角初版，待亲读校订。</p>
         <div class="card-actions">
-          <a class="card-link card-link-strong" href="reading-notes/books/cang-sang-shi-nian/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
+          <a class="card-link card-link-strong" href="reading-notes/books/cang-sang-shi-nian/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:chang-an-de-li-zhi--tong-ming-ying-shi-yuan-zhu -->
-      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="《长安的荔枝》 马伯庸 AI 读书 全书视角 AI 问书">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="type-tag">AI 问书</span><span class="subtle">网页版</span><time datetime="2026-10-27">10.27</time></div>
+      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="《长安的荔枝》 马伯庸 AI 读书 全书视角" data-mode="whole jingdu archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-27">10.27</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/chang-an-de-li-zhi--tong-ming-ying-shi-yuan-zhu/overview.html">《长安的荔枝》</a></h3>
-        <p>马伯庸　·　8 章　·　全书视角初版，含 AI 问书，待亲读校订。</p>
+        <p>马伯庸　·　8 章　·　全书视角初版，待亲读校订。</p>
         <div class="card-actions">
           <a class="card-link card-link-green" href="reading-notes/books/chang-an-de-li-zhi--tong-ming-ying-shi-yuan-zhu/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
-          <a class="card-link card-link-strong" href="reading-notes/books/chang-an-de-li-zhi--tong-ming-ying-shi-yuan-zhu/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
+          <a class="card-link card-link-strong" href="reading-notes/books/chang-an-de-li-zhi--tong-ming-ying-shi-yuan-zhu/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:chuan-yue-tu-ku-man-si-tan -->
-      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="《穿越土库曼斯坦》 刘子超 AI 读书 全书视角 AI 问书">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="type-tag">AI 问书</span><span class="subtle">网页版</span><time datetime="2026-10-27">10.27</time></div>
+      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="《穿越土库曼斯坦》 刘子超 AI 读书 全书视角" data-mode="whole jingdu archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-27">10.27</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/chuan-yue-tu-ku-man-si-tan/overview.html">《穿越土库曼斯坦》</a></h3>
-        <p>刘子超　·　16 章　·　全书视角初版，含 AI 问书，待亲读校订。</p>
+        <p>刘子超　·　16 章　·　全书视角初版，待亲读校订。</p>
         <div class="card-actions">
           <a class="card-link card-link-green" href="reading-notes/books/chuan-yue-tu-ku-man-si-tan/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
-          <a class="card-link card-link-strong" href="reading-notes/books/chuan-yue-tu-ku-man-si-tan/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
+          <a class="card-link card-link-strong" href="reading-notes/books/chuan-yue-tu-ku-man-si-tan/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:da-ying-bo-wu-guan-shi-jie-jian-shi -->
-      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="《大英博物馆世界简史》 尼尔·麦格雷戈 AI 读书 全书视角 AI 问书">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="type-tag">AI 问书</span><span class="subtle">网页版</span><time datetime="2026-10-27">10.27</time></div>
+      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="《大英博物馆世界简史》 尼尔·麦格雷戈 AI 读书 全书视角" data-mode="whole jingdu archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-27">10.27</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/da-ying-bo-wu-guan-shi-jie-jian-shi/overview.html">《大英博物馆世界简史》</a></h3>
-        <p>尼尔·麦格雷戈　·　122 章　·　全书视角初版，含 AI 问书，待亲读校订。</p>
+        <p>尼尔·麦格雷戈　·　122 章　·　全书视角初版，待亲读校订。</p>
         <div class="card-actions">
           <a class="card-link card-link-green" href="reading-notes/books/da-ying-bo-wu-guan-shi-jie-jian-shi/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
-          <a class="card-link card-link-strong" href="reading-notes/books/da-ying-bo-wu-guan-shi-jie-jian-shi/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
+          <a class="card-link card-link-strong" href="reading-notes/books/da-ying-bo-wu-guan-shi-jie-jian-shi/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:da-zhuan-zhe--xian-dai-zhai-wu-yu-ke-chi-xu-de -->
-      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="《大转折：现代债务与可持续的增长》  AI 读书 全书视角 AI 问书">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="type-tag">AI 问书</span><span class="subtle">网页版</span><time datetime="2026-10-27">10.27</time></div>
+      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="《大转折：现代债务与可持续的增长》 AI 读书 全书视角" data-mode="whole archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-27">10.27</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/da-zhuan-zhe--xian-dai-zhai-wu-yu-ke-chi-xu-de/overview.html">《大转折：现代债务与可持续的增长》</a></h3>
-        <p>全书视角初版，含 AI 问书，待亲读校订。</p>
+        <p>全书视角初版，待亲读校订。</p>
         <div class="card-actions">
-          <a class="card-link card-link-strong" href="reading-notes/books/da-zhuan-zhe--xian-dai-zhai-wu-yu-ke-chi-xu-de/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+          <a class="card-link card-link-strong" href="reading-notes/books/da-zhuan-zhe--xian-dai-zhai-wu-yu-ke-chi-xu-de/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
         </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:di-yu-wang-she-hui--sang-shi-da-zhi-shi-dai- -->
-      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="《低欲望社会：「丧失大志时代」的新·国富论》 [日]大前研一 AI 读书 全书视角 AI 问书">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="type-tag">AI 问书</span><span class="subtle">网页版</span><time datetime="2026-10-27">10.27</time></div>
+      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="《低欲望社会：「丧失大志时代」的新·国富论》 [日]大前研一 AI 读书 全书视角" data-mode="whole jingdu archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-27">10.27</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/di-yu-wang-she-hui--sang-shi-da-zhi-shi-dai-/overview.html">《低欲望社会：「丧失大志时代」的新·国富论》</a></h3>
-        <p>[日]大前研一　·　4 章　·　全书视角初版，含 AI 问书，待亲读校订。</p>
+        <p>[日]大前研一　·　4 章　·　全书视角初版，待亲读校订。</p>
         <div class="card-actions">
           <a class="card-link card-link-green" href="reading-notes/books/di-yu-wang-she-hui--sang-shi-da-zhi-shi-dai-/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
-          <a class="card-link card-link-strong" href="reading-notes/books/di-yu-wang-she-hui--sang-shi-da-zhi-shi-dai-/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
+          <a class="card-link card-link-strong" href="reading-notes/books/di-yu-wang-she-hui--sang-shi-da-zhi-shi-dai-/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:dong-wu-nong-chang -->
-      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="动物农场 [英]乔治·奥威尔 AI 读书 全书视角 AI 问书">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="type-tag">AI 问书</span><span class="subtle">网页版</span><time datetime="2026-10-27">10.27</time></div>
+      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="动物农场 [英]乔治·奥威尔 AI 读书 全书视角" data-mode="whole jingdu archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-27">10.27</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/dong-wu-nong-chang/overview.html">动物农场</a></h3>
-        <p>[英]乔治·奥威尔　·　10 章　·　全书视角初版，含 AI 问书，待亲读校订。</p>
+        <p>[英]乔治·奥威尔　·　10 章　·　全书视角初版，待亲读校订。</p>
         <div class="card-actions">
           <a class="card-link card-link-green" href="reading-notes/books/dong-wu-nong-chang/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
-          <a class="card-link card-link-strong" href="reading-notes/books/dong-wu-nong-chang/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
+          <a class="card-link card-link-strong" href="reading-notes/books/dong-wu-nong-chang/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:du-mao-xuan--zou-chu-ren-sheng-kun-ju -->
-      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="读毛选，走出人生困局 温伯陵 AI 读书 全书视角 AI 问书">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="type-tag">AI 问书</span><span class="subtle">网页版</span><time datetime="2026-10-27">10.27</time></div>
+      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="读毛选，走出人生困局 温伯陵 AI 读书 全书视角" data-mode="whole archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-27">10.27</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/du-mao-xuan--zou-chu-ren-sheng-kun-ju/overview.html">读毛选，走出人生困局</a></h3>
-        <p>温伯陵　·　13 章　·　全书视角初版，含 AI 问书，待亲读校订。</p>
+        <p>温伯陵　·　13 章　·　全书视角初版，待亲读校订。</p>
         <div class="card-actions">
-          <a class="card-link card-link-strong" href="reading-notes/books/du-mao-xuan--zou-chu-ren-sheng-kun-ju/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
+          <a class="card-link card-link-strong" href="reading-notes/books/du-mao-xuan--zou-chu-ren-sheng-kun-ju/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:elephant-qingyouji -->
-      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="今天也不用工作吗，大象？（轻游记）  AI 读书 全书视角 AI 问书">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="type-tag">AI 问书</span><span class="subtle">网页版</span><time datetime="2026-10-27">10.27</time></div>
+      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="今天也不用工作吗，大象？（轻游记） AI 读书 全书视角" data-mode="whole archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-27">10.27</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/elephant-qingyouji/overview.html">今天也不用工作吗，大象？（轻游记）</a></h3>
-        <p>全书视角初版，含 AI 问书，待亲读校订。</p>
+        <p>全书视角初版，待亲读校订。</p>
         <div class="card-actions">
-          <a class="card-link card-link-strong" href="reading-notes/books/elephant-qingyouji/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
+          <a class="card-link card-link-strong" href="reading-notes/books/elephant-qingyouji/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:er-yue-he-shuo-fan-fu -->
-      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="《二月河说反腐》  AI 读书 全书视角 AI 问书">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="type-tag">AI 问书</span><span class="subtle">网页版</span><time datetime="2026-10-27">10.27</time></div>
+      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="《二月河说反腐》 AI 读书 全书视角" data-mode="whole archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-27">10.27</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/er-yue-he-shuo-fan-fu/overview.html">《二月河说反腐》</a></h3>
-        <p>全书视角初版，含 AI 问书，待亲读校订。</p>
+        <p>全书视角初版，待亲读校订。</p>
         <div class="card-actions">
-          <a class="card-link card-link-strong" href="reading-notes/books/er-yue-he-shuo-fan-fu/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+          <a class="card-link card-link-strong" href="reading-notes/books/er-yue-he-shuo-fan-fu/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
         </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:fa-zhi-de-xi-jie -->
-      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="法治的细节 罗翔 AI 读书 全书视角 AI 问书">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="type-tag">AI 问书</span><span class="subtle">网页版</span><time datetime="2026-10-27">10.27</time></div>
+      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="法治的细节 罗翔 AI 读书 全书视角" data-mode="whole jingdu archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-27">10.27</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/fa-zhi-de-xi-jie/overview.html">法治的细节</a></h3>
-        <p>罗翔　·　6 章　·　全书视角初版，含 AI 问书，待亲读校订。</p>
+        <p>罗翔　·　6 章　·　全书视角初版，待亲读校订。</p>
         <div class="card-actions">
           <a class="card-link card-link-green" href="reading-notes/books/fa-zhi-de-xi-jie/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
-          <a class="card-link card-link-strong" href="reading-notes/books/fa-zhi-de-xi-jie/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
+          <a class="card-link card-link-strong" href="reading-notes/books/fa-zhi-de-xi-jie/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:fang-si-qi-de-chu-lian-le-yuan--jing-bian-ban- -->
-      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="房思琪的初恋乐园（精编版） 林奕含 AI 读书 全书视角 AI 问书">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="type-tag">AI 问书</span><span class="subtle">网页版</span><time datetime="2026-10-27">10.27</time></div>
+      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="房思琪的初恋乐园（精编版） 林奕含 AI 读书 全书视角" data-mode="whole archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-27">10.27</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/fang-si-qi-de-chu-lian-le-yuan--jing-bian-ban-/overview.html">房思琪的初恋乐园（精编版）</a></h3>
-        <p>林奕含　·　2 章　·　全书视角初版，含 AI 问书，待亲读校订。</p>
+        <p>林奕含　·　2 章　·　全书视角初版，待亲读校订。</p>
         <div class="card-actions">
-          <a class="card-link card-link-strong" href="reading-notes/books/fang-si-qi-de-chu-lian-le-yuan--jing-bian-ban-/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
+          <a class="card-link card-link-strong" href="reading-notes/books/fang-si-qi-de-chu-lian-le-yuan--jing-bian-ban-/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:gao-xing-jia-bi-ren-sheng-zhi-nan -->
-      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="高性价比人生指南 奥尔科特 AI 读书 全书视角 AI 问书">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="type-tag">AI 问书</span><span class="subtle">网页版</span><time datetime="2026-10-27">10.27</time></div>
+      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="高性价比人生指南 奥尔科特 AI 读书 全书视角" data-mode="whole jingdu archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-27">10.27</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/gao-xing-jia-bi-ren-sheng-zhi-nan/overview.html">高性价比人生指南</a></h3>
-        <p>奥尔科特　·　42 章　·　全书视角初版，含 AI 问书，待亲读校订。</p>
+        <p>奥尔科特　·　42 章　·　全书视角初版，待亲读校订。</p>
         <div class="card-actions">
           <a class="card-link card-link-green" href="reading-notes/books/gao-xing-jia-bi-ren-sheng-zhi-nan/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
-          <a class="card-link card-link-strong" href="reading-notes/books/gao-xing-jia-bi-ren-sheng-zhi-nan/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
+          <a class="card-link card-link-strong" href="reading-notes/books/gao-xing-jia-bi-ren-sheng-zhi-nan/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:gu-shou--tou-zi-zhi-nan -->
-      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="固收+投资指南 银行螺丝钉 AI 读书 全书视角 AI 问书">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="type-tag">AI 问书</span><span class="subtle">网页版</span><time datetime="2026-10-27">10.27</time></div>
+      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="固收+投资指南 银行螺丝钉 AI 读书 全书视角" data-mode="whole jingdu archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-27">10.27</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/gu-shou--tou-zi-zhi-nan/overview.html">固收+投资指南</a></h3>
-        <p>银行螺丝钉　·　19 章　·　全书视角初版，含 AI 问书，待亲读校订。</p>
+        <p>银行螺丝钉　·　19 章　·　全书视角初版，待亲读校订。</p>
         <div class="card-actions">
           <a class="card-link card-link-green" href="reading-notes/books/gu-shou--tou-zi-zhi-nan/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
-          <a class="card-link card-link-strong" href="reading-notes/books/gu-shou--tou-zi-zhi-nan/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
+          <a class="card-link card-link-strong" href="reading-notes/books/gu-shou--tou-zi-zhi-nan/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:king-return-dalrymple -->
-      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="王的归程——阿富汗战记（1839-1842）  AI 读书 全书视角 AI 问书">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="type-tag">AI 问书</span><span class="subtle">网页版</span><time datetime="2026-10-27">10.27</time></div>
+      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="王的归程——阿富汗战记（1839-1842） AI 读书 全书视角" data-mode="whole archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-27">10.27</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/king-return-dalrymple/overview.html">王的归程——阿富汗战记（1839-1842）</a></h3>
-        <p>全书视角初版，含 AI 问书，待亲读校订。</p>
+        <p>全书视角初版，待亲读校订。</p>
         <div class="card-actions">
-          <a class="card-link card-link-strong" href="reading-notes/books/king-return-dalrymple/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+          <a class="card-link card-link-strong" href="reading-notes/books/king-return-dalrymple/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
         </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:local-zhi-ye-gui-hua-niao-shu -->
-      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="职业如何规划？大城市，小城市，如何抉择？我来说说我的个人经历和思考  AI 读书 全书视角 AI 问书">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="type-tag">AI 问书</span><span class="subtle">网页版</span><time datetime="2026-10-27">10.27</time></div>
+      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="职业如何规划？大城市，小城市，如何抉择？我来说说我的个人经历和思考 AI 读书 全书视角" data-mode="whole archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-27">10.27</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/local-zhi-ye-gui-hua-niao-shu/overview.html">职业如何规划？大城市，小城市，如何抉择？我来说说我的个人经历和思考</a></h3>
-        <p>全书视角初版，含 AI 问书，待亲读校订。</p>
+        <p>全书视角初版，待亲读校订。</p>
         <div class="card-actions">
-          <a class="card-link card-link-strong" href="reading-notes/books/local-zhi-ye-gui-hua-niao-shu/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+          <a class="card-link card-link-strong" href="reading-notes/books/local-zhi-ye-gui-hua-niao-shu/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
         </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:serbia-qingyouji -->
-      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="塞尔维亚：他们都爱中国人（轻游记）  AI 读书 全书视角 AI 问书">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="type-tag">AI 问书</span><span class="subtle">网页版</span><time datetime="2026-10-27">10.27</time></div>
+      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="塞尔维亚：他们都爱中国人（轻游记） AI 读书 全书视角" data-mode="whole archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-27">10.27</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/serbia-qingyouji/overview.html">塞尔维亚：他们都爱中国人（轻游记）</a></h3>
-        <p>全书视角初版，含 AI 问书，待亲读校订。</p>
+        <p>全书视角初版，待亲读校订。</p>
         <div class="card-actions">
-          <a class="card-link card-link-strong" href="reading-notes/books/serbia-qingyouji/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
+          <a class="card-link card-link-strong" href="reading-notes/books/serbia-qingyouji/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:shi-shi -->
-      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="《时势》  AI 读书 全书视角 AI 问书">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="type-tag">AI 问书</span><span class="subtle">网页版</span><time datetime="2026-10-27">10.27</time></div>
+      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="《时势》 AI 读书 全书视角" data-mode="whole archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-27">10.27</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/shi-shi/overview.html">《时势》</a></h3>
-        <p>全书视角初版，含 AI 问书，待亲读校订。</p>
+        <p>全书视角初版，待亲读校订。</p>
         <div class="card-actions">
-          <a class="card-link card-link-strong" href="reading-notes/books/shi-shi/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+          <a class="card-link card-link-strong" href="reading-notes/books/shi-shi/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
         </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:tou-guo-di-li-kan-li-shi-xi-lie--quan-3-ce- -->
-      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="《透过地理看历史系列（全3册）》 李不白 AI 读书 全书视角 AI 问书">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="type-tag">AI 问书</span><span class="subtle">网页版</span><time datetime="2026-10-27">10.27</time></div>
+      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="《透过地理看历史系列（全3册）》 李不白 AI 读书 全书视角" data-mode="whole jingdu archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-27">10.27</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/tou-guo-di-li-kan-li-shi-xi-lie--quan-3-ce-/overview.html">《透过地理看历史系列（全3册）》</a></h3>
-        <p>李不白　·　97 章　·　全书视角初版，含 AI 问书，待亲读校订。</p>
+        <p>李不白　·　97 章　·　全书视角初版，待亲读校订。</p>
         <div class="card-actions">
           <a class="card-link card-link-green" href="reading-notes/books/tou-guo-di-li-kan-li-shi-xi-lie--quan-3-ce-/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
-          <a class="card-link card-link-strong" href="reading-notes/books/tou-guo-di-li-kan-li-shi-xi-lie--quan-3-ce-/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
+          <a class="card-link card-link-strong" href="reading-notes/books/tou-guo-di-li-kan-li-shi-xi-lie--quan-3-ce-/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:unstable-life-qingyouji -->
-      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="我只是喜欢不稳定的人生  AI 读书 全书视角 AI 问书">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="type-tag">AI 问书</span><span class="subtle">网页版</span><time datetime="2026-10-27">10.27</time></div>
+      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="我只是喜欢不稳定的人生 AI 读书 全书视角" data-mode="whole">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-27">10.27</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/unstable-life-qingyouji/overview.html">我只是喜欢不稳定的人生</a></h3>
-        <p>全书视角初版，含 AI 问书，待亲读校订。</p>
+        <p>全书视角初版，待亲读校订。</p>
         <div class="card-actions">
-          <a class="card-link card-link-strong" href="reading-notes/books/unstable-life-qingyouji/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+          <a class="card-link card-link-strong" href="reading-notes/books/unstable-life-qingyouji/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
         </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:wen-hua-ku-lv -->
-      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="《文化苦旅》 余秋雨 AI 读书 全书视角 AI 问书">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="type-tag">AI 问书</span><span class="subtle">网页版</span><time datetime="2026-10-27">10.27</time></div>
+      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="《文化苦旅》 余秋雨 AI 读书 全书视角" data-mode="whole jingdu archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-27">10.27</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/wen-hua-ku-lv/overview.html">《文化苦旅》</a></h3>
-        <p>余秋雨　·　38 章　·　全书视角初版，含 AI 问书，待亲读校订。</p>
+        <p>余秋雨　·　38 章　·　全书视角初版，待亲读校订。</p>
         <div class="card-actions">
           <a class="card-link card-link-green" href="reading-notes/books/wen-hua-ku-lv/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
-          <a class="card-link card-link-strong" href="reading-notes/books/wen-hua-ku-lv/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
+          <a class="card-link card-link-strong" href="reading-notes/books/wen-hua-ku-lv/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>        </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:yi-ri-wei-jing--jing-ji-xia-xing-qi-chuan-yue-z -->
-      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="《以日为镜：经济下行期穿越指南》  AI 读书 全书视角 AI 问书">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="type-tag">AI 问书</span><span class="subtle">网页版</span><time datetime="2026-10-27">10.27</time></div>
+      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="《以日为镜：经济下行期穿越指南》 AI 读书 全书视角" data-mode="whole archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-27">10.27</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/yi-ri-wei-jing--jing-ji-xia-xing-qi-chuan-yue-z/overview.html">《以日为镜：经济下行期穿越指南》</a></h3>
-        <p>全书视角初版，含 AI 问书，待亲读校订。</p>
+        <p>全书视角初版，待亲读校订。</p>
         <div class="card-actions">
-          <a class="card-link card-link-strong" href="reading-notes/books/yi-ri-wei-jing--jing-ji-xia-xing-qi-chuan-yue-z/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+          <a class="card-link card-link-strong" href="reading-notes/books/yi-ri-wei-jing--jing-ji-xia-xing-qi-chuan-yue-z/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
         </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:zhi-hu-shen-tie--ren-shi-zhen-xiang -->
-      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="《知乎神贴：人世真相》  AI 读书 全书视角 AI 问书">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><span class="type-tag">AI 问书</span><span class="subtle">网页版</span><time datetime="2026-10-27">10.27</time></div>
+      <article class="archive-card" data-ts="2026-10-27T00:00:00+08" data-search="《知乎神贴：人世真相》 AI 读书 全书视角" data-mode="whole archive">
+        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-27">10.27</time></div>
         <h3><a class="card-title-link" href="reading-notes/books/zhi-hu-shen-tie--ren-shi-zhen-xiang/overview.html">《知乎神贴：人世真相》</a></h3>
-        <p>全书视角初版，含 AI 问书，待亲读校订。</p>
+        <p>全书视角初版，待亲读校订。</p>
         <div class="card-actions">
-          <a class="card-link card-link-strong" href="reading-notes/books/zhi-hu-shen-tie--ren-shi-zhen-xiang/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+          <a class="card-link card-link-strong" href="reading-notes/books/zhi-hu-shen-tie--ren-shi-zhen-xiang/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
         </div>
       </article>
       <!-- /preread-card -->
       <!-- preread-card:norway-night -->
       <article class="archive-card" data-ts="2026-10-17T12:00:00+08" data-search="挪威极夜：独处时才能成为自己（轻游记） 猴面包的树 AI 读书 整书汇编">
-        <div class="card-top"><span class="type-tag type-tag-gold">整书汇编</span><span class="type-tag">已完读</span><span class="subtle">网页版</span><time datetime="2026-10-17">10.17</time></div>
+        <div class="card-top"><span class="type-tag type-tag-gold">整书汇编</span><span class="type-tag">已完读</span><time datetime="2026-10-17">10.17</time></div>
         <h3><a class="card-title-link" href="books/norway-night/index.html">挪威极夜：独处时才能成为自己（轻游记）</a></h3>
         <p>猴面包的树　·　完读后成册的主题汇编</p>
         <div class="card-actions">
@@ -902,44 +913,44 @@
 
 
       <!-- preread-soon:local-lao-gong-jian-chi-fang-jia-hui-die -->
-      <article class="archive-card archive-card-soon" data-ts="2026-10-27T04:09:00+08" data-search="本地书目（待整理） 即将上线 待整理 local-lao-gong-jian-chi-fang-jia-hui-die">
-        <div class="card-top"><span class="type-tag type-tag-soon">即将上线</span><span class="subtle">待整理</span></div>
-        <h3>本地书目（待整理）</h3>
+      <article class="archive-card archive-card-soon" data-ts="2026-10-27T04:09:00+08" data-search="本地书目 即将上线 local-lao-gong-jian-chi-fang-jia-hui-die">
+        <div class="card-top"><span class="type-tag type-tag-soon">即将上线</span></div>
+        <h3>本地书目</h3>
         <p>资料收集中，通读页敬请期待。</p>
         <div class="card-actions">
           <span class="card-link card-link-muted">敬请期待</span>
         </div>
       </article>
       <!-- preread-soon:local-modern-finance-housing-curgdbd -->
-      <article class="archive-card archive-card-soon" data-ts="2026-10-27T04:09:00+08" data-search="本地书目（待整理） 即将上线 待整理 local-modern-finance-housing-curgdbd">
-        <div class="card-top"><span class="type-tag type-tag-soon">即将上线</span><span class="subtle">待整理</span></div>
-        <h3>本地书目（待整理）</h3>
+      <article class="archive-card archive-card-soon" data-ts="2026-10-27T04:09:00+08" data-search="本地书目 即将上线 local-modern-finance-housing-curgdbd">
+        <div class="card-top"><span class="type-tag type-tag-soon">即将上线</span></div>
+        <h3>本地书目</h3>
         <p>资料收集中，通读页敬请期待。</p>
         <div class="card-actions">
           <span class="card-link card-link-muted">敬请期待</span>
         </div>
       </article>
       <!-- preread-soon:local-shen-hua-de-po-mie-flp713 -->
-      <article class="archive-card archive-card-soon" data-ts="2026-10-27T04:09:00+08" data-search="本地书目（待整理） 即将上线 待整理 local-shen-hua-de-po-mie-flp713">
-        <div class="card-top"><span class="type-tag type-tag-soon">即将上线</span><span class="subtle">待整理</span></div>
-        <h3>本地书目（待整理）</h3>
+      <article class="archive-card archive-card-soon" data-ts="2026-10-27T04:09:00+08" data-search="本地书目 即将上线 local-shen-hua-de-po-mie-flp713">
+        <div class="card-top"><span class="type-tag type-tag-soon">即将上线</span></div>
+        <h3>本地书目</h3>
         <p>资料收集中，通读页敬请期待。</p>
         <div class="card-actions">
           <span class="card-link card-link-muted">敬请期待</span>
         </div>
       </article>
       <!-- preread-soon:local-yin-wei-jian-dapeng -->
-      <article class="archive-card archive-card-soon" data-ts="2026-10-27T04:09:00+08" data-search="本地书目（待整理） 即将上线 待整理 local-yin-wei-jian-dapeng">
-        <div class="card-top"><span class="type-tag type-tag-soon">即将上线</span><span class="subtle">待整理</span></div>
-        <h3>本地书目（待整理）</h3>
+      <article class="archive-card archive-card-soon" data-ts="2026-10-27T04:09:00+08" data-search="本地书目 即将上线 local-yin-wei-jian-dapeng">
+        <div class="card-top"><span class="type-tag type-tag-soon">即将上线</span></div>
+        <h3>本地书目</h3>
         <p>资料收集中，通读页敬请期待。</p>
         <div class="card-actions">
           <span class="card-link card-link-muted">敬请期待</span>
         </div>
       </article>
       <!-- preread-soon:rites-of-spring-eksteins -->
-      <article class="archive-card archive-card-soon" data-ts="2026-10-27T04:09:00+08" data-search="Rites of Spring 即将上线 待整理 rites-of-spring-eksteins">
-        <div class="card-top"><span class="type-tag type-tag-soon">即将上线</span><span class="subtle">待整理</span></div>
+      <article class="archive-card archive-card-soon" data-ts="2026-10-27T04:09:00+08" data-search="Rites of Spring 即将上线 rites-of-spring-eksteins">
+        <div class="card-top"><span class="type-tag type-tag-soon">即将上线</span></div>
         <h3>Rites of Spring</h3>
         <p>资料收集中，通读页敬请期待。</p>
         <div class="card-actions">
@@ -947,8 +958,8 @@
         </div>
       </article>
       <!-- preread-soon:spain-qingyouji -->
-      <article class="archive-card archive-card-soon" data-ts="2026-10-27T04:09:00+08" data-search="西班牙轻游记 即将上线 待整理 spain-qingyouji">
-        <div class="card-top"><span class="type-tag type-tag-soon">即将上线</span><span class="subtle">待整理</span></div>
+      <article class="archive-card archive-card-soon" data-ts="2026-10-27T04:09:00+08" data-search="西班牙轻游记 即将上线 spain-qingyouji">
+        <div class="card-top"><span class="type-tag type-tag-soon">即将上线</span></div>
         <h3>西班牙轻游记</h3>
         <p>资料收集中，通读页敬请期待。</p>
         <div class="card-actions">
@@ -956,8 +967,8 @@
         </div>
       </article>
       <!-- preread-soon:the-swerve-greenblatt -->
-      <article class="archive-card archive-card-soon" data-ts="2026-10-27T04:09:00+08" data-search="The Swerve 即将上线 待整理 the-swerve-greenblatt">
-        <div class="card-top"><span class="type-tag type-tag-soon">即将上线</span><span class="subtle">待整理</span></div>
+      <article class="archive-card archive-card-soon" data-ts="2026-10-27T04:09:00+08" data-search="The Swerve 即将上线 the-swerve-greenblatt">
+        <div class="card-top"><span class="type-tag type-tag-soon">即将上线</span></div>
         <h3>The Swerve</h3>
         <p>资料收集中，通读页敬请期待。</p>
         <div class="card-actions">
@@ -966,7 +977,8 @@
       </article>
           </div>
         </section>
-      </section><section id="reading-panel-close" class="reading-panel" aria-label="精读">
+              <p class="empty-state" data-empty-state hidden>没有找到匹配的书。<button type="button" class="link-button" data-clear-filters>清除筛选</button></p>
+</section><section id="reading-panel-close" class="reading-panel" aria-label="精读">
         <p class="panel-intro">只收录实际亲读后形成的日期笔记；选读、未完读与实际覆盖范围，均保留原有标记。全书视角见「通读」，读完的整书汇编见「归档」。</p>
         <div class="toolbar" data-search-toolbar>
           <label class="search-label" for="reading-search">搜索精读</label>
@@ -977,13 +989,13 @@
           <h3 class="reading-group-title" id="firsthand-title">日期笔记 <span>亲读当天一篇，同书同日多场合并</span></h3>
           <p class="muted group-note">全部日期笔记都在这里，按日期倒序；读完的书汇成整书汇编，进「归档」。</p>
           <div class="archive-grid" aria-label="最新亲读笔记">
-      <article class="archive-card" data-search="知乎神贴：人世真相 2026-10-28 日期笔记 阅读笔记 玄谷">
+      <article class="archive-card" data-search="知乎神贴：人世真相 2026-10-28 日期笔记 阅读笔记 玄谷" data-mode="whole archive">
         <div class="card-top"><span class="type-tag">日期笔记</span><time datetime="2026-10-28">2026.10.28</time></div>
         <h3>知乎神贴：人世真相</h3>
         <p>本次阅读覆盖跪下也得死：卡扎菲动了谁的奶酪？——利比亚乱局背后的地缘博弈与历史悲剧。开篇处读到：“跪下也得死：卡扎菲动了…</p>
         <div class="card-dates" aria-label="本书全部日期笔记，共 1 篇"><a href="reading-notes/books/zhi-hu-shen-tie--ren-shi-zhen-xiang/notes/2026-10-28.html" aria-current="true" aria-label="2026.10.28 的日期笔记">10.28<span aria-hidden="true"> ↗</span></a></div>
       </article>
-      <article class="archive-card" data-search="透过地理看历史系列（全3册） 2026-10-27 日期笔记 阅读笔记 李不白 2026-10-26">
+      <article class="archive-card" data-search="透过地理看历史系列（全3册） 2026-10-27 日期笔记 阅读笔记 李不白 2026-10-26" data-mode="whole jingdu archive">
         <div class="card-top"><span class="type-tag">日期笔记</span><time datetime="2026-10-27">2026.10.27</time></div>
         <h3><a class="book-jd-link" href="reading-notes/books/tou-guo-di-li-kan-li-shi-xi-lie--quan-3-ce-/mindmap.html">透过地理看历史系列（全3册）</a></h3>
         <p>本次阅读覆盖第四章。开篇处读到：“第四章
@@ -991,45 +1003,45 @@
 我们现在知道山西简称晋，是因为东周时这里有个强大的晋国。”收尾…</p>
         <div class="card-dates" aria-label="本书全部日期笔记，共 2 篇"><span class="cd-label">共 2 篇</span><a href="reading-notes/books/tou-guo-di-li-kan-li-shi-xi-lie--quan-3-ce-/notes/2026-10-27.html" aria-current="true" aria-label="2026.10.27 的日期笔记">10.27<span aria-hidden="true"> ↗</span></a><a href="reading-notes/books/tou-guo-di-li-kan-li-shi-xi-lie--quan-3-ce-/notes/2026-10-26.html" aria-label="2026.10.26 的日期笔记">10.26<span aria-hidden="true"> ↗</span></a></div>
       </article>
-      <article class="archive-card" data-search="文化苦旅 2026-10-26 日期笔记 阅读笔记 余秋雨">
+      <article class="archive-card" data-search="文化苦旅 2026-10-26 日期笔记 阅读笔记 余秋雨" data-mode="whole jingdu archive">
         <div class="card-top"><span class="type-tag">日期笔记</span><time datetime="2026-10-26">2026.10.26</time></div>
         <h3><a class="book-jd-link" href="reading-notes/books/wen-hua-ku-lv/mindmap.html">文化苦旅</a></h3>
         <p>本片段探讨了藏书楼与天一阁在文化保护与传承中的特殊意义及其所面临的命运。文中关注了藏书和文化遗产在历史长河中遭受的损毁、…</p>
         <div class="card-dates" aria-label="本书全部日期笔记，共 1 篇"><a href="reading-notes/books/wen-hua-ku-lv/notes/2026-10-26.html" aria-current="true" aria-label="2026.10.26 的日期笔记">10.26<span aria-hidden="true"> ↗</span></a></div>
       </article>
-      <article class="archive-card" data-search="以日为镜：经济下行期穿越指南 2026-10-26 日期笔记 阅读笔记 王熙威">
+      <article class="archive-card" data-search="以日为镜：经济下行期穿越指南 2026-10-26 日期笔记 阅读笔记 王熙威" data-mode="whole archive">
         <div class="card-top"><span class="type-tag">日期笔记</span><time datetime="2026-10-26">2026.10.26</time></div>
         <h3>以日为镜：经济下行期穿越指南</h3>
         <p>经济和时代的变化使得传统社交型娱乐场所走向萧条，而电影院则通过引入会员制、升级高清硬件与座椅设施等精品化手段实现转型。如…</p>
         <div class="card-dates" aria-label="本书全部日期笔记，共 1 篇"><a href="reading-notes/books/yi-ri-wei-jing--jing-ji-xia-xing-qi-chuan-yue-z/notes/2026-10-26.html" aria-current="true" aria-label="2026.10.26 的日期笔记">10.26<span aria-hidden="true"> ↗</span></a></div>
       </article>
-      <article class="archive-card" data-search="二月河说反腐 2026-10-25 日期笔记 阅读笔记 二月河">
+      <article class="archive-card" data-search="二月河说反腐 2026-10-25 日期笔记 阅读笔记 二月河" data-mode="whole archive">
         <div class="card-top"><span class="type-tag">日期笔记</span><time datetime="2026-10-25">2026.10.25</time></div>
         <h3>二月河说反腐</h3>
         <p>本次阅读覆盖版权信息。开篇处读到：“在“媒体访谈篇”中，二月河结合历史背景与现代视角，对当前反腐力度进行了深刻的分析，并…</p>
         <div class="card-dates" aria-label="本书全部日期笔记，共 1 篇"><a href="reading-notes/books/er-yue-he-shuo-fan-fu/notes/2026-10-25.html" aria-current="true" aria-label="2026.10.25 的日期笔记">10.25<span aria-hidden="true"> ↗</span></a></div>
       </article>
-      <article class="archive-card" data-search="知乎神贴：人世真相 2026-10-25 日期笔记 阅读笔记 玄谷">
+      <article class="archive-card" data-search="知乎神贴：人世真相 2026-10-25 日期笔记 阅读笔记 玄谷" data-mode="whole archive">
         <div class="card-top"><span class="type-tag">日期笔记</span><time datetime="2026-10-25">2026.10.25</time></div>
         <h3>知乎神贴：人世真相</h3>
         <p>本次阅读覆盖版权信息。开篇处读到：“通过对印巴宗教矛盾、中俄关系、日韩贸易战等热点问题的分析，读者可以更好地理解国际关系…</p>
         <div class="card-dates" aria-label="本书全部日期笔记，共 1 篇"><a href="reading-notes/books/zhi-hu-shen-tie--ren-shi-zhen-xiang/notes/2026-10-25.html" aria-current="true" aria-label="2026.10.25 的日期笔记">10.25<span aria-hidden="true"> ↗</span></a></div>
       </article>
-      <article class="archive-card" data-search="王的归程 阿富汗 达尔林普尔 第二章 心意未决 2026-10-20 第三章 大博弈 发轫 16点 三场 第四章 地狱之口 加兹尼 18点 四场 第五章 圣战的旗帜 罗伯茨 20点 五场 2026-10-21 第六章 我们败于蒙昧 第七章 秩序荡然无存 第八章 号角哀鸣 14点 第一章 2026-10-19">
+      <article class="archive-card" data-search="王的归程 阿富汗 达尔林普尔 第二章 心意未决 2026-10-20 第三章 大博弈 发轫 16点 三场 第四章 地狱之口 加兹尼 18点 四场 第五章 圣战的旗帜 罗伯茨 20点 五场 2026-10-21 第六章 我们败于蒙昧 第七章 秩序荡然无存 第八章 号角哀鸣 14点 第一章 2026-10-19" data-mode="whole archive">
         <div class="card-top"><span class="type-tag">AI读书 · 选择性阅读</span><time datetime="2026-10-21">2026.10.21</time></div>
         <h3>王的归程：阿富汗战记（1839～1842）</h3>
         <p class="reader-meta"><span class="reader-type" data-agent-type="browser_non_code">浏览器 Agent</span><span>阅读员 · AI读书</span></p>
         <p>今日三场浏览与理解累计51分58秒（14点场17分50秒）；第六至第八章选择性覆盖至首批部队离营段。协议还需执行保障，撤离须考虑盟友与随营者。未完读；平台有效时长及打卡未确认。</p>
         <div class="card-dates" aria-label="本书全部日期笔记，共 3 篇"><span class="cd-label">共 3 篇</span><a href="reading-notes/books/king-return-dalrymple/notes/2026-10-21.html" aria-current="true" aria-label="2026.10.21 的日期笔记">10.21<span aria-hidden="true"> ↗</span></a><a href="reading-notes/books/king-return-dalrymple/notes/2026-10-20.html" aria-label="2026.10.20 的日期笔记">10.20<span aria-hidden="true"> ↗</span></a><a href="reading-notes/books/king-return-dalrymple/notes/2026-10-19.html" aria-label="2026.10.19 的日期笔记">10.19<span aria-hidden="true"> ↗</span></a></div>
       </article>
-      <article class="archive-card" data-search="大转向 世界如何步入现代 格林布拉特 AI读书 第三章 寻找卢克莱修 2026-10-19">
+      <article class="archive-card" data-search="大转向 世界如何步入现代 格林布拉特 AI读书 第三章 寻找卢克莱修 2026-10-19" data-mode="archive">
         <div class="card-top"><span class="type-tag">AI读书 · 日期笔记</span><time datetime="2026-10-19">2026.10.19</time></div>
         <h3>大转向：世界如何步入现代</h3>
         <p class="reader-meta"><span class="reader-type" data-agent-type="browser_non_code">浏览器 Agent</span><span>阅读员 · AI读书</span></p>
         <p>早场浏览与理解9分48秒；第三章《寻找卢克莱修》续读至正文末，注释选择性浏览。诗艺与思想认同、卷轴与读者语境、节制与快乐。全书未完读。</p>
         <div class="card-dates" aria-label="本书全部日期笔记，共 1 篇"><a href="reading-notes/books/the-swerve-greenblatt/notes/2026-10-19.html" aria-current="true" aria-label="2026.10.19 的日期笔记">10.19<span aria-hidden="true"> ↗</span></a></div>
       </article>
-      <article class="archive-card" data-search="大转折 现代债务与可持续的增长 赵燕菁 AI读书 日期笔记 2026-10-19">
+      <article class="archive-card" data-search="大转折 现代债务与可持续的增长 赵燕菁 AI读书 日期笔记 2026-10-19" data-mode="whole archive">
         <div class="card-top"><span class="type-tag">AI读书 · 日期笔记</span><time datetime="2026-10-19">2026.10.19</time></div>
         <h3>大转折：现代债务与可持续的增长</h3>
         <p class="reader-meta"><span class="reader-type" data-agent-type="code">代码自动化 · Agent</span><span>阅读员 · weread-auto（云端）</span></p>
@@ -1043,7 +1055,7 @@
         <p>远行的自由，也有边界：从德里初见、拒绝被安排，读到旅馆噪声中的自由与安宁。</p>
         <div class="card-dates" aria-label="本书全部日期笔记，共 2 篇"><span class="cd-label">共 2 篇</span><a href="notes/2026/2026-10-18-world-is-wide.html" aria-current="true" aria-label="2026.10.18 的日期笔记">10.18<span aria-hidden="true"> ↗</span></a><a href="notes/2026/2026-10-17-world-is-wide.html" aria-label="2026.10.17 的日期笔记">10.17<span aria-hidden="true"> ↗</span></a></div>
       </article>
-      <article class="archive-card" data-search="因为贱，所以生活艰辛 本地 PDF 原创理解 日期笔记 2026-10-18">
+      <article class="archive-card" data-search="因为贱，所以生活艰辛 本地 PDF 原创理解 日期笔记 2026-10-18" data-mode="archive">
         <div class="card-top"><span class="type-tag">本地 PDF · 日期笔记</span><time datetime="2026-10-18">2026.10.18</time></div>
         <h3>因为贱，所以生活艰辛</h3>
         <p class="reader-meta"><span class="reader-type" data-agent-type="code">代码辅助 · 文件只读</span><span>阅读员 · Cue 本地试读</span></p>
@@ -1064,7 +1076,7 @@
         <p>本次阅读覆盖版权信息。开篇处读到：“原来这世上终有些感情，赢了最初，败了最后。”收尾处读到：“当爱已经回不去，宿命是早就…</p>
         <div class="card-dates" aria-label="本书全部日期笔记，共 1 篇"><a href="notes/2026/2026-10-17-yu-dian-qiu.html" aria-current="true" aria-label="2026.10.17 的日期笔记">10.17<span aria-hidden="true"> ↗</span></a></div>
       </article>
-      <article class="archive-card" data-search="时势 2026-10-17 日期笔记 阅读笔记 小 Lin">
+      <article class="archive-card" data-search="时势 2026-10-17 日期笔记 阅读笔记 小 Lin" data-mode="whole archive">
         <div class="card-top"><span class="type-tag">日期笔记</span><time datetime="2026-10-17">2026.10.17</time></div>
         <h3>时势</h3>
         <p class="reader-meta"><span class="reader-type" data-agent-type="code">代码 Agent</span><span>阅读员 · weread-auto</span></p>
@@ -1117,7 +1129,7 @@
         <div class="card-top">
           <span class="type-tag type-tag-gold">整书汇编</span>
           <div class="card-top-meta">
-            <span class="subtle">网页版 · EPUB</span>
+            
             <time class="updated-time" datetime="2026-10-17T16:53:00+08:00" aria-label="最后更新：2026年10月17日 16:53（UTC+8）">更新于 2026.10.17 16:53</time>
           </div>
         </div>

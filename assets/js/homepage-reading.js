@@ -61,27 +61,80 @@
   list.hidden = false;
 
   const normalize = (value) => value.toLocaleLowerCase('zh-CN').replace(/[\s：:，,。.!！?？、-]/g, '');
+  // IA-02：搜索与「内容类型筛选」叠加生效；计数反映筛选后的卡片数（方案 8.5）
   panels.forEach((panel) => {
     const input = panel.querySelector('[data-card-search]');
-    if (!input) return;
+    const filterBar = panel.querySelector('[data-filter-bar]');
+    if (!input && !filterBar) return;
     const cards = [...panel.querySelectorAll('.archive-card')];
     const status = panel.querySelector('[data-search-status]');
     const empty = panel.querySelector('[data-empty-state]');
+    const clearBtn = panel.querySelector('[data-clear-filters]');
+    const filterBtns = filterBar ? [...filterBar.querySelectorAll('button[data-filter]')] : [];
+    let activeFilter = 'all';
+
+    const syncFilterButtons = () => {
+      filterBtns.forEach((b) => b.setAttribute('aria-selected', String(b.dataset.filter === activeFilter)));
+    };
+
     const update = () => {
-      const query = normalize(input.value.trim());
+      const query = normalize(input ? input.value.trim() : '');
+      const filtering = query !== '' || activeFilter !== 'all';
       let shown = 0;
       cards.forEach((card) => {
-        const match = !query || normalize(`${card.dataset.search || ''} ${card.textContent || ''}`).includes(query);
+        const modeOk = activeFilter === 'all'
+          || (card.dataset.mode || '').split(/\s+/).includes(activeFilter);
+        const textOk = !query
+          || normalize(`${card.dataset.search || ''} ${card.textContent || ''}`).includes(query);
+        const match = modeOk && textOk;
         card.hidden = !match;
         if (match) shown += 1;
       });
-      status.textContent = query ? `找到 ${shown} 个匹配条目` : `显示全部 ${cards.length} 个条目`;
-      empty.hidden = shown > 0;
+      if (status) {
+        status.textContent = filtering
+          ? `找到 ${shown} 个匹配条目`
+          : `显示全部 ${cards.length} 个条目`;
+      }
+      if (empty) empty.hidden = shown > 0;
       panel.querySelectorAll('.reading-group').forEach((group) => {
-        group.hidden = query !== '' && ![...group.querySelectorAll('.archive-card')].some((card) => !card.hidden);
+        group.hidden = filtering
+          && ![...group.querySelectorAll('.archive-card')].some((card) => !card.hidden);
       });
     };
-    input.addEventListener('input', update);
+
+    if (input) input.addEventListener('input', update);
+
+    filterBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        activeFilter = btn.dataset.filter;
+        syncFilterButtons();
+        update();
+        btn.focus();
+      });
+      btn.addEventListener('keydown', (event) => {
+        let next;
+        if (event.key === 'ArrowRight') next = (filterBtns.indexOf(btn) + 1) % filterBtns.length;
+        else if (event.key === 'ArrowLeft') next = (filterBtns.indexOf(btn) - 1 + filterBtns.length) % filterBtns.length;
+        else return;
+        event.preventDefault();
+        activeFilter = filterBtns[next].dataset.filter;
+        syncFilterButtons();
+        update();
+        filterBtns[next].focus();
+      });
+    });
+
+    // 空结果给出清除入口（方案 8.5）
+    if (clearBtn) {
+      clearBtn.addEventListener('click', () => {
+        activeFilter = 'all';
+        if (input) input.value = '';
+        syncFilterButtons();
+        update();
+      });
+    }
+
+    syncFilterButtons();
     update();
   });
 })();
