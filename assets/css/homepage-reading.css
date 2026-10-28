@@ -109,3 +109,24 @@
 }
 .card-dates a[aria-current="true"]:hover{border-color:#a9c0b0;background:#d3e0d6}
 .card-dates a[aria-current="true"] span{opacity:.65}
+
+/* ===== 精读卡内的「本书全书导图」入口（tools_link_mindmap_index.py 插入） =====
+   与 card-dates 的日期胶囊同排，用虚线边区分「日期笔记」与「二次提炼产物」 */
+.card-dates + .mm-note-link{order:-1}
+.mm-note-link{
+  display:inline-block;
+  margin-top:auto;
+  padding:6px 11px;
+  border:1px dashed #b9c9be;
+  border-radius:99px;
+  background:#f7faf7;
+  color:#4d6b58;
+  font-size:.78rem;
+  font-weight:700;
+  line-height:1;
+  text-decoration:none;
+  transition:border-color .15s ease,background .15s ease,color .15s ease;
+}
+.mm-note-link span{font-weight:400;opacity:.5;display:inline-block;transition:opacity .15s ease,transform .15s ease}
+.mm-note-link:hover{border-color:#72927e;background:#eef4ef;color:#33513f}
+.mm-note-link:hover span{opacity:.95;transform:translate(1px,-1px)}
