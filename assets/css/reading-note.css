@@ -151,9 +151,12 @@ main.page>section .toc-part{background:#fbfaf5;border-color:#ece7dc}
   border-radius:0 10px 10px 0;background:#fff;overflow:hidden;
   transition:box-shadow .15s,border-color .15s}
 .mm-ch:hover{border-color:#e2d9c4;box-shadow:0 2px 8px rgba(80,70,40,.06)}
-.mm-ch>details>summary{display:flex;align-items:center;gap:11px;
-  padding:9px 13px 9px 10px;cursor:pointer;list-style:none}
+.mm-ch>details>summary{display:list-item;list-style:none;cursor:pointer;padding:0;
+  -webkit-tap-highlight-color:rgba(47,107,82,.06)}
 .mm-ch>details>summary::-webkit-details-marker{display:none}
+/* 行内布局放内层：summary 若直接 display:flex，iOS Safari 会丢掉点击热区（点了不展开） */
+.mm-line{display:flex;align-items:center;gap:11px;padding:10px 13px 10px 10px;
+  min-height:26px;touch-action:manipulation}
 .mm-no{flex:none;min-width:29px;height:25px;padding:0 6px;display:inline-grid;place-items:center;
   border-radius:7px;background:var(--c);color:#fff;
   font:700 .77rem/1 var(--sans);letter-spacing:.02em;
@@ -206,3 +209,12 @@ main.page>section .toc-part{background:#fbfaf5;border-color:#ece7dc}
   .mm-pt{font-size:.86rem}
   .mm-group{padding-left:11px}
 }
+
+/* 修：旧规则 .ch-secs li::before 的圆点会误伤引用条目，导致每句原句前多出一条 7px 竖线 */
+.ch-body ul.ch-quote>li::before{content:none;display:none}
+.ch-body ul.ch-quote>li{padding-left:0}
+
+/* 修：.ch-secs li::before 的圆点只在 .ch-prog（带状态的进度列表）里成立，
+   普通导读列表 li 不是 flex 容器，宽高失效后只剩一条 1.5px 边框 → 视觉上就是
+   每个条目开头多一条竖线。这里按祖先类兜住。 */
+.ch-secs:not(.ch-prog) li::before{content:none;display:none}
