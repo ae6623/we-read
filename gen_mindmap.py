@@ -436,6 +436,81 @@ def _chapter_html(c: dict, full: dict) -> str:
     return "".join(out)
 
 
+def _extra_modules(slug: str) -> str:
+    """精读页补全模块（2026-10-28 加回）：Top10 真实金句 + 复用 AI 问书 + 更高维度/当年占位。
+    所有取数都 try/except 降级——模块是锦上添花，绝不能让主页面渲染失败。
+    样式复用 assets/css/mmx-guide.css 的 .mmx-mod 系列（已发布）。"""
+    out = []
+    # 1) Top10 真实金句：取自 book_outline.quote（非 LLM 生成）
+    try:
+        import sqlite3
+        db = sqlite3.connect(str(HERE / "data" / "we_read.db"))
+        c = db.cursor()
+        seen, q = set(), []
+        for ch, qt in c.execute(
+                "SELECT chapter, quote FROM book_outline "
+                "WHERE slug=? AND quote IS NOT NULL AND quote!='' "
+                "ORDER BY ch_no, sec_no, point_no, quote_no", (slug,)):
+            qt = (qt or "").strip()
+            if len(qt) < 15 or qt in seen:
+                continue
+            seen.add(qt)
+            q.append((ch or "本书正文", qt))
+            if len(q) >= 10:
+                break
+        if q:
+            items = "".join(
+                '<li><blockquote>「%s」</blockquote><cite>%s</cite></li>'
+                % (E(qt), E(ch)) for ch, qt in q)
+            out.append(
+                '<section class="mmx-mod" aria-labelledby="top10">'
+                '<h2 id="top10">原文金句 · 持续积累</h2>'
+                '<p class="mmx-mod-note">以下原句取自本书 AI 大纲落库的原文摘录'
+                '（book_outline.quote），按大纲顺序节选，非 AI 生成；更多见逐章深读页。</p>'
+                '<ol class="mmx-qlist">%s</ol></section>' % items)
+    except Exception:
+        pass
+    # 2) AI 问书：复用本书日期笔记中的真实内容；无则占位
+    try:
+        notes = BOOKS / slug / "notes"
+        ask = None
+        if notes.exists():
+            for f in sorted(notes.glob("*.html")):
+                html = f.read_text(encoding="utf-8")
+                m = re.search(r"<h2>\s*AI\s*问书\s*</h2>(.*?)(?=<h2>|</section>|</main>|$)",
+                              html, re.S)
+                if m and m.group(1).strip():
+                    ask = m.group(1).strip()
+                    break
+        if ask:
+            out.append(
+                '<section class="mmx-mod" aria-labelledby="aiask">'
+                '<h2 id="aiask">AI 问书</h2>'
+                '<p class="mmx-mod-note">下方内容复用自本书日期笔记中的 AI 问书'
+                '（按实读范围生成）；全书级整理将在云端 AI 阅读流程完成后补充。</p>'
+                '<div class="mmx-ask">%s</div></section>' % ask)
+        else:
+            out.append(
+                '<section class="mmx-mod" aria-labelledby="aiask">'
+                '<h2 id="aiask">AI 问书</h2>'
+                '<div class="mmx-pending">本书 <b>AI 问书</b> 由 AI 读书平台的书籍 AI 生成，'
+                '将在云端 AI 阅读流程完读后自动补充到此页。</div></section>')
+    except Exception:
+        pass
+    # 3) 更高维度 / 当年与今天：LLM 模块，云端完读后生成，先放占位框架
+    out.append(
+        '<section class="mmx-mod" aria-labelledby="higher">'
+        '<h2 id="higher">用更高维度的知识看这本书</h2>'
+        '<div class="mmx-pending">此模块由云端 AI 阅读流程在完读后生成：把本书放回知识史与'
+        '理论框架中重读，区分书中主张、外部证据与综合分析。当前待补。</div></section>')
+    out.append(
+        '<section class="mmx-mod" aria-labelledby="thennow">'
+        '<h2 id="thennow">当年与今天</h2>'
+        '<div class="mmx-pending">此模块由云端 AI 阅读流程在完读后生成：区分作者当年所能'
+        '知晓与后来才显现的事实，给出今日可迁移的启发。当前待补。</div></section>')
+    return "\n".join(out)
+
+
 def render(d: dict, ctx: dict = None) -> str:
     sp = d["spine"]
     chs = d["chapters"]
@@ -486,6 +561,8 @@ def render(d: dict, ctx: dict = None) -> str:
             body.append(_chapter_html(c, full))
         body.append('</ol>')
         body.append('</details>')
+
+    body.append(_extra_modules(d["slug"]))
 
     html = PAGE % {
         "title": E(d["title"]),
