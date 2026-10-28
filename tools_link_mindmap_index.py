@@ -7,7 +7,7 @@
 
 本工具做两处挂载：
   1) 通读 tab 的 preread-card（`<!-- preread-card:<slug> -->` 注释包裹）：在该卡的
-     .card-actions 最前插入「精读」绿色链接（用户要求精读置前）。
+     .card-actions 末尾追加「精读」绿色链接。
   2) 精读 tab 的日期笔记卡（archive-card，靠 notes/ 链接识别 slug）：在 .card-dates
      书名改为链接（不再用胶囊），点书名直接进精读页。
 
@@ -32,7 +32,25 @@ BOOK_NAME_LINK = '<h3><a class="book-jd-link" href="reading-notes/books/%s/mindm
 
 
 def mindmap_slugs():
-    return {p.parent.name for p in BOOKS.glob("*/mindmap.html")}
+    """有精读页（mindmap.html）的书：本地 ∪ 线上。
+
+    本地仓不全（只有少量 mindmap），若只扫本地会漏挂大量通读卡片的精读入口，
+    因此以线上仓库树为准补齐（git trees API）。
+    """
+    have = {p.parent.name for p in BOOKS.glob("*/mindmap.html")}
+    try:
+        import json as _json
+        import subprocess as _sp
+        out = _sp.check_output(
+            ["gh", "api", "repos/ae6623/we-read/git/trees/main?recursive=1",
+             "--jq", "[.tree[].path] | map(select(endswith(\"/mindmap.html\")))"],
+            timeout=60, stderr=_sp.DEVNULL)
+        online = {p.split("/")[2] for p in _json.loads(out.decode())
+                  if p.startswith("reading-notes/books/")}
+        have |= online
+    except Exception as e:
+        print("! 拉取线上 mindmap 列表失败，仅用本地:", e)
+    return have
 
 
 def patch_preread(html, have):
@@ -51,12 +69,11 @@ def patch_preread(html, have):
             continue
         block = html[m.start():end + len("</article>")]
         if slug in have and "mindmap.html" not in block:
-            # 2026-10-28：精读放 action 行最前（用户要求），插在 card-actions 开头
-            anchor = '<div class="card-actions">\n'
-            i = block.find(anchor)
-            if i >= 0:
-                j = i + len(anchor)
-                block = block[:j] + "          " + (LINK % slug) + "\n" + block[j:]
+            # 找该块内最后一个 </div> 之前的 card-actions 收口
+            act = block.rfind('</div>')
+            if act > 0:
+                head = block[:act].rstrip()
+                block = head + "\n          " + (LINK % slug) + "\n        " + block[act:]
                 added.append(slug)
         out.append(block)
         pos = end + len("</article>")
