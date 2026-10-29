@@ -14,7 +14,8 @@ window.MINDMAP_MODULES = {
   higher: true,    // 用更高维度的知识看这本书
   verify: true,    // 阅读时要验证的问题
   thennow: true,   // 当年与今天 · 初步对照
-  evib: false      // 来源与证据边界
+  evib: false,     // 来源与证据边界
+  coreask: true    // 核心追问 / 逐章追问（未归类）——第3批由 deep-read 合并而来
 };
 (function () {
   "use strict";
