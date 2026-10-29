@@ -95,6 +95,11 @@ def convert(html: str, name: str) -> tuple[str, list[str]]:
     if "mmx-guide.css" in html:
         return html, ["已转换过，跳过"]
 
+    # 0) 先确认有「章节导读」再动刀。结构块的信息靠章节导读全覆盖，
+    #    没有章节导读就删结构块 = 净丢内容（long-cang / 马克·吐温短篇属此类）。
+    if not GUIDE_OPEN.search(html):
+        return html, ["无章节导读，整体跳过（未改动）"]
+
     # 1) 删「全书结构与主题关系」
     p = html.find(STRUCT_H2)
     if p >= 0:
