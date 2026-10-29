@@ -66,8 +66,7 @@ NEW_TABS = ('        <button type="button" id="reading-tab-overview" data-panel=
 
 # ---------------------------------------------------------------- IA-02
 TOOLBAR = '''        <div class="toolbar shelf-toolbar" data-search-toolbar>
-          <label class="search-label" for="shelf-search">搜索书架</label>
-          <input id="shelf-search" type="search" placeholder="按书名或作者筛选…" autocomplete="off" data-card-search>
+          <input id="shelf-search" type="search" placeholder="按书名或作者筛选…" autocomplete="off" data-card-search aria-label="搜索">
           <div class="filter-bar" data-filter-bar role="group" aria-label="按内容类型筛选">
             <button type="button" data-filter="all" aria-selected="true">全部</button>
             <button type="button" data-filter="whole" aria-selected="false">通读</button>
