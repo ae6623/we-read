@@ -123,35 +123,34 @@
   transition:color .15s ease,border-color .15s ease}
 .book-jd-link:hover{color:#4d6b58;border-bottom-color:#4d6b58}
 
-/* ── 书架头部搜索：放大镜图标，点击后横向展开（2026-10-30 用户拍板：
-      去掉 hero 标签行与「阅读书架」标题区，搜索默认只留一个图标） ── */
-.shelf-head{align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:14px 28px}
-.shelf-head-search{flex:0 0 auto;min-width:0;display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
-
-/* 放大镜按钮 */
-.search-toggle{flex:0 0 auto;width:36px;height:36px;display:grid;place-items:center;padding:0;
-  border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--green2);
-  cursor:pointer;transition:background .18s ease,border-color .18s ease}
-.search-toggle:hover{background:var(--sage);border-color:#c3d2c5}
-.search-toggle:focus-visible{outline:2px solid #72927e;outline-offset:2px}
-.search-toggle svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
-
-/* 输入框：默认收起（宽度 0、不可点），展开时横向拉开 */
-.shelf-head-search input{flex:0 0 auto;width:0;min-width:0;padding:9px 0;
-  border:1px solid transparent;border-radius:999px;background:var(--card);
-  font:inherit;font-size:.88rem;color:var(--ink);outline:none;
-  opacity:0;pointer-events:none;
-  transition:width .26s ease,opacity .18s ease,padding .26s ease,border-color .18s ease}
-.shelf-head-search.is-open input{width:min(260px,54vw);padding:9px 16px;
-  border-color:var(--line);opacity:1;pointer-events:auto}
-.shelf-head-search input:focus{border-color:#72927e;box-shadow:0 0 0 3px #dce8df}
-
-.shelf-head-search .search-status{flex:0 0 auto;text-align:right;font-size:.74rem}
-.shelf-head-search .search-status:empty{display:none}
+/* ── 书架头部（标题行）+ Tab 行右侧搜索（2026-10-30 用户拍板：搜索挪进 Tab 行最右，点开浮层不挤左边） ── */
+.shelf-head{align-items:end;flex-wrap:wrap;gap:14px 28px}
+.reading-tabs-wrap{position:relative}
+.tab-search-toggle{margin-left:auto;flex:0 0 auto;min-height:48px;width:48px;padding:10px;
+  border:1px solid transparent;border-radius:10px;background:transparent;color:var(--muted);
+  cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
+.tab-search-toggle:hover{background:var(--sage);color:var(--green)}
+.tab-search-toggle[aria-expanded="true"]{background:var(--green);border-color:var(--green);color:#fff}
+.tab-search-toggle svg{display:block;width:20px;height:20px}
+.shelf-search-pop{position:absolute;top:calc(100% + 8px);right:0;z-index:20;
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end;
+  padding:10px 14px;border:1px solid var(--line);border-radius:12px;background:#fffefa;
+  box-shadow:0 10px 26px #24312e14}
+.shelf-search-pop .search-label{font-size:.84rem;font-weight:700;color:var(--green);white-space:nowrap}
+.shelf-search-pop input{flex:1 1 220px;min-width:180px;border:1px solid var(--line);border-radius:999px;
+  background:#fffefa;padding:9px 16px;font:inherit;font-size:.88rem;color:var(--ink);outline:none;
+  transition:border-color .15s,box-shadow .15s}
+.shelf-search-pop input:focus{border-color:#72927e;box-shadow:0 0 0 3px #dce8df}
+.shelf-search-pop .search-status{flex:0 0 auto;font-size:.74rem;color:var(--muted);white-space:nowrap}
+.shelf-search-pop .search-status:empty{display:none}
 @media(max-width:680px){
   .shelf-head{align-items:center}
-  .shelf-head-search{max-width:100%}
-  .shelf-head-search.is-open input{width:min(220px,62vw);padding:8px 12px;font-size:.82rem}
+  .shelf-head>div:first-child{flex:1 1 auto;min-width:0}
+  /* 手机上浮层占满行宽，输入框有完整空间，不往左边挤 */
+  .shelf-search-pop{left:0;right:0;justify-content:stretch}
+  .shelf-search-pop .search-label{display:none}
+  .shelf-search-pop input{flex:1 1 auto;min-width:0;padding:8px 12px;font-size:.82rem}
+  .tab-search-toggle{min-height:44px;width:44px;padding:8px}
 }
 /* 整卡可点：hover 提示 + 键盘可达 */
 .archive-card.card-clickable{cursor:pointer}
@@ -194,5 +193,7 @@ details.reading-bar>summary:hover{color:#3a5344}
 @media(max-width:680px){
   details.reading-bar>summary{padding:12px 18px}
   .reading-bar-body{flex-direction:column;gap:8px;padding:0 18px 12px}
+  /* 列向布局下 flex-basis 会变成最小高度（280px），短段落下方全是空白——改回自适应 */
+  .reading-bar-body .hero-description{flex:0 0 auto;max-width:none}
   .reading-bar-body .hero-description+.hero-description{border-left:0;padding-left:0;border-top:1px solid #d7dfd3;padding-top:8px}
 }

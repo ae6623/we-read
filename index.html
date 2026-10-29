@@ -41,6 +41,7 @@
       <p class="eyebrow">WE READ · READING ARCHIVE</p>
       <h1>读过的书，<br><span>留下自己的注脚。</span></h1>
       <p class="hero-copy hero-quote"><q>尽信书，则不如无书。</q>——<cite><a href="https://www.chinakongzi.org/kzsf/lsjd/mengzi/200711/t20071120_28410.htm" aria-label="查看《孟子·尽心下》原文">《孟子·尽心下》</a></cite></p>
+      <div class="hero-meta"><span>通读</span><span>精读</span><span>系列</span><span>归档</span></div>
       </div>
     <div class="hero-sketch" aria-hidden="true">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 300" focusable="false">
@@ -70,9 +71,9 @@
     <div class="hero-mark" aria-hidden="true">阅</div>
   </header>
 
-  <details class="reading-explanation reading-bar" aria-label="阅读理念说明" data-explain-fold data-module="reading-bar">
+  <details class="reading-explanation reading-bar" aria-label="上善若水" data-explain-fold data-module="reading-bar">
     <summary>
-      <span class="reading-bar-label">阅读理念</span>
+      <span class="reading-bar-label">上善若水</span>
     </summary>
     <div class="reading-bar-body">
       <p class="hero-description">个人认知有限，AI认知无限，我们要借着 AI 的海量多维知识库，搭配睿智书评与今日观古的宝贵经验，让作者的思路与我们的当下思考🤔，强制进行关联，让我们的认知得到生产力级别的精进。</p>
@@ -81,26 +82,30 @@
   </details>
 
   <main id="main" class="layout">
-    <section class="intro-row shelf-head" aria-label="阅读书架">
-      <div class="shelf-head-search" data-search-wrap>
-        <button type="button" class="search-toggle" data-search-toggle
-                aria-label="搜索书架（按书名或作者）" aria-expanded="false" aria-controls="shelf-search">
-          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-            <circle cx="10.5" cy="10.5" r="6.5"></circle>
-            <line x1="15.4" y1="15.4" x2="20.5" y2="20.5"></line>
-          </svg>
-        </button>
-        <input id="shelf-search" type="search" placeholder="按书名或作者筛选…" autocomplete="off" data-card-search data-search-panel="reading-panel-overview">
-        <p class="search-status" aria-live="polite" data-search-status for="shelf-search"></p>
+    <section class="intro-row shelf-head" aria-labelledby="archive-title">
+      <div>
+        <p class="eyebrow eyebrow-dark">THE READING SHELF</p>
+        <h2 id="archive-title">阅读书架</h2>
+        <p class="muted">从全书脉络到亲读注脚，再按系列与日期回看。</p>
       </div>
     </section>
 
     <div class="reading-module" data-reading-module>
+      <div class="reading-tabs-wrap">
       <div class="reading-tabs" data-tablist aria-label="阅读内容" hidden>
         <button type="button" id="reading-tab-overview" data-panel="reading-panel-overview" aria-label="书架">书架</button>
         <button type="button" id="reading-tab-close" data-panel="reading-panel-close" aria-label="精读">精读</button>
         <button type="button" id="reading-tab-series" data-panel="reading-panel-series" aria-label="系列">系列</button>
         <button type="button" id="reading-tab-archive" data-panel="reading-panel-archive" aria-label="归档">归档</button>
+        <button type="button" id="shelf-search-toggle" class="tab-search-toggle" aria-expanded="false" aria-controls="shelf-search-pop" aria-label="搜索书架" title="搜索书架">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><line x1="15.6" y1="15.6" x2="21" y2="21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <div class="shelf-search-pop" id="shelf-search-pop" hidden>
+        <label class="search-label" for="shelf-search">搜索书架</label>
+        <input id="shelf-search" type="search" placeholder="按书名或作者筛选…" autocomplete="off" data-card-search data-search-panel="reading-panel-overview">
+        <p class="search-status" aria-live="polite" data-search-status for="shelf-search"></p>
+      </div>
       </div>
 
       <section id="reading-panel-overview" class="reading-panel" aria-label="书架">
@@ -111,51 +116,6 @@
 <section id="panel-whole" class="reading-group subtab-panel" aria-labelledby="whole-book-title">
           <h3 class="reading-group-title" id="whole-book-title">全书视角 <span>开读即建，随精读校订</span></h3>
           <div class="archive-grid" aria-label="读前内容">
-      <!-- preread-card:huang-jin-shi-dai -->
-      <article class="archive-card" data-ts="2026-10-29T21:50:00" data-search="黄金时代 王小波 AI 读书 全书视角 AI 大纲" data-mode="whole jingdu archive">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-29">10.29</time></div>
-        <h3><a class="card-title-link" href="reading-notes/books/huang-jin-shi-dai/overview.html">黄金时代</a></h3>
-        <p>王小波　·　41 章 / 965 条　·　全书视角初版，待亲读校订。</p>
-        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/huang-jin-shi-dai/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
-        </div>
-      </article>
-      <!-- /preread-card -->
-      <!-- preread-card:chao-tu-jie-ji-jian-ou-zhou-shi--ou-zhou-li-shi -->
-      <article class="archive-card" data-ts="2026-10-29T21:51:00" data-search="超图解极简欧洲史（欧洲历史如何塑造现代文明） 王宇琨 董志道编著 AI 读书 全书视角 AI 大纲" data-mode="whole jingdu archive">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-29">10.29</time></div>
-        <h3><a class="card-title-link" href="reading-notes/books/chao-tu-jie-ji-jian-ou-zhou-shi--ou-zhou-li-shi/overview.html">超图解极简欧洲史（欧洲历史如何塑造现代文明）</a></h3>
-        <p>王宇琨 董志道编著　·　22 章 / 1207 条　·　全书视角初版，待亲读校订。</p>
-        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/chao-tu-jie-ji-jian-ou-zhou-shi--ou-zhou-li-shi/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
-        </div>
-      </article>
-      <!-- /preread-card -->
-      <!-- preread-card:zhi-sun--ru-he-ke-fu-tan-lan-he-kong-ju -->
-      <article class="archive-card" data-ts="2026-10-29T21:52:00" data-search="止损：如何克服贪婪和恐惧 吉姆·保罗 布伦丹·莫伊尼汉 AI 读书 全书视角 AI 大纲" data-mode="whole jingdu archive">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-29">10.29</time></div>
-        <h3><a class="card-title-link" href="reading-notes/books/zhi-sun--ru-he-ke-fu-tan-lan-he-kong-ju/overview.html">止损：如何克服贪婪和恐惧</a></h3>
-        <p>吉姆·保罗 布伦丹·莫伊尼汉　·　65 章 / 1182 条　·　全书视角初版，待亲读校订。</p>
-        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/zhi-sun--ru-he-ke-fu-tan-lan-he-kong-ju/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
-        </div>
-      </article>
-      <!-- /preread-card -->
-      <!-- preread-card:cai-fu-shi-ren-zhi-de-bian-xian--quan-xin-sheng -->
-      <article class="archive-card" data-ts="2026-10-29T21:53:00" data-search="财富是认知的变现（全新升级版） 舒泰峰 AI 读书 全书视角 AI 大纲" data-mode="whole jingdu archive">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-29">10.29</time></div>
-        <h3><a class="card-title-link" href="reading-notes/books/cai-fu-shi-ren-zhi-de-bian-xian--quan-xin-sheng/overview.html">财富是认知的变现（全新升级版）</a></h3>
-        <p>舒泰峰　·　46 章 / 1166 条　·　全书视角初版，待亲读校订。</p>
-        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/cai-fu-shi-ren-zhi-de-bian-xian--quan-xin-sheng/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
-        </div>
-      </article>
-      <!-- /preread-card -->
-      <!-- preread-card:wu-shi-zi-tong-feng-shui-yun-cheng -->
-      <article class="archive-card" data-ts="2026-10-29T21:54:00" data-search="无师自通风水运程 大一居士 AI 读书 全书视角 AI 大纲" data-mode="whole jingdu archive">
-        <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-29">10.29</time></div>
-        <h3><a class="card-title-link" href="reading-notes/books/wu-shi-zi-tong-feng-shui-yun-cheng/overview.html">无师自通风水运程</a></h3>
-        <p>大一居士　·　75 章 / 3183 条　·　全书视角初版，待亲读校订。</p>
-        <div class="card-actions">          <a class="card-link card-link-strong" href="reading-notes/books/wu-shi-zi-tong-feng-shui-yun-cheng/outline.html">AI 大纲 <span aria-hidden="true">↗</span></a>
-        </div>
-      </article>
-      <!-- /preread-card -->
       <!-- preread-card:ping-mian-guo -->
       <article class="archive-card" data-ts="2026-10-28T04:52:51" data-search="平面国 [英] 艾勃特 AI 读书 全书视角 AI 大纲" data-mode="whole jingdu archive">
         <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><time datetime="2026-10-28">10.28</time></div>

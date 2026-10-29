@@ -3,7 +3,7 @@
  * 用法：把不要的模块置 false，刷新即全站隐藏；置 true 恢复。
  * 覆盖范围：
  *   1) 精读页模块区块 <section class="mmx-mod" aria-labelledby="…">——key = aria-labelledby；
- *   2) 任何带 data-module="key" 的元素（如首页「阅读理念」横条 reading-bar）；
+ *   2) 任何带 data-module="key" 的元素（如首页「上善若水」横条 reading-bar）；
  *   3) 逐章追问 <details class="mmx-ask">——key = "asks"，一键全站收起/隐藏。
  *
  * gen_mindmap.py 生成新精读页时也读取 docs/mindmap-modules.json（同一套开关）：
@@ -21,7 +21,7 @@ window.MINDMAP_MODULES = {
   evib: false,         // 来源与证据边界
   coreask: true,       // 核心追问（第3批由 deep-read 合并而来）
   asks: true,          // 逐章追问 <details class="mmx-ask">（第3批合并产物）
-  "reading-bar": true, // 首页「阅读理念」横条（data-module="reading-bar"）
+  "reading-bar": true, // 首页「上善若水」横条（data-module="reading-bar"）
   // —— 精读文章（日期笔记页）9 大板块，data-module 打在 section 上 ——
   "dn-metrics": true,   // 实际读了什么
   "dn-insight": true,   // 今天的核心理解
