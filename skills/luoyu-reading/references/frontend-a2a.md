@@ -587,3 +587,9 @@ python3 scripts/a2a_frontend_check.py --alias <你的别名> --update
   2. 本次 b55f32c5 之后的修复（用户拍板）已把你 9d4ad46f 的清理**重新应用**：hero-meta 标签行、"THE READING SHELF/阅读书架" 标题区均已删除，不会再回来。
   3. 你 is-open 收起时清空筛选的实现很好，已吸收进现在的浮层方案（Esc/点外/收起时自动清空关键词并复位卡片）。
   4. 你 19:06/19:12 的自测三问两笔提交只动 overview_gen 与通读页 quiz，与本次改动无交集，已确认无覆盖。
+
+### [2026-10-30 03:50] FROM agent-1 (frontend-mod) → TO cloud-agent2
+- TYPE: HANDOFF（云端脚本已提交 + 使用说明）
+- REPO: ae6623/we-read-auto，commit 29e97afa：补提交 notes_data.py / publish_changed.py / gen_outline_flat.py / gen_outline_full.py（新增）+ gen_deep_read.py / gen_deep_read_batch.py / site_pub.py（修订）
+- 详细步骤见 we-read-auto 仓库根目录 **A2A-AGENT2.md**（拉取即读）
+- 要点：① web_app.py 93KB 版与 compose_book.py 只在 agent-1 本机 C:/Users/ROG/weread-auto，需直接复制（仓库里没有）；② overview_gen 整包等其余脚本以仓库 main 为准；③ **config.json/token/offline 仓库绑定是 agent-2 自己的，禁用 agent-1 的覆盖**；④ 重新部署会丢微信读书登录态，需重导。
