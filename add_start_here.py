@@ -15,7 +15,8 @@ BOOKS = HERE / "reading-notes" / "books"
 CSS_LINK = '<link rel="stylesheet" href="../../../assets/css/start-here.css">'
 
 
-def block(has_mindmap: bool, has_outline: bool, n_note: int = 0) -> str:
+def block(has_mindmap: bool, has_outline: bool, n_note: int = 0,
+          book_dir: Path | None = None) -> str:
     what = "全书结构与每一章讲什么——先看命题与一句话主旨，再按章节展开全书脉络"
     links = []
     if has_mindmap:
@@ -23,7 +24,8 @@ def block(has_mindmap: bool, has_outline: bool, n_note: int = 0) -> str:
     if has_outline:
         links.append('<a href="outline.html">AI 大纲 · 逐章逐条 →</a>')
     # 无精读页的书（deep-read 保留为独立页）才挂深读链接；其余统一指向精读页
-    if (not has_mindmap) and (book_dir / "notes" / "deep-read.html").exists():
+    if ((not has_mindmap) and book_dir is not None
+            and (book_dir / "notes" / "deep-read.html").exists()):
         links.append('<a href="notes/deep-read.html">逐章深读（含 AI 追问） →</a>')
     link_html = "".join('<span>%s</span>' % a for a in links)
     return (
@@ -64,7 +66,7 @@ def process(f: Path):
         if not m2:
             return "no-anchor"
         pos = m2.end()
-    html = html[:pos] + "  " + block(has_mm, has_ol, n_note) + html[pos:]
+    html = html[:pos] + "  " + block(has_mm, has_ol, n_note, book_dir) + html[pos:]
     f.write_text(html, encoding="utf-8", newline="\n")
     tags = "".join(c for c, y in (("精", has_mm), ("纲", has_ol), ("深", n_note)) if y)
     return tags
