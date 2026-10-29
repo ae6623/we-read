@@ -133,12 +133,8 @@
 .shelf-head-search .search-status{flex:1 0 100%;text-align:right;font-size:.74rem}
 .shelf-head-search .search-status:empty{display:none}
 @media(max-width:680px){
-  .shelf-head{align-items:center;gap:10px 14px}
-  .shelf-head>div:first-child{flex:1 1 auto;min-width:0}
-  .shelf-head-search{flex:0 0 auto;min-width:0;max-width:56%}
-  .shelf-head-search .search-label{display:none}
-  .shelf-head-search input{flex:1 1 auto;min-width:0;padding:8px 12px;font-size:.82rem}
-  .shelf-head-search .search-status{flex-basis:100%;text-align:left}
+  .shelf-head-search{flex:1 0 100%;order:3}
+  .shelf-head-search .search-status{text-align:left}
 }
 /* 整卡可点：hover 提示 + 键盘可达 */
 .archive-card.card-clickable{cursor:pointer}
@@ -151,9 +147,9 @@
 details.reading-explanation{display:block;max-width:1080px;margin:0 auto 6px;padding:0 28px;
   background:transparent;border:0;border-radius:0;grid-template-columns:none;gap:0}
 details.reading-explanation .hero-description+.hero-description{border-left:0;padding-left:0;margin-top:8px}
-details.reading-explanation summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:10px;
-  width:100%;color:var(--green);font-size:.92rem;font-weight:700;padding:13px 20px;border:1px solid var(--line);
-  border-radius:12px;background:#edf0e9;transition:color .15s,border-color .15s}
+details.reading-explanation summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;
+  color:var(--muted);font-size:.82rem;font-weight:600;padding:9px 16px;border:1px solid var(--line);
+  border-radius:999px;background:#fffefa;transition:color .15s,border-color .15s}
 details.reading-explanation summary::-webkit-details-marker{display:none}
 details.reading-explanation summary:hover{color:var(--green);border-color:#72927e}
 details.reading-explanation summary:focus-visible{outline:2px solid var(--green2);outline-offset:2px}
@@ -161,3 +157,22 @@ details.reading-explanation summary:after{content:"展开 ▾";font-size:.72rem;
 details.reading-explanation[open] summary:after{content:"收起 ▴"}
 details.reading-explanation .hero-description{margin:14px 0 0;color:#58665e;font-size:.9rem;max-width:860px}
 @media(max-width:680px){details.reading-explanation{padding:0 18px}}
+
+/* ── 阅读理念：常驻横向条（2026-10-29 改，去掉折叠小框） ── */
+.reading-explanation.reading-bar{
+  display:flex;align-items:stretch;gap:18px;box-sizing:border-box;
+  max-width:1080px;width:100%;margin:14px auto 6px;padding:13px 22px;
+  background:#f3f6f1;border:0;border-top:2px solid #d9e2d8;border-bottom:2px solid #d9e2d8;border-radius:0}
+.reading-bar-label{
+  flex:0 0 auto;align-self:stretch;display:flex;align-items:center;
+  font:700 .82rem/1.4 var(--serif);letter-spacing:.18em;color:#4d6b58;
+  padding-right:18px;border-right:1px solid #cfdacf;white-space:nowrap}
+.reading-bar-body{flex:1 1 auto;display:flex;gap:22px;flex-wrap:wrap}
+.reading-bar-body .hero-description{margin:0;flex:1 1 280px;font-size:.9rem;line-height:1.65;color:#58665e}
+.reading-bar-body .hero-description+.hero-description{border-left:1px solid #cfdacf;padding-left:22px}
+@media(max-width:680px){
+  .reading-explanation.reading-bar{flex-direction:column;gap:8px;padding:12px 18px}
+  .reading-bar-label{align-items:flex-start;border-right:0;border-bottom:1px solid #cfdacf;padding:0 0 6px}
+  .reading-bar-body{flex-direction:column;gap:8px}
+  .reading-bar-body .hero-description+.hero-description{border-left:0;padding-left:0;border-top:1px solid #d7dfd3;padding-top:8px}
+}

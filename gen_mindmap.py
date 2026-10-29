@@ -436,6 +436,27 @@ def _chapter_html(c: dict, full: dict) -> str:
     return "".join(out)
 
 
+# ── 精读页模块统一开关（2026-10-29）：docs/mindmap-modules.json ──
+# enabled=false 的模块在渲染时整体跳过；改配置即对所有书统一生效，无需改页面或逐个编辑。
+MODULE_CFG_PATH = HERE / "docs" / "mindmap-modules.json"
+
+
+def _module_enabled_map() -> dict:
+    try:
+        cfg = json.loads(MODULE_CFG_PATH.read_text(encoding="utf-8"))
+        return {x["id"]: bool(x.get("enabled", True)) for x in cfg.get("modules", [])}
+    except Exception:
+        return {}
+
+
+_ENABLED_MAP = _module_enabled_map()
+
+
+def _section_id(html: str):
+    m = re.search(r'<section[^>]*\saria-labelledby="([^"]+)"', html)
+    return m.group(1) if m else None
+
+
 def _extra_modules(d: dict) -> str:
     """精读页补全模块（2026-10-28 重构：参考 outline.html 模块排序）。
     顺序：一句话主旨 → 核心观点初判 → 原文金句 Top10 → AI 问书
@@ -565,6 +586,9 @@ def _extra_modules(d: dict) -> str:
         '<li><b>更高维度 / 阅读验证 / 当年与今天</b>：由云端 AI 阅读流程完读后生成，当前为占位；</li>'
         '<li>归纳与解读均为模型生成，<b>仅供参考</b>，读后请以原书为准。</li>'
         '</ul></div></section>')
+    # 统一模块开关：enabled=false 的整体跳过（docs/mindmap-modules.json），对所有书统一生效
+    if _ENABLED_MAP:
+        out = [s for s in out if _ENABLED_MAP.get(_section_id(s), True)]
     return "\n".join(out)
 
 
