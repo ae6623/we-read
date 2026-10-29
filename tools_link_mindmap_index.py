@@ -7,7 +7,7 @@
 
 本工具做两处挂载：
   1) 通读 tab 的 preread-card（`<!-- preread-card:<slug> -->` 注释包裹）：在该卡的
-     .card-actions 末尾追加「精读」绿色链接。
+     .card-actions 里、AI 大纲链接之前插入「精读」绿色链接（保证「先精读，再大纲」）。
   2) 精读 tab 的日期笔记卡（archive-card，靠 notes/ 链接识别 slug）：在 .card-dates
      书名改为链接（不再用胶囊），点书名直接进精读页。
 
@@ -69,12 +69,20 @@ def patch_preread(html, have):
             continue
         block = html[m.start():end + len("</article>")]
         if slug in have and "mindmap.html" not in block:
-            # 找该块内最后一个 </div> 之前的 card-actions 收口
-            act = block.rfind('</div>')
-            if act > 0:
-                head = block[:act].rstrip()
-                block = head + "\n          " + (LINK % slug) + "\n        " + block[act:]
-                added.append(slug)
+            # 保证「先精读，再大纲」：若有 AI 大纲链接，则把精读插到它前面；
+            # 否则（通读卡理论上都有大纲）再退化到 card-actions 末尾追加。
+            outline_m = re.search(
+                r'<a class="card-link card-link-strong"[^>]*href="[^"]*outline\.html">.*?</a>',
+                block, re.S)
+            if outline_m:
+                ins = "          " + (LINK % slug) + "\n"
+                block = block[:outline_m.start()] + ins + block[outline_m.start():]
+            else:
+                act = block.rfind('</div>')
+                if act > 0:
+                    head = block[:act].rstrip()
+                    block = head + "\n          " + (LINK % slug) + "\n        " + block[act:]
+            added.append(slug)
         out.append(block)
         pos = end + len("</article>")
     out.append(html[pos:])
