@@ -54,6 +54,32 @@
   };
   window.addEventListener('hashchange', syncTabFromLocation);
   window.addEventListener('popstate', syncTabFromLocation);
+  // 卡片按时间倒序（新书在最上）：有 data-ts 用 data-ts，否则取卡片内 <time>/搜索词中的日期。
+  // 生成器写死的时间戳若同值，稳定排序保持原相对顺序；未来生产新书给更晚 ts 会自动上浮。
+  const newestKey = (card) => {
+    const ts = card.getAttribute('data-ts');
+    if (ts) return ts;
+    const t = card.querySelector('time') && card.querySelector('time').getAttribute('datetime');
+    if (t) return t.length <= 10 ? `${t}T23:59:59` : t;
+    const m = (card.getAttribute('data-search') || '').match(/(\d{4}-\d{2}-\d{2})/);
+    return m ? `${m[1]}T00:00:00` : '0000';
+  };
+  const sortCardsNewest = (panel) => {
+    const cards = [...panel.querySelectorAll('article.archive-card')];
+    if (!cards.length) return;
+    const groups = new Map();
+    cards.forEach((c) => {
+      const parent = c.parentNode;
+      if (!groups.has(parent)) groups.set(parent, []);
+      groups.get(parent).push(c);
+    });
+    groups.forEach((arr, parent) => {
+      arr.sort((a, b) => newestKey(b).localeCompare(newestKey(a))); // 倒序；Array.sort 稳定
+      arr.forEach((c) => parent.appendChild(c));
+    });
+  };
+  panels.forEach(sortCardsNewest);
+
   // A recognized URL hash selects its tab; otherwise start on 精读.
   const defaultIndex = tabs.findIndex((tab) => tab.id === 'reading-tab-close');
   const hashIndex = indexFromLocation();
