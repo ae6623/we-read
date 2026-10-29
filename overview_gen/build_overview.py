@@ -62,6 +62,29 @@ MMX_JS = """<script>
 """
 
 
+# 无信息量的章名：纯序号（一/二/1/2）、「第X章」、罗马数字。
+# 左侧 mmx-no 已经是序号，这类章名等于把序号重复一遍，读者看不出这章讲什么。
+_BAD_CHAPTER = re.compile(r"^第?\s*[一二三四五六七八九十百零〇0-9IVXivx]{1,4}\s*"
+                          r"[、.．章节篇部回]?\s*$")
+
+
+def chapter_display(t, secs) -> str:
+    """章名没信息量时，用它第一个小节标题顶上（2026-10-30 用户提出）。
+
+    典型是《黄金时代》——微信读书 AI 大纲的一级条目就叫「一」「二」「三」，
+    真正的标题在二级（「陈清扬不是破鞋的讨论」）。
+    """
+    t = (t or "").strip()
+    if t and not _BAD_CHAPTER.match(t):
+        return t
+    for s in secs or []:
+        h = (s.get("h4") or s.get("h") or "").strip()
+        if h and not _BAD_CHAPTER.match(h):
+            # 保留原章名做前缀，读者对得上大纲与目录
+            return ("%s · %s" % (t, h)) if t else h
+    return t or "本章要点"
+
+
 def esc(t):
     return html.escape(t, quote=False)
 
@@ -243,7 +266,7 @@ def build(cfg, chapters, aiqa_html="", quiz_answers=None, quiz_items=None):
         <span class="badge" data-s="unread">未读</span><span class="mmx-caret">›</span>
       </summary>
       <div class="mmx-body">
-''' % (no, esc(t)))
+''' % (no, esc(chapter_display(t, secs))))
             out.append('        <p class="mmx-stat">共 %d 个小节 · %d 条要点 · %d 句原句摘录</p>\n'
                        % (len(secs), npts, nq))
             cap = min(per_ch, budget - used_total)
