@@ -593,6 +593,13 @@ def _extra_modules(d: dict) -> str:
     if body:
         out.append(sec("aiask", body))
 
+    # 3.5) 核心追问：deep-read 的跨书主题问答，落 data/mindmap/<slug>.json 的 modules.coreask
+    cq = [x for x in ((mods.get("coreask") or {}).get("pairs") or []) if x]
+    if cq:
+        out.append(sec("coreask", "".join(
+            '<div class="mmx-qa"><p class="mmx-q">%s</p><p class="mmx-a">%s</p></div>'
+            % (E(x.get("q") or ""), E(x.get("a") or "")) for x in cq)))
+
     # 4-6) 三个纵深模块：本书 JSON 有内容就渲染，没有就按 show_pending 决定是否留占位
     for key in ("higher", "verify", "thennow"):
         body = paras(key)
