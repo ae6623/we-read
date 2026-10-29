@@ -618,12 +618,7 @@ def render(d: dict, ctx: dict = None) -> str:
     body.append('<div class="mmx-bar"><i style="width:%d%%"></i></div>' % bar)
     body.append('</section>')
 
-    # 只有一条主干的书（短篇/轻游记）画关系图没有信息量，只留一句说明
-    if len(sp) > 1:
-        body.append('<section class="mmx-svgwrap">%s</section>' % _svg_spine(d))
-    else:
-        body.append('<p class="mmx-tip mmx-oneline">全书只有一条主干：'
-                    '%s。下面按章展开。</p>' % E(sp[0]["label"]))
+    body.append('<section class="mmx-svgwrap">%s</section>' % _svg_spine(d))
 
     body.append('<div class="mmx-tools">'
                 '<button class="mmx-btn" data-mmx="open">展开全部要点</button>'
