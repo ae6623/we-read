@@ -3,136 +3,130 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="《一个女人一生的二十四小时》全书主干导图 · 章节定位 · 跨章张力（由 AI 大纲条目结构化重算）">
+<meta name="description" content="《一个女人一生的二十四小时》全书精读 · 章节定位 · 跨章张力（由 AI 大纲条目结构化重算）">
 <title>《一个女人一生的二十四小时》｜精读</title>
 <link rel="stylesheet" href="../../../assets/css/reading-overview.css">
 <link rel="stylesheet" href="../../../assets/css/mmx-guide.css">
 <style>
-.mm-wrap{max-width:1120px}
-.mm-kicker{font-size:.7rem;letter-spacing:.18em;color:var(--muted);margin:0 0 .3em}
-.mm-claim{font-size:1.16rem;line-height:1.75;margin:.1em 0 .5em;color:var(--ink)}
-.mm-bound{font-size:.86rem;color:#5c5347;line-height:1.8;margin:.2em 0}
-.mm-evi{font-size:.76rem;color:var(--muted);margin:.6em 0 .3em}
-.mm-bar{height:5px;background:#e6dfcf;border-radius:3px;overflow:hidden;margin-bottom:1.2em}
-.mm-bar i{display:block;height:100%;background:linear-gradient(90deg,#8a9b6e,#c2b280)}
-.mm-svgwrap{overflow-x:auto;padding:.4em 0 1em;border-bottom:1px solid var(--line)}
-.mm-svg{width:100%;height:auto;min-width:760px}
-.mm-spine{margin:.9em 0;border-left:3px solid #d9d0bd;padding:.1em 0 .1em .9em}
-.mm-spine[open]{border-left-color:#8a9b6e}
-.mm-spine>summary{display:flex;gap:.6em;align-items:baseline;cursor:pointer;
+/* 章节树组件（mmx-cn/body/sec/pts/qt…）在 assets/css/mmx-guide.css，与通读页共用；
+   这里只留导图页专属件：命题卡 / 主干 SVG / 主干分组。 */
+.mmx-wrap{max-width:1120px}
+.mmx-kicker{font-size:.7rem;letter-spacing:.18em;color:var(--muted);margin:0 0 .3em}
+.mmx-claim{font-size:1.16rem;line-height:1.75;margin:.1em 0 .5em;color:var(--ink)}
+.mmx-bound{font-size:.86rem;color:#5c5347;line-height:1.8;margin:.2em 0}
+.mmx-evi{font-size:.76rem;color:var(--muted);margin:.6em 0 .3em}
+.mmx-bar{height:5px;background:#e6dfcf;border-radius:3px;overflow:hidden;margin-bottom:1.2em}
+.mmx-bar i{display:block;height:100%;background:linear-gradient(90deg,#8a9b6e,#c2b280)}
+.mmx-svgwrap{overflow-x:auto;padding:.4em 0 1em;border-bottom:1px solid var(--line)}
+.mmx-svg{width:100%;height:auto;min-width:760px}
+.mmx-spine{margin:1.15em 0;border-left:3px solid #ece4d3;padding:.1em 0 .1em .85em}
+.mmx-spine[open]{border-left-color:#d8cdb4}
+.mmx-spine>summary{display:flex;gap:.6em;align-items:baseline;cursor:pointer;
   list-style:none;padding:.35em 0}
-.mm-spine>summary::-webkit-details-marker{display:none}
-.mm-id{font-family:Georgia,serif;font-size:.8rem;color:#8a9b6e;border:1px solid #cfd8bd;
+.mmx-spine>summary::-webkit-details-marker{display:none}
+.mmx-id{font-family:Georgia,serif;font-size:.8rem;color:#8a9b6e;border:1px solid #cfd8bd;
   border-radius:4px;padding:0 .35em}
-.mm-label{font-weight:600;font-size:1rem;color:var(--ink)}
-.mm-cnt{margin-left:auto;font-size:.74rem;color:var(--muted)}
-.mm-why{font-size:.8rem;color:var(--muted);margin:.1em 0 .8em;line-height:1.7}
-.mm-tree{list-style:none;padding:0;margin:0}
-.mm-tree li{position:relative;padding:.42em 0 .42em 1.1em;border-left:1px dotted #cfc6b4;
-  margin-left:.5em}
-.mm-tree li:before{content:"";position:absolute;left:0;top:1.05em;width:.7em;
-  border-top:1px dotted #cfc6b4}
-.mm-ch{margin:0;font-size:.92rem;color:var(--ink)}
-.mm-ch b{color:#a9a08d;font-weight:500;font-size:.8rem;margin-right:.4em}
-.mm-role{font-size:.68rem;padding:.05em .4em;border-radius:3px;margin-left:.5em;
-  vertical-align:.1em;white-space:nowrap}
-.r-pre{background:#eef0e6;color:#6b7a4e}.r-th{background:#eae7f0;color:#5f5578}
-.r-cnt{background:#f6e9e4;color:#946350}.r-case{background:#e8eff1;color:#4f7380}
-.r-end{background:#f2ecdf;color:#8a7442}
-.mm-gist{margin:.18em 0 .3em;font-size:.84rem;line-height:1.75;color:#4a443b}
-.mm-chip{display:inline-block;font-size:.68rem;color:#6b6152;background:#f2ecdf;
-  border-radius:9px;padding:.05em .5em;margin:.15em .25em .15em 0}
-.mm-anchor{display:block;font-size:.78rem;color:#8a8272;line-height:1.7;
-  border-left:2px dotted #d9d0bd;padding-left:.7em;margin-top:.3em}
-@media(max-width:720px){.mm-svg{min-width:640px}}
+.mmx-label{font-weight:600;font-size:1rem;color:var(--ink)}
+.mmx-cnt{margin-left:auto;font-size:.74rem;color:var(--muted)}
+.mmx-why{font-size:.8rem;color:var(--muted);margin:.1em 0 .8em;line-height:1.7}
+.mmx-tree{list-style:none;padding:0;margin:.15em 0 0}
+@media(max-width:720px){.mmx-svg{min-width:640px}}
 </style>
 </head>
 <body>
-<main class="wrap mm-wrap">
+<main class="wrap mmx-wrap">
 <header class="note-head">
-  <p class="eyebrow">MIND MAP · AFTER THINKING</p>
-  <h1>《一个女人一生的二十四小时》精读 · 全书主干</h1>
-  <p class="meta">6 章 · 主干重排 · 章节功能定位 · 由本书 AI 大纲条目重算</p>
+  <p class="eyebrow">CLOSE READING · AFTER THINKING</p>
+  <h1>《一个女人一生的二十四小时》精读</h1>
+  <p class="meta">6 章 · 37 条要点 · 95 句原句 · 主干重排 · 章节功能定位 · 由本书 AI 大纲条目重算</p>
   <p class="links"><a href="../../../index.html">← 返回首页</a>
      <a href="../../index.html">阅读归档索引</a>
      <a href="overview.html">全书视角</a>
      <a href="outline.html">AI 大纲</a></p>
 </header>
-<section class="mm-thesis">
-<p class="mm-kicker">THIS BOOK ARGUES</p>
-<p class="mm-claim">一个被规矩驯化了一生的女人，用二十四小时的越界证明：人可以被一次同情彻底改写，也可以被它终身放逐。</p>
-<p class="mm-bound"><b>边界</b> 全部材料来自C夫人的自述，无旁证；叙述者只是倾听者，因此这是「一个人如何解释自己」，不是对事件的事实认定。</p>
-<p class="mm-evi">证据密度 <b>100%</b> · 37 条要点中 37 条带原句 （结构由 AI 大纲条目重算，非读后感）</p>
-<div class="mm-bar"><i style="width:100%"></i></div>
+<section class="mmx-thesis">
+<p class="mmx-kicker">THIS BOOK ARGUES</p>
+<p class="mmx-claim">一个被规矩驯化了一生的女人，用二十四小时的越界证明：人可以被一次同情彻底改写，也可以被它终身放逐。</p>
+<p class="mmx-bound"><b>边界</b> 全部材料来自C夫人的自述，无旁证；叙述者只是倾听者，因此这是「一个人如何解释自己」，不是对事件的事实认定。</p>
+<p class="mmx-evi">证据密度 <b>100%</b> · 37 条要点中 37 条带原句 （结构由 AI 大纲条目重算，非读后感）</p>
+<div class="mmx-bar"><i style="width:100%"></i></div>
 </section>
-<section class="mm-svgwrap"><svg class="mm-svg" viewBox="0 0 1120 286" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="一个女人一生的二十四小时 全书主干导图">
-<rect x="0" y="0" width="1120" height="286" fill="none"/>
-<style>.mm-svg text{font-family:"Noto Serif SC",Georgia,serif}.mm-svg .t1{font-size:15px;fill:#2f2a24;font-weight:600}.mm-svg .t2{font-size:12px;fill:#5c5347}.mm-svg .t3{font-size:10.5px;fill:#8a8272}.mm-svg .rt{font-size:13px;fill:#f7f3ea;font-weight:600}.mm-svg .ln{stroke:#cfc6b4;stroke-width:1.4;fill:none}</style>
-<rect x="28" y="92" width="250" height="62" rx="10" fill="#3d372e"/>
-<text class="rt" x="44" y="117">一个女人一生的二十四小时</text>
-<text class="t3" x="44" y="137" style="fill:#c9c0ae">6 章 · 主干 3 条</text>
-<path class="ln" d="M278 123 C338 123,340 61,400 61"/>
-<rect x="400" y="38" width="250" height="46" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
-<rect x="400" y="38" width="5" height="46" rx="2.5" fill="#8a9b6e"/>
-<text class="t1" x="416" y="57">A 从争论到注视</text>
-<text class="t3" x="416" y="74">2 章</text>
-<text class="t2" x="700" y="57">一场关于激情的辩论把叙述者推到C夫人身边，观察开始。</text>
-<path class="ln" d="M650 61 L686 61"/>
-<path class="ln" d="M278 123 C338 123,340 123,400 123"/>
-<rect x="400" y="100" width="250" height="46" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
-<rect x="400" y="100" width="5" height="46" rx="2.5" fill="#8a9b6e"/>
-<text class="t1" x="416" y="119">B 动机的翻转</text>
-<text class="t3" x="416" y="136">2 章</text>
-<text class="t2" x="700" y="119">追上赌徒不是爱而是恐惧与好奇，同情第一次被拆开看。</text>
-<path class="ln" d="M650 123 L686 123"/>
-<path class="ln" d="M278 123 C338 123,340 185,400 185"/>
-<rect x="400" y="162" width="250" height="46" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
-<rect x="400" y="162" width="5" height="46" rx="2.5" fill="#8a9b6e"/>
-<text class="t1" x="416" y="181">C 自述与余生</text>
-<text class="t3" x="416" y="198">2 章</text>
-<text class="t2" x="700" y="181">身世与那一夜的完整交代，解释了此后二十四小时的重复。</text>
-<path class="ln" d="M650 185 L686 185"/>
+<section class="mmx-svgwrap"><svg class="mmx-svg" viewBox="0 0 1120 282" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="一个女人一生的二十四小时 全书精读">
+<rect x="0" y="0" width="1120" height="282" fill="none"/>
+<style>.mmx-svg text{font-family:"Noto Serif SC",Georgia,serif}.mmx-svg .t1{font-size:15px;fill:#2f2a24;font-weight:600}.mmx-svg .t2{font-size:12px;fill:#5c5347}.mmx-svg .t3{font-size:10.5px;fill:#8a8272}.mmx-svg .rt{font-size:13px;fill:#f7f3ea;font-weight:600}.mmx-svg .ln{stroke:#cfc6b4;stroke-width:1.4;fill:none}</style>
+<rect x="28" y="97" width="262" height="52" rx="10" fill="#3d372e"/>
+<text class="rt" x="44" y="121">一个女人一生的二十四小时</text>
+<text class="t3" x="44" y="141" style="fill:#c9c0ae">6 章 · 主干 3 条</text>
+<path class="ln" d="M290 123 C350 123,340 61,400 61"/>
+<rect x="400" y="33" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="33" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="58">A 从争论到注视</text>
+<text class="t3" x="416" y="78">2 章</text>
+<text class="t2" x="714" y="57">一场关于激情的辩论把叙述者推到C夫人身边，观察开始。</text>
+<path class="ln" d="M692 61 L700 61"/>
+<path class="ln" d="M290 123 C350 123,340 123,400 123"/>
+<rect x="400" y="95" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="95" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="120">B 动机的翻转</text>
+<text class="t3" x="416" y="140">2 章</text>
+<text class="t2" x="714" y="119">追上赌徒不是爱而是恐惧与好奇，同情第一次被拆开看。</text>
+<path class="ln" d="M692 123 L700 123"/>
+<path class="ln" d="M290 123 C350 123,340 185,400 185"/>
+<rect x="400" y="157" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="157" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="182">C 自述与余生</text>
+<text class="t3" x="416" y="202">2 章</text>
+<text class="t2" x="714" y="181">身世与那一夜的完整交代，解释了此后二十四小时的重复。</text>
+<path class="ln" d="M692 185 L700 185"/>
 </svg></section>
-<details class="mm-spine" open>
-<summary><span class="mm-id">A</span><span class="mm-label">从争论到注视</span><span class="mm-cnt">2 章</span></summary>
-<p class="mm-why">一场关于激情的辩论把叙述者推到C夫人身边，观察开始。</p>
-<ol class="mm-tree">
-<li class="r-pre"><p class="mm-ch"><b>1</b> 版权信息 · 1 · 争论的起因和过程<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">一场激烈争论升级为粗暴争执，为后文的激情主题定调</p><span class="mm-anchor">「大多数人其实都缺乏想象力，唯有那些直接攫住他们感官、如楔子般猛然楔入心灵的刺激，方能激起他们内心一丝波澜。」</span></li>
-<li class="r-pre"><p class="mm-ch"><b>2</b> 版权信息 · 2 · 辩论后的变化<span class="mm-role r-pre">铺垫</span></p><p class="mm-gist">争论后众人疏远，C夫人反而主动接近叙述者</p><span class="mm-anchor">「那对德国夫妇明显变得疏远冷淡。」</span></li>
+<div class="mmx-tools"><button class="mmx-btn" data-mmx="open">展开全部要点</button><button class="mmx-btn" data-mmx="close">全部收起</button><span class="mmx-tip">每章折叠态只占一行，点章名展开该章全部小节、要点与原句</span></div>
+<details class="mmx-spine" open>
+<summary><span class="mmx-id">A</span><span class="mmx-label">从争论到注视</span><span class="mmx-cnt">2 章</span></summary>
+<p class="mmx-why">一场关于激情的辩论把叙述者推到C夫人身边，观察开始。</p>
+<ol class="mmx-tree">
+<details class="mmx-cn"><summary><span class="mmx-no">1</span><span class="mmx-name">版权信息 · 1 · 争论的起因和过程</span><span class="mmx-role">铺垫</span><span class="mmx-pnum">8 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 4 个小节 · 8 条要点 · 18 句原句摘录</p><p class="mmx-gist">一场激烈争论升级为粗暴争执，为后文的激情主题定调</p><details class="mmx-sec" open><summary><span class="mmx-sech">争论的起因和过程</span><span class="mmx-secc">2 条</span></summary><ol class="mmx-pts"><li><span class="mmx-pt">争论由一场激烈的言语纷争引发，逐渐升级为粗暴争执，甚至快要演变为互相羞辱谩骂</span><ul class="mmx-qt"><li>「大多数人其实都缺乏想象力，唯有那些直接攫住他们感官、如楔子般猛然楔入心灵的刺激，方能激起他们内心一丝波澜。」</li><li>「面对那些稍显遥远、不够迫切的事物，他们便如隔雾观火，漠不关心。」</li></ul></li><li><span class="mmx-pt">争论的核心是饭店里发生了一起桃色风波</span><ul class="mmx-qt"><li>「这桩风波的开端，是当天中午十二点二十分：一位年轻的法国人随车抵达，入住了临海客房。」</li><li>「他路过时，总会以谦和又真诚的方式向每一个人打招呼。」</li><li>「他仿佛是命运格外眷顾的人物。他深知，自己凭借明朗的面庞与青春的魅力，能为他人带来愉悦。」</li><li>「他的出现，对那家大多住着年老体弱宾客的饭店而言，无异于一股春风。」</li></ul></li></ol></details><details class="mmx-sec"><summary><span class="mmx-sech">亨丽埃特夫人私奔事件的影响</span><span class="mmx-secc">2 条</span></summary><ol class="mmx-pts"><li><span class="mmx-pt">亨丽埃特夫人与那位年轻的法国人私奔，引起了极大的震动</span><ul class="mmx-qt"><li>「亨丽埃特夫人并非独自离开，而是与那位年轻的法国人一同私奔而去了。」</li><li>「而这位法国人先前赢得的普遍好感，此刻也正急剧褪色。」</li></ul></li><li><span class="mmx-pt">人们对亨丽埃特夫人的行为进行了激烈的评判</span><ul class="mmx-qt"><li>「大家一致认定，亨丽埃特夫人早已与那年轻人暗通款曲，而这位“吹笛人”此番不过是为敲定私奔的最后细节而来罢了。」</li><li>「因为，众人断言：一个正派的女人，绝不可能在短短两小时的认识之后，就随着一个陌生人一走了之。」</li></ul></li></ol></details><details class="mmx-sec"><summary><span class="mmx-sech">作者对亨丽埃特夫人的辩护</span><span class="mmx-secc">2 条</span></summary><ol class="mmx-pts"><li><span class="mmx-pt">作者认为亨丽埃特夫人的行为是愚蠢但绝非卑鄙可鄙的</span><ul class="mmx-qt"><li>「她敢于遵从自己的内心。」</li><li>「她将在明天，甚至可能就在今天，就将深深陷入痛苦与悔恨之中。」</li></ul></li><li><span class="mmx-pt">作者坚称任何人都没有资格鄙视亨丽埃特夫人</span><ul class="mmx-qt"><li>「作者对亨丽埃特夫人的情感并没有那么强烈，不过是辩论的势头将作者推到了这个立场。」</li><li>「作者认为，比起审判人，作者更乐于去理解人。」</li></ul></li></ol></details><details class="mmx-sec"><summary><span class="mmx-sech">C夫人对争论的平息</span><span class="mmx-secc">2 条</span></summary><ol class="mmx-pts"><li><span class="mmx-pt">C夫人以她的智慧和冷静平息了这场争论</span><ul class="mmx-qt"><li>「C夫人用那双清澈的灰色眼睛直直地看着作者，沉默地注视了好一会儿，似乎在权衡，也似乎在探测。」</li><li>「C夫人最终用一种几乎无法言说的从容，用那种既毫不唐突又绝对优雅的方式站起身来，温和地向作者伸出手。」</li></ul></li><li><span class="mmx-pt">C夫人的行为让整张餐桌恢复了平静</span><ul class="mmx-qt"><li>「我们全都在心里默默感谢她：感谢她让我们这些方才还针锋相对的“对手”，此刻竟能以勉强的礼貌互致问候。」</li><li>「那股几近爆裂的紧张氛围，也终于随着几句轻松的玩笑悄然化解。」</li></ul></li></ol></details></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">2</span><span class="mmx-name">版权信息 · 2 · 辩论后的变化</span><span class="mmx-role">铺垫</span><span class="mmx-pnum">6 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 3 个小节 · 6 条要点 · 16 句原句摘录</p><p class="mmx-gist">争论后众人疏远，C夫人反而主动接近叙述者</p><details class="mmx-sec" open><summary><span class="mmx-sech">辩论后的变化</span><span class="mmx-secc">2 条</span></summary><ol class="mmx-pts"><li><span class="mmx-pt">辩论后，我与几位对手之间形成了一层隔膜</span><ul class="mmx-qt"><li>「那对德国夫妇明显变得疏远冷淡。」</li><li>「意大利夫妇则似乎乐在其中，接下来的几天里总是带着一丝揶揄。」</li></ul></li><li><span class="mmx-pt">C夫人自那之后对我表现出的格外亲切</span><ul class="mmx-qt"><li>「她本是极为拘谨的人，几乎从不在用餐之外与同桌之人多作交谈。」</li><li>「自那次争论之后，她竟多次在花园中主动走近我，和我攀谈。」</li></ul></li></ol></details><details class="mmx-sec"><summary><span class="mmx-sech">C夫人的请求</span><span class="mmx-secc">2 条</span></summary><ol class="mmx-pts"><li><span class="mmx-pt">C夫人希望我能向她讲述她生命中的一段往事</span><ul class="mmx-qt"><li>「那段经历已经过去太久，几乎与她当下的生活无关。」</li><li>「但正因为我将在后天离开，这种临别的距离感反倒使她更容易说出口。」</li></ul></li><li><span class="mmx-pt">C夫人希望我尽全力，不隐瞒任何事，无论对我，还是对她自己</span><ul class="mmx-qt"><li>「“您说得完全正确：半真半假的话毫无意义，唯有全然的真诚才有价值。”。」</li><li>「“我会尽全力，不隐瞒任何事，无论对您，还是对我自己。请于晚餐后到我房间来，我已经六十七岁了，无须顾虑任何误解。”。」</li></ul></li></ol></details><details class="mmx-sec"><summary><span class="mmx-sech">讲述往事的过程</span><span class="mmx-secc">2 条</span></summary><ol class="mmx-pts"><li><span class="mmx-pt">C夫人在晚餐后到我房间来，开始讲述她的往事</span><ul class="mmx-qt"><li>「屋子里只透着微弱的光晕，昏暗中，一盏小巧的阅读灯投下柔黄的光锥，其余角落都沉在黄昏般的半明半暗里。」</li><li>「C夫人大方自然地迎上前来，为我拉出一张扶手椅，自己则在我对面坐下。」</li></ul></li><li><span class="mmx-pt">C夫人讲述她的丈夫在蒙特卡洛的赌场输光了一切，然后走向死亡的过程</span><ul class="mmx-qt"><li>「“那日中午，我与M公爵夫人共进午餐，她是我家族中的一位远房亲戚。午餐后，我还未感到倦意，便走进赌场，在众桌之间悠闲踱步，自己并不下注，只是看人。”。」</li><li>「“那天傍晚，当我走进赌场，从两张拥挤不堪的赌桌旁穿过，正准备从手袋里取出几枚金币时，忽然听见一个极为奇特的声音。那声音来自赌桌对面，在轮盘球疲惫地在两个数字之间艰难摇晃、整个赌厅屏息以待的那种密不透风的沉默中，它显得格外刺耳。”。」</li><li>「“我被这情景震慑得如同石化。因为我立刻明白，这个人是要走向死亡。”。」</li><li>「“他站在衣帽间前，侍者已将外套递到他面前。然而他的手臂再也不受支配，软得像失去知觉一般，于是那位殷勤的侍者只得像扶着一个瘫痪之人般，小心而吃力地把他的手臂塞进袖中。”。」</li><li>「“这个动作如此令人震撼，以至于我在一旁观看时竟感到一阵羞愧。我不由自主地偏过头去，像是在为自己目睹一场陌生人的绝望感到难堪——仿佛我不是在现实中，而是在剧场的舞台边，窥视着某个角色的悲剧性崩溃。”。」</li><li>「“然而紧接着，那种无法解释的恐惧又一次从内心深处将我推了出去。我匆忙取回自己的外套，几乎没有思考，完全是出于某种本能与冲动，追着那个陌生人冲进了夜色之中。”。」</li></ul></li></ol></details></div></details>
 </ol>
 </details>
-<details class="mm-spine">
-<summary><span class="mm-id">B</span><span class="mm-label">动机的翻转</span><span class="mm-cnt">2 章</span></summary>
-<p class="mm-why">追上赌徒不是爱而是恐惧与好奇，同情第一次被拆开看。</p>
-<ol class="mm-tree">
-<li class="r-th"><p class="mm-ch"><b>3</b> 版权信息 · 3 · C夫人的真实动机<span class="mm-role r-th">立论</span></p><p class="mm-gist">点破动机：追赌徒不是爱上他，而是好奇与恐惧驱动</p><span class="mm-anchor">「C夫人当时并未将他视作一个‘男人’来看待。」</span></li>
-<li class="r-case"><p class="mm-ch"><b>4</b> 版权信息 · 4 · C夫人的情绪爆发和解释<span class="mm-role r-case">案例</span></p><p class="mm-gist">C夫人情绪爆发，坦白自己从未与陌生人有过关系</p><span class="mm-anchor">「C夫人走到窗前沉默地望着窗外，或许只是将额头抵在冰冷的玻璃上静静地靠着。」</span></li>
+<details class="mmx-spine">
+<summary><span class="mmx-id">B</span><span class="mmx-label">动机的翻转</span><span class="mmx-cnt">2 章</span></summary>
+<p class="mmx-why">追上赌徒不是爱而是恐惧与好奇，同情第一次被拆开看。</p>
+<ol class="mmx-tree">
+<details class="mmx-cn"><summary><span class="mmx-no">3</span><span class="mmx-name">版权信息 · 3 · C夫人的真实动机</span><span class="mmx-role">立论</span><span class="mmx-pnum">5 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 3 个小节 · 5 条要点 · 14 句原句摘录</p><p class="mmx-gist">点破动机：追赌徒不是爱上他，而是好奇与恐惧驱动</p><details class="mmx-sec" open><summary><span class="mmx-sech">C夫人的真实动机</span><span class="mmx-secc">1 条</span></summary><ol class="mmx-pts"><li><span class="mmx-pt">C夫人追上赌徒并非因为爱上他，而是出于好奇和恐惧</span><ul class="mmx-qt"><li>「C夫人当时并未将他视作一个‘男人’来看待。」</li><li>「C夫人被某种着魔般的力量吸引，被某种意志推动，甚至来不及意识到这鲁莽行为的荒谬。」</li></ul></li></ol></details><details class="mmx-sec"><summary><span class="mmx-sech">C夫人对赌徒的观察和感受</span><span class="mmx-secc">2 条</span></summary><ol class="mmx-pts"><li><span class="mmx-pt">C夫人观察到赌徒的疲惫和绝望，感到震惊和恐惧</span><ul class="mmx-qt"><li>「赌徒整个身体像一个麻袋似的重重摔在长椅上。」</li><li>「赌徒头歪斜着仰靠在椅背上，手臂软塌塌、毫无形状地垂到地上。」</li><li>「C夫人看到赌徒倒下的方式，好似一块石子坠入深渊，直到触底才会停住。」</li></ul></li><li><span class="mmx-pt">C夫人被赌徒的绝望和孤独深深震撼</span><ul class="mmx-qt"><li>「赌徒在滂沱大雨中一动不动，疲惫得甚至无法站起、走上几步躲到屋檐下。」</li><li>「赌徒仿佛拥有一种奇异的天赋：他的一切情感都会以动作与姿态强烈而清晰地显现。」</li></ul></li></ol></details><details class="mmx-sec"><summary><span class="mmx-sech">C夫人的行动和决定</span><span class="mmx-secc">2 条</span></summary><ol class="mmx-pts"><li><span class="mmx-pt">C夫人被雨声和赌徒的绝望吸引，决定去救他</span><ul class="mmx-qt"><li>「一滴雨重重地砸落下来，紧接着，大雨毫无预警地倾泻而下。」</li><li>「在骤然倾泻而下的暴雨中，那位不幸的青年依然僵坐在长椅上，纹丝不动。」</li></ul></li><li><span class="mmx-pt">C夫人将赌徒带到旅馆，试图帮助他</span><ul class="mmx-qt"><li>「C夫人将手伸进包里，拿出一百法郎，对赌徒说：‘这里有一百法郎，拿着，去开个房间吧，明天就回尼斯去。’。」</li><li>「赌徒用一种我从未料到的力量，将我的手推了回去，说：‘你是个好人，可别浪费你的钱了。救不了我的。’。」</li><li>「C夫人再次坚持，将钱递给赌徒，赌徒几乎是猛地推开了我的手，说：‘算了吧，’他又低声重复道，语调沉闷而绝望，‘这毫无意义。还不如让我就在外面自我了结了，总比弄得他们房间里血迹斑斑要好。你的一百法郎救不了我，哪怕一千也一样。我明天还是会拿着最后的几枚硬币回到赌厅，直到一文不剩才会停手。何必再来一遍？这一切对我来说已经够了。’。」</li><li>「C夫人决不退让，猛地抓住赌徒的手，把钞票硬塞进他掌心，说：‘你必须收下，立刻上去！’。」</li><li>「赌徒忽然用一种生硬、冷峻、几乎带着怨恨的声音说，那双冰冷的手指紧紧扣住了C夫人的手腕，力道如铁一般强硬。C夫人惊恐万分，那种惊恐——贯穿全身、令人瘫软、仿佛被闪电击中的感觉，让C夫人失去了所有反应。C夫人想挣脱，想反抗，但意志全然不听使唤。而且，C夫人感到羞耻——在门房那冷漠而催促的注视下，C夫人竟无力与一个陌生男人扭打。就这样，C夫人忽然已身在旅馆之内。」</li></ul></li></ol></details></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">4</span><span class="mmx-name">版权信息 · 4 · C夫人的情绪爆发和解释</span><span class="mmx-role">案例</span><span class="mmx-pnum">6 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 3 个小节 · 6 条要点 · 11 句原句摘录</p><p class="mmx-gist">C夫人情绪爆发，坦白自己从未与陌生人有过关系</p><details class="mmx-sec" open><summary><span class="mmx-sech">C夫人的情绪爆发和解释</span><span class="mmx-secc">2 条</span></summary><ol class="mmx-pts"><li><span class="mmx-pt">C夫人情绪激荡，向作者坦白自己从未对陌生人产生过丝毫关系</span><ul class="mmx-qt"><li>「C夫人走到窗前沉默地望着窗外，或许只是将额头抵在冰冷的玻璃上静静地靠着。」</li><li>「C夫人回到作者面前，重新坐下，说：“好了，此刻，最艰难的部分我已经说出来了。”。」</li></ul></li><li><span class="mmx-pt">C夫人解释自己卷入悲剧完全出于一种近乎过度激发的援助冲动，与任何情欲、任何个人情感都无关</span><ul class="mmx-qt"><li>「C夫人说：“我曾对自己起誓，要对您，也对我自己坦诚到底，所以我向您重申：这件事完全出于一种近乎过度激发的援助冲动，与任何情欲、任何个人情感都无关，我是在没有任何欲望、没有任何预感的情况下，卷入了这场悲剧。”。」</li></ul></li></ol></details><details class="mmx-sec"><summary><span class="mmx-sech">C夫人描述那一夜的经过</span><span class="mmx-secc">2 条</span></summary><ol class="mmx-pts"><li><span class="mmx-pt">C夫人描述了自己在那一夜与一个陌生人搏斗，为他的生命而战的经历</span><ul class="mmx-qt"><li>「C夫人说：“那一夜，我是在与一个人搏斗，为他的生命而战。”。」</li><li>「C夫人说：“我用每一根神经都清晰地感知到，那陌生人、那个几乎已然沉沦的人，正以一个濒死者的全部渴望与疯狂，紧紧攫住生命的最后一线。”。」</li></ul></li><li><span class="mmx-pt">C夫人描述了清晨醒来时，发现自己和一个完全陌生的男人同睡在一间旅馆房间的惊骇经历</span><ul class="mmx-qt"><li>「C夫人说：“我从铅一般沉重的睡眠中醒来，仿佛从夜的最深处浮出，那是一种从未经历过的黑暗与昏沉。”。」</li><li>「C夫人说：“我听见隔壁房间有人说话，听见水流淌的声音，听见走廊上有人拖着脚步经过，每一个声音、每一个细节都像铁锤一样，无情地敲击着我，让我不得不承认：我醒着，我无比清醒，我在活生生的现实里。”。」</li></ul></li></ol></details><details class="mmx-sec"><summary><span class="mmx-sech">C夫人的内心感受和决定</span><span class="mmx-secc">2 条</span></summary><ol class="mmx-pts"><li><span class="mmx-pt">C夫人感到恐惧、耻辱与惊骇，但同时也感到欣慰和骄傲</span><ul class="mmx-qt"><li>「C夫人说：“我永远也不会知道，自己当时躺了多久，四肢冰冷，僵硬得像具尸体，直挺挺地躺在棺木中似的。”。」</li><li>「C夫人说：“我看着他，那目光，我想我只能这样说，是母亲的目光。”。」</li></ul></li><li><span class="mmx-pt">C夫人决定逃离旅馆，不再见到那个陌生人</span><ul class="mmx-qt"><li>「C夫人说：“‘我现在得走了，’我迅速对他说，‘你留下，先穿好衣服。十二点钟，在赌场门口等我——那时我会处理好一切后续的事。’。”。」</li><li>「C夫人说：“还不等他回话，我已冲出房间，只为不再看到那个房间、不再面对那张床、不再让这一切继续蔓延。”。」</li></ul></li></ol></details></div></details>
 </ol>
 </details>
-<details class="mm-spine">
-<summary><span class="mm-id">C</span><span class="mm-label">自述与余生</span><span class="mm-cnt">2 章</span></summary>
-<p class="mm-why">身世与那一夜的完整交代，解释了此后二十四小时的重复。</p>
-<ol class="mm-tree">
-<li class="r-case"><p class="mm-ch"><b>5</b> 版权信息 · 5 · C夫人的转变<span class="mm-role r-case">案例</span></p><p class="mm-gist">从痛苦到轻松的转变，她第一次感到自己被需要</p><span class="mm-anchor">「C夫人曾说过：丈夫去世后，我几乎彻底放弃了自己的生活。」</span></li>
-<li class="r-end"><p class="mm-ch"><b>6</b> 版权信息 · 6 · C夫人的讲述<span class="mm-role r-end">收束</span></p><p class="mm-gist">身世与遭遇全盘托出，二十四小时成为她余生的刻度</p><span class="mm-anchor">「C夫人曾向讲述者承诺，要彻底坦诚。」</span></li>
+<details class="mmx-spine">
+<summary><span class="mmx-id">C</span><span class="mmx-label">自述与余生</span><span class="mmx-cnt">2 章</span></summary>
+<p class="mmx-why">身世与那一夜的完整交代，解释了此后二十四小时的重复。</p>
+<ol class="mmx-tree">
+<details class="mmx-cn"><summary><span class="mmx-no">5</span><span class="mmx-name">版权信息 · 5 · C夫人的转变</span><span class="mmx-role">案例</span><span class="mmx-pnum">6 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 3 个小节 · 6 条要点 · 24 句原句摘录</p><p class="mmx-gist">从痛苦到轻松的转变，她第一次感到自己被需要</p><details class="mmx-sec" open><summary><span class="mmx-sech">C夫人的转变</span><span class="mmx-secc">2 条</span></summary><ol class="mmx-pts"><li><span class="mmx-pt">C夫人经历了从痛苦到轻松的过程</span><ul class="mmx-qt"><li>「C夫人曾说过：丈夫去世后，我几乎彻底放弃了自己的生活。」</li><li>「但如今，命运第一次将一项真正的任务摆在我面前——我救了一个人，用尽全部意志和力量，把他从毁灭的边缘拉了回来。」</li></ul></li><li><span class="mmx-pt">C夫人感到自己存在的必要</span><ul class="mmx-qt"><li>「我突然重新感到自己存在的必要，血液重新奔涌，人生有了力量，有了方向。」</li></ul></li></ol></details><details class="mmx-sec"><summary><span class="mmx-sech">陌生人的故事</span><span class="mmx-secc">2 条</span></summary><ol class="mmx-pts"><li><span class="mmx-pt">陌生人出身于奥地利波兰一支古老的贵族家族，原本是作为外交官培养的</span><ul class="mmx-qt"><li>「他曾在维也纳求学，并于一个月前刚刚以优异的成绩通过了第一场考试。」</li><li>「他的叔叔是一位总参谋部的高级军官，他当时正寄宿在叔叔家。」</li></ul></li><li><span class="mmx-pt">陌生人因为赌博，输光了所有的东西，包括他的名誉</span><ul class="mmx-qt"><li>「他越输越多，债务越积越高，而那些凭‘信用’签下的承诺，连同他的名誉，只能靠一场‘决定性的豪赌’来挽回。」</li><li>「他早已典当了手表、衣物，最终发生了最可怕的事：他从一位年长姑母的柜子里偷走了她平时很少佩戴的两枚大纽扣式珠宝。」</li></ul></li></ol></details><details class="mmx-sec"><summary><span class="mmx-sech">C夫人的救赎</span><span class="mmx-secc">2 条</span></summary><ol class="mmx-pts"><li><span class="mmx-pt">C夫人决定帮助陌生人，拯救他</span><ul class="mmx-qt"><li>「我答应出钱帮他支付旅费，也帮他赎回那枚被他典当的首饰。」</li><li>「但这一切都有一个前提——他必须在今天之内离开，并且要以他的名誉发誓，从此再不碰一张牌，再不参与任何形式的赌博。」</li></ul></li><li><span class="mmx-pt">C夫人成功地帮助陌生人，他重新找到了生活的希望</span><ul class="mmx-qt"><li>「他转身走向一处壁龛，对着圣像划了十字，顺从地跪了下来。」</li><li>「‘请跟我念，’我说着，自己也因激动而微微颤抖，‘照着我说的重复：我发誓——’。」</li><li>「他颤抖着，一字一句复述那誓言，话语在这空旷无声的教堂里清晰地回响，仿佛被钉在空气中，久久不散。」</li><li>「随后是一阵沉寂。如此静谧，竟能听见外面树叶间被风穿梭搅动的低低涛声。」</li><li>「忽然间，他如忏悔者般扑倒在祭坛前。随之而出的，是一种我从未听过的祈祷方式：他开始用波兰语快速而杂乱地低语，像是陷入狂热的激动中，那些我无法理解的词语从他口中倾泻而出。」</li><li>「但我能感受到，这一定是祷告，是极度的感恩，是痛悔，是灵魂的倾诉。」</li><li>「他的头颅一次次低伏到祈祷台上，像是在将自己整个交托出去。」</li><li>「他以燃烧般的热情一遍遍重复着那些异国的音节，最终浓缩成一个词——那个他反复呼喊、几乎用生命之力吐出的词。」</li><li>「我至今未曾在任何教堂中听过如此祈祷，此后也再未听到过。」</li><li>「他紧紧抓住木制的跪椅，手指关节因用力而发白。整个身体被一种来自内部的风暴剧烈撕扯着，有时猛然上扬，有时又被重力狠狠压向地面。」</li><li>「他的眼睛与知觉似乎已完全从这个现实世界抽离，他的整个存在此刻正处于另一重界域：要么是涤净之火的炼狱，要么是灵魂即将升向圣洁之境的高地。」</li><li>「终于，他缓慢地站了起来，画了个十字，费力地转过身来。」</li><li>「他的双膝微微发颤，脸色苍白，像是刚从一场剧烈挣扎中脱身。」</li><li>「但当他看见我时，眼中猛然绽出光亮，一个洁净、虔诚、宛如神迹的微笑浮上他疲惫的面庞。」</li><li>「他走近我，深深地鞠了一个俄式鞠躬，然后轻轻地握住我的双手，低头、恭敬地将唇贴近我的指背，低声说道：‘是上帝把您派来的，我刚才已经为此感谢过他了。’。」</li></ul></li></ol></details></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">6</span><span class="mmx-name">版权信息 · 6 · C夫人的讲述</span><span class="mmx-role">收束</span><span class="mmx-pnum">6 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 3 个小节 · 6 条要点 · 12 句原句摘录</p><p class="mmx-gist">身世与遭遇全盘托出，二十四小时成为她余生的刻度</p><details class="mmx-sec" open><summary><span class="mmx-sech">C夫人的讲述</span><span class="mmx-secc">2 条</span></summary><ol class="mmx-pts"><li><span class="mmx-pt">C夫人向讲述者倾诉了自己的身世和遭遇</span><ul class="mmx-qt"><li>「C夫人曾向讲述者承诺，要彻底坦诚。」</li><li>「C夫人强迫自己将那一段经历有条理地回忆、讲述，并为那些当时纷乱交织、彼此缠绕不清的情绪寻找清晰准确的词语。」</li></ul></li><li><span class="mmx-pt">C夫人讲述了自己在遇到年轻人后的失望和痛苦</span><ul class="mmx-qt"><li>「C夫人感到失望，因为这个年轻人竟那样温顺地离开了，那样毫无挣扎、毫无留恋地走了，竟丝毫没有尝试挽留我，或是留下来陪我。」</li><li>「C夫人感到痛苦，因为她的感官已经完全失序了，她的内心正被汹涌的情绪彻底淹没。」</li></ul></li></ol></details><details class="mmx-sec"><summary><span class="mmx-sech">C夫人的回忆和挣扎</span><span class="mmx-secc">2 条</span></summary><ol class="mmx-pts"><li><span class="mmx-pt">C夫人回忆了自己和年轻人的相遇和分别</span><ul class="mmx-qt"><li>「C夫人回忆了自己在酒店房间里来回踱步，心乱如麻，无端拉开抽屉，又漫无目的地关上。」</li><li>「C夫人回忆了自己在车站台上，看着那些车厢从我面前缓缓滑过，我竭力想在窗口间寻得他的面容。」</li></ul></li><li><span class="mmx-pt">C夫人挣扎着想要忘记这段经历，但是无法做到</span><ul class="mmx-qt"><li>「C夫人挣扎着想要忘记这段经历，但是她的内心却一次又一次浮现出那张面孔，那张我曾无比热切地注视过的、令我感到近乎欢喜的面孔。」</li><li>「C夫人挣扎着想要忘记这段经历，但是每当她想起那个瞬间——那个她被他的嘲弄抽打得无处遁形、在成百上千的陌生人面前窘迫站立的瞬间——她的血液依然会在体内冰冷凝固。」</li></ul></li></ol></details><details class="mmx-sec"><summary><span class="mmx-sech">C夫人的决定和离开</span><span class="mmx-secc">2 条</span></summary><ol class="mmx-pts"><li><span class="mmx-pt">C夫人决定离开这里，离开这座被诅咒的地狱</span><ul class="mmx-qt"><li>「C夫人决定离开这里，离开此刻的我，回家，回到我的亲人身边，回到我过去的、属于我自己的生活里去。」</li><li>「C夫人连夜赶往巴黎，在那里换乘火车直奔布洛涅，又从布洛涅到多佛，从多佛到伦敦，从伦敦直奔我儿子的乡间宅邸，这一切都在一种疯狂的疾驰中完成，没有思考，没有停顿。」</li></ul></li><li><span class="mmx-pt">C夫人最终到达了儿子的庄园，但是她的内心仍然充满了痛苦和羞愧</span><ul class="mmx-qt"><li>「C夫人最终到达了儿子的庄园，但是她的神情、她的样子，一定流露出某种无法遮掩的东西。」</li><li>「C夫人拒绝了所有问题，只要求一盆热水，我迫切需要把旅途的污垢洗掉，把那狂徒、那卑劣之人所留下的每一处痕迹，都从我身上清除干净。」</li></ul></li></ol></details></div></details>
 </ol>
 </details>
-
-<section class="mmx-mod" aria-labelledby="oneline"><h2 id="oneline">一句话主旨</h2><p class="mmx-oneline">一个被规矩驯化了一生的女人，用二十四小时的越界证明：人可以被一次同情彻底改写，也可以被它终身放逐。</p><p class="mmx-mod-note">本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。</p></section>
+<section class="mmx-mod" aria-labelledby="oneline"><h2 id="oneline">一句话主旨</h2><p class="mmx-mod-note">本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。</p><p class="mmx-oneline">一个被规矩驯化了一生的女人，用二十四小时的越界证明：人可以被一次同情彻底改写，也可以被它终身放逐。</p></section>
 <section class="mmx-mod" aria-labelledby="views"><h2 id="views">核心观点初判</h2><p class="mmx-mod-note">按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。</p><ul class="mmx-views"><li><b>从争论到注视</b>——一场关于激情的辩论把叙述者推到C夫人身边，观察开始。</li><li><b>动机的翻转</b>——追上赌徒不是爱而是恐惧与好奇，同情第一次被拆开看。</li><li><b>自述与余生</b>——身世与那一夜的完整交代，解释了此后二十四小时的重复。</li></ul></section>
 <section class="mmx-mod" aria-labelledby="top10"><h2 id="top10">原文金句 · 持续积累</h2><p class="mmx-mod-note">以下原句取自本书 AI 大纲落库的原文摘录（book_outline.quote），按大纲顺序节选，非 AI 生成；更多见逐章深读页。</p><ol class="mmx-qlist"><li><blockquote>「大多数人其实都缺乏想象力，唯有那些直接攫住他们感官、如楔子般猛然楔入心灵的刺激，方能激起他们内心一丝波澜。」</blockquote><cite>版权信息 · 1 · 争论的起因和过程</cite></li><li><blockquote>「面对那些稍显遥远、不够迫切的事物，他们便如隔雾观火，漠不关心。」</blockquote><cite>版权信息 · 1 · 争论的起因和过程</cite></li><li><blockquote>「这桩风波的开端，是当天中午十二点二十分：一位年轻的法国人随车抵达，入住了临海客房。」</blockquote><cite>版权信息 · 1 · 争论的起因和过程</cite></li><li><blockquote>「他路过时，总会以谦和又真诚的方式向每一个人打招呼。」</blockquote><cite>版权信息 · 1 · 争论的起因和过程</cite></li><li><blockquote>「他仿佛是命运格外眷顾的人物。他深知，自己凭借明朗的面庞与青春的魅力，能为他人带来愉悦。」</blockquote><cite>版权信息 · 1 · 争论的起因和过程</cite></li><li><blockquote>「他的出现，对那家大多住着年老体弱宾客的饭店而言，无异于一股春风。」</blockquote><cite>版权信息 · 1 · 争论的起因和过程</cite></li><li><blockquote>「亨丽埃特夫人并非独自离开，而是与那位年轻的法国人一同私奔而去了。」</blockquote><cite>版权信息 · 1 · 争论的起因和过程</cite></li><li><blockquote>「而这位法国人先前赢得的普遍好感，此刻也正急剧褪色。」</blockquote><cite>版权信息 · 1 · 争论的起因和过程</cite></li><li><blockquote>「大家一致认定，亨丽埃特夫人早已与那年轻人暗通款曲，而这位“吹笛人”此番不过是为敲定私奔的最后细节而来罢了。」</blockquote><cite>版权信息 · 1 · 争论的起因和过程</cite></li><li><blockquote>「因为，众人断言：一个正派的女人，绝不可能在短短两小时的认识之后，就随着一个陌生人一走了之。」</blockquote><cite>版权信息 · 1 · 争论的起因和过程</cite></li></ol></section>
-<section class="mmx-mod" aria-labelledby="aiask"><h2 id="aiask">AI 问书</h2><div class="mmx-pending">本书 <b>AI 问书</b> 由 AI 读书平台的书籍 AI 生成，将在云端 AI 阅读流程完读后自动补充到此页。</div></section>
-<section class="mmx-mod" aria-labelledby="higher"><h2 id="higher">用更高维度的知识看这本书</h2><div class="mmx-pending">此模块由云端 AI 阅读流程在完读后生成：把本书放回知识史与理论框架中重读，区分书中主张、外部证据与综合分析。当前待补。</div></section>
-<section class="mmx-mod" aria-labelledby="verify"><h2 id="verify">阅读时要验证的问题</h2><div class="mmx-pending">此模块由云端 AI 阅读流程在完读后生成：列出读时需核对的原句、数字与论点（如关键数据出处、个案代表性、类比限度）。当前待补。</div></section>
-<section class="mmx-mod" aria-labelledby="thennow"><h2 id="thennow">当年与今天 · 初步对照</h2><div class="mmx-pending">此模块由云端 AI 阅读流程在完读后生成：区分作者当年所能知晓与后来才显现的事实，给出今日可迁移的启发。当前待补。</div></section>
-<section class="mmx-mod" aria-labelledby="evib"><h2 id="evib">来源与证据边界</h2><div class="mmx-evib"><p>本页「精读」由 <b>AI 大模型</b> 对本书 AI 大纲条目做结构化重算（主干、分组、证据密度），<b>非读后感</b>。</p><ul><li><b>原文金句</b>：逐字取自全书 AI 大纲落库的原文摘录（book_outline.quote）；</li><li><b>AI 问书</b>：复用自本书日期笔记中已有的真实 AI 问答；</li><li><b>更高维度 / 阅读验证 / 当年与今天</b>：由云端 AI 阅读流程完读后生成，当前为占位；</li><li>归纳与解读均为模型生成，<b>仅供参考</b>，读后请以原书为准。</li></ul></div></section>
-
-  <footer class="site-footer">
+<footer class="site-footer">
   <p class="small">口径：主干由 AI 依章节要点重新归纳，章的功能（铺垫/立论/反证/案例/收束）是结构判断而非原文自述；
-  引文逐字来自 AI 大纲的原句摘录，未命中原句的章不标注引文（本次 0 处）。</p>
+  每章展开后的「小节 → 要点 → 原句」逐字取自本书 AI 大纲，与「全书视角」页的章节导读同源，一条未删
+  （引文未命中原句的章不标注代表句，本次 0 处）。</p>
   <p><a href="../../../index.html">← 返回首页</a>　<a href="overview.html">全书视角</a></p>
 </footer>
 </main>
+<script>
+(function(){
+  var btns=document.querySelectorAll("[data-mm]");
+  for(var i=0;i<btns.length;i++){(function(b){
+    b.addEventListener("click",function(){
+      var open=b.getAttribute("data-mmx")==="open";
+      document.querySelectorAll("details.mmx-spine").forEach(function(d){d.open=open;});
+      document.querySelectorAll("details.mmx-cn").forEach(function(d){d.open=open;});
+      document.querySelectorAll("details.ch-sec").forEach(function(d){d.open=open;});
+    });
+  })(btns[i]);}
+})();
+</script>
 <script src="../../../assets/js/mindmap-modules.js?v=20261029b" defer></script>
 </body>
 </html>

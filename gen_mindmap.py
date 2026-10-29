@@ -439,6 +439,23 @@ def _chapter_html(c: dict, full: dict) -> str:
 # ── 精读页模块统一开关（2026-10-29）：docs/mindmap-modules.json ──
 # enabled=false 的模块在渲染时整体跳过；改配置即对所有书统一生效，无需改页面或逐个编辑。
 MODULE_CFG_PATH = HERE / "docs" / "mindmap-modules.json"
+MODULE_TEXT_PATH = HERE / "docs" / "mindmap-module-text.json"
+
+
+def _module_text_cfg() -> dict:
+    """模块文案模板：标题 / 说明 / 占位文案，全站共用（改一处即全站生效）。"""
+    try:
+        return json.loads(MODULE_TEXT_PATH.read_text(encoding="utf-8"))
+    except Exception:
+        return {"defaults": {}, "show_pending": False}
+
+
+_MT = _module_text_cfg()
+
+
+def _mt(key: str, field: str, default=""):
+    v = ((_MT.get("defaults") or {}).get(key) or {}).get(field)
+    return default if v is None else v
 
 
 def _module_enabled_map() -> dict:
@@ -458,348 +475,141 @@ def _section_id(html: str):
 
 
 def _extra_modules(d: dict) -> str:
-    """精读页补全模块（2026-10-28 重构：参考 outline.html 模块排序）。
-    顺序：一句话主旨 → 核心观点初判 → 原文金句 Top10 → AI 问书
-          → 用更高维度的知识看 → 阅读时要验证的问题 → 当年与今天 · 初步对照 → 来源与证据边界
-    真实数据（非杜撰）：thesis.claim（一句话主旨）、spine（核心观点）、
-    book_outline.quote（金句）、本书日期笔记（AI 问书复用）；其余 LLM 模块先占位，
-    由云端 AI 阅读流程完读后填充。所有取数 try/except 降级，绝不拖垮主渲染。"""
+    """精读页模块：结构统一、文案取自 JSON。
+
+    三层数据源（改文案不需要动任何 html）：
+      1) docs/mindmap-module-text.json  —— 全站共用的标题 / 说明 / 占位文案模板；
+      2) data/mindmap/<slug>.json 的 modules 字段 —— 本书专属内容（有就用）；
+      3) 结构化重算 —— thesis.claim（主旨）、spine（观点）、book_outline.quote（金句）、
+         本书日期笔记（AI 问书）。这三块本来就是数据，不手写。
+    任何一层缺失都不报错，降级到下一层；show_pending=false 时没有真实内容的模块整块不渲染。
+    """
+    mods = d.get("modules") or {}
     out = []
-    # 0) 一句话主旨：取自已生成的 thesis.claim（真实，非读后感）
-    try:
-        claim = ((d.get("thesis") or {}).get("claim") or "").strip()
-        if claim:
-            out.append(
-                '<section class="mmx-mod" aria-labelledby="oneline">'
-                '<h2 id="oneline">一句话主旨</h2>'
-                '<p class="mmx-oneline">%s</p>'
-                '<p class="mmx-mod-note">本页「精读」由 AI 大纲条目结构化重算，'
-                '主旨句取自全书命题，非读后感。</p></section>' % E(claim))
-    except Exception:
-        pass
-    # 1) 核心观点初判：取自 spine 各分组 label + why（真实结构）
-    try:
-        spine = d.get("spine") or []
-        items = []
-        for s in spine:
+
+    def sec(key, body):
+        title = _mt(key, "title", key)
+        note = _mt(key, "note")
+        s = ['<section class="mmx-mod" aria-labelledby="%s">' % key,
+             '<h2 id="%s">%s</h2>' % (key, E(title))]
+        if note:
+            s.append('<p class="mmx-mod-note">%s</p>' % E(note))
+        s.append(body)
+        s.append('</section>')
+        return "".join(s)
+
+    def pending(key):
+        txt = _mt(key, "pending")
+        if not txt or not _MT.get("show_pending", False):
+            return None
+        return '<div class="mmx-pending">%s</div>' % txt
+
+    def paras(key, key_name="paras"):
+        """通用：{"paras": [...]} → <p> 段；{"items": [...]} → <ul>。"""
+        m = mods.get(key) or {}
+        ps = [x for x in (m.get(key_name) or []) if x]
+        if ps:
+            return "".join('<p>%s</p>' % E(x) for x in ps)
+        items = [x for x in (m.get("items") or []) if x]
+        if items:
+            return '<ul class="mmx-views">%s</ul>' % "".join(
+                '<li>%s</li>' % E(x) for x in items)
+        return pending(key)
+
+    # 0) 一句话主旨：本书覆盖 > thesis.claim
+    claim = (mods.get("oneline") or "").strip() if isinstance(mods.get("oneline"), str) else ""
+    claim = claim or ((d.get("thesis") or {}).get("claim") or "").strip()
+    if claim:
+        out.append(sec("oneline", '<p class="mmx-oneline">%s</p>' % E(claim)))
+
+    # 1) 核心观点初判：本书覆盖 > spine(label + why)
+    items = [x for x in ((mods.get("views") or {}).get("items") or []) if x]
+    if not items:
+        for s in (d.get("spine") or []):
             label = (s.get("label") or "").strip()
             if not label:
                 continue
             why = (s.get("why") or "").strip()
-            txt = "<b>%s</b>" % E(label)
-            if why:
-                txt += "——%s" % E(why)
-            items.append("<li>%s</li>" % txt)
-        if items:
-            out.append(
-                '<section class="mmx-mod" aria-labelledby="views">'
-                '<h2 id="views">核心观点初判</h2>'
-                '<p class="mmx-mod-note">按全书主干分组，归纳各段在论证中的位置'
-                '（取自 spine，结构重算，非读后感）。</p>'
-                '<ul class="mmx-views">%s</ul></section>' % "".join(items))
-    except Exception:
-        pass
-    # 2) Top10 真实金句：取自 book_outline.quote（非 LLM 生成）
-    try:
-        import sqlite3
-        db = sqlite3.connect(str(HERE / "data" / "we_read.db"))
-        c = db.cursor()
-        seen, q = set(), []
-        for ch, qt in c.execute(
-                "SELECT chapter, quote FROM book_outline "
-                "WHERE slug=? AND quote IS NOT NULL AND quote!='' "
-                "ORDER BY ch_no, sec_no, point_no, quote_no", (d["slug"],)):
-            qt = (qt or "").strip()
-            if len(qt) < 15 or qt in seen:
-                continue
-            seen.add(qt)
-            q.append((ch or "本书正文", qt))
-            if len(q) >= 10:
-                break
-        if q:
-            items = "".join(
-                '<li><blockquote>「%s」</blockquote><cite>%s</cite></li>'
-                % (E(qt), E(ch)) for ch, qt in q)
-            out.append(
-                '<section class="mmx-mod" aria-labelledby="top10">'
-                '<h2 id="top10">原文金句 · 持续积累</h2>'
-                '<p class="mmx-mod-note">以下原句取自本书 AI 大纲落库的原文摘录'
-                '（book_outline.quote），按大纲顺序节选，非 AI 生成；更多见逐章深读页。</p>'
-                '<ol class="mmx-qlist">%s</ol></section>' % items)
-    except Exception:
-        pass
-    # 3) AI 问书：复用本书日期笔记中的真实内容；无则占位
-    try:
-        notes = BOOKS / d["slug"] / "notes"
-        ask = None
-        if notes.exists():
-            for f in sorted(notes.glob("*.html")):
-                html = f.read_text(encoding="utf-8")
-                m = re.search(r"<h2>\s*AI\s*问书\s*</h2>(.*?)(?=<h2>|</section>|</main>|$)",
-                              html, re.S)
-                if m and m.group(1).strip():
-                    ask = m.group(1).strip()
-                    break
-        if ask:
-            out.append(
-                '<section class="mmx-mod" aria-labelledby="aiask">'
-                '<h2 id="aiask">AI 问书</h2>'
-                '<p class="mmx-mod-note">下方内容复用自本书日期笔记中的 AI 问书'
-                '（按实读范围生成）；全书级整理将在云端 AI 阅读流程完成后补充。</p>'
-                '<div class="mmx-ask">%s</div></section>' % ask)
-        else:
-            out.append(
-                '<section class="mmx-mod" aria-labelledby="aiask">'
-                '<h2 id="aiask">AI 问书</h2>'
-                '<div class="mmx-pending">本书 <b>AI 问书</b> 由 AI 读书平台的书籍 AI 生成，'
-                '将在云端 AI 阅读流程完读后自动补充到此页。</div></section>')
-    except Exception:
-        pass
-    # 4) 用更高维度的知识看这本书（LLM 模块，占位）
-    out.append(
-        '<section class="mmx-mod" aria-labelledby="higher">'
-        '<h2 id="higher">用更高维度的知识看这本书</h2>'
-        '<div class="mmx-pending">此模块由云端 AI 阅读流程在完读后生成：把本书放回知识史与'
-        '理论框架中重读，区分书中主张、外部证据与综合分析。当前待补。</div></section>')
-    # 5) 阅读时要验证的问题（LLM 模块，占位）
-    out.append(
-        '<section class="mmx-mod" aria-labelledby="verify">'
-        '<h2 id="verify">阅读时要验证的问题</h2>'
-        '<div class="mmx-pending">此模块由云端 AI 阅读流程在完读后生成：列出读时需核对的'
-        '原句、数字与论点（如关键数据出处、个案代表性、类比限度）。当前待补。</div></section>')
-    # 6) 当年与今天 · 初步对照（LLM 模块，占位，对齐 outline 命名）
-    out.append(
-        '<section class="mmx-mod" aria-labelledby="thennow">'
-        '<h2 id="thennow">当年与今天 · 初步对照</h2>'
-        '<div class="mmx-pending">此模块由云端 AI 阅读流程在完读后生成：区分作者当年所能'
-        '知晓与后来才显现的事实，给出今日可迁移的启发。当前待补。</div></section>')
-    # 7) 来源与证据边界（真实 provenance，互补 footer 口径）
-    out.append(
-        '<section class="mmx-mod" aria-labelledby="evib">'
-        '<h2 id="evib">来源与证据边界</h2>'
-        '<div class="mmx-evib">'
-        '<p>本页「精读」由 <b>AI 大模型</b> 对本书 AI 大纲条目做结构化重算'
-        '（主干、分组、证据密度），<b>非读后感</b>。</p>'
-        '<ul>'
-        '<li><b>原文金句</b>：逐字取自全书 AI 大纲落库的原文摘录（book_outline.quote）；</li>'
-        '<li><b>AI 问书</b>：复用自本书日期笔记中已有的真实 AI 问答；</li>'
-        '<li><b>更高维度 / 阅读验证 / 当年与今天</b>：由云端 AI 阅读流程完读后生成，当前为占位；</li>'
-        '<li>归纳与解读均为模型生成，<b>仅供参考</b>，读后请以原书为准。</li>'
-        '</ul></div></section>')
-    # 统一模块开关：enabled=false 的整体跳过（docs/mindmap-modules.json），对所有书统一生效
+            items.append("<b>%s</b>%s" % (E(label), ("——%s" % E(why)) if why else ""))
+    if items:
+        out.append(sec("views", '<ul class="mmx-views">%s</ul>' % "".join(
+            "<li>%s</li>" % x for x in items)))
+
+    # 2) 原文金句 Top10：本书覆盖 > book_outline.quote（真实原文）
+    q = [x for x in ((mods.get("top10") or {}).get("items") or []) if x]
+    if not q:
+        try:
+            import sqlite3
+            con = sqlite3.connect(str(HERE / "data" / "we_read.db"))
+            seen = set()
+            for ch, qt in con.execute(
+                    "SELECT chapter, quote FROM book_outline "
+                    "WHERE slug=? AND quote IS NOT NULL AND quote!='' "
+                    "ORDER BY ch_no, sec_no, point_no, quote_no", (d["slug"],)):
+                qt = (qt or "").strip()
+                if len(qt) < 15 or qt in seen:
+                    continue
+                seen.add(qt)
+                q.append({"quote": qt, "from": ch or "本书正文"})
+                if len(q):
+                    if len(q) >= 10:
+                        break
+            con.close()
+        except Exception:
+            q = []
+    if q:
+        lis = []
+        for x in q:
+            if isinstance(x, dict):
+                lis.append('<li><blockquote>「%s」</blockquote><cite>%s</cite></li>'
+                           % (E(x.get("quote") or ""), E(x.get("from") or "本书正文")))
+            else:
+                lis.append('<li><blockquote>「%s」</blockquote></li>' % E(x))
+        out.append(sec("top10", '<ol class="mmx-qlist">%s</ol>' % "".join(lis)))
+
+    # 3) AI 问书：本书覆盖 > 本书日期笔记里已有的真实问答 > 占位
+    ai = mods.get("aiask") or {}
+    pairs = [x for x in (ai.get("pairs") or []) if x]
+    if pairs:
+        body = "".join(
+            '<div class="mmx-qa"><p class="mmx-q">%s</p><p class="mmx-a">%s</p></div>'
+            % (E(x.get("q") or ""), E(x.get("a") or "")) for x in pairs)
+    else:
+        body = ""
+        try:
+            notes = BOOKS / d["slug"] / "notes"
+            if notes.exists():
+                for f in sorted(notes.glob("*.html")):
+                    html = f.read_text(encoding="utf-8")
+                    m = re.search(r"<h2>\s*AI\s*问书\s*</h2>(.*?)(?=<h2>|</section>|</main>|$)",
+                                  html, re.S)
+                    if m and m.group(1).strip():
+                        body = '<div class="mmx-ask">%s</div>' % m.group(1).strip()
+                        break
+        except Exception:
+            body = ""
+        if not body:
+            body = pending("aiask")
+    if body:
+        out.append(sec("aiask", body))
+
+    # 4-6) 三个纵深模块：本书 JSON 有内容就渲染，没有就按 show_pending 决定是否留占位
+    for key in ("higher", "verify", "thennow"):
+        body = paras(key)
+        if body:
+            out.append(sec(key, body))
+
+    # 7) 来源与证据边界：lede + 固定条目（全站模板），本书可追加 items
+    ev_items = list(_mt("evib", "items", []) or []) + list((mods.get("evib") or {}).get("items") or [])
+    if ev_items:
+        out.append(sec("evib", '<div class="mmx-evib"><p>%s</p><ul>%s</ul></div>'
+                       % (_mt("evib", "lede"),
+                          "".join("<li>%s</li>" % x for x in ev_items))))
+
+    # 统一开关：enabled=false 的整块跳过（docs/mindmap-modules.json）
     if _ENABLED_MAP:
         out = [s for s in out if _ENABLED_MAP.get(_section_id(s), True)]
     return "\n".join(out)
-
-
-def render(d: dict, ctx: dict = None) -> str:
-    sp = d["spine"]
-    chs = d["chapters"]
-    by_id = {}
-    for c in chs:
-        by_id.setdefault(c["spine"], []).append(c)
-    full = {c["no"]: c for c in ((ctx or {}).get("chapters") or [])}
-    n_pts_all = sum(sum(len(s["points"]) for s in (f.get("secs") or []))
-                    for f in full.values())
-    n_q_all = sum(1 for f in full.values() for s in (f.get("secs") or [])
-                  for p in s["points"] for q in p["quotes"] if q)
-    density = d["evidence"]["density"]
-    bar = int(round(density * 100))
-
-    body = []
-    body.append('<section class="mmx-thesis">')
-    body.append('<p class="mmx-kicker">THIS BOOK ARGUES</p>')
-    body.append('<p class="mmx-claim">%s</p>' % E(d["thesis"]["claim"] or "（未生成）"))
-    if d["thesis"]["boundary"]:
-        body.append('<p class="mmx-bound"><b>边界</b> %s</p>' % E(d["thesis"]["boundary"]))
-    body.append('<p class="mmx-evi">证据密度 <b>%d%%</b> · %d 条要点中 %d 条带原句 '
-                '（结构由 AI 大纲条目重算，非读后感）</p>'
-                % (bar, d["evidence"]["points"], d["evidence"]["with_quote"]))
-    body.append('<div class="mmx-bar"><i style="width:%d%%"></i></div>' % bar)
-    body.append('</section>')
-
-    body.append('<section class="mmx-svgwrap">%s</section>' % _svg_spine(d))
-
-    body.append('<div class="mmx-tools">'
-                '<button class="mmx-btn" data-mmx="open">展开全部要点</button>'
-                '<button class="mmx-btn" data-mmx="close">全部收起</button>'
-                '<span class="mmx-tip">每章折叠态只占一行，点章名展开该章全部小节、要点与原句</span>'
-                '</div>')
-
-    for s in sp:
-        items = by_id.get(s["id"]) or []
-        body.append('<details class="mmx-spine"%s>' % (" open" if s is sp[0] else ""))
-        body.append('<summary><span class="mmx-id">%s</span>'
-                    '<span class="mmx-label">%s</span>'
-                    '<span class="mmx-cnt">%d 章</span></summary>'
-                    % (E(s["id"]), E(s["label"]), len(items)))
-        body.append('<p class="mmx-why">%s</p>' % E(s["why"]))
-        body.append('<ol class="mmx-tree">')
-        for c in items:
-            # 章条目与通读页「逐章详读」同一套类名与视觉：无卡片、无彩条、虚线分隔。
-            # 类名统一 mmx- 前缀，与通读页那套 mm-ch/mm-chs 彻底隔开
-            # 新版章节卡写的，撞上就会染色（手机上一屏看不到几章）。
-            body.append(_chapter_html(c, full))
-        body.append('</ol>')
-        body.append('</details>')
-
-    try:
-        body.append(_extra_modules(d))
-    except Exception:
-        body.append("")
-
-    html = PAGE % {
-        "title": E(d["title"]),
-        "slug": E(d["slug"]),
-        "body": "\n".join(body),
-        "n": len(chs),
-        "pts": ("%d 条要点 · %d 句原句" % (n_pts_all, n_q_all)) if n_pts_all else "要点待补",
-        "bad": len(d["bad_anchor"]),
-    }
-    return html
-
-
-def _digest(ctx, cut=42, max_ch=0):
-    """紧凑摘要：章号 + 标题 + 首条要点。给人（或另一个模型）读的最小充分输入。"""
-    out = ["《%s》%d 章" % (ctx["title"], len(ctx["chapters"]))]
-    for c in ctx["chapters"][:max_ch or None]:
-        out.append("%d. %s | %s" % (c["no"], c["title"], c["brief"][:cut]))
-    return "\n".join(out)
-
-
-def first_anchor(c: dict) -> str:
-    """章内第一句原句（没有原句时用首条要点），保证逐字来自大纲。"""
-    for q in c["quotes"]:
-        if q and len(q) >= 6:
-            return q[:60]
-    pool = c["anchor_pool"]
-    return (pool[0][:60] if pool else "")
-
-
-def from_batch(slug: str, raw: dict, ctx: dict):
-    """把人工/模型给出的 {thesis, spine, chapters:[{no,role,gist}]} 补全为完整结果。
-
-    anchor 一律由脚本从该书原句里取（拒绝编造），evidence 由数据库算。
-    """
-    chs = ctx["chapters"]
-    by_no = {c["no"]: c for c in chs}
-    owner = {}
-    for s in raw.get("spine") or []:
-        for no in s.get("chapters") or []:
-            try:
-                owner[int(no)] = s["id"]
-            except Exception:
-                pass
-    given = {int(c["no"]): c for c in (raw.get("chapters") or [])
-             if str(c.get("no", "")).strip().isdigit()}
-    last = (raw.get("spine") or [{}])[0].get("id", "A")
-    out_ch = []
-    for c in chs:
-        g = given.get(c["no"]) or {}
-        role = (g.get("role") or "").strip()
-        if role not in ("铺垫", "立论", "反证", "案例", "收束"):
-            role = "立论"
-        gist = (g.get("gist") or "").strip() or (c["brief"][:40] or "(未生成)")
-        sp = owner.get(c["no"], last)
-        last = sp
-        out_ch.append({
-            "no": c["no"], "title": c["title"], "spine": sp,
-            "gist": gist, "role": role,
-            "concepts": [x for x in (g.get("concepts") or []) if x][:4],
-            "anchor": first_anchor(c), "anchor_ok": True,
-            "pts": c["pts"], "with_q": c["with_q"],
-        })
-    pts = sum(c["pts"] for c in out_ch)
-    wq = sum(c["with_q"] for c in out_ch)
-    th = raw.get("thesis") or {}
-    return {
-        "slug": slug, "title": ctx["title"],
-        "thesis": {"claim": (th.get("claim") or "").strip(),
-                   "boundary": (th.get("boundary") or "").strip()},
-        "spine": [{"id": s["id"], "label": (s.get("label") or "").strip(),
-                   "why": (s.get("why") or "").strip(),
-                   "chapters": [c["no"] for c in out_ch if c["spine"] == s["id"]]}
-                  for s in (raw.get("spine") or [])
-                  if [c["no"] for c in out_ch if c["spine"] == s["id"]]],
-        "chapters": out_ch,
-        "evidence": {"points": pts, "with_quote": wq,
-                     "density": round(wq / pts, 3) if pts else 0.0},
-        "bad_anchor": [],
-        "built_at": time.strftime("%Y-%m-%dT%H:%M:%S+08:00"),
-        "source": raw.get("_by") or "manual-llm",
-    }
-
-
-PAGE = """<!doctype html>
-<html lang="zh-CN">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="《%(title)s》全书精读 · 章节定位 · 跨章张力（由 AI 大纲条目结构化重算）">
-<title>《%(title)s》｜精读</title>
-<link rel="stylesheet" href="../../../assets/css/reading-overview.css">
-<link rel="stylesheet" href="../../../assets/css/mmx-guide.css">
-<style>
-/* 章节树组件（mmx-cn/body/sec/pts/qt…）在 assets/css/mmx-guide.css，与通读页共用；
-   这里只留导图页专属件：命题卡 / 主干 SVG / 主干分组。 */
-.mmx-wrap{max-width:1120px}
-.mmx-kicker{font-size:.7rem;letter-spacing:.18em;color:var(--muted);margin:0 0 .3em}
-.mmx-claim{font-size:1.16rem;line-height:1.75;margin:.1em 0 .5em;color:var(--ink)}
-.mmx-bound{font-size:.86rem;color:#5c5347;line-height:1.8;margin:.2em 0}
-.mmx-evi{font-size:.76rem;color:var(--muted);margin:.6em 0 .3em}
-.mmx-bar{height:5px;background:#e6dfcf;border-radius:3px;overflow:hidden;margin-bottom:1.2em}
-.mmx-bar i{display:block;height:100%%;background:linear-gradient(90deg,#8a9b6e,#c2b280)}
-.mmx-svgwrap{overflow-x:auto;padding:.4em 0 1em;border-bottom:1px solid var(--line)}
-.mmx-svg{width:100%%;height:auto;min-width:760px}
-.mmx-spine{margin:1.15em 0;border-left:3px solid #ece4d3;padding:.1em 0 .1em .85em}
-.mmx-spine[open]{border-left-color:#d8cdb4}
-.mmx-spine>summary{display:flex;gap:.6em;align-items:baseline;cursor:pointer;
-  list-style:none;padding:.35em 0}
-.mmx-spine>summary::-webkit-details-marker{display:none}
-.mmx-id{font-family:Georgia,serif;font-size:.8rem;color:#8a9b6e;border:1px solid #cfd8bd;
-  border-radius:4px;padding:0 .35em}
-.mmx-label{font-weight:600;font-size:1rem;color:var(--ink)}
-.mmx-cnt{margin-left:auto;font-size:.74rem;color:var(--muted)}
-.mmx-why{font-size:.8rem;color:var(--muted);margin:.1em 0 .8em;line-height:1.7}
-.mmx-tree{list-style:none;padding:0;margin:.15em 0 0}
-@media(max-width:720px){.mmx-svg{min-width:640px}}
-</style>
-</head>
-<body>
-<main class="wrap mmx-wrap">
-<header class="note-head">
-  <p class="eyebrow">CLOSE READING · AFTER THINKING</p>
-  <h1>《%(title)s》精读</h1>
-  <p class="meta">%(n)d 章 · %(pts)s · 主干重排 · 章节功能定位 · 由本书 AI 大纲条目重算</p>
-  <p class="links"><a href="../../../index.html">← 返回首页</a>
-     <a href="../../index.html">阅读归档索引</a>
-     <a href="overview.html">全书视角</a>
-     <a href="outline.html">AI 大纲</a></p>
-</header>
-%(body)s
-<footer class="site-footer">
-  <p class="small">口径：主干由 AI 依章节要点重新归纳，章的功能（铺垫/立论/反证/案例/收束）是结构判断而非原文自述；
-  每章展开后的「小节 → 要点 → 原句」逐字取自本书 AI 大纲，与「全书视角」页的章节导读同源，一条未删
-  （引文未命中原句的章不标注代表句，本次 %(bad)d 处）。</p>
-  <p><a href="../../../index.html">← 返回首页</a>　<a href="overview.html">全书视角</a></p>
-</footer>
-</main>
-<script>
-(function(){
-  var btns=document.querySelectorAll("[data-mm]");
-  for(var i=0;i<btns.length;i++){(function(b){
-    b.addEventListener("click",function(){
-      var open=b.getAttribute("data-mmx")==="open";
-      document.querySelectorAll("details.mmx-spine").forEach(function(d){d.open=open;});
-      document.querySelectorAll("details.mmx-cn").forEach(function(d){d.open=open;});
-      document.querySelectorAll("details.ch-sec").forEach(function(d){d.open=open;});
-    });
-  })(btns[i]);}
-})();
-</script>
-</body>
-</html>
-"""
 
 
 # ------------------------------------------------------------------ 主流程
