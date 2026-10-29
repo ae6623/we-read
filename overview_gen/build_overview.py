@@ -27,8 +27,8 @@ CSS_HEAD = '''<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="《{title}》全书视角 · 读前通读（由 AI 大纲整理）">
-<title>《{title}》｜全书视角（读前通读）</title>
+<meta name="description" content="《{title}》全书视角（由 AI 大纲整理）">
+<title>《{title}》｜全书视角</title>
 <link rel="stylesheet" href="../../../assets/css/reading-overview.css">
 <link rel="stylesheet" href="../../../assets/css/start-here.css">
 <link rel="stylesheet" href="../../../assets/css/mmx-guide.css">
@@ -238,10 +238,10 @@ def build(cfg, chapters, aiqa_html="", quiz_answers=None):
                     take = pts[: cap - shown]
                     shown += len(take)
                     qs = [q for q in (s.get('quotes') or []) if 10 <= len(q) <= 200]
-                    op = ' open' if (si == 1 or (len(secs) == 1 and not s.get('h'))) else ''
+                    op = ' open' if (si == 1 or (len(secs) == 1 and not (s.get('h') or s.get('h4')))) else ''
                     out.append('        <details class="mmx-sec"%s><summary>'
                                '<span class="mmx-sech">%s</span><span class="mmx-secc">%d 条</span>'
-                               '</summary>\n' % (op, esc(s.get('h') or '本章要点'), len(pts)))
+                               '</summary>\n' % (op, esc(s.get('h') or s.get('h4') or '本章要点'), len(pts)))
                     out.append('          <ol class="mmx-pts">%s</ol>\n'
                                % ''.join('<li>%s</li>' % esc(trim(p)) for p in take))
                     if qs:

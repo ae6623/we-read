@@ -39,7 +39,9 @@ def block(has_mindmap: bool, has_outline: bool, n_note: int = 0,
 
 def process(f: Path):
     html = f.read_text(encoding="utf-8")
-    if "start-here" in html:
+    # 精确判定：overview_gen 的 CSS_HEAD 会自带 start-here.css 引用，
+    # 只查 "start-here" 会把「有 CSS 但没导航块」的页误判成已插入（2026-10-29）。
+    if '<nav class="start-here"' in html:
         return None
     book_dir = f.parent
     has_mm = (book_dir / "mindmap.html").exists()
