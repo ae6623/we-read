@@ -110,6 +110,45 @@
     }
   });
 
+  // 搜索框折叠展开（2026-10-30）：默认只显示放大镜图标，点击后横向拉开输入框。
+  // 收起时清空并复位筛选——否则会留下「看不见的过滤状态」（图标收起但卡片仍被过滤）。
+  document.querySelectorAll('[data-search-wrap]').forEach((wrap) => {
+    const btn = wrap.querySelector('[data-search-toggle]');
+    const input = wrap.querySelector('input[data-card-search]');
+    if (!btn || !input) return;
+    let closing = false;
+    const setOpen = (open) => {
+      if (open) {
+        wrap.classList.add('is-open');
+        btn.setAttribute('aria-expanded', 'true');
+        input.focus();
+        return;
+      }
+      if (!wrap.classList.contains('is-open')) return;
+      closing = true;
+      wrap.classList.remove('is-open');
+      btn.setAttribute('aria-expanded', 'false');
+      if (input.value) {
+        input.value = '';
+        input.dispatchEvent(new Event('input'));   // 触发上面的 update() 复位卡片
+      }
+      input.blur();
+      closing = false;
+    };
+    btn.addEventListener('click', () => setOpen(!wrap.classList.contains('is-open')));
+    input.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
+    // 失焦且已清空 → 收起；有内容时保持展开，方便继续改关键词
+    input.addEventListener('blur', () => {
+      setTimeout(() => {
+        if (closing) return;
+        if (!input.value && document.activeElement !== btn) setOpen(false);
+      }, 120);
+    });
+    document.addEventListener('click', (e) => {
+      if (!wrap.contains(e.target) && !input.value) setOpen(false);
+    });
+  });
+
   // 整卡可点：点击卡片空白处等同点书名（书名即通读入口）；卡内真实链接不受影响
   module.querySelectorAll('.archive-card').forEach((card) => {
     const link = card.querySelector('.card-title-link');

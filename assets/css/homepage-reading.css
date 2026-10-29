@@ -123,21 +123,35 @@
   transition:color .15s ease,border-color .15s ease}
 .book-jd-link:hover{color:#4d6b58;border-bottom-color:#4d6b58}
 
-/* ── 书架头部搜索（标题右侧）+ 整卡可点（2026-10-29 用户拍板：去筛选条） ── */
-.shelf-head{align-items:end;flex-wrap:wrap;gap:14px 28px}
-.shelf-head-search{flex:0 1 340px;min-width:220px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.shelf-head-search input{flex:1 1 150px;min-width:130px;border:1px solid var(--line);border-radius:999px;
-  background:#fffefa;padding:9px 16px;font:inherit;font-size:.88rem;color:var(--ink);outline:none;
-  transition:border-color .15s,box-shadow .15s}
+/* ── 书架头部搜索：放大镜图标，点击后横向展开（2026-10-30 用户拍板：
+      去掉 hero 标签行与「阅读书架」标题区，搜索默认只留一个图标） ── */
+.shelf-head{align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:14px 28px}
+.shelf-head-search{flex:0 0 auto;min-width:0;display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+
+/* 放大镜按钮 */
+.search-toggle{flex:0 0 auto;width:36px;height:36px;display:grid;place-items:center;padding:0;
+  border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--green2);
+  cursor:pointer;transition:background .18s ease,border-color .18s ease}
+.search-toggle:hover{background:var(--sage);border-color:#c3d2c5}
+.search-toggle:focus-visible{outline:2px solid #72927e;outline-offset:2px}
+.search-toggle svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+
+/* 输入框：默认收起（宽度 0、不可点），展开时横向拉开 */
+.shelf-head-search input{flex:0 0 auto;width:0;min-width:0;padding:9px 0;
+  border:1px solid transparent;border-radius:999px;background:var(--card);
+  font:inherit;font-size:.88rem;color:var(--ink);outline:none;
+  opacity:0;pointer-events:none;
+  transition:width .26s ease,opacity .18s ease,padding .26s ease,border-color .18s ease}
+.shelf-head-search.is-open input{width:min(260px,54vw);padding:9px 16px;
+  border-color:var(--line);opacity:1;pointer-events:auto}
 .shelf-head-search input:focus{border-color:#72927e;box-shadow:0 0 0 3px #dce8df}
+
 .shelf-head-search .search-status{flex:0 0 auto;text-align:right;font-size:.74rem}
 .shelf-head-search .search-status:empty{display:none}
 @media(max-width:680px){
   .shelf-head{align-items:center}
-  .shelf-head>div:first-child{flex:1 1 auto;min-width:0}
-  .shelf-head-search{flex:0 0 auto;min-width:0;max-width:56%;order:0}
-  .shelf-head-search .search-label{display:none}
-  .shelf-head-search input{flex:1 1 auto;min-width:0;padding:8px 12px;font-size:.82rem}
+  .shelf-head-search{max-width:100%}
+  .shelf-head-search.is-open input{width:min(220px,62vw);padding:8px 12px;font-size:.82rem}
 }
 /* 整卡可点：hover 提示 + 键盘可达 */
 .archive-card.card-clickable{cursor:pointer}
