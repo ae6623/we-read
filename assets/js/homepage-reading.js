@@ -60,7 +60,8 @@
   module.setAttribute('data-tabs-ready', '');
   list.hidden = false;
 
-  // Tab 行右侧搜索按钮：点开右侧浮层（不挤占 Tab），再点/Esc/点外部收起
+  // Tab 行右侧搜索按钮：点开右侧浮层（不挤占 Tab），再点/Esc/点外部收起。
+  // 收起时若有关键词则清空并触发筛选复位——避免「浮层收起但卡片仍被过滤」的隐形状态。
   const searchToggle = document.getElementById('shelf-search-toggle');
   const searchPop = document.getElementById('shelf-search-pop');
   if (searchToggle && searchPop) {
@@ -68,7 +69,14 @@
     const setSearchOpen = (open) => {
       searchToggle.setAttribute('aria-expanded', String(open));
       searchPop.hidden = !open;
-      if (open && searchInput) searchInput.focus();
+      if (open) {
+        if (searchInput) searchInput.focus();
+        return;
+      }
+      if (searchInput && searchInput.value) {
+        searchInput.value = '';
+        searchInput.dispatchEvent(new Event('input'));
+      }
     };
     searchToggle.addEventListener('click', () => setSearchOpen(searchPop.hidden));
     document.addEventListener('click', (event) => {

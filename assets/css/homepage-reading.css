@@ -123,15 +123,17 @@
   transition:color .15s ease,border-color .15s ease}
 .book-jd-link:hover{color:#4d6b58;border-bottom-color:#4d6b58}
 
-/* ── 书架头部（标题行）+ Tab 行右侧搜索（2026-10-30 用户拍板：搜索挪进 Tab 行最右，点开浮层不挤左边） ── */
-.shelf-head{align-items:end;flex-wrap:wrap;gap:14px 28px}
+/* ── Tab 行右侧搜索（2026-10-30 二版：绿色小圆钮，点开浮层；收起自动清空筛选） ── */
 .reading-tabs-wrap{position:relative}
-.tab-search-toggle{margin-left:auto;flex:0 0 auto;min-height:48px;width:48px;padding:10px;
-  border:1px solid transparent;border-radius:10px;background:transparent;color:var(--muted);
-  cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
-.tab-search-toggle:hover{background:var(--sage);color:var(--green)}
-.tab-search-toggle[aria-expanded="true"]{background:var(--green);border-color:var(--green);color:#fff}
-.tab-search-toggle svg{display:block;width:20px;height:20px}
+.reading-tabs button.tab-search-toggle{margin-left:auto;align-self:center;flex:0 0 auto;
+  width:38px;height:38px;min-height:38px;padding:0;border:1px solid #c3d2c5;border-radius:999px;
+  background:#fffefa;color:var(--green);cursor:pointer;
+  display:inline-flex;align-items:center;justify-content:center;
+  transition:background .18s ease,border-color .18s ease,color .18s ease}
+.reading-tabs button.tab-search-toggle:hover{background:var(--sage);border-color:#72927e}
+.reading-tabs button.tab-search-toggle[aria-expanded="true"]{background:var(--green);border-color:var(--green);color:#fff}
+.reading-tabs button.tab-search-toggle svg{display:block;width:17px;height:17px;
+  fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
 .shelf-search-pop{position:absolute;top:calc(100% + 8px);right:0;z-index:20;
   display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end;
   padding:10px 14px;border:1px solid var(--line);border-radius:12px;background:#fffefa;
@@ -144,13 +146,11 @@
 .shelf-search-pop .search-status{flex:0 0 auto;font-size:.74rem;color:var(--muted);white-space:nowrap}
 .shelf-search-pop .search-status:empty{display:none}
 @media(max-width:680px){
-  .shelf-head{align-items:center}
-  .shelf-head>div:first-child{flex:1 1 auto;min-width:0}
   /* 手机上浮层占满行宽，输入框有完整空间，不往左边挤 */
-  .shelf-search-pop{left:0;right:0;justify-content:stretch}
+  .shelf-search-pop{left:0;right:0}
   .shelf-search-pop .search-label{display:none}
   .shelf-search-pop input{flex:1 1 auto;min-width:0;padding:8px 12px;font-size:.82rem}
-  .tab-search-toggle{min-height:44px;width:44px;padding:8px}
+  .reading-tabs button.tab-search-toggle{width:36px;height:36px;min-height:36px}
 }
 /* 整卡可点：hover 提示 + 键盘可达 */
 .archive-card.card-clickable{cursor:pointer}
