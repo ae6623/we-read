@@ -42,7 +42,7 @@ def main(argv=None):
         print("  + %-46s 插入入口" % slug[:46])
         n += 1
         if a.write:
-            ov.write_text(new, encoding="utf-8")
+            ov.write_text(new, encoding="utf-8", newline="\n")
     print("插入 %d 本%s" % (n, "" if a.write else "（未写，加 --write）"))
     return 0
 
