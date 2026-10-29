@@ -62,6 +62,17 @@
 
   const normalize = (value) => value.toLocaleLowerCase('zh-CN').replace(/[\s：:，,。.!！?？、-]/g, '');
 
+  // 首屏阅读理念横条（details/summary，默认收起）：展开状态记 localStorage
+  const explain = document.querySelector('[data-explain-fold]');
+  if (explain) {
+    try {
+      if (localStorage.getItem('we-read:reading-bar-open') === '1') explain.open = true;
+      explain.addEventListener('toggle', () => {
+        try { localStorage.setItem('we-read:reading-bar-open', explain.open ? '1' : '0'); } catch (e) { /* ignore */ }
+      });
+    } catch (e) { /* localStorage 不可用时保持默认收起 */ }
+  }
+
   // 搜索框可位于模块外（书架面板的搜索在「阅读书架」标题右侧，属 .intro-row）：
   // input 加 data-search-panel="<面板id>" 指定目标；缺省取最近的面板
   document.querySelectorAll('[data-card-search]').forEach((input) => {

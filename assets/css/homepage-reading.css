@@ -130,11 +130,14 @@
   background:#fffefa;padding:9px 16px;font:inherit;font-size:.88rem;color:var(--ink);outline:none;
   transition:border-color .15s,box-shadow .15s}
 .shelf-head-search input:focus{border-color:#72927e;box-shadow:0 0 0 3px #dce8df}
-.shelf-head-search .search-status{flex:1 0 100%;text-align:right;font-size:.74rem}
+.shelf-head-search .search-status{flex:0 0 auto;text-align:right;font-size:.74rem}
 .shelf-head-search .search-status:empty{display:none}
 @media(max-width:680px){
-  .shelf-head-search{flex:1 0 100%;order:3}
-  .shelf-head-search .search-status{text-align:left}
+  .shelf-head{align-items:center}
+  .shelf-head>div:first-child{flex:1 1 auto;min-width:0}
+  .shelf-head-search{flex:0 0 auto;min-width:0;max-width:56%;order:0}
+  .shelf-head-search .search-label{display:none}
+  .shelf-head-search input{flex:1 1 auto;min-width:0;padding:8px 12px;font-size:.82rem}
 }
 /* 整卡可点：hover 提示 + 键盘可达 */
 .archive-card.card-clickable{cursor:pointer}
@@ -159,20 +162,23 @@ details.reading-explanation .hero-description{margin:14px 0 0;color:#58665e;font
 @media(max-width:680px){details.reading-explanation{padding:0 18px}}
 
 /* ── 阅读理念：常驻横向条（2026-10-29 改，去掉折叠小框） ── */
-.reading-explanation.reading-bar{
-  display:flex;align-items:stretch;gap:18px;box-sizing:border-box;
-  max-width:1080px;width:100%;margin:14px auto 6px;padding:13px 22px;
-  background:#f3f6f1;border:0;border-top:2px solid #d9e2d8;border-bottom:2px solid #d9e2d8;border-radius:0}
+details.reading-explanation.reading-bar{
+  display:block;box-sizing:border-box;padding:0;
+  max-width:1080px;width:100%;margin:14px auto 6px;
+  background:#f3f6f1;border:0;border-top:2px solid #d9e2d8;border-bottom:2px solid #d9e2d8}
+details.reading-bar>summary{list-style:none;cursor:pointer;display:flex;align-items:center;
+  justify-content:space-between;gap:12px;padding:13px 22px;
+  border:0;border-radius:0;background:transparent;color:var(--ink);font-size:.95rem}
+details.reading-bar>summary::-webkit-details-marker{display:none}
+details.reading-bar>summary:hover .reading-bar-label,
+details.reading-bar>summary:hover{color:#3a5344}
 .reading-bar-label{
-  flex:0 0 auto;align-self:stretch;display:flex;align-items:center;
-  font:700 .82rem/1.4 var(--serif);letter-spacing:.18em;color:#4d6b58;
-  padding-right:18px;border-right:1px solid #cfdacf;white-space:nowrap}
-.reading-bar-body{flex:1 1 auto;display:flex;gap:22px;flex-wrap:wrap}
+  font:700 .82rem/1.4 var(--serif);letter-spacing:.18em;color:#4d6b58;white-space:nowrap}
+.reading-bar-body{display:flex;gap:22px;flex-wrap:wrap;padding:2px 22px 14px}
 .reading-bar-body .hero-description{margin:0;flex:1 1 280px;font-size:.9rem;line-height:1.65;color:#58665e}
 .reading-bar-body .hero-description+.hero-description{border-left:1px solid #cfdacf;padding-left:22px}
 @media(max-width:680px){
-  .reading-explanation.reading-bar{flex-direction:column;gap:8px;padding:12px 18px}
-  .reading-bar-label{align-items:flex-start;border-right:0;border-bottom:1px solid #cfdacf;padding:0 0 6px}
-  .reading-bar-body{flex-direction:column;gap:8px}
+  details.reading-bar>summary{padding:12px 18px}
+  .reading-bar-body{flex-direction:column;gap:8px;padding:0 18px 12px}
   .reading-bar-body .hero-description+.hero-description{border-left:0;padding-left:0;border-top:1px solid #d7dfd3;padding-top:8px}
 }
