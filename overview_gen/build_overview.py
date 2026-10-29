@@ -189,7 +189,7 @@ def reset_split_state():
 
 
 # ---------------------------------------------------------------- 渲染
-def build(cfg, chapters, aiqa_html="", quiz_answers=None):
+def build(cfg, chapters, aiqa_html="", quiz_answers=None, quiz_items=None):
     """渲染一本 overview.html 文本。
 
     cfg      : BOOK 配置 dict（slug/title/author/chip/split/thesis/mindmap/ai/
@@ -290,8 +290,13 @@ def build(cfg, chapters, aiqa_html="", quiz_answers=None):
 
     out.append('<section class="views"><h2>核心观点初判</h2>\n%s</section>\n\n' % _pretty_views(cfg['views']))
     out.append('<section class="card"><h2>迁移与行动</h2>\n%s</section>\n\n' % cfg['action'])
-    out.append('<section class="card quiz-card"><h2>读完自测 3 问</h2>\n<ol>\n%s\n</ol>%s</section>\n\n'
-               % (cfg['quiz'], _quiz_answers_html(cfg.get('quiz'), quiz_answers or [])))
+    # 自测三问：gen_quiz 出过题就用它的题面 + 答案（整块替换）；
+    # 没出过才退回 books.py/derive_cfg 的题面 + 补答配对（2026-10-30）
+    if quiz_items:
+        out.append(_quiz_block(quiz_items))
+    else:
+        out.append('<section class="card quiz-card"><h2>读完自测 3 问</h2>\n<ol>\n%s\n</ol>%s</section>\n\n'
+                   % (cfg['quiz'], _quiz_answers_html(cfg.get('quiz'), quiz_answers or [])))
     out.append('<section class="card"><h2>复习与记忆复利</h2>\n%s</section>\n\n' % cfg['memo'])
     out.append('<footer class="site-footer"><a href="../../../index.html">← 返回首页</a>　<a href="../../index.html">阅读归档索引</a></footer>\n')
     out.append(MMX_JS)
@@ -352,3 +357,26 @@ def _quiz_answers_html(quiz_cfg, answers):
                           % (esc(q), esc(a).replace('\n', '<br>')))
     blocks.append('</div>')
     return ''.join(blocks)
+
+
+# 自测题来源 → 区块标题。题面由谁出，就标谁，不冒充（2026-10-30）
+_QUIZ_SRC_TITLE = {
+    "ai": "AI 出题并作答（微信读书 Ai 问书，带书内引源）",
+    "gemini": "AI 出题并作答（Gemini 依据本书大纲）",
+    "local": "参考答案（依据本书 AI 大纲整理，未经 AI 问答）",
+}
+
+
+def _quiz_block(items: list[dict]) -> str:
+    """题面与答案都来自 gen_quiz：整块渲染，不做题面模糊配对。"""
+    src = (items[0].get("src") or "").lower()
+    title = _QUIZ_SRC_TITLE.get(src, "参考答案")
+    lis = "".join("<li>%s</li>\n" % esc(i.get("q") or "") for i in items)
+    blocks = ['<section class="card quiz-card"><h2>读完自测 3 问</h2>\n<ol>\n%s</ol>'
+              % lis, '<div class="quiz-ans"><h3>%s</h3>' % title]
+    for i in items:
+        blocks.append('<div class="aiqa-item"><h3>%s</h3><p>%s</p></div>'
+                      % (esc(i.get("q") or ""),
+                         esc(i.get("a") or "").replace("\n", "<br>")))
+    blocks.append("</div></section>\n\n")
+    return "".join(blocks)
