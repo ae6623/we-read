@@ -21,7 +21,17 @@ window.MINDMAP_MODULES = {
   evib: false,         // 来源与证据边界
   coreask: true,       // 核心追问（第3批由 deep-read 合并而来）
   asks: true,          // 逐章追问 <details class="mmx-ask">（第3批合并产物）
-  "reading-bar": true  // 首页「阅读理念」横条（data-module="reading-bar"）
+  "reading-bar": true, // 首页「阅读理念」横条（data-module="reading-bar"）
+  // —— 精读文章（日期笔记页）9 大板块，data-module 打在 section 上 ——
+  "dn-metrics": true,   // 实际读了什么
+  "dn-insight": true,   // 今天的核心理解
+  "dn-mindmap": true,   // 思维导图
+  "dn-framework": true, // 与整书框架的连接
+  "dn-transfer": true,  // 可迁移的启发与问题
+  "dn-thennow": true,   // 当年与今天
+  "dn-top10": true,     // 原文段落 Top 10
+  "dn-next": true,      // 下次从这里继续
+  "dn-boundary": true   // 来源边界
 };
 // 兼容别名
 window.SITE_MODULES = window.MINDMAP_MODULES;
@@ -57,9 +67,30 @@ window.SITE_MODULES = window.MINDMAP_MODULES;
       }
     }
   }
+  // 4) 精读文章内容 JSON 填充：页面 <name>.html 同目录的 <name>.json 是内容数据源。
+  //    改 JSON → 发布 → 刷新即生效，不必动 HTML。html 键为 null 时隐藏该模块。
+  function fill() {
+    var m = location.pathname.match(/\/([^\/]+)\.html$/);
+    if (!m || !window.fetch) return;
+    fetch(m[1] + ".json", { cache: "no-cache" })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) {
+        if (!data || !data.modules) return;
+        Object.keys(data.modules).forEach(function (k) {
+          var el = document.querySelector('[data-module="' + k + '"]');
+          if (!el) return;
+          var v = data.modules[k];
+          if (v === null) { el.hidden = true; el.setAttribute("data-mm-off", ""); return; }
+          var html = (v && typeof v === "object") ? v.html : v;
+          if (typeof html === "string") el.innerHTML = html;
+        });
+      })
+      .catch(function () { /* 无 JSON 或离线预览时保持 HTML 原内容 */ });
+  }
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", apply);
+    document.addEventListener("DOMContentLoaded", function () { apply(); fill(); });
   } else {
     apply();
+    fill();
   }
 })();
