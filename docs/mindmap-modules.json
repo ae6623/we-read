@@ -1,13 +1,16 @@
 {
-  "_comment": "精读页（mindmap）补全模块统一开关。gen_mindmap.py 渲染时会按此表过滤：enabled=false 的模块整体跳过，对所有书统一生效。改这里即可，不用改页面或逐个编辑。id 必须与生成器 _extra_modules() 里各 <section> 的 aria-labelledby 一致。",
+  "_comment": "全站模块统一开关（不只精读导图）：gen_mindmap.py 渲染精读页时按此表过滤，enabled=false 的模块整体跳过；assets/js/mindmap-modules.js 里同名 key 负责已生成页面的运行时隐藏（含 data-module 元素与逐章追问 details.mmx-ask）。改一处，全站所有页面统一生效。精读模块 id 与生成器 _extra_modules() 里各 <section> 的 aria-labelledby 一致。",
   "modules": [
-    { "id": "oneline",  "title": "一句话主旨", "enabled": true },
-    { "id": "views",    "title": "核心观点初判", "enabled": true },
-    { "id": "top10",    "title": "原文金句 · 持续积累", "enabled": true },
-    { "id": "aiask",    "title": "AI 问书", "enabled": true },
-    { "id": "higher",   "title": "用更高维度的知识看这本书", "enabled": true },
-    { "id": "verify",   "title": "阅读时要验证的问题", "enabled": true },
-    { "id": "thennow",  "title": "当年与今天 · 初步对照", "enabled": true },
-    { "id": "evib",     "title": "来源与证据边界", "enabled": false }
+    { "id": "oneline",     "title": "一句话主旨", "enabled": true },
+    { "id": "views",       "title": "核心观点初判", "enabled": true },
+    { "id": "top10",       "title": "原文金句 · 持续积累", "enabled": true },
+    { "id": "aiask",       "title": "AI 问书", "enabled": true },
+    { "id": "higher",      "title": "用更高维度的知识看这本书", "enabled": true },
+    { "id": "verify",      "title": "阅读时要验证的问题", "enabled": true },
+    { "id": "thennow",     "title": "当年与今天 · 初步对照", "enabled": true },
+    { "id": "evib",        "title": "来源与证据边界", "enabled": false },
+    { "id": "coreask",     "title": "核心追问（deep-read 合并）", "enabled": true },
+    { "id": "asks",        "title": "逐章追问 details.mmx-ask（deep-read 合并，仅运行时开关）", "enabled": true },
+    { "id": "reading-bar", "title": "首页「阅读理念」横条（data-module，仅运行时开关）", "enabled": true }
   ]
 }
