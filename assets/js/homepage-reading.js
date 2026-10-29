@@ -27,6 +27,7 @@
       if (hash && window.location.hash !== `#${hash}`) history.pushState(null, '', `#${hash}`);
     }
     if (focus) tabs[index].focus();
+    syncSearchPanel(panels[index]); // 搜索目标跟随当前 Tab
   };
   list.setAttribute('role', 'tablist');
   tabs.forEach((tab, index) => {
@@ -60,28 +61,71 @@
   module.setAttribute('data-tabs-ready', '');
   list.hidden = false;
 
-  // Tab 行右侧搜索按钮：点开右侧浮层（不挤占 Tab），再点/Esc/点外部收起。
-  // 收起时若有关键词则清空并触发筛选复位——避免「浮层收起但卡片仍被过滤」的隐形状态。
+  // ── 统一搜索（2026-10-30）：Tab 行放大镜 = 全站唯一搜索入口 ──
+  // 一个输入框、一个浮层；筛选目标跟随当前激活的 Tab——在哪个 Tab 就只搜哪个 Tab 的笔记。
+  const normalize = (value) => value.toLocaleLowerCase('zh-CN').replace(/[\s：:，,。.!！?？、-]/g, '');
+  var searchReady = false; // activate() 初始化时就会调 syncSearchPanel（函数声明提升），用 var 标志挡住未初始化阶段
+  let searchPanel = null;
+  let searchCards = [];
   const searchToggle = document.getElementById('shelf-search-toggle');
   const searchPop = document.getElementById('shelf-search-pop');
-  if (searchToggle && searchPop) {
-    const searchInput = searchPop.querySelector('input');
+  const searchInput = searchPop ? searchPop.querySelector('input') : null;
+  const searchStatus = document.querySelector('[data-search-status][for="shelf-search"]');
+
+  const applySearch = () => {
+    if (!searchPanel || !searchInput) return;
+    const query = normalize(searchInput.value.trim());
+    let shown = 0;
+    searchCards.forEach((card) => {
+      const match = !query || normalize(`${card.dataset.search || ''} ${card.textContent || ''}`).includes(query);
+      card.hidden = !match;
+      if (match) shown += 1;
+    });
+    if (searchStatus) searchStatus.textContent = query ? `找到 ${shown} 本` : `共 ${searchCards.length} 本`;
+    const empty = searchPanel.querySelector('[data-empty-state]');
+    if (empty) empty.hidden = shown > 0;
+    searchPanel.querySelectorAll('.reading-group').forEach((group) => {
+      group.hidden = query !== '' && ![...group.querySelectorAll('.archive-card')].some((card) => !card.hidden);
+    });
+  };
+
+  const setSearchPanel = (panel) => {
+    if (!panel || panel === searchPanel) return;
+    if (searchPanel) { // 复位上一个面板的过滤痕迹，避免筛选串台
+      searchCards.forEach((card) => { card.hidden = false; });
+      searchPanel.querySelectorAll('.reading-group').forEach((group) => { group.hidden = false; });
+      const oldEmpty = searchPanel.querySelector('[data-empty-state]');
+      if (oldEmpty) oldEmpty.hidden = true;
+    }
+    searchPanel = panel;
+    searchCards = [...panel.querySelectorAll('.archive-card, .series-preview')];
+    applySearch();
+  };
+
+  function syncSearchPanel(panel) {
+    if (searchReady) setSearchPanel(panel);
+  }
+
+  if (searchToggle && searchPop && searchInput) {
     const setSearchOpen = (open) => {
       searchToggle.setAttribute('aria-expanded', String(open));
       searchPop.hidden = !open;
       if (open) {
-        if (searchInput) searchInput.focus();
+        setSearchPanel(panels.find((panel) => !panel.hidden) || null); // 打开时对准当前 Tab
+        searchInput.focus();
         return;
       }
-      if (searchInput && searchInput.value) {
+      if (searchInput.value) { // 收起即清空并复位，避免「看不见的过滤状态」
         searchInput.value = '';
-        searchInput.dispatchEvent(new Event('input'));
+        applySearch();
       }
     };
     searchToggle.addEventListener('click', () => setSearchOpen(searchPop.hidden));
+    searchInput.addEventListener('input', applySearch);
     document.addEventListener('click', (event) => {
       if (searchPop.hidden) return;
-      if (event.target.closest('#shelf-search-pop, #shelf-search-toggle')) return;
+      // 点 Tab 按钮不收起：关键词跟随切 Tab，继续筛新页签（syncSearchPanel 已挂 activate）
+      if (event.target.closest('#shelf-search-pop, #shelf-search-toggle, .reading-tabs button[data-panel]')) return;
       setSearchOpen(false);
     });
     document.addEventListener('keydown', (event) => {
@@ -90,9 +134,18 @@
         searchToggle.focus();
       }
     });
+    const clearBtn = module.querySelector('[data-clear-filters]');
+    if (clearBtn && !clearBtn.dataset.clearBound) {
+      clearBtn.dataset.clearBound = '';
+      clearBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        searchInput.focus();
+        applySearch();
+      });
+    }
   }
-
-  const normalize = (value) => value.toLocaleLowerCase('zh-CN').replace(/[\s：:，,。.!！?？、-]/g, '');
+  searchReady = true;
+  setSearchPanel(panels.find((panel) => !panel.hidden) || null); // 对准初始 Tab
 
   // 首屏阅读理念横条（details/summary，默认收起）：展开状态记 localStorage
   const explain = document.querySelector('[data-explain-fold]');
@@ -104,43 +157,6 @@
       });
     } catch (e) { /* localStorage 不可用时保持默认收起 */ }
   }
-
-  // 搜索框可位于模块外（书架面板的搜索在「阅读书架」标题右侧，属 .intro-row）：
-  // input 加 data-search-panel="<面板id>" 指定目标；缺省取最近的面板
-  document.querySelectorAll('[data-card-search]').forEach((input) => {
-    const panel = document.getElementById(input.dataset.searchPanel || '')
-      || input.closest('.reading-panel');
-    if (!panel) return;
-    const cards = [...panel.querySelectorAll('.archive-card')];
-    const status = document.querySelector(`[data-search-status][for="${input.id}"]`)
-      || panel.querySelector('[data-search-status]');
-    const empty = panel.querySelector('[data-empty-state]');
-    const update = () => {
-      const query = normalize(input.value.trim());
-      let shown = 0;
-      cards.forEach((card) => {
-        const match = !query || normalize(`${card.dataset.search || ''} ${card.textContent || ''}`).includes(query);
-        card.hidden = !match;
-        if (match) shown += 1;
-      });
-      if (status) status.textContent = query ? `找到 ${shown} 本` : `共 ${cards.length} 本`;
-      if (empty) empty.hidden = shown > 0;
-      panel.querySelectorAll('.reading-group').forEach((group) => {
-        group.hidden = query !== '' && ![...group.querySelectorAll('.archive-card')].some((card) => !card.hidden);
-      });
-    };
-    input.addEventListener('input', update);
-    update();
-    const clearBtn = panel.querySelector('[data-clear-filters]');
-    if (clearBtn && !clearBtn.dataset.clearBound) {
-      clearBtn.dataset.clearBound = '';
-      clearBtn.addEventListener('click', () => {
-        input.value = '';
-        input.focus();
-        update();
-      });
-    }
-  });
 
   // 整卡可点：点击卡片空白处等同点书名（书名即通读入口）；卡内真实链接不受影响
   module.querySelectorAll('.archive-card').forEach((card) => {
