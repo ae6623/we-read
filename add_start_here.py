@@ -22,7 +22,8 @@ def block(has_mindmap: bool, has_outline: bool, n_note: int = 0) -> str:
         links.append('<a href="mindmap.html">下一步：精读 · 全书主干 →</a>')
     if has_outline:
         links.append('<a href="outline.html">AI 大纲 · 逐章逐条 →</a>')
-    if n_note:
+    # 无精读页的书（deep-read 保留为独立页）才挂深读链接；其余统一指向精读页
+    if (not has_mindmap) and (book_dir / "notes" / "deep-read.html").exists():
         links.append('<a href="notes/deep-read.html">逐章深读（含 AI 追问） →</a>')
     link_html = "".join('<span>%s</span>' % a for a in links)
     return (
