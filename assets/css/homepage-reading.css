@@ -133,8 +133,12 @@
 .shelf-head-search .search-status{flex:1 0 100%;text-align:right;font-size:.74rem}
 .shelf-head-search .search-status:empty{display:none}
 @media(max-width:680px){
-  .shelf-head-search{flex:1 0 100%;order:3}
-  .shelf-head-search .search-status{text-align:left}
+  .shelf-head{align-items:center;gap:10px 14px}
+  .shelf-head>div:first-child{flex:1 1 auto;min-width:0}
+  .shelf-head-search{flex:0 0 auto;min-width:0;max-width:56%}
+  .shelf-head-search .search-label{display:none}
+  .shelf-head-search input{flex:1 1 auto;min-width:0;padding:8px 12px;font-size:.82rem}
+  .shelf-head-search .search-status{flex-basis:100%;text-align:left}
 }
 /* 整卡可点：hover 提示 + 键盘可达 */
 .archive-card.card-clickable{cursor:pointer}
@@ -147,9 +151,9 @@
 details.reading-explanation{display:block;max-width:1080px;margin:0 auto 6px;padding:0 28px;
   background:transparent;border:0;border-radius:0;grid-template-columns:none;gap:0}
 details.reading-explanation .hero-description+.hero-description{border-left:0;padding-left:0;margin-top:8px}
-details.reading-explanation summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;
-  color:var(--muted);font-size:.82rem;font-weight:600;padding:9px 16px;border:1px solid var(--line);
-  border-radius:999px;background:#fffefa;transition:color .15s,border-color .15s}
+details.reading-explanation summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:10px;
+  width:100%;color:var(--green);font-size:.92rem;font-weight:700;padding:13px 20px;border:1px solid var(--line);
+  border-radius:12px;background:#edf0e9;transition:color .15s,border-color .15s}
 details.reading-explanation summary::-webkit-details-marker{display:none}
 details.reading-explanation summary:hover{color:var(--green);border-color:#72927e}
 details.reading-explanation summary:focus-visible{outline:2px solid var(--green2);outline-offset:2px}
