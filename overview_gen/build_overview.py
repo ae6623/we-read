@@ -39,6 +39,29 @@ CSS_HEAD = '''<!doctype html>
 '''
 
 
+# 「章节导读」工具行 + 页尾脚本：与 tools/convert_guide_mmx.py 的迁移口径完全一致。
+# 渲染器必须自带这两段——否则新产页会缺「展开全部要点 / 全部收起」，
+# 与 convert_guide_mmx.py 迁移过的旧页不一致（2026-10-30 补）。
+MMX_TOOLS = ('<div class="mmx-tools">'
+             '<button class="mmx-btn" data-mmx="open">展开全部要点</button>'
+             '<button class="mmx-btn" data-mmx="close">全部收起</button>'
+             '<span class="mmx-tip">章折叠态只占一行，点章名展开全部小节、要点与原句；'
+             '更完整的分层见本书 AI 大纲页</span></div>')
+MMX_JS = """<script>
+(function(){
+  var btns=document.querySelectorAll("[data-mmx]");
+  for(var i=0;i<btns.length;i++){(function(b){
+    b.addEventListener("click",function(){
+      var open=b.getAttribute("data-mmx")==="open";
+      document.querySelectorAll("details.mmx-cn").forEach(function(d){d.open=open;});
+      document.querySelectorAll("details.mmx-sec").forEach(function(d){d.open=open;});
+    });
+  })(btns[i]);}
+})();
+</script>
+"""
+
+
 def esc(t):
     return html.escape(t, quote=False)
 
@@ -195,6 +218,7 @@ def build(cfg, chapters, aiqa_html="", quiz_answers=None):
     # 结构分组块删除，cfg['mindmap'] 保留但不再渲染；AI 大纲页继续作为完整版。
 
     out.append('<section aria-labelledby="chapter-guide-title"><h2 id="chapter-guide-title">章节导读</h2>\n')
+    out.append('  ' + MMX_TOOLS + '\n')
 
     parts = []
     for idx, c in enumerate(chapters):
@@ -269,7 +293,9 @@ def build(cfg, chapters, aiqa_html="", quiz_answers=None):
     out.append('<section class="card quiz-card"><h2>读完自测 3 问</h2>\n<ol>\n%s\n</ol>%s</section>\n\n'
                % (cfg['quiz'], _quiz_answers_html(cfg.get('quiz'), quiz_answers or [])))
     out.append('<section class="card"><h2>复习与记忆复利</h2>\n%s</section>\n\n' % cfg['memo'])
-    out.append('<footer class="site-footer"><a href="../../../index.html">← 返回首页</a>　<a href="../../index.html">阅读归档索引</a></footer>\n</main>\n</body>\n</html>\n')
+    out.append('<footer class="site-footer"><a href="../../../index.html">← 返回首页</a>　<a href="../../index.html">阅读归档索引</a></footer>\n')
+    out.append(MMX_JS)
+    out.append('</main>\n</body>\n</html>\n')
     return ''.join(out)
 
 

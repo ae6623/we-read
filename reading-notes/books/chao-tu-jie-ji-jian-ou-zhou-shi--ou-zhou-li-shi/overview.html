@@ -27,6 +27,7 @@
 <section class="card"><h2>一句话主旨</h2>
 <p>《超图解极简欧洲史（欧洲历史如何塑造现代文明）》按 AI 大纲共 22 章、157 个小节，开篇议题是「超图解极简欧洲史概述」：本书通过约500幅逻辑导图、200幅图说及表格，以超图解的手法，呈现欧洲历史进程的方方面面。<b>本页只做结构通读</b>：主旨与判断留待精读页与亲读，不由程序代笔。</p></section>
 <section aria-labelledby="chapter-guide-title"><h2 id="chapter-guide-title">章节导读</h2>
+  <div class="mmx-tools"><button class="mmx-btn" data-mmx="open">展开全部要点</button><button class="mmx-btn" data-mmx="close">全部收起</button><span class="mmx-tip">章折叠态只占一行，点章名展开全部小节、要点与原句；更完整的分层见本书 AI 大纲页</span></div>
   <div class="toc-part"><span class="part-label">全书篇目（AI 大纲顺序）</span>
     <details class="mmx-cn"><summary>
         <span class="mmx-no">1</span><span class="mmx-name">本书告诉你</span>
@@ -617,6 +618,18 @@
 <p>《超图解极简欧洲史（欧洲历史如何塑造现代文明）》是 AI 大纲自动整理页：先抓全书骨架（22 章）与首章要点，再带着问题读原文。</p><p>每周回看一次——哪些「存疑」已读原文验证、哪些仍待查证，让记忆复利。</p></section>
 
 <footer class="site-footer"><a href="../../../index.html">← 返回首页</a>　<a href="../../index.html">阅读归档索引</a></footer>
+<script>
+(function(){
+  var btns=document.querySelectorAll("[data-mmx]");
+  for(var i=0;i<btns.length;i++){(function(b){
+    b.addEventListener("click",function(){
+      var open=b.getAttribute("data-mmx")==="open";
+      document.querySelectorAll("details.mmx-cn").forEach(function(d){d.open=open;});
+      document.querySelectorAll("details.mmx-sec").forEach(function(d){d.open=open;});
+    });
+  })(btns[i]);}
+})();
+</script>
 </main>
 </body>
 </html>
