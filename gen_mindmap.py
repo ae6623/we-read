@@ -116,8 +116,49 @@ PROMPT_CH = """《{title}》的主干结构如下：
 
 
 # ------------------------------------------------------------------ 上下文
+def _outline_from_json(slug: str) -> list:
+    """DB 无大纲时的回退：解析 compose 产出的 outline.json。
+
+    背景（2026-10-31 云端实测）：load_book_outline 读 data/we_read.db 的 book_outline
+    表，而 compose_book.step_outline 只写 outline.{html,json,md} 从不入库，导致
+    「云端刚跑完 outline、gen_mindmap 立刻报库中无大纲，0.2 秒空转退出」。
+    outline.json 的四层扁平条目（1 章 / 2 节 / 3 要点 / 4 原句）与 DB 行同构，
+    这里重建为 load_book_outline 的返回结构，二者可互换。
+    """
+    p = BOOKS / slug / "outline.json"
+    if not p.exists():
+        return []
+    try:
+        items = json.loads(p.read_text(encoding="utf-8"))
+    except Exception:
+        return []
+    if not isinstance(items, list):
+        return []
+    chs, cc, cs, cp = [], None, None, None
+    for it in items:
+        if not isinstance(it, dict):
+            continue
+        lv, tx = it.get("level"), (it.get("text") or "").strip()
+        if lv == 1:
+            cc = {"no": len(chs) + 1, "title": tx, "secs": []}
+            chs.append(cc)
+            cs = cp = None
+        elif lv == 2 and cc is not None:
+            cs = {"h": tx, "points": []}
+            cc["secs"].append(cs)
+            cp = None
+        elif lv == 3 and cs is not None:
+            cp = {"text": tx, "quotes": []}
+            cs["points"].append(cp)
+        elif lv == 4 and cp is not None and tx:
+            cp["quotes"].append(tx)
+    return chs
+
+
 def build_ctx(slug: str):
     chs = S.load_book_outline(slug)
+    if not chs:
+        chs = _outline_from_json(slug)      # 回退：用站点里的 outline.json
     if not chs:
         return None
     title = G._title_of(str(BOOKS / slug), slug)
