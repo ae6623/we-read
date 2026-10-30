@@ -187,13 +187,13 @@
 </main>
 <script>
 (function(){
-  var btns=document.querySelectorAll("[data-mm]");
+  var btns=document.querySelectorAll("[data-mmx]");
   for(var i=0;i<btns.length;i++){(function(b){
     b.addEventListener("click",function(){
       var open=b.getAttribute("data-mmx")==="open";
       document.querySelectorAll("details.mmx-spine").forEach(function(d){d.open=open;});
       document.querySelectorAll("details.mmx-cn").forEach(function(d){d.open=open;});
-      document.querySelectorAll("details.ch-sec").forEach(function(d){d.open=open;});
+      document.querySelectorAll("details.mmx-sec").forEach(function(d){d.open=open;});
     });
   })(btns[i]);}
 })();
