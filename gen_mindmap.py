@@ -456,8 +456,12 @@ def _chapter_html(c: dict, full: dict) -> str:
            '<span class="mmx-caret">›</span></summary>'
            '<div class="mmx-body">'
            '<p class="mmx-stat">%s</p>'
-           '<p class="mmx-gist">%s</p>%s'
-           % (c["no"], E(c["title"]), E(c["role"]), n_pts, stat, E(c["gist"]), chips)]
+           '<p class="mmx-gist">%s</p>%s%s'
+           % (c["no"], E(c["title"]), E(c["role"]), n_pts, stat, E(c["gist"]), chips,
+              # 代表句：与该章原句池逐字校验过（refine/from_batch 里 anchor_ok），
+              # 校验不过的 anchor 已被清空，这里自然不输出。
+              ('<p class="mmx-anchor">锚点原句：「%s」</p>' % E(c["anchor"]))
+              if c.get("anchor") else "")]
     for i, s in enumerate(secs):
         out.append('<details class="mmx-sec"%s>'
                    '<summary><span class="mmx-sech">%s</span>'
@@ -511,11 +515,19 @@ PAGE_STYLE = """
 
 
 def _page_stats(d, full):
+    """统计以 ctx 实算为准：JSON 里的 evidence 可能是别处/旧版本写的。
+
+    2026-10-31 云端实测：旧 data/mindmap/*.json 的 with_quote 语义与 ctx 不一致
+    （33 vs 190），density 记成 1.79，页面直接画出 width:179% 的溢出条。
+    """
     chs = d.get("chapters") or []
     ev = d.get("evidence") or {}
-    pts = int(ev.get("points") or sum(int(c.get("pts") or 0) for c in chs))
-    wq = int(ev.get("with_quote") or sum(int(c.get("with_q") or 0) for c in chs))
-    dens = round(float(ev.get("density") or (wq / pts if pts else 0)) * 100)
+    pts = sum(int(c.get("pts") or 0) for c in (full or {}).values())
+    wq = sum(int(c.get("with_q") or 0) for c in (full or {}).values())
+    if not pts:
+        pts = int(ev.get("points") or sum(int(c.get("pts") or 0) for c in chs))
+        wq = int(ev.get("with_quote") or sum(int(c.get("with_q") or 0) for c in chs))
+    dens = min(100, round((wq / pts if pts else 0) * 100))
     nq = sum(len(p.get("quotes") or []) for c in full.values()
              for s in (c.get("secs") or []) for p in (s.get("points") or []))
     return len(chs), pts, wq, dens, nq
