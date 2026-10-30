@@ -56,3 +56,40 @@
 - [ ] ⏸ 遗留：云端 `GEMINI_API_KEY` 仍未配置（`/api/diag/gemini` key_configured=false），`gen_aiqa_from_outline` / `gen_mindmap` 的 LLM 通道不可用；按 `docs/mindmap-module-standard.md` 第 6 节应由云端模型亲自介入撰写真实内容
 
 > 最后更新：2026-10-30 22:35（Asia/Shanghai）
+
+## 轮次 · 2026-10-31 01:05 云端版本号 + 精读改离线导入通道并发布
+
+用户口径（本轮的硬约束）：**只跑云端，本机不动；云端代码保持最新；云端留一个版本号跟最新提交对比。**
+
+- [x] 版本标记落地
+  - [x] `build_version.py` → `VERSION.json`（engine/site 提交 + 快照指纹 + 9 个运行时文件 md5 + built_at）
+  - [x] `GET /api/version`：读 VERSION.json、重算运行时 md5 查漂移、带 token 实时比 `api.github.com` 的 main（匿名会 403/404）
+  - [x] 修 sha 比较：本地 `[:8]` vs 上游 7 位导致永远 `stale` → 统一 `[:7]`
+  - [x] 线上实测 `engine=54cace7 site=a5be4bd stale=false behind={engine:false,site:false} drift=[]`
+- [x] 快照重建：`git archive origin/main` → `/c/tmp/we-read-snap`（1093 文件），`make_snapshot.py --repo … --out vendor/we-read.zip` → 指纹 `20261031-004335-2bda18ee`（83.4MB）
+- [x] 引擎代码对齐：部署源顶层 py 与 `we-read-auto@54cace7` 逐文件比对，除 `cloud_scheduler.py`(11799B，含 `start_compose_worker`)、`web_app.py`(96KB) 外**全部一致**（其余差异只是 CRLF）；部署版路由是引擎版超集，没丢东西
+- [x] 精读离线通道（云端到 Google 不通的解法，符合 mindmap 标准第 6 节）
+  - [x] `data/import/100-ge-ren-sheng-yi-yuan.json`（14KB，thesis + 6 主干组 + 34 章 gist/role/anchor）
+  - [x] `step_mindmap` 检测到该文件 → `gen_mindmap.py --import-batch <json> --write`（纯渲染、零 LLM）
+  - [x] `gen_mindmap.py` 恢复 `render()`/`from_batch()`（站点仓库某次重构把它们整段删了，四个入口全 NameError）；补 `from_batch` 的 anchor 逐字校验
+  - [x] `build_ctx` 补 `_outline_from_json` 回退（compose 只写 outline.json 不入库）
+  - [x] `_chapter_html` 锚点块：原来只在「本章无小节」时才输出 → 改成有 anchor 就输出（34/34）
+  - [x] `_page_stats` 改按 ctx 实算并 clamp 100（旧 JSON 的 with_quote 口径不一致，画出 179% 的溢出条）
+- [x] 排障（4 个都修了）
+  - [x] 残留 `weread.lock` 的 pid 在容器重建后被复用 → `os.kill(pid,0)` 通过 → 锁永远等 25 分钟；`run_book` 直接 return 且不留痕。加 `/api/diag/locks`（GET 详情 / POST clear）+ `last_status=blocked`
+  - [x] 单跑 `mindmap` 跳过 `ensure_repo_ready` → 旧快照 → 0.2s「库中无大纲」退出 0 记 ok；改成无条件先 ensure
+  - [x] `need_browser` 把 mindmap 也算进去（`gen_mindmap.py` 无任何 playwright 调用）→ 改成只看 `outline`
+  - [x] 单跑 `publish` 时 `steps_done=[]` → 「没有可发布文件」；回退成「最近一次成功产物步骤」
+  - [x] `step_mindmap` 成败改看 returncode（原来只看文件存在，崩了也 ok），日志带 `import_batch/size/tail`
+- [x] 云端产出并发布：《100个人生遗愿》`章=34 主干=6 密度=92% 锚点缺=0`，123,596B，commit `2ff4cec`（只提交这一个文件）
+- [x] 线上复核：Pages 200 / 123,596 字节；34 章块 / 34 锚点 / 153 个 details 全闭合 / 密度条 `width:92%`
+- [x] 部署后重导登录态：`POST /api/auth/import` → 11 cookie，`ok=true`
+- [x] A2A 日文件 `agent-communication/2026/10/2026-10-31.md` + 月索引
+- [x] 本轮 `make_snapshot.py` 默认 `--out` 写死成 agent-1 目录（`weread-cloud/vendor/we-read.zip` 被覆盖成新快照）→ 已在 A2A 声明，建议改默认值
+- [ ] ⏸ `backfill_modules.py`（higher/verify/thennow/aiask/coreask）已同步进部署源，但**没接进 compose 步骤**；《文化苦旅》等仍有模板假 core-ask
+- [ ] ⏸ 云端仍无 `GEMINI_API_KEY`、到 Google 不通 → 一切 LLM 步骤走离线导入通道（需要会话侧先写 `<slug>.json`）
+- [ ] ⏸ 《100个人生遗愿》不在 `reading-notes/index.html` 归档索引里（站首页有卡片）；索引归会话最全的本机维护，agent-2 不碰
+- [ ] ⏸ `ae6623/we-read-offline` 仓库仍不存在（线上旧 config 指向它）
+
+> 最后更新：2026-10-31 01:05（Asia/Shanghai）
+
