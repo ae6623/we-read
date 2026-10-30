@@ -3,7 +3,7 @@
 维护人：`cloud-agent2`（= weread-cloud-agent-2 / WorkBuddy 独立账号 User2；部署源 `C:/Users/ROG/weread-cloud-new`，云端 `weread-daily-98024.app.workbuddy.host`）。
 **只写本文件**，不碰其他角色的 todo。协议：[todo-protocol.md](../../skills/luoyu-reading/references/todo-protocol.md)（开工前登记、每完成一项 `[x]` 并单独 commit、卡住标 `⏸ 阻塞` 跳过）。
 
-> 最后更新：2026-10-30 04:12（Asia/Shanghai）
+> 最后更新（旧）：2026-10-30 04:12（Asia/Shanghai）
 
 ## 当前状态
 
@@ -42,3 +42,17 @@
 - 遗留（不阻塞、交索引维护方）：《100个人生遗愿》首页索引卡片的「精读」链接未补——按保守发布铁律索引由会话最全的本机维护，agent-2 未动 `index.html`。
 - 遗留（交 agent-1）：云端线上旧 config 的 `shared.repo_url=ae6623/we-read-offline.git` 实测仓库不存在（404 + `git ls-remote` Repository not found）；本次沿用 agent-2 本地 config 现值 `we-read.git`。若要恢复 offline 绑定，请先创建该仓库。
 - 遗留（交 agent-1）：云端 `gemini.enabled=false` 且无 `GEMINI_API_KEY`，`gen_mindmap.py` 在沙箱不可用；本轮精读由会话侧离线重算完成。
+
+## 轮次 · 2026-10-30 22:35 跟进 main 最新代码并重建沙箱
+
+- [x] 拉 `ae6623/we-read-auto` origin/main `9285c9e`（较上轮 `9a9cbf9` 领先 11 提交），同步 45 个顶层 py + `overview_gen/` 10 文件 + `docs/` 12 文件到部署源
+  - 新增：`gen_aiqa_from_outline.py`(20637) / `publish_deep_read.py` / `_regen_fake_coreask.py` / `gen_pending_manifest.py` / `overview_gen/mindmap_render.py`(15942，此前缺失的精读渲染器)
+  - 升级：`gen_deep_read.py` 21794→24881（slug/书名双匹配，根治虚拟核心追问）、`gen_deep_read_batch.py`、`weread_daily.py` 150008→151000、`site_pub.py`、`weread_store.py` 6537→10780
+- [x] 铁律校验：`web_app.py` 保持 93KB 版（main 上的 85398 未覆盖）；`compose_book.py`、`probe.py`、`config.json` 均未被覆盖
+- [x] **坑（已修）**：main 的 `cloud_scheduler.py`(8219B) 只有 `start_scheduler`、**无 `start_compose_worker`**，直接部署会让 `app.py` ImportError 起不来 —— 已保留部署源版(11799B，含 worker)，`grep` 复核两个函数都在
+- [x] 重打站点快照 `vendor/we-read.zip`：旧快照是 10-27，已落后三天；改用 `git archive origin/main` 导出干净副本（1093 文件/168MB）再打包，新指纹 `20261030-223336-69d0655f`（85MB），含主仓最新精读页与 `gen_mindmap.py`(34855)
+- [x] 部署成功：sandbox `df917fc4…`、`verified:true`、域名不变；首页 HTTP 200 / 57KB；`/api/status`、`/api/compose/status`、`/api/books`、`/api/diag/gemini` 全 200
+- [x] 登录态无需重导（部署后 `/api/check` 仍 ok=true，今日已读 20.8 分钟）；云端快照指纹已确认刷新为 `20261030-223336-69d0655f`
+- [ ] ⏸ 遗留：云端 `GEMINI_API_KEY` 仍未配置（`/api/diag/gemini` key_configured=false），`gen_aiqa_from_outline` / `gen_mindmap` 的 LLM 通道不可用；按 `docs/mindmap-module-standard.md` 第 6 节应由云端模型亲自介入撰写真实内容
+
+> 最后更新：2026-10-30 22:35（Asia/Shanghai）
