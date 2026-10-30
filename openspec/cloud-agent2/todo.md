@@ -110,3 +110,32 @@
 
 > 最后更新：2026-10-31 01:05（Asia/Shanghai）
 
+
+## 轮次 · 2026-10-31 02:05 控制台「立即读书」：书架一键生产通读+精读+入库
+
+用户要求：控制台加书架（按加入时间倒排）+「生产通读+精读」按钮，跑书脚本流程化，直接跑最新 5 本；
+LLM 连不上就让云端提供 api 连接、数据要入库；两个 key（Gemini / 微信读书 skill）在页面上显示且可保存，
+代码读配置兜底。
+
+- [x] **页面置顶两张卡**（`templates/index.html`）
+  - 「📖 立即读书 · 书架」：30 本按最近/加入时间倒排，逐本显示 大纲/通读/精读 是否已有 + 「生产通读+精读」按钮；顶部「生产最新 5 本」「立即阅读一次」
+  - 「🔑 API Key 配置」：微信读书 key / Gemini key / LLM 端点（base_url+model+key）三段，掩码↔明文切换、可保存、一键测连通
+- [x] **后端接口**：`GET /api/shelf`（10 分钟缓存，`?refresh=1` 强刷）、`POST /api/produce`、`POST /api/produce/batch`、
+  `GET|POST /api/keys`、`GET /api/mindmaps`、`POST /api/mindmaps/backfill`、`GET /api/diag/llm`
+- [x] **流水线化**：队列项带 `steps`，默认 `outline,overview,mindmap,publish`；后台 worker 顺序跑；
+  已有产物默认跳过（`skipped=exists`）；`/api/compose/run` 支持 `force`
+- [x] **LLM 通道**：`config.llm`（OpenAI 兼容）优先，其次 Gemini。实测云端**能通** DeepSeek/通义/Moonshot/智谱，
+  **不通** Google/OpenAI —— 所以「让云端提供 api 连接」只需在页面填 base_url+key
+- [x] **精读降级链**：`data/import/<slug>.json` → OpenAI/Gemini → `--from-outline`（AI 大纲结构化重算，页面自标「结构提要」）→ 明确失败
+- [x] **数据入库**：`book_mindmap` 表（slug/book/mode/chapters/spine/density/missing/payload/built_at），
+  库迁到 `weread-data/we_read.db`；**实测跨部署留存 75 行**（原来放 data/ 每次部署被本机空库冲掉）
+- [x] **真跑了最新 5 本**：知乎神贴(done)、戴老师魔性诗词课(**新产出 outline 167KB + overview 148KB + mindmap 248KB/66 章/密度 89%**)、
+  100个人生遗愿(done)、买房(done)、激流三部曲(done)；Pages 三页均 200
+- [x] 修 4 个 bug：① `overview_gen.generate()` 不认 `slug` 参数（按签名探测）② `skipped` 步骤被算进 publish 导致旧文件覆盖 main
+  ③ force 重生成冲掉别人注入内容 → 先备份 `mindmap.prev.html` ④ 本机空库随部署上传冲掉沙箱库 → 迁 `weread-data/` + 删本机库 + gitignore
+- [x] 事故还原：force 重生成把 agent-1 注入的《100个人生遗愿》真实核心追问 7 行冲掉，已按 `a883816` 版本原样还原（commit `b3844ef`）
+- [ ] ⏸ 书架排序只有 shelf/sync 的 `updateTime`（最近阅读），没有真正「加入书架时间」字段；要严格按加入时间需另找接口
+- [ ] ⏸ 云端没有可用 LLM key（Gemini 到 Google 不通）；给一个 DeepSeek/通义/Moonshot/智谱 key 填进页面即可走 LLM 精读
+- [ ] ⏸ GitHub Pages 的 Actions 队列经常积压（本轮多次 queued/cancelled），新页面可能延迟数分钟才 200
+
+> 最后更新：2026-10-31 02:05（Asia/Shanghai）
