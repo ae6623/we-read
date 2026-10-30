@@ -171,3 +171,21 @@ LLM 连不上就让云端提供 api 连接、数据要入库；两个 key（Gemi
   台账能算出缺哪些（当前 100个人生遗愿 缺 top10/aiask/higher/verify/thennow），要补得填 LLM key 或人工写 JSON
 
 > 最后更新：2026-10-31 02:25（Asia/Shanghai）
+
+## 轮次 · 2026-10-31 02:35 书架修复（数据不是最新）
+
+- [x] **根因 1：只取 30 本**。`list_recent_books(limit=30)` 硬截断，书架实际 **353 本**，
+      第 31 本以后（含刚加入的新书）根本进不来 → 改为全量返回
+- [x] **根因 2：按「最近阅读」排序**。刚加入还没读的书没有 `bookProgress` → `updateTime` 为空
+      → 排到最后 → 再被 30 条截掉。改为按**书架条目自带 updateTime（加入时间）倒排**，
+      实测 353 本 0 违例（2026-10-30 → 2017-01-12）
+- [x] **根因 3：时间戳有字符串形态**。`shelf/sync` 里 `updateTime` 有时是 `"1760179240"`，
+      只判 `int/float` 会全部丢掉（第一版就是这么错的）→ 统一 `_as_ts()` 归一
+- [x] **根因 4：大 JSON 打到管道直接崩**。放开到 353 本后子进程报
+      `BlockingIOError: [Errno 11] write could not complete without blocking`（HTTP 500）
+      → 新增 `emit_json()`：先 `os.set_blocking(True)` 再 8KB 分块 flush
+- [x] 产物标记改**以台账为准**（生产完立刻可见），文件存在性只作兜底
+- [x] 前端：显示 加入日期 / 未读数 / 阅读进度 / 模块 x/8，缓存命中与「暂用上次结果」都有提示
+- 实测：`count=353, unread=184, 有加入时间 353/353, 倒排违例 0`
+
+> 最后更新：2026-10-31 02:35（Asia/Shanghai）
