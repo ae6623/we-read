@@ -619,6 +619,84 @@ def render(d: dict, ctx: dict | None = None) -> str:
 ROLES = ("铺垫", "立论", "反证", "案例", "收束")
 
 
+def structural_batch(slug: str, ctx: dict, group: int = 7) -> dict:
+    """无 LLM 的结构化重算：把 AI 大纲直接折成「主干 + 章级定位 + 锚点」。
+
+    为什么要有这条路（2026-10-31）：云端沙箱到 Google 长期不通，`refine()` 的两次
+    LLM 调用必然失败，精读就永远出不来。但站点里的 `outline.json` 本身就是微信读书
+    **AI 大纲**（1 章 / 2 节 / 3 要点 / 4 原句），章要点与原句都是逐字原文 —— 足够渲染
+    一页「结构型精读」。
+
+    诚实边界（写进页面，不装成读后感）：
+      - 要点、原句：逐字来自 AI 大纲，不改写；
+      - 主干分组：按章序机械切块（每 group 章），不是语义聚类；
+      - 命题（thesis）：只陈述结构事实，不给观点，明确标注「结构提要」。
+    """
+    chs = ctx.get("chapters") or []
+    if not chs:
+        return {}
+    groups, cur = [], []
+    for c in chs:
+        cur.append(c)
+        if len(cur) >= group:
+            groups.append(cur)
+            cur = []
+    if cur:
+        if groups and len(cur) <= 2:          # 尾巴太短就并进上一组
+            groups[-1].extend(cur)
+        else:
+            groups.append(cur)
+    ids = "ABCDEFGHIJ"
+    spine, owner = [], {}
+    for i, g in enumerate(groups):
+        sid = ids[i] if i < len(ids) else "G%d" % i
+        first, last = g[0], g[-1]
+        label = ("第 %d–%d 章" % (first["no"], last["no"])
+                 if first["no"] != last["no"] else "第 %d 章" % first["no"])
+        spine.append({"id": sid, "label": label,
+                      "why": "含「%s」至「%s」" % (first["title"][:12], last["title"][:12]),
+                      "chapters": [c["no"] for c in g]})
+        for c in g:
+            owner[c["no"]] = sid
+
+    out_ch = []
+    for c in chs:
+        brief = (c.get("brief") or "").strip()
+        anchor = ""
+        for q in (c.get("quotes") or []):
+            q = (q or "").strip()
+            if len(q) >= 8:
+                anchor = q
+                break
+        out_ch.append({
+            "no": c["no"], "title": c.get("title") or "",
+            "spine": owner.get(c["no"], "A"),
+            "gist": brief or ("本章 %d 条要点见下" % int(c.get("pts") or 0)),
+            "role": "立论",
+            "concepts": [],
+            "anchor": anchor, "anchor_ok": bool(anchor),
+            "pts": int(c.get("pts") or 0), "with_q": int(c.get("with_q") or 0),
+        })
+
+    pts = sum(x["pts"] for x in out_ch)
+    wq = sum(x["with_q"] for x in out_ch)
+    n = len(out_ch)
+    head = "、".join(s["label"] for s in spine[:3])
+    claim = ("《%s》共 %d 章，按章序折成 %d 段主干（%s）；"
+             "每章的要点与原句均逐字取自本书 AI 大纲，未做人工解读。"
+             % (ctx.get("title") or "", n, len(spine), head))
+    boundary = ("本页为结构提要：主干分组按章序机械切分，不是语义聚类；"
+                "命题只陈述结构事实，不代表读者观点。要点/原句来自微信读书 AI 大纲，"
+                "未经二次改写。")
+    return {"slug": slug, "title": ctx.get("title") or "",
+            "thesis": {"claim": claim, "boundary": boundary},
+            "spine": spine, "chapters": out_ch,
+            "evidence": {"points": pts, "with_quote": wq,
+                         "density": round(wq / pts, 3) if pts else 0.0},
+            "bad_anchor": [],
+            "built_at": time.strftime("%Y-%m-%dT%H:%M:%S+08:00")}
+
+
 def from_batch(slug: str, item: dict, ctx: dict) -> dict:
     """把 --import-batch 的 {thesis,spine,chapters} 合成与 refine() 同构的结构。"""
     chs = ctx.get("chapters") or []
@@ -905,6 +983,10 @@ def main(argv=None):
     ap.add_argument("--digest", type=int, metavar="N",
                     help="只打印还没生成导图的 N 本书的紧凑摘要（不调 LLM）")
     ap.add_argument("--import-batch", help="导入批量 JSON 并渲染：{slug:{thesis,spine,chapters}}")
+    ap.add_argument("--from-outline", action="store_true",
+                    help="不调 LLM：把 outline.json 的 AI 大纲结构直接重算成精读页")
+    ap.add_argument("--group", type=int, default=7,
+                    help="--from-outline 时每段主干包含的章数（默认 7）")
     ap.add_argument("--cut", type=int, default=42, help="摘要里每条要点的截断长度")
     ap.add_argument("--model", help="首选模型（失败自动按 CANDIDATES 降级）")
     ap.add_argument("--budget", type=int, default=0,
@@ -931,6 +1013,36 @@ def main(argv=None):
                 slug[:44], len(d["chapters"]), len(d["spine"]),
                 d["evidence"]["density"] * 100, len(d["bad_anchor"])))
         return 0
+
+    if a.from_outline:
+        slugs = [a.slug] if a.slug else [
+            p.name for p in sorted(BOOKS.iterdir())
+            if p.is_dir() and (p / "outline.json").exists()]
+        if a.skip_existing:
+            slugs = [x for x in slugs if not (BOOKS / x / "mindmap.html").exists()]
+        ok = 0
+        for slug in slugs:
+            ctx = build_ctx(slug)
+            if not ctx:
+                print("  - %-44s 无 outline.json / 大纲为空" % slug[:44])
+                continue
+            t0 = time.time()
+            d = structural_batch(slug, ctx, group=max(2, a.group))
+            if not d:
+                print("  ✗ %-44s 结构化为空" % slug[:44])
+                continue
+            DB_OUT.mkdir(parents=True, exist_ok=True)
+            if not a.dry_run:
+                (DB_OUT / ("%s.json" % slug)).write_text(
+                    json.dumps(d, ensure_ascii=False, indent=1), encoding="utf-8")
+            if a.write:
+                (BOOKS / slug / "mindmap.html").write_text(
+                    render(d, ctx), encoding="utf-8", newline="\n")
+            ok += 1
+            print("  ✓ %-44s 章=%3d 主干=%d 密度=%.0f%% 锚点缺=%d %.1fs" % (
+                slug[:44], len(d["chapters"]), len(d["spine"]),
+                d["evidence"]["density"] * 100, len(d["bad_anchor"]), time.time() - t0))
+        return 0 if ok else 1
 
     if a.import_batch is None and a.digest:
         pool = ([a.slug] if a.slug else
