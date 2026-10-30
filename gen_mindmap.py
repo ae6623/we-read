@@ -436,6 +436,188 @@ def _chapter_html(c: dict, full: dict) -> str:
     return "".join(out)
 
 
+
+# ------------------------------------------------------------------ 页面组装
+# 2026-10-30 补齐：render() / from_batch() 在一次重构中被删除，导致本脚本所有
+# 写页面的分支（run_one / --import-batch / --render-only / --all --write）全部
+# NameError。此处按站内既有 74 本精读页的同一套 DOM 复原，输出与旧页完全同构：
+# 命题卡 -> 主干 SVG -> 主干分组（内含 _chapter_html 章节树）-> 模块区 -> 页脚。
+PAGE_STYLE = """
+/* 章节树组件（mmx-cn/body/sec/pts/qt…）在 assets/css/mmx-guide.css，与通读页共用；
+   这里只留导图页专属件：命题卡 / 主干 SVG / 主干分组。 */
+.mmx-wrap{max-width:1120px}
+.mmx-kicker{font-size:.7rem;letter-spacing:.18em;color:var(--muted);margin:0 0 .3em}
+.mmx-claim{font-size:1.16rem;line-height:1.75;margin:.1em 0 .5em;color:var(--ink)}
+.mmx-bound{font-size:.86rem;color:#5c5347;line-height:1.8;margin:.2em 0}
+.mmx-evi{font-size:.76rem;color:var(--muted);margin:.6em 0 .3em}
+.mmx-bar{height:5px;background:#e6dfcf;border-radius:3px;overflow:hidden;margin-bottom:1.2em}
+.mmx-bar i{display:block;height:100%;background:linear-gradient(90deg,#8a9b6e,#c2b280)}
+.mmx-svgwrap{overflow-x:auto;padding:.4em 0 1em;border-bottom:1px solid var(--line)}
+.mmx-svg{width:100%;height:auto;min-width:760px}
+.mmx-spine{margin:1.15em 0;border-left:3px solid #ece4d3;padding:.1em 0 .1em .85em}
+.mmx-spine[open]{border-left-color:#d8cdb4}
+.mmx-spine>summary{display:flex;gap:.6em;align-items:baseline;cursor:pointer;
+  list-style:none;padding:.35em 0}
+.mmx-spine>summary::-webkit-details-marker{display:none}
+.mmx-id{font-family:Georgia,serif;font-size:.8rem;color:#8a9b6e;border:1px solid #cfd8bd;
+  border-radius:4px;padding:0 .35em}
+.mmx-label{font-weight:600;font-size:1rem;color:var(--ink)}
+.mmx-cnt{margin-left:auto;font-size:.74rem;color:var(--muted)}
+.mmx-why{font-size:.8rem;color:var(--muted);margin:.1em 0 .8em;line-height:1.7}
+.mmx-tree{list-style:none;padding:0;margin:.15em 0 0}
+@media(max-width:720px){.mmx-svg{min-width:640px}}
+"""
+
+
+def _page_stats(d, full):
+    chs = d.get("chapters") or []
+    ev = d.get("evidence") or {}
+    pts = int(ev.get("points") or sum(int(c.get("pts") or 0) for c in chs))
+    wq = int(ev.get("with_quote") or sum(int(c.get("with_q") or 0) for c in chs))
+    dens = round(float(ev.get("density") or (wq / pts if pts else 0)) * 100)
+    nq = sum(len(p.get("quotes") or []) for c in full.values()
+             for s in (c.get("secs") or []) for p in (s.get("points") or []))
+    return len(chs), pts, wq, dens, nq
+
+
+def render(d: dict, ctx: dict | None = None) -> str:
+    """把 refine()/from_batch() 的结构渲染成 mindmap.html。"""
+    ctx = ctx or {}
+    full = {c["no"]: c for c in (ctx.get("chapters") or []) if "no" in c}
+    chs = d.get("chapters") or []
+    sp = d.get("spine") or []
+    thesis = d.get("thesis") or {}
+    n_ch, pts, wq, dens, nq = _page_stats(d, full)
+
+    by_spine = {}
+    for c in chs:
+        by_spine.setdefault(c.get("spine"), []).append(c)
+    blocks = []
+    for s in sp:
+        members = by_spine.get(s["id"]) or []
+        if not members:
+            continue
+        rows = "\n".join(_chapter_html(c, full) for c in members)
+        blocks.append(
+            '<details class="mmx-spine" open>\n'
+            '<summary><span class="mmx-id">%s</span><span class="mmx-label">%s</span>'
+            '<span class="mmx-cnt">%d 章</span></summary>\n'
+            '<p class="mmx-why">%s</p>\n<ol class="mmx-tree">\n%s\n</ol></details>'
+            % (E(s.get("id") or ""), E(s.get("label") or ""), len(members),
+               E(s.get("why") or ""), rows))
+    bad = len(d.get("bad_anchor") or [])
+    title = d.get("title") or ctx.get("title") or ""
+
+    out = []
+    out.append('<!doctype html>\n<html lang="zh-CN">\n<head>\n'
+               '<meta charset="utf-8">\n'
+               '<meta name="viewport" content="width=device-width, initial-scale=1">\n'
+               '<meta name="description" content="《%s》全书精读 · 章节定位 · 跨章张力'
+               '（由 AI 大纲条目结构化重算）">\n' % E(title))
+    out.append('<title>《%s》｜精读</title>\n' % E(title))
+    out.append('<link rel="stylesheet" href="../../../assets/css/reading-overview.css">\n'
+               '<link rel="stylesheet" href="../../../assets/css/mmx-guide.css">\n')
+    out.append("<style>\n%s\n</style>\n</head>\n<body>\n" % PAGE_STYLE)
+    out.append('<main class="wrap mmx-wrap">\n<header class="note-head">\n')
+    out.append('  <p class="eyebrow">CLOSE READING · AFTER THINKING</p>\n')
+    out.append("  <h1>《%s》精读</h1>\n" % E(title))
+    out.append('  <p class="meta">%d 章 · %d 条要点 · %d 句原句 · 主干 %d 条 · '
+               '章节功能定位 · 由本书 AI 大纲条目重算</p>\n'
+               % (n_ch, pts, nq, len(sp)))
+    out.append('  <p class="links"><a href="../../../index.html">← 返回首页</a>\n'
+               '     <a href="../../index.html">阅读归档索引</a>\n'
+               '     <a href="overview.html">全书视角</a>\n'
+               '     <a href="outline.html">AI 大纲</a></p>\n</header>\n')
+    out.append('<section class="mmx-thesis">\n<p class="mmx-kicker">THIS BOOK ARGUES</p>\n')
+    out.append('<p class="mmx-claim">%s</p>\n' % E(thesis.get("claim") or ""))
+    if thesis.get("boundary"):
+        out.append('<p class="mmx-bound"><b>边界</b> %s</p>\n' % E(thesis["boundary"]))
+    out.append('<p class="mmx-evi">证据密度 <b>%d%%</b> · %d 条要点中 %d 条带原句 '
+               '（结构由 AI 大纲条目重算，非读后感）</p>\n' % (dens, pts, wq))
+    out.append('<div class="mmx-bar"><i style="width:%d%%"></i></div>\n</section>\n' % dens)
+    out.append('<section class="mmx-svgwrap">\n%s</section>\n' % _svg_spine(d))
+    out.append('<div class="mmx-tools"><button class="mmx-btn" data-mmx="open">展开全部要点</button>'
+               '<button class="mmx-btn" data-mmx="close">全部收起</button>'
+               '<span class="mmx-tip">每章折叠态只占一行，点章名展开该章全部小节、要点与原句</span></div>\n')
+    out.append("\n".join(blocks))
+    extra = _extra_modules(d)
+    if extra:
+        out.append(extra)
+    out.append('<footer class="site-footer">\n'
+               '  <p class="small">口径：主干由 AI 依章节要点重新归纳，章的功能'
+               '（铺垫/立论/反证/案例/收束）是结构判断而非原文自述；\n'
+               '  每章展开后的「小节 → 要点 → 原句」逐字取自本书 AI 大纲，与「全书视角」页的'
+               '章节导读同源，一条未删\n'
+               '  （引文未命中原句的章不标注代表句，本次 %d 处）。</p>\n'
+               '  <p><a href="../../../index.html">← 返回首页</a>　'
+               '<a href="overview.html">全书视角</a></p>\n</footer>\n</main>\n' % bad)
+    out.append('<script>\n(function(){\n  var btns=document.querySelectorAll("[data-mmx]");\n'
+               '  for(var i=0;i<btns.length;i++){(function(b){\n'
+               '    b.addEventListener("click",function(){\n'
+               '      var open=b.getAttribute("data-mmx")==="open";\n'
+               '      document.querySelectorAll("details.mmx-spine").forEach(function(d){d.open=open;});\n'
+               '      document.querySelectorAll("details.mmx-cn").forEach(function(d){d.open=open;});\n'
+               '    });\n  })(btns[i]);}\n})();\n</script>\n'
+               '<script src="../../../assets/js/mindmap-modules.js?v=20261029b" defer></script>\n'
+               '</body>\n</html>\n')
+    return "".join(out)
+
+
+ROLES = ("铺垫", "立论", "反证", "案例", "收束")
+
+
+def from_batch(slug: str, item: dict, ctx: dict) -> dict:
+    """把 --import-batch 的 {thesis,spine,chapters} 合成与 refine() 同构的结构。"""
+    chs = ctx.get("chapters") or []
+    pool = {c["no"]: [re.sub(r"\s+", "", x) for x in (c.get("anchor_pool") or [])] for c in chs}
+    spine = []
+    for s in item.get("spine") or []:
+        spine.append({"id": s.get("id") or "A", "label": s.get("label") or "",
+                      "why": s.get("why") or "",
+                      "chapters": [int(x) for x in (s.get("chapters") or [])
+                                   if str(x).strip().isdigit()]})
+    owner = {}
+    for s in spine:
+        for no in s["chapters"]:
+            owner[no] = s["id"]
+    last = spine[0]["id"] if spine else "A"
+    it_ch = {}
+    for c in item.get("chapters") or []:
+        try:
+            it_ch[int(c.get("no"))] = c
+        except Exception:
+            pass
+    out_ch, bad = [], []
+    for c in chs:
+        it = it_ch.get(c["no"]) or {}
+        anchor = (it.get("anchor") or "").strip()
+        ok_anchor = bool(anchor) and any(
+            re.sub(r"\s+", "", anchor)[:40] in p for p in pool.get(c["no"], []) if p)
+        if anchor and not ok_anchor:
+            bad.append(c["no"])
+            anchor = ""
+        role = it.get("role") if it.get("role") in ROLES else "立论"
+        out_ch.append({"no": c["no"], "title": c.get("title") or "",
+                       "spine": owner.get(c["no"], last),
+                       "gist": (it.get("gist") or "").strip() or "(未生成)",
+                       "role": role,
+                       "concepts": [x for x in (it.get("concepts") or []) if x][:4],
+                       "anchor": anchor, "anchor_ok": ok_anchor,
+                       "pts": int(c.get("pts") or 0), "with_q": int(c.get("with_q") or 0)})
+    pts = sum(x["pts"] for x in out_ch)
+    wq = sum(x["with_q"] for x in out_ch)
+    th = item.get("thesis") or {}
+    return {"slug": slug, "title": ctx.get("title") or "",
+            "thesis": {"claim": (th.get("claim") or "").strip(),
+                       "boundary": (th.get("boundary") or "").strip()},
+            "spine": [s for s in spine if any(x["spine"] == s["id"] for x in out_ch)],
+            "chapters": out_ch,
+            "evidence": {"points": pts, "with_quote": wq,
+                         "density": round(wq / pts, 3) if pts else 0.0},
+            "bad_anchor": bad,
+            "built_at": time.strftime("%Y-%m-%dT%H:%M:%S+08:00")}
+
+
 # ── 精读页模块统一开关（2026-10-29）：docs/mindmap-modules.json ──
 # enabled=false 的模块在渲染时整体跳过；改配置即对所有书统一生效，无需改页面或逐个编辑。
 MODULE_CFG_PATH = HERE / "docs" / "mindmap-modules.json"
