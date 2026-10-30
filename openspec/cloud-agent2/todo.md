@@ -91,5 +91,22 @@
 - [ ] ⏸ 《100个人生遗愿》不在 `reading-notes/index.html` 归档索引里（站首页有卡片）；索引归会话最全的本机维护，agent-2 不碰
 - [ ] ⏸ `ae6623/we-read-offline` 仓库仍不存在（线上旧 config 指向它）
 
+## 轮次 · 2026-10-31 01:22 官方 API key 接入 + 跑书安全性加固
+
+用户给了微信读书官方 skill 的 `wrk-` key（**不需要登录态**，用户明说云端和本机都要）。
+
+- [x] key 落位三处：本机 `~/.weread-auto-api-key`、部署源 `weread-cloud-new/weread-api-key.txt`（随部署上传）、顺手给 `weread-cloud/` 也放一份；`.gitignore` 已加两行
+- [x] 新增 `GET /api/diag/weread`：报 key 来源（env / home / deploy_file）、书名作者评分、章节数、热门划线总数
+  - 云端实测：`key_configured=true`（deploy_file）、40 章、381 条热门划线、最热 1404 人
+- [x] **修封装 bug**：`best_bookmarks` 网关默认只回 20 条，必须显式传 `maxIdx`（400 → 381 条一次取完）；已提交引擎 main `341fe963`
+- [x] **修限流**：连续请求网关回 **HTTP 499**（不是 JSON 错误码），逐章循环必中，静默 45s 才恢复。`call()` 加 1.2s 全局节流 + 499 指数退避重试（6/12/24s），已提交 `609be02f`。实测 40 章逐章拉取 0 失败，35 章有划线、366 条
+- [x] 产出 `data/import/100-ge-ren-sheng-yi-yuan.bookmarks.json`（40 章 / 366 条官方原文 + 划线人数），留作锚点校验与后续升级的原料
+- [x] **跑书安全加固**：`step_mindmap` 在没有 `<slug>.json` 且 **Gemini TLS 不可达**时快速失败（`_gemini_reachable()` 做 TLS 握手探测，不是只 connect——本机 TCP 通但 TLS 被掐，只看 connect 会误判）。负向实测《买房让日本人幸福了吗》→ 50 秒内 `ok=false` 并说明「没有 data/import/xxx.json，且云端到 Gemini 不通」，不再空转 25 分钟、不动已有页面
+- [x] 幂等验证：《100个人生遗愿》重跑精读 0.1s → 123,596B / 34 章 / 锚点缺 0，与线上完全一致；再跑 publish → **「无变更」**，没产生空提交
+- [x] 部署后回归：`/api/version` `stale=false`、`drift=[]`、engine `c2e7a4e`（代码提交是 `609be02`，`c2e7a4e` 只是 agent-1 新加的 `A2A-WEREAD-AUTO2.md` 文档）；登录态重导 11 cookie
+
+> 最后更新：2026-10-31 01:22（Asia/Shanghai）
+
+
 > 最后更新：2026-10-31 01:05（Asia/Shanghai）
 
