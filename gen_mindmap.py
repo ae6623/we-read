@@ -933,6 +933,16 @@ def _extra_modules(d: dict) -> str:
 
 
 # ------------------------------------------------------------------ 主流程
+def _persist(slug: str, d: dict, mode: str) -> None:
+    """精读结构入库（data/we_read.db 的 book_mindmap）。失败不影响出页面。"""
+    try:
+        import weread_store as _S
+        if hasattr(_S, "save_mindmap"):
+            _S.save_mindmap(slug, (d or {}).get("title") or "", d or {}, mode=mode)
+    except Exception:
+        pass
+
+
 def run_one(slug: str, write: bool, dry: bool, log=print):
     ctx = build_ctx(slug)
     if not ctx:
@@ -947,6 +957,7 @@ def run_one(slug: str, write: bool, dry: bool, log=print):
     if not dry:
         (DB_OUT / ("%s.json" % slug)).write_text(
             json.dumps(d, ensure_ascii=False, indent=1), encoding="utf-8")
+        _persist(slug, d, "llm")
     if write:
         html = render(d, ctx)
         (BOOKS / slug / "mindmap.html").write_text(html, encoding="utf-8", newline="\n")
@@ -1006,6 +1017,7 @@ def main(argv=None):
             d = from_batch(slug, item, ctx)
             (DB_OUT / ("%s.json" % slug)).write_text(
                 json.dumps(d, ensure_ascii=False, indent=1), encoding="utf-8")
+            _persist(slug, d, "import")
             if a.write:
                 (BOOKS / slug / "mindmap.html").write_text(
                     render(d, ctx), encoding="utf-8", newline="\n")
@@ -1035,6 +1047,7 @@ def main(argv=None):
             if not a.dry_run:
                 (DB_OUT / ("%s.json" % slug)).write_text(
                     json.dumps(d, ensure_ascii=False, indent=1), encoding="utf-8")
+                _persist(slug, d, "from-outline")
             if a.write:
                 (BOOKS / slug / "mindmap.html").write_text(
                     render(d, ctx), encoding="utf-8", newline="\n")

@@ -11,7 +11,9 @@
 """
 from __future__ import annotations
 
+import json
 import sqlite3
+import time
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
@@ -80,6 +82,21 @@ def _init():
     )
     db.execute(
         "CREATE INDEX IF NOT EXISTS idx_outline_book ON book_outline(book)"
+    )
+    # 精读结构入库（2026-10-31）：以前只落 data/mindmap/<slug>.json 与页面，
+    # 换环境/重建沙箱就查不到「这本书精读做到哪一步、用的什么通道」。
+    db.execute(
+        """CREATE TABLE IF NOT EXISTS book_mindmap (
+               slug      TEXT PRIMARY KEY,
+               book      TEXT,
+               mode      TEXT,
+               chapters  INTEGER DEFAULT 0,
+               spine     INTEGER DEFAULT 0,
+               density   REAL DEFAULT 0,
+               missing   INTEGER DEFAULT 0,
+               payload   TEXT,
+               built_at  TEXT
+           )"""
     )
     db.commit()
 
@@ -273,6 +290,54 @@ def load_book_outline(slug: str) -> list:
     return chs
 
 
+# ---------------------------------------------------------------- 精读结构
+def save_mindmap(slug: str, book: str, d: dict, mode: str = "") -> bool:
+    """把一份精读结构（refine/import/from-outline 的产物）写进 book_mindmap。
+
+    同时保留整份 JSON 到 payload 列：页面渲染用文件，查询/统计用库，
+    两边不打架。mode 记录来源通道（llm / import / from-outline）。
+    """
+    if not isinstance(d, dict) or not d.get("chapters"):
+        return False
+    db = get_db()
+    ev = d.get("evidence") or {}
+    db.execute(
+        """INSERT INTO book_mindmap(slug, book, mode, chapters, spine, density,
+                                    missing, payload, built_at)
+           VALUES(?,?,?,?,?,?,?,?,?)
+           ON CONFLICT(slug) DO UPDATE SET
+             book=excluded.book, mode=excluded.mode, chapters=excluded.chapters,
+             spine=excluded.spine, density=excluded.density, missing=excluded.missing,
+             payload=excluded.payload, built_at=excluded.built_at""",
+        (slug, book or d.get("title") or "", mode or d.get("mode") or "",
+         len(d.get("chapters") or []), len(d.get("spine") or []),
+         float(ev.get("density") or 0), len(d.get("bad_anchor") or []),
+         json.dumps(d, ensure_ascii=False),
+         d.get("built_at") or time.strftime("%Y-%m-%dT%H:%M:%S")))
+    db.commit()
+    return True
+
+
+def load_mindmap(slug: str) -> dict | None:
+    db = get_db()
+    row = db.execute("SELECT payload FROM book_mindmap WHERE slug=?", (slug,)).fetchone()
+    if not row:
+        return None
+    try:
+        return json.loads(row["payload"])
+    except Exception:
+        return None
+
+
+def list_mindmaps() -> list:
+    """每本已入库精读的一行摘要（控制台/统计用）。"""
+    db = get_db()
+    rows = db.execute(
+        """SELECT slug, book, mode, chapters, spine, density, missing, built_at
+           FROM book_mindmap ORDER BY built_at DESC""").fetchall()
+    return [dict(r) for r in rows]
+
+
 def counts() -> list:
     """每本书的入库统计，供 /api/ingest/status 展示。"""
     db = get_db()
@@ -282,52 +347,6 @@ def counts() -> list:
                   SUM(backfill) AS backfill,
                   (SELECT COUNT(*) FROM quiz q WHERE q.book = ai_qa.book) AS quiz
            FROM ai_qa GROUP BY book ORDER BY book""",
-    ).fetchall()
-    return [dict(r) for r in rows]
-
-
-# ---------------------------------------------------------------- 精读笔记（2026-10-28 补）
-# 站内 15 本 / 22 篇精读笔记此前没有表承接：它们是「AI 大纲（机器产物）」与
-# 「人读后的判断」之间唯一的桥，跨书对照最值钱的一层就在这里。
-# 表是懒建的（不改进 _init），避免与并行改动冲突。
-_NOTE_DDL = """CREATE TABLE IF NOT EXISTS note (
-       slug       TEXT NOT NULL,   -- 站点 slug
-       date       TEXT NOT NULL,   -- 笔记日期 YYYY-MM-DD
-       title      TEXT,            -- 当篇标题
-       html       TEXT,            -- 正文 HTML（整页）
-       bytes      INTEGER NOT NULL DEFAULT 0,
-       has_aiqa   INTEGER NOT NULL DEFAULT 0,  -- 含 AI 问书区块
-       updated_at TEXT NOT NULL,
-       PRIMARY KEY (slug, date)
-   )"""
-
-
-def save_note(slug: str, date: str, title: str | None, html: str,
-              has_aiqa: bool = False) -> int:
-    """写入一篇精读笔记（按 slug+date 幂等）。返回字节数。"""
-    db = get_db()
-    db.execute(_NOTE_DDL)
-    now = datetime.now(CST).isoformat(timespec="seconds")
-    b = len((html or "").encode("utf-8"))
-    db.execute(
-        """INSERT INTO note (slug, date, title, html, bytes, has_aiqa, updated_at)
-           VALUES (?,?,?,?,?,?,?)
-           ON CONFLICT(slug, date) DO UPDATE SET
-             title=excluded.title, html=excluded.html, bytes=excluded.bytes,
-             has_aiqa=excluded.has_aiqa, updated_at=excluded.updated_at""",
-        (slug, date, title, html, b, 1 if has_aiqa else 0, now),
-    )
-    db.commit()
-    return b
-
-
-def load_notes(slug: str) -> list:
-    """返回某书的全部精读笔记（按日期升序）。"""
-    db = get_db()
-    db.execute(_NOTE_DDL)
-    rows = db.execute(
-        "SELECT date, title, html, bytes, has_aiqa FROM note"
-        " WHERE slug=? ORDER BY date ASC", (slug,)
     ).fetchall()
     return [dict(r) for r in rows]
 
