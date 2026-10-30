@@ -11,6 +11,16 @@ description: Multi-platform reading workflow for source-labeled whole-book previ
 
 为用户把多本书读得更有效：开读即建立有来源边界的全书视角初版，再把每天真实读到的内容连回框架，完读后才做校订后的整书汇编。`references/book-registry.json` 是书目归属/认领、完读、`active_sessions`（兼容旧锁 `active_session`） 与 `resume_point` 的权威来源；`references/agent-roster.json` 只登记身份、类型、排班及个人状态镜像，不作为书目或完读事实的唯一来源。共享归档与 Git 规则见 `references/coordination.md`，跨 Agent 开始/结束记录见 `references/agent-communication.md`，用户最新决定见 `references/decisions.md`。使用某个平台前阅读对应的 `references/platforms/<platform>.md`（当前先有AI读书指南）。
 
+## 笔记台账：产出要登记，缺的要补偿（2026-10-31 用户决定）
+
+任何 Agent 产出或更新一本书的笔记后，必须让「这本书做到了哪一步、还缺什么」可查；出问题时按同一套流程补偿——**补偿 = 重新产出这份笔记，不是把状态改成看起来好了**。完整规范（表结构、状态语义、命令、验收）见 [笔记台账与补偿规范](references/notes-ledger.md)。
+
+- **两张表**：`book_note`（一本书一行：`status`、`steps_ok/all`、`mods_ok/all`）+ `book_module`（每个产物/模块一行：步骤 `outline`/`overview`/`mindmap`/`publish`，精读子模块 `mindmap.oneline` … `mindmap.thennow`）。状态五档：`ok`（已产出且指纹对上）、`skipped`（已有未重做）、`stale`（记着 ok 但文件没了或 md5 变了）、`failed`、`missing`（应有但没有）。
+- **台账是索引，不是事实**：与 main 冲突时以站点仓库的实际文件为准；库在各自部署的 `weread-data/we_read.db`，不共享库文件，共享的是同一套表结构与流程。
+- **三个操作**：扫描回填（`POST /api/notes/backfill`，幂等，换环境/库丢失时用）、核验（`POST /api/notes/verify`，把失效的标 `stale`）、查漏（`GET /api/notes/<slug>` 的 `plan.run` / `missing_modules`）。生产前 `compose_book.plan_steps()` 会先算账：核验通过就跳过，只补缺的和失效的。
+- **补偿边界（三条铁律）**：① 只重跑失效的步骤，`force` 覆盖前必须留 `mindmap.prev.html` 备份——页面里可能有别的 Agent 注入的模块；② 发布只发本次真正写入的文件，`skipped=exists` 的步骤不算写入（否则会用旧快照覆盖 main）；③ 没有 LLM 通道就走降级链（`data/import` → OpenAI 兼容 → `--from-outline` 结构化重算 → 明确失败），降级程度必须让页面自我标注，不许假装生成、不许写模板假数据。
+- **补偿完在 A2A 日文件记一条**：slug / 哪一步 / 为什么 / 用的什么通道 / 验收结果，避免别的 Agent 重复劳动；别人 registry 上有 owner 或活跃会话的书，先问再动。
+
 ## 选书与排班先过滤阅读黑名单（2026-10-23）
 管理员推荐、排班派活及所有阅读员选书、认领、默认续读、实际开读前，先读同一权威仓库最新 main 的 [阅读黑名单规则](references/reading-blacklist.md) 与唯一 [黑名单数据](references/reading-blacklist.json)。命中的具体书或禁读主题直接排除，转下一本已获授权的合格候选，不再逐次询问；用户指定优先与旧认领不自动解除禁读决定。不为分类打开正文／书内 AI，主题不明由选书 Agent 核查非正文书目元数据，仍不明就暂不选，不反复打扰用户。单次跳过、暂停、受阻不自动成为永久黑名单；不改既有 owner、锁、续读点或阅读历史。可复用只读工具 `scripts/filter-reading-candidates.py`；通过黑名单后仍须走认领、暂停状态、时窗与资源预检。规则合入 main 不代表所有旧会话或独立执行器已热更新。
 ## 所有阅读员的公开内容原则（2026-10-22）
