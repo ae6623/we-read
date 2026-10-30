@@ -18,7 +18,12 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent
-DB_PATH = BASE_DIR / "data" / "we_read.db"
+# 2026-10-31：库原来放 data/we_read.db，而部署会把本机 data/ 整目录传上去
+# （本机那份是空库），每次部署就把沙箱里攒的数据冲光——实测回填 76 本精读后
+# 一次部署归零。weread-data/ 是运行时目录（compose.json 在里面能跨部署留存），
+# 所以库也搬过去；首次启动时若新库不存在而旧库有数据，自动迁移一次。
+DB_PATH = BASE_DIR / "weread-data" / "we_read.db"
+_LEGACY_DB = BASE_DIR / "data" / "we_read.db"
 CST = timezone(timedelta(hours=8))
 
 _conn = None
@@ -29,9 +34,23 @@ def _slug(title: str) -> str:
     return s.strip("-")[:60] or "book"
 
 
+def _migrate_legacy() -> None:
+    """旧库 data/we_read.db → 新库 weread-data/we_read.db（只在新库缺失时搬一次）。"""
+    try:
+        if DB_PATH.exists() or not _LEGACY_DB.exists():
+            return
+        if _LEGACY_DB.stat().st_size <= 40960:      # 空库/骨架，没必要搬
+            return
+        DB_PATH.parent.mkdir(parents=True, exist_ok=True)
+        DB_PATH.write_bytes(_LEGACY_DB.read_bytes())
+    except Exception:
+        pass
+
+
 def get_db():
     global _conn
     if _conn is None:
+        _migrate_legacy()
         DB_PATH.parent.mkdir(parents=True, exist_ok=True)
         _conn = sqlite3.connect(str(DB_PATH), check_same_thread=False)
         _conn.row_factory = sqlite3.Row
