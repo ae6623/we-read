@@ -139,3 +139,35 @@ LLM 连不上就让云端提供 api 连接、数据要入库；两个 key（Gemi
 - [ ] ⏸ GitHub Pages 的 Actions 队列经常积压（本轮多次 queued/cancelled），新页面可能延迟数分钟才 200
 
 > 最后更新：2026-10-31 02:05（Asia/Shanghai）
+
+## 轮次 · 2026-10-31 02:25 笔记台账 + 配置台账（两张表）
+
+用户要求：① 找库表存放已产出的笔记与「笔记下各模块的产出情况」，下次一键生产能查漏补缺、能跳过；
+② 再搞一张配置表，把基础配置（git/gemini/skill/api key）、流程、模块、agent（多 agent/本地/云端/cue）都收进去。
+
+- [x] **`book_note`（一本书一行）+ `book_module`（每个产物/模块一行）**，库在 `weread-data/we_read.db`
+  - `book_module.module`：步骤 `outline/overview/mindmap/publish`；精读子模块 `mindmap.oneline…thennow`
+  - 状态语义：`ok` / `skipped` / `failed` / `stale`（记了 ok 但文件不见了或 md5 变了）/ `missing`（应有但没有）
+  - 每行带 `path/size/md5/mode/detail`，`mode` 记来源通道（llm / import / from-outline / backfill）
+- [x] **生产前查台账**（`compose_book.plan_steps`）：文件在 + 指纹对得上 → 跳过；否则跑；全跳过连 `publish` 一起省
+  - 实测：已齐的书 `steps=outline,overview,mindmap,publish` 秒退，`last_status=skipped`，
+    消息 `全部产物已存在且校验一致，本次无变更；精读还缺模块：top10、aiask、higher、verify、thennow`
+- [x] **接口**：`GET /api/notes`、`GET /api/notes/<slug>`（带现场核验 + 下一步计划）、
+  `POST /api/notes/backfill`（幂等扫描，实测 82 本 / 552 个子模块 / 10.8s）、`POST /api/notes/verify`（标 stale）
+- [x] **`app_config` 配置表**（`config_store.py`），四组 49 项：
+  - `basic` 凭证与仓库：`site.github_token`、`shared.token`、`gemini.api_key`、`weread.api_key`、`llm.api_key/base_url/model`、仓库地址、发布模式/代理
+  - `flow` 流程：`compose.steps/module_steps/auto_start`、`read.only`、阅读时长上下限、云端排班、自更新
+  - `module` 模块：精读 8 个模块开关、`show_pending`、原句密度目标
+  - `agent`：`agent.name/role/env`、本地与云端地址、`agent.peers` 名册、`cue.enabled/target/channel/template/timeout`
+  - `GET|POST /api/config/table`、`GET /api/config/health`；**config.json 仍是运行时真相源**，改表即写回 json
+  - 敏感项默认掩码，`?reveal=1` 出明文；前端保存时空值=不改（避免把掩码写回去）
+- [x] **前端两张卡**：「🗂 笔记台账」（列表→详情，显示 8 模块 ●/○、核验结果、下次将跑什么）、
+  「⚙️ 配置台账」（四组 tab，逐项可改，整体保存）
+- [x] 修 2 个真问题：
+  1. **sqlite 全局单连接跨线程写** → 回填写一半炸 `SystemError: error return without exception set`
+     （每次只多写 7 本）。改 `threading.local()` 每线程独立连接 + WAL + busy_timeout，4 线程并发压测通过
+  2. 页面 `<title>` 解析出 `《100个人生遗愿》｜AI 大纲（读前通读）` → 优先取《》内书名
+- [ ] ⏸ 精读子模块的「补」还没自动化：`backfill_modules.py` 已同步进部署源但没接进 compose，
+  台账能算出缺哪些（当前 100个人生遗愿 缺 top10/aiask/higher/verify/thennow），要补得填 LLM key 或人工写 JSON
+
+> 最后更新：2026-10-31 02:25（Asia/Shanghai）
