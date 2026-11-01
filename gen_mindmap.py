@@ -591,9 +591,14 @@ def render(d: dict, ctx: dict | None = None) -> str:
     out.append('<main class="wrap mmx-wrap">\n<header class="note-head">\n')
     out.append('  <p class="eyebrow">CLOSE READING · AFTER THINKING</p>\n')
     out.append("  <h1>《%s》精读</h1>\n" % E(title))
-    out.append('  <p class="meta">%d 章 · %d 条要点 · %d 句原句 · 主干 %d 条 · '
-               '章节功能定位 · 由本书 AI 大纲条目重算</p>\n'
-               % (n_ch, pts, nq, len(sp)))
+    # 一条热门划线都没有的书：meta 别再写「0 条要点 · 0 句原句」，
+    # 那是数据缺失，不是这本书的「成绩」（2026-11-01）。
+    if pts == 0:
+        out.append('  <p class="meta">%d 章 · 暂无公开热门划线 · 章节树只到目录层级</p>\n' % n_ch)
+    else:
+        out.append('  <p class="meta">%d 章 · %d 条要点 · %d 句原句 · 主干 %d 条 · '
+                   '章节功能定位 · 由本书 AI 大纲条目重算</p>\n'
+                   % (n_ch, pts, nq, len(sp)))
     out.append('  <p class="links"><a href="../../../index.html">← 返回首页</a>\n'
                '     <a href="../../index.html">阅读归档索引</a>\n'
                '     <a href="overview.html">全书视角</a>\n'
@@ -602,9 +607,13 @@ def render(d: dict, ctx: dict | None = None) -> str:
     out.append('<p class="mmx-claim">%s</p>\n' % E(thesis.get("claim") or ""))
     if thesis.get("boundary"):
         out.append('<p class="mmx-bound"><b>边界</b> %s</p>\n' % E(thesis["boundary"]))
-    out.append('<p class="mmx-evi">证据密度 <b>%d%%</b> · %d 条要点中 %d 条带原句 '
-               '（结构由 AI 大纲条目重算，非读后感）</p>\n' % (dens, pts, wq))
-    out.append('<div class="mmx-bar"><i style="width:%d%%"></i></div>\n</section>\n' % dens)
+    if pts:
+        out.append('<p class="mmx-evi">证据密度 <b>%d%%</b> · %d 条要点中 %d 条带原句 '
+                   '（结构由 AI 大纲条目重算，非读后感）</p>\n' % (dens, pts, wq))
+        out.append('<div class="mmx-bar"><i style="width:%d%%"></i></div>\n</section>\n' % dens)
+    else:
+        # 没有要点就没有「证据密度」，留一根 0% 的进度条等于骗人。
+        out.append('</section>\n')
     out.append('<section class="mmx-svgwrap">\n%s</section>\n' % _svg_spine(d))
     if pts == 0:
         # 全书一条热度划线都没有：说清楚是「书没被划线」而不是页面坏了。
