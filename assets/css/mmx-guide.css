@@ -120,3 +120,8 @@
 .mmx-evib li{line-height:1.9;margin:.2em 0}
 .mmx-evib b{color:#3a352c}
 /* 阅读时要验证的问题 复用 .mmx-pending（虚线框占位）即可，无需新类 */
+
+/* 空章：本书该章没有公开热门划线。渲染成静态一行——
+   不做成折叠（点开是空白），也不显示「0 条」（一排 0 像页面坏了）。 */
+.mmx-cn-empty{display:flex;gap:9px;align-items:baseline;padding:9px 2px;opacity:.7}
+.mmx-cn-empty .mmx-name{color:#7d7668}
