@@ -20,13 +20,16 @@
 import re
 import html
 
-# 反思题区块标题的单一真源（仓库根 reading_note_spec.py）。
-# 本模块可能在两种 sys.path 下被导入：以仓库根为 cwd 跑 `python -m overview_gen`，
-# 或由外部脚本 `from overview_gen.auto import ...`——后者 sys.path[0] 未必是仓库根，
-# 故补一次路径再重试。失败仍然抛错，不做"用内联默认值"的静默降级。
+try:  # 包内导入（cli/auto 走这条）与脚本直跑（sys.path 已在 overview_gen）都要能用
+    from .mindmap_render import render_mindmap
+except ImportError:  # pragma: no cover
+    from mindmap_render import render_mindmap
+
+# 反思题区块标题的唯一真源在仓库根 reading_note_spec.py。
+# 包内导入时 cwd 已在仓库根；直跑脚本时 sys.path[0] 是 overview_gen/，需补父目录。
 try:
     from reading_note_spec import REFLECT_TITLE
-except ImportError:  # pragma: no cover - 取决于调用方 cwd
+except ImportError:  # pragma: no cover
     import sys as _sys
     from pathlib import Path as _Path
     _sys.path.insert(0, str(_Path(__file__).resolve().parent.parent))
@@ -39,62 +42,16 @@ CSS_HEAD = '''<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="《{title}》全书视角（由 AI 大纲整理）">
-<title>《{title}》｜全书视角</title>
+<meta name="description" content="《{title}》全书视角 · 读前通读（由 AI 大纲整理）">
+<title>《{title}》｜全书视角（读前通读）</title>
 <link rel="stylesheet" href="../../../assets/css/reading-overview.css">
-<link rel="stylesheet" href="../../../assets/css/start-here.css">
 <link rel="stylesheet" href="../../../assets/css/mmx-guide.css">
 <link rel="stylesheet" href="../../../assets/css/book-link-drawer.css">
+<script src="../../../assets/js/mindmap.js" defer></script>
 </head>
 <body>
 <main class="page">
 '''
-
-
-# 「章节导读」工具行 + 页尾脚本：与 tools/convert_guide_mmx.py 的迁移口径完全一致。
-# 渲染器必须自带这两段——否则新产页会缺「展开全部要点 / 全部收起」，
-# 与 convert_guide_mmx.py 迁移过的旧页不一致（2026-10-30 补）。
-MMX_TOOLS = ('<div class="mmx-tools">'
-             '<button class="mmx-btn" data-mmx="open">展开全部要点</button>'
-             '<button class="mmx-btn" data-mmx="close">全部收起</button>'
-             '<span class="mmx-tip">章折叠态只占一行，点章名展开全部小节、要点与原句；'
-             '更完整的分层见本书 AI 大纲页</span></div>')
-MMX_JS = """<script>
-(function(){
-  var btns=document.querySelectorAll("[data-mmx]");
-  for(var i=0;i<btns.length;i++){(function(b){
-    b.addEventListener("click",function(){
-      var open=b.getAttribute("data-mmx")==="open";
-      document.querySelectorAll("details.mmx-cn").forEach(function(d){d.open=open;});
-      document.querySelectorAll("details.mmx-sec").forEach(function(d){d.open=open;});
-    });
-  })(btns[i]);}
-})();
-</script>
-"""
-
-
-# 无信息量的章名：纯序号（一/二/1/2）、「第X章」、罗马数字。
-# 左侧 mmx-no 已经是序号，这类章名等于把序号重复一遍，读者看不出这章讲什么。
-_BAD_CHAPTER = re.compile(r"^第?\s*[一二三四五六七八九十百零〇0-9IVXivx]{1,4}\s*"
-                          r"[、.．章节篇部回]?\s*$")
-
-
-def chapter_display(t, secs) -> str:
-    """章名没信息量时，用它第一个小节标题顶上（2026-10-30 用户提出）。
-
-    典型是《黄金时代》——微信读书 AI 大纲的一级条目就叫「一」「二」「三」，
-    真正的标题在二级（「陈清扬不是破鞋的讨论」）。
-    """
-    t = (t or "").strip()
-    if t and not _BAD_CHAPTER.match(t):
-        return t
-    for s in secs or []:
-        h = (s.get("h4") or s.get("h") or "").strip()
-        if h and not _BAD_CHAPTER.match(h):
-            # 保留原章名做前缀，读者对得上大纲与目录
-            return ("%s · %s" % (t, h)) if t else h
-    return t or "本章要点"
 
 
 def esc(t):
@@ -224,7 +181,7 @@ def reset_split_state():
 
 
 # ---------------------------------------------------------------- 渲染
-def build(cfg, chapters, aiqa_html="", quiz_answers=None, quiz_items=None):
+def build(cfg, chapters, aiqa_html="", quiz_answers=None):
     """渲染一本 overview.html 文本。
 
     cfg      : BOOK 配置 dict（slug/title/author/chip/split/thesis/mindmap/ai/
@@ -236,24 +193,20 @@ def build(cfg, chapters, aiqa_html="", quiz_answers=None, quiz_items=None):
     reset_split_state()
     out = [CSS_HEAD.format(title=cfg['title'])]
     out.append('''<header class="note-head">
-  <p class="eyebrow">全书视角</p>
+  <p class="eyebrow">全书视角 · 读前通读</p>
   <h1>《%s》</h1>
   <p class="meta">作者：%s　·　来源：AI 大纲整理　·　共 %d 章</p>
-  <div class="chips"><span class="chip">全书视角</span><span class="chip">AI 大纲</span><span class="chip">%s</span></div>
-  <p class="small">本页由本书 AI 大纲（章节要点与原文摘录）整理，供全书视角与后续精读对照，<b>不等同于已亲读</b>。%s</p>
+  <div class="chips"><span class="chip">读前通读</span><span class="chip">AI 大纲</span><span class="chip">%s</span></div>
+  <p class="small">本页由本书 AI 大纲（章节要点与原文摘录）整理，供读前通读与后续精读对照，<b>不等同于已亲读</b>。%s</p>
 </header>
 ''' % (cfg['title'], cfg['author'], len(chapters), cfg['chip'], cfg.get('head_note', '')))
-
-    # IA-05「从这里开始」导航块（首屏可见；链接按数据可用性，由 auto.py 填 cfg['start_here']）
-    out.append(cfg.get('start_here') or '')
 
     out.append('<section class="card"><h2>一句话主旨</h2>\n<p>%s</p></section>\n' % cfg['thesis'])
     # 「全书结构与主题关系」章节串联块已合并进章节导读（2026-10-28）：
     # 同一批章在三处出现（结构分组/章节导读/AI 大纲），满屏大纲感。
-    # 结构分组块删除，cfg['mindmap'] 保留但不再渲染；AI 大纲页继续作为完整版。
+    # 结构分组块删除，cfg['mindmap'] 不再渲染；AI 大纲页继续作为完整版。
 
     out.append('<section aria-labelledby="chapter-guide-title"><h2 id="chapter-guide-title">章节导读</h2>\n')
-    out.append('  ' + MMX_TOOLS + '\n')
 
     parts = []
     for idx, c in enumerate(chapters):
@@ -278,7 +231,7 @@ def build(cfg, chapters, aiqa_html="", quiz_answers=None, quiz_items=None):
         <span class="badge" data-s="unread">未读</span><span class="mmx-caret">›</span>
       </summary>
       <div class="mmx-body">
-''' % (no, esc(chapter_display(t, secs))))
+''' % (no, esc(t)))
             out.append('        <p class="mmx-stat">共 %d 个小节 · %d 条要点 · %d 句原句摘录</p>\n'
                        % (len(secs), npts, nq))
             cap = min(per_ch, budget - used_total)
@@ -297,10 +250,10 @@ def build(cfg, chapters, aiqa_html="", quiz_answers=None, quiz_items=None):
                     take = pts[: cap - shown]
                     shown += len(take)
                     qs = [q for q in (s.get('quotes') or []) if 10 <= len(q) <= 200]
-                    op = ' open' if (si == 1 or (len(secs) == 1 and not (s.get('h') or s.get('h4')))) else ''
+                    op = ' open' if (si == 1 or (len(secs) == 1 and not s.get('h'))) else ''
                     out.append('        <details class="mmx-sec"%s><summary>'
                                '<span class="mmx-sech">%s</span><span class="mmx-secc">%d 条</span>'
-                               '</summary>\n' % (op, esc(s.get('h') or s.get('h4') or '本章要点'), len(pts)))
+                               '</summary>\n' % (op, esc(s.get('h') or '本章要点'), len(pts)))
                     out.append('          <ol class="mmx-pts">%s</ol>\n'
                                % ''.join('<li>%s</li>' % esc(trim(p)) for p in take))
                     if qs:
@@ -325,18 +278,11 @@ def build(cfg, chapters, aiqa_html="", quiz_answers=None, quiz_items=None):
 
     out.append('<section class="views"><h2>核心观点初判</h2>\n%s</section>\n\n' % _pretty_views(cfg['views']))
     out.append('<section class="card"><h2>迁移与行动</h2>\n%s</section>\n\n' % cfg['action'])
-    # 全书思考三问：gen_quiz 出过题就用它的题面 + 答案（整块替换）；
-    # 没出过才退回 books.py/derive_cfg 的题面 + 补答配对（2026-10-30）
-    # 区块标题统一从 reading_note_spec 取，不再硬编码（2026-11-01）
-    if quiz_items:
-        out.append(_quiz_block(quiz_items))
-    else:
-        out.append('<section class="card quiz-card"><h2>%s</h2>\n<ol>\n%s\n</ol>%s</section>\n\n'
-                   % (REFLECT_TITLE, cfg['quiz'], _quiz_answers_html(cfg.get('quiz'), quiz_answers or [])))
+    out.append('<section class="card quiz-card"><h2>%s</h2>\n<ol>\n%s\n</ol>%s</section>\n\n'
+               % (REFLECT_TITLE, cfg['quiz'],
+                  _quiz_answers_html(cfg.get('quiz'), quiz_answers or [])))
     out.append('<section class="card"><h2>复习与记忆复利</h2>\n%s</section>\n\n' % cfg['memo'])
-    out.append('<footer class="site-footer"><a href="../../../index.html">← 返回首页</a>　<a href="../../index.html">阅读归档索引</a></footer>\n')
-    out.append(MMX_JS)
-    out.append('</main>\n</body>\n</html>\n')
+    out.append('<footer class="site-footer"><a href="../../../index.html">← 返回首页</a>　<a href="../../index.html">阅读归档索引</a></footer>\n</main>\n</body>\n</html>\n')
     return ''.join(out)
 
 
@@ -393,26 +339,3 @@ def _quiz_answers_html(quiz_cfg, answers):
                           % (esc(q), esc(a).replace('\n', '<br>')))
     blocks.append('</div>')
     return ''.join(blocks)
-
-
-# 自测题来源 → 区块标题。题面由谁出，就标谁，不冒充（2026-10-30）
-_QUIZ_SRC_TITLE = {
-    "ai": "AI 出题并作答（微信读书 Ai 问书，带书内引源）",
-    "gemini": "AI 出题并作答（Gemini 依据本书大纲）",
-    "local": "参考答案（依据本书 AI 大纲整理，未经 AI 问答）",
-}
-
-
-def _quiz_block(items: list[dict]) -> str:
-    """题面与答案都来自 gen_quiz：整块渲染，不做题面模糊配对。"""
-    src = (items[0].get("src") or "").lower()
-    title = _QUIZ_SRC_TITLE.get(src, "参考答案")
-    lis = "".join("<li>%s</li>\n" % esc(i.get("q") or "") for i in items)
-    blocks = ['<section class="card quiz-card"><h2>%s</h2>\n<ol>\n%s</ol>'
-              % (REFLECT_TITLE, lis), '<div class="quiz-ans"><h3>%s</h3>' % title]
-    for i in items:
-        blocks.append('<div class="aiqa-item"><h3>%s</h3><p>%s</p></div>'
-                      % (esc(i.get("q") or ""),
-                         esc(i.get("a") or "").replace("\n", "<br>")))
-    blocks.append("</div></section>\n\n")
-    return "".join(blocks)

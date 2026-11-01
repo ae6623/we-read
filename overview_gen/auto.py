@@ -215,7 +215,7 @@ def derive_cfg(parsed, title, author, chip="AI大纲整理"):
     # 全书结构（mindmap）：章节标题 + 各章首层小节（忠实转写，按原样呈现）
     lines = ["%s · %s · 共 %d 章" % (title, author or "（作者待补）", n_ch)]
     for i, c in enumerate(chapters, 1):
-        secs = " / ".join(s.get("h4", "") for s in c.get("secs", []) if s.get("h4"))[:48]
+        secs = " / ".join(s.get("h4", "") for s in c.get("secs", []) if s.get("h4"))
         lines.append("├─ 第%d章 《%s》" % (i, c.get("title", "")))
         if secs:
             lines.append("│   └─ %s" % secs)
@@ -256,9 +256,10 @@ def derive_cfg(parsed, title, author, chip="AI大纲整理"):
         "<p><b>三、验证存疑：</b>凡标「存疑」的观点，读原文时专门核对一次再决定是否采纳。</p>"
     )
     # 默认反思题：全书视角的高维三问，来自单一真源 reading_note_spec。
-    # 旧的那套（"大纲共列出多少章节条目/第一章最让你意外/合上本页能否讲清"）是
+    # 旧的一套（"大纲共列出多少章节条目/第一章最让你意外/合上本页能否讲清"）是
     # 章节条目级、版面元信息级的问法，读来无增益，已废弃（2026-11-01）。
-    quiz = reflect_questions_html()
+    # 2026-11-01 晚：题库扩到 24 题，按书名稳定随机抽 3（不同书不再千篇一律）。
+    quiz = reflect_questions_html(title)
     memo = (
         "<p>《%s》是 AI 大纲自动整理页：先抓全书骨架（%d 章）与首章要点，再带着问题读原文。</p>"
         "<p>每周回看一次——哪些「存疑」已读原文验证、哪些仍待查证，让记忆复利。</p>"
