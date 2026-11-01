@@ -7,11 +7,15 @@
   if (panels.some((panel) => !panel)) return;
   const hashByTabId = new Map([
     ['reading-tab-overview', 'tongDu'],
-    ['reading-tab-close', 'jingDu'],
     ['reading-tab-series', 'xiLie'],
     ['reading-tab-archive', 'guiDang'],
   ]);
-  const indexForHash = (hash) => tabs.findIndex((tab) => hashByTabId.get(tab.id) === hash);
+  // 2026-11-01 撤掉「精读」页签（书架卡片里已有精读入口），老链接 #jingDu 并回书架
+  const legacyHash = { jingDu: 'tongDu' };
+  const indexForHash = (hash) => {
+    const want = legacyHash[hash] || hash;
+    return tabs.findIndex((tab) => hashByTabId.get(tab.id) === want);
+  };
   const indexFromLocation = () => indexForHash(window.location.hash.slice(1));
 
   // Progressive enhancement: without JS, all sections and their links remain visible.
@@ -81,7 +85,7 @@
   panels.forEach(sortCardsNewest);
 
   // A recognized URL hash selects its tab; otherwise start on 精读.
-  const defaultIndex = tabs.findIndex((tab) => tab.id === 'reading-tab-close');
+  const defaultIndex = tabs.findIndex((tab) => tab.id === 'reading-tab-overview');
   const hashIndex = indexFromLocation();
   activate(hashIndex >= 0 ? hashIndex : (defaultIndex >= 0 ? defaultIndex : 0));
   module.setAttribute('data-tabs-ready', '');

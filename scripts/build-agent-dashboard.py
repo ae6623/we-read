@@ -31,14 +31,15 @@ PUBLIC_PROGRESS = {
     "local-pdf-reader": {"bookTitle": "职业如何规划？大城市，小城市，如何抉择？我来说说我的个人经历和思考", "bookStatus": "paused", "recordedStatus": "未能开始阅读（受阻）", "coverage": "10月19日最新尝试未开读；此前续读至原帖 2014-05-24 09:53 回复（作者答复未读）", "duration": "最近成功选读窗口约9分48秒；最新受阻尝试0秒", "durationScope": "前者含本地解析与等待，并非纯阅读或平台时长；后者仅为最新受阻尝试，不合计", "recordedAt": "2026-10-19T01:41:39+08:00", "sourceLabel": "2026-10-19 沟通核实", "note": "本机工具及替代篇目预检受阻；保留已有续读点，未声称完成。"},
     "wechat-reading-browser": {"bookTitle": "大转向：世界如何步入现代", "bookStatus": "in_progress", "recordedStatus": "最近已确认部分阅读 · 非当前在线状态", "coverage": "第三章《寻找卢克莱修》开篇至西塞罗评价段末（截至 2026-10-18）", "duration": "未知", "durationScope": "未记录本段有效时长", "recordedAt": "2026-10-18T14:38:27+08:00", "sourceLabel": "注册表已确认边界", "note": "最近已确认的书目覆盖如上；不根据计划推断正在阅读。旧书《世界这么大，我想到处躺》已暂停。"},
     "weread-auto": {"bookTitle": "住小房子的女人", "bookStatus": "in_progress", "recordedStatus": "最近登记休息；本机任务停用", "coverage": "公开确认进度 12%；章节边界待确认", "duration": "未知", "durationScope": "无较新确认场次时长", "recordedAt": "2026-10-17T23:01:22+08:00", "sourceLabel": "运行清单与注册表", "note": "本机计划任务已停用；今日未有实际运行结束记录。"},
-    "weread-auto-cloud": {"bookTitle": "大转折：现代债务与可持续的增长", "bookStatus": "in_progress", "recordedStatus": "阅读已结束；收尾延迟补报，活动锁记录不一致", "coverage": "《泡沫是好还是坏？》章内；未声称全书完成", "duration": "平台有效时长约 11.9 分钟；浏览窗口约 13 分钟", "durationScope": "前者为平台累计时长差，后者为运行窗口；不可互换", "recordedAt": "2026-10-19T02:19:13+08:00", "sourceLabel": "2026-10-19 沟通核实（02:21核实）", "note": "registry active_session 仍显示 01:58 开始的旧锁，但通信确认 02:19:13 run_active=False；close 曾进入待补队列，故标注记录不一致，不据旧锁称当前运行。"},
+    "workbuddy-cloud-luoyu": {"bookTitle": "大转折：现代债务与可持续的增长", "bookStatus": "in_progress", "recordedStatus": "阅读已结束；收尾延迟补报，活动锁记录不一致", "coverage": "《泡沫是好还是坏？》章内；未声称全书完成", "duration": "平台有效时长约 11.9 分钟；浏览窗口约 13 分钟", "durationScope": "前者为平台累计时长差，后者为运行窗口；不可互换", "recordedAt": "2026-10-19T02:19:13+08:00", "sourceLabel": "2026-10-19 沟通核实（02:21核实）", "note": "registry active_session 仍显示 01:58 开始的旧锁，但通信确认 02:19:13 run_active=False；close 曾进入待补队列，故标注记录不一致，不据旧锁称当前运行。"},
 }
 
 # User-approved target schedule, Asia/Shanghai. These are plans, not execution evidence.
+# 2026-11-01：云端角色由 weread-auto-cloud 更名为 workbuddy-cloud-luoyu，
+# 目标排班以 agent-roster.json 的 schedule 为准（不再在此另写一份，避免两处漂移）。
 TARGET_SCHEDULES = {
     "wechat-reading-browser": [("06:30", "07:30", "06:30"), ("14:00", "15:00", "14:00")],
     "weread-auto": [("08:00", "09:00", "08:00"), ("16:00", "17:00", "16:00")],
-    "weread-auto-cloud": [("10:00", "11:00", "10:00"), ("19:00", "20:00", "19:00")],
     "local-pdf-reader": [],
 }
 
@@ -134,7 +135,7 @@ def build(root):
             labels = {"running":"较新登记运行中 · 非在线探测", "completed":"较新场次登记结束；成果待核验", "blocked":"较新记录受阻；实读结果待核验", "failed":"较新场次失败；实读结果待核验", "idle":"最近登记休息；阅读结果待核验"}
             fallback.update(recordedStatus=labels.get(status,"较新场次状态待确认"), duration="未知", durationScope="较新场次时长待核验", sourceLabel="较新运行登记", recordedAt=(end if end and end > start else start).isoformat(), note="较新记录优先；已确认的历史章节覆盖不代表本场新增阅读。")
         # Today’s appended communication can invalidate fallback certainty if it contains a newer reading event for the role.
-        role_terms = {"weread-auto-cloud": r"云端|weread-auto-cloud", "weread-auto": r"本机|weread-auto(?!-cloud)", "wechat-reading-browser": r"AI读书|微信读书|wechat-reading-browser", "local-pdf-reader": r"本地试读|Windows读书|local-pdf-reader"}.get(agent_id, re.escape(str(agent_id)))
+        role_terms = {"workbuddy-cloud-luoyu": r"云端|weread-auto-cloud|workbuddy-cloud-luoyu", "weread-auto": r"本机|weread-auto(?!-cloud)", "wechat-reading-browser": r"AI读书|微信读书|wechat-reading-browser", "local-pdf-reader": r"本地试读|Windows读书|local-pdf-reader"}.get(agent_id, re.escape(str(agent_id)))
         if fallback_time and comm_text:
             # Inspect dated event headings, not arbitrary mentions elsewhere in the daily file.
             for line in comm_text.splitlines():
@@ -158,7 +159,7 @@ def build(root):
             # Confirmed disabled facts in today’s dated communication, not legacy schedule_basis wording.
             if not fresh_start:
                 progress["note"] = "2026-10-19 沟通确认本机计划任务停用；未见较新运行记录。"
-        if agent_id == "weread-auto-cloud":
+        if agent_id == "workbuddy-cloud-luoyu":
             verified_end = parse_time("2026-10-19T02:19:13+08:00")
             no_new_roster_start = not (start and start > verified_end)
             if session_start and session_start <= verified_end and no_new_roster_start:
