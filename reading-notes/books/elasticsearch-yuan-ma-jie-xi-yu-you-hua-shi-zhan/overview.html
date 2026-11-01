@@ -1,0 +1,21 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Elasticsearch源码解析与优化实战 · 通读 · 全书视角</title><style>
+:root{--fg:#1f2328;--muted:#6b7280;--line:#e6e2da;--accent:#b45309;--bg:#fbfaf7}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.78 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
+.wrap{max-width:840px;margin:0 auto;padding:38px 22px 90px}
+h1{font-size:26px;line-height:1.35;margin:0 0 6px}
+.meta{color:var(--muted);font-size:14px;margin-bottom:20px}
+h2{font-size:19px;margin:34px 0 12px;padding-left:10px;border-left:4px solid var(--accent)}
+h3{font-size:16px;margin:18px 0 8px}
+p{margin:8px 0}
+.tag{display:inline-block;background:#f2ede2;color:#8a6d3b;font-size:12px;padding:1px 9px;border-radius:10px;margin-right:6px}
+ul,ol{padding-left:22px}li{margin:4px 0}
+.quote{border-left:3px solid #d8cfbd;padding:6px 12px;color:#4b4639;background:#f7f4ee;margin:8px 0;font-size:15px;border-radius:0 6px 6px 0}
+.src{color:var(--muted);font-size:12px}
+.ch{display:flex;gap:10px;padding:7px 0;border-bottom:1px dashed var(--line)}
+.ch .no{color:var(--accent);font-weight:600;min-width:34px;text-align:right}
+.card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:12px 0}
+.foot{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+a{color:#8a5a00;text-decoration:none}a:hover{text-decoration:underline}
+.badge{font-size:12px;color:#8a6d3b;background:#f6f1e6;border:1px solid #eadfc6;border-radius:6px;padding:1px 7px}
+</style></head><body><div class="wrap"><h1>Elasticsearch源码解析与优化实战</h1><div class="meta"><span class="tag">通读 · 全书视角</span>张超　·　在读 0%（累计 0 分钟）</div><h2>一句话</h2><p>本书介绍了Elasticsearch的系统原理，旨在帮助读者了解其内部原理、设计思想，以及在生产环境中如何正确地部署、优化系统。</p><h2>这本书在讲什么</h2><p>本书介绍了Elasticsearch的系统原理，旨在帮助读者了解其内部原理、设计思想，以及在生产环境中如何正确地部署、优化系统。系统原理分两方面介绍，一方面详细介绍主要流程，例如启动流程、选主流程、恢复流程；另一方面介绍各重要模块的实现，以及模块之间的关系，例如gateway模块、allocation模块等。本书的最后一部分介绍如何优化写入速度、搜索速度等大家关心的实际问题，并提供了一些诊断问题的方法和工具供读者参考。</p><h2>全书结构（169 章）</h2><ol><li>作者简介</li><li>前言</li><li>第1章 走进Elasticsearch</li><li>1.1 基本概念和原理</li><li>1.2 集群内部原理</li><li>1.3 客户端API</li><li>1.4 主要内部模块简介</li><li>第2章 准备编译和调试环境</li><li>2.1 编译源码</li><li>2.2 调试Elasticsearch</li><li>2.3 代码书签和断点组</li><li>第3章 集群启动流程</li><li>3.1 选举主节点</li><li>3.2 选举集群元信息</li><li>3.3 allocation过程</li><li>3.4 index recovery</li><li>3.5 集群启动日志</li><li>3.6 小结</li><li>第4章 节点的启动和关闭</li><li>4.1 启动流程做了什么</li><li>4.2 启动流程分析</li><li>4.3 节点关闭流程</li><li>4.4 关闭流程分析</li><li>4.5 分片读写过程中执行关闭</li><li>4.6 主节点被关闭</li><li>4.7 小结</li><li>第5章 选主流程</li><li>5.1 设计思想</li><li>5.2 为什么使用主从模式</li><li>5.3 选举算法</li><li class="src">…… 其余 139 章见 AI 大纲</li></ol><h2>读者划得最多的句子</h2><div class="quote">ES正是利用这种特性实现了近实时搜索。每秒产生一个新分段，新段先写入文件系统缓存，但稍后再执行flush刷盘操作，写操作很快会执行完，一旦写成功，就可以像其他文件一样被打开和读取了。<div class="src">1.1 基本概念和原理　·　128 人划线</div></div><div class="quote">当集群规模扩大或缩小时，ES 会自动在各节点中迁移分片，使数据仍然均匀分布在集群里。<div class="src">1.1 基本概念和原理　·　80 人划线</div></div><div class="quote">优先队列是一个存有topN匹配文档的有序列表。优先队列大小为分页参数from + size。<div class="src">9.3 分布式搜索过程　·　80 人划线</div></div><div class="quote">所有节点都会参与选举，并参与投票，但是，只有有资格成为Master的节点（node.master为true）的投票才有效．<div class="src">5.5 流程概述　·　78 人划线</div></div><div class="quote">在存储结构上，由_index、_type和_id唯一标识一个文档。<div class="src">1.1 基本概念和原理　·　72 人划线</div></div><div class="quote">当主节点异常时，集群会重新选举主节点。当某个主分片异常时，会将副分片提升为主分片。<div class="src">1.2 集群内部原理　·　72 人划线</div></div><div class="quote">ES的选主算法是基于Bully算法的改进，主要思路是对节点ID排序，取ID值最大的节点作为Master，每个节点都运行这个流程。<div class="src">3.1 选举主节点　·　72 人划线</div></div><div class="quote">索引别名就像一个快捷方式或软链接，不同的是它可以指向一个或多个索引。可以用于实现索引分组，或者索引间的无缝切换。<div class="src">1.1 基本概念和原理　·　65 人划线</div></div><div class="quote">但是互联网产品迭代快，技术文档不全，想要搞清楚原理，只能阅读代码，相当于从代码中逆向理解设计思想。<div class="src">前言　·　56 人划线</div></div><div class="quote">在ES 6.x版本中，一个索引只允许存在一个_type，未来的7.x版本将完全删除_type的概念。<div class="src">1.1 基本概念和原理　·　54 人划线</div></div><h2>全书思考 3 问</h2><ol><li>本书真正要解决的「真问题」是什么？作者为什么认为它重要、又为什么难解？</li><li>如果用一句话概括全书的核心主张，你会怎么讲？支撑它的最强证据与最薄弱的一环分别在哪里？</li><li>读罢全书，哪三个观念最值得带进你自己的决策或生活？它们会如何改变你的行为？</li></ol><p class="src">这是读后自省题：不依赖 AI 代答，合上书用自己的话作答，越具体越好——它们指向全书主旨、论证结构与个人迁移，而非单章条目。</p><div class="foot">来源：微信读书官方简介/目录/热门划线接口　·　生成于 2026-11-01 13:15　·　开读即产（不等完读）</div></div></body></html>

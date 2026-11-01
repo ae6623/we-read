@@ -1,0 +1,21 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>实战Java高并发程序设计（第2版） · AI 问答 · 自测</title><style>
+:root{--fg:#1f2328;--muted:#6b7280;--line:#e6e2da;--accent:#b45309;--bg:#fbfaf7}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.78 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
+.wrap{max-width:840px;margin:0 auto;padding:38px 22px 90px}
+h1{font-size:26px;line-height:1.35;margin:0 0 6px}
+.meta{color:var(--muted);font-size:14px;margin-bottom:20px}
+h2{font-size:19px;margin:34px 0 12px;padding-left:10px;border-left:4px solid var(--accent)}
+h3{font-size:16px;margin:18px 0 8px}
+p{margin:8px 0}
+.tag{display:inline-block;background:#f2ede2;color:#8a6d3b;font-size:12px;padding:1px 9px;border-radius:10px;margin-right:6px}
+ul,ol{padding-left:22px}li{margin:4px 0}
+.quote{border-left:3px solid #d8cfbd;padding:6px 12px;color:#4b4639;background:#f7f4ee;margin:8px 0;font-size:15px;border-radius:0 6px 6px 0}
+.src{color:var(--muted);font-size:12px}
+.ch{display:flex;gap:10px;padding:7px 0;border-bottom:1px dashed var(--line)}
+.ch .no{color:var(--accent);font-weight:600;min-width:34px;text-align:right}
+.card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:12px 0}
+.foot{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+a{color:#8a5a00;text-decoration:none}a:hover{text-decoration:underline}
+.badge{font-size:12px;color:#8a6d3b;background:#f6f1e6;border:1px solid #eadfc6;border-radius:6px;padding:1px 7px}
+</style></head><body><div class="wrap"><h1>实战Java高并发程序设计（第2版）</h1><div class="meta"><span class="tag">AI 问答 · 自测</span>基于 8 条读者高赞划线的自测追问</div><p class="src">说明：这里不编答案。每题给出一条<b>真实划线原文</b>与出处，配三个追问，用来检验你是否真读懂了这句话。</p><div class="card"><h3>Q1. 这句话的关键判断是什么？</h3><div class="quote">「注意：改进的方法很简单，使用线程安全的Vector代替ArrayList即可。」<div class="src">2.8 程序中的幽灵：隐蔽的错误　·　90 人划线</div></div><p class="src">追问：① 它的核心主张是什么？② 成立的前提/边界在哪？③ 放进全书主题，它是支撑还是反驳作者？</p></div><div class="card"><h3>Q2. 这句话的关键判断是什么？</h3><div class="quote">「如果线程的智力不够，且都秉承着“谦让”的原则，主动将资源释放给他人使用，那么就会导致资源不断地在两个线程间跳动，而没有一个线程可以同时拿到所有资源正常执行。这种情况就是活锁。」<div class="src">1.2 你必须知道的几个概念　·　84 人划线</div></div><p class="src">追问：① 它的核心主张是什么？② 成立的前提/边界在哪？③ 放进全书主题，它是支撑还是反驳作者？</p></div><div class="card"><h3>Q3. 这句话的关键判断是什么？</h3><div class="quote">「volatile关键字并不能真正保证线程安全。它只能确保一个线程修改了数据后，其他线程能够看到这个改动。但当两个线程同时修改某一个数据时，依然会产生冲突。」<div class="src">2.7 线程安全的概念与关键字synchronized　·　65 人划线</div></div><p class="src">追问：① 它的核心主张是什么？② 成立的前提/边界在哪？③ 放进全书主题，它是支撑还是反驳作者？</p></div><div class="card"><h3>Q4. 这句话的关键判断是什么？</h3><div class="quote">「对于无障碍的线程来说，一旦检测到这种情况，它就会立即对自己所做的修改进行回滚，确保数据安全。但如果没有数据竞争发生，那么线程就可以顺利完成自己的工作，走出临界区。」<div class="src">1.3 并发级别　·　60 人划线</div></div><p class="src">追问：① 它的核心主张是什么？② 成立的前提/边界在哪？③ 放进全书主题，它是支撑还是反驳作者？</p></div><div class="card"><h3>Q5. 这句话的关键判断是什么？</h3><div class="quote">「但如果锁是公平的，按照先来后到的规则，那么饥饿就不会产生，不管新来的线程优先级多高，要想获得资源，就必须乖乖排队，这样所有的线程都有机会执行」<div class="src">1.3 并发级别　·　54 人划线</div></div><p class="src">追问：① 它的核心主张是什么？② 成立的前提/边界在哪？③ 放进全书主题，它是支撑还是反驳作者？</p></div><div class="card"><h3>Q6. 这句话的关键判断是什么？</h3><div class="quote">「使用自定义线程池时，要根据应用的具体情况，选择合适的并发队列作为任务的缓冲。当线程资源紧张时，不同的并发队列对系统行为和性能的影响均不同。」<div class="src">3.2 线程复用：线程池　·　54 人划线</div></div><p class="src">追问：① 它的核心主张是什么？② 成立的前提/边界在哪？③ 放进全书主题，它是支撑还是反驳作者？</p></div><div class="card"><h3>Q7. 这句话的关键判断是什么？</h3><div class="quote">「线程A的指令执行顺序在线程B看来是没有保证的。如果运气好的话，线程B也许真的可以看到和线程A一样的执行顺序。」<div class="src">1.5 回到Java：JMM　·　51 人划线</div></div><p class="src">追问：① 它的核心主张是什么？② 成立的前提/边界在哪？③ 放进全书主题，它是支撑还是反驳作者？</p></div><div class="card"><h3>Q8. 这句话的关键判断是什么？</h3><div class="quote">「Thread.sleep()方法由于中断而抛出异常，此时，它会清除中断标记，如果不加处理，那么在下一次循环开始时，就无法捕获这个中断，故在异常处理中，再次设置中断标记位」<div class="src">2.2 初始线程：线程的基本操作　·　51 人划线</div></div><p class="src">追问：① 它的核心主张是什么？② 成立的前提/边界在哪？③ 放进全书主题，它是支撑还是反驳作者？</p></div><div class="foot">来源：微信读书官方热门划线接口（原文逐字，问题为结构化追问）　·　生成于 2026-11-01 13:15　·　开读即产（不等完读）</div></div></body></html>
