@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《Elasticsearch源码解析与优化实战》｜通读 · 精读</title>
+<link rel="stylesheet" href="../../../assets/css/reading-overview.css"><link rel="stylesheet" href="../../../assets/css/mmx-guide.css"><link rel="stylesheet" href="../../../assets/css/reading-outline.css">
+<style>
+/* 合并页外壳 */
+body{max-width:960px;margin:0 auto;padding:0 18px 80px;}
+.combined-head{padding:34px 0 18px;border-bottom:1px solid #e7e0d2;margin-bottom:8px;}
+.combined-head h1{font-size:26px;margin:0 0 10px;}
+.nav{position:sticky;top:0;z-index:20;background:rgba(255,253,248,.96);backdrop-filter:blur(6px);
+  border-bottom:1px solid #ece4d4;padding:10px 0;margin:14px 0 26px;display:flex;flex-wrap:wrap;gap:8px;
+  box-shadow:0 2px 10px rgba(120,100,60,.06);}
+.navlink{font-size:12.5px;color:#5d5443;text-decoration:none;background:#f6f1e6;border:1px solid #e7ddca;
+  border-radius:7px;padding:4px 10px;}
+section{scroll-margin-top:64px;}
+/* 一句话主旨：去左侧竖线 */
+.mmx-oneline{border-left:none;padding-left:18px;}
+/* AI领读章内：AI 大纲原生深层样式 */
+.merged-guide .sec{margin:10px 0 14px;padding-left:6px;border-left:2px solid #e5e0d6}
+.merged-guide .sec h4{font:600 .98rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.6em 0 .3em}
+.merged-guide ul.point{margin:.3em 0;padding-left:20px}
+.merged-guide ul.point>li{margin:.35em 0}
+.merged-guide ul.quote{margin:.25em 0 .25em 20px;padding-left:18px;list-style:none}
+.merged-guide ul.quote::before{content:"原句";display:block;font-size:.72rem;color:#bf8247;
+  letter-spacing:.1em;margin:.15em 0 .1em;font-weight:600}
+.merged-guide ul.quote.quote-node{margin-top:.5em;padding-top:.4em;border-top:1px dashed #eadfc9}
+.merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
+.merged-guide ul.quote>li{color:#4a4436;font-size:.93rem;margin:.2em 0;padding-left:10px;border-left:2px solid #bf8247}
+</style>
+</head>
+<body>
+<header class="combined-head">
+  <p class="eyebrow">读前通读 + 精读 · 合并页</p>
+  <h1>《Elasticsearch源码解析与优化实战》</h1>
+  <div class="chips"><span class="chip">通读 + 精读</span><span class="chip">AI领读</span><span class="chip">5 个模块</span></div>
+  <p class="small">本页为「通读 + 精读」合并视图：<b>AI领读</b> = 章节目录 + 骨架 + AI 大纲融合，其余为精读模块。AI 大纲独立页 <a href="outline.html">outline.html</a> 仍保留。</p>
+</header>
+<nav class="nav"><a class="navlink" href="#mod-svg">全书结构导图</a><a class="navlink" href="#mod-oneline">一句话主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a></nav>
+<section class="mmx-svgwrap" id="mod-svg">
+<svg class="mmx-svg" viewBox="0 0 1120 1584" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Elasticsearch源码解析与优化实战 全书精读">
+<rect x="0" y="0" width="1120" height="1584" fill="none"/>
+<style>.mmx-svg text{font-family:"Noto Serif SC",Georgia,serif}.mmx-svg .t1{font-size:15px;fill:#2f2a24;font-weight:600}.mmx-svg .t2{font-size:12px;fill:#5c5347}.mmx-svg .t3{font-size:10.5px;fill:#8a8272}.mmx-svg .rt{font-size:13px;fill:#f7f3ea;font-weight:600}.mmx-svg .ln{stroke:#cfc6b4;stroke-width:1.4;fill:none}</style>
+<rect x="28" y="739" width="262" height="70" rx="10" fill="#3d372e"/>
+<text class="rt" x="44" y="763">Elasticsearch源码解析</text>
+<text class="rt" x="44" y="781">与优化实战</text>
+<text class="t3" x="44" y="801" style="fill:#c9c0ae">169 章 · 主干 24 条</text>
+<path class="ln" d="M290 774 C350 774,340 61,400 61"/>
+<rect x="400" y="33" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="33" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="58">A 第 1–7 章</text>
+<text class="t3" x="416" y="78">7 章</text>
+<text class="t2" x="714" y="57">含「作者简介」至「1.4 主要内部模块简介」</text>
+<path class="ln" d="M692 61 L700 61"/>
+<path class="ln" d="M290 774 C350 774,340 123,400 123"/>
+<rect x="400" y="95" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="95" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="120">B 第 8–14 章</text>
+<text class="t3" x="416" y="140">7 章</text>
+<text class="t2" x="714" y="119">含「第2章 准备编译和调试环」至「3.2 选举集群元信息」</text>
+<path class="ln" d="M692 123 L700 123"/>
+<path class="ln" d="M290 774 C350 774,340 185,400 185"/>
+<rect x="400" y="157" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="157" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="182">C 第 15–21 章</text>
+<text class="t3" x="416" y="202">7 章</text>
+<text class="t2" x="714" y="181">含「3.3 allocati」至「4.2 启动流程分析」</text>
+<path class="ln" d="M692 185 L700 185"/>
+<path class="ln" d="M290 774 C350 774,340 247,400 247"/>
+<rect x="400" y="219" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="219" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="244">D 第 22–28 章</text>
+<text class="t3" x="416" y="264">7 章</text>
+<text class="t2" x="714" y="243">含「4.3 节点关闭流程」至「5.1 设计思想」</text>
+<path class="ln" d="M692 247 L700 247"/>
+<path class="ln" d="M290 774 C350 774,340 309,400 309"/>
+<rect x="400" y="281" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="281" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="306">E 第 29–35 章</text>
+<text class="t3" x="416" y="326">7 章</text>
+<text class="t2" x="714" y="305">含「5.2 为什么使用主从模」至「5.8 小结」</text>
+<path class="ln" d="M692 309 L700 309"/>
+<path class="ln" d="M290 774 C350 774,340 371,400 371"/>
+<rect x="400" y="343" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="343" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="368">F 第 36–42 章</text>
+<text class="t3" x="416" y="388">7 章</text>
+<text class="t2" x="714" y="367">含「第6章 数据模型」至「第7章 写流程」</text>
+<path class="ln" d="M692 371 L700 371"/>
+<path class="ln" d="M290 774 C350 774,340 433,400 433"/>
+<rect x="400" y="405" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="405" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="430">G 第 43–49 章</text>
+<text class="t3" x="416" y="450">7 章</text>
+<text class="t2" x="714" y="429">含「7.1 文档操作的定义」至「7.7 思考」</text>
+<path class="ln" d="M692 433 L700 433"/>
+<path class="ln" d="M290 774 C350 774,340 495,400 495"/>
+<rect x="400" y="467" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="467" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="492">H 第 50–56 章</text>
+<text class="t3" x="416" y="512">7 章</text>
+<text class="t2" x="714" y="491">含「第8章 GET流程」至「第9章 Search流程」</text>
+<path class="ln" d="M692 495 L700 495"/>
+<path class="ln" d="M290 774 C350 774,340 557,400 557"/>
+<rect x="400" y="529" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="529" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="554">I 第 57–63 章</text>
+<text class="t3" x="416" y="574">7 章</text>
+<text class="t2" x="714" y="553">含「9.1 索引和搜索」至「10.2 流程概述」</text>
+<path class="ln" d="M692 557 L700 557"/>
+<path class="ln" d="M290 774 C350 774,340 619,400 619"/>
+<rect x="400" y="591" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="591" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="616">J 第 64–70 章</text>
+<text class="t3" x="416" y="636">7 章</text>
+<text class="t2" x="714" y="615">含「10.3 主分片恢复流程」至「第11章 gateway」</text>
+<path class="ln" d="M692 619 L700 619"/>
+<path class="ln" d="M290 774 C350 774,340 681,400 681"/>
+<rect x="400" y="653" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="653" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="678">G10 第 71–77 章</text>
+<text class="t3" x="416" y="698">7 章</text>
+<text class="t2" x="714" y="677">含「11.1 元数据」至「12.1 什么是allo」</text>
+<path class="ln" d="M692 681 L700 681"/>
+<path class="ln" d="M290 774 C350 774,340 743,400 743"/>
+<rect x="400" y="715" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="715" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="740">G11 第 78–84 章</text>
+<text class="t3" x="416" y="760">7 章</text>
+<text class="t2" x="714" y="739">含「12.2 触发时机」至「12.8 从alloca」</text>
+<path class="ln" d="M692 743 L700 743"/>
+<path class="ln" d="M290 774 C350 774,340 805,400 805"/>
+<rect x="400" y="777" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="777" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="802">G12 第 85–91 章</text>
+<text class="t3" x="416" y="822">7 章</text>
+<text class="t2" x="714" y="801">含「12.9 思考」至「13.5 删除快照实现原」</text>
+<path class="ln" d="M692 805 L700 805"/>
+<path class="ln" d="M290 774 C350 774,340 867,400 867"/>
+<rect x="400" y="839" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="839" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="864">G13 第 92–98 章</text>
+<text class="t3" x="416" y="884">7 章</text>
+<text class="t2" x="714" y="863">含「13.6 思考与总结」至「14.5 集群状态的发布」</text>
+<path class="ln" d="M692 867 L700 867"/>
+<path class="ln" d="M290 774 C350 774,340 929,400 929"/>
+<rect x="400" y="901" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="901" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="926">G14 第 99–105 章</text>
+<text class="t3" x="416" y="946">7 章</text>
+<text class="t2" x="714" y="925">含「14.6 应用集群状态」至「15.2 Transpo」</text>
+<path class="ln" d="M692 929 L700 929"/>
+<path class="ln" d="M290 774 C350 774,340 991,400 991"/>
+<rect x="400" y="963" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="963" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="988">G15 第 106–112 章</text>
+<text class="t3" x="416" y="1008">7 章</text>
+<text class="t2" x="714" y="987">含「15.3 REST解析和」至「16.3 查看线程池」</text>
+<path class="ln" d="M692 991 L700 991"/>
+<path class="ln" d="M290 774 C350 774,340 1053,400 1053"/>
+<rect x="400" y="1025" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="1025" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="1050">G16 第 113–119 章</text>
+<text class="t3" x="416" y="1070">7 章</text>
+<text class="t2" x="714" y="1049">含「16.4 ES的线程池实」至「17.3 Shrink的」</text>
+<path class="ln" d="M692 1053 L700 1053"/>
+<path class="ln" d="M290 774 C350 774,340 1115,400 1115"/>
+<rect x="400" y="1087" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="1087" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="1112">G17 第 120–126 章</text>
+<text class="t3" x="416" y="1132">7 章</text>
+<text class="t2" x="714" y="1111">含「第18章 写入速度优化」至「18.6 磁盘间的任务均」</text>
+<path class="ln" d="M692 1115 L700 1115"/>
+<path class="ln" d="M290 774 C350 774,340 1177,400 1177"/>
+<rect x="400" y="1149" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="1149" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="1174">G18 第 127–133 章</text>
+<text class="t3" x="416" y="1194">7 章</text>
+<text class="t2" x="714" y="1173">含「18.7 节点间的任务均」至「19.2 使用更快的硬件」</text>
+<path class="ln" d="M692 1177 L700 1177"/>
+<path class="ln" d="M290 774 C350 774,340 1239,400 1239"/>
+<rect x="400" y="1211" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="1211" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="1236">G19 第 134–140 章</text>
+<text class="t3" x="416" y="1256">7 章</text>
+<text class="t2" x="714" y="1235">含「19.3 文档模型」至「19.9 预热全局序号（」</text>
+<path class="ln" d="M692 1239 L700 1239"/>
+<path class="ln" d="M290 774 C350 774,340 1301,400 1301"/>
+<rect x="400" y="1273" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="1273" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="1298">G20 第 141–147 章</text>
+<text class="t3" x="416" y="1318">7 章</text>
+<text class="t2" x="714" y="1297">含「19.10 execut」至「19.16 限制搜索请求」</text>
+<path class="ln" d="M692 1301 L700 1301"/>
+<path class="ln" d="M290 774 C350 774,340 1363,400 1363"/>
+<rect x="400" y="1335" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="1335" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="1360">G21 第 148–154 章</text>
+<text class="t3" x="416" y="1380">7 章</text>
+<text class="t2" x="714" y="1359">含「19.17 利用自适应副」至「21.1 集群层」</text>
+<path class="ln" d="M692 1363 L700 1363"/>
+<path class="ln" d="M290 774 C350 774,340 1425,400 1425"/>
+<rect x="400" y="1397" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="1397" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="1422">G22 第 155–161 章</text>
+<text class="t3" x="416" y="1442">7 章</text>
+<text class="t2" x="714" y="1421">含「21.2 节点层」至「第22章 故障诊断」</text>
+<path class="ln" d="M692 1425 L700 1425"/>
+<path class="ln" d="M290 774 C350 774,340 1487,400 1487"/>
+<rect x="400" y="1459" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="1459" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="1484">G23 第 162–169 章</text>
+<text class="t3" x="416" y="1504">8 章</text>
+<text class="t2" x="714" y="1483">含「22.1 使用Profi」至「附录A 重大版本变化」</text>
+<path class="ln" d="M692 1487 L700 1487"/>
+</svg></section>
+<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">一句话主旨</h2><p class="mmx-mod-note">本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。</p><p class="mmx-oneline">本书介绍了Elasticsearch的系统原理，旨在帮助读者了解其内部原理、设计思想，以及在生产环境中如何正确地部署、优化系统</p></section>
+<section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" id="mod-merged_guide"><h2 id="merged-guide-title">AI领读 · 全书篇目</h2>
+<p class="small">本书 AI 大纲目前为章级目录（要点与原句待补全）。以下为全书篇目，大纲补全后将自动升级为「目录 + 骨架 + 要点 + 原句」完整版。</p>
+<ol class="mmx-pts"><li><b>1</b> 作者简介</li><li><b>2</b> 前言</li><li><b>3</b> 第1章 走进Elasticsearch</li><li><b>4</b> 1.1 基本概念和原理</li><li><b>5</b> 1.2 集群内部原理</li><li><b>6</b> 1.3 客户端API</li><li><b>7</b> 1.4 主要内部模块简介</li><li><b>8</b> 第2章 准备编译和调试环境</li><li><b>9</b> 2.1 编译源码</li><li><b>10</b> 2.2 调试Elasticsearch</li><li><b>11</b> 2.3 代码书签和断点组</li><li><b>12</b> 第3章 集群启动流程</li><li><b>13</b> 3.1 选举主节点</li><li><b>14</b> 3.2 选举集群元信息</li><li><b>15</b> 3.3 allocation过程</li><li><b>16</b> 3.4 index recovery</li><li><b>17</b> 3.5 集群启动日志</li><li><b>18</b> 3.6 小结</li><li><b>19</b> 第4章 节点的启动和关闭</li><li><b>20</b> 4.1 启动流程做了什么</li><li><b>21</b> 4.2 启动流程分析</li><li><b>22</b> 4.3 节点关闭流程</li><li><b>23</b> 4.4 关闭流程分析</li><li><b>24</b> 4.5 分片读写过程中执行关闭</li><li><b>25</b> 4.6 主节点被关闭</li><li><b>26</b> 4.7 小结</li><li><b>27</b> 第5章 选主流程</li><li><b>28</b> 5.1 设计思想</li><li><b>29</b> 5.2 为什么使用主从模式</li><li><b>30</b> 5.3 选举算法</li><li><b>31</b> 5.4 相关配置</li><li><b>32</b> 5.5 流程概述</li><li><b>33</b> 5.6 流程分析</li><li><b>34</b> 5.7 节点失效检测</li><li><b>35</b> 5.8 小结</li><li><b>36</b> 第6章 数据模型</li><li><b>37</b> 6.1 PacificA算法</li><li><b>38</b> 6.2 ES的数据副本模型</li><li><b>39</b> 6.3 Allocation IDs</li><li><b>40</b> 6.4 Sequence IDs</li><li><b>41</b> 6.5 _version</li><li><b>42</b> 第7章 写流程</li><li><b>43</b> 7.1 文档操作的定义</li><li><b>44</b> 7.2 可选参数</li><li><b>45</b> 7.3 Index/Bulk基本流程</li><li><b>46</b> 7.4 Index/Bulk详细流程</li><li><b>47</b> 7.5 I/O异常处理</li><li><b>48</b> 7.6 系统特性</li><li><b>49</b> 7.7 思考</li><li><b>50</b> 第8章 GET流程</li><li><b>51</b> 8.1 可选参数</li><li><b>52</b> 8.2 GET基本流程</li><li><b>53</b> 8.3 GET详细分析</li><li><b>54</b> 8.4 MGET流程分析</li><li><b>55</b> 8.5 思考</li><li><b>56</b> 第9章 Search流程</li><li><b>57</b> 9.1 索引和搜索</li><li><b>58</b> 9.2 search type</li><li><b>59</b> 9.3 分布式搜索过程</li><li><b>60</b> 9.4 小结</li><li><b>61</b> 第10章 索引恢复流程分析</li><li><b>62</b> 10.1 相关配置</li><li><b>63</b> 10.2 流程概述</li><li><b>64</b> 10.3 主分片恢复流程</li><li><b>65</b> 10.4 副分片恢复流程</li><li><b>66</b> 10.5 recovery速度优化</li><li><b>67</b> 10.6 如何保证副分片和主分片一致</li><li><b>68</b> 10.7 recovery相关监控命令</li><li><b>69</b> 10.8 小结</li><li><b>70</b> 第11章 gateway模块分析</li><li><b>71</b> 11.1 元数据</li><li><b>72</b> 11.2 元数据的持久化</li><li><b>73</b> 11.3 元数据的恢复</li><li><b>74</b> 11.4 元数据恢复流程分析</li><li><b>75</b> 11.5 思考</li><li><b>76</b> 第12章 allocation模块分析</li><li><b>77</b> 12.1 什么是allocation</li><li><b>78</b> 12.2 触发时机</li><li><b>79</b> 12.3 allocation模块结构概述</li><li><b>80</b> 12.4 allocators</li><li><b>81</b> 12.5 deciders</li><li><b>82</b> 12.6 核心reroute实现</li><li><b>83</b> 12.7 从gateway到allocation流程的转换</li><li><b>84</b> 12.8 从allocation流程到recovery流程的转换</li><li><b>85</b> 12.9 思考</li><li><b>86</b> 第13章 Snapshot模块分析</li><li><b>87</b> 13.1 仓库</li><li><b>88</b> 13.2 快照</li><li><b>89</b> 13.3 从快照恢复</li><li><b>90</b> 13.4 创建快照的实现原理</li><li><b>91</b> 13.5 删除快照实现原理</li><li><b>92</b> 13.6 思考与总结</li><li><b>93</b> 第14章 Cluster模块分析</li><li><b>94</b> 14.1 集群状态</li><li><b>95</b> 14.2 内部封装和实现</li><li><b>96</b> 14.3 提交集群任务</li><li><b>97</b> 14.4 集群任务的执行过程</li><li><b>98</b> 14.5 集群状态的发布过程</li><li><b>99</b> 14.6 应用集群状态</li><li><b>100</b> 14.7 查看等待执行的集群任务</li><li><b>101</b> 14.8 任务管理API</li><li><b>102</b> 14.9 思考与总结</li><li><b>103</b> 第15章 Transport模块分析</li><li><b>104</b> 15.1 配置信息</li><li><b>105</b> 15.2 Transport总体架构</li><li><b>106</b> 15.3 REST解析和处理</li><li><b>107</b> 15.4 RPC实现</li><li><b>108</b> 15.5 思考与总结</li><li><b>109</b> 第16章 ThreadPool模块分析</li><li><b>110</b> 16.1 线程池类型</li><li><b>111</b> 16.2 处理器设置</li><li><b>112</b> 16.3 查看线程池</li><li><b>113</b> 16.4 ES的线程池实现</li><li><b>114</b> 16.5 其他线程池</li><li><b>115</b> 16.6 思考与总结</li><li><b>116</b> 第17章 Shrink原理分析</li><li><b>117</b> 17.1 准备源索引</li><li><b>118</b> 17.2 缩小索引</li><li><b>119</b> 17.3 Shrink的工作原理</li><li><b>120</b> 第18章 写入速度优化</li><li><b>121</b> 18.1 translog flush间隔调整</li><li><b>122</b> 18.2 索引刷新间隔refresh_interval</li><li><b>123</b> 18.3 段合并优化</li><li><b>124</b> 18.4 indexing buffer</li><li><b>125</b> 18.5 使用bulk请求</li><li><b>126</b> 18.6 磁盘间的任务均衡</li><li><b>127</b> 18.7 节点间的任务均衡</li><li><b>128</b> 18.8 索引过程调整和优化</li><li><b>129</b> 18.9 参考配置</li><li><b>130</b> 18.10 思考与总结</li><li><b>131</b> 第19章 搜索速度的优化</li><li><b>132</b> 19.1 为文件系统cache预留足够的内存</li><li><b>133</b> 19.2 使用更快的硬件</li><li><b>134</b> 19.3 文档模型</li><li><b>135</b> 19.4 预索引数据</li><li><b>136</b> 19.5 字段映射</li><li><b>137</b> 19.6 避免使用脚本</li><li><b>138</b> 19.7 优化日期搜索</li><li><b>139</b> 19.8 为只读索引执行force-merge</li><li><b>140</b> 19.9 预热全局序号（global ordinals）</li><li><b>141</b> 19.10 execution hint</li><li><b>142</b> 19.11 预热文件系统cache</li><li><b>143</b> 19.12 转换查询表达式</li><li><b>144</b> 19.13 调节搜索请求中的batched_reduce_size</li><li><b>145</b> 19.14 使用近似聚合</li><li><b>146</b> 19.15 深度优先还是广度优先</li><li><b>147</b> 19.16 限制搜索请求的分片数</li><li><b>148</b> 19.17 利用自适应副本选择（ARS）提升ES响应速度</li><li><b>149</b> 第20章 磁盘使用量优化</li><li><b>150</b> 20.1 预备知识</li><li><b>151</b> 20.2 优化措施</li><li><b>152</b> 20.3 测试数据</li><li><b>153</b> 第21章 综合应用实践</li><li><b>154</b> 21.1 集群层</li><li><b>155</b> 21.2 节点层</li><li><b>156</b> 21.3 系统层</li><li><b>157</b> 21.4 索引层</li><li><b>158</b> 21.5 客户端</li><li><b>159</b> 21.6 读写</li><li><b>160</b> 21.7 控制相关度</li><li><b>161</b> 第22章 故障诊断</li><li><b>162</b> 22.1 使用Profile API定位慢查询</li><li><b>163</b> 22.2 使用Explain API分析未分配的分片（Unassigned Shards）</li><li><b>164</b> 22.3 节点CPU使用率高</li><li><b>165</b> 22.4 节点内存使用率高</li><li><b>166</b> 22.5 Slow Logs</li><li><b>167</b> 22.6 分析工具</li><li><b>168</b> 22.7 小结</li><li><b>169</b> 附录A 重大版本变化</li></ol></section>
+<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点初判</h2><p class="mmx-mod-note">按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。</p><ul class="mmx-views"><li><b>第 1–7 章</b>——含「作者简介」至「1.4 主要内部模块简介」</li><li><b>第 8–14 章</b>——含「第2章 准备编译和调试环」至「3.2 选举集群元信息」</li><li><b>第 15–21 章</b>——含「3.3 allocati」至「4.2 启动流程分析」</li><li><b>第 22–28 章</b>——含「4.3 节点关闭流程」至「5.1 设计思想」</li><li><b>第 29–35 章</b>——含「5.2 为什么使用主从模」至「5.8 小结」</li><li><b>第 36–42 章</b>——含「第6章 数据模型」至「第7章 写流程」</li><li><b>第 43–49 章</b>——含「7.1 文档操作的定义」至「7.7 思考」</li><li><b>第 50–56 章</b>——含「第8章 GET流程」至「第9章 Search流程」</li><li><b>第 57–63 章</b>——含「9.1 索引和搜索」至「10.2 流程概述」</li><li><b>第 64–70 章</b>——含「10.3 主分片恢复流程」至「第11章 gateway」</li><li><b>第 71–77 章</b>——含「11.1 元数据」至「12.1 什么是allo」</li><li><b>第 78–84 章</b>——含「12.2 触发时机」至「12.8 从alloca」</li><li><b>第 85–91 章</b>——含「12.9 思考」至「13.5 删除快照实现原」</li><li><b>第 92–98 章</b>——含「13.6 思考与总结」至「14.5 集群状态的发布」</li><li><b>第 99–105 章</b>——含「14.6 应用集群状态」至「15.2 Transpo」</li><li><b>第 106–112 章</b>——含「15.3 REST解析和」至「16.3 查看线程池」</li><li><b>第 113–119 章</b>——含「16.4 ES的线程池实」至「17.3 Shrink的」</li><li><b>第 120–126 章</b>——含「第18章 写入速度优化」至「18.6 磁盘间的任务均」</li><li><b>第 127–133 章</b>——含「18.7 节点间的任务均」至「19.2 使用更快的硬件」</li><li><b>第 134–140 章</b>——含「19.3 文档模型」至「19.9 预热全局序号（」</li><li><b>第 141–147 章</b>——含「19.10 execut」至「19.16 限制搜索请求」</li><li><b>第 148–154 章</b>——含「19.17 利用自适应副」至「21.1 集群层」</li><li><b>第 155–161 章</b>——含「21.2 节点层」至「第22章 故障诊断」</li><li><b>第 162–169 章</b>——含「22.1 使用Profi」至「附录A 重大版本变化」</li></ul></section>
+<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句 · 持续积累</h2><p class="mmx-mod-note">以下原句取自本书 AI 大纲落库的原文摘录（book_outline.quote），按大纲顺序节选，非 AI 生成；更多见逐章深读页。</p><ol class="mmx-qlist"><li><blockquote>「ES正是利用这种特性实现了近实时搜索。每秒产生一个新分段，新段先写入文件系统缓存，但稍后再执行flush刷盘操作，写操作很快会执行完，一旦写成功，就可以像其他文件一样被打开和读取了。」</blockquote><cite>本书正文</cite></li><li><blockquote>「当集群规模扩大或缩小时，ES 会自动在各节点中迁移分片，使数据仍然均匀分布在集群里。」</blockquote><cite>本书正文</cite></li><li><blockquote>「优先队列是一个存有topN匹配文档的有序列表。优先队列大小为分页参数from + size。」</blockquote><cite>本书正文</cite></li><li><blockquote>「所有节点都会参与选举，并参与投票，但是，只有有资格成为Master的节点（node.master为true）的投票才有效．」</blockquote><cite>本书正文</cite></li><li><blockquote>「在存储结构上，由_index、_type和_id唯一标识一个文档。」</blockquote><cite>本书正文</cite></li><li><blockquote>「当主节点异常时，集群会重新选举主节点。当某个主分片异常时，会将副分片提升为主分片。」</blockquote><cite>本书正文</cite></li><li><blockquote>「ES的选主算法是基于Bully算法的改进，主要思路是对节点ID排序，取ID值最大的节点作为Master，每个节点都运行这个流程。」</blockquote><cite>本书正文</cite></li><li><blockquote>「索引别名就像一个快捷方式或软链接，不同的是它可以指向一个或多个索引。可以用于实现索引分组，或者索引间的无缝切换。」</blockquote><cite>本书正文</cite></li><li><blockquote>「但是互联网产品迭代快，技术文档不全，想要搞清楚原理，只能阅读代码，相当于从代码中逆向理解设计思想。」</blockquote><cite>本书正文</cite></li><li><blockquote>「在ES 6.x版本中，一个索引只允许存在一个_type，未来的7.x版本将完全删除_type的概念。」</blockquote><cite>本书正文</cite></li></ol></section>
+</body>
+</html>

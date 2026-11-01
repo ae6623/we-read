@@ -79,3 +79,40 @@ engine_commit）、什么时候。台账 `compose.json` 每书同记 `produced_b
 - 快照里没有 `note-spec/VERSION`（旧快照）视为尚未立门槛，放行——新快照起强制。
 - bump 时机速查：改题库 / 改模板 / 改答案口径 / 改发布规则 / 新增模块 → minor+1；
   改错别字、纯注释 → 可不 bump。部署代码但不改规则 → 不用 bump（VERSION.json 记录部署指纹）。
+
+## 八、overview 模块系统 + 合并页默认入口（overview_gen）
+
+> 单一口径：本机引擎、云端沙箱、任何 agent 给读前通读页增删「模块」时口径一致、有据可查。
+> 真源实现在 `we-read-auto` 的 `overview_gen/`（扁平布局）；详细模块清单见该仓
+> `overview_gen/README.md` 的「模块系统」一节，本处只记口径与强制项。
+
+### 增加模块 = 必须同步写模块说明（强制）
+
+1. 在 `build_overview.py` 的 `MODULES` 注册表新增渲染函数（`_m_xxx`）时，**必须同时**在
+   `overview_gen/README.md` 的「模块清单」补该模块的说明（职责 / 渲染内容 / 适用与覆盖情况），
+   **并同步更新本文件**（本节）。不允许只在代码里加模块、不写文档。
+2. 改规则先改这里（单一口径）+ `overview_gen/README.md`（真源项目说明），**不许在生成器里内联私货**。
+3. 新需求一律「新增模块」，绝不在老模块 / 老 `build()` 上做大手术（低耦合高内聚）。
+4. 模块的启用 / 停用只通过 `books.py` 的 `MODULES_OVERRIDE` 配置（一本一行），不碰共享渲染；
+   回退只需删对应 `MODULES_OVERRIDE` 条目。
+
+### 模块清单
+
+| 模块名 | 职责 | 启用方式 |
+|---|---|---|
+| `thesis` | 一句话主旨 | 默认 |
+| `chapter_guide` | 章节导读（带配额截断，超出显示「（其余 N 条要点见本书 AI 大纲页）」） | 老通读页 `overview.html` 默认 |
+| `merged_guide` | **AI 领读**（新增）：全书骨架 + 章节导读全文 + AI 大纲融合为一棵自包含树；原句提升为节点并保留要点下嵌套原句，无配额截断、无跳转指引 | 合并页 `combined.html` 全站启用；也可按书 `MODULES_OVERRIDE` 覆盖 |
+| `ai` | AI 问书 + 快答实录 | 默认 |
+| `views` | 核心观点初判 | 默认 |
+| `action` | 迁移与行动 | 默认（合并页不渲染） |
+| `quiz` | 全书思考 N 问（带答案） | 默认 |
+| `memo` | 复习与记忆复利 | 默认（合并页不渲染） |
+
+### 合并页 = 站点默认入口（2026-11-02 起）
+
+- 每本书新增 `reading-notes/books/<slug>/combined.html`：通读（overview）与精读（mindmap）
+  模块去重合并成一页，顺序为 思维导图 → 一句话主旨 → **AI 领读** → 精读模块 → 全书思考 3 问。
+- **老页 `overview.html` / `mindmap.html` / `outline.html` 一律保留**：继续生成、继续发布，
+  卡片与入口抽屉里仍留有直达链接；切换的只是「点书名进哪页」（`_entry_page()` / `entry_page()`）。
+- 回退方式：删掉 `combined.html`（或让生成器不产出）即自动回退老通读页，**不会出死链**。

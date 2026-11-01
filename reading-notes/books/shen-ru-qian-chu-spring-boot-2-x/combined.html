@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《深入浅出Spring Boot 2.x》｜通读 · 精读</title>
+<link rel="stylesheet" href="../../../assets/css/reading-overview.css"><link rel="stylesheet" href="../../../assets/css/mmx-guide.css"><link rel="stylesheet" href="../../../assets/css/reading-outline.css">
+<style>
+/* 合并页外壳 */
+body{max-width:960px;margin:0 auto;padding:0 18px 80px;}
+.combined-head{padding:34px 0 18px;border-bottom:1px solid #e7e0d2;margin-bottom:8px;}
+.combined-head h1{font-size:26px;margin:0 0 10px;}
+.nav{position:sticky;top:0;z-index:20;background:rgba(255,253,248,.96);backdrop-filter:blur(6px);
+  border-bottom:1px solid #ece4d4;padding:10px 0;margin:14px 0 26px;display:flex;flex-wrap:wrap;gap:8px;
+  box-shadow:0 2px 10px rgba(120,100,60,.06);}
+.navlink{font-size:12.5px;color:#5d5443;text-decoration:none;background:#f6f1e6;border:1px solid #e7ddca;
+  border-radius:7px;padding:4px 10px;}
+section{scroll-margin-top:64px;}
+/* 一句话主旨：去左侧竖线 */
+.mmx-oneline{border-left:none;padding-left:18px;}
+/* AI领读章内：AI 大纲原生深层样式 */
+.merged-guide .sec{margin:10px 0 14px;padding-left:6px;border-left:2px solid #e5e0d6}
+.merged-guide .sec h4{font:600 .98rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.6em 0 .3em}
+.merged-guide ul.point{margin:.3em 0;padding-left:20px}
+.merged-guide ul.point>li{margin:.35em 0}
+.merged-guide ul.quote{margin:.25em 0 .25em 20px;padding-left:18px;list-style:none}
+.merged-guide ul.quote::before{content:"原句";display:block;font-size:.72rem;color:#bf8247;
+  letter-spacing:.1em;margin:.15em 0 .1em;font-weight:600}
+.merged-guide ul.quote.quote-node{margin-top:.5em;padding-top:.4em;border-top:1px dashed #eadfc9}
+.merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
+.merged-guide ul.quote>li{color:#4a4436;font-size:.93rem;margin:.2em 0;padding-left:10px;border-left:2px solid #bf8247}
+</style>
+</head>
+<body>
+<header class="combined-head">
+  <p class="eyebrow">读前通读 + 精读 · 合并页</p>
+  <h1>《深入浅出Spring Boot 2.x》</h1>
+  <div class="chips"><span class="chip">通读 + 精读</span><span class="chip">AI领读</span><span class="chip">5 个模块</span></div>
+  <p class="small">本页为「通读 + 精读」合并视图：<b>AI领读</b> = 章节目录 + 骨架 + AI 大纲融合，其余为精读模块。AI 大纲独立页 <a href="outline.html">outline.html</a> 仍保留。</p>
+</header>
+<nav class="nav"><a class="navlink" href="#mod-svg">全书结构导图</a><a class="navlink" href="#mod-oneline">一句话主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a></nav>
+<section class="mmx-svgwrap" id="mod-svg">
+<svg class="mmx-svg" viewBox="0 0 1120 1150" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="深入浅出Spring Boot 2.x 全书精读">
+<rect x="0" y="0" width="1120" height="1150" fill="none"/>
+<style>.mmx-svg text{font-family:"Noto Serif SC",Georgia,serif}.mmx-svg .t1{font-size:15px;fill:#2f2a24;font-weight:600}.mmx-svg .t2{font-size:12px;fill:#5c5347}.mmx-svg .t3{font-size:10.5px;fill:#8a8272}.mmx-svg .rt{font-size:13px;fill:#f7f3ea;font-weight:600}.mmx-svg .ln{stroke:#cfc6b4;stroke-width:1.4;fill:none}</style>
+<rect x="28" y="522" width="262" height="70" rx="10" fill="#3d372e"/>
+<text class="rt" x="44" y="546">深入浅出Spring Boot 2</text>
+<text class="rt" x="44" y="564">.x</text>
+<text class="t3" x="44" y="584" style="fill:#c9c0ae">115 章 · 主干 17 条</text>
+<path class="ln" d="M290 557 C350 557,340 61,400 61"/>
+<rect x="400" y="33" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="33" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="58">A 第 1–7 章</text>
+<text class="t3" x="416" y="78">7 章</text>
+<text class="t2" x="714" y="57">含「版权」至「致谢」</text>
+<path class="ln" d="M692 61 L700 61"/>
+<path class="ln" d="M290 557 C350 557,340 123,400 123"/>
+<rect x="400" y="95" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="95" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="120">B 第 8–14 章</text>
+<text class="t3" x="416" y="140">7 章</text>
+<text class="t2" x="714" y="119">含「纠错、源码和课程」至「第1章 Spring B」</text>
+<path class="ln" d="M692 123 L700 123"/>
+<path class="ln" d="M290 557 C350 557,340 185,400 185"/>
+<rect x="400" y="157" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="157" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="182">C 第 15–21 章</text>
+<text class="t3" x="416" y="202">7 章</text>
+<text class="t2" x="714" y="181">含「1.1 Spring的历」至「2.2 Spring B」</text>
+<path class="ln" d="M692 185 L700 185"/>
+<path class="ln" d="M290 557 C350 557,340 247,400 247"/>
+<rect x="400" y="219" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="219" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="244">D 第 22–28 章</text>
+<text class="t3" x="416" y="264">7 章</text>
+<text class="t2" x="714" y="243">含「2.3 使用自定义配置」至「3.4 生命周期」</text>
+<path class="ln" d="M692 247 L700 247"/>
+<path class="ln" d="M290 557 C350 557,340 309,400 309"/>
+<rect x="400" y="281" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="281" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="306">E 第 29–35 章</text>
+<text class="t3" x="416" y="326">7 章</text>
+<text class="t2" x="714" y="305">含「3.5 使用属性文件」至「第4章 开始约定编程——」</text>
+<path class="ln" d="M692 309 L700 309"/>
+<path class="ln" d="M290 557 C350 557,340 371,400 371"/>
+<rect x="400" y="343" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="343" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="368">F 第 36–42 章</text>
+<text class="t3" x="416" y="388">7 章</text>
+<text class="t2" x="714" y="367">含「4.1 约定编程」至「5.2 使用JdbcTe」</text>
+<path class="ln" d="M692 371 L700 371"/>
+<path class="ln" d="M290 557 C350 557,340 433,400 433"/>
+<rect x="400" y="405" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="405" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="430">G 第 43–49 章</text>
+<text class="t3" x="416" y="450">7 章</text>
+<text class="t2" x="714" y="429">含「5.3 使用JPA（Hi」至「6.4 传播行为」</text>
+<path class="ln" d="M692 433 L700 433"/>
+<path class="ln" d="M290 557 C350 557,340 495,400 495"/>
+<rect x="400" y="467" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="467" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="492">H 第 50–56 章</text>
+<text class="t3" x="416" y="512">7 章</text>
+<text class="t2" x="714" y="491">含「6.5 @Transac」至「第8章 文档数据库——M」</text>
+<path class="ln" d="M692 495 L700 495"/>
+<path class="ln" d="M290 557 C350 557,340 557,400 557"/>
+<rect x="400" y="529" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="529" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="554">I 第 57–63 章</text>
+<text class="t3" x="416" y="574">7 章</text>
+<text class="t2" x="714" y="553">含「8.1 配置MongoD」至「9.3 定制Spring」</text>
+<path class="ln" d="M692 557 L700 557"/>
+<path class="ln" d="M290 557 C350 557,340 619,400 619"/>
+<rect x="400" y="591" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="591" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="616">J 第 64–70 章</text>
+<text class="t3" x="416" y="636">7 章</text>
+<text class="t2" x="714" y="615">含「9.4 Spring M」至「10.5 数据模型」</text>
+<path class="ln" d="M692 619 L700 619"/>
+<path class="ln" d="M290 557 C350 557,340 681,400 681"/>
+<rect x="400" y="653" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="653" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="678">G10 第 71–77 章</text>
+<text class="t3" x="416" y="698">7 章</text>
+<text class="t2" x="714" y="677">含「10.6 视图和视图解析」至「11.1 REST简述」</text>
+<path class="ln" d="M692 681 L700 681"/>
+<path class="ln" d="M290 557 C350 557,340 743,400 743"/>
+<rect x="400" y="715" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="715" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="740">G11 第 78–84 章</text>
+<text class="t3" x="416" y="760">7 章</text>
+<text class="t2" x="714" y="739">含「11.2 使用Sprin」至「12.4 限制请求」</text>
+<path class="ln" d="M692 743 L700 743"/>
+<path class="ln" d="M290 557 C350 557,340 805,400 805"/>
+<rect x="400" y="777" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="777" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="802">G12 第 85–91 章</text>
+<text class="t3" x="416" y="822">7 章</text>
+<text class="t2" x="714" y="801">含「12.5 用户认证功能」至「第14章 Spring 」</text>
+<path class="ln" d="M692 805 L700 805"/>
+<path class="ln" d="M290 557 C350 557,340 867,400 867"/>
+<rect x="400" y="839" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="839" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="864">G13 第 92–98 章</text>
+<text class="t3" x="416" y="884">7 章</text>
+<text class="t2" x="714" y="863">含「14.1 基础概念」至「15.1 设计与开发」</text>
+<path class="ln" d="M692 867 L700 867"/>
+<path class="ln" d="M290 557 C350 557,340 929,400 929"/>
+<rect x="400" y="901" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="901" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="926">G14 第 99–105 章</text>
+<text class="t3" x="416" y="946">7 章</text>
+<text class="t2" x="714" y="925">含「15.2 高并发开发」至「16.5 JMX监控」</text>
+<path class="ln" d="M692 929 L700 929"/>
+<path class="ln" d="M290 557 C350 557,340 991,400 991"/>
+<rect x="400" y="963" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="963" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="988">G15 第 106–112 章</text>
+<text class="t3" x="416" y="1008">7 章</text>
+<text class="t2" x="714" y="987">含「第17章 分布式开发——」至「附录 Spring Bo」</text>
+<path class="ln" d="M692 991 L700 991"/>
+<path class="ln" d="M290 557 C350 557,340 1053,400 1053"/>
+<rect x="400" y="1025" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="1025" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="1050">G16 第 113–115 章</text>
+<text class="t3" x="416" y="1070">3 章</text>
+<text class="t2" x="714" y="1049">含「A.1 选择内嵌服务器」至「A.3 深入Spring」</text>
+<path class="ln" d="M692 1053 L700 1053"/>
+</svg></section>
+<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">一句话主旨</h2><p class="mmx-mod-note">本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。</p><p class="mmx-oneline">Spring框架是JavaEE开发的强有力的工具和事实标准，而SpringBoot采用“约定优于配置”的原则简化了Spring的开发，从而成</p></section>
+<section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" id="mod-merged_guide"><h2 id="merged-guide-title">AI领读 · 全书篇目</h2>
+<p class="small">本书 AI 大纲目前为章级目录（要点与原句待补全）。以下为全书篇目，大纲补全后将自动升级为「目录 + 骨架 + 要点 + 原句」完整版。</p>
+<ol class="mmx-pts"><li><b>1</b> 版权</li><li><b>2</b> 内容提要</li><li><b>3</b> 前言</li><li><b>4</b> 本书的安排</li><li><b>5</b> 阅读本书的要求和目标读者</li><li><b>6</b> 本书使用的Spring Boot版本</li><li><b>7</b> 致谢</li><li><b>8</b> 纠错、源码和课程</li><li><b>9</b> 资源与支持</li><li><b>10</b> 配套资源</li><li><b>11</b> 提交勘误</li><li><b>12</b> 与我们联系</li><li><b>13</b> 关于异步社区和异步图书</li><li><b>14</b> 第1章 Spring Boot来临</li><li><b>15</b> 1.1 Spring的历史</li><li><b>16</b> 1.2 注解还是XML</li><li><b>17</b> 1.3 Spring Boot的优点</li><li><b>18</b> 1.4 传统Spring MVC和Spring Boot的对比</li><li><b>19</b> 第2章 聊聊开发环境搭建和基本开发</li><li><b>20</b> 2.1 搭建Spring Boot开发环境</li><li><b>21</b> 2.2 Spring Boot的依赖和自动配置</li><li><b>22</b> 2.3 使用自定义配置</li><li><b>23</b> 2.4 开发自己的Spring Boot项目</li><li><b>24</b> 第3章 全注解下的Spring IoC</li><li><b>25</b> 3.1 IoC容器简介</li><li><b>26</b> 3.2 装配你的Bean</li><li><b>27</b> 3.3 依赖注入</li><li><b>28</b> 3.4 生命周期</li><li><b>29</b> 3.5 使用属性文件</li><li><b>30</b> 3.6 条件装配Bean</li><li><b>31</b> 3.7 Bean的作用域</li><li><b>32</b> 3.8 使用@Profile</li><li><b>33</b> 3.9 引入XML配置Bean</li><li><b>34</b> 3.10 使用Spring EL</li><li><b>35</b> 第4章 开始约定编程——Spring AOP</li><li><b>36</b> 4.1 约定编程</li><li><b>37</b> 4.2 AOP的概念</li><li><b>38</b> 4.3 AOP开发详解</li><li><b>39</b> 4.4 多个切面</li><li><b>40</b> 第5章 访问数据库</li><li><b>41</b> 5.1 配置数据源</li><li><b>42</b> 5.2 使用JdbcTemplate操作数据库</li><li><b>43</b> 5.3 使用JPA（Hibernate）操作数据</li><li><b>44</b> 5.4 整合MyBatis框架</li><li><b>45</b> 第6章 聊聊数据库事务处理</li><li><b>46</b> 6.1 JDBC的数据库事务</li><li><b>47</b> 6.2 Spring声明式事务的使用</li><li><b>48</b> 6.3 隔离级别</li><li><b>49</b> 6.4 传播行为</li><li><b>50</b> 6.5 @Transactional自调用失效问题</li><li><b>51</b> 第7章 使用性能利器——Redis</li><li><b>52</b> 7.1 spring-data-redis项目简介</li><li><b>53</b> 7.2 在Spring Boot中配置和使用Redis</li><li><b>54</b> 7.3 Redis的一些特殊用法</li><li><b>55</b> 7.4 使用Spring缓存注解操作Redis</li><li><b>56</b> 第8章 文档数据库——MongoDB</li><li><b>57</b> 8.1 配置MongoDB</li><li><b>58</b> 8.2 使用MongoTemplate实例</li><li><b>59</b> 8.3 使用JPA</li><li><b>60</b> 第9章 初识Spring MVC</li><li><b>61</b> 9.1 Spring MVC框架的设计</li><li><b>62</b> 9.2 Spring MVC流程</li><li><b>63</b> 9.3 定制Spring MVC的初始化</li><li><b>64</b> 9.4 Spring MVC实例</li><li><b>65</b> 第10章 深入Spring MVC开发</li><li><b>66</b> 10.1 处理器映射</li><li><b>67</b> 10.2 获取控制器参数</li><li><b>68</b> 10.3 自定义参数转换规则</li><li><b>69</b> 10.4 数据验证</li><li><b>70</b> 10.5 数据模型</li><li><b>71</b> 10.6 视图和视图解析器</li><li><b>72</b> 10.7 文件上传</li><li><b>73</b> 10.8 拦截器</li><li><b>74</b> 10.9 国际化</li><li><b>75</b> 10.10 Spring MVC拾遗</li><li><b>76</b> 第11章 构建REST风格网站</li><li><b>77</b> 11.1 REST简述</li><li><b>78</b> 11.2 使用Spring MVC开发REST风格端点</li><li><b>79</b> 11.3 客户端请求RestTemplate</li><li><b>80</b> 第12章 安全——Spring Security</li><li><b>81</b> 12.1 概述和简单安全认证</li><li><b>82</b> 12.2 使用WebSecurityConfigurerAdapter自定义</li><li><b>83</b> 12.3 自定义用户服务信息</li><li><b>84</b> 12.4 限制请求</li><li><b>85</b> 12.5 用户认证功能</li><li><b>86</b> 第13章 学点Spring其他的技术</li><li><b>87</b> 13.1 异步线程池</li><li><b>88</b> 13.2 异步消息</li><li><b>89</b> 13.3 定时任务</li><li><b>90</b> 13.4 WebSocket 应用</li><li><b>91</b> 第14章 Spring 5新框架——WebFlux</li><li><b>92</b> 14.1 基础概念</li><li><b>93</b> 14.2 通过Spring MVC方式开发WebFlux服务端</li><li><b>94</b> 14.3 深入WebFlux服务端开发</li><li><b>95</b> 14.4 深入客户端开发</li><li><b>96</b> 14.5 使用路由函数方式开发WebFlux</li><li><b>97</b> 第15章 实践一下——抢购商品</li><li><b>98</b> 15.1 设计与开发</li><li><b>99</b> 15.2 高并发开发</li><li><b>100</b> 第16章 部署、测试和监控</li><li><b>101</b> 16.1 部署和运行</li><li><b>102</b> 16.2 测试</li><li><b>103</b> 16.3 Actuator监控端点</li><li><b>104</b> 16.4 HTTP监控</li><li><b>105</b> 16.5 JMX监控</li><li><b>106</b> 第17章 分布式开发——Spring Cloud</li><li><b>107</b> 17.1 服务治理和服务发现——Eureka</li><li><b>108</b> 17.2 微服务之间的调用</li><li><b>109</b> 17.3 断路器——Hystrix</li><li><b>110</b> 17.4 路由网关——Zuul</li><li><b>111</b> 17.5 使用@SpringCloudApplication</li><li><b>112</b> 附录 Spring Boot知识点补充</li><li><b>113</b> A.1 选择内嵌服务器</li><li><b>114</b> A.2 修改商标</li><li><b>115</b> A.3 深入Spring Boot自动装配</li></ol></section>
+<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点初判</h2><p class="mmx-mod-note">按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。</p><ul class="mmx-views"><li><b>第 1–7 章</b>——含「版权」至「致谢」</li><li><b>第 8–14 章</b>——含「纠错、源码和课程」至「第1章 Spring B」</li><li><b>第 15–21 章</b>——含「1.1 Spring的历」至「2.2 Spring B」</li><li><b>第 22–28 章</b>——含「2.3 使用自定义配置」至「3.4 生命周期」</li><li><b>第 29–35 章</b>——含「3.5 使用属性文件」至「第4章 开始约定编程——」</li><li><b>第 36–42 章</b>——含「4.1 约定编程」至「5.2 使用JdbcTe」</li><li><b>第 43–49 章</b>——含「5.3 使用JPA（Hi」至「6.4 传播行为」</li><li><b>第 50–56 章</b>——含「6.5 @Transac」至「第8章 文档数据库——M」</li><li><b>第 57–63 章</b>——含「8.1 配置MongoD」至「9.3 定制Spring」</li><li><b>第 64–70 章</b>——含「9.4 Spring M」至「10.5 数据模型」</li><li><b>第 71–77 章</b>——含「10.6 视图和视图解析」至「11.1 REST简述」</li><li><b>第 78–84 章</b>——含「11.2 使用Sprin」至「12.4 限制请求」</li><li><b>第 85–91 章</b>——含「12.5 用户认证功能」至「第14章 Spring 」</li><li><b>第 92–98 章</b>——含「14.1 基础概念」至「15.1 设计与开发」</li><li><b>第 99–105 章</b>——含「15.2 高并发开发」至「16.5 JMX监控」</li><li><b>第 106–112 章</b>——含「第17章 分布式开发——」至「附录 Spring Bo」</li><li><b>第 113–115 章</b>——含「A.1 选择内嵌服务器」至「A.3 深入Spring」</li></ul></section>
+<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句 · 持续积累</h2><p class="mmx-mod-note">以下原句取自本书 AI 大纲落库的原文摘录（book_outline.quote），按大纲顺序节选，非 AI 生成；更多见逐章深读页。</p><ol class="mmx-qlist"><li><blockquote>「约定优于配置，这是Spring Boot的主导思想。」</blockquote><cite>本书正文</cite></li><li><blockquote>「这51笔交易笔数就是多条数据库记录统计出来的。而可重复读是针对数据库的单一条记录，例如，商品的库存是以数据库里面的一条记录存储的，它可以产生可重复读，而不能产生幻读。」</blockquote><cite>本书正文</cite></li><li><blockquote>「IoC是一种通过描述来生成或者获取对象的技术」</blockquote><cite>本书正文</cite></li><li><blockquote>「IoC容器需要具备两个基本的功能： •通过描述管理Bean，包括发布和获取Bean； •通过描述完成Bean之间的依赖关系。」</blockquote><cite>本书正文</cite></li><li><blockquote>「Spring IoC初始化和销毁Bean的过程，这便是Bean的生命周期的过程，它大致分为Bean定义、Bean的初始化、Bean的生存期和Bean的销毁4个部分。其中Bean定义过程大致如下。」</blockquote><cite>本书正文</cite></li><li><blockquote>「读写提交（read committed）隔离级别，是指一个事务只能读取另外一个事务已经提交的数据，不能读取未提交的数据。」</blockquote><cite>本书正文</cite></li><li><blockquote>「在Spring中，当一个方法调用另外一个方法时，可以让事务采取不同的策略工作，如新建事务或者挂起当前事务等，这便是事务的传播行为」</blockquote><cite>本书正文</cite></li><li><blockquote>「@SpringBootApplication标志着这是一个Spring Boot入门文件」</blockquote><cite>本书正文</cite></li><li><blockquote>「每个资源对应一个特定的URI。要获取这个资源，访问它的URI即可，而在REST中每一个资源都会对应一个独一无二的URI。在REST中，URI也可以称为端点（End Point）。」</blockquote><cite>本书正文</cite></li><li><blockquote>「Spring IoC容器并不能知道你需要注入什么动物（是狗？是猫？）给BussinessPerson类对象，从而引起错误的发生」</blockquote><cite>本书正文</cite></li></ol></section>
+</body>
+</html>
