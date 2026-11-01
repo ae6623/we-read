@@ -80,10 +80,17 @@ _SEQ_ONLY_RE = re.compile(
     r"^\s*(?:第\s*)?[零〇一二两三四五六七八九十百千\d]+\s*[章回节篇部卷集]?\s*$"
 )
 
-#: 渲染器自身产生的 fallback 文案，不能拿来当章名。
+#: 渲染器/生成器自身产生的文案，不能拿来当章名。
+#: 前三项来自渲染器的空小节兜底；后三项来自 produce_all.chapter_blocks 批量造小节——
+#: 那是全站统一的模板文案，不是本书真实的小节标题。若不排除，凡章名是「第二章」
+#: 这类纯序号的书，每章都会被派生成同一个名字（2026-11-01 线上实测事故）。
 _RENDER_FALLBACKS = frozenset({
     "本节要点", "本节要点：", "未命名", "未命名章节", "无标题", "-", "—", "…", "...",
+    "读者划得最多的句子", "热门划线", "热门划线原句",
 })
+
+#: 统计型文案（「划线 12128 人」）同样不能当章名。
+_COUNT_TEXT_RE = re.compile(r"^划线\s*[\d,，]+\s*人$")
 
 
 def _norm(v) -> str:
@@ -102,6 +109,8 @@ def is_placeholder_title(title) -> bool:
     if not t:
         return True
     if t in _RENDER_FALLBACKS:
+        return True
+    if _COUNT_TEXT_RE.match(t):
         return True
     return bool(_SEQ_ONLY_RE.match(t))
 
