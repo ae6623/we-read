@@ -20,6 +20,18 @@
 import re
 import html
 
+# 反思题区块标题的单一真源（仓库根 reading_note_spec.py）。
+# 本模块可能在两种 sys.path 下被导入：以仓库根为 cwd 跑 `python -m overview_gen`，
+# 或由外部脚本 `from overview_gen.auto import ...`——后者 sys.path[0] 未必是仓库根，
+# 故补一次路径再重试。失败仍然抛错，不做"用内联默认值"的静默降级。
+try:
+    from reading_note_spec import REFLECT_TITLE
+except ImportError:  # pragma: no cover - 取决于调用方 cwd
+    import sys as _sys
+    from pathlib import Path as _Path
+    _sys.path.insert(0, str(_Path(__file__).resolve().parent.parent))
+    from reading_note_spec import REFLECT_TITLE
+
 # 共享样式表路径：overview.html 落在 reading-notes/books/<slug>/ 下，
 # 相对路径 ../../../assets/css/ 正好是仓库根 assets/css/，与线上站点一致。
 CSS_HEAD = '''<!doctype html>
@@ -219,7 +231,7 @@ def build(cfg, chapters, aiqa_html="", quiz_answers=None, quiz_items=None):
                                 views/action/quiz/memo，可选 head_note）
     chapters : parse_outline() 返回的章节列表
     aiqa_html: 可选，data/ai_qa 快答实录渲染块（无数据传空串则整个区块不出现）
-    quiz_answers: 可选，「读完自测 3 问」的 AI 补答列表 [{q,a}]（无补答则不渲染任何提示）
+    quiz_answers: 可选，「全书思考 3 问」的 AI 补答列表 [{q,a}]（无补答则不渲染任何提示）
     """
     reset_split_state()
     out = [CSS_HEAD.format(title=cfg['title'])]
@@ -313,13 +325,14 @@ def build(cfg, chapters, aiqa_html="", quiz_answers=None, quiz_items=None):
 
     out.append('<section class="views"><h2>核心观点初判</h2>\n%s</section>\n\n' % _pretty_views(cfg['views']))
     out.append('<section class="card"><h2>迁移与行动</h2>\n%s</section>\n\n' % cfg['action'])
-    # 自测三问：gen_quiz 出过题就用它的题面 + 答案（整块替换）；
+    # 全书思考三问：gen_quiz 出过题就用它的题面 + 答案（整块替换）；
     # 没出过才退回 books.py/derive_cfg 的题面 + 补答配对（2026-10-30）
+    # 区块标题统一从 reading_note_spec 取，不再硬编码（2026-11-01）
     if quiz_items:
         out.append(_quiz_block(quiz_items))
     else:
-        out.append('<section class="card quiz-card"><h2>读完自测 3 问</h2>\n<ol>\n%s\n</ol>%s</section>\n\n'
-                   % (cfg['quiz'], _quiz_answers_html(cfg.get('quiz'), quiz_answers or [])))
+        out.append('<section class="card quiz-card"><h2>%s</h2>\n<ol>\n%s\n</ol>%s</section>\n\n'
+                   % (REFLECT_TITLE, cfg['quiz'], _quiz_answers_html(cfg.get('quiz'), quiz_answers or [])))
     out.append('<section class="card"><h2>复习与记忆复利</h2>\n%s</section>\n\n' % cfg['memo'])
     out.append('<footer class="site-footer"><a href="../../../index.html">← 返回首页</a>　<a href="../../index.html">阅读归档索引</a></footer>\n')
     out.append(MMX_JS)
@@ -349,7 +362,7 @@ def _pretty_views(views_html):
 
 
 def _quiz_answers_html(quiz_cfg, answers):
-    """读完自测 3 问的 AI 补答区块：按题面模糊配对；无补答时返回空（不渲染任何提示）。"""
+    """全书思考三问的 AI 补答区块：按题面模糊配对；无补答时返回空（不渲染任何提示）。"""
     qs = re.findall(r'<li>(.*?)</li>', quiz_cfg or '', re.S)
     if not qs:
         return ''
@@ -395,8 +408,8 @@ def _quiz_block(items: list[dict]) -> str:
     src = (items[0].get("src") or "").lower()
     title = _QUIZ_SRC_TITLE.get(src, "参考答案")
     lis = "".join("<li>%s</li>\n" % esc(i.get("q") or "") for i in items)
-    blocks = ['<section class="card quiz-card"><h2>读完自测 3 问</h2>\n<ol>\n%s</ol>'
-              % lis, '<div class="quiz-ans"><h3>%s</h3>' % title]
+    blocks = ['<section class="card quiz-card"><h2>%s</h2>\n<ol>\n%s</ol>'
+              % (REFLECT_TITLE, lis), '<div class="quiz-ans"><h3>%s</h3>' % title]
     for i in items:
         blocks.append('<div class="aiqa-item"><h3>%s</h3><p>%s</p></div>'
                       % (esc(i.get("q") or ""),

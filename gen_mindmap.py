@@ -41,6 +41,9 @@ sys.path.insert(0, str(HERE))
 
 import gen_outline_full as G  # noqa: E402
 import weread_store as S  # noqa: E402
+# 章名展示文本的单一真源：占位章名（空/纯序号）按「首小节名 → 首要点 → 锚点」
+# 派生。改派生规则只改 reading_note_spec.py，不在这里内联。
+from reading_note_spec import chapter_title  # noqa: E402
 
 DB_OUT = HERE / "data" / "mindmap"
 BOOKS = HERE / "reading-notes" / "books"
@@ -457,7 +460,7 @@ def _chapter_html(c: dict, full: dict) -> str:
            '<div class="mmx-body">'
            '<p class="mmx-stat">%s</p>'
            '<p class="mmx-gist">%s</p>%s%s'
-           % (c["no"], E(c["title"]), E(c["role"]), n_pts, stat, E(c["gist"]), chips,
+           % (c["no"], E(chapter_title(c, full)), E(c["role"]), n_pts, stat, E(c["gist"]), chips,
               # 代表句：与该章原句池逐字校验过（refine/from_batch 里 anchor_ok），
               # 校验不过的 anchor 已被清空，这里自然不输出。
               ('<p class="mmx-anchor">锚点原句：「%s」</p>' % E(c["anchor"]))

@@ -34,6 +34,14 @@ from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
 from .parse_outline import parse_outline
+# 反思题题面的唯一真源（仓库根 reading_note_spec.py）；直跑脚本时补父目录
+try:
+    from reading_note_spec import reflect_questions_html
+except ImportError:  # pragma: no cover
+    import sys as _sys
+    from pathlib import Path as _Path
+    _sys.path.insert(0, str(_Path(__file__).resolve().parent.parent))
+    from reading_note_spec import reflect_questions_html
 from .build_overview import build, split_plain
 from .quality_gate import check as gate_check
 from . import books as books_mod
@@ -247,11 +255,10 @@ def derive_cfg(parsed, title, author, chip="AI大纲整理"):
         "避免被大纲带偏结论。</p>"
         "<p><b>三、验证存疑：</b>凡标「存疑」的观点，读原文时专门核对一次再决定是否采纳。</p>"
     )
-    quiz = (
-        "<li>本书 AI 大纲共列出多少章节条目？它们大致如何分组？</li>"
-        "<li>第一章最让你意外的要点是什么？它和你原先的预期有何不同？</li>"
-        "<li>合上本页，你能用自己的话讲清本书试图解决的问题吗？</li>"
-    )
+    # 默认反思题：全书视角的高维三问，来自单一真源 reading_note_spec。
+    # 旧的那套（"大纲共列出多少章节条目/第一章最让你意外/合上本页能否讲清"）是
+    # 章节条目级、版面元信息级的问法，读来无增益，已废弃（2026-11-01）。
+    quiz = reflect_questions_html()
     memo = (
         "<p>《%s》是 AI 大纲自动整理页：先抓全书骨架（%d 章）与首章要点，再带着问题读原文。</p>"
         "<p>每周回看一次——哪些「存疑」已读原文验证、哪些仍待查证，让记忆复利。</p>"
