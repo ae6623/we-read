@@ -1,0 +1,21 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Netty进阶之路：跟着案例学Netty · AI 问答 · 自测</title><style>
+:root{--fg:#1f2328;--muted:#6b7280;--line:#e6e2da;--accent:#b45309;--bg:#fbfaf7}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.78 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
+.wrap{max-width:840px;margin:0 auto;padding:38px 22px 90px}
+h1{font-size:26px;line-height:1.35;margin:0 0 6px}
+.meta{color:var(--muted);font-size:14px;margin-bottom:20px}
+h2{font-size:19px;margin:34px 0 12px;padding-left:10px;border-left:4px solid var(--accent)}
+h3{font-size:16px;margin:18px 0 8px}
+p{margin:8px 0}
+.tag{display:inline-block;background:#f2ede2;color:#8a6d3b;font-size:12px;padding:1px 9px;border-radius:10px;margin-right:6px}
+ul,ol{padding-left:22px}li{margin:4px 0}
+.quote{border-left:3px solid #d8cfbd;padding:6px 12px;color:#4b4639;background:#f7f4ee;margin:8px 0;font-size:15px;border-radius:0 6px 6px 0}
+.src{color:var(--muted);font-size:12px}
+.ch{display:flex;gap:10px;padding:7px 0;border-bottom:1px dashed var(--line)}
+.ch .no{color:var(--accent);font-weight:600;min-width:34px;text-align:right}
+.card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:12px 0}
+.foot{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+a{color:#8a5a00;text-decoration:none}a:hover{text-decoration:underline}
+.badge{font-size:12px;color:#8a6d3b;background:#f6f1e6;border:1px solid #eadfc6;border-radius:6px;padding:1px 7px}
+</style></head><body><div class="wrap"><h1>Netty进阶之路：跟着案例学Netty</h1><div class="meta"><span class="tag">AI 问答 · 自测</span>基于 7 条读者高赞划线的自测追问</div><p class="src">说明：这里不编答案。每题给出一条<b>真实划线原文</b>与出处，配三个追问，用来检验你是否真读懂了这句话。</p><div class="card"><h3>Q1. 这句话的关键判断是什么？</h3><div class="quote">「推荐业务处理线程和Netty网络I/O线程分离策略」<div class="src">8.1 车联网服务端接收不到车载终端消息问题　·　34 人划线</div></div><p class="src">追问：① 它的核心主张是什么？② 成立的前提/边界在哪？③ 放进全书主题，它是支撑还是反驳作者？</p></div><div class="card"><h3>Q2. 这句话的关键判断是什么？</h3><div class="quote">「channelReadComplete方法中的业务逻辑移到channelRead方法中执行，生产环境升级之后问题得到解决」<div class="src">15.1 channelReadComplete方法被调用多次问题　·　34 人划线</div></div><p class="src">追问：① 它的核心主张是什么？② 成立的前提/边界在哪？③ 放进全书主题，它是支撑还是反驳作者？</p></div><div class="card"><h3>Q3. 这句话的关键判断是什么？</h3><div class="quote">「守护线程（Daemon）就是运行在程序后台的线程，通常守护线程是由JVM 创建的，用于辅助用户线程或者 JVM工作，比较典型的如 GC线程」<div class="src">1.1 Netty服务端意外退出问题　·　28 人划线</div></div><p class="src">追问：① 它的核心主张是什么？② 成立的前提/边界在哪？③ 放进全书主题，它是支撑还是反驳作者？</p></div><div class="card"><h3>Q4. 这句话的关键判断是什么？</h3><div class="quote">「其中 memoryMap 存放的是PoolSubpage的分配信息，depthMap存放的是二叉树的深度」<div class="src">3.2 Netty内存池工作机制　·　28 人划线</div></div><p class="src">追问：① 它的核心主张是什么？② 成立的前提/边界在哪？③ 放进全书主题，它是支撑还是反驳作者？</p></div><div class="card"><h3>Q5. 这句话的关键判断是什么？</h3><div class="quote">「在某个时刻，一个HTTP连接上只能单向地处理一个消息，就像单行道，一个消息处理得慢，很容易导致后续消息阻塞」<div class="src">14.1 gRPC基础入门　·　28 人划线</div></div><p class="src">追问：① 它的核心主张是什么？② 成立的前提/边界在哪？③ 放进全书主题，它是支撑还是反驳作者？</p></div><div class="card"><h3>Q6. 这句话的关键判断是什么？</h3><div class="quote">「Java的优雅停机通常通过注册JDK的ShutdownHook来实现」<div class="src">1.2 Netty优雅退出机制　·　22 人划线</div></div><p class="src">追问：① 它的核心主张是什么？② 成立的前提/边界在哪？③ 放进全书主题，它是支撑还是反驳作者？</p></div><div class="card"><h3>Q7. 这句话的关键判断是什么？</h3><div class="quote">「整形可能会增加延迟，而流控几乎不引入额外的延迟」<div class="src">16.1 Netty流量整形功能　·　20 人划线</div></div><p class="src">追问：① 它的核心主张是什么？② 成立的前提/边界在哪？③ 放进全书主题，它是支撑还是反驳作者？</p></div><div class="foot">来源：微信读书官方热门划线接口（原文逐字，问题为结构化追问）　·　生成于 2026-11-01 13:18　·　开读即产（不等完读）</div></div></body></html>
