@@ -1,21 +1,311 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>邓小平时代 · 通读 · 全书视角</title><style>
-:root{--fg:#1f2328;--muted:#6b7280;--line:#e6e2da;--accent:#b45309;--bg:#fbfaf7}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.78 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
-.wrap{max-width:840px;margin:0 auto;padding:38px 22px 90px}
-h1{font-size:26px;line-height:1.35;margin:0 0 6px}
-.meta{color:var(--muted);font-size:14px;margin-bottom:20px}
-h2{font-size:19px;margin:34px 0 12px;padding-left:10px;border-left:4px solid var(--accent)}
-h3{font-size:16px;margin:18px 0 8px}
-p{margin:8px 0}
-.tag{display:inline-block;background:#f2ede2;color:#8a6d3b;font-size:12px;padding:1px 9px;border-radius:10px;margin-right:6px}
-ul,ol{padding-left:22px}li{margin:4px 0}
-.quote{border-left:3px solid #d8cfbd;padding:6px 12px;color:#4b4639;background:#f7f4ee;margin:8px 0;font-size:15px;border-radius:0 6px 6px 0}
-.src{color:var(--muted);font-size:12px}
-.ch{display:flex;gap:10px;padding:7px 0;border-bottom:1px dashed var(--line)}
-.ch .no{color:var(--accent);font-weight:600;min-width:34px;text-align:right}
-.card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:12px 0}
-.foot{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
-a{color:#8a5a00;text-decoration:none}a:hover{text-decoration:underline}
-.badge{font-size:12px;color:#8a6d3b;background:#f6f1e6;border:1px solid #eadfc6;border-radius:6px;padding:1px 7px}
-</style></head><body><div class="wrap"><h1>邓小平时代</h1><div class="meta"><span class="tag">通读 · 全书视角</span>傅高义　·　在读 68%（累计 639 分钟）</div><h2>全书结构（33 章）</h2><ol><li>扉　页</li><li>地图　1980年代的中国</li><li>香港中文版序</li><li>香港中文版出版说明</li><li>前言　探寻邓小平</li><li>导言　这个人和他的使命</li><li>第1章　革命者、建设者、改革者：1904–1969</li><li>第2章　从放逐到返京：1969–1974</li><li>第3章　在毛泽东手下整顿秩序：1974–1975</li><li>第4章　在毛泽东手下规划未来：1975</li><li>第5章　在毛时代终结时靠边站：1976</li><li>第6章　在华国锋时期复出：1977–1978</li><li>第7章　开创邓小平时代：1978－1980</li><li>第8章　为自由设限：1978–1979</li><li>第9章　苏联和越南的威胁：1978–1979</li><li>第10章　向日本开放：1978</li><li>第11章　向美国敞开大门：1978–1979</li><li>第12章　组建领导班子：1979–1980</li><li>第13章 邓小平的治国术</li><li>第14章　广东和福建的试验：1979–1984</li><li>第15章　经济调整和农村改革：1978–1982</li><li>第16章　加快经济发展和开放：1982–1989</li><li>第17章　一国两制：台湾、香港和西藏</li><li>第18章　为军事现代化作准备</li><li>第19章　政治的潮起潮落</li><li>第20章 邓小平时代的挑战：1989–1992</li><li>第21章　天安门悲剧：1989年5月17日–6月4日</li><li>第22章　站稳脚跟：1989–1992</li><li>第23章　邓小平时代的终曲——南巡：1992</li><li>邓小平的历史地位</li><li class="src">…… 其余 3 章见 AI 大纲</li></ol><div class="foot">来源：微信读书官方简介/目录/热门划线接口　·　生成于 2026-11-01 09:21　·　开读即产（不等完读）</div></div></body></html>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="《程序员超强大脑》全书精读 · 章节定位 · 跨章张力（由 AI 大纲条目结构化重算）">
+<title>《程序员超强大脑》｜精读</title>
+<link rel="stylesheet" href="../../../assets/css/reading-overview.css">
+<link rel="stylesheet" href="../../../assets/css/mmx-guide.css">
+<style>
+
+/* 章节树组件（mmx-cn/body/sec/pts/qt…）在 assets/css/mmx-guide.css，与通读页共用；
+   这里只留导图页专属件：命题卡 / 主干 SVG / 主干分组。 */
+.mmx-wrap{max-width:1120px}
+.mmx-kicker{font-size:.7rem;letter-spacing:.18em;color:var(--muted);margin:0 0 .3em}
+.mmx-claim{font-size:1.16rem;line-height:1.75;margin:.1em 0 .5em;color:var(--ink)}
+.mmx-bound{font-size:.86rem;color:#5c5347;line-height:1.8;margin:.2em 0}
+.mmx-evi{font-size:.76rem;color:var(--muted);margin:.6em 0 .3em}
+.mmx-bar{height:5px;background:#e6dfcf;border-radius:3px;overflow:hidden;margin-bottom:1.2em}
+.mmx-bar i{display:block;height:100%;background:linear-gradient(90deg,#8a9b6e,#c2b280)}
+.mmx-svgwrap{overflow-x:auto;padding:.4em 0 1em;border-bottom:1px solid var(--line)}
+.mmx-svg{width:100%;height:auto;min-width:760px}
+.mmx-spine{margin:1.15em 0;border-left:3px solid #ece4d3;padding:.1em 0 .1em .85em}
+.mmx-spine[open]{border-left-color:#d8cdb4}
+.mmx-spine>summary{display:flex;gap:.6em;align-items:baseline;cursor:pointer;
+  list-style:none;padding:.35em 0}
+.mmx-spine>summary::-webkit-details-marker{display:none}
+.mmx-id{font-family:Georgia,serif;font-size:.8rem;color:#8a9b6e;border:1px solid #cfd8bd;
+  border-radius:4px;padding:0 .35em}
+.mmx-label{font-weight:600;font-size:1rem;color:var(--ink)}
+.mmx-cnt{margin-left:auto;font-size:.74rem;color:var(--muted)}
+.mmx-why{font-size:.8rem;color:var(--muted);margin:.1em 0 .8em;line-height:1.7}
+.mmx-tree{list-style:none;padding:0;margin:.15em 0 0}
+@media(max-width:720px){.mmx-svg{min-width:640px}}
+
+</style>
+</head>
+<body>
+<main class="wrap mmx-wrap">
+<header class="note-head">
+  <p class="eyebrow">CLOSE READING · AFTER THINKING</p>
+  <h1>《程序员超强大脑》精读</h1>
+  <p class="meta">80 章 · 80 条要点 · 0 句原句 · 主干 12 条 · 章节功能定位 · 由本书 AI 大纲条目重算</p>
+  <p class="links"><a href="../../../index.html">← 返回首页</a>
+     <a href="../../index.html">阅读归档索引</a>
+     <a href="overview.html">全书视角</a>
+     <a href="outline.html">AI 大纲</a></p>
+</header>
+<section class="mmx-thesis">
+<p class="mmx-kicker">THIS BOOK ARGUES</p>
+<p class="mmx-claim">为什么你在写代码时总会遇到这样或那样的问题？为什么你总是记错某些语法？为什么有些人能够快速学会新的编程语言，而有些人则不能？在试图解决困难或</p>
+<p class="mmx-bound"><b>边界</b> 结构提要，非读后感；观点以原文为准。</p>
+<p class="mmx-evi">证据密度 <b>0%</b> · 80 条要点中 0 条带原句 （结构由 AI 大纲条目重算，非读后感）</p>
+<div class="mmx-bar"><i style="width:0%"></i></div>
+</section>
+<section class="mmx-svgwrap">
+<svg class="mmx-svg" viewBox="0 0 1120 840" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="程序员超强大脑 全书精读">
+<rect x="0" y="0" width="1120" height="840" fill="none"/>
+<style>.mmx-svg text{font-family:"Noto Serif SC",Georgia,serif}.mmx-svg .t1{font-size:15px;fill:#2f2a24;font-weight:600}.mmx-svg .t2{font-size:12px;fill:#5c5347}.mmx-svg .t3{font-size:10.5px;fill:#8a8272}.mmx-svg .rt{font-size:13px;fill:#f7f3ea;font-weight:600}.mmx-svg .ln{stroke:#cfc6b4;stroke-width:1.4;fill:none}</style>
+<rect x="28" y="376" width="262" height="52" rx="10" fill="#3d372e"/>
+<text class="rt" x="44" y="400">程序员超强大脑</text>
+<text class="t3" x="44" y="420" style="fill:#c9c0ae">80 章 · 主干 12 条</text>
+<path class="ln" d="M290 402 C350 402,340 61,400 61"/>
+<rect x="400" y="33" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="33" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="58">A 第 1–7 章</text>
+<text class="t3" x="416" y="78">7 章</text>
+<text class="t2" x="714" y="57">含「本书讨论的3种认知过程一」至「第一部分 代码阅读」</text>
+<path class="ln" d="M692 61 L700 61"/>
+<path class="ln" d="M290 402 C350 402,340 123,400 123"/>
+<rect x="400" y="95" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="95" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="120">B 第 8–14 章</text>
+<text class="t3" x="416" y="140">7 章</text>
+<text class="t2" x="714" y="119">含「第1章 剖析程序设计之惑」至「2.1 快速阅读代码」</text>
+<path class="ln" d="M692 123 L700 123"/>
+<path class="ln" d="M290 402 C350 402,340 185,400 185"/>
+<rect x="400" y="157" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="157" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="182">C 第 15–21 章</text>
+<text class="t3" x="416" y="202">7 章</text>
+<text class="t2" x="714" y="181">含「2.2 弥补记忆容量不足」至「3.3 如何避免遗忘」</text>
+<path class="ln" d="M692 185 L700 185"/>
+<path class="ln" d="M290 402 C350 402,340 247,400 247"/>
+<rect x="400" y="219" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="219" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="244">D 第 22–28 章</text>
+<text class="t3" x="416" y="264">7 章</text>
+<text class="t2" x="714" y="243">含「3.4 如何牢记编程语法」至「4.4 小结」</text>
+<path class="ln" d="M692 247 L700 247"/>
+<path class="ln" d="M290 402 C350 402,340 309,400 309"/>
+<rect x="400" y="281" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="281" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="306">E 第 29–35 章</text>
+<text class="t3" x="416" y="326">7 章</text>
+<text class="t2" x="714" y="305">含「第二部分 代码思考」至「5.5 运用文本理解策略」</text>
+<path class="ln" d="M692 309 L700 309"/>
+<path class="ln" d="M290 402 C350 402,340 371,400 371"/>
+<rect x="400" y="343" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="343" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="368">F 第 36–42 章</text>
+<text class="t3" x="416" y="388">7 章</text>
+<text class="t2" x="714" y="367">含「5.6 小结」至「6.5 概念机器和图式」</text>
+<path class="ln" d="M692 371 L700 371"/>
+<path class="ln" d="M290 402 C350 402,340 433,400 433"/>
+<rect x="400" y="405" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="405" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="430">G 第 43–49 章</text>
+<text class="t3" x="416" y="450">7 章</text>
+<text class="t2" x="714" y="429">含「6.6 小结」至「第8章 提高命名的质量」</text>
+<path class="ln" d="M692 433 L700 433"/>
+<path class="ln" d="M290 402 C350 402,340 495,400 495"/>
+<rect x="400" y="467" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="467" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="492">H 第 50–56 章</text>
+<text class="t3" x="416" y="512">7 章</text>
+<text class="t2" x="714" y="491">含「8.1 命名为什么重要」至「第9章 避免低质量代码和」</text>
+<path class="ln" d="M692 495 L700 495"/>
+<path class="ln" d="M290 402 C350 402,340 557,400 557"/>
+<rect x="400" y="529" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="529" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="554">I 第 57–63 章</text>
+<text class="t3" x="416" y="574">7 章</text>
+<text class="t2" x="714" y="553">含「9.1 为什么存在异味的」至「10.3 自动化：构建内」</text>
+<path class="ln" d="M692 557 L700 557"/>
+<path class="ln" d="M290 402 C350 402,340 619,400 619"/>
+<rect x="400" y="591" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="591" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="616">J 第 64–70 章</text>
+<text class="t3" x="416" y="636">7 章</text>
+<text class="t2" x="714" y="615">含「10.4 从代码及其解释」至「11.3 小结」</text>
+<path class="ln" d="M692 619 L700 619"/>
+<path class="ln" d="M290 402 C350 402,340 681,400 681"/>
+<rect x="400" y="653" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="653" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="678">G10 第 71–77 章</text>
+<text class="t3" x="416" y="698">7 章</text>
+<text class="t2" x="714" y="677">含「第12章 设计和改进大型」至「13.2 高级程序员与初」</text>
+<path class="ln" d="M692 681 L700 681"/>
+<path class="ln" d="M290 402 C350 402,340 743,400 743"/>
+<rect x="400" y="715" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="715" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="740">G11 第 78–80 章</text>
+<text class="t3" x="416" y="760">3 章</text>
+<text class="t2" x="714" y="739">含「13.3 完善适岗培训流」至「写在最后」</text>
+<path class="ln" d="M692 743 L700 743"/>
+</svg></section>
+<div class="mmx-tools"><button class="mmx-btn" data-mmx="open">展开全部要点</button><button class="mmx-btn" data-mmx="close">全部收起</button><span class="mmx-tip">每章折叠态只占一行，点章名展开该章全部小节、要点与原句</span></div>
+<details class="mmx-spine" open>
+<summary><span class="mmx-id">A</span><span class="mmx-label">第 1–7 章</span><span class="mmx-cnt">7 章</span></summary>
+<p class="mmx-why">含「本书讨论的3种认知过程一」至「第一部分 代码阅读」</p>
+<ol class="mmx-tree">
+<details class="mmx-cn"><summary><span class="mmx-no">1</span><span class="mmx-name">本书讨论的3种认知过程一览</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">本书讨论的3种认知过程一览</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">2</span><span class="mmx-name">序言</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">序言</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">3</span><span class="mmx-name">前言</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">前言</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">4</span><span class="mmx-name">致谢</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">致谢</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">5</span><span class="mmx-name">关于本书</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">关于本书</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">6</span><span class="mmx-name">关于封面插图</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">关于封面插图</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">7</span><span class="mmx-name">第一部分 代码阅读</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">第一部分 代码阅读</p></div></details>
+</ol></details>
+<details class="mmx-spine" open>
+<summary><span class="mmx-id">B</span><span class="mmx-label">第 8–14 章</span><span class="mmx-cnt">7 章</span></summary>
+<p class="mmx-why">含「第1章 剖析程序设计之惑」至「2.1 快速阅读代码」</p>
+<ol class="mmx-tree">
+<details class="mmx-cn"><summary><span class="mmx-no">8</span><span class="mmx-name">第1章 剖析程序设计之惑</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">第1章 剖析程序设计之惑</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">9</span><span class="mmx-name">1.1 代码造成的各种困惑</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">1.1 代码造成的各种困惑</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">10</span><span class="mmx-name">1.2 影响程序设计的不同认知过程</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">1.2 影响程序设计的不同认知过程</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">11</span><span class="mmx-name">1.3 认知过程之间的关系</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">1.3 认知过程之间的关系</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">12</span><span class="mmx-name">1.4 小结</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">1.4 小结</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">13</span><span class="mmx-name">第2章 快速阅读代码</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">第2章 快速阅读代码</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">14</span><span class="mmx-name">2.1 快速阅读代码</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">2.1 快速阅读代码</p></div></details>
+</ol></details>
+<details class="mmx-spine" open>
+<summary><span class="mmx-id">C</span><span class="mmx-label">第 15–21 章</span><span class="mmx-cnt">7 章</span></summary>
+<p class="mmx-why">含「2.2 弥补记忆容量不足」至「3.3 如何避免遗忘」</p>
+<ol class="mmx-tree">
+<details class="mmx-cn"><summary><span class="mmx-no">15</span><span class="mmx-name">2.2 弥补记忆容量不足的短板</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">2.2 弥补记忆容量不足的短板</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">16</span><span class="mmx-name">2.3 看到的代码比读到的代码多</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">2.3 看到的代码比读到的代码多</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">17</span><span class="mmx-name">2.4 小结</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">2.4 小结</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">18</span><span class="mmx-name">第3章 快速学习编程语法</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">第3章 快速学习编程语法</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">19</span><span class="mmx-name">3.1 语法记忆小贴士</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">3.1 语法记忆小贴士</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">20</span><span class="mmx-name">3.2 如何利用抽认卡快速学习语法</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">3.2 如何利用抽认卡快速学习语法</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">21</span><span class="mmx-name">3.3 如何避免遗忘</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">3.3 如何避免遗忘</p></div></details>
+</ol></details>
+<details class="mmx-spine" open>
+<summary><span class="mmx-id">D</span><span class="mmx-label">第 22–28 章</span><span class="mmx-cnt">7 章</span></summary>
+<p class="mmx-why">含「3.4 如何牢记编程语法」至「4.4 小结」</p>
+<ol class="mmx-tree">
+<details class="mmx-cn"><summary><span class="mmx-no">22</span><span class="mmx-name">3.4 如何牢记编程语法</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">3.4 如何牢记编程语法</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">23</span><span class="mmx-name">3.5 小结</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">3.5 小结</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">24</span><span class="mmx-name">第4章 阅读复杂的代码</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">第4章 阅读复杂的代码</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">25</span><span class="mmx-name">4.1 为什么复杂的代码难以理解</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">4.1 为什么复杂的代码难以理解</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">26</span><span class="mmx-name">4.2 减轻认知负荷的方法</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">4.2 减轻认知负荷的方法</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">27</span><span class="mmx-name">4.3 利用记忆辅助工具解决工作记忆过载的问题</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">4.3 利用记忆辅助工具解决工作记忆过载的问题</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">28</span><span class="mmx-name">4.4 小结</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">4.4 小结</p></div></details>
+</ol></details>
+<details class="mmx-spine" open>
+<summary><span class="mmx-id">E</span><span class="mmx-label">第 29–35 章</span><span class="mmx-cnt">7 章</span></summary>
+<p class="mmx-why">含「第二部分 代码思考」至「5.5 运用文本理解策略」</p>
+<ol class="mmx-tree">
+<details class="mmx-cn"><summary><span class="mmx-no">29</span><span class="mmx-name">第二部分 代码思考</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">第二部分 代码思考</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">30</span><span class="mmx-name">第5章 深入理解代码</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">第5章 深入理解代码</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">31</span><span class="mmx-name">5.1 变量角色框架</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">5.1 变量角色框架</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">32</span><span class="mmx-name">5.2 角色和范式</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">5.2 角色和范式</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">33</span><span class="mmx-name">5.3 加深对程序的了解</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">5.3 加深对程序的了解</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">34</span><span class="mmx-name">5.4 阅读代码和阅读文本有相似之处</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">5.4 阅读代码和阅读文本有相似之处</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">35</span><span class="mmx-name">5.5 运用文本理解策略来阅读代码</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">5.5 运用文本理解策略来阅读代码</p></div></details>
+</ol></details>
+<details class="mmx-spine" open>
+<summary><span class="mmx-id">F</span><span class="mmx-label">第 36–42 章</span><span class="mmx-cnt">7 章</span></summary>
+<p class="mmx-why">含「5.6 小结」至「6.5 概念机器和图式」</p>
+<ol class="mmx-tree">
+<details class="mmx-cn"><summary><span class="mmx-no">36</span><span class="mmx-name">5.6 小结</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">5.6 小结</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">37</span><span class="mmx-name">第6章 更好地解决编程问题</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">第6章 更好地解决编程问题</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">38</span><span class="mmx-name">6.1 借助模型来思考代码</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">6.1 借助模型来思考代码</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">39</span><span class="mmx-name">6.2 心智模型</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">6.2 心智模型</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">40</span><span class="mmx-name">6.3 概念机器</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">6.3 概念机器</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">41</span><span class="mmx-name">6.4 概念机器和语言描述</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">6.4 概念机器和语言描述</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">42</span><span class="mmx-name">6.5 概念机器和图式</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">6.5 概念机器和图式</p></div></details>
+</ol></details>
+<details class="mmx-spine" open>
+<summary><span class="mmx-id">G</span><span class="mmx-label">第 43–49 章</span><span class="mmx-cnt">7 章</span></summary>
+<p class="mmx-why">含「6.6 小结」至「第8章 提高命名的质量」</p>
+<ol class="mmx-tree">
+<details class="mmx-cn"><summary><span class="mmx-no">43</span><span class="mmx-name">6.6 小结</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">6.6 小结</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">44</span><span class="mmx-name">第7章 迷思概念：错误的思维方式</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">第7章 迷思概念：错误的思维方式</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">45</span><span class="mmx-name">7.1 为什么学习第二门编程语言比学习第一门编程语言更容易</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">7.1 为什么学习第二门编程语言比学习第一门编程语言更容易</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">46</span><span class="mmx-name">7.2 迷思概念：思维中存在的错误</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">7.2 迷思概念：思维中存在的错误</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">47</span><span class="mmx-name">7.3 小结</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">7.3 小结</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">48</span><span class="mmx-name">第三部分 代码编写</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">第三部分 代码编写</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">49</span><span class="mmx-name">第8章 提高命名的质量</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">第8章 提高命名的质量</p></div></details>
+</ol></details>
+<details class="mmx-spine" open>
+<summary><span class="mmx-id">H</span><span class="mmx-label">第 50–56 章</span><span class="mmx-cnt">7 章</span></summary>
+<p class="mmx-why">含「8.1 命名为什么重要」至「第9章 避免低质量代码和」</p>
+<ol class="mmx-tree">
+<details class="mmx-cn"><summary><span class="mmx-no">50</span><span class="mmx-name">8.1 命名为什么重要</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">8.1 命名为什么重要</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">51</span><span class="mmx-name">8.2 从认知的角度剖析命名</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">8.2 从认知的角度剖析命名</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">52</span><span class="mmx-name">8.3 哪些类型的标识符更容易理解</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">8.3 哪些类型的标识符更容易理解</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">53</span><span class="mmx-name">8.4 标识符与代码错误之间的关系</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">8.4 标识符与代码错误之间的关系</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">54</span><span class="mmx-name">8.5 如何设计质量更高的标识符</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">8.5 如何设计质量更高的标识符</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">55</span><span class="mmx-name">8.6 小结</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">8.6 小结</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">56</span><span class="mmx-name">第9章 避免低质量代码和认知负荷：两种框架</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">第9章 避免低质量代码和认知负荷：两种框架</p></div></details>
+</ol></details>
+<details class="mmx-spine" open>
+<summary><span class="mmx-id">I</span><span class="mmx-label">第 57–63 章</span><span class="mmx-cnt">7 章</span></summary>
+<p class="mmx-why">含「9.1 为什么存在异味的」至「10.3 自动化：构建内」</p>
+<ol class="mmx-tree">
+<details class="mmx-cn"><summary><span class="mmx-no">57</span><span class="mmx-name">9.1 为什么存在异味的代码会加重认知负荷</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">9.1 为什么存在异味的代码会加重认知负荷</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">58</span><span class="mmx-name">9.2 低质量标识符对认知负荷的影响</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">9.2 低质量标识符对认知负荷的影响</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">59</span><span class="mmx-name">9.3 小结</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">9.3 小结</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">60</span><span class="mmx-name">第10章 提高解决复杂问题的能力</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">第10章 提高解决复杂问题的能力</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">61</span><span class="mmx-name">10.1 问题解决的实质</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">10.1 问题解决的实质</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">62</span><span class="mmx-name">10.2 长时记忆在解决编程问题时所起的作用</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">10.2 长时记忆在解决编程问题时所起的作用</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">63</span><span class="mmx-name">10.3 自动化：构建内隐记忆</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">10.3 自动化：构建内隐记忆</p></div></details>
+</ol></details>
+<details class="mmx-spine" open>
+<summary><span class="mmx-id">J</span><span class="mmx-label">第 64–70 章</span><span class="mmx-cnt">7 章</span></summary>
+<p class="mmx-why">含「10.4 从代码及其解释」至「11.3 小结」</p>
+<ol class="mmx-tree">
+<details class="mmx-cn"><summary><span class="mmx-no">64</span><span class="mmx-name">10.4 从代码及其解释中汲取经验</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">10.4 从代码及其解释中汲取经验</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">65</span><span class="mmx-name">10.5 小结</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">10.5 小结</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">66</span><span class="mmx-name">第四部分 代码协作</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">第四部分 代码协作</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">67</span><span class="mmx-name">第11章 编程活动和任务</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">第11章 编程活动和任务</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">68</span><span class="mmx-name">11.1 程序设计包括不同的编程活动</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">11.1 程序设计包括不同的编程活动</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">69</span><span class="mmx-name">11.2 受到干扰的程序员</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">11.2 受到干扰的程序员</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">70</span><span class="mmx-name">11.3 小结</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">11.3 小结</p></div></details>
+</ol></details>
+<details class="mmx-spine" open>
+<summary><span class="mmx-id">G10</span><span class="mmx-label">第 71–77 章</span><span class="mmx-cnt">7 章</span></summary>
+<p class="mmx-why">含「第12章 设计和改进大型」至「13.2 高级程序员与初」</p>
+<ol class="mmx-tree">
+<details class="mmx-cn"><summary><span class="mmx-no">71</span><span class="mmx-name">第12章 设计和改进大型系统</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">第12章 设计和改进大型系统</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">72</span><span class="mmx-name">12.1 代码库的属性</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">12.1 代码库的属性</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">73</span><span class="mmx-name">12.2 认知维度和编程活动</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">12.2 认知维度和编程活动</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">74</span><span class="mmx-name">12.3 小结</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">12.3 小结</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">75</span><span class="mmx-name">第13章 对新程序员进行适岗培训</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">第13章 对新程序员进行适岗培训</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">76</span><span class="mmx-name">13.1 适岗培训中存在的问题</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">13.1 适岗培训中存在的问题</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">77</span><span class="mmx-name">13.2 高级程序员与初级程序员的区别</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">13.2 高级程序员与初级程序员的区别</p></div></details>
+</ol></details>
+<details class="mmx-spine" open>
+<summary><span class="mmx-id">G11</span><span class="mmx-label">第 78–80 章</span><span class="mmx-cnt">3 章</span></summary>
+<p class="mmx-why">含「13.3 完善适岗培训流」至「写在最后」</p>
+<ol class="mmx-tree">
+<details class="mmx-cn"><summary><span class="mmx-no">78</span><span class="mmx-name">13.3 完善适岗培训流程</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">13.3 完善适岗培训流程</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">79</span><span class="mmx-name">13.4 小结</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">13.4 小结</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">80</span><span class="mmx-name">写在最后</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">写在最后</p></div></details>
+</ol></details><section class="mmx-mod" aria-labelledby="oneline"><h2 id="oneline">一句话主旨</h2><p class="mmx-mod-note">本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。</p><p class="mmx-oneline">为什么你在写代码时总会遇到这样或那样的问题？为什么你总是记错某些语法？为什么有些人能够快速学会新的编程语言，而有些人则不能？在试图解决困难或</p></section>
+<section class="mmx-mod" aria-labelledby="views"><h2 id="views">核心观点初判</h2><p class="mmx-mod-note">按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。</p><ul class="mmx-views"><li><b>第 1–7 章</b>——含「本书讨论的3种认知过程一」至「第一部分 代码阅读」</li><li><b>第 8–14 章</b>——含「第1章 剖析程序设计之惑」至「2.1 快速阅读代码」</li><li><b>第 15–21 章</b>——含「2.2 弥补记忆容量不足」至「3.3 如何避免遗忘」</li><li><b>第 22–28 章</b>——含「3.4 如何牢记编程语法」至「4.4 小结」</li><li><b>第 29–35 章</b>——含「第二部分 代码思考」至「5.5 运用文本理解策略」</li><li><b>第 36–42 章</b>——含「5.6 小结」至「6.5 概念机器和图式」</li><li><b>第 43–49 章</b>——含「6.6 小结」至「第8章 提高命名的质量」</li><li><b>第 50–56 章</b>——含「8.1 命名为什么重要」至「第9章 避免低质量代码和」</li><li><b>第 57–63 章</b>——含「9.1 为什么存在异味的」至「10.3 自动化：构建内」</li><li><b>第 64–70 章</b>——含「10.4 从代码及其解释」至「11.3 小结」</li><li><b>第 71–77 章</b>——含「第12章 设计和改进大型」至「13.2 高级程序员与初」</li><li><b>第 78–80 章</b>——含「13.3 完善适岗培训流」至「写在最后」</li></ul></section>
+<section class="mmx-mod" aria-labelledby="top10"><h2 id="top10">原文金句 · 持续积累</h2><p class="mmx-mod-note">以下原句取自本书 AI 大纲落库的原文摘录（book_outline.quote），按大纲顺序节选，非 AI 生成；更多见逐章深读页。</p><ol class="mmx-qlist"><li><blockquote>「程序员或许并不在乎能否记住语法，毕竟可以上网搜索相关信息。但是从第2章的讨论可知，已经知道的信息会影响大脑加工代码的效率，因此熟记编程语法、概念和数据结构可以在一定程度上加快代码加工速度。」</blockquote><cite>本书正文</cite></li><li><blockquote>「许多人主要依靠大量写代码来学习编程，这种方法有一定用处，但未必特别有效。如果希望刻意练习代码分块，那么积极尝试记忆代码是一种很好的手段。」</blockquote><cite>本书正文</cite></li><li><blockquote>「通过重构来提高代码可读性，以消除工作记忆过载带来的影响」</blockquote><cite>本书正文</cite></li><li><blockquote>「此外，主动思考并回想信息同样能够巩固记忆。运用精细加工策略来思考刚刚掌握的信息对于学习复杂的编程概念特别有效。」</blockquote><cite>本书正文</cite></li><li><blockquote>「大脑不是单纯去记忆单词和事实，而是根据已有的记忆和信仰调整需要记忆的内容。」</blockquote><cite>本书正文</cite></li><li><blockquote>「把所有变量连起来以后，就可以有条不紊地阅读代码，不必再反复浏览代码以查找变量出现的位置。这样一来便可减轻认知负荷，从而释放工作记忆，使大脑能够专心思考代码功能。」</blockquote><cite>本书正文</cite></li><li><blockquote>「涵盖大多数变量的11种角色」</blockquote><cite>本书正文</cite></li><li><blockquote>「熟悉遗忘曲线和提取练习的影响后，你应该更清楚为什么每次遇到陌生的编程语法就打开搜索引擎不是个好习惯：正因为搜索轻而易举、司空见惯，大脑认为其实不需要记住语法，导致语法的提取强度总是在低位徘徊。」</blockquote><cite>本书正文</cite></li><li><blockquote>「如果把长时记忆比作硬盘，短时记忆比作内存，那么工作记忆就相当于大脑的“处理器”。」</blockquote><cite>本书正文</cite></li><li><blockquote>「短时记忆的作用是记忆信息，工作记忆的作用则是加工信息，我认为这是两种相互独立的认知过程。」</blockquote><cite>本书正文</cite></li></ol></section><footer class="site-footer">
+  <p class="small">口径：主干由 AI 依章节要点重新归纳，章的功能（铺垫/立论/反证/案例/收束）是结构判断而非原文自述；
+  每章展开后的「小节 → 要点 → 原句」逐字取自本书 AI 大纲，与「全书视角」页的章节导读同源，一条未删
+  （引文未命中原句的章不标注代表句，本次 0 处）。</p>
+  <p><a href="../../../index.html">← 返回首页</a>　<a href="overview.html">全书视角</a></p>
+</footer>
+</main>
+<script>
+(function(){
+  var btns=document.querySelectorAll("[data-mmx]");
+  for(var i=0;i<btns.length;i++){(function(b){
+    b.addEventListener("click",function(){
+      var open=b.getAttribute("data-mmx")==="open";
+      document.querySelectorAll("details.mmx-spine").forEach(function(d){d.open=open;});
+      document.querySelectorAll("details.mmx-cn").forEach(function(d){d.open=open;});
+    });
+  })(btns[i]);}
+})();
+</script>
+<script src="../../../assets/js/mindmap-modules.js?v=20261029b" defer></script>
+</body>
+</html>
