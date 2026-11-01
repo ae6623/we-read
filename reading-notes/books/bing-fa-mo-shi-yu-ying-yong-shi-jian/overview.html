@@ -1,0 +1,21 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>并发模式与应用实践 · 通读 · 全书视角</title><style>
+:root{--fg:#1f2328;--muted:#6b7280;--line:#e6e2da;--accent:#b45309;--bg:#fbfaf7}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.78 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
+.wrap{max-width:840px;margin:0 auto;padding:38px 22px 90px}
+h1{font-size:26px;line-height:1.35;margin:0 0 6px}
+.meta{color:var(--muted);font-size:14px;margin-bottom:20px}
+h2{font-size:19px;margin:34px 0 12px;padding-left:10px;border-left:4px solid var(--accent)}
+h3{font-size:16px;margin:18px 0 8px}
+p{margin:8px 0}
+.tag{display:inline-block;background:#f2ede2;color:#8a6d3b;font-size:12px;padding:1px 9px;border-radius:10px;margin-right:6px}
+ul,ol{padding-left:22px}li{margin:4px 0}
+.quote{border-left:3px solid #d8cfbd;padding:6px 12px;color:#4b4639;background:#f7f4ee;margin:8px 0;font-size:15px;border-radius:0 6px 6px 0}
+.src{color:var(--muted);font-size:12px}
+.ch{display:flex;gap:10px;padding:7px 0;border-bottom:1px dashed var(--line)}
+.ch .no{color:var(--accent);font-weight:600;min-width:34px;text-align:right}
+.card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:12px 0}
+.foot{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+a{color:#8a5a00;text-decoration:none}a:hover{text-decoration:underline}
+.badge{font-size:12px;color:#8a6d3b;background:#f6f1e6;border:1px solid #eadfc6;border-radius:6px;padding:1px 7px}
+</style></head><body><div class="wrap"><h1>并发模式与应用实践</h1><div class="meta"><span class="tag">通读 · 全书视角</span>阿图尔·S.科德　·　在读 0%（累计 0 分钟）</div><h2>一句话</h2><p>本书第1章介绍并发编程。</p><h2>这本书在讲什么</h2><p>本书第1章介绍并发编程。正如你将看到的，并发本身就是一个领域。你将了解UNIX进程以及并发模式的管道和过滤器。本章涉及并发编程的综述，你可能已对这方面有所了解。第2章涵盖一些关键的基本概念，并介绍Java内存模型的本质。你将了解共享状态模型中出现的竞争条件和问题，并尝试第一个并发模式：手拉手锁定。第3章包括显式同步可变状态和监视器模式，你会看到这种方法存在很多问题。我们将详细介绍主动对象设计模式。第4章介绍线程如何通过生产者/消费者模式相互通信，并介绍线程通信的概念，然后解释主/从设计模式。本章还将介绍fork-join模式的一个特例：map-reduce模式。第5章讨论构建块，还将讨论阻塞队列、有界队列、锁存器、FutureTask、信号量、屏障、激活和安全等内容。最后，描述不可变性以及不可变数据结构固有的线程安全性。第6章介绍future并讨论它的一元性质，包括转型和单子模式，还将阐释future模式的构成，同时会介绍Promise类。第7章介绍actor范式。再次回顾主动对象模式，然后解释actor范式，特别是未明确的锁定性质。还将讨论ask与tell、become模式（并强调其不变性）、流水线、半同步或半异步，并通过示例代码进行说明。</p><h2>全书结构（42 章）</h2><ol><li>译者序</li><li>前言</li><li>作者/评阅者简介</li><li>第1章 并发简介</li><li>1.1 并发轻而易举</li><li>1.2 消息传递模型</li><li>1.3 共享内存和共享状态模型</li><li>1.4 模式和范式</li><li>1.5 本章小结</li><li>第2章 并发模式初探</li><li>2.1 线程及其上下文</li><li>2.2 竞争条件</li><li>2.3 本章小结</li><li>第3章 更多的线程模式</li><li>3.1 有界缓冲区</li><li>3.2 读写锁</li><li>3.3 计数信号量</li><li>3.4 我们自己的重入锁</li><li>3.5 倒计时锁存器</li><li>3.6 循环屏障</li><li>3.7 future任务</li><li>3.8 本章小结</li><li>第4章 线程池</li><li>4.1 线程池</li><li>4.2 fork-join池</li><li>4.3 线程的工作窃取算法</li><li>4.4 主动对象</li><li>4.5 本章小结</li><li>第5章 提升并发性</li><li>5.1 无锁堆栈</li><li class="src">…… 其余 12 章见 AI 大纲</li></ol><h2>全书思考 3 问</h2><ol><li>本书真正要解决的「真问题」是什么？作者为什么认为它重要、又为什么难解？</li><li>如果用一句话概括全书的核心主张，你会怎么讲？支撑它的最强证据与最薄弱的一环分别在哪里？</li><li>读罢全书，哪三个观念最值得带进你自己的决策或生活？它们会如何改变你的行为？</li></ol><p class="src">这是读后自省题：不依赖 AI 代答，合上书用自己的话作答，越具体越好——它们指向全书主旨、论证结构与个人迁移，而非单章条目。</p><div class="foot">来源：微信读书官方简介/目录/热门划线接口　·　生成于 2026-11-01 13:31　·　开读即产（不等完读）</div></div></body></html>
