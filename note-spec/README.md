@@ -54,6 +54,12 @@
 engine_commit）、什么时候。台账 `compose.json` 每书同记 `produced_by`，
 `/api/notes/<slug>` 可查。出问题先看戳，再定性「代码没更新」还是「实现者差异」。
 
+**修订台账（v1.4.0 起）**：每次 publish 成功向 SQLite 表 `note_revision`
+追加一行（slug / book / produced_by / spec_version / files / at）。
+同一本书可以反复重修，修过几次、每次谁产出，全部有据可查。
+**「已产出」判定以修订台账 + 站点产物页为准，与「读没读完」（finished / progress）
+完全解耦**——书读完不读完不影响笔记产出资格；选书策略只跳过「已产出笔记」的书。
+
 ## 六、版本与快照
 
 - 云端部署源带 `VERSION.json`（`build_version.py` 生成）：engine_commit + site_commit +
