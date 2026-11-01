@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="《Java编程的逻辑》全书精读 · 章节定位 · 跨章张力（由 AI 大纲条目结构化重算）">
+<title>《Java编程的逻辑》｜精读</title>
+<link rel="stylesheet" href="../../../assets/css/reading-overview.css">
+<link rel="stylesheet" href="../../../assets/css/mmx-guide.css">
+<style>
+
+/* 章节树组件（mmx-cn/body/sec/pts/qt…）在 assets/css/mmx-guide.css，与通读页共用；
+   这里只留导图页专属件：命题卡 / 主干 SVG / 主干分组。 */
+.mmx-wrap{max-width:1120px}
+.mmx-kicker{font-size:.7rem;letter-spacing:.18em;color:var(--muted);margin:0 0 .3em}
+.mmx-claim{font-size:1.16rem;line-height:1.75;margin:.1em 0 .5em;color:var(--ink)}
+.mmx-bound{font-size:.86rem;color:#5c5347;line-height:1.8;margin:.2em 0}
+.mmx-evi{font-size:.76rem;color:var(--muted);margin:.6em 0 .3em}
+.mmx-bar{height:5px;background:#e6dfcf;border-radius:3px;overflow:hidden;margin-bottom:1.2em}
+.mmx-bar i{display:block;height:100%;background:linear-gradient(90deg,#8a9b6e,#c2b280)}
+.mmx-svgwrap{overflow-x:auto;padding:.4em 0 1em;border-bottom:1px solid var(--line)}
+.mmx-svg{width:100%;height:auto;min-width:760px}
+.mmx-spine{margin:1.15em 0;border-left:3px solid #ece4d3;padding:.1em 0 .1em .85em}
+.mmx-spine[open]{border-left-color:#d8cdb4}
+.mmx-spine>summary{display:flex;gap:.6em;align-items:baseline;cursor:pointer;
+  list-style:none;padding:.35em 0}
+.mmx-spine>summary::-webkit-details-marker{display:none}
+.mmx-id{font-family:Georgia,serif;font-size:.8rem;color:#8a9b6e;border:1px solid #cfd8bd;
+  border-radius:4px;padding:0 .35em}
+.mmx-label{font-weight:600;font-size:1rem;color:var(--ink)}
+.mmx-cnt{margin-left:auto;font-size:.74rem;color:var(--muted)}
+.mmx-why{font-size:.8rem;color:var(--muted);margin:.1em 0 .8em;line-height:1.7}
+.mmx-tree{list-style:none;padding:0;margin:.15em 0 0}
+@media(max-width:720px){.mmx-svg{min-width:640px}}
+
+</style>
+</head>
+<body>
+<main class="wrap mmx-wrap">
+<header class="note-head">
+  <p class="eyebrow">CLOSE READING · AFTER THINKING</p>
+  <h1>《Java编程的逻辑》精读</h1>
+  <p class="meta">146 章 · 146 条要点 · 0 句原句 · 主干 21 条 · 章节功能定位 · 由本书 AI 大纲条目重算</p>
+  <p class="links"><a href="../../../index.html">← 返回首页</a>
+     <a href="../../index.html">阅读归档索引</a>
+     <a href="overview.html">全书视角</a>
+     <a href="outline.html">AI 大纲</a></p>
+</header>
+<section class="mmx-thesis">
+<p class="mmx-kicker">THIS BOOK ARGUES</p>
+<p class="mmx-claim">写一本关于编程的书，是我大概15年前就有的一个想法，当时，我体会到了编程中数据结构的美妙和神奇，有一种收获的喜悦和分享的冲动</p>
+<p class="mmx-bound"><b>边界</b> 结构提要，非读后感；观点以原文为准。</p>
+<p class="mmx-evi">证据密度 <b>0%</b> · 146 条要点中 0 条带原句 （结构由 AI 大纲条目重算，非读后感）</p>
+<div class="mmx-bar"><i style="width:0%"></i></div>
+</section>
+<section class="mmx-svgwrap">
+<svg class="mmx-svg" viewBox="0 0 1120 1398" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Java编程的逻辑 全书精读">
+<rect x="0" y="0" width="1120" height="1398" fill="none"/>
+<style>.mmx-svg text{font-family:"Noto Serif SC",Georgia,serif}.mmx-svg .t1{font-size:15px;fill:#2f2a24;font-weight:600}.mmx-svg .t2{font-size:12px;fill:#5c5347}.mmx-svg .t3{font-size:10.5px;fill:#8a8272}.mmx-svg .rt{font-size:13px;fill:#f7f3ea;font-weight:600}.mmx-svg .ln{stroke:#cfc6b4;stroke-width:1.4;fill:none}</style>
+<rect x="28" y="655" width="262" height="52" rx="10" fill="#3d372e"/>
+<text class="rt" x="44" y="679">Java编程的逻辑</text>
+<text class="t3" x="44" y="699" style="fill:#c9c0ae">146 章 · 主干 21 条</text>
+<path class="ln" d="M290 681 C350 681,340 61,400 61"/>
+<rect x="400" y="33" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="33" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="58">A 第 1–7 章</text>
+<text class="t3" x="416" y="78">7 章</text>
+<text class="t2" x="714" y="57">含「读者评论」至「1.3 基本运算」</text>
+<path class="ln" d="M692 61 L700 61"/>
+<path class="ln" d="M290 681 C350 681,340 123,400 123"/>
+<rect x="400" y="95" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="95" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="120">B 第 8–14 章</text>
+<text class="t3" x="416" y="140">7 章</text>
+<text class="t2" x="714" y="119">含「1.4 条件执行」至「2.2 小数的二进制表示」</text>
+<path class="ln" d="M692 123 L700 123"/>
+<path class="ln" d="M290 681 C350 681,340 185,400 185"/>
+<rect x="400" y="157" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="157" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="182">C 第 15–21 章</text>
+<text class="t3" x="416" y="202">7 章</text>
+<text class="t2" x="714" y="181">含「2.3 字符的编码与乱码」至「3.3 代码的组织机制」</text>
+<path class="ln" d="M692 185 L700 185"/>
+<path class="ln" d="M290 681 C350 681,340 247,400 247"/>
+<rect x="400" y="219" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="219" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="244">D 第 22–28 章</text>
+<text class="t3" x="416" y="264">7 章</text>
+<text class="t2" x="714" y="243">含「第4章 类的继承」至「5.1 接口的本质」</text>
+<path class="ln" d="M692 247 L700 247"/>
+<path class="ln" d="M290 681 C350 681,340 309,400 309"/>
+<rect x="400" y="281" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="281" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="306">E 第 29–35 章</text>
+<text class="t3" x="416" y="326">7 章</text>
+<text class="t2" x="714" y="305">含「5.2 抽象类」至「6.3 异常处理」</text>
+<path class="ln" d="M692 309 L700 309"/>
+<path class="ln" d="M290 681 C350 681,340 371,400 371"/>
+<rect x="400" y="343" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="343" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="368">F 第 36–42 章</text>
+<text class="t3" x="416" y="388">7 章</text>
+<text class="t2" x="714" y="367">含「6.4 如何使用异常」至「7.5 剖析日期和时间」</text>
+<path class="ln" d="M692 371 L700 371"/>
+<path class="ln" d="M290 681 C350 681,340 433,400 433"/>
+<rect x="400" y="405" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="405" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="430">G 第 43–49 章</text>
+<text class="t3" x="416" y="450">7 章</text>
+<text class="t2" x="714" y="429">含「7.6 随机」至「第9章 列表和队列」</text>
+<path class="ln" d="M692 433 L700 433"/>
+<path class="ln" d="M290 681 C350 681,340 495,400 495"/>
+<rect x="400" y="467" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="467" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="492">H 第 50–56 章</text>
+<text class="t3" x="416" y="512">7 章</text>
+<text class="t2" x="714" y="491">含「9.1 剖析ArrayL」至「10.3 排序二叉树」</text>
+<path class="ln" d="M692 495 L700 495"/>
+<path class="ln" d="M290 681 C350 681,340 557,400 557"/>
+<rect x="400" y="529" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="529" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="554">I 第 57–63 章</text>
+<text class="t3" x="416" y="574">7 章</text>
+<text class="t2" x="714" y="553">含「10.4 剖析TreeM」至「11.1 堆的概念与算法」</text>
+<path class="ln" d="M692 557 L700 557"/>
+<path class="ln" d="M290 681 C350 681,340 619,400 619"/>
+<rect x="400" y="591" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="591" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="616">J 第 64–70 章</text>
+<text class="t3" x="416" y="636">7 章</text>
+<text class="t2" x="714" y="615">含「11.2 剖析Prior」至「第四部分 文件」</text>
+<path class="ln" d="M692 619 L700 619"/>
+<path class="ln" d="M290 681 C350 681,340 681,400 681"/>
+<rect x="400" y="653" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="653" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="678">G10 第 71–77 章</text>
+<text class="t3" x="416" y="698">7 章</text>
+<text class="t2" x="714" y="677">含「第13章 文件基本技术」至「14.1 常见文件类型处」</text>
+<path class="ln" d="M692 681 L700 681"/>
+<path class="ln" d="M290 681 C350 681,340 743,400 743"/>
+<rect x="400" y="715" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="715" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="740">G11 第 78–84 章</text>
+<text class="t3" x="416" y="760">7 章</text>
+<text class="t2" x="714" y="739">含「14.2 随机读写文件」至「15.1 线程的基本概念」</text>
+<path class="ln" d="M692 743 L700 743"/>
+<path class="ln" d="M290 681 C350 681,340 805,400 805"/>
+<rect x="400" y="777" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="777" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="802">G12 第 85–91 章</text>
+<text class="t3" x="416" y="822">7 章</text>
+<text class="t2" x="714" y="801">含「15.2 理解synch」至「16.3 显式条件」</text>
+<path class="ln" d="M692 805 L700 805"/>
+<path class="ln" d="M290 681 C350 681,340 867,400 867"/>
+<rect x="400" y="839" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="839" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="864">G13 第 92–98 章</text>
+<text class="t3" x="416" y="884">7 章</text>
+<text class="t2" x="714" y="863">含「第17章 并发容器」至「18.1 基本概念和原理」</text>
+<path class="ln" d="M692 867 L700 867"/>
+<path class="ln" d="M290 681 C350 681,340 929,400 929"/>
+<rect x="400" y="901" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="901" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="926">G14 第 99–105 章</text>
+<text class="t3" x="416" y="946">7 章</text>
+<text class="t2" x="714" y="925">含「18.2 线程池」至「19.4 循环栅栏Cyc」</text>
+<path class="ln" d="M692 929 L700 929"/>
+<path class="ln" d="M290 681 C350 681,340 991,400 991"/>
+<rect x="400" y="963" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="963" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="988">G15 第 106–112 章</text>
+<text class="t3" x="416" y="1008">7 章</text>
+<text class="t2" x="714" y="987">含「19.5 理解Threa」至「第六部分 动态与函数式编」</text>
+<path class="ln" d="M692 991 L700 991"/>
+<path class="ln" d="M290 681 C350 681,340 1053,400 1053"/>
+<rect x="400" y="1025" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="1025" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="1050">G16 第 113–119 章</text>
+<text class="t3" x="416" y="1070">7 章</text>
+<text class="t2" x="714" y="1049">含「第21章 反射」至「22.2 框架和库的注解」</text>
+<path class="ln" d="M692 1053 L700 1053"/>
+<path class="ln" d="M290 681 C350 681,340 1115,400 1115"/>
+<rect x="400" y="1087" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="1087" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="1112">G17 第 120–126 章</text>
+<text class="t3" x="416" y="1132">7 章</text>
+<text class="t2" x="714" y="1111">含「22.3 创建注解」至「23.2 Java SD」</text>
+<path class="ln" d="M692 1115 L700 1115"/>
+<path class="ln" d="M290 681 C350 681,340 1177,400 1177"/>
+<rect x="400" y="1149" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="1149" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="1174">G18 第 127–133 章</text>
+<text class="t3" x="416" y="1194">7 章</text>
+<text class="t2" x="714" y="1173">含「23.3 cglib动态」至「24.3 类加载的应用：」</text>
+<path class="ln" d="M692 1177 L700 1177"/>
+<path class="ln" d="M290 681 C350 681,340 1239,400 1239"/>
+<rect x="400" y="1211" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="1211" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="1236">G19 第 134–140 章</text>
+<text class="t3" x="416" y="1256">7 章</text>
+<text class="t2" x="714" y="1235">含「24.4 自定义Clas」至「25.4 剖析常见表达式」</text>
+<path class="ln" d="M692 1239 L700 1239"/>
+<path class="ln" d="M290 681 C350 681,340 1301,400 1301"/>
+<rect x="400" y="1273" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="1273" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="1298">G20 第 141–146 章</text>
+<text class="t3" x="416" y="1318">6 章</text>
+<text class="t2" x="714" y="1297">含「第26章 函数式编程」至「26.5 Java 8的」</text>
+<path class="ln" d="M692 1301 L700 1301"/>
+</svg></section>
+<div class="mmx-tools"><button class="mmx-btn" data-mmx="open">展开全部要点</button><button class="mmx-btn" data-mmx="close">全部收起</button><span class="mmx-tip">每章折叠态只占一行，点章名展开该章全部小节、要点与原句</span></div>
+<details class="mmx-spine" open>
+<summary><span class="mmx-id">A</span><span class="mmx-label">第 1–7 章</span><span class="mmx-cnt">7 章</span></summary>
+<p class="mmx-why">含「读者评论」至「1.3 基本运算」</p>
+<ol class="mmx-tree">
+<details class="mmx-cn"><summary><span class="mmx-no">1</span><span class="mmx-name">读者评论</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">读者评论</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">2</span><span class="mmx-name">前言</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">前言</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">3</span><span class="mmx-name">第一部分 编程基础与二进制</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">第一部分 编程基础与二进制</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">4</span><span class="mmx-name">第1章 编程基础</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">第1章 编程基础</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">5</span><span class="mmx-name">1.1 数据类型和变量</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">1.1 数据类型和变量</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">6</span><span class="mmx-name">1.2 赋值</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">1.2 赋值</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">7</span><span class="mmx-name">1.3 基本运算</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">1.3 基本运算</p></div></details>
+</ol></details>
+<details class="mmx-spine" open>
+<summary><span class="mmx-id">B</span><span class="mmx-label">第 8–14 章</span><span class="mmx-cnt">7 章</span></summary>
+<p class="mmx-why">含「1.4 条件执行」至「2.2 小数的二进制表示」</p>
+<ol class="mmx-tree">
+<details class="mmx-cn"><summary><span class="mmx-no">8</span><span class="mmx-name">1.4 条件执行</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">1.4 条件执行</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">9</span><span class="mmx-name">1.5 循环</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">1.5 循环</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">10</span><span class="mmx-name">1.6 函数的用法</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">1.6 函数的用法</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">11</span><span class="mmx-name">1.7 函数调用的基本原理</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">1.7 函数调用的基本原理</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">12</span><span class="mmx-name">第2章 理解数据背后的二进制</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">第2章 理解数据背后的二进制</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">13</span><span class="mmx-name">2.1 整数的二进制表示与位运算</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">2.1 整数的二进制表示与位运算</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">14</span><span class="mmx-name">2.2 小数的二进制表示</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">2.2 小数的二进制表示</p></div></details>
+</ol></details>
+<details class="mmx-spine" open>
+<summary><span class="mmx-id">C</span><span class="mmx-label">第 15–21 章</span><span class="mmx-cnt">7 章</span></summary>
+<p class="mmx-why">含「2.3 字符的编码与乱码」至「3.3 代码的组织机制」</p>
+<ol class="mmx-tree">
+<details class="mmx-cn"><summary><span class="mmx-no">15</span><span class="mmx-name">2.3 字符的编码与乱码</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">2.3 字符的编码与乱码</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">16</span><span class="mmx-name">2.4 char的真正含义</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">2.4 char的真正含义</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">17</span><span class="mmx-name">第二部分 面向对象</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">第二部分 面向对象</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">18</span><span class="mmx-name">第3章 类的基础</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">第3章 类的基础</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">19</span><span class="mmx-name">3.1 类的基本概念</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">3.1 类的基本概念</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">20</span><span class="mmx-name">3.2 类的组合</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">3.2 类的组合</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">21</span><span class="mmx-name">3.3 代码的组织机制</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">3.3 代码的组织机制</p></div></details>
+</ol></details>
+<details class="mmx-spine" open>
+<summary><span class="mmx-id">D</span><span class="mmx-label">第 22–28 章</span><span class="mmx-cnt">7 章</span></summary>
+<p class="mmx-why">含「第4章 类的继承」至「5.1 接口的本质」</p>
+<ol class="mmx-tree">
+<details class="mmx-cn"><summary><span class="mmx-no">22</span><span class="mmx-name">第4章 类的继承</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">第4章 类的继承</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">23</span><span class="mmx-name">4.1 基本概念</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">4.1 基本概念</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">24</span><span class="mmx-name">4.2 继承的细节</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">4.2 继承的细节</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">25</span><span class="mmx-name">4.3 继承实现的基本原理</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">4.3 继承实现的基本原理</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">26</span><span class="mmx-name">4.4 为什么说继承是把双刃剑</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">4.4 为什么说继承是把双刃剑</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">27</span><span class="mmx-name">第5章 类的扩展</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">第5章 类的扩展</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">28</span><span class="mmx-name">5.1 接口的本质</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">5.1 接口的本质</p></div></details>
+</ol></details>
+<details class="mmx-spine" open>
+<summary><span class="mmx-id">E</span><span class="mmx-label">第 29–35 章</span><span class="mmx-cnt">7 章</span></summary>
+<p class="mmx-why">含「5.2 抽象类」至「6.3 异常处理」</p>
+<ol class="mmx-tree">
+<details class="mmx-cn"><summary><span class="mmx-no">29</span><span class="mmx-name">5.2 抽象类</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">5.2 抽象类</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">30</span><span class="mmx-name">5.3 内部类的本质</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">5.3 内部类的本质</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">31</span><span class="mmx-name">5.4 枚举的本质</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">5.4 枚举的本质</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">32</span><span class="mmx-name">第6章 异常</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">第6章 异常</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">33</span><span class="mmx-name">6.1 初识异常</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">6.1 初识异常</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">34</span><span class="mmx-name">6.2 异常类</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">6.2 异常类</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">35</span><span class="mmx-name">6.3 异常处理</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">6.3 异常处理</p></div></details>
+</ol></details>
+<details class="mmx-spine" open>
+<summary><span class="mmx-id">F</span><span class="mmx-label">第 36–42 章</span><span class="mmx-cnt">7 章</span></summary>
+<p class="mmx-why">含「6.4 如何使用异常」至「7.5 剖析日期和时间」</p>
+<ol class="mmx-tree">
+<details class="mmx-cn"><summary><span class="mmx-no">36</span><span class="mmx-name">6.4 如何使用异常</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">6.4 如何使用异常</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">37</span><span class="mmx-name">第7章 常用基础类</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">第7章 常用基础类</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">38</span><span class="mmx-name">7.1 包装类</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">7.1 包装类</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">39</span><span class="mmx-name">7.2 剖析String</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">7.2 剖析String</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">40</span><span class="mmx-name">7.3 剖析StringBuilder</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">7.3 剖析StringBuilder</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">41</span><span class="mmx-name">7.4 剖析Arrays</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">7.4 剖析Arrays</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">42</span><span class="mmx-name">7.5 剖析日期和时间</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">7.5 剖析日期和时间</p></div></details>
+</ol></details>
+<details class="mmx-spine" open>
+<summary><span class="mmx-id">G</span><span class="mmx-label">第 43–49 章</span><span class="mmx-cnt">7 章</span></summary>
+<p class="mmx-why">含「7.6 随机」至「第9章 列表和队列」</p>
+<ol class="mmx-tree">
+<details class="mmx-cn"><summary><span class="mmx-no">43</span><span class="mmx-name">7.6 随机</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">7.6 随机</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">44</span><span class="mmx-name">第三部分 泛型与容器</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">第三部分 泛型与容器</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">45</span><span class="mmx-name">第8章 泛型</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">第8章 泛型</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">46</span><span class="mmx-name">8.1 基本概念和原理</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">8.1 基本概念和原理</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">47</span><span class="mmx-name">8.2 解析通配符</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">8.2 解析通配符</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">48</span><span class="mmx-name">8.3 细节和局限性</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">8.3 细节和局限性</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">49</span><span class="mmx-name">第9章 列表和队列</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">第9章 列表和队列</p></div></details>
+</ol></details>
+<details class="mmx-spine" open>
+<summary><span class="mmx-id">H</span><span class="mmx-label">第 50–56 章</span><span class="mmx-cnt">7 章</span></summary>
+<p class="mmx-why">含「9.1 剖析ArrayL」至「10.3 排序二叉树」</p>
+<ol class="mmx-tree">
+<details class="mmx-cn"><summary><span class="mmx-no">50</span><span class="mmx-name">9.1 剖析ArrayList</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">9.1 剖析ArrayList</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">51</span><span class="mmx-name">9.2 剖析LinkedList</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">9.2 剖析LinkedList</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">52</span><span class="mmx-name">9.3 剖析ArrayDeque</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">9.3 剖析ArrayDeque</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">53</span><span class="mmx-name">第10章 Map和Set</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">第10章 Map和Set</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">54</span><span class="mmx-name">10.1 剖析HashMap</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">10.1 剖析HashMap</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">55</span><span class="mmx-name">10.2 剖析HashSet</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">10.2 剖析HashSet</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">56</span><span class="mmx-name">10.3 排序二叉树</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">10.3 排序二叉树</p></div></details>
+</ol></details>
+<details class="mmx-spine" open>
+<summary><span class="mmx-id">I</span><span class="mmx-label">第 57–63 章</span><span class="mmx-cnt">7 章</span></summary>
+<p class="mmx-why">含「10.4 剖析TreeM」至「11.1 堆的概念与算法」</p>
+<ol class="mmx-tree">
+<details class="mmx-cn"><summary><span class="mmx-no">57</span><span class="mmx-name">10.4 剖析TreeMap</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">10.4 剖析TreeMap</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">58</span><span class="mmx-name">10.5 剖析TreeSet</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">10.5 剖析TreeSet</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">59</span><span class="mmx-name">10.6 剖析LinkedHashMap</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">10.6 剖析LinkedHashMap</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">60</span><span class="mmx-name">10.7 剖析EnumMap</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">10.7 剖析EnumMap</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">61</span><span class="mmx-name">10.8 剖析EnumSet</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">10.8 剖析EnumSet</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">62</span><span class="mmx-name">第11章 堆与优先级队列</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">第11章 堆与优先级队列</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">63</span><span class="mmx-name">11.1 堆的概念与算法</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">11.1 堆的概念与算法</p></div></details>
+</ol></details>
+<details class="mmx-spine" open>
+<summary><span class="mmx-id">J</span><span class="mmx-label">第 64–70 章</span><span class="mmx-cnt">7 章</span></summary>
+<p class="mmx-why">含「11.2 剖析Prior」至「第四部分 文件」</p>
+<ol class="mmx-tree">
+<details class="mmx-cn"><summary><span class="mmx-no">64</span><span class="mmx-name">11.2 剖析PriorityQueue</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">11.2 剖析PriorityQueue</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">65</span><span class="mmx-name">11.3 堆和PriorityQueue的应用</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">11.3 堆和PriorityQueue的应用</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">66</span><span class="mmx-name">第12章 通用容器类和总结</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">第12章 通用容器类和总结</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">67</span><span class="mmx-name">12.1 抽象容器类</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">12.1 抽象容器类</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">68</span><span class="mmx-name">12.2 Collections</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">12.2 Collections</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">69</span><span class="mmx-name">12.3 容器类总结</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">12.3 容器类总结</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">70</span><span class="mmx-name">第四部分 文件</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">第四部分 文件</p></div></details>
+</ol></details>
+<details class="mmx-spine" open>
+<summary><span class="mmx-id">G10</span><span class="mmx-label">第 71–77 章</span><span class="mmx-cnt">7 章</span></summary>
+<p class="mmx-why">含「第13章 文件基本技术」至「14.1 常见文件类型处」</p>
+<ol class="mmx-tree">
+<details class="mmx-cn"><summary><span class="mmx-no">71</span><span class="mmx-name">第13章 文件基本技术</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">第13章 文件基本技术</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">72</span><span class="mmx-name">13.1 文件概述</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">13.1 文件概述</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">73</span><span class="mmx-name">13.2 二进制文件和字节流</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">13.2 二进制文件和字节流</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">74</span><span class="mmx-name">13.3 文本文件和字符流</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">13.3 文本文件和字符流</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">75</span><span class="mmx-name">13.4 文件和目录操作</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">13.4 文件和目录操作</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">76</span><span class="mmx-name">第14章 文件高级技术</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">第14章 文件高级技术</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">77</span><span class="mmx-name">14.1 常见文件类型处理</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">14.1 常见文件类型处理</p></div></details>
+</ol></details>
+<details class="mmx-spine" open>
+<summary><span class="mmx-id">G11</span><span class="mmx-label">第 78–84 章</span><span class="mmx-cnt">7 章</span></summary>
+<p class="mmx-why">含「14.2 随机读写文件」至「15.1 线程的基本概念」</p>
+<ol class="mmx-tree">
+<details class="mmx-cn"><summary><span class="mmx-no">78</span><span class="mmx-name">14.2 随机读写文件</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">14.2 随机读写文件</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">79</span><span class="mmx-name">14.3 内存映射文件</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">14.3 内存映射文件</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">80</span><span class="mmx-name">14.4 标准序列化机制</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">14.4 标准序列化机制</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">81</span><span class="mmx-name">14.5 使用Jackson序列化为JSON/XML/MessagePack</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">14.5 使用Jackson序列化为JSON/XML/MessagePack</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">82</span><span class="mmx-name">第五部分 并发</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">第五部分 并发</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">83</span><span class="mmx-name">第15章 并发基础知识</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">第15章 并发基础知识</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">84</span><span class="mmx-name">15.1 线程的基本概念</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">15.1 线程的基本概念</p></div></details>
+</ol></details>
+<details class="mmx-spine" open>
+<summary><span class="mmx-id">G12</span><span class="mmx-label">第 85–91 章</span><span class="mmx-cnt">7 章</span></summary>
+<p class="mmx-why">含「15.2 理解synch」至「16.3 显式条件」</p>
+<ol class="mmx-tree">
+<details class="mmx-cn"><summary><span class="mmx-no">85</span><span class="mmx-name">15.2 理解synchronized</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">15.2 理解synchronized</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">86</span><span class="mmx-name">15.3 线程的基本协作机制</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">15.3 线程的基本协作机制</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">87</span><span class="mmx-name">15.4 线程的中断</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">15.4 线程的中断</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">88</span><span class="mmx-name">第16章 并发包的基石</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">第16章 并发包的基石</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">89</span><span class="mmx-name">16.1 原子变量和CAS</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">16.1 原子变量和CAS</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">90</span><span class="mmx-name">16.2 显式锁</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">16.2 显式锁</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">91</span><span class="mmx-name">16.3 显式条件</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">16.3 显式条件</p></div></details>
+</ol></details>
+<details class="mmx-spine" open>
+<summary><span class="mmx-id">G13</span><span class="mmx-label">第 92–98 章</span><span class="mmx-cnt">7 章</span></summary>
+<p class="mmx-why">含「第17章 并发容器」至「18.1 基本概念和原理」</p>
+<ol class="mmx-tree">
+<details class="mmx-cn"><summary><span class="mmx-no">92</span><span class="mmx-name">第17章 并发容器</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">第17章 并发容器</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">93</span><span class="mmx-name">17.1 写时复制的List和Set</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">17.1 写时复制的List和Set</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">94</span><span class="mmx-name">17.2 ConcurrentHashMap</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">17.2 ConcurrentHashMap</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">95</span><span class="mmx-name">17.3 基于跳表的Map和Set</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">17.3 基于跳表的Map和Set</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">96</span><span class="mmx-name">17.4 并发队列</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">17.4 并发队列</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">97</span><span class="mmx-name">第18章 异步任务执行服务</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">第18章 异步任务执行服务</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">98</span><span class="mmx-name">18.1 基本概念和原理</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">18.1 基本概念和原理</p></div></details>
+</ol></details>
+<details class="mmx-spine" open>
+<summary><span class="mmx-id">G14</span><span class="mmx-label">第 99–105 章</span><span class="mmx-cnt">7 章</span></summary>
+<p class="mmx-why">含「18.2 线程池」至「19.4 循环栅栏Cyc」</p>
+<ol class="mmx-tree">
+<details class="mmx-cn"><summary><span class="mmx-no">99</span><span class="mmx-name">18.2 线程池</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">18.2 线程池</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">100</span><span class="mmx-name">18.3 定时任务的那些陷阱</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">18.3 定时任务的那些陷阱</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">101</span><span class="mmx-name">第19章 同步和协作工具类</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">第19章 同步和协作工具类</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">102</span><span class="mmx-name">19.1 读写锁ReentrantReadWriteLock</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">19.1 读写锁ReentrantReadWriteLock</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">103</span><span class="mmx-name">19.2 信号量Semaphore</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">19.2 信号量Semaphore</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">104</span><span class="mmx-name">19.3 倒计时门栓CountDownLatch</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">19.3 倒计时门栓CountDownLatch</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">105</span><span class="mmx-name">19.4 循环栅栏CyclicBarrier</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">19.4 循环栅栏CyclicBarrier</p></div></details>
+</ol></details>
+<details class="mmx-spine" open>
+<summary><span class="mmx-id">G15</span><span class="mmx-label">第 106–112 章</span><span class="mmx-cnt">7 章</span></summary>
+<p class="mmx-why">含「19.5 理解Threa」至「第六部分 动态与函数式编」</p>
+<ol class="mmx-tree">
+<details class="mmx-cn"><summary><span class="mmx-no">106</span><span class="mmx-name">19.5 理解ThreadLocal</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">19.5 理解ThreadLocal</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">107</span><span class="mmx-name">第20章 并发总结</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">第20章 并发总结</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">108</span><span class="mmx-name">20.1 线程安全的机制</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">20.1 线程安全的机制</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">109</span><span class="mmx-name">20.2 线程的协作机制</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">20.2 线程的协作机制</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">110</span><span class="mmx-name">20.3 容器类</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">20.3 容器类</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">111</span><span class="mmx-name">20.4 任务执行服务</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">20.4 任务执行服务</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">112</span><span class="mmx-name">第六部分 动态与函数式编程</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">第六部分 动态与函数式编程</p></div></details>
+</ol></details>
+<details class="mmx-spine" open>
+<summary><span class="mmx-id">G16</span><span class="mmx-label">第 113–119 章</span><span class="mmx-cnt">7 章</span></summary>
+<p class="mmx-why">含「第21章 反射」至「22.2 框架和库的注解」</p>
+<ol class="mmx-tree">
+<details class="mmx-cn"><summary><span class="mmx-no">113</span><span class="mmx-name">第21章 反射</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">第21章 反射</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">114</span><span class="mmx-name">21.1 Class类</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">21.1 Class类</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">115</span><span class="mmx-name">21.2 应用示例</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">21.2 应用示例</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">116</span><span class="mmx-name">21.3 反射与泛型</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">21.3 反射与泛型</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">117</span><span class="mmx-name">第22章 注解</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">第22章 注解</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">118</span><span class="mmx-name">22.1 内置注解</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">22.1 内置注解</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">119</span><span class="mmx-name">22.2 框架和库的注解</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">22.2 框架和库的注解</p></div></details>
+</ol></details>
+<details class="mmx-spine" open>
+<summary><span class="mmx-id">G17</span><span class="mmx-label">第 120–126 章</span><span class="mmx-cnt">7 章</span></summary>
+<p class="mmx-why">含「22.3 创建注解」至「23.2 Java SD」</p>
+<ol class="mmx-tree">
+<details class="mmx-cn"><summary><span class="mmx-no">120</span><span class="mmx-name">22.3 创建注解</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">22.3 创建注解</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">121</span><span class="mmx-name">22.4 查看注解信息</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">22.4 查看注解信息</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">122</span><span class="mmx-name">22.5 注解的应用：定制序列化</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">22.5 注解的应用：定制序列化</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">123</span><span class="mmx-name">22.6 注解的应用：DI容器</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">22.6 注解的应用：DI容器</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">124</span><span class="mmx-name">第23章 动态代理</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">第23章 动态代理</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">125</span><span class="mmx-name">23.1 静态代理</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">23.1 静态代理</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">126</span><span class="mmx-name">23.2 Java SDK动态代理</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">23.2 Java SDK动态代理</p></div></details>
+</ol></details>
+<details class="mmx-spine" open>
+<summary><span class="mmx-id">G18</span><span class="mmx-label">第 127–133 章</span><span class="mmx-cnt">7 章</span></summary>
+<p class="mmx-why">含「23.3 cglib动态」至「24.3 类加载的应用：」</p>
+<ol class="mmx-tree">
+<details class="mmx-cn"><summary><span class="mmx-no">127</span><span class="mmx-name">23.3 cglib动态代理</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">23.3 cglib动态代理</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">128</span><span class="mmx-name">23.4 Java SDK代理与cglib代理比较</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">23.4 Java SDK代理与cglib代理比较</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">129</span><span class="mmx-name">23.5 动态代理的应用：AOP</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">23.5 动态代理的应用：AOP</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">130</span><span class="mmx-name">第24章 类加载机制</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">第24章 类加载机制</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">131</span><span class="mmx-name">24.1 类加载的基本机制和过程</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">24.1 类加载的基本机制和过程</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">132</span><span class="mmx-name">24.2 理解ClassLoader</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">24.2 理解ClassLoader</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">133</span><span class="mmx-name">24.3 类加载的应用：可配置的策略</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">24.3 类加载的应用：可配置的策略</p></div></details>
+</ol></details>
+<details class="mmx-spine" open>
+<summary><span class="mmx-id">G19</span><span class="mmx-label">第 134–140 章</span><span class="mmx-cnt">7 章</span></summary>
+<p class="mmx-why">含「24.4 自定义Clas」至「25.4 剖析常见表达式」</p>
+<ol class="mmx-tree">
+<details class="mmx-cn"><summary><span class="mmx-no">134</span><span class="mmx-name">24.4 自定义ClassLoader</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">24.4 自定义ClassLoader</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">135</span><span class="mmx-name">24.5 自定义ClassLoader的应用：热部署</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">24.5 自定义ClassLoader的应用：热部署</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">136</span><span class="mmx-name">第25章 正则表达式</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">第25章 正则表达式</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">137</span><span class="mmx-name">25.1 语法</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">25.1 语法</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">138</span><span class="mmx-name">25.2 Java API</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">25.2 Java API</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">139</span><span class="mmx-name">25.3 模板引擎</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">25.3 模板引擎</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">140</span><span class="mmx-name">25.4 剖析常见表达式</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">25.4 剖析常见表达式</p></div></details>
+</ol></details>
+<details class="mmx-spine" open>
+<summary><span class="mmx-id">G20</span><span class="mmx-label">第 141–146 章</span><span class="mmx-cnt">6 章</span></summary>
+<p class="mmx-why">含「第26章 函数式编程」至「26.5 Java 8的」</p>
+<ol class="mmx-tree">
+<details class="mmx-cn"><summary><span class="mmx-no">141</span><span class="mmx-name">第26章 函数式编程</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">第26章 函数式编程</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">142</span><span class="mmx-name">26.1 Lambda表达式</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">26.1 Lambda表达式</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">143</span><span class="mmx-name">26.2 函数式数据处理：基本用法</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">26.2 函数式数据处理：基本用法</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">144</span><span class="mmx-name">26.3 函数式数据处理：强大方便的收集器</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">26.3 函数式数据处理：强大方便的收集器</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">145</span><span class="mmx-name">26.4 组合式异步编程</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">26.4 组合式异步编程</p></div></details>
+<details class="mmx-cn"><summary><span class="mmx-no">146</span><span class="mmx-name">26.5 Java 8的日期和时间API</span><span class="mmx-role">立论</span><span class="mmx-pnum">0 条</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">共 0 个小节 · 0 条要点 · 0 句原句摘录</p><p class="mmx-gist">26.5 Java 8的日期和时间API</p></div></details>
+</ol></details><section class="mmx-mod" aria-labelledby="oneline"><h2 id="oneline">一句话主旨</h2><p class="mmx-mod-note">本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。</p><p class="mmx-oneline">写一本关于编程的书，是我大概15年前就有的一个想法，当时，我体会到了编程中数据结构的美妙和神奇，有一种收获的喜悦和分享的冲动</p></section>
+<section class="mmx-mod" aria-labelledby="views"><h2 id="views">核心观点初判</h2><p class="mmx-mod-note">按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。</p><ul class="mmx-views"><li><b>第 1–7 章</b>——含「读者评论」至「1.3 基本运算」</li><li><b>第 8–14 章</b>——含「1.4 条件执行」至「2.2 小数的二进制表示」</li><li><b>第 15–21 章</b>——含「2.3 字符的编码与乱码」至「3.3 代码的组织机制」</li><li><b>第 22–28 章</b>——含「第4章 类的继承」至「5.1 接口的本质」</li><li><b>第 29–35 章</b>——含「5.2 抽象类」至「6.3 异常处理」</li><li><b>第 36–42 章</b>——含「6.4 如何使用异常」至「7.5 剖析日期和时间」</li><li><b>第 43–49 章</b>——含「7.6 随机」至「第9章 列表和队列」</li><li><b>第 50–56 章</b>——含「9.1 剖析ArrayL」至「10.3 排序二叉树」</li><li><b>第 57–63 章</b>——含「10.4 剖析TreeM」至「11.1 堆的概念与算法」</li><li><b>第 64–70 章</b>——含「11.2 剖析Prior」至「第四部分 文件」</li><li><b>第 71–77 章</b>——含「第13章 文件基本技术」至「14.1 常见文件类型处」</li><li><b>第 78–84 章</b>——含「14.2 随机读写文件」至「15.1 线程的基本概念」</li><li><b>第 85–91 章</b>——含「15.2 理解synch」至「16.3 显式条件」</li><li><b>第 92–98 章</b>——含「第17章 并发容器」至「18.1 基本概念和原理」</li><li><b>第 99–105 章</b>——含「18.2 线程池」至「19.4 循环栅栏Cyc」</li><li><b>第 106–112 章</b>——含「19.5 理解Threa」至「第六部分 动态与函数式编」</li><li><b>第 113–119 章</b>——含「第21章 反射」至「22.2 框架和库的注解」</li><li><b>第 120–126 章</b>——含「22.3 创建注解」至「23.2 Java SD」</li><li><b>第 127–133 章</b>——含「23.3 cglib动态」至「24.3 类加载的应用：」</li><li><b>第 134–140 章</b>——含「24.4 自定义Clas」至「25.4 剖析常见表达式」</li><li><b>第 141–146 章</b>——含「第26章 函数式编程」至「26.5 Java 8的」</li></ul></section>
+<section class="mmx-mod" aria-labelledby="top10"><h2 id="top10">原文金句 · 持续积累</h2><p class="mmx-mod-note">以下原句取自本书 AI 大纲落库的原文摘录（book_outline.quote），按大纲顺序节选，非 AI 生成；更多见逐章深读页。</p><ol class="mmx-qlist"><li><blockquote>「世界万物都是由元素周期表中的基本元素组成的，基本数据类型就相当于化学中的基本元素，而对象就相当于世界万物。」</blockquote><cite>本书正文</cite></li><li><blockquote>「对于数组，==判断的是两个变量指向的是不是同一个数组，而不是两个数组的元素内容是否一样，即使两个数组的内容是一样的，但如果是两个不同的数组，==依然会返回false」</blockquote><cite>本书正文</cite></li><li><blockquote>「变量就是给数据起名字，方便找不同的数据，它的值可以变，但含义不应变。」</blockquote><cite>本书正文</cite></li><li><blockquote>「则b的值还是0，因为||会“短路”，即在看到||前面部分就可以判定结果的情况下，忽略||后面的运算。」</blockquote><cite>本书正文</cite></li><li><blockquote>「之所以需要加L或l，是因为数字常量默认为是int类型。」</blockquote><cite>本书正文</cite></li><li><blockquote>「static表示类方法，也叫静态方法，与类方法相对的是实例方法。实例方法没有static修饰符，必须通过实例或者对象调用，而类方法可以直接通过类名进行调用，不需要创建实例。」</blockquote><cite>本书正文</cite></li><li><blockquote>「给数组变量赋值和给数组中元素赋值是两回事，给数组中元素赋值是改变数组内容，而给数组变量赋值则会让变量指向一个不同的位置。」</blockquote><cite>本书正文</cite></li><li><blockquote>「数组作为参数与基本类型是不一样的，基本类型不会对调用者中的变量造成任何影响，但数组不是，在函数内修改数组中的元素会修改调用者中的数组内容。」</blockquote><cite>本书正文</cite></li><li><blockquote>「以上就是递归函数的执行过程，函数代码虽然只有一份，但在执行的过程中，每调用一次，就会有一次入栈，生成一份不同的参数、局部变量和返回地址。」</blockquote><cite>本书正文</cite></li><li><blockquote>「可变长度参数的语法是在数据类型后面加三个点“... ”，在函数内，可变长度参数可以看作是数组。可变长度参数必须是参数列表中的最后一个，一个函数也只能有一个可变长度的参数。」</blockquote><cite>本书正文</cite></li></ol></section><footer class="site-footer">
+  <p class="small">口径：主干由 AI 依章节要点重新归纳，章的功能（铺垫/立论/反证/案例/收束）是结构判断而非原文自述；
+  每章展开后的「小节 → 要点 → 原句」逐字取自本书 AI 大纲，与「全书视角」页的章节导读同源，一条未删
+  （引文未命中原句的章不标注代表句，本次 0 处）。</p>
+  <p><a href="../../../index.html">← 返回首页</a>　<a href="overview.html">全书视角</a></p>
+</footer>
+</main>
+<script>
+(function(){
+  var btns=document.querySelectorAll("[data-mmx]");
+  for(var i=0;i<btns.length;i++){(function(b){
+    b.addEventListener("click",function(){
+      var open=b.getAttribute("data-mmx")==="open";
+      document.querySelectorAll("details.mmx-spine").forEach(function(d){d.open=open;});
+      document.querySelectorAll("details.mmx-cn").forEach(function(d){d.open=open;});
+    });
+  })(btns[i]);}
+})();
+</script>
+<script src="../../../assets/js/mindmap-modules.js?v=20261029b" defer></script>
+</body>
+</html>
