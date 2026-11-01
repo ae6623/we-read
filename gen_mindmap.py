@@ -451,16 +451,30 @@ def _chapter_html(c: dict, full: dict) -> str:
     n_q = sum(1 for s in secs for p in s["points"] for q in p["quotes"] if q)
     chips = "".join('<span class="mmx-chip">%s</span>' % E(x) for x in c["concepts"])
     stat = "共 %d 个小节 · %d 条要点 · %d 句原句摘录" % (len(secs), n_pts, n_q)
+    # 一章一条划线都没有时，渲染成**一行静态章名**：
+    # 不做成折叠（点开是空白比不点更糟），也不显示「0 条」（一排 0 看着像页面坏了）。
+    # 这是数据事实（本书该章无公开热门划线），不是加载失败（2026-11-01）。
+    if n_pts == 0 and not secs:
+        return ('<div class="mmx-cn mmx-cn-empty">'
+                '<span class="mmx-no">%d</span>'
+                '<span class="mmx-name">%s</span>'
+                '</div>' % (c["no"], E(chapter_title(c, full))))
+    # 无 LLM 的结构型精读不编「章功能」和「一句话说本章」，字段为空就整段不输出，
+    # 免得页面上留一排空 span/空段落冒充内容（2026-11-01）。
+    role_html = ('<span class="mmx-role">%s</span>' % E(c["role"])
+                 if (c.get("role") or "").strip() else "")
+    gist_html = ('<p class="mmx-gist">%s</p>' % E(c["gist"])
+                 if (c.get("gist") or "").strip() else "")
     out = ['<details class="mmx-cn">'
            '<summary><span class="mmx-no">%d</span>'
            '<span class="mmx-name">%s</span>'
-           '<span class="mmx-role">%s</span>'
+           '%s'
            '<span class="mmx-pnum">%d 条</span>'
            '<span class="mmx-caret">›</span></summary>'
            '<div class="mmx-body">'
            '<p class="mmx-stat">%s</p>'
-           '<p class="mmx-gist">%s</p>%s%s'
-           % (c["no"], E(chapter_title(c, full)), E(c["role"]), n_pts, stat, E(c["gist"]), chips,
+           '%s%s%s'
+           % (c["no"], E(chapter_title(c, full)), role_html, n_pts, stat, gist_html, chips,
               # 代表句：与该章原句池逐字校验过（refine/from_batch 里 anchor_ok），
               # 校验不过的 anchor 已被清空，这里自然不输出。
               ('<p class="mmx-anchor">锚点原句：「%s」</p>' % E(c["anchor"]))
@@ -592,6 +606,12 @@ def render(d: dict, ctx: dict | None = None) -> str:
                '（结构由 AI 大纲条目重算，非读后感）</p>\n' % (dens, pts, wq))
     out.append('<div class="mmx-bar"><i style="width:%d%%"></i></div>\n</section>\n' % dens)
     out.append('<section class="mmx-svgwrap">\n%s</section>\n' % _svg_spine(d))
+    if pts == 0:
+        # 全书一条热度划线都没有：说清楚是「书没被划线」而不是页面坏了。
+        # 章节树里每章会退化成一行静态章名（见 _chapter_html），这里给一句解释。
+        out.append('<p class="mmx-empty">本书暂无公开热门划线，章节树只到目录层级——'
+                   '每章没有可展开的要点与原句，不是加载失败。等这本书有了读者划线，'
+                   '重跑生产会自动补上。</p>\n')
     out.append('<div class="mmx-tools"><button class="mmx-btn" data-mmx="open">展开全部要点</button>'
                '<button class="mmx-btn" data-mmx="close">全部收起</button>'
                '<span class="mmx-tip">每章折叠态只占一行，点章名展开该章全部小节、要点与原句</span></div>\n')
