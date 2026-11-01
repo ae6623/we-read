@@ -10,11 +10,14 @@
 body{max-width:960px;margin:0 auto;padding:0 18px 80px;}
 .combined-head{padding:34px 0 18px;border-bottom:1px solid #e7e0d2;margin-bottom:8px;}
 .combined-head h1{font-size:26px;margin:0 0 10px;}
+/* 锚点导航：固定一排 4 个，等宽对齐 */
 .nav{position:sticky;top:0;z-index:20;background:rgba(255,253,248,.96);backdrop-filter:blur(6px);
-  border-bottom:1px solid #ece4d4;padding:10px 0;margin:14px 0 26px;display:flex;flex-wrap:wrap;gap:8px;
+  border-bottom:1px solid #ece4d4;padding:10px 0;margin:14px 0 26px;display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;
   box-shadow:0 2px 10px rgba(120,100,60,.06);}
 .navlink{font-size:12.5px;color:#5d5443;text-decoration:none;background:#f6f1e6;border:1px solid #e7ddca;
-  border-radius:7px;padding:4px 10px;}
+  border-radius:7px;padding:4px 6px;text-align:center;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;}
 section{scroll-margin-top:64px;}
 /* 一句话主旨：去左侧竖线 */
 .mmx-oneline{border-left:none;padding-left:18px;}
@@ -29,14 +32,22 @@ section{scroll-margin-top:64px;}
 .merged-guide ul.quote.quote-node{margin-top:.5em;padding-top:.4em;border-top:1px dashed #eadfc9}
 .merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
 .merged-guide ul.quote>li{color:#4a4436;font-size:.93rem;margin:.2em 0;padding-left:10px;border-left:2px solid #bf8247}
+/* 模块内子内容（AI领读除外，它有专属深层样式）：左缩进 + 正文与标题分层 */
+section.mmx-mod>ul,section.mmx-mod>ol,section.mmx-mod>div,
+section.mmx-mod>p:not(.mmx-mod-note),
+section.card:not(.merged-guide)>ul,section.card:not(.merged-guide)>ol,
+section.card:not(.merged-guide)>div,section.card:not(.merged-guide)>p:not(.mmx-mod-note){
+  padding-left:16px;}
+section.mmx-mod li,section.mmx-mod p:not(.mmx-mod-note),
+section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mod-note){
+  color:#4a4436;font-size:.93rem;line-height:1.78;}
 </style>
 </head>
 <body>
 <header class="combined-head">
   <p class="eyebrow">读前通读 + 精读 · 合并页</p>
   <h1>《100个人生遗愿》</h1>
-  <div class="chips"><span class="chip">通读 + 精读</span><span class="chip">AI领读</span><span class="chip">10 个模块</span></div>
-  <p class="small">本页为「通读 + 精读」合并视图：<b>AI领读</b> = 章节目录 + 骨架 + AI 大纲融合，其余为精读模块。AI 大纲独立页 <a href="outline.html">outline.html</a> 仍保留。</p>
+  <div class="chips"><span class="chip">通读 + 精读</span><span class="chip">AI领读</span><span class="chip">AI 生产</span></div>
 </header>
 <nav class="nav"><a class="navlink" href="#mod-svg">全书结构导图</a><a class="navlink" href="#mod-oneline">一句话主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-coreask">核心追问</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a><a class="navlink" href="#mod-aiask">AI 问书</a><a class="navlink" href="#mod-higher">更高维度</a><a class="navlink" href="#mod-verify">阅读验证</a><a class="navlink" href="#mod-thennow">当年与今天</a></nav>
 <section class="mmx-svgwrap" id="mod-svg"><svg class="mmx-svg" viewBox="0 0 1120 442" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="100个人生遗愿 全书精读"><rect x="0" y="0" width="1120" height="442" fill="none"/><style>.mmx-svg text{font-family:"Noto Serif SC",Georgia,serif}.mmx-svg .t1{font-size:15px;fill:#2f2a24;font-weight:600}.mmx-svg .t2{font-size:12px;fill:#5c5347}.mmx-svg .t3{font-size:10.5px;fill:#8a8272}.mmx-svg .rt{font-size:13px;fill:#f7f3ea;font-weight:600}.mmx-svg .ln{stroke:#cfc6b4;stroke-width:1.4;fill:none}</style><rect x="28" y="195" width="262" height="52" rx="10" fill="#3d372e"/><text class="rt" x="44" y="217">100个人生遗愿</text><text class="t3" x="44" y="237" style="fill:#c9c0ae">34 章 · 主干 6 条</text><path class="ln" d="M290 221 C350 221,340 60,400 60"/><rect x="400" y="33" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/><rect x="400" y="33" width="5" height="55" rx="2.5" fill="#8a9b6e"/><text class="t1" x="416" y="57">A 从宣判到清单</text><text class="t3" x="416" y="76">2 章 · 第 1–2 章</text><text class="t2" x="710" y="55">先交代清单从哪来：不是浪漫的突发奇想，而是被判了期限之后，人怎么把余</text><text class="t2" x="710" y="72">生的支配权拿回自己手里。</text><path class="ln" d="M290 221 C350 221,340 122,400 122"/><rect x="400" y="95" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/><rect x="400" y="95" width="5" height="55" rx="2.5" fill="#8a9b6e"/><text class="t1" x="416" y="119">B 把愿望过成日子</text><text class="t3" x="416" y="138">14 章 · 第 3–16 章</text><text class="t2" x="710" y="117">街舞、摩托、驻唱、滑翔伞、闺密出逃、二次婚礼、给家人的礼物……愿望一</text><text class="t2" x="710" y="134">个接一个落地，也顺带把丈夫、儿子、母亲、闺密重新排进自己的生活。</text><path class="ln" d="M290 221 C350 221,340 184,400 184"/><rect x="400" y="157" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/><rect x="400" y="157" width="5" height="55" rx="2.5" fill="#8a9b6e"/><text class="t1" x="416" y="181">C 身体里的账</text><text class="t3" x="416" y="200">7 章 · 第 17–23 章</text><text class="t2" x="710" y="179">叙事倒回起点：误诊、宣判、祁姐、化疗、脱发、切除、转移。前半本的轻盈</text><text class="t2" x="710" y="196">，是拿这些具体的身体代价换来的。</text><path class="ln" d="M290 221 C350 221,340 246,400 246"/><rect x="400" y="219" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/><rect x="400" y="219" width="5" height="55" rx="2.5" fill="#8a9b6e"/><text class="t1" x="416" y="243">D 钱、神医与边界</text><text class="t3" x="416" y="262">6 章 · 第 24–29 章</text><text class="t2" x="710" y="241">靶向药三十倍价差、北海寻神医、医托四十万佣金、想停治疗——把「想活」</text><text class="t2" x="710" y="258">拆成钱、信息与人性的现实问题，也划出她不肯越的线。</text><path class="ln" d="M290 221 C350 221,340 308,400 308"/><rect x="400" y="281" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/><rect x="400" y="281" width="5" height="55" rx="2.5" fill="#8a9b6e"/><text class="t1" x="416" y="305">E 树皮小院</text><text class="t3" x="416" y="324">3 章 · 第 30–32 章</text><text class="t2" x="710" y="303">清单之外长出来的愿望：一块免费空地、三百块树皮、邻居递来的电锯。具体</text><text class="t2" x="710" y="320">的事把焦虑挤走，日子从打卡变回日常。</text><path class="ln" d="M290 221 C350 221,340 370,400 370"/><rect x="400" y="343" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/><rect x="400" y="343" width="5" height="55" rx="2.5" fill="#8a9b6e"/><text class="t1" x="416" y="367">F 撕掉清单之后</text><text class="t3" x="416" y="386">2 章 · 第 33–34 章</text><text class="t2" x="710" y="365">承认清单已变成新的任务与表演，改用「是否在场」定义生命价值，最后把问</text><text class="t2" x="710" y="382">题递回给读者。</text></svg></section>

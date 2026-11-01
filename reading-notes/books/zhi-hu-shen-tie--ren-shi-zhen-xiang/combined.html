@@ -10,11 +10,14 @@
 body{max-width:960px;margin:0 auto;padding:0 18px 80px;}
 .combined-head{padding:34px 0 18px;border-bottom:1px solid #e7e0d2;margin-bottom:8px;}
 .combined-head h1{font-size:26px;margin:0 0 10px;}
+/* 锚点导航：固定一排 4 个，等宽对齐 */
 .nav{position:sticky;top:0;z-index:20;background:rgba(255,253,248,.96);backdrop-filter:blur(6px);
-  border-bottom:1px solid #ece4d4;padding:10px 0;margin:14px 0 26px;display:flex;flex-wrap:wrap;gap:8px;
+  border-bottom:1px solid #ece4d4;padding:10px 0;margin:14px 0 26px;display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;
   box-shadow:0 2px 10px rgba(120,100,60,.06);}
 .navlink{font-size:12.5px;color:#5d5443;text-decoration:none;background:#f6f1e6;border:1px solid #e7ddca;
-  border-radius:7px;padding:4px 10px;}
+  border-radius:7px;padding:4px 6px;text-align:center;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;}
 section{scroll-margin-top:64px;}
 /* 一句话主旨：去左侧竖线 */
 .mmx-oneline{border-left:none;padding-left:18px;}
@@ -29,14 +32,22 @@ section{scroll-margin-top:64px;}
 .merged-guide ul.quote.quote-node{margin-top:.5em;padding-top:.4em;border-top:1px dashed #eadfc9}
 .merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
 .merged-guide ul.quote>li{color:#4a4436;font-size:.93rem;margin:.2em 0;padding-left:10px;border-left:2px solid #bf8247}
+/* 模块内子内容（AI领读除外，它有专属深层样式）：左缩进 + 正文与标题分层 */
+section.mmx-mod>ul,section.mmx-mod>ol,section.mmx-mod>div,
+section.mmx-mod>p:not(.mmx-mod-note),
+section.card:not(.merged-guide)>ul,section.card:not(.merged-guide)>ol,
+section.card:not(.merged-guide)>div,section.card:not(.merged-guide)>p:not(.mmx-mod-note){
+  padding-left:16px;}
+section.mmx-mod li,section.mmx-mod p:not(.mmx-mod-note),
+section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mod-note){
+  color:#4a4436;font-size:.93rem;line-height:1.78;}
 </style>
 </head>
 <body>
 <header class="combined-head">
   <p class="eyebrow">读前通读 + 精读 · 合并页</p>
   <h1>《知乎神贴：人世真相》</h1>
-  <div class="chips"><span class="chip">通读 + 精读</span><span class="chip">AI领读</span><span class="chip">10 个模块</span></div>
-  <p class="small">本页为「通读 + 精读」合并视图：<b>AI领读</b> = 章节目录 + 骨架 + AI 大纲融合，其余为精读模块。AI 大纲独立页 <a href="outline.html">outline.html</a> 仍保留。</p>
+  <div class="chips"><span class="chip">通读 + 精读</span><span class="chip">AI领读</span><span class="chip">AI 生产</span></div>
 </header>
 <nav class="nav"><a class="navlink" href="#mod-svg">全书结构导图</a><a class="navlink" href="#mod-oneline">一句话主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a><a class="navlink" href="#mod-aiask">AI 问书</a><a class="navlink" href="#mod-higher">更高维度</a><a class="navlink" href="#mod-verify">阅读验证</a><a class="navlink" href="#mod-thennow">当年与今天</a><a class="navlink" href="#mod-coreask">核心追问</a></nav>
 <section class="mmx-svgwrap" id="mod-svg"><svg class="mmx-svg" viewBox="0 0 1120 406" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="知乎神贴：人世真相 全书精读">
@@ -12281,7 +12292,7 @@ section{scroll-margin-top:64px;}
 </section>
 <section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点初判</h2><p class="mmx-mod-note">按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。</p><ul class="mmx-views"><li><b>地缘博弈与帝国兴衰</b>——聚焦国家与部族之间的地缘政治冲突、边界划分及帝国衰亡史。</li><li><b>权力结构与政治漩涡</b>——梳理各国内部权力争夺、门阀财阀、黑帮势力及政治博弈的底层逻辑。</li><li><b>资本狂欢与经济危机</b>——剖析资本主义运作、股市泡沫、贸易战以及货币霸权的经济规律。</li><li><b>人性的瘾与精神困境</b>——探讨人类历史上瘾物质、消费主义、内卷化及个体认知的局限与破局。</li><li><b>血火洗礼与战争抉择</b>——记录重大战争、革命斗争、武装冲突及历史转折点的军事与政治抉择。</li></ul></section>
 <section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句 · 持续积累</h2><p class="mmx-mod-note">以下原句取自本书 AI 大纲落库的原文摘录（book_outline.quote），按大纲顺序节选，非 AI 生成；更多见逐章深读页。</p><ol class="mmx-qlist"><li><blockquote>「这种差异是如何产生的？答案是突厥人。」</blockquote><cite>【暗流】大国博弈的底层代码</cite></li><li><blockquote>「“India”(印度)这个概念，其实是英国殖民者杜撰的。」</blockquote><cite>【暗流】大国博弈的底层代码</cite></li><li><blockquote>「即便在如今的印度，这种“区域松散”的观念仍隐约存在。」</blockquote><cite>【暗流】大国博弈的底层代码</cite></li><li><blockquote>「印度北方真正的强势力量，是雅利安人。」</blockquote><cite>【暗流】大国博弈的底层代码</cite></li><li><blockquote>「雅利安人进入印度后，为了保持种族血统纯正、巩固长期统治，推行了印度教和种姓制度。」</blockquote><cite>【暗流】大国博弈的底层代码</cite></li><li><blockquote>「平等是吸引受压迫者皈依的利器——只有地位低下的人，才最渴望平等。」</blockquote><cite>【暗流】大国博弈的底层代码</cite></li><li><blockquote>「对外扩张带来的战利品分配，也吸引了突厥等善战民族皈依伊斯兰教。」</blockquote><cite>【暗流】大国博弈的底层代码</cite></li><li><blockquote>「尽管他们仍自称为“突厥人”，但本质上就像一艘船：从港口出发后，每天都在维修、更换部件，最终整艘船都焕然一新。」</blockquote><cite>【暗流】大国博弈的底层代码</cite></li><li><blockquote>「这和计算机领域的“分布式系统”概念很像：即使一部分“节点”(神祇相关的祭祀场所)消失，剩下的节点仍能正常运转。」</blockquote><cite>【暗流】大国博弈的底层代码</cite></li><li><blockquote>「佛教如同一个集中化的组织，一旦作为“核心”的寺庙被摧毁、僧侣被杀害，宗教传承便难以为继。」</blockquote><cite>【暗流】大国博弈的底层代码</cite></li></ol></section>
-<section class="mmx-mod" aria-labelledby="aiask" id="mod-aiask"><h2 id="aiask">AI 问书</h2><p class="mmx-mod-note">下方内容复用自本书日期笔记中的 AI 问书（按实读范围生成）；全书级整理将在云端 AI 阅读流程完成后补充。</p><div class="mmx-ask"><p class="eyebrow">以下问答由 AI 读书「Ai 问书」生成，带书内引源；不是本工具的归纳。</p><div class="aiqa-item"><h3>这本书讲了什么？</h3><p>《知乎神贴：人世真相》是一部聚焦“人生、社会、人性”三大维度的认知提升读物。作者以知乎高赞帖子的写法，通过真实案例、数据与逻辑分析，拆解日常与宏观层面的运行规则。</p>
+<section class="mmx-mod" aria-labelledby="aiask" id="mod-aiask"><h2 id="aiask">AI 问书</h2><div class="mmx-ask"><div class="aiqa-item"><h3>这本书讲了什么？</h3><p>《知乎神贴：人世真相》是一部聚焦“人生、社会、人性”三大维度的认知提升读物。作者以知乎高赞帖子的写法，通过真实案例、数据与逻辑分析，拆解日常与宏观层面的运行规则。</p>
 <p>个人层面：书中首先讨论如何建立正确的消费观与财富观。作者指出，穷人与富人在奢侈品消费上的差异不在于“想不想享受”，而在于“用血汗钱买”还是“让资本产生收益买”，这直接决定了能否跳出“消费→负债→更穷”的循环。<br />社会层面：书里用“结构化枷锁”解释阶级流动困难——缺乏资源、信息与杠杆使得底层突破门槛极窄。作者建议从自己可控的范围内缓慢积累：选对城市、攒好钱、持续学习，通过互联网把个人能力货币化，才是跨越阶层的关键。<br />宏观视角：作者进一步放大到全球资源与权力格局。例如石油、芯片、数据等战略资源的掌控者，往往通过“结算货币”“供应链”“定价权”三层手段影响普通人账单，甚至左右国家命运。这部分旨在提醒读者：理解大到国际政治、小到日常消费的底层逻辑，都需要跳出单一事件，看背后的资源—权力—货币链条。<br />方法论与行动建议：</p>
 <ul><li>用资产配置分散风险，合理使用杠杆，同时持续提升人力资本。</li><li>把人生视作“升级打怪”的过程，先完成当前阶段的所有“必做任务”，再自然进入下一层。</li><li>认清自己所处阶段，接受“缓慢积累”的过程，日拱一卒方能成为少数“没出局”的人。</li></ul>
 <p>总的来说，这本书意在打破认知误区，提供多元视角：从个人理财、职场生存到宏观资源博弈，层层递进地说明“看清底层逻辑—调整行为模式—实现长期收益”的路径，帮助读者在复杂社会中做出更理性的选择。</p></div><div class="aiqa-item"><h3>《知乎神贴：人世真相》里最反直觉、最容易被误读的观点是哪一个？为什么？</h3><p>《知乎神贴：人世真相》中最反直觉、也最容易被误读的观点是：</p>
