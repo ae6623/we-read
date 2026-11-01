@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="assets/css/site.css?v=20261028c">
   <link rel="stylesheet" href="assets/css/reading-metrics.css">
   <link rel="stylesheet" href="assets/css/homepage-reading.css?v=20261030c">
+  <link rel="stylesheet" href="assets/css/shelf-filter.css?v=20261101a">
 <link rel="stylesheet" href="assets/css/book-link-drawer.css">
 <link rel="stylesheet" href="assets/css/homepage-hero.css">
 </head>
@@ -88,6 +89,9 @@
         <button type="button" id="reading-tab-close" data-panel="reading-panel-close" aria-label="精读">精读</button>
         <button type="button" id="reading-tab-series" data-panel="reading-panel-series" aria-label="系列">系列</button>
         <button type="button" id="reading-tab-archive" data-panel="reading-panel-archive" aria-label="归档">归档</button>
+        <button type="button" id="shelf-filter-toggle" class="tab-filter-toggle" aria-expanded="false" aria-controls="shelf-filter-pop" aria-label="按分类筛选" title="按分类筛选">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16l-6.2 7.4V19l-3.6-2.1v-4.5L4 5z"/></svg>
+        </button>
         <button type="button" id="shelf-search-toggle" class="tab-search-toggle" aria-expanded="false" aria-controls="shelf-search-pop" aria-label="搜索书架" title="搜索书架">
           <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><line x1="15.6" y1="15.6" x2="21" y2="21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
         </button>
@@ -95,6 +99,16 @@
       <div class="shelf-search-pop" id="shelf-search-pop" hidden>
         <input id="shelf-search" type="search" placeholder="按书名、日期或作者筛选当前页签…" autocomplete="off" data-card-search aria-label="搜索">
         <p class="search-status" aria-live="polite" data-search-status for="shelf-search"></p>
+      </div>
+      <div class="shelf-filter-pop" id="shelf-filter-pop" hidden>
+        <label class="sf-field">一级
+          <select id="shelf-cat1" aria-label="一级分类"><option value="">全部分类</option></select>
+        </label>
+        <label class="sf-field">二级
+          <select id="shelf-cat2" aria-label="二级分类" disabled><option value="">先选一级</option></select>
+        </label>
+        <button type="button" class="sf-clear" id="shelf-cat-clear">清除</button>
+        <p class="sf-status" id="shelf-cat-status" aria-live="polite">分类数据加载中…</p>
       </div>
       </div>
 
@@ -5522,7 +5536,7 @@
   <div class="visit-badge-row"><div class="visit-badge" role="group" aria-label="站点访问统计"><span class="visit-badge-item"><b class="visit-badge-num" id="gc_site_pv_num">–</b><span class="visit-badge-unit">次访问</span></span><span class="visit-badge-div visit-badge-uv" aria-hidden="true"></span><span class="visit-badge-item visit-badge-uv"><b class="visit-badge-num" id="gc_site_uv_num">–</b><span class="visit-badge-unit">位访客</span></span></div></div>
   <!-- visit-badge:end -->
   <script src="assets/js/mindmap-modules.js?v=20261029a" defer></script>
-  <script src="assets/js/homepage-reading.js?v=20261030e" defer></script>
+  <script src="assets/js/homepage-reading.js?v=20261101a" defer></script>
 <script data-goatcounter="https://ae6623.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <!-- gc-fill:begin -->
 <script>
