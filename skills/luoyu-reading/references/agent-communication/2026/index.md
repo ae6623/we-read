@@ -2,4 +2,5 @@
 
 [沟通索引](../../agent-communication.md)
 
+- [2026-11](11/index.md)
 - [2026-10](10/index.md)
