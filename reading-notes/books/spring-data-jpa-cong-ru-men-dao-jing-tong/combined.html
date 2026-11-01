@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《Spring Data JPA从入门到精通》｜通读 · 精读</title>
+<link rel="stylesheet" href="../../../assets/css/reading-overview.css"><link rel="stylesheet" href="../../../assets/css/mmx-guide.css"><link rel="stylesheet" href="../../../assets/css/reading-outline.css">
+<style>
+/* 合并页外壳 */
+body{max-width:960px;margin:0 auto;padding:0 18px 80px;}
+.combined-head{padding:34px 0 18px;border-bottom:1px solid #e7e0d2;margin-bottom:8px;}
+.combined-head h1{font-size:26px;margin:0 0 10px;}
+.nav{position:sticky;top:0;z-index:20;background:rgba(255,253,248,.96);backdrop-filter:blur(6px);
+  border-bottom:1px solid #ece4d4;padding:10px 0;margin:14px 0 26px;display:flex;flex-wrap:wrap;gap:8px;
+  box-shadow:0 2px 10px rgba(120,100,60,.06);}
+.navlink{font-size:12.5px;color:#5d5443;text-decoration:none;background:#f6f1e6;border:1px solid #e7ddca;
+  border-radius:7px;padding:4px 10px;}
+section{scroll-margin-top:64px;}
+/* 一句话主旨：去左侧竖线 */
+.mmx-oneline{border-left:none;padding-left:18px;}
+/* AI领读章内：AI 大纲原生深层样式 */
+.merged-guide .sec{margin:10px 0 14px;padding-left:6px;border-left:2px solid #e5e0d6}
+.merged-guide .sec h4{font:600 .98rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.6em 0 .3em}
+.merged-guide ul.point{margin:.3em 0;padding-left:20px}
+.merged-guide ul.point>li{margin:.35em 0}
+.merged-guide ul.quote{margin:.25em 0 .25em 20px;padding-left:18px;list-style:none}
+.merged-guide ul.quote::before{content:"原句";display:block;font-size:.72rem;color:#bf8247;
+  letter-spacing:.1em;margin:.15em 0 .1em;font-weight:600}
+.merged-guide ul.quote.quote-node{margin-top:.5em;padding-top:.4em;border-top:1px dashed #eadfc9}
+.merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
+.merged-guide ul.quote>li{color:#4a4436;font-size:.93rem;margin:.2em 0;padding-left:10px;border-left:2px solid #bf8247}
+</style>
+</head>
+<body>
+<header class="combined-head">
+  <p class="eyebrow">读前通读 + 精读 · 合并页</p>
+  <h1>《Spring Data JPA从入门到精通》</h1>
+  <div class="chips"><span class="chip">通读 + 精读</span><span class="chip">AI领读</span><span class="chip">5 个模块</span></div>
+  <p class="small">本页为「通读 + 精读」合并视图：<b>AI领读</b> = 章节目录 + 骨架 + AI 大纲融合，其余为精读模块。AI 大纲独立页 <a href="outline.html">outline.html</a> 仍保留。</p>
+</header>
+<nav class="nav"><a class="navlink" href="#mod-svg">全书结构导图</a><a class="navlink" href="#mod-oneline">一句话主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a></nav>
+<section class="mmx-svgwrap" id="mod-svg">
+<svg class="mmx-svg" viewBox="0 0 1120 840" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Spring Data JPA从入门到精通 全书精读">
+<rect x="0" y="0" width="1120" height="840" fill="none"/>
+<style>.mmx-svg text{font-family:"Noto Serif SC",Georgia,serif}.mmx-svg .t1{font-size:15px;fill:#2f2a24;font-weight:600}.mmx-svg .t2{font-size:12px;fill:#5c5347}.mmx-svg .t3{font-size:10.5px;fill:#8a8272}.mmx-svg .rt{font-size:13px;fill:#f7f3ea;font-weight:600}.mmx-svg .ln{stroke:#cfc6b4;stroke-width:1.4;fill:none}</style>
+<rect x="28" y="367" width="262" height="70" rx="10" fill="#3d372e"/>
+<text class="rt" x="44" y="391">Spring Data JPA从入</text>
+<text class="rt" x="44" y="409">门到精通</text>
+<text class="t3" x="44" y="429" style="fill:#c9c0ae">85 章 · 主干 12 条</text>
+<path class="ln" d="M290 402 C350 402,340 61,400 61"/>
+<rect x="400" y="33" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="33" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="58">A 第 1–7 章</text>
+<text class="t3" x="416" y="78">7 章</text>
+<text class="t2" x="714" y="57">含「内容简介」至「阅读指南」</text>
+<path class="ln" d="M692 61 L700 61"/>
+<path class="ln" d="M290 402 C350 402,340 123,400 123"/>
+<rect x="400" y="95" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="95" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="120">B 第 8–14 章</text>
+<text class="t3" x="416" y="140">7 章</text>
+<text class="t2" x="714" y="119">含「技术支持」至「1.3 了解Spring」</text>
+<path class="ln" d="M692 123 L700 123"/>
+<path class="ln" d="M290 402 C350 402,340 185,400 185"/>
+<rect x="400" y="157" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="157" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="182">C 第 15–21 章</text>
+<text class="t3" x="416" y="202">7 章</text>
+<text class="t2" x="714" y="181">含「1.4 Spring D」至「2.5 JpaRepos」</text>
+<path class="ln" d="M692 185 L700 185"/>
+<path class="ln" d="M290 402 C350 402,340 247,400 247"/>
+<rect x="400" y="219" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="219" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="244">D 第 22–28 章</text>
+<text class="t3" x="416" y="264">7 章</text>
+<text class="t2" x="714" y="243">含「2.6 Reposito」至「3.6 查询结果的处理」</text>
+<path class="ln" d="M692 247 L700 247"/>
+<path class="ln" d="M290 402 C350 402,340 309,400 309"/>
+<rect x="400" y="281" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="281" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="306">E 第 29–35 章</text>
+<text class="t3" x="416" y="326">7 章</text>
+<text class="t2" x="714" y="305">含「3.7 实现机制介绍」至「4.5 @QueryHi」</text>
+<path class="ln" d="M692 309 L700 309"/>
+<path class="ln" d="M290 402 C350 402,340 371,400 371"/>
+<rect x="400" y="343" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="343" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="368">F 第 36–42 章</text>
+<text class="t3" x="416" y="388">7 章</text>
+<text class="t2" x="714" y="367">含「4.6 @Procedu」至「5.5 关于关系查询的一」</text>
+<path class="ln" d="M692 371 L700 371"/>
+<path class="ln" d="M290 402 C350 402,340 433,400 433"/>
+<rect x="400" y="405" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="405" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="430">G 第 43–49 章</text>
+<text class="t3" x="416" y="450">7 章</text>
+<text class="t2" x="714" y="429">含「第二部分 晋级之高级部分」至「第7章 Spring D」</text>
+<path class="ln" d="M692 433 L700 433"/>
+<path class="ln" d="M290 402 C350 402,340 495,400 495"/>
+<rect x="400" y="467" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="467" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="492">H 第 50–56 章</text>
+<text class="t3" x="416" y="512">7 章</text>
+<text class="t2" x="714" y="491">含「7.1 Auditing」至「第8章 DataSour」</text>
+<path class="ln" d="M692 495 L700 495"/>
+<path class="ln" d="M290 402 C350 402,340 557,400 557"/>
+<rect x="400" y="529" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="529" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="554">I 第 57–63 章</text>
+<text class="t3" x="416" y="574">7 章</text>
+<text class="t2" x="714" y="553">含「8.1 默认数据源的讲解」至「第三部分 延展部分」</text>
+<path class="ln" d="M692 557 L700 557"/>
+<path class="ln" d="M290 402 C350 402,340 619,400 619"/>
+<rect x="400" y="591" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="591" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="616">J 第 64–70 章</text>
+<text class="t3" x="416" y="636">7 章</text>
+<text class="t2" x="714" y="615">含「第9章 IntelliJ」至「10.2 Spring 」</text>
+<path class="ln" d="M692 619 L700 619"/>
+<path class="ln" d="M290 402 C350 402,340 681,400 681"/>
+<rect x="400" y="653" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="653" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="678">G10 第 71–77 章</text>
+<text class="t3" x="416" y="698">7 章</text>
+<text class="t2" x="714" y="677">含「10.3 Spring 」至「12.1 快速入门」</text>
+<path class="ln" d="M692 681 L700 681"/>
+<path class="ln" d="M290 402 C350 402,340 743,400 743"/>
+<rect x="400" y="715" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="715" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="740">G11 第 78–85 章</text>
+<text class="t3" x="416" y="760">8 章</text>
+<text class="t2" x="714" y="739">含「12.2 Spring 」至「附录5 applicat」</text>
+<path class="ln" d="M692 743 L700 743"/>
+</svg></section>
+<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">一句话主旨</h2><p class="mmx-mod-note">本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。</p><p class="mmx-oneline">《Spring Data JPA从入门到精通》以Spring Boot为技术基础，从入门到精通，由浅入深地介绍Spring Data JPA</p></section>
+<section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" id="mod-merged_guide"><h2 id="merged-guide-title">AI领读 · 全书篇目</h2>
+<p class="small">本书 AI 大纲目前为章级目录（要点与原句待补全）。以下为全书篇目，大纲补全后将自动升级为「目录 + 骨架 + 要点 + 原句」完整版。</p>
+<ol class="mmx-pts"><li><b>1</b> 内容简介</li><li><b>2</b> 推荐序</li><li><b>3</b> 前言</li><li><b>4</b> “未来已经来临，只是尚未流行”</li><li><b>5</b> 追本溯源</li><li><b>6</b> 本书特色</li><li><b>7</b> 阅读指南</li><li><b>8</b> 技术支持</li><li><b>9</b> 致谢</li><li><b>10</b> 第一部分 基础部分</li><li><b>11</b> 第1章 整体认识JPA</li><li><b>12</b> 1.1 市场上ORM框架比对</li><li><b>13</b> 1.2 JPA的介绍以及开源实现</li><li><b>14</b> 1.3 了解Spring Data</li><li><b>15</b> 1.4 Spring Data JPA的主要类及结构图</li><li><b>16</b> 第2章 JPA基础查询方法</li><li><b>17</b> 2.1 Spring Data Common的Repository</li><li><b>18</b> 2.2 Repository的类层次关系 (diagms/hierarchy/structure)</li><li><b>19</b> 2.3 CrudRepository方法详解</li><li><b>20</b> 2.4 PagingAndSortingRepository方法详解</li><li><b>21</b> 2.5 JpaRepository方法详解</li><li><b>22</b> 2.6 Repository的实现类SimpleJpaRepository</li><li><b>23</b> 第3章 定义查询方法</li><li><b>24</b> 3.1 定义查询方法的配置方法</li><li><b>25</b> 3.2 方法的查询策略设置</li><li><b>26</b> 3.3 查询方法的创建</li><li><b>27</b> 3.5 方法的查询策略的属性表达式</li><li><b>28</b> 3.6 查询结果的处理</li><li><b>29</b> 3.7 实现机制介绍</li><li><b>30</b> 第4章 注解式查询方法</li><li><b>31</b> 4.1 @Query详解</li><li><b>32</b> 4.2 @Param用法</li><li><b>33</b> 4.3 SpEL表达式的支持</li><li><b>34</b> 4.4 @Modifying修改查询</li><li><b>35</b> 4.5 @QueryHints</li><li><b>36</b> 4.6 @Procedure储存过程的查询方法</li><li><b>37</b> 第5章 @Entity实例里面常用注解详解</li><li><b>38</b> 5.1 javax.persistence概况介绍</li><li><b>39</b> 5.2 基本注解</li><li><b>40</b> 5.3 关联关系注解</li><li><b>41</b> 5.4 Left join、Inner join与@EntityGraph</li><li><b>42</b> 5.5 关于关系查询的一些坑</li><li><b>43</b> 第二部分 晋级之高级部分</li><li><b>44</b> 第6章 JpaRepository扩展详解</li><li><b>45</b> 6.1 JpaRepository介绍</li><li><b>46</b> 6.2 QueryByExampleExecutor的使用</li><li><b>47</b> 6.3 JpaSpecificationExecutor的详细使用</li><li><b>48</b> 6.4 自定义Repository</li><li><b>49</b> 第7章 Spring Data JPA的扩展</li><li><b>50</b> 7.1 Auditing及其事件详解</li><li><b>51</b> 7.2 @Version处理乐观锁的问题</li><li><b>52</b> 7.3 对MvcWeb的支持</li><li><b>53</b> 7.4 @EnableJpaRepositories详解</li><li><b>54</b> 7.5 默认日志简单介绍</li><li><b>55</b> 7.6 Spring Boot JPA的版本问题</li><li><b>56</b> 第8章 DataSource的配置</li><li><b>57</b> 8.1 默认数据源的讲解</li><li><b>58</b> 8.2 AliDruidDataSource的配置</li><li><b>59</b> 8.3 事务的处理及其讲解</li><li><b>60</b> 8.4 如何配置多数据源</li><li><b>61</b> 8.5 Naming命名策略详解及其实践</li><li><b>62</b> 8.6 完整的传统XML的配置方法</li><li><b>63</b> 第三部分 延展部分</li><li><b>64</b> 第9章 IntelliJ IDEA与Spring JPA</li><li><b>65</b> 9.1 IntelliJ IDEA概述</li><li><b>66</b> 9.2 DataBase插件</li><li><b>67</b> 9.3 Persistence及JPA相关的插件介绍</li><li><b>68</b> 9.4 IntelliJ IDEA分析源码用到的视图</li><li><b>69</b> 第10章 Spring Data Redis详解</li><li><b>70</b> 10.2 Spring Boot+Spring Data Redis配置</li><li><b>71</b> 10.3 Spring Data Redis结合Spring Cache 配置方法</li><li><b>72</b> 第11章 SpEL表达式讲解</li><li><b>73</b> 11.1 SpEL介绍</li><li><b>74</b> 11.2 SpEL的基础语法</li><li><b>75</b> 11.3 主要的类及其原理</li><li><b>76</b> 第12章 Spring Data REST</li><li><b>77</b> 12.1 快速入门</li><li><b>78</b> 12.2 Spring Data REST定制化</li><li><b>79</b> 12.3 Spring Boot 2.0加载原理</li><li><b>80</b> 12.4 未来发展</li><li><b>81</b> 附录1 Repository Query Method关键字列表</li><li><b>82</b> 附录2 Repository Query Method返回值类型</li><li><b>83</b> 附录3 JPA注解大全</li><li><b>84</b> 附录4 Spring中涉及的注解</li><li><b>85</b> 附录5 application.properties里面关于JPA的配置大全</li></ol></section>
+<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点初判</h2><p class="mmx-mod-note">按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。</p><ul class="mmx-views"><li><b>第 1–7 章</b>——含「内容简介」至「阅读指南」</li><li><b>第 8–14 章</b>——含「技术支持」至「1.3 了解Spring」</li><li><b>第 15–21 章</b>——含「1.4 Spring D」至「2.5 JpaRepos」</li><li><b>第 22–28 章</b>——含「2.6 Reposito」至「3.6 查询结果的处理」</li><li><b>第 29–35 章</b>——含「3.7 实现机制介绍」至「4.5 @QueryHi」</li><li><b>第 36–42 章</b>——含「4.6 @Procedu」至「5.5 关于关系查询的一」</li><li><b>第 43–49 章</b>——含「第二部分 晋级之高级部分」至「第7章 Spring D」</li><li><b>第 50–56 章</b>——含「7.1 Auditing」至「第8章 DataSour」</li><li><b>第 57–63 章</b>——含「8.1 默认数据源的讲解」至「第三部分 延展部分」</li><li><b>第 64–70 章</b>——含「第9章 IntelliJ」至「10.2 Spring 」</li><li><b>第 71–77 章</b>——含「10.3 Spring 」至「12.1 快速入门」</li><li><b>第 78–85 章</b>——含「12.2 Spring 」至「附录5 applicat」</li></ul></section>
+<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句 · 持续积累</h2><p class="mmx-mod-note">以下原句取自本书 AI 大纲落库的原文摘录（book_outline.quote），按大纲顺序节选，非 AI 生成；更多见逐章深读页。</p><ol class="mmx-qlist"><li><blockquote>「特别强调一下delete和save方法，因为在实际工作中有的人会画蛇添足，自己先去查询再做判断处理，其实Spring JPA底层都已经考虑到了。」</blockquote><cite>本书正文</cite></li><li><blockquote>「Projections的应用场景还是挺多的，希望大家好好体会，以利用更优雅的代码实现不同的场景，不必用数组、冗余的对象去接收查询结果。」</blockquote><cite>本书正文</cite></li><li><blockquote>「当用到Pageable的时候会默认执行一条cout语句」</blockquote><cite>本书正文</cite></li><li><blockquote>「随着微服务的推行，其实很少有多数据源的场景」</blockquote><cite>本书正文</cite></li><li><blockquote>「通过以上的三步，我们已经完成了auting的配置」</blockquote><cite>本书正文</cite></li></ol></section>
+</body>
+</html>

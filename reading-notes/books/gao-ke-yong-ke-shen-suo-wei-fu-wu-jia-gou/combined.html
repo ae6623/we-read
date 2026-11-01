@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>《高可用可伸缩微服务架构：基于Dubbo、Spring Cloud和Service Mesh》｜通读 · 精读</title>
+<link rel="stylesheet" href="../../../assets/css/reading-overview.css"><link rel="stylesheet" href="../../../assets/css/mmx-guide.css"><link rel="stylesheet" href="../../../assets/css/reading-outline.css">
+<style>
+/* 合并页外壳 */
+body{max-width:960px;margin:0 auto;padding:0 18px 80px;}
+.combined-head{padding:34px 0 18px;border-bottom:1px solid #e7e0d2;margin-bottom:8px;}
+.combined-head h1{font-size:26px;margin:0 0 10px;}
+.nav{position:sticky;top:0;z-index:20;background:rgba(255,253,248,.96);backdrop-filter:blur(6px);
+  border-bottom:1px solid #ece4d4;padding:10px 0;margin:14px 0 26px;display:flex;flex-wrap:wrap;gap:8px;
+  box-shadow:0 2px 10px rgba(120,100,60,.06);}
+.navlink{font-size:12.5px;color:#5d5443;text-decoration:none;background:#f6f1e6;border:1px solid #e7ddca;
+  border-radius:7px;padding:4px 10px;}
+section{scroll-margin-top:64px;}
+/* 一句话主旨：去左侧竖线 */
+.mmx-oneline{border-left:none;padding-left:18px;}
+/* AI领读章内：AI 大纲原生深层样式 */
+.merged-guide .sec{margin:10px 0 14px;padding-left:6px;border-left:2px solid #e5e0d6}
+.merged-guide .sec h4{font:600 .98rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.6em 0 .3em}
+.merged-guide ul.point{margin:.3em 0;padding-left:20px}
+.merged-guide ul.point>li{margin:.35em 0}
+.merged-guide ul.quote{margin:.25em 0 .25em 20px;padding-left:18px;list-style:none}
+.merged-guide ul.quote::before{content:"原句";display:block;font-size:.72rem;color:#bf8247;
+  letter-spacing:.1em;margin:.15em 0 .1em;font-weight:600}
+.merged-guide ul.quote.quote-node{margin-top:.5em;padding-top:.4em;border-top:1px dashed #eadfc9}
+.merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
+.merged-guide ul.quote>li{color:#4a4436;font-size:.93rem;margin:.2em 0;padding-left:10px;border-left:2px solid #bf8247}
+</style>
+</head>
+<body>
+<header class="combined-head">
+  <p class="eyebrow">读前通读 + 精读 · 合并页</p>
+  <h1>《高可用可伸缩微服务架构：基于Dubbo、Spring Cloud和Service Mesh》</h1>
+  <div class="chips"><span class="chip">通读 + 精读</span><span class="chip">AI领读</span><span class="chip">5 个模块</span></div>
+  <p class="small">本页为「通读 + 精读」合并视图：<b>AI领读</b> = 章节目录 + 骨架 + AI 大纲融合，其余为精读模块。AI 大纲独立页 <a href="outline.html">outline.html</a> 仍保留。</p>
+</header>
+<nav class="nav"><a class="navlink" href="#mod-svg">全书结构导图</a><a class="navlink" href="#mod-oneline">一句话主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a></nav>
+<section class="mmx-svgwrap" id="mod-svg">
+<svg class="mmx-svg" viewBox="0 0 1120 840" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="高可用可伸缩微服务架构：基于Dubbo、Spring Cloud和Service Mesh 全书精读">
+<rect x="0" y="0" width="1120" height="840" fill="none"/>
+<style>.mmx-svg text{font-family:"Noto Serif SC",Georgia,serif}.mmx-svg .t1{font-size:15px;fill:#2f2a24;font-weight:600}.mmx-svg .t2{font-size:12px;fill:#5c5347}.mmx-svg .t3{font-size:10.5px;fill:#8a8272}.mmx-svg .rt{font-size:13px;fill:#f7f3ea;font-weight:600}.mmx-svg .ln{stroke:#cfc6b4;stroke-width:1.4;fill:none}</style>
+<rect x="28" y="367" width="262" height="70" rx="10" fill="#3d372e"/>
+<text class="rt" x="44" y="391">高可用可伸缩微服务架构：基于Dub</text>
+<text class="rt" x="44" y="409">bo、Spring Cloud和…</text>
+<text class="t3" x="44" y="429" style="fill:#c9c0ae">80 章 · 主干 12 条</text>
+<path class="ln" d="M290 402 C350 402,340 61,400 61"/>
+<rect x="400" y="33" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="33" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="58">A 第 1–7 章</text>
+<text class="t3" x="416" y="78">7 章</text>
+<text class="t2" x="714" y="57">含「关于作者」至「第1章 微服务架构概述」</text>
+<path class="ln" d="M692 61 L700 61"/>
+<path class="ln" d="M290 402 C350 402,340 123,400 123"/>
+<rect x="400" y="95" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="95" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="120">B 第 8–14 章</text>
+<text class="t3" x="416" y="140">7 章</text>
+<text class="t2" x="714" y="119">含「1.1 什么是架构」至「第2章 微服务领域驱动设」</text>
+<path class="ln" d="M692 123 L700 123"/>
+<path class="ln" d="M290 402 C350 402,340 185,400 185"/>
+<rect x="400" y="157" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="157" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="182">C 第 15–21 章</text>
+<text class="t3" x="416" y="202">7 章</text>
+<text class="t2" x="714" y="181">含「2.1 领域驱动设计」至「3.3 基于Dubbo的」</text>
+<path class="ln" d="M692 185 L700 185"/>
+<path class="ln" d="M290 402 C350 402,340 247,400 247"/>
+<rect x="400" y="219" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="219" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="244">D 第 22–28 章</text>
+<text class="t3" x="416" y="264">7 章</text>
+<text class="t2" x="714" y="243">含「第4章 Spring B」至「5.1 微服务的稳定性」</text>
+<path class="ln" d="M692 247 L700 247"/>
+<path class="ln" d="M290 402 C350 402,340 309,400 309"/>
+<rect x="400" y="281" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="281" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="306">E 第 29–35 章</text>
+<text class="t3" x="416" y="326">7 章</text>
+<text class="t2" x="714" y="305">含「5.2 高可用」至「6.3 最终一致性解决方」</text>
+<path class="ln" d="M692 309 L700 309"/>
+<path class="ln" d="M290 402 C350 402,340 371,400 371"/>
+<rect x="400" y="343" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="343" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="368">F 第 36–42 章</text>
+<text class="t3" x="416" y="388">7 章</text>
+<text class="t2" x="714" y="367">含「6.4 开源项目的分布式」至「8.1 Netflix 」</text>
+<path class="ln" d="M692 371 L700 371"/>
+<path class="ln" d="M290 402 C350 402,340 433,400 433"/>
+<rect x="400" y="405" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="405" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="430">G 第 43–49 章</text>
+<text class="t3" x="416" y="450">7 章</text>
+<text class="t2" x="714" y="429">含「8.2 Netflix 」至「9.3 数据仓库工具Hi」</text>
+<path class="ln" d="M692 433 L700 433"/>
+<path class="ln" d="M290 402 C350 402,340 495,400 495"/>
+<rect x="400" y="467" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="467" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="492">H 第 50–56 章</text>
+<text class="t3" x="416" y="512">7 章</text>
+<text class="t2" x="714" y="491">含「9.4 使用Sqoop抽」至「11.1 支付场景的介绍」</text>
+<path class="ln" d="M692 495 L700 495"/>
+<path class="ln" d="M290 402 C350 402,340 557,400 557"/>
+<rect x="400" y="529" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="529" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="554">I 第 57–63 章</text>
+<text class="t3" x="416" y="574">7 章</text>
+<text class="t2" x="714" y="553">含「11.2 支付业务建模和」至「12.2 遗留系统的债券」</text>
+<path class="ln" d="M692 557 L700 557"/>
+<path class="ln" d="M290 402 C350 402,340 619,400 619"/>
+<rect x="400" y="591" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="591" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="616">J 第 64–70 章</text>
+<text class="t3" x="416" y="636">7 章</text>
+<text class="t2" x="714" y="615">含「12.3 从单体系统拆分」至「13.4 Service」</text>
+<path class="ln" d="M692 619 L700 619"/>
+<path class="ln" d="M290 402 C350 402,340 681,400 681"/>
+<rect x="400" y="653" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="653" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="678">G10 第 71–77 章</text>
+<text class="t3" x="416" y="698">7 章</text>
+<text class="t2" x="714" y="677">含「13.5 Service」至「14.2 Prometh」</text>
+<path class="ln" d="M692 681 L700 681"/>
+<path class="ln" d="M290 402 C350 402,340 743,400 743"/>
+<rect x="400" y="715" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
+<rect x="400" y="715" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
+<text class="t1" x="416" y="740">G11 第 78–80 章</text>
+<text class="t3" x="416" y="760">3 章</text>
+<text class="t2" x="714" y="739">含「反侵权盗版声明」至「专家力荐」</text>
+<path class="ln" d="M692 743 L700 743"/>
+</svg></section>
+<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">一句话主旨</h2><p class="mmx-mod-note">本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。</p><p class="mmx-oneline">近年来微服务架构已经成为大规模分布式架构的主流技术，越来越多的公司已经或开始转型为微服务架构</p></section>
+<section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" id="mod-merged_guide"><h2 id="merged-guide-title">AI领读 · 全书篇目</h2>
+<p class="small">本书 AI 大纲目前为章级目录（要点与原句待补全）。以下为全书篇目，大纲补全后将自动升级为「目录 + 骨架 + 要点 + 原句」完整版。</p>
+<ol class="mmx-pts"><li><b>1</b> 关于作者</li><li><b>2</b> 序一</li><li><b>3</b> 序二</li><li><b>4</b> 专家评价</li><li><b>5</b> 前言</li><li><b>6</b> CodingFly简介</li><li><b>7</b> 第1章 微服务架构概述</li><li><b>8</b> 1.1 什么是架构</li><li><b>9</b> 1.2 几个相关概念</li><li><b>10</b> 1.3 从软件的生命周期看架构设计</li><li><b>11</b> 1.4 架构的形式与特点</li><li><b>12</b> 1.5 架构的目标与方法</li><li><b>13</b> 1.6 架构的不同风格</li><li><b>14</b> 第2章 微服务领域驱动设计</li><li><b>15</b> 2.1 领域驱动设计</li><li><b>16</b> 2.2 微服务的设计</li><li><b>17</b> 2.3 小结</li><li><b>18</b> 第3章 Apache Dubbo框架的原理与实现</li><li><b>19</b> 3.1 Dubbo框架的选型与使用</li><li><b>20</b> 3.2 Dubbo框架的原理分析</li><li><b>21</b> 3.3 基于Dubbo的自动化Mock系统</li><li><b>22</b> 第4章 Spring Boot/Spring Cloud实践</li><li><b>23</b> 4.1 Spring Boot原理剖析</li><li><b>24</b> 4.2 Dubbo Spring Boot Starter</li><li><b>25</b> 4.3 Spring Cloud栈</li><li><b>26</b> 4.4 基于Maven Archetype的脚手架</li><li><b>27</b> 第5章 微服务稳定性保证的常用手段</li><li><b>28</b> 5.1 微服务的稳定性</li><li><b>29</b> 5.2 高可用</li><li><b>30</b> 5.3 高并发</li><li><b>31</b> 5.4 总结</li><li><b>32</b> 第6章 微服务下如何保证事务的一致性</li><li><b>33</b> 6.1 从本地事务到分布式事务的演变</li><li><b>34</b> 6.2 强一致性解决方案</li><li><b>35</b> 6.3 最终一致性解决方案</li><li><b>36</b> 6.4 开源项目的分布式事务实现解读</li><li><b>37</b> 第7章 百亿流量微服务网关的设计与实现</li><li><b>38</b> 7.1 API网关概述</li><li><b>39</b> 7.2 开源网关的分析与调研</li><li><b>40</b> 7.3 百亿流量交易系统API网关设计</li><li><b>41</b> 第8章 微服务编排</li><li><b>42</b> 8.1 Netflix Conductor</li><li><b>43</b> 8.2 Netflix Conductor的架构</li><li><b>44</b> 8.3 Conductor的使用案例</li><li><b>45</b> 8.4 Netflix Conductor源码分析</li><li><b>46</b> 第9章 微服务数据抽取与统计</li><li><b>47</b> 9.1 案例小故事</li><li><b>48</b> 9.2 数据仓库概述</li><li><b>49</b> 9.3 数据仓库工具Hive</li><li><b>50</b> 9.4 使用Sqoop抽取数据</li><li><b>51</b> 9.5 ETL作业调度</li><li><b>52</b> 第10章 微服务双活体系建设</li><li><b>53</b> 10.1 系统高可用</li><li><b>54</b> 10.2 双活数据中心</li><li><b>55</b> 第11章 基于支付场景下的微服务改造与性能优化</li><li><b>56</b> 11.1 支付场景的介绍</li><li><b>57</b> 11.2 支付业务建模和服务划分</li><li><b>58</b> 11.3 支付场景下微服务架构的详解与分析</li><li><b>59</b> 11.4 从代码层面提升微服务架构的性能</li><li><b>60</b> 11.5 微服务架构中常见的一些故障分析技巧</li><li><b>61</b> 第12章 遗留系统的微服务架构改造</li><li><b>62</b> 12.1 代码分层结构的转变</li><li><b>63</b> 12.2 遗留系统的债券与思考</li><li><b>64</b> 12.3 从单体系统拆分服务的方法论</li><li><b>65</b> 12.4 遗留系统的微服务架构改造</li><li><b>66</b> 第13章 Service Mesh详解</li><li><b>67</b> 13.1 Service Mesh是什么</li><li><b>68</b> 13.2 Service Mesh的背景</li><li><b>69</b> 13.3 Service Mesh介绍</li><li><b>70</b> 13.4 Service Mesh的价值</li><li><b>71</b> 13.5 Service Mesh现状</li><li><b>72</b> 13.6 Service Mesh存在的问题</li><li><b>73</b> 13.7 Istio详解</li><li><b>74</b> 13.8 Service Mesh展望</li><li><b>75</b> 第14章 微服务监控实战</li><li><b>76</b> 14.1 APM原理与应用</li><li><b>77</b> 14.2 Prometheus监控系统介绍</li><li><b>78</b> 反侵权盗版声明</li><li><b>79</b> 关于作者</li><li><b>80</b> 专家力荐</li></ol></section>
+<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点初判</h2><p class="mmx-mod-note">按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。</p><ul class="mmx-views"><li><b>第 1–7 章</b>——含「关于作者」至「第1章 微服务架构概述」</li><li><b>第 8–14 章</b>——含「1.1 什么是架构」至「第2章 微服务领域驱动设」</li><li><b>第 15–21 章</b>——含「2.1 领域驱动设计」至「3.3 基于Dubbo的」</li><li><b>第 22–28 章</b>——含「第4章 Spring B」至「5.1 微服务的稳定性」</li><li><b>第 29–35 章</b>——含「5.2 高可用」至「6.3 最终一致性解决方」</li><li><b>第 36–42 章</b>——含「6.4 开源项目的分布式」至「8.1 Netflix 」</li><li><b>第 43–49 章</b>——含「8.2 Netflix 」至「9.3 数据仓库工具Hi」</li><li><b>第 50–56 章</b>——含「9.4 使用Sqoop抽」至「11.1 支付场景的介绍」</li><li><b>第 57–63 章</b>——含「11.2 支付业务建模和」至「12.2 遗留系统的债券」</li><li><b>第 64–70 章</b>——含「12.3 从单体系统拆分」至「13.4 Service」</li><li><b>第 71–77 章</b>——含「13.5 Service」至「14.2 Prometh」</li><li><b>第 78–80 章</b>——含「反侵权盗版声明」至「专家力荐」</li></ul></section>
+<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句 · 持续积累</h2><p class="mmx-mod-note">以下原句取自本书 AI 大纲落库的原文摘录（book_outline.quote），按大纲顺序节选，非 AI 生成；更多见逐章深读页。</p><ol class="mmx-qlist"><li><blockquote>「自软件工程产生以来，架构设计和过程管理一直是软件领域DNA的双螺旋。」</blockquote><cite>本书正文</cite></li><li><blockquote>「目前更常见的是基于AOP和代码生成技术实现代理存根（stub）和服务存根（skeleton），然后用一个紧凑的二进制序列化方式实现一个高效的RPC框架。」</blockquote><cite>本书正文</cite></li><li><blockquote>「微服务看似美好，但在企业中落地实施其实是一件很困难的事情」</blockquote><cite>本书正文</cite></li><li><blockquote>「（3）Dubbo在2018年之前停更了许多年，对于技术发展的新需求，需要由开发者通过其强大的扩展能力自行扩展，自行升级处理。」</blockquote><cite>本书正文</cite></li><li><blockquote>「计算机科学领域的任何问题都可以通过增加一个间接的中间层来解决」</blockquote><cite>本书正文</cite></li><li><blockquote>「模式是对于普遍问题的普遍解决方案」</blockquote><cite>本书正文</cite></li><li><blockquote>「在多活的实现上不同公司有不同的方案，在实现的复杂度上，同城双活相对容易，而异地多活则最难实现，需要考虑的因素有很多」</blockquote><cite>本书正文</cite></li><li><blockquote>「如何保证幂等性呢？」</blockquote><cite>本书正文</cite></li><li><blockquote>「循序渐进，终达目标。特别是在具体的设计实践中，思路和方法，比结论更重要。一个正确的结论在别处可能就是错的，但思路和方法是可以复用的。」</blockquote><cite>本书正文</cite></li><li><blockquote>「业内比较常用的分布式事务解决方案包括强一致性的两阶段提交协议、三阶段提交协议，以及最终一致性的可靠事件模式、补偿模式、阿里的TCC模式。」</blockquote><cite>本书正文</cite></li></ol></section>
+</body>
+</html>
