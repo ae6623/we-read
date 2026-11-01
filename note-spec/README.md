@@ -61,3 +61,15 @@ engine_commit）、什么时候。台账 `compose.json` 每书同记 `produced_b
 - 站点快照 `vendor/we-read.zip` 由 `make_snapshot.py` 从 **we-read main 最新提交**打；
   快照过期（如本例：zip 早于 `--from-outline` 提交 1 小时）= 云端功能静默回退，
   部署前必须核对 `snapshot` 指纹晚于最新功能提交。
+
+## 七、版本门槛（跑任务前强制比对）
+
+- `note-spec/VERSION`（本目录）= **规则要求的最低版本**（x.y.z 语义化）。
+  规则、题库、模板、发布口径有任何变更，随改动一起 bump，随代码进 main。
+- 实现者（引擎 / 云端沙箱 / 任何跑产书任务的 agent）自带 `reading_note_spec.SPEC_VERSION`；
+  `compose_book.run_book` 开跑前调 `assert_spec_ready()`：
+  **自带版本 < 仓库要求 → 拒绝执行**，报错里写明 remediation
+  （本机 `git pull origin main`；云端重跑 `make_snapshot.py` 重打快照再部署）。
+- 快照里没有 `note-spec/VERSION`（旧快照）视为尚未立门槛，放行——新快照起强制。
+- bump 时机速查：改题库 / 改模板 / 改答案口径 / 改发布规则 / 新增模块 → minor+1；
+  改错别字、纯注释 → 可不 bump。部署代码但不改规则 → 不用 bump（VERSION.json 记录部署指纹）。

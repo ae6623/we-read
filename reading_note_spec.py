@@ -95,6 +95,67 @@ REFLECT_NOTE = (
 )
 
 
+# ---------------------------------------------------------------- 版本门槛
+# 2026-11-01 用户定调：防止「实现者带着旧代码/旧快照跑任务」再出快照过期事故
+# （gen_mindmap 缺 --from-outline、旧题面回潮）。规则：
+#   · 规则/功能/部署有变更 → bump `note-spec/VERSION`（x.y.z，语义化）；
+#   · 实现者跑任务前必须自报 SPEC_VERSION，且 >= 仓库要求的最低版本；
+#   · 低于要求 = 先拉最新代码 / 重打快照，比出来更新了才许跑，否则拒绝执行。
+SPEC_VERSION = "1.2.0"          # 本文件（实现者自带的规则版本）
+
+#: 仓库里放要求的最低版本的位置（按序找第一个存在的）。
+def _spec_version_paths(extra=()):
+    from pathlib import Path
+    here = Path(__file__).resolve().parent
+    cands = [here / "note-spec" / "VERSION",           # spec 与仓库同根（we-read）
+             here.parent / "note-spec" / "VERSION"]    # spec 在子目录（引擎仓副本）
+    cands += [Path(p) for p in extra]
+    import os
+    env = os.environ.get("WEREAD_NOTE_SPEC_DIR")
+    if env:
+        cands.insert(0, Path(env) / "VERSION")
+    return cands
+
+
+def _ver_tuple(v: str):
+    parts = []
+    for x in (v or "").strip().lstrip("v").split("."):
+        try:
+            parts.append(int(x))
+        except ValueError:
+            parts.append(0)
+    return tuple(parts)
+
+
+def load_required_spec_version(extra=()) -> tuple:
+    """返回 (required_str, found_path)；找不到要求文件返回 ('', None)。"""
+    for p in _spec_version_paths(extra):
+        try:
+            if p.is_file():
+                return p.read_text(encoding="utf-8").strip(), p
+        except Exception:
+            continue
+    return "", None
+
+
+def assert_spec_ready(extra=(), repo_hint: str = "") -> None:
+    """跑任务的门槛：自带 SPEC_VERSION 低于仓库要求就抛错（拒绝执行）。
+
+    报错信息给足 remediation：拉最新 we-read main / 重打快照再部署。
+    """
+    req, path = load_required_spec_version(extra)
+    if not req:
+        return          # 仓库还没立门槛（旧快照），放行；新快照会带上 VERSION
+    if _ver_tuple(SPEC_VERSION) >= _ver_tuple(req):
+        return
+    raise RuntimeError(
+        "笔记规则版本过低：实现者带 v%s，仓库要求 ≥ v%s（%s）。"
+        "先拉最新代码再跑：we-read 仓库 `git pull origin main`，"
+        "云端部署源重跑 make_snapshot.py + 部署%s。"
+        % (SPEC_VERSION, req, path or "?",
+           ("，或同步部署目录后重新部署（参考 %s）" % repo_hint) if repo_hint else ""))
+
+
 def pick_reflect_questions(seed: str = "", n: int = 3) -> list:
     """按 seed（书 slug 或书名）从题库稳定随机抽 n 题。
 
