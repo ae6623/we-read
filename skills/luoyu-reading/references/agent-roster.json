@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "timezone": "Asia/Shanghai",
-  "updated_at": "2026-10-28T22:37:35+08:00",
+  "updated_at": "2026-11-01T16:05:00+08:00",
   "source_of_truth": true,
   "instructions": [
     "Read this roster before every scheduled reading run; work only inside the registered slot.",
@@ -106,8 +106,8 @@
       "last_run_id": "browser-spring-20261028-2230"
     },
     {
-      "id": "weread-auto-cloud",
-      "display_name": "weread-auto（云端）",
+      "id": "workbuddy-cloud-luoyu",
+      "display_name": "weread-auto（云端 · workbuddy-cloud-luoyu）",
       "type": "code",
       "implementation": "Playwright on WorkBuddy 云端沙箱；与本地 weread-auto 共享同一书目注册表，串行认领，互不重叠。",
       "deployment": "cloud",
@@ -147,7 +147,9 @@
       "enabled": false,
       "suspended_at": "2026-10-19T10:55:00+08:00",
       "suspended_reason": "用户决定：云端先不要开始，后面本机阅读为主。",
-      "assignment_note": "云端已暂停，不再产生场次与阅读事件。《大转折：现代债务与可持续的增长》转为 paused，保留已确认续读点与归属，不自动转交本机；转交须按 registry 认领流程并经用户确认。"
+      "assignment_note": "云端已暂停，不再产生场次与阅读事件。《大转折：现代债务与可持续的增长》转为 paused，保留已确认续读点与归属，不自动转交本机；转交须按 registry 认领流程并经用户确认。",
+      "renamed_from": "weread-auto-cloud",
+      "rename_note": "2026-11-01 用户要求身份只留 workbuddy-*：白名单与注册表身份统一改名为 workbuddy-cloud-luoyu（原 weread-auto-cloud）。机器与实际部署未变。"
     },
     {
       "id": "local-pdf-reader",
