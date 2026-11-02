@@ -281,6 +281,13 @@
       sec.className = 'rd-hero rd-hero-full';
       sec.innerHTML = '<img class="rd-hero-bg" aria-hidden="true" alt="" decoding="async" src="' + src + '">'
         + '<img class="rd-hero-cover" alt="封面" loading="eager" fetchpriority="high" decoding="async" src="' + src + '">';
+      // 缓存地址失效（换域名/图被删）→ 回落到本地封面文件再试一次
+      var cov = sec.querySelector('.rd-hero-cover');
+      cov.addEventListener('error', function () {
+        var local = '../../../assets/covers/' + encodeURIComponent(slug) + '.jpg';
+        if (this.getAttribute('src') !== local) { this.setAttribute('src', local); return; }
+        this.style.display = 'none';   // 彻底没有 → 只留背景墙
+      });
       if (!stick) {
         stick = document.createElement('div');
         stick.id = 'rdStick';
