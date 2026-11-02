@@ -41,6 +41,11 @@ section.card:not(.merged-guide)>div,section.card:not(.merged-guide)>p:not(.mmx-m
 section.mmx-mod li,section.mmx-mod p:not(.mmx-mod-note),
 section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mod-note){
   color:#4a4436;font-size:.93rem;line-height:1.78;}
+/* 核心观点初判：外链 mmx-guide.css 的「观点N」前缀是绝对定位，在本页版式里和标题叠字，
+   且此前要求去掉「观点1/2/3」前缀 —— 这里整条关掉（外链 CSS 不在页面内，只能内联覆盖）。 */
+.mmx-views li{padding-left:0 !important;}
+.mmx-views li:before,.mmx-views li::before{
+  content:none !important;display:none !important;counter-increment:none !important;}
 </style>
 </head>
 <body>
