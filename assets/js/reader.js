@@ -196,14 +196,25 @@
   /* 详情页顶部大封面模块（参考微信读书书籍介绍页）：
      居中竖版大图 + 主题绿光晕底；封面 404 → 整块隐藏，不留空洞。
      插到 header 之前 → 大图从网页最顶部开始（第 20 批）。
-     FULL_HERO 白名单：卡片式满宽平铺变体——封面图 100vw 铺满当背景 +
-     底部压暗渐变 + 书名叠图上，hero 高度不变（不顶走下方内容），
-     header 的 h1 隐藏（标题已在图上）。SPA 翻页时随 curSlug 重建，
-     非 full 书翻回来时 h1 会恢复显示。 */
+     FULL_HERO 白名单：卡片式满宽平铺变体（第 20 批 b/c）——封面 100vw×100svh
+     铺满当背景，书名 h1 / chips / 章节导航 #rdNav 全部搬进图上（微信读书
+     介绍页式），正文从第二屏开始。翻页重建前先 rescue 移回原位。
+     SPA 翻页时随 curSlug 重建，非 full 书自动还原。 */
   var FULL_HERO = { 'shi-nian-lun-hui': 1 };
+  function rescueHeroNodes() {
+    var head = document.querySelector('header.combined-head');
+    var hero = document.getElementById('rdHero');
+    if (!hero || !head) return;
+    var h1 = hero.querySelector('h1'), chips = hero.querySelector('#rdChips'),
+        nav = hero.querySelector('#rdNav');
+    if (h1) head.insertBefore(h1, head.firstChild);
+    if (chips) head.appendChild(chips);
+    if (nav && head.parentNode) head.parentNode.insertBefore(nav, head.nextSibling);
+  }
   function addHero() {
     var main = q('#rdBody');
     if (!main) return;
+    rescueHeroNodes();
     var old = document.getElementById('rdHero');
     if (old && old.parentNode) old.parentNode.removeChild(old);
     var slug = curSlug || (document.body.getAttribute('data-slug') || '');
@@ -215,19 +226,23 @@
     var h1 = head ? head.querySelector('h1') : null;
     if (FULL_HERO[slug]) {
       sec.className = 'rd-hero rd-hero-full';
-      var title = h1 ? (h1.textContent || '').trim() : '';
-      sec.innerHTML = '<img class="rd-hero-cover" alt="封面" loading="eager" src="' + src + '">'
-        + (title ? '<h2 class="rd-hero-title">' + esc(title) + '</h2>' : '');
-      if (h1) h1.style.display = 'none';
+      sec.innerHTML = '<img class="rd-hero-cover" alt="封面" loading="eager" src="' + src + '">';
+      if (h1) sec.appendChild(h1);
+      var chips = document.getElementById('rdChips');
+      if (chips) sec.appendChild(chips);
+      var nav = document.getElementById('rdNav');
+      if (nav) sec.appendChild(nav);
+      if (head) head.style.display = 'none';   // 内容已搬走，隐藏空壳避免留白
     } else {
       sec.className = 'rd-hero';
-      if (h1) h1.style.display = '';
+      if (head) head.style.display = '';
       sec.innerHTML = '<img class="rd-hero-bg" aria-hidden="true" alt="" src="' + src + '">'
         + '<img class="rd-hero-img" alt="封面" loading="eager" src="' + src + '">';
     }
     var img = sec.querySelector('img');
     img.addEventListener('error', function () {
-      if (h1) h1.style.display = '';
+      rescueHeroNodes();
+      if (head) head.style.display = '';
       if (sec.parentNode) sec.parentNode.removeChild(sec);
     });
     if (head && head.parentNode) head.parentNode.insertBefore(sec, head);
@@ -281,7 +296,9 @@
     a.addEventListener('click', function () {
       try { if (window.rdTrack) rdTrack('/detail/back-home', '详情页·回首页'); } catch (e) {}
     });
-    head.insertBefore(a, head.firstChild);
+    /* 挂 body 而非 header：fixed 定位不依赖 DOM 位置，
+       FULL_HERO 书的 header 会整块隐藏，挂 header 会连带按钮一起消失 */
+    document.body.appendChild(a);
   }
 
 
