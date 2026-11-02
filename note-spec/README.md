@@ -116,3 +116,13 @@ engine_commit）、什么时候。台账 `compose.json` 每书同记 `produced_b
 - **老页 `overview.html` / `mindmap.html` / `outline.html` 一律保留**：继续生成、继续发布，
   卡片与入口抽屉里仍留有直达链接；切换的只是「点书名进哪页」（`_entry_page()` / `entry_page()`）。
 - 回退方式：删掉 `combined.html`（或让生成器不产出）即自动回退老通读页，**不会出死链**。
+
+### 合并页架构（2026-11-02 重构）：壳页 + 数据 + 共享资源
+
+- **渲染逻辑唯一真源**：`assets/css/reader.css`（样式/主题）+ `assets/js/reader.js`
+  （装配/导航/改名/清废话/设置面板/滚动高亮）。**改 UI 只动这两个文件，339 本书零重生成。**
+- 每本书 `combined.html` 只是 ~2KB 壳页；内容在 `combined-data.html`
+  （`<!--META {...}-->` + 若干 `<section data-key="…">`），reader.js fetch 后装配。
+- 只有「内容生成逻辑变更」（AI领读融合树、问答答案等）或「新书入库」才需要跑
+  `overview_gen/combine_page.py` 重生成 data；模块排序/标题/文案调整全部在前端做。
+- 数据由 fetch 加载，页面需通过 http/https 访问；`--standalone` 可产离线单文件。
