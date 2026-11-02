@@ -54,6 +54,14 @@ html[data-theme=dark] body{color-scheme:dark;}
 body{max-width:880px;margin:0 auto;padding:0 18px 80px;font-size:.9375rem;line-height:1.88;
   color:var(--ink);background:var(--pg-bg);-webkit-font-smoothing:antialiased;}
 .combined-head{padding:30px 0 16px;border-bottom:1px solid var(--card-bd);margin-bottom:4px;}
+/* 顶部大封面模块（参考微信读书书籍介绍页） */
+#rdHero{margin:16px 0 4px;padding:28px 16px 24px;border-radius:14px;text-align:center;
+  background:radial-gradient(120% 95% at 50% 0%,rgba(49,94,80,.38),rgba(49,94,80,.10) 58%,transparent 100%),
+    var(--card-bg,#fff);
+  border:1px solid var(--card-bd);}
+.rd-hero-img{width:min(56vw,240px);aspect-ratio:30/43;object-fit:cover;border-radius:10px;
+  box-shadow:0 14px 42px rgba(0,0,0,.42),0 2px 8px rgba(0,0,0,.22);
+  display:block;margin:0 auto;}
 /* 回首页入口：header 顶部的小胶囊 */
 .rd-home{display:inline-flex;align-items:center;gap:.35em;font-size:.78rem;line-height:1;
   color:var(--muted);text-decoration:none;background:var(--navlink-bg,#f3f1ea);
