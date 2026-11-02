@@ -226,7 +226,9 @@
     var h1 = head ? head.querySelector('h1') : null;
     if (FULL_HERO[slug]) {
       sec.className = 'rd-hero rd-hero-full';
-      sec.innerHTML = '<img class="rd-hero-cover" alt="封面" loading="eager" src="' + src + '">';
+      /* 网易云音乐式：封面放大模糊做满屏氛围底 + 封面本体完整居中（不裁切） */
+      sec.innerHTML = '<img class="rd-hero-bg" aria-hidden="true" alt="" src="' + src + '">'
+        + '<img class="rd-hero-cover" alt="封面" loading="eager" src="' + src + '">';
       if (h1) sec.appendChild(h1);
       var chips = document.getElementById('rdChips');
       if (chips) sec.appendChild(chips);
