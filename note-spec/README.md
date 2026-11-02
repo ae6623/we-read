@@ -280,3 +280,16 @@ engine_commit）、什么时候。台账 `compose.json` 每书同记 `produced_b
   `object-fit:cover` 自动裁上下，overlay 白字区收紧（h3 两行截断）。
 - **详情页 hero**：贴顶全出血（负 margin 抵消 body padding，无圆角无边框），
   主题绿渐变打底 + 封面 blur(52px)/opacity .55 铺底 + 底部压暗；两种主题都适配。
+
+### 第 19 批（2026-11-02 17:40）：海报还原 / 返回 icon / 删 eyebrow / 全量随机打散
+
+- **一排二海报还原 30/43**（第 18 批的 60/43 减高版废弃），完整封面不裁切。
+- **回首页改右上角浮动 icon**：`#rdHome` fixed 于 Aa 设置钮左侧（34px 圆角小方钮、只一个 ←），
+  不再占正文一行；埋点 `/detail/back-home` 不变。
+- **删壳内 eyebrow**：339 个 combined.html 里的「读前通读 + 精读 · 合并页」整行删除，
+  标题上方更干净。壳进一步变薄（chips/eyebrow 这类装饰文本应尽量走 reader.js 渲染）。
+- **书架全量随机打散**：`scatter()` 从「只洗第一页 15 张」改为**整表洗牌**——每次打开首页
+  从 281 本里随机抽 15 本作第一页、顺序随机；同一次访问内（切列数/翻页/改字号）顺序保持稳定。
+- 架构口径：站点是纯静态（GitHub Pages 无后端），「模板壳」就是共享的 `reader.js/css`
+  （341 本书共用一份），各书正文数据在各自 `combined-data.html`；只有壳内写死的静态文本
+  （如 eyebrow、旧 chip 文案）变更才需要批量改壳文件，模板逻辑变更只动 reader.* 一份。
