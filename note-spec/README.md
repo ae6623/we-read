@@ -147,12 +147,14 @@ engine_commit）、什么时候。台账 `compose.json` 每书同记 `produced_b
 `assets/js/home-theme.js`（首页）+ `assets/js/reader.js`（书页）读写同一个键：
 
 ```json
-{"theme":"cream|light|green|dark", "fs":0.90, "pm":1.35}
+{"theme":"cream|light|green|dark", "fs":0.86, "pm":1, "cols":1}
 ```
 
 - 首页样式真源 `assets/css/home-theme.css`：四主题变量 + 组件字号覆盖；
   书页是 `assets/css/reader.css`。两边变量名一致（`--paper/--card/--ink/--muted/--line/--green/--sage`）。
 - `--fs` 控制 `html{font-size}`（整页 rem 一起缩放），`--pm` 控制卡片/分组间距。
-- **默认值按页面性质分开**：首页米白（`.90`）、书页夜间（`.94`）。
-  初始化 `apply(false)` 只应用不落盘 —— 用户没主动选过，就不能被「默认」写成「偏好」，
+- **默认值按页面性质分开**：首页米白（`.86`，紧凑 `pm=1`）、书页夜间（`.94`）。
+- 初始化 `apply(false)` 只应用不落盘 —— 用户没主动选过，就不能被「默认」写成「偏好」，
   否则逛一次书页，首页会永久变黑。
+- 首页多两个字段：`cols`（1 = 一排一 / 2 = 一排二，缺省跟随响应式）；
+  卡片收藏单独存 `rd-fav`（slug 数组），不进 `rd-cfg`。
