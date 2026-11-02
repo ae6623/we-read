@@ -4,32 +4,64 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>《甲骨文·二战史（全6册）》｜通读 · 精读</title>
+<script>
+/* 防闪：渲染前先把上次保存的主题/字号/段距应用到 <html> */
+(function(){try{var c=JSON.parse(localStorage.getItem('rd-cfg')||'{}'),d=document.documentElement;
+d.dataset.theme=c.theme||'cream';
+if(c.fs)d.style.setProperty('--fs',c.fs);
+if(c.pm)d.style.setProperty('--pm',c.pm);}catch(e){}})();
+</script>
 <link rel="stylesheet" href="../../../assets/css/reading-overview.css"><link rel="stylesheet" href="../../../assets/css/mmx-guide.css"><link rel="stylesheet" href="../../../assets/css/reading-outline.css">
 <style>
-/* ── 外壳与全局阅读节奏 ── */
-body{max-width:880px;margin:0 auto;padding:0 18px 80px;
-  font-size:15px;line-height:1.88;color:#3b453e;background:#f7f8f3;
-  -webkit-font-smoothing:antialiased;}
-.combined-head{padding:30px 0 16px;border-bottom:1px solid #e7e0d2;margin-bottom:4px;}
-.combined-head h1{font:700 23px/1.35 var(--serif);margin:0 0 8px;color:#244b40;}
+/* ── 主题变量：默认米白；纯白/护眼绿/夜间由 html[data-theme] 覆盖 ── */
+:root{
+  --fs:1;--pm:1;
+  --pg-bg:#f7f8f3;--card-bg:#fffdf6;--card-bd:#e8e4d5;--ink:#3b453e;--txt:#4a4436;
+  --sub:#8d8878;--head:#244b40;--qgreen:#2f5b49;--gold:#bf8247;
+  --nav-bg:rgba(247,248,243,.96);--navlink-bg:#fdfbf3;--navlink-bd:#e8e2d2;
+  --inner-bg:#fbfaf2;--inner-bd:#eee9d8;--oneline-bg:#fbfaf4;
+  --act-bg:#e5efe4;--act-bd:#bcd4bc;
+}
+html[data-theme=light]{--pg-bg:#ffffff;--card-bg:#ffffff;--card-bd:#e7e7e2;
+  --nav-bg:rgba(255,255,255,.96);--navlink-bg:#fafaf7;--navlink-bd:#e7e7e0;
+  --inner-bg:#fafaf7;--inner-bd:#ecebe4;--oneline-bg:#fafaf7;}
+html[data-theme=green]{--pg-bg:#cfe8d2;--card-bg:#eef7ef;--card-bd:#b9dcc0;--ink:#2f4237;
+  --txt:#3b5446;--sub:#5d7c67;--head:#1e4d37;--qgreen:#1e5c41;
+  --nav-bg:rgba(207,232,210,.96);--navlink-bg:#f4fbf5;--navlink-bd:#b4d8bd;
+  --inner-bg:#f6fbf7;--inner-bd:#cde5d3;--oneline-bg:#f6fbf7;--act-bg:#bfe3c6;--act-bd:#95c8a1;}
+html[data-theme=dark]{--pg-bg:#15171a;--card-bg:#1f2226;--card-bd:#34383f;--ink:#c9ced4;
+  --txt:#b4bac1;--sub:#8a919a;--head:#93c8a8;--qgreen:#9ed0af;
+  --nav-bg:rgba(21,23,26,.96);--navlink-bg:#262a2f;--navlink-bd:#3a3f46;
+  --inner-bg:#272b30;--inner-bd:#3a3f46;--oneline-bg:#272b30;
+  --act-bg:#244b40;--act-bd:#2f5b49;}
+
+/* ── 外壳与全局阅读节奏（字号跟随 --fs 整页缩放，段距跟随 --pm） ── */
+html{font-size:calc(16px*var(--fs));}
+html[data-theme=dark] body{color-scheme:dark;}
+body{max-width:880px;margin:0 auto;padding:0 18px 80px;font-size:.9375rem;line-height:1.88;
+  color:var(--ink);background:var(--pg-bg);-webkit-font-smoothing:antialiased;}
+.combined-head{padding:30px 0 16px;border-bottom:1px solid var(--card-bd);margin-bottom:4px;}
+.combined-head h1{font:700 1.45rem/1.35 var(--serif);margin:0 0 8px;color:var(--head);}
 .combined-head .eyebrow{font-size:.72rem;letter-spacing:.14em;margin:0 0 6px;}
 .chips{margin:8px 0 0;}
 .chip{font-size:.72rem;padding:2px 10px;}
-/* 锚点导航：固定一排 4 个，等宽对齐 */
-.nav{position:sticky;top:0;z-index:20;background:rgba(247,248,243,.96);backdrop-filter:blur(6px);
-  border-bottom:1px solid #ece4d4;padding:10px 0;margin:12px 0 20px;display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;
+
+/* ── 锚点导航：小屏最少一排 4 个，大屏自动一排/两排放完；滚动到哪亮哪 ── */
+.nav{position:sticky;top:0;z-index:20;background:var(--nav-bg);backdrop-filter:blur(6px);
+  border-bottom:1px solid var(--card-bd);padding:10px 0;margin:12px 0 20px;display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(76px,1fr));gap:6px;
   box-shadow:0 2px 10px rgba(120,100,60,.05);}
-.navlink{font-size:12px;color:#5d5443;text-decoration:none;background:#fdfbf3;border:1px solid #e8e2d2;
-  border-radius:8px;padding:6px 4px;text-align:center;white-space:nowrap;overflow:hidden;
-  text-overflow:ellipsis;transition:background .15s,color .15s;}
-.navlink:hover{background:#f2efe2;color:#244b40;}
+.navlink{font-size:12px;color:var(--txt);text-decoration:none;background:var(--navlink-bg);
+  border:1px solid var(--navlink-bd);border-radius:8px;padding:6px 4px;text-align:center;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:all .15s;}
+.navlink:hover{color:var(--head);border-color:var(--head);}
+.navlink.active{color:var(--head);background:var(--act-bg);border-color:var(--act-bd);font-weight:700;}
 section{scroll-margin-top:62px;}
 
 /* ── 统一卡片：所有顶层模块（AI领读 / AI 问答 / 其余）一视同仁 ── */
 body>section.mmx-mod,body>section.card,body>section.mmx-svgwrap{
-  background:#fffdf6;border:1px solid #e8e4d5;border-radius:16px;
-  padding:18px 22px;margin:18px 0;
+  background:var(--card-bg);border:1px solid var(--card-bd);border-radius:16px;
+  padding:18px 22px;margin:calc(18px*var(--pm)) 0;
   box-shadow:0 1px 3px rgba(110,95,60,.05);}
 body>section.mmx-mod>*:first-child,body>section.card>*:first-child,
 body>section.mmx-svgwrap>*:first-child{margin-top:0}
@@ -39,74 +71,115 @@ body>section.mmx-svgwrap>*:last-child{margin-bottom:0}
 body>section.mmx-svgwrap>svg.mmx-svg{display:block;width:100%;height:auto;margin:2px auto 0;}
 /* 模块标题：统一大小、弱强调，不与正文抢注意力 */
 body>section.mmx-mod>h2,body>section.card>h2{
-  font:700 1.04rem/1.5 var(--serif);color:#244b40;margin:0 0 11px;
-  padding-left:10px;border-left:3px solid #bf8247;letter-spacing:.01em;}
-/* 正文：字号收小、行距放宽、段间距舒服 */
+  font:700 1.04rem/1.5 var(--serif);color:var(--head);margin:0 0 11px;
+  padding-left:10px;border-left:3px solid var(--gold);letter-spacing:.01em;}
+/* 正文：字号收小、行距放宽、段间距随 --pm 调节 */
 body>section.mmx-mod p,body>section.card p,
 body>section.mmx-mod li,body>section.card li{
-  font-size:.9rem;line-height:1.92;color:#4a4436;}
-body>section.mmx-mod p,body>section.card p{margin:.5em 0;}
+  font-size:.9rem;line-height:1.92;color:var(--txt);margin:calc(.5em*var(--pm)) 0;}
 body>section.mmx-mod>ul,body>section.mmx-mod>ol,body>section.mmx-mod>div,
 body>section.mmx-mod>p:not(.mmx-mod-note),
 body>section.card:not(.merged-guide)>ul,body>section.card:not(.merged-guide)>ol,
 body>section.card:not(.merged-guide)>div,body>section.card:not(.merged-guide)>p:not(.mmx-mod-note){
   padding-left:14px;}
-/* 模块说明小字：弱化不抢眼 */
-.mmx-mod-note{font-size:.75rem;color:#8d8878;margin:.1em 0 .75em;line-height:1.7;}
 
 /* ── 内部块统一：卡片里不再套深卡片，一律浅底子块 ── */
 body>section .mmx-pending,body>section .mmx-evib,body>section .aiqa-item{
-  background:#fbfaf2;border:1px solid #eee9d8;border-radius:12px;
-  padding:13px 16px;margin:.65em 0;}
+  background:var(--inner-bg);border:1px solid var(--inner-bd);border-radius:12px;
+  padding:13px 16px;margin:calc(.65em*var(--pm)) 0;}
 body>section .mmx-evib ul{padding-left:1.15em;}
 /* 一句话主旨：去左侧竖线 + 收敛字号 */
-.mmx-oneline{font-size:.98rem;line-height:1.85;color:#3a352c;margin:.2em 0 0;
-  padding:12px 16px;background:#fbfaf4;border-left:none;border-radius:12px;}
+.mmx-oneline{font-size:.98rem;line-height:1.85;color:var(--txt);margin:.2em 0 0;
+  padding:12px 16px;background:var(--oneline-bg);border-left:none;border-radius:12px;}
 /* 核心观点 / 验证清单：虚线分隔 + 收紧行距 */
 .mmx-views li{padding:.5em 0 .5em 0;font-size:.9rem;line-height:1.88;}
 /* 原文金句 */
 .mmx-qlist li{padding:.6em 0 .6em 2.2em;}
-.mmx-qlist blockquote{font-size:.89rem;line-height:1.9;}
-.mmx-qlist cite{font-size:.72rem;}
+.mmx-qlist blockquote{font-size:.89rem;line-height:1.9;color:var(--txt);}
+.mmx-qlist cite{font-size:.72rem;color:var(--sub);}
 /* 核心追问：问句加重、答句放松 */
-.mmx-qa{margin:.7em 0;padding-left:12px;border-left:3px solid #e5dfcd;}
-.mmx-qa .mmx-q{font-size:.9rem;font-weight:700;color:#2f3a33;line-height:1.8;margin:0 0 .25em;}
-.mmx-qa .mmx-a{font-size:.88rem;line-height:1.95;color:#4a4436;margin:0;}
+.mmx-qa{margin:calc(.7em*var(--pm)) 0;padding-left:12px;border-left:3px solid var(--inner-bd);}
+.mmx-qa .mmx-q{font-size:.9rem;font-weight:700;color:var(--ink);line-height:1.8;margin:0 0 .25em;}
+.mmx-qa .mmx-a{font-size:.88rem;line-height:1.95;color:var(--txt);margin:0;}
 
 /* ── AI 问书专项：外层容器透明，问答条目才是阅读单元 ── */
 #mod-aiask .mmx-ask{background:transparent;border:0;border-radius:0;padding:0;margin:0;}
-#mod-aiask .aiqa-item{margin:.6em 0;padding:14px 16px 15px;}
-#mod-aiask .aiqa-item h3{font:700 .93rem/1.7 var(--serif);color:#2f5b49;margin:0 0 .4em;
+#mod-aiask .aiqa-item{margin:calc(.6em*var(--pm)) 0;padding:14px 16px 15px;}
+#mod-aiask .aiqa-item h3{font:700 .93rem/1.7 var(--serif);color:var(--qgreen);margin:0 0 .4em;
   padding:0;border:0;}
-#mod-aiask .aiqa-item h3:before{content:"问　";color:#bf8247;font-weight:700;}
-#mod-aiask .aiqa-item p{font-size:.88rem;line-height:1.95;color:#4a4436;margin:.4em 0;}
-#mod-aiask .aiqa-item ul{margin:.35em 0;padding-left:1.1em;}
-#mod-aiask .aiqa-item li{font-size:.87rem;line-height:1.88;margin:.18em 0;color:#4a4436;}
-#mod-aiask .aiqa-item li::marker{color:#c0a06a;}
+#mod-aiask .aiqa-item h3:before{content:"问　";color:var(--gold);font-weight:700;}
+/* 回答整体右缩进，与问句文字对齐（别顶着左边） */
+#mod-aiask .aiqa-item>p,#mod-aiask .aiqa-item>ul{margin-left:26px;}
+#mod-aiask .aiqa-item p{font-size:.88rem;line-height:1.95;color:var(--txt);
+  margin-top:calc(.4em*var(--pm));margin-bottom:calc(.4em*var(--pm));}
+#mod-aiask .aiqa-item ul{margin-top:calc(.35em*var(--pm));margin-bottom:calc(.35em*var(--pm));
+  padding-left:1.1em;}
+#mod-aiask .aiqa-item li{font-size:.87rem;line-height:1.88;margin:calc(.18em*var(--pm)) 0;
+  color:var(--qgreen);}
+#mod-aiask .aiqa-item li::marker{color:var(--gold);}
 /* 逐章追问（details 形态）：摘要行也收敛 */
-.mmx-ask>summary{font-size:.87rem;line-height:1.7;padding:2px 0;}
-.mmx-askbody{font-size:.88rem;line-height:1.9;}
+.mmx-ask>summary{font-size:.87rem;line-height:1.7;padding:2px 0;color:var(--qgreen);}
+.mmx-askbody{font-size:.88rem;line-height:1.9;color:var(--txt);}
 
-/* AI领读章内：AI 大纲原生深层样式（字号同步收小） */
-.merged-guide .sec{margin:9px 0 12px;padding-left:6px;border-left:2px solid #e5e0d6}
-.merged-guide .sec h4{font:600 .93rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.5em 0 .25em}
+/* ── AI领读章内：AI 大纲原生深层样式（章节字号整体再收一档） ── */
+.merged-guide .sec{margin:9px 0 12px;padding-left:6px;border-left:2px solid var(--card-bd)}
+.merged-guide .sec h4{font:600 .84rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:var(--head);margin:.5em 0 .25em}
+.merged-guide .mmx-name{font-size:.88rem !important;}
+.merged-guide .mmx-sech{font-size:.8rem !important;}
+.merged-guide .mmx-gist{font-size:.83rem !important;line-height:1.85;}
+.merged-guide .mmx-stat{font-size:.7rem !important;}
 .merged-guide ul.point{margin:.25em 0;padding-left:20px}
-.merged-guide ul.point>li{margin:.3em 0}
+.merged-guide ul.point>li{margin:.3em 0;font-size:.8rem !important;line-height:1.85;}
 .merged-guide ul.quote{margin:.22em 0 .22em 20px;padding-left:18px;list-style:none}
-.merged-guide ul.quote::before{content:"原句";display:block;font-size:.7rem;color:#bf8247;
+.merged-guide ul.quote::before{content:"原句";display:block;font-size:.7rem;color:var(--gold);
   letter-spacing:.1em;margin:.12em 0 .08em;font-weight:600}
-.merged-guide ul.quote.quote-node{margin-top:.45em;padding-top:.35em;border-top:1px dashed #eadfc9}
+.merged-guide ul.quote.quote-node{margin-top:.45em;padding-top:.35em;border-top:1px dashed var(--inner-bd)}
 .merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
-.merged-guide ul.quote>li{color:#4a4436;font-size:.88rem;line-height:1.85;margin:.18em 0;padding-left:10px;border-left:2px solid #bf8247}
+.merged-guide ul.quote>li{color:var(--txt);font-size:.8rem !important;line-height:1.85;margin:.18em 0;padding-left:10px;border-left:2px solid var(--gold)}
+.merged-guide .mmx-qt{font-size:.77rem !important;}
+
 /* 核心观点初判：外链 mmx-guide.css 的「观点N」前缀是绝对定位，在本页版式里和标题叠字，
    且此前要求去掉「观点1/2/3」前缀 —— 这里整条关掉（外链 CSS 不在页面内，只能内联覆盖）。 */
 .mmx-views li{padding-left:0 !important;}
 .mmx-views li:before,.mmx-views li::before{
   content:none !important;display:none !important;counter-increment:none !important;}
+
+/* ── 夜间主题：覆盖共享 CSS 里的硬编码浅色 ── */
+html[data-theme=dark] h1,html[data-theme=dark] h2,html[data-theme=dark] h3,
+html[data-theme=dark] h4{color:var(--head);}
+html[data-theme=dark] .mmx-qt{background:var(--inner-bg);color:var(--txt);}
+html[data-theme=dark] .mmx-qlist blockquote,html[data-theme=dark] .mmx-ask blockquote,
+html[data-theme=dark] .mmx-gist,html[data-theme=dark] .mmx-pts,
+html[data-theme=dark] .mmx-askbody{color:var(--txt);}
+html[data-theme=dark] .mmx-qlist li:before{background:#2b3a31;color:#9ed0af;}
+html[data-theme=dark] .mmx-views li,html[data-theme=dark] .mmx-qlist li,
+html[data-theme=dark] .mmx-qa,html[data-theme=dark] .mmx-sec>summary,
+html[data-theme=dark] .mmx-cn{border-color:#3a3f46;}
+html[data-theme=dark] .mmx-views li b,html[data-theme=dark] .mmx-qa .mmx-q{color:var(--ink);}
+html[data-theme=dark] .chip{background:#274234;color:#9ed0af;}
+html[data-theme=dark] .mmx-role,html[data-theme=dark] .mmx-chip{background:#262a2f;
+  color:#8a919a;border-color:#3a3f46;}
+html[data-theme=dark] a{color:#9ed0af;}
+
+/* ── 右上角设置面板 ── */
+#rdFab{position:fixed;top:10px;right:12px;z-index:60;font:600 13px/1 var(--sans);color:var(--txt);
+  background:var(--card-bg);border:1px solid var(--card-bd);border-radius:9px;padding:8px 12px;
+  cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.1);}
+#rdFab:hover{border-color:var(--head);color:var(--head);}
+#rdPanel{position:fixed;top:48px;right:12px;z-index:60;background:var(--card-bg);
+  border:1px solid var(--card-bd);border-radius:12px;padding:12px 14px;
+  box-shadow:0 8px 24px rgba(0,0,0,.16);display:grid;gap:9px;min-width:212px;}
+#rdPanel[hidden]{display:none;}
+#rdPanel .rd-row{display:flex;gap:5px;align-items:center;justify-content:space-between;}
+#rdPanel .rd-row>span{font-size:.72rem;color:var(--sub);flex:none;}
+#rdPanel .rd-btns{display:flex;gap:5px;}
+#rdPanel button{font:600 12px/1.4 var(--sans);color:var(--txt);background:var(--navlink-bg);
+  border:1px solid var(--navlink-bd);border-radius:7px;padding:4px 9px;cursor:pointer;}
+#rdPanel button:hover{border-color:var(--head);color:var(--head);}
+
 @media(max-width:720px){
-  body{padding:0 12px 60px;font-size:14.5px;}
-  body>section.mmx-mod,body>section.card{padding:15px 16px;border-radius:14px;}
-  .nav{grid-template-columns:repeat(2,minmax(0,1fr));}
+  body{padding:0 12px 60px;}
+  body>section.mmx-mod,body>section.card,body>section.mmx-svgwrap{padding:15px 16px;border-radius:14px;}
 }
 </style>
 </head>
@@ -669,5 +742,77 @@ body>section .mmx-evib ul{padding-left:1.15em;}
 <p class="small">本书 AI 大纲目前为章级目录（要点与原句待补全）。以下为全书篇目，大纲补全后将自动升级为「目录 + 骨架 + 要点 + 原句」完整版。</p>
 <ol class="mmx-pts"><li><b>1</b> 总目录</li><li><b>2</b> 使日十年：1932～1942年美国驻日大使约瑟夫·C.格鲁的日记及公私文件摘录</li><li><b>3</b> 前折页</li><li><b>4</b> 文前辅文</li><li><b>5</b> 关于作者</li><li><b>6</b> 序言</li><li><b>7</b> 第一章 刺杀阴影笼罩下的日本</li><li><b>8</b> 第一章 刺杀阴影笼罩下的日本</li><li><b>9</b> 第一章 刺杀阴影笼罩下的日本</li><li><b>10</b> 第一章 刺杀阴影笼罩下的日本</li><li><b>11</b> 第一章 刺杀阴影笼罩下的日本</li><li><b>12</b> 第一章 刺杀阴影笼罩下的日本</li><li><b>13</b> 第一章 刺杀阴影笼罩下的日本</li><li><b>14</b> 第一章 刺杀阴影笼罩下的日本</li><li><b>15</b> 第一章 刺杀阴影笼罩下的日本</li><li><b>16</b> 第一章 刺杀阴影笼罩下的日本</li><li><b>17</b> 第一章 刺杀阴影笼罩下的日本</li><li><b>18</b> 第一章 刺杀阴影笼罩下的日本</li><li><b>19</b> 第一章 刺杀阴影笼罩下的日本</li><li><b>20</b> 第一章 刺杀阴影笼罩下的日本</li><li><b>21</b> 第一章 刺杀阴影笼罩下的日本</li><li><b>22</b> 第一章 刺杀阴影笼罩下的日本</li><li><b>23</b> 第一章 刺杀阴影笼罩下的日本</li><li><b>24</b> 第一章 刺杀阴影笼罩下的日本</li><li><b>25</b> 第一章 刺杀阴影笼罩下的日本</li><li><b>26</b> 第一章 刺杀阴影笼罩下的日本</li><li><b>27</b> 第一章 刺杀阴影笼罩下的日本</li><li><b>28</b> 第一章 刺杀阴影笼罩下的日本</li><li><b>29</b> 第一章 刺杀阴影笼罩下的日本</li><li><b>30</b> 第一章 刺杀阴影笼罩下的日本</li><li><b>31</b> 第一章 刺杀阴影笼罩下的日本</li><li><b>32</b> 第一章 刺杀阴影笼罩下的日本</li><li><b>33</b> 第一章 刺杀阴影笼罩下的日本</li><li><b>34</b> 第一章 刺杀阴影笼罩下的日本</li><li><b>35</b> 第一章 刺杀阴影笼罩下的日本</li><li><b>36</b> 第一章 刺杀阴影笼罩下的日本</li><li><b>37</b> 第一章 刺杀阴影笼罩下的日本</li><li><b>38</b> 第一章 刺杀阴影笼罩下的日本</li><li><b>39</b> 第一章 刺杀阴影笼罩下的日本</li><li><b>40</b> 第一章 刺杀阴影笼罩下的日本</li><li><b>41</b> 第一章 刺杀阴影笼罩下的日本</li><li><b>42</b> 第一章 刺杀阴影笼罩下的日本</li><li><b>43</b> 第一章 刺杀阴影笼罩下的日本</li><li><b>44</b> 第一章 刺杀阴影笼罩下的日本</li><li><b>45</b> 第一章 刺杀阴影笼罩下的日本</li><li><b>46</b> 第一章 刺杀阴影笼罩下的日本</li><li><b>47</b> 第一章 刺杀阴影笼罩下的日本</li><li><b>48</b> 第一章 刺杀阴影笼罩下的日本</li><li><b>49</b> 第一章 刺杀阴影笼罩下的日本</li><li><b>50</b> 第一章 刺杀阴影笼罩下的日本</li><li><b>51</b> 第一章 刺杀阴影笼罩下的日本</li><li><b>52</b> 第一章 刺杀阴影笼罩下的日本</li><li><b>53</b> 第一章 刺杀阴影笼罩下的日本</li><li><b>54</b> 第一章 刺杀阴影笼罩下的日本</li><li><b>55</b> 第二章 暴风雨前平静的三年</li><li><b>56</b> 第二章 暴风雨前平静的三年</li><li><b>57</b> 第二章 暴风雨前平静的三年</li><li><b>58</b> 第二章 暴风雨前平静的三年</li><li><b>59</b> 第二章 暴风雨前平静的三年</li><li><b>60</b> 第二章 暴风雨前平静的三年</li><li><b>61</b> 第二章 暴风雨前平静的三年</li><li><b>62</b> 第二章 暴风雨前平静的三年</li><li><b>63</b> 第二章 暴风雨前平静的三年</li><li><b>64</b> 第二章 暴风雨前平静的三年</li><li><b>65</b> 第二章 暴风雨前平静的三年</li><li><b>66</b> 第二章 暴风雨前平静的三年</li><li><b>67</b> 第二章 暴风雨前平静的三年</li><li><b>68</b> 第二章 暴风雨前平静的三年</li><li><b>69</b> 第二章 暴风雨前平静的三年</li><li><b>70</b> 第二章 暴风雨前平静的三年</li><li><b>71</b> 第二章 暴风雨前平静的三年</li><li><b>72</b> 第二章 暴风雨前平静的三年</li><li><b>73</b> 第二章 暴风雨前平静的三年</li><li><b>74</b> 第二章 暴风雨前平静的三年</li><li><b>75</b> 第二章 暴风雨前平静的三年</li><li><b>76</b> 第二章 暴风雨前平静的三年</li><li><b>77</b> 第二章 暴风雨前平静的三年</li><li><b>78</b> 第二章 暴风雨前平静的三年</li><li><b>79</b> 第二章 暴风雨前平静的三年</li><li><b>80</b> 第二章 暴风雨前平静的三年</li><li><b>81</b> 第二章 暴风雨前平静的三年</li><li><b>82</b> 第二章 暴风雨前平静的三年</li><li><b>83</b> 第二章 暴风雨前平静的三年</li><li><b>84</b> 第二章 暴风雨前平静的三年</li><li><b>85</b> 第二章 暴风雨前平静的三年</li><li><b>86</b> 第二章 暴风雨前平静的三年</li><li><b>87</b> 第二章 暴风雨前平静的三年</li><li><b>88</b> 第二章 暴风雨前平静的三年</li><li><b>89</b> 第二章 暴风雨前平静的三年</li><li><b>90</b> 第二章 暴风雨前平静的三年</li><li><b>91</b> 第二章 暴风雨前平静的三年</li><li><b>92</b> 第二章 暴风雨前平静的三年</li><li><b>93</b> 第二章 暴风雨前平静的三年</li><li><b>94</b> 第二章 暴风雨前平静的三年</li><li><b>95</b> 第二章 暴风雨前平静的三年</li><li><b>96</b> 第二章 暴风雨前平静的三年</li><li><b>97</b> 第二章 暴风雨前平静的三年</li><li><b>98</b> 第二章 暴风雨前平静的三年</li><li><b>99</b> 第二章 暴风雨前平静的三年</li><li><b>100</b> 第二章 暴风雨前平静的三年</li><li><b>101</b> 第二章 暴风雨前平静的三年</li><li><b>102</b> 第二章 暴风雨前平静的三年</li><li><b>103</b> 第二章 暴风雨前平静的三年</li><li><b>104</b> 第二章 暴风雨前平静的三年</li><li><b>105</b> 第二章 暴风雨前平静的三年</li><li><b>106</b> 第二章 暴风雨前平静的三年</li><li><b>107</b> 第二章 暴风雨前平静的三年</li><li><b>108</b> 第二章 暴风雨前平静的三年</li><li><b>109</b> 第二章 暴风雨前平静的三年</li><li><b>110</b> 第二章 暴风雨前平静的三年</li><li><b>111</b> 第二章 暴风雨前平静的三年</li><li><b>112</b> 第二章 暴风雨前平静的三年</li><li><b>113</b> 第二章 暴风雨前平静的三年</li><li><b>114</b> 第二章 暴风雨前平静的三年</li><li><b>115</b> 第二章 暴风雨前平静的三年</li><li><b>116</b> 第二章 暴风雨前平静的三年</li><li><b>117</b> 第二章 暴风雨前平静的三年</li><li><b>118</b> 第二章 暴风雨前平静的三年</li><li><b>119</b> 第二章 暴风雨前平静的三年</li><li><b>120</b> 第二章 暴风雨前平静的三年</li><li><b>121</b> 第二章 暴风雨前平静的三年</li><li><b>122</b> 第二章 暴风雨前平静的三年</li><li><b>123</b> 第二章 暴风雨前平静的三年</li><li><b>124</b> 第二章 暴风雨前平静的三年</li><li><b>125</b> 第三章 从未遂政变到公开战争</li><li><b>126</b> 第四章 中国事变</li><li><b>127</b> 第四章 中国事变</li><li><b>128</b> 第四章 中国事变</li><li><b>129</b> 第四章 中国事变</li><li><b>130</b> 第四章 中国事变</li><li><b>131</b> 第四章 中国事变</li><li><b>132</b> 第四章 中国事变</li><li><b>133</b> 第四章 中国事变</li><li><b>134</b> 第四章 中国事变</li><li><b>135</b> 第四章 中国事变</li><li><b>136</b> 第四章 中国事变</li><li><b>137</b> 第四章 中国事变</li><li><b>138</b> 第四章 中国事变</li><li><b>139</b> 第四章 中国事变</li><li><b>140</b> 第四章 中国事变</li><li><b>141</b> 第四章 中国事变</li><li><b>142</b> 第四章 中国事变</li><li><b>143</b> 第四章 中国事变</li><li><b>144</b> 第四章 中国事变</li><li><b>145</b> 第四章 中国事变</li><li><b>146</b> 第四章 中国事变</li><li><b>147</b> 第四章 中国事变</li><li><b>148</b> 第四章 中国事变</li><li><b>149</b> 第四章 中国事变</li><li><b>150</b> 第四章 中国事变</li><li><b>151</b> 第四章 中国事变</li><li><b>152</b> 第四章 中国事变</li><li><b>153</b> 第四章 中国事变</li><li><b>154</b> 第四章 中国事变</li><li><b>155</b> 第四章 中国事变</li><li><b>156</b> 第四章 中国事变</li><li><b>157</b> 第四章 中国事变</li><li><b>158</b> 第四章 中国事变</li><li><b>159</b> 第四章 中国事变</li><li><b>160</b> 第四章 中国事变</li><li><b>161</b> 第四章 中国事变</li><li><b>162</b> 第四章 中国事变</li><li><b>163</b> 第四章 中国事变</li><li><b>164</b> 第四章 中国事变</li><li><b>165</b> 第四章 中国事变</li><li><b>166</b> 第四章 中国事变</li><li><b>167</b> 第四章 中国事变</li><li><b>168</b> 第四章 中国事变</li><li><b>169</b> 第四章 中国事变</li><li><b>170</b> 第四章 中国事变</li><li><b>171</b> 第四章 中国事变</li><li><b>172</b> 第四章 中国事变</li><li><b>173</b> 第五章 一个世界，两场战争</li><li><b>174</b> 第五章 一个世界，两场战争</li><li><b>175</b> 第五章 一个世界，两场战争</li><li><b>176</b> 第五章 一个世界，两场战争</li><li><b>177</b> 第五章 一个世界，两场战争</li><li><b>178</b> 第五章 一个世界，两场战争</li><li><b>179</b> 第五章 一个世界，两场战争</li><li><b>180</b> 第五章 一个世界，两场战争</li><li><b>181</b> 第五章 一个世界，两场战争</li><li><b>182</b> 第五章 一个世界，两场战争</li><li><b>183</b> 第五章 一个世界，两场战争</li><li><b>184</b> 第五章 一个世界，两场战争</li><li><b>185</b> 第五章 一个世界，两场战争</li><li><b>186</b> 第五章 一个世界，两场战争</li><li><b>187</b> 第五章 一个世界，两场战争</li><li><b>188</b> 第五章 一个世界，两场战争</li><li><b>189</b> 第五章 一个世界，两场战争</li><li><b>190</b> 第五章 一个世界，两场战争</li><li><b>191</b> 第五章 一个世界，两场战争</li><li><b>192</b> 第五章 一个世界，两场战争</li><li><b>193</b> 第五章 一个世界，两场战争</li><li><b>194</b> 第五章 一个世界，两场战争</li><li><b>195</b> 第五章 一个世界，两场战争</li><li><b>196</b> 第五章 一个世界，两场战争</li><li><b>197</b> 第五章 一个世界，两场战争</li><li><b>198</b> 第五章 一个世界，两场战争</li><li><b>199</b> 第五章 一个世界，两场战争</li><li><b>200</b> 第五章 一个世界，两场战争</li><li><b>201</b> 第五章 一个世界，两场战争</li><li><b>202</b> 第五章 一个世界，两场战争</li><li><b>203</b> 第五章 一个世界，两场战争</li><li><b>204</b> 第五章 一个世界，两场战争</li><li><b>205</b> 第五章 一个世界，两场战争</li><li><b>206</b> 第五章 一个世界，两场战争</li><li><b>207</b> 第五章 一个世界，两场战争</li><li><b>208</b> 第五章 一个世界，两场战争</li><li><b>209</b> 第五章 一个世界，两场战争</li><li><b>210</b> 第五章 一个世界，两场战争</li><li><b>211</b> 第五章 一个世界，两场战争</li><li><b>212</b> 第五章 一个世界，两场战争</li><li><b>213</b> 第五章 一个世界，两场战争</li><li><b>214</b> 第五章 一个世界，两场战争</li><li><b>215</b> 第五章 一个世界，两场战争</li><li><b>216</b> 第五章 一个世界，两场战争</li><li><b>217</b> 第五章 一个世界，两场战争</li><li><b>218</b> 第五章 一个世界，两场战争</li><li><b>219</b> 第五章 一个世界，两场战争</li><li><b>220</b> 第五章 一个世界，两场战争</li><li><b>221</b> 第五章 一个世界，两场战争</li><li><b>222</b> 第五章 一个世界，两场战争</li><li><b>223</b> 第五章 一个世界，两场战争</li><li><b>224</b> 第五章 一个世界，两场战争</li><li><b>225</b> 第五章 一个世界，两场战争</li><li><b>226</b> 第五章 一个世界，两场战争</li><li><b>227</b> 第五章 一个世界，两场战争</li><li><b>228</b> 第五章 一个世界，两场战争</li><li><b>229</b> 第五章 一个世界，两场战争</li><li><b>230</b> 第五章 一个世界，两场战争</li><li><b>231</b> 第五章 一个世界，两场战争</li><li><b>232</b> 第五章 一个世界，两场战争</li><li><b>233</b> 第五章 一个世界，两场战争</li><li><b>234</b> 第五章 一个世界，两场战争</li><li><b>235</b> 第五章 一个世界，两场战争</li><li><b>236</b> 第五章 一个世界，两场战争</li><li><b>237</b> 第五章 一个世界，两场战争</li><li><b>238</b> 第五章 一个世界，两场战争</li><li><b>239</b> 第五章 一个世界，两场战争</li><li><b>240</b> 第五章 一个世界，两场战争</li><li><b>241</b> 第五章 一个世界，两场战争</li><li><b>242</b> 第五章 一个世界，两场战争</li><li><b>243</b> 第五章 一个世界，两场战争</li><li><b>244</b> 第五章 一个世界，两场战争</li><li><b>245</b> 第五章 一个世界，两场战争</li><li><b>246</b> 第五章 一个世界，两场战争</li><li><b>247</b> 第五章 一个世界，两场战争</li><li><b>248</b> 第五章 一个世界，两场战争</li><li><b>249</b> 第五章 一个世界，两场战争</li><li><b>250</b> 第五章 一个世界，两场战争</li><li><b>251</b> 第五章 一个世界，两场战争</li><li><b>252</b> 第五章 一个世界，两场战争</li><li><b>253</b> 第五章 一个世界，两场战争</li><li><b>254</b> 第五章 一个世界，两场战争</li><li><b>255</b> 第五章 一个世界，两场战争</li><li><b>256</b> 第五章 一个世界，两场战争</li><li><b>257</b> 第五章 一个世界，两场战争</li><li><b>258</b> 第五章 一个世界，两场战争</li><li><b>259</b> 第五章 一个世界，两场战争</li><li><b>260</b> 第五章 一个世界，两场战争</li><li><b>261</b> 第五章 一个世界，两场战争</li><li><b>262</b> 第五章 一个世界，两场战争</li><li><b>263</b> 第五章 一个世界，两场战争</li><li><b>264</b> 第五章 一个世界，两场战争</li><li><b>265</b> 第五章 一个世界，两场战争</li><li><b>266</b> 第五章 一个世界，两场战争</li><li><b>267</b> 第五章 一个世界，两场战争</li><li><b>268</b> 第五章 一个世界，两场战争</li><li><b>269</b> 第五章 一个世界，两场战争</li><li><b>270</b> 第五章 一个世界，两场战争</li><li><b>271</b> 第五章 一个世界，两场战争</li><li><b>272</b> 第五章 一个世界，两场战争</li><li><b>273</b> 第五章 一个世界，两场战争</li><li><b>274</b> 第五章 一个世界，两场战争</li><li><b>275</b> 第五章 一个世界，两场战争</li><li><b>276</b> 第五章 一个世界，两场战争</li><li><b>277</b> 第五章 一个世界，两场战争</li><li><b>278</b> 第五章 一个世界，两场战争</li><li><b>279</b> 第五章 一个世界，两场战争</li><li><b>280</b> 第五章 一个世界，两场战争</li><li><b>281</b> 第五章 一个世界，两场战争</li><li><b>282</b> 第五章 一个世界，两场战争</li><li><b>283</b> 第五章 一个世界，两场战争</li><li><b>284</b> 第五章 一个世界，两场战争</li><li><b>285</b> 第五章 一个世界，两场战争</li><li><b>286</b> 第五章 一个世界，两场战争</li><li><b>287</b> 第五章 一个世界，两场战争</li><li><b>288</b> 第五章 一个世界，两场战争</li><li><b>289</b> 第五章 一个世界，两场战争</li><li><b>290</b> 第五章 一个世界，两场战争</li><li><b>291</b> 第五章 一个世界，两场战争</li><li><b>292</b> 第五章 一个世界，两场战争</li><li><b>293</b> 第五章 一个世界，两场战争</li><li><b>294</b> 第五章 一个世界，两场战争</li><li><b>295</b> 第五章 一个世界，两场战争</li><li><b>296</b> 第五章 一个世界，两场战争</li><li><b>297</b> 第五章 一个世界，两场战争</li><li><b>298</b> 第五章 一个世界，两场战争</li><li><b>299</b> 第五章 一个世界，两场战争</li><li><b>300</b> 第五章 一个世界，两场战争</li><li><b>301</b> 第五章 一个世界，两场战争</li><li><b>302</b> 第五章 一个世界，两场战争</li><li><b>303</b> 第五章 一个世界，两场战争</li><li><b>304</b> 第五章 一个世界，两场战争</li><li><b>305</b> 第五章 一个世界，两场战争</li><li><b>306</b> 第六章 一个世界，一场战争</li><li><b>307</b> 第六章 一个世界，一场战争</li><li><b>308</b> 第六章 一个世界，一场战争</li><li><b>309</b> 第六章 一个世界，一场战争</li><li><b>310</b> 第六章 一个世界，一场战争</li><li><b>311</b> 第六章 一个世界，一场战争</li><li><b>312</b> 第六章 一个世界，一场战争</li><li><b>313</b> 第六章 一个世界，一场战争</li><li><b>314</b> 第六章 一个世界，一场战争</li><li><b>315</b> 第六章 一个世界，一场战争</li><li><b>316</b> 第六章 一个世界，一场战争</li><li><b>317</b> 第六章 一个世界，一场战争</li><li><b>318</b> 第六章 一个世界，一场战争</li><li><b>319</b> 第六章 一个世界，一场战争</li><li><b>320</b> 第六章 一个世界，一场战争</li><li><b>321</b> 第六章 一个世界，一场战争</li><li><b>322</b> 第六章 一个世界，一场战争</li><li><b>323</b> 第六章 一个世界，一场战争</li><li><b>324</b> 第六章 一个世界，一场战争</li><li><b>325</b> 第六章 一个世界，一场战争</li><li><b>326</b> 第六章 一个世界，一场战争</li><li><b>327</b> 第六章 一个世界，一场战争</li><li><b>328</b> 第六章 一个世界，一场战争</li><li><b>329</b> 第六章 一个世界，一场战争</li><li><b>330</b> 第六章 一个世界，一场战争</li><li><b>331</b> 第六章 一个世界，一场战争</li><li><b>332</b> 第六章 一个世界，一场战争</li><li><b>333</b> 第六章 一个世界，一场战争</li><li><b>334</b> 第六章 一个世界，一场战争</li><li><b>335</b> 第六章 一个世界，一场战争</li><li><b>336</b> 第六章 一个世界，一场战争</li><li><b>337</b> 日本主要官员及各国派驻日本的主要外交使节人名一览</li><li><b>338</b> 版权页</li><li><b>339</b> 后折页</li><li><b>340</b> 封底</li><li><b>341</b> 南京1937：血战危城</li><li><b>342</b> 前折页</li><li><b>343</b> 本书获誉</li><li><b>344</b> 致谢</li><li><b>345</b> 作者按</li><li><b>346</b> 前言</li><li><b>347</b> 第一章 新的战斗打响了</li><li><b>348</b> 第二章 “全面出击！”</li><li><b>349</b> 第三章 跨越战线</li><li><b>350</b> 第四章 太湖之战</li><li><b>351</b> 第五章 严冬</li><li><b>352</b> 第六章 兵临城下</li><li><b>353</b> 第七章 决定性的日子</li><li><b>354</b> 第八章 沦陷</li><li><b>355</b> 第九章 恐怖</li><li><b>356</b> 第十章 劫后</li><li><b>357</b> 附录</li><li><b>358</b> 参考文献</li><li><b>359</b> 索引</li><li><b>360</b> 版权页</li><li><b>361</b> 后折页</li><li><b>362</b> 封底</li><li><b>363</b> 中国1945：中国革命与美国的抉择</li><li><b>364</b> 前折页</li><li><b>365</b> 文前辅文</li><li><b>366</b> 本书获誉</li><li><b>367</b> 关于中国的人名和地名</li><li><b>368</b> 引言</li><li><b>369</b> 第一部 无辜的中国人</li><li><b>370</b> 第二章 委员长与美国人</li><li><b>371</b> 第三章 满目疮痍的国家</li><li><b>372</b> 第四章 毛、周和美国人</li><li><b>373</b> 第二部 仇恨的种子</li><li><b>374</b> 第六章 特使的愤怒</li><li><b>375</b> 第七章 道德妥协</li><li><b>376</b> 第八章 “笑里藏刀”</li><li><b>377</b> 第九章 中国政策之战</li><li><b>378</b> 第十章 不同的命运</li><li><b>379</b> 第三部 成功与失败</li><li><b>380</b> 第十二章 斯大林的欲望</li><li><b>381</b> 第十三章 既成事实</li><li><b>382</b> 第十四章 从何下手？</li><li><b>383</b> 第十五章 马歇尔来了</li><li><b>384</b> 第十六章 从希望到对抗</li><li><b>385</b> 尾声</li><li><b>386</b> 致谢</li><li><b>387</b> 参考文献</li><li><b>388</b> 版权页</li><li><b>389</b> 后折页</li><li><b>390</b> 封底</li><li><b>391</b> 未了中国缘：一部自传</li><li><b>392</b> 文前辅文</li><li><b>393</b> 文前彩插</li><li><b>394</b> 序</li><li><b>395</b> 第一部分 离开与重返</li><li><b>396</b> 第二章 从中国到美国</li><li><b>397</b> 第三章 我的游学教育</li><li><b>398</b> 第四章 汉口、远东事务处和珍珠港</li><li><b>399</b> 第二部分 “此次任命既不是出于您的请求，也不是为了您的方便”</li><li><b>400</b> 第六章 与甘地的一面之约</li><li><b>401</b> 第七章 尼赫鲁和“那个问题”</li><li><b>402</b> 第八章 美国人在印度</li><li><b>403</b> 第九章 威尔基、华盛顿和“醋乔”</li><li><b>404</b> 第十章 与那加猎首者一起</li><li><b>405</b> 第三部分 公共外交和个人外交</li><li><b>406</b> 第十二章 开罗：和罗斯福、丘吉尔、蒋介石在一起</li><li><b>407</b> 第十三章 大英帝国重回亚洲或许与我们无关</li><li><b>408</b> 第十四章 帕特丽夏到达印度；宋氏家族上演闹剧</li><li><b>409</b> 第四部分 中国问题</li><li><b>410</b> 第十六章 委员长对抗将军</li><li><b>411</b> 第十七章 会见毛泽东</li><li><b>412</b> 第十八章 共产党、国民党和赫尔利三者交锋</li><li><b>413</b> 第五部分 莫斯科的日日夜夜</li><li><b>414</b> 第二十章 赫尔利全面出击</li><li><b>415</b> 第二十一章 战后的莫斯科</li><li><b>416</b> 第六部分 国内争斗</li><li><b>417</b> 第二十三章 被任命为凯南领导的政策规划司成员</li><li><b>418</b> 第二十四章 与国家安全委员会展开合作</li><li><b>419</b> 第二十五章 1948年重访亚洲</li><li><b>420</b> 第二十六章 “共和国历史中最为恶毒的竞选：充斥着片面引导和弥天大谎”</li><li><b>421</b> 结语</li><li><b>422</b> 索引</li><li><b>423</b> 致谢</li><li><b>424</b> 版权页</li><li><b>425</b> 封底</li><li><b>426</b> 国民党高层的派系政治（修订本）：蒋介石“最高领袖”地位的确立</li><li><b>427</b> 前折页</li><li><b>428</b> 文前彩插</li><li><b>429</b> 文前辅文</li><li><b>430</b> 绪论</li><li><b>431</b> 第一章 蒋、汪、胡分合回顾</li><li><b>432</b> 二 廖案结果：胡汉民被逐出广州</li><li><b>433</b> 三 中山舰事件：蒋介石的冒险行动</li><li><b>434</b> 四 宁汉对峙：元老们迎汪抗蒋</li><li><b>435</b> 五 蒋汪联手反对特委会</li><li><b>436</b> 第二章 蒋胡由合作到分裂</li><li><b>437</b> 二 蒋胡合作的基础</li><li><b>438</b> 三 党权和军权的较量</li><li><b>439</b> 第三章 约法之争与胡汉民被扣</li><li><b>440</b> 一 约法问题之由来</li><li><b>441</b> 二 胡适挑战“党治” 鼓吹约法</li><li><b>442</b> 三 《太原约法》的真实意图</li><li><b>443</b> 四 国民党四中全会上的交锋</li><li><b>444</b> 五 汤山事件</li><li><b>445</b> 第四章 国民会议的本质</li><li><b>446</b> 二 历次修订《国民政府组织法》之比较</li><li><b>447</b> 三 国民党内外对《约法》的反应</li><li><b>448</b> 第五章 “非常会议”与广州开府</li><li><b>449</b> 二 胡汉民为什么选择在广东发难</li><li><b>450</b> 三 党内各派联合反蒋局面的形成</li><li><b>451</b> 四 四监委弹劾通电的反响</li><li><b>452</b> 五 广州开府</li><li><b>453</b> 六 陈铭枢态度的转变</li><li><b>454</b> 第六章 北方反蒋的再次兴起</li><li><b>455</b> 二 阎锡山返晋风波</li><li><b>456</b> 三 甘肃雷马事变</li><li><b>457</b> 四 宁粤大战一触即发</li><li><b>458</b> 第七章 上海和谈</li><li><b>459</b> 一 蒋为何始终坚持政治解决</li><li><b>460</b> 二 国难当头 被迫和解</li><li><b>461</b> 三 宁粤广州会议</li><li><b>462</b> 四 初步统一的上海和谈</li><li><b>463</b> 第八章 国民党第四次全国代表大会</li><li><b>464</b> 二 粤方内部的矛盾与分化</li><li><b>465</b> 三 广州，胡汉民调停下的四全大会</li><li><b>466</b> 四 上海，汪精卫另起炉灶</li><li><b>467</b> 第九章 蒋氏下野和国府改组</li><li><b>468</b> 二 北方秘密联合倒张</li><li><b>469</b> 三 四届一中全会的纠纷</li><li><b>470</b> 第十章 蒋汪合作</li><li><b>471</b> 二 特委会的成立与金融风潮</li><li><b>472</b> 三 蒋介石复出前的布置</li><li><b>473</b> 四 蒋汪合流 重掌中枢</li><li><b>474</b> 第十一章 地域观念与蒋介石的起伏</li><li><b>475</b> 一 孙中山粤籍观念在国民党中的运用</li><li><b>476</b> 二 江浙派对粤籍“党统”的首次挑战</li><li><b>477</b> 三 党内粤籍领袖正统意识的总爆发</li><li><b>478</b> 四 地域观念淡出党内权力斗争</li><li><b>479</b> 五 蒋介石“最高领袖”地位的确立</li><li><b>480</b> 第十二章 蒋介石与政学系</li><li><b>481</b> 一 为什么叫政学系</li><li><b>482</b> 二 蒋介石为什么要用政学系</li><li><b>483</b> 三 政学系都有些什么人</li><li><b>484</b> 四 政学系是如何控制政权的</li><li><b>485</b> 五 政学系与CC系、黄埔系</li><li><b>486</b> 征引文献</li><li><b>487</b> 后记</li><li><b>488</b> 附记</li><li><b>489</b> 版权页</li><li><b>490</b> 后折页</li><li><b>491</b> 封底</li><li><b>492</b> 中国之翼：飞行在战争、谎言、罗曼史和大冒险的黄金时代</li><li><b>493</b> 前折页</li><li><b>494</b> 文前彩插</li><li><b>495</b> 文前辅文</li><li><b>496</b> 中文版序</li><li><b>497</b> 作者的话</li><li><b>498</b> 中国地名拼音对照表</li><li><b>499</b> 1931年冬</li><li><b>500</b> 第一部分 中央帝国</li><li><b>501</b> 1 1931年的圣帕特里克节</li><li><b>502</b> 2 “你对付不了这些飞行员”</li><li><b>503</b> 3 “这家航空公司是合资伙伴关系”</li><li><b>504</b> 4 蛋糕与香槟</li><li><b>505</b> 5 三号航线</li><li><b>506</b> 6 一个泛美航空的男子和一个叫姬兹的女子</li><li><b>507</b> 7 最后的浪漫时光</li><li><b>508</b> 第二部分 战争</li><li><b>509</b> 8 天崩地裂</li><li><b>510</b> 9 救兵</li><li><b>511</b> 10 11月的上海</li><li><b>512</b> 11 复活</li><li><b>513</b> 第三部分 随风漂泊</li><li><b>514</b> 12 临时首都</li><li><b>515</b> 13 “桂林”号事件</li><li><b>516</b> 14 汉口疏散</li><li><b>517</b> 15 与蒋夫人会面</li><li><b>518</b> 16 轰炸季节</li><li><b>519</b> 17 室性心动过速</li><li><b>520</b> 18 一个机翼和一个备件，无须祈祷</li><li><b>521</b> 19 “那些飞机是日本的！”</li><li><b>522</b> 第四部分 驼峰</li><li><b>523</b> 20 在战斗中</li><li><b>524</b> 21 “对我们来说，五年前就开始了”</li><li><b>525</b> 22 卡在基岩边缘</li><li><b>526</b> 23 “我们将在余生不断谈论此事”</li><li><b>527</b> 24 不算最糟糕的打仗方式</li><li><b>528</b> 25 失去一个朋友</li><li><b>529</b> 26 命中注定</li><li><b>530</b> 27 黄金任务</li><li><b>531</b> 28 残局</li><li><b>532</b> 后记</li><li><b>533</b> 鸣谢</li><li><b>534</b> 参考文献</li><li><b>535</b> 注释</li><li><b>536</b> 索引</li><li><b>537</b> 版权页</li><li><b>538</b> 后折页</li><li><b>539</b> 封底</li></ol></section>
 <section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点</h2><ul class="mmx-views"><li><b>第 1–7 章</b>——含「总目录」至「第一章 刺杀阴影笼罩下的」</li><li><b>第 8–14 章</b>——含「第一章 刺杀阴影笼罩下的」至「第一章 刺杀阴影笼罩下的」</li><li><b>第 15–21 章</b>——含「第一章 刺杀阴影笼罩下的」至「第一章 刺杀阴影笼罩下的」</li><li><b>第 22–28 章</b>——含「第一章 刺杀阴影笼罩下的」至「第一章 刺杀阴影笼罩下的」</li><li><b>第 29–35 章</b>——含「第一章 刺杀阴影笼罩下的」至「第一章 刺杀阴影笼罩下的」</li><li><b>第 36–42 章</b>——含「第一章 刺杀阴影笼罩下的」至「第一章 刺杀阴影笼罩下的」</li><li><b>第 43–49 章</b>——含「第一章 刺杀阴影笼罩下的」至「第一章 刺杀阴影笼罩下的」</li><li><b>第 50–56 章</b>——含「第一章 刺杀阴影笼罩下的」至「第二章 暴风雨前平静的三」</li><li><b>第 57–63 章</b>——含「第二章 暴风雨前平静的三」至「第二章 暴风雨前平静的三」</li><li><b>第 64–70 章</b>——含「第二章 暴风雨前平静的三」至「第二章 暴风雨前平静的三」</li><li><b>第 71–77 章</b>——含「第二章 暴风雨前平静的三」至「第二章 暴风雨前平静的三」</li><li><b>第 78–84 章</b>——含「第二章 暴风雨前平静的三」至「第二章 暴风雨前平静的三」</li><li><b>第 85–91 章</b>——含「第二章 暴风雨前平静的三」至「第二章 暴风雨前平静的三」</li><li><b>第 92–98 章</b>——含「第二章 暴风雨前平静的三」至「第二章 暴风雨前平静的三」</li><li><b>第 99–105 章</b>——含「第二章 暴风雨前平静的三」至「第二章 暴风雨前平静的三」</li><li><b>第 106–112 章</b>——含「第二章 暴风雨前平静的三」至「第二章 暴风雨前平静的三」</li><li><b>第 113–119 章</b>——含「第二章 暴风雨前平静的三」至「第二章 暴风雨前平静的三」</li><li><b>第 120–126 章</b>——含「第二章 暴风雨前平静的三」至「第四章 中国事变」</li><li><b>第 127–133 章</b>——含「第四章 中国事变」至「第四章 中国事变」</li><li><b>第 134–140 章</b>——含「第四章 中国事变」至「第四章 中国事变」</li><li><b>第 141–147 章</b>——含「第四章 中国事变」至「第四章 中国事变」</li><li><b>第 148–154 章</b>——含「第四章 中国事变」至「第四章 中国事变」</li><li><b>第 155–161 章</b>——含「第四章 中国事变」至「第四章 中国事变」</li><li><b>第 162–168 章</b>——含「第四章 中国事变」至「第四章 中国事变」</li><li><b>第 169–175 章</b>——含「第四章 中国事变」至「第五章 一个世界，两场战」</li><li><b>第 176–182 章</b>——含「第五章 一个世界，两场战」至「第五章 一个世界，两场战」</li><li><b>第 183–189 章</b>——含「第五章 一个世界，两场战」至「第五章 一个世界，两场战」</li><li><b>第 190–196 章</b>——含「第五章 一个世界，两场战」至「第五章 一个世界，两场战」</li><li><b>第 197–203 章</b>——含「第五章 一个世界，两场战」至「第五章 一个世界，两场战」</li><li><b>第 204–210 章</b>——含「第五章 一个世界，两场战」至「第五章 一个世界，两场战」</li><li><b>第 211–217 章</b>——含「第五章 一个世界，两场战」至「第五章 一个世界，两场战」</li><li><b>第 218–224 章</b>——含「第五章 一个世界，两场战」至「第五章 一个世界，两场战」</li><li><b>第 225–231 章</b>——含「第五章 一个世界，两场战」至「第五章 一个世界，两场战」</li><li><b>第 232–238 章</b>——含「第五章 一个世界，两场战」至「第五章 一个世界，两场战」</li><li><b>第 239–245 章</b>——含「第五章 一个世界，两场战」至「第五章 一个世界，两场战」</li><li><b>第 246–252 章</b>——含「第五章 一个世界，两场战」至「第五章 一个世界，两场战」</li><li><b>第 253–259 章</b>——含「第五章 一个世界，两场战」至「第五章 一个世界，两场战」</li><li><b>第 260–266 章</b>——含「第五章 一个世界，两场战」至「第五章 一个世界，两场战」</li><li><b>第 267–273 章</b>——含「第五章 一个世界，两场战」至「第五章 一个世界，两场战」</li><li><b>第 274–280 章</b>——含「第五章 一个世界，两场战」至「第五章 一个世界，两场战」</li><li><b>第 281–287 章</b>——含「第五章 一个世界，两场战」至「第五章 一个世界，两场战」</li><li><b>第 288–294 章</b>——含「第五章 一个世界，两场战」至「第五章 一个世界，两场战」</li><li><b>第 295–301 章</b>——含「第五章 一个世界，两场战」至「第五章 一个世界，两场战」</li><li><b>第 302–308 章</b>——含「第五章 一个世界，两场战」至「第六章 一个世界，一场战」</li><li><b>第 309–315 章</b>——含「第六章 一个世界，一场战」至「第六章 一个世界，一场战」</li><li><b>第 316–322 章</b>——含「第六章 一个世界，一场战」至「第六章 一个世界，一场战」</li><li><b>第 323–329 章</b>——含「第六章 一个世界，一场战」至「第六章 一个世界，一场战」</li><li><b>第 330–336 章</b>——含「第六章 一个世界，一场战」至「第六章 一个世界，一场战」</li><li><b>第 337–343 章</b>——含「日本主要官员及各国派驻日」至「本书获誉」</li><li><b>第 344–350 章</b>——含「致谢」至「第四章 太湖之战」</li><li><b>第 351–357 章</b>——含「第五章 严冬」至「附录」</li><li><b>第 358–364 章</b>——含「参考文献」至「前折页」</li><li><b>第 365–371 章</b>——含「文前辅文」至「第三章 满目疮痍的国家」</li><li><b>第 372–378 章</b>——含「第四章 毛、周和美国人」至「第十章 不同的命运」</li><li><b>第 379–385 章</b>——含「第三部 成功与失败」至「尾声」</li><li><b>第 386–392 章</b>——含「致谢」至「文前辅文」</li><li><b>第 393–399 章</b>——含「文前彩插」至「第二部分 “此次任命既不」</li><li><b>第 400–406 章</b>——含「第六章 与甘地的一面之约」至「第十二章 开罗：和罗斯福」</li><li><b>第 407–413 章</b>——含「第十三章 大英帝国重回亚」至「第五部分 莫斯科的日日夜」</li><li><b>第 414–420 章</b>——含「第二十章 赫尔利全面出击」至「第二十六章 “共和国历史」</li><li><b>第 421–427 章</b>——含「结语」至「前折页」</li><li><b>第 428–434 章</b>——含「文前彩插」至「四 宁汉对峙：元老们迎汪」</li><li><b>第 435–441 章</b>——含「五 蒋汪联手反对特委会」至「二 胡适挑战“党治” 鼓」</li><li><b>第 442–448 章</b>——含「三 《太原约法》的真实意」至「第五章 “非常会议”与广」</li><li><b>第 449–455 章</b>——含「二 胡汉民为什么选择在广」至「二 阎锡山返晋风波」</li><li><b>第 456–462 章</b>——含「三 甘肃雷马事变」至「四 初步统一的上海和谈」</li><li><b>第 463–469 章</b>——含「第八章 国民党第四次全国」至「三 四届一中全会的纠纷」</li><li><b>第 470–476 章</b>——含「第十章 蒋汪合作」至「二 江浙派对粤籍“党统”」</li><li><b>第 477–483 章</b>——含「三 党内粤籍领袖正统意识」至「三 政学系都有些什么人」</li><li><b>第 484–490 章</b>——含「四 政学系是如何控制政权」至「后折页」</li><li><b>第 491–497 章</b>——含「封底」至「作者的话」</li><li><b>第 498–504 章</b>——含「中国地名拼音对照表」至「4 蛋糕与香槟」</li><li><b>第 505–511 章</b>——含「5 三号航线」至「10 11月的上海」</li><li><b>第 512–518 章</b>——含「11 复活」至「16 轰炸季节」</li><li><b>第 519–525 章</b>——含「17 室性心动过速」至「22 卡在基岩边缘」</li><li><b>第 526–532 章</b>——含「23 “我们将在余生不断」至「后记」</li><li><b>第 533–539 章</b>——含「鸣谢」至「封底」</li></ul></section>
+<button id="rdFab" aria-label="阅读设置" title="阅读设置">Aa</button>
+<div id="rdPanel" hidden>
+  <div class="rd-row"><span>字号</span><span class="rd-btns">
+    <button data-rd="fs-">A−</button><button data-rd="fs+">A＋</button></span></div>
+  <div class="rd-row"><span>段距</span><span class="rd-btns">
+    <button data-rd="pm-">紧</button><button data-rd="pm0">中</button><button data-rd="pm+">松</button></span></div>
+  <div class="rd-row"><span>主题</span><span class="rd-btns">
+    <button data-rd="th-cream">米白</button><button data-rd="th-light">纯白</button>
+    <button data-rd="th-green">护眼</button><button data-rd="th-dark">夜间</button></span></div>
+</div>
+<script>
+(function(){
+  var d = document.documentElement;
+  var c = {}; try { c = JSON.parse(localStorage.getItem('rd-cfg') || '{}'); } catch (e) {}
+  var FS = [0.88, 0.96, 1.04, 1.16, 1.30], PM = [0.6, 1, 1.5];
+  var fi = FS.indexOf(parseFloat(d.style.getPropertyValue('--fs')) || c.fs); if (fi < 0) fi = 2;
+  var pi = PM.indexOf(parseFloat(d.style.getPropertyValue('--pm')) || c.pm); if (pi < 0) pi = 1;
+  var panel = document.getElementById('rdPanel');
+  document.getElementById('rdFab').onclick = function (e) {
+    e.stopPropagation(); panel.hidden = !panel.hidden;
+  };
+  document.addEventListener('click', function (e) {
+    if (!panel.hidden && !panel.contains(e.target) && e.target.id !== 'rdFab') panel.hidden = true;
+  });
+  panel.addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-rd]'); if (!b) return;
+    var k = b.dataset.rd;
+    if (k === 'fs-') fi = Math.max(0, fi - 1);
+    else if (k === 'fs+') fi = Math.min(FS.length - 1, fi + 1);
+    else if (k === 'pm-') pi = Math.max(0, pi - 1);
+    else if (k === 'pm0') pi = 1;
+    else if (k === 'pm+') pi = Math.min(PM.length - 1, pi + 1);
+    else if (k.indexOf('th-') === 0) c.theme = k.slice(3);
+    apply();
+  });
+  function apply() {
+    d.dataset.theme = c.theme || 'cream';
+    d.style.setProperty('--fs', FS[fi]);
+    d.style.setProperty('--pm', PM[pi]);
+    c.fs = FS[fi]; c.pm = PM[pi];
+    try { localStorage.setItem('rd-cfg', JSON.stringify(c)); } catch (e) {}
+    [].forEach.call(panel.querySelectorAll('button[data-rd^="th-"]'), function (b) {
+      b.style.borderColor = (b.dataset.rd === 'th-' + (c.theme || 'cream')) ? 'var(--head)' : '';
+      b.style.color = (b.dataset.rd === 'th-' + (c.theme || 'cream')) ? 'var(--head)' : '';
+    });
+  }
+  apply();
+  /* 导航随滚动高亮 */
+  var links = [].slice.call(document.querySelectorAll('.navlink')), map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var mark = function (a) {
+    links.forEach(function (x) { x.classList.toggle('active', x === a); });
+  };
+  if ('IntersectionObserver' in window) {
+    var cur = null;
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (e.isIntersecting) {
+          var a = map[e.target.id];
+          if (a && cur !== a) { cur = a; mark(a); }
+        }
+      });
+    }, { rootMargin: '-15% 0px -75% 0px' });
+    Object.keys(map).forEach(function (id) {
+      var el = document.getElementById(id); if (el) io.observe(el);
+    });
+  }
+  links.forEach(function (a) {
+    a.addEventListener('click', function () { mark(a); });
+  });
+})();
+</script>
 </body>
 </html>

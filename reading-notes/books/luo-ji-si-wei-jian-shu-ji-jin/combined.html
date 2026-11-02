@@ -4,32 +4,64 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>《罗辑思维荐书集锦（套装共24册）》｜通读 · 精读</title>
+<script>
+/* 防闪：渲染前先把上次保存的主题/字号/段距应用到 <html> */
+(function(){try{var c=JSON.parse(localStorage.getItem('rd-cfg')||'{}'),d=document.documentElement;
+d.dataset.theme=c.theme||'cream';
+if(c.fs)d.style.setProperty('--fs',c.fs);
+if(c.pm)d.style.setProperty('--pm',c.pm);}catch(e){}})();
+</script>
 <link rel="stylesheet" href="../../../assets/css/reading-overview.css"><link rel="stylesheet" href="../../../assets/css/mmx-guide.css"><link rel="stylesheet" href="../../../assets/css/reading-outline.css">
 <style>
-/* ── 外壳与全局阅读节奏 ── */
-body{max-width:880px;margin:0 auto;padding:0 18px 80px;
-  font-size:15px;line-height:1.88;color:#3b453e;background:#f7f8f3;
-  -webkit-font-smoothing:antialiased;}
-.combined-head{padding:30px 0 16px;border-bottom:1px solid #e7e0d2;margin-bottom:4px;}
-.combined-head h1{font:700 23px/1.35 var(--serif);margin:0 0 8px;color:#244b40;}
+/* ── 主题变量：默认米白；纯白/护眼绿/夜间由 html[data-theme] 覆盖 ── */
+:root{
+  --fs:1;--pm:1;
+  --pg-bg:#f7f8f3;--card-bg:#fffdf6;--card-bd:#e8e4d5;--ink:#3b453e;--txt:#4a4436;
+  --sub:#8d8878;--head:#244b40;--qgreen:#2f5b49;--gold:#bf8247;
+  --nav-bg:rgba(247,248,243,.96);--navlink-bg:#fdfbf3;--navlink-bd:#e8e2d2;
+  --inner-bg:#fbfaf2;--inner-bd:#eee9d8;--oneline-bg:#fbfaf4;
+  --act-bg:#e5efe4;--act-bd:#bcd4bc;
+}
+html[data-theme=light]{--pg-bg:#ffffff;--card-bg:#ffffff;--card-bd:#e7e7e2;
+  --nav-bg:rgba(255,255,255,.96);--navlink-bg:#fafaf7;--navlink-bd:#e7e7e0;
+  --inner-bg:#fafaf7;--inner-bd:#ecebe4;--oneline-bg:#fafaf7;}
+html[data-theme=green]{--pg-bg:#cfe8d2;--card-bg:#eef7ef;--card-bd:#b9dcc0;--ink:#2f4237;
+  --txt:#3b5446;--sub:#5d7c67;--head:#1e4d37;--qgreen:#1e5c41;
+  --nav-bg:rgba(207,232,210,.96);--navlink-bg:#f4fbf5;--navlink-bd:#b4d8bd;
+  --inner-bg:#f6fbf7;--inner-bd:#cde5d3;--oneline-bg:#f6fbf7;--act-bg:#bfe3c6;--act-bd:#95c8a1;}
+html[data-theme=dark]{--pg-bg:#15171a;--card-bg:#1f2226;--card-bd:#34383f;--ink:#c9ced4;
+  --txt:#b4bac1;--sub:#8a919a;--head:#93c8a8;--qgreen:#9ed0af;
+  --nav-bg:rgba(21,23,26,.96);--navlink-bg:#262a2f;--navlink-bd:#3a3f46;
+  --inner-bg:#272b30;--inner-bd:#3a3f46;--oneline-bg:#272b30;
+  --act-bg:#244b40;--act-bd:#2f5b49;}
+
+/* ── 外壳与全局阅读节奏（字号跟随 --fs 整页缩放，段距跟随 --pm） ── */
+html{font-size:calc(16px*var(--fs));}
+html[data-theme=dark] body{color-scheme:dark;}
+body{max-width:880px;margin:0 auto;padding:0 18px 80px;font-size:.9375rem;line-height:1.88;
+  color:var(--ink);background:var(--pg-bg);-webkit-font-smoothing:antialiased;}
+.combined-head{padding:30px 0 16px;border-bottom:1px solid var(--card-bd);margin-bottom:4px;}
+.combined-head h1{font:700 1.45rem/1.35 var(--serif);margin:0 0 8px;color:var(--head);}
 .combined-head .eyebrow{font-size:.72rem;letter-spacing:.14em;margin:0 0 6px;}
 .chips{margin:8px 0 0;}
 .chip{font-size:.72rem;padding:2px 10px;}
-/* 锚点导航：固定一排 4 个，等宽对齐 */
-.nav{position:sticky;top:0;z-index:20;background:rgba(247,248,243,.96);backdrop-filter:blur(6px);
-  border-bottom:1px solid #ece4d4;padding:10px 0;margin:12px 0 20px;display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;
+
+/* ── 锚点导航：小屏最少一排 4 个，大屏自动一排/两排放完；滚动到哪亮哪 ── */
+.nav{position:sticky;top:0;z-index:20;background:var(--nav-bg);backdrop-filter:blur(6px);
+  border-bottom:1px solid var(--card-bd);padding:10px 0;margin:12px 0 20px;display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(76px,1fr));gap:6px;
   box-shadow:0 2px 10px rgba(120,100,60,.05);}
-.navlink{font-size:12px;color:#5d5443;text-decoration:none;background:#fdfbf3;border:1px solid #e8e2d2;
-  border-radius:8px;padding:6px 4px;text-align:center;white-space:nowrap;overflow:hidden;
-  text-overflow:ellipsis;transition:background .15s,color .15s;}
-.navlink:hover{background:#f2efe2;color:#244b40;}
+.navlink{font-size:12px;color:var(--txt);text-decoration:none;background:var(--navlink-bg);
+  border:1px solid var(--navlink-bd);border-radius:8px;padding:6px 4px;text-align:center;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:all .15s;}
+.navlink:hover{color:var(--head);border-color:var(--head);}
+.navlink.active{color:var(--head);background:var(--act-bg);border-color:var(--act-bd);font-weight:700;}
 section{scroll-margin-top:62px;}
 
 /* ── 统一卡片：所有顶层模块（AI领读 / AI 问答 / 其余）一视同仁 ── */
 body>section.mmx-mod,body>section.card,body>section.mmx-svgwrap{
-  background:#fffdf6;border:1px solid #e8e4d5;border-radius:16px;
-  padding:18px 22px;margin:18px 0;
+  background:var(--card-bg);border:1px solid var(--card-bd);border-radius:16px;
+  padding:18px 22px;margin:calc(18px*var(--pm)) 0;
   box-shadow:0 1px 3px rgba(110,95,60,.05);}
 body>section.mmx-mod>*:first-child,body>section.card>*:first-child,
 body>section.mmx-svgwrap>*:first-child{margin-top:0}
@@ -39,74 +71,115 @@ body>section.mmx-svgwrap>*:last-child{margin-bottom:0}
 body>section.mmx-svgwrap>svg.mmx-svg{display:block;width:100%;height:auto;margin:2px auto 0;}
 /* 模块标题：统一大小、弱强调，不与正文抢注意力 */
 body>section.mmx-mod>h2,body>section.card>h2{
-  font:700 1.04rem/1.5 var(--serif);color:#244b40;margin:0 0 11px;
-  padding-left:10px;border-left:3px solid #bf8247;letter-spacing:.01em;}
-/* 正文：字号收小、行距放宽、段间距舒服 */
+  font:700 1.04rem/1.5 var(--serif);color:var(--head);margin:0 0 11px;
+  padding-left:10px;border-left:3px solid var(--gold);letter-spacing:.01em;}
+/* 正文：字号收小、行距放宽、段间距随 --pm 调节 */
 body>section.mmx-mod p,body>section.card p,
 body>section.mmx-mod li,body>section.card li{
-  font-size:.9rem;line-height:1.92;color:#4a4436;}
-body>section.mmx-mod p,body>section.card p{margin:.5em 0;}
+  font-size:.9rem;line-height:1.92;color:var(--txt);margin:calc(.5em*var(--pm)) 0;}
 body>section.mmx-mod>ul,body>section.mmx-mod>ol,body>section.mmx-mod>div,
 body>section.mmx-mod>p:not(.mmx-mod-note),
 body>section.card:not(.merged-guide)>ul,body>section.card:not(.merged-guide)>ol,
 body>section.card:not(.merged-guide)>div,body>section.card:not(.merged-guide)>p:not(.mmx-mod-note){
   padding-left:14px;}
-/* 模块说明小字：弱化不抢眼 */
-.mmx-mod-note{font-size:.75rem;color:#8d8878;margin:.1em 0 .75em;line-height:1.7;}
 
 /* ── 内部块统一：卡片里不再套深卡片，一律浅底子块 ── */
 body>section .mmx-pending,body>section .mmx-evib,body>section .aiqa-item{
-  background:#fbfaf2;border:1px solid #eee9d8;border-radius:12px;
-  padding:13px 16px;margin:.65em 0;}
+  background:var(--inner-bg);border:1px solid var(--inner-bd);border-radius:12px;
+  padding:13px 16px;margin:calc(.65em*var(--pm)) 0;}
 body>section .mmx-evib ul{padding-left:1.15em;}
 /* 一句话主旨：去左侧竖线 + 收敛字号 */
-.mmx-oneline{font-size:.98rem;line-height:1.85;color:#3a352c;margin:.2em 0 0;
-  padding:12px 16px;background:#fbfaf4;border-left:none;border-radius:12px;}
+.mmx-oneline{font-size:.98rem;line-height:1.85;color:var(--txt);margin:.2em 0 0;
+  padding:12px 16px;background:var(--oneline-bg);border-left:none;border-radius:12px;}
 /* 核心观点 / 验证清单：虚线分隔 + 收紧行距 */
 .mmx-views li{padding:.5em 0 .5em 0;font-size:.9rem;line-height:1.88;}
 /* 原文金句 */
 .mmx-qlist li{padding:.6em 0 .6em 2.2em;}
-.mmx-qlist blockquote{font-size:.89rem;line-height:1.9;}
-.mmx-qlist cite{font-size:.72rem;}
+.mmx-qlist blockquote{font-size:.89rem;line-height:1.9;color:var(--txt);}
+.mmx-qlist cite{font-size:.72rem;color:var(--sub);}
 /* 核心追问：问句加重、答句放松 */
-.mmx-qa{margin:.7em 0;padding-left:12px;border-left:3px solid #e5dfcd;}
-.mmx-qa .mmx-q{font-size:.9rem;font-weight:700;color:#2f3a33;line-height:1.8;margin:0 0 .25em;}
-.mmx-qa .mmx-a{font-size:.88rem;line-height:1.95;color:#4a4436;margin:0;}
+.mmx-qa{margin:calc(.7em*var(--pm)) 0;padding-left:12px;border-left:3px solid var(--inner-bd);}
+.mmx-qa .mmx-q{font-size:.9rem;font-weight:700;color:var(--ink);line-height:1.8;margin:0 0 .25em;}
+.mmx-qa .mmx-a{font-size:.88rem;line-height:1.95;color:var(--txt);margin:0;}
 
 /* ── AI 问书专项：外层容器透明，问答条目才是阅读单元 ── */
 #mod-aiask .mmx-ask{background:transparent;border:0;border-radius:0;padding:0;margin:0;}
-#mod-aiask .aiqa-item{margin:.6em 0;padding:14px 16px 15px;}
-#mod-aiask .aiqa-item h3{font:700 .93rem/1.7 var(--serif);color:#2f5b49;margin:0 0 .4em;
+#mod-aiask .aiqa-item{margin:calc(.6em*var(--pm)) 0;padding:14px 16px 15px;}
+#mod-aiask .aiqa-item h3{font:700 .93rem/1.7 var(--serif);color:var(--qgreen);margin:0 0 .4em;
   padding:0;border:0;}
-#mod-aiask .aiqa-item h3:before{content:"问　";color:#bf8247;font-weight:700;}
-#mod-aiask .aiqa-item p{font-size:.88rem;line-height:1.95;color:#4a4436;margin:.4em 0;}
-#mod-aiask .aiqa-item ul{margin:.35em 0;padding-left:1.1em;}
-#mod-aiask .aiqa-item li{font-size:.87rem;line-height:1.88;margin:.18em 0;color:#4a4436;}
-#mod-aiask .aiqa-item li::marker{color:#c0a06a;}
+#mod-aiask .aiqa-item h3:before{content:"问　";color:var(--gold);font-weight:700;}
+/* 回答整体右缩进，与问句文字对齐（别顶着左边） */
+#mod-aiask .aiqa-item>p,#mod-aiask .aiqa-item>ul{margin-left:26px;}
+#mod-aiask .aiqa-item p{font-size:.88rem;line-height:1.95;color:var(--txt);
+  margin-top:calc(.4em*var(--pm));margin-bottom:calc(.4em*var(--pm));}
+#mod-aiask .aiqa-item ul{margin-top:calc(.35em*var(--pm));margin-bottom:calc(.35em*var(--pm));
+  padding-left:1.1em;}
+#mod-aiask .aiqa-item li{font-size:.87rem;line-height:1.88;margin:calc(.18em*var(--pm)) 0;
+  color:var(--qgreen);}
+#mod-aiask .aiqa-item li::marker{color:var(--gold);}
 /* 逐章追问（details 形态）：摘要行也收敛 */
-.mmx-ask>summary{font-size:.87rem;line-height:1.7;padding:2px 0;}
-.mmx-askbody{font-size:.88rem;line-height:1.9;}
+.mmx-ask>summary{font-size:.87rem;line-height:1.7;padding:2px 0;color:var(--qgreen);}
+.mmx-askbody{font-size:.88rem;line-height:1.9;color:var(--txt);}
 
-/* AI领读章内：AI 大纲原生深层样式（字号同步收小） */
-.merged-guide .sec{margin:9px 0 12px;padding-left:6px;border-left:2px solid #e5e0d6}
-.merged-guide .sec h4{font:600 .93rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.5em 0 .25em}
+/* ── AI领读章内：AI 大纲原生深层样式（章节字号整体再收一档） ── */
+.merged-guide .sec{margin:9px 0 12px;padding-left:6px;border-left:2px solid var(--card-bd)}
+.merged-guide .sec h4{font:600 .84rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:var(--head);margin:.5em 0 .25em}
+.merged-guide .mmx-name{font-size:.88rem !important;}
+.merged-guide .mmx-sech{font-size:.8rem !important;}
+.merged-guide .mmx-gist{font-size:.83rem !important;line-height:1.85;}
+.merged-guide .mmx-stat{font-size:.7rem !important;}
 .merged-guide ul.point{margin:.25em 0;padding-left:20px}
-.merged-guide ul.point>li{margin:.3em 0}
+.merged-guide ul.point>li{margin:.3em 0;font-size:.8rem !important;line-height:1.85;}
 .merged-guide ul.quote{margin:.22em 0 .22em 20px;padding-left:18px;list-style:none}
-.merged-guide ul.quote::before{content:"原句";display:block;font-size:.7rem;color:#bf8247;
+.merged-guide ul.quote::before{content:"原句";display:block;font-size:.7rem;color:var(--gold);
   letter-spacing:.1em;margin:.12em 0 .08em;font-weight:600}
-.merged-guide ul.quote.quote-node{margin-top:.45em;padding-top:.35em;border-top:1px dashed #eadfc9}
+.merged-guide ul.quote.quote-node{margin-top:.45em;padding-top:.35em;border-top:1px dashed var(--inner-bd)}
 .merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
-.merged-guide ul.quote>li{color:#4a4436;font-size:.88rem;line-height:1.85;margin:.18em 0;padding-left:10px;border-left:2px solid #bf8247}
+.merged-guide ul.quote>li{color:var(--txt);font-size:.8rem !important;line-height:1.85;margin:.18em 0;padding-left:10px;border-left:2px solid var(--gold)}
+.merged-guide .mmx-qt{font-size:.77rem !important;}
+
 /* 核心观点初判：外链 mmx-guide.css 的「观点N」前缀是绝对定位，在本页版式里和标题叠字，
    且此前要求去掉「观点1/2/3」前缀 —— 这里整条关掉（外链 CSS 不在页面内，只能内联覆盖）。 */
 .mmx-views li{padding-left:0 !important;}
 .mmx-views li:before,.mmx-views li::before{
   content:none !important;display:none !important;counter-increment:none !important;}
+
+/* ── 夜间主题：覆盖共享 CSS 里的硬编码浅色 ── */
+html[data-theme=dark] h1,html[data-theme=dark] h2,html[data-theme=dark] h3,
+html[data-theme=dark] h4{color:var(--head);}
+html[data-theme=dark] .mmx-qt{background:var(--inner-bg);color:var(--txt);}
+html[data-theme=dark] .mmx-qlist blockquote,html[data-theme=dark] .mmx-ask blockquote,
+html[data-theme=dark] .mmx-gist,html[data-theme=dark] .mmx-pts,
+html[data-theme=dark] .mmx-askbody{color:var(--txt);}
+html[data-theme=dark] .mmx-qlist li:before{background:#2b3a31;color:#9ed0af;}
+html[data-theme=dark] .mmx-views li,html[data-theme=dark] .mmx-qlist li,
+html[data-theme=dark] .mmx-qa,html[data-theme=dark] .mmx-sec>summary,
+html[data-theme=dark] .mmx-cn{border-color:#3a3f46;}
+html[data-theme=dark] .mmx-views li b,html[data-theme=dark] .mmx-qa .mmx-q{color:var(--ink);}
+html[data-theme=dark] .chip{background:#274234;color:#9ed0af;}
+html[data-theme=dark] .mmx-role,html[data-theme=dark] .mmx-chip{background:#262a2f;
+  color:#8a919a;border-color:#3a3f46;}
+html[data-theme=dark] a{color:#9ed0af;}
+
+/* ── 右上角设置面板 ── */
+#rdFab{position:fixed;top:10px;right:12px;z-index:60;font:600 13px/1 var(--sans);color:var(--txt);
+  background:var(--card-bg);border:1px solid var(--card-bd);border-radius:9px;padding:8px 12px;
+  cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.1);}
+#rdFab:hover{border-color:var(--head);color:var(--head);}
+#rdPanel{position:fixed;top:48px;right:12px;z-index:60;background:var(--card-bg);
+  border:1px solid var(--card-bd);border-radius:12px;padding:12px 14px;
+  box-shadow:0 8px 24px rgba(0,0,0,.16);display:grid;gap:9px;min-width:212px;}
+#rdPanel[hidden]{display:none;}
+#rdPanel .rd-row{display:flex;gap:5px;align-items:center;justify-content:space-between;}
+#rdPanel .rd-row>span{font-size:.72rem;color:var(--sub);flex:none;}
+#rdPanel .rd-btns{display:flex;gap:5px;}
+#rdPanel button{font:600 12px/1.4 var(--sans);color:var(--txt);background:var(--navlink-bg);
+  border:1px solid var(--navlink-bd);border-radius:7px;padding:4px 9px;cursor:pointer;}
+#rdPanel button:hover{border-color:var(--head);color:var(--head);}
+
 @media(max-width:720px){
-  body{padding:0 12px 60px;font-size:14.5px;}
-  body>section.mmx-mod,body>section.card{padding:15px 16px;border-radius:14px;}
-  .nav{grid-template-columns:repeat(2,minmax(0,1fr));}
+  body{padding:0 12px 60px;}
+  body>section.mmx-mod,body>section.card,body>section.mmx-svgwrap{padding:15px 16px;border-radius:14px;}
 }
 </style>
 </head>
@@ -845,5 +918,77 @@ body>section .mmx-evib ul{padding-left:1.15em;}
 <ol class="mmx-pts"><li><b>1</b> 人类简史：从动物到上帝（精装版）</li><li><b>2</b> 第一部分 认知革命</li><li><b>3</b> 第一章 人类：一种也没什么特别的动物</li><li><b>4</b> 第二章 知善恶树</li><li><b>5</b> 第三章 亚当和夏娃的一天</li><li><b>6</b> 第四章 毁天灭地的人类洪水</li><li><b>7</b> 第二部分 农业革命</li><li><b>8</b> 第五章 史上最大骗局</li><li><b>9</b> 第六章 盖起金字塔</li><li><b>10</b> 第七章 记忆过载</li><li><b>11</b> 第八章 历史从无正义</li><li><b>12</b> 第三部分 人类的融合统一</li><li><b>13</b> 第九章 历史的方向</li><li><b>14</b> 第十章 金钱的味道</li><li><b>15</b> 第十一章 帝国的愿景</li><li><b>16</b> 第十二章 宗教的法则</li><li><b>17</b> 第十三章 成功的秘密</li><li><b>18</b> 第四部分 科学革命</li><li><b>19</b> 第十四章 发现自己的无知</li><li><b>20</b> 第十五章 科学与帝国的联姻</li><li><b>21</b> 第十六章 资本主义教条</li><li><b>22</b> 第十七章 工业的巨轮</li><li><b>23</b> 第十八章 一场永远的革命</li><li><b>24</b> 第十九章 从此过着幸福快乐的日子</li><li><b>25</b> 第二十章 智人末日</li><li><b>26</b> 后记 变成神的这种动物</li><li><b>27</b> 致谢</li><li><b>28</b> 历史年表</li><li><b>29</b> 参考数据</li><li><b>30</b> 未来简史：从智人到智神</li><li><b>31</b> 图片</li><li><b>32</b> 献言</li><li><b>33</b> 体外受精：掌握创造的力量</li><li><b>34</b> 第1章 人类的新议题</li><li><b>35</b> 第一部分 智人征服世界</li><li><b>36</b> 第2章 人类世</li><li><b>37</b> 第3章 人类的特质</li><li><b>38</b> 第二部分 智人为世界赋予意义</li><li><b>39</b> 第4章 虚构的力量</li><li><b>40</b> 第5章 科学与宗教之争</li><li><b>41</b> 第6章 与“现代”的契约</li><li><b>42</b> 第7章 人文主义革命</li><li><b>43</b> 第三部分 智人失去控制权</li><li><b>44</b> 第8章 实验室里的定时炸弹</li><li><b>45</b> 第9章 大分离</li><li><b>46</b> 第10章 意识的海洋</li><li><b>47</b> 第11章 数据主义</li><li><b>48</b> 图片来源</li><li><b>49</b> 致谢</li><li><b>50</b> 今日简史：人类命运大议题</li><li><b>51</b> 献言</li><li><b>52</b> 序</li><li><b>53</b> 第一部分 科技颠覆</li><li><b>54</b> 第1章 理想的幻灭：从旧故事到新故事</li><li><b>55</b> 第2章 就业：等你长大，可能没有工作</li><li><b>56</b> 第3章 自由：数据霸权与社会公平</li><li><b>57</b> 第4章 平等：谁该拥有数据</li><li><b>58</b> 第二部分 政治挑战</li><li><b>59</b> 第5章 社群：人类身体的价值</li><li><b>60</b> 第6章 文明：世界的大同</li><li><b>61</b> 第7章 民族主义：无法解决全球性问题</li><li><b>62</b> 第8章 宗教：神祇只是为国家服务</li><li><b>63</b> 第9章 文化认同：开放与宽容</li><li><b>64</b> 第三部分 绝望与希望</li><li><b>65</b> 第10章 恐怖主义：切忌反应过度</li><li><b>66</b> 第11章 战争：永远不要低估人类的愚蠢</li><li><b>67</b> 第12章 谦逊：地球不是绕着你转</li><li><b>68</b> 第13章 神：不要妄称神的名</li><li><b>69</b> 第14章 世俗主义：面对你的不完美</li><li><b>70</b> 第四部分 真相</li><li><b>71</b> 第15章 无知：你知道的比你想象的少</li><li><b>72</b> 第16章 正义：人类的道德困境</li><li><b>73</b> 第17章 后真相时代：谎言万世永存</li><li><b>74</b> 第18章 未来不是科幻小说：无法逃离的母体</li><li><b>75</b> 第五部分 生存下去</li><li><b>76</b> 第19章 教育：改变是唯一不变的事</li><li><b>77</b> 第20章 意义：人生不是虚构的故事</li><li><b>78</b> 第21章 重新认识自己：人类心智的奥秘</li><li><b>79</b> 致谢</li><li><b>80</b> 原则</li><li><b>81</b> 文前的话</li><li><b>82</b> 致敬</li><li><b>83</b> 中文版序</li><li><b>84</b> 导言</li><li><b>85</b> 第一部分 我的历程</li><li><b>86</b> 第二部分 生活原则</li><li><b>87</b> 生活原则总结</li><li><b>88</b> 生活原则概要与列表</li><li><b>89</b> 第三部分 工作原则</li><li><b>90</b> 打造良好的文化……</li><li><b>91</b> 用对人……</li><li><b>92</b> 建造并进化你的机器……</li><li><b>93</b> 将工作原则融会贯通</li><li><b>94</b> 结语</li><li><b>95</b> 附录 桥水为创意择优所用的工具和行为准则</li><li><b>96</b> 参考文献</li><li><b>97</b> 致谢</li><li><b>98</b> 审校后记</li><li><b>99</b> 爆裂：未来社会的9大生存原则</li><li><b>100</b> 推荐序一 如何在快速变革的时代不被抛在脑后</li><li><b>101</b> 推荐序二 未来的应对</li><li><b>102</b> 推荐序三 重新定义常识</li><li><b>103</b> 序言</li><li><b>104</b> 1 涌现优于权威</li><li><b>105</b> 附言：将钟摆拨回原处</li><li><b>106</b> 2 拉力优于推力</li><li><b>107</b> 附言：偶然的幸运并非侥幸</li><li><b>108</b> 3 指南针优于地图</li><li><b>109</b> 附言：思考神话而非任务</li><li><b>110</b> 4 风险优于安全</li><li><b>111</b> 附言：低买高卖</li><li><b>112</b> 5 违抗优于服从</li><li><b>113</b> 附言：有良知的违抗</li><li><b>114</b> 6 实践优于理论</li><li><b>115</b> 附言：当理论失灵</li><li><b>116</b> 7 多样性优于能力</li><li><b>117</b> 附言：差异化带来的不同</li><li><b>118</b> 8 韧性优于力量</li><li><b>119</b> 附言：容忍混乱，或者接受意料之外的事</li><li><b>120</b> 9 系统优于个体</li><li><b>121</b> 附言：在“白色空间”内工作</li><li><b>122</b> 总结</li><li><b>123</b> 致谢</li><li><b>124</b> 注释</li><li><b>125</b> 希腊人的故事（全三册）</li><li><b>126</b> 希腊人的故事1 文明的诞生</li><li><b>127</b> 前言：写给读者的信</li><li><b>128</b> 第一章 希腊人是谁？</li><li><b>129</b> 奥林匹克运动会</li><li><b>130</b> 诸神的世界</li><li><b>131</b> 向海外发展</li><li><b>132</b> 第二章 纷纷建国</li><li><b>133</b> 斯巴达——吕库古“宪法”</li><li><b>134</b> 雅典——梭伦改革</li><li><b>135</b> 雅典——庇西特拉图时代</li><li><b>136</b> 政变</li><li><b>137</b> 雅典——克里斯提尼改革</li><li><b>138</b> 陶片放逐</li><li><b>139</b> “弃权”？“尊重少数人的意见”？</li><li><b>140</b> 第三章 抵抗侵略者波斯</li><li><b>141</b> 波斯帝国</li><li><b>142</b> 第一次希波战争</li><li><b>143</b> 马拉松</li><li><b>144</b> 两次希波战争之间的10年</li><li><b>145</b> 排除政敌</li><li><b>146</b> 战争前夜</li><li><b>147</b> 温泉关</li><li><b>148</b> 强制疏散</li><li><b>149</b> 前往萨拉米斯</li><li><b>150</b> 萨拉米斯海战</li><li><b>151</b> 普拉塔亚陆战</li><li><b>152</b> 爱琴海重回希腊</li><li><b>153</b> 第四章 希波战争以后</li><li><b>154</b> 雅典与比雷埃夫斯的城市一体化</li><li><b>155</b> 年轻的斯巴达将军</li><li><b>156</b> 提洛同盟</li><li><b>157</b> 英雄的余生</li><li><b>158</b> 年表</li><li><b>159</b> 图片出处一览</li><li><b>160</b> 希腊人的故事2 文明的崩坏</li><li><b>161</b> 民主的成熟和崩坏</li><li><b>162</b> 第一部 伯里克利时代</li><li><b>163</b> 前期</li><li><b>164</b> 后期</li><li><b>165</b> 第二部 伯里克利以后</li><li><b>166</b> 前期</li><li><b>167</b> 后期</li><li><b>168</b> 年表</li><li><b>169</b> 图片出处一览</li><li><b>170</b> 希腊人的故事3 新希望</li><li><b>171</b> 第一部 希腊城邦国家的终结</li><li><b>172</b> 第一章 雅典的凋败</li><li><b>173</b> 第二章 无法蜕变的斯巴达</li><li><b>174</b> 第三章 底比斯的极限</li><li><b>175</b> 第二部 新生力量</li><li><b>176</b> 第一章 父亲腓力</li><li><b>177</b> 第二章 儿子亚历山大</li><li><b>178</b> 第三章 希腊化世界</li><li><b>179</b> 变量：看见中国社会小趋势</li><li><b>180</b> 献给</li><li><b>181</b> 感谢</li><li><b>182</b> 前言</li><li><b>183</b> 第一章 怎样观察一棵树</li><li><b>184</b> 两棵树</li><li><b>185</b> 30年</li><li><b>186</b> 长河与大树</li><li><b>187</b> 历史感</li><li><b>188</b> 冲击与反转</li><li><b>189</b> 快变量和慢变量</li><li><b>190</b> 大趋势和小趋势</li><li><b>191</b> 5个变量</li><li><b>192</b> 第二章 在无人地带寻找无人机</li><li><b>193</b> 火星上的农业</li><li><b>194</b> 极客极飞</li><li><b>195</b> 秋收起“翼”</li><li><b>196</b> 寻找场景</li><li><b>197</b> 猜猜谁在敲门</li><li><b>198</b> 匹配</li><li><b>199</b> 水稻和稗草</li><li><b>200</b> 群众路线</li><li><b>201</b> 第三章 老兵不死</li><li><b>202</b> 跟汽车说话的人</li><li><b>203</b> 完美曲线</li><li><b>204</b> 新造车运动</li><li><b>205</b> 海尔的老兵</li><li><b>206</b> 企业必死，生态永存</li><li><b>207</b> 凡是过去，皆为序曲</li><li><b>208</b> Sky流</li><li><b>209</b> 电子竞技“超级碗”</li><li><b>210</b> 新与旧</li><li><b>211</b> 第四章 在菜市场遇见城市设计师</li><li><b>212</b> 城市盯梢者</li><li><b>213</b> 菜市场小贩的手</li><li><b>214</b> 自上而下和自下而上</li><li><b>215</b> 单核城市和多核城市</li><li><b>216</b> 谁是东莞人？</li><li><b>217</b> 城市新物种</li><li><b>218</b> 林哥</li><li><b>219</b> 卑微者最顽强</li><li><b>220</b> 精明收缩</li><li><b>221</b> DNA Café</li><li><b>222</b> 颜值革命</li><li><b>223</b> 第五章 阿那亚和范家小学</li><li><b>224</b> 托克维尔在阿那亚</li><li><b>225</b> 街角咖啡馆</li><li><b>226</b> 第二人生</li><li><b>227</b> 从云到雨</li><li><b>228</b> 重建社群</li><li><b>229</b> 剧情反转</li><li><b>230</b> 范家小学的孩子</li><li><b>231</b> 张校长</li><li><b>232</b> 两条路</li><li><b>233</b> 夕阳无言</li><li><b>234</b> 后记</li><li><b>235</b> 致谢</li><li><b>236</b> 草与禾：中华文明4000年融合史</li><li><b>237</b> 献词</li><li><b>238</b> 序 中华文明的视角</li><li><b>239</b> 第一章 双峰对峙——草的世界与禾的世界</li><li><b>240</b> 商周天下：中国与四方</li><li><b>241</b> 迷雾中的北境</li><li><b>242</b> 白登山前后：两个世界的战与和</li><li><b>243</b> 从马邑之谋到燕然勒石</li><li><b>244</b> 第二章 胡汉难分——以华夏为主体的混合政权模式</li><li><b>245</b> 走向洛阳城</li><li><b>246</b> 飞旋在亚洲舞台</li><li><b>247</b> 大唐变成小唐</li><li><b>248</b> 第三章 北驰南渡——以草原为主体的混合政权模式</li><li><b>249</b> 契丹人的“新农村建设”</li><li><b>250</b> 女真人南柯一梦</li><li><b>251</b> 转进江南：水运即国运</li><li><b>252</b> 第四章 万里一统——元朝统一政权模式</li><li><b>253</b> 大元王朝的三大支柱</li><li><b>254</b> 朱棣：披着大明外衣的“蒙古人”</li><li><b>255</b> 第五章 天下一家——清朝统一政权模式</li><li><b>256</b> 皇太极：“我是谁？”</li><li><b>257</b> 草原的最后挽歌</li><li><b>258</b> 天下的清朝</li><li><b>259</b> 后记 春草秋禾织天下</li><li><b>260</b> 创世记：从细胞到文明，社会的深层起源</li><li><b>261</b> 引言</li><li><b>262</b> 第一章 寻找创世记</li><li><b>263</b> 第二章 演化史上的大转变</li><li><b>264</b> 第三章 大转变的两难问题及其解决之道</li><li><b>265</b> 第四章 追踪漫长的社会演化过程</li><li><b>266</b> 第五章 迈进真社会性的最后几步</li><li><b>267</b> 第六章 群体选择</li><li><b>268</b> 第七章 人类的故事</li><li><b>269</b> 参考文献与拓展阅读</li><li><b>270</b> 作者致谢</li><li><b>271</b> 译者致谢</li><li><b>272</b> 细节：如何轻松影响他人</li><li><b>273</b> 引言</li><li><b>274</b> 01 向“大众”借力</li><li><b>275</b> 02 “小众”的反作用力</li><li><b>276</b> 03 非常态VS常态</li><li><b>277</b> 04 强大的环境暗示</li><li><b>278</b> 05 改个名字，改变一切</li><li><b>279</b> 06 如何化敌为友</li><li><b>280</b> 07 预测他人的喜好、渴望与需求</li><li><b>281</b> 08 主动承诺的力量</li><li><b>282</b> 09 承诺要行动，要公开</li><li><b>283</b> 10 “心安理得”效应</li><li><b>284</b> 11 如何为员工鼓劲儿加油</li><li><b>285</b> 12 如何避开决策陷阱</li><li><b>286</b> 13 巧用“执行意向”</li><li><b>287</b> 14 推迟一点儿会更好</li><li><b>288</b> 15 为了将来的自己</li><li><b>289</b> 16 目标设得好，干劲儿会更足</li><li><b>290</b> 17 损失规避原则</li><li><b>291</b> 18 如何克服拖延症</li><li><b>292</b> 19 如何留住顾客跟定你</li><li><b>293</b> 20 把潜力变成现实</li><li><b>294</b> 21 把会议开得更高效</li><li><b>295</b> 22 服装的影响力</li><li><b>296</b> 23 亮出专家身份</li><li><b>297</b> 24 不确定的说服力</li><li><b>298</b> 25 中心位置的影响力</li><li><b>299</b> 26 如何激发创意</li><li><b>300</b> 27 主场还是客场</li><li><b>301</b> 28 如何让自己变得更强大</li><li><b>302</b> 29 你所需的只是爱</li><li><b>303</b> 30 完美礼物哪里找</li><li><b>304</b> 31 为互助留出余地</li><li><b>305</b> 32 表达感激好处多</li><li><b>306</b> 33 出乎意料与抛砖引玉</li><li><b>307</b> 34 如何获得帮助</li><li><b>308</b> 35 先下手为强</li><li><b>309</b> 36 报价精确一点儿会更好</li><li><b>310</b> 37 定价末尾数字有玄机</li><li><b>311</b> 38 顺序改一改，生意滚滚来</li><li><b>312</b> 39 如何事半功倍</li><li><b>313</b> 40 化整为零</li><li><b>314</b> 41 鲜明生动的细节</li><li><b>315</b> 42 指出机会成本</li><li><b>316</b> 43 如何激励他人（还有你自己）完成任务</li><li><b>317</b> 44 如何提高客户忠诚度</li><li><b>318</b> 45 如何让一加一大于二</li><li><b>319</b> 46 退后一步看问题</li><li><b>320</b> 47 从他人的错误中汲取教训</li><li><b>321</b> 48 对错误进行管理</li><li><b>322</b> 49 当天就点评</li><li><b>323</b> 50 给邮件加点儿料，让谈判更顺畅</li><li><b>324</b> 51 碰触的魔力</li><li><b>325</b> 52 把最好的留到最后</li><li><b>326</b> 额外附赠</li><li><b>327</b> 致谢</li><li><b>328</b> 助推：如何做出有关健康、财富与幸福的最佳决策</li><li><b>329</b> 推荐序1 引导你做出更好的选择</li><li><b>330</b> 推荐序2 我们离“经济人”有多远？</li><li><b>331</b> 推荐序3 助推？强推？还是干脆踹一脚？</li><li><b>332</b> 概述</li><li><b>333</b> 第1章 偏见和谬误如何欺骗我们的眼睛？</li><li><b>334</b> 第2章 如何抵制诱惑？</li><li><b>335</b> 第3章 如何控制社会对我们的影响？</li><li><b>336</b> 第4章 如何提高选择的满意度？</li><li><b>337</b> 第5章 如何优化选择体系？</li><li><b>338</b> 第6章 如何制订更有保障的理财计划？</li><li><b>339</b> 第7章 你的投资方案够好吗？</li><li><b>340</b> 第8章 如何设计更好的信贷方案？</li><li><b>341</b> 第9章 如何打造更为人性化的社会保障体系？</li><li><b>342</b> 第10章 如何改进处方药保险方案？</li><li><b>343</b> 第11章 如何促进器官捐献？</li><li><b>344</b> 第12章 如何拯救我们的星球？</li><li><b>345</b> 第13章 我们该如何为孩子挑选学校？</li><li><b>346</b> 第14章 如何改善现有医疗体系？</li><li><b>347</b> 第15章 婚姻有没有可能私人化？</li><li><b>348</b> 第16章 欢迎来到助推的世界！</li><li><b>349</b> 第17章 谁会反对助推？</li><li><b>350</b> 第18章 助推：真正的第三条道路</li><li><b>351</b> 后记 写于2008年金融危机之后</li><li><b>352</b> 致谢</li><li><b>353</b> 智能商业</li><li><b>354</b> 推荐序 马云|阿里巴巴集团创始人|</li><li><b>355</b> 自序</li><li><b>356</b> 前言</li><li><b>357</b> 第一部分 智能商业</li><li><b>358</b> 01 智能商业大变革</li><li><b>359</b> 02 互联网的本质</li><li><b>360</b> 03 智能商业双螺旋之一：网络协同</li><li><b>361</b> 04 智能商业双螺旋之二：数据智能</li><li><b>362</b> 05 智能商业的特征：向精准升维</li><li><b>363</b> 06 黑洞效应：智能商业胜出的秘密</li><li><b>364</b> 第二部分 商业模式变革</li><li><b>365</b> 07 C2B：未来的核心商业模式</li><li><b>366</b> 08 S2B：通往C2B模式的自然演化路径</li><li><b>367</b> 第三部分 战略变革</li><li><b>368</b> 09 新战略：高效反馈闭环</li><li><b>369</b> 10 新定位：点—线—面—体</li><li><b>370</b> 第四部分 组织变革</li><li><b>371</b> 11 第四次组织创新：创造力革命</li><li><b>372</b> 12 新组织原则：从管理到赋能</li><li><b>373</b> 13 自组织协同网</li><li><b>374</b> 第五部分 案例分析</li><li><b>375</b> 14 淘宝的演化</li><li><b>376</b> 15 新品牌：网红时代的品牌打造</li><li><b>377</b> 第六部分 关于未来</li><li><b>378</b> 16 “互联网×”：传统产业的重构</li><li><b>379</b> 结语 新文明：感受未来已来</li><li><b>380</b> 致谢</li><li><b>381</b> 暗知识：机器认知如何颠覆商业和社会</li><li><b>382</b> 导读</li><li><b>383</b> 序言 “暗知识”和现代社会</li><li><b>384</b> 寄语</li><li><b>385</b> 第一章 横空出世——暗知识的发现</li><li><b>386</b> 第二章 榨取数据——机器能学会的知识</li><li><b>387</b> 第三章 神经网络——萃取隐蔽相关性</li><li><b>388</b> 第四章 逐鹿硅谷——AI产业争霸战</li><li><b>389</b> 第五章 飓风袭来——将被颠覆的行业</li><li><b>390</b> 第六章 暗知识神迹——机器能否超越人类</li><li><b>391</b> 第七章 “神人”与“闲人”——AI时代的社会与伦理</li><li><b>392</b> 结束语 人类该怎么办</li><li><b>393</b> 致谢</li><li><b>394</b> 附录1：一个经典的5层神经网络LeNet-5</li><li><b>395</b> 附录2：循环神经网络RNN和长-短时记忆网络LSTM</li><li><b>396</b> 附录3：CPU、GPU和TPU</li><li><b>397</b> 附录4：机器学习的主要编程框架</li><li><b>398</b> 参考文献</li><li><b>399</b> 百岁人生：长寿时代的生活和工作</li><li><b>400</b> 名人推荐</li><li><b>401</b> 绪论</li><li><b>402</b> 温迪妮的诅咒</li><li><b>403</b> 这次不一样</li><li><b>404</b> 我是谁</li><li><b>405</b> 第1章 生活篇 天降长寿</li><li><b>406</b> 第2章 财务篇 更晚退休</li><li><b>407</b> 杰克创造的人生</li><li><b>408</b> 吉米——三阶段人生的绷紧</li><li><b>409</b> 简——三阶段人生的崩溃</li><li><b>410</b> 伴侣</li><li><b>411</b> 别了，三阶段人生</li><li><b>412</b> 第3章 工作篇 就业形势</li><li><b>413</b> 失业的未来？</li><li><b>414</b> 未来的工作</li><li><b>415</b> 我们对简的建议是什么？</li><li><b>416</b> 第4章 资产篇 专注无价之物</li><li><b>417</b> 第一类：生产资产</li><li><b>418</b> 同辈</li><li><b>419</b> 声誉</li><li><b>420</b> 第二类：活力资产</li><li><b>421</b> 杰克的无形资产</li><li><b>422</b> 第三类：新型资产——转型资产</li><li><b>423</b> 自我认知</li><li><b>424</b> 多元网络</li><li><b>425</b> 第5章 情景篇 可能的自我</li><li><b>426</b> 四阶段人生情景设想</li><li><b>427</b> 简的情景设想</li><li><b>428</b> 第6章 阶段篇 人生新模块</li><li><b>429</b> 青春再来</li><li><b>430</b> 成为一名探险者</li><li><b>431</b> 成为独立生产者</li><li><b>432</b> 制作一种投资组合</li><li><b>433</b> 转变的本质</li><li><b>434</b> 第7章 金钱篇 长寿推手</li><li><b>435</b> 财务功效</li><li><b>436</b> 金融机构</li><li><b>437</b> 第8章 时间篇 娱乐还是创造</li><li><b>438</b> 第9章 亲友篇 改变的私生活</li><li><b>439</b> 工作和家庭</li><li><b>440</b> 多代同堂的生活</li><li><b>441</b> 第10章 实践篇 期待变革</li><li><b>442</b> 这对教育意味着什么？</li><li><b>443</b> 这对公司来说意味着什么？</li><li><b>444</b> 关于政府</li><li><b>445</b> 为什么变化这么慢？</li><li><b>446</b> 超级版图：全球供应链、超级城市与新商业文明的崛起</li><li><b>447</b> 中文版序</li><li><b>448</b> 前言</li><li><b>449</b> 关于地图的说明</li><li><b>450</b> 第一部 互联互通的超级版图</li><li><b>451</b> 第一章 从割离到连接</li><li><b>452</b> 第二章 新世界的新地图</li><li><b>453</b> 第二部 国家的放权</li><li><b>454</b> 第三章 权力大下放</li><li><b>455</b> 第四章 从分权到聚合</li><li><b>456</b> 第五章 美利坚合众国的命运</li><li><b>457</b> 第三部 未来的国家竞争</li><li><b>458</b> 第六章 未来战争的多种形式与可能</li><li><b>459</b> 第七章 伟大的供应链战争</li><li><b>460</b> 第八章 基础设施联盟</li><li><b>461</b> 第九章 新钢铁时代</li><li><b>462</b> 第十章 海洋超级版图</li><li><b>463</b> 第四部 从国家到超级城市</li><li><b>464</b> 第十一章 你建造，他们就会来</li><li><b>465</b> 第十二章 规划超级城市</li><li><b>466</b> 第十三章 供应链的救赎</li><li><b>467</b> 第五部 走向全球社会</li><li><b>468</b> 第十四章 数字供应链</li><li><b>469</b> 第十五章 文明的融合</li><li><b>470</b> 第十六章 供应链与自然的博弈</li><li><b>471</b> 结语</li><li><b>472</b> 致谢</li><li><b>473</b> 推荐制图网站和工具</li><li><b>474</b> 反脆弱</li><li><b>475</b> 献给</li><li><b>476</b> 章节概要与阅读导图</li><li><b>477</b> 前言</li><li><b>478</b> 第一卷 反脆弱性：介绍</li><li><b>479</b> 第1章 达摩克利斯之剑和九头蛇怪</li><li><b>480</b> 第2章 随处可见的过度补偿和过度反应</li><li><b>481</b> 第3章 猫与洗衣机</li><li><b>482</b> 第4章 杀死我的东西却让其他人更强壮</li><li><b>483</b> 第二卷 现代化与对反脆弱性的否定</li><li><b>484</b> 第5章 露天市场与办公楼</li><li><b>485</b> 第6章 告诉他们我爱随机性</li><li><b>486</b> 第7章 天真的干预</li><li><b>487</b> 第8章 预测是现代化的产物</li><li><b>488</b> 第三卷 非预测性的世界观</li><li><b>489</b> 第9章 胖子托尼与脆弱推手</li><li><b>490</b> 第10章 塞内加的不利因素和有利因素</li><li><b>491</b> 第11章 千万别嫁给摇滚明星</li><li><b>492</b> 第四卷 可选择性、技术与反脆弱性的智慧</li><li><b>493</b> 第12章 泰勒斯的甜葡萄</li><li><b>494</b> 第13章 教鸟儿如何飞行</li><li><b>495</b> 第14章 当两件事不是“同一回事”时</li><li><b>496</b> 第15章 失败者撰写的历史</li><li><b>497</b> 第16章 混乱中的秩序</li><li><b>498</b> 第17章 胖子托尼与苏格拉底辩论</li><li><b>499</b> 第五卷 非线性与非线性</li><li><b>500</b> 第18章 一块大石头与一千颗小石子的区别</li><li><b>501</b> 第19章 炼金石与反炼金石</li><li><b>502</b> 第六卷 否定法</li><li><b>503</b> 第20章 时间与脆弱性</li><li><b>504</b> 第21章 医疗、凸性和不透明</li><li><b>505</b> 第22章 活得长寿，但不要太长</li><li><b>506</b> 第七卷 脆弱性与反脆弱性的伦理</li><li><b>507</b> 第23章 切身利害：反脆弱性和牺牲他人的可选择性</li><li><b>508</b> 第24章 给职业戴上伦理光环</li><li><b>509</b> 第25章 结语</li><li><b>510</b> 后记</li><li><b>511</b> 光荣与梦想1</li><li><b>512</b> 献言</li><li><b>513</b> 序曲 谷底</li><li><b>514</b> 第一部分 应运而起（1932～1941年）</li><li><b>515</b> 第一章 世事维艰</li><li><b>516</b> 第二章 罗斯福</li><li><b>517</b> 第三章 骚乱</li><li><b>518</b> 第四章 罗斯福和民意所向</li><li><b>519</b> 第五章 保守派卷土重来</li><li><b>520</b> 第六章 笼罩在原始恐怖的阴云下</li><li><b>521</b> 第七章 黑暗中的曙光</li><li><b>522</b> 第八章 战争边缘的美国</li><li><b>523</b> 光荣与梦想2</li><li><b>524</b> 献言</li><li><b>525</b> 第二部分 牺牲与变化（1941～1950年）</li><li><b>526</b> 第九章 反击</li><li><b>527</b> 第十章 国内战线</li><li><b>528</b> 第十一章 小院丁香花开时</li><li><b>529</b> 第十二章 新世界，新风向</li><li><b>530</b> 第十三章 胜利旗帜的光芒不再</li><li><b>531</b> 第十四章 哈里·杜鲁门时代的生活</li><li><b>532</b> 第十五章 黑夜里哈里的一点儿英雄形象</li><li><b>533</b> 第十六章 疑虑重重的时代</li><li><b>534</b> 第十七章 坠入深渊</li><li><b>535</b> 光荣与梦想3</li><li><b>536</b> 献言</li><li><b>537</b> 第三部分 种下恶果（1951～1960年）</li><li><b>538</b> 第十八章 内讧不断</li><li><b>539</b> 第十九章 向右转</li><li><b>540</b> 第二十章 对通用汽车公司有益的</li><li><b>541</b> 第二十一章 主席先生，主席先生</li><li><b>542</b> 第二十二章 从容前行</li><li><b>543</b> 第二十三章 追逐幸福</li><li><b>544</b> 第二十四章 警笛声响起</li><li><b>545</b> 第二十五章 改革动荡</li><li><b>546</b> 第二十六章 将军归营</li><li><b>547</b> 光荣与梦想4</li><li><b>548</b> 献言</li><li><b>549</b> 第四部分 终尝恶果（1961～1968年）</li><li><b>550</b> 第二十七章 美国的新一代</li><li><b>551</b> 第二十八章 号角的又一次召唤</li><li><b>552</b> 第二十九章 铭记勿忘</li><li><b>553</b> 第三十章 权力的长臂</li><li><b>554</b> 第三十一章 伟大梦想与梦之幻灭</li><li><b>555</b> 第三十二章 走投无路</li><li><b>556</b> 第三十三章 多事之秋</li><li><b>557</b> 第五部分 尼克松赢了（1969～1972年）</li><li><b>558</b> 第三十四章 沉默大多数的崛起</li><li><b>559</b> 第三十五章 牢骚满腹的大人物们</li><li><b>560</b> 第三十六章 美利坚“分裂”国</li><li><b>561</b> 第三十七章 自尊丧尽</li><li><b>562</b> 后记 余音</li><li><b>563</b> 致谢</li><li><b>564</b> 大事记</li><li><b>565</b> 黑天鹅</li><li><b>566</b> 献辞页</li><li><b>567</b> 序言</li><li><b>568</b> 第一部分 极端斯坦与黑天鹅现象</li><li><b>569</b> 第一章 自我欺骗的人类</li><li><b>570</b> 第二章 出版业中的黑天鹅</li><li><b>571</b> 第三章 极端斯坦与平均斯坦</li><li><b>572</b> 第四章 1001天――如何避免成失败者</li><li><b>573</b> 第五章 不能只靠过去的经验来判断</li><li><b>574</b> 第六章 叙述谬误</li><li><b>575</b> 第七章 活在希望的小屋里</li><li><b>576</b> 第八章永 不消失的运气――沉默的证</li><li><b>577</b> 第九章 游戏谬误――愚人的不确定</li><li><b>578</b> 第二部分 我们难以预测</li><li><b>579</b> 第十章 预测之耻</li><li><b>580</b> 第十一章 怎样寻找鸟粪</li><li><b>581</b> 第十二章 认知斯坦――一个梦</li><li><b>582</b> 第十三章 假如你不会预测怎么办</li><li><b>583</b> 第三部分 极端斯坦的灰天鹅</li><li><b>584</b> 第十四章 从平均斯坦到极端斯坦，再回到平均斯坦</li><li><b>585</b> 第十五章 钟形曲线――智力大骗</li><li><b>586</b> 第十六章 随机的美学</li><li><b>587</b> 第十七章 洛克的疯子――在错误的地方出现的钟形曲线</li><li><b>588</b> 第十八章 骗子的不确定性</li><li><b>589</b> 结语 一半对一半――如何与黑天鹅打成平手</li><li><b>590</b> 后记1 从白天鹅到黑天鹅</li><li><b>591</b> 后记2 强大与脆弱――更深层次的哲学经验的反思</li><li><b>592</b> 致谢</li><li><b>593</b> 论大战略</li><li><b>594</b> 献辞</li><li><b>595</b> 推荐序</li><li><b>596</b> 序言</li><li><b>597</b> 第一章 穿越赫勒斯滂海峡</li><li><b>598</b> 第二章 长墙</li><li><b>599</b> 第三章 老师和约束</li><li><b>600</b> 第四章 灵魂与国家</li><li><b>601</b> 第五章 作为枢纽的君主</li><li><b>602</b> 第六章 新世界</li><li><b>603</b> 第七章 最伟大的战略家</li><li><b>604</b> 第八章 最伟大的总统</li><li><b>605</b> 第九章 最后的美好希望</li><li><b>606</b> 第十章 以赛亚</li><li><b>607</b> 重新理解创业：一个创业者的途中思考</li><li><b>608</b> 推荐序一 认知和思考最好的体现是面向未来的行动</li><li><b>609</b> 推荐序二 反思是为了更好地前行</li><li><b>610</b> 推荐序三 我与周航的四个故事</li><li><b>611</b> 前言</li><li><b>612</b> 一个创业者从南到北的故事</li><li><b>613</b> 我与易到的上半场</li><li><b>614</b> 我们如此恐惧失败</li><li><b>615</b> 中美对待失败的差异</li><li><b>616</b> 失败是一种宿命</li><li><b>617</b> 第一章 重新理解战略</li><li><b>618</b> 概念先行还是问题驱动</li><li><b>619</b> 甄别需求的真伪</li><li><b>620</b> 完美的宏大和简陋的快捷</li><li><b>621</b> 战略的维度</li><li><b>622</b> 战略思考要摆脱战斗模式</li><li><b>623</b> 第二章 重新理解竞争</li><li><b>624</b> 先行者姿态</li><li><b>625</b> 成功带来的认知局限</li><li><b>626</b> 竞争是生死问题</li><li><b>627</b> 真正的竞争来自另一个维度</li><li><b>628</b> 创新窒息</li><li><b>629</b> 竞争是全方位的战争</li><li><b>630</b> 竞争的核心问题</li><li><b>631</b> 第三章 重新理解品牌</li><li><b>632</b> 过去，我们怎么看品牌？</li><li><b>633</b> 重新理解品牌</li><li><b>634</b> 回归原点做品牌</li><li><b>635</b> 做品牌的两个主张</li><li><b>636</b> 口碑是最好的传播</li><li><b>637</b> 用一以贯之的真诚去解决问题</li><li><b>638</b> 第四章 重新理解流量</li><li><b>639</b> 流量永远是稀缺的</li><li><b>640</b> 产品本身决定了流量的关键问题</li><li><b>641</b> 后流量时代</li><li><b>642</b> 第五章 重新理解钱</li><li><b>643</b> 关于钱的四点反思</li><li><b>644</b> 选择投资人：不博弈，双赢</li><li><b>645</b> 退出与套现</li><li><b>646</b> 第六章 重新理解领导力</li><li><b>647</b> 领导力首先是做自己</li><li><b>648</b> 你只能领导你喜欢的人</li><li><b>649</b> 寻找与你最相匹配的领域</li><li><b>650</b> 第七章 领导者的自我成长</li><li><b>651</b> 归功于外，归因于己</li><li><b>652</b> 领导者要成长就要“复盘”</li><li><b>653</b> 学会示弱</li><li><b>654</b> 学会向别人求助</li><li><b>655</b> 避免怕输的心态</li><li><b>656</b> 第八章 如何打造一个团队</li><li><b>657</b> 长心：寻找志趣相投的合伙人</li><li><b>658</b> 搭骨架：寻找信任你的初创员工</li><li><b>659</b> 长肉：学会留住牛人</li><li><b>660</b> 集体面试：缓解团队更迭带来的矛盾</li><li><b>661</b> 复盘：团队整合的核心方法</li><li><b>662</b> 第九章 重新理解企业成长</li><li><b>663</b> 做好打持久战的准备</li><li><b>664</b> 最小化启动</li><li><b>665</b> 加速度比初速度更重要</li><li><b>666</b> 没有绝对的坚持</li><li><b>667</b> 基业长青</li><li><b>668</b> 第十章 如何应对低谷</li><li><b>669</b> 低谷时期常见的三种做法</li><li><b>670</b> 低谷时期的三条建议</li><li><b>671</b> 第十一章 突破瓶颈</li><li><b>672</b> 保持清醒的认识，不要全盘否定过去</li><li><b>673</b> 战略摸索期应如何调整</li><li><b>674</b> 找到创业的初心</li><li><b>675</b> 第十二章 重新理解未来</li><li><b>676</b> 看到和看穿</li><li><b>677</b> 找到独特的小切口</li><li><b>678</b> 从大处着眼，从小处着手，思考需求的本质</li><li><b>679</b> 创新没有边界</li><li><b>680</b> 顺应时代的趋势</li><li><b>681</b> 结语 学习做一个卓越的投资人</li><li><b>682</b> 角色转变：从创业者到投资人</li><li><b>683</b> 做小，做少，做慢</li><li><b>684</b> 勤奋可能并不是成功的充分条件</li><li><b>685</b> 在否定中继续向前走</li><li><b>686</b> 后记 为了再来：重新理解创业</li><li><b>687</b> 自私的基因（40周年增订精装版）</li><li><b>688</b> 40周年增订版说明</li><li><b>689</b> 40周年增订版序言</li><li><b>690</b> 30周年版简介</li><li><b>691</b> 第2版前言</li><li><b>692</b> 序言</li><li><b>693</b> 前言</li><li><b>694</b> 第1章 为什么会有人呢？</li><li><b>695</b> 第2章 复制因子</li><li><b>696</b> 第3章 不朽的双螺旋</li><li><b>697</b> 第4章 基因机器</li><li><b>698</b> 第5章 进犯行为：稳定性和自私的机器</li><li><b>699</b> 第6章 基因种族</li><li><b>700</b> 第7章 计划生育</li><li><b>701</b> 第8章 代际之战</li><li><b>702</b> 第9章 两性战争</li><li><b>703</b> 第10章 你为我搔痒，我就骑在你的头上</li><li><b>704</b> 第11章 觅母：新的复制因子</li><li><b>705</b> 第12章 好人终有好报</li><li><b>706</b> 第13章 基因的延伸</li><li><b>707</b> 第14章 基因决定论与基因选择论</li><li><b>708</b> 第15章 对于完美化的制约</li><li><b>709</b> 尾注</li><li><b>710</b> 参考书目</li><li><b>711</b> 第14、15章术语表</li><li><b>712</b> 评论集萃</li></ol></section>
 <section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点</h2><ul class="mmx-views"><li><b>第 1–7 章</b>——含「人类简史：从动物到上帝（」至「第二部分 农业革命」</li><li><b>第 8–14 章</b>——含「第五章 史上最大骗局」至「第十章 金钱的味道」</li><li><b>第 15–21 章</b>——含「第十一章 帝国的愿景」至「第十六章 资本主义教条」</li><li><b>第 22–28 章</b>——含「第十七章 工业的巨轮」至「历史年表」</li><li><b>第 29–35 章</b>——含「参考数据」至「第一部分 智人征服世界」</li><li><b>第 36–42 章</b>——含「第2章 人类世」至「第7章 人文主义革命」</li><li><b>第 43–49 章</b>——含「第三部分 智人失去控制权」至「致谢」</li><li><b>第 50–56 章</b>——含「今日简史：人类命运大议题」至「第3章 自由：数据霸权与」</li><li><b>第 57–63 章</b>——含「第4章 平等：谁该拥有数」至「第9章 文化认同：开放与」</li><li><b>第 64–70 章</b>——含「第三部分 绝望与希望」至「第四部分 真相」</li><li><b>第 71–77 章</b>——含「第15章 无知：你知道的」至「第20章 意义：人生不是」</li><li><b>第 78–84 章</b>——含「第21章 重新认识自己：」至「导言」</li><li><b>第 85–91 章</b>——含「第一部分 我的历程」至「用对人……」</li><li><b>第 92–98 章</b>——含「建造并进化你的机器……」至「审校后记」</li><li><b>第 99–105 章</b>——含「爆裂：未来社会的9大生存」至「附言：将钟摆拨回原处」</li><li><b>第 106–112 章</b>——含「2 拉力优于推力」至「5 违抗优于服从」</li><li><b>第 113–119 章</b>——含「附言：有良知的违抗」至「附言：容忍混乱，或者接受」</li><li><b>第 120–126 章</b>——含「9 系统优于个体」至「希腊人的故事1 文明的诞」</li><li><b>第 127–133 章</b>——含「前言：写给读者的信」至「斯巴达——吕库古“宪法”」</li><li><b>第 134–140 章</b>——含「雅典——梭伦改革」至「第三章 抵抗侵略者波斯」</li><li><b>第 141–147 章</b>——含「波斯帝国」至「温泉关」</li><li><b>第 148–154 章</b>——含「强制疏散」至「雅典与比雷埃夫斯的城市一」</li><li><b>第 155–161 章</b>——含「年轻的斯巴达将军」至「民主的成熟和崩坏」</li><li><b>第 162–168 章</b>——含「第一部 伯里克利时代」至「年表」</li><li><b>第 169–175 章</b>——含「图片出处一览」至「第二部 新生力量」</li><li><b>第 176–182 章</b>——含「第一章 父亲腓力」至「前言」</li><li><b>第 183–189 章</b>——含「第一章 怎样观察一棵树」至「快变量和慢变量」</li><li><b>第 190–196 章</b>——含「大趋势和小趋势」至「寻找场景」</li><li><b>第 197–203 章</b>——含「猜猜谁在敲门」至「完美曲线」</li><li><b>第 204–210 章</b>——含「新造车运动」至「新与旧」</li><li><b>第 211–217 章</b>——含「第四章 在菜市场遇见城市」至「城市新物种」</li><li><b>第 218–224 章</b>——含「林哥」至「托克维尔在阿那亚」</li><li><b>第 225–231 章</b>——含「街角咖啡馆」至「张校长」</li><li><b>第 232–238 章</b>——含「两条路」至「序 中华文明的视角」</li><li><b>第 239–245 章</b>——含「第一章 双峰对峙——草的」至「走向洛阳城」</li><li><b>第 246–252 章</b>——含「飞旋在亚洲舞台」至「第四章 万里一统——元朝」</li><li><b>第 253–259 章</b>——含「大元王朝的三大支柱」至「后记 春草秋禾织天下」</li><li><b>第 260–266 章</b>——含「创世记：从细胞到文明，社」至「第五章 迈进真社会性的最」</li><li><b>第 267–273 章</b>——含「第六章 群体选择」至「引言」</li><li><b>第 274–280 章</b>——含「01 向“大众”借力」至「07 预测他人的喜好、渴」</li><li><b>第 281–287 章</b>——含「08 主动承诺的力量」至「14 推迟一点儿会更好」</li><li><b>第 288–294 章</b>——含「15 为了将来的自己」至「21 把会议开得更高效」</li><li><b>第 295–301 章</b>——含「22 服装的影响力」至「28 如何让自己变得更强」</li><li><b>第 302–308 章</b>——含「29 你所需的只是爱」至「35 先下手为强」</li><li><b>第 309–315 章</b>——含「36 报价精确一点儿会更」至「42 指出机会成本」</li><li><b>第 316–322 章</b>——含「43 如何激励他人（还有」至「49 当天就点评」</li><li><b>第 323–329 章</b>——含「50 给邮件加点儿料，让」至「推荐序1 引导你做出更好」</li><li><b>第 330–336 章</b>——含「推荐序2 我们离“经济人」至「第4章 如何提高选择的满」</li><li><b>第 337–343 章</b>——含「第5章 如何优化选择体系」至「第11章 如何促进器官捐」</li><li><b>第 344–350 章</b>——含「第12章 如何拯救我们的」至「第18章 助推：真正的第」</li><li><b>第 351–357 章</b>——含「后记 写于2008年金融」至「第一部分 智能商业」</li><li><b>第 358–364 章</b>——含「01 智能商业大变革」至「第二部分 商业模式变革」</li><li><b>第 365–371 章</b>——含「07 C2B：未来的核心」至「11 第四次组织创新：创」</li><li><b>第 372–378 章</b>——含「12 新组织原则：从管理」至「16 “互联网×”：传统」</li><li><b>第 379–385 章</b>——含「结语 新文明：感受未来已」至「第一章 横空出世——暗知」</li><li><b>第 386–392 章</b>——含「第二章 榨取数据——机器」至「结束语 人类该怎么办」</li><li><b>第 393–399 章</b>——含「致谢」至「百岁人生：长寿时代的生活」</li><li><b>第 400–406 章</b>——含「名人推荐」至「第2章 财务篇 更晚退休」</li><li><b>第 407–413 章</b>——含「杰克创造的人生」至「失业的未来？」</li><li><b>第 414–420 章</b>——含「未来的工作」至「第二类：活力资产」</li><li><b>第 421–427 章</b>——含「杰克的无形资产」至「简的情景设想」</li><li><b>第 428–434 章</b>——含「第6章 阶段篇 人生新模」至「第7章 金钱篇 长寿推手」</li><li><b>第 435–441 章</b>——含「财务功效」至「第10章 实践篇 期待变」</li><li><b>第 442–448 章</b>——含「这对教育意味着什么？」至「前言」</li><li><b>第 449–455 章</b>——含「关于地图的说明」至「第四章 从分权到聚合」</li><li><b>第 456–462 章</b>——含「第五章 美利坚合众国的命」至「第十章 海洋超级版图」</li><li><b>第 463–469 章</b>——含「第四部 从国家到超级城市」至「第十五章 文明的融合」</li><li><b>第 470–476 章</b>——含「第十六章 供应链与自然的」至「章节概要与阅读导图」</li><li><b>第 477–483 章</b>——含「前言」至「第二卷 现代化与对反脆弱」</li><li><b>第 484–490 章</b>——含「第5章 露天市场与办公楼」至「第10章 塞内加的不利因」</li><li><b>第 491–497 章</b>——含「第11章 千万别嫁给摇滚」至「第16章 混乱中的秩序」</li><li><b>第 498–504 章</b>——含「第17章 胖子托尼与苏格」至「第21章 医疗、凸性和不」</li><li><b>第 505–511 章</b>——含「第22章 活得长寿，但不」至「光荣与梦想1」</li><li><b>第 512–518 章</b>——含「献言」至「第四章 罗斯福和民意所向」</li><li><b>第 519–525 章</b>——含「第五章 保守派卷土重来」至「第二部分 牺牲与变化（1」</li><li><b>第 526–532 章</b>——含「第九章 反击」至「第十五章 黑夜里哈里的一」</li><li><b>第 533–539 章</b>——含「第十六章 疑虑重重的时代」至「第十九章 向右转」</li><li><b>第 540–546 章</b>——含「第二十章 对通用汽车公司」至「第二十六章 将军归营」</li><li><b>第 547–553 章</b>——含「光荣与梦想4」至「第三十章 权力的长臂」</li><li><b>第 554–560 章</b>——含「第三十一章 伟大梦想与梦」至「第三十六章 美利坚“分裂」</li><li><b>第 561–567 章</b>——含「第三十七章 自尊丧尽」至「序言」</li><li><b>第 568–574 章</b>——含「第一部分 极端斯坦与黑天」至「第六章 叙述谬误」</li><li><b>第 575–581 章</b>——含「第七章 活在希望的小屋里」至「第十二章 认知斯坦――一」</li><li><b>第 582–588 章</b>——含「第十三章 假如你不会预测」至「第十八章 骗子的不确定性」</li><li><b>第 589–595 章</b>——含「结语 一半对一半――如何」至「推荐序」</li><li><b>第 596–602 章</b>——含「序言」至「第六章 新世界」</li><li><b>第 603–609 章</b>——含「第七章 最伟大的战略家」至「推荐序二 反思是为了更好」</li><li><b>第 610–616 章</b>——含「推荐序三 我与周航的四个」至「失败是一种宿命」</li><li><b>第 617–623 章</b>——含「第一章 重新理解战略」至「第二章 重新理解竞争」</li><li><b>第 624–630 章</b>——含「先行者姿态」至「竞争的核心问题」</li><li><b>第 631–637 章</b>——含「第三章 重新理解品牌」至「用一以贯之的真诚去解决问」</li><li><b>第 638–644 章</b>——含「第四章 重新理解流量」至「选择投资人：不博弈，双赢」</li><li><b>第 645–651 章</b>——含「退出与套现」至「归功于外，归因于己」</li><li><b>第 652–658 章</b>——含「领导者要成长就要“复盘”」至「搭骨架：寻找信任你的初创」</li><li><b>第 659–665 章</b>——含「长肉：学会留住牛人」至「加速度比初速度更重要」</li><li><b>第 666–672 章</b>——含「没有绝对的坚持」至「保持清醒的认识，不要全盘」</li><li><b>第 673–679 章</b>——含「战略摸索期应如何调整」至「创新没有边界」</li><li><b>第 680–686 章</b>——含「顺应时代的趋势」至「后记 为了再来：重新理解」</li><li><b>第 687–693 章</b>——含「自私的基因（40周年增订」至「前言」</li><li><b>第 694–700 章</b>——含「第1章 为什么会有人呢？」至「第7章 计划生育」</li><li><b>第 701–707 章</b>——含「第8章 代际之战」至「第14章 基因决定论与基」</li><li><b>第 708–712 章</b>——含「第15章 对于完美化的制」至「评论集萃」</li></ul></section>
 <section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句</h2><ol class="mmx-qlist"><li><blockquote>「人类以为自己驯化了植物，但其实是植物驯化了智人。」</blockquote><cite>本书正文</cite></li><li><blockquote>「人类语言真正最独特的功能，并不在于能够传达关于人或狮子的信息，而是能够传达关于一些根本不存在的事物的信息。」</blockquote><cite>本书正文</cite></li><li><blockquote>「在这里，人们需要的并不是什么精心设计的教条，只是求个心安，希望自己的故事能够在死后延续。」</blockquote><cite>本书正文</cite></li><li><blockquote>「身为人类，我们不可能脱离想象所建构出的秩序。每一次我们以为自己打破了监狱的高墙、迈向自由的前方，其实只是到了另一间更大的监狱，把活动范围稍稍加以扩大而已。」</blockquote><cite>本书正文</cite></li><li><blockquote>「这正是农业革命真正的本质：让更多的人以更糟的状况活下去。」</blockquote><cite>本书正文</cite></li><li><blockquote>「讨论虚构的事物”正是智人语言最独特的功能。」</blockquote><cite>本书正文</cite></li><li><blockquote>「我们以为自己省下了时间；然而，我们其实是把生活的步调加速成过去的10倍，于是我们整天忙忙碌碌、焦躁不安。」</blockquote><cite>本书正文</cite></li><li><blockquote>「不过就在600万年前，有一只母猿产下两个女儿，一个成了所有黑猩猩的祖先，另一个则成了所有人类的祖奶奶。」</blockquote><cite>本书正文</cite></li><li><blockquote>「相较之下，人类转眼就登上顶端，不仅让生态系统猝不及防，就连人类自己也不知所措。」</blockquote><cite>本书正文</cite></li><li><blockquote>「但事实已经证明，大多数有钱人之所以有钱，只是因为他出生在有钱的家庭，而大多数穷人一辈子没钱，也就只是因为他出生在贫穷的家庭而已。」</blockquote><cite>本书正文</cite></li></ol></section>
+<button id="rdFab" aria-label="阅读设置" title="阅读设置">Aa</button>
+<div id="rdPanel" hidden>
+  <div class="rd-row"><span>字号</span><span class="rd-btns">
+    <button data-rd="fs-">A−</button><button data-rd="fs+">A＋</button></span></div>
+  <div class="rd-row"><span>段距</span><span class="rd-btns">
+    <button data-rd="pm-">紧</button><button data-rd="pm0">中</button><button data-rd="pm+">松</button></span></div>
+  <div class="rd-row"><span>主题</span><span class="rd-btns">
+    <button data-rd="th-cream">米白</button><button data-rd="th-light">纯白</button>
+    <button data-rd="th-green">护眼</button><button data-rd="th-dark">夜间</button></span></div>
+</div>
+<script>
+(function(){
+  var d = document.documentElement;
+  var c = {}; try { c = JSON.parse(localStorage.getItem('rd-cfg') || '{}'); } catch (e) {}
+  var FS = [0.88, 0.96, 1.04, 1.16, 1.30], PM = [0.6, 1, 1.5];
+  var fi = FS.indexOf(parseFloat(d.style.getPropertyValue('--fs')) || c.fs); if (fi < 0) fi = 2;
+  var pi = PM.indexOf(parseFloat(d.style.getPropertyValue('--pm')) || c.pm); if (pi < 0) pi = 1;
+  var panel = document.getElementById('rdPanel');
+  document.getElementById('rdFab').onclick = function (e) {
+    e.stopPropagation(); panel.hidden = !panel.hidden;
+  };
+  document.addEventListener('click', function (e) {
+    if (!panel.hidden && !panel.contains(e.target) && e.target.id !== 'rdFab') panel.hidden = true;
+  });
+  panel.addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-rd]'); if (!b) return;
+    var k = b.dataset.rd;
+    if (k === 'fs-') fi = Math.max(0, fi - 1);
+    else if (k === 'fs+') fi = Math.min(FS.length - 1, fi + 1);
+    else if (k === 'pm-') pi = Math.max(0, pi - 1);
+    else if (k === 'pm0') pi = 1;
+    else if (k === 'pm+') pi = Math.min(PM.length - 1, pi + 1);
+    else if (k.indexOf('th-') === 0) c.theme = k.slice(3);
+    apply();
+  });
+  function apply() {
+    d.dataset.theme = c.theme || 'cream';
+    d.style.setProperty('--fs', FS[fi]);
+    d.style.setProperty('--pm', PM[pi]);
+    c.fs = FS[fi]; c.pm = PM[pi];
+    try { localStorage.setItem('rd-cfg', JSON.stringify(c)); } catch (e) {}
+    [].forEach.call(panel.querySelectorAll('button[data-rd^="th-"]'), function (b) {
+      b.style.borderColor = (b.dataset.rd === 'th-' + (c.theme || 'cream')) ? 'var(--head)' : '';
+      b.style.color = (b.dataset.rd === 'th-' + (c.theme || 'cream')) ? 'var(--head)' : '';
+    });
+  }
+  apply();
+  /* 导航随滚动高亮 */
+  var links = [].slice.call(document.querySelectorAll('.navlink')), map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var mark = function (a) {
+    links.forEach(function (x) { x.classList.toggle('active', x === a); });
+  };
+  if ('IntersectionObserver' in window) {
+    var cur = null;
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (e.isIntersecting) {
+          var a = map[e.target.id];
+          if (a && cur !== a) { cur = a; mark(a); }
+        }
+      });
+    }, { rootMargin: '-15% 0px -75% 0px' });
+    Object.keys(map).forEach(function (id) {
+      var el = document.getElementById(id); if (el) io.observe(el);
+    });
+  }
+  links.forEach(function (a) {
+    a.addEventListener('click', function () { mark(a); });
+  });
+})();
+</script>
 </body>
 </html>

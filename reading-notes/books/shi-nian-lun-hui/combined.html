@@ -4,32 +4,64 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>《十年轮回：从亚洲到全球的金融危机（从大历史视角解读时代变局）》｜通读 · 精读</title>
+<script>
+/* 防闪：渲染前先把上次保存的主题/字号/段距应用到 <html> */
+(function(){try{var c=JSON.parse(localStorage.getItem('rd-cfg')||'{}'),d=document.documentElement;
+d.dataset.theme=c.theme||'cream';
+if(c.fs)d.style.setProperty('--fs',c.fs);
+if(c.pm)d.style.setProperty('--pm',c.pm);}catch(e){}})();
+</script>
 <link rel="stylesheet" href="../../../assets/css/reading-overview.css"><link rel="stylesheet" href="../../../assets/css/mmx-guide.css"><link rel="stylesheet" href="../../../assets/css/reading-outline.css">
 <style>
-/* ── 外壳与全局阅读节奏 ── */
-body{max-width:880px;margin:0 auto;padding:0 18px 80px;
-  font-size:15px;line-height:1.88;color:#3b453e;background:#f7f8f3;
-  -webkit-font-smoothing:antialiased;}
-.combined-head{padding:30px 0 16px;border-bottom:1px solid #e7e0d2;margin-bottom:4px;}
-.combined-head h1{font:700 23px/1.35 var(--serif);margin:0 0 8px;color:#244b40;}
+/* ── 主题变量：默认米白；纯白/护眼绿/夜间由 html[data-theme] 覆盖 ── */
+:root{
+  --fs:1;--pm:1;
+  --pg-bg:#f7f8f3;--card-bg:#fffdf6;--card-bd:#e8e4d5;--ink:#3b453e;--txt:#4a4436;
+  --sub:#8d8878;--head:#244b40;--qgreen:#2f5b49;--gold:#bf8247;
+  --nav-bg:rgba(247,248,243,.96);--navlink-bg:#fdfbf3;--navlink-bd:#e8e2d2;
+  --inner-bg:#fbfaf2;--inner-bd:#eee9d8;--oneline-bg:#fbfaf4;
+  --act-bg:#e5efe4;--act-bd:#bcd4bc;
+}
+html[data-theme=light]{--pg-bg:#ffffff;--card-bg:#ffffff;--card-bd:#e7e7e2;
+  --nav-bg:rgba(255,255,255,.96);--navlink-bg:#fafaf7;--navlink-bd:#e7e7e0;
+  --inner-bg:#fafaf7;--inner-bd:#ecebe4;--oneline-bg:#fafaf7;}
+html[data-theme=green]{--pg-bg:#cfe8d2;--card-bg:#eef7ef;--card-bd:#b9dcc0;--ink:#2f4237;
+  --txt:#3b5446;--sub:#5d7c67;--head:#1e4d37;--qgreen:#1e5c41;
+  --nav-bg:rgba(207,232,210,.96);--navlink-bg:#f4fbf5;--navlink-bd:#b4d8bd;
+  --inner-bg:#f6fbf7;--inner-bd:#cde5d3;--oneline-bg:#f6fbf7;--act-bg:#bfe3c6;--act-bd:#95c8a1;}
+html[data-theme=dark]{--pg-bg:#15171a;--card-bg:#1f2226;--card-bd:#34383f;--ink:#c9ced4;
+  --txt:#b4bac1;--sub:#8a919a;--head:#93c8a8;--qgreen:#9ed0af;
+  --nav-bg:rgba(21,23,26,.96);--navlink-bg:#262a2f;--navlink-bd:#3a3f46;
+  --inner-bg:#272b30;--inner-bd:#3a3f46;--oneline-bg:#272b30;
+  --act-bg:#244b40;--act-bd:#2f5b49;}
+
+/* ── 外壳与全局阅读节奏（字号跟随 --fs 整页缩放，段距跟随 --pm） ── */
+html{font-size:calc(16px*var(--fs));}
+html[data-theme=dark] body{color-scheme:dark;}
+body{max-width:880px;margin:0 auto;padding:0 18px 80px;font-size:.9375rem;line-height:1.88;
+  color:var(--ink);background:var(--pg-bg);-webkit-font-smoothing:antialiased;}
+.combined-head{padding:30px 0 16px;border-bottom:1px solid var(--card-bd);margin-bottom:4px;}
+.combined-head h1{font:700 1.45rem/1.35 var(--serif);margin:0 0 8px;color:var(--head);}
 .combined-head .eyebrow{font-size:.72rem;letter-spacing:.14em;margin:0 0 6px;}
 .chips{margin:8px 0 0;}
 .chip{font-size:.72rem;padding:2px 10px;}
-/* 锚点导航：固定一排 4 个，等宽对齐 */
-.nav{position:sticky;top:0;z-index:20;background:rgba(247,248,243,.96);backdrop-filter:blur(6px);
-  border-bottom:1px solid #ece4d4;padding:10px 0;margin:12px 0 20px;display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;
+
+/* ── 锚点导航：小屏最少一排 4 个，大屏自动一排/两排放完；滚动到哪亮哪 ── */
+.nav{position:sticky;top:0;z-index:20;background:var(--nav-bg);backdrop-filter:blur(6px);
+  border-bottom:1px solid var(--card-bd);padding:10px 0;margin:12px 0 20px;display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(76px,1fr));gap:6px;
   box-shadow:0 2px 10px rgba(120,100,60,.05);}
-.navlink{font-size:12px;color:#5d5443;text-decoration:none;background:#fdfbf3;border:1px solid #e8e2d2;
-  border-radius:8px;padding:6px 4px;text-align:center;white-space:nowrap;overflow:hidden;
-  text-overflow:ellipsis;transition:background .15s,color .15s;}
-.navlink:hover{background:#f2efe2;color:#244b40;}
+.navlink{font-size:12px;color:var(--txt);text-decoration:none;background:var(--navlink-bg);
+  border:1px solid var(--navlink-bd);border-radius:8px;padding:6px 4px;text-align:center;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:all .15s;}
+.navlink:hover{color:var(--head);border-color:var(--head);}
+.navlink.active{color:var(--head);background:var(--act-bg);border-color:var(--act-bd);font-weight:700;}
 section{scroll-margin-top:62px;}
 
 /* ── 统一卡片：所有顶层模块（AI领读 / AI 问答 / 其余）一视同仁 ── */
 body>section.mmx-mod,body>section.card,body>section.mmx-svgwrap{
-  background:#fffdf6;border:1px solid #e8e4d5;border-radius:16px;
-  padding:18px 22px;margin:18px 0;
+  background:var(--card-bg);border:1px solid var(--card-bd);border-radius:16px;
+  padding:18px 22px;margin:calc(18px*var(--pm)) 0;
   box-shadow:0 1px 3px rgba(110,95,60,.05);}
 body>section.mmx-mod>*:first-child,body>section.card>*:first-child,
 body>section.mmx-svgwrap>*:first-child{margin-top:0}
@@ -39,74 +71,115 @@ body>section.mmx-svgwrap>*:last-child{margin-bottom:0}
 body>section.mmx-svgwrap>svg.mmx-svg{display:block;width:100%;height:auto;margin:2px auto 0;}
 /* 模块标题：统一大小、弱强调，不与正文抢注意力 */
 body>section.mmx-mod>h2,body>section.card>h2{
-  font:700 1.04rem/1.5 var(--serif);color:#244b40;margin:0 0 11px;
-  padding-left:10px;border-left:3px solid #bf8247;letter-spacing:.01em;}
-/* 正文：字号收小、行距放宽、段间距舒服 */
+  font:700 1.04rem/1.5 var(--serif);color:var(--head);margin:0 0 11px;
+  padding-left:10px;border-left:3px solid var(--gold);letter-spacing:.01em;}
+/* 正文：字号收小、行距放宽、段间距随 --pm 调节 */
 body>section.mmx-mod p,body>section.card p,
 body>section.mmx-mod li,body>section.card li{
-  font-size:.9rem;line-height:1.92;color:#4a4436;}
-body>section.mmx-mod p,body>section.card p{margin:.5em 0;}
+  font-size:.9rem;line-height:1.92;color:var(--txt);margin:calc(.5em*var(--pm)) 0;}
 body>section.mmx-mod>ul,body>section.mmx-mod>ol,body>section.mmx-mod>div,
 body>section.mmx-mod>p:not(.mmx-mod-note),
 body>section.card:not(.merged-guide)>ul,body>section.card:not(.merged-guide)>ol,
 body>section.card:not(.merged-guide)>div,body>section.card:not(.merged-guide)>p:not(.mmx-mod-note){
   padding-left:14px;}
-/* 模块说明小字：弱化不抢眼 */
-.mmx-mod-note{font-size:.75rem;color:#8d8878;margin:.1em 0 .75em;line-height:1.7;}
 
 /* ── 内部块统一：卡片里不再套深卡片，一律浅底子块 ── */
 body>section .mmx-pending,body>section .mmx-evib,body>section .aiqa-item{
-  background:#fbfaf2;border:1px solid #eee9d8;border-radius:12px;
-  padding:13px 16px;margin:.65em 0;}
+  background:var(--inner-bg);border:1px solid var(--inner-bd);border-radius:12px;
+  padding:13px 16px;margin:calc(.65em*var(--pm)) 0;}
 body>section .mmx-evib ul{padding-left:1.15em;}
 /* 一句话主旨：去左侧竖线 + 收敛字号 */
-.mmx-oneline{font-size:.98rem;line-height:1.85;color:#3a352c;margin:.2em 0 0;
-  padding:12px 16px;background:#fbfaf4;border-left:none;border-radius:12px;}
+.mmx-oneline{font-size:.98rem;line-height:1.85;color:var(--txt);margin:.2em 0 0;
+  padding:12px 16px;background:var(--oneline-bg);border-left:none;border-radius:12px;}
 /* 核心观点 / 验证清单：虚线分隔 + 收紧行距 */
 .mmx-views li{padding:.5em 0 .5em 0;font-size:.9rem;line-height:1.88;}
 /* 原文金句 */
 .mmx-qlist li{padding:.6em 0 .6em 2.2em;}
-.mmx-qlist blockquote{font-size:.89rem;line-height:1.9;}
-.mmx-qlist cite{font-size:.72rem;}
+.mmx-qlist blockquote{font-size:.89rem;line-height:1.9;color:var(--txt);}
+.mmx-qlist cite{font-size:.72rem;color:var(--sub);}
 /* 核心追问：问句加重、答句放松 */
-.mmx-qa{margin:.7em 0;padding-left:12px;border-left:3px solid #e5dfcd;}
-.mmx-qa .mmx-q{font-size:.9rem;font-weight:700;color:#2f3a33;line-height:1.8;margin:0 0 .25em;}
-.mmx-qa .mmx-a{font-size:.88rem;line-height:1.95;color:#4a4436;margin:0;}
+.mmx-qa{margin:calc(.7em*var(--pm)) 0;padding-left:12px;border-left:3px solid var(--inner-bd);}
+.mmx-qa .mmx-q{font-size:.9rem;font-weight:700;color:var(--ink);line-height:1.8;margin:0 0 .25em;}
+.mmx-qa .mmx-a{font-size:.88rem;line-height:1.95;color:var(--txt);margin:0;}
 
 /* ── AI 问书专项：外层容器透明，问答条目才是阅读单元 ── */
 #mod-aiask .mmx-ask{background:transparent;border:0;border-radius:0;padding:0;margin:0;}
-#mod-aiask .aiqa-item{margin:.6em 0;padding:14px 16px 15px;}
-#mod-aiask .aiqa-item h3{font:700 .93rem/1.7 var(--serif);color:#2f5b49;margin:0 0 .4em;
+#mod-aiask .aiqa-item{margin:calc(.6em*var(--pm)) 0;padding:14px 16px 15px;}
+#mod-aiask .aiqa-item h3{font:700 .93rem/1.7 var(--serif);color:var(--qgreen);margin:0 0 .4em;
   padding:0;border:0;}
-#mod-aiask .aiqa-item h3:before{content:"问　";color:#bf8247;font-weight:700;}
-#mod-aiask .aiqa-item p{font-size:.88rem;line-height:1.95;color:#4a4436;margin:.4em 0;}
-#mod-aiask .aiqa-item ul{margin:.35em 0;padding-left:1.1em;}
-#mod-aiask .aiqa-item li{font-size:.87rem;line-height:1.88;margin:.18em 0;color:#4a4436;}
-#mod-aiask .aiqa-item li::marker{color:#c0a06a;}
+#mod-aiask .aiqa-item h3:before{content:"问　";color:var(--gold);font-weight:700;}
+/* 回答整体右缩进，与问句文字对齐（别顶着左边） */
+#mod-aiask .aiqa-item>p,#mod-aiask .aiqa-item>ul{margin-left:26px;}
+#mod-aiask .aiqa-item p{font-size:.88rem;line-height:1.95;color:var(--txt);
+  margin-top:calc(.4em*var(--pm));margin-bottom:calc(.4em*var(--pm));}
+#mod-aiask .aiqa-item ul{margin-top:calc(.35em*var(--pm));margin-bottom:calc(.35em*var(--pm));
+  padding-left:1.1em;}
+#mod-aiask .aiqa-item li{font-size:.87rem;line-height:1.88;margin:calc(.18em*var(--pm)) 0;
+  color:var(--qgreen);}
+#mod-aiask .aiqa-item li::marker{color:var(--gold);}
 /* 逐章追问（details 形态）：摘要行也收敛 */
-.mmx-ask>summary{font-size:.87rem;line-height:1.7;padding:2px 0;}
-.mmx-askbody{font-size:.88rem;line-height:1.9;}
+.mmx-ask>summary{font-size:.87rem;line-height:1.7;padding:2px 0;color:var(--qgreen);}
+.mmx-askbody{font-size:.88rem;line-height:1.9;color:var(--txt);}
 
-/* AI领读章内：AI 大纲原生深层样式（字号同步收小） */
-.merged-guide .sec{margin:9px 0 12px;padding-left:6px;border-left:2px solid #e5e0d6}
-.merged-guide .sec h4{font:600 .93rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.5em 0 .25em}
+/* ── AI领读章内：AI 大纲原生深层样式（章节字号整体再收一档） ── */
+.merged-guide .sec{margin:9px 0 12px;padding-left:6px;border-left:2px solid var(--card-bd)}
+.merged-guide .sec h4{font:600 .84rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:var(--head);margin:.5em 0 .25em}
+.merged-guide .mmx-name{font-size:.88rem !important;}
+.merged-guide .mmx-sech{font-size:.8rem !important;}
+.merged-guide .mmx-gist{font-size:.83rem !important;line-height:1.85;}
+.merged-guide .mmx-stat{font-size:.7rem !important;}
 .merged-guide ul.point{margin:.25em 0;padding-left:20px}
-.merged-guide ul.point>li{margin:.3em 0}
+.merged-guide ul.point>li{margin:.3em 0;font-size:.8rem !important;line-height:1.85;}
 .merged-guide ul.quote{margin:.22em 0 .22em 20px;padding-left:18px;list-style:none}
-.merged-guide ul.quote::before{content:"原句";display:block;font-size:.7rem;color:#bf8247;
+.merged-guide ul.quote::before{content:"原句";display:block;font-size:.7rem;color:var(--gold);
   letter-spacing:.1em;margin:.12em 0 .08em;font-weight:600}
-.merged-guide ul.quote.quote-node{margin-top:.45em;padding-top:.35em;border-top:1px dashed #eadfc9}
+.merged-guide ul.quote.quote-node{margin-top:.45em;padding-top:.35em;border-top:1px dashed var(--inner-bd)}
 .merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
-.merged-guide ul.quote>li{color:#4a4436;font-size:.88rem;line-height:1.85;margin:.18em 0;padding-left:10px;border-left:2px solid #bf8247}
+.merged-guide ul.quote>li{color:var(--txt);font-size:.8rem !important;line-height:1.85;margin:.18em 0;padding-left:10px;border-left:2px solid var(--gold)}
+.merged-guide .mmx-qt{font-size:.77rem !important;}
+
 /* 核心观点初判：外链 mmx-guide.css 的「观点N」前缀是绝对定位，在本页版式里和标题叠字，
    且此前要求去掉「观点1/2/3」前缀 —— 这里整条关掉（外链 CSS 不在页面内，只能内联覆盖）。 */
 .mmx-views li{padding-left:0 !important;}
 .mmx-views li:before,.mmx-views li::before{
   content:none !important;display:none !important;counter-increment:none !important;}
+
+/* ── 夜间主题：覆盖共享 CSS 里的硬编码浅色 ── */
+html[data-theme=dark] h1,html[data-theme=dark] h2,html[data-theme=dark] h3,
+html[data-theme=dark] h4{color:var(--head);}
+html[data-theme=dark] .mmx-qt{background:var(--inner-bg);color:var(--txt);}
+html[data-theme=dark] .mmx-qlist blockquote,html[data-theme=dark] .mmx-ask blockquote,
+html[data-theme=dark] .mmx-gist,html[data-theme=dark] .mmx-pts,
+html[data-theme=dark] .mmx-askbody{color:var(--txt);}
+html[data-theme=dark] .mmx-qlist li:before{background:#2b3a31;color:#9ed0af;}
+html[data-theme=dark] .mmx-views li,html[data-theme=dark] .mmx-qlist li,
+html[data-theme=dark] .mmx-qa,html[data-theme=dark] .mmx-sec>summary,
+html[data-theme=dark] .mmx-cn{border-color:#3a3f46;}
+html[data-theme=dark] .mmx-views li b,html[data-theme=dark] .mmx-qa .mmx-q{color:var(--ink);}
+html[data-theme=dark] .chip{background:#274234;color:#9ed0af;}
+html[data-theme=dark] .mmx-role,html[data-theme=dark] .mmx-chip{background:#262a2f;
+  color:#8a919a;border-color:#3a3f46;}
+html[data-theme=dark] a{color:#9ed0af;}
+
+/* ── 右上角设置面板 ── */
+#rdFab{position:fixed;top:10px;right:12px;z-index:60;font:600 13px/1 var(--sans);color:var(--txt);
+  background:var(--card-bg);border:1px solid var(--card-bd);border-radius:9px;padding:8px 12px;
+  cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.1);}
+#rdFab:hover{border-color:var(--head);color:var(--head);}
+#rdPanel{position:fixed;top:48px;right:12px;z-index:60;background:var(--card-bg);
+  border:1px solid var(--card-bd);border-radius:12px;padding:12px 14px;
+  box-shadow:0 8px 24px rgba(0,0,0,.16);display:grid;gap:9px;min-width:212px;}
+#rdPanel[hidden]{display:none;}
+#rdPanel .rd-row{display:flex;gap:5px;align-items:center;justify-content:space-between;}
+#rdPanel .rd-row>span{font-size:.72rem;color:var(--sub);flex:none;}
+#rdPanel .rd-btns{display:flex;gap:5px;}
+#rdPanel button{font:600 12px/1.4 var(--sans);color:var(--txt);background:var(--navlink-bg);
+  border:1px solid var(--navlink-bd);border-radius:7px;padding:4px 9px;cursor:pointer;}
+#rdPanel button:hover{border-color:var(--head);color:var(--head);}
+
 @media(max-width:720px){
-  body{padding:0 12px 60px;font-size:14.5px;}
-  body>section.mmx-mod,body>section.card{padding:15px 16px;border-radius:14px;}
-  .nav{grid-template-columns:repeat(2,minmax(0,1fr));}
+  body{padding:0 12px 60px;}
+  body>section.mmx-mod,body>section.card,body>section.mmx-svgwrap{padding:15px 16px;border-radius:14px;}
 }
 </style>
 </head>
@@ -300,5 +373,77 @@ body>section .mmx-evib ul{padding-left:1.15em;}
 <ol class="mmx-pts"><li><b>1</b> 图表目录</li><li><b>2</b> 百年变局 典藏版自序</li><li><b>3</b> 第三版自序</li><li><b>4</b> 第二版自序</li><li><b>5</b> 致谢</li><li><b>6</b> 导论</li><li><b>7</b> 一个亚洲人的观点</li><li><b>8</b> 死灰复燃</li><li><b>9</b> 分析的框架</li><li><b>10</b> 亚洲和全球的金融危机简史</li><li><b>11</b> 宏观的经历——大稳定造就大满足</li><li><b>12</b> 微观组织机构的混乱</li><li><b>13</b> 本书结构</li><li><b>14</b> 第一章 分崩离析</li><li><b>15</b> 1997年7月2日，星期三</li><li><b>16</b> 受伤的老虎</li><li><b>17</b> 地区中央银行家会晤</li><li><b>18</b> 初次尝试解释亚洲危机</li><li><b>19</b> 对泰国的救市方案</li><li><b>20</b> 风生水起</li><li><b>21</b> 论战</li><li><b>22</b> 亚洲货币基金</li><li><b>23</b> 混乱中的龙</li><li><b>24</b> 一场政治危机</li><li><b>25</b> 亚洲巨人绊倒了</li><li><b>26</b> 马尼拉框架</li><li><b>27</b> 令人注目的1997年底</li><li><b>28</b> 不安的圣诞节</li><li><b>29</b> 追本穷源</li><li><b>30</b> 第二章 日本和亚洲危机</li><li><b>31</b> 日本：亚洲最大的经济体</li><li><b>32</b> 飞雁模式：亚洲转变成为世界制造业中心</li><li><b>33</b> 一条供应链，两种货币标准</li><li><b>34</b> 后广场协议：日本与亚洲联系的加强</li><li><b>35</b> 1987～1990年：日本泡沫经济播下了亚洲危机的种子</li><li><b>36</b> 退休挂职制与“老伙计俱乐部”</li><li><b>37</b> 1991～1995年：日元利差交易在亚洲兴起</li><li><b>38</b> 1995～1999年：日本银行在国内碰到了大麻烦</li><li><b>39</b> 不稳定的日元：亚洲的主要软肋</li><li><b>40</b> 结论：从国际收支差额的视角</li><li><b>41</b> 第三章 仁者见仁智者见智</li><li><b>42</b> 讲究实际的人……</li><li><b>43</b> ……与新古典经济学的缺陷</li><li><b>44</b> 我在经济发展中的个人历程</li><li><b>45</b> 理论和实践</li><li><b>46</b> 仁者见仁，智者见智</li><li><b>47</b> 第四章 银行业：最薄弱的环节</li><li><b>48</b> 狂热、恐慌和崩溃</li><li><b>49</b> 亚洲银行业简史</li><li><b>50</b> 变化中的亚洲人口禀赋</li><li><b>51</b> 金融系统的功能</li><li><b>52</b> 资源配置</li><li><b>53</b> 价格发现</li><li><b>54</b> 风险管理</li><li><b>55</b> 公司治理</li><li><b>56</b> 亚洲银行业路在何方？</li><li><b>57</b> 对亚洲发展战略的再思考</li><li><b>58</b> 第五章 华盛顿共识和国际货币基金组织</li><li><b>59</b> 华盛顿共识</li><li><b>60</b> 对华盛顿共识的再思考</li><li><b>61</b> 国际货币基金组织的角色</li><li><b>62</b> 国际货币基金组织的信誉危机</li><li><b>63</b> 从华盛顿共识到全球共识？</li><li><b>64</b> 第六章 泰国：全球化的业报</li><li><b>65</b> 东南亚明星国家</li><li><b>66</b> 墨西哥危机再现？</li><li><b>67</b> 泰国在20世纪90年代中期发生了什么？</li><li><b>68</b> 反受成功之害</li><li><b>69</b> 经济过热</li><li><b>70</b> 泰国的阿喀琉斯之踵</li><li><b>71</b> 制造麻烦的日元</li><li><b>72</b> 泡沫破裂</li><li><b>73</b> 政治+糟糕的经济=危机</li><li><b>74</b> 坐困愁城的个人和机构</li><li><b>75</b> 国家的醒悟</li><li><b>76</b> 第七章 韩国：外强中干</li><li><b>77</b> 韩国奇迹</li><li><b>78</b> 韩国公司（Korea Inc.）的诞生</li><li><b>79</b> 韩国公司的融资</li><li><b>80</b> 问题出在哪里？</li><li><b>81</b> 溜溜球日元又来了</li><li><b>82</b> 不协调的自由化</li><li><b>83</b> 信心危机</li><li><b>84</b> 复苏和重新崛起</li><li><b>85</b> 第八章 马来西亚：特立独行</li><li><b>86</b> 强劲的宏观经济基本面</li><li><b>87</b> 较有活力的金融系统</li><li><b>88</b> 脆弱性正在显现</li><li><b>89</b> 亢奋的经济</li><li><b>90</b> 不断膨胀的资产泡沫</li><li><b>91</b> 这是一场货币危机吗？</li><li><b>92</b> 自由落体</li><li><b>93</b> 从正统到异端</li><li><b>94</b> 智利影响与中国模式</li><li><b>95</b> 一致谴责</li><li><b>96</b> 特殊情况，特殊方案</li><li><b>97</b> 第九章 印度尼西亚：从经济危机到政治危机</li><li><b>98</b> 由贫到富</li><li><b>99</b> 权力政治</li><li><b>100</b> 裙带资本主义</li><li><b>101</b> 脆弱的金融系统</li><li><b>102</b> 再见，金融管制；你好，金融崩溃</li><li><b>103</b> 旧药不管用了</li><li><b>104</b> 关于治理和制度</li><li><b>105</b> 第十章 中国香港：非常之时需用非常之策</li><li><b>106</b> 把赌注下在货币战中：中央银行还是对冲基金？</li><li><b>107</b> 港元联系汇率制</li><li><b>108</b> 基础扎实，但也有软肋</li><li><b>109</b> 香港的黑色星期四</li><li><b>110</b> 谣言不胫而走</li><li><b>111</b> 香港实力的堡垒</li><li><b>112</b> 事关生存的问题</li><li><b>113</b> 从指责到默认</li><li><b>114</b> 非常之时，非常之策</li><li><b>115</b> 第十一章 中国：龙的腾飞</li><li><b>116</b> 中国和危机五国的比较</li><li><b>117</b> 龙的腾飞</li><li><b>118</b> 中国经济的转型</li><li><b>119</b> 未来之路</li><li><b>120</b> 第十二章 从危机到一体化</li><li><b>121</b> 亚洲“成长的烦恼”：绝不会再有了！</li><li><b>122</b> 从复苏到区域经济一体化</li><li><b>123</b> 亚洲金融一体化的绊脚石</li><li><b>124</b> 亚洲在经济一体化上的选择</li><li><b>125</b> 亚洲金融一体化的前景</li><li><b>126</b> 第十三章 金融工程的新世界</li><li><b>127</b> 汇聚的网络</li><li><b>128</b> 金融工程的出现</li><li><b>129</b> 过度杠杆化——金融系统的阿喀琉斯之踵</li><li><b>130</b> 如此高的杠杆化有多危险？</li><li><b>131</b> 流动性幻觉</li><li><b>132</b> 明斯基金融不稳定性假设：“稳定带来不稳定”</li><li><b>133</b> 市场是如何躲过这些风险的？</li><li><b>134</b> 风险管理危机</li><li><b>135</b> 第十四章 金融监管出了什么问题？</li><li><b>136</b> 金融稳定的三根支柱</li><li><b>137</b> 问题出在哪里？</li><li><b>138</b> 化复杂为简单</li><li><b>139</b> 透明度是必要条件但非充分条件</li><li><b>140</b> 金融监管的机构模式</li><li><b>141</b> 危机和制度八元素</li><li><b>142</b> 战略分析——认清背景，明确目标</li><li><b>143</b> 在有限的资源条件下确定优先次序</li><li><b>144</b> 错误的激励</li><li><b>145</b> 标准、原则和规则——简单的必要性</li><li><b>146</b> 结构和范围</li><li><b>147</b> 进程、执行和总结</li><li><b>148</b> 第十五章 全球金融崩溃</li><li><b>149</b> 过度的流动性</li><li><b>150</b> 充溢的泡沫</li><li><b>151</b> 崩溃</li><li><b>152</b> 出了什么问题？</li><li><b>153</b> 咎由谁负？</li><li><b>154</b> 次贷对监管的影响</li><li><b>155</b> 监管受到制约的问题</li><li><b>156</b> 第十六章 治理危机</li><li><b>157</b> 进入新阶段的重要标志</li><li><b>158</b> 当前的经验教训</li><li><b>159</b> 返璞归真</li><li><b>160</b> 长远的观点</li><li><b>161</b> 仁者见仁，智者见智</li><li><b>162</b> 结论</li><li><b>163</b> 附录一 从亚洲到全球的金融危机：大事记</li><li><b>164</b> 附录二 缩略词英汉对照表</li><li><b>165</b> 参考文献</li></ol></section>
 <section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点</h2><ul class="mmx-views"><li><b>第 1–7 章</b>——含「图表目录」至「一个亚洲人的观点」</li><li><b>第 8–14 章</b>——含「死灰复燃」至「第一章 分崩离析」</li><li><b>第 15–21 章</b>——含「1997年7月2日，星期」至「论战」</li><li><b>第 22–28 章</b>——含「亚洲货币基金」至「不安的圣诞节」</li><li><b>第 29–35 章</b>——含「追本穷源」至「1987～1990年：日」</li><li><b>第 36–42 章</b>——含「退休挂职制与“老伙计俱乐」至「讲究实际的人……」</li><li><b>第 43–49 章</b>——含「……与新古典经济学的缺陷」至「亚洲银行业简史」</li><li><b>第 50–56 章</b>——含「变化中的亚洲人口禀赋」至「亚洲银行业路在何方？」</li><li><b>第 57–63 章</b>——含「对亚洲发展战略的再思考」至「从华盛顿共识到全球共识？」</li><li><b>第 64–70 章</b>——含「第六章 泰国：全球化的业」至「泰国的阿喀琉斯之踵」</li><li><b>第 71–77 章</b>——含「制造麻烦的日元」至「韩国奇迹」</li><li><b>第 78–84 章</b>——含「韩国公司（Korea I」至「复苏和重新崛起」</li><li><b>第 85–91 章</b>——含「第八章 马来西亚：特立独」至「这是一场货币危机吗？」</li><li><b>第 92–98 章</b>——含「自由落体」至「由贫到富」</li><li><b>第 99–105 章</b>——含「权力政治」至「第十章 中国香港：非常之」</li><li><b>第 106–112 章</b>——含「把赌注下在货币战中：中央」至「事关生存的问题」</li><li><b>第 113–119 章</b>——含「从指责到默认」至「未来之路」</li><li><b>第 120–126 章</b>——含「第十二章 从危机到一体化」至「第十三章 金融工程的新世」</li><li><b>第 127–133 章</b>——含「汇聚的网络」至「市场是如何躲过这些风险的」</li><li><b>第 134–140 章</b>——含「风险管理危机」至「金融监管的机构模式」</li><li><b>第 141–147 章</b>——含「危机和制度八元素」至「进程、执行和总结」</li><li><b>第 148–154 章</b>——含「第十五章 全球金融崩溃」至「次贷对监管的影响」</li><li><b>第 155–161 章</b>——含「监管受到制约的问题」至「仁者见仁，智者见智」</li><li><b>第 162–165 章</b>——含「结论」至「参考文献」</li></ul></section>
 <section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句</h2><ol class="mmx-qlist"><li><blockquote>「他教我要从30000英尺高度去看问题，先调焦至地面，然后慢慢地上升到300或3 000英尺，直到更加清晰地看出问题为止。」</blockquote><cite>本书正文</cite></li><li><blockquote>「2019/20年的疫情是气候变暖、人口密集制造出来的病毒演变」</blockquote><cite>本书正文</cite></li><li><blockquote>「我们不能通过创造货币永远推迟结构性调整的痛苦。系统只有在“有者”愿意为“无者”牺牲时才能达到稳定。」</blockquote><cite>本书正文</cite></li><li><blockquote>「所有的危机都从流动性过剩开始，接着出现投机热，最终形成泡沫，尔后发生崩溃。」</blockquote><cite>本书正文</cite></li><li><blockquote>「美联储可能没有认识到，它不只是世界上最强大国家的货币——美元——的中央银行，它在道义上还负有为世界上其余国家稳定基本局势的责任。」</blockquote><cite>本书正文</cite></li><li><blockquote>「我们都知道该怎么做，但是我们这么做后，就不知道该怎么赢得下一次竞选」</blockquote><cite>本书正文</cite></li><li><blockquote>「萧条的唯一原因就是繁荣。」</blockquote><cite>本书正文</cite></li><li><blockquote>「简而言之，经济学不能脱离政治、气候变化、地理、技术以及其他因素而独立存在。」</blockquote><cite>本书正文</cite></li><li><blockquote>「银行系统冒着用短期存款为长期资本融资的风险（即期限错配），同时私人部门借入外汇用本国货币为投资提供资金（即外汇错配）。只不过，外汇储备或流动性不足以满足兑付的要求。」</blockquote><cite>本书正文</cite></li><li><blockquote>「拥有国外净资产即意味着，一旦日元升值就会造成外汇损失。」</blockquote><cite>本书正文</cite></li></ol></section>
+<button id="rdFab" aria-label="阅读设置" title="阅读设置">Aa</button>
+<div id="rdPanel" hidden>
+  <div class="rd-row"><span>字号</span><span class="rd-btns">
+    <button data-rd="fs-">A−</button><button data-rd="fs+">A＋</button></span></div>
+  <div class="rd-row"><span>段距</span><span class="rd-btns">
+    <button data-rd="pm-">紧</button><button data-rd="pm0">中</button><button data-rd="pm+">松</button></span></div>
+  <div class="rd-row"><span>主题</span><span class="rd-btns">
+    <button data-rd="th-cream">米白</button><button data-rd="th-light">纯白</button>
+    <button data-rd="th-green">护眼</button><button data-rd="th-dark">夜间</button></span></div>
+</div>
+<script>
+(function(){
+  var d = document.documentElement;
+  var c = {}; try { c = JSON.parse(localStorage.getItem('rd-cfg') || '{}'); } catch (e) {}
+  var FS = [0.88, 0.96, 1.04, 1.16, 1.30], PM = [0.6, 1, 1.5];
+  var fi = FS.indexOf(parseFloat(d.style.getPropertyValue('--fs')) || c.fs); if (fi < 0) fi = 2;
+  var pi = PM.indexOf(parseFloat(d.style.getPropertyValue('--pm')) || c.pm); if (pi < 0) pi = 1;
+  var panel = document.getElementById('rdPanel');
+  document.getElementById('rdFab').onclick = function (e) {
+    e.stopPropagation(); panel.hidden = !panel.hidden;
+  };
+  document.addEventListener('click', function (e) {
+    if (!panel.hidden && !panel.contains(e.target) && e.target.id !== 'rdFab') panel.hidden = true;
+  });
+  panel.addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-rd]'); if (!b) return;
+    var k = b.dataset.rd;
+    if (k === 'fs-') fi = Math.max(0, fi - 1);
+    else if (k === 'fs+') fi = Math.min(FS.length - 1, fi + 1);
+    else if (k === 'pm-') pi = Math.max(0, pi - 1);
+    else if (k === 'pm0') pi = 1;
+    else if (k === 'pm+') pi = Math.min(PM.length - 1, pi + 1);
+    else if (k.indexOf('th-') === 0) c.theme = k.slice(3);
+    apply();
+  });
+  function apply() {
+    d.dataset.theme = c.theme || 'cream';
+    d.style.setProperty('--fs', FS[fi]);
+    d.style.setProperty('--pm', PM[pi]);
+    c.fs = FS[fi]; c.pm = PM[pi];
+    try { localStorage.setItem('rd-cfg', JSON.stringify(c)); } catch (e) {}
+    [].forEach.call(panel.querySelectorAll('button[data-rd^="th-"]'), function (b) {
+      b.style.borderColor = (b.dataset.rd === 'th-' + (c.theme || 'cream')) ? 'var(--head)' : '';
+      b.style.color = (b.dataset.rd === 'th-' + (c.theme || 'cream')) ? 'var(--head)' : '';
+    });
+  }
+  apply();
+  /* 导航随滚动高亮 */
+  var links = [].slice.call(document.querySelectorAll('.navlink')), map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var mark = function (a) {
+    links.forEach(function (x) { x.classList.toggle('active', x === a); });
+  };
+  if ('IntersectionObserver' in window) {
+    var cur = null;
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (e.isIntersecting) {
+          var a = map[e.target.id];
+          if (a && cur !== a) { cur = a; mark(a); }
+        }
+      });
+    }, { rootMargin: '-15% 0px -75% 0px' });
+    Object.keys(map).forEach(function (id) {
+      var el = document.getElementById(id); if (el) io.observe(el);
+    });
+  }
+  links.forEach(function (a) {
+    a.addEventListener('click', function () { mark(a); });
+  });
+})();
+</script>
 </body>
 </html>
