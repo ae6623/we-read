@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": 209,
+  "revision": 208,
   "timezone": "Asia/Shanghai",
   "authority": "latest origin/main; claims become effective only after serialized acceptance there",
   "migration": {
@@ -743,14 +743,12 @@
       "platform": "local_pdf",
       "platform_book_id": null,
       "priority": "user_requested",
-      "status": "completed",
-      "owner_agent_id": null,
+      "status": "in_progress",
+      "owner_agent_id": "local-pdf-reader",
       "claim": {
-        "state": "released",
+        "state": "held",
         "source": "用户2026-10-23确认继续本书；管理员确认仅亲读精读，笔记按实际读到的部分标注，不写通读或完读",
-        "claimed_at": "2026-10-23T10:13:00+08:00",
-        "released_at": "2026-11-02T05:12:56+08:00",
-        "release_reason": "用户明确授权的一次性整书AI分析完成；既有亲读范围、时长与续读点不变。"
+        "claimed_at": "2026-10-23T10:13:00+08:00"
       },
       "last_confirmed_progress": null,
       "resume_point": {
@@ -761,16 +759,8 @@
         "source": "文件元信息与前两页字数统计，未读正文",
         "confirmed_at": null
       },
-      "next_question_status": "confirmed",
-      "completion": {
-        "event_id": "completed-local-modern-finance-housing-curgdbd-user-ai-20261102",
-        "sequence": 7,
-        "confirmed_by": "user:雨（2026-11-01T22:19:43+08:00直接授权本书一次性整书输出；按需处理、不自动排期）",
-        "completed_at": "2026-11-02T05:12:56+08:00",
-        "mode": "AI阅读",
-        "evidence": "用户明确批准的一次性本地PDF全文AI分析路径；不是亲读，也不是阅读平台AI章节问答。全文文字层覆盖检查通过：433/433页均有文字层，72/72分析块完成（qwen3.5:9b 47块、qwen3.5:4b 25块），随后由qwen3.5:9b完成整书综合。原材料是天涯帖子合集，未核实正式章节目录；公开导览只列5个经原文逐字匹配的代表性帖子题名，不冒充完整帖子目录。既有亲读范围第1–6、12、110、227、273页共10页保持不变，不新增亲读时长或章节状态。终稿按ae6623/we-read main的note-spec 1.4.0最终模板手工组装，produced-by如实标注manual-template-assembly；未声称由缺失的compose_book生成器产出。授权云端工作区及目标站点仓库均无note_revision SQLite台账，因此未写台账条目。",
-        "output": "reading-notes/books/local-modern-finance-housing-curgdbd/final.html; reading-notes/books/local-modern-finance-housing-curgdbd/final.epub; _data/books/local-modern-finance-housing-curgdbd.json"
-      },
+      "next_question_status": "needs-confirmation",
+      "completion": null,
       "pdf_source_note": "本地私有文件，不含路径；仅提炼本人摘要，不复制原文",
       "incident_notes": [
         "2026-10-23 11:44–11:53 未先登记读取；11:53 整本经 Gemini 超授权，草稿未发布；12:04 已删本地与 Gemini 上传副本；之后仅人工内部提炼，不用 Gemini，待雨确认。"
@@ -952,7 +942,7 @@
   "synthesis": {
     "visibility": "private",
     "batch_size": 3,
-    "unique_completed_count": 7,
+    "unique_completed_count": 6,
     "batches": [
       {
         "batch_id": "batch-001",
@@ -979,5 +969,18 @@
     ]
   },
   "updated_at": "2026-11-01T22:23:47+08:00",
-  "active_sessions": []
+  "active_sessions": [
+    {
+      "run_id": "local-pdf-20261101-222347-123",
+      "agent_id": "local-pdf-reader",
+      "book_id": "local-modern-finance-housing-curgdbd",
+      "slot": "owner_directed_whole_book_once",
+      "started_at": "2026-11-01T22:23:47+08:00",
+      "environment_id": "local-pdf-reader-cloud",
+      "reading_mode": "local_pdf",
+      "resource_ids": [
+        "local-pdf:cloud-workspace"
+      ]
+    }
+  ]
 }
