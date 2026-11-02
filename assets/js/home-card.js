@@ -141,12 +141,18 @@
         img.loading = 'lazy';
         img.alt = title;
         img.src = 'assets/covers/' + slug + '.jpg';
+        // 立即把封面绝对地址写进 localStorage（不依赖是否已滚动加载到）：
+        // 详情页直接复用同一个 URL，浏览器缓存命中 → 秒出图
+        try { localStorage.setItem('rdCover:' + slug, img.src); } catch (e) {}
         img.addEventListener('error', function () { this.remove(); });
         // 真封面加载成功 → 隐藏占位题字，只留图。
         // 注意：循环用 var，闭包里不能引用 cover（会全指到最后一轮），用 this 向上找
         img.addEventListener('load', function () {
           var c = this.closest('.card-cover');
           if (c) c.classList.add('has-img');
+          // 把已解析好的封面绝对地址存到 localStorage，
+          // 详情页直接复用同一个 URL → 浏览器缓存命中，秒出图，不用重新下载
+          try { localStorage.setItem('rdCover:' + slug, this.currentSrc || this.src); } catch (e) {}
         });
         // 兜底：缓存/极快加载时 load 事件可能已错过，挂完监听补查一次
         if (img.complete && img.naturalWidth > 0) cover.classList.add('has-img');
