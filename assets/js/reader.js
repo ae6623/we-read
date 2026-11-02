@@ -109,20 +109,11 @@
   }
 
   function renderChips(meta) {
+    /* 徽章行已废弃（第 20 批 n）：详情页顶部只留书名 / 作者 / 章节导航 */
     var box = q('#rdChips');
-    if (!box) return;
-    var chips = [meta.cat1 || '通读 + 精读', meta.cat2 || 'Gemini pro', 'AI 生产'];
-    var spans = qa('.chip', box);
-    if (spans.length === 3) {
-      // 壳页已直出三个占位 chip → 就地改文本，避免重建导致的闪动
-      spans.forEach(function (el, i) { el.textContent = chips[i]; });
-    } else {
-      box.innerHTML = chips.map(function (t) {
-        return '<span class="chip">' + String(t).replace(/[<>&]/g, '') + '</span>';
-      }).join('');
-    }
+    if (box && box.parentNode) box.parentNode.removeChild(box);
     if (meta.title) {
-      var h1 = q('.combined-head h1');
+      var h1 = q('#rdStick h1') || q('.combined-head h1');
       if (h1) h1.textContent = '《' + meta.title + '》';
       document.title = '《' + meta.title + '》｜全书领读';
     }
@@ -203,15 +194,18 @@
   var FULL_HERO = { 'shi-nian-lun-hui': 1 };
   function rescueHeroNodes() {
     var head = document.querySelector('header.combined-head');
-    var hero = document.getElementById('rdHero');
-    if (!hero || !head) return;
-    var h1 = hero.querySelector('h1'), chips = hero.querySelector('#rdChips'),
-        nav = hero.querySelector('#rdNav');
-    if (h1) head.insertBefore(h1, head.firstChild);
-    if (chips) head.appendChild(chips);
-    if (nav && head.parentNode) head.parentNode.insertBefore(nav, head.nextSibling);
+    if (!head) return;
+    var stick = document.getElementById('rdStick');
+    var h1 = (stick || document).querySelector('h1');
+    var nav = document.getElementById('rdNav');
+    if (h1 && h1.parentNode !== head) head.insertBefore(h1, head.firstChild);
+    if (nav && head.parentNode && !head.parentNode.contains(nav)) {
+      head.parentNode.insertBefore(nav, head.nextSibling);
+    }
     var au = document.getElementById('rdHeroAuthor');
     if (au && au.parentNode) au.parentNode.removeChild(au);
+    if (stick && stick.parentNode) stick.parentNode.removeChild(stick);
+    head.style.display = '';
   }
   /* FULL_HERO 书：从同目录 overview.html 的 .meta 提取作者（如「沈联涛」），
      异步填进 hero；取不到就整行隐藏。 */
@@ -253,49 +247,72 @@
   }
   window.addEventListener('scroll', titleBarTick, { passive: true });
 
+  /* 封面地址：优先用首页写进 localStorage 的地址（浏览器已有缓存，秒出）；
+     没有则回落到同目录相对的本地封面文件（即从 git 拿），都不行再走 404 兜底 */
+  function coverSrc(slug) {
+    var local = '../../../assets/covers/' + encodeURIComponent(slug) + '.jpg';
+    try {
+      var c = localStorage.getItem('rdCover:' + slug);
+      if (c) return c;
+    } catch (e) { /* 无痕模式忽略 */ }
+    return local;
+  }
+
   function addHero() {
     var main = q('#rdBody');
     if (!main) return;
-    rescueHeroNodes();
-    var old = document.getElementById('rdHero');
-    if (old && old.parentNode) old.parentNode.removeChild(old);
     var slug = curSlug || (document.body.getAttribute('data-slug') || '');
     if (!slug) return;
+    var prev = document.getElementById('rdHero');
+    if (prev && prev.getAttribute('data-slug') === slug) return;   // 同一本已渲染，不重建（防重复下载/闪）
+
+    rescueHeroNodes();
+    if (prev && prev.parentNode) prev.parentNode.removeChild(prev);
     var sec = document.createElement('section');
     sec.id = 'rdHero';
-    var src = '../../../assets/covers/' + encodeURIComponent(slug) + '.jpg';
+    sec.setAttribute('data-slug', slug);
+    var src = coverSrc(slug);
     var head = document.querySelector('header.combined-head');
     var h1 = head ? head.querySelector('h1') : null;
+    var stick = document.getElementById('rdStick');
     if (FULL_HERO[slug]) {
+      /* 海报墙：只钉「背景 + 封面本体」，上下各留一段紧贴的背景；
+         标题 / 作者 / 章节导航移到墙下方的 .rd-stick 吸顶条，自然吸顶 */
       sec.className = 'rd-hero rd-hero-full';
-      /* 网易云音乐式：封面图铺满做背景墙 + 封面本体完整居中（不裁切） */
-      sec.innerHTML = '<img class="rd-hero-bg" aria-hidden="true" alt="" src="' + src + '">'
-        + '<img class="rd-hero-cover" alt="封面" loading="eager" src="' + src + '">';
-      if (h1) sec.appendChild(h1);
+      sec.innerHTML = '<img class="rd-hero-bg" aria-hidden="true" alt="" decoding="async" src="' + src + '">'
+        + '<img class="rd-hero-cover" alt="封面" loading="eager" fetchpriority="high" decoding="async" src="' + src + '">';
+      if (!stick) {
+        stick = document.createElement('div');
+        stick.id = 'rdStick';
+        stick.className = 'rd-stick';
+      }
+      stick.innerHTML = '';
+      if (h1) stick.appendChild(h1);
       var au = document.createElement('div');
       au.id = 'rdHeroAuthor';
       au.className = 'rd-hero-author';
-      sec.appendChild(au);
+      stick.appendChild(au);
       fillHeroAuthor(slug, au);
-      var chips = document.getElementById('rdChips');
-      if (chips) sec.appendChild(chips);
       var nav = document.getElementById('rdNav');
-      if (nav) sec.appendChild(nav);
-      if (head) head.style.display = 'none';   // 内容已搬走，隐藏空壳避免留白
-      var bar = ensureTitleBar();
-      bar.hidden = false;
-      bar.querySelector('.rd-titlebar-in').textContent = (h1 ? h1.textContent : title).trim();
-    } else {
-      if (titleBar) { titleBar.hidden = true; titleBar.classList.remove('show'); }
-      sec.className = 'rd-hero';
-      if (head) head.style.display = '';
-      sec.innerHTML = '<img class="rd-hero-bg" aria-hidden="true" alt="" src="' + src + '">'
-        + '<img class="rd-hero-img" alt="封面" loading="eager" src="' + src + '">';
+      if (nav) stick.appendChild(nav);
+      if (head) head.style.display = 'none';
+      if (head && head.parentNode) {
+        head.parentNode.insertBefore(sec, head);
+        head.parentNode.insertBefore(stick, head);
+      } else {
+        main.insertBefore(sec, main.firstChild);
+        main.insertBefore(stick, sec.nextSibling);
+      }
+      return;
     }
-    var img = sec.querySelector('img');
-    img.addEventListener('error', function () {
+
+    if (stick && stick.parentNode) stick.parentNode.removeChild(stick);
+    sec.className = 'rd-hero';
+    sec.innerHTML = '<img class="rd-hero-bg" aria-hidden="true" alt="" decoding="async" src="' + src + '">'
+      + '<img class="rd-hero-img" alt="封面" loading="eager" fetchpriority="high" src="' + src + '">';
+    var img = sec.querySelector('.rd-hero-img');
+    if (img) img.addEventListener('error', function () {
       rescueHeroNodes();
-      if (head) head.style.display = '';
       if (sec.parentNode) sec.parentNode.removeChild(sec);
     });
     if (head && head.parentNode) head.parentNode.insertBefore(sec, head);
@@ -611,6 +628,7 @@
   function boot() {
     initSettings();
     addHomeLink();
+    addHero();          // 先立海报墙：封面立刻开始下载，不等正文数据
 
     // ① 内联数据（standalone 单文件预览）优先，② 否则 fetch 同目录数据文件
     var inline = document.getElementById('rdData');
