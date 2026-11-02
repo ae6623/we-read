@@ -195,6 +195,7 @@
 
   /* 详情页顶部大封面模块（参考微信读书书籍介绍页）：
      居中竖版大图 + 主题绿光晕底；封面 404 → 整块隐藏，不留空洞。
+     插到 header 之前 → 大图从网页最顶部开始（第 20 批）。
      SPA 翻页时随 curSlug 重建。 */
   function addHero() {
     var main = q('#rdBody');
@@ -213,7 +214,9 @@
     img.addEventListener('error', function () {
       if (sec.parentNode) sec.parentNode.removeChild(sec);
     });
-    main.insertBefore(sec, main.firstChild);
+    var head = document.querySelector('header.combined-head');
+    if (head && head.parentNode) head.parentNode.insertBefore(sec, head);
+    else main.insertBefore(sec, main.firstChild);
   }
 
   /* 「原句 · 本小节汇总」去重：小节里如果所有 ul.quote 的原句加起来
