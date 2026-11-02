@@ -269,21 +269,19 @@ html[data-cols="3"] #rdCols .ic-cols-3{display:block}
   opacity:0;transition:opacity .4s ease;}
 .card-cover.has-img .card-cover-img{opacity:1;}
 
-/* —— 一排二：海报化，封面铺满整卡、文字叠图上（第 18 批：高度减半 30/43→60/43） —— */
+/* —— 一排二：海报化，封面铺满整卡、文字叠图上（第 19 批：高度还原 30/43 完整海报不裁切） —— */
 html[data-cols="2"] .archive-card{display:flex;flex-direction:column;}
 html[data-cols="2"] .card-cover{margin-bottom:10px;}
 html[data-cols="2"] #panel-whole .archive-card{position:relative;display:block;overflow:hidden;
-  aspect-ratio:60/43;padding:0;border:none;}
+  aspect-ratio:30/43;padding:0;border:none;}
 html[data-cols="2"] #panel-whole .card-cover{position:absolute;inset:0;width:100%;height:100%;
   aspect-ratio:auto;border-radius:0;box-shadow:none;margin:0;}
-/* 减高后图被裁：对齐封面上部（书名区），避开底部 overlay 白字 */
-html[data-cols="2"] #panel-whole .card-cover-img{object-position:center 22%;}
 html[data-cols="2"] #panel-whole .card-cover-title{font-size:2rem;}
 html[data-cols="2"] #panel-whole .card-body{position:absolute;left:0;right:0;bottom:0;z-index:2;
-  padding:30px 12px 9px;color:#fff;
-  background:linear-gradient(180deg,rgba(10,16,14,0),rgba(10,16,14,.18) 36%,rgba(10,16,14,.8));}
+  padding:36px 12px 10px;color:#fff;
+  background:linear-gradient(180deg,rgba(10,16,14,0),rgba(10,16,14,.15) 32%,rgba(10,16,14,.78));}
 html[data-cols="2"] #panel-whole .archive-card h3{color:#fff;display:-webkit-box;
-  -webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+  -webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
 html[data-cols="2"] #panel-whole .card-top time{color:rgba(255,255,255,.85);}
 html[data-cols="2"] #panel-whole .card-author{color:rgba(255,255,255,.82);}
 html[data-cols="2"] #panel-whole .card-foot .card-meta{color:rgba(255,255,255,.82);}

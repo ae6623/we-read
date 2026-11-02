@@ -257,7 +257,9 @@
     a.id = 'rdHome';
     a.className = 'rd-home';
     a.href = '../../../index.html';
-    a.innerHTML = '<span aria-hidden="true">←</span> 回首页';
+    a.innerHTML = '<span aria-hidden="true">←</span>';
+    a.title = '回首页';
+    a.setAttribute('aria-label', '回首页');
     a.addEventListener('click', function () {
       try { if (window.rdTrack) rdTrack('/detail/back-home', '详情页·回首页'); } catch (e) {}
     });
