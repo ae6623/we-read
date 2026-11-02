@@ -80,16 +80,18 @@ body{max-width:880px;margin:0 auto;padding:0 18px 80px;font-size:.9375rem;line-h
    封面本体加大居中，书名/作者/chips(右对齐)/导航叠下方 */
 /* sticky 钉墙：上半（封面大部）先随滚动离场，随后整块钉在视口顶，
    正文圆角卡片继续上滑逐段盖住 书名/作者/chips/导航 —— 「盖住部分头图」 */
-#rdHero.rd-hero-full{position:relative;
+/* 整面海报墙 sticky top:0：进页面立即钉死（封面/书名/chips/nav/背景全不动），
+   正文圆角卡片从下滑上来逐段盖住；钉墙不依赖 fixed/svh，手机内核全兼容 */
+#rdHero.rd-hero-full{position:sticky;top:0;
   width:100vw;margin-left:calc(50% - 50vw);padding:56px 0 36px;
   display:flex;flex-direction:column;justify-content:flex-end;text-align:left;
   border-bottom:none;background:transparent;}
-.rd-hero-full .rd-hero-bg{position:fixed;top:0;left:0;width:100vw;height:100vh;height:100svh;
+.rd-hero-full .rd-hero-bg{position:absolute;inset:0;width:100%;height:100%;
   object-fit:cover;opacity:1;filter:blur(12px) saturate(1.08) brightness(.88);z-index:0;}
 .rd-hero-full .rd-hero-cover{position:relative;z-index:2;width:min(70vw,360px);aspect-ratio:30/43;
   object-fit:cover;border-radius:14px;margin:0 auto 24px;display:block;
   box-shadow:0 18px 54px rgba(0,0,0,.5),0 2px 10px rgba(0,0,0,.3),0 0 0 1px rgba(255,255,255,.2);}
-.rd-hero-full::after{content:"";position:fixed;inset:0;z-index:1;pointer-events:none;
+.rd-hero-full::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
   background:linear-gradient(180deg,rgba(18,30,26,.34) 0%,rgba(18,30,26,.1) 36%,rgba(18,30,26,.55) 70%,rgba(18,30,26,.9) 100%);}
 /* 正文圆角卡片：上滑盖住背景墙 */
 .rd-hero-full ~ #rdBody{position:relative;z-index:2;background:var(--bg);

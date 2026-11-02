@@ -247,8 +247,8 @@
   }
   function titleBarTick() {
     if (!titleBar || titleBar.hidden) return;
-    var h1 = document.querySelector('#rdHero h1');
-    var show = h1 && (h1.getBoundingClientRect().bottom < 48);
+    var hero = document.getElementById('rdHero');
+    var show = hero && (window.scrollY || 0) > hero.offsetHeight - 100;
     titleBar.classList.toggle('show', !!show);
   }
   window.addEventListener('scroll', titleBarTick, { passive: true });
