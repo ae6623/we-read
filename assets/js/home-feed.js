@@ -357,7 +357,7 @@
   }
 
   function boot() {
-    if (!d.getAttribute('data-cols')) d.setAttribute('data-cols', '2');   // 默认一排二
+    if (!d.getAttribute('data-cols')) d.setAttribute('data-cols', '3');   // 默认一排三
     syncAll(true);
     relayout();
 
