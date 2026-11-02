@@ -147,14 +147,57 @@ engine_commit）、什么时候。台账 `compose.json` 每书同记 `produced_b
 `assets/js/home-theme.js`（首页）+ `assets/js/reader.js`（书页）读写同一个键：
 
 ```json
-{"theme":"cream|light|green|dark", "fs":0.86, "pm":1, "cols":1}
+{"theme":"cream|light|green|dark", "fs":0.80, "pm":1, "cols":2}
 ```
 
 - 首页样式真源 `assets/css/home-theme.css`：四主题变量 + 组件字号覆盖；
   书页是 `assets/css/reader.css`。两边变量名一致（`--paper/--card/--ink/--muted/--line/--green/--sage`）。
 - `--fs` 控制 `html{font-size}`（整页 rem 一起缩放），`--pm` 控制卡片/分组间距。
-- **默认值按页面性质分开**：首页米白（`.86`，紧凑 `pm=1`）、书页夜间（`.94`）。
+- **默认值按页面性质分开**：首页米白（`.80`，紧凑 `pm=1`）、书页夜间（`.94`）。
 - 初始化 `apply(false)` 只应用不落盘 —— 用户没主动选过，就不能被「默认」写成「偏好」，
   否则逛一次书页，首页会永久变黑。
-- 首页多两个字段：`cols`（1 = 一排一 / 2 = 一排二，缺省跟随响应式）；
+- 首页多一个字段：`cols`（1 = 一排一 / 2 = 一排二，**默认 2**，不再按屏宽自动降级）；
   卡片收藏单独存 `rd-fav`（slug 数组），不进 `rd-cfg`。
+
+### 书架信息流（2026-11-02）：瀑布流 + 15 张/页
+
+- **默认一排二**（`html[data-cols="2"]`），卡片高度不一 → `assets/js/home-feed.js`
+  按「当前最短列」绝对定位摆放；只写 `style` 不改结构，搜索/筛选那套 `card.hidden` 照旧有效。
+- **一页 15 张**：未加载的卡只加 `data-pg="off"`（CSS 隐藏），不销毁 DOM；
+  下滑到页脚前 240px 自动加载下一页，`--` 页脚是状态条（有 IntersectionObserver 时不给按钮，
+  因为按钮出现的瞬间就开始加载，永远点不到）。
+- **混排网格不参与**：系列页的网格里混着 `.series-preview` 导览块，绝对定位会把它们压叠，
+  这类网格交回 CSS 网格、也不分页（`pure = 卡片数 === 子元素数`）。
+- 「这个网格有哪些卡」每次现算，不快照 —— 上游 `homepage-reading.js` 会按时间重排、
+  把书在网格之间搬家（`sortCardsNewest`）。
+
+### 埋点口径（GoatCounter events）
+
+页脚「次访问 / 位访客」本来就走 `ae6623.goatcounter.com`，同一账号支持自定义事件
+（`goatcounter.count({path, title, event:true})`）：不新增依赖、不进 PV，后台 Events 单列，
+也能用 `https://ae6623.goatcounter.com/counter/<path>.json` 读回。
+
+路径规范：`/ev/<类别>/<维度…>`
+
+| 类别 | path | 触发 |
+|---|---|---|
+| 首屏 | `/ev/load/<pane>/p1/init` | 页面就绪，每网格一次 |
+| 加载下一页 | `/ev/load/<pane>/p<n>/<auto\|click>` | 触发加载，n 从 2 起 |
+| 曝光 | `/ev/expose/<pane>/p<n>/<A\|B\|C>` | 该页第一张卡进入视口，同页同位只报一次 |
+| 打开 | `/ev/open/<slug>` | 点书名 |
+| 收藏 | `/ev/fav/<on\|off>/<slug>` | 卡片菜单 |
+| 分享 | `/ev/share/<slug>` | 卡片菜单 |
+
+**A/B/C 位按页序切，不按像素**：
+
+- **A 位**：第 1 页（首屏 15 张）
+- **B 位**：第 2–3 页
+- **C 位**：第 4 页及以后
+
+站内没有广告位，位次只用来回答「读者到底滑到第几屏」。按页切比按像素稳——
+字号可调（`--fs` .78~1.08），像素口径会随用户设置漂。
+
+`pane` 取所在面板 id：`whole` / `soon` / `series` / `archive`；同面板多个网格加序号后缀（`whole-1`）。
+
+限流：单次访问最多 60 条，同 path 只发一次；`count.js` 8 秒内没加载出来就丢弃队列
+（离线、被拦截都不影响页面）。

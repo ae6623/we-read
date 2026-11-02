@@ -23,6 +23,13 @@
     try { localStorage.setItem(KEY, JSON.stringify(list)); } catch (e) {}
   }
 
+  function track(p, t) { if (window.rdTrack) window.rdTrack(p, t); }
+
+  function titleOf(card) {
+    var h = card.querySelector('h3');
+    return ((h ? h.textContent : '') || '').trim().slice(0, 40) || keyOf(card);
+  }
+
   function keyOf(card) {
     if (card.dataset.slug) return card.dataset.slug;
     var a = card.querySelector('.card-title-link, .book-jd-link, h3 a');
@@ -141,11 +148,14 @@
         if (act === 'fav') {
           var list = load();
           var i = list.indexOf(k);
-          if (i >= 0) { list.splice(i, 1); paint(it, false); toast('已取消收藏'); }
-          else { list.push(k); paint(it, true); toast('已收藏'); }
+          var on = i < 0;
+          if (on) { list.push(k); paint(it, true); toast('已收藏'); }
+          else { list.splice(i, 1); paint(it, false); toast('已取消收藏'); }
           save(list);
+          track('/ev/fav/' + (on ? 'on' : 'off') + '/' + k, (on ? '收藏 · ' : '取消收藏 · ') + titleOf(it.card));
         } else if (act === 'share') {
           share(it);
+          track('/ev/share/' + k, '分享 · ' + titleOf(it.card));
         }
         menu.hidden = true;
         more.setAttribute('aria-expanded', 'false');
@@ -154,6 +164,15 @@
 
     document.addEventListener('click', function (e) {
       if (!e.target.closest || !e.target.closest('.card-more, .card-menu')) closeAll(null);
+    });
+
+    /* 点书名 = 打开这本书 → 上报一条，用来算「曝光→打开」的转化 */
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest ? e.target.closest('.card-title-link, .book-jd-link') : null;
+      if (!a) return;
+      var card = a.closest ? a.closest('.archive-card') : null;
+      var k = card ? keyOf(card) : a.getAttribute('href');
+      track('/ev/open/' + k, '打开 · ' + (card ? titleOf(card) : k));
     });
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') closeAll(null);

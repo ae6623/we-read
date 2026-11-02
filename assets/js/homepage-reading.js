@@ -128,7 +128,9 @@
     if (searchStatus) searchStatus.textContent = query ? `找到 ${shown} 本` : `共 ${searchCards.length} 本`;
     const empty = searchPanel.querySelector('[data-empty-state]');
     if (empty) empty.hidden = shown > 0;
-    searchPanel.querySelectorAll('.reading-group').forEach((group) => {
+    // 注意：.reading-group 里还混着「全书视角 / 即将上线」两个子 Tab 面板（.subtab-panel），
+    // 它们的显隐归子 Tab 管，搜索不该顺手把它们打开/关掉。
+    searchPanel.querySelectorAll('.reading-group:not(.subtab-panel)').forEach((group) => {
       group.hidden = filtering && ![...group.querySelectorAll('.archive-card')].some((card) => !card.hidden);
     });
     refreshCatUi(shown);
@@ -138,7 +140,7 @@
     if (!panel || panel === searchPanel) return;
     if (searchPanel) { // 复位上一个面板的过滤痕迹，避免筛选串台
       searchCards.forEach((card) => { card.hidden = false; });
-      searchPanel.querySelectorAll('.reading-group').forEach((group) => { group.hidden = false; });
+      searchPanel.querySelectorAll('.reading-group:not(.subtab-panel)').forEach((group) => { group.hidden = false; });
       const oldEmpty = searchPanel.querySelector('[data-empty-state]');
       if (oldEmpty) oldEmpty.hidden = true;
     }

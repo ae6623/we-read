@@ -11,7 +11,7 @@
 
 /* ── 1. 字号与节奏：整页跟着 --fs 缩放，间距跟着 --pm 走 ───────────── */
 :root{
-  --fs:.86;   /* 首页默认比书页（.94）再小两档：卡片是索引，不是正文 */
+  --fs:.80;   /* 首页默认比书页（.94）再小：卡片是索引，不是正文 */
   --pm:1;     /* 默认紧凑：卡片间隙、分组间距全部收一档 */
 }
 html{font-size:calc(16px*var(--fs));}
@@ -45,10 +45,10 @@ html[data-theme=dark]{
 
 /* ── 3. 字号收小：卡片是索引，不是正文 ──────────────────────────── */
 h2{font-size:1.5rem;line-height:1.4;}
-.archive-card h3{font-size:1.02rem;line-height:1.45;margin:9px 0 3px;}
+.archive-card h3{font-size:1.04rem;line-height:1.42;margin:7px 0 3px;}
 /* 书名里偶有 `tmp_xxx` 这类没有断点的长 token，会把整页顶出横向滚动条 */
 .archive-card h3,.card-title-link,.archive-card p{overflow-wrap:anywhere;}
-.archive-card p{font-size:.8rem;line-height:1.6;margin:0 0 10px;}
+.archive-card p{font-size:.78rem;line-height:1.58;margin:0 0 8px;}
 .archive-card{min-height:140px;padding:15px 17px 13px;}
 .card-top{font-size:.72rem;}
 .type-tag{font-size:.67rem;padding:2px 9px;}
@@ -140,34 +140,50 @@ html[data-theme=dark] body{color-scheme:dark;}
 .overview-entries{gap:calc(12px*var(--pm));}
 .reading-panel+.reading-panel{margin-top:calc(32px*var(--pm));}
 
-/* ── 7. 工具栏：列数切换 + 主题（搜索钮右侧，同一排） ───────────── */
-.reading-tabs button.tab-tool-toggle{margin-left:6px;align-self:center;flex:0 0 auto;
-  width:38px;height:38px;min-height:38px;padding:0;border:1px solid var(--line);border-radius:999px;
+/* ── 7. 工具栏：页签靠左、操作靠右（查找 ｜ 显示 用一条线分开） ───── */
+/* 页签按内容宽度排。之前 `flex:1` 拉满整行，三个短词被摊得很开，
+   看着像「居中」，右侧按钮也被顶到最边上，两边都不好点。 */
+.reading-tabs{justify-content:flex-start;gap:3px;margin:0 0 12px;padding:0 0 8px;}
+.reading-tabs button{flex:0 0 auto;min-width:0;min-height:32px;padding:6px 12px;
+  font-size:.84rem;border-radius:9px;}
+
+/* 右侧 4 个圆钮统一尺寸 */
+.reading-tabs button.tab-filter-toggle,
+.reading-tabs button.tab-search-toggle,
+.reading-tabs button.tab-tool-toggle{align-self:center;flex:0 0 auto;
+  width:34px;height:34px;min-height:34px;padding:0;border:1px solid var(--line);border-radius:999px;
   background:var(--card);color:var(--muted);cursor:pointer;
   display:inline-flex;align-items:center;justify-content:center;
   transition:background .18s ease,border-color .18s ease,color .18s ease;}
+.reading-tabs button.tab-filter-toggle:hover,
+.reading-tabs button.tab-search-toggle:hover,
 .reading-tabs button.tab-tool-toggle:hover{background:var(--sage);border-color:var(--green2);color:var(--green);}
+.reading-tabs button.tab-filter-toggle[aria-expanded="true"],
+.reading-tabs button.tab-search-toggle[aria-expanded="true"],
 .reading-tabs button.tab-tool-toggle[aria-expanded="true"],
 .reading-tabs button.tab-tool-toggle[aria-pressed="true"]{background:var(--green);border-color:var(--green);color:#fff;}
 .reading-tabs button.tab-tool-toggle svg{display:block;width:17px;height:17px;
   fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
 .reading-tabs button.rd-aa{font:700 12px/1 var(--sans);letter-spacing:.02em;}
+
+/* 分组：筛选 / 搜索 是「找」，列数 / Aa 是「显示」。
+   四个圆钮平铺时看着像同类事，其实一半是弹层、一半是持久开关，
+   拉一条竖线把语义断开，用户才知道哪两个会改版式。 */
+.reading-tabs button.tab-filter-toggle{margin-left:auto;position:relative;}
+.reading-tabs button.tab-search-toggle,
+.reading-tabs button.tab-tool-toggle{margin-left:6px;}
+.reading-tabs button.tab-filter-toggle::before{content:"";position:absolute;
+  left:-8px;top:50%;width:1px;height:16px;margin-top:-8px;background:var(--muted);opacity:.4;}
+
 /* 列数钮的高亮让位给图标：一排一/一排二 看图形就够，绿色实心会把工具栏衬得太花 */
 .reading-tabs button#rdCols[aria-pressed="true"],
 html[data-theme=dark] .reading-tabs button#rdCols[aria-pressed="true"]{
   background:var(--card);border-color:var(--line);color:var(--muted);}
 .reading-tabs button#rdCols[aria-pressed="true"]:hover{background:var(--sage);color:var(--green);}
 
-/* 列数图标：默认跟随响应式（窄屏显示「一排一」），用户手动切换后按 data-cols 走 */
+/* 列数图标跟着 data-cols 走（默认一排二） */
 #rdCols svg{display:none}
-#rdCols .ic-cols-2{display:block}
-@media(max-width:680px){
-  #rdCols .ic-cols-2{display:none}
-  #rdCols .ic-cols-1{display:block}
-}
-html[data-cols="1"] #rdCols .ic-cols-2{display:none}
 html[data-cols="1"] #rdCols .ic-cols-1{display:block}
-html[data-cols="2"] #rdCols .ic-cols-1{display:none}
 html[data-cols="2"] #rdCols .ic-cols-2{display:block}
 
 /* 面板：贴在 Aa 正下方，右对齐（与搜索/筛选浮层同一套位置） */
@@ -221,15 +237,19 @@ html[data-cols="1"] .overview-entries{grid-template-columns:minmax(0,1fr)!import
 html[data-cols="2"] .overview-entries{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
 
 @media(max-width:680px){
-  /* 手机一排要塞 3 个页签 + 4 个工具钮，工具钮收到 32 */
-  .reading-tabs button.tab-tool-toggle{width:32px;height:32px;min-height:32px;margin-left:4px;}
+  /* 3 个页签 + 4 个圆钮，一行放得下；页签不再拉满 */
+  .reading-tabs{gap:2px;margin-bottom:10px;padding-bottom:7px;}
+  .reading-tabs button{font-size:.8rem;padding:5px 10px;min-height:30px;}
+  .reading-tabs button.tab-filter-toggle,
+  .reading-tabs button.tab-search-toggle,
+  .reading-tabs button.tab-tool-toggle{width:32px;height:32px;min-height:32px;}
+  .reading-tabs button.tab-search-toggle,
+  .reading-tabs button.tab-tool-toggle{margin-left:5px;}
   .reading-tabs button.tab-tool-toggle svg{width:15px;height:15px;}
   .reading-tabs button.rd-aa{font-size:11px;}
-  .reading-tabs button{font-size:.86rem;padding:8px 6px;min-height:40px;}
-  .reading-tabs button.tab-filter-toggle,
-  .reading-tabs button.tab-search-toggle{width:32px;height:32px;min-height:32px;}
+  .reading-tabs button.tab-filter-toggle::before{left:-6px;height:14px;margin-top:-7px;}
   #rdPanel{left:auto;right:0;min-width:0;width:min(268px,calc(100vw - 36px));}
-  .archive-card{min-height:0;padding:13px 15px 11px;}
+  .archive-card{min-height:0;padding:11px 13px 9px;}
 }
 @media(prefers-reduced-motion:reduce){
   .archive-card,.series-preview{transition:none;}
@@ -243,3 +263,66 @@ html[data-cols="2"] .overview-entries{grid-template-columns:repeat(2,minmax(0,1f
   transition:opacity .2s ease,transform .2s ease;max-width:80vw;text-align:center;}
 .rd-toast.is-on{opacity:1;transform:translate(-50%,0);}
 @media(prefers-reduced-motion:reduce){.rd-toast{transition:none;}}
+
+/* ── 9. 卡片日期挪到右上角 ────────────────────────────────────── */
+/* 徽章藏掉后 card-top 里只剩日期，原来靠左，和书名抢视线；
+   挪到右上角当「角标」用，一眼扫时间、不看正文。 */
+.archive-card .card-top{justify-content:flex-end;min-height:0;margin:0 0 2px;gap:6px;}
+.archive-card .card-top time{font:600 .66rem/1 var(--sans);letter-spacing:.06em;
+  color:var(--muted);font-variant-numeric:tabular-nums;background:none;border:0;padding:0;}
+
+/* ── 10. 瀑布流 + 分页 ────────────────────────────────────────── */
+/* 卡片改为绝对定位后由 home-feed.js 摆放，这里只保证不参与文档流、
+   不被 site.css 的 min-height 撑高。 */
+.archive-grid>.archive-card{left:0;top:0;}
+.archive-card[data-pg="off"]{display:none;}
+
+.feed-foot{display:flex;justify-content:center;padding:calc(14px*var(--pm)) 0 2px;}
+.feed-more{font:600 .76rem/1.4 var(--sans);color:var(--green);background:var(--card);
+  border:1px solid var(--line);border-radius:999px;padding:8px 18px;cursor:pointer;
+  transition:background .18s ease,border-color .18s ease;}
+.feed-more:hover{background:var(--sage);border-color:var(--green2);}
+.feed-more span{color:var(--muted);font-weight:400;margin-left:6px;font-size:.68rem;
+  font-variant-numeric:tabular-nums;}
+.feed-end{margin:0;color:var(--muted);font-size:.68rem;letter-spacing:.12em;}
+@media(max-width:680px){
+  .feed-more{font-size:.72rem;padding:7px 15px;}
+}
+
+/* ── 11. 顶部压缩：让第一排卡片能挤进首屏 ───────────────────────── */
+.hero{min-height:0;}
+.hero-inner{padding:40px 28px 34px;}
+.hero-brand{margin-bottom:10px;}
+.hero .eyebrow{font-size:.6rem;letter-spacing:.16em;margin:0;}
+.hero h1{font-size:clamp(1.9rem,3.2vw,2.9rem);line-height:1.26;margin:12px 0 10px;}
+.hero-copy{font-size:.9rem;line-height:1.7;}
+details.reading-bar{margin:8px auto 4px;}
+
+@media(max-width:680px){
+  .hero-inner{padding:18px 16px 16px;}
+  .hero-brand{font-size:.9rem;margin-bottom:4px;padding:4px 0;margin-top:-2px;}
+  .hero .eyebrow{font-size:.55rem;letter-spacing:.13em;margin-top:6px;}
+  .hero h1{font-size:1.66rem;line-height:1.3;margin:7px 0 7px;}
+  .hero h1 span{border-bottom-width:3px;padding-bottom:2px;}
+  .hero-copy{font-size:.74rem;line-height:1.55;max-width:none;}
+  .hero-mark{font-size:8.5rem;top:auto;bottom:-16px;right:-12px;}
+  details.reading-bar>summary{padding:8px 16px;}
+  .reading-bar-label{font-size:.72rem;}
+}
+
+/* 主体上边距也跟着收：整条「页头 → 理念条 → 工具栏 → 卡片」压缩到一屏能看见两排 */
+.layout{padding:24px 28px 56px;}
+@media(max-width:680px){
+  .layout{padding:14px 14px 34px;}
+  .reading-module{padding-top:0;}
+}
+
+/* 再压一点：手机上去掉与品牌行重复的英文 eyebrow，子分段也收一档 */
+@media(max-width:680px){
+  .hero .eyebrow{display:none;}
+  .subtabs{padding:3px;margin:0 0 12px;}
+  .subtabs button{padding:7px 8px;font-size:.8rem;}
+  .subtabs .count{margin-left:5px;padding:0 7px;font-size:.68rem;line-height:1.6;}
+}
+.feed-note{margin:0;color:var(--muted);font-size:.72rem;letter-spacing:.02em;}
+.feed-note span{color:var(--line);margin-left:4px;font-variant-numeric:tabular-nums;}

@@ -8,9 +8,9 @@
   'use strict';
 
   var KEY = 'rd-cfg';
-  var FS = [0.82, 0.86, 0.90, 0.94, 1.00, 1.08, 1.18];
+  var FS = [0.78, 0.80, 0.83, 0.86, 0.90, 0.94, 1.00, 1.08];
   var PM = [0.55, 1, 1.5];
-  var DEF_THEME = 'cream', DEF_FS = 0.86, DEF_PM = 1;
+  var DEF_THEME = 'cream', DEF_FS = 0.80, DEF_PM = 1;
   var THEME_COLOR = { cream: '#f6f3ed', light: '#ffffff', green: '#cfe8d2', dark: '#15171a' };
 
   var d = document.documentElement;
@@ -35,7 +35,7 @@
     var c = load();
     var fi = idx(FS, c.fs, DEF_FS);
     var pi = idx(PM, c.pm, DEF_PM);
-    if (c.pm == null) pi = -1;              // 未设置 → 用首页自己的 1.35
+    if (c.pm == null) pi = -1;              // 未设置 → 用首页自己的紧凑档
 
     var panel = q('#rdPanel'), fab = q('#rdFab');
     var tc = q('meta[name="theme-color"]');
@@ -88,10 +88,9 @@
     (function () {
       var btn = q('#rdCols');
       if (!btn) return;
-      var narrow = window.matchMedia('(max-width: 680px)');
-
       function current() {
-        return d.getAttribute('data-cols') || (narrow.matches ? '1' : '2');
+        // 默认一排二（瀑布流），不再按屏宽自动降成一排一
+        return d.getAttribute('data-cols') || '2';
       }
       function paint() {
         btn.setAttribute('aria-pressed', current() === '1' ? 'true' : 'false');
@@ -104,15 +103,11 @@
       }
 
       if (c.cols === 1 || c.cols === 2) set(String(c.cols), false);
-      else paint();
+      else set('2', false);
 
       btn.addEventListener('click', function () {
         set(current() === '1' ? '2' : '1', true);
       });
-      // 没手动选过的人，转屏/改窗口时跟随响应式
-      var onChange = function () { if (c.cols !== 1 && c.cols !== 2) paint(); };
-      if (narrow.addEventListener) narrow.addEventListener('change', onChange);
-      else if (narrow.addListener) narrow.addListener(onChange);
     })();
 
     // 首次进入只应用、不写盘：用户没选过就保持默认，别把「默认」变成「用户偏好」
