@@ -29,10 +29,10 @@
   var meta = hasWM ? new WeakMap() : null;
 
   /* ── 首屏打散 ───────────────────────────────────────────────────
-     纯按时间排，每次进来第一屏永远是同几本。只把「第一页」这 15 张打乱，
-     第 16 张往后仍是时间序（分页本身不乱）。
-     种子放在内存里：同一次访问内无论重排多少次（搬卡、切列数、改字号），
-     结果都一样 —— 否则每次 resize 卡片就换位置，眼睛跟不上。 */
+     第 19 批：整个书架列表全量随机打散（原来只打乱第一页 15 张、第 16 张起
+     仍是时间序）。种子放在内存里：同一次访问内无论重排多少次（搬卡、切列数、
+     改字号），结果都一样 —— 否则每次 resize 卡片就换位置，眼睛跟不上；
+     每次重新打开页面/刷新则换一副新牌。 */
   var SEED = ((Date.now() ^ Math.floor(Math.random() * 1e9)) >>> 0) || 1;
 
   function rng(a) {                      // mulberry32
@@ -45,14 +45,12 @@
   }
 
   function scatter(list) {
-    var n = Math.min(PAGE, list.length);
-    if (n < 2) return list.slice();
-    var head = list.slice(0, n), r = rng(SEED);
-    for (var i = n - 1; i > 0; i--) {
+    var arr = list.slice(), r = rng(SEED);
+    for (var i = arr.length - 1; i > 0; i--) {
       var j = Math.floor(r() * (i + 1));
-      var t = head[i]; head[i] = head[j]; head[j] = t;
+      var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
     }
-    return head.concat(list.slice(n));
+    return arr;
   }
 
   /* ── 曝光观察器 ────────────────────────────────────────────────── */

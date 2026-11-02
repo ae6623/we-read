@@ -73,12 +73,13 @@ body{max-width:880px;margin:0 auto;padding:0 18px 80px;font-size:.9375rem;line-h
   @keyframes rdHeroIn{from{opacity:0;transform:translateY(10px) scale(.97)}to{opacity:1;transform:none}}
 }
 /* 回首页入口：header 顶部的小胶囊 */
-.rd-home{display:inline-flex;align-items:center;gap:.35em;font-size:.78rem;line-height:1;
-  color:var(--muted);text-decoration:none;background:var(--navlink-bg,#f3f1ea);
-  border:1px solid var(--card-bd);border-radius:999px;padding:6px 14px 6px 11px;
-  transition:color .15s ease,border-color .15s ease;}
+/* 第 19 批：回首页改为右上角浮动小圆 icon（与 Aa 设置钮并排），不占正文一行 */
+.rd-home{position:fixed;top:10px;right:58px;z-index:60;display:flex;align-items:center;justify-content:center;
+  width:34px;height:34px;font-size:16px;line-height:1;color:var(--txt);text-decoration:none;
+  background:var(--card-bg);border:1px solid var(--card-bd);border-radius:9px;padding:0;
+  box-shadow:0 2px 8px rgba(0,0,0,.1);transition:color .15s ease,border-color .15s ease;}
 .rd-home:hover{color:var(--head,#315e50);border-color:var(--head,#315e50);}
-.rd-home span{font-size:.9em;}
+.rd-home span{font-size:1em;}
 .combined-head h1{font:700 1.45rem/1.35 var(--serif);margin:0 0 8px;color:var(--head);}
 .combined-head .eyebrow{font-size:.72rem;letter-spacing:.14em;margin:0 0 6px;}
 .chips{margin:8px 0 0;}
