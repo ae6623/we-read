@@ -8,9 +8,10 @@
   'use strict';
 
   var KEY = 'rd-cfg';
-  var FS = [0.78, 0.80, 0.83, 0.86, 0.90, 0.94, 1.00, 1.08];
+  var FS = [0.72, 0.74, 0.76, 0.78, 0.80, 0.83, 0.86, 0.90, 0.94, 1.00, 1.08];
   var PM = [0.55, 1, 1.5];
-  var DEF_THEME = 'cream', DEF_FS = 0.80, DEF_PM = 1;
+  var DEF_THEME = 'cream', DEF_FS = 0.76, DEF_PM = 1;
+  var FS_VER = 2;            // 档位表变过就升版本，见 boot() 里的迁移
   var THEME_COLOR = { cream: '#f6f3ed', light: '#ffffff', green: '#cfe8d2', dark: '#15171a' };
 
   var d = document.documentElement;
@@ -33,6 +34,14 @@
 
   function boot() {
     var c = load();
+    /* 老配置迁移：上一版默认是 .80，这批整体又小了两档。
+       存着旧默认值的人其实没主动选过字号，跟着新默认走；
+       自己调过（不是 .80）的不动。只迁一次。 */
+    if ((c.ver || 1) < FS_VER) {
+      if (c.fs === 0.8) c.fs = DEF_FS;
+      c.ver = FS_VER;
+      if (Object.keys(c).length) save(c);
+    }
     var fi = idx(FS, c.fs, DEF_FS);
     var pi = idx(PM, c.pm, DEF_PM);
     if (c.pm == null) pi = -1;              // 未设置 → 用首页自己的紧凑档

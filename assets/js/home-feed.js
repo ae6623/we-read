@@ -66,6 +66,10 @@
   }
 
   /* ── 瀑布流排版 ────────────────────────────────────────────────── */
+  function isSpan(el, cols) {
+    return cols === 2 && el.getAttribute('data-span') === '2';
+  }
+
   function layout(s) {
     var grid = s.grid;
     if (!s.pure) {                        // 混排网格（系列页有 .series-preview）交回 CSS 网格
@@ -76,6 +80,7 @@
           s.cards[d0].style.left = '';
           s.cards[d0].style.top = '';
           s.cards[d0].style.margin = '';
+          s.cards[d0].removeAttribute('data-span');
         }
         grid.style.height = '';
         grid.style.position = '';
@@ -96,27 +101,50 @@
     var cards = s.cards, vis = [], i, k;
     for (i = 0; i < cards.length; i++) if (shownOf(cards[i])) vis.push(cards[i]);
 
+    /* 首卡横幅只对「窄列 + 有元信息」的卡有意义：卡宽 175 时两列容易排成表格，
+       压一张通栏卡当起点；桌面卡宽 500 会变成一条空心横条；「即将上线」那种
+       只有标题 + 一句说明的卡跨列更是大片空白 —— 都排除。
+       属性不在 MutationObserver 的监听列表里，改了不会自激。 */
+    var span = cols === 2 && colW < 300 && vis.length > 3 &&
+      !!(vis[0] && vis[0].querySelector('.card-meta'));
+    for (i = 0; i < cards.length; i++) {
+      var on = span && cards[i] === vis[0];
+      if (on) {
+        if (cards[i].getAttribute('data-span') !== '2') cards[i].setAttribute('data-span', '2');
+      } else if (cards[i].hasAttribute('data-span')) {
+        cards[i].removeAttribute('data-span');
+      }
+    }
+
     grid.style.position = 'relative';
 
-    // 1) 先统一定宽（同一批写入，只触发一次重排）
+    // 1) 先统一定宽（同一批写入，只触发一次重排）；横幅卡占满整行
     for (i = 0; i < vis.length; i++) {
       vis[i].style.position = 'absolute';
-      vis[i].style.width = colW + 'px';
       vis[i].style.margin = '0';
+      vis[i].style.width = (i === 0 && isSpan(vis[i], cols) ? W : colW) + 'px';
     }
     // 2) 再量高：宽度定下来后高度才是真的
     var hs = [];
     for (i = 0; i < vis.length; i++) hs.push(vis[i].offsetHeight);
 
-    // 3) 依次放进当前最短的列
+    // 3) 依次放进当前最短的列；横幅卡把两列一起压到它下面
     var ys = [];
     for (k = 0; k < cols; k++) ys[k] = 0;
     var maxY = 0;
     for (i = 0; i < vis.length; i++) {
+      var el = vis[i];
+      if (i === 0 && isSpan(el, cols)) {
+        el.style.left = '0px';
+        el.style.top = '0px';
+        for (k = 0; k < cols; k++) ys[k] = hs[i] + gy;
+        maxY = hs[i] + gy;
+        continue;
+      }
       var m = 0;
       for (k = 1; k < cols; k++) if (ys[k] < ys[m]) m = k;
-      vis[i].style.left = (m * (colW + gx)) + 'px';
-      vis[i].style.top = ys[m] + 'px';
+      el.style.left = (m * (colW + gx)) + 'px';
+      el.style.top = ys[m] + 'px';
       ys[m] += hs[i] + gy;
       if (ys[m] > maxY) maxY = ys[m];
     }
@@ -167,26 +195,36 @@
     if (s.watch || !s.foot || typeof IntersectionObserver !== 'function') return;
     s.watch = true;
     new IntersectionObserver(function (es) {
-      for (var j = 0; j < es.length; j++) {
-        if (!es[j].isIntersecting) continue;
-        var now = Date.now();
-        // 首屏别急着加载：启动那几百毫秒里，上游脚本还在搬卡片、改 hidden，
-        // 网格高度会短暂塌下去，页脚「假进入」视口。
-        if (now - BOOT < 900) continue;
-        // 首屏只给第一页：用户还没下滑就不续页（慢网下卡片重排会让页脚「假进入」视口）
-        if (window.scrollY < 120 && s.shown <= PAGE) continue;
-        if (now - s.auto < 320) continue;       // 别一口气全加载
-        if (!nearFoot(s.foot)) continue;        // 回读一次真实位置再说
-        s.auto = now;
-        reveal(s, PAGE, 'auto');
-      }
+      for (var j = 0; j < es.length; j++) if (es[j].isIntersecting) check(s);
     }, { rootMargin: '240px 0px' }).observe(s.foot);
   }
 
+  /* 续页判定只留这一个入口。
+     以前判断写在 IO 回调里，被 320ms 节流挡掉就再也不回来了 ——
+     观察器只报「状态变化」，元素继续往下滑走之后不会再回调，
+     快速滑到底就会永久停在「已显示 30 / 276」。所以被节流时挂个定时器补一次。 */
+  function check(s) {
+    if (!s.foot || s.shown >= s.cards.length) return;
+    var now = Date.now();
+    if (now - BOOT < 900) return;                       // 启动抖动期
+    if (window.scrollY < 120 && s.shown <= PAGE) return; // 还没下滑，首屏只给第一页
+    if (now - s.auto < 320) {                            // 节流：补一次，别丢事件
+      if (!s.timer) {
+        s.timer = setTimeout(function () { s.timer = 0; check(s); }, 330);
+      }
+      return;
+    }
+    if (!nearFoot(s.foot)) return;                       // 回读真实位置再说
+    s.auto = now;
+    reveal(s, PAGE, 'auto');
+  }
+
+  // 页脚只要还在视口下方 240px 以外就不算到；已经滑过去了（在上方）算到 ——
+  // 用户都看到底了，还端着「还有 246 本」不放就太磨人。
   function nearFoot(el, margin) {
     margin = margin || 240;
     var r = el.getBoundingClientRect();
-    return r.top < window.innerHeight + margin && r.bottom > -margin;
+    return r.top < window.innerHeight + margin;
   }
 
   /* ── 加载下一页 ────────────────────────────────────────────────── */
@@ -248,6 +286,7 @@
     }
 
     applyPg(s);
+
 
     if (now.length > PAGE) {
       if (!s.foot) makeFoot(s);
@@ -330,6 +369,18 @@
       clearTimeout(rz);
       rz = setTimeout(relayout, 140);
     });
+
+    /* 滚动兜底：观察器只在「进出视口」时报一次，卡片一多，页脚可能被一口气
+       滑过去而没触发；滚动时顺手查一遍，比只靠 IO 稳。 */
+    var sr = 0;
+    window.addEventListener('scroll', function () {
+      if (sr) return;
+      sr = requestAnimationFrame(function () {
+        sr = 0;
+        for (var i = 0; i < states.length; i++) check(states[i]);
+      });
+    }, { passive: true });
+
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(relayout);
   }
 

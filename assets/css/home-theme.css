@@ -11,7 +11,7 @@
 
 /* ── 1. 字号与节奏：整页跟着 --fs 缩放，间距跟着 --pm 走 ───────────── */
 :root{
-  --fs:.80;   /* 首页默认比书页（.94）再小：卡片是索引，不是正文 */
+  --fs:.76;   /* 首页默认比书页（.94）再小：卡片是索引，不是正文 */
   --pm:1;     /* 默认紧凑：卡片间隙、分组间距全部收一档 */
 }
 html{font-size:calc(16px*var(--fs));}
@@ -45,11 +45,11 @@ html[data-theme=dark]{
 
 /* ── 3. 字号收小：卡片是索引，不是正文 ──────────────────────────── */
 h2{font-size:1.5rem;line-height:1.4;}
-.archive-card h3{font-size:1.04rem;line-height:1.42;margin:7px 0 3px;}
+.archive-card h3{font-size:.98rem;line-height:1.52;margin:5px 0 0;}
 /* 书名里偶有 `tmp_xxx` 这类没有断点的长 token，会把整页顶出横向滚动条 */
 .archive-card h3,.card-title-link,.archive-card p{overflow-wrap:anywhere;}
-.archive-card p{font-size:.78rem;line-height:1.58;margin:0 0 8px;}
-.archive-card{min-height:140px;padding:15px 17px 13px;}
+.archive-card p{font-size:.76rem;line-height:1.58;margin:0 0 8px;}
+.archive-card{min-height:0;padding:14px 16px 12px;}
 .card-top{font-size:.72rem;}
 .type-tag{font-size:.67rem;padding:2px 9px;}
 .updated-time{font-size:.64rem;}
@@ -74,6 +74,17 @@ h2{font-size:1.5rem;line-height:1.4;}
 details.reading-bar>summary{font-size:.88rem;padding:11px 20px;}
 .reading-bar-label{font-size:.76rem;}
 .visit-badge-num{font-size:1.2rem;}
+
+/* 桌面：卡片宽（500px 上下），字号小到 8px 就发飘，这里回一档；
+   但不要再给 min-height —— 内容只有书名 + 一行元信息，撑高就是中间一大块白。 */
+@media(min-width:900px){
+  .archive-card{padding:15px 18px 12px;min-height:0;}
+  .archive-card h3{font-size:1.06rem;line-height:1.46;}
+  .card-author{font-size:.74rem;}
+  .card-foot{gap:8px;}
+  .card-foot .card-meta{font-size:.7rem;}
+  .archive-card .card-top time{font-size:.74rem;}
+}
 
 /* ── 4. 颜色重映射：把散落的硬编码浅色挂到变量上 ────────────────── */
 .toolbar input,.shelf-search-pop,.shelf-search-pop input,.shelf-filter-pop,
@@ -207,12 +218,21 @@ html[data-cols="2"] #rdCols .ic-cols-2{display:block}
   .archive-card .card-top:not(:has(time, .subtle)){display:none;}
 }
 .archive-card{position:relative;}
-.card-foot{display:flex;align-items:center;gap:8px;margin-top:auto;min-height:26px;}
-.card-author{font-size:.75rem;color:var(--muted);min-width:0;
+.card-foot{display:flex;align-items:center;gap:7px;margin-top:auto;min-height:22px;padding-top:3px;}
+.card-author{font-size:.7rem;color:var(--muted);min-width:0;flex:1 1 auto;
   overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .card-author:empty{display:none;}
-.card-more{margin-left:auto;flex:none;display:inline-flex;align-items:center;justify-content:center;
-  width:26px;height:26px;padding:0;border:1px solid transparent;border-radius:8px;
+/* 章节数 / 笔记条数：原来是书名下面独占一行、靠左，白占一行高度；
+   挪到底部右侧当「卡片元信息」，和日期（右上）连成右侧信息列。 */
+.card-foot .card-meta{margin:0 0 0 auto;flex:0 0 auto;max-width:56%;
+  font:600 .66rem/1.25 var(--sans);letter-spacing:.01em;color:var(--muted);
+  font-variant-numeric:tabular-nums;white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis;}
+/* 没有 meta 的卡片（描述型段落没被搬走）兜底：⋯ 自己靠右 */
+@supports selector(:has(*)){
+  .card-foot:not(:has(.card-meta)) .card-more{margin-left:auto;}
+}.card-more{margin-left:6px;flex:none;display:inline-flex;align-items:center;justify-content:center;
+  width:24px;height:24px;padding:0;border:1px solid transparent;border-radius:8px;
   background:transparent;color:var(--muted);cursor:pointer;transition:background .15s,color .15s;}
 .card-more svg{width:16px;height:16px;fill:currentColor;}
 .card-more:hover,.card-more[aria-expanded="true"]{background:var(--sage);color:var(--green);border-color:var(--line);}
@@ -249,7 +269,7 @@ html[data-cols="2"] .overview-entries{grid-template-columns:repeat(2,minmax(0,1f
   .reading-tabs button.rd-aa{font-size:11px;}
   .reading-tabs button.tab-filter-toggle::before{left:-6px;height:14px;margin-top:-7px;}
   #rdPanel{left:auto;right:0;min-width:0;width:min(268px,calc(100vw - 36px));}
-  .archive-card{min-height:0;padding:11px 13px 9px;}
+  .archive-card{min-height:0;padding:10px 12px 8px;}
 }
 @media(prefers-reduced-motion:reduce){
   .archive-card,.series-preview{transition:none;}
@@ -267,8 +287,8 @@ html[data-cols="2"] .overview-entries{grid-template-columns:repeat(2,minmax(0,1f
 /* ── 9. 卡片日期挪到右上角 ────────────────────────────────────── */
 /* 徽章藏掉后 card-top 里只剩日期，原来靠左，和书名抢视线；
    挪到右上角当「角标」用，一眼扫时间、不看正文。 */
-.archive-card .card-top{justify-content:flex-end;min-height:0;margin:0 0 2px;gap:6px;}
-.archive-card .card-top time{font:600 .66rem/1 var(--sans);letter-spacing:.06em;
+.archive-card .card-top{justify-content:flex-end;min-height:0;margin:0 0 1px;gap:6px;}
+.archive-card .card-top time{font:600 .72rem/1.1 var(--sans);letter-spacing:.05em;
   color:var(--muted);font-variant-numeric:tabular-nums;background:none;border:0;padding:0;}
 
 /* ── 10. 瀑布流 + 分页 ────────────────────────────────────────── */
@@ -276,6 +296,16 @@ html[data-cols="2"] .overview-entries{grid-template-columns:repeat(2,minmax(0,1f
    不被 site.css 的 min-height 撑高。 */
 .archive-grid>.archive-card{left:0;top:0;}
 .archive-card[data-pg="off"]{display:none;}
+
+/* 首卡横幅：两列瀑布里，第一张横跨整行。
+   纯文字卡的高度只随书名行数变（1 行 / 2 行，差 18px），两列很容易排成
+   「表格」；开头压一张通栏卡，整面墙立刻有起点，往下也才有错落可言。 */
+html[data-cols="2"] .archive-grid>.archive-card[data-span="2"]{padding:12px 15px 10px;}
+html[data-cols="2"] .archive-grid>.archive-card[data-span="2"] h3{font-size:1.24rem;line-height:1.38;margin:5px 0 0;}
+html[data-cols="2"] .archive-grid>.archive-card[data-span="2"] .card-top{margin-bottom:0;}
+html[data-cols="2"] .archive-grid>.archive-card[data-span="2"] .card-top time{font-size:.76rem;}
+html[data-cols="2"] .archive-grid>.archive-card[data-span="2"] .card-author{font-size:.74rem;}
+html[data-cols="2"] .archive-grid>.archive-card[data-span="2"] .card-foot .card-meta{font-size:.7rem;}
 
 .feed-foot{display:flex;justify-content:center;padding:calc(14px*var(--pm)) 0 2px;}
 .feed-more{font:600 .76rem/1.4 var(--sans);color:var(--green);background:var(--card);

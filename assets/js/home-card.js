@@ -88,7 +88,34 @@
     toast(url);
   }
 
+  /* ── 章节数搬到卡片右下 ─────────────────────────────────────────
+     原来「34 章 / 790 条」在书名下面独占一行、靠左，白吃一行高度；
+     挪到 card-foot 右侧后：日期在右上、章节数在右下，元信息连成一条右列，
+     书名单独占中间，卡片也能矮掉一行（瀑布流靠这个错落）。 */
+  var META_RE = /^\s*[\d,]+\s*章(\s*\/\s*[\d,]+\s*条)?\s*$/;
+
+  function moveMeta() {
+    var cards = document.querySelectorAll('.archive-card');
+    for (var i = 0; i < cards.length; i++) {
+      var card = cards[i];
+      if (card.querySelector('.card-meta')) continue;
+      var foot = card.querySelector('.card-foot');
+      if (!foot) continue;
+      var ps = card.querySelectorAll('p');
+      for (var j = 0; j < ps.length; j++) {
+        var p = ps[j];
+        // 只搬纯元信息；描述型段落（系列 / 归档卡）留在原位，别把正文塞进底栏
+        if (!META_RE.test((p.textContent || '').trim())) continue;
+        p.classList.add('card-meta');
+        var more = foot.querySelector('.card-more');
+        foot.insertBefore(p, more || null);
+        break;
+      }
+    }
+  }
+
   function boot() {
+    moveMeta();
     var favs = load();
 
     items = Array.prototype.slice.call(document.querySelectorAll('.archive-card'))
