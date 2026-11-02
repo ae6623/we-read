@@ -191,7 +191,12 @@
      铺满当背景，书名 h1 / chips / 章节导航 #rdNav 全部搬进图上（微信读书
      介绍页式），正文从第二屏开始。翻页重建前先 rescue 移回原位。
      SPA 翻页时随 curSlug 重建，非 full 书自动还原。 */
-  var FULL_HERO = { 'shi-nian-lun-hui': 1 };
+  /* 第 20 批 p：海报墙（满宽背景墙 + 独立吸顶标题条）改为**全站默认**，
+     不再逐本白名单，也不用改任何壳页 html —— 版式完全由这里的 JS + reader.css 决定。
+     需要退出这套版式的书，把 slug 写进 HERO_SKIP 即可（目前为空）。
+     封面 404 的书会自动降级回普通版式，并记进 HERO_FAILED 防止反复重试。 */
+  var HERO_SKIP = {};
+  var HERO_FAILED = {};
   function rescueHeroNodes() {
     var head = document.querySelector('header.combined-head');
     if (!head) return;
@@ -205,7 +210,97 @@
     var au = document.getElementById('rdHeroAuthor');
     if (au && au.parentNode) au.parentNode.removeChild(au);
     if (stick && stick.parentNode) stick.parentNode.removeChild(stick);
+    document.body.classList.remove('rd-has-full');
     head.style.display = '';
+  }
+  /* 吸顶让位：标题条钉住后，左上「回首页」与右上「Aa」两颗浮动钮正好压在
+     书名/作者上 → 滚动过墙后给标题条两侧留出避让内边距（CSS 里配 .rd-scrolled） */
+  var edgeBound = false;
+  function bindStickyEdge() {
+    if (edgeBound) return;
+    edgeBound = true;
+    window.addEventListener('scroll', function () {
+      var hero = document.getElementById('rdHero');
+      if (!hero || !document.body.classList.contains('rd-has-full')) {
+        document.body.classList.remove('rd-scrolled');
+        return;
+      }
+      document.body.classList.toggle('rd-scrolled', (window.scrollY || 0) > hero.offsetHeight - 70);
+    }, { passive: true });
+  }
+  /* 书名入口的 bookId：全站集中放 assets/data/bookids.json（有则列出），
+     不再往 339 个壳页里写 data-book-id。壳页若自带则优先用壳页的。
+     没有 bookId 的书 → 书名保持纯文本，不显示 ↗（点了也没地方去） */
+  var HERO_DATA = null, heroLoading = false, heroQueue = [];
+  function shellBookId(slug) {
+    var own = (document.body.getAttribute('data-book-id') || '').trim();
+    return (own && document.body.getAttribute('data-slug') === slug) ? own : '';
+  }
+  /* assets/data/hero.json = { ids:{slug:bookId}, nocover:[slug…] }
+     3KB 的小表，一次请求供全站复用：有 bookId 的书名才可点，没封面的书不开墙 */
+  function loadHeroData(cb) {
+    if (HERO_DATA) { if (cb) cb(HERO_DATA); return; }
+    if (cb) heroQueue.push(cb);
+    if (heroLoading) return;
+    heroLoading = true;
+    fetch('../../../assets/data/hero.json', { credentials: 'same-origin' })
+      .then(function (r) { return r.ok ? r.json() : {}; })
+      .catch(function () { return {}; })
+      .then(function (m) {
+        HERO_DATA = { ids: (m && m.ids) || {}, nocover: (m && m.nocover) || [] };
+        HERO_DATA.nocoverMap = {};
+        HERO_DATA.nocover.forEach(function (x) { HERO_DATA.nocoverMap[x] = 1; });
+        heroLoading = false;
+        var q = heroQueue; heroQueue = [];
+        q.forEach(function (f) { try { f(HERO_DATA); } catch (e) { /* 忽略 */ } });
+      });
+  }
+  function hasCover(slug) {
+    if (!HERO_DATA) return true;                       // 数据没到 → 先按有封面处理
+    return !HERO_DATA.nocoverMap[slug];
+  }
+  function armTitleLink(a, slug) {
+    var id = shellBookId(slug);
+    if (id) { applyTitleHref(a, slug, id); return; }
+    loadHeroData(function (d) {
+      if (!a.isConnected || a.getAttribute('data-slug') !== slug) return;
+      var v = d.ids && d.ids[slug];
+      if (v) applyTitleHref(a, slug, v);
+    });
+  }
+  function applyTitleHref(a, slug, id) {
+    a.href = 'weread://reading?bId=' + encodeURIComponent(id) + '&type=1';
+    a.setAttribute('data-book-id', id);
+    a.setAttribute('aria-label', '在微信读书打开《' + (document.body.getAttribute('data-title') || '') + '》');
+    a.classList.add('rd-title-on');
+    wireWeread(a, id);
+  }
+  /* 有书没封面（全站 45 本）：不开海报墙，直接退回「标题 + 正文」的朴素版式 */
+  function degradeHero(slug, sec) {
+    HERO_FAILED[slug] = 1;
+    rescueHeroNodes();
+    if (sec && sec.parentNode) sec.parentNode.removeChild(sec);
+  }
+  /* 书名入口：点标题唤起微信读书 App 里这本书的详情页
+     weread://reading?bId=<bookId>&type=1 → type=1 即书籍详情页。
+     桌面浏览器 / 没装 App 点不动协议时，1.5 秒兜底打开网页版搜索页。 */
+  function wireWeread(a, bookId) {
+    a.addEventListener('click', function (e) {
+      e.preventDefault();
+      var left = false;
+      var mark = function () { left = true; };
+      document.addEventListener('visibilitychange', mark);
+      window.addEventListener('blur', mark);
+      try { window.location.href = 'weread://reading?bId=' + bookId + '&type=1'; } catch (err) { /* 忽略 */ }
+      setTimeout(function () {
+        document.removeEventListener('visibilitychange', mark);
+        window.removeEventListener('blur', mark);
+        if (left || document.hidden) return;
+        var t = (document.body.getAttribute('data-title') || '').replace(/^《/, '').replace(/》$/, '');
+        window.open('https://weread.qq.com/web/search/books?keyword=' + encodeURIComponent(t || bookId),
+          '_blank', 'noopener');
+      }, 1500);
+    });
   }
   /* FULL_HERO 书：从同目录 overview.html 的 .meta 提取作者（如「沈联涛」），
      异步填进 hero；取不到就整行隐藏。 */
@@ -218,7 +313,11 @@
         if (!au.isConnected || au.getAttribute('data-slug') !== slug) return;
         var m = t.match(/<div class="meta">([\s\S]*?)<\/div>/);
         var meta = m ? m[1].replace(/<span[\s\S]*?<\/span>/g, '').replace(/<[^>]*>/g, '') : '';
-        var author = (meta.split('·')[0] || '').trim();
+        /* meta 形如「作者　·　在读 0%（累计 0 分钟）」。作者名本身也可能带「·」
+           （乔治·奥威尔、丹尼尔·佩科…），所以只在「· 在读/已读」处截断，
+           不能按第一个「·」切——那会把「乔治·奥威尔」切成「乔治」 */
+        var author = meta.replace(/[\s\u3000]*[·・][\s\u3000]*(在读|已读|读至)[\s\S]*$/, '')
+          .replace(/\s+/g, ' ').trim();
         if (author) au.textContent = author;
         else au.style.display = 'none';
       })
@@ -275,18 +374,19 @@
     var head = document.querySelector('header.combined-head');
     var h1 = head ? head.querySelector('h1') : null;
     var stick = document.getElementById('rdStick');
-    if (FULL_HERO[slug]) {
+    if (!HERO_SKIP[slug] && !HERO_FAILED[slug] && hasCover(slug)) {
       /* 海报墙：只钉「背景 + 封面本体」，上下各留一段紧贴的背景；
          标题 / 作者 / 章节导航移到墙下方的 .rd-stick 吸顶条，自然吸顶 */
       sec.className = 'rd-hero rd-hero-full';
       sec.innerHTML = '<img class="rd-hero-bg" aria-hidden="true" alt="" decoding="async" src="' + src + '">'
         + '<img class="rd-hero-cover" alt="封面" loading="eager" fetchpriority="high" decoding="async" src="' + src + '">';
-      // 缓存地址失效（换域名/图被删）→ 回落到本地封面文件再试一次
+      // 缓存地址失效（换域名/图被删）→ 回落到本地封面文件再试一次；
+      // 本地也没有 = 这本本来没封面 → 整体降级回普通版式，不留一大片空墙
       var cov = sec.querySelector('.rd-hero-cover');
       cov.addEventListener('error', function () {
         var local = '../../../assets/covers/' + encodeURIComponent(slug) + '.jpg';
         if (this.getAttribute('src') !== local) { this.setAttribute('src', local); return; }
-        this.style.display = 'none';   // 彻底没有 → 只留背景墙
+        degradeHero(slug, sec);
       });
       if (!stick) {
         stick = document.createElement('div');
@@ -294,12 +394,25 @@
         stick.className = 'rd-stick';
       }
       stick.innerHTML = '';
-      if (h1) stick.appendChild(h1);
-      var au = document.createElement('div');
+      /* 标题行：书名（可点，唤起微信读书详情页）+ 作者（行尾，右对齐） */
+      var row = document.createElement('div');
+      row.className = 'rd-stick-row';
+      var au = document.createElement('span');
       au.id = 'rdHeroAuthor';
       au.className = 'rd-hero-author';
-      stick.appendChild(au);
+      if (h1) {
+        var tlink = document.createElement('a');
+        tlink.className = 'rd-title';
+        tlink.id = 'rdTitleLink';
+        tlink.setAttribute('data-slug', slug);
+        tlink.appendChild(h1);
+        row.appendChild(tlink);
+      }
+      row.appendChild(au);
+      stick.appendChild(row);
       fillHeroAuthor(slug, au);
+      document.body.classList.add('rd-has-full');
+      bindStickyEdge();
       var nav = document.getElementById('rdNav');
       if (nav) stick.appendChild(nav);
       if (head) head.style.display = 'none';
@@ -310,6 +423,10 @@
         main.insertBefore(sec, main.firstChild);
         main.insertBefore(stick, sec.nextSibling);
       }
+      /* 标题入口要等节点真正挂进 DOM 之后才上链接：hero.json 若已在内存里，
+         armTitleLink 是同步回调，提前调用会因 a.isConnected=false 直接跳过 */
+      var tlink2 = stick.querySelector('#rdTitleLink');
+      if (tlink2) armTitleLink(tlink2, slug);
       return;
     }
 
@@ -635,7 +752,13 @@
   function boot() {
     initSettings();
     addHomeLink();
-    addHero();          // 先立海报墙：封面立刻开始下载，不等正文数据
+    /* 先立海报墙：封面立刻开始下载，不等正文数据。
+       但要先知道这本有没有封面（没封面的书不开墙）——3KB 的 hero.json 一般
+       几十毫秒就到，最多等 150ms，之后不管有没有都照常立墙，避免卡首屏 */
+    var heroStarted = false;
+    var startHero = function () { if (heroStarted) return; heroStarted = true; addHero(); };
+    loadHeroData(startHero);
+    setTimeout(startHero, 150);
 
     // ① 内联数据（standalone 单文件预览）优先，② 否则 fetch 同目录数据文件
     var inline = document.getElementById('rdData');
