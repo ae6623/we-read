@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>《西班牙：在这，有人后悔有人圆梦（轻游记）》｜通读 · 精读</title>
+<title>《西班牙：在这，有人后悔有人圆梦（轻游记）》｜全书领读</title>
 <script>
 /* 防闪：渲染前先把上次保存的主题/字号/段距应用到 <html> */
 (function(){try{var c=JSON.parse(localStorage.getItem('rd-cfg')||'{}'),d=document.documentElement;
@@ -12,253 +12,16 @@ if(c.fs)d.style.setProperty('--fs',c.fs);
 if(c.pm)d.style.setProperty('--pm',c.pm);}catch(e){}})();
 </script>
 <link rel="stylesheet" href="../../../assets/css/reading-overview.css"><link rel="stylesheet" href="../../../assets/css/mmx-guide.css"><link rel="stylesheet" href="../../../assets/css/reading-outline.css">
-<style>
-/* ── 主题变量：默认＝夜间主题 + 段距松 + 整页字号 .94；其余主题由 html[data-theme] 覆盖 ── */
-:root{
-  --fs:.94;--pm:1.5;
-  --pg-bg:#15171a;--card-bg:#1f2226;--card-bd:#34383f;--ink:#c9ced4;--txt:#b4bac1;
-  --sub:#8a919a;--head:#93c8a8;--qgreen:#9ed0af;--gold:#bf8247;
-  --nav-bg:rgba(21,23,26,.96);--navlink-bg:#262a2f;--navlink-bd:#3a3f46;
-  --inner-bg:#272b30;--inner-bd:#3a3f46;--oneline-bg:#272b30;
-  --act-bg:#244b40;--act-bd:#2f5b49;
-  /* 共享 CSS 的变量一并接管：卡片/正文/链接/分隔线都跟主题走 */
-  --paper:#15171a;--card:#1f2226;--muted:#8a919a;--green:#93c8a8;--green2:#a8d8bb;
-  --line:#3a3f46;--sage:#274234;--accent:#9ed0af;--e5e0d6:#34383f;
-}
-html[data-theme=cream]{
-  --pg-bg:#f7f8f3;--card-bg:#fffdf6;--card-bd:#e8e4d5;--ink:#3b453e;--txt:#4a4436;
-  --sub:#8d8878;--head:#244b40;--qgreen:#2f5b49;
-  --nav-bg:rgba(247,248,243,.96);--navlink-bg:#fdfbf3;--navlink-bd:#e8e2d2;
-  --inner-bg:#fbfaf2;--inner-bd:#eee9d8;--oneline-bg:#fbfaf4;
-  --act-bg:#e5efe4;--act-bd:#bcd4bc;
-  --paper:#f6f7f2;--card:#fffdf6;--muted:#697870;--green:#244b40;--green2:#315e50;
-  --line:#dfe6df;--sage:#dce8df;--accent:#286b52;--e5e0d6:#e5e0d6;}
-html[data-theme=light]{
-  --pg-bg:#ffffff;--card-bg:#ffffff;--card-bd:#e7e7e2;--ink:#33373a;--txt:#4a4436;
-  --sub:#8d8878;--head:#244b40;--qgreen:#2f5b49;
-  --nav-bg:rgba(255,255,255,.96);--navlink-bg:#fafaf7;--navlink-bd:#e7e7e0;
-  --inner-bg:#fafaf7;--inner-bd:#ecebe4;--oneline-bg:#fafaf7;
-  --paper:#fff;--card:#fff;--muted:#697870;--green:#244b40;--green2:#315e50;
-  --line:#e7e7e2;--sage:#e6efe7;--accent:#286b52;}
-html[data-theme=green]{
-  --pg-bg:#cfe8d2;--card-bg:#eef7ef;--card-bd:#b9dcc0;--ink:#2f4237;--txt:#3b5446;
-  --sub:#5d7c67;--head:#1e4d37;--qgreen:#1e5c41;
-  --nav-bg:rgba(207,232,210,.96);--navlink-bg:#f4fbf5;--navlink-bd:#b4d8bd;
-  --inner-bg:#f6fbf7;--inner-bd:#cde5d3;--oneline-bg:#f6fbf7;
-  --act-bg:#bfe3c6;--act-bd:#95c8a1;
-  --paper:#cfe8d2;--card:#eef7ef;--muted:#5d7c67;--green:#1e4d37;--green2:#2c6b4e;
-  --line:#b9dcc0;--sage:#b7dfc0;--accent:#1e5c41;}
-html[data-theme=dark]{
-  --pg-bg:#15171a;--card-bg:#1f2226;--card-bd:#34383f;--ink:#c9ced4;--txt:#b4bac1;
-  --sub:#8a919a;--head:#93c8a8;--qgreen:#9ed0af;
-  --nav-bg:rgba(21,23,26,.96);--navlink-bg:#262a2f;--navlink-bd:#3a3f46;
-  --inner-bg:#272b30;--inner-bd:#3a3f46;--oneline-bg:#272b30;
-  --act-bg:#244b40;--act-bd:#2f5b49;
-  --paper:#15171a;--card:#1f2226;--muted:#8a919a;--green:#93c8a8;--green2:#a8d8bb;
-  --line:#3a3f46;--sage:#274234;--accent:#9ed0af;--e5e0d6:#34383f;}
-
-/* ── 外壳与全局阅读节奏（字号跟随 --fs 整页缩放，段距跟随 --pm） ── */
-html{font-size:calc(16px*var(--fs));}
-html[data-theme=dark] body{color-scheme:dark;}
-body{max-width:880px;margin:0 auto;padding:0 18px 80px;font-size:.9375rem;line-height:1.88;
-  color:var(--ink);background:var(--pg-bg);-webkit-font-smoothing:antialiased;}
-.combined-head{padding:30px 0 16px;border-bottom:1px solid var(--card-bd);margin-bottom:4px;}
-.combined-head h1{font:700 1.45rem/1.35 var(--serif);margin:0 0 8px;color:var(--head);}
-.combined-head .eyebrow{font-size:.72rem;letter-spacing:.14em;margin:0 0 6px;}
-.chips{margin:8px 0 0;}
-.chip{font-size:.72rem;padding:2px 10px;}
-
-/* ── 锚点导航：小屏最少一排 4 个，大屏自动一排/两排放完；滚动到哪亮哪 ── */
-.nav{position:sticky;top:0;z-index:20;background:var(--nav-bg);backdrop-filter:blur(6px);
-  border-bottom:1px solid var(--card-bd);padding:10px 0;margin:12px 0 20px;display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(76px,1fr));gap:6px;
-  box-shadow:0 2px 10px rgba(120,100,60,.05);}
-.navlink{font-size:12px;color:var(--txt);text-decoration:none;background:var(--navlink-bg);
-  border:1px solid var(--navlink-bd);border-radius:8px;padding:6px 4px;text-align:center;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:all .15s;}
-.navlink:hover{color:var(--head);border-color:var(--head);}
-.navlink.active{color:var(--head);background:var(--act-bg);border-color:var(--act-bd);font-weight:700;}
-section{scroll-margin-top:62px;}
-
-/* ── 统一卡片：所有顶层模块（AI领读 / AI 问答 / 其余）一视同仁 ── */
-body>section.mmx-mod,body>section.card,body>section.mmx-svgwrap{
-  background:var(--card-bg);border:1px solid var(--card-bd);border-radius:16px;
-  padding:18px 22px;margin:calc(18px*var(--pm)) 0;
-  box-shadow:0 1px 3px rgba(110,95,60,.05);}
-body>section.mmx-mod>*:first-child,body>section.card>*:first-child,
-body>section.mmx-svgwrap>*:first-child{margin-top:0}
-body>section.mmx-mod>*:last-child,body>section.card>*:last-child,
-body>section.mmx-svgwrap>*:last-child{margin-bottom:0}
-/* 结构导图：图本身留白居中，不与正文抢宽 */
-body>section.mmx-svgwrap>svg.mmx-svg{display:block;width:100%;height:auto;margin:2px auto 0;}
-/* 模块标题：统一大小、弱强调，不与正文抢注意力 */
-body>section.mmx-mod>h2,body>section.card>h2{
-  font:700 1rem/1.5 var(--serif);color:var(--head);margin:0 0 11px;
-  padding-left:10px;border-left:3px solid var(--gold);letter-spacing:.01em;}
-/* 正文：字号收小、行距放宽、段间距随 --pm 调节 */
-body>section.mmx-mod p,body>section.card p,
-body>section.mmx-mod li,body>section.card li{
-  font-size:.84rem;line-height:1.92;color:var(--txt);margin:calc(.5em*var(--pm)) 0;}
-body>section.mmx-mod>ul,body>section.mmx-mod>ol,body>section.mmx-mod>div,
-body>section.mmx-mod>p:not(.mmx-mod-note),
-body>section.card:not(.merged-guide)>ul,body>section.card:not(.merged-guide)>ol,
-body>section.card:not(.merged-guide)>div,body>section.card:not(.merged-guide)>p:not(.mmx-mod-note){
-  padding-left:14px;}
-
-/* ── 内部块统一：卡片里不再套深卡片，一律浅底子块 ── */
-body>section .mmx-pending,body>section .mmx-evib,body>section .aiqa-item{
-  background:var(--inner-bg);border:1px solid var(--inner-bd);border-radius:12px;
-  padding:13px 16px;margin:calc(.65em*var(--pm)) 0;}
-body>section .mmx-evib ul{padding-left:1.15em;}
-/* 一句话主旨：去左侧竖线 + 收敛字号 */
-.mmx-oneline{font-size:.9rem;line-height:1.85;color:var(--txt);margin:.2em 0 0;
-  padding:12px 16px;background:var(--oneline-bg);border-left:none;border-radius:12px;}
-/* 核心观点 / 验证清单：虚线分隔 + 收紧行距 */
-.mmx-views li{padding:.5em 0 .5em 0;font-size:.84rem;line-height:1.88;}
-/* 原文金句 */
-.mmx-qlist li{padding:.6em 0 .6em 2.2em;}
-.mmx-qlist blockquote{font-size:.82rem;line-height:1.9;color:var(--txt);}
-.mmx-qlist cite{font-size:.72rem;color:var(--sub);}
-/* 核心追问：问句加重、答句放松 */
-.mmx-qa{margin:calc(.7em*var(--pm)) 0;padding-left:12px;border-left:3px solid var(--inner-bd);}
-.mmx-qa .mmx-q{font-size:.84rem;font-weight:700;color:var(--ink);line-height:1.8;margin:0 0 .25em;}
-.mmx-qa .mmx-a{font-size:.82rem;line-height:1.95;color:var(--txt);margin:0;}
-
-/* ── AI 问书专项：外层容器透明，问答条目才是阅读单元 ── */
-#mod-aiask .mmx-ask{background:transparent;border:0;border-radius:0;padding:0;margin:0;}
-#mod-aiask .aiqa-item{margin:calc(.6em*var(--pm)) 0;padding:14px 16px 15px;}
-#mod-aiask .aiqa-item h3{font:700 .88rem/1.7 var(--serif);color:var(--qgreen);margin:0 0 .4em;
-  padding:0;border:0;}
-#mod-aiask .aiqa-item h3:before{content:"问　";color:var(--gold);font-weight:700;}
-/* 回答整体右缩进，与问句文字对齐（别顶着左边） */
-#mod-aiask .aiqa-item>p,#mod-aiask .aiqa-item>ul{margin-left:26px;}
-#mod-aiask .aiqa-item p{font-size:.82rem;line-height:1.95;color:var(--txt);
-  margin-top:calc(.4em*var(--pm));margin-bottom:calc(.4em*var(--pm));}
-#mod-aiask .aiqa-item ul{margin-top:calc(.35em*var(--pm));margin-bottom:calc(.35em*var(--pm));
-  padding-left:1.1em;}
-#mod-aiask .aiqa-item li{font-size:.82rem;line-height:1.88;margin:calc(.18em*var(--pm)) 0;
-  color:var(--qgreen);}
-#mod-aiask .aiqa-item li::marker{color:var(--gold);}
-/* 逐章追问（details 形态）：摘要行也收敛 */
-.mmx-ask>summary{font-size:.82rem;line-height:1.7;padding:2px 0;color:var(--qgreen);}
-.mmx-askbody{font-size:.82rem;line-height:1.9;color:var(--txt);}
-
-/* ── AI领读章内：AI 大纲原生深层样式（章节字号整体再收一档） ── */
-.merged-guide .sec{margin:9px 0 12px;padding-left:6px;border-left:2px solid var(--card-bd)}
-.merged-guide .sec h4{font:600 .82rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:var(--head);margin:.5em 0 .25em}
-.merged-guide .mmx-name{font-size:.84rem !important;}
-.merged-guide .mmx-sech{font-size:.78rem !important;}
-.merged-guide .mmx-gist{font-size:.78rem !important;line-height:1.85;}
-.merged-guide .mmx-stat{font-size:.7rem !important;}
-.merged-guide ul.point{margin:.25em 0;padding-left:20px}
-.merged-guide ul.point>li{margin:.3em 0;font-size:.78rem !important;line-height:1.85;}
-.merged-guide ul.quote{margin:.22em 0 .22em 20px;padding-left:18px;list-style:none}
-.merged-guide ul.quote::before{content:"原句";display:block;font-size:.7rem;color:var(--gold);
-  letter-spacing:.1em;margin:.12em 0 .08em;font-weight:600}
-.merged-guide ul.quote.quote-node{margin-top:.45em;padding-top:.35em;border-top:1px dashed var(--inner-bd)}
-.merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
-.merged-guide ul.quote>li{color:var(--txt);font-size:.8rem !important;line-height:1.85;margin:.18em 0;padding-left:10px;border-left:2px solid var(--gold)}
-.merged-guide .mmx-qt{font-size:.77rem !important;}
-
-/* 核心观点初判：外链 mmx-guide.css 的「观点N」前缀是绝对定位，在本页版式里和标题叠字，
-   且此前要求去掉「观点1/2/3」前缀 —— 这里整条关掉（外链 CSS 不在页面内，只能内联覆盖）。 */
-.mmx-views li{padding-left:0 !important;}
-.mmx-views li:before,.mmx-views li::before{
-  content:none !important;display:none !important;counter-increment:none !important;}
-
-/* ── 夜间主题：覆盖共享 CSS 里的硬编码浅色 ── */
-html[data-theme=dark] h1,html[data-theme=dark] h2,html[data-theme=dark] h3,
-html[data-theme=dark] h4{color:var(--head);}
-html[data-theme=dark] .mmx-qt{background:var(--inner-bg);color:var(--txt);}
-html[data-theme=dark] .mmx-qlist blockquote,html[data-theme=dark] .mmx-ask blockquote,
-html[data-theme=dark] .mmx-gist,html[data-theme=dark] .mmx-pts,
-html[data-theme=dark] .mmx-askbody{color:var(--txt);}
-html[data-theme=dark] .mmx-qlist li:before{background:#2b3a31;color:#9ed0af;}
-html[data-theme=dark] .mmx-views li,html[data-theme=dark] .mmx-qlist li,
-html[data-theme=dark] .mmx-qa,html[data-theme=dark] .mmx-sec>summary,
-html[data-theme=dark] .mmx-cn{border-color:#3a3f46;}
-html[data-theme=dark] .mmx-views li b,html[data-theme=dark] .mmx-qa .mmx-q{color:var(--ink);}
-html[data-theme=dark] .chip{background:#274234;color:#9ed0af;}
-html[data-theme=dark] .mmx-role,html[data-theme=dark] .mmx-chip{background:#262a2f;
-  color:#8a919a;border-color:#3a3f46;}
-html[data-theme=dark] a{color:#9ed0af;}
-
-/* AI领读：外层卡片底 + 章内所有硬编码浅色（含 body 内联的 OUTLINE_DEEP_CSS）全部跟随主题。
-   这些规则在 body 内联 <style> 之后，必须 !important 才能覆盖。 */
-html[data-theme=dark] .merged-guide .card,
-html[data-theme=dark] .merged-guide .toc-part,
-html[data-theme=dark] .toc-part,html[data-theme=dark] .card{
-  background:var(--card-bg) !important;border-color:var(--card-bd) !important;}
-html[data-theme=dark] .merged-guide .sec,
-html[data-theme=dark] .merged-guide ul.quote,
-html[data-theme=dark] .mmx-cn,html[data-theme=dark] .mmx-sec>summary{
-  border-color:var(--inner-bd) !important;}
-html[data-theme=dark] .merged-guide .sec h4,
-html[data-theme=dark] .mmx-sech,html[data-theme=dark] .merged-guide .mmx-name{
-  color:var(--head) !important;}
-html[data-theme=dark] .merged-guide ul.quote>li,
-html[data-theme=dark] .merged-guide ul.point>li,
-html[data-theme=dark] .merged-guide .mmx-gist,
-html[data-theme=dark] .merged-guide .mmx-pts{
-  color:var(--txt) !important;}
-html[data-theme=dark] .merged-guide ul.quote::before{color:var(--gold) !important;}
-html[data-theme=dark] .mmx-qt{background:var(--inner-bg) !important;color:var(--txt) !important;}
-html[data-theme=dark] .mmx-more,html[data-theme=dark] .mmx-empty,
-html[data-theme=dark] .mmx-pnum,html[data-theme=dark] .mmx-secc{color:var(--sub) !important;}
-/* 非夜间主题：内层卡片同样跟随主题（共享 CSS 的 --card 写死 #fff） */
-html[data-theme=cream] .toc-part,html[data-theme=cream] .card,
-html[data-theme=light] .toc-part,html[data-theme=light] .card,
-html[data-theme=green] .toc-part,html[data-theme=green] .card{
-  background:var(--card-bg) !important;border-color:var(--card-bd) !important;}
-
-/* ── 右上角设置面板 ── */
-#rdFab{position:fixed;top:10px;right:12px;z-index:60;font:600 13px/1 var(--sans);color:var(--txt);
-  background:var(--card-bg);border:1px solid var(--card-bd);border-radius:9px;padding:8px 12px;
-  cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.1);}
-#rdFab:hover{border-color:var(--head);color:var(--head);}
-#rdPanel{position:fixed;top:48px;right:12px;z-index:60;background:var(--card-bg);
-  border:1px solid var(--card-bd);border-radius:12px;padding:12px 14px;
-  box-shadow:0 8px 24px rgba(0,0,0,.16);display:grid;gap:9px;min-width:212px;}
-#rdPanel[hidden]{display:none;}
-#rdPanel .rd-row{display:flex;gap:5px;align-items:center;justify-content:space-between;}
-#rdPanel .rd-row>span{font-size:.72rem;color:var(--sub);flex:none;}
-#rdPanel .rd-btns{display:flex;gap:5px;}
-#rdPanel button{font:600 12px/1.4 var(--sans);color:var(--txt);background:var(--navlink-bg);
-  border:1px solid var(--navlink-bd);border-radius:7px;padding:4px 9px;cursor:pointer;}
-#rdPanel button:hover{border-color:var(--head);color:var(--head);}
-
-@media(max-width:720px){
-  body{padding:0 12px 60px;}
-  body>section.mmx-mod,body>section.card,body>section.mmx-svgwrap{padding:15px 16px;border-radius:14px;}
-}
-</style>
+<link rel="stylesheet" href="../../../assets/css/reader.css">
 </head>
-<body>
+<body data-slug="spain-qingyouji" data-title="西班牙：在这，有人后悔有人圆梦（轻游记）">
 <header class="combined-head">
   <p class="eyebrow">读前通读 + 精读 · 合并页</p>
   <h1>《西班牙：在这，有人后悔有人圆梦（轻游记）》</h1>
-  <div class="chips"><span class="chip">通读 + 精读</span><span class="chip">AI领读</span><span class="chip">AI 生产</span></div>
+  <div class="chips" id="rdChips"></div>
 </header>
-<nav class="nav"><a class="navlink" href="#mod-svg">结构导图</a><a class="navlink" href="#mod-oneline">核心主旨</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a></nav>
-<section class="mmx-svgwrap" id="mod-svg"><h2>结构导图</h2>
-<svg class="mmx-svg" viewBox="0 0 1120 158" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="西班牙：在这，有人后悔有人圆梦（轻游记） 全书精读">
-<rect x="0" y="0" width="1120" height="158" fill="none"/>
-<style>.mmx-svg text{font-family:"Noto Serif SC",Georgia,serif}.mmx-svg .t1{font-size:15px;fill:#2f2a24;font-weight:600}.mmx-svg .t2{font-size:12px;fill:#5c5347}.mmx-svg .t3{font-size:10.5px;fill:#8a8272}.mmx-svg .rt{font-size:13px;fill:#f7f3ea;font-weight:600}.mmx-svg .ln{stroke:#cfc6b4;stroke-width:1.4;fill:none}</style>
-<rect x="28" y="26" width="262" height="70" rx="10" fill="#3d372e"/>
-<text class="rt" x="44" y="50">西班牙：在这，有人后悔有人圆梦（轻</text>
-<text class="rt" x="44" y="68">游记）</text>
-<text class="t3" x="44" y="88" style="fill:#c9c0ae">2 章 · 主干 1 条</text>
-<path class="ln" d="M290 61 C350 61,340 61,400 61"/>
-<rect x="400" y="33" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/>
-<rect x="400" y="33" width="5" height="55" rx="2.5" fill="#8a9b6e"/>
-<text class="t1" x="416" y="58">A 第 1–2 章</text>
-<text class="t3" x="416" y="78">2 章</text>
-<text class="t2" x="714" y="57">含「沧桑的老白」至「造梦的小永」</text>
-<path class="ln" d="M692 61 L700 61"/>
-</svg></section>
-<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">核心主旨</h2><p class="mmx-oneline">我在西班牙巴塞罗那的一家中餐馆吃饭，结识了老板老白</p></section>
-<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点</h2><ul class="mmx-views"><li><b>第 1–2 章</b>——含「沧桑的老白」至「造梦的小永」</li></ul></section>
-<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句</h2><ol class="mmx-qlist"><li><blockquote>「“不要轻易下定论。人啊，要慢慢地交往，一定要慢。时间长了才能看清一个人，好的坏的，都能接受，才能真的成为朋友。太快的朋友反而容易散。”我说。」</blockquote><cite>本书正文</cite></li><li><blockquote>「和中国人聊天，大多数时候让我不舒服。没说几句，又是钱钱钱。”小永苦笑。」</blockquote><cite>本书正文</cite></li><li><blockquote>「，“如果当初我没出来，赶上改革开放的风口，说不定比现在更好些......”」</blockquote><cite>本书正文</cite></li><li><blockquote>「我很喜欢看儿童读物，那些色彩、想象力，我觉得很美好。我还喜欢蹦蹦床，虽然我已经二十多岁了，但就是喜欢这些啊。”小永不好意思地说。」</blockquote><cite>本书正文</cite></li><li><blockquote>「那个3个孩子的单亲妈妈，每天工作7个小时，之后还要上学练琴，但她整个人就像点燃了一样，永远充满激情。」</blockquote><cite>本书正文</cite></li><li><blockquote>「1993年，我17岁，从福建一路坐火车、坐船、坐汽车，到莫斯科，藏了5天，越过国境一直跑到土耳其，再去法国，最终达到西班牙。」</blockquote><cite>本书正文</cite></li><li><blockquote>「我爱幽兰异众芳，不将颜色媚春阳。西风寒露深林下，任是无人也自香。」</blockquote><cite>本书正文</cite></li><li><blockquote>「家里有家里的苦，出门有出门的苦，哪个苦也不会少一些。」</blockquote><cite>本书正文</cite></li><li><blockquote>「小永是东北人，他说很爱和陌生人说话，但实际上他看上去很腼腆，既社恐又社牛的。」</blockquote><cite>本书正文</cite></li><li><blockquote>「他很喜欢和别人聊天，但又很怕和别人成为朋友。」</blockquote><cite>本书正文</cite></li></ol></section>
+<nav class="nav" id="rdNav"></nav>
+<main id="rdBody"><p class="rd-loading">正在加载…</p></main>
 <button id="rdFab" aria-label="阅读设置" title="阅读设置">Aa</button>
 <div id="rdPanel" hidden>
   <div class="rd-row"><span>字号</span><span class="rd-btns">
@@ -269,67 +32,6 @@ html[data-theme=green] .toc-part,html[data-theme=green] .card{
     <button data-rd="th-cream">米白</button><button data-rd="th-light">纯白</button>
     <button data-rd="th-green">护眼</button><button data-rd="th-dark">夜间</button></span></div>
 </div>
-<script>
-(function(){
-  var d = document.documentElement;
-  var c = {}; try { c = JSON.parse(localStorage.getItem('rd-cfg') || '{}'); } catch (e) {}
-  var FS = [0.86, 0.90, 0.94, 1.00, 1.08, 1.18], PM = [0.6, 1, 1.5];
-  var fi = FS.indexOf(parseFloat(d.style.getPropertyValue('--fs')) || c.fs); if (fi < 0) fi = 2;
-  var pi = PM.indexOf(parseFloat(d.style.getPropertyValue('--pm')) || c.pm); if (pi < 0) pi = 2;
-  var panel = document.getElementById('rdPanel');
-  document.getElementById('rdFab').onclick = function (e) {
-    e.stopPropagation(); panel.hidden = !panel.hidden;
-  };
-  document.addEventListener('click', function (e) {
-    if (!panel.hidden && !panel.contains(e.target) && e.target.id !== 'rdFab') panel.hidden = true;
-  });
-  panel.addEventListener('click', function (e) {
-    var b = e.target.closest('button[data-rd]'); if (!b) return;
-    var k = b.dataset.rd;
-    if (k === 'fs-') fi = Math.max(0, fi - 1);
-    else if (k === 'fs+') fi = Math.min(FS.length - 1, fi + 1);
-    else if (k === 'pm-') pi = Math.max(0, pi - 1);
-    else if (k === 'pm0') pi = 1;
-    else if (k === 'pm+') pi = Math.min(PM.length - 1, pi + 1);
-    else if (k.indexOf('th-') === 0) c.theme = k.slice(3);
-    apply();
-  });
-  function apply() {
-    d.dataset.theme = c.theme || 'dark';
-    d.style.setProperty('--fs', FS[fi]);
-    d.style.setProperty('--pm', PM[pi]);
-    c.fs = FS[fi]; c.pm = PM[pi];
-    try { localStorage.setItem('rd-cfg', JSON.stringify(c)); } catch (e) {}
-    [].forEach.call(panel.querySelectorAll('button[data-rd^="th-"]'), function (b) {
-      b.style.borderColor = (b.dataset.rd === 'th-' + (c.theme || 'dark')) ? 'var(--head)' : '';
-      b.style.color = (b.dataset.rd === 'th-' + (c.theme || 'dark')) ? 'var(--head)' : '';
-    });
-  }
-  apply();
-  /* 导航随滚动高亮 */
-  var links = [].slice.call(document.querySelectorAll('.navlink')), map = {};
-  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
-  var mark = function (a) {
-    links.forEach(function (x) { x.classList.toggle('active', x === a); });
-  };
-  if ('IntersectionObserver' in window) {
-    var cur = null;
-    var io = new IntersectionObserver(function (es) {
-      es.forEach(function (e) {
-        if (e.isIntersecting) {
-          var a = map[e.target.id];
-          if (a && cur !== a) { cur = a; mark(a); }
-        }
-      });
-    }, { rootMargin: '-15% 0px -75% 0px' });
-    Object.keys(map).forEach(function (id) {
-      var el = document.getElementById(id); if (el) io.observe(el);
-    });
-  }
-  links.forEach(function (a) {
-    a.addEventListener('click', function () { mark(a); });
-  });
-})();
-</script>
+<script src="../../../assets/js/reader.js"></script>
 </body>
 </html>
