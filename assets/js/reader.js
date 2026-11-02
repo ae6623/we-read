@@ -196,7 +196,11 @@
   /* 详情页顶部大封面模块（参考微信读书书籍介绍页）：
      居中竖版大图 + 主题绿光晕底；封面 404 → 整块隐藏，不留空洞。
      插到 header 之前 → 大图从网页最顶部开始（第 20 批）。
-     SPA 翻页时随 curSlug 重建。 */
+     FULL_HERO 白名单：卡片式满宽平铺变体——封面图 100vw 铺满当背景 +
+     底部压暗渐变 + 书名叠图上，hero 高度不变（不顶走下方内容），
+     header 的 h1 隐藏（标题已在图上）。SPA 翻页时随 curSlug 重建，
+     非 full 书翻回来时 h1 会恢复显示。 */
+  var FULL_HERO = { 'shi-nian-lun-hui': 1 };
   function addHero() {
     var main = q('#rdBody');
     if (!main) return;
@@ -206,15 +210,26 @@
     if (!slug) return;
     var sec = document.createElement('section');
     sec.id = 'rdHero';
-    sec.className = 'rd-hero';
     var src = '../../../assets/covers/' + encodeURIComponent(slug) + '.jpg';
-    sec.innerHTML = '<img class="rd-hero-bg" aria-hidden="true" alt="" src="' + src + '">'
-      + '<img class="rd-hero-img" alt="封面" loading="eager" src="' + src + '">';
-    var img = sec.querySelector('.rd-hero-img');
+    var head = document.querySelector('header.combined-head');
+    var h1 = head ? head.querySelector('h1') : null;
+    if (FULL_HERO[slug]) {
+      sec.className = 'rd-hero rd-hero-full';
+      var title = h1 ? (h1.textContent || '').trim() : '';
+      sec.innerHTML = '<img class="rd-hero-cover" alt="封面" loading="eager" src="' + src + '">'
+        + (title ? '<h2 class="rd-hero-title">' + esc(title) + '</h2>' : '');
+      if (h1) h1.style.display = 'none';
+    } else {
+      sec.className = 'rd-hero';
+      if (h1) h1.style.display = '';
+      sec.innerHTML = '<img class="rd-hero-bg" aria-hidden="true" alt="" src="' + src + '">'
+        + '<img class="rd-hero-img" alt="封面" loading="eager" src="' + src + '">';
+    }
+    var img = sec.querySelector('img');
     img.addEventListener('error', function () {
+      if (h1) h1.style.display = '';
       if (sec.parentNode) sec.parentNode.removeChild(sec);
     });
-    var head = document.querySelector('header.combined-head');
     if (head && head.parentNode) head.parentNode.insertBefore(sec, head);
     else main.insertBefore(sec, main.firstChild);
   }
