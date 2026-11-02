@@ -111,11 +111,13 @@ body{max-width:880px;margin:0 auto;padding:0 18px 80px;font-size:.9375rem;line-h
   color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:right;}
 /* 标题即入口：点击跳微信读书 App（未安装回落网页搜索） */
 .rd-title{display:flex;align-items:baseline;gap:6px;flex:0 1 auto;min-width:0;
-  color:inherit;text-decoration:none;transition:color .15s ease;}
-.rd-title::after{content:"↗";flex:none;font:400 .82em/1 var(--sans);color:var(--muted);opacity:.65;}
-.rd-title:hover,.rd-title:focus-visible{color:var(--head);}
-.rd-title:hover::after{opacity:1;}
-.rd-title:focus-visible{outline:2px solid var(--head);outline-offset:3px;border-radius:4px;}
+  color:inherit;text-decoration:none;cursor:default;}
+/* 只有拿到 bookId 的书（.rd-title-on）才是可点入口 */
+.rd-title-on{cursor:pointer;transition:color .15s ease;}
+.rd-title-on::after{content:"↗";flex:none;font:400 .82em/1 var(--sans);color:var(--muted);opacity:.65;}
+.rd-title-on:hover,.rd-title-on:focus-visible{color:var(--head);}
+.rd-title-on:hover::after{opacity:1;}
+.rd-title-on:focus-visible{outline:2px solid var(--head);outline-offset:3px;border-radius:4px;}
 .rd-stick .nav{position:relative;top:auto;margin:0;background:transparent;border:none;
   box-shadow:none;backdrop-filter:none;padding:0;}
 .rd-stick .navlink{font-size:11.5px;padding:5px 4px;}
