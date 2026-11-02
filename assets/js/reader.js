@@ -149,6 +149,8 @@
 
     main.innerHTML = polish(parts.join('\n'));
     main.removeAttribute('aria-busy');
+    main.classList.add('rd-in');   // 内容淡入，替代骨架的突兀切换
+    loaded();
 
     // 导航：壳页已直出全套标签 → 就地删掉本书没有的、补上缺的（不重建，避免宽度闪动）
     if (nav) {
@@ -266,12 +268,22 @@
 
   /* ── 启动 ─────────────────────────────────────────────── */
 
+  // 顶部进度条收尾（成功/失败都要收，否则一直转 = 看起来像卡死）
+  function loaded() {
+    var bar = q('#rdBar');
+    if (!bar) return;
+    bar.classList.add('rd-done');
+    setTimeout(function () { if (bar.parentNode) bar.parentNode.removeChild(bar); }, 420);
+  }
+
   function fail(msg) {
     var main = q('#rdBody');
     if (main) {
       main.removeAttribute('aria-busy');
-      main.innerHTML = '<p class="rd-fail">内容加载失败：' + msg + '</p>';
+      main.classList.remove('rd-in');
+      main.innerHTML = '<p class="rd-fail">' + msg + '</p>';
     }
+    loaded();
   }
 
   function boot() {
