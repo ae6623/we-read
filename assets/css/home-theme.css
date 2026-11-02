@@ -251,10 +251,12 @@ html[data-cols="3"] #rdCols .ic-cols-3{display:block}
 .archive-card.is-fav .card-more{color:var(--gold);}
 .archive-card.is-fav{box-shadow:inset 0 0 0 1px rgba(191,130,71,.45);}
 
-/* ── 10a. 卡片封面（一排二显示图块；一排一整卡渐变不出图；一排三隐藏） ──
-   封面底统一用主题绿渐变（不再按 slug 哈希上色，整排一个色、整洁）；
-   真封面放 assets/covers/<slug>.jpg 即自动盖上（onerror 移除露占位，
-   load 成功加 .has-img 隐藏题字只留图）。 */
+/* ── 10a. 卡片封面（真封面 assets/covers/<slug>.jpg，404 回落主题绿占位） ──
+   书架主卡（#panel-whole）三档版式：
+     一排二 → 海报化：封面铺满整卡，文字叠图上（底部压暗渐变保证可读）；
+     一排一 → 封面置左竖版（30/43），文字在右；
+     一排三 → 封面置顶竖版，文字在图下。
+   归档 / 即将上线维持「图上文下」的普通卡。 */
 .card-body{display:flex;flex-direction:column;flex:1 1 auto;min-width:0;}
 .card-cover{position:relative;width:100%;aspect-ratio:5/3;border-radius:8px;overflow:hidden;
   background:linear-gradient(155deg,var(--green2,#315e50),var(--green,#244b40));
@@ -264,13 +266,38 @@ html[data-cols="3"] #rdCols .ic-cols-3{display:block}
   text-shadow:0 1px 3px rgba(0,0,0,.28);pointer-events:none;}
 .card-cover.has-img .card-cover-title{display:none;}
 .card-cover-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
-/* 一排二：封面置顶（通栏缩略图），文字在封面下 */
+
+/* —— 一排二：海报化，封面铺满整卡、文字叠图上 —— */
 html[data-cols="2"] .archive-card{display:flex;flex-direction:column;}
 html[data-cols="2"] .card-cover{margin-bottom:10px;}
-/* 一排一：不出独立图块（之前竖版图块高度局促、卡片失衡），整卡铺淡主题渐变更舒展 */
-html[data-cols="1"] .archive-card{
-  background:linear-gradient(150deg,rgba(49,94,80,.13),rgba(49,94,80,.035) 60%),var(--card,#fffefa);}
-html[data-cols="1"] .card-cover{display:none;}
+html[data-cols="2"] #panel-whole .archive-card{position:relative;display:block;overflow:hidden;
+  aspect-ratio:30/43;padding:0;border:none;}
+html[data-cols="2"] #panel-whole .card-cover{position:absolute;inset:0;width:100%;height:100%;
+  aspect-ratio:auto;border-radius:0;box-shadow:none;margin:0;}
+html[data-cols="2"] #panel-whole .card-cover-title{font-size:2rem;}
+html[data-cols="2"] #panel-whole .card-body{position:absolute;left:0;right:0;bottom:0;z-index:2;
+  padding:36px 12px 10px;color:#fff;
+  background:linear-gradient(180deg,rgba(10,16,14,0),rgba(10,16,14,.15) 32%,rgba(10,16,14,.78));}
+html[data-cols="2"] #panel-whole .archive-card h3{color:#fff;display:-webkit-box;
+  -webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+html[data-cols="2"] #panel-whole .card-top time{color:rgba(255,255,255,.85);}
+html[data-cols="2"] #panel-whole .card-author{color:rgba(255,255,255,.82);}
+html[data-cols="2"] #panel-whole .card-foot .card-meta{color:rgba(255,255,255,.82);}
+html[data-cols="2"] #panel-whole .card-more{color:#fff;}
+
+/* —— 一排一：封面置左竖版，文字在右 —— */
+html[data-cols="1"] #panel-whole .archive-card{display:flex;flex-direction:row;align-items:stretch;
+  gap:12px;padding:12px;position:relative;}
+html[data-cols="1"] #panel-whole .card-cover{flex:0 0 96px;width:96px;aspect-ratio:30/43;
+  border-radius:8px;margin:0;}
+html[data-cols="1"] #panel-whole .card-cover-title{font-size:1.05rem;letter-spacing:.1em;}
+html[data-cols="1"] #panel-whole .card-body{flex:1 1 auto;min-width:0;justify-content:center;}
+
+/* —— 一排三：封面置顶竖版 —— */
+html[data-cols="3"] #panel-whole .archive-card{display:flex;flex-direction:column;padding:8px 8px 9px;}
+html[data-cols="3"] #panel-whole .card-cover{display:block;aspect-ratio:30/43;border-radius:8px;
+  margin:0 0 7px;}
+html[data-cols="3"] #panel-whole .card-cover-title{font-size:.9rem;letter-spacing:.1em;}
 
 /* 列数切换：force 覆盖 site.css 的媒体查询 */
 html[data-cols="1"] .archive-grid{grid-template-columns:minmax(0,1fr)!important;}

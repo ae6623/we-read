@@ -177,6 +177,7 @@
       }
     }
     renderChips(data.meta || {});
+    addHero();
     spy(links);
     hookSvgModal();
     pnRender();
@@ -190,6 +191,29 @@
   function wrapShu(t) {
     t = esc(String(t || '').trim());
     return t.indexOf('《') === 0 ? t : '《' + t + '》';
+  }
+
+  /* 详情页顶部大封面模块（参考微信读书书籍介绍页）：
+     居中竖版大图 + 主题绿光晕底；封面 404 → 整块隐藏，不留空洞。
+     SPA 翻页时随 curSlug 重建。 */
+  function addHero() {
+    var main = q('#rdBody');
+    if (!main) return;
+    var old = document.getElementById('rdHero');
+    if (old && old.parentNode) old.parentNode.removeChild(old);
+    var slug = curSlug || (document.body.getAttribute('data-slug') || '');
+    if (!slug) return;
+    var sec = document.createElement('section');
+    sec.id = 'rdHero';
+    sec.className = 'rd-hero';
+    var src = '../../../assets/covers/' + encodeURIComponent(slug) + '.jpg';
+    sec.innerHTML = '<img class="rd-hero-bg" aria-hidden="true" alt="" src="' + src + '">'
+      + '<img class="rd-hero-img" alt="封面" loading="eager" src="' + src + '">';
+    var img = sec.querySelector('.rd-hero-img');
+    img.addEventListener('error', function () {
+      if (sec.parentNode) sec.parentNode.removeChild(sec);
+    });
+    main.insertBefore(sec, main.firstChild);
   }
 
   /* 「原句 · 本小节汇总」去重：小节里如果所有 ul.quote 的原句加起来
