@@ -250,20 +250,22 @@
     var THEME_COLOR = { dark: '#15171a', cream: '#f7f8f3', light: '#ffffff', green: '#cfe8d2' };
     var tcMeta = q('meta[name="theme-color"]');
 
-    function apply() {
-      d.setAttribute('data-theme', c.theme || DEF_THEME);
-      if (tcMeta) tcMeta.setAttribute('content', THEME_COLOR[c.theme || DEF_THEME] || '#15171a');
+    // store=false → 只应用不落盘：没主动选过主题的人，不该被顺手写入「默认夜间」，
+    // 否则回到首页（默认米白）会突然变黑。
+    function apply(store) {
+      var th = c.theme || DEF_THEME;
+      d.setAttribute('data-theme', th);
+      if (tcMeta) tcMeta.setAttribute('content', THEME_COLOR[th] || '#15171a');
       d.style.setProperty('--fs', FS[fi]);
       d.style.setProperty('--pm', PM[pi]);
-      c.fs = FS[fi]; c.pm = PM[pi];
-      saveCfg(c);
+      if (store !== false) { c.fs = FS[fi]; c.pm = PM[pi]; saveCfg(c); }
       qa('button[data-rd^="th-"]', panel).forEach(function (b) {
         var on = b.getAttribute('data-rd') === 'th-' + (c.theme || DEF_THEME);
         b.style.borderColor = on ? 'var(--head)' : '';
         b.style.color = on ? 'var(--head)' : '';
       });
     }
-    apply();
+    apply(false);
   }
 
   /* ── 启动 ─────────────────────────────────────────────── */

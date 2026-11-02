@@ -12,6 +12,19 @@
   <link rel="stylesheet" href="assets/css/shelf-filter.css?v=20261101a">
 <link rel="stylesheet" href="assets/css/book-link-drawer.css">
 <link rel="stylesheet" href="assets/css/homepage-hero.css">
+<script>
+/* 防闪：首屏先按上次保存的偏好上色，再等 CSS 生效（与书页共用 rd-cfg） */
+(function(){try{
+  var c=JSON.parse(localStorage.getItem('rd-cfg')||'{}'),d=document.documentElement;
+  d.dataset.theme=c.theme||'cream';
+  if(c.fs)d.style.setProperty('--fs',c.fs);
+  if(c.pm)d.style.setProperty('--pm',c.pm);
+  var m=document.querySelector('meta[name="theme-color"]');
+  var T={cream:'#f6f3ed',light:'#ffffff',green:'#cfe8d2',dark:'#15171a'};
+  if(m&&T[c.theme||'cream'])m.setAttribute('content',T[c.theme||'cream']);
+}catch(e){}})();
+</script>
+<link rel="stylesheet" href="assets/css/home-theme.css?v=20261102a">
 </head>
 <body>
   <a class="skip-link" href="#main">跳到内容</a>
@@ -3728,6 +3741,17 @@
   <!-- visit-badge:begin -->
   <div class="visit-badge-row"><div class="visit-badge" role="group" aria-label="站点访问统计"><span class="visit-badge-item"><b class="visit-badge-num" id="gc_site_pv_num">–</b><span class="visit-badge-unit">次访问</span></span><span class="visit-badge-div visit-badge-uv" aria-hidden="true"></span><span class="visit-badge-item visit-badge-uv"><b class="visit-badge-num" id="gc_site_uv_num">–</b><span class="visit-badge-unit">位访客</span></span></div></div>
   <!-- visit-badge:end -->
+  <button id="rdFab" type="button" aria-label="阅读设置" title="阅读设置">Aa</button>
+  <div id="rdPanel" hidden>
+    <div class="rd-row"><span>字号</span><span class="rd-btns">
+      <button type="button" data-rd="fs-">A−</button><button type="button" data-rd="fs+">A＋</button></span></div>
+    <div class="rd-row"><span>段距</span><span class="rd-btns">
+      <button type="button" data-rd="pm-">紧</button><button type="button" data-rd="pm0">中</button><button type="button" data-rd="pm+">松</button></span></div>
+    <div class="rd-row"><span>主题</span><span class="rd-btns">
+      <button type="button" data-rd="th-cream">米白</button><button type="button" data-rd="th-light">纯白</button>
+      <button type="button" data-rd="th-green">护眼</button><button type="button" data-rd="th-dark">夜间</button></span></div>
+  </div>
+  <script src="assets/js/home-theme.js?v=20261102a"></script>
   <script src="assets/js/mindmap-modules.js?v=20261029a" defer></script>
   <script src="assets/js/homepage-reading.js?v=20261101a" defer></script>
 <script data-goatcounter="https://ae6623.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>

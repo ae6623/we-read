@@ -1,0 +1,166 @@
+/* home-theme.css — 首页阅读偏好：字号 / 段距 / 四主题
+ *
+ * 与书页共用同一套偏好（localStorage `rd-cfg`）：
+ *   在书页把字号调小、切到夜间，回到首页也是同样的字号和主题。
+ * 默认值刻意与书页区分：书页从「夜里读长文」出发默认夜间；首页是书架索引，
+ * 默认保持纸感米白 —— 用户没主动选过，就不要替他决定。
+ *
+ * 变量名与 site.css / reader.css 完全一致（--paper/--card/--ink/--muted/--line/
+ * --green/--green2/--sage/--gold），所以只要覆盖这一组，整站配色一起走。
+ */
+
+/* ── 1. 字号与节奏：整页跟着 --fs 缩放，间距跟着 --pm 走 ───────────── */
+:root{
+  --fs:.90;   /* 首页默认比书页（.94）再小一档：卡片标题是索引文字，不需要正文的体量 */
+  --pm:1.35;
+}
+html{font-size:calc(16px*var(--fs));}
+body{font-size:1rem;line-height:1.72;}
+
+/* ── 2. 四套主题变量 ────────────────────────────────────────────── */
+:root,html[data-theme=cream]{
+  --paper:#f6f3ed;--card:#fffefa;--ink:#24312e;--muted:#69766f;
+  --green:#244b40;--green2:#315e50;--sage:#dce8df;--gold:#bf8247;--line:#e5e0d6;
+  --soft:#58665e;          /* 正文次级文字 */
+  --soft2:#65716b;         /* 卡片摘要 */
+  --input:#fffefa;         /* 输入框 / 胶囊底色 */
+  --wash:#f3f6f1;          /* 理念条 / 浅色分区底 */
+  --shadow:36,49,46;
+}
+html[data-theme=light]{
+  --paper:#ffffff;--card:#ffffff;--ink:#242b28;--muted:#6b756f;
+  --green:#1f4a3e;--green2:#2b5a4b;--sage:#e6efe7;--gold:#b4762f;--line:#e7e7e2;
+  --soft:#4f5b54;--soft2:#5c6760;--input:#ffffff;--wash:#f5f8f4;--shadow:36,49,46;
+}
+html[data-theme=green]{
+  --paper:#cfe8d2;--card:#eef7ef;--ink:#2f4237;--muted:#5d7c67;
+  --green:#1e4d37;--green2:#2c6b4e;--sage:#b7dfc0;--gold:#96662f;--line:#b9dcc0;
+  --soft:#3b5446;--soft2:#44604f;--input:#f6fbf7;--wash:#dcefdf;--shadow:30,60,44;
+}
+html[data-theme=dark]{
+  --paper:#15171a;--card:#1f2226;--ink:#c9ced4;--muted:#8a919a;
+  --green:#93c8a8;--green2:#a8d8bb;--sage:#274234;--gold:#bf8247;--line:#34383f;
+  --soft:#a9b1b8;--soft2:#9aa2aa;--input:#262a2f;--wash:#1c2224;--shadow:0,0,0;
+}
+
+/* ── 3. 字号收小：卡片是索引，不是正文 ──────────────────────────── */
+h2{font-size:1.5rem;line-height:1.4;}
+.archive-card h3{font-size:1.05rem;line-height:1.5;margin:13px 0 4px;}
+/* 书名里偶有 `tmp_xxx` 这类没有断点的长 token，会把整页顶出横向滚动条 */
+.archive-card h3,.card-title-link,.archive-card p{overflow-wrap:anywhere;}
+.archive-card p{font-size:.82rem;line-height:1.65;margin:0 0 15px;}
+.archive-card{min-height:182px;padding:19px 20px 17px;}
+.card-top{font-size:.72rem;}
+.type-tag{font-size:.67rem;padding:2px 9px;}
+.updated-time{font-size:.64rem;}
+.card-link,.download-link{font-size:.78rem;}
+.card-dates .cd-label{font-size:.68rem;}
+.card-dates a{font-size:.72rem;padding:5px 10px;}
+.archive-count strong{font-size:1.75rem;}
+.reading-tabs button{font-size:.92rem;min-height:42px;padding:8px 18px;}
+.subtabs button{font-size:.86rem;padding:8px 15px;}
+.panel-title{font-size:1.18rem;}
+.panel-intro{font-size:.86rem;}
+.reading-group-title{font-size:1.08rem;}
+.reading-group-title span{font-size:.74rem;}
+.group-note{font-size:.78rem;}
+.overview-entries strong{font-size:1.02rem;}
+.overview-entries span{font-size:.78rem;}
+.principles h2{font-size:1.18rem;}
+.principles p:last-child{font-size:.84rem;}
+.series-preview h3{font-size:1.12rem;}
+.series-preview>p:not(.eyebrow):not(.series-author){font-size:.84rem;}
+.reading-explanation .hero-description,.reading-bar-body .hero-description{font-size:.84rem;}
+details.reading-bar>summary{font-size:.88rem;padding:11px 20px;}
+.reading-bar-label{font-size:.76rem;}
+.visit-badge-num{font-size:1.2rem;}
+
+/* ── 4. 颜色重映射：把散落的硬编码浅色挂到变量上 ────────────────── */
+.toolbar input,.shelf-search-pop,.shelf-search-pop input,.shelf-filter-pop,
+.card-dates a,.reading-tabs button.tab-search-toggle,
+.reading-tabs button.tab-filter-toggle,details.reading-explanation summary,
+.subtabs button[aria-selected="true"],.archive-card{
+  background:var(--card);color:var(--ink);
+}
+.shelf-filter-pop,.shelf-search-pop{border-color:var(--line);}
+.sf-field,.shelf-filter-pop .sf-field{background:var(--input);border-color:var(--line);color:var(--ink);}
+.shelf-filter-pop select{background:var(--input);border-color:var(--line);color:var(--ink);}
+.shelf-filter-pop select:focus{border-color:var(--green2);box-shadow:0 0 0 3px var(--sage);}
+.shelf-filter-pop .sf-clear{background:var(--sage);border-color:var(--line);color:var(--muted);}
+.shelf-filter-pop .sf-clear:hover{border-color:var(--green2);color:var(--green);}
+.shelf-filter-pop select option{background:var(--card);color:var(--ink);}
+.card-dates a:hover{background:var(--sage);border-color:var(--green2);color:var(--green);}
+.archive-card p,.series-preview>p:not(.eyebrow):not(.series-author),
+.reading-explanation .hero-description,.reading-bar-body .hero-description,
+.principles p:last-child{color:var(--soft2);}
+.type-tag{background:var(--sage);color:var(--green);}
+.type-tag-gold{background:#f3e9da;color:#795633;}
+.type-tag-sage{background:#e7ece6;color:#59675c;}
+.card-link-strong{color:#8b6338;border-bottom-color:#d9b98c;}
+.card-link-green{color:var(--green2);border-bottom-color:var(--sage);}
+.principles{background:var(--sage);}
+/* 原规则是 details.reading-explanation.reading-bar，特异性更高，必须同名覆盖 */
+details.reading-explanation.reading-bar{background:var(--wash);
+  border-top-color:var(--line);border-bottom-color:var(--line);}
+.subtabs .count{background:var(--card);color:var(--green2);}
+.subtabs button[aria-selected="true"] .count{background:var(--sage);color:var(--green);}
+details.reading-bar>summary{color:var(--ink);}
+.reading-bar-label{color:var(--green2);}
+.reading-bar-body .hero-description+.hero-description{border-left-color:var(--line);}
+.visit-badge{background:linear-gradient(180deg,var(--card),var(--wash));border-color:var(--line);}
+.visit-badge-num{color:var(--gold);}
+.visit-badge-unit{color:var(--muted);}
+.visit-badge-div{background:var(--line);}
+.archive-card.featured{background:linear-gradient(145deg,var(--card),var(--wash));border-color:var(--line);}
+
+/* ── 5. 夜间专项：让深底上的层级还成立 ─────────────────────────── */
+html[data-theme=dark] .hero{background:linear-gradient(120deg,#101d19,#1a3129 62%,#2b3b34);}
+html[data-theme=dark] .archive-card{box-shadow:0 4px 16px rgba(0,0,0,.28);}
+html[data-theme=dark] .archive-card:hover{box-shadow:0 10px 24px rgba(0,0,0,.36);}
+html[data-theme=dark] .reading-tabs button[aria-selected="true"]{color:#15171a;}
+html[data-theme=dark] .subtabs{box-shadow:inset 0 0 0 1px rgba(255,255,255,.04);}
+html[data-theme=dark] .subtabs button[aria-selected="true"]{box-shadow:0 2px 8px rgba(0,0,0,.35);}
+html[data-theme=dark] .card-dates a:hover{background:var(--sage);color:var(--ink);}
+html[data-theme=dark] .type-tag-gold{background:#33291c;color:#d9a76b;}
+html[data-theme=dark] .type-tag-sage{background:#232a26;color:#a3ada6;}
+html[data-theme=dark] .card-link-strong{color:#d0a06a;border-bottom-color:#6d5233;}
+html[data-theme=dark] .toolbar input:focus,
+html[data-theme=dark] .shelf-search-pop input:focus{box-shadow:0 0 0 3px rgba(147,200,168,.18);border-color:var(--green2);}
+html[data-theme=dark] .visit-badge{box-shadow:0 2px 9px rgba(0,0,0,.35);}
+html[data-theme=dark] .site-footer{border-top-color:var(--line);}
+html[data-theme=dark] body{color-scheme:dark;}
+
+/* ── 6. 段距：卡片间隙与分组间距跟着 --pm 呼吸 ──────────────────── */
+.archive-grid{gap:calc(14px*var(--pm));}
+/* 网格项默认 min-width:auto，长书名会把 1fr 撑破容器（手机上卡片右侧被切）；
+   显式归零让卡片老实待在列宽里，文字该换行就换行。 */
+.archive-card,.overview-entries a,.series-preview{min-width:0;}
+.archive-card>*{min-width:0;}
+.reading-group{margin:calc(26px*var(--pm)) 0 calc(32px*var(--pm));}
+.overview-entries{gap:calc(12px*var(--pm));}
+.reading-panel+.reading-panel{margin-top:calc(32px*var(--pm));}
+
+/* ── 7. 右上角 Aa 与面板（与书页同一套交互，位置改到右下避让办公室入口） ── */
+#rdFab{position:fixed;right:14px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:60;
+  font:600 13px/1 var(--sans);color:var(--ink);background:var(--card);
+  border:1px solid var(--line);border-radius:11px;padding:9px 12px;cursor:pointer;
+  box-shadow:0 3px 12px rgba(var(--shadow),.16);}
+#rdFab:hover{border-color:var(--green);color:var(--green);}
+#rdPanel{position:fixed;right:14px;bottom:calc(62px + env(safe-area-inset-bottom));z-index:60;
+  background:var(--card);border:1px solid var(--line);border-radius:13px;padding:12px 14px;
+  box-shadow:0 10px 28px rgba(var(--shadow),.22);display:grid;gap:9px;min-width:216px;}
+#rdPanel[hidden]{display:none;}
+#rdPanel .rd-row{display:flex;gap:5px;align-items:center;justify-content:space-between;}
+#rdPanel .rd-row>span{font-size:.72rem;color:var(--muted);flex:none;}
+#rdPanel .rd-btns{display:flex;gap:5px;}
+#rdPanel button{font:600 12px/1.4 var(--sans);color:var(--ink);background:var(--input);
+  border:1px solid var(--line);border-radius:7px;padding:4px 9px;cursor:pointer;}
+#rdPanel button:hover{border-color:var(--green);color:var(--green);}
+#rdPanel button[aria-pressed="true"]{border-color:var(--green);color:var(--green);background:var(--sage);}
+@media(max-width:680px){
+  #rdFab{right:12px;bottom:calc(12px + env(safe-area-inset-bottom));padding:8px 11px;}
+  #rdPanel{right:12px;left:12px;min-width:0;bottom:calc(56px + env(safe-area-inset-bottom));}
+}
+@media(prefers-reduced-motion:reduce){
+  .archive-card,.series-preview{transition:none;}
+}
