@@ -228,7 +228,10 @@ html[data-theme=green] .toc-part,html[data-theme=green] .card{
  * 这样慢网时读者看到的是「这本书有哪些模块 + 正在填充」，而不是一片空白。
  */
 #rdBar{position:fixed;top:0;left:0;right:0;height:3px;z-index:99;pointer-events:none;
-  overflow:hidden;background:var(--card-bd);}
+  overflow:hidden;background:var(--card-bd);
+  /* 兜底：即使 JS 版本较旧没能收条，9 秒后也自己淡出，绝不长期挂在页面上 */
+  animation:rdBarHide .4s ease 9s forwards;}
+@keyframes rdBarHide{to{opacity:0;visibility:hidden}}
 #rdBar::before{content:"";display:block;width:100%;height:100%;border-radius:2px;
   transform-origin:0 50%;background:var(--head);box-shadow:0 0 10px var(--head);
   animation:rdBarRun 9s cubic-bezier(.15,.7,.25,1) forwards;}
