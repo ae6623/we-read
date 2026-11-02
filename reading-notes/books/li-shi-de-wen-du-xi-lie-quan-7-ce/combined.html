@@ -6,46 +6,108 @@
 <title>《历史的温度》系列全7册》｜通读 · 精读</title>
 <link rel="stylesheet" href="../../../assets/css/reading-overview.css"><link rel="stylesheet" href="../../../assets/css/mmx-guide.css"><link rel="stylesheet" href="../../../assets/css/reading-outline.css">
 <style>
-/* 合并页外壳 */
-body{max-width:960px;margin:0 auto;padding:0 18px 80px;}
-.combined-head{padding:34px 0 18px;border-bottom:1px solid #e7e0d2;margin-bottom:8px;}
-.combined-head h1{font-size:26px;margin:0 0 10px;}
+/* ── 外壳与全局阅读节奏 ── */
+body{max-width:880px;margin:0 auto;padding:0 18px 80px;
+  font-size:15px;line-height:1.88;color:#3b453e;background:#f7f8f3;
+  -webkit-font-smoothing:antialiased;}
+.combined-head{padding:30px 0 16px;border-bottom:1px solid #e7e0d2;margin-bottom:4px;}
+.combined-head h1{font:700 23px/1.35 var(--serif);margin:0 0 8px;color:#244b40;}
+.combined-head .eyebrow{font-size:.72rem;letter-spacing:.14em;margin:0 0 6px;}
+.chips{margin:8px 0 0;}
+.chip{font-size:.72rem;padding:2px 10px;}
 /* 锚点导航：固定一排 4 个，等宽对齐 */
-.nav{position:sticky;top:0;z-index:20;background:rgba(255,253,248,.96);backdrop-filter:blur(6px);
-  border-bottom:1px solid #ece4d4;padding:10px 0;margin:14px 0 26px;display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;
-  box-shadow:0 2px 10px rgba(120,100,60,.06);}
-.navlink{font-size:12.5px;color:#5d5443;text-decoration:none;background:#f6f1e6;border:1px solid #e7ddca;
-  border-radius:7px;padding:4px 6px;text-align:center;white-space:nowrap;overflow:hidden;
-  text-overflow:ellipsis;}
-section{scroll-margin-top:64px;}
-/* 一句话主旨：去左侧竖线 */
-.mmx-oneline{border-left:none;padding-left:18px;}
-/* AI领读章内：AI 大纲原生深层样式 */
-.merged-guide .sec{margin:10px 0 14px;padding-left:6px;border-left:2px solid #e5e0d6}
-.merged-guide .sec h4{font:600 .98rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.6em 0 .3em}
-.merged-guide ul.point{margin:.3em 0;padding-left:20px}
-.merged-guide ul.point>li{margin:.35em 0}
-.merged-guide ul.quote{margin:.25em 0 .25em 20px;padding-left:18px;list-style:none}
-.merged-guide ul.quote::before{content:"原句";display:block;font-size:.72rem;color:#bf8247;
-  letter-spacing:.1em;margin:.15em 0 .1em;font-weight:600}
-.merged-guide ul.quote.quote-node{margin-top:.5em;padding-top:.4em;border-top:1px dashed #eadfc9}
+.nav{position:sticky;top:0;z-index:20;background:rgba(247,248,243,.96);backdrop-filter:blur(6px);
+  border-bottom:1px solid #ece4d4;padding:10px 0;margin:12px 0 20px;display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;
+  box-shadow:0 2px 10px rgba(120,100,60,.05);}
+.navlink{font-size:12px;color:#5d5443;text-decoration:none;background:#fdfbf3;border:1px solid #e8e2d2;
+  border-radius:8px;padding:6px 4px;text-align:center;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;transition:background .15s,color .15s;}
+.navlink:hover{background:#f2efe2;color:#244b40;}
+section{scroll-margin-top:62px;}
+
+/* ── 统一卡片：所有顶层模块（AI领读 / AI 问答 / 其余）一视同仁 ── */
+body>section.mmx-mod,body>section.card,body>section.mmx-svgwrap{
+  background:#fffdf6;border:1px solid #e8e4d5;border-radius:16px;
+  padding:18px 22px;margin:18px 0;
+  box-shadow:0 1px 3px rgba(110,95,60,.05);}
+body>section.mmx-mod>*:first-child,body>section.card>*:first-child,
+body>section.mmx-svgwrap>*:first-child{margin-top:0}
+body>section.mmx-mod>*:last-child,body>section.card>*:last-child,
+body>section.mmx-svgwrap>*:last-child{margin-bottom:0}
+/* 结构导图：图本身留白居中，不与正文抢宽 */
+body>section.mmx-svgwrap>svg.mmx-svg{display:block;width:100%;height:auto;margin:2px auto 0;}
+/* 模块标题：统一大小、弱强调，不与正文抢注意力 */
+body>section.mmx-mod>h2,body>section.card>h2{
+  font:700 1.04rem/1.5 var(--serif);color:#244b40;margin:0 0 11px;
+  padding-left:10px;border-left:3px solid #bf8247;letter-spacing:.01em;}
+/* 正文：字号收小、行距放宽、段间距舒服 */
+body>section.mmx-mod p,body>section.card p,
+body>section.mmx-mod li,body>section.card li{
+  font-size:.9rem;line-height:1.92;color:#4a4436;}
+body>section.mmx-mod p,body>section.card p{margin:.5em 0;}
+body>section.mmx-mod>ul,body>section.mmx-mod>ol,body>section.mmx-mod>div,
+body>section.mmx-mod>p:not(.mmx-mod-note),
+body>section.card:not(.merged-guide)>ul,body>section.card:not(.merged-guide)>ol,
+body>section.card:not(.merged-guide)>div,body>section.card:not(.merged-guide)>p:not(.mmx-mod-note){
+  padding-left:14px;}
+/* 模块说明小字：弱化不抢眼 */
+.mmx-mod-note{font-size:.75rem;color:#8d8878;margin:.1em 0 .75em;line-height:1.7;}
+
+/* ── 内部块统一：卡片里不再套深卡片，一律浅底子块 ── */
+body>section .mmx-pending,body>section .mmx-evib,body>section .aiqa-item{
+  background:#fbfaf2;border:1px solid #eee9d8;border-radius:12px;
+  padding:13px 16px;margin:.65em 0;}
+body>section .mmx-evib ul{padding-left:1.15em;}
+/* 一句话主旨：去左侧竖线 + 收敛字号 */
+.mmx-oneline{font-size:.98rem;line-height:1.85;color:#3a352c;margin:.2em 0 0;
+  padding:12px 16px;background:#fbfaf4;border-left:none;border-radius:12px;}
+/* 核心观点 / 验证清单：虚线分隔 + 收紧行距 */
+.mmx-views li{padding:.5em 0 .5em 0;font-size:.9rem;line-height:1.88;}
+/* 原文金句 */
+.mmx-qlist li{padding:.6em 0 .6em 2.2em;}
+.mmx-qlist blockquote{font-size:.89rem;line-height:1.9;}
+.mmx-qlist cite{font-size:.72rem;}
+/* 核心追问：问句加重、答句放松 */
+.mmx-qa{margin:.7em 0;padding-left:12px;border-left:3px solid #e5dfcd;}
+.mmx-qa .mmx-q{font-size:.9rem;font-weight:700;color:#2f3a33;line-height:1.8;margin:0 0 .25em;}
+.mmx-qa .mmx-a{font-size:.88rem;line-height:1.95;color:#4a4436;margin:0;}
+
+/* ── AI 问书专项：外层容器透明，问答条目才是阅读单元 ── */
+#mod-aiask .mmx-ask{background:transparent;border:0;border-radius:0;padding:0;margin:0;}
+#mod-aiask .aiqa-item{margin:.6em 0;padding:14px 16px 15px;}
+#mod-aiask .aiqa-item h3{font:700 .93rem/1.7 var(--serif);color:#2f5b49;margin:0 0 .4em;
+  padding:0;border:0;}
+#mod-aiask .aiqa-item h3:before{content:"问　";color:#bf8247;font-weight:700;}
+#mod-aiask .aiqa-item p{font-size:.88rem;line-height:1.95;color:#4a4436;margin:.4em 0;}
+#mod-aiask .aiqa-item ul{margin:.35em 0;padding-left:1.1em;}
+#mod-aiask .aiqa-item li{font-size:.87rem;line-height:1.88;margin:.18em 0;color:#4a4436;}
+#mod-aiask .aiqa-item li::marker{color:#c0a06a;}
+/* 逐章追问（details 形态）：摘要行也收敛 */
+.mmx-ask>summary{font-size:.87rem;line-height:1.7;padding:2px 0;}
+.mmx-askbody{font-size:.88rem;line-height:1.9;}
+
+/* AI领读章内：AI 大纲原生深层样式（字号同步收小） */
+.merged-guide .sec{margin:9px 0 12px;padding-left:6px;border-left:2px solid #e5e0d6}
+.merged-guide .sec h4{font:600 .93rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.5em 0 .25em}
+.merged-guide ul.point{margin:.25em 0;padding-left:20px}
+.merged-guide ul.point>li{margin:.3em 0}
+.merged-guide ul.quote{margin:.22em 0 .22em 20px;padding-left:18px;list-style:none}
+.merged-guide ul.quote::before{content:"原句";display:block;font-size:.7rem;color:#bf8247;
+  letter-spacing:.1em;margin:.12em 0 .08em;font-weight:600}
+.merged-guide ul.quote.quote-node{margin-top:.45em;padding-top:.35em;border-top:1px dashed #eadfc9}
 .merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
-.merged-guide ul.quote>li{color:#4a4436;font-size:.93rem;margin:.2em 0;padding-left:10px;border-left:2px solid #bf8247}
-/* 模块内子内容（AI领读除外，它有专属深层样式）：左缩进 + 正文与标题分层 */
-section.mmx-mod>ul,section.mmx-mod>ol,section.mmx-mod>div,
-section.mmx-mod>p:not(.mmx-mod-note),
-section.card:not(.merged-guide)>ul,section.card:not(.merged-guide)>ol,
-section.card:not(.merged-guide)>div,section.card:not(.merged-guide)>p:not(.mmx-mod-note){
-  padding-left:16px;}
-section.mmx-mod li,section.mmx-mod p:not(.mmx-mod-note),
-section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mod-note){
-  color:#4a4436;font-size:.93rem;line-height:1.78;}
+.merged-guide ul.quote>li{color:#4a4436;font-size:.88rem;line-height:1.85;margin:.18em 0;padding-left:10px;border-left:2px solid #bf8247}
 /* 核心观点初判：外链 mmx-guide.css 的「观点N」前缀是绝对定位，在本页版式里和标题叠字，
    且此前要求去掉「观点1/2/3」前缀 —— 这里整条关掉（外链 CSS 不在页面内，只能内联覆盖）。 */
 .mmx-views li{padding-left:0 !important;}
 .mmx-views li:before,.mmx-views li::before{
   content:none !important;display:none !important;counter-increment:none !important;}
+@media(max-width:720px){
+  body{padding:0 12px 60px;font-size:14.5px;}
+  body>section.mmx-mod,body>section.card{padding:15px 16px;border-radius:14px;}
+  .nav{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
 </style>
 </head>
 <body>
@@ -54,8 +116,8 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
   <h1>《历史的温度》系列全7册》</h1>
   <div class="chips"><span class="chip">通读 + 精读</span><span class="chip">AI领读</span><span class="chip">AI 生产</span></div>
 </header>
-<nav class="nav"><a class="navlink" href="#mod-svg">全书结构导图</a><a class="navlink" href="#mod-oneline">一句话主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a></nav>
-<section class="mmx-svgwrap" id="mod-svg">
+<nav class="nav"><a class="navlink" href="#mod-svg">结构导图</a><a class="navlink" href="#mod-oneline">核心主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a></nav>
+<section class="mmx-svgwrap" id="mod-svg"><h2>结构导图</h2>
 <svg class="mmx-svg" viewBox="0 0 1120 2824" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="《历史的温度》系列全7册 全书精读">
 <rect x="0" y="0" width="1120" height="2824" fill="none"/>
 <style>.mmx-svg text{font-family:"Noto Serif SC",Georgia,serif}.mmx-svg .t1{font-size:15px;fill:#2f2a24;font-weight:600}.mmx-svg .t2{font-size:12px;fill:#5c5347}.mmx-svg .t3{font-size:10.5px;fill:#8a8272}.mmx-svg .rt{font-size:13px;fill:#f7f3ea;font-weight:600}.mmx-svg .ln{stroke:#cfc6b4;stroke-width:1.4;fill:none}</style>
@@ -371,11 +433,11 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
 <text class="t2" x="714" y="2723">含「“隐形”国士，勿忘汤飞凡」至「附录 读者评论」</text>
 <path class="ln" d="M692 2727 L700 2727"/>
 </svg></section>
-<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">一句话主旨</h2><p class="mmx-mod-note">本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。</p><p class="mmx-oneline">历史是万花筒，每个人看到的不同，每个角度看到的也不同</p></section>
-<section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" id="mod-merged_guide"><h2 id="merged-guide-title">AI领读 · 全书篇目</h2>
+<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">核心主旨</h2><p class="mmx-oneline">历史是万花筒，每个人看到的不同，每个角度看到的也不同</p></section>
+<section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" id="mod-merged_guide"><h2 id="merged-guide-title">AI领读</h2>
 <p class="small">本书 AI 大纲目前为章级目录（要点与原句待补全）。以下为全书篇目，大纲补全后将自动升级为「目录 + 骨架 + 要点 + 原句」完整版。</p>
 <ol class="mmx-pts"><li><b>1</b> 历史的温度：寻找历史背面的故事、热血和真性情</li><li><b>2</b> 推荐序</li><li><b>3</b> 自序</li><li><b>4</b> 人物篇 是非留待后人说</li><li><b>5</b> 爱因斯坦的三个侧面</li><li><b>6</b> 爱迪生的侧面</li><li><b>7</b> 女生的美貌与智慧，真的能够并存吗</li><li><b>8</b> 让“二战”美军痴迷的“东京玫瑰”</li><li><b>9</b> 做一个“新时代女性”，真的要拿生命来换？</li><li><b>10</b> 我认识一个男人，叫刘翔</li><li><b>11</b> 民国第一个享受国葬的人</li><li><b>12</b> 他没有军衔，但人人称他“将军”</li><li><b>13</b> 为什么他没打过一场仗，却是陆军上将？</li><li><b>14</b> “汉奸将军”的自我救赎之路</li><li><b>15</b> “戴老板”之死</li><li><b>16</b> “暗杀大王”的最终宿命</li><li><b>17</b> “上海皇帝”的正面与反面</li><li><b>18</b> 一个被低估的“大V”的成长之路</li><li><b>19</b> 一个63岁的老头，是怎么收复166万平方公里国土的？</li><li><b>20</b> 珍妃为什么必须死</li><li><b>21</b> 靠画漫画，28岁就缴4000万元的个人所得税是怎样一种体验？</li><li><b>22</b> 逸闻篇 往事并不如烟</li><li><b>23</b> 需要经历时间考验的，除了爱情，可能还有建筑</li><li><b>24</b> 张衡的地动仪，到底是否存在？</li><li><b>25</b> “世纪之骗”背后的兴奋剂黑历史</li><li><b>26</b> 史上最黑暗的一届奥运会</li><li><b>27</b> 孙杨为什么会被别人质疑“服药”？</li><li><b>28</b> “让球”阴影下的“小山智丽事件”</li><li><b>29</b> 一根香烟点燃的革命</li><li><b>30</b> 两个大总统，你选哪个？</li><li><b>31</b> “一战”，被遗忘的14万中国人</li><li><b>32</b> “二战”期间，居然还有这样的一批日本人</li><li><b>33</b> 一段匪夷所思的“美国往事”</li><li><b>34</b> 战争篇 一寸山河一寸血</li><li><b>35</b> “九一八事变”前后的四张面孔</li><li><b>36</b> “大刀向鬼子们的头上砍去”的背后</li><li><b>37</b> 这群四川人，不该被遗忘</li><li><b>38</b> 抗日战争，我们到底有没有空军</li><li><b>39</b> 一座被死守的仓库</li><li><b>40</b> 1937，这座城没有不战而降</li><li><b>41</b> 血战台儿庄</li><li><b>42</b> 日本投降前后的四个片段</li><li><b>43</b> 后记</li><li><b>44</b> 附录 读者评论</li><li><b>45</b> 历史的温度2：细节里的故事、彷徨和信念</li><li><b>46</b> 自序</li><li><b>47</b> 人物 不应让历史睡去</li><li><b>48</b> “土肥圆”和“土肥原”</li><li><b>49</b> 东条英机之死</li><li><b>50</b> 他们每天的生活，就是活生生的“潜伏”</li><li><b>51</b> 孙殿英的“盗墓笔记”</li><li><b>52</b> 一张照片引发的自杀</li><li><b>53</b> 凡尔纳的科幻小说，究竟过时了吗？</li><li><b>54</b> 尼古拉·特斯拉：到底是神还是人？</li><li><b>55</b> 张灵甫之死</li><li><b>56</b> 一位孤悬东北的土匪将军</li><li><b>57</b> 张勋这个人</li><li><b>58</b> 或许我们长大后，才能读懂他的童话</li><li><b>59</b> 鲁迅背后的两位女性</li><li><b>60</b> 他是个医生，却夺走了40万人的生命</li><li><b>61</b> 逸闻 历史是漫长的征途</li><li><b>62</b> 他以500公里时速撞向地球，最后时刻说了什么？</li><li><b>63</b> 中国人接受“裸体艺术”，到底有多难？</li><li><b>64</b> 一场轰动中外的大劫案</li><li><b>65</b> 明明是刻骨铭心的仇恨，但日本战后为什么会感激美国人？</li><li><b>66</b> 一九四九，百万黄金大挪移</li><li><b>67</b> 当年，到底有多少故宫文物被运往台湾？</li><li><b>68</b> 24年前的今天，人类文明留下了黑暗的一页</li><li><b>69</b> 55年前，人类差点灭绝</li><li><b>70</b> 一场神秘的超级大爆炸</li><li><b>71</b> 信念 道阻且长，而终点可期</li><li><b>72</b> 1942年，15架美国轰炸机在中国迫降……</li><li><b>73</b> 有一种撤退，叫敦刻尔克</li><li><b>74</b> 敦刻尔克撤退之后，英国人干什么去了？</li><li><b>75</b> 一个公务员给全人类留下的数学难题</li><li><b>76</b> 直到坐上电椅，这对夫妇依旧表示自己清白……</li><li><b>77</b> 五环 体育能否超越政治</li><li><b>78</b> 一个34岁就做到正部级官员的运动员</li><li><b>79</b> 世界冠军之死</li><li><b>80</b> 这届奥运会，全世界近一半国家不愿参加……</li><li><b>81</b> 没错！就是他“承包”了一届奥运会！</li><li><b>82</b> 24年前的那个“北京一夜”</li><li><b>83</b> 历史的温度3：时代扑面而来，转瞬即成历史</li><li><b>84</b> 自序</li><li><b>85</b> 上篇 大变局时代</li><li><b>86</b> 是非成败丁汝昌</li><li><b>87</b> 末日孤舰“海圻”号：大清帝国的最后荣光</li><li><b>88</b> 提督的抉择：是死，是死，还是死？</li><li><b>89</b> 中国第一个蒙难的新闻记者</li><li><b>90</b> 一个皇帝的“过山车之旅”</li><li><b>91</b> 双面张作霖</li><li><b>92</b> 他当过两任中华民国大总统，你却未必了解他</li><li><b>93</b> 严复的人生，为何最终会拐个弯？</li><li><b>94</b> “名士”于右任</li><li><b>95</b> 曾拥有诸多“第一”，但她未必被人记得</li><li><b>96</b> 中篇 以国家之名</li><li><b>97</b> 1937，南京城里的纳粹旗</li><li><b>98</b> 猎杀山本五十六</li><li><b>99</b> 丘吉尔的另一面</li><li><b>100</b> “偷袭珍珠港”之后……</li><li><b>101</b> 1944，刺杀希特勒</li><li><b>102</b> 纳粹德国其实“投降了两次”，你知道吗？</li><li><b>103</b> 日本为什么会挨第二颗原子弹？</li><li><b>104</b> 刺杀汪精卫</li><li><b>105</b> 料得年年断肠处，不敢忆，长津湖</li><li><b>106</b> 一个传奇女间谍的“七重面纱”</li><li><b>107</b> 川岛芳子：从格格到间谍</li><li><b>108</b> 下篇 人性的抉择</li><li><b>109</b> 切·格瓦拉：一个符号化偶像背后的真实故事</li><li><b>110</b> 人神之间吴清源</li><li><b>111</b> 梵高之死</li><li><b>112</b> 能称“时尚女王”的人不多，她算一个</li><li><b>113</b> 一位女明星的神秘死亡</li><li><b>114</b> 中国人最熟悉的那个欧洲公主，真的幸福吗？</li><li><b>115</b> 戴安娜之死</li><li><b>116</b> 俄罗斯方块：一款小游戏背后的隐秘故事</li><li><b>117</b> 到底是谁发明了电话？</li><li><b>118</b> 你知道当年在报纸上登广告有多难吗？</li><li><b>119</b> 老祖宗考试作弊的那点儿事</li><li><b>120</b> 哈得孙河上的奇迹</li><li><b>121</b> 人类悲歌：切尔诺贝利核事故背后的阴影</li><li><b>122</b> 巨轮沉没的那一刻……</li><li><b>123</b> 逃离德黑兰</li><li><b>124</b> 附录 读者评论</li><li><b>125</b> 历史的温度4：那些执念和信念、理想与梦想</li><li><b>126</b> 自序</li><li><b>127</b> 信念</li><li><b>128</b> 中国海归第一人：见证近代史的“活化石”</li><li><b>129</b> 昔日少年今已强，勿忘张伯苓</li><li><b>130</b> 清末日本留学潮：一半是海水，一半是火焰</li><li><b>131</b> 一次“简陋”的起义</li><li><b>132</b> 悲壮黄花岗</li><li><b>133</b> 棉湖战役：决定黄埔军校存亡的生死一战</li><li><b>134</b> 日籍八路军：抗战期间的特殊群体</li><li><b>135</b> 一个人的奥运会</li><li><b>136</b> 郭永怀：一位不应被历史遗忘的科学家</li><li><b>137</b> 中国重返联合国的幕后较量</li><li><b>138</b> 1991年，那场震动全国的“改革开放”大辩论</li><li><b>139</b> 残酷太空路：中国“长征三号乙”首次发射失败幕后</li><li><b>140</b> 执念</li><li><b>141</b> 徐霞客：一个富二代的理想与实践</li><li><b>142</b> 人类历史上首次环球航行一周，究竟是什么在支撑着他们？</li><li><b>143</b> 海底两万里：不管你是否凝视，深渊总是在那里</li><li><b>144</b> “请问，你为什么要去攀登珠穆朗玛峰……”</li><li><b>145</b> 加加林之死</li><li><b>146</b> 那些从月球回来的宇航员</li><li><b>147</b> “挑战者号”悲歌</li><li><b>148</b> 18年前的今天，人类超声速旅行的梦想破碎……</li><li><b>149</b> 人类能不能扮演“上帝”？</li><li><b>150</b> 文念</li><li><b>151</b> 聊聊颜真卿，以及他的《祭侄文稿》</li><li><b>152</b> 蒲松龄：贫穷从来不会限制你的想象</li><li><b>153</b> 杀妻自尽的天才诗人：黑夜给了他黑色的眼睛，但是……</li><li><b>154</b> 一个因写关于中国的小说获得诺贝尔文学奖的美国人</li><li><b>155</b> 这些著名的日本作家，为何最终都选择自杀？</li><li><b>156</b> “文胆”之死</li><li><b>157</b> 一幅名画背后的谋杀案</li><li><b>158</b> 人生终会谢幕，侠客永不独行</li><li><b>159</b> 妄念</li><li><b>160</b> 陈公博：卿本佳人，奈何做贼？</li><li><b>161</b> 一个自认“戴罪立功”的汉奸</li><li><b>162</b> 一个“慷慨就义”的汉奸</li><li><b>163</b> 从愤青到首相，这个日本人为何能改变整个东亚格局？</li><li><b>164</b> 日本政坛最年轻的自杀首相，到底做过些什么？</li><li><b>165</b> 一场血腥又荒诞的兵变</li><li><b>166</b> 大庆油田：日本人的“野望”与“残念”</li><li><b>167</b> 情念</li><li><b>168</b> 1931年，皇帝陛下离婚了</li><li><b>169</b> 日本“战国第一美人”，到底有没有得到爱情？</li><li><b>170</b> 这位日本历史上最美的“平民皇后”，到底幸福吗？</li><li><b>171</b> 这世间，哪有那么多“明明可以靠颜值吃饭”……</li><li><b>172</b> 他左手江山，右手美人，最后喜提“公爵”……</li><li><b>173</b> 附录 读者评论</li><li><b>174</b> 历史的温度5：那些博弈、较量与人性</li><li><b>175</b> 自序</li><li><b>176</b> 筹码的较量</li><li><b>177</b> 1930年，美国发动的那场贸易战</li><li><b>178</b> 开罗会议：“四大强国”的幕后博弈</li><li><b>179</b> 再聚德黑兰：“三巨头”的台前与幕后</li><li><b>180</b> 第一颗原子弹爆炸背后的四个人</li><li><b>181</b> 1973年，人类世界重新认识石油</li><li><b>182</b> 三个东亚国家，三天，一场政变</li><li><b>183</b> 长崎事件：大清对日外交的最后荣光</li><li><b>184</b> 《排华法案》：一部应让美国人至今羞愧的法案</li><li><b>185</b> 麦卡锡主义：一个从未远去的幽灵</li><li><b>186</b> 1971年，“乒乓外交”背后的六个人</li><li><b>187</b> 那一年，中国在联合国连投16轮反对票</li><li><b>188</b> 炮火的怒吼</li><li><b>189</b> 帝国的覆灭：600万人为何会被168个侵略者摧垮？</li><li><b>190</b> 日俄战争：一场中国土地上的权力游戏</li><li><b>191</b> 美墨战争：一场“老大”对“老二”发动的掠食战</li><li><b>192</b> 弩炮悲歌：昔日盟友之间的残忍对杀</li><li><b>193</b> 帝国斜阳：一场跨越半个地球的战争</li><li><b>194</b> 争霸亚洲：400多年前那场中日之战</li><li><b>195</b> 1598年，中朝日决战露梁海</li><li><b>196</b> 决战料罗湾：中西文明的海上大搏杀</li><li><b>197</b> 1949年，炮轰“紫石英”</li><li><b>198</b> 科威特战争：“敝国虽小，硬骨头还是有两根的”</li><li><b>199</b> 个人的抉择</li><li><b>200</b> 县令之死</li><li><b>201</b> 中国最后一个状元</li><li><b>202</b> 朝鲜最后一个国王</li><li><b>203</b> “民国第一奇人”和他的“朋友圈”</li><li><b>204</b> 山高水长，勿忘陈嘉庚</li><li><b>205</b> “国士”邓稼先</li><li><b>206</b> 那个叫余纯顺的上海人</li><li><b>207</b> 拉瓦锡之死</li><li><b>208</b> 贝当：62岁的“民族英雄”，84岁的“卖国贼”</li><li><b>209</b> 奥本海默：“原子弹之父”的成功与悲剧</li><li><b>210</b> 奥黛丽·赫本：天使的侧面</li><li><b>211</b> 自然的抗争</li><li><b>212</b> 1910年，那场在东北暴发的鼠疫</li><li><b>213</b> 死神狂欢：1918年大流感</li><li><b>214</b> 天花的灭绝之路</li><li><b>215</b> 他不是药神，但他的发现改变了世界</li><li><b>216</b> 附录 读者评论</li><li><b>217</b> 历史的温度6：站在十字路口</li><li><b>218</b> 自序</li><li><b>219</b> 站在十字路口</li><li><b>220</b> 辜鸿铭：“末代狂儒”的矛盾与孤独</li><li><b>221</b> 蔡元培：一生请辞，一世楷模</li><li><b>222</b> “六君子”之死</li><li><b>223</b> 曹锟这个人</li><li><b>224</b> 中国动画功成日，勿忘万籁鸣</li><li><b>225</b> 稻米飘香，勿忘袁隆平</li><li><b>226</b> 真实的“一休哥”：癫狂一世，风流一生</li><li><b>227</b> 他究竟做了什么，会被称为“史上最危险的间谍”？</li><li><b>228</b> 潜入水面之下</li><li><b>229</b> 辛卯科场案：一桩让皇帝都头疼的“高考”舞弊案</li><li><b>230</b> 权力的游戏：一次“性贿赂”引发的政坛大乱斗</li><li><b>231</b> 斩杀安德海：晚清宫廷的一场暗斗</li><li><b>232</b> 东芝事件：当年美国是如何强行“敲打”日本的</li><li><b>233</b> 麦凯恩：幽灵的复仇</li><li><b>234</b> 利库路特事件：日本战后第一大腐败案的台前幕后</li><li><b>235</b> 流血的分割线：印度和巴基斯坦是怎么分家的？</li><li><b>236</b> 面对真实世界</li><li><b>237</b> 中国曾经有一种神奇的货币，叫“金圆券”</li><li><b>238</b> 荒诞与真实：1938年，火星人“入侵”美国</li><li><b>239</b> “人民圣殿教”：从“世外桃源”到集体自杀</li><li><b>240</b> 地铁里的杀人毒气：邪教究竟是怎样形成的？</li><li><b>241</b> 世纪审判：一桩“铁证如山”的凶杀案，为何能翻盘？</li><li><b>242</b> 作为医生，他为何成了世界第一连环杀手……</li><li><b>243</b> 罗斯威尔事件：人类到底有没有发现外星人？</li><li><b>244</b> 处在剧变前夜</li><li><b>245</b> 庄士敦：紫禁城里的洋“帝师”</li><li><b>246</b> 黑船事件：让日本人心情复杂的“蛮夷入侵”</li><li><b>247</b> 曾经是“亚洲第一”的北洋水师，是怎么建立起来的？</li><li><b>248</b> 那个不远万里去送死的倒霉皇帝</li><li><b>249</b> 置身血肉战场</li><li><b>250</b> 平型关伏击战的背后</li><li><b>251</b> 宝山保卫战：另一个关于“六佰”的故事</li><li><b>252</b> 1943，血战常德</li><li><b>253</b> 1944，血战腾冲</li><li><b>254</b> 红场1941：漫天飞雪中的悲壮阅兵</li><li><b>255</b> 同在五环之下</li><li><b>256</b> 萨马兰奇：挽救了奥运会的老人</li><li><b>257</b> 柏林1936：一届“史无前例”的奥运会</li><li><b>258</b> 1964，日本豪赌奥运</li><li><b>259</b> 从射活鸽到霹雳舞：奥运会项目增减背后的博弈</li><li><b>260</b> 附录 读者评论</li><li><b>261</b> 历史的温度7：那些退隐、告别和离席</li><li><b>262</b> 自序</li><li><b>263</b> 告别舞台</li><li><b>264</b> 中国最后一个皇太后</li><li><b>265</b> 亨利·卢斯：曾经“美国最有权力的七个人之一”</li><li><b>266</b> 李小龙：戏刚开场，斯人已逝</li><li><b>267</b> 朱建华：一个同样被“期待”压垮的天才</li><li><b>268</b> 黄金荣：大佬的末日迷途</li><li><b>269</b> 天才与疯子之间，隔着一道“美丽心灵”</li><li><b>270</b> 大厦将倾</li><li><b>271</b> “幼天王”之死</li><li><b>272</b> “刺马”：轰动晚清的第一奇案</li><li><b>273</b> “杨乃武与小白菜案”：晚清官场的一场“蝴蝶效应”</li><li><b>274</b> 1900年，逃离紫禁城</li><li><b>275</b> 那一年，长沙烈火焚城</li><li><b>276</b> 1946年，上海滩大选美</li><li><b>277</b> 时代之变</li><li><b>278</b> “功德林”的那些战犯</li><li><b>279</b> 东京审判：当年判那些战犯死刑，究竟有多难？</li><li><b>280</b> 开国第一刀：枪毙刘青山、张子善</li><li><b>281</b> 基辛格的那次“秘密访华”</li><li><b>282</b> 那些少年班的“神童”</li><li><b>283</b> 禹作敏：一个“能人”的翻车</li><li><b>284</b> 逝水年华</li><li><b>285</b> 这个男人，曾经燃烧一代人的小宇宙</li><li><b>286</b> 他画的不是篮球，而是一代人的热血和青春</li><li><b>287</b> 这部火爆全国的动画片，为什么只拍了五集？</li><li><b>288</b> 当初的“人间大炮”，你还记得如何发射吗？</li><li><b>289</b> 曾经有一个聊天工具，叫MSN</li><li><b>290</b> 浩劫之下</li><li><b>291</b> 永不返航的“古斯特洛夫号”</li><li><b>292</b> 1948年，无法抵达终点的江亚轮</li><li><b>293</b> “库尔斯克号”悲歌</li><li><b>294</b> 特内里费空难：人类史上最惨痛的一场空难</li><li><b>295</b> 两架飞机相撞，概率究竟有多大？</li><li><b>296</b> “幽灵航班”：太阳神航空522号</li><li><b>297</b> 安第斯山空难：他们是英雄还是魔鬼？</li><li><b>298</b> 身后之名</li><li><b>299</b> 罗兰夫人之死</li><li><b>300</b> “第六天魔王”之死</li><li><b>301</b> 真实白求恩：从浪子到楷模</li><li><b>302</b> “隐形”国士，勿忘汤飞凡</li><li><b>303</b> 袁枚：人生一大幸事，就是用自己喜欢的方式过一生</li><li><b>304</b> 附录 读者评论</li></ol></section>
-<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点初判</h2><p class="mmx-mod-note">按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。</p><ul class="mmx-views"><li><b>第 1–7 章</b>——含「历史的温度：寻找历史背面」至「女生的美貌与智慧，真的能」</li><li><b>第 8–14 章</b>——含「让“二战”美军痴迷的“东」至「“汉奸将军”的自我救赎之」</li><li><b>第 15–21 章</b>——含「“戴老板”之死」至「靠画漫画，28岁就缴40」</li><li><b>第 22–28 章</b>——含「逸闻篇 往事并不如烟」至「“让球”阴影下的“小山智」</li><li><b>第 29–35 章</b>——含「一根香烟点燃的革命」至「“九一八事变”前后的四张」</li><li><b>第 36–42 章</b>——含「“大刀向鬼子们的头上砍去」至「日本投降前后的四个片段」</li><li><b>第 43–49 章</b>——含「后记」至「东条英机之死」</li><li><b>第 50–56 章</b>——含「他们每天的生活，就是活生」至「一位孤悬东北的土匪将军」</li><li><b>第 57–63 章</b>——含「张勋这个人」至「中国人接受“裸体艺术”，」</li><li><b>第 64–70 章</b>——含「一场轰动中外的大劫案」至「一场神秘的超级大爆炸」</li><li><b>第 71–77 章</b>——含「信念 道阻且长，而终点可」至「五环 体育能否超越政治」</li><li><b>第 78–84 章</b>——含「一个34岁就做到正部级官」至「自序」</li><li><b>第 85–91 章</b>——含「上篇 大变局时代」至「双面张作霖」</li><li><b>第 92–98 章</b>——含「他当过两任中华民国大总统」至「猎杀山本五十六」</li><li><b>第 99–105 章</b>——含「丘吉尔的另一面」至「料得年年断肠处，不敢忆，」</li><li><b>第 106–112 章</b>——含「一个传奇女间谍的“七重面」至「能称“时尚女王”的人不多」</li><li><b>第 113–119 章</b>——含「一位女明星的神秘死亡」至「老祖宗考试作弊的那点儿事」</li><li><b>第 120–126 章</b>——含「哈得孙河上的奇迹」至「自序」</li><li><b>第 127–133 章</b>——含「信念」至「棉湖战役：决定黄埔军校存」</li><li><b>第 134–140 章</b>——含「日籍八路军：抗战期间的特」至「执念」</li><li><b>第 141–147 章</b>——含「徐霞客：一个富二代的理想」至「“挑战者号”悲歌」</li><li><b>第 148–154 章</b>——含「18年前的今天，人类超声」至「一个因写关于中国的小说获」</li><li><b>第 155–161 章</b>——含「这些著名的日本作家，为何」至「一个自认“戴罪立功”的汉」</li><li><b>第 162–168 章</b>——含「一个“慷慨就义”的汉奸」至「1931年，皇帝陛下离婚」</li><li><b>第 169–175 章</b>——含「日本“战国第一美人”，到」至「自序」</li><li><b>第 176–182 章</b>——含「筹码的较量」至「三个东亚国家，三天，一场」</li><li><b>第 183–189 章</b>——含「长崎事件：大清对日外交的」至「帝国的覆灭：600万人为」</li><li><b>第 190–196 章</b>——含「日俄战争：一场中国土地上」至「决战料罗湾：中西文明的海」</li><li><b>第 197–203 章</b>——含「1949年，炮轰“紫石英」至「“民国第一奇人”和他的“」</li><li><b>第 204–210 章</b>——含「山高水长，勿忘陈嘉庚」至「奥黛丽·赫本：天使的侧面」</li><li><b>第 211–217 章</b>——含「自然的抗争」至「历史的温度6：站在十字路」</li><li><b>第 218–224 章</b>——含「自序」至「中国动画功成日，勿忘万籁」</li><li><b>第 225–231 章</b>——含「稻米飘香，勿忘袁隆平」至「斩杀安德海：晚清宫廷的一」</li><li><b>第 232–238 章</b>——含「东芝事件：当年美国是如何」至「荒诞与真实：1938年，」</li><li><b>第 239–245 章</b>——含「“人民圣殿教”：从“世外」至「庄士敦：紫禁城里的洋“帝」</li><li><b>第 246–252 章</b>——含「黑船事件：让日本人心情复」至「1943，血战常德」</li><li><b>第 253–259 章</b>——含「1944，血战腾冲」至「从射活鸽到霹雳舞：奥运会」</li><li><b>第 260–266 章</b>——含「附录 读者评论」至「李小龙：戏刚开场，斯人已」</li><li><b>第 267–273 章</b>——含「朱建华：一个同样被“期待」至「“杨乃武与小白菜案”：晚」</li><li><b>第 274–280 章</b>——含「1900年，逃离紫禁城」至「开国第一刀：枪毙刘青山、」</li><li><b>第 281–287 章</b>——含「基辛格的那次“秘密访华”」至「这部火爆全国的动画片，为」</li><li><b>第 288–294 章</b>——含「当初的“人间大炮”，你还」至「特内里费空难：人类史上最」</li><li><b>第 295–301 章</b>——含「两架飞机相撞，概率究竟有」至「真实白求恩：从浪子到楷模」</li><li><b>第 302–304 章</b>——含「“隐形”国士，勿忘汤飞凡」至「附录 读者评论」</li></ul></section>
-<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句 · 持续积累</h2><p class="mmx-mod-note">以下原句取自本书 AI 大纲落库的原文摘录（book_outline.quote），按大纲顺序节选，非 AI 生成；更多见逐章深读页。</p><ol class="mmx-qlist"><li><blockquote>「媒体和大众喜爱“孤独的天才”“快饿死的艺术家”，或者“与全世界作对的智者”这一类故事，即使这些故事并不全是真的。」</blockquote><cite>本书正文</cite></li><li><blockquote>「我们往往会陷入一种奇怪的期待：一个人在某一方面登峰造极，于是我们就幻想他在各方面都无可挑剔。」</blockquote><cite>本书正文</cite></li><li><blockquote>「在特定的大时代背景下，我们又有谁，有能力掌控自己的命运呢？」</blockquote><cite>本书正文</cite></li><li><blockquote>「历史就是历史，历史永远不会忘记。」</blockquote><cite>本书正文</cite></li><li><blockquote>「于你，于我，于他，于她，世间又哪有什么完美的人？」</blockquote><cite>本书正文</cite></li><li><blockquote>「很多历史事件或者历史人物，都有两面性。我们不能跳出当时的历史环境，在现在用“上帝视角”去评价当时的人和事，这对当时的人来说，不公平。」</blockquote><cite>本书正文</cite></li><li><blockquote>「而不少美国士兵战后回忆：打到东京，去看一下“东京玫瑰”长什么样，是他们战斗的主要动力之一。」</blockquote><cite>本书正文</cite></li><li><blockquote>「但据说贝克勒尔曾这样说过：“居里夫人的贡献是充当了皮埃尔·居里先生的好助手，这有理由让我们相信，上帝造出女人来，是配合男人的最好助手。”」</blockquote><cite>本书正文</cite></li><li><blockquote>「“如果玛丽·居里是一个男人，这一切都不会发生！”」</blockquote><cite>本书正文</cite></li><li><blockquote>「爱因斯坦当时有一个难以决定的抉择——是娶母亲还是娶女儿。而大度的埃尔莎表示：爱因斯坦可以任选其一。」</blockquote><cite>本书正文</cite></li></ol></section>
+<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点</h2><ul class="mmx-views"><li><b>第 1–7 章</b>——含「历史的温度：寻找历史背面」至「女生的美貌与智慧，真的能」</li><li><b>第 8–14 章</b>——含「让“二战”美军痴迷的“东」至「“汉奸将军”的自我救赎之」</li><li><b>第 15–21 章</b>——含「“戴老板”之死」至「靠画漫画，28岁就缴40」</li><li><b>第 22–28 章</b>——含「逸闻篇 往事并不如烟」至「“让球”阴影下的“小山智」</li><li><b>第 29–35 章</b>——含「一根香烟点燃的革命」至「“九一八事变”前后的四张」</li><li><b>第 36–42 章</b>——含「“大刀向鬼子们的头上砍去」至「日本投降前后的四个片段」</li><li><b>第 43–49 章</b>——含「后记」至「东条英机之死」</li><li><b>第 50–56 章</b>——含「他们每天的生活，就是活生」至「一位孤悬东北的土匪将军」</li><li><b>第 57–63 章</b>——含「张勋这个人」至「中国人接受“裸体艺术”，」</li><li><b>第 64–70 章</b>——含「一场轰动中外的大劫案」至「一场神秘的超级大爆炸」</li><li><b>第 71–77 章</b>——含「信念 道阻且长，而终点可」至「五环 体育能否超越政治」</li><li><b>第 78–84 章</b>——含「一个34岁就做到正部级官」至「自序」</li><li><b>第 85–91 章</b>——含「上篇 大变局时代」至「双面张作霖」</li><li><b>第 92–98 章</b>——含「他当过两任中华民国大总统」至「猎杀山本五十六」</li><li><b>第 99–105 章</b>——含「丘吉尔的另一面」至「料得年年断肠处，不敢忆，」</li><li><b>第 106–112 章</b>——含「一个传奇女间谍的“七重面」至「能称“时尚女王”的人不多」</li><li><b>第 113–119 章</b>——含「一位女明星的神秘死亡」至「老祖宗考试作弊的那点儿事」</li><li><b>第 120–126 章</b>——含「哈得孙河上的奇迹」至「自序」</li><li><b>第 127–133 章</b>——含「信念」至「棉湖战役：决定黄埔军校存」</li><li><b>第 134–140 章</b>——含「日籍八路军：抗战期间的特」至「执念」</li><li><b>第 141–147 章</b>——含「徐霞客：一个富二代的理想」至「“挑战者号”悲歌」</li><li><b>第 148–154 章</b>——含「18年前的今天，人类超声」至「一个因写关于中国的小说获」</li><li><b>第 155–161 章</b>——含「这些著名的日本作家，为何」至「一个自认“戴罪立功”的汉」</li><li><b>第 162–168 章</b>——含「一个“慷慨就义”的汉奸」至「1931年，皇帝陛下离婚」</li><li><b>第 169–175 章</b>——含「日本“战国第一美人”，到」至「自序」</li><li><b>第 176–182 章</b>——含「筹码的较量」至「三个东亚国家，三天，一场」</li><li><b>第 183–189 章</b>——含「长崎事件：大清对日外交的」至「帝国的覆灭：600万人为」</li><li><b>第 190–196 章</b>——含「日俄战争：一场中国土地上」至「决战料罗湾：中西文明的海」</li><li><b>第 197–203 章</b>——含「1949年，炮轰“紫石英」至「“民国第一奇人”和他的“」</li><li><b>第 204–210 章</b>——含「山高水长，勿忘陈嘉庚」至「奥黛丽·赫本：天使的侧面」</li><li><b>第 211–217 章</b>——含「自然的抗争」至「历史的温度6：站在十字路」</li><li><b>第 218–224 章</b>——含「自序」至「中国动画功成日，勿忘万籁」</li><li><b>第 225–231 章</b>——含「稻米飘香，勿忘袁隆平」至「斩杀安德海：晚清宫廷的一」</li><li><b>第 232–238 章</b>——含「东芝事件：当年美国是如何」至「荒诞与真实：1938年，」</li><li><b>第 239–245 章</b>——含「“人民圣殿教”：从“世外」至「庄士敦：紫禁城里的洋“帝」</li><li><b>第 246–252 章</b>——含「黑船事件：让日本人心情复」至「1943，血战常德」</li><li><b>第 253–259 章</b>——含「1944，血战腾冲」至「从射活鸽到霹雳舞：奥运会」</li><li><b>第 260–266 章</b>——含「附录 读者评论」至「李小龙：戏刚开场，斯人已」</li><li><b>第 267–273 章</b>——含「朱建华：一个同样被“期待」至「“杨乃武与小白菜案”：晚」</li><li><b>第 274–280 章</b>——含「1900年，逃离紫禁城」至「开国第一刀：枪毙刘青山、」</li><li><b>第 281–287 章</b>——含「基辛格的那次“秘密访华”」至「这部火爆全国的动画片，为」</li><li><b>第 288–294 章</b>——含「当初的“人间大炮”，你还」至「特内里费空难：人类史上最」</li><li><b>第 295–301 章</b>——含「两架飞机相撞，概率究竟有」至「真实白求恩：从浪子到楷模」</li><li><b>第 302–304 章</b>——含「“隐形”国士，勿忘汤飞凡」至「附录 读者评论」</li></ul></section>
+<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句</h2><ol class="mmx-qlist"><li><blockquote>「媒体和大众喜爱“孤独的天才”“快饿死的艺术家”，或者“与全世界作对的智者”这一类故事，即使这些故事并不全是真的。」</blockquote><cite>本书正文</cite></li><li><blockquote>「我们往往会陷入一种奇怪的期待：一个人在某一方面登峰造极，于是我们就幻想他在各方面都无可挑剔。」</blockquote><cite>本书正文</cite></li><li><blockquote>「在特定的大时代背景下，我们又有谁，有能力掌控自己的命运呢？」</blockquote><cite>本书正文</cite></li><li><blockquote>「历史就是历史，历史永远不会忘记。」</blockquote><cite>本书正文</cite></li><li><blockquote>「于你，于我，于他，于她，世间又哪有什么完美的人？」</blockquote><cite>本书正文</cite></li><li><blockquote>「很多历史事件或者历史人物，都有两面性。我们不能跳出当时的历史环境，在现在用“上帝视角”去评价当时的人和事，这对当时的人来说，不公平。」</blockquote><cite>本书正文</cite></li><li><blockquote>「而不少美国士兵战后回忆：打到东京，去看一下“东京玫瑰”长什么样，是他们战斗的主要动力之一。」</blockquote><cite>本书正文</cite></li><li><blockquote>「但据说贝克勒尔曾这样说过：“居里夫人的贡献是充当了皮埃尔·居里先生的好助手，这有理由让我们相信，上帝造出女人来，是配合男人的最好助手。”」</blockquote><cite>本书正文</cite></li><li><blockquote>「“如果玛丽·居里是一个男人，这一切都不会发生！”」</blockquote><cite>本书正文</cite></li><li><blockquote>「爱因斯坦当时有一个难以决定的抉择——是娶母亲还是娶女儿。而大度的埃尔莎表示：爱因斯坦可以任选其一。」</blockquote><cite>本书正文</cite></li></ol></section>
 </body>
 </html>

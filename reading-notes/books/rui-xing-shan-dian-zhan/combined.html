@@ -6,46 +6,108 @@
 <title>《瑞幸闪电战》｜通读 · 精读</title>
 <link rel="stylesheet" href="../../../assets/css/reading-overview.css"><link rel="stylesheet" href="../../../assets/css/mmx-guide.css"><link rel="stylesheet" href="../../../assets/css/reading-outline.css">
 <style>
-/* 合并页外壳 */
-body{max-width:960px;margin:0 auto;padding:0 18px 80px;}
-.combined-head{padding:34px 0 18px;border-bottom:1px solid #e7e0d2;margin-bottom:8px;}
-.combined-head h1{font-size:26px;margin:0 0 10px;}
+/* ── 外壳与全局阅读节奏 ── */
+body{max-width:880px;margin:0 auto;padding:0 18px 80px;
+  font-size:15px;line-height:1.88;color:#3b453e;background:#f7f8f3;
+  -webkit-font-smoothing:antialiased;}
+.combined-head{padding:30px 0 16px;border-bottom:1px solid #e7e0d2;margin-bottom:4px;}
+.combined-head h1{font:700 23px/1.35 var(--serif);margin:0 0 8px;color:#244b40;}
+.combined-head .eyebrow{font-size:.72rem;letter-spacing:.14em;margin:0 0 6px;}
+.chips{margin:8px 0 0;}
+.chip{font-size:.72rem;padding:2px 10px;}
 /* 锚点导航：固定一排 4 个，等宽对齐 */
-.nav{position:sticky;top:0;z-index:20;background:rgba(255,253,248,.96);backdrop-filter:blur(6px);
-  border-bottom:1px solid #ece4d4;padding:10px 0;margin:14px 0 26px;display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;
-  box-shadow:0 2px 10px rgba(120,100,60,.06);}
-.navlink{font-size:12.5px;color:#5d5443;text-decoration:none;background:#f6f1e6;border:1px solid #e7ddca;
-  border-radius:7px;padding:4px 6px;text-align:center;white-space:nowrap;overflow:hidden;
-  text-overflow:ellipsis;}
-section{scroll-margin-top:64px;}
-/* 一句话主旨：去左侧竖线 */
-.mmx-oneline{border-left:none;padding-left:18px;}
-/* AI领读章内：AI 大纲原生深层样式 */
-.merged-guide .sec{margin:10px 0 14px;padding-left:6px;border-left:2px solid #e5e0d6}
-.merged-guide .sec h4{font:600 .98rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.6em 0 .3em}
-.merged-guide ul.point{margin:.3em 0;padding-left:20px}
-.merged-guide ul.point>li{margin:.35em 0}
-.merged-guide ul.quote{margin:.25em 0 .25em 20px;padding-left:18px;list-style:none}
-.merged-guide ul.quote::before{content:"原句";display:block;font-size:.72rem;color:#bf8247;
-  letter-spacing:.1em;margin:.15em 0 .1em;font-weight:600}
-.merged-guide ul.quote.quote-node{margin-top:.5em;padding-top:.4em;border-top:1px dashed #eadfc9}
+.nav{position:sticky;top:0;z-index:20;background:rgba(247,248,243,.96);backdrop-filter:blur(6px);
+  border-bottom:1px solid #ece4d4;padding:10px 0;margin:12px 0 20px;display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;
+  box-shadow:0 2px 10px rgba(120,100,60,.05);}
+.navlink{font-size:12px;color:#5d5443;text-decoration:none;background:#fdfbf3;border:1px solid #e8e2d2;
+  border-radius:8px;padding:6px 4px;text-align:center;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;transition:background .15s,color .15s;}
+.navlink:hover{background:#f2efe2;color:#244b40;}
+section{scroll-margin-top:62px;}
+
+/* ── 统一卡片：所有顶层模块（AI领读 / AI 问答 / 其余）一视同仁 ── */
+body>section.mmx-mod,body>section.card,body>section.mmx-svgwrap{
+  background:#fffdf6;border:1px solid #e8e4d5;border-radius:16px;
+  padding:18px 22px;margin:18px 0;
+  box-shadow:0 1px 3px rgba(110,95,60,.05);}
+body>section.mmx-mod>*:first-child,body>section.card>*:first-child,
+body>section.mmx-svgwrap>*:first-child{margin-top:0}
+body>section.mmx-mod>*:last-child,body>section.card>*:last-child,
+body>section.mmx-svgwrap>*:last-child{margin-bottom:0}
+/* 结构导图：图本身留白居中，不与正文抢宽 */
+body>section.mmx-svgwrap>svg.mmx-svg{display:block;width:100%;height:auto;margin:2px auto 0;}
+/* 模块标题：统一大小、弱强调，不与正文抢注意力 */
+body>section.mmx-mod>h2,body>section.card>h2{
+  font:700 1.04rem/1.5 var(--serif);color:#244b40;margin:0 0 11px;
+  padding-left:10px;border-left:3px solid #bf8247;letter-spacing:.01em;}
+/* 正文：字号收小、行距放宽、段间距舒服 */
+body>section.mmx-mod p,body>section.card p,
+body>section.mmx-mod li,body>section.card li{
+  font-size:.9rem;line-height:1.92;color:#4a4436;}
+body>section.mmx-mod p,body>section.card p{margin:.5em 0;}
+body>section.mmx-mod>ul,body>section.mmx-mod>ol,body>section.mmx-mod>div,
+body>section.mmx-mod>p:not(.mmx-mod-note),
+body>section.card:not(.merged-guide)>ul,body>section.card:not(.merged-guide)>ol,
+body>section.card:not(.merged-guide)>div,body>section.card:not(.merged-guide)>p:not(.mmx-mod-note){
+  padding-left:14px;}
+/* 模块说明小字：弱化不抢眼 */
+.mmx-mod-note{font-size:.75rem;color:#8d8878;margin:.1em 0 .75em;line-height:1.7;}
+
+/* ── 内部块统一：卡片里不再套深卡片，一律浅底子块 ── */
+body>section .mmx-pending,body>section .mmx-evib,body>section .aiqa-item{
+  background:#fbfaf2;border:1px solid #eee9d8;border-radius:12px;
+  padding:13px 16px;margin:.65em 0;}
+body>section .mmx-evib ul{padding-left:1.15em;}
+/* 一句话主旨：去左侧竖线 + 收敛字号 */
+.mmx-oneline{font-size:.98rem;line-height:1.85;color:#3a352c;margin:.2em 0 0;
+  padding:12px 16px;background:#fbfaf4;border-left:none;border-radius:12px;}
+/* 核心观点 / 验证清单：虚线分隔 + 收紧行距 */
+.mmx-views li{padding:.5em 0 .5em 0;font-size:.9rem;line-height:1.88;}
+/* 原文金句 */
+.mmx-qlist li{padding:.6em 0 .6em 2.2em;}
+.mmx-qlist blockquote{font-size:.89rem;line-height:1.9;}
+.mmx-qlist cite{font-size:.72rem;}
+/* 核心追问：问句加重、答句放松 */
+.mmx-qa{margin:.7em 0;padding-left:12px;border-left:3px solid #e5dfcd;}
+.mmx-qa .mmx-q{font-size:.9rem;font-weight:700;color:#2f3a33;line-height:1.8;margin:0 0 .25em;}
+.mmx-qa .mmx-a{font-size:.88rem;line-height:1.95;color:#4a4436;margin:0;}
+
+/* ── AI 问书专项：外层容器透明，问答条目才是阅读单元 ── */
+#mod-aiask .mmx-ask{background:transparent;border:0;border-radius:0;padding:0;margin:0;}
+#mod-aiask .aiqa-item{margin:.6em 0;padding:14px 16px 15px;}
+#mod-aiask .aiqa-item h3{font:700 .93rem/1.7 var(--serif);color:#2f5b49;margin:0 0 .4em;
+  padding:0;border:0;}
+#mod-aiask .aiqa-item h3:before{content:"问　";color:#bf8247;font-weight:700;}
+#mod-aiask .aiqa-item p{font-size:.88rem;line-height:1.95;color:#4a4436;margin:.4em 0;}
+#mod-aiask .aiqa-item ul{margin:.35em 0;padding-left:1.1em;}
+#mod-aiask .aiqa-item li{font-size:.87rem;line-height:1.88;margin:.18em 0;color:#4a4436;}
+#mod-aiask .aiqa-item li::marker{color:#c0a06a;}
+/* 逐章追问（details 形态）：摘要行也收敛 */
+.mmx-ask>summary{font-size:.87rem;line-height:1.7;padding:2px 0;}
+.mmx-askbody{font-size:.88rem;line-height:1.9;}
+
+/* AI领读章内：AI 大纲原生深层样式（字号同步收小） */
+.merged-guide .sec{margin:9px 0 12px;padding-left:6px;border-left:2px solid #e5e0d6}
+.merged-guide .sec h4{font:600 .93rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.5em 0 .25em}
+.merged-guide ul.point{margin:.25em 0;padding-left:20px}
+.merged-guide ul.point>li{margin:.3em 0}
+.merged-guide ul.quote{margin:.22em 0 .22em 20px;padding-left:18px;list-style:none}
+.merged-guide ul.quote::before{content:"原句";display:block;font-size:.7rem;color:#bf8247;
+  letter-spacing:.1em;margin:.12em 0 .08em;font-weight:600}
+.merged-guide ul.quote.quote-node{margin-top:.45em;padding-top:.35em;border-top:1px dashed #eadfc9}
 .merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
-.merged-guide ul.quote>li{color:#4a4436;font-size:.93rem;margin:.2em 0;padding-left:10px;border-left:2px solid #bf8247}
-/* 模块内子内容（AI领读除外，它有专属深层样式）：左缩进 + 正文与标题分层 */
-section.mmx-mod>ul,section.mmx-mod>ol,section.mmx-mod>div,
-section.mmx-mod>p:not(.mmx-mod-note),
-section.card:not(.merged-guide)>ul,section.card:not(.merged-guide)>ol,
-section.card:not(.merged-guide)>div,section.card:not(.merged-guide)>p:not(.mmx-mod-note){
-  padding-left:16px;}
-section.mmx-mod li,section.mmx-mod p:not(.mmx-mod-note),
-section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mod-note){
-  color:#4a4436;font-size:.93rem;line-height:1.78;}
+.merged-guide ul.quote>li{color:#4a4436;font-size:.88rem;line-height:1.85;margin:.18em 0;padding-left:10px;border-left:2px solid #bf8247}
 /* 核心观点初判：外链 mmx-guide.css 的「观点N」前缀是绝对定位，在本页版式里和标题叠字，
    且此前要求去掉「观点1/2/3」前缀 —— 这里整条关掉（外链 CSS 不在页面内，只能内联覆盖）。 */
 .mmx-views li{padding-left:0 !important;}
 .mmx-views li:before,.mmx-views li::before{
   content:none !important;display:none !important;counter-increment:none !important;}
+@media(max-width:720px){
+  body{padding:0 12px 60px;font-size:14.5px;}
+  body>section.mmx-mod,body>section.card{padding:15px 16px;border-radius:14px;}
+  .nav{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
 </style>
 </head>
 <body>
@@ -54,8 +116,8 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
   <h1>《瑞幸闪电战》</h1>
   <div class="chips"><span class="chip">通读 + 精读</span><span class="chip">AI领读</span><span class="chip">AI 生产</span></div>
 </header>
-<nav class="nav"><a class="navlink" href="#mod-svg">全书结构导图</a><a class="navlink" href="#mod-oneline">一句话主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a></nav>
-<section class="mmx-svgwrap" id="mod-svg">
+<nav class="nav"><a class="navlink" href="#mod-svg">结构导图</a><a class="navlink" href="#mod-oneline">核心主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a></nav>
+<section class="mmx-svgwrap" id="mod-svg"><h2>结构导图</h2>
 <svg class="mmx-svg" viewBox="0 0 1120 592" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="瑞幸闪电战 全书精读">
 <rect x="0" y="0" width="1120" height="592" fill="none"/>
 <style>.mmx-svg text{font-family:"Noto Serif SC",Georgia,serif}.mmx-svg .t1{font-size:15px;fill:#2f2a24;font-weight:600}.mmx-svg .t2{font-size:12px;fill:#5c5347}.mmx-svg .t3{font-size:10.5px;fill:#8a8272}.mmx-svg .rt{font-size:13px;fill:#f7f3ea;font-weight:600}.mmx-svg .ln{stroke:#cfc6b4;stroke-width:1.4;fill:none}</style>
@@ -119,11 +181,11 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
 <text class="t2" x="714" y="491">含「在时代剧变背景下，瑞幸还」至「后记」</text>
 <path class="ln" d="M692 495 L700 495"/>
 </svg></section>
-<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">一句话主旨</h2><p class="mmx-mod-note">本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。</p><p class="mmx-oneline">18个月实现美国纳斯达克证券交易所上市，开出3000多家门店…… 怎样的组织架构、经营方式、供应链运营让瑞幸咖啡能以闪电般的速度扩张拓店、积</p></section>
-<section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" id="mod-merged_guide"><h2 id="merged-guide-title">AI领读 · 全书篇目</h2>
+<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">核心主旨</h2><p class="mmx-oneline">18个月实现美国纳斯达克证券交易所上市，开出3000多家门店…… 怎样的组织架构、经营方式、供应链运营让瑞幸咖啡能以闪电般的速度扩张拓店、积</p></section>
+<section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" id="mod-merged_guide"><h2 id="merged-guide-title">AI领读</h2>
 <p class="small">本书 AI 大纲目前为章级目录（要点与原句待补全）。以下为全书篇目，大纲补全后将自动升级为「目录 + 骨架 + 要点 + 原句」完整版。</p>
 <ol class="mmx-pts"><li><b>1</b> 推荐序 瑞幸的标本意义在于数字重构零售的探索</li><li><b>2</b> 自序 瑞幸不只是闪电战</li><li><b>3</b> 1 新零售：瑞幸模式是不是伪命题</li><li><b>4</b> 究竟有没有新零售</li><li><b>5</b> 瑞幸的本质</li><li><b>6</b> 重新理解人货场</li><li><b>7</b> 自动售货机的新春天</li><li><b>8</b> 物联网的时代来了</li><li><b>9</b> 极简主义和新零售</li><li><b>10</b> 解读加拿大Tim Hortons</li><li><b>11</b> 对标7-Eleven，目标直指科技零售</li><li><b>12</b> 2 咖啡在中国：高速增长时代已经来临</li><li><b>13</b> 中国市场vs欧美日韩市场</li><li><b>14</b> 谁在为咖啡埋单</li><li><b>15</b> 一杯咖啡究竟多少钱？</li><li><b>16</b> 行业格局：那些鲜为人知的咖啡巨头</li><li><b>17</b> 咖啡高速增长的历史契机</li><li><b>18</b> 第四次咖啡浪潮，该如何布局</li><li><b>19</b> 3 数据驱动：瑞幸闪电战的核心动能</li><li><b>20</b> 餐饮公司为什么需要一个COO？</li><li><b>21</b> 技术驱动的三重境界</li><li><b>22</b> 何为真正的数据驱动型企业</li><li><b>23</b> 数据拆解，为决策赋能</li><li><b>24</b> 咖啡销售场景下的数据应用</li><li><b>25</b> 兵马未动，数据先行</li><li><b>26</b> 4 管理纲领：瑞幸新型组织原则</li><li><b>27</b> 瑞幸没有文化？</li><li><b>28</b> 裂变：组织力如何支撑短时间的疯狂扩张</li><li><b>29</b> 凝聚力：一股真正力量的缔造</li><li><b>30</b> 如何避开快速膨胀的生死劫？</li><li><b>31</b> 瑞幸咖啡有灵魂吗？</li><li><b>32</b> 反观瑞幸：从外部解读管理与文化</li><li><b>33</b> 5 第三种模式：瑞幸如何管理地面军团？</li><li><b>34</b> 麦当劳向左，海底捞向右，瑞幸向哪？</li><li><b>35</b> 为什么瑞幸会走出第三条路？</li><li><b>36</b> “第三条路”如何造就企业基因？</li><li><b>37</b> 6 生命线：新型供应链与品质管理</li><li><b>38</b> 供应链速成的秘诀</li><li><b>39</b> 瑞幸供应链有何独到之处？</li><li><b>40</b> 统一战线：瑞幸的供应商管理新理念</li><li><b>41</b> 最高标准的质量管理是怎样炼成的？</li><li><b>42</b> 7 爆发增长：品牌及营销闪电战全推演</li><li><b>43</b> 我们正在遭遇品牌创造的低谷期</li><li><b>44</b> 深度剖析瑞幸营销全流程</li><li><b>45</b> 瑞幸品牌战略的兵棋推演</li><li><b>46</b> 解读瑞幸运营增长模型</li><li><b>47</b> 瑞幸到底是不是在乱花钱？</li><li><b>48</b> 8 瑞幸与它所恰逢的时代</li><li><b>49</b> 洞察时代变化的四大趋势</li><li><b>50</b> 在时代剧变背景下，瑞幸还能走多远？</li><li><b>51</b> 瑞幸阳谋</li><li><b>52</b> 后记</li></ol></section>
-<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点初判</h2><p class="mmx-mod-note">按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。</p><ul class="mmx-views"><li><b>第 1–7 章</b>——含「推荐序 瑞幸的标本意义在」至「自动售货机的新春天」</li><li><b>第 8–14 章</b>——含「物联网的时代来了」至「谁在为咖啡埋单」</li><li><b>第 15–21 章</b>——含「一杯咖啡究竟多少钱？」至「技术驱动的三重境界」</li><li><b>第 22–28 章</b>——含「何为真正的数据驱动型企业」至「裂变：组织力如何支撑短时」</li><li><b>第 29–35 章</b>——含「凝聚力：一股真正力量的缔」至「为什么瑞幸会走出第三条路」</li><li><b>第 36–42 章</b>——含「“第三条路”如何造就企业」至「7 爆发增长：品牌及营销」</li><li><b>第 43–49 章</b>——含「我们正在遭遇品牌创造的低」至「洞察时代变化的四大趋势」</li><li><b>第 50–52 章</b>——含「在时代剧变背景下，瑞幸还」至「后记」</li></ul></section>
-<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句 · 持续积累</h2><p class="mmx-mod-note">以下原句取自本书 AI 大纲落库的原文摘录（book_outline.quote），按大纲顺序节选，非 AI 生成；更多见逐章深读页。</p><ol class="mmx-qlist"><li><blockquote>「比如我们对新事物普遍不信任、不理解，依然在用过去的思维判断今天的商业模式。比如我们试图借用经验对所有企业硬套硬归类，比如我们太容易受到舆论的影响，而不独立思考。」</blockquote><cite>本书正文</cite></li><li><blockquote>「不要指望所有的一线员工自己去思考该怎么做，你得把命令分解给他们，比如你希望他们提高销售业绩，然后给他们奖励，但他们可能很难理解重点，你应该告诉他们：今天必须把临近保质期的酸奶促销掉，方法可以是打五折。」</blockquote><cite>本书正文</cite></li><li><blockquote>「资本的巨大成功，掩盖了它在其他维度的努力。若无系统，则无法支持扩张。若无数据，则如盲人摸象。若无供应链，早晚死于膨胀。若无组织能力，则早已乱成一团。若无品牌，则无法形成势能。」</blockquote><cite>本书正文</cite></li><li><blockquote>「终端、数据、新连接、品牌、技术，是这个时代成功企业的五大标志。」</blockquote><cite>本书正文</cite></li><li><blockquote>「存地失人，人地皆失；存人失地，人地皆得。」</blockquote><cite>本书正文</cite></li><li><blockquote>「理发店、房屋中介那种一起跳操、一起喊口号的行为能存在这么多年，也有一定的合理性，说明是有效的。」</blockquote><cite>本书正文</cite></li><li><blockquote>「在2018财年，好市多净利润达31.34亿美元，会员费营收为31.42亿美元，这意味着好市多的利润主要来自会员费。」</blockquote><cite>本书正文</cite></li><li><blockquote>「你的价值有多大应该由你能满足多少需求来衡量」</blockquote><cite>本书正文</cite></li><li><blockquote>「这个世界上一定有一种东西超越金钱和利益，那就是信念与信仰。世界上最实的东西到最后都是最虚的。若没有信念与信仰，我们的企业就不可能走向全球。」</blockquote><cite>本书正文</cite></li><li><blockquote>「北宋大儒张载曾说：“为天地立心，为生民立命，为往圣继绝学，为万世开太平。”」</blockquote><cite>本书正文</cite></li></ol></section>
+<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点</h2><ul class="mmx-views"><li><b>第 1–7 章</b>——含「推荐序 瑞幸的标本意义在」至「自动售货机的新春天」</li><li><b>第 8–14 章</b>——含「物联网的时代来了」至「谁在为咖啡埋单」</li><li><b>第 15–21 章</b>——含「一杯咖啡究竟多少钱？」至「技术驱动的三重境界」</li><li><b>第 22–28 章</b>——含「何为真正的数据驱动型企业」至「裂变：组织力如何支撑短时」</li><li><b>第 29–35 章</b>——含「凝聚力：一股真正力量的缔」至「为什么瑞幸会走出第三条路」</li><li><b>第 36–42 章</b>——含「“第三条路”如何造就企业」至「7 爆发增长：品牌及营销」</li><li><b>第 43–49 章</b>——含「我们正在遭遇品牌创造的低」至「洞察时代变化的四大趋势」</li><li><b>第 50–52 章</b>——含「在时代剧变背景下，瑞幸还」至「后记」</li></ul></section>
+<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句</h2><ol class="mmx-qlist"><li><blockquote>「比如我们对新事物普遍不信任、不理解，依然在用过去的思维判断今天的商业模式。比如我们试图借用经验对所有企业硬套硬归类，比如我们太容易受到舆论的影响，而不独立思考。」</blockquote><cite>本书正文</cite></li><li><blockquote>「不要指望所有的一线员工自己去思考该怎么做，你得把命令分解给他们，比如你希望他们提高销售业绩，然后给他们奖励，但他们可能很难理解重点，你应该告诉他们：今天必须把临近保质期的酸奶促销掉，方法可以是打五折。」</blockquote><cite>本书正文</cite></li><li><blockquote>「资本的巨大成功，掩盖了它在其他维度的努力。若无系统，则无法支持扩张。若无数据，则如盲人摸象。若无供应链，早晚死于膨胀。若无组织能力，则早已乱成一团。若无品牌，则无法形成势能。」</blockquote><cite>本书正文</cite></li><li><blockquote>「终端、数据、新连接、品牌、技术，是这个时代成功企业的五大标志。」</blockquote><cite>本书正文</cite></li><li><blockquote>「存地失人，人地皆失；存人失地，人地皆得。」</blockquote><cite>本书正文</cite></li><li><blockquote>「理发店、房屋中介那种一起跳操、一起喊口号的行为能存在这么多年，也有一定的合理性，说明是有效的。」</blockquote><cite>本书正文</cite></li><li><blockquote>「在2018财年，好市多净利润达31.34亿美元，会员费营收为31.42亿美元，这意味着好市多的利润主要来自会员费。」</blockquote><cite>本书正文</cite></li><li><blockquote>「你的价值有多大应该由你能满足多少需求来衡量」</blockquote><cite>本书正文</cite></li><li><blockquote>「这个世界上一定有一种东西超越金钱和利益，那就是信念与信仰。世界上最实的东西到最后都是最虚的。若没有信念与信仰，我们的企业就不可能走向全球。」</blockquote><cite>本书正文</cite></li><li><blockquote>「北宋大儒张载曾说：“为天地立心，为生民立命，为往圣继绝学，为万世开太平。”」</blockquote><cite>本书正文</cite></li></ol></section>
 </body>
 </html>

@@ -6,46 +6,108 @@
 <title>《滚雪球：巴菲特和他的财富人生（套装共2册）》｜通读 · 精读</title>
 <link rel="stylesheet" href="../../../assets/css/reading-overview.css"><link rel="stylesheet" href="../../../assets/css/mmx-guide.css"><link rel="stylesheet" href="../../../assets/css/reading-outline.css">
 <style>
-/* 合并页外壳 */
-body{max-width:960px;margin:0 auto;padding:0 18px 80px;}
-.combined-head{padding:34px 0 18px;border-bottom:1px solid #e7e0d2;margin-bottom:8px;}
-.combined-head h1{font-size:26px;margin:0 0 10px;}
+/* ── 外壳与全局阅读节奏 ── */
+body{max-width:880px;margin:0 auto;padding:0 18px 80px;
+  font-size:15px;line-height:1.88;color:#3b453e;background:#f7f8f3;
+  -webkit-font-smoothing:antialiased;}
+.combined-head{padding:30px 0 16px;border-bottom:1px solid #e7e0d2;margin-bottom:4px;}
+.combined-head h1{font:700 23px/1.35 var(--serif);margin:0 0 8px;color:#244b40;}
+.combined-head .eyebrow{font-size:.72rem;letter-spacing:.14em;margin:0 0 6px;}
+.chips{margin:8px 0 0;}
+.chip{font-size:.72rem;padding:2px 10px;}
 /* 锚点导航：固定一排 4 个，等宽对齐 */
-.nav{position:sticky;top:0;z-index:20;background:rgba(255,253,248,.96);backdrop-filter:blur(6px);
-  border-bottom:1px solid #ece4d4;padding:10px 0;margin:14px 0 26px;display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;
-  box-shadow:0 2px 10px rgba(120,100,60,.06);}
-.navlink{font-size:12.5px;color:#5d5443;text-decoration:none;background:#f6f1e6;border:1px solid #e7ddca;
-  border-radius:7px;padding:4px 6px;text-align:center;white-space:nowrap;overflow:hidden;
-  text-overflow:ellipsis;}
-section{scroll-margin-top:64px;}
-/* 一句话主旨：去左侧竖线 */
-.mmx-oneline{border-left:none;padding-left:18px;}
-/* AI领读章内：AI 大纲原生深层样式 */
-.merged-guide .sec{margin:10px 0 14px;padding-left:6px;border-left:2px solid #e5e0d6}
-.merged-guide .sec h4{font:600 .98rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.6em 0 .3em}
-.merged-guide ul.point{margin:.3em 0;padding-left:20px}
-.merged-guide ul.point>li{margin:.35em 0}
-.merged-guide ul.quote{margin:.25em 0 .25em 20px;padding-left:18px;list-style:none}
-.merged-guide ul.quote::before{content:"原句";display:block;font-size:.72rem;color:#bf8247;
-  letter-spacing:.1em;margin:.15em 0 .1em;font-weight:600}
-.merged-guide ul.quote.quote-node{margin-top:.5em;padding-top:.4em;border-top:1px dashed #eadfc9}
+.nav{position:sticky;top:0;z-index:20;background:rgba(247,248,243,.96);backdrop-filter:blur(6px);
+  border-bottom:1px solid #ece4d4;padding:10px 0;margin:12px 0 20px;display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;
+  box-shadow:0 2px 10px rgba(120,100,60,.05);}
+.navlink{font-size:12px;color:#5d5443;text-decoration:none;background:#fdfbf3;border:1px solid #e8e2d2;
+  border-radius:8px;padding:6px 4px;text-align:center;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;transition:background .15s,color .15s;}
+.navlink:hover{background:#f2efe2;color:#244b40;}
+section{scroll-margin-top:62px;}
+
+/* ── 统一卡片：所有顶层模块（AI领读 / AI 问答 / 其余）一视同仁 ── */
+body>section.mmx-mod,body>section.card,body>section.mmx-svgwrap{
+  background:#fffdf6;border:1px solid #e8e4d5;border-radius:16px;
+  padding:18px 22px;margin:18px 0;
+  box-shadow:0 1px 3px rgba(110,95,60,.05);}
+body>section.mmx-mod>*:first-child,body>section.card>*:first-child,
+body>section.mmx-svgwrap>*:first-child{margin-top:0}
+body>section.mmx-mod>*:last-child,body>section.card>*:last-child,
+body>section.mmx-svgwrap>*:last-child{margin-bottom:0}
+/* 结构导图：图本身留白居中，不与正文抢宽 */
+body>section.mmx-svgwrap>svg.mmx-svg{display:block;width:100%;height:auto;margin:2px auto 0;}
+/* 模块标题：统一大小、弱强调，不与正文抢注意力 */
+body>section.mmx-mod>h2,body>section.card>h2{
+  font:700 1.04rem/1.5 var(--serif);color:#244b40;margin:0 0 11px;
+  padding-left:10px;border-left:3px solid #bf8247;letter-spacing:.01em;}
+/* 正文：字号收小、行距放宽、段间距舒服 */
+body>section.mmx-mod p,body>section.card p,
+body>section.mmx-mod li,body>section.card li{
+  font-size:.9rem;line-height:1.92;color:#4a4436;}
+body>section.mmx-mod p,body>section.card p{margin:.5em 0;}
+body>section.mmx-mod>ul,body>section.mmx-mod>ol,body>section.mmx-mod>div,
+body>section.mmx-mod>p:not(.mmx-mod-note),
+body>section.card:not(.merged-guide)>ul,body>section.card:not(.merged-guide)>ol,
+body>section.card:not(.merged-guide)>div,body>section.card:not(.merged-guide)>p:not(.mmx-mod-note){
+  padding-left:14px;}
+/* 模块说明小字：弱化不抢眼 */
+.mmx-mod-note{font-size:.75rem;color:#8d8878;margin:.1em 0 .75em;line-height:1.7;}
+
+/* ── 内部块统一：卡片里不再套深卡片，一律浅底子块 ── */
+body>section .mmx-pending,body>section .mmx-evib,body>section .aiqa-item{
+  background:#fbfaf2;border:1px solid #eee9d8;border-radius:12px;
+  padding:13px 16px;margin:.65em 0;}
+body>section .mmx-evib ul{padding-left:1.15em;}
+/* 一句话主旨：去左侧竖线 + 收敛字号 */
+.mmx-oneline{font-size:.98rem;line-height:1.85;color:#3a352c;margin:.2em 0 0;
+  padding:12px 16px;background:#fbfaf4;border-left:none;border-radius:12px;}
+/* 核心观点 / 验证清单：虚线分隔 + 收紧行距 */
+.mmx-views li{padding:.5em 0 .5em 0;font-size:.9rem;line-height:1.88;}
+/* 原文金句 */
+.mmx-qlist li{padding:.6em 0 .6em 2.2em;}
+.mmx-qlist blockquote{font-size:.89rem;line-height:1.9;}
+.mmx-qlist cite{font-size:.72rem;}
+/* 核心追问：问句加重、答句放松 */
+.mmx-qa{margin:.7em 0;padding-left:12px;border-left:3px solid #e5dfcd;}
+.mmx-qa .mmx-q{font-size:.9rem;font-weight:700;color:#2f3a33;line-height:1.8;margin:0 0 .25em;}
+.mmx-qa .mmx-a{font-size:.88rem;line-height:1.95;color:#4a4436;margin:0;}
+
+/* ── AI 问书专项：外层容器透明，问答条目才是阅读单元 ── */
+#mod-aiask .mmx-ask{background:transparent;border:0;border-radius:0;padding:0;margin:0;}
+#mod-aiask .aiqa-item{margin:.6em 0;padding:14px 16px 15px;}
+#mod-aiask .aiqa-item h3{font:700 .93rem/1.7 var(--serif);color:#2f5b49;margin:0 0 .4em;
+  padding:0;border:0;}
+#mod-aiask .aiqa-item h3:before{content:"问　";color:#bf8247;font-weight:700;}
+#mod-aiask .aiqa-item p{font-size:.88rem;line-height:1.95;color:#4a4436;margin:.4em 0;}
+#mod-aiask .aiqa-item ul{margin:.35em 0;padding-left:1.1em;}
+#mod-aiask .aiqa-item li{font-size:.87rem;line-height:1.88;margin:.18em 0;color:#4a4436;}
+#mod-aiask .aiqa-item li::marker{color:#c0a06a;}
+/* 逐章追问（details 形态）：摘要行也收敛 */
+.mmx-ask>summary{font-size:.87rem;line-height:1.7;padding:2px 0;}
+.mmx-askbody{font-size:.88rem;line-height:1.9;}
+
+/* AI领读章内：AI 大纲原生深层样式（字号同步收小） */
+.merged-guide .sec{margin:9px 0 12px;padding-left:6px;border-left:2px solid #e5e0d6}
+.merged-guide .sec h4{font:600 .93rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.5em 0 .25em}
+.merged-guide ul.point{margin:.25em 0;padding-left:20px}
+.merged-guide ul.point>li{margin:.3em 0}
+.merged-guide ul.quote{margin:.22em 0 .22em 20px;padding-left:18px;list-style:none}
+.merged-guide ul.quote::before{content:"原句";display:block;font-size:.7rem;color:#bf8247;
+  letter-spacing:.1em;margin:.12em 0 .08em;font-weight:600}
+.merged-guide ul.quote.quote-node{margin-top:.45em;padding-top:.35em;border-top:1px dashed #eadfc9}
 .merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
-.merged-guide ul.quote>li{color:#4a4436;font-size:.93rem;margin:.2em 0;padding-left:10px;border-left:2px solid #bf8247}
-/* 模块内子内容（AI领读除外，它有专属深层样式）：左缩进 + 正文与标题分层 */
-section.mmx-mod>ul,section.mmx-mod>ol,section.mmx-mod>div,
-section.mmx-mod>p:not(.mmx-mod-note),
-section.card:not(.merged-guide)>ul,section.card:not(.merged-guide)>ol,
-section.card:not(.merged-guide)>div,section.card:not(.merged-guide)>p:not(.mmx-mod-note){
-  padding-left:16px;}
-section.mmx-mod li,section.mmx-mod p:not(.mmx-mod-note),
-section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mod-note){
-  color:#4a4436;font-size:.93rem;line-height:1.78;}
+.merged-guide ul.quote>li{color:#4a4436;font-size:.88rem;line-height:1.85;margin:.18em 0;padding-left:10px;border-left:2px solid #bf8247}
 /* 核心观点初判：外链 mmx-guide.css 的「观点N」前缀是绝对定位，在本页版式里和标题叠字，
    且此前要求去掉「观点1/2/3」前缀 —— 这里整条关掉（外链 CSS 不在页面内，只能内联覆盖）。 */
 .mmx-views li{padding-left:0 !important;}
 .mmx-views li:before,.mmx-views li::before{
   content:none !important;display:none !important;counter-increment:none !important;}
+@media(max-width:720px){
+  body{padding:0 12px 60px;font-size:14.5px;}
+  body>section.mmx-mod,body>section.card{padding:15px 16px;border-radius:14px;}
+  .nav{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
 </style>
 </head>
 <body>
@@ -54,8 +116,8 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
   <h1>《滚雪球：巴菲特和他的财富人生（套装共2册）》</h1>
   <div class="chips"><span class="chip">通读 + 精读</span><span class="chip">AI领读</span><span class="chip">AI 生产</span></div>
 </header>
-<nav class="nav"><a class="navlink" href="#mod-svg">全书结构导图</a><a class="navlink" href="#mod-oneline">一句话主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a><a class="navlink" href="#mod-aiask">AI 问书</a><a class="navlink" href="#mod-coreask">核心追问</a><a class="navlink" href="#mod-higher">更高维度</a><a class="navlink" href="#mod-verify">阅读验证</a><a class="navlink" href="#mod-thennow">当年与今天</a></nav>
-<section class="mmx-svgwrap" id="mod-svg">
+<nav class="nav"><a class="navlink" href="#mod-svg">结构导图</a><a class="navlink" href="#mod-oneline">核心主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a><a class="navlink" href="#mod-aiask">AI 问书</a><a class="navlink" href="#mod-coreask">核心追问</a><a class="navlink" href="#mod-higher">更高维度</a><a class="navlink" href="#mod-verify">阅读验证</a><a class="navlink" href="#mod-thennow">往日今时</a></nav>
+<section class="mmx-svgwrap" id="mod-svg"><h2>结构导图</h2>
 <svg class="mmx-svg" viewBox="0 0 1120 654" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="滚雪球：巴菲特和他的财富人生（套装共2册） 全书精读">
 <rect x="0" y="0" width="1120" height="654" fill="none"/>
 <style>.mmx-svg text{font-family:"Noto Serif SC",Georgia,serif}.mmx-svg .t1{font-size:15px;fill:#2f2a24;font-weight:600}.mmx-svg .t2{font-size:12px;fill:#5c5347}.mmx-svg .t3{font-size:10.5px;fill:#8a8272}.mmx-svg .rt{font-size:13px;fill:#f7f3ea;font-weight:600}.mmx-svg .ln{stroke:#cfc6b4;stroke-width:1.4;fill:none}</style>
@@ -127,7 +189,7 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
 <text class="t2" x="714" y="553">含「57 传神谕者」至「资料搜集说明」</text>
 <path class="ln" d="M692 557 L700 557"/>
 </svg></section>
-<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">一句话主旨</h2><p class="mmx-mod-note">本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。</p><p class="mmx-oneline">《滚雪球：巴菲特和他的财富人生（套装共2册）》共 63 章，按章序折成 9 段主干（第 1–7 章、第 8–14 章、第 15–21 章）；每章的要点与原句均逐字取自本书 AI 大纲，未做人工解读。</p></section>
+<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">核心主旨</h2><p class="mmx-oneline">《滚雪球：巴菲特和他的财富人生（套装共2册）》共 63 章，按章序折成 9 段主干（第 1–7 章、第 8–14 章、第 15–21 章）；每章的要点与原句均逐字取自本书 AI 大纲，未做人工解读。</p></section>
 <section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" id="mod-merged_guide"><h2 id="merged-guide-title">AI领读</h2>
 <style>
 /* merged_guide 章内：AI 大纲原生深层样式 */
@@ -6623,12 +6685,12 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
       </div></details>
   </div>
 </section>
-<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点初判</h2><p class="mmx-mod-note">按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。</p><ul class="mmx-views"><li><b>第 1–7 章</b>——含「1 不作逢迎」至「7 休战纪念日」</li><li><b>第 8–14 章</b>——含「8 1 000招」至「14 大象」</li><li><b>第 15–21 章</b>——含「15 面试」至「21 真正的玩家」</li><li><b>第 22–28 章</b>——含「22 隐藏的光辉」至「28 干燥的火种」</li><li><b>第 29–35 章</b>——含「29 毛料是什么」至「35 《奥马哈太阳报》」</li><li><b>第 36–42 章</b>——含「36 两只落汤鸡」至「42 最高荣誉」</li><li><b>第 43–49 章</b>——含「43 法老王」至「49 愤怒的众神」</li><li><b>第 50–56 章</b>——含「50 卵巢彩票」至「56 富人统治、富人享受」</li><li><b>第 57–63 章</b>——含「57 传神谕者」至「资料搜集说明」</li></ul></section>
-<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句 · 持续积累</h2><p class="mmx-mod-note">以下原句取自本书大纲落库的原文摘录，按大纲顺序节选，非 AI 生成；更多见逐章深读页。</p><ol class="mmx-qlist"><li><blockquote>「他那件价值不菲的杰尼亚上装肩膀处打着褶儿，像是批量生产出来的便宜货。」</blockquote><cite>1 不作逢迎</cite></li><li><blockquote>「他穿着一件普普通通的白衬衣，衬衣领子太小，将脖子勒得紧紧的，领结与领口不太贴合。」</blockquote><cite>1 不作逢迎</cite></li><li><blockquote>「办公室外面的走廊上，内布拉斯加玉米剥皮者橄榄球队的照片、他参演一部肥皂剧所得的薪水支票、他购买长期资本管理公司对冲基金的报价书(对方未接受)和可口可乐纪念品四处摆放。」</blockquote><cite>1 不作逢迎</cite></li><li><blockquote>「巴菲特的投资观点是“当我的观点和他人不同的时候，选择不太讨巧的那个”」</blockquote><cite>1 不作逢迎</cite></li><li><blockquote>「巴菲特给我上了很多课，最精彩的一些来自我对他的观察。第一堂课就是：以谦卑之态屈人之兵。」</blockquote><cite>1 不作逢迎</cite></li><li><blockquote>「巴菲特认为，每一笔财富的背后都隐藏着一桩罪恶，但伯克希尔绝非如此」</blockquote><cite>1 不作逢迎</cite></li><li><blockquote>「巴菲特乘坐湾流IV型飞机去全美各地，经常参加名人聚会」</blockquote><cite>2 太阳谷</cite></li><li><blockquote>「巴菲特的心情很轻松，几周之前，他就期待着这次旅行。」</blockquote><cite>2 太阳谷</cite></li><li><blockquote>「巴菲特一家在飞机上玩闹、看电视和打电话，乘务员则在枫木餐桌上铺好桌布，摆好插满兰花的花瓶，然后回厨房准备午饭。」</blockquote><cite>2 太阳谷</cite></li><li><blockquote>「巴菲特在太阳谷的住所是赫伯特·艾伦安置其贵宾的地方」</blockquote><cite>2 太阳谷</cite></li></ol></section>
-<section class="mmx-mod" aria-labelledby="aiask" id="mod-aiask"><h2 id="aiask">AI 问书</h2><p class="mmx-mod-note">下方内容为本书级 AI 问书整理，由云端 AI 阅读流程基于本书大纲、章节锚点与热门划线生成。</p><div class="mmx-qa"><p class="mmx-q">如果让巴菲特用一句话回答「你为什么不住在纽约」，书里能找到什么答案？</p><p class="mmx-a">第一章「不作逢迎」给了线索：他坐在父亲霍华德那张简陋木桌后面，办公室堆着可口可乐纪念品、1952 年 1 月的戴尔·卡内基演讲课证书、富国银行运钞马车模型和一只人造荧光树脂棒球手套。奥马哈不是避世，是主动降低外部记分卡的采样频率——离报价远一点，就少被别人的价格牵着走。</p></div><div class="mmx-qa"><p class="mmx-q">这本书里哪些细节最不适合被当成成功学来模仿？</p><p class="mmx-a">第十章「犯罪行为实录」写他的叛逆与偷窃；第十二章写他花 1 200 美元买 40 英亩农场，让农户去种、利润共享——「由其他人来做那些会让人汗水淋漓的无聊工作」；612 人划的那条更直接：不愿为他人的资金负责，除非非常确信会成功。这些是性格与特殊位置的产物，是约束条件，不是操作步骤。</p></div><div class="mmx-qa"><p class="mmx-q">1999 年太阳谷那场演讲，为什么是全书的关键节点？</p><p class="mmx-a">因为那是他三十年里第一次公开预言。第二章写他批评 IT 股泡沫，核心论点只有一句：股票市场的最终价格只反映经济的产出。听众里有比尔·盖茨、安迪·格鲁夫，他说完还反问「现在，还有没有什么人没被我挖苦到」。泡沫在那之后还要再涨几个月才破——这正好检验他能不能扛住被嘲笑的时间，而不只是判断对错。</p></div></section>
-<section class="mmx-mod" aria-labelledby="coreask" id="mod-coreask"><h2 id="coreask">核心追问（来自深读）</h2><p class="mmx-mod-note">跨章主题的深读追问，由云端 AI 阅读流程基于全书大纲、章节锚点与热门划线撰写；逐章的追问收在每个章条目里。</p><div class="mmx-qa"><p class="mmx-q">施罗德写的是投资，为什么却用「传道冲动」「浴缸障碍赛」这样的章名，花好几章去写祖父的杂货店和父亲的股票经纪行？</p><p class="mmx-a">因为她要证明的是性格先于方法。第五章写泽布隆·巴菲特记录家族吝啬、欧内斯特的经营策略，一路落到霍华德与利拉的婚姻，才有了「花的比挣的少」加「不借债」这条家训（这条划线有 616 人）。若从投资案例写起，读者只会问「买了什么」；从家族写起，读者才会问「他为什么能不花」。前者可模仿，后者不可。</p></div><div class="mmx-qa"><p class="mmx-q">「内部记分卡」被当成全书的价值主轴，它的边界在哪里？</p><p class="mmx-a">1638 人划的那条说得很绝对：父亲是「百分之百」的内部记分卡使用者。但同一本书第三章「习惯性动物」又写巴菲特和芒格「都有布道的冲动」——作演讲、写评论、上电视纪录片、让记者跟着旅行、去大学开课。这些都是在争取外部评价。更准确的说法是：内部记分卡不是不要外部反馈，而是先有一套自己的算法，再拿外部结果去校准，顺序不能倒。</p></div><div class="mmx-qa"><p class="mmx-q">这本书宣传的「方法很简单」，最大反例是什么？</p><p class="mmx-a">作者自己把反例写进去了：1200 人划的那句「他说他最喜欢奥马哈、汉堡和节俭的生活……为什么没有人能够复制呢」。可复制的只是纪律——安全边际、「如果他不能约束风险，那就会放弃可能的财富」（608 人划线）；不可复制的是条件：保险浮存金、超长期资金、以及他出生与积累的特定年代。1800 人划的那句「钱可以让我独立」，前提是已经先有了钱。</p></div></section>
-<section class="mmx-mod" aria-labelledby="higher" id="mod-higher"><h2 id="higher">用更高维度的知识看这本书</h2><p class="mmx-mod-note">下方内容由云端 AI 阅读流程生成：把本书放回知识史与理论框架中重读，区分书中主张、外部证据与综合分析。</p><p>【书中主张】传记把巴菲特放进格雷厄姆—费雪—芒格这条谱系：安全边际、延迟消费（793 人划线把投资拆成「想要多少回报」和「想什么时间得到」）、以及「短期内市场是投票器，长期是称重器」（840 人划线）都源自格雷厄姆。【外部证据】「投票器／称重器」的确切表述出自格雷厄姆，而凯恩斯在《就业、利息和货币通论》第十二章用报纸选美竞赛比喻长期预期，两者都强调价格与价值可以长期分离。【综合分析】施罗德真正做的是一部「性格谱系学」：她把节俭、复利、延迟满足放进马克斯·韦伯《新教伦理与资本主义精神》的延长线上，只是把加尔文宗的「天职」替换成了「记分卡」——宗教性的自我审查变成世俗的记账习惯。这也解释了为什么「每一分钱都是雪球的一片小雪花」（744 人划线）既是理财箴言，也是道德箴言。</p><p>【书中主张】巴菲特的存在本身被用来证明市场可以被战胜。【外部证据】但法马—弗伦奇的多因子模型把股票超额收益分解为价值、盈利、投资与杠杆等因子，后来的多项研究据此把伯克希尔的长期超额收益重述为「低价买入高质量资产＋低成本长期杠杆」的组合，而不是单纯的选股天赋；「存活者偏差」也提醒我们，同期采用类似策略的人里，被记住的只有活下来的那些。【综合分析】两种说法并不冲突：这本书提供的是约束条件（能力圈、安全边际、不借债），因子研究提供的是收益分解。读者能迁移的是前者——尤其是不放弃安全边际（608 人划线）这种把「不做」也算作决策的习惯，而不是后者的收益率。</p></section>
-<section class="mmx-mod" aria-labelledby="verify" id="mod-verify"><h2 id="verify">阅读时要验证的问题</h2><p class="mmx-mod-note">下方由云端 AI 阅读流程生成：读时需核对的原文、数字与论点（关键数据出处、个案代表性、类比限度）。</p><ul class="mmx-views"><li>太阳谷演讲：书中称这是「30 年时间里他发出的首次预言」，需核对演讲的确切日期（一般记为 1999 年 7 月艾伦公司年会）与原始报道出处；流传的文本多经转述，宜核对艾伦公司年会记录与当时财经媒体的现场报道。</li><li>数字与译本：书中「1 200 美元买一个 40 英亩的农场」、早期送报收入、合伙公司年代的收益率等数据，需核对英文原版 Snowball（Alice Schroeder）的对应页码；中文版为套装两册，章序与英文版分卷不同，引用时最好同时注明英文版章节名。</li><li>作者立场偏差：施罗德是巴菲特本人选定的授权传记作者，材料大量来自巴菲特口述及其家人、芒格的访谈；书中对购买长期资本管理公司（LTCM）报价被拒一节、对家庭关系与财产安排的叙述，属于单方授权视角，宜与《巴菲特致股东的信》、芒格的公开演讲与第三方报道对读。</li></ul></section>
-<section class="mmx-mod" aria-labelledby="thennow" id="mod-thennow"><h2 id="thennow">当年与今天 · 初步对照</h2><p class="mmx-mod-note">下方由云端 AI 阅读流程生成：区分作者当年所能知晓与后来才显现的事实，给出今日可迁移的启发。</p><p>【作者当年所能知晓】施罗德成书于 2008 年前后，她能看到的是：1999 年演讲之后的互联网泡沫破裂、1998 年长期资本管理公司危机，以及正在展开的金融危机。所以「30 年首次预言」在书中是被验证过的判断，不是事后追认。【后来才显现】此后十余年，伯克希尔的持仓结构从可口可乐、富国银行这类「消费品＋金融」转向苹果与能源，又在 2020 年代把现金储备推到高位——具体数字与时间点需按最新年报核对，而它们共同说明一件事：能力圈的边界是被他自己改过的，不是先天给定的。</p><p>【今天可迁移的启发】三条不依赖时代。一是「延迟消费」的框架（793 人划线）：先回答「想要多少回报、什么时候要」，再谈买什么。二是把「不借债」「花的比挣的少」（616 人划线）当作风险约束而不是致富手段——它们是防守条款。三是 1050 人划的那条「与比你优秀的人待在一起是一件很有收获的事」：这是本书少有的、可立即执行且不以资本为前提的建议。至于「不投看不懂的行业」这条原则，后来被苹果这笔投资修订过，读者应把它当作能力圈原则的例子，而不是具体行业的禁忌。</p></section>
+<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点</h2><ul class="mmx-views"><li><b>第 1–7 章</b>——含「1 不作逢迎」至「7 休战纪念日」</li><li><b>第 8–14 章</b>——含「8 1 000招」至「14 大象」</li><li><b>第 15–21 章</b>——含「15 面试」至「21 真正的玩家」</li><li><b>第 22–28 章</b>——含「22 隐藏的光辉」至「28 干燥的火种」</li><li><b>第 29–35 章</b>——含「29 毛料是什么」至「35 《奥马哈太阳报》」</li><li><b>第 36–42 章</b>——含「36 两只落汤鸡」至「42 最高荣誉」</li><li><b>第 43–49 章</b>——含「43 法老王」至「49 愤怒的众神」</li><li><b>第 50–56 章</b>——含「50 卵巢彩票」至「56 富人统治、富人享受」</li><li><b>第 57–63 章</b>——含「57 传神谕者」至「资料搜集说明」</li></ul></section>
+<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句</h2><ol class="mmx-qlist"><li><blockquote>「他那件价值不菲的杰尼亚上装肩膀处打着褶儿，像是批量生产出来的便宜货。」</blockquote><cite>1 不作逢迎</cite></li><li><blockquote>「他穿着一件普普通通的白衬衣，衬衣领子太小，将脖子勒得紧紧的，领结与领口不太贴合。」</blockquote><cite>1 不作逢迎</cite></li><li><blockquote>「办公室外面的走廊上，内布拉斯加玉米剥皮者橄榄球队的照片、他参演一部肥皂剧所得的薪水支票、他购买长期资本管理公司对冲基金的报价书(对方未接受)和可口可乐纪念品四处摆放。」</blockquote><cite>1 不作逢迎</cite></li><li><blockquote>「巴菲特的投资观点是“当我的观点和他人不同的时候，选择不太讨巧的那个”」</blockquote><cite>1 不作逢迎</cite></li><li><blockquote>「巴菲特给我上了很多课，最精彩的一些来自我对他的观察。第一堂课就是：以谦卑之态屈人之兵。」</blockquote><cite>1 不作逢迎</cite></li><li><blockquote>「巴菲特认为，每一笔财富的背后都隐藏着一桩罪恶，但伯克希尔绝非如此」</blockquote><cite>1 不作逢迎</cite></li><li><blockquote>「巴菲特乘坐湾流IV型飞机去全美各地，经常参加名人聚会」</blockquote><cite>2 太阳谷</cite></li><li><blockquote>「巴菲特的心情很轻松，几周之前，他就期待着这次旅行。」</blockquote><cite>2 太阳谷</cite></li><li><blockquote>「巴菲特一家在飞机上玩闹、看电视和打电话，乘务员则在枫木餐桌上铺好桌布，摆好插满兰花的花瓶，然后回厨房准备午饭。」</blockquote><cite>2 太阳谷</cite></li><li><blockquote>「巴菲特在太阳谷的住所是赫伯特·艾伦安置其贵宾的地方」</blockquote><cite>2 太阳谷</cite></li></ol></section>
+<section class="mmx-mod" aria-labelledby="aiask" id="mod-aiask"><h2 id="aiask">AI 问书</h2><div class="mmx-qa"><p class="mmx-q">如果让巴菲特用一句话回答「你为什么不住在纽约」，书里能找到什么答案？</p><p class="mmx-a">第一章「不作逢迎」给了线索：他坐在父亲霍华德那张简陋木桌后面，办公室堆着可口可乐纪念品、1952 年 1 月的戴尔·卡内基演讲课证书、富国银行运钞马车模型和一只人造荧光树脂棒球手套。奥马哈不是避世，是主动降低外部记分卡的采样频率——离报价远一点，就少被别人的价格牵着走。</p></div><div class="mmx-qa"><p class="mmx-q">这本书里哪些细节最不适合被当成成功学来模仿？</p><p class="mmx-a">第十章「犯罪行为实录」写他的叛逆与偷窃；第十二章写他花 1 200 美元买 40 英亩农场，让农户去种、利润共享——「由其他人来做那些会让人汗水淋漓的无聊工作」；612 人划的那条更直接：不愿为他人的资金负责，除非非常确信会成功。这些是性格与特殊位置的产物，是约束条件，不是操作步骤。</p></div><div class="mmx-qa"><p class="mmx-q">1999 年太阳谷那场演讲，为什么是全书的关键节点？</p><p class="mmx-a">因为那是他三十年里第一次公开预言。第二章写他批评 IT 股泡沫，核心论点只有一句：股票市场的最终价格只反映经济的产出。听众里有比尔·盖茨、安迪·格鲁夫，他说完还反问「现在，还有没有什么人没被我挖苦到」。泡沫在那之后还要再涨几个月才破——这正好检验他能不能扛住被嘲笑的时间，而不只是判断对错。</p></div></section>
+<section class="mmx-mod" aria-labelledby="coreask" id="mod-coreask"><h2 id="coreask">核心追问</h2><div class="mmx-qa"><p class="mmx-q">施罗德写的是投资，为什么却用「传道冲动」「浴缸障碍赛」这样的章名，花好几章去写祖父的杂货店和父亲的股票经纪行？</p><p class="mmx-a">因为她要证明的是性格先于方法。第五章写泽布隆·巴菲特记录家族吝啬、欧内斯特的经营策略，一路落到霍华德与利拉的婚姻，才有了「花的比挣的少」加「不借债」这条家训（这条划线有 616 人）。若从投资案例写起，读者只会问「买了什么」；从家族写起，读者才会问「他为什么能不花」。前者可模仿，后者不可。</p></div><div class="mmx-qa"><p class="mmx-q">「内部记分卡」被当成全书的价值主轴，它的边界在哪里？</p><p class="mmx-a">1638 人划的那条说得很绝对：父亲是「百分之百」的内部记分卡使用者。但同一本书第三章「习惯性动物」又写巴菲特和芒格「都有布道的冲动」——作演讲、写评论、上电视纪录片、让记者跟着旅行、去大学开课。这些都是在争取外部评价。更准确的说法是：内部记分卡不是不要外部反馈，而是先有一套自己的算法，再拿外部结果去校准，顺序不能倒。</p></div><div class="mmx-qa"><p class="mmx-q">这本书宣传的「方法很简单」，最大反例是什么？</p><p class="mmx-a">作者自己把反例写进去了：1200 人划的那句「他说他最喜欢奥马哈、汉堡和节俭的生活……为什么没有人能够复制呢」。可复制的只是纪律——安全边际、「如果他不能约束风险，那就会放弃可能的财富」（608 人划线）；不可复制的是条件：保险浮存金、超长期资金、以及他出生与积累的特定年代。1800 人划的那句「钱可以让我独立」，前提是已经先有了钱。</p></div></section>
+<section class="mmx-mod" aria-labelledby="higher" id="mod-higher"><h2 id="higher">更高维度</h2><p>【书中主张】传记把巴菲特放进格雷厄姆—费雪—芒格这条谱系：安全边际、延迟消费（793 人划线把投资拆成「想要多少回报」和「想什么时间得到」）、以及「短期内市场是投票器，长期是称重器」（840 人划线）都源自格雷厄姆。【外部证据】「投票器／称重器」的确切表述出自格雷厄姆，而凯恩斯在《就业、利息和货币通论》第十二章用报纸选美竞赛比喻长期预期，两者都强调价格与价值可以长期分离。【综合分析】施罗德真正做的是一部「性格谱系学」：她把节俭、复利、延迟满足放进马克斯·韦伯《新教伦理与资本主义精神》的延长线上，只是把加尔文宗的「天职」替换成了「记分卡」——宗教性的自我审查变成世俗的记账习惯。这也解释了为什么「每一分钱都是雪球的一片小雪花」（744 人划线）既是理财箴言，也是道德箴言。</p><p>【书中主张】巴菲特的存在本身被用来证明市场可以被战胜。【外部证据】但法马—弗伦奇的多因子模型把股票超额收益分解为价值、盈利、投资与杠杆等因子，后来的多项研究据此把伯克希尔的长期超额收益重述为「低价买入高质量资产＋低成本长期杠杆」的组合，而不是单纯的选股天赋；「存活者偏差」也提醒我们，同期采用类似策略的人里，被记住的只有活下来的那些。【综合分析】两种说法并不冲突：这本书提供的是约束条件（能力圈、安全边际、不借债），因子研究提供的是收益分解。读者能迁移的是前者——尤其是不放弃安全边际（608 人划线）这种把「不做」也算作决策的习惯，而不是后者的收益率。</p></section>
+<section class="mmx-mod" aria-labelledby="verify" id="mod-verify"><h2 id="verify">阅读验证</h2><ul class="mmx-views"><li>太阳谷演讲：书中称这是「30 年时间里他发出的首次预言」，需核对演讲的确切日期（一般记为 1999 年 7 月艾伦公司年会）与原始报道出处；流传的文本多经转述，宜核对艾伦公司年会记录与当时财经媒体的现场报道。</li><li>数字与译本：书中「1 200 美元买一个 40 英亩的农场」、早期送报收入、合伙公司年代的收益率等数据，需核对英文原版 Snowball（Alice Schroeder）的对应页码；中文版为套装两册，章序与英文版分卷不同，引用时最好同时注明英文版章节名。</li><li>作者立场偏差：施罗德是巴菲特本人选定的授权传记作者，材料大量来自巴菲特口述及其家人、芒格的访谈；书中对购买长期资本管理公司（LTCM）报价被拒一节、对家庭关系与财产安排的叙述，属于单方授权视角，宜与《巴菲特致股东的信》、芒格的公开演讲与第三方报道对读。</li></ul></section>
+<section class="mmx-mod" aria-labelledby="thennow" id="mod-thennow"><h2 id="thennow">往日今时</h2><p>【作者当年所能知晓】施罗德成书于 2008 年前后，她能看到的是：1999 年演讲之后的互联网泡沫破裂、1998 年长期资本管理公司危机，以及正在展开的金融危机。所以「30 年首次预言」在书中是被验证过的判断，不是事后追认。【后来才显现】此后十余年，伯克希尔的持仓结构从可口可乐、富国银行这类「消费品＋金融」转向苹果与能源，又在 2020 年代把现金储备推到高位——具体数字与时间点需按最新年报核对，而它们共同说明一件事：能力圈的边界是被他自己改过的，不是先天给定的。</p><p>【今天可迁移的启发】三条不依赖时代。一是「延迟消费」的框架（793 人划线）：先回答「想要多少回报、什么时候要」，再谈买什么。二是把「不借债」「花的比挣的少」（616 人划线）当作风险约束而不是致富手段——它们是防守条款。三是 1050 人划的那条「与比你优秀的人待在一起是一件很有收获的事」：这是本书少有的、可立即执行且不以资本为前提的建议。至于「不投看不懂的行业」这条原则，后来被苹果这笔投资修订过，读者应把它当作能力圈原则的例子，而不是具体行业的禁忌。</p></section>
 </body>
 </html>

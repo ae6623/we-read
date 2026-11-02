@@ -6,46 +6,108 @@
 <title>《大话中国艺术史（全新修订版）》｜通读 · 精读</title>
 <link rel="stylesheet" href="../../../assets/css/reading-overview.css"><link rel="stylesheet" href="../../../assets/css/mmx-guide.css"><link rel="stylesheet" href="../../../assets/css/reading-outline.css">
 <style>
-/* 合并页外壳 */
-body{max-width:960px;margin:0 auto;padding:0 18px 80px;}
-.combined-head{padding:34px 0 18px;border-bottom:1px solid #e7e0d2;margin-bottom:8px;}
-.combined-head h1{font-size:26px;margin:0 0 10px;}
+/* ── 外壳与全局阅读节奏 ── */
+body{max-width:880px;margin:0 auto;padding:0 18px 80px;
+  font-size:15px;line-height:1.88;color:#3b453e;background:#f7f8f3;
+  -webkit-font-smoothing:antialiased;}
+.combined-head{padding:30px 0 16px;border-bottom:1px solid #e7e0d2;margin-bottom:4px;}
+.combined-head h1{font:700 23px/1.35 var(--serif);margin:0 0 8px;color:#244b40;}
+.combined-head .eyebrow{font-size:.72rem;letter-spacing:.14em;margin:0 0 6px;}
+.chips{margin:8px 0 0;}
+.chip{font-size:.72rem;padding:2px 10px;}
 /* 锚点导航：固定一排 4 个，等宽对齐 */
-.nav{position:sticky;top:0;z-index:20;background:rgba(255,253,248,.96);backdrop-filter:blur(6px);
-  border-bottom:1px solid #ece4d4;padding:10px 0;margin:14px 0 26px;display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;
-  box-shadow:0 2px 10px rgba(120,100,60,.06);}
-.navlink{font-size:12.5px;color:#5d5443;text-decoration:none;background:#f6f1e6;border:1px solid #e7ddca;
-  border-radius:7px;padding:4px 6px;text-align:center;white-space:nowrap;overflow:hidden;
-  text-overflow:ellipsis;}
-section{scroll-margin-top:64px;}
-/* 一句话主旨：去左侧竖线 */
-.mmx-oneline{border-left:none;padding-left:18px;}
-/* AI领读章内：AI 大纲原生深层样式 */
-.merged-guide .sec{margin:10px 0 14px;padding-left:6px;border-left:2px solid #e5e0d6}
-.merged-guide .sec h4{font:600 .98rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.6em 0 .3em}
-.merged-guide ul.point{margin:.3em 0;padding-left:20px}
-.merged-guide ul.point>li{margin:.35em 0}
-.merged-guide ul.quote{margin:.25em 0 .25em 20px;padding-left:18px;list-style:none}
-.merged-guide ul.quote::before{content:"原句";display:block;font-size:.72rem;color:#bf8247;
-  letter-spacing:.1em;margin:.15em 0 .1em;font-weight:600}
-.merged-guide ul.quote.quote-node{margin-top:.5em;padding-top:.4em;border-top:1px dashed #eadfc9}
+.nav{position:sticky;top:0;z-index:20;background:rgba(247,248,243,.96);backdrop-filter:blur(6px);
+  border-bottom:1px solid #ece4d4;padding:10px 0;margin:12px 0 20px;display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;
+  box-shadow:0 2px 10px rgba(120,100,60,.05);}
+.navlink{font-size:12px;color:#5d5443;text-decoration:none;background:#fdfbf3;border:1px solid #e8e2d2;
+  border-radius:8px;padding:6px 4px;text-align:center;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;transition:background .15s,color .15s;}
+.navlink:hover{background:#f2efe2;color:#244b40;}
+section{scroll-margin-top:62px;}
+
+/* ── 统一卡片：所有顶层模块（AI领读 / AI 问答 / 其余）一视同仁 ── */
+body>section.mmx-mod,body>section.card,body>section.mmx-svgwrap{
+  background:#fffdf6;border:1px solid #e8e4d5;border-radius:16px;
+  padding:18px 22px;margin:18px 0;
+  box-shadow:0 1px 3px rgba(110,95,60,.05);}
+body>section.mmx-mod>*:first-child,body>section.card>*:first-child,
+body>section.mmx-svgwrap>*:first-child{margin-top:0}
+body>section.mmx-mod>*:last-child,body>section.card>*:last-child,
+body>section.mmx-svgwrap>*:last-child{margin-bottom:0}
+/* 结构导图：图本身留白居中，不与正文抢宽 */
+body>section.mmx-svgwrap>svg.mmx-svg{display:block;width:100%;height:auto;margin:2px auto 0;}
+/* 模块标题：统一大小、弱强调，不与正文抢注意力 */
+body>section.mmx-mod>h2,body>section.card>h2{
+  font:700 1.04rem/1.5 var(--serif);color:#244b40;margin:0 0 11px;
+  padding-left:10px;border-left:3px solid #bf8247;letter-spacing:.01em;}
+/* 正文：字号收小、行距放宽、段间距舒服 */
+body>section.mmx-mod p,body>section.card p,
+body>section.mmx-mod li,body>section.card li{
+  font-size:.9rem;line-height:1.92;color:#4a4436;}
+body>section.mmx-mod p,body>section.card p{margin:.5em 0;}
+body>section.mmx-mod>ul,body>section.mmx-mod>ol,body>section.mmx-mod>div,
+body>section.mmx-mod>p:not(.mmx-mod-note),
+body>section.card:not(.merged-guide)>ul,body>section.card:not(.merged-guide)>ol,
+body>section.card:not(.merged-guide)>div,body>section.card:not(.merged-guide)>p:not(.mmx-mod-note){
+  padding-left:14px;}
+/* 模块说明小字：弱化不抢眼 */
+.mmx-mod-note{font-size:.75rem;color:#8d8878;margin:.1em 0 .75em;line-height:1.7;}
+
+/* ── 内部块统一：卡片里不再套深卡片，一律浅底子块 ── */
+body>section .mmx-pending,body>section .mmx-evib,body>section .aiqa-item{
+  background:#fbfaf2;border:1px solid #eee9d8;border-radius:12px;
+  padding:13px 16px;margin:.65em 0;}
+body>section .mmx-evib ul{padding-left:1.15em;}
+/* 一句话主旨：去左侧竖线 + 收敛字号 */
+.mmx-oneline{font-size:.98rem;line-height:1.85;color:#3a352c;margin:.2em 0 0;
+  padding:12px 16px;background:#fbfaf4;border-left:none;border-radius:12px;}
+/* 核心观点 / 验证清单：虚线分隔 + 收紧行距 */
+.mmx-views li{padding:.5em 0 .5em 0;font-size:.9rem;line-height:1.88;}
+/* 原文金句 */
+.mmx-qlist li{padding:.6em 0 .6em 2.2em;}
+.mmx-qlist blockquote{font-size:.89rem;line-height:1.9;}
+.mmx-qlist cite{font-size:.72rem;}
+/* 核心追问：问句加重、答句放松 */
+.mmx-qa{margin:.7em 0;padding-left:12px;border-left:3px solid #e5dfcd;}
+.mmx-qa .mmx-q{font-size:.9rem;font-weight:700;color:#2f3a33;line-height:1.8;margin:0 0 .25em;}
+.mmx-qa .mmx-a{font-size:.88rem;line-height:1.95;color:#4a4436;margin:0;}
+
+/* ── AI 问书专项：外层容器透明，问答条目才是阅读单元 ── */
+#mod-aiask .mmx-ask{background:transparent;border:0;border-radius:0;padding:0;margin:0;}
+#mod-aiask .aiqa-item{margin:.6em 0;padding:14px 16px 15px;}
+#mod-aiask .aiqa-item h3{font:700 .93rem/1.7 var(--serif);color:#2f5b49;margin:0 0 .4em;
+  padding:0;border:0;}
+#mod-aiask .aiqa-item h3:before{content:"问　";color:#bf8247;font-weight:700;}
+#mod-aiask .aiqa-item p{font-size:.88rem;line-height:1.95;color:#4a4436;margin:.4em 0;}
+#mod-aiask .aiqa-item ul{margin:.35em 0;padding-left:1.1em;}
+#mod-aiask .aiqa-item li{font-size:.87rem;line-height:1.88;margin:.18em 0;color:#4a4436;}
+#mod-aiask .aiqa-item li::marker{color:#c0a06a;}
+/* 逐章追问（details 形态）：摘要行也收敛 */
+.mmx-ask>summary{font-size:.87rem;line-height:1.7;padding:2px 0;}
+.mmx-askbody{font-size:.88rem;line-height:1.9;}
+
+/* AI领读章内：AI 大纲原生深层样式（字号同步收小） */
+.merged-guide .sec{margin:9px 0 12px;padding-left:6px;border-left:2px solid #e5e0d6}
+.merged-guide .sec h4{font:600 .93rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.5em 0 .25em}
+.merged-guide ul.point{margin:.25em 0;padding-left:20px}
+.merged-guide ul.point>li{margin:.3em 0}
+.merged-guide ul.quote{margin:.22em 0 .22em 20px;padding-left:18px;list-style:none}
+.merged-guide ul.quote::before{content:"原句";display:block;font-size:.7rem;color:#bf8247;
+  letter-spacing:.1em;margin:.12em 0 .08em;font-weight:600}
+.merged-guide ul.quote.quote-node{margin-top:.45em;padding-top:.35em;border-top:1px dashed #eadfc9}
 .merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
-.merged-guide ul.quote>li{color:#4a4436;font-size:.93rem;margin:.2em 0;padding-left:10px;border-left:2px solid #bf8247}
-/* 模块内子内容（AI领读除外，它有专属深层样式）：左缩进 + 正文与标题分层 */
-section.mmx-mod>ul,section.mmx-mod>ol,section.mmx-mod>div,
-section.mmx-mod>p:not(.mmx-mod-note),
-section.card:not(.merged-guide)>ul,section.card:not(.merged-guide)>ol,
-section.card:not(.merged-guide)>div,section.card:not(.merged-guide)>p:not(.mmx-mod-note){
-  padding-left:16px;}
-section.mmx-mod li,section.mmx-mod p:not(.mmx-mod-note),
-section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mod-note){
-  color:#4a4436;font-size:.93rem;line-height:1.78;}
+.merged-guide ul.quote>li{color:#4a4436;font-size:.88rem;line-height:1.85;margin:.18em 0;padding-left:10px;border-left:2px solid #bf8247}
 /* 核心观点初判：外链 mmx-guide.css 的「观点N」前缀是绝对定位，在本页版式里和标题叠字，
    且此前要求去掉「观点1/2/3」前缀 —— 这里整条关掉（外链 CSS 不在页面内，只能内联覆盖）。 */
 .mmx-views li{padding-left:0 !important;}
 .mmx-views li:before,.mmx-views li::before{
   content:none !important;display:none !important;counter-increment:none !important;}
+@media(max-width:720px){
+  body{padding:0 12px 60px;font-size:14.5px;}
+  body>section.mmx-mod,body>section.card{padding:15px 16px;border-radius:14px;}
+  .nav{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
 </style>
 </head>
 <body>
@@ -54,8 +116,8 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
   <h1>《大话中国艺术史（全新修订版）》</h1>
   <div class="chips"><span class="chip">通读 + 精读</span><span class="chip">AI领读</span><span class="chip">AI 生产</span></div>
 </header>
-<nav class="nav"><a class="navlink" href="#mod-svg">全书结构导图</a><a class="navlink" href="#mod-oneline">一句话主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a></nav>
-<section class="mmx-svgwrap" id="mod-svg">
+<nav class="nav"><a class="navlink" href="#mod-svg">结构导图</a><a class="navlink" href="#mod-oneline">核心主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a></nav>
+<section class="mmx-svgwrap" id="mod-svg"><h2>结构导图</h2>
 <svg class="mmx-svg" viewBox="0 0 1120 592" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="大话中国艺术史（全新修订版） 全书精读">
 <rect x="0" y="0" width="1120" height="592" fill="none"/>
 <style>.mmx-svg text{font-family:"Noto Serif SC",Georgia,serif}.mmx-svg .t1{font-size:15px;fill:#2f2a24;font-weight:600}.mmx-svg .t2{font-size:12px;fill:#5c5347}.mmx-svg .t3{font-size:10.5px;fill:#8a8272}.mmx-svg .rt{font-size:13px;fill:#f7f3ea;font-weight:600}.mmx-svg .ln{stroke:#cfc6b4;stroke-width:1.4;fill:none}</style>
@@ -119,11 +181,11 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
 <text class="t2" x="714" y="491">含「写在最后的话」至「《大话中国艺术史》内文质」</text>
 <path class="ln" d="M692 495 L700 495"/>
 </svg></section>
-<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">一句话主旨</h2><p class="mmx-mod-note">本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。</p><p class="mmx-oneline">句句有梗，一口气读完10000年中国艺术史</p></section>
-<section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" id="mod-merged_guide"><h2 id="merged-guide-title">AI领读 · 全书篇目</h2>
+<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">核心主旨</h2><p class="mmx-oneline">句句有梗，一口气读完10000年中国艺术史</p></section>
+<section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" id="mod-merged_guide"><h2 id="merged-guide-title">AI领读</h2>
 <p class="small">本书 AI 大纲目前为章级目录（要点与原句待补全）。以下为全书篇目，大纲补全后将自动升级为「目录 + 骨架 + 要点 + 原句」完整版。</p>
 <ol class="mmx-pts"><li><b>1</b> 序言</li><li><b>2</b> 中国艺术史 最熟悉的陌生人</li><li><b>3</b> 第一章 原始艺术 艺术的开始，是一场意外——好奇与恐惧并存的婴儿期</li><li><b>4</b> 1.1 陶器时代 玩泥巴玩出新境界！</li><li><b>5</b> 1.2 玉器 长得好看还是有用的</li><li><b>6</b> 第二章 青铜时代 是时候展示真正的技术了——孩童时期的探索欲</li><li><b>7</b> 2.1 鼎簋鬲甗簠壶缶豆爵壶 3000年前的吃货太讲究了！</li><li><b>8</b> 2.2 曾侯乙编钟 这个黑科技产物，是给上天听的声音</li><li><b>9</b> 2.3 三星堆 有四方，才有中国</li><li><b>10</b> 第三章 秦汉艺术 让世界记住我！——青春期的第一次成熟</li><li><b>11</b> 3.1 秦陵兵马俑 小人物的伟大</li><li><b>12</b> 3.2 马踏匈奴 少年强则国强</li><li><b>13</b> 3.3 T形帛画 死后的世界长啥样？</li><li><b>14</b> 3.4 漆器 我有金刚不坏之身</li><li><b>15</b> 第四章 魏晋南北朝 兵家不幸诗家幸——青春期的第一次失落</li><li><b>16</b> 4.1 竹林七贤 第一支文人大V天团，出道！</li><li><b>17</b> 4.2 王羲之《兰亭集序》 古人开派对有多嗨</li><li><b>18</b> 4.3 顾恺之《洛神赋图》 年度情感大戏，正在上映</li><li><b>19</b> 4.4 敦煌壁画 跨越千年的国风漫画</li><li><b>20</b> 第五章 隋唐艺术 扶摇直上九万里——三十而立，中国艺术的壮年期</li><li><b>21</b> 5.1 阎立本《步辇图》 美图修修，还你一个大国气象</li><li><b>22</b> 5.2 唐三彩 大唐门面担当，顶流出场了</li><li><b>23</b> 5.3 李白《上阳台帖》 人到中年，职场危机怎么办？</li><li><b>24</b> 5.4 颜真卿《祭侄文稿》 傲然筋骨，足以顶天立地</li><li><b>25</b> 5.5 韩滉《五牛图》 职场保命法则</li><li><b>26</b> 第六章 五代及宋朝艺术 黄金时代，来了！——中国艺术的不惑之年</li><li><b>27</b> 6.1 顾闳中《韩熙载夜宴图》 艺术版的《碟中谍》</li><li><b>28</b> 6.2 范宽《溪山行旅图》 人生，并没有什么大不了！</li><li><b>29</b> 6.3 苏轼《黄州寒食帖》 一般一般，天下第三</li><li><b>30</b> 6.4 宋徽宗 手把手教您怎么开一家艺术学院兼整垮一家上市公司</li><li><b>31</b> 6.5 王希孟《千里江山图》 人生至死是少年！</li><li><b>32</b> 6.6 张择端《清明上河图》 穿越宋朝一日游</li><li><b>33</b> 6.7 汝官哥钧定 古代五大制瓷工厂的内卷历史</li><li><b>34</b> 第七章 元代艺术 危机里，有一朵奇葩正在盛开——中国艺术也有中年危机</li><li><b>35</b> 7.1 赵孟頫 被误解了800年的艺术全才</li><li><b>36</b> 7.2 黄公望《富春山居图》 人生若觉无用时，不如读读黄公望</li><li><b>37</b> 7.3 倪瓒《六君子图》 我就是我，颜色不一样的烟火</li><li><b>38</b> 7.4 元青花 陶瓷界的混血儿，时尚界的弄潮儿</li><li><b>39</b> 第八章 明清艺术 古典艺术最后的辉煌——中国艺术暮年的保守与创新</li><li><b>40</b> 8.1 唐伯虎 真实的唐伯虎原来这么惨！</li><li><b>41</b> 8.2 徐渭 狂，很狂，非常狂</li><li><b>42</b> 8.3 八大山人 世界以痛吻我，给它一个白眼又如何</li><li><b>43</b> 8.4 郑板桥 被画竹子“耽误”的老愤青</li><li><b>44</b> 8.5 郎世宁 洋画家也有春天</li><li><b>45</b> 第九章 近代艺术 我们要到哪里去？——中国艺术的传承与新生</li><li><b>46</b> 9.1 齐白石 平凡人间的烟火气</li><li><b>47</b> 9.2 徐悲鸿 万马齐喑下的万马奔腾</li><li><b>48</b> 9.3 潘玉良 怎一个“飒”字了得</li><li><b>49</b> 9.4 鲁迅 国民第一设计师，不服来战</li><li><b>50</b> 写在最后的话</li><li><b>51</b> 图片索引</li><li><b>52</b> 意外艺术《大话中国艺术史》策划团队</li><li><b>53</b> 《大话中国艺术史》内文质量把控团队</li></ol></section>
-<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点初判</h2><p class="mmx-mod-note">按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。</p><ul class="mmx-views"><li><b>第 1–7 章</b>——含「序言」至「2.1 鼎簋鬲甗簠壶缶豆」</li><li><b>第 8–14 章</b>——含「2.2 曾侯乙编钟 这个」至「3.4 漆器 我有金刚不」</li><li><b>第 15–21 章</b>——含「第四章 魏晋南北朝 兵家」至「5.1 阎立本《步辇图》」</li><li><b>第 22–28 章</b>——含「5.2 唐三彩 大唐门面」至「6.2 范宽《溪山行旅图」</li><li><b>第 29–35 章</b>——含「6.3 苏轼《黄州寒食帖」至「7.1 赵孟頫 被误解了」</li><li><b>第 36–42 章</b>——含「7.2 黄公望《富春山居」至「8.3 八大山人 世界以」</li><li><b>第 43–49 章</b>——含「8.4 郑板桥 被画竹子」至「9.4 鲁迅 国民第一设」</li><li><b>第 50–53 章</b>——含「写在最后的话」至「《大话中国艺术史》内文质」</li></ul></section>
-<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句 · 持续积累</h2><p class="mmx-mod-note">以下原句取自本书 AI 大纲落库的原文摘录（book_outline.quote），按大纲顺序节选，非 AI 生成；更多见逐章深读页。</p><ol class="mmx-qlist"><li><blockquote>「在先民们看来，美，就是吃饱喝足了，整点漂亮事儿。整着整着，他们就觉得自己老幸福了。」</blockquote><cite>本书正文</cite></li><li><blockquote>「王小波说：“一个人只拥有此生此世是不够的，他还应该拥有诗意的世界。”」</blockquote><cite>本书正文</cite></li><li><blockquote>「艺术的开始，其实是个意外。但在这些所谓意外的背后，却有着人类独有的求知欲和探索欲。」</blockquote><cite>本书正文</cite></li><li><blockquote>「死亡不是生命的终点，遗忘才是。」</blockquote><cite>本书正文</cite></li><li><blockquote>「梁晓声先生曾说：“人不但无法选择家庭出身，更无法选择所处的时代。但无论这两点对人多么不利，人仍有选择自己人性坐标的可能，哪怕选择余地很小很小。」</blockquote><cite>本书正文</cite></li><li><blockquote>「中华文明，并不是发源于一地，然后传向四方的，而是从一开始，就如点点繁星，在中华大地各处诞生、发展、绽放光辉。」</blockquote><cite>本书正文</cite></li><li><blockquote>「一切的开始，是为了生存。」</blockquote><cite>本书正文</cite></li><li><blockquote>「为了让这项浩大的工程不出差错，秦国当时沿用了战国中期就开始采用的“物勒工名”制度，就是在兵马俑的身上写下制作工匠的姓名，以便审核验收不过关的时候，可以进行追责。」</blockquote><cite>本书正文</cite></li><li><blockquote>「“黑如漆，亮如镜，薄如纸，硬如瓷，声如磬”，这是考古学家对黑陶的评价，因为它的薄，所以人们也叫它“蛋壳黑陶”。」</blockquote><cite>本书正文</cite></li><li><blockquote>「“若将花酒比车马，彼何碌碌我何闲。别人笑我太疯癫，我笑他人看不穿。”」</blockquote><cite>本书正文</cite></li></ol></section>
+<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点</h2><ul class="mmx-views"><li><b>第 1–7 章</b>——含「序言」至「2.1 鼎簋鬲甗簠壶缶豆」</li><li><b>第 8–14 章</b>——含「2.2 曾侯乙编钟 这个」至「3.4 漆器 我有金刚不」</li><li><b>第 15–21 章</b>——含「第四章 魏晋南北朝 兵家」至「5.1 阎立本《步辇图》」</li><li><b>第 22–28 章</b>——含「5.2 唐三彩 大唐门面」至「6.2 范宽《溪山行旅图」</li><li><b>第 29–35 章</b>——含「6.3 苏轼《黄州寒食帖」至「7.1 赵孟頫 被误解了」</li><li><b>第 36–42 章</b>——含「7.2 黄公望《富春山居」至「8.3 八大山人 世界以」</li><li><b>第 43–49 章</b>——含「8.4 郑板桥 被画竹子」至「9.4 鲁迅 国民第一设」</li><li><b>第 50–53 章</b>——含「写在最后的话」至「《大话中国艺术史》内文质」</li></ul></section>
+<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句</h2><ol class="mmx-qlist"><li><blockquote>「在先民们看来，美，就是吃饱喝足了，整点漂亮事儿。整着整着，他们就觉得自己老幸福了。」</blockquote><cite>本书正文</cite></li><li><blockquote>「王小波说：“一个人只拥有此生此世是不够的，他还应该拥有诗意的世界。”」</blockquote><cite>本书正文</cite></li><li><blockquote>「艺术的开始，其实是个意外。但在这些所谓意外的背后，却有着人类独有的求知欲和探索欲。」</blockquote><cite>本书正文</cite></li><li><blockquote>「死亡不是生命的终点，遗忘才是。」</blockquote><cite>本书正文</cite></li><li><blockquote>「梁晓声先生曾说：“人不但无法选择家庭出身，更无法选择所处的时代。但无论这两点对人多么不利，人仍有选择自己人性坐标的可能，哪怕选择余地很小很小。」</blockquote><cite>本书正文</cite></li><li><blockquote>「中华文明，并不是发源于一地，然后传向四方的，而是从一开始，就如点点繁星，在中华大地各处诞生、发展、绽放光辉。」</blockquote><cite>本书正文</cite></li><li><blockquote>「一切的开始，是为了生存。」</blockquote><cite>本书正文</cite></li><li><blockquote>「为了让这项浩大的工程不出差错，秦国当时沿用了战国中期就开始采用的“物勒工名”制度，就是在兵马俑的身上写下制作工匠的姓名，以便审核验收不过关的时候，可以进行追责。」</blockquote><cite>本书正文</cite></li><li><blockquote>「“黑如漆，亮如镜，薄如纸，硬如瓷，声如磬”，这是考古学家对黑陶的评价，因为它的薄，所以人们也叫它“蛋壳黑陶”。」</blockquote><cite>本书正文</cite></li><li><blockquote>「“若将花酒比车马，彼何碌碌我何闲。别人笑我太疯癫，我笑他人看不穿。”」</blockquote><cite>本书正文</cite></li></ol></section>
 </body>
 </html>

@@ -6,46 +6,108 @@
 <title>《一句顶一万句（2022新版）》｜通读 · 精读</title>
 <link rel="stylesheet" href="../../../assets/css/reading-overview.css"><link rel="stylesheet" href="../../../assets/css/mmx-guide.css"><link rel="stylesheet" href="../../../assets/css/reading-outline.css">
 <style>
-/* 合并页外壳 */
-body{max-width:960px;margin:0 auto;padding:0 18px 80px;}
-.combined-head{padding:34px 0 18px;border-bottom:1px solid #e7e0d2;margin-bottom:8px;}
-.combined-head h1{font-size:26px;margin:0 0 10px;}
+/* ── 外壳与全局阅读节奏 ── */
+body{max-width:880px;margin:0 auto;padding:0 18px 80px;
+  font-size:15px;line-height:1.88;color:#3b453e;background:#f7f8f3;
+  -webkit-font-smoothing:antialiased;}
+.combined-head{padding:30px 0 16px;border-bottom:1px solid #e7e0d2;margin-bottom:4px;}
+.combined-head h1{font:700 23px/1.35 var(--serif);margin:0 0 8px;color:#244b40;}
+.combined-head .eyebrow{font-size:.72rem;letter-spacing:.14em;margin:0 0 6px;}
+.chips{margin:8px 0 0;}
+.chip{font-size:.72rem;padding:2px 10px;}
 /* 锚点导航：固定一排 4 个，等宽对齐 */
-.nav{position:sticky;top:0;z-index:20;background:rgba(255,253,248,.96);backdrop-filter:blur(6px);
-  border-bottom:1px solid #ece4d4;padding:10px 0;margin:14px 0 26px;display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;
-  box-shadow:0 2px 10px rgba(120,100,60,.06);}
-.navlink{font-size:12.5px;color:#5d5443;text-decoration:none;background:#f6f1e6;border:1px solid #e7ddca;
-  border-radius:7px;padding:4px 6px;text-align:center;white-space:nowrap;overflow:hidden;
-  text-overflow:ellipsis;}
-section{scroll-margin-top:64px;}
-/* 一句话主旨：去左侧竖线 */
-.mmx-oneline{border-left:none;padding-left:18px;}
-/* AI领读章内：AI 大纲原生深层样式 */
-.merged-guide .sec{margin:10px 0 14px;padding-left:6px;border-left:2px solid #e5e0d6}
-.merged-guide .sec h4{font:600 .98rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.6em 0 .3em}
-.merged-guide ul.point{margin:.3em 0;padding-left:20px}
-.merged-guide ul.point>li{margin:.35em 0}
-.merged-guide ul.quote{margin:.25em 0 .25em 20px;padding-left:18px;list-style:none}
-.merged-guide ul.quote::before{content:"原句";display:block;font-size:.72rem;color:#bf8247;
-  letter-spacing:.1em;margin:.15em 0 .1em;font-weight:600}
-.merged-guide ul.quote.quote-node{margin-top:.5em;padding-top:.4em;border-top:1px dashed #eadfc9}
+.nav{position:sticky;top:0;z-index:20;background:rgba(247,248,243,.96);backdrop-filter:blur(6px);
+  border-bottom:1px solid #ece4d4;padding:10px 0;margin:12px 0 20px;display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;
+  box-shadow:0 2px 10px rgba(120,100,60,.05);}
+.navlink{font-size:12px;color:#5d5443;text-decoration:none;background:#fdfbf3;border:1px solid #e8e2d2;
+  border-radius:8px;padding:6px 4px;text-align:center;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;transition:background .15s,color .15s;}
+.navlink:hover{background:#f2efe2;color:#244b40;}
+section{scroll-margin-top:62px;}
+
+/* ── 统一卡片：所有顶层模块（AI领读 / AI 问答 / 其余）一视同仁 ── */
+body>section.mmx-mod,body>section.card,body>section.mmx-svgwrap{
+  background:#fffdf6;border:1px solid #e8e4d5;border-radius:16px;
+  padding:18px 22px;margin:18px 0;
+  box-shadow:0 1px 3px rgba(110,95,60,.05);}
+body>section.mmx-mod>*:first-child,body>section.card>*:first-child,
+body>section.mmx-svgwrap>*:first-child{margin-top:0}
+body>section.mmx-mod>*:last-child,body>section.card>*:last-child,
+body>section.mmx-svgwrap>*:last-child{margin-bottom:0}
+/* 结构导图：图本身留白居中，不与正文抢宽 */
+body>section.mmx-svgwrap>svg.mmx-svg{display:block;width:100%;height:auto;margin:2px auto 0;}
+/* 模块标题：统一大小、弱强调，不与正文抢注意力 */
+body>section.mmx-mod>h2,body>section.card>h2{
+  font:700 1.04rem/1.5 var(--serif);color:#244b40;margin:0 0 11px;
+  padding-left:10px;border-left:3px solid #bf8247;letter-spacing:.01em;}
+/* 正文：字号收小、行距放宽、段间距舒服 */
+body>section.mmx-mod p,body>section.card p,
+body>section.mmx-mod li,body>section.card li{
+  font-size:.9rem;line-height:1.92;color:#4a4436;}
+body>section.mmx-mod p,body>section.card p{margin:.5em 0;}
+body>section.mmx-mod>ul,body>section.mmx-mod>ol,body>section.mmx-mod>div,
+body>section.mmx-mod>p:not(.mmx-mod-note),
+body>section.card:not(.merged-guide)>ul,body>section.card:not(.merged-guide)>ol,
+body>section.card:not(.merged-guide)>div,body>section.card:not(.merged-guide)>p:not(.mmx-mod-note){
+  padding-left:14px;}
+/* 模块说明小字：弱化不抢眼 */
+.mmx-mod-note{font-size:.75rem;color:#8d8878;margin:.1em 0 .75em;line-height:1.7;}
+
+/* ── 内部块统一：卡片里不再套深卡片，一律浅底子块 ── */
+body>section .mmx-pending,body>section .mmx-evib,body>section .aiqa-item{
+  background:#fbfaf2;border:1px solid #eee9d8;border-radius:12px;
+  padding:13px 16px;margin:.65em 0;}
+body>section .mmx-evib ul{padding-left:1.15em;}
+/* 一句话主旨：去左侧竖线 + 收敛字号 */
+.mmx-oneline{font-size:.98rem;line-height:1.85;color:#3a352c;margin:.2em 0 0;
+  padding:12px 16px;background:#fbfaf4;border-left:none;border-radius:12px;}
+/* 核心观点 / 验证清单：虚线分隔 + 收紧行距 */
+.mmx-views li{padding:.5em 0 .5em 0;font-size:.9rem;line-height:1.88;}
+/* 原文金句 */
+.mmx-qlist li{padding:.6em 0 .6em 2.2em;}
+.mmx-qlist blockquote{font-size:.89rem;line-height:1.9;}
+.mmx-qlist cite{font-size:.72rem;}
+/* 核心追问：问句加重、答句放松 */
+.mmx-qa{margin:.7em 0;padding-left:12px;border-left:3px solid #e5dfcd;}
+.mmx-qa .mmx-q{font-size:.9rem;font-weight:700;color:#2f3a33;line-height:1.8;margin:0 0 .25em;}
+.mmx-qa .mmx-a{font-size:.88rem;line-height:1.95;color:#4a4436;margin:0;}
+
+/* ── AI 问书专项：外层容器透明，问答条目才是阅读单元 ── */
+#mod-aiask .mmx-ask{background:transparent;border:0;border-radius:0;padding:0;margin:0;}
+#mod-aiask .aiqa-item{margin:.6em 0;padding:14px 16px 15px;}
+#mod-aiask .aiqa-item h3{font:700 .93rem/1.7 var(--serif);color:#2f5b49;margin:0 0 .4em;
+  padding:0;border:0;}
+#mod-aiask .aiqa-item h3:before{content:"问　";color:#bf8247;font-weight:700;}
+#mod-aiask .aiqa-item p{font-size:.88rem;line-height:1.95;color:#4a4436;margin:.4em 0;}
+#mod-aiask .aiqa-item ul{margin:.35em 0;padding-left:1.1em;}
+#mod-aiask .aiqa-item li{font-size:.87rem;line-height:1.88;margin:.18em 0;color:#4a4436;}
+#mod-aiask .aiqa-item li::marker{color:#c0a06a;}
+/* 逐章追问（details 形态）：摘要行也收敛 */
+.mmx-ask>summary{font-size:.87rem;line-height:1.7;padding:2px 0;}
+.mmx-askbody{font-size:.88rem;line-height:1.9;}
+
+/* AI领读章内：AI 大纲原生深层样式（字号同步收小） */
+.merged-guide .sec{margin:9px 0 12px;padding-left:6px;border-left:2px solid #e5e0d6}
+.merged-guide .sec h4{font:600 .93rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.5em 0 .25em}
+.merged-guide ul.point{margin:.25em 0;padding-left:20px}
+.merged-guide ul.point>li{margin:.3em 0}
+.merged-guide ul.quote{margin:.22em 0 .22em 20px;padding-left:18px;list-style:none}
+.merged-guide ul.quote::before{content:"原句";display:block;font-size:.7rem;color:#bf8247;
+  letter-spacing:.1em;margin:.12em 0 .08em;font-weight:600}
+.merged-guide ul.quote.quote-node{margin-top:.45em;padding-top:.35em;border-top:1px dashed #eadfc9}
 .merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
-.merged-guide ul.quote>li{color:#4a4436;font-size:.93rem;margin:.2em 0;padding-left:10px;border-left:2px solid #bf8247}
-/* 模块内子内容（AI领读除外，它有专属深层样式）：左缩进 + 正文与标题分层 */
-section.mmx-mod>ul,section.mmx-mod>ol,section.mmx-mod>div,
-section.mmx-mod>p:not(.mmx-mod-note),
-section.card:not(.merged-guide)>ul,section.card:not(.merged-guide)>ol,
-section.card:not(.merged-guide)>div,section.card:not(.merged-guide)>p:not(.mmx-mod-note){
-  padding-left:16px;}
-section.mmx-mod li,section.mmx-mod p:not(.mmx-mod-note),
-section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mod-note){
-  color:#4a4436;font-size:.93rem;line-height:1.78;}
+.merged-guide ul.quote>li{color:#4a4436;font-size:.88rem;line-height:1.85;margin:.18em 0;padding-left:10px;border-left:2px solid #bf8247}
 /* 核心观点初判：外链 mmx-guide.css 的「观点N」前缀是绝对定位，在本页版式里和标题叠字，
    且此前要求去掉「观点1/2/3」前缀 —— 这里整条关掉（外链 CSS 不在页面内，只能内联覆盖）。 */
 .mmx-views li{padding-left:0 !important;}
 .mmx-views li:before,.mmx-views li::before{
   content:none !important;display:none !important;counter-increment:none !important;}
+@media(max-width:720px){
+  body{padding:0 12px 60px;font-size:14.5px;}
+  body>section.mmx-mod,body>section.card{padding:15px 16px;border-radius:14px;}
+  .nav{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
 </style>
 </head>
 <body>
@@ -54,8 +116,8 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
   <h1>《一句顶一万句（2022新版）》</h1>
   <div class="chips"><span class="chip">通读 + 精读</span><span class="chip">AI领读</span><span class="chip">AI 生产</span></div>
 </header>
-<nav class="nav"><a class="navlink" href="#mod-svg">全书结构导图</a><a class="navlink" href="#mod-oneline">一句话主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a><a class="navlink" href="#mod-coreask">核心追问</a><a class="navlink" href="#mod-aiask">AI 问书</a><a class="navlink" href="#mod-higher">更高维度</a><a class="navlink" href="#mod-verify">阅读验证</a><a class="navlink" href="#mod-thennow">当年与今天</a></nav>
-<section class="mmx-svgwrap" id="mod-svg"><svg class="mmx-svg" viewBox="0 0 1120 530" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="一句顶一万句（2022新版） 全书精读">
+<nav class="nav"><a class="navlink" href="#mod-svg">结构导图</a><a class="navlink" href="#mod-oneline">核心主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a><a class="navlink" href="#mod-coreask">核心追问</a><a class="navlink" href="#mod-aiask">AI 问书</a><a class="navlink" href="#mod-higher">更高维度</a><a class="navlink" href="#mod-verify">阅读验证</a><a class="navlink" href="#mod-thennow">往日今时</a></nav>
+<section class="mmx-svgwrap" id="mod-svg"><h2>结构导图</h2><svg class="mmx-svg" viewBox="0 0 1120 530" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="一句顶一万句（2022新版） 全书精读">
 <rect x="0" y="0" width="1120" height="530" fill="none"/>
 <style>.mmx-svg text{font-family:"Noto Serif SC",Georgia,serif}.mmx-svg .t1{font-size:15px;fill:#2f2a24;font-weight:600}.mmx-svg .t2{font-size:12px;fill:#5c5347}.mmx-svg .t3{font-size:10.5px;fill:#8a8272}.mmx-svg .rt{font-size:13px;fill:#f7f3ea;font-weight:600}.mmx-svg .ln{stroke:#cfc6b4;stroke-width:1.4;fill:none}</style>
 <rect x="28" y="221" width="262" height="52" rx="10" fill="#3d372e"/>
@@ -118,7 +180,7 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
 <text class="t2" x="714" y="437">真正抵达的孤独底色。</text>
 <path class="ln" d="M692 433 L700 433"/>
 </svg></section>
-<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">一句话主旨</h2><p class="mmx-mod-note">本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。</p><p class="mmx-oneline">人为了寻找一句说得着的话，经历着离散、出走与无尽的寻找。</p></section>
+<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">核心主旨</h2><p class="mmx-oneline">人为了寻找一句说得着的话，经历着离散、出走与无尽的寻找。</p></section>
 <section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" id="mod-merged_guide"><h2 id="merged-guide-title">AI领读</h2>
 <style>
 /* merged_guide 章内：AI 大纲原生深层样式 */
@@ -3076,12 +3138,12 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
       </div></details>
   </div>
 </section>
-<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点初判</h2><p class="mmx-mod-note">按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。</p><ul class="mmx-views"><li><b>延津众生相</b>——通过老杨、老裴、老汪、老胡等各色人物的底层经历与生活轨迹，展现延津县早期的社会群像。</li><li><b>杨百顺出走</b>——围绕杨百顺与家庭的矛盾，记录其离家学艺、改名换姓的漂泊过程及家族成员的变故。</li><li><b>吴摩西入赘</b>——杨百顺改名杨摩西并信教，后入赘县城吴家改名吴摩西，在复杂的熟人社会中经历成亲与冲突。</li><li><b>吴香香私奔</b>——吴香香与老高私奔，留下一地鸡毛的残局，由此引发后续两代人的命运交错。</li><li><b>曹青娥身世</b>——由曹青娥（巧玲）被拐卖至山西的经历切入，串联起两代人对延津的复杂情感与婚姻生活。</li><li><b>牛爱国寻妻</b>——记录牛爱国与庞丽娜的婚姻破裂、其母曹青娥去世，以及牛爱国在外地的漂泊与寻找。</li><li><b>假找之旅</b>——牛爱国踏上寻找出走妻子的虚妄旅程，呼应全书人与人之间终究无法真正抵达的孤独底色。</li></ul></section>
-<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句 · 持续积累</h2><p class="mmx-mod-note">以下原句取自本书 AI 大纲落库的原文摘录（book_outline.quote），按大纲顺序节选，非 AI 生成；更多见逐章深读页。</p><ol class="mmx-qlist"><li><blockquote>「老杨背后说起朋友，一次也没提到过杨家庄卖豆腐也卖凉粉的老杨。」</blockquote><cite>上部 出延津记 · 一 · 杨百顺他爹老杨与马家庄赶大车的老马的关系</cite></li><li><blockquote>「老李觉得卖豆腐的老杨和赶大车的老马是好朋友，便把老杨的座位，空在了老马身边。」</blockquote><cite>上部 出延津记 · 一 · 杨百顺他爹老杨与马家庄赶大车的老马的关系</cite></li><li><blockquote>「老马急了，让老李把老杨的座位，调到另一桌牲口牙子老杜身边。」</blockquote><cite>上部 出延津记 · 一 · 杨百顺他爹老杨与马家庄赶大车的老马的关系</cite></li><li><blockquote>「老杨认为自己去得晚，偶然挨着了老杜。」</blockquote><cite>上部 出延津记 · 一 · 杨百顺他爹老杨与马家庄赶大车的老马的关系</cite></li><li><blockquote>「杨百顺便把昨天听到的一席话，告诉了老杨。」</blockquote><cite>上部 出延津记 · 一 · 杨百顺他爹老杨与马家庄赶大车的老马的关系</cite></li><li><blockquote>「老杨听后，先是兜头扇了杨百顺一巴掌，然后在杨百顺的哭声中，又抱着头蹲在豆腐房门口，半天没有说话。」</blockquote><cite>上部 出延津记 · 一 · 杨百顺他爹老杨与马家庄赶大车的老马的关系</cite></li><li><blockquote>「之后半个月没理老马。在家里，再不提“老马”二字。」</blockquote><cite>上部 出延津记 · 一 · 杨百顺他爹老杨与马家庄赶大车的老马的关系</cite></li><li><blockquote>「但半个月后，又与老马恢复了来往，还与老马说笑话，遇事还找老马商量。」</blockquote><cite>上部 出延津记 · 一 · 杨百顺他爹老杨与马家庄赶大车的老马的关系</cite></li><li><blockquote>「老杨会打鼓，鼓槌敲着鼓面，磕着鼓边，能敲打出诸多花样。」</blockquote><cite>上部 出延津记 · 一 · 杨百顺他爹老杨与马家庄赶大车的老马的关系</cite></li><li><blockquote>「于是另辟蹊径，卖豆腐时，干脆不吆喝了，转成打鼓。」</blockquote><cite>上部 出延津记 · 一 · 杨百顺他爹老杨与马家庄赶大车的老马的关系</cite></li></ol></section>
-<section class="mmx-mod" aria-labelledby="coreask" id="mod-coreask"><h2 id="coreask">核心追问（来自深读）</h2><p class="mmx-mod-note">跨章主题的深读追问，由模型基于全书大纲与原文摘录撰写；逐章的追问收在每个章条目里。</p><div class="mmx-qa"><p class="mmx-q">杨百顺从杨百顺到杨摩西再到吴摩西，每次改名对应怎样一次生计与身份的转折</p><p class="mmx-a">杨百顺→杨摩西（入赘馒头铺、随妻家姓）→吴摩西（被县长收为养子改姓），每次改名都是一次卖身式生计依附：从卖豆腐、做学徒到依附权力，名字是身份被一次次典当的收据。</p></div><div class="mmx-qa"><p class="mmx-q">老杨与老马「表面上是好朋友」，小说用哪些细节写出这层关系的虚假</p><p class="mmx-a">老杨逢人先提“我朋友老马”，老马却当面客气、背后轻贱；老马指路让老杨吃亏，老杨还以为得了恩惠。小说用这种“单向热络、双向算计”写出关系里俯视与利用的虚假。</p></div><div class="mmx-qa"><p class="mmx-q">牛爱国回延津要找的到底是什么？母亲曹青娥（巧玲）的身世如何改变了这次「回」的意义</p><p class="mmx-a">牛爱国找的是“说得着”的人——母亲巧玲（被拐卖的曹青娥）一生也在找“家”与“话”。回延津因此不只是地理返乡，而是替母系血缘补上被断裂的“说得着”，让“回”有了根。</p></div></section>
-<section class="mmx-mod" aria-labelledby="aiask" id="mod-aiask"><h2 id="aiask">AI 问书</h2><p class="mmx-mod-note">下方内容为本书级 AI 问书整理，由云端 AI 阅读流程基于本书大纲、章节锚点与热门划线生成。</p><div class="mmx-qa"><p class="mmx-q">书名为何叫“一句顶一万句”？</p><p class="mmx-a">不是比数量，而是比“说得着”：一万句废话抵不上一句知心话。刘震云把中国人隐秘的孤独写成一种“说话”的饥渴——人这辈子翻山越岭，不过想找个能接住自己话的人。书名是对沟通稀缺的尖锐命名，也是对“说不着”的漫长控诉。</p></div><div class="mmx-qa"><p class="mmx-q">“出延津记”和“回延津记”两代人的循环说明什么？</p><p class="mmx-a">杨百顺出走延津、牛爱国回望延津，相隔百年却走在同一道题上：都在找那个“说得着”的人，都因一句话的错位而改写一生。刘震云用两代人的镜像说明，孤独不是偶然处境，而是横贯时空的结构性宿命，出走与归来都是同一种寻找。</p></div><div class="mmx-qa"><p class="mmx-q">书中“杀猪的、剃头的、传教士”为何都能成为知己？</p><p class="mmx-a">因为刘震云把“说得着”从身份里剥离出来：老曾、老裴、喊丧的罗长礼，与杨百顺并无共同阶层，却能在某一刻接住彼此的话。这反衬出亲人、夫妻之间反而常“说不着”的荒诞——最该懂你的人，往往最不懂，知己反而来自偶然的投缘。</p></div></section>
-<section class="mmx-mod" aria-labelledby="higher" id="mod-higher"><h2 id="higher">用更高维度的知识看这本书</h2><p class="mmx-mod-note">下方内容由云端 AI 阅读流程生成：把本书放回知识史与理论框架中重读，区分书中主张、外部证据与综合分析。</p><p>【书中主张】小说主张孤独的本质是“说不着”：人终其一生寻找能接住自己话语的人，亲情与婚姻常失灵，知己却可能出现在杀猪匠或喊丧人那里。【外部证据】杨百顺改名叫杨摩西、又随妻姓吴、最终顶替罗长礼喊丧，一连串改名对应一连串“说不着”的漂流；学界视其为对乡土中国人际关系的解构。【综合分析】这一主张把存在主义式的孤独落在中国乡土语境里，用最土的人物写最普世的匮乏。它提醒我们，语言不是交流工具，而是人确认自己“在”的唯一方式，失语即失踪。</p><p>【书中主张】书同时主张，历史与命运常被一句话轻轻拨转：出走、杀人、私奔，起因往往只是某句没说清或听错的话。【外部证据】从吴香香跟人跑、牛爱国寻妻到巧玲被卖，情节推进几乎都靠“误会一句话”；这种“言语即因果”的写法，是刘震云对《水浒传》《三国演义》话本传统的反用。【综合分析】但小说并非只写悲——喊丧的罗长礼、杨百顺在丧礼上替人哭出的那一口，暗示人在“说不着”的世界里仍能靠一种表演式的表达确认自己。荒诞底下，是刘震云对普通人尊严的暗暗护惜。</p></section>
-<section class="mmx-mod" aria-labelledby="verify" id="mod-verify"><h2 id="verify">阅读时要验证的问题</h2><p class="mmx-mod-note">下方由云端 AI 阅读流程生成：读时需核对的原文、数字与论点（关键数据出处、个案代表性、类比限度）。</p><ul class="mmx-views"><li>小说分《出延津记》与《回延津记》上下两部，可核对目录结构。（可核对：上下部结构）</li><li>主角杨百顺多次改名（杨摩西、吴摩西等），最终顶替罗长礼喊丧，可核对人物线索。（可核对：改名与喊丧）</li><li>下部主角牛爱国寻妻的旅程与上部形成镜像，可核对情节对应。（可核对：牛爱国寻妻线）</li></ul></section>
-<section class="mmx-mod" aria-labelledby="thennow" id="mod-thennow"><h2 id="thennow">当年与今天 · 初步对照</h2><p class="mmx-mod-note">下方由云端 AI 阅读流程生成：区分作者当年所能知晓与后来才显现的事实，给出今日可迁移的启发。</p><p>刘震云写于2009年，他当年能确知的是中原乡土的宗族离散、城市化前夕农民的精神漂泊，以及熟人社会瓦解后“说话”功能的退化；这些是贴着河南延津地气的观察，所以书里的孤独有泥土味，不是都市人矫情的呻吟，而是农耕共同体松动时的真实回响。</p><p>但短视频、算法推荐与“信息茧房”制造的新型孤独，是作者彼时无法预见的；今天年轻人把“社交电量耗尽”挂在嘴边，恰是“说不着”的当代升级。后来才显现的，是一句顶一万句的困境，从田间地头搬进了每个人的手机屏幕里。</p></section>
+<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点</h2><ul class="mmx-views"><li><b>延津众生相</b>——通过老杨、老裴、老汪、老胡等各色人物的底层经历与生活轨迹，展现延津县早期的社会群像。</li><li><b>杨百顺出走</b>——围绕杨百顺与家庭的矛盾，记录其离家学艺、改名换姓的漂泊过程及家族成员的变故。</li><li><b>吴摩西入赘</b>——杨百顺改名杨摩西并信教，后入赘县城吴家改名吴摩西，在复杂的熟人社会中经历成亲与冲突。</li><li><b>吴香香私奔</b>——吴香香与老高私奔，留下一地鸡毛的残局，由此引发后续两代人的命运交错。</li><li><b>曹青娥身世</b>——由曹青娥（巧玲）被拐卖至山西的经历切入，串联起两代人对延津的复杂情感与婚姻生活。</li><li><b>牛爱国寻妻</b>——记录牛爱国与庞丽娜的婚姻破裂、其母曹青娥去世，以及牛爱国在外地的漂泊与寻找。</li><li><b>假找之旅</b>——牛爱国踏上寻找出走妻子的虚妄旅程，呼应全书人与人之间终究无法真正抵达的孤独底色。</li></ul></section>
+<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句</h2><ol class="mmx-qlist"><li><blockquote>「老杨背后说起朋友，一次也没提到过杨家庄卖豆腐也卖凉粉的老杨。」</blockquote><cite>上部 出延津记 · 一 · 杨百顺他爹老杨与马家庄赶大车的老马的关系</cite></li><li><blockquote>「老李觉得卖豆腐的老杨和赶大车的老马是好朋友，便把老杨的座位，空在了老马身边。」</blockquote><cite>上部 出延津记 · 一 · 杨百顺他爹老杨与马家庄赶大车的老马的关系</cite></li><li><blockquote>「老马急了，让老李把老杨的座位，调到另一桌牲口牙子老杜身边。」</blockquote><cite>上部 出延津记 · 一 · 杨百顺他爹老杨与马家庄赶大车的老马的关系</cite></li><li><blockquote>「老杨认为自己去得晚，偶然挨着了老杜。」</blockquote><cite>上部 出延津记 · 一 · 杨百顺他爹老杨与马家庄赶大车的老马的关系</cite></li><li><blockquote>「杨百顺便把昨天听到的一席话，告诉了老杨。」</blockquote><cite>上部 出延津记 · 一 · 杨百顺他爹老杨与马家庄赶大车的老马的关系</cite></li><li><blockquote>「老杨听后，先是兜头扇了杨百顺一巴掌，然后在杨百顺的哭声中，又抱着头蹲在豆腐房门口，半天没有说话。」</blockquote><cite>上部 出延津记 · 一 · 杨百顺他爹老杨与马家庄赶大车的老马的关系</cite></li><li><blockquote>「之后半个月没理老马。在家里，再不提“老马”二字。」</blockquote><cite>上部 出延津记 · 一 · 杨百顺他爹老杨与马家庄赶大车的老马的关系</cite></li><li><blockquote>「但半个月后，又与老马恢复了来往，还与老马说笑话，遇事还找老马商量。」</blockquote><cite>上部 出延津记 · 一 · 杨百顺他爹老杨与马家庄赶大车的老马的关系</cite></li><li><blockquote>「老杨会打鼓，鼓槌敲着鼓面，磕着鼓边，能敲打出诸多花样。」</blockquote><cite>上部 出延津记 · 一 · 杨百顺他爹老杨与马家庄赶大车的老马的关系</cite></li><li><blockquote>「于是另辟蹊径，卖豆腐时，干脆不吆喝了，转成打鼓。」</blockquote><cite>上部 出延津记 · 一 · 杨百顺他爹老杨与马家庄赶大车的老马的关系</cite></li></ol></section>
+<section class="mmx-mod" aria-labelledby="coreask" id="mod-coreask"><h2 id="coreask">核心追问</h2><div class="mmx-qa"><p class="mmx-q">杨百顺从杨百顺到杨摩西再到吴摩西，每次改名对应怎样一次生计与身份的转折</p><p class="mmx-a">杨百顺→杨摩西（入赘馒头铺、随妻家姓）→吴摩西（被县长收为养子改姓），每次改名都是一次卖身式生计依附：从卖豆腐、做学徒到依附权力，名字是身份被一次次典当的收据。</p></div><div class="mmx-qa"><p class="mmx-q">老杨与老马「表面上是好朋友」，小说用哪些细节写出这层关系的虚假</p><p class="mmx-a">老杨逢人先提“我朋友老马”，老马却当面客气、背后轻贱；老马指路让老杨吃亏，老杨还以为得了恩惠。小说用这种“单向热络、双向算计”写出关系里俯视与利用的虚假。</p></div><div class="mmx-qa"><p class="mmx-q">牛爱国回延津要找的到底是什么？母亲曹青娥（巧玲）的身世如何改变了这次「回」的意义</p><p class="mmx-a">牛爱国找的是“说得着”的人——母亲巧玲（被拐卖的曹青娥）一生也在找“家”与“话”。回延津因此不只是地理返乡，而是替母系血缘补上被断裂的“说得着”，让“回”有了根。</p></div></section>
+<section class="mmx-mod" aria-labelledby="aiask" id="mod-aiask"><h2 id="aiask">AI 问书</h2><div class="mmx-qa"><p class="mmx-q">书名为何叫“一句顶一万句”？</p><p class="mmx-a">不是比数量，而是比“说得着”：一万句废话抵不上一句知心话。刘震云把中国人隐秘的孤独写成一种“说话”的饥渴——人这辈子翻山越岭，不过想找个能接住自己话的人。书名是对沟通稀缺的尖锐命名，也是对“说不着”的漫长控诉。</p></div><div class="mmx-qa"><p class="mmx-q">“出延津记”和“回延津记”两代人的循环说明什么？</p><p class="mmx-a">杨百顺出走延津、牛爱国回望延津，相隔百年却走在同一道题上：都在找那个“说得着”的人，都因一句话的错位而改写一生。刘震云用两代人的镜像说明，孤独不是偶然处境，而是横贯时空的结构性宿命，出走与归来都是同一种寻找。</p></div><div class="mmx-qa"><p class="mmx-q">书中“杀猪的、剃头的、传教士”为何都能成为知己？</p><p class="mmx-a">因为刘震云把“说得着”从身份里剥离出来：老曾、老裴、喊丧的罗长礼，与杨百顺并无共同阶层，却能在某一刻接住彼此的话。这反衬出亲人、夫妻之间反而常“说不着”的荒诞——最该懂你的人，往往最不懂，知己反而来自偶然的投缘。</p></div></section>
+<section class="mmx-mod" aria-labelledby="higher" id="mod-higher"><h2 id="higher">更高维度</h2><p>【书中主张】小说主张孤独的本质是“说不着”：人终其一生寻找能接住自己话语的人，亲情与婚姻常失灵，知己却可能出现在杀猪匠或喊丧人那里。【外部证据】杨百顺改名叫杨摩西、又随妻姓吴、最终顶替罗长礼喊丧，一连串改名对应一连串“说不着”的漂流；学界视其为对乡土中国人际关系的解构。【综合分析】这一主张把存在主义式的孤独落在中国乡土语境里，用最土的人物写最普世的匮乏。它提醒我们，语言不是交流工具，而是人确认自己“在”的唯一方式，失语即失踪。</p><p>【书中主张】书同时主张，历史与命运常被一句话轻轻拨转：出走、杀人、私奔，起因往往只是某句没说清或听错的话。【外部证据】从吴香香跟人跑、牛爱国寻妻到巧玲被卖，情节推进几乎都靠“误会一句话”；这种“言语即因果”的写法，是刘震云对《水浒传》《三国演义》话本传统的反用。【综合分析】但小说并非只写悲——喊丧的罗长礼、杨百顺在丧礼上替人哭出的那一口，暗示人在“说不着”的世界里仍能靠一种表演式的表达确认自己。荒诞底下，是刘震云对普通人尊严的暗暗护惜。</p></section>
+<section class="mmx-mod" aria-labelledby="verify" id="mod-verify"><h2 id="verify">阅读验证</h2><ul class="mmx-views"><li>小说分《出延津记》与《回延津记》上下两部，可核对目录结构。（可核对：上下部结构）</li><li>主角杨百顺多次改名（杨摩西、吴摩西等），最终顶替罗长礼喊丧，可核对人物线索。（可核对：改名与喊丧）</li><li>下部主角牛爱国寻妻的旅程与上部形成镜像，可核对情节对应。（可核对：牛爱国寻妻线）</li></ul></section>
+<section class="mmx-mod" aria-labelledby="thennow" id="mod-thennow"><h2 id="thennow">往日今时</h2><p>刘震云写于2009年，他当年能确知的是中原乡土的宗族离散、城市化前夕农民的精神漂泊，以及熟人社会瓦解后“说话”功能的退化；这些是贴着河南延津地气的观察，所以书里的孤独有泥土味，不是都市人矫情的呻吟，而是农耕共同体松动时的真实回响。</p><p>但短视频、算法推荐与“信息茧房”制造的新型孤独，是作者彼时无法预见的；今天年轻人把“社交电量耗尽”挂在嘴边，恰是“说不着”的当代升级。后来才显现的，是一句顶一万句的困境，从田间地头搬进了每个人的手机屏幕里。</p></section>
 </body>
 </html>

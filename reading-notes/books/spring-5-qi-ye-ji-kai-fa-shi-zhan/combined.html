@@ -6,46 +6,108 @@
 <title>《Spring 5企业级开发实战》｜通读 · 精读</title>
 <link rel="stylesheet" href="../../../assets/css/reading-overview.css"><link rel="stylesheet" href="../../../assets/css/mmx-guide.css"><link rel="stylesheet" href="../../../assets/css/reading-outline.css">
 <style>
-/* 合并页外壳 */
-body{max-width:960px;margin:0 auto;padding:0 18px 80px;}
-.combined-head{padding:34px 0 18px;border-bottom:1px solid #e7e0d2;margin-bottom:8px;}
-.combined-head h1{font-size:26px;margin:0 0 10px;}
+/* ── 外壳与全局阅读节奏 ── */
+body{max-width:880px;margin:0 auto;padding:0 18px 80px;
+  font-size:15px;line-height:1.88;color:#3b453e;background:#f7f8f3;
+  -webkit-font-smoothing:antialiased;}
+.combined-head{padding:30px 0 16px;border-bottom:1px solid #e7e0d2;margin-bottom:4px;}
+.combined-head h1{font:700 23px/1.35 var(--serif);margin:0 0 8px;color:#244b40;}
+.combined-head .eyebrow{font-size:.72rem;letter-spacing:.14em;margin:0 0 6px;}
+.chips{margin:8px 0 0;}
+.chip{font-size:.72rem;padding:2px 10px;}
 /* 锚点导航：固定一排 4 个，等宽对齐 */
-.nav{position:sticky;top:0;z-index:20;background:rgba(255,253,248,.96);backdrop-filter:blur(6px);
-  border-bottom:1px solid #ece4d4;padding:10px 0;margin:14px 0 26px;display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;
-  box-shadow:0 2px 10px rgba(120,100,60,.06);}
-.navlink{font-size:12.5px;color:#5d5443;text-decoration:none;background:#f6f1e6;border:1px solid #e7ddca;
-  border-radius:7px;padding:4px 6px;text-align:center;white-space:nowrap;overflow:hidden;
-  text-overflow:ellipsis;}
-section{scroll-margin-top:64px;}
-/* 一句话主旨：去左侧竖线 */
-.mmx-oneline{border-left:none;padding-left:18px;}
-/* AI领读章内：AI 大纲原生深层样式 */
-.merged-guide .sec{margin:10px 0 14px;padding-left:6px;border-left:2px solid #e5e0d6}
-.merged-guide .sec h4{font:600 .98rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.6em 0 .3em}
-.merged-guide ul.point{margin:.3em 0;padding-left:20px}
-.merged-guide ul.point>li{margin:.35em 0}
-.merged-guide ul.quote{margin:.25em 0 .25em 20px;padding-left:18px;list-style:none}
-.merged-guide ul.quote::before{content:"原句";display:block;font-size:.72rem;color:#bf8247;
-  letter-spacing:.1em;margin:.15em 0 .1em;font-weight:600}
-.merged-guide ul.quote.quote-node{margin-top:.5em;padding-top:.4em;border-top:1px dashed #eadfc9}
+.nav{position:sticky;top:0;z-index:20;background:rgba(247,248,243,.96);backdrop-filter:blur(6px);
+  border-bottom:1px solid #ece4d4;padding:10px 0;margin:12px 0 20px;display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;
+  box-shadow:0 2px 10px rgba(120,100,60,.05);}
+.navlink{font-size:12px;color:#5d5443;text-decoration:none;background:#fdfbf3;border:1px solid #e8e2d2;
+  border-radius:8px;padding:6px 4px;text-align:center;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;transition:background .15s,color .15s;}
+.navlink:hover{background:#f2efe2;color:#244b40;}
+section{scroll-margin-top:62px;}
+
+/* ── 统一卡片：所有顶层模块（AI领读 / AI 问答 / 其余）一视同仁 ── */
+body>section.mmx-mod,body>section.card,body>section.mmx-svgwrap{
+  background:#fffdf6;border:1px solid #e8e4d5;border-radius:16px;
+  padding:18px 22px;margin:18px 0;
+  box-shadow:0 1px 3px rgba(110,95,60,.05);}
+body>section.mmx-mod>*:first-child,body>section.card>*:first-child,
+body>section.mmx-svgwrap>*:first-child{margin-top:0}
+body>section.mmx-mod>*:last-child,body>section.card>*:last-child,
+body>section.mmx-svgwrap>*:last-child{margin-bottom:0}
+/* 结构导图：图本身留白居中，不与正文抢宽 */
+body>section.mmx-svgwrap>svg.mmx-svg{display:block;width:100%;height:auto;margin:2px auto 0;}
+/* 模块标题：统一大小、弱强调，不与正文抢注意力 */
+body>section.mmx-mod>h2,body>section.card>h2{
+  font:700 1.04rem/1.5 var(--serif);color:#244b40;margin:0 0 11px;
+  padding-left:10px;border-left:3px solid #bf8247;letter-spacing:.01em;}
+/* 正文：字号收小、行距放宽、段间距舒服 */
+body>section.mmx-mod p,body>section.card p,
+body>section.mmx-mod li,body>section.card li{
+  font-size:.9rem;line-height:1.92;color:#4a4436;}
+body>section.mmx-mod p,body>section.card p{margin:.5em 0;}
+body>section.mmx-mod>ul,body>section.mmx-mod>ol,body>section.mmx-mod>div,
+body>section.mmx-mod>p:not(.mmx-mod-note),
+body>section.card:not(.merged-guide)>ul,body>section.card:not(.merged-guide)>ol,
+body>section.card:not(.merged-guide)>div,body>section.card:not(.merged-guide)>p:not(.mmx-mod-note){
+  padding-left:14px;}
+/* 模块说明小字：弱化不抢眼 */
+.mmx-mod-note{font-size:.75rem;color:#8d8878;margin:.1em 0 .75em;line-height:1.7;}
+
+/* ── 内部块统一：卡片里不再套深卡片，一律浅底子块 ── */
+body>section .mmx-pending,body>section .mmx-evib,body>section .aiqa-item{
+  background:#fbfaf2;border:1px solid #eee9d8;border-radius:12px;
+  padding:13px 16px;margin:.65em 0;}
+body>section .mmx-evib ul{padding-left:1.15em;}
+/* 一句话主旨：去左侧竖线 + 收敛字号 */
+.mmx-oneline{font-size:.98rem;line-height:1.85;color:#3a352c;margin:.2em 0 0;
+  padding:12px 16px;background:#fbfaf4;border-left:none;border-radius:12px;}
+/* 核心观点 / 验证清单：虚线分隔 + 收紧行距 */
+.mmx-views li{padding:.5em 0 .5em 0;font-size:.9rem;line-height:1.88;}
+/* 原文金句 */
+.mmx-qlist li{padding:.6em 0 .6em 2.2em;}
+.mmx-qlist blockquote{font-size:.89rem;line-height:1.9;}
+.mmx-qlist cite{font-size:.72rem;}
+/* 核心追问：问句加重、答句放松 */
+.mmx-qa{margin:.7em 0;padding-left:12px;border-left:3px solid #e5dfcd;}
+.mmx-qa .mmx-q{font-size:.9rem;font-weight:700;color:#2f3a33;line-height:1.8;margin:0 0 .25em;}
+.mmx-qa .mmx-a{font-size:.88rem;line-height:1.95;color:#4a4436;margin:0;}
+
+/* ── AI 问书专项：外层容器透明，问答条目才是阅读单元 ── */
+#mod-aiask .mmx-ask{background:transparent;border:0;border-radius:0;padding:0;margin:0;}
+#mod-aiask .aiqa-item{margin:.6em 0;padding:14px 16px 15px;}
+#mod-aiask .aiqa-item h3{font:700 .93rem/1.7 var(--serif);color:#2f5b49;margin:0 0 .4em;
+  padding:0;border:0;}
+#mod-aiask .aiqa-item h3:before{content:"问　";color:#bf8247;font-weight:700;}
+#mod-aiask .aiqa-item p{font-size:.88rem;line-height:1.95;color:#4a4436;margin:.4em 0;}
+#mod-aiask .aiqa-item ul{margin:.35em 0;padding-left:1.1em;}
+#mod-aiask .aiqa-item li{font-size:.87rem;line-height:1.88;margin:.18em 0;color:#4a4436;}
+#mod-aiask .aiqa-item li::marker{color:#c0a06a;}
+/* 逐章追问（details 形态）：摘要行也收敛 */
+.mmx-ask>summary{font-size:.87rem;line-height:1.7;padding:2px 0;}
+.mmx-askbody{font-size:.88rem;line-height:1.9;}
+
+/* AI领读章内：AI 大纲原生深层样式（字号同步收小） */
+.merged-guide .sec{margin:9px 0 12px;padding-left:6px;border-left:2px solid #e5e0d6}
+.merged-guide .sec h4{font:600 .93rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.5em 0 .25em}
+.merged-guide ul.point{margin:.25em 0;padding-left:20px}
+.merged-guide ul.point>li{margin:.3em 0}
+.merged-guide ul.quote{margin:.22em 0 .22em 20px;padding-left:18px;list-style:none}
+.merged-guide ul.quote::before{content:"原句";display:block;font-size:.7rem;color:#bf8247;
+  letter-spacing:.1em;margin:.12em 0 .08em;font-weight:600}
+.merged-guide ul.quote.quote-node{margin-top:.45em;padding-top:.35em;border-top:1px dashed #eadfc9}
 .merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
-.merged-guide ul.quote>li{color:#4a4436;font-size:.93rem;margin:.2em 0;padding-left:10px;border-left:2px solid #bf8247}
-/* 模块内子内容（AI领读除外，它有专属深层样式）：左缩进 + 正文与标题分层 */
-section.mmx-mod>ul,section.mmx-mod>ol,section.mmx-mod>div,
-section.mmx-mod>p:not(.mmx-mod-note),
-section.card:not(.merged-guide)>ul,section.card:not(.merged-guide)>ol,
-section.card:not(.merged-guide)>div,section.card:not(.merged-guide)>p:not(.mmx-mod-note){
-  padding-left:16px;}
-section.mmx-mod li,section.mmx-mod p:not(.mmx-mod-note),
-section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mod-note){
-  color:#4a4436;font-size:.93rem;line-height:1.78;}
+.merged-guide ul.quote>li{color:#4a4436;font-size:.88rem;line-height:1.85;margin:.18em 0;padding-left:10px;border-left:2px solid #bf8247}
 /* 核心观点初判：外链 mmx-guide.css 的「观点N」前缀是绝对定位，在本页版式里和标题叠字，
    且此前要求去掉「观点1/2/3」前缀 —— 这里整条关掉（外链 CSS 不在页面内，只能内联覆盖）。 */
 .mmx-views li{padding-left:0 !important;}
 .mmx-views li:before,.mmx-views li::before{
   content:none !important;display:none !important;counter-increment:none !important;}
+@media(max-width:720px){
+  body{padding:0 12px 60px;font-size:14.5px;}
+  body>section.mmx-mod,body>section.card{padding:15px 16px;border-radius:14px;}
+  .nav{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
 </style>
 </head>
 <body>
@@ -54,8 +116,8 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
   <h1>《Spring 5企业级开发实战》</h1>
   <div class="chips"><span class="chip">通读 + 精读</span><span class="chip">AI领读</span><span class="chip">AI 生产</span></div>
 </header>
-<nav class="nav"><a class="navlink" href="#mod-svg">全书结构导图</a><a class="navlink" href="#mod-oneline">一句话主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a></nav>
-<section class="mmx-svgwrap" id="mod-svg">
+<nav class="nav"><a class="navlink" href="#mod-svg">结构导图</a><a class="navlink" href="#mod-oneline">核心主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a></nav>
+<section class="mmx-svgwrap" id="mod-svg"><h2>结构导图</h2>
 <svg class="mmx-svg" viewBox="0 0 1120 1398" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Spring 5企业级开发实战 全书精读">
 <rect x="0" y="0" width="1120" height="1398" fill="none"/>
 <style>.mmx-svg text{font-family:"Noto Serif SC",Georgia,serif}.mmx-svg .t1{font-size:15px;fill:#2f2a24;font-weight:600}.mmx-svg .t2{font-size:12px;fill:#5c5347}.mmx-svg .t3{font-size:10.5px;fill:#8a8272}.mmx-svg .rt{font-size:13px;fill:#f7f3ea;font-weight:600}.mmx-svg .ln{stroke:#cfc6b4;stroke-width:1.4;fill:none}</style>
@@ -210,11 +272,11 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
 <text class="t2" x="714" y="1297">含「A.21 状态模式」至「参考文献」</text>
 <path class="ln" d="M692 1301 L700 1301"/>
 </svg></section>
-<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">一句话主旨</h2><p class="mmx-mod-note">本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。</p><p class="mmx-oneline">Spring框架是为了降低解决企业系统开发的复杂度而产生的，掌握并学会使用Spring框架进行项目开发，是Java开发人员必备技能之一，本书</p></section>
-<section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" id="mod-merged_guide"><h2 id="merged-guide-title">AI领读 · 全书篇目</h2>
+<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">核心主旨</h2><p class="mmx-oneline">Spring框架是为了降低解决企业系统开发的复杂度而产生的，掌握并学会使用Spring框架进行项目开发，是Java开发人员必备技能之一，本书</p></section>
+<section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" id="mod-merged_guide"><h2 id="merged-guide-title">AI领读</h2>
 <p class="small">本书 AI 大纲目前为章级目录（要点与原句待补全）。以下为全书篇目，大纲补全后将自动升级为「目录 + 骨架 + 要点 + 原句」完整版。</p>
 <ol class="mmx-pts"><li><b>1</b> 作者简介</li><li><b>2</b> 内容简介</li><li><b>3</b> 推荐语</li><li><b>4</b> 前言</li><li><b>5</b> 本书结构</li><li><b>6</b> 本书预备知识</li><li><b>7</b> 读者对象</li><li><b>8</b> 源代码下载</li><li><b>9</b> 勘误与交流</li><li><b>10</b> 致谢</li><li><b>11</b> 第一篇 Spring基础篇</li><li><b>12</b> 第1章 环境搭建</li><li><b>13</b> 1.1 Spring介绍</li><li><b>14</b> 1.2 环境准备</li><li><b>15</b> 1.3 快速搭建Spring 5项目</li><li><b>16</b> 1.4 小 结</li><li><b>17</b> 第2章 Spring IoC容器原理</li><li><b>18</b> 2.1 IoC容器揭秘</li><li><b>19</b> 2.2 Spring IoC的实现方式</li><li><b>20</b> 2.3 Spring IoC实现原理解析</li><li><b>21</b> 2.4 Spring IoC容器中Bean的生命周期</li><li><b>22</b> 2.5 小 结</li><li><b>23</b> 第3章 Spring AOP揭秘</li><li><b>24</b> 3.1 AOP前置知识</li><li><b>25</b> 3.2 AOP概述</li><li><b>26</b> 3.3 Spring AOP实现</li><li><b>27</b> 3.4 基于Spring AOP的实战</li><li><b>28</b> 3.5 Spring集成AspectJ实战</li><li><b>29</b> 3.6 Spring AOP的实现原理</li><li><b>30</b> 3.7 小 结</li><li><b>31</b> 第二篇 Spring 5新特性篇</li><li><b>32</b> 第4章 Spring 5新特性概述</li><li><b>33</b> 4.1 Spring 5.0新特性</li><li><b>34</b> 4.2 Spring 5.1新特性</li><li><b>35</b> 第5章 Java 8新特性概述</li><li><b>36</b> 5.1 Lambda表达式</li><li><b>37</b> 5.2 接口默认方法</li><li><b>38</b> 5.3 小 结</li><li><b>39</b> 第6章 Spring WebFlux响应式编程</li><li><b>40</b> 6.1 传统的编程模型</li><li><b>41</b> 6.2 响应式编程模型</li><li><b>42</b> 6.3 Reactor</li><li><b>43</b> 6.4 Spring WebFlux</li><li><b>44</b> 6.5 小 结</li><li><b>45</b> 第7章 WebClient响应式客户端</li><li><b>46</b> 7.1 RestTemplate调试Spring MVC</li><li><b>47</b> 7.2 WebClient调试Spring WebFlux</li><li><b>48</b> 7.3 小 结</li><li><b>49</b> 第8章 Spring 5结合Kotlin编程</li><li><b>50</b> 8.1 Kotlin简介</li><li><b>51</b> 8.2 Spring 5集成Kotlin</li><li><b>52</b> 8.3 小 结</li><li><b>53</b> 第9章 Spring 5更多新特性</li><li><b>54</b> 9.1 Resource接口</li><li><b>55</b> 9.2 HTTP 2</li><li><b>56</b> 9.3 JUnit 5</li><li><b>57</b> 9.4 小 结</li><li><b>58</b> 第三篇 Spring系统集成篇</li><li><b>59</b> 第10章 Spring集成Log4j2</li><li><b>60</b> 10.1 Log4j2配置详解</li><li><b>61</b> 10.2 Log4j2日志级别</li><li><b>62</b> 10.3 Log4j2实战演练</li><li><b>63</b> 10.4 小 结</li><li><b>64</b> 第11章 Spring集成Spring MVC</li><li><b>65</b> 11.1 Spring MVC快速体验</li><li><b>66</b> 11.2 Spring MVC视图呈现</li><li><b>67</b> 11.3 Spring MVC拦截器</li><li><b>68</b> 11.4 Spring MVC代码解析</li><li><b>69</b> 11.5 小 结</li><li><b>70</b> 第12章 Spring集成MyBatis</li><li><b>71</b> 12.1 Spring、Spring MVC和MyBatis集成快速体验</li><li><b>72</b> 12.2 MyBatis代码解析</li><li><b>73</b> 12.3 小 结</li><li><b>74</b> 第13章 Spring事务管理</li><li><b>75</b> 13.1 事务的特性</li><li><b>76</b> 13.2 事务的隔离级别</li><li><b>77</b> 13.3 JDBC方式使用事务</li><li><b>78</b> 13.4 Spring事务管理快速体验</li><li><b>79</b> 13.5 Spring事务隔离级别</li><li><b>80</b> 13.6 Spring事务传播行为</li><li><b>81</b> 13.7 Spring事务代码分析</li><li><b>82</b> 13.8 小 结</li><li><b>83</b> 第14章 Spring集成Redis</li><li><b>84</b> 14.1 Redis单节点安装</li><li><b>85</b> 14.2 Redis支持的数据类型</li><li><b>86</b> 14.3 Redis持久化策略</li><li><b>87</b> 14.4 Redis主从复制模式</li><li><b>88</b> 14.5 Redis哨兵模式</li><li><b>89</b> 14.6 Redis集群模式</li><li><b>90</b> 14.7 Spring、MyBatis和Redis集成快速体验</li><li><b>91</b> 14.8 Redis缓存穿透和雪崩</li><li><b>92</b> 14.9 小 结</li><li><b>93</b> 第15章 Spring集成ZooKeeper</li><li><b>94</b> 15.1 ZooKeeper集群安装</li><li><b>95</b> 15.2 ZooKeeper总体架构</li><li><b>96</b> 15.3 Spring集成ZooKeeper快速体验</li><li><b>97</b> 15.4 ZooKeeper发布订阅</li><li><b>98</b> 15.5 ZooKeeper分布式锁</li><li><b>99</b> 15.6 小 结</li><li><b>100</b> 第16章 Spring集成Kafka</li><li><b>101</b> 16.1 Kafka集群安装</li><li><b>102</b> 16.2 Kafka总体架构</li><li><b>103</b> 16.3 Spring集成Kafka快速体验</li><li><b>104</b> 16.4 小 结</li><li><b>105</b> 第17章 Spring集成Mycat</li><li><b>106</b> 17.1 Mycat分库分表</li><li><b>107</b> 17.2 Mycat分库分表实战</li><li><b>108</b> 17.3 Spring+MyBatis+Mycat快速体验</li><li><b>109</b> 17.4 小 结</li><li><b>110</b> 第18章 Spring集成Sharding-JDBC</li><li><b>111</b> 18.1 Spring集成Sharding-JDBC快速体验</li><li><b>112</b> 18.2 Sharding-JDBC强制路由</li><li><b>113</b> 18.3 Sharding-JDBC分布式主键</li><li><b>114</b> 18.4 小 结</li><li><b>115</b> 第19章 Spring集成Dubbo</li><li><b>116</b> 19.1 远程过程调用协议</li><li><b>117</b> 19.2 Spring集成Dubbo快速体验</li><li><b>118</b> 19.3 Dubbo代码分析</li><li><b>119</b> 19.4 小 结</li><li><b>120</b> 附录A 设计模式</li><li><b>121</b> A.1 工厂模式</li><li><b>122</b> A.2 抽象工厂模式</li><li><b>123</b> A.3 单例模式</li><li><b>124</b> A.4 建造者模式</li><li><b>125</b> A.5 原型模式</li><li><b>126</b> A.6 适配器模式</li><li><b>127</b> A.7 桥接模式</li><li><b>128</b> A.8 标准模式</li><li><b>129</b> A.9 组合模式</li><li><b>130</b> A.10 装饰器模式</li><li><b>131</b> A.11 外观模式</li><li><b>132</b> A.12 享元模式</li><li><b>133</b> A.13 代理模式</li><li><b>134</b> A.14 责任链模式</li><li><b>135</b> A.15 命令模式</li><li><b>136</b> A.16 解释器模式</li><li><b>137</b> A.17 迭代器模式</li><li><b>138</b> A.18 中介者模式</li><li><b>139</b> A.19 备忘录模式</li><li><b>140</b> A.20 观察者模式</li><li><b>141</b> A.21 状态模式</li><li><b>142</b> A.22 空对象模式</li><li><b>143</b> A.23 策略模式</li><li><b>144</b> A.24 模板模式</li><li><b>145</b> A.25 拦截过滤器模式</li><li><b>146</b> 参考文献</li></ol></section>
-<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点初判</h2><p class="mmx-mod-note">按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。</p><ul class="mmx-views"><li><b>第 1–7 章</b>——含「作者简介」至「读者对象」</li><li><b>第 8–14 章</b>——含「源代码下载」至「1.2 环境准备」</li><li><b>第 15–21 章</b>——含「1.3 快速搭建Spri」至「2.4 Spring I」</li><li><b>第 22–28 章</b>——含「2.5 小 结」至「3.5 Spring集成」</li><li><b>第 29–35 章</b>——含「3.6 Spring A」至「第5章 Java 8新特」</li><li><b>第 36–42 章</b>——含「5.1 Lambda表达」至「6.3 Reactor」</li><li><b>第 43–49 章</b>——含「6.4 Spring W」至「第8章 Spring 5」</li><li><b>第 50–56 章</b>——含「8.1 Kotlin简介」至「9.3 JUnit 5」</li><li><b>第 57–63 章</b>——含「9.4 小 结」至「10.4 小 结」</li><li><b>第 64–70 章</b>——含「第11章 Spring集」至「第12章 Spring集」</li><li><b>第 71–77 章</b>——含「12.1 Spring、」至「13.3 JDBC方式使」</li><li><b>第 78–84 章</b>——含「13.4 Spring事」至「14.1 Redis单节」</li><li><b>第 85–91 章</b>——含「14.2 Redis支持」至「14.8 Redis缓存」</li><li><b>第 92–98 章</b>——含「14.9 小 结」至「15.5 ZooKeep」</li><li><b>第 99–105 章</b>——含「15.6 小 结」至「第17章 Spring集」</li><li><b>第 106–112 章</b>——含「17.1 Mycat分库」至「18.2 Shardin」</li><li><b>第 113–119 章</b>——含「18.3 Shardin」至「19.4 小 结」</li><li><b>第 120–126 章</b>——含「附录A 设计模式」至「A.6 适配器模式」</li><li><b>第 127–133 章</b>——含「A.7 桥接模式」至「A.13 代理模式」</li><li><b>第 134–140 章</b>——含「A.14 责任链模式」至「A.20 观察者模式」</li><li><b>第 141–146 章</b>——含「A.21 状态模式」至「参考文献」</li></ul></section>
-<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句 · 持续积累</h2><p class="mmx-mod-note">以下原句取自本书 AI 大纲落库的原文摘录（book_outline.quote），按大纲顺序节选，非 AI 生成；更多见逐章深读页。</p><ol class="mmx-qlist"><li><blockquote>「控制反转、依赖倒置和依赖注入三者之间的关系是：控制反转是一种软件设计模式，其遵循了软件工程中的依赖倒置原则；依赖注入是Spring框架实现控制反转的一种方式。」</blockquote><cite>本书正文</cite></li><li><blockquote>「横切关注点可以对某些方法进行拦截，拦截后对原方法进行增强处理。」</blockquote><cite>本书正文</cite></li><li><blockquote>「织入是把切面作用到目标对象，然后产生一个代理对象的过程。」</blockquote><cite>本书正文</cite></li><li><blockquote>「连接点是在程序执行过程中某个特定的点，比如某方法调用的时候或者处理异常的时候。由于Spring只支持方法类型的连接点，所以在Spring AOP中一个连接点总是表示一个方法的执行。」</blockquote><cite>本书正文</cite></li><li><blockquote>「切面就是对横切关注点的抽象，这个关注点可能会横切多个对象。」</blockquote><cite>本书正文</cite></li><li><blockquote>「Spring让开发人员有更多的精力投入到业务逻辑开发中，而不需要将其应用程序绑定到特定的部署环境，是为了降低企业应用开发的复杂性而创建的。」</blockquote><cite>本书正文</cite></li><li><blockquote>「控制：由谁控制，控制了什么？」</blockquote><cite>本书正文</cite></li><li><blockquote>「目标对象，被一个或者多个切面所通知的对象，即业务中需要进行增强的业务对象。」</blockquote><cite>本书正文</cite></li><li><blockquote>「依赖注入（DI，Dependency Injection）是Spring实现IoC容器的一种重要手段」</blockquote><cite>本书正文</cite></li></ol></section>
+<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点</h2><ul class="mmx-views"><li><b>第 1–7 章</b>——含「作者简介」至「读者对象」</li><li><b>第 8–14 章</b>——含「源代码下载」至「1.2 环境准备」</li><li><b>第 15–21 章</b>——含「1.3 快速搭建Spri」至「2.4 Spring I」</li><li><b>第 22–28 章</b>——含「2.5 小 结」至「3.5 Spring集成」</li><li><b>第 29–35 章</b>——含「3.6 Spring A」至「第5章 Java 8新特」</li><li><b>第 36–42 章</b>——含「5.1 Lambda表达」至「6.3 Reactor」</li><li><b>第 43–49 章</b>——含「6.4 Spring W」至「第8章 Spring 5」</li><li><b>第 50–56 章</b>——含「8.1 Kotlin简介」至「9.3 JUnit 5」</li><li><b>第 57–63 章</b>——含「9.4 小 结」至「10.4 小 结」</li><li><b>第 64–70 章</b>——含「第11章 Spring集」至「第12章 Spring集」</li><li><b>第 71–77 章</b>——含「12.1 Spring、」至「13.3 JDBC方式使」</li><li><b>第 78–84 章</b>——含「13.4 Spring事」至「14.1 Redis单节」</li><li><b>第 85–91 章</b>——含「14.2 Redis支持」至「14.8 Redis缓存」</li><li><b>第 92–98 章</b>——含「14.9 小 结」至「15.5 ZooKeep」</li><li><b>第 99–105 章</b>——含「15.6 小 结」至「第17章 Spring集」</li><li><b>第 106–112 章</b>——含「17.1 Mycat分库」至「18.2 Shardin」</li><li><b>第 113–119 章</b>——含「18.3 Shardin」至「19.4 小 结」</li><li><b>第 120–126 章</b>——含「附录A 设计模式」至「A.6 适配器模式」</li><li><b>第 127–133 章</b>——含「A.7 桥接模式」至「A.13 代理模式」</li><li><b>第 134–140 章</b>——含「A.14 责任链模式」至「A.20 观察者模式」</li><li><b>第 141–146 章</b>——含「A.21 状态模式」至「参考文献」</li></ul></section>
+<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句</h2><ol class="mmx-qlist"><li><blockquote>「控制反转、依赖倒置和依赖注入三者之间的关系是：控制反转是一种软件设计模式，其遵循了软件工程中的依赖倒置原则；依赖注入是Spring框架实现控制反转的一种方式。」</blockquote><cite>本书正文</cite></li><li><blockquote>「横切关注点可以对某些方法进行拦截，拦截后对原方法进行增强处理。」</blockquote><cite>本书正文</cite></li><li><blockquote>「织入是把切面作用到目标对象，然后产生一个代理对象的过程。」</blockquote><cite>本书正文</cite></li><li><blockquote>「连接点是在程序执行过程中某个特定的点，比如某方法调用的时候或者处理异常的时候。由于Spring只支持方法类型的连接点，所以在Spring AOP中一个连接点总是表示一个方法的执行。」</blockquote><cite>本书正文</cite></li><li><blockquote>「切面就是对横切关注点的抽象，这个关注点可能会横切多个对象。」</blockquote><cite>本书正文</cite></li><li><blockquote>「Spring让开发人员有更多的精力投入到业务逻辑开发中，而不需要将其应用程序绑定到特定的部署环境，是为了降低企业应用开发的复杂性而创建的。」</blockquote><cite>本书正文</cite></li><li><blockquote>「控制：由谁控制，控制了什么？」</blockquote><cite>本书正文</cite></li><li><blockquote>「目标对象，被一个或者多个切面所通知的对象，即业务中需要进行增强的业务对象。」</blockquote><cite>本书正文</cite></li><li><blockquote>「依赖注入（DI，Dependency Injection）是Spring实现IoC容器的一种重要手段」</blockquote><cite>本书正文</cite></li></ol></section>
 </body>
 </html>

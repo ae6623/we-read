@@ -6,46 +6,108 @@
 <title>《一生的读书计划》｜通读 · 精读</title>
 <link rel="stylesheet" href="../../../assets/css/reading-overview.css"><link rel="stylesheet" href="../../../assets/css/mmx-guide.css"><link rel="stylesheet" href="../../../assets/css/reading-outline.css">
 <style>
-/* 合并页外壳 */
-body{max-width:960px;margin:0 auto;padding:0 18px 80px;}
-.combined-head{padding:34px 0 18px;border-bottom:1px solid #e7e0d2;margin-bottom:8px;}
-.combined-head h1{font-size:26px;margin:0 0 10px;}
+/* ── 外壳与全局阅读节奏 ── */
+body{max-width:880px;margin:0 auto;padding:0 18px 80px;
+  font-size:15px;line-height:1.88;color:#3b453e;background:#f7f8f3;
+  -webkit-font-smoothing:antialiased;}
+.combined-head{padding:30px 0 16px;border-bottom:1px solid #e7e0d2;margin-bottom:4px;}
+.combined-head h1{font:700 23px/1.35 var(--serif);margin:0 0 8px;color:#244b40;}
+.combined-head .eyebrow{font-size:.72rem;letter-spacing:.14em;margin:0 0 6px;}
+.chips{margin:8px 0 0;}
+.chip{font-size:.72rem;padding:2px 10px;}
 /* 锚点导航：固定一排 4 个，等宽对齐 */
-.nav{position:sticky;top:0;z-index:20;background:rgba(255,253,248,.96);backdrop-filter:blur(6px);
-  border-bottom:1px solid #ece4d4;padding:10px 0;margin:14px 0 26px;display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;
-  box-shadow:0 2px 10px rgba(120,100,60,.06);}
-.navlink{font-size:12.5px;color:#5d5443;text-decoration:none;background:#f6f1e6;border:1px solid #e7ddca;
-  border-radius:7px;padding:4px 6px;text-align:center;white-space:nowrap;overflow:hidden;
-  text-overflow:ellipsis;}
-section{scroll-margin-top:64px;}
-/* 一句话主旨：去左侧竖线 */
-.mmx-oneline{border-left:none;padding-left:18px;}
-/* AI领读章内：AI 大纲原生深层样式 */
-.merged-guide .sec{margin:10px 0 14px;padding-left:6px;border-left:2px solid #e5e0d6}
-.merged-guide .sec h4{font:600 .98rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.6em 0 .3em}
-.merged-guide ul.point{margin:.3em 0;padding-left:20px}
-.merged-guide ul.point>li{margin:.35em 0}
-.merged-guide ul.quote{margin:.25em 0 .25em 20px;padding-left:18px;list-style:none}
-.merged-guide ul.quote::before{content:"原句";display:block;font-size:.72rem;color:#bf8247;
-  letter-spacing:.1em;margin:.15em 0 .1em;font-weight:600}
-.merged-guide ul.quote.quote-node{margin-top:.5em;padding-top:.4em;border-top:1px dashed #eadfc9}
+.nav{position:sticky;top:0;z-index:20;background:rgba(247,248,243,.96);backdrop-filter:blur(6px);
+  border-bottom:1px solid #ece4d4;padding:10px 0;margin:12px 0 20px;display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;
+  box-shadow:0 2px 10px rgba(120,100,60,.05);}
+.navlink{font-size:12px;color:#5d5443;text-decoration:none;background:#fdfbf3;border:1px solid #e8e2d2;
+  border-radius:8px;padding:6px 4px;text-align:center;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;transition:background .15s,color .15s;}
+.navlink:hover{background:#f2efe2;color:#244b40;}
+section{scroll-margin-top:62px;}
+
+/* ── 统一卡片：所有顶层模块（AI领读 / AI 问答 / 其余）一视同仁 ── */
+body>section.mmx-mod,body>section.card,body>section.mmx-svgwrap{
+  background:#fffdf6;border:1px solid #e8e4d5;border-radius:16px;
+  padding:18px 22px;margin:18px 0;
+  box-shadow:0 1px 3px rgba(110,95,60,.05);}
+body>section.mmx-mod>*:first-child,body>section.card>*:first-child,
+body>section.mmx-svgwrap>*:first-child{margin-top:0}
+body>section.mmx-mod>*:last-child,body>section.card>*:last-child,
+body>section.mmx-svgwrap>*:last-child{margin-bottom:0}
+/* 结构导图：图本身留白居中，不与正文抢宽 */
+body>section.mmx-svgwrap>svg.mmx-svg{display:block;width:100%;height:auto;margin:2px auto 0;}
+/* 模块标题：统一大小、弱强调，不与正文抢注意力 */
+body>section.mmx-mod>h2,body>section.card>h2{
+  font:700 1.04rem/1.5 var(--serif);color:#244b40;margin:0 0 11px;
+  padding-left:10px;border-left:3px solid #bf8247;letter-spacing:.01em;}
+/* 正文：字号收小、行距放宽、段间距舒服 */
+body>section.mmx-mod p,body>section.card p,
+body>section.mmx-mod li,body>section.card li{
+  font-size:.9rem;line-height:1.92;color:#4a4436;}
+body>section.mmx-mod p,body>section.card p{margin:.5em 0;}
+body>section.mmx-mod>ul,body>section.mmx-mod>ol,body>section.mmx-mod>div,
+body>section.mmx-mod>p:not(.mmx-mod-note),
+body>section.card:not(.merged-guide)>ul,body>section.card:not(.merged-guide)>ol,
+body>section.card:not(.merged-guide)>div,body>section.card:not(.merged-guide)>p:not(.mmx-mod-note){
+  padding-left:14px;}
+/* 模块说明小字：弱化不抢眼 */
+.mmx-mod-note{font-size:.75rem;color:#8d8878;margin:.1em 0 .75em;line-height:1.7;}
+
+/* ── 内部块统一：卡片里不再套深卡片，一律浅底子块 ── */
+body>section .mmx-pending,body>section .mmx-evib,body>section .aiqa-item{
+  background:#fbfaf2;border:1px solid #eee9d8;border-radius:12px;
+  padding:13px 16px;margin:.65em 0;}
+body>section .mmx-evib ul{padding-left:1.15em;}
+/* 一句话主旨：去左侧竖线 + 收敛字号 */
+.mmx-oneline{font-size:.98rem;line-height:1.85;color:#3a352c;margin:.2em 0 0;
+  padding:12px 16px;background:#fbfaf4;border-left:none;border-radius:12px;}
+/* 核心观点 / 验证清单：虚线分隔 + 收紧行距 */
+.mmx-views li{padding:.5em 0 .5em 0;font-size:.9rem;line-height:1.88;}
+/* 原文金句 */
+.mmx-qlist li{padding:.6em 0 .6em 2.2em;}
+.mmx-qlist blockquote{font-size:.89rem;line-height:1.9;}
+.mmx-qlist cite{font-size:.72rem;}
+/* 核心追问：问句加重、答句放松 */
+.mmx-qa{margin:.7em 0;padding-left:12px;border-left:3px solid #e5dfcd;}
+.mmx-qa .mmx-q{font-size:.9rem;font-weight:700;color:#2f3a33;line-height:1.8;margin:0 0 .25em;}
+.mmx-qa .mmx-a{font-size:.88rem;line-height:1.95;color:#4a4436;margin:0;}
+
+/* ── AI 问书专项：外层容器透明，问答条目才是阅读单元 ── */
+#mod-aiask .mmx-ask{background:transparent;border:0;border-radius:0;padding:0;margin:0;}
+#mod-aiask .aiqa-item{margin:.6em 0;padding:14px 16px 15px;}
+#mod-aiask .aiqa-item h3{font:700 .93rem/1.7 var(--serif);color:#2f5b49;margin:0 0 .4em;
+  padding:0;border:0;}
+#mod-aiask .aiqa-item h3:before{content:"问　";color:#bf8247;font-weight:700;}
+#mod-aiask .aiqa-item p{font-size:.88rem;line-height:1.95;color:#4a4436;margin:.4em 0;}
+#mod-aiask .aiqa-item ul{margin:.35em 0;padding-left:1.1em;}
+#mod-aiask .aiqa-item li{font-size:.87rem;line-height:1.88;margin:.18em 0;color:#4a4436;}
+#mod-aiask .aiqa-item li::marker{color:#c0a06a;}
+/* 逐章追问（details 形态）：摘要行也收敛 */
+.mmx-ask>summary{font-size:.87rem;line-height:1.7;padding:2px 0;}
+.mmx-askbody{font-size:.88rem;line-height:1.9;}
+
+/* AI领读章内：AI 大纲原生深层样式（字号同步收小） */
+.merged-guide .sec{margin:9px 0 12px;padding-left:6px;border-left:2px solid #e5e0d6}
+.merged-guide .sec h4{font:600 .93rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.5em 0 .25em}
+.merged-guide ul.point{margin:.25em 0;padding-left:20px}
+.merged-guide ul.point>li{margin:.3em 0}
+.merged-guide ul.quote{margin:.22em 0 .22em 20px;padding-left:18px;list-style:none}
+.merged-guide ul.quote::before{content:"原句";display:block;font-size:.7rem;color:#bf8247;
+  letter-spacing:.1em;margin:.12em 0 .08em;font-weight:600}
+.merged-guide ul.quote.quote-node{margin-top:.45em;padding-top:.35em;border-top:1px dashed #eadfc9}
 .merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
-.merged-guide ul.quote>li{color:#4a4436;font-size:.93rem;margin:.2em 0;padding-left:10px;border-left:2px solid #bf8247}
-/* 模块内子内容（AI领读除外，它有专属深层样式）：左缩进 + 正文与标题分层 */
-section.mmx-mod>ul,section.mmx-mod>ol,section.mmx-mod>div,
-section.mmx-mod>p:not(.mmx-mod-note),
-section.card:not(.merged-guide)>ul,section.card:not(.merged-guide)>ol,
-section.card:not(.merged-guide)>div,section.card:not(.merged-guide)>p:not(.mmx-mod-note){
-  padding-left:16px;}
-section.mmx-mod li,section.mmx-mod p:not(.mmx-mod-note),
-section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mod-note){
-  color:#4a4436;font-size:.93rem;line-height:1.78;}
+.merged-guide ul.quote>li{color:#4a4436;font-size:.88rem;line-height:1.85;margin:.18em 0;padding-left:10px;border-left:2px solid #bf8247}
 /* 核心观点初判：外链 mmx-guide.css 的「观点N」前缀是绝对定位，在本页版式里和标题叠字，
    且此前要求去掉「观点1/2/3」前缀 —— 这里整条关掉（外链 CSS 不在页面内，只能内联覆盖）。 */
 .mmx-views li{padding-left:0 !important;}
 .mmx-views li:before,.mmx-views li::before{
   content:none !important;display:none !important;counter-increment:none !important;}
+@media(max-width:720px){
+  body{padding:0 12px 60px;font-size:14.5px;}
+  body>section.mmx-mod,body>section.card{padding:15px 16px;border-radius:14px;}
+  .nav{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
 </style>
 </head>
 <body>
@@ -54,8 +116,8 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
   <h1>《一生的读书计划》</h1>
   <div class="chips"><span class="chip">通读 + 精读</span><span class="chip">AI领读</span><span class="chip">AI 生产</span></div>
 </header>
-<nav class="nav"><a class="navlink" href="#mod-svg">全书结构导图</a><a class="navlink" href="#mod-oneline">一句话主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a><a class="navlink" href="#mod-aiask">AI 问书</a><a class="navlink" href="#mod-coreask">核心追问</a><a class="navlink" href="#mod-higher">更高维度</a><a class="navlink" href="#mod-verify">阅读验证</a><a class="navlink" href="#mod-thennow">当年与今天</a><a class="navlink" href="#mod-quiz">读完自测</a></nav>
-<section class="mmx-svgwrap" id="mod-svg">
+<nav class="nav"><a class="navlink" href="#mod-svg">结构导图</a><a class="navlink" href="#mod-oneline">核心主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a><a class="navlink" href="#mod-aiask">AI 问书</a><a class="navlink" href="#mod-coreask">核心追问</a><a class="navlink" href="#mod-higher">更高维度</a><a class="navlink" href="#mod-verify">阅读验证</a><a class="navlink" href="#mod-thennow">往日今时</a><a class="navlink" href="#mod-quiz">读完自测</a></nav>
+<section class="mmx-svgwrap" id="mod-svg"><h2>结构导图</h2>
 <svg class="mmx-svg" viewBox="0 0 1120 716" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="一生的读书计划 全书精读">
 <rect x="0" y="0" width="1120" height="716" fill="none"/>
 <style>.mmx-svg text{font-family:"Noto Serif SC",Georgia,serif}.mmx-svg .t1{font-size:15px;fill:#2f2a24;font-weight:600}.mmx-svg .t2{font-size:12px;fill:#5c5347}.mmx-svg .t3{font-size:10.5px;fill:#8a8272}.mmx-svg .rt{font-size:13px;fill:#f7f3ea;font-weight:600}.mmx-svg .ln{stroke:#cfc6b4;stroke-width:1.4;fill:none}</style>
@@ -133,7 +195,7 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
 <text class="t2" x="714" y="615">含「现代作家」至「阿道斯·赫胥黎（1894」</text>
 <path class="ln" d="M692 619 L700 619"/>
 </svg></section>
-<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">一句话主旨</h2><p class="mmx-mod-note">本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。</p><p class="mmx-oneline">《一生的读书计划》共 70 章，按章序折成 10 段主干（第 1–7 章、第 8–14 章、第 15–21 章）；每章的要点与原句均逐字取自本书 AI 大纲，未做人工解读。</p></section>
+<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">核心主旨</h2><p class="mmx-oneline">《一生的读书计划》共 70 章，按章序折成 10 段主干（第 1–7 章、第 8–14 章、第 15–21 章）；每章的要点与原句均逐字取自本书 AI 大纲，未做人工解读。</p></section>
 <section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" id="mod-merged_guide"><h2 id="merged-guide-title">AI领读</h2>
 <style>
 /* merged_guide 章内：AI 大纲原生深层样式 */
@@ -5344,14 +5406,14 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
       </div></details>
   </div>
 </section>
-<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点初判</h2><p class="mmx-mod-note">按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。</p><ul class="mmx-views"><li><b>第 1–7 章</b>——含「内容提要」至「亚里士多德（384—32」</li><li><b>第 8–14 章</b>——含「埃斯库罗斯（525—45」至「中·世·纪」</li><li><b>第 15–21 章</b>——含「但丁（1265—1321」至「萧伯纳（1856—195」</li><li><b>第 22–28 章</b>——含「小说」至「爱弥丽·勃朗特（1818」</li><li><b>第 29–35 章</b>——含「狄更斯（1812—187」至「劳伦斯（1885—193」</li><li><b>第 36–42 章</b>——含「詹姆斯·乔伊斯（1882」至「福楼拜（1821—188」</li><li><b>第 43–49 章</b>——含「普鲁斯特（1871—19」至「塞万提斯（1547—16」</li><li><b>第 50–56 章</b>——含「果戈理（1809—185」至「华兹华斯（1770—18」</li><li><b>第 57–63 章</b>——含「柯勒律治（1772—18」至「亨利·亚当斯（1838—」</li><li><b>第 64–70 章</b>——含「现代作家」至「阿道斯·赫胥黎（1894」</li></ul></section>
-<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句 · 持续积累</h2><p class="mmx-mod-note">以下原句取自本书大纲落库的原文摘录，按大纲顺序节选，非 AI 生成；更多见逐章深读页。</p><ol class="mmx-qlist"><li><blockquote>「本书是费迪曼教授为18岁至80岁的爱书者所推荐的一张读书清单。」</blockquote><cite>内容提要</cite></li><li><blockquote>「本书是一册别拘一格、生动有趣、极富价值的世界名著导读。」</blockquote><cite>内容提要</cite></li><li><blockquote>「费迪曼教授是著名的广播和电视节目主持人、记者和专栏作家」</blockquote><cite>内容提要</cite></li><li><blockquote>「所选作品始于荷马，迄于现代，内容包罗万象，有戏剧、诗歌、小说、散文、历史、传记、自传等。」</blockquote><cite>内容提要</cite></li><li><blockquote>「费迪曼教授采取与读者简短对话的方式，对每一部作品及其作者，均用五百至一千字的篇幅进行勾勒」</blockquote><cite>内容提要</cite></li><li><blockquote>「费迪曼教授撰写此书只有一个目的，就是将读者引向知识的宝库，然后交给他们一把开门的钥匙」</blockquote><cite>内容提要</cite></li><li><blockquote>「让他们自己入库，自行取宝，自行享受这些宝藏的乐趣，从而成为一个智者。」</blockquote><cite>内容提要</cite></li><li><blockquote>「读者也需警惕一点，书中的观点，仅代表费迪曼教授的个人视角」</blockquote><cite>内容提要</cite></li><li><blockquote>「大凡读书，仁者见仁，智者见智。我们希望读者能够尽量保持自己的看法和理解，莫被大师牵着鼻子走。」</blockquote><cite>内容提要</cite></li><li><blockquote>「荷马可能生活在公元前八百至七百年间，也或者更早一些。」</blockquote><cite>古代</cite></li></ol></section>
-<section class="mmx-mod" aria-labelledby="aiask" id="mod-aiask"><h2 id="aiask">AI 问书</h2><p class="mmx-mod-note">下方内容为本书级 AI 问书整理，由云端 AI 阅读流程基于本书大纲、章节锚点与热门划线生成。</p><div class="mmx-qa"><p class="mmx-q">卡尔·凡·德兰说“所谓古典，就是无需重写的书”（56人划线），这个定义撑得住吗？</p><p class="mmx-a">按字面检验撑不住：《神曲》《浮士德》之后仍有无数重写，荷马史诗本身也是口头传统层累的结果。真正有价值的是它给出的判别方向——经典不是“没人敢改”，而是“改了也绕不开”：你尽可以重写俄底浦斯，却仍在与索福克利斯对话。当作“影响力的稳定性”来理解，比当作文本的唯一性更准。</p></div><div class="mmx-qa"><p class="mmx-q">全书最反直觉的一条阅读建议是什么？</p><p class="mmx-a">72人划的那条：“你读希罗多德时可以随意洒脱，但在读修昔底德时，你必须正襟危坐。读亚里士多德时，你应放慢一点速度，但遇到《欧第伯》，你花上一个晚上就能享受。”它把“怎么读”排在“读什么”之前：同为史书，希罗多德可当故事翻，修昔底德必须逐句读，因为后者有论证结构。</p></div><div class="mmx-qa"><p class="mmx-q">如果只保留一条选书标准，书里给的是哪一条？</p><p class="mmx-a">77人划的三条：“一是有益于读者，二是超越时空，三是读者感兴趣或极有阅读价值。”其中真正可执行的是第一条和第三条，它们把判断权放在“你”身上；“超越时空”只能事后追认，无法事前筛选。所以正确用法是把432人划的“莫被大师牵着鼻子走”当使用说明，而不是客套。</p></div></section>
-<section class="mmx-mod" aria-labelledby="coreask" id="mod-coreask"><h2 id="coreask">核心追问（来自深读）</h2><p class="mmx-mod-note">跨章主题的深读追问，由云端 AI 阅读流程基于全书大纲、章节锚点与热门划线撰写；逐章的追问收在每个章条目里。</p><div class="mmx-qa"><p class="mmx-q">作者一边断言“在这个世界上，根本不存在‘最好的书’”（65人划线），一边又开了一份“一生”的书单，这不矛盾吗？</p><p class="mmx-a">不矛盾，因为它的自我定位是地图，不是判决书。169人划的那条说得直白：把读者引到书店、图书馆门口，交一把钥匙，让他“自己入库，自行取宝”。所以126人划的“并不意味着清单里的每一本书都是这个世界上的‘最好的书’”不是客套，而是免责条款，也是方法论。</p></div><div class="mmx-qa"><p class="mmx-q">这份选目的边界在哪里？最大盲区作者自己承认了吗？</p><p class="mmx-a">承认了，而且毫无保留：156人划的那条写明“我的书单里也没有出现东方的巨著……我认为，迄至目前为止，典范我们精神的仍是西方的理念”。70人划的那条收得更死——诗人除英语国家外只留荷马、希腊悲剧作家、维吉尔、但丁、莫里哀、歌德。可迁移的是“如何导读”，不是“读什么”。</p></div><div class="mmx-qa"><p class="mmx-q">“知己不必见面，见面未必知己”（315人划线）是全书最动人的一句，它的逻辑漏洞在哪？</p><p class="mmx-a">它偷换了“理解”与“关系”。能读懂一本书不等于与作者互为知己——何况书中人物多属虚构。作者自己给出了修补：121人划的“要不断地感受现实，向生活学习，否则……就永远不会领悟他们，并因之陷入莫须有的苦恼”。书单解决不了阅历问题。</p></div></section>
-<section class="mmx-mod" aria-labelledby="higher" id="mod-higher"><h2 id="higher">用更高维度的知识看这本书</h2><p class="mmx-mod-note">下方内容由云端 AI 阅读流程生成：把本书放回知识史与理论框架中重读，区分书中主张、外部证据与综合分析。</p><p>【书中主张】费迪曼把清单按“古代—中·世·纪—戏剧—小说”排开，起点是荷马，并断言“荷马之后，再也没有荷马”（85人划线）；他把《伊里亚特》读成“描述人类愚行——战争——的最伟大故事”，中心人物阿基力斯是“西方世界里的第一位传奇英雄”，又把《奥德赛》读成“知性的力量”（98人划线），称它可能是“最早的冒险故事，也是最早的写实小说”。【外部证据】这个排序本身即是一种知识史立场：它与二十世纪中叶美国“西方文明”通识课程体系同源，与艾略特关于“经典”的论述一脉，后来在布鲁姆的“西方正典”论述中得到最著名的重申。【综合分析】值得注意的是，书里给古典的替代定义——“所谓古典，就是无需重写的书”——其实与“始于荷马”的线性叙事互相拉扯：前者是共时的影响力判据，后者是历时的起源叙事。这本书今天仍读得下去，靠的是前者的导读技术，而不是后者的宏大框架。</p><p>【书中主张】作者自陈“典范我们精神的仍是西方的理念”（156人划线），并据此把东方巨著排除在选目之外。【外部证据】今天检验这一判断有两条可查的路线：一是全球史与后殖民研究对“西方文明”课程谱系的系谱学考察，它显示这套正典形成于特定的制度与年代；二是比较文学界对“世界文学”书目构成的实证统计（翻译流通量、各国课程标准、教材选目），其分布与本书选目差异显著。【综合分析】结论因此要分层：在“如何把一本书介绍给别人”这一层，本书的技术今天仍然有效——每部作品及其作者用五百至一千字勾勒，时而强调作者生涯与人品，时而摘要叙述内容，时而援引权威点评，时而劝读者拨开迷雾莫为错误见解所惑，时而对莎翁、歌德做出新评价；在“选谁”这一层，它绑定的是1950—60年代美国通识教育的共识，需要读者用自己的清单去覆盖。</p></section>
-<section class="mmx-mod" aria-labelledby="verify" id="mod-verify"><h2 id="verify">阅读时要验证的问题</h2><p class="mmx-mod-note">下方由云端 AI 阅读流程生成：读时需核对的原文、数字与论点（关键数据出处、个案代表性、类比限度）。</p><ul class="mmx-views"><li>版本差异需核对：《一生的读书计划》英文原版有多个版次，费迪曼后期曾与合作人大幅修订、增补了东方与拉美作品并重排次序；中文版所依据的底本与年份需核对。大纲“内容提要”中“精选了一百多种古今世界名著”“所选作品始于荷马，迄于现代”的说法具体对应哪一版，引用时须注明版次。</li><li>选目取舍与自陈偏差需核对：156人划的那条明确表示不收东方巨著，70人划的那条又把诗人限于荷马、希腊悲剧作家、维吉尔、但丁、莫里哀、歌德。需调取对应版次的完整目录，确认是否确无《源氏物语》《红楼梦》《一千零一夜》等，以及“小说”部分（大纲在此截断）到底收了哪些非西方作品。</li><li>生卒年与引文出处需核对：书中给希罗多德（484—424BC）、修昔底德（460—400BC）、埃斯库罗斯（525—456BC）等生卒年，属通行旧说，需与现代学术版年表核对；另234人划的“不能记起过去的人，注定要重蹈覆辙”常被归于桑塔亚那，但该句的确切原文与出处存在争议，引用前须核对。</li></ul></section>
-<section class="mmx-mod" aria-labelledby="thennow" id="mod-thennow"><h2 id="thennow">当年与今天 · 初步对照</h2><p class="mmx-mod-note">下方由云端 AI 阅读流程生成：区分作者当年所能知晓与后来才显现的事实，给出今日可迁移的启发。</p><p>【作者当年所能知晓】费迪曼的身份是广播与电视节目主持人、记者和专栏作家，他面对的是战后美国中产读者的自学需求，所谓“知识的宝库”只能是书店与公共图书馆；他把《伊里亚特》读成战争愚行、把《奥德赛》读成知性的力量，带着二战与冷战的直接经验。96人划的那句“读者真要完全读完，也许需要五十年”，也是一个以纸质书、以稳定闲暇为前提的估算。【后来才显现的事实】后来出现的是他未及计入的三件事：正典之争在1980年代后成为公共议题，选目不再有天然共识；翻译与数字文本大幅降低了非西方作品的获取成本，当年“看不到”的理由不再成立；而“读完”这件事本身被检索、摘要与音频重写，清单从路线图变成了可跳过的清单。</p><p>【可迁移的启发】第一条是把“选目”与“方法”分开继承：选目有明确的年代与地域边界，方法却可以照搬——为一本书写五百到一千字的介绍，在作者生平、内容摘要、他人评价、破除误解、重新评价这五种笔法之间来回切换，比列一张“必读书单”有用得多。第二条来自192人划的那句“好书只是一面镜子，它的伟大在于它可使你反观自身”：把阅读的产出定义成“发现你自己，提升你自己”，而不是“完成清单”。若非要以完成为目标，那65人划的“在这个世界上，根本不存在‘最好的书’”应当是记住的第一条——它同时是这份书单的起点和它的解药。</p></section>
-<section class="card quiz-card" id="mod-quiz"><h2>全书思考 3 问</h2>
+<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点</h2><ul class="mmx-views"><li><b>第 1–7 章</b>——含「内容提要」至「亚里士多德（384—32」</li><li><b>第 8–14 章</b>——含「埃斯库罗斯（525—45」至「中·世·纪」</li><li><b>第 15–21 章</b>——含「但丁（1265—1321」至「萧伯纳（1856—195」</li><li><b>第 22–28 章</b>——含「小说」至「爱弥丽·勃朗特（1818」</li><li><b>第 29–35 章</b>——含「狄更斯（1812—187」至「劳伦斯（1885—193」</li><li><b>第 36–42 章</b>——含「詹姆斯·乔伊斯（1882」至「福楼拜（1821—188」</li><li><b>第 43–49 章</b>——含「普鲁斯特（1871—19」至「塞万提斯（1547—16」</li><li><b>第 50–56 章</b>——含「果戈理（1809—185」至「华兹华斯（1770—18」</li><li><b>第 57–63 章</b>——含「柯勒律治（1772—18」至「亨利·亚当斯（1838—」</li><li><b>第 64–70 章</b>——含「现代作家」至「阿道斯·赫胥黎（1894」</li></ul></section>
+<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句</h2><ol class="mmx-qlist"><li><blockquote>「本书是费迪曼教授为18岁至80岁的爱书者所推荐的一张读书清单。」</blockquote><cite>内容提要</cite></li><li><blockquote>「本书是一册别拘一格、生动有趣、极富价值的世界名著导读。」</blockquote><cite>内容提要</cite></li><li><blockquote>「费迪曼教授是著名的广播和电视节目主持人、记者和专栏作家」</blockquote><cite>内容提要</cite></li><li><blockquote>「所选作品始于荷马，迄于现代，内容包罗万象，有戏剧、诗歌、小说、散文、历史、传记、自传等。」</blockquote><cite>内容提要</cite></li><li><blockquote>「费迪曼教授采取与读者简短对话的方式，对每一部作品及其作者，均用五百至一千字的篇幅进行勾勒」</blockquote><cite>内容提要</cite></li><li><blockquote>「费迪曼教授撰写此书只有一个目的，就是将读者引向知识的宝库，然后交给他们一把开门的钥匙」</blockquote><cite>内容提要</cite></li><li><blockquote>「让他们自己入库，自行取宝，自行享受这些宝藏的乐趣，从而成为一个智者。」</blockquote><cite>内容提要</cite></li><li><blockquote>「读者也需警惕一点，书中的观点，仅代表费迪曼教授的个人视角」</blockquote><cite>内容提要</cite></li><li><blockquote>「大凡读书，仁者见仁，智者见智。我们希望读者能够尽量保持自己的看法和理解，莫被大师牵着鼻子走。」</blockquote><cite>内容提要</cite></li><li><blockquote>「荷马可能生活在公元前八百至七百年间，也或者更早一些。」</blockquote><cite>古代</cite></li></ol></section>
+<section class="mmx-mod" aria-labelledby="aiask" id="mod-aiask"><h2 id="aiask">AI 问书</h2><div class="mmx-qa"><p class="mmx-q">卡尔·凡·德兰说“所谓古典，就是无需重写的书”（56人划线），这个定义撑得住吗？</p><p class="mmx-a">按字面检验撑不住：《神曲》《浮士德》之后仍有无数重写，荷马史诗本身也是口头传统层累的结果。真正有价值的是它给出的判别方向——经典不是“没人敢改”，而是“改了也绕不开”：你尽可以重写俄底浦斯，却仍在与索福克利斯对话。当作“影响力的稳定性”来理解，比当作文本的唯一性更准。</p></div><div class="mmx-qa"><p class="mmx-q">全书最反直觉的一条阅读建议是什么？</p><p class="mmx-a">72人划的那条：“你读希罗多德时可以随意洒脱，但在读修昔底德时，你必须正襟危坐。读亚里士多德时，你应放慢一点速度，但遇到《欧第伯》，你花上一个晚上就能享受。”它把“怎么读”排在“读什么”之前：同为史书，希罗多德可当故事翻，修昔底德必须逐句读，因为后者有论证结构。</p></div><div class="mmx-qa"><p class="mmx-q">如果只保留一条选书标准，书里给的是哪一条？</p><p class="mmx-a">77人划的三条：“一是有益于读者，二是超越时空，三是读者感兴趣或极有阅读价值。”其中真正可执行的是第一条和第三条，它们把判断权放在“你”身上；“超越时空”只能事后追认，无法事前筛选。所以正确用法是把432人划的“莫被大师牵着鼻子走”当使用说明，而不是客套。</p></div></section>
+<section class="mmx-mod" aria-labelledby="coreask" id="mod-coreask"><h2 id="coreask">核心追问</h2><div class="mmx-qa"><p class="mmx-q">作者一边断言“在这个世界上，根本不存在‘最好的书’”（65人划线），一边又开了一份“一生”的书单，这不矛盾吗？</p><p class="mmx-a">不矛盾，因为它的自我定位是地图，不是判决书。169人划的那条说得直白：把读者引到书店、图书馆门口，交一把钥匙，让他“自己入库，自行取宝”。所以126人划的“并不意味着清单里的每一本书都是这个世界上的‘最好的书’”不是客套，而是免责条款，也是方法论。</p></div><div class="mmx-qa"><p class="mmx-q">这份选目的边界在哪里？最大盲区作者自己承认了吗？</p><p class="mmx-a">承认了，而且毫无保留：156人划的那条写明“我的书单里也没有出现东方的巨著……我认为，迄至目前为止，典范我们精神的仍是西方的理念”。70人划的那条收得更死——诗人除英语国家外只留荷马、希腊悲剧作家、维吉尔、但丁、莫里哀、歌德。可迁移的是“如何导读”，不是“读什么”。</p></div><div class="mmx-qa"><p class="mmx-q">“知己不必见面，见面未必知己”（315人划线）是全书最动人的一句，它的逻辑漏洞在哪？</p><p class="mmx-a">它偷换了“理解”与“关系”。能读懂一本书不等于与作者互为知己——何况书中人物多属虚构。作者自己给出了修补：121人划的“要不断地感受现实，向生活学习，否则……就永远不会领悟他们，并因之陷入莫须有的苦恼”。书单解决不了阅历问题。</p></div></section>
+<section class="mmx-mod" aria-labelledby="higher" id="mod-higher"><h2 id="higher">更高维度</h2><p>【书中主张】费迪曼把清单按“古代—中·世·纪—戏剧—小说”排开，起点是荷马，并断言“荷马之后，再也没有荷马”（85人划线）；他把《伊里亚特》读成“描述人类愚行——战争——的最伟大故事”，中心人物阿基力斯是“西方世界里的第一位传奇英雄”，又把《奥德赛》读成“知性的力量”（98人划线），称它可能是“最早的冒险故事，也是最早的写实小说”。【外部证据】这个排序本身即是一种知识史立场：它与二十世纪中叶美国“西方文明”通识课程体系同源，与艾略特关于“经典”的论述一脉，后来在布鲁姆的“西方正典”论述中得到最著名的重申。【综合分析】值得注意的是，书里给古典的替代定义——“所谓古典，就是无需重写的书”——其实与“始于荷马”的线性叙事互相拉扯：前者是共时的影响力判据，后者是历时的起源叙事。这本书今天仍读得下去，靠的是前者的导读技术，而不是后者的宏大框架。</p><p>【书中主张】作者自陈“典范我们精神的仍是西方的理念”（156人划线），并据此把东方巨著排除在选目之外。【外部证据】今天检验这一判断有两条可查的路线：一是全球史与后殖民研究对“西方文明”课程谱系的系谱学考察，它显示这套正典形成于特定的制度与年代；二是比较文学界对“世界文学”书目构成的实证统计（翻译流通量、各国课程标准、教材选目），其分布与本书选目差异显著。【综合分析】结论因此要分层：在“如何把一本书介绍给别人”这一层，本书的技术今天仍然有效——每部作品及其作者用五百至一千字勾勒，时而强调作者生涯与人品，时而摘要叙述内容，时而援引权威点评，时而劝读者拨开迷雾莫为错误见解所惑，时而对莎翁、歌德做出新评价；在“选谁”这一层，它绑定的是1950—60年代美国通识教育的共识，需要读者用自己的清单去覆盖。</p></section>
+<section class="mmx-mod" aria-labelledby="verify" id="mod-verify"><h2 id="verify">阅读验证</h2><ul class="mmx-views"><li>版本差异需核对：《一生的读书计划》英文原版有多个版次，费迪曼后期曾与合作人大幅修订、增补了东方与拉美作品并重排次序；中文版所依据的底本与年份需核对。大纲“内容提要”中“精选了一百多种古今世界名著”“所选作品始于荷马，迄于现代”的说法具体对应哪一版，引用时须注明版次。</li><li>选目取舍与自陈偏差需核对：156人划的那条明确表示不收东方巨著，70人划的那条又把诗人限于荷马、希腊悲剧作家、维吉尔、但丁、莫里哀、歌德。需调取对应版次的完整目录，确认是否确无《源氏物语》《红楼梦》《一千零一夜》等，以及“小说”部分（大纲在此截断）到底收了哪些非西方作品。</li><li>生卒年与引文出处需核对：书中给希罗多德（484—424BC）、修昔底德（460—400BC）、埃斯库罗斯（525—456BC）等生卒年，属通行旧说，需与现代学术版年表核对；另234人划的“不能记起过去的人，注定要重蹈覆辙”常被归于桑塔亚那，但该句的确切原文与出处存在争议，引用前须核对。</li></ul></section>
+<section class="mmx-mod" aria-labelledby="thennow" id="mod-thennow"><h2 id="thennow">往日今时</h2><p>【作者当年所能知晓】费迪曼的身份是广播与电视节目主持人、记者和专栏作家，他面对的是战后美国中产读者的自学需求，所谓“知识的宝库”只能是书店与公共图书馆；他把《伊里亚特》读成战争愚行、把《奥德赛》读成知性的力量，带着二战与冷战的直接经验。96人划的那句“读者真要完全读完，也许需要五十年”，也是一个以纸质书、以稳定闲暇为前提的估算。【后来才显现的事实】后来出现的是他未及计入的三件事：正典之争在1980年代后成为公共议题，选目不再有天然共识；翻译与数字文本大幅降低了非西方作品的获取成本，当年“看不到”的理由不再成立；而“读完”这件事本身被检索、摘要与音频重写，清单从路线图变成了可跳过的清单。</p><p>【可迁移的启发】第一条是把“选目”与“方法”分开继承：选目有明确的年代与地域边界，方法却可以照搬——为一本书写五百到一千字的介绍，在作者生平、内容摘要、他人评价、破除误解、重新评价这五种笔法之间来回切换，比列一张“必读书单”有用得多。第二条来自192人划的那句“好书只是一面镜子，它的伟大在于它可使你反观自身”：把阅读的产出定义成“发现你自己，提升你自己”，而不是“完成清单”。若非要以完成为目标，那65人划的“在这个世界上，根本不存在‘最好的书’”应当是记住的第一条——它同时是这份书单的起点和它的解药。</p></section>
+<section class="card quiz-card" id="mod-quiz"><h2>读完自测</h2>
 <ol>
 <li>书里最让你「原来如此」的一个概念或事实是什么？它推翻了你原来的哪个认知？</li><li>如果把全书压缩成一条建议，你会怎么写？它成立的前提条件是什么？</li><li>读完之后，你对书名的理解和翻开前有什么不同？</li>
 </ol><div class="quiz-ans"><h3>AI 补答（AI 问书）</h3><div class="aiqa-item"><h3>书里最让你「原来如此」的一个概念或事实是什么？它推翻了你原来的哪个认知？</h3><p>最「原来如此」的是费迪曼对「读懂」的定义：每篇导读只用五百到一千字，却坚持回答「这部作品为什么重要、该怎么读它」——比如读《伊利亚特》，重点不是背情节，而是看人类暴行（战争）如何被写成最伟大的故事。这推翻了「经典导读必须长篇大论」的预设：书单的价值不在「全」，而在告诉你从哪本下手、读到什么程度算读懂。另外，荷马生平不可考（连出生地都只能推断）却作品不朽，也顺带推翻了「先懂作者再懂作品」的惯性认知——伟大的文本自己站得住。</p></div><div class="aiqa-item"><h3>如果把全书压缩成一条建议，你会怎么写？它成立的前提条件是什么？</h3><p>一条建议：「把这张书单当地图，别当任务清单——每年挑一两部真正想读的，配合费迪曼的导读进入；读不下去就换下一部，导读只是钥匙，入库取宝靠你自己。」（书里原话大意：将读者引向知识宝库，然后交给他们一把开门的钥匙。）成立的前提有两个：一是接受经典阅读是数年的长线而非一次冲刺——本书覆盖一百多种名著、始于荷马迄于现代，本就是「一生的」尺度；二是愿意在导读与原文之间来回对照——费迪曼反复强调评点不能替代原作，且书中的观点仅代表他个人的视角，读者要保持自己的理解。</p></div><div class="aiqa-item"><h3>读完之后，你对书名的理解和翻开前有什么不同？</h3><p>翻开前以为这是「必读书目打卡表」，重点在「读书」；读完才明白重点在「一生的计划」——它计划的对象是你的一生，而不是一份假期作业。按年代编排（古代 → 中世纪 → 小说时代 → 现代）本身就是一部西方心灵史的路线图，让你在不同人生阶段可以反复回到同一批书，每次读到的都不一样。所谓「计划」也不是按序完成，而是给一生安排一个可以随时启程、随时绕行的阅读节奏。</p></div></div></section>

@@ -6,46 +6,108 @@
 <title>《100个人生遗愿》｜通读 · 精读</title>
 <link rel="stylesheet" href="../../../assets/css/reading-overview.css"><link rel="stylesheet" href="../../../assets/css/mmx-guide.css"><link rel="stylesheet" href="../../../assets/css/reading-outline.css">
 <style>
-/* 合并页外壳 */
-body{max-width:960px;margin:0 auto;padding:0 18px 80px;}
-.combined-head{padding:34px 0 18px;border-bottom:1px solid #e7e0d2;margin-bottom:8px;}
-.combined-head h1{font-size:26px;margin:0 0 10px;}
+/* ── 外壳与全局阅读节奏 ── */
+body{max-width:880px;margin:0 auto;padding:0 18px 80px;
+  font-size:15px;line-height:1.88;color:#3b453e;background:#f7f8f3;
+  -webkit-font-smoothing:antialiased;}
+.combined-head{padding:30px 0 16px;border-bottom:1px solid #e7e0d2;margin-bottom:4px;}
+.combined-head h1{font:700 23px/1.35 var(--serif);margin:0 0 8px;color:#244b40;}
+.combined-head .eyebrow{font-size:.72rem;letter-spacing:.14em;margin:0 0 6px;}
+.chips{margin:8px 0 0;}
+.chip{font-size:.72rem;padding:2px 10px;}
 /* 锚点导航：固定一排 4 个，等宽对齐 */
-.nav{position:sticky;top:0;z-index:20;background:rgba(255,253,248,.96);backdrop-filter:blur(6px);
-  border-bottom:1px solid #ece4d4;padding:10px 0;margin:14px 0 26px;display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;
-  box-shadow:0 2px 10px rgba(120,100,60,.06);}
-.navlink{font-size:12.5px;color:#5d5443;text-decoration:none;background:#f6f1e6;border:1px solid #e7ddca;
-  border-radius:7px;padding:4px 6px;text-align:center;white-space:nowrap;overflow:hidden;
-  text-overflow:ellipsis;}
-section{scroll-margin-top:64px;}
-/* 一句话主旨：去左侧竖线 */
-.mmx-oneline{border-left:none;padding-left:18px;}
-/* AI领读章内：AI 大纲原生深层样式 */
-.merged-guide .sec{margin:10px 0 14px;padding-left:6px;border-left:2px solid #e5e0d6}
-.merged-guide .sec h4{font:600 .98rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.6em 0 .3em}
-.merged-guide ul.point{margin:.3em 0;padding-left:20px}
-.merged-guide ul.point>li{margin:.35em 0}
-.merged-guide ul.quote{margin:.25em 0 .25em 20px;padding-left:18px;list-style:none}
-.merged-guide ul.quote::before{content:"原句";display:block;font-size:.72rem;color:#bf8247;
-  letter-spacing:.1em;margin:.15em 0 .1em;font-weight:600}
-.merged-guide ul.quote.quote-node{margin-top:.5em;padding-top:.4em;border-top:1px dashed #eadfc9}
+.nav{position:sticky;top:0;z-index:20;background:rgba(247,248,243,.96);backdrop-filter:blur(6px);
+  border-bottom:1px solid #ece4d4;padding:10px 0;margin:12px 0 20px;display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;
+  box-shadow:0 2px 10px rgba(120,100,60,.05);}
+.navlink{font-size:12px;color:#5d5443;text-decoration:none;background:#fdfbf3;border:1px solid #e8e2d2;
+  border-radius:8px;padding:6px 4px;text-align:center;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;transition:background .15s,color .15s;}
+.navlink:hover{background:#f2efe2;color:#244b40;}
+section{scroll-margin-top:62px;}
+
+/* ── 统一卡片：所有顶层模块（AI领读 / AI 问答 / 其余）一视同仁 ── */
+body>section.mmx-mod,body>section.card,body>section.mmx-svgwrap{
+  background:#fffdf6;border:1px solid #e8e4d5;border-radius:16px;
+  padding:18px 22px;margin:18px 0;
+  box-shadow:0 1px 3px rgba(110,95,60,.05);}
+body>section.mmx-mod>*:first-child,body>section.card>*:first-child,
+body>section.mmx-svgwrap>*:first-child{margin-top:0}
+body>section.mmx-mod>*:last-child,body>section.card>*:last-child,
+body>section.mmx-svgwrap>*:last-child{margin-bottom:0}
+/* 结构导图：图本身留白居中，不与正文抢宽 */
+body>section.mmx-svgwrap>svg.mmx-svg{display:block;width:100%;height:auto;margin:2px auto 0;}
+/* 模块标题：统一大小、弱强调，不与正文抢注意力 */
+body>section.mmx-mod>h2,body>section.card>h2{
+  font:700 1.04rem/1.5 var(--serif);color:#244b40;margin:0 0 11px;
+  padding-left:10px;border-left:3px solid #bf8247;letter-spacing:.01em;}
+/* 正文：字号收小、行距放宽、段间距舒服 */
+body>section.mmx-mod p,body>section.card p,
+body>section.mmx-mod li,body>section.card li{
+  font-size:.9rem;line-height:1.92;color:#4a4436;}
+body>section.mmx-mod p,body>section.card p{margin:.5em 0;}
+body>section.mmx-mod>ul,body>section.mmx-mod>ol,body>section.mmx-mod>div,
+body>section.mmx-mod>p:not(.mmx-mod-note),
+body>section.card:not(.merged-guide)>ul,body>section.card:not(.merged-guide)>ol,
+body>section.card:not(.merged-guide)>div,body>section.card:not(.merged-guide)>p:not(.mmx-mod-note){
+  padding-left:14px;}
+/* 模块说明小字：弱化不抢眼 */
+.mmx-mod-note{font-size:.75rem;color:#8d8878;margin:.1em 0 .75em;line-height:1.7;}
+
+/* ── 内部块统一：卡片里不再套深卡片，一律浅底子块 ── */
+body>section .mmx-pending,body>section .mmx-evib,body>section .aiqa-item{
+  background:#fbfaf2;border:1px solid #eee9d8;border-radius:12px;
+  padding:13px 16px;margin:.65em 0;}
+body>section .mmx-evib ul{padding-left:1.15em;}
+/* 一句话主旨：去左侧竖线 + 收敛字号 */
+.mmx-oneline{font-size:.98rem;line-height:1.85;color:#3a352c;margin:.2em 0 0;
+  padding:12px 16px;background:#fbfaf4;border-left:none;border-radius:12px;}
+/* 核心观点 / 验证清单：虚线分隔 + 收紧行距 */
+.mmx-views li{padding:.5em 0 .5em 0;font-size:.9rem;line-height:1.88;}
+/* 原文金句 */
+.mmx-qlist li{padding:.6em 0 .6em 2.2em;}
+.mmx-qlist blockquote{font-size:.89rem;line-height:1.9;}
+.mmx-qlist cite{font-size:.72rem;}
+/* 核心追问：问句加重、答句放松 */
+.mmx-qa{margin:.7em 0;padding-left:12px;border-left:3px solid #e5dfcd;}
+.mmx-qa .mmx-q{font-size:.9rem;font-weight:700;color:#2f3a33;line-height:1.8;margin:0 0 .25em;}
+.mmx-qa .mmx-a{font-size:.88rem;line-height:1.95;color:#4a4436;margin:0;}
+
+/* ── AI 问书专项：外层容器透明，问答条目才是阅读单元 ── */
+#mod-aiask .mmx-ask{background:transparent;border:0;border-radius:0;padding:0;margin:0;}
+#mod-aiask .aiqa-item{margin:.6em 0;padding:14px 16px 15px;}
+#mod-aiask .aiqa-item h3{font:700 .93rem/1.7 var(--serif);color:#2f5b49;margin:0 0 .4em;
+  padding:0;border:0;}
+#mod-aiask .aiqa-item h3:before{content:"问　";color:#bf8247;font-weight:700;}
+#mod-aiask .aiqa-item p{font-size:.88rem;line-height:1.95;color:#4a4436;margin:.4em 0;}
+#mod-aiask .aiqa-item ul{margin:.35em 0;padding-left:1.1em;}
+#mod-aiask .aiqa-item li{font-size:.87rem;line-height:1.88;margin:.18em 0;color:#4a4436;}
+#mod-aiask .aiqa-item li::marker{color:#c0a06a;}
+/* 逐章追问（details 形态）：摘要行也收敛 */
+.mmx-ask>summary{font-size:.87rem;line-height:1.7;padding:2px 0;}
+.mmx-askbody{font-size:.88rem;line-height:1.9;}
+
+/* AI领读章内：AI 大纲原生深层样式（字号同步收小） */
+.merged-guide .sec{margin:9px 0 12px;padding-left:6px;border-left:2px solid #e5e0d6}
+.merged-guide .sec h4{font:600 .93rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.5em 0 .25em}
+.merged-guide ul.point{margin:.25em 0;padding-left:20px}
+.merged-guide ul.point>li{margin:.3em 0}
+.merged-guide ul.quote{margin:.22em 0 .22em 20px;padding-left:18px;list-style:none}
+.merged-guide ul.quote::before{content:"原句";display:block;font-size:.7rem;color:#bf8247;
+  letter-spacing:.1em;margin:.12em 0 .08em;font-weight:600}
+.merged-guide ul.quote.quote-node{margin-top:.45em;padding-top:.35em;border-top:1px dashed #eadfc9}
 .merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
-.merged-guide ul.quote>li{color:#4a4436;font-size:.93rem;margin:.2em 0;padding-left:10px;border-left:2px solid #bf8247}
-/* 模块内子内容（AI领读除外，它有专属深层样式）：左缩进 + 正文与标题分层 */
-section.mmx-mod>ul,section.mmx-mod>ol,section.mmx-mod>div,
-section.mmx-mod>p:not(.mmx-mod-note),
-section.card:not(.merged-guide)>ul,section.card:not(.merged-guide)>ol,
-section.card:not(.merged-guide)>div,section.card:not(.merged-guide)>p:not(.mmx-mod-note){
-  padding-left:16px;}
-section.mmx-mod li,section.mmx-mod p:not(.mmx-mod-note),
-section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mod-note){
-  color:#4a4436;font-size:.93rem;line-height:1.78;}
+.merged-guide ul.quote>li{color:#4a4436;font-size:.88rem;line-height:1.85;margin:.18em 0;padding-left:10px;border-left:2px solid #bf8247}
 /* 核心观点初判：外链 mmx-guide.css 的「观点N」前缀是绝对定位，在本页版式里和标题叠字，
    且此前要求去掉「观点1/2/3」前缀 —— 这里整条关掉（外链 CSS 不在页面内，只能内联覆盖）。 */
 .mmx-views li{padding-left:0 !important;}
 .mmx-views li:before,.mmx-views li::before{
   content:none !important;display:none !important;counter-increment:none !important;}
+@media(max-width:720px){
+  body{padding:0 12px 60px;font-size:14.5px;}
+  body>section.mmx-mod,body>section.card{padding:15px 16px;border-radius:14px;}
+  .nav{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
 </style>
 </head>
 <body>
@@ -54,9 +116,9 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
   <h1>《100个人生遗愿》</h1>
   <div class="chips"><span class="chip">通读 + 精读</span><span class="chip">AI领读</span><span class="chip">AI 生产</span></div>
 </header>
-<nav class="nav"><a class="navlink" href="#mod-svg">全书结构导图</a><a class="navlink" href="#mod-oneline">一句话主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-coreask">核心追问</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a><a class="navlink" href="#mod-aiask">AI 问书</a><a class="navlink" href="#mod-higher">更高维度</a><a class="navlink" href="#mod-verify">阅读验证</a><a class="navlink" href="#mod-thennow">当年与今天</a></nav>
-<section class="mmx-svgwrap" id="mod-svg"><svg class="mmx-svg" viewBox="0 0 1120 442" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="100个人生遗愿 全书精读"><rect x="0" y="0" width="1120" height="442" fill="none"/><style>.mmx-svg text{font-family:"Noto Serif SC",Georgia,serif}.mmx-svg .t1{font-size:15px;fill:#2f2a24;font-weight:600}.mmx-svg .t2{font-size:12px;fill:#5c5347}.mmx-svg .t3{font-size:10.5px;fill:#8a8272}.mmx-svg .rt{font-size:13px;fill:#f7f3ea;font-weight:600}.mmx-svg .ln{stroke:#cfc6b4;stroke-width:1.4;fill:none}</style><rect x="28" y="195" width="262" height="52" rx="10" fill="#3d372e"/><text class="rt" x="44" y="217">100个人生遗愿</text><text class="t3" x="44" y="237" style="fill:#c9c0ae">34 章 · 主干 6 条</text><path class="ln" d="M290 221 C350 221,340 60,400 60"/><rect x="400" y="33" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/><rect x="400" y="33" width="5" height="55" rx="2.5" fill="#8a9b6e"/><text class="t1" x="416" y="57">A 从宣判到清单</text><text class="t3" x="416" y="76">2 章 · 第 1–2 章</text><text class="t2" x="710" y="55">先交代清单从哪来：不是浪漫的突发奇想，而是被判了期限之后，人怎么把余</text><text class="t2" x="710" y="72">生的支配权拿回自己手里。</text><path class="ln" d="M290 221 C350 221,340 122,400 122"/><rect x="400" y="95" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/><rect x="400" y="95" width="5" height="55" rx="2.5" fill="#8a9b6e"/><text class="t1" x="416" y="119">B 把愿望过成日子</text><text class="t3" x="416" y="138">14 章 · 第 3–16 章</text><text class="t2" x="710" y="117">街舞、摩托、驻唱、滑翔伞、闺密出逃、二次婚礼、给家人的礼物……愿望一</text><text class="t2" x="710" y="134">个接一个落地，也顺带把丈夫、儿子、母亲、闺密重新排进自己的生活。</text><path class="ln" d="M290 221 C350 221,340 184,400 184"/><rect x="400" y="157" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/><rect x="400" y="157" width="5" height="55" rx="2.5" fill="#8a9b6e"/><text class="t1" x="416" y="181">C 身体里的账</text><text class="t3" x="416" y="200">7 章 · 第 17–23 章</text><text class="t2" x="710" y="179">叙事倒回起点：误诊、宣判、祁姐、化疗、脱发、切除、转移。前半本的轻盈</text><text class="t2" x="710" y="196">，是拿这些具体的身体代价换来的。</text><path class="ln" d="M290 221 C350 221,340 246,400 246"/><rect x="400" y="219" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/><rect x="400" y="219" width="5" height="55" rx="2.5" fill="#8a9b6e"/><text class="t1" x="416" y="243">D 钱、神医与边界</text><text class="t3" x="416" y="262">6 章 · 第 24–29 章</text><text class="t2" x="710" y="241">靶向药三十倍价差、北海寻神医、医托四十万佣金、想停治疗——把「想活」</text><text class="t2" x="710" y="258">拆成钱、信息与人性的现实问题，也划出她不肯越的线。</text><path class="ln" d="M290 221 C350 221,340 308,400 308"/><rect x="400" y="281" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/><rect x="400" y="281" width="5" height="55" rx="2.5" fill="#8a9b6e"/><text class="t1" x="416" y="305">E 树皮小院</text><text class="t3" x="416" y="324">3 章 · 第 30–32 章</text><text class="t2" x="710" y="303">清单之外长出来的愿望：一块免费空地、三百块树皮、邻居递来的电锯。具体</text><text class="t2" x="710" y="320">的事把焦虑挤走，日子从打卡变回日常。</text><path class="ln" d="M290 221 C350 221,340 370,400 370"/><rect x="400" y="343" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/><rect x="400" y="343" width="5" height="55" rx="2.5" fill="#8a9b6e"/><text class="t1" x="416" y="367">F 撕掉清单之后</text><text class="t3" x="416" y="386">2 章 · 第 33–34 章</text><text class="t2" x="710" y="365">承认清单已变成新的任务与表演，改用「是否在场」定义生命价值，最后把问</text><text class="t2" x="710" y="382">题递回给读者。</text></svg></section>
-<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">一句话主旨</h2><p class="mmx-mod-note">本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。</p><p class="mmx-oneline">一位乳腺癌患者把遗愿清单从死亡倒计时过成了生活方式：问题不在死前要做什么，而在今天要怎么活。</p></section>
+<nav class="nav"><a class="navlink" href="#mod-svg">结构导图</a><a class="navlink" href="#mod-oneline">核心主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-coreask">核心追问</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a><a class="navlink" href="#mod-aiask">AI 问书</a><a class="navlink" href="#mod-higher">更高维度</a><a class="navlink" href="#mod-verify">阅读验证</a><a class="navlink" href="#mod-thennow">往日今时</a></nav>
+<section class="mmx-svgwrap" id="mod-svg"><h2>结构导图</h2><svg class="mmx-svg" viewBox="0 0 1120 442" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="100个人生遗愿 全书精读"><rect x="0" y="0" width="1120" height="442" fill="none"/><style>.mmx-svg text{font-family:"Noto Serif SC",Georgia,serif}.mmx-svg .t1{font-size:15px;fill:#2f2a24;font-weight:600}.mmx-svg .t2{font-size:12px;fill:#5c5347}.mmx-svg .t3{font-size:10.5px;fill:#8a8272}.mmx-svg .rt{font-size:13px;fill:#f7f3ea;font-weight:600}.mmx-svg .ln{stroke:#cfc6b4;stroke-width:1.4;fill:none}</style><rect x="28" y="195" width="262" height="52" rx="10" fill="#3d372e"/><text class="rt" x="44" y="217">100个人生遗愿</text><text class="t3" x="44" y="237" style="fill:#c9c0ae">34 章 · 主干 6 条</text><path class="ln" d="M290 221 C350 221,340 60,400 60"/><rect x="400" y="33" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/><rect x="400" y="33" width="5" height="55" rx="2.5" fill="#8a9b6e"/><text class="t1" x="416" y="57">A 从宣判到清单</text><text class="t3" x="416" y="76">2 章 · 第 1–2 章</text><text class="t2" x="710" y="55">先交代清单从哪来：不是浪漫的突发奇想，而是被判了期限之后，人怎么把余</text><text class="t2" x="710" y="72">生的支配权拿回自己手里。</text><path class="ln" d="M290 221 C350 221,340 122,400 122"/><rect x="400" y="95" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/><rect x="400" y="95" width="5" height="55" rx="2.5" fill="#8a9b6e"/><text class="t1" x="416" y="119">B 把愿望过成日子</text><text class="t3" x="416" y="138">14 章 · 第 3–16 章</text><text class="t2" x="710" y="117">街舞、摩托、驻唱、滑翔伞、闺密出逃、二次婚礼、给家人的礼物……愿望一</text><text class="t2" x="710" y="134">个接一个落地，也顺带把丈夫、儿子、母亲、闺密重新排进自己的生活。</text><path class="ln" d="M290 221 C350 221,340 184,400 184"/><rect x="400" y="157" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/><rect x="400" y="157" width="5" height="55" rx="2.5" fill="#8a9b6e"/><text class="t1" x="416" y="181">C 身体里的账</text><text class="t3" x="416" y="200">7 章 · 第 17–23 章</text><text class="t2" x="710" y="179">叙事倒回起点：误诊、宣判、祁姐、化疗、脱发、切除、转移。前半本的轻盈</text><text class="t2" x="710" y="196">，是拿这些具体的身体代价换来的。</text><path class="ln" d="M290 221 C350 221,340 246,400 246"/><rect x="400" y="219" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/><rect x="400" y="219" width="5" height="55" rx="2.5" fill="#8a9b6e"/><text class="t1" x="416" y="243">D 钱、神医与边界</text><text class="t3" x="416" y="262">6 章 · 第 24–29 章</text><text class="t2" x="710" y="241">靶向药三十倍价差、北海寻神医、医托四十万佣金、想停治疗——把「想活」</text><text class="t2" x="710" y="258">拆成钱、信息与人性的现实问题，也划出她不肯越的线。</text><path class="ln" d="M290 221 C350 221,340 308,400 308"/><rect x="400" y="281" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/><rect x="400" y="281" width="5" height="55" rx="2.5" fill="#8a9b6e"/><text class="t1" x="416" y="305">E 树皮小院</text><text class="t3" x="416" y="324">3 章 · 第 30–32 章</text><text class="t2" x="710" y="303">清单之外长出来的愿望：一块免费空地、三百块树皮、邻居递来的电锯。具体</text><text class="t2" x="710" y="320">的事把焦虑挤走，日子从打卡变回日常。</text><path class="ln" d="M290 221 C350 221,340 370,400 370"/><rect x="400" y="343" width="292" height="55" rx="8" fill="#f4efe3" stroke="#d9d0bd"/><rect x="400" y="343" width="5" height="55" rx="2.5" fill="#8a9b6e"/><text class="t1" x="416" y="367">F 撕掉清单之后</text><text class="t3" x="416" y="386">2 章 · 第 33–34 章</text><text class="t2" x="710" y="365">承认清单已变成新的任务与表演，改用「是否在场」定义生命价值，最后把问</text><text class="t2" x="710" y="382">题递回给读者。</text></svg></section>
+<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">核心主旨</h2><p class="mmx-oneline">一位乳腺癌患者把遗愿清单从死亡倒计时过成了生活方式：问题不在死前要做什么，而在今天要怎么活。</p></section>
 <section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" id="mod-merged_guide"><h2 id="merged-guide-title">AI领读</h2>
 <style>
 /* merged_guide 章内：AI 大纲原生深层样式 */
@@ -2393,15 +2455,14 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
   </div>
 </section>
 <section class="mmx-mod" aria-labelledby="coreask" id="mod-coreask">
-  <h2 id="coreask">核心追问（来自深读）</h2>
-  <p class="mmx-mod-note">跨章主题的深读追问，由模型基于全书大纲与原文摘录撰写；逐章的追问收在每个章条目里。</p>
-<div class="mmx-qa"><p class="mmx-q">这本书真正想回答的问题是什么？我用一句话说清了吗</p><p class="mmx-a">基于大纲，本书共 34 章、三段旅程：遗愿之旅（贵州出发，为自己活、驻唱、闺蜜出逃、第二次婚礼）、抗癌三年（等宣判、化疗、转移、寻医）、归园田居（树皮小院、撕掉遗愿清单）。就「核心问题」而言，目前的（待验证）判断是：作者在乳腺癌确诊后把「遗愿清单」从死亡倒计时过成了生活方式——问题不是「死前要做什么」，而是「今天要怎么活」。第一章「你要为自己活」与终章「你想要怎样的生活」首尾呼应，正落在这一问一答上。（大纲推断，未亲读）</p></div><div class="mmx-qa"><p class="mmx-q">哪个判断我最不确定、需要回到原文哪一节验证？</p><p class="mmx-a">目前最需回原文验证的是《撕掉遗愿清单 但我还在》与《癌症三年 生命在升腾》之间的关系——大纲里前者出现在终章部分，如果清单已「撕掉」，那么支撑「生命在升腾」的到底是什么：是清单完成后的空，还是清单之外的日常？这两章的张力可能与初读时「完成即解脱」的判断有出入，建议读到这里专门核对。另外《转移 为什么又是我》与《神药 医保》之间，治疗线如何没有压垮遗愿线，也值得对照。（大纲推断，未亲读）</p></div><div class="mmx-qa"><p class="mmx-q">如果只能把一条洞见讲给三个月后的自己，是哪条？为什么</p><p class="mmx-a">若只留一条，我会选第一章「贵州 你要为自己活」里的那句判断：遗愿清单的起点不是「想做的事」，而是「把为自己活当成正当的事」。它把全书最底层的转向说清了——后面 33 章的驻唱、街舞、出逃、再婚礼，都只是这一句的具体化。三个月后回看，最经得起检验的也是它：清单会变、病情会变，但「为自己活的正当性」一旦立住，剩下的都只是执行。（基于大纲条目，未亲读）</p></div>
+  <h2 id="coreask">核心追问</h2>
+  <div class="mmx-qa"><p class="mmx-q">这本书真正想回答的问题是什么？我用一句话说清了吗</p><p class="mmx-a">基于大纲，本书共 34 章、三段旅程：遗愿之旅（贵州出发，为自己活、驻唱、闺蜜出逃、第二次婚礼）、抗癌三年（等宣判、化疗、转移、寻医）、归园田居（树皮小院、撕掉遗愿清单）。就「核心问题」而言，目前的（待验证）判断是：作者在乳腺癌确诊后把「遗愿清单」从死亡倒计时过成了生活方式——问题不是「死前要做什么」，而是「今天要怎么活」。第一章「你要为自己活」与终章「你想要怎样的生活」首尾呼应，正落在这一问一答上。（大纲推断，未亲读）</p></div><div class="mmx-qa"><p class="mmx-q">哪个判断我最不确定、需要回到原文哪一节验证？</p><p class="mmx-a">目前最需回原文验证的是《撕掉遗愿清单 但我还在》与《癌症三年 生命在升腾》之间的关系——大纲里前者出现在终章部分，如果清单已「撕掉」，那么支撑「生命在升腾」的到底是什么：是清单完成后的空，还是清单之外的日常？这两章的张力可能与初读时「完成即解脱」的判断有出入，建议读到这里专门核对。另外《转移 为什么又是我》与《神药 医保》之间，治疗线如何没有压垮遗愿线，也值得对照。（大纲推断，未亲读）</p></div><div class="mmx-qa"><p class="mmx-q">如果只能把一条洞见讲给三个月后的自己，是哪条？为什么</p><p class="mmx-a">若只留一条，我会选第一章「贵州 你要为自己活」里的那句判断：遗愿清单的起点不是「想做的事」，而是「把为自己活当成正当的事」。它把全书最底层的转向说清了——后面 33 章的驻唱、街舞、出逃、再婚礼，都只是这一句的具体化。三个月后回看，最经得起检验的也是它：清单会变、病情会变，但「为自己活的正当性」一旦立住，剩下的都只是执行。（基于大纲条目，未亲读）</p></div>
 </section>
-<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点初判</h2><p class="mmx-mod-note">按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。</p><ul class="mmx-views"><li><b>遗愿之旅：你要为自己活</b>——确诊前与确诊初期，作者把愿望清单过成生活——贵州、驻唱、街舞、闺蜜出逃、再婚礼。</li><li><b>癌症三年：生命在升腾</b>——等宣判、化疗、转移、寻医，治疗线没有压垮遗愿线。</li><li><b>归园田居：撕掉清单但我还在</b>——露营、树皮小院、复得返自然，遗愿从清单变成生活方式。</li></ul></section>
-<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句 · 持续积累</h2><p class="mmx-mod-note">以下原句取自本书 AI 大纲落库的原文摘录（book_outline.quote），按大纲顺序节选，非 AI 生成；更多见逐章深读页。</p><ol class="mmx-qlist"><li><blockquote>「2023年2月，北京的检查结果出来了。好消息，不是浆细胞乳腺炎；坏消息，是癌症。」</blockquote><cite>本书正文</cite></li><li><blockquote>「作者满怀希望。我是乳腺癌，但是我把整个乳房都切掉了。我以为自己战胜了癌症，可以继续和家人幸福地生活在一起。」</blockquote><cite>本书正文</cite></li><li><blockquote>「2023年8月，就在手术后不到两个月，我检查出肺部多发癌细胞转移。」</blockquote><cite>本书正文</cite></li><li><blockquote>「不是简单的转移，而是肺上很多地方都出现了癌细胞的区域，两边的肺都有。在我看来，这几乎是肺癌晚期的宣判。」</blockquote><cite>本书正文</cite></li><li><blockquote>「我忽然想到，不能再这么躺下去。如果注定要死，为什么不能死得像个人？」</blockquote><cite>本书正文</cite></li><li><blockquote>「我想让他们看到，我虽然身体不健康了，但是仍有强大的精神。」</blockquote><cite>本书正文</cite></li><li><blockquote>「小朱早就从朱妈那里了解了我的情况，问我的第一个问题就是：“姐，想想你自己想做什么？”。」</blockquote><cite>本书正文</cite></li><li><blockquote>「我们决定也要搞一个遗愿清单，为自己活，做所有自己想做的事情。」</blockquote><cite>本书正文</cite></li><li><blockquote>「在实现遗愿的过程中，我有了很多改变。更了解自己，和家人有更深的联结，看到更多人和更多风景。」</blockquote><cite>本书正文</cite></li><li><blockquote>「一边实现遗愿，一边发现一些愿望已经不重要了，同时又会发现对我来说更重要的愿望。」</blockquote><cite>本书正文</cite></li></ol></section>
-<section class="mmx-mod" aria-labelledby="aiask" id="mod-aiask"><h2 id="aiask">AI 问书</h2><p class="mmx-mod-note">下方内容为本书级 AI 问书整理，由云端 AI 阅读流程基于本书大纲、章节锚点与热门划线生成。</p><div class="mmx-qa"><p class="mmx-q">“撕掉遗愿清单但我还在”——清单到底有没有意义？</p><p class="mmx-a">作者前期把愿望当任务清单（贵州、驻唱、街舞、闺蜜出逃、第二次婚礼），后期在树皮小院“撕掉清单”却说“但我还在”。意义不在清单本身，而在它把“为自己活”从口号变成具体行动。当遗愿从“死前要做完”转成“今天就这样活”，清单完成了使命——被超越。</p></div><div class="mmx-qa"><p class="mmx-q">书里说“进医保后一次药从三万多降到一千多，三十倍差距”，这能说明什么？</p><p class="mmx-a">这是全书最硬的“社会性”锚点：个人遗愿清单再浪漫，也架不住一次化疗三万元。医保谈判把药价砍到三十分之一，等于把“能不能活着去实现愿望”这件事从家庭经济能力里部分解放出来。它提醒读者，遗愿清单的底座是医疗可及性，不是情怀。</p></div></section>
-<section class="mmx-mod" aria-labelledby="higher" id="mod-higher"><h2 id="higher">用更高维度的知识看这本书</h2><p class="mmx-mod-note">下方内容由云端 AI 阅读流程生成：把本书放回知识史与理论框架中重读，区分书中主张、外部证据与综合分析。</p><p>【书中主张】把本书放回“临终叙事/遗愿文学”谱系：它既非《相约星期二》式的哲思对话，也非《死亡的脸》式医学纪实，而更接近“中国式抗癌日记+清单体”，用“减法人生”对抗死亡焦虑——减掉外界标准、减掉无意义追逐，只留爱、感受、平静。【外部证据】积极心理学（Seligman的PERMA）也把“意义与积极关系”列为幸福核心，与“在场、真切感受”互相印证；【综合分析】本书独特在“具体性”——露营、树皮小院、闺蜜出逃这些琐碎动作，把存在主义命题落到一日三餐，比格言更耐读。</p><p>【书中主张】作者反复强调“我还在感受，我还在爱”“用是否在场定义生命价值”，把死亡从终点改写为主语的转换。【外部证据】可对照凯博文（Arthur Kleinman）《疾痛的故事》——慢性病患通过叙事重建自我；【综合分析】但需警惕把个别样本普遍化：作者能“为自己活”依赖家庭支持与网络善意（书中也写“遇到好多好心人”），并非所有重症患者都有这份余裕，书的价值是“一种活法样本”而非“标准答案”。</p></section>
-<section class="mmx-mod" aria-labelledby="verify" id="mod-verify"><h2 id="verify">阅读时要验证的问题</h2><p class="mmx-mod-note">下方由云端 AI 阅读流程生成：读时需核对的原文、数字与论点（关键数据出处、个案代表性、类比限度）。</p><ul class="mmx-views"><li>“进医保后一次三万多降到一千多、三十倍差距”应与当年国家医保谈判具体药品（如某靶向药）中标价格核对，确认是哪种药、哪一年纳入，避免把文学化数字当统计。</li><li>书中“100个人生遗愿”的清单是否真有100项、作者真实身份（笔记中出现“邓静妈妈”的搜索痕迹）应在出版信息中核实，引用时标注为个人 memoir 而非医学指南。</li><li>“吃人血馒头”指书中拒绝参与疑似医托/神医骗局——可对照书中“北海寻神医”“医托”章节，确认作者对替代疗法的态度是否前后一致。</li></ul></section>
-<section class="mmx-mod" aria-labelledby="thennow" id="mod-thennow"><h2 id="thennow">当年与今天 · 初步对照</h2><p class="mmx-mod-note">下方由云端 AI 阅读流程生成：区分作者当年所能知晓与后来才显现的事实，给出今日可迁移的启发。</p><p>作者写作时（推测为近年的抗癌博主出书潮），“遗愿清单”还是带点鸡汤色彩的舶来概念；她用真实病榻经验把它拽回地面——不是“死前去看世界”，而是“今天要不要为自己活一次”。当年她能写下的，是一个普通中国女性患者在医保、家庭、网络三股力量间的真实处境。</p><p>今天再读，短视频平台已涌现大量“抗癌博主”，遗愿清单从私人仪式变成内容素材，书的“在场”姿态反而更显珍贵。可迁移的启发：清单永远救不了人，能救人的，是作者在树皮小院领悟的那句——“我还在感受，我还在爱”，把丈量生命的尺子从“做了多少事”换成“是否在场”。</p></section>
+<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点</h2><ul class="mmx-views"><li><b>遗愿之旅：你要为自己活</b>——确诊前与确诊初期，作者把愿望清单过成生活——贵州、驻唱、街舞、闺蜜出逃、再婚礼。</li><li><b>癌症三年：生命在升腾</b>——等宣判、化疗、转移、寻医，治疗线没有压垮遗愿线。</li><li><b>归园田居：撕掉清单但我还在</b>——露营、树皮小院、复得返自然，遗愿从清单变成生活方式。</li></ul></section>
+<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句</h2><ol class="mmx-qlist"><li><blockquote>「2023年2月，北京的检查结果出来了。好消息，不是浆细胞乳腺炎；坏消息，是癌症。」</blockquote><cite>本书正文</cite></li><li><blockquote>「作者满怀希望。我是乳腺癌，但是我把整个乳房都切掉了。我以为自己战胜了癌症，可以继续和家人幸福地生活在一起。」</blockquote><cite>本书正文</cite></li><li><blockquote>「2023年8月，就在手术后不到两个月，我检查出肺部多发癌细胞转移。」</blockquote><cite>本书正文</cite></li><li><blockquote>「不是简单的转移，而是肺上很多地方都出现了癌细胞的区域，两边的肺都有。在我看来，这几乎是肺癌晚期的宣判。」</blockquote><cite>本书正文</cite></li><li><blockquote>「我忽然想到，不能再这么躺下去。如果注定要死，为什么不能死得像个人？」</blockquote><cite>本书正文</cite></li><li><blockquote>「我想让他们看到，我虽然身体不健康了，但是仍有强大的精神。」</blockquote><cite>本书正文</cite></li><li><blockquote>「小朱早就从朱妈那里了解了我的情况，问我的第一个问题就是：“姐，想想你自己想做什么？”。」</blockquote><cite>本书正文</cite></li><li><blockquote>「我们决定也要搞一个遗愿清单，为自己活，做所有自己想做的事情。」</blockquote><cite>本书正文</cite></li><li><blockquote>「在实现遗愿的过程中，我有了很多改变。更了解自己，和家人有更深的联结，看到更多人和更多风景。」</blockquote><cite>本书正文</cite></li><li><blockquote>「一边实现遗愿，一边发现一些愿望已经不重要了，同时又会发现对我来说更重要的愿望。」</blockquote><cite>本书正文</cite></li></ol></section>
+<section class="mmx-mod" aria-labelledby="aiask" id="mod-aiask"><h2 id="aiask">AI 问书</h2><div class="mmx-qa"><p class="mmx-q">“撕掉遗愿清单但我还在”——清单到底有没有意义？</p><p class="mmx-a">作者前期把愿望当任务清单（贵州、驻唱、街舞、闺蜜出逃、第二次婚礼），后期在树皮小院“撕掉清单”却说“但我还在”。意义不在清单本身，而在它把“为自己活”从口号变成具体行动。当遗愿从“死前要做完”转成“今天就这样活”，清单完成了使命——被超越。</p></div><div class="mmx-qa"><p class="mmx-q">书里说“进医保后一次药从三万多降到一千多，三十倍差距”，这能说明什么？</p><p class="mmx-a">这是全书最硬的“社会性”锚点：个人遗愿清单再浪漫，也架不住一次化疗三万元。医保谈判把药价砍到三十分之一，等于把“能不能活着去实现愿望”这件事从家庭经济能力里部分解放出来。它提醒读者，遗愿清单的底座是医疗可及性，不是情怀。</p></div></section>
+<section class="mmx-mod" aria-labelledby="higher" id="mod-higher"><h2 id="higher">更高维度</h2><p>【书中主张】把本书放回“临终叙事/遗愿文学”谱系：它既非《相约星期二》式的哲思对话，也非《死亡的脸》式医学纪实，而更接近“中国式抗癌日记+清单体”，用“减法人生”对抗死亡焦虑——减掉外界标准、减掉无意义追逐，只留爱、感受、平静。【外部证据】积极心理学（Seligman的PERMA）也把“意义与积极关系”列为幸福核心，与“在场、真切感受”互相印证；【综合分析】本书独特在“具体性”——露营、树皮小院、闺蜜出逃这些琐碎动作，把存在主义命题落到一日三餐，比格言更耐读。</p><p>【书中主张】作者反复强调“我还在感受，我还在爱”“用是否在场定义生命价值”，把死亡从终点改写为主语的转换。【外部证据】可对照凯博文（Arthur Kleinman）《疾痛的故事》——慢性病患通过叙事重建自我；【综合分析】但需警惕把个别样本普遍化：作者能“为自己活”依赖家庭支持与网络善意（书中也写“遇到好多好心人”），并非所有重症患者都有这份余裕，书的价值是“一种活法样本”而非“标准答案”。</p></section>
+<section class="mmx-mod" aria-labelledby="verify" id="mod-verify"><h2 id="verify">阅读验证</h2><ul class="mmx-views"><li>“进医保后一次三万多降到一千多、三十倍差距”应与当年国家医保谈判具体药品（如某靶向药）中标价格核对，确认是哪种药、哪一年纳入，避免把文学化数字当统计。</li><li>书中“100个人生遗愿”的清单是否真有100项、作者真实身份（笔记中出现“邓静妈妈”的搜索痕迹）应在出版信息中核实，引用时标注为个人 memoir 而非医学指南。</li><li>“吃人血馒头”指书中拒绝参与疑似医托/神医骗局——可对照书中“北海寻神医”“医托”章节，确认作者对替代疗法的态度是否前后一致。</li></ul></section>
+<section class="mmx-mod" aria-labelledby="thennow" id="mod-thennow"><h2 id="thennow">往日今时</h2><p>作者写作时（推测为近年的抗癌博主出书潮），“遗愿清单”还是带点鸡汤色彩的舶来概念；她用真实病榻经验把它拽回地面——不是“死前去看世界”，而是“今天要不要为自己活一次”。当年她能写下的，是一个普通中国女性患者在医保、家庭、网络三股力量间的真实处境。</p><p>今天再读，短视频平台已涌现大量“抗癌博主”，遗愿清单从私人仪式变成内容素材，书的“在场”姿态反而更显珍贵。可迁移的启发：清单永远救不了人，能救人的，是作者在树皮小院领悟的那句——“我还在感受，我还在爱”，把丈量生命的尺子从“做了多少事”换成“是否在场”。</p></section>
 </body>
 </html>

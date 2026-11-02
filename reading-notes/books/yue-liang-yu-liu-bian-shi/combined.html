@@ -6,46 +6,108 @@
 <title>《月亮与六便士》｜通读 · 精读</title>
 <link rel="stylesheet" href="../../../assets/css/reading-overview.css"><link rel="stylesheet" href="../../../assets/css/mmx-guide.css"><link rel="stylesheet" href="../../../assets/css/reading-outline.css">
 <style>
-/* 合并页外壳 */
-body{max-width:960px;margin:0 auto;padding:0 18px 80px;}
-.combined-head{padding:34px 0 18px;border-bottom:1px solid #e7e0d2;margin-bottom:8px;}
-.combined-head h1{font-size:26px;margin:0 0 10px;}
+/* ── 外壳与全局阅读节奏 ── */
+body{max-width:880px;margin:0 auto;padding:0 18px 80px;
+  font-size:15px;line-height:1.88;color:#3b453e;background:#f7f8f3;
+  -webkit-font-smoothing:antialiased;}
+.combined-head{padding:30px 0 16px;border-bottom:1px solid #e7e0d2;margin-bottom:4px;}
+.combined-head h1{font:700 23px/1.35 var(--serif);margin:0 0 8px;color:#244b40;}
+.combined-head .eyebrow{font-size:.72rem;letter-spacing:.14em;margin:0 0 6px;}
+.chips{margin:8px 0 0;}
+.chip{font-size:.72rem;padding:2px 10px;}
 /* 锚点导航：固定一排 4 个，等宽对齐 */
-.nav{position:sticky;top:0;z-index:20;background:rgba(255,253,248,.96);backdrop-filter:blur(6px);
-  border-bottom:1px solid #ece4d4;padding:10px 0;margin:14px 0 26px;display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;
-  box-shadow:0 2px 10px rgba(120,100,60,.06);}
-.navlink{font-size:12.5px;color:#5d5443;text-decoration:none;background:#f6f1e6;border:1px solid #e7ddca;
-  border-radius:7px;padding:4px 6px;text-align:center;white-space:nowrap;overflow:hidden;
-  text-overflow:ellipsis;}
-section{scroll-margin-top:64px;}
-/* 一句话主旨：去左侧竖线 */
-.mmx-oneline{border-left:none;padding-left:18px;}
-/* AI领读章内：AI 大纲原生深层样式 */
-.merged-guide .sec{margin:10px 0 14px;padding-left:6px;border-left:2px solid #e5e0d6}
-.merged-guide .sec h4{font:600 .98rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.6em 0 .3em}
-.merged-guide ul.point{margin:.3em 0;padding-left:20px}
-.merged-guide ul.point>li{margin:.35em 0}
-.merged-guide ul.quote{margin:.25em 0 .25em 20px;padding-left:18px;list-style:none}
-.merged-guide ul.quote::before{content:"原句";display:block;font-size:.72rem;color:#bf8247;
-  letter-spacing:.1em;margin:.15em 0 .1em;font-weight:600}
-.merged-guide ul.quote.quote-node{margin-top:.5em;padding-top:.4em;border-top:1px dashed #eadfc9}
+.nav{position:sticky;top:0;z-index:20;background:rgba(247,248,243,.96);backdrop-filter:blur(6px);
+  border-bottom:1px solid #ece4d4;padding:10px 0;margin:12px 0 20px;display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;
+  box-shadow:0 2px 10px rgba(120,100,60,.05);}
+.navlink{font-size:12px;color:#5d5443;text-decoration:none;background:#fdfbf3;border:1px solid #e8e2d2;
+  border-radius:8px;padding:6px 4px;text-align:center;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;transition:background .15s,color .15s;}
+.navlink:hover{background:#f2efe2;color:#244b40;}
+section{scroll-margin-top:62px;}
+
+/* ── 统一卡片：所有顶层模块（AI领读 / AI 问答 / 其余）一视同仁 ── */
+body>section.mmx-mod,body>section.card,body>section.mmx-svgwrap{
+  background:#fffdf6;border:1px solid #e8e4d5;border-radius:16px;
+  padding:18px 22px;margin:18px 0;
+  box-shadow:0 1px 3px rgba(110,95,60,.05);}
+body>section.mmx-mod>*:first-child,body>section.card>*:first-child,
+body>section.mmx-svgwrap>*:first-child{margin-top:0}
+body>section.mmx-mod>*:last-child,body>section.card>*:last-child,
+body>section.mmx-svgwrap>*:last-child{margin-bottom:0}
+/* 结构导图：图本身留白居中，不与正文抢宽 */
+body>section.mmx-svgwrap>svg.mmx-svg{display:block;width:100%;height:auto;margin:2px auto 0;}
+/* 模块标题：统一大小、弱强调，不与正文抢注意力 */
+body>section.mmx-mod>h2,body>section.card>h2{
+  font:700 1.04rem/1.5 var(--serif);color:#244b40;margin:0 0 11px;
+  padding-left:10px;border-left:3px solid #bf8247;letter-spacing:.01em;}
+/* 正文：字号收小、行距放宽、段间距舒服 */
+body>section.mmx-mod p,body>section.card p,
+body>section.mmx-mod li,body>section.card li{
+  font-size:.9rem;line-height:1.92;color:#4a4436;}
+body>section.mmx-mod p,body>section.card p{margin:.5em 0;}
+body>section.mmx-mod>ul,body>section.mmx-mod>ol,body>section.mmx-mod>div,
+body>section.mmx-mod>p:not(.mmx-mod-note),
+body>section.card:not(.merged-guide)>ul,body>section.card:not(.merged-guide)>ol,
+body>section.card:not(.merged-guide)>div,body>section.card:not(.merged-guide)>p:not(.mmx-mod-note){
+  padding-left:14px;}
+/* 模块说明小字：弱化不抢眼 */
+.mmx-mod-note{font-size:.75rem;color:#8d8878;margin:.1em 0 .75em;line-height:1.7;}
+
+/* ── 内部块统一：卡片里不再套深卡片，一律浅底子块 ── */
+body>section .mmx-pending,body>section .mmx-evib,body>section .aiqa-item{
+  background:#fbfaf2;border:1px solid #eee9d8;border-radius:12px;
+  padding:13px 16px;margin:.65em 0;}
+body>section .mmx-evib ul{padding-left:1.15em;}
+/* 一句话主旨：去左侧竖线 + 收敛字号 */
+.mmx-oneline{font-size:.98rem;line-height:1.85;color:#3a352c;margin:.2em 0 0;
+  padding:12px 16px;background:#fbfaf4;border-left:none;border-radius:12px;}
+/* 核心观点 / 验证清单：虚线分隔 + 收紧行距 */
+.mmx-views li{padding:.5em 0 .5em 0;font-size:.9rem;line-height:1.88;}
+/* 原文金句 */
+.mmx-qlist li{padding:.6em 0 .6em 2.2em;}
+.mmx-qlist blockquote{font-size:.89rem;line-height:1.9;}
+.mmx-qlist cite{font-size:.72rem;}
+/* 核心追问：问句加重、答句放松 */
+.mmx-qa{margin:.7em 0;padding-left:12px;border-left:3px solid #e5dfcd;}
+.mmx-qa .mmx-q{font-size:.9rem;font-weight:700;color:#2f3a33;line-height:1.8;margin:0 0 .25em;}
+.mmx-qa .mmx-a{font-size:.88rem;line-height:1.95;color:#4a4436;margin:0;}
+
+/* ── AI 问书专项：外层容器透明，问答条目才是阅读单元 ── */
+#mod-aiask .mmx-ask{background:transparent;border:0;border-radius:0;padding:0;margin:0;}
+#mod-aiask .aiqa-item{margin:.6em 0;padding:14px 16px 15px;}
+#mod-aiask .aiqa-item h3{font:700 .93rem/1.7 var(--serif);color:#2f5b49;margin:0 0 .4em;
+  padding:0;border:0;}
+#mod-aiask .aiqa-item h3:before{content:"问　";color:#bf8247;font-weight:700;}
+#mod-aiask .aiqa-item p{font-size:.88rem;line-height:1.95;color:#4a4436;margin:.4em 0;}
+#mod-aiask .aiqa-item ul{margin:.35em 0;padding-left:1.1em;}
+#mod-aiask .aiqa-item li{font-size:.87rem;line-height:1.88;margin:.18em 0;color:#4a4436;}
+#mod-aiask .aiqa-item li::marker{color:#c0a06a;}
+/* 逐章追问（details 形态）：摘要行也收敛 */
+.mmx-ask>summary{font-size:.87rem;line-height:1.7;padding:2px 0;}
+.mmx-askbody{font-size:.88rem;line-height:1.9;}
+
+/* AI领读章内：AI 大纲原生深层样式（字号同步收小） */
+.merged-guide .sec{margin:9px 0 12px;padding-left:6px;border-left:2px solid #e5e0d6}
+.merged-guide .sec h4{font:600 .93rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.5em 0 .25em}
+.merged-guide ul.point{margin:.25em 0;padding-left:20px}
+.merged-guide ul.point>li{margin:.3em 0}
+.merged-guide ul.quote{margin:.22em 0 .22em 20px;padding-left:18px;list-style:none}
+.merged-guide ul.quote::before{content:"原句";display:block;font-size:.7rem;color:#bf8247;
+  letter-spacing:.1em;margin:.12em 0 .08em;font-weight:600}
+.merged-guide ul.quote.quote-node{margin-top:.45em;padding-top:.35em;border-top:1px dashed #eadfc9}
 .merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
-.merged-guide ul.quote>li{color:#4a4436;font-size:.93rem;margin:.2em 0;padding-left:10px;border-left:2px solid #bf8247}
-/* 模块内子内容（AI领读除外，它有专属深层样式）：左缩进 + 正文与标题分层 */
-section.mmx-mod>ul,section.mmx-mod>ol,section.mmx-mod>div,
-section.mmx-mod>p:not(.mmx-mod-note),
-section.card:not(.merged-guide)>ul,section.card:not(.merged-guide)>ol,
-section.card:not(.merged-guide)>div,section.card:not(.merged-guide)>p:not(.mmx-mod-note){
-  padding-left:16px;}
-section.mmx-mod li,section.mmx-mod p:not(.mmx-mod-note),
-section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mod-note){
-  color:#4a4436;font-size:.93rem;line-height:1.78;}
+.merged-guide ul.quote>li{color:#4a4436;font-size:.88rem;line-height:1.85;margin:.18em 0;padding-left:10px;border-left:2px solid #bf8247}
 /* 核心观点初判：外链 mmx-guide.css 的「观点N」前缀是绝对定位，在本页版式里和标题叠字，
    且此前要求去掉「观点1/2/3」前缀 —— 这里整条关掉（外链 CSS 不在页面内，只能内联覆盖）。 */
 .mmx-views li{padding-left:0 !important;}
 .mmx-views li:before,.mmx-views li::before{
   content:none !important;display:none !important;counter-increment:none !important;}
+@media(max-width:720px){
+  body{padding:0 12px 60px;font-size:14.5px;}
+  body>section.mmx-mod,body>section.card{padding:15px 16px;border-radius:14px;}
+  .nav{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
 </style>
 </head>
 <body>
@@ -54,8 +116,8 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
   <h1>《月亮与六便士》</h1>
   <div class="chips"><span class="chip">通读 + 精读</span><span class="chip">AI领读</span><span class="chip">AI 生产</span></div>
 </header>
-<nav class="nav"><a class="navlink" href="#mod-svg">全书结构导图</a><a class="navlink" href="#mod-oneline">一句话主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a><a class="navlink" href="#mod-coreask">核心追问</a><a class="navlink" href="#mod-aiask">AI 问书</a><a class="navlink" href="#mod-higher">更高维度</a><a class="navlink" href="#mod-verify">阅读验证</a><a class="navlink" href="#mod-thennow">当年与今天</a></nav>
-<section class="mmx-svgwrap" id="mod-svg"><svg class="mmx-svg" viewBox="0 0 1120 468" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="月亮与六便士 全书精读">
+<nav class="nav"><a class="navlink" href="#mod-svg">结构导图</a><a class="navlink" href="#mod-oneline">核心主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a><a class="navlink" href="#mod-coreask">核心追问</a><a class="navlink" href="#mod-aiask">AI 问书</a><a class="navlink" href="#mod-higher">更高维度</a><a class="navlink" href="#mod-verify">阅读验证</a><a class="navlink" href="#mod-thennow">往日今时</a></nav>
+<section class="mmx-svgwrap" id="mod-svg"><h2>结构导图</h2><svg class="mmx-svg" viewBox="0 0 1120 468" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="月亮与六便士 全书精读">
 <rect x="0" y="0" width="1120" height="468" fill="none"/>
 <style>.mmx-svg text{font-family:"Noto Serif SC",Georgia,serif}.mmx-svg .t1{font-size:15px;fill:#2f2a24;font-weight:600}.mmx-svg .t2{font-size:12px;fill:#5c5347}.mmx-svg .t3{font-size:10.5px;fill:#8a8272}.mmx-svg .rt{font-size:13px;fill:#f7f3ea;font-weight:600}.mmx-svg .ln{stroke:#cfc6b4;stroke-width:1.4;fill:none}</style>
 <rect x="28" y="190" width="262" height="52" rx="10" fill="#3d372e"/>
@@ -110,7 +172,7 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
 <text class="t2" x="714" y="375">收尾。</text>
 <path class="ln" d="M692 371 L700 371"/>
 </svg></section>
-<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">一句话主旨</h2><p class="mmx-mod-note">本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。</p><p class="mmx-oneline">艺术创作的狂热追求与世俗生活规范之间存在不可调和的冲突。</p></section>
+<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">核心主旨</h2><p class="mmx-oneline">艺术创作的狂热追求与世俗生活规范之间存在不可调和的冲突。</p></section>
 <section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" id="mod-merged_guide"><h2 id="merged-guide-title">AI领读</h2>
 <style>
 /* merged_guide 章内：AI 大纲原生深层样式 */
@@ -4271,12 +4333,12 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
       </div></details>
   </div>
 </section>
-<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点初判</h2><p class="mmx-mod-note">按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。</p><ul class="mmx-views"><li><b>伦敦的平庸与离去</b>——交代斯特里克兰抛弃家庭与社会身份的背景，揭示其艺术本能与世俗生活的分裂。</li><li><b>巴黎的艺术挣扎</b>——描述主角在巴黎的生存状态及艺术探索，展现其对物质与社交的极度冷漠。</li><li><b>斯特罗夫的悲剧</b>——通过斯特罗夫夫妇的介入，展现斯特里克兰的艺术追求如何摧毁他人的生活与情感。</li><li><b>艺术观点的碰撞</b>——通过作者与主角的深度接触，探讨其独特的艺术视角与对传统美学的背离。</li><li><b>塔希提的终极归宿</b>——记录主角在原始环境中完成艺术创作并走向死亡的过程，实现艺术与自我的最终融合。</li><li><b>作者与译者背景</b>——提供关于作者创作立场及译者背景的补充信息，完成对全书的结构性收尾。</li></ul></section>
-<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句 · 持续积累</h2><p class="mmx-mod-note">以下原句取自本书 AI 大纲落库的原文摘录（book_outline.quote），按大纲顺序节选，非 AI 生成；更多见逐章深读页。</p><ol class="mmx-qlist"><li><blockquote>「1837年之前的乔治时代是浪漫主义文学的鼎盛期，虽然出现过亨利·菲尔丁、玛丽·雪莱和简·奥斯丁等少数名留青史的小说巨匠，但绝大多数享有盛誉的文学家，如罗伯特·伯恩斯、威廉·华兹华斯、萨缪尔·泰勒·科勒律治、约翰·济慈、乔治·戈登·拜伦和珀西·比希·雪莱等，无不以诗歌名世。」</blockquote><cite>导读</cite></li><li><blockquote>「小说很少受到当时文人的认真对待，甚至在有些作者心目中也无非是茶余饭后的消遣而已。」</blockquote><cite>导读</cite></li><li><blockquote>「19世纪叱咤风云的文坛巨子，是查尔斯·狄更斯、威廉·萨克雷、乔治·艾略特、托马斯·哈代、勃朗蒂三姐妹和乔治·吉辛等小说家。」</blockquote><cite>导读</cite></li><li><blockquote>「而提及小说在维多利亚时代的流行，则不得不先谈大不列颠帝国的勃兴。」</blockquote><cite>导读</cite></li><li><blockquote>「1831年，全英人口不足2403万，到1901年已飙升至4522万。」</blockquote><cite>导读</cite></li><li><blockquote>「至于识字率方面，1840年，英国只有67%的男人和51%的女人能够在结婚登记时签署自己名字；旨在推动基础教育的《教育法案》于1870年实施，仅仅三十年后，英国成年男女的识字率分别高达97.2%和96.8%。」</blockquote><cite>导读</cite></li><li><blockquote>「19世纪中期，少数精明的生意人从中发现商机，创办了流通图书馆，提供收费的图书外借服务，其中的翘楚有穆迪图书馆(Mudie's Library)和威廉·亨利·史密斯父子公司(W.H.Smith&amp;Son)等。」</blockquote><cite>导读</cite></li><li><blockquote>「得益于极低的生产成本，兼且没有官方审查制度，维多利亚时期的杂志层出不穷，某些年份新办刊物多达百余种，影响力较大的有《玉米山》(Cornhill)、《回音》(Echo)、《嘉言》(Good Words)等数十家。」</blockquote><cite>导读</cite></li><li><blockquote>「其次，在背景设定方面，故事通常不再发生于古代或者某个虚构的空间，而是同时代某个真实存在的地方，尤其是当时世界首屈一指的大都会伦敦。」</blockquote><cite>导读</cite></li><li><blockquote>「再者，叙事情节不再追求耸人听闻或怪诞离奇，而是偏重入情入理，对各种器物的描写也细致入微，旨在让读者觉得和现实生活所去不远。」</blockquote><cite>导读</cite></li></ol></section>
-<section class="mmx-mod" aria-labelledby="coreask" id="mod-coreask"><h2 id="coreask">核心追问（来自深读）</h2><p class="mmx-mod-note">跨章主题的深读追问，由模型基于全书大纲与原文摘录撰写；逐章的追问收在每个章条目里。</p><div class="mmx-qa"><p class="mmx-q">导读把全书主题归纳为什么？「精神优于物质、个体大于社会」具体在斯特里克兰身上如何体现</p><p class="mmx-a">导读把主题归为精神与物质、个体与社会的对立。斯特里克兰弃证券经纪之职、抛妻弃子去画画，正是把“月亮”（内在召唤）置于“六便士”（世俗安稳）之上，用余生证明个体可以大于社会期待。</p></div><div class="mmx-qa"><p class="mmx-q">巴黎部分，斯特罗夫一家为何走向悲剧？斯特里克兰对布兰琪的态度说明了他怎样的为人</p><p class="mmx-a">斯特罗夫好心收留病中的斯特里克兰，后者却勾引其妻布兰琪并致其自尽。斯特里克兰对布兰琪只有欲望与利用、毫无愧疚——暴露他是彻底以自我为中心的创造者，他人的爱与死皆是素材。</p></div><div class="mmx-qa"><p class="mmx-q">塔希提为什么对斯特里克兰如此关键？他临终那幅巨作的下落，与「神话建构」一条有何呼应</p><p class="mmx-a">塔希提隔绝而丰饶，让他卸下文明评判、回到本能创作，画出巅峰之作。那幅融合天地生灭的巨作被他遗命焚毁，正呼应“神话建构”：意义不在留存，而在他活成了自己的传说。</p></div></section>
-<section class="mmx-mod" aria-labelledby="aiask" id="mod-aiask"><h2 id="aiask">AI 问书</h2><p class="mmx-mod-note">下方内容为本书级 AI 问书整理，由云端 AI 阅读流程基于本书大纲、章节锚点与热门划线生成。</p><div class="mmx-qa"><p class="mmx-q">斯特里克兰为什么要抛下妻儿去画画？</p><p class="mmx-a">小说给不出体面理由：他中年突然弃商从画，不为成名也不为钱，只说“我必须画画”。毛姆借这个人物质问，当一个人被某种不可理喻的冲动攫住，世俗的责任、温情与安稳是否还构成束缚。驱动力不是热爱，而是一种非如此不可的驱魔。</p></div><div class="mmx-qa"><p class="mmx-q">书名“月亮与六便士”到底比喻什么？</p><p class="mmx-a">月亮指遥不可及的理想与美，六便士是低头可见的世俗生计。毛姆用这枚硬币与那轮月亮，把“仰望”与“苟且”压成一个瞬间的选择。书名并非他本人所起，却精准道出斯特里克兰们的处境：大多数人捡起便士，少数人抬头追月，且往往追得一无所有。</p></div><div class="mmx-qa"><p class="mmx-q">斯特里克兰在塔希提的结局意味着什么？</p><p class="mmx-a">他在麻风病毁容、双目失明后仍于木屋墙壁上画下终极之作，死后却按遗愿被妻子付之一炬。毛姆借此把“创造”与“被理解”彻底脱钩：最伟大的作品未必需要被看见，艺术的自足高于世人的喝彩，而毁灭本身成了最后一道完成式。</p></div></section>
-<section class="mmx-mod" aria-labelledby="higher" id="mod-higher"><h2 id="higher">用更高维度的知识看这本书</h2><p class="mmx-mod-note">下方内容由云端 AI 阅读流程生成：把本书放回知识史与理论框架中重读，区分书中主张、外部证据与综合分析。</p><p>【书中主张】小说主张艺术与个人幸福彼此背叛：天才往往残忍、忘恩且反社会，真正的创造不预设道德，也不回馈温情；斯特里克兰的“必须画画”高于一切人伦。【外部证据】毛姆以高更为原型，却刻意抽空其温情面；书中借叙事者之口反复辩驳“艺术家是否应为好人”，与西方“为艺术而艺术”论争同源。【综合分析】这一主张的挑衅在于，它拒绝把艺术浪漫化成苦尽甘来的励志故事，而把创作者写成一个被使命占据、对旁人毫无愧疚的“非人”，逼读者重审我们对天才的道德想象。</p><p>【书中主张】书同时主张，世俗的“成功”与精神的“完成”是两套不兼容的账本；斯特里克兰烧掉壁画，是对世俗认可的最彻底弃权。【外部证据】塔希提土著爱塔的接纳、布吕诺船长“建造自己的宇宙”的譬喻，构成与伦敦中产生活的对照；毛姆本人亦在随笔中多次怀疑庸常幸福的真实性。【综合分析】但毛姆并未完全背书这种残忍——叙事者的犹疑与讽刺笔调，暗示他既羡慕斯特里克兰的决绝，又不敢否认平凡生活的正当。月亮与六便士的张力，正在于它既召唤又警告那次抬头。</p></section>
-<section class="mmx-mod" aria-labelledby="verify" id="mod-verify"><h2 id="verify">阅读时要验证的问题</h2><p class="mmx-mod-note">下方由云端 AI 阅读流程生成：读时需核对的原文、数字与论点（关键数据出处、个案代表性、类比限度）。</p><ul class="mmx-views"><li>书名“月亮与六便士”并非毛姆自拟，源自对《人性的枷锁》的书评，可核对出版史料与相关传记。（可核对：书名来源）</li><li>斯特里克兰以画家高更（Paul Gauguin）为原型，可核对毛姆自述及高更生平对照。（可核对：高更原型）</li><li>小说中斯特里克兰死于麻风病、双目失明，临终壁画被爱塔按其遗愿烧毁，可核对正文结局章节。（可核对：塔希提结局）</li></ul></section>
-<section class="mmx-mod" aria-labelledby="thennow" id="mod-thennow"><h2 id="thennow">当年与今天 · 初步对照</h2><p class="mmx-mod-note">下方由云端 AI 阅读流程生成：区分作者当年所能知晓与后来才显现的事实，给出今日可迁移的启发。</p><p>毛姆写作于1919年，他当年能确知的是一战前后英国中产阶级的价值崩塌、对高更式“文明逃逸”的时兴想象，以及殖民地作为欧洲人精神避难所的流行叙事；这些是他贴着时代脉搏写下的，所以斯特里克兰的出走既有个人任性，也踩中了整个时代对庸常的反叛浪潮。</p><p>但“躺平”“数字游民”“FIRE运动”这类后来才出现的逃离范式，是毛姆无法预见的；今天读者把斯特里克兰读成“反内卷先驱”，反而暴露当代人同样的困局。后来才显现的，是那轮月亮从一个艺术家的执念，变成了每个被困在六便士里的普通人共同的抬头冲动。</p></section>
+<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点</h2><ul class="mmx-views"><li><b>伦敦的平庸与离去</b>——交代斯特里克兰抛弃家庭与社会身份的背景，揭示其艺术本能与世俗生活的分裂。</li><li><b>巴黎的艺术挣扎</b>——描述主角在巴黎的生存状态及艺术探索，展现其对物质与社交的极度冷漠。</li><li><b>斯特罗夫的悲剧</b>——通过斯特罗夫夫妇的介入，展现斯特里克兰的艺术追求如何摧毁他人的生活与情感。</li><li><b>艺术观点的碰撞</b>——通过作者与主角的深度接触，探讨其独特的艺术视角与对传统美学的背离。</li><li><b>塔希提的终极归宿</b>——记录主角在原始环境中完成艺术创作并走向死亡的过程，实现艺术与自我的最终融合。</li><li><b>作者与译者背景</b>——提供关于作者创作立场及译者背景的补充信息，完成对全书的结构性收尾。</li></ul></section>
+<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句</h2><ol class="mmx-qlist"><li><blockquote>「1837年之前的乔治时代是浪漫主义文学的鼎盛期，虽然出现过亨利·菲尔丁、玛丽·雪莱和简·奥斯丁等少数名留青史的小说巨匠，但绝大多数享有盛誉的文学家，如罗伯特·伯恩斯、威廉·华兹华斯、萨缪尔·泰勒·科勒律治、约翰·济慈、乔治·戈登·拜伦和珀西·比希·雪莱等，无不以诗歌名世。」</blockquote><cite>导读</cite></li><li><blockquote>「小说很少受到当时文人的认真对待，甚至在有些作者心目中也无非是茶余饭后的消遣而已。」</blockquote><cite>导读</cite></li><li><blockquote>「19世纪叱咤风云的文坛巨子，是查尔斯·狄更斯、威廉·萨克雷、乔治·艾略特、托马斯·哈代、勃朗蒂三姐妹和乔治·吉辛等小说家。」</blockquote><cite>导读</cite></li><li><blockquote>「而提及小说在维多利亚时代的流行，则不得不先谈大不列颠帝国的勃兴。」</blockquote><cite>导读</cite></li><li><blockquote>「1831年，全英人口不足2403万，到1901年已飙升至4522万。」</blockquote><cite>导读</cite></li><li><blockquote>「至于识字率方面，1840年，英国只有67%的男人和51%的女人能够在结婚登记时签署自己名字；旨在推动基础教育的《教育法案》于1870年实施，仅仅三十年后，英国成年男女的识字率分别高达97.2%和96.8%。」</blockquote><cite>导读</cite></li><li><blockquote>「19世纪中期，少数精明的生意人从中发现商机，创办了流通图书馆，提供收费的图书外借服务，其中的翘楚有穆迪图书馆(Mudie's Library)和威廉·亨利·史密斯父子公司(W.H.Smith&amp;Son)等。」</blockquote><cite>导读</cite></li><li><blockquote>「得益于极低的生产成本，兼且没有官方审查制度，维多利亚时期的杂志层出不穷，某些年份新办刊物多达百余种，影响力较大的有《玉米山》(Cornhill)、《回音》(Echo)、《嘉言》(Good Words)等数十家。」</blockquote><cite>导读</cite></li><li><blockquote>「其次，在背景设定方面，故事通常不再发生于古代或者某个虚构的空间，而是同时代某个真实存在的地方，尤其是当时世界首屈一指的大都会伦敦。」</blockquote><cite>导读</cite></li><li><blockquote>「再者，叙事情节不再追求耸人听闻或怪诞离奇，而是偏重入情入理，对各种器物的描写也细致入微，旨在让读者觉得和现实生活所去不远。」</blockquote><cite>导读</cite></li></ol></section>
+<section class="mmx-mod" aria-labelledby="coreask" id="mod-coreask"><h2 id="coreask">核心追问</h2><div class="mmx-qa"><p class="mmx-q">导读把全书主题归纳为什么？「精神优于物质、个体大于社会」具体在斯特里克兰身上如何体现</p><p class="mmx-a">导读把主题归为精神与物质、个体与社会的对立。斯特里克兰弃证券经纪之职、抛妻弃子去画画，正是把“月亮”（内在召唤）置于“六便士”（世俗安稳）之上，用余生证明个体可以大于社会期待。</p></div><div class="mmx-qa"><p class="mmx-q">巴黎部分，斯特罗夫一家为何走向悲剧？斯特里克兰对布兰琪的态度说明了他怎样的为人</p><p class="mmx-a">斯特罗夫好心收留病中的斯特里克兰，后者却勾引其妻布兰琪并致其自尽。斯特里克兰对布兰琪只有欲望与利用、毫无愧疚——暴露他是彻底以自我为中心的创造者，他人的爱与死皆是素材。</p></div><div class="mmx-qa"><p class="mmx-q">塔希提为什么对斯特里克兰如此关键？他临终那幅巨作的下落，与「神话建构」一条有何呼应</p><p class="mmx-a">塔希提隔绝而丰饶，让他卸下文明评判、回到本能创作，画出巅峰之作。那幅融合天地生灭的巨作被他遗命焚毁，正呼应“神话建构”：意义不在留存，而在他活成了自己的传说。</p></div></section>
+<section class="mmx-mod" aria-labelledby="aiask" id="mod-aiask"><h2 id="aiask">AI 问书</h2><div class="mmx-qa"><p class="mmx-q">斯特里克兰为什么要抛下妻儿去画画？</p><p class="mmx-a">小说给不出体面理由：他中年突然弃商从画，不为成名也不为钱，只说“我必须画画”。毛姆借这个人物质问，当一个人被某种不可理喻的冲动攫住，世俗的责任、温情与安稳是否还构成束缚。驱动力不是热爱，而是一种非如此不可的驱魔。</p></div><div class="mmx-qa"><p class="mmx-q">书名“月亮与六便士”到底比喻什么？</p><p class="mmx-a">月亮指遥不可及的理想与美，六便士是低头可见的世俗生计。毛姆用这枚硬币与那轮月亮，把“仰望”与“苟且”压成一个瞬间的选择。书名并非他本人所起，却精准道出斯特里克兰们的处境：大多数人捡起便士，少数人抬头追月，且往往追得一无所有。</p></div><div class="mmx-qa"><p class="mmx-q">斯特里克兰在塔希提的结局意味着什么？</p><p class="mmx-a">他在麻风病毁容、双目失明后仍于木屋墙壁上画下终极之作，死后却按遗愿被妻子付之一炬。毛姆借此把“创造”与“被理解”彻底脱钩：最伟大的作品未必需要被看见，艺术的自足高于世人的喝彩，而毁灭本身成了最后一道完成式。</p></div></section>
+<section class="mmx-mod" aria-labelledby="higher" id="mod-higher"><h2 id="higher">更高维度</h2><p>【书中主张】小说主张艺术与个人幸福彼此背叛：天才往往残忍、忘恩且反社会，真正的创造不预设道德，也不回馈温情；斯特里克兰的“必须画画”高于一切人伦。【外部证据】毛姆以高更为原型，却刻意抽空其温情面；书中借叙事者之口反复辩驳“艺术家是否应为好人”，与西方“为艺术而艺术”论争同源。【综合分析】这一主张的挑衅在于，它拒绝把艺术浪漫化成苦尽甘来的励志故事，而把创作者写成一个被使命占据、对旁人毫无愧疚的“非人”，逼读者重审我们对天才的道德想象。</p><p>【书中主张】书同时主张，世俗的“成功”与精神的“完成”是两套不兼容的账本；斯特里克兰烧掉壁画，是对世俗认可的最彻底弃权。【外部证据】塔希提土著爱塔的接纳、布吕诺船长“建造自己的宇宙”的譬喻，构成与伦敦中产生活的对照；毛姆本人亦在随笔中多次怀疑庸常幸福的真实性。【综合分析】但毛姆并未完全背书这种残忍——叙事者的犹疑与讽刺笔调，暗示他既羡慕斯特里克兰的决绝，又不敢否认平凡生活的正当。月亮与六便士的张力，正在于它既召唤又警告那次抬头。</p></section>
+<section class="mmx-mod" aria-labelledby="verify" id="mod-verify"><h2 id="verify">阅读验证</h2><ul class="mmx-views"><li>书名“月亮与六便士”并非毛姆自拟，源自对《人性的枷锁》的书评，可核对出版史料与相关传记。（可核对：书名来源）</li><li>斯特里克兰以画家高更（Paul Gauguin）为原型，可核对毛姆自述及高更生平对照。（可核对：高更原型）</li><li>小说中斯特里克兰死于麻风病、双目失明，临终壁画被爱塔按其遗愿烧毁，可核对正文结局章节。（可核对：塔希提结局）</li></ul></section>
+<section class="mmx-mod" aria-labelledby="thennow" id="mod-thennow"><h2 id="thennow">往日今时</h2><p>毛姆写作于1919年，他当年能确知的是一战前后英国中产阶级的价值崩塌、对高更式“文明逃逸”的时兴想象，以及殖民地作为欧洲人精神避难所的流行叙事；这些是他贴着时代脉搏写下的，所以斯特里克兰的出走既有个人任性，也踩中了整个时代对庸常的反叛浪潮。</p><p>但“躺平”“数字游民”“FIRE运动”这类后来才出现的逃离范式，是毛姆无法预见的；今天读者把斯特里克兰读成“反内卷先驱”，反而暴露当代人同样的困局。后来才显现的，是那轮月亮从一个艺术家的执念，变成了每个被困在六便士里的普通人共同的抬头冲动。</p></section>
 </body>
 </html>

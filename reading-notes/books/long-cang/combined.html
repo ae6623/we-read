@@ -6,46 +6,108 @@
 <title>《龙藏》｜通读 · 精读</title>
 <link rel="stylesheet" href="../../../assets/css/reading-overview.css"><link rel="stylesheet" href="../../../assets/css/mmx-guide.css"><link rel="stylesheet" href="../../../assets/css/reading-outline.css">
 <style>
-/* 合并页外壳 */
-body{max-width:960px;margin:0 auto;padding:0 18px 80px;}
-.combined-head{padding:34px 0 18px;border-bottom:1px solid #e7e0d2;margin-bottom:8px;}
-.combined-head h1{font-size:26px;margin:0 0 10px;}
+/* ── 外壳与全局阅读节奏 ── */
+body{max-width:880px;margin:0 auto;padding:0 18px 80px;
+  font-size:15px;line-height:1.88;color:#3b453e;background:#f7f8f3;
+  -webkit-font-smoothing:antialiased;}
+.combined-head{padding:30px 0 16px;border-bottom:1px solid #e7e0d2;margin-bottom:4px;}
+.combined-head h1{font:700 23px/1.35 var(--serif);margin:0 0 8px;color:#244b40;}
+.combined-head .eyebrow{font-size:.72rem;letter-spacing:.14em;margin:0 0 6px;}
+.chips{margin:8px 0 0;}
+.chip{font-size:.72rem;padding:2px 10px;}
 /* 锚点导航：固定一排 4 个，等宽对齐 */
-.nav{position:sticky;top:0;z-index:20;background:rgba(255,253,248,.96);backdrop-filter:blur(6px);
-  border-bottom:1px solid #ece4d4;padding:10px 0;margin:14px 0 26px;display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;
-  box-shadow:0 2px 10px rgba(120,100,60,.06);}
-.navlink{font-size:12.5px;color:#5d5443;text-decoration:none;background:#f6f1e6;border:1px solid #e7ddca;
-  border-radius:7px;padding:4px 6px;text-align:center;white-space:nowrap;overflow:hidden;
-  text-overflow:ellipsis;}
-section{scroll-margin-top:64px;}
-/* 一句话主旨：去左侧竖线 */
-.mmx-oneline{border-left:none;padding-left:18px;}
-/* AI领读章内：AI 大纲原生深层样式 */
-.merged-guide .sec{margin:10px 0 14px;padding-left:6px;border-left:2px solid #e5e0d6}
-.merged-guide .sec h4{font:600 .98rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.6em 0 .3em}
-.merged-guide ul.point{margin:.3em 0;padding-left:20px}
-.merged-guide ul.point>li{margin:.35em 0}
-.merged-guide ul.quote{margin:.25em 0 .25em 20px;padding-left:18px;list-style:none}
-.merged-guide ul.quote::before{content:"原句";display:block;font-size:.72rem;color:#bf8247;
-  letter-spacing:.1em;margin:.15em 0 .1em;font-weight:600}
-.merged-guide ul.quote.quote-node{margin-top:.5em;padding-top:.4em;border-top:1px dashed #eadfc9}
+.nav{position:sticky;top:0;z-index:20;background:rgba(247,248,243,.96);backdrop-filter:blur(6px);
+  border-bottom:1px solid #ece4d4;padding:10px 0;margin:12px 0 20px;display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;
+  box-shadow:0 2px 10px rgba(120,100,60,.05);}
+.navlink{font-size:12px;color:#5d5443;text-decoration:none;background:#fdfbf3;border:1px solid #e8e2d2;
+  border-radius:8px;padding:6px 4px;text-align:center;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;transition:background .15s,color .15s;}
+.navlink:hover{background:#f2efe2;color:#244b40;}
+section{scroll-margin-top:62px;}
+
+/* ── 统一卡片：所有顶层模块（AI领读 / AI 问答 / 其余）一视同仁 ── */
+body>section.mmx-mod,body>section.card,body>section.mmx-svgwrap{
+  background:#fffdf6;border:1px solid #e8e4d5;border-radius:16px;
+  padding:18px 22px;margin:18px 0;
+  box-shadow:0 1px 3px rgba(110,95,60,.05);}
+body>section.mmx-mod>*:first-child,body>section.card>*:first-child,
+body>section.mmx-svgwrap>*:first-child{margin-top:0}
+body>section.mmx-mod>*:last-child,body>section.card>*:last-child,
+body>section.mmx-svgwrap>*:last-child{margin-bottom:0}
+/* 结构导图：图本身留白居中，不与正文抢宽 */
+body>section.mmx-svgwrap>svg.mmx-svg{display:block;width:100%;height:auto;margin:2px auto 0;}
+/* 模块标题：统一大小、弱强调，不与正文抢注意力 */
+body>section.mmx-mod>h2,body>section.card>h2{
+  font:700 1.04rem/1.5 var(--serif);color:#244b40;margin:0 0 11px;
+  padding-left:10px;border-left:3px solid #bf8247;letter-spacing:.01em;}
+/* 正文：字号收小、行距放宽、段间距舒服 */
+body>section.mmx-mod p,body>section.card p,
+body>section.mmx-mod li,body>section.card li{
+  font-size:.9rem;line-height:1.92;color:#4a4436;}
+body>section.mmx-mod p,body>section.card p{margin:.5em 0;}
+body>section.mmx-mod>ul,body>section.mmx-mod>ol,body>section.mmx-mod>div,
+body>section.mmx-mod>p:not(.mmx-mod-note),
+body>section.card:not(.merged-guide)>ul,body>section.card:not(.merged-guide)>ol,
+body>section.card:not(.merged-guide)>div,body>section.card:not(.merged-guide)>p:not(.mmx-mod-note){
+  padding-left:14px;}
+/* 模块说明小字：弱化不抢眼 */
+.mmx-mod-note{font-size:.75rem;color:#8d8878;margin:.1em 0 .75em;line-height:1.7;}
+
+/* ── 内部块统一：卡片里不再套深卡片，一律浅底子块 ── */
+body>section .mmx-pending,body>section .mmx-evib,body>section .aiqa-item{
+  background:#fbfaf2;border:1px solid #eee9d8;border-radius:12px;
+  padding:13px 16px;margin:.65em 0;}
+body>section .mmx-evib ul{padding-left:1.15em;}
+/* 一句话主旨：去左侧竖线 + 收敛字号 */
+.mmx-oneline{font-size:.98rem;line-height:1.85;color:#3a352c;margin:.2em 0 0;
+  padding:12px 16px;background:#fbfaf4;border-left:none;border-radius:12px;}
+/* 核心观点 / 验证清单：虚线分隔 + 收紧行距 */
+.mmx-views li{padding:.5em 0 .5em 0;font-size:.9rem;line-height:1.88;}
+/* 原文金句 */
+.mmx-qlist li{padding:.6em 0 .6em 2.2em;}
+.mmx-qlist blockquote{font-size:.89rem;line-height:1.9;}
+.mmx-qlist cite{font-size:.72rem;}
+/* 核心追问：问句加重、答句放松 */
+.mmx-qa{margin:.7em 0;padding-left:12px;border-left:3px solid #e5dfcd;}
+.mmx-qa .mmx-q{font-size:.9rem;font-weight:700;color:#2f3a33;line-height:1.8;margin:0 0 .25em;}
+.mmx-qa .mmx-a{font-size:.88rem;line-height:1.95;color:#4a4436;margin:0;}
+
+/* ── AI 问书专项：外层容器透明，问答条目才是阅读单元 ── */
+#mod-aiask .mmx-ask{background:transparent;border:0;border-radius:0;padding:0;margin:0;}
+#mod-aiask .aiqa-item{margin:.6em 0;padding:14px 16px 15px;}
+#mod-aiask .aiqa-item h3{font:700 .93rem/1.7 var(--serif);color:#2f5b49;margin:0 0 .4em;
+  padding:0;border:0;}
+#mod-aiask .aiqa-item h3:before{content:"问　";color:#bf8247;font-weight:700;}
+#mod-aiask .aiqa-item p{font-size:.88rem;line-height:1.95;color:#4a4436;margin:.4em 0;}
+#mod-aiask .aiqa-item ul{margin:.35em 0;padding-left:1.1em;}
+#mod-aiask .aiqa-item li{font-size:.87rem;line-height:1.88;margin:.18em 0;color:#4a4436;}
+#mod-aiask .aiqa-item li::marker{color:#c0a06a;}
+/* 逐章追问（details 形态）：摘要行也收敛 */
+.mmx-ask>summary{font-size:.87rem;line-height:1.7;padding:2px 0;}
+.mmx-askbody{font-size:.88rem;line-height:1.9;}
+
+/* AI领读章内：AI 大纲原生深层样式（字号同步收小） */
+.merged-guide .sec{margin:9px 0 12px;padding-left:6px;border-left:2px solid #e5e0d6}
+.merged-guide .sec h4{font:600 .93rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.5em 0 .25em}
+.merged-guide ul.point{margin:.25em 0;padding-left:20px}
+.merged-guide ul.point>li{margin:.3em 0}
+.merged-guide ul.quote{margin:.22em 0 .22em 20px;padding-left:18px;list-style:none}
+.merged-guide ul.quote::before{content:"原句";display:block;font-size:.7rem;color:#bf8247;
+  letter-spacing:.1em;margin:.12em 0 .08em;font-weight:600}
+.merged-guide ul.quote.quote-node{margin-top:.45em;padding-top:.35em;border-top:1px dashed #eadfc9}
 .merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
-.merged-guide ul.quote>li{color:#4a4436;font-size:.93rem;margin:.2em 0;padding-left:10px;border-left:2px solid #bf8247}
-/* 模块内子内容（AI领读除外，它有专属深层样式）：左缩进 + 正文与标题分层 */
-section.mmx-mod>ul,section.mmx-mod>ol,section.mmx-mod>div,
-section.mmx-mod>p:not(.mmx-mod-note),
-section.card:not(.merged-guide)>ul,section.card:not(.merged-guide)>ol,
-section.card:not(.merged-guide)>div,section.card:not(.merged-guide)>p:not(.mmx-mod-note){
-  padding-left:16px;}
-section.mmx-mod li,section.mmx-mod p:not(.mmx-mod-note),
-section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mod-note){
-  color:#4a4436;font-size:.93rem;line-height:1.78;}
+.merged-guide ul.quote>li{color:#4a4436;font-size:.88rem;line-height:1.85;margin:.18em 0;padding-left:10px;border-left:2px solid #bf8247}
 /* 核心观点初判：外链 mmx-guide.css 的「观点N」前缀是绝对定位，在本页版式里和标题叠字，
    且此前要求去掉「观点1/2/3」前缀 —— 这里整条关掉（外链 CSS 不在页面内，只能内联覆盖）。 */
 .mmx-views li{padding-left:0 !important;}
 .mmx-views li:before,.mmx-views li::before{
   content:none !important;display:none !important;counter-increment:none !important;}
+@media(max-width:720px){
+  body{padding:0 12px 60px;font-size:14.5px;}
+  body>section.mmx-mod,body>section.card{padding:15px 16px;border-radius:14px;}
+  .nav{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
 </style>
 </head>
 <body>
@@ -54,8 +116,8 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
   <h1>《龙藏》</h1>
   <div class="chips"><span class="chip">通读 + 精读</span><span class="chip">AI领读</span><span class="chip">AI 生产</span></div>
 </header>
-<nav class="nav"><a class="navlink" href="#mod-svg">全书结构导图</a><a class="navlink" href="#mod-oneline">一句话主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a><a class="navlink" href="#mod-coreask">核心追问</a><a class="navlink" href="#mod-aiask">AI 问书</a><a class="navlink" href="#mod-higher">更高维度</a><a class="navlink" href="#mod-verify">阅读验证</a><a class="navlink" href="#mod-thennow">当年与今天</a></nav>
-<section class="mmx-svgwrap" id="mod-svg"><svg class="mmx-svg" viewBox="0 0 1120 468" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="龙藏 全书精读">
+<nav class="nav"><a class="navlink" href="#mod-svg">结构导图</a><a class="navlink" href="#mod-oneline">核心主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a><a class="navlink" href="#mod-coreask">核心追问</a><a class="navlink" href="#mod-aiask">AI 问书</a><a class="navlink" href="#mod-higher">更高维度</a><a class="navlink" href="#mod-verify">阅读验证</a><a class="navlink" href="#mod-thennow">往日今时</a></nav>
+<section class="mmx-svgwrap" id="mod-svg"><h2>结构导图</h2><svg class="mmx-svg" viewBox="0 0 1120 468" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="龙藏 全书精读">
 <rect x="0" y="0" width="1120" height="468" fill="none"/>
 <style>.mmx-svg text{font-family:"Noto Serif SC",Georgia,serif}.mmx-svg .t1{font-size:15px;fill:#2f2a24;font-weight:600}.mmx-svg .t2{font-size:12px;fill:#5c5347}.mmx-svg .t3{font-size:10.5px;fill:#8a8272}.mmx-svg .rt{font-size:13px;fill:#f7f3ea;font-weight:600}.mmx-svg .ln{stroke:#cfc6b4;stroke-width:1.4;fill:none}</style>
 <rect x="28" y="190" width="262" height="52" rx="10" fill="#3d372e"/>
@@ -110,7 +172,7 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
 <text class="t2" x="714" y="375">对抗寂灭、重塑秩序的宏大志向。</text>
 <path class="ln" d="M692 371 L700 371"/>
 </svg></section>
-<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">一句话主旨</h2><p class="mmx-mod-note">本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。</p><p class="mmx-oneline">卫渊通过构建「万里河山」道基与「青冥界域」，实现从个人修仙到集众经营的降维打击。</p></section>
+<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">核心主旨</h2><p class="mmx-oneline">卫渊通过构建「万里河山」道基与「青冥界域」，实现从个人修仙到集众经营的降维打击。</p></section>
 <section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" id="mod-merged_guide"><h2 id="merged-guide-title">AI领读</h2>
 <style>
 /* merged_guide 章内：AI 大纲原生深层样式 */
@@ -25396,12 +25458,12 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
       </div></details>
   </div>
 </section>
-<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点初判</h2><p class="mmx-mod-note">按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。</p><ul class="mmx-views"><li><b>仙途启蒙与气运布局</b>——确立主角卫渊与张生的师徒羁绊，通过仙宗统考揭示气运与根基对修行的决定性作用。</li><li><b>武测博弈与鼎新之争</b>——在太初宫内部权力斗争背景下，卫渊完成从凡人到铸体圆满的转化，初步接触仙道权力结构。</li><li><b>边疆实战与勋功积累</b>——通过北辽前线厮杀，卫渊确立了以「山河之力」为核心的战斗风格，并完成道基的质变飞跃。</li><li><b>界域开辟与经营之道</b>——卫渊在西域建立「青冥界域」，将天外来客知识与仙道结合，实现凡人与修士的协同防御。</li><li><b>幽寒探索与因果纠缠</b>——通过对幽寒界的资源掠夺与巫族的大规模战争，卫渊的道基演化出阴阳平衡，实力跨阶层增长。</li><li><b>末法秘境与终焉救赎</b>——在末法秘境中体悟众生终局，卫渊获得「万世千秋剑」传承，确立了对抗寂灭、重塑秩序的宏大志向。</li></ul></section>
-<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句 · 持续积累</h2><p class="mmx-mod-note">以下原句取自本书 AI 大纲落库的原文摘录（book_outline.quote），按大纲顺序节选，非 AI 生成；更多见逐章深读页。</p><ol class="mmx-qlist"><li><blockquote>「文士环顾周围绵延群山走势，再看看山脚下的小谷地，感慨道：“如果不是亲身到此，怎知这里已经风云汇聚？”。」</blockquote><cite>寻龙</cite></li><li><blockquote>「管家看到文士，眼睛一亮，施礼道：“先生从哪里来？如何称呼？”。」</blockquote><cite>寻龙</cite></li><li><blockquote>「管家就道：“我家老爷姓卫，整个县里谁不知道卫有财卫大善人的名号？今日四夫人临盆，老爷就让我给路过的人发些赏钱，沾沾喜气。”。」</blockquote><cite>寻龙</cite></li><li><blockquote>「管家招手叫来另一个家丁，捧上来的是漆盘，上面放着笔墨和一个钱袋。管家拿起钱袋送上，文士在手里一掂，钱袋里装的居然是散碎银子，足有一两。」</blockquote><cite>寻龙</cite></li><li><blockquote>「“这又是何故？”张生没有收钱袋。他刚刚看得分明，管家给旁人派发的赏钱都是几个铜钱。管家就道：“我家老爷最敬重读书人。先生一看就是有大才的，谢礼自然不同。还请先生给孩子取个名，一个男名一个女名。”。」</blockquote><cite>寻龙</cite></li><li><blockquote>「张生向宅院望去，双瞳深处清光一闪，然后便拿过纸笔，在纸上写下一个‘渊’字，道：“这是取‘有龙在渊’之意。小公子福缘深厚，当得起这一字。”。」</blockquote><cite>寻龙</cite></li><li><blockquote>「管家看着那个龙飞凤舞的渊字，只觉其好，却不知道好在哪里。他左看右看，也没看出门道。这时张生放下了笔，就带着童子离开。」</blockquote><cite>寻龙</cite></li><li><blockquote>「张生取出一块玉盘放在阵台上。玉盘质地绝佳，上面刻着无数纹路，隐隐有光芒流转。放定玉盘后，张生就对童子道：“此间事了，你我的缘份就尽了。过去一年，我已经将入门的东西传了给你，日后你凭此根基，自能寻个喜欢的宗门加入好好修行。”。」</blockquote><cite>寻龙</cite></li><li><blockquote>「童子眼睛立刻就红了，扑通跪在地上，叫道：“不，我不要去别处，就要跟着先生！我只认先生作我师父！”。」</blockquote><cite>寻龙</cite></li><li><blockquote>「张生不为所动，淡道：“你我并无师徒缘份，不要叫我师父。你机缘不够，强求亦是枉然。”。」</blockquote><cite>寻龙</cite></li></ol></section>
-<section class="mmx-mod" aria-labelledby="coreask" id="mod-coreask"><h2 id="coreask">核心追问（来自深读）</h2><p class="mmx-mod-note">跨章主题的深读追问，由模型基于全书大纲与原文摘录撰写；逐章的追问收在每个章条目里。</p><div class="mmx-qa"><p class="mmx-q">首章张生抽出的龙气里既有祥瑞也有灾星、反贼之象，这个开篇设定为全书埋下了什么矛盾</p><p class="mmx-a">关于「首章张生抽出的龙气里既有祥瑞也有灾星、反贼之象，这个」：大纲显示《》以《寻龙》起手、到《遍地阴阳》收束，核心脉络与「张生和书僮来到雍州的山上，感叹这里的山势险峻」相关。以上为大纲条目推断，未亲读正文，读后请核对。</p></div><div class="mmx-qa"><p class="mmx-q">卫渊从太初宫弟子到永安知县、再到西疆主事，每一次身份转换，他解决的问题类型发生了什么变化</p><p class="mmx-a">基于大纲，本书共 295 章，主线：《寻龙》 → 《天灾，人祸？》 → 《和先生有缘》 … 《遍地阴阳》。就「核心问题」而言，目前的（待验证）判断是：张生和书僮来到雍州的山上，感叹这里的山势险峻。这是大纲条目推断，未亲读正文，读后请回原文核对。</p></div><div class="mmx-qa"><p class="mmx-q">「末法之世」作为终局前的危机，动摇的是力量本身，还是依赖力量的那套秩序</p><p class="mmx-a">关于「「末法之世」作为终局前的危机，动摇的是力量本身，还是」：大纲显示《》以《寻龙》起手、到《遍地阴阳》收束，核心脉络与「张生和书僮来到雍州的山上，感叹这里的山势险峻」相关。以上为大纲条目推断，未亲读正文，读后请核对。</p></div></section>
-<section class="mmx-mod" aria-labelledby="aiask" id="mod-aiask"><h2 id="aiask">AI 问书</h2><p class="mmx-mod-note">下方内容为本书级 AI 问书整理，由云端 AI 阅读流程基于本书大纲、章节锚点与热门划线生成。</p><div class="mmx-qa"><p class="mmx-q">卫渊的「集众经营」和一般修仙文的「独自无敌」有什么不同？</p><p class="mmx-a">锚点写他在西域建「青冥界域」，「将天外来客知识与仙道结合，实现凡人与修士的协同防御」。一般修仙是主角一个人升级打怪，龙藏的核心是「万里河山」道基——把凡人、资源、势力都纳入自己的经营系统，用组织力做降维打击。热门划线里「天才共享」的设定也点明：本书把宗门垄断反过来写成「集众」才能破局。</p></div><div class="mmx-qa"><p class="mmx-q">卫渊三岁就「异常高大」，这不是又一种龙傲天吗？</p><p class="mmx-a">锚点：「男孩正是卫渊，虽然今年才刚满三岁，可是生得异常高大，山间乡下农户孩子又普遍瘦小，所以看起来已经比镇上许多七八岁的孩子还高。」这确实是金手指设定，但小说把重点放在他用「山河之力」战斗、演化阴阳平衡的道基，而非单纯战力碾压；「这到底修的是什么仙？」的迷茫反而是对修仙目的的追问。</p></div><div class="mmx-qa"><p class="mmx-q">「青冥界域」靠什么立住？</p><p class="mmx-a">锚点：卫渊「在西域建立青冥界域，将天外来客知识与仙道结合，实现凡人与修士的协同防御」，并有「千秋城三堂（天机、枢密、夙夜）」为权柄最高处。它靠的是把修士战力与凡人生产、情报（崔聿用例银换情报）绑定成体系，而非 single 强者；这正是「集众」胜过「位格」的设定落点。</p></div></section>
-<section class="mmx-mod" aria-labelledby="higher" id="mod-higher"><h2 id="higher">用更高维度的知识看这本书</h2><p class="mmx-mod-note">下方内容由云端 AI 阅读流程生成：把本书放回知识史与理论框架中重读，区分书中主张、外部证据与综合分析。</p><p>【书中主张】小说让卫渊以「万里河山」道基与「青冥界域」实现「从个人修仙到集众经营」的降维打击，主张在资源匮乏、异族环伺的破碎之域，单打独斗无法逾越位格鸿沟，唯有把凡人、修士、资源组织成体系才能破局。【外部证据】类型上它属于2010年后「凡人流/经营流」仙侠，与《诡秘之主》的「组织化成长」一脉相承；热门划线「天才共享」设定也借用了现实教育公平的话语。【综合分析】把《龙藏》放回仙侠演化谱系，它把早期「逆天改命」的个人英雄叙事，改写成「基建+治理」的集体叙事——其爽点从「我比谁都强」转为「我让一群人变强」。</p><p>【书中主张】书中「幽寒界永远是阴沉的」「巫族顶着血色光罩快速突进」等把异族写为可计算的战争对象，卫渊道基演化出阴阳平衡，是「实力跨阶层增长」的写法。【外部证据】这类「界域经营+种族战争」直接受游戏化世界观（如4X策略）影响，读者用「种田/征服」双线理解；但AI大纲提示在「仙宗高层绝对力量压制」下集众之道仍难逾越，说明设定留有天花板。【综合分析】从网络类型学看，它的创新是有限的：仍依赖「三岁异常高大」的金手指与战力数值化；其真正可取处，是把「治理」当作修炼本身，给了爽文一点稀缺的共同体想象。</p></section>
-<section class="mmx-mod" aria-labelledby="verify" id="mod-verify"><h2 id="verify">阅读时要验证的问题</h2><p class="mmx-mod-note">下方由云端 AI 阅读流程生成：读时需核对的原文、数字与论点（关键数据出处、个案代表性、类比限度）。</p><ul class="mmx-views"><li>「卫渊今年才刚满三岁，生得异常高大」——核对小说开篇设定章回，确认这是穿越/特殊天赋的锚点，区分正文与同人二创的夸张。</li><li>「天才共享：人域修道种子应由各大宗门共享，统一举办入宗考核」——核查该设定的提出章回（仙宗统考相关），确认是作者原设还是热门划线读者的概括，避免把读者批注当原文。</li><li>《龙藏》为网络连载——应核查其首发平台、作者、完结状态与总字数，确认「青冥界域」「千秋城三堂」等后期设定确属正文，避免把AI导图的归纳当作原著事实。</li></ul></section>
-<section class="mmx-mod" aria-labelledby="thennow" id="mod-thennow"><h2 id="thennow">当年与今天 · 初步对照</h2><p class="mmx-mod-note">下方由云端 AI 阅读流程生成：区分作者当年所能知晓与后来才显现的事实，给出今日可迁移的启发。</p><p>作者当年（连载期）所能知晓的，是修仙文市场从「废柴逆袭」转向「种田经营」的口味变化，以及游戏化世界观对年轻读者的吸引；写不出「组织力胜过个人」会如何被今天「抗风险共同体」话语重新解读。</p><p>后来显现的事实是：此类「集众经营流」已成仙侠主流亚类型，读者用「基建」「公会」等现代词转译书中设定；可迁移的启发是——卫渊的「降维打击」本质是用系统组织对抗资源垄断，这恰是今天小团队用协作撬动大平台的可笑又真实的映射，只是现实没有修仙兜底。</p></section>
+<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点</h2><ul class="mmx-views"><li><b>仙途启蒙与气运布局</b>——确立主角卫渊与张生的师徒羁绊，通过仙宗统考揭示气运与根基对修行的决定性作用。</li><li><b>武测博弈与鼎新之争</b>——在太初宫内部权力斗争背景下，卫渊完成从凡人到铸体圆满的转化，初步接触仙道权力结构。</li><li><b>边疆实战与勋功积累</b>——通过北辽前线厮杀，卫渊确立了以「山河之力」为核心的战斗风格，并完成道基的质变飞跃。</li><li><b>界域开辟与经营之道</b>——卫渊在西域建立「青冥界域」，将天外来客知识与仙道结合，实现凡人与修士的协同防御。</li><li><b>幽寒探索与因果纠缠</b>——通过对幽寒界的资源掠夺与巫族的大规模战争，卫渊的道基演化出阴阳平衡，实力跨阶层增长。</li><li><b>末法秘境与终焉救赎</b>——在末法秘境中体悟众生终局，卫渊获得「万世千秋剑」传承，确立了对抗寂灭、重塑秩序的宏大志向。</li></ul></section>
+<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句</h2><ol class="mmx-qlist"><li><blockquote>「文士环顾周围绵延群山走势，再看看山脚下的小谷地，感慨道：“如果不是亲身到此，怎知这里已经风云汇聚？”。」</blockquote><cite>寻龙</cite></li><li><blockquote>「管家看到文士，眼睛一亮，施礼道：“先生从哪里来？如何称呼？”。」</blockquote><cite>寻龙</cite></li><li><blockquote>「管家就道：“我家老爷姓卫，整个县里谁不知道卫有财卫大善人的名号？今日四夫人临盆，老爷就让我给路过的人发些赏钱，沾沾喜气。”。」</blockquote><cite>寻龙</cite></li><li><blockquote>「管家招手叫来另一个家丁，捧上来的是漆盘，上面放着笔墨和一个钱袋。管家拿起钱袋送上，文士在手里一掂，钱袋里装的居然是散碎银子，足有一两。」</blockquote><cite>寻龙</cite></li><li><blockquote>「“这又是何故？”张生没有收钱袋。他刚刚看得分明，管家给旁人派发的赏钱都是几个铜钱。管家就道：“我家老爷最敬重读书人。先生一看就是有大才的，谢礼自然不同。还请先生给孩子取个名，一个男名一个女名。”。」</blockquote><cite>寻龙</cite></li><li><blockquote>「张生向宅院望去，双瞳深处清光一闪，然后便拿过纸笔，在纸上写下一个‘渊’字，道：“这是取‘有龙在渊’之意。小公子福缘深厚，当得起这一字。”。」</blockquote><cite>寻龙</cite></li><li><blockquote>「管家看着那个龙飞凤舞的渊字，只觉其好，却不知道好在哪里。他左看右看，也没看出门道。这时张生放下了笔，就带着童子离开。」</blockquote><cite>寻龙</cite></li><li><blockquote>「张生取出一块玉盘放在阵台上。玉盘质地绝佳，上面刻着无数纹路，隐隐有光芒流转。放定玉盘后，张生就对童子道：“此间事了，你我的缘份就尽了。过去一年，我已经将入门的东西传了给你，日后你凭此根基，自能寻个喜欢的宗门加入好好修行。”。」</blockquote><cite>寻龙</cite></li><li><blockquote>「童子眼睛立刻就红了，扑通跪在地上，叫道：“不，我不要去别处，就要跟着先生！我只认先生作我师父！”。」</blockquote><cite>寻龙</cite></li><li><blockquote>「张生不为所动，淡道：“你我并无师徒缘份，不要叫我师父。你机缘不够，强求亦是枉然。”。」</blockquote><cite>寻龙</cite></li></ol></section>
+<section class="mmx-mod" aria-labelledby="coreask" id="mod-coreask"><h2 id="coreask">核心追问</h2><div class="mmx-qa"><p class="mmx-q">首章张生抽出的龙气里既有祥瑞也有灾星、反贼之象，这个开篇设定为全书埋下了什么矛盾</p><p class="mmx-a">关于「首章张生抽出的龙气里既有祥瑞也有灾星、反贼之象，这个」：大纲显示《》以《寻龙》起手、到《遍地阴阳》收束，核心脉络与「张生和书僮来到雍州的山上，感叹这里的山势险峻」相关。以上为大纲条目推断，未亲读正文，读后请核对。</p></div><div class="mmx-qa"><p class="mmx-q">卫渊从太初宫弟子到永安知县、再到西疆主事，每一次身份转换，他解决的问题类型发生了什么变化</p><p class="mmx-a">基于大纲，本书共 295 章，主线：《寻龙》 → 《天灾，人祸？》 → 《和先生有缘》 … 《遍地阴阳》。就「核心问题」而言，目前的（待验证）判断是：张生和书僮来到雍州的山上，感叹这里的山势险峻。这是大纲条目推断，未亲读正文，读后请回原文核对。</p></div><div class="mmx-qa"><p class="mmx-q">「末法之世」作为终局前的危机，动摇的是力量本身，还是依赖力量的那套秩序</p><p class="mmx-a">关于「「末法之世」作为终局前的危机，动摇的是力量本身，还是」：大纲显示《》以《寻龙》起手、到《遍地阴阳》收束，核心脉络与「张生和书僮来到雍州的山上，感叹这里的山势险峻」相关。以上为大纲条目推断，未亲读正文，读后请核对。</p></div></section>
+<section class="mmx-mod" aria-labelledby="aiask" id="mod-aiask"><h2 id="aiask">AI 问书</h2><div class="mmx-qa"><p class="mmx-q">卫渊的「集众经营」和一般修仙文的「独自无敌」有什么不同？</p><p class="mmx-a">锚点写他在西域建「青冥界域」，「将天外来客知识与仙道结合，实现凡人与修士的协同防御」。一般修仙是主角一个人升级打怪，龙藏的核心是「万里河山」道基——把凡人、资源、势力都纳入自己的经营系统，用组织力做降维打击。热门划线里「天才共享」的设定也点明：本书把宗门垄断反过来写成「集众」才能破局。</p></div><div class="mmx-qa"><p class="mmx-q">卫渊三岁就「异常高大」，这不是又一种龙傲天吗？</p><p class="mmx-a">锚点：「男孩正是卫渊，虽然今年才刚满三岁，可是生得异常高大，山间乡下农户孩子又普遍瘦小，所以看起来已经比镇上许多七八岁的孩子还高。」这确实是金手指设定，但小说把重点放在他用「山河之力」战斗、演化阴阳平衡的道基，而非单纯战力碾压；「这到底修的是什么仙？」的迷茫反而是对修仙目的的追问。</p></div><div class="mmx-qa"><p class="mmx-q">「青冥界域」靠什么立住？</p><p class="mmx-a">锚点：卫渊「在西域建立青冥界域，将天外来客知识与仙道结合，实现凡人与修士的协同防御」，并有「千秋城三堂（天机、枢密、夙夜）」为权柄最高处。它靠的是把修士战力与凡人生产、情报（崔聿用例银换情报）绑定成体系，而非 single 强者；这正是「集众」胜过「位格」的设定落点。</p></div></section>
+<section class="mmx-mod" aria-labelledby="higher" id="mod-higher"><h2 id="higher">更高维度</h2><p>【书中主张】小说让卫渊以「万里河山」道基与「青冥界域」实现「从个人修仙到集众经营」的降维打击，主张在资源匮乏、异族环伺的破碎之域，单打独斗无法逾越位格鸿沟，唯有把凡人、修士、资源组织成体系才能破局。【外部证据】类型上它属于2010年后「凡人流/经营流」仙侠，与《诡秘之主》的「组织化成长」一脉相承；热门划线「天才共享」设定也借用了现实教育公平的话语。【综合分析】把《龙藏》放回仙侠演化谱系，它把早期「逆天改命」的个人英雄叙事，改写成「基建+治理」的集体叙事——其爽点从「我比谁都强」转为「我让一群人变强」。</p><p>【书中主张】书中「幽寒界永远是阴沉的」「巫族顶着血色光罩快速突进」等把异族写为可计算的战争对象，卫渊道基演化出阴阳平衡，是「实力跨阶层增长」的写法。【外部证据】这类「界域经营+种族战争」直接受游戏化世界观（如4X策略）影响，读者用「种田/征服」双线理解；但AI大纲提示在「仙宗高层绝对力量压制」下集众之道仍难逾越，说明设定留有天花板。【综合分析】从网络类型学看，它的创新是有限的：仍依赖「三岁异常高大」的金手指与战力数值化；其真正可取处，是把「治理」当作修炼本身，给了爽文一点稀缺的共同体想象。</p></section>
+<section class="mmx-mod" aria-labelledby="verify" id="mod-verify"><h2 id="verify">阅读验证</h2><ul class="mmx-views"><li>「卫渊今年才刚满三岁，生得异常高大」——核对小说开篇设定章回，确认这是穿越/特殊天赋的锚点，区分正文与同人二创的夸张。</li><li>「天才共享：人域修道种子应由各大宗门共享，统一举办入宗考核」——核查该设定的提出章回（仙宗统考相关），确认是作者原设还是热门划线读者的概括，避免把读者批注当原文。</li><li>《龙藏》为网络连载——应核查其首发平台、作者、完结状态与总字数，确认「青冥界域」「千秋城三堂」等后期设定确属正文，避免把AI导图的归纳当作原著事实。</li></ul></section>
+<section class="mmx-mod" aria-labelledby="thennow" id="mod-thennow"><h2 id="thennow">往日今时</h2><p>作者当年（连载期）所能知晓的，是修仙文市场从「废柴逆袭」转向「种田经营」的口味变化，以及游戏化世界观对年轻读者的吸引；写不出「组织力胜过个人」会如何被今天「抗风险共同体」话语重新解读。</p><p>后来显现的事实是：此类「集众经营流」已成仙侠主流亚类型，读者用「基建」「公会」等现代词转译书中设定；可迁移的启发是——卫渊的「降维打击」本质是用系统组织对抗资源垄断，这恰是今天小团队用协作撬动大平台的可笑又真实的映射，只是现实没有修仙兜底。</p></section>
 </body>
 </html>

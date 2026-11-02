@@ -6,46 +6,108 @@
 <title>《理想国译丛系列套装11册（033-043）》｜通读 · 精读</title>
 <link rel="stylesheet" href="../../../assets/css/reading-overview.css"><link rel="stylesheet" href="../../../assets/css/mmx-guide.css"><link rel="stylesheet" href="../../../assets/css/reading-outline.css">
 <style>
-/* 合并页外壳 */
-body{max-width:960px;margin:0 auto;padding:0 18px 80px;}
-.combined-head{padding:34px 0 18px;border-bottom:1px solid #e7e0d2;margin-bottom:8px;}
-.combined-head h1{font-size:26px;margin:0 0 10px;}
+/* ── 外壳与全局阅读节奏 ── */
+body{max-width:880px;margin:0 auto;padding:0 18px 80px;
+  font-size:15px;line-height:1.88;color:#3b453e;background:#f7f8f3;
+  -webkit-font-smoothing:antialiased;}
+.combined-head{padding:30px 0 16px;border-bottom:1px solid #e7e0d2;margin-bottom:4px;}
+.combined-head h1{font:700 23px/1.35 var(--serif);margin:0 0 8px;color:#244b40;}
+.combined-head .eyebrow{font-size:.72rem;letter-spacing:.14em;margin:0 0 6px;}
+.chips{margin:8px 0 0;}
+.chip{font-size:.72rem;padding:2px 10px;}
 /* 锚点导航：固定一排 4 个，等宽对齐 */
-.nav{position:sticky;top:0;z-index:20;background:rgba(255,253,248,.96);backdrop-filter:blur(6px);
-  border-bottom:1px solid #ece4d4;padding:10px 0;margin:14px 0 26px;display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;
-  box-shadow:0 2px 10px rgba(120,100,60,.06);}
-.navlink{font-size:12.5px;color:#5d5443;text-decoration:none;background:#f6f1e6;border:1px solid #e7ddca;
-  border-radius:7px;padding:4px 6px;text-align:center;white-space:nowrap;overflow:hidden;
-  text-overflow:ellipsis;}
-section{scroll-margin-top:64px;}
-/* 一句话主旨：去左侧竖线 */
-.mmx-oneline{border-left:none;padding-left:18px;}
-/* AI领读章内：AI 大纲原生深层样式 */
-.merged-guide .sec{margin:10px 0 14px;padding-left:6px;border-left:2px solid #e5e0d6}
-.merged-guide .sec h4{font:600 .98rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.6em 0 .3em}
-.merged-guide ul.point{margin:.3em 0;padding-left:20px}
-.merged-guide ul.point>li{margin:.35em 0}
-.merged-guide ul.quote{margin:.25em 0 .25em 20px;padding-left:18px;list-style:none}
-.merged-guide ul.quote::before{content:"原句";display:block;font-size:.72rem;color:#bf8247;
-  letter-spacing:.1em;margin:.15em 0 .1em;font-weight:600}
-.merged-guide ul.quote.quote-node{margin-top:.5em;padding-top:.4em;border-top:1px dashed #eadfc9}
+.nav{position:sticky;top:0;z-index:20;background:rgba(247,248,243,.96);backdrop-filter:blur(6px);
+  border-bottom:1px solid #ece4d4;padding:10px 0;margin:12px 0 20px;display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;
+  box-shadow:0 2px 10px rgba(120,100,60,.05);}
+.navlink{font-size:12px;color:#5d5443;text-decoration:none;background:#fdfbf3;border:1px solid #e8e2d2;
+  border-radius:8px;padding:6px 4px;text-align:center;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;transition:background .15s,color .15s;}
+.navlink:hover{background:#f2efe2;color:#244b40;}
+section{scroll-margin-top:62px;}
+
+/* ── 统一卡片：所有顶层模块（AI领读 / AI 问答 / 其余）一视同仁 ── */
+body>section.mmx-mod,body>section.card,body>section.mmx-svgwrap{
+  background:#fffdf6;border:1px solid #e8e4d5;border-radius:16px;
+  padding:18px 22px;margin:18px 0;
+  box-shadow:0 1px 3px rgba(110,95,60,.05);}
+body>section.mmx-mod>*:first-child,body>section.card>*:first-child,
+body>section.mmx-svgwrap>*:first-child{margin-top:0}
+body>section.mmx-mod>*:last-child,body>section.card>*:last-child,
+body>section.mmx-svgwrap>*:last-child{margin-bottom:0}
+/* 结构导图：图本身留白居中，不与正文抢宽 */
+body>section.mmx-svgwrap>svg.mmx-svg{display:block;width:100%;height:auto;margin:2px auto 0;}
+/* 模块标题：统一大小、弱强调，不与正文抢注意力 */
+body>section.mmx-mod>h2,body>section.card>h2{
+  font:700 1.04rem/1.5 var(--serif);color:#244b40;margin:0 0 11px;
+  padding-left:10px;border-left:3px solid #bf8247;letter-spacing:.01em;}
+/* 正文：字号收小、行距放宽、段间距舒服 */
+body>section.mmx-mod p,body>section.card p,
+body>section.mmx-mod li,body>section.card li{
+  font-size:.9rem;line-height:1.92;color:#4a4436;}
+body>section.mmx-mod p,body>section.card p{margin:.5em 0;}
+body>section.mmx-mod>ul,body>section.mmx-mod>ol,body>section.mmx-mod>div,
+body>section.mmx-mod>p:not(.mmx-mod-note),
+body>section.card:not(.merged-guide)>ul,body>section.card:not(.merged-guide)>ol,
+body>section.card:not(.merged-guide)>div,body>section.card:not(.merged-guide)>p:not(.mmx-mod-note){
+  padding-left:14px;}
+/* 模块说明小字：弱化不抢眼 */
+.mmx-mod-note{font-size:.75rem;color:#8d8878;margin:.1em 0 .75em;line-height:1.7;}
+
+/* ── 内部块统一：卡片里不再套深卡片，一律浅底子块 ── */
+body>section .mmx-pending,body>section .mmx-evib,body>section .aiqa-item{
+  background:#fbfaf2;border:1px solid #eee9d8;border-radius:12px;
+  padding:13px 16px;margin:.65em 0;}
+body>section .mmx-evib ul{padding-left:1.15em;}
+/* 一句话主旨：去左侧竖线 + 收敛字号 */
+.mmx-oneline{font-size:.98rem;line-height:1.85;color:#3a352c;margin:.2em 0 0;
+  padding:12px 16px;background:#fbfaf4;border-left:none;border-radius:12px;}
+/* 核心观点 / 验证清单：虚线分隔 + 收紧行距 */
+.mmx-views li{padding:.5em 0 .5em 0;font-size:.9rem;line-height:1.88;}
+/* 原文金句 */
+.mmx-qlist li{padding:.6em 0 .6em 2.2em;}
+.mmx-qlist blockquote{font-size:.89rem;line-height:1.9;}
+.mmx-qlist cite{font-size:.72rem;}
+/* 核心追问：问句加重、答句放松 */
+.mmx-qa{margin:.7em 0;padding-left:12px;border-left:3px solid #e5dfcd;}
+.mmx-qa .mmx-q{font-size:.9rem;font-weight:700;color:#2f3a33;line-height:1.8;margin:0 0 .25em;}
+.mmx-qa .mmx-a{font-size:.88rem;line-height:1.95;color:#4a4436;margin:0;}
+
+/* ── AI 问书专项：外层容器透明，问答条目才是阅读单元 ── */
+#mod-aiask .mmx-ask{background:transparent;border:0;border-radius:0;padding:0;margin:0;}
+#mod-aiask .aiqa-item{margin:.6em 0;padding:14px 16px 15px;}
+#mod-aiask .aiqa-item h3{font:700 .93rem/1.7 var(--serif);color:#2f5b49;margin:0 0 .4em;
+  padding:0;border:0;}
+#mod-aiask .aiqa-item h3:before{content:"问　";color:#bf8247;font-weight:700;}
+#mod-aiask .aiqa-item p{font-size:.88rem;line-height:1.95;color:#4a4436;margin:.4em 0;}
+#mod-aiask .aiqa-item ul{margin:.35em 0;padding-left:1.1em;}
+#mod-aiask .aiqa-item li{font-size:.87rem;line-height:1.88;margin:.18em 0;color:#4a4436;}
+#mod-aiask .aiqa-item li::marker{color:#c0a06a;}
+/* 逐章追问（details 形态）：摘要行也收敛 */
+.mmx-ask>summary{font-size:.87rem;line-height:1.7;padding:2px 0;}
+.mmx-askbody{font-size:.88rem;line-height:1.9;}
+
+/* AI领读章内：AI 大纲原生深层样式（字号同步收小） */
+.merged-guide .sec{margin:9px 0 12px;padding-left:6px;border-left:2px solid #e5e0d6}
+.merged-guide .sec h4{font:600 .93rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.5em 0 .25em}
+.merged-guide ul.point{margin:.25em 0;padding-left:20px}
+.merged-guide ul.point>li{margin:.3em 0}
+.merged-guide ul.quote{margin:.22em 0 .22em 20px;padding-left:18px;list-style:none}
+.merged-guide ul.quote::before{content:"原句";display:block;font-size:.7rem;color:#bf8247;
+  letter-spacing:.1em;margin:.12em 0 .08em;font-weight:600}
+.merged-guide ul.quote.quote-node{margin-top:.45em;padding-top:.35em;border-top:1px dashed #eadfc9}
 .merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
-.merged-guide ul.quote>li{color:#4a4436;font-size:.93rem;margin:.2em 0;padding-left:10px;border-left:2px solid #bf8247}
-/* 模块内子内容（AI领读除外，它有专属深层样式）：左缩进 + 正文与标题分层 */
-section.mmx-mod>ul,section.mmx-mod>ol,section.mmx-mod>div,
-section.mmx-mod>p:not(.mmx-mod-note),
-section.card:not(.merged-guide)>ul,section.card:not(.merged-guide)>ol,
-section.card:not(.merged-guide)>div,section.card:not(.merged-guide)>p:not(.mmx-mod-note){
-  padding-left:16px;}
-section.mmx-mod li,section.mmx-mod p:not(.mmx-mod-note),
-section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mod-note){
-  color:#4a4436;font-size:.93rem;line-height:1.78;}
+.merged-guide ul.quote>li{color:#4a4436;font-size:.88rem;line-height:1.85;margin:.18em 0;padding-left:10px;border-left:2px solid #bf8247}
 /* 核心观点初判：外链 mmx-guide.css 的「观点N」前缀是绝对定位，在本页版式里和标题叠字，
    且此前要求去掉「观点1/2/3」前缀 —— 这里整条关掉（外链 CSS 不在页面内，只能内联覆盖）。 */
 .mmx-views li{padding-left:0 !important;}
 .mmx-views li:before,.mmx-views li::before{
   content:none !important;display:none !important;counter-increment:none !important;}
+@media(max-width:720px){
+  body{padding:0 12px 60px;font-size:14.5px;}
+  body>section.mmx-mod,body>section.card{padding:15px 16px;border-radius:14px;}
+  .nav{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
 </style>
 </head>
 <body>
@@ -54,8 +116,8 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
   <h1>《理想国译丛系列套装11册（033-043）》</h1>
   <div class="chips"><span class="chip">通读 + 精读</span><span class="chip">AI领读</span><span class="chip">AI 生产</span></div>
 </header>
-<nav class="nav"><a class="navlink" href="#mod-svg">全书结构导图</a><a class="navlink" href="#mod-oneline">一句话主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a></nav>
-<section class="mmx-svgwrap" id="mod-svg">
+<nav class="nav"><a class="navlink" href="#mod-svg">结构导图</a><a class="navlink" href="#mod-oneline">核心主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a></nav>
+<section class="mmx-svgwrap" id="mod-svg"><h2>结构导图</h2>
 <svg class="mmx-svg" viewBox="0 0 1120 2948" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="理想国译丛系列套装11册（033-043） 全书精读">
 <rect x="0" y="0" width="1120" height="2948" fill="none"/>
 <style>.mmx-svg text{font-family:"Noto Serif SC",Georgia,serif}.mmx-svg .t1{font-size:15px;fill:#2f2a24;font-weight:600}.mmx-svg .t2{font-size:12px;fill:#5c5347}.mmx-svg .t3{font-size:10.5px;fill:#8a8272}.mmx-svg .rt{font-size:13px;fill:#f7f3ea;font-weight:600}.mmx-svg .ln{stroke:#cfc6b4;stroke-width:1.4;fill:none}</style>
@@ -386,11 +448,11 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
 <text class="t2" x="714" y="2847">含「致谢」至「参考文献」</text>
 <path class="ln" d="M692 2851 L700 2851"/>
 </svg></section>
-<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">一句话主旨</h2><p class="mmx-mod-note">本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。</p><p class="mmx-oneline">本套装包含《理想国译丛033 拉丁美洲被切开的血管》《理想国译丛034 不敢懈怠：曼德拉的总统岁月》《理想国译丛035 圣经与利剑：英国和巴</p></section>
-<section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" id="mod-merged_guide"><h2 id="merged-guide-title">AI领读 · 全书篇目</h2>
+<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">核心主旨</h2><p class="mmx-oneline">本套装包含《理想国译丛033 拉丁美洲被切开的血管》《理想国译丛034 不敢懈怠：曼德拉的总统岁月》《理想国译丛035 圣经与利剑：英国和巴</p></section>
+<section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" id="mod-merged_guide"><h2 id="merged-guide-title">AI领读</h2>
 <p class="small">本书 AI 大纲目前为章级目录（要点与原句待补全）。以下为全书篇目，大纲补全后将自动升级为「目录 + 骨架 + 要点 + 原句」完整版。</p>
 <ol class="mmx-pts"><li><b>1</b> 拉丁美洲被切开的血管</li><li><b>2</b> 理想国译丛序</li><li><b>3</b> 导读 以挑战的姿态执笔</li><li><b>4</b> 推荐语</li><li><b>5</b> 序言 暴风雪中的一亿两千万儿童</li><li><b>6</b> 第一部分 地球的富有造成人类的贫困</li><li><b>7</b> 蔗糖国王和其他的农业君主</li><li><b>8</b> 权力的地下源泉</li><li><b>9</b> 第二部分 发展是遇难者多于航行者的航行</li><li><b>10</b> 掠夺的现代结构</li><li><b>11</b> 七年之后</li><li><b>12</b> 不敢懈怠：曼德拉的总统岁月</li><li><b>13</b> 理想国译丛序</li><li><b>14</b> 编辑人员</li><li><b>15</b> 推荐语</li><li><b>16</b> 前言</li><li><b>17</b> 致读者</li><li><b>18</b> 序</li><li><b>19</b> 第一章 自由的挑战</li><li><b>20</b> 第二章 以谈判实现民主</li><li><b>21</b> 第三章 自由公平的选举</li><li><b>22</b> 第四章 进入总统府</li><li><b>23</b> 第五章 民族的团结</li><li><b>24</b> 第六章 总统与宪法</li><li><b>25</b> 第七章 议会</li><li><b>26</b> 第八章 传统领袖与民主</li><li><b>27</b> 第九章 国家转型</li><li><b>28</b> 第十章 和解</li><li><b>29</b> 第十一章 社会与经济转型</li><li><b>30</b> 第十二章 与媒体交锋</li><li><b>31</b> 第十三章 在非洲和世界舞台上</li><li><b>32</b> 结语</li><li><b>33</b> 附录一 组织机构缩略语</li><li><b>34</b> 附录二 人物、地点与事件</li><li><b>35</b> 附录三 大事年表（1990—1999）</li><li><b>36</b> 附录四 南非地图，1996</li><li><b>37</b> 注释</li><li><b>38</b> 致谢</li><li><b>39</b> 索引</li><li><b>40</b> 插图</li><li><b>41</b> 圣经与利剑：英国和巴勒斯坦——从青铜时代到贝尔福宣言</li><li><b>42</b> 理想国译丛序</li><li><b>43</b> 感言</li><li><b>44</b> 推荐语</li><li><b>45</b> 序言（1983—1984年版）</li><li><b>46</b> 前言</li><li><b>47</b> 第1章 起源：公认的神话</li><li><b>48</b> 2.阿尔比恩的腓尼基人</li><li><b>49</b> 3.罗马治下的朱迪亚和不列颠</li><li><b>50</b> 第2章 不列颠的使徒：亚利马太的约瑟</li><li><b>51</b> 第3章 “耶路撒冷啊，我们站在了你的大门内”：朝圣的浪潮</li><li><b>52</b> 第4章 十字军东征</li><li><b>53</b> 第5章 英译《圣经》</li><li><b>54</b> 第6章 黎凡特的商业冒险家</li><li><b>55</b> 第7章 几乎成真的预言：清教徒的英格兰和以色列的希望</li><li><b>56</b> 第8章 宗教低潮期：世俗智者的统治</li><li><b>57</b> 第9章 东方问题：叙利亚的帝国之争</li><li><b>58</b> 第10章 沙夫茨伯里伯爵的愿景：信奉英国国教的以色列</li><li><b>59</b> 第11章 帝国航线上的巴勒斯坦</li><li><b>60</b> 第12章 犹太人登场：“我不为己，谁来为我？”［1］</li><li><b>61</b> 第13章 涌入圣地</li><li><b>62</b> 第14章 迫近：迪斯累里、苏伊士、塞浦路斯</li><li><b>63</b> 第15章 秃鹰合围：土耳其苏丹的困境</li><li><b>64</b> 第16章 赫茨尔和张伯伦：第一份领土许诺</li><li><b>65</b> 第17章 结局：贝尔福宣言和巴勒斯坦托管</li><li><b>66</b> 2.贝尔福宣言：丙酮还是良知？</li><li><b>67</b> 3.历史的陷阱：托管</li><li><b>68</b> 后记：梦想的破灭</li><li><b>69</b> 参考文献</li><li><b>70</b> 战争时期日本精神史：1931—1945</li><li><b>71</b> 理想国译丛序</li><li><b>72</b> 导读 异端之必要</li><li><b>73</b> 一 向1931年至1945年的日本趋近</li><li><b>74</b> 二 关于转向</li><li><b>75</b> 三 锁国</li><li><b>76</b> 四 关于国体</li><li><b>77</b> 五 大亚细亚</li><li><b>78</b> 六 非转向的形式</li><li><b>79</b> 七 日本之中的朝鲜</li><li><b>80</b> 八 以“非斯大林化”为目标</li><li><b>81</b> 九 玉碎的思想</li><li><b>82</b> 十 战争时期的日常生活</li><li><b>83</b> 十一 原子弹的牺牲者</li><li><b>84</b> 十二 战争的终结</li><li><b>85</b> 十三 回顾</li><li><b>86</b> 后记</li><li><b>87</b> 参考书目</li><li><b>88</b> 印尼Etc：众神遗落的珍珠</li><li><b>89</b> 理想国译丛序</li><li><b>90</b> 导读 迂回接近一个几乎不可能存在的国家</li><li><b>91</b> 印尼分区地图</li><li><b>92</b> 前言</li><li><b>93</b> 第一章 不可思议的国度</li><li><b>94</b> 第二章 多元而统一</li><li><b>95</b> 第三章 黏稠的传统文化</li><li><b>96</b> 第四章 来自他乡的居民</li><li><b>97</b> 第五章 天高皇帝远</li><li><b>98</b> 第六章 幸福大家族</li><li><b>99</b> 第七章 大地之母的宠儿</li><li><b>100</b> 第八章 冰上的利润</li><li><b>101</b> 第九章 一页沧桑史</li><li><b>102</b> 第十章 苏门答腊异世界</li><li><b>103</b> 第十一章 族群对立与暴民正义</li><li><b>104</b> 第十二章 你的真主，我的上帝</li><li><b>105</b> 第十三章 爪哇剪影</li><li><b>106</b> 结语 印尼精神</li><li><b>107</b> 印尼省份、省会中英对照表</li><li><b>108</b> 资料来源及延伸阅读</li><li><b>109</b> 第三帝国的到来</li><li><b>110</b> M译丛序</li><li><b>111</b> 编辑人员</li><li><b>112</b> 献词</li><li><b>113</b> 图片列表</li><li><b>114</b> 地图与图表目录</li><li><b>115</b> 序言</li><li><b>116</b> 第一章 历史遗产</li><li><b>117</b> 第一节 德意志的独特性</li><li><b>118</b> 第二节 宣扬仇恨</li><li><b>119</b> 第三节 1914年的精神</li><li><b>120</b> 第四节 陷入混乱</li><li><b>121</b> 第二章 民主之殇</li><li><b>122</b> 第一节 魏玛的弱点</li><li><b>123</b> 第二节 大通胀</li><li><b>124</b> 第三节 文化战争</li><li><b>125</b> 第四节 适者与不适者</li><li><b>126</b> 第三章 纳粹主义的兴起</li><li><b>127</b> 第一节 波希米亚式革命者</li><li><b>128</b> 第二节 啤酒馆暴动</li><li><b>129</b> 第三节 卷土重来</li><li><b>130</b> 第四节 使命感的来源</li><li><b>131</b> 第四章 通往权力之路</li><li><b>132</b> 第一节 大萧条</li><li><b>133</b> 第二节 民主制度的危机</li><li><b>134</b> 第三节 暴力的胜利</li><li><b>135</b> 第四节 致命的决策</li><li><b>136</b> 插图</li><li><b>137</b> 第五章 建立第三帝国</li><li><b>138</b> 第一节 恐怖开始了</li><li><b>139</b> 第二节 国会纵火案</li><li><b>140</b> 第三节 民主政体被摧毁</li><li><b>141</b> 第四节 德国的一体化进程</li><li><b>142</b> 第六章 希特勒的文化革命</li><li><b>143</b> 第一节 不和谐音符</li><li><b>144</b> 第二节 艺术的净化</li><li><b>145</b> 第三节 “打倒非日耳曼精神”</li><li><b>146</b> 第四节 一场“摧毁旧秩序的革命”？</li><li><b>147</b> 注释</li><li><b>148</b> 参考文献</li><li><b>149</b> M译丛</li><li><b>150</b> 当权的第三帝国</li><li><b>151</b> M译丛序</li><li><b>152</b> 编辑人员</li><li><b>153</b> 献词</li><li><b>154</b> 图片列表与版权信息</li><li><b>155</b> 地图目录</li><li><b>156</b> 序言</li><li><b>157</b> 序幕</li><li><b>158</b> 第一章 警察国家</li><li><b>159</b> 第一节 “长刀之夜”</li><li><b>160</b> 第二节 镇压和反抗</li><li><b>161</b> 第三节 “人民公敌”</li><li><b>162</b> 第四节 恐怖手腕</li><li><b>163</b> 第二章 精神动员</li><li><b>164</b> 第一节 启蒙人民</li><li><b>165</b> 第二节 为德国而写作</li><li><b>166</b> 第三节 视角问题</li><li><b>167</b> 第四节 从不协到协和</li><li><b>168</b> 第三章 灵魂改造</li><li><b>169</b> 第一节 信仰问题</li><li><b>170</b> 第二节 天主教徒和异教徒</li><li><b>171</b> 第三节 青年就是未来</li><li><b>172</b> 第四节 “反智斗争”</li><li><b>173</b> 第四章 繁荣和掠夺</li><li><b>174</b> 第一节 “战胜失业”</li><li><b>175</b> 第二节 商业、政治和战争</li><li><b>176</b> 第三节 经济的雅利安化</li><li><b>177</b> 第四节 分赃</li><li><b>178</b> 插图</li><li><b>179</b> 第五章 建立人民共同体</li><li><b>180</b> 第一节 血与土</li><li><b>181</b> 第二节 中产阶级的命运</li><li><b>182</b> 第三节 驯服无产阶级</li><li><b>183</b> 第四节 承诺与现实</li><li><b>184</b> 第六章 走向种族乌托邦</li><li><b>185</b> 第一节 以科学精神的名义</li><li><b>186</b> 第二节 纽伦堡法案</li><li><b>187</b> 第三节 “犹太人必须滚出欧洲”</li><li><b>188</b> 第四节 碎玻璃之夜</li><li><b>189</b> 第七章 通向战争之路</li><li><b>190</b> 第一节 从弱小到强大</li><li><b>191</b> 第二节 建立大德意志</li><li><b>192</b> 第三节 强取捷克斯洛伐克</li><li><b>193</b> 第四节 进军东方</li><li><b>194</b> 注释</li><li><b>195</b> 参考文献</li><li><b>196</b> M译丛</li><li><b>197</b> 战时的第三帝国</li><li><b>198</b> M译丛序</li><li><b>199</b> 编辑人员</li><li><b>200</b> 献词</li><li><b>201</b> 插图列表</li><li><b>202</b> 地图目录</li><li><b>203</b> 序言</li><li><b>204</b> 第一章 披着人皮的野兽</li><li><b>205</b> 第一节 闪电战制胜</li><li><b>206</b> 第二节 新的种族秩序</li><li><b>207</b> 第三节 “恐怖的暴民”</li><li><b>208</b> 第四节 “不配活着”</li><li><b>209</b> 第二章 战争的命运</li><li><b>210</b> 第一节 “上天的安排”</li><li><b>211</b> 第二节 “病态的野心”</li><li><b>212</b> 第三节 巴巴罗萨行动</li><li><b>213</b> 第四节 沿着拿破仑的足迹</li><li><b>214</b> 第三章 “最终解决方案”</li><li><b>215</b> 第一节 “毫无怜悯”</li><li><b>216</b> 第二节 发动种族灭绝</li><li><b>217</b> 第三节 万湖会议</li><li><b>218</b> 第四节 “待宰羔羊”</li><li><b>219</b> 第四章 新秩序</li><li><b>220</b> 第一节 战争命脉</li><li><b>221</b> 第二节 “命如草芥”</li><li><b>222</b> 第三节 臣服于纳粹政权</li><li><b>223</b> 第四节 总体战</li><li><b>224</b> 第五章 “终结的开端”</li><li><b>225</b> 第一节 硝烟弥漫的德国</li><li><b>226</b> 第二节 漫长的撤退</li><li><b>227</b> 第三节 “厄运降临”</li><li><b>228</b> 第四节 新的“挣扎时期”</li><li><b>229</b> 第六章 德国的道德体系</li><li><b>230</b> 第一节 恐惧与内疚</li><li><b>231</b> 第二节 毁灭的文化</li><li><b>232</b> 第三节 致命的科学</li><li><b>233</b> 第四节 抵抗</li><li><b>234</b> 第七章 倾覆</li><li><b>235</b> 第一节 “最后的希望”</li><li><b>236</b> 第二节 “与全世界同归于尽”</li><li><b>237</b> 第三节 最后的战败</li><li><b>238</b> 第四节 余波</li><li><b>239</b> 注释</li><li><b>240</b> 参考文献</li><li><b>241</b> M译丛</li><li><b>242</b> 耶路撒冷之前的艾希曼：平庸面具下的大屠杀刽子手</li><li><b>243</b> 理想国译丛序</li><li><b>244</b> 献词</li><li><b>245</b> 书中主要人物 （以下介绍译自本书英译本）</li><li><b>246</b> 纳粹党卫队职阶名称 （以下对照表由译者制作）</li><li><b>247</b> 导言</li><li><b>248</b> 第一章 “我的名字成了象征”</li><li><b>249</b> 第一节 走向公众之路</li><li><b>250</b> 第二节 一个名字在战后的事业生涯</li><li><b>251</b> 第三节 讨厌的隐姓埋名状态</li><li><b>252</b> 第二章 间奏曲：在中东的虚假踪迹</li><li><b>253</b> 第三章 艾希曼在阿根廷</li><li><b>254</b> 第一节 在“应许之地”过生活</li><li><b>255</b> 第二节 国内战线</li><li><b>256</b> 第三节 友情相助</li><li><b>257</b> 第四章 所谓的萨森访谈</li><li><b>258</b> 第一节 作者艾希曼</li><li><b>259</b> 第二节 谈话中的艾希曼</li><li><b>260</b> 仲裁者：卢多尔夫·冯·阿尔文斯莱本[388] （献给乌基·戈尼，无论如何本章的一部分内容必须归功于他）</li><li><b>261</b> 第五章 虚假的安全感</li><li><b>262</b> 第六章 角色的转换：艾希曼在耶路撒冷</li><li><b>263</b> 第七章 余波荡漾</li><li><b>264</b> 缩略语</li><li><b>265</b> 致谢</li><li><b>266</b> 出处说明</li><li><b>267</b> 参考文献</li><li><b>268</b> 残酷剧场：艺术、电影与战争阴影</li><li><b>269</b> 理想国译丛序</li><li><b>270</b> 编辑人员</li><li><b>271</b> 献词</li><li><b>272</b> 前言</li><li><b>273</b> 一 受害者情结的欢愉与险境</li><li><b>274</b> 二 迷人的自恋狂：莱妮·里芬施塔尔</li><li><b>275</b> 三 沃纳·赫尔佐格及其英雄</li><li><b>276</b> 四 柏林之光：赖纳·维尔纳·法斯宾德</li><li><b>277</b> 五 毁灭德国计划</li><li><b>278</b> 六 只有故乡好</li><li><b>279</b> 七 安妮·弗兰克的身后事</li><li><b>280</b> 八 德占时期的巴黎——甜美与残酷</li><li><b>281</b> 九 扭曲的纪录片艺术</li><li><b>282</b> 十 珍珠港事变之欣喜若狂</li><li><b>283</b> 十一 为帝国捐躯的神风特攻队</li><li><b>284</b> 十二 克林特·伊斯特伍德的战争</li><li><b>285</b> 十三 被夺走的梦想</li><li><b>286</b> 十四 尖酸刻薄的记事者：哈里·凯斯勒</li><li><b>287</b> 十五 信仰者</li><li><b>288</b> 十六 孟加拉文艺复兴的最后一人</li><li><b>289</b> 十七 他们现在的样子：迈克·李</li><li><b>290</b> 十八 尴尬的艺术</li><li><b>291</b> 十九 创造大卫·鲍伊</li><li><b>292</b> 二十 必胜的穿衣哲学</li><li><b>293</b> 二十一 马克斯·贝克曼的马戏团</li><li><b>294</b> 二十二 堕落艺术</li><li><b>295</b> 二十三 乔治·格罗兹的亚美利加</li><li><b>296</b> 二十四 返璞归真的大艺术家</li><li><b>297</b> 二十五 东京执迷</li><li><b>298</b> 二十六 日式悲剧</li><li><b>299</b> 二十七 虚拟暴力</li><li><b>300</b> 出处</li><li><b>301</b> 注释</li><li><b>302</b> 资本主义的未来</li><li><b>303</b> 理想国译丛序</li><li><b>304</b> 编辑人员</li><li><b>305</b> 献词</li><li><b>306</b> 第一部分 危机</li><li><b>307</b> 第二部分 重建道德</li><li><b>308</b> 第三章 道德的国家</li><li><b>309</b> 第四章 道德的企业</li><li><b>310</b> 第五章 道德的家庭</li><li><b>311</b> 第六章 道德的世界</li><li><b>312</b> 第三部分 重建包容性社会</li><li><b>313</b> 第八章 阶层分化：享有一切的家庭，分崩离析的家庭</li><li><b>314</b> 第九章 全球分化：赢家和落后群体[Ⅰ]</li><li><b>315</b> 第四部分 重建包容性政治</li><li><b>316</b> 致谢</li><li><b>317</b> 注释</li><li><b>318</b> 参考文献</li></ol></section>
-<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点初判</h2><p class="mmx-mod-note">按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。</p><ul class="mmx-views"><li><b>第 1–7 章</b>——含「拉丁美洲被切开的血管」至「蔗糖国王和其他的农业君主」</li><li><b>第 8–14 章</b>——含「权力的地下源泉」至「编辑人员」</li><li><b>第 15–21 章</b>——含「推荐语」至「第三章 自由公平的选举」</li><li><b>第 22–28 章</b>——含「第四章 进入总统府」至「第十章 和解」</li><li><b>第 29–35 章</b>——含「第十一章 社会与经济转型」至「附录三 大事年表（199」</li><li><b>第 36–42 章</b>——含「附录四 南非地图，199」至「理想国译丛序」</li><li><b>第 43–49 章</b>——含「感言」至「3.罗马治下的朱迪亚和不」</li><li><b>第 50–56 章</b>——含「第2章 不列颠的使徒：亚」至「第8章 宗教低潮期：世俗」</li><li><b>第 57–63 章</b>——含「第9章 东方问题：叙利亚」至「第15章 秃鹰合围：土耳」</li><li><b>第 64–70 章</b>——含「第16章 赫茨尔和张伯伦」至「战争时期日本精神史：19」</li><li><b>第 71–77 章</b>——含「理想国译丛序」至「五 大亚细亚」</li><li><b>第 78–84 章</b>——含「六 非转向的形式」至「十二 战争的终结」</li><li><b>第 85–91 章</b>——含「十三 回顾」至「印尼分区地图」</li><li><b>第 92–98 章</b>——含「前言」至「第六章 幸福大家族」</li><li><b>第 99–105 章</b>——含「第七章 大地之母的宠儿」至「第十三章 爪哇剪影」</li><li><b>第 106–112 章</b>——含「结语 印尼精神」至「献词」</li><li><b>第 113–119 章</b>——含「图片列表」至「第三节 1914年的精神」</li><li><b>第 120–126 章</b>——含「第四节 陷入混乱」至「第三章 纳粹主义的兴起」</li><li><b>第 127–133 章</b>——含「第一节 波希米亚式革命者」至「第二节 民主制度的危机」</li><li><b>第 134–140 章</b>——含「第三节 暴力的胜利」至「第三节 民主政体被摧毁」</li><li><b>第 141–147 章</b>——含「第四节 德国的一体化进程」至「注释」</li><li><b>第 148–154 章</b>——含「参考文献」至「图片列表与版权信息」</li><li><b>第 155–161 章</b>——含「地图目录」至「第三节 “人民公敌”」</li><li><b>第 162–168 章</b>——含「第四节 恐怖手腕」至「第三章 灵魂改造」</li><li><b>第 169–175 章</b>——含「第一节 信仰问题」至「第二节 商业、政治和战争」</li><li><b>第 176–182 章</b>——含「第三节 经济的雅利安化」至「第三节 驯服无产阶级」</li><li><b>第 183–189 章</b>——含「第四节 承诺与现实」至「第七章 通向战争之路」</li><li><b>第 190–196 章</b>——含「第一节 从弱小到强大」至「M译丛」</li><li><b>第 197–203 章</b>——含「战时的第三帝国」至「序言」</li><li><b>第 204–210 章</b>——含「第一章 披着人皮的野兽」至「第一节 “上天的安排”」</li><li><b>第 211–217 章</b>——含「第二节 “病态的野心”」至「第三节 万湖会议」</li><li><b>第 218–224 章</b>——含「第四节 “待宰羔羊”」至「第五章 “终结的开端”」</li><li><b>第 225–231 章</b>——含「第一节 硝烟弥漫的德国」至「第二节 毁灭的文化」</li><li><b>第 232–238 章</b>——含「第三节 致命的科学」至「第四节 余波」</li><li><b>第 239–245 章</b>——含「注释」至「书中主要人物 （以下介绍」</li><li><b>第 246–252 章</b>——含「纳粹党卫队职阶名称 （以」至「第二章 间奏曲：在中东的」</li><li><b>第 253–259 章</b>——含「第三章 艾希曼在阿根廷」至「第二节 谈话中的艾希曼」</li><li><b>第 260–266 章</b>——含「仲裁者：卢多尔夫·冯·阿」至「出处说明」</li><li><b>第 267–273 章</b>——含「参考文献」至「一 受害者情结的欢愉与险」</li><li><b>第 274–280 章</b>——含「二 迷人的自恋狂：莱妮·」至「八 德占时期的巴黎——甜」</li><li><b>第 281–287 章</b>——含「九 扭曲的纪录片艺术」至「十五 信仰者」</li><li><b>第 288–294 章</b>——含「十六 孟加拉文艺复兴的最」至「二十二 堕落艺术」</li><li><b>第 295–301 章</b>——含「二十三 乔治·格罗兹的亚」至「注释」</li><li><b>第 302–308 章</b>——含「资本主义的未来」至「第三章 道德的国家」</li><li><b>第 309–315 章</b>——含「第四章 道德的企业」至「第四部分 重建包容性政治」</li><li><b>第 316–318 章</b>——含「致谢」至「参考文献」</li></ul></section>
-<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句 · 持续积累</h2><p class="mmx-mod-note">以下原句取自本书 AI 大纲落库的原文摘录（book_outline.quote），按大纲顺序节选，非 AI 生成；更多见逐章深读页。</p><ol class="mmx-qlist"><li><blockquote>「所谓国际分工就是指一些国家专门赢利，而另外一些国家专门遭受损失。」</blockquote><cite>本书正文</cite></li><li><blockquote>「我们希望保持一种非功利的兴趣：对世界的丰富性、复杂性本身充满兴趣，真诚地渴望理解他人的经验。」</blockquote><cite>本书正文</cite></li><li><blockquote>「当女教师讲解说西班牙殖民者巴尔博亚登上巴拿马一座山峰后，成为同时看见大西洋、太平洋两大洋的第一人时，加莱亚诺举手发问：“老师小姐，当时印第安人都是瞎子吗？”」</blockquote><cite>本书正文</cite></li><li><blockquote>「二十多个美国新教传教团在稀有矿产蕴藏丰富的地带定点传教，教授英语，并在这片地球上最大的可居住而荒无人烟的地区大量发放避孕药品」</blockquote><cite>本书正文</cite></li><li><blockquote>「一种产品越是受到世界市场的青睐，它带给为生产这种产品而做出牺牲的拉美人民的灾难也就越大」</blockquote><cite>本书正文</cite></li><li><blockquote>「滋润着帝国主义权力中心的雨水淹没了该体系广阔的外围，与此同时，我们的统治阶级（受外部统治的国内统治阶级）的舒适安逸就等于诅咒我们广大民众永远要过着牲口般的生活。」</blockquote><cite>本书正文</cite></li><li><blockquote>「日本国家宗教的密教部分受到欧洲文明的强烈影响。」</blockquote><cite>本书正文</cite></li><li><blockquote>「大量烈性酒。等到他们从酩酊大醉中醒来时，已经负债累累了。他们只得到陌生的炎热地区去干活，以此偿债」</blockquote><cite>本书正文</cite></li><li><blockquote>「印第安人过去和现在都由于本身的富有而遭到不幸。这是整个拉丁美洲悲剧的缩影。」</blockquote><cite>本书正文</cite></li><li><blockquote>「从新殖民地掠夺来的贵重金属刺激了欧洲的经济发展，甚至可以说，使欧洲的经济有可能得以发展。」</blockquote><cite>本书正文</cite></li></ol></section>
+<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点</h2><ul class="mmx-views"><li><b>第 1–7 章</b>——含「拉丁美洲被切开的血管」至「蔗糖国王和其他的农业君主」</li><li><b>第 8–14 章</b>——含「权力的地下源泉」至「编辑人员」</li><li><b>第 15–21 章</b>——含「推荐语」至「第三章 自由公平的选举」</li><li><b>第 22–28 章</b>——含「第四章 进入总统府」至「第十章 和解」</li><li><b>第 29–35 章</b>——含「第十一章 社会与经济转型」至「附录三 大事年表（199」</li><li><b>第 36–42 章</b>——含「附录四 南非地图，199」至「理想国译丛序」</li><li><b>第 43–49 章</b>——含「感言」至「3.罗马治下的朱迪亚和不」</li><li><b>第 50–56 章</b>——含「第2章 不列颠的使徒：亚」至「第8章 宗教低潮期：世俗」</li><li><b>第 57–63 章</b>——含「第9章 东方问题：叙利亚」至「第15章 秃鹰合围：土耳」</li><li><b>第 64–70 章</b>——含「第16章 赫茨尔和张伯伦」至「战争时期日本精神史：19」</li><li><b>第 71–77 章</b>——含「理想国译丛序」至「五 大亚细亚」</li><li><b>第 78–84 章</b>——含「六 非转向的形式」至「十二 战争的终结」</li><li><b>第 85–91 章</b>——含「十三 回顾」至「印尼分区地图」</li><li><b>第 92–98 章</b>——含「前言」至「第六章 幸福大家族」</li><li><b>第 99–105 章</b>——含「第七章 大地之母的宠儿」至「第十三章 爪哇剪影」</li><li><b>第 106–112 章</b>——含「结语 印尼精神」至「献词」</li><li><b>第 113–119 章</b>——含「图片列表」至「第三节 1914年的精神」</li><li><b>第 120–126 章</b>——含「第四节 陷入混乱」至「第三章 纳粹主义的兴起」</li><li><b>第 127–133 章</b>——含「第一节 波希米亚式革命者」至「第二节 民主制度的危机」</li><li><b>第 134–140 章</b>——含「第三节 暴力的胜利」至「第三节 民主政体被摧毁」</li><li><b>第 141–147 章</b>——含「第四节 德国的一体化进程」至「注释」</li><li><b>第 148–154 章</b>——含「参考文献」至「图片列表与版权信息」</li><li><b>第 155–161 章</b>——含「地图目录」至「第三节 “人民公敌”」</li><li><b>第 162–168 章</b>——含「第四节 恐怖手腕」至「第三章 灵魂改造」</li><li><b>第 169–175 章</b>——含「第一节 信仰问题」至「第二节 商业、政治和战争」</li><li><b>第 176–182 章</b>——含「第三节 经济的雅利安化」至「第三节 驯服无产阶级」</li><li><b>第 183–189 章</b>——含「第四节 承诺与现实」至「第七章 通向战争之路」</li><li><b>第 190–196 章</b>——含「第一节 从弱小到强大」至「M译丛」</li><li><b>第 197–203 章</b>——含「战时的第三帝国」至「序言」</li><li><b>第 204–210 章</b>——含「第一章 披着人皮的野兽」至「第一节 “上天的安排”」</li><li><b>第 211–217 章</b>——含「第二节 “病态的野心”」至「第三节 万湖会议」</li><li><b>第 218–224 章</b>——含「第四节 “待宰羔羊”」至「第五章 “终结的开端”」</li><li><b>第 225–231 章</b>——含「第一节 硝烟弥漫的德国」至「第二节 毁灭的文化」</li><li><b>第 232–238 章</b>——含「第三节 致命的科学」至「第四节 余波」</li><li><b>第 239–245 章</b>——含「注释」至「书中主要人物 （以下介绍」</li><li><b>第 246–252 章</b>——含「纳粹党卫队职阶名称 （以」至「第二章 间奏曲：在中东的」</li><li><b>第 253–259 章</b>——含「第三章 艾希曼在阿根廷」至「第二节 谈话中的艾希曼」</li><li><b>第 260–266 章</b>——含「仲裁者：卢多尔夫·冯·阿」至「出处说明」</li><li><b>第 267–273 章</b>——含「参考文献」至「一 受害者情结的欢愉与险」</li><li><b>第 274–280 章</b>——含「二 迷人的自恋狂：莱妮·」至「八 德占时期的巴黎——甜」</li><li><b>第 281–287 章</b>——含「九 扭曲的纪录片艺术」至「十五 信仰者」</li><li><b>第 288–294 章</b>——含「十六 孟加拉文艺复兴的最」至「二十二 堕落艺术」</li><li><b>第 295–301 章</b>——含「二十三 乔治·格罗兹的亚」至「注释」</li><li><b>第 302–308 章</b>——含「资本主义的未来」至「第三章 道德的国家」</li><li><b>第 309–315 章</b>——含「第四章 道德的企业」至「第四部分 重建包容性政治」</li><li><b>第 316–318 章</b>——含「致谢」至「参考文献」</li></ul></section>
+<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句</h2><ol class="mmx-qlist"><li><blockquote>「所谓国际分工就是指一些国家专门赢利，而另外一些国家专门遭受损失。」</blockquote><cite>本书正文</cite></li><li><blockquote>「我们希望保持一种非功利的兴趣：对世界的丰富性、复杂性本身充满兴趣，真诚地渴望理解他人的经验。」</blockquote><cite>本书正文</cite></li><li><blockquote>「当女教师讲解说西班牙殖民者巴尔博亚登上巴拿马一座山峰后，成为同时看见大西洋、太平洋两大洋的第一人时，加莱亚诺举手发问：“老师小姐，当时印第安人都是瞎子吗？”」</blockquote><cite>本书正文</cite></li><li><blockquote>「二十多个美国新教传教团在稀有矿产蕴藏丰富的地带定点传教，教授英语，并在这片地球上最大的可居住而荒无人烟的地区大量发放避孕药品」</blockquote><cite>本书正文</cite></li><li><blockquote>「一种产品越是受到世界市场的青睐，它带给为生产这种产品而做出牺牲的拉美人民的灾难也就越大」</blockquote><cite>本书正文</cite></li><li><blockquote>「滋润着帝国主义权力中心的雨水淹没了该体系广阔的外围，与此同时，我们的统治阶级（受外部统治的国内统治阶级）的舒适安逸就等于诅咒我们广大民众永远要过着牲口般的生活。」</blockquote><cite>本书正文</cite></li><li><blockquote>「日本国家宗教的密教部分受到欧洲文明的强烈影响。」</blockquote><cite>本书正文</cite></li><li><blockquote>「大量烈性酒。等到他们从酩酊大醉中醒来时，已经负债累累了。他们只得到陌生的炎热地区去干活，以此偿债」</blockquote><cite>本书正文</cite></li><li><blockquote>「印第安人过去和现在都由于本身的富有而遭到不幸。这是整个拉丁美洲悲剧的缩影。」</blockquote><cite>本书正文</cite></li><li><blockquote>「从新殖民地掠夺来的贵重金属刺激了欧洲的经济发展，甚至可以说，使欧洲的经济有可能得以发展。」</blockquote><cite>本书正文</cite></li></ol></section>
 </body>
 </html>

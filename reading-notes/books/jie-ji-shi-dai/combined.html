@@ -6,46 +6,108 @@
 <title>《阶级时代：为什么不平等至关重要（套装共10册）（逃离不平等该如何做？着眼于人与人之间的关系，我们有多种不同的理由来反对不平等）》｜通读 · 精读</title>
 <link rel="stylesheet" href="../../../assets/css/reading-overview.css"><link rel="stylesheet" href="../../../assets/css/mmx-guide.css"><link rel="stylesheet" href="../../../assets/css/reading-outline.css">
 <style>
-/* 合并页外壳 */
-body{max-width:960px;margin:0 auto;padding:0 18px 80px;}
-.combined-head{padding:34px 0 18px;border-bottom:1px solid #e7e0d2;margin-bottom:8px;}
-.combined-head h1{font-size:26px;margin:0 0 10px;}
+/* ── 外壳与全局阅读节奏 ── */
+body{max-width:880px;margin:0 auto;padding:0 18px 80px;
+  font-size:15px;line-height:1.88;color:#3b453e;background:#f7f8f3;
+  -webkit-font-smoothing:antialiased;}
+.combined-head{padding:30px 0 16px;border-bottom:1px solid #e7e0d2;margin-bottom:4px;}
+.combined-head h1{font:700 23px/1.35 var(--serif);margin:0 0 8px;color:#244b40;}
+.combined-head .eyebrow{font-size:.72rem;letter-spacing:.14em;margin:0 0 6px;}
+.chips{margin:8px 0 0;}
+.chip{font-size:.72rem;padding:2px 10px;}
 /* 锚点导航：固定一排 4 个，等宽对齐 */
-.nav{position:sticky;top:0;z-index:20;background:rgba(255,253,248,.96);backdrop-filter:blur(6px);
-  border-bottom:1px solid #ece4d4;padding:10px 0;margin:14px 0 26px;display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;
-  box-shadow:0 2px 10px rgba(120,100,60,.06);}
-.navlink{font-size:12.5px;color:#5d5443;text-decoration:none;background:#f6f1e6;border:1px solid #e7ddca;
-  border-radius:7px;padding:4px 6px;text-align:center;white-space:nowrap;overflow:hidden;
-  text-overflow:ellipsis;}
-section{scroll-margin-top:64px;}
-/* 一句话主旨：去左侧竖线 */
-.mmx-oneline{border-left:none;padding-left:18px;}
-/* AI领读章内：AI 大纲原生深层样式 */
-.merged-guide .sec{margin:10px 0 14px;padding-left:6px;border-left:2px solid #e5e0d6}
-.merged-guide .sec h4{font:600 .98rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.6em 0 .3em}
-.merged-guide ul.point{margin:.3em 0;padding-left:20px}
-.merged-guide ul.point>li{margin:.35em 0}
-.merged-guide ul.quote{margin:.25em 0 .25em 20px;padding-left:18px;list-style:none}
-.merged-guide ul.quote::before{content:"原句";display:block;font-size:.72rem;color:#bf8247;
-  letter-spacing:.1em;margin:.15em 0 .1em;font-weight:600}
-.merged-guide ul.quote.quote-node{margin-top:.5em;padding-top:.4em;border-top:1px dashed #eadfc9}
+.nav{position:sticky;top:0;z-index:20;background:rgba(247,248,243,.96);backdrop-filter:blur(6px);
+  border-bottom:1px solid #ece4d4;padding:10px 0;margin:12px 0 20px;display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;
+  box-shadow:0 2px 10px rgba(120,100,60,.05);}
+.navlink{font-size:12px;color:#5d5443;text-decoration:none;background:#fdfbf3;border:1px solid #e8e2d2;
+  border-radius:8px;padding:6px 4px;text-align:center;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;transition:background .15s,color .15s;}
+.navlink:hover{background:#f2efe2;color:#244b40;}
+section{scroll-margin-top:62px;}
+
+/* ── 统一卡片：所有顶层模块（AI领读 / AI 问答 / 其余）一视同仁 ── */
+body>section.mmx-mod,body>section.card,body>section.mmx-svgwrap{
+  background:#fffdf6;border:1px solid #e8e4d5;border-radius:16px;
+  padding:18px 22px;margin:18px 0;
+  box-shadow:0 1px 3px rgba(110,95,60,.05);}
+body>section.mmx-mod>*:first-child,body>section.card>*:first-child,
+body>section.mmx-svgwrap>*:first-child{margin-top:0}
+body>section.mmx-mod>*:last-child,body>section.card>*:last-child,
+body>section.mmx-svgwrap>*:last-child{margin-bottom:0}
+/* 结构导图：图本身留白居中，不与正文抢宽 */
+body>section.mmx-svgwrap>svg.mmx-svg{display:block;width:100%;height:auto;margin:2px auto 0;}
+/* 模块标题：统一大小、弱强调，不与正文抢注意力 */
+body>section.mmx-mod>h2,body>section.card>h2{
+  font:700 1.04rem/1.5 var(--serif);color:#244b40;margin:0 0 11px;
+  padding-left:10px;border-left:3px solid #bf8247;letter-spacing:.01em;}
+/* 正文：字号收小、行距放宽、段间距舒服 */
+body>section.mmx-mod p,body>section.card p,
+body>section.mmx-mod li,body>section.card li{
+  font-size:.9rem;line-height:1.92;color:#4a4436;}
+body>section.mmx-mod p,body>section.card p{margin:.5em 0;}
+body>section.mmx-mod>ul,body>section.mmx-mod>ol,body>section.mmx-mod>div,
+body>section.mmx-mod>p:not(.mmx-mod-note),
+body>section.card:not(.merged-guide)>ul,body>section.card:not(.merged-guide)>ol,
+body>section.card:not(.merged-guide)>div,body>section.card:not(.merged-guide)>p:not(.mmx-mod-note){
+  padding-left:14px;}
+/* 模块说明小字：弱化不抢眼 */
+.mmx-mod-note{font-size:.75rem;color:#8d8878;margin:.1em 0 .75em;line-height:1.7;}
+
+/* ── 内部块统一：卡片里不再套深卡片，一律浅底子块 ── */
+body>section .mmx-pending,body>section .mmx-evib,body>section .aiqa-item{
+  background:#fbfaf2;border:1px solid #eee9d8;border-radius:12px;
+  padding:13px 16px;margin:.65em 0;}
+body>section .mmx-evib ul{padding-left:1.15em;}
+/* 一句话主旨：去左侧竖线 + 收敛字号 */
+.mmx-oneline{font-size:.98rem;line-height:1.85;color:#3a352c;margin:.2em 0 0;
+  padding:12px 16px;background:#fbfaf4;border-left:none;border-radius:12px;}
+/* 核心观点 / 验证清单：虚线分隔 + 收紧行距 */
+.mmx-views li{padding:.5em 0 .5em 0;font-size:.9rem;line-height:1.88;}
+/* 原文金句 */
+.mmx-qlist li{padding:.6em 0 .6em 2.2em;}
+.mmx-qlist blockquote{font-size:.89rem;line-height:1.9;}
+.mmx-qlist cite{font-size:.72rem;}
+/* 核心追问：问句加重、答句放松 */
+.mmx-qa{margin:.7em 0;padding-left:12px;border-left:3px solid #e5dfcd;}
+.mmx-qa .mmx-q{font-size:.9rem;font-weight:700;color:#2f3a33;line-height:1.8;margin:0 0 .25em;}
+.mmx-qa .mmx-a{font-size:.88rem;line-height:1.95;color:#4a4436;margin:0;}
+
+/* ── AI 问书专项：外层容器透明，问答条目才是阅读单元 ── */
+#mod-aiask .mmx-ask{background:transparent;border:0;border-radius:0;padding:0;margin:0;}
+#mod-aiask .aiqa-item{margin:.6em 0;padding:14px 16px 15px;}
+#mod-aiask .aiqa-item h3{font:700 .93rem/1.7 var(--serif);color:#2f5b49;margin:0 0 .4em;
+  padding:0;border:0;}
+#mod-aiask .aiqa-item h3:before{content:"问　";color:#bf8247;font-weight:700;}
+#mod-aiask .aiqa-item p{font-size:.88rem;line-height:1.95;color:#4a4436;margin:.4em 0;}
+#mod-aiask .aiqa-item ul{margin:.35em 0;padding-left:1.1em;}
+#mod-aiask .aiqa-item li{font-size:.87rem;line-height:1.88;margin:.18em 0;color:#4a4436;}
+#mod-aiask .aiqa-item li::marker{color:#c0a06a;}
+/* 逐章追问（details 形态）：摘要行也收敛 */
+.mmx-ask>summary{font-size:.87rem;line-height:1.7;padding:2px 0;}
+.mmx-askbody{font-size:.88rem;line-height:1.9;}
+
+/* AI领读章内：AI 大纲原生深层样式（字号同步收小） */
+.merged-guide .sec{margin:9px 0 12px;padding-left:6px;border-left:2px solid #e5e0d6}
+.merged-guide .sec h4{font:600 .93rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.5em 0 .25em}
+.merged-guide ul.point{margin:.25em 0;padding-left:20px}
+.merged-guide ul.point>li{margin:.3em 0}
+.merged-guide ul.quote{margin:.22em 0 .22em 20px;padding-left:18px;list-style:none}
+.merged-guide ul.quote::before{content:"原句";display:block;font-size:.7rem;color:#bf8247;
+  letter-spacing:.1em;margin:.12em 0 .08em;font-weight:600}
+.merged-guide ul.quote.quote-node{margin-top:.45em;padding-top:.35em;border-top:1px dashed #eadfc9}
 .merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
-.merged-guide ul.quote>li{color:#4a4436;font-size:.93rem;margin:.2em 0;padding-left:10px;border-left:2px solid #bf8247}
-/* 模块内子内容（AI领读除外，它有专属深层样式）：左缩进 + 正文与标题分层 */
-section.mmx-mod>ul,section.mmx-mod>ol,section.mmx-mod>div,
-section.mmx-mod>p:not(.mmx-mod-note),
-section.card:not(.merged-guide)>ul,section.card:not(.merged-guide)>ol,
-section.card:not(.merged-guide)>div,section.card:not(.merged-guide)>p:not(.mmx-mod-note){
-  padding-left:16px;}
-section.mmx-mod li,section.mmx-mod p:not(.mmx-mod-note),
-section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mod-note){
-  color:#4a4436;font-size:.93rem;line-height:1.78;}
+.merged-guide ul.quote>li{color:#4a4436;font-size:.88rem;line-height:1.85;margin:.18em 0;padding-left:10px;border-left:2px solid #bf8247}
 /* 核心观点初判：外链 mmx-guide.css 的「观点N」前缀是绝对定位，在本页版式里和标题叠字，
    且此前要求去掉「观点1/2/3」前缀 —— 这里整条关掉（外链 CSS 不在页面内，只能内联覆盖）。 */
 .mmx-views li{padding-left:0 !important;}
 .mmx-views li:before,.mmx-views li::before{
   content:none !important;display:none !important;counter-increment:none !important;}
+@media(max-width:720px){
+  body{padding:0 12px 60px;font-size:14.5px;}
+  body>section.mmx-mod,body>section.card{padding:15px 16px;border-radius:14px;}
+  .nav{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
 </style>
 </head>
 <body>
@@ -54,8 +116,8 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
   <h1>《阶级时代：为什么不平等至关重要（套装共10册）（逃离不平等该如何做？着眼于人与人之间的关系，我们有多种不同的理由来反对不平等）》</h1>
   <div class="chips"><span class="chip">通读 + 精读</span><span class="chip">AI领读</span><span class="chip">AI 生产</span></div>
 </header>
-<nav class="nav"><a class="navlink" href="#mod-svg">全书结构导图</a><a class="navlink" href="#mod-oneline">一句话主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a></nav>
-<section class="mmx-svgwrap" id="mod-svg">
+<nav class="nav"><a class="navlink" href="#mod-svg">结构导图</a><a class="navlink" href="#mod-oneline">核心主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a></nav>
+<section class="mmx-svgwrap" id="mod-svg"><h2>结构导图</h2>
 <svg class="mmx-svg" viewBox="0 0 1120 2080" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="阶级时代：为什么不平等至关重要（套装共10册）（逃离不平等该如何做？着眼于人与人之间的关系，我们有多种不同的理由来反对不平等） 全书精读">
 <rect x="0" y="0" width="1120" height="2080" fill="none"/>
 <style>.mmx-svg text{font-family:"Noto Serif SC",Georgia,serif}.mmx-svg .t1{font-size:15px;fill:#2f2a24;font-weight:600}.mmx-svg .t2{font-size:12px;fill:#5c5347}.mmx-svg .t3{font-size:10.5px;fill:#8a8272}.mmx-svg .rt{font-size:13px;fill:#f7f3ea;font-weight:600}.mmx-svg .ln{stroke:#cfc6b4;stroke-width:1.4;fill:none}</style>
@@ -288,10 +350,10 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
 <text class="t2" x="714" y="1979">含「包厢化」至「版权页」</text>
 <path class="ln" d="M692 1983 L700 1983"/>
 </svg></section>
-<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">一句话主旨</h2><p class="mmx-mod-note">本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。</p><p class="mmx-oneline">结构提要：本书按章节顺序展开。</p></section>
-<section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" id="mod-merged_guide"><h2 id="merged-guide-title">AI领读 · 全书篇目</h2>
+<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">核心主旨</h2><p class="mmx-oneline">结构提要：本书按章节顺序展开。</p></section>
+<section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" id="mod-merged_guide"><h2 id="merged-guide-title">AI领读</h2>
 <p class="small">本书 AI 大纲目前为章级目录（要点与原句待补全）。以下为全书篇目，大纲补全后将自动升级为「目录 + 骨架 + 要点 + 原句」完整版。</p>
 <ol class="mmx-pts"><li><b>1</b> 为什么不平等至关重要</li><li><b>2</b> 序言</li><li><b>3</b> 第一章 导论</li><li><b>4</b> 第二章 平等的关切</li><li><b>5</b> 第三章 地位不平等</li><li><b>6</b> 第四章 程序公平</li><li><b>7</b> 第五章 实质机会</li><li><b>8</b> 第六章 政治公平</li><li><b>9</b> 第七章 平等、自由与强制</li><li><b>10</b> 第八章 应得</li><li><b>11</b> 第九章 收入不平等</li><li><b>12</b> 第十章 结论</li><li><b>13</b> 参考文献</li><li><b>14</b> 译后记</li><li><b>15</b> 版权页</li><li><b>16</b> 不平等社会：从石器时代到21世纪，人类如何应对不平等</li><li><b>17</b> 题记</li><li><b>18</b> 献给</li><li><b>19</b> 序言 不平等的挑战</li><li><b>20</b> 第一部分 不平等简史</li><li><b>21</b> 第2章 不平等的帝国</li><li><b>22</b> 第3章 大起大落</li><li><b>23</b> 第二部分 战争</li><li><b>24</b> 第5章 大压缩</li><li><b>25</b> 第6章 前工业化时期的战争和内战</li><li><b>26</b> 第三部分 革命</li><li><b>27</b> 第8章 前列宁时代</li><li><b>28</b> 第四部分 崩溃</li><li><b>29</b> 第五部分 灾难</li><li><b>30</b> 第11章 瘟疫、饥荒和战争</li><li><b>31</b> 第六部分 替代性选择</li><li><b>32</b> 第13章 经济发展和教育</li><li><b>33</b> 第14章 如果是另一种历史，那会怎么样呢？从历史到反事实分析</li><li><b>34</b> 第七部分 不平等的卷土重来和未来的不平等矫正</li><li><b>35</b> 第16章 未来将何去何从？</li><li><b>36</b> 附录 不平等的极限</li><li><b>37</b> 致谢</li><li><b>38</b> 参考文献</li><li><b>39</b> 译后记</li><li><b>40</b> 版权页</li><li><b>41</b> 贫穷的本质 ： 我们为什么摆脱不了贫穷 ： 修订版</li><li><b>42</b> 前言</li><li><b>43</b> 第一章 再好好想想</li><li><b>44</b> 第一部分 生活案例</li><li><b>45</b> 第二章 饥饿人口已达到10亿？</li><li><b>46</b> 第三章 提高全球居民健康水平容易吗？</li><li><b>47</b> 第四章 全班最优</li><li><b>48</b> 第五章 帕克·苏达诺的大家庭</li><li><b>49</b> 第二部分 慈善机构</li><li><b>50</b> 第六章 赤脚的对冲基金经理</li><li><b>51</b> 第七章 贷款给穷人：不那么简单的经济学</li><li><b>52</b> 第八章 节省一砖一瓦</li><li><b>53</b> 第九章 不情愿的企业家们</li><li><b>54</b> 第十章 政策，政治</li><li><b>55</b> 总结</li><li><b>56</b> 致谢</li><li><b>57</b> 版权页</li><li><b>58</b> 逃离不平等：健康、财富及不平等的起源</li><li><b>59</b> 前言</li><li><b>60</b> 引言</li><li><b>61</b> 第一章 人类福祉现状</li><li><b>62</b> 第一部分 生存与死亡</li><li><b>63</b> 第二章 从史前至1945年</li><li><b>64</b> 第三章 消灭传染病</li><li><b>65</b> 第四章 当代世界的健康状况</li><li><b>66</b> 第二部分 大分化时代</li><li><b>67</b> 第五章 美国的物质生活状况</li><li><b>68</b> 第六章 全球化与大逃亡</li><li><b>69</b> 第三部分 救助与全球贫困</li><li><b>70</b> 第七章 如何救助落后者？</li><li><b>71</b> 后记</li><li><b>72</b> 版权页</li><li><b>73</b> 冲动的美国</li><li><b>74</b> 推荐序一</li><li><b>75</b> 推荐序二</li><li><b>76</b> 导论</li><li><b>77</b> 第一部分 自我社会</li><li><b>78</b> 第一章 越多越好</li><li><b>79</b> 第二章 缺乏自信</li><li><b>80</b> 第三章 权力的腐败</li><li><b>81</b> 第四章 免费午餐</li><li><b>82</b> 第二部分 镜中的裂痕</li><li><b>83</b> 第五章 独自在家</li><li><b>84</b> 第六章 艰苦的劳动</li><li><b>85</b> 第七章 无论疾病还是富裕</li><li><b>86</b> 第八章 永恒的战争</li><li><b>87</b> 第三部分 我们的社会</li><li><b>88</b> 第九章 制造空间</li><li><b>89</b> 致谢</li><li><b>90</b> 参考文献</li><li><b>91</b> 版权页</li><li><b>92</b> 公正：该如何做是好？</li><li><b>93</b> 第一章 做正当之事</li><li><b>94</b> 第二章 最大幸福原则／功利主义</li><li><b>95</b> 第三章 我们拥有自身吗？／自由至上主义</li><li><b>96</b> 第四章 雇佣帮助／市场与道德</li><li><b>97</b> 第五章 重要的是动机／伊曼纽尔·康德</li><li><b>98</b> 第六章 平等的理由／约翰·罗尔斯</li><li><b>99</b> 第七章 反歧视政策之争</li><li><b>100</b> 第八章 谁应得什么？／亚里士多德</li><li><b>101</b> 第九章 我们彼此负有什么义务？／忠诚之难</li><li><b>102</b> 第十章 公正与共同善</li><li><b>103</b> 后记</li><li><b>104</b> 版权页</li><li><b>105</b> 断裂的阶梯：不平等如何影响你的人生</li><li><b>106</b> “比较译丛”序</li><li><b>107</b> 引言</li><li><b>108</b> 第一章 食堂阿姨经济学——为什么“感觉贫困”像“真的贫困”一样伤人</li><li><b>109</b> 第二章 相对容易——为什么我们无法停止与他人的比较</li><li><b>110</b> 第三章 贫穷的逻辑——不平等有自己的逻辑</li><li><b>111</b> 第四章 右派、左派与梯子——不平等如何分裂我们的政治观点</li><li><b>112</b> 第五章 长寿者的墓碑高——不平等是生死攸关的大事</li><li><b>113</b> 第六章 上帝、阴谋和天使的语言——为什么人们会相信他们需要相信的</li><li><b>114</b> 第七章 黑人和白人之间的不平等——种族和经济不平等的危险舞蹈</li><li><b>115</b> 第八章 合作的阶梯——为什么公平薪酬是公平竞争的标志</li><li><b>116</b> 第九章 垂直生活的艺术——平缓的阶梯，与照顾相比，以及那些最重要的事情</li><li><b>117</b> 致谢</li><li><b>118</b> 译后记</li><li><b>119</b> 版权页</li><li><b>120</b> 新城市危机：不平等与正在消失的中产阶级</li><li><b>121</b> 献给</li><li><b>122</b> 前言</li><li><b>123</b> 第一章 城市矛盾</li><li><b>124</b> 第二章 赢者通吃城市化</li><li><b>125</b> 第三章 精英城市</li><li><b>126</b> 第四章 绅士化和它引起的不满</li><li><b>127</b> 第五章 城市的不平等</li><li><b>128</b> 第六章 大分层加剧</li><li><b>129</b> 第七章 拼布城市</li><li><b>130</b> 第八章 郊区危机</li><li><b>131</b> 第九章 全球城市化危机</li><li><b>132</b> 第十章 惠及全民的城市化</li><li><b>133</b> 附录</li><li><b>134</b> 致谢</li><li><b>135</b> 版权页</li><li><b>136</b> 美国怎么了：绝望的死亡与资本主义的未来</li><li><b>137</b> 推荐序</li><li><b>138</b> 序言</li><li><b>139</b> 引言 午后的死亡</li><li><b>140</b> 第一篇 以过去为序章</li><li><b>141</b> 第一章 山雨欲来</li><li><b>142</b> 第二章 分道扬镳</li><li><b>143</b> 第三章 绝望的死亡</li><li><b>144</b> 第二篇 沙场面面观</li><li><b>145</b> 第四章 受教育程度影响生死</li><li><b>146</b> 第五章 黑人与白人死亡现状分析</li><li><b>147</b> 第六章 生者的健康状况</li><li><b>148</b> 第七章 疼痛之苦与疼痛之谜</li><li><b>149</b> 第八章 自杀、药物和酒精</li><li><b>150</b> 第九章 阿片类药物之痛</li><li><b>151</b> 第三篇 经济扮演的角色</li><li><b>152</b> 第十章 歧途：贫困、收入与经济大衰退</li><li><b>153</b> 第十一章 就业市场加剧分化</li><li><b>154</b> 第十二章 婚姻家庭方面日益扩大的鸿沟</li><li><b>155</b> 第四篇 为什么资本主义辜负了众生</li><li><b>156</b> 第十三章 美国的医疗制度是如何戕害生命的</li><li><b>157</b> 第十四章 资本主义、移民、机器人和外国</li><li><b>158</b> 第十五章 企业、消费者和工人</li><li><b>159</b> 第十六章 何去何从</li><li><b>160</b> 致谢</li><li><b>161</b> 版权页</li><li><b>162</b> 金钱不能买什么：金钱与公正的正面交锋</li><li><b>163</b> 引言 市场与道德</li><li><b>164</b> 市场必胜论的时代</li><li><b>165</b> 一切都待价而沽</li><li><b>166</b> 重新思考市场的角色</li><li><b>167</b> 第1章 插队</li><li><b>168</b> 快速通道</li><li><b>169</b> 雷克萨斯专用道</li><li><b>170</b> 替人排队的生意</li><li><b>171</b> 倒卖门诊号</li><li><b>172</b> 特约医生</li><li><b>173</b> 市场逻辑</li><li><b>174</b> 市场伦理与排队伦理</li><li><b>175</b> 市场和腐败</li><li><b>176</b> 倒票有什么错</li><li><b>177</b> 排队伦理</li><li><b>178</b> 第2章 激励措施</li><li><b>179</b> 生活中的经济学分析</li><li><b>180</b> 用金钱奖励取得好成绩的孩子</li><li><b>181</b> 健康贿赂</li><li><b>182</b> 具有渗透力的激励措施</li><li><b>183</b> 罚金抑或费用</li><li><b>184</b> 碳补偿行动</li><li><b>185</b> 付费猎杀犀牛</li><li><b>186</b> 付费猎杀海象</li><li><b>187</b> 激励措施与道德困境</li><li><b>188</b> 第3章 市场是如何排挤道德规范的</li><li><b>189</b> 金钱能够买什么和不能买什么</li><li><b>190</b> 雇人道歉与购买婚礼祝词</li><li><b>191</b> 抵制礼物的理据</li><li><b>192</b> 礼物的货币化</li><li><b>193</b> 买来的荣誉</li><li><b>194</b> 反对市场的两种观点</li><li><b>195</b> 排挤非市场规范</li><li><b>196</b> 核废料贮存点</li><li><b>197</b> 捐赠日的活动与迟接孩子的现象</li><li><b>198</b> 商业化效应</li><li><b>199</b> 卖血</li><li><b>200</b> 市场信念的两大原则</li><li><b>201</b> 节约爱</li><li><b>202</b> 第4章 生命与死亡的市场</li><li><b>203</b> 普通员工保险</li><li><b>204</b> 保单贴现：拿生命做赌注</li><li><b>205</b> 死亡赌局</li><li><b>206</b> 人寿保险的简明道德史</li><li><b>207</b> 恐怖活动期货市场</li><li><b>208</b> 陌生人的生命</li><li><b>209</b> 死亡债券</li><li><b>210</b> 第5章 冠名权</li><li><b>211</b> 待售的亲笔签名</li><li><b>212</b> 比赛的冠名权</li><li><b>213</b> 包厢</li><li><b>214</b> 点球成金</li><li><b>215</b> 无孔不入的广告</li><li><b>216</b> 商业主义有什么错</li><li><b>217</b> 市政营销</li><li><b>218</b> 包厢化</li><li><b>219</b> 版权页</li><li><b>220</b> 版权页</li></ol></section>
-<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点初判</h2><p class="mmx-mod-note">按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。</p><ul class="mmx-views"><li><b>第 1–7 章</b>——含「为什么不平等至关重要」至「第五章 实质机会」</li><li><b>第 8–14 章</b>——含「第六章 政治公平」至「译后记」</li><li><b>第 15–21 章</b>——含「版权页」至「第2章 不平等的帝国」</li><li><b>第 22–28 章</b>——含「第3章 大起大落」至「第四部分 崩溃」</li><li><b>第 29–35 章</b>——含「第五部分 灾难」至「第16章 未来将何去何从」</li><li><b>第 36–42 章</b>——含「附录 不平等的极限」至「前言」</li><li><b>第 43–49 章</b>——含「第一章 再好好想想」至「第二部分 慈善机构」</li><li><b>第 50–56 章</b>——含「第六章 赤脚的对冲基金经」至「致谢」</li><li><b>第 57–63 章</b>——含「版权页」至「第二章 从史前至1945」</li><li><b>第 64–70 章</b>——含「第三章 消灭传染病」至「第七章 如何救助落后者？」</li><li><b>第 71–77 章</b>——含「后记」至「第一部分 自我社会」</li><li><b>第 78–84 章</b>——含「第一章 越多越好」至「第六章 艰苦的劳动」</li><li><b>第 85–91 章</b>——含「第七章 无论疾病还是富裕」至「版权页」</li><li><b>第 92–98 章</b>——含「公正：该如何做是好？」至「第六章 平等的理由／约翰」</li><li><b>第 99–105 章</b>——含「第七章 反歧视政策之争」至「断裂的阶梯：不平等如何影」</li><li><b>第 106–112 章</b>——含「“比较译丛”序」至「第五章 长寿者的墓碑高—」</li><li><b>第 113–119 章</b>——含「第六章 上帝、阴谋和天使」至「版权页」</li><li><b>第 120–126 章</b>——含「新城市危机：不平等与正在」至「第四章 绅士化和它引起的」</li><li><b>第 127–133 章</b>——含「第五章 城市的不平等」至「附录」</li><li><b>第 134–140 章</b>——含「致谢」至「第一篇 以过去为序章」</li><li><b>第 141–147 章</b>——含「第一章 山雨欲来」至「第六章 生者的健康状况」</li><li><b>第 148–154 章</b>——含「第七章 疼痛之苦与疼痛之」至「第十二章 婚姻家庭方面日」</li><li><b>第 155–161 章</b>——含「第四篇 为什么资本主义辜」至「版权页」</li><li><b>第 162–168 章</b>——含「金钱不能买什么：金钱与公」至「快速通道」</li><li><b>第 169–175 章</b>——含「雷克萨斯专用道」至「市场和腐败」</li><li><b>第 176–182 章</b>——含「倒票有什么错」至「具有渗透力的激励措施」</li><li><b>第 183–189 章</b>——含「罚金抑或费用」至「金钱能够买什么和不能买什」</li><li><b>第 190–196 章</b>——含「雇人道歉与购买婚礼祝词」至「核废料贮存点」</li><li><b>第 197–203 章</b>——含「捐赠日的活动与迟接孩子的」至「普通员工保险」</li><li><b>第 204–210 章</b>——含「保单贴现：拿生命做赌注」至「第5章 冠名权」</li><li><b>第 211–217 章</b>——含「待售的亲笔签名」至「市政营销」</li><li><b>第 218–220 章</b>——含「包厢化」至「版权页」</li></ul></section>
+<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点</h2><ul class="mmx-views"><li><b>第 1–7 章</b>——含「为什么不平等至关重要」至「第五章 实质机会」</li><li><b>第 8–14 章</b>——含「第六章 政治公平」至「译后记」</li><li><b>第 15–21 章</b>——含「版权页」至「第2章 不平等的帝国」</li><li><b>第 22–28 章</b>——含「第3章 大起大落」至「第四部分 崩溃」</li><li><b>第 29–35 章</b>——含「第五部分 灾难」至「第16章 未来将何去何从」</li><li><b>第 36–42 章</b>——含「附录 不平等的极限」至「前言」</li><li><b>第 43–49 章</b>——含「第一章 再好好想想」至「第二部分 慈善机构」</li><li><b>第 50–56 章</b>——含「第六章 赤脚的对冲基金经」至「致谢」</li><li><b>第 57–63 章</b>——含「版权页」至「第二章 从史前至1945」</li><li><b>第 64–70 章</b>——含「第三章 消灭传染病」至「第七章 如何救助落后者？」</li><li><b>第 71–77 章</b>——含「后记」至「第一部分 自我社会」</li><li><b>第 78–84 章</b>——含「第一章 越多越好」至「第六章 艰苦的劳动」</li><li><b>第 85–91 章</b>——含「第七章 无论疾病还是富裕」至「版权页」</li><li><b>第 92–98 章</b>——含「公正：该如何做是好？」至「第六章 平等的理由／约翰」</li><li><b>第 99–105 章</b>——含「第七章 反歧视政策之争」至「断裂的阶梯：不平等如何影」</li><li><b>第 106–112 章</b>——含「“比较译丛”序」至「第五章 长寿者的墓碑高—」</li><li><b>第 113–119 章</b>——含「第六章 上帝、阴谋和天使」至「版权页」</li><li><b>第 120–126 章</b>——含「新城市危机：不平等与正在」至「第四章 绅士化和它引起的」</li><li><b>第 127–133 章</b>——含「第五章 城市的不平等」至「附录」</li><li><b>第 134–140 章</b>——含「致谢」至「第一篇 以过去为序章」</li><li><b>第 141–147 章</b>——含「第一章 山雨欲来」至「第六章 生者的健康状况」</li><li><b>第 148–154 章</b>——含「第七章 疼痛之苦与疼痛之」至「第十二章 婚姻家庭方面日」</li><li><b>第 155–161 章</b>——含「第四篇 为什么资本主义辜」至「版权页」</li><li><b>第 162–168 章</b>——含「金钱不能买什么：金钱与公」至「快速通道」</li><li><b>第 169–175 章</b>——含「雷克萨斯专用道」至「市场和腐败」</li><li><b>第 176–182 章</b>——含「倒票有什么错」至「具有渗透力的激励措施」</li><li><b>第 183–189 章</b>——含「罚金抑或费用」至「金钱能够买什么和不能买什」</li><li><b>第 190–196 章</b>——含「雇人道歉与购买婚礼祝词」至「核废料贮存点」</li><li><b>第 197–203 章</b>——含「捐赠日的活动与迟接孩子的」至「普通员工保险」</li><li><b>第 204–210 章</b>——含「保单贴现：拿生命做赌注」至「第5章 冠名权」</li><li><b>第 211–217 章</b>——含「待售的亲笔签名」至「市政营销」</li><li><b>第 218–220 章</b>——含「包厢化」至「版权页」</li></ul></section>
 </body>
 </html>

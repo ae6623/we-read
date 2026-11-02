@@ -6,46 +6,108 @@
 <title>《大英博物馆世界简史》｜通读 · 精读</title>
 <link rel="stylesheet" href="../../../assets/css/reading-overview.css"><link rel="stylesheet" href="../../../assets/css/mmx-guide.css"><link rel="stylesheet" href="../../../assets/css/reading-outline.css">
 <style>
-/* 合并页外壳 */
-body{max-width:960px;margin:0 auto;padding:0 18px 80px;}
-.combined-head{padding:34px 0 18px;border-bottom:1px solid #e7e0d2;margin-bottom:8px;}
-.combined-head h1{font-size:26px;margin:0 0 10px;}
+/* ── 外壳与全局阅读节奏 ── */
+body{max-width:880px;margin:0 auto;padding:0 18px 80px;
+  font-size:15px;line-height:1.88;color:#3b453e;background:#f7f8f3;
+  -webkit-font-smoothing:antialiased;}
+.combined-head{padding:30px 0 16px;border-bottom:1px solid #e7e0d2;margin-bottom:4px;}
+.combined-head h1{font:700 23px/1.35 var(--serif);margin:0 0 8px;color:#244b40;}
+.combined-head .eyebrow{font-size:.72rem;letter-spacing:.14em;margin:0 0 6px;}
+.chips{margin:8px 0 0;}
+.chip{font-size:.72rem;padding:2px 10px;}
 /* 锚点导航：固定一排 4 个，等宽对齐 */
-.nav{position:sticky;top:0;z-index:20;background:rgba(255,253,248,.96);backdrop-filter:blur(6px);
-  border-bottom:1px solid #ece4d4;padding:10px 0;margin:14px 0 26px;display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;
-  box-shadow:0 2px 10px rgba(120,100,60,.06);}
-.navlink{font-size:12.5px;color:#5d5443;text-decoration:none;background:#f6f1e6;border:1px solid #e7ddca;
-  border-radius:7px;padding:4px 6px;text-align:center;white-space:nowrap;overflow:hidden;
-  text-overflow:ellipsis;}
-section{scroll-margin-top:64px;}
-/* 一句话主旨：去左侧竖线 */
-.mmx-oneline{border-left:none;padding-left:18px;}
-/* AI领读章内：AI 大纲原生深层样式 */
-.merged-guide .sec{margin:10px 0 14px;padding-left:6px;border-left:2px solid #e5e0d6}
-.merged-guide .sec h4{font:600 .98rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.6em 0 .3em}
-.merged-guide ul.point{margin:.3em 0;padding-left:20px}
-.merged-guide ul.point>li{margin:.35em 0}
-.merged-guide ul.quote{margin:.25em 0 .25em 20px;padding-left:18px;list-style:none}
-.merged-guide ul.quote::before{content:"原句";display:block;font-size:.72rem;color:#bf8247;
-  letter-spacing:.1em;margin:.15em 0 .1em;font-weight:600}
-.merged-guide ul.quote.quote-node{margin-top:.5em;padding-top:.4em;border-top:1px dashed #eadfc9}
+.nav{position:sticky;top:0;z-index:20;background:rgba(247,248,243,.96);backdrop-filter:blur(6px);
+  border-bottom:1px solid #ece4d4;padding:10px 0;margin:12px 0 20px;display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;
+  box-shadow:0 2px 10px rgba(120,100,60,.05);}
+.navlink{font-size:12px;color:#5d5443;text-decoration:none;background:#fdfbf3;border:1px solid #e8e2d2;
+  border-radius:8px;padding:6px 4px;text-align:center;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;transition:background .15s,color .15s;}
+.navlink:hover{background:#f2efe2;color:#244b40;}
+section{scroll-margin-top:62px;}
+
+/* ── 统一卡片：所有顶层模块（AI领读 / AI 问答 / 其余）一视同仁 ── */
+body>section.mmx-mod,body>section.card,body>section.mmx-svgwrap{
+  background:#fffdf6;border:1px solid #e8e4d5;border-radius:16px;
+  padding:18px 22px;margin:18px 0;
+  box-shadow:0 1px 3px rgba(110,95,60,.05);}
+body>section.mmx-mod>*:first-child,body>section.card>*:first-child,
+body>section.mmx-svgwrap>*:first-child{margin-top:0}
+body>section.mmx-mod>*:last-child,body>section.card>*:last-child,
+body>section.mmx-svgwrap>*:last-child{margin-bottom:0}
+/* 结构导图：图本身留白居中，不与正文抢宽 */
+body>section.mmx-svgwrap>svg.mmx-svg{display:block;width:100%;height:auto;margin:2px auto 0;}
+/* 模块标题：统一大小、弱强调，不与正文抢注意力 */
+body>section.mmx-mod>h2,body>section.card>h2{
+  font:700 1.04rem/1.5 var(--serif);color:#244b40;margin:0 0 11px;
+  padding-left:10px;border-left:3px solid #bf8247;letter-spacing:.01em;}
+/* 正文：字号收小、行距放宽、段间距舒服 */
+body>section.mmx-mod p,body>section.card p,
+body>section.mmx-mod li,body>section.card li{
+  font-size:.9rem;line-height:1.92;color:#4a4436;}
+body>section.mmx-mod p,body>section.card p{margin:.5em 0;}
+body>section.mmx-mod>ul,body>section.mmx-mod>ol,body>section.mmx-mod>div,
+body>section.mmx-mod>p:not(.mmx-mod-note),
+body>section.card:not(.merged-guide)>ul,body>section.card:not(.merged-guide)>ol,
+body>section.card:not(.merged-guide)>div,body>section.card:not(.merged-guide)>p:not(.mmx-mod-note){
+  padding-left:14px;}
+/* 模块说明小字：弱化不抢眼 */
+.mmx-mod-note{font-size:.75rem;color:#8d8878;margin:.1em 0 .75em;line-height:1.7;}
+
+/* ── 内部块统一：卡片里不再套深卡片，一律浅底子块 ── */
+body>section .mmx-pending,body>section .mmx-evib,body>section .aiqa-item{
+  background:#fbfaf2;border:1px solid #eee9d8;border-radius:12px;
+  padding:13px 16px;margin:.65em 0;}
+body>section .mmx-evib ul{padding-left:1.15em;}
+/* 一句话主旨：去左侧竖线 + 收敛字号 */
+.mmx-oneline{font-size:.98rem;line-height:1.85;color:#3a352c;margin:.2em 0 0;
+  padding:12px 16px;background:#fbfaf4;border-left:none;border-radius:12px;}
+/* 核心观点 / 验证清单：虚线分隔 + 收紧行距 */
+.mmx-views li{padding:.5em 0 .5em 0;font-size:.9rem;line-height:1.88;}
+/* 原文金句 */
+.mmx-qlist li{padding:.6em 0 .6em 2.2em;}
+.mmx-qlist blockquote{font-size:.89rem;line-height:1.9;}
+.mmx-qlist cite{font-size:.72rem;}
+/* 核心追问：问句加重、答句放松 */
+.mmx-qa{margin:.7em 0;padding-left:12px;border-left:3px solid #e5dfcd;}
+.mmx-qa .mmx-q{font-size:.9rem;font-weight:700;color:#2f3a33;line-height:1.8;margin:0 0 .25em;}
+.mmx-qa .mmx-a{font-size:.88rem;line-height:1.95;color:#4a4436;margin:0;}
+
+/* ── AI 问书专项：外层容器透明，问答条目才是阅读单元 ── */
+#mod-aiask .mmx-ask{background:transparent;border:0;border-radius:0;padding:0;margin:0;}
+#mod-aiask .aiqa-item{margin:.6em 0;padding:14px 16px 15px;}
+#mod-aiask .aiqa-item h3{font:700 .93rem/1.7 var(--serif);color:#2f5b49;margin:0 0 .4em;
+  padding:0;border:0;}
+#mod-aiask .aiqa-item h3:before{content:"问　";color:#bf8247;font-weight:700;}
+#mod-aiask .aiqa-item p{font-size:.88rem;line-height:1.95;color:#4a4436;margin:.4em 0;}
+#mod-aiask .aiqa-item ul{margin:.35em 0;padding-left:1.1em;}
+#mod-aiask .aiqa-item li{font-size:.87rem;line-height:1.88;margin:.18em 0;color:#4a4436;}
+#mod-aiask .aiqa-item li::marker{color:#c0a06a;}
+/* 逐章追问（details 形态）：摘要行也收敛 */
+.mmx-ask>summary{font-size:.87rem;line-height:1.7;padding:2px 0;}
+.mmx-askbody{font-size:.88rem;line-height:1.9;}
+
+/* AI领读章内：AI 大纲原生深层样式（字号同步收小） */
+.merged-guide .sec{margin:9px 0 12px;padding-left:6px;border-left:2px solid #e5e0d6}
+.merged-guide .sec h4{font:600 .93rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.5em 0 .25em}
+.merged-guide ul.point{margin:.25em 0;padding-left:20px}
+.merged-guide ul.point>li{margin:.3em 0}
+.merged-guide ul.quote{margin:.22em 0 .22em 20px;padding-left:18px;list-style:none}
+.merged-guide ul.quote::before{content:"原句";display:block;font-size:.7rem;color:#bf8247;
+  letter-spacing:.1em;margin:.12em 0 .08em;font-weight:600}
+.merged-guide ul.quote.quote-node{margin-top:.45em;padding-top:.35em;border-top:1px dashed #eadfc9}
 .merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
-.merged-guide ul.quote>li{color:#4a4436;font-size:.93rem;margin:.2em 0;padding-left:10px;border-left:2px solid #bf8247}
-/* 模块内子内容（AI领读除外，它有专属深层样式）：左缩进 + 正文与标题分层 */
-section.mmx-mod>ul,section.mmx-mod>ol,section.mmx-mod>div,
-section.mmx-mod>p:not(.mmx-mod-note),
-section.card:not(.merged-guide)>ul,section.card:not(.merged-guide)>ol,
-section.card:not(.merged-guide)>div,section.card:not(.merged-guide)>p:not(.mmx-mod-note){
-  padding-left:16px;}
-section.mmx-mod li,section.mmx-mod p:not(.mmx-mod-note),
-section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mod-note){
-  color:#4a4436;font-size:.93rem;line-height:1.78;}
+.merged-guide ul.quote>li{color:#4a4436;font-size:.88rem;line-height:1.85;margin:.18em 0;padding-left:10px;border-left:2px solid #bf8247}
 /* 核心观点初判：外链 mmx-guide.css 的「观点N」前缀是绝对定位，在本页版式里和标题叠字，
    且此前要求去掉「观点1/2/3」前缀 —— 这里整条关掉（外链 CSS 不在页面内，只能内联覆盖）。 */
 .mmx-views li{padding-left:0 !important;}
 .mmx-views li:before,.mmx-views li::before{
   content:none !important;display:none !important;counter-increment:none !important;}
+@media(max-width:720px){
+  body{padding:0 12px 60px;font-size:14.5px;}
+  body>section.mmx-mod,body>section.card{padding:15px 16px;border-radius:14px;}
+  .nav{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
 </style>
 </head>
 <body>
@@ -54,8 +116,8 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
   <h1>《大英博物馆世界简史》</h1>
   <div class="chips"><span class="chip">通读 + 精读</span><span class="chip">AI领读</span><span class="chip">AI 生产</span></div>
 </header>
-<nav class="nav"><a class="navlink" href="#mod-svg">全书结构导图</a><a class="navlink" href="#mod-oneline">一句话主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a><a class="navlink" href="#mod-coreask">核心追问</a><a class="navlink" href="#mod-aiask">AI 问书</a><a class="navlink" href="#mod-higher">更高维度</a><a class="navlink" href="#mod-verify">阅读验证</a><a class="navlink" href="#mod-thennow">当年与今天</a></nav>
-<section class="mmx-svgwrap" id="mod-svg"><svg class="mmx-svg" viewBox="0 0 1120 530" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="大英博物馆世界简史 全书精读">
+<nav class="nav"><a class="navlink" href="#mod-svg">结构导图</a><a class="navlink" href="#mod-oneline">核心主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a><a class="navlink" href="#mod-coreask">核心追问</a><a class="navlink" href="#mod-aiask">AI 问书</a><a class="navlink" href="#mod-higher">更高维度</a><a class="navlink" href="#mod-verify">阅读验证</a><a class="navlink" href="#mod-thennow">往日今时</a></nav>
+<section class="mmx-svgwrap" id="mod-svg"><h2>结构导图</h2><svg class="mmx-svg" viewBox="0 0 1120 530" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="大英博物馆世界简史 全书精读">
 <rect x="0" y="0" width="1120" height="530" fill="none"/>
 <style>.mmx-svg text{font-family:"Noto Serif SC",Georgia,serif}.mmx-svg .t1{font-size:15px;fill:#2f2a24;font-weight:600}.mmx-svg .t2{font-size:12px;fill:#5c5347}.mmx-svg .t3{font-size:10.5px;fill:#8a8272}.mmx-svg .rt{font-size:13px;fill:#f7f3ea;font-weight:600}.mmx-svg .ln{stroke:#cfc6b4;stroke-width:1.4;fill:none}</style>
 <rect x="28" y="221" width="262" height="52" rx="10" fill="#3d372e"/>
@@ -118,7 +180,7 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
 <text class="t2" x="714" y="437">产品的普及。</text>
 <path class="ln" d="M692 433 L700 433"/>
 </svg></section>
-<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">一句话主旨</h2><p class="mmx-mod-note">本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。</p><p class="mmx-oneline">通过人类不同历史阶段遗留的100件文物，重构跨越两百万年的全球物质文化与人类发展史。</p></section>
+<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">核心主旨</h2><p class="mmx-oneline">通过人类不同历史阶段遗留的100件文物，重构跨越两百万年的全球物质文化与人类发展史。</p></section>
 <section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" id="mod-merged_guide"><h2 id="merged-guide-title">AI领读</h2>
 <style>
 /* merged_guide 章内：AI 大纲原生深层样式 */
@@ -8810,12 +8872,12 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
       </div></details>
   </div>
 </section>
-<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点初判</h2><p class="mmx-mod-note">按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。</p><ul class="mmx-views"><li><b>人类起源与原始艺术</b>——从非洲起源到冰河时代，梳理早期石器与具象艺术如何标志人之所以为人。</li><li><b>农业革命与社群定居</b>——聚焦独立萌芽的农业与陶器制作，展现食物富余如何重塑人类社群与生活方式。</li><li><b>城市崛起与文字之初</b>——记录大河流域首批城市的诞生、阶级分化、行政管理及早期文字的出现。</li><li><b>帝国扩张与贸易网络</b>——呈现旧世界新势力的崛起、欧亚美洲的帝国缔造、货币流通及跨区域贸易网络的形成。</li><li><b>信仰兴起与宫廷秘密</b>——探讨宗教信仰的大规模确立、丝绸之路的文化交融，以及王室贵族的奢华统治与地位象征。</li><li><b>全球探险与帝国冲突</b>——描绘地理大发现后的第一次经济全球化、跨大西洋奴隶贸易、宗教改革与殖民扩张。</li><li><b>工业转型与现代世界</b>——聚焦工业革命带来的批量生产、大众宣传、意识形态冲突与当代科技产品的普及。</li></ul></section>
-<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句 · 持续积累</h2><p class="mmx-mod-note">以下原句取自本书 AI 大纲落库的原文摘录（book_outline.quote），按大纲顺序节选，非 AI 生成；更多见逐章深读页。</p><ol class="mmx-qlist"><li><blockquote>「这些物品应尽可能公平地选自全球不同地区，尽可能多方面地展现那些已被证明切实可行的人类经验。」</blockquote><cite>序 不可能完成的任务</cite></li><li><blockquote>「它们必须在收录伟大艺术品的同时也包含日常生活的必需品。」</blockquote><cite>序 不可能完成的任务</cite></li><li><blockquote>「用5件文物分别展现某一时间点上的五种景象。」</blockquote><cite>序 不可能完成的任务</cite></li><li><blockquote>「博物馆工作人员对这一情况心存疑虑，但BBC的同仁们十分自信。」</blockquote><cite>序 不可能完成的任务</cite></li><li><blockquote>「他们认为，想象是一种特殊的欣赏方式，听众能对文物自发地展开讨论，从而创造出属于自己的历史。」</blockquote><cite>序 不可能完成的任务</cite></li><li><blockquote>「这些信息有关民族与地区，环境与接触，历史中的不同时刻以及我们对其做出反思的当下。」</blockquote><cite>导言 来自过去的讯息</cite></li><li><blockquote>「例如，1939年的政治事件决定了人们对萨顿胡遗址的发掘与解读。」</blockquote><cite>导言 来自过去的讯息</cite></li><li><blockquote>「罗塞塔石碑(以及其他一些物品)是英国与拿破仑治下的法国进行艰苦斗争的记录。」</blockquote><cite>导言 来自过去的讯息</cite></li><li><blockquote>「美国独立战争在书中通过一张美洲土著所绘制的鹿皮地图这一独特视角展开。」</blockquote><cite>导言 来自过去的讯息</cite></li><li><blockquote>「例如，在英国方面，我们对库克船长的探险队与澳大利亚土著在植物学湾的第一次相遇有科学记载及船长日志为证，而在澳大利亚方面，他们仅有一面木制盾牌。」</blockquote><cite>导言 来自过去的讯息</cite></li></ol></section>
-<section class="mmx-mod" aria-labelledby="coreask" id="mod-coreask"><h2 id="coreask">核心追问（来自深读）</h2><p class="mmx-mod-note">跨章主题的深读追问，由模型基于全书大纲与原文摘录撰写；逐章的追问收在每个章条目里。</p><div class="mmx-qa"><p class="mmx-q">这本书真正想回答的问题是什么？我用一句话说清了吗</p><p class="mmx-a">基于大纲，本书共 122 章，主线：《序 不可能完成的任务》 → 《导言 来自过去的讯息》 → 《第一部分 人之所以为人》 … 《100 太阳能灯具与充电器》。就「核心问题」而言，目前的（待验证）判断是：大英博物馆自1753年成立以来，一直致力于收集全球文物。。这是大纲条目推断，未亲读正文，读后请回原文核对。</p></div><div class="mmx-qa"><p class="mmx-q">哪个判断我最不确定、需要回到原文哪一节验证？ 目前最不确定的是第 100 件（太阳能灯具）的论证链条，以及各项数字的原文表述；须亲读后自答</p><p class="mmx-a">目前最需回原文验证的是《50 传丝公主画版》——大纲里它涉及「《传丝公主传奇》是历史上最重大的一次技术盗窃案的儿童版解释」，与初读时的判断可能有张力，建议读到这里专门核对。（大纲推断，未亲读）</p></div><div class="mmx-qa"><p class="mmx-q">如果只能把一条洞见讲给三个月后的自己，是哪条？为什么</p><p class="mmx-a">若只留一条，我会选《序 不可能完成的任务》里的「大英博物馆自1753年成立以来，一直致力于收集全球文物。」：它把全书最底层的判断说清了，三个月后回看仍最经得起检验。（基于大纲条目，未亲读，读后确认）</p></div></section>
-<section class="mmx-mod" aria-labelledby="aiask" id="mod-aiask"><h2 id="aiask">AI 问书</h2><p class="mmx-mod-note">下方内容为本书级 AI 问书整理，由云端 AI 阅读流程基于本书大纲、章节锚点与热门划线生成。</p><div class="mmx-qa"><p class="mmx-q">“历史由胜利者书写，失败者只能通过物品讲述”——这本书怎么靠物品补回失败者的声音？</p><p class="mmx-a">书中核心方法正在于此：远征、王朝留下文字，而被征服部落、普通工匠只留下器物。比如“早期写字板”记的是啤酒配给与政府机构诞生，“玉斧”泄露史前人对形状的想象——这些不是胜利者写的，是沉默者“做”出来的。MacGregor 用100件实物把“谁留下东西谁就被记住”反转成“谁的东西还在谁就还在说话”。</p></div><div class="mmx-qa"><p class="mmx-q">“用物品讲述历史，不能缺少诗人”——为什么博物馆叙事要请诗人？</p><p class="mmx-a">书中把雪莱《奥兹曼迪亚斯》刻进对法老雕像的解读，也引诗人面对文物的感慨。物品本身不叙事，意义由人赋予；诗人的作用是把冷器物接回情感与人类处境。MacGregor 借诗人提醒：文物不是考据终点，而是与今日之我对话的起点——“重访儿时博物馆，物品一如往昔，人已大变”正是这层意思。</p></div></section>
-<section class="mmx-mod" aria-labelledby="higher" id="mod-higher"><h2 id="higher">用更高维度的知识看这本书</h2><p class="mmx-mod-note">下方内容由云端 AI 阅读流程生成：把本书放回知识史与理论框架中重读，区分书中主张、外部证据与综合分析。</p><p>【书中主张】把本书放回“物质文化史/全球史”谱系——区别于传统的政治史编年，它承继布罗代尔“长时段”与物质文化研究，用器物串联两百万年：物品是跨越胜利者叙事、打捞沉默者声音的媒介。【外部证据】可对照考古学“物质性（materiality）”理论——物不仅是史料，更是行动者；【综合分析】MacGregor 作为大英博物馆馆长，其“全球遗产”立场隐含帝国收藏的正当化叙事，读者需同时读批评者（如文物归还论）方能平衡。</p><p>【书中主张】“埃及方尖碑散落全球既是殖民记忆，也提醒这是共同遗产”。【外部证据】可对照“去殖民博物馆”争论——希腊要求帕特农雕塑归还，与书中“属于世界文化”说辞张力明显；【综合分析】本书的局限恰在“大英视角”：100件多为大英馆藏，全球史被悄悄等同“大英曾收藏的世界”。其框架开阔，立场却自带帝国主义余温，读时须识此底色。</p></section>
-<section class="mmx-mod" aria-labelledby="verify" id="mod-verify"><h2 id="verify">阅读时要验证的问题</h2><p class="mmx-mod-note">下方由云端 AI 阅读流程生成：读时需核对的原文、数字与论点（关键数据出处、个案代表性、类比限度）。</p><ul class="mmx-views"><li>“世界上现存第一批陶罐诞生于日本（绳纹陶器，约1.6万年前）”应核对考古定年，绳纹陶确早，但“第一批”的“世界”范围表述需比对近东更早陶器（如中东）的研究结论。</li><li>“早期写字板记载啤酒与政府机构诞生”应核对具体泥板（如乌鲁克时期）释读，确认“啤酒配给”与“官僚起源”的互证是否成立。</li><li>书中100件藏品多为大英博物馆馆藏，应核对各件出土地与现存地，注意部分涉及殖民掠夺争议（如贝宁青铜、帕特农雕塑），引用须标注来源与归属争议。</li></ul></section>
-<section class="mmx-mod" aria-labelledby="thennow" id="mod-thennow"><h2 id="thennow">当年与今天 · 初步对照</h2><p class="mmx-mod-note">下方由云端 AI 阅读流程生成：区分作者当年所能知晓与后来才显现的事实，给出今日可迁移的启发。</p><p>MacGregor 写于2010年BBC系列，彼时“全球史”正取代欧洲中心叙事，大英也借节目软化其帝国收藏的争议。作者当年能做的，是用馆藏把人类连成一条两百万年的线——野心在“共同遗产”的温情。</p><p>今天文物归还（贝宁、帕特农、埃及）运动高涨，书中“属于世界”的暧昧立场更显尴尬。可迁移的启发：物品确实会说话，但“谁在替它说话、替谁说话”仍是真问题。读这本书，既要学它“从一把石斧看人性”，也要问那把石斧为何在伦敦。</p></section>
+<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点</h2><ul class="mmx-views"><li><b>人类起源与原始艺术</b>——从非洲起源到冰河时代，梳理早期石器与具象艺术如何标志人之所以为人。</li><li><b>农业革命与社群定居</b>——聚焦独立萌芽的农业与陶器制作，展现食物富余如何重塑人类社群与生活方式。</li><li><b>城市崛起与文字之初</b>——记录大河流域首批城市的诞生、阶级分化、行政管理及早期文字的出现。</li><li><b>帝国扩张与贸易网络</b>——呈现旧世界新势力的崛起、欧亚美洲的帝国缔造、货币流通及跨区域贸易网络的形成。</li><li><b>信仰兴起与宫廷秘密</b>——探讨宗教信仰的大规模确立、丝绸之路的文化交融，以及王室贵族的奢华统治与地位象征。</li><li><b>全球探险与帝国冲突</b>——描绘地理大发现后的第一次经济全球化、跨大西洋奴隶贸易、宗教改革与殖民扩张。</li><li><b>工业转型与现代世界</b>——聚焦工业革命带来的批量生产、大众宣传、意识形态冲突与当代科技产品的普及。</li></ul></section>
+<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句</h2><ol class="mmx-qlist"><li><blockquote>「这些物品应尽可能公平地选自全球不同地区，尽可能多方面地展现那些已被证明切实可行的人类经验。」</blockquote><cite>序 不可能完成的任务</cite></li><li><blockquote>「它们必须在收录伟大艺术品的同时也包含日常生活的必需品。」</blockquote><cite>序 不可能完成的任务</cite></li><li><blockquote>「用5件文物分别展现某一时间点上的五种景象。」</blockquote><cite>序 不可能完成的任务</cite></li><li><blockquote>「博物馆工作人员对这一情况心存疑虑，但BBC的同仁们十分自信。」</blockquote><cite>序 不可能完成的任务</cite></li><li><blockquote>「他们认为，想象是一种特殊的欣赏方式，听众能对文物自发地展开讨论，从而创造出属于自己的历史。」</blockquote><cite>序 不可能完成的任务</cite></li><li><blockquote>「这些信息有关民族与地区，环境与接触，历史中的不同时刻以及我们对其做出反思的当下。」</blockquote><cite>导言 来自过去的讯息</cite></li><li><blockquote>「例如，1939年的政治事件决定了人们对萨顿胡遗址的发掘与解读。」</blockquote><cite>导言 来自过去的讯息</cite></li><li><blockquote>「罗塞塔石碑(以及其他一些物品)是英国与拿破仑治下的法国进行艰苦斗争的记录。」</blockquote><cite>导言 来自过去的讯息</cite></li><li><blockquote>「美国独立战争在书中通过一张美洲土著所绘制的鹿皮地图这一独特视角展开。」</blockquote><cite>导言 来自过去的讯息</cite></li><li><blockquote>「例如，在英国方面，我们对库克船长的探险队与澳大利亚土著在植物学湾的第一次相遇有科学记载及船长日志为证，而在澳大利亚方面，他们仅有一面木制盾牌。」</blockquote><cite>导言 来自过去的讯息</cite></li></ol></section>
+<section class="mmx-mod" aria-labelledby="coreask" id="mod-coreask"><h2 id="coreask">核心追问</h2><div class="mmx-qa"><p class="mmx-q">这本书真正想回答的问题是什么？我用一句话说清了吗</p><p class="mmx-a">基于大纲，本书共 122 章，主线：《序 不可能完成的任务》 → 《导言 来自过去的讯息》 → 《第一部分 人之所以为人》 … 《100 太阳能灯具与充电器》。就「核心问题」而言，目前的（待验证）判断是：大英博物馆自1753年成立以来，一直致力于收集全球文物。。这是大纲条目推断，未亲读正文，读后请回原文核对。</p></div><div class="mmx-qa"><p class="mmx-q">哪个判断我最不确定、需要回到原文哪一节验证？ 目前最不确定的是第 100 件（太阳能灯具）的论证链条，以及各项数字的原文表述；须亲读后自答</p><p class="mmx-a">目前最需回原文验证的是《50 传丝公主画版》——大纲里它涉及「《传丝公主传奇》是历史上最重大的一次技术盗窃案的儿童版解释」，与初读时的判断可能有张力，建议读到这里专门核对。（大纲推断，未亲读）</p></div><div class="mmx-qa"><p class="mmx-q">如果只能把一条洞见讲给三个月后的自己，是哪条？为什么</p><p class="mmx-a">若只留一条，我会选《序 不可能完成的任务》里的「大英博物馆自1753年成立以来，一直致力于收集全球文物。」：它把全书最底层的判断说清了，三个月后回看仍最经得起检验。（基于大纲条目，未亲读，读后确认）</p></div></section>
+<section class="mmx-mod" aria-labelledby="aiask" id="mod-aiask"><h2 id="aiask">AI 问书</h2><div class="mmx-qa"><p class="mmx-q">“历史由胜利者书写，失败者只能通过物品讲述”——这本书怎么靠物品补回失败者的声音？</p><p class="mmx-a">书中核心方法正在于此：远征、王朝留下文字，而被征服部落、普通工匠只留下器物。比如“早期写字板”记的是啤酒配给与政府机构诞生，“玉斧”泄露史前人对形状的想象——这些不是胜利者写的，是沉默者“做”出来的。MacGregor 用100件实物把“谁留下东西谁就被记住”反转成“谁的东西还在谁就还在说话”。</p></div><div class="mmx-qa"><p class="mmx-q">“用物品讲述历史，不能缺少诗人”——为什么博物馆叙事要请诗人？</p><p class="mmx-a">书中把雪莱《奥兹曼迪亚斯》刻进对法老雕像的解读，也引诗人面对文物的感慨。物品本身不叙事，意义由人赋予；诗人的作用是把冷器物接回情感与人类处境。MacGregor 借诗人提醒：文物不是考据终点，而是与今日之我对话的起点——“重访儿时博物馆，物品一如往昔，人已大变”正是这层意思。</p></div></section>
+<section class="mmx-mod" aria-labelledby="higher" id="mod-higher"><h2 id="higher">更高维度</h2><p>【书中主张】把本书放回“物质文化史/全球史”谱系——区别于传统的政治史编年，它承继布罗代尔“长时段”与物质文化研究，用器物串联两百万年：物品是跨越胜利者叙事、打捞沉默者声音的媒介。【外部证据】可对照考古学“物质性（materiality）”理论——物不仅是史料，更是行动者；【综合分析】MacGregor 作为大英博物馆馆长，其“全球遗产”立场隐含帝国收藏的正当化叙事，读者需同时读批评者（如文物归还论）方能平衡。</p><p>【书中主张】“埃及方尖碑散落全球既是殖民记忆，也提醒这是共同遗产”。【外部证据】可对照“去殖民博物馆”争论——希腊要求帕特农雕塑归还，与书中“属于世界文化”说辞张力明显；【综合分析】本书的局限恰在“大英视角”：100件多为大英馆藏，全球史被悄悄等同“大英曾收藏的世界”。其框架开阔，立场却自带帝国主义余温，读时须识此底色。</p></section>
+<section class="mmx-mod" aria-labelledby="verify" id="mod-verify"><h2 id="verify">阅读验证</h2><ul class="mmx-views"><li>“世界上现存第一批陶罐诞生于日本（绳纹陶器，约1.6万年前）”应核对考古定年，绳纹陶确早，但“第一批”的“世界”范围表述需比对近东更早陶器（如中东）的研究结论。</li><li>“早期写字板记载啤酒与政府机构诞生”应核对具体泥板（如乌鲁克时期）释读，确认“啤酒配给”与“官僚起源”的互证是否成立。</li><li>书中100件藏品多为大英博物馆馆藏，应核对各件出土地与现存地，注意部分涉及殖民掠夺争议（如贝宁青铜、帕特农雕塑），引用须标注来源与归属争议。</li></ul></section>
+<section class="mmx-mod" aria-labelledby="thennow" id="mod-thennow"><h2 id="thennow">往日今时</h2><p>MacGregor 写于2010年BBC系列，彼时“全球史”正取代欧洲中心叙事，大英也借节目软化其帝国收藏的争议。作者当年能做的，是用馆藏把人类连成一条两百万年的线——野心在“共同遗产”的温情。</p><p>今天文物归还（贝宁、帕特农、埃及）运动高涨，书中“属于世界”的暧昧立场更显尴尬。可迁移的启发：物品确实会说话，但“谁在替它说话、替谁说话”仍是真问题。读这本书，既要学它“从一把石斧看人性”，也要问那把石斧为何在伦敦。</p></section>
 </body>
 </html>

@@ -6,46 +6,108 @@
 <title>《一地鸡毛（典藏版）》｜通读 · 精读</title>
 <link rel="stylesheet" href="../../../assets/css/reading-overview.css"><link rel="stylesheet" href="../../../assets/css/mmx-guide.css"><link rel="stylesheet" href="../../../assets/css/reading-outline.css">
 <style>
-/* 合并页外壳 */
-body{max-width:960px;margin:0 auto;padding:0 18px 80px;}
-.combined-head{padding:34px 0 18px;border-bottom:1px solid #e7e0d2;margin-bottom:8px;}
-.combined-head h1{font-size:26px;margin:0 0 10px;}
+/* ── 外壳与全局阅读节奏 ── */
+body{max-width:880px;margin:0 auto;padding:0 18px 80px;
+  font-size:15px;line-height:1.88;color:#3b453e;background:#f7f8f3;
+  -webkit-font-smoothing:antialiased;}
+.combined-head{padding:30px 0 16px;border-bottom:1px solid #e7e0d2;margin-bottom:4px;}
+.combined-head h1{font:700 23px/1.35 var(--serif);margin:0 0 8px;color:#244b40;}
+.combined-head .eyebrow{font-size:.72rem;letter-spacing:.14em;margin:0 0 6px;}
+.chips{margin:8px 0 0;}
+.chip{font-size:.72rem;padding:2px 10px;}
 /* 锚点导航：固定一排 4 个，等宽对齐 */
-.nav{position:sticky;top:0;z-index:20;background:rgba(255,253,248,.96);backdrop-filter:blur(6px);
-  border-bottom:1px solid #ece4d4;padding:10px 0;margin:14px 0 26px;display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;
-  box-shadow:0 2px 10px rgba(120,100,60,.06);}
-.navlink{font-size:12.5px;color:#5d5443;text-decoration:none;background:#f6f1e6;border:1px solid #e7ddca;
-  border-radius:7px;padding:4px 6px;text-align:center;white-space:nowrap;overflow:hidden;
-  text-overflow:ellipsis;}
-section{scroll-margin-top:64px;}
-/* 一句话主旨：去左侧竖线 */
-.mmx-oneline{border-left:none;padding-left:18px;}
-/* AI领读章内：AI 大纲原生深层样式 */
-.merged-guide .sec{margin:10px 0 14px;padding-left:6px;border-left:2px solid #e5e0d6}
-.merged-guide .sec h4{font:600 .98rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.6em 0 .3em}
-.merged-guide ul.point{margin:.3em 0;padding-left:20px}
-.merged-guide ul.point>li{margin:.35em 0}
-.merged-guide ul.quote{margin:.25em 0 .25em 20px;padding-left:18px;list-style:none}
-.merged-guide ul.quote::before{content:"原句";display:block;font-size:.72rem;color:#bf8247;
-  letter-spacing:.1em;margin:.15em 0 .1em;font-weight:600}
-.merged-guide ul.quote.quote-node{margin-top:.5em;padding-top:.4em;border-top:1px dashed #eadfc9}
+.nav{position:sticky;top:0;z-index:20;background:rgba(247,248,243,.96);backdrop-filter:blur(6px);
+  border-bottom:1px solid #ece4d4;padding:10px 0;margin:12px 0 20px;display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;
+  box-shadow:0 2px 10px rgba(120,100,60,.05);}
+.navlink{font-size:12px;color:#5d5443;text-decoration:none;background:#fdfbf3;border:1px solid #e8e2d2;
+  border-radius:8px;padding:6px 4px;text-align:center;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;transition:background .15s,color .15s;}
+.navlink:hover{background:#f2efe2;color:#244b40;}
+section{scroll-margin-top:62px;}
+
+/* ── 统一卡片：所有顶层模块（AI领读 / AI 问答 / 其余）一视同仁 ── */
+body>section.mmx-mod,body>section.card,body>section.mmx-svgwrap{
+  background:#fffdf6;border:1px solid #e8e4d5;border-radius:16px;
+  padding:18px 22px;margin:18px 0;
+  box-shadow:0 1px 3px rgba(110,95,60,.05);}
+body>section.mmx-mod>*:first-child,body>section.card>*:first-child,
+body>section.mmx-svgwrap>*:first-child{margin-top:0}
+body>section.mmx-mod>*:last-child,body>section.card>*:last-child,
+body>section.mmx-svgwrap>*:last-child{margin-bottom:0}
+/* 结构导图：图本身留白居中，不与正文抢宽 */
+body>section.mmx-svgwrap>svg.mmx-svg{display:block;width:100%;height:auto;margin:2px auto 0;}
+/* 模块标题：统一大小、弱强调，不与正文抢注意力 */
+body>section.mmx-mod>h2,body>section.card>h2{
+  font:700 1.04rem/1.5 var(--serif);color:#244b40;margin:0 0 11px;
+  padding-left:10px;border-left:3px solid #bf8247;letter-spacing:.01em;}
+/* 正文：字号收小、行距放宽、段间距舒服 */
+body>section.mmx-mod p,body>section.card p,
+body>section.mmx-mod li,body>section.card li{
+  font-size:.9rem;line-height:1.92;color:#4a4436;}
+body>section.mmx-mod p,body>section.card p{margin:.5em 0;}
+body>section.mmx-mod>ul,body>section.mmx-mod>ol,body>section.mmx-mod>div,
+body>section.mmx-mod>p:not(.mmx-mod-note),
+body>section.card:not(.merged-guide)>ul,body>section.card:not(.merged-guide)>ol,
+body>section.card:not(.merged-guide)>div,body>section.card:not(.merged-guide)>p:not(.mmx-mod-note){
+  padding-left:14px;}
+/* 模块说明小字：弱化不抢眼 */
+.mmx-mod-note{font-size:.75rem;color:#8d8878;margin:.1em 0 .75em;line-height:1.7;}
+
+/* ── 内部块统一：卡片里不再套深卡片，一律浅底子块 ── */
+body>section .mmx-pending,body>section .mmx-evib,body>section .aiqa-item{
+  background:#fbfaf2;border:1px solid #eee9d8;border-radius:12px;
+  padding:13px 16px;margin:.65em 0;}
+body>section .mmx-evib ul{padding-left:1.15em;}
+/* 一句话主旨：去左侧竖线 + 收敛字号 */
+.mmx-oneline{font-size:.98rem;line-height:1.85;color:#3a352c;margin:.2em 0 0;
+  padding:12px 16px;background:#fbfaf4;border-left:none;border-radius:12px;}
+/* 核心观点 / 验证清单：虚线分隔 + 收紧行距 */
+.mmx-views li{padding:.5em 0 .5em 0;font-size:.9rem;line-height:1.88;}
+/* 原文金句 */
+.mmx-qlist li{padding:.6em 0 .6em 2.2em;}
+.mmx-qlist blockquote{font-size:.89rem;line-height:1.9;}
+.mmx-qlist cite{font-size:.72rem;}
+/* 核心追问：问句加重、答句放松 */
+.mmx-qa{margin:.7em 0;padding-left:12px;border-left:3px solid #e5dfcd;}
+.mmx-qa .mmx-q{font-size:.9rem;font-weight:700;color:#2f3a33;line-height:1.8;margin:0 0 .25em;}
+.mmx-qa .mmx-a{font-size:.88rem;line-height:1.95;color:#4a4436;margin:0;}
+
+/* ── AI 问书专项：外层容器透明，问答条目才是阅读单元 ── */
+#mod-aiask .mmx-ask{background:transparent;border:0;border-radius:0;padding:0;margin:0;}
+#mod-aiask .aiqa-item{margin:.6em 0;padding:14px 16px 15px;}
+#mod-aiask .aiqa-item h3{font:700 .93rem/1.7 var(--serif);color:#2f5b49;margin:0 0 .4em;
+  padding:0;border:0;}
+#mod-aiask .aiqa-item h3:before{content:"问　";color:#bf8247;font-weight:700;}
+#mod-aiask .aiqa-item p{font-size:.88rem;line-height:1.95;color:#4a4436;margin:.4em 0;}
+#mod-aiask .aiqa-item ul{margin:.35em 0;padding-left:1.1em;}
+#mod-aiask .aiqa-item li{font-size:.87rem;line-height:1.88;margin:.18em 0;color:#4a4436;}
+#mod-aiask .aiqa-item li::marker{color:#c0a06a;}
+/* 逐章追问（details 形态）：摘要行也收敛 */
+.mmx-ask>summary{font-size:.87rem;line-height:1.7;padding:2px 0;}
+.mmx-askbody{font-size:.88rem;line-height:1.9;}
+
+/* AI领读章内：AI 大纲原生深层样式（字号同步收小） */
+.merged-guide .sec{margin:9px 0 12px;padding-left:6px;border-left:2px solid #e5e0d6}
+.merged-guide .sec h4{font:600 .93rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.5em 0 .25em}
+.merged-guide ul.point{margin:.25em 0;padding-left:20px}
+.merged-guide ul.point>li{margin:.3em 0}
+.merged-guide ul.quote{margin:.22em 0 .22em 20px;padding-left:18px;list-style:none}
+.merged-guide ul.quote::before{content:"原句";display:block;font-size:.7rem;color:#bf8247;
+  letter-spacing:.1em;margin:.12em 0 .08em;font-weight:600}
+.merged-guide ul.quote.quote-node{margin-top:.45em;padding-top:.35em;border-top:1px dashed #eadfc9}
 .merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
-.merged-guide ul.quote>li{color:#4a4436;font-size:.93rem;margin:.2em 0;padding-left:10px;border-left:2px solid #bf8247}
-/* 模块内子内容（AI领读除外，它有专属深层样式）：左缩进 + 正文与标题分层 */
-section.mmx-mod>ul,section.mmx-mod>ol,section.mmx-mod>div,
-section.mmx-mod>p:not(.mmx-mod-note),
-section.card:not(.merged-guide)>ul,section.card:not(.merged-guide)>ol,
-section.card:not(.merged-guide)>div,section.card:not(.merged-guide)>p:not(.mmx-mod-note){
-  padding-left:16px;}
-section.mmx-mod li,section.mmx-mod p:not(.mmx-mod-note),
-section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mod-note){
-  color:#4a4436;font-size:.93rem;line-height:1.78;}
+.merged-guide ul.quote>li{color:#4a4436;font-size:.88rem;line-height:1.85;margin:.18em 0;padding-left:10px;border-left:2px solid #bf8247}
 /* 核心观点初判：外链 mmx-guide.css 的「观点N」前缀是绝对定位，在本页版式里和标题叠字，
    且此前要求去掉「观点1/2/3」前缀 —— 这里整条关掉（外链 CSS 不在页面内，只能内联覆盖）。 */
 .mmx-views li{padding-left:0 !important;}
 .mmx-views li:before,.mmx-views li::before{
   content:none !important;display:none !important;counter-increment:none !important;}
+@media(max-width:720px){
+  body{padding:0 12px 60px;font-size:14.5px;}
+  body>section.mmx-mod,body>section.card{padding:15px 16px;border-radius:14px;}
+  .nav{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
 </style>
 </head>
 <body>
@@ -54,8 +116,8 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
   <h1>《一地鸡毛（典藏版）》</h1>
   <div class="chips"><span class="chip">通读 + 精读</span><span class="chip">AI领读</span><span class="chip">AI 生产</span></div>
 </header>
-<nav class="nav"><a class="navlink" href="#mod-svg">全书结构导图</a><a class="navlink" href="#mod-oneline">一句话主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a><a class="navlink" href="#mod-coreask">核心追问</a><a class="navlink" href="#mod-aiask">AI 问书</a><a class="navlink" href="#mod-higher">更高维度</a><a class="navlink" href="#mod-verify">阅读验证</a><a class="navlink" href="#mod-thennow">当年与今天</a></nav>
-<section class="mmx-svgwrap" id="mod-svg"><svg class="mmx-svg" viewBox="0 0 1120 344" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="一地鸡毛（典藏版） 全书精读">
+<nav class="nav"><a class="navlink" href="#mod-svg">结构导图</a><a class="navlink" href="#mod-oneline">核心主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a><a class="navlink" href="#mod-coreask">核心追问</a><a class="navlink" href="#mod-aiask">AI 问书</a><a class="navlink" href="#mod-higher">更高维度</a><a class="navlink" href="#mod-verify">阅读验证</a><a class="navlink" href="#mod-thennow">往日今时</a></nav>
+<section class="mmx-svgwrap" id="mod-svg"><h2>结构导图</h2><svg class="mmx-svg" viewBox="0 0 1120 344" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="一地鸡毛（典藏版） 全书精读">
 <rect x="0" y="0" width="1120" height="344" fill="none"/>
 <style>.mmx-svg text{font-family:"Noto Serif SC",Georgia,serif}.mmx-svg .t1{font-size:15px;fill:#2f2a24;font-weight:600}.mmx-svg .t2{font-size:12px;fill:#5c5347}.mmx-svg .t3{font-size:10.5px;fill:#8a8272}.mmx-svg .rt{font-size:13px;fill:#f7f3ea;font-weight:600}.mmx-svg .ln{stroke:#cfc6b4;stroke-width:1.4;fill:none}</style>
 <rect x="28" y="128" width="262" height="52" rx="10" fill="#3d372e"/>
@@ -90,7 +152,7 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
 <text class="t2" x="714" y="243">以一场钢琴音乐会收束，把此前所有琐碎放进更大的对照里。</text>
 <path class="ln" d="M692 247 L700 247"/>
 </svg></section>
-<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">一句话主旨</h2><p class="mmx-mod-note">本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。</p><p class="mmx-oneline">这批小说反复写同一件事：在单位、村庄、军营这些无法退出的结构里，人靠琐事与周旋换取一点点位置，谁认真谁先受伤。</p></section>
+<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">核心主旨</h2><p class="mmx-oneline">这批小说反复写同一件事：在单位、村庄、军营这些无法退出的结构里，人靠琐事与周旋换取一点点位置，谁认真谁先受伤。</p></section>
 <section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" id="mod-merged_guide"><h2 id="merged-guide-title">AI领读</h2>
 <style>
 /* merged_guide 章内：AI 大纲原生深层样式 */
@@ -1648,12 +1710,12 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
       </div></details>
   </div>
 </section>
-<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点初判</h2><p class="mmx-mod-note">按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。</p><ul class="mmx-views"><li><b>单位里的位置</b>——三篇都写在编制度中分东西、排队、让位，「位置」是最硬的资源。</li><li><b>乡野与旧秩序</b>——口信与头人写乡村的权力与信义，用最朴素的方式讲人情如何结算。</li><li><b>少年与入伍</b>——塔铺与新兵连写年轻人第一次离开家，被组织重新塑形。</li><li><b>尾声随笔</b>——以一场钢琴音乐会收束，把此前所有琐碎放进更大的对照里。</li></ul></section>
-<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句 · 持续积累</h2><p class="mmx-mod-note">以下原句取自本书 AI 大纲落库的原文摘录（book_outline.quote），按大纲顺序节选，非 AI 生成；更多见逐章深读页。</p><ol class="mmx-qlist"><li><blockquote>「小林排到七点十五，把单位的班车给误了。」</blockquote><cite>一地鸡毛</cite></li><li><blockquote>「保姆因嫌小林家工资低，家里饭菜差，早就闹着罢工，要换人家。」</blockquote><cite>一地鸡毛</cite></li><li><blockquote>「现在保姆看着馊豆腐，一点不心疼，还一股脑把责任推给了小林。」</blockquote><cite>一地鸡毛</cite></li><li><blockquote>「老头工作积极性很高，有时不该查水表也来，说来看看水表是否运转正常。」</blockquote><cite>一地鸡毛</cite></li><li><blockquote>「老头一坐下，小林心里就发凉，因为老头一在谁家坐下，就要高谈阔论一番，说说他年轻时候的事。」</blockquote><cite>一地鸡毛</cite></li><li><blockquote>「小林和小林老婆脸都一赤一白的。」</blockquote><cite>一地鸡毛</cite></li><li><blockquote>「小林赶紧到老头子跟前，正色声明，这门洞有没有人偷水他不知道，但他家是决不干这种事，他家虽然穷，但穷有穷的骨气！。」</blockquote><cite>一地鸡毛</cite></li><li><blockquote>「老头子听了他们的话，弹了一下烟灰：“行了，这事就到这里为止了。以前大家偷没有偷，就既往不咎了，以后注意不偷就行了！”。」</blockquote><cite>一地鸡毛</cite></li><li><blockquote>「在单位不愉快，回来就向小林唠叨。」</blockquote><cite>一地鸡毛</cite></li><li><blockquote>「小林说，外边帮不上忙，内里不也帮了？不也向你解释了？解释不也是帮忙？就把老婆劝下了。」</blockquote><cite>一地鸡毛</cite></li></ol></section>
-<section class="mmx-mod" aria-labelledby="coreask" id="mod-coreask"><h2 id="coreask">核心追问（来自深读）</h2><p class="mmx-mod-note">跨章主题的深读追问，由模型基于全书大纲与原文摘录撰写；逐章的追问收在每个章条目里。</p><div class="mmx-qa"><p class="mmx-q">《一地鸡毛》里，一块馊豆腐为什么能引发夫妻大战？争吵真正指向的是什么</p><p class="mmx-a">馊豆腐只是导火索。小林家为一块豆腐从怪保姆吵到夫妻互怼，真正指向的是底层小职员被生计、单位体制与家务琐事反复挤压后，连最日常的善意都被耗尽——尊严在鸡毛蒜皮里一点点磨没。</p></div><div class="mmx-qa"><p class="mmx-q">《单位》的「分梨」与「民意测验」分别暴露了办公室权力运作的哪一面</p><p class="mmx-a">「分梨」是领导借分水果完成一次不动声色的权力排序与服从测试；「民意测验」则是用“群众意见”包装的人事安排，暴露出单位里规则表面民主、实质由上意决定的运作逻辑。</p></div><div class="mmx-qa"><p class="mmx-q">《塔铺》与《新兵连》都写青年找出路，两者的「出路」有何不同</p><p class="mmx-a">《塔铺》的出路是高考——靠读书跳出农门，带着向上的确定性；《新兵连》的出路是入伍提干，却在“表现—被选中”的博弈里把人磨成工具。前者信制度，后者信运气与表演。</p></div></section>
-<section class="mmx-mod" aria-labelledby="aiask" id="mod-aiask"><h2 id="aiask">AI 问书</h2><p class="mmx-mod-note">下方内容为本书级 AI 问书整理，由云端 AI 阅读流程基于本书大纲、章节锚点与热门划线生成。</p><div class="mmx-qa"><p class="mmx-q">刘震云写“一地鸡毛”，想说的真是鸡毛蒜皮吗？</p><p class="mmx-a">表面写小林家一块豆腐馊了、老婆调动、孩子入托、给处长送礼这些琐事，实则写体制与生计如何把一个人从清高磨成圆熟。鸡毛满地不是生活本身，而是理想被日常碾碎后的残渣；小说用最卑微的物事，丈量精神退场的全过程。</p></div><div class="mmx-qa"><p class="mmx-q">小说结尾“打碎鱼缸”有什么寓意？</p><p class="mmx-a">妻子把鱼缸摔碎、金鱼倒进马桶，是全书最狠的一笔：曾经象征体面与小情趣的鱼缸，终究抵不过房租与人事的挤压。它意味着小林一家连最后一点“非功利”的喘息都被清掉，人彻底缴械于生存——浪漫死在一地鸡毛里。</p></div><div class="mmx-qa"><p class="mmx-q">小林从大学生到“会办事”的转变，是成长还是堕落？</p><p class="mmx-a">小说暧昧地把它写成必然：为了老婆调动、孩子进好幼儿园，小林学会排队送礼、巴结处长，良心的不适被生计一笔笔抹平。刘震云不审判，只呈现——当每一步妥协都有理由，堕落就成了“过日子”的同义词，这比直白的批判更冷。</p></div></section>
-<section class="mmx-mod" aria-labelledby="higher" id="mod-higher"><h2 id="higher">用更高维度的知识看这本书</h2><p class="mmx-mod-note">下方内容由云端 AI 阅读流程生成：把本书放回知识史与理论框架中重读，区分书中主张、外部证据与综合分析。</p><p>【书中主张】小说主张日常生活具有一种无声的暴力：当生存压力足够密，理想、清高与原则会被琐碎事务一点点置换，人不是被打败，而是被“磨平”。【外部证据】豆腐馊了、查水表、孩子入托、给领导送礼等情节，构成90年代机关青年最写实的压力清单；刘震云以“新写实”笔法，被评论界归为对理想主义的祛魅。【综合分析】这一主张的锋利在“无敌人”——没有恶人，只有流程与开销，你输给的不是谁，而是一地鸡毛本身。它把体制批判下沉到厨房与走廊，让宏大叙事在油盐里解体。</p><p>【书中主张】书同时主张，所谓“成熟”常是精神缴械的体面说法：小林学会“办事”后获得安稳，却也失去了早年的自己。【外部证据】与《单位》《官场》等篇构成刘震云早期的“官场—单位”序列；学界认为他写的是计划经济向市场转轨中个体的精神折旧。【综合分析】但小说并不提供反抗的样板，它的诚实在于承认多数人只能如此。这种“认了”的姿态，让一地鸡毛既是控诉，也是一代人无奈的自我和解，留白的冷峻比呐喊更持久。</p></section>
-<section class="mmx-mod" aria-labelledby="verify" id="mod-verify"><h2 id="verify">阅读时要验证的问题</h2><p class="mmx-mod-note">下方由云端 AI 阅读流程生成：读时需核对的原文、数字与论点（关键数据出处、个案代表性、类比限度）。</p><ul class="mmx-views"><li>小说以“买豆腐”开场，一块豆腐放馊成为全篇导火索，可核对正文开篇情节。（可核对：豆腐开场）</li><li>小林妻子名为“小李”，靠丈夫单位关系为调动奔走，可核对人物设定与相关情节。（可核对：妻子调动线）</li><li>结尾妻子摔碎鱼缸、金鱼倒入马桶，可核对正文结尾段落。（可核对：鱼缸结局）</li></ul></section>
-<section class="mmx-mod" aria-labelledby="thennow" id="mod-thennow"><h2 id="thennow">当年与今天 · 初步对照</h2><p class="mmx-mod-note">下方由云端 AI 阅读流程生成：区分作者当年所能知晓与后来才显现的事实，给出今日可迁移的启发。</p><p>刘震云写于1991年，他当年能确知的是计划经济尾声单位制对人的裹挟、知识分子“上岸”后的精神落差，以及大城市住房与托幼的真实窘迫；这些是贴着当时社会肌理的观察，因而小林的困境不是编造的喜剧，而是一代体制内青年共同的生存实录。</p><p>但平台经济、996与“上岸”叙事的当代变形，是作者彼时无法预见的；今天读者把小林读成“房奴与考编青年前身”，反而照见结构性困境的延续。后来才显现的，是一地鸡毛从单位制特产，变成了每个普通人都熟悉的生存底噪。</p></section>
+<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点</h2><ul class="mmx-views"><li><b>单位里的位置</b>——三篇都写在编制度中分东西、排队、让位，「位置」是最硬的资源。</li><li><b>乡野与旧秩序</b>——口信与头人写乡村的权力与信义，用最朴素的方式讲人情如何结算。</li><li><b>少年与入伍</b>——塔铺与新兵连写年轻人第一次离开家，被组织重新塑形。</li><li><b>尾声随笔</b>——以一场钢琴音乐会收束，把此前所有琐碎放进更大的对照里。</li></ul></section>
+<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句</h2><ol class="mmx-qlist"><li><blockquote>「小林排到七点十五，把单位的班车给误了。」</blockquote><cite>一地鸡毛</cite></li><li><blockquote>「保姆因嫌小林家工资低，家里饭菜差，早就闹着罢工，要换人家。」</blockquote><cite>一地鸡毛</cite></li><li><blockquote>「现在保姆看着馊豆腐，一点不心疼，还一股脑把责任推给了小林。」</blockquote><cite>一地鸡毛</cite></li><li><blockquote>「老头工作积极性很高，有时不该查水表也来，说来看看水表是否运转正常。」</blockquote><cite>一地鸡毛</cite></li><li><blockquote>「老头一坐下，小林心里就发凉，因为老头一在谁家坐下，就要高谈阔论一番，说说他年轻时候的事。」</blockquote><cite>一地鸡毛</cite></li><li><blockquote>「小林和小林老婆脸都一赤一白的。」</blockquote><cite>一地鸡毛</cite></li><li><blockquote>「小林赶紧到老头子跟前，正色声明，这门洞有没有人偷水他不知道，但他家是决不干这种事，他家虽然穷，但穷有穷的骨气！。」</blockquote><cite>一地鸡毛</cite></li><li><blockquote>「老头子听了他们的话，弹了一下烟灰：“行了，这事就到这里为止了。以前大家偷没有偷，就既往不咎了，以后注意不偷就行了！”。」</blockquote><cite>一地鸡毛</cite></li><li><blockquote>「在单位不愉快，回来就向小林唠叨。」</blockquote><cite>一地鸡毛</cite></li><li><blockquote>「小林说，外边帮不上忙，内里不也帮了？不也向你解释了？解释不也是帮忙？就把老婆劝下了。」</blockquote><cite>一地鸡毛</cite></li></ol></section>
+<section class="mmx-mod" aria-labelledby="coreask" id="mod-coreask"><h2 id="coreask">核心追问</h2><div class="mmx-qa"><p class="mmx-q">《一地鸡毛》里，一块馊豆腐为什么能引发夫妻大战？争吵真正指向的是什么</p><p class="mmx-a">馊豆腐只是导火索。小林家为一块豆腐从怪保姆吵到夫妻互怼，真正指向的是底层小职员被生计、单位体制与家务琐事反复挤压后，连最日常的善意都被耗尽——尊严在鸡毛蒜皮里一点点磨没。</p></div><div class="mmx-qa"><p class="mmx-q">《单位》的「分梨」与「民意测验」分别暴露了办公室权力运作的哪一面</p><p class="mmx-a">「分梨」是领导借分水果完成一次不动声色的权力排序与服从测试；「民意测验」则是用“群众意见”包装的人事安排，暴露出单位里规则表面民主、实质由上意决定的运作逻辑。</p></div><div class="mmx-qa"><p class="mmx-q">《塔铺》与《新兵连》都写青年找出路，两者的「出路」有何不同</p><p class="mmx-a">《塔铺》的出路是高考——靠读书跳出农门，带着向上的确定性；《新兵连》的出路是入伍提干，却在“表现—被选中”的博弈里把人磨成工具。前者信制度，后者信运气与表演。</p></div></section>
+<section class="mmx-mod" aria-labelledby="aiask" id="mod-aiask"><h2 id="aiask">AI 问书</h2><div class="mmx-qa"><p class="mmx-q">刘震云写“一地鸡毛”，想说的真是鸡毛蒜皮吗？</p><p class="mmx-a">表面写小林家一块豆腐馊了、老婆调动、孩子入托、给处长送礼这些琐事，实则写体制与生计如何把一个人从清高磨成圆熟。鸡毛满地不是生活本身，而是理想被日常碾碎后的残渣；小说用最卑微的物事，丈量精神退场的全过程。</p></div><div class="mmx-qa"><p class="mmx-q">小说结尾“打碎鱼缸”有什么寓意？</p><p class="mmx-a">妻子把鱼缸摔碎、金鱼倒进马桶，是全书最狠的一笔：曾经象征体面与小情趣的鱼缸，终究抵不过房租与人事的挤压。它意味着小林一家连最后一点“非功利”的喘息都被清掉，人彻底缴械于生存——浪漫死在一地鸡毛里。</p></div><div class="mmx-qa"><p class="mmx-q">小林从大学生到“会办事”的转变，是成长还是堕落？</p><p class="mmx-a">小说暧昧地把它写成必然：为了老婆调动、孩子进好幼儿园，小林学会排队送礼、巴结处长，良心的不适被生计一笔笔抹平。刘震云不审判，只呈现——当每一步妥协都有理由，堕落就成了“过日子”的同义词，这比直白的批判更冷。</p></div></section>
+<section class="mmx-mod" aria-labelledby="higher" id="mod-higher"><h2 id="higher">更高维度</h2><p>【书中主张】小说主张日常生活具有一种无声的暴力：当生存压力足够密，理想、清高与原则会被琐碎事务一点点置换，人不是被打败，而是被“磨平”。【外部证据】豆腐馊了、查水表、孩子入托、给领导送礼等情节，构成90年代机关青年最写实的压力清单；刘震云以“新写实”笔法，被评论界归为对理想主义的祛魅。【综合分析】这一主张的锋利在“无敌人”——没有恶人，只有流程与开销，你输给的不是谁，而是一地鸡毛本身。它把体制批判下沉到厨房与走廊，让宏大叙事在油盐里解体。</p><p>【书中主张】书同时主张，所谓“成熟”常是精神缴械的体面说法：小林学会“办事”后获得安稳，却也失去了早年的自己。【外部证据】与《单位》《官场》等篇构成刘震云早期的“官场—单位”序列；学界认为他写的是计划经济向市场转轨中个体的精神折旧。【综合分析】但小说并不提供反抗的样板，它的诚实在于承认多数人只能如此。这种“认了”的姿态，让一地鸡毛既是控诉，也是一代人无奈的自我和解，留白的冷峻比呐喊更持久。</p></section>
+<section class="mmx-mod" aria-labelledby="verify" id="mod-verify"><h2 id="verify">阅读验证</h2><ul class="mmx-views"><li>小说以“买豆腐”开场，一块豆腐放馊成为全篇导火索，可核对正文开篇情节。（可核对：豆腐开场）</li><li>小林妻子名为“小李”，靠丈夫单位关系为调动奔走，可核对人物设定与相关情节。（可核对：妻子调动线）</li><li>结尾妻子摔碎鱼缸、金鱼倒入马桶，可核对正文结尾段落。（可核对：鱼缸结局）</li></ul></section>
+<section class="mmx-mod" aria-labelledby="thennow" id="mod-thennow"><h2 id="thennow">往日今时</h2><p>刘震云写于1991年，他当年能确知的是计划经济尾声单位制对人的裹挟、知识分子“上岸”后的精神落差，以及大城市住房与托幼的真实窘迫；这些是贴着当时社会肌理的观察，因而小林的困境不是编造的喜剧，而是一代体制内青年共同的生存实录。</p><p>但平台经济、996与“上岸”叙事的当代变形，是作者彼时无法预见的；今天读者把小林读成“房奴与考编青年前身”，反而照见结构性困境的延续。后来才显现的，是一地鸡毛从单位制特产，变成了每个普通人都熟悉的生存底噪。</p></section>
 </body>
 </html>

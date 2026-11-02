@@ -6,46 +6,108 @@
 <title>《平面国》｜通读 · 精读</title>
 <link rel="stylesheet" href="../../../assets/css/reading-overview.css"><link rel="stylesheet" href="../../../assets/css/mmx-guide.css"><link rel="stylesheet" href="../../../assets/css/reading-outline.css">
 <style>
-/* 合并页外壳 */
-body{max-width:960px;margin:0 auto;padding:0 18px 80px;}
-.combined-head{padding:34px 0 18px;border-bottom:1px solid #e7e0d2;margin-bottom:8px;}
-.combined-head h1{font-size:26px;margin:0 0 10px;}
+/* ── 外壳与全局阅读节奏 ── */
+body{max-width:880px;margin:0 auto;padding:0 18px 80px;
+  font-size:15px;line-height:1.88;color:#3b453e;background:#f7f8f3;
+  -webkit-font-smoothing:antialiased;}
+.combined-head{padding:30px 0 16px;border-bottom:1px solid #e7e0d2;margin-bottom:4px;}
+.combined-head h1{font:700 23px/1.35 var(--serif);margin:0 0 8px;color:#244b40;}
+.combined-head .eyebrow{font-size:.72rem;letter-spacing:.14em;margin:0 0 6px;}
+.chips{margin:8px 0 0;}
+.chip{font-size:.72rem;padding:2px 10px;}
 /* 锚点导航：固定一排 4 个，等宽对齐 */
-.nav{position:sticky;top:0;z-index:20;background:rgba(255,253,248,.96);backdrop-filter:blur(6px);
-  border-bottom:1px solid #ece4d4;padding:10px 0;margin:14px 0 26px;display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;
-  box-shadow:0 2px 10px rgba(120,100,60,.06);}
-.navlink{font-size:12.5px;color:#5d5443;text-decoration:none;background:#f6f1e6;border:1px solid #e7ddca;
-  border-radius:7px;padding:4px 6px;text-align:center;white-space:nowrap;overflow:hidden;
-  text-overflow:ellipsis;}
-section{scroll-margin-top:64px;}
-/* 一句话主旨：去左侧竖线 */
-.mmx-oneline{border-left:none;padding-left:18px;}
-/* AI领读章内：AI 大纲原生深层样式 */
-.merged-guide .sec{margin:10px 0 14px;padding-left:6px;border-left:2px solid #e5e0d6}
-.merged-guide .sec h4{font:600 .98rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.6em 0 .3em}
-.merged-guide ul.point{margin:.3em 0;padding-left:20px}
-.merged-guide ul.point>li{margin:.35em 0}
-.merged-guide ul.quote{margin:.25em 0 .25em 20px;padding-left:18px;list-style:none}
-.merged-guide ul.quote::before{content:"原句";display:block;font-size:.72rem;color:#bf8247;
-  letter-spacing:.1em;margin:.15em 0 .1em;font-weight:600}
-.merged-guide ul.quote.quote-node{margin-top:.5em;padding-top:.4em;border-top:1px dashed #eadfc9}
+.nav{position:sticky;top:0;z-index:20;background:rgba(247,248,243,.96);backdrop-filter:blur(6px);
+  border-bottom:1px solid #ece4d4;padding:10px 0;margin:12px 0 20px;display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;
+  box-shadow:0 2px 10px rgba(120,100,60,.05);}
+.navlink{font-size:12px;color:#5d5443;text-decoration:none;background:#fdfbf3;border:1px solid #e8e2d2;
+  border-radius:8px;padding:6px 4px;text-align:center;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;transition:background .15s,color .15s;}
+.navlink:hover{background:#f2efe2;color:#244b40;}
+section{scroll-margin-top:62px;}
+
+/* ── 统一卡片：所有顶层模块（AI领读 / AI 问答 / 其余）一视同仁 ── */
+body>section.mmx-mod,body>section.card,body>section.mmx-svgwrap{
+  background:#fffdf6;border:1px solid #e8e4d5;border-radius:16px;
+  padding:18px 22px;margin:18px 0;
+  box-shadow:0 1px 3px rgba(110,95,60,.05);}
+body>section.mmx-mod>*:first-child,body>section.card>*:first-child,
+body>section.mmx-svgwrap>*:first-child{margin-top:0}
+body>section.mmx-mod>*:last-child,body>section.card>*:last-child,
+body>section.mmx-svgwrap>*:last-child{margin-bottom:0}
+/* 结构导图：图本身留白居中，不与正文抢宽 */
+body>section.mmx-svgwrap>svg.mmx-svg{display:block;width:100%;height:auto;margin:2px auto 0;}
+/* 模块标题：统一大小、弱强调，不与正文抢注意力 */
+body>section.mmx-mod>h2,body>section.card>h2{
+  font:700 1.04rem/1.5 var(--serif);color:#244b40;margin:0 0 11px;
+  padding-left:10px;border-left:3px solid #bf8247;letter-spacing:.01em;}
+/* 正文：字号收小、行距放宽、段间距舒服 */
+body>section.mmx-mod p,body>section.card p,
+body>section.mmx-mod li,body>section.card li{
+  font-size:.9rem;line-height:1.92;color:#4a4436;}
+body>section.mmx-mod p,body>section.card p{margin:.5em 0;}
+body>section.mmx-mod>ul,body>section.mmx-mod>ol,body>section.mmx-mod>div,
+body>section.mmx-mod>p:not(.mmx-mod-note),
+body>section.card:not(.merged-guide)>ul,body>section.card:not(.merged-guide)>ol,
+body>section.card:not(.merged-guide)>div,body>section.card:not(.merged-guide)>p:not(.mmx-mod-note){
+  padding-left:14px;}
+/* 模块说明小字：弱化不抢眼 */
+.mmx-mod-note{font-size:.75rem;color:#8d8878;margin:.1em 0 .75em;line-height:1.7;}
+
+/* ── 内部块统一：卡片里不再套深卡片，一律浅底子块 ── */
+body>section .mmx-pending,body>section .mmx-evib,body>section .aiqa-item{
+  background:#fbfaf2;border:1px solid #eee9d8;border-radius:12px;
+  padding:13px 16px;margin:.65em 0;}
+body>section .mmx-evib ul{padding-left:1.15em;}
+/* 一句话主旨：去左侧竖线 + 收敛字号 */
+.mmx-oneline{font-size:.98rem;line-height:1.85;color:#3a352c;margin:.2em 0 0;
+  padding:12px 16px;background:#fbfaf4;border-left:none;border-radius:12px;}
+/* 核心观点 / 验证清单：虚线分隔 + 收紧行距 */
+.mmx-views li{padding:.5em 0 .5em 0;font-size:.9rem;line-height:1.88;}
+/* 原文金句 */
+.mmx-qlist li{padding:.6em 0 .6em 2.2em;}
+.mmx-qlist blockquote{font-size:.89rem;line-height:1.9;}
+.mmx-qlist cite{font-size:.72rem;}
+/* 核心追问：问句加重、答句放松 */
+.mmx-qa{margin:.7em 0;padding-left:12px;border-left:3px solid #e5dfcd;}
+.mmx-qa .mmx-q{font-size:.9rem;font-weight:700;color:#2f3a33;line-height:1.8;margin:0 0 .25em;}
+.mmx-qa .mmx-a{font-size:.88rem;line-height:1.95;color:#4a4436;margin:0;}
+
+/* ── AI 问书专项：外层容器透明，问答条目才是阅读单元 ── */
+#mod-aiask .mmx-ask{background:transparent;border:0;border-radius:0;padding:0;margin:0;}
+#mod-aiask .aiqa-item{margin:.6em 0;padding:14px 16px 15px;}
+#mod-aiask .aiqa-item h3{font:700 .93rem/1.7 var(--serif);color:#2f5b49;margin:0 0 .4em;
+  padding:0;border:0;}
+#mod-aiask .aiqa-item h3:before{content:"问　";color:#bf8247;font-weight:700;}
+#mod-aiask .aiqa-item p{font-size:.88rem;line-height:1.95;color:#4a4436;margin:.4em 0;}
+#mod-aiask .aiqa-item ul{margin:.35em 0;padding-left:1.1em;}
+#mod-aiask .aiqa-item li{font-size:.87rem;line-height:1.88;margin:.18em 0;color:#4a4436;}
+#mod-aiask .aiqa-item li::marker{color:#c0a06a;}
+/* 逐章追问（details 形态）：摘要行也收敛 */
+.mmx-ask>summary{font-size:.87rem;line-height:1.7;padding:2px 0;}
+.mmx-askbody{font-size:.88rem;line-height:1.9;}
+
+/* AI领读章内：AI 大纲原生深层样式（字号同步收小） */
+.merged-guide .sec{margin:9px 0 12px;padding-left:6px;border-left:2px solid #e5e0d6}
+.merged-guide .sec h4{font:600 .93rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.5em 0 .25em}
+.merged-guide ul.point{margin:.25em 0;padding-left:20px}
+.merged-guide ul.point>li{margin:.3em 0}
+.merged-guide ul.quote{margin:.22em 0 .22em 20px;padding-left:18px;list-style:none}
+.merged-guide ul.quote::before{content:"原句";display:block;font-size:.7rem;color:#bf8247;
+  letter-spacing:.1em;margin:.12em 0 .08em;font-weight:600}
+.merged-guide ul.quote.quote-node{margin-top:.45em;padding-top:.35em;border-top:1px dashed #eadfc9}
 .merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
-.merged-guide ul.quote>li{color:#4a4436;font-size:.93rem;margin:.2em 0;padding-left:10px;border-left:2px solid #bf8247}
-/* 模块内子内容（AI领读除外，它有专属深层样式）：左缩进 + 正文与标题分层 */
-section.mmx-mod>ul,section.mmx-mod>ol,section.mmx-mod>div,
-section.mmx-mod>p:not(.mmx-mod-note),
-section.card:not(.merged-guide)>ul,section.card:not(.merged-guide)>ol,
-section.card:not(.merged-guide)>div,section.card:not(.merged-guide)>p:not(.mmx-mod-note){
-  padding-left:16px;}
-section.mmx-mod li,section.mmx-mod p:not(.mmx-mod-note),
-section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mod-note){
-  color:#4a4436;font-size:.93rem;line-height:1.78;}
+.merged-guide ul.quote>li{color:#4a4436;font-size:.88rem;line-height:1.85;margin:.18em 0;padding-left:10px;border-left:2px solid #bf8247}
 /* 核心观点初判：外链 mmx-guide.css 的「观点N」前缀是绝对定位，在本页版式里和标题叠字，
    且此前要求去掉「观点1/2/3」前缀 —— 这里整条关掉（外链 CSS 不在页面内，只能内联覆盖）。 */
 .mmx-views li{padding-left:0 !important;}
 .mmx-views li:before,.mmx-views li::before{
   content:none !important;display:none !important;counter-increment:none !important;}
+@media(max-width:720px){
+  body{padding:0 12px 60px;font-size:14.5px;}
+  body>section.mmx-mod,body>section.card{padding:15px 16px;border-radius:14px;}
+  .nav{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
 </style>
 </head>
 <body>
@@ -54,8 +116,8 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
   <h1>《平面国》</h1>
   <div class="chips"><span class="chip">通读 + 精读</span><span class="chip">AI领读</span><span class="chip">AI 生产</span></div>
 </header>
-<nav class="nav"><a class="navlink" href="#mod-svg">全书结构导图</a><a class="navlink" href="#mod-oneline">一句话主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a><a class="navlink" href="#mod-coreask">核心追问</a><a class="navlink" href="#mod-aiask">AI 问书</a><a class="navlink" href="#mod-higher">更高维度</a><a class="navlink" href="#mod-verify">阅读验证</a><a class="navlink" href="#mod-thennow">当年与今天</a></nav>
-<section class="mmx-svgwrap" id="mod-svg"><svg class="mmx-svg" viewBox="0 0 1120 468" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="平面国 全书精读">
+<nav class="nav"><a class="navlink" href="#mod-svg">结构导图</a><a class="navlink" href="#mod-oneline">核心主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a><a class="navlink" href="#mod-coreask">核心追问</a><a class="navlink" href="#mod-aiask">AI 问书</a><a class="navlink" href="#mod-higher">更高维度</a><a class="navlink" href="#mod-verify">阅读验证</a><a class="navlink" href="#mod-thennow">往日今时</a></nav>
+<section class="mmx-svgwrap" id="mod-svg"><h2>结构导图</h2><svg class="mmx-svg" viewBox="0 0 1120 468" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="平面国 全书精读">
 <rect x="0" y="0" width="1120" height="468" fill="none"/>
 <style>.mmx-svg text{font-family:"Noto Serif SC",Georgia,serif}.mmx-svg .t1{font-size:15px;fill:#2f2a24;font-weight:600}.mmx-svg .t2{font-size:12px;fill:#5c5347}.mmx-svg .t3{font-size:10.5px;fill:#8a8272}.mmx-svg .rt{font-size:13px;fill:#f7f3ea;font-weight:600}.mmx-svg .ln{stroke:#cfc6b4;stroke-width:1.4;fill:none}</style>
 <rect x="28" y="190" width="262" height="52" rx="10" fill="#3d372e"/>
@@ -108,7 +170,7 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
 <text class="t2" x="714" y="375">果。</text>
 <path class="ln" d="M692 371 L700 371"/>
 </svg></section>
-<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">一句话主旨</h2><p class="mmx-mod-note">本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。</p><p class="mmx-oneline">生物的认知受限于其维度的物理局限，超越维度的真理难以向低维度世界证明。</p></section>
+<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">核心主旨</h2><p class="mmx-oneline">生物的认知受限于其维度的物理局限，超越维度的真理难以向低维度世界证明。</p></section>
 <section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" id="mod-merged_guide"><h2 id="merged-guide-title">AI领读</h2>
 <style>
 /* merged_guide 章内：AI 大纲原生深层样式 */
@@ -1570,12 +1632,12 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
       </div></details>
   </div>
 </section>
-<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点初判</h2><p class="mmx-mod-note">按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。</p><ul class="mmx-views"><li><b>平面国的物理与社会</b>——梳理平面国的空间局限、气候环境以及由形状决定的阶层属性。</li><li><b>居民的辨认与色彩革命</b>——详细说明图形间的辨认方法、不规则图形的处理及颜色法案引发的叛乱。</li><li><b>牧师统治与教义</b>——阐述牧师阶层的统治地位及圆的教义对社会行为和教育的要求。</li><li><b>线国之梦与启蒙</b>——通过梦境中的线国经历与空间国陌生人的造访，展现低维无法理解高维的困境。</li><li><b>空间国游历与三维认知</b>——作者亲历空间国并接受球的教导，理解了三维世界的几何结构与奥秘。</li><li><b>三维理论的传播尝试</b>——记录作者试图向孙儿及世人传播三维理论却遭遇禁锢与困境的最终结果。</li></ul></section>
-<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句 · 持续积累</h2><p class="mmx-mod-note">以下原句取自本书 AI 大纲落库的原文摘录（book_outline.quote），按大纲顺序节选，非 AI 生成；更多见逐章深读页。</p><ol class="mmx-qlist"><li><blockquote>「设想有一张巨大的纸，上面满是直线、三角形、正方形、五边形、六边形及其他各种图形。」</blockquote><cite>1．关于平面国的本质</cite></li><li><blockquote>「这些图形并不在某处停留不动，而是在平面周围、平面上或里面自由移动，但无力跳出这个平面，也无法沉下去。」</blockquote><cite>1．关于平面国的本质</cite></li><li><blockquote>「我们什么也看不到，更不用说把图形相互区分开来。」</blockquote><cite>1．关于平面国的本质</cite></li><li><blockquote>「对我们来说，除了直线，没有什么可见的事物。」</blockquote><cite>1．关于平面国的本质</cite></li><li><blockquote>「把一个便士放在你们空间国的一张桌子中央，然后贴身上去盯着看，不久，会出现一个圆。」</blockquote><cite>1．关于平面国的本质</cite></li><li><blockquote>「回到桌边，并逐渐放低你的目光，你会发现这个便士在你视线里会越来越变成椭圆形。」</blockquote><cite>1．关于平面国的本质</cite></li><li><blockquote>「最后，当你的目光与桌边恰好处于同一平面时，这个便士看起来不再像个椭圆了，你看见的是一条直线。」</blockquote><cite>1．关于平面国的本质</cite></li><li><blockquote>「如果你以相同的方式看从硬纸板上裁下的三角形、正方形或其他图形，结果并无两样。」</blockquote><cite>1．关于平面国的本质</cite></li><li><blockquote>「一旦你把目光贴到桌边看的话，你很快发现你所看到的不再是个图形，而是一条直线。」</blockquote><cite>1．关于平面国的本质</cite></li><li><blockquote>「当我们的朋友走得更近时，我们所看到的线条也更大；如果他离我们而去，线条就变小。」</blockquote><cite>1．关于平面国的本质</cite></li></ol></section>
-<section class="mmx-mod" aria-labelledby="coreask" id="mod-coreask"><h2 id="coreask">核心追问（来自深读）</h2><p class="mmx-mod-note">跨章主题的深读追问，由模型基于全书大纲与原文摘录撰写；逐章的追问收在每个章条目里。</p><div class="mmx-qa"><p class="mmx-q">平面国为何把「颜色法案」视为对秩序的威胁</p><p class="mmx-a">关于「平面国为何把「颜色法案」视为对秩序的威胁」：大纲显示《》以《1．关于平面国的本质》起手、到《22．我是如何尝试以其他方式传播三维理论以及结果》收束，核心脉络与「我们的世界被描述为一个平面国，其中的图形在平面上自由移动，但无力跳出这个平面，也无法…」相关。以上为大纲条目推断，未亲读正文，读后请核对。</p></div><div class="mmx-qa"><p class="mmx-q">正方形在空间国看到了什么，使他再也回不到原来的确信</p><p class="mmx-a">关于「正方形在空间国看到了什么，使他再也回不到原来的确信」：大纲显示《》以《1．关于平面国的本质》起手、到《22．我是如何尝试以其他方式传播三维理论以及结果》收束，核心脉络与「我们的世界被描述为一个平面国，其中的图形在平面上自由移动，但无力跳出这个平面，也无法…」相关。以上为大纲条目推断，未亲读正文，读后请核对。</p></div><div class="mmx-qa"><p class="mmx-q">球为何拒绝正方形关于「第四维」的推论？这说明什么</p><p class="mmx-a">关于「球为何拒绝正方形关于「第四维」的推论？这说明什么」：大纲显示《》以《1．关于平面国的本质》起手、到《22．我是如何尝试以其他方式传播三维理论以及结果》收束，核心脉络与「我们的世界被描述为一个平面国，其中的图形在平面上自由移动，但无力跳出这个平面，也无法…」相关。以上为大纲条目推断，未亲读正文，读后请核对。</p></div></section>
-<section class="mmx-mod" aria-labelledby="aiask" id="mod-aiask"><h2 id="aiask">AI 问书</h2><p class="mmx-mod-note">下方内容为本书级 AI 问书整理，由云端 AI 阅读流程基于本书大纲、章节锚点与热门划线生成。</p><div class="mmx-qa"><p class="mmx-q">《平面国》里女性是「线段」，这是在冒犯女性吗？</p><p class="mmx-a">锚点写「平面国的所有女性都是线段」，且「女性生活的痛苦和羞辱不仅是女人存在的必然，也是我们平面国的制度基础」。这看似歧视，其实是 Abbott 用夸张的性别压迫讽刺维多利亚社会的等级制——把「维度越低越卑微」推到极端，让读者看见自己社会里「形状决定地位」的荒谬。热门划线「人的行为只取决于形状」正是这个讽刺的核心。</p></div><div class="mmx-qa"><p class="mmx-q">为什么「球」用角撞人都没法让平面国人相信三维？</p><p class="mmx-a">锚点：「球用坚硬的右角猛烈地与陌生人相撞，但陌生人只是缓慢地从我身边溜开」。在平面国，居民「看不见、也不可能看见任何其他东西」除了线段，球从上方穿过平面只能被感知为「一个点在变大变小」。物理维度限制了感知，再怎么演示也越不过认知的墙——这正是书名「平面国」的机关：真理存在，但低维无法接收。</p></div><div class="mmx-qa"><p class="mmx-q">书结尾说作者教孙儿三维理论遭否认，想说什么？</p><p class="mmx-a">锚点：「作者决定避免直接提及受神启的事，而是通过展示的方式」教孙儿，却遭流泪否认。这写的是「代际与权力的合谋」：统治阶层（圆形/牧师）禁止传播高维真理，连亲人也本能抗拒。书中「网络真的让我们……只与观点相近的人交流」的现代划线，恰把19世纪的讽刺接到了今天的回声室。</p></div></section>
-<section class="mmx-mod" aria-labelledby="higher" id="mod-higher"><h2 id="higher">用更高维度的知识看这本书</h2><p class="mmx-mod-note">下方内容由云端 AI 阅读流程生成：把本书放回知识史与理论框架中重读，区分书中主张、外部证据与综合分析。</p><p>【书中主张】Abbott 借平面国的物理设定主张：生物的认知被其维度的物理局限锁死，超越维度的真理（如三维）无法向低维世界证明，只能被当作异端。【外部证据】书出版于1884年，作者 Edwin Abbott 是英国神学家与古典学家，其「维度隐喻」后被科学界借去通俗解释四维空间；热门划线「女性都是线段」「行为只取决于形状」反映其维多利亚等级讽刺的原貌。【综合分析】把本书放回思想史，它既是最早的「维度科普寓言」，也是一篇用几何写就的社会 satire——用「形状=阶级」映射当时英国固化的阶层与性别秩序。</p><p>【书中主张】书中「颜色革命」（克洛马蒂斯发现颜色成分）、「圆形牧师统治」与「每月更换标本减少等腰三角形人口」写尽低维社会对异见与底层的系统性压制。【外部证据】现代读者把它读成「认知局限」的元寓言，热门划线自发接上「网络是否只是制造同温层」的当代问题，说明其讽刺具有跨媒介的生命力。【综合分析】从科学哲学看，平面国预言了「不可通约的范式」——库恩后来说的范式之争，在平面国里是物理事实；今天可迁移的是：我们每个人都活在自己的「平面」里，能否承认存在自己看不见的维度，是智识谦逊的试金石。</p></section>
-<section class="mmx-mod" aria-labelledby="verify" id="mod-verify"><h2 id="verify">阅读时要验证的问题</h2><p class="mmx-mod-note">下方由云端 AI 阅读流程生成：读时需核对的原文、数字与论点（关键数据出处、个案代表性、类比限度）。</p><ul class="mmx-views"><li>「平面国的所有女性都是线段」——核查 Edwin Abbott《Flatland》(1884) 原文设定，确认这是作者设定的社会等级（线段=最低），而非后世改编添加，区分原著与影视化版本。</li><li>「克洛马蒂斯发现颜色成分引发颜色革命」——核对书中「Chromatistes」章节，确认颜色法案与叛乱的情节归属，避免把读者批注当原文。</li><li>作者身份「英国神学家、古典学家 Edwin Abbott」——核查其生卒（1838–1926）与任职（City of London School 校长），确认写作背景，区分科幻小说家与神学家双重身份。</li></ul></section>
-<section class="mmx-mod" aria-labelledby="thennow" id="mod-thennow"><h2 id="thennow">当年与今天 · 初步对照</h2><p class="mmx-mod-note">下方由云端 AI 阅读流程生成：区分作者当年所能知晓与后来才显现的事实，给出今日可迁移的启发。</p><p>Abbott 当年（1884年）所能知晓的，是维多利亚英国固化的阶级与性别秩序、以及刚兴起的高维几何讨论（凯莱、克莱因）；他写不出今天「算法同温层」「信息茧房」会成为维度隐喻的新注解。</p><p>后来显现的事实是：《平面国》被数学界、脑科学、甚至企业管理反复借用，「你活在几维」成了流行语；可迁移的启发是——我们最大的盲点往往不是无知，而是像平面国人一样，把「自己看不见的」判定为「不存在」。承认有更高维度，是避免被自己的形状囚禁的第一步。</p></section>
+<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点</h2><ul class="mmx-views"><li><b>平面国的物理与社会</b>——梳理平面国的空间局限、气候环境以及由形状决定的阶层属性。</li><li><b>居民的辨认与色彩革命</b>——详细说明图形间的辨认方法、不规则图形的处理及颜色法案引发的叛乱。</li><li><b>牧师统治与教义</b>——阐述牧师阶层的统治地位及圆的教义对社会行为和教育的要求。</li><li><b>线国之梦与启蒙</b>——通过梦境中的线国经历与空间国陌生人的造访，展现低维无法理解高维的困境。</li><li><b>空间国游历与三维认知</b>——作者亲历空间国并接受球的教导，理解了三维世界的几何结构与奥秘。</li><li><b>三维理论的传播尝试</b>——记录作者试图向孙儿及世人传播三维理论却遭遇禁锢与困境的最终结果。</li></ul></section>
+<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句</h2><ol class="mmx-qlist"><li><blockquote>「设想有一张巨大的纸，上面满是直线、三角形、正方形、五边形、六边形及其他各种图形。」</blockquote><cite>1．关于平面国的本质</cite></li><li><blockquote>「这些图形并不在某处停留不动，而是在平面周围、平面上或里面自由移动，但无力跳出这个平面，也无法沉下去。」</blockquote><cite>1．关于平面国的本质</cite></li><li><blockquote>「我们什么也看不到，更不用说把图形相互区分开来。」</blockquote><cite>1．关于平面国的本质</cite></li><li><blockquote>「对我们来说，除了直线，没有什么可见的事物。」</blockquote><cite>1．关于平面国的本质</cite></li><li><blockquote>「把一个便士放在你们空间国的一张桌子中央，然后贴身上去盯着看，不久，会出现一个圆。」</blockquote><cite>1．关于平面国的本质</cite></li><li><blockquote>「回到桌边，并逐渐放低你的目光，你会发现这个便士在你视线里会越来越变成椭圆形。」</blockquote><cite>1．关于平面国的本质</cite></li><li><blockquote>「最后，当你的目光与桌边恰好处于同一平面时，这个便士看起来不再像个椭圆了，你看见的是一条直线。」</blockquote><cite>1．关于平面国的本质</cite></li><li><blockquote>「如果你以相同的方式看从硬纸板上裁下的三角形、正方形或其他图形，结果并无两样。」</blockquote><cite>1．关于平面国的本质</cite></li><li><blockquote>「一旦你把目光贴到桌边看的话，你很快发现你所看到的不再是个图形，而是一条直线。」</blockquote><cite>1．关于平面国的本质</cite></li><li><blockquote>「当我们的朋友走得更近时，我们所看到的线条也更大；如果他离我们而去，线条就变小。」</blockquote><cite>1．关于平面国的本质</cite></li></ol></section>
+<section class="mmx-mod" aria-labelledby="coreask" id="mod-coreask"><h2 id="coreask">核心追问</h2><div class="mmx-qa"><p class="mmx-q">平面国为何把「颜色法案」视为对秩序的威胁</p><p class="mmx-a">关于「平面国为何把「颜色法案」视为对秩序的威胁」：大纲显示《》以《1．关于平面国的本质》起手、到《22．我是如何尝试以其他方式传播三维理论以及结果》收束，核心脉络与「我们的世界被描述为一个平面国，其中的图形在平面上自由移动，但无力跳出这个平面，也无法…」相关。以上为大纲条目推断，未亲读正文，读后请核对。</p></div><div class="mmx-qa"><p class="mmx-q">正方形在空间国看到了什么，使他再也回不到原来的确信</p><p class="mmx-a">关于「正方形在空间国看到了什么，使他再也回不到原来的确信」：大纲显示《》以《1．关于平面国的本质》起手、到《22．我是如何尝试以其他方式传播三维理论以及结果》收束，核心脉络与「我们的世界被描述为一个平面国，其中的图形在平面上自由移动，但无力跳出这个平面，也无法…」相关。以上为大纲条目推断，未亲读正文，读后请核对。</p></div><div class="mmx-qa"><p class="mmx-q">球为何拒绝正方形关于「第四维」的推论？这说明什么</p><p class="mmx-a">关于「球为何拒绝正方形关于「第四维」的推论？这说明什么」：大纲显示《》以《1．关于平面国的本质》起手、到《22．我是如何尝试以其他方式传播三维理论以及结果》收束，核心脉络与「我们的世界被描述为一个平面国，其中的图形在平面上自由移动，但无力跳出这个平面，也无法…」相关。以上为大纲条目推断，未亲读正文，读后请核对。</p></div></section>
+<section class="mmx-mod" aria-labelledby="aiask" id="mod-aiask"><h2 id="aiask">AI 问书</h2><div class="mmx-qa"><p class="mmx-q">《平面国》里女性是「线段」，这是在冒犯女性吗？</p><p class="mmx-a">锚点写「平面国的所有女性都是线段」，且「女性生活的痛苦和羞辱不仅是女人存在的必然，也是我们平面国的制度基础」。这看似歧视，其实是 Abbott 用夸张的性别压迫讽刺维多利亚社会的等级制——把「维度越低越卑微」推到极端，让读者看见自己社会里「形状决定地位」的荒谬。热门划线「人的行为只取决于形状」正是这个讽刺的核心。</p></div><div class="mmx-qa"><p class="mmx-q">为什么「球」用角撞人都没法让平面国人相信三维？</p><p class="mmx-a">锚点：「球用坚硬的右角猛烈地与陌生人相撞，但陌生人只是缓慢地从我身边溜开」。在平面国，居民「看不见、也不可能看见任何其他东西」除了线段，球从上方穿过平面只能被感知为「一个点在变大变小」。物理维度限制了感知，再怎么演示也越不过认知的墙——这正是书名「平面国」的机关：真理存在，但低维无法接收。</p></div><div class="mmx-qa"><p class="mmx-q">书结尾说作者教孙儿三维理论遭否认，想说什么？</p><p class="mmx-a">锚点：「作者决定避免直接提及受神启的事，而是通过展示的方式」教孙儿，却遭流泪否认。这写的是「代际与权力的合谋」：统治阶层（圆形/牧师）禁止传播高维真理，连亲人也本能抗拒。书中「网络真的让我们……只与观点相近的人交流」的现代划线，恰把19世纪的讽刺接到了今天的回声室。</p></div></section>
+<section class="mmx-mod" aria-labelledby="higher" id="mod-higher"><h2 id="higher">更高维度</h2><p>【书中主张】Abbott 借平面国的物理设定主张：生物的认知被其维度的物理局限锁死，超越维度的真理（如三维）无法向低维世界证明，只能被当作异端。【外部证据】书出版于1884年，作者 Edwin Abbott 是英国神学家与古典学家，其「维度隐喻」后被科学界借去通俗解释四维空间；热门划线「女性都是线段」「行为只取决于形状」反映其维多利亚等级讽刺的原貌。【综合分析】把本书放回思想史，它既是最早的「维度科普寓言」，也是一篇用几何写就的社会 satire——用「形状=阶级」映射当时英国固化的阶层与性别秩序。</p><p>【书中主张】书中「颜色革命」（克洛马蒂斯发现颜色成分）、「圆形牧师统治」与「每月更换标本减少等腰三角形人口」写尽低维社会对异见与底层的系统性压制。【外部证据】现代读者把它读成「认知局限」的元寓言，热门划线自发接上「网络是否只是制造同温层」的当代问题，说明其讽刺具有跨媒介的生命力。【综合分析】从科学哲学看，平面国预言了「不可通约的范式」——库恩后来说的范式之争，在平面国里是物理事实；今天可迁移的是：我们每个人都活在自己的「平面」里，能否承认存在自己看不见的维度，是智识谦逊的试金石。</p></section>
+<section class="mmx-mod" aria-labelledby="verify" id="mod-verify"><h2 id="verify">阅读验证</h2><ul class="mmx-views"><li>「平面国的所有女性都是线段」——核查 Edwin Abbott《Flatland》(1884) 原文设定，确认这是作者设定的社会等级（线段=最低），而非后世改编添加，区分原著与影视化版本。</li><li>「克洛马蒂斯发现颜色成分引发颜色革命」——核对书中「Chromatistes」章节，确认颜色法案与叛乱的情节归属，避免把读者批注当原文。</li><li>作者身份「英国神学家、古典学家 Edwin Abbott」——核查其生卒（1838–1926）与任职（City of London School 校长），确认写作背景，区分科幻小说家与神学家双重身份。</li></ul></section>
+<section class="mmx-mod" aria-labelledby="thennow" id="mod-thennow"><h2 id="thennow">往日今时</h2><p>Abbott 当年（1884年）所能知晓的，是维多利亚英国固化的阶级与性别秩序、以及刚兴起的高维几何讨论（凯莱、克莱因）；他写不出今天「算法同温层」「信息茧房」会成为维度隐喻的新注解。</p><p>后来显现的事实是：《平面国》被数学界、脑科学、甚至企业管理反复借用，「你活在几维」成了流行语；可迁移的启发是——我们最大的盲点往往不是无知，而是像平面国人一样，把「自己看不见的」判定为「不存在」。承认有更高维度，是避免被自己的形状囚禁的第一步。</p></section>
 </body>
 </html>

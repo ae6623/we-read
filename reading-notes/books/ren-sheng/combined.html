@@ -6,46 +6,108 @@
 <title>《人生》｜通读 · 精读</title>
 <link rel="stylesheet" href="../../../assets/css/reading-overview.css"><link rel="stylesheet" href="../../../assets/css/mmx-guide.css"><link rel="stylesheet" href="../../../assets/css/reading-outline.css">
 <style>
-/* 合并页外壳 */
-body{max-width:960px;margin:0 auto;padding:0 18px 80px;}
-.combined-head{padding:34px 0 18px;border-bottom:1px solid #e7e0d2;margin-bottom:8px;}
-.combined-head h1{font-size:26px;margin:0 0 10px;}
+/* ── 外壳与全局阅读节奏 ── */
+body{max-width:880px;margin:0 auto;padding:0 18px 80px;
+  font-size:15px;line-height:1.88;color:#3b453e;background:#f7f8f3;
+  -webkit-font-smoothing:antialiased;}
+.combined-head{padding:30px 0 16px;border-bottom:1px solid #e7e0d2;margin-bottom:4px;}
+.combined-head h1{font:700 23px/1.35 var(--serif);margin:0 0 8px;color:#244b40;}
+.combined-head .eyebrow{font-size:.72rem;letter-spacing:.14em;margin:0 0 6px;}
+.chips{margin:8px 0 0;}
+.chip{font-size:.72rem;padding:2px 10px;}
 /* 锚点导航：固定一排 4 个，等宽对齐 */
-.nav{position:sticky;top:0;z-index:20;background:rgba(255,253,248,.96);backdrop-filter:blur(6px);
-  border-bottom:1px solid #ece4d4;padding:10px 0;margin:14px 0 26px;display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;
-  box-shadow:0 2px 10px rgba(120,100,60,.06);}
-.navlink{font-size:12.5px;color:#5d5443;text-decoration:none;background:#f6f1e6;border:1px solid #e7ddca;
-  border-radius:7px;padding:4px 6px;text-align:center;white-space:nowrap;overflow:hidden;
-  text-overflow:ellipsis;}
-section{scroll-margin-top:64px;}
-/* 一句话主旨：去左侧竖线 */
-.mmx-oneline{border-left:none;padding-left:18px;}
-/* AI领读章内：AI 大纲原生深层样式 */
-.merged-guide .sec{margin:10px 0 14px;padding-left:6px;border-left:2px solid #e5e0d6}
-.merged-guide .sec h4{font:600 .98rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.6em 0 .3em}
-.merged-guide ul.point{margin:.3em 0;padding-left:20px}
-.merged-guide ul.point>li{margin:.35em 0}
-.merged-guide ul.quote{margin:.25em 0 .25em 20px;padding-left:18px;list-style:none}
-.merged-guide ul.quote::before{content:"原句";display:block;font-size:.72rem;color:#bf8247;
-  letter-spacing:.1em;margin:.15em 0 .1em;font-weight:600}
-.merged-guide ul.quote.quote-node{margin-top:.5em;padding-top:.4em;border-top:1px dashed #eadfc9}
+.nav{position:sticky;top:0;z-index:20;background:rgba(247,248,243,.96);backdrop-filter:blur(6px);
+  border-bottom:1px solid #ece4d4;padding:10px 0;margin:12px 0 20px;display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;
+  box-shadow:0 2px 10px rgba(120,100,60,.05);}
+.navlink{font-size:12px;color:#5d5443;text-decoration:none;background:#fdfbf3;border:1px solid #e8e2d2;
+  border-radius:8px;padding:6px 4px;text-align:center;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;transition:background .15s,color .15s;}
+.navlink:hover{background:#f2efe2;color:#244b40;}
+section{scroll-margin-top:62px;}
+
+/* ── 统一卡片：所有顶层模块（AI领读 / AI 问答 / 其余）一视同仁 ── */
+body>section.mmx-mod,body>section.card,body>section.mmx-svgwrap{
+  background:#fffdf6;border:1px solid #e8e4d5;border-radius:16px;
+  padding:18px 22px;margin:18px 0;
+  box-shadow:0 1px 3px rgba(110,95,60,.05);}
+body>section.mmx-mod>*:first-child,body>section.card>*:first-child,
+body>section.mmx-svgwrap>*:first-child{margin-top:0}
+body>section.mmx-mod>*:last-child,body>section.card>*:last-child,
+body>section.mmx-svgwrap>*:last-child{margin-bottom:0}
+/* 结构导图：图本身留白居中，不与正文抢宽 */
+body>section.mmx-svgwrap>svg.mmx-svg{display:block;width:100%;height:auto;margin:2px auto 0;}
+/* 模块标题：统一大小、弱强调，不与正文抢注意力 */
+body>section.mmx-mod>h2,body>section.card>h2{
+  font:700 1.04rem/1.5 var(--serif);color:#244b40;margin:0 0 11px;
+  padding-left:10px;border-left:3px solid #bf8247;letter-spacing:.01em;}
+/* 正文：字号收小、行距放宽、段间距舒服 */
+body>section.mmx-mod p,body>section.card p,
+body>section.mmx-mod li,body>section.card li{
+  font-size:.9rem;line-height:1.92;color:#4a4436;}
+body>section.mmx-mod p,body>section.card p{margin:.5em 0;}
+body>section.mmx-mod>ul,body>section.mmx-mod>ol,body>section.mmx-mod>div,
+body>section.mmx-mod>p:not(.mmx-mod-note),
+body>section.card:not(.merged-guide)>ul,body>section.card:not(.merged-guide)>ol,
+body>section.card:not(.merged-guide)>div,body>section.card:not(.merged-guide)>p:not(.mmx-mod-note){
+  padding-left:14px;}
+/* 模块说明小字：弱化不抢眼 */
+.mmx-mod-note{font-size:.75rem;color:#8d8878;margin:.1em 0 .75em;line-height:1.7;}
+
+/* ── 内部块统一：卡片里不再套深卡片，一律浅底子块 ── */
+body>section .mmx-pending,body>section .mmx-evib,body>section .aiqa-item{
+  background:#fbfaf2;border:1px solid #eee9d8;border-radius:12px;
+  padding:13px 16px;margin:.65em 0;}
+body>section .mmx-evib ul{padding-left:1.15em;}
+/* 一句话主旨：去左侧竖线 + 收敛字号 */
+.mmx-oneline{font-size:.98rem;line-height:1.85;color:#3a352c;margin:.2em 0 0;
+  padding:12px 16px;background:#fbfaf4;border-left:none;border-radius:12px;}
+/* 核心观点 / 验证清单：虚线分隔 + 收紧行距 */
+.mmx-views li{padding:.5em 0 .5em 0;font-size:.9rem;line-height:1.88;}
+/* 原文金句 */
+.mmx-qlist li{padding:.6em 0 .6em 2.2em;}
+.mmx-qlist blockquote{font-size:.89rem;line-height:1.9;}
+.mmx-qlist cite{font-size:.72rem;}
+/* 核心追问：问句加重、答句放松 */
+.mmx-qa{margin:.7em 0;padding-left:12px;border-left:3px solid #e5dfcd;}
+.mmx-qa .mmx-q{font-size:.9rem;font-weight:700;color:#2f3a33;line-height:1.8;margin:0 0 .25em;}
+.mmx-qa .mmx-a{font-size:.88rem;line-height:1.95;color:#4a4436;margin:0;}
+
+/* ── AI 问书专项：外层容器透明，问答条目才是阅读单元 ── */
+#mod-aiask .mmx-ask{background:transparent;border:0;border-radius:0;padding:0;margin:0;}
+#mod-aiask .aiqa-item{margin:.6em 0;padding:14px 16px 15px;}
+#mod-aiask .aiqa-item h3{font:700 .93rem/1.7 var(--serif);color:#2f5b49;margin:0 0 .4em;
+  padding:0;border:0;}
+#mod-aiask .aiqa-item h3:before{content:"问　";color:#bf8247;font-weight:700;}
+#mod-aiask .aiqa-item p{font-size:.88rem;line-height:1.95;color:#4a4436;margin:.4em 0;}
+#mod-aiask .aiqa-item ul{margin:.35em 0;padding-left:1.1em;}
+#mod-aiask .aiqa-item li{font-size:.87rem;line-height:1.88;margin:.18em 0;color:#4a4436;}
+#mod-aiask .aiqa-item li::marker{color:#c0a06a;}
+/* 逐章追问（details 形态）：摘要行也收敛 */
+.mmx-ask>summary{font-size:.87rem;line-height:1.7;padding:2px 0;}
+.mmx-askbody{font-size:.88rem;line-height:1.9;}
+
+/* AI领读章内：AI 大纲原生深层样式（字号同步收小） */
+.merged-guide .sec{margin:9px 0 12px;padding-left:6px;border-left:2px solid #e5e0d6}
+.merged-guide .sec h4{font:600 .93rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.5em 0 .25em}
+.merged-guide ul.point{margin:.25em 0;padding-left:20px}
+.merged-guide ul.point>li{margin:.3em 0}
+.merged-guide ul.quote{margin:.22em 0 .22em 20px;padding-left:18px;list-style:none}
+.merged-guide ul.quote::before{content:"原句";display:block;font-size:.7rem;color:#bf8247;
+  letter-spacing:.1em;margin:.12em 0 .08em;font-weight:600}
+.merged-guide ul.quote.quote-node{margin-top:.45em;padding-top:.35em;border-top:1px dashed #eadfc9}
 .merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
-.merged-guide ul.quote>li{color:#4a4436;font-size:.93rem;margin:.2em 0;padding-left:10px;border-left:2px solid #bf8247}
-/* 模块内子内容（AI领读除外，它有专属深层样式）：左缩进 + 正文与标题分层 */
-section.mmx-mod>ul,section.mmx-mod>ol,section.mmx-mod>div,
-section.mmx-mod>p:not(.mmx-mod-note),
-section.card:not(.merged-guide)>ul,section.card:not(.merged-guide)>ol,
-section.card:not(.merged-guide)>div,section.card:not(.merged-guide)>p:not(.mmx-mod-note){
-  padding-left:16px;}
-section.mmx-mod li,section.mmx-mod p:not(.mmx-mod-note),
-section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mod-note){
-  color:#4a4436;font-size:.93rem;line-height:1.78;}
+.merged-guide ul.quote>li{color:#4a4436;font-size:.88rem;line-height:1.85;margin:.18em 0;padding-left:10px;border-left:2px solid #bf8247}
 /* 核心观点初判：外链 mmx-guide.css 的「观点N」前缀是绝对定位，在本页版式里和标题叠字，
    且此前要求去掉「观点1/2/3」前缀 —— 这里整条关掉（外链 CSS 不在页面内，只能内联覆盖）。 */
 .mmx-views li{padding-left:0 !important;}
 .mmx-views li:before,.mmx-views li::before{
   content:none !important;display:none !important;counter-increment:none !important;}
+@media(max-width:720px){
+  body{padding:0 12px 60px;font-size:14.5px;}
+  body>section.mmx-mod,body>section.card{padding:15px 16px;border-radius:14px;}
+  .nav{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
 </style>
 </head>
 <body>
@@ -54,8 +116,8 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
   <h1>《人生》</h1>
   <div class="chips"><span class="chip">通读 + 精读</span><span class="chip">AI领读</span><span class="chip">AI 生产</span></div>
 </header>
-<nav class="nav"><a class="navlink" href="#mod-svg">全书结构导图</a><a class="navlink" href="#mod-oneline">一句话主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a><a class="navlink" href="#mod-coreask">核心追问</a><a class="navlink" href="#mod-aiask">AI 问书</a><a class="navlink" href="#mod-higher">更高维度</a><a class="navlink" href="#mod-verify">阅读验证</a><a class="navlink" href="#mod-thennow">当年与今天</a></nav>
-<section class="mmx-svgwrap" id="mod-svg"><svg class="mmx-svg" viewBox="0 0 1120 406" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="人生 全书精读">
+<nav class="nav"><a class="navlink" href="#mod-svg">结构导图</a><a class="navlink" href="#mod-oneline">核心主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a><a class="navlink" href="#mod-coreask">核心追问</a><a class="navlink" href="#mod-aiask">AI 问书</a><a class="navlink" href="#mod-higher">更高维度</a><a class="navlink" href="#mod-verify">阅读验证</a><a class="navlink" href="#mod-thennow">往日今时</a></nav>
+<section class="mmx-svgwrap" id="mod-svg"><h2>结构导图</h2><svg class="mmx-svg" viewBox="0 0 1120 406" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="人生 全书精读">
 <rect x="0" y="0" width="1120" height="406" fill="none"/>
 <style>.mmx-svg text{font-family:"Noto Serif SC",Georgia,serif}.mmx-svg .t1{font-size:15px;fill:#2f2a24;font-weight:600}.mmx-svg .t2{font-size:12px;fill:#5c5347}.mmx-svg .t3{font-size:10.5px;fill:#8a8272}.mmx-svg .rt{font-size:13px;fill:#f7f3ea;font-weight:600}.mmx-svg .ln{stroke:#cfc6b4;stroke-width:1.4;fill:none}</style>
 <rect x="28" y="159" width="262" height="52" rx="10" fill="#3d372e"/>
@@ -102,7 +164,7 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
 <text class="t2" x="714" y="313">到美国作为旅行与认知的终点。</text>
 <path class="ln" d="M692 309 L700 309"/>
 </svg></section>
-<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">一句话主旨</h2><p class="mmx-mod-note">本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。</p><p class="mmx-oneline">通过全球摩托车旅行实地考察各国经济潜力与社会秩序，验证投资与生存的全球化逻辑。</p></section>
+<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">核心主旨</h2><p class="mmx-oneline">通过全球摩托车旅行实地考察各国经济潜力与社会秩序，验证投资与生存的全球化逻辑。</p></section>
 <section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" id="mod-merged_guide"><h2 id="merged-guide-title">AI领读</h2>
 <style>
 /* merged_guide 章内：AI 大纲原生深层样式 */
@@ -4051,12 +4113,12 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
       </div></details>
   </div>
 </section>
-<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点初判</h2><p class="mmx-mod-note">按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。</p><ul class="mmx-views"><li><b>启程与中欧观察</b>——记录旅行准备及对中欧经济形势的初步预判，确立了作者通过实地考察评估投资环境的视角。</li><li><b>穿越欧亚与中国探索</b>——从巴尔干半岛进入中国，对比不同体制下的经济活力与基础设施现状，重点关注中国企业家的潜力。</li><li><b>苏联体制的实地评估</b>——深入苏联腹地，通过物资供应、工业产出与社会生活细节，剖析其庞大资源与落后体制的矛盾。</li><li><b>非洲的动荡与机遇</b>——跨越撒哈拉至南非，记录了从经济崩溃到资源垄断的多种社会形态，反映了非洲地区的复杂投资环境。</li><li><b>美洲大陆的地理与经济</b>——从澳大利亚转战南美至北美，考察泛美公路沿线的地缘经济，并以回到美国作为旅行与认知的终点。</li></ul></section>
-<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句 · 持续积累</h2><p class="mmx-mod-note">以下原句取自本书 AI 大纲落库的原文摘录（book_outline.quote），按大纲顺序节选，非 AI 生成；更多见逐章深读页。</p><ol class="mmx-qlist"><li><blockquote>「父亲在二战时被派往德国担任炮兵军官。」</blockquote><cite>飞向苏联</cite></li><li><blockquote>「父亲和他的弟弟合伙在亚拉巴马州的迪莫波利斯开办了一家工厂。」</blockquote><cite>飞向苏联</cite></li><li><blockquote>「母亲任由我们五兄弟相互争斗、打闹嬉戏。」</blockquote><cite>飞向苏联</cite></li><li><blockquote>「在5岁的时候我有了第一份工作，是在棒球比赛结束后捡拾瓶子。」</blockquote><cite>飞向苏联</cite></li><li><blockquote>「1948年，我争取到在儿童棒球联赛的比赛中售卖软饮料和花生的机会。」</blockquote><cite>飞向苏联</cite></li><li><blockquote>「父亲后来又郑重其事地贷给他这个年仅6岁的儿子100美元，让我买一台花生烘烤机。」</blockquote><cite>飞向苏联</cite></li><li><blockquote>「5年后，在经商道路上我获得了利润，偿还了100美元创业贷款后，还在银行存了100美元。」</blockquote><cite>飞向苏联</cite></li><li><blockquote>「作者在耶鲁的第一个周日，所有的同学都给家里打电话。」</blockquote><cite>飞向苏联</cite></li><li><blockquote>「作者也拿起电话，告诉接线员我想呼叫亚拉巴马的迪莫波利斯。」</blockquote><cite>飞向苏联</cite></li><li><blockquote>「作者成为亚拉巴马州迪莫波利斯历史上，在泰晤士河上掌舵参加牛津——剑桥赛艇对抗赛的第一人。」</blockquote><cite>飞向苏联</cite></li></ol></section>
-<section class="mmx-mod" aria-labelledby="coreask" id="mod-coreask"><h2 id="coreask">核心追问（来自深读）</h2><p class="mmx-mod-note">跨章主题的深读追问，由模型基于全书大纲与原文摘录撰写；逐章的追问收在每个章条目里。</p><div class="mmx-qa"><p class="mmx-q">作者为何放弃华尔街的职位去骑摩托环球</p><p class="mmx-a">关于「作者为何放弃华尔街的职位去骑摩托环球」：大纲显示《》以《飞向苏联》起手、到《回家》收束，核心脉络与「作者出生于1942年，是五兄弟中的老大」相关。以上为大纲条目推断，未亲读正文，读后请核对。</p></div><div class="mmx-qa"><p class="mmx-q">在苏联与东欧章节里，作者反复记录的「短缺」有哪些具体表现</p><p class="mmx-a">关于「在苏联与东欧章节里，作者反复记录的「短缺」有哪些具体」：大纲显示《》以《飞向苏联》起手、到《回家》收束，核心脉络与「作者出生于1942年，是五兄弟中的老大」相关。以上为大纲条目推断，未亲读正文，读后请核对。</p></div><div class="mmx-qa"><p class="mmx-q">塔碧莎在旅途中的处境，如何影响作者的选择与叙事</p><p class="mmx-a">就「塔碧莎在旅途中的处境，如何影响作者的选择与叙」而言，大纲从《飞向苏联》（作者出生于1942年，是五兄弟中的老大）铺到《回家》（我们在得克萨斯州的布朗斯维尔入境回到美国），首尾形成对照——这一安排是否成立，需读正文确认。（大纲推断，未亲读）</p></div></section>
-<section class="mmx-mod" aria-labelledby="aiask" id="mod-aiask"><h2 id="aiask">AI 问书</h2><p class="mmx-mod-note">下方内容为本书级 AI 问书整理，由云端 AI 阅读流程基于本书大纲、章节锚点与热门划线生成。</p><div class="mmx-qa"><p class="mmx-q">作者骑摩托环游世界，是在写旅行攻略还是投资分析？</p><p class="mmx-a">锚点写「我想以地面旅行的方式认知这个世界，了解我们生活的这个星球」，又反复标记「年轻人省下的每一元钱……适当投资……20倍回报」。他不是写攻略，而是用车轮丈量「哪里值得投」：泛美公路破旧=拉美整合失败，苏联「农业丰收却运输受阻食品短缺」=体制错配。旅行是方法，判断各国经济潜力才是目的。</p></div><div class="mmx-qa"><p class="mmx-q">他对「中国企业家」的判断准吗？</p><p class="mmx-a">锚点：「中国的企业家正全力以赴地经营企业，20年之后，他们将跻身世界上最优秀的企业家行列」。这是作者1980年代在中国实地观察后下的注，后来被反复引用为「神预言」。但他也记录反面：旅游局官员「对我们驱车前往感到惊慌失措，并威胁说要请军队介入」——他看的是民间活力，也看体制摩擦，结论并不盲目乐观。</p></div><div class="mmx-qa"><p class="mmx-q">为什么说「达里恩地带」是全书的经济隐喻？</p><p class="mmx-a">锚点：「达里恩地带是一条通向南美洲的路，势必会带来空前的旅游繁荣」。这是泛美公路唯一断点（巴拿马—哥伦比亚间无路），作者用它隐喻「物理连接的缺失如何限制区域繁荣」。他把基础设施当作经济的血管：巴拿马运河「太落后太狭窄」、赞比亚「公路铺砌完好货币未崩溃」，都在说同一个道理——连通性决定命运。</p></div></section>
-<section class="mmx-mod" aria-labelledby="higher" id="mod-higher"><h2 id="higher">用更高维度的知识看这本书</h2><p class="mmx-mod-note">下方内容由云端 AI 阅读流程生成：把本书放回知识史与理论框架中重读，区分书中主张、外部证据与综合分析。</p><p>【书中主张】作者以摩托车实地旅行验证「投资与生存的全球化逻辑」，主张一个地区的潜力取决于连通性、制度与人的活力：苏联资源丰但物流失灵、中国民间活力强但官僚摩擦、非洲资源丰富却动荡。【外部证据】书中数据点（苏联蕴藏全球1/4石油、40%铁矿石、1/3磷酸盐；戴比尔斯垄断钻石定价）可与同期《经济学家》国别报告对照；但作者自陈这是「个人实地观察」，明确不代表严谨学术统计。【综合分析】把本书放回「行走经济学」谱系，其价值在把宏观数据还原为可触的路面、海关与市集，局限在样本受1980年代时间窗与作者个人视角的双重约束。</p><p>【书中主张】他提出「如果日本的资本同中国的劳动力结合，共同开发西伯利亚富饶的资源，将会创造巨大的财富」，把跨国要素组合当作增长解药，也写「边境的繁忙表明该国的开放程度」。【外部证据】这一设想在冷战末期显得天真，事后日俄领土争端与西伯利亚开发迟缓证明其未兑现；但「开放度=投资潜力」的判断在东亚 subsequent 崛起中被部分印证。【综合分析】从发展经济学看，本书是「制度经济学+个人冒险」的混合体；其最可贵的，是拒绝只读报表——「熟知你所去地区的文化，否则就会被排斥在外」这句话，至今仍是跨境投资最被低估的变量。</p></section>
-<section class="mmx-mod" aria-labelledby="verify" id="mod-verify"><h2 id="verify">阅读时要验证的问题</h2><p class="mmx-mod-note">下方由云端 AI 阅读流程生成：读时需核对的原文、数字与论点（关键数据出处、个案代表性、类比限度）。</p><ul class="mmx-views"><li>「苏联蕴藏全世界至少1/4石油沉积物、40%铁矿石、1/3磷酸盐」——核对1980年代苏联地质储量公开数据，确认该比例口径（占全球已探明储量），避免把作者估算当精确年报。</li><li>「20年之后，他们将跻身世界上最优秀的企业家行列」——核查本书初版年代（作者1980年退休后旅行，书约1990年代初），确认「20年」指向约2010年，评估该预言与实际中国民企崛起的吻合度。</li><li>「达里恩地带是泛美公路唯一断点」——核查地理事实（巴拿马Darién Gap确无铺装公路），确认作者观察准确，区分文学想象与真实地貌。</li></ul></section>
-<section class="mmx-mod" aria-labelledby="thennow" id="mod-thennow"><h2 id="thennow">当年与今天 · 初步对照</h2><p class="mmx-mod-note">下方由云端 AI 阅读流程生成：区分作者当年所能知晓与后来才显现的事实，给出今日可迁移的启发。</p><p>作者当年（1980–90年代旅行）所能知晓的，是冷战末期两极格局、苏联计划经济困境与发展中国家债务危机；他写不出后来中国入世、互联网与供应链全球化会如何改写他笔下的「潜力排名」。</p><p>后来显现的事实是：他对中国企业家的乐观判断大体兑现，而「日本资本+中国劳力开发西伯利亚」的设想因领土争端落空；可迁移的启发是——他最朴素的法则（连通性、开放度、文化熟知、长周期投资）在今天的跨境与跨行业决策里依然有效，只是「地面旅行」换成了数据尽调。</p></section>
+<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点</h2><ul class="mmx-views"><li><b>启程与中欧观察</b>——记录旅行准备及对中欧经济形势的初步预判，确立了作者通过实地考察评估投资环境的视角。</li><li><b>穿越欧亚与中国探索</b>——从巴尔干半岛进入中国，对比不同体制下的经济活力与基础设施现状，重点关注中国企业家的潜力。</li><li><b>苏联体制的实地评估</b>——深入苏联腹地，通过物资供应、工业产出与社会生活细节，剖析其庞大资源与落后体制的矛盾。</li><li><b>非洲的动荡与机遇</b>——跨越撒哈拉至南非，记录了从经济崩溃到资源垄断的多种社会形态，反映了非洲地区的复杂投资环境。</li><li><b>美洲大陆的地理与经济</b>——从澳大利亚转战南美至北美，考察泛美公路沿线的地缘经济，并以回到美国作为旅行与认知的终点。</li></ul></section>
+<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句</h2><ol class="mmx-qlist"><li><blockquote>「父亲在二战时被派往德国担任炮兵军官。」</blockquote><cite>飞向苏联</cite></li><li><blockquote>「父亲和他的弟弟合伙在亚拉巴马州的迪莫波利斯开办了一家工厂。」</blockquote><cite>飞向苏联</cite></li><li><blockquote>「母亲任由我们五兄弟相互争斗、打闹嬉戏。」</blockquote><cite>飞向苏联</cite></li><li><blockquote>「在5岁的时候我有了第一份工作，是在棒球比赛结束后捡拾瓶子。」</blockquote><cite>飞向苏联</cite></li><li><blockquote>「1948年，我争取到在儿童棒球联赛的比赛中售卖软饮料和花生的机会。」</blockquote><cite>飞向苏联</cite></li><li><blockquote>「父亲后来又郑重其事地贷给他这个年仅6岁的儿子100美元，让我买一台花生烘烤机。」</blockquote><cite>飞向苏联</cite></li><li><blockquote>「5年后，在经商道路上我获得了利润，偿还了100美元创业贷款后，还在银行存了100美元。」</blockquote><cite>飞向苏联</cite></li><li><blockquote>「作者在耶鲁的第一个周日，所有的同学都给家里打电话。」</blockquote><cite>飞向苏联</cite></li><li><blockquote>「作者也拿起电话，告诉接线员我想呼叫亚拉巴马的迪莫波利斯。」</blockquote><cite>飞向苏联</cite></li><li><blockquote>「作者成为亚拉巴马州迪莫波利斯历史上，在泰晤士河上掌舵参加牛津——剑桥赛艇对抗赛的第一人。」</blockquote><cite>飞向苏联</cite></li></ol></section>
+<section class="mmx-mod" aria-labelledby="coreask" id="mod-coreask"><h2 id="coreask">核心追问</h2><div class="mmx-qa"><p class="mmx-q">作者为何放弃华尔街的职位去骑摩托环球</p><p class="mmx-a">关于「作者为何放弃华尔街的职位去骑摩托环球」：大纲显示《》以《飞向苏联》起手、到《回家》收束，核心脉络与「作者出生于1942年，是五兄弟中的老大」相关。以上为大纲条目推断，未亲读正文，读后请核对。</p></div><div class="mmx-qa"><p class="mmx-q">在苏联与东欧章节里，作者反复记录的「短缺」有哪些具体表现</p><p class="mmx-a">关于「在苏联与东欧章节里，作者反复记录的「短缺」有哪些具体」：大纲显示《》以《飞向苏联》起手、到《回家》收束，核心脉络与「作者出生于1942年，是五兄弟中的老大」相关。以上为大纲条目推断，未亲读正文，读后请核对。</p></div><div class="mmx-qa"><p class="mmx-q">塔碧莎在旅途中的处境，如何影响作者的选择与叙事</p><p class="mmx-a">就「塔碧莎在旅途中的处境，如何影响作者的选择与叙」而言，大纲从《飞向苏联》（作者出生于1942年，是五兄弟中的老大）铺到《回家》（我们在得克萨斯州的布朗斯维尔入境回到美国），首尾形成对照——这一安排是否成立，需读正文确认。（大纲推断，未亲读）</p></div></section>
+<section class="mmx-mod" aria-labelledby="aiask" id="mod-aiask"><h2 id="aiask">AI 问书</h2><div class="mmx-qa"><p class="mmx-q">作者骑摩托环游世界，是在写旅行攻略还是投资分析？</p><p class="mmx-a">锚点写「我想以地面旅行的方式认知这个世界，了解我们生活的这个星球」，又反复标记「年轻人省下的每一元钱……适当投资……20倍回报」。他不是写攻略，而是用车轮丈量「哪里值得投」：泛美公路破旧=拉美整合失败，苏联「农业丰收却运输受阻食品短缺」=体制错配。旅行是方法，判断各国经济潜力才是目的。</p></div><div class="mmx-qa"><p class="mmx-q">他对「中国企业家」的判断准吗？</p><p class="mmx-a">锚点：「中国的企业家正全力以赴地经营企业，20年之后，他们将跻身世界上最优秀的企业家行列」。这是作者1980年代在中国实地观察后下的注，后来被反复引用为「神预言」。但他也记录反面：旅游局官员「对我们驱车前往感到惊慌失措，并威胁说要请军队介入」——他看的是民间活力，也看体制摩擦，结论并不盲目乐观。</p></div><div class="mmx-qa"><p class="mmx-q">为什么说「达里恩地带」是全书的经济隐喻？</p><p class="mmx-a">锚点：「达里恩地带是一条通向南美洲的路，势必会带来空前的旅游繁荣」。这是泛美公路唯一断点（巴拿马—哥伦比亚间无路），作者用它隐喻「物理连接的缺失如何限制区域繁荣」。他把基础设施当作经济的血管：巴拿马运河「太落后太狭窄」、赞比亚「公路铺砌完好货币未崩溃」，都在说同一个道理——连通性决定命运。</p></div></section>
+<section class="mmx-mod" aria-labelledby="higher" id="mod-higher"><h2 id="higher">更高维度</h2><p>【书中主张】作者以摩托车实地旅行验证「投资与生存的全球化逻辑」，主张一个地区的潜力取决于连通性、制度与人的活力：苏联资源丰但物流失灵、中国民间活力强但官僚摩擦、非洲资源丰富却动荡。【外部证据】书中数据点（苏联蕴藏全球1/4石油、40%铁矿石、1/3磷酸盐；戴比尔斯垄断钻石定价）可与同期《经济学家》国别报告对照；但作者自陈这是「个人实地观察」，明确不代表严谨学术统计。【综合分析】把本书放回「行走经济学」谱系，其价值在把宏观数据还原为可触的路面、海关与市集，局限在样本受1980年代时间窗与作者个人视角的双重约束。</p><p>【书中主张】他提出「如果日本的资本同中国的劳动力结合，共同开发西伯利亚富饶的资源，将会创造巨大的财富」，把跨国要素组合当作增长解药，也写「边境的繁忙表明该国的开放程度」。【外部证据】这一设想在冷战末期显得天真，事后日俄领土争端与西伯利亚开发迟缓证明其未兑现；但「开放度=投资潜力」的判断在东亚 subsequent 崛起中被部分印证。【综合分析】从发展经济学看，本书是「制度经济学+个人冒险」的混合体；其最可贵的，是拒绝只读报表——「熟知你所去地区的文化，否则就会被排斥在外」这句话，至今仍是跨境投资最被低估的变量。</p></section>
+<section class="mmx-mod" aria-labelledby="verify" id="mod-verify"><h2 id="verify">阅读验证</h2><ul class="mmx-views"><li>「苏联蕴藏全世界至少1/4石油沉积物、40%铁矿石、1/3磷酸盐」——核对1980年代苏联地质储量公开数据，确认该比例口径（占全球已探明储量），避免把作者估算当精确年报。</li><li>「20年之后，他们将跻身世界上最优秀的企业家行列」——核查本书初版年代（作者1980年退休后旅行，书约1990年代初），确认「20年」指向约2010年，评估该预言与实际中国民企崛起的吻合度。</li><li>「达里恩地带是泛美公路唯一断点」——核查地理事实（巴拿马Darién Gap确无铺装公路），确认作者观察准确，区分文学想象与真实地貌。</li></ul></section>
+<section class="mmx-mod" aria-labelledby="thennow" id="mod-thennow"><h2 id="thennow">往日今时</h2><p>作者当年（1980–90年代旅行）所能知晓的，是冷战末期两极格局、苏联计划经济困境与发展中国家债务危机；他写不出后来中国入世、互联网与供应链全球化会如何改写他笔下的「潜力排名」。</p><p>后来显现的事实是：他对中国企业家的乐观判断大体兑现，而「日本资本+中国劳力开发西伯利亚」的设想因领土争端落空；可迁移的启发是——他最朴素的法则（连通性、开放度、文化熟知、长周期投资）在今天的跨境与跨行业决策里依然有效，只是「地面旅行」换成了数据尽调。</p></section>
 </body>
 </html>

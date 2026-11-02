@@ -6,46 +6,108 @@
 <title>《我是落花生的女儿》｜通读 · 精读</title>
 <link rel="stylesheet" href="../../../assets/css/reading-overview.css"><link rel="stylesheet" href="../../../assets/css/mmx-guide.css"><link rel="stylesheet" href="../../../assets/css/reading-outline.css">
 <style>
-/* 合并页外壳 */
-body{max-width:960px;margin:0 auto;padding:0 18px 80px;}
-.combined-head{padding:34px 0 18px;border-bottom:1px solid #e7e0d2;margin-bottom:8px;}
-.combined-head h1{font-size:26px;margin:0 0 10px;}
+/* ── 外壳与全局阅读节奏 ── */
+body{max-width:880px;margin:0 auto;padding:0 18px 80px;
+  font-size:15px;line-height:1.88;color:#3b453e;background:#f7f8f3;
+  -webkit-font-smoothing:antialiased;}
+.combined-head{padding:30px 0 16px;border-bottom:1px solid #e7e0d2;margin-bottom:4px;}
+.combined-head h1{font:700 23px/1.35 var(--serif);margin:0 0 8px;color:#244b40;}
+.combined-head .eyebrow{font-size:.72rem;letter-spacing:.14em;margin:0 0 6px;}
+.chips{margin:8px 0 0;}
+.chip{font-size:.72rem;padding:2px 10px;}
 /* 锚点导航：固定一排 4 个，等宽对齐 */
-.nav{position:sticky;top:0;z-index:20;background:rgba(255,253,248,.96);backdrop-filter:blur(6px);
-  border-bottom:1px solid #ece4d4;padding:10px 0;margin:14px 0 26px;display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;
-  box-shadow:0 2px 10px rgba(120,100,60,.06);}
-.navlink{font-size:12.5px;color:#5d5443;text-decoration:none;background:#f6f1e6;border:1px solid #e7ddca;
-  border-radius:7px;padding:4px 6px;text-align:center;white-space:nowrap;overflow:hidden;
-  text-overflow:ellipsis;}
-section{scroll-margin-top:64px;}
-/* 一句话主旨：去左侧竖线 */
-.mmx-oneline{border-left:none;padding-left:18px;}
-/* AI领读章内：AI 大纲原生深层样式 */
-.merged-guide .sec{margin:10px 0 14px;padding-left:6px;border-left:2px solid #e5e0d6}
-.merged-guide .sec h4{font:600 .98rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.6em 0 .3em}
-.merged-guide ul.point{margin:.3em 0;padding-left:20px}
-.merged-guide ul.point>li{margin:.35em 0}
-.merged-guide ul.quote{margin:.25em 0 .25em 20px;padding-left:18px;list-style:none}
-.merged-guide ul.quote::before{content:"原句";display:block;font-size:.72rem;color:#bf8247;
-  letter-spacing:.1em;margin:.15em 0 .1em;font-weight:600}
-.merged-guide ul.quote.quote-node{margin-top:.5em;padding-top:.4em;border-top:1px dashed #eadfc9}
+.nav{position:sticky;top:0;z-index:20;background:rgba(247,248,243,.96);backdrop-filter:blur(6px);
+  border-bottom:1px solid #ece4d4;padding:10px 0;margin:12px 0 20px;display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;
+  box-shadow:0 2px 10px rgba(120,100,60,.05);}
+.navlink{font-size:12px;color:#5d5443;text-decoration:none;background:#fdfbf3;border:1px solid #e8e2d2;
+  border-radius:8px;padding:6px 4px;text-align:center;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;transition:background .15s,color .15s;}
+.navlink:hover{background:#f2efe2;color:#244b40;}
+section{scroll-margin-top:62px;}
+
+/* ── 统一卡片：所有顶层模块（AI领读 / AI 问答 / 其余）一视同仁 ── */
+body>section.mmx-mod,body>section.card,body>section.mmx-svgwrap{
+  background:#fffdf6;border:1px solid #e8e4d5;border-radius:16px;
+  padding:18px 22px;margin:18px 0;
+  box-shadow:0 1px 3px rgba(110,95,60,.05);}
+body>section.mmx-mod>*:first-child,body>section.card>*:first-child,
+body>section.mmx-svgwrap>*:first-child{margin-top:0}
+body>section.mmx-mod>*:last-child,body>section.card>*:last-child,
+body>section.mmx-svgwrap>*:last-child{margin-bottom:0}
+/* 结构导图：图本身留白居中，不与正文抢宽 */
+body>section.mmx-svgwrap>svg.mmx-svg{display:block;width:100%;height:auto;margin:2px auto 0;}
+/* 模块标题：统一大小、弱强调，不与正文抢注意力 */
+body>section.mmx-mod>h2,body>section.card>h2{
+  font:700 1.04rem/1.5 var(--serif);color:#244b40;margin:0 0 11px;
+  padding-left:10px;border-left:3px solid #bf8247;letter-spacing:.01em;}
+/* 正文：字号收小、行距放宽、段间距舒服 */
+body>section.mmx-mod p,body>section.card p,
+body>section.mmx-mod li,body>section.card li{
+  font-size:.9rem;line-height:1.92;color:#4a4436;}
+body>section.mmx-mod p,body>section.card p{margin:.5em 0;}
+body>section.mmx-mod>ul,body>section.mmx-mod>ol,body>section.mmx-mod>div,
+body>section.mmx-mod>p:not(.mmx-mod-note),
+body>section.card:not(.merged-guide)>ul,body>section.card:not(.merged-guide)>ol,
+body>section.card:not(.merged-guide)>div,body>section.card:not(.merged-guide)>p:not(.mmx-mod-note){
+  padding-left:14px;}
+/* 模块说明小字：弱化不抢眼 */
+.mmx-mod-note{font-size:.75rem;color:#8d8878;margin:.1em 0 .75em;line-height:1.7;}
+
+/* ── 内部块统一：卡片里不再套深卡片，一律浅底子块 ── */
+body>section .mmx-pending,body>section .mmx-evib,body>section .aiqa-item{
+  background:#fbfaf2;border:1px solid #eee9d8;border-radius:12px;
+  padding:13px 16px;margin:.65em 0;}
+body>section .mmx-evib ul{padding-left:1.15em;}
+/* 一句话主旨：去左侧竖线 + 收敛字号 */
+.mmx-oneline{font-size:.98rem;line-height:1.85;color:#3a352c;margin:.2em 0 0;
+  padding:12px 16px;background:#fbfaf4;border-left:none;border-radius:12px;}
+/* 核心观点 / 验证清单：虚线分隔 + 收紧行距 */
+.mmx-views li{padding:.5em 0 .5em 0;font-size:.9rem;line-height:1.88;}
+/* 原文金句 */
+.mmx-qlist li{padding:.6em 0 .6em 2.2em;}
+.mmx-qlist blockquote{font-size:.89rem;line-height:1.9;}
+.mmx-qlist cite{font-size:.72rem;}
+/* 核心追问：问句加重、答句放松 */
+.mmx-qa{margin:.7em 0;padding-left:12px;border-left:3px solid #e5dfcd;}
+.mmx-qa .mmx-q{font-size:.9rem;font-weight:700;color:#2f3a33;line-height:1.8;margin:0 0 .25em;}
+.mmx-qa .mmx-a{font-size:.88rem;line-height:1.95;color:#4a4436;margin:0;}
+
+/* ── AI 问书专项：外层容器透明，问答条目才是阅读单元 ── */
+#mod-aiask .mmx-ask{background:transparent;border:0;border-radius:0;padding:0;margin:0;}
+#mod-aiask .aiqa-item{margin:.6em 0;padding:14px 16px 15px;}
+#mod-aiask .aiqa-item h3{font:700 .93rem/1.7 var(--serif);color:#2f5b49;margin:0 0 .4em;
+  padding:0;border:0;}
+#mod-aiask .aiqa-item h3:before{content:"问　";color:#bf8247;font-weight:700;}
+#mod-aiask .aiqa-item p{font-size:.88rem;line-height:1.95;color:#4a4436;margin:.4em 0;}
+#mod-aiask .aiqa-item ul{margin:.35em 0;padding-left:1.1em;}
+#mod-aiask .aiqa-item li{font-size:.87rem;line-height:1.88;margin:.18em 0;color:#4a4436;}
+#mod-aiask .aiqa-item li::marker{color:#c0a06a;}
+/* 逐章追问（details 形态）：摘要行也收敛 */
+.mmx-ask>summary{font-size:.87rem;line-height:1.7;padding:2px 0;}
+.mmx-askbody{font-size:.88rem;line-height:1.9;}
+
+/* AI领读章内：AI 大纲原生深层样式（字号同步收小） */
+.merged-guide .sec{margin:9px 0 12px;padding-left:6px;border-left:2px solid #e5e0d6}
+.merged-guide .sec h4{font:600 .93rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.5em 0 .25em}
+.merged-guide ul.point{margin:.25em 0;padding-left:20px}
+.merged-guide ul.point>li{margin:.3em 0}
+.merged-guide ul.quote{margin:.22em 0 .22em 20px;padding-left:18px;list-style:none}
+.merged-guide ul.quote::before{content:"原句";display:block;font-size:.7rem;color:#bf8247;
+  letter-spacing:.1em;margin:.12em 0 .08em;font-weight:600}
+.merged-guide ul.quote.quote-node{margin-top:.45em;padding-top:.35em;border-top:1px dashed #eadfc9}
 .merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
-.merged-guide ul.quote>li{color:#4a4436;font-size:.93rem;margin:.2em 0;padding-left:10px;border-left:2px solid #bf8247}
-/* 模块内子内容（AI领读除外，它有专属深层样式）：左缩进 + 正文与标题分层 */
-section.mmx-mod>ul,section.mmx-mod>ol,section.mmx-mod>div,
-section.mmx-mod>p:not(.mmx-mod-note),
-section.card:not(.merged-guide)>ul,section.card:not(.merged-guide)>ol,
-section.card:not(.merged-guide)>div,section.card:not(.merged-guide)>p:not(.mmx-mod-note){
-  padding-left:16px;}
-section.mmx-mod li,section.mmx-mod p:not(.mmx-mod-note),
-section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mod-note){
-  color:#4a4436;font-size:.93rem;line-height:1.78;}
+.merged-guide ul.quote>li{color:#4a4436;font-size:.88rem;line-height:1.85;margin:.18em 0;padding-left:10px;border-left:2px solid #bf8247}
 /* 核心观点初判：外链 mmx-guide.css 的「观点N」前缀是绝对定位，在本页版式里和标题叠字，
    且此前要求去掉「观点1/2/3」前缀 —— 这里整条关掉（外链 CSS 不在页面内，只能内联覆盖）。 */
 .mmx-views li{padding-left:0 !important;}
 .mmx-views li:before,.mmx-views li::before{
   content:none !important;display:none !important;counter-increment:none !important;}
+@media(max-width:720px){
+  body{padding:0 12px 60px;font-size:14.5px;}
+  body>section.mmx-mod,body>section.card{padding:15px 16px;border-radius:14px;}
+  .nav{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
 </style>
 </head>
 <body>
@@ -54,8 +116,8 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
   <h1>《我是落花生的女儿》</h1>
   <div class="chips"><span class="chip">通读 + 精读</span><span class="chip">AI领读</span><span class="chip">AI 生产</span></div>
 </header>
-<nav class="nav"><a class="navlink" href="#mod-svg">全书结构导图</a><a class="navlink" href="#mod-oneline">一句话主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a><a class="navlink" href="#mod-aiask">AI 问书</a><a class="navlink" href="#mod-coreask">核心追问</a><a class="navlink" href="#mod-higher">更高维度</a><a class="navlink" href="#mod-verify">阅读验证</a><a class="navlink" href="#mod-thennow">当年与今天</a></nav>
-<section class="mmx-svgwrap" id="mod-svg">
+<nav class="nav"><a class="navlink" href="#mod-svg">结构导图</a><a class="navlink" href="#mod-oneline">核心主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a><a class="navlink" href="#mod-aiask">AI 问书</a><a class="navlink" href="#mod-coreask">核心追问</a><a class="navlink" href="#mod-higher">更高维度</a><a class="navlink" href="#mod-verify">阅读验证</a><a class="navlink" href="#mod-thennow">往日今时</a></nav>
+<section class="mmx-svgwrap" id="mod-svg"><h2>结构导图</h2>
 <svg class="mmx-svg" viewBox="0 0 1120 406" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="我是落花生的女儿 全书精读">
 <rect x="0" y="0" width="1120" height="406" fill="none"/>
 <style>.mmx-svg text{font-family:"Noto Serif SC",Georgia,serif}.mmx-svg .t1{font-size:15px;fill:#2f2a24;font-weight:600}.mmx-svg .t2{font-size:12px;fill:#5c5347}.mmx-svg .t3{font-size:10.5px;fill:#8a8272}.mmx-svg .rt{font-size:13px;fill:#f7f3ea;font-weight:600}.mmx-svg .ln{stroke:#cfc6b4;stroke-width:1.4;fill:none}</style>
@@ -98,7 +160,7 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
 <text class="t2" x="714" y="305">含「第八章 就业省第二监狱」至「第六章 归结」</text>
 <path class="ln" d="M692 309 L700 309"/>
 </svg></section>
-<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">一句话主旨</h2><p class="mmx-mod-note">本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。</p><p class="mmx-oneline">《我是落花生的女儿》共 31 章，按章序折成 5 段主干（第 1–7 章、第 8–14 章、第 15–21 章）；每章的要点与原句均逐字取自本书 AI 大纲，未做人工解读。</p></section>
+<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">核心主旨</h2><p class="mmx-oneline">《我是落花生的女儿》共 31 章，按章序折成 5 段主干（第 1–7 章、第 8–14 章、第 15–21 章）；每章的要点与原句均逐字取自本书 AI 大纲，未做人工解读。</p></section>
 <section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" id="mod-merged_guide"><h2 id="merged-guide-title">AI领读</h2>
 <style>
 /* merged_guide 章内：AI 大纲原生深层样式 */
@@ -4812,12 +4874,12 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
       </div></details>
   </div>
 </section>
-<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点初判</h2><p class="mmx-mod-note">按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。</p><ul class="mmx-views"><li><b>第 1–7 章</b>——含「第二章 天崩」至「第三章 市立第三女中」</li><li><b>第 8–14 章</b>——含「第四章 山雨欲来」至「第四章 拘押」</li><li><b>第 15–21 章</b>——含「第五章 为囚第一年」至「第五章 麻花又拧了一转」</li><li><b>第 22–28 章</b>——含「后语」至「第六章 北京农业大学」</li><li><b>第 29–31 章</b>——含「第八章 就业省第二监狱」至「第六章 归结」</li></ul></section>
-<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句 · 持续积累</h2><p class="mmx-mod-note">以下原句取自本书大纲落库的原文摘录，按大纲顺序节选，非 AI 生成；更多见逐章深读页。</p><ol class="mmx-qlist"><li><blockquote>「爸爸感冒发烧，躺了一天，已经退烧了，还在家里休养着。」</blockquote><cite>第二章 天崩</cite></li><li><blockquote>「妈妈出去给他买东西回来，忽听到她大喊一声，叫着：“快来人！怎么啦！”。」</blockquote><cite>第二章 天崩</cite></li><li><blockquote>「我和哥哥被领到房门外，过了一会儿，妈妈走了出来，哥哥一下扑上去大哭大喊：“爸爸死了呀！爸爸死了呀！”。」</blockquote><cite>第二章 天崩</cite></li><li><blockquote>「妈妈躺在床旁的沙发上，连声哭着说：“怎样让你爸爸活过来呀！”。」</blockquote><cite>第二章 天崩</cite></li><li><blockquote>「爸爸一进门，马上“结业”，我俩就像放飞的小鸟一样聚到爸爸身旁，快乐无边。」</blockquote><cite>第二章 天崩</cite></li><li><blockquote>「爸爸爱旅游，到农村去也能招来一帮村童，把带来的食品分给他们，和他们交谈说笑，还和他们一块儿做游戏。」</blockquote><cite>第二章 天崩</cite></li><li><blockquote>「爸爸爱说笑话，随时随地能找到笑料，也会拿妈妈和我们俩来调侃，但对婆婆，绝不因她的出身而不尊她为长辈。」</blockquote><cite>第二章 天崩</cite></li><li><blockquote>「爸爸还真有艺术的天赋，有一年圣诞节在合一堂开联欢会，爸爸表演小脚女人打高尔夫球，博得全场叫好，大家笑得前仰后合。」</blockquote><cite>第二章 天崩</cite></li><li><blockquote>「爸爸的一位台湾同乡柯政和先生是位音乐人，爸爸和他合作译过许多外国名歌，也写过许多歌词，有时候也自己谱曲。」</blockquote><cite>第二章 天崩</cite></li><li><blockquote>「爸爸的朋友陈乐素先生(陈垣公的儿子)是史学家，中药是他家祖业，在乡下有房子，我们也去过。」</blockquote><cite>第二章 天崩</cite></li></ol></section>
-<section class="mmx-mod" aria-labelledby="aiask" id="mod-aiask"><h2 id="aiask">AI 问书</h2><p class="mmx-mod-note">下方内容为本书级 AI 问书整理，由云端 AI 阅读流程基于本书大纲、章节锚点与热门划线生成。</p><div class="mmx-qa"><p class="mmx-q">要认识许地山这个人，书里哪一节最值得读？</p><p class="mmx-a">「天崩」那一章里回忆父亲的部分。它写的不是学问，是生活：爸爸一进门，她和哥哥就像放飞的小鸟聚到他身旁；有一年圣诞节在合一堂开联欢会，他表演小脚女人打高尔夫球，博得全场叫好；他会吹笙、会唱闽南戏，和台湾同乡柯政和合作译过许多外国名歌；应《新儿童》主编黄庆云之请，编了《桃金娘》《萤灯》两篇童话。还有一条细节能看出家风：梁漱溟到香港办报就住在他家，因为不吃肉，就在他家搭伙。</p></div><div class="mmx-qa"><p class="mmx-q">2771 人划的那句「爸爸死了，自始至终我没有号哭」——她是在克制，还是在诚实？</p><p class="mmx-a">更像诚实，而且她说清了理由：「我记得爸爸爱我，从我记事到他去世，六年的时间，桩桩件件我记得很多，记得很清。」不哭不等于不痛；同一条里她还写妈妈说她「没有感情，属无情无义之类」，可见这个反应在当时就被误读过。3290 人划的那句「人或早些或迟些，都有一件首先记得的事」，可以当作整本回忆录的方法论：她记的是桩桩件件，不是情绪。</p></div><div class="mmx-qa"><p class="mmx-q">书里哪一幕最能说明「落花生」这条价值指令是怎么传下来的？</p><p class="mmx-a">2159 人划的那条：妈妈一向很注意仪表，即使爸爸去世后也是衣着平整、发卷顺贴、腰身挺直、步伐稳健，「没想到，她竟能和搬运工一样扛箱子，这一幕给我的印象很深，影响很大」。落花生不是一种性格，是一种在体面与苦活之间不切换自我认同的能力——这一幕比任何议论都更能说明，她后来为什么能扛住那些年。</p></div></section>
-<section class="mmx-mod" aria-labelledby="coreask" id="mod-coreask"><h2 id="coreask">核心追问（来自深读）</h2><p class="mmx-mod-note">跨章主题的深读追问，由云端 AI 阅读流程基于全书大纲、章节锚点与热门划线撰写；逐章的追问收在每个章条目里。</p><div class="mmx-qa"><p class="mmx-q">书名自称「落花生的女儿」，可全书最用力的部分不是童年，而是后来的牢狱——为什么？</p><p class="mmx-a">因为「落花生」在书里不是遗传标签，是一条价值指令。2656 人划的那句「不羡靓果枝头，甘为土中一颗小花生，尽力作为『有用的人』，也很充实自信」，既是父亲那篇短文的意思，也是她后半生的用法：被埋在土里、看不见光的时候，仍能算「有用」。2114 人划的那条说得更直接——爸爸的乐观豁达「支持了我的一生，润色了我的生活，受用未尽」。</p></div><div class="mmx-qa"><p class="mmx-q">「我相信快乐得自己给自己找」（2160 人划线）的边界在哪里？会不会把结构性的处境个人化？</p><p class="mmx-a">边界在于这句话不是天真，而是她算过风险之后的选择。2268 人划的那条写她「知道了有一些人是不能看别人过好日子的，存着不善的心理」；2256 人划的那条更具体：从敬芳的冤案里她得出两条经验——不和不了解底细的人走得太近，以及「自此我不再写日记，也不留信件」。所以边界很清楚：这套技术在极端处境里有效，但把它推广成普遍人生建议，就会把环境的责任转嫁给个人。</p></div><div class="mmx-qa"><p class="mmx-q">全书最大的反例出在哪一条？</p><p class="mmx-a">出在 2048 人划的那条：一位劳改干部对她这个「敌人」尚且关心体谅、拿她当个人，而恋爱结婚、恩爱相处六年之久的丈夫，时过境迁就视她为害，还要借离婚给自己捞政治资本。如果「落花生」式的人格能解释她怎样活下来，它解释不了为什么最亲近的人反而最先撤离——这提醒读者：幸存与人际关系的质量不是同一件事，能扛住环境，不等于能留住人。</p></div></section>
-<section class="mmx-mod" aria-labelledby="higher" id="mod-higher"><h2 id="higher">用更高维度的知识看这本书</h2><p class="mmx-mod-note">下方内容由云端 AI 阅读流程生成：把本书放回知识史与理论框架中重读，区分书中主张、外部证据与综合分析。</p><p>【书中主张】她把「有用的人」当作自我定义的锚，并把社会地位的涨落视为外部赋予——2628 人划的那句「社会地位的高下是当政者予以的，自己还是那个自己，并没有什么可自诩的」。【外部证据】这类叙述在中国现代知识分子回忆录里有一条可辨识的传统：杨绛《干校六记》以「哀而不伤」的笔法把大事件压进日常细节；在西方同类传统里，普里莫·莱维《这是不是个人》同样以「保留日常技艺与人的尺度」作为存活的证据。【综合分析】本书的罕见之处在于跨度：它从 1941 年前后香港的文化圈（全家最常去陈寅恪家，《大公报》名记者杨刚是家中常客，《新儿童》主编黄庆云上门约稿）一路写到后来的「拘押」「为囚第一年」「五年南兵营」诸章。多数同类回忆录只写后一半，她把前一半也写足了，这才让「社会地位是外部赋予」这句话有了对照物——她确实见过另一种生活。</p><p>【书中主张】3810 人划的那句「造作时是苦，希望时是乐。临事时是苦，回想时是乐」——把苦与乐切成四个时态，等于承认回忆与经历可以是两件事。【外部证据】现代心理学对此有大量研究：卡尼曼区分「体验自我」与「记忆自我」，并提出峰终定律与「时长忽略」，说明人对一段经历的评价主要由峰值与结尾决定，这正好解释了为什么「临事时苦、回想时乐」在经验上成立。【综合分析】但回忆录天然是「记忆自我」的产物，带有事后整饰。读这本书要分层：2159 人划的「妈妈和搬运工一样扛箱子」、2405 人划的「家政课的烹饪实习班我不敢参加，因为得交不少材料费」这类具体画面，是可靠的证词；而概括性的情绪判断，应放回具体情节里复核。</p></section>
-<section class="mmx-mod" aria-labelledby="verify" id="mod-verify"><h2 id="verify">阅读时要验证的问题</h2><p class="mmx-mod-note">下方由云端 AI 阅读流程生成：读时需核对的原文、数字与论点（关键数据出处、个案代表性、类比限度）。</p><ul class="mmx-views"><li>史实细节：书中记 1941 年 12 月 8 日日本飞机轰炸香港、母亲带兄妹到中区主教大堂受洗；此前的「爸爸在家中猝然去世」需核对许地山病逝于香港的确切日期与死因。作者一家从香港经广州湾赤坎到柳州（柳州香山慈幼院小学）、再卷入湘桂大撤退、在贵阳马鞍山国立十四中就学的一段路线，需与抗战时期交通与学校内迁的史料对读。</li><li>人物与版本：书中出现的陈寅恪、梁漱溟、《大公报》记者杨刚、《新儿童》主编黄庆云，以及「我见到的齐白石」一节，均属作者亲历，宜与各自年谱、传记核对时间与场合；本书为作者晚年所写的回忆录，需核对出版版本（不同出版社、是否有删节）与「五十流年似水，万千恩怨已灰」等自作诗的完整文本。</li><li>记忆与立场偏差：作者明写「自此我不再写日记，也不留信件」，意味着 1950 年代之后的关键情节缺少同期文书佐证，主要依靠事后回忆；涉及具体人名（如「敬芳的奇冤」一节）与判决经过的叙述，宜与档案或其他当事人的回忆对读。作者自陈的立场是「不羡靓果枝头」（2656 人划线），读者在引用她对社会地位的评价（2628 人划线）时，应注意这是一种事后形成的自我理解，而非当时的感受记录。</li></ul></section>
-<section class="mmx-mod" aria-labelledby="thennow" id="mod-thennow"><h2 id="thennow">当年与今天 · 初步对照</h2><p class="mmx-mod-note">下方由云端 AI 阅读流程生成：区分作者当年所能知晓与后来才显现的事实，给出今日可迁移的启发。</p><p>【作者当年所能知晓】她写下这些事时，已经能通观自己从大学教授的女儿到囚犯、再到普通老人的完整弧线；但在狱中的那些年里，她并不知道后来恢复名誉会在什么时候发生，也不知道这本书会在几十年后出版。她当时能依靠的只有手边的东西：父亲的乐观豁达（2114 人划线）、「快乐得自己给自己找」的信条（2160 人划线），以及在养猪场、在工厂里学到的具体劳动。【后来才显现】后来才显现的是代价：那些「不写日记、不留信件」的自我保护，同时造成了历史证据的空白——这既是个人的代价，也给后人研究那一段历史留下了困难。</p><p>【今天可迁移的启发】两条。第一条关于自我定义：把「有用」当作自我定义，比把「被承认」当作自我定义更抗压——2656 与 2628 两条划线合起来就是这句话，地位是别人给的，用处是自己定的。第二条关于尊严：从 2159 人划的那条学具体的东西——尊严不是一种情绪状态，而是「能和搬运工一样扛箱子」的行动能力，可以被练习和保持。至于 3692 人划的那句「假如我当时就知道她是我的唯一，无论如何我都要看看她的」——那是这本书里少有的明确遗憾，也提醒读者：有些判断只有事后才成立，别把「回想时是乐」当成对经历的完整结算。</p></section>
+<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点</h2><ul class="mmx-views"><li><b>第 1–7 章</b>——含「第二章 天崩」至「第三章 市立第三女中」</li><li><b>第 8–14 章</b>——含「第四章 山雨欲来」至「第四章 拘押」</li><li><b>第 15–21 章</b>——含「第五章 为囚第一年」至「第五章 麻花又拧了一转」</li><li><b>第 22–28 章</b>——含「后语」至「第六章 北京农业大学」</li><li><b>第 29–31 章</b>——含「第八章 就业省第二监狱」至「第六章 归结」</li></ul></section>
+<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句</h2><ol class="mmx-qlist"><li><blockquote>「爸爸感冒发烧，躺了一天，已经退烧了，还在家里休养着。」</blockquote><cite>第二章 天崩</cite></li><li><blockquote>「妈妈出去给他买东西回来，忽听到她大喊一声，叫着：“快来人！怎么啦！”。」</blockquote><cite>第二章 天崩</cite></li><li><blockquote>「我和哥哥被领到房门外，过了一会儿，妈妈走了出来，哥哥一下扑上去大哭大喊：“爸爸死了呀！爸爸死了呀！”。」</blockquote><cite>第二章 天崩</cite></li><li><blockquote>「妈妈躺在床旁的沙发上，连声哭着说：“怎样让你爸爸活过来呀！”。」</blockquote><cite>第二章 天崩</cite></li><li><blockquote>「爸爸一进门，马上“结业”，我俩就像放飞的小鸟一样聚到爸爸身旁，快乐无边。」</blockquote><cite>第二章 天崩</cite></li><li><blockquote>「爸爸爱旅游，到农村去也能招来一帮村童，把带来的食品分给他们，和他们交谈说笑，还和他们一块儿做游戏。」</blockquote><cite>第二章 天崩</cite></li><li><blockquote>「爸爸爱说笑话，随时随地能找到笑料，也会拿妈妈和我们俩来调侃，但对婆婆，绝不因她的出身而不尊她为长辈。」</blockquote><cite>第二章 天崩</cite></li><li><blockquote>「爸爸还真有艺术的天赋，有一年圣诞节在合一堂开联欢会，爸爸表演小脚女人打高尔夫球，博得全场叫好，大家笑得前仰后合。」</blockquote><cite>第二章 天崩</cite></li><li><blockquote>「爸爸的一位台湾同乡柯政和先生是位音乐人，爸爸和他合作译过许多外国名歌，也写过许多歌词，有时候也自己谱曲。」</blockquote><cite>第二章 天崩</cite></li><li><blockquote>「爸爸的朋友陈乐素先生(陈垣公的儿子)是史学家，中药是他家祖业，在乡下有房子，我们也去过。」</blockquote><cite>第二章 天崩</cite></li></ol></section>
+<section class="mmx-mod" aria-labelledby="aiask" id="mod-aiask"><h2 id="aiask">AI 问书</h2><div class="mmx-qa"><p class="mmx-q">要认识许地山这个人，书里哪一节最值得读？</p><p class="mmx-a">「天崩」那一章里回忆父亲的部分。它写的不是学问，是生活：爸爸一进门，她和哥哥就像放飞的小鸟聚到他身旁；有一年圣诞节在合一堂开联欢会，他表演小脚女人打高尔夫球，博得全场叫好；他会吹笙、会唱闽南戏，和台湾同乡柯政和合作译过许多外国名歌；应《新儿童》主编黄庆云之请，编了《桃金娘》《萤灯》两篇童话。还有一条细节能看出家风：梁漱溟到香港办报就住在他家，因为不吃肉，就在他家搭伙。</p></div><div class="mmx-qa"><p class="mmx-q">2771 人划的那句「爸爸死了，自始至终我没有号哭」——她是在克制，还是在诚实？</p><p class="mmx-a">更像诚实，而且她说清了理由：「我记得爸爸爱我，从我记事到他去世，六年的时间，桩桩件件我记得很多，记得很清。」不哭不等于不痛；同一条里她还写妈妈说她「没有感情，属无情无义之类」，可见这个反应在当时就被误读过。3290 人划的那句「人或早些或迟些，都有一件首先记得的事」，可以当作整本回忆录的方法论：她记的是桩桩件件，不是情绪。</p></div><div class="mmx-qa"><p class="mmx-q">书里哪一幕最能说明「落花生」这条价值指令是怎么传下来的？</p><p class="mmx-a">2159 人划的那条：妈妈一向很注意仪表，即使爸爸去世后也是衣着平整、发卷顺贴、腰身挺直、步伐稳健，「没想到，她竟能和搬运工一样扛箱子，这一幕给我的印象很深，影响很大」。落花生不是一种性格，是一种在体面与苦活之间不切换自我认同的能力——这一幕比任何议论都更能说明，她后来为什么能扛住那些年。</p></div></section>
+<section class="mmx-mod" aria-labelledby="coreask" id="mod-coreask"><h2 id="coreask">核心追问</h2><div class="mmx-qa"><p class="mmx-q">书名自称「落花生的女儿」，可全书最用力的部分不是童年，而是后来的牢狱——为什么？</p><p class="mmx-a">因为「落花生」在书里不是遗传标签，是一条价值指令。2656 人划的那句「不羡靓果枝头，甘为土中一颗小花生，尽力作为『有用的人』，也很充实自信」，既是父亲那篇短文的意思，也是她后半生的用法：被埋在土里、看不见光的时候，仍能算「有用」。2114 人划的那条说得更直接——爸爸的乐观豁达「支持了我的一生，润色了我的生活，受用未尽」。</p></div><div class="mmx-qa"><p class="mmx-q">「我相信快乐得自己给自己找」（2160 人划线）的边界在哪里？会不会把结构性的处境个人化？</p><p class="mmx-a">边界在于这句话不是天真，而是她算过风险之后的选择。2268 人划的那条写她「知道了有一些人是不能看别人过好日子的，存着不善的心理」；2256 人划的那条更具体：从敬芳的冤案里她得出两条经验——不和不了解底细的人走得太近，以及「自此我不再写日记，也不留信件」。所以边界很清楚：这套技术在极端处境里有效，但把它推广成普遍人生建议，就会把环境的责任转嫁给个人。</p></div><div class="mmx-qa"><p class="mmx-q">全书最大的反例出在哪一条？</p><p class="mmx-a">出在 2048 人划的那条：一位劳改干部对她这个「敌人」尚且关心体谅、拿她当个人，而恋爱结婚、恩爱相处六年之久的丈夫，时过境迁就视她为害，还要借离婚给自己捞政治资本。如果「落花生」式的人格能解释她怎样活下来，它解释不了为什么最亲近的人反而最先撤离——这提醒读者：幸存与人际关系的质量不是同一件事，能扛住环境，不等于能留住人。</p></div></section>
+<section class="mmx-mod" aria-labelledby="higher" id="mod-higher"><h2 id="higher">更高维度</h2><p>【书中主张】她把「有用的人」当作自我定义的锚，并把社会地位的涨落视为外部赋予——2628 人划的那句「社会地位的高下是当政者予以的，自己还是那个自己，并没有什么可自诩的」。【外部证据】这类叙述在中国现代知识分子回忆录里有一条可辨识的传统：杨绛《干校六记》以「哀而不伤」的笔法把大事件压进日常细节；在西方同类传统里，普里莫·莱维《这是不是个人》同样以「保留日常技艺与人的尺度」作为存活的证据。【综合分析】本书的罕见之处在于跨度：它从 1941 年前后香港的文化圈（全家最常去陈寅恪家，《大公报》名记者杨刚是家中常客，《新儿童》主编黄庆云上门约稿）一路写到后来的「拘押」「为囚第一年」「五年南兵营」诸章。多数同类回忆录只写后一半，她把前一半也写足了，这才让「社会地位是外部赋予」这句话有了对照物——她确实见过另一种生活。</p><p>【书中主张】3810 人划的那句「造作时是苦，希望时是乐。临事时是苦，回想时是乐」——把苦与乐切成四个时态，等于承认回忆与经历可以是两件事。【外部证据】现代心理学对此有大量研究：卡尼曼区分「体验自我」与「记忆自我」，并提出峰终定律与「时长忽略」，说明人对一段经历的评价主要由峰值与结尾决定，这正好解释了为什么「临事时苦、回想时乐」在经验上成立。【综合分析】但回忆录天然是「记忆自我」的产物，带有事后整饰。读这本书要分层：2159 人划的「妈妈和搬运工一样扛箱子」、2405 人划的「家政课的烹饪实习班我不敢参加，因为得交不少材料费」这类具体画面，是可靠的证词；而概括性的情绪判断，应放回具体情节里复核。</p></section>
+<section class="mmx-mod" aria-labelledby="verify" id="mod-verify"><h2 id="verify">阅读验证</h2><ul class="mmx-views"><li>史实细节：书中记 1941 年 12 月 8 日日本飞机轰炸香港、母亲带兄妹到中区主教大堂受洗；此前的「爸爸在家中猝然去世」需核对许地山病逝于香港的确切日期与死因。作者一家从香港经广州湾赤坎到柳州（柳州香山慈幼院小学）、再卷入湘桂大撤退、在贵阳马鞍山国立十四中就学的一段路线，需与抗战时期交通与学校内迁的史料对读。</li><li>人物与版本：书中出现的陈寅恪、梁漱溟、《大公报》记者杨刚、《新儿童》主编黄庆云，以及「我见到的齐白石」一节，均属作者亲历，宜与各自年谱、传记核对时间与场合；本书为作者晚年所写的回忆录，需核对出版版本（不同出版社、是否有删节）与「五十流年似水，万千恩怨已灰」等自作诗的完整文本。</li><li>记忆与立场偏差：作者明写「自此我不再写日记，也不留信件」，意味着 1950 年代之后的关键情节缺少同期文书佐证，主要依靠事后回忆；涉及具体人名（如「敬芳的奇冤」一节）与判决经过的叙述，宜与档案或其他当事人的回忆对读。作者自陈的立场是「不羡靓果枝头」（2656 人划线），读者在引用她对社会地位的评价（2628 人划线）时，应注意这是一种事后形成的自我理解，而非当时的感受记录。</li></ul></section>
+<section class="mmx-mod" aria-labelledby="thennow" id="mod-thennow"><h2 id="thennow">往日今时</h2><p>【作者当年所能知晓】她写下这些事时，已经能通观自己从大学教授的女儿到囚犯、再到普通老人的完整弧线；但在狱中的那些年里，她并不知道后来恢复名誉会在什么时候发生，也不知道这本书会在几十年后出版。她当时能依靠的只有手边的东西：父亲的乐观豁达（2114 人划线）、「快乐得自己给自己找」的信条（2160 人划线），以及在养猪场、在工厂里学到的具体劳动。【后来才显现】后来才显现的是代价：那些「不写日记、不留信件」的自我保护，同时造成了历史证据的空白——这既是个人的代价，也给后人研究那一段历史留下了困难。</p><p>【今天可迁移的启发】两条。第一条关于自我定义：把「有用」当作自我定义，比把「被承认」当作自我定义更抗压——2656 与 2628 两条划线合起来就是这句话，地位是别人给的，用处是自己定的。第二条关于尊严：从 2159 人划的那条学具体的东西——尊严不是一种情绪状态，而是「能和搬运工一样扛箱子」的行动能力，可以被练习和保持。至于 3692 人划的那句「假如我当时就知道她是我的唯一，无论如何我都要看看她的」——那是这本书里少有的明确遗憾，也提醒读者：有些判断只有事后才成立，别把「回想时是乐」当成对经历的完整结算。</p></section>
 </body>
 </html>

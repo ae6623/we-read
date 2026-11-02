@@ -6,46 +6,108 @@
 <title>《沧桑十年》｜通读 · 精读</title>
 <link rel="stylesheet" href="../../../assets/css/reading-overview.css"><link rel="stylesheet" href="../../../assets/css/mmx-guide.css"><link rel="stylesheet" href="../../../assets/css/reading-outline.css">
 <style>
-/* 合并页外壳 */
-body{max-width:960px;margin:0 auto;padding:0 18px 80px;}
-.combined-head{padding:34px 0 18px;border-bottom:1px solid #e7e0d2;margin-bottom:8px;}
-.combined-head h1{font-size:26px;margin:0 0 10px;}
+/* ── 外壳与全局阅读节奏 ── */
+body{max-width:880px;margin:0 auto;padding:0 18px 80px;
+  font-size:15px;line-height:1.88;color:#3b453e;background:#f7f8f3;
+  -webkit-font-smoothing:antialiased;}
+.combined-head{padding:30px 0 16px;border-bottom:1px solid #e7e0d2;margin-bottom:4px;}
+.combined-head h1{font:700 23px/1.35 var(--serif);margin:0 0 8px;color:#244b40;}
+.combined-head .eyebrow{font-size:.72rem;letter-spacing:.14em;margin:0 0 6px;}
+.chips{margin:8px 0 0;}
+.chip{font-size:.72rem;padding:2px 10px;}
 /* 锚点导航：固定一排 4 个，等宽对齐 */
-.nav{position:sticky;top:0;z-index:20;background:rgba(255,253,248,.96);backdrop-filter:blur(6px);
-  border-bottom:1px solid #ece4d4;padding:10px 0;margin:14px 0 26px;display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;
-  box-shadow:0 2px 10px rgba(120,100,60,.06);}
-.navlink{font-size:12.5px;color:#5d5443;text-decoration:none;background:#f6f1e6;border:1px solid #e7ddca;
-  border-radius:7px;padding:4px 6px;text-align:center;white-space:nowrap;overflow:hidden;
-  text-overflow:ellipsis;}
-section{scroll-margin-top:64px;}
-/* 一句话主旨：去左侧竖线 */
-.mmx-oneline{border-left:none;padding-left:18px;}
-/* AI领读章内：AI 大纲原生深层样式 */
-.merged-guide .sec{margin:10px 0 14px;padding-left:6px;border-left:2px solid #e5e0d6}
-.merged-guide .sec h4{font:600 .98rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.6em 0 .3em}
-.merged-guide ul.point{margin:.3em 0;padding-left:20px}
-.merged-guide ul.point>li{margin:.35em 0}
-.merged-guide ul.quote{margin:.25em 0 .25em 20px;padding-left:18px;list-style:none}
-.merged-guide ul.quote::before{content:"原句";display:block;font-size:.72rem;color:#bf8247;
-  letter-spacing:.1em;margin:.15em 0 .1em;font-weight:600}
-.merged-guide ul.quote.quote-node{margin-top:.5em;padding-top:.4em;border-top:1px dashed #eadfc9}
+.nav{position:sticky;top:0;z-index:20;background:rgba(247,248,243,.96);backdrop-filter:blur(6px);
+  border-bottom:1px solid #ece4d4;padding:10px 0;margin:12px 0 20px;display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;
+  box-shadow:0 2px 10px rgba(120,100,60,.05);}
+.navlink{font-size:12px;color:#5d5443;text-decoration:none;background:#fdfbf3;border:1px solid #e8e2d2;
+  border-radius:8px;padding:6px 4px;text-align:center;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;transition:background .15s,color .15s;}
+.navlink:hover{background:#f2efe2;color:#244b40;}
+section{scroll-margin-top:62px;}
+
+/* ── 统一卡片：所有顶层模块（AI领读 / AI 问答 / 其余）一视同仁 ── */
+body>section.mmx-mod,body>section.card,body>section.mmx-svgwrap{
+  background:#fffdf6;border:1px solid #e8e4d5;border-radius:16px;
+  padding:18px 22px;margin:18px 0;
+  box-shadow:0 1px 3px rgba(110,95,60,.05);}
+body>section.mmx-mod>*:first-child,body>section.card>*:first-child,
+body>section.mmx-svgwrap>*:first-child{margin-top:0}
+body>section.mmx-mod>*:last-child,body>section.card>*:last-child,
+body>section.mmx-svgwrap>*:last-child{margin-bottom:0}
+/* 结构导图：图本身留白居中，不与正文抢宽 */
+body>section.mmx-svgwrap>svg.mmx-svg{display:block;width:100%;height:auto;margin:2px auto 0;}
+/* 模块标题：统一大小、弱强调，不与正文抢注意力 */
+body>section.mmx-mod>h2,body>section.card>h2{
+  font:700 1.04rem/1.5 var(--serif);color:#244b40;margin:0 0 11px;
+  padding-left:10px;border-left:3px solid #bf8247;letter-spacing:.01em;}
+/* 正文：字号收小、行距放宽、段间距舒服 */
+body>section.mmx-mod p,body>section.card p,
+body>section.mmx-mod li,body>section.card li{
+  font-size:.9rem;line-height:1.92;color:#4a4436;}
+body>section.mmx-mod p,body>section.card p{margin:.5em 0;}
+body>section.mmx-mod>ul,body>section.mmx-mod>ol,body>section.mmx-mod>div,
+body>section.mmx-mod>p:not(.mmx-mod-note),
+body>section.card:not(.merged-guide)>ul,body>section.card:not(.merged-guide)>ol,
+body>section.card:not(.merged-guide)>div,body>section.card:not(.merged-guide)>p:not(.mmx-mod-note){
+  padding-left:14px;}
+/* 模块说明小字：弱化不抢眼 */
+.mmx-mod-note{font-size:.75rem;color:#8d8878;margin:.1em 0 .75em;line-height:1.7;}
+
+/* ── 内部块统一：卡片里不再套深卡片，一律浅底子块 ── */
+body>section .mmx-pending,body>section .mmx-evib,body>section .aiqa-item{
+  background:#fbfaf2;border:1px solid #eee9d8;border-radius:12px;
+  padding:13px 16px;margin:.65em 0;}
+body>section .mmx-evib ul{padding-left:1.15em;}
+/* 一句话主旨：去左侧竖线 + 收敛字号 */
+.mmx-oneline{font-size:.98rem;line-height:1.85;color:#3a352c;margin:.2em 0 0;
+  padding:12px 16px;background:#fbfaf4;border-left:none;border-radius:12px;}
+/* 核心观点 / 验证清单：虚线分隔 + 收紧行距 */
+.mmx-views li{padding:.5em 0 .5em 0;font-size:.9rem;line-height:1.88;}
+/* 原文金句 */
+.mmx-qlist li{padding:.6em 0 .6em 2.2em;}
+.mmx-qlist blockquote{font-size:.89rem;line-height:1.9;}
+.mmx-qlist cite{font-size:.72rem;}
+/* 核心追问：问句加重、答句放松 */
+.mmx-qa{margin:.7em 0;padding-left:12px;border-left:3px solid #e5dfcd;}
+.mmx-qa .mmx-q{font-size:.9rem;font-weight:700;color:#2f3a33;line-height:1.8;margin:0 0 .25em;}
+.mmx-qa .mmx-a{font-size:.88rem;line-height:1.95;color:#4a4436;margin:0;}
+
+/* ── AI 问书专项：外层容器透明，问答条目才是阅读单元 ── */
+#mod-aiask .mmx-ask{background:transparent;border:0;border-radius:0;padding:0;margin:0;}
+#mod-aiask .aiqa-item{margin:.6em 0;padding:14px 16px 15px;}
+#mod-aiask .aiqa-item h3{font:700 .93rem/1.7 var(--serif);color:#2f5b49;margin:0 0 .4em;
+  padding:0;border:0;}
+#mod-aiask .aiqa-item h3:before{content:"问　";color:#bf8247;font-weight:700;}
+#mod-aiask .aiqa-item p{font-size:.88rem;line-height:1.95;color:#4a4436;margin:.4em 0;}
+#mod-aiask .aiqa-item ul{margin:.35em 0;padding-left:1.1em;}
+#mod-aiask .aiqa-item li{font-size:.87rem;line-height:1.88;margin:.18em 0;color:#4a4436;}
+#mod-aiask .aiqa-item li::marker{color:#c0a06a;}
+/* 逐章追问（details 形态）：摘要行也收敛 */
+.mmx-ask>summary{font-size:.87rem;line-height:1.7;padding:2px 0;}
+.mmx-askbody{font-size:.88rem;line-height:1.9;}
+
+/* AI领读章内：AI 大纲原生深层样式（字号同步收小） */
+.merged-guide .sec{margin:9px 0 12px;padding-left:6px;border-left:2px solid #e5e0d6}
+.merged-guide .sec h4{font:600 .93rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.5em 0 .25em}
+.merged-guide ul.point{margin:.25em 0;padding-left:20px}
+.merged-guide ul.point>li{margin:.3em 0}
+.merged-guide ul.quote{margin:.22em 0 .22em 20px;padding-left:18px;list-style:none}
+.merged-guide ul.quote::before{content:"原句";display:block;font-size:.7rem;color:#bf8247;
+  letter-spacing:.1em;margin:.12em 0 .08em;font-weight:600}
+.merged-guide ul.quote.quote-node{margin-top:.45em;padding-top:.35em;border-top:1px dashed #eadfc9}
 .merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
-.merged-guide ul.quote>li{color:#4a4436;font-size:.93rem;margin:.2em 0;padding-left:10px;border-left:2px solid #bf8247}
-/* 模块内子内容（AI领读除外，它有专属深层样式）：左缩进 + 正文与标题分层 */
-section.mmx-mod>ul,section.mmx-mod>ol,section.mmx-mod>div,
-section.mmx-mod>p:not(.mmx-mod-note),
-section.card:not(.merged-guide)>ul,section.card:not(.merged-guide)>ol,
-section.card:not(.merged-guide)>div,section.card:not(.merged-guide)>p:not(.mmx-mod-note){
-  padding-left:16px;}
-section.mmx-mod li,section.mmx-mod p:not(.mmx-mod-note),
-section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mod-note){
-  color:#4a4436;font-size:.93rem;line-height:1.78;}
+.merged-guide ul.quote>li{color:#4a4436;font-size:.88rem;line-height:1.85;margin:.18em 0;padding-left:10px;border-left:2px solid #bf8247}
 /* 核心观点初判：外链 mmx-guide.css 的「观点N」前缀是绝对定位，在本页版式里和标题叠字，
    且此前要求去掉「观点1/2/3」前缀 —— 这里整条关掉（外链 CSS 不在页面内，只能内联覆盖）。 */
 .mmx-views li{padding-left:0 !important;}
 .mmx-views li:before,.mmx-views li::before{
   content:none !important;display:none !important;counter-increment:none !important;}
+@media(max-width:720px){
+  body{padding:0 12px 60px;font-size:14.5px;}
+  body>section.mmx-mod,body>section.card{padding:15px 16px;border-radius:14px;}
+  .nav{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
 </style>
 </head>
 <body>
@@ -54,8 +116,8 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
   <h1>《沧桑十年》</h1>
   <div class="chips"><span class="chip">通读 + 精读</span><span class="chip">AI领读</span><span class="chip">AI 生产</span></div>
 </header>
-<nav class="nav"><a class="navlink" href="#mod-svg">全书结构导图</a><a class="navlink" href="#mod-oneline">一句话主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a><a class="navlink" href="#mod-coreask">核心追问</a><a class="navlink" href="#mod-aiask">AI 问书</a><a class="navlink" href="#mod-higher">更高维度</a><a class="navlink" href="#mod-verify">阅读验证</a><a class="navlink" href="#mod-thennow">当年与今天</a></nav>
-<section class="mmx-svgwrap" id="mod-svg"><svg class="mmx-svg" viewBox="0 0 1120 530" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="沧桑十年 全书精读">
+<nav class="nav"><a class="navlink" href="#mod-svg">结构导图</a><a class="navlink" href="#mod-oneline">核心主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a><a class="navlink" href="#mod-coreask">核心追问</a><a class="navlink" href="#mod-aiask">AI 问书</a><a class="navlink" href="#mod-higher">更高维度</a><a class="navlink" href="#mod-verify">阅读验证</a><a class="navlink" href="#mod-thennow">往日今时</a></nav>
+<section class="mmx-svgwrap" id="mod-svg"><h2>结构导图</h2><svg class="mmx-svg" viewBox="0 0 1120 530" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="沧桑十年 全书精读">
 <rect x="0" y="0" width="1120" height="530" fill="none"/>
 <style>.mmx-svg text{font-family:"Noto Serif SC",Georgia,serif}.mmx-svg .t1{font-size:15px;fill:#2f2a24;font-weight:600}.mmx-svg .t2{font-size:12px;fill:#5c5347}.mmx-svg .t3{font-size:10.5px;fill:#8a8272}.mmx-svg .rt{font-size:13px;fill:#f7f3ea;font-weight:600}.mmx-svg .ln{stroke:#cfc6b4;stroke-width:1.4;fill:none}</style>
 <rect x="28" y="221" width="262" height="52" rx="10" fill="#3d372e"/>
@@ -118,7 +180,7 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
 <text class="t2" x="714" y="437">历史遗留问题的思考。</text>
 <path class="ln" d="M692 433 L700 433"/>
 </svg></section>
-<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">一句话主旨</h2><p class="mmx-mod-note">本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。</p><p class="mmx-oneline">作者记录了在政治运动中从地方官员沦为阶下囚、流放劳改直至最终平反重返岗位的十年沧桑遭遇。</p></section>
+<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">核心主旨</h2><p class="mmx-oneline">作者记录了在政治运动中从地方官员沦为阶下囚、流放劳改直至最终平反重返岗位的十年沧桑遭遇。</p></section>
 <section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" id="mod-merged_guide"><h2 id="merged-guide-title">AI领读</h2>
 <style>
 /* merged_guide 章内：AI 大纲原生深层样式 */
@@ -7460,18 +7522,17 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
       </div></details>
   </div>
 </section>
-<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点初判</h2><p class="mmx-mod-note">按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。</p><ul class="mmx-views"><li><b>下放与初遭批判</b>——记述作者从西南局下放南充，到被召回机关点名为走资派并遭受批斗与隔离的全过程。</li><li><b>隔离审查与历史清查</b>——展现作者被隔离后，面临国际间谍、地下党档案及历史政策问题的层层审查与家庭变故。</li><li><b>流放疏散与动荡现实</b>——记录作者被疏散至峨眉山及苗溪农场，以及目睹外界全面内乱、武斗和游斗的景象。</li><li><b>囚徒生活与残酷虐待</b>——聚焦作者身处底层劳役、小将风采及各类政治波折中的生存状态与复杂见闻。</li><li><b>被捕突围与监狱群像</b>——详述作者经历红卫兵关押、惊险逃亡、再度被抓入昭觉寺监狱的囚徒经历与狱友群像。</li><li><b>反复折腾与重新起用</b>——记录出狱又入狱的折磨、最终获得解放及重返省委工作并卷入新政治风浪的过程。</li><li><b>尘埃落定与时代反思</b>——以领袖去世、四人帮倒台及运动落幕为终点，反映作者对十年动乱及历史遗留问题的思考。</li></ul></section>
-<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句 · 持续积累</h2><p class="mmx-mod-note">以下原句取自本书 AI 大纲落库的原文摘录（book_outline.quote），按大纲顺序节选，非 AI 生成；更多见逐章深读页。</p><ol class="mmx-qlist"><li><blockquote>「作者曾听说，我们党内正有一些理论家，创立了什么“革命中心东移论”，起劲儿地在树立所谓世界革命的“第三块里程碑”。」</blockquote><cite>第一章 莫名其妙地变成反革命</cite></li><li><blockquote>「作者认为，我们党内有三分之一的政权不在革命家的手里，而是掌握在走资本主义道路的当权派手里。」</blockquote><cite>第一章 莫名其妙地变成反革命</cite></li><li><blockquote>「作者曾作过一首《归故园》的七律诗，表达了他对农民生活的同情和理解。」</blockquote><cite>第一章 莫名其妙地变成反革命</cite></li><li><blockquote>「有的社员真可说是衣不蔽体，食不果腹。」</blockquote><cite>第一章 莫名其妙地变成反革命</cite></li><li><blockquote>「作者坐车下来时，在路上就看到一些面带菜色，衣服褴褛的农民。」</blockquote><cite>第一章 莫名其妙地变成反革命</cite></li><li><blockquote>「作者认为，社员生活之所以苦，就是因为阶级斗争没有抓好，就是因为站在他们头上的基层干部，许多已经变坏了。」</blockquote><cite>第一章 莫名其妙地变成反革命</cite></li><li><blockquote>「这样的斗争，一搞就是几个月，真是斗得风声鹤唳，草木皆兵，好像到处都有阶级敌人和走资派一伙在进行反革命活动。」</blockquote><cite>第一章 莫名其妙地变成反革命</cite></li><li><blockquote>「有的基层干部被斗得死去活来，下不了台。」</blockquote><cite>第一章 莫名其妙地变成反革命</cite></li><li><blockquote>「作者的左邻右舍，好像也没有搞好生产。」</blockquote><cite>第一章 莫名其妙地变成反革命</cite></li><li><blockquote>「由于基层干部许多还没有被“解放”，没有资格抓生产，有的被“解放”了，不想再犯错误，也缩手缩脚，怕说是“以生产压革命”，不敢再抓生产。」</blockquote><cite>第一章 莫名其妙地变成反革命</cite></li></ol></section>
+<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点</h2><ul class="mmx-views"><li><b>下放与初遭批判</b>——记述作者从西南局下放南充，到被召回机关点名为走资派并遭受批斗与隔离的全过程。</li><li><b>隔离审查与历史清查</b>——展现作者被隔离后，面临国际间谍、地下党档案及历史政策问题的层层审查与家庭变故。</li><li><b>流放疏散与动荡现实</b>——记录作者被疏散至峨眉山及苗溪农场，以及目睹外界全面内乱、武斗和游斗的景象。</li><li><b>囚徒生活与残酷虐待</b>——聚焦作者身处底层劳役、小将风采及各类政治波折中的生存状态与复杂见闻。</li><li><b>被捕突围与监狱群像</b>——详述作者经历红卫兵关押、惊险逃亡、再度被抓入昭觉寺监狱的囚徒经历与狱友群像。</li><li><b>反复折腾与重新起用</b>——记录出狱又入狱的折磨、最终获得解放及重返省委工作并卷入新政治风浪的过程。</li><li><b>尘埃落定与时代反思</b>——以领袖去世、四人帮倒台及运动落幕为终点，反映作者对十年动乱及历史遗留问题的思考。</li></ul></section>
+<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句</h2><ol class="mmx-qlist"><li><blockquote>「作者曾听说，我们党内正有一些理论家，创立了什么“革命中心东移论”，起劲儿地在树立所谓世界革命的“第三块里程碑”。」</blockquote><cite>第一章 莫名其妙地变成反革命</cite></li><li><blockquote>「作者认为，我们党内有三分之一的政权不在革命家的手里，而是掌握在走资本主义道路的当权派手里。」</blockquote><cite>第一章 莫名其妙地变成反革命</cite></li><li><blockquote>「作者曾作过一首《归故园》的七律诗，表达了他对农民生活的同情和理解。」</blockquote><cite>第一章 莫名其妙地变成反革命</cite></li><li><blockquote>「有的社员真可说是衣不蔽体，食不果腹。」</blockquote><cite>第一章 莫名其妙地变成反革命</cite></li><li><blockquote>「作者坐车下来时，在路上就看到一些面带菜色，衣服褴褛的农民。」</blockquote><cite>第一章 莫名其妙地变成反革命</cite></li><li><blockquote>「作者认为，社员生活之所以苦，就是因为阶级斗争没有抓好，就是因为站在他们头上的基层干部，许多已经变坏了。」</blockquote><cite>第一章 莫名其妙地变成反革命</cite></li><li><blockquote>「这样的斗争，一搞就是几个月，真是斗得风声鹤唳，草木皆兵，好像到处都有阶级敌人和走资派一伙在进行反革命活动。」</blockquote><cite>第一章 莫名其妙地变成反革命</cite></li><li><blockquote>「有的基层干部被斗得死去活来，下不了台。」</blockquote><cite>第一章 莫名其妙地变成反革命</cite></li><li><blockquote>「作者的左邻右舍，好像也没有搞好生产。」</blockquote><cite>第一章 莫名其妙地变成反革命</cite></li><li><blockquote>「由于基层干部许多还没有被“解放”，没有资格抓生产，有的被“解放”了，不想再犯错误，也缩手缩脚，怕说是“以生产压革命”，不敢再抓生产。」</blockquote><cite>第一章 莫名其妙地变成反革命</cite></li></ol></section>
 <section class="mmx-mod" aria-labelledby="coreask" id="mod-coreask">
-  <h2 id="coreask">核心追问（来自深读）</h2>
-  <p class="mmx-mod-note">跨章主题的深读追问，由模型基于全书大纲与原文摘录撰写；逐章的追问收在每个章条目里。</p>
-<div class="mmx-qa"><p class="mmx-q">这本书真正想回答的问题是什么？我用一句话说清了吗</p><p class="mmx-a">基于大纲，本书共 101 章，主线：《第一章 莫名其妙地变成反革命》 → 《2 天不从人愿》 → 《3 “回不来了”》 … 《5 这一天》。就「核心问题」而言，目前的（待验证）判断是：作者从中共中央西南局宣传部长的岗位上，下放至南充作县委副书记。。这是大纲条目推断，未亲读正文，读后请回原文核对。</p></div>
+  <h2 id="coreask">核心追问</h2>
+  <div class="mmx-qa"><p class="mmx-q">这本书真正想回答的问题是什么？我用一句话说清了吗</p><p class="mmx-a">基于大纲，本书共 101 章，主线：《第一章 莫名其妙地变成反革命》 → 《2 天不从人愿》 → 《3 “回不来了”》 … 《5 这一天》。就「核心问题」而言，目前的（待验证）判断是：作者从中共中央西南局宣传部长的岗位上，下放至南充作县委副书记。。这是大纲条目推断，未亲读正文，读后请回原文核对。</p></div>
 <div class="mmx-qa"><p class="mmx-q">哪个判断我最不确定、需要回到原文哪一节验证？ 目前最不确定的是第 1—3 章的归因链条，以及第 7 章的口号是否为当时记录；须亲读这两处后自答</p><p class="mmx-a">目前最需回原文验证的是《9 三杯清泪落窗前》——大纲里它涉及「红卫兵司令部怕我和对面宿舍楼的学生有“目谈”的机会。」，与初读时的判断可能有张力，建议读到这里专门核对。（大纲推断，未亲读）</p></div>
 <div class="mmx-qa"><p class="mmx-q">如果只能把一条洞见讲给三个月后的自己，是哪条？为什么</p><p class="mmx-a">若只留一条，我会选《第一章 莫名其妙地变成反革命》里的「作者从中共中央西南局宣传部长的岗位上，下放至南充作县委副书记。」：它把全书最底层的判断说清了，三个月后回看仍最经得起检验。（基于大纲条目，未亲读，读后确认）</p></div>
 </section>
-<section class="mmx-mod" aria-labelledby="aiask" id="mod-aiask"><h2 id="aiask">AI 问书</h2><p class="mmx-mod-note">下方内容为本书级 AI 问书整理，由云端 AI 阅读流程基于本书大纲、章节锚点与热门划线生成。</p><div class="mmx-qa"><p class="mmx-q">作者一边说自己“诚心诚意为群众谋幸福”干了十几年，一边困惑“他们的生活还是这么苦”——这矛盾说明了什么？</p><p class="mmx-a">锚点原句“搞土改、合作化、公社化…不知怎么搞的，他们的生活还是这么苦”是全书最痛的自问。它揭穿了“运动=进步”的预设：作者作为推动者真诚相信自己在造福，却无法解释底层苦楚。这恰恰印证书里“英雄人物不能决定历史根本方向”——个人忠诚与制度后果之间，横着一道作者直到沦为阶下囚才看清的鸿沟。</p></div><div class="mmx-qa"><p class="mmx-q">“西南局就死了十六个局级以上干部”——这种数字在个人回忆里该怎么读？</p><p class="mmx-a">这是作者亲历的见证性数字，分量在“局级以上的干部、包括四个书记”——连体制内的高层都成批倒下，说明运动冲击的并非只是“敌人”，而是整个权力机器自身。读这类数字要像书里说的“历史事实是抹杀不了的”，把它当史料旁证，而非孤证；同时记住它是个人视角，需与档案互证。</p></div></section>
-<section class="mmx-mod" aria-labelledby="higher" id="mod-higher"><h2 id="higher">用更高维度的知识看这本书</h2><p class="mmx-mod-note">下方内容由云端 AI 阅读流程生成：把本书放回知识史与理论框架中重读，区分书中主张、外部证据与综合分析。</p><p>【书中主张】把本书放回“文革回忆录”谱系——与季羡林《牛棚杂忆》、韦君宜《思痛录》同属“受害者自述”，但本书记述者身份特殊：他是运动初期仍“拥护文化大革命”、直到1976年才醒悟的当权派，主张“灾难根子未被挖掉则会重演”。【外部证据】可对照《关于建国以来党的若干历史问题的决议》对文革的定性；【综合分析】本书独特价值在“从内部人视角”记录权力如何自我吞噬，比纯受害者叙事多一层机制观察。</p><p>【书中主张】“英雄人物不能决定历史根本方向”，把反思从个人恩怨抬到历史规律。【外部证据】历史唯物主义本就强调结构与合力，作者以此自解“不自知”的惭愧；【综合分析】但作为平反后的回忆，存在“后见之明”重构风险——书里对当年“狂热拥护”的自责是否完全诚实、有无为自身开脱的笔法，读者宜交叉核对同时期日记与档案，而非全信单一回忆。</p></section>
-<section class="mmx-mod" aria-labelledby="verify" id="mod-verify"><h2 id="verify">阅读时要验证的问题</h2><p class="mmx-mod-note">下方由云端 AI 阅读流程生成：读时需核对的原文、数字与论点（关键数据出处、个案代表性、类比限度）。</p><ul class="mmx-views"><li>作者身份（曾任中共中央西南局宣传部长、文革中被定“反革命”、囚于昭觉寺监狱）应核对公开出版信息（如《沧桑十年》作者及具体职务），避免张冠李戴。</li><li>“西南局死了十六个局级以上干部，包括四个书记”等数字属个人回忆，应比照《中国共产党历史》第二卷等权威编年核实口径与时段。</li><li>“1974年11月29日彭德怀逝世”为史实，但书中所引情境（作者得知的反应）属个人记忆，引用时需区分事实与感受。</li></ul></section>
-<section class="mmx-mod" aria-labelledby="thennow" id="mod-thennow"><h2 id="thennow">当年与今天 · 初步对照</h2><p class="mmx-mod-note">下方由云端 AI 阅读流程生成：区分作者当年所能知晓与后来才显现的事实，给出今日可迁移的启发。</p><p>作者写于平反之后（约1980年代），彼时全党正从“两个凡是”转向反思文革，个人回忆是补官方叙事之缺的民间档案。作者当年能写下的，是一个曾真心拥护运动、又被运动吞没的当权派的迟来觉悟。</p><p>今天再读，书里“根子没挖掉还会重演”的警告仍未被时间作废——它不指向特定年代，而指向任何“运动式治理”的诱惑。可迁移的启发：无论身处何种岗位，记住作者那句“他们的生活还是这么苦”——任何宏大革命叙事，最终都要在普通人的饭碗上结账。</p></section>
+<section class="mmx-mod" aria-labelledby="aiask" id="mod-aiask"><h2 id="aiask">AI 问书</h2><div class="mmx-qa"><p class="mmx-q">作者一边说自己“诚心诚意为群众谋幸福”干了十几年，一边困惑“他们的生活还是这么苦”——这矛盾说明了什么？</p><p class="mmx-a">锚点原句“搞土改、合作化、公社化…不知怎么搞的，他们的生活还是这么苦”是全书最痛的自问。它揭穿了“运动=进步”的预设：作者作为推动者真诚相信自己在造福，却无法解释底层苦楚。这恰恰印证书里“英雄人物不能决定历史根本方向”——个人忠诚与制度后果之间，横着一道作者直到沦为阶下囚才看清的鸿沟。</p></div><div class="mmx-qa"><p class="mmx-q">“西南局就死了十六个局级以上干部”——这种数字在个人回忆里该怎么读？</p><p class="mmx-a">这是作者亲历的见证性数字，分量在“局级以上的干部、包括四个书记”——连体制内的高层都成批倒下，说明运动冲击的并非只是“敌人”，而是整个权力机器自身。读这类数字要像书里说的“历史事实是抹杀不了的”，把它当史料旁证，而非孤证；同时记住它是个人视角，需与档案互证。</p></div></section>
+<section class="mmx-mod" aria-labelledby="higher" id="mod-higher"><h2 id="higher">更高维度</h2><p>【书中主张】把本书放回“文革回忆录”谱系——与季羡林《牛棚杂忆》、韦君宜《思痛录》同属“受害者自述”，但本书记述者身份特殊：他是运动初期仍“拥护文化大革命”、直到1976年才醒悟的当权派，主张“灾难根子未被挖掉则会重演”。【外部证据】可对照《关于建国以来党的若干历史问题的决议》对文革的定性；【综合分析】本书独特价值在“从内部人视角”记录权力如何自我吞噬，比纯受害者叙事多一层机制观察。</p><p>【书中主张】“英雄人物不能决定历史根本方向”，把反思从个人恩怨抬到历史规律。【外部证据】历史唯物主义本就强调结构与合力，作者以此自解“不自知”的惭愧；【综合分析】但作为平反后的回忆，存在“后见之明”重构风险——书里对当年“狂热拥护”的自责是否完全诚实、有无为自身开脱的笔法，读者宜交叉核对同时期日记与档案，而非全信单一回忆。</p></section>
+<section class="mmx-mod" aria-labelledby="verify" id="mod-verify"><h2 id="verify">阅读验证</h2><ul class="mmx-views"><li>作者身份（曾任中共中央西南局宣传部长、文革中被定“反革命”、囚于昭觉寺监狱）应核对公开出版信息（如《沧桑十年》作者及具体职务），避免张冠李戴。</li><li>“西南局死了十六个局级以上干部，包括四个书记”等数字属个人回忆，应比照《中国共产党历史》第二卷等权威编年核实口径与时段。</li><li>“1974年11月29日彭德怀逝世”为史实，但书中所引情境（作者得知的反应）属个人记忆，引用时需区分事实与感受。</li></ul></section>
+<section class="mmx-mod" aria-labelledby="thennow" id="mod-thennow"><h2 id="thennow">往日今时</h2><p>作者写于平反之后（约1980年代），彼时全党正从“两个凡是”转向反思文革，个人回忆是补官方叙事之缺的民间档案。作者当年能写下的，是一个曾真心拥护运动、又被运动吞没的当权派的迟来觉悟。</p><p>今天再读，书里“根子没挖掉还会重演”的警告仍未被时间作废——它不指向特定年代，而指向任何“运动式治理”的诱惑。可迁移的启发：无论身处何种岗位，记住作者那句“他们的生活还是这么苦”——任何宏大革命叙事，最终都要在普通人的饭碗上结账。</p></section>
 </body>
 </html>
