@@ -223,37 +223,123 @@ html[data-theme=green] .toc-part,html[data-theme=green] .card{
   #rdBody>section.mmx-mod,#rdBody>section.card,#rdBody>section.mmx-svgwrap{padding:15px 16px;border-radius:14px;}
 }
 
-/* ── 骨架屏：数据未到位时的占位（静态元素已直出，这里只补内容位） ── */
-.rd-skel{display:grid;gap:calc(18px*var(--pm));}
+/* ── 加载态：顶部进度条 + 骨架屏 ──────────────────────────
+ * 设计原则：模块标题本来就已知，壳页直接写死标题文字，只把「内容」留空占位。
+ * 这样慢网时读者看到的是「这本书有哪些模块 + 正在填充」，而不是一片空白。
+ */
+#rdBar{position:fixed;top:0;left:0;right:0;height:3px;z-index:99;pointer-events:none;
+  overflow:hidden;background:var(--card-bd);
+  /* 兜底：即使 JS 版本较旧没能收条，9 秒后也自己淡出，绝不长期挂在页面上 */
+  animation:rdBarHide .4s ease 9s forwards;}
+@keyframes rdBarHide{to{opacity:0;visibility:hidden}}
+#rdBar::before{content:"";display:block;width:100%;height:100%;border-radius:2px;
+  transform-origin:0 50%;background:var(--head);box-shadow:0 0 10px var(--head);
+  animation:rdBarRun 9s cubic-bezier(.15,.7,.25,1) forwards;}
+/* 像真实加载条：一路推进到 92% 停住，数据到位再整条淡出（不循环、不闪烁） */
+@keyframes rdBarRun{0%{transform:scaleX(0)}38%{transform:scaleX(.52)}100%{transform:scaleX(.92)}}
+#rdBar.rd-done{opacity:0;transition:opacity .35s ease;}
+
+.rd-skel{display:grid;gap:calc(16px*var(--pm));}
 .rd-skel-card{background:var(--card-bg);border:1px solid var(--card-bd);border-radius:16px;
-  padding:18px 22px;margin:0;}  /* margin:0 覆盖共享 CSS 的 section{margin:30px 0} */
+  padding:16px 20px 20px;margin:0;}  /* margin:0 覆盖共享 CSS 的 section{margin:30px 0} */
+/* 标题：与真实模块标题同字号同字重，只是颜色偏弱 —— 加载完几乎无跳动 */
+.rd-skel .sk-t{font:700 1rem/1.5 var(--serif);color:var(--sub);margin:0 0 13px;
+  padding-left:10px;border-left:3px solid var(--line);letter-spacing:.01em;}
+.rd-skel-card>.sk-l:nth-child(2){margin-top:0;}
+
+/* 内容位：按模块自身的形状给不同占位块 */
+.rd-skel .sk-fig,.rd-skel .sk-sub,.rd-skel .sk-node,
+.rd-skel .sk-q,.rd-skel .sk-a,.rd-skel .sk-l,.rd-skel .sk-h{
+  position:relative;overflow:hidden;background:var(--skel-a);border-radius:6px;}
+.rd-skel .sk-fig{height:168px;border-radius:12px;}
 .rd-skel .sk-h{height:15px;width:118px;border-radius:5px;}
-.rd-skel .sk-sub{height:13px;width:92px;border-radius:4px;margin-top:20px;}
-.rd-skel .sk-l{height:11px;border-radius:4px;margin-top:12px;}
-.rd-skel .sk-fig{height:186px;border-radius:12px;margin-top:16px;}
-.rd-skel .sk-node{height:42px;border-radius:9px;margin-top:10px;}
-.rd-skel .w96{width:96%}.rd-skel .w88{width:88%}.rd-skel .w82{width:82%}
-.rd-skel .w74{width:74%}.rd-skel .w66{width:66%}.rd-skel .w50{width:50%}
-/* 骨架配色按主题单独给（--inner-bg/bd 在浅色主题下与卡片底太接近，会看不清） */
-:root,html[data-theme=dark]{--skel-a:#272b30;--skel-b:#3c434b;}
-html[data-theme=cream]{--skel-a:#f2ede0;--skel-b:#e2dbc8;}
-html[data-theme=light]{--skel-a:#f0ede7;--skel-b:#ded9d0;}
-html[data-theme=green]{--skel-a:#e1f1e5;--skel-b:#c7e1cf;}
-.rd-skel .sk-h,.rd-skel .sk-sub,.rd-skel .sk-l,.rd-skel .sk-fig,.rd-skel .sk-node{
-  background:linear-gradient(90deg,var(--skel-a) 26%,var(--skel-b) 37%,var(--skel-a) 50%);
-  background-size:400% 100%;animation:rdShimmer 1.35s ease-in-out infinite;}
-@keyframes rdShimmer{0%{background-position:100% 0}100%{background-position:0 0}}
+.rd-skel .sk-sub{height:30px;width:42%;border-radius:9px;margin-bottom:12px;}
+.rd-skel .sk-node{height:54px;border-radius:10px;margin-top:10px;}
+.rd-skel .sk-q{height:14px;width:62%;border-radius:5px;margin-bottom:9px;}
+.rd-skel .sk-a{height:14px;border-radius:5px;margin:0 0 18px 26px;background:var(--skel-b);}
+.rd-skel .sk-l{height:12px;border-radius:5px;margin-top:13px;}
+.rd-skel .w96{width:96%}.rd-skel .w94{width:94%}.rd-skel .w92{width:92%}
+.rd-skel .w90{width:90%}.rd-skel .w88{width:88%}.rd-skel .w86{width:86%}
+.rd-skel .w84{width:84%}.rd-skel .w82{width:82%}.rd-skel .w78{width:78%}
+.rd-skel .w76{width:76%}.rd-skel .w74{width:74%}.rd-skel .w72{width:72%}
+.rd-skel .w70{width:70%}.rd-skel .w68{width:68%}.rd-skel .w66{width:66%}
+.rd-skel .w64{width:64%}.rd-skel .w62{width:62%}.rd-skel .w56{width:56%}
+.rd-skel .w52{width:52%}.rd-skel .w50{width:50%}
+/* 骨架配色按主题分档（深色下也要看得见，浅色下别糊成一片） */
+:root,html[data-theme=dark]{--skel-a:#2c3138;--skel-b:#4a525d;}
+html[data-theme=cream]{--skel-a:#e9e2d0;--skel-b:#d0c5a8;}
+html[data-theme=light]{--skel-a:#eeeae2;--skel-b:#d3ccc0;}
+html[data-theme=green]{--skel-a:#d6e9da;--skel-b:#aed3ba;}
+/* 扫光：从占位块上掠过，明确「正在加载」 */
+.rd-skel .sk-fig::after,.rd-skel .sk-sub::after,.rd-skel .sk-node::after,
+.rd-skel .sk-q::after,.rd-skel .sk-a::after,.rd-skel .sk-l::after,.rd-skel .sk-h::after{
+  content:"";position:absolute;top:0;bottom:0;left:0;width:55%;
+  background:linear-gradient(90deg,transparent,var(--skel-b),transparent);
+  animation:rdSweep 1.25s ease-in-out infinite;}
+@keyframes rdSweep{0%{transform:translateX(-130%)}60%,100%{transform:translateX(270%)}}
 @media (prefers-reduced-motion:reduce){
-  .rd-skel .sk-h,.rd-skel .sk-sub,.rd-skel .sk-l,.rd-skel .sk-fig,.rd-skel .sk-node{
-    animation:none;background:var(--skel-a);}
+  #rdBar::before{animation:none;width:100%;opacity:.5}
+  .rd-skel .sk-fig::after,.rd-skel .sk-sub::after,.rd-skel .sk-node::after,
+  .rd-skel .sk-q::after,.rd-skel .sk-a::after,.rd-skel .sk-l::after,
+  .rd-skel .sk-h::after{display:none;}
+  #rdBody.rd-in>*{animation:none;}
 }
-/* 骨架退场：数据到位后淡出，避免生硬切换 */
+/* 骨架退场 + 内容淡入（避免生硬切换） */
 .rd-skel{transition:opacity .18s ease;}
 .rd-skel.rd-out{opacity:0;}
+#rdBody.rd-in>*{animation:rdIn .26s ease both;}
+@keyframes rdIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 /* 加载失败 */
 .rd-fail{padding:22px 0;color:var(--sub);font-size:.86rem;line-height:1.9;}
-.rd-fail b{color:var(--head);}
+.rd-fail b{color:var(--head);display:block;margin-bottom:6px;font-size:.92rem;}
+.rd-retry{margin-top:10px;font:600 13px/1.4 var(--sans);color:var(--head);
+  background:var(--navlink-bg);border:1px solid var(--head);border-radius:8px;
+  padding:7px 14px;cursor:pointer;}
+.rd-retry:hover{background:var(--act-bg);}
 @media(max-width:720px){
-  .rd-skel-card{padding:15px 16px;border-radius:14px;}
-  .rd-skel .sk-fig{height:150px;}
+  .rd-skel-card{padding:14px 16px 18px;border-radius:14px;}
+  .rd-skel .sk-fig{height:132px;}
+  .rd-skel .sk-node{height:48px;}
+}
+
+/* ── 结构导图全屏弹层 ─────────────────────────────────────────────── */
+#rdSvgModal{position:fixed;inset:0;z-index:90;}
+#rdSvgModal[hidden]{display:none;}
+.rd-svg-mask{position:absolute;inset:0;background:rgba(10,12,14,.86);backdrop-filter:blur(3px);}
+.rd-svg-stage{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  margin:0;padding:20px;overflow:auto;-webkit-overflow-scrolling:touch;}
+.rd-svg-holder{max-width:min(96vw,1280px);max-height:88vh;display:flex;align-items:center;justify-content:center;}
+.rd-svg-holder svg{width:100%;min-width:600px;height:auto;max-height:88vh;display:block;border-radius:10px;
+  background:var(--card-bg);box-shadow:0 18px 60px rgba(0,0,0,.5);cursor:zoom-out;}
+.rd-svg-close{position:absolute;top:14px;right:16px;z-index:2;width:40px;height:40px;
+  display:flex;align-items:center;justify-content:center;border-radius:50%;
+  border:1px solid rgba(255,255,255,.35);background:rgba(20,22,26,.72);color:#fff;
+  font:600 17px/1 var(--sans);cursor:pointer;}
+.rd-svg-close:hover{background:rgba(255,255,255,.16);}
+@media(max-width:720px){
+  .rd-svg-stage{padding:12px;}
+  .rd-svg-close{top:10px;right:10px;}
+}
+
+/* ── 上一篇 / 下一篇（详情页最底部） ──────────────────────────────── */
+#rdPn{display:flex;justify-content:space-between;align-items:stretch;gap:10px;
+  margin:26px 0 10px;padding-top:16px;border-top:1px solid var(--card-bd);}
+#rdPn[hidden]{display:none;}
+.rd-pn{flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:3px;
+  padding:11px 13px;border:1px solid var(--card-bd);border-radius:12px;
+  background:var(--navlink-bg);text-decoration:none;color:var(--txt);
+  transition:border-color .15s ease,background .15s ease;}
+.rd-pn:hover{border-color:var(--head);background:var(--act-bg);}
+.rd-pn.is-off{opacity:.45;pointer-events:none;}
+.rd-pn-next{text-align:right;align-items:flex-end;}
+.rd-pn-k{font:600 .7rem/1.2 var(--sans);letter-spacing:.08em;color:var(--sub);}
+.rd-pn-t{font:600 .84rem/1.45 var(--serif);color:var(--head);
+  overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
+@media(max-width:720px){
+  #rdPn{gap:8px;margin:20px 0 6px;}
+  .rd-pn{padding:10px 11px;border-radius:10px;}
+  .rd-pn-t{font-size:.8rem;}
+}
+@media (prefers-reduced-motion:reduce){
+  .rd-pn{transition:none;}
 }
