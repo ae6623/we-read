@@ -111,7 +111,7 @@
   function renderChips(meta) {
     var box = q('#rdChips');
     if (!box) return;
-    var chips = [meta.cat1 || '通读 + 精读', meta.cat2 || 'AI领读', 'AI 生产'];
+    var chips = [meta.cat1 || '通读 + 精读', meta.cat2 || 'Gemini pro', 'AI 生产'];
     var spans = qa('.chip', box);
     if (spans.length === 3) {
       // 壳页已直出三个占位 chip → 就地改文本，避免重建导致的闪动
@@ -177,6 +177,8 @@
     }
     renderChips(data.meta || {});
     spy(links);
+    hookSvgModal();
+    pnRender();
   }
 
   /* ── 导航滚动高亮 ─────────────────────────────────────── */
@@ -204,6 +206,145 @@
       a.addEventListener('click', function () { mark(a); });
     });
   }
+
+  /* ── 结构导图全屏弹层 ────────────────────────────────────────────
+     导航里的「结构导图」和图本身都可点：点开大屏看图，右上角 ✕ 关闭
+     （点遮罩 / Esc 也关）。弹层全局唯一，每次渲染后往里填当前书的图。 */
+  var svgModal = null;
+
+  function ensureSvgModal() {
+    if (svgModal) return svgModal;
+    var m = document.createElement('div');
+    m.id = 'rdSvgModal';
+    m.hidden = true;
+    m.innerHTML =
+      '<div class="rd-svg-mask"></div>' +
+      '<figure class="rd-svg-stage"><div class="rd-svg-holder"></div></figure>' +
+      '<button class="rd-svg-close" type="button" aria-label="关闭大图">✕</button>';
+    document.body.appendChild(m);
+    function close() { m.hidden = true; qa('.rd-svg-holder svg', m).forEach(function (s) { s.remove(); }); }
+    m.querySelector('.rd-svg-close').addEventListener('click', close);
+    m.querySelector('.rd-svg-mask').addEventListener('click', close);
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !m.hidden) close();
+    });
+    svgModal = m;
+    return m;
+  }
+
+  function openSvgModal() {
+    var src = q('#mod-svg svg');
+    if (!src) {                              // 本书没有结构导图 → 退回锚点跳转
+      var sec = q('#mod-svg');
+      if (sec) sec.scrollIntoView({ behavior: 'smooth' });
+      return;
+    }
+    var m = ensureSvgModal();
+    var holder = q('.rd-svg-holder', m);
+    holder.innerHTML = '';
+    var clone = src.cloneNode(true);
+    clone.removeAttribute('style');          // 内联尺寸交给弹层 CSS 管
+    holder.appendChild(clone);
+    m.hidden = false;
+  }
+
+  function hookSvgModal() {
+    qa('.navlink[href="#mod-svg"]').forEach(function (a) {
+      if (a._rdSvgHook) return;
+      a._rdSvgHook = true;
+      a.addEventListener('click', function (e) { e.preventDefault(); openSvgModal(); });
+    });
+    var svg = q('#mod-svg svg');
+    if (svg) {
+      svg.style.cursor = 'zoom-in';
+      svg.addEventListener('click', openSvgModal);   // 每次渲染都是新节点，不会重复挂
+    }
+  }
+
+  /* ── 上一篇 / 下一篇 ─────────────────────────────────────────────
+     顺序 = 首页书架的卡片序（assets/data/book-order.json，由首页卡片生成，
+     最新在前）：上一篇 = 更新一篇，下一篇 = 更早一篇。
+     点击不整页跳转：fetch 那本的 combined-data.html 原地重渲染，
+     URL 用 pushState 换成目标页，前进/后退都能用；渲染失败整页兜底跳转。 */
+  var pnOrder = null;                        // [{slug,title}]
+  var pnIdx = -1;
+  var curSlug = (document.body && document.body.getAttribute('data-slug')) || '';
+
+  function esc(s) {
+    return String(s).replace(/[&<>"]/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+    });
+  }
+
+  function pnLoad(cb) {
+    if (pnOrder) return cb();
+    fetch('../../../assets/data/book-order.json', { credentials: 'same-origin' })
+      .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(function (list) {
+        pnOrder = (Array.isArray(list) ? list : []).map(function (x) {
+          return { slug: x[0], title: x[1] };
+        });
+      })
+      .catch(function () { pnOrder = []; })
+      .then(cb);
+  }
+
+  function pnRender() {
+    pnLoad(function () {
+      var host = q('#rdPn');
+      if (!host) {
+        var main = q('#rdBody');
+        if (!main) return;
+        host = document.createElement('nav');
+        host.id = 'rdPn';
+        host.setAttribute('aria-label', '上一篇 / 下一篇');
+        main.parentNode.appendChild(host);
+      }
+      pnIdx = -1;
+      for (var i = 0; i < pnOrder.length; i++) if (pnOrder[i].slug === curSlug) { pnIdx = i; break; }
+      if (pnIdx < 0) { host.innerHTML = ''; host.hidden = true; return; }
+      host.hidden = false;
+      var prev = pnIdx > 0 ? pnOrder[pnIdx - 1] : null;
+      var next = pnIdx < pnOrder.length - 1 ? pnOrder[pnIdx + 1] : null;
+      host.innerHTML =
+        '<a class="rd-pn rd-pn-prev' + (prev ? '' : ' is-off') + '"' + (prev ? ' href="#pn-prev"' : '') + '>' +
+          '<span class="rd-pn-k">上一篇</span>' +
+          '<span class="rd-pn-t">' + (prev ? '《' + esc(prev.title) + '》' : '已经是最新一篇') + '</span></a>' +
+        '<a class="rd-pn rd-pn-next' + (next ? '' : ' is-off') + '"' + (next ? ' href="#pn-next"' : '') + '>' +
+          '<span class="rd-pn-k">下一篇</span>' +
+          '<span class="rd-pn-t">' + (next ? '《' + esc(next.title) + '》' : '已经是最早一篇') + '</span></a>';
+      var ap = q('.rd-pn-prev', host), an = q('.rd-pn-next', host);
+      if (prev && ap) ap.addEventListener('click', function (e) { e.preventDefault(); goBook(prev.slug); });
+      if (next && an) an.addEventListener('click', function (e) { e.preventDefault(); goBook(next.slug); });
+    });
+  }
+
+  function goBook(slug, push) {
+    if (!slug || slug === curSlug) return;
+    var main = q('#rdBody');
+    if (main) main.setAttribute('aria-busy', 'true');
+    if (svgModal && !svgModal.hidden) svgModal.hidden = true;
+    fetch('../' + slug + '/combined-data.html?v=' + encodeURIComponent(slug), { credentials: 'same-origin' })
+      .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
+      .then(function (html) {
+        if (!html || html.indexOf('<section') < 0) throw new Error('空数据');
+        curSlug = slug;
+        render(parseData(html));
+        if (push !== false) {
+          try { history.pushState({ rdBook: slug }, '', '../' + slug + '/combined.html'); } catch (e) {}
+        }
+        window.scrollTo(0, 0);
+      })
+      .catch(function () {
+        // 原地渲染失败 → 整页跳过去，别把读者卡死在本页
+        location.href = '../' + slug + '/combined.html';
+      });
+  }
+
+  window.addEventListener('popstate', function () {
+    var m = location.pathname.match(/\/books\/([^/]+)\/combined\.html$/);
+    if (m && m[1] && m[1] !== curSlug) goBook(m[1], false);
+  });
 
   /* ── 阅读设置：主题 / 字号 / 段距（localStorage 持久化） ── */
 

@@ -105,10 +105,6 @@
   }
 
   /* ── 瀑布流排版 ────────────────────────────────────────────────── */
-  function isSpan(el, cols) {
-    return cols > 1 && el.getAttribute('data-span') === 'full';
-  }
-
   function layout(s) {
     var grid = s.grid;
     if (!s.pure) {                        // 混排网格（系列页有 .series-preview）交回 CSS 网格
@@ -141,46 +137,31 @@
     var cards = s.cards, vis = [], i, k;
     for (i = 0; i < cards.length; i++) if (shownOf(cards[i])) vis.push(cards[i]);
 
-    /* 首卡横幅只对「窄列 + 有元信息」的卡有意义：卡宽 175 时两列容易排成表格，
-       压一张通栏卡当起点；桌面卡宽 500 会变成一条空心横条；「即将上线」那种
-       只有标题 + 一句说明的卡跨列更是大片空白 —— 都排除。
-       属性不在 MutationObserver 的监听列表里，改了不会自激。 */
-    var span = cols > 1 && colW < 300 && vis.length > 3 &&
-      !!(vis[0] && vis[0].querySelector('.card-meta'));
+    /* 第 15 批：取消首卡铺满横幅，所有卡统一等宽。
+       （之前第一张跨整行，用户觉得不要了。） */
+    var span = false;
     for (i = 0; i < cards.length; i++) {
-      var on = span && cards[i] === vis[0];
-      if (on) {
-        if (cards[i].getAttribute('data-span') !== 'full') cards[i].setAttribute('data-span', 'full');
-      } else if (cards[i].hasAttribute('data-span')) {
-        cards[i].removeAttribute('data-span');
-      }
+      if (cards[i].hasAttribute('data-span')) cards[i].removeAttribute('data-span');
     }
 
     grid.style.position = 'relative';
 
-    // 1) 先统一定宽（同一批写入，只触发一次重排）；横幅卡占满整行
+    // 1) 先统一定宽（同一批写入，只触发一次重排）
     for (i = 0; i < vis.length; i++) {
       vis[i].style.position = 'absolute';
       vis[i].style.margin = '0';
-      vis[i].style.width = (i === 0 && isSpan(vis[i], cols) ? W : colW) + 'px';
+      vis[i].style.width = colW + 'px';
     }
     // 2) 再量高：宽度定下来后高度才是真的
     var hs = [];
     for (i = 0; i < vis.length; i++) hs.push(vis[i].offsetHeight);
 
-    // 3) 依次放进当前最短的列；横幅卡把两列一起压到它下面
+    // 3) 依次放进当前最短的列
     var ys = [];
     for (k = 0; k < cols; k++) ys[k] = 0;
     var maxY = 0;
     for (i = 0; i < vis.length; i++) {
       var el = vis[i];
-      if (i === 0 && isSpan(el, cols)) {
-        el.style.left = '0px';
-        el.style.top = '0px';
-        for (k = 0; k < cols; k++) ys[k] = hs[i] + gy;
-        maxY = hs[i] + gy;
-        continue;
-      }
       var m = 0;
       for (k = 1; k < cols; k++) if (ys[k] < ys[m]) m = k;
       el.style.left = (m * (colW + gx)) + 'px';
@@ -376,7 +357,7 @@
   }
 
   function boot() {
-    if (!d.getAttribute('data-cols')) d.setAttribute('data-cols', '3');   // 默认一排三
+    if (!d.getAttribute('data-cols')) d.setAttribute('data-cols', '2');   // 默认一排二
     syncAll(true);
     relayout();
 

@@ -11,7 +11,7 @@
   var FS = [0.72, 0.74, 0.76, 0.78, 0.80, 0.83, 0.86, 0.90, 0.94, 1.00, 1.08];
   var PM = [0.55, 1, 1.5];
   var DEF_THEME = 'cream', DEF_FS = 0.76, DEF_PM = 1;
-  var CFG_VER = 3;           // 默认值变过就升版本，见 boot() 里的迁移
+  var CFG_VER = 4;           // 默认值变过就升版本，见 boot() 里的迁移
   var THEME_COLOR = { cream: '#f6f3ed', light: '#ffffff', green: '#cfe8d2', dark: '#15171a' };
 
   var d = document.documentElement;
@@ -34,11 +34,11 @@
 
   function boot() {
     var c = load();
-    /* 老配置迁移：字号默认 .80 → .76、列数默认 2 → 3。
+    /* 老配置迁移：字号默认 .80 → .76、列数默认 3 → 2（第 15 批改回一排二）。
        存着旧默认值的人其实没主动选过，跟着新默认走；自己调过的不动。只迁一次。 */
     if ((c.ver || 1) < CFG_VER) {
       if (c.fs === 0.8) c.fs = DEF_FS;
-      if (c.cols === 2) c.cols = 3;
+      if (c.cols === 3) c.cols = 2;
       c.ver = CFG_VER;
       if (Object.keys(c).length) save(c);
     }
@@ -93,20 +93,21 @@
       });
     }
 
-    // ── 列数：一排三 / 一排二 / 一排一（点一下降一档，到底再回到三） ──
+    // ── 列数：一排二（默认）→ 一排三 → 一排一，点一下循环 ──────────
     (function () {
       var btn = q('#rdCols');
       if (!btn) return;
-      var ORDER = ['3', '2', '1'];
+      var ORDER = ['2', '3', '1'];
+      var CN = { 1: '一', 2: '二', 3: '三' };
       function current() {
         var v = d.getAttribute('data-cols');
-        return ORDER.indexOf(v) >= 0 ? v : '3';
+        return ORDER.indexOf(v) >= 0 ? v : '2';
       }
       function paint() {
         var cur = current();
+        var next = ORDER[(ORDER.indexOf(cur) + 1) % ORDER.length];
         btn.setAttribute('aria-pressed', cur === '1' ? 'true' : 'false');
-        btn.title = '当前一排' + (cur === '1' ? '一' : cur === '2' ? '二' : '三') +
-          ' · 点按切一排' + (cur === '3' ? '二' : cur === '2' ? '一' : '三');
+        btn.title = '当前一排' + CN[cur] + ' · 点按切一排' + CN[next];
       }
       function set(v, touch) {
         d.setAttribute('data-cols', v);
@@ -115,7 +116,7 @@
       }
 
       if (c.cols === 1 || c.cols === 2 || c.cols === 3) set(String(c.cols), false);
-      else set('3', false);
+      else set('2', false);
 
       btn.addEventListener('click', function () {
         set(ORDER[(ORDER.indexOf(current()) + 1) % ORDER.length], true);

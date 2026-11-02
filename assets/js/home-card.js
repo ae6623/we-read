@@ -114,8 +114,57 @@
     }
   }
 
+  /* ── 卡片封面（一排一 / 一排二才显示，一排三隐藏） ──────────────
+     库里目前没有书籍封面图（只有 epub），所以默认渲染「按 slug 哈希上色的占位封面 +
+     书名」，让用户先看到带封面的版式效果。若日后把真封面放到 assets/covers/<slug>.jpg，
+     <img> 会自动盖上去、占位层透明退场（onerror 移除）。 */
+  function hashHue(s) {
+    var h = 0;
+    s = s || '';
+    for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) % 360;
+    return h;
+  }
+
+  function addCovers() {
+    var cards = document.querySelectorAll('.archive-card');
+    for (var i = 0; i < cards.length; i++) {
+      var card = cards[i];
+      if (card.querySelector('.card-cover')) continue;
+      var slug = card.dataset.slug || '';
+      var h3 = card.querySelector('h3');
+      var title = ((h3 ? h3.textContent : '') || '').trim();
+      var cover = document.createElement('div');
+      cover.className = 'card-cover';
+      cover.style.setProperty('--ch', hashHue(slug || title || String(i)) + 'deg');
+      if (title) {
+        var t = document.createElement('span');
+        t.className = 'card-cover-title';
+        // 只当「书封题字」用：去掉书名号等前导标点后取前两个字，完整书名在下方 h3
+        t.textContent = title.replace(/^[\s《〈“"'「【·—-]+/, '').slice(0, 2);
+        cover.appendChild(t);
+      }
+      if (slug) {
+        var img = document.createElement('img');
+        img.className = 'card-cover-img';
+        img.loading = 'lazy';
+        img.alt = title;
+        img.src = 'assets/covers/' + slug + '.jpg';
+        img.addEventListener('error', function () { this.remove(); });
+        cover.appendChild(img);
+      }
+      // 把除封面外的所有子节点（含隐藏的 ⋯ 菜单）包进 card-body，
+      // 方便「封面置顶（一排二）/ 封面置左（一排一）」两种版式切换
+      var body = document.createElement('div');
+      body.className = 'card-body';
+      while (card.firstChild) body.appendChild(card.firstChild);
+      card.appendChild(cover);
+      card.appendChild(body);
+    }
+  }
+
   function boot() {
     moveMeta();
+    addCovers();
     var favs = load();
 
     items = Array.prototype.slice.call(document.querySelectorAll('.archive-card'))

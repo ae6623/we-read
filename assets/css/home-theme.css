@@ -251,6 +251,28 @@ html[data-cols="3"] #rdCols .ic-cols-3{display:block}
 .archive-card.is-fav .card-more{color:var(--gold);}
 .archive-card.is-fav{box-shadow:inset 0 0 0 1px rgba(191,130,71,.45);}
 
+/* ── 10a. 卡片封面（一排一 / 一排二显示，一排三隐藏） ───────────────
+   库里目前没有书籍封面图（只有 epub），默认渲染「按 slug 哈希上色的占位封面 +
+   书名」，先看版式效果；日后把真封面放到 assets/covers/<slug>.jpg，
+   <img> 会自动盖上去（onerror 时移除，露出占位层）。 */
+.card-body{display:flex;flex-direction:column;flex:1 1 auto;min-width:0;}
+.card-cover{position:relative;width:100%;aspect-ratio:5/3;border-radius:8px;overflow:hidden;
+  background:linear-gradient(150deg,
+    hsl(var(--ch,210deg) 50% 60%),
+    hsl(calc(var(--ch,210deg) + 38deg) 44% 44%));
+  box-shadow:0 1px 4px rgba(0,0,0,.18);flex:none;}
+.card-cover-title{position:absolute;inset:0;z-index:1;display:flex;align-items:center;justify-content:center;
+  color:rgba(255,255,255,.92);font:600 1.5rem/1 var(--serif);letter-spacing:.06em;
+  text-shadow:0 1px 4px rgba(0,0,0,.35);pointer-events:none;}
+.card-cover-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
+/* 一排二：封面置顶（通栏缩略图），文字在封面下 */
+html[data-cols="2"] .archive-card{display:flex;flex-direction:column;}
+html[data-cols="2"] .card-cover{margin-bottom:9px;}
+/* 一排一：封面置左（竖版书脊），文字在右 */
+html[data-cols="1"] .archive-card{display:flex;flex-direction:row;align-items:flex-start;gap:13px;}
+html[data-cols="1"] .card-cover{flex:0 0 92px;aspect-ratio:3/4;width:92px;}
+html[data-cols="1"] .card-body{flex:1 1 auto;}
+
 /* 列数切换：force 覆盖 site.css 的媒体查询 */
 html[data-cols="1"] .archive-grid{grid-template-columns:minmax(0,1fr)!important;}
 html[data-cols="2"] .archive-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
@@ -263,14 +285,15 @@ html[data-cols="3"] .overview-entries{grid-template-columns:repeat(3,minmax(0,1f
 html[data-cols="3"] #reading-panel-archive .archive-grid,
 html[data-cols="3"] #panel-soon .archive-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
 
-/* ── 一排三（默认）：112px 的窄卡，信息只能按「书名 > 章节 > 作者」排 ── */
+/* ── 一排三：112px 的窄卡，太挤 → 不显示封面、精简掉作者，只留「书名 + 章节数」 ── */
 html[data-cols="3"] .archive-card{padding:10px 10px 8px;}
 html[data-cols="3"] .archive-card h3{font-size:.9rem;line-height:1.42;margin:4px 0 0;}
 html[data-cols="3"] .archive-card .card-top{margin-bottom:1px;}
 html[data-cols="3"] .archive-card .card-top time{font-size:.66rem;letter-spacing:.01em;}
+html[data-cols="3"] .card-cover{display:none;}
+html[data-cols="3"] .card-author{display:none;}
 html[data-cols="3"] .card-foot{flex-wrap:wrap;gap:1px 4px;padding-top:2px;}
-/* 作者独占一行（窄卡里和章节数挤一起只会两败俱伤），章节数回到右下 */
-html[data-cols="3"] .card-author{flex:1 1 100%;font-size:.64rem;line-height:1.3;}
+/* 章节数回到右下 */
 html[data-cols="3"] .card-foot .card-meta{order:1;margin-left:auto;max-width:100%;font-size:.64rem;}
 html[data-cols="3"] .card-more{order:2;width:22px;height:22px;margin-left:2px;}
 html[data-cols="3"] .card-more svg{width:14px;height:14px;}
@@ -314,21 +337,9 @@ html[data-cols="3"] .card-more svg{width:14px;height:14px;}
 /* 卡片改为绝对定位后由 home-feed.js 摆放，这里只保证不参与文档流、
    不被 site.css 的 min-height 撑高。 */
 .archive-grid>.archive-card{left:0;top:0;}
-.archive-card[data-pg="off"]{display:none;}
-
-/* 首卡横幅：两列瀑布里，第一张横跨整行。
-   纯文字卡的高度只随书名行数变（1 行 / 2 行，差 18px），两列很容易排成
-   「表格」；开头压一张通栏卡，整面墙立刻有起点，往下也才有错落可言。 */
-html:not([data-cols="1"]) .archive-grid>.archive-card[data-span="full"]{padding:12px 15px 10px;}
-html:not([data-cols="1"]) .archive-grid>.archive-card[data-span="full"] h3{font-size:1.24rem;line-height:1.38;margin:5px 0 0;}
-html:not([data-cols="1"]) .archive-grid>.archive-card[data-span="full"] .card-top{margin-bottom:0;}
-html:not([data-cols="1"]) .archive-grid>.archive-card[data-span="full"] .card-top time{font-size:.76rem;}
-html:not([data-cols="1"]) .archive-grid>.archive-card[data-span="full"] .card-author{font-size:.74rem;}
-html:not([data-cols="1"]) .archive-grid>.archive-card[data-span="full"] .card-foot .card-meta{font-size:.7rem;}
-/* 横幅卡宽 362，底栏按两列那套排（作者 + 章节数 + ⋯ 一行），别继承三列的换行 */
-html:not([data-cols="1"]) .archive-grid>.archive-card[data-span="full"] .card-foot{flex-wrap:nowrap;gap:7px;padding-top:3px;}
-html:not([data-cols="1"]) .archive-grid>.archive-card[data-span="full"] .card-author{flex:1 1 auto;}
-html:not([data-cols="1"]) .archive-grid>.archive-card[data-span="full"] .card-more{width:24px;height:24px;margin-left:6px;}
+/* 下面的列数版式规则（html[data-cols=N] .archive-card）比这两条选择器权重高，
+   会把分页藏起来的卡和搜索 hidden 的卡重新显示出来 —— 必须 !important 压住。 */
+.archive-card[data-pg="off"],.archive-card[hidden]{display:none!important;}
 
 .feed-foot{display:flex;justify-content:center;padding:calc(14px*var(--pm)) 0 2px;}
 .feed-more{font:600 .76rem/1.4 var(--sans);color:var(--green);background:var(--card);

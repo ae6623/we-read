@@ -159,10 +159,19 @@ engine_commit）、什么时候。台账 `compose.json` 每书同记 `produced_b
 - 首页多一个字段：`cols`（1 = 一排一 / 2 = 一排二，**默认 2**，不再按屏宽自动降级）；
   卡片收藏单独存 `rd-fav`（slug 数组），不进 `rd-cfg`。
 
-### 书架信息流（2026-11-02）：瀑布流 + 15 张/页
+### 书架信息流（2026-11-02）：瀑布流 + 15 张/页 + 默认两列 + 封面
 
-- **默认一排三**（`html[data-cols="3"]`，按钮循环 三→二→一），卡片高度不一 → `assets/js/home-feed.js`
+- **默认一排二**（`html[data-cols="2"]`，按钮循环 二→三→一），卡片高度不一 → `assets/js/home-feed.js`
   按「当前最短列」绝对定位摆放；只写 `style` 不改结构，搜索/筛选那套 `card.hidden` 照旧有效。
+- **首卡不再横幅铺满**：删掉 `data-span="full"` 首卡特判（原第一张大卡占满整行），所有卡统一按列数摆放；
+  `isSpan()` 已移除，`home-feed.js` 里 `span` 恒为 `false`。
+- **封面（一排一 / 一排二显示，一排三隐藏）**：`home-card.js` 的 `addCovers()` 给每张 `.archive-card`
+  加 `.card-cover` —— 占位用 slug 哈希色相 + 书名去标点前两字做大字题字；同时试加载
+  `assets/covers/<slug>.jpg`，加载失败（404）自动 `remove`、露出占位层。**库里目前没有真封面图**，
+  日后把图丢进 `assets/covers/<slug>.jpg` 即自动生效，无需改代码。
+  - 一排三：为防拥挤，**隐藏 `.card-cover` 与 `.card-author`**，只留书名 / 日期 / 章节数精简信息。
+  - 一排二：`flex-direction:column`，封面置顶（5:3 渐变块）。
+  - 一排一：`flex-direction:row`，封面置左（92px 竖版）。
 - **首屏打散**：只把第一页 15 张打乱（`scatter()`，mulberry32 + 内存种子），第 16 张往后仍是时间序。
   种子在内存里 —— 同一次访问里重排多少次（切列数、改字号、resize）结果都不变，卡片不会乱跳。
 - **「即将上线」「归档」两格不做瀑布**（`isFixedGrid()`）：前者只有标题 + 一句说明，
@@ -219,3 +228,16 @@ engine_commit）、什么时候。台账 `compose.json` 每书同记 `produced_b
 
 限流：单次访问最多 60 条，同 path 只发一次；`count.js` 8 秒内没加载出来就丢弃队列
 （离线、被拦截都不影响页面）。
+
+### 详情页交互（2026-11-02）：Gemini pro 标签 + 结构导图弹层 + 上一篇/下一篇
+
+- **「AI领读」→「Gemini pro」**：`reader.js` 的 `renderChips()` 第二枚 chip 固定文案由 `AI领读`
+  改为 `Gemini pro`（第一枚仍是品类 `cat1`，第三枚 `AI 生产` 不变）。339 本 `combined.html` 里
+  旧 `<span class="chip">AI领读</span>` 已全量替换为 `Gemini pro`。
+- **结构导图全屏弹层**：点导航里的「结构导图」入口或点导图 svg 本身 → 克隆 `#mod-svg svg` 进
+  `#rdSvgModal`（遮罩 + 舞台 + 右上角关闭钮 `✕`）。关闭方式三种：点关闭钮 / 点遮罩 / `Esc`。
+  舞台 `overflow:auto` + svg `min-width:600px`，手机端可横向平移看大图。
+- **上一篇 / 下一篇（SPA，不整页跳转）**：顺序走 `assets/data/book-order.json`（首页卡片序，最新在前）。
+  上一篇 = 更新一篇（列表里后一个），下一篇 = 更早一篇（列表里前一个）。点按 `fetch` 目标书的
+  `combined-data.html` 原地重渲染 + `history.pushState` 换 URL，前进/后退可用；渲染失败整页兜底跳转。
+  翻页条 `#rdPn` 在 `#rdBody` 之后，左下「上一篇」、右下「下一篇」，书名带《》包裹。
