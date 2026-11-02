@@ -271,3 +271,12 @@ engine_commit）、什么时候。台账 `compose.json` 每书同记 `produced_b
   `.rd-hero-bg`（封面自身 blur(46px) 放大 136% 做氛围光，opacity .38）+
   `.rd-hero-img`（居中 240px 竖版大图，入场动画，`prefers-reduced-motion` 时不播），
   再叠主题绿径向光晕。封面 404 → 整块移除；SPA 翻页随 `curSlug` 重建。
+
+### 第 18 批（2026-11-02 16:30）：默认一排三 / 一排二减高 / hero 贴顶主题色
+
+- **默认列数回一排三**：`home-theme.js` `CFG_VER=5`（迁移 `cols:2→3`，只迁一次、
+  手动调过列数的人也会被带走——和第 15 批同一策略），循环 **三→二→一**。
+- **一排二海报减高**：卡片 `aspect-ratio 60/43`（原 30/43 的一半高），封面
+  `object-fit:cover` 自动裁上下，overlay 白字区收紧（h3 两行截断）。
+- **详情页 hero**：贴顶全出血（负 margin 抵消 body padding，无圆角无边框），
+  主题绿渐变打底 + 封面 blur(52px)/opacity .55 铺底 + 底部压暗；两种主题都适配。

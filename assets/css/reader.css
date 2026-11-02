@@ -56,16 +56,17 @@ body{max-width:880px;margin:0 auto;padding:0 18px 80px;font-size:.9375rem;line-h
 .combined-head{padding:30px 0 16px;border-bottom:1px solid var(--card-bd);margin-bottom:4px;}
 /* 顶部大封面模块（参考微信读书书籍介绍页）：
    封面自身模糊放大铺底做氛围光 + 主题绿径向光晕，两层叠加 */
-#rdHero{position:relative;overflow:hidden;margin:16px 0 4px;padding:34px 16px 26px;border-radius:14px;
-  text-align:center;border:1px solid var(--card-bd);
-  background:var(--card-bg,#fff);}
+/* 第 18 批：贴顶全出血（负 margin 抵消 body padding），主题色打底 + 封面模糊铺底 */
+#rdHero{position:relative;overflow:hidden;margin:0 -18px 10px;padding:44px 16px 30px;
+  text-align:center;border:none;border-bottom:1px solid var(--card-bd);
+  background:linear-gradient(180deg,var(--green2,#315e50),var(--green,#244b40));}
 .rd-hero-bg{position:absolute;left:-18%;top:-18%;width:136%;height:136%;z-index:0;
-  object-fit:cover;filter:blur(46px) saturate(1.2);opacity:.38;pointer-events:none;}
+  object-fit:cover;filter:blur(52px) saturate(1.25);opacity:.55;pointer-events:none;}
 #rdHero::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
-  background:radial-gradient(115% 90% at 50% 0%,rgba(49,94,80,.34),rgba(49,94,80,.06) 55%,rgba(49,94,80,.22) 100%);}
+  background:radial-gradient(115% 90% at 50% 0%,rgba(49,94,80,0),rgba(20,34,29,.18) 60%,rgba(20,34,29,.5) 100%);}
 .rd-hero-img{position:relative;z-index:2;width:min(56vw,240px);aspect-ratio:30/43;object-fit:cover;
   border-radius:10px;
-  box-shadow:0 14px 42px rgba(0,0,0,.42),0 2px 8px rgba(0,0,0,.22),0 0 0 1px rgba(255,255,255,.14);
+  box-shadow:0 14px 42px rgba(0,0,0,.45),0 2px 8px rgba(0,0,0,.25),0 0 0 1px rgba(255,255,255,.16);
   display:block;margin:0 auto;}
 @media(prefers-reduced-motion:no-preference){
   .rd-hero-img{animation:rdHeroIn .5s cubic-bezier(.2,.7,.3,1) both;}
@@ -244,6 +245,7 @@ html[data-theme=green] .toc-part,html[data-theme=green] .card{
 
 @media(max-width:720px){
   body{padding:0 12px 60px;}
+  #rdHero{margin:0 -12px 8px;}
   #rdBody>section.mmx-mod,#rdBody>section.card,#rdBody>section.mmx-svgwrap{padding:15px 16px;border-radius:14px;}
 }
 
