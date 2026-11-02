@@ -173,6 +173,8 @@
         // 首屏别急着加载：启动那几百毫秒里，上游脚本还在搬卡片、改 hidden，
         // 网格高度会短暂塌下去，页脚「假进入」视口。
         if (now - BOOT < 900) continue;
+        // 首屏只给第一页：用户还没下滑就不续页（慢网下卡片重排会让页脚「假进入」视口）
+        if (window.scrollY < 120 && s.shown <= PAGE) continue;
         if (now - s.auto < 320) continue;       // 别一口气全加载
         if (!nearFoot(s.foot)) continue;        // 回读一次真实位置再说
         s.auto = now;
