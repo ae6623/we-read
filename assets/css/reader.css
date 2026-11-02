@@ -409,3 +409,16 @@ html[data-theme=green]{--skel-a:#d6e9da;--skel-b:#aed3ba;}
 @media (prefers-reduced-motion:reduce){
   .rd-pn{transition:none;}
 }
+
+/* ── 夜间主题：结构导图 SVG 配色适配 ───────────────────────────
+   导图 SVG 颜色写死（节点米白底 #f4efe3 / 深字 #2f2a24 / 说明深灰 #5c5347），
+   夜间主题下深字落在深卡片底上看不清。fill 是表现属性，CSS 可覆盖：
+   节点底改主题深绿、文字整体提亮、连线压暗。深浅主题互不影响 */
+html[data-theme=dark] .mmx-svg rect[fill="#f4efe3"]{fill:#244b40;}
+html[data-theme=dark] .mmx-svg rect[fill="#3d372e"]{fill:#1c3a2b;}
+html[data-theme=dark] .mmx-svg rect[fill="#8a9b6e"]{fill:#3f7a5c;}
+html[data-theme=dark] .mmx-svg .t1{fill:#dcefe2 !important;}
+html[data-theme=dark] .mmx-svg .t2{fill:#b8cec0 !important;}
+html[data-theme=dark] .mmx-svg .t3{fill:#93a89a !important;}
+html[data-theme=dark] .mmx-svg text[style*="c9c0ae"]{fill:#93a89a !important;}
+html[data-theme=dark] .mmx-svg .ln{stroke:#2f5b49;}
