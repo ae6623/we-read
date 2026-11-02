@@ -4,32 +4,64 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>《价值投资五部曲》｜通读 · 精读</title>
+<script>
+/* 防闪：渲染前先把上次保存的主题/字号/段距应用到 <html> */
+(function(){try{var c=JSON.parse(localStorage.getItem('rd-cfg')||'{}'),d=document.documentElement;
+d.dataset.theme=c.theme||'cream';
+if(c.fs)d.style.setProperty('--fs',c.fs);
+if(c.pm)d.style.setProperty('--pm',c.pm);}catch(e){}})();
+</script>
 <link rel="stylesheet" href="../../../assets/css/reading-overview.css"><link rel="stylesheet" href="../../../assets/css/mmx-guide.css"><link rel="stylesheet" href="../../../assets/css/reading-outline.css">
 <style>
-/* ── 外壳与全局阅读节奏 ── */
-body{max-width:880px;margin:0 auto;padding:0 18px 80px;
-  font-size:15px;line-height:1.88;color:#3b453e;background:#f7f8f3;
-  -webkit-font-smoothing:antialiased;}
-.combined-head{padding:30px 0 16px;border-bottom:1px solid #e7e0d2;margin-bottom:4px;}
-.combined-head h1{font:700 23px/1.35 var(--serif);margin:0 0 8px;color:#244b40;}
+/* ── 主题变量：默认米白；纯白/护眼绿/夜间由 html[data-theme] 覆盖 ── */
+:root{
+  --fs:1;--pm:1;
+  --pg-bg:#f7f8f3;--card-bg:#fffdf6;--card-bd:#e8e4d5;--ink:#3b453e;--txt:#4a4436;
+  --sub:#8d8878;--head:#244b40;--qgreen:#2f5b49;--gold:#bf8247;
+  --nav-bg:rgba(247,248,243,.96);--navlink-bg:#fdfbf3;--navlink-bd:#e8e2d2;
+  --inner-bg:#fbfaf2;--inner-bd:#eee9d8;--oneline-bg:#fbfaf4;
+  --act-bg:#e5efe4;--act-bd:#bcd4bc;
+}
+html[data-theme=light]{--pg-bg:#ffffff;--card-bg:#ffffff;--card-bd:#e7e7e2;
+  --nav-bg:rgba(255,255,255,.96);--navlink-bg:#fafaf7;--navlink-bd:#e7e7e0;
+  --inner-bg:#fafaf7;--inner-bd:#ecebe4;--oneline-bg:#fafaf7;}
+html[data-theme=green]{--pg-bg:#cfe8d2;--card-bg:#eef7ef;--card-bd:#b9dcc0;--ink:#2f4237;
+  --txt:#3b5446;--sub:#5d7c67;--head:#1e4d37;--qgreen:#1e5c41;
+  --nav-bg:rgba(207,232,210,.96);--navlink-bg:#f4fbf5;--navlink-bd:#b4d8bd;
+  --inner-bg:#f6fbf7;--inner-bd:#cde5d3;--oneline-bg:#f6fbf7;--act-bg:#bfe3c6;--act-bd:#95c8a1;}
+html[data-theme=dark]{--pg-bg:#15171a;--card-bg:#1f2226;--card-bd:#34383f;--ink:#c9ced4;
+  --txt:#b4bac1;--sub:#8a919a;--head:#93c8a8;--qgreen:#9ed0af;
+  --nav-bg:rgba(21,23,26,.96);--navlink-bg:#262a2f;--navlink-bd:#3a3f46;
+  --inner-bg:#272b30;--inner-bd:#3a3f46;--oneline-bg:#272b30;
+  --act-bg:#244b40;--act-bd:#2f5b49;}
+
+/* ── 外壳与全局阅读节奏（字号跟随 --fs 整页缩放，段距跟随 --pm） ── */
+html{font-size:calc(16px*var(--fs));}
+html[data-theme=dark] body{color-scheme:dark;}
+body{max-width:880px;margin:0 auto;padding:0 18px 80px;font-size:.9375rem;line-height:1.88;
+  color:var(--ink);background:var(--pg-bg);-webkit-font-smoothing:antialiased;}
+.combined-head{padding:30px 0 16px;border-bottom:1px solid var(--card-bd);margin-bottom:4px;}
+.combined-head h1{font:700 1.45rem/1.35 var(--serif);margin:0 0 8px;color:var(--head);}
 .combined-head .eyebrow{font-size:.72rem;letter-spacing:.14em;margin:0 0 6px;}
 .chips{margin:8px 0 0;}
 .chip{font-size:.72rem;padding:2px 10px;}
-/* 锚点导航：固定一排 4 个，等宽对齐 */
-.nav{position:sticky;top:0;z-index:20;background:rgba(247,248,243,.96);backdrop-filter:blur(6px);
-  border-bottom:1px solid #ece4d4;padding:10px 0;margin:12px 0 20px;display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;
+
+/* ── 锚点导航：小屏最少一排 4 个，大屏自动一排/两排放完；滚动到哪亮哪 ── */
+.nav{position:sticky;top:0;z-index:20;background:var(--nav-bg);backdrop-filter:blur(6px);
+  border-bottom:1px solid var(--card-bd);padding:10px 0;margin:12px 0 20px;display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(76px,1fr));gap:6px;
   box-shadow:0 2px 10px rgba(120,100,60,.05);}
-.navlink{font-size:12px;color:#5d5443;text-decoration:none;background:#fdfbf3;border:1px solid #e8e2d2;
-  border-radius:8px;padding:6px 4px;text-align:center;white-space:nowrap;overflow:hidden;
-  text-overflow:ellipsis;transition:background .15s,color .15s;}
-.navlink:hover{background:#f2efe2;color:#244b40;}
+.navlink{font-size:12px;color:var(--txt);text-decoration:none;background:var(--navlink-bg);
+  border:1px solid var(--navlink-bd);border-radius:8px;padding:6px 4px;text-align:center;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:all .15s;}
+.navlink:hover{color:var(--head);border-color:var(--head);}
+.navlink.active{color:var(--head);background:var(--act-bg);border-color:var(--act-bd);font-weight:700;}
 section{scroll-margin-top:62px;}
 
 /* ── 统一卡片：所有顶层模块（AI领读 / AI 问答 / 其余）一视同仁 ── */
 body>section.mmx-mod,body>section.card,body>section.mmx-svgwrap{
-  background:#fffdf6;border:1px solid #e8e4d5;border-radius:16px;
-  padding:18px 22px;margin:18px 0;
+  background:var(--card-bg);border:1px solid var(--card-bd);border-radius:16px;
+  padding:18px 22px;margin:calc(18px*var(--pm)) 0;
   box-shadow:0 1px 3px rgba(110,95,60,.05);}
 body>section.mmx-mod>*:first-child,body>section.card>*:first-child,
 body>section.mmx-svgwrap>*:first-child{margin-top:0}
@@ -39,74 +71,115 @@ body>section.mmx-svgwrap>*:last-child{margin-bottom:0}
 body>section.mmx-svgwrap>svg.mmx-svg{display:block;width:100%;height:auto;margin:2px auto 0;}
 /* 模块标题：统一大小、弱强调，不与正文抢注意力 */
 body>section.mmx-mod>h2,body>section.card>h2{
-  font:700 1.04rem/1.5 var(--serif);color:#244b40;margin:0 0 11px;
-  padding-left:10px;border-left:3px solid #bf8247;letter-spacing:.01em;}
-/* 正文：字号收小、行距放宽、段间距舒服 */
+  font:700 1.04rem/1.5 var(--serif);color:var(--head);margin:0 0 11px;
+  padding-left:10px;border-left:3px solid var(--gold);letter-spacing:.01em;}
+/* 正文：字号收小、行距放宽、段间距随 --pm 调节 */
 body>section.mmx-mod p,body>section.card p,
 body>section.mmx-mod li,body>section.card li{
-  font-size:.9rem;line-height:1.92;color:#4a4436;}
-body>section.mmx-mod p,body>section.card p{margin:.5em 0;}
+  font-size:.9rem;line-height:1.92;color:var(--txt);margin:calc(.5em*var(--pm)) 0;}
 body>section.mmx-mod>ul,body>section.mmx-mod>ol,body>section.mmx-mod>div,
 body>section.mmx-mod>p:not(.mmx-mod-note),
 body>section.card:not(.merged-guide)>ul,body>section.card:not(.merged-guide)>ol,
 body>section.card:not(.merged-guide)>div,body>section.card:not(.merged-guide)>p:not(.mmx-mod-note){
   padding-left:14px;}
-/* 模块说明小字：弱化不抢眼 */
-.mmx-mod-note{font-size:.75rem;color:#8d8878;margin:.1em 0 .75em;line-height:1.7;}
 
 /* ── 内部块统一：卡片里不再套深卡片，一律浅底子块 ── */
 body>section .mmx-pending,body>section .mmx-evib,body>section .aiqa-item{
-  background:#fbfaf2;border:1px solid #eee9d8;border-radius:12px;
-  padding:13px 16px;margin:.65em 0;}
+  background:var(--inner-bg);border:1px solid var(--inner-bd);border-radius:12px;
+  padding:13px 16px;margin:calc(.65em*var(--pm)) 0;}
 body>section .mmx-evib ul{padding-left:1.15em;}
 /* 一句话主旨：去左侧竖线 + 收敛字号 */
-.mmx-oneline{font-size:.98rem;line-height:1.85;color:#3a352c;margin:.2em 0 0;
-  padding:12px 16px;background:#fbfaf4;border-left:none;border-radius:12px;}
+.mmx-oneline{font-size:.98rem;line-height:1.85;color:var(--txt);margin:.2em 0 0;
+  padding:12px 16px;background:var(--oneline-bg);border-left:none;border-radius:12px;}
 /* 核心观点 / 验证清单：虚线分隔 + 收紧行距 */
 .mmx-views li{padding:.5em 0 .5em 0;font-size:.9rem;line-height:1.88;}
 /* 原文金句 */
 .mmx-qlist li{padding:.6em 0 .6em 2.2em;}
-.mmx-qlist blockquote{font-size:.89rem;line-height:1.9;}
-.mmx-qlist cite{font-size:.72rem;}
+.mmx-qlist blockquote{font-size:.89rem;line-height:1.9;color:var(--txt);}
+.mmx-qlist cite{font-size:.72rem;color:var(--sub);}
 /* 核心追问：问句加重、答句放松 */
-.mmx-qa{margin:.7em 0;padding-left:12px;border-left:3px solid #e5dfcd;}
-.mmx-qa .mmx-q{font-size:.9rem;font-weight:700;color:#2f3a33;line-height:1.8;margin:0 0 .25em;}
-.mmx-qa .mmx-a{font-size:.88rem;line-height:1.95;color:#4a4436;margin:0;}
+.mmx-qa{margin:calc(.7em*var(--pm)) 0;padding-left:12px;border-left:3px solid var(--inner-bd);}
+.mmx-qa .mmx-q{font-size:.9rem;font-weight:700;color:var(--ink);line-height:1.8;margin:0 0 .25em;}
+.mmx-qa .mmx-a{font-size:.88rem;line-height:1.95;color:var(--txt);margin:0;}
 
 /* ── AI 问书专项：外层容器透明，问答条目才是阅读单元 ── */
 #mod-aiask .mmx-ask{background:transparent;border:0;border-radius:0;padding:0;margin:0;}
-#mod-aiask .aiqa-item{margin:.6em 0;padding:14px 16px 15px;}
-#mod-aiask .aiqa-item h3{font:700 .93rem/1.7 var(--serif);color:#2f5b49;margin:0 0 .4em;
+#mod-aiask .aiqa-item{margin:calc(.6em*var(--pm)) 0;padding:14px 16px 15px;}
+#mod-aiask .aiqa-item h3{font:700 .93rem/1.7 var(--serif);color:var(--qgreen);margin:0 0 .4em;
   padding:0;border:0;}
-#mod-aiask .aiqa-item h3:before{content:"问　";color:#bf8247;font-weight:700;}
-#mod-aiask .aiqa-item p{font-size:.88rem;line-height:1.95;color:#4a4436;margin:.4em 0;}
-#mod-aiask .aiqa-item ul{margin:.35em 0;padding-left:1.1em;}
-#mod-aiask .aiqa-item li{font-size:.87rem;line-height:1.88;margin:.18em 0;color:#4a4436;}
-#mod-aiask .aiqa-item li::marker{color:#c0a06a;}
+#mod-aiask .aiqa-item h3:before{content:"问　";color:var(--gold);font-weight:700;}
+/* 回答整体右缩进，与问句文字对齐（别顶着左边） */
+#mod-aiask .aiqa-item>p,#mod-aiask .aiqa-item>ul{margin-left:26px;}
+#mod-aiask .aiqa-item p{font-size:.88rem;line-height:1.95;color:var(--txt);
+  margin-top:calc(.4em*var(--pm));margin-bottom:calc(.4em*var(--pm));}
+#mod-aiask .aiqa-item ul{margin-top:calc(.35em*var(--pm));margin-bottom:calc(.35em*var(--pm));
+  padding-left:1.1em;}
+#mod-aiask .aiqa-item li{font-size:.87rem;line-height:1.88;margin:calc(.18em*var(--pm)) 0;
+  color:var(--qgreen);}
+#mod-aiask .aiqa-item li::marker{color:var(--gold);}
 /* 逐章追问（details 形态）：摘要行也收敛 */
-.mmx-ask>summary{font-size:.87rem;line-height:1.7;padding:2px 0;}
-.mmx-askbody{font-size:.88rem;line-height:1.9;}
+.mmx-ask>summary{font-size:.87rem;line-height:1.7;padding:2px 0;color:var(--qgreen);}
+.mmx-askbody{font-size:.88rem;line-height:1.9;color:var(--txt);}
 
-/* AI领读章内：AI 大纲原生深层样式（字号同步收小） */
-.merged-guide .sec{margin:9px 0 12px;padding-left:6px;border-left:2px solid #e5e0d6}
-.merged-guide .sec h4{font:600 .93rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.5em 0 .25em}
+/* ── AI领读章内：AI 大纲原生深层样式（章节字号整体再收一档） ── */
+.merged-guide .sec{margin:9px 0 12px;padding-left:6px;border-left:2px solid var(--card-bd)}
+.merged-guide .sec h4{font:600 .84rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:var(--head);margin:.5em 0 .25em}
+.merged-guide .mmx-name{font-size:.88rem !important;}
+.merged-guide .mmx-sech{font-size:.8rem !important;}
+.merged-guide .mmx-gist{font-size:.83rem !important;line-height:1.85;}
+.merged-guide .mmx-stat{font-size:.7rem !important;}
 .merged-guide ul.point{margin:.25em 0;padding-left:20px}
-.merged-guide ul.point>li{margin:.3em 0}
+.merged-guide ul.point>li{margin:.3em 0;font-size:.8rem !important;line-height:1.85;}
 .merged-guide ul.quote{margin:.22em 0 .22em 20px;padding-left:18px;list-style:none}
-.merged-guide ul.quote::before{content:"原句";display:block;font-size:.7rem;color:#bf8247;
+.merged-guide ul.quote::before{content:"原句";display:block;font-size:.7rem;color:var(--gold);
   letter-spacing:.1em;margin:.12em 0 .08em;font-weight:600}
-.merged-guide ul.quote.quote-node{margin-top:.45em;padding-top:.35em;border-top:1px dashed #eadfc9}
+.merged-guide ul.quote.quote-node{margin-top:.45em;padding-top:.35em;border-top:1px dashed var(--inner-bd)}
 .merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
-.merged-guide ul.quote>li{color:#4a4436;font-size:.88rem;line-height:1.85;margin:.18em 0;padding-left:10px;border-left:2px solid #bf8247}
+.merged-guide ul.quote>li{color:var(--txt);font-size:.8rem !important;line-height:1.85;margin:.18em 0;padding-left:10px;border-left:2px solid var(--gold)}
+.merged-guide .mmx-qt{font-size:.77rem !important;}
+
 /* 核心观点初判：外链 mmx-guide.css 的「观点N」前缀是绝对定位，在本页版式里和标题叠字，
    且此前要求去掉「观点1/2/3」前缀 —— 这里整条关掉（外链 CSS 不在页面内，只能内联覆盖）。 */
 .mmx-views li{padding-left:0 !important;}
 .mmx-views li:before,.mmx-views li::before{
   content:none !important;display:none !important;counter-increment:none !important;}
+
+/* ── 夜间主题：覆盖共享 CSS 里的硬编码浅色 ── */
+html[data-theme=dark] h1,html[data-theme=dark] h2,html[data-theme=dark] h3,
+html[data-theme=dark] h4{color:var(--head);}
+html[data-theme=dark] .mmx-qt{background:var(--inner-bg);color:var(--txt);}
+html[data-theme=dark] .mmx-qlist blockquote,html[data-theme=dark] .mmx-ask blockquote,
+html[data-theme=dark] .mmx-gist,html[data-theme=dark] .mmx-pts,
+html[data-theme=dark] .mmx-askbody{color:var(--txt);}
+html[data-theme=dark] .mmx-qlist li:before{background:#2b3a31;color:#9ed0af;}
+html[data-theme=dark] .mmx-views li,html[data-theme=dark] .mmx-qlist li,
+html[data-theme=dark] .mmx-qa,html[data-theme=dark] .mmx-sec>summary,
+html[data-theme=dark] .mmx-cn{border-color:#3a3f46;}
+html[data-theme=dark] .mmx-views li b,html[data-theme=dark] .mmx-qa .mmx-q{color:var(--ink);}
+html[data-theme=dark] .chip{background:#274234;color:#9ed0af;}
+html[data-theme=dark] .mmx-role,html[data-theme=dark] .mmx-chip{background:#262a2f;
+  color:#8a919a;border-color:#3a3f46;}
+html[data-theme=dark] a{color:#9ed0af;}
+
+/* ── 右上角设置面板 ── */
+#rdFab{position:fixed;top:10px;right:12px;z-index:60;font:600 13px/1 var(--sans);color:var(--txt);
+  background:var(--card-bg);border:1px solid var(--card-bd);border-radius:9px;padding:8px 12px;
+  cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.1);}
+#rdFab:hover{border-color:var(--head);color:var(--head);}
+#rdPanel{position:fixed;top:48px;right:12px;z-index:60;background:var(--card-bg);
+  border:1px solid var(--card-bd);border-radius:12px;padding:12px 14px;
+  box-shadow:0 8px 24px rgba(0,0,0,.16);display:grid;gap:9px;min-width:212px;}
+#rdPanel[hidden]{display:none;}
+#rdPanel .rd-row{display:flex;gap:5px;align-items:center;justify-content:space-between;}
+#rdPanel .rd-row>span{font-size:.72rem;color:var(--sub);flex:none;}
+#rdPanel .rd-btns{display:flex;gap:5px;}
+#rdPanel button{font:600 12px/1.4 var(--sans);color:var(--txt);background:var(--navlink-bg);
+  border:1px solid var(--navlink-bd);border-radius:7px;padding:4px 9px;cursor:pointer;}
+#rdPanel button:hover{border-color:var(--head);color:var(--head);}
+
 @media(max-width:720px){
-  body{padding:0 12px 60px;font-size:14.5px;}
-  body>section.mmx-mod,body>section.card{padding:15px 16px;border-radius:14px;}
-  .nav{grid-template-columns:repeat(2,minmax(0,1fr));}
+  body{padding:0 12px 60px;}
+  body>section.mmx-mod,body>section.card,body>section.mmx-svgwrap{padding:15px 16px;border-radius:14px;}
 }
 </style>
 </head>
@@ -355,5 +428,77 @@ body>section .mmx-evib ul{padding-left:1.15em;}
 <ol class="mmx-pts"><li><b>1</b> 投资中最简单的事</li><li><b>2</b> 推荐序</li><li><b>3</b> 再版序</li><li><b>4</b> 初版序</li><li><b>5</b> 第一部分 投资理念</li><li><b>6</b> 01 以实业的眼光做投资</li><li><b>7</b> 02 人弃我取，逆向投资的关键</li><li><b>8</b> 03 便宜是硬道理</li><li><b>9</b> ｜投资随想录｜</li><li><b>10</b> 第二部分 投资方法</li><li><b>11</b> 04 投资的三个基本问题</li><li><b>12</b> 05 宁数月亮，不数星星</li><li><b>13</b> 06 经验就像旧衣服</li><li><b>14</b> ｜投资随想录｜</li><li><b>15</b> 第三部分 投资风险</li><li><b>16</b> 07 价值陷阱与成长陷阱</li><li><b>17</b> 08 真假风险与安全边际</li><li><b>18</b> 09 价值投资的局限性</li><li><b>19</b> 10 四种周期、三种杠杆，行业轮动时机的把握</li><li><b>20</b> ｜投资随想录｜</li><li><b>21</b> 第四部分 投资心理学</li><li><b>22</b> 11 人性的弱点：投资者常见的心理误区</li><li><b>23</b> 12 后视镜</li><li><b>24</b> 13 傻瓜定价说</li><li><b>25</b> 14 这次不同了</li><li><b>26</b> 15 树动风动心动</li><li><b>27</b> 16 知易行难</li><li><b>28</b> 附录 投资访谈</li><li><b>29</b> 后记</li><li><b>30</b> 投资中不简单的事</li><li><b>31</b> 推荐序</li><li><b>32</b> 序言</li><li><b>33</b> 第一篇 思想篇</li><li><b>34</b> 01 回归投资的本质，做时间的朋友</li><li><b>35</b> 02 在中国市场做价值投资的思路</li><li><b>36</b> 03 我所理解的基本面投资</li><li><b>37</b> 04 行业周期的判断和投资思路</li><li><b>38</b> 05 逆向投资核心方法</li><li><b>39</b> 06 在经济变化的主航道上投资</li><li><b>40</b> 07 学习把最重要的事情做到极致</li><li><b>41</b> 智者之书一 经得起时间检验的投资思想</li><li><b>42</b> 智者之书二 用资本创造价值</li><li><b>43</b> 智者之书三 快乐投资的源泉</li><li><b>44</b> 第二篇 实战篇</li><li><b>45</b> 08 投资中的变与不变</li><li><b>46</b> 09 “从0到1”的陷阱和“从1到N”的机会</li><li><b>47</b> 10 新牛市背景下的风险与机会</li><li><b>48</b> 11 基本面投资在中国的实践</li><li><b>49</b> 12 深度研究，从市场认知偏差中发掘大机会</li><li><b>50</b> 13 如何做好投研选择题</li><li><b>51</b> 14 价值投资的优势和企业成长的力量</li><li><b>52</b> 15 5 178一周年思考</li><li><b>53</b> 16 股票研究的断舍离</li><li><b>54</b> 17 市场的不可知与可知</li><li><b>55</b> 18 对操作策略和估值应用的一点思考</li><li><b>56</b> 19 当我们谈论公司时我们谈什么？</li><li><b>57</b> 20 从“渗透率”到“市场占有率”</li><li><b>58</b> 21 投资中我们为何甘愿又“蠢”又“饿”</li><li><b>59</b> 2017年度策略 在市场分化中集中优势</li><li><b>60</b> 2016年度策略 经济筑底，估值修复</li><li><b>61</b> 第三篇 成长篇</li><li><b>62</b> 22 邱国鹭：22年股市投研框架概览</li><li><b>63</b> 23 邓晓峰：投资的赛场比拼的是学习能力</li><li><b>64</b> 24 “股市常青树”孙庆瑞，为何长短期皆不败</li><li><b>65</b> 25 卓利伟，在A股市场长期坚持基本面投资</li><li><b>66</b> 26 传奇高手冯柳，从职业股民到基金经理的修炼之路</li><li><b>67</b> 投资对谈录一 孙庆瑞对话邱国鹭：“股市常青树”是如何炼成的</li><li><b>68</b> 投资对谈录二 邓晓峰对话邱国鹭：深谈十年投资经</li><li><b>69</b> 附录一 价值信徒的坚守与百年老店的探索</li><li><b>70</b> 附录二 高毅资产简介</li><li><b>71</b> 注释</li><li><b>72</b> 投资异类</li><li><b>73</b> 推荐序一</li><li><b>74</b> 推荐序二</li><li><b>75</b> 序言</li><li><b>76</b> 第一部分 重新认知天使投资</li><li><b>77</b> 导读认知升维</li><li><b>78</b> 01 天使投资的本质</li><li><b>79</b> 02 天使投资的三大误区</li><li><b>80</b> 03 天使投资的三个赌局</li><li><b>81</b> 写给创业者的三堂课</li><li><b>82</b> 第二部分 两大认知、九条标准与一种坚持</li><li><b>83</b> 导读审时度势，顺势而为</li><li><b>84</b> 04 离开了势能，我们将一事无成</li><li><b>85</b> 05 时机决定生死，买定离手</li><li><b>86</b> 06 判断好生意的九条标准</li><li><b>87</b> 07 长久的陪伴和迟来的满足感</li><li><b>88</b> 写给创业者的三堂课</li><li><b>89</b> 第三部分 赌人的三大误区和五大心法</li><li><b>90</b> 导读萝卜青菜，各有所爱</li><li><b>91</b> 08 天使赌人的三个误区</li><li><b>92</b> 09 赌人心法一：认知水平</li><li><b>93</b> 10 赌人心法二：领导力</li><li><b>94</b> 11 赌人心法三：自控力</li><li><b>95</b> 12 赌人心法四：偏执狂</li><li><b>96</b> 13 赌人心法五：孤注一掷</li><li><b>97</b> 14 逆境中悄悄生长的异类</li><li><b>98</b> 写给创业者的三堂课</li><li><b>99</b> 结语 无招胜有招</li><li><b>100</b> 后记</li><li><b>101</b> 注释</li><li><b>102</b> 跳着踢踏舞去上班</li><li><b>103</b> 测试题 股神巴菲特的秘密你知道多少</li><li><b>104</b> 推荐序1 快乐投资的源泉</li><li><b>105</b> 推荐序2 一个聪明家伙的伟大故事</li><li><b>106</b> 前言 我的老朋友，巴菲特</li><li><b>107</b> 01 没有人比得上琼斯</li><li><b>108</b> 02 对冲基金遭遇艰难岁月（节选）</li><li><b>109</b> 03 通货膨胀如何欺诈股票投资者</li><li><b>110</b> 04 小学院在投资游戏中取得大成功</li><li><b>111</b> 伯克希尔哈撒韦公司股东的捐赠</li><li><b>112</b> 05 股东的慈善捐赠权利</li><li><b>113</b> 06 伯克希尔哈撒韦公司搁置捐赠</li><li><b>114</b> 07 巴菲特的信</li><li><b>115</b> 08 你能跑赢股市吗（节选）</li><li><b>116</b> 巴菲特和首府/美国广播公司</li><li><b>117</b> 09 首府广播的资本政变（节选）</li><li><b>118</b> 10 改变决策的合并费用（节选）</li><li><b>119</b> 11 时代华纳不为人知的故事（节选）</li><li><b>120</b> 12 巴菲特与迪士尼：竖起大拇指（节选）</li><li><b>121</b> 13 通过回购股票来打败市场（节选）</li><li><b>122</b> 14 猜猜是谁购买了“倒霉”债券</li><li><b>123</b> 15 巴菲特语录</li><li><b>124</b> 16 一切都该留给子孙吗（节选）</li><li><b>125</b> 17 打电话给巴菲特谈合并（节选）</li><li><b>126</b> 18 对于指数期货的早期恐惧</li><li><b>127</b> 19 巴菲特内幕</li><li><b>128</b> 巴菲特和所罗门兄弟公司</li><li><b>129</b> 20 所罗门的智慧</li><li><b>130</b> 21 巴菲特在所罗门力挽狂澜</li><li><b>131</b> 22 巴菲特语录</li><li><b>132</b> 23 内布拉斯加的特别待遇</li><li><b>133</b> 24 巴菲特温馨提示：是时候出手房地美了</li><li><b>134</b> 桥牌桌边发生了什么</li><li><b>135</b> 26 提问凯恩</li><li><b>136</b> 27 如何与亿万富翁共处（节选）</li><li><b>137</b> 28 巴菲特语录</li><li><b>138</b> 巴菲特与新一代“巴菲特”</li><li><b>139</b> 29 谁将成为新的巴菲特（节选）</li><li><b>140</b> 30 现在，看看老巴菲特</li><li><b>141</b> 31 我是怎么搞砸的（节选）</li><li><b>142</b> 32 富人和名人的子女（节选）</li><li><b>143</b> 33 “点金石”也打折了</li><li><b>144</b> 34 巴菲特买进垃圾债券</li><li><b>145</b> 35 巴菲特语录</li><li><b>146</b> 巴菲特和可口可乐公司</li><li><b>147</b> 36 世界上最好的品牌（节选）</li><li><b>148</b> 37 可口可乐公司到底发生了什么（节选）</li><li><b>149</b> 38 价值机器（节选）</li><li><b>150</b> 39 巴菲特如何看待风险</li><li><b>151</b> 40 巴菲特抵挡住2亿美元的“下冲气流”</li><li><b>152</b> 巴菲特与盖茨</li><li><b>153</b> 41 亿万富翁的伙伴</li><li><b>154</b> 42 盖茨眼中的巴菲特</li><li><b>155</b> 43 解开衍生品的乱麻（节选）</li><li><b>156</b> 44 巴菲特语录</li><li><b>157</b> 45 缘何沃伦·巴菲特对美国运通公司下大赌注（节选）</li><li><b>158</b> 46 给予的礼物，巴菲特点滴</li><li><b>159</b> 47 比尔·盖茨和沃伦·巴菲特秀</li><li><b>160</b> 48 建在沙丘上的房子</li><li><b>161</b> 49 吉米·巴菲特和沃伦·巴菲特是亲戚吗</li><li><b>162</b> 50 大咬一口审计委员会</li><li><b>163</b> 51 巴菲特先生谈股票市场</li><li><b>164</b> 52 巴菲特主义</li><li><b>165</b> 53 支持奥巴马和希拉里的“政治重婚犯”</li><li><b>166</b> 最受赞赏——一次又一次</li><li><b>167</b> 54 价值机器</li><li><b>168</b> 55 《财富》杂志来信选摘</li><li><b>169</b> 56 巴菲特谈股票市场</li><li><b>170</b> 57 每个人都渴望的情书（节选）</li><li><b>171</b> 58 一切的神谕</li><li><b>172</b> 59 《财富》杂志来信选登</li><li><b>173</b> 60 大规模杀伤性金融武器</li><li><b>174</b> 61 现在我们要把钱放到哪里去呢</li><li><b>175</b> 62 7倍回报的中石油</li><li><b>176</b> 影响力问题</li><li><b>177</b> 64 最有影响力的商人：沃伦·巴菲特（节选）</li><li><b>178</b> 65 不断增长的贸易赤字等于在出卖我们的国家。现在有一个方法可以解决这个问题——我们需要马上行动</li><li><b>179</b> 66 “巴菲特”周边产品</li><li><b>180</b> 67 我得到过的最好建议</li><li><b>181</b> 68 910亿美元的对话</li><li><b>182</b> 69 致命的“交易费用”</li><li><b>183</b> 70 身居幕后的查理·芒格</li><li><b>184</b> 71 巴菲特支持通用汽车公司，并购买了一辆凯迪拉克</li><li><b>185</b> 成为慈善家</li><li><b>186</b> 72 巴菲特捐出财产</li><li><b>187</b> 73 巴菲特的捐赠将如何分配</li><li><b>188</b> 74 20多年历史的110亿美元</li><li><b>189</b> 75 巴菲特对盖茨说：把钱花掉</li><li><b>190</b> 76 按照“神话”定价</li><li><b>191</b> 77 先知的信用危机</li><li><b>192</b> 78 巴菲特是怎么想的</li><li><b>193</b> 79 巴菲特的豪赌</li><li><b>194</b> 80 奥巴马的商业观（节选）</li><li><b>195</b> 81 “巴菲特的市场指标”显示：购买股票正逢其时</li><li><b>196</b> 82 暴风骑士（节选）</li><li><b>197</b> 83 让巴菲特“出轨”的比亚迪</li><li><b>198</b> 84 最受赞赏的人们赞赏谁（节选）</li><li><b>199</b> 85 巴菲特的“修复”先生</li><li><b>200</b> 捐赠承诺</li><li><b>201</b> 86 6000亿美元的挑战</li><li><b>202</b> 87 我的慈善承诺</li><li><b>203</b> 88 小巴菲特造访北京</li><li><b>204</b> 89 为何股票胜过黄金和债券</li><li><b>205</b> 致谢 致敬巴菲特的精彩人生</li><li><b>206</b> 注释</li><li><b>207</b> 价值</li><li><b>208</b> 题记</li><li><b>209</b> 自序 这是一条长期主义之路</li><li><b>210</b> 第一部分 寻找价值的历程</li><li><b>211</b> 第1章 价值的底色</li><li><b>212</b> 第2章 价值投资启蒙</li><li><b>213</b> 第3章 价值投资初试炼</li><li><b>214</b> 第二部分 价值投资的哲学与修养</li><li><b>215</b> 第4章 价值投资方法与哲学</li><li><b>216</b> 第5章 价值投资者的自我修养</li><li><b>217</b> 高瓴公式</li><li><b>218</b> 第三部分 价值投资的创新框架</li><li><b>219</b> 第6章 与伟大格局观者同行</li><li><b>220</b> 第7章 持续创造价值的卓越组织</li><li><b>221</b> 第8章 产业变革中的价值投资</li><li><b>222</b> 第9章 价值投资的实践探索</li><li><b>223</b> 第10章 永远追求丰富而有益的人生</li><li><b>224</b> 后记 做时间的朋友</li><li><b>225</b> 附录 我的演讲和文章</li><li><b>226</b> 注释</li></ol></section>
 <section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点</h2><ul class="mmx-views"><li><b>第 1–7 章</b>——含「投资中最简单的事」至「02 人弃我取，逆向投资」</li><li><b>第 8–14 章</b>——含「03 便宜是硬道理」至「｜投资随想录｜」</li><li><b>第 15–21 章</b>——含「第三部分 投资风险」至「第四部分 投资心理学」</li><li><b>第 22–28 章</b>——含「11 人性的弱点：投资者」至「附录 投资访谈」</li><li><b>第 29–35 章</b>——含「后记」至「02 在中国市场做价值投」</li><li><b>第 36–42 章</b>——含「03 我所理解的基本面投」至「智者之书二 用资本创造价」</li><li><b>第 43–49 章</b>——含「智者之书三 快乐投资的源」至「12 深度研究，从市场认」</li><li><b>第 50–56 章</b>——含「13 如何做好投研选择题」至「19 当我们谈论公司时我」</li><li><b>第 57–63 章</b>——含「20 从“渗透率”到“市」至「23 邓晓峰：投资的赛场」</li><li><b>第 64–70 章</b>——含「24 “股市常青树”孙庆」至「附录二 高毅资产简介」</li><li><b>第 71–77 章</b>——含「注释」至「导读认知升维」</li><li><b>第 78–84 章</b>——含「01 天使投资的本质」至「04 离开了势能，我们将」</li><li><b>第 85–91 章</b>——含「05 时机决定生死，买定」至「08 天使赌人的三个误区」</li><li><b>第 92–98 章</b>——含「09 赌人心法一：认知水」至「写给创业者的三堂课」</li><li><b>第 99–105 章</b>——含「结语 无招胜有招」至「推荐序2 一个聪明家伙的」</li><li><b>第 106–112 章</b>——含「前言 我的老朋友，巴菲特」至「05 股东的慈善捐赠权利」</li><li><b>第 113–119 章</b>——含「06 伯克希尔哈撒韦公司」至「11 时代华纳不为人知的」</li><li><b>第 120–126 章</b>——含「12 巴菲特与迪士尼：竖」至「18 对于指数期货的早期」</li><li><b>第 127–133 章</b>——含「19 巴菲特内幕」至「24 巴菲特温馨提示：是」</li><li><b>第 134–140 章</b>——含「桥牌桌边发生了什么」至「30 现在，看看老巴菲特」</li><li><b>第 141–147 章</b>——含「31 我是怎么搞砸的（节」至「36 世界上最好的品牌（」</li><li><b>第 148–154 章</b>——含「37 可口可乐公司到底发」至「42 盖茨眼中的巴菲特」</li><li><b>第 155–161 章</b>——含「43 解开衍生品的乱麻（」至「49 吉米·巴菲特和沃伦」</li><li><b>第 162–168 章</b>——含「50 大咬一口审计委员会」至「55 《财富》杂志来信选」</li><li><b>第 169–175 章</b>——含「56 巴菲特谈股票市场」至「62 7倍回报的中石油」</li><li><b>第 176–182 章</b>——含「影响力问题」至「69 致命的“交易费用”」</li><li><b>第 183–189 章</b>——含「70 身居幕后的查理·芒」至「75 巴菲特对盖茨说：把」</li><li><b>第 190–196 章</b>——含「76 按照“神话”定价」至「82 暴风骑士（节选）」</li><li><b>第 197–203 章</b>——含「83 让巴菲特“出轨”的」至「88 小巴菲特造访北京」</li><li><b>第 204–210 章</b>——含「89 为何股票胜过黄金和」至「第一部分 寻找价值的历程」</li><li><b>第 211–217 章</b>——含「第1章 价值的底色」至「高瓴公式」</li><li><b>第 218–226 章</b>——含「第三部分 价值投资的创新」至「注释」</li></ul></section>
 <section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句</h2><ol class="mmx-qlist"><li><blockquote>「在多数人都醉心于“即时满足”（instant gratification）的世界里，懂得用“延迟满足”（delayed gratification）去做交易的人，已先胜一筹了。」</blockquote><cite>本书正文</cite></li><li><blockquote>「不为精彩绝伦的牛股倾倒，不被纷繁复杂的个例迷惑，不抱侥幸心理，不赌小概率事件，坚持按规律投资，这是投资纪律的一种体现，也是投资成功的必要条件。」</blockquote><cite>本书正文</cite></li><li><blockquote>「即使最成功的投资人，也要心胸坦荡，认识到自我局限，不可以名门正宗自居，须认识到获得真理是一个学无止境、永远追求的过程。」</blockquote><cite>本书正文</cite></li><li><blockquote>「投资的本质是价值发现，长期投资成功的基石是投资标的在其生命周期内自身创造的现金流能够覆盖投资者为之付出的价格。」</blockquote><cite>本书正文</cite></li><li><blockquote>「中国线下零售的分散和低效是中国线上电商迅速崛起的重要原因。」</blockquote><cite>本书正文</cite></li><li><blockquote>「股价的短期起伏，反映的只是看客们的情绪波动，与企业价值无关。以买企业的心态做投资，不因急跌而失措，也不因急涨而忘形。」</blockquote><cite>本书正文</cite></li><li><blockquote>「任何表面复杂的事物，只要掌握了内在的规律，其内核和本质应该是清晰易懂的」</blockquote><cite>本书正文</cite></li><li><blockquote>「做投资如同庖丁解牛，追求以无厚入有间，只有找到行业的内在规律和优质公司的成长路径，顺应事物发展的客观规律，最终才能事半功倍。」</blockquote><cite>本书正文</cite></li><li><blockquote>「迪士尼能够历经百年屹立不倒，很重要的原因是米老鼠和唐老鸭不会要求涨片酬。」</blockquote><cite>本书正文</cite></li><li><blockquote>「市场的主题炒作往往是短期的，长期起决定性作用的仍然是行业竞争格局、公司竞争优势和定价权。只有坚持以实业的眼光去评估企业的价值，不受市场的极端情绪波动所影响，时间才会是我们的朋友。」</blockquote><cite>本书正文</cite></li></ol></section>
+<button id="rdFab" aria-label="阅读设置" title="阅读设置">Aa</button>
+<div id="rdPanel" hidden>
+  <div class="rd-row"><span>字号</span><span class="rd-btns">
+    <button data-rd="fs-">A−</button><button data-rd="fs+">A＋</button></span></div>
+  <div class="rd-row"><span>段距</span><span class="rd-btns">
+    <button data-rd="pm-">紧</button><button data-rd="pm0">中</button><button data-rd="pm+">松</button></span></div>
+  <div class="rd-row"><span>主题</span><span class="rd-btns">
+    <button data-rd="th-cream">米白</button><button data-rd="th-light">纯白</button>
+    <button data-rd="th-green">护眼</button><button data-rd="th-dark">夜间</button></span></div>
+</div>
+<script>
+(function(){
+  var d = document.documentElement;
+  var c = {}; try { c = JSON.parse(localStorage.getItem('rd-cfg') || '{}'); } catch (e) {}
+  var FS = [0.88, 0.96, 1.04, 1.16, 1.30], PM = [0.6, 1, 1.5];
+  var fi = FS.indexOf(parseFloat(d.style.getPropertyValue('--fs')) || c.fs); if (fi < 0) fi = 2;
+  var pi = PM.indexOf(parseFloat(d.style.getPropertyValue('--pm')) || c.pm); if (pi < 0) pi = 1;
+  var panel = document.getElementById('rdPanel');
+  document.getElementById('rdFab').onclick = function (e) {
+    e.stopPropagation(); panel.hidden = !panel.hidden;
+  };
+  document.addEventListener('click', function (e) {
+    if (!panel.hidden && !panel.contains(e.target) && e.target.id !== 'rdFab') panel.hidden = true;
+  });
+  panel.addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-rd]'); if (!b) return;
+    var k = b.dataset.rd;
+    if (k === 'fs-') fi = Math.max(0, fi - 1);
+    else if (k === 'fs+') fi = Math.min(FS.length - 1, fi + 1);
+    else if (k === 'pm-') pi = Math.max(0, pi - 1);
+    else if (k === 'pm0') pi = 1;
+    else if (k === 'pm+') pi = Math.min(PM.length - 1, pi + 1);
+    else if (k.indexOf('th-') === 0) c.theme = k.slice(3);
+    apply();
+  });
+  function apply() {
+    d.dataset.theme = c.theme || 'cream';
+    d.style.setProperty('--fs', FS[fi]);
+    d.style.setProperty('--pm', PM[pi]);
+    c.fs = FS[fi]; c.pm = PM[pi];
+    try { localStorage.setItem('rd-cfg', JSON.stringify(c)); } catch (e) {}
+    [].forEach.call(panel.querySelectorAll('button[data-rd^="th-"]'), function (b) {
+      b.style.borderColor = (b.dataset.rd === 'th-' + (c.theme || 'cream')) ? 'var(--head)' : '';
+      b.style.color = (b.dataset.rd === 'th-' + (c.theme || 'cream')) ? 'var(--head)' : '';
+    });
+  }
+  apply();
+  /* 导航随滚动高亮 */
+  var links = [].slice.call(document.querySelectorAll('.navlink')), map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var mark = function (a) {
+    links.forEach(function (x) { x.classList.toggle('active', x === a); });
+  };
+  if ('IntersectionObserver' in window) {
+    var cur = null;
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (e.isIntersecting) {
+          var a = map[e.target.id];
+          if (a && cur !== a) { cur = a; mark(a); }
+        }
+      });
+    }, { rootMargin: '-15% 0px -75% 0px' });
+    Object.keys(map).forEach(function (id) {
+      var el = document.getElementById(id); if (el) io.observe(el);
+    });
+  }
+  links.forEach(function (a) {
+    a.addEventListener('click', function () { mark(a); });
+  });
+})();
+</script>
 </body>
 </html>

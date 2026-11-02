@@ -4,32 +4,64 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>《怪诞行为学（全四册）（新版）》｜通读 · 精读</title>
+<script>
+/* 防闪：渲染前先把上次保存的主题/字号/段距应用到 <html> */
+(function(){try{var c=JSON.parse(localStorage.getItem('rd-cfg')||'{}'),d=document.documentElement;
+d.dataset.theme=c.theme||'cream';
+if(c.fs)d.style.setProperty('--fs',c.fs);
+if(c.pm)d.style.setProperty('--pm',c.pm);}catch(e){}})();
+</script>
 <link rel="stylesheet" href="../../../assets/css/reading-overview.css"><link rel="stylesheet" href="../../../assets/css/mmx-guide.css"><link rel="stylesheet" href="../../../assets/css/reading-outline.css">
 <style>
-/* ── 外壳与全局阅读节奏 ── */
-body{max-width:880px;margin:0 auto;padding:0 18px 80px;
-  font-size:15px;line-height:1.88;color:#3b453e;background:#f7f8f3;
-  -webkit-font-smoothing:antialiased;}
-.combined-head{padding:30px 0 16px;border-bottom:1px solid #e7e0d2;margin-bottom:4px;}
-.combined-head h1{font:700 23px/1.35 var(--serif);margin:0 0 8px;color:#244b40;}
+/* ── 主题变量：默认米白；纯白/护眼绿/夜间由 html[data-theme] 覆盖 ── */
+:root{
+  --fs:1;--pm:1;
+  --pg-bg:#f7f8f3;--card-bg:#fffdf6;--card-bd:#e8e4d5;--ink:#3b453e;--txt:#4a4436;
+  --sub:#8d8878;--head:#244b40;--qgreen:#2f5b49;--gold:#bf8247;
+  --nav-bg:rgba(247,248,243,.96);--navlink-bg:#fdfbf3;--navlink-bd:#e8e2d2;
+  --inner-bg:#fbfaf2;--inner-bd:#eee9d8;--oneline-bg:#fbfaf4;
+  --act-bg:#e5efe4;--act-bd:#bcd4bc;
+}
+html[data-theme=light]{--pg-bg:#ffffff;--card-bg:#ffffff;--card-bd:#e7e7e2;
+  --nav-bg:rgba(255,255,255,.96);--navlink-bg:#fafaf7;--navlink-bd:#e7e7e0;
+  --inner-bg:#fafaf7;--inner-bd:#ecebe4;--oneline-bg:#fafaf7;}
+html[data-theme=green]{--pg-bg:#cfe8d2;--card-bg:#eef7ef;--card-bd:#b9dcc0;--ink:#2f4237;
+  --txt:#3b5446;--sub:#5d7c67;--head:#1e4d37;--qgreen:#1e5c41;
+  --nav-bg:rgba(207,232,210,.96);--navlink-bg:#f4fbf5;--navlink-bd:#b4d8bd;
+  --inner-bg:#f6fbf7;--inner-bd:#cde5d3;--oneline-bg:#f6fbf7;--act-bg:#bfe3c6;--act-bd:#95c8a1;}
+html[data-theme=dark]{--pg-bg:#15171a;--card-bg:#1f2226;--card-bd:#34383f;--ink:#c9ced4;
+  --txt:#b4bac1;--sub:#8a919a;--head:#93c8a8;--qgreen:#9ed0af;
+  --nav-bg:rgba(21,23,26,.96);--navlink-bg:#262a2f;--navlink-bd:#3a3f46;
+  --inner-bg:#272b30;--inner-bd:#3a3f46;--oneline-bg:#272b30;
+  --act-bg:#244b40;--act-bd:#2f5b49;}
+
+/* ── 外壳与全局阅读节奏（字号跟随 --fs 整页缩放，段距跟随 --pm） ── */
+html{font-size:calc(16px*var(--fs));}
+html[data-theme=dark] body{color-scheme:dark;}
+body{max-width:880px;margin:0 auto;padding:0 18px 80px;font-size:.9375rem;line-height:1.88;
+  color:var(--ink);background:var(--pg-bg);-webkit-font-smoothing:antialiased;}
+.combined-head{padding:30px 0 16px;border-bottom:1px solid var(--card-bd);margin-bottom:4px;}
+.combined-head h1{font:700 1.45rem/1.35 var(--serif);margin:0 0 8px;color:var(--head);}
 .combined-head .eyebrow{font-size:.72rem;letter-spacing:.14em;margin:0 0 6px;}
 .chips{margin:8px 0 0;}
 .chip{font-size:.72rem;padding:2px 10px;}
-/* 锚点导航：固定一排 4 个，等宽对齐 */
-.nav{position:sticky;top:0;z-index:20;background:rgba(247,248,243,.96);backdrop-filter:blur(6px);
-  border-bottom:1px solid #ece4d4;padding:10px 0;margin:12px 0 20px;display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;
+
+/* ── 锚点导航：小屏最少一排 4 个，大屏自动一排/两排放完；滚动到哪亮哪 ── */
+.nav{position:sticky;top:0;z-index:20;background:var(--nav-bg);backdrop-filter:blur(6px);
+  border-bottom:1px solid var(--card-bd);padding:10px 0;margin:12px 0 20px;display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(76px,1fr));gap:6px;
   box-shadow:0 2px 10px rgba(120,100,60,.05);}
-.navlink{font-size:12px;color:#5d5443;text-decoration:none;background:#fdfbf3;border:1px solid #e8e2d2;
-  border-radius:8px;padding:6px 4px;text-align:center;white-space:nowrap;overflow:hidden;
-  text-overflow:ellipsis;transition:background .15s,color .15s;}
-.navlink:hover{background:#f2efe2;color:#244b40;}
+.navlink{font-size:12px;color:var(--txt);text-decoration:none;background:var(--navlink-bg);
+  border:1px solid var(--navlink-bd);border-radius:8px;padding:6px 4px;text-align:center;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:all .15s;}
+.navlink:hover{color:var(--head);border-color:var(--head);}
+.navlink.active{color:var(--head);background:var(--act-bg);border-color:var(--act-bd);font-weight:700;}
 section{scroll-margin-top:62px;}
 
 /* ── 统一卡片：所有顶层模块（AI领读 / AI 问答 / 其余）一视同仁 ── */
 body>section.mmx-mod,body>section.card,body>section.mmx-svgwrap{
-  background:#fffdf6;border:1px solid #e8e4d5;border-radius:16px;
-  padding:18px 22px;margin:18px 0;
+  background:var(--card-bg);border:1px solid var(--card-bd);border-radius:16px;
+  padding:18px 22px;margin:calc(18px*var(--pm)) 0;
   box-shadow:0 1px 3px rgba(110,95,60,.05);}
 body>section.mmx-mod>*:first-child,body>section.card>*:first-child,
 body>section.mmx-svgwrap>*:first-child{margin-top:0}
@@ -39,74 +71,115 @@ body>section.mmx-svgwrap>*:last-child{margin-bottom:0}
 body>section.mmx-svgwrap>svg.mmx-svg{display:block;width:100%;height:auto;margin:2px auto 0;}
 /* 模块标题：统一大小、弱强调，不与正文抢注意力 */
 body>section.mmx-mod>h2,body>section.card>h2{
-  font:700 1.04rem/1.5 var(--serif);color:#244b40;margin:0 0 11px;
-  padding-left:10px;border-left:3px solid #bf8247;letter-spacing:.01em;}
-/* 正文：字号收小、行距放宽、段间距舒服 */
+  font:700 1.04rem/1.5 var(--serif);color:var(--head);margin:0 0 11px;
+  padding-left:10px;border-left:3px solid var(--gold);letter-spacing:.01em;}
+/* 正文：字号收小、行距放宽、段间距随 --pm 调节 */
 body>section.mmx-mod p,body>section.card p,
 body>section.mmx-mod li,body>section.card li{
-  font-size:.9rem;line-height:1.92;color:#4a4436;}
-body>section.mmx-mod p,body>section.card p{margin:.5em 0;}
+  font-size:.9rem;line-height:1.92;color:var(--txt);margin:calc(.5em*var(--pm)) 0;}
 body>section.mmx-mod>ul,body>section.mmx-mod>ol,body>section.mmx-mod>div,
 body>section.mmx-mod>p:not(.mmx-mod-note),
 body>section.card:not(.merged-guide)>ul,body>section.card:not(.merged-guide)>ol,
 body>section.card:not(.merged-guide)>div,body>section.card:not(.merged-guide)>p:not(.mmx-mod-note){
   padding-left:14px;}
-/* 模块说明小字：弱化不抢眼 */
-.mmx-mod-note{font-size:.75rem;color:#8d8878;margin:.1em 0 .75em;line-height:1.7;}
 
 /* ── 内部块统一：卡片里不再套深卡片，一律浅底子块 ── */
 body>section .mmx-pending,body>section .mmx-evib,body>section .aiqa-item{
-  background:#fbfaf2;border:1px solid #eee9d8;border-radius:12px;
-  padding:13px 16px;margin:.65em 0;}
+  background:var(--inner-bg);border:1px solid var(--inner-bd);border-radius:12px;
+  padding:13px 16px;margin:calc(.65em*var(--pm)) 0;}
 body>section .mmx-evib ul{padding-left:1.15em;}
 /* 一句话主旨：去左侧竖线 + 收敛字号 */
-.mmx-oneline{font-size:.98rem;line-height:1.85;color:#3a352c;margin:.2em 0 0;
-  padding:12px 16px;background:#fbfaf4;border-left:none;border-radius:12px;}
+.mmx-oneline{font-size:.98rem;line-height:1.85;color:var(--txt);margin:.2em 0 0;
+  padding:12px 16px;background:var(--oneline-bg);border-left:none;border-radius:12px;}
 /* 核心观点 / 验证清单：虚线分隔 + 收紧行距 */
 .mmx-views li{padding:.5em 0 .5em 0;font-size:.9rem;line-height:1.88;}
 /* 原文金句 */
 .mmx-qlist li{padding:.6em 0 .6em 2.2em;}
-.mmx-qlist blockquote{font-size:.89rem;line-height:1.9;}
-.mmx-qlist cite{font-size:.72rem;}
+.mmx-qlist blockquote{font-size:.89rem;line-height:1.9;color:var(--txt);}
+.mmx-qlist cite{font-size:.72rem;color:var(--sub);}
 /* 核心追问：问句加重、答句放松 */
-.mmx-qa{margin:.7em 0;padding-left:12px;border-left:3px solid #e5dfcd;}
-.mmx-qa .mmx-q{font-size:.9rem;font-weight:700;color:#2f3a33;line-height:1.8;margin:0 0 .25em;}
-.mmx-qa .mmx-a{font-size:.88rem;line-height:1.95;color:#4a4436;margin:0;}
+.mmx-qa{margin:calc(.7em*var(--pm)) 0;padding-left:12px;border-left:3px solid var(--inner-bd);}
+.mmx-qa .mmx-q{font-size:.9rem;font-weight:700;color:var(--ink);line-height:1.8;margin:0 0 .25em;}
+.mmx-qa .mmx-a{font-size:.88rem;line-height:1.95;color:var(--txt);margin:0;}
 
 /* ── AI 问书专项：外层容器透明，问答条目才是阅读单元 ── */
 #mod-aiask .mmx-ask{background:transparent;border:0;border-radius:0;padding:0;margin:0;}
-#mod-aiask .aiqa-item{margin:.6em 0;padding:14px 16px 15px;}
-#mod-aiask .aiqa-item h3{font:700 .93rem/1.7 var(--serif);color:#2f5b49;margin:0 0 .4em;
+#mod-aiask .aiqa-item{margin:calc(.6em*var(--pm)) 0;padding:14px 16px 15px;}
+#mod-aiask .aiqa-item h3{font:700 .93rem/1.7 var(--serif);color:var(--qgreen);margin:0 0 .4em;
   padding:0;border:0;}
-#mod-aiask .aiqa-item h3:before{content:"问　";color:#bf8247;font-weight:700;}
-#mod-aiask .aiqa-item p{font-size:.88rem;line-height:1.95;color:#4a4436;margin:.4em 0;}
-#mod-aiask .aiqa-item ul{margin:.35em 0;padding-left:1.1em;}
-#mod-aiask .aiqa-item li{font-size:.87rem;line-height:1.88;margin:.18em 0;color:#4a4436;}
-#mod-aiask .aiqa-item li::marker{color:#c0a06a;}
+#mod-aiask .aiqa-item h3:before{content:"问　";color:var(--gold);font-weight:700;}
+/* 回答整体右缩进，与问句文字对齐（别顶着左边） */
+#mod-aiask .aiqa-item>p,#mod-aiask .aiqa-item>ul{margin-left:26px;}
+#mod-aiask .aiqa-item p{font-size:.88rem;line-height:1.95;color:var(--txt);
+  margin-top:calc(.4em*var(--pm));margin-bottom:calc(.4em*var(--pm));}
+#mod-aiask .aiqa-item ul{margin-top:calc(.35em*var(--pm));margin-bottom:calc(.35em*var(--pm));
+  padding-left:1.1em;}
+#mod-aiask .aiqa-item li{font-size:.87rem;line-height:1.88;margin:calc(.18em*var(--pm)) 0;
+  color:var(--qgreen);}
+#mod-aiask .aiqa-item li::marker{color:var(--gold);}
 /* 逐章追问（details 形态）：摘要行也收敛 */
-.mmx-ask>summary{font-size:.87rem;line-height:1.7;padding:2px 0;}
-.mmx-askbody{font-size:.88rem;line-height:1.9;}
+.mmx-ask>summary{font-size:.87rem;line-height:1.7;padding:2px 0;color:var(--qgreen);}
+.mmx-askbody{font-size:.88rem;line-height:1.9;color:var(--txt);}
 
-/* AI领读章内：AI 大纲原生深层样式（字号同步收小） */
-.merged-guide .sec{margin:9px 0 12px;padding-left:6px;border-left:2px solid #e5e0d6}
-.merged-guide .sec h4{font:600 .93rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.5em 0 .25em}
+/* ── AI领读章内：AI 大纲原生深层样式（章节字号整体再收一档） ── */
+.merged-guide .sec{margin:9px 0 12px;padding-left:6px;border-left:2px solid var(--card-bd)}
+.merged-guide .sec h4{font:600 .84rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:var(--head);margin:.5em 0 .25em}
+.merged-guide .mmx-name{font-size:.88rem !important;}
+.merged-guide .mmx-sech{font-size:.8rem !important;}
+.merged-guide .mmx-gist{font-size:.83rem !important;line-height:1.85;}
+.merged-guide .mmx-stat{font-size:.7rem !important;}
 .merged-guide ul.point{margin:.25em 0;padding-left:20px}
-.merged-guide ul.point>li{margin:.3em 0}
+.merged-guide ul.point>li{margin:.3em 0;font-size:.8rem !important;line-height:1.85;}
 .merged-guide ul.quote{margin:.22em 0 .22em 20px;padding-left:18px;list-style:none}
-.merged-guide ul.quote::before{content:"原句";display:block;font-size:.7rem;color:#bf8247;
+.merged-guide ul.quote::before{content:"原句";display:block;font-size:.7rem;color:var(--gold);
   letter-spacing:.1em;margin:.12em 0 .08em;font-weight:600}
-.merged-guide ul.quote.quote-node{margin-top:.45em;padding-top:.35em;border-top:1px dashed #eadfc9}
+.merged-guide ul.quote.quote-node{margin-top:.45em;padding-top:.35em;border-top:1px dashed var(--inner-bd)}
 .merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
-.merged-guide ul.quote>li{color:#4a4436;font-size:.88rem;line-height:1.85;margin:.18em 0;padding-left:10px;border-left:2px solid #bf8247}
+.merged-guide ul.quote>li{color:var(--txt);font-size:.8rem !important;line-height:1.85;margin:.18em 0;padding-left:10px;border-left:2px solid var(--gold)}
+.merged-guide .mmx-qt{font-size:.77rem !important;}
+
 /* 核心观点初判：外链 mmx-guide.css 的「观点N」前缀是绝对定位，在本页版式里和标题叠字，
    且此前要求去掉「观点1/2/3」前缀 —— 这里整条关掉（外链 CSS 不在页面内，只能内联覆盖）。 */
 .mmx-views li{padding-left:0 !important;}
 .mmx-views li:before,.mmx-views li::before{
   content:none !important;display:none !important;counter-increment:none !important;}
+
+/* ── 夜间主题：覆盖共享 CSS 里的硬编码浅色 ── */
+html[data-theme=dark] h1,html[data-theme=dark] h2,html[data-theme=dark] h3,
+html[data-theme=dark] h4{color:var(--head);}
+html[data-theme=dark] .mmx-qt{background:var(--inner-bg);color:var(--txt);}
+html[data-theme=dark] .mmx-qlist blockquote,html[data-theme=dark] .mmx-ask blockquote,
+html[data-theme=dark] .mmx-gist,html[data-theme=dark] .mmx-pts,
+html[data-theme=dark] .mmx-askbody{color:var(--txt);}
+html[data-theme=dark] .mmx-qlist li:before{background:#2b3a31;color:#9ed0af;}
+html[data-theme=dark] .mmx-views li,html[data-theme=dark] .mmx-qlist li,
+html[data-theme=dark] .mmx-qa,html[data-theme=dark] .mmx-sec>summary,
+html[data-theme=dark] .mmx-cn{border-color:#3a3f46;}
+html[data-theme=dark] .mmx-views li b,html[data-theme=dark] .mmx-qa .mmx-q{color:var(--ink);}
+html[data-theme=dark] .chip{background:#274234;color:#9ed0af;}
+html[data-theme=dark] .mmx-role,html[data-theme=dark] .mmx-chip{background:#262a2f;
+  color:#8a919a;border-color:#3a3f46;}
+html[data-theme=dark] a{color:#9ed0af;}
+
+/* ── 右上角设置面板 ── */
+#rdFab{position:fixed;top:10px;right:12px;z-index:60;font:600 13px/1 var(--sans);color:var(--txt);
+  background:var(--card-bg);border:1px solid var(--card-bd);border-radius:9px;padding:8px 12px;
+  cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.1);}
+#rdFab:hover{border-color:var(--head);color:var(--head);}
+#rdPanel{position:fixed;top:48px;right:12px;z-index:60;background:var(--card-bg);
+  border:1px solid var(--card-bd);border-radius:12px;padding:12px 14px;
+  box-shadow:0 8px 24px rgba(0,0,0,.16);display:grid;gap:9px;min-width:212px;}
+#rdPanel[hidden]{display:none;}
+#rdPanel .rd-row{display:flex;gap:5px;align-items:center;justify-content:space-between;}
+#rdPanel .rd-row>span{font-size:.72rem;color:var(--sub);flex:none;}
+#rdPanel .rd-btns{display:flex;gap:5px;}
+#rdPanel button{font:600 12px/1.4 var(--sans);color:var(--txt);background:var(--navlink-bg);
+  border:1px solid var(--navlink-bd);border-radius:7px;padding:4px 9px;cursor:pointer;}
+#rdPanel button:hover{border-color:var(--head);color:var(--head);}
+
 @media(max-width:720px){
-  body{padding:0 12px 60px;font-size:14.5px;}
-  body>section.mmx-mod,body>section.card{padding:15px 16px;border-radius:14px;}
-  .nav{grid-template-columns:repeat(2,minmax(0,1fr));}
+  body{padding:0 12px 60px;}
+  body>section.mmx-mod,body>section.card,body>section.mmx-svgwrap{padding:15px 16px;border-radius:14px;}
 }
 </style>
 </head>
@@ -411,5 +484,77 @@ body>section .mmx-evib ul{padding-left:1.15em;}
 <ol class="mmx-pts"><li><b>1</b> 怪诞行为学1：可预测的非理性</li><li><b>2</b> 献言</li><li><b>3</b> 推荐序 解释非理性行为</li><li><b>4</b> 作者序</li><li><b>5</b> 引言 飞来横祸让我与行为经济学结下不解之缘</li><li><b>6</b> 第一章 相对论的真相：为什么我们喜欢比较和攀比？</li><li><b>7</b> 我们生活中的价格“诱饵”</li><li><b>8</b> 巴黎和罗马，你选择去哪里度蜜月？</li><li><b>9</b> 三个人中，你想跟哪一个约会？</li><li><b>10</b> 富人嫉妒比自己更富有的人</li><li><b>11</b> 打破相对论的怪圈</li><li><b>12</b> 第二章 供求关系的失衡：为什么珍珠无价？</li><li><b>13</b> 黑珍珠如何从无人问津变为稀世珍宝？</li><li><b>14</b> “幼鹅效应”与“锚定”</li><li><b>15</b> “羊群效应”与星巴克咖啡</li><li><b>16</b> “任意的一致”与消费习惯</li><li><b>17</b> 自由市场与宏观调控</li><li><b>18</b> 第三章 免费的代价：为什么赠品反而让我们花费更多？</li><li><b>19</b> “零”的历史与传奇</li><li><b>20</b> 免费的诱惑不可抵挡</li><li><b>21</b> 我们为什么疯抢根本不需要的东西？</li><li><b>22</b> 买书免运费与免费换机油</li><li><b>23</b> 政府可以尝试推出免费的政策</li><li><b>24</b> 是什么导致结果大相径庭？</li><li><b>25</b> 第四章 社会规范的成本：为什么我们乐于做义工，干活儿赚钱时反而不高兴？</li><li><b>26</b> 你需要向你的岳母支付晚餐费用吗？</li><li><b>27</b> 社会规范vs市场规范</li><li><b>28</b> 不要向你的约会对象提钱</li><li><b>29</b> 罚款对杜绝迟到有效吗？</li><li><b>30</b> 极易被打破的微妙平衡</li><li><b>31</b> 涨工资可以解决“血汗工厂”的痼疾吗？</li><li><b>32</b> 金钱买不来优质的教育</li><li><b>33</b> “火人节”：纯社会规范的回归</li><li><b>34</b> 第五章 性兴奋的影响：为什么“热烈”比我们想的还热？</li><li><b>35</b> 两个“我”：杰基尔博士与海德先生</li><li><b>36</b> “你只需说不”vs“没问题”</li><li><b>37</b> 预防青少年发生驾驶事故的干预措施</li><li><b>38</b> 了解情绪的两面性——冷静与激情</li><li><b>39</b> 性兴奋实验的问题清单</li><li><b>40</b> 第六章 拖沓的恶习与自我控制：为什么我们信誓旦旦的事情却总是做不到？</li><li><b>41</b> 过度消费是明智之举吗？</li><li><b>42</b> 设定自我控制的底线</li><li><b>43</b> 让全身检查像买份麦当劳套餐一样简单</li><li><b>44</b> 拥有“自我控制”功能的智能信用卡</li><li><b>45</b> 第七章 所有权的个性：为什么我们会依恋自己拥有的一切？</li><li><b>46</b> 为什么卖主的估价总比买主高？</li><li><b>47</b> 人类本性中的三大非理性怪癖</li><li><b>48</b> 宜家效应与虚拟所有权</li><li><b>49</b> 如何治疗所有权依恋症？</li><li><b>50</b> 第八章 多种选择的困境：为什么我们希望所有的门都开着？</li><li><b>51</b> 留有余地的“傻瓜游戏”</li><li><b>52</b> 新欢与旧爱，应该选择哪一个？</li><li><b>53</b> 让每个人都疲于奔命的“三扇门”</li><li><b>54</b> 果断地关上该关的门</li><li><b>55</b> 饿死在谷堆间的驴子</li><li><b>56</b> 第九章 预期的效应：为什么我们可以心想事成？</li><li><b>57</b> 费城老鹰队vs纽约巨人队</li><li><b>58</b> 添加香醋的百威啤酒</li><li><b>59</b> 特制咖啡味道如何？</li><li><b>60</b> 赝品也可以卖出名画的价钱</li><li><b>61</b> 美食不如美器，预期改变品位</li><li><b>62</b> 你更喜欢百事可乐还是可口可乐？</li><li><b>63</b> 偏见与第三方</li><li><b>64</b> 第十章 价格的魔力：为什么我们喜欢买贵的东西？</li><li><b>65</b> 神奇的安慰疗法</li><li><b>66</b> 价格越贵的药越有效吗？</li><li><b>67</b> 安慰疗法的去与留</li><li><b>68</b> 应该让烧伤病人穿紧身衣吗？</li><li><b>69</b> 第十一章 人性的弱点：为什么我们不诚实？</li><li><b>70</b> 考试中你会作弊吗？</li><li><b>71</b> 政府法令能杜绝不诚实吗？</li><li><b>72</b> 道德准则和就职誓言的力量</li><li><b>73</b> 各行各业中的“灰色地带”</li><li><b>74</b> 世界上哪个国家最诚实？</li><li><b>75</b> 第十二章 企业的特权：为什么现金可以阻止我们作弊？</li><li><b>76</b> 可乐不见了，现金还在</li><li><b>77</b> 非现金引发的作弊现象</li><li><b>78</b> 诚实与不诚实的临界点</li><li><b>79</b> “最终解释权”也是一种不诚实的表现吗？</li><li><b>80</b> 现金时代的终结与舞弊行为的泛滥</li><li><b>81</b> 第十三章 啤酒与免费午餐：什么是行为经济学，哪里有免费午餐？</li><li><b>82</b> 个人需求与群体属性的矛盾</li><li><b>83</b> “免费午餐”是可以实现的</li><li><b>84</b> 附录1 关于正文部分章节的补充说明及趣闻逸事</li><li><b>85</b> 附录2 用行为经济学解读美国的次贷危机</li><li><b>86</b> 致谢</li><li><b>87</b> 怪诞行为学2：非理性的积极力量</li><li><b>88</b> 导言</li><li><b>89</b> 第一部分 以匪夷所思的方式彻底颠覆职场中的既定逻辑</li><li><b>90</b> 第一章 金钱的诱惑 为什么巨额奖金带不来高业绩？</li><li><b>91</b> 第二章 工作的意义 我们可以从乐高游戏中学到什么？</li><li><b>92</b> 第三章 宜家效应 为什么我们会高估自己的劳动成果？</li><li><b>93</b> 第四章 不在这里发现的偏见 为什么“我”的点子比“你”的要好？</li><li><b>94</b> 第五章 报复的本能 为什么我们要寻求公平正义</li><li><b>95</b> 第二部分 以出人意料的方式挑战生活中的常规</li><li><b>96</b> 第六章 适应的法则 为什么我们能适应一些事（但不是所有事，也不是一直如此）</li><li><b>97</b> 第七章 好不好？ 适应、伴侣和美丽市场</li><li><b>98</b> 第八章 市场的失灵 一个有关在线约会的案例</li><li><b>99</b> 第九章 感情的偏好 为什么我们选择帮助某个人，却漠视许多人的痛苦？</li><li><b>100</b> 第十章 短期情绪的长期效应 为什么我们常常感情用事？</li><li><b>101</b> 第十一章 非理性的教训 为什么一切决策都需要检验？</li><li><b>102</b> 致谢</li><li><b>103</b> 怪诞行为学3：非理性的你</li><li><b>104</b> 献言</li><li><b>105</b> 引言</li><li><b>106</b> 义务的升级</li><li><b>107</b> 说“不”的艺术与快乐</li><li><b>108</b> 对奈飞公司的不满</li><li><b>109</b> 节食和自我控制</li><li><b>110</b> 被遗忘的债务和被免除的债务</li><li><b>111</b> 婚姻和经济模型</li><li><b>112</b> 社交网络和社会规范</li><li><b>113</b> 昂贵的猫屎咖啡</li><li><b>114</b> 结婚戒指带来的烦恼</li><li><b>115</b> 遭到排斥的检举者</li><li><b>116</b> 延长美好时光的方法</li><li><b>117</b> 在嘈杂的环境中约会的好处</li><li><b>118</b> 如何做出理性的决策？</li><li><b>119</b> 大蒜的“神奇”作用</li><li><b>120</b> 寻求他人帮助的策略</li><li><b>121</b> 解决家庭矛盾的两个建议</li><li><b>122</b> 在公共浴室中找出被使用次数最少的隔间</li><li><b>123</b> 娱乐新闻为什么广受欢迎？</li><li><b>124</b> 结婚的意义</li><li><b>125</b> 边跑步边思考可行吗？</li><li><b>126</b> 如何快乐地工作？</li><li><b>127</b> 多重任务处理的艺术</li><li><b>128</b> 增加亲子之间交流的方法</li><li><b>129</b> 一个不可思议但有趣的迷信行为</li><li><b>130</b> 多多赞美他人</li><li><b>131</b> 要让他人看到你付出的努力</li><li><b>132</b> 航班延误与人性的弱点</li><li><b>133</b> 高级轿车与信号</li><li><b>134</b> 着装与时尚</li><li><b>135</b> 尝试新鲜事物，探索未知世界</li><li><b>136</b> 谁是适合我的结婚对象？</li><li><b>137</b> 离婚率的高低</li><li><b>138</b> 理财顾问的佣金</li><li><b>139</b> 关于正义和与松鼠分享食物</li><li><b>140</b> 人际交往和互联网</li><li><b>141</b> 恋爱约会与职场招聘</li><li><b>142</b> 非理性的行为与理性的决策</li><li><b>143</b> 预期的力量</li><li><b>144</b> 消除内心的不安</li><li><b>145</b> 让人称心如意的礼物</li><li><b>146</b> 先吃哪一个三明治？</li><li><b>147</b> 抱怨的积极力量</li><li><b>148</b> 房产拍卖和疯狂的报价</li><li><b>149</b> 考试和祖父母的去世</li><li><b>150</b> 运气是一场数字游戏</li><li><b>151</b> 不翼而飞的袜子和怪诞心理学</li><li><b>152</b> 慈善捐助可以提升幸福感</li><li><b>153</b> 跑车和中年人</li><li><b>154</b> 提供骗人服务的网站</li><li><b>155</b> 让人懊恼的早餐时间</li><li><b>156</b> 如何消磨晚上的时光？</li><li><b>157</b> 应不应该要孩子</li><li><b>158</b> 婚姻与银行账户</li><li><b>159</b> 葡萄酒的战场</li><li><b>160</b> 交通拥堵和利他主义</li><li><b>161</b> 寻找停车位的烦恼</li><li><b>162</b> 抛硬币做决策</li><li><b>163</b> 垃圾和狗屎</li><li><b>164</b> 戒烟的最佳办法</li><li><b>165</b> 职业选择所面临的风险</li><li><b>166</b> 非理性决策的危害</li><li><b>167</b> 帮助人们攒够退休金</li><li><b>168</b> 主动纠正错误的美德</li><li><b>169</b> 度假期间我们会更诚实吗？</li><li><b>170</b> 如何选择付账的方法？</li><li><b>171</b> 办公用品和一枚25美分的硬币</li><li><b>172</b> 没时间工作却有时间运动</li><li><b>173</b> 增强记忆力的秘诀</li><li><b>174</b> 书和有声读物的异同</li><li><b>175</b> 人的灵魂和帕斯卡赌注</li><li><b>176</b> 葡萄酒的价格</li><li><b>177</b> 课程和教师的搭配艺术</li><li><b>178</b> 如何抵挡美食的诱惑？</li><li><b>179</b> 由三个部分组成的解决方案</li><li><b>180</b> 改掉浪费时间的坏习惯</li><li><b>181</b> 自助餐的投资回报率</li><li><b>182</b> 如何问对问题？</li><li><b>183</b> 自由意志和甜甜圈</li><li><b>184</b> 一年之中最乐观的日子</li><li><b>185</b> 股票投资与冲动性决策</li><li><b>186</b> 通勤与居住地点的选择</li><li><b>187</b> 乘坐烘干机去参加婚礼</li><li><b>188</b> 升职带来的成就感</li><li><b>189</b> 心理距离和移情作用</li><li><b>190</b> 要不要改变现状？</li><li><b>191</b> 知识的诅咒</li><li><b>192</b> 自欺欺人的解释</li><li><b>193</b> 老鼠的性命与市场</li><li><b>194</b> 学着让自己放松</li><li><b>195</b> 男性的诚实度</li><li><b>196</b> 男人和穿高跟鞋的女人</li><li><b>197</b> 积极信号和消极信号</li><li><b>198</b> 讨厌的纳税日</li><li><b>199</b> 所谓的“服务”</li><li><b>200</b> 体育比赛的过程与结果</li><li><b>201</b> 致谢</li><li><b>202</b> 怪诞行为学4：诚实的真相</li><li><b>203</b> 致（各国）读者</li><li><b>204</b> 推荐序1 我们都不诚实过</li><li><b>205</b> 推荐序2 揭开不诚实的黑箱</li><li><b>206</b> 推荐序3 不完美才是真实的人性</li><li><b>207</b> 前言 为何不诚实的行为如此让人着迷？</li><li><b>208</b> 理性犯罪模式的世界</li><li><b>209</b> 热心的志愿者们</li><li><b>210</b> 第1章 测试理性犯罪的简单模式</li><li><b>211</b> 如果可以，你会选择作弊吗？</li><li><b>212</b> 钱越多就越容易诱发欺骗行为吗？</li><li><b>213</b> 抓住那个“小偷”</li><li><b>214</b> 市场商贩和出租车司机比人们想象的更公正</li><li><b>215</b> 经验系数：不诚实与诚实间的分界线在哪里？</li><li><b>216</b> 第2章 探索经验系数的秘密</li><li><b>217</b> 公司里人尽皆知的真相</li><li><b>218</b> 如何降低人们的不诚实行为</li><li><b>219</b> 签名的位置不同，谎报信息的程度也不同</li><li><b>220</b> 错误的教训</li><li><b>221</b> 第3章 对自己的动机视而不见</li><li><b>222</b> 高尔夫球选手更可能以哪种方式移动球去作弊？</li><li><b>223</b> 何时会用“穆里甘”</li><li><b>224</b> 现实的“灰色地带”</li><li><b>225</b> 第4章 被动机迷惑的理智</li><li><b>226</b> 一个古怪的烧伤治疗方案：在脸上刺青</li><li><b>227</b> 互惠心理的秘密</li><li><b>228</b> “随便吃”的制药公司</li><li><b>229</b> 粉饰数据</li><li><b>230</b> “砖家”意见</li><li><b>231</b> 醉汉的实验数据是否应该被排除？</li><li><b>232</b> 信息公开未必是剂灵丹妙药</li><li><b>233</b> 如何降低利益冲突？</li><li><b>234</b> 第5章 越疲倦，越冲动</li><li><b>235</b> 选择水果还是选择巧克力蛋糕？</li><li><b>236</b> 疲惫的大脑</li><li><b>237</b> 压力大的人更容易说谎吗？</li><li><b>238</b> 为什么一到期末考试，学生们的亲人就纷纷离世？</li><li><b>239</b> “绿色”这个词是什么颜色的？</li><li><b>240</b> 没有人能抵挡住所有诱惑</li><li><b>241</b> 第6章 穿冒牌货会让我们更不诚信吗？</li><li><b>242</b> 外部信号与自我信号——从毛呢到阿玛尼</li><li><b>243</b> “假”正品</li><li><b>244</b> “管他呢”效应与诚实的界限</li><li><b>245</b> 更糟糕的后果</li><li><b>246</b> 伪装直至成功？</li><li><b>247</b> 第7章 陷入自我欺骗</li><li><b>248</b> 我们会本能地高估自己的能力与智商</li><li><b>249</b> 我们总喜欢夸大自己取得的成就并信以为真</li><li><b>250</b> 自我欺骗的积极力量与消极影响</li><li><b>251</b> 生活中有时需要善意的谎言</li><li><b>252</b> 第8章 创新与不诚实：我们都是编故事的人</li><li><b>253</b> 非理性决策</li><li><b>254</b> 硬币原理</li><li><b>255</b> 说谎者的大脑</li><li><b>256</b> 创造力越强，粉饰不诚实行为的能力越强</li><li><b>257</b> 诚信与智商无关</li><li><b>258</b> 为了报复而选择欺骗他人</li><li><b>259</b> 意大利之旅的“创举”</li><li><b>260</b> 最伟大的艺术家也是最具创造力的骗子吗？</li><li><b>261</b> 科技创新与惊天骗局只有一步之遥</li><li><b>262</b> 第9章 我们是如何感染上不诚实的病毒的？</li><li><b>263</b> 课堂欺骗</li><li><b>264</b> 害群之马</li><li><b>265</b> 从个体的不诚实到群体的不诚实</li><li><b>266</b> 近朱者赤，近墨者黑</li><li><b>267</b> 如何重拾道德？</li><li><b>268</b> 第10章 合作性欺骗：为什么安然公司会死于巨大的财务丑闻？</li><li><b>269</b> 团队合作可能会诱发利他的不诚实行为</li><li><b>270</b> 小心，合作中可能会产生欺骗</li><li><b>271</b> 可笑的合作</li><li><b>272</b> 第11章 一个喜忧参半的结局：我们的行为不理性也不完美</li><li><b>273</b> 谁才是“真正”的骗子？</li><li><b>274</b> 哪个国家或地区的人最爱撒谎？</li><li><b>275</b> 我们应如何面对不诚实？</li><li><b>276</b> 致谢</li></ol></section>
 <section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点</h2><ul class="mmx-views"><li><b>第 1–7 章</b>——含「怪诞行为学1：可预测的非」至「我们生活中的价格“诱饵”」</li><li><b>第 8–14 章</b>——含「巴黎和罗马，你选择去哪里」至「“幼鹅效应”与“锚定”」</li><li><b>第 15–21 章</b>——含「“羊群效应”与星巴克咖啡」至「我们为什么疯抢根本不需要」</li><li><b>第 22–28 章</b>——含「买书免运费与免费换机油」至「不要向你的约会对象提钱」</li><li><b>第 29–35 章</b>——含「罚款对杜绝迟到有效吗？」至「两个“我”：杰基尔博士与」</li><li><b>第 36–42 章</b>——含「“你只需说不”vs“没问」至「设定自我控制的底线」</li><li><b>第 43–49 章</b>——含「让全身检查像买份麦当劳套」至「如何治疗所有权依恋症？」</li><li><b>第 50–56 章</b>——含「第八章 多种选择的困境：」至「第九章 预期的效应：为什」</li><li><b>第 57–63 章</b>——含「费城老鹰队vs纽约巨人队」至「偏见与第三方」</li><li><b>第 64–70 章</b>——含「第十章 价格的魔力：为什」至「考试中你会作弊吗？」</li><li><b>第 71–77 章</b>——含「政府法令能杜绝不诚实吗？」至「非现金引发的作弊现象」</li><li><b>第 78–84 章</b>——含「诚实与不诚实的临界点」至「附录1 关于正文部分章节」</li><li><b>第 85–91 章</b>——含「附录2 用行为经济学解读」至「第二章 工作的意义 我们」</li><li><b>第 92–98 章</b>——含「第三章 宜家效应 为什么」至「第八章 市场的失灵 一个」</li><li><b>第 99–105 章</b>——含「第九章 感情的偏好 为什」至「引言」</li><li><b>第 106–112 章</b>——含「义务的升级」至「社交网络和社会规范」</li><li><b>第 113–119 章</b>——含「昂贵的猫屎咖啡」至「大蒜的“神奇”作用」</li><li><b>第 120–126 章</b>——含「寻求他人帮助的策略」至「如何快乐地工作？」</li><li><b>第 127–133 章</b>——含「多重任务处理的艺术」至「高级轿车与信号」</li><li><b>第 134–140 章</b>——含「着装与时尚」至「人际交往和互联网」</li><li><b>第 141–147 章</b>——含「恋爱约会与职场招聘」至「抱怨的积极力量」</li><li><b>第 148–154 章</b>——含「房产拍卖和疯狂的报价」至「提供骗人服务的网站」</li><li><b>第 155–161 章</b>——含「让人懊恼的早餐时间」至「寻找停车位的烦恼」</li><li><b>第 162–168 章</b>——含「抛硬币做决策」至「主动纠正错误的美德」</li><li><b>第 169–175 章</b>——含「度假期间我们会更诚实吗？」至「人的灵魂和帕斯卡赌注」</li><li><b>第 176–182 章</b>——含「葡萄酒的价格」至「如何问对问题？」</li><li><b>第 183–189 章</b>——含「自由意志和甜甜圈」至「心理距离和移情作用」</li><li><b>第 190–196 章</b>——含「要不要改变现状？」至「男人和穿高跟鞋的女人」</li><li><b>第 197–203 章</b>——含「积极信号和消极信号」至「致（各国）读者」</li><li><b>第 204–210 章</b>——含「推荐序1 我们都不诚实过」至「第1章 测试理性犯罪的简」</li><li><b>第 211–217 章</b>——含「如果可以，你会选择作弊吗」至「公司里人尽皆知的真相」</li><li><b>第 218–224 章</b>——含「如何降低人们的不诚实行为」至「现实的“灰色地带”」</li><li><b>第 225–231 章</b>——含「第4章 被动机迷惑的理智」至「醉汉的实验数据是否应该被」</li><li><b>第 232–238 章</b>——含「信息公开未必是剂灵丹妙药」至「为什么一到期末考试，学生」</li><li><b>第 239–245 章</b>——含「“绿色”这个词是什么颜色」至「更糟糕的后果」</li><li><b>第 246–252 章</b>——含「伪装直至成功？」至「第8章 创新与不诚实：我」</li><li><b>第 253–259 章</b>——含「非理性决策」至「意大利之旅的“创举”」</li><li><b>第 260–266 章</b>——含「最伟大的艺术家也是最具创」至「近朱者赤，近墨者黑」</li><li><b>第 267–273 章</b>——含「如何重拾道德？」至「谁才是“真正”的骗子？」</li><li><b>第 274–276 章</b>——含「哪个国家或地区的人最爱撒」至「致谢」</li></ul></section>
 <section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句</h2><ol class="mmx-qlist"><li><blockquote>「人心不足蛇吞象。唯一的解决方法就是打破相对论的怪圈。」</blockquote><cite>本书正文</cite></li><li><blockquote>「人们很少做不加对比的选择。我们的心里并没有一个“内部价值计量器”来告诉我们某种物品真正的价值是多少。相反，我们关注的是这种物品与其他物品的相对优劣，以此来估算其价值。」</blockquote><cite>本书正文</cite></li><li><blockquote>「一旦社会规范与市场规范发生碰撞，社会规范就会退出。换言之，社会规范很难重建。一旦这朵盛开的玫瑰从枝头落下（一旦社会规范被市场规范打败）它就很难再发挥任何效力。」</blockquote><cite>本书正文</cite></li><li><blockquote>「人们为什么会一再犯同样的错误，而很少从中吸取教训。」</blockquote><cite>本书正文</cite></li><li><blockquote>「多数人只有到了具体情境才知道自己真正想要的是什么。」</blockquote><cite>本书正文</cite></li><li><blockquote>「汤姆无意中发现了人类行为的一个重要定律，那就是要让人们渴望做一件事，只需使做这件事的机会难以获得即可。”」</blockquote><cite>本书正文</cite></li><li><blockquote>「我们不但喜欢将事物与事物进行比较，而且喜欢比较容易比较的——避免比较不容易比较的事物。」</blockquote><cite>本书正文</cite></li><li><blockquote>「基于其他人的行为来推断某事物的好坏，以决定我们是否仿效，这就是“羊群效应”。」</blockquote><cite>本书正文</cite></li><li><blockquote>「换言之，我们对价格变化的敏感度，实际在很大程度上可能是两种因素共同作用的结果——我们对过去价格的记忆，以及我们想与过去决定保持一致的欲望，根本不是对我们真正偏好或需求大小的体现。」</blockquote><cite>本书正文</cite></li><li><blockquote>「比如你是单身，希望在即将到来的相亲晚会上吸引更多的约会对象，该怎么办呢？我的建议是，你带上一个同伴，外观特点和你基本相似（相似的肤色、体型、面貌），但要比你稍稍差一点儿（–你）。」</blockquote><cite>本书正文</cite></li></ol></section>
+<button id="rdFab" aria-label="阅读设置" title="阅读设置">Aa</button>
+<div id="rdPanel" hidden>
+  <div class="rd-row"><span>字号</span><span class="rd-btns">
+    <button data-rd="fs-">A−</button><button data-rd="fs+">A＋</button></span></div>
+  <div class="rd-row"><span>段距</span><span class="rd-btns">
+    <button data-rd="pm-">紧</button><button data-rd="pm0">中</button><button data-rd="pm+">松</button></span></div>
+  <div class="rd-row"><span>主题</span><span class="rd-btns">
+    <button data-rd="th-cream">米白</button><button data-rd="th-light">纯白</button>
+    <button data-rd="th-green">护眼</button><button data-rd="th-dark">夜间</button></span></div>
+</div>
+<script>
+(function(){
+  var d = document.documentElement;
+  var c = {}; try { c = JSON.parse(localStorage.getItem('rd-cfg') || '{}'); } catch (e) {}
+  var FS = [0.88, 0.96, 1.04, 1.16, 1.30], PM = [0.6, 1, 1.5];
+  var fi = FS.indexOf(parseFloat(d.style.getPropertyValue('--fs')) || c.fs); if (fi < 0) fi = 2;
+  var pi = PM.indexOf(parseFloat(d.style.getPropertyValue('--pm')) || c.pm); if (pi < 0) pi = 1;
+  var panel = document.getElementById('rdPanel');
+  document.getElementById('rdFab').onclick = function (e) {
+    e.stopPropagation(); panel.hidden = !panel.hidden;
+  };
+  document.addEventListener('click', function (e) {
+    if (!panel.hidden && !panel.contains(e.target) && e.target.id !== 'rdFab') panel.hidden = true;
+  });
+  panel.addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-rd]'); if (!b) return;
+    var k = b.dataset.rd;
+    if (k === 'fs-') fi = Math.max(0, fi - 1);
+    else if (k === 'fs+') fi = Math.min(FS.length - 1, fi + 1);
+    else if (k === 'pm-') pi = Math.max(0, pi - 1);
+    else if (k === 'pm0') pi = 1;
+    else if (k === 'pm+') pi = Math.min(PM.length - 1, pi + 1);
+    else if (k.indexOf('th-') === 0) c.theme = k.slice(3);
+    apply();
+  });
+  function apply() {
+    d.dataset.theme = c.theme || 'cream';
+    d.style.setProperty('--fs', FS[fi]);
+    d.style.setProperty('--pm', PM[pi]);
+    c.fs = FS[fi]; c.pm = PM[pi];
+    try { localStorage.setItem('rd-cfg', JSON.stringify(c)); } catch (e) {}
+    [].forEach.call(panel.querySelectorAll('button[data-rd^="th-"]'), function (b) {
+      b.style.borderColor = (b.dataset.rd === 'th-' + (c.theme || 'cream')) ? 'var(--head)' : '';
+      b.style.color = (b.dataset.rd === 'th-' + (c.theme || 'cream')) ? 'var(--head)' : '';
+    });
+  }
+  apply();
+  /* 导航随滚动高亮 */
+  var links = [].slice.call(document.querySelectorAll('.navlink')), map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var mark = function (a) {
+    links.forEach(function (x) { x.classList.toggle('active', x === a); });
+  };
+  if ('IntersectionObserver' in window) {
+    var cur = null;
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (e.isIntersecting) {
+          var a = map[e.target.id];
+          if (a && cur !== a) { cur = a; mark(a); }
+        }
+      });
+    }, { rootMargin: '-15% 0px -75% 0px' });
+    Object.keys(map).forEach(function (id) {
+      var el = document.getElementById(id); if (el) io.observe(el);
+    });
+  }
+  links.forEach(function (a) {
+    a.addEventListener('click', function () { mark(a); });
+  });
+})();
+</script>
 </body>
 </html>

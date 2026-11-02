@@ -4,32 +4,64 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>《老子与西方哲学：中西哲学的对撞》｜通读 · 精读</title>
+<script>
+/* 防闪：渲染前先把上次保存的主题/字号/段距应用到 <html> */
+(function(){try{var c=JSON.parse(localStorage.getItem('rd-cfg')||'{}'),d=document.documentElement;
+d.dataset.theme=c.theme||'cream';
+if(c.fs)d.style.setProperty('--fs',c.fs);
+if(c.pm)d.style.setProperty('--pm',c.pm);}catch(e){}})();
+</script>
 <link rel="stylesheet" href="../../../assets/css/reading-overview.css"><link rel="stylesheet" href="../../../assets/css/mmx-guide.css"><link rel="stylesheet" href="../../../assets/css/reading-outline.css">
 <style>
-/* ── 外壳与全局阅读节奏 ── */
-body{max-width:880px;margin:0 auto;padding:0 18px 80px;
-  font-size:15px;line-height:1.88;color:#3b453e;background:#f7f8f3;
-  -webkit-font-smoothing:antialiased;}
-.combined-head{padding:30px 0 16px;border-bottom:1px solid #e7e0d2;margin-bottom:4px;}
-.combined-head h1{font:700 23px/1.35 var(--serif);margin:0 0 8px;color:#244b40;}
+/* ── 主题变量：默认米白；纯白/护眼绿/夜间由 html[data-theme] 覆盖 ── */
+:root{
+  --fs:1;--pm:1;
+  --pg-bg:#f7f8f3;--card-bg:#fffdf6;--card-bd:#e8e4d5;--ink:#3b453e;--txt:#4a4436;
+  --sub:#8d8878;--head:#244b40;--qgreen:#2f5b49;--gold:#bf8247;
+  --nav-bg:rgba(247,248,243,.96);--navlink-bg:#fdfbf3;--navlink-bd:#e8e2d2;
+  --inner-bg:#fbfaf2;--inner-bd:#eee9d8;--oneline-bg:#fbfaf4;
+  --act-bg:#e5efe4;--act-bd:#bcd4bc;
+}
+html[data-theme=light]{--pg-bg:#ffffff;--card-bg:#ffffff;--card-bd:#e7e7e2;
+  --nav-bg:rgba(255,255,255,.96);--navlink-bg:#fafaf7;--navlink-bd:#e7e7e0;
+  --inner-bg:#fafaf7;--inner-bd:#ecebe4;--oneline-bg:#fafaf7;}
+html[data-theme=green]{--pg-bg:#cfe8d2;--card-bg:#eef7ef;--card-bd:#b9dcc0;--ink:#2f4237;
+  --txt:#3b5446;--sub:#5d7c67;--head:#1e4d37;--qgreen:#1e5c41;
+  --nav-bg:rgba(207,232,210,.96);--navlink-bg:#f4fbf5;--navlink-bd:#b4d8bd;
+  --inner-bg:#f6fbf7;--inner-bd:#cde5d3;--oneline-bg:#f6fbf7;--act-bg:#bfe3c6;--act-bd:#95c8a1;}
+html[data-theme=dark]{--pg-bg:#15171a;--card-bg:#1f2226;--card-bd:#34383f;--ink:#c9ced4;
+  --txt:#b4bac1;--sub:#8a919a;--head:#93c8a8;--qgreen:#9ed0af;
+  --nav-bg:rgba(21,23,26,.96);--navlink-bg:#262a2f;--navlink-bd:#3a3f46;
+  --inner-bg:#272b30;--inner-bd:#3a3f46;--oneline-bg:#272b30;
+  --act-bg:#244b40;--act-bd:#2f5b49;}
+
+/* ── 外壳与全局阅读节奏（字号跟随 --fs 整页缩放，段距跟随 --pm） ── */
+html{font-size:calc(16px*var(--fs));}
+html[data-theme=dark] body{color-scheme:dark;}
+body{max-width:880px;margin:0 auto;padding:0 18px 80px;font-size:.9375rem;line-height:1.88;
+  color:var(--ink);background:var(--pg-bg);-webkit-font-smoothing:antialiased;}
+.combined-head{padding:30px 0 16px;border-bottom:1px solid var(--card-bd);margin-bottom:4px;}
+.combined-head h1{font:700 1.45rem/1.35 var(--serif);margin:0 0 8px;color:var(--head);}
 .combined-head .eyebrow{font-size:.72rem;letter-spacing:.14em;margin:0 0 6px;}
 .chips{margin:8px 0 0;}
 .chip{font-size:.72rem;padding:2px 10px;}
-/* 锚点导航：固定一排 4 个，等宽对齐 */
-.nav{position:sticky;top:0;z-index:20;background:rgba(247,248,243,.96);backdrop-filter:blur(6px);
-  border-bottom:1px solid #ece4d4;padding:10px 0;margin:12px 0 20px;display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;
+
+/* ── 锚点导航：小屏最少一排 4 个，大屏自动一排/两排放完；滚动到哪亮哪 ── */
+.nav{position:sticky;top:0;z-index:20;background:var(--nav-bg);backdrop-filter:blur(6px);
+  border-bottom:1px solid var(--card-bd);padding:10px 0;margin:12px 0 20px;display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(76px,1fr));gap:6px;
   box-shadow:0 2px 10px rgba(120,100,60,.05);}
-.navlink{font-size:12px;color:#5d5443;text-decoration:none;background:#fdfbf3;border:1px solid #e8e2d2;
-  border-radius:8px;padding:6px 4px;text-align:center;white-space:nowrap;overflow:hidden;
-  text-overflow:ellipsis;transition:background .15s,color .15s;}
-.navlink:hover{background:#f2efe2;color:#244b40;}
+.navlink{font-size:12px;color:var(--txt);text-decoration:none;background:var(--navlink-bg);
+  border:1px solid var(--navlink-bd);border-radius:8px;padding:6px 4px;text-align:center;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:all .15s;}
+.navlink:hover{color:var(--head);border-color:var(--head);}
+.navlink.active{color:var(--head);background:var(--act-bg);border-color:var(--act-bd);font-weight:700;}
 section{scroll-margin-top:62px;}
 
 /* ── 统一卡片：所有顶层模块（AI领读 / AI 问答 / 其余）一视同仁 ── */
 body>section.mmx-mod,body>section.card,body>section.mmx-svgwrap{
-  background:#fffdf6;border:1px solid #e8e4d5;border-radius:16px;
-  padding:18px 22px;margin:18px 0;
+  background:var(--card-bg);border:1px solid var(--card-bd);border-radius:16px;
+  padding:18px 22px;margin:calc(18px*var(--pm)) 0;
   box-shadow:0 1px 3px rgba(110,95,60,.05);}
 body>section.mmx-mod>*:first-child,body>section.card>*:first-child,
 body>section.mmx-svgwrap>*:first-child{margin-top:0}
@@ -39,74 +71,115 @@ body>section.mmx-svgwrap>*:last-child{margin-bottom:0}
 body>section.mmx-svgwrap>svg.mmx-svg{display:block;width:100%;height:auto;margin:2px auto 0;}
 /* 模块标题：统一大小、弱强调，不与正文抢注意力 */
 body>section.mmx-mod>h2,body>section.card>h2{
-  font:700 1.04rem/1.5 var(--serif);color:#244b40;margin:0 0 11px;
-  padding-left:10px;border-left:3px solid #bf8247;letter-spacing:.01em;}
-/* 正文：字号收小、行距放宽、段间距舒服 */
+  font:700 1.04rem/1.5 var(--serif);color:var(--head);margin:0 0 11px;
+  padding-left:10px;border-left:3px solid var(--gold);letter-spacing:.01em;}
+/* 正文：字号收小、行距放宽、段间距随 --pm 调节 */
 body>section.mmx-mod p,body>section.card p,
 body>section.mmx-mod li,body>section.card li{
-  font-size:.9rem;line-height:1.92;color:#4a4436;}
-body>section.mmx-mod p,body>section.card p{margin:.5em 0;}
+  font-size:.9rem;line-height:1.92;color:var(--txt);margin:calc(.5em*var(--pm)) 0;}
 body>section.mmx-mod>ul,body>section.mmx-mod>ol,body>section.mmx-mod>div,
 body>section.mmx-mod>p:not(.mmx-mod-note),
 body>section.card:not(.merged-guide)>ul,body>section.card:not(.merged-guide)>ol,
 body>section.card:not(.merged-guide)>div,body>section.card:not(.merged-guide)>p:not(.mmx-mod-note){
   padding-left:14px;}
-/* 模块说明小字：弱化不抢眼 */
-.mmx-mod-note{font-size:.75rem;color:#8d8878;margin:.1em 0 .75em;line-height:1.7;}
 
 /* ── 内部块统一：卡片里不再套深卡片，一律浅底子块 ── */
 body>section .mmx-pending,body>section .mmx-evib,body>section .aiqa-item{
-  background:#fbfaf2;border:1px solid #eee9d8;border-radius:12px;
-  padding:13px 16px;margin:.65em 0;}
+  background:var(--inner-bg);border:1px solid var(--inner-bd);border-radius:12px;
+  padding:13px 16px;margin:calc(.65em*var(--pm)) 0;}
 body>section .mmx-evib ul{padding-left:1.15em;}
 /* 一句话主旨：去左侧竖线 + 收敛字号 */
-.mmx-oneline{font-size:.98rem;line-height:1.85;color:#3a352c;margin:.2em 0 0;
-  padding:12px 16px;background:#fbfaf4;border-left:none;border-radius:12px;}
+.mmx-oneline{font-size:.98rem;line-height:1.85;color:var(--txt);margin:.2em 0 0;
+  padding:12px 16px;background:var(--oneline-bg);border-left:none;border-radius:12px;}
 /* 核心观点 / 验证清单：虚线分隔 + 收紧行距 */
 .mmx-views li{padding:.5em 0 .5em 0;font-size:.9rem;line-height:1.88;}
 /* 原文金句 */
 .mmx-qlist li{padding:.6em 0 .6em 2.2em;}
-.mmx-qlist blockquote{font-size:.89rem;line-height:1.9;}
-.mmx-qlist cite{font-size:.72rem;}
+.mmx-qlist blockquote{font-size:.89rem;line-height:1.9;color:var(--txt);}
+.mmx-qlist cite{font-size:.72rem;color:var(--sub);}
 /* 核心追问：问句加重、答句放松 */
-.mmx-qa{margin:.7em 0;padding-left:12px;border-left:3px solid #e5dfcd;}
-.mmx-qa .mmx-q{font-size:.9rem;font-weight:700;color:#2f3a33;line-height:1.8;margin:0 0 .25em;}
-.mmx-qa .mmx-a{font-size:.88rem;line-height:1.95;color:#4a4436;margin:0;}
+.mmx-qa{margin:calc(.7em*var(--pm)) 0;padding-left:12px;border-left:3px solid var(--inner-bd);}
+.mmx-qa .mmx-q{font-size:.9rem;font-weight:700;color:var(--ink);line-height:1.8;margin:0 0 .25em;}
+.mmx-qa .mmx-a{font-size:.88rem;line-height:1.95;color:var(--txt);margin:0;}
 
 /* ── AI 问书专项：外层容器透明，问答条目才是阅读单元 ── */
 #mod-aiask .mmx-ask{background:transparent;border:0;border-radius:0;padding:0;margin:0;}
-#mod-aiask .aiqa-item{margin:.6em 0;padding:14px 16px 15px;}
-#mod-aiask .aiqa-item h3{font:700 .93rem/1.7 var(--serif);color:#2f5b49;margin:0 0 .4em;
+#mod-aiask .aiqa-item{margin:calc(.6em*var(--pm)) 0;padding:14px 16px 15px;}
+#mod-aiask .aiqa-item h3{font:700 .93rem/1.7 var(--serif);color:var(--qgreen);margin:0 0 .4em;
   padding:0;border:0;}
-#mod-aiask .aiqa-item h3:before{content:"问　";color:#bf8247;font-weight:700;}
-#mod-aiask .aiqa-item p{font-size:.88rem;line-height:1.95;color:#4a4436;margin:.4em 0;}
-#mod-aiask .aiqa-item ul{margin:.35em 0;padding-left:1.1em;}
-#mod-aiask .aiqa-item li{font-size:.87rem;line-height:1.88;margin:.18em 0;color:#4a4436;}
-#mod-aiask .aiqa-item li::marker{color:#c0a06a;}
+#mod-aiask .aiqa-item h3:before{content:"问　";color:var(--gold);font-weight:700;}
+/* 回答整体右缩进，与问句文字对齐（别顶着左边） */
+#mod-aiask .aiqa-item>p,#mod-aiask .aiqa-item>ul{margin-left:26px;}
+#mod-aiask .aiqa-item p{font-size:.88rem;line-height:1.95;color:var(--txt);
+  margin-top:calc(.4em*var(--pm));margin-bottom:calc(.4em*var(--pm));}
+#mod-aiask .aiqa-item ul{margin-top:calc(.35em*var(--pm));margin-bottom:calc(.35em*var(--pm));
+  padding-left:1.1em;}
+#mod-aiask .aiqa-item li{font-size:.87rem;line-height:1.88;margin:calc(.18em*var(--pm)) 0;
+  color:var(--qgreen);}
+#mod-aiask .aiqa-item li::marker{color:var(--gold);}
 /* 逐章追问（details 形态）：摘要行也收敛 */
-.mmx-ask>summary{font-size:.87rem;line-height:1.7;padding:2px 0;}
-.mmx-askbody{font-size:.88rem;line-height:1.9;}
+.mmx-ask>summary{font-size:.87rem;line-height:1.7;padding:2px 0;color:var(--qgreen);}
+.mmx-askbody{font-size:.88rem;line-height:1.9;color:var(--txt);}
 
-/* AI领读章内：AI 大纲原生深层样式（字号同步收小） */
-.merged-guide .sec{margin:9px 0 12px;padding-left:6px;border-left:2px solid #e5e0d6}
-.merged-guide .sec h4{font:600 .93rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.5em 0 .25em}
+/* ── AI领读章内：AI 大纲原生深层样式（章节字号整体再收一档） ── */
+.merged-guide .sec{margin:9px 0 12px;padding-left:6px;border-left:2px solid var(--card-bd)}
+.merged-guide .sec h4{font:600 .84rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:var(--head);margin:.5em 0 .25em}
+.merged-guide .mmx-name{font-size:.88rem !important;}
+.merged-guide .mmx-sech{font-size:.8rem !important;}
+.merged-guide .mmx-gist{font-size:.83rem !important;line-height:1.85;}
+.merged-guide .mmx-stat{font-size:.7rem !important;}
 .merged-guide ul.point{margin:.25em 0;padding-left:20px}
-.merged-guide ul.point>li{margin:.3em 0}
+.merged-guide ul.point>li{margin:.3em 0;font-size:.8rem !important;line-height:1.85;}
 .merged-guide ul.quote{margin:.22em 0 .22em 20px;padding-left:18px;list-style:none}
-.merged-guide ul.quote::before{content:"原句";display:block;font-size:.7rem;color:#bf8247;
+.merged-guide ul.quote::before{content:"原句";display:block;font-size:.7rem;color:var(--gold);
   letter-spacing:.1em;margin:.12em 0 .08em;font-weight:600}
-.merged-guide ul.quote.quote-node{margin-top:.45em;padding-top:.35em;border-top:1px dashed #eadfc9}
+.merged-guide ul.quote.quote-node{margin-top:.45em;padding-top:.35em;border-top:1px dashed var(--inner-bd)}
 .merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
-.merged-guide ul.quote>li{color:#4a4436;font-size:.88rem;line-height:1.85;margin:.18em 0;padding-left:10px;border-left:2px solid #bf8247}
+.merged-guide ul.quote>li{color:var(--txt);font-size:.8rem !important;line-height:1.85;margin:.18em 0;padding-left:10px;border-left:2px solid var(--gold)}
+.merged-guide .mmx-qt{font-size:.77rem !important;}
+
 /* 核心观点初判：外链 mmx-guide.css 的「观点N」前缀是绝对定位，在本页版式里和标题叠字，
    且此前要求去掉「观点1/2/3」前缀 —— 这里整条关掉（外链 CSS 不在页面内，只能内联覆盖）。 */
 .mmx-views li{padding-left:0 !important;}
 .mmx-views li:before,.mmx-views li::before{
   content:none !important;display:none !important;counter-increment:none !important;}
+
+/* ── 夜间主题：覆盖共享 CSS 里的硬编码浅色 ── */
+html[data-theme=dark] h1,html[data-theme=dark] h2,html[data-theme=dark] h3,
+html[data-theme=dark] h4{color:var(--head);}
+html[data-theme=dark] .mmx-qt{background:var(--inner-bg);color:var(--txt);}
+html[data-theme=dark] .mmx-qlist blockquote,html[data-theme=dark] .mmx-ask blockquote,
+html[data-theme=dark] .mmx-gist,html[data-theme=dark] .mmx-pts,
+html[data-theme=dark] .mmx-askbody{color:var(--txt);}
+html[data-theme=dark] .mmx-qlist li:before{background:#2b3a31;color:#9ed0af;}
+html[data-theme=dark] .mmx-views li,html[data-theme=dark] .mmx-qlist li,
+html[data-theme=dark] .mmx-qa,html[data-theme=dark] .mmx-sec>summary,
+html[data-theme=dark] .mmx-cn{border-color:#3a3f46;}
+html[data-theme=dark] .mmx-views li b,html[data-theme=dark] .mmx-qa .mmx-q{color:var(--ink);}
+html[data-theme=dark] .chip{background:#274234;color:#9ed0af;}
+html[data-theme=dark] .mmx-role,html[data-theme=dark] .mmx-chip{background:#262a2f;
+  color:#8a919a;border-color:#3a3f46;}
+html[data-theme=dark] a{color:#9ed0af;}
+
+/* ── 右上角设置面板 ── */
+#rdFab{position:fixed;top:10px;right:12px;z-index:60;font:600 13px/1 var(--sans);color:var(--txt);
+  background:var(--card-bg);border:1px solid var(--card-bd);border-radius:9px;padding:8px 12px;
+  cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.1);}
+#rdFab:hover{border-color:var(--head);color:var(--head);}
+#rdPanel{position:fixed;top:48px;right:12px;z-index:60;background:var(--card-bg);
+  border:1px solid var(--card-bd);border-radius:12px;padding:12px 14px;
+  box-shadow:0 8px 24px rgba(0,0,0,.16);display:grid;gap:9px;min-width:212px;}
+#rdPanel[hidden]{display:none;}
+#rdPanel .rd-row{display:flex;gap:5px;align-items:center;justify-content:space-between;}
+#rdPanel .rd-row>span{font-size:.72rem;color:var(--sub);flex:none;}
+#rdPanel .rd-btns{display:flex;gap:5px;}
+#rdPanel button{font:600 12px/1.4 var(--sans);color:var(--txt);background:var(--navlink-bg);
+  border:1px solid var(--navlink-bd);border-radius:7px;padding:4px 9px;cursor:pointer;}
+#rdPanel button:hover{border-color:var(--head);color:var(--head);}
+
 @media(max-width:720px){
-  body{padding:0 12px 60px;font-size:14.5px;}
-  body>section.mmx-mod,body>section.card{padding:15px 16px;border-radius:14px;}
-  .nav{grid-template-columns:repeat(2,minmax(0,1fr));}
+  body{padding:0 12px 60px;}
+  body>section.mmx-mod,body>section.card,body>section.mmx-svgwrap{padding:15px 16px;border-radius:14px;}
 }
 </style>
 </head>
@@ -5732,5 +5805,77 @@ body>section .mmx-evib ul{padding-left:1.15em;}
 <section class="mmx-mod" aria-labelledby="higher" id="mod-higher"><h2 id="higher">更高维度</h2><p>【书中主张】把老子放进前苏格拉底哲学的序列，主张中西在「本原」问题上同源同构。【外部证据】这种把不同文明放进同一时间轴比较的框架，源自雅斯贝尔斯的「轴心时代」说；而专业汉学家的判断更保守：葛瑞汉指出中国思想以「关联性思维」为主，与希腊的因果性、实体性思维是两种范式；安乐哲则强调「道」不可译作西方形而上学的「本原（arche）」。【综合分析】本书属于「平行比较」传统，价值在于提出对读的可能：泰勒斯的水与老子的水、阿那克西曼德的「无限」与老子的复归、赫拉克利特的河流与《老子》的变，这些对照确实能互相照亮。风险在于用 arche 去套「道」——《老子》里的道同时是生成者与「象帝之先」的否定性表述，无法被完全覆盖。</p><p>【书中主张】「万物生于有还是生于无」一节把老子的有无与现代物理学并置，隐含「古已有之」的结论倾向。【外部证据】作者引用的质量守恒（拉瓦锡）与质能关系式属于 19—20 世纪科学的结论；而恩培多克勒的四根说之所以被化学史追认为前身，是因为它第一次把变化解释为不变元素的聚散，这一点与「元素」概念在逻辑上同构。【综合分析】用现代科学「印证」古代宇宙论，在科普层面有效，在论证层面无效——古代命题没有可检验的预测，也就谈不上被证实。真正可迁移的是方法：把「变化」解释为「不变者的重新排列」，这一思路从四根说到原子论再到现代化学一脉相承；而《老子》提供的是另一种思路——变化本身就是常（「反者道之动」）。两者是并列的形而上学选项，不是先后关系。</p></section>
 <section class="mmx-mod" aria-labelledby="verify" id="mod-verify"><h2 id="verify">阅读验证</h2><ul class="mmx-views"><li>原文与版本：书中引《管子·水地》「水者何也？万物之本原也，诸生之宗室也」及齐、楚、秦三国水性与民风的对应段落，需核对《管子》点校本的异文；《老子》「水善利万物而不争」为第八章、「人之生也柔弱，其死也坚强」为第七十六章、「道生一，一生二，二生三，三生万物」为第四十二章（王弼本章序），需核书中依据的是王弼本、河上公本，还是马王堆帛书甲／乙本——帛书相应章句与传世本有别，直接影响「有／无」的释读。</li><li>史实细节：泰勒斯承包榨油机的故事出自亚里士多德《政治学》，仰望星空跌入坑被女仆讥笑出自柏拉图《泰阿泰德》，阿波罗神庙三角鼎传说见于第欧根尼·拉尔修《名哲言行录》——三者的史料等级不同，书中常并列使用，需分别核对；阿那克西曼德「人最初是鱼」需核对是残篇原文还是后世转述；恩培多克勒跳进火山口的死法属传说，学界多视为杜撰，不应作为生平事实引用。</li><li>作者立场偏差：书名标举「对撞」，但各章结构高度一致（先讲希腊哲学家生平，再引老子对读，最后落脚「相通」），需核对是否存在选择性引用——例如「人不能两次踏进同一条河流」与「人一次也不能踏进」（克拉底鲁的极端化）在传统上被当作需要警惕的过度推论，书中如何处理；另，书中引林语堂「湖南人是古代楚国武士后裔」说明楚地民风，属现代文人的印象式议论，不构成民族性格的证据。</li></ul></section>
 <section class="mmx-mod" aria-labelledby="thennow" id="mod-thennow"><h2 id="thennow">往日今时</h2><p>【作者当年所能知晓】写作时可用的中西比较资源，主要是从严复、梁启超到胡适、冯友兰一脉建立起来的「中国哲学」学科框架，以及雅斯贝尔斯的轴心时代说；这些框架的共同特点是用西方哲学的范畴（本体论、认识论、辩证法）给中国思想分科。【后来才显现】20 世纪 70 年代以后马王堆帛书《老子》、90 年代郭店楚简《老子》相继出土，为《老子》的成书年代与若干章句提供了传世本之外的校勘基础，「道生一」等章的释读也随之出现新解——这些材料是近几十年才充分进入公共讨论的，读者应以最新整理本核对书中引文。</p><p>【今天可迁移的启发】两条。第一，把「通」与「异」分开处理：先确认双方是否在回答同一个问题（本原、变与常、有无），再看论证方式是否可比——只有问题相同而解法不同，比较才有信息量。第二，警惕「古已有之」的诱惑：古代宇宙论与现代科学可以互相照亮，但一个没有可检验预测的命题，不会因为现代科学后来发现了类似结构就变成先知。读这本书最合适的姿态，是把它当作一份对读清单，而不是一份结论清单。</p></section>
+<button id="rdFab" aria-label="阅读设置" title="阅读设置">Aa</button>
+<div id="rdPanel" hidden>
+  <div class="rd-row"><span>字号</span><span class="rd-btns">
+    <button data-rd="fs-">A−</button><button data-rd="fs+">A＋</button></span></div>
+  <div class="rd-row"><span>段距</span><span class="rd-btns">
+    <button data-rd="pm-">紧</button><button data-rd="pm0">中</button><button data-rd="pm+">松</button></span></div>
+  <div class="rd-row"><span>主题</span><span class="rd-btns">
+    <button data-rd="th-cream">米白</button><button data-rd="th-light">纯白</button>
+    <button data-rd="th-green">护眼</button><button data-rd="th-dark">夜间</button></span></div>
+</div>
+<script>
+(function(){
+  var d = document.documentElement;
+  var c = {}; try { c = JSON.parse(localStorage.getItem('rd-cfg') || '{}'); } catch (e) {}
+  var FS = [0.88, 0.96, 1.04, 1.16, 1.30], PM = [0.6, 1, 1.5];
+  var fi = FS.indexOf(parseFloat(d.style.getPropertyValue('--fs')) || c.fs); if (fi < 0) fi = 2;
+  var pi = PM.indexOf(parseFloat(d.style.getPropertyValue('--pm')) || c.pm); if (pi < 0) pi = 1;
+  var panel = document.getElementById('rdPanel');
+  document.getElementById('rdFab').onclick = function (e) {
+    e.stopPropagation(); panel.hidden = !panel.hidden;
+  };
+  document.addEventListener('click', function (e) {
+    if (!panel.hidden && !panel.contains(e.target) && e.target.id !== 'rdFab') panel.hidden = true;
+  });
+  panel.addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-rd]'); if (!b) return;
+    var k = b.dataset.rd;
+    if (k === 'fs-') fi = Math.max(0, fi - 1);
+    else if (k === 'fs+') fi = Math.min(FS.length - 1, fi + 1);
+    else if (k === 'pm-') pi = Math.max(0, pi - 1);
+    else if (k === 'pm0') pi = 1;
+    else if (k === 'pm+') pi = Math.min(PM.length - 1, pi + 1);
+    else if (k.indexOf('th-') === 0) c.theme = k.slice(3);
+    apply();
+  });
+  function apply() {
+    d.dataset.theme = c.theme || 'cream';
+    d.style.setProperty('--fs', FS[fi]);
+    d.style.setProperty('--pm', PM[pi]);
+    c.fs = FS[fi]; c.pm = PM[pi];
+    try { localStorage.setItem('rd-cfg', JSON.stringify(c)); } catch (e) {}
+    [].forEach.call(panel.querySelectorAll('button[data-rd^="th-"]'), function (b) {
+      b.style.borderColor = (b.dataset.rd === 'th-' + (c.theme || 'cream')) ? 'var(--head)' : '';
+      b.style.color = (b.dataset.rd === 'th-' + (c.theme || 'cream')) ? 'var(--head)' : '';
+    });
+  }
+  apply();
+  /* 导航随滚动高亮 */
+  var links = [].slice.call(document.querySelectorAll('.navlink')), map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var mark = function (a) {
+    links.forEach(function (x) { x.classList.toggle('active', x === a); });
+  };
+  if ('IntersectionObserver' in window) {
+    var cur = null;
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (e.isIntersecting) {
+          var a = map[e.target.id];
+          if (a && cur !== a) { cur = a; mark(a); }
+        }
+      });
+    }, { rootMargin: '-15% 0px -75% 0px' });
+    Object.keys(map).forEach(function (id) {
+      var el = document.getElementById(id); if (el) io.observe(el);
+    });
+  }
+  links.forEach(function (a) {
+    a.addEventListener('click', function () { mark(a); });
+  });
+})();
+</script>
 </body>
 </html>
