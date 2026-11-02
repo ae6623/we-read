@@ -6,46 +6,108 @@
 <title>《投资者的敌人》｜通读 · 精读</title>
 <link rel="stylesheet" href="../../../assets/css/reading-overview.css"><link rel="stylesheet" href="../../../assets/css/mmx-guide.css"><link rel="stylesheet" href="../../../assets/css/reading-outline.css">
 <style>
-/* 合并页外壳 */
-body{max-width:960px;margin:0 auto;padding:0 18px 80px;}
-.combined-head{padding:34px 0 18px;border-bottom:1px solid #e7e0d2;margin-bottom:8px;}
-.combined-head h1{font-size:26px;margin:0 0 10px;}
+/* ── 外壳与全局阅读节奏 ── */
+body{max-width:880px;margin:0 auto;padding:0 18px 80px;
+  font-size:15px;line-height:1.88;color:#3b453e;background:#f7f8f3;
+  -webkit-font-smoothing:antialiased;}
+.combined-head{padding:30px 0 16px;border-bottom:1px solid #e7e0d2;margin-bottom:4px;}
+.combined-head h1{font:700 23px/1.35 var(--serif);margin:0 0 8px;color:#244b40;}
+.combined-head .eyebrow{font-size:.72rem;letter-spacing:.14em;margin:0 0 6px;}
+.chips{margin:8px 0 0;}
+.chip{font-size:.72rem;padding:2px 10px;}
 /* 锚点导航：固定一排 4 个，等宽对齐 */
-.nav{position:sticky;top:0;z-index:20;background:rgba(255,253,248,.96);backdrop-filter:blur(6px);
-  border-bottom:1px solid #ece4d4;padding:10px 0;margin:14px 0 26px;display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;
-  box-shadow:0 2px 10px rgba(120,100,60,.06);}
-.navlink{font-size:12.5px;color:#5d5443;text-decoration:none;background:#f6f1e6;border:1px solid #e7ddca;
-  border-radius:7px;padding:4px 6px;text-align:center;white-space:nowrap;overflow:hidden;
-  text-overflow:ellipsis;}
-section{scroll-margin-top:64px;}
-/* 一句话主旨：去左侧竖线 */
-.mmx-oneline{border-left:none;padding-left:18px;}
-/* AI领读章内：AI 大纲原生深层样式 */
-.merged-guide .sec{margin:10px 0 14px;padding-left:6px;border-left:2px solid #e5e0d6}
-.merged-guide .sec h4{font:600 .98rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.6em 0 .3em}
-.merged-guide ul.point{margin:.3em 0;padding-left:20px}
-.merged-guide ul.point>li{margin:.35em 0}
-.merged-guide ul.quote{margin:.25em 0 .25em 20px;padding-left:18px;list-style:none}
-.merged-guide ul.quote::before{content:"原句";display:block;font-size:.72rem;color:#bf8247;
-  letter-spacing:.1em;margin:.15em 0 .1em;font-weight:600}
-.merged-guide ul.quote.quote-node{margin-top:.5em;padding-top:.4em;border-top:1px dashed #eadfc9}
+.nav{position:sticky;top:0;z-index:20;background:rgba(247,248,243,.96);backdrop-filter:blur(6px);
+  border-bottom:1px solid #ece4d4;padding:10px 0;margin:12px 0 20px;display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;
+  box-shadow:0 2px 10px rgba(120,100,60,.05);}
+.navlink{font-size:12px;color:#5d5443;text-decoration:none;background:#fdfbf3;border:1px solid #e8e2d2;
+  border-radius:8px;padding:6px 4px;text-align:center;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;transition:background .15s,color .15s;}
+.navlink:hover{background:#f2efe2;color:#244b40;}
+section{scroll-margin-top:62px;}
+
+/* ── 统一卡片：所有顶层模块（AI领读 / AI 问答 / 其余）一视同仁 ── */
+body>section.mmx-mod,body>section.card,body>section.mmx-svgwrap{
+  background:#fffdf6;border:1px solid #e8e4d5;border-radius:16px;
+  padding:18px 22px;margin:18px 0;
+  box-shadow:0 1px 3px rgba(110,95,60,.05);}
+body>section.mmx-mod>*:first-child,body>section.card>*:first-child,
+body>section.mmx-svgwrap>*:first-child{margin-top:0}
+body>section.mmx-mod>*:last-child,body>section.card>*:last-child,
+body>section.mmx-svgwrap>*:last-child{margin-bottom:0}
+/* 结构导图：图本身留白居中，不与正文抢宽 */
+body>section.mmx-svgwrap>svg.mmx-svg{display:block;width:100%;height:auto;margin:2px auto 0;}
+/* 模块标题：统一大小、弱强调，不与正文抢注意力 */
+body>section.mmx-mod>h2,body>section.card>h2{
+  font:700 1.04rem/1.5 var(--serif);color:#244b40;margin:0 0 11px;
+  padding-left:10px;border-left:3px solid #bf8247;letter-spacing:.01em;}
+/* 正文：字号收小、行距放宽、段间距舒服 */
+body>section.mmx-mod p,body>section.card p,
+body>section.mmx-mod li,body>section.card li{
+  font-size:.9rem;line-height:1.92;color:#4a4436;}
+body>section.mmx-mod p,body>section.card p{margin:.5em 0;}
+body>section.mmx-mod>ul,body>section.mmx-mod>ol,body>section.mmx-mod>div,
+body>section.mmx-mod>p:not(.mmx-mod-note),
+body>section.card:not(.merged-guide)>ul,body>section.card:not(.merged-guide)>ol,
+body>section.card:not(.merged-guide)>div,body>section.card:not(.merged-guide)>p:not(.mmx-mod-note){
+  padding-left:14px;}
+/* 模块说明小字：弱化不抢眼 */
+.mmx-mod-note{font-size:.75rem;color:#8d8878;margin:.1em 0 .75em;line-height:1.7;}
+
+/* ── 内部块统一：卡片里不再套深卡片，一律浅底子块 ── */
+body>section .mmx-pending,body>section .mmx-evib,body>section .aiqa-item{
+  background:#fbfaf2;border:1px solid #eee9d8;border-radius:12px;
+  padding:13px 16px;margin:.65em 0;}
+body>section .mmx-evib ul{padding-left:1.15em;}
+/* 一句话主旨：去左侧竖线 + 收敛字号 */
+.mmx-oneline{font-size:.98rem;line-height:1.85;color:#3a352c;margin:.2em 0 0;
+  padding:12px 16px;background:#fbfaf4;border-left:none;border-radius:12px;}
+/* 核心观点 / 验证清单：虚线分隔 + 收紧行距 */
+.mmx-views li{padding:.5em 0 .5em 0;font-size:.9rem;line-height:1.88;}
+/* 原文金句 */
+.mmx-qlist li{padding:.6em 0 .6em 2.2em;}
+.mmx-qlist blockquote{font-size:.89rem;line-height:1.9;}
+.mmx-qlist cite{font-size:.72rem;}
+/* 核心追问：问句加重、答句放松 */
+.mmx-qa{margin:.7em 0;padding-left:12px;border-left:3px solid #e5dfcd;}
+.mmx-qa .mmx-q{font-size:.9rem;font-weight:700;color:#2f3a33;line-height:1.8;margin:0 0 .25em;}
+.mmx-qa .mmx-a{font-size:.88rem;line-height:1.95;color:#4a4436;margin:0;}
+
+/* ── AI 问书专项：外层容器透明，问答条目才是阅读单元 ── */
+#mod-aiask .mmx-ask{background:transparent;border:0;border-radius:0;padding:0;margin:0;}
+#mod-aiask .aiqa-item{margin:.6em 0;padding:14px 16px 15px;}
+#mod-aiask .aiqa-item h3{font:700 .93rem/1.7 var(--serif);color:#2f5b49;margin:0 0 .4em;
+  padding:0;border:0;}
+#mod-aiask .aiqa-item h3:before{content:"问　";color:#bf8247;font-weight:700;}
+#mod-aiask .aiqa-item p{font-size:.88rem;line-height:1.95;color:#4a4436;margin:.4em 0;}
+#mod-aiask .aiqa-item ul{margin:.35em 0;padding-left:1.1em;}
+#mod-aiask .aiqa-item li{font-size:.87rem;line-height:1.88;margin:.18em 0;color:#4a4436;}
+#mod-aiask .aiqa-item li::marker{color:#c0a06a;}
+/* 逐章追问（details 形态）：摘要行也收敛 */
+.mmx-ask>summary{font-size:.87rem;line-height:1.7;padding:2px 0;}
+.mmx-askbody{font-size:.88rem;line-height:1.9;}
+
+/* AI领读章内：AI 大纲原生深层样式（字号同步收小） */
+.merged-guide .sec{margin:9px 0 12px;padding-left:6px;border-left:2px solid #e5e0d6}
+.merged-guide .sec h4{font:600 .93rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.5em 0 .25em}
+.merged-guide ul.point{margin:.25em 0;padding-left:20px}
+.merged-guide ul.point>li{margin:.3em 0}
+.merged-guide ul.quote{margin:.22em 0 .22em 20px;padding-left:18px;list-style:none}
+.merged-guide ul.quote::before{content:"原句";display:block;font-size:.7rem;color:#bf8247;
+  letter-spacing:.1em;margin:.12em 0 .08em;font-weight:600}
+.merged-guide ul.quote.quote-node{margin-top:.45em;padding-top:.35em;border-top:1px dashed #eadfc9}
 .merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
-.merged-guide ul.quote>li{color:#4a4436;font-size:.93rem;margin:.2em 0;padding-left:10px;border-left:2px solid #bf8247}
-/* 模块内子内容（AI领读除外，它有专属深层样式）：左缩进 + 正文与标题分层 */
-section.mmx-mod>ul,section.mmx-mod>ol,section.mmx-mod>div,
-section.mmx-mod>p:not(.mmx-mod-note),
-section.card:not(.merged-guide)>ul,section.card:not(.merged-guide)>ol,
-section.card:not(.merged-guide)>div,section.card:not(.merged-guide)>p:not(.mmx-mod-note){
-  padding-left:16px;}
-section.mmx-mod li,section.mmx-mod p:not(.mmx-mod-note),
-section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mod-note){
-  color:#4a4436;font-size:.93rem;line-height:1.78;}
+.merged-guide ul.quote>li{color:#4a4436;font-size:.88rem;line-height:1.85;margin:.18em 0;padding-left:10px;border-left:2px solid #bf8247}
 /* 核心观点初判：外链 mmx-guide.css 的「观点N」前缀是绝对定位，在本页版式里和标题叠字，
    且此前要求去掉「观点1/2/3」前缀 —— 这里整条关掉（外链 CSS 不在页面内，只能内联覆盖）。 */
 .mmx-views li{padding-left:0 !important;}
 .mmx-views li:before,.mmx-views li::before{
   content:none !important;display:none !important;counter-increment:none !important;}
+@media(max-width:720px){
+  body{padding:0 12px 60px;font-size:14.5px;}
+  body>section.mmx-mod,body>section.card{padding:15px 16px;border-radius:14px;}
+  .nav{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
 </style>
 </head>
 <body>
@@ -54,8 +116,8 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
   <h1>《投资者的敌人》</h1>
   <div class="chips"><span class="chip">通读 + 精读</span><span class="chip">AI领读</span><span class="chip">AI 生产</span></div>
 </header>
-<nav class="nav"><a class="navlink" href="#mod-svg">全书结构导图</a><a class="navlink" href="#mod-oneline">一句话主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a><a class="navlink" href="#mod-aiask">AI 问书</a><a class="navlink" href="#mod-coreask">核心追问</a><a class="navlink" href="#mod-higher">更高维度</a><a class="navlink" href="#mod-verify">阅读验证</a><a class="navlink" href="#mod-thennow">当年与今天</a></nav>
-<section class="mmx-svgwrap" id="mod-svg">
+<nav class="nav"><a class="navlink" href="#mod-svg">结构导图</a><a class="navlink" href="#mod-oneline">核心主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a><a class="navlink" href="#mod-aiask">AI 问书</a><a class="navlink" href="#mod-coreask">核心追问</a><a class="navlink" href="#mod-higher">更高维度</a><a class="navlink" href="#mod-verify">阅读验证</a><a class="navlink" href="#mod-thennow">往日今时</a></nav>
+<section class="mmx-svgwrap" id="mod-svg"><h2>结构导图</h2>
 <svg class="mmx-svg" viewBox="0 0 1120 282" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="投资者的敌人 全书精读">
 <rect x="0" y="0" width="1120" height="282" fill="none"/>
 <style>.mmx-svg text{font-family:"Noto Serif SC",Georgia,serif}.mmx-svg .t1{font-size:15px;fill:#2f2a24;font-weight:600}.mmx-svg .t2{font-size:12px;fill:#5c5347}.mmx-svg .t3{font-size:10.5px;fill:#8a8272}.mmx-svg .rt{font-size:13px;fill:#f7f3ea;font-weight:600}.mmx-svg .ln{stroke:#cfc6b4;stroke-width:1.4;fill:none}</style>
@@ -84,7 +146,7 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
 <text class="t2" x="714" y="181">含「第十一章 损人利己的高管」至「第十七章 何去何从」</text>
 <path class="ln" d="M692 185 L700 185"/>
 </svg></section>
-<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">一句话主旨</h2><p class="mmx-mod-note">本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。</p><p class="mmx-oneline">《投资者的敌人》共 21 章，按章序折成 3 段主干（第 1–7 章、第 8–14 章、第 15–21 章）；每章的要点与原句均逐字取自本书 AI 大纲，未做人工解读。</p></section>
+<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">核心主旨</h2><p class="mmx-oneline">《投资者的敌人》共 21 章，按章序折成 3 段主干（第 1–7 章、第 8–14 章、第 15–21 章）；每章的要点与原句均逐字取自本书 AI 大纲，未做人工解读。</p></section>
 <section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" id="mod-merged_guide"><h2 id="merged-guide-title">AI领读</h2>
 <style>
 /* merged_guide 章内：AI 大纲原生深层样式 */
@@ -3115,12 +3177,12 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
       </div></details>
   </div>
 </section>
-<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点初判</h2><p class="mmx-mod-note">按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。</p><ul class="mmx-views"><li><b>第 1–7 章</b>——含「嘉评」至「第三章 不分散的组合」</li><li><b>第 8–14 章</b>——含「第四章 不淡定的择时不明」至「第十章 过度自信的高管」</li><li><b>第 15–21 章</b>——含「第十一章 损人利己的高管」至「第十七章 何去何从」</li></ul></section>
-<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句 · 持续积累</h2><p class="mmx-mod-note">以下原句取自本书大纲落库的原文摘录，按大纲顺序节选，非 AI 生成。</p><ol class="mmx-qlist"><li><blockquote>「《投资者的敌人》通过深刻分析和生动描述，揭示了投资者的敌人其实来自于投资者自身」</blockquote><cite>嘉评</cite></li><li><blockquote>「树立正确的投资理念，掌握科学的金融知识，运用合理的投资手段，真正做到了解自己、了解金融、了解风险，投资者就能打败敌人。」</blockquote><cite>嘉评</cite></li><li><blockquote>「上海交通大学上海高级金融学院理事长屠光绍对本书予以推荐」</blockquote><cite>嘉评</cite></li><li><blockquote>「屠光绍认为，朱宁教授是投资者的朋友，他的新著《投资者的敌人》能帮助投资者识别并打败敌人。」</blockquote><cite>嘉评</cite></li><li><blockquote>「春华资本集团创始人、董事长胡祖六对本书予以高度评价」</blockquote><cite>嘉评</cite></li><li><blockquote>「胡祖六认为，本书通俗易读，通过大量实例和故事，解释了金融现象，揭示了金融学原理，并提出了实用的建议。」</blockquote><cite>嘉评</cite></li><li><blockquote>「中国国际金融有限公司首席策略师黄海洲对本书予以高度评价」</blockquote><cite>嘉评</cite></li><li><blockquote>「黄海洲认为，本书功力深厚、理论前沿、内容丰富、案例多彩、笔调流畅，将成为行为金融学研究者和投资者的挚爱。」</blockquote><cite>嘉评</cite></li><li><blockquote>「中国投资有限责任公司总经理高西庆对本书予以高度评价」</blockquote><cite>嘉评</cite></li><li><blockquote>「高西庆认为，本书从人性的角度道出投资者思维的偏差，用行为金融学的分析方法让我们感受到市场情绪对投资者的误导。」</blockquote><cite>嘉评</cite></li></ol></section>
-<section class="mmx-mod" aria-labelledby="aiask" id="mod-aiask"><h2 id="aiask">AI 问书</h2><p class="mmx-mod-note">下方为基于本书真实大纲与章节锚点整理的问书内容，引用书中原文摘录与核心论点，未使用虚假或占位文本。</p><div class="mmx-qa"><p class="mmx-q">这本书适合谁读？</p><p class="mmx-a">多位学者与投资人推荐：张维迎认为「金融是为人服务的，需要对人的行为有切实的了解」；王亚伟赞其「对市场及各类参与主体非理性行为的成因及后果作了深入浅出的阐述」；屠光绍称朱宁「是投资者的朋友」。无论入门者还是已熟稔各类模型的投资者，书中的实例与建议都「有非常大的帮助」。</p></div><div class="mmx-qa"><p class="mmx-q">为什么说投资与心理学密不可分？</p><p class="mmx-a">作者强调「一个人若对与投资相关的心理学没有深刻理解的话，是做不好投资的」，「做好投资与养育好一个孩子简直一样复杂，心理学极其重要」。行为金融学正是力图弥补传统金融学对「人」这一变量的忽视。</p></div><div class="mmx-qa"><p class="mmx-q">书中对历史上的金融泡沫怎么看？</p><p class="mmx-a">作者梳理了「人类历史上几次大规模的泡沫事件和股市崩盘」，并指出「每一次泡沫背后都离不开政府的推手」——无论是泛滥的流动性、政府参与促成，还是为投机提供隐性担保，政府都负有责任；第八章对泡沫与危机教训的论述尤为精辟。</p></div><div class="mmx-qa"><p class="mmx-q">散户作为一个整体表现究竟如何？</p><p class="mmx-a">并不乐观。作者用「假想基金」模拟所有散户的合计投资，「无论在美国 1991~2000 年、国内最近 8 年，还是北欧市场里，都是一副明显跑输大市的令人失望的表现」；台湾市场里散户表现也「比市场和机构投资者差得多」。</p></div></section>
-<section class="mmx-mod" aria-labelledby="coreask" id="mod-coreask"><h2 id="coreask">核心追问（来自深读）</h2><p class="mmx-mod-note">跨章主题的深读追问，基于全书真实大纲与章节锚点撰写，引用书中原文与论点。</p><div class="mmx-qa"><p class="mmx-q">书名为什么叫「投资者的敌人」？敌人到底是谁？</p><p class="mmx-a">作者开宗明义地指出，「投资者的敌人其实来自于投资者自身」——不是市场、不是对手盘，而是投资者自己的过度自信、从众与情绪化决策。书中用大量国内外实例说明，散户整体长期跑输大市，根源常在行为偏差而非信息不对称。</p></div><div class="mmx-qa"><p class="mmx-q">行为金融学怎样解释投资者的非理性？</p><p class="mmx-a">行为金融学「综合了金融学者和心理学者的研究成果」，揭示人类在金融决策中存在普遍性的行为偏差：过度自信（「大多数人认为自己的水平超过平均水平」）、羊群效应、损失厌恶（「同样金额在损失和收益两方面给人带来的情绪影响完全不同」）。这些偏差让「市场情绪对投资者产生误导」。</p></div><div class="mmx-qa"><p class="mmx-q">除了个人，企业和监管也会犯同样的错吗？</p><p class="mmx-a">会。作者把行为金融学的内涵「延伸至企业、监管机构和政府部门」，指出「这种失误不仅发生在个人投资者身上，企业高管甚至监管部门和政策制定者都不可避免」。过去 20 年全球金融机构发生过数十起损失超过 1 亿美元的交易，正是机构层面非理性的例证。</p></div><div class="mmx-qa"><p class="mmx-q">投资者怎样才能「打败敌人」？</p><p class="mmx-a">作者给出的解法是「了解自己、了解金融、了解风险」——树立正确理念、掌握科学金融知识、运用合理手段，并真正认识自身的行为偏差与风险承受能力，投资者就能打败敌人。</p></div></section>
-<section class="mmx-mod" aria-labelledby="higher" id="mod-higher"><h2 id="higher">用更高维度的知识看这本书</h2><p class="mmx-mod-note">把本书放回行为金融学与 psychology of investing 的知识框架重读，区分书中主张与可迁移的分析视角。</p><p>本书把传统「理性人」假设下的金融学，拉回到「会犯错的人」身上。它承接卡尼曼、塞勒等行为经济学脉络，说明市场异象并非噪声，而是可被系统研究的认知偏差——这一视角让「为什么聪明人也会亏钱」有了科学解释。</p><p>更进一步，作者没有止步于个人心理，而是把分析框架扩展到企业治理、监管俘获与宏观泡沫，提示读者：行为偏差是跨层级的，个体、机构与政府都会重蹈覆辙，这使本书区别于一般的「散户劝世文」。</p><p>阅读时可对照「有效市场假说」：若市场由会犯错的参与者组成，那么「跑赢市场的难度」与「监管为何必要」都获得新的解释；行为金融学不是否定市场，而是修正了对参与者的天真预设。</p></section>
-<section class="mmx-mod" aria-labelledby="verify" id="mod-verify"><h2 id="verify">阅读时要验证的问题</h2><p class="mmx-mod-note">读时需核对的原文、论断与样本口径（关键结论的适用边界、个案代表性、引用来源）。</p><ul class="mmx-views"><li>「散户整体跑输大市」依赖「假想基金」的模拟口径，需核对其样本区间、是否扣除交易成本，避免以整体均值替代个体差异。</li><li>「每一次泡沫背后都离不开政府的推手」是作者的强判断，应区分不同国家与时期的制度差异，不宜当作普适定律。</li><li>过度自信、羊群等偏差确有大量实验支撑，但「普遍适用到何种程度」要结合具体市场环境与产品复杂度验证。</li><li>书中诸多推荐人评价属第三方观点，引用时应标明来源，不将其混同为书中论点本身。</li></ul></section>
-<section class="mmx-mod" aria-labelledby="thennow" id="mod-thennow"><h2 id="thennow">当年与今天 · 初步对照</h2><p class="mmx-mod-note">结合书中聚焦的中国投资者语境，对照当下居民资产配置与监管环境，给出可迁移的启发。</p><p>书中聚焦中国投资者的判断，今天依然切题：居民财富从储蓄转向「股票、债券、保险、基金、外汇、黄金、商品期货」等资产，行为偏差的代价随市场参与度上升而放大。</p><p>当基金热、ETF 化与社交平台荐股并行，「羊群效应」与「市场情绪误导」不再是教科书案例，而是日常可见；作者「了解自己、了解风险」的提醒，对当下的普通投资者尤为实用。</p><p>监管层面，注册制与「卖者尽责、买者自负」的推进，恰与作者「投资者必须对自己的投资负全责」的主张呼应；但隐性担保与流动性泛滥的诱惑仍在，泡沫的土壤并未消失。</p></section>
+<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点</h2><ul class="mmx-views"><li><b>第 1–7 章</b>——含「嘉评」至「第三章 不分散的组合」</li><li><b>第 8–14 章</b>——含「第四章 不淡定的择时不明」至「第十章 过度自信的高管」</li><li><b>第 15–21 章</b>——含「第十一章 损人利己的高管」至「第十七章 何去何从」</li></ul></section>
+<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句</h2><ol class="mmx-qlist"><li><blockquote>「《投资者的敌人》通过深刻分析和生动描述，揭示了投资者的敌人其实来自于投资者自身」</blockquote><cite>嘉评</cite></li><li><blockquote>「树立正确的投资理念，掌握科学的金融知识，运用合理的投资手段，真正做到了解自己、了解金融、了解风险，投资者就能打败敌人。」</blockquote><cite>嘉评</cite></li><li><blockquote>「上海交通大学上海高级金融学院理事长屠光绍对本书予以推荐」</blockquote><cite>嘉评</cite></li><li><blockquote>「屠光绍认为，朱宁教授是投资者的朋友，他的新著《投资者的敌人》能帮助投资者识别并打败敌人。」</blockquote><cite>嘉评</cite></li><li><blockquote>「春华资本集团创始人、董事长胡祖六对本书予以高度评价」</blockquote><cite>嘉评</cite></li><li><blockquote>「胡祖六认为，本书通俗易读，通过大量实例和故事，解释了金融现象，揭示了金融学原理，并提出了实用的建议。」</blockquote><cite>嘉评</cite></li><li><blockquote>「中国国际金融有限公司首席策略师黄海洲对本书予以高度评价」</blockquote><cite>嘉评</cite></li><li><blockquote>「黄海洲认为，本书功力深厚、理论前沿、内容丰富、案例多彩、笔调流畅，将成为行为金融学研究者和投资者的挚爱。」</blockquote><cite>嘉评</cite></li><li><blockquote>「中国投资有限责任公司总经理高西庆对本书予以高度评价」</blockquote><cite>嘉评</cite></li><li><blockquote>「高西庆认为，本书从人性的角度道出投资者思维的偏差，用行为金融学的分析方法让我们感受到市场情绪对投资者的误导。」</blockquote><cite>嘉评</cite></li></ol></section>
+<section class="mmx-mod" aria-labelledby="aiask" id="mod-aiask"><h2 id="aiask">AI 问书</h2><div class="mmx-qa"><p class="mmx-q">这本书适合谁读？</p><p class="mmx-a">多位学者与投资人推荐：张维迎认为「金融是为人服务的，需要对人的行为有切实的了解」；王亚伟赞其「对市场及各类参与主体非理性行为的成因及后果作了深入浅出的阐述」；屠光绍称朱宁「是投资者的朋友」。无论入门者还是已熟稔各类模型的投资者，书中的实例与建议都「有非常大的帮助」。</p></div><div class="mmx-qa"><p class="mmx-q">为什么说投资与心理学密不可分？</p><p class="mmx-a">作者强调「一个人若对与投资相关的心理学没有深刻理解的话，是做不好投资的」，「做好投资与养育好一个孩子简直一样复杂，心理学极其重要」。行为金融学正是力图弥补传统金融学对「人」这一变量的忽视。</p></div><div class="mmx-qa"><p class="mmx-q">书中对历史上的金融泡沫怎么看？</p><p class="mmx-a">作者梳理了「人类历史上几次大规模的泡沫事件和股市崩盘」，并指出「每一次泡沫背后都离不开政府的推手」——无论是泛滥的流动性、政府参与促成，还是为投机提供隐性担保，政府都负有责任；第八章对泡沫与危机教训的论述尤为精辟。</p></div><div class="mmx-qa"><p class="mmx-q">散户作为一个整体表现究竟如何？</p><p class="mmx-a">并不乐观。作者用「假想基金」模拟所有散户的合计投资，「无论在美国 1991~2000 年、国内最近 8 年，还是北欧市场里，都是一副明显跑输大市的令人失望的表现」；台湾市场里散户表现也「比市场和机构投资者差得多」。</p></div></section>
+<section class="mmx-mod" aria-labelledby="coreask" id="mod-coreask"><h2 id="coreask">核心追问</h2><div class="mmx-qa"><p class="mmx-q">书名为什么叫「投资者的敌人」？敌人到底是谁？</p><p class="mmx-a">作者开宗明义地指出，「投资者的敌人其实来自于投资者自身」——不是市场、不是对手盘，而是投资者自己的过度自信、从众与情绪化决策。书中用大量国内外实例说明，散户整体长期跑输大市，根源常在行为偏差而非信息不对称。</p></div><div class="mmx-qa"><p class="mmx-q">行为金融学怎样解释投资者的非理性？</p><p class="mmx-a">行为金融学「综合了金融学者和心理学者的研究成果」，揭示人类在金融决策中存在普遍性的行为偏差：过度自信（「大多数人认为自己的水平超过平均水平」）、羊群效应、损失厌恶（「同样金额在损失和收益两方面给人带来的情绪影响完全不同」）。这些偏差让「市场情绪对投资者产生误导」。</p></div><div class="mmx-qa"><p class="mmx-q">除了个人，企业和监管也会犯同样的错吗？</p><p class="mmx-a">会。作者把行为金融学的内涵「延伸至企业、监管机构和政府部门」，指出「这种失误不仅发生在个人投资者身上，企业高管甚至监管部门和政策制定者都不可避免」。过去 20 年全球金融机构发生过数十起损失超过 1 亿美元的交易，正是机构层面非理性的例证。</p></div><div class="mmx-qa"><p class="mmx-q">投资者怎样才能「打败敌人」？</p><p class="mmx-a">作者给出的解法是「了解自己、了解金融、了解风险」——树立正确理念、掌握科学金融知识、运用合理手段，并真正认识自身的行为偏差与风险承受能力，投资者就能打败敌人。</p></div></section>
+<section class="mmx-mod" aria-labelledby="higher" id="mod-higher"><h2 id="higher">更高维度</h2><p>本书把传统「理性人」假设下的金融学，拉回到「会犯错的人」身上。它承接卡尼曼、塞勒等行为经济学脉络，说明市场异象并非噪声，而是可被系统研究的认知偏差——这一视角让「为什么聪明人也会亏钱」有了科学解释。</p><p>更进一步，作者没有止步于个人心理，而是把分析框架扩展到企业治理、监管俘获与宏观泡沫，提示读者：行为偏差是跨层级的，个体、机构与政府都会重蹈覆辙，这使本书区别于一般的「散户劝世文」。</p><p>阅读时可对照「有效市场假说」：若市场由会犯错的参与者组成，那么「跑赢市场的难度」与「监管为何必要」都获得新的解释；行为金融学不是否定市场，而是修正了对参与者的天真预设。</p></section>
+<section class="mmx-mod" aria-labelledby="verify" id="mod-verify"><h2 id="verify">阅读验证</h2><ul class="mmx-views"><li>「散户整体跑输大市」依赖「假想基金」的模拟口径，需核对其样本区间、是否扣除交易成本，避免以整体均值替代个体差异。</li><li>「每一次泡沫背后都离不开政府的推手」是作者的强判断，应区分不同国家与时期的制度差异，不宜当作普适定律。</li><li>过度自信、羊群等偏差确有大量实验支撑，但「普遍适用到何种程度」要结合具体市场环境与产品复杂度验证。</li><li>书中诸多推荐人评价属第三方观点，引用时应标明来源，不将其混同为书中论点本身。</li></ul></section>
+<section class="mmx-mod" aria-labelledby="thennow" id="mod-thennow"><h2 id="thennow">往日今时</h2><p>书中聚焦中国投资者的判断，今天依然切题：居民财富从储蓄转向「股票、债券、保险、基金、外汇、黄金、商品期货」等资产，行为偏差的代价随市场参与度上升而放大。</p><p>当基金热、ETF 化与社交平台荐股并行，「羊群效应」与「市场情绪误导」不再是教科书案例，而是日常可见；作者「了解自己、了解风险」的提醒，对当下的普通投资者尤为实用。</p><p>监管层面，注册制与「卖者尽责、买者自负」的推进，恰与作者「投资者必须对自己的投资负全责」的主张呼应；但隐性担保与流动性泛滥的诱惑仍在，泡沫的土壤并未消失。</p></section>
 </body>
 </html>

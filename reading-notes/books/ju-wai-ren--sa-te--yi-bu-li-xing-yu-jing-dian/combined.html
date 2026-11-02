@@ -6,46 +6,108 @@
 <title>《局外人》｜通读 · 精读</title>
 <link rel="stylesheet" href="../../../assets/css/reading-overview.css"><link rel="stylesheet" href="../../../assets/css/mmx-guide.css"><link rel="stylesheet" href="../../../assets/css/reading-outline.css">
 <style>
-/* 合并页外壳 */
-body{max-width:960px;margin:0 auto;padding:0 18px 80px;}
-.combined-head{padding:34px 0 18px;border-bottom:1px solid #e7e0d2;margin-bottom:8px;}
-.combined-head h1{font-size:26px;margin:0 0 10px;}
+/* ── 外壳与全局阅读节奏 ── */
+body{max-width:880px;margin:0 auto;padding:0 18px 80px;
+  font-size:15px;line-height:1.88;color:#3b453e;background:#f7f8f3;
+  -webkit-font-smoothing:antialiased;}
+.combined-head{padding:30px 0 16px;border-bottom:1px solid #e7e0d2;margin-bottom:4px;}
+.combined-head h1{font:700 23px/1.35 var(--serif);margin:0 0 8px;color:#244b40;}
+.combined-head .eyebrow{font-size:.72rem;letter-spacing:.14em;margin:0 0 6px;}
+.chips{margin:8px 0 0;}
+.chip{font-size:.72rem;padding:2px 10px;}
 /* 锚点导航：固定一排 4 个，等宽对齐 */
-.nav{position:sticky;top:0;z-index:20;background:rgba(255,253,248,.96);backdrop-filter:blur(6px);
-  border-bottom:1px solid #ece4d4;padding:10px 0;margin:14px 0 26px;display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;
-  box-shadow:0 2px 10px rgba(120,100,60,.06);}
-.navlink{font-size:12.5px;color:#5d5443;text-decoration:none;background:#f6f1e6;border:1px solid #e7ddca;
-  border-radius:7px;padding:4px 6px;text-align:center;white-space:nowrap;overflow:hidden;
-  text-overflow:ellipsis;}
-section{scroll-margin-top:64px;}
-/* 一句话主旨：去左侧竖线 */
-.mmx-oneline{border-left:none;padding-left:18px;}
-/* AI领读章内：AI 大纲原生深层样式 */
-.merged-guide .sec{margin:10px 0 14px;padding-left:6px;border-left:2px solid #e5e0d6}
-.merged-guide .sec h4{font:600 .98rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.6em 0 .3em}
-.merged-guide ul.point{margin:.3em 0;padding-left:20px}
-.merged-guide ul.point>li{margin:.35em 0}
-.merged-guide ul.quote{margin:.25em 0 .25em 20px;padding-left:18px;list-style:none}
-.merged-guide ul.quote::before{content:"原句";display:block;font-size:.72rem;color:#bf8247;
-  letter-spacing:.1em;margin:.15em 0 .1em;font-weight:600}
-.merged-guide ul.quote.quote-node{margin-top:.5em;padding-top:.4em;border-top:1px dashed #eadfc9}
+.nav{position:sticky;top:0;z-index:20;background:rgba(247,248,243,.96);backdrop-filter:blur(6px);
+  border-bottom:1px solid #ece4d4;padding:10px 0;margin:12px 0 20px;display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;
+  box-shadow:0 2px 10px rgba(120,100,60,.05);}
+.navlink{font-size:12px;color:#5d5443;text-decoration:none;background:#fdfbf3;border:1px solid #e8e2d2;
+  border-radius:8px;padding:6px 4px;text-align:center;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;transition:background .15s,color .15s;}
+.navlink:hover{background:#f2efe2;color:#244b40;}
+section{scroll-margin-top:62px;}
+
+/* ── 统一卡片：所有顶层模块（AI领读 / AI 问答 / 其余）一视同仁 ── */
+body>section.mmx-mod,body>section.card,body>section.mmx-svgwrap{
+  background:#fffdf6;border:1px solid #e8e4d5;border-radius:16px;
+  padding:18px 22px;margin:18px 0;
+  box-shadow:0 1px 3px rgba(110,95,60,.05);}
+body>section.mmx-mod>*:first-child,body>section.card>*:first-child,
+body>section.mmx-svgwrap>*:first-child{margin-top:0}
+body>section.mmx-mod>*:last-child,body>section.card>*:last-child,
+body>section.mmx-svgwrap>*:last-child{margin-bottom:0}
+/* 结构导图：图本身留白居中，不与正文抢宽 */
+body>section.mmx-svgwrap>svg.mmx-svg{display:block;width:100%;height:auto;margin:2px auto 0;}
+/* 模块标题：统一大小、弱强调，不与正文抢注意力 */
+body>section.mmx-mod>h2,body>section.card>h2{
+  font:700 1.04rem/1.5 var(--serif);color:#244b40;margin:0 0 11px;
+  padding-left:10px;border-left:3px solid #bf8247;letter-spacing:.01em;}
+/* 正文：字号收小、行距放宽、段间距舒服 */
+body>section.mmx-mod p,body>section.card p,
+body>section.mmx-mod li,body>section.card li{
+  font-size:.9rem;line-height:1.92;color:#4a4436;}
+body>section.mmx-mod p,body>section.card p{margin:.5em 0;}
+body>section.mmx-mod>ul,body>section.mmx-mod>ol,body>section.mmx-mod>div,
+body>section.mmx-mod>p:not(.mmx-mod-note),
+body>section.card:not(.merged-guide)>ul,body>section.card:not(.merged-guide)>ol,
+body>section.card:not(.merged-guide)>div,body>section.card:not(.merged-guide)>p:not(.mmx-mod-note){
+  padding-left:14px;}
+/* 模块说明小字：弱化不抢眼 */
+.mmx-mod-note{font-size:.75rem;color:#8d8878;margin:.1em 0 .75em;line-height:1.7;}
+
+/* ── 内部块统一：卡片里不再套深卡片，一律浅底子块 ── */
+body>section .mmx-pending,body>section .mmx-evib,body>section .aiqa-item{
+  background:#fbfaf2;border:1px solid #eee9d8;border-radius:12px;
+  padding:13px 16px;margin:.65em 0;}
+body>section .mmx-evib ul{padding-left:1.15em;}
+/* 一句话主旨：去左侧竖线 + 收敛字号 */
+.mmx-oneline{font-size:.98rem;line-height:1.85;color:#3a352c;margin:.2em 0 0;
+  padding:12px 16px;background:#fbfaf4;border-left:none;border-radius:12px;}
+/* 核心观点 / 验证清单：虚线分隔 + 收紧行距 */
+.mmx-views li{padding:.5em 0 .5em 0;font-size:.9rem;line-height:1.88;}
+/* 原文金句 */
+.mmx-qlist li{padding:.6em 0 .6em 2.2em;}
+.mmx-qlist blockquote{font-size:.89rem;line-height:1.9;}
+.mmx-qlist cite{font-size:.72rem;}
+/* 核心追问：问句加重、答句放松 */
+.mmx-qa{margin:.7em 0;padding-left:12px;border-left:3px solid #e5dfcd;}
+.mmx-qa .mmx-q{font-size:.9rem;font-weight:700;color:#2f3a33;line-height:1.8;margin:0 0 .25em;}
+.mmx-qa .mmx-a{font-size:.88rem;line-height:1.95;color:#4a4436;margin:0;}
+
+/* ── AI 问书专项：外层容器透明，问答条目才是阅读单元 ── */
+#mod-aiask .mmx-ask{background:transparent;border:0;border-radius:0;padding:0;margin:0;}
+#mod-aiask .aiqa-item{margin:.6em 0;padding:14px 16px 15px;}
+#mod-aiask .aiqa-item h3{font:700 .93rem/1.7 var(--serif);color:#2f5b49;margin:0 0 .4em;
+  padding:0;border:0;}
+#mod-aiask .aiqa-item h3:before{content:"问　";color:#bf8247;font-weight:700;}
+#mod-aiask .aiqa-item p{font-size:.88rem;line-height:1.95;color:#4a4436;margin:.4em 0;}
+#mod-aiask .aiqa-item ul{margin:.35em 0;padding-left:1.1em;}
+#mod-aiask .aiqa-item li{font-size:.87rem;line-height:1.88;margin:.18em 0;color:#4a4436;}
+#mod-aiask .aiqa-item li::marker{color:#c0a06a;}
+/* 逐章追问（details 形态）：摘要行也收敛 */
+.mmx-ask>summary{font-size:.87rem;line-height:1.7;padding:2px 0;}
+.mmx-askbody{font-size:.88rem;line-height:1.9;}
+
+/* AI领读章内：AI 大纲原生深层样式（字号同步收小） */
+.merged-guide .sec{margin:9px 0 12px;padding-left:6px;border-left:2px solid #e5e0d6}
+.merged-guide .sec h4{font:600 .93rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.5em 0 .25em}
+.merged-guide ul.point{margin:.25em 0;padding-left:20px}
+.merged-guide ul.point>li{margin:.3em 0}
+.merged-guide ul.quote{margin:.22em 0 .22em 20px;padding-left:18px;list-style:none}
+.merged-guide ul.quote::before{content:"原句";display:block;font-size:.7rem;color:#bf8247;
+  letter-spacing:.1em;margin:.12em 0 .08em;font-weight:600}
+.merged-guide ul.quote.quote-node{margin-top:.45em;padding-top:.35em;border-top:1px dashed #eadfc9}
 .merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
-.merged-guide ul.quote>li{color:#4a4436;font-size:.93rem;margin:.2em 0;padding-left:10px;border-left:2px solid #bf8247}
-/* 模块内子内容（AI领读除外，它有专属深层样式）：左缩进 + 正文与标题分层 */
-section.mmx-mod>ul,section.mmx-mod>ol,section.mmx-mod>div,
-section.mmx-mod>p:not(.mmx-mod-note),
-section.card:not(.merged-guide)>ul,section.card:not(.merged-guide)>ol,
-section.card:not(.merged-guide)>div,section.card:not(.merged-guide)>p:not(.mmx-mod-note){
-  padding-left:16px;}
-section.mmx-mod li,section.mmx-mod p:not(.mmx-mod-note),
-section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mod-note){
-  color:#4a4436;font-size:.93rem;line-height:1.78;}
+.merged-guide ul.quote>li{color:#4a4436;font-size:.88rem;line-height:1.85;margin:.18em 0;padding-left:10px;border-left:2px solid #bf8247}
 /* 核心观点初判：外链 mmx-guide.css 的「观点N」前缀是绝对定位，在本页版式里和标题叠字，
    且此前要求去掉「观点1/2/3」前缀 —— 这里整条关掉（外链 CSS 不在页面内，只能内联覆盖）。 */
 .mmx-views li{padding-left:0 !important;}
 .mmx-views li:before,.mmx-views li::before{
   content:none !important;display:none !important;counter-increment:none !important;}
+@media(max-width:720px){
+  body{padding:0 12px 60px;font-size:14.5px;}
+  body>section.mmx-mod,body>section.card{padding:15px 16px;border-radius:14px;}
+  .nav{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
 </style>
 </head>
 <body>
@@ -54,8 +116,8 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
   <h1>《局外人》</h1>
   <div class="chips"><span class="chip">通读 + 精读</span><span class="chip">AI领读</span><span class="chip">AI 生产</span></div>
 </header>
-<nav class="nav"><a class="navlink" href="#mod-svg">全书结构导图</a><a class="navlink" href="#mod-oneline">一句话主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a><a class="navlink" href="#mod-coreask">核心追问</a><a class="navlink" href="#mod-aiask">AI 问书</a><a class="navlink" href="#mod-higher">更高维度</a><a class="navlink" href="#mod-verify">阅读验证</a><a class="navlink" href="#mod-thennow">当年与今天</a></nav>
-<section class="mmx-svgwrap" id="mod-svg"><svg class="mmx-svg" viewBox="0 0 1120 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="局外人 全书精读">
+<nav class="nav"><a class="navlink" href="#mod-svg">结构导图</a><a class="navlink" href="#mod-oneline">核心主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a><a class="navlink" href="#mod-coreask">核心追问</a><a class="navlink" href="#mod-aiask">AI 问书</a><a class="navlink" href="#mod-higher">更高维度</a><a class="navlink" href="#mod-verify">阅读验证</a><a class="navlink" href="#mod-thennow">往日今时</a></nav>
+<section class="mmx-svgwrap" id="mod-svg"><h2>结构导图</h2><svg class="mmx-svg" viewBox="0 0 1120 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="局外人 全书精读">
 <rect x="0" y="0" width="1120" height="220" fill="none"/>
 <style>.mmx-svg text{font-family:"Noto Serif SC",Georgia,serif}.mmx-svg .t1{font-size:15px;fill:#2f2a24;font-weight:600}.mmx-svg .t2{font-size:12px;fill:#5c5347}.mmx-svg .t3{font-size:10.5px;fill:#8a8272}.mmx-svg .rt{font-size:13px;fill:#f7f3ea;font-weight:600}.mmx-svg .ln{stroke:#cfc6b4;stroke-width:1.4;fill:none}</style>
 <rect x="28" y="66" width="262" height="52" rx="10" fill="#3d372e"/>
@@ -77,7 +139,7 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
 <text class="t2" x="714" y="119">从预审到法庭到死囚牢房，社会用道德问题替代了法律问题。</text>
 <path class="ln" d="M692 123 L700 123"/>
 </svg></section>
-<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">一句话主旨</h2><p class="mmx-mod-note">本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。</p><p class="mmx-oneline">默尔索被判死刑不是因为杀了人，而是因为他不肯在母亲葬礼上表演悲伤；审判的其实是态度，不是事实。</p></section>
+<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">核心主旨</h2><p class="mmx-oneline">默尔索被判死刑不是因为杀了人，而是因为他不肯在母亲葬礼上表演悲伤；审判的其实是态度，不是事实。</p></section>
 <section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" id="mod-merged_guide"><h2 id="merged-guide-title">AI领读</h2>
 <style>
 /* merged_guide 章内：AI 大纲原生深层样式 */
@@ -1184,12 +1246,12 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
       </div></details>
   </div>
 </section>
-<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点初判</h2><p class="mmx-mod-note">按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。</p><ul class="mmx-views"><li><b>第一部分：日常到命案</b>——葬礼、海水、雷蒙的邀约一路铺到海滩上的四枪，全程没有情绪解释。</li><li><b>第二部分：审判</b>——从预审到法庭到死囚牢房，社会用道德问题替代了法律问题。</li></ul></section>
-<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句 · 持续积累</h2><p class="mmx-mod-note">以下原句取自本书 AI 大纲落库的原文摘录（book_outline.quote），按大纲顺序节选，非 AI 生成；更多见逐章深读页。</p><ol class="mmx-qlist"><li><blockquote>「电报内容：“母亲去世。明日举行葬礼。谨致敬意。”。」</blockquote><cite>第一部分 · 一 · 母亲去世的消息和葬礼的安排</cite></li><li><blockquote>「公共汽车行程：两点钟出发，下午抵达。」</blockquote><cite>第一部分 · 一 · 母亲去世的消息和葬礼的安排</cite></li><li><blockquote>「向老板请了两天假，得到老板的理解。」</blockquote><cite>第一部分 · 一 · 母亲去世的消息和葬礼的安排</cite></li><li><blockquote>「乘坐两点钟的公共汽车，下午抵达。」</blockquote><cite>第一部分 · 一 · 母亲去世的消息和葬礼的安排</cite></li><li><blockquote>「母亲在家时，总是默默地用目光追随着我。」</blockquote><cite>第一部分 · 一 · 母亲去世的消息和葬礼的安排</cite></li><li><blockquote>「刚住进养老院的头几天，她经常哭。」</blockquote><cite>第一部分 · 一 · 母亲去世的消息和葬礼的安排</cite></li><li><blockquote>「过去一年里，我几乎没再去那里，多少也是这个原因。」</blockquote><cite>第一部分 · 一 · 母亲去世的消息和葬礼的安排</cite></li><li><blockquote>「院长告诉我，葬礼定于上午十点举行。」</blockquote><cite>第一部分 · 一 · 母亲去世的消息和葬礼的安排</cite></li><li><blockquote>「我们把妈妈送到了我们那间小太平间。」</blockquote><cite>第一部分 · 一 · 母亲去世的消息和葬礼的安排</cite></li><li><blockquote>「男人们拿着一条床单，朝棺材走去。」</blockquote><cite>第一部分 · 一 · 母亲去世的消息和葬礼的安排</cite></li></ol></section>
-<section class="mmx-mod" aria-labelledby="coreask" id="mod-coreask"><h2 id="coreask">核心追问（来自深读）</h2><p class="mmx-mod-note">跨章主题的深读追问，由模型基于全书大纲与原文摘录撰写；逐章的追问收在每个章条目里。</p><div class="mmx-qa"><p class="mmx-q">法庭为什么反复追问葬礼细节，而不是枪击的具体过程？这种追问顺序暴露了什么</p><p class="mmx-a">就「法庭为什么反复追问葬礼细节，而不是枪击的具体」而言，大纲从《第一部分 · 一 · 母亲去世的消息和葬礼的安排》（收到养老院发来的电报，得知母亲去世）铺到《第二部分 · 五 · 死刑犯的困境与期待》（死刑犯对必然发生的事情寻找出路），首尾形成对照——这一安排是否成立，需读正文确认。（大纲推断，未亲读）</p></div><div class="mmx-qa"><p class="mmx-q">默尔索在狱中从「自由人的想法」转为「囚徒的想法」，这个转变说明了什么</p><p class="mmx-a">关于「默尔索在狱中从「自由人的想法」转为「囚徒的想法」，这」：大纲显示《》以《第一部分 · 一 · 母亲去世的消息和葬礼的安排》起手、到《第二部分 · 五 · 死刑犯的困境与期待》收束，核心脉络与「收到养老院发来的电报，得知母亲去世」相关。以上为大纲条目推断，未亲读正文，读后请核对。</p></div><div class="mmx-qa"><p class="mmx-q">他最后拒绝牧师，是拒绝安慰，还是拒绝虚假的意义？这两者的差别在哪里</p><p class="mmx-a">就「他最后拒绝牧师，是拒绝安慰，还是拒绝虚假的意」而言，大纲从《第一部分 · 一 · 母亲去世的消息和葬礼的安排》（收到养老院发来的电报，得知母亲去世）铺到《第二部分 · 五 · 死刑犯的困境与期待》（死刑犯对必然发生的事情寻找出路），首尾形成对照——这一安排是否成立，需读正文确认。（大纲推断，未亲读）</p></div></section>
-<section class="mmx-mod" aria-labelledby="aiask" id="mod-aiask"><h2 id="aiask">AI 问书</h2><p class="mmx-mod-note">下方内容为本书级 AI 问书整理，由云端 AI 阅读流程基于本书大纲、章节锚点与热门划线生成。</p><div class="mmx-qa"><p class="mmx-q">默尔索在母亲葬礼上没哭，真的有罪吗？</p><p class="mmx-a">书里他从接到「母亲去世。明日举行葬礼」的电报起，全程只记冷、累、光，葬礼后还去游泳、看喜剧片、和玛丽睡觉。法庭不审他杀了阿拉伯人，而审「他在母亲葬礼上没哭」——锚点写「我的命运由他们决定，而根本不征求我的意见」。加缪的机关正在于：社会判的是「态度」，不是「事实」。</p></div><div class="mmx-qa"><p class="mmx-q">默尔索说「人生在世，永远也不该演戏作假」，他到底是诚实还是冷漠？</p><p class="mmx-a">这是全书最难处。叙述严格贴着他的感官，读者拿不到全知视角，所以「他冷漠」和「他不表演」在文本里无法区分——这正是小说设计。他在海滩「对着那具尸体开了四枪」，可此前已说「我打破了海滩上不寻常的寂静，原本是幸福自在的」；他的诚实恰恰冒犯了社会要人「表演悲伤」的潜规则。</p></div><div class="mmx-qa"><p class="mmx-q">为什么结尾默尔索反而「期望很多人来看热闹向他喊仇恨」？</p><p class="mmx-a">锚点：「为了善始善终，功德圆满，为了不感到自己属于另类，我期望处决我的那天，有很多人前来看热闹，他们都向我发出仇恨的叫喊声。」这是他最后对社会的反叛——你们要我演，我就演到底；在死亡将至时，他第一次主动「加入」了人群，完成了存在主义式的和解。</p></div></section>
-<section class="mmx-mod" aria-labelledby="higher" id="mod-higher"><h2 id="higher">用更高维度的知识看这本书</h2><p class="mmx-mod-note">下方内容由云端 AI 阅读流程生成：把本书放回知识史与理论框架中重读，区分书中主张、外部证据与综合分析。</p><p>【书中主张】加缪借默尔索的「不表演」写存在主义的荒诞：社会用「在母亲葬礼上该哭」的道德剧本审判人，却跳过他是否该为杀人负责的事实，审判的其实是态度。【外部证据】萨特在《&lt;局外人&gt;的诠释》中指出默尔索的「诚实」是对基督教式伪善的反抗；但文学史也记录当时不少读者把他读成「冷漠的怪物」，说明小说的接受本身就在重演书里的误判。【综合分析】把《局外人》放回二战前法国文学谱系，它上承福楼拜「客观叙事」、下启「新小说」，用零度叙述把价值悬置；其锋利处在于让读者自己成为「审判者」，从而暴露道德剧场的可笑。</p><p>【书中主张】默尔索在监狱里「把自由重新定义为可回忆的细节」，在死囚牢房里反而获得了前所未有的清醒，印证「人生在世，永远也不该演戏作假」是他唯一坚持的伦理。【外部证据】加缪同期写《西西弗神话》提出「应当想象西西弗是幸福的」，与默尔索的结局形成互文；但存在主义「荒诞」在战后常被简化为「什么都不在乎」，偏离了加缪「反抗」的积极面。【综合分析】从司法社会学看，《局外人》预言了「表演性司法」：当一个社会更在乎被告「看起来悔不悔」而非「事实如何」，冤错就有了温床；今天看，它是对舆情审判、道德绑架最古老的文学预警。</p></section>
-<section class="mmx-mod" aria-labelledby="verify" id="mod-verify"><h2 id="verify">阅读时要验证的问题</h2><p class="mmx-mod-note">下方由云端 AI 阅读流程生成：读时需核对的原文、数字与论点（关键数据出处、个案代表性、类比限度）。</p><ul class="mmx-views"><li>「母亲去世。明日举行葬礼。谨致敬意。」——核对《局外人》开篇电报原文（法语「Maman est morte. Hier peut-être.」常译「妈妈死了。也许是昨天」），确认中译与原文时间表述的差异。</li><li>默尔索「对准尸体开了四枪」——核对小说第一部分结尾海滩段落，确认枪击次数与「第一枪后停顿再补三枪」的叙事节奏，区分改编电影的处理。</li><li>萨特《&lt;局外人&gt;的诠释》——核查该文（1943）对默尔索「诚实」的读法，确认存在主义解读的出处，避免把后世二手阐释当加缪原意。</li></ul></section>
-<section class="mmx-mod" aria-labelledby="thennow" id="mod-thennow"><h2 id="thennow">当年与今天 · 初步对照</h2><p class="mmx-mod-note">下方由云端 AI 阅读流程生成：区分作者当年所能知晓与后来才显现的事实，给出今日可迁移的启发。</p><p>加缪当年（1942年）所能知晓的，是二战前夕法国殖民阿尔及利亚的种族与司法现实（默尔索狱友「多数是阿拉伯人」），以及存在主义对基督教的叛离；他写不出今天社交媒体的「人设表演」。</p><p>后来显现的事实是：《局外人》成了「躺平」「淡人」的文化图腾，常被断章取义成「什么都不在乎」；可迁移的启发是——在人人都被要求表演情绪、站队表态的当下，默尔索的困境反而更真：我们是否在用「正确的悲伤」换取社会的接纳，而把真实的自己判了死刑？</p></section>
+<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点</h2><ul class="mmx-views"><li><b>第一部分：日常到命案</b>——葬礼、海水、雷蒙的邀约一路铺到海滩上的四枪，全程没有情绪解释。</li><li><b>第二部分：审判</b>——从预审到法庭到死囚牢房，社会用道德问题替代了法律问题。</li></ul></section>
+<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句</h2><ol class="mmx-qlist"><li><blockquote>「电报内容：“母亲去世。明日举行葬礼。谨致敬意。”。」</blockquote><cite>第一部分 · 一 · 母亲去世的消息和葬礼的安排</cite></li><li><blockquote>「公共汽车行程：两点钟出发，下午抵达。」</blockquote><cite>第一部分 · 一 · 母亲去世的消息和葬礼的安排</cite></li><li><blockquote>「向老板请了两天假，得到老板的理解。」</blockquote><cite>第一部分 · 一 · 母亲去世的消息和葬礼的安排</cite></li><li><blockquote>「乘坐两点钟的公共汽车，下午抵达。」</blockquote><cite>第一部分 · 一 · 母亲去世的消息和葬礼的安排</cite></li><li><blockquote>「母亲在家时，总是默默地用目光追随着我。」</blockquote><cite>第一部分 · 一 · 母亲去世的消息和葬礼的安排</cite></li><li><blockquote>「刚住进养老院的头几天，她经常哭。」</blockquote><cite>第一部分 · 一 · 母亲去世的消息和葬礼的安排</cite></li><li><blockquote>「过去一年里，我几乎没再去那里，多少也是这个原因。」</blockquote><cite>第一部分 · 一 · 母亲去世的消息和葬礼的安排</cite></li><li><blockquote>「院长告诉我，葬礼定于上午十点举行。」</blockquote><cite>第一部分 · 一 · 母亲去世的消息和葬礼的安排</cite></li><li><blockquote>「我们把妈妈送到了我们那间小太平间。」</blockquote><cite>第一部分 · 一 · 母亲去世的消息和葬礼的安排</cite></li><li><blockquote>「男人们拿着一条床单，朝棺材走去。」</blockquote><cite>第一部分 · 一 · 母亲去世的消息和葬礼的安排</cite></li></ol></section>
+<section class="mmx-mod" aria-labelledby="coreask" id="mod-coreask"><h2 id="coreask">核心追问</h2><div class="mmx-qa"><p class="mmx-q">法庭为什么反复追问葬礼细节，而不是枪击的具体过程？这种追问顺序暴露了什么</p><p class="mmx-a">就「法庭为什么反复追问葬礼细节，而不是枪击的具体」而言，大纲从《第一部分 · 一 · 母亲去世的消息和葬礼的安排》（收到养老院发来的电报，得知母亲去世）铺到《第二部分 · 五 · 死刑犯的困境与期待》（死刑犯对必然发生的事情寻找出路），首尾形成对照——这一安排是否成立，需读正文确认。（大纲推断，未亲读）</p></div><div class="mmx-qa"><p class="mmx-q">默尔索在狱中从「自由人的想法」转为「囚徒的想法」，这个转变说明了什么</p><p class="mmx-a">关于「默尔索在狱中从「自由人的想法」转为「囚徒的想法」，这」：大纲显示《》以《第一部分 · 一 · 母亲去世的消息和葬礼的安排》起手、到《第二部分 · 五 · 死刑犯的困境与期待》收束，核心脉络与「收到养老院发来的电报，得知母亲去世」相关。以上为大纲条目推断，未亲读正文，读后请核对。</p></div><div class="mmx-qa"><p class="mmx-q">他最后拒绝牧师，是拒绝安慰，还是拒绝虚假的意义？这两者的差别在哪里</p><p class="mmx-a">就「他最后拒绝牧师，是拒绝安慰，还是拒绝虚假的意」而言，大纲从《第一部分 · 一 · 母亲去世的消息和葬礼的安排》（收到养老院发来的电报，得知母亲去世）铺到《第二部分 · 五 · 死刑犯的困境与期待》（死刑犯对必然发生的事情寻找出路），首尾形成对照——这一安排是否成立，需读正文确认。（大纲推断，未亲读）</p></div></section>
+<section class="mmx-mod" aria-labelledby="aiask" id="mod-aiask"><h2 id="aiask">AI 问书</h2><div class="mmx-qa"><p class="mmx-q">默尔索在母亲葬礼上没哭，真的有罪吗？</p><p class="mmx-a">书里他从接到「母亲去世。明日举行葬礼」的电报起，全程只记冷、累、光，葬礼后还去游泳、看喜剧片、和玛丽睡觉。法庭不审他杀了阿拉伯人，而审「他在母亲葬礼上没哭」——锚点写「我的命运由他们决定，而根本不征求我的意见」。加缪的机关正在于：社会判的是「态度」，不是「事实」。</p></div><div class="mmx-qa"><p class="mmx-q">默尔索说「人生在世，永远也不该演戏作假」，他到底是诚实还是冷漠？</p><p class="mmx-a">这是全书最难处。叙述严格贴着他的感官，读者拿不到全知视角，所以「他冷漠」和「他不表演」在文本里无法区分——这正是小说设计。他在海滩「对着那具尸体开了四枪」，可此前已说「我打破了海滩上不寻常的寂静，原本是幸福自在的」；他的诚实恰恰冒犯了社会要人「表演悲伤」的潜规则。</p></div><div class="mmx-qa"><p class="mmx-q">为什么结尾默尔索反而「期望很多人来看热闹向他喊仇恨」？</p><p class="mmx-a">锚点：「为了善始善终，功德圆满，为了不感到自己属于另类，我期望处决我的那天，有很多人前来看热闹，他们都向我发出仇恨的叫喊声。」这是他最后对社会的反叛——你们要我演，我就演到底；在死亡将至时，他第一次主动「加入」了人群，完成了存在主义式的和解。</p></div></section>
+<section class="mmx-mod" aria-labelledby="higher" id="mod-higher"><h2 id="higher">更高维度</h2><p>【书中主张】加缪借默尔索的「不表演」写存在主义的荒诞：社会用「在母亲葬礼上该哭」的道德剧本审判人，却跳过他是否该为杀人负责的事实，审判的其实是态度。【外部证据】萨特在《&lt;局外人&gt;的诠释》中指出默尔索的「诚实」是对基督教式伪善的反抗；但文学史也记录当时不少读者把他读成「冷漠的怪物」，说明小说的接受本身就在重演书里的误判。【综合分析】把《局外人》放回二战前法国文学谱系，它上承福楼拜「客观叙事」、下启「新小说」，用零度叙述把价值悬置；其锋利处在于让读者自己成为「审判者」，从而暴露道德剧场的可笑。</p><p>【书中主张】默尔索在监狱里「把自由重新定义为可回忆的细节」，在死囚牢房里反而获得了前所未有的清醒，印证「人生在世，永远也不该演戏作假」是他唯一坚持的伦理。【外部证据】加缪同期写《西西弗神话》提出「应当想象西西弗是幸福的」，与默尔索的结局形成互文；但存在主义「荒诞」在战后常被简化为「什么都不在乎」，偏离了加缪「反抗」的积极面。【综合分析】从司法社会学看，《局外人》预言了「表演性司法」：当一个社会更在乎被告「看起来悔不悔」而非「事实如何」，冤错就有了温床；今天看，它是对舆情审判、道德绑架最古老的文学预警。</p></section>
+<section class="mmx-mod" aria-labelledby="verify" id="mod-verify"><h2 id="verify">阅读验证</h2><ul class="mmx-views"><li>「母亲去世。明日举行葬礼。谨致敬意。」——核对《局外人》开篇电报原文（法语「Maman est morte. Hier peut-être.」常译「妈妈死了。也许是昨天」），确认中译与原文时间表述的差异。</li><li>默尔索「对准尸体开了四枪」——核对小说第一部分结尾海滩段落，确认枪击次数与「第一枪后停顿再补三枪」的叙事节奏，区分改编电影的处理。</li><li>萨特《&lt;局外人&gt;的诠释》——核查该文（1943）对默尔索「诚实」的读法，确认存在主义解读的出处，避免把后世二手阐释当加缪原意。</li></ul></section>
+<section class="mmx-mod" aria-labelledby="thennow" id="mod-thennow"><h2 id="thennow">往日今时</h2><p>加缪当年（1942年）所能知晓的，是二战前夕法国殖民阿尔及利亚的种族与司法现实（默尔索狱友「多数是阿拉伯人」），以及存在主义对基督教的叛离；他写不出今天社交媒体的「人设表演」。</p><p>后来显现的事实是：《局外人》成了「躺平」「淡人」的文化图腾，常被断章取义成「什么都不在乎」；可迁移的启发是——在人人都被要求表演情绪、站队表态的当下，默尔索的困境反而更真：我们是否在用「正确的悲伤」换取社会的接纳，而把真实的自己判了死刑？</p></section>
 </body>
 </html>

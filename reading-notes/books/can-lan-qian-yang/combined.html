@@ -6,46 +6,108 @@
 <title>《灿烂千阳》｜通读 · 精读</title>
 <link rel="stylesheet" href="../../../assets/css/reading-overview.css"><link rel="stylesheet" href="../../../assets/css/mmx-guide.css"><link rel="stylesheet" href="../../../assets/css/reading-outline.css">
 <style>
-/* 合并页外壳 */
-body{max-width:960px;margin:0 auto;padding:0 18px 80px;}
-.combined-head{padding:34px 0 18px;border-bottom:1px solid #e7e0d2;margin-bottom:8px;}
-.combined-head h1{font-size:26px;margin:0 0 10px;}
+/* ── 外壳与全局阅读节奏 ── */
+body{max-width:880px;margin:0 auto;padding:0 18px 80px;
+  font-size:15px;line-height:1.88;color:#3b453e;background:#f7f8f3;
+  -webkit-font-smoothing:antialiased;}
+.combined-head{padding:30px 0 16px;border-bottom:1px solid #e7e0d2;margin-bottom:4px;}
+.combined-head h1{font:700 23px/1.35 var(--serif);margin:0 0 8px;color:#244b40;}
+.combined-head .eyebrow{font-size:.72rem;letter-spacing:.14em;margin:0 0 6px;}
+.chips{margin:8px 0 0;}
+.chip{font-size:.72rem;padding:2px 10px;}
 /* 锚点导航：固定一排 4 个，等宽对齐 */
-.nav{position:sticky;top:0;z-index:20;background:rgba(255,253,248,.96);backdrop-filter:blur(6px);
-  border-bottom:1px solid #ece4d4;padding:10px 0;margin:14px 0 26px;display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;
-  box-shadow:0 2px 10px rgba(120,100,60,.06);}
-.navlink{font-size:12.5px;color:#5d5443;text-decoration:none;background:#f6f1e6;border:1px solid #e7ddca;
-  border-radius:7px;padding:4px 6px;text-align:center;white-space:nowrap;overflow:hidden;
-  text-overflow:ellipsis;}
-section{scroll-margin-top:64px;}
-/* 一句话主旨：去左侧竖线 */
-.mmx-oneline{border-left:none;padding-left:18px;}
-/* AI领读章内：AI 大纲原生深层样式 */
-.merged-guide .sec{margin:10px 0 14px;padding-left:6px;border-left:2px solid #e5e0d6}
-.merged-guide .sec h4{font:600 .98rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.6em 0 .3em}
-.merged-guide ul.point{margin:.3em 0;padding-left:20px}
-.merged-guide ul.point>li{margin:.35em 0}
-.merged-guide ul.quote{margin:.25em 0 .25em 20px;padding-left:18px;list-style:none}
-.merged-guide ul.quote::before{content:"原句";display:block;font-size:.72rem;color:#bf8247;
-  letter-spacing:.1em;margin:.15em 0 .1em;font-weight:600}
-.merged-guide ul.quote.quote-node{margin-top:.5em;padding-top:.4em;border-top:1px dashed #eadfc9}
+.nav{position:sticky;top:0;z-index:20;background:rgba(247,248,243,.96);backdrop-filter:blur(6px);
+  border-bottom:1px solid #ece4d4;padding:10px 0;margin:12px 0 20px;display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;
+  box-shadow:0 2px 10px rgba(120,100,60,.05);}
+.navlink{font-size:12px;color:#5d5443;text-decoration:none;background:#fdfbf3;border:1px solid #e8e2d2;
+  border-radius:8px;padding:6px 4px;text-align:center;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;transition:background .15s,color .15s;}
+.navlink:hover{background:#f2efe2;color:#244b40;}
+section{scroll-margin-top:62px;}
+
+/* ── 统一卡片：所有顶层模块（AI领读 / AI 问答 / 其余）一视同仁 ── */
+body>section.mmx-mod,body>section.card,body>section.mmx-svgwrap{
+  background:#fffdf6;border:1px solid #e8e4d5;border-radius:16px;
+  padding:18px 22px;margin:18px 0;
+  box-shadow:0 1px 3px rgba(110,95,60,.05);}
+body>section.mmx-mod>*:first-child,body>section.card>*:first-child,
+body>section.mmx-svgwrap>*:first-child{margin-top:0}
+body>section.mmx-mod>*:last-child,body>section.card>*:last-child,
+body>section.mmx-svgwrap>*:last-child{margin-bottom:0}
+/* 结构导图：图本身留白居中，不与正文抢宽 */
+body>section.mmx-svgwrap>svg.mmx-svg{display:block;width:100%;height:auto;margin:2px auto 0;}
+/* 模块标题：统一大小、弱强调，不与正文抢注意力 */
+body>section.mmx-mod>h2,body>section.card>h2{
+  font:700 1.04rem/1.5 var(--serif);color:#244b40;margin:0 0 11px;
+  padding-left:10px;border-left:3px solid #bf8247;letter-spacing:.01em;}
+/* 正文：字号收小、行距放宽、段间距舒服 */
+body>section.mmx-mod p,body>section.card p,
+body>section.mmx-mod li,body>section.card li{
+  font-size:.9rem;line-height:1.92;color:#4a4436;}
+body>section.mmx-mod p,body>section.card p{margin:.5em 0;}
+body>section.mmx-mod>ul,body>section.mmx-mod>ol,body>section.mmx-mod>div,
+body>section.mmx-mod>p:not(.mmx-mod-note),
+body>section.card:not(.merged-guide)>ul,body>section.card:not(.merged-guide)>ol,
+body>section.card:not(.merged-guide)>div,body>section.card:not(.merged-guide)>p:not(.mmx-mod-note){
+  padding-left:14px;}
+/* 模块说明小字：弱化不抢眼 */
+.mmx-mod-note{font-size:.75rem;color:#8d8878;margin:.1em 0 .75em;line-height:1.7;}
+
+/* ── 内部块统一：卡片里不再套深卡片，一律浅底子块 ── */
+body>section .mmx-pending,body>section .mmx-evib,body>section .aiqa-item{
+  background:#fbfaf2;border:1px solid #eee9d8;border-radius:12px;
+  padding:13px 16px;margin:.65em 0;}
+body>section .mmx-evib ul{padding-left:1.15em;}
+/* 一句话主旨：去左侧竖线 + 收敛字号 */
+.mmx-oneline{font-size:.98rem;line-height:1.85;color:#3a352c;margin:.2em 0 0;
+  padding:12px 16px;background:#fbfaf4;border-left:none;border-radius:12px;}
+/* 核心观点 / 验证清单：虚线分隔 + 收紧行距 */
+.mmx-views li{padding:.5em 0 .5em 0;font-size:.9rem;line-height:1.88;}
+/* 原文金句 */
+.mmx-qlist li{padding:.6em 0 .6em 2.2em;}
+.mmx-qlist blockquote{font-size:.89rem;line-height:1.9;}
+.mmx-qlist cite{font-size:.72rem;}
+/* 核心追问：问句加重、答句放松 */
+.mmx-qa{margin:.7em 0;padding-left:12px;border-left:3px solid #e5dfcd;}
+.mmx-qa .mmx-q{font-size:.9rem;font-weight:700;color:#2f3a33;line-height:1.8;margin:0 0 .25em;}
+.mmx-qa .mmx-a{font-size:.88rem;line-height:1.95;color:#4a4436;margin:0;}
+
+/* ── AI 问书专项：外层容器透明，问答条目才是阅读单元 ── */
+#mod-aiask .mmx-ask{background:transparent;border:0;border-radius:0;padding:0;margin:0;}
+#mod-aiask .aiqa-item{margin:.6em 0;padding:14px 16px 15px;}
+#mod-aiask .aiqa-item h3{font:700 .93rem/1.7 var(--serif);color:#2f5b49;margin:0 0 .4em;
+  padding:0;border:0;}
+#mod-aiask .aiqa-item h3:before{content:"问　";color:#bf8247;font-weight:700;}
+#mod-aiask .aiqa-item p{font-size:.88rem;line-height:1.95;color:#4a4436;margin:.4em 0;}
+#mod-aiask .aiqa-item ul{margin:.35em 0;padding-left:1.1em;}
+#mod-aiask .aiqa-item li{font-size:.87rem;line-height:1.88;margin:.18em 0;color:#4a4436;}
+#mod-aiask .aiqa-item li::marker{color:#c0a06a;}
+/* 逐章追问（details 形态）：摘要行也收敛 */
+.mmx-ask>summary{font-size:.87rem;line-height:1.7;padding:2px 0;}
+.mmx-askbody{font-size:.88rem;line-height:1.9;}
+
+/* AI领读章内：AI 大纲原生深层样式（字号同步收小） */
+.merged-guide .sec{margin:9px 0 12px;padding-left:6px;border-left:2px solid #e5e0d6}
+.merged-guide .sec h4{font:600 .93rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.5em 0 .25em}
+.merged-guide ul.point{margin:.25em 0;padding-left:20px}
+.merged-guide ul.point>li{margin:.3em 0}
+.merged-guide ul.quote{margin:.22em 0 .22em 20px;padding-left:18px;list-style:none}
+.merged-guide ul.quote::before{content:"原句";display:block;font-size:.7rem;color:#bf8247;
+  letter-spacing:.1em;margin:.12em 0 .08em;font-weight:600}
+.merged-guide ul.quote.quote-node{margin-top:.45em;padding-top:.35em;border-top:1px dashed #eadfc9}
 .merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
-.merged-guide ul.quote>li{color:#4a4436;font-size:.93rem;margin:.2em 0;padding-left:10px;border-left:2px solid #bf8247}
-/* 模块内子内容（AI领读除外，它有专属深层样式）：左缩进 + 正文与标题分层 */
-section.mmx-mod>ul,section.mmx-mod>ol,section.mmx-mod>div,
-section.mmx-mod>p:not(.mmx-mod-note),
-section.card:not(.merged-guide)>ul,section.card:not(.merged-guide)>ol,
-section.card:not(.merged-guide)>div,section.card:not(.merged-guide)>p:not(.mmx-mod-note){
-  padding-left:16px;}
-section.mmx-mod li,section.mmx-mod p:not(.mmx-mod-note),
-section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mod-note){
-  color:#4a4436;font-size:.93rem;line-height:1.78;}
+.merged-guide ul.quote>li{color:#4a4436;font-size:.88rem;line-height:1.85;margin:.18em 0;padding-left:10px;border-left:2px solid #bf8247}
 /* 核心观点初判：外链 mmx-guide.css 的「观点N」前缀是绝对定位，在本页版式里和标题叠字，
    且此前要求去掉「观点1/2/3」前缀 —— 这里整条关掉（外链 CSS 不在页面内，只能内联覆盖）。 */
 .mmx-views li{padding-left:0 !important;}
 .mmx-views li:before,.mmx-views li::before{
   content:none !important;display:none !important;counter-increment:none !important;}
+@media(max-width:720px){
+  body{padding:0 12px 60px;font-size:14.5px;}
+  body>section.mmx-mod,body>section.card{padding:15px 16px;border-radius:14px;}
+  .nav{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
 </style>
 </head>
 <body>
@@ -54,8 +116,8 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
   <h1>《灿烂千阳》</h1>
   <div class="chips"><span class="chip">通读 + 精读</span><span class="chip">AI领读</span><span class="chip">AI 生产</span></div>
 </header>
-<nav class="nav"><a class="navlink" href="#mod-svg">全书结构导图</a><a class="navlink" href="#mod-oneline">一句话主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a><a class="navlink" href="#mod-coreask">核心追问</a><a class="navlink" href="#mod-aiask">AI 问书</a><a class="navlink" href="#mod-higher">更高维度</a><a class="navlink" href="#mod-verify">阅读验证</a><a class="navlink" href="#mod-thennow">当年与今天</a></nav>
-<section class="mmx-svgwrap" id="mod-svg"><svg class="mmx-svg" viewBox="0 0 1120 530" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="灿烂千阳 全书精读">
+<nav class="nav"><a class="navlink" href="#mod-svg">结构导图</a><a class="navlink" href="#mod-oneline">核心主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a><a class="navlink" href="#mod-coreask">核心追问</a><a class="navlink" href="#mod-aiask">AI 问书</a><a class="navlink" href="#mod-higher">更高维度</a><a class="navlink" href="#mod-verify">阅读验证</a><a class="navlink" href="#mod-thennow">往日今时</a></nav>
+<section class="mmx-svgwrap" id="mod-svg"><h2>结构导图</h2><svg class="mmx-svg" viewBox="0 0 1120 530" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="灿烂千阳 全书精读">
 <rect x="0" y="0" width="1120" height="530" fill="none"/>
 <style>.mmx-svg text{font-family:"Noto Serif SC",Georgia,serif}.mmx-svg .t1{font-size:15px;fill:#2f2a24;font-weight:600}.mmx-svg .t2{font-size:12px;fill:#5c5347}.mmx-svg .t3{font-size:10.5px;fill:#8a8272}.mmx-svg .rt{font-size:13px;fill:#f7f3ea;font-weight:600}.mmx-svg .ln{stroke:#cfc6b4;stroke-width:1.4;fill:none}</style>
 <rect x="28" y="221" width="262" height="52" rx="10" fill="#3d372e"/>
@@ -118,7 +180,7 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
 <text class="t2" x="714" y="437">，驱动后续情节发展。</text>
 <path class="ln" d="M692 433 L700 433"/>
 </svg></section>
-<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">一句话主旨</h2><p class="mmx-mod-note">本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。</p><p class="mmx-oneline">在阿富汗三十年战乱动荡中，女性通过苦难中的相互救赎与自我牺牲，重塑了家庭纽带与生存尊严。</p></section>
+<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">核心主旨</h2><p class="mmx-oneline">在阿富汗三十年战乱动荡中，女性通过苦难中的相互救赎与自我牺牲，重塑了家庭纽带与生存尊严。</p></section>
 <section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" id="mod-merged_guide"><h2 id="merged-guide-title">AI领读</h2>
 <style>
 /* merged_guide 章内：AI 大纲原生深层样式 */
@@ -4735,12 +4797,12 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
       </div></details>
   </div>
 </section>
-<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点初判</h2><p class="mmx-mod-note">按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。</p><ul class="mmx-views"><li><b>玛丽雅姆的边缘童年</b>——交代玛丽雅姆私生女身份带来的原生家庭创伤，以及她对父权认同的渴望与幻灭。</li><li><b>包办婚姻下的压抑生存</b>——描述玛丽雅姆被迫进入拉希德的家庭，在生育压力与暴力威胁下经历身份的彻底异化。</li><li><b>莱拉的成长与战争创伤</b>——展现受教育女性莱拉在战火中失去亲人与爱人，从现代文明生活坠入生存绝境的过程。</li><li><b>双雌并立与苦难共生</b>——两代女性在同一屋檐下由敌对转向结盟，通过共同抚育后代与尝试逃亡建立深厚联结。</li><li><b>极端主义下的生存抗争</b>——在塔利班严酷统治下，女性面临极度贫困与暴力，最终通过反抗旧秩序实现悲剧性的解脱。</li><li><b>牺牲后的救赎与重建</b>——玛丽雅姆以生命为代价换取莱拉的自由，莱拉在战后重建中延续了女性的爱与希望。</li><li><b>时空交织的真相揭示</b>——作为全书关键的叙事转折点，通过第三方视角揭示塔里克的生存现状，驱动后续情节发展。</li></ul></section>
-<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句 · 持续积累</h2><p class="mmx-mod-note">以下原句取自本书 AI 大纲落库的原文摘录（book_outline.quote），按大纲顺序节选，非 AI 生成；更多见逐章深读页。</p><ol class="mmx-qlist"><li><blockquote>「在这个以女性为主角的故事中，绝望与微弱的希望同时呈现。」</blockquote><cite>评论</cite></li><li><blockquote>「他的写作简单，朴实无华，但是他的故事却动人心弦。」</blockquote><cite>评论</cite></li><li><blockquote>「胡赛尼在小说中展现出了更为精湛的叙事才能，讲述了一个为了留住希望与快乐而作出必要牺牲、用爱的力量战胜恐惧的故事。」</blockquote><cite>评论</cite></li><li><blockquote>「《灿烂千阳》不愧是胡赛尼继《追风筝的人》后的又一佳作。」</blockquote><cite>评论</cite></li><li><blockquote>「故事线索清晰，写作言语简练，隐喻精当，读者宛如走入故事主角的生命之中，感同身受……胡赛尼对语言的表现能力有着非凡的鉴别力和控制力，总是能以极准确的描述来反映现实，同时又能引发读者内心深层的感触。」</blockquote><cite>评论</cite></li><li><blockquote>「玛丽雅姆只有在星期四才会坐立不安、心不在焉。」</blockquote><cite>第一部分 · 第一章 · 玛丽雅姆的童年生活</cite></li><li><blockquote>「玛丽雅姆在扎里勒到泥屋来看望她的日子，会挥舞着手臂，跑过空地上那片齐膝高的杂草。」</blockquote><cite>第一部分 · 第一章 · 玛丽雅姆的童年生活</cite></li><li><blockquote>「娜娜看到玛丽雅姆打碎传家宝的瓷器，满脸涨得通红，上唇不停地抖动。」</blockquote><cite>第一部分 · 第一章 · 玛丽雅姆的童年生活</cite></li><li><blockquote>「娜娜抓住玛丽雅姆的手腕，咬牙切齿地说：“你这个笨手笨脚的小哈拉米。这就是我忍受了一切得到的回报。一个打碎传家宝的、笨手笨脚的小哈拉米！”。」</blockquote><cite>第一部分 · 第一章 · 玛丽雅姆的童年生活</cite></li><li><blockquote>「扎里勒说她是他的蓓蕾，喜欢她坐在他的膝盖上。」</blockquote><cite>第一部分 · 第一章 · 玛丽雅姆的童年生活</cite></li></ol></section>
-<section class="mmx-mod" aria-labelledby="coreask" id="mod-coreask"><h2 id="coreask">核心追问（来自深读）</h2><p class="mmx-mod-note">跨章主题的深读追问，由模型基于全书大纲与原文摘录撰写；逐章的追问收在每个章条目里。</p><div class="mmx-qa"><p class="mmx-q">这本书真正想回答的问题是什么？我用一句话说清了吗</p><p class="mmx-a">基于大纲，本书共 52 章，主线：《评论》 → 《第一部分 · 第一章 · 玛…》 → 《第一部分 · 第二章 · 娜…》 … 《第四部分 · 第五十一章 ·…》。就「核心问题」而言，目前的（待验证）判断是：它要回答"在被系统性剥夺行动权的处境里，两个女人如何重新获得行动的可能"，答案是"在彼此身上"。是否成立要读完全书判断。这是大纲条目推断，未亲读正文，读后请回原文核对。</p></div><div class="mmx-qa"><p class="mmx-q">哪个判断我最不确定、需要回到原文哪一节验证</p><p class="mmx-a">目前最需回原文验证的是《第二部分 · 第二十六章 · 莱拉在喀布尔的炎热夏天》——大纲里它涉及「莱拉在客厅的沙发上静静地躺着，汗水浸透了她的上衣。」，与初读时的判断可能有张力，建议读到这里专门核对。（大纲推断，未亲读）</p></div><div class="mmx-qa"><p class="mmx-q">如果只能把一条洞见讲给三个月后的自己，是哪条？为什么</p><p class="mmx-a">若只留一条，我会选《评论》里的「《灿烂千阳》是一部“阿富汗30年历史的揪心记录，一部关于家庭、友谊、信念和因爱得救的…」：它把全书最底层的判断说清了，三个月后回看仍最经得起检验。（基于大纲条目，未亲读，读后确认）</p></div></section>
-<section class="mmx-mod" aria-labelledby="aiask" id="mod-aiask"><h2 id="aiask">AI 问书</h2><p class="mmx-mod-note">下方内容为本书级 AI 问书整理，由云端 AI 阅读流程基于本书大纲、章节锚点与热门划线生成。</p><div class="mmx-qa"><p class="mmx-q">玛丽雅姆杀死拉希德、自己赴死，这算“救赎”还是“又一次男权剧本里的牺牲”？</p><p class="mmx-a">书中玛丽雅姆“第一次决定自己生活的轨迹，把铁锹砸了下去，使尽浑身力气”——这是她一生唯一一次主动选择。之前她是被父亲抛弃、被丈夫虐待的客体，这一砸让她从“被决定者”变成“决定者”。胡赛尼把她的死写成“一千个太阳般灿烂的光芒”留在莱拉心中，救赎成立在于：她用死亡换回了莱拉与孩子的生，也换回了自己作为主体的尊严。</p></div><div class="mmx-qa"><p class="mmx-q">“男人怪罪的手指总是指向女人”——这句话怎么贯穿阿富汗三十年？</p><p class="mmx-a">锚点原句“就像指南针总是指向北方一样，男人怪罪的手指总是指向女人”。从娜娜（被扎里勒家当杂草）、玛丽雅姆（不孕被骂）、莱拉（逃亡被掌控），到塔利班统治下女性被禁上学看病——书把“女性即原罪”写成阿富汗社会的底层语法。莱拉母亲说“她嫁了一个没有信念的男人”却仍怪自己，正是这语法内化的一幕。</p></div></section>
-<section class="mmx-mod" aria-labelledby="higher" id="mod-higher"><h2 id="higher">用更高维度的知识看这本书</h2><p class="mmx-mod-note">下方内容由云端 AI 阅读流程生成：把本书放回知识史与理论框架中重读，区分书中主张、外部证据与综合分析。</p><p>【书中主张】把本书放回“阿富汗战争文学”谱系——与作者前作《追风筝的人》共享喀布尔背景，但视角从男性赎罪转向女性双主角，主张女性间跨越代际的结盟（玛丽雅姆—莱拉）是乱世中唯一可靠的家庭纽带。【外部证据】可对照人类学家《在喀布尔的女人》等田野——塔利班时期女性公共生活被系统性抹除；【综合分析】本书以通俗小说完成“见证”，其力量在情感真实而非政治分析，读时需补读非虚构以得全貌。</p><p>【书中主张】“布卡是一面只能看出不能看进的窗户”，女性借遮掩反获旁观者自由。【外部证据】女性主义地理学（Massey）谈身体如何被空间规训，布卡既是囚笼也是缓冲；【综合分析】但书名“一千个灿烂的太阳”所引诗歌原写喀布尔之美，胡赛尼挪用为对女性的颂歌，是文学再营造——致敬是真，历史考据则宜另求诗集原文。</p></section>
-<section class="mmx-mod" aria-labelledby="verify" id="mod-verify"><h2 id="verify">阅读时要验证的问题</h2><p class="mmx-mod-note">下方由云端 AI 阅读流程生成：读时需核对的原文、数字与论点（关键数据出处、个案代表性、类比限度）。</p><ul class="mmx-views"><li>书名“一千个灿烂的太阳”出自17世纪波斯诗人萨埃布·塔布里齐（Saib-e-Tabrizi）咏喀布尔的诗句，应核对原诗与中译，确认是否确为“墙壁后一千个太阳”意象。</li><li>书中塔利班“关掉大学、摧毁雕像、医院不给女人看病”等描写应比照1996-2001年塔利班统治史实，小说有时间压缩，勿当编年史。</li><li>玛丽雅姆被处决的司法程序（毛拉、公开石刑/枪决）应回原文确认细节，避免在讨论“阿富汗女性”时把文学情节当法律实录。</li></ul></section>
-<section class="mmx-mod" aria-labelledby="thennow" id="mod-thennow"><h2 id="thennow">当年与今天 · 初步对照</h2><p class="mmx-mod-note">下方由云端 AI 阅读流程生成：区分作者当年所能知晓与后来才显现的事实，给出今日可迁移的启发。</p><p>胡赛尼写于2007年，彼时塔利班虽已下台但阿富汗女性处境仍艰，国际社会正把“拯救阿女”当作干预叙事。作者当年能写出的，是一则在内战、苏军、圣战者、塔利班层层碾压下的女性幸存故事。</p><p>今天塔利班重掌政权（2021），书中“女孩不能上学”从历史惨剧变回当下现实，书的价值从“见证过去”转为“预言循环”。可迁移的启发：玛丽雅姆那句“我小时候渴望的一切你们都已给我”——苦难里的相互托举，是任何政权都夺不走的；但个体互助替代不了制度保障，这正是今天读它的刺痛所在。</p></section>
+<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点</h2><ul class="mmx-views"><li><b>玛丽雅姆的边缘童年</b>——交代玛丽雅姆私生女身份带来的原生家庭创伤，以及她对父权认同的渴望与幻灭。</li><li><b>包办婚姻下的压抑生存</b>——描述玛丽雅姆被迫进入拉希德的家庭，在生育压力与暴力威胁下经历身份的彻底异化。</li><li><b>莱拉的成长与战争创伤</b>——展现受教育女性莱拉在战火中失去亲人与爱人，从现代文明生活坠入生存绝境的过程。</li><li><b>双雌并立与苦难共生</b>——两代女性在同一屋檐下由敌对转向结盟，通过共同抚育后代与尝试逃亡建立深厚联结。</li><li><b>极端主义下的生存抗争</b>——在塔利班严酷统治下，女性面临极度贫困与暴力，最终通过反抗旧秩序实现悲剧性的解脱。</li><li><b>牺牲后的救赎与重建</b>——玛丽雅姆以生命为代价换取莱拉的自由，莱拉在战后重建中延续了女性的爱与希望。</li><li><b>时空交织的真相揭示</b>——作为全书关键的叙事转折点，通过第三方视角揭示塔里克的生存现状，驱动后续情节发展。</li></ul></section>
+<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句</h2><ol class="mmx-qlist"><li><blockquote>「在这个以女性为主角的故事中，绝望与微弱的希望同时呈现。」</blockquote><cite>评论</cite></li><li><blockquote>「他的写作简单，朴实无华，但是他的故事却动人心弦。」</blockquote><cite>评论</cite></li><li><blockquote>「胡赛尼在小说中展现出了更为精湛的叙事才能，讲述了一个为了留住希望与快乐而作出必要牺牲、用爱的力量战胜恐惧的故事。」</blockquote><cite>评论</cite></li><li><blockquote>「《灿烂千阳》不愧是胡赛尼继《追风筝的人》后的又一佳作。」</blockquote><cite>评论</cite></li><li><blockquote>「故事线索清晰，写作言语简练，隐喻精当，读者宛如走入故事主角的生命之中，感同身受……胡赛尼对语言的表现能力有着非凡的鉴别力和控制力，总是能以极准确的描述来反映现实，同时又能引发读者内心深层的感触。」</blockquote><cite>评论</cite></li><li><blockquote>「玛丽雅姆只有在星期四才会坐立不安、心不在焉。」</blockquote><cite>第一部分 · 第一章 · 玛丽雅姆的童年生活</cite></li><li><blockquote>「玛丽雅姆在扎里勒到泥屋来看望她的日子，会挥舞着手臂，跑过空地上那片齐膝高的杂草。」</blockquote><cite>第一部分 · 第一章 · 玛丽雅姆的童年生活</cite></li><li><blockquote>「娜娜看到玛丽雅姆打碎传家宝的瓷器，满脸涨得通红，上唇不停地抖动。」</blockquote><cite>第一部分 · 第一章 · 玛丽雅姆的童年生活</cite></li><li><blockquote>「娜娜抓住玛丽雅姆的手腕，咬牙切齿地说：“你这个笨手笨脚的小哈拉米。这就是我忍受了一切得到的回报。一个打碎传家宝的、笨手笨脚的小哈拉米！”。」</blockquote><cite>第一部分 · 第一章 · 玛丽雅姆的童年生活</cite></li><li><blockquote>「扎里勒说她是他的蓓蕾，喜欢她坐在他的膝盖上。」</blockquote><cite>第一部分 · 第一章 · 玛丽雅姆的童年生活</cite></li></ol></section>
+<section class="mmx-mod" aria-labelledby="coreask" id="mod-coreask"><h2 id="coreask">核心追问</h2><div class="mmx-qa"><p class="mmx-q">这本书真正想回答的问题是什么？我用一句话说清了吗</p><p class="mmx-a">基于大纲，本书共 52 章，主线：《评论》 → 《第一部分 · 第一章 · 玛…》 → 《第一部分 · 第二章 · 娜…》 … 《第四部分 · 第五十一章 ·…》。就「核心问题」而言，目前的（待验证）判断是：它要回答"在被系统性剥夺行动权的处境里，两个女人如何重新获得行动的可能"，答案是"在彼此身上"。是否成立要读完全书判断。这是大纲条目推断，未亲读正文，读后请回原文核对。</p></div><div class="mmx-qa"><p class="mmx-q">哪个判断我最不确定、需要回到原文哪一节验证</p><p class="mmx-a">目前最需回原文验证的是《第二部分 · 第二十六章 · 莱拉在喀布尔的炎热夏天》——大纲里它涉及「莱拉在客厅的沙发上静静地躺着，汗水浸透了她的上衣。」，与初读时的判断可能有张力，建议读到这里专门核对。（大纲推断，未亲读）</p></div><div class="mmx-qa"><p class="mmx-q">如果只能把一条洞见讲给三个月后的自己，是哪条？为什么</p><p class="mmx-a">若只留一条，我会选《评论》里的「《灿烂千阳》是一部“阿富汗30年历史的揪心记录，一部关于家庭、友谊、信念和因爱得救的…」：它把全书最底层的判断说清了，三个月后回看仍最经得起检验。（基于大纲条目，未亲读，读后确认）</p></div></section>
+<section class="mmx-mod" aria-labelledby="aiask" id="mod-aiask"><h2 id="aiask">AI 问书</h2><div class="mmx-qa"><p class="mmx-q">玛丽雅姆杀死拉希德、自己赴死，这算“救赎”还是“又一次男权剧本里的牺牲”？</p><p class="mmx-a">书中玛丽雅姆“第一次决定自己生活的轨迹，把铁锹砸了下去，使尽浑身力气”——这是她一生唯一一次主动选择。之前她是被父亲抛弃、被丈夫虐待的客体，这一砸让她从“被决定者”变成“决定者”。胡赛尼把她的死写成“一千个太阳般灿烂的光芒”留在莱拉心中，救赎成立在于：她用死亡换回了莱拉与孩子的生，也换回了自己作为主体的尊严。</p></div><div class="mmx-qa"><p class="mmx-q">“男人怪罪的手指总是指向女人”——这句话怎么贯穿阿富汗三十年？</p><p class="mmx-a">锚点原句“就像指南针总是指向北方一样，男人怪罪的手指总是指向女人”。从娜娜（被扎里勒家当杂草）、玛丽雅姆（不孕被骂）、莱拉（逃亡被掌控），到塔利班统治下女性被禁上学看病——书把“女性即原罪”写成阿富汗社会的底层语法。莱拉母亲说“她嫁了一个没有信念的男人”却仍怪自己，正是这语法内化的一幕。</p></div></section>
+<section class="mmx-mod" aria-labelledby="higher" id="mod-higher"><h2 id="higher">更高维度</h2><p>【书中主张】把本书放回“阿富汗战争文学”谱系——与作者前作《追风筝的人》共享喀布尔背景，但视角从男性赎罪转向女性双主角，主张女性间跨越代际的结盟（玛丽雅姆—莱拉）是乱世中唯一可靠的家庭纽带。【外部证据】可对照人类学家《在喀布尔的女人》等田野——塔利班时期女性公共生活被系统性抹除；【综合分析】本书以通俗小说完成“见证”，其力量在情感真实而非政治分析，读时需补读非虚构以得全貌。</p><p>【书中主张】“布卡是一面只能看出不能看进的窗户”，女性借遮掩反获旁观者自由。【外部证据】女性主义地理学（Massey）谈身体如何被空间规训，布卡既是囚笼也是缓冲；【综合分析】但书名“一千个灿烂的太阳”所引诗歌原写喀布尔之美，胡赛尼挪用为对女性的颂歌，是文学再营造——致敬是真，历史考据则宜另求诗集原文。</p></section>
+<section class="mmx-mod" aria-labelledby="verify" id="mod-verify"><h2 id="verify">阅读验证</h2><ul class="mmx-views"><li>书名“一千个灿烂的太阳”出自17世纪波斯诗人萨埃布·塔布里齐（Saib-e-Tabrizi）咏喀布尔的诗句，应核对原诗与中译，确认是否确为“墙壁后一千个太阳”意象。</li><li>书中塔利班“关掉大学、摧毁雕像、医院不给女人看病”等描写应比照1996-2001年塔利班统治史实，小说有时间压缩，勿当编年史。</li><li>玛丽雅姆被处决的司法程序（毛拉、公开石刑/枪决）应回原文确认细节，避免在讨论“阿富汗女性”时把文学情节当法律实录。</li></ul></section>
+<section class="mmx-mod" aria-labelledby="thennow" id="mod-thennow"><h2 id="thennow">往日今时</h2><p>胡赛尼写于2007年，彼时塔利班虽已下台但阿富汗女性处境仍艰，国际社会正把“拯救阿女”当作干预叙事。作者当年能写出的，是一则在内战、苏军、圣战者、塔利班层层碾压下的女性幸存故事。</p><p>今天塔利班重掌政权（2021），书中“女孩不能上学”从历史惨剧变回当下现实，书的价值从“见证过去”转为“预言循环”。可迁移的启发：玛丽雅姆那句“我小时候渴望的一切你们都已给我”——苦难里的相互托举，是任何政权都夺不走的；但个体互助替代不了制度保障，这正是今天读它的刺痛所在。</p></section>
 </body>
 </html>

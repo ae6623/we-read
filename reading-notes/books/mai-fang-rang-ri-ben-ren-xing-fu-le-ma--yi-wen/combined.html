@@ -6,46 +6,108 @@
 <title>《买房让日本人幸福了吗？》｜通读 · 精读</title>
 <link rel="stylesheet" href="../../../assets/css/reading-overview.css"><link rel="stylesheet" href="../../../assets/css/mmx-guide.css"><link rel="stylesheet" href="../../../assets/css/reading-outline.css">
 <style>
-/* 合并页外壳 */
-body{max-width:960px;margin:0 auto;padding:0 18px 80px;}
-.combined-head{padding:34px 0 18px;border-bottom:1px solid #e7e0d2;margin-bottom:8px;}
-.combined-head h1{font-size:26px;margin:0 0 10px;}
+/* ── 外壳与全局阅读节奏 ── */
+body{max-width:880px;margin:0 auto;padding:0 18px 80px;
+  font-size:15px;line-height:1.88;color:#3b453e;background:#f7f8f3;
+  -webkit-font-smoothing:antialiased;}
+.combined-head{padding:30px 0 16px;border-bottom:1px solid #e7e0d2;margin-bottom:4px;}
+.combined-head h1{font:700 23px/1.35 var(--serif);margin:0 0 8px;color:#244b40;}
+.combined-head .eyebrow{font-size:.72rem;letter-spacing:.14em;margin:0 0 6px;}
+.chips{margin:8px 0 0;}
+.chip{font-size:.72rem;padding:2px 10px;}
 /* 锚点导航：固定一排 4 个，等宽对齐 */
-.nav{position:sticky;top:0;z-index:20;background:rgba(255,253,248,.96);backdrop-filter:blur(6px);
-  border-bottom:1px solid #ece4d4;padding:10px 0;margin:14px 0 26px;display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;
-  box-shadow:0 2px 10px rgba(120,100,60,.06);}
-.navlink{font-size:12.5px;color:#5d5443;text-decoration:none;background:#f6f1e6;border:1px solid #e7ddca;
-  border-radius:7px;padding:4px 6px;text-align:center;white-space:nowrap;overflow:hidden;
-  text-overflow:ellipsis;}
-section{scroll-margin-top:64px;}
-/* 一句话主旨：去左侧竖线 */
-.mmx-oneline{border-left:none;padding-left:18px;}
-/* AI领读章内：AI 大纲原生深层样式 */
-.merged-guide .sec{margin:10px 0 14px;padding-left:6px;border-left:2px solid #e5e0d6}
-.merged-guide .sec h4{font:600 .98rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.6em 0 .3em}
-.merged-guide ul.point{margin:.3em 0;padding-left:20px}
-.merged-guide ul.point>li{margin:.35em 0}
-.merged-guide ul.quote{margin:.25em 0 .25em 20px;padding-left:18px;list-style:none}
-.merged-guide ul.quote::before{content:"原句";display:block;font-size:.72rem;color:#bf8247;
-  letter-spacing:.1em;margin:.15em 0 .1em;font-weight:600}
-.merged-guide ul.quote.quote-node{margin-top:.5em;padding-top:.4em;border-top:1px dashed #eadfc9}
+.nav{position:sticky;top:0;z-index:20;background:rgba(247,248,243,.96);backdrop-filter:blur(6px);
+  border-bottom:1px solid #ece4d4;padding:10px 0;margin:12px 0 20px;display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;
+  box-shadow:0 2px 10px rgba(120,100,60,.05);}
+.navlink{font-size:12px;color:#5d5443;text-decoration:none;background:#fdfbf3;border:1px solid #e8e2d2;
+  border-radius:8px;padding:6px 4px;text-align:center;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;transition:background .15s,color .15s;}
+.navlink:hover{background:#f2efe2;color:#244b40;}
+section{scroll-margin-top:62px;}
+
+/* ── 统一卡片：所有顶层模块（AI领读 / AI 问答 / 其余）一视同仁 ── */
+body>section.mmx-mod,body>section.card,body>section.mmx-svgwrap{
+  background:#fffdf6;border:1px solid #e8e4d5;border-radius:16px;
+  padding:18px 22px;margin:18px 0;
+  box-shadow:0 1px 3px rgba(110,95,60,.05);}
+body>section.mmx-mod>*:first-child,body>section.card>*:first-child,
+body>section.mmx-svgwrap>*:first-child{margin-top:0}
+body>section.mmx-mod>*:last-child,body>section.card>*:last-child,
+body>section.mmx-svgwrap>*:last-child{margin-bottom:0}
+/* 结构导图：图本身留白居中，不与正文抢宽 */
+body>section.mmx-svgwrap>svg.mmx-svg{display:block;width:100%;height:auto;margin:2px auto 0;}
+/* 模块标题：统一大小、弱强调，不与正文抢注意力 */
+body>section.mmx-mod>h2,body>section.card>h2{
+  font:700 1.04rem/1.5 var(--serif);color:#244b40;margin:0 0 11px;
+  padding-left:10px;border-left:3px solid #bf8247;letter-spacing:.01em;}
+/* 正文：字号收小、行距放宽、段间距舒服 */
+body>section.mmx-mod p,body>section.card p,
+body>section.mmx-mod li,body>section.card li{
+  font-size:.9rem;line-height:1.92;color:#4a4436;}
+body>section.mmx-mod p,body>section.card p{margin:.5em 0;}
+body>section.mmx-mod>ul,body>section.mmx-mod>ol,body>section.mmx-mod>div,
+body>section.mmx-mod>p:not(.mmx-mod-note),
+body>section.card:not(.merged-guide)>ul,body>section.card:not(.merged-guide)>ol,
+body>section.card:not(.merged-guide)>div,body>section.card:not(.merged-guide)>p:not(.mmx-mod-note){
+  padding-left:14px;}
+/* 模块说明小字：弱化不抢眼 */
+.mmx-mod-note{font-size:.75rem;color:#8d8878;margin:.1em 0 .75em;line-height:1.7;}
+
+/* ── 内部块统一：卡片里不再套深卡片，一律浅底子块 ── */
+body>section .mmx-pending,body>section .mmx-evib,body>section .aiqa-item{
+  background:#fbfaf2;border:1px solid #eee9d8;border-radius:12px;
+  padding:13px 16px;margin:.65em 0;}
+body>section .mmx-evib ul{padding-left:1.15em;}
+/* 一句话主旨：去左侧竖线 + 收敛字号 */
+.mmx-oneline{font-size:.98rem;line-height:1.85;color:#3a352c;margin:.2em 0 0;
+  padding:12px 16px;background:#fbfaf4;border-left:none;border-radius:12px;}
+/* 核心观点 / 验证清单：虚线分隔 + 收紧行距 */
+.mmx-views li{padding:.5em 0 .5em 0;font-size:.9rem;line-height:1.88;}
+/* 原文金句 */
+.mmx-qlist li{padding:.6em 0 .6em 2.2em;}
+.mmx-qlist blockquote{font-size:.89rem;line-height:1.9;}
+.mmx-qlist cite{font-size:.72rem;}
+/* 核心追问：问句加重、答句放松 */
+.mmx-qa{margin:.7em 0;padding-left:12px;border-left:3px solid #e5dfcd;}
+.mmx-qa .mmx-q{font-size:.9rem;font-weight:700;color:#2f3a33;line-height:1.8;margin:0 0 .25em;}
+.mmx-qa .mmx-a{font-size:.88rem;line-height:1.95;color:#4a4436;margin:0;}
+
+/* ── AI 问书专项：外层容器透明，问答条目才是阅读单元 ── */
+#mod-aiask .mmx-ask{background:transparent;border:0;border-radius:0;padding:0;margin:0;}
+#mod-aiask .aiqa-item{margin:.6em 0;padding:14px 16px 15px;}
+#mod-aiask .aiqa-item h3{font:700 .93rem/1.7 var(--serif);color:#2f5b49;margin:0 0 .4em;
+  padding:0;border:0;}
+#mod-aiask .aiqa-item h3:before{content:"问　";color:#bf8247;font-weight:700;}
+#mod-aiask .aiqa-item p{font-size:.88rem;line-height:1.95;color:#4a4436;margin:.4em 0;}
+#mod-aiask .aiqa-item ul{margin:.35em 0;padding-left:1.1em;}
+#mod-aiask .aiqa-item li{font-size:.87rem;line-height:1.88;margin:.18em 0;color:#4a4436;}
+#mod-aiask .aiqa-item li::marker{color:#c0a06a;}
+/* 逐章追问（details 形态）：摘要行也收敛 */
+.mmx-ask>summary{font-size:.87rem;line-height:1.7;padding:2px 0;}
+.mmx-askbody{font-size:.88rem;line-height:1.9;}
+
+/* AI领读章内：AI 大纲原生深层样式（字号同步收小） */
+.merged-guide .sec{margin:9px 0 12px;padding-left:6px;border-left:2px solid #e5e0d6}
+.merged-guide .sec h4{font:600 .93rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.5em 0 .25em}
+.merged-guide ul.point{margin:.25em 0;padding-left:20px}
+.merged-guide ul.point>li{margin:.3em 0}
+.merged-guide ul.quote{margin:.22em 0 .22em 20px;padding-left:18px;list-style:none}
+.merged-guide ul.quote::before{content:"原句";display:block;font-size:.7rem;color:#bf8247;
+  letter-spacing:.1em;margin:.12em 0 .08em;font-weight:600}
+.merged-guide ul.quote.quote-node{margin-top:.45em;padding-top:.35em;border-top:1px dashed #eadfc9}
 .merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
-.merged-guide ul.quote>li{color:#4a4436;font-size:.93rem;margin:.2em 0;padding-left:10px;border-left:2px solid #bf8247}
-/* 模块内子内容（AI领读除外，它有专属深层样式）：左缩进 + 正文与标题分层 */
-section.mmx-mod>ul,section.mmx-mod>ol,section.mmx-mod>div,
-section.mmx-mod>p:not(.mmx-mod-note),
-section.card:not(.merged-guide)>ul,section.card:not(.merged-guide)>ol,
-section.card:not(.merged-guide)>div,section.card:not(.merged-guide)>p:not(.mmx-mod-note){
-  padding-left:16px;}
-section.mmx-mod li,section.mmx-mod p:not(.mmx-mod-note),
-section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mod-note){
-  color:#4a4436;font-size:.93rem;line-height:1.78;}
+.merged-guide ul.quote>li{color:#4a4436;font-size:.88rem;line-height:1.85;margin:.18em 0;padding-left:10px;border-left:2px solid #bf8247}
 /* 核心观点初判：外链 mmx-guide.css 的「观点N」前缀是绝对定位，在本页版式里和标题叠字，
    且此前要求去掉「观点1/2/3」前缀 —— 这里整条关掉（外链 CSS 不在页面内，只能内联覆盖）。 */
 .mmx-views li{padding-left:0 !important;}
 .mmx-views li:before,.mmx-views li::before{
   content:none !important;display:none !important;counter-increment:none !important;}
+@media(max-width:720px){
+  body{padding:0 12px 60px;font-size:14.5px;}
+  body>section.mmx-mod,body>section.card{padding:15px 16px;border-radius:14px;}
+  .nav{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
 </style>
 </head>
 <body>
@@ -54,8 +116,8 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
   <h1>《买房让日本人幸福了吗？》</h1>
   <div class="chips"><span class="chip">通读 + 精读</span><span class="chip">AI领读</span><span class="chip">AI 生产</span></div>
 </header>
-<nav class="nav"><a class="navlink" href="#mod-svg">全书结构导图</a><a class="navlink" href="#mod-oneline">一句话主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a><a class="navlink" href="#mod-coreask">核心追问</a><a class="navlink" href="#mod-aiask">AI 问书</a><a class="navlink" href="#mod-higher">更高维度</a><a class="navlink" href="#mod-verify">阅读验证</a><a class="navlink" href="#mod-thennow">当年与今天</a></nav>
-<section class="mmx-svgwrap" id="mod-svg"><svg class="mmx-svg" viewBox="0 0 1120 468" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="买房让日本人幸福了吗？ 全书精读">
+<nav class="nav"><a class="navlink" href="#mod-svg">结构导图</a><a class="navlink" href="#mod-oneline">核心主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a><a class="navlink" href="#mod-coreask">核心追问</a><a class="navlink" href="#mod-aiask">AI 问书</a><a class="navlink" href="#mod-higher">更高维度</a><a class="navlink" href="#mod-verify">阅读验证</a><a class="navlink" href="#mod-thennow">往日今时</a></nav>
+<section class="mmx-svgwrap" id="mod-svg"><h2>结构导图</h2><svg class="mmx-svg" viewBox="0 0 1120 468" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="买房让日本人幸福了吗？ 全书精读">
 <rect x="0" y="0" width="1120" height="468" fill="none"/>
 <style>.mmx-svg text{font-family:"Noto Serif SC",Georgia,serif}.mmx-svg .t1{font-size:15px;fill:#2f2a24;font-weight:600}.mmx-svg .t2{font-size:12px;fill:#5c5347}.mmx-svg .t3{font-size:10.5px;fill:#8a8272}.mmx-svg .rt{font-size:13px;fill:#f7f3ea;font-weight:600}.mmx-svg .ln{stroke:#cfc6b4;stroke-width:1.4;fill:none}</style>
 <rect x="28" y="190" width="262" height="52" rx="10" fill="#3d372e"/>
@@ -110,7 +172,7 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
 <text class="t2" x="714" y="375">民主自治与新型建构寻找楼房的未来。</text>
 <path class="ln" d="M692 371 L700 371"/>
 </svg></section>
-<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">一句话主旨</h2><p class="mmx-mod-note">本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。</p><p class="mmx-oneline">楼房虽推动了日本现代化与小家庭化，但其产权困境、泡沫化倾向及健康隐患正严重威胁居民幸福。</p></section>
+<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">核心主旨</h2><p class="mmx-oneline">楼房虽推动了日本现代化与小家庭化，但其产权困境、泡沫化倾向及健康隐患正严重威胁居民幸福。</p></section>
 <section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" id="mod-merged_guide"><h2 id="merged-guide-title">AI领读</h2>
 <style>
 /* merged_guide 章内：AI 大纲原生深层样式 */
@@ -4664,12 +4726,12 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
       </div></details>
   </div>
 </section>
-<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点初判</h2><p class="mmx-mod-note">按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。</p><ul class="mmx-views"><li><b>楼房兴起与社会变革</b>——梳理日本楼房的起源、称谓演变与战后建设浪潮，说明其如何改变日本人的居住形态与家庭结构。</li><li><b>产权治理与管理危机</b>——剖析《区分所有法》漏洞、业委会权力滥用、物业托管错位及维修难题，揭示楼房管理的民主赤字。</li><li><b>跨国资本与市场泡沫</b>——探讨外资爆买、长期房贷刺激与宽松政策催生的房地产泡沫，分析其周期性崩盘与投资神话的破灭。</li><li><b>开发黑幕与销售套路</b>——揭露房地产开发行业的低门槛、暴利追求、样板房心理战及双向中介等侵害消费者权益的行业潜规则。</li><li><b>建筑缺陷与身心健康</b>——指出混凝土建材、高层居住、地震停电及过敏风险对居民身体健康和日常生活带来的负面影响。</li><li><b>老龄废墟与未来出路</b>——直面老旧楼房重建率低、物业费未缴纳及法律滞后的绝境，探索通过民主自治与新型建构寻找楼房的未来。</li></ul></section>
-<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句 · 持续积累</h2><p class="mmx-mod-note">以下原句取自本书 AI 大纲落库的原文摘录（book_outline.quote），按大纲顺序节选，非 AI 生成；更多见逐章深读页。</p><ol class="mmx-qlist"><li><blockquote>「最初二十几年是制作广告，后来成为记者。」</blockquote><cite>第一章 买房让日本人走向幸福了吗？</cite></li><li><blockquote>「作为记者，我是站在高度接近购房者(消费者)的立场和视点出发撰写文章，发表言论，有时也会对房地产开发商(供给方)进行尖锐的批评。」</blockquote><cite>第一章 买房让日本人走向幸福了吗？</cite></li><li><blockquote>「在今后的时代里，让日本人走向不幸的楼房或许会越来越多。」</blockquote><cite>第一章 买房让日本人走向幸福了吗？</cite></li><li><blockquote>「如果我发出了“楼市泡沫即将破灭”的信号，开发商想必会很不高兴。但是，看见了破灭的兆头，对购房者做出提醒，告诉他们“现在不是买房的时候”，也是我的工作。」</blockquote><cite>第一章 买房让日本人走向幸福了吗？</cite></li><li><blockquote>「因为今后楼房的数量还会不断增加。对于居住在城市的日本人来说，主要的居住形态就是楼房。今后这个倾向也会进一步增强。」</blockquote><cite>第一章 买房让日本人走向幸福了吗？</cite></li><li><blockquote>「而且，今后住进楼房的人们应该也能过上幸福的生活。」</blockquote><cite>第一章 买房让日本人走向幸福了吗？</cite></li><li><blockquote>「六十年前在钢筋混凝土的集体住宅里生活的日本人，最多也就几千人。」</blockquote><cite>楼房改变了日本人的生活</cite></li><li><blockquote>「现在仅是商品房，日本全国就有六百多万套存量。」</blockquote><cite>楼房改变了日本人的生活</cite></li><li><blockquote>「六十年前，大部分日本人住在集体住宅里，没有自己的家。」</blockquote><cite>楼房改变了日本人的生活</cite></li><li><blockquote>「现在，大部分日本人都住在楼房里，有了自己的家。」</blockquote><cite>楼房改变了日本人的生活</cite></li></ol></section>
-<section class="mmx-mod" aria-labelledby="coreask" id="mod-coreask"><h2 id="coreask">核心追问（来自深读）</h2><p class="mmx-mod-note">跨章主题的深读追问，由模型基于全书大纲与原文摘录撰写；逐章的追问收在每个章条目里。</p><div class="mmx-qa"><p class="mmx-q">为什么作者说「要有物业费等于税金的意识」？这个类比改变了对哪一笔支出的判断</p><p class="mmx-a">就「为什么作者说「要有物业费等于税金的意识」？这」而言，大纲从《Digital Lab简介》（Digital Lab是上海译文出版社数字业务的实验部门，成立于2014年3月。）铺到《白金塔的挑战》（白金塔高级公寓楼位于东京都港区，是一座有效发挥民主主义功能的住宅楼），首尾形成对照——这一安排是否成立，需读正文确认。（大纲推断，未亲读）</p></div><div class="mmx-qa"><p class="mmx-q">「五分之四赞成」的重建门槛，为什么在现实中几乎无法达成？它保护的究竟是谁的权利</p><p class="mmx-a">就「「五分之四赞成」的重建门槛，为什么在现实中几」而言，大纲从《Digital Lab简介》（Digital Lab是上海译文出版社数字业务的实验部门，成立于2014年3月。）铺到《白金塔的挑战》（白金塔高级公寓楼位于东京都港区，是一座有效发挥民主主义功能的住宅楼），首尾形成对照——这一安排是否成立，需读正文确认。（大纲推断，未亲读）</p></div><div class="mmx-qa"><p class="mmx-q">从第一章到第八章，作者对「楼房」的态度是变了吗，还是他一直说的是同一件事</p><p class="mmx-a">关于「从第一章到第八章，作者对「楼房」的态度是变了吗，还是」：大纲显示《》以《Digital Lab简介》起手、到《白金塔的挑战》收束，核心脉络与「Digital Lab是上海译文出版社数字业务的实验部门，成立于2014年3月。」相关。以上为大纲条目推断，未亲读正文，读后请核对。</p></div></section>
-<section class="mmx-mod" aria-labelledby="aiask" id="mod-aiask"><h2 id="aiask">AI 问书</h2><p class="mmx-mod-note">下方内容为本书级 AI 问书整理，由云端 AI 阅读流程基于本书大纲、章节锚点与热门划线生成。</p><div class="mmx-qa"><p class="mmx-q">书里说楼房导致少子化，因果成立吗？</p><p class="mmx-a">热门划线直言「楼房的普及对于日本的小家庭化和随之而来的少子化，负有不可推卸的责任」。锚点给的逻辑是：儿女住房离老人太远，孩子无法托付长辈照顾，于是「不能像以前那样生很多孩子」；加上房贷三十五年束缚人生选择。这是相关性论证，不是严密因果，但点出了居住形态对家庭结构的真实重塑。</p></div><div class="mmx-qa"><p class="mmx-q">「五分之四赞成」才能重建，这为什么是陷阱？</p><p class="mmx-a">锚点：「为了进行重建，需要在业主大会上获得五分之四的业主赞成」。老旧楼房里常有失联业主、派系分歧、低价购入想套利者，凑齐八成几乎不可能，于是楼只能烂着。再叠加「S主任利用委托书投出八成赞成」的民主赤字，书中揭示《区分所有法》把决策门槛设到实际不可操作，居民被自己的产权锁死。</p></div><div class="mmx-qa"><p class="mmx-q">作者用什么标准判断日本楼市有泡沫？</p><p class="mmx-a">热门划线给出硬指标：「出租收益率低于5%可判定有泡沫成分、低于4%基本是完完全全的泡沫」。锚点还写「郊外新建商品房十年后半价」「二手房仅新房的五折六折」，说明价格已脱离使用 value。作者用租金回报而非房价涨跌来判断泡沫，这是它比「感觉贵」更可核对的地方。</p></div></section>
-<section class="mmx-mod" aria-labelledby="higher" id="mod-higher"><h2 id="higher">用更高维度的知识看这本书</h2><p class="mmx-mod-note">下方内容由云端 AI 阅读流程生成：把本书放回知识史与理论框架中重读，区分书中主张、外部证据与综合分析。</p><p>【书中主张】本书主张楼房虽推动日本现代化与小家庭化，却因《区分所有法》漏洞、泡沫化与建筑缺陷而威胁幸福，核心论点是「产权困境把居民锁死在自己买的房子里」。【外部证据】热门划线给出可量化判据：「出租收益率低于5%有泡沫成分、低于4%基本是完完全全的泡沫」，以及「房贷三十五年还清在当下不切实际」；这些与日本1990年泡沫破裂、2013年后负利率（黑田「3号火箭筒」）的宏观事实相印证。【综合分析】把本书放回住房政治经济学，它介于批判性与实用指南之间，其价值不在学术创新，而在用大量一手案例（花园城市LaLa横滨施工事故、REINS信息不透明）让「买房=幸福」的神话现出裂缝。</p><p>【书中主张】书中指出日本「几乎所有的楼房都是最近五十年内建造」，且「习惯钢筋混凝土居住形态还不满六十年」，叠加人口老龄化，未来将出现大量「老龄废墟」与重建失败案例。【外部证据】横向比较：英国86%、美国90%的住房交易是二手房，而日本以新房为主，这种结构差异放大了新建依赖与开发商权力；宪法第29条对私有财产的保护也抬高了强制重建的门槛。【综合分析】从比较制度看，本书揭示的是「战后新建崇拜+强私有产权+弱自治」三者的错配；今天可迁移的，是对任一「拥有即幸福」叙事保持警惕——资产也可能是一份你赎不回的债务。</p></section>
-<section class="mmx-mod" aria-labelledby="verify" id="mod-verify"><h2 id="verify">阅读时要验证的问题</h2><p class="mmx-mod-note">下方由云端 AI 阅读流程生成：读时需核对的原文、数字与论点（关键数据出处、个案代表性、类比限度）。</p><ul class="mmx-views"><li>「出租收益率低于5%=泡沫成分、低于4%=完全泡沫」——核查该判据是否引自日本不动产投资实务标准（如RC合成法等），确认是作者引用还是自定阈值，避免当作普适定律。</li><li>「公寓（マンション）一词是开发商约1960年起使用」——核对日语词典与建筑史，确认「apāto/マンション」语义演变，区分「公寓」作为高级称谓的营销起源。</li><li>「花园城市LaLa横滨施工质量问题，支撑桩未达《建筑基准法》承载层数」——核查该真实事故（若有）的报道与年代，确认书中案例是否基于具体事件，避免把演绎当新闻。</li></ul></section>
-<section class="mmx-mod" aria-labelledby="thennow" id="mod-thennow"><h2 id="thennow">当年与今天 · 初步对照</h2><p class="mmx-mod-note">下方由云端 AI 阅读流程生成：区分作者当年所能知晓与后来才显现的事实，给出今日可迁移的启发。</p><p>作者当年（日文版）所能知晓的，是日本泡沫破裂后「失去的三十年」、老龄化与大量老旧楼房待重建的现实；写不出后来全球央行大放水（黑田负利率2016）把「买房抗通胀」重新变成中产信仰。</p><p>后来显现的事实是：中国、韩国也走上「新房崇拜+长周期房贷+开发商金融化」的相似路径，书中「五分之四赞成才能重建」的死结正在多地预演；可迁移的启发是——在房价与幸福感脱钩的时代，产权未必是自由，也可能是一份用三十年收入去供、却卖不回本的负担。</p></section>
+<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点</h2><ul class="mmx-views"><li><b>楼房兴起与社会变革</b>——梳理日本楼房的起源、称谓演变与战后建设浪潮，说明其如何改变日本人的居住形态与家庭结构。</li><li><b>产权治理与管理危机</b>——剖析《区分所有法》漏洞、业委会权力滥用、物业托管错位及维修难题，揭示楼房管理的民主赤字。</li><li><b>跨国资本与市场泡沫</b>——探讨外资爆买、长期房贷刺激与宽松政策催生的房地产泡沫，分析其周期性崩盘与投资神话的破灭。</li><li><b>开发黑幕与销售套路</b>——揭露房地产开发行业的低门槛、暴利追求、样板房心理战及双向中介等侵害消费者权益的行业潜规则。</li><li><b>建筑缺陷与身心健康</b>——指出混凝土建材、高层居住、地震停电及过敏风险对居民身体健康和日常生活带来的负面影响。</li><li><b>老龄废墟与未来出路</b>——直面老旧楼房重建率低、物业费未缴纳及法律滞后的绝境，探索通过民主自治与新型建构寻找楼房的未来。</li></ul></section>
+<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句</h2><ol class="mmx-qlist"><li><blockquote>「最初二十几年是制作广告，后来成为记者。」</blockquote><cite>第一章 买房让日本人走向幸福了吗？</cite></li><li><blockquote>「作为记者，我是站在高度接近购房者(消费者)的立场和视点出发撰写文章，发表言论，有时也会对房地产开发商(供给方)进行尖锐的批评。」</blockquote><cite>第一章 买房让日本人走向幸福了吗？</cite></li><li><blockquote>「在今后的时代里，让日本人走向不幸的楼房或许会越来越多。」</blockquote><cite>第一章 买房让日本人走向幸福了吗？</cite></li><li><blockquote>「如果我发出了“楼市泡沫即将破灭”的信号，开发商想必会很不高兴。但是，看见了破灭的兆头，对购房者做出提醒，告诉他们“现在不是买房的时候”，也是我的工作。」</blockquote><cite>第一章 买房让日本人走向幸福了吗？</cite></li><li><blockquote>「因为今后楼房的数量还会不断增加。对于居住在城市的日本人来说，主要的居住形态就是楼房。今后这个倾向也会进一步增强。」</blockquote><cite>第一章 买房让日本人走向幸福了吗？</cite></li><li><blockquote>「而且，今后住进楼房的人们应该也能过上幸福的生活。」</blockquote><cite>第一章 买房让日本人走向幸福了吗？</cite></li><li><blockquote>「六十年前在钢筋混凝土的集体住宅里生活的日本人，最多也就几千人。」</blockquote><cite>楼房改变了日本人的生活</cite></li><li><blockquote>「现在仅是商品房，日本全国就有六百多万套存量。」</blockquote><cite>楼房改变了日本人的生活</cite></li><li><blockquote>「六十年前，大部分日本人住在集体住宅里，没有自己的家。」</blockquote><cite>楼房改变了日本人的生活</cite></li><li><blockquote>「现在，大部分日本人都住在楼房里，有了自己的家。」</blockquote><cite>楼房改变了日本人的生活</cite></li></ol></section>
+<section class="mmx-mod" aria-labelledby="coreask" id="mod-coreask"><h2 id="coreask">核心追问</h2><div class="mmx-qa"><p class="mmx-q">为什么作者说「要有物业费等于税金的意识」？这个类比改变了对哪一笔支出的判断</p><p class="mmx-a">就「为什么作者说「要有物业费等于税金的意识」？这」而言，大纲从《Digital Lab简介》（Digital Lab是上海译文出版社数字业务的实验部门，成立于2014年3月。）铺到《白金塔的挑战》（白金塔高级公寓楼位于东京都港区，是一座有效发挥民主主义功能的住宅楼），首尾形成对照——这一安排是否成立，需读正文确认。（大纲推断，未亲读）</p></div><div class="mmx-qa"><p class="mmx-q">「五分之四赞成」的重建门槛，为什么在现实中几乎无法达成？它保护的究竟是谁的权利</p><p class="mmx-a">就「「五分之四赞成」的重建门槛，为什么在现实中几」而言，大纲从《Digital Lab简介》（Digital Lab是上海译文出版社数字业务的实验部门，成立于2014年3月。）铺到《白金塔的挑战》（白金塔高级公寓楼位于东京都港区，是一座有效发挥民主主义功能的住宅楼），首尾形成对照——这一安排是否成立，需读正文确认。（大纲推断，未亲读）</p></div><div class="mmx-qa"><p class="mmx-q">从第一章到第八章，作者对「楼房」的态度是变了吗，还是他一直说的是同一件事</p><p class="mmx-a">关于「从第一章到第八章，作者对「楼房」的态度是变了吗，还是」：大纲显示《》以《Digital Lab简介》起手、到《白金塔的挑战》收束，核心脉络与「Digital Lab是上海译文出版社数字业务的实验部门，成立于2014年3月。」相关。以上为大纲条目推断，未亲读正文，读后请核对。</p></div></section>
+<section class="mmx-mod" aria-labelledby="aiask" id="mod-aiask"><h2 id="aiask">AI 问书</h2><div class="mmx-qa"><p class="mmx-q">书里说楼房导致少子化，因果成立吗？</p><p class="mmx-a">热门划线直言「楼房的普及对于日本的小家庭化和随之而来的少子化，负有不可推卸的责任」。锚点给的逻辑是：儿女住房离老人太远，孩子无法托付长辈照顾，于是「不能像以前那样生很多孩子」；加上房贷三十五年束缚人生选择。这是相关性论证，不是严密因果，但点出了居住形态对家庭结构的真实重塑。</p></div><div class="mmx-qa"><p class="mmx-q">「五分之四赞成」才能重建，这为什么是陷阱？</p><p class="mmx-a">锚点：「为了进行重建，需要在业主大会上获得五分之四的业主赞成」。老旧楼房里常有失联业主、派系分歧、低价购入想套利者，凑齐八成几乎不可能，于是楼只能烂着。再叠加「S主任利用委托书投出八成赞成」的民主赤字，书中揭示《区分所有法》把决策门槛设到实际不可操作，居民被自己的产权锁死。</p></div><div class="mmx-qa"><p class="mmx-q">作者用什么标准判断日本楼市有泡沫？</p><p class="mmx-a">热门划线给出硬指标：「出租收益率低于5%可判定有泡沫成分、低于4%基本是完完全全的泡沫」。锚点还写「郊外新建商品房十年后半价」「二手房仅新房的五折六折」，说明价格已脱离使用 value。作者用租金回报而非房价涨跌来判断泡沫，这是它比「感觉贵」更可核对的地方。</p></div></section>
+<section class="mmx-mod" aria-labelledby="higher" id="mod-higher"><h2 id="higher">更高维度</h2><p>【书中主张】本书主张楼房虽推动日本现代化与小家庭化，却因《区分所有法》漏洞、泡沫化与建筑缺陷而威胁幸福，核心论点是「产权困境把居民锁死在自己买的房子里」。【外部证据】热门划线给出可量化判据：「出租收益率低于5%有泡沫成分、低于4%基本是完完全全的泡沫」，以及「房贷三十五年还清在当下不切实际」；这些与日本1990年泡沫破裂、2013年后负利率（黑田「3号火箭筒」）的宏观事实相印证。【综合分析】把本书放回住房政治经济学，它介于批判性与实用指南之间，其价值不在学术创新，而在用大量一手案例（花园城市LaLa横滨施工事故、REINS信息不透明）让「买房=幸福」的神话现出裂缝。</p><p>【书中主张】书中指出日本「几乎所有的楼房都是最近五十年内建造」，且「习惯钢筋混凝土居住形态还不满六十年」，叠加人口老龄化，未来将出现大量「老龄废墟」与重建失败案例。【外部证据】横向比较：英国86%、美国90%的住房交易是二手房，而日本以新房为主，这种结构差异放大了新建依赖与开发商权力；宪法第29条对私有财产的保护也抬高了强制重建的门槛。【综合分析】从比较制度看，本书揭示的是「战后新建崇拜+强私有产权+弱自治」三者的错配；今天可迁移的，是对任一「拥有即幸福」叙事保持警惕——资产也可能是一份你赎不回的债务。</p></section>
+<section class="mmx-mod" aria-labelledby="verify" id="mod-verify"><h2 id="verify">阅读验证</h2><ul class="mmx-views"><li>「出租收益率低于5%=泡沫成分、低于4%=完全泡沫」——核查该判据是否引自日本不动产投资实务标准（如RC合成法等），确认是作者引用还是自定阈值，避免当作普适定律。</li><li>「公寓（マンション）一词是开发商约1960年起使用」——核对日语词典与建筑史，确认「apāto/マンション」语义演变，区分「公寓」作为高级称谓的营销起源。</li><li>「花园城市LaLa横滨施工质量问题，支撑桩未达《建筑基准法》承载层数」——核查该真实事故（若有）的报道与年代，确认书中案例是否基于具体事件，避免把演绎当新闻。</li></ul></section>
+<section class="mmx-mod" aria-labelledby="thennow" id="mod-thennow"><h2 id="thennow">往日今时</h2><p>作者当年（日文版）所能知晓的，是日本泡沫破裂后「失去的三十年」、老龄化与大量老旧楼房待重建的现实；写不出后来全球央行大放水（黑田负利率2016）把「买房抗通胀」重新变成中产信仰。</p><p>后来显现的事实是：中国、韩国也走上「新房崇拜+长周期房贷+开发商金融化」的相似路径，书中「五分之四赞成才能重建」的死结正在多地预演；可迁移的启发是——在房价与幸福感脱钩的时代，产权未必是自由，也可能是一份用三十年收入去供、却卖不回本的负担。</p></section>
 </body>
 </html>

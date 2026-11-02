@@ -6,46 +6,108 @@
 <title>《戴老师魔性诗词课》｜通读 · 精读</title>
 <link rel="stylesheet" href="../../../assets/css/reading-overview.css"><link rel="stylesheet" href="../../../assets/css/mmx-guide.css"><link rel="stylesheet" href="../../../assets/css/reading-outline.css">
 <style>
-/* 合并页外壳 */
-body{max-width:960px;margin:0 auto;padding:0 18px 80px;}
-.combined-head{padding:34px 0 18px;border-bottom:1px solid #e7e0d2;margin-bottom:8px;}
-.combined-head h1{font-size:26px;margin:0 0 10px;}
+/* ── 外壳与全局阅读节奏 ── */
+body{max-width:880px;margin:0 auto;padding:0 18px 80px;
+  font-size:15px;line-height:1.88;color:#3b453e;background:#f7f8f3;
+  -webkit-font-smoothing:antialiased;}
+.combined-head{padding:30px 0 16px;border-bottom:1px solid #e7e0d2;margin-bottom:4px;}
+.combined-head h1{font:700 23px/1.35 var(--serif);margin:0 0 8px;color:#244b40;}
+.combined-head .eyebrow{font-size:.72rem;letter-spacing:.14em;margin:0 0 6px;}
+.chips{margin:8px 0 0;}
+.chip{font-size:.72rem;padding:2px 10px;}
 /* 锚点导航：固定一排 4 个，等宽对齐 */
-.nav{position:sticky;top:0;z-index:20;background:rgba(255,253,248,.96);backdrop-filter:blur(6px);
-  border-bottom:1px solid #ece4d4;padding:10px 0;margin:14px 0 26px;display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;
-  box-shadow:0 2px 10px rgba(120,100,60,.06);}
-.navlink{font-size:12.5px;color:#5d5443;text-decoration:none;background:#f6f1e6;border:1px solid #e7ddca;
-  border-radius:7px;padding:4px 6px;text-align:center;white-space:nowrap;overflow:hidden;
-  text-overflow:ellipsis;}
-section{scroll-margin-top:64px;}
-/* 一句话主旨：去左侧竖线 */
-.mmx-oneline{border-left:none;padding-left:18px;}
-/* AI领读章内：AI 大纲原生深层样式 */
-.merged-guide .sec{margin:10px 0 14px;padding-left:6px;border-left:2px solid #e5e0d6}
-.merged-guide .sec h4{font:600 .98rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.6em 0 .3em}
-.merged-guide ul.point{margin:.3em 0;padding-left:20px}
-.merged-guide ul.point>li{margin:.35em 0}
-.merged-guide ul.quote{margin:.25em 0 .25em 20px;padding-left:18px;list-style:none}
-.merged-guide ul.quote::before{content:"原句";display:block;font-size:.72rem;color:#bf8247;
-  letter-spacing:.1em;margin:.15em 0 .1em;font-weight:600}
-.merged-guide ul.quote.quote-node{margin-top:.5em;padding-top:.4em;border-top:1px dashed #eadfc9}
+.nav{position:sticky;top:0;z-index:20;background:rgba(247,248,243,.96);backdrop-filter:blur(6px);
+  border-bottom:1px solid #ece4d4;padding:10px 0;margin:12px 0 20px;display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;
+  box-shadow:0 2px 10px rgba(120,100,60,.05);}
+.navlink{font-size:12px;color:#5d5443;text-decoration:none;background:#fdfbf3;border:1px solid #e8e2d2;
+  border-radius:8px;padding:6px 4px;text-align:center;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;transition:background .15s,color .15s;}
+.navlink:hover{background:#f2efe2;color:#244b40;}
+section{scroll-margin-top:62px;}
+
+/* ── 统一卡片：所有顶层模块（AI领读 / AI 问答 / 其余）一视同仁 ── */
+body>section.mmx-mod,body>section.card,body>section.mmx-svgwrap{
+  background:#fffdf6;border:1px solid #e8e4d5;border-radius:16px;
+  padding:18px 22px;margin:18px 0;
+  box-shadow:0 1px 3px rgba(110,95,60,.05);}
+body>section.mmx-mod>*:first-child,body>section.card>*:first-child,
+body>section.mmx-svgwrap>*:first-child{margin-top:0}
+body>section.mmx-mod>*:last-child,body>section.card>*:last-child,
+body>section.mmx-svgwrap>*:last-child{margin-bottom:0}
+/* 结构导图：图本身留白居中，不与正文抢宽 */
+body>section.mmx-svgwrap>svg.mmx-svg{display:block;width:100%;height:auto;margin:2px auto 0;}
+/* 模块标题：统一大小、弱强调，不与正文抢注意力 */
+body>section.mmx-mod>h2,body>section.card>h2{
+  font:700 1.04rem/1.5 var(--serif);color:#244b40;margin:0 0 11px;
+  padding-left:10px;border-left:3px solid #bf8247;letter-spacing:.01em;}
+/* 正文：字号收小、行距放宽、段间距舒服 */
+body>section.mmx-mod p,body>section.card p,
+body>section.mmx-mod li,body>section.card li{
+  font-size:.9rem;line-height:1.92;color:#4a4436;}
+body>section.mmx-mod p,body>section.card p{margin:.5em 0;}
+body>section.mmx-mod>ul,body>section.mmx-mod>ol,body>section.mmx-mod>div,
+body>section.mmx-mod>p:not(.mmx-mod-note),
+body>section.card:not(.merged-guide)>ul,body>section.card:not(.merged-guide)>ol,
+body>section.card:not(.merged-guide)>div,body>section.card:not(.merged-guide)>p:not(.mmx-mod-note){
+  padding-left:14px;}
+/* 模块说明小字：弱化不抢眼 */
+.mmx-mod-note{font-size:.75rem;color:#8d8878;margin:.1em 0 .75em;line-height:1.7;}
+
+/* ── 内部块统一：卡片里不再套深卡片，一律浅底子块 ── */
+body>section .mmx-pending,body>section .mmx-evib,body>section .aiqa-item{
+  background:#fbfaf2;border:1px solid #eee9d8;border-radius:12px;
+  padding:13px 16px;margin:.65em 0;}
+body>section .mmx-evib ul{padding-left:1.15em;}
+/* 一句话主旨：去左侧竖线 + 收敛字号 */
+.mmx-oneline{font-size:.98rem;line-height:1.85;color:#3a352c;margin:.2em 0 0;
+  padding:12px 16px;background:#fbfaf4;border-left:none;border-radius:12px;}
+/* 核心观点 / 验证清单：虚线分隔 + 收紧行距 */
+.mmx-views li{padding:.5em 0 .5em 0;font-size:.9rem;line-height:1.88;}
+/* 原文金句 */
+.mmx-qlist li{padding:.6em 0 .6em 2.2em;}
+.mmx-qlist blockquote{font-size:.89rem;line-height:1.9;}
+.mmx-qlist cite{font-size:.72rem;}
+/* 核心追问：问句加重、答句放松 */
+.mmx-qa{margin:.7em 0;padding-left:12px;border-left:3px solid #e5dfcd;}
+.mmx-qa .mmx-q{font-size:.9rem;font-weight:700;color:#2f3a33;line-height:1.8;margin:0 0 .25em;}
+.mmx-qa .mmx-a{font-size:.88rem;line-height:1.95;color:#4a4436;margin:0;}
+
+/* ── AI 问书专项：外层容器透明，问答条目才是阅读单元 ── */
+#mod-aiask .mmx-ask{background:transparent;border:0;border-radius:0;padding:0;margin:0;}
+#mod-aiask .aiqa-item{margin:.6em 0;padding:14px 16px 15px;}
+#mod-aiask .aiqa-item h3{font:700 .93rem/1.7 var(--serif);color:#2f5b49;margin:0 0 .4em;
+  padding:0;border:0;}
+#mod-aiask .aiqa-item h3:before{content:"问　";color:#bf8247;font-weight:700;}
+#mod-aiask .aiqa-item p{font-size:.88rem;line-height:1.95;color:#4a4436;margin:.4em 0;}
+#mod-aiask .aiqa-item ul{margin:.35em 0;padding-left:1.1em;}
+#mod-aiask .aiqa-item li{font-size:.87rem;line-height:1.88;margin:.18em 0;color:#4a4436;}
+#mod-aiask .aiqa-item li::marker{color:#c0a06a;}
+/* 逐章追问（details 形态）：摘要行也收敛 */
+.mmx-ask>summary{font-size:.87rem;line-height:1.7;padding:2px 0;}
+.mmx-askbody{font-size:.88rem;line-height:1.9;}
+
+/* AI领读章内：AI 大纲原生深层样式（字号同步收小） */
+.merged-guide .sec{margin:9px 0 12px;padding-left:6px;border-left:2px solid #e5e0d6}
+.merged-guide .sec h4{font:600 .93rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.5em 0 .25em}
+.merged-guide ul.point{margin:.25em 0;padding-left:20px}
+.merged-guide ul.point>li{margin:.3em 0}
+.merged-guide ul.quote{margin:.22em 0 .22em 20px;padding-left:18px;list-style:none}
+.merged-guide ul.quote::before{content:"原句";display:block;font-size:.7rem;color:#bf8247;
+  letter-spacing:.1em;margin:.12em 0 .08em;font-weight:600}
+.merged-guide ul.quote.quote-node{margin-top:.45em;padding-top:.35em;border-top:1px dashed #eadfc9}
 .merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
-.merged-guide ul.quote>li{color:#4a4436;font-size:.93rem;margin:.2em 0;padding-left:10px;border-left:2px solid #bf8247}
-/* 模块内子内容（AI领读除外，它有专属深层样式）：左缩进 + 正文与标题分层 */
-section.mmx-mod>ul,section.mmx-mod>ol,section.mmx-mod>div,
-section.mmx-mod>p:not(.mmx-mod-note),
-section.card:not(.merged-guide)>ul,section.card:not(.merged-guide)>ol,
-section.card:not(.merged-guide)>div,section.card:not(.merged-guide)>p:not(.mmx-mod-note){
-  padding-left:16px;}
-section.mmx-mod li,section.mmx-mod p:not(.mmx-mod-note),
-section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mod-note){
-  color:#4a4436;font-size:.93rem;line-height:1.78;}
+.merged-guide ul.quote>li{color:#4a4436;font-size:.88rem;line-height:1.85;margin:.18em 0;padding-left:10px;border-left:2px solid #bf8247}
 /* 核心观点初判：外链 mmx-guide.css 的「观点N」前缀是绝对定位，在本页版式里和标题叠字，
    且此前要求去掉「观点1/2/3」前缀 —— 这里整条关掉（外链 CSS 不在页面内，只能内联覆盖）。 */
 .mmx-views li{padding-left:0 !important;}
 .mmx-views li:before,.mmx-views li::before{
   content:none !important;display:none !important;counter-increment:none !important;}
+@media(max-width:720px){
+  body{padding:0 12px 60px;font-size:14.5px;}
+  body>section.mmx-mod,body>section.card{padding:15px 16px;border-radius:14px;}
+  .nav{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
 </style>
 </head>
 <body>
@@ -54,8 +116,8 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
   <h1>《戴老师魔性诗词课》</h1>
   <div class="chips"><span class="chip">通读 + 精读</span><span class="chip">AI领读</span><span class="chip">AI 生产</span></div>
 </header>
-<nav class="nav"><a class="navlink" href="#mod-svg">全书结构导图</a><a class="navlink" href="#mod-oneline">一句话主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a><a class="navlink" href="#mod-aiask">AI 问书</a><a class="navlink" href="#mod-coreask">核心追问</a><a class="navlink" href="#mod-higher">更高维度</a><a class="navlink" href="#mod-verify">阅读验证</a><a class="navlink" href="#mod-thennow">当年与今天</a></nav>
-<section class="mmx-svgwrap" id="mod-svg">
+<nav class="nav"><a class="navlink" href="#mod-svg">结构导图</a><a class="navlink" href="#mod-oneline">核心主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a><a class="navlink" href="#mod-aiask">AI 问书</a><a class="navlink" href="#mod-coreask">核心追问</a><a class="navlink" href="#mod-higher">更高维度</a><a class="navlink" href="#mod-verify">阅读验证</a><a class="navlink" href="#mod-thennow">往日今时</a></nav>
+<section class="mmx-svgwrap" id="mod-svg"><h2>结构导图</h2>
 <svg class="mmx-svg" viewBox="0 0 1120 716" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="戴老师魔性诗词课 全书精读">
 <rect x="0" y="0" width="1120" height="716" fill="none"/>
 <style>.mmx-svg text{font-family:"Noto Serif SC",Georgia,serif}.mmx-svg .t1{font-size:15px;fill:#2f2a24;font-weight:600}.mmx-svg .t2{font-size:12px;fill:#5c5347}.mmx-svg .t3{font-size:10.5px;fill:#8a8272}.mmx-svg .rt{font-size:13px;fill:#f7f3ea;font-weight:600}.mmx-svg .ln{stroke:#cfc6b4;stroke-width:1.4;fill:none}</style>
@@ -133,7 +195,7 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
 <text class="t2" x="714" y="615">含「25 杜甫的自嘲」至「27 “诗歌最高成就奖”」</text>
 <path class="ln" d="M692 619 L700 619"/>
 </svg></section>
-<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">一句话主旨</h2><p class="mmx-mod-note">本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。</p><p class="mmx-oneline">《戴老师魔性诗词课》共 66 章，按章序折成 10 段主干（第 1–7 章、第 8–14 章、第 15–21 章）；每章的要点与原句均逐字取自本书 AI 大纲，未做人工解读。</p></section>
+<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">核心主旨</h2><p class="mmx-oneline">《戴老师魔性诗词课》共 66 章，按章序折成 10 段主干（第 1–7 章、第 8–14 章、第 15–21 章）；每章的要点与原句均逐字取自本书 AI 大纲，未做人工解读。</p></section>
 <section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" id="mod-merged_guide"><h2 id="merged-guide-title">AI领读</h2>
 <style>
 /* merged_guide 章内：AI 大纲原生深层样式 */
@@ -4378,12 +4440,12 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
       </div></details>
   </div>
 </section>
-<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点初判</h2><p class="mmx-mod-note">按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。</p><ul class="mmx-views"><li><b>第 1–7 章</b>——含「序 诗国的“爷们”——和」至「六 你能品味“沉郁顿挫”」</li><li><b>第 8–14 章</b>——含「七 李杜诗篇：为何读与如」至「06 写这首诗，高考绝对」</li><li><b>第 15–21 章</b>——含「07 走狗屎运！」至「13 岂一个“爽”字了得」</li><li><b>第 22–28 章</b>——含「14 别样的琴声」至「20 一座古名楼，两个浪」</li><li><b>第 29–35 章</b>——含「21 飘飘欲仙」至「27 敬亭山老兄，你好！」</li><li><b>第 36–42 章</b>——含「28 越热闹，越孤独」至「03 想当年」</li><li><b>第 43–49 章</b>——含「04 “酒仙”群雕」至「10 纪事与感事」</li><li><b>第 50–56 章</b>——含「11 帝国的兴衰与心灵的」至「17 回望盛世」</li><li><b>第 57–63 章</b>——含「18 语丽情哀」至「24 《登高》：七律的绝」</li><li><b>第 64–66 章</b>——含「25 杜甫的自嘲」至「27 “诗歌最高成就奖”」</li></ul></section>
-<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句 · 持续积累</h2><p class="mmx-mod-note">以下原句取自本书大纲落库的原文摘录，按大纲顺序节选，非 AI 生成；更多见逐章深读页。</p><ol class="mmx-qlist"><li><blockquote>「在全国各个大学里，每年都有几万名学生选修，深受青年学子们的欢迎。」</blockquote><cite>序 诗国的“爷们”——和你侃侃李白与杜甫</cite></li><li><blockquote>「“戴建业口音”还这么动听，很长一段时间一直排在热搜榜的前几名。」</blockquote><cite>序 诗国的“爷们”——和你侃侃李白与杜甫</cite></li><li><blockquote>「从宋人开始，学诗的首选是唐诗，读唐诗的首选又是盛唐诗」</blockquote><cite>一 你见过双日当空吗？</cite></li><li><blockquote>「严羽在《沧浪诗话》中说：“夫学诗者以识为主，入门须正，立志须高，以汉魏晋盛唐为师，不作开元、天宝以下人物。”。」</blockquote><cite>一 你见过双日当空吗？</cite></li><li><blockquote>「闻一多先生十分形象地比喻说，这是中国的太阳和月亮碰了头。」</blockquote><cite>一 你见过双日当空吗？</cite></li><li><blockquote>「李白与杜甫刚一碰头，中国的诗坛上便红霞满天——出现了光耀万代的“盛唐气象”。」</blockquote><cite>一 你见过双日当空吗？</cite></li><li><blockquote>「“大诗人”不仅必须诗艺非凡，还必须人格伟大和境界崇高。」</blockquote><cite>一 你见过双日当空吗？</cite></li><li><blockquote>「中国古代被称为“大诗人”的屈指可数，如屈原、陶渊明、李白、杜甫、苏轼等」</blockquote><cite>一 你见过双日当空吗？</cite></li><li><blockquote>「他们中间屈、陶、苏，在各自的时代都是孤日当空，唯独李白与杜甫是双日并世。」</blockquote><cite>一 你见过双日当空吗？</cite></li><li><blockquote>「“盛唐气象”是指几种风格特点：或雄壮，或浑厚，或飘逸，或沉郁，或悲壮。」</blockquote><cite>二 “盛唐气象”长啥样？</cite></li></ol></section>
-<section class="mmx-mod" aria-labelledby="aiask" id="mod-aiask"><h2 id="aiask">AI 问书</h2><p class="mmx-mod-note">下方内容为本书级 AI 问书整理，由云端 AI 阅读流程基于本书大纲、章节锚点与热门划线生成。</p><div class="mmx-qa"><p class="mmx-q">如果只用一首诗讲清“豪放飘逸”，书里会挑哪一首？</p><p class="mmx-a">“05 疯子送别”的标题已经给出答案：《宣州谢朓楼饯别校书叔云》。“弃我去者昨日之日不可留”起手即断，中间“抽刀断水水更流”自造比喻，收在“明朝散发弄扁舟”。戴老师用它示范“飘逸”不是轻，而是快——情绪在一首诗里反复翻转，正合792人划的那句“一下发烧，一下冰冷”。</p></div><div class="mmx-qa"><p class="mmx-q">讲《早发白帝城》的那一节为什么叫“数学学霸”？</p><p class="mmx-a">因为它是全集里最能用数字讲清速度感的一首：“千里江陵一日还”是距离与时间的比值，“轻舟已过万重山”是加速度。这一节把它放回遇赦东归的处境里读——数字不是修辞技巧，是心境：只有刚被赦免的人，才会去算“一日”能走完“千里”。</p></div><div class="mmx-qa"><p class="mmx-q">“戴建业口音”为什么能红？这本书的“魔性”究竟来自哪里？</p><p class="mmx-a">序章自己交代过：口音上过热搜，他自嘲“我的普通话竟然讲得这么‘标准’”。但真正的魔性是保留思考过程——969人划的那条：“这种先有鸡还是先有蛋似的鬼问题，是刚才写着写着才冒出来的，说真的，它把我自己也给弄蒙了。”他让学生看见结论是怎么长出来的，而不是只递一个结论。</p></div></section>
-<section class="mmx-mod" aria-labelledby="coreask" id="mod-coreask"><h2 id="coreask">核心追问（来自深读）</h2><p class="mmx-mod-note">跨章主题的深读追问，由云端 AI 阅读流程基于全书大纲、章节锚点与热门划线撰写；逐章的追问收在每个章条目里。</p><div class="mmx-qa"><p class="mmx-q">全书先讲李白与杜甫在洛阳相会，再讲十六讲李白诗，为什么不直接开讲《将进酒》？</p><p class="mmx-a">因为他要先立尺子再讲诗。序章之后，“一 你见过双日当空吗？”先写天宝三载李杜洛阳相会（1020人划线），再给出“大诗人”三条硬指标——诗艺非凡、人格伟大、境界崇高（799人划线）；屈、陶、苏在各自时代都是孤日当空，唯独李杜双日并世。尺子立住，后面“03 大唐最狠劝酒歌”“06 写这首诗，高考绝对不及格”才谈得上好在哪里。</p></div><div class="mmx-qa"><p class="mmx-q">“盛唐气象”被当成全书骨架，这个概念的判别力够吗？边界在哪里？</p><p class="mmx-a">戴老师把它拆成雄壮、浑厚、飘逸、沉郁、悲壮五种风格，这一步其实自我消解：连杜甫的沉郁也算盛唐气象，那“气象”就不再是风格，而是政治气候——765人划的“一个时代的统治者越自信，那个时代就越宽容”正是这个逻辑。边界由此暴露：气象要靠崩塌才显形，安史之乱后的杜甫才是真正的样本。</p></div><div class="mmx-qa"><p class="mmx-q">“盛世必然出现伟人，伟人必然创造盛世”是全书最响的一句，它站得住吗？最大反例是什么？</p><p class="mmx-a">站不住，这是循环论证，而且被书里另一条直接推翻——979人划的“诗人高度的自信与彻底的自卑同在，无边的欢乐与无边的忧伤并存”。反例就是李白本人：功业几乎为零，“04 把高尚和功利都嘲讽了一通”讲《梁园吟》，最亮的句子出自最失意的人。盛世给的是舞台，不是才华。</p></div></section>
-<section class="mmx-mod" aria-labelledby="higher" id="mod-higher"><h2 id="higher">用更高维度的知识看这本书</h2><p class="mmx-mod-note">下方内容由云端 AI 阅读流程生成：把本书放回知识史与理论框架中重读，区分书中主张、外部证据与综合分析。</p><p>【书中主张】戴建业把“盛唐气象”的源头钉在两处：唐人殷璠《河岳英灵集序》“开元十五年后，声律风骨兼备矣”，以及严羽《沧浪诗话》“入门须正，立志须高，以汉魏晋盛唐为师”；再引鲁迅说唐诗是后人无法逾越的高峰，说明人“诗必盛唐”。【外部证据】但“盛唐气象”作为现代学术术语，通常追溯到林庚1950—60年代的论述，他把气象与“少年精神”绑定；闻一多“中国的太阳和月亮碰了头”（1020人划线）也是现代学术修辞，而非唐人自评。【综合分析】这本书做的是一次“学术概念的口语化回译”：把二十世纪学界的判断重新讲成课堂语言。风险也随之而来——听众容易把林庚式的浪漫化想象当成唐代原貌，而书里引用的殷璠与严羽，恰恰一位是有明确取舍的选家，一位是有宗派立场的批评家，都不是中立证人。</p><p>【书中主张】954人划的“人的生命力越旺盛，他的欲望就越多，他的抱负就越大……因而他的痛苦可能越深”，与684人划的“可见志向越远大，幸福感就越少”，把诗风还原成生命力与失望的函数。【外部证据】这与现代心理学中目标强度与主观幸福感的负相关、以及“适应—参照点”效应方向一致；但765人划的“统治者越自信，时代越宽容”属于典型的社会决定论，现代文学社会学（如布迪厄的场域理论）会要求补上另一半——诗体自身的格律积累。【综合分析】两条路径合起来才完整：政治气候给了自信，声律积累给了工具；所以书里才反复强调殷璠那句“声律风骨兼备”——不是任选一个年份，而是两件事恰好在同一时刻成熟。今天可迁移的正是这个“双条件”思路：评价一个创作高峰，既要看它给了人什么，也要看它给了人什么形式。</p></section>
-<section class="mmx-mod" aria-labelledby="verify" id="mod-verify"><h2 id="verify">阅读时要验证的问题</h2><p class="mmx-mod-note">下方由云端 AI 阅读流程生成：读时需核对的原文、数字与论点（关键数据出处、个案代表性、类比限度）。</p><ul class="mmx-views"><li>年份与出处需核对：书中称“天宝三载，李白和杜甫在洛阳相会”（1020人划线）。李杜初会的年份学界通常记为天宝三载（744年），但相会地点有洛阳、梁宋等不同说法；“闻一多‘太阳和月亮碰了头’”的原文出处需核对具体篇目，不宜仅凭转述引用。</li><li>引文用字需核对：第二章引殷璠《河岳英灵集序》“开元十五年后，声律风骨兼备矣”，通行本多作“声律风骨始备矣”；另“15 ‘天生丽质’”讲“诗眼”的来历与所举例证（如第12讲所引《夜泊牛渚怀古》、书中“犬吠水声中，桃花带雨浓”一首的用字），需与李白全集及各家注本对账。</li><li>讲次取舍需核对：01—16讲全部给了李白（“最浪漫的糊涂虫”“走狗屎运！”“数学学霸”“神韵诗派的鼻祖”等），杜甫只占“四 别样的‘盛唐’”与“六 你能品味‘沉郁顿挫’吗？”两讲，与序章“双日并世”的对等设定并不对称。需核对本书是否为课堂录音／视频整理稿——若是，不对称来自课程编排而非作者取舍，引用时不宜当作完整的李杜比较论。</li></ul></section>
-<section class="mmx-mod" aria-labelledby="thennow" id="mod-thennow"><h2 id="thennow">当年与今天 · 初步对照</h2><p class="mmx-mod-note">下方由云端 AI 阅读流程生成：区分作者当年所能知晓与后来才显现的事实，给出今日可迁移的启发。</p><p>【作者当年所能知晓】戴建业讲的是1980年代以来唐宋文学研究形成的共识版盛唐：以《唐诗三百首》的选目传统为底子，以殷璠、严羽的宗派判断为经，以闻一多的现代学术修辞为纬。序章已写明，“走近大诗人”是面向本科生的选修课，视频后来进了“超星名师讲坛”——它的原始形态是教室里的课，不是为短视频写的文案。他当年能依据的材料，也仅限于这条脉络之内的资源。【后来才显现的事实】“魔性”走红发生在课程录制多年之后：书中自述“戴建业口音”“很长一段时间一直排在热搜榜的前几名”。文本没变，介质变了——同一套口语化讲解，在课堂上只是好懂，到了碎片分发时代才被读成“魔性”。这一条提醒我们区分“内容”与“传播”：红的是后者，扎实的仍是前者。</p><p>【可迁移的启发】第一条是把“生命力—欲望—痛苦”当作联动系统来读人，而不是贴标签：684人划的“志向越远大，幸福感就越少”，配上李白漫游、求仕、入长安、流放的完整履历，构成一条可复用的解释链——一个人的高光与低谷往往同源。第二条更有用也更难：765人划的“统治者越自信，那个时代就越宽容”，提示我们判断一个创作环境，看的不是它允许多少赞美，而是它能容下多少与主调相反的作品。杜甫的“沉郁”能被算进“盛唐气象”，本身就是一条可核对的宽容度指标。</p></section>
+<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点</h2><ul class="mmx-views"><li><b>第 1–7 章</b>——含「序 诗国的“爷们”——和」至「六 你能品味“沉郁顿挫”」</li><li><b>第 8–14 章</b>——含「七 李杜诗篇：为何读与如」至「06 写这首诗，高考绝对」</li><li><b>第 15–21 章</b>——含「07 走狗屎运！」至「13 岂一个“爽”字了得」</li><li><b>第 22–28 章</b>——含「14 别样的琴声」至「20 一座古名楼，两个浪」</li><li><b>第 29–35 章</b>——含「21 飘飘欲仙」至「27 敬亭山老兄，你好！」</li><li><b>第 36–42 章</b>——含「28 越热闹，越孤独」至「03 想当年」</li><li><b>第 43–49 章</b>——含「04 “酒仙”群雕」至「10 纪事与感事」</li><li><b>第 50–56 章</b>——含「11 帝国的兴衰与心灵的」至「17 回望盛世」</li><li><b>第 57–63 章</b>——含「18 语丽情哀」至「24 《登高》：七律的绝」</li><li><b>第 64–66 章</b>——含「25 杜甫的自嘲」至「27 “诗歌最高成就奖”」</li></ul></section>
+<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句</h2><ol class="mmx-qlist"><li><blockquote>「在全国各个大学里，每年都有几万名学生选修，深受青年学子们的欢迎。」</blockquote><cite>序 诗国的“爷们”——和你侃侃李白与杜甫</cite></li><li><blockquote>「“戴建业口音”还这么动听，很长一段时间一直排在热搜榜的前几名。」</blockquote><cite>序 诗国的“爷们”——和你侃侃李白与杜甫</cite></li><li><blockquote>「从宋人开始，学诗的首选是唐诗，读唐诗的首选又是盛唐诗」</blockquote><cite>一 你见过双日当空吗？</cite></li><li><blockquote>「严羽在《沧浪诗话》中说：“夫学诗者以识为主，入门须正，立志须高，以汉魏晋盛唐为师，不作开元、天宝以下人物。”。」</blockquote><cite>一 你见过双日当空吗？</cite></li><li><blockquote>「闻一多先生十分形象地比喻说，这是中国的太阳和月亮碰了头。」</blockquote><cite>一 你见过双日当空吗？</cite></li><li><blockquote>「李白与杜甫刚一碰头，中国的诗坛上便红霞满天——出现了光耀万代的“盛唐气象”。」</blockquote><cite>一 你见过双日当空吗？</cite></li><li><blockquote>「“大诗人”不仅必须诗艺非凡，还必须人格伟大和境界崇高。」</blockquote><cite>一 你见过双日当空吗？</cite></li><li><blockquote>「中国古代被称为“大诗人”的屈指可数，如屈原、陶渊明、李白、杜甫、苏轼等」</blockquote><cite>一 你见过双日当空吗？</cite></li><li><blockquote>「他们中间屈、陶、苏，在各自的时代都是孤日当空，唯独李白与杜甫是双日并世。」</blockquote><cite>一 你见过双日当空吗？</cite></li><li><blockquote>「“盛唐气象”是指几种风格特点：或雄壮，或浑厚，或飘逸，或沉郁，或悲壮。」</blockquote><cite>二 “盛唐气象”长啥样？</cite></li></ol></section>
+<section class="mmx-mod" aria-labelledby="aiask" id="mod-aiask"><h2 id="aiask">AI 问书</h2><div class="mmx-qa"><p class="mmx-q">如果只用一首诗讲清“豪放飘逸”，书里会挑哪一首？</p><p class="mmx-a">“05 疯子送别”的标题已经给出答案：《宣州谢朓楼饯别校书叔云》。“弃我去者昨日之日不可留”起手即断，中间“抽刀断水水更流”自造比喻，收在“明朝散发弄扁舟”。戴老师用它示范“飘逸”不是轻，而是快——情绪在一首诗里反复翻转，正合792人划的那句“一下发烧，一下冰冷”。</p></div><div class="mmx-qa"><p class="mmx-q">讲《早发白帝城》的那一节为什么叫“数学学霸”？</p><p class="mmx-a">因为它是全集里最能用数字讲清速度感的一首：“千里江陵一日还”是距离与时间的比值，“轻舟已过万重山”是加速度。这一节把它放回遇赦东归的处境里读——数字不是修辞技巧，是心境：只有刚被赦免的人，才会去算“一日”能走完“千里”。</p></div><div class="mmx-qa"><p class="mmx-q">“戴建业口音”为什么能红？这本书的“魔性”究竟来自哪里？</p><p class="mmx-a">序章自己交代过：口音上过热搜，他自嘲“我的普通话竟然讲得这么‘标准’”。但真正的魔性是保留思考过程——969人划的那条：“这种先有鸡还是先有蛋似的鬼问题，是刚才写着写着才冒出来的，说真的，它把我自己也给弄蒙了。”他让学生看见结论是怎么长出来的，而不是只递一个结论。</p></div></section>
+<section class="mmx-mod" aria-labelledby="coreask" id="mod-coreask"><h2 id="coreask">核心追问</h2><div class="mmx-qa"><p class="mmx-q">全书先讲李白与杜甫在洛阳相会，再讲十六讲李白诗，为什么不直接开讲《将进酒》？</p><p class="mmx-a">因为他要先立尺子再讲诗。序章之后，“一 你见过双日当空吗？”先写天宝三载李杜洛阳相会（1020人划线），再给出“大诗人”三条硬指标——诗艺非凡、人格伟大、境界崇高（799人划线）；屈、陶、苏在各自时代都是孤日当空，唯独李杜双日并世。尺子立住，后面“03 大唐最狠劝酒歌”“06 写这首诗，高考绝对不及格”才谈得上好在哪里。</p></div><div class="mmx-qa"><p class="mmx-q">“盛唐气象”被当成全书骨架，这个概念的判别力够吗？边界在哪里？</p><p class="mmx-a">戴老师把它拆成雄壮、浑厚、飘逸、沉郁、悲壮五种风格，这一步其实自我消解：连杜甫的沉郁也算盛唐气象，那“气象”就不再是风格，而是政治气候——765人划的“一个时代的统治者越自信，那个时代就越宽容”正是这个逻辑。边界由此暴露：气象要靠崩塌才显形，安史之乱后的杜甫才是真正的样本。</p></div><div class="mmx-qa"><p class="mmx-q">“盛世必然出现伟人，伟人必然创造盛世”是全书最响的一句，它站得住吗？最大反例是什么？</p><p class="mmx-a">站不住，这是循环论证，而且被书里另一条直接推翻——979人划的“诗人高度的自信与彻底的自卑同在，无边的欢乐与无边的忧伤并存”。反例就是李白本人：功业几乎为零，“04 把高尚和功利都嘲讽了一通”讲《梁园吟》，最亮的句子出自最失意的人。盛世给的是舞台，不是才华。</p></div></section>
+<section class="mmx-mod" aria-labelledby="higher" id="mod-higher"><h2 id="higher">更高维度</h2><p>【书中主张】戴建业把“盛唐气象”的源头钉在两处：唐人殷璠《河岳英灵集序》“开元十五年后，声律风骨兼备矣”，以及严羽《沧浪诗话》“入门须正，立志须高，以汉魏晋盛唐为师”；再引鲁迅说唐诗是后人无法逾越的高峰，说明人“诗必盛唐”。【外部证据】但“盛唐气象”作为现代学术术语，通常追溯到林庚1950—60年代的论述，他把气象与“少年精神”绑定；闻一多“中国的太阳和月亮碰了头”（1020人划线）也是现代学术修辞，而非唐人自评。【综合分析】这本书做的是一次“学术概念的口语化回译”：把二十世纪学界的判断重新讲成课堂语言。风险也随之而来——听众容易把林庚式的浪漫化想象当成唐代原貌，而书里引用的殷璠与严羽，恰恰一位是有明确取舍的选家，一位是有宗派立场的批评家，都不是中立证人。</p><p>【书中主张】954人划的“人的生命力越旺盛，他的欲望就越多，他的抱负就越大……因而他的痛苦可能越深”，与684人划的“可见志向越远大，幸福感就越少”，把诗风还原成生命力与失望的函数。【外部证据】这与现代心理学中目标强度与主观幸福感的负相关、以及“适应—参照点”效应方向一致；但765人划的“统治者越自信，时代越宽容”属于典型的社会决定论，现代文学社会学（如布迪厄的场域理论）会要求补上另一半——诗体自身的格律积累。【综合分析】两条路径合起来才完整：政治气候给了自信，声律积累给了工具；所以书里才反复强调殷璠那句“声律风骨兼备”——不是任选一个年份，而是两件事恰好在同一时刻成熟。今天可迁移的正是这个“双条件”思路：评价一个创作高峰，既要看它给了人什么，也要看它给了人什么形式。</p></section>
+<section class="mmx-mod" aria-labelledby="verify" id="mod-verify"><h2 id="verify">阅读验证</h2><ul class="mmx-views"><li>年份与出处需核对：书中称“天宝三载，李白和杜甫在洛阳相会”（1020人划线）。李杜初会的年份学界通常记为天宝三载（744年），但相会地点有洛阳、梁宋等不同说法；“闻一多‘太阳和月亮碰了头’”的原文出处需核对具体篇目，不宜仅凭转述引用。</li><li>引文用字需核对：第二章引殷璠《河岳英灵集序》“开元十五年后，声律风骨兼备矣”，通行本多作“声律风骨始备矣”；另“15 ‘天生丽质’”讲“诗眼”的来历与所举例证（如第12讲所引《夜泊牛渚怀古》、书中“犬吠水声中，桃花带雨浓”一首的用字），需与李白全集及各家注本对账。</li><li>讲次取舍需核对：01—16讲全部给了李白（“最浪漫的糊涂虫”“走狗屎运！”“数学学霸”“神韵诗派的鼻祖”等），杜甫只占“四 别样的‘盛唐’”与“六 你能品味‘沉郁顿挫’吗？”两讲，与序章“双日并世”的对等设定并不对称。需核对本书是否为课堂录音／视频整理稿——若是，不对称来自课程编排而非作者取舍，引用时不宜当作完整的李杜比较论。</li></ul></section>
+<section class="mmx-mod" aria-labelledby="thennow" id="mod-thennow"><h2 id="thennow">往日今时</h2><p>【作者当年所能知晓】戴建业讲的是1980年代以来唐宋文学研究形成的共识版盛唐：以《唐诗三百首》的选目传统为底子，以殷璠、严羽的宗派判断为经，以闻一多的现代学术修辞为纬。序章已写明，“走近大诗人”是面向本科生的选修课，视频后来进了“超星名师讲坛”——它的原始形态是教室里的课，不是为短视频写的文案。他当年能依据的材料，也仅限于这条脉络之内的资源。【后来才显现的事实】“魔性”走红发生在课程录制多年之后：书中自述“戴建业口音”“很长一段时间一直排在热搜榜的前几名”。文本没变，介质变了——同一套口语化讲解，在课堂上只是好懂，到了碎片分发时代才被读成“魔性”。这一条提醒我们区分“内容”与“传播”：红的是后者，扎实的仍是前者。</p><p>【可迁移的启发】第一条是把“生命力—欲望—痛苦”当作联动系统来读人，而不是贴标签：684人划的“志向越远大，幸福感就越少”，配上李白漫游、求仕、入长安、流放的完整履历，构成一条可复用的解释链——一个人的高光与低谷往往同源。第二条更有用也更难：765人划的“统治者越自信，那个时代就越宽容”，提示我们判断一个创作环境，看的不是它允许多少赞美，而是它能容下多少与主调相反的作品。杜甫的“沉郁”能被算进“盛唐气象”，本身就是一条可核对的宽容度指标。</p></section>
 </body>
 </html>

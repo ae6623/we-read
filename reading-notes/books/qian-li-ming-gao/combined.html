@@ -6,46 +6,108 @@
 <title>《千里命稿》｜通读 · 精读</title>
 <link rel="stylesheet" href="../../../assets/css/reading-overview.css"><link rel="stylesheet" href="../../../assets/css/mmx-guide.css"><link rel="stylesheet" href="../../../assets/css/reading-outline.css">
 <style>
-/* 合并页外壳 */
-body{max-width:960px;margin:0 auto;padding:0 18px 80px;}
-.combined-head{padding:34px 0 18px;border-bottom:1px solid #e7e0d2;margin-bottom:8px;}
-.combined-head h1{font-size:26px;margin:0 0 10px;}
+/* ── 外壳与全局阅读节奏 ── */
+body{max-width:880px;margin:0 auto;padding:0 18px 80px;
+  font-size:15px;line-height:1.88;color:#3b453e;background:#f7f8f3;
+  -webkit-font-smoothing:antialiased;}
+.combined-head{padding:30px 0 16px;border-bottom:1px solid #e7e0d2;margin-bottom:4px;}
+.combined-head h1{font:700 23px/1.35 var(--serif);margin:0 0 8px;color:#244b40;}
+.combined-head .eyebrow{font-size:.72rem;letter-spacing:.14em;margin:0 0 6px;}
+.chips{margin:8px 0 0;}
+.chip{font-size:.72rem;padding:2px 10px;}
 /* 锚点导航：固定一排 4 个，等宽对齐 */
-.nav{position:sticky;top:0;z-index:20;background:rgba(255,253,248,.96);backdrop-filter:blur(6px);
-  border-bottom:1px solid #ece4d4;padding:10px 0;margin:14px 0 26px;display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;
-  box-shadow:0 2px 10px rgba(120,100,60,.06);}
-.navlink{font-size:12.5px;color:#5d5443;text-decoration:none;background:#f6f1e6;border:1px solid #e7ddca;
-  border-radius:7px;padding:4px 6px;text-align:center;white-space:nowrap;overflow:hidden;
-  text-overflow:ellipsis;}
-section{scroll-margin-top:64px;}
-/* 一句话主旨：去左侧竖线 */
-.mmx-oneline{border-left:none;padding-left:18px;}
-/* AI领读章内：AI 大纲原生深层样式 */
-.merged-guide .sec{margin:10px 0 14px;padding-left:6px;border-left:2px solid #e5e0d6}
-.merged-guide .sec h4{font:600 .98rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.6em 0 .3em}
-.merged-guide ul.point{margin:.3em 0;padding-left:20px}
-.merged-guide ul.point>li{margin:.35em 0}
-.merged-guide ul.quote{margin:.25em 0 .25em 20px;padding-left:18px;list-style:none}
-.merged-guide ul.quote::before{content:"原句";display:block;font-size:.72rem;color:#bf8247;
-  letter-spacing:.1em;margin:.15em 0 .1em;font-weight:600}
-.merged-guide ul.quote.quote-node{margin-top:.5em;padding-top:.4em;border-top:1px dashed #eadfc9}
+.nav{position:sticky;top:0;z-index:20;background:rgba(247,248,243,.96);backdrop-filter:blur(6px);
+  border-bottom:1px solid #ece4d4;padding:10px 0;margin:12px 0 20px;display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;
+  box-shadow:0 2px 10px rgba(120,100,60,.05);}
+.navlink{font-size:12px;color:#5d5443;text-decoration:none;background:#fdfbf3;border:1px solid #e8e2d2;
+  border-radius:8px;padding:6px 4px;text-align:center;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;transition:background .15s,color .15s;}
+.navlink:hover{background:#f2efe2;color:#244b40;}
+section{scroll-margin-top:62px;}
+
+/* ── 统一卡片：所有顶层模块（AI领读 / AI 问答 / 其余）一视同仁 ── */
+body>section.mmx-mod,body>section.card,body>section.mmx-svgwrap{
+  background:#fffdf6;border:1px solid #e8e4d5;border-radius:16px;
+  padding:18px 22px;margin:18px 0;
+  box-shadow:0 1px 3px rgba(110,95,60,.05);}
+body>section.mmx-mod>*:first-child,body>section.card>*:first-child,
+body>section.mmx-svgwrap>*:first-child{margin-top:0}
+body>section.mmx-mod>*:last-child,body>section.card>*:last-child,
+body>section.mmx-svgwrap>*:last-child{margin-bottom:0}
+/* 结构导图：图本身留白居中，不与正文抢宽 */
+body>section.mmx-svgwrap>svg.mmx-svg{display:block;width:100%;height:auto;margin:2px auto 0;}
+/* 模块标题：统一大小、弱强调，不与正文抢注意力 */
+body>section.mmx-mod>h2,body>section.card>h2{
+  font:700 1.04rem/1.5 var(--serif);color:#244b40;margin:0 0 11px;
+  padding-left:10px;border-left:3px solid #bf8247;letter-spacing:.01em;}
+/* 正文：字号收小、行距放宽、段间距舒服 */
+body>section.mmx-mod p,body>section.card p,
+body>section.mmx-mod li,body>section.card li{
+  font-size:.9rem;line-height:1.92;color:#4a4436;}
+body>section.mmx-mod p,body>section.card p{margin:.5em 0;}
+body>section.mmx-mod>ul,body>section.mmx-mod>ol,body>section.mmx-mod>div,
+body>section.mmx-mod>p:not(.mmx-mod-note),
+body>section.card:not(.merged-guide)>ul,body>section.card:not(.merged-guide)>ol,
+body>section.card:not(.merged-guide)>div,body>section.card:not(.merged-guide)>p:not(.mmx-mod-note){
+  padding-left:14px;}
+/* 模块说明小字：弱化不抢眼 */
+.mmx-mod-note{font-size:.75rem;color:#8d8878;margin:.1em 0 .75em;line-height:1.7;}
+
+/* ── 内部块统一：卡片里不再套深卡片，一律浅底子块 ── */
+body>section .mmx-pending,body>section .mmx-evib,body>section .aiqa-item{
+  background:#fbfaf2;border:1px solid #eee9d8;border-radius:12px;
+  padding:13px 16px;margin:.65em 0;}
+body>section .mmx-evib ul{padding-left:1.15em;}
+/* 一句话主旨：去左侧竖线 + 收敛字号 */
+.mmx-oneline{font-size:.98rem;line-height:1.85;color:#3a352c;margin:.2em 0 0;
+  padding:12px 16px;background:#fbfaf4;border-left:none;border-radius:12px;}
+/* 核心观点 / 验证清单：虚线分隔 + 收紧行距 */
+.mmx-views li{padding:.5em 0 .5em 0;font-size:.9rem;line-height:1.88;}
+/* 原文金句 */
+.mmx-qlist li{padding:.6em 0 .6em 2.2em;}
+.mmx-qlist blockquote{font-size:.89rem;line-height:1.9;}
+.mmx-qlist cite{font-size:.72rem;}
+/* 核心追问：问句加重、答句放松 */
+.mmx-qa{margin:.7em 0;padding-left:12px;border-left:3px solid #e5dfcd;}
+.mmx-qa .mmx-q{font-size:.9rem;font-weight:700;color:#2f3a33;line-height:1.8;margin:0 0 .25em;}
+.mmx-qa .mmx-a{font-size:.88rem;line-height:1.95;color:#4a4436;margin:0;}
+
+/* ── AI 问书专项：外层容器透明，问答条目才是阅读单元 ── */
+#mod-aiask .mmx-ask{background:transparent;border:0;border-radius:0;padding:0;margin:0;}
+#mod-aiask .aiqa-item{margin:.6em 0;padding:14px 16px 15px;}
+#mod-aiask .aiqa-item h3{font:700 .93rem/1.7 var(--serif);color:#2f5b49;margin:0 0 .4em;
+  padding:0;border:0;}
+#mod-aiask .aiqa-item h3:before{content:"问　";color:#bf8247;font-weight:700;}
+#mod-aiask .aiqa-item p{font-size:.88rem;line-height:1.95;color:#4a4436;margin:.4em 0;}
+#mod-aiask .aiqa-item ul{margin:.35em 0;padding-left:1.1em;}
+#mod-aiask .aiqa-item li{font-size:.87rem;line-height:1.88;margin:.18em 0;color:#4a4436;}
+#mod-aiask .aiqa-item li::marker{color:#c0a06a;}
+/* 逐章追问（details 形态）：摘要行也收敛 */
+.mmx-ask>summary{font-size:.87rem;line-height:1.7;padding:2px 0;}
+.mmx-askbody{font-size:.88rem;line-height:1.9;}
+
+/* AI领读章内：AI 大纲原生深层样式（字号同步收小） */
+.merged-guide .sec{margin:9px 0 12px;padding-left:6px;border-left:2px solid #e5e0d6}
+.merged-guide .sec h4{font:600 .93rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.5em 0 .25em}
+.merged-guide ul.point{margin:.25em 0;padding-left:20px}
+.merged-guide ul.point>li{margin:.3em 0}
+.merged-guide ul.quote{margin:.22em 0 .22em 20px;padding-left:18px;list-style:none}
+.merged-guide ul.quote::before{content:"原句";display:block;font-size:.7rem;color:#bf8247;
+  letter-spacing:.1em;margin:.12em 0 .08em;font-weight:600}
+.merged-guide ul.quote.quote-node{margin-top:.45em;padding-top:.35em;border-top:1px dashed #eadfc9}
 .merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
-.merged-guide ul.quote>li{color:#4a4436;font-size:.93rem;margin:.2em 0;padding-left:10px;border-left:2px solid #bf8247}
-/* 模块内子内容（AI领读除外，它有专属深层样式）：左缩进 + 正文与标题分层 */
-section.mmx-mod>ul,section.mmx-mod>ol,section.mmx-mod>div,
-section.mmx-mod>p:not(.mmx-mod-note),
-section.card:not(.merged-guide)>ul,section.card:not(.merged-guide)>ol,
-section.card:not(.merged-guide)>div,section.card:not(.merged-guide)>p:not(.mmx-mod-note){
-  padding-left:16px;}
-section.mmx-mod li,section.mmx-mod p:not(.mmx-mod-note),
-section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mod-note){
-  color:#4a4436;font-size:.93rem;line-height:1.78;}
+.merged-guide ul.quote>li{color:#4a4436;font-size:.88rem;line-height:1.85;margin:.18em 0;padding-left:10px;border-left:2px solid #bf8247}
 /* 核心观点初判：外链 mmx-guide.css 的「观点N」前缀是绝对定位，在本页版式里和标题叠字，
    且此前要求去掉「观点1/2/3」前缀 —— 这里整条关掉（外链 CSS 不在页面内，只能内联覆盖）。 */
 .mmx-views li{padding-left:0 !important;}
 .mmx-views li:before,.mmx-views li::before{
   content:none !important;display:none !important;counter-increment:none !important;}
+@media(max-width:720px){
+  body{padding:0 12px 60px;font-size:14.5px;}
+  body>section.mmx-mod,body>section.card{padding:15px 16px;border-radius:14px;}
+  .nav{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
 </style>
 </head>
 <body>
@@ -54,8 +116,8 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
   <h1>《千里命稿》</h1>
   <div class="chips"><span class="chip">通读 + 精读</span><span class="chip">AI领读</span><span class="chip">AI 生产</span></div>
 </header>
-<nav class="nav"><a class="navlink" href="#mod-svg">全书结构导图</a><a class="navlink" href="#mod-oneline">一句话主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a><a class="navlink" href="#mod-aiask">AI 问书</a><a class="navlink" href="#mod-coreask">核心追问</a><a class="navlink" href="#mod-higher">更高维度</a><a class="navlink" href="#mod-verify">阅读验证</a><a class="navlink" href="#mod-thennow">当年与今天</a></nav>
-<section class="mmx-svgwrap" id="mod-svg">
+<nav class="nav"><a class="navlink" href="#mod-svg">结构导图</a><a class="navlink" href="#mod-oneline">核心主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a><a class="navlink" href="#mod-aiask">AI 问书</a><a class="navlink" href="#mod-coreask">核心追问</a><a class="navlink" href="#mod-higher">更高维度</a><a class="navlink" href="#mod-verify">阅读验证</a><a class="navlink" href="#mod-thennow">往日今时</a></nav>
+<section class="mmx-svgwrap" id="mod-svg"><h2>结构导图</h2>
 <svg class="mmx-svg" viewBox="0 0 1120 406" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="千里命稿 全书精读">
 <rect x="0" y="0" width="1120" height="406" fill="none"/>
 <style>.mmx-svg text{font-family:"Noto Serif SC",Georgia,serif}.mmx-svg .t1{font-size:15px;fill:#2f2a24;font-weight:600}.mmx-svg .t2{font-size:12px;fill:#5c5347}.mmx-svg .t3{font-size:10.5px;fill:#8a8272}.mmx-svg .rt{font-size:13px;fill:#f7f3ea;font-weight:600}.mmx-svg .ln{stroke:#cfc6b4;stroke-width:1.4;fill:none}</style>
@@ -98,7 +160,7 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
 <text class="t2" x="714" y="305">含「格局篇」至「评断篇」</text>
 <path class="ln" d="M692 309 L700 309"/>
 </svg></section>
-<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">一句话主旨</h2><p class="mmx-mod-note">本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。</p><p class="mmx-oneline">《千里命稿》共 33 章，按章序折成 5 段主干（第 1–7 章、第 8–14 章、第 15–21 章）；每章的要点与原句均逐字取自本书 AI 大纲，未做人工解读。</p></section>
+<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">核心主旨</h2><p class="mmx-oneline">《千里命稿》共 33 章，按章序折成 5 段主干（第 1–7 章、第 8–14 章、第 15–21 章）；每章的要点与原句均逐字取自本书 AI 大纲，未做人工解读。</p></section>
 <section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" id="mod-merged_guide"><h2 id="merged-guide-title">AI领读</h2>
 <style>
 /* merged_guide 章内：AI 大纲原生深层样式 */
@@ -5328,12 +5390,12 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
       </div></details>
   </div>
 </section>
-<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点初判</h2><p class="mmx-mod-note">按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。</p><ul class="mmx-views"><li><b>第 1–7 章</b>——含「校订凡例」至「天干篇」</li><li><b>第 8–14 章</b>——含「地支篇」至「比劫禄刃篇」</li><li><b>第 15–21 章</b>——含「格局篇」至「富贵吉寿篇」</li><li><b>第 22–28 章</b>——含「贫贱凶夭篇」至「运限篇」</li><li><b>第 29–33 章</b>——含「格局篇」至「评断篇」</li></ul></section>
-<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句 · 持续积累</h2><p class="mmx-mod-note">以下原句取自本书大纲落库的原文摘录，按大纲顺序节选，非 AI 生成；更多见逐章深读页。</p><ol class="mmx-qlist"><li><blockquote>「底本为网络转录全帙，讹夺甚夥；更取国学典籍网本、海外连载本及福山堂藏本对勘。」</blockquote><cite>校订凡例</cite></li><li><blockquote>「诸本与底本多同出一源，凡诸本同讹者，则依子平义理、干支阴阳、藏干十神之法定夺，不敢曲从。」</blockquote><cite>校订凡例</cite></li><li><blockquote>「形近而误者，如己、已、巳之混，戊、戌、戍之混，曰、日之混，西、酉之混，徵、徽之混，幸、辛之混，徵诸上下文而一一厘正。」</blockquote><cite>校订凡例</cite></li><li><blockquote>「干支之误最关紧要。凡四柱、大运、流年干支，皆核其阴阳相配(阳干配阳支、阴干配阴支)及大运顺逆之序，误者径改。」</blockquote><cite>校订凡例</cite></li><li><blockquote>「格局篇「生于十二月取格详例」一百二十条，底本残泐错乱，今据月令藏干、十神之定例，并参本书外格篇「建禄格」「月刃格」二条覆核重排。」</blockquote><cite>校订凡例</cite></li><li><blockquote>「天干篇、地支篇每干每支之下，原书各有「例」一格，底本全脱，福山堂本存之而文已漫漶。今据十二长生、干支生克合冲刑害之例，重加董理校录，附于各条之后。」</blockquote><cite>校订凡例</cite></li><li><blockquote>「原书阙文不可遽补者，以「□」识之，一字一格；补录之文及校记者，以〔 〕别之。」</blockquote><cite>校订凡例</cite></li><li><blockquote>「标点依新式标点重加；原书重文、衍文及误植之衍字，择要删乙。」</blockquote><cite>校订凡例</cite></li><li><blockquote>「凡改字之处，别为《校勘记》一卷，殿于书末，共得七百零四事，读者可覆按焉。」</blockquote><cite>校订凡例</cite></li><li><blockquote>「作者认为，虽然圣人也不敢以论断定，但可以在中仄盈亏之象，五行生克之理之中，求之而百不失一。」</blockquote><cite>杨叔和序</cite></li></ol></section>
-<section class="mmx-mod" aria-labelledby="aiask" id="mod-aiask"><h2 id="aiask">AI 问书</h2><p class="mmx-mod-note">下方内容为本书级 AI 问书整理，由云端 AI 阅读流程基于本书大纲、章节锚点与热门划线生成。</p><div class="mmx-qa"><p class="mmx-q">书中大运顺逆为何要写成「男命所生之年天干属阳，或女命所生之年天干属阳，运皆顺行」？</p><p class="mmx-a">原文紧接着给出逆行的对应条件，顺逆的起点皆据所生之月建推算。这一条的价值在于把性别、年干阴阳与运行方向三者锁成一个可查的关系式：只要年柱一排定，行运方向就不再是术者的自由发挥，而与干支阴阳绑定。这是全书把经验规则形式化的典型一例。</p></div><div class="mmx-qa"><p class="mmx-q">「人元」为什么在本书里单独成篇，它对判断强弱有什么用？</p><p class="mmx-a">因为地支不是单个符号，而是藏干的容器。书中有极精彩的一例：寅中所藏丙火既能克去时干庚金，而时支申中所有庚金亦破寅中之丙火冲去，于是作者反问「岂非精采尽为破坏乎」。不看藏干，格局看着漂亮；一看藏干，环环相扣的配置会在内部互相抵消，这正是人元篇存在的理由。</p></div><div class="mmx-qa"><p class="mmx-q">格局篇的「生于十二月取格详例」为什么会残泐错乱，又是怎么被补起来的？</p><p class="mmx-a">校订凡例交代得很具体：这一百二十条在底本上已残泐错乱，校者据月令藏干、十神之定例重排，并拿外格篇的建禄格、月刃格两条覆核。取格的总原则是「月支本气透于天干，应先取以为格」。这说明现存文本中的这一部分并非原样照排，而是依据内部体例推补的结果。</p></div></section>
-<section class="mmx-mod" aria-labelledby="coreask" id="mod-coreask"><h2 id="coreask">核心追问（来自深读）</h2><p class="mmx-mod-note">跨章主题的深读追问，由云端 AI 阅读流程基于全书大纲、章节锚点与热门划线撰写；逐章的追问收在每个章条目里。</p><div class="mmx-qa"><p class="mmx-q">一本讲命理的书，为什么要用整整一篇「起例问答」先教人排四柱、推算年干支，而不是先讲结论？</p><p class="mmx-a">因为它的权威不来自断言，而来自一套可被复算的程序。「推月之法，先须熟读歌诀」，「必先将其人岁数除十二，视其余数若干，从今年地支起，逆推至若干位」。先把干支变成可以手推的算式，读者才有可能自行复核。校订凡例自陈二十四篇从三篇序、一篇自序一路排到诸论篇，正是这条先器后理的教学顺序。</p></div><div class="mmx-qa"><p class="mmx-q">身强身弱、取格、用神这套程序的判断边界在哪？</p><p class="mmx-a">它必须先把一个人连同其社会处境压缩成八个字。「强弱篇」只分论身强、论身弱，「格局篇」讲八格的成败、太过不及与用神，因此任何个案都要先被折算成日主强弱加十神配置，再交给术者调剂。好处是每一造都有话说，代价是辅助假设过多——真假、太过不及、外格转败为成这类补救条款随时可用，几乎任何结果都能被事后解释，却难以事先被否证。</p></div><div class="mmx-qa"><p class="mmx-q">校订者宣布「凡诸本同讹者，则依子平义理……定夺」，这种做法有什么风险？</p><p class="mmx-a">当义理成为判据，校勘就从恢复原文变成了一次理论表态。「干支之误最关紧要，凡四柱、大运、流年干支，皆核其阴阳相配」，误者径改——规则本身没问题，但热门划线中仍可见「丙丁己午皆为火」「寅辰已申戌亥为阳」这类与通行说法不合的句子，恰好落在凡例自列的己已巳、戊戌戍混讹范围内，说明每一处径改都值得再按一遍。</p></div></section>
-<section class="mmx-mod" aria-labelledby="higher" id="mod-higher"><h2 id="higher">用更高维度的知识看这本书</h2><p class="mmx-mod-note">下方内容由云端 AI 阅读流程生成：把本书放回知识史与理论框架中重读，区分书中主张、外部证据与综合分析。</p><p>【书中主张】三篇序反复强调命理之学应当成为一门可教可学的学问，而不是江湖生计。杨叔和序说虽然圣人也不敢以论断定，但仍可在中仄盈亏之象、五行生克之理中求之而百不失一；同时痛斥江湖术士「理既不明，语亦鄙陋」，希望有人作中流之砥柱。骆经畲序则自述他读《星平会海》《三命通会》《滴天髓》诸书苦无心得，直到得见本书前身讲义才「昔日疑难迎刃而解」。【外部证据】这段话把本书放回了民国时期术数知识化、教材化的潮流：新的印刷与函授媒介把师徒口耳相传的技艺，改造成有目录、有篇次、有习题式例证的讲义。【综合分析】因此它的真正抱负是这门学问的体面化与标准化，而这恰好解释为何书中对条例、格式与精确性的执着，远甚于对个别断语的标新立异。</p><p>【书中主张】全书实际上给出的是一台符号运算机器：有限的十个天干与十二个地支作为状态集，四柱为初态，大运流年为状态转移，身强身弱与用神为目标函数与修正项。【外部证据】用现代眼光衡量，这是一套内部相当自洽的形式系统；但正因辅助假设（真假、太过不及、外格转败为成）足以吸收任何反例，它无法通过可证伪性这道分水岭；而巴纳姆效应的大量实验，也足以解释为什么简明评语容易被体验为不爽禾黍般的精准。【综合分析】于是今天读它，价值不在预测而在别处：一是把它当作完善的符号推理范例，看一套前现代的符号学如何在缺少外部校验的条件下，靠不断增设补救条款而持续自我完善；二是它自身提醒我们，自洽不等于正确——校勘者以义理定夺讹字时，犯的正是同一类错误。</p></section>
-<section class="mmx-mod" aria-labelledby="verify" id="mod-verify"><h2 id="verify">阅读时要验证的问题</h2><p class="mmx-mod-note">下方由云端 AI 阅读流程生成：读时需核对的原文、数字与论点（关键数据出处、个案代表性、类比限度）。</p><ul class="mmx-views"><li>推年逆算法的通例与特例：书中称「必先将其人岁数除十二，视其余数若干，从今年地支起，逆推至若干位」，并以今年癸酉、其人三十七岁推得丁酉为例；另注明岁数整十无零作十论、除尽无余作十二论。（核对：起例问答推年法，注意天干逆推与地支逆推两条路径是否并用）</li><li>版本与校勘规模：校订凡例自陈底本为网络转录全帙，另取国学典籍网本、海外连载本及福山堂藏本对勘，全书共得校勘记七百零四事，且天干篇、地支篇每干每支之下原有的「例」一格在底本全脱、福山堂本存之而漫漶，为据义理重加董理之本。（核对：书末校勘记卷与各篇所附「例」）</li><li>与通行说法不合的文本疑点：高频划线中出现「丙丁己午皆为火」「寅辰已申戌亥为阳，子丑卯午未酉为阴」，以及取格例中的「辰月透戌」「未月透巳」「戌月秀戌」，均与通行的丙丁巳午属火、子寅辰午申戌为阳等说法不同，恰落在凡例自列的形近混讹范围内。（核对：是否为己巳、戊戌之讹，及各家子平书的地支阴阳通例）</li></ul></section>
-<section class="mmx-mod" aria-labelledby="thennow" id="mod-thennow"><h2 id="thennow">当年与今天 · 初步对照</h2><p class="mmx-mod-note">下方由云端 AI 阅读流程生成：区分作者当年所能知晓与后来才显现的事实，给出今日可迁移的启发。</p><p>作者当年所能知晓的，是一个只需一套歌诀与一手掌上推算就能讲完命局的年代：尚无廉价的排盘工具，掌上逆推年干支、熟读五虎遁与五鼠遁歌诀，是执业者的基本功，因而技艺的价值很大一部分落在算式本身。他也能清楚看见同行状况——古书说理不透、江湖从业者理既不明而语亦鄙陋，这才有了编讲义以授海内有志者的动机。这个背景下，掐指一算的可靠与简明的评语，就是一门手艺的核心竞争力。</p><p>后来才显现的变化是双重的：一方面，统计与可重复验证成为判断经验命题的主流标准，而命理推论至今拿不出可重复的外部效应证据；另一方面，计算机把排盘降为零成本的瞬间操作，掌上逆推这套技艺连同《千里命稿》大半的计算价值随之蒸发，剩下的只有关于格局与用神的判断理由。今天可迁移的启发也在这里：评价一套决策系统要同时问两个问题——它是否内部自洽、它是否有外部效度；而任何学说的历史位置，往往取决于它借以立足的那种稀缺性是否还在。</p></section>
+<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点</h2><ul class="mmx-views"><li><b>第 1–7 章</b>——含「校订凡例」至「天干篇」</li><li><b>第 8–14 章</b>——含「地支篇」至「比劫禄刃篇」</li><li><b>第 15–21 章</b>——含「格局篇」至「富贵吉寿篇」</li><li><b>第 22–28 章</b>——含「贫贱凶夭篇」至「运限篇」</li><li><b>第 29–33 章</b>——含「格局篇」至「评断篇」</li></ul></section>
+<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句</h2><ol class="mmx-qlist"><li><blockquote>「底本为网络转录全帙，讹夺甚夥；更取国学典籍网本、海外连载本及福山堂藏本对勘。」</blockquote><cite>校订凡例</cite></li><li><blockquote>「诸本与底本多同出一源，凡诸本同讹者，则依子平义理、干支阴阳、藏干十神之法定夺，不敢曲从。」</blockquote><cite>校订凡例</cite></li><li><blockquote>「形近而误者，如己、已、巳之混，戊、戌、戍之混，曰、日之混，西、酉之混，徵、徽之混，幸、辛之混，徵诸上下文而一一厘正。」</blockquote><cite>校订凡例</cite></li><li><blockquote>「干支之误最关紧要。凡四柱、大运、流年干支，皆核其阴阳相配(阳干配阳支、阴干配阴支)及大运顺逆之序，误者径改。」</blockquote><cite>校订凡例</cite></li><li><blockquote>「格局篇「生于十二月取格详例」一百二十条，底本残泐错乱，今据月令藏干、十神之定例，并参本书外格篇「建禄格」「月刃格」二条覆核重排。」</blockquote><cite>校订凡例</cite></li><li><blockquote>「天干篇、地支篇每干每支之下，原书各有「例」一格，底本全脱，福山堂本存之而文已漫漶。今据十二长生、干支生克合冲刑害之例，重加董理校录，附于各条之后。」</blockquote><cite>校订凡例</cite></li><li><blockquote>「原书阙文不可遽补者，以「□」识之，一字一格；补录之文及校记者，以〔 〕别之。」</blockquote><cite>校订凡例</cite></li><li><blockquote>「标点依新式标点重加；原书重文、衍文及误植之衍字，择要删乙。」</blockquote><cite>校订凡例</cite></li><li><blockquote>「凡改字之处，别为《校勘记》一卷，殿于书末，共得七百零四事，读者可覆按焉。」</blockquote><cite>校订凡例</cite></li><li><blockquote>「作者认为，虽然圣人也不敢以论断定，但可以在中仄盈亏之象，五行生克之理之中，求之而百不失一。」</blockquote><cite>杨叔和序</cite></li></ol></section>
+<section class="mmx-mod" aria-labelledby="aiask" id="mod-aiask"><h2 id="aiask">AI 问书</h2><div class="mmx-qa"><p class="mmx-q">书中大运顺逆为何要写成「男命所生之年天干属阳，或女命所生之年天干属阳，运皆顺行」？</p><p class="mmx-a">原文紧接着给出逆行的对应条件，顺逆的起点皆据所生之月建推算。这一条的价值在于把性别、年干阴阳与运行方向三者锁成一个可查的关系式：只要年柱一排定，行运方向就不再是术者的自由发挥，而与干支阴阳绑定。这是全书把经验规则形式化的典型一例。</p></div><div class="mmx-qa"><p class="mmx-q">「人元」为什么在本书里单独成篇，它对判断强弱有什么用？</p><p class="mmx-a">因为地支不是单个符号，而是藏干的容器。书中有极精彩的一例：寅中所藏丙火既能克去时干庚金，而时支申中所有庚金亦破寅中之丙火冲去，于是作者反问「岂非精采尽为破坏乎」。不看藏干，格局看着漂亮；一看藏干，环环相扣的配置会在内部互相抵消，这正是人元篇存在的理由。</p></div><div class="mmx-qa"><p class="mmx-q">格局篇的「生于十二月取格详例」为什么会残泐错乱，又是怎么被补起来的？</p><p class="mmx-a">校订凡例交代得很具体：这一百二十条在底本上已残泐错乱，校者据月令藏干、十神之定例重排，并拿外格篇的建禄格、月刃格两条覆核。取格的总原则是「月支本气透于天干，应先取以为格」。这说明现存文本中的这一部分并非原样照排，而是依据内部体例推补的结果。</p></div></section>
+<section class="mmx-mod" aria-labelledby="coreask" id="mod-coreask"><h2 id="coreask">核心追问</h2><div class="mmx-qa"><p class="mmx-q">一本讲命理的书，为什么要用整整一篇「起例问答」先教人排四柱、推算年干支，而不是先讲结论？</p><p class="mmx-a">因为它的权威不来自断言，而来自一套可被复算的程序。「推月之法，先须熟读歌诀」，「必先将其人岁数除十二，视其余数若干，从今年地支起，逆推至若干位」。先把干支变成可以手推的算式，读者才有可能自行复核。校订凡例自陈二十四篇从三篇序、一篇自序一路排到诸论篇，正是这条先器后理的教学顺序。</p></div><div class="mmx-qa"><p class="mmx-q">身强身弱、取格、用神这套程序的判断边界在哪？</p><p class="mmx-a">它必须先把一个人连同其社会处境压缩成八个字。「强弱篇」只分论身强、论身弱，「格局篇」讲八格的成败、太过不及与用神，因此任何个案都要先被折算成日主强弱加十神配置，再交给术者调剂。好处是每一造都有话说，代价是辅助假设过多——真假、太过不及、外格转败为成这类补救条款随时可用，几乎任何结果都能被事后解释，却难以事先被否证。</p></div><div class="mmx-qa"><p class="mmx-q">校订者宣布「凡诸本同讹者，则依子平义理……定夺」，这种做法有什么风险？</p><p class="mmx-a">当义理成为判据，校勘就从恢复原文变成了一次理论表态。「干支之误最关紧要，凡四柱、大运、流年干支，皆核其阴阳相配」，误者径改——规则本身没问题，但热门划线中仍可见「丙丁己午皆为火」「寅辰已申戌亥为阳」这类与通行说法不合的句子，恰好落在凡例自列的己已巳、戊戌戍混讹范围内，说明每一处径改都值得再按一遍。</p></div></section>
+<section class="mmx-mod" aria-labelledby="higher" id="mod-higher"><h2 id="higher">更高维度</h2><p>【书中主张】三篇序反复强调命理之学应当成为一门可教可学的学问，而不是江湖生计。杨叔和序说虽然圣人也不敢以论断定，但仍可在中仄盈亏之象、五行生克之理中求之而百不失一；同时痛斥江湖术士「理既不明，语亦鄙陋」，希望有人作中流之砥柱。骆经畲序则自述他读《星平会海》《三命通会》《滴天髓》诸书苦无心得，直到得见本书前身讲义才「昔日疑难迎刃而解」。【外部证据】这段话把本书放回了民国时期术数知识化、教材化的潮流：新的印刷与函授媒介把师徒口耳相传的技艺，改造成有目录、有篇次、有习题式例证的讲义。【综合分析】因此它的真正抱负是这门学问的体面化与标准化，而这恰好解释为何书中对条例、格式与精确性的执着，远甚于对个别断语的标新立异。</p><p>【书中主张】全书实际上给出的是一台符号运算机器：有限的十个天干与十二个地支作为状态集，四柱为初态，大运流年为状态转移，身强身弱与用神为目标函数与修正项。【外部证据】用现代眼光衡量，这是一套内部相当自洽的形式系统；但正因辅助假设（真假、太过不及、外格转败为成）足以吸收任何反例，它无法通过可证伪性这道分水岭；而巴纳姆效应的大量实验，也足以解释为什么简明评语容易被体验为不爽禾黍般的精准。【综合分析】于是今天读它，价值不在预测而在别处：一是把它当作完善的符号推理范例，看一套前现代的符号学如何在缺少外部校验的条件下，靠不断增设补救条款而持续自我完善；二是它自身提醒我们，自洽不等于正确——校勘者以义理定夺讹字时，犯的正是同一类错误。</p></section>
+<section class="mmx-mod" aria-labelledby="verify" id="mod-verify"><h2 id="verify">阅读验证</h2><ul class="mmx-views"><li>推年逆算法的通例与特例：书中称「必先将其人岁数除十二，视其余数若干，从今年地支起，逆推至若干位」，并以今年癸酉、其人三十七岁推得丁酉为例；另注明岁数整十无零作十论、除尽无余作十二论。（核对：起例问答推年法，注意天干逆推与地支逆推两条路径是否并用）</li><li>版本与校勘规模：校订凡例自陈底本为网络转录全帙，另取国学典籍网本、海外连载本及福山堂藏本对勘，全书共得校勘记七百零四事，且天干篇、地支篇每干每支之下原有的「例」一格在底本全脱、福山堂本存之而漫漶，为据义理重加董理之本。（核对：书末校勘记卷与各篇所附「例」）</li><li>与通行说法不合的文本疑点：高频划线中出现「丙丁己午皆为火」「寅辰已申戌亥为阳，子丑卯午未酉为阴」，以及取格例中的「辰月透戌」「未月透巳」「戌月秀戌」，均与通行的丙丁巳午属火、子寅辰午申戌为阳等说法不同，恰落在凡例自列的形近混讹范围内。（核对：是否为己巳、戊戌之讹，及各家子平书的地支阴阳通例）</li></ul></section>
+<section class="mmx-mod" aria-labelledby="thennow" id="mod-thennow"><h2 id="thennow">往日今时</h2><p>作者当年所能知晓的，是一个只需一套歌诀与一手掌上推算就能讲完命局的年代：尚无廉价的排盘工具，掌上逆推年干支、熟读五虎遁与五鼠遁歌诀，是执业者的基本功，因而技艺的价值很大一部分落在算式本身。他也能清楚看见同行状况——古书说理不透、江湖从业者理既不明而语亦鄙陋，这才有了编讲义以授海内有志者的动机。这个背景下，掐指一算的可靠与简明的评语，就是一门手艺的核心竞争力。</p><p>后来才显现的变化是双重的：一方面，统计与可重复验证成为判断经验命题的主流标准，而命理推论至今拿不出可重复的外部效应证据；另一方面，计算机把排盘降为零成本的瞬间操作，掌上逆推这套技艺连同《千里命稿》大半的计算价值随之蒸发，剩下的只有关于格局与用神的判断理由。今天可迁移的启发也在这里：评价一套决策系统要同时问两个问题——它是否内部自洽、它是否有外部效度；而任何学说的历史位置，往往取决于它借以立足的那种稀缺性是否还在。</p></section>
 </body>
 </html>

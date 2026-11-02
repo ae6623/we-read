@@ -6,46 +6,108 @@
 <title>《代码精进之路：从码农到工匠》｜通读 · 精读</title>
 <link rel="stylesheet" href="../../../assets/css/reading-overview.css"><link rel="stylesheet" href="../../../assets/css/mmx-guide.css"><link rel="stylesheet" href="../../../assets/css/reading-outline.css">
 <style>
-/* 合并页外壳 */
-body{max-width:960px;margin:0 auto;padding:0 18px 80px;}
-.combined-head{padding:34px 0 18px;border-bottom:1px solid #e7e0d2;margin-bottom:8px;}
-.combined-head h1{font-size:26px;margin:0 0 10px;}
+/* ── 外壳与全局阅读节奏 ── */
+body{max-width:880px;margin:0 auto;padding:0 18px 80px;
+  font-size:15px;line-height:1.88;color:#3b453e;background:#f7f8f3;
+  -webkit-font-smoothing:antialiased;}
+.combined-head{padding:30px 0 16px;border-bottom:1px solid #e7e0d2;margin-bottom:4px;}
+.combined-head h1{font:700 23px/1.35 var(--serif);margin:0 0 8px;color:#244b40;}
+.combined-head .eyebrow{font-size:.72rem;letter-spacing:.14em;margin:0 0 6px;}
+.chips{margin:8px 0 0;}
+.chip{font-size:.72rem;padding:2px 10px;}
 /* 锚点导航：固定一排 4 个，等宽对齐 */
-.nav{position:sticky;top:0;z-index:20;background:rgba(255,253,248,.96);backdrop-filter:blur(6px);
-  border-bottom:1px solid #ece4d4;padding:10px 0;margin:14px 0 26px;display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;
-  box-shadow:0 2px 10px rgba(120,100,60,.06);}
-.navlink{font-size:12.5px;color:#5d5443;text-decoration:none;background:#f6f1e6;border:1px solid #e7ddca;
-  border-radius:7px;padding:4px 6px;text-align:center;white-space:nowrap;overflow:hidden;
-  text-overflow:ellipsis;}
-section{scroll-margin-top:64px;}
-/* 一句话主旨：去左侧竖线 */
-.mmx-oneline{border-left:none;padding-left:18px;}
-/* AI领读章内：AI 大纲原生深层样式 */
-.merged-guide .sec{margin:10px 0 14px;padding-left:6px;border-left:2px solid #e5e0d6}
-.merged-guide .sec h4{font:600 .98rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.6em 0 .3em}
-.merged-guide ul.point{margin:.3em 0;padding-left:20px}
-.merged-guide ul.point>li{margin:.35em 0}
-.merged-guide ul.quote{margin:.25em 0 .25em 20px;padding-left:18px;list-style:none}
-.merged-guide ul.quote::before{content:"原句";display:block;font-size:.72rem;color:#bf8247;
-  letter-spacing:.1em;margin:.15em 0 .1em;font-weight:600}
-.merged-guide ul.quote.quote-node{margin-top:.5em;padding-top:.4em;border-top:1px dashed #eadfc9}
+.nav{position:sticky;top:0;z-index:20;background:rgba(247,248,243,.96);backdrop-filter:blur(6px);
+  border-bottom:1px solid #ece4d4;padding:10px 0;margin:12px 0 20px;display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;
+  box-shadow:0 2px 10px rgba(120,100,60,.05);}
+.navlink{font-size:12px;color:#5d5443;text-decoration:none;background:#fdfbf3;border:1px solid #e8e2d2;
+  border-radius:8px;padding:6px 4px;text-align:center;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;transition:background .15s,color .15s;}
+.navlink:hover{background:#f2efe2;color:#244b40;}
+section{scroll-margin-top:62px;}
+
+/* ── 统一卡片：所有顶层模块（AI领读 / AI 问答 / 其余）一视同仁 ── */
+body>section.mmx-mod,body>section.card,body>section.mmx-svgwrap{
+  background:#fffdf6;border:1px solid #e8e4d5;border-radius:16px;
+  padding:18px 22px;margin:18px 0;
+  box-shadow:0 1px 3px rgba(110,95,60,.05);}
+body>section.mmx-mod>*:first-child,body>section.card>*:first-child,
+body>section.mmx-svgwrap>*:first-child{margin-top:0}
+body>section.mmx-mod>*:last-child,body>section.card>*:last-child,
+body>section.mmx-svgwrap>*:last-child{margin-bottom:0}
+/* 结构导图：图本身留白居中，不与正文抢宽 */
+body>section.mmx-svgwrap>svg.mmx-svg{display:block;width:100%;height:auto;margin:2px auto 0;}
+/* 模块标题：统一大小、弱强调，不与正文抢注意力 */
+body>section.mmx-mod>h2,body>section.card>h2{
+  font:700 1.04rem/1.5 var(--serif);color:#244b40;margin:0 0 11px;
+  padding-left:10px;border-left:3px solid #bf8247;letter-spacing:.01em;}
+/* 正文：字号收小、行距放宽、段间距舒服 */
+body>section.mmx-mod p,body>section.card p,
+body>section.mmx-mod li,body>section.card li{
+  font-size:.9rem;line-height:1.92;color:#4a4436;}
+body>section.mmx-mod p,body>section.card p{margin:.5em 0;}
+body>section.mmx-mod>ul,body>section.mmx-mod>ol,body>section.mmx-mod>div,
+body>section.mmx-mod>p:not(.mmx-mod-note),
+body>section.card:not(.merged-guide)>ul,body>section.card:not(.merged-guide)>ol,
+body>section.card:not(.merged-guide)>div,body>section.card:not(.merged-guide)>p:not(.mmx-mod-note){
+  padding-left:14px;}
+/* 模块说明小字：弱化不抢眼 */
+.mmx-mod-note{font-size:.75rem;color:#8d8878;margin:.1em 0 .75em;line-height:1.7;}
+
+/* ── 内部块统一：卡片里不再套深卡片，一律浅底子块 ── */
+body>section .mmx-pending,body>section .mmx-evib,body>section .aiqa-item{
+  background:#fbfaf2;border:1px solid #eee9d8;border-radius:12px;
+  padding:13px 16px;margin:.65em 0;}
+body>section .mmx-evib ul{padding-left:1.15em;}
+/* 一句话主旨：去左侧竖线 + 收敛字号 */
+.mmx-oneline{font-size:.98rem;line-height:1.85;color:#3a352c;margin:.2em 0 0;
+  padding:12px 16px;background:#fbfaf4;border-left:none;border-radius:12px;}
+/* 核心观点 / 验证清单：虚线分隔 + 收紧行距 */
+.mmx-views li{padding:.5em 0 .5em 0;font-size:.9rem;line-height:1.88;}
+/* 原文金句 */
+.mmx-qlist li{padding:.6em 0 .6em 2.2em;}
+.mmx-qlist blockquote{font-size:.89rem;line-height:1.9;}
+.mmx-qlist cite{font-size:.72rem;}
+/* 核心追问：问句加重、答句放松 */
+.mmx-qa{margin:.7em 0;padding-left:12px;border-left:3px solid #e5dfcd;}
+.mmx-qa .mmx-q{font-size:.9rem;font-weight:700;color:#2f3a33;line-height:1.8;margin:0 0 .25em;}
+.mmx-qa .mmx-a{font-size:.88rem;line-height:1.95;color:#4a4436;margin:0;}
+
+/* ── AI 问书专项：外层容器透明，问答条目才是阅读单元 ── */
+#mod-aiask .mmx-ask{background:transparent;border:0;border-radius:0;padding:0;margin:0;}
+#mod-aiask .aiqa-item{margin:.6em 0;padding:14px 16px 15px;}
+#mod-aiask .aiqa-item h3{font:700 .93rem/1.7 var(--serif);color:#2f5b49;margin:0 0 .4em;
+  padding:0;border:0;}
+#mod-aiask .aiqa-item h3:before{content:"问　";color:#bf8247;font-weight:700;}
+#mod-aiask .aiqa-item p{font-size:.88rem;line-height:1.95;color:#4a4436;margin:.4em 0;}
+#mod-aiask .aiqa-item ul{margin:.35em 0;padding-left:1.1em;}
+#mod-aiask .aiqa-item li{font-size:.87rem;line-height:1.88;margin:.18em 0;color:#4a4436;}
+#mod-aiask .aiqa-item li::marker{color:#c0a06a;}
+/* 逐章追问（details 形态）：摘要行也收敛 */
+.mmx-ask>summary{font-size:.87rem;line-height:1.7;padding:2px 0;}
+.mmx-askbody{font-size:.88rem;line-height:1.9;}
+
+/* AI领读章内：AI 大纲原生深层样式（字号同步收小） */
+.merged-guide .sec{margin:9px 0 12px;padding-left:6px;border-left:2px solid #e5e0d6}
+.merged-guide .sec h4{font:600 .93rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.5em 0 .25em}
+.merged-guide ul.point{margin:.25em 0;padding-left:20px}
+.merged-guide ul.point>li{margin:.3em 0}
+.merged-guide ul.quote{margin:.22em 0 .22em 20px;padding-left:18px;list-style:none}
+.merged-guide ul.quote::before{content:"原句";display:block;font-size:.7rem;color:#bf8247;
+  letter-spacing:.1em;margin:.12em 0 .08em;font-weight:600}
+.merged-guide ul.quote.quote-node{margin-top:.45em;padding-top:.35em;border-top:1px dashed #eadfc9}
 .merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
-.merged-guide ul.quote>li{color:#4a4436;font-size:.93rem;margin:.2em 0;padding-left:10px;border-left:2px solid #bf8247}
-/* 模块内子内容（AI领读除外，它有专属深层样式）：左缩进 + 正文与标题分层 */
-section.mmx-mod>ul,section.mmx-mod>ol,section.mmx-mod>div,
-section.mmx-mod>p:not(.mmx-mod-note),
-section.card:not(.merged-guide)>ul,section.card:not(.merged-guide)>ol,
-section.card:not(.merged-guide)>div,section.card:not(.merged-guide)>p:not(.mmx-mod-note){
-  padding-left:16px;}
-section.mmx-mod li,section.mmx-mod p:not(.mmx-mod-note),
-section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mod-note){
-  color:#4a4436;font-size:.93rem;line-height:1.78;}
+.merged-guide ul.quote>li{color:#4a4436;font-size:.88rem;line-height:1.85;margin:.18em 0;padding-left:10px;border-left:2px solid #bf8247}
 /* 核心观点初判：外链 mmx-guide.css 的「观点N」前缀是绝对定位，在本页版式里和标题叠字，
    且此前要求去掉「观点1/2/3」前缀 —— 这里整条关掉（外链 CSS 不在页面内，只能内联覆盖）。 */
 .mmx-views li{padding-left:0 !important;}
 .mmx-views li:before,.mmx-views li::before{
   content:none !important;display:none !important;counter-increment:none !important;}
+@media(max-width:720px){
+  body{padding:0 12px 60px;font-size:14.5px;}
+  body>section.mmx-mod,body>section.card{padding:15px 16px;border-radius:14px;}
+  .nav{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
 </style>
 </head>
 <body>
@@ -54,8 +116,8 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
   <h1>《代码精进之路：从码农到工匠》</h1>
   <div class="chips"><span class="chip">通读 + 精读</span><span class="chip">AI领读</span><span class="chip">AI 生产</span></div>
 </header>
-<nav class="nav"><a class="navlink" href="#mod-svg">全书结构导图</a><a class="navlink" href="#mod-oneline">一句话主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a></nav>
-<section class="mmx-svgwrap" id="mod-svg">
+<nav class="nav"><a class="navlink" href="#mod-svg">结构导图</a><a class="navlink" href="#mod-oneline">核心主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a></nav>
+<section class="mmx-svgwrap" id="mod-svg"><h2>结构导图</h2>
 <svg class="mmx-svg" viewBox="0 0 1120 1212" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="代码精进之路：从码农到工匠 全书精读">
 <rect x="0" y="0" width="1120" height="1212" fill="none"/>
 <style>.mmx-svg text{font-family:"Noto Serif SC",Georgia,serif}.mmx-svg .t1{font-size:15px;fill:#2f2a24;font-weight:600}.mmx-svg .t2{font-size:12px;fill:#5c5347}.mmx-svg .t3{font-size:10.5px;fill:#8a8272}.mmx-svg .rt{font-size:13px;fill:#f7f3ea;font-weight:600}.mmx-svg .ln{stroke:#cfc6b4;stroke-width:1.4;fill:none}</style>
@@ -189,11 +251,11 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
 <text class="t2" x="714" y="1111">含「13.4 使用COLA」至「13.9 本章小结」</text>
 <path class="ln" d="M692 1115 L700 1115"/>
 </svg></section>
-<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">一句话主旨</h2><p class="mmx-mod-note">本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。</p><p class="mmx-oneline">这是一本为专业程序员而写的书，写好代码、追求卓越和工匠精神是每个程序员都应该具备的优秀品质</p></section>
-<section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" id="mod-merged_guide"><h2 id="merged-guide-title">AI领读 · 全书篇目</h2>
+<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">核心主旨</h2><p class="mmx-oneline">这是一本为专业程序员而写的书，写好代码、追求卓越和工匠精神是每个程序员都应该具备的优秀品质</p></section>
+<section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" id="mod-merged_guide"><h2 id="merged-guide-title">AI领读</h2>
 <p class="small">本书 AI 大纲目前为章级目录（要点与原句待补全）。以下为全书篇目，大纲补全后将自动升级为「目录 + 骨架 + 要点 + 原句」完整版。</p>
 <ol class="mmx-pts"><li><b>1</b> 序一</li><li><b>2</b> 序二</li><li><b>3</b> 前言</li><li><b>4</b> 资源与支持</li><li><b>5</b> 彩图</li><li><b>6</b> 第一部分 技艺</li><li><b>7</b> 1.1 命名的力量</li><li><b>8</b> 1.2 命名其实很难</li><li><b>9</b> 1.3 有意义的命名</li><li><b>10</b> 1.4 保持一致性</li><li><b>11</b> 1.5 自明的代码</li><li><b>12</b> 1.6 命名工具</li><li><b>13</b> 1.7 本章小结</li><li><b>14</b> 第2章 规范</li><li><b>15</b> 2.1 认知成本</li><li><b>16</b> 2.2 混乱的代价</li><li><b>17</b> 2.3 代码规范</li><li><b>18</b> 2.4 埋点规范</li><li><b>19</b> 2.5 架构规范</li><li><b>20</b> 2.6 防止破窗</li><li><b>21</b> 2.7 本章小结</li><li><b>22</b> 第3章 函数</li><li><b>23</b> 3.1 什么是函数</li><li><b>24</b> 3.2 软件中的函数</li><li><b>25</b> 3.3 封装判断</li><li><b>26</b> 3.4 函数参数</li><li><b>27</b> 3.5 短小的函数</li><li><b>28</b> 3.6 职责单一</li><li><b>29</b> 3.7 精简辅助代码</li><li><b>30</b> 3.8 组合函数模式</li><li><b>31</b> 3.9 SLAP</li><li><b>32</b> 3.10 函数式编程</li><li><b>33</b> 3.11 本章小结</li><li><b>34</b> 第4章 设计原则</li><li><b>35</b> 4.1 SOLID概览</li><li><b>36</b> 4.2 SRP</li><li><b>37</b> 4.3 OCP</li><li><b>38</b> 4.4 LSP</li><li><b>39</b> 4.5 ISP</li><li><b>40</b> 4.6 DIP</li><li><b>41</b> 4.7 DRY</li><li><b>42</b> 4.8 YAGNI</li><li><b>43</b> 4.9 Rule of Three</li><li><b>44</b> 4.10 KISS原则</li><li><b>45</b> 4.11 POLA原则</li><li><b>46</b> 4.12 本章小结</li><li><b>47</b> 第5章 设计模式</li><li><b>48</b> 5.1 模式</li><li><b>49</b> 5.2 GoF</li><li><b>50</b> 5.3 拦截器模式</li><li><b>51</b> 5.4 插件模式</li><li><b>52</b> 5.5 管道模式</li><li><b>53</b> 5.6 本章小结</li><li><b>54</b> 第6章 模型</li><li><b>55</b> 6.1 什么是模型</li><li><b>56</b> 6.2 UML</li><li><b>57</b> 6.3 类图</li><li><b>58</b> 6.4 领域模型</li><li><b>59</b> 6.5 敏捷建模</li><li><b>60</b> 6.6 广义模型</li><li><b>61</b> 6.7 本章小结</li><li><b>62</b> 第7章 DDD的精髓</li><li><b>63</b> 7.1 什么是DDD</li><li><b>64</b> 7.2 初步体验DDD</li><li><b>65</b> 7.3 数据驱动和领域驱动</li><li><b>66</b> 7.4 DDD的优势</li><li><b>67</b> 7.5 DDD的核心概念</li><li><b>68</b> 7.6 领域建模方法</li><li><b>69</b> 7.7 模型演化</li><li><b>70</b> 7.8 为什么DDD饱受争议</li><li><b>71</b> 7.9 本章小结</li><li><b>72</b> 第二部分 思想</li><li><b>73</b> 8.1 伟大的抽象</li><li><b>74</b> 8.2 到底什么是抽象</li><li><b>75</b> 8.3 抽象是OO的基础</li><li><b>76</b> 8.4 抽象的层次性</li><li><b>77</b> 8.5 如何进行抽象</li><li><b>78</b> 8.6 如何提升抽象思维</li><li><b>79</b> 8.7 本章小结</li><li><b>80</b> 第9章 分治</li><li><b>81</b> 9.1 分治算法</li><li><b>82</b> 9.2 函数分解</li><li><b>83</b> 9.3 写代码的两次创造</li><li><b>84</b> 9.4 分治模式</li><li><b>85</b> 9.5 分层设计</li><li><b>86</b> 9.6 横切和竖切</li><li><b>87</b> 9.7 本章小结</li><li><b>88</b> 第10章 技术人的素养</li><li><b>89</b> 10.1 不教条</li><li><b>90</b> 10.2 批判性思维</li><li><b>91</b> 10.3 成长型思维</li><li><b>92</b> 10.4 结构化思维</li><li><b>93</b> 10.5 工具化思维</li><li><b>94</b> 10.6 好奇心</li><li><b>95</b> 10.7 记笔记</li><li><b>96</b> 10.8 有目标</li><li><b>97</b> 10.9 选择的自由</li><li><b>98</b> 10.10 平和的心态</li><li><b>99</b> 10.11 精进</li><li><b>100</b> 10.12 本章小结</li><li><b>101</b> 第11章 技术Leader的修养</li><li><b>102</b> 11.1 技术氛围</li><li><b>103</b> 11.2 目标管理</li><li><b>104</b> 11.3 技术规划</li><li><b>105</b> 11.4 推理阶梯</li><li><b>106</b> 11.5 Leader和Manager的区别</li><li><b>107</b> 11.6 视人为人</li><li><b>108</b> 11.7 本章小结</li><li><b>109</b> 第三部分 实践</li><li><b>110</b> 12.1 软件架构</li><li><b>111</b> 12.2 典型的应用架构</li><li><b>112</b> 12.3 COLA架构设计</li><li><b>113</b> 12.4 COLA测试</li><li><b>114</b> 12.5 COLA架构总览</li><li><b>115</b> 12.6 本章小结</li><li><b>116</b> 第13章 工匠平台</li><li><b>117</b> 13.1 项目背景</li><li><b>118</b> 13.2 整理需求</li><li><b>119</b> 13.3 工匠Demo</li><li><b>120</b> 13.4 使用COLA</li><li><b>121</b> 13.5 领域模型</li><li><b>122</b> 13.6 核心业务逻辑</li><li><b>123</b> 13.7 实现技术细节</li><li><b>124</b> 13.8 测试</li><li><b>125</b> 13.9 本章小结</li></ol></section>
-<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点初判</h2><p class="mmx-mod-note">按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。</p><ul class="mmx-views"><li><b>第 1–7 章</b>——含「序一」至「1.1 命名的力量」</li><li><b>第 8–14 章</b>——含「1.2 命名其实很难」至「第2章 规范」</li><li><b>第 15–21 章</b>——含「2.1 认知成本」至「2.7 本章小结」</li><li><b>第 22–28 章</b>——含「第3章 函数」至「3.6 职责单一」</li><li><b>第 29–35 章</b>——含「3.7 精简辅助代码」至「4.1 SOLID概览」</li><li><b>第 36–42 章</b>——含「4.2 SRP」至「4.8 YAGNI」</li><li><b>第 43–49 章</b>——含「4.9 Rule of 」至「5.2 GoF」</li><li><b>第 50–56 章</b>——含「5.3 拦截器模式」至「6.2 UML」</li><li><b>第 57–63 章</b>——含「6.3 类图」至「7.1 什么是DDD」</li><li><b>第 64–70 章</b>——含「7.2 初步体验DDD」至「7.8 为什么DDD饱受」</li><li><b>第 71–77 章</b>——含「7.9 本章小结」至「8.5 如何进行抽象」</li><li><b>第 78–84 章</b>——含「8.6 如何提升抽象思维」至「9.4 分治模式」</li><li><b>第 85–91 章</b>——含「9.5 分层设计」至「10.3 成长型思维」</li><li><b>第 92–98 章</b>——含「10.4 结构化思维」至「10.10 平和的心态」</li><li><b>第 99–105 章</b>——含「10.11 精进」至「11.4 推理阶梯」</li><li><b>第 106–112 章</b>——含「11.5 Leader和」至「12.3 COLA架构设」</li><li><b>第 113–119 章</b>——含「12.4 COLA测试」至「13.3 工匠Demo」</li><li><b>第 120–125 章</b>——含「13.4 使用COLA」至「13.9 本章小结」</li></ul></section>
-<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句 · 持续积累</h2><p class="mmx-mod-note">以下原句取自本书 AI 大纲落库的原文摘录（book_outline.quote），按大纲顺序节选，非 AI 生成；更多见逐章深读页。</p><ol class="mmx-qlist"><li><blockquote>「虽然原来的方法并不复杂，但按照SRP分解后的代码显然更加容易让人读懂，这种拆分是有积极意义的。基本上，遵循SRP的函数都不会太长，再配上合理的命名，就不难得到我们想要的短小的函数。」</blockquote><cite>本书正文</cite></li><li><blockquote>「如果注释是为了阐述代码背后的意图，那么这个注释是有用的；如果注释是为了复述代码功能，那么就要小心了，这样的注释往往意味着“坏味道”」</blockquote><cite>本书正文</cite></li><li><blockquote>「认知是有成本的，而混乱的代价在于让我们对事物无法形成有效的记忆和认知，导致我们每次面对的问题都是新问题，每次面临的场景都是新场景，又要重新理解一遍。」</blockquote><cite>本书正文</cite></li><li><blockquote>「真正的技术Leader是能够创建并且演进架构，在架构层面上帮助大家比较容易地写出好代码的人；是能够创建良好的技术氛围，以写好代码为荣，以写坏代码为耻，促使大家不停学习的人。」</blockquote><cite>本书正文</cite></li><li><blockquote>「不管你们有多敬业，加多少班，在面对烂系统时，你仍然会寸步难行，因为你大部分的精力不是在应对开发需求，而是在应对混乱。」</blockquote><cite>本书正文</cite></li><li><blockquote>「别给糟糕的代码加注释——重新写吧」</blockquote><cite>本书正文</cite></li><li><blockquote>「事物的复杂程度在很大程度上取决于其有序程度，减少无序能在一定程度上降低复杂度，这正是规范的价值所在。通过规范，把无序的混沌控制在一个能够理解的范围内，从而帮助我们减少认知成本，降低对事物认知的复杂度。」</blockquote><cite>本书正文</cite></li><li><blockquote>「对于辅助类，尽量不要用Helper、Util之类的后缀，因为其含义太过笼统，容易破坏SRP（单一职责原则）。比如对于处理CSV，可以这样写：」</blockquote><cite>本书正文</cite></li><li><blockquote>「名为万物之始，万物始于无名，道生一，一生二，二生三，三生万物。」</blockquote><cite>本书正文</cite></li><li><blockquote>「一个程序员的“美德”就在于他是否能为后人留下一段看得懂、可维护性好的代码。」</blockquote><cite>本书正文</cite></li></ol></section>
+<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点</h2><ul class="mmx-views"><li><b>第 1–7 章</b>——含「序一」至「1.1 命名的力量」</li><li><b>第 8–14 章</b>——含「1.2 命名其实很难」至「第2章 规范」</li><li><b>第 15–21 章</b>——含「2.1 认知成本」至「2.7 本章小结」</li><li><b>第 22–28 章</b>——含「第3章 函数」至「3.6 职责单一」</li><li><b>第 29–35 章</b>——含「3.7 精简辅助代码」至「4.1 SOLID概览」</li><li><b>第 36–42 章</b>——含「4.2 SRP」至「4.8 YAGNI」</li><li><b>第 43–49 章</b>——含「4.9 Rule of 」至「5.2 GoF」</li><li><b>第 50–56 章</b>——含「5.3 拦截器模式」至「6.2 UML」</li><li><b>第 57–63 章</b>——含「6.3 类图」至「7.1 什么是DDD」</li><li><b>第 64–70 章</b>——含「7.2 初步体验DDD」至「7.8 为什么DDD饱受」</li><li><b>第 71–77 章</b>——含「7.9 本章小结」至「8.5 如何进行抽象」</li><li><b>第 78–84 章</b>——含「8.6 如何提升抽象思维」至「9.4 分治模式」</li><li><b>第 85–91 章</b>——含「9.5 分层设计」至「10.3 成长型思维」</li><li><b>第 92–98 章</b>——含「10.4 结构化思维」至「10.10 平和的心态」</li><li><b>第 99–105 章</b>——含「10.11 精进」至「11.4 推理阶梯」</li><li><b>第 106–112 章</b>——含「11.5 Leader和」至「12.3 COLA架构设」</li><li><b>第 113–119 章</b>——含「12.4 COLA测试」至「13.3 工匠Demo」</li><li><b>第 120–125 章</b>——含「13.4 使用COLA」至「13.9 本章小结」</li></ul></section>
+<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句</h2><ol class="mmx-qlist"><li><blockquote>「虽然原来的方法并不复杂，但按照SRP分解后的代码显然更加容易让人读懂，这种拆分是有积极意义的。基本上，遵循SRP的函数都不会太长，再配上合理的命名，就不难得到我们想要的短小的函数。」</blockquote><cite>本书正文</cite></li><li><blockquote>「如果注释是为了阐述代码背后的意图，那么这个注释是有用的；如果注释是为了复述代码功能，那么就要小心了，这样的注释往往意味着“坏味道”」</blockquote><cite>本书正文</cite></li><li><blockquote>「认知是有成本的，而混乱的代价在于让我们对事物无法形成有效的记忆和认知，导致我们每次面对的问题都是新问题，每次面临的场景都是新场景，又要重新理解一遍。」</blockquote><cite>本书正文</cite></li><li><blockquote>「真正的技术Leader是能够创建并且演进架构，在架构层面上帮助大家比较容易地写出好代码的人；是能够创建良好的技术氛围，以写好代码为荣，以写坏代码为耻，促使大家不停学习的人。」</blockquote><cite>本书正文</cite></li><li><blockquote>「不管你们有多敬业，加多少班，在面对烂系统时，你仍然会寸步难行，因为你大部分的精力不是在应对开发需求，而是在应对混乱。」</blockquote><cite>本书正文</cite></li><li><blockquote>「别给糟糕的代码加注释——重新写吧」</blockquote><cite>本书正文</cite></li><li><blockquote>「事物的复杂程度在很大程度上取决于其有序程度，减少无序能在一定程度上降低复杂度，这正是规范的价值所在。通过规范，把无序的混沌控制在一个能够理解的范围内，从而帮助我们减少认知成本，降低对事物认知的复杂度。」</blockquote><cite>本书正文</cite></li><li><blockquote>「对于辅助类，尽量不要用Helper、Util之类的后缀，因为其含义太过笼统，容易破坏SRP（单一职责原则）。比如对于处理CSV，可以这样写：」</blockquote><cite>本书正文</cite></li><li><blockquote>「名为万物之始，万物始于无名，道生一，一生二，二生三，三生万物。」</blockquote><cite>本书正文</cite></li><li><blockquote>「一个程序员的“美德”就在于他是否能为后人留下一段看得懂、可维护性好的代码。」</blockquote><cite>本书正文</cite></li></ol></section>
 </body>
 </html>

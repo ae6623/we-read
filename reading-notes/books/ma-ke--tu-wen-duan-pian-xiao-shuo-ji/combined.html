@@ -6,46 +6,108 @@
 <title>《马克·吐温短篇小说集》｜通读 · 精读</title>
 <link rel="stylesheet" href="../../../assets/css/reading-overview.css"><link rel="stylesheet" href="../../../assets/css/mmx-guide.css"><link rel="stylesheet" href="../../../assets/css/reading-outline.css">
 <style>
-/* 合并页外壳 */
-body{max-width:960px;margin:0 auto;padding:0 18px 80px;}
-.combined-head{padding:34px 0 18px;border-bottom:1px solid #e7e0d2;margin-bottom:8px;}
-.combined-head h1{font-size:26px;margin:0 0 10px;}
+/* ── 外壳与全局阅读节奏 ── */
+body{max-width:880px;margin:0 auto;padding:0 18px 80px;
+  font-size:15px;line-height:1.88;color:#3b453e;background:#f7f8f3;
+  -webkit-font-smoothing:antialiased;}
+.combined-head{padding:30px 0 16px;border-bottom:1px solid #e7e0d2;margin-bottom:4px;}
+.combined-head h1{font:700 23px/1.35 var(--serif);margin:0 0 8px;color:#244b40;}
+.combined-head .eyebrow{font-size:.72rem;letter-spacing:.14em;margin:0 0 6px;}
+.chips{margin:8px 0 0;}
+.chip{font-size:.72rem;padding:2px 10px;}
 /* 锚点导航：固定一排 4 个，等宽对齐 */
-.nav{position:sticky;top:0;z-index:20;background:rgba(255,253,248,.96);backdrop-filter:blur(6px);
-  border-bottom:1px solid #ece4d4;padding:10px 0;margin:14px 0 26px;display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;
-  box-shadow:0 2px 10px rgba(120,100,60,.06);}
-.navlink{font-size:12.5px;color:#5d5443;text-decoration:none;background:#f6f1e6;border:1px solid #e7ddca;
-  border-radius:7px;padding:4px 6px;text-align:center;white-space:nowrap;overflow:hidden;
-  text-overflow:ellipsis;}
-section{scroll-margin-top:64px;}
-/* 一句话主旨：去左侧竖线 */
-.mmx-oneline{border-left:none;padding-left:18px;}
-/* AI领读章内：AI 大纲原生深层样式 */
-.merged-guide .sec{margin:10px 0 14px;padding-left:6px;border-left:2px solid #e5e0d6}
-.merged-guide .sec h4{font:600 .98rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.6em 0 .3em}
-.merged-guide ul.point{margin:.3em 0;padding-left:20px}
-.merged-guide ul.point>li{margin:.35em 0}
-.merged-guide ul.quote{margin:.25em 0 .25em 20px;padding-left:18px;list-style:none}
-.merged-guide ul.quote::before{content:"原句";display:block;font-size:.72rem;color:#bf8247;
-  letter-spacing:.1em;margin:.15em 0 .1em;font-weight:600}
-.merged-guide ul.quote.quote-node{margin-top:.5em;padding-top:.4em;border-top:1px dashed #eadfc9}
+.nav{position:sticky;top:0;z-index:20;background:rgba(247,248,243,.96);backdrop-filter:blur(6px);
+  border-bottom:1px solid #ece4d4;padding:10px 0;margin:12px 0 20px;display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;
+  box-shadow:0 2px 10px rgba(120,100,60,.05);}
+.navlink{font-size:12px;color:#5d5443;text-decoration:none;background:#fdfbf3;border:1px solid #e8e2d2;
+  border-radius:8px;padding:6px 4px;text-align:center;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;transition:background .15s,color .15s;}
+.navlink:hover{background:#f2efe2;color:#244b40;}
+section{scroll-margin-top:62px;}
+
+/* ── 统一卡片：所有顶层模块（AI领读 / AI 问答 / 其余）一视同仁 ── */
+body>section.mmx-mod,body>section.card,body>section.mmx-svgwrap{
+  background:#fffdf6;border:1px solid #e8e4d5;border-radius:16px;
+  padding:18px 22px;margin:18px 0;
+  box-shadow:0 1px 3px rgba(110,95,60,.05);}
+body>section.mmx-mod>*:first-child,body>section.card>*:first-child,
+body>section.mmx-svgwrap>*:first-child{margin-top:0}
+body>section.mmx-mod>*:last-child,body>section.card>*:last-child,
+body>section.mmx-svgwrap>*:last-child{margin-bottom:0}
+/* 结构导图：图本身留白居中，不与正文抢宽 */
+body>section.mmx-svgwrap>svg.mmx-svg{display:block;width:100%;height:auto;margin:2px auto 0;}
+/* 模块标题：统一大小、弱强调，不与正文抢注意力 */
+body>section.mmx-mod>h2,body>section.card>h2{
+  font:700 1.04rem/1.5 var(--serif);color:#244b40;margin:0 0 11px;
+  padding-left:10px;border-left:3px solid #bf8247;letter-spacing:.01em;}
+/* 正文：字号收小、行距放宽、段间距舒服 */
+body>section.mmx-mod p,body>section.card p,
+body>section.mmx-mod li,body>section.card li{
+  font-size:.9rem;line-height:1.92;color:#4a4436;}
+body>section.mmx-mod p,body>section.card p{margin:.5em 0;}
+body>section.mmx-mod>ul,body>section.mmx-mod>ol,body>section.mmx-mod>div,
+body>section.mmx-mod>p:not(.mmx-mod-note),
+body>section.card:not(.merged-guide)>ul,body>section.card:not(.merged-guide)>ol,
+body>section.card:not(.merged-guide)>div,body>section.card:not(.merged-guide)>p:not(.mmx-mod-note){
+  padding-left:14px;}
+/* 模块说明小字：弱化不抢眼 */
+.mmx-mod-note{font-size:.75rem;color:#8d8878;margin:.1em 0 .75em;line-height:1.7;}
+
+/* ── 内部块统一：卡片里不再套深卡片，一律浅底子块 ── */
+body>section .mmx-pending,body>section .mmx-evib,body>section .aiqa-item{
+  background:#fbfaf2;border:1px solid #eee9d8;border-radius:12px;
+  padding:13px 16px;margin:.65em 0;}
+body>section .mmx-evib ul{padding-left:1.15em;}
+/* 一句话主旨：去左侧竖线 + 收敛字号 */
+.mmx-oneline{font-size:.98rem;line-height:1.85;color:#3a352c;margin:.2em 0 0;
+  padding:12px 16px;background:#fbfaf4;border-left:none;border-radius:12px;}
+/* 核心观点 / 验证清单：虚线分隔 + 收紧行距 */
+.mmx-views li{padding:.5em 0 .5em 0;font-size:.9rem;line-height:1.88;}
+/* 原文金句 */
+.mmx-qlist li{padding:.6em 0 .6em 2.2em;}
+.mmx-qlist blockquote{font-size:.89rem;line-height:1.9;}
+.mmx-qlist cite{font-size:.72rem;}
+/* 核心追问：问句加重、答句放松 */
+.mmx-qa{margin:.7em 0;padding-left:12px;border-left:3px solid #e5dfcd;}
+.mmx-qa .mmx-q{font-size:.9rem;font-weight:700;color:#2f3a33;line-height:1.8;margin:0 0 .25em;}
+.mmx-qa .mmx-a{font-size:.88rem;line-height:1.95;color:#4a4436;margin:0;}
+
+/* ── AI 问书专项：外层容器透明，问答条目才是阅读单元 ── */
+#mod-aiask .mmx-ask{background:transparent;border:0;border-radius:0;padding:0;margin:0;}
+#mod-aiask .aiqa-item{margin:.6em 0;padding:14px 16px 15px;}
+#mod-aiask .aiqa-item h3{font:700 .93rem/1.7 var(--serif);color:#2f5b49;margin:0 0 .4em;
+  padding:0;border:0;}
+#mod-aiask .aiqa-item h3:before{content:"问　";color:#bf8247;font-weight:700;}
+#mod-aiask .aiqa-item p{font-size:.88rem;line-height:1.95;color:#4a4436;margin:.4em 0;}
+#mod-aiask .aiqa-item ul{margin:.35em 0;padding-left:1.1em;}
+#mod-aiask .aiqa-item li{font-size:.87rem;line-height:1.88;margin:.18em 0;color:#4a4436;}
+#mod-aiask .aiqa-item li::marker{color:#c0a06a;}
+/* 逐章追问（details 形态）：摘要行也收敛 */
+.mmx-ask>summary{font-size:.87rem;line-height:1.7;padding:2px 0;}
+.mmx-askbody{font-size:.88rem;line-height:1.9;}
+
+/* AI领读章内：AI 大纲原生深层样式（字号同步收小） */
+.merged-guide .sec{margin:9px 0 12px;padding-left:6px;border-left:2px solid #e5e0d6}
+.merged-guide .sec h4{font:600 .93rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.5em 0 .25em}
+.merged-guide ul.point{margin:.25em 0;padding-left:20px}
+.merged-guide ul.point>li{margin:.3em 0}
+.merged-guide ul.quote{margin:.22em 0 .22em 20px;padding-left:18px;list-style:none}
+.merged-guide ul.quote::before{content:"原句";display:block;font-size:.7rem;color:#bf8247;
+  letter-spacing:.1em;margin:.12em 0 .08em;font-weight:600}
+.merged-guide ul.quote.quote-node{margin-top:.45em;padding-top:.35em;border-top:1px dashed #eadfc9}
 .merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
-.merged-guide ul.quote>li{color:#4a4436;font-size:.93rem;margin:.2em 0;padding-left:10px;border-left:2px solid #bf8247}
-/* 模块内子内容（AI领读除外，它有专属深层样式）：左缩进 + 正文与标题分层 */
-section.mmx-mod>ul,section.mmx-mod>ol,section.mmx-mod>div,
-section.mmx-mod>p:not(.mmx-mod-note),
-section.card:not(.merged-guide)>ul,section.card:not(.merged-guide)>ol,
-section.card:not(.merged-guide)>div,section.card:not(.merged-guide)>p:not(.mmx-mod-note){
-  padding-left:16px;}
-section.mmx-mod li,section.mmx-mod p:not(.mmx-mod-note),
-section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mod-note){
-  color:#4a4436;font-size:.93rem;line-height:1.78;}
+.merged-guide ul.quote>li{color:#4a4436;font-size:.88rem;line-height:1.85;margin:.18em 0;padding-left:10px;border-left:2px solid #bf8247}
 /* 核心观点初判：外链 mmx-guide.css 的「观点N」前缀是绝对定位，在本页版式里和标题叠字，
    且此前要求去掉「观点1/2/3」前缀 —— 这里整条关掉（外链 CSS 不在页面内，只能内联覆盖）。 */
 .mmx-views li{padding-left:0 !important;}
 .mmx-views li:before,.mmx-views li::before{
   content:none !important;display:none !important;counter-increment:none !important;}
+@media(max-width:720px){
+  body{padding:0 12px 60px;font-size:14.5px;}
+  body>section.mmx-mod,body>section.card{padding:15px 16px;border-radius:14px;}
+  .nav{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
 </style>
 </head>
 <body>
@@ -54,8 +116,8 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
   <h1>《马克·吐温短篇小说集》</h1>
   <div class="chips"><span class="chip">通读 + 精读</span><span class="chip">AI领读</span><span class="chip">AI 生产</span></div>
 </header>
-<nav class="nav"><a class="navlink" href="#mod-svg">全书结构导图</a><a class="navlink" href="#mod-oneline">一句话主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a><a class="navlink" href="#mod-coreask">核心追问</a><a class="navlink" href="#mod-aiask">AI 问书</a><a class="navlink" href="#mod-higher">更高维度</a><a class="navlink" href="#mod-verify">阅读验证</a><a class="navlink" href="#mod-thennow">当年与今天</a></nav>
-<section class="mmx-svgwrap" id="mod-svg"><svg class="mmx-svg" viewBox="0 0 1120 406" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="马克·吐温短篇小说集 全书精读">
+<nav class="nav"><a class="navlink" href="#mod-svg">结构导图</a><a class="navlink" href="#mod-oneline">核心主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a><a class="navlink" href="#mod-coreask">核心追问</a><a class="navlink" href="#mod-aiask">AI 问书</a><a class="navlink" href="#mod-higher">更高维度</a><a class="navlink" href="#mod-verify">阅读验证</a><a class="navlink" href="#mod-thennow">往日今时</a></nav>
+<section class="mmx-svgwrap" id="mod-svg"><h2>结构导图</h2><svg class="mmx-svg" viewBox="0 0 1120 406" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="马克·吐温短篇小说集 全书精读">
 <rect x="0" y="0" width="1120" height="406" fill="none"/>
 <style>.mmx-svg text{font-family:"Noto Serif SC",Georgia,serif}.mmx-svg .t1{font-size:15px;fill:#2f2a24;font-weight:600}.mmx-svg .t2{font-size:12px;fill:#5c5347}.mmx-svg .t3{font-size:10.5px;fill:#8a8272}.mmx-svg .rt{font-size:13px;fill:#f7f3ea;font-weight:600}.mmx-svg .ln{stroke:#cfc6b4;stroke-width:1.4;fill:none}</style>
 <rect x="28" y="159" width="262" height="52" rx="10" fill="#3d372e"/>
@@ -102,7 +164,7 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
 <text class="t2" x="714" y="313">默牢骚。</text>
 <path class="ln" d="M692 309 L700 309"/>
 </svg></section>
-<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">一句话主旨</h2><p class="mmx-mod-note">本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。</p><p class="mmx-oneline">通过幽默、讽刺与荒诞叙事，剖析人性弱点、社会伪善与人类文明的种种荒谬性。</p></section>
+<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">核心主旨</h2><p class="mmx-oneline">通过幽默、讽刺与荒诞叙事，剖析人性弱点、社会伪善与人类文明的种种荒谬性。</p></section>
 <section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" id="mod-merged_guide"><h2 id="merged-guide-title">AI领读</h2>
 <style>
 /* merged_guide 章内：AI 大纲原生深层样式 */
@@ -2164,12 +2226,12 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
       </div></details>
   </div>
 </section>
-<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点初判</h2><p class="mmx-mod-note">按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。</p><ul class="mmx-views"><li><b>人性与道德剖析</b>——通过具体人物命运与抉择，探讨金钱、道德、谎言与生命恩赐对人性的考验。</li><li><b>动物视角与反讽</b>——借助狗、撒旦以及亚当夏娃的独特视角，对人类社会的盲目与虚伪进行辛辣反讽。</li><li><b>社会观察与批判</b>——聚焦日常现象与社会心理，揭示人类在财富崇拜、死亡认知、日常风险及行为规范上的盲区。</li><li><b>文学与艺术解构</b>——集中探讨各类文体、交谈方式、幽默艺术及其荒诞表现形式，展现作者对文字与创作的思考。</li><li><b>个人经历与闲谈</b>——记录作者个人在打字机使用、育儿观察及日常琐事中的真实体验与幽默牢骚。</li></ul></section>
-<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句 · 持续积累</h2><p class="mmx-mod-note">以下原句取自本书 AI 大纲落库的原文摘录（book_outline.quote），按大纲顺序节选，非 AI 生成；更多见逐章深读页。</p><ol class="mmx-qlist"><li><blockquote>「他现年三十五岁，已经在这家店里工作了十四年。」</blockquote><cite>三万美元的遗产</cite></li><li><blockquote>「刚入职时，他的年薪只有四百美元，之后每年增加一百美元，四年下来，年薪便涨到了八百美元。」</blockquote><cite>三万美元的遗产</cite></li><li><blockquote>「她用二十五美元现金，在镇边买下一小块地。」</blockquote><cite>三万美元的遗产</cite></li><li><blockquote>「结婚七年后，她在自己的地皮上盖了一栋价值两千美元、舒适又漂亮的房子。」</blockquote><cite>三万美元的遗产</cite></li><li><blockquote>「他这么做并非出于亲情，而是因为金钱给他带来了无数烦恼与痛苦。」</blockquote><cite>三万美元的遗产</cite></li><li><blockquote>「他希望这笔钱能继续去“造孽”。」</blockquote><cite>三万美元的遗产</cite></li><li><blockquote>「萨莉先打破了沉默，激动地说：“啊，那该多好啊，阿莱克！先拿一千美元买一匹马和一辆马车，夏天出门兜风；冬天再添件皮大衣暖暖身子。”。」</blockquote><cite>三万美元的遗产</cite></li><li><blockquote>「阿莱克冷静而坚决地答道：“动用本金？绝对不行。就算有一百万也不行！”。」</blockquote><cite>三万美元的遗产</cite></li><li><blockquote>「阿莱克说：“追求更高的回报。”。」</blockquote><cite>三万美元的遗产</cite></li><li><blockquote>「“大概两三年时间。我已经看好两笔投资：一笔石油，一笔小麦。”。」</blockquote><cite>三万美元的遗产</cite></li></ol></section>
-<section class="mmx-mod" aria-labelledby="coreask" id="mod-coreask"><h2 id="coreask">核心追问（来自深读）</h2><p class="mmx-mod-note">跨章主题的深读追问，由模型基于全书大纲与原文摘录撰写；逐章的追问收在每个章条目里。</p><div class="mmx-qa"><p class="mmx-q">《三万美元的遗产》里，福斯特夫妇的财富为何能一路「增长」到荒唐的数字？是什么机制让幻觉自我放大</p><p class="mmx-a">关于「《三万美元的遗产》里，福斯特夫妇的财富为何能一路「增」：大纲显示《》以《三万美元的遗产》起手、到《夏娃日记》收束，核心脉络与「萨拉丁是镇上最大商铺的记账员，也是当地同行里薪水最高的人」相关。以上为大纲条目推断，未亲读正文，读后请核对。</p></div><div class="mmx-qa"><p class="mmx-q">《狗的自述》中，狗明明救了婴儿，为何反被主人打伤？叙述视角的错位在讽刺什么</p><p class="mmx-a">关于「《狗的自述》中，狗明明救了婴儿，为何反被主人打伤？叙」：大纲显示《》以《三万美元的遗产》起手、到《夏娃日记》收束，核心脉络与「萨拉丁是镇上最大商铺的记账员，也是当地同行里薪水最高的人」相关。以上为大纲条目推断，未亲读正文，读后请核对。</p></div><div class="mmx-qa"><p class="mmx-q">把「修订讣告」和「一次电话交谈」放在一起读，作者对「现代传播」的判断是什么</p><p class="mmx-a">关于「把「修订讣告」和「一次电话交谈」放在一起读，作者对「」：大纲显示《》以《三万美元的遗产》起手、到《夏娃日记》收束，核心脉络与「萨拉丁是镇上最大商铺的记账员，也是当地同行里薪水最高的人」相关。以上为大纲条目推断，未亲读正文，读后请核对。</p></div></section>
-<section class="mmx-mod" aria-labelledby="aiask" id="mod-aiask"><h2 id="aiask">AI 问书</h2><p class="mmx-mod-note">下方内容为本书级 AI 问书整理，由云端 AI 阅读流程基于本书大纲、章节锚点与热门划线生成。</p><div class="mmx-qa"><p class="mmx-q">马克·吐温写《加利福尼亚人的故事》，幽默下面是什么？</p><p class="mmx-a">锚点写加州「曾经人烟稠密，后来人们纷纷离去，只剩下荒凉的自然和矿工们简陋的生活」。小说表面讲一个矿工对「美」的执着（藏起一位姑娘的画像），内核是对淘金热幻灭与人被黄金异化后的孤独。热门划线「用不正当手段追逐的巨额财富，其实是一个陷阱」正点出：财富叙事如何毁掉普通人的平静生活。</p></div><div class="mmx-qa"><p class="mmx-q">《生命的五种恩赐》里年轻人为什么选了「享乐」就后悔？</p><p class="mmx-a">锚点：「年轻人迫不及待地选择了享乐，但那些快乐都转瞬即逝，令人失望至极，毫无意义且空虚不堪」。马克·吐温用寓言拆穿「享乐=幸福」的等式，五种恩赐（享乐、爱情、名利等）逐一被证明是空。这是他晚期「愤世」一面的集中爆发，和早期《竞选州长》的轻喜剧已完全不同调。</p></div><div class="mmx-qa"><p class="mmx-q">为什么说马克·吐温的「讽刺」主要针对伪善而非坏人？</p><p class="mmx-a">锚点多处指向制度性虚伪：《婴儿妙语》讽刺父母「把幼稚又愚蠢的话登在报纸上」；《来自撒旦的人道话语》借撒旦嘲「慈善委员会接受洛克菲勒捐款」的双标；《修订讣告》主张「讣告应由逝者本人执笔」以传递真实评价。他嘲笑的是社会表演——人人在体面面具下藏着算计。</p></div></section>
-<section class="mmx-mod" aria-labelledby="higher" id="mod-higher"><h2 id="higher">用更高维度的知识看这本书</h2><p class="mmx-mod-note">下方内容由云端 AI 阅读流程生成：把本书放回知识史与理论框架中重读，区分书中主张、外部证据与综合分析。</p><p>【书中主张】马克·吐温用幽默、反讽与荒诞（狗的视角、撒旦、亚当夏娃）剖析「人性弱点、社会伪善与文明的荒谬」，主张体面叙事之下尽是算计与空虚。【外部证据】热门划线「道德原则固然能让人远离浮华与恶习，可贫穷带来的克制，远比原则更有力」呼应其晚期悲观主义；传记考证显示他晚年破产、丧女，讽刺锋芒由轻喜剧转向愤世。【综合分析】把本书放回美国文学谱系，它上承斯威夫特式讽刺、下接后来的黑色幽默，马克·吐温的「搞笑」从来不是无害的——他用笑话拆穿「进步」「慈善」「民主」的神话。</p><p>【书中主张】书中《爱德华·米尔斯与乔治·本顿》《加利福尼亚人的故事》等反复证明：善人被亏待、投机者胜出，「事情向来如此：对从未握过大笔财富的人而言，钱财反而是祸水」。【外部证据】这与吐温本人投资印刷机、出版业失败的真实经历互文；但选本（本书为「图文短篇小说集」）对篇目的取舍会影响读者对其「幽默/愤世」比重的判断。【综合分析】从文体看，他首创「用口语化叙述者制造不可靠叙事」，《竞选州长》的套路在本书短篇里成熟；今天读，他的讽刺仍精准命中「人设」「慈善人设」「财富鸡汤」等当代顽疾。</p></section>
-<section class="mmx-mod" aria-labelledby="verify" id="mod-verify"><h2 id="verify">阅读时要验证的问题</h2><p class="mmx-mod-note">下方由云端 AI 阅读流程生成：读时需核对的原文、数字与论点（关键数据出处、个案代表性、类比限度）。</p><ul class="mmx-views"><li>《生命的五种恩赐》「年轻人选享乐转瞬即逝」——核对马克·吐温该短篇（常译《The Five Boons of Life》）原文，确认五种恩赐的设定与结局，避免与《神秘的陌生人》片段混淆。</li><li>「讣告应由逝者本人执笔」出自《修订讣告》——核查该篇在吐温文集的归属与写作年代，确认是讽刺文而非小说，区分其杂文与短篇小说体例。</li><li>本书为「图文短篇小说集」——应核查所选篇目是否均为马克·吐温原作、中文译文来源，以及「图文」插画是否为后加，避免把编者导言当作者原意。</li></ul></section>
-<section class="mmx-mod" aria-labelledby="thennow" id="mod-thennow"><h2 id="thennow">当年与今天 · 初步对照</h2><p class="mmx-mod-note">下方由云端 AI 阅读流程生成：区分作者当年所能知晓与后来才显现的事实，给出今日可迁移的启发。</p><p>马克·吐温当年（19世纪末）所能知晓的，是美国镀金时代的贫富撕裂、帝国主义扩张与自己的投资失败；他写不出今天「财富自由」「财务鸡汤」会成为一门生意，更无从预见社交媒体的表演式人设。</p><p>后来显现的事实是：他的讽刺被收进课本变成「幽默大师」的温和形象，锋利的愤世常被磨平；可迁移的启发是——书中「贫穷带来的克制远比原则更有力」「钱财是祸水」在今天仍刺眼：当所有人都在教你怎么变富，吐温提醒你，追逐财富本身可能正是那个陷阱。</p></section>
+<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点</h2><ul class="mmx-views"><li><b>人性与道德剖析</b>——通过具体人物命运与抉择，探讨金钱、道德、谎言与生命恩赐对人性的考验。</li><li><b>动物视角与反讽</b>——借助狗、撒旦以及亚当夏娃的独特视角，对人类社会的盲目与虚伪进行辛辣反讽。</li><li><b>社会观察与批判</b>——聚焦日常现象与社会心理，揭示人类在财富崇拜、死亡认知、日常风险及行为规范上的盲区。</li><li><b>文学与艺术解构</b>——集中探讨各类文体、交谈方式、幽默艺术及其荒诞表现形式，展现作者对文字与创作的思考。</li><li><b>个人经历与闲谈</b>——记录作者个人在打字机使用、育儿观察及日常琐事中的真实体验与幽默牢骚。</li></ul></section>
+<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句</h2><ol class="mmx-qlist"><li><blockquote>「他现年三十五岁，已经在这家店里工作了十四年。」</blockquote><cite>三万美元的遗产</cite></li><li><blockquote>「刚入职时，他的年薪只有四百美元，之后每年增加一百美元，四年下来，年薪便涨到了八百美元。」</blockquote><cite>三万美元的遗产</cite></li><li><blockquote>「她用二十五美元现金，在镇边买下一小块地。」</blockquote><cite>三万美元的遗产</cite></li><li><blockquote>「结婚七年后，她在自己的地皮上盖了一栋价值两千美元、舒适又漂亮的房子。」</blockquote><cite>三万美元的遗产</cite></li><li><blockquote>「他这么做并非出于亲情，而是因为金钱给他带来了无数烦恼与痛苦。」</blockquote><cite>三万美元的遗产</cite></li><li><blockquote>「他希望这笔钱能继续去“造孽”。」</blockquote><cite>三万美元的遗产</cite></li><li><blockquote>「萨莉先打破了沉默，激动地说：“啊，那该多好啊，阿莱克！先拿一千美元买一匹马和一辆马车，夏天出门兜风；冬天再添件皮大衣暖暖身子。”。」</blockquote><cite>三万美元的遗产</cite></li><li><blockquote>「阿莱克冷静而坚决地答道：“动用本金？绝对不行。就算有一百万也不行！”。」</blockquote><cite>三万美元的遗产</cite></li><li><blockquote>「阿莱克说：“追求更高的回报。”。」</blockquote><cite>三万美元的遗产</cite></li><li><blockquote>「“大概两三年时间。我已经看好两笔投资：一笔石油，一笔小麦。”。」</blockquote><cite>三万美元的遗产</cite></li></ol></section>
+<section class="mmx-mod" aria-labelledby="coreask" id="mod-coreask"><h2 id="coreask">核心追问</h2><div class="mmx-qa"><p class="mmx-q">《三万美元的遗产》里，福斯特夫妇的财富为何能一路「增长」到荒唐的数字？是什么机制让幻觉自我放大</p><p class="mmx-a">关于「《三万美元的遗产》里，福斯特夫妇的财富为何能一路「增」：大纲显示《》以《三万美元的遗产》起手、到《夏娃日记》收束，核心脉络与「萨拉丁是镇上最大商铺的记账员，也是当地同行里薪水最高的人」相关。以上为大纲条目推断，未亲读正文，读后请核对。</p></div><div class="mmx-qa"><p class="mmx-q">《狗的自述》中，狗明明救了婴儿，为何反被主人打伤？叙述视角的错位在讽刺什么</p><p class="mmx-a">关于「《狗的自述》中，狗明明救了婴儿，为何反被主人打伤？叙」：大纲显示《》以《三万美元的遗产》起手、到《夏娃日记》收束，核心脉络与「萨拉丁是镇上最大商铺的记账员，也是当地同行里薪水最高的人」相关。以上为大纲条目推断，未亲读正文，读后请核对。</p></div><div class="mmx-qa"><p class="mmx-q">把「修订讣告」和「一次电话交谈」放在一起读，作者对「现代传播」的判断是什么</p><p class="mmx-a">关于「把「修订讣告」和「一次电话交谈」放在一起读，作者对「」：大纲显示《》以《三万美元的遗产》起手、到《夏娃日记》收束，核心脉络与「萨拉丁是镇上最大商铺的记账员，也是当地同行里薪水最高的人」相关。以上为大纲条目推断，未亲读正文，读后请核对。</p></div></section>
+<section class="mmx-mod" aria-labelledby="aiask" id="mod-aiask"><h2 id="aiask">AI 问书</h2><div class="mmx-qa"><p class="mmx-q">马克·吐温写《加利福尼亚人的故事》，幽默下面是什么？</p><p class="mmx-a">锚点写加州「曾经人烟稠密，后来人们纷纷离去，只剩下荒凉的自然和矿工们简陋的生活」。小说表面讲一个矿工对「美」的执着（藏起一位姑娘的画像），内核是对淘金热幻灭与人被黄金异化后的孤独。热门划线「用不正当手段追逐的巨额财富，其实是一个陷阱」正点出：财富叙事如何毁掉普通人的平静生活。</p></div><div class="mmx-qa"><p class="mmx-q">《生命的五种恩赐》里年轻人为什么选了「享乐」就后悔？</p><p class="mmx-a">锚点：「年轻人迫不及待地选择了享乐，但那些快乐都转瞬即逝，令人失望至极，毫无意义且空虚不堪」。马克·吐温用寓言拆穿「享乐=幸福」的等式，五种恩赐（享乐、爱情、名利等）逐一被证明是空。这是他晚期「愤世」一面的集中爆发，和早期《竞选州长》的轻喜剧已完全不同调。</p></div><div class="mmx-qa"><p class="mmx-q">为什么说马克·吐温的「讽刺」主要针对伪善而非坏人？</p><p class="mmx-a">锚点多处指向制度性虚伪：《婴儿妙语》讽刺父母「把幼稚又愚蠢的话登在报纸上」；《来自撒旦的人道话语》借撒旦嘲「慈善委员会接受洛克菲勒捐款」的双标；《修订讣告》主张「讣告应由逝者本人执笔」以传递真实评价。他嘲笑的是社会表演——人人在体面面具下藏着算计。</p></div></section>
+<section class="mmx-mod" aria-labelledby="higher" id="mod-higher"><h2 id="higher">更高维度</h2><p>【书中主张】马克·吐温用幽默、反讽与荒诞（狗的视角、撒旦、亚当夏娃）剖析「人性弱点、社会伪善与文明的荒谬」，主张体面叙事之下尽是算计与空虚。【外部证据】热门划线「道德原则固然能让人远离浮华与恶习，可贫穷带来的克制，远比原则更有力」呼应其晚期悲观主义；传记考证显示他晚年破产、丧女，讽刺锋芒由轻喜剧转向愤世。【综合分析】把本书放回美国文学谱系，它上承斯威夫特式讽刺、下接后来的黑色幽默，马克·吐温的「搞笑」从来不是无害的——他用笑话拆穿「进步」「慈善」「民主」的神话。</p><p>【书中主张】书中《爱德华·米尔斯与乔治·本顿》《加利福尼亚人的故事》等反复证明：善人被亏待、投机者胜出，「事情向来如此：对从未握过大笔财富的人而言，钱财反而是祸水」。【外部证据】这与吐温本人投资印刷机、出版业失败的真实经历互文；但选本（本书为「图文短篇小说集」）对篇目的取舍会影响读者对其「幽默/愤世」比重的判断。【综合分析】从文体看，他首创「用口语化叙述者制造不可靠叙事」，《竞选州长》的套路在本书短篇里成熟；今天读，他的讽刺仍精准命中「人设」「慈善人设」「财富鸡汤」等当代顽疾。</p></section>
+<section class="mmx-mod" aria-labelledby="verify" id="mod-verify"><h2 id="verify">阅读验证</h2><ul class="mmx-views"><li>《生命的五种恩赐》「年轻人选享乐转瞬即逝」——核对马克·吐温该短篇（常译《The Five Boons of Life》）原文，确认五种恩赐的设定与结局，避免与《神秘的陌生人》片段混淆。</li><li>「讣告应由逝者本人执笔」出自《修订讣告》——核查该篇在吐温文集的归属与写作年代，确认是讽刺文而非小说，区分其杂文与短篇小说体例。</li><li>本书为「图文短篇小说集」——应核查所选篇目是否均为马克·吐温原作、中文译文来源，以及「图文」插画是否为后加，避免把编者导言当作者原意。</li></ul></section>
+<section class="mmx-mod" aria-labelledby="thennow" id="mod-thennow"><h2 id="thennow">往日今时</h2><p>马克·吐温当年（19世纪末）所能知晓的，是美国镀金时代的贫富撕裂、帝国主义扩张与自己的投资失败；他写不出今天「财富自由」「财务鸡汤」会成为一门生意，更无从预见社交媒体的表演式人设。</p><p>后来显现的事实是：他的讽刺被收进课本变成「幽默大师」的温和形象，锋利的愤世常被磨平；可迁移的启发是——书中「贫穷带来的克制远比原则更有力」「钱财是祸水」在今天仍刺眼：当所有人都在教你怎么变富，吐温提醒你，追逐财富本身可能正是那个陷阱。</p></section>
 </body>
 </html>

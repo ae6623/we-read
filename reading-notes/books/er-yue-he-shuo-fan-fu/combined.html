@@ -6,46 +6,108 @@
 <title>《二月河说反腐》｜通读 · 精读</title>
 <link rel="stylesheet" href="../../../assets/css/reading-overview.css"><link rel="stylesheet" href="../../../assets/css/mmx-guide.css"><link rel="stylesheet" href="../../../assets/css/reading-outline.css">
 <style>
-/* 合并页外壳 */
-body{max-width:960px;margin:0 auto;padding:0 18px 80px;}
-.combined-head{padding:34px 0 18px;border-bottom:1px solid #e7e0d2;margin-bottom:8px;}
-.combined-head h1{font-size:26px;margin:0 0 10px;}
+/* ── 外壳与全局阅读节奏 ── */
+body{max-width:880px;margin:0 auto;padding:0 18px 80px;
+  font-size:15px;line-height:1.88;color:#3b453e;background:#f7f8f3;
+  -webkit-font-smoothing:antialiased;}
+.combined-head{padding:30px 0 16px;border-bottom:1px solid #e7e0d2;margin-bottom:4px;}
+.combined-head h1{font:700 23px/1.35 var(--serif);margin:0 0 8px;color:#244b40;}
+.combined-head .eyebrow{font-size:.72rem;letter-spacing:.14em;margin:0 0 6px;}
+.chips{margin:8px 0 0;}
+.chip{font-size:.72rem;padding:2px 10px;}
 /* 锚点导航：固定一排 4 个，等宽对齐 */
-.nav{position:sticky;top:0;z-index:20;background:rgba(255,253,248,.96);backdrop-filter:blur(6px);
-  border-bottom:1px solid #ece4d4;padding:10px 0;margin:14px 0 26px;display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;
-  box-shadow:0 2px 10px rgba(120,100,60,.06);}
-.navlink{font-size:12.5px;color:#5d5443;text-decoration:none;background:#f6f1e6;border:1px solid #e7ddca;
-  border-radius:7px;padding:4px 6px;text-align:center;white-space:nowrap;overflow:hidden;
-  text-overflow:ellipsis;}
-section{scroll-margin-top:64px;}
-/* 一句话主旨：去左侧竖线 */
-.mmx-oneline{border-left:none;padding-left:18px;}
-/* AI领读章内：AI 大纲原生深层样式 */
-.merged-guide .sec{margin:10px 0 14px;padding-left:6px;border-left:2px solid #e5e0d6}
-.merged-guide .sec h4{font:600 .98rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.6em 0 .3em}
-.merged-guide ul.point{margin:.3em 0;padding-left:20px}
-.merged-guide ul.point>li{margin:.35em 0}
-.merged-guide ul.quote{margin:.25em 0 .25em 20px;padding-left:18px;list-style:none}
-.merged-guide ul.quote::before{content:"原句";display:block;font-size:.72rem;color:#bf8247;
-  letter-spacing:.1em;margin:.15em 0 .1em;font-weight:600}
-.merged-guide ul.quote.quote-node{margin-top:.5em;padding-top:.4em;border-top:1px dashed #eadfc9}
+.nav{position:sticky;top:0;z-index:20;background:rgba(247,248,243,.96);backdrop-filter:blur(6px);
+  border-bottom:1px solid #ece4d4;padding:10px 0;margin:12px 0 20px;display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;
+  box-shadow:0 2px 10px rgba(120,100,60,.05);}
+.navlink{font-size:12px;color:#5d5443;text-decoration:none;background:#fdfbf3;border:1px solid #e8e2d2;
+  border-radius:8px;padding:6px 4px;text-align:center;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;transition:background .15s,color .15s;}
+.navlink:hover{background:#f2efe2;color:#244b40;}
+section{scroll-margin-top:62px;}
+
+/* ── 统一卡片：所有顶层模块（AI领读 / AI 问答 / 其余）一视同仁 ── */
+body>section.mmx-mod,body>section.card,body>section.mmx-svgwrap{
+  background:#fffdf6;border:1px solid #e8e4d5;border-radius:16px;
+  padding:18px 22px;margin:18px 0;
+  box-shadow:0 1px 3px rgba(110,95,60,.05);}
+body>section.mmx-mod>*:first-child,body>section.card>*:first-child,
+body>section.mmx-svgwrap>*:first-child{margin-top:0}
+body>section.mmx-mod>*:last-child,body>section.card>*:last-child,
+body>section.mmx-svgwrap>*:last-child{margin-bottom:0}
+/* 结构导图：图本身留白居中，不与正文抢宽 */
+body>section.mmx-svgwrap>svg.mmx-svg{display:block;width:100%;height:auto;margin:2px auto 0;}
+/* 模块标题：统一大小、弱强调，不与正文抢注意力 */
+body>section.mmx-mod>h2,body>section.card>h2{
+  font:700 1.04rem/1.5 var(--serif);color:#244b40;margin:0 0 11px;
+  padding-left:10px;border-left:3px solid #bf8247;letter-spacing:.01em;}
+/* 正文：字号收小、行距放宽、段间距舒服 */
+body>section.mmx-mod p,body>section.card p,
+body>section.mmx-mod li,body>section.card li{
+  font-size:.9rem;line-height:1.92;color:#4a4436;}
+body>section.mmx-mod p,body>section.card p{margin:.5em 0;}
+body>section.mmx-mod>ul,body>section.mmx-mod>ol,body>section.mmx-mod>div,
+body>section.mmx-mod>p:not(.mmx-mod-note),
+body>section.card:not(.merged-guide)>ul,body>section.card:not(.merged-guide)>ol,
+body>section.card:not(.merged-guide)>div,body>section.card:not(.merged-guide)>p:not(.mmx-mod-note){
+  padding-left:14px;}
+/* 模块说明小字：弱化不抢眼 */
+.mmx-mod-note{font-size:.75rem;color:#8d8878;margin:.1em 0 .75em;line-height:1.7;}
+
+/* ── 内部块统一：卡片里不再套深卡片，一律浅底子块 ── */
+body>section .mmx-pending,body>section .mmx-evib,body>section .aiqa-item{
+  background:#fbfaf2;border:1px solid #eee9d8;border-radius:12px;
+  padding:13px 16px;margin:.65em 0;}
+body>section .mmx-evib ul{padding-left:1.15em;}
+/* 一句话主旨：去左侧竖线 + 收敛字号 */
+.mmx-oneline{font-size:.98rem;line-height:1.85;color:#3a352c;margin:.2em 0 0;
+  padding:12px 16px;background:#fbfaf4;border-left:none;border-radius:12px;}
+/* 核心观点 / 验证清单：虚线分隔 + 收紧行距 */
+.mmx-views li{padding:.5em 0 .5em 0;font-size:.9rem;line-height:1.88;}
+/* 原文金句 */
+.mmx-qlist li{padding:.6em 0 .6em 2.2em;}
+.mmx-qlist blockquote{font-size:.89rem;line-height:1.9;}
+.mmx-qlist cite{font-size:.72rem;}
+/* 核心追问：问句加重、答句放松 */
+.mmx-qa{margin:.7em 0;padding-left:12px;border-left:3px solid #e5dfcd;}
+.mmx-qa .mmx-q{font-size:.9rem;font-weight:700;color:#2f3a33;line-height:1.8;margin:0 0 .25em;}
+.mmx-qa .mmx-a{font-size:.88rem;line-height:1.95;color:#4a4436;margin:0;}
+
+/* ── AI 问书专项：外层容器透明，问答条目才是阅读单元 ── */
+#mod-aiask .mmx-ask{background:transparent;border:0;border-radius:0;padding:0;margin:0;}
+#mod-aiask .aiqa-item{margin:.6em 0;padding:14px 16px 15px;}
+#mod-aiask .aiqa-item h3{font:700 .93rem/1.7 var(--serif);color:#2f5b49;margin:0 0 .4em;
+  padding:0;border:0;}
+#mod-aiask .aiqa-item h3:before{content:"问　";color:#bf8247;font-weight:700;}
+#mod-aiask .aiqa-item p{font-size:.88rem;line-height:1.95;color:#4a4436;margin:.4em 0;}
+#mod-aiask .aiqa-item ul{margin:.35em 0;padding-left:1.1em;}
+#mod-aiask .aiqa-item li{font-size:.87rem;line-height:1.88;margin:.18em 0;color:#4a4436;}
+#mod-aiask .aiqa-item li::marker{color:#c0a06a;}
+/* 逐章追问（details 形态）：摘要行也收敛 */
+.mmx-ask>summary{font-size:.87rem;line-height:1.7;padding:2px 0;}
+.mmx-askbody{font-size:.88rem;line-height:1.9;}
+
+/* AI领读章内：AI 大纲原生深层样式（字号同步收小） */
+.merged-guide .sec{margin:9px 0 12px;padding-left:6px;border-left:2px solid #e5e0d6}
+.merged-guide .sec h4{font:600 .93rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.5em 0 .25em}
+.merged-guide ul.point{margin:.25em 0;padding-left:20px}
+.merged-guide ul.point>li{margin:.3em 0}
+.merged-guide ul.quote{margin:.22em 0 .22em 20px;padding-left:18px;list-style:none}
+.merged-guide ul.quote::before{content:"原句";display:block;font-size:.7rem;color:#bf8247;
+  letter-spacing:.1em;margin:.12em 0 .08em;font-weight:600}
+.merged-guide ul.quote.quote-node{margin-top:.45em;padding-top:.35em;border-top:1px dashed #eadfc9}
 .merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
-.merged-guide ul.quote>li{color:#4a4436;font-size:.93rem;margin:.2em 0;padding-left:10px;border-left:2px solid #bf8247}
-/* 模块内子内容（AI领读除外，它有专属深层样式）：左缩进 + 正文与标题分层 */
-section.mmx-mod>ul,section.mmx-mod>ol,section.mmx-mod>div,
-section.mmx-mod>p:not(.mmx-mod-note),
-section.card:not(.merged-guide)>ul,section.card:not(.merged-guide)>ol,
-section.card:not(.merged-guide)>div,section.card:not(.merged-guide)>p:not(.mmx-mod-note){
-  padding-left:16px;}
-section.mmx-mod li,section.mmx-mod p:not(.mmx-mod-note),
-section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mod-note){
-  color:#4a4436;font-size:.93rem;line-height:1.78;}
+.merged-guide ul.quote>li{color:#4a4436;font-size:.88rem;line-height:1.85;margin:.18em 0;padding-left:10px;border-left:2px solid #bf8247}
 /* 核心观点初判：外链 mmx-guide.css 的「观点N」前缀是绝对定位，在本页版式里和标题叠字，
    且此前要求去掉「观点1/2/3」前缀 —— 这里整条关掉（外链 CSS 不在页面内，只能内联覆盖）。 */
 .mmx-views li{padding-left:0 !important;}
 .mmx-views li:before,.mmx-views li::before{
   content:none !important;display:none !important;counter-increment:none !important;}
+@media(max-width:720px){
+  body{padding:0 12px 60px;font-size:14.5px;}
+  body>section.mmx-mod,body>section.card{padding:15px 16px;border-radius:14px;}
+  .nav{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
 </style>
 </head>
 <body>
@@ -54,8 +116,8 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
   <h1>《二月河说反腐》</h1>
   <div class="chips"><span class="chip">通读 + 精读</span><span class="chip">AI领读</span><span class="chip">AI 生产</span></div>
 </header>
-<nav class="nav"><a class="navlink" href="#mod-svg">全书结构导图</a><a class="navlink" href="#mod-oneline">一句话主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a><a class="navlink" href="#mod-aiask">AI 问书</a><a class="navlink" href="#mod-higher">更高维度</a><a class="navlink" href="#mod-verify">阅读验证</a><a class="navlink" href="#mod-thennow">当年与今天</a><a class="navlink" href="#mod-coreask">核心追问</a></nav>
-<section class="mmx-svgwrap" id="mod-svg"><svg class="mmx-svg" viewBox="0 0 1120 468" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="二月河说反腐 全书精读">
+<nav class="nav"><a class="navlink" href="#mod-svg">结构导图</a><a class="navlink" href="#mod-oneline">核心主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a><a class="navlink" href="#mod-aiask">AI 问书</a><a class="navlink" href="#mod-higher">更高维度</a><a class="navlink" href="#mod-verify">阅读验证</a><a class="navlink" href="#mod-thennow">往日今时</a><a class="navlink" href="#mod-coreask">核心追问</a></nav>
+<section class="mmx-svgwrap" id="mod-svg"><h2>结构导图</h2><svg class="mmx-svg" viewBox="0 0 1120 468" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="二月河说反腐 全书精读">
 <rect x="0" y="0" width="1120" height="468" fill="none"/>
 <style>.mmx-svg text{font-family:"Noto Serif SC",Georgia,serif}.mmx-svg .t1{font-size:15px;fill:#2f2a24;font-weight:600}.mmx-svg .t2{font-size:12px;fill:#5c5347}.mmx-svg .t3{font-size:10.5px;fill:#8a8272}.mmx-svg .rt{font-size:13px;fill:#f7f3ea;font-weight:600}.mmx-svg .ln{stroke:#cfc6b4;stroke-width:1.4;fill:none}</style>
 <rect x="28" y="190" width="262" height="52" rx="10" fill="#3d372e"/>
@@ -110,9 +172,9 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
 <text class="t2" x="714" y="375">的实证总结。</text>
 <path class="ln" d="M692 371 L700 371"/>
 </svg></section>
-<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">一句话主旨</h2><p class="mmx-mod-note">本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。</p><p class="mmx-oneline">腐败是危及民族生存的社会性“糖尿病”，必须通过制度化他律而非单纯的道德自律来根除。</p></section>
+<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">核心主旨</h2><p class="mmx-oneline">腐败是危及民族生存的社会性“糖尿病”，必须通过制度化他律而非单纯的道德自律来根除。</p></section>
 <section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" id="mod-merged_guide"><h2 id="merged-guide-title">AI领读</h2>
-<div class="toc"><b>章节目录</b><ul><li><a href="#sec0">全书视角 · 全书结构</a></li><li><a href="#sec1">一句话主旨</a></li><li><a href="#sec2">全书视角 · 这本书到底在做什么</a></li><li><a href="#sec3">全书结构与章节导航 · 三部分 26 篇</a></li><li><a href="#sec4">核心观点初判</a></li><li><a href="#sec5">问AI读书 AI 问答</a></li><li><a href="#sec6">阅读时要验证的问题</a></li><li><a href="#sec7">当年与今天 · 初步对照</a></li><li><a href="#sec8">来源与证据边界</a></li><li><a href="#sec9">公开点评摘录</a></li><li><a href="#sec10">相关日期笔记</a></li><li><a href="#sec11">更新记录</a></li></ul></div>
+<div class="toc"><b>章节目录</b><ul><li><a href="#sec0">全书视角 · 全书结构</a></li><li><a href="#sec1">一句话主旨</a></li><li><a href="#sec2">全书视角 · 这本书到底在做什么</a></li><li><a href="#sec3">全书结构与章节导航 · 三部分 26 篇</a></li><li><a href="#sec4">核心观点初判</a></li><li><a href="#sec5">问AI读书 AI 问答</a></li><li><a href="#sec6">阅读时要验证的问题</a></li><li><a href="#sec7">往日今时 · 初步对照</a></li><li><a href="#sec8">来源与证据边界</a></li><li><a href="#sec9">公开点评摘录</a></li><li><a href="#sec10">相关日期笔记</a></li><li><a href="#sec11">更新记录</a></li></ul></div>
 <section id="sec0">
 <h2>全书视角 · 全书结构</h2>
 <p>本书是二月河反腐文章的<b>首次结集</b>，由「访谈篇」「散论篇」「小说节选篇」三部分构成，共约 26 个篇目。<span class="src" data-k="official">官方简介</span> 本仓库<b>未生成 AI 大纲（outline.html）</b>，以下结构据中国作家网、人民出版社与电子书平台公开的目录整理，读前先看一遍即可知道每一篇落在哪一编。</p>
@@ -252,7 +314,7 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
 <li>核对「经济文化强大不是理由」一节中引用的宋/唐/乾隆 GDP 占比，是作者二手转述还是一手史料，属推断性论据时需标注来源层级。<span class="src" data-k="unknown">待核实</span>。</li>
 </ul>
 </section><section id="sec7">
-<h2>当年与今天 · 初步对照</h2>
+<h2>往日今时 · 初步对照</h2>
 <p class="small">原作成书：2015 年 9 月由人民出版社首版（成书源于人民出版社提议，ISBN 978-7-01-015059-8，定价 29.80 元，约 188 页）。其反腐论述的公开引爆点是 2014 年二月河做客中纪委《聆听大家》栏目。</p>
 <h3>当年作者能知道什么</h3>
 <p>2014 年前后，十八大后反腐持续深入推进，二月河以「落霞三部曲」写尽康雍乾吏治的作家身份被推到公共讨论前台。他本非反腐专家，却在两会与中纪委访谈中直陈历史教训，引发高层与公众关注；本书即在此背景下由出版社提议结集出版。<span class="src" data-k="official">官方简介</span><span class="src" data-k="infer">综合推断</span>。</p>
@@ -285,12 +347,12 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
 <div class="card">开读首日创建（简介／点评打底）；2026-10-25 随阅读进度更新；<b>2026-10-26 重修本篇</b>——剔除原「规范问题」机械模板与大量空白「待补」占位，补入真实问答（AI 问答 栏，6 组）、基于公开目录的章节导航与书-specific 的验证清单，依据书目简介与作者公开访谈原文重写；来源全部带来源标签，未经亲读处标「待核实」。</div>
 </section>
 <footer><p><a href="../../../index.html">← 返回首页</a>　<a href="../../index.html">阅读归档索引</a>　<a href="overview.html">查看全书视角（通读页）</a></p></footer></section>
-<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点初判</h2><p class="mmx-mod-note">按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。</p><ul class="mmx-views"><li><b>反腐的紧迫性</b>——确立反腐在历史与现实中的高度，强调机制改革优于高薪养廉与单纯杀戮。</li><li><b>权力异化与腐败根源</b>——分析基层权力失控与历史教训，指出腐败是导致政权覆灭的社会病灶。</li><li><b>他律机制的必要性</b>——论证密折制度等他律手段的价值，否定道德自律的有效性，将腐败类比为社会糖尿病。</li><li><b>官场生态与腐败心理</b>——剖析官场送礼文化、黑社会化及唯物主义贪婪心理，揭示腐败对民族气数的侵蚀。</li><li><b>历史反腐实践与教训</b>——通过雍正时期的清库、惩贪与养廉尝试，展示历史治理中的具体手段与局限。</li><li><b>贪腐行为的演变逻辑</b>——通过具体贪官案例，刻画权力寻租与贪腐心理的形成过程，作为全书的实证总结。</li></ul></section>
-<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句 · 持续积累</h2><p class="mmx-mod-note">以下原句取自本书 AI 大纲落库的原文摘录（book_outline.quote），按大纲顺序节选，非 AI 生成；更多见逐章深读页。</p><ol class="mmx-qlist"><li><blockquote>「康熙甚至还组建了我国第一个皇家科学院。」</blockquote><cite>现在的反腐力度读遍二十四史都找不到</cite></li><li><blockquote>「人生成功一个是力气，一个是才气，再一个还要有运气。」</blockquote><cite>现在的反腐力度读遍二十四史都找不到</cite></li><li><blockquote>「十五年前省委组织部找我谈话，说想让我当省文联主席。我跟他们讲，我说我不会管人，这是第一；第二我不会管事；第三我不会管钱。」</blockquote><cite>现在的反腐力度读遍二十四史都找不到</cite></li><li><blockquote>「根本的问题是你自己有没有立场，这跟自己的价值观有关，跟自己受到的家庭教育有关。」</blockquote><cite>现在的反腐力度读遍二十四史都找不到</cite></li><li><blockquote>「满军入关的时候，只有八万五千兵力，吴三桂在山海关的驻军是三万五千人，合在一起就是十二万人。汉族的兵力是多少呢，李自成的铁骑部队有一百多万，加起来汉族的武装力量在四百万人以上。可是十二万人打四百万人，却如人无人之境。为什么，因为你腐败了，四百万人也就是一堆臭肉，不腐败，十二万人也能变成一把剁肉的刀。」</blockquote><cite>现在的反腐力度读遍二十四史都找不到</cite></li><li><blockquote>「蒲松龄在《聊斋志异》里的《夜叉国》中回答“什么是官”时说，“出则舆马，人则高堂；上一呼而下百诺；见者侧目视，侧足立：此名为官”。」</blockquote><cite>现在的反腐力度读遍二十四史都找不到</cite></li><li><blockquote>「如果权力关在笼子里，钥匙还在官员手里，那等于没用，笼子的钥匙要放在舆论监督和人民的手中，让反腐败更为公开，更为透明。」</blockquote><cite>现在的反腐力度读遍二十四史都找不到</cite></li><li><blockquote>「过去不可能有这么多渠道，顶多就是写写信，现在很方便就可以把自己的意愿反映出来。」</blockquote><cite>现在的反腐力度读遍二十四史都找不到</cite></li><li><blockquote>「像现在反腐败做的比说的还好，人民群众感到振奋。」</blockquote><cite>现在的反腐力度读遍二十四史都找不到</cite></li><li><blockquote>「我讲课都是从这个角度说的，因为咱不是领导，那么咱就讲实实在在的话，大家都来好好过日子，就是个和谐社会。」</blockquote><cite>现在的反腐力度读遍二十四史都找不到</cite></li></ol></section>
-<section class="mmx-mod" aria-labelledby="aiask" id="mod-aiask"><h2 id="aiask">AI 问书</h2><p class="mmx-mod-note">下方内容为本书级 AI 问书整理，由云端 AI 阅读流程基于本书大纲、章节锚点与热门划线生成。</p><div class="mmx-qa"><p class="mmx-q">雍正的反腐措施对今天还有参考价值吗？</p><p class="mmx-a">有制度史价值但需剥离时代条件：密折制度是前现代的信息监控，不能简单类比现代监察体系；但「制度他律优于道德自律」的核心结论穿越时空。书中态度是取其原理、不取其手段。</p></div><div class="mmx-qa"><p class="mmx-q">「经济文化强大不是原谅腐败的理由」在反驳什么？</p><p class="mmx-a">反驳一种流行论调：发展优先、腐败是必要润滑剂。二月河以蒋政权为例——接收时期的腐败直接瓦解了政权，说明腐败不是发展的副产品，而是能吞噬发展成果的主变量。富强与清廉不是先后关系，而是共生关系。</p></div></section>
-<section class="mmx-mod" aria-labelledby="higher" id="mod-higher"><h2 id="higher">用更高维度的知识看这本书</h2><p class="mmx-mod-note">下方内容由云端 AI 阅读流程生成：把本书放回知识史与理论框架中重读，区分书中主张、外部证据与综合分析。</p><p>把本书放进反腐研究谱系：它站在制度主义一侧，与「高薪养廉」和道德教化两派都保持距离。用现代化理论看，它触及的核心问题是治理现代化——从人格化权威（清官依赖）到非人格化制度（权力约束），这是亨廷顿式命题的中国历史注脚。</p><p>与《万历十五年》式的历史写作对照：二者都拒绝把腐败道德化、都指向制度困境。黄仁宇以「数目字管理」解释明代困境，二月河则以亲历改革时代的经验回望清代——一古一今，共同点是腐败从来不是个人的堕落，而是系统的症候。</p></section>
-<section class="mmx-mod" aria-labelledby="verify" id="mod-verify"><h2 id="verify">阅读时要验证的问题</h2><p class="mmx-mod-note">下方由云端 AI 阅读流程生成：读时需核对的原文、数字与论点（关键数据出处、个案代表性、类比限度）。</p><ul class="mmx-views"><li>「现在的反腐力度读遍二十四史都找不到」是文学性判断，力度比较缺乏统一量化标准，应视为观点而非史实结论。</li><li>雍正相关改革（摊丁入亩、火耗归公、养廉银、密折制度）的具体内容与效果，应对照《清史稿》及清史研究核实。</li><li>蒋政权因腐败垮台的因果链条在学界有不同解释权重（军事、经济、政治多因），单因归因需谨慎。</li></ul></section>
-<section class="mmx-mod" aria-labelledby="thennow" id="mod-thennow"><h2 id="thennow">当年与今天 · 初步对照</h2><p class="mmx-mod-note">下方由云端 AI 阅读流程生成：区分作者当年所能知晓与后来才显现的事实，给出今日可迁移的启发。</p><p>二月河成书于十八大后反腐初期，带着历史学家式的振奋；今天再读，书中主张的「制度化、常态化」已成现实进程——监察体系改革、巡视制度常态化，正是「钥匙放在民众手中」的制度化表达。当年的呼吁，今天会不断与身边的制度现实互相印证。</p><p>可迁移的启发：反腐叙事天然倾向戏剧化（杀伐、大案），本书提醒真正的变量是平凡的制度细节。对任何组织同理：与其期待清官，不如检查权力的约束结构。</p></section>
-<section class="mmx-mod" aria-labelledby="coreask" id="mod-coreask"><h2 id="coreask">核心追问（来自深读）</h2><p class="mmx-mod-note">跨章主题的深读追问，由云端 AI 阅读流程基于全书大纲、章节锚点与热门划线撰写；逐章的追问收在每个章条目里。</p><div class="mmx-qa"><p class="mmx-q">为什么二月河把腐败比作「社会糖尿病」？</p><p class="mmx-a">比喻的锋利处在于病程：糖尿病不立即致死，而是慢性侵蚀全身系统，腐败同样如此——单个案件不亡政，但它腐蚀制度的毛细血管，等并发症爆发（政权覆灭）时已入膏肓。它否定了「运动式反腐能速愈」的幻想，指向必须终身管理的制度化他律。</p></div><div class="mmx-qa"><p class="mmx-q">书中为什么否定「高薪养廉」和「多杀」？</p><p class="mmx-a">书中从历史与心理两端论证：「反腐不能迷信杀人」——杀戮只改变恐惧、不改变结构；「小官巨贪」现象更说明贪腐与工资高低没有必然关系，权力约束缺位才是根源。雍正密折、耗羡归公等改革说明制度设计比道德说教有效，正面主张是「把权力关进笼子，钥匙放在民众手中」。</p></div><div class="mmx-qa"><p class="mmx-q">一个历史小说家谈反腐，独特价值在哪？</p><p class="mmx-a">在纵深。二月河写尽康雍乾三朝，能把今天的反腐放进二十四史的坐标系：哪些是老病（送礼文化、家族统治）、哪些是新症（小官巨贪）、哪些是真突破（「现在的反腐力度读遍二十四史都找不到」）。历史纵深让判断有了基准线，这是时评做不到的。</p></div></section>
+<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点</h2><ul class="mmx-views"><li><b>反腐的紧迫性</b>——确立反腐在历史与现实中的高度，强调机制改革优于高薪养廉与单纯杀戮。</li><li><b>权力异化与腐败根源</b>——分析基层权力失控与历史教训，指出腐败是导致政权覆灭的社会病灶。</li><li><b>他律机制的必要性</b>——论证密折制度等他律手段的价值，否定道德自律的有效性，将腐败类比为社会糖尿病。</li><li><b>官场生态与腐败心理</b>——剖析官场送礼文化、黑社会化及唯物主义贪婪心理，揭示腐败对民族气数的侵蚀。</li><li><b>历史反腐实践与教训</b>——通过雍正时期的清库、惩贪与养廉尝试，展示历史治理中的具体手段与局限。</li><li><b>贪腐行为的演变逻辑</b>——通过具体贪官案例，刻画权力寻租与贪腐心理的形成过程，作为全书的实证总结。</li></ul></section>
+<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句</h2><ol class="mmx-qlist"><li><blockquote>「康熙甚至还组建了我国第一个皇家科学院。」</blockquote><cite>现在的反腐力度读遍二十四史都找不到</cite></li><li><blockquote>「人生成功一个是力气，一个是才气，再一个还要有运气。」</blockquote><cite>现在的反腐力度读遍二十四史都找不到</cite></li><li><blockquote>「十五年前省委组织部找我谈话，说想让我当省文联主席。我跟他们讲，我说我不会管人，这是第一；第二我不会管事；第三我不会管钱。」</blockquote><cite>现在的反腐力度读遍二十四史都找不到</cite></li><li><blockquote>「根本的问题是你自己有没有立场，这跟自己的价值观有关，跟自己受到的家庭教育有关。」</blockquote><cite>现在的反腐力度读遍二十四史都找不到</cite></li><li><blockquote>「满军入关的时候，只有八万五千兵力，吴三桂在山海关的驻军是三万五千人，合在一起就是十二万人。汉族的兵力是多少呢，李自成的铁骑部队有一百多万，加起来汉族的武装力量在四百万人以上。可是十二万人打四百万人，却如人无人之境。为什么，因为你腐败了，四百万人也就是一堆臭肉，不腐败，十二万人也能变成一把剁肉的刀。」</blockquote><cite>现在的反腐力度读遍二十四史都找不到</cite></li><li><blockquote>「蒲松龄在《聊斋志异》里的《夜叉国》中回答“什么是官”时说，“出则舆马，人则高堂；上一呼而下百诺；见者侧目视，侧足立：此名为官”。」</blockquote><cite>现在的反腐力度读遍二十四史都找不到</cite></li><li><blockquote>「如果权力关在笼子里，钥匙还在官员手里，那等于没用，笼子的钥匙要放在舆论监督和人民的手中，让反腐败更为公开，更为透明。」</blockquote><cite>现在的反腐力度读遍二十四史都找不到</cite></li><li><blockquote>「过去不可能有这么多渠道，顶多就是写写信，现在很方便就可以把自己的意愿反映出来。」</blockquote><cite>现在的反腐力度读遍二十四史都找不到</cite></li><li><blockquote>「像现在反腐败做的比说的还好，人民群众感到振奋。」</blockquote><cite>现在的反腐力度读遍二十四史都找不到</cite></li><li><blockquote>「我讲课都是从这个角度说的，因为咱不是领导，那么咱就讲实实在在的话，大家都来好好过日子，就是个和谐社会。」</blockquote><cite>现在的反腐力度读遍二十四史都找不到</cite></li></ol></section>
+<section class="mmx-mod" aria-labelledby="aiask" id="mod-aiask"><h2 id="aiask">AI 问书</h2><div class="mmx-qa"><p class="mmx-q">雍正的反腐措施对今天还有参考价值吗？</p><p class="mmx-a">有制度史价值但需剥离时代条件：密折制度是前现代的信息监控，不能简单类比现代监察体系；但「制度他律优于道德自律」的核心结论穿越时空。书中态度是取其原理、不取其手段。</p></div><div class="mmx-qa"><p class="mmx-q">「经济文化强大不是原谅腐败的理由」在反驳什么？</p><p class="mmx-a">反驳一种流行论调：发展优先、腐败是必要润滑剂。二月河以蒋政权为例——接收时期的腐败直接瓦解了政权，说明腐败不是发展的副产品，而是能吞噬发展成果的主变量。富强与清廉不是先后关系，而是共生关系。</p></div></section>
+<section class="mmx-mod" aria-labelledby="higher" id="mod-higher"><h2 id="higher">更高维度</h2><p>把本书放进反腐研究谱系：它站在制度主义一侧，与「高薪养廉」和道德教化两派都保持距离。用现代化理论看，它触及的核心问题是治理现代化——从人格化权威（清官依赖）到非人格化制度（权力约束），这是亨廷顿式命题的中国历史注脚。</p><p>与《万历十五年》式的历史写作对照：二者都拒绝把腐败道德化、都指向制度困境。黄仁宇以「数目字管理」解释明代困境，二月河则以亲历改革时代的经验回望清代——一古一今，共同点是腐败从来不是个人的堕落，而是系统的症候。</p></section>
+<section class="mmx-mod" aria-labelledby="verify" id="mod-verify"><h2 id="verify">阅读验证</h2><ul class="mmx-views"><li>「现在的反腐力度读遍二十四史都找不到」是文学性判断，力度比较缺乏统一量化标准，应视为观点而非史实结论。</li><li>雍正相关改革（摊丁入亩、火耗归公、养廉银、密折制度）的具体内容与效果，应对照《清史稿》及清史研究核实。</li><li>蒋政权因腐败垮台的因果链条在学界有不同解释权重（军事、经济、政治多因），单因归因需谨慎。</li></ul></section>
+<section class="mmx-mod" aria-labelledby="thennow" id="mod-thennow"><h2 id="thennow">往日今时</h2><p>二月河成书于十八大后反腐初期，带着历史学家式的振奋；今天再读，书中主张的「制度化、常态化」已成现实进程——监察体系改革、巡视制度常态化，正是「钥匙放在民众手中」的制度化表达。当年的呼吁，今天会不断与身边的制度现实互相印证。</p><p>可迁移的启发：反腐叙事天然倾向戏剧化（杀伐、大案），本书提醒真正的变量是平凡的制度细节。对任何组织同理：与其期待清官，不如检查权力的约束结构。</p></section>
+<section class="mmx-mod" aria-labelledby="coreask" id="mod-coreask"><h2 id="coreask">核心追问</h2><div class="mmx-qa"><p class="mmx-q">为什么二月河把腐败比作「社会糖尿病」？</p><p class="mmx-a">比喻的锋利处在于病程：糖尿病不立即致死，而是慢性侵蚀全身系统，腐败同样如此——单个案件不亡政，但它腐蚀制度的毛细血管，等并发症爆发（政权覆灭）时已入膏肓。它否定了「运动式反腐能速愈」的幻想，指向必须终身管理的制度化他律。</p></div><div class="mmx-qa"><p class="mmx-q">书中为什么否定「高薪养廉」和「多杀」？</p><p class="mmx-a">书中从历史与心理两端论证：「反腐不能迷信杀人」——杀戮只改变恐惧、不改变结构；「小官巨贪」现象更说明贪腐与工资高低没有必然关系，权力约束缺位才是根源。雍正密折、耗羡归公等改革说明制度设计比道德说教有效，正面主张是「把权力关进笼子，钥匙放在民众手中」。</p></div><div class="mmx-qa"><p class="mmx-q">一个历史小说家谈反腐，独特价值在哪？</p><p class="mmx-a">在纵深。二月河写尽康雍乾三朝，能把今天的反腐放进二十四史的坐标系：哪些是老病（送礼文化、家族统治）、哪些是新症（小官巨贪）、哪些是真突破（「现在的反腐力度读遍二十四史都找不到」）。历史纵深让判断有了基准线，这是时评做不到的。</p></div></section>
 </body>
 </html>

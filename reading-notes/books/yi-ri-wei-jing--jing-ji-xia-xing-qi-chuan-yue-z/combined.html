@@ -6,46 +6,108 @@
 <title>《以日为镜：经济下行期穿越指南》｜通读 · 精读</title>
 <link rel="stylesheet" href="../../../assets/css/reading-overview.css"><link rel="stylesheet" href="../../../assets/css/mmx-guide.css"><link rel="stylesheet" href="../../../assets/css/reading-outline.css">
 <style>
-/* 合并页外壳 */
-body{max-width:960px;margin:0 auto;padding:0 18px 80px;}
-.combined-head{padding:34px 0 18px;border-bottom:1px solid #e7e0d2;margin-bottom:8px;}
-.combined-head h1{font-size:26px;margin:0 0 10px;}
+/* ── 外壳与全局阅读节奏 ── */
+body{max-width:880px;margin:0 auto;padding:0 18px 80px;
+  font-size:15px;line-height:1.88;color:#3b453e;background:#f7f8f3;
+  -webkit-font-smoothing:antialiased;}
+.combined-head{padding:30px 0 16px;border-bottom:1px solid #e7e0d2;margin-bottom:4px;}
+.combined-head h1{font:700 23px/1.35 var(--serif);margin:0 0 8px;color:#244b40;}
+.combined-head .eyebrow{font-size:.72rem;letter-spacing:.14em;margin:0 0 6px;}
+.chips{margin:8px 0 0;}
+.chip{font-size:.72rem;padding:2px 10px;}
 /* 锚点导航：固定一排 4 个，等宽对齐 */
-.nav{position:sticky;top:0;z-index:20;background:rgba(255,253,248,.96);backdrop-filter:blur(6px);
-  border-bottom:1px solid #ece4d4;padding:10px 0;margin:14px 0 26px;display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;
-  box-shadow:0 2px 10px rgba(120,100,60,.06);}
-.navlink{font-size:12.5px;color:#5d5443;text-decoration:none;background:#f6f1e6;border:1px solid #e7ddca;
-  border-radius:7px;padding:4px 6px;text-align:center;white-space:nowrap;overflow:hidden;
-  text-overflow:ellipsis;}
-section{scroll-margin-top:64px;}
-/* 一句话主旨：去左侧竖线 */
-.mmx-oneline{border-left:none;padding-left:18px;}
-/* AI领读章内：AI 大纲原生深层样式 */
-.merged-guide .sec{margin:10px 0 14px;padding-left:6px;border-left:2px solid #e5e0d6}
-.merged-guide .sec h4{font:600 .98rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.6em 0 .3em}
-.merged-guide ul.point{margin:.3em 0;padding-left:20px}
-.merged-guide ul.point>li{margin:.35em 0}
-.merged-guide ul.quote{margin:.25em 0 .25em 20px;padding-left:18px;list-style:none}
-.merged-guide ul.quote::before{content:"原句";display:block;font-size:.72rem;color:#bf8247;
-  letter-spacing:.1em;margin:.15em 0 .1em;font-weight:600}
-.merged-guide ul.quote.quote-node{margin-top:.5em;padding-top:.4em;border-top:1px dashed #eadfc9}
+.nav{position:sticky;top:0;z-index:20;background:rgba(247,248,243,.96);backdrop-filter:blur(6px);
+  border-bottom:1px solid #ece4d4;padding:10px 0;margin:12px 0 20px;display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;
+  box-shadow:0 2px 10px rgba(120,100,60,.05);}
+.navlink{font-size:12px;color:#5d5443;text-decoration:none;background:#fdfbf3;border:1px solid #e8e2d2;
+  border-radius:8px;padding:6px 4px;text-align:center;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;transition:background .15s,color .15s;}
+.navlink:hover{background:#f2efe2;color:#244b40;}
+section{scroll-margin-top:62px;}
+
+/* ── 统一卡片：所有顶层模块（AI领读 / AI 问答 / 其余）一视同仁 ── */
+body>section.mmx-mod,body>section.card,body>section.mmx-svgwrap{
+  background:#fffdf6;border:1px solid #e8e4d5;border-radius:16px;
+  padding:18px 22px;margin:18px 0;
+  box-shadow:0 1px 3px rgba(110,95,60,.05);}
+body>section.mmx-mod>*:first-child,body>section.card>*:first-child,
+body>section.mmx-svgwrap>*:first-child{margin-top:0}
+body>section.mmx-mod>*:last-child,body>section.card>*:last-child,
+body>section.mmx-svgwrap>*:last-child{margin-bottom:0}
+/* 结构导图：图本身留白居中，不与正文抢宽 */
+body>section.mmx-svgwrap>svg.mmx-svg{display:block;width:100%;height:auto;margin:2px auto 0;}
+/* 模块标题：统一大小、弱强调，不与正文抢注意力 */
+body>section.mmx-mod>h2,body>section.card>h2{
+  font:700 1.04rem/1.5 var(--serif);color:#244b40;margin:0 0 11px;
+  padding-left:10px;border-left:3px solid #bf8247;letter-spacing:.01em;}
+/* 正文：字号收小、行距放宽、段间距舒服 */
+body>section.mmx-mod p,body>section.card p,
+body>section.mmx-mod li,body>section.card li{
+  font-size:.9rem;line-height:1.92;color:#4a4436;}
+body>section.mmx-mod p,body>section.card p{margin:.5em 0;}
+body>section.mmx-mod>ul,body>section.mmx-mod>ol,body>section.mmx-mod>div,
+body>section.mmx-mod>p:not(.mmx-mod-note),
+body>section.card:not(.merged-guide)>ul,body>section.card:not(.merged-guide)>ol,
+body>section.card:not(.merged-guide)>div,body>section.card:not(.merged-guide)>p:not(.mmx-mod-note){
+  padding-left:14px;}
+/* 模块说明小字：弱化不抢眼 */
+.mmx-mod-note{font-size:.75rem;color:#8d8878;margin:.1em 0 .75em;line-height:1.7;}
+
+/* ── 内部块统一：卡片里不再套深卡片，一律浅底子块 ── */
+body>section .mmx-pending,body>section .mmx-evib,body>section .aiqa-item{
+  background:#fbfaf2;border:1px solid #eee9d8;border-radius:12px;
+  padding:13px 16px;margin:.65em 0;}
+body>section .mmx-evib ul{padding-left:1.15em;}
+/* 一句话主旨：去左侧竖线 + 收敛字号 */
+.mmx-oneline{font-size:.98rem;line-height:1.85;color:#3a352c;margin:.2em 0 0;
+  padding:12px 16px;background:#fbfaf4;border-left:none;border-radius:12px;}
+/* 核心观点 / 验证清单：虚线分隔 + 收紧行距 */
+.mmx-views li{padding:.5em 0 .5em 0;font-size:.9rem;line-height:1.88;}
+/* 原文金句 */
+.mmx-qlist li{padding:.6em 0 .6em 2.2em;}
+.mmx-qlist blockquote{font-size:.89rem;line-height:1.9;}
+.mmx-qlist cite{font-size:.72rem;}
+/* 核心追问：问句加重、答句放松 */
+.mmx-qa{margin:.7em 0;padding-left:12px;border-left:3px solid #e5dfcd;}
+.mmx-qa .mmx-q{font-size:.9rem;font-weight:700;color:#2f3a33;line-height:1.8;margin:0 0 .25em;}
+.mmx-qa .mmx-a{font-size:.88rem;line-height:1.95;color:#4a4436;margin:0;}
+
+/* ── AI 问书专项：外层容器透明，问答条目才是阅读单元 ── */
+#mod-aiask .mmx-ask{background:transparent;border:0;border-radius:0;padding:0;margin:0;}
+#mod-aiask .aiqa-item{margin:.6em 0;padding:14px 16px 15px;}
+#mod-aiask .aiqa-item h3{font:700 .93rem/1.7 var(--serif);color:#2f5b49;margin:0 0 .4em;
+  padding:0;border:0;}
+#mod-aiask .aiqa-item h3:before{content:"问　";color:#bf8247;font-weight:700;}
+#mod-aiask .aiqa-item p{font-size:.88rem;line-height:1.95;color:#4a4436;margin:.4em 0;}
+#mod-aiask .aiqa-item ul{margin:.35em 0;padding-left:1.1em;}
+#mod-aiask .aiqa-item li{font-size:.87rem;line-height:1.88;margin:.18em 0;color:#4a4436;}
+#mod-aiask .aiqa-item li::marker{color:#c0a06a;}
+/* 逐章追问（details 形态）：摘要行也收敛 */
+.mmx-ask>summary{font-size:.87rem;line-height:1.7;padding:2px 0;}
+.mmx-askbody{font-size:.88rem;line-height:1.9;}
+
+/* AI领读章内：AI 大纲原生深层样式（字号同步收小） */
+.merged-guide .sec{margin:9px 0 12px;padding-left:6px;border-left:2px solid #e5e0d6}
+.merged-guide .sec h4{font:600 .93rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.5em 0 .25em}
+.merged-guide ul.point{margin:.25em 0;padding-left:20px}
+.merged-guide ul.point>li{margin:.3em 0}
+.merged-guide ul.quote{margin:.22em 0 .22em 20px;padding-left:18px;list-style:none}
+.merged-guide ul.quote::before{content:"原句";display:block;font-size:.7rem;color:#bf8247;
+  letter-spacing:.1em;margin:.12em 0 .08em;font-weight:600}
+.merged-guide ul.quote.quote-node{margin-top:.45em;padding-top:.35em;border-top:1px dashed #eadfc9}
 .merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
-.merged-guide ul.quote>li{color:#4a4436;font-size:.93rem;margin:.2em 0;padding-left:10px;border-left:2px solid #bf8247}
-/* 模块内子内容（AI领读除外，它有专属深层样式）：左缩进 + 正文与标题分层 */
-section.mmx-mod>ul,section.mmx-mod>ol,section.mmx-mod>div,
-section.mmx-mod>p:not(.mmx-mod-note),
-section.card:not(.merged-guide)>ul,section.card:not(.merged-guide)>ol,
-section.card:not(.merged-guide)>div,section.card:not(.merged-guide)>p:not(.mmx-mod-note){
-  padding-left:16px;}
-section.mmx-mod li,section.mmx-mod p:not(.mmx-mod-note),
-section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mod-note){
-  color:#4a4436;font-size:.93rem;line-height:1.78;}
+.merged-guide ul.quote>li{color:#4a4436;font-size:.88rem;line-height:1.85;margin:.18em 0;padding-left:10px;border-left:2px solid #bf8247}
 /* 核心观点初判：外链 mmx-guide.css 的「观点N」前缀是绝对定位，在本页版式里和标题叠字，
    且此前要求去掉「观点1/2/3」前缀 —— 这里整条关掉（外链 CSS 不在页面内，只能内联覆盖）。 */
 .mmx-views li{padding-left:0 !important;}
 .mmx-views li:before,.mmx-views li::before{
   content:none !important;display:none !important;counter-increment:none !important;}
+@media(max-width:720px){
+  body{padding:0 12px 60px;font-size:14.5px;}
+  body>section.mmx-mod,body>section.card{padding:15px 16px;border-radius:14px;}
+  .nav{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
 </style>
 </head>
 <body>
@@ -54,8 +116,8 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
   <h1>《以日为镜：经济下行期穿越指南》</h1>
   <div class="chips"><span class="chip">通读 + 精读</span><span class="chip">AI领读</span><span class="chip">AI 生产</span></div>
 </header>
-<nav class="nav"><a class="navlink" href="#mod-svg">全书结构导图</a><a class="navlink" href="#mod-oneline">一句话主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a></nav>
-<section class="mmx-svgwrap" id="mod-svg"><svg class="mmx-svg" viewBox="0 0 1120 530" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="以日为镜：经济下行期穿越指南 全书精读">
+<nav class="nav"><a class="navlink" href="#mod-svg">结构导图</a><a class="navlink" href="#mod-oneline">核心主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a></nav>
+<section class="mmx-svgwrap" id="mod-svg"><h2>结构导图</h2><svg class="mmx-svg" viewBox="0 0 1120 530" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="以日为镜：经济下行期穿越指南 全书精读">
 <rect x="0" y="0" width="1120" height="530" fill="none"/>
 <style>.mmx-svg text{font-family:"Noto Serif SC",Georgia,serif}.mmx-svg .t1{font-size:15px;fill:#2f2a24;font-weight:600}.mmx-svg .t2{font-size:12px;fill:#5c5347}.mmx-svg .t3{font-size:10.5px;fill:#8a8272}.mmx-svg .rt{font-size:13px;fill:#f7f3ea;font-weight:600}.mmx-svg .ln{stroke:#cfc6b4;stroke-width:1.4;fill:none}</style>
 <rect x="28" y="221" width="262" height="52" rx="10" fill="#3d372e"/>
@@ -118,9 +180,9 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
 <text class="t2" x="714" y="437">上的同与异。</text>
 <path class="ln" d="M692 433 L700 433"/>
 </svg></section>
-<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">一句话主旨</h2><p class="mmx-mod-note">本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。</p><p class="mmx-oneline">经济下行与结构转型会重塑社会阶层、家庭形态、消费心理及个体生存策略。</p></section>
+<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">核心主旨</h2><p class="mmx-oneline">经济下行与结构转型会重塑社会阶层、家庭形态、消费心理及个体生存策略。</p></section>
 <section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" id="mod-merged_guide"><h2 id="merged-guide-title">AI领读</h2>
-<div class="toc"><b>章节目录</b><ul><li><a href="#sec0">全书视角 · 全书结构</a></li><li><a href="#sec1">一句话主旨</a></li><li><a href="#sec2">全书视角 · 这本书到底在做什么</a></li><li><a href="#sec3">全书结构与章节导航 · 共 8 章</a></li><li><a href="#sec4">核心观点初判</a></li><li><a href="#sec5">问AI读书 AI 问答</a></li><li><a href="#sec6">用更高维度的知识看这本书</a></li><li><a href="#sec7">阅读时要验证的问题</a></li><li><a href="#sec8">当年与今天 · 初步对照</a></li><li><a href="#sec9">来源与证据边界</a></li><li><a href="#sec10">相关日期笔记</a></li><li><a href="#sec11">更新记录</a></li></ul></div>
+<div class="toc"><b>章节目录</b><ul><li><a href="#sec0">全书视角 · 全书结构</a></li><li><a href="#sec1">一句话主旨</a></li><li><a href="#sec2">全书视角 · 这本书到底在做什么</a></li><li><a href="#sec3">全书结构与章节导航 · 共 8 章</a></li><li><a href="#sec4">核心观点初判</a></li><li><a href="#sec5">问AI读书 AI 问答</a></li><li><a href="#sec6">用更高维度的知识看这本书</a></li><li><a href="#sec7">阅读时要验证的问题</a></li><li><a href="#sec8">往日今时 · 初步对照</a></li><li><a href="#sec9">来源与证据边界</a></li><li><a href="#sec10">相关日期笔记</a></li><li><a href="#sec11">更新记录</a></li></ul></div>
 <section id="sec0">
 <h2>全书视角 · 全书结构</h2>
 <p>本书<b>没有 AI 大纲文件（outline.html）</b>，以下结构据AI读书书目页公开目录与简介整理：<b>序言 + 8 章 + 主要参考书目</b>，每章末均有「观察者手记」把散点故事收束到一条论点。读前先看一遍，精读时知道每个故事落在全书的哪一段。<span class="src" data-k="official">官方目录</span></p>
@@ -310,7 +372,7 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
 </div>
 </section><section id="sec6">
 <h2>用更高维度的知识看这本书</h2>
-<p class="small">本节是外部知识坐标与综合分析，不是作者原话，也不代表已亲读全书；未核实的判断标待核实，随亲读校订。与「当年与今天」分工互引，不重复。</p>
+<p class="small">本节是外部知识坐标与综合分析，不是作者原话，也不代表已亲读全书；未核实的判断标待核实，随亲读校订。与「往日今时」分工互引，不重复。</p>
 <h3>放进更大的知识坐标</h3>
 <p><b>书中问题与依据：</b>本书主线是「普通人在长期经济下行中如何守住生活底线」，叙事落点是「失去的三十年」的人物切片（据官方简介与目录）。<span class="src" data-k="official">官方简介/目录</span>。</p>
 <p><b>可关联的现代知识框架（外部，非书中原话）：</b>辜朝明的「资产负债表衰退」可解释为何个人与企业集体去杠杆；大前研一《低欲望社会》对应书中「下流化」「断舍离」的心态；NHK《无缘社会》《老后破产》报道与书中第四章同题；上野千鹤子的性别/照护批判对应第三章。这些构成故事背后的学术坐标，但<b>书中是否真正引用、引用到什么程度，待亲读核实</b>。<span class="src" data-k="infer">综合推断</span><span class="src" data-k="unknown">待核实</span>。</p>
@@ -338,7 +400,7 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
 <li>第八章 四条「相似性」逐条类比中国时，作者是否真在「不同的节奏」一节强调了体制与节奏差异的边界（据目录推断，待亲读核对）。</li>
 </ul>
 </section><section id="sec8">
-<h2>当年与今天 · 初步对照</h2>
+<h2>往日今时 · 初步对照</h2>
 <p class="small">原作首版：2026 年 5 月（AI读书书目信息）。</p>
 <h3>当年作者能知道什么</h3>
 <p>作者王熙威（北大本科、东京大学硕士，近二十年深耕日本社会肌理）写作时，中国正处在「内卷」「躺平」「消费降级」成为日常热词的阶段，读者天然会把日本「失去的三十年」拿来对照。他据此把书定位为「镜子」而非预言，是一种读者意识的自觉。<span class="src" data-k="official">官方简介</span><span class="src" data-k="infer">综合推断</span>。</p>
@@ -363,7 +425,7 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
 <div class="card">开读首日创建（简介/点评打底，含机械模板与「待补」占位）；<b>2026-10-26 重修本篇</b>——剔除逐章模板「验证问题」与「用更高维度的知识」整节「待补」占位，补入真实 AI 问答栏、完整章节导航与书-specific 验证问题，依据官方简介、公开目录与读者点评重写；正文未亲读，相关判断标 官方/推断/待核实。</div>
 </section>
 <footer><p><a href="../../../index.html">← 返回首页</a>　<a href="../../index.html">阅读归档索引</a>　<a href="overview.html">查看全书视角（通读页）</a></p></footer></section>
-<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点初判</h2><p class="mmx-mod-note">按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。</p><ul class="mmx-views"><li><b>泡沫破裂与宏观冲击</b>——梳理1991年泡沫破裂对商业巨头、普通家庭及资产市场的首波毁灭性打击。</li><li><b>就业冰河与学历失灵</b>——展现经济下行期青年就业市场的残酷现实及学历神话破灭后的个体抉择。</li><li><b>家庭裂变与女性困境</b>——剖析传统婚姻家庭解体、父权结构拆解以及边缘女性陷入贫困的社会现象。</li><li><b>阶层坠落与老后破产</b>——揭示中产阶级坍塌、格差社会形成以及孤独死与养老金危机带来的老后困境。</li><li><b>消费转型与精神避难</b>——阐释从过度消费转向极简、共享、性价比以及利用二次元文化寻找精神寄托。</li><li><b>劳工异化与自救尝试</b>——探讨派遣雇佣制度造成的社会割裂、极端危机爆发及个体的微观心理自救。</li><li><b>商业演进与中日镜鉴</b>——分析新商业模式出海与宏观政策效用，对比中日在人口、就业及消费上的同与异。</li></ul></section>
-<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句 · 持续积累</h2><p class="mmx-mod-note">以下原句取自本书 AI 大纲落库的原文摘录（book_outline.quote），按大纲顺序节选，非 AI 生成；更多见逐章深读页。</p><ol class="mmx-qlist"><li><blockquote>「《以日为镜》写了整整两年、改了八稿，交到读者手中，就像是交出了一份沉甸甸的答卷。」</blockquote><cite>致AI 读书读者的一封信</cite></li><li><blockquote>「AI 读书聚集了全中国最庞大、也最敏锐的阅读群体，你们每天都在海量的信息中筛选、思考。」</blockquote><cite>致AI 读书读者的一封信</cite></li><li><blockquote>「最初动笔时，作者脑子里装满了宏大的词汇：资产负债表衰退、失去的三十年、少子老龄化。」</blockquote><cite>致AI 读书读者的一封信</cite></li><li><blockquote>「但在真正深入采访，甚至潜入日本中小企业和普通人生活的过程中，作者发现那些宏大叙事往往掩盖了具体个体的温度。」</blockquote><cite>致AI 读书读者的一封信</cite></li><li><blockquote>「2026年的“春斗”(春季劳资谈判)，日本企业的平均薪资涨幅达到了惊人的5.26%。」</blockquote><cite>致AI 读书读者的一封信</cite></li><li><blockquote>「购买力平价(PPP)人均GDP更是跌到了全球第37位。」</blockquote><cite>致AI 读书读者的一封信</cite></li><li><blockquote>「与之伴随的，是超过2.2万起“孤独死”事件，其中甚至有200多人在离世一年后才被发现。」</blockquote><cite>致AI 读书读者的一封信</cite></li><li><blockquote>「在AI 读书的评论区里，作者经常能看到大家关于“内卷”“躺平”“消费降级”的热烈讨论。」</blockquote><cite>致AI 读书读者的一封信</cite></li><li><blockquote>「这本书不是为了制造焦虑，更不是为了预言未来。」</blockquote><cite>致AI 读书读者的一封信</cite></li><li><blockquote>「它只是试图把一亿多人在三十年间的挣扎与智慧，浓缩成一个个具体而微的故事。」</blockquote><cite>致AI 读书读者的一封信</cite></li></ol></section>
+<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点</h2><ul class="mmx-views"><li><b>泡沫破裂与宏观冲击</b>——梳理1991年泡沫破裂对商业巨头、普通家庭及资产市场的首波毁灭性打击。</li><li><b>就业冰河与学历失灵</b>——展现经济下行期青年就业市场的残酷现实及学历神话破灭后的个体抉择。</li><li><b>家庭裂变与女性困境</b>——剖析传统婚姻家庭解体、父权结构拆解以及边缘女性陷入贫困的社会现象。</li><li><b>阶层坠落与老后破产</b>——揭示中产阶级坍塌、格差社会形成以及孤独死与养老金危机带来的老后困境。</li><li><b>消费转型与精神避难</b>——阐释从过度消费转向极简、共享、性价比以及利用二次元文化寻找精神寄托。</li><li><b>劳工异化与自救尝试</b>——探讨派遣雇佣制度造成的社会割裂、极端危机爆发及个体的微观心理自救。</li><li><b>商业演进与中日镜鉴</b>——分析新商业模式出海与宏观政策效用，对比中日在人口、就业及消费上的同与异。</li></ul></section>
+<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句</h2><ol class="mmx-qlist"><li><blockquote>「《以日为镜》写了整整两年、改了八稿，交到读者手中，就像是交出了一份沉甸甸的答卷。」</blockquote><cite>致AI 读书读者的一封信</cite></li><li><blockquote>「AI 读书聚集了全中国最庞大、也最敏锐的阅读群体，你们每天都在海量的信息中筛选、思考。」</blockquote><cite>致AI 读书读者的一封信</cite></li><li><blockquote>「最初动笔时，作者脑子里装满了宏大的词汇：资产负债表衰退、失去的三十年、少子老龄化。」</blockquote><cite>致AI 读书读者的一封信</cite></li><li><blockquote>「但在真正深入采访，甚至潜入日本中小企业和普通人生活的过程中，作者发现那些宏大叙事往往掩盖了具体个体的温度。」</blockquote><cite>致AI 读书读者的一封信</cite></li><li><blockquote>「2026年的“春斗”(春季劳资谈判)，日本企业的平均薪资涨幅达到了惊人的5.26%。」</blockquote><cite>致AI 读书读者的一封信</cite></li><li><blockquote>「购买力平价(PPP)人均GDP更是跌到了全球第37位。」</blockquote><cite>致AI 读书读者的一封信</cite></li><li><blockquote>「与之伴随的，是超过2.2万起“孤独死”事件，其中甚至有200多人在离世一年后才被发现。」</blockquote><cite>致AI 读书读者的一封信</cite></li><li><blockquote>「在AI 读书的评论区里，作者经常能看到大家关于“内卷”“躺平”“消费降级”的热烈讨论。」</blockquote><cite>致AI 读书读者的一封信</cite></li><li><blockquote>「这本书不是为了制造焦虑，更不是为了预言未来。」</blockquote><cite>致AI 读书读者的一封信</cite></li><li><blockquote>「它只是试图把一亿多人在三十年间的挣扎与智慧，浓缩成一个个具体而微的故事。」</blockquote><cite>致AI 读书读者的一封信</cite></li></ol></section>
 </body>
 </html>

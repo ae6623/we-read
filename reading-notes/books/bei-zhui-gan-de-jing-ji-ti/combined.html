@@ -6,46 +6,108 @@
 <title>《被追赶的经济体》｜通读 · 精读</title>
 <link rel="stylesheet" href="../../../assets/css/reading-overview.css"><link rel="stylesheet" href="../../../assets/css/mmx-guide.css"><link rel="stylesheet" href="../../../assets/css/reading-outline.css">
 <style>
-/* 合并页外壳 */
-body{max-width:960px;margin:0 auto;padding:0 18px 80px;}
-.combined-head{padding:34px 0 18px;border-bottom:1px solid #e7e0d2;margin-bottom:8px;}
-.combined-head h1{font-size:26px;margin:0 0 10px;}
+/* ── 外壳与全局阅读节奏 ── */
+body{max-width:880px;margin:0 auto;padding:0 18px 80px;
+  font-size:15px;line-height:1.88;color:#3b453e;background:#f7f8f3;
+  -webkit-font-smoothing:antialiased;}
+.combined-head{padding:30px 0 16px;border-bottom:1px solid #e7e0d2;margin-bottom:4px;}
+.combined-head h1{font:700 23px/1.35 var(--serif);margin:0 0 8px;color:#244b40;}
+.combined-head .eyebrow{font-size:.72rem;letter-spacing:.14em;margin:0 0 6px;}
+.chips{margin:8px 0 0;}
+.chip{font-size:.72rem;padding:2px 10px;}
 /* 锚点导航：固定一排 4 个，等宽对齐 */
-.nav{position:sticky;top:0;z-index:20;background:rgba(255,253,248,.96);backdrop-filter:blur(6px);
-  border-bottom:1px solid #ece4d4;padding:10px 0;margin:14px 0 26px;display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;
-  box-shadow:0 2px 10px rgba(120,100,60,.06);}
-.navlink{font-size:12.5px;color:#5d5443;text-decoration:none;background:#f6f1e6;border:1px solid #e7ddca;
-  border-radius:7px;padding:4px 6px;text-align:center;white-space:nowrap;overflow:hidden;
-  text-overflow:ellipsis;}
-section{scroll-margin-top:64px;}
-/* 一句话主旨：去左侧竖线 */
-.mmx-oneline{border-left:none;padding-left:18px;}
-/* AI领读章内：AI 大纲原生深层样式 */
-.merged-guide .sec{margin:10px 0 14px;padding-left:6px;border-left:2px solid #e5e0d6}
-.merged-guide .sec h4{font:600 .98rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.6em 0 .3em}
-.merged-guide ul.point{margin:.3em 0;padding-left:20px}
-.merged-guide ul.point>li{margin:.35em 0}
-.merged-guide ul.quote{margin:.25em 0 .25em 20px;padding-left:18px;list-style:none}
-.merged-guide ul.quote::before{content:"原句";display:block;font-size:.72rem;color:#bf8247;
-  letter-spacing:.1em;margin:.15em 0 .1em;font-weight:600}
-.merged-guide ul.quote.quote-node{margin-top:.5em;padding-top:.4em;border-top:1px dashed #eadfc9}
+.nav{position:sticky;top:0;z-index:20;background:rgba(247,248,243,.96);backdrop-filter:blur(6px);
+  border-bottom:1px solid #ece4d4;padding:10px 0;margin:12px 0 20px;display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;
+  box-shadow:0 2px 10px rgba(120,100,60,.05);}
+.navlink{font-size:12px;color:#5d5443;text-decoration:none;background:#fdfbf3;border:1px solid #e8e2d2;
+  border-radius:8px;padding:6px 4px;text-align:center;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;transition:background .15s,color .15s;}
+.navlink:hover{background:#f2efe2;color:#244b40;}
+section{scroll-margin-top:62px;}
+
+/* ── 统一卡片：所有顶层模块（AI领读 / AI 问答 / 其余）一视同仁 ── */
+body>section.mmx-mod,body>section.card,body>section.mmx-svgwrap{
+  background:#fffdf6;border:1px solid #e8e4d5;border-radius:16px;
+  padding:18px 22px;margin:18px 0;
+  box-shadow:0 1px 3px rgba(110,95,60,.05);}
+body>section.mmx-mod>*:first-child,body>section.card>*:first-child,
+body>section.mmx-svgwrap>*:first-child{margin-top:0}
+body>section.mmx-mod>*:last-child,body>section.card>*:last-child,
+body>section.mmx-svgwrap>*:last-child{margin-bottom:0}
+/* 结构导图：图本身留白居中，不与正文抢宽 */
+body>section.mmx-svgwrap>svg.mmx-svg{display:block;width:100%;height:auto;margin:2px auto 0;}
+/* 模块标题：统一大小、弱强调，不与正文抢注意力 */
+body>section.mmx-mod>h2,body>section.card>h2{
+  font:700 1.04rem/1.5 var(--serif);color:#244b40;margin:0 0 11px;
+  padding-left:10px;border-left:3px solid #bf8247;letter-spacing:.01em;}
+/* 正文：字号收小、行距放宽、段间距舒服 */
+body>section.mmx-mod p,body>section.card p,
+body>section.mmx-mod li,body>section.card li{
+  font-size:.9rem;line-height:1.92;color:#4a4436;}
+body>section.mmx-mod p,body>section.card p{margin:.5em 0;}
+body>section.mmx-mod>ul,body>section.mmx-mod>ol,body>section.mmx-mod>div,
+body>section.mmx-mod>p:not(.mmx-mod-note),
+body>section.card:not(.merged-guide)>ul,body>section.card:not(.merged-guide)>ol,
+body>section.card:not(.merged-guide)>div,body>section.card:not(.merged-guide)>p:not(.mmx-mod-note){
+  padding-left:14px;}
+/* 模块说明小字：弱化不抢眼 */
+.mmx-mod-note{font-size:.75rem;color:#8d8878;margin:.1em 0 .75em;line-height:1.7;}
+
+/* ── 内部块统一：卡片里不再套深卡片，一律浅底子块 ── */
+body>section .mmx-pending,body>section .mmx-evib,body>section .aiqa-item{
+  background:#fbfaf2;border:1px solid #eee9d8;border-radius:12px;
+  padding:13px 16px;margin:.65em 0;}
+body>section .mmx-evib ul{padding-left:1.15em;}
+/* 一句话主旨：去左侧竖线 + 收敛字号 */
+.mmx-oneline{font-size:.98rem;line-height:1.85;color:#3a352c;margin:.2em 0 0;
+  padding:12px 16px;background:#fbfaf4;border-left:none;border-radius:12px;}
+/* 核心观点 / 验证清单：虚线分隔 + 收紧行距 */
+.mmx-views li{padding:.5em 0 .5em 0;font-size:.9rem;line-height:1.88;}
+/* 原文金句 */
+.mmx-qlist li{padding:.6em 0 .6em 2.2em;}
+.mmx-qlist blockquote{font-size:.89rem;line-height:1.9;}
+.mmx-qlist cite{font-size:.72rem;}
+/* 核心追问：问句加重、答句放松 */
+.mmx-qa{margin:.7em 0;padding-left:12px;border-left:3px solid #e5dfcd;}
+.mmx-qa .mmx-q{font-size:.9rem;font-weight:700;color:#2f3a33;line-height:1.8;margin:0 0 .25em;}
+.mmx-qa .mmx-a{font-size:.88rem;line-height:1.95;color:#4a4436;margin:0;}
+
+/* ── AI 问书专项：外层容器透明，问答条目才是阅读单元 ── */
+#mod-aiask .mmx-ask{background:transparent;border:0;border-radius:0;padding:0;margin:0;}
+#mod-aiask .aiqa-item{margin:.6em 0;padding:14px 16px 15px;}
+#mod-aiask .aiqa-item h3{font:700 .93rem/1.7 var(--serif);color:#2f5b49;margin:0 0 .4em;
+  padding:0;border:0;}
+#mod-aiask .aiqa-item h3:before{content:"问　";color:#bf8247;font-weight:700;}
+#mod-aiask .aiqa-item p{font-size:.88rem;line-height:1.95;color:#4a4436;margin:.4em 0;}
+#mod-aiask .aiqa-item ul{margin:.35em 0;padding-left:1.1em;}
+#mod-aiask .aiqa-item li{font-size:.87rem;line-height:1.88;margin:.18em 0;color:#4a4436;}
+#mod-aiask .aiqa-item li::marker{color:#c0a06a;}
+/* 逐章追问（details 形态）：摘要行也收敛 */
+.mmx-ask>summary{font-size:.87rem;line-height:1.7;padding:2px 0;}
+.mmx-askbody{font-size:.88rem;line-height:1.9;}
+
+/* AI领读章内：AI 大纲原生深层样式（字号同步收小） */
+.merged-guide .sec{margin:9px 0 12px;padding-left:6px;border-left:2px solid #e5e0d6}
+.merged-guide .sec h4{font:600 .93rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.5em 0 .25em}
+.merged-guide ul.point{margin:.25em 0;padding-left:20px}
+.merged-guide ul.point>li{margin:.3em 0}
+.merged-guide ul.quote{margin:.22em 0 .22em 20px;padding-left:18px;list-style:none}
+.merged-guide ul.quote::before{content:"原句";display:block;font-size:.7rem;color:#bf8247;
+  letter-spacing:.1em;margin:.12em 0 .08em;font-weight:600}
+.merged-guide ul.quote.quote-node{margin-top:.45em;padding-top:.35em;border-top:1px dashed #eadfc9}
 .merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
-.merged-guide ul.quote>li{color:#4a4436;font-size:.93rem;margin:.2em 0;padding-left:10px;border-left:2px solid #bf8247}
-/* 模块内子内容（AI领读除外，它有专属深层样式）：左缩进 + 正文与标题分层 */
-section.mmx-mod>ul,section.mmx-mod>ol,section.mmx-mod>div,
-section.mmx-mod>p:not(.mmx-mod-note),
-section.card:not(.merged-guide)>ul,section.card:not(.merged-guide)>ol,
-section.card:not(.merged-guide)>div,section.card:not(.merged-guide)>p:not(.mmx-mod-note){
-  padding-left:16px;}
-section.mmx-mod li,section.mmx-mod p:not(.mmx-mod-note),
-section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mod-note){
-  color:#4a4436;font-size:.93rem;line-height:1.78;}
+.merged-guide ul.quote>li{color:#4a4436;font-size:.88rem;line-height:1.85;margin:.18em 0;padding-left:10px;border-left:2px solid #bf8247}
 /* 核心观点初判：外链 mmx-guide.css 的「观点N」前缀是绝对定位，在本页版式里和标题叠字，
    且此前要求去掉「观点1/2/3」前缀 —— 这里整条关掉（外链 CSS 不在页面内，只能内联覆盖）。 */
 .mmx-views li{padding-left:0 !important;}
 .mmx-views li:before,.mmx-views li::before{
   content:none !important;display:none !important;counter-increment:none !important;}
+@media(max-width:720px){
+  body{padding:0 12px 60px;font-size:14.5px;}
+  body>section.mmx-mod,body>section.card{padding:15px 16px;border-radius:14px;}
+  .nav{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
 </style>
 </head>
 <body>
@@ -54,8 +116,8 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
   <h1>《被追赶的经济体》</h1>
   <div class="chips"><span class="chip">通读 + 精读</span><span class="chip">AI领读</span><span class="chip">AI 生产</span></div>
 </header>
-<nav class="nav"><a class="navlink" href="#mod-svg">全书结构导图</a><a class="navlink" href="#mod-oneline">一句话主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a></nav>
-<section class="mmx-svgwrap" id="mod-svg">
+<nav class="nav"><a class="navlink" href="#mod-svg">结构导图</a><a class="navlink" href="#mod-oneline">核心主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a></nav>
+<section class="mmx-svgwrap" id="mod-svg"><h2>结构导图</h2>
 <svg class="mmx-svg" viewBox="0 0 1120 2638" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="被追赶的经济体 全书精读">
 <rect x="0" y="0" width="1120" height="2638" fill="none"/>
 <style>.mmx-svg text{font-family:"Noto Serif SC",Georgia,serif}.mmx-svg .t1{font-size:15px;fill:#2f2a24;font-weight:600}.mmx-svg .t2{font-size:12px;fill:#5c5347}.mmx-svg .t3{font-size:10.5px;fill:#8a8272}.mmx-svg .rt{font-size:13px;fill:#f7f3ea;font-weight:600}.mmx-svg .ln{stroke:#cfc6b4;stroke-width:1.4;fill:none}</style>
@@ -350,11 +412,11 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
 <text class="t2" x="714" y="2537">含「数据亟待完善」至「后记」</text>
 <path class="ln" d="M692 2541 L700 2541"/>
 </svg></section>
-<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">一句话主旨</h2><p class="mmx-mod-note">本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。</p><p class="mmx-oneline">经济学家辜朝明在本书中深入探讨了传统经济解决方案在应对大衰退和疫情后经济与社会问题方面的失败</p></section>
-<section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" id="mod-merged_guide"><h2 id="merged-guide-title">AI领读 · 全书篇目</h2>
+<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">核心主旨</h2><p class="mmx-oneline">经济学家辜朝明在本书中深入探讨了传统经济解决方案在应对大衰退和疫情后经济与社会问题方面的失败</p></section>
+<section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" id="mod-merged_guide"><h2 id="merged-guide-title">AI领读</h2>
 <p class="small">本书 AI 大纲目前为章级目录（要点与原句待补全）。以下为全书篇目，大纲补全后将自动升级为「目录 + 骨架 + 要点 + 原句」完整版。</p>
 <ol class="mmx-pts"><li><b>1</b> 致词</li><li><b>2</b> 对作者此前著作的赞誉</li><li><b>3</b> 译者导读</li><li><b>4</b> 序言</li><li><b>5</b> 第一章 理解宏观经济学的另一半</li><li><b>6</b> 宏观经济学常识：我之支出，他之收入</li><li><b>7</b> 金融中介的重要性</li><li><b>8</b> 货币政策和财政政策的作用</li><li><b>9</b> 借款人消失的两大原因</li><li><b>10</b> 通缩螺旋机制</li><li><b>11</b> 合成谬误与节俭悖论</li><li><b>12</b> 借贷对于经济增长的重要性</li><li><b>13</b> 二战后凯恩斯理论没有得到应用</li><li><b>14</b> 面临偿付能力约束时，借款人消失</li><li><b>15</b> 经济学家从未思考过追求债务最小化导致的经济衰退</li><li><b>16</b> 评估去杠杆问题的严重程度</li><li><b>17</b> 经济学界没有考虑经济体的去杠杆问题</li><li><b>18</b> 尚无术语界定追求债务最小化引发的衰退</li><li><b>19</b> 节俭悖论是工业革命前的常态</li><li><b>20</b> 借款人和贷款人的四种可能情形</li><li><b>21</b> 贷款人短缺的补救措施众所周知</li><li><b>22</b> 借款人的缺失与宏观经济学的另一半</li><li><b>23</b> 固守利润最大化假设妨碍了理论创新</li><li><b>24</b> 第二章 资产负债表问题导致借款人短缺</li><li><b>25</b> 日本的资产负债表衰退</li><li><b>26</b> 对西方资产负债表衰退的观察</li><li><b>27</b> 借款人消失的第一个受害者：货币政策</li><li><b>28</b> 大萧条是一次严重的资产负债表衰退</li><li><b>29</b> 1990年后日本同样出现货币总量“脱钩”现象</li><li><b>30</b> 情形4下，需要最后贷款人的介入</li><li><b>31</b> 情形3和情形4下，政府必须充当最后借款人</li><li><b>32</b> 情形3下，政府通过债券市场借款</li><li><b>33</b> 资产负债表衰退下经济体的自我纠正机制</li><li><b>34</b> G20在2010年多伦多峰会上改变路线</li><li><b>35</b> 追溯四个经济体中央银行的历史记录</li><li><b>36</b> 量化宽松并未使日本、英国或欧洲的货币供应量加速增长</li><li><b>37</b> 美联储官员未承诺通过扩大货币供应量来提高通胀</li><li><b>38</b> 伯南克利用与其导师观点不同的政策拯救了美国经济</li><li><b>39</b> 其他中央银行支持财政紧缩</li><li><b>40</b> 实体经济参与者深知量化宽松政策毫无意义</li><li><b>41</b> 市场参与者仍然假定经济处于情形1或情形2</li><li><b>42</b> 追溯财政政策的历史记录</li><li><b>43</b> 在资产负债表衰退期间衡量财政乘数的困难</li><li><b>44</b> 减税还是增加政府开支</li><li><b>45</b> 资产负债表衰退期间油价下跌</li><li><b>46</b> 资产负债表问题的严重程度很重要</li><li><b>47</b> 债务创伤可能会持续很长时间</li><li><b>48</b> 即使有大量公共债务，也必须维持财政刺激</li><li><b>49</b> 第三章 引入“被追赶的经济体”概念</li><li><b>50</b> 借款人的可得性和经济发展三个阶段</li><li><b>51</b> 工业化的第一阶段：城镇化经济体</li><li><b>52</b> 经济增长加剧了刘易斯拐点前城镇化阶段的收入不平等</li><li><b>53</b> 工业化的第二阶段：后刘易斯拐点的成熟经济体</li><li><b>54</b> 为扩大产能和提高生产力水平，投资性借贷爆炸性增长</li><li><b>55</b> 工业化的第三阶段：被追赶的经济体</li><li><b>56</b> 日本的崛起迫使西方国家改变</li><li><b>57</b> 在被追赶的时代，收入不平等问题加剧</li><li><b>58</b> 日本工业化的三个阶段</li><li><b>59</b> 自由贸易加速了全球化</li><li><b>60</b> 中国正处于后刘易斯拐点的工业化黄金时代</li><li><b>61</b> 国家/地区的幸福值</li><li><b>62</b> 对贸易赤字和制造业工作岗位流失的关注度不够</li><li><b>63</b> 后工业化社会和被追赶阶段的概念渊源</li><li><b>64</b> 刘易斯拐点与理论的变化</li><li><b>65</b> 刘易斯拐点与包容性社会秩序</li><li><b>66</b> 托马斯·皮凯蒂的“不平等”的真正来源</li><li><b>67</b> 第四章 经济发展三个阶段的宏观经济政策</li><li><b>68</b> 工人在被追赶的阶段只能“自立自强”</li><li><b>69</b> 消费者在经济发展三个阶段中的演化</li><li><b>70</b> 经济发展的三个阶段中不同的通货膨胀趋势</li><li><b>71</b> 企业借款的减少和货币政策有效性的丧失</li><li><b>72</b> 同样的原因使超低利率在日本根深蒂固</li><li><b>73</b> 中性利率因经济发展阶段不同而变化</li><li><b>74</b> 经济发展三个阶段中的财政政策挑战</li><li><b>75</b> 错误使用不同时期乘数和弹性数据是危险的</li><li><b>76</b> 被追赶的经济体所面临的根本宏观政策挑战</li><li><b>77</b> 根本问题的根本解决方案</li><li><b>78</b> 不是私人部门的工作</li><li><b>79</b> 需要独立的委员会来选择和监督项目</li><li><b>80</b> 债务限额争论的问题</li><li><b>81</b> 债务限额的争论忽略了一个事实：债务是储蓄的另一面</li><li><b>82</b> 公众对超额储蓄缺乏认识</li><li><b>83</b> 项目的质量及其宏观经济背景很重要</li><li><b>84</b> 债务限额论只看数量不看价格</li><li><b>85</b> 被追赶的经济体容易出现泡沫</li><li><b>86</b> 中央银行是问题的一部分，而不是解决方案的一部分</li><li><b>87</b> 投资于现有资产的资金滞留在金融市场</li><li><b>88</b> 被追赶的经济体容易出现泡沫和资产负债表衰退的循环</li><li><b>89</b> 剧烈的波动毫无益处</li><li><b>90</b> 政府应积极投资，直至结构性改革初见成效</li><li><b>91</b> “金融资本主义”和被追赶的经济体</li><li><b>92</b> 财政政策要尽早介入</li><li><b>93</b> 提前为未来的危机准备精选项目清单</li><li><b>94</b> 政策制定者无法摆脱黄金时代的记忆</li><li><b>95</b> 反抗有助于使日本养老金领取者不至于失去一切</li><li><b>96</b> 2%的通胀目标对被追赶的经济体是否合适</li><li><b>97</b> 菲利普斯曲线是针对黄金时代的</li><li><b>98</b> 私人投资的恢复不会使黄金时代回归</li><li><b>99</b> 被追赶经济体的正确运作方式不同于黄金时代</li><li><b>100</b> 第五章 经济增长和维持发达经济体地位所面临的挑战</li><li><b>101</b> 由消费者和企业驱动的经济增长</li><li><b>102</b> 黄金时代的正向合成谬误</li><li><b>103</b> 企业应遵循的两种策略</li><li><b>104</b> 盈利动机和生产力</li><li><b>105</b> 生产力的概念和测量存在的问题</li><li><b>106</b> 盈利能力和物质生产力</li><li><b>107</b> 在被追赶的经济体中，更高的生产力不一定产生更高的工资</li><li><b>108</b> 提高最低工资会促进生产力吗</li><li><b>109</b> 出口导向型增长模式面临更少的障碍</li><li><b>110</b> 进口替代型增长模式很少具有可持续性</li><li><b>111</b> 透明度是美国市场最大的吸引力</li><li><b>112</b> 识别大力扩张根源的重要性</li><li><b>113</b> 中等收入陷阱和从策略B向策略A转型的困难</li><li><b>114</b> 人口特征与企业投资决策</li><li><b>115</b> 人口特征内生于经济发展阶段</li><li><b>116</b> 被追赶的经济体要保持领先，需要三管齐下进行改革</li><li><b>117</b> 美国曾如何应对日本的挑战</li><li><b>118</b> 里根经济学和学习如何跑得更快</li><li><b>119</b> 被追赶的经济体需要劳动力市场的灵活性</li><li><b>120</b> 供给侧改革的效果需要时间来呈现</li><li><b>121</b> 寻找和鼓励创新者的挑战</li><li><b>122</b> 需要正确的教育方式</li><li><b>123</b> 被追赶时代教育的重要性凸显</li><li><b>124</b> 让学生留在学校的挑战</li><li><b>125</b> 亚裔教育成就的高昂代价</li><li><b>126</b> 合理的税收和监管制度的重要性</li><li><b>127</b> 正确解释不平等统计数据的重要性</li><li><b>128</b> 是更好地分配医疗服务还是研发更多的新药</li><li><b>129</b> 企业家在大力扩张时期的重要性</li><li><b>130</b> 社会主义的新吸引力和达成公众共识的难度</li><li><b>131</b> 让老牌政党在被追赶的时代再次发挥作用</li><li><b>132</b> 发达经济体正在腹背受敌</li><li><b>133</b> 不良税制的案例：日本遗产税</li><li><b>134</b> 中国台湾将遗产税和赠与税的税率降至10%</li><li><b>135</b> 中国台湾减税的全球影响</li><li><b>136</b> 在被追赶阶段，社会如何重构是一个开放性问题</li><li><b>137</b> 新兴经济体须未雨绸缪</li><li><b>138</b> 中国面临的挑战：“脱钩”、人口特征和中等收入陷阱</li><li><b>139</b> 中国的改革开放推动了人类历史上最伟大的经济增长</li><li><b>140</b> 中国的转折</li><li><b>141</b> “脱钩”后国内需要的大力扩张</li><li><b>142</b> 人类进步的经济命运</li><li><b>143</b> 结论</li><li><b>144</b> 第六章 新冠肺炎疫情和量化宽松陷阱期间的货币政策</li><li><b>145</b> 日本和欧洲的公司债券收益率波动相对温和</li><li><b>146</b> 资本市场已经不再把央行对于财政赤字的融资当回事</li><li><b>147</b> 汇率在各国央行的共同行动下保持稳定</li><li><b>148</b> 通胀回归</li><li><b>149</b> 50年后，财政刺激重现</li><li><b>150</b> 能源部门无法回到2020年前的情况</li><li><b>151</b> 对可持续发展目标的关注可能使经济重回情形1</li><li><b>152</b> 后疫情时代货币政策的正常化将面临挑战</li><li><b>153</b> 需要一个减震器</li><li><b>154</b> 相对股市，美联储更关注房地产</li><li><b>155</b> 货币政策正常化的首次尝试</li><li><b>156</b> 量化宽松陷阱：货币当局和市场之间的拉锯战</li><li><b>157</b> 量化宽松陷阱的首次重现</li><li><b>158</b> 全球量化宽松陷阱</li><li><b>159</b> 央行资产负债表正常化的难点</li><li><b>160</b> 美联储直面量化宽松的退出问题</li><li><b>161</b> 对于量化宽松的逐步退出，尚未达成理论共识</li><li><b>162</b> 对称性通胀目标既无效又危险</li><li><b>163</b> 2022年后的量化紧缩被明确界定为抗击通胀的工具</li><li><b>164</b> “我们现在都是日本人”</li><li><b>165</b> 泡沫破裂引发金融和宏观经济的双重问题</li><li><b>166</b> 如果处理得当，金融危机两年左右可以得到控制</li><li><b>167</b> 资产负债表衰退后的复苏需要花费远不止两年的时间</li><li><b>168</b> 将2008年后的经济下行称为全球金融危机是错误的</li><li><b>169</b> 欧洲央行的政策评估还远不够充分</li><li><b>170</b> 要用大规模且昂贵的加息来抑制通货膨胀</li><li><b>171</b> 量化宽松的总成本超过收益</li><li><b>172</b> 直升机撒钱谬论</li><li><b>173</b> 直升机撒钱的四种类型之一：从空中撒钱</li><li><b>174</b> 直升机撒钱的四种类型之二：政府提供直接融资</li><li><b>175</b> 直升机撒钱的四种类型之三：给消费者直接发钱</li><li><b>176</b> 直升机撒钱的四种类型之四：政府凭证和永续零息债券</li><li><b>177</b> 退出永续零息债券和政府凭证的巨大问题</li><li><b>178</b> 现代货币理论在2020年美国大选前成为焦点</li><li><b>179</b> 现代货币理论的预期与现实</li><li><b>180</b> 当私人借贷需求疲软时，不需要现代货币理论来扩大财政赤字</li><li><b>181</b> 能否改变私人部门的借贷是判断货币政策是否有效的关键指标</li><li><b>182</b> 量化宽松陷阱的规模与形式取决于其他央行的行动</li><li><b>183</b> 在疫情防控期间借贷是否有助于缓解债务创伤</li><li><b>184</b> 货币刺激和财政刺激都不廉价</li><li><b>185</b> 第七章 欧洲正在重复20世纪30年代的错误</li><li><b>186</b> 2008年全球金融危机以来历史重现</li><li><b>187</b> 德国的资产负债表衰退比其他国家早了8年</li><li><b>188</b> 有缺陷的《稳定与增长公约》让极右翼政党发展壮大</li><li><b>189</b> 对欧元区危机的预测被忽视了</li><li><b>190</b> 决策者需要追问：为什么欧盟怀疑论者会获得支持</li><li><b>191</b> 官方未能识别这一经济问题</li><li><b>192</b> 《稳定与增长公约》本该督促处于情形3的国家使用财政刺激</li><li><b>193</b> 1929年后饱受痛苦的德国却让其他国家在2008年后承受相同的痛苦</li><li><b>194</b> 内在通缩带来的欧洲复苏</li><li><b>195</b> 新冠肺炎疫情再次暴露欧元区结构性缺陷</li><li><b>196</b> 欧元的制度性缺陷</li><li><b>197</b> 资本逃逸是欧元区问题的核心</li><li><b>198</b> 基于市场的财政约束引发欧元反应强烈</li><li><b>199</b> 货币联盟发挥作用需要财政分化</li><li><b>200</b> 财政分化可以让货币政策正常化</li><li><b>201</b> 财政分化的方式之一是实行差异化风险权重</li><li><b>202</b> 引导外围国家的储蓄回流</li><li><b>203</b> 对负反馈循环不应有的恐惧</li><li><b>204</b> 让货币联盟在没有财政联盟的情况下运作</li><li><b>205</b> 德国模式并不适用于所有国家</li><li><b>206</b> 米尔顿·弗里德曼自由市场理论的三个问题</li><li><b>207</b> 第八章 宏观经济学另一半中的货币和银行</li><li><b>208</b> 银行系统的两个外部性</li><li><b>209</b> 欧元区银行业的问题是否仍未得到解决</li><li><b>210</b> 欧元区对日本和美国银行问题的两个误解</li><li><b>211</b> 日本的银行早期就开始坏账核销</li><li><b>212</b> 拨备提高了，但为何不良贷款仍未下降</li><li><b>213</b> 导致日本经济大幅下滑的真正原因在于借款人而非贷款人</li><li><b>214</b> 美国拯救商业地产违背市场原则，但带来了复苏</li><li><b>215</b> 沃尔克的“假装和拖延”在拉美债务危机期间拯救了世界</li><li><b>216</b> 欧元区未能区分普通与系统性银行危机</li><li><b>217</b> 回顾欧元区信贷紧缩</li><li><b>218</b> 注资的正确路径</li><li><b>219</b> 美国资产剥离者幽灵般地扼杀欧洲银行</li><li><b>220</b> “大而不能倒”与全球金融危机无关</li><li><b>221</b> 铭记沃尔克在1982年的行动</li><li><b>222</b> 对“大而不能倒”的过度关注可能会限制未来的政策举措</li><li><b>223</b> 存款准备金要求和货币乘数过时了吗</li><li><b>224</b> 单独而言银行是金融中介，但总体来看银行是货币创造者</li><li><b>225</b> 货币乘数的变化及其政策意义</li><li><b>226</b> 货币供给是如何失去它作为经济活动先行指标作用的</li><li><b>227</b> 需要数据来区分经营性贷款和融资性贷款</li><li><b>228</b> 货币创造并不意味着财富创造</li><li><b>229</b> 第九章 逆全球化以及自由贸易和自由资本流动之间的冲突</li><li><b>230</b> 经济学教科书中关于贸易的错误观点引发逆全球化</li><li><b>231</b> 片面教授自由贸易理论</li><li><b>232</b> 贸易和经常账户平衡的重要性</li><li><b>233</b> 贸易平衡机制的消失</li><li><b>234</b> 资本自由流动使汇率失去了纠正贸易失衡的作用</li><li><b>235</b> 贸易和资本流动对外汇市场的影响</li><li><b>236</b> 经济学界允许贸易持续失衡</li><li><b>237</b> 贸易失衡不是由投资/储蓄平衡决定的</li><li><b>238</b> 投资/储蓄平衡理论无法解释美国的贸易逆差</li><li><b>239</b> 整体储蓄下降源于个人的节省</li><li><b>240</b> 汇率的长期结构性影响</li><li><b>241</b> 中期产业转移的不可逆性</li><li><b>242</b> 推动出口往往比拉动进口更为重要</li><li><b>243</b> 资本市场开放是一个相对较新的现象</li><li><b>244</b> 资本流动扭曲了贸易流动</li><li><b>245</b> 资本流动会提升效率吗</li><li><b>246</b> 资本流动削弱了货币政策的有效性</li><li><b>247</b> 国家政策目标与资本自由流动之间存在不一致</li><li><b>248</b> 不同的国家，同一个金融市场</li><li><b>249</b> 各类金融机构也别无选择</li><li><b>250</b> 对外汇市场的影响因素出现新认识了吗</li><li><b>251</b> 需要与最优货币区理论相反的命题</li><li><b>252</b> 政府干预外汇市场的案例</li><li><b>253</b> 政府能否摆脱政策的“三元悖论”困境</li><li><b>254</b> “三元悖论”所隐含的假设与外汇市场现实情况不一致</li><li><b>255</b> 当理想汇率有助于纠正贸易失衡时，“三元悖论”不成立</li><li><b>256</b> 确定贸易平衡下的汇率并非易事</li><li><b>257</b> 若央行的干预与贸易驱动的资金流动方向一致，干预是有效的</li><li><b>258</b> “亚洲广场协议”与维持自由贸易的责任</li><li><b>259</b> 顺差国家开放国内市场优先于推动货币升值</li><li><b>260</b> 调整汇率可能会导致资本逃逸</li><li><b>261</b> “父债子偿”</li><li><b>262</b> 实现收益趋同的两种资本流动与投资者质量</li><li><b>263</b> 阻止信息缺乏投资者的智利方案</li><li><b>264</b> 在实行贸易保护主义之前，要考虑组建国家/地区队</li><li><b>265</b> 是时候反思资本市场自由化了</li><li><b>266</b> 最现实的解决方案</li><li><b>267</b> 第十章 经济学再思考</li><li><b>268</b> 是结构性问题还是资产负债表问题</li><li><b>269</b> 结构性改革需要正确表述</li><li><b>270</b> 萨默斯的长期停滞理论</li><li><b>271</b> 警惕“外部冲击”伪命题</li><li><b>272</b> 警惕对预期的虚假暗示</li><li><b>273</b> 从哪里开始分析是至关重要的</li><li><b>274</b> 传统模型难以解释突发的逆转</li><li><b>275</b> 对数学的痴迷正在扼杀宏观经济学的可信度</li><li><b>276</b> 经济学中通俗易懂的语言的力量</li><li><b>277</b> 经济学家应该学习医学理念而非物理学</li><li><b>278</b> 经济学缺乏有意义的增长理论</li><li><b>279</b> 经济学本身的生存问题</li><li><b>280</b> 经济学：一段潮流更替的历史</li><li><b>281</b> 数据亟待完善</li><li><b>282</b> 经济学失灵的政治意义</li><li><b>283</b> 和平时期民主国家维持财政刺激的困难</li><li><b>284</b> 受过一半教育的人所构成的威胁</li><li><b>285</b> 不同经济发展阶段恰当的政策组合总结</li><li><b>286</b> 结论</li><li><b>287</b> 参考文献</li><li><b>288</b> 后记</li></ol></section>
-<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点初判</h2><p class="mmx-mod-note">按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。</p><ul class="mmx-views"><li><b>第 1–7 章</b>——含「致词」至「金融中介的重要性」</li><li><b>第 8–14 章</b>——含「货币政策和财政政策的作用」至「面临偿付能力约束时，借款」</li><li><b>第 15–21 章</b>——含「经济学家从未思考过追求债」至「贷款人短缺的补救措施众所」</li><li><b>第 22–28 章</b>——含「借款人的缺失与宏观经济学」至「大萧条是一次严重的资产负」</li><li><b>第 29–35 章</b>——含「1990年后日本同样出现」至「追溯四个经济体中央银行的」</li><li><b>第 36–42 章</b>——含「量化宽松并未使日本、英国」至「追溯财政政策的历史记录」</li><li><b>第 43–49 章</b>——含「在资产负债表衰退期间衡量」至「第三章 引入“被追赶的经」</li><li><b>第 50–56 章</b>——含「借款人的可得性和经济发展」至「日本的崛起迫使西方国家改」</li><li><b>第 57–63 章</b>——含「在被追赶的时代，收入不平」至「后工业化社会和被追赶阶段」</li><li><b>第 64–70 章</b>——含「刘易斯拐点与理论的变化」至「经济发展的三个阶段中不同」</li><li><b>第 71–77 章</b>——含「企业借款的减少和货币政策」至「根本问题的根本解决方案」</li><li><b>第 78–84 章</b>——含「不是私人部门的工作」至「债务限额论只看数量不看价」</li><li><b>第 85–91 章</b>——含「被追赶的经济体容易出现泡」至「“金融资本主义”和被追赶」</li><li><b>第 92–98 章</b>——含「财政政策要尽早介入」至「私人投资的恢复不会使黄金」</li><li><b>第 99–105 章</b>——含「被追赶经济体的正确运作方」至「生产力的概念和测量存在的」</li><li><b>第 106–112 章</b>——含「盈利能力和物质生产力」至「识别大力扩张根源的重要性」</li><li><b>第 113–119 章</b>——含「中等收入陷阱和从策略B向」至「被追赶的经济体需要劳动力」</li><li><b>第 120–126 章</b>——含「供给侧改革的效果需要时间」至「合理的税收和监管制度的重」</li><li><b>第 127–133 章</b>——含「正确解释不平等统计数据的」至「不良税制的案例：日本遗产」</li><li><b>第 134–140 章</b>——含「中国台湾将遗产税和赠与税」至「中国的转折」</li><li><b>第 141–147 章</b>——含「“脱钩”后国内需要的大力」至「汇率在各国央行的共同行动」</li><li><b>第 148–154 章</b>——含「通胀回归」至「相对股市，美联储更关注房」</li><li><b>第 155–161 章</b>——含「货币政策正常化的首次尝试」至「对于量化宽松的逐步退出，」</li><li><b>第 162–168 章</b>——含「对称性通胀目标既无效又危」至「将2008年后的经济下行」</li><li><b>第 169–175 章</b>——含「欧洲央行的政策评估还远不」至「直升机撒钱的四种类型之三」</li><li><b>第 176–182 章</b>——含「直升机撒钱的四种类型之四」至「量化宽松陷阱的规模与形式」</li><li><b>第 183–189 章</b>——含「在疫情防控期间借贷是否有」至「对欧元区危机的预测被忽视」</li><li><b>第 190–196 章</b>——含「决策者需要追问：为什么欧」至「欧元的制度性缺陷」</li><li><b>第 197–203 章</b>——含「资本逃逸是欧元区问题的核」至「对负反馈循环不应有的恐惧」</li><li><b>第 204–210 章</b>——含「让货币联盟在没有财政联盟」至「欧元区对日本和美国银行问」</li><li><b>第 211–217 章</b>——含「日本的银行早期就开始坏账」至「回顾欧元区信贷紧缩」</li><li><b>第 218–224 章</b>——含「注资的正确路径」至「单独而言银行是金融中介，」</li><li><b>第 225–231 章</b>——含「货币乘数的变化及其政策意」至「片面教授自由贸易理论」</li><li><b>第 232–238 章</b>——含「贸易和经常账户平衡的重要」至「投资/储蓄平衡理论无法解」</li><li><b>第 239–245 章</b>——含「整体储蓄下降源于个人的节」至「资本流动会提升效率吗」</li><li><b>第 246–252 章</b>——含「资本流动削弱了货币政策的」至「政府干预外汇市场的案例」</li><li><b>第 253–259 章</b>——含「政府能否摆脱政策的“三元」至「顺差国家开放国内市场优先」</li><li><b>第 260–266 章</b>——含「调整汇率可能会导致资本逃」至「最现实的解决方案」</li><li><b>第 267–273 章</b>——含「第十章 经济学再思考」至「从哪里开始分析是至关重要」</li><li><b>第 274–280 章</b>——含「传统模型难以解释突发的逆」至「经济学：一段潮流更替的历」</li><li><b>第 281–288 章</b>——含「数据亟待完善」至「后记」</li></ul></section>
-<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句 · 持续积累</h2><p class="mmx-mod-note">以下原句取自本书 AI 大纲落库的原文摘录（book_outline.quote），按大纲顺序节选，非 AI 生成；更多见逐章深读页。</p><ol class="mmx-qlist"><li><blockquote>「当一个国家存在储蓄者时，借款人是何等的重要：有人储蓄就必须有人借贷，否则经济将不可避免地陷入萎缩。只要储蓄的资金没有被全部用于借贷和消费，经济规模就会出现萎缩。」</blockquote><cite>本书正文</cite></li><li><blockquote>「应该看到，在这本书中，作者基于其背景和立场，对中国特色社会主义市场经济发展的方式和道路存在片面理解和认识误区，读者应该坚定道路自信和理论自信，用批判的眼光客观看待和理解相关问题及观点。」</blockquote><cite>本书正文</cite></li><li><blockquote>「未雨绸缪是人类的天性，是根深蒂固的。如果说储蓄是人类的天性，那么工业革命前长达数世纪的经济停滞，一定是因为借款人缺失。」</blockquote><cite>本书正文</cite></li><li><blockquote>「要强调一点，这里所说的借款指的是真实开支，比如用于建造工厂或者购买消费品，而不是用于购买房产或股票等存量资产的开支。前者可以增加GDP，而后者只涉及资产所有权的转移，而不会增加GDP。」</blockquote><cite>本书正文</cite></li><li><blockquote>「我进而想到了在极低利率环境下，私人部门追求债务最小化甚至不愿借贷的另一个原因，即企业无法找到足够有吸引力的投资机会，借贷和投资变得无利可图。毕竟在商业和经济领域中，没有人能保证这样的机会一直充足。」</blockquote><cite>本书正文</cite></li><li><blockquote>「想要经济实现增长，就要不断出现对企业有吸引力的投资机会，以及值得消费者借贷消费的必备商品。」</blockquote><cite>本书正文</cite></li><li><blockquote>「私人部门并非总如经济学教科书中所假设的那样追求“利润最大化”，而是在面临严峻的资产负债表挑战（债务积压）时，会选择追求“债务最小化”。」</blockquote><cite>本书正文</cite></li><li><blockquote>「美国比其他经济体做得更好，不是因为美国版量化宽松政策实施得更好，而是因为它是唯一一个中央银行公开反对财政紧缩的国家。」</blockquote><cite>本书正文</cite></li><li><blockquote>「回头看，在黄金时代经历的美好生活，看似每个人都从经济增长中受益，实际上为许多人创造了一种虚假的安全感，并让他们相信这种安全感会永远持续下去。因此，当美国进入被追赶阶段时，他们完全措手不及。」</blockquote><cite>本书正文</cite></li><li><blockquote>「他们很可能会不顾利率高低，一直增加储蓄，直到达到他们所认为的安全水平。」</blockquote><cite>本书正文</cite></li></ol></section>
+<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点</h2><ul class="mmx-views"><li><b>第 1–7 章</b>——含「致词」至「金融中介的重要性」</li><li><b>第 8–14 章</b>——含「货币政策和财政政策的作用」至「面临偿付能力约束时，借款」</li><li><b>第 15–21 章</b>——含「经济学家从未思考过追求债」至「贷款人短缺的补救措施众所」</li><li><b>第 22–28 章</b>——含「借款人的缺失与宏观经济学」至「大萧条是一次严重的资产负」</li><li><b>第 29–35 章</b>——含「1990年后日本同样出现」至「追溯四个经济体中央银行的」</li><li><b>第 36–42 章</b>——含「量化宽松并未使日本、英国」至「追溯财政政策的历史记录」</li><li><b>第 43–49 章</b>——含「在资产负债表衰退期间衡量」至「第三章 引入“被追赶的经」</li><li><b>第 50–56 章</b>——含「借款人的可得性和经济发展」至「日本的崛起迫使西方国家改」</li><li><b>第 57–63 章</b>——含「在被追赶的时代，收入不平」至「后工业化社会和被追赶阶段」</li><li><b>第 64–70 章</b>——含「刘易斯拐点与理论的变化」至「经济发展的三个阶段中不同」</li><li><b>第 71–77 章</b>——含「企业借款的减少和货币政策」至「根本问题的根本解决方案」</li><li><b>第 78–84 章</b>——含「不是私人部门的工作」至「债务限额论只看数量不看价」</li><li><b>第 85–91 章</b>——含「被追赶的经济体容易出现泡」至「“金融资本主义”和被追赶」</li><li><b>第 92–98 章</b>——含「财政政策要尽早介入」至「私人投资的恢复不会使黄金」</li><li><b>第 99–105 章</b>——含「被追赶经济体的正确运作方」至「生产力的概念和测量存在的」</li><li><b>第 106–112 章</b>——含「盈利能力和物质生产力」至「识别大力扩张根源的重要性」</li><li><b>第 113–119 章</b>——含「中等收入陷阱和从策略B向」至「被追赶的经济体需要劳动力」</li><li><b>第 120–126 章</b>——含「供给侧改革的效果需要时间」至「合理的税收和监管制度的重」</li><li><b>第 127–133 章</b>——含「正确解释不平等统计数据的」至「不良税制的案例：日本遗产」</li><li><b>第 134–140 章</b>——含「中国台湾将遗产税和赠与税」至「中国的转折」</li><li><b>第 141–147 章</b>——含「“脱钩”后国内需要的大力」至「汇率在各国央行的共同行动」</li><li><b>第 148–154 章</b>——含「通胀回归」至「相对股市，美联储更关注房」</li><li><b>第 155–161 章</b>——含「货币政策正常化的首次尝试」至「对于量化宽松的逐步退出，」</li><li><b>第 162–168 章</b>——含「对称性通胀目标既无效又危」至「将2008年后的经济下行」</li><li><b>第 169–175 章</b>——含「欧洲央行的政策评估还远不」至「直升机撒钱的四种类型之三」</li><li><b>第 176–182 章</b>——含「直升机撒钱的四种类型之四」至「量化宽松陷阱的规模与形式」</li><li><b>第 183–189 章</b>——含「在疫情防控期间借贷是否有」至「对欧元区危机的预测被忽视」</li><li><b>第 190–196 章</b>——含「决策者需要追问：为什么欧」至「欧元的制度性缺陷」</li><li><b>第 197–203 章</b>——含「资本逃逸是欧元区问题的核」至「对负反馈循环不应有的恐惧」</li><li><b>第 204–210 章</b>——含「让货币联盟在没有财政联盟」至「欧元区对日本和美国银行问」</li><li><b>第 211–217 章</b>——含「日本的银行早期就开始坏账」至「回顾欧元区信贷紧缩」</li><li><b>第 218–224 章</b>——含「注资的正确路径」至「单独而言银行是金融中介，」</li><li><b>第 225–231 章</b>——含「货币乘数的变化及其政策意」至「片面教授自由贸易理论」</li><li><b>第 232–238 章</b>——含「贸易和经常账户平衡的重要」至「投资/储蓄平衡理论无法解」</li><li><b>第 239–245 章</b>——含「整体储蓄下降源于个人的节」至「资本流动会提升效率吗」</li><li><b>第 246–252 章</b>——含「资本流动削弱了货币政策的」至「政府干预外汇市场的案例」</li><li><b>第 253–259 章</b>——含「政府能否摆脱政策的“三元」至「顺差国家开放国内市场优先」</li><li><b>第 260–266 章</b>——含「调整汇率可能会导致资本逃」至「最现实的解决方案」</li><li><b>第 267–273 章</b>——含「第十章 经济学再思考」至「从哪里开始分析是至关重要」</li><li><b>第 274–280 章</b>——含「传统模型难以解释突发的逆」至「经济学：一段潮流更替的历」</li><li><b>第 281–288 章</b>——含「数据亟待完善」至「后记」</li></ul></section>
+<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句</h2><ol class="mmx-qlist"><li><blockquote>「当一个国家存在储蓄者时，借款人是何等的重要：有人储蓄就必须有人借贷，否则经济将不可避免地陷入萎缩。只要储蓄的资金没有被全部用于借贷和消费，经济规模就会出现萎缩。」</blockquote><cite>本书正文</cite></li><li><blockquote>「应该看到，在这本书中，作者基于其背景和立场，对中国特色社会主义市场经济发展的方式和道路存在片面理解和认识误区，读者应该坚定道路自信和理论自信，用批判的眼光客观看待和理解相关问题及观点。」</blockquote><cite>本书正文</cite></li><li><blockquote>「未雨绸缪是人类的天性，是根深蒂固的。如果说储蓄是人类的天性，那么工业革命前长达数世纪的经济停滞，一定是因为借款人缺失。」</blockquote><cite>本书正文</cite></li><li><blockquote>「要强调一点，这里所说的借款指的是真实开支，比如用于建造工厂或者购买消费品，而不是用于购买房产或股票等存量资产的开支。前者可以增加GDP，而后者只涉及资产所有权的转移，而不会增加GDP。」</blockquote><cite>本书正文</cite></li><li><blockquote>「我进而想到了在极低利率环境下，私人部门追求债务最小化甚至不愿借贷的另一个原因，即企业无法找到足够有吸引力的投资机会，借贷和投资变得无利可图。毕竟在商业和经济领域中，没有人能保证这样的机会一直充足。」</blockquote><cite>本书正文</cite></li><li><blockquote>「想要经济实现增长，就要不断出现对企业有吸引力的投资机会，以及值得消费者借贷消费的必备商品。」</blockquote><cite>本书正文</cite></li><li><blockquote>「私人部门并非总如经济学教科书中所假设的那样追求“利润最大化”，而是在面临严峻的资产负债表挑战（债务积压）时，会选择追求“债务最小化”。」</blockquote><cite>本书正文</cite></li><li><blockquote>「美国比其他经济体做得更好，不是因为美国版量化宽松政策实施得更好，而是因为它是唯一一个中央银行公开反对财政紧缩的国家。」</blockquote><cite>本书正文</cite></li><li><blockquote>「回头看，在黄金时代经历的美好生活，看似每个人都从经济增长中受益，实际上为许多人创造了一种虚假的安全感，并让他们相信这种安全感会永远持续下去。因此，当美国进入被追赶阶段时，他们完全措手不及。」</blockquote><cite>本书正文</cite></li><li><blockquote>「他们很可能会不顾利率高低，一直增加储蓄，直到达到他们所认为的安全水平。」</blockquote><cite>本书正文</cite></li></ol></section>
 </body>
 </html>

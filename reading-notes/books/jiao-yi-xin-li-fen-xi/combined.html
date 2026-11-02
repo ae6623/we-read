@@ -6,46 +6,108 @@
 <title>《交易心理分析》｜通读 · 精读</title>
 <link rel="stylesheet" href="../../../assets/css/reading-overview.css"><link rel="stylesheet" href="../../../assets/css/mmx-guide.css"><link rel="stylesheet" href="../../../assets/css/reading-outline.css">
 <style>
-/* 合并页外壳 */
-body{max-width:960px;margin:0 auto;padding:0 18px 80px;}
-.combined-head{padding:34px 0 18px;border-bottom:1px solid #e7e0d2;margin-bottom:8px;}
-.combined-head h1{font-size:26px;margin:0 0 10px;}
+/* ── 外壳与全局阅读节奏 ── */
+body{max-width:880px;margin:0 auto;padding:0 18px 80px;
+  font-size:15px;line-height:1.88;color:#3b453e;background:#f7f8f3;
+  -webkit-font-smoothing:antialiased;}
+.combined-head{padding:30px 0 16px;border-bottom:1px solid #e7e0d2;margin-bottom:4px;}
+.combined-head h1{font:700 23px/1.35 var(--serif);margin:0 0 8px;color:#244b40;}
+.combined-head .eyebrow{font-size:.72rem;letter-spacing:.14em;margin:0 0 6px;}
+.chips{margin:8px 0 0;}
+.chip{font-size:.72rem;padding:2px 10px;}
 /* 锚点导航：固定一排 4 个，等宽对齐 */
-.nav{position:sticky;top:0;z-index:20;background:rgba(255,253,248,.96);backdrop-filter:blur(6px);
-  border-bottom:1px solid #ece4d4;padding:10px 0;margin:14px 0 26px;display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;
-  box-shadow:0 2px 10px rgba(120,100,60,.06);}
-.navlink{font-size:12.5px;color:#5d5443;text-decoration:none;background:#f6f1e6;border:1px solid #e7ddca;
-  border-radius:7px;padding:4px 6px;text-align:center;white-space:nowrap;overflow:hidden;
-  text-overflow:ellipsis;}
-section{scroll-margin-top:64px;}
-/* 一句话主旨：去左侧竖线 */
-.mmx-oneline{border-left:none;padding-left:18px;}
-/* AI领读章内：AI 大纲原生深层样式 */
-.merged-guide .sec{margin:10px 0 14px;padding-left:6px;border-left:2px solid #e5e0d6}
-.merged-guide .sec h4{font:600 .98rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.6em 0 .3em}
-.merged-guide ul.point{margin:.3em 0;padding-left:20px}
-.merged-guide ul.point>li{margin:.35em 0}
-.merged-guide ul.quote{margin:.25em 0 .25em 20px;padding-left:18px;list-style:none}
-.merged-guide ul.quote::before{content:"原句";display:block;font-size:.72rem;color:#bf8247;
-  letter-spacing:.1em;margin:.15em 0 .1em;font-weight:600}
-.merged-guide ul.quote.quote-node{margin-top:.5em;padding-top:.4em;border-top:1px dashed #eadfc9}
+.nav{position:sticky;top:0;z-index:20;background:rgba(247,248,243,.96);backdrop-filter:blur(6px);
+  border-bottom:1px solid #ece4d4;padding:10px 0;margin:12px 0 20px;display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;
+  box-shadow:0 2px 10px rgba(120,100,60,.05);}
+.navlink{font-size:12px;color:#5d5443;text-decoration:none;background:#fdfbf3;border:1px solid #e8e2d2;
+  border-radius:8px;padding:6px 4px;text-align:center;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;transition:background .15s,color .15s;}
+.navlink:hover{background:#f2efe2;color:#244b40;}
+section{scroll-margin-top:62px;}
+
+/* ── 统一卡片：所有顶层模块（AI领读 / AI 问答 / 其余）一视同仁 ── */
+body>section.mmx-mod,body>section.card,body>section.mmx-svgwrap{
+  background:#fffdf6;border:1px solid #e8e4d5;border-radius:16px;
+  padding:18px 22px;margin:18px 0;
+  box-shadow:0 1px 3px rgba(110,95,60,.05);}
+body>section.mmx-mod>*:first-child,body>section.card>*:first-child,
+body>section.mmx-svgwrap>*:first-child{margin-top:0}
+body>section.mmx-mod>*:last-child,body>section.card>*:last-child,
+body>section.mmx-svgwrap>*:last-child{margin-bottom:0}
+/* 结构导图：图本身留白居中，不与正文抢宽 */
+body>section.mmx-svgwrap>svg.mmx-svg{display:block;width:100%;height:auto;margin:2px auto 0;}
+/* 模块标题：统一大小、弱强调，不与正文抢注意力 */
+body>section.mmx-mod>h2,body>section.card>h2{
+  font:700 1.04rem/1.5 var(--serif);color:#244b40;margin:0 0 11px;
+  padding-left:10px;border-left:3px solid #bf8247;letter-spacing:.01em;}
+/* 正文：字号收小、行距放宽、段间距舒服 */
+body>section.mmx-mod p,body>section.card p,
+body>section.mmx-mod li,body>section.card li{
+  font-size:.9rem;line-height:1.92;color:#4a4436;}
+body>section.mmx-mod p,body>section.card p{margin:.5em 0;}
+body>section.mmx-mod>ul,body>section.mmx-mod>ol,body>section.mmx-mod>div,
+body>section.mmx-mod>p:not(.mmx-mod-note),
+body>section.card:not(.merged-guide)>ul,body>section.card:not(.merged-guide)>ol,
+body>section.card:not(.merged-guide)>div,body>section.card:not(.merged-guide)>p:not(.mmx-mod-note){
+  padding-left:14px;}
+/* 模块说明小字：弱化不抢眼 */
+.mmx-mod-note{font-size:.75rem;color:#8d8878;margin:.1em 0 .75em;line-height:1.7;}
+
+/* ── 内部块统一：卡片里不再套深卡片，一律浅底子块 ── */
+body>section .mmx-pending,body>section .mmx-evib,body>section .aiqa-item{
+  background:#fbfaf2;border:1px solid #eee9d8;border-radius:12px;
+  padding:13px 16px;margin:.65em 0;}
+body>section .mmx-evib ul{padding-left:1.15em;}
+/* 一句话主旨：去左侧竖线 + 收敛字号 */
+.mmx-oneline{font-size:.98rem;line-height:1.85;color:#3a352c;margin:.2em 0 0;
+  padding:12px 16px;background:#fbfaf4;border-left:none;border-radius:12px;}
+/* 核心观点 / 验证清单：虚线分隔 + 收紧行距 */
+.mmx-views li{padding:.5em 0 .5em 0;font-size:.9rem;line-height:1.88;}
+/* 原文金句 */
+.mmx-qlist li{padding:.6em 0 .6em 2.2em;}
+.mmx-qlist blockquote{font-size:.89rem;line-height:1.9;}
+.mmx-qlist cite{font-size:.72rem;}
+/* 核心追问：问句加重、答句放松 */
+.mmx-qa{margin:.7em 0;padding-left:12px;border-left:3px solid #e5dfcd;}
+.mmx-qa .mmx-q{font-size:.9rem;font-weight:700;color:#2f3a33;line-height:1.8;margin:0 0 .25em;}
+.mmx-qa .mmx-a{font-size:.88rem;line-height:1.95;color:#4a4436;margin:0;}
+
+/* ── AI 问书专项：外层容器透明，问答条目才是阅读单元 ── */
+#mod-aiask .mmx-ask{background:transparent;border:0;border-radius:0;padding:0;margin:0;}
+#mod-aiask .aiqa-item{margin:.6em 0;padding:14px 16px 15px;}
+#mod-aiask .aiqa-item h3{font:700 .93rem/1.7 var(--serif);color:#2f5b49;margin:0 0 .4em;
+  padding:0;border:0;}
+#mod-aiask .aiqa-item h3:before{content:"问　";color:#bf8247;font-weight:700;}
+#mod-aiask .aiqa-item p{font-size:.88rem;line-height:1.95;color:#4a4436;margin:.4em 0;}
+#mod-aiask .aiqa-item ul{margin:.35em 0;padding-left:1.1em;}
+#mod-aiask .aiqa-item li{font-size:.87rem;line-height:1.88;margin:.18em 0;color:#4a4436;}
+#mod-aiask .aiqa-item li::marker{color:#c0a06a;}
+/* 逐章追问（details 形态）：摘要行也收敛 */
+.mmx-ask>summary{font-size:.87rem;line-height:1.7;padding:2px 0;}
+.mmx-askbody{font-size:.88rem;line-height:1.9;}
+
+/* AI领读章内：AI 大纲原生深层样式（字号同步收小） */
+.merged-guide .sec{margin:9px 0 12px;padding-left:6px;border-left:2px solid #e5e0d6}
+.merged-guide .sec h4{font:600 .93rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.5em 0 .25em}
+.merged-guide ul.point{margin:.25em 0;padding-left:20px}
+.merged-guide ul.point>li{margin:.3em 0}
+.merged-guide ul.quote{margin:.22em 0 .22em 20px;padding-left:18px;list-style:none}
+.merged-guide ul.quote::before{content:"原句";display:block;font-size:.7rem;color:#bf8247;
+  letter-spacing:.1em;margin:.12em 0 .08em;font-weight:600}
+.merged-guide ul.quote.quote-node{margin-top:.45em;padding-top:.35em;border-top:1px dashed #eadfc9}
 .merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
-.merged-guide ul.quote>li{color:#4a4436;font-size:.93rem;margin:.2em 0;padding-left:10px;border-left:2px solid #bf8247}
-/* 模块内子内容（AI领读除外，它有专属深层样式）：左缩进 + 正文与标题分层 */
-section.mmx-mod>ul,section.mmx-mod>ol,section.mmx-mod>div,
-section.mmx-mod>p:not(.mmx-mod-note),
-section.card:not(.merged-guide)>ul,section.card:not(.merged-guide)>ol,
-section.card:not(.merged-guide)>div,section.card:not(.merged-guide)>p:not(.mmx-mod-note){
-  padding-left:16px;}
-section.mmx-mod li,section.mmx-mod p:not(.mmx-mod-note),
-section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mod-note){
-  color:#4a4436;font-size:.93rem;line-height:1.78;}
+.merged-guide ul.quote>li{color:#4a4436;font-size:.88rem;line-height:1.85;margin:.18em 0;padding-left:10px;border-left:2px solid #bf8247}
 /* 核心观点初判：外链 mmx-guide.css 的「观点N」前缀是绝对定位，在本页版式里和标题叠字，
    且此前要求去掉「观点1/2/3」前缀 —— 这里整条关掉（外链 CSS 不在页面内，只能内联覆盖）。 */
 .mmx-views li{padding-left:0 !important;}
 .mmx-views li:before,.mmx-views li::before{
   content:none !important;display:none !important;counter-increment:none !important;}
+@media(max-width:720px){
+  body{padding:0 12px 60px;font-size:14.5px;}
+  body>section.mmx-mod,body>section.card{padding:15px 16px;border-radius:14px;}
+  .nav{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
 </style>
 </head>
 <body>
@@ -54,8 +116,8 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
   <h1>《交易心理分析》</h1>
   <div class="chips"><span class="chip">通读 + 精读</span><span class="chip">AI领读</span><span class="chip">AI 生产</span></div>
 </header>
-<nav class="nav"><a class="navlink" href="#mod-svg">全书结构导图</a><a class="navlink" href="#mod-oneline">一句话主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a></nav>
-<section class="mmx-svgwrap" id="mod-svg">
+<nav class="nav"><a class="navlink" href="#mod-svg">结构导图</a><a class="navlink" href="#mod-oneline">核心主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a></nav>
+<section class="mmx-svgwrap" id="mod-svg"><h2>结构导图</h2>
 <svg class="mmx-svg" viewBox="0 0 1120 654" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="交易心理分析 全书精读">
 <rect x="0" y="0" width="1120" height="654" fill="none"/>
 <style>.mmx-svg text{font-family:"Noto Serif SC",Georgia,serif}.mmx-svg .t1{font-size:15px;fill:#2f2a24;font-weight:600}.mmx-svg .t2{font-size:12px;fill:#5c5347}.mmx-svg .t3{font-size:10.5px;fill:#8a8272}.mmx-svg .rt{font-size:13px;fill:#f7f3ea;font-weight:600}.mmx-svg .ln{stroke:#cfc6b4;stroke-width:1.4;fill:none}</style>
@@ -126,11 +188,11 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
 <text class="t2" x="714" y="553">含「练习：学习像赌场一样利用」至「致谢」</text>
 <path class="ln" d="M692 557 L700 557"/>
 </svg></section>
-<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">一句话主旨</h2><p class="mmx-mod-note">本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。</p><p class="mmx-oneline">如果你想成为长期获利的交易赢家，如果你有足够经验，知道什么是优势，但却发现利用优势交易很困难，如果你的交易成绩总是起伏不定，连续几次获利之后</p></section>
-<section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" id="mod-merged_guide"><h2 id="merged-guide-title">AI领读 · 全书篇目</h2>
+<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">核心主旨</h2><p class="mmx-oneline">如果你想成为长期获利的交易赢家，如果你有足够经验，知道什么是优势，但却发现利用优势交易很困难，如果你的交易成绩总是起伏不定，连续几次获利之后</p></section>
+<section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" id="mod-merged_guide"><h2 id="merged-guide-title">AI领读</h2>
 <p class="small">本书 AI 大纲目前为章级目录（要点与原句待补全）。以下为全书篇目，大纲补全后将自动升级为「目录 + 骨架 + 要点 + 原句」完整版。</p>
 <ol class="mmx-pts"><li><b>1</b> 献词</li><li><b>2</b> 专家推荐</li><li><b>3</b> 精彩语录</li><li><b>4</b> 中文版序言</li><li><b>5</b> 专文导读</li><li><b>6</b> 推荐序</li><li><b>7</b> 前言</li><li><b>8</b> 态度调查表</li><li><b>9</b> 第1章 成功之道：基本分析、技术分析或者心理分析</li><li><b>10</b> 转向技术分析</li><li><b>11</b> 转向心理分析</li><li><b>12</b> 第2章 交易的诱惑与风险</li><li><b>13</b> 吸引力</li><li><b>14</b> 危险</li><li><b>15</b> 安全措施</li><li><b>16</b> 问题：不愿意制定规则</li><li><b>17</b> 问题：不能负责</li><li><b>18</b> 问题：沉迷于随机的报酬</li><li><b>19</b> 问题：外在控制与内在控制</li><li><b>20</b> 第3章 负责</li><li><b>21</b> 塑造你的心理</li><li><b>22</b> 对亏损的反应</li><li><b>23</b> 赢家、输家、旺家和衰家</li><li><b>24</b> 第4章 持续一贯是一种心态</li><li><b>25</b> 交易信念</li><li><b>26</b> 真正了解风险</li><li><b>27</b> 调整你的心理</li><li><b>28</b> 第5章 认知的动力</li><li><b>29</b> 为你的心智软件除虫</li><li><b>30</b> 认知与学习</li><li><b>31</b> 认知与风险</li><li><b>32</b> 联想的力量</li><li><b>33</b> 第6章 市场观点</li><li><b>34</b> 不确定原则</li><li><b>35</b> 市场的最基本特性（表现方式几乎毫无限制）</li><li><b>36</b> 第7章 交易者的优势：从概率角度思考</li><li><b>37</b> 矛盾：随机的结果和长期的成绩</li><li><b>38</b> 当下的交易</li><li><b>39</b> 管理期望</li><li><b>40</b> 消除情感上的风险</li><li><b>41</b> 第8章 发挥信念的优势</li><li><b>42</b> 问题的定义</li><li><b>43</b> 名词的定义</li><li><b>44</b> 基本事实和技巧的关系</li><li><b>45</b> 走向“顺境”</li><li><b>46</b> 第9章 信念的本质</li><li><b>47</b> 信念的起源</li><li><b>48</b> 信念对人生的影响</li><li><b>49</b> 信念与事实</li><li><b>50</b> 第10章 信念对交易的影响</li><li><b>51</b> 自我评估与交易</li><li><b>52</b> 第11章 像交易者一样思考</li><li><b>53</b> 机械阶段</li><li><b>54</b> 检视自己</li><li><b>55</b> 自律的角色</li><li><b>56</b> 创造长期获利的信念</li><li><b>57</b> 练习：学习像赌场一样利用优势交易</li><li><b>58</b> 结语</li><li><b>59</b> 态度调查表</li><li><b>60</b> 亚马逊读者评论</li><li><b>61</b> 致谢</li></ol></section>
-<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点初判</h2><p class="mmx-mod-note">按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。</p><ul class="mmx-views"><li><b>第 1–7 章</b>——含「献词」至「前言」</li><li><b>第 8–14 章</b>——含「态度调查表」至「危险」</li><li><b>第 15–21 章</b>——含「安全措施」至「塑造你的心理」</li><li><b>第 22–28 章</b>——含「对亏损的反应」至「第5章 认知的动力」</li><li><b>第 29–35 章</b>——含「为你的心智软件除虫」至「市场的最基本特性（表现方」</li><li><b>第 36–42 章</b>——含「第7章 交易者的优势：从」至「问题的定义」</li><li><b>第 43–49 章</b>——含「名词的定义」至「信念与事实」</li><li><b>第 50–56 章</b>——含「第10章 信念对交易的影」至「创造长期获利的信念」</li><li><b>第 57–61 章</b>——含「练习：学习像赌场一样利用」至「致谢」</li></ul></section>
-<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句 · 持续积累</h2><p class="mmx-mod-note">以下原句取自本书 AI 大纲落库的原文摘录（book_outline.quote），按大纲顺序节选，非 AI 生成；更多见逐章深读页。</p><ol class="mmx-qlist"><li><blockquote>「交易活动让个人获得表达创意的无限自由，以及大部分人一生大部分时间里无法得到的表达自由。」</blockquote><cite>本书正文</cite></li><li><blockquote>「他越觉得必须获利、越不能亏损，对于显示他可能无法达成目标的信息就越不能容忍。他排除的信息越多，对于能够根据自己最大利益行动的机会就越发不可能看出来。」</blockquote><cite>本书正文</cite></li><li><blockquote>「长期赢家和他人有一个不同的决定性特质，就是他们建立了一种独一无二的心态，能够维持纪律与专注，最重要的是能够在逆境中保持信心。」</blockquote><cite>本书正文</cite></li><li><blockquote>「了解、刻意认清并再学习怎么克服心中自然联想的倾向是创造长期成就重要的一环，要培养和维持能够看出市场机会流程的心态，却不受痛苦或过度自信造成的问题影响，你必须花费精力刻意控制联想过程。」</blockquote><cite>本书正文</cite></li><li><blockquote>「你必须接受一个事实，即市场中“任何事情都可能会发生”，你不可能每次都预测准确。」</blockquote><cite>本书正文</cite></li><li><blockquote>「赚钱是学习和精通某种心智技巧的副产品，你对这一点了解多少，就有多少能力不再注意赚钱，而是注意怎么把交易当成精通这些技巧的工具。」</blockquote><cite>本书正文</cite></li><li><blockquote>「事实上，你认为“自己知道”、“假设自己知道”或是“需要知道下一步会发生什么事情”的程度，等于你交易时的失败程度。」</blockquote><cite>本书正文</cite></li><li><blockquote>「从事交易并进而造成价格波动的人并非总是做出理性行动。」</blockquote><cite>本书正文</cite></li><li><blockquote>「要创造长期成就，你不能依赖市场；同样要长期体验到快乐，你也不能依赖外在世界。真正快乐的人不必做什么事情就会快乐，他们原本就是快乐的人。」</blockquote><cite>本书正文</cite></li><li><blockquote>「最高明的交易者能够持续一贯地胜过其他人，当然有特别的原因。如果要我把所有的原因简化为一个，我会说最高明的交易者的思想跟大家不同。」</blockquote><cite>本书正文</cite></li></ol></section>
+<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点</h2><ul class="mmx-views"><li><b>第 1–7 章</b>——含「献词」至「前言」</li><li><b>第 8–14 章</b>——含「态度调查表」至「危险」</li><li><b>第 15–21 章</b>——含「安全措施」至「塑造你的心理」</li><li><b>第 22–28 章</b>——含「对亏损的反应」至「第5章 认知的动力」</li><li><b>第 29–35 章</b>——含「为你的心智软件除虫」至「市场的最基本特性（表现方」</li><li><b>第 36–42 章</b>——含「第7章 交易者的优势：从」至「问题的定义」</li><li><b>第 43–49 章</b>——含「名词的定义」至「信念与事实」</li><li><b>第 50–56 章</b>——含「第10章 信念对交易的影」至「创造长期获利的信念」</li><li><b>第 57–61 章</b>——含「练习：学习像赌场一样利用」至「致谢」</li></ul></section>
+<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句</h2><ol class="mmx-qlist"><li><blockquote>「交易活动让个人获得表达创意的无限自由，以及大部分人一生大部分时间里无法得到的表达自由。」</blockquote><cite>本书正文</cite></li><li><blockquote>「他越觉得必须获利、越不能亏损，对于显示他可能无法达成目标的信息就越不能容忍。他排除的信息越多，对于能够根据自己最大利益行动的机会就越发不可能看出来。」</blockquote><cite>本书正文</cite></li><li><blockquote>「长期赢家和他人有一个不同的决定性特质，就是他们建立了一种独一无二的心态，能够维持纪律与专注，最重要的是能够在逆境中保持信心。」</blockquote><cite>本书正文</cite></li><li><blockquote>「了解、刻意认清并再学习怎么克服心中自然联想的倾向是创造长期成就重要的一环，要培养和维持能够看出市场机会流程的心态，却不受痛苦或过度自信造成的问题影响，你必须花费精力刻意控制联想过程。」</blockquote><cite>本书正文</cite></li><li><blockquote>「你必须接受一个事实，即市场中“任何事情都可能会发生”，你不可能每次都预测准确。」</blockquote><cite>本书正文</cite></li><li><blockquote>「赚钱是学习和精通某种心智技巧的副产品，你对这一点了解多少，就有多少能力不再注意赚钱，而是注意怎么把交易当成精通这些技巧的工具。」</blockquote><cite>本书正文</cite></li><li><blockquote>「事实上，你认为“自己知道”、“假设自己知道”或是“需要知道下一步会发生什么事情”的程度，等于你交易时的失败程度。」</blockquote><cite>本书正文</cite></li><li><blockquote>「从事交易并进而造成价格波动的人并非总是做出理性行动。」</blockquote><cite>本书正文</cite></li><li><blockquote>「要创造长期成就，你不能依赖市场；同样要长期体验到快乐，你也不能依赖外在世界。真正快乐的人不必做什么事情就会快乐，他们原本就是快乐的人。」</blockquote><cite>本书正文</cite></li><li><blockquote>「最高明的交易者能够持续一贯地胜过其他人，当然有特别的原因。如果要我把所有的原因简化为一个，我会说最高明的交易者的思想跟大家不同。」</blockquote><cite>本书正文</cite></li></ol></section>
 </body>
 </html>

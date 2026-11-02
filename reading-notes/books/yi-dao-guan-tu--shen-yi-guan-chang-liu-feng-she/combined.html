@@ -6,46 +6,108 @@
 <title>《医道官途》｜通读 · 精读</title>
 <link rel="stylesheet" href="../../../assets/css/reading-overview.css"><link rel="stylesheet" href="../../../assets/css/mmx-guide.css"><link rel="stylesheet" href="../../../assets/css/reading-outline.css">
 <style>
-/* 合并页外壳 */
-body{max-width:960px;margin:0 auto;padding:0 18px 80px;}
-.combined-head{padding:34px 0 18px;border-bottom:1px solid #e7e0d2;margin-bottom:8px;}
-.combined-head h1{font-size:26px;margin:0 0 10px;}
+/* ── 外壳与全局阅读节奏 ── */
+body{max-width:880px;margin:0 auto;padding:0 18px 80px;
+  font-size:15px;line-height:1.88;color:#3b453e;background:#f7f8f3;
+  -webkit-font-smoothing:antialiased;}
+.combined-head{padding:30px 0 16px;border-bottom:1px solid #e7e0d2;margin-bottom:4px;}
+.combined-head h1{font:700 23px/1.35 var(--serif);margin:0 0 8px;color:#244b40;}
+.combined-head .eyebrow{font-size:.72rem;letter-spacing:.14em;margin:0 0 6px;}
+.chips{margin:8px 0 0;}
+.chip{font-size:.72rem;padding:2px 10px;}
 /* 锚点导航：固定一排 4 个，等宽对齐 */
-.nav{position:sticky;top:0;z-index:20;background:rgba(255,253,248,.96);backdrop-filter:blur(6px);
-  border-bottom:1px solid #ece4d4;padding:10px 0;margin:14px 0 26px;display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;
-  box-shadow:0 2px 10px rgba(120,100,60,.06);}
-.navlink{font-size:12.5px;color:#5d5443;text-decoration:none;background:#f6f1e6;border:1px solid #e7ddca;
-  border-radius:7px;padding:4px 6px;text-align:center;white-space:nowrap;overflow:hidden;
-  text-overflow:ellipsis;}
-section{scroll-margin-top:64px;}
-/* 一句话主旨：去左侧竖线 */
-.mmx-oneline{border-left:none;padding-left:18px;}
-/* AI领读章内：AI 大纲原生深层样式 */
-.merged-guide .sec{margin:10px 0 14px;padding-left:6px;border-left:2px solid #e5e0d6}
-.merged-guide .sec h4{font:600 .98rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.6em 0 .3em}
-.merged-guide ul.point{margin:.3em 0;padding-left:20px}
-.merged-guide ul.point>li{margin:.35em 0}
-.merged-guide ul.quote{margin:.25em 0 .25em 20px;padding-left:18px;list-style:none}
-.merged-guide ul.quote::before{content:"原句";display:block;font-size:.72rem;color:#bf8247;
-  letter-spacing:.1em;margin:.15em 0 .1em;font-weight:600}
-.merged-guide ul.quote.quote-node{margin-top:.5em;padding-top:.4em;border-top:1px dashed #eadfc9}
+.nav{position:sticky;top:0;z-index:20;background:rgba(247,248,243,.96);backdrop-filter:blur(6px);
+  border-bottom:1px solid #ece4d4;padding:10px 0;margin:12px 0 20px;display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;
+  box-shadow:0 2px 10px rgba(120,100,60,.05);}
+.navlink{font-size:12px;color:#5d5443;text-decoration:none;background:#fdfbf3;border:1px solid #e8e2d2;
+  border-radius:8px;padding:6px 4px;text-align:center;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;transition:background .15s,color .15s;}
+.navlink:hover{background:#f2efe2;color:#244b40;}
+section{scroll-margin-top:62px;}
+
+/* ── 统一卡片：所有顶层模块（AI领读 / AI 问答 / 其余）一视同仁 ── */
+body>section.mmx-mod,body>section.card,body>section.mmx-svgwrap{
+  background:#fffdf6;border:1px solid #e8e4d5;border-radius:16px;
+  padding:18px 22px;margin:18px 0;
+  box-shadow:0 1px 3px rgba(110,95,60,.05);}
+body>section.mmx-mod>*:first-child,body>section.card>*:first-child,
+body>section.mmx-svgwrap>*:first-child{margin-top:0}
+body>section.mmx-mod>*:last-child,body>section.card>*:last-child,
+body>section.mmx-svgwrap>*:last-child{margin-bottom:0}
+/* 结构导图：图本身留白居中，不与正文抢宽 */
+body>section.mmx-svgwrap>svg.mmx-svg{display:block;width:100%;height:auto;margin:2px auto 0;}
+/* 模块标题：统一大小、弱强调，不与正文抢注意力 */
+body>section.mmx-mod>h2,body>section.card>h2{
+  font:700 1.04rem/1.5 var(--serif);color:#244b40;margin:0 0 11px;
+  padding-left:10px;border-left:3px solid #bf8247;letter-spacing:.01em;}
+/* 正文：字号收小、行距放宽、段间距舒服 */
+body>section.mmx-mod p,body>section.card p,
+body>section.mmx-mod li,body>section.card li{
+  font-size:.9rem;line-height:1.92;color:#4a4436;}
+body>section.mmx-mod p,body>section.card p{margin:.5em 0;}
+body>section.mmx-mod>ul,body>section.mmx-mod>ol,body>section.mmx-mod>div,
+body>section.mmx-mod>p:not(.mmx-mod-note),
+body>section.card:not(.merged-guide)>ul,body>section.card:not(.merged-guide)>ol,
+body>section.card:not(.merged-guide)>div,body>section.card:not(.merged-guide)>p:not(.mmx-mod-note){
+  padding-left:14px;}
+/* 模块说明小字：弱化不抢眼 */
+.mmx-mod-note{font-size:.75rem;color:#8d8878;margin:.1em 0 .75em;line-height:1.7;}
+
+/* ── 内部块统一：卡片里不再套深卡片，一律浅底子块 ── */
+body>section .mmx-pending,body>section .mmx-evib,body>section .aiqa-item{
+  background:#fbfaf2;border:1px solid #eee9d8;border-radius:12px;
+  padding:13px 16px;margin:.65em 0;}
+body>section .mmx-evib ul{padding-left:1.15em;}
+/* 一句话主旨：去左侧竖线 + 收敛字号 */
+.mmx-oneline{font-size:.98rem;line-height:1.85;color:#3a352c;margin:.2em 0 0;
+  padding:12px 16px;background:#fbfaf4;border-left:none;border-radius:12px;}
+/* 核心观点 / 验证清单：虚线分隔 + 收紧行距 */
+.mmx-views li{padding:.5em 0 .5em 0;font-size:.9rem;line-height:1.88;}
+/* 原文金句 */
+.mmx-qlist li{padding:.6em 0 .6em 2.2em;}
+.mmx-qlist blockquote{font-size:.89rem;line-height:1.9;}
+.mmx-qlist cite{font-size:.72rem;}
+/* 核心追问：问句加重、答句放松 */
+.mmx-qa{margin:.7em 0;padding-left:12px;border-left:3px solid #e5dfcd;}
+.mmx-qa .mmx-q{font-size:.9rem;font-weight:700;color:#2f3a33;line-height:1.8;margin:0 0 .25em;}
+.mmx-qa .mmx-a{font-size:.88rem;line-height:1.95;color:#4a4436;margin:0;}
+
+/* ── AI 问书专项：外层容器透明，问答条目才是阅读单元 ── */
+#mod-aiask .mmx-ask{background:transparent;border:0;border-radius:0;padding:0;margin:0;}
+#mod-aiask .aiqa-item{margin:.6em 0;padding:14px 16px 15px;}
+#mod-aiask .aiqa-item h3{font:700 .93rem/1.7 var(--serif);color:#2f5b49;margin:0 0 .4em;
+  padding:0;border:0;}
+#mod-aiask .aiqa-item h3:before{content:"问　";color:#bf8247;font-weight:700;}
+#mod-aiask .aiqa-item p{font-size:.88rem;line-height:1.95;color:#4a4436;margin:.4em 0;}
+#mod-aiask .aiqa-item ul{margin:.35em 0;padding-left:1.1em;}
+#mod-aiask .aiqa-item li{font-size:.87rem;line-height:1.88;margin:.18em 0;color:#4a4436;}
+#mod-aiask .aiqa-item li::marker{color:#c0a06a;}
+/* 逐章追问（details 形态）：摘要行也收敛 */
+.mmx-ask>summary{font-size:.87rem;line-height:1.7;padding:2px 0;}
+.mmx-askbody{font-size:.88rem;line-height:1.9;}
+
+/* AI领读章内：AI 大纲原生深层样式（字号同步收小） */
+.merged-guide .sec{margin:9px 0 12px;padding-left:6px;border-left:2px solid #e5e0d6}
+.merged-guide .sec h4{font:600 .93rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.5em 0 .25em}
+.merged-guide ul.point{margin:.25em 0;padding-left:20px}
+.merged-guide ul.point>li{margin:.3em 0}
+.merged-guide ul.quote{margin:.22em 0 .22em 20px;padding-left:18px;list-style:none}
+.merged-guide ul.quote::before{content:"原句";display:block;font-size:.7rem;color:#bf8247;
+  letter-spacing:.1em;margin:.12em 0 .08em;font-weight:600}
+.merged-guide ul.quote.quote-node{margin-top:.45em;padding-top:.35em;border-top:1px dashed #eadfc9}
 .merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
-.merged-guide ul.quote>li{color:#4a4436;font-size:.93rem;margin:.2em 0;padding-left:10px;border-left:2px solid #bf8247}
-/* 模块内子内容（AI领读除外，它有专属深层样式）：左缩进 + 正文与标题分层 */
-section.mmx-mod>ul,section.mmx-mod>ol,section.mmx-mod>div,
-section.mmx-mod>p:not(.mmx-mod-note),
-section.card:not(.merged-guide)>ul,section.card:not(.merged-guide)>ol,
-section.card:not(.merged-guide)>div,section.card:not(.merged-guide)>p:not(.mmx-mod-note){
-  padding-left:16px;}
-section.mmx-mod li,section.mmx-mod p:not(.mmx-mod-note),
-section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mod-note){
-  color:#4a4436;font-size:.93rem;line-height:1.78;}
+.merged-guide ul.quote>li{color:#4a4436;font-size:.88rem;line-height:1.85;margin:.18em 0;padding-left:10px;border-left:2px solid #bf8247}
 /* 核心观点初判：外链 mmx-guide.css 的「观点N」前缀是绝对定位，在本页版式里和标题叠字，
    且此前要求去掉「观点1/2/3」前缀 —— 这里整条关掉（外链 CSS 不在页面内，只能内联覆盖）。 */
 .mmx-views li{padding-left:0 !important;}
 .mmx-views li:before,.mmx-views li::before{
   content:none !important;display:none !important;counter-increment:none !important;}
+@media(max-width:720px){
+  body{padding:0 12px 60px;font-size:14.5px;}
+  body>section.mmx-mod,body>section.card{padding:15px 16px;border-radius:14px;}
+  .nav{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
 </style>
 </head>
 <body>
@@ -54,8 +116,8 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
   <h1>《医道官途》</h1>
   <div class="chips"><span class="chip">通读 + 精读</span><span class="chip">AI领读</span><span class="chip">AI 生产</span></div>
 </header>
-<nav class="nav"><a class="navlink" href="#mod-svg">全书结构导图</a><a class="navlink" href="#mod-oneline">一句话主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a><a class="navlink" href="#mod-coreask">核心追问</a><a class="navlink" href="#mod-aiask">AI 问书</a><a class="navlink" href="#mod-higher">更高维度</a><a class="navlink" href="#mod-verify">阅读验证</a><a class="navlink" href="#mod-thennow">当年与今天</a></nav>
-<section class="mmx-svgwrap" id="mod-svg"><svg class="mmx-svg" viewBox="0 0 1120 468" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="医道官途 全书精读">
+<nav class="nav"><a class="navlink" href="#mod-svg">结构导图</a><a class="navlink" href="#mod-oneline">核心主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a><a class="navlink" href="#mod-coreask">核心追问</a><a class="navlink" href="#mod-aiask">AI 问书</a><a class="navlink" href="#mod-higher">更高维度</a><a class="navlink" href="#mod-verify">阅读验证</a><a class="navlink" href="#mod-thennow">往日今时</a></nav>
+<section class="mmx-svgwrap" id="mod-svg"><h2>结构导图</h2><svg class="mmx-svg" viewBox="0 0 1120 468" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="医道官途 全书精读">
 <rect x="0" y="0" width="1120" height="468" fill="none"/>
 <style>.mmx-svg text{font-family:"Noto Serif SC",Georgia,serif}.mmx-svg .t1{font-size:15px;fill:#2f2a24;font-weight:600}.mmx-svg .t2{font-size:12px;fill:#5c5347}.mmx-svg .t3{font-size:10.5px;fill:#8a8272}.mmx-svg .rt{font-size:13px;fill:#f7f3ea;font-weight:600}.mmx-svg .ln{stroke:#cfc6b4;stroke-width:1.4;fill:none}</style>
 <rect x="28" y="190" width="262" height="52" rx="10" fill="#3d372e"/>
@@ -110,7 +172,7 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
 <text class="t2" x="714" y="375">尾。</text>
 <path class="ln" d="M692 371 L700 371"/>
 </svg></section>
-<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">一句话主旨</h2><p class="mmx-mod-note">本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。</p><p class="mmx-oneline">主角凭借医术与政治智慧，在复杂的官场与地方博弈中不断晋升并化解危机。</p></section>
+<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">核心主旨</h2><p class="mmx-oneline">主角凭借医术与政治智慧，在复杂的官场与地方博弈中不断晋升并化解危机。</p></section>
 <section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" id="mod-merged_guide"><h2 id="merged-guide-title">AI领读</h2>
 <style>
 /* merged_guide 章内：AI 大纲原生深层样式 */
@@ -32862,12 +32924,12 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
       </div></details>
   </div>
 </section>
-<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点初判</h2><p class="mmx-mod-note">按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。</p><ul class="mmx-views"><li><b>基层医者与官场起步</b>——主角从基层医疗岗位进入体制，通过解决事件初步建立人脉与官场基础。</li><li><b>地方冲突与权力博弈</b>——围绕黑山子乡及春阳县的矿难、选举和派系斗争，展现复杂的基层权力交锋。</li><li><b>资本渗透与高层交织</b>——活动范围扩展至省城与香港，介入资本运作、家族恩怨及更高层面的政治博弈。</li><li><b>经济改革与多方角力</b>——主角进入企改办推进经济改革，处理走私、文旅开发及地方势力对抗。</li><li><b>危机应对与格局重塑</b>——面对跨国商业、病毒危机及复杂的官场人事调整，主角逐步巩固自身影响力。</li><li><b>尘埃落定与终局博弈</b>——经历一系列重大事件与政治洗牌后，各方势力尘埃落定，完成全书收尾。</li></ul></section>
-<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句 · 持续积累</h2><p class="mmx-mod-note">以下原句取自本书 AI 大纲落库的原文摘录（book_outline.quote），按大纲顺序节选，非 AI 生成；更多见逐章深读页。</p><ol class="mmx-qlist"><li><blockquote>「张一针不是个英雄，虽然医术高超，可是从来不做没有回报的事情。」</blockquote><cite>第一章 重生在妇科</cite></li><li><blockquote>「张一针治好的富人多，基本上都是给了银子的，张一针治好的女人多，多数都是姿色出众的。」</blockquote><cite>第一章 重生在妇科</cite></li><li><blockquote>「张一针死得很惨，武功已臻化境的他先是喝下隋炀帝的毒酒，然后被一千名御林军乱箭攒心。」</blockquote><cite>第一章 重生在妇科</cite></li><li><blockquote>「张一针惊魂未定地睁大了双眼，目瞪口呆地看着周围的一切。」</blockquote><cite>第一章 重生在妇科</cite></li><li><blockquote>「张一针仍然在浑浑噩噩地观察着周围，直到周艳玲重复第二遍的时候，他才意识到台上的老女人是冲着自己发火的。」</blockquote><cite>第一章 重生在妇科</cite></li><li><blockquote>「张一针看了看讲台上对自己怒目而视的周艳玲，摇了摇头，暗暗道：“悍妇猛如虎，我还是回避一下先！”。」</blockquote><cite>第一章 重生在妇科</cite></li><li><blockquote>「张一针轻轻挣脱了袁文丽的手掌，站起身整理了一下身上的衣服，“晦气！真他妈的晦气”，原来自己也穿着白色的孝服，头顶还戴着孝帽子。」</blockquote><cite>第一章 重生在妇科</cite></li><li><blockquote>「张一针已经渐渐接受了现实，他知道自己一开口说不定就会惹事，干脆老老实实闭上了嘴巴，一味地点头来表示对袁文丽的顺从。」</blockquote><cite>第一章 重生在妇科</cite></li><li><blockquote>「张扬翻开病历，向周艳玲看了看，周艳玲鼓励他说：“放心大胆地问！”。」</blockquote><cite>第一章 重生在妇科</cite></li><li><blockquote>「张扬清了清嗓子：“请问小姐有何不适？”。」</blockquote><cite>第一章 重生在妇科</cite></li></ol></section>
-<section class="mmx-mod" aria-labelledby="coreask" id="mod-coreask"><h2 id="coreask">核心追问（来自深读）</h2><p class="mmx-mod-note">跨章主题的深读追问，由模型基于全书大纲与原文摘录撰写；逐章的追问收在每个章条目里。</p><div class="mmx-qa"><p class="mmx-q">张扬每一次处境变化，主要靠医术、靠人情，还是两者叠加？各举一处对照说明</p><p class="mmx-a">关于「张扬每一次处境变化，主要靠医术、靠人情，还是两者叠加」：大纲显示《》以《第一章 重生在妇科》起手、到《第二百九十四章 聆讯》收束，核心脉络与「张一针是隋末第一圣手，因救活隋炀帝难产的贵妃而被杀」相关。以上为大纲条目推断，未亲读正文，读后请核对。</p></div><div class="mmx-qa"><p class="mmx-q">「穿越者的知识差」在书里既是优势也是风险：它带来过哪些具体的麻烦（例如无法解释判断来源）</p><p class="mmx-a">关于「「穿越者的知识差」在书里既是优势也是风险：它带来过哪」：大纲显示《》以《第一章 重生在妇科》起手、到《第二百九十四章 聆讯》收束，核心脉络与「张一针是隋末第一圣手，因救活隋炀帝难产的贵妃而被杀」相关。以上为大纲条目推断，未亲读正文，读后请核对。</p></div><div class="mmx-qa"><p class="mmx-q">到第 294 章「聆讯」，作者用什么方式收束多条人物线？这与前期的单章冲突结构有何不同</p><p class="mmx-a">关于「到第 294 章「聆讯」，作者用什么方式收束多条人物」：大纲显示《》以《第一章 重生在妇科》起手、到《第二百九十四章 聆讯》收束，核心脉络与「张一针是隋末第一圣手，因救活隋炀帝难产的贵妃而被杀」相关。以上为大纲条目推断，未亲读正文，读后请核对。</p></div></section>
-<section class="mmx-mod" aria-labelledby="aiask" id="mod-aiask"><h2 id="aiask">AI 问书</h2><p class="mmx-mod-note">下方内容为本书级 AI 问书整理，由云端 AI 阅读流程基于本书大纲、章节锚点与热门划线生成。</p><div class="mmx-qa"><p class="mmx-q">《医道官途》和《首席御医》有什么异同？</p><p class="mmx-a">同属“医术+官场”的路子，但张扬的起点更草根：从基层医疗岗位进体制，靠解决事件攒人脉。区别在气质——曾毅偏“国手破局”，张扬偏“小子逆袭”。两者都把医术当入场券，差别只是门第与口吻，共享同一套“以医入官”的爽点公式。</p></div><div class="mmx-qa"><p class="mmx-q">书中“拳头有形，权力无形”想说明什么？</p><p class="mmx-a">原句说拳伤肉体、权慑内心，善用权者才是真丈夫。这是张扬在体制里学到的第一课：硬碰硬是下策，能用无形的权力与规则拿捏人才是上位之道。书借这句把“武夫”与“权谋者”分了高下，也定下主角以智不以力的基调。</p></div><div class="mmx-qa"><p class="mmx-q">“拍马屁也要分时机”这类市侩智慧，书想传达什么？</p><p class="mmx-a">它点出奉承一旦踩错时点就会变成讽刺——人情与权力场里，分寸比态度更重要。这类格言式的生存算术，是全书密度最高的“官场教材”：不是教人学坏，而是拆开体制里那些不成文的运行潜规则，让逆袭有章可循。</p></div></section>
-<section class="mmx-mod" aria-labelledby="higher" id="mod-higher"><h2 id="higher">用更高维度的知识看这本书</h2><p class="mmx-mod-note">下方内容由云端 AI 阅读流程生成：把本书放回知识史与理论框架中重读，区分书中主张、外部证据与综合分析。</p><p>【书中主张】医术是进入体制并积累政治资本的敲门砖；主角从基层医疗岗位出发，靠解决事件与结交人脉在官场向上攀爬。【外部证据】书中以张扬从基层医者起步、在黑山子乡与春阳县卷入矿难、选举与派系斗争为线；与《首席御医》“以医入官”共享同一类型结构。【综合分析】这一主张把专业能力兑换为权力起点，提供了清晰的逆袭路径，但其“医术即外挂”的设定与真实体制的复杂约束相去甚远，价值在爽感而非写实。</p><p>【书中主张】书同时主张，体制生存的关键是读懂“无形权力”与分寸：拳头伤身、权力慑心，奉承也须看时机。【外部证据】以“拳头有形权力无形”“拍马屁分时机”“七品就了不得”等读者高频划线句，对应 spine 中地方冲突与高层交织的博弈。【综合分析】但这种“官场教材”式的写法，把复杂的公共治理压缩成关系与权谋的算术，容易把读者引向对体制的功利化想象。它提供的是一套高度类型化的通关话术，而非对医政关系的严肃理解。</p></section>
-<section class="mmx-mod" aria-labelledby="verify" id="mod-verify"><h2 id="verify">阅读时要验证的问题</h2><p class="mmx-mod-note">下方由云端 AI 阅读流程生成：读时需核对的原文、数字与论点（关键数据出处、个案代表性、类比限度）。</p><ul class="mmx-views"><li>主角名为张扬，从基层医疗岗位进入体制并积累人脉，可核对基层医者与官场起步章节。（可核对：张扬/基层起步）</li><li>书中以黑山子乡、春阳县的矿难、选举与派系斗争展开地方博弈，可核对地方冲突章节。（可核对：矿难/选举线）</li><li>书中“拳头有形、权力无形”“拍马屁分时机”等为高频划线句，可核对相关章节。（可核对：权力格言）</li></ul></section>
-<section class="mmx-mod" aria-labelledby="thennow" id="mod-thennow"><h2 id="thennow">当年与今天 · 初步对照</h2><p class="mmx-mod-note">下方由云端 AI 阅读流程生成：区分作者当年所能知晓与后来才显现的事实，给出今日可迁移的启发。</p><p>作者写的是网络文学里对“基层逆袭+医术外挂”的成熟想象，张扬的草根起步、矿难与选举等情节，是网文读者当年能共鸣的爽点配方；对人情世故的格言式拆解，也贴着本土职场读者的真实经验。，也让“医术即权力跳板”的套路在此被定型并深刻影响后来者。</p><p>但真实基层治理的规范化、医疗反腐与数字政务的推进，使这类“以权谋逆袭”的叙事愈发悬浮；后来同类网文在题材合规上也面临更严的边界。后来才显现的，是《医道官途》作为流派成熟期作品，既喂饱了一代读者的逆袭瘾，也把“医术即权力跳板”的套路固化，影响了此后同类的写法。</p></section>
+<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点</h2><ul class="mmx-views"><li><b>基层医者与官场起步</b>——主角从基层医疗岗位进入体制，通过解决事件初步建立人脉与官场基础。</li><li><b>地方冲突与权力博弈</b>——围绕黑山子乡及春阳县的矿难、选举和派系斗争，展现复杂的基层权力交锋。</li><li><b>资本渗透与高层交织</b>——活动范围扩展至省城与香港，介入资本运作、家族恩怨及更高层面的政治博弈。</li><li><b>经济改革与多方角力</b>——主角进入企改办推进经济改革，处理走私、文旅开发及地方势力对抗。</li><li><b>危机应对与格局重塑</b>——面对跨国商业、病毒危机及复杂的官场人事调整，主角逐步巩固自身影响力。</li><li><b>尘埃落定与终局博弈</b>——经历一系列重大事件与政治洗牌后，各方势力尘埃落定，完成全书收尾。</li></ul></section>
+<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句</h2><ol class="mmx-qlist"><li><blockquote>「张一针不是个英雄，虽然医术高超，可是从来不做没有回报的事情。」</blockquote><cite>第一章 重生在妇科</cite></li><li><blockquote>「张一针治好的富人多，基本上都是给了银子的，张一针治好的女人多，多数都是姿色出众的。」</blockquote><cite>第一章 重生在妇科</cite></li><li><blockquote>「张一针死得很惨，武功已臻化境的他先是喝下隋炀帝的毒酒，然后被一千名御林军乱箭攒心。」</blockquote><cite>第一章 重生在妇科</cite></li><li><blockquote>「张一针惊魂未定地睁大了双眼，目瞪口呆地看着周围的一切。」</blockquote><cite>第一章 重生在妇科</cite></li><li><blockquote>「张一针仍然在浑浑噩噩地观察着周围，直到周艳玲重复第二遍的时候，他才意识到台上的老女人是冲着自己发火的。」</blockquote><cite>第一章 重生在妇科</cite></li><li><blockquote>「张一针看了看讲台上对自己怒目而视的周艳玲，摇了摇头，暗暗道：“悍妇猛如虎，我还是回避一下先！”。」</blockquote><cite>第一章 重生在妇科</cite></li><li><blockquote>「张一针轻轻挣脱了袁文丽的手掌，站起身整理了一下身上的衣服，“晦气！真他妈的晦气”，原来自己也穿着白色的孝服，头顶还戴着孝帽子。」</blockquote><cite>第一章 重生在妇科</cite></li><li><blockquote>「张一针已经渐渐接受了现实，他知道自己一开口说不定就会惹事，干脆老老实实闭上了嘴巴，一味地点头来表示对袁文丽的顺从。」</blockquote><cite>第一章 重生在妇科</cite></li><li><blockquote>「张扬翻开病历，向周艳玲看了看，周艳玲鼓励他说：“放心大胆地问！”。」</blockquote><cite>第一章 重生在妇科</cite></li><li><blockquote>「张扬清了清嗓子：“请问小姐有何不适？”。」</blockquote><cite>第一章 重生在妇科</cite></li></ol></section>
+<section class="mmx-mod" aria-labelledby="coreask" id="mod-coreask"><h2 id="coreask">核心追问</h2><div class="mmx-qa"><p class="mmx-q">张扬每一次处境变化，主要靠医术、靠人情，还是两者叠加？各举一处对照说明</p><p class="mmx-a">关于「张扬每一次处境变化，主要靠医术、靠人情，还是两者叠加」：大纲显示《》以《第一章 重生在妇科》起手、到《第二百九十四章 聆讯》收束，核心脉络与「张一针是隋末第一圣手，因救活隋炀帝难产的贵妃而被杀」相关。以上为大纲条目推断，未亲读正文，读后请核对。</p></div><div class="mmx-qa"><p class="mmx-q">「穿越者的知识差」在书里既是优势也是风险：它带来过哪些具体的麻烦（例如无法解释判断来源）</p><p class="mmx-a">关于「「穿越者的知识差」在书里既是优势也是风险：它带来过哪」：大纲显示《》以《第一章 重生在妇科》起手、到《第二百九十四章 聆讯》收束，核心脉络与「张一针是隋末第一圣手，因救活隋炀帝难产的贵妃而被杀」相关。以上为大纲条目推断，未亲读正文，读后请核对。</p></div><div class="mmx-qa"><p class="mmx-q">到第 294 章「聆讯」，作者用什么方式收束多条人物线？这与前期的单章冲突结构有何不同</p><p class="mmx-a">关于「到第 294 章「聆讯」，作者用什么方式收束多条人物」：大纲显示《》以《第一章 重生在妇科》起手、到《第二百九十四章 聆讯》收束，核心脉络与「张一针是隋末第一圣手，因救活隋炀帝难产的贵妃而被杀」相关。以上为大纲条目推断，未亲读正文，读后请核对。</p></div></section>
+<section class="mmx-mod" aria-labelledby="aiask" id="mod-aiask"><h2 id="aiask">AI 问书</h2><div class="mmx-qa"><p class="mmx-q">《医道官途》和《首席御医》有什么异同？</p><p class="mmx-a">同属“医术+官场”的路子，但张扬的起点更草根：从基层医疗岗位进体制，靠解决事件攒人脉。区别在气质——曾毅偏“国手破局”，张扬偏“小子逆袭”。两者都把医术当入场券，差别只是门第与口吻，共享同一套“以医入官”的爽点公式。</p></div><div class="mmx-qa"><p class="mmx-q">书中“拳头有形，权力无形”想说明什么？</p><p class="mmx-a">原句说拳伤肉体、权慑内心，善用权者才是真丈夫。这是张扬在体制里学到的第一课：硬碰硬是下策，能用无形的权力与规则拿捏人才是上位之道。书借这句把“武夫”与“权谋者”分了高下，也定下主角以智不以力的基调。</p></div><div class="mmx-qa"><p class="mmx-q">“拍马屁也要分时机”这类市侩智慧，书想传达什么？</p><p class="mmx-a">它点出奉承一旦踩错时点就会变成讽刺——人情与权力场里，分寸比态度更重要。这类格言式的生存算术，是全书密度最高的“官场教材”：不是教人学坏，而是拆开体制里那些不成文的运行潜规则，让逆袭有章可循。</p></div></section>
+<section class="mmx-mod" aria-labelledby="higher" id="mod-higher"><h2 id="higher">更高维度</h2><p>【书中主张】医术是进入体制并积累政治资本的敲门砖；主角从基层医疗岗位出发，靠解决事件与结交人脉在官场向上攀爬。【外部证据】书中以张扬从基层医者起步、在黑山子乡与春阳县卷入矿难、选举与派系斗争为线；与《首席御医》“以医入官”共享同一类型结构。【综合分析】这一主张把专业能力兑换为权力起点，提供了清晰的逆袭路径，但其“医术即外挂”的设定与真实体制的复杂约束相去甚远，价值在爽感而非写实。</p><p>【书中主张】书同时主张，体制生存的关键是读懂“无形权力”与分寸：拳头伤身、权力慑心，奉承也须看时机。【外部证据】以“拳头有形权力无形”“拍马屁分时机”“七品就了不得”等读者高频划线句，对应 spine 中地方冲突与高层交织的博弈。【综合分析】但这种“官场教材”式的写法，把复杂的公共治理压缩成关系与权谋的算术，容易把读者引向对体制的功利化想象。它提供的是一套高度类型化的通关话术，而非对医政关系的严肃理解。</p></section>
+<section class="mmx-mod" aria-labelledby="verify" id="mod-verify"><h2 id="verify">阅读验证</h2><ul class="mmx-views"><li>主角名为张扬，从基层医疗岗位进入体制并积累人脉，可核对基层医者与官场起步章节。（可核对：张扬/基层起步）</li><li>书中以黑山子乡、春阳县的矿难、选举与派系斗争展开地方博弈，可核对地方冲突章节。（可核对：矿难/选举线）</li><li>书中“拳头有形、权力无形”“拍马屁分时机”等为高频划线句，可核对相关章节。（可核对：权力格言）</li></ul></section>
+<section class="mmx-mod" aria-labelledby="thennow" id="mod-thennow"><h2 id="thennow">往日今时</h2><p>作者写的是网络文学里对“基层逆袭+医术外挂”的成熟想象，张扬的草根起步、矿难与选举等情节，是网文读者当年能共鸣的爽点配方；对人情世故的格言式拆解，也贴着本土职场读者的真实经验。，也让“医术即权力跳板”的套路在此被定型并深刻影响后来者。</p><p>但真实基层治理的规范化、医疗反腐与数字政务的推进，使这类“以权谋逆袭”的叙事愈发悬浮；后来同类网文在题材合规上也面临更严的边界。后来才显现的，是《医道官途》作为流派成熟期作品，既喂饱了一代读者的逆袭瘾，也把“医术即权力跳板”的套路固化，影响了此后同类的写法。</p></section>
 </body>
 </html>

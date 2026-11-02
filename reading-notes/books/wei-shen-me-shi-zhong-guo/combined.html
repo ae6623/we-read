@@ -6,46 +6,108 @@
 <title>《为什么是中国》｜通读 · 精读</title>
 <link rel="stylesheet" href="../../../assets/css/reading-overview.css"><link rel="stylesheet" href="../../../assets/css/mmx-guide.css"><link rel="stylesheet" href="../../../assets/css/reading-outline.css">
 <style>
-/* 合并页外壳 */
-body{max-width:960px;margin:0 auto;padding:0 18px 80px;}
-.combined-head{padding:34px 0 18px;border-bottom:1px solid #e7e0d2;margin-bottom:8px;}
-.combined-head h1{font-size:26px;margin:0 0 10px;}
+/* ── 外壳与全局阅读节奏 ── */
+body{max-width:880px;margin:0 auto;padding:0 18px 80px;
+  font-size:15px;line-height:1.88;color:#3b453e;background:#f7f8f3;
+  -webkit-font-smoothing:antialiased;}
+.combined-head{padding:30px 0 16px;border-bottom:1px solid #e7e0d2;margin-bottom:4px;}
+.combined-head h1{font:700 23px/1.35 var(--serif);margin:0 0 8px;color:#244b40;}
+.combined-head .eyebrow{font-size:.72rem;letter-spacing:.14em;margin:0 0 6px;}
+.chips{margin:8px 0 0;}
+.chip{font-size:.72rem;padding:2px 10px;}
 /* 锚点导航：固定一排 4 个，等宽对齐 */
-.nav{position:sticky;top:0;z-index:20;background:rgba(255,253,248,.96);backdrop-filter:blur(6px);
-  border-bottom:1px solid #ece4d4;padding:10px 0;margin:14px 0 26px;display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;
-  box-shadow:0 2px 10px rgba(120,100,60,.06);}
-.navlink{font-size:12.5px;color:#5d5443;text-decoration:none;background:#f6f1e6;border:1px solid #e7ddca;
-  border-radius:7px;padding:4px 6px;text-align:center;white-space:nowrap;overflow:hidden;
-  text-overflow:ellipsis;}
-section{scroll-margin-top:64px;}
-/* 一句话主旨：去左侧竖线 */
-.mmx-oneline{border-left:none;padding-left:18px;}
-/* AI领读章内：AI 大纲原生深层样式 */
-.merged-guide .sec{margin:10px 0 14px;padding-left:6px;border-left:2px solid #e5e0d6}
-.merged-guide .sec h4{font:600 .98rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.6em 0 .3em}
-.merged-guide ul.point{margin:.3em 0;padding-left:20px}
-.merged-guide ul.point>li{margin:.35em 0}
-.merged-guide ul.quote{margin:.25em 0 .25em 20px;padding-left:18px;list-style:none}
-.merged-guide ul.quote::before{content:"原句";display:block;font-size:.72rem;color:#bf8247;
-  letter-spacing:.1em;margin:.15em 0 .1em;font-weight:600}
-.merged-guide ul.quote.quote-node{margin-top:.5em;padding-top:.4em;border-top:1px dashed #eadfc9}
+.nav{position:sticky;top:0;z-index:20;background:rgba(247,248,243,.96);backdrop-filter:blur(6px);
+  border-bottom:1px solid #ece4d4;padding:10px 0;margin:12px 0 20px;display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;
+  box-shadow:0 2px 10px rgba(120,100,60,.05);}
+.navlink{font-size:12px;color:#5d5443;text-decoration:none;background:#fdfbf3;border:1px solid #e8e2d2;
+  border-radius:8px;padding:6px 4px;text-align:center;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;transition:background .15s,color .15s;}
+.navlink:hover{background:#f2efe2;color:#244b40;}
+section{scroll-margin-top:62px;}
+
+/* ── 统一卡片：所有顶层模块（AI领读 / AI 问答 / 其余）一视同仁 ── */
+body>section.mmx-mod,body>section.card,body>section.mmx-svgwrap{
+  background:#fffdf6;border:1px solid #e8e4d5;border-radius:16px;
+  padding:18px 22px;margin:18px 0;
+  box-shadow:0 1px 3px rgba(110,95,60,.05);}
+body>section.mmx-mod>*:first-child,body>section.card>*:first-child,
+body>section.mmx-svgwrap>*:first-child{margin-top:0}
+body>section.mmx-mod>*:last-child,body>section.card>*:last-child,
+body>section.mmx-svgwrap>*:last-child{margin-bottom:0}
+/* 结构导图：图本身留白居中，不与正文抢宽 */
+body>section.mmx-svgwrap>svg.mmx-svg{display:block;width:100%;height:auto;margin:2px auto 0;}
+/* 模块标题：统一大小、弱强调，不与正文抢注意力 */
+body>section.mmx-mod>h2,body>section.card>h2{
+  font:700 1.04rem/1.5 var(--serif);color:#244b40;margin:0 0 11px;
+  padding-left:10px;border-left:3px solid #bf8247;letter-spacing:.01em;}
+/* 正文：字号收小、行距放宽、段间距舒服 */
+body>section.mmx-mod p,body>section.card p,
+body>section.mmx-mod li,body>section.card li{
+  font-size:.9rem;line-height:1.92;color:#4a4436;}
+body>section.mmx-mod p,body>section.card p{margin:.5em 0;}
+body>section.mmx-mod>ul,body>section.mmx-mod>ol,body>section.mmx-mod>div,
+body>section.mmx-mod>p:not(.mmx-mod-note),
+body>section.card:not(.merged-guide)>ul,body>section.card:not(.merged-guide)>ol,
+body>section.card:not(.merged-guide)>div,body>section.card:not(.merged-guide)>p:not(.mmx-mod-note){
+  padding-left:14px;}
+/* 模块说明小字：弱化不抢眼 */
+.mmx-mod-note{font-size:.75rem;color:#8d8878;margin:.1em 0 .75em;line-height:1.7;}
+
+/* ── 内部块统一：卡片里不再套深卡片，一律浅底子块 ── */
+body>section .mmx-pending,body>section .mmx-evib,body>section .aiqa-item{
+  background:#fbfaf2;border:1px solid #eee9d8;border-radius:12px;
+  padding:13px 16px;margin:.65em 0;}
+body>section .mmx-evib ul{padding-left:1.15em;}
+/* 一句话主旨：去左侧竖线 + 收敛字号 */
+.mmx-oneline{font-size:.98rem;line-height:1.85;color:#3a352c;margin:.2em 0 0;
+  padding:12px 16px;background:#fbfaf4;border-left:none;border-radius:12px;}
+/* 核心观点 / 验证清单：虚线分隔 + 收紧行距 */
+.mmx-views li{padding:.5em 0 .5em 0;font-size:.9rem;line-height:1.88;}
+/* 原文金句 */
+.mmx-qlist li{padding:.6em 0 .6em 2.2em;}
+.mmx-qlist blockquote{font-size:.89rem;line-height:1.9;}
+.mmx-qlist cite{font-size:.72rem;}
+/* 核心追问：问句加重、答句放松 */
+.mmx-qa{margin:.7em 0;padding-left:12px;border-left:3px solid #e5dfcd;}
+.mmx-qa .mmx-q{font-size:.9rem;font-weight:700;color:#2f3a33;line-height:1.8;margin:0 0 .25em;}
+.mmx-qa .mmx-a{font-size:.88rem;line-height:1.95;color:#4a4436;margin:0;}
+
+/* ── AI 问书专项：外层容器透明，问答条目才是阅读单元 ── */
+#mod-aiask .mmx-ask{background:transparent;border:0;border-radius:0;padding:0;margin:0;}
+#mod-aiask .aiqa-item{margin:.6em 0;padding:14px 16px 15px;}
+#mod-aiask .aiqa-item h3{font:700 .93rem/1.7 var(--serif);color:#2f5b49;margin:0 0 .4em;
+  padding:0;border:0;}
+#mod-aiask .aiqa-item h3:before{content:"问　";color:#bf8247;font-weight:700;}
+#mod-aiask .aiqa-item p{font-size:.88rem;line-height:1.95;color:#4a4436;margin:.4em 0;}
+#mod-aiask .aiqa-item ul{margin:.35em 0;padding-left:1.1em;}
+#mod-aiask .aiqa-item li{font-size:.87rem;line-height:1.88;margin:.18em 0;color:#4a4436;}
+#mod-aiask .aiqa-item li::marker{color:#c0a06a;}
+/* 逐章追问（details 形态）：摘要行也收敛 */
+.mmx-ask>summary{font-size:.87rem;line-height:1.7;padding:2px 0;}
+.mmx-askbody{font-size:.88rem;line-height:1.9;}
+
+/* AI领读章内：AI 大纲原生深层样式（字号同步收小） */
+.merged-guide .sec{margin:9px 0 12px;padding-left:6px;border-left:2px solid #e5e0d6}
+.merged-guide .sec h4{font:600 .93rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.5em 0 .25em}
+.merged-guide ul.point{margin:.25em 0;padding-left:20px}
+.merged-guide ul.point>li{margin:.3em 0}
+.merged-guide ul.quote{margin:.22em 0 .22em 20px;padding-left:18px;list-style:none}
+.merged-guide ul.quote::before{content:"原句";display:block;font-size:.7rem;color:#bf8247;
+  letter-spacing:.1em;margin:.12em 0 .08em;font-weight:600}
+.merged-guide ul.quote.quote-node{margin-top:.45em;padding-top:.35em;border-top:1px dashed #eadfc9}
 .merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
-.merged-guide ul.quote>li{color:#4a4436;font-size:.93rem;margin:.2em 0;padding-left:10px;border-left:2px solid #bf8247}
-/* 模块内子内容（AI领读除外，它有专属深层样式）：左缩进 + 正文与标题分层 */
-section.mmx-mod>ul,section.mmx-mod>ol,section.mmx-mod>div,
-section.mmx-mod>p:not(.mmx-mod-note),
-section.card:not(.merged-guide)>ul,section.card:not(.merged-guide)>ol,
-section.card:not(.merged-guide)>div,section.card:not(.merged-guide)>p:not(.mmx-mod-note){
-  padding-left:16px;}
-section.mmx-mod li,section.mmx-mod p:not(.mmx-mod-note),
-section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mod-note){
-  color:#4a4436;font-size:.93rem;line-height:1.78;}
+.merged-guide ul.quote>li{color:#4a4436;font-size:.88rem;line-height:1.85;margin:.18em 0;padding-left:10px;border-left:2px solid #bf8247}
 /* 核心观点初判：外链 mmx-guide.css 的「观点N」前缀是绝对定位，在本页版式里和标题叠字，
    且此前要求去掉「观点1/2/3」前缀 —— 这里整条关掉（外链 CSS 不在页面内，只能内联覆盖）。 */
 .mmx-views li{padding-left:0 !important;}
 .mmx-views li:before,.mmx-views li::before{
   content:none !important;display:none !important;counter-increment:none !important;}
+@media(max-width:720px){
+  body{padding:0 12px 60px;font-size:14.5px;}
+  body>section.mmx-mod,body>section.card{padding:15px 16px;border-radius:14px;}
+  .nav{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
 </style>
 </head>
 <body>
@@ -54,8 +116,8 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
   <h1>《为什么是中国》</h1>
   <div class="chips"><span class="chip">通读 + 精读</span><span class="chip">AI领读</span><span class="chip">AI 生产</span></div>
 </header>
-<nav class="nav"><a class="navlink" href="#mod-svg">全书结构导图</a><a class="navlink" href="#mod-oneline">一句话主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a><a class="navlink" href="#mod-aiask">AI 问书</a><a class="navlink" href="#mod-coreask">核心追问</a><a class="navlink" href="#mod-higher">更高维度</a><a class="navlink" href="#mod-verify">阅读验证</a><a class="navlink" href="#mod-thennow">当年与今天</a></nav>
-<section class="mmx-svgwrap" id="mod-svg">
+<nav class="nav"><a class="navlink" href="#mod-svg">结构导图</a><a class="navlink" href="#mod-oneline">核心主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a><a class="navlink" href="#mod-aiask">AI 问书</a><a class="navlink" href="#mod-coreask">核心追问</a><a class="navlink" href="#mod-higher">更高维度</a><a class="navlink" href="#mod-verify">阅读验证</a><a class="navlink" href="#mod-thennow">往日今时</a></nav>
+<section class="mmx-svgwrap" id="mod-svg"><h2>结构导图</h2>
 <svg class="mmx-svg" viewBox="0 0 1120 406" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="为什么是中国 全书精读">
 <rect x="0" y="0" width="1120" height="406" fill="none"/>
 <style>.mmx-svg text{font-family:"Noto Serif SC",Georgia,serif}.mmx-svg .t1{font-size:15px;fill:#2f2a24;font-weight:600}.mmx-svg .t2{font-size:12px;fill:#5c5347}.mmx-svg .t3{font-size:10.5px;fill:#8a8272}.mmx-svg .rt{font-size:13px;fill:#f7f3ea;font-weight:600}.mmx-svg .ln{stroke:#cfc6b4;stroke-width:1.4;fill:none}</style>
@@ -98,7 +160,7 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
 <text class="t2" x="714" y="305">含「强军需利器，制胜必砺技」至「中国经济发展之谜」</text>
 <path class="ln" d="M692 309 L700 309"/>
 </svg></section>
-<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">一句话主旨</h2><p class="mmx-mod-note">本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。</p><p class="mmx-oneline">《为什么是中国》共 34 章，按章序折成 5 段主干（第 1–7 章、第 8–14 章、第 15–21 章）；每章的要点与原句均逐字取自本书 AI 大纲，未做人工解读。</p></section>
+<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">核心主旨</h2><p class="mmx-oneline">《为什么是中国》共 34 章，按章序折成 5 段主干（第 1–7 章、第 8–14 章、第 15–21 章）；每章的要点与原句均逐字取自本书 AI 大纲，未做人工解读。</p></section>
 <section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" id="mod-merged_guide"><h2 id="merged-guide-title">AI领读</h2>
 <style>
 /* merged_guide 章内：AI 大纲原生深层样式 */
@@ -3021,12 +3083,12 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
       </div></details>
   </div>
 </section>
-<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点初判</h2><p class="mmx-mod-note">按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。</p><ul class="mmx-views"><li><b>第 1–7 章</b>——含「第一章 散沙——山河破碎」至「无尽探索，不断以失败告终」</li><li><b>第 8–14 章</b>——含「谁能担当民族救亡之责？」至「战争狂热之背后，苟且退让」</li><li><b>第 15–21 章</b>——含「受实力误导的魄力，被境界」至「战将必须重战」</li><li><b>第 22–28 章</b>——含「第六章 利益——中国崛起」至「军人最大的奉献不是牺牲，」</li><li><b>第 29–34 章</b>——含「强军需利器，制胜必砺技」至「中国经济发展之谜」</li></ul></section>
-<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句 · 持续积累</h2><p class="mmx-mod-note">以下原句取自本书大纲落库的原文摘录，按大纲顺序节选，非 AI 生成；更多见逐章深读页。</p><ol class="mmx-qlist"><li><blockquote>「国力衰弱，风气败坏，士气低迷，人心涣散，中国沦落为一盘散沙。」</blockquote><cite>第一章 散沙——山河破碎时的世道人心</cite></li><li><blockquote>「从17世纪中叶到18世纪末，大清王朝在康熙、雍正、乾隆三位皇帝在位时达到鼎盛」</blockquote><cite>第一章 散沙——山河破碎时的世道人心</cite></li><li><blockquote>「按照西方统计，当时中国经济总量占世界第一位，人口占世界1/3，对外贸易长期出超。」</blockquote><cite>第一章 散沙——山河破碎时的世道人心</cite></li><li><blockquote>「灾难来得十分突然，1840年，中英第一次鸦片战争爆发」</blockquote><cite>第一章 散沙——山河破碎时的世道人心</cite></li><li><blockquote>「大英帝国凭借28艘军舰、15,000人的军队入侵中国，最后迫使大清王朝签订丧权辱国的第一个不平等条约——《南京条约》。」</blockquote><cite>第一章 散沙——山河破碎时的世道人心</cite></li><li><blockquote>「—1860年，第二次鸦片战争，英军18,000人、法军7,200人长驱直入中国首都，将圆明园付之一炬」</blockquote><cite>第一章 散沙——山河破碎时的世道人心</cite></li><li><blockquote>「清政府被迫与俄、美、英、法四国分别签订《天津条约》，后又被迫签订《中俄瑷珲条约》《北京条约》等一系列丧权辱国的条约。」</blockquote><cite>第一章 散沙——山河破碎时的世道人心</cite></li><li><blockquote>「年中日甲午战争，清军战败，一纸《马关条约》使中国割让辽东半岛和台湾，赔款白银两亿两。」</blockquote><cite>第一章 散沙——山河破碎时的世道人心</cite></li><li><blockquote>「年八国联军进攻北京，国家虽然不少，拼凑的兵力却不足两万人，10天令北京陷落，此次中国赔款数额更是达到空前的4.5亿两白银」</blockquote><cite>第一章 散沙——山河破碎时的世道人心</cite></li><li><blockquote>「一个被西方描述为GDP占世界1/3的东方大国，面对坚船利炮竟然如此不堪一击，一而再、再而三地割地赔款、丧权辱国，为什么会这样？」</blockquote><cite>第一章 散沙——山河破碎时的世道人心</cite></li></ol></section>
-<section class="mmx-mod" aria-labelledby="aiask" id="mod-aiask"><h2 id="aiask">AI 问书</h2><p class="mmx-mod-note">下方内容为本书级 AI 问书整理，由云端 AI 阅读流程基于本书大纲、章节锚点与热门划线生成。</p><div class="mmx-qa"><p class="mmx-q">书里哪些数字最值得单独核一遍？</p><p class="mmx-a">1840 年英军 28 艘军舰、15 000 人；1856—1860 年英军 18 000 人、法军 7 200 人；1900 年八国联军拼凑兵力不足两万、10 天令北京陷落；甲午赔款 2 亿两、庚子赔款 4.5 亿两。这些是全书论证的支点，尤其庚子赔款常还有「分 39 年偿付、本息合计约 9.8 亿两」的口径，只取本金会低估负担。建议用《筹办夷务始末》与茅海建《天朝的崩溃》等专题研究对读。</p></div><div class="mmx-qa"><p class="mmx-q">「离开国家命运，还谈什么个人命运？」——这句话反过来问，这本书给了个体什么可操作的东西？</p><p class="mmx-a">有，而且集中在两条划线上：8176 人划的「做难事必有所得……一定要做困难的事，干自己没干过的，那才是挑战」，和 3270 人划的「想，都是问题；做，才是答案」。这是全书少有的、可以脱离宏大叙事单独执行的建议；其余大量内容讲的是国家层面的因果，读者若把它们直接搬到个人处境，容易变成只喊口号。</p></div><div class="mmx-qa"><p class="mmx-q">作者写「正视正面战场，莫要碎化历史」这一节，读者该怎么读？</p><p class="mmx-a">把它当作立场声明来读。作者把国民党军队的「石牌大捷」与共产党军队的「平型关大捷」并列讨论，并批评「把历史切割成碎块，再分别放到个人的背上」（3708 人划线）这种习惯——后者确实是读史的常见毛病。但同一节的取舍本身也有立场，宜与不同来源的抗战史研究对读，看双方对规模、伤亡与战略影响的记述是否一致。</p></div></section>
-<section class="mmx-mod" aria-labelledby="coreask" id="mod-coreask"><h2 id="coreask">核心追问（来自深读）</h2><p class="mmx-mod-note">跨章主题的深读追问，由云端 AI 阅读流程基于全书大纲、章节锚点与热门划线撰写；逐章的追问收在每个章条目里。</p><div class="mmx-qa"><p class="mmx-q">第一章为什么把四份宣战诏书一字排开：1841 年 1 月 27 日、1860 年 9 月 12 日、1894 年 8 月 1 日、1900 年 6 月 21 日？</p><p class="mmx-a">因为作者要证明失败不在态度。四份诏书跨六十年，道光对英、咸丰对英法、光绪对日、慈禧对十一国，每一次都是「大声说不」，每一次都以割地赔款收场。12852 人划的那句「在新生的资本主义体制面前，封建体制已经走到了历史的尽头」是结论，四份诏书是证据——如果敢宣战就能赢，这六十年不会是这个走向。</p></div><div class="mmx-qa"><p class="mmx-q">「历史不记过程，只记结果」被 4114 人划线，这句话用起来有什么风险？</p><p class="mmx-a">风险是它会取消过程评估。作者用它解释道光：穿带补丁裤子、勤俭励精图治，但第一个丧权辱国的条约是他签的，这个例子成立。可同一本书里 7276 人划的那条又说「没有他们的探索失败，就没有我们后来探索的成功」，那是肯定失败者的过程价值。两句话合起来才完整：对当政者按结果问责，对探索者按过程计量，不能只挑一句用。</p></div><div class="mmx-qa"><p class="mmx-q">书里最需要警惕的一个归因是什么？</p><p class="mmx-a">是把甲午之败主要归给腐败。第三章算得很细：北洋舰队建设耗银 3 000 万两、总投入约 1 亿两，每年 300 余万两、占年财政收入 4% 强，投入并不少于日本。3861 人划的那条「政权建立了军队，又腐蚀着它」确实点出了问题，但停在「腐败」，就无法解释腐败为何是系统性的——为何每年治河之费真正用于工程的不到十分之一，为何励精图治的皇帝也治不住。答案在体制，不在品德。</p></div></section>
-<section class="mmx-mod" aria-labelledby="higher" id="mod-higher"><h2 id="higher">用更高维度的知识看这本书</h2><p class="mmx-mod-note">下方内容由云端 AI 阅读流程生成：把本书放回知识史与理论框架中重读，区分书中主张、外部证据与综合分析。</p><p>【书中主张】把近代中国的失败归因于体制走到了尽头，并把中国共产党的出现写成「大浪淘沙，砥柱恒存，于无穷无尽的灾难中走出了中国共产党人」（3450 人划线）。【外部证据】这一叙事与 20 世纪中国史学的革命史范式一脉相承；另有两条不同的解释路径：蒋廷黻《中国近代史》代表的现代化范式，把问题定位在从传统国家向近代民族国家转型的迟缓；费正清等人的「冲击—回应」模式则把起点放在外来冲击上。近几十年又有研究把晚清的财政汲取能力、地方绅权与欧洲「军事—财政国家」做比较。【综合分析】本书属于面向大众的「问题导向史论」，贡献是把制度、军备、人心三条线并置推进，代价是因果链条比专业史学更短、更确定；读者宜把它当作提问的起点——「为什么会这样」——而不是终点答案。</p><p>【书中主张】「和平是一个民族最大的腐蚀剂」（5040 人划线，书中归于黑格尔），以及 5556 人划的「变革就是扬弃……从某种程度上说，就是自己消灭自己，谁又愿意消灭自己呢」。【外部证据】黑格尔这句引文的确切出处需核对，常见的是转述其法哲学中关于长期和平使民族腐化的判断；而在现代国际关系理论里，相近的命题更接近「权力转移」与「安全困境」，两者都不依赖民族性格假设。【综合分析】把「和平—腐化」当作普遍规律有修辞力量，但缺少对照组：同样长期和平的社会并未普遍腐化。真正可迁移的是组织社会学的命题——组织需要外部压力来维持自我更新，压力消失后，维持纪律的成本转由内部承担。这一条对企业、军队、个人都成立，不必绑在民族叙事上。</p></section>
-<section class="mmx-mod" aria-labelledby="verify" id="mod-verify"><h2 id="verify">阅读时要验证的问题</h2><p class="mmx-mod-note">下方由云端 AI 阅读流程生成：读时需核对的原文、数字与论点（关键数据出处、个案代表性、类比限度）。</p><ul class="mmx-views"><li>数据出处：1840 年英军「28 艘军舰、15 000 人」，1856—1860 年「英军 18 000 人、法军 7 200 人」，1900 年八国联军「拼凑的兵力却不足两万人」「10 天令北京陷落」，甲午赔款 2 亿两、庚子赔款 4.5 亿两——需与《筹办夷务始末》《清史稿》及茅海建《天朝的崩溃》等专题研究核对；庚子赔款常记为 4.5 亿两本金、分 39 年偿付、本息合计约 9.8 亿两，引用时应注明取本金还是本息。</li><li>北洋经费口径：书中称北洋舰队「耗银 3 000 万两」、总投资「1 亿两上下」、每年 300 余万两「平均占其年财政收入 4% 强」。清代岁入的估算区间在学界并不统一（是否计入海关税、厘金差别很大），需核对该 4% 的分母口径；与日本海军投入的对比，也需厘清是按总额还是按占预算比例。</li><li>引文与作者立场：书中引黑格尔「和平是一个民族最大的腐蚀剂」未注出处，需核对德文原文与中译本；杨靖宇一节（4784 人划线，称出卖、围捕、打死他的都是中国人）所涉具体人事，需与东北抗日联军相关史料核对姓名与经过；作者长期在军队院校从事战略与安全研究，书中对正面战场与敌后战场贡献的评价、对「跨过鸭绿江那一刻」作为民族复兴心理起点（3798 人划线）的判断，均带有明确立场，宜与不同来源的史学著述对读。</li></ul></section>
-<section class="mmx-mod" aria-labelledby="thennow" id="mod-thennow"><h2 id="thennow">当年与今天 · 初步对照</h2><p class="mmx-mod-note">下方由云端 AI 阅读流程生成：区分作者当年所能知晓与后来才显现的事实，给出今日可迁移的启发。</p><p>【作者当年所能知晓】本书成书于 2010 年代后期，作者能看到的是中国已成为世界第二大经济体、航母入列、对外合作倡议的提出，以及当时仍可接触到的抗美援朝老兵口述。他把「跨过鸭绿江那一刻」（3798 人划线）定为民族复兴的心理起点，依据的正是这一代人亲身经历的记忆结构。【后来才显现】此后几年的中美贸易摩擦、技术封锁与全球疫情，是成书时无法预知的新变量；它们把 5136 人划的那句「腰杆上一定要有东西……如果腰杆上除了钱包什么都没有，那么钱包也很容易被别人抢走」的含义，从军事自立扩展到了产业链与技术自立——这是当年的写法里没有的一层。</p><p>【今天可迁移的启发】两条。正面用：把「做难事必有所得」落到能力建设上——挑没干过的事，接受失败也算提高（8176 与 7276 两条划线可合起来读）。反着用：警惕把「历史不记过程，只记结果」当成放弃过程评估的借口——对当政者按结果问责是必要的，对个人与组织按过程计量同样必要，否则解释力只剩下「成王败寇」。另有一条方法论提醒：全书反复出现的「散沙—自觉—重生」是一条单线叙事，引用时最好同时知道还有现代化范式与冲击—回应范式这两条不同的线。</p></section>
+<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点</h2><ul class="mmx-views"><li><b>第 1–7 章</b>——含「第一章 散沙——山河破碎」至「无尽探索，不断以失败告终」</li><li><b>第 8–14 章</b>——含「谁能担当民族救亡之责？」至「战争狂热之背后，苟且退让」</li><li><b>第 15–21 章</b>——含「受实力误导的魄力，被境界」至「战将必须重战」</li><li><b>第 22–28 章</b>——含「第六章 利益——中国崛起」至「军人最大的奉献不是牺牲，」</li><li><b>第 29–34 章</b>——含「强军需利器，制胜必砺技」至「中国经济发展之谜」</li></ul></section>
+<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句</h2><ol class="mmx-qlist"><li><blockquote>「国力衰弱，风气败坏，士气低迷，人心涣散，中国沦落为一盘散沙。」</blockquote><cite>第一章 散沙——山河破碎时的世道人心</cite></li><li><blockquote>「从17世纪中叶到18世纪末，大清王朝在康熙、雍正、乾隆三位皇帝在位时达到鼎盛」</blockquote><cite>第一章 散沙——山河破碎时的世道人心</cite></li><li><blockquote>「按照西方统计，当时中国经济总量占世界第一位，人口占世界1/3，对外贸易长期出超。」</blockquote><cite>第一章 散沙——山河破碎时的世道人心</cite></li><li><blockquote>「灾难来得十分突然，1840年，中英第一次鸦片战争爆发」</blockquote><cite>第一章 散沙——山河破碎时的世道人心</cite></li><li><blockquote>「大英帝国凭借28艘军舰、15,000人的军队入侵中国，最后迫使大清王朝签订丧权辱国的第一个不平等条约——《南京条约》。」</blockquote><cite>第一章 散沙——山河破碎时的世道人心</cite></li><li><blockquote>「—1860年，第二次鸦片战争，英军18,000人、法军7,200人长驱直入中国首都，将圆明园付之一炬」</blockquote><cite>第一章 散沙——山河破碎时的世道人心</cite></li><li><blockquote>「清政府被迫与俄、美、英、法四国分别签订《天津条约》，后又被迫签订《中俄瑷珲条约》《北京条约》等一系列丧权辱国的条约。」</blockquote><cite>第一章 散沙——山河破碎时的世道人心</cite></li><li><blockquote>「年中日甲午战争，清军战败，一纸《马关条约》使中国割让辽东半岛和台湾，赔款白银两亿两。」</blockquote><cite>第一章 散沙——山河破碎时的世道人心</cite></li><li><blockquote>「年八国联军进攻北京，国家虽然不少，拼凑的兵力却不足两万人，10天令北京陷落，此次中国赔款数额更是达到空前的4.5亿两白银」</blockquote><cite>第一章 散沙——山河破碎时的世道人心</cite></li><li><blockquote>「一个被西方描述为GDP占世界1/3的东方大国，面对坚船利炮竟然如此不堪一击，一而再、再而三地割地赔款、丧权辱国，为什么会这样？」</blockquote><cite>第一章 散沙——山河破碎时的世道人心</cite></li></ol></section>
+<section class="mmx-mod" aria-labelledby="aiask" id="mod-aiask"><h2 id="aiask">AI 问书</h2><div class="mmx-qa"><p class="mmx-q">书里哪些数字最值得单独核一遍？</p><p class="mmx-a">1840 年英军 28 艘军舰、15 000 人；1856—1860 年英军 18 000 人、法军 7 200 人；1900 年八国联军拼凑兵力不足两万、10 天令北京陷落；甲午赔款 2 亿两、庚子赔款 4.5 亿两。这些是全书论证的支点，尤其庚子赔款常还有「分 39 年偿付、本息合计约 9.8 亿两」的口径，只取本金会低估负担。建议用《筹办夷务始末》与茅海建《天朝的崩溃》等专题研究对读。</p></div><div class="mmx-qa"><p class="mmx-q">「离开国家命运，还谈什么个人命运？」——这句话反过来问，这本书给了个体什么可操作的东西？</p><p class="mmx-a">有，而且集中在两条划线上：8176 人划的「做难事必有所得……一定要做困难的事，干自己没干过的，那才是挑战」，和 3270 人划的「想，都是问题；做，才是答案」。这是全书少有的、可以脱离宏大叙事单独执行的建议；其余大量内容讲的是国家层面的因果，读者若把它们直接搬到个人处境，容易变成只喊口号。</p></div><div class="mmx-qa"><p class="mmx-q">作者写「正视正面战场，莫要碎化历史」这一节，读者该怎么读？</p><p class="mmx-a">把它当作立场声明来读。作者把国民党军队的「石牌大捷」与共产党军队的「平型关大捷」并列讨论，并批评「把历史切割成碎块，再分别放到个人的背上」（3708 人划线）这种习惯——后者确实是读史的常见毛病。但同一节的取舍本身也有立场，宜与不同来源的抗战史研究对读，看双方对规模、伤亡与战略影响的记述是否一致。</p></div></section>
+<section class="mmx-mod" aria-labelledby="coreask" id="mod-coreask"><h2 id="coreask">核心追问</h2><div class="mmx-qa"><p class="mmx-q">第一章为什么把四份宣战诏书一字排开：1841 年 1 月 27 日、1860 年 9 月 12 日、1894 年 8 月 1 日、1900 年 6 月 21 日？</p><p class="mmx-a">因为作者要证明失败不在态度。四份诏书跨六十年，道光对英、咸丰对英法、光绪对日、慈禧对十一国，每一次都是「大声说不」，每一次都以割地赔款收场。12852 人划的那句「在新生的资本主义体制面前，封建体制已经走到了历史的尽头」是结论，四份诏书是证据——如果敢宣战就能赢，这六十年不会是这个走向。</p></div><div class="mmx-qa"><p class="mmx-q">「历史不记过程，只记结果」被 4114 人划线，这句话用起来有什么风险？</p><p class="mmx-a">风险是它会取消过程评估。作者用它解释道光：穿带补丁裤子、勤俭励精图治，但第一个丧权辱国的条约是他签的，这个例子成立。可同一本书里 7276 人划的那条又说「没有他们的探索失败，就没有我们后来探索的成功」，那是肯定失败者的过程价值。两句话合起来才完整：对当政者按结果问责，对探索者按过程计量，不能只挑一句用。</p></div><div class="mmx-qa"><p class="mmx-q">书里最需要警惕的一个归因是什么？</p><p class="mmx-a">是把甲午之败主要归给腐败。第三章算得很细：北洋舰队建设耗银 3 000 万两、总投入约 1 亿两，每年 300 余万两、占年财政收入 4% 强，投入并不少于日本。3861 人划的那条「政权建立了军队，又腐蚀着它」确实点出了问题，但停在「腐败」，就无法解释腐败为何是系统性的——为何每年治河之费真正用于工程的不到十分之一，为何励精图治的皇帝也治不住。答案在体制，不在品德。</p></div></section>
+<section class="mmx-mod" aria-labelledby="higher" id="mod-higher"><h2 id="higher">更高维度</h2><p>【书中主张】把近代中国的失败归因于体制走到了尽头，并把中国共产党的出现写成「大浪淘沙，砥柱恒存，于无穷无尽的灾难中走出了中国共产党人」（3450 人划线）。【外部证据】这一叙事与 20 世纪中国史学的革命史范式一脉相承；另有两条不同的解释路径：蒋廷黻《中国近代史》代表的现代化范式，把问题定位在从传统国家向近代民族国家转型的迟缓；费正清等人的「冲击—回应」模式则把起点放在外来冲击上。近几十年又有研究把晚清的财政汲取能力、地方绅权与欧洲「军事—财政国家」做比较。【综合分析】本书属于面向大众的「问题导向史论」，贡献是把制度、军备、人心三条线并置推进，代价是因果链条比专业史学更短、更确定；读者宜把它当作提问的起点——「为什么会这样」——而不是终点答案。</p><p>【书中主张】「和平是一个民族最大的腐蚀剂」（5040 人划线，书中归于黑格尔），以及 5556 人划的「变革就是扬弃……从某种程度上说，就是自己消灭自己，谁又愿意消灭自己呢」。【外部证据】黑格尔这句引文的确切出处需核对，常见的是转述其法哲学中关于长期和平使民族腐化的判断；而在现代国际关系理论里，相近的命题更接近「权力转移」与「安全困境」，两者都不依赖民族性格假设。【综合分析】把「和平—腐化」当作普遍规律有修辞力量，但缺少对照组：同样长期和平的社会并未普遍腐化。真正可迁移的是组织社会学的命题——组织需要外部压力来维持自我更新，压力消失后，维持纪律的成本转由内部承担。这一条对企业、军队、个人都成立，不必绑在民族叙事上。</p></section>
+<section class="mmx-mod" aria-labelledby="verify" id="mod-verify"><h2 id="verify">阅读验证</h2><ul class="mmx-views"><li>数据出处：1840 年英军「28 艘军舰、15 000 人」，1856—1860 年「英军 18 000 人、法军 7 200 人」，1900 年八国联军「拼凑的兵力却不足两万人」「10 天令北京陷落」，甲午赔款 2 亿两、庚子赔款 4.5 亿两——需与《筹办夷务始末》《清史稿》及茅海建《天朝的崩溃》等专题研究核对；庚子赔款常记为 4.5 亿两本金、分 39 年偿付、本息合计约 9.8 亿两，引用时应注明取本金还是本息。</li><li>北洋经费口径：书中称北洋舰队「耗银 3 000 万两」、总投资「1 亿两上下」、每年 300 余万两「平均占其年财政收入 4% 强」。清代岁入的估算区间在学界并不统一（是否计入海关税、厘金差别很大），需核对该 4% 的分母口径；与日本海军投入的对比，也需厘清是按总额还是按占预算比例。</li><li>引文与作者立场：书中引黑格尔「和平是一个民族最大的腐蚀剂」未注出处，需核对德文原文与中译本；杨靖宇一节（4784 人划线，称出卖、围捕、打死他的都是中国人）所涉具体人事，需与东北抗日联军相关史料核对姓名与经过；作者长期在军队院校从事战略与安全研究，书中对正面战场与敌后战场贡献的评价、对「跨过鸭绿江那一刻」作为民族复兴心理起点（3798 人划线）的判断，均带有明确立场，宜与不同来源的史学著述对读。</li></ul></section>
+<section class="mmx-mod" aria-labelledby="thennow" id="mod-thennow"><h2 id="thennow">往日今时</h2><p>【作者当年所能知晓】本书成书于 2010 年代后期，作者能看到的是中国已成为世界第二大经济体、航母入列、对外合作倡议的提出，以及当时仍可接触到的抗美援朝老兵口述。他把「跨过鸭绿江那一刻」（3798 人划线）定为民族复兴的心理起点，依据的正是这一代人亲身经历的记忆结构。【后来才显现】此后几年的中美贸易摩擦、技术封锁与全球疫情，是成书时无法预知的新变量；它们把 5136 人划的那句「腰杆上一定要有东西……如果腰杆上除了钱包什么都没有，那么钱包也很容易被别人抢走」的含义，从军事自立扩展到了产业链与技术自立——这是当年的写法里没有的一层。</p><p>【今天可迁移的启发】两条。正面用：把「做难事必有所得」落到能力建设上——挑没干过的事，接受失败也算提高（8176 与 7276 两条划线可合起来读）。反着用：警惕把「历史不记过程，只记结果」当成放弃过程评估的借口——对当政者按结果问责是必要的，对个人与组织按过程计量同样必要，否则解释力只剩下「成王败寇」。另有一条方法论提醒：全书反复出现的「散沙—自觉—重生」是一条单线叙事，引用时最好同时知道还有现代化范式与冲击—回应范式这两条不同的线。</p></section>
 </body>
 </html>

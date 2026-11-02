@@ -6,46 +6,108 @@
 <title>《媚色无双》｜通读 · 精读</title>
 <link rel="stylesheet" href="../../../assets/css/reading-overview.css"><link rel="stylesheet" href="../../../assets/css/mmx-guide.css"><link rel="stylesheet" href="../../../assets/css/reading-outline.css">
 <style>
-/* 合并页外壳 */
-body{max-width:960px;margin:0 auto;padding:0 18px 80px;}
-.combined-head{padding:34px 0 18px;border-bottom:1px solid #e7e0d2;margin-bottom:8px;}
-.combined-head h1{font-size:26px;margin:0 0 10px;}
+/* ── 外壳与全局阅读节奏 ── */
+body{max-width:880px;margin:0 auto;padding:0 18px 80px;
+  font-size:15px;line-height:1.88;color:#3b453e;background:#f7f8f3;
+  -webkit-font-smoothing:antialiased;}
+.combined-head{padding:30px 0 16px;border-bottom:1px solid #e7e0d2;margin-bottom:4px;}
+.combined-head h1{font:700 23px/1.35 var(--serif);margin:0 0 8px;color:#244b40;}
+.combined-head .eyebrow{font-size:.72rem;letter-spacing:.14em;margin:0 0 6px;}
+.chips{margin:8px 0 0;}
+.chip{font-size:.72rem;padding:2px 10px;}
 /* 锚点导航：固定一排 4 个，等宽对齐 */
-.nav{position:sticky;top:0;z-index:20;background:rgba(255,253,248,.96);backdrop-filter:blur(6px);
-  border-bottom:1px solid #ece4d4;padding:10px 0;margin:14px 0 26px;display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;
-  box-shadow:0 2px 10px rgba(120,100,60,.06);}
-.navlink{font-size:12.5px;color:#5d5443;text-decoration:none;background:#f6f1e6;border:1px solid #e7ddca;
-  border-radius:7px;padding:4px 6px;text-align:center;white-space:nowrap;overflow:hidden;
-  text-overflow:ellipsis;}
-section{scroll-margin-top:64px;}
-/* 一句话主旨：去左侧竖线 */
-.mmx-oneline{border-left:none;padding-left:18px;}
-/* AI领读章内：AI 大纲原生深层样式 */
-.merged-guide .sec{margin:10px 0 14px;padding-left:6px;border-left:2px solid #e5e0d6}
-.merged-guide .sec h4{font:600 .98rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.6em 0 .3em}
-.merged-guide ul.point{margin:.3em 0;padding-left:20px}
-.merged-guide ul.point>li{margin:.35em 0}
-.merged-guide ul.quote{margin:.25em 0 .25em 20px;padding-left:18px;list-style:none}
-.merged-guide ul.quote::before{content:"原句";display:block;font-size:.72rem;color:#bf8247;
-  letter-spacing:.1em;margin:.15em 0 .1em;font-weight:600}
-.merged-guide ul.quote.quote-node{margin-top:.5em;padding-top:.4em;border-top:1px dashed #eadfc9}
+.nav{position:sticky;top:0;z-index:20;background:rgba(247,248,243,.96);backdrop-filter:blur(6px);
+  border-bottom:1px solid #ece4d4;padding:10px 0;margin:12px 0 20px;display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;
+  box-shadow:0 2px 10px rgba(120,100,60,.05);}
+.navlink{font-size:12px;color:#5d5443;text-decoration:none;background:#fdfbf3;border:1px solid #e8e2d2;
+  border-radius:8px;padding:6px 4px;text-align:center;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;transition:background .15s,color .15s;}
+.navlink:hover{background:#f2efe2;color:#244b40;}
+section{scroll-margin-top:62px;}
+
+/* ── 统一卡片：所有顶层模块（AI领读 / AI 问答 / 其余）一视同仁 ── */
+body>section.mmx-mod,body>section.card,body>section.mmx-svgwrap{
+  background:#fffdf6;border:1px solid #e8e4d5;border-radius:16px;
+  padding:18px 22px;margin:18px 0;
+  box-shadow:0 1px 3px rgba(110,95,60,.05);}
+body>section.mmx-mod>*:first-child,body>section.card>*:first-child,
+body>section.mmx-svgwrap>*:first-child{margin-top:0}
+body>section.mmx-mod>*:last-child,body>section.card>*:last-child,
+body>section.mmx-svgwrap>*:last-child{margin-bottom:0}
+/* 结构导图：图本身留白居中，不与正文抢宽 */
+body>section.mmx-svgwrap>svg.mmx-svg{display:block;width:100%;height:auto;margin:2px auto 0;}
+/* 模块标题：统一大小、弱强调，不与正文抢注意力 */
+body>section.mmx-mod>h2,body>section.card>h2{
+  font:700 1.04rem/1.5 var(--serif);color:#244b40;margin:0 0 11px;
+  padding-left:10px;border-left:3px solid #bf8247;letter-spacing:.01em;}
+/* 正文：字号收小、行距放宽、段间距舒服 */
+body>section.mmx-mod p,body>section.card p,
+body>section.mmx-mod li,body>section.card li{
+  font-size:.9rem;line-height:1.92;color:#4a4436;}
+body>section.mmx-mod p,body>section.card p{margin:.5em 0;}
+body>section.mmx-mod>ul,body>section.mmx-mod>ol,body>section.mmx-mod>div,
+body>section.mmx-mod>p:not(.mmx-mod-note),
+body>section.card:not(.merged-guide)>ul,body>section.card:not(.merged-guide)>ol,
+body>section.card:not(.merged-guide)>div,body>section.card:not(.merged-guide)>p:not(.mmx-mod-note){
+  padding-left:14px;}
+/* 模块说明小字：弱化不抢眼 */
+.mmx-mod-note{font-size:.75rem;color:#8d8878;margin:.1em 0 .75em;line-height:1.7;}
+
+/* ── 内部块统一：卡片里不再套深卡片，一律浅底子块 ── */
+body>section .mmx-pending,body>section .mmx-evib,body>section .aiqa-item{
+  background:#fbfaf2;border:1px solid #eee9d8;border-radius:12px;
+  padding:13px 16px;margin:.65em 0;}
+body>section .mmx-evib ul{padding-left:1.15em;}
+/* 一句话主旨：去左侧竖线 + 收敛字号 */
+.mmx-oneline{font-size:.98rem;line-height:1.85;color:#3a352c;margin:.2em 0 0;
+  padding:12px 16px;background:#fbfaf4;border-left:none;border-radius:12px;}
+/* 核心观点 / 验证清单：虚线分隔 + 收紧行距 */
+.mmx-views li{padding:.5em 0 .5em 0;font-size:.9rem;line-height:1.88;}
+/* 原文金句 */
+.mmx-qlist li{padding:.6em 0 .6em 2.2em;}
+.mmx-qlist blockquote{font-size:.89rem;line-height:1.9;}
+.mmx-qlist cite{font-size:.72rem;}
+/* 核心追问：问句加重、答句放松 */
+.mmx-qa{margin:.7em 0;padding-left:12px;border-left:3px solid #e5dfcd;}
+.mmx-qa .mmx-q{font-size:.9rem;font-weight:700;color:#2f3a33;line-height:1.8;margin:0 0 .25em;}
+.mmx-qa .mmx-a{font-size:.88rem;line-height:1.95;color:#4a4436;margin:0;}
+
+/* ── AI 问书专项：外层容器透明，问答条目才是阅读单元 ── */
+#mod-aiask .mmx-ask{background:transparent;border:0;border-radius:0;padding:0;margin:0;}
+#mod-aiask .aiqa-item{margin:.6em 0;padding:14px 16px 15px;}
+#mod-aiask .aiqa-item h3{font:700 .93rem/1.7 var(--serif);color:#2f5b49;margin:0 0 .4em;
+  padding:0;border:0;}
+#mod-aiask .aiqa-item h3:before{content:"问　";color:#bf8247;font-weight:700;}
+#mod-aiask .aiqa-item p{font-size:.88rem;line-height:1.95;color:#4a4436;margin:.4em 0;}
+#mod-aiask .aiqa-item ul{margin:.35em 0;padding-left:1.1em;}
+#mod-aiask .aiqa-item li{font-size:.87rem;line-height:1.88;margin:.18em 0;color:#4a4436;}
+#mod-aiask .aiqa-item li::marker{color:#c0a06a;}
+/* 逐章追问（details 形态）：摘要行也收敛 */
+.mmx-ask>summary{font-size:.87rem;line-height:1.7;padding:2px 0;}
+.mmx-askbody{font-size:.88rem;line-height:1.9;}
+
+/* AI领读章内：AI 大纲原生深层样式（字号同步收小） */
+.merged-guide .sec{margin:9px 0 12px;padding-left:6px;border-left:2px solid #e5e0d6}
+.merged-guide .sec h4{font:600 .93rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.5em 0 .25em}
+.merged-guide ul.point{margin:.25em 0;padding-left:20px}
+.merged-guide ul.point>li{margin:.3em 0}
+.merged-guide ul.quote{margin:.22em 0 .22em 20px;padding-left:18px;list-style:none}
+.merged-guide ul.quote::before{content:"原句";display:block;font-size:.7rem;color:#bf8247;
+  letter-spacing:.1em;margin:.12em 0 .08em;font-weight:600}
+.merged-guide ul.quote.quote-node{margin-top:.45em;padding-top:.35em;border-top:1px dashed #eadfc9}
 .merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
-.merged-guide ul.quote>li{color:#4a4436;font-size:.93rem;margin:.2em 0;padding-left:10px;border-left:2px solid #bf8247}
-/* 模块内子内容（AI领读除外，它有专属深层样式）：左缩进 + 正文与标题分层 */
-section.mmx-mod>ul,section.mmx-mod>ol,section.mmx-mod>div,
-section.mmx-mod>p:not(.mmx-mod-note),
-section.card:not(.merged-guide)>ul,section.card:not(.merged-guide)>ol,
-section.card:not(.merged-guide)>div,section.card:not(.merged-guide)>p:not(.mmx-mod-note){
-  padding-left:16px;}
-section.mmx-mod li,section.mmx-mod p:not(.mmx-mod-note),
-section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mod-note){
-  color:#4a4436;font-size:.93rem;line-height:1.78;}
+.merged-guide ul.quote>li{color:#4a4436;font-size:.88rem;line-height:1.85;margin:.18em 0;padding-left:10px;border-left:2px solid #bf8247}
 /* 核心观点初判：外链 mmx-guide.css 的「观点N」前缀是绝对定位，在本页版式里和标题叠字，
    且此前要求去掉「观点1/2/3」前缀 —— 这里整条关掉（外链 CSS 不在页面内，只能内联覆盖）。 */
 .mmx-views li{padding-left:0 !important;}
 .mmx-views li:before,.mmx-views li::before{
   content:none !important;display:none !important;counter-increment:none !important;}
+@media(max-width:720px){
+  body{padding:0 12px 60px;font-size:14.5px;}
+  body>section.mmx-mod,body>section.card{padding:15px 16px;border-radius:14px;}
+  .nav{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
 </style>
 </head>
 <body>
@@ -54,8 +116,8 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
   <h1>《媚色无双》</h1>
   <div class="chips"><span class="chip">通读 + 精读</span><span class="chip">AI领读</span><span class="chip">AI 生产</span></div>
 </header>
-<nav class="nav"><a class="navlink" href="#mod-svg">全书结构导图</a><a class="navlink" href="#mod-oneline">一句话主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a><a class="navlink" href="#mod-coreask">核心追问</a><a class="navlink" href="#mod-aiask">AI 问书</a><a class="navlink" href="#mod-higher">更高维度</a><a class="navlink" href="#mod-verify">阅读验证</a><a class="navlink" href="#mod-thennow">当年与今天</a></nav>
-<section class="mmx-svgwrap" id="mod-svg"><svg class="mmx-svg" viewBox="0 0 1120 406" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="媚色无双 全书精读">
+<nav class="nav"><a class="navlink" href="#mod-svg">结构导图</a><a class="navlink" href="#mod-oneline">核心主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a><a class="navlink" href="#mod-coreask">核心追问</a><a class="navlink" href="#mod-aiask">AI 问书</a><a class="navlink" href="#mod-higher">更高维度</a><a class="navlink" href="#mod-verify">阅读验证</a><a class="navlink" href="#mod-thennow">往日今时</a></nav>
+<section class="mmx-svgwrap" id="mod-svg"><h2>结构导图</h2><svg class="mmx-svg" viewBox="0 0 1120 406" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="媚色无双 全书精读">
 <rect x="0" y="0" width="1120" height="406" fill="none"/>
 <style>.mmx-svg text{font-family:"Noto Serif SC",Georgia,serif}.mmx-svg .t1{font-size:15px;fill:#2f2a24;font-weight:600}.mmx-svg .t2{font-size:12px;fill:#5c5347}.mmx-svg .t3{font-size:10.5px;fill:#8a8272}.mmx-svg .rt{font-size:13px;fill:#f7f3ea;font-weight:600}.mmx-svg .ln{stroke:#cfc6b4;stroke-width:1.4;fill:none}</style>
 <rect x="28" y="159" width="262" height="52" rx="10" fill="#3d372e"/>
@@ -97,7 +159,7 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
 <text class="t2" x="714" y="305">以梦境给配角一次翻盘，暴露正文分配的不公。</text>
 <path class="ln" d="M692 309 L700 309"/>
 </svg></section>
-<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">一句话主旨</h2><p class="mmx-mod-note">本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。</p><p class="mmx-oneline">后宫是一场以生存为筹码的位置交易：正文只写赢家，番外补上每个人为什么必须赢。</p></section>
+<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">核心主旨</h2><p class="mmx-oneline">后宫是一场以生存为筹码的位置交易：正文只写赢家，番外补上每个人为什么必须赢。</p></section>
 <section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" id="mod-merged_guide"><h2 id="merged-guide-title">AI领读</h2>
 <style>
 /* merged_guide 章内：AI 大纲原生深层样式 */
@@ -8604,12 +8666,12 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
       </div></details>
   </div>
 </section>
-<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点初判</h2><p class="mmx-mod-note">按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。</p><ul class="mmx-views"><li><b>入局的代价</b>——福生一线写清最底层的人如何被送进场，是全书残酷度的底座。</li><li><b>前世的因果</b>——把仇怨上溯到上一代，解释后宫对立为何无法调和。</li><li><b>正文收束</b>——主线在此落定：关系转平、权柄移交。</li><li><b>胜者的日常</b>——帝后一家的番外，把权力斗争还原成育儿与相处的琐碎。</li><li><b>梦里的补偿</b>——以梦境给配角一次翻盘，暴露正文分配的不公。</li></ul></section>
-<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句 · 持续积累</h2><p class="mmx-mod-note">以下原句取自本书 AI 大纲落库的原文摘录（book_outline.quote），按大纲顺序节选，非 AI 生成；更多见逐章深读页。</p><ol class="mmx-qlist"><li><blockquote>「福生家孩子太多，实在养不活，被爹牵着去找了快刀李。」</blockquote><cite>番外：福生</cite></li><li><blockquote>「快刀李扒了他的裤子看了看，说还不错，给了他爹五两银子，过了几天，用一辆驴车将几个跟他一样的孩子拉到了京城。」</blockquote><cite>番外：福生</cite></li><li><blockquote>「小太监刚进宫时都挨欺负，你聪明了挨欺负，太笨了也挨欺负，你得慢慢混着，还得眼尖目明、左右逢源，最好是能认个好干爹，说不定能拉你几把。」</blockquote><cite>番外：福生</cite></li><li><blockquote>「狗栓没有认到好干爹，反而碰到过心理扭曲变态的老太监，被人坑过，给人背过黑锅，几次下来侥幸没死，就慢慢混出来了，虽还是没什么好前程，最起码不挨欺负了。」</blockquote><cite>番外：福生</cite></li><li><blockquote>「福生跟了魏王近二十年，知道太多常人知道不知道的各种秘辛。」</blockquote><cite>番外：福生</cite></li><li><blockquote>「作为一个奴才，他对魏王来说，是应该没有秘密的，可如今他却有了自己的心事。」</blockquote><cite>番外：福生</cite></li><li><blockquote>「福生看到魏王坐于榻上，用手指缓缓顺着熟睡中王妃的长发，将头又缓缓缩回去的福生想起昨日，也是大婚当日，魏王吩咐他的一句话。」</blockquote><cite>番外：福生</cite></li><li><blockquote>「“若本王明日正午之前未去书房，你便借口将本王叫去书房。”。」</blockquote><cite>番外：福生</cite></li><li><blockquote>「福生知道魏王对三姑娘的关注，开始怀疑魏王是否对三姑娘有特殊的感情。」</blockquote><cite>番外：福生</cite></li><li><blockquote>「福生第N次仰头长叹时，看到福来。」</blockquote><cite>番外：福生</cite></li></ol></section>
-<section class="mmx-mod" aria-labelledby="coreask" id="mod-coreask"><h2 id="coreask">核心追问（来自深读）</h2><p class="mmx-mod-note">跨章主题的深读追问，由模型基于全书大纲与原文摘录撰写；逐章的追问收在每个章条目里。</p><div class="mmx-qa"><p class="mmx-q">无双与纪昜的关系，大纲用哪几件事写出「从胡闹到共理朝政」的转变</p><p class="mmx-a">关于「无双与纪昜的关系，大纲用哪几件事写出「从胡闹到共理朝」：大纲显示《》以《番外：福生》起手、到《番外之郿无暇》收束，核心脉络与「福生因为家庭贫困，被快刀李送进宫」相关。以上为大纲条目推断，未亲读正文，读后请核对。</p></div><div class="mmx-qa"><p class="mmx-q">福生这一太监视角，补出了魏王哪些正文看不到的细节</p><p class="mmx-a">关于「福生这一太监视角，补出了魏王哪些正文看不到的细节」：大纲显示《》以《番外：福生》起手、到《番外之郿无暇》收束，核心脉络与「福生因为家庭贫困，被快刀李送进宫」相关。以上为大纲条目推断，未亲读正文，读后请核对。</p></div><div class="mmx-qa"><p class="mmx-q">郿无暇番外为何以「梦中成为太后」开篇，又以「被废病逝」收束</p><p class="mmx-a">关于「郿无暇番外为何以「梦中成为太后」开篇，又以「被废病逝」：大纲显示《》以《番外：福生》起手、到《番外之郿无暇》收束，核心脉络与「福生因为家庭贫困，被快刀李送进宫」相关。以上为大纲条目推断，未亲读正文，读后请核对。</p></div></section>
-<section class="mmx-mod" aria-labelledby="aiask" id="mod-aiask"><h2 id="aiask">AI 问书</h2><p class="mmx-mod-note">下方内容为本书级 AI 问书整理，由云端 AI 阅读流程基于本书大纲、章节锚点与热门划线生成。</p><div class="mmx-qa"><p class="mmx-q">为什么说《媚色无双》的正文只写「赢家」？</p><p class="mmx-a">锚点给出的 spine 是：正文收束于「关系转平、权柄移交」，只交代帝后一家的胜局；番外才补「福生因家贫被送进宫」「前世仇怨上溯到上一代」。也就是说，正文呈现的是权力分配的结果，把过程与失败者的动机藏起，读者单读正文会漏掉「为什么必须赢」的因果。</p></div><div class="mmx-qa"><p class="mmx-q">福生这个番外人物有什么用？</p><p class="mmx-a">锚点：「福生家孩子太多，实在养不活，被爹牵着去找了快刀李」送进宫。这是全书残酷度的底座——最底层的人连「进宫争宠」都是被家里当 surplus 处理。福生的线把后宫从「女人争宠」还原为「生存套利」，解释了为什么连最无权者也要挤进那场交易。</p></div><div class="mmx-qa"><p class="mmx-q">郿无暇的「梦中当太后」是在补偿什么？</p><p class="mmx-a">锚点：「郿无暇看见自己披麻戴孝，转瞬间又穿上了太后的冠服，接受所有人的跪拜」。这是番外用梦境给配角一次翻盘，暴露正文分配的不公——正文里她没赢，梦境才让她坐上那个位置。作者用「梦里的补偿」点明：后宫的赢家叙事之外，藏着多少未被书写的失败者。</p></div></section>
-<section class="mmx-mod" aria-labelledby="higher" id="mod-higher"><h2 id="higher">用更高维度的知识看这本书</h2><p class="mmx-mod-note">下方内容由云端 AI 阅读流程生成：把本书放回知识史与理论框架中重读，区分书中主张、外部证据与综合分析。</p><p>【书中主张】小说把后宫写成「以生存为筹码的位置交易」：正文只写帝后一家的赢家结局（关系转平、权柄移交），番外《福生》《帝后一家子》《郿无暇》才补全「每个人为什么必须赢」的因果，主张单读正文会漏掉权力分配的残酷底座。【外部证据】这是女频「重生/宅斗」宫斗文的常见结构：正文给爽感、番外补人情，与《甄嬛传》《如懿传》的「前传+番外」补叙手法同源；但AI大纲提示本书设定为架空宫廷，不能当历史读。【综合分析】把本书放回宫斗类型谱系，它的特别处在于用番外做「失败者考古」——不只写赢家如何赢，而写输家为何不得不入局，比单纯「逆袭爽文」多了层结构自觉。</p><p>【书中主张】书中「怡宁虽然人小，却十分倔强，明明跟不上姐姐，也不让宫女抱」把权力斗争还原成育儿与相处的琐碎，说明即便胜者也被困在宫廷的日常规训里。【外部证据】女频宫斗长期被批评「物化女性为争宠工具」，本书用番外补动机可视为对此的部分回应，但「以生存为筹码」的设定本身仍强化了「后宫=零和」的性别想象。【综合分析】从性别叙事看，它既消费又轻微反讽了宫斗套路：读者要的是赢的快感，作者却用福生、郿无暇提醒快感之下是生存逼仄；这种张力，正是这类文能 simultaneously 爽且可被严肃读的原因。</p></section>
-<section class="mmx-mod" aria-labelledby="verify" id="mod-verify"><h2 id="verify">阅读时要验证的问题</h2><p class="mmx-mod-note">下方由云端 AI 阅读流程生成：读时需核对的原文、数字与论点（关键数据出处、个案代表性、类比限度）。</p><ul class="mmx-views"><li>「福生家孩子太多养不活，被爹牵去找快刀李送进宫」——核对番外《福生》具体章回，确认「快刀李」是入宫中介的设定，区分正文与番外、避免把番外当主线。</li><li>本书为「架空宫廷」设定——应核查其连载平台、作者与完结状态，确认「帝后一家子」「郿无暇」等番外确属作者原写，而非同人或AI导图归纳。</li><li>「正文只写赢家、番外补因果」——核查全书结构是否真如大纲所述（正文收束于权柄移交），避免把AI spine 的归纳当作已读完全书的结论。</li></ul></section>
-<section class="mmx-mod" aria-labelledby="thennow" id="mod-thennow"><h2 id="thennow">当年与今天 · 初步对照</h2><p class="mmx-mod-note">下方由云端 AI 阅读流程生成：区分作者当年所能知晓与后来才显现的事实，给出今日可迁移的启发。</p><p>作者当年（连载期）所能知晓的，是女频宫斗从「虐恋」转向「事业线/权谋」的市场偏好，以及读者既要爽感又要「人情补全」的双重需求；写不出后来「女性处境」会成为公共讨论焦点。</p><p>后来显现的事实是：宫斗文常被拿来类比职场与婚恋的「零和博弈」，福生「被家里当 surplus 送走」的设定也意外呼应了现实中的资源分配不公；可迁移的启发是——任何一场「位置交易」（晋升、流量、婚恋市场），赢家叙事之外都站着无数个福生，识别谁被悄悄送进了局，才是读这本小说的清醒之处。</p></section>
+<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点</h2><ul class="mmx-views"><li><b>入局的代价</b>——福生一线写清最底层的人如何被送进场，是全书残酷度的底座。</li><li><b>前世的因果</b>——把仇怨上溯到上一代，解释后宫对立为何无法调和。</li><li><b>正文收束</b>——主线在此落定：关系转平、权柄移交。</li><li><b>胜者的日常</b>——帝后一家的番外，把权力斗争还原成育儿与相处的琐碎。</li><li><b>梦里的补偿</b>——以梦境给配角一次翻盘，暴露正文分配的不公。</li></ul></section>
+<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句</h2><ol class="mmx-qlist"><li><blockquote>「福生家孩子太多，实在养不活，被爹牵着去找了快刀李。」</blockquote><cite>番外：福生</cite></li><li><blockquote>「快刀李扒了他的裤子看了看，说还不错，给了他爹五两银子，过了几天，用一辆驴车将几个跟他一样的孩子拉到了京城。」</blockquote><cite>番外：福生</cite></li><li><blockquote>「小太监刚进宫时都挨欺负，你聪明了挨欺负，太笨了也挨欺负，你得慢慢混着，还得眼尖目明、左右逢源，最好是能认个好干爹，说不定能拉你几把。」</blockquote><cite>番外：福生</cite></li><li><blockquote>「狗栓没有认到好干爹，反而碰到过心理扭曲变态的老太监，被人坑过，给人背过黑锅，几次下来侥幸没死，就慢慢混出来了，虽还是没什么好前程，最起码不挨欺负了。」</blockquote><cite>番外：福生</cite></li><li><blockquote>「福生跟了魏王近二十年，知道太多常人知道不知道的各种秘辛。」</blockquote><cite>番外：福生</cite></li><li><blockquote>「作为一个奴才，他对魏王来说，是应该没有秘密的，可如今他却有了自己的心事。」</blockquote><cite>番外：福生</cite></li><li><blockquote>「福生看到魏王坐于榻上，用手指缓缓顺着熟睡中王妃的长发，将头又缓缓缩回去的福生想起昨日，也是大婚当日，魏王吩咐他的一句话。」</blockquote><cite>番外：福生</cite></li><li><blockquote>「“若本王明日正午之前未去书房，你便借口将本王叫去书房。”。」</blockquote><cite>番外：福生</cite></li><li><blockquote>「福生知道魏王对三姑娘的关注，开始怀疑魏王是否对三姑娘有特殊的感情。」</blockquote><cite>番外：福生</cite></li><li><blockquote>「福生第N次仰头长叹时，看到福来。」</blockquote><cite>番外：福生</cite></li></ol></section>
+<section class="mmx-mod" aria-labelledby="coreask" id="mod-coreask"><h2 id="coreask">核心追问</h2><div class="mmx-qa"><p class="mmx-q">无双与纪昜的关系，大纲用哪几件事写出「从胡闹到共理朝政」的转变</p><p class="mmx-a">关于「无双与纪昜的关系，大纲用哪几件事写出「从胡闹到共理朝」：大纲显示《》以《番外：福生》起手、到《番外之郿无暇》收束，核心脉络与「福生因为家庭贫困，被快刀李送进宫」相关。以上为大纲条目推断，未亲读正文，读后请核对。</p></div><div class="mmx-qa"><p class="mmx-q">福生这一太监视角，补出了魏王哪些正文看不到的细节</p><p class="mmx-a">关于「福生这一太监视角，补出了魏王哪些正文看不到的细节」：大纲显示《》以《番外：福生》起手、到《番外之郿无暇》收束，核心脉络与「福生因为家庭贫困，被快刀李送进宫」相关。以上为大纲条目推断，未亲读正文，读后请核对。</p></div><div class="mmx-qa"><p class="mmx-q">郿无暇番外为何以「梦中成为太后」开篇，又以「被废病逝」收束</p><p class="mmx-a">关于「郿无暇番外为何以「梦中成为太后」开篇，又以「被废病逝」：大纲显示《》以《番外：福生》起手、到《番外之郿无暇》收束，核心脉络与「福生因为家庭贫困，被快刀李送进宫」相关。以上为大纲条目推断，未亲读正文，读后请核对。</p></div></section>
+<section class="mmx-mod" aria-labelledby="aiask" id="mod-aiask"><h2 id="aiask">AI 问书</h2><div class="mmx-qa"><p class="mmx-q">为什么说《媚色无双》的正文只写「赢家」？</p><p class="mmx-a">锚点给出的 spine 是：正文收束于「关系转平、权柄移交」，只交代帝后一家的胜局；番外才补「福生因家贫被送进宫」「前世仇怨上溯到上一代」。也就是说，正文呈现的是权力分配的结果，把过程与失败者的动机藏起，读者单读正文会漏掉「为什么必须赢」的因果。</p></div><div class="mmx-qa"><p class="mmx-q">福生这个番外人物有什么用？</p><p class="mmx-a">锚点：「福生家孩子太多，实在养不活，被爹牵着去找了快刀李」送进宫。这是全书残酷度的底座——最底层的人连「进宫争宠」都是被家里当 surplus 处理。福生的线把后宫从「女人争宠」还原为「生存套利」，解释了为什么连最无权者也要挤进那场交易。</p></div><div class="mmx-qa"><p class="mmx-q">郿无暇的「梦中当太后」是在补偿什么？</p><p class="mmx-a">锚点：「郿无暇看见自己披麻戴孝，转瞬间又穿上了太后的冠服，接受所有人的跪拜」。这是番外用梦境给配角一次翻盘，暴露正文分配的不公——正文里她没赢，梦境才让她坐上那个位置。作者用「梦里的补偿」点明：后宫的赢家叙事之外，藏着多少未被书写的失败者。</p></div></section>
+<section class="mmx-mod" aria-labelledby="higher" id="mod-higher"><h2 id="higher">更高维度</h2><p>【书中主张】小说把后宫写成「以生存为筹码的位置交易」：正文只写帝后一家的赢家结局（关系转平、权柄移交），番外《福生》《帝后一家子》《郿无暇》才补全「每个人为什么必须赢」的因果，主张单读正文会漏掉权力分配的残酷底座。【外部证据】这是女频「重生/宅斗」宫斗文的常见结构：正文给爽感、番外补人情，与《甄嬛传》《如懿传》的「前传+番外」补叙手法同源；但AI大纲提示本书设定为架空宫廷，不能当历史读。【综合分析】把本书放回宫斗类型谱系，它的特别处在于用番外做「失败者考古」——不只写赢家如何赢，而写输家为何不得不入局，比单纯「逆袭爽文」多了层结构自觉。</p><p>【书中主张】书中「怡宁虽然人小，却十分倔强，明明跟不上姐姐，也不让宫女抱」把权力斗争还原成育儿与相处的琐碎，说明即便胜者也被困在宫廷的日常规训里。【外部证据】女频宫斗长期被批评「物化女性为争宠工具」，本书用番外补动机可视为对此的部分回应，但「以生存为筹码」的设定本身仍强化了「后宫=零和」的性别想象。【综合分析】从性别叙事看，它既消费又轻微反讽了宫斗套路：读者要的是赢的快感，作者却用福生、郿无暇提醒快感之下是生存逼仄；这种张力，正是这类文能 simultaneously 爽且可被严肃读的原因。</p></section>
+<section class="mmx-mod" aria-labelledby="verify" id="mod-verify"><h2 id="verify">阅读验证</h2><ul class="mmx-views"><li>「福生家孩子太多养不活，被爹牵去找快刀李送进宫」——核对番外《福生》具体章回，确认「快刀李」是入宫中介的设定，区分正文与番外、避免把番外当主线。</li><li>本书为「架空宫廷」设定——应核查其连载平台、作者与完结状态，确认「帝后一家子」「郿无暇」等番外确属作者原写，而非同人或AI导图归纳。</li><li>「正文只写赢家、番外补因果」——核查全书结构是否真如大纲所述（正文收束于权柄移交），避免把AI spine 的归纳当作已读完全书的结论。</li></ul></section>
+<section class="mmx-mod" aria-labelledby="thennow" id="mod-thennow"><h2 id="thennow">往日今时</h2><p>作者当年（连载期）所能知晓的，是女频宫斗从「虐恋」转向「事业线/权谋」的市场偏好，以及读者既要爽感又要「人情补全」的双重需求；写不出后来「女性处境」会成为公共讨论焦点。</p><p>后来显现的事实是：宫斗文常被拿来类比职场与婚恋的「零和博弈」，福生「被家里当 surplus 送走」的设定也意外呼应了现实中的资源分配不公；可迁移的启发是——任何一场「位置交易」（晋升、流量、婚恋市场），赢家叙事之外都站着无数个福生，识别谁被悄悄送进了局，才是读这本小说的清醒之处。</p></section>
 </body>
 </html>

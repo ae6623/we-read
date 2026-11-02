@@ -6,46 +6,108 @@
 <title>《山居杂忆》｜通读 · 精读</title>
 <link rel="stylesheet" href="../../../assets/css/reading-overview.css"><link rel="stylesheet" href="../../../assets/css/mmx-guide.css"><link rel="stylesheet" href="../../../assets/css/reading-outline.css">
 <style>
-/* 合并页外壳 */
-body{max-width:960px;margin:0 auto;padding:0 18px 80px;}
-.combined-head{padding:34px 0 18px;border-bottom:1px solid #e7e0d2;margin-bottom:8px;}
-.combined-head h1{font-size:26px;margin:0 0 10px;}
+/* ── 外壳与全局阅读节奏 ── */
+body{max-width:880px;margin:0 auto;padding:0 18px 80px;
+  font-size:15px;line-height:1.88;color:#3b453e;background:#f7f8f3;
+  -webkit-font-smoothing:antialiased;}
+.combined-head{padding:30px 0 16px;border-bottom:1px solid #e7e0d2;margin-bottom:4px;}
+.combined-head h1{font:700 23px/1.35 var(--serif);margin:0 0 8px;color:#244b40;}
+.combined-head .eyebrow{font-size:.72rem;letter-spacing:.14em;margin:0 0 6px;}
+.chips{margin:8px 0 0;}
+.chip{font-size:.72rem;padding:2px 10px;}
 /* 锚点导航：固定一排 4 个，等宽对齐 */
-.nav{position:sticky;top:0;z-index:20;background:rgba(255,253,248,.96);backdrop-filter:blur(6px);
-  border-bottom:1px solid #ece4d4;padding:10px 0;margin:14px 0 26px;display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;
-  box-shadow:0 2px 10px rgba(120,100,60,.06);}
-.navlink{font-size:12.5px;color:#5d5443;text-decoration:none;background:#f6f1e6;border:1px solid #e7ddca;
-  border-radius:7px;padding:4px 6px;text-align:center;white-space:nowrap;overflow:hidden;
-  text-overflow:ellipsis;}
-section{scroll-margin-top:64px;}
-/* 一句话主旨：去左侧竖线 */
-.mmx-oneline{border-left:none;padding-left:18px;}
-/* AI领读章内：AI 大纲原生深层样式 */
-.merged-guide .sec{margin:10px 0 14px;padding-left:6px;border-left:2px solid #e5e0d6}
-.merged-guide .sec h4{font:600 .98rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.6em 0 .3em}
-.merged-guide ul.point{margin:.3em 0;padding-left:20px}
-.merged-guide ul.point>li{margin:.35em 0}
-.merged-guide ul.quote{margin:.25em 0 .25em 20px;padding-left:18px;list-style:none}
-.merged-guide ul.quote::before{content:"原句";display:block;font-size:.72rem;color:#bf8247;
-  letter-spacing:.1em;margin:.15em 0 .1em;font-weight:600}
-.merged-guide ul.quote.quote-node{margin-top:.5em;padding-top:.4em;border-top:1px dashed #eadfc9}
+.nav{position:sticky;top:0;z-index:20;background:rgba(247,248,243,.96);backdrop-filter:blur(6px);
+  border-bottom:1px solid #ece4d4;padding:10px 0;margin:12px 0 20px;display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;
+  box-shadow:0 2px 10px rgba(120,100,60,.05);}
+.navlink{font-size:12px;color:#5d5443;text-decoration:none;background:#fdfbf3;border:1px solid #e8e2d2;
+  border-radius:8px;padding:6px 4px;text-align:center;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;transition:background .15s,color .15s;}
+.navlink:hover{background:#f2efe2;color:#244b40;}
+section{scroll-margin-top:62px;}
+
+/* ── 统一卡片：所有顶层模块（AI领读 / AI 问答 / 其余）一视同仁 ── */
+body>section.mmx-mod,body>section.card,body>section.mmx-svgwrap{
+  background:#fffdf6;border:1px solid #e8e4d5;border-radius:16px;
+  padding:18px 22px;margin:18px 0;
+  box-shadow:0 1px 3px rgba(110,95,60,.05);}
+body>section.mmx-mod>*:first-child,body>section.card>*:first-child,
+body>section.mmx-svgwrap>*:first-child{margin-top:0}
+body>section.mmx-mod>*:last-child,body>section.card>*:last-child,
+body>section.mmx-svgwrap>*:last-child{margin-bottom:0}
+/* 结构导图：图本身留白居中，不与正文抢宽 */
+body>section.mmx-svgwrap>svg.mmx-svg{display:block;width:100%;height:auto;margin:2px auto 0;}
+/* 模块标题：统一大小、弱强调，不与正文抢注意力 */
+body>section.mmx-mod>h2,body>section.card>h2{
+  font:700 1.04rem/1.5 var(--serif);color:#244b40;margin:0 0 11px;
+  padding-left:10px;border-left:3px solid #bf8247;letter-spacing:.01em;}
+/* 正文：字号收小、行距放宽、段间距舒服 */
+body>section.mmx-mod p,body>section.card p,
+body>section.mmx-mod li,body>section.card li{
+  font-size:.9rem;line-height:1.92;color:#4a4436;}
+body>section.mmx-mod p,body>section.card p{margin:.5em 0;}
+body>section.mmx-mod>ul,body>section.mmx-mod>ol,body>section.mmx-mod>div,
+body>section.mmx-mod>p:not(.mmx-mod-note),
+body>section.card:not(.merged-guide)>ul,body>section.card:not(.merged-guide)>ol,
+body>section.card:not(.merged-guide)>div,body>section.card:not(.merged-guide)>p:not(.mmx-mod-note){
+  padding-left:14px;}
+/* 模块说明小字：弱化不抢眼 */
+.mmx-mod-note{font-size:.75rem;color:#8d8878;margin:.1em 0 .75em;line-height:1.7;}
+
+/* ── 内部块统一：卡片里不再套深卡片，一律浅底子块 ── */
+body>section .mmx-pending,body>section .mmx-evib,body>section .aiqa-item{
+  background:#fbfaf2;border:1px solid #eee9d8;border-radius:12px;
+  padding:13px 16px;margin:.65em 0;}
+body>section .mmx-evib ul{padding-left:1.15em;}
+/* 一句话主旨：去左侧竖线 + 收敛字号 */
+.mmx-oneline{font-size:.98rem;line-height:1.85;color:#3a352c;margin:.2em 0 0;
+  padding:12px 16px;background:#fbfaf4;border-left:none;border-radius:12px;}
+/* 核心观点 / 验证清单：虚线分隔 + 收紧行距 */
+.mmx-views li{padding:.5em 0 .5em 0;font-size:.9rem;line-height:1.88;}
+/* 原文金句 */
+.mmx-qlist li{padding:.6em 0 .6em 2.2em;}
+.mmx-qlist blockquote{font-size:.89rem;line-height:1.9;}
+.mmx-qlist cite{font-size:.72rem;}
+/* 核心追问：问句加重、答句放松 */
+.mmx-qa{margin:.7em 0;padding-left:12px;border-left:3px solid #e5dfcd;}
+.mmx-qa .mmx-q{font-size:.9rem;font-weight:700;color:#2f3a33;line-height:1.8;margin:0 0 .25em;}
+.mmx-qa .mmx-a{font-size:.88rem;line-height:1.95;color:#4a4436;margin:0;}
+
+/* ── AI 问书专项：外层容器透明，问答条目才是阅读单元 ── */
+#mod-aiask .mmx-ask{background:transparent;border:0;border-radius:0;padding:0;margin:0;}
+#mod-aiask .aiqa-item{margin:.6em 0;padding:14px 16px 15px;}
+#mod-aiask .aiqa-item h3{font:700 .93rem/1.7 var(--serif);color:#2f5b49;margin:0 0 .4em;
+  padding:0;border:0;}
+#mod-aiask .aiqa-item h3:before{content:"问　";color:#bf8247;font-weight:700;}
+#mod-aiask .aiqa-item p{font-size:.88rem;line-height:1.95;color:#4a4436;margin:.4em 0;}
+#mod-aiask .aiqa-item ul{margin:.35em 0;padding-left:1.1em;}
+#mod-aiask .aiqa-item li{font-size:.87rem;line-height:1.88;margin:.18em 0;color:#4a4436;}
+#mod-aiask .aiqa-item li::marker{color:#c0a06a;}
+/* 逐章追问（details 形态）：摘要行也收敛 */
+.mmx-ask>summary{font-size:.87rem;line-height:1.7;padding:2px 0;}
+.mmx-askbody{font-size:.88rem;line-height:1.9;}
+
+/* AI领读章内：AI 大纲原生深层样式（字号同步收小） */
+.merged-guide .sec{margin:9px 0 12px;padding-left:6px;border-left:2px solid #e5e0d6}
+.merged-guide .sec h4{font:600 .93rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.5em 0 .25em}
+.merged-guide ul.point{margin:.25em 0;padding-left:20px}
+.merged-guide ul.point>li{margin:.3em 0}
+.merged-guide ul.quote{margin:.22em 0 .22em 20px;padding-left:18px;list-style:none}
+.merged-guide ul.quote::before{content:"原句";display:block;font-size:.7rem;color:#bf8247;
+  letter-spacing:.1em;margin:.12em 0 .08em;font-weight:600}
+.merged-guide ul.quote.quote-node{margin-top:.45em;padding-top:.35em;border-top:1px dashed #eadfc9}
 .merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
-.merged-guide ul.quote>li{color:#4a4436;font-size:.93rem;margin:.2em 0;padding-left:10px;border-left:2px solid #bf8247}
-/* 模块内子内容（AI领读除外，它有专属深层样式）：左缩进 + 正文与标题分层 */
-section.mmx-mod>ul,section.mmx-mod>ol,section.mmx-mod>div,
-section.mmx-mod>p:not(.mmx-mod-note),
-section.card:not(.merged-guide)>ul,section.card:not(.merged-guide)>ol,
-section.card:not(.merged-guide)>div,section.card:not(.merged-guide)>p:not(.mmx-mod-note){
-  padding-left:16px;}
-section.mmx-mod li,section.mmx-mod p:not(.mmx-mod-note),
-section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mod-note){
-  color:#4a4436;font-size:.93rem;line-height:1.78;}
+.merged-guide ul.quote>li{color:#4a4436;font-size:.88rem;line-height:1.85;margin:.18em 0;padding-left:10px;border-left:2px solid #bf8247}
 /* 核心观点初判：外链 mmx-guide.css 的「观点N」前缀是绝对定位，在本页版式里和标题叠字，
    且此前要求去掉「观点1/2/3」前缀 —— 这里整条关掉（外链 CSS 不在页面内，只能内联覆盖）。 */
 .mmx-views li{padding-left:0 !important;}
 .mmx-views li:before,.mmx-views li::before{
   content:none !important;display:none !important;counter-increment:none !important;}
+@media(max-width:720px){
+  body{padding:0 12px 60px;font-size:14.5px;}
+  body>section.mmx-mod,body>section.card{padding:15px 16px;border-radius:14px;}
+  .nav{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
 </style>
 </head>
 <body>
@@ -54,8 +116,8 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
   <h1>《山居杂忆》</h1>
   <div class="chips"><span class="chip">通读 + 精读</span><span class="chip">AI领读</span><span class="chip">AI 生产</span></div>
 </header>
-<nav class="nav"><a class="navlink" href="#mod-svg">全书结构导图</a><a class="navlink" href="#mod-oneline">一句话主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a></nav>
-<section class="mmx-svgwrap" id="mod-svg">
+<nav class="nav"><a class="navlink" href="#mod-svg">结构导图</a><a class="navlink" href="#mod-oneline">核心主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a></nav>
+<section class="mmx-svgwrap" id="mod-svg"><h2>结构导图</h2>
 <svg class="mmx-svg" viewBox="0 0 1120 654" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="山居杂忆 全书精读">
 <rect x="0" y="0" width="1120" height="654" fill="none"/>
 <style>.mmx-svg text{font-family:"Noto Serif SC",Georgia,serif}.mmx-svg .t1{font-size:15px;fill:#2f2a24;font-weight:600}.mmx-svg .t2{font-size:12px;fill:#5c5347}.mmx-svg .t3{font-size:10.5px;fill:#8a8272}.mmx-svg .rt{font-size:13px;fill:#f7f3ea;font-weight:600}.mmx-svg .ln{stroke:#cfc6b4;stroke-width:1.4;fill:none}</style>
@@ -126,11 +188,11 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
 <text class="t2" x="714" y="553">含「伍拾叁章 依然静好楼记」至「增订版后记」</text>
 <path class="ln" d="M692 557 L700 557"/>
 </svg></section>
-<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">一句话主旨</h2><p class="mmx-mod-note">本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。</p><p class="mmx-oneline">这是一本活的历史书，记录的是以一个江南家族为中心、从清朝末年到改革开放开始这一百年的中国社会变革史</p></section>
-<section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" id="mod-merged_guide"><h2 id="merged-guide-title">AI领读 · 全书篇目</h2>
+<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">核心主旨</h2><p class="mmx-oneline">这是一本活的历史书，记录的是以一个江南家族为中心、从清朝末年到改革开放开始这一百年的中国社会变革史</p></section>
+<section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" id="mod-merged_guide"><h2 id="merged-guide-title">AI领读</h2>
 <p class="small">本书 AI 大纲目前为章级目录（要点与原句待补全）。以下为全书篇目，大纲补全后将自动升级为「目录 + 骨架 + 要点 + 原句」完整版。</p>
 <ol class="mmx-pts"><li><b>1</b> 插图</li><li><b>2</b> 周退密先生为《山居杂忆》题词</li><li><b>3</b> 序一</li><li><b>4</b> 序二</li><li><b>5</b> 壹章 杭州旧时风俗之一</li><li><b>6</b> 贰章 杭州旧时风俗之二</li><li><b>7</b> 叁章 杭州旧时风俗之三</li><li><b>8</b> 肆章 杭州旧时风俗之四</li><li><b>9</b> 伍章 曾祖母二三事</li><li><b>10</b> 陆章 叶妈</li><li><b>11</b> 柒章 招姑娘</li><li><b>12</b> 捌章 褚先生</li><li><b>13</b> 玖章 黄先生</li><li><b>14</b> 拾章 鬼故事</li><li><b>15</b> 拾壹章 再说鬼故事</li><li><b>16</b> 拾贰章 孙云章医生</li><li><b>17</b> 拾叁章 阮师傅和杨海师傅</li><li><b>18</b> 拾肆章 民四嫂</li><li><b>19</b> 拾伍章 绣花沈妈</li><li><b>20</b> 拾陆章 扶乩</li><li><b>21</b> 拾柒章 陈妈</li><li><b>22</b> 拾捌章 桂花糖</li><li><b>23</b> 拾玖章 我的父母</li><li><b>24</b> 贰拾章 结婚之一——做媒、相亲、订婚</li><li><b>25</b> 贰拾壹章 结婚之二——准备嫁妆</li><li><b>26</b> 贰拾贰章 结婚之三——婚礼</li><li><b>27</b> 贰拾叁章 结婚之四——从“三朝”到满月</li><li><b>28</b> 贰拾肆章 我的公婆</li><li><b>29</b> 贰拾伍章 我的太婆</li><li><b>30</b> 贰拾陆章 黄妈</li><li><b>31</b> 贰拾柒章 吴烈忠医生</li><li><b>32</b> 贰拾捌章 昆明叔叔</li><li><b>33</b> 贰拾玖章 寡妇</li><li><b>34</b> 叁拾章 姨太太</li><li><b>35</b> 叁拾壹章 香市</li><li><b>36</b> 叁拾贰章 放生</li><li><b>37</b> 叁拾叁章 我的弟弟宜官</li><li><b>38</b> 叁拾肆章 我的哥哥恺之</li><li><b>39</b> 叁拾伍章 家乡的吃</li><li><b>40</b> 叁拾陆章 我的烹饪经历</li><li><b>41</b> 叁拾柒章 逃难之一</li><li><b>42</b> 叁拾捌章 逃难之二</li><li><b>43</b> 叁拾玖章 逃难之三</li><li><b>44</b> 肆拾章 一位朱先生和三位朱师母</li><li><b>45</b> 肆拾壹章 黄山之游前后</li><li><b>46</b> 肆拾贰章 周端臣和沈颂南</li><li><b>47</b> 肆拾叁章 丁蕙女士</li><li><b>48</b> 肆拾肆章 阿苏和绍大</li><li><b>49</b> 肆拾伍章 吴汉槎先生</li><li><b>50</b> 肆拾陆章 汤书年医生</li><li><b>51</b> 肆拾柒章 说说沪杭的私人医生</li><li><b>52</b> 肆拾捌章 奶婶婶</li><li><b>53</b> 肆拾玖章 抄家</li><li><b>54</b> 伍拾章 扫地出门</li><li><b>55</b> 伍拾壹章 阿四老太</li><li><b>56</b> 伍拾贰章 倪兄</li><li><b>57</b> 伍拾叁章 依然静好楼记</li><li><b>58</b> 后记</li><li><b>59</b> 增订版后记</li></ol></section>
-<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点初判</h2><p class="mmx-mod-note">按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。</p><ul class="mmx-views"><li><b>第 1–7 章</b>——含「插图」至「叁章 杭州旧时风俗之三」</li><li><b>第 8–14 章</b>——含「肆章 杭州旧时风俗之四」至「拾章 鬼故事」</li><li><b>第 15–21 章</b>——含「拾壹章 再说鬼故事」至「拾柒章 陈妈」</li><li><b>第 22–28 章</b>——含「拾捌章 桂花糖」至「贰拾肆章 我的公婆」</li><li><b>第 29–35 章</b>——含「贰拾伍章 我的太婆」至「叁拾壹章 香市」</li><li><b>第 36–42 章</b>——含「叁拾贰章 放生」至「叁拾捌章 逃难之二」</li><li><b>第 43–49 章</b>——含「叁拾玖章 逃难之三」至「肆拾伍章 吴汉槎先生」</li><li><b>第 50–56 章</b>——含「肆拾陆章 汤书年医生」至「伍拾贰章 倪兄」</li><li><b>第 57–59 章</b>——含「伍拾叁章 依然静好楼记」至「增订版后记」</li></ul></section>
-<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句 · 持续积累</h2><p class="mmx-mod-note">以下原句取自本书 AI 大纲落库的原文摘录（book_outline.quote），按大纲顺序节选，非 AI 生成；更多见逐章深读页。</p><ol class="mmx-qlist"><li><blockquote>「小孩时总觉得过年开心，因为既有吃穿，又有好玩，样样新奇有趣，于是一年之中天天盼新年，好像日子过得真慢。等到成年之后，只觉得一年一年过得何其快也，于是永远再也尝不到小孩时过年的乐趣了！」</blockquote><cite>本书正文</cite></li><li><blockquote>「还有一种可让小孩拿在手里，叫“滴滴精”。那是一根签子，上半段涂火药，用火柴一点即发出火花，不会烫手，可玩多时才熄灭。」</blockquote><cite>本书正文</cite></li><li><blockquote>「可见中国人自古就知道怎么开后门、贿赂干部。不但对人可以这样，而且也能依法炮制用来对付菩萨！」</blockquote><cite>本书正文</cite></li><li><blockquote>「记得小时候最喜欢的是过年，因为那时有吃、有穿、有看、又有玩，真是一年之中最为高兴的时候了。」</blockquote><cite>本书正文</cite></li><li><blockquote>「而客人则一般只喝一二调羹的莲子汤，枣饼也只吃半只，算是客气。」</blockquote><cite>本书正文</cite></li><li><blockquote>「大年初一，早晨一睁开眼，不等我开口说话，保姆（即专门照看孩子的女仆）就会将冷冰冰的桔子和干荔子塞进我的嘴中。这是因为“桔”和“荔”两个字是“吉利”两字的近音字。」</blockquote><cite>本书正文</cite></li><li><blockquote>「我常想：佛教徒总相信：善有善报，恶有恶报。然而为什么很多像招姑娘那样的善良人，命运却如此不幸呢？难道是因为他们前世造孽，所以今世才要受苦！？」</blockquote><cite>本书正文</cite></li><li><blockquote>「如果这颗牙是从上颚拔下的，就扔到床底下去；如果是从下颚拔下的，就扔到床上的帐顶上去。」</blockquote><cite>本书正文</cite></li><li><blockquote>「旧时妇女不剪发，都梳头梳辫子。当时有迷信的说法，说每洗一次头发，阴间的母亲就要喝一次洗头水，所以不能多洗头。」</blockquote><cite>本书正文</cite></li><li><blockquote>「冬至前一夜称为“冬至夜”。这一夜是全年最长的一夜。据说那夜做的梦最准，能预言以后的事。」</blockquote><cite>本书正文</cite></li></ol></section>
+<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点</h2><ul class="mmx-views"><li><b>第 1–7 章</b>——含「插图」至「叁章 杭州旧时风俗之三」</li><li><b>第 8–14 章</b>——含「肆章 杭州旧时风俗之四」至「拾章 鬼故事」</li><li><b>第 15–21 章</b>——含「拾壹章 再说鬼故事」至「拾柒章 陈妈」</li><li><b>第 22–28 章</b>——含「拾捌章 桂花糖」至「贰拾肆章 我的公婆」</li><li><b>第 29–35 章</b>——含「贰拾伍章 我的太婆」至「叁拾壹章 香市」</li><li><b>第 36–42 章</b>——含「叁拾贰章 放生」至「叁拾捌章 逃难之二」</li><li><b>第 43–49 章</b>——含「叁拾玖章 逃难之三」至「肆拾伍章 吴汉槎先生」</li><li><b>第 50–56 章</b>——含「肆拾陆章 汤书年医生」至「伍拾贰章 倪兄」</li><li><b>第 57–59 章</b>——含「伍拾叁章 依然静好楼记」至「增订版后记」</li></ul></section>
+<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句</h2><ol class="mmx-qlist"><li><blockquote>「小孩时总觉得过年开心，因为既有吃穿，又有好玩，样样新奇有趣，于是一年之中天天盼新年，好像日子过得真慢。等到成年之后，只觉得一年一年过得何其快也，于是永远再也尝不到小孩时过年的乐趣了！」</blockquote><cite>本书正文</cite></li><li><blockquote>「还有一种可让小孩拿在手里，叫“滴滴精”。那是一根签子，上半段涂火药，用火柴一点即发出火花，不会烫手，可玩多时才熄灭。」</blockquote><cite>本书正文</cite></li><li><blockquote>「可见中国人自古就知道怎么开后门、贿赂干部。不但对人可以这样，而且也能依法炮制用来对付菩萨！」</blockquote><cite>本书正文</cite></li><li><blockquote>「记得小时候最喜欢的是过年，因为那时有吃、有穿、有看、又有玩，真是一年之中最为高兴的时候了。」</blockquote><cite>本书正文</cite></li><li><blockquote>「而客人则一般只喝一二调羹的莲子汤，枣饼也只吃半只，算是客气。」</blockquote><cite>本书正文</cite></li><li><blockquote>「大年初一，早晨一睁开眼，不等我开口说话，保姆（即专门照看孩子的女仆）就会将冷冰冰的桔子和干荔子塞进我的嘴中。这是因为“桔”和“荔”两个字是“吉利”两字的近音字。」</blockquote><cite>本书正文</cite></li><li><blockquote>「我常想：佛教徒总相信：善有善报，恶有恶报。然而为什么很多像招姑娘那样的善良人，命运却如此不幸呢？难道是因为他们前世造孽，所以今世才要受苦！？」</blockquote><cite>本书正文</cite></li><li><blockquote>「如果这颗牙是从上颚拔下的，就扔到床底下去；如果是从下颚拔下的，就扔到床上的帐顶上去。」</blockquote><cite>本书正文</cite></li><li><blockquote>「旧时妇女不剪发，都梳头梳辫子。当时有迷信的说法，说每洗一次头发，阴间的母亲就要喝一次洗头水，所以不能多洗头。」</blockquote><cite>本书正文</cite></li><li><blockquote>「冬至前一夜称为“冬至夜”。这一夜是全年最长的一夜。据说那夜做的梦最准，能预言以后的事。」</blockquote><cite>本书正文</cite></li></ol></section>
 </body>
 </html>

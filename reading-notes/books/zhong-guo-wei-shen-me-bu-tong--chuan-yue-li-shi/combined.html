@@ -6,46 +6,108 @@
 <title>《中国为什么不同：穿越历史理解我们身处的时代》｜通读 · 精读</title>
 <link rel="stylesheet" href="../../../assets/css/reading-overview.css"><link rel="stylesheet" href="../../../assets/css/mmx-guide.css"><link rel="stylesheet" href="../../../assets/css/reading-outline.css">
 <style>
-/* 合并页外壳 */
-body{max-width:960px;margin:0 auto;padding:0 18px 80px;}
-.combined-head{padding:34px 0 18px;border-bottom:1px solid #e7e0d2;margin-bottom:8px;}
-.combined-head h1{font-size:26px;margin:0 0 10px;}
+/* ── 外壳与全局阅读节奏 ── */
+body{max-width:880px;margin:0 auto;padding:0 18px 80px;
+  font-size:15px;line-height:1.88;color:#3b453e;background:#f7f8f3;
+  -webkit-font-smoothing:antialiased;}
+.combined-head{padding:30px 0 16px;border-bottom:1px solid #e7e0d2;margin-bottom:4px;}
+.combined-head h1{font:700 23px/1.35 var(--serif);margin:0 0 8px;color:#244b40;}
+.combined-head .eyebrow{font-size:.72rem;letter-spacing:.14em;margin:0 0 6px;}
+.chips{margin:8px 0 0;}
+.chip{font-size:.72rem;padding:2px 10px;}
 /* 锚点导航：固定一排 4 个，等宽对齐 */
-.nav{position:sticky;top:0;z-index:20;background:rgba(255,253,248,.96);backdrop-filter:blur(6px);
-  border-bottom:1px solid #ece4d4;padding:10px 0;margin:14px 0 26px;display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;
-  box-shadow:0 2px 10px rgba(120,100,60,.06);}
-.navlink{font-size:12.5px;color:#5d5443;text-decoration:none;background:#f6f1e6;border:1px solid #e7ddca;
-  border-radius:7px;padding:4px 6px;text-align:center;white-space:nowrap;overflow:hidden;
-  text-overflow:ellipsis;}
-section{scroll-margin-top:64px;}
-/* 一句话主旨：去左侧竖线 */
-.mmx-oneline{border-left:none;padding-left:18px;}
-/* AI领读章内：AI 大纲原生深层样式 */
-.merged-guide .sec{margin:10px 0 14px;padding-left:6px;border-left:2px solid #e5e0d6}
-.merged-guide .sec h4{font:600 .98rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.6em 0 .3em}
-.merged-guide ul.point{margin:.3em 0;padding-left:20px}
-.merged-guide ul.point>li{margin:.35em 0}
-.merged-guide ul.quote{margin:.25em 0 .25em 20px;padding-left:18px;list-style:none}
-.merged-guide ul.quote::before{content:"原句";display:block;font-size:.72rem;color:#bf8247;
-  letter-spacing:.1em;margin:.15em 0 .1em;font-weight:600}
-.merged-guide ul.quote.quote-node{margin-top:.5em;padding-top:.4em;border-top:1px dashed #eadfc9}
+.nav{position:sticky;top:0;z-index:20;background:rgba(247,248,243,.96);backdrop-filter:blur(6px);
+  border-bottom:1px solid #ece4d4;padding:10px 0;margin:12px 0 20px;display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;
+  box-shadow:0 2px 10px rgba(120,100,60,.05);}
+.navlink{font-size:12px;color:#5d5443;text-decoration:none;background:#fdfbf3;border:1px solid #e8e2d2;
+  border-radius:8px;padding:6px 4px;text-align:center;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;transition:background .15s,color .15s;}
+.navlink:hover{background:#f2efe2;color:#244b40;}
+section{scroll-margin-top:62px;}
+
+/* ── 统一卡片：所有顶层模块（AI领读 / AI 问答 / 其余）一视同仁 ── */
+body>section.mmx-mod,body>section.card,body>section.mmx-svgwrap{
+  background:#fffdf6;border:1px solid #e8e4d5;border-radius:16px;
+  padding:18px 22px;margin:18px 0;
+  box-shadow:0 1px 3px rgba(110,95,60,.05);}
+body>section.mmx-mod>*:first-child,body>section.card>*:first-child,
+body>section.mmx-svgwrap>*:first-child{margin-top:0}
+body>section.mmx-mod>*:last-child,body>section.card>*:last-child,
+body>section.mmx-svgwrap>*:last-child{margin-bottom:0}
+/* 结构导图：图本身留白居中，不与正文抢宽 */
+body>section.mmx-svgwrap>svg.mmx-svg{display:block;width:100%;height:auto;margin:2px auto 0;}
+/* 模块标题：统一大小、弱强调，不与正文抢注意力 */
+body>section.mmx-mod>h2,body>section.card>h2{
+  font:700 1.04rem/1.5 var(--serif);color:#244b40;margin:0 0 11px;
+  padding-left:10px;border-left:3px solid #bf8247;letter-spacing:.01em;}
+/* 正文：字号收小、行距放宽、段间距舒服 */
+body>section.mmx-mod p,body>section.card p,
+body>section.mmx-mod li,body>section.card li{
+  font-size:.9rem;line-height:1.92;color:#4a4436;}
+body>section.mmx-mod p,body>section.card p{margin:.5em 0;}
+body>section.mmx-mod>ul,body>section.mmx-mod>ol,body>section.mmx-mod>div,
+body>section.mmx-mod>p:not(.mmx-mod-note),
+body>section.card:not(.merged-guide)>ul,body>section.card:not(.merged-guide)>ol,
+body>section.card:not(.merged-guide)>div,body>section.card:not(.merged-guide)>p:not(.mmx-mod-note){
+  padding-left:14px;}
+/* 模块说明小字：弱化不抢眼 */
+.mmx-mod-note{font-size:.75rem;color:#8d8878;margin:.1em 0 .75em;line-height:1.7;}
+
+/* ── 内部块统一：卡片里不再套深卡片，一律浅底子块 ── */
+body>section .mmx-pending,body>section .mmx-evib,body>section .aiqa-item{
+  background:#fbfaf2;border:1px solid #eee9d8;border-radius:12px;
+  padding:13px 16px;margin:.65em 0;}
+body>section .mmx-evib ul{padding-left:1.15em;}
+/* 一句话主旨：去左侧竖线 + 收敛字号 */
+.mmx-oneline{font-size:.98rem;line-height:1.85;color:#3a352c;margin:.2em 0 0;
+  padding:12px 16px;background:#fbfaf4;border-left:none;border-radius:12px;}
+/* 核心观点 / 验证清单：虚线分隔 + 收紧行距 */
+.mmx-views li{padding:.5em 0 .5em 0;font-size:.9rem;line-height:1.88;}
+/* 原文金句 */
+.mmx-qlist li{padding:.6em 0 .6em 2.2em;}
+.mmx-qlist blockquote{font-size:.89rem;line-height:1.9;}
+.mmx-qlist cite{font-size:.72rem;}
+/* 核心追问：问句加重、答句放松 */
+.mmx-qa{margin:.7em 0;padding-left:12px;border-left:3px solid #e5dfcd;}
+.mmx-qa .mmx-q{font-size:.9rem;font-weight:700;color:#2f3a33;line-height:1.8;margin:0 0 .25em;}
+.mmx-qa .mmx-a{font-size:.88rem;line-height:1.95;color:#4a4436;margin:0;}
+
+/* ── AI 问书专项：外层容器透明，问答条目才是阅读单元 ── */
+#mod-aiask .mmx-ask{background:transparent;border:0;border-radius:0;padding:0;margin:0;}
+#mod-aiask .aiqa-item{margin:.6em 0;padding:14px 16px 15px;}
+#mod-aiask .aiqa-item h3{font:700 .93rem/1.7 var(--serif);color:#2f5b49;margin:0 0 .4em;
+  padding:0;border:0;}
+#mod-aiask .aiqa-item h3:before{content:"问　";color:#bf8247;font-weight:700;}
+#mod-aiask .aiqa-item p{font-size:.88rem;line-height:1.95;color:#4a4436;margin:.4em 0;}
+#mod-aiask .aiqa-item ul{margin:.35em 0;padding-left:1.1em;}
+#mod-aiask .aiqa-item li{font-size:.87rem;line-height:1.88;margin:.18em 0;color:#4a4436;}
+#mod-aiask .aiqa-item li::marker{color:#c0a06a;}
+/* 逐章追问（details 形态）：摘要行也收敛 */
+.mmx-ask>summary{font-size:.87rem;line-height:1.7;padding:2px 0;}
+.mmx-askbody{font-size:.88rem;line-height:1.9;}
+
+/* AI领读章内：AI 大纲原生深层样式（字号同步收小） */
+.merged-guide .sec{margin:9px 0 12px;padding-left:6px;border-left:2px solid #e5e0d6}
+.merged-guide .sec h4{font:600 .93rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.5em 0 .25em}
+.merged-guide ul.point{margin:.25em 0;padding-left:20px}
+.merged-guide ul.point>li{margin:.3em 0}
+.merged-guide ul.quote{margin:.22em 0 .22em 20px;padding-left:18px;list-style:none}
+.merged-guide ul.quote::before{content:"原句";display:block;font-size:.7rem;color:#bf8247;
+  letter-spacing:.1em;margin:.12em 0 .08em;font-weight:600}
+.merged-guide ul.quote.quote-node{margin-top:.45em;padding-top:.35em;border-top:1px dashed #eadfc9}
 .merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
-.merged-guide ul.quote>li{color:#4a4436;font-size:.93rem;margin:.2em 0;padding-left:10px;border-left:2px solid #bf8247}
-/* 模块内子内容（AI领读除外，它有专属深层样式）：左缩进 + 正文与标题分层 */
-section.mmx-mod>ul,section.mmx-mod>ol,section.mmx-mod>div,
-section.mmx-mod>p:not(.mmx-mod-note),
-section.card:not(.merged-guide)>ul,section.card:not(.merged-guide)>ol,
-section.card:not(.merged-guide)>div,section.card:not(.merged-guide)>p:not(.mmx-mod-note){
-  padding-left:16px;}
-section.mmx-mod li,section.mmx-mod p:not(.mmx-mod-note),
-section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mod-note){
-  color:#4a4436;font-size:.93rem;line-height:1.78;}
+.merged-guide ul.quote>li{color:#4a4436;font-size:.88rem;line-height:1.85;margin:.18em 0;padding-left:10px;border-left:2px solid #bf8247}
 /* 核心观点初判：外链 mmx-guide.css 的「观点N」前缀是绝对定位，在本页版式里和标题叠字，
    且此前要求去掉「观点1/2/3」前缀 —— 这里整条关掉（外链 CSS 不在页面内，只能内联覆盖）。 */
 .mmx-views li{padding-left:0 !important;}
 .mmx-views li:before,.mmx-views li::before{
   content:none !important;display:none !important;counter-increment:none !important;}
+@media(max-width:720px){
+  body{padding:0 12px 60px;font-size:14.5px;}
+  body>section.mmx-mod,body>section.card{padding:15px 16px;border-radius:14px;}
+  .nav{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
 </style>
 </head>
 <body>
@@ -54,8 +116,8 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
   <h1>《中国为什么不同：穿越历史理解我们身处的时代》</h1>
   <div class="chips"><span class="chip">通读 + 精读</span><span class="chip">AI领读</span><span class="chip">AI 生产</span></div>
 </header>
-<nav class="nav"><a class="navlink" href="#mod-svg">全书结构导图</a><a class="navlink" href="#mod-oneline">一句话主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a><a class="navlink" href="#mod-coreask">核心追问</a><a class="navlink" href="#mod-aiask">AI 问书</a><a class="navlink" href="#mod-higher">更高维度</a><a class="navlink" href="#mod-verify">阅读验证</a><a class="navlink" href="#mod-thennow">当年与今天</a></nav>
-<section class="mmx-svgwrap" id="mod-svg"><svg class="mmx-svg" viewBox="0 0 1120 530" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="中国为什么不同：穿越历史理解我们身处的时代 全书精读">
+<nav class="nav"><a class="navlink" href="#mod-svg">结构导图</a><a class="navlink" href="#mod-oneline">核心主旨</a><a class="navlink" href="#mod-merged_guide">AI领读</a><a class="navlink" href="#mod-views">核心观点</a><a class="navlink" href="#mod-top10">原文金句</a><a class="navlink" href="#mod-coreask">核心追问</a><a class="navlink" href="#mod-aiask">AI 问书</a><a class="navlink" href="#mod-higher">更高维度</a><a class="navlink" href="#mod-verify">阅读验证</a><a class="navlink" href="#mod-thennow">往日今时</a></nav>
+<section class="mmx-svgwrap" id="mod-svg"><h2>结构导图</h2><svg class="mmx-svg" viewBox="0 0 1120 530" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="中国为什么不同：穿越历史理解我们身处的时代 全书精读">
 <rect x="0" y="0" width="1120" height="530" fill="none"/>
 <style>.mmx-svg text{font-family:"Noto Serif SC",Georgia,serif}.mmx-svg .t1{font-size:15px;fill:#2f2a24;font-weight:600}.mmx-svg .t2{font-size:12px;fill:#5c5347}.mmx-svg .t3{font-size:10.5px;fill:#8a8272}.mmx-svg .rt{font-size:13px;fill:#f7f3ea;font-weight:600}.mmx-svg .ln{stroke:#cfc6b4;stroke-width:1.4;fill:none}</style>
 <rect x="28" y="212" width="262" height="70" rx="10" fill="#3d372e"/>
@@ -119,7 +181,7 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
 <text class="t2" x="714" y="437">变与地球剧本的关系。</text>
 <path class="ln" d="M692 433 L700 433"/>
 </svg></section>
-<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">一句话主旨</h2><p class="mmx-mod-note">本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。</p><p class="mmx-oneline">中华文明的形成与延续是由地理环境、气候周期、制度演进及全球贸易网络共同塑造的长期历史进程。</p></section>
+<section class="mmx-mod" aria-labelledby="oneline" id="mod-oneline"><h2 id="oneline">核心主旨</h2><p class="mmx-oneline">中华文明的形成与延续是由地理环境、气候周期、制度演进及全球贸易网络共同塑造的长期历史进程。</p></section>
 <section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" id="mod-merged_guide"><h2 id="merged-guide-title">AI领读</h2>
 <style>
 /* merged_guide 章内：AI 大纲原生深层样式 */
@@ -1924,12 +1986,12 @@ section.card:not(.merged-guide) li,section.card:not(.merged-guide) p:not(.mmx-mo
       </div></details>
   </div>
 </section>
-<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点初判</h2><p class="mmx-mod-note">按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。</p><ul class="mmx-views"><li><b>地理基础与文明格局</b>——梳理了地理差异、双流域容错能力及自然边界对早期中华文明走向的决定性影响。</li><li><b>气候变迁与王朝更迭</b>——分析了冷周期导致的农业减产、财政危机及游牧与农耕之争如何周期性驱动王朝更替。</li><li><b>文字系统与选官制度</b>——探讨了表意文字的传承与科举标准化选拔机制对维持大一统社会结构的支撑作用。</li><li><b>分裂趋向与统一博弈</b>——对比东西方历史走向，说明了华北平原格局与外部压力如何促使中国走向必然的统一。</li><li><b>贸易网络与连通逻辑</b>——考察了丝绸之路与海上贸易等明暗线网络对中华文明长期稳定与社会结构转变的影响。</li><li><b>制度惯性与近代落后</b>——剖析了科举制度及传统经济结构的成功反面所形成的惯性，如何阻碍了近代现代科学与工业革命的发展。</li><li><b>文明演进与地理约束</b>——总结了农耕时代地理对文明的物理约束，并指出数字时代文明正在改变与地球剧本的关系。</li></ul></section>
-<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句 · 持续积累</h2><p class="mmx-mod-note">以下原句取自本书 AI 大纲落库的原文摘录（book_outline.quote），按大纲顺序节选，非 AI 生成；更多见逐章深读页。</p><ol class="mmx-qlist"><li><blockquote>「小麦的人为迁徙速度年均约为1.5公里，对于人类早期而言，受制于种群数量和活动范围，这个迁移速度并不算慢。」</blockquote><cite>第一节 文明传播的隐性成本</cite></li><li><blockquote>「玉米向北传播的历程与小麦截然不同，它在墨西哥高原以北几乎停滞了两千年。」</blockquote><cite>第一节 文明传播的隐性成本</cite></li><li><blockquote>「它解释了技术和物种传播的速度差异，它设定了文明发展的时间表。」</blockquote><cite>第一节 文明传播的隐性成本</cite></li><li><blockquote>「在人类历史的前一万年里，它决定了哪些大陆的居民率先积累起农业剩余，率先发展出复杂社会组织，率先掌握金属冶炼和文字记录。」</blockquote><cite>第一节 文明传播的隐性成本</cite></li><li><blockquote>「以欧亚大陆东西轴线为例，历史上同时存在中国、印度、波斯、希腊、罗马等由文明聚合的国家形态。」</blockquote><cite>第一节 文明传播的隐性成本</cite></li><li><blockquote>「它们相互交流技术，通过贸易互通有无，但却在政治制度、宗教信仰和社会结构上有着严重的分歧。」</blockquote><cite>第一节 文明传播的隐性成本</cite></li><li><blockquote>「中国主体疆域有一个独一无二的剧本，两条超级长河全境贯穿，它给我们提供了一种非常独特的配置，这种配置为中华文明创造了巨大的杂交空间和容错空间。」</blockquote><cite>第二节 中华文明的杂交与容错</cite></li><li><blockquote>「当气候恶化，游牧民族频繁入侵或者大规模战乱兴起时，北方的核心人口和经济资源就会陆续向南方转移，并在长江流域找到一片可以继续发展的疆域。」</blockquote><cite>第二节 中华文明的杂交与容错</cite></li><li><blockquote>「往南迁移，以河流和山脉为依托，可以大幅降低文明消亡的速率，以空间换时间，为文明火种的重燃争取时间。」</blockquote><cite>第二节 中华文明的杂交与容错</cite></li><li><blockquote>「崖山海战与南明政权灭亡时，中华文明早就过了发展的幼稚期，文明只有高度成熟才能具备强大的同化能力。」</blockquote><cite>第二节 中华文明的杂交与容错</cite></li></ol></section>
-<section class="mmx-mod" aria-labelledby="coreask" id="mod-coreask"><h2 id="coreask">核心追问（来自深读）</h2><p class="mmx-mod-note">跨章主题的深读追问，由模型基于全书大纲与原文摘录撰写；逐章的追问收在每个章条目里。</p><div class="mmx-qa"><p class="mmx-q">作者如何用「半封闭地理」与「双流域」解释中华文明的容错能力？这与对外连通受限有何张力</p><p class="mmx-a">半封闭地理＋黄河长江双流域，使农耕文明在相对隔离中反复融合、内部容错；但隔离也削弱对外连通，使技术交流慢半拍——容错与封闭是同一结构的双面。</p></div><div class="mmx-qa"><p class="mmx-q">气候冷暖周期被说成王朝崩溃的「近乎充分条件」，这一判断在短尺度（十年以下）是否依然成立</p><p class="mmx-a">气候周期对王朝崩溃的解释在百年尺度更强；十年以下短尺度更多看治理、财政与偶然事件，该“近乎充分条件”会失效，不能拿一次冷冬直接解释一场具体动荡。</p></div><div class="mmx-qa"><p class="mmx-q">科举制度既消灭门阀垄断，又被指造成「制度锁定」，同一套设计为何同时是优势与陷阱</p><p class="mmx-a">科举打破门阀、以考试取士，让阶层流动与皇权稳固兼得（优势）；但它把精英都导入应试与官本位，抑制了技术、商业与思想的其他出路，形成路径锁定（陷阱）。</p></div></section>
-<section class="mmx-mod" aria-labelledby="aiask" id="mod-aiask"><h2 id="aiask">AI 问书</h2><p class="mmx-mod-note">下方内容为本书级 AI 问书整理，由云端 AI 阅读流程基于本书大纲、章节锚点与热门划线生成。</p><div class="mmx-qa"><p class="mmx-q">这本书用什么解释“中国为什么不同”？</p><p class="mmx-a">它不归因于单一文化或制度，而是把地理格局、双流域容错、长周期气候变迁与选官制度叠在一起看：黄河流域的脆弱逼出统一与水利集权，表意文字与科举维持大一统。作者主张“不同”是多重变量长期耦合的结果，而非某个民族的例外。</p></div><div class="mmx-qa"><p class="mmx-q">书中“冷周期驱动王朝更替”的论点站得住吗？</p><p class="mmx-a">作者认为小冰期带来的农业减产、财政危机与游牧南压，周期性地压垮王朝；这把气候当作历史的隐藏自变量。它确有史料支撑（如明末小冰期），但批评者会指出这是长尺度相关性而非单因决定，书也承认微观偶然不在其解释半径内。</p></div><div class="mmx-qa"><p class="mmx-q">作者怎么解释中国近代为何“落后”？</p><p class="mmx-a">他把科举与传统经济结构的“成功反面”称为制度惯性：曾经支撑统一的选官与农耕体系，在近代科学革命与工业革命面前反而成了路径锁死。换句话说，过去让你赢的结构，会在变局里变成让你慢的那块石头——这是全书写得最冷峻的一笔。</p></div></section>
-<section class="mmx-mod" aria-labelledby="higher" id="mod-higher"><h2 id="higher">用更高维度的知识看这本书</h2><p class="mmx-mod-note">下方内容由云端 AI 阅读流程生成：把本书放回知识史与理论框架中重读，区分书中主张、外部证据与综合分析。</p><p>【书中主张】中华文明是地理、气候、制度与贸易网络长期耦合的产物，其“大一统”韧性来自双流域容错、表意文字传承与科举标准化选拔的相互加固。【外部证据】书中举证：黄河脆弱性催生水利集权、科举提供跨地域精英流动、丝路与海运构成明暗贸易线；与贾雷德·戴蒙德式地理决定论同属长尺度解释框架。【综合分析】这一主张的价值在于把“中国不同”去神秘化——它不是民族本质，而是可被拆解的变量组合。但它也易滑向地理/气候决定论，需警惕把复杂历史压成几条曲线。</p><p>【书中主张】书同时主张，昔日的制度优势会在近代转化为惯性枷锁：科举与传统经济结构的成功反面，阻碍了科学革命与工业化。【外部证据】以宋明海上贸易的收缩、明清闭关与技术选择为例，对照欧洲科学革命与小农—工匠体系的差异；与黄仁宇“数目字管理”缺失论形成互文。【综合分析】但“制度惯性”说需平衡——同一套文官与水利体系也曾支撑长期稳定与人口峰值。作者真正想说的，是任何结构都有它的“有效期”，理解当下，要先读懂这套结构何时从资产变成负债。</p></section>
-<section class="mmx-mod" aria-labelledby="verify" id="mod-verify"><h2 id="verify">阅读时要验证的问题</h2><p class="mmx-mod-note">下方由云端 AI 阅读流程生成：读时需核对的原文、数字与论点（关键数据出处、个案代表性、类比限度）。</p><ul class="mmx-views"><li>书中以“双流域（黄河—长江）容错能力”解释早期文明走向，可核对地理基础与文明格局章节。（可核对：双流域容错论点）</li><li>书中将小冰期/冷周期与明末等王朝危机关联，可核对气候变迁与王朝更迭章节。（可核对：冷周期论点）</li><li>书中以科举标准化作为维持大一统的支撑机制，可核对文字系统与选官制度章节。（可核对：科举支撑论点）</li></ul></section>
-<section class="mmx-mod" aria-labelledby="thennow" id="mod-thennow"><h2 id="thennow">当年与今天 · 初步对照</h2><p class="mmx-mod-note">下方由云端 AI 阅读流程生成：区分作者当年所能知晓与后来才显现的事实，给出今日可迁移的启发。</p><p>作者立足的是可被考古、气候树轮与文献印证的宏观长时段：地理格局、小冰期序列、科举题名录、贸易航线这些都是他当年能据以立论的硬材料，写作本身也是对“李约瑟难题”这一老问题的中文回应。，也把“中国为什么不同”这个问题交还给新一轮技术—地缘变局去重新提问。</p><p>但全球供应链重构、气候变暖速率与AI带来的知识生产变革，是作者写作时难以精确预判的；后来者用卫星遥感、大数据重新校准了书里的若干长周期判断。后来才显现的，是“中国为什么不同”这个问题本身，正被新一轮技术—地缘变局重新提问。</p></section>
+<section class="mmx-mod" aria-labelledby="views" id="mod-views"><h2 id="views">核心观点</h2><ul class="mmx-views"><li><b>地理基础与文明格局</b>——梳理了地理差异、双流域容错能力及自然边界对早期中华文明走向的决定性影响。</li><li><b>气候变迁与王朝更迭</b>——分析了冷周期导致的农业减产、财政危机及游牧与农耕之争如何周期性驱动王朝更替。</li><li><b>文字系统与选官制度</b>——探讨了表意文字的传承与科举标准化选拔机制对维持大一统社会结构的支撑作用。</li><li><b>分裂趋向与统一博弈</b>——对比东西方历史走向，说明了华北平原格局与外部压力如何促使中国走向必然的统一。</li><li><b>贸易网络与连通逻辑</b>——考察了丝绸之路与海上贸易等明暗线网络对中华文明长期稳定与社会结构转变的影响。</li><li><b>制度惯性与近代落后</b>——剖析了科举制度及传统经济结构的成功反面所形成的惯性，如何阻碍了近代现代科学与工业革命的发展。</li><li><b>文明演进与地理约束</b>——总结了农耕时代地理对文明的物理约束，并指出数字时代文明正在改变与地球剧本的关系。</li></ul></section>
+<section class="mmx-mod" aria-labelledby="top10" id="mod-top10"><h2 id="top10">原文金句</h2><ol class="mmx-qlist"><li><blockquote>「小麦的人为迁徙速度年均约为1.5公里，对于人类早期而言，受制于种群数量和活动范围，这个迁移速度并不算慢。」</blockquote><cite>第一节 文明传播的隐性成本</cite></li><li><blockquote>「玉米向北传播的历程与小麦截然不同，它在墨西哥高原以北几乎停滞了两千年。」</blockquote><cite>第一节 文明传播的隐性成本</cite></li><li><blockquote>「它解释了技术和物种传播的速度差异，它设定了文明发展的时间表。」</blockquote><cite>第一节 文明传播的隐性成本</cite></li><li><blockquote>「在人类历史的前一万年里，它决定了哪些大陆的居民率先积累起农业剩余，率先发展出复杂社会组织，率先掌握金属冶炼和文字记录。」</blockquote><cite>第一节 文明传播的隐性成本</cite></li><li><blockquote>「以欧亚大陆东西轴线为例，历史上同时存在中国、印度、波斯、希腊、罗马等由文明聚合的国家形态。」</blockquote><cite>第一节 文明传播的隐性成本</cite></li><li><blockquote>「它们相互交流技术，通过贸易互通有无，但却在政治制度、宗教信仰和社会结构上有着严重的分歧。」</blockquote><cite>第一节 文明传播的隐性成本</cite></li><li><blockquote>「中国主体疆域有一个独一无二的剧本，两条超级长河全境贯穿，它给我们提供了一种非常独特的配置，这种配置为中华文明创造了巨大的杂交空间和容错空间。」</blockquote><cite>第二节 中华文明的杂交与容错</cite></li><li><blockquote>「当气候恶化，游牧民族频繁入侵或者大规模战乱兴起时，北方的核心人口和经济资源就会陆续向南方转移，并在长江流域找到一片可以继续发展的疆域。」</blockquote><cite>第二节 中华文明的杂交与容错</cite></li><li><blockquote>「往南迁移，以河流和山脉为依托，可以大幅降低文明消亡的速率，以空间换时间，为文明火种的重燃争取时间。」</blockquote><cite>第二节 中华文明的杂交与容错</cite></li><li><blockquote>「崖山海战与南明政权灭亡时，中华文明早就过了发展的幼稚期，文明只有高度成熟才能具备强大的同化能力。」</blockquote><cite>第二节 中华文明的杂交与容错</cite></li></ol></section>
+<section class="mmx-mod" aria-labelledby="coreask" id="mod-coreask"><h2 id="coreask">核心追问</h2><div class="mmx-qa"><p class="mmx-q">作者如何用「半封闭地理」与「双流域」解释中华文明的容错能力？这与对外连通受限有何张力</p><p class="mmx-a">半封闭地理＋黄河长江双流域，使农耕文明在相对隔离中反复融合、内部容错；但隔离也削弱对外连通，使技术交流慢半拍——容错与封闭是同一结构的双面。</p></div><div class="mmx-qa"><p class="mmx-q">气候冷暖周期被说成王朝崩溃的「近乎充分条件」，这一判断在短尺度（十年以下）是否依然成立</p><p class="mmx-a">气候周期对王朝崩溃的解释在百年尺度更强；十年以下短尺度更多看治理、财政与偶然事件，该“近乎充分条件”会失效，不能拿一次冷冬直接解释一场具体动荡。</p></div><div class="mmx-qa"><p class="mmx-q">科举制度既消灭门阀垄断，又被指造成「制度锁定」，同一套设计为何同时是优势与陷阱</p><p class="mmx-a">科举打破门阀、以考试取士，让阶层流动与皇权稳固兼得（优势）；但它把精英都导入应试与官本位，抑制了技术、商业与思想的其他出路，形成路径锁定（陷阱）。</p></div></section>
+<section class="mmx-mod" aria-labelledby="aiask" id="mod-aiask"><h2 id="aiask">AI 问书</h2><div class="mmx-qa"><p class="mmx-q">这本书用什么解释“中国为什么不同”？</p><p class="mmx-a">它不归因于单一文化或制度，而是把地理格局、双流域容错、长周期气候变迁与选官制度叠在一起看：黄河流域的脆弱逼出统一与水利集权，表意文字与科举维持大一统。作者主张“不同”是多重变量长期耦合的结果，而非某个民族的例外。</p></div><div class="mmx-qa"><p class="mmx-q">书中“冷周期驱动王朝更替”的论点站得住吗？</p><p class="mmx-a">作者认为小冰期带来的农业减产、财政危机与游牧南压，周期性地压垮王朝；这把气候当作历史的隐藏自变量。它确有史料支撑（如明末小冰期），但批评者会指出这是长尺度相关性而非单因决定，书也承认微观偶然不在其解释半径内。</p></div><div class="mmx-qa"><p class="mmx-q">作者怎么解释中国近代为何“落后”？</p><p class="mmx-a">他把科举与传统经济结构的“成功反面”称为制度惯性：曾经支撑统一的选官与农耕体系，在近代科学革命与工业革命面前反而成了路径锁死。换句话说，过去让你赢的结构，会在变局里变成让你慢的那块石头——这是全书写得最冷峻的一笔。</p></div></section>
+<section class="mmx-mod" aria-labelledby="higher" id="mod-higher"><h2 id="higher">更高维度</h2><p>【书中主张】中华文明是地理、气候、制度与贸易网络长期耦合的产物，其“大一统”韧性来自双流域容错、表意文字传承与科举标准化选拔的相互加固。【外部证据】书中举证：黄河脆弱性催生水利集权、科举提供跨地域精英流动、丝路与海运构成明暗贸易线；与贾雷德·戴蒙德式地理决定论同属长尺度解释框架。【综合分析】这一主张的价值在于把“中国不同”去神秘化——它不是民族本质，而是可被拆解的变量组合。但它也易滑向地理/气候决定论，需警惕把复杂历史压成几条曲线。</p><p>【书中主张】书同时主张，昔日的制度优势会在近代转化为惯性枷锁：科举与传统经济结构的成功反面，阻碍了科学革命与工业化。【外部证据】以宋明海上贸易的收缩、明清闭关与技术选择为例，对照欧洲科学革命与小农—工匠体系的差异；与黄仁宇“数目字管理”缺失论形成互文。【综合分析】但“制度惯性”说需平衡——同一套文官与水利体系也曾支撑长期稳定与人口峰值。作者真正想说的，是任何结构都有它的“有效期”，理解当下，要先读懂这套结构何时从资产变成负债。</p></section>
+<section class="mmx-mod" aria-labelledby="verify" id="mod-verify"><h2 id="verify">阅读验证</h2><ul class="mmx-views"><li>书中以“双流域（黄河—长江）容错能力”解释早期文明走向，可核对地理基础与文明格局章节。（可核对：双流域容错论点）</li><li>书中将小冰期/冷周期与明末等王朝危机关联，可核对气候变迁与王朝更迭章节。（可核对：冷周期论点）</li><li>书中以科举标准化作为维持大一统的支撑机制，可核对文字系统与选官制度章节。（可核对：科举支撑论点）</li></ul></section>
+<section class="mmx-mod" aria-labelledby="thennow" id="mod-thennow"><h2 id="thennow">往日今时</h2><p>作者立足的是可被考古、气候树轮与文献印证的宏观长时段：地理格局、小冰期序列、科举题名录、贸易航线这些都是他当年能据以立论的硬材料，写作本身也是对“李约瑟难题”这一老问题的中文回应。，也把“中国为什么不同”这个问题交还给新一轮技术—地缘变局去重新提问。</p><p>但全球供应链重构、气候变暖速率与AI带来的知识生产变革，是作者写作时难以精确预判的；后来者用卫星遥感、大数据重新校准了书里的若干长周期判断。后来才显现的，是“中国为什么不同”这个问题本身，正被新一轮技术—地缘变局重新提问。</p></section>
 </body>
 </html>
