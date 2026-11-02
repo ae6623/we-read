@@ -232,6 +232,27 @@
         if (au.isConnected && au.getAttribute('data-slug') === slug) au.style.display = 'none';
       });
   }
+  /* 书名吸顶条：FULL_HERO 书专用。书名滚出视口后顶部淡入固定，
+     背景墙（fixed）始终钉死，hero 本体普通流滚动 */
+  var titleBar = null;
+  function ensureTitleBar() {
+    if (titleBar) return titleBar;
+    titleBar = document.createElement('div');
+    titleBar.id = 'rdTitleBar';
+    titleBar.className = 'rd-titlebar';
+    titleBar.hidden = true;
+    titleBar.innerHTML = '<div class="rd-titlebar-in"></div>';
+    document.body.appendChild(titleBar);
+    return titleBar;
+  }
+  function titleBarTick() {
+    if (!titleBar || titleBar.hidden) return;
+    var h1 = document.querySelector('#rdHero h1');
+    var show = h1 && (h1.getBoundingClientRect().bottom < 48);
+    titleBar.classList.toggle('show', !!show);
+  }
+  window.addEventListener('scroll', titleBarTick, { passive: true });
+
   function addHero() {
     var main = q('#rdBody');
     if (!main) return;
@@ -261,7 +282,11 @@
       var nav = document.getElementById('rdNav');
       if (nav) sec.appendChild(nav);
       if (head) head.style.display = 'none';   // 内容已搬走，隐藏空壳避免留白
+      var bar = ensureTitleBar();
+      bar.hidden = false;
+      bar.querySelector('.rd-titlebar-in').textContent = (h1 ? h1.textContent : title).trim();
     } else {
+      if (titleBar) { titleBar.hidden = true; titleBar.classList.remove('show'); }
       sec.className = 'rd-hero';
       if (head) head.style.display = '';
       sec.innerHTML = '<img class="rd-hero-bg" aria-hidden="true" alt="" src="' + src + '">'
