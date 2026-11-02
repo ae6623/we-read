@@ -251,27 +251,26 @@ html[data-cols="3"] #rdCols .ic-cols-3{display:block}
 .archive-card.is-fav .card-more{color:var(--gold);}
 .archive-card.is-fav{box-shadow:inset 0 0 0 1px rgba(191,130,71,.45);}
 
-/* ── 10a. 卡片封面（一排一 / 一排二显示，一排三隐藏） ───────────────
-   库里目前没有书籍封面图（只有 epub），默认渲染「按 slug 哈希上色的占位封面 +
-   书名」，先看版式效果；日后把真封面放到 assets/covers/<slug>.jpg，
-   <img> 会自动盖上去（onerror 时移除，露出占位层）。 */
+/* ── 10a. 卡片封面（一排二显示图块；一排一整卡渐变不出图；一排三隐藏） ──
+   封面底统一用主题绿渐变（不再按 slug 哈希上色，整排一个色、整洁）；
+   真封面放 assets/covers/<slug>.jpg 即自动盖上（onerror 移除露占位，
+   load 成功加 .has-img 隐藏题字只留图）。 */
 .card-body{display:flex;flex-direction:column;flex:1 1 auto;min-width:0;}
 .card-cover{position:relative;width:100%;aspect-ratio:5/3;border-radius:8px;overflow:hidden;
-  background:linear-gradient(150deg,
-    hsl(var(--ch,210deg) 50% 60%),
-    hsl(calc(var(--ch,210deg) + 38deg) 44% 44%));
-  box-shadow:0 1px 4px rgba(0,0,0,.18);flex:none;}
+  background:linear-gradient(155deg,var(--green2,#315e50),var(--green,#244b40));
+  box-shadow:0 1px 4px rgba(0,0,0,.14);flex:none;}
 .card-cover-title{position:absolute;inset:0;z-index:1;display:flex;align-items:center;justify-content:center;
-  color:rgba(255,255,255,.92);font:600 1.5rem/1 var(--serif);letter-spacing:.06em;
-  text-shadow:0 1px 4px rgba(0,0,0,.35);pointer-events:none;}
+  color:rgba(255,255,255,.94);font:600 1.35rem/1 var(--serif);letter-spacing:.16em;
+  text-shadow:0 1px 3px rgba(0,0,0,.28);pointer-events:none;}
+.card-cover.has-img .card-cover-title{display:none;}
 .card-cover-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
 /* 一排二：封面置顶（通栏缩略图），文字在封面下 */
 html[data-cols="2"] .archive-card{display:flex;flex-direction:column;}
-html[data-cols="2"] .card-cover{margin-bottom:9px;}
-/* 一排一：封面置左（竖版书脊），文字在右 */
-html[data-cols="1"] .archive-card{display:flex;flex-direction:row;align-items:flex-start;gap:13px;}
-html[data-cols="1"] .card-cover{flex:0 0 92px;aspect-ratio:3/4;width:92px;}
-html[data-cols="1"] .card-body{flex:1 1 auto;}
+html[data-cols="2"] .card-cover{margin-bottom:10px;}
+/* 一排一：不出独立图块（之前竖版图块高度局促、卡片失衡），整卡铺淡主题渐变更舒展 */
+html[data-cols="1"] .archive-card{
+  background:linear-gradient(150deg,rgba(49,94,80,.13),rgba(49,94,80,.035) 60%),var(--card,#fffefa);}
+html[data-cols="1"] .card-cover{display:none;}
 
 /* 列数切换：force 覆盖 site.css 的媒体查询 */
 html[data-cols="1"] .archive-grid{grid-template-columns:minmax(0,1fr)!important;}
@@ -285,14 +284,15 @@ html[data-cols="3"] .overview-entries{grid-template-columns:repeat(3,minmax(0,1f
 html[data-cols="3"] #reading-panel-archive .archive-grid,
 html[data-cols="3"] #panel-soon .archive-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
 
-/* ── 一排三：112px 的窄卡，太挤 → 不显示封面、精简掉作者，只留「书名 + 章节数」 ── */
-html[data-cols="3"] .archive-card{padding:10px 10px 8px;}
-html[data-cols="3"] .archive-card h3{font-size:.9rem;line-height:1.42;margin:4px 0 0;}
-html[data-cols="3"] .archive-card .card-top{margin-bottom:1px;}
-html[data-cols="3"] .archive-card .card-top time{font-size:.66rem;letter-spacing:.01em;}
+/* ── 一排三：112px 窄卡 → 不显示封面/作者，但把间距、字号放宽防拥挤 ── */
+html[data-cols="3"] .archive-grid{gap:16px 12px!important;}
+html[data-cols="3"] .archive-card{padding:12px 12px 10px;}
+html[data-cols="3"] .archive-card h3{font-size:.92rem;line-height:1.5;margin:6px 0 0;}
+html[data-cols="3"] .archive-card .card-top{margin-bottom:2px;}
+html[data-cols="3"] .archive-card .card-top time{font-size:.68rem;letter-spacing:.01em;}
 html[data-cols="3"] .card-cover{display:none;}
 html[data-cols="3"] .card-author{display:none;}
-html[data-cols="3"] .card-foot{flex-wrap:wrap;gap:1px 4px;padding-top:2px;}
+html[data-cols="3"] .card-foot{flex-wrap:wrap;gap:3px 5px;padding-top:5px;}
 /* 章节数回到右下 */
 html[data-cols="3"] .card-foot .card-meta{order:1;margin-left:auto;max-width:100%;font-size:.64rem;}
 html[data-cols="3"] .card-more{order:2;width:22px;height:22px;margin-left:2px;}
