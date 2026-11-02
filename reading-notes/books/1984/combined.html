@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#15171a">
 <title>《1984》｜全书领读</title>
 <script>
 /* 防闪：渲染前先把上次保存的主题/字号/段距应用到 <html> */
@@ -18,10 +19,51 @@ if(c.pm)d.style.setProperty('--pm',c.pm);}catch(e){}})();
 <header class="combined-head">
   <p class="eyebrow">读前通读 + 精读 · 合并页</p>
   <h1>《1984》</h1>
-  <div class="chips" id="rdChips"></div>
+  <div class="chips" id="rdChips"><span class="chip">通读 + 精读</span><span class="chip">AI领读</span><span class="chip">AI 生产</span></div>
 </header>
-<nav class="nav" id="rdNav"></nav>
-<main id="rdBody"><p class="rd-loading">正在加载…</p></main>
+<nav class="nav" id="rdNav" aria-label="章节导航">
+  <a class="navlink" href="#mod-svg">结构导图</a>
+  <a class="navlink" href="#mod-oneline">核心主旨</a>
+  <a class="navlink" href="#mod-merged_guide">AI领读</a>
+  <a class="navlink" href="#mod-views">核心观点</a>
+  <a class="navlink" href="#mod-top10">原文金句</a>
+  <a class="navlink" href="#mod-aiask">AI 问书</a>
+  <a class="navlink" href="#mod-coreask">核心追问</a>
+  <a class="navlink" href="#mod-higher">更高维度</a>
+  <a class="navlink" href="#mod-verify">阅读验证</a>
+  <a class="navlink" href="#mod-thennow">往日今时</a>
+  <a class="navlink" href="#mod-quiz">读完自测</a>
+</nav>
+<main id="rdBody" aria-busy="true">
+  <div class="rd-skel" id="rdSkel" aria-hidden="true">
+    <section class="rd-skel-card">
+      <div class="sk-h"></div>
+      <div class="sk-fig"></div>
+    </section>
+    <section class="rd-skel-card">
+      <div class="sk-h"></div>
+      <div class="sk-l w88"></div>
+      <div class="sk-l w66"></div>
+    </section>
+    <section class="rd-skel-card">
+      <div class="sk-h"></div>
+      <div class="sk-sub"></div>
+      <div class="sk-node"></div>
+      <div class="sk-node"></div>
+      <div class="sk-node"></div>
+      <div class="sk-l w96"></div>
+      <div class="sk-l w82"></div>
+      <div class="sk-l w74"></div>
+    </section>
+    <section class="rd-skel-card">
+      <div class="sk-h"></div>
+      <div class="sk-l w96"></div>
+      <div class="sk-l w82"></div>
+      <div class="sk-l w74"></div>
+      <div class="sk-l w50"></div>
+    </section>
+  </div>
+</main>
 <button id="rdFab" aria-label="阅读设置" title="阅读设置">Aa</button>
 <div id="rdPanel" hidden>
   <div class="rd-row"><span>字号</span><span class="rd-btns">
