@@ -192,10 +192,11 @@ html[data-theme=dark] .reading-tabs button#rdCols[aria-pressed="true"]{
   background:var(--card);border-color:var(--line);color:var(--muted);}
 .reading-tabs button#rdCols[aria-pressed="true"]:hover{background:var(--sage);color:var(--green);}
 
-/* 列数图标跟着 data-cols 走（默认一排二） */
+/* 列数图标跟着 data-cols 走（默认一排三） */
 #rdCols svg{display:none}
 html[data-cols="1"] #rdCols .ic-cols-1{display:block}
 html[data-cols="2"] #rdCols .ic-cols-2{display:block}
+html[data-cols="3"] #rdCols .ic-cols-3{display:block}
 
 /* 面板：贴在 Aa 正下方，右对齐（与搜索/筛选浮层同一套位置） */
 #rdPanel{position:absolute;top:calc(100% + 8px);right:0;z-index:30;
@@ -253,8 +254,26 @@ html[data-cols="2"] #rdCols .ic-cols-2{display:block}
 /* 列数切换：force 覆盖 site.css 的媒体查询 */
 html[data-cols="1"] .archive-grid{grid-template-columns:minmax(0,1fr)!important;}
 html[data-cols="2"] .archive-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+html[data-cols="3"] .archive-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;}
 html[data-cols="1"] .overview-entries{grid-template-columns:minmax(0,1fr)!important;}
 html[data-cols="2"] .overview-entries{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+html[data-cols="3"] .overview-entries{grid-template-columns:repeat(3,minmax(0,1fr))!important;}
+/* 「即将上线」「归档」固定两列：前者只有标题 + 一句说明，三列跨列全是空白；
+   后者卡里嵌「阅读入口」折叠块，三列会把入口压成竖排字 */
+html[data-cols="3"] #reading-panel-archive .archive-grid,
+html[data-cols="3"] #panel-soon .archive-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+
+/* ── 一排三（默认）：112px 的窄卡，信息只能按「书名 > 章节 > 作者」排 ── */
+html[data-cols="3"] .archive-card{padding:10px 10px 8px;}
+html[data-cols="3"] .archive-card h3{font-size:.9rem;line-height:1.42;margin:4px 0 0;}
+html[data-cols="3"] .archive-card .card-top{margin-bottom:1px;}
+html[data-cols="3"] .archive-card .card-top time{font-size:.66rem;letter-spacing:.01em;}
+html[data-cols="3"] .card-foot{flex-wrap:wrap;gap:1px 4px;padding-top:2px;}
+/* 作者独占一行（窄卡里和章节数挤一起只会两败俱伤），章节数回到右下 */
+html[data-cols="3"] .card-author{flex:1 1 100%;font-size:.64rem;line-height:1.3;}
+html[data-cols="3"] .card-foot .card-meta{order:1;margin-left:auto;max-width:100%;font-size:.64rem;}
+html[data-cols="3"] .card-more{order:2;width:22px;height:22px;margin-left:2px;}
+html[data-cols="3"] .card-more svg{width:14px;height:14px;}
 
 @media(max-width:680px){
   /* 3 个页签 + 4 个圆钮，一行放得下；页签不再拉满 */
@@ -300,12 +319,16 @@ html[data-cols="2"] .overview-entries{grid-template-columns:repeat(2,minmax(0,1f
 /* 首卡横幅：两列瀑布里，第一张横跨整行。
    纯文字卡的高度只随书名行数变（1 行 / 2 行，差 18px），两列很容易排成
    「表格」；开头压一张通栏卡，整面墙立刻有起点，往下也才有错落可言。 */
-html[data-cols="2"] .archive-grid>.archive-card[data-span="2"]{padding:12px 15px 10px;}
-html[data-cols="2"] .archive-grid>.archive-card[data-span="2"] h3{font-size:1.24rem;line-height:1.38;margin:5px 0 0;}
-html[data-cols="2"] .archive-grid>.archive-card[data-span="2"] .card-top{margin-bottom:0;}
-html[data-cols="2"] .archive-grid>.archive-card[data-span="2"] .card-top time{font-size:.76rem;}
-html[data-cols="2"] .archive-grid>.archive-card[data-span="2"] .card-author{font-size:.74rem;}
-html[data-cols="2"] .archive-grid>.archive-card[data-span="2"] .card-foot .card-meta{font-size:.7rem;}
+html:not([data-cols="1"]) .archive-grid>.archive-card[data-span="full"]{padding:12px 15px 10px;}
+html:not([data-cols="1"]) .archive-grid>.archive-card[data-span="full"] h3{font-size:1.24rem;line-height:1.38;margin:5px 0 0;}
+html:not([data-cols="1"]) .archive-grid>.archive-card[data-span="full"] .card-top{margin-bottom:0;}
+html:not([data-cols="1"]) .archive-grid>.archive-card[data-span="full"] .card-top time{font-size:.76rem;}
+html:not([data-cols="1"]) .archive-grid>.archive-card[data-span="full"] .card-author{font-size:.74rem;}
+html:not([data-cols="1"]) .archive-grid>.archive-card[data-span="full"] .card-foot .card-meta{font-size:.7rem;}
+/* 横幅卡宽 362，底栏按两列那套排（作者 + 章节数 + ⋯ 一行），别继承三列的换行 */
+html:not([data-cols="1"]) .archive-grid>.archive-card[data-span="full"] .card-foot{flex-wrap:nowrap;gap:7px;padding-top:3px;}
+html:not([data-cols="1"]) .archive-grid>.archive-card[data-span="full"] .card-author{flex:1 1 auto;}
+html:not([data-cols="1"]) .archive-grid>.archive-card[data-span="full"] .card-more{width:24px;height:24px;margin-left:6px;}
 
 .feed-foot{display:flex;justify-content:center;padding:calc(14px*var(--pm)) 0 2px;}
 .feed-more{font:600 .76rem/1.4 var(--sans);color:var(--green);background:var(--card);

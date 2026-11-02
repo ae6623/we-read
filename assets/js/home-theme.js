@@ -11,7 +11,7 @@
   var FS = [0.72, 0.74, 0.76, 0.78, 0.80, 0.83, 0.86, 0.90, 0.94, 1.00, 1.08];
   var PM = [0.55, 1, 1.5];
   var DEF_THEME = 'cream', DEF_FS = 0.76, DEF_PM = 1;
-  var FS_VER = 2;            // 档位表变过就升版本，见 boot() 里的迁移
+  var CFG_VER = 3;           // 默认值变过就升版本，见 boot() 里的迁移
   var THEME_COLOR = { cream: '#f6f3ed', light: '#ffffff', green: '#cfe8d2', dark: '#15171a' };
 
   var d = document.documentElement;
@@ -34,12 +34,12 @@
 
   function boot() {
     var c = load();
-    /* 老配置迁移：上一版默认是 .80，这批整体又小了两档。
-       存着旧默认值的人其实没主动选过字号，跟着新默认走；
-       自己调过（不是 .80）的不动。只迁一次。 */
-    if ((c.ver || 1) < FS_VER) {
+    /* 老配置迁移：字号默认 .80 → .76、列数默认 2 → 3。
+       存着旧默认值的人其实没主动选过，跟着新默认走；自己调过的不动。只迁一次。 */
+    if ((c.ver || 1) < CFG_VER) {
       if (c.fs === 0.8) c.fs = DEF_FS;
-      c.ver = FS_VER;
+      if (c.cols === 2) c.cols = 3;
+      c.ver = CFG_VER;
       if (Object.keys(c).length) save(c);
     }
     var fi = idx(FS, c.fs, DEF_FS);
@@ -93,17 +93,20 @@
       });
     }
 
-    // ── 列数：一排一 / 一排二 ────────────────────────────────
+    // ── 列数：一排三 / 一排二 / 一排一（点一下降一档，到底再回到三） ──
     (function () {
       var btn = q('#rdCols');
       if (!btn) return;
+      var ORDER = ['3', '2', '1'];
       function current() {
-        // 默认一排二（瀑布流），不再按屏宽自动降成一排一
-        return d.getAttribute('data-cols') || '2';
+        var v = d.getAttribute('data-cols');
+        return ORDER.indexOf(v) >= 0 ? v : '3';
       }
       function paint() {
-        btn.setAttribute('aria-pressed', current() === '1' ? 'true' : 'false');
-        btn.title = current() === '1' ? '当前一排一 · 点按切一排二' : '当前一排二 · 点按切一排一';
+        var cur = current();
+        btn.setAttribute('aria-pressed', cur === '1' ? 'true' : 'false');
+        btn.title = '当前一排' + (cur === '1' ? '一' : cur === '2' ? '二' : '三') +
+          ' · 点按切一排' + (cur === '3' ? '二' : cur === '2' ? '一' : '三');
       }
       function set(v, touch) {
         d.setAttribute('data-cols', v);
@@ -111,11 +114,11 @@
         paint();
       }
 
-      if (c.cols === 1 || c.cols === 2) set(String(c.cols), false);
-      else set('2', false);
+      if (c.cols === 1 || c.cols === 2 || c.cols === 3) set(String(c.cols), false);
+      else set('3', false);
 
       btn.addEventListener('click', function () {
-        set(current() === '1' ? '2' : '1', true);
+        set(ORDER[(ORDER.indexOf(current()) + 1) % ORDER.length], true);
       });
     })();
 

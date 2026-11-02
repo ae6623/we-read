@@ -28,6 +28,33 @@
   var hasWM = typeof WeakMap === 'function';
   var meta = hasWM ? new WeakMap() : null;
 
+  /* ── 首屏打散 ───────────────────────────────────────────────────
+     纯按时间排，每次进来第一屏永远是同几本。只把「第一页」这 15 张打乱，
+     第 16 张往后仍是时间序（分页本身不乱）。
+     种子放在内存里：同一次访问内无论重排多少次（搬卡、切列数、改字号），
+     结果都一样 —— 否则每次 resize 卡片就换位置，眼睛跟不上。 */
+  var SEED = ((Date.now() ^ Math.floor(Math.random() * 1e9)) >>> 0) || 1;
+
+  function rng(a) {                      // mulberry32
+    return function () {
+      a |= 0; a = a + 0x6D2B79F5 | 0;
+      var t = Math.imul(a ^ a >>> 15, 1 | a);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+
+  function scatter(list) {
+    var n = Math.min(PAGE, list.length);
+    if (n < 2) return list.slice();
+    var head = list.slice(0, n), r = rng(SEED);
+    for (var i = n - 1; i > 0; i--) {
+      var j = Math.floor(r() * (i + 1));
+      var t = head[i]; head[i] = head[j]; head[j] = t;
+    }
+    return head.concat(list.slice(n));
+  }
+
   /* ── 曝光观察器 ────────────────────────────────────────────────── */
   var io = (typeof IntersectionObserver === 'function')
     ? new IntersectionObserver(function (entries) {
@@ -43,6 +70,18 @@
         }
       }, { rootMargin: '0px 0px -12% 0px', threshold: 0.34 })
     : null;
+
+  /* 「即将上线」「归档」两格不做瀑布：前者只有标题 + 一句说明（跨列全是空白），
+     后者卡里嵌着「阅读入口」折叠块（窄列会把入口压成竖排字）。
+     交回 CSS 网格，列数在 home-theme.css 里固定两列。 */
+  function isFixedGrid(grid) {
+    var el = grid;
+    while (el && el !== document.body) {
+      if (el.id === 'archive-grid' || el.id === 'reading-panel-archive' || el.id === 'panel-soon') return true;
+      el = el.parentElement;
+    }
+    return false;
+  }
 
   function isCard(el) {
     return el && el.nodeType === 1 && el.classList && el.classList.contains('archive-card');
@@ -67,7 +106,7 @@
 
   /* ── 瀑布流排版 ────────────────────────────────────────────────── */
   function isSpan(el, cols) {
-    return cols === 2 && el.getAttribute('data-span') === '2';
+    return cols > 1 && el.getAttribute('data-span') === 'full';
   }
 
   function layout(s) {
@@ -94,7 +133,8 @@
     var cs = getComputedStyle(grid);
     var gx = parseFloat(cs.columnGap) || 12;
     var gy = parseFloat(cs.rowGap) || 12;
-    var cols = d.getAttribute('data-cols') === '1' ? 1 : 2;
+    var cols = parseInt(d.getAttribute('data-cols'), 10) || 3;
+    if (cols < 1 || cols > 3) cols = 3;
     var colW = (W - gx * (cols - 1)) / cols;
     if (colW <= 1) return;
 
@@ -105,12 +145,12 @@
        压一张通栏卡当起点；桌面卡宽 500 会变成一条空心横条；「即将上线」那种
        只有标题 + 一句说明的卡跨列更是大片空白 —— 都排除。
        属性不在 MutationObserver 的监听列表里，改了不会自激。 */
-    var span = cols === 2 && colW < 300 && vis.length > 3 &&
+    var span = cols > 1 && colW < 300 && vis.length > 3 &&
       !!(vis[0] && vis[0].querySelector('.card-meta'));
     for (i = 0; i < cards.length; i++) {
       var on = span && cards[i] === vis[0];
       if (on) {
-        if (cards[i].getAttribute('data-span') !== '2') cards[i].setAttribute('data-span', '2');
+        if (cards[i].getAttribute('data-span') !== 'full') cards[i].setAttribute('data-span', 'full');
       } else if (cards[i].hasAttribute('data-span')) {
         cards[i].removeAttribute('data-span');
       }
@@ -271,11 +311,14 @@
     /* 只有「整格都是卡片」才做瀑布流 + 分页。
        系列页的网格里混着 .series-preview 导览块，绝对定位会把它们压叠在一起，
        这种网格保持原来的 CSS 网格排布，也不分页（本来就只有几十张）。 */
-    var pure = now.length === grid.children.length;
+    /* 归档卡的「阅读入口」是个 details 折叠块，窄列会把标题压成竖排字（三列时尤甚），
+       这类面板不做瀑布、交回 CSS 网格。 */
+    var pure = now.length === grid.children.length && !isFixedGrid(grid);
     if (pure !== s.pure) { s.dirtyMixed = s.pure === true; s.pure = pure; }
 
     var grew = now.length > s.cards.length;
-    s.cards = now;
+    // 纯卡网格：第一页打散（其余保持时间序）；混排网格原样交给 CSS
+    s.cards = pure ? scatter(now) : now;
     if (s.shown > now.length) s.shown = now.length;
 
     if (!pure) {                          // 混排：全部显示，不留页脚
@@ -333,7 +376,7 @@
   }
 
   function boot() {
-    if (!d.getAttribute('data-cols')) d.setAttribute('data-cols', '2');   // 默认一排二
+    if (!d.getAttribute('data-cols')) d.setAttribute('data-cols', '3');   // 默认一排三
     syncAll(true);
     relayout();
 
