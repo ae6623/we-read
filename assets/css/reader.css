@@ -74,20 +74,30 @@ body{max-width:880px;margin:0 auto;padding:0 18px 80px;font-size:.9375rem;line-h
 }
 /* 回首页入口：header 顶部的小胶囊 */
 /* 第 19 批：回首页改为右上角浮动小圆 icon（与 Aa 设置钮并排），不占正文一行 */
-/* 第 20 批 b：满宽平铺变体（FULL_HERO 白名单，先上《十年轮回》看效果）——
-   封面图 100vw 铺满当背景（首页卡片式，左右拉满到视口边缘），
-   底部压暗渐变 + 书名白字叠图上；hero 高度与普通版一致，下方内容位置不变 */
-#rdHero.rd-hero-full{width:100vw;margin-left:calc(50% - 50vw);padding:0;min-height:314px;
-  display:flex;align-items:flex-end;text-align:left;border-bottom:1px solid var(--card-bd);
-  background:var(--green2,#315e50);}
+/* 第 20 批 b/c：满宽平铺变体（FULL_HERO 白名单，先上《十年轮回》看效果）——
+   封面图 100vw×100svh 铺满当背景（首页卡片式，左右拉满到视口边缘），
+   底部压暗渐变；书名 h1 / chips / 章节导航全部搬进图上（微信读书介绍页式），
+   正文从第二屏开始 */
+#rdHero.rd-hero-full{width:100vw;margin-left:calc(50% - 50vw);padding:0;
+  min-height:100vh;min-height:100svh;
+  display:flex;flex-direction:column;justify-content:flex-end;text-align:left;
+  border-bottom:1px solid var(--card-bd);background:var(--green2,#315e50);}
 .rd-hero-full .rd-hero-cover{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
   object-position:center 30%;z-index:0;}
 .rd-hero-full::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
-  background:linear-gradient(180deg,rgba(18,30,26,.18) 0%,rgba(18,30,26,0) 34%,rgba(18,30,26,.62) 100%),
-    radial-gradient(120% 100% at 50% 0%,rgba(36,75,64,0) 55%,rgba(20,34,29,.35) 100%);}
-.rd-hero-full .rd-hero-title{position:relative;z-index:2;margin:0;padding:0 20px 18px;max-width:880px;
+  background:linear-gradient(180deg,rgba(18,30,26,.22) 0%,rgba(18,30,26,.02) 40%,rgba(18,30,26,.55) 78%,rgba(18,30,26,.78) 100%);}
+.rd-hero-full h1{position:relative;z-index:2;margin:0;padding:0 20px;max-width:880px;
   font:700 clamp(1.25rem,2.6vw,1.7rem)/1.4 var(--serif);color:#fff;
   text-shadow:0 2px 10px rgba(0,0,0,.55),0 1px 3px rgba(0,0,0,.4);}
+.rd-hero-full .chips{position:relative;z-index:2;margin:12px 20px 0;}
+.rd-hero-full .chip{background:rgba(255,255,255,.16);color:#fff;border:1px solid rgba(255,255,255,.28);
+  backdrop-filter:blur(4px);}
+.rd-hero-full .nav{position:relative;z-index:2;margin:14px 20px 18px;
+  background:rgba(20,32,28,.42);backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.18);border-radius:12px;box-shadow:0 4px 18px rgba(0,0,0,.25);}
+.rd-hero-full .navlink{color:#fff;background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.22);}
+.rd-hero-full .navlink:hover{color:#fff;border-color:rgba(255,255,255,.6);background:rgba(255,255,255,.2);}
+.rd-hero-full .navlink.active{color:#fff;background:rgba(158,208,175,.35);border-color:rgba(158,208,175,.7);}
 .rd-home{position:fixed;top:10px;left:12px;z-index:60;display:flex;align-items:center;justify-content:center;
   width:34px;height:34px;font-size:16px;line-height:1;color:var(--txt);text-decoration:none;
   background:var(--card-bg);border:1px solid var(--card-bd);border-radius:9px;padding:0;
@@ -261,8 +271,10 @@ html[data-theme=green] .toc-part,html[data-theme=green] .card{
 @media(max-width:720px){
   body{padding:0 12px 60px;}
   #rdHero{margin:0 -12px 8px;}
-  #rdHero.rd-hero-full{margin:0 0 8px;width:100vw;margin-left:calc(50% - 50vw);}
-  .rd-hero-full .rd-hero-title{padding:0 14px 14px;}
+  #rdHero.rd-hero-full{margin:0;width:100vw;margin-left:calc(50% - 50vw);}
+  .rd-hero-full h1{padding:0 14px;}
+  .rd-hero-full .chips{margin:10px 14px 0;}
+  .rd-hero-full .nav{margin:12px 14px 14px;}
   #rdBody>section.mmx-mod,#rdBody>section.card,#rdBody>section.mmx-svgwrap{padding:15px 16px;border-radius:14px;}
 }
 
