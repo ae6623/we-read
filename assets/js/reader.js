@@ -205,7 +205,44 @@
     var au = document.getElementById('rdHeroAuthor');
     if (au && au.parentNode) au.parentNode.removeChild(au);
     if (stick && stick.parentNode) stick.parentNode.removeChild(stick);
+    document.body.classList.remove('rd-has-full');
     head.style.display = '';
+  }
+  /* 吸顶让位：标题条钉住后，左上「回首页」与右上「Aa」两颗浮动钮正好压在
+     书名/作者上 → 滚动过墙后给标题条两侧留出避让内边距（CSS 里配 .rd-scrolled） */
+  var edgeBound = false;
+  function bindStickyEdge() {
+    if (edgeBound) return;
+    edgeBound = true;
+    window.addEventListener('scroll', function () {
+      var hero = document.getElementById('rdHero');
+      if (!hero || !document.body.classList.contains('rd-has-full')) {
+        document.body.classList.remove('rd-scrolled');
+        return;
+      }
+      document.body.classList.toggle('rd-scrolled', (window.scrollY || 0) > hero.offsetHeight - 70);
+    }, { passive: true });
+  }
+  /* 书名入口：点标题唤起微信读书 App 里这本书的详情页
+     weread://reading?bId=<bookId>&type=1 → type=1 即书籍详情页。
+     桌面浏览器 / 没装 App 点不动协议时，1.5 秒兜底打开网页版搜索页。 */
+  function wireWeread(a, bookId) {
+    a.addEventListener('click', function (e) {
+      e.preventDefault();
+      var left = false;
+      var mark = function () { left = true; };
+      document.addEventListener('visibilitychange', mark);
+      window.addEventListener('blur', mark);
+      try { window.location.href = 'weread://reading?bId=' + bookId + '&type=1'; } catch (err) { /* 忽略 */ }
+      setTimeout(function () {
+        document.removeEventListener('visibilitychange', mark);
+        window.removeEventListener('blur', mark);
+        if (left || document.hidden) return;
+        var t = (document.body.getAttribute('data-title') || '').replace(/^《/, '').replace(/》$/, '');
+        window.open('https://weread.qq.com/web/search/books?keyword=' + encodeURIComponent(t || bookId),
+          '_blank', 'noopener');
+      }, 1500);
+    });
   }
   /* FULL_HERO 书：从同目录 overview.html 的 .meta 提取作者（如「沈联涛」），
      异步填进 hero；取不到就整行隐藏。 */
@@ -294,12 +331,32 @@
         stick.className = 'rd-stick';
       }
       stick.innerHTML = '';
-      if (h1) stick.appendChild(h1);
-      var au = document.createElement('div');
+      /* 标题行：书名（可点，唤起微信读书详情页）+ 作者（行尾，右对齐） */
+      var row = document.createElement('div');
+      row.className = 'rd-stick-row';
+      var au = document.createElement('span');
       au.id = 'rdHeroAuthor';
       au.className = 'rd-hero-author';
-      stick.appendChild(au);
+      if (h1) {
+        var bookId = (document.body.getAttribute('data-book-id') || '').trim();
+        if (bookId) {
+          var tlink = document.createElement('a');
+          tlink.className = 'rd-title';
+          tlink.id = 'rdTitleLink';
+          tlink.href = 'weread://reading?bId=' + bookId + '&type=1';
+          tlink.setAttribute('aria-label', '在微信读书打开《' + (document.body.getAttribute('data-title') || '') + '》');
+          tlink.appendChild(h1);
+          wireWeread(tlink, bookId);
+          row.appendChild(tlink);
+        } else {
+          row.appendChild(h1);
+        }
+      }
+      row.appendChild(au);
+      stick.appendChild(row);
       fillHeroAuthor(slug, au);
+      document.body.classList.add('rd-has-full');
+      bindStickyEdge();
       var nav = document.getElementById('rdNav');
       if (nav) stick.appendChild(nav);
       if (head) head.style.display = 'none';

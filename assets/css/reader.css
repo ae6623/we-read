@@ -98,18 +98,31 @@ body{max-width:880px;margin:0 auto;padding:0 18px 80px;font-size:.9375rem;line-h
 .rd-hero-full::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
   background:linear-gradient(180deg,rgba(18,30,26,.28) 0%,rgba(18,30,26,.06) 42%,rgba(18,30,26,.42) 100%);}
 
-/* 标题 + 作者 + 章节导航：墙下方吸顶条（滚过墙后钉在视口顶） */
+/* 标题 + 作者 + 章节导航：墙下方吸顶条（滚过墙后钉在视口顶）
+   第 20 批 o：标题行加高；作者移到标题同一行末尾（右侧）；标题整体可点，
+   唤起微信读书对应书的详情页 */
 .rd-stick{position:sticky;top:0;z-index:8;background:var(--pg-bg);
-  padding:10px 0 8px;margin:0 0 12px;border-bottom:1px solid var(--card-bd);}
-.rd-stick h1{margin:0 0 4px;font:700 1.18rem/1.45 var(--serif);color:var(--head);
+  padding:16px 0 12px;margin:0 0 12px;border-bottom:1px solid var(--card-bd);
+  transition:padding .18s ease;}
+.rd-stick-row{display:flex;align-items:baseline;gap:12px;margin:0 0 8px;}
+.rd-stick h1{margin:0;flex:0 1 auto;min-width:0;font:700 1.18rem/1.6 var(--serif);color:var(--head);
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.rd-stick .rd-hero-author{margin:0 0 8px;font-size:.8rem;line-height:1.5;color:var(--muted);}
+.rd-stick .rd-hero-author{flex:none;margin:0 0 0 auto;max-width:36%;font-size:.78rem;line-height:1.6;
+  color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:right;}
+/* 标题即入口：点击跳微信读书 App（未安装回落网页搜索） */
+.rd-title{display:flex;align-items:baseline;gap:6px;flex:0 1 auto;min-width:0;
+  color:inherit;text-decoration:none;transition:color .15s ease;}
+.rd-title::after{content:"↗";flex:none;font:400 .82em/1 var(--sans);color:var(--muted);opacity:.65;}
+.rd-title:hover,.rd-title:focus-visible{color:var(--head);}
+.rd-title:hover::after{opacity:1;}
+.rd-title:focus-visible{outline:2px solid var(--head);outline-offset:3px;border-radius:4px;}
 .rd-stick .nav{position:relative;top:auto;margin:0;background:transparent;border:none;
   box-shadow:none;backdrop-filter:none;padding:0;}
 .rd-stick .navlink{font-size:11.5px;padding:5px 4px;}
 
-/* 正文圆角卡片：上滑盖住墙面 */
-.rd-hero-full ~ #rdBody{position:relative;z-index:2;background:var(--bg);
+/* 正文圆角卡片：上滑盖住墙面（背景必须给 --pg-bg 兜底：旧写法 var(--bg) 未定义=透明，
+   全宽后会让两侧露出底下的背景墙） */
+.rd-hero-full ~ #rdBody{position:relative;z-index:2;background:var(--pg-bg,#15171a);
   border-radius:20px 20px 0 0;box-shadow:0 -10px 28px rgba(0,0,0,.18);}
 .rd-home{position:fixed;top:10px;left:12px;z-index:60;display:flex;align-items:center;justify-content:center;
   width:34px;height:34px;font-size:16px;line-height:1;color:var(--txt);text-decoration:none;
@@ -287,7 +300,15 @@ html[data-theme=green] .toc-part,html[data-theme=green] .card{
   #rdHero.rd-hero-full{margin:0;width:100vw;margin-left:calc(50% - 50vw);padding:32px 0;}
   .rd-hero-full .rd-hero-cover{width:min(58vw,260px);}
   .rd-stick{padding:8px 0 6px;}
-  .rd-stick h1{font-size:1.02rem;}
+  .rd-stick{padding:12px 0 10px;}
+  /* 窄屏标题允许两行，模块自然抬高，长书名不再只剩半句 */
+  .rd-stick h1{font-size:1.04rem;line-height:1.5;white-space:normal;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+  .rd-stick-row{gap:10px;align-items:flex-end;}
+  .rd-stick .rd-hero-author{max-width:30%;}
+  .rd-title::after{display:none;}   /* 窄屏不显示外链小箭头，标题两行已足够挤 */
+  /* 吸顶后左上「←」、右上「Aa」会压在书名/作者上 → 标题条两侧让位 */
+  body.rd-scrolled .rd-stick{padding-left:46px;padding-right:46px;}
   #rdBody>section.mmx-mod,#rdBody>section.card,#rdBody>section.mmx-svgwrap{padding:15px 16px;border-radius:14px;}
 }
 
@@ -436,17 +457,36 @@ html[data-theme=dark] .mmx-svg .ln{stroke:#2f5b49;}
   background:linear-gradient(180deg,rgba(16,26,22,.9) 0%,rgba(16,26,22,.55) 70%,rgba(16,26,22,0) 100%);
   text-shadow:0 1px 4px rgba(0,0,0,.5);}
 
-/* ── 桌面端（≥1024px）：正文列加宽 + 头部收进内容宽度 ───────────
-   旧版 body 固定 880px，宽屏上文章一条窄缝、hero 却拉满整窗 → 两头都难看 */
+/* ── 桌面端（≥1024px）：正文列加宽 ───────────
+   第 20 批 o：FULL_HERO 书（body.rd-has-full）背景墙铺满整个视口宽度，
+   墙下方内容放宽到 1320 列居中（超宽屏 1400）；普通书仍按 1120 居中 */
 @media(min-width:1024px){
   body{max-width:1120px;padding:0 28px 96px;font-size:1rem;}
+  body.rd-has-full{max-width:none;padding:0 0 96px;}
   #rdHero.rd-hero-full{width:100%;margin-left:0;margin-top:14px;padding:56px 0;
     border-radius:18px 18px 0 0;overflow:hidden;}
+  body.rd-has-full #rdHero.rd-hero-full{width:100%;margin:0;padding:68px 0;
+    border-radius:0;}
   .rd-hero-full .rd-hero-cover{width:min(26vw,320px);}
-  .rd-stick{padding:12px 2px 10px;}
+  body.rd-has-full .rd-hero-full .rd-hero-cover{width:min(22vw,340px);}
+  /* 标题条/正文：背景 100% 全宽，内容靠计算内边距对齐到中央内容列 */
+  body.rd-has-full .rd-stick,
+  body.rd-has-full #rdBody{padding-left:max(28px,calc((100% - 1320px)/2 + 28px));
+    padding-right:max(28px,calc((100% - 1320px)/2 + 28px));}
+  .rd-stick{padding-top:12px;padding-bottom:10px;}
+  body.rd-has-full .rd-stick{padding-top:26px;padding-bottom:18px;}
   .rd-stick h1{font-size:1.32rem;}
+  body.rd-has-full .rd-stick h1{font-size:1.5rem;line-height:1.62;}
+  body.rd-has-full .rd-stick-row{margin:0 0 14px;gap:18px;}
+  body.rd-has-full.rd-scrolled .rd-stick{
+    padding-left:max(56px,calc((100% - 1320px)/2 + 28px));
+    padding-right:max(56px,calc((100% - 1320px)/2 + 28px));}
   .rd-stick .navlink{font-size:12.5px;padding:7px 6px;}
 }
 @media(min-width:1500px){
   body{max-width:1200px;}
+  body.rd-has-full{max-width:none;}
+  body.rd-has-full .rd-stick,
+  body.rd-has-full #rdBody{padding-left:max(28px,calc((100% - 1400px)/2 + 28px));
+    padding-right:max(28px,calc((100% - 1400px)/2 + 28px));}
 }
