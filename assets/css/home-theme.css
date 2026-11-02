@@ -11,8 +11,8 @@
 
 /* ── 1. 字号与节奏：整页跟着 --fs 缩放，间距跟着 --pm 走 ───────────── */
 :root{
-  --fs:.90;   /* 首页默认比书页（.94）再小一档：卡片标题是索引文字，不需要正文的体量 */
-  --pm:1.35;
+  --fs:.86;   /* 首页默认比书页（.94）再小两档：卡片是索引，不是正文 */
+  --pm:1;     /* 默认紧凑：卡片间隙、分组间距全部收一档 */
 }
 html{font-size:calc(16px*var(--fs));}
 body{font-size:1rem;line-height:1.72;}
@@ -45,11 +45,11 @@ html[data-theme=dark]{
 
 /* ── 3. 字号收小：卡片是索引，不是正文 ──────────────────────────── */
 h2{font-size:1.5rem;line-height:1.4;}
-.archive-card h3{font-size:1.05rem;line-height:1.5;margin:13px 0 4px;}
+.archive-card h3{font-size:1.02rem;line-height:1.45;margin:9px 0 3px;}
 /* 书名里偶有 `tmp_xxx` 这类没有断点的长 token，会把整页顶出横向滚动条 */
 .archive-card h3,.card-title-link,.archive-card p{overflow-wrap:anywhere;}
-.archive-card p{font-size:.82rem;line-height:1.65;margin:0 0 15px;}
-.archive-card{min-height:182px;padding:19px 20px 17px;}
+.archive-card p{font-size:.8rem;line-height:1.6;margin:0 0 10px;}
+.archive-card{min-height:140px;padding:15px 17px 13px;}
 .card-top{font-size:.72rem;}
 .type-tag{font-size:.67rem;padding:2px 9px;}
 .updated-time{font-size:.64rem;}
@@ -131,36 +131,115 @@ html[data-theme=dark] .site-footer{border-top-color:var(--line);}
 html[data-theme=dark] body{color-scheme:dark;}
 
 /* ── 6. 段距：卡片间隙与分组间距跟着 --pm 呼吸 ──────────────────── */
-.archive-grid{gap:calc(14px*var(--pm));}
+.archive-grid{gap:calc(12px*var(--pm));}
 /* 网格项默认 min-width:auto，长书名会把 1fr 撑破容器（手机上卡片右侧被切）；
    显式归零让卡片老实待在列宽里，文字该换行就换行。 */
 .archive-card,.overview-entries a,.series-preview{min-width:0;}
 .archive-card>*{min-width:0;}
-.reading-group{margin:calc(26px*var(--pm)) 0 calc(32px*var(--pm));}
+.reading-group{margin:calc(20px*var(--pm)) 0 calc(26px*var(--pm));}
 .overview-entries{gap:calc(12px*var(--pm));}
 .reading-panel+.reading-panel{margin-top:calc(32px*var(--pm));}
 
-/* ── 7. 右上角 Aa 与面板（与书页同一套交互，位置改到右下避让办公室入口） ── */
-#rdFab{position:fixed;right:14px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:60;
-  font:600 13px/1 var(--sans);color:var(--ink);background:var(--card);
-  border:1px solid var(--line);border-radius:11px;padding:9px 12px;cursor:pointer;
-  box-shadow:0 3px 12px rgba(var(--shadow),.16);}
-#rdFab:hover{border-color:var(--green);color:var(--green);}
-#rdPanel{position:fixed;right:14px;bottom:calc(62px + env(safe-area-inset-bottom));z-index:60;
-  background:var(--card);border:1px solid var(--line);border-radius:13px;padding:12px 14px;
-  box-shadow:0 10px 28px rgba(var(--shadow),.22);display:grid;gap:9px;min-width:216px;}
+/* ── 7. 工具栏：列数切换 + 主题（搜索钮右侧，同一排） ───────────── */
+.reading-tabs button.tab-tool-toggle{margin-left:6px;align-self:center;flex:0 0 auto;
+  width:38px;height:38px;min-height:38px;padding:0;border:1px solid var(--line);border-radius:999px;
+  background:var(--card);color:var(--muted);cursor:pointer;
+  display:inline-flex;align-items:center;justify-content:center;
+  transition:background .18s ease,border-color .18s ease,color .18s ease;}
+.reading-tabs button.tab-tool-toggle:hover{background:var(--sage);border-color:var(--green2);color:var(--green);}
+.reading-tabs button.tab-tool-toggle[aria-expanded="true"],
+.reading-tabs button.tab-tool-toggle[aria-pressed="true"]{background:var(--green);border-color:var(--green);color:#fff;}
+.reading-tabs button.tab-tool-toggle svg{display:block;width:17px;height:17px;
+  fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.reading-tabs button.rd-aa{font:700 12px/1 var(--sans);letter-spacing:.02em;}
+/* 列数钮的高亮让位给图标：一排一/一排二 看图形就够，绿色实心会把工具栏衬得太花 */
+.reading-tabs button#rdCols[aria-pressed="true"],
+html[data-theme=dark] .reading-tabs button#rdCols[aria-pressed="true"]{
+  background:var(--card);border-color:var(--line);color:var(--muted);}
+.reading-tabs button#rdCols[aria-pressed="true"]:hover{background:var(--sage);color:var(--green);}
+
+/* 列数图标：默认跟随响应式（窄屏显示「一排一」），用户手动切换后按 data-cols 走 */
+#rdCols svg{display:none}
+#rdCols .ic-cols-2{display:block}
+@media(max-width:680px){
+  #rdCols .ic-cols-2{display:none}
+  #rdCols .ic-cols-1{display:block}
+}
+html[data-cols="1"] #rdCols .ic-cols-2{display:none}
+html[data-cols="1"] #rdCols .ic-cols-1{display:block}
+html[data-cols="2"] #rdCols .ic-cols-1{display:none}
+html[data-cols="2"] #rdCols .ic-cols-2{display:block}
+
+/* 面板：贴在 Aa 正下方，右对齐（与搜索/筛选浮层同一套位置） */
+#rdPanel{position:absolute;top:calc(100% + 8px);right:0;z-index:30;
+  background:var(--card);border:1px solid var(--line);border-radius:13px;padding:11px 13px;
+  box-shadow:0 12px 30px rgba(var(--shadow),.24);display:grid;gap:8px;min-width:224px;}
 #rdPanel[hidden]{display:none;}
-#rdPanel .rd-row{display:flex;gap:5px;align-items:center;justify-content:space-between;}
+#rdPanel .rd-row{display:flex;gap:6px;align-items:center;justify-content:space-between;}
 #rdPanel .rd-row>span{font-size:.72rem;color:var(--muted);flex:none;}
 #rdPanel .rd-btns{display:flex;gap:5px;}
 #rdPanel button{font:600 12px/1.4 var(--sans);color:var(--ink);background:var(--input);
   border:1px solid var(--line);border-radius:7px;padding:4px 9px;cursor:pointer;}
 #rdPanel button:hover{border-color:var(--green);color:var(--green);}
 #rdPanel button[aria-pressed="true"]{border-color:var(--green);color:var(--green);background:var(--sage);}
+
+/* ── 8. 卡片：藏起徽章与旧入口，底部换「作者 + 操作」 ─────────────── */
+/* 全书视角徽章、精读/AI 大纲入口暂时不用：DOM 保留，将来改一行 CSS 就能放回 */
+.archive-card .type-tag,.archive-card .card-actions{display:none;}
+/* 徽章藏掉后，只剩一个日期或干脆空的顶栏就别占位了 */
+@supports selector(:has(*)){
+  .archive-card .card-top:not(:has(time, .subtle)){display:none;}
+}
+.archive-card{position:relative;}
+.card-foot{display:flex;align-items:center;gap:8px;margin-top:auto;min-height:26px;}
+.card-author{font-size:.75rem;color:var(--muted);min-width:0;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.card-author:empty{display:none;}
+.card-more{margin-left:auto;flex:none;display:inline-flex;align-items:center;justify-content:center;
+  width:26px;height:26px;padding:0;border:1px solid transparent;border-radius:8px;
+  background:transparent;color:var(--muted);cursor:pointer;transition:background .15s,color .15s;}
+.card-more svg{width:16px;height:16px;fill:currentColor;}
+.card-more:hover,.card-more[aria-expanded="true"]{background:var(--sage);color:var(--green);border-color:var(--line);}
+.card-menu{position:fixed;right:12px;bottom:48px;z-index:200;min-width:120px;
+  background:var(--card);border:1px solid var(--line);border-radius:11px;padding:5px;
+  box-shadow:0 10px 26px rgba(var(--shadow),.24);display:grid;gap:2px;}
+.card-menu[hidden]{display:none;}
+.card-menu button{display:flex;align-items:center;gap:8px;width:100%;padding:7px 9px;
+  border:0;border-radius:7px;background:transparent;color:var(--ink);
+  font:600 .78rem/1.4 var(--sans);text-align:left;cursor:pointer;}
+.card-menu button:hover{background:var(--sage);color:var(--green);}
+.card-menu button svg{width:14px;height:14px;flex:none;}
+.card-menu button[data-act="fav"][aria-checked="true"]{color:var(--gold);}
+.card-menu button[data-act="fav"][aria-checked="true"] svg{fill:var(--gold);stroke:var(--gold);}
+.archive-card.is-fav .card-more{color:var(--gold);}
+.archive-card.is-fav{box-shadow:inset 0 0 0 1px rgba(191,130,71,.45);}
+
+/* 列数切换：force 覆盖 site.css 的媒体查询 */
+html[data-cols="1"] .archive-grid{grid-template-columns:minmax(0,1fr)!important;}
+html[data-cols="2"] .archive-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+html[data-cols="1"] .overview-entries{grid-template-columns:minmax(0,1fr)!important;}
+html[data-cols="2"] .overview-entries{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+
 @media(max-width:680px){
-  #rdFab{right:12px;bottom:calc(12px + env(safe-area-inset-bottom));padding:8px 11px;}
-  #rdPanel{right:12px;left:12px;min-width:0;bottom:calc(56px + env(safe-area-inset-bottom));}
+  /* 手机一排要塞 3 个页签 + 4 个工具钮，工具钮收到 32 */
+  .reading-tabs button.tab-tool-toggle{width:32px;height:32px;min-height:32px;margin-left:4px;}
+  .reading-tabs button.tab-tool-toggle svg{width:15px;height:15px;}
+  .reading-tabs button.rd-aa{font-size:11px;}
+  .reading-tabs button{font-size:.86rem;padding:8px 6px;min-height:40px;}
+  .reading-tabs button.tab-filter-toggle,
+  .reading-tabs button.tab-search-toggle{width:32px;height:32px;min-height:32px;}
+  #rdPanel{left:auto;right:0;min-width:0;width:min(268px,calc(100vw - 36px));}
+  .archive-card{min-height:0;padding:13px 15px 11px;}
 }
 @media(prefers-reduced-motion:reduce){
   .archive-card,.series-preview{transition:none;}
 }
+
+/* 轻提示（收藏/分享反馈）：底部居中胶囊，1.8s 自动消失 */
+.rd-toast{position:fixed;left:50%;bottom:calc(26px + env(safe-area-inset-bottom));
+  transform:translate(-50%,10px);z-index:80;background:var(--ink);color:var(--paper);
+  padding:8px 16px;border-radius:999px;font:600 .78rem/1.4 var(--sans);
+  box-shadow:0 8px 22px rgba(var(--shadow),.28);opacity:0;pointer-events:none;
+  transition:opacity .2s ease,transform .2s ease;max-width:80vw;text-align:center;}
+.rd-toast.is-on{opacity:1;transform:translate(-50%,0);}
+@media(prefers-reduced-motion:reduce){.rd-toast{transition:none;}}

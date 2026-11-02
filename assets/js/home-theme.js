@@ -8,9 +8,9 @@
   'use strict';
 
   var KEY = 'rd-cfg';
-  var FS = [0.86, 0.90, 0.94, 1.00, 1.08, 1.18];
-  var PM = [0.6, 1, 1.5];
-  var DEF_THEME = 'cream', DEF_FS = 0.90, DEF_PM = 1.35;
+  var FS = [0.82, 0.86, 0.90, 0.94, 1.00, 1.08, 1.18];
+  var PM = [0.55, 1, 1.5];
+  var DEF_THEME = 'cream', DEF_FS = 0.86, DEF_PM = 1;
   var THEME_COLOR = { cream: '#f6f3ed', light: '#ffffff', green: '#cfe8d2', dark: '#15171a' };
 
   var d = document.documentElement;
@@ -55,6 +55,11 @@
       qa('button[data-rd^="th-"]', panel).forEach(function (b) {
         b.setAttribute('aria-pressed', b.getAttribute('data-rd') === 'th-' + th ? 'true' : 'false');
       });
+      // 段距三档也要标出当前档，否则看不出「紧/中/松」现在停在哪
+      var pmKeys = ['pm-', 'pm0', 'pm+'];
+      qa('button[data-rd^="pm"]', panel).forEach(function (b) {
+        b.setAttribute('aria-pressed', pmKeys.indexOf(b.getAttribute('data-rd')) === pi ? 'true' : 'false');
+      });
     }
 
     if (panel && fab) {
@@ -78,6 +83,37 @@
         apply(touch);
       });
     }
+
+    // ── 列数：一排一 / 一排二 ────────────────────────────────
+    (function () {
+      var btn = q('#rdCols');
+      if (!btn) return;
+      var narrow = window.matchMedia('(max-width: 680px)');
+
+      function current() {
+        return d.getAttribute('data-cols') || (narrow.matches ? '1' : '2');
+      }
+      function paint() {
+        btn.setAttribute('aria-pressed', current() === '1' ? 'true' : 'false');
+        btn.title = current() === '1' ? '当前一排一 · 点按切一排二' : '当前一排二 · 点按切一排一';
+      }
+      function set(v, touch) {
+        d.setAttribute('data-cols', v);
+        if (touch) { c.cols = parseInt(v, 10); save(c); }
+        paint();
+      }
+
+      if (c.cols === 1 || c.cols === 2) set(String(c.cols), false);
+      else paint();
+
+      btn.addEventListener('click', function () {
+        set(current() === '1' ? '2' : '1', true);
+      });
+      // 没手动选过的人，转屏/改窗口时跟随响应式
+      var onChange = function () { if (c.cols !== 1 && c.cols !== 2) paint(); };
+      if (narrow.addEventListener) narrow.addEventListener('change', onChange);
+      else if (narrow.addListener) narrow.addListener(onChange);
+    })();
 
     // 首次进入只应用、不写盘：用户没选过就保持默认，别把「默认」变成「用户偏好」
     apply(null);
