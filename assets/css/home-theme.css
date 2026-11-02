@@ -265,7 +265,9 @@ html[data-cols="3"] #rdCols .ic-cols-3{display:block}
   color:rgba(255,255,255,.94);font:600 1.35rem/1 var(--serif);letter-spacing:.16em;
   text-shadow:0 1px 3px rgba(0,0,0,.28);pointer-events:none;}
 .card-cover.has-img .card-cover-title{display:none;}
-.card-cover-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
+.card-cover-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;
+  opacity:0;transition:opacity .4s ease;}
+.card-cover.has-img .card-cover-img{opacity:1;}
 
 /* —— 一排二：海报化，封面铺满整卡、文字叠图上（第 18 批：高度减半 30/43→60/43） —— */
 html[data-cols="2"] .archive-card{display:flex;flex-direction:column;}
