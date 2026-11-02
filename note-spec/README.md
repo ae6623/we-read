@@ -141,3 +141,18 @@ engine_commit）、什么时候。台账 `compose.json` 每书同记 `produced_b
 铁律：**骨架卡里的标题是真实模块名，只有内容是假的**——读者第一眼就知道这本书有哪几块，
 不会因为一片空白以为页面挂了。深色主题下占位块与页面背景的灰阶差至少 2 档（≈+15 亮度）。
 `prefers-reduced-motion` 下停扫光/淡入，只留静态色块；fetch 失败显示 `.rd-fail` + 重新加载。
+
+### 阅读偏好（2026-11-02）：首页与书页共用一份 `rd-cfg`
+
+`assets/js/home-theme.js`（首页）+ `assets/js/reader.js`（书页）读写同一个键：
+
+```json
+{"theme":"cream|light|green|dark", "fs":0.90, "pm":1.35}
+```
+
+- 首页样式真源 `assets/css/home-theme.css`：四主题变量 + 组件字号覆盖；
+  书页是 `assets/css/reader.css`。两边变量名一致（`--paper/--card/--ink/--muted/--line/--green/--sage`）。
+- `--fs` 控制 `html{font-size}`（整页 rem 一起缩放），`--pm` 控制卡片/分组间距。
+- **默认值按页面性质分开**：首页米白（`.90`）、书页夜间（`.94`）。
+  初始化 `apply(false)` 只应用不落盘 —— 用户没主动选过，就不能被「默认」写成「偏好」，
+  否则逛一次书页，首页会永久变黑。
