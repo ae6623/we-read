@@ -231,10 +231,9 @@ html[data-theme=green] .toc-part,html[data-theme=green] .card{
   overflow:hidden;background:var(--card-bd);}
 #rdBar::before{content:"";display:block;width:100%;height:100%;border-radius:2px;
   transform-origin:0 50%;background:var(--head);box-shadow:0 0 10px var(--head);
-  animation:rdBarRun 1.5s cubic-bezier(.25,.6,.35,1) infinite;}
-@keyframes rdBarRun{0%{transform:scaleX(0);opacity:1}
-  55%{transform:scaleX(.72);opacity:1}
-  100%{transform:scaleX(1);opacity:0}}
+  animation:rdBarRun 9s cubic-bezier(.15,.7,.25,1) forwards;}
+/* 像真实加载条：一路推进到 92% 停住，数据到位再整条淡出（不循环、不闪烁） */
+@keyframes rdBarRun{0%{transform:scaleX(0)}38%{transform:scaleX(.52)}100%{transform:scaleX(.92)}}
 #rdBar.rd-done{opacity:0;transition:opacity .35s ease;}
 
 .rd-skel{display:grid;gap:calc(16px*var(--pm));}
