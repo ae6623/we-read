@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": 210,
+  "revision": 211,
   "timezone": "Asia/Shanghai",
   "authority": "latest origin/main; claims become effective only after serialized acceptance there",
   "migration": {
@@ -773,12 +773,14 @@
       "platform": "local_pdf",
       "platform_book_id": null,
       "priority": "owner_directed_speed_test",
-      "status": "in_progress",
-      "owner_agent_id": "local-pdf-reader",
+      "status": "completed",
+      "owner_agent_id": null,
       "claim": {
-        "state": "held",
-        "source": "管理员 2026-10-23 23:57 群内分配的 Windows 本地 PDF 测速场次",
-        "claimed_at": "2026-10-24T00:23:02+08:00"
+        "state": "released",
+        "source": "管理员 2026-10-23 23:57 群内分配的 Windows 本地 PDF 测速场次；2026-11-03 本地PDF全文AI分析完成并发布；仅对当前PDF可提取文本完读，个人亲读记录与续读点保持不变。",
+        "claimed_at": "2026-10-24T00:23:02+08:00",
+        "released_at": "2026-11-03T05:46:01+08:00",
+        "release_reason": "本场本地PDF可提取全文AI分析完成并发布；个人亲读记录与续读点保持原样。"
       },
       "category": "3-社会与人生观察",
       "last_confirmed_progress": null,
@@ -791,7 +793,15 @@
         "confirmed_at": null
       },
       "next_question_status": "needs-confirmation",
-      "completion": null,
+      "completion": {
+        "event_id": "completed-local-jingji-moshi-shehui-genyuan-suixiang-ai-2026-11-03",
+        "sequence": 7,
+        "confirmed_by": "local-pdf-reader",
+        "completed_at": "2026-11-03",
+        "evidence": "用户授权的本地PDF AI阅读完成：PDF可提取全文122,719字符，被切分为93/93个连续文本单元（92个原文标记加尾段），无缺失、无失败；Qwen3.5 2B逐单元分析并由Qwen3.5 4B整书综合，生成最终HTML与EPUB。完读范围仅限当前本地PDF可提取文本，不证明天涯原帖合集完整；不等于亲读，不更新个人亲读章节、时长、日期笔记或续读点。",
+        "mode": "AI阅读",
+        "output": "reading-notes/books/local-jingji-moshi-shehui-genyuan-suixiang/final.html；reading-notes/books/local-jingji-moshi-shehui-genyuan-suixiang/final.epub"
+      },
       "pdf_source_note": "本地私有文件，云端副本；不含路径；仅提炼本人摘要，不复制原文",
       "incident_notes": [
         "2026-10-24 测速场次 local-pdf-20261024-0023-m167：Gemini 辅助草稿（内部，未发布）；Gemini 3.8 一次 504 超时后换用 3-flash-preview，覆盖有缺口（177–215页未覆盖），草稿有转述失真，已核对更正；未完读"
@@ -942,7 +952,7 @@
   "synthesis": {
     "visibility": "private",
     "batch_size": 3,
-    "unique_completed_count": 6,
+    "unique_completed_count": 7,
     "batches": [
       {
         "batch_id": "batch-001",
@@ -968,19 +978,6 @@
       }
     ]
   },
-  "updated_at": "2026-11-03T03:04:49+08:00",
-  "active_sessions": [
-    {
-      "run_id": "local-pdf-20261103-030449-167",
-      "agent_id": "local-pdf-reader",
-      "book_id": "local-jingji-moshi-shehui-genyuan-suixiang",
-      "slot": "owner_directed_whole_book_once",
-      "started_at": "2026-11-03T03:04:49+08:00",
-      "environment_id": "local-pdf-reader-cloud",
-      "reading_mode": "local_pdf",
-      "resource_ids": [
-        "local-pdf:cloud-workspace"
-      ]
-    }
-  ]
+  "updated_at": "2026-11-03T05:47:42+08:00",
+  "active_sessions": []
 }
