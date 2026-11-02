@@ -232,14 +232,6 @@
         if (au.isConnected && au.getAttribute('data-slug') === slug) au.style.display = 'none';
       });
   }
-  /* FULL_HERO 书背景墙视差：背景在文档流里以 0.45 倍速跟随滚动（translateY），
-     正文卡片正常上滑 → 卡片"盖住"背景墙的相对滑动感。 */
-  function heroParallax() {
-    var bg = document.querySelector('#rdHero.rd-hero-full .rd-hero-bg');
-    if (!bg) return;
-    var y = window.scrollY || window.pageYOffset || 0;
-    bg.style.transform = 'translateY(' + Math.round(y * 0.45) + 'px)';
-  }
   function addHero() {
     var main = q('#rdBody');
     if (!main) return;
@@ -269,12 +261,9 @@
       var nav = document.getElementById('rdNav');
       if (nav) sec.appendChild(nav);
       if (head) head.style.display = 'none';   // 内容已搬走，隐藏空壳避免留白
-      window.addEventListener('scroll', heroParallax, { passive: true });
-      heroParallax();
     } else {
       sec.className = 'rd-hero';
       if (head) head.style.display = '';
-      window.removeEventListener('scroll', heroParallax);
       sec.innerHTML = '<img class="rd-hero-bg" aria-hidden="true" alt="" src="' + src + '">'
         + '<img class="rd-hero-img" alt="封面" loading="eager" src="' + src + '">';
     }
