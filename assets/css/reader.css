@@ -291,7 +291,11 @@ html[data-theme=green]{--skel-a:#d6e9da;--skel-b:#aed3ba;}
 @keyframes rdIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 /* 加载失败 */
 .rd-fail{padding:22px 0;color:var(--sub);font-size:.86rem;line-height:1.9;}
-.rd-fail b{color:var(--head);}
+.rd-fail b{color:var(--head);display:block;margin-bottom:6px;font-size:.92rem;}
+.rd-retry{margin-top:10px;font:600 13px/1.4 var(--sans);color:var(--head);
+  background:var(--navlink-bg);border:1px solid var(--head);border-radius:8px;
+  padding:7px 14px;cursor:pointer;}
+.rd-retry:hover{background:var(--act-bg);}
 @media(max-width:720px){
   .rd-skel-card{padding:14px 16px 18px;border-radius:14px;}
   .rd-skel .sk-fig{height:132px;}

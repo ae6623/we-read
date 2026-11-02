@@ -281,7 +281,14 @@
     if (main) {
       main.removeAttribute('aria-busy');
       main.classList.remove('rd-in');
-      main.innerHTML = '<p class="rd-fail">' + msg + '</p>';
+      // 线上失败基本是网络问题；只有 file:// 才需要解释同源策略
+      var tip = location.protocol === 'file:'
+        ? '页面需通过站点（http/https）访问：直接双击本地文件会被浏览器的同源策略拦截。'
+        : '多半是网络不稳，点下面重新加载即可。';
+      main.innerHTML = '<p class="rd-fail"><b>内容没能加载出来</b>' + (msg || '') + '<br>'
+        + tip + '<br><button class="rd-retry" type="button">重新加载</button></p>';
+      var btn = q('.rd-retry', main);
+      if (btn) btn.onclick = function () { location.reload(); };
     }
     loaded();
   }
@@ -306,8 +313,7 @@
       if (!html || html.indexOf('<section') < 0) throw new Error('空数据');
       render(parseData(html));
     }).catch(function (err) {
-      fail('内容加载失败（' + err.message + '）。本站页面需通过站点访问（http/https），'
-         + '直接双击打开本地文件会被浏览器的同源策略拦截。');
+      fail(err && err.message ? '（' + err.message + '）' : '');
     });
   }
 
