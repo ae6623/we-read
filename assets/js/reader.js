@@ -206,9 +206,10 @@
     var sec = document.createElement('section');
     sec.id = 'rdHero';
     sec.className = 'rd-hero';
-    sec.innerHTML = '<img class="rd-hero-img" alt="封面" loading="eager" src="../../../assets/covers/'
-      + encodeURIComponent(slug) + '.jpg">';
-    var img = sec.querySelector('img');
+    var src = '../../../assets/covers/' + encodeURIComponent(slug) + '.jpg';
+    sec.innerHTML = '<img class="rd-hero-bg" aria-hidden="true" alt="" src="' + src + '">'
+      + '<img class="rd-hero-img" alt="封面" loading="eager" src="' + src + '">';
+    var img = sec.querySelector('.rd-hero-img');
     img.addEventListener('error', function () {
       if (sec.parentNode) sec.parentNode.removeChild(sec);
     });
