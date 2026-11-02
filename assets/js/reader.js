@@ -112,12 +112,18 @@
     var box = q('#rdChips');
     if (!box) return;
     var chips = [meta.cat1 || '通读 + 精读', meta.cat2 || 'AI领读', 'AI 生产'];
-    box.innerHTML = chips.map(function (t) {
-      return '<span class="chip">' + String(t).replace(/[<>&]/g, '') + '</span>';
-    }).join('');
+    var spans = qa('.chip', box);
+    if (spans.length === 3) {
+      // 壳页已直出三个占位 chip → 就地改文本，避免重建导致的闪动
+      spans.forEach(function (el, i) { el.textContent = chips[i]; });
+    } else {
+      box.innerHTML = chips.map(function (t) {
+        return '<span class="chip">' + String(t).replace(/[<>&]/g, '') + '</span>';
+      }).join('');
+    }
     if (meta.title) {
       var h1 = q('.combined-head h1');
-      if (h1 && !h1.textContent.replace(/[《》\s]/g, '')) h1.textContent = '《' + meta.title + '》';
+      if (h1) h1.textContent = '《' + meta.title + '》';
       document.title = '《' + meta.title + '》｜全书领读';
     }
   }
@@ -142,10 +148,30 @@
     });
 
     main.innerHTML = polish(parts.join('\n'));
+    main.removeAttribute('aria-busy');
+
+    // 导航：壳页已直出全套标签 → 就地删掉本书没有的、补上缺的（不重建，避免宽度闪动）
     if (nav) {
-      nav.innerHTML = links.map(function (l) {
-        return '<a class="navlink" href="#' + l.id + '">' + l.label + '</a>';
-      }).join('');
+      var have = {};
+      links.forEach(function (l) { have[l.id] = l.label; });
+      var existing = qa('.navlink', nav);
+      if (existing.length) {
+        existing.forEach(function (a) {
+          var id = (a.getAttribute('href') || '').replace(/^#/, '');
+          if (!have[id]) a.parentNode.removeChild(a);
+          else a.textContent = have[id];
+        });
+        links.forEach(function (l) {
+          if (!q('.navlink[href="#' + l.id + '"]', nav)) {
+            nav.insertAdjacentHTML('beforeend',
+              '<a class="navlink" href="#' + l.id + '">' + l.label + '</a>');
+          }
+        });
+      } else {
+        nav.innerHTML = links.map(function (l) {
+          return '<a class="navlink" href="#' + l.id + '">' + l.label + '</a>';
+        }).join('');
+      }
     }
     renderChips(data.meta || {});
     spy(links);
@@ -219,8 +245,12 @@
       apply();
     });
 
+    var THEME_COLOR = { dark: '#15171a', cream: '#f7f8f3', light: '#ffffff', green: '#cfe8d2' };
+    var tcMeta = q('meta[name="theme-color"]');
+
     function apply() {
       d.setAttribute('data-theme', c.theme || DEF_THEME);
+      if (tcMeta) tcMeta.setAttribute('content', THEME_COLOR[c.theme || DEF_THEME] || '#15171a');
       d.style.setProperty('--fs', FS[fi]);
       d.style.setProperty('--pm', PM[pi]);
       c.fs = FS[fi]; c.pm = PM[pi];
@@ -239,7 +269,8 @@
   function fail(msg) {
     var main = q('#rdBody');
     if (main) {
-      main.innerHTML = '<p class="rd-loading">' + msg + '</p>';
+      main.removeAttribute('aria-busy');
+      main.innerHTML = '<p class="rd-fail">内容加载失败：' + msg + '</p>';
     }
   }
 
