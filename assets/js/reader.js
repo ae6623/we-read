@@ -210,6 +210,35 @@
     if (h1) head.insertBefore(h1, head.firstChild);
     if (chips) head.appendChild(chips);
     if (nav && head.parentNode) head.parentNode.insertBefore(nav, head.nextSibling);
+    var au = document.getElementById('rdHeroAuthor');
+    if (au && au.parentNode) au.parentNode.removeChild(au);
+  }
+  /* FULL_HERO 书：从同目录 overview.html 的 .meta 提取作者（如「沈联涛」），
+     异步填进 hero；取不到就整行隐藏。 */
+  function fillHeroAuthor(slug, au) {
+    if (!au) return;
+    au.setAttribute('data-slug', slug);
+    fetch('overview.html', { credentials: 'same-origin' })
+      .then(function (r) { return r.ok ? r.text() : ''; })
+      .then(function (t) {
+        if (!au.isConnected || au.getAttribute('data-slug') !== slug) return;
+        var m = t.match(/<div class="meta">([\s\S]*?)<\/div>/);
+        var meta = m ? m[1].replace(/<span[\s\S]*?<\/span>/g, '').replace(/<[^>]*>/g, '') : '';
+        var author = (meta.split('·')[0] || '').trim();
+        if (author) au.textContent = author;
+        else au.style.display = 'none';
+      })
+      .catch(function () {
+        if (au.isConnected && au.getAttribute('data-slug') === slug) au.style.display = 'none';
+      });
+  }
+  /* FULL_HERO 书背景墙视差：背景在文档流里以 0.45 倍速跟随滚动（translateY），
+     正文卡片正常上滑 → 卡片"盖住"背景墙的相对滑动感。 */
+  function heroParallax() {
+    var bg = document.querySelector('#rdHero.rd-hero-full .rd-hero-bg');
+    if (!bg) return;
+    var y = window.scrollY || window.pageYOffset || 0;
+    bg.style.transform = 'translateY(' + Math.round(y * 0.45) + 'px)';
   }
   function addHero() {
     var main = q('#rdBody');
@@ -226,18 +255,26 @@
     var h1 = head ? head.querySelector('h1') : null;
     if (FULL_HERO[slug]) {
       sec.className = 'rd-hero rd-hero-full';
-      /* 网易云音乐式：封面放大模糊做满屏氛围底 + 封面本体完整居中（不裁切） */
+      /* 网易云音乐式：封面图铺满做背景墙 + 封面本体完整居中（不裁切） */
       sec.innerHTML = '<img class="rd-hero-bg" aria-hidden="true" alt="" src="' + src + '">'
         + '<img class="rd-hero-cover" alt="封面" loading="eager" src="' + src + '">';
       if (h1) sec.appendChild(h1);
+      var au = document.createElement('div');
+      au.id = 'rdHeroAuthor';
+      au.className = 'rd-hero-author';
+      sec.appendChild(au);
+      fillHeroAuthor(slug, au);
       var chips = document.getElementById('rdChips');
       if (chips) sec.appendChild(chips);
       var nav = document.getElementById('rdNav');
       if (nav) sec.appendChild(nav);
       if (head) head.style.display = 'none';   // 内容已搬走，隐藏空壳避免留白
+      window.addEventListener('scroll', heroParallax, { passive: true });
+      heroParallax();
     } else {
       sec.className = 'rd-hero';
       if (head) head.style.display = '';
+      window.removeEventListener('scroll', heroParallax);
       sec.innerHTML = '<img class="rd-hero-bg" aria-hidden="true" alt="" src="' + src + '">'
         + '<img class="rd-hero-img" alt="封面" loading="eager" src="' + src + '">';
     }
