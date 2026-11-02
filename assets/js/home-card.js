@@ -142,8 +142,14 @@
         img.alt = title;
         img.src = 'assets/covers/' + slug + '.jpg';
         img.addEventListener('error', function () { this.remove(); });
-        // 真封面加载成功 → 隐藏占位题字，只留图
-        img.addEventListener('load', function () { cover.classList.add('has-img'); });
+        // 真封面加载成功 → 隐藏占位题字，只留图。
+        // 注意：循环用 var，闭包里不能引用 cover（会全指到最后一轮），用 this 向上找
+        img.addEventListener('load', function () {
+          var c = this.closest('.card-cover');
+          if (c) c.classList.add('has-img');
+        });
+        // 兜底：缓存/极快加载时 load 事件可能已错过，挂完监听补查一次
+        if (img.complete && img.naturalWidth > 0) cover.classList.add('has-img');
         cover.appendChild(img);
       }
       // 把除封面外的所有子节点（含隐藏的 ⋯ 菜单）包进 card-body，
