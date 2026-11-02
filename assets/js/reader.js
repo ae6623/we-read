@@ -150,6 +150,7 @@
     main.innerHTML = polish(parts.join('\n'));
     main.removeAttribute('aria-busy');
     main.classList.add('rd-in');   // 内容淡入，替代骨架的突兀切换
+    dedupQuoteNodes(main);
     loaded();
 
     // 导航：壳页已直出全套标签 → 就地删掉本书没有的、补上缺的（不重建，避免宽度闪动）
@@ -182,6 +183,63 @@
   }
 
   /* ── 导航滚动高亮 ─────────────────────────────────────── */
+
+  /* 书名号包装：book-order.json 的书名有的整体带《》（取自首页 h3），
+     有的是「《xxx》在说什么」这类自带前书名号的形式 → 只要以《开头就不再包，
+     否则会出现《《xxx》》或《《xxx》在说什么》 */
+  function wrapShu(t) {
+    t = esc(String(t || '').trim());
+    return t.indexOf('《') === 0 ? t : '《' + t + '》';
+  }
+
+  /* 「原句 · 本小节汇总」去重：小节里如果所有 ul.quote 的原句加起来
+     和汇总节点一字不差（只有一个来源时必然如此），汇总就是纯重复 → 整块删掉。
+     汇总里有任何一条新增内容则保留不动。 */
+  function dedupQuoteNodes(root) {
+    var nodes;
+    try { nodes = root.querySelectorAll('ul.quote.quote-node'); } catch (e) { return; }
+    function flat(ul) {
+      var out = [];
+      Array.prototype.forEach.call(ul.children, function (li) {
+        if (li.tagName !== 'LI') return;
+        var t = (li.textContent || '').replace(/\s+/g, '');
+        if (t) out.push(t);
+      });
+      return out;
+    }
+    Array.prototype.forEach.call(nodes, function (node) {
+      var sec = node.closest ? node.closest('.sec') : null;
+      if (!sec) return;
+      var src = sec.querySelectorAll('ul.quote:not(.quote-node)');
+      if (!src.length) return;               // 小节里没有别的原句 → 汇总是唯一来源，保留
+      var want = [], have = flat(node);
+      Array.prototype.forEach.call(src, function (ul) {
+        want = want.concat(flat(ul));
+      });
+      if (!have.length || want.length !== have.length) return;
+      for (var i = 0; i < have.length; i++) if (have[i] !== want[i]) return;
+      node.parentNode.removeChild(node);
+    });
+  }
+
+  /* 详情页顶部「回首页」入口：注入到 header 顶部，点击上报埋点。
+     埋点走 goatcounter 事件通道（combined.html 已带 no_onload 的 count.js +
+     home-track.js，详情页只报事件、不计 PV）。 */
+  function addHomeLink() {
+    if (document.getElementById('rdHome')) return;
+    var head = q('header.combined-head');
+    if (!head) return;
+    var a = document.createElement('a');
+    a.id = 'rdHome';
+    a.className = 'rd-home';
+    a.href = '../../../index.html';
+    a.innerHTML = '<span aria-hidden="true">←</span> 回首页';
+    a.addEventListener('click', function () {
+      try { if (window.rdTrack) rdTrack('/detail/back-home', '详情页·回首页'); } catch (e) {}
+    });
+    head.insertBefore(a, head.firstChild);
+  }
+
 
   function spy(links) {
     var as = qa('.navlink'), map = {};
@@ -309,10 +367,10 @@
       host.innerHTML =
         '<a class="rd-pn rd-pn-prev' + (prev ? '' : ' is-off') + '"' + (prev ? ' href="#pn-prev"' : '') + '>' +
           '<span class="rd-pn-k">上一篇</span>' +
-          '<span class="rd-pn-t">' + (prev ? '《' + esc(prev.title) + '》' : '已经是最新一篇') + '</span></a>' +
+          '<span class="rd-pn-t">' + (prev ? wrapShu(prev.title) : '已经是最新一篇') + '</span></a>' +
         '<a class="rd-pn rd-pn-next' + (next ? '' : ' is-off') + '"' + (next ? ' href="#pn-next"' : '') + '>' +
           '<span class="rd-pn-k">下一篇</span>' +
-          '<span class="rd-pn-t">' + (next ? '《' + esc(next.title) + '》' : '已经是最早一篇') + '</span></a>';
+          '<span class="rd-pn-t">' + (next ? wrapShu(next.title) : '已经是最早一篇') + '</span></a>';
       var ap = q('.rd-pn-prev', host), an = q('.rd-pn-next', host);
       if (prev && ap) ap.addEventListener('click', function (e) { e.preventDefault(); goBook(prev.slug); });
       if (next && an) an.addEventListener('click', function (e) { e.preventDefault(); goBook(next.slug); });
@@ -438,6 +496,7 @@
 
   function boot() {
     initSettings();
+    addHomeLink();
 
     // ① 内联数据（standalone 单文件预览）优先，② 否则 fetch 同目录数据文件
     var inline = document.getElementById('rdData');

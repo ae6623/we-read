@@ -241,3 +241,18 @@ engine_commit）、什么时候。台账 `compose.json` 每书同记 `produced_b
   上一篇 = 更新一篇（列表里后一个），下一篇 = 更早一篇（列表里前一个）。点按 `fetch` 目标书的
   `combined-data.html` 原地重渲染 + `history.pushState` 换 URL，前进/后退可用；渲染失败整页兜底跳转。
   翻页条 `#rdPn` 在 `#rdBody` 之后，左下「上一篇」、右下「下一篇」，书名带《》包裹。
+
+### 详情页交互补充（2026-11-02 下午）：回首页入口 / 书名号 / 汇总去重（第 16 批）
+
+- **回首页入口**：`reader.js` `addHomeLink()` 在 `header.combined-head` 顶部注入
+  `#rdHome`（← 回首页，指向 `../../../index.html`），SPA 翻页后依然保留（只在 boot 注入一次）。
+- **埋点**：339 本 `combined.html` 尾部新增三行——`window.goatcounter={no_onload:true}`
+  （详情页不计 PV）+ `gc.zgo.at/count.js` + `home-track.js`。点「回首页」时
+  `rdTrack('/detail/back-home','详情页·回首页')`，走 GoatCounter 事件通道，
+  后台 Events 里单独可看，不占 PV。
+- **翻页条书名号**：`wrapShu()` 统一处理——书名以《开头（含「《xxx》在说什么」这类
+  自带书名号的形式）就不再包裹，杜绝《《xxx》》双重书名号。
+- **「原句 · 本小节汇总」去重**：`dedupQuoteNodes()` 渲染后比对每个
+  `ul.quote.quote-node` 与同节（`.sec`）内全部 `ul.quote` 的原句列表，
+  逐字相同（纯重复）就整块删除；有任何新增内容则保留。实测全库 16411 个
+  汇总块全部为纯重复 → 均删除，正文信息零损失。

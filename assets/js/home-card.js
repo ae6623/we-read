@@ -118,13 +118,6 @@
      库里目前没有书籍封面图（只有 epub），所以默认渲染「按 slug 哈希上色的占位封面 +
      书名」，让用户先看到带封面的版式效果。若日后把真封面放到 assets/covers/<slug>.jpg，
      <img> 会自动盖上去、占位层透明退场（onerror 移除）。 */
-  function hashHue(s) {
-    var h = 0;
-    s = s || '';
-    for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) % 360;
-    return h;
-  }
-
   function addCovers() {
     var cards = document.querySelectorAll('.archive-card');
     for (var i = 0; i < cards.length; i++) {
@@ -135,7 +128,6 @@
       var title = ((h3 ? h3.textContent : '') || '').trim();
       var cover = document.createElement('div');
       cover.className = 'card-cover';
-      cover.style.setProperty('--ch', hashHue(slug || title || String(i)) + 'deg');
       if (title) {
         var t = document.createElement('span');
         t.className = 'card-cover-title';
@@ -150,6 +142,8 @@
         img.alt = title;
         img.src = 'assets/covers/' + slug + '.jpg';
         img.addEventListener('error', function () { this.remove(); });
+        // 真封面加载成功 → 隐藏占位题字，只留图
+        img.addEventListener('load', function () { cover.classList.add('has-img'); });
         cover.appendChild(img);
       }
       // 把除封面外的所有子节点（含隐藏的 ⋯ 菜单）包进 card-body，
