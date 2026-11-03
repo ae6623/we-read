@@ -1,7 +1,9 @@
 /*!
  * share.js — 页面分享组件（二维码 + 微博 / QQ空间 / 复制链接）
  *
- * 用法：引入本文件即可。脚本会在 .series-page 的导航右侧自动放一个分享图标，
+ * 用法：引入本文件即可。脚本会自动找挂载点放一个分享图标：
+ *   - 系列页：.series-nav 右侧
+ *   - 书籍详情页：header.combined-head 右上角
  * 不需要在每个页面模板里手写按钮，新增页面漏不掉。
  *
  * 微信、朋友圈没有可用的网页分享协议（需 JS-SDK 与公众号授权），
@@ -46,11 +48,11 @@
 
   function init() {
     var nav = document.querySelector('.series-page .series-nav') || document.querySelector('.series-nav');
-    if (!nav) return;
+    var head = document.querySelector('header.combined-head');
+    if (!nav && !head) return;
 
     var btn = document.createElement('button');
     btn.type = 'button';
-    btn.className = 'share-btn';
     btn.setAttribute('aria-label', '分享这一页');
     btn.title = '分享这一页';
     btn.innerHTML =
@@ -60,7 +62,17 @@
       '<circle cx="18" cy="19" r="2.6" fill="none" stroke="currentColor" stroke-width="1.8"/>' +
       '<path d="M8.3 10.7l7.4-4.3M8.3 13.3l7.4 4.3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>' +
       '</svg>';
-    nav.appendChild(btn);
+
+    if (nav && !head) {
+      /* 系列页：放进顶部导航右侧 */
+      btn.className = 'share-btn';
+      nav.appendChild(btn);
+    } else {
+      /* 详情页：右上角浮动，和 Aa 设置钮并排（页面有两种头部形态，
+         浮动按钮不受 header 是否被隐藏影响） */
+      btn.className = 'share-btn share-btn--float';
+      document.body.appendChild(btn);
+    }
 
     var mask = buildPanel();
     var qrBox = mask.querySelector('.share-qr');

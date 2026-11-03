@@ -1,7 +1,6 @@
 /* share.css — 分享按钮与分享面板（配合 assets/js/share.js） */
 
-.series-nav .share-btn{
-  margin-left:auto;
+.share-btn{
   display:inline-flex;
   align-items:center;
   justify-content:center;
@@ -15,8 +14,29 @@
   cursor:pointer;
   transition:background .18s ease,border-color .18s ease,transform .18s ease;
 }
-.series-nav .share-btn:hover{background:#eef2ea;border-color:#b9cbb8;transform:translateY(-1px)}
-.series-nav .share-btn:active{transform:translateY(0)}
+.share-btn:hover{background:#eef2ea;border-color:#b9cbb8;transform:translateY(-1px)}
+.share-btn:active{transform:translateY(0)}
+.series-nav .share-btn{margin-left:auto}
+
+/* 书籍详情页 · 右上角浮动，和 Aa 设置钮并排 */
+.share-btn--float{
+  position:fixed;
+  top:10px;
+  right:64px;
+  z-index:60;
+  width:34px;
+  height:34px;
+  border-radius:9px;
+  background:var(--card-bg,#fffefa);
+  border:1px solid var(--card-bd,#d9dfd4);
+  color:var(--txt,#2b3a33);
+  box-shadow:0 2px 8px rgba(0,0,0,.1);
+}
+.share-btn--float:hover{border-color:var(--head,#315e50);color:var(--head,#315e50);background:var(--card-bg,#fffefa);transform:none}
+.share-btn--float:active{transform:translateY(1px)}
+@media (max-width:560px){
+  .share-btn--float{top:10px;right:64px;width:34px;height:34px}
+}
 
 .share-mask{
   position:fixed;
