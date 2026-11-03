@@ -1,21 +1,5138 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>深入浅出Spring Boot 2.x · AI 大纲</title><style>
-:root{--fg:#1f2328;--muted:#6b7280;--line:#e6e2da;--accent:#b45309;--bg:#fbfaf7}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.78 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
-.wrap{max-width:840px;margin:0 auto;padding:38px 22px 90px}
-h1{font-size:26px;line-height:1.35;margin:0 0 6px}
-.meta{color:var(--muted);font-size:14px;margin-bottom:20px}
-h2{font-size:19px;margin:34px 0 12px;padding-left:10px;border-left:4px solid var(--accent)}
-h3{font-size:16px;margin:18px 0 8px}
-p{margin:8px 0}
-.tag{display:inline-block;background:#f2ede2;color:#8a6d3b;font-size:12px;padding:1px 9px;border-radius:10px;margin-right:6px}
-ul,ol{padding-left:22px}li{margin:4px 0}
-.quote{border-left:3px solid #d8cfbd;padding:6px 12px;color:#4b4639;background:#f7f4ee;margin:8px 0;font-size:15px;border-radius:0 6px 6px 0}
-.src{color:var(--muted);font-size:12px}
-.ch{display:flex;gap:10px;padding:7px 0;border-bottom:1px dashed var(--line)}
-.ch .no{color:var(--accent);font-weight:600;min-width:34px;text-align:right}
-.card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:12px 0}
-.foot{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
-a{color:#8a5a00;text-decoration:none}a:hover{text-decoration:underline}
-.badge{font-size:12px;color:#8a6d3b;background:#f6f1e6;border:1px solid #eadfc6;border-radius:6px;padding:1px 7px}
-</style></head><body><div class="wrap"><h1>深入浅出Spring Boot 2.x</h1><div class="meta"><span class="tag">AI 大纲</span>杨开振　·　共 115 章</div><h2>全书提要</h2><p>Spring框架是JavaEE开发的强有力的工具和事实标准，而SpringBoot采用“约定优于配置”的原则简化了Spring的开发，从而成为业界流行的微服务开发框架，已经被越来越多的企业采用。2018年3月SpringBoot的版本正式从1.x升级到了2.x，为了适应新潮流，本书将对SpringBoot2.x技术进行深入讲解。本书从一个最简单的工程开始讲解SpringBoot企业级开发，其内容包含全注解下的SpringIoC和AOP、数据库编程（JDBC、JPA和MyBatis）、数据库事务、NoSQL（Redis和MongoDB）技术、SpringMVC、Spring5新一代响应式框架WebFlux、互联网抢购业务、部署与监控、REST风格和SpringCloud分布式开发等。本书内容紧扣互联网企业的实际要求，从全注解下Spring知识讲到SpringBoot的企业级开发，对于Java开发人员，尤其是初学SpringBoot的人员和需要从传统Spring转向SpringBoot开发的技术人员，具有很高的参考价值。</p><h2>章节大纲（含各章热门划线原文）</h2><div class="ch"><span class="no">1</span><div><b>版权</b><span class="src"> · 162 字</span></div></div><div class="ch"><span class="no">2</span><div><b>内容提要</b><span class="src"> · 478 字</span></div></div><div class="ch"><span class="no">3</span><div><b>前言</b><span class="src"> · 948 字</span><div class="quote">“微服务”将一个大的系统拆分为多个子系统，然后通过REST风格的请求将它们集成起来，进一步简化了分布式系统的开发。 <span class="src">[34人划线]</span></div><div class="quote">Spring Boot采用了“约定优于配置”的规则 <span class="src">[34人划线]</span></div></div></div><div class="ch"><span class="no">4</span><div><b>本书的安排</b><span class="src"> · 1145 字</span></div></div><div class="ch"><span class="no">5</span><div><b>阅读本书的要求和目标读者</b><span class="src"> · 347 字</span></div></div><div class="ch"><span class="no">6</span><div><b>本书使用的Spring Boot版本</b><span class="src"> · 386 字</span></div></div><div class="ch"><span class="no">7</span><div><b>致谢</b><span class="src"> · 173 字</span></div></div><div class="ch"><span class="no">8</span><div><b>纠错、源码和课程</b><span class="src"> · 338 字</span></div></div><div class="ch"><span class="no">9</span><div><b>资源与支持</b><span class="src"> · 60 字</span></div></div><div class="ch"><span class="no">10</span><div><b>配套资源</b><span class="src"> · 117 字</span></div></div><div class="ch"><span class="no">11</span><div><b>提交勘误</b><span class="src"> · 191 字</span></div></div><div class="ch"><span class="no">12</span><div><b>与我们联系</b><span class="src"> · 364 字</span></div></div><div class="ch"><span class="no">13</span><div><b>关于异步社区和异步图书</b><span class="src"> · 296 字</span></div></div><div class="ch"><span class="no">14</span><div><b>第1章 Spring Boot来临</b><span class="src"> · 229 字</span></div></div><div class="ch"><span class="no">15</span><div><b>1.1 Spring的历史</b><span class="src"> · 1863 字</span></div></div><div class="ch"><span class="no">16</span><div><b>1.2 注解还是XML</b><span class="src"> · 1348 字</span></div></div><div class="ch"><span class="no">17</span><div><b>1.3 Spring Boot的优点</b><span class="src"> · 957 字</span><div class="quote">约定优于配置，这是Spring Boot的主导思想。 <span class="src">[85人划线]</span></div></div></div><div class="ch"><span class="no">18</span><div><b>1.4 传统Spring MVC和Spring Boot的对比</b><span class="src"> · 8225 字</span></div></div><div class="ch"><span class="no">19</span><div><b>第2章 聊聊开发环境搭建和基本开发</b><span class="src"> · 178 字</span></div></div><div class="ch"><span class="no">20</span><div><b>2.1 搭建Spring Boot开发环境</b><span class="src"> · 3479 字</span></div></div><div class="ch"><span class="no">21</span><div><b>2.2 Spring Boot的依赖和自动配置</b><span class="src"> · 5754 字</span></div></div><div class="ch"><span class="no">22</span><div><b>2.3 使用自定义配置</b><span class="src"> · 1923 字</span><div class="quote">yml文件的配置与properties文件只是简写和缩进的差别 <span class="src">[34人划线]</span></div></div></div><div class="ch"><span class="no">23</span><div><b>2.4 开发自己的Spring Boot项目</b><span class="src"> · 2779 字</span><div class="quote">@SpringBootApplication标志着这是一个Spring Boot入门文件 <span class="src">[48人划线]</span></div><div class="quote">Spring MVC的视图解析器的作用主要是定位视图，也就是当控制器只是返回一个逻辑名称的时候，是没有办法直接对应找到视图的，这就需要视图解析器进行解析了 <span class="src">[36人划线]</span></div></div></div><div class="ch"><span class="no">24</span><div><b>第3章 全注解下的Spring IoC</b><span class="src"> · 798 字</span><div class="quote">IoC是一种通过描述来生成或者获取对象的技术 <span class="src">[68人划线]</span></div><div class="quote">IoC容器需要具备两个基本的功能： •通过描述管理Bean，包括发布和获取Bean； •通过描述完成Bean之间的依赖关系。 <span class="src">[52人划线]</span></div></div></div><div class="ch"><span class="no">25</span><div><b>3.1 IoC容器简介</b><span class="src"> · 4393 字</span><div class="quote">注解@Bean也不是唯一创建Bean的方法，还有其他的方法可以让IoC容器装配Bean <span class="src">[36人划线]</span></div><div class="quote">在Spring IoC容器中，默认的情况下，Bean都是以单例存在的，也就是使用getBean方法返回的都是同一个对象 <span class="src">[34人划线]</span></div></div></div><div class="ch"><span class="no">26</span><div><b>3.2 装配你的Bean</b><span class="src"> · 6608 字</span><div class="quote">当然你也可以不配置这个字符串，那么IoC容器就会把类名第一个字母作为小写，其他不变作为Bean名称放入到IoC容器中 <span class="src">[36人划线]</span></div><div class="quote">@ComponentScan，意味着它会进行扫描，但是它只会扫描类AppConfig所在的当前包和其子包 <span class="src">[36人划线]</span></div></div></div><div class="ch"><span class="no">27</span><div><b>3.3 依赖注入</b><span class="src"> · 6038 字</span><div class="quote">Spring IoC容器并不能知道你需要注入什么动物（是狗？是猫？）给BussinessPerson类对象，从而引起错误的发生 <span class="src">[39人划线]</span></div></div></div><div class="ch"><span class="no">28</span><div><b>3.4 生命周期</b><span class="src"> · 7308 字</span><div class="quote">Spring IoC初始化和销毁Bean的过程，这便是Bean的生命周期的过程，它大致分为Bean定义、Bean的初始化、Bean的生存期和Bean的销毁4个部分。其中Bean定义过程大致如下。 <span class="src">[51人划线]</span></div></div></div><div class="ch"><span class="no">29</span><div><b>3.5 使用属性文件</b><span class="src"> · 3666 字</span></div></div><div class="ch"><span class="no">30</span><div><b>3.6 条件装配Bean</b><span class="src"> · 1683 字</span></div></div><div class="ch"><span class="no">31</span><div><b>3.7 Bean的作用域</b><span class="src"> · 1788 字</span></div></div><div class="ch"><span class="no">32</span><div><b>3.8 使用@Profile</b><span class="src"> · 2267 字</span></div></div><div class="ch"><span class="no">33</span><div><b>3.9 引入XML配置Bean</b><span class="src"> · 1222 字</span></div></div><div class="ch"><span class="no">34</span><div><b>3.10 使用Spring EL</b><span class="src"> · 1611 字</span></div></div><div class="ch"><span class="no">35</span><div><b>第4章 开始约定编程——Spring AOP</b><span class="src"> · 286 字</span></div></div><div class="ch"><span class="no">36</span><div><b>4.1 约定编程</b><span class="src"> · 7468 字</span><div class="quote">只是这需要自己去实践，如果仅仅是看看，那么效果肯定就会相差几个档次。 <span class="src">[36人划线]</span></div></div></div><div class="ch"><span class="no">37</span><div><b>4.2 AOP的概念</b><span class="src"> · 3637 字</span></div></div><div class="ch"><span class="no">38</span><div><b>4.3 AOP开发详解</b><span class="src"> · 11588 字</span></div></div><div class="ch"><span class="no">39</span><div><b>4.4 多个切面</b><span class="src"> · 3983 字</span></div></div><div class="ch"><span class="no">40</span><div><b>第5章 访问数据库</b><span class="src"> · 1147 字</span></div></div><div class="ch"><span class="no">41</span><div><b>5.1 配置数据源</b><span class="src"> · 4821 字</span></div></div><div class="ch"><span class="no">42</span><div><b>5.2 使用JdbcTemplate操作数据库</b><span class="src"> · 4197 字</span></div></div><div class="ch"><span class="no">43</span><div><b>5.3 使用JPA（Hibernate）操作数据</b><span class="src"> · 6848 字</span></div></div><div class="ch"><span class="no">44</span><div><b>5.4 整合MyBatis框架</b><span class="src"> · 14504 字</span></div></div><div class="ch"><span class="no">45</span><div><b>第6章 聊聊数据库事务处理</b><span class="src"> · 1718 字</span></div></div><div class="ch"><span class="no">46</span><div><b>6.1 JDBC的数据库事务</b><span class="src"> · 1378 字</span></div></div><div class="ch"><span class="no">47</span><div><b>6.2 Spring声明式事务的使用</b><span class="src"> · 10755 字</span></div></div><div class="ch"><span class="no">48</span><div><b>6.3 隔离级别</b><span class="src"> · 5003 字</span><div class="quote">这51笔交易笔数就是多条数据库记录统计出来的。而可重复读是针对数据库的单一条记录，例如，商品的库存是以数据库里面的一条记录存储的，它可以产生可重复读，而不能产生幻读。 <span class="src">[72人划线]</span></div><div class="quote">读写提交（read committed）隔离级别，是指一个事务只能读取另外一个事务已经提交的数据，不能读取未提交的数据。 <span class="src">[51人划线]</span></div></div></div><div class="ch"><span class="no">49</span><div><b>6.4 传播行为</b><span class="src"> · 10190 字</span><div class="quote">在Spring中，当一个方法调用另外一个方法时，可以让事务采取不同的策略工作，如新建事务或者挂起当前事务等，这便是事务的传播行为 <span class="src">[51人划线]</span></div></div></div><div class="ch"><span class="no">50</span><div><b>6.5 @Transactional自调用失效问题</b><span class="src"> · 5557 字</span></div></div><div class="ch"><span class="no">51</span><div><b>第7章 使用性能利器——Redis</b><span class="src"> · 1735 字</span></div></div><div class="ch"><span class="no">52</span><div><b>7.1 spring-data-redis项目简介</b><span class="src"> · 8267 字</span></div></div><div class="ch"><span class="no">53</span><div><b>7.2 在Spring Boot中配置和使用Redis</b><span class="src"> · 8084 字</span></div></div><div class="ch"><span class="no">54</span><div><b>7.3 Redis的一些特殊用法</b><span class="src"> · 10167 字</span></div></div><div class="ch"><span class="no">55</span><div><b>7.4 使用Spring缓存注解操作Redis</b><span class="src"> · 14220 字</span></div></div><div class="ch"><span class="no">56</span><div><b>第8章 文档数据库——MongoDB</b><span class="src"> · 1280 字</span></div></div><div class="ch"><span class="no">57</span><div><b>8.1 配置MongoDB</b><span class="src"> · 1218 字</span></div></div><div class="ch"><span class="no">58</span><div><b>8.2 使用MongoTemplate实例</b><span class="src"> · 8063 字</span></div></div><div class="ch"><span class="no">59</span><div><b>8.3 使用JPA</b><span class="src"> · 4625 字</span></div></div><div class="ch"><span class="no">60</span><div><b>第9章 初识Spring MVC</b><span class="src"> · 804 字</span></div></div><div class="ch"><span class="no">61</span><div><b>9.1 Spring MVC框架的设计</b><span class="src"> · 505 字</span></div></div><div class="ch"><span class="no">62</span><div><b>9.2 Spring MVC流程</b><span class="src"> · 8939 字</span></div></div><div class="ch"><span class="no">63</span><div><b>9.3 定制Spring MVC的初始化</b><span class="src"> · 2524 字</span></div></div><div class="ch"><span class="no">64</span><div><b>9.4 Spring MVC实例</b><span class="src"> · 4638 字</span></div></div><div class="ch"><span class="no">65</span><div><b>第10章 深入Spring MVC开发</b><span class="src"> · 200 字</span></div></div><div class="ch"><span class="no">66</span><div><b>10.1 处理器映射</b><span class="src"> · 1707 字</span></div></div><div class="ch"><span class="no">67</span><div><b>10.2 获取控制器参数</b><span class="src"> · 7406 字</span></div></div><div class="ch"><span class="no">68</span><div><b>10.3 自定义参数转换规则</b><span class="src"> · 6359 字</span></div></div><div class="ch"><span class="no">69</span><div><b>10.4 数据验证</b><span class="src"> · 6589 字</span></div></div><div class="ch"><span class="no">70</span><div><b>10.5 数据模型</b><span class="src"> · 2178 字</span></div></div><div class="ch"><span class="no">71</span><div><b>10.6 视图和视图解析器</b><span class="src"> · 5765 字</span></div></div><div class="ch"><span class="no">72</span><div><b>10.7 文件上传</b><span class="src"> · 5069 字</span></div></div><div class="ch"><span class="no">73</span><div><b>10.8 拦截器</b><span class="src"> · 7505 字</span></div></div><div class="ch"><span class="no">74</span><div><b>10.9 国际化</b><span class="src"> · 6965 字</span></div></div><div class="ch"><span class="no">75</span><div><b>10.10 Spring MVC拾遗</b><span class="src"> · 10538 字</span></div></div><div class="ch"><span class="no">76</span><div><b>第11章 构建REST风格网站</b><span class="src"> · 384 字</span></div></div><div class="ch"><span class="no">77</span><div><b>11.1 REST简述</b><span class="src"> · 2563 字</span><div class="quote">每个资源对应一个特定的URI。要获取这个资源，访问它的URI即可，而在REST中每一个资源都会对应一个独一无二的URI。在REST中，URI也可以称为端点（End Point）。 <span class="src">[42人划线]</span></div></div></div><div class="ch"><span class="no">78</span><div><b>11.2 使用Spring MVC开发REST风格端点</b><span class="src"> · 18725 字</span></div></div><div class="ch"><span class="no">79</span><div><b>11.3 客户端请求RestTemplate</b><span class="src"> · 5979 字</span></div></div><div class="ch"><span class="no">80</span><div><b>第12章 安全——Spring Security</b><span class="src"> · 660 字</span></div></div><div class="ch"><span class="no">81</span><div><b>12.1 概述和简单安全认证</b><span class="src"> · 2937 字</span></div></div><div class="ch"><span class="no">82</span><div><b>12.2 使用WebSecurityConfigurerAdapter自定义</b><span class="src"> · 1161 字</span></div></div><div class="ch"><span class="no">83</span><div><b>12.3 自定义用户服务信息</b><span class="src"> · 9519 字</span></div></div><div class="ch"><span class="no">84</span><div><b>12.4 限制请求</b><span class="src"> · 6412 字</span></div></div><div class="ch"><span class="no">85</span><div><b>12.5 用户认证功能</b><span class="src"> · 5143 字</span></div></div><div class="ch"><span class="no">86</span><div><b>第13章 学点Spring其他的技术</b><span class="src"> · 157 字</span></div></div><div class="ch"><span class="no">87</span><div><b>13.1 异步线程池</b><span class="src"> · 3236 字</span></div></div><div class="ch"><span class="no">88</span><div><b>13.2 异步消息</b><span class="src"> · 10508 字</span></div></div><div class="ch"><span class="no">89</span><div><b>13.3 定时任务</b><span class="src"> · 2130 字</span></div></div><div class="ch"><span class="no">90</span><div><b>13.4 WebSocket 应用</b><span class="src"> · 16241 字</span></div></div><div class="ch"><span class="no">91</span><div><b>第14章 Spring 5新框架——WebFlux</b><span class="src"> · 633 字</span></div></div><div class="ch"><span class="no">92</span><div><b>14.1 基础概念</b><span class="src"> · 5796 字</span></div></div><div class="ch"><span class="no">93</span><div><b>14.2 通过Spring MVC方式开发WebFlux服务端</b><span class="src"> · 10925 字</span></div></div><div class="ch"><span class="no">94</span><div><b>14.3 深入WebFlux服务端开发</b><span class="src"> · 4863 字</span></div></div><div class="ch"><span class="no">95</span><div><b>14.4 深入客户端开发</b><span class="src"> · 4135 字</span></div></div><div class="ch"><span class="no">96</span><div><b>14.5 使用路由函数方式开发WebFlux</b><span class="src"> · 8318 字</span></div></div><div class="ch"><span class="no">97</span><div><b>第15章 实践一下——抢购商品</b><span class="src"> · 323 字</span></div></div><div class="ch"><span class="no">98</span><div><b>15.1 设计与开发</b><span class="src"> · 8840 字</span></div></div><div class="ch"><span class="no">99</span><div><b>15.2 高并发开发</b><span class="src"> · 14677 字</span></div></div><div class="ch"><span class="no">100</span><div><b>第16章 部署、测试和监控</b><span class="src"> · 248 字</span></div></div><div class="ch"><span class="no">101</span><div><b>16.1 部署和运行</b><span class="src"> · 4331 字</span></div></div><div class="ch"><span class="no">102</span><div><b>16.2 测试</b><span class="src"> · 3697 字</span></div></div><div class="ch"><span class="no">103</span><div><b>16.3 Actuator监控端点</b><span class="src"> · 714 字</span></div></div><div class="ch"><span class="no">104</span><div><b>16.4 HTTP监控</b><span class="src"> · 12112 字</span></div></div><div class="ch"><span class="no">105</span><div><b>16.5 JMX监控</b><span class="src"> · 483 字</span></div></div><div class="ch"><span class="no">106</span><div><b>第17章 分布式开发——Spring Cloud</b><span class="src"> · 2615 字</span></div></div><div class="ch"><span class="no">107</span><div><b>17.1 服务治理和服务发现——Eureka</b><span class="src"> · 7075 字</span></div></div><div class="ch"><span class="no">108</span><div><b>17.2 微服务之间的调用</b><span class="src"> · 7854 字</span></div></div><div class="ch"><span class="no">109</span><div><b>17.3 断路器——Hystrix</b><span class="src"> · 5545 字</span></div></div><div class="ch"><span class="no">110</span><div><b>17.4 路由网关——Zuul</b><span class="src"> · 7166 字</span></div></div><div class="ch"><span class="no">111</span><div><b>17.5 使用@SpringCloudApplication</b><span class="src"> · 1197 字</span></div></div><div class="ch"><span class="no">112</span><div><b>附录 Spring Boot知识点补充</b><span class="src"> · 68 字</span></div></div><div class="ch"><span class="no">113</span><div><b>A.1 选择内嵌服务器</b><span class="src"> · 766 字</span></div></div><div class="ch"><span class="no">114</span><div><b>A.2 修改商标</b><span class="src"> · 1114 字</span></div></div><div class="ch"><span class="no">115</span><div><b>A.3 深入Spring Boot自动装配</b><span class="src"> · 3520 字</span></div></div><div class="foot">来源：微信读书官方章节接口 + 热门划线接口，逐字原文　·　生成于 2026-11-01 13:21　·　开读即产（不等完读）</div></div></body></html>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="深入浅出Spring Boot 2.x AI 大纲">
+<title>《深入浅出Spring Boot 2.x》｜AI 大纲</title>
+<link rel="stylesheet" href="../../../assets/css/site.css">
+<link rel="stylesheet" href="../../../assets/css/reading-outline.css">
+
+</head>
+<body>
+<main class="page">
+  <header class="note-head">
+    <p class="eyebrow">AI OUTLINE · BEFORE READING</p>
+    <h1>《深入浅出Spring Boot 2.x》AI 大纲</h1>
+    <p class="meta">作者：—　·　共 111 章 / 1585 条　·　AI 读书 · 全书大纲</p>
+    <p><a href="../../../index.html">← 返回首页</a>　<a href="../../index.html">阅读归档索引</a>　<a href="outline.epub" download>下载 EPUB ↓</a></p>
+    <div class="chips"><span class="chip">全书视角</span><span class="chip">AI 生成</span><span class="chip">含原文摘录</span></div>
+    <p class="small">本大纲由 AI 读书（阅读端智能大纲）生成，是全书结构与要点的机器梳理，
+    <b>不等同于已亲读</b>；其中第 4 层条目为书中原句摘录。章节可展开查看。</p>
+  </header>
+  <div class="toc"><b>章节目录</b><ul>
+<li><a href="#ch0">版权</a></li>
+<li><a href="#ch1">内容提要</a></li>
+<li><a href="#ch2">本书的安排</a></li>
+<li><a href="#ch3">阅读本书的要求和目标读者</a></li>
+<li><a href="#ch4">本书使用的Spring Boot版本</a></li>
+<li><a href="#ch5">纠错、源码和课程</a></li>
+<li><a href="#ch6">配套资源</a></li>
+<li><a href="#ch7">提交勘误</a></li>
+<li><a href="#ch8">与我们联系</a></li>
+<li><a href="#ch9">关于异步社区和异步图书</a></li>
+<li><a href="#ch10">第1章 Spring Boot来临</a></li>
+<li><a href="#ch11">1.1 Spring的历史</a></li>
+<li><a href="#ch12">1.2 注解还是XML</a></li>
+<li><a href="#ch13">1.3 Spring Boot的优点</a></li>
+<li><a href="#ch14">1.4 传统Spring MVC和Spring Boot的对比</a></li>
+<li><a href="#ch15">第2章 聊聊开发环境搭建和基本开发</a></li>
+<li><a href="#ch16">2.1 搭建Spring Boot开发环境</a></li>
+<li><a href="#ch17">2.2 Spring Boot的依赖和自动配置</a></li>
+<li><a href="#ch18">2.3 使用自定义配置</a></li>
+<li><a href="#ch19">2.4 开发自己的Spring Boot项目</a></li>
+<li><a href="#ch20">第3章 全注解下的Spring IoC</a></li>
+<li><a href="#ch21">3.1 IoC容器简介</a></li>
+<li><a href="#ch22">3.2 装配你的Bean</a></li>
+<li><a href="#ch23">3.3 依赖注入</a></li>
+<li><a href="#ch24">3.4 生命周期</a></li>
+<li><a href="#ch25">3.5 使用属性文件</a></li>
+<li><a href="#ch26">3.6 条件装配Bean</a></li>
+<li><a href="#ch27">3.7 Bean的作用域</a></li>
+<li><a href="#ch28">3.8 使用@Profile</a></li>
+<li><a href="#ch29">3.9 引入XML配置Bean</a></li>
+<li><a href="#ch30">3.10 使用Spring EL</a></li>
+<li><a href="#ch31">第4章 开始约定编程——Spring AOP</a></li>
+<li><a href="#ch32">4.1 约定编程</a></li>
+<li><a href="#ch33">4.2 AOP的概念</a></li>
+<li><a href="#ch34">4.3 AOP开发详解</a></li>
+<li><a href="#ch35">4.4 多个切面</a></li>
+<li><a href="#ch36">第5章 访问数据库</a></li>
+<li><a href="#ch37">5.1 配置数据源</a></li>
+<li><a href="#ch38">5.2 使用JdbcTemplate操作数据库</a></li>
+<li><a href="#ch39">5.3 使用JPA（Hibernate）操作数据</a></li>
+<li><a href="#ch40">5.4 整合MyBatis框架</a></li>
+<li><a href="#ch41">第6章 聊聊数据库事务处理</a></li>
+<li><a href="#ch42">6.1 JDBC的数据库事务</a></li>
+<li><a href="#ch43">6.2 Spring声明式事务的使用</a></li>
+<li><a href="#ch44">6.3 隔离级别</a></li>
+<li><a href="#ch45">6.4 传播行为</a></li>
+<li><a href="#ch46">6.5 @Transactional自调用失效问题</a></li>
+<li><a href="#ch47">第7章 使用性能利器——Redis</a></li>
+<li><a href="#ch48">7.1 spring-data-redis项目简介</a></li>
+<li><a href="#ch49">7.2 在Spring Boot中配置和使用Redis</a></li>
+<li><a href="#ch50">7.3 Redis的一些特殊用法</a></li>
+<li><a href="#ch51">7.4 使用Spring缓存注解操作Redis</a></li>
+<li><a href="#ch52">第8章 文档数据库——MongoDB</a></li>
+<li><a href="#ch53">8.1 配置MongoDB</a></li>
+<li><a href="#ch54">8.2 使用MongoTemplate实例</a></li>
+<li><a href="#ch55">8.3 使用JPA</a></li>
+<li><a href="#ch56">第9章 初识Spring MVC</a></li>
+<li><a href="#ch57">9.1 Spring MVC框架的设计</a></li>
+<li><a href="#ch58">9.2 Spring MVC流程</a></li>
+<li><a href="#ch59">9.3 定制Spring MVC的初始化</a></li>
+<li><a href="#ch60">9.4 Spring MVC实例</a></li>
+<li><a href="#ch61">第10章 深入Spring MVC开发</a></li>
+<li><a href="#ch62">10.1 处理器映射</a></li>
+<li><a href="#ch63">10.2 获取控制器参数</a></li>
+<li><a href="#ch64">10.3 自定义参数转换规则</a></li>
+<li><a href="#ch65">10.4 数据验证</a></li>
+<li><a href="#ch66">10.5 数据模型</a></li>
+<li><a href="#ch67">10.6 视图和视图解析器</a></li>
+<li><a href="#ch68">10.7 文件上传</a></li>
+<li><a href="#ch69">10.8 拦截器</a></li>
+<li><a href="#ch70">10.9 国际化</a></li>
+<li><a href="#ch71">10.10 Spring MVC拾遗</a></li>
+<li><a href="#ch72">第11章 构建REST风格网站</a></li>
+<li><a href="#ch73">11.1 REST简述</a></li>
+<li><a href="#ch74">11.2 使用Spring MVC开发REST风格端点</a></li>
+<li><a href="#ch75">11.3 客户端请求RestTemplate</a></li>
+<li><a href="#ch76">第12章 安全——Spring Security</a></li>
+<li><a href="#ch77">12.1 概述和简单安全认证</a></li>
+<li><a href="#ch78">12.2 使用WebSecurityConfigurerAdapter自定义</a></li>
+<li><a href="#ch79">12.3 自定义用户服务信息</a></li>
+<li><a href="#ch80">12.4 限制请求</a></li>
+<li><a href="#ch81">12.5 用户认证功能</a></li>
+<li><a href="#ch82">第13章 学点Spring其他的技术</a></li>
+<li><a href="#ch83">13.1 异步线程池</a></li>
+<li><a href="#ch84">13.2 异步消息</a></li>
+<li><a href="#ch85">13.3 定时任务</a></li>
+<li><a href="#ch86">13.4 WebSocket 应用</a></li>
+<li><a href="#ch87">第14章 Spring 5新框架——WebFlux</a></li>
+<li><a href="#ch88">14.1 基础概念</a></li>
+<li><a href="#ch89">14.2 通过Spring MVC方式开发WebFlux服务端</a></li>
+<li><a href="#ch90">14.3 深入WebFlux服务端开发</a></li>
+<li><a href="#ch91">14.4 深入客户端开发</a></li>
+<li><a href="#ch92">14.5 使用路由函数方式开发WebFlux</a></li>
+<li><a href="#ch93">第15章 实践一下——抢购商品</a></li>
+<li><a href="#ch94">15.1 设计与开发</a></li>
+<li><a href="#ch95">15.2 高并发开发</a></li>
+<li><a href="#ch96">第16章 部署、测试和监控</a></li>
+<li><a href="#ch97">16.1 部署和运行</a></li>
+<li><a href="#ch98">16.2 测试</a></li>
+<li><a href="#ch99">16.3 Actuator监控端点</a></li>
+<li><a href="#ch100">16.4 HTTP监控</a></li>
+<li><a href="#ch101">16.5 JMX监控</a></li>
+<li><a href="#ch102">第17章 分布式开发——Spring Cloud</a></li>
+<li><a href="#ch103">17.1 服务治理和服务发现——Eureka</a></li>
+<li><a href="#ch104">17.2 微服务之间的调用</a></li>
+<li><a href="#ch105">17.3 断路器——Hystrix</a></li>
+<li><a href="#ch106">17.4 路由网关——Zuul</a></li>
+<li><a href="#ch107">17.5 使用@SpringCloudApplication</a></li>
+<li><a href="#ch108">A.1 选择内嵌服务器</a></li>
+<li><a href="#ch109">A.2 修改商标</a></li>
+<li><a href="#ch110">A.3 深入Spring Boot自动装配</a></li>
+</ul></div>
+<details class="ch" id="ch0"><summary>版权</summary>
+<div class="sec">
+<h4>《深入浅出Spring Boot 2.x》的版权信息</h4>
+<ul class="point">
+<li><b>本书由杨开振著，责任编辑为杨海玲</b>
+<ul class="quote">
+<li>人民邮电出版社出版发行，北京市丰台区成寿寺路11号。</li>
+<li>邮编：100164，电子邮件：315@ptpress.com.cn。</li>
+<li>网址：http://www.ptpress.com.cn。</li>
+<li>读者服务热线：(010)81055410，反盗版热线：(010)81055315。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch1"><summary>内容提要</summary>
+<div class="sec">
+<h4>Spring Boot 2.x技术深入讲解</h4>
+<ul class="point">
+<li><b>Spring Boot采用“约定优于配置”的原则简化了Spring的开发</b>
+<ul class="quote">
+<li>Spring Boot已经成为业界最流行的微服务开发框架。</li>
+</ul>
+</li>
+<li><b>本书内容包含全注解下的Spring IoC和AOP、数据库编程(JDBC、JPA和MyBatis)、数据库事务、NoSQL(Redis和MongoDB)技术、Spring MVC、Spring 5新一代响应式框架WebFlux、互联网抢购业务、部署与监控、REST风格和Spring Cloud分布式开发等。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>本书内容紧扣互联网企业的实际要求</h4>
+<ul class="point">
+<li><b>从全注解下Spring知识讲到Spring Boot的企业级开发</b>
+<ul class="quote">
+<li>对于Java开发人员，尤其是初学Spring Boot的人员和需要从传统Spring转向Spring Boot开发的技术人员，具有很高的参考价值。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch2"><summary>本书的安排</summary>
+<div class="sec">
+<h4>Spring Boot与Spring的区别及开发环境搭建</h4>
+<ul class="point">
+<li><b>Spring Boot使Spring项目可以更加快速地开发、部署和测试</b>
+<ul class="quote">
+<li>Spring Boot采用了“约定优于配置”的理念。</li>
+<li>Spring Boot在其内部提供了大量的starter，而这些starter又提供了许多自动配置类。</li>
+</ul>
+</li>
+<li><b>学习Spring Boot就必须掌握Spring的基础知识</b>
+<ul class="quote">
+<li>如果不懂Spring的原理，一旦出现开发的问题，开发者就很容易陷入困境，难以找到问题的根源。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring基础IoC和AOP</h4>
+<ul class="point">
+<li><b>全注解下的Spring基础IoC和AOP，让初学者可以无缝对接Spring Boot的全注解开发方式</b>
+<ul class="quote">
+<li>第3章和第4章讨论在全注解下的Spring基础IoC和AOP。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>数据库的开发及事务编程</h4>
+<ul class="point">
+<li><b>数据库的开发、基于SSM框架(Spring MVC+Spring+MyBatis)的流行以及数据库事务的重要性</b>
+<ul class="quote">
+<li>除了讨论传统的JDBC和JPA开发，还会重点讨论和MyBatis框架的整合，以及Spring数据库事务的编程。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>NoSQL数据库的使用</h4>
+<ul class="point">
+<li><b>两种NoSQL数据库(即Redis和MongoDB)的使用，可以极大地提高系统的性能</b>
+<ul class="quote">
+<li>第7章和第8章主要讲互联网中广泛使用的两种NoSQL数据库(即Redis和MongoDB)。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring MVC开发</h4>
+<ul class="point">
+<li><b>从Spring MVC的基础讲到实际的开发和应用，让读者能够掌握各种Spring Web后端的开发技巧</b>
+<ul class="quote">
+<li>第9章和第10章讲解在Spring Boot和全注解下的Spring MVC开发。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>构建REST风格的网站</h4>
+<ul class="point">
+<li><b>REST风格已经成为一种广泛使用的风格</b>
+<ul class="quote">
+<li>当前各个微服务是以REST风格请求相互融合的。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Security</h4>
+<ul class="point">
+<li><b>通过它可以保护我们的站点，使其远离各种各样的攻击，保证网站安全</b>
+<ul class="quote">
+<li>第12章讲Spring Security。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring常用技术</h4>
+<ul class="point">
+<li><b>异步线程、定时器、消息机制和WebSocket等，以满足企业的其他开发需要</b>
+<ul class="quote">
+<li>第13章讲一些Spring常用的技术。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>WebFlux框架</h4>
+<ul class="point">
+<li><b>介绍非阻塞编程的技巧，通过它可以构建非阻塞的网站</b>
+<ul class="quote">
+<li>第14章讲解Spring 5推出的新的非阻塞框架WebFlux。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>SSM整合及高并发与锁的应用</h4>
+<ul class="point">
+<li><b>通过抢购场景讲述互联网中的高并发与锁的应用</b>
+<ul class="quote">
+<li>第15章讲SSM整合。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Boot的打包、部署、测试和监控</h4>
+<ul class="point">
+<li><b>让读者对Spring Boot有深入的了解，并且通过进一步学习掌握企业级应用的开发技巧</b>
+<ul class="quote">
+<li>第16章讲Spring Boot的打包、部署、测试和监控。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>基于Spring Cloud的分布式开发入门知识</h4>
+<ul class="point">
+<li><b>使用它可以构建企业级分布式系统</b>
+<ul class="quote">
+<li>第17章讲基于Spring Cloud的分布式开发入门知识。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch3"><summary>阅读本书的要求和目标读者</summary>
+<div class="sec">
+<h4>阅读本书的要求</h4>
+<ul class="point">
+<li><b>读者需要具备Java编程语言基础、Java EE(Servlet和JSP)基础、前端(HTML、JavaScript和JQuery)基础和数据库(MySQL、Redis和MongoDB)基础。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>本书的目标读者</h4>
+<ul class="point">
+<li><b>适合从事或者即将使用Spring Boot开发的人员阅读和学习</b>
+<ul class="quote">
+<li>本书使用全注解讲解Spring基础技术(IoC和AOP)。</li>
+</ul>
+</li>
+<li><b>适合基于传统Spring需要转向Spring Boot开发方式的开发者阅读</b>
+<ul class="quote">
+<li>本书可以帮助这类开发者快速掌握Spring Boot开发方式。</li>
+</ul>
+</li>
+<li><b>适合作为大中专院校作为教材</b>
+<ul class="quote">
+<li>本书可以帮助在校师生贴近企业级Java EE开发。</li>
+</ul>
+</li>
+<li><b>读者通过本书的学习可以有效地提高自身的技术能力</b>
+<ul class="quote">
+<li>读者可以将这些技术应用于实际学习和工作当中。</li>
+<li>读者也可以把本书当作工作手册来查阅。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch4"><summary>本书使用的Spring Boot版本</summary>
+<div class="sec">
+<h4>本书使用的Spring Boot版本</h4>
+<ul class="point">
+<li><b>本书采用版本2.0.0.RELEASE进行讲解</b>
+<ul class="quote">
+<li>Spring Boot 2.x和Spring Boot 1.x在使用上有很多地方存在很多不同。</li>
+<li>Spring Boot 2.x只能支持JDK 8或者以上版本。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch5"><summary>纠错、源码和课程</summary>
+<div class="sec">
+<h4>本书勘误与反馈</h4>
+<ul class="point">
+<li><b>欢迎读者对本书提出意见或建议</b>
+<ul class="quote">
+<li>意见或建议可通过邮件(ykzhen2013@163.com)或博客(https://blog.csdn.net/ykzhen2015)留言。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>免费基础入门视频课程与源代码下载</h4>
+<ul class="point">
+<li><b>提供免费的基础入门视频课程和源代码下载</b>
+<ul class="quote">
+<li>视频课程和源代码下载信息会发布到异步社区(https://www.epubit.com)和作者博客上。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch6"><summary>配套资源</summary>
+<div class="sec">
+<h4>本书配套资源</h4>
+<ul class="point">
+<li><b>本书源代码</b>
+<ul class="quote">
+<li>要获得本书源代码，请在异步社区本书页面中点击 ，跳转到下载界面，按提示进行操作即可。</li>
+</ul>
+</li>
+<li><b>书中彩图文件</b>
+<ul class="quote">
+<li>要获得书中彩图文件，请在异步社区本书页面中点击 ，跳转到下载界面，按提示进行操作即可。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch7"><summary>提交勘误</summary>
+<div class="sec">
+<h4>提交勘误的方式</h4>
+<ul class="point">
+<li><b>登录异步社区，按书名搜索，进入本书页面。</b>
+</li>
+<li><b>点击“提交勘误”，输入勘误信息，点击“提交”按钮。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>勘误的审核与奖励</h4>
+<ul class="point">
+<li><b>本书的作者和编辑会对您提交的勘误进行审核。</b>
+</li>
+<li><b>确认并接受后，您将获赠异步社区的100积分。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch8"><summary>与我们联系</summary>
+<div class="sec">
+<h4>联系邮箱</h4>
+<ul class="point">
+<li><b>我们的联系邮箱是contact@epubit.com.cn。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>疑问或建议</h4>
+<ul class="point">
+<li><b>如果您对本书有任何疑问或建议，请您发邮件给我们，并请在邮件标题中注明本书书名</b>
+<ul class="quote">
+<li>我们会尽快回复您的邮件。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>出版、录制、翻译、审校等工作</h4>
+<ul class="point">
+<li><b>如果您有兴趣出版图书、录制教学视频，或者参与图书翻译、技术审校等工作，可以发邮件给我们</b>
+<ul class="quote">
+<li>有意出版图书的作者也可以到异步社区在线提交投稿。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>批量购买</h4>
+<ul class="point">
+<li><b>如果您是学校、培训机构或企业，想批量购买本书或异步社区出版的其他图书，也可以发邮件给我们</b>
+<ul class="quote">
+<li>我们会为您提供优惠的价格和优质的服务。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>盗版行为举报</h4>
+<ul class="point">
+<li><b>如果您在网上发现有针对异步社区出品图书的各种形式的盗版行为，包括对图书全部或部分内容的非授权传播，请您将怀疑有侵权行为的链接发邮件给我们</b>
+<ul class="quote">
+<li>您的这一举动是对作者权益的保护，也是我们持续为您提供有价值的内容的动力之源。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch9"><summary>关于异步社区和异步图书</summary>
+<div class="sec">
+<h4>异步社区简介</h4>
+<ul class="point">
+<li><b>异步社区是人民邮电出版社旗下IT专业图书社区，创办于2015年8月</b>
+<ul class="quote">
+<li>异步社区提供大量精品IT技术图书和电子书，以及高品质技术文章和视频课程。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>异步图书简介</h4>
+<ul class="point">
+<li><b>异步图书是由异步社区编辑团队策划出版的精品IT专业图书的品牌</b>
+<ul class="quote">
+<li>异步图书的出版领域包括软件开发、大数据、AI、测试、前端、网络技术等。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch10"><summary>第1章 Spring Boot来临</summary>
+<div class="sec">
+<h4>Spring Boot的历史背景</h4>
+<ul class="point">
+<li><b>Spring Boot是当今Java EE开发的事实标准</b>
+<ul class="quote">
+<li>Spring Boot是大部分企业构建Java EE应用的基础。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch11"><summary>1.1 Spring的历史</summary>
+<div class="sec">
+<h4>Spring的历史背景</h4>
+<ul class="point">
+<li><b>EJB的繁琐和低效</b>
+<ul class="quote">
+<li>开发一个EJB需要大量的接口和配置文件。</li>
+<li>配置的工作量比开发的工作量还要大。</li>
+<li>需要使用Web容器去调用EJB容器的服务，存在弊端。</li>
+</ul>
+</li>
+<li><b>Spring的提出和目标</b>
+<ul class="quote">
+<li>Spring是如下的框架：J2EE应该更容易使用；编程应该面向接口，而不是类；JavaBean提供了很好的配置应用的方式；OO设计比任何实现技术都重要；Checked异常被过度使用；测试性是必要的，平台如spring应该帮助使代码更容易测试。</li>
+<li>Spring的目标：Spring应该是一个愉快使用的框架；你的应用代码不应该依赖Spring API；Spring不应该与好的现有解决方案竞争，而应该促进集成。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring的发展历程</h4>
+<ul class="point">
+<li><b>Spring 1.0版本的推出</b>
+<ul class="quote">
+<li>Spring项目在2004年推出了1.0版本。</li>
+<li>Spring以强大的控制反转(IoC)来管理各类Java资源，降低了各种资源的耦合。</li>
+<li>Spring提供了极低的侵入性，使用Spring框架开发的编码，脱离了Spring API也可以继续使用。</li>
+<li>Spring的面向切面的编程(AOP)通过动态代理技术，允许我们按照约定进行配置编程，增强了Bean的功能。</li>
+<li>Spring还提供许多整合了当时非常流行的框架的模板，如持久层Hibernate的HibernateTemplate模板、iBATIS的SqlMapClientTemplate模板等。</li>
+</ul>
+</li>
+<li><b>Spring的影响力</b>
+<ul class="quote">
+<li>Spring成为了现实中Java EE开发的标准。</li>
+<li>EJB 3.0的规范也引入了Spring的理念，但是也未能挽回其颓势。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring与其他框架的比较</h4>
+<ul class="point">
+<li><b>Spring与EJB的比较</b>
+<ul class="quote">
+<li>EJB 3.0的规范引入了Spring的理念，但是也未能挽回其颓势，主要原因在于它的规范还是比较死板，而且比较难整合其他开源框架。</li>
+<li>其次，它运行在EJB容器之中，使用上还是比较困难，性能也不高。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch12"><summary>1.2 注解还是XML</summary>
+<div class="sec">
+<h4>Spring注解与XML的发展历程</h4>
+<ul class="point">
+<li><b>Spring早期版本主要使用XML配置</b>
+<ul class="quote">
+<li>JDK5加入注解新特性后，Spring内部出现使用注解还是XML的分歧。</li>
+</ul>
+</li>
+<li><b>Spring 2.x之后的版本引入少量注解，如@Component、@Service等</b>
+<ul class="quote">
+<li>对于Spring的开发，绝大部分的情况下还是以使用XML为主，注解为辅。</li>
+</ul>
+</li>
+<li><b>Spring 3.0引入更多注解功能，产生使用注解还是XML的分歧</b>
+<ul class="quote">
+<li>对于业务类使用注解，例如，对于MVC开发，控制器使用@Controller，业务层使用@Service，持久层使用@Repository。</li>
+<li>对于一些公用的Bean，例如，对于数据库(如Redis)、第三方资源等则使用XML进行配置。</li>
+</ul>
+</li>
+<li><b>Spring 3.x和Spring 4.x的版本注解功能越来越强大，对于XML的依赖越来越少</b>
+<ul class="quote">
+<li>到了4.x的版本后甚至可以完全脱离XML，因此在Spring中使用注解开发占据了主流的地位。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Boot的出现和发展</h4>
+<ul class="point">
+<li><b>Spring Boot基于Spring框架，通过注解的方式简化了Spring框架的开发</b>
+<ul class="quote">
+<li>Spring Boot并非是代替Spring框架，而是让Spring框架更加容易得到快速的使用。</li>
+</ul>
+</li>
+<li><b>Spring Boot 1.0版本使用了特定的方式来进行配置，开发人员不再需要定义样板化的配置</b>
+<ul class="quote">
+<li>Spring Boot致力于在蓬勃发展的快速应用开发领域借助Java EE在企业互联网的强势地位成为业界领导者。</li>
+</ul>
+</li>
+<li><b>Spring Boot 2.0.0 GA版本基于Spring 5，并引入其最新的功能，能够有效支持Java 9的开发</b>
+<ul class="quote">
+<li>Spring Boot 2.0.0 GA版本符合了现今微服务快速开发、测试和部署的需要。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Boot在微服务领域的应用</h4>
+<ul class="point">
+<li><b>Spring Boot除了以注解为主的开发，还有其他的绑定，例如，对服务器进行了绑定和默认对Spring的最大化配置</b>
+<ul class="quote">
+<li>开发者能够尽快进行开发代码、发布和测试自己的项目。</li>
+</ul>
+</li>
+<li><b>越来越多的企业选择Spring Boot作为开发的选型</b>
+<ul class="quote">
+<li>Spring Boot更加兴旺起来，本书主要就是论述Spring Boot这一令人激动的开发工具。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch13"><summary>1.3 Spring Boot的优点</summary>
+<div class="sec">
+<h4>Spring Boot的优点</h4>
+<ul class="point">
+<li><b>Spring Boot是一个基于Spring框架搭建起来的应用，可以嵌入Tomcat、Jetty或者Undertow等服务器，并且不需要传统的WAR文件进行部署</b>
+<ul class="quote">
+<li>搭建Spring Boot项目并不需要单独下载Tomcat等传统的服务器。</li>
+</ul>
+</li>
+<li><b>Spring Boot提供通过Maven(或者Grandle)依赖的starter，这些starter可以直接获取开发所需的相关包</b>
+<ul class="quote">
+<li>通过这些starter项目就能以Java Application的形式运行Spring Boot的项目，而无须其他服务器配置。</li>
+</ul>
+</li>
+<li><b>Spring Boot提供Spring框架的最大自动化配置，大量使用自动配置，使得开发者对Spring的配置尽量减少</b>
+<ul class="quote">
+<li>对于Spring Boot而言，大部分情况下存在默认配置，你甚至可以在没有任何定义的情况下使用Spring框架。</li>
+</ul>
+</li>
+<li><b>Spring Boot提供了一些监测、自动检测的功能和外部配置，与此同时没有附加代码和XML的配置要求</b>
+<ul class="quote">
+<li>约定优于配置，这是Spring Boot的主导思想。</li>
+<li>对于部署这些项目必需的功能，Spring Boot提供starter的依赖。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch14"><summary>1.4 传统Spring MVC和Spring Boot的对比</summary>
+<div class="sec">
+<h4>传统Spring MVC开发流程</h4>
+<ul class="point">
+<li><b>传统Spring MVC开发需要配置DispatcherServlet和Spring IoC的容器</b>
+<ul class="quote">
+<li>可以选择使用web.xml的配置来实现，也可以使用Servlet 3.1规范，继承由Spring MVC提供的AbstractAnnotationConfigDispatcherServletInitializer来配置Spring MVC项目。</li>
+</ul>
+</li>
+<li><b>需要配置Spring MVC的核心类DispatcherServlet的上下文</b>
+<ul class="quote">
+<li>通过引入一个Java配置文件—— WebConfig.java，配置Spring MVC的核心类DispatcherServlet的上下文。</li>
+</ul>
+</li>
+<li><b>开发Spring MVC控制器Controller</b>
+<ul class="quote">
+<li>开发一个简单的控制器(Controller)，如代码清单1-3所示。</li>
+</ul>
+</li>
+<li><b>需要第三方服务器，如Tomcat、WebLogic等服务器去部署你的工程</b>
+<ul class="quote">
+<li>在启动服务器后，再打开浏览器，输入对应的URL，就可以得到测试页面。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Boot开发流程</h4>
+<ul class="point">
+<li><b>Spring Boot开发简化了传统Spring MVC的配置</b>
+<ul class="quote">
+<li>Spring Boot会根据Maven配置的starter去寻找对应的依赖，将对应的jar包加载到工程中，而且它还会把绑定的服务器也加载到工程中。</li>
+</ul>
+</li>
+<li><b>Spring Boot允许直接进行开发，无需配置服务器</b>
+<ul class="quote">
+<li>只需要开发一个类就可以运行Spring Boot的应用了，如代码清单1-5所示。</li>
+</ul>
+</li>
+<li><b>Spring Boot提供了监控的功能，方便构建分布式系统开发</b>
+<ul class="quote">
+<li>Spring Boot还提供了监控的功能，随着云技术的到来，微服务成了市场的热点，于是代表Java微服务时代的Spring Boot微服务开发的时代已经到来。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch15"><summary>第2章 聊聊开发环境搭建和基本开发</summary>
+<div class="sec">
+<h4>Spring Boot开发环境搭建</h4>
+<ul class="point">
+<li><b>需要先来搭建Spring Boot的工程。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Boot的特点</h4>
+<ul class="point">
+<li><b>对Spring Boot做进一步的了解，才能更好地对Spring Boot有更深入的介绍。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch16"><summary>2.1 搭建Spring Boot开发环境</summary>
+<div class="sec">
+<h4>搭建Eclipse开发环境</h4>
+<ul class="point">
+<li><b>安装STS插件</b>
+<ul class="quote">
+<li>打开Eclipse的菜单Help→Eclipse Marketplace，选择Spring Tool Suite(STS)的插件进行安装。</li>
+</ul>
+</li>
+<li><b>创建Spring Boot工程</b>
+<ul class="quote">
+<li>点击File→New→Project，选择Spring Starter Project，点击Next，创建项目。</li>
+</ul>
+</li>
+<li><b>配置Spring Boot工程</b>
+<ul class="quote">
+<li>在创建项目的对话框中，进行自定义配置，如选择使用War形式的打包。</li>
+</ul>
+</li>
+<li><b>选择依赖的starter</b>
+<ul class="quote">
+<li>在选择依赖的对话框中，选择AOP和Web，以及其他需要的依赖。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>搭建IntelliJ IDEA开发环境</h4>
+<ul class="point">
+<li><b>启动IntelliJ IDEA开发环境，选择Create New Project，选择Spring Initializr</b>
+<ul class="quote">
+<li>将JDK切换为你想要的版本。</li>
+</ul>
+</li>
+<li><b>配置Spring Boot项目</b>
+<ul class="quote">
+<li>在配置项目的对话框中，进行自定义配置，如选择以War打包的形式。</li>
+</ul>
+</li>
+<li><b>选择对应的starter</b>
+<ul class="quote">
+<li>在选择starter的窗口中，选择你需要的starter进行依赖。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch17"><summary>2.2 Spring Boot的依赖和自动配置</summary>
+<div class="sec">
+<h4>Spring Boot的依赖和自动配置</h4>
+<ul class="point">
+<li><b>Spring Boot通过Maven依赖找到对应的jar包和嵌入的服务器</b>
+<ul class="quote">
+<li>打开Maven的本地仓库，找到对应Spring Boot的文件夹。</li>
+<li>打开spring-boot-start-web文件夹，就可以看到一个名为spring-boot-starter-web-2.0.0.RELEASE.pom的文件。</li>
+</ul>
+</li>
+<li><b>Spring Boot使用默认自动配置类来创建默认的开发环境</b>
+<ul class="quote">
+<li>Spring Boot内部已经自动为我们做了很多关于DispatcherServlet的配置。</li>
+<li>@EnableConfigurationProperties还能够在读取配置内容的情况下自动生成Spring MVC所需的类。</li>
+</ul>
+</li>
+<li><b>Spring Boot允许读入配置文件的内容来自定义自动初始化所需的内容</b>
+<ul class="quote">
+<li>有时候，我们需要对这些默认的环境进行修改以适应个性化的要求。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch18"><summary>2.3 使用自定义配置</summary>
+<div class="sec">
+<h4>Spring Boot自定义配置</h4>
+<ul class="point">
+<li><b>Spring Boot提供了默认的约定配置项，但开发者并不需要全部去配置，只是根据自己工程的需要引入对应的starter，对其进行必要的配置就可以了</b>
+<ul class="quote">
+<li>Spring Boot的配置项多达300多项，所以十分繁复，好在我们并不需要全部去配置。</li>
+</ul>
+</li>
+<li><b>通过这些约定的配置就可以在很大程度上自定义开发环境，以适应真实需求</b>
+<ul class="quote">
+<li>这就是Spring Boot的理念，配置尽量简单并且存在约定，屏蔽Spring内部的细节，使得Spring能够开箱后经过简单的配置后即可让开发者使用，以满足快速开发、部署和测试的需要。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Boot的配置文件</h4>
+<ul class="point">
+<li><b>Spring Boot的配置文件是application.properties，通过它可以根据自己的需要实现自定义</b>
+<ul class="quote">
+<li>例如，假设当前8080端口已经被占用，我们希望使用8090端口启动Tomcat，那么只需要在这个文件中添加一行：server.port=8090。</li>
+</ul>
+</li>
+<li><b>Spring Boot的参数配置除了使用properties文件之外，还可以使用yml文件等</b>
+<ul class="quote">
+<li>yml文件的配置与properties文件只是简写和缩进的差别，因此差异并不大，所以本书统一使用properties文件进行配置。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Boot配置文件的加载顺序</h4>
+<ul class="point">
+<li><b>Spring Boot的配置文件加载顺序为：命令行参数；来自java:comp/env的JNDI属性；Java系统属性(System.getProperties())；操作系统环境变量；RandomValuePropertySource配置的random.*属性值；jar包外部的application-{profile}.properties或application.yml(带spring.profile)配置文件；jar包内部的application-{profile}.properties或application.ym(带spring.profile)配置文件；jar包外部的application.properties或application.yml(不带spring.profile)配置文件；jar包内部的application.properties或application.ym(不带spring.profile)配置文件；@Configuration注解类上的@PropertySource；通过SpringApplication.setDefaultProperties指定的默认属性。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch19"><summary>2.4 开发自己的Spring Boot项目</summary>
+<div class="sec">
+<h4>修改服务器启动端口</h4>
+<ul class="point">
+<li><b>修改application.properties文件中的server.port属性</b>
+<ul class="quote">
+<li>server.port=8090。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>配置视图解析器</h4>
+<ul class="point">
+<li><b>在application.properties文件中定义视图前后缀</b>
+<ul class="quote">
+<li>spring.mvc.view.prefix=/WEB-INF/jsp/。</li>
+<li>spring.mvc.view.suffix=.jsp。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>开发控制器</h4>
+<ul class="point">
+<li><b>新建一个控制器IndexController，并定义映射为/index的路径</b>
+<ul class="quote">
+<li>@Controller。</li>
+<li>@RequestMapping(&quot;/index&quot;)。</li>
+<li>public String index() { return &quot;index&quot;; }。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>开发视图</h4>
+<ul class="point">
+<li><b>在/webapp/WEB-INF/jsp/目录下新建index.jsp文件</b>
+<ul class="quote">
+<li>&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot; pageEncoding=&quot;UTF-8&quot;%&gt;。</li>
+<li>&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&gt;。</li>
+<li>&lt;html&gt;。</li>
+<li>&lt;head&gt;。</li>
+<li>&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;。</li>
+<li>&lt;title&gt;Spring boot 视图解析器&lt;/title&gt;。</li>
+<li>&lt;/head&gt;。</li>
+<li>&lt;body&gt;。</li>
+<li>&lt;h1&gt;测试视图解析器&lt;/h1&gt;。</li>
+<li>&lt;/body&gt;。</li>
+<li>&lt;/html&gt;。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>运行Spring Boot项目</h4>
+<ul class="point">
+<li><b>以Java Application的形式运行类Chapter2Application</b>
+<ul class="quote">
+<li>SpringApplication.run(Chapter2Application.class, args);。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch20"><summary>第3章 全注解下的Spring IoC</summary>
+<div class="sec">
+<h4>Spring IoC的基本概念</h4>
+<ul class="point">
+<li><b>IoC是一种通过描述来生成或者获取对象的技术</b>
+<ul class="quote">
+<li>对于Java初学者更多的时候所熟悉的是使用new关键字来创建对象，而在Spring中则不是，它是通过描述来创建对象。</li>
+</ul>
+</li>
+<li><b>Spring Boot是基于注解的开发Spring IoC</b>
+<ul class="quote">
+<li>Spring Boot并不建议使用XML，而是通过注解的描述生成对象。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring IoC的核心：IoC容器</h4>
+<ul class="point">
+<li><b>IoC容器需要具备两个基本的功能：通过描述管理Bean，包括发布和获取Bean；通过描述完成Bean之间的依赖关系。</b>
+</li>
+<li><b>在Spring中把每一个需要管理的对象称为Spring Bean(简称Bean)，而Spring管理这些Bean的容器，被我们称为Spring IoC容器(或者简称IoC容器)。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring IoC的应用</h4>
+<ul class="point">
+<li><b>对象之间并不是孤立的，它们之间还可能存在依赖的关系</b>
+<ul class="quote">
+<li>例如，一个班级是由多个老师和同学组成的，那么班级就依赖于多个老师和同学了。</li>
+</ul>
+</li>
+<li><b>Spring还提供了依赖注入的功能，使得我们能够通过描述来管理各个对象之间的关系。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch21"><summary>3.1 IoC容器简介</summary>
+<div class="sec">
+<h4>IoC容器简介</h4>
+<ul class="point">
+<li><b>Spring IoC容器是一个管理Bean的容器，所有IoC容器都需要实现接口BeanFactory</b>
+<ul class="quote">
+<li>BeanFactory接口源码中包含了多个getBean方法，允许我们按类型或者名称获取Bean。</li>
+<li>isSingleton方法判断Bean是否在Spring IoC中为单例，默认的情况下，Bean都是以单例存在的。</li>
+<li>isPrototype方法判断Bean是否在Spring IoC中为原型，如果它返回的是true，那么当我们使用getBean方法获取Bean的时候，Spring IoC容器就会创建一个新的Bean返回给调用者。</li>
+</ul>
+</li>
+<li><b>Spring在BeanFactory的基础上，设计了一个更为高级的接口ApplicationContext</b>
+<ul class="quote">
+<li>ApplicationContext接口通过继承上级接口，进而继承BeanFactory接口，但是在BeanFactory的基础上，扩展了消息国际化接口(MessageSource)、环境可配置接口(EnvironmentCapable)、应用事件发布接口(ApplicationEventPublisher)和资源模式解析接口(ResourcePatternResolver)，所以它的功能会更为强大。</li>
+</ul>
+</li>
+<li><b>在Spring Boot当中我们主要是通过注解来装配Bean到Spring IoC容器中</b>
+<ul class="quote">
+<li>使用AnnotationConfigApplicationContext来构建自己的IoC容器，通过Java配置文件AppConfig来装配Bean。</li>
+<li>通过getBean方法获取对应的POJO，并将Bean的属性信息输出出来。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch22"><summary>3.2 装配你的Bean</summary>
+<div class="sec">
+<h4>通过扫描装配你的Bean</h4>
+<ul class="point">
+<li><b>使用@Component和@ComponentScan注解进行Bean的扫描装配</b>
+<ul class="quote">
+<li>@Component标明哪个类被扫描进入Spring IoC容器。</li>
+<li>@ComponentScan标明采用何种策略去扫描装配Bean。</li>
+</ul>
+</li>
+<li><b>@ComponentScan允许自定义扫描的包</b>
+<ul class="quote">
+<li>可以通过配置项basePackages定义扫描的包名。</li>
+<li>还可以通过basePackageClasses定义扫描的类。</li>
+<li>includeFilters和excludeFilters，includeFilters是定义满足过滤器(Filter)条件的Bean才去扫描，excludeFilters则是排除过滤器条件的Bean。</li>
+</ul>
+</li>
+<li><b>Spring Boot中的@SpringBootApplication注解也注入了@ComponentScan</b>
+<ul class="quote">
+<li>通过它就能够定义扫描哪些包。</li>
+<li>exclude和excludeName两个方法是对于其内部的自动配置类才会生效的。</li>
+<li>为了能够排除其他类，还可以再加入@ComponentScan以达到我们的目的。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>自定义第三方Bean</h4>
+<ul class="point">
+<li><b>使用@Bean注解将第三方包的类对象装配到Spring IoC容器中</b>
+<ul class="quote">
+<li>例如，要引入一个DBCP数据源，我们先在pom.xml上加入项目所需要DBCP包和数据库MySQL驱动程序的依赖。</li>
+<li>然后将使用它提供的机制来生成数据源，这时候，可以把代码清单3-12中的代码放置到AppConfig.java中。</li>
+<li>这里通过@Bean定义了其配置项name为“dataSource”，那么Spring就会把它返回的对象用名称“dataSource”保存在IoC容器中。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch23"><summary>3.3 依赖注入</summary>
+<div class="sec">
+<h4>依赖注入的概念和作用</h4>
+<ul class="point">
+<li><b>依赖注入是Spring IoC的两个作用之一，用于Bean之间的依赖</b>
+<ul class="quote">
+<li>人类(Person)有时候利用一些动物(Animal)去完成一些事情，这就是依赖。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>注解@Autowired的使用</h4>
+<ul class="point">
+<li><b>@Autowired会根据类型(by type)找到对应的Bean进行注入</b>
+<ul class="quote">
+<li>例如，在BussinessPerson类中，@Autowired会将Dog的实例注入。</li>
+</ul>
+</li>
+<li><b>@Autowired提供规则，首先它会根据类型找到对应的Bean，如果对应类型的Bean不是唯一的，那么它会根据其属性名称和Bean的名称进行匹配</b>
+<ul class="quote">
+<li>如果匹配得上，就会使用该Bean；如果还无法匹配，就会抛出异常。</li>
+</ul>
+</li>
+<li><b>@Autowired是一个默认必须找到对应Bean的注解，如果不能确定其标注属性一定会存在并且允许这个被标注的属性为null，那么你可以配置@Autowired属性required为false</b>
+<ul class="quote">
+<li>例如，像下面一样：@Autowired(required = false)。</li>
+</ul>
+</li>
+<li><b>@Autowired还可以标注方法，如setAnimal方法</b>
+<ul class="quote">
+<li>这样它也会使用setAnimal方法从IoC容器中找到对应的动物进行注入。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>消除歧义性——@Primary和@Qualifier的使用</h4>
+<ul class="point">
+<li><b>@Primary是一个修改优先权的注解，当我们有猫有狗的时候，假设这次需要使用猫，那么只需要在猫类的定义上加入@Primary就可以了</b>
+<ul class="quote">
+<li>例如，在Cat类上加入@Primary，那么Spring IoC容器，当发现有多个同样类型的Bean时，请优先使用我进行注入。</li>
+</ul>
+</li>
+<li><b>@Quelifier可以满足更加灵活的机制来实现注入，它的配置项value需要一个字符串去定义，它将与@Autowired组合在一起，通过类型和名称一起找到Bean</b>
+<ul class="quote">
+<li>例如，在BussinessPerson属性animal的标注上使用@Autowired和@Qualifier(&quot;dog&quot;)，那么Spring IoC将会以类型和名称去寻找对应的Bean进行注入。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>带有参数的构造方法类的装配</h4>
+<ul class="point">
+<li><b>对于只有带有参数的构造方法的类，可以使用@Autowired注解对构造方法的参数进行注入</b>
+<ul class="quote">
+<li>例如，在BussinessPerson类中，使用@Autowired和@Qualifier(&quot;dog&quot;)注解对构造方法的参数进行注入。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch24"><summary>3.4 生命周期</summary>
+<div class="sec">
+<h4>Spring IoC容器初始化Bean的过程</h4>
+<ul class="point">
+<li><b>Spring通过配置，如@ComponentScan定义的扫描路径去找到带有@Component的类，这个过程就是一个资源定位的过程</b>
+<ul class="quote">
+<li>一旦找到了资源，那么它就开始解析，并且将定义的信息保存起来。</li>
+<li>然后就会把Bean定义发布到Spring IoC容器中。</li>
+</ul>
+</li>
+<li><b>在默认的情况下，Spring会继续去完成Bean的实例化和依赖注入</b>
+<ul class="quote">
+<li>但是，有些Bean会受到变化因素的影响，这时我们倒希望是取出Bean的时候完成初始化和依赖注入。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Bean的初始化流程</h4>
+<ul class="point">
+<li><b>Spring在完成依赖注入后，还提供了一系列的接口和配置来完成Bean初始化的过程</b>
+<ul class="quote">
+<li>Spring在完成依赖注入后，还会进行如图3-5所示流程来完成它的生命周期。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Bean的生命周期</h4>
+<ul class="point">
+<li><b>对于图3-5，在没有注释的情况下的流程节点都是针对单个Bean而言的，但是BeanPostProcessor是针对所有Bean而言的</b>
+<ul class="quote">
+<li>即使你定义了ApplicationContextAware接口，但是有时候并不会调用，这要根据你的IoC容器来决定。</li>
+<li>对于那些没有实现ApplicationContext接口的容器，在生命周期对应的ApplicationContextAware定义的方法也是不会被调用的，只有实现了ApplicationContext接口的容器，才会在生命周期调用ApplicationContextAware所定义的setApplicationContext方法。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Bean后置处理器(BeanPostProcessor)</h4>
+<ul class="point">
+<li><b>Bean后置处理器将对所有的Bean有效</b>
+<ul class="quote">
+<li>这个Bean后置处理器将对所有的Bean有效。</li>
+<li>然后我们就可以用代码清单3-20进行测试。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch25"><summary>3.5 使用属性文件</summary>
+<div class="sec">
+<h4>Spring Boot中使用属性文件</h4>
+<ul class="point">
+<li><b>Spring Boot默认使用application.properties文件</b>
+<ul class="quote">
+<li>在Maven配置文件中加载依赖，Spring Boot将创建读取属性文件的上下文。</li>
+</ul>
+</li>
+<li><b>可以使用自定义的配置文件</b>
+<ul class="quote">
+<li>数据库的属性可以配置在jdbc.properties中。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用@Value注解读取属性文件</h4>
+<ul class="point">
+<li><b>通过@Value注解，使用${......}这样的占位符读取配置在属性文件的内容</b>
+<ul class="quote">
+<li>创建一个新的类DataBaseProperties，通过@Value注解，使用${......}这样的占位符读取配置在属性文件的内容。</li>
+<li>启动Spring Boot就可以看到下面的日志，读取属性成功了。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用@ConfigurationProperties注解简化配置</h4>
+<ul class="point">
+<li><b>通过@ConfigurationProperties注解，使得配置上有所减少</b>
+<ul class="quote">
+<li>修改DataBaseProperties的代码，使用@ConfigurationProperties注解，通过它使得配置上有所减少。</li>
+<li>这里在注解@ConfigurationProperties中配置的字符串database，将与POJO的属性名称组成属性的全限定名去配置文件里查找，这样就能将对应的属性读入到POJO当中。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用@PropertySource加载多个属性文件</h4>
+<ul class="point">
+<li><b>使用@PropertySource去定义对应的属性文件，把它加载到Spring的上下文中</b>
+<ul class="quote">
+<li>先把代码清单3-22中给出的配置从application.properties中迁移到jdbc.properties中。</li>
+<li>使用@PropertySource(value={&quot;classpath:jdbc.properties&quot;}, ignoreResourceNotFound=true)去定义对应的属性文件，把它加载到Spring的上下文中。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch26"><summary>3.6 条件装配Bean</summary>
+<div class="sec">
+<h4>条件装配Bean的概念和作用</h4>
+<ul class="point">
+<li><b>条件装配Bean是Spring提供的一种机制，用于在特定条件下装配Bean</b>
+<ul class="quote">
+<li>当某些客观的因素会使一些Bean无法进行初始化时，IoC容器如果还进行数据源的装配，则系统将会抛出异常，导致应用无法继续。</li>
+<li>这时倒是希望IoC容器不去装配数据源。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>@Conditional注解的使用</h4>
+<ul class="point">
+<li><b>使用@Conditional注解，并配置对应的Condition接口实现类</b>
+<ul class="quote">
+<li>例如，在代码清单3-26中，加入了@Conditional注解，并且配置了类DatabaseConditional。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Condition接口的实现</h4>
+<ul class="point">
+<li><b>Condition接口要求实现matches方法，用于判断是否满足装配Bean的条件</b>
+<ul class="quote">
+<li>matches方法首先读取其上下文环境，然后判定是否已经配置了对应的数据库信息。</li>
+<li>当这些都已经配置好后则返回true，这个时候Spring会装配数据库连接池的Bean，否则是不装配的。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch27"><summary>3.7 Bean的作用域</summary>
+<div class="sec">
+<h4>Spring Bean的作用域</h4>
+<ul class="point">
+<li><b>Spring Bean存在单例(Singleton)和原型(Prototype)两种作用域</b>
+<ul class="quote">
+<li>isSingleton方法如果返回true，则Bean在IoC容器中以单例存在。</li>
+<li>如果isPrototype方法返回true，则当我们每次获取Bean的时候，IoC容器都会创建一个新的Bean。</li>
+</ul>
+</li>
+<li><b>Java EE广泛地使用在互联网中，而在Web容器中，则存在页面(page)、请求(request)、会话(session)和应用(application)4种作用域</b>
+<ul class="quote">
+<li>对于页面(page)，是针对JSP当前页面的作用域，所以Spring是无法支持的。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>单例(Singleton)和原型(Prototype)的区别</h4>
+<ul class="point">
+<li><b>在IoC容器中，只有一个ScopeBean的实例</b>
+<ul class="quote">
+<li>scopeBean1和scopeBean2这两个变量都指向了同一的实例。</li>
+</ul>
+</li>
+<li><b>将Bean的作用域修改为了prototype，这样就能让IoC容器在每次获取Bean时，都新建一个Bean的实例返回给调用者</b>
+<ul class="quote">
+<li>scopeBean1 == scopeBean2返回的将是false。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring MVC环境中定义其他作用域</h4>
+<ul class="point">
+<li><b>在Spring MVC环境中，还可以使用WebApplicationContext去定义其他作用域，如请求(SCOPE_REQUEST)、会话(SCOPE_SESSION)和应用(SCOPE_APPLICATION)</b>
+<ul class="quote">
+<li>这样同一个请求范围内去获取这个Bean的时候，只会共用同一个Bean，第二次请求就会产生新的Bean。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch28"><summary>3.8 使用@Profile</summary>
+<div class="sec">
+<h4>Spring Profile机制</h4>
+<ul class="point">
+<li><b>Spring提供了Profile机制，可以方便地实现各个环境之间的切换</b>
+<ul class="quote">
+<li>假设存在dev_spring_boot和test_spring_boot两个数据库，可以使用注解@Profile定义两个Bean。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Profile的配置</h4>
+<ul class="point">
+<li><b>Spring中存在两个参数可以提供给我们配置，以修改启动Profile机制，一个是spring.profiles.active，另一个是spring.profiles.default</b>
+<ul class="quote">
+<li>在这两种属性都没有配置的情况下，Spring将不会启动Profile机制。</li>
+<li>Spring是先判定是否存在spring.profiles.active配置后，再去查找spring.profiles.default配置的，所以spring.profiles.active的优先级要大于spring.profiles.default。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>启动Profile机制的方法</h4>
+<ul class="point">
+<li><b>在Java启动项目中，我们只需要如下配置就能够启动Profile机制：JAVA_OPTS=&quot;-Dspring.profiles.active=dev&quot;</b>
+<ul class="quote">
+<li>当然我们也可以在IDE中切换环境，例如，Eclipse中，我们打开运行选项就能够配置这个参数。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Boot中配置文件的切换</h4>
+<ul class="point">
+<li><b>Spring Boot允许比较方便地切换配置环境</b>
+<ul class="quote">
+<li>首先我们在配置文件目录新增application- dev.properties文件，然后将日志配置为DEBUG级别。</li>
+<li>按照Spring Boot的规则，假设把选项-Dspring.profiles.active配置的值记为{profile}，则它会用application-{profile}.properties文件去代替原来默认的application.properties文件，然后启动Spring Boot的程序，就可以看到日志以DEBUG级别打出，非常详尽。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch29"><summary>3.9 引入XML配置Bean</summary>
+<div class="sec">
+<h4>Spring Boot中使用XML配置Bean</h4>
+<ul class="point">
+<li><b>使用注解@ImportResource引入对应的XML文件。</b>
+</li>
+<li><b>在Java配置文件中载入XML定义的Bean</b>
+<ul class="quote">
+<li>在Java配置文件中，可以使用@ImportResource注解引入XML文件，从而将XML定义的Bean也装配到IoC容器中。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch30"><summary>3.10 使用Spring EL</summary>
+<div class="sec">
+<h4>Spring EL简介</h4>
+<ul class="point">
+<li><b>Spring EL是Spring提供的一种表达式语言，可以拥有更为强大的运算规则来更好地装配Bean。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用Spring EL读取属性文件的值</h4>
+<ul class="point">
+<li><b>@Value中的${......}代表占位符，它会读取上下文的属性值装配到属性中</b>
+<ul class="quote">
+<li>例如：@Value(&quot;${database.driverName}&quot;) String driver。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用Spring EL调用方法</h4>
+<ul class="point">
+<li><b>#{......}代表启用Spring表达式，它将具有运算的功能</b>
+<ul class="quote">
+<li>例如：@Value(&quot;#{T(System).currentTimeMillis()}&quot;) private Long initTime = null。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用Spring EL给属性直接进行赋值</h4>
+<ul class="point">
+<li><b>可以给属性直接进行赋值，如代码清单3-34所示</b>
+<ul class="quote">
+<li>例如：@Value(&quot;#{&#x27;使用Spring EL赋值字符串&#x27;}&quot;) private String str = null。</li>
+<li>例如：@Value(&quot;#{9.3E3}&quot;) private double d;。</li>
+<li>例如：@Value(&quot;#{3.14}&quot;) private float pi;。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用Spring EL获取其他Spring Bean的属性来给当前的Bean属性赋值</h4>
+<ul class="point">
+<li><b>这里的beanName是Spring IoC容器Bean的名称，str是其属性，代表引用对应的Bean的属性给当前属性赋值</b>
+<ul class="quote">
+<li>例如：@Value(&quot;#{beanName.str}&quot;) private String otherBeanProp = null。</li>
+<li>例如：@Value(&quot;#{beanName.str?.toUpperCase()}&quot;) private String otherBeanProp = null。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用Spring EL进行一定的运算</h4>
+<ul class="point">
+<li><b>Spring EL能够支持的运算还有很多，其中等值比较如果是数字型的可以使用==比较符，如果是字符串型的可以使用eq比较符</b>
+<ul class="quote">
+<li>例如：@Value(&quot;#{1+2}&quot;) private int run;。</li>
+<li>例如：@Value(&quot;#{beanName.pi == 3.14f}&quot;) private boolean piFlag;。</li>
+<li>例如：@Value(&quot;#{beanName.str eq &#x27;Spring Boot&#x27;}&quot;) private boolean strFlag;。</li>
+<li>例如：@Value(&quot;#{beanName.str + &#x27;  连接字符串&#x27;}&quot;) private String strApp = null;。</li>
+<li>例如：@Value(&quot;#{beanName.d &gt; 1000 ? &#x27;大于&#x27; : &#x27;小于&#x27;}&quot;) private String resultDesc = null;。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch31"><summary>第4章 开始约定编程——Spring AOP</summary>
+<div class="sec">
+<h4>Spring AOP的约定编程</h4>
+<ul class="point">
+<li><b>约定编程的流程</b>
+<ul class="quote">
+<li>首先你需要记住的是约定的流程是什么，然后就可以完成对应的任务，却不需要知道底层设计者是怎么将约定的内容织入对应的流程中的。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch32"><summary>4.1 约定编程</summary>
+<div class="sec">
+<h4>约定编程实例</h4>
+<ul class="point">
+<li><b>定义一个简单的接口HelloService</b>
+<ul class="quote">
+<li>HelloService接口中定义一个sayHello的方法，参数name是名字。</li>
+</ul>
+</li>
+<li><b>实现HelloService接口的HelloServiceImpl</b>
+<ul class="quote">
+<li>HelloServiceImpl实现类中，方法sayHello首先判断name是否为空，如果为空，则抛出异常，告诉调用者参数为空；如果不为空，则对该名字说hello。</li>
+</ul>
+</li>
+<li><b>定义拦截器接口Interceptor</b>
+<ul class="quote">
+<li>Interceptor接口包含before、after、around、afterReturning和afterThrowing等方法。</li>
+</ul>
+</li>
+<li><b>开发自己的拦截器MyInterceptor</b>
+<ul class="quote">
+<li>MyInterceptor拦截器实现了Interceptor接口的所有方法。</li>
+</ul>
+</li>
+<li><b>约定调用proxy对象的方法时，其执行流程</b>
+<ul class="quote">
+<li>使用proxy调用方法时会先执行拦截器的before方法。</li>
+<li>如果拦截器的useAround方法返回true，则执行拦截器的around方法，而不调用target对象对应的方法。</li>
+<li>无论怎么样，在完成之前的事情后，都会执行拦截器的after方法。</li>
+<li>在执行around方法或者回调target的事件方法时，可能发生异常，也可能不发生异常。如果发生异常，就执行拦截器的afterThrowing方法，否则就执行afterReturning方法。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>ProxyBean的实现</h4>
+<ul class="point">
+<li><b>动态代理模式需要代理对象</b>
+<ul class="quote">
+<li>代理对象可以增强或者控制对真实对象(target)的访问。</li>
+</ul>
+</li>
+<li><b>JDK提供了类Proxy的静态方法——newProxyInstance，用于生成代理对象</b>
+<ul class="quote">
+<li>newProxyInstance方法有3个参数：classLoader、interfaces和invocationHandler。</li>
+</ul>
+</li>
+<li><b>ProxyBean实现了接口InvocationHandler，因此就可以定义invoke方法</b>
+<ul class="quote">
+<li>在getBean方法中，生成了一个代理对象，并且创建了一个ProxyBean实例保存目标对象(target)和拦截器(interceptor)，为后面的调用做好了准备。</li>
+<li>生成了一个代理对象，而这个代理对象挂在target实现的接口之下，所以你可以用target对象实现的接口对这个代理对象实现强制转换，并且将这个代理对象的逻辑挂在ProxyBean实例之下，这样就完成了目标对象(target)和代理对象(proxy)的绑定。</li>
+<li>将代理对象返回给调用者。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>总结</h4>
+<ul class="point">
+<li><b>只要提供一定的约定规则，按照约定编程后，就可以把自己开发的代码织入约定的流程中</b>
+<ul class="quote">
+<li>Spring AOP也是这么做的，它可以通过与我们的约定，把对应的方法通过动态代理技术织入约定的流程中。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch33"><summary>4.2 AOP的概念</summary>
+<div class="sec">
+<h4>AOP的概念和为什么使用AOP</h4>
+<ul class="point">
+<li><b>AOP最为典型的应用实际就是数据库事务的管控</b>
+<ul class="quote">
+<li>例如，当我们需要保存一个用户时，可能要连同它的角色信息一并保存到数据库中。</li>
+<li>这里的用户信息和用户角色信息，我们都可以使用面向对象编程(OOP)进行设计，但是它们在数据库事务中的要求是，要么一起成功，要么一起失败，这样OOP就无能为力了。</li>
+</ul>
+</li>
+<li><b>AOP还可以减少大量重复的工作</b>
+<ul class="quote">
+<li>例如，我们获取数据库事务连接、事务操控和关闭数据库连接的过程，都需要使用大量的try ... catch ... finally...语句去操作，这显然存在大量重复的工作。</li>
+<li>Spring帮你把insertUser方法织入类似于图4-6所示的流程中，而数据库连接的打开和关闭以及事务管理都由它给你默认实现，也就是它可以将大量重复的流程通过约定的方式抽取出来，然后给予默认的实现。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>AOP术语和流程</h4>
+<ul class="point">
+<li><b>连接点(join point)：对应的是具体被拦截的对象，因为Spring只能支持方法，所以被拦截的对象往往就是指特定的方法</b>
+<ul class="quote">
+<li>例如，我们前面提到的HelloServiceImpl的sayHello方法就是一个连接点，AOP将通过动态代理技术把它织入对应的流程中。</li>
+</ul>
+</li>
+<li><b>切点(point cut)：有时候，我们的切面不单单应用于单个方法，也可能是多个类的不同方法，这时，可以通过正则式和指示器的规则去定义，从而适配连接点</b>
+<ul class="quote">
+<li>切点就是提供这样一个功能的概念。</li>
+</ul>
+</li>
+<li><b>通知(advice)：就是按照约定的流程下的方法，分为前置通知(before advice)、后置通知(after advice)、环绕通知(around advice)、事后返回通知(afterReturning advice)和异常通知(afterThrowing advice)</b>
+<ul class="quote">
+<li>它会根据约定织入流程中，需要弄明白它们在流程中的顺序和运行的条件。</li>
+</ul>
+</li>
+<li><b>目标对象(target)：即被代理对象</b>
+<ul class="quote">
+<li>例如，约定编程中的HelloServiceImpl实例就是一个目标对象，它被代理了。</li>
+</ul>
+</li>
+<li><b>引入(introduction)：是指引入新的类和其方法，增强现有Bean的功能。</b>
+</li>
+<li><b>织入(weaving)：它是一个通过动态代理技术，为原有服务对象生成代理对象，然后将与切点定义匹配的连接点拦截，并按约定将各类通知织入约定流程的过程。</b>
+</li>
+<li><b>切面(aspect)：是一个可以定义切点、各类通知和引入的内容，Spring AOP将通过它的信息来增强Bean的功能或者将对应的方法织入流程。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch34"><summary>4.3 AOP开发详解</summary>
+<div class="sec">
+<h4>确定连接点</h4>
+<ul class="point">
+<li><b>确定在什么地方需要AOP，也就是需要确定连接点(在Spring中就是什么类的什么方法)的问题</b>
+<ul class="quote">
+<li>现在我们假设有一个UserService接口，它有一个printUser方法。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>开发切面</h4>
+<ul class="point">
+<li><b>通过它可以描述AOP其他的信息，用以描述流程的织入</b>
+<ul class="quote">
+<li>下面我们来创建一个切面类，如代码清单4-12所示。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>切点定义</h4>
+<ul class="point">
+<li><b>切点的作用就是向Spring描述哪些类的哪些方法需要启用AOP编程</b>
+<ul class="quote">
+<li>有了切点的概念，就可以把代码清单4-12修改为代码清单4-13的样子，从而把冗余的正则式定义排除在外。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>测试AOP</h4>
+<ul class="point">
+<li><b>Spring AOP会将其织入对应的流程中</b>
+<ul class="quote">
+<li>调试运行这段代码，打开浏览器，等待服务器启动完成后，在代码清单4-14中加粗的地方加入断点，然后再打开浏览器，最后在地址栏输入请求地址http://localhost:8080/user/print?id=1&amp;userName= user_name_1&amp;note=2323，就可以看到请求进入了断点中。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>环绕通知</h4>
+<ul class="point">
+<li><b>环绕通知(Around)是所有通知中最为强大的通知，强大也意味着难以控制</b>
+<ul class="quote">
+<li>一般而言，使用它的场景是在你需要大幅度修改原有目标对象的服务逻辑时，否则都尽量使用其他的通知。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>引入</h4>
+<ul class="point">
+<li><b>Spring还允许增强这个接口的功能，我们可以为这个接口引入新的接口</b>
+<ul class="quote">
+<li>例如，要引入一个用户检测的接口UserValidator，其定义如代码清单4-17所示。</li>
+<li>这样，我们通过Spring AOP引入的定义就能够增强UserService接口的功能。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>通知获取参数</h4>
+<ul class="point">
+<li><b>在切点处加入对应的正则式就可以传递参数给通知</b>
+<ul class="quote">
+<li>对于非环绕通知还可以使用一个连接点(JoinPoint)类型的参数，通过它也可以获取参数。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>织入</h4>
+<ul class="point">
+<li><b>织入是一个生成动态代理对象并且将切面和目标对象方法编织成为约定流程的过程</b>
+<ul class="quote">
+<li>对于流程上的通知，上面已经有了比较完善的说明，而上面我们都是采用接口+实现类的模式，这是Spring推荐的方式，本书也遵循这样的方式。</li>
+<li>但是对于是否拥有接口则不是Spring AOP的强制要求，对于动态代理的也有多种实现方式，我们之前谈到的JDK只是其中的一种，业界比较流行的还有CGLIB、Javassist、ASM等。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch35"><summary>4.4 多个切面</summary>
+<div class="sec">
+<h4>多个切面的运行及其顺序</h4>
+<ul class="point">
+<li><b>Spring支持多个切面的运行，需要知道其运行的顺序</b>
+<ul class="quote">
+<li>创建3个切面类，它们同时拦截UserServiceImpl的manyAspects方法。</li>
+</ul>
+</li>
+<li><b>切面的执行顺序是混乱的，可以通过@Order和Ordered接口指定切面的顺序</b>
+<ul class="quote">
+<li>使用@Order注解，例如，我们指定MyAspect1的顺序为1。</li>
+<li>使用Ordered接口，例如，我们可以把代码清单4-28修改为代码清单4-29的样子。</li>
+<li>对于前置通知(before)都是从小到大运行的，而对于后置通知和返回通知都是从大到小运行的，这就是一个典型的责任链模式的顺序。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch36"><summary>第5章 访问数据库</summary>
+<div class="sec">
+<h4>Java中访问数据库的历史变迁</h4>
+<ul class="point">
+<li><b>JDBC规范因冗余代码多、流程和资源难以控制而逐渐被淘汰</b>
+<ul class="quote">
+<li>JDBC规范需要的冗余代码比较多，加上流程和资源比较难以控制，如烦琐的try...catch...finally...语句，使得当时的Java EE的开发受到了很大的质疑。</li>
+</ul>
+</li>
+<li><b>EJB虽然能支持持久化，但配置极为烦琐，很快就被Hibernate框架取代。</b>
+</li>
+<li><b>Hibernate 3.2对JPA实现了完全支持，但EJB 3.0并没有能兴旺起来。</b>
+</li>
+<li><b>MyBatis在移动互联网时代成为主流持久层框架</b>
+<ul class="quote">
+<li>MyBatis是一个不屏蔽SQL且提供动态SQL、接口式编程和简易SQL绑定POJO的半自动化框架，它的使用十分简单，而且能非常容易定制SQL，以提高网站性能，因此在移动互联网兴起的时代，它占据了强势的地位。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring支持的数据访问模式</h4>
+<ul class="point">
+<li><b>Spring支持JdbcTemplate的数据库访问模式，但这个用法一直未被很多企业采用。</b>
+</li>
+<li><b>Spring通过提供各种各样的模板，使得其他优秀的框架能够整合到Spring中来</b>
+<ul class="quote">
+<li>Spring并不排斥其他优秀的框架，而是通过提供各种各样的模板，使得这些框架能够整合到Spring中来，并且更加方便开发者的使用。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>数据源的配置</h4>
+<ul class="point">
+<li><b>在Spring Boot中，已经自动默认数据源的配置，下面我们来了解这方面的细节。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch37"><summary>5.1 配置数据源</summary>
+<div class="sec">
+<h4>启动默认数据源</h4>
+<ul class="point">
+<li><b>Spring Boot默认使用内嵌式数据库h2</b>
+<ul class="quote">
+<li>h2是内存数据库，如h2、hqldb和Derby等。</li>
+</ul>
+</li>
+<li><b>可以将数据源配置为hqldb或者Derby</b>
+<ul class="quote">
+<li>h2、hqldb和Derby等内存数据库在应用上并不广泛。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>配置自定义数据源</h4>
+<ul class="point">
+<li><b>以MySQL作为自定义数据源，需要配置数据库的相关信息</b>
+<ul class="quote">
+<li>在默认情况下，Spring Boot会使用其绑定的Tomcat的数据源。</li>
+</ul>
+</li>
+<li><b>可以配置第三方数据源，如DBCP数据源</b>
+<ul class="quote">
+<li>如果我们要使用DBCP数据源，只需要加入DBCP的数据源的Maven依赖。</li>
+<li>通过spring.datasource.type属性指定了数据库连接池的类型，然后再使用spring.datasource.dbcp2.*去配置数据库连接池的属性。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>验证数据源配置</h4>
+<ul class="point">
+<li><b>通过新建一个Bean，监测数据库连接池类型</b>
+<ul class="quote">
+<li>实现接口ApplicationContextAware 的方法setApplicationContext()，依照Spring Bean 生命周期的规则，在其初始化的时候该方法就会被调用，从而获取Spring IoC容器的上下文(applicationContext)，这时通过getBean方法就可以获取数据库连接池，然后打印出数据连接池的全限定名，这样就可以知道它使用的是哪种数据库连接池了。</li>
+</ul>
+</li>
+<li><b>创建POJO用户来与数据库表对应起来</b>
+<ul class="quote">
+<li>有了这些，就让我们开始Spring数据库编程的征程吧。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch38"><summary>5.2 使用JdbcTemplate操作数据库</summary>
+<div class="sec">
+<h4>JdbcTemplate的使用</h4>
+<ul class="point">
+<li><b>JdbcTemplate是Spring框架提供的，用于操作数据库</b>
+<ul class="quote">
+<li>在配置数据源后，Spring Boot通过其自动配置机制配置好了JdbcTemplate。</li>
+</ul>
+</li>
+<li><b>JdbcTemplate的使用需要通过实现RowMapper接口来完成数据库数据到POJO对象的映射</b>
+<ul class="quote">
+<li>对于Java 8及以上版本，可以使用Lambda表达式来比较优雅地实现RowMapper接口。</li>
+<li>如果JDK的版本比较低，没有支持Lambda表达式，那就只能声明类或者使用匿名类了。</li>
+</ul>
+</li>
+<li><b>JdbcTemplate的增删查改操作主要是传递参数，然后执行SQL后返回影响数据库记录数</b>
+<ul class="quote">
+<li>对于简单的应用，只有一条SQL，有时我们需要执行多条SQL。</li>
+<li>JdbcTemplate是每调用一次便会生成一个数据库连接，所以这种方式是不被推荐的。</li>
+<li>有时候我们希望在一个连接里面执行多条SQL，对此我们也可以使用StatementCallback或者ConnectionCallback接口实现回调。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用StatementCallback和ConnectionCallback执行多条SQL</h4>
+<ul class="point">
+<li><b>通过Lambda表达式使用StatementCallback，可以在一条数据库连接中执行多条SQL。</b>
+</li>
+<li><b>通过Lambda表达式使用ConnectionCallback接口，可以在一条数据库连接中执行多条SQL。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch39"><summary>5.3 使用JPA（Hibernate）操作数据</summary>
+<div class="sec">
+<h4>JPA(Hibernate)概述</h4>
+<ul class="point">
+<li><b>JPA是Java持久化API，定义了对象关系映射(ORM)以及实体对象持久化的标准接口</b>
+<ul class="quote">
+<li>JPA是JSR-220(EJB 3.0)规范的一部分，但在JSR-220中规定实体对象(Entity Bean)由JPA进行支持。</li>
+<li>JPA不局限于EJB 3.0，而是作为POJO持久化的标准规范，可以脱离容器独立运行、开发和测试，更加方便。</li>
+</ul>
+</li>
+<li><b>JPA所维护的核心是实体(Entity Bean)，而它是通过一个持久化上下文(Persistence Context)来使用的</b>
+<ul class="quote">
+<li>持久化上下文包含对象关系映射(ORM，或O/RM，或O/R映射)描述，实体操作API，以及查询语言。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>开发JPA</h4>
+<ul class="point">
+<li><b>使用注解@Entity标明这是一个实体类，@Table配置的属性name指出它映射数据库的表</b>
+<ul class="quote">
+<li>@Id标注那个属性为表的主键，注解@GeneratedValue则是可以配置采用何种策略生成主键。</li>
+<li>这里的用户名称使用注解@Column进行标注，因为属性名称(userName)和数据库列名(user_name)不一致，而其他的属性名称和数据库列名保持一致，这样就能与数据库的表的字段一一对应起来了。</li>
+</ul>
+</li>
+<li><b>使用注解@Convert指定了SexConverter作为其转换器</b>
+<ul class="quote">
+<li>这个类定义了从数据库读出的转换规则和从属性转换为数据库列的规则，这样就能够使性别枚举类与数据库的列对应起来了。</li>
+</ul>
+</li>
+<li><b>Spring提供了JpaRepository接口提供，它本身也继承了其他的接口</b>
+<ul class="quote">
+<li>JPA最顶级的接口是Repository，而它没有定义任何方法，定义方法的是它的子接口CrudRepository，其定义实体最基本的增删改的操作，功能性还不足够强大，为此PagingAndSortingRepository则继承了它并且提供了分页和排序的功能，最后JpaRepository扩展了PagingAndSortingRepository，而且扩展了QueryByExampleExecutor接口，这样就可以拥有按例子(Example)查询的功能。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>配置JPA</h4>
+<ul class="point">
+<li><b>在Spring Boot的配置文件中加入一些配置，如代码清单5-18所示</b>
+<ul class="quote">
+<li>#使用MySQL数据库方言 spring.jpa.database-platform=org.hibernate.dialect.MySQLDialect。</li>
+<li>#打印数据库SQL spring.jpa.show-sql=true。</li>
+<li>#选择Hibernate数据定义语言(DDL)策略为update spring.jpa.hibernate.ddl-auto=update。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch40"><summary>5.4 整合MyBatis框架</summary>
+<div class="sec">
+<h4>MyBatis简介</h4>
+<ul class="point">
+<li><b>MyBatis是支持定制化 SQL、存储过程以及高级映射的优秀的持久层框架</b>
+<ul class="quote">
+<li>MyBatis 避免了几乎所有的JDBC代码和手动设置参数以及获取结果集。</li>
+<li>MyBatis 可以对配置和原生Map使用简单的XML或注解，将接口和Java的POJO(Plain Old Java Object，普通的 Java对象)映射成数据库中的记录。</li>
+</ul>
+</li>
+<li><b>MyBatis的配置文件包括基础配置文件和映射文件</b>
+<ul class="quote">
+<li>在MyBatis中也可以使用注解来实现映射，只是由于功能和可读性的限制，在实际的企业中使用得比较少。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>MyBatis的配置</h4>
+<ul class="point">
+<li><b>MyBatis是一个基于SqlSessionFactory构建的框架</b>
+<ul class="quote">
+<li>对于SqlSessionFactory而言，它的作用是生成SqlSession接口对象，这个接口对象是MyBatis操作的核心。</li>
+<li>构建SqlSessionFactory是通过配置类(Configuration)来完成的。</li>
+</ul>
+</li>
+<li><b>Configuration可以配置的内容包括属性、设置、类型别名、类型处理器、对象工厂、插件、数据库环境、数据库厂商标识和映射器</b>
+<ul class="quote">
+<li>properties(属性)：属性文件在实际应用中一般采用Spring进行配置，而不是MyBatis，所以这里不再介绍它的使用。</li>
+<li>settings(设置)：它的配置将改变MyBatis的底层行为，可以配置映射规则，如自动映射和驼峰映射、执行器(Executor)类型、缓存等内容。</li>
+<li>typeAliases(类型别名)：因为使用类全限定名会比较长，所以MyBatis会对常用的类提供默认的别名，此外还允许我们通过typeAliases配置自定义的别名。</li>
+<li>typeHandlers(类型处理器)：这是MyBatis的重要配置之一，在MyBatis写入和读取数据库的过程中对于不同类型的数据(对于Java是JavaType，对于数据库则是JdbcType)进行自定义转换。</li>
+<li>objectFactory(对象工厂)：这是一个在MyBatis生成返回的POJO时会调用的工厂类。</li>
+<li>plugins(插件)：有时候也称为拦截器，是MyBatis最强大也是最危险的组件，它通过动态代理和责任链模式来完成，可以修改MyBatis底层的实现功能。</li>
+<li>environments(数据库环境)：可以配置数据库连接内容和事务。</li>
+<li>databaseIdProvider(数据库厂商标识)：允许MyBatis配置多类型数据库支持，不常用，不再讨论它的使用。</li>
+<li>mappers(映射器)：是MyBatis最核心的组件，它提供SQL和POJO映射关系，这是MyBatis开发的核心。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Boot整合MyBatis</h4>
+<ul class="point">
+<li><b>在大部分的情况下，应该“擦除”SqlSession接口的使用而直接获取Mapper接口</b>
+<ul class="quote">
+<li>为了方便我们使用，MyBatis社区在与Spring整合的包中提供了两个类，它们是MapperFactoryBean和MapperScannerConfigurer。</li>
+<li>实际上，MyBatis还提供了注解@MapperScan，也能够将MyBatis所需的对应接口扫描装配到Spring IoC容器中。</li>
+</ul>
+</li>
+<li><b>使用MapperFactoryBean装配MyBatis接口</b>
+<ul class="quote">
+<li>我们可以先定义一个MyBatis的Mapper接口，然后使用MapperFactoryBean来定义Mapper接口。</li>
+</ul>
+</li>
+<li><b>使用MapperScannerConfigurer扫描装配MyBatis接口</b>
+<ul class="quote">
+<li>MapperScannerConfigurer类定义了扫描的包，这样程序就会去扫描对应的包了。</li>
+</ul>
+</li>
+<li><b>使用@MapperScan定义扫描</b>
+<ul class="quote">
+<li>@MapperScan允许我们通过扫描加载MyBaits的Mapper，如果你的Spring Boot项目中不存在多个SqlSessionFactory(或者SqlSessionTemplate)，那么你完全可以不配置sqlSessionFactoryRef(或者sqlSessionTemplateRef)。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>MyBatis的其他配置</h4>
+<ul class="point">
+<li><b>在Spring Boot中比较常用的MyBatis的配置选项包括定义Mapper的XML路径、定义别名扫描的包、MyBatis配置文件、配置MyBaits插件(拦截器)、具体类需要与@MappedJdbcTypes联合使用、级联延迟加载属性配置、执行器(Executor)，可以配置SIMPLE, REUSE, BATCH，默认为SIMPLE</b>
+<ul class="quote">
+<li>如果遇到比较复杂的配置，可以直接通过mybatis.config-location去指定MyBatis本身的配置文件，去完成你需要的复杂配置。</li>
+<li>当你的项目不是太复杂时，使用Spring Boot提供给你的配置就可以了。</li>
+</ul>
+</li>
+<li><b>使用代码配置MyBatis</b>
+<ul class="quote">
+<li>在某些情况下，如果配置比较少，也可以使用它们来配置MyBatis的相关内容，这样也是比较方便的，但是需要开发者对MyBatis底层的内容有足够的认知才行。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch41"><summary>第6章 聊聊数据库事务处理</summary>
+<div class="sec">
+<h4>数据库事务的重要性</h4>
+<ul class="point">
+<li><b>电商和金融网站关注数据库事务，因为热门商品的交易和库存以及金融产品的金额，是不允许发生错误的。</b>
+</li>
+<li><b>高并发场景下，数据库的数据将在一个多事务的场景下运行，可能会造成数据的不一致。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring中的数据库事务处理</h4>
+<ul class="point">
+<li><b>Spring通过AOP技术来提供数据库事务服务</b>
+<ul class="quote">
+<li>Spring将JDBC中的try....catch...finally...语句和打开和关闭数据库连接的代码以及事务回滚的代码擦除。</li>
+</ul>
+</li>
+<li><b>Spring Boot不推荐使用编程式事务，推荐使用声明式事务</b>
+<ul class="quote">
+<li>编程式事务这种比较底层的方式已经基本被淘汰了。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>数据库隔离级别</h4>
+<ul class="point">
+<li><b>数据库隔离级别用于解决多个事务并发访问时可能出现的问题</b>
+<ul class="quote">
+<li>数据库隔离级别包括读未提交、读提交、可重复读和串行化。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring数据库事务传播行为</h4>
+<ul class="point">
+<li><b>Spring数据库事务传播行为可以处理一些特殊的场景，如一个批处理，它将处理多个交易，但是在一些交易中发生了异常，这个时候则不能将所有的交易都回滚</b>
+<ul class="quote">
+<li>通过Spring的数据库事务传播行为，可以很方便地处理这样的场景。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>配置数据库信息</h4>
+<ul class="point">
+<li><b>在application.properties中进行数据库连接池的配置</b>
+<ul class="quote">
+<li>spring.datasource.url=jdbc:mysql://localhost:3306/spring_boot_chapter6。</li>
+<li>spring.datasource.username=root。</li>
+<li>spring.datasource.password=123456。</li>
+<li>spring.datasource.tomcat.max-idle=10。</li>
+<li>spring.datasource.tomcat.max-active=50。</li>
+<li>spring.datasource.tomcat.max-wait=10000。</li>
+<li>spring.datasource.tomcat.initial-size=5。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch42"><summary>6.1 JDBC的数据库事务</summary>
+<div class="sec">
+<h4>JDBC的事务处理</h4>
+<ul class="point">
+<li><b>JDBC进行插入用户的测试代码</b>
+<ul class="quote">
+<li>获取连接，开启事务，设置隔离级别，执行SQL，提交事务，关闭数据库连接。</li>
+</ul>
+</li>
+<li><b>AOP允许我们把那些公共的代码抽取出来，单独实现</b>
+<ul class="quote">
+<li>执行SQL事务流程与AOP约定流程十分接近。</li>
+<li>可以把除执行SQL这步之外的步骤抽取出来单独实现，这便是Spring数据库事务编程的思想。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch43"><summary>6.2 Spring声明式事务的使用</summary>
+<div class="sec">
+<h4>Spring声明式数据库事务约定</h4>
+<ul class="point">
+<li><b>Spring利用AOP为我们提供了一个数据库事务的约定流程</b>
+<ul class="quote">
+<li>通过这个约定流程就可以减少大量的冗余代码和一些没有必要的try...catch...finally...语句。</li>
+</ul>
+</li>
+<li><b>使用@Transactional进行标注，可以标注在类或者方法上</b>
+<ul class="quote">
+<li>当它标注在类上时，代表这个类所有公共(public)非静态的方法都将启用事务功能。</li>
+</ul>
+</li>
+<li><b>Spring会对注解@Transactional属性配置去设置数据库事务</b>
+<ul class="quote">
+<li>Spring会根据是否发生异常采取不同的策略，如果没有发生异常，Spring数据库拦截器就会帮助我们提交事务，如果发生异常，就要判断一次事务定义器内的配置，如果事务定义器已经约定了该类型的异常不回滚事务就提交事务，如果没有任何配置或者不是配置不回滚事务的异常，则会回滚事务。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>@Transactional的配置项</h4>
+<ul class="point">
+<li><b>value和transactionManager属性是配置一个Spring的事务管理器</b>
+<ul class="quote">
+<li>timeout是事务可以允许存在的时间戳，单位为秒。</li>
+<li>readOnly属性定义的是事务是否是只读事务。</li>
+<li>rollbackFor、rollbackForClassName、noRollbackFor和noRollbackForClassName都是指定异常，通过这些属性的设置可以指定在什么异常的情况下依旧提交事务，在什么异常的情况下回滚事务。</li>
+</ul>
+</li>
+<li><b>propagation和isolation这两个属性是事务方法之间调用的行为</b>
+<ul class="quote">
+<li>propagation指的是传播行为，isolation则是隔离级别。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring事务管理器</h4>
+<ul class="point">
+<li><b>事务的打开、回滚和提交是由事务管理器来完成的</b>
+<ul class="quote">
+<li>在Spring中，事务管理器的顶层接口为PlatformTransactionManager。</li>
+<li>Spring在事务管理时，就是将这些方法按照约定织入对应的流程中的。</li>
+</ul>
+</li>
+<li><b>在Spring Boot中，当你依赖于mybatis-spring-boot-starter之后，它会自动创建一个DataSourceTransactionManager对象，作为事务管理器</b>
+<ul class="quote">
+<li>如果依赖于spring-boot-starter-data-jpa，则它会自动创建JpaTransactionManager对象作为事务管理器。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>测试数据库事务</h4>
+<ul class="point">
+<li><b>创建一张表，其SQL如代码清单6-6所示</b>
+<ul class="quote">
+<li>为了与它映射起来，需要使用一个POJO，其内容如代码清单6-7所示。</li>
+</ul>
+</li>
+<li><b>接着是与这个MyBatis接口文件对应的一个映射文件，如代码清单6-9所示</b>
+<ul class="quote">
+<li>这里的&lt;select&gt;元素定义的resultType为user，是一个别名，指向代码清单6-7所定义的POJO。</li>
+<li>对于&lt;insert&gt;元素定义的属性useGeneratedKeys和keyProperty，则表示在插入之后使用数据库生成机制回填对象的主键。</li>
+</ul>
+</li>
+<li><b>接着需要创建一个UserService和它的实现类UserServiceImpl，然后通过@Transactioanal启用Spring数据库事务机制</b>
+<ul class="quote">
+<li>代码中的方法上标注了注解@Transactional，意味着这两个方法将启用Spring数据库事务机制。</li>
+</ul>
+</li>
+<li><b>在事务配置中，采用了读写提交的隔离级别，后面我们将讨论隔离级别的含义，这里的代码还会限制超时时间为1 s</b>
+<ul class="quote">
+<li>然后可以写一个控制器，用来测试事务的启用情况，如代码清单6-11所示。</li>
+</ul>
+</li>
+<li><b>有了控制器，我们还需要给Spring Boot配置MyBatis框架的内容，于是需要在配置文件application.properties中加入代码清单6-12的代码片段</b>
+<ul class="quote">
+<li>这样MyBatis框架就配置完了。</li>
+<li>依赖于mybatis-spring-boot-starter之后，Spring Boot会自动创建事务管理器、MyBatis的SqlSessionFactory和SqlSessionTemplate等内容。</li>
+</ul>
+</li>
+<li><b>下面我们需要配置Spring Boot的运行文件，以达到测试的目的，并且查看Spring Boot自动为我们创建的事务管理器、SqlSessionFactory和SqlSessionTemplate信息</b>
+<ul class="quote">
+<li>启动文件如代码清单6-13所示。</li>
+<li>首先这里使用了@MapperScan扫描对应的包，并限定了只有被注解@Repository标注的接口，这样就可以把MyBatis对应的接口文件扫描到Spring IoC容器中了。</li>
+<li>这里通过注解@Autowired直接注入了事务管理器，它是通过Spring Boot的机制自动生成的，并不需要我们去关心。</li>
+<li>而在viewMyBatis方法中，加入了注解@PostConstruct，所以在这个类对象被初始化后，会调用这个方法，在这个方法中，因为先前已经将IoC容器注入进来，所以可以通过IoC容器获取对应的Bean以监控它们，并且在加粗的地方加入断点，这样我们以debug的方式启动它就可以进入断点了。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch44"><summary>6.3 隔离级别</summary>
+<div class="sec">
+<h4>数据库事务的基本特征</h4>
+<ul class="point">
+<li><b>数据库事务具有原子性、一致性、隔离性和持久性</b>
+<ul class="quote">
+<li>原子性：事务中包含的操作被看作一个整体的业务单元，这个业务单元中的操作要么全部成功，要么全部失败，不会出现部分失败、部分成功的场景。</li>
+<li>一致性：事务在完成时，必须使所有的数据都保持一致状态，在数据库中所有的修改都基于事务，保证了数据的完整性。</li>
+<li>隔离性：可能多个应用程序线程同时访问同一数据，这样数据库同样的数据就会在各个不同的事务中被访问，这样会产生丢失更新。为了压制丢失更新的产生，数据库定义了隔离级别的概念，通过它的选择，可以在不同程度上压制丢失更新的发生。</li>
+<li>持久性：事务结束后，所有的数据会固化到一个地方，如保存到磁盘当中，即使断电重启后也可以提供给应用程序访问。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>隔离级别的概念和作用</h4>
+<ul class="point">
+<li><b>隔离级别是为了解决多个事务同时操作数据时可能出现的丢失更新问题</b>
+<ul class="quote">
+<li>第一类丢失更新：事务回滚另外一个事务提交而引发的数据不一致的情况。</li>
+<li>第二类丢失更新：多个事务都提交引发的丢失更新。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>详解隔离级别</h4>
+<ul class="point">
+<li><b>数据库标准提出了4类隔离级别：未提交读、读写提交、可重复读和串行化</b>
+<ul class="quote">
+<li>未提交读(read uncommitted)：允许一个事务读取另外一个事务没有提交的数据。</li>
+<li>读写提交(read committed)：一个事务只能读取另外一个事务已经提交的数据，不能读取未提交的数据。</li>
+<li>可重复读(repeatable read)：可重复读的目标是克服读写提交中出现的不可重复读的现象。</li>
+<li>串行化(Serializable)：串行化是数据库最高的隔离级别，它会要求所有的SQL都会按照顺序执行。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用合理的隔离级别</h4>
+<ul class="point">
+<li><b>在选择隔离级别时，要考虑数据一致性和系统性能的问题</b>
+<ul class="quote">
+<li>追求更高的隔离级别，它能更好地保证了数据的一致性，但是也要付出锁的代价。</li>
+<li>对于高并发下又要保证数据一致性的场景，则需要另行处理了。</li>
+</ul>
+</li>
+<li><b>Spring Boot 可以通过配置文件指定默认的隔离级别</b>
+<ul class="quote">
+<li>例如，当我们需要把隔离级别设置为读写提交时，可以在application.properties文件加入默认的配置。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch45"><summary>6.4 传播行为</summary>
+<div class="sec">
+<h4>事务的传播行为</h4>
+<ul class="point">
+<li><b>传播行为是方法之间调用事务采取的策略问题</b>
+<ul class="quote">
+<li>在绝大部分的情况下，我们会认为数据库事务要么全部成功，要么全部失败。</li>
+<li>但现实中也许会有特殊的情况，例如，执行一个批量程序，处理很多的交易，绝大部分交易是可以顺利完成的，但是也有极少数的交易因为特殊原因不能完成而发生异常。</li>
+</ul>
+</li>
+<li><b>Spring中，当一个方法调用另外一个方法时，可以让事务采取不同的策略工作，如新建事务或者挂起当前事务等，这便是事务的传播行为</b>
+<ul class="quote">
+<li>批量任务我们称之为当前方法，那么批量事务就称为当前事务，当它调用单个交易时，称单个交易为子方法，当前方法调用子方法的时候，让每一个子方法不在当前事务中执行，而是创建一个新的事务去执行子方法，我们就说当前方法调用子方法的传播行为为新建事务。</li>
+<li>此外，还可能让子方法在无事务、独立事务中执行，这些完全取决于你的业务需求。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>传播行为的定义</h4>
+<ul class="point">
+<li><b>Spring事务机制中对数据库存在7种传播行为，它是通过枚举类Propagation定义的</b>
+<ul class="quote">
+<li>需要事务，它是默认传播行为，如果当前存在事务，就沿用当前事务，否则新建一个事务运行子方法。</li>
+<li>支持事务，如果当前存在事务，就沿用当前事务，如果不存在，则继续采用无事务的方式运行子方法。</li>
+<li>必须使用事务，如果当前没有事务，则会抛出异常，如果存在当前事务，就沿用当前事务。</li>
+<li>无论当前事务是否存在，都会创建新事务运行方法，这样新事务就可以拥有新的锁和隔离级别等特性，与当前事务相互独立。</li>
+<li>不支持事务，当前存在事务时，将挂起事务，运行方法。</li>
+<li>不支持事务，如果当前方法存在事务，则抛出异常，否则继续使用无事务机制运行。</li>
+<li>在当前方法调用子方法时，如果子方法发生异常，只回滚子方法执行过的SQL，而不回滚当前方法的事务。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>测试传播行为</h4>
+<ul class="point">
+<li><b>使用REQUIRED传播行为，子方法会沿用当前事务</b>
+<ul class="quote">
+<li>日志中可以看到都是在沿用已经存在的当前事务。</li>
+</ul>
+</li>
+<li><b>使用REQUIRES_NEW传播行为，子方法会创建独立的事务</b>
+<ul class="quote">
+<li>它启用了新的数据库事务去运行每一个insertUser方法，并且独立提交，这样就完全脱离了原有事务的管控，每一个事务都可以拥有自己独立的隔离级别和锁。</li>
+</ul>
+</li>
+<li><b>使用NESTED传播行为，子方法会创建嵌套事务，如果子方法回滚，当前事务也会回滚</b>
+<ul class="quote">
+<li>Spring为我们生成了nested事务，而从其日志信息中可以看到保存点的释放，可见Spring也是使用保存点技术来完成让子事务回滚而不致使当前事务回滚的工作。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch46"><summary>6.5 @Transactional自调用失效问题</summary>
+<div class="sec">
+<h4>@Transactional自调用失效问题</h4>
+<ul class="point">
+<li><b>在自调用过程中，Spring不能把你的代码织入到约定的流程中，导致@Transactional失效</b>
+<ul class="quote">
+<li>Spring数据库事务的约定，其实现原理是AOP，而AOP的原理是动态代理。</li>
+<li>在自调用的过程中，是类自身的调用，而不是代理对象去调用，那么就不会产生AOP。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>克服自调用问题的方法</h4>
+<ul class="point">
+<li><b>使用一个Service去调用另一个Service，这样就是代理对象的调用，Spring才会将你的代码织入事务流程</b>
+<ul class="quote">
+<li>我们可以像6.4.2节那样，用一个Service去调用另一个Service。</li>
+</ul>
+</li>
+<li><b>从Spring IoC容器中获取代理对象去启用AOP</b>
+<ul class="quote">
+<li>实现ApplicationContextAware接口的setApplicationContext方法，把IoC容器设置到这个类中来。</li>
+<li>在insertUsers方法中，我们通过IoC容器获取了UserService的接口对象，使用它调用了传播行为为REQUIRES_NEW的insertUser方法。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch47"><summary>第7章 使用性能利器——Redis</summary>
+<div class="sec">
+<h4>Redis简介</h4>
+<ul class="point">
+<li><b>Redis是一种运行在内存的数据库，支持7种数据类型的存储。</b>
+</li>
+<li><b>Redis是一个开源、使用ANSI C语言编写、遵守BSD协议、支持网络、可基于内存亦可持久化的日志型、键值数据库，并提供多种语言的API。</b>
+</li>
+<li><b>Redis是基于内存的，所以运行速度很快，大约是关系数据库几倍到几十倍的速度</b>
+<ul class="quote">
+<li>在我的测试中，Redis可以在1 s内完成10万次的读写，性能十分高效。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Redis在网站性能优化中的应用</h4>
+<ul class="point">
+<li><b>在查询比例较大的网站使用Redis可以数倍地提升网站的性能</b>
+<ul class="quote">
+<li>当一个会员登录网站，我们就把其常用数据从数据库一次性查询出来存放在Redis中，那么之后大部分的查询只需要基于Redis完成便可以了，这样将很大程度上提升网站的性能。</li>
+</ul>
+</li>
+<li><b>Redis还提供了简单的事务机制，通过事务机制可以有效保证在高并发的场景下数据的一致性</b>
+<ul class="quote">
+<li>Redis自身数据类型比较少，命令功能也比较有限，运算能力一直不强，所以Redis在2.6版本之后开始增加Lua语言的支持，这样Redis的运算能力就大大提高了，而且在Redis中Lua语言的执行是原子性的，也就是在Redis执行Lua时，不会被其他命令所打断，这样就能够保证在高并发场景下的一致性。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Boot集成Redis</h4>
+<ul class="point">
+<li><b>Spring Boot通过spring-data-redis项目对Redis开发进行支持</b>
+<ul class="quote">
+<li>在讨论Spring Boot如何使用Redis之前，很有必要简单地介绍一下这个项目的，这样才能更好地在Spring中使用Redis。</li>
+</ul>
+</li>
+<li><b>需要先加入关于Redis的依赖，然后允许我们通过配置文件application.properties进行配置</b>
+<ul class="quote">
+<li>这样我们就引入了Spring对Redis的starter，只是在默认的情况下，spring-boot-starter-data-redis(版本2.x)会依赖Lettuce的Redis客户端驱动，而在一般的项目中，我们会使用Jedis，所以在代码中使用了&lt;exclusions&gt;元素将其依赖排除了，与此同时引入了Jedis的依赖，这样就可以使用Jedis进行编程了。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Redis数据类型</h4>
+<ul class="point">
+<li><b>Redis能够支持多种数据类型，包括字符串、散列、列表(链表)、集合、有序集合、基数和地理位置等</b>
+<ul class="quote">
+<li>我们将讨论字符串、散列、列表、集合和有序集合的使用，因为它们的使用率比较高。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch48"><summary>7.1 spring-data-redis项目简介</summary>
+<div class="sec">
+<h4>spring-data-redis项目的设计</h4>
+<ul class="point">
+<li><b>Spring提供了一个RedisConnectionFactory接口，通过它可以生成一个RedisConnection接口对象</b>
+<ul class="quote">
+<li>RedisConnection接口对象是对Redis底层接口的封装。</li>
+</ul>
+</li>
+<li><b>Spring提供了RedisTemplate，它会自动从RedisConnectionFactory工厂中获取连接，然后执行对应的Redis命令，在最后还会关闭Redis的连接。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>RedisTemplate的使用</h4>
+<ul class="point">
+<li><b>RedisTemplate提供了如表7-1所示几个可以配置的属性</b>
+<ul class="quote">
+<li>通过上述讲解我们可以看到，在代码清单7-4中，由于我们什么都没有配置，因此它会默认使用JdkSerializationRedisSerializer对对象进行序列化和反序列化。</li>
+</ul>
+</li>
+<li><b>Spring对Redis数据类型操作的封装</b>
+<ul class="quote">
+<li>Redis能够支持7种类型的数据结构，这7种类型是字符串、散列、列表(链表)、集合、有序集合、基数和地理位置。</li>
+<li>Spring针对每一种数据结构的操作都提供了对应的操作接口。</li>
+<li>有时我们可能需要对某一个键值对(key-value)做连续的操作，Spring也提供支持，它提供了对应的BoundXXXOperations接口。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>SessionCallback和RedisCallback接口</h4>
+<ul class="point">
+<li><b>SessionCallback提供了良好的封装，对于开发者比较友好，因此在实际的开发中应该优先选择使用它</b>
+<ul class="quote">
+<li>使用SessionCallback接口则比较友好，这也是我在大部分情况下推荐使用的接口，它提供了更为高级的API，使得我们的使用更为简单，可读性也更佳。</li>
+</ul>
+</li>
+<li><b>RedisCallback接口并不是那么友好，但是它能够改写一些底层的东西，如序列化的问题，所以在需要改写那些较为底层规则时，可以使用它</b>
+<ul class="quote">
+<li>如果采用的是Java 8或者以上的版本，则还可以使用Lambda表达式改写上述代码，这样代码就会更加清爽。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch49"><summary>7.2 在Spring Boot中配置和使用Redis</summary>
+<div class="sec">
+<h4>在Spring Boot中配置Redis</h4>
+<ul class="point">
+<li><b>在配置文件application.properties中加入Redis服务器配置</b>
+<ul class="quote">
+<li>spring.redis.jedis.pool.min-idle=5。</li>
+<li>spring.redis.jedis.pool.max-active=10。</li>
+<li>spring.redis.jedis.pool.max-idle=10。</li>
+<li>spring.redis.jedis.pool.max-wait=2000。</li>
+<li>spring.redis.port=6379。</li>
+<li>spring.redis.host=192.168.11.131。</li>
+<li>spring.redis.password=123456。</li>
+<li>spring.redis.timeout=1000。</li>
+</ul>
+</li>
+<li><b>修改RedisTemplate的序列化器</b>
+<ul class="quote">
+<li>通过@Autowired注入由Spring Boot根据配置生成的RedisTemplate对象。</li>
+<li>利用Spring Bean生命周期的特性使用注解@PostConstruct自定义后初始化方法。</li>
+<li>把RedisTemplate中的键序列化器修改为StringRedisSerializer。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>操作Redis数据类型</h4>
+<ul class="point">
+<li><b>操作字符串和散列数据类型</b>
+<ul class="quote">
+<li>存入一个“key1”的数据，然后是“int_key”。</li>
+<li>使用运算，但是因为RedisTemplate并不能支持底层所有的Redis命令，所以这里先获取了原始的Redis连接的Jedis对象，用它来做减一运算。</li>
+<li>插入多个散列的field时可以采用Map，然后为了方便对同一个数据操作，这里代码还获取了BoundHashOperations对象进行操作。</li>
+</ul>
+</li>
+<li><b>操作列表(链表)</b>
+<ul class="quote">
+<li>插入两个列表,注意它们在链表的顺序。</li>
+<li>绑定list2链表操作，然后从右边弹出一个成员，获取定位元素，从左边插入链表，求链表长度，求链表下标区间成员。</li>
+</ul>
+</li>
+<li><b>操作集合</b>
+<ul class="quote">
+<li>请注意：这里v1重复两次，因为集合不允许重复，所以只是插入5个成员到集合中。</li>
+<li>对集合各类操作，在最后还有交集、差集和并集的操作。</li>
+</ul>
+</li>
+<li><b>操作有序集合(zset)</b>
+<ul class="quote">
+<li>往有序集合插入元素，绑定zset1有序集合操作，增加一个元素，删除元素，求分数，在分数区间下，按分数排序，同时返回value和score，按从大到小排序。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch50"><summary>7.3 Redis的一些特殊用法</summary>
+<div class="sec">
+<h4>使用Redis事务</h4>
+<ul class="point">
+<li><b>Redis事务支持多个命令的组合，通过watch... multi...exec命令实现</b>
+<ul class="quote">
+<li>watch命令可以监控Redis的一些键。</li>
+<li>multi命令开始事务，开始事务后，该客户端的命令不会马上被执行，而是存放在一个队列里。</li>
+<li>exec命令执行事务，执行事务时，要么全部执行，要么全部不执行，而且不会被其他客户端打断。</li>
+</ul>
+</li>
+<li><b>Redis事务具有原子性，可以保证数据的一致性</b>
+<ul class="quote">
+<li>在exec方法运行前我们修改了key1，根据Redis事务的规则，它在exec方法后会探测key1是否被修改过，如果没有则会执行事务，否则就取消事务。</li>
+<li>对于出错的命令Redis只是报出错误，而错误后面的命令依旧被执行，所以key2和key3都存在数据，这就是Redis事务的特点。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用Redis流水线</h4>
+<ul class="point">
+<li><b>流水线技术可以大幅度提升Redis的性能</b>
+<ul class="quote">
+<li>在关系数据库中我们可以使用批量，也就是只有需要执行SQL时，才一次性地发送所有的SQL去执行，这样性能就提高了许多。对于Redis也是可以的，这便是流水线(pipline)技术。</li>
+<li>使用流水线后可以提升大约10倍的速度，它十分适合大数据量的执行。</li>
+</ul>
+</li>
+<li><b>使用流水线时，所有的命令也只是进入队列而没有执行，所以执行的命令返回值也为空</b>
+<ul class="quote">
+<li>代码清单7-17只是运用于测试，在运行如此多的命令时，需要考虑的另外一个问题是内存空间的消耗，因为对于程序而言，它最终会返回一个List对象，如果过多的命令执行返回的结果都保存到这个List中，显然会造成内存消耗过大。</li>
+<li>与事务一样，使用流水线的过程中，所有的命令也只是进入队列而没有执行，所以执行的命令返回值也为空，这也是需要注意的地方。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用Redis发布订阅</h4>
+<ul class="point">
+<li><b>发布订阅是消息的一种常用模式，Redis提供一个渠道，让消息能够发送到这个渠道上，而多个系统可以监听这个渠道</b>
+<ul class="quote">
+<li>首先是Redis提供一个渠道，让消息能够发送到这个渠道上，而多个系统可以监听这个渠道，如短信、微信和邮件系统都可以监听这个渠道，当一条消息发送到渠道，渠道就会通知它的监听者，这样短信、微信和邮件系统就能够得到这个渠道给它们的消息了，这些监听者会根据自己的需要去处理这个消息，于是我们就可以得到各种各样的通知了。</li>
+</ul>
+</li>
+<li><b>Spring提供了RedisTemplate来发送消息，通过RedisTemplate的convertAndSend方法发送消息</b>
+<ul class="quote">
+<li>在Spring中，我们也可以使用RedisTemplate来发送消息，例如：redisTemplate.convertAndSend(channel, message);其中，channel代表渠道，message代表消息，这样就能够得到Redis发送过来的消息了。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用Lua脚本</h4>
+<ul class="point">
+<li><b>Redis在2.6版本后提供了Lua脚本的支持，而且执行Lua脚本在Redis中还具备原子性</b>
+<ul class="quote">
+<li>为了增强Redis的计算能力，Redis在2.6版本后提供了Lua脚本的支持，而且执行Lua脚本在Redis中还具备原子性，所以在需要保证数据一致性的高并发环境中，我们也可以使用Redis的Lua语言来保证数据的一致性，且Lua脚本具备更加强大的运算功能，在高并发需要保证数据一致性时，Lua脚本方案比使用Redis自身提供的事务要更好一些。</li>
+</ul>
+</li>
+<li><b>Spring提供了RedisScript接口，可以执行Lua脚本</b>
+<ul class="quote">
+<li>Spring会将Lua脚本发送到Redis服务器进行缓存，而此时Redis服务器会返回一个32位的SHA1编码，这时候通过getSha1方法就可以得到Redis返回的这个编码了。</li>
+<li>执行Lua脚本的方法有两种，其定义如下：public &lt;T&gt; T execute(RedisScript&lt;T&gt; script, List&lt;K&gt; keys, Object... args) 和 public &lt;T&gt; T execute(RedisScript&lt;T&gt; script, RedisSerializer&lt;?&gt; argsSerializer, RedisSerializer&lt;T&gt; resultSerializer, List&lt;K&gt; keys, Object... args)。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch51"><summary>7.4 使用Spring缓存注解操作Redis</summary>
+<div class="sec">
+<h4>缓存管理器和缓存的启用</h4>
+<ul class="point">
+<li><b>Spring使用缓存注解前，需要配置缓存管理器</b>
+<ul class="quote">
+<li>Spring可以支持多种缓存管理机制，但因为当前Redis已经广泛地使用，所以基于实用原则，本书将只介绍Redis缓存的应用。</li>
+</ul>
+</li>
+<li><b>在Spring Boot的starter机制中，允许我们通过配置文件生成缓存管理器</b>
+<ul class="quote">
+<li>spring.cache.type=REDIS，spring.cache.cache-names=redisCache。</li>
+</ul>
+</li>
+<li><b>为了使用缓存管理器，需要在Spring Boot的配置文件中加入驱动缓存的注解@EnableCaching</b>
+<ul class="quote">
+<li>这样就可以驱动Spring缓存机制工作了。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>开发缓存注解</h4>
+<ul class="point">
+<li><b>使用@CachePut、@Cacheable和@CacheEvict注解进行缓存操作</b>
+<ul class="quote">
+<li>@CachePut表示将方法结果返回存放到缓存中。</li>
+<li>@Cacheable 表示先从缓存中通过定义的键查询，如果可以查询到数据，则返回，否则执行该方法，返回数据，并且将返回结果保存到缓存中。</li>
+<li>@CacheEvict 通过定义的键移除缓存。</li>
+</ul>
+</li>
+<li><b>缓存注解中的key和value配置</b>
+<ul class="quote">
+<li>value属性配置缓存名称，多个名称可以使用逗号分隔，以便于缓存注解的引用。</li>
+<li>key属性配置缓存键，可以使用Spring EL表达式。</li>
+</ul>
+</li>
+<li><b>缓存注解中的condition配置</b>
+<ul class="quote">
+<li>condition属性是一个Spring EL表达式，如果为true，则使用缓存操作，否则就不使用。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>测试缓存注解</h4>
+<ul class="point">
+<li><b>编写对应的Controller或者测试方法对缓存注解进行测试</b>
+<ul class="quote">
+<li>通过请求代码清单7-33中的方法，就能够测试缓存注解了。</li>
+</ul>
+</li>
+<li><b>使用Redis客户端查看缓存信息</b>
+<ul class="quote">
+<li>Redis缓存机制会使用#{cacheName}:#{key}的形式作为键保存数据。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>缓存注解自调用失效问题</h4>
+<ul class="point">
+<li><b>updateUserName方法调用getUser方法是类内部的自调用，并不存在代理对象的调用，这样便不会出现AOP，也就不会使用到标注在getUser上的缓存注解去获取缓存的值了</b>
+<ul class="quote">
+<li>要克服这个问题，可以参考6.5节关于数据库事务那样用两个服务(Service)类相互调用，或者直接从Spring IoC容器中获取代理对象来操作，这样就能成功克服自调用的问题了。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>缓存脏数据说明</h4>
+<ul class="point">
+<li><b>使用缓存可以使得系统性能大幅度地提高，但是也引发了很多问题，其中最为严重的问题就是脏数据问题</b>
+<ul class="quote">
+<li>对于数据的读操作，一般而言是允许不是实时数据，如一些电商网站还存在一些排名榜单，而这个排名往往都不是实时的，它会存在延迟，其实对于查询是可以存在延迟的，也就是存在脏数据是允许的。</li>
+<li>对于数据的写操作，往往采取的策略就完全不一样，需要我们谨慎一些，一般会认为缓存不可信，所以会考虑从数据库中先读取最新数据，然后再更新数据，以避免将缓存的脏数据写入数据库中，导致出现业务问题。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>自定义缓存管理器</h4>
+<ul class="point">
+<li><b>如果我们并不希望采用Spring Boot机制带来的键命名方式，也不希望缓存永不超时，这时我们可以自定义缓存管理器</b>
+<ul class="quote">
+<li>在Spring中，我们有两种方法定制缓存管理器，一种是像代码清单7-27那样通过配置消除缓存键的前缀和自定义超时时间的属性来定制生成RedisCacheManager；另一种方法是不采用Spring Boot为我们生成的方式，而是完全通过自己的代码创建缓存管理器，尤其是当需要比较多自定义的时候，更加推荐你采用自定义的代码。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch52"><summary>第8章 文档数据库——MongoDB</summary>
+<div class="sec">
+<h4>MongoDB简介</h4>
+<ul class="point">
+<li><b>MongoDB是一个基于分布式文件存储的开源数据库系统</b>
+<ul class="quote">
+<li>MongoDB由C++语言编写，是一个NoSQL数据库。</li>
+</ul>
+</li>
+<li><b>MongoDB的目的是为Web应用提供可扩展的高性能数据存储解决方案</b>
+<ul class="quote">
+<li>在负载高时可以添加更多的节点，以保证服务器性能。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>MongoDB数据结构</h4>
+<ul class="point">
+<li><b>MongoDB将数据存储为一个文档，数据结构由键值(key-value)对组成</b>
+<ul class="quote">
+<li>MongoDB文档类似于JSON数据集，所以很容易转化成为Java POJO对象或者JavaScript对象。</li>
+<li>这些字段值还可以包含其他文档、数组及文档数组。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Boot整合MongoDB</h4>
+<ul class="point">
+<li><b>Spring Boot的配置文件提供了许多关于MongoDB的配置</b>
+<ul class="quote">
+<li>一切的开始都需要引入Spring Boot关于MongoDB的starter。</li>
+</ul>
+</li>
+<li><b>Spring Boot使用fastjson进行JSON的操作</b>
+<ul class="quote">
+<li>推荐引入阿里巴巴开发的fastjson的开发包。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch53"><summary>8.1 配置MongoDB</summary>
+<div class="sec">
+<h4>Spring Boot关于MongoDB的默认配置</h4>
+<ul class="point">
+<li><b>Spring Boot已经提供了关于MongoDB的配置，也有了默认的可配置项</b>
+<ul class="quote">
+<li>spring.data.mongodb.authentication-database= # 用于签名的MongoDB数据库。</li>
+<li>spring.data.mongodb.database=test # 数据库名称。</li>
+<li>spring.data.mongodb.field-naming-strategy= # 使用字段名策略。</li>
+<li>spring.data.mongodb.grid-fs-database= # GridFs(网格文件)数据库名称。</li>
+<li>spring.data.mongodb.host=localhost # MongoDB服务器，不能设置为URI。</li>
+<li>spring.data.mongodb.password= # MongoDB服务器用户密码，不能设置为URI。</li>
+<li>spring.data.mongodb.port= # MongoDB服务器端口，不能设置为URI。</li>
+<li>spring.data.mongodb.repositories.type=auto # 是否启用MongoDB关于JPA规范的编程。</li>
+<li>spring.data.mongodb.uri=mongodb://localhost/test # MongoDB默认 URI。</li>
+<li>spring.data.mongodb.username= # MongoDB服务器用户名，不能设置为URI。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Boot自动创建的MongoDB相关的Bean</h4>
+<ul class="point">
+<li><b>Spring Boot会自动创建关于MongoDB的Spring Bean</b>
+<ul class="quote">
+<li>MongoTemplate、CustomConversions等。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch54"><summary>8.2 使用MongoTemplate实例</summary>
+<div class="sec">
+<h4>搭建开发环境</h4>
+<ul class="point">
+<li><b>创建用户POJO和角色POJO</b>
+<ul class="quote">
+<li>用户POJO包含id、userName、note和roles属性。</li>
+<li>角色POJO包含id、roleName和note属性。</li>
+</ul>
+</li>
+<li><b>创建用户控制器</b>
+<ul class="quote">
+<li>用户控制器包含page、saveUser、getUser、findUser、updateUser和deleteUser方法。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用MongoTemplate操作文档</h4>
+<ul class="point">
+<li><b>查询用户</b>
+<ul class="quote">
+<li>通过MongoTemplate的findById方法获取用户。</li>
+<li>通过MongoTemplate的find方法查询用户。</li>
+</ul>
+</li>
+<li><b>新增用户</b>
+<ul class="quote">
+<li>通过MongoTemplate的save方法新增用户。</li>
+</ul>
+</li>
+<li><b>删除用户</b>
+<ul class="quote">
+<li>通过MongoTemplate的remove方法删除用户。</li>
+</ul>
+</li>
+<li><b>更新用户</b>
+<ul class="quote">
+<li>通过MongoTemplate的updateFirst方法更新用户。</li>
+<li>通过MongoTemplate的updateMulti方法更新用户。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch55"><summary>8.3 使用JPA</summary>
+<div class="sec">
+<h4>使用JPA的基本用法</h4>
+<ul class="point">
+<li><b>定义MongoDB的JPA接口，并自动获得相应的方法</b>
+<ul class="quote">
+<li>接口扩展MongoRepository接口，指定实体类型和主键类型。</li>
+<li>符合JPA规范命名方法，则不需要再实现该方法也可用。</li>
+</ul>
+</li>
+<li><b>使用@EnableMongoRepositories指定扫描对应的接口</b>
+<ul class="quote">
+<li>通过basePackages配置项指定JPA接口所在的包。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用自定义查询</h4>
+<ul class="point">
+<li><b>使用@Query注解自定义查询</b>
+<ul class="quote">
+<li>注解@Query阿拉伯数字指定参数的下标，以0开始。</li>
+</ul>
+</li>
+<li><b>使用自定义方法，并通过实现“接口名称+Impl”的类提供方法实现</b>
+<ul class="quote">
+<li>Spring JPA会自动找到这个类作为接口方法实现。</li>
+<li>如果不喜欢“Impl”这样的后缀，可以通过修改@EnableMongoRepositories的repositoryImplementationPostfix属性来指定自定义后缀。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch56"><summary>第9章 初识Spring MVC</summary>
+<div class="sec">
+<h4>Java开发从管理系统时代迈向互联网系统时代</h4>
+<ul class="point">
+<li><b>管理系统时代以浏览器页面为主，对JSP要求较高，Struts1或Struts2对JSP提供了良好的支持</b>
+<ul class="quote">
+<li>Struts1和Struts2耦合了大量的页面方面的内容。</li>
+</ul>
+</li>
+<li><b>互联网时代，业务大部分发生在手机、平板电脑等移动终端，对JSP的依赖已经不断地下降</b>
+<ul class="quote">
+<li>移动互联网的时代进一步地要求前后台进行分离。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring MVC的定位和特点</h4>
+<ul class="point">
+<li><b>Spring MVC定位于一个较为松散的组合，展示给用户的视图、控制器返回的数据模型、定位视图的视图解析器和处理适配器等内容都是独立的</b>
+<ul class="quote">
+<li>通过Spring MVC很容易把后台的数据转换为各种类型的数据，以满足移动互联网数据多样化的要求。</li>
+</ul>
+</li>
+<li><b>Spring MVC是基于Spring基础框架派生出来的Web框架，可以十分方便地整合到Spring框架中</b>
+<ul class="quote">
+<li>Spring整合Struts2还是比较繁复的。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring MVC成为当前最主流的Web开发框架</h4>
+<ul class="point">
+<li><b>Spring MVC已经成为当前最主流的Web开发框架</b>
+<ul class="quote">
+<li>学习Spring MVC，首先是学习其基于MVC的分层的思想。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch57"><summary>9.1 Spring MVC框架的设计</summary>
+<div class="sec">
+<h4>Spring MVC框架的设计</h4>
+<ul class="point">
+<li><b>MVC框架的运行流程是：处理请求先到达控制器，控制器进行请求分发，然后访问模型层，获取数据后渲染到视图中展现给用户</b>
+<ul class="quote">
+<li>控制器的作用是进行请求分发，这样它会根据请求的内容去访问模型层。</li>
+<li>在现今互联网系统中，数据主要从数据库和NoSQL中来，而且对于数据库而言往往还存在事务的机制，为了适应这样的变化，设计者会把模型层再细分为两层，即服务层和数据访问层。</li>
+<li>当控制器获取到由模型层返回的数据后，就将数据渲染到视图中，这样就能够展现给用户了。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch58"><summary>9.2 Spring MVC流程</summary>
+<div class="sec">
+<h4>Spring MVC流程概述</h4>
+<ul class="point">
+<li><b>Spring MVC的流程是围绕DispatcherServlet而工作的</b>
+<ul class="quote">
+<li>DispatcherServlet是Spring MVC中最重要的组件。</li>
+</ul>
+</li>
+<li><b>Spring MVC处理请求并非一定需要经过全流程，有时候一些流程并不存在</b>
+<ul class="quote">
+<li>例如，在我们加入@ResponseBody时，是没有经过视图解析器和视图渲染的。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring MVC组件初始化</h4>
+<ul class="point">
+<li><b>Spring Boot机制下启用Spring MVC，会初始化一些重要的组件</b>
+<ul class="quote">
+<li>这些组件的初始化，我们可以看到spring-webmvc-xxx.jar包的属性文件DispatcherServlet.properties，它定义的对象都是在Spring MVC开始时就初始化，并且存放在Spring IoC容器中。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>控制器(Controller)开发</h4>
+<ul class="point">
+<li><b>使用@Controller注解表明这是一个控制器，@RequestMapping代表请求路径和控制器(或其方法)的映射关系</b>
+<ul class="quote">
+<li>它会在Web服务器启动Spring MVC时，就被扫描到HandlerMapping的机制中存储。</li>
+<li>之后在用户发起请求被DispatcherServlet拦截后，通过URI和其他的条件，通过HandlerMapper机制就能找到对应的控制器(或其方法)进行响应。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>处理器(Handler)和拦截器(Interceptor)</h4>
+<ul class="point">
+<li><b>HandlerExecutionChain对象包含一个处理器(handler)，处理器是对控制器(controller)的包装</b>
+<ul class="quote">
+<li>处理器可以读入HTTP和上下文的相关参数，然后再传递给控制器方法。</li>
+<li>在控制器执行完成返回后，处理器又可以通过配置信息对控制器的返回结果进行处理。</li>
+</ul>
+</li>
+<li><b>处理器(handler)还需要一个适配器去运行HandlerExecutionChain对象包含的处理器，这就是HandlerAdapter接口定义的实现类</b>
+<ul class="quote">
+<li>通过请求的类型，DispatcherServlet就会找到它来执行Web请求的HandlerExecutionChain对象包含的内容，这样就能够执行我们的处理器(handler)了。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>视图解析器(ViewResolver)</h4>
+<ul class="point">
+<li><b>视图解析器的作用是将数据模型(Model)渲染，这样就能够响应用户的请求</b>
+<ul class="quote">
+<li>在控制器中返回的是“user/details”，那么它就会找到/WEB-INF/jsp/user/details.jsp作为视图(View)。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>JSON视图的使用</h4>
+<ul class="point">
+<li><b>使用JSON视图可以将数据模型转换为JSON数据集来响应请求</b>
+<ul class="quote">
+<li>在控制器的方法中模型和视图(ModelAndView)中捆绑了JSON视图(MappingJackson2JsonView)和数据模型(User对象)，然后返回，其结果也会转变为JSON。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch59"><summary>9.3 定制Spring MVC的初始化</summary>
+<div class="sec">
+<h4>Spring MVC的初始化定制</h4>
+<ul class="point">
+<li><b>Spring Boot通过WebMvcAutoConfigurationAdapter自动配置Spring MVC的初始化。</b>
+</li>
+<li><b>Spring Boot提供了接口WebMvcConfigurer，开发者可以通过实现这个接口，重写需要自定义的方法进行定制</b>
+<ul class="quote">
+<li>WebMvcConfigurer是基于Java 8的接口，大部分方法都是default类型的，但是它们都是空实现。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring MVC可配置项</h4>
+<ul class="point">
+<li><b>spring.mvc.async.request-timeout：异步请求超时时间(单位为毫秒)。</b>
+</li>
+<li><b>spring.mvc.contentnegotiation.favor-parameter：是否使用请求参数(默认参数为&quot;format&quot;)来确定请求的媒体类型。</b>
+</li>
+<li><b>spring.mvc.contentnegotiation.favor-path-extension：是否使用URL中的路径扩展来确定请求的媒体类型。</b>
+</li>
+<li><b>spring.mvc.contentnegotiation.media-types.*：设置内容协商向媒体类型映射文件扩展名。</b>
+</li>
+<li><b>spring.mvc.contentnegotiation.parameter-name：当启用favor-parameter参数是，自定义参数名。</b>
+</li>
+<li><b>spring.mvc.date-format：日期格式配置，如yyyy-MM-dd。</b>
+</li>
+<li><b>spring.mvc.dispatch-trace-request：是否让FrameworkServlet doService方法支持TRACE请求。</b>
+</li>
+<li><b>spring.mvc.dispatch-options-request：是否启用 FrameworkServlet doService 方法支持OPTIONS请求。</b>
+</li>
+<li><b>spring.mvc.favicon.enabled：spring MVC的图标是否启用。</b>
+</li>
+<li><b>spring.mvc.formcontent.putfilter.enabled：Servlet规范要求表格数据可用于HTTP POST而不是HTTP PUT或PATCH请求，这个选项将使得过滤器拦截HTTP PUT和PATCH，且内容类型是application/x-www-form-urlencoded的请求，并且将其转换为POST请求。</b>
+</li>
+<li><b>spring.mvc.ignore-default-model-on-redirect：如果配置为default，那么它将忽略模型重定向的场景。</b>
+</li>
+<li><b>spring.mvc.locale：默认国际化选项，默认取Accept-Language。</b>
+</li>
+<li><b>spring.mvc.locale-resolver：国际化解析器，如果需要固定可以使用fixed。</b>
+</li>
+<li><b>spring.mvc.log-resolved-exception：是否启用警告日志异常解决。</b>
+</li>
+<li><b>spring.mvc.message-codes-resolver-format：消息代码的格式化策略。</b>
+</li>
+<li><b>spring.mvc.pathmatch.use-registered-suffix-pattern：是否对spring.mvc.contentnegotiation.media-types.*注册的扩展采用后缀模式匹配。</b>
+</li>
+<li><b>spring.mvc.pathmatch.use-suffix-pattern：当匹配模式到请求时，是否使用后缀模式匹配(.*)。</b>
+</li>
+<li><b>spring.mvc.servlet.load-on-startup：启用Spring Web服务Serlvet的优先顺序配置。</b>
+</li>
+<li><b>spring.mvc.static-path-pattern：指定静态资源路径。</b>
+</li>
+<li><b>spring.mvc.throw-exception-if-no-handler-found：如果请求找不到处理器，是否抛出 NoHandlerFoundException异常。</b>
+</li>
+<li><b>spring.mvc.view.prefix：Spring MVC视图前缀。</b>
+</li>
+<li><b>spring.mvc.view.suffix：Spring MVC视图后缀。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch60"><summary>9.4 Spring MVC实例</summary>
+<div class="sec">
+<h4>Spring MVC实例开发</h4>
+<ul class="point">
+<li><b>Spring MVC开发核心是控制器的开发</b>
+<ul class="quote">
+<li>控制器的开发分为定义请求分发，接收请求获取参数，处理业务逻辑获取数据模型，绑定视图和数据模型。</li>
+</ul>
+</li>
+<li><b>控制器开发包括请求分发，接收请求获取参数，处理业务逻辑获取数据模型，绑定视图和数据模型</b>
+<ul class="quote">
+<li>请求分发由注解@RequestMapping完成，可以标注类或者方法。</li>
+<li>接收请求获取参数，使用注解@RequestParam，通过指定参数名称使得HTTP请求的参数和方法的参数进行绑定。</li>
+<li>处理业务逻辑获取数据模型，访问模型层得到数据。</li>
+<li>绑定视图和数据模型，创建模型和视图(ModeAndView)，指定视图名称，加入数据模型，返回模型和视图。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>视图和视图渲染</h4>
+<ul class="point">
+<li><b>使用EasyUI作为页面端界面，通过JSTL的forEach标签进行循环将控制器返回的用户列表渲染到JSP中</b>
+<ul class="quote">
+<li>在刚刚进入页面的时候，就可以展示用户列表。</li>
+</ul>
+</li>
+<li><b>页面中还定义了两个文本框，用来输入用户名和备注，然后通过查询按钮进行查询</b>
+<ul class="quote">
+<li>查询按钮的点击事件定义为onSearch，这样就能够找到onSearch函数来执行查询。</li>
+<li>在onSearch函数中，首先定义DataGrid请求的URL，它指向了代码清单9-9中的list方法，然后通过jQuery去获取两个文本框的参数值，再通过DataGrid的load方法，传递参数去后端查询，得到数据后重新载入DataGrid的数据，这样DataGrid就能够得到查询的数据了。</li>
+</ul>
+</li>
+<li><b>list方法标注为了@ResponseBody，这样Spring MVC就知道最终需要把返回的结果转换为JSON</b>
+<ul class="quote">
+<li>获取参数，这里使用了注解@RequestParam，通过指定参数名称使得HTTP请求的参数和方法的参数进行绑定，只是这个注解的默认规则是参数不能为空。为了克服这个问题，代码将其属性required设置为false即可，其意义就是允许参数为空。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch61"><summary>第10章 深入Spring MVC开发</summary>
+<div class="sec">
+<h4>Spring MVC开发概述</h4>
+<ul class="point">
+<li><b>Spring MVC的大体流程</b>
+<ul class="quote">
+<li>Spring MVC请求处理流程：接收请求 -&gt; 映射到控制器 -&gt; 执行控制器方法 -&gt; 返回视图。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>注解@RequestMapping</h4>
+<ul class="point">
+<li><b>让控制器的方法能够与请求的URL对应起来</b>
+<ul class="quote">
+<li>@RequestMapping注解用于将HTTP请求映射到特定的控制器方法。</li>
+<li>@RequestMapping注解可以配置多个属性，如value、method、params等。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>控制器开发</h4>
+<ul class="point">
+<li><b>开发控制器的第一步是让控制器的方法能够与请求的URL对应起来</b>
+<ul class="quote">
+<li>使用@RequestMapping注解，将HTTP请求映射到特定的控制器方法。</li>
+<li>通过配置@RequestMapping注解的属性，可以更加精细地控制URL的映射。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Boot中的Spring MVC开发</h4>
+<ul class="point">
+<li><b>在Spring Boot中开发Spring MVC应用程序更加简单和方便</b>
+<ul class="quote">
+<li>Spring Boot提供了自动配置的Web环境，使得开发Web应用程序变得更加简单。</li>
+<li>Spring Boot还提供了许多内置的模板和工具，可以帮助开发人员快速构建Web应用程序。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch62"><summary>10.1 处理器映射</summary>
+<div class="sec">
+<h4>处理器映射的概念和作用</h4>
+<ul class="point">
+<li><b>处理器映射的主要任务是将请求定位到具体的处理器上</b>
+<ul class="quote">
+<li>Spring MVC在启动阶段就会将注解@RequestMapping所配置的内容保存到处理器映射(HandlerMapping)机制中去。</li>
+<li>通过拦截请求信息与HandlerMapping进行匹配，找到对应的处理器(它包含控制器的逻辑)，并将处理器及其拦截器保存到HandlerExecutionChain对象中，返回给DispatcherServlet。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>RequestMapping注解的配置项</h4>
+<ul class="point">
+<li><b>通过配置项value或者path来设置请求URL，从而让对应的请求映射到控制器或其方法上</b>
+<ul class="quote">
+<li>配置项value和path也可以通过正则式来让方法匹配多个请求。</li>
+<li>在能够明确场景下，都建议一个路径对应一个方法或者让正则式的匹配规则简单明了。</li>
+</ul>
+</li>
+<li><b>method配置项可以限定HTTP的请求类型</b>
+<ul class="quote">
+<li>Spring 4.3的版本之后，为了简化method配置项的配置新增了几个注解，如@GetMapping、@PostMapping、@PatchMapping、@PutMapping和@DeleteMapping。</li>
+<li>@GetMapping对应的是HTTP的GET方法，@PostMapping对应的是HTTP的POST方法。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch63"><summary>10.2 获取控制器参数</summary>
+<div class="sec">
+<h4>在无注解下获取参数</h4>
+<ul class="point">
+<li><b>参数名称和HTTP请求的参数名称保持一致</b>
+<ul class="quote">
+<li>控制器方法参数中还有一个字符串参数str，但因为参数在默认的规则下可以为空，所以这个请求并不会报错。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用@RequestParam获取参数</h4>
+<ul class="point">
+<li><b>通过注解@RequestParam确定前后端参数名称的映射关系</b>
+<ul class="quote">
+<li>在方法参数处使用了注解@RequestParam，其目的是指定HTTP参数和方法参数的映射关系，这样处理器就会按照其配置的映射关系来得到参数，然后调用控制器的方法。</li>
+</ul>
+</li>
+<li><b>配置@RequestParam的属性required为false，可以使参数允许为空</b>
+<ul class="quote">
+<li>把代码清单10-3中的字符串参数str修改为：@RequestParam(value=&quot;str_val&quot;, required = false) String strVal。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>传递数组</h4>
+<ul class="point">
+<li><b>Spring MVC内部已经能够支持用逗号分隔的数组参数</b>
+<ul class="quote">
+<li>方法里定义了采用数组，那么前端就需要依照一定的规则传递给这个方法，例如，输入http://localhost:8080/my/requestArray?intArr=1,2,3&amp;longArr=4,5,6&amp;strArr=str1,str2,str3，可以看到需要传递数组参数时，每个参数的数组元素只需要通过逗号分隔即可。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>传递JSON</h4>
+<ul class="point">
+<li><b>Spring MVC也提供了良好的支持，可以将数据转换为JSON数据集，通过HTTP请求体提交给后端</b>
+<ul class="quote">
+<li>这里定义了一个简易的表单，它使用了jQuery进行Ajax提交。注意到加粗的代码，它指定了提交的请求地址(url)、数据(data)、提交类型(contentType)和事后事件(success)。从脚本来看，这里先组织了一个JSON数据集，而且把提交类型也设置为了JSON类型，然后才提交到控制器。</li>
+</ul>
+</li>
+<li><b>控制器就可以得到一个JSON数据集的请求体了</b>
+<ul class="quote">
+<li>这个方法的参数标注为@RequestBody，意味着它将接收前端提交的JSON请求体，而在JSON请求体与User类之间的属性名称是保持一致的，这样Spring MVC就会通过这层映射关系将JSON请求体转换为User对象。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>通过URL传递参数</h4>
+<ul class="point">
+<li><b>通过处理器映射和注解@PathVariable的组合获取URL参数</b>
+<ul class="quote">
+<li>代码中首先通过@GetMapping 指定一个URL，然后用{...}来标明参数的位置和名称。这里指定名称为id，这样Spring MVC就会根据请求去匹配这个方法。@PathVariable配置的字符串为id，它对应URL的参数声明，这样Spring就知道如何从URL中获取参数。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>获取格式化参数</h4>
+<ul class="point">
+<li><b>对日期和数字类型的转换注解进行处理，分别是@DateTimeFormat和@NumberFormat</b>
+<ul class="quote">
+<li>@DateTimeFormat是针对日期进行格式化的，@NumberFormat则是针对数字进行格式化的。</li>
+</ul>
+</li>
+<li><b>Spring会根据约定的格式把数据转换出来</b>
+<ul class="quote">
+<li>启动Spring Boot后，请求http://localhost:8080/my/format/form，就可以看到图10-3所示的表单。</li>
+<li>提交表单后，就可以看到对应的JSON数据集输出，这样就可以获取那些格式化的参数了。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch64"><summary>10.3 自定义参数转换规则</summary>
+<div class="sec">
+<h4>Spring MVC参数转换规则</h4>
+<ul class="point">
+<li><b>Spring MVC通过WebDataBinder机制获取参数，并进行转换和验证</b>
+<ul class="quote">
+<li>WebDataBinder机制解析HTTP请求的上下文，然后在控制器的调用之前转换参数并且提供验证的功能。</li>
+</ul>
+</li>
+<li><b>处理器获取参数逻辑，包括从HTTP请求和上下文环境来得到参数</b>
+<ul class="quote">
+<li>如果是简易的参数它会以简单的转换器进行转换，而这些简单的转换器是Spring MVC自身已经提供了的。</li>
+<li>如果是转换HTTP请求体(Body)，它就会调用HttpMessageConverter接口的方法对请求体的信息进行转换。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>一对一转换器(Converter)</h4>
+<ul class="point">
+<li><b>Converter是一对一的转化器，从一种类型转换为另外一种类型</b>
+<ul class="quote">
+<li>Converter接口的定义十分简单，类型有源类型(S)和目标类型(T)两种，它们通过convert方法进行转换。</li>
+</ul>
+</li>
+<li><b>通过实现Converter接口，自定义转换器，如字符串用户转换器</b>
+<ul class="quote">
+<li>实现Converter接口的类标注为@Component，Spring会将其扫描并装配到IoC容器中。</li>
+<li>Spring MVC通过HTTP的参数类型(String)和控制器的参数类型(User)进行匹配，就可以从注册机制中发现这个转换类，这样就能够将参数转换出来。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>GenericConverter集合和数组转换</h4>
+<ul class="point">
+<li><b>GenericConverter是数组转换器，Spring MVC自身提供了一些数组转换器，需要自定义的并不多</b>
+<ul class="quote">
+<li>假设需要同时新增多个用户，这样便需要传递一个用户列表(List&lt;User&gt;)给控制器，此时Spring MVC会使用StringToCollectionConverter转换它。</li>
+</ul>
+</li>
+<li><b>通过实现GenericConverter接口，自定义数组转换器，如StringToCollectionConverter</b>
+<ul class="quote">
+<li>StringToCollectionConverter首先会把字符串用逗号分隔为一个个的子字符串，然后根据原类型泛型为String、目标类型泛型为User类，找到对应的Converter进行转换，将子字符串转换为User对象。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch65"><summary>10.4 数据验证</summary>
+<div class="sec">
+<h4>JSR-303验证</h4>
+<ul class="point">
+<li><b>JSR-303验证主要是通过注解的方式进行的</b>
+<ul class="quote">
+<li>在属性中加入相关的注解，如@NotNull、@Future、@DateTimeFormat、@DecimalMin、@DecimalMax、@Min、@Max、@Range、@Email、@Size。</li>
+</ul>
+</li>
+<li><b>Spring MVC会自动地将最后的验证结果放入Errors对象中</b>
+<ul class="quote">
+<li>通过@Valid注解启动验证机制，Spring MVC会启用JSR-303验证机制进行验证。</li>
+<li>它会自动地将最后的验证结果放入Errors对象中，这样就可以从中得到相关验证过后的信息。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>参数验证机制</h4>
+<ul class="point">
+<li><b>Spring还提供自己的验证机制，在WebDataBinder中除了可以注册转换器外，还允许注册验证器(Validator)</b>
+<ul class="quote">
+<li>在Spring控制器中，它还允许使用注解@InitBinder，这个注解的作用是允许在进入控制器方法前修改WebDataBinder机制。</li>
+</ul>
+</li>
+<li><b>通过@InitBinder，可以在执行控制器方法前，处理器会先执行表@InitBinder标注的方法</b>
+<ul class="quote">
+<li>在这个方法里绑定了自定义的验证器UserValidator，而且设置了日期的格式，所以在控制器方法中已经不再需要使用@DateTimeFormat去定义日期格式化。</li>
+<li>通过这样的自定义，在使用注解@Valid标注User参数后，Spring MVC就会去遍历对应的验证器，当遍历到UserValidator时，会去执行它的supports方法。因为该方法会返回true，所以Spring MVC会用这个验证器去验证User类的数据。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch66"><summary>10.5 数据模型</summary>
+<div class="sec">
+<h4>Spring MVC数据模型设计</h4>
+<ul class="point">
+<li><b>ModelMap是Spring MVC中用于绑定数据的核心类</b>
+<ul class="quote">
+<li>ModelMap继承了LinkedHashMap类，具备Map接口的一切特性。</li>
+<li>ModelMap还可以增加数据属性。</li>
+</ul>
+</li>
+<li><b>Spring MVC会自动创建数据模型对象</b>
+<ul class="quote">
+<li>如果在控制器方法的参数中使用ModelAndView、Model或者ModelMap作为参数类型，Spring MVC会自动创建数据模型对象。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>数据模型的使用</h4>
+<ul class="point">
+<li><b>使用Model接口</b>
+<ul class="quote">
+<li>在useModel方法里，只是返回一个字符串，Spring MVC会自动生成对应的视图，并且绑定数据模型。</li>
+</ul>
+</li>
+<li><b>使用ModelMap类</b>
+<ul class="quote">
+<li>在useModelMap方法，返回了ModelAndView对象，但是它没有绑定ModelMap对象，Spring MVC又会自动地绑定它。</li>
+</ul>
+</li>
+<li><b>使用ModelAndView</b>
+<ul class="quote">
+<li>在useModelAndView方法，设置了数据模型和视图名称，Spring MVC会自动处理数据模型的绑定。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>数据模型在视图中的渲染</h4>
+<ul class="point">
+<li><b>视图通过InternalResourceViewResolver定位，找到对应的JSP视图</b>
+<ul class="quote">
+<li>这个JSP的内容如代码清单10-23所示，将数据渲染到这个JSP上。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch67"><summary>10.6 视图和视图解析器</summary>
+<div class="sec">
+<h4>视图和视图解析器的基本概念</h4>
+<ul class="point">
+<li><b>视图是渲染数据模型展示给用户的组件，分为逻辑视图和非逻辑视图</b>
+<ul class="quote">
+<li>逻辑视图是需要视图解析器(ViewResolver)进行进一步定位的。</li>
+<li>非逻辑视图，则并不需要进一步地定位视图的位置，它只需要直接将数据模型渲染出来即可。</li>
+</ul>
+</li>
+<li><b>视图解析器InternalResourceViewResolver是比较常用的</b>
+<ul class="quote">
+<li>InternalResourceViewResolver可以根据请求的路径，找到对应的JSP文件，将数据模型传递进入，JstlView就会将数据模型渲染，展示数据给用户。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>视图设计</h4>
+<ul class="point">
+<li><b>视图需要实现Spring MVC定义的视图接口View</b>
+<ul class="quote">
+<li>View接口中包含getContentType方法和render方法。</li>
+</ul>
+</li>
+<li><b>Spring MVC提供了许多开发好的视图类，如MappingJackson2JsonView和JstlView</b>
+<ul class="quote">
+<li>MappingJackson2JsonView会将数据模型渲染为JSON数据集展示给用户查看。</li>
+<li>JstlView是一个逻辑视图，于是可以在控制器返回一个字符串，使用视图解析器去定位对应的JSP文件，就能够找到对应的JSP文件，将数据模型传递进入，JstlView就会将数据模型渲染，展示数据给用户。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>视图实例——导出PDF文件</h4>
+<ul class="point">
+<li><b>AbstractPdfView属于非逻辑视图，因此它并不需要任何的视图解析器(ViewResolver)去定位</b>
+<ul class="quote">
+<li>AbstractPdfView是一个抽象类，存在需要开发者自己实现的抽象方法。</li>
+</ul>
+</li>
+<li><b>通过PDF视图的定义，就只需要实现这个抽象方法便可以将数据模型渲染为PDF</b>
+<ul class="quote">
+<li>这个方法中的参数，包含数据模型(model)对象、HTTP的请求(request)和响应(response)对象，通过这些就可以得到数据模型和上下文环境的参数，此外方法中还有与PDF文档有关的参数(document和writer)，通过它们就可以定制PDF的格式和数据的渲染。</li>
+</ul>
+</li>
+<li><b>为了能够使用PDF，需要在Maven的配置文件中加入相关的依赖</b>
+<ul class="quote">
+<li>导入关于PDF的包，如：core-renderer和itextpdf。</li>
+</ul>
+</li>
+<li><b>继承AbstractPdfView的非抽象类，通过它调度PdfExportService的make方法就可以让控制器实现自定义的导出逻辑</b>
+<ul class="quote">
+<li>在创建自定义PDF视图时，需要自定义一个导出服务接口(PdfExportService)。</li>
+<li>通过实现这个接口，每个控制器都可以自定义其导出的逻辑。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch68"><summary>10.7 文件上传</summary>
+<div class="sec">
+<h4>Spring MVC对文件上传的支持</h4>
+<ul class="point">
+<li><b>DispatcherServlet会使用适配器模式，将HttpServletRequest接口对象转换为MultipartHttp ServletRequest对象</b>
+<ul class="quote">
+<li>MultipartHttpServletRequest接口扩展了HttpServletRequest接口的所有方法，而且定义了一些操作文件的方法。</li>
+</ul>
+</li>
+<li><b>使用Spring MVC上传文件时，需要配置MultipartHttpServletRequest，这个任务是通过MultipartResolver接口实现的</b>
+<ul class="quote">
+<li>MultipartResolver接口存在两个实现类，分别是StandardServletMultipartResolver和CommonsMultipartResolver。</li>
+<li>在默认的情况下Spring推荐使用的是StandardServletMultipartResolver。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>开发文件上传功能</h4>
+<ul class="point">
+<li><b>首先需要配置代码清单10-30中的配置项</b>
+<ul class="quote">
+<li>指定默认上传的文件夹。</li>
+<li>限制单个文件最大大小。</li>
+<li>限制所有文件最大大小。</li>
+</ul>
+</li>
+<li><b>创建JSP文件，其内容如代码清单10-32所示</b>
+<ul class="quote">
+<li>&lt;form&gt;表单声明为multipart/form-data。</li>
+</ul>
+</li>
+<li><b>开发文件上传控制器来完成文件上传</b>
+<ul class="quote">
+<li>uploadPage方法用来映射上传文件的JSP。</li>
+<li>uploadRequest方法将HttpServletRequest对象传递，从之前的分析可知，在调用控制器之前，DispatcherServlet会将其转换为MultipartHttpServletRequest对象，所以方法中使用了强制转换，从而得到MultipartHttpServletRequest对象，然后获取MultipartFile对象，接着使用MultipartFile对象的getOriginalFilename方法就可以得到上传的文件名，而通过它的transferTo方法，就可以将文件保存到对应的路径中。</li>
+<li>uploadMultipartFile则是直接使用MultipartFile对象获取上传的文件，从而进行操作。</li>
+<li>uploadPart方法是使用Servlet的API，可以使用其write方法直接写入文件，这也是我推荐的方式。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch69"><summary>10.8 拦截器</summary>
+<div class="sec">
+<h4>拦截器的设计</h4>
+<ul class="point">
+<li><b>拦截器需要实现HandlerInterceptor接口</b>
+<ul class="quote">
+<li>HandlerInterceptor接口定义了preHandle、postHandle和afterCompletion三个方法。</li>
+</ul>
+</li>
+<li><b>拦截器方法的执行流程</b>
+<ul class="quote">
+<li>执行preHandle方法，该方法会返回一个布尔值。如果为false，则结束所有流程；如果为true，则执行下一步。</li>
+<li>执行处理器逻辑，它包含控制器的功能。</li>
+<li>执行postHandle方法。</li>
+<li>执行视图解析和视图渲染。</li>
+<li>执行afterCompletion方法。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>开发拦截器</h4>
+<ul class="point">
+<li><b>实现HandlerInterceptor接口，并重写3个具体的拦截器方法</b>
+<ul class="quote">
+<li>在preHandle方法中打印“处理器前方法”。</li>
+<li>在postHandle方法中打印“处理器后方法”。</li>
+<li>在afterCompletion方法中打印“处理器完成方法”。</li>
+</ul>
+</li>
+<li><b>在配置文件中实现WebMvcConfigurer接口，并覆盖其addInterceptors方法进行注册拦截器</b>
+<ul class="quote">
+<li>注册拦截器到Spring MVC机制，然后它会返回一个拦截器注册。</li>
+<li>指定拦截匹配模式，限制拦截器拦截请求。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>多个拦截器的顺序</h4>
+<ul class="point">
+<li><b>处理器前方法采用先注册先执行，而处理器后方法和完成方法则是先注册后执行的规则</b>
+<ul class="quote">
+<li>对于处理器前(preHandle)方法返回为true的场景，多个拦截器的执行顺序是：先注册的先执行，后注册的后执行。</li>
+<li>对于处理器前(preHandle)方法返回为false的场景，只有先注册的拦截器的处理器后(postHandle)方法和完成方法会执行。</li>
+</ul>
+</li>
+<li><b>完成方法afterCompletion则不一样，它只会执行返回true的拦截器的完成方法，而且顺序是先注册后执行</b>
+<ul class="quote">
+<li>即使有多个拦截器的完成方法返回true，它们也会按照先注册先执行的规则来执行。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch70"><summary>10.9 国际化</summary>
+<div class="sec">
+<h4>国际化消息源</h4>
+<ul class="point">
+<li><b>Spring MVC提供了国际化消息源机制，使用MessageSource接口体系</b>
+<ul class="quote">
+<li>大部分情况下，使用JDK的ResourceBundle处理国际化信息。</li>
+</ul>
+</li>
+<li><b>Spring Boot提供了国际化的配置项，使得开发者能够以最快的速度配置国际化</b>
+<ul class="quote">
+<li>设置国际化消息是否总是采用格式化，默认为false。</li>
+<li>设置国际化属性名称，如果多个可以使用逗号分隔，默认为messages。</li>
+<li>设置国际化消息缓存超时秒数，默认为永远不过期，如果0表示每次都重新加载。</li>
+<li>国际化消息编码。</li>
+<li>如果没有找到特定区域设置的文件，则设置是否返回到系统区域设置。</li>
+<li>是否使用消息编码作为默认的响应消息，而非抛出NoSuchMessageException异常，只建议在开发阶段使用。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>国际化解析器</h4>
+<ul class="point">
+<li><b>Spring MVC提供了LocaleResolver接口来确定用户的国际化区域</b>
+<ul class="quote">
+<li>AcceptHeaderLocaleResolver：使用浏览器头请求的信息去实现国际化区域。</li>
+<li>FixedLocaleResolver：固定的国际化区域。</li>
+<li>CookieLocaleResolver：将国际化区域信息设置在浏览器Cookie中。</li>
+<li>SessionLocaleResolver：类似于CookieLocaleResolver，只是将国际化信息设置在Session中。</li>
+</ul>
+</li>
+<li><b>Spring Boot中提供了两个简单的配置项，以方便开发者能够以最快的速度配置国际化解析器</b>
+<ul class="quote">
+<li>指定国际化区域，可以覆盖&quot;Accept-Language&quot; 头信息。</li>
+<li>国际化解析器，可以选择fixed或accept-header。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>国际化实例——SessionLocaleResolver</h4>
+<ul class="point">
+<li><b>使用实例来讲解国际化的使用，采用的是在实际工作中使用得最多的SessionLocaleResolver</b>
+<ul class="quote">
+<li>先设置国际化消息源的配置项。</li>
+<li>配置项spring.messages.basename的值为international，这个配置项的默认值为messages，这就意味着我们的国际化消息的配置文件名称为international.properties、international_zh_CN.properties和international_en_US.properties，并且将其放入到resources文件夹中。</li>
+<li>其中international.properties是必不可少的，否则Spring Boot将不会生成国际化消息机制；对于Spring MVC，它是默认的国际化消息源，也就是不能确定国际化或者国际化消息源查找失败，就会从采用这个文件的消息源来提供国际化消息。</li>
+<li>配置项spring.messages.cache-duration则表示缓存过期的时间，也就是超过3600 s(1 h)后就会过期，从而国际化消息系统会重新读入这些国际化文件以达到更新的效果。</li>
+<li>为了测试，这里还要创建三个国际化属性文件。</li>
+</ul>
+</li>
+<li><b>接下来需要了解的是在控制器和视图中如何获取和使用国际化区域的消息</b>
+<ul class="quote">
+<li>首先是控制器，注入国际化消息接口对象，后台获取国际化信息和打开国际化视图。</li>
+<li>视图国际化(/WEB-INF/jsp/i18n/internationalization.jsp)，通过HTTP请求参数变化国际化。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch71"><summary>10.10 Spring MVC拾遗</summary>
+<div class="sec">
+<h4>@ResponseBody转换为JSON的秘密</h4>
+<ul class="point">
+<li><b>Spring MVC通过HandlerMethodReturnValueHandler和HttpMessageConverter处理@ResponseBody注解</b>
+<ul class="quote">
+<li>当遇到标注的@ResponseBody后，处理器就会记录这个方法的响应类型为JSON数据集。</li>
+<li>执行完控制器返回后，处理器会启用结果解析器(ResultResolver)去解析这个结果，它会去轮询注册给Spring MVC的HttpMessageConverter接口的实现类。</li>
+<li>因为MappingJackson2HttpMessageConverter这个实现类已经被Spring MVC所注册，加上Spring MVC将控制器的结果类型标明为JSON，所以就匹配上了，于是通过它就在处理器内部把结果转换为了JSON。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>重定向</h4>
+<ul class="point">
+<li><b>Spring MVC提供了RedirectAttributes，可以保存需要传递给重定位的数据</b>
+<ul class="quote">
+<li>被addFlashAttribute方法保存的参数，在控制器执行完成后，会被保存到Session对象中。</li>
+<li>当执行重定向时，在进入重定向前首先把Session中的参数取出，用以填充重定向方法的参数和数据模型，之后删除Session中的数据，然后就可以调用重定向方法，并将对象传递给重定向的方法。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>操作会话对象</h4>
+<ul class="point">
+<li><b>Spring MVC提供了@SessionAttribute和@SessionAttributes两个注解来操作HttpSession对象</b>
+<ul class="quote">
+<li>@SessionAttribute应用于参数，它的作用是将HttpSession中的属性读出，赋予控制器的参数。</li>
+<li>@SessionAttributes则只能用于类的注解，它会将相关数据模型的属性保存到Session中。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>给控制器增加通知</h4>
+<ul class="point">
+<li><b>Spring MVC提供了@ControllerAdvice、@InitBinder、@ExceptionHandler和@ModelAttribute四个注解来增强控制器</b>
+<ul class="quote">
+<li>@ControllerAdvice：定义一个控制器的通知类，允许定义一些关于增强控制器的各类通知和限定增强哪些控制器功能等。</li>
+<li>@InitBinder：定义控制器参数绑定规则，如转换规则、格式化等，它会在参数转换之前执行。</li>
+<li>@ExceptionHandler：定义控制器发生异常后的操作。</li>
+<li>@ModelAttribute: 可以在控制器方法执行之前，对数据模型进行操作。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>获取请求头参数</h4>
+<ul class="point">
+<li><b>Spring MVC提供了@RequestHeader注解来获取请求头参数</b>
+<ul class="quote">
+<li>通过@RequestHeader接收请求头参数，例如：@PostMapping(&quot;/header/user&quot;) @ResponseBody public User headerUser(@RequestHeader(&quot;id&quot;) Long id) { User user = userService.getUser(id); return user; }。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch72"><summary>第11章 构建REST风格网站</summary>
+<div class="sec">
+<h4>REST风格概述</h4>
+<ul class="point">
+<li><b>REST风格是一种非标准的风格约定，已被广泛应用于互联网世界，尤其在微服务中。</b>
+</li>
+<li><b>在REST风格中，每一个资源都对应着一个网址，一个代表资源网址应该是一个名词，而不存在动词，这代表对一个资源的操作</b>
+<ul class="quote">
+<li>例如，要获取id为1的用户的URL可能就设计成http://localhost:8080/user/1。其中user是名词，它代表用户信息，1则是用户的编号，它的含义就是获取用户id为1的资源信息。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch73"><summary>11.1 REST简述</summary>
+<div class="sec">
+<h4>REST简述</h4>
+<ul class="point">
+<li><b>REST是Roy Thomas Fielding在他2000年的博士论文中提出的</b>
+<ul class="quote">
+<li>Fielding博士是HTTP协议(1.0版和1.1版)的主要设计者、Apache服务器软件的作者之一、Apache基金会的第一任主席。</li>
+</ul>
+</li>
+<li><b>REST风格的三个主要的名词是“资源”、“表现层”和“状态转换”</b>
+<ul class="quote">
+<li>资源：可以是系统权限用户、角色和菜单等，也可以是一些媒体类型，如文本、图片、歌曲，总之它就是一个具体存在的对象。</li>
+<li>表现层：有了资源还需要确定如何表现这个资源。例如，一个用户可以使用JSON、XML或者其他的形式表现出来，又如可能返回的是一幅图片。</li>
+<li>状态转换：现实中资源并不是一成不变的，它是一个变化的过程，一个资源可以经历创建(create)、访问(visit)、修改(update)和删除(delete)的过程。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>HTTP的动作</h4>
+<ul class="point">
+<li><b>对于资源而言，它存在创建(create)、修改(update)、访问(visit)和删除(delete)的状态转换，这样它就对应于HTTP的行为的5种动作</b>
+<ul class="quote">
+<li>GET(VISIT)：访问服务器资源(一个或者多个资源)。</li>
+<li>POST(CREATE)：提交服务器资源信息，用来创建新的资源。</li>
+<li>PUT(UPDATE)：修改服务器已经存在的资源，使用PUT时需要把资源的所有属性一并提交。</li>
+<li>PATCH(UPDATE)：修改服务器已经存在的资源，使用PATCH时只需要将部分资源属性提交。</li>
+<li>DELETE(DELETE)：从服务器将资源删除。</li>
+</ul>
+</li>
+<li><b>对于HTTP协议，还有另外两种不常用的动作行为：HEAD和OPTIONS</b>
+<ul class="quote">
+<li>HEAD：获取资源的元数据(Content-type)。</li>
+<li>OPTIONS：提供资源可供客户端修改的属性信息。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>REST风格的一些误区</h4>
+<ul class="point">
+<li><b>一般不应该在URI中存在动词</b>
+<ul class="quote">
+<li>例如：GET    /user/get/1，应该修改为：GET    /user/1。</li>
+</ul>
+</li>
+<li><b>不推荐使用类似于PUT    users?userName=user_name&amp;note=note这样传递参数</b>
+<ul class="quote">
+<li>应该采用PUT    users/{userName}/{note}。</li>
+</ul>
+</li>
+<li><b>如果参数很多，不应该考虑使用URI传递参数，而是考虑请求体获取参数</b>
+<ul class="quote">
+<li>类似10.2.4节那样处理就可以了。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch74"><summary>11.2 使用Spring MVC开发REST风格端点</summary>
+<div class="sec">
+<h4>Spring MVC整合REST</h4>
+<ul class="point">
+<li><b>Spring 4.3之后可以使用@GetMapping、@PostMapping、@PutMapping、@PatchMapping、@DeleteMapping注解进行REST风格的开发</b>
+<ul class="quote">
+<li>@GetMapping：对应HTTP的GET请求，获取资源。</li>
+<li>@PostMapping：对应HTTP的POST请求，创建资源。</li>
+<li>@PutMapping：对应HTTP的PUT请求，提交所有资源属性以修改资源。</li>
+<li>@PatchMapping：对应HTTP的PATCH请求，提交资源部分修改的属性。</li>
+<li>@DeleteMapping：对应HTTP的DELETE请求，删除服务器端的资源。</li>
+</ul>
+</li>
+<li><b>通过@RequestMapping、@GetMapping等注解就能把URI定位到对应的控制器方法上，通过注解@PathVariable就能够将URI地址的参数获取，通过@RequestBody可以将请求体为JSON的数据转化为复杂的Java对象</b>
+<ul class="quote">
+<li>对于简单的参数，往往会通过URL直接传递，在Spring MVC可以使用注解@PathVariable进行获取。</li>
+<li>对于那些复杂的参数，例如，你需要传递一个复杂的资源需要十几个甚至几十个字段，可以考虑使用请求体JSON的方式提交给服务器，这样就可以使用注解@RequestBody将JSON数据集转换为Java对象。</li>
+</ul>
+</li>
+<li><b>在Spring MVC对REST风格的设计中，甚至可以使用注解@RestController让整个控制器都默认转换为JSON数据集</b>
+<ul class="quote">
+<li>使用@RestController注解可以让整个控制器返回的对象转化为JSON数据集。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用Spring开发REST风格的端点</h4>
+<ul class="point">
+<li><b>对于DAO层而言，使用的是PO(Persisent Object)，它直接对应数据库的表，为了处理它，需要一个VO(View Object，视图对象)去转换</b>
+<ul class="quote">
+<li>用户PO对象。</li>
+<li>用户VO对象。</li>
+</ul>
+</li>
+<li><b>控制器加入对应的方法就可以完成REST风格的设计</b>
+<ul class="quote">
+<li>index方法中会跳转到一个JSP视图中去，这个JSP可以用于编写JavaScript脚本来测试请求。</li>
+<li>使用HTTP POST动作创建资源(用户)。</li>
+<li>获取用户的GET请求。</li>
+<li>查询符合要求的用户。</li>
+<li>使用HTTP的PUT请求修改用户信息。</li>
+<li>使用PATCH请求修改用户名称。</li>
+<li>使用HTTP的DELETE请求。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用@RestController</h4>
+<ul class="point">
+<li><b>通过它可以将控制器返回的对象转化为JSON数据集</b>
+<ul class="quote">
+<li>使用@RestController定义，这样对于getUser 返回的对象就会转变为JSON数据集了。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>渲染结果</h4>
+<ul class="point">
+<li><b>在Spring MVC中，IoC容器启动时注册了两个HttpMessageConverter接口的实现类，它们分别为StringHttpMessageConverter和Mapping Jackson2HttpMessageConverter</b>
+<ul class="quote">
+<li>HttpMessageConverter接口中定义了一个canWrite方法，它返回一个布尔值，而MediaType则是可以传入的媒体类型，Spring MVC在执行控制器的方法后回去遍历注册的HttpMessageConverter接口的实现类使用canWrite方法去判断是否拦截控制器的返回。</li>
+</ul>
+</li>
+<li><b>在@RequestMapping、GetMapping等注解中还存在consumes和produces两个属性</b>
+<ul class="quote">
+<li>consumes代表的是限制该方法接收什么类型的请求体(body)，produces代表的是限定返回的媒体类型，仅当request请求头中的(Accept)类型中包含该指定类型才返回。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>处理HTTP状态码、异常和响应头</h4>
+<ul class="point">
+<li><b>Spring提供了实体封装类ResponseEntity和注解@ResponseStatus</b>
+<ul class="quote">
+<li>ResponseEntity可以有效封装错误消息和状态码，通过@ResponseStatus可以配置指定的响应码给客户端。</li>
+</ul>
+</li>
+<li><b>利用@ControllerAdvice和@ExceptionHandler注解的使用，其中注解@ControllerAdvice是用来定义控制器通知的，@ExceptionHandler则是指定异常发生的处理方法</b>
+<ul class="quote">
+<li>@ExceptionHandler定义了拦截NotFoundException的异常，@ResponseBody定义了响应的信息以JSON格式表达，@ResponseStatus定义了状态码为500(服务器内部错误)，这样就会把这个状态码传达给请求者。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch75"><summary>11.3 客户端请求RestTemplate</summary>
+<div class="sec">
+<h4>RestTemplate模板类简介</h4>
+<ul class="point">
+<li><b>RestTemplate模板类用于方便地完成系统之间的REST请求调用，实现数据集成。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>RestTemplate请求方式</h4>
+<ul class="point">
+<li><b>RestTemplate支持多种请求方式，如GET、POST、DELETE等</b>
+<ul class="quote">
+<li>通过实例演示了如何使用这些方法进行HTTP请求。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>RestTemplate响应头属性和HTTP状态码</h4>
+<ul class="point">
+<li><b>RestTemplate还可以获取服务器响应头属性和HTTP状态码，以判断请求是否成功，并提供错误信息反馈。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>RestTemplate的exchange方法</h4>
+<ul class="point">
+<li><b>RestTemplate的exchange方法提供了更灵活的参数定制，但相对而言可读性较低</b>
+<ul class="quote">
+<li>推荐使用postForEntity和getForEntity等方法。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch76"><summary>第12章 安全——Spring Security</summary>
+<div class="sec">
+<h4>Spring Security简介</h4>
+<ul class="point">
+<li><b>Spring Security是一个能够为基于Spring生态圈，提供安全访问控制解决方案的框架。</b>
+</li>
+<li><b>Spring Security提供了一组可以在Spring应用上下文中配置的机制，充分利用了Spring的强大特性，为应用系统提供声明式的安全访问控制功能，减少了为企业系统安全控制编写大量重复代码的工作。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Security依赖的引入</h4>
+<ul class="point">
+<li><b>在Maven配置文件中引入对应的依赖，如代码清单12-1所示</b>
+<ul class="quote">
+<li>代码清单12-1：引入Spring Security依赖。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch77"><summary>12.1 概述和简单安全认证</summary>
+<div class="sec">
+<h4>Spring Security概述</h4>
+<ul class="point">
+<li><b>Spring Security是基于Servlet过滤器对请求进行拦截的</b>
+<ul class="quote">
+<li>Spring Security在进入到DispatcherServlet前就可以对Spring MVC的请求进行拦截。</li>
+</ul>
+</li>
+<li><b>Spring Security提供了过滤器DelegatingFilterProxy类给予开发者配置</b>
+<ul class="quote">
+<li>在传统的Web工程中，可以使用web.xml进行配置，但是因为Spring Boot推荐的是全注解的方式，所以这里不再介绍使用web.xml的方式。</li>
+<li>在传统的Spring全注解的方式下，只需要加入@EnableWebSecurity就可以驱动Spring Sercurity了。</li>
+<li>在Spring Boot中，只需配置了代码清单12-1所示的代码，它便会自动启动Spring Sercurity。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Security的原理</h4>
+<ul class="point">
+<li><b>Spring Security启动后，会创建一个名称为springSecurityFilterChain的Spring Bean</b>
+<ul class="quote">
+<li>它的类型为FilterChainProxy，事实上它也实现了Filter接口，只是它是一个特殊的拦截器。</li>
+</ul>
+</li>
+<li><b>FilterChainProxy对象上存在一个拦截器列表，列表上存在用户验证的拦截器、跨站点请求伪造等拦截器</b>
+<ul class="quote">
+<li>这样它就可以提供多种拦截功能。</li>
+</ul>
+</li>
+<li><b>Spring Security也实现了大部分常用的安全功能，并提供了相应的机制来简化开发者的工作</b>
+<ul class="quote">
+<li>大部分情况下并不需要自定义开发，使用它提供的机制即可。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Boot下的Spring Security配置</h4>
+<ul class="point">
+<li><b>在Spring Boot中，只要加入了代码清单12-1所示的代码，直接启动Spring Boot的应用也会启用Spring Security</b>
+<ul class="quote">
+<li>启动后可以看到如下打印随机生成密码的日志。</li>
+</ul>
+</li>
+<li><b>Spring Boot的自动配置机制，允许开发者很快速地修改用户名和密码</b>
+<ul class="quote">
+<li>例如，在application.properties文件中加入代码清单12-2所示的配置。</li>
+<li>有了安全配置的属性，即使没有加入@EnableWebSecurity，Spring Boot也会根据配置的项自动启动安全机制。</li>
+</ul>
+</li>
+<li><b>Spring Boot还支持代码清单12-3所列明的配置项</b>
+<ul class="quote">
+<li># Spring Security过滤器排序 spring.security.filter.order=-100。</li>
+<li># 安全过滤器责任链拦截的分发类型 spring.security.filter.dispatcher-types=async,error,request。</li>
+<li># 用户名，默认值为user spring.security.user.name=user。</li>
+<li># 用户密码 spring.security.user.password=。</li>
+<li># 用户角色 spring.security.user.roles=。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch78"><summary>12.2 使用WebSecurityConfigurerAdapter自定义</summary>
+<div class="sec">
+<h4>WebSecurityConfigurerAdapter简介</h4>
+<ul class="point">
+<li><b>Spring Security提供了SecurityConfigurer接口，通过它就能够实现对Spring Security的配置</b>
+<ul class="quote">
+<li>Spring对Web工程还提供了专门的接口WebSecurityConfigurer，并且在这个接口的定义上提供了一个抽象类WebSecurityConfigurer Adapter。</li>
+</ul>
+</li>
+<li><b>开发者通过继承WebSecurityConfigurerAdapter就能得到Spring Security默认的安全功能，也可以通过覆盖它提供的方法，来自定义自己的安全拦截方案</b>
+<ul class="quote">
+<li>WebSecurityConfigurerAdapter中默认存在的3个方法：configure(AuthenticationManagerBuilder auth)，configure(WebSecurity web)，configure(HttpSecurity http)。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>configure(AuthenticationManagerBuilder auth)方法</h4>
+<ul class="point">
+<li><b>用来配置用户签名服务，主要是user-details机制，你还可以给予用户赋予角色</b>
+<ul class="quote">
+<li>在默认的情况下Spring不会为你创建任何的用户和密码，也就是有登录页面而没有可登录的用户。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>configure(WebSecurity web)方法</h4>
+<ul class="point">
+<li><b>用来配置Filter链的内容，可以配置Filter链忽略哪些内容</b>
+<ul class="quote">
+<li>WebSecurityConfigurerAdapter提供的是空实现，也就是没有任何的配置。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>configure(HttpSecurity http)方法</h4>
+<ul class="point">
+<li><b>用来配置拦截保护的请求，比如什么请求放行，什么请求需要验证</b>
+<ul class="quote">
+<li>开发者可以通过覆盖这个方法来指定用户或者角色的访问权限。</li>
+<li>在WebSecurityConfigurerAdapter提供的验证方式下满足通过用户验证或者HTTP基本验证的任何请求，Spring Security都会放行。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch79"><summary>12.3 自定义用户服务信息</summary>
+<div class="sec">
+<h4>使用内存签名服务</h4>
+<ul class="point">
+<li><b>内存签名服务简单，适合于测试的快速环境搭建环境</b>
+<ul class="quote">
+<li>使用内存存储用户信息的管理器配置(InMemoryUserDetailsManagerConfigurer)。</li>
+<li>通过passwordEncoder方法，设置了密码编码器。</li>
+<li>withUser方法是注册用户名称，返回用户详情构造器(UserDetailsBuilder)对象，这样就能够去配置用户的信息了。</li>
+<li>password方法是设置密码，采用的是通过BCrypt加密方式加密后的密码字符串。</li>
+<li>roles方法赋予角色类型，将来就可以通过这个角色名称赋予权限了。</li>
+</ul>
+</li>
+<li><b>内存用户的使用方法</b>
+<ul class="quote">
+<li>使用and方法作为连接，有时候这样显得比较冗余，我们可以修改代码清单12-4中的configure方法，如代码清单12-5所示。</li>
+<li>表12-1介绍了UserDetailsBuilder方法的其他使用方法。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用数据库定义用户认证服务</h4>
+<ul class="point">
+<li><b>Spring Security提供了对数据库的查询方法来满足开发者的需要</b>
+<ul class="quote">
+<li>JdbcUserDetailsManagerConfigurer是一个Spring Security对于数据库配置的支持，并且它也提供了默认的SQL。</li>
+<li>既然涉及了数据库，就需要准备好数据库(MySQL)的表和数据。</li>
+</ul>
+</li>
+<li><b>密码编码器(Pbkdf2PasswordEncoder类)对象可以提高网站的安全性</b>
+<ul class="quote">
+<li>在application.properties中加入一个属性：system.user.password.secret=uvwxyz，这是一个阴匙，只有拿到这个阴匙才能通过加密算法对密码进行匹配。</li>
+<li>对代码清单12-7中的部分代码进行改造，如代码清单12-8所示。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用自定义用户认证服务</h4>
+<ul class="point">
+<li><b>如果Redis有缓存数据用户数据，那么就从Redis中读取，如果没有，则需要从数据库中查询用户信息</b>
+<ul class="quote">
+<li>假设系统已经提供UserRoleService的接口，通过它可以操作Redis和数据库。</li>
+</ul>
+</li>
+<li><b>实现UserDetailsService接口定义用户服务类</b>
+<ul class="quote">
+<li>这个类标注为@Service，这样Spring就能够自动地扫描它为Bean，然后通过自动注入了UserRoleService接口。</li>
+<li>覆盖接口的loadUserByUsername方法，在这个方法中先通过UserRoleService接口查询到用户和对应的角色信息，然后通过changeToUser方法把它转换为一个UserDetails接口的对象。</li>
+</ul>
+</li>
+<li><b>给认证服务注册这个UserDetailsServiceImpl</b>
+<ul class="quote">
+<li>因为UserDetailsServiceImpl被标注为@Service，所以会被Spring的上下文扫描装配为Bean。</li>
+<li>configure方法首先声明了密码编码器，这样就能够对密码进行加密和比较了，然后再通过userDetailsService方法注册用户服务实现类，同时绑定密码的编码器，这样就能够使用加密过后的密码了。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch80"><summary>12.4 限制请求</summary>
+<div class="sec">
+<h4>Spring Security配置请求路径访问权限</h4>
+<ul class="point">
+<li><b>使用Ant风格配置限定</b>
+<ul class="quote">
+<li>限定签名后的权限。</li>
+<li>限定特定路径的请求权限。</li>
+<li>其他路径允许签名后访问。</li>
+</ul>
+</li>
+<li><b>使用正则式规则配置限定</b>
+<ul class="quote">
+<li>采用正则式的方式给予请求路径的限定。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用Spring表达式配置访问权限</h4>
+<ul class="point">
+<li><b>Spring表达式设置权限</b>
+<ul class="quote">
+<li>使用Spring表达式限定只有角色ROLE_USER或者ROLE_ADMIN。</li>
+<li>设置访问权限给角色ROLE_ADMIN，要求是完整登录(非记住我登录)。</li>
+<li>限定&quot;/admin/welcome2&quot;访问权限给角色ROLE_ADMIN，允许不完整登录。</li>
+</ul>
+</li>
+<li><b>Spring Security中的Spring表达式方法</b>
+<ul class="quote">
+<li>hasRole：判断用户是否具有指定角色。</li>
+<li>hasAuthority：判断用户是否具有指定权限。</li>
+<li>isAuthenticated：判断用户是否已经通过认证。</li>
+<li>isFullyAuthenticated：判断用户是否已经通过完整认证。</li>
+<li>isRememberMe：判断用户是否使用了记住我功能。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>强制使用HTTPS</h4>
+<ul class="point">
+<li><b>使用安全渠道，限定为https请求</b>
+<ul class="quote">
+<li>对于Ant风格下的地址/admin/**就只能使用HTTPS协议进行请求了。</li>
+</ul>
+</li>
+<li><b>不使用HTTPS请求</b>
+<ul class="quote">
+<li>取消安全请求的机制，这样就可以使用普通的HTTP请求。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>防止跨站点请求伪造</h4>
+<ul class="point">
+<li><b>Spring Security提供了方案来处理CSRF过滤器</b>
+<ul class="quote">
+<li>默认的情况下，它会启用这个过滤器来防止CSRF攻击。</li>
+</ul>
+</li>
+<li><b>每次HTTP请求的表单(Form)就要求存在CSRF参数</b>
+<ul class="quote">
+<li>当访问表单的时候，Spring Security就生成CSRF参数，放入表单中。</li>
+<li>当提交表单到服务器时，就要求连同CSRF参数一并提交到服务器。</li>
+<li>Spring Security就会对CSRF参数进行判断，判断是否与其生成的保持一致。如果一致，它就不会认为该请求来自CSRF攻击；如果CSRF参数为空或者与服务器的不一致，它就认为这是一个来自CSRF的攻击而拒绝请求。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch81"><summary>12.5 用户认证功能</summary>
+<div class="sec">
+<h4>自定义登录页面</h4>
+<ul class="point">
+<li><b>通过覆盖WebSecurity ConfigurerAdapter的configure(HttpSecurity)方法，让登录页指向对应的请求路径和启用“记住我”(Remember Me)功能</b>
+<ul class="quote">
+<li>http.authorizeRequests().antMatchers(&quot;/admin/**&quot;).access(&quot;hasRole(&#x27;ADMIN&#x27;)&quot;).and().rememberMe().tokenValiditySeconds(86400).key(&quot;remember-me-key&quot;).and().httpBasic().and().authorizeRequests().antMatchers(&quot;/**&quot;).permitAll().and().formLogin().loginPage(&quot;/login/page&quot;).defaultSuccessUrl(&quot;/admin/welcome1&quot;);。</li>
+</ul>
+</li>
+<li><b>指定login/page所映射的路径，可以使用传统的控制器去映射，也可以使用新增的映射关系去完成</b>
+<ul class="quote">
+<li>WebConfig类实现了WebMvcConfigurer接口，并覆盖了addViewControllers方法。在方法里存在3个路径的配置，但这里只讨论注册的URL，即“/login/page”，它映射为“login.jsp”。</li>
+</ul>
+</li>
+<li><b>实现自定义登录页面和启用“记住我”功能</b>
+<ul class="quote">
+<li>登录页面中定义用户名且要求参数名称为username，密码为password，“记住我”为remember-me，且“记住我”是一个checkbox。</li>
+<li>Spring Boot中CRSF过滤器是会默认启动的，因此这里还会在请求表单中加入了对应的参数，这样就可以避免CSRF的攻击了。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>启用HTTP Basic认证</h4>
+<ul class="point">
+<li><b>使用代码修改HTTP Basic认证功能</b>
+<ul class="quote">
+<li>http.httpBasic().realmName(&quot;my-basic-name&quot;);。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>登出</h4>
+<ul class="point">
+<li><b>Spring Security会提供一个URL——“/logout”，只要使用HTTP的POST请求(注意，GET请求是不能退出的)了这个URL，Spring Security就会登出，并且清除Remember Me功能保存的相关信息</b>
+<ul class="quote">
+<li>有时候也想自定义请求退出的路径。如代码清单12-17将请求“/logout/page”映射为“logout_welcome.jsp”，作为登出后的欢迎页面。</li>
+<li>再回看代码清单12-17，它还将请求将“/logout”映射为“logout.jsp”，作为测试登出的页面。</li>
+</ul>
+</li>
+<li><b>为了使Spring Security的LogoutFilter能够拦截这个动作的请求，需要修改WebSecurityConfigurerAdapter的方法configure(HttpSecurity)</b>
+<ul class="quote">
+<li>在加粗代码中，定义了成功登出跳转的路径为“/welcome”，而登出的请求URL为“/logout/page”。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch82"><summary>第13章 学点Spring其他的技术</summary>
+<div class="sec">
+<h4>Spring Boot其他技术</h4>
+<ul class="point">
+<li><b>Spring Boot涉及的内容较多，还有一些常用但是比较烦琐的内容需要进行学习，如异步线程池、JMS消息、定时和WebSocket等。</b>
+</li>
+<li><b>虽然这些知识在实际的工作中对于企业而言还是相当实用的。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch83"><summary>13.1 异步线程池</summary>
+<div class="sec">
+<h4>异步线程池的定义和开启</h4>
+<ul class="point">
+<li><b>AsyncConfigurer接口定义了异步线程池和异常处理器</b>
+<ul class="quote">
+<li>getAsyncExecutor方法返回自定义线程池。</li>
+<li>getAsyncUncaughtExceptionHandler方法定义异常处理器。</li>
+</ul>
+</li>
+<li><b>使用@EnableAsync注解开启异步可用</b>
+<ul class="quote">
+<li>Spring会使用这个线程池作为其异步调用的线程。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>异步实例的开发</h4>
+<ul class="point">
+<li><b>实现AsyncConfigurer接口，自定义线程池</b>
+<ul class="quote">
+<li>定义线程池的核心线程数、最大线程数和线程队列最大线程数。</li>
+<li>初始化线程池。</li>
+</ul>
+</li>
+<li><b>使用@Async注解驱动Spring使用异步调用</b>
+<ul class="quote">
+<li>方法被标注@Async时，Spring就会通过这个线程池的空闲线程去运行该方法。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>异步调用的测试</h4>
+<ul class="point">
+<li><b>控制器中调用异步服务方法</b>
+<ul class="quote">
+<li>打印出当前线程的名称。</li>
+<li>调用异步服务方法。</li>
+</ul>
+</li>
+<li><b>通过日志验证异步调用</b>
+<ul class="quote">
+<li>控制器方法和异步方法是由不同的线程运行的。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch84"><summary>13.2 异步消息</summary>
+<div class="sec">
+<h4>JMS简介</h4>
+<ul class="point">
+<li><b>JMS按其规范分为点对点(Point-to-Point)和发布订阅(Publish/Subscribe)两种形式</b>
+<ul class="quote">
+<li>点对点就是将一个系统的消息发布到指定的另外一个系统。</li>
+<li>发布订阅模式是一个系统约定将消息发布到一个主题(Topic)中，然后各个系统就能够通过订阅这个主题，根据发送过来的信息处理对应的业务。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>ActiveMQ的使用</h4>
+<ul class="point">
+<li><b>ActiveMQ是Apache的一个开源项目，是一个Java消息服务(JMS)的实现</b>
+<ul class="quote">
+<li>首先在http://activemq.apache.org/download.html下载ActiveMQ，然后进入其bin目录下，如果是Linux平台则可以运行activemq.sh，如果是Windows系统，则根据是32位还是64位机选择对应的启动目录运行activemq.bat文件，即可启动ActiveMQ。</li>
+</ul>
+</li>
+<li><b>Spring Boot提供了对ActiveMQ的支持，通过配置文件可以方便地配置ActiveMQ</b>
+<ul class="quote">
+<li>为了能够支持ActiveMQ，首先配置Maven依赖，引入ActiveMQ的starter，这样便可以通过application.properties文件配置关于ActiveMQ的内容。</li>
+<li>有了这些依赖，就可以在application.properties文件中配置ActiveMQ的信息。</li>
+</ul>
+</li>
+<li><b>Spring Boot提供了基于注解的方式接收消息，简化了开发者的操作</b>
+<ul class="quote">
+<li>对于接收信息，Spring 4.1之后的版本提供注解@JmsListener进一步地简化了开发者的工作。</li>
+<li>使用@JmsListener注解，可以方便地监听消息队列，接收消息。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>RabbitMQ的使用</h4>
+<ul class="point">
+<li><b>RabbitMQ是AMQP协议的一个实现，是一种常用的消息队列中间件</b>
+<ul class="quote">
+<li>首先加入我们的Maven依赖，引入AMPQ的starter。</li>
+<li>接着我们需要配置RabbitMQ的信息，如服务器地址、端口、用户名、密码等。</li>
+</ul>
+</li>
+<li><b>Spring Boot提供了对RabbitMQ的支持，通过配置文件可以方便地配置RabbitMQ</b>
+<ul class="quote">
+<li>Spring Boot会依据配置的内容创建RabbitMQ的相关对象，如连接工厂、RabbitTemplate等。</li>
+<li>Spring Boot还提供了基于注解的方式发送和接收消息，简化了开发者的操作。</li>
+</ul>
+</li>
+<li><b>RabbitMQ支持消息确认机制，发送方可以监听消息是否被消费</b>
+<ul class="quote">
+<li>如果发送方设置了回调，当消费者得到消息时，它就会调用回调方法。</li>
+<li>如果消息被成功消费，回调方法中的ack参数为true，否则为false。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch85"><summary>13.3 定时任务</summary>
+<div class="sec">
+<h4>Spring中使用定时任务</h4>
+<ul class="point">
+<li><b>在配置文件中加入@EnableScheduling，就能够使用注解驱动定时任务的机制</b>
+<ul class="quote">
+<li>通过注解@Scheduled去配置如何定时。</li>
+</ul>
+</li>
+<li><b>使用@Async注解代表这需要使用异步线程执行</b>
+<ul class="quote">
+<li>关于它的使用可参考13.1节的内容。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>@Scheduled的配置项</h4>
+<ul class="point">
+<li><b>@Scheduled除了cron外都比较好理解，只有cron是可以通过表达式更为灵活地配置运行的方式</b>
+<ul class="quote">
+<li>cron有6～7个空格分隔的时间元素，按顺序依次是“秒 分 时 天 月 星期 年”。</li>
+<li>年是一个可以不配置的元素。</li>
+<li>天和星期会产生定义上的冲突，所以往往会以通配符?表示，它表示不指定值，而*则表示任意的月。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>cron表达式举例</h4>
+<ul class="point">
+<li><b>0 0 0 ? * WED 这个配置表示每个星期三中午0点整</b>
+<ul class="quote">
+<li>这个表达式需要注意的是其中的特殊字符，如?和*。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>定时机制例子</h4>
+<ul class="point">
+<li><b>Spring IoC容器初始化后，第一次延迟3秒，每隔1秒执行一次</b>
+<ul class="quote">
+<li>使用@Scheduled(initialDelay = 3000, fixedRate = 1000)注解。</li>
+</ul>
+</li>
+<li><b>11:00到11:59点每分钟执行一次</b>
+<ul class="quote">
+<li>使用@Scheduled(cron = &quot;0 * 11 * * ?&quot;)注解。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch86"><summary>13.4 WebSocket 应用</summary>
+<div class="sec">
+<h4>WebSocket应用概述</h4>
+<ul class="point">
+<li><b>WebSocket协议是基于TCP的一种新的网络协议，实现了浏览器与服务器全双工通信</b>
+<ul class="quote">
+<li>允许服务器主动发送信息给客户端，实现从客户端发送消息到服务器，服务器又可以转发消息到客户端。</li>
+</ul>
+</li>
+<li><b>Spring提供了良好的WebSocket开发支持</b>
+<ul class="quote">
+<li>很多浏览器已经实现了WebSocket协议，但是依旧存在着很多浏览器没有实现该协议，为了兼容那些没有实现该协议的浏览器，往往还需要通过STOMP协议来完成这些兼容。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>开发简易的WebSocket服务</h4>
+<ul class="point">
+<li><b>通过Spring创建Java配置文件，新建 Server EndpointExporter对象，定义WebSocket服务器的端点</b>
+<ul class="quote">
+<li>使用@ServerEndpoint定义一个端点服务类。</li>
+</ul>
+</li>
+<li><b>在服务器端点服务类中，定义WebSocket的打开、关闭、错误和发送消息的方法</b>
+<ul class="quote">
+<li>@OnOpen：标注客户端打开WebSocket服务端点调用方法。</li>
+<li>@OnClose：标注客户端关闭WebSocket服务端点调用方法。</li>
+<li>@OnMessage：标注客户端发送消息，WebSocket服务端点调用方法。</li>
+<li>@OnError：标注客户端请求WebSocket服务端点发生异常调用方法。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用STOMP</h4>
+<ul class="point">
+<li><b>在配置文件中加入注解@EnableWebSocketMessageBroker，启动WebSocket下的子协议STOMP</b>
+<ul class="quote">
+<li>实现Spring提供给接口WebSocketMessageBrokerConfigurer。</li>
+<li>覆盖AbstractWebSocketMessageBrokerConfigurer所定义的方法即可配置STOP的相关服务。</li>
+</ul>
+</li>
+<li><b>通过Spring Boot自动创建SimpMessagingTemplate对象，进行转发消息</b>
+<ul class="quote">
+<li>通过这个模板可以发送消息到特定的地址，甚至是限制给特定的用户发送消息。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Security用户认证</h4>
+<ul class="point">
+<li><b>定义3个可以登录的内存用户，通过Spring Security的配置</b>
+<ul class="quote">
+<li>密码加密器使用BCryptPasswordEncoder。</li>
+<li>加入三个内存用户，密码分别为加密后的&quot;p1&quot;,&quot;p2&quot;和&quot;p3&quot;。</li>
+<li>可以通过 passwordEncoder.encode(&quot;p1&quot;)这样获得加密后的密码。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>WebSocket客户端页面开发</h4>
+<ul class="point">
+<li><b>发送页面、接收页面、发送用户页面和接收用户页面</b>
+<ul class="quote">
+<li>发送页面对应于WebSocketController的send方法。</li>
+<li>接收页面对应于WebSocketController的receive方法。</li>
+<li>发送用户页面对应于WebSocketController的sendUser方法。</li>
+<li>接收用户页面对应于WebSocketController的receiveUser方法。</li>
+</ul>
+</li>
+<li><b>使用JavaScript API进行请求服务器端点，发送消息和关闭连接</b>
+<ul class="quote">
+<li>连接服务器端点，使用SockJS。</li>
+<li>发送消息到服务器端点，使用Stomp.over。</li>
+<li>关闭连接，使用stompClient.disconnect。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch87"><summary>第14章 Spring 5新框架——WebFlux</summary>
+<div class="sec">
+<h4>Spring WebFlux概述</h4>
+<ul class="point">
+<li><b>Spring WebFlux是Spring 5发布的新一代响应式的Web框架</b>
+<ul class="quote">
+<li>Spring Boot 2.x.x版本才能支持WebFlux的开发。</li>
+</ul>
+</li>
+<li><b>WebFlux适用于对并发数和响应速度要求高，不需要高数据一致性的互联网应用</b>
+<ul class="quote">
+<li>游戏、视频、新闻和广告的网站一般不会涉及账户和财产的问题，不需要很高的数据一致性，但是对于并发数和响应速度却十分在意。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>响应式编程基础概念</h4>
+<ul class="point">
+<li><b>响应式编程是一种处理异步数据流编程范式</b>
+<ul class="quote">
+<li>响应式编程可以更好地处理高并发和低延迟的场景。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>RxJava和Reactor</h4>
+<ul class="point">
+<li><b>RxJava和Reactor是响应式编程的实现方式</b>
+<ul class="quote">
+<li>Spring WebFlux默认使用Reactor作为实现方式。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch88"><summary>14.1 基础概念</summary>
+<div class="sec">
+<h4>响应式编程的宣言</h4>
+<ul class="point">
+<li><b>响应式编程的四大理念：灵敏的、可恢复的、可伸缩的、消息驱动的</b>
+<ul class="quote">
+<li>灵敏的：就是可以快速响应的，只要有任何可能，系统都应该能够尽可能快地做出响应。</li>
+<li>可恢复的：系统在运行中可能出现问题，但是能够有很强大的容错机制和修复机制保持响应性。</li>
+<li>可伸缩的：在任何负载下，响应式编程都可以根据自身压力变化，请求少时，通过减少资源释放服务器的压力，负载大时能够通过扩展算法和软硬件的方式扩展服务能力，以经济实惠的方式实现可伸缩性。</li>
+<li>消息驱动的：响应式编程存在异步消息机制，事件之间的协作是通过消息进行连接的。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Reactor模型</h4>
+<ul class="point">
+<li><b>Reactor模型是一种基于事件的模型，对于服务器线程而言，它也是一种异步的</b>
+<ul class="quote">
+<li>首先是Selector线程轮询到事件，然后通过路由找到处理器去运行对应的逻辑，处理器最后所返回的结果会转换为数据流。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring WebFlux的概述</h4>
+<ul class="point">
+<li><b>Spring WebFlux是新一代的Web响应式编程框架，它基于Servlet 3.1+的非阻塞规范，使用函数式的编程方式</b>
+<ul class="quote">
+<li>对于响应式编程而言分为Router Functions、Spring WebFlux和HTTP/Reactive Streams共3层。</li>
+<li>Router Functions：是一个路由分发层，根据请求的事件，决定采用什么类的什么方法处理客户端发送过来的事件请求。</li>
+<li>Spring-webflux：是一种控制层，主要处理业务逻辑前进行的封装和控制数据流返回格式等。</li>
+<li>HTTP/Reactive Streams：是将结果转换为数据流的过程。</li>
+</ul>
+</li>
+<li><b>Spring WebFlux需要的是能够支持Servlet 3.1+的容器，如Tomcat、Jetty和Undertow等</b>
+<ul class="quote">
+<li>在Java异步编程的领域，使用得最多的却是Netty，所以在Spring Boot对Spring WebFlux的starter中默认是依赖于Netty库的。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>WebHandler接口和运行流程</h4>
+<ul class="point">
+<li><b>Spring WebFlux使用的是WebHandler，它与DispatcherServlet有异曲同工之妙</b>
+<ul class="quote">
+<li>DispatcherHandler是WebHandler的核心，WebHandlerDecorator是一个装饰者，ResourceWebHandler是资源的管理器。</li>
+</ul>
+</li>
+<li><b>DispatcherHandler的handle方法源码，从HandlerMapping找到对应的处理器，通过反射运行处理器，处理结果的handleResult方法，通过它将结果转变为对应的数据流序列</b>
+<ul class="quote">
+<li>找到处理器后，就会通过invokeHandler方法运行处理器，在这个方法里也是找到合适的HandlerAdapter去运行处理器的。</li>
+<li>最后就到了处理结果的handleResult方法，通过它将结果转变为对应的数据流序列。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch89"><summary>14.2 通过Spring MVC方式开发WebFlux服务端</summary>
+<div class="sec">
+<h4>开发持久层</h4>
+<ul class="point">
+<li><b>定义用户POJO，并使用MongoDB作为数据源</b>
+<ul class="quote">
+<li>使用@Document注解标识为MongoDB文档。</li>
+<li>使用@Id注解定义文档的id。</li>
+<li>使用@Field注解定义在MongoDB中使用的属性名。</li>
+</ul>
+</li>
+<li><b>继承ReactiveMongoRepository接口，声明JPA接口</b>
+<ul class="quote">
+<li>接口声明需要扩展的是ReactiveMongoRepository。</li>
+<li>定义findByUserNameLikeAndNoteLike方法，使用用户名和备注进行模糊查询。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>开发服务层</h4>
+<ul class="point">
+<li><b>定义用户服务接口，并实现接口</b>
+<ul class="quote">
+<li>接口中定义了获取用户、新增用户、更新用户、删除用户和查询用户的方法。</li>
+<li>实现接口时，通过IoC容器注入UserRepository。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>开发控制层</h4>
+<ul class="point">
+<li><b>使用REST风格的控制器，并定义用户视图模型</b>
+<ul class="quote">
+<li>使用@RestController注解代表采用REST风格的控制器。</li>
+<li>定义UserVo对象，将性别枚举转换为code和name。</li>
+</ul>
+</li>
+<li><b>实现控制器中的方法，并进行类型转换</b>
+<ul class="quote">
+<li>getUser方法中，将User对象转换为UserVo对象。</li>
+<li>insertUser、updateUser和deleteUser方法中，同样将User对象转换为UserVo对象。</li>
+<li>findUsers方法中，将User对象转换为UserVo对象，并采用下拉式的获取方式。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>配置服务</h4>
+<ul class="point">
+<li><b>配置Spring Boot的配置文件，指定MongoDB的连接信息</b>
+<ul class="quote">
+<li>定义MongoDB服务器、用户名、密码、端口和数据库名称。</li>
+</ul>
+</li>
+<li><b>编写Spring Boot的启动文件，排除数据源的初始化，并启用响应式的MongoDB的JPA接口</b>
+<ul class="quote">
+<li>使用@SpringBootApplication注解定义扫描包。</li>
+<li>使用@EnableAutoConfiguration排除数据源的初始化。</li>
+<li>使用@EnableReactiveMongoRepositories注解驱动MongoDB的JPA接口。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>客户端开发——WebClient</h4>
+<ul class="point">
+<li><b>使用WebClient类请求后端的服务</b>
+<ul class="quote">
+<li>创建WebClient对象，并设置请求基础路径。</li>
+<li>定义POST请求，并发送请求。</li>
+<li>定义GET请求，并发送请求。</li>
+<li>定义PUT请求，并发送请求。</li>
+<li>定义DELETE请求，并发送请求。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch90"><summary>14.3 深入WebFlux服务端开发</summary>
+<div class="sec">
+<h4>WebFlux服务端开发概述</h4>
+<ul class="point">
+<li><b>WebFlux的组件与Spring MVC十分接近，可以实现接口WebFluxConfigurer进行配置</b>
+<ul class="quote">
+<li>WebFluxConfigurer是一个Java 8之后的接口，是一个拥有默认实现(default)方法的接口，所以实现接口并不需要全部覆盖其定义的方法，只需要覆盖对应的方法即可。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>类型转换器——Converter</h4>
+<ul class="point">
+<li><b>通过实现WebFluxConfigurer接口的addFormatters方法，可以自定义所需的一些组件</b>
+<ul class="quote">
+<li>在这个方法中，可以注册Converter和Formatter。</li>
+</ul>
+</li>
+<li><b>定义String --&gt; User类型转换器，可以将字符串按照约定的格式转换为用户类</b>
+<ul class="quote">
+<li>通过继承实现WebFluxConfigurer接口，覆盖对应的方法，来自定义所需的一些组件。</li>
+<li>最为简单的方法是删除addFormatters方法，而将转换器定义为一个Spring Bean，Spring Boot就会自动识别这个Bean为转换器，而无须再自行进行注册。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>验证器——Validator</h4>
+<ul class="point">
+<li><b>使用Spring MVC的Validator机制，可以定义用户验证器UserValidator</b>
+<ul class="quote">
+<li>UserValidator实现了Validator接口，并覆盖了supports和validate方法。</li>
+</ul>
+</li>
+<li><b>可以通过覆盖WebFluxConfigurer接口的getValidator方法，从而加入用户验证器</b>
+<ul class="quote">
+<li>这里创建一个验证器，不能是多个，而这个验证器是全局性的，为各个控制器所共享。</li>
+</ul>
+</li>
+<li><b>使用注解@InitBinder，可以将类和验证器进行绑定，实现局部验证器</b>
+<ul class="quote">
+<li>这样UserValidator就只是对当前的控制器有效，而不是全局有效。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>访问静态资源</h4>
+<ul class="point">
+<li><b>覆盖WebFluxConfigurer的addResourceHandlers方法，可以设置静态资源</b>
+<ul class="quote">
+<li>通过这样的限定，就可以直接通过URI来访问/resources/static/下的静态资源。</li>
+<li>在Spring的上下文机制中还可以直接访问/public路径，它将能够访问classpath:/static/下的资源。</li>
+<li>这里还设置了缓存的时限，设定为一年(365天)。</li>
+</ul>
+</li>
+<li><b>可以在application.properties文件中进行配置，区分静态资源设置一个前缀</b>
+<ul class="quote">
+<li>这样在访问静态资源的时候就需要加入/static/前缀了。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch91"><summary>14.4 深入客户端开发</summary>
+<div class="sec">
+<h4>处理服务端错误和转换</h4>
+<ul class="point">
+<li><b>使用客户端处理服务端的错误</b>
+<ul class="quote">
+<li>通过onStatus方法监控服务器返回的状态码，并进行错误处理。</li>
+<li>如果发生异常，则用第二个Lambda表达式返回作为结果。</li>
+</ul>
+</li>
+<li><b>使用自定义转换规则</b>
+<ul class="quote">
+<li>在代码清单14-21中加入map方法进行转换。</li>
+<li>使用exchange方法代替retrieve方法，允许自定义转换。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>设置请求头</h4>
+<ul class="point">
+<li><b>服务端通过@RequestHeader获取参数</b>
+<ul class="quote">
+<li>在服务端方法中，使用@RequestHeader从请求头中获取参数。</li>
+<li>如果查询不到用户，则抛出异常，否则就更新用户信息。</li>
+</ul>
+</li>
+<li><b>使用WebClient设置请求头</b>
+<ul class="quote">
+<li>使用header方法设置用户编号(id)和用户名(userName)。</li>
+<li>通过这样就可以请求到代码清单14-24所示的方法。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch92"><summary>14.5 使用路由函数方式开发WebFlux</summary>
+<div class="sec">
+<h4>使用路由函数方式开发WebFlux</h4>
+<ul class="point">
+<li><b>Spring WebFlux提供了路由函数开发方式来开发WebFlux，体现了高并发的特性，也符合函数式编程的潮流</b>
+<ul class="quote">
+<li>使用路由函数方式开发WebFlux会引入更多的API和长长的方法链，使得可读性和可维护性变差。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>开发处理器</h4>
+<ul class="point">
+<li><b>开发一个处理器用来处理各种场景，包括getUser、insertUser、updateUser、deleteUser、findUsers和updateUserName等方法</b>
+<ul class="quote">
+<li>getUser方法通过ServerRequest的pathVariable方法获取在URI上的参数，然后将其转换为长整型(Long)参数，通过JPA接口(UserRepository)去获取用户信息，最后通过ServerResponse进行应答。</li>
+<li>insertUser方法通过ServerRequest的bodyToMono把请求体转变为User对象，然后使用了一个很重要的方法——cache，否则程序就会在等待数据的接收，不会往下一步走，通过这个方法就能够将这个流对象缓存起来。flatMap方法中使用了userRepository的save方法保存对象，最后再通过translate方法转换为UserVo类型。</li>
+<li>updateUser方法与insertUser方法的实现类似，都是通过flatMap方法保存对象，最后再通过translate方法转换为UserVo类型。</li>
+<li>deleteUser方法与getUser方法也是接近的，只是返回的是Mono&lt;Void&gt;，没有其他特别之处。</li>
+<li>findUsers方法可能查询到零到多个对象，所以会使用Flux进行封装数据流序列。</li>
+<li>updateUserName方法将会从请求头中获取参数，然后再进行业务处理。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>开发请求路由</h4>
+<ul class="point">
+<li><b>为了使HTTP请求能够映射到方法上，需要开发路由器，使得请求能够映射到路由的方法上</b>
+<ul class="quote">
+<li>通过@Autowired注入了用户处理器(UserHandler)，这样就能够使用这个处理器。</li>
+<li>在userRouter方法中，使用静态导入的router方法定义了用户处理器的gerUser方法与“/user/{id}”对应起来，并且通过静态导入的GET方法设置这是一个HTTP GET方法，通过accept方法设置请求响应为JSON数据流。</li>
+<li>对于insertUser、updateUser、updateUserName和deleteUser方法都是与此类似的，这里就不再一一论述。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用过滤器</h4>
+<ul class="point">
+<li><b>为了保护业务请求，可以采用过滤器的方式拦截请求，通过验证身份后才处理业务逻辑</b>
+<ul class="quote">
+<li>先看到代码中的securityRouter方法，它与之前所定义的路由方式并无太大的不同，只是添加了flter方法，这个方法又指向了filterLogic方法。</li>
+<li>这个方法的参数是一个ServerRequest，另一个是HandlerFunction，方法的逻辑则是取出请求头中的用户名和密码，然后做了自己的逻辑判断。如果验证通过，则返回next.handle(request)代表接受请求，然后就路由到了处理器中；如果验证没有通过，则使用ServerResponse将响应状态设置为未签名(UNAUTHORIZED)返回给请求者，这样请求就被拒绝了。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch93"><summary>第15章 实践一下——抢购商品</summary>
+<div class="sec">
+<h4>Spring Boot抢购商品实践</h4>
+<ul class="point">
+<li><b>通过抢购商品的实践来回顾之前内容，阐述高并发与锁的问题</b>
+<ul class="quote">
+<li>电商网站抢购的场景，电商网站往往存在很多的商品，有些商品会以低价限量推销，并且会在推销之前做广告以吸引网站会员购买。</li>
+<li>如果是十分热销的商品，就会有大量的会员等待在商品推出的那一刻，打开手机、电脑和平板电脑点击抢购，这个瞬间就会给网站带来很大的并发量，这便是一个高并发的场景，处理这些并发是互联网常见的场景之一。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>高并发问题</h4>
+<ul class="point">
+<li><b>高并发是互联网常见的场景之一，处理这些并发是必要的</b>
+<ul class="quote">
+<li>电商网站抢购的场景中，大量的会员等待在商品推出的那一刻，打开手机、电脑和平板电脑点击抢购，这个瞬间就会给网站带来很大的并发量。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>持久层MyBatis实践</h4>
+<ul class="point">
+<li><b>使用MyBatis作为实践的持久层</b>
+<ul class="quote">
+<li>持久层MyBatis已经成为当今互联网持久层的主流框架。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch94"><summary>15.1 设计与开发</summary>
+<div class="sec">
+<h4>数据库表设计</h4>
+<ul class="point">
+<li><b>创建两张数据库表：产品信息表和购买信息表</b>
+<ul class="quote">
+<li>产品信息表包含id、product_name、stock、price、version、note字段。</li>
+<li>购买信息表包含id、user_id、product_id、price、quantity、sum、purchase_date、note字段。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用MyBatis开发持久层</h4>
+<ul class="point">
+<li><b>创建两个POJO：ProductPo和PurchaseRecordPo</b>
+<ul class="quote">
+<li>ProductPo包含id、productName、stock、price、version、note字段。</li>
+<li>PurchaseRecordPo包含id、userId、productId、price、quantity、sum、purchaseTime、note字段。</li>
+</ul>
+</li>
+<li><b>创建映射文件：Product.xml和PurchaseRecord.xml</b>
+<ul class="quote">
+<li>Product.xml包含获取产品和减库存的SQL。</li>
+<li>PurchaseRecord.xml包含插入购买记录的SQL。</li>
+</ul>
+</li>
+<li><b>创建接口：ProductDao和PurchaseRecordDao</b>
+<ul class="quote">
+<li>ProductDao包含getProduct和decreaseProduct方法。</li>
+<li>PurchaseRecordDao包含insertPurchaseRecord方法。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用Spring开发业务层和控制层</h4>
+<ul class="point">
+<li><b>创建业务层接口：PurchaseService</b>
+<ul class="quote">
+<li>PurchaseService包含purchase方法。</li>
+</ul>
+</li>
+<li><b>创建业务层实现类：PurchaseServiceImpl</b>
+<ul class="quote">
+<li>PurchaseServiceImpl实现了purchase方法，并处理了数据库事务。</li>
+</ul>
+</li>
+<li><b>创建控制器：PurchaseController</b>
+<ul class="quote">
+<li>PurchaseController包含testPage和purchase方法。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>测试和配置</h4>
+<ul class="point">
+<li><b>使用Ajax方式测试控制器</b>
+<ul class="quote">
+<li>在test.jsp中编写JavaScript脚本，通过POST请求后端进行测试。</li>
+</ul>
+</li>
+<li><b>配置开发环境</b>
+<ul class="quote">
+<li>配置数据库连接、MyBatis和视图解析器。</li>
+</ul>
+</li>
+<li><b>配置Spring Boot启动文件</b>
+<ul class="quote">
+<li>定义扫描包和MyBatis的整合。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch95"><summary>15.2 高并发开发</summary>
+<div class="sec">
+<h4>高并发开发中的超发现象</h4>
+<ul class="point">
+<li><b>高并发环境下，系统出现了超发的现象，即原有的产品发放了超过库存数量的商品</b>
+<ul class="quote">
+<li>在多线程环境中可能出现如表15-1所示的场景。</li>
+<li>在线程1和线程2开始阶段都同时读入库存为1，但是在T3时刻线程1扣减库存后商品就没有库存了，线程2此时并不会感知线程1的这个操作，而是继续按自己原有的判断，按照库存为1进行扣减库存，这样就出现了T4时刻库存为−1，而T6时刻错误记录的超发场景。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>悲观锁处理高并发超发的问题</h4>
+<ul class="point">
+<li><b>悲观锁是使用数据库内部的锁对记录进行加锁，从而使得其他事务等待以保证数据的一致</b>
+<ul class="quote">
+<li>在数据库事务执行的过程中，就会锁定查询出来的数据，其他的事务将不能再对其进行读写，这样就避免了数据的不一致。</li>
+<li>单个请求直至数据库事务完成，才会释放这个锁，其他的请求才能重新得到这个锁。</li>
+</ul>
+</li>
+<li><b>悲观锁会造成过多的等待和事务上下文的切换导致缓慢</b>
+<ul class="quote">
+<li>当开启一个事务执行for update语句时，数据库就会给这条记录加入锁，让其他的事务等待，直至事务结束才会释放锁。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>乐观锁处理高并发超发的问题</h4>
+<ul class="point">
+<li><b>乐观锁是一种不使用数据库锁和不阻塞线程并发的方案</b>
+<ul class="quote">
+<li>以本章的商品购买为例来说，就是一个线程一开始先读取既有的商品库存数据，保存起来，我们把这些旧数据称为旧值，然后去执行一定的业务逻辑，等到需要对共享数据做修改时，会事先将保存的旧值库存与当前数据库的库存进行比较，如果旧值与当前库存一致，它就认为数据没有被修改过，否则就认为数据已经被修改过，当前计算将不被信任，所以就不再修改任何数据。</li>
+</ul>
+</li>
+<li><b>乐观锁会引发一种ABA问题</b>
+<ul class="quote">
+<li>在T2到T5时刻，线程1计算商品总价格的时候，当前库存会被线程2所修改，它是一个A→B→A的过程，所以人们比较形象地称之为“ABA问题”。</li>
+<li>为了克服这个问题，一些开发者引入了一些规则，典型的如增加版本号(version)，并且规定：只要操作过程中修改共享值，无论是业务正常、回退还是异常，版本号(version)只能递增，不能递减。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用Redis处理高并发</h4>
+<ul class="point">
+<li><b>Redis的机制也能够帮助我们克服超发现象，但是，因为其命令方式运算能力比较薄弱，所以往往采用Redis Lua去代替它原有的命令方式</b>
+<ul class="quote">
+<li>Redis Lua在Redis的执行中是具备原子性的，当它被执行时不会被其他客户端发送过来的命令打断，通过这样一种机制可以在需要高并发的环境下考虑使用Redis去代替数据库作为响应用户的数据载体。</li>
+</ul>
+</li>
+<li><b>因为Redis的存储不稳定，所以需要及时地将数据保存到数据库中</b>
+<ul class="quote">
+<li>这里将会启用定时任务去查找Redis保存的购买信息，将它们保存到数据库中。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch96"><summary>第16章 部署、测试和监控</summary>
+<div class="sec">
+<h4>Spring Boot项目的部署</h4>
+<ul class="point">
+<li><b>使用Maven进行部署</b>
+<ul class="quote">
+<li>Maven构建以pom.xml文件为基础。</li>
+<li>Maven可以构建和部署Spring Boot项目。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Boot项目的测试</h4>
+<ul class="point">
+<li><b>基于JUnit进行测试</b>
+<ul class="quote">
+<li>JUnit是Java中常用的单元测试框架。</li>
+<li>Spring Boot项目可以使用JUnit进行测试。</li>
+</ul>
+</li>
+<li><b>使用Mockito进行测试</b>
+<ul class="quote">
+<li>Mockito可以模拟测试中的HTTP环境。</li>
+<li>使用Mockito可以消除环境带来的测试困难。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Boot项目的监控</h4>
+<ul class="point">
+<li><b>使用Actuator进行监控</b>
+<ul class="quote">
+<li>Actuator是Spring Boot提供的用于监控运行状态的工具。</li>
+<li>通过Actuator可以监控运行的状态和一些简单的管理。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch97"><summary>16.1 部署和运行</summary>
+<div class="sec">
+<h4>打包项目</h4>
+<ul class="point">
+<li><b>使用IDE打包，以Eclipse为例</b>
+<ul class="quote">
+<li>IDE会帮助生成关于Web应用所需要的目录，例如，放置JSP页面的webapp目录。</li>
+<li>在pom.xml中添加一些内容，指定打包为war包。</li>
+</ul>
+</li>
+<li><b>使用命令打包</b>
+<ul class="quote">
+<li>进入工程项目的文件夹，然后使用命令mvm package。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>运行项目</h4>
+<ul class="point">
+<li><b>使用java -jar命令直接运行</b>
+<ul class="quote">
+<li>Spring Boot会使用内嵌的服务器运行这个war包。</li>
+</ul>
+</li>
+<li><b>使用命令指定参数</b>
+<ul class="quote">
+<li>运行的时候发现8080端口被其他应用占用，此时希望使用的是9080端口，于是可以把运行的命令修改为：java -jar spring-0.0.1-SNAPSHOT.war --server.port=9080。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>热部署</h4>
+<ul class="point">
+<li><b>导入spring-boot-devtools引入热部署。</b>
+</li>
+<li><b>热部署配置项</b>
+<ul class="quote">
+<li>spring.devtools.livereload.enabled=true，是否启用一个livereload.com 兼容的服务器。</li>
+<li>spring.devtools.livereload.port=35729，端口livereload.com服务器端口。</li>
+<li>spring.devtools.restart.additional-exclude=，在原来的基础上新增不重启服务的文件夹目录。</li>
+<li>spring.devtools.restart.additional-paths=，在原来的基础上新增重启服务的文件夹目录。</li>
+<li>spring.devtools.restart.enabled=true，是否启用自动重启功能。</li>
+<li>spring.devtools.restart.exclude=META-INF/maven/**,META-INF/resources/**,resources/**,static/**,public/**,templates/**,**/*Test.class,**/*Tests.class,git.properties，不重启服务的文件夹配置。</li>
+<li>spring.devtools.restart.poll-interval=1000，设置对路径变化进行监测的时间间隔(以毫秒为单位)。</li>
+<li>spring.devtools.restart.quiet-period=400，在没有改变任何classpath的情况下，在重启被触发前的静默时长(以毫秒计)。</li>
+<li>spring.devtools.restart.trigger-file=，设置触发文件，当需要实际触发重启检查时，则需要修改这个文件。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch98"><summary>16.2 测试</summary>
+<div class="sec">
+<h4>Spring Boot测试框架</h4>
+<ul class="point">
+<li><b>Spring Boot提供了JUnit的测试包</b>
+<ul class="quote">
+<li>spring-boot-starter-test会引入JUnit的测试包。</li>
+</ul>
+</li>
+<li><b>Spring Boot可以支持多种方面的测试，如JPA、MongoDB、REST风格和Redis等</b>
+<ul class="quote">
+<li>基于实用原则，这里主要讲解测试业务层类、REST风格和Mock测试。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>构建测试类</h4>
+<ul class="point">
+<li><b>IDE会同时构建测试环境</b>
+<ul class="quote">
+<li>创建Spring Boot项目的时候，IDE会同时构建测试环境。</li>
+</ul>
+</li>
+<li><b>可以使用@RunWith和@SpringBootTest注解构建测试类</b>
+<ul class="quote">
+<li>注解@RunWith所载入的类SpringRunner是Spring结合JUnit的运行器。</li>
+<li>注解@SpringBootTest是可以配置Spring Boot的关于测试的相关功能。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用随机端口和REST风格测试</h4>
+<ul class="point">
+<li><b>在Spring Boot中提供了随机端口的机制</b>
+<ul class="quote">
+<li>使用@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)注解配置随机端口启动。</li>
+</ul>
+</li>
+<li><b>可以使用REST测试模板(TestRestTemplate)进行测试</b>
+<ul class="quote">
+<li>TestRestTemplate是由Spring Boot的机制自动生成的。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Mock测试</h4>
+<ul class="point">
+<li><b>Mock测试是在测试过程中，对于某些不容易构造或者不容易获取的对象，用一个虚拟的对象来创建以便测试的测试方法</b>
+<ul class="quote">
+<li>如果产品服务接口(ProductService)的getProduct方法当前无法调度产品微服务，那么Mock测试就可以给一个虚拟的产品，让当前测试能够继续。</li>
+</ul>
+</li>
+<li><b>可以使用@MockBean注解对Spring Bean使用Mock测试</b>
+<ul class="quote">
+<li>在测试方法中，先是构建虚拟对象，因为按假设ProductService并不能提供服务，所以就只能先模拟产品(mockProduct)。</li>
+<li>使用Spring Boot引入的Mockito来指定Mock Bean、方法和参数，并指定返回的虚拟对象。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch99"><summary>16.3 Actuator监控端点</summary>
+<div class="sec">
+<h4>Spring Boot监控功能</h4>
+<ul class="point">
+<li><b>Spring Boot提供了对项目的监控功能</b>
+<ul class="quote">
+<li>首先需要引入监控的包，如代码清单16-10所示。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Actuator提供的端点</h4>
+<ul class="point">
+<li><b>Actuator提供了多种监控手段，包括HTTP和JMX等</b>
+<ul class="quote">
+<li>Spring Boot中为这些端点提供了多种监控手段，包括HTTP和JMX等。本书会详细讨论最常用的HTTP的方式，而对JMX的方式只会做简单的讨论。</li>
+</ul>
+</li>
+<li><b>表16-1列出了Actuator端点说明</b>
+<ul class="quote">
+<li>端点包括：health、info、beans、mappings、shutdown、metrics、trace等。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>HTTP监控端点</h4>
+<ul class="point">
+<li><b>HTTP的方式是最常用的监控方式</b>
+<ul class="quote">
+<li>Spring Boot中，HTTP监控端点默认是关闭的，需要手动开启。</li>
+<li>开启HTTP监控端点，只需要在application.properties文件中添加以下配置：management.endpoints.web.exposure.include=*。</li>
+<li>开启HTTP监控端点后，就可以通过HTTP请求访问这些端点了。</li>
+</ul>
+</li>
+<li><b>可以通过HTTP请求访问Actuator端点</b>
+<ul class="quote">
+<li>例如，可以通过访问http://localhost:8080/actuator/health来查看应用的健康状态。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch100"><summary>16.4 HTTP监控</summary>
+<div class="sec">
+<h4>HTTP监控</h4>
+<ul class="point">
+<li><b>Spring Boot默认会暴露info和health这两个端点</b>
+<ul class="quote">
+<li>在默认情况下，Spring Boot端点的前缀是“/actuator/”。</li>
+</ul>
+</li>
+<li><b>可以通过配置application.properties文件来暴露其他端点</b>
+<ul class="quote">
+<li>让Actuator暴露端点，可以在application.properties文件中配置management.endpoints.web.exposure.include=info,health,beans。</li>
+<li>如果需要访问除env端点以外的所有的端点，可以在application.properties文件中做如下配置：management.endpoints.web.exposure.include=*，management.endpoints.web.exposure.exclude=env。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>查看敏感信息</h4>
+<ul class="point">
+<li><b>默认情况下，Actuator对敏感信息是除了health和info端点，其余端点都是不暴露的</b>
+<ul class="quote">
+<li>虽然前面通过配置application.properties这样的方式可以进行访问，但是这样的方式从安全的角度来说是非常不利的。</li>
+</ul>
+</li>
+<li><b>使用Spring Security配置用户和角色，来解决这些敏感信息的访问权限问题</b>
+<ul class="quote">
+<li>先引入spring-boot-starter-security，然后配置用户和角色。</li>
+<li>有了用户还需要设置权限。这里看到configure(HttpSecurity)方法，它首先定义了一个端点的数组，这些是敏感信息的端点，需要验证才可以访问。这里使用requestMatcher方法进行匹配请求，而EndpointRequest.to(....)方法是指定对应的端点，后续的hasRole是限定角色访问权限。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>shutdown端点</h4>
+<ul class="point">
+<li><b>默认的情况下，Actuator并不会给开发者启动shutdown端点</b>
+<ul class="quote">
+<li>因为请求它是危险的，从名称就可以知道，请求它将关闭服务，这就是Actuator在默认的情况下不提供它的原因。</li>
+</ul>
+</li>
+<li><b>为了启用它，需要开发者在application.properties中添加配置项</b>
+<ul class="quote">
+<li># 配置视图解析器 spring.mvc.view.prefix=/WEB-INF/jsp/ spring.mvc.view.suffix=.jsp。</li>
+<li># 启用shutdown端点 management.endpoint.shutdown.enabled=true。</li>
+<li># 暴露端点 management.endpoints.web.exposure.include=*。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>配置端点</h4>
+<ul class="point">
+<li><b>可以通过Spring Boot的配置文件来修改Actuator端点原有的配置</b>
+<ul class="quote">
+<li>管理的服务器做了新的配置，设置端口为8000，并且通过配置属性management.endpoints. web.base-path=/manage将请求前缀设置为“/manage”。</li>
+<li>配置属性management.endpoints.enabled-by-default=false，其意义是不启用所有的端点，这样就不能对任何端点进行请求了。为了使开发者能够启用端点，这里还按下列格式对需要启用的端点进行了配置：management.endpoint&lt;endpointId&gt;.enabled=true。</li>
+<li>配置项management.endpoints.web.path-mapping.mappings=request_mappings是将原有mappings端点的请求路径从mappings修改为request_mappings。</li>
+<li>配置项management.endpoints.web.path-mapping.env=/prj/env是将原来的端点env的请求路径修改为/prj/env。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>自定义端点</h4>
+<ul class="point">
+<li><b>在Actuator中加入端点只需要加入注解@Endpoint即可</b>
+<ul class="quote">
+<li>如果只想提供JMX监控，可以使用注解@JmxEndpoint；如果只想提供Web监控，可以使用注解@WebEndpoint。</li>
+<li>正如上述内容所示，Actuator还会存在默认的端点，也可以使用@WebEndpointExtension或者@EndpointJmxExtension对已有的端点进行扩展。</li>
+</ul>
+</li>
+<li><b>自定义端点可以监测数据库是否能够连接得上</b>
+<ul class="quote">
+<li>这里我们需要一个独立的端点，如代码清单16-15所示。</li>
+<li>注意加粗的两个注解。其中，@Endpoint代表该类声明为Actuator的端点，其中它的id属性是配置自定义端点的id，而enableByDefault是是否在默认情况下启用端点；@ReadOperation是一个读操作，在同一个端点下只能有一个@ReadOperation标注的方法，否则Spring就会抛出异常。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>健康指标项</h4>
+<ul class="point">
+<li><b>Actuator会对监控提供一些常用的指标项</b>
+<ul class="quote">
+<li>表16-2所示的健康指标是Actuator会根据开发者配置的项目进行自动开启的。</li>
+</ul>
+</li>
+<li><b>可以通过配置management.endpoint.health.show-details来展示所有的健康指标</b>
+<ul class="quote">
+<li># never— —从不展示健康项。</li>
+<li># when-authorized — —签名认证之后展示。</li>
+<li># always — — 每次都展示。</li>
+</ul>
+</li>
+<li><b>有时候可以先禁止全部健康指标的监测，再只开放自己感兴趣的健康指标的监测</b>
+<ul class="quote">
+<li>例如，配置management.health.defaults.enabled=false，management.health.db.enabled=true，就会先禁止所有的健康指标的监测，然后根据后续的配置，只开启数据库的健康指标监测。</li>
+</ul>
+</li>
+<li><b>开发者可以自定义健康指标</b>
+<ul class="quote">
+<li>例如，我们现在需要监测服务器是否可以访问万维网(World Wide Web，WWW)，为了实现这样的功能有必要先了解Actuator中健康指标的设计。</li>
+<li>这里不谈CompositeHealthIndicator，因为它是一个组合指标器，现实中使用得不多。Abstract HealthIndicator则使用万维网健康指标器WwwHealthIndicator进行监测。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch101"><summary>16.5 JMX监控</summary>
+<div class="sec">
+<h4>JMX监控Spring Boot应用</h4>
+<ul class="point">
+<li><b>通过Java管理扩展(Java Management Extensions，JMX)来监控JVM的状况</b>
+<ul class="quote">
+<li>进入JAVA_HOME目录，然后进入其bin目录，运行jconsole.exe。</li>
+<li>在运行Spring Boot的应用后再运行jconsole.exe，选择Spring Boot的应用程序，点击“连接”就能够连接到Spring Boot运行的环境，从而监控JVM的运行状态。</li>
+</ul>
+</li>
+<li><b>使用jconsole监控Spring Boot应用</b>
+<ul class="quote">
+<li>选中MBean选项卡，可以看到关于Spring Boot的菜单org.springframework.boot，点击最下面的health操作菜单，就可以看到Spring Boot应用的运行状态。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch102"><summary>第17章 分布式开发——Spring Cloud</summary>
+<div class="sec">
+<h4>Spring Cloud简介</h4>
+<ul class="point">
+<li><b>Spring Cloud是一套组件，可以细分为多种组件，如服务发现、配置中心、消息总线、负载均衡、断路器和数据监控等。</b>
+</li>
+<li><b>Spring Cloud为开发者提供了一套简单易懂、易部署和维护的分布式系统开发包</b>
+<ul class="quote">
+<li>Spring Cloud并不是自己独自造轮子，而是将目前各家公司已经开发好的、经过实践考验较为成熟的技术组合起来，并且通过Spring Boot风格进行再次封装。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>服务治理和服务发现</h4>
+<ul class="point">
+<li><b>Spring Cloud中使用Netflix Eureka作为服务治理的，通过服务注册将单个微服务节点注册给服务治理中心</b>
+<ul class="quote">
+<li>服务发现则是微服务节点可以对服务治理中心发送消息，使得服务治理中心可以将新的微服务节点纳入管理。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>客户端负载均衡</h4>
+<ul class="point">
+<li><b>Spring Cloud提供了Ribbon来实现客户端负载均衡</b>
+<ul class="quote">
+<li>当一个微服务(服务消费者)调用另外一个微服务(服务提供者)时，服务提供者需要负载均衡算法提供一个节点进行响应。</li>
+<li>使用3台服务节点后，通过负载均衡的算法使得每个节点能够比较平均地分摊请求，这样每个点服务只是需要处理1万笔请求，这样就可以分摊服务的压力，及时响应。</li>
+<li>在服务的过程中，可能出现某个节点故障的风险，通过均衡负载的算法就可以将故障节点排除，使后续请求分散到其他可用节点上，这就体现了Spring Cloud的高可用。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>声明服务调用</h4>
+<ul class="point">
+<li><b>Spring Cloud提供了接口式的声明服务调用编程，它就是Feign</b>
+<ul class="quote">
+<li>通过它请求其他微服务时，就如同调度本地服务的Java接口一样，从而在多次调用的情况下可以简化开发者的编程，提高代码的可读性。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>断路器</h4>
+<ul class="point">
+<li><b>Spring Cloud引入了Netflix的开源框架Hystrix来处理这些问题</b>
+<ul class="quote">
+<li>当服务提供者响应延迟或者故障时，就会使得服务消费者长期得不到响应，Hystrix就会对这些延迟或者故障的服务进行处理。</li>
+<li>当服务消费者长期得不到服务提供者响应时，就可以进行降级、服务断路、线程和信号隔离、请求缓存或者合并等处理。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>API网关</h4>
+<ul class="point">
+<li><b>Spring Cloud中API网关是Zuul</b>
+<ul class="quote">
+<li>对于网关而言，存在两个作用：第一个作用是将请求的地址映射为真实服务器的地址，第二个作用是过滤服务。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Cloud在电商项目中的应用</h4>
+<ul class="point">
+<li><b>将产品和用户这两个服务注册给服务治理中心，让服务治理中心能够管理它们</b>
+<ul class="quote">
+<li>每一个服务包括服务治理中心都存在两个节点，这样在请求量大的时候服务就可以由两个节点共同承担，有效降低每一个节点的负载。</li>
+<li>如果其中的一个节点因为某种原因发生故障，那么就可以由服务的另一个节点承担功能提供。</li>
+</ul>
+</li>
+<li><b>Spring Cloud提供了Ribbon和Feign给开发者使用</b>
+<ul class="quote">
+<li>Ribbon用于实现客户端负载均衡。</li>
+<li>Feign用于声明服务调用，简化多次调用的复杂度。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch103"><summary>17.1 服务治理和服务发现——Eureka</summary>
+<div class="sec">
+<h4>配置服务治理节点</h4>
+<ul class="point">
+<li><b>使用Spring Cloud的Eureka作为服务治理服务器</b>
+<ul class="quote">
+<li>通过Maven引入对应的jar包。</li>
+<li>在Spring Boot的启动文件上加入注解@EnableEurekaServer。</li>
+</ul>
+</li>
+<li><b>配置Eureka模块的基本内容</b>
+<ul class="quote">
+<li>属性spring.application.name配置为server。</li>
+<li>属性eureka.client.register-with-eureka配置为false。</li>
+<li>属性eureka.client.fetch-registry配置为false。</li>
+<li>属性eureka.client.serviceUrl.defaultZone代表服务中心的域。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>服务发现</h4>
+<ul class="point">
+<li><b>新建一个Spring Boot的工程，引入服务发现相关的包</b>
+<ul class="quote">
+<li>修改Spring Boot的启动文件，在Spring Cloud旧版本中启用发现服务的注解@EnableDiscoveryClient，但是在新版本中只需要依赖spring-cloud-starter-netflix-eureka-client，就不需要这个注解了。</li>
+<li>使用application.properties进行配置，配置服务发现的服务治理中心。</li>
+</ul>
+</li>
+<li><b>注册服务到服务治理中心</b>
+<ul class="quote">
+<li>启动产品微服务，再次看到服务治理中心的网址，就可以看到注册成功的页面。</li>
+<li>启动用户微服务，然后再修改这个配置文件的服务器端口为8002，再启动第二个节点，稍等一会，再查看服务治理中心页面，可以看到注册两个用户微服务节点。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>配置多个服务治理中心节点</h4>
+<ul class="point">
+<li><b>修改服务治理中心的配置文件application.properties，配置新的服务治理中心节点</b>
+<ul class="quote">
+<li>这里依旧使用7001端口启用服务治理中心，而微服务名称依旧为server。</li>
+<li>对于属性eureka.client.serviceUrl.defaultZone则配置了7002端口的服务域，这个服务指向的是第二个服务治理中心。</li>
+</ul>
+</li>
+<li><b>启动7002的服务治理中心，7001的服务治理中心就不会再出现异常信息</b>
+<ul class="quote">
+<li>因为7002端口的服务治理中心被注册到7001的服务治理中心。</li>
+</ul>
+</li>
+<li><b>将其他的微服务注册到多个服务治理中心中</b>
+<ul class="quote">
+<li>以单个产品微服务为例来修改配置文件，加入两个服务治理中心的域。</li>
+<li>启动这个产品服务后，再修改端口为9002，然后再启动一次，这样两个产品微服务节点都会被注册到两个服务治理中心去。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch104"><summary>17.2 微服务之间的调用</summary>
+<div class="sec">
+<h4>微服务之间的调用</h4>
+<ul class="point">
+<li><b>分布式系统在执行交易逻辑时，需要使得产品微服务得到用户信息才可以决定产品的折扣</b>
+<ul class="quote">
+<li>用户的信息则是放置在用户微服务中的。</li>
+</ul>
+</li>
+<li><b>Spring Cloud提供了Ribbon和Feign组件来帮助我们完成微服务之间相互调用的功能</b>
+<ul class="quote">
+<li>通过它们，各个微服务之间就能够相互调用，并且它会默认实现了负载均衡。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Ribbon客户端负载均衡</h4>
+<ul class="point">
+<li><b>Ribbon实际就是一个RestTemplate对象，通过@LoadBalance注解就可以提供负载均衡的算法</b>
+<ul class="quote">
+<li>在默认的情况下，它会提供轮询的负载均衡算法。</li>
+</ul>
+</li>
+<li><b>RestTemplate对象调用用户微服务请求的时候，Ribbon会自动给用户微服务节点实现负载均衡</b>
+<ul class="quote">
+<li>请求就会被分摊到微服务的各个节点上，从而降低单点的压力。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Feign声明式调用</h4>
+<ul class="point">
+<li><b>Feign是一个基于接口的编程方式，开发者只需要声明接口和配置注解，在调度接口方法时，Spring Cloud就根据配置来调度对应的REST风格的请求，从其他微服务系统中获取数据</b>
+<ul class="quote">
+<li>使用Feign，首先需要在产品微服务中使用Maven引入依赖包。</li>
+<li>为了启用Feign，首先需要在Spring Boot的启动文件中加入注解@EnableFeignClients。</li>
+<li>然后在产品微服务中加入接口声明，注意这里仅仅是一个接口声明，并不需要实现类。</li>
+</ul>
+</li>
+<li><b>Feign屏蔽掉了RestTemplate的使用，提供了接口声明式的调用，使得程序可读性更高，同时在多次调用中更为方便</b>
+<ul class="quote">
+<li>与Ribbon相比，Feign提供了负载均衡算法。</li>
+<li>通过这些代码，可以看出Feign都是通过Spring MVC中的注解来简化其他微服务数据的使用。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch105"><summary>17.3 断路器——Hystrix</summary>
+<div class="sec">
+<h4>微服务中的断路器概念</h4>
+<ul class="point">
+<li><b>断路器如同电路中的保险丝，防止服务雪崩</b>
+<ul class="quote">
+<li>在微服务系统之间大量调用可能导致服务消费者自身出现瘫痪的情况下，断路器就会将这些积压的大量请求“熔断”，来保证其自身服务可用，而不会蔓延到其他微服务系统上。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用降级服务处理限制请求</h4>
+<ul class="point">
+<li><b>当请求其他微服务出现超时或发生故障时，使用自身服务其他的方法进行响应</b>
+<ul class="quote">
+<li>在Spring Cloud中断路器是由NetFlix的Hystrix实现的，它默认监控微服务之间的调用超时时间为2000 ms(2 s)，如果超过这个超时时间，它就会根据你的配置使用其他方法进行响应。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>启用Hystrix仪表盘进行监控</h4>
+<ul class="point">
+<li><b>Hystrix仪表盘可以监控断路的情况，帮助开发者监控可能出现的问题</b>
+<ul class="quote">
+<li>首先新建工程，命名为chapter17-dashboard，然后引入相关的包。</li>
+<li>有了这些，在主类加入注解@EnableHystrixDashboard就能够启动Hystrix仪表盘。</li>
+<li>加入这个注解@EnableHystrixDashboard后，就可以启用Hystrix仪表盘，然后给配置文件application.properties添加相应的代码。</li>
+<li>然后重启产品服务，就可以像图17-13所示那样输入对应的链接和其他内容，将产品微服务的断路机制注册给仪表盘进行监测了。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch106"><summary>17.4 路由网关——Zuul</summary>
+<div class="sec">
+<h4>Zuul网关的构建</h4>
+<ul class="point">
+<li><b>Zuul是Spring Cloud支持API网关开发的组件</b>
+<ul class="quote">
+<li>Zuul来自NetFlix的开源网关，使用简单。</li>
+</ul>
+</li>
+<li><b>启用Zuul网关代理功能只需要一个注解@EnableZuulProxy</b>
+<ul class="quote">
+<li>@EnableZuulProxy注解引入了断路机制。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用过滤器</h4>
+<ul class="point">
+<li><b>Zuul网关允许配置请求映射，有面向传统网关的配置方式和面向服务的配置方式</b>
+<ul class="quote">
+<li>面向传统网关的配置方式使用zuul.routes.&lt;key&gt;.path和zuul.routes.&lt;key&gt;.url进行配置。</li>
+<li>面向服务的配置方式使用zuul.routes.&lt;key&gt;.path和zuul.routes.&lt;key&gt;.serviceId进行配置。</li>
+</ul>
+</li>
+<li><b>在Zuul中存在一个抽象类ZuulFilter，实现这个抽象类可以自定义过滤器</b>
+<ul class="quote">
+<li>ZuulFilter有四个抽象方法：shouldFilter、run、filterType、filterOrder。</li>
+<li>shouldFilter方法返回boolean值，如果为true，则执行这个过滤器的run方法。</li>
+<li>run方法是过滤器的核心，它首先获取请求中的序列号和验证码，跟着使用StringRedisTemplate通过序列号获取Redis服务器上的验证码。然后将Redis的验证码与请求的验证码进行比较，如果匹配不一致，则设置不再转发请求到微服务系统，并且将响应码设置为401，响应类型为JSON数据集，最后还会设置响应体的内容；如果一致，则返回null，放行服务。</li>
+<li>filterType方法返回了“pre”，则过滤器会在路由之前执行。</li>
+<li>filterOrder返回为0，这个方法在指定多个过滤器顺序才有意义，数字越小，则越优先，这里只有一个过滤器，所以就返回0。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch107"><summary>17.5 使用@SpringCloudApplication</summary>
+<div class="sec">
+<h4>@SpringCloudApplication注解的简化作用</h4>
+<ul class="point">
+<li><b>@SpringCloudApplication会启用Spring Boot的应用，以及开发服务发现和断路器的功能</b>
+<ul class="quote">
+<li>@SpringCloudApplication目前还缺乏配置扫描包的配置项，所以往往需要配合注解@ComponentScan来定义扫描的包。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>@SpringCloudApplication注解与@ComponentScan注解的结合使用</h4>
+<ul class="point">
+<li><b>使用@ComponentScan进行包扫描作为弥补</b>
+<ul class="quote">
+<li>因为@SpringCloudApplication并不提供配置包的功能，所以使用@ComponentScan进行包扫描作为弥补。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>@SpringCloudApplication注解与@EnableFeignClients注解的结合使用。</h4>
+<ul class="point">
+</ul></div>
+</details>
+<details class="ch" id="ch108"><summary>A.1 选择内嵌服务器</summary>
+<div class="sec">
+<h4>选择内嵌服务器</h4>
+<ul class="point">
+<li><b>Spring Boot可以选择Jetty或者Undertow作为内嵌服务器</b>
+<ul class="quote">
+<li>在Spring Boot中，因为spring-boot-starter-web中已经默认地依赖了内嵌的Tomcat，所以需要将其引入先排除。</li>
+</ul>
+</li>
+<li><b>在Maven依赖中排除Tomcat的引入，然后引入对应的Jetty或者Undertow服务器</b>
+<ul class="quote">
+<li>代码清单A-1　使用Undertow或者Jetty。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch109"><summary>A.2 修改商标</summary>
+<div class="sec">
+<h4>修改Spring Boot默认商标图</h4>
+<ul class="point">
+<li><b>使用文字替换默认商标图</b>
+<ul class="quote">
+<li>打开网址http://patorjk.com/software/taag/，录入自己需要的文字。</li>
+<li>将其复制到文本文件中，然后以文件名banner.txt保存到Spring Boot项目的resources目录中。</li>
+</ul>
+</li>
+<li><b>使用图片替换默认商标图</b>
+<ul class="quote">
+<li>删除之前保存的文件banner.txt。</li>
+<li>将企业商标图片以banner.jpg保存到工程的resources目录中。</li>
+<li>Spring Boot会将图片中的内容转换为文字予以表达。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>自定义Spring Boot商标属性</h4>
+<ul class="point">
+<li><b>spring.main.banner-mode属性</b>
+<ul class="quote">
+<li>console： System.out输出，默认值。</li>
+<li>log： 将商标打印到日志中。</li>
+<li>off： 关闭。</li>
+</ul>
+</li>
+<li><b>banner.charset属性：商标文件编码。</b>
+</li>
+<li><b>banner.location属性：商标文件路径。</b>
+</li>
+<li><b>banner.image.location属性：商标文件路径，文件名也可以是banner.jpg,banner.png。</b>
+</li>
+<li><b>banner.image.width属性：商标文字宽度(默认是76个字符)。</b>
+</li>
+<li><b>banner.image.height属性：商标高度(默认是商标图片默认的高度)。</b>
+</li>
+<li><b>banner.image.margin属性：左手边图片商标的页边距 (默认为 2)。</b>
+</li>
+<li><b>banner.image.invert属性：布尔值，是否将图像反转为黑色主题，即白色转换为黑色，黑色转换为白色(默认值 false)。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch110"><summary>A.3 深入Spring Boot自动装配</summary>
+<div class="sec">
+<h4>Spring Boot自动装配的原理</h4>
+<ul class="point">
+<li><b>Spring Boot通过spring-boot-starter-web包引入spring-boot-starters包，进而引入spring-boot-autoconfigure包，提供自动配置的功能</b>
+<ul class="quote">
+<li>有关自动配置的类很多，这里无法一一论述，读者可以到https://docs.spring.io/spring-boot/docs/1.5.9.RELEASE/reference/htmlsingle/#auto-configuration-classes-from-autoconfigure-module查看相关信息。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>RedisAutoConfiguration源码分析</h4>
+<ul class="point">
+<li><b>RedisAutoConfiguration通过@Configuration注解定义，通过@ConditionalOnClass注解配置存在哪些类，通过@EnableConfigurationProperties注解指定可以通过配置文件装配的类</b>
+<ul class="quote">
+<li>RedisAutoConfiguration的源码中，@ConditionalOnClass注解配置了JedisConnection、RedisOperations和Jedis。</li>
+<li>@EnableConfigurationProperties注解指定为RedisProperties，这样就可以通过文件配置了。</li>
+</ul>
+</li>
+<li><b>RedisAutoConfiguration内部类RedisConfiguration通过@ConditionalOnMissingBean注解，在缺失某些类型的Bean的时候，才将方法返回的Bean装配到IoC容器中</b>
+<ul class="quote">
+<li>redisTemplate方法标注为@ConditionalOnMissingBean(name = &quot;redisTemplate&quot;)，这说明在不存在命名为reidsTemplate的类的时候，才会装配这个类。</li>
+<li>stringRedisTemplate方法则标注为@ConditionalOnMissingBean (StringRedisTemplate.class)，这说明在Spring IoC容器不存在StringRedisTemplate类型的Bean的时候才会使用这个方法装配Bean。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>RedisRepositoriesAutoConfiguration源码分析</h4>
+<ul class="point">
+<li><b>RedisRepositoriesAutoConfiguration通过@Configuration注解定义，通过@ConditionalOnClass和@ConditionalOnProperty注解配置启动条件，通过@ConditionalOnMissingBean注解指定Bean的装配顺序</b>
+<ul class="quote">
+<li>@ConditionalOnClass注解配置了Jedis.class和EnableRedisRepositories.class。</li>
+<li>@ConditionalOnProperty注解配置了属性spring.data.redis.repositories.*。</li>
+<li>@ConditionalOnMissingBean注解指定了在RedisRepositoryFactoryBean类型的Bean不存在时，才会装配RedisRepositoriesAutoConfiguration。</li>
+</ul>
+</li>
+<li><b>RedisRepositoriesAutoConfiguration通过@Import注解加载其他的类到当前的环境中来，通过@AutoConfigureAfter注解指定在完成RedisAuto Configuration的装配后才执行</b>
+<ul class="quote">
+<li>@Import注解加载了RedisRepositoriesAutoConfigureRegistrar.class。</li>
+<li>@AutoConfigureAfter注解指定在完成RedisAuto Configuration的装配后才执行RedisRepositoriesAutoConfiguration。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+  <p class="site-footer">由 weread-auto 导出 · 供全书视角与后续精读对照　<span class="gcstat" id="gc_page_pv" style="display:none">本页阅读 <b id="gc_page_pv_num">–</b> 次</span></p>
+</main>
+<script>(function(){
+  function openId(id){
+    if(!id) return null;
+    var el = document.getElementById(id);
+    if(!el) return null;
+    var d = (el.tagName === 'DETAILS') ? el : (el.closest ? el.closest('details') : null);
+    if(d && !d.open) d.open = true;      // 关键：目录跳过来时把这一章展开
+    return el;
+  }
+  function go(id){
+    var el = openId(id);
+    if(!el) return;
+    // 展开会改变文档高度，等一帧再滚，免得停在错误位置
+    setTimeout(function(){ el.scrollIntoView({block:'start'}); }, 10);
+  }
+  function fromHash(){
+    var h = (location.hash || '').replace(/^#/, '');
+    if(h) go(decodeURIComponent(h));
+  }
+  document.addEventListener('click', function(e){
+    var a = (e.target && e.target.closest) ? e.target.closest('a[href^="#"]') : null;
+    if(!a) return;
+    var id = (a.getAttribute('href') || '').slice(1);
+    if(id) go(id);
+  }, false);
+  window.addEventListener('hashchange', fromHash, false);
+  // 手动展开某章时把锚点写回地址栏：刷新或分享链接能直接落回这一章
+  document.addEventListener('toggle', function(e){
+    var t = e.target;
+    if(t && t.tagName === 'DETAILS' && t.open && t.id && location.hash !== '#' + t.id){
+      try { history.replaceState(null, '', '#' + t.id); } catch(err) {}
+    }
+  }, true);
+  fromHash();
+})();
+</script>
+<script data-goatcounter="https://ae6623.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<!-- gc-fill:begin -->
+<script>
+(function(){
+  /* GoatCounter 计数端点只吃 .json（.txt 会 400 unknown extension），
+     没数据的路径也返回 404 + {"count":0,"count_unique":0}，所以按文本解析。 */
+  var C="ae6623", base="https://"+C+".goatcounter.com/counter";
+  function stat(p){
+    return fetch(base+p+".json",{credentials:"omit",cache:"no-store"})
+      .then(function(r){return r.text();})
+      .then(function(t){
+        try{
+          var d=JSON.parse(t), c=parseInt(d.count,10);
+          if(!isFinite(c))return null;
+          var u=parseInt(d.count_unique,10);
+          return {pv:String(c), uv:isFinite(u)?String(u):null};
+        }catch(e){return null}
+      })
+      .catch(function(){return null});
+  }
+  function put(id,v){var e=document.getElementById(id);if(e&&v!=null)e.textContent=v;}
+  stat("/*").then(function(d){
+    if(!d)return;
+    put("gc_site_pv_num",d.pv);
+    if(d.uv!=null){put("gc_site_uv_num",d.uv);}
+    else{var x=document.querySelectorAll(".visit-badge-uv");
+         for(var i=0;i<x.length;i++)x[i].style.display="none";}
+  });
+  var pp=document.getElementById("gc_page_pv");
+  if(pp&&location.pathname){
+    var path=location.pathname;
+    if(path.length>1&&path.charAt(path.length-1)==="/")path=path.slice(0,-1);
+    stat(path).then(function(d){
+      if(d){put("gc_page_pv_num",d.pv);pp.style.display="";}
+    });
+  }
+})();
+</script>
+<!-- gc-fill:end -->
+</body>
+</html>

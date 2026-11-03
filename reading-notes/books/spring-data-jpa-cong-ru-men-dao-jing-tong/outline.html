@@ -1,21 +1,2916 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Spring Data JPA从入门到精通 · AI 大纲</title><style>
-:root{--fg:#1f2328;--muted:#6b7280;--line:#e6e2da;--accent:#b45309;--bg:#fbfaf7}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.78 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
-.wrap{max-width:840px;margin:0 auto;padding:38px 22px 90px}
-h1{font-size:26px;line-height:1.35;margin:0 0 6px}
-.meta{color:var(--muted);font-size:14px;margin-bottom:20px}
-h2{font-size:19px;margin:34px 0 12px;padding-left:10px;border-left:4px solid var(--accent)}
-h3{font-size:16px;margin:18px 0 8px}
-p{margin:8px 0}
-.tag{display:inline-block;background:#f2ede2;color:#8a6d3b;font-size:12px;padding:1px 9px;border-radius:10px;margin-right:6px}
-ul,ol{padding-left:22px}li{margin:4px 0}
-.quote{border-left:3px solid #d8cfbd;padding:6px 12px;color:#4b4639;background:#f7f4ee;margin:8px 0;font-size:15px;border-radius:0 6px 6px 0}
-.src{color:var(--muted);font-size:12px}
-.ch{display:flex;gap:10px;padding:7px 0;border-bottom:1px dashed var(--line)}
-.ch .no{color:var(--accent);font-weight:600;min-width:34px;text-align:right}
-.card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:12px 0}
-.foot{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
-a{color:#8a5a00;text-decoration:none}a:hover{text-decoration:underline}
-.badge{font-size:12px;color:#8a6d3b;background:#f6f1e6;border:1px solid #eadfc6;border-radius:6px;padding:1px 7px}
-</style></head><body><div class="wrap"><h1>Spring Data JPA从入门到精通</h1><div class="meta"><span class="tag">AI 大纲</span>张振华　·　共 85 章</div><h2>全书提要</h2><p>《Spring Data JPA从入门到精通》以Spring Boot为技术基础，从入门到精通，由浅入深地介绍Spring Data JPA的使用。有语法，有实践，有原理剖析。 《Spring Data JPA从入门到精通》分为12章，内容包括整体认识JPA、JPA基础查询方法、定义查询方法、注解式查询方法、@Entity实例里面常用注解详解、JpaRepository扩展详解、JPA的MVC扩展REST支持、DataSource的配置、乐观锁、SpEL表达式在Spring Data里面的应用、Spring Data Redis实现cacheable的实践、IntelliJ IDEA加快开发效率、Spring Data REST简单介绍等。 《Spring Data JPA从入门到精通》适合Java开发初学者、Java开发工程师、Java开发架构师阅读，也适合高等院校和培训学校相关专业的师生教学参考。</p><h2>章节大纲（含各章热门划线原文）</h2><div class="ch"><span class="no">1</span><div><b>内容简介</b><span class="src"> · 363 字</span></div></div><div class="ch"><span class="no">2</span><div><b>推荐序</b><span class="src"> · 1983 字</span></div></div><div class="ch"><span class="no">3</span><div><b>前言</b><span class="src"> · 415 字</span></div></div><div class="ch"><span class="no">4</span><div><b>“未来已经来临，只是尚未流行”</b><span class="src"> · 421 字</span></div></div><div class="ch"><span class="no">5</span><div><b>追本溯源</b><span class="src"> · 164 字</span></div></div><div class="ch"><span class="no">6</span><div><b>本书特色</b><span class="src"> · 235 字</span></div></div><div class="ch"><span class="no">7</span><div><b>阅读指南</b><span class="src"> · 461 字</span></div></div><div class="ch"><span class="no">8</span><div><b>技术支持</b><span class="src"> · 328 字</span></div></div><div class="ch"><span class="no">9</span><div><b>致谢</b><span class="src"> · 174 字</span></div></div><div class="ch"><span class="no">10</span><div><b>第一部分 基础部分</b><span class="src"> · 81 字</span></div></div><div class="ch"><span class="no">11</span><div><b>第1章 整体认识JPA</b><span class="src"> · 99 字</span></div></div><div class="ch"><span class="no">12</span><div><b>1.1 市场上ORM框架比对</b><span class="src"> · 742 字</span></div></div><div class="ch"><span class="no">13</span><div><b>1.2 JPA的介绍以及开源实现</b><span class="src"> · 706 字</span></div></div><div class="ch"><span class="no">14</span><div><b>1.3 了解Spring Data</b><span class="src"> · 1253 字</span></div></div><div class="ch"><span class="no">15</span><div><b>1.4 Spring Data JPA的主要类及结构图</b><span class="src"> · 1500 字</span></div></div><div class="ch"><span class="no">16</span><div><b>第2章 JPA基础查询方法</b><span class="src"> · 99 字</span></div></div><div class="ch"><span class="no">17</span><div><b>2.1 Spring Data Common的Repository</b><span class="src"> · 415 字</span></div></div><div class="ch"><span class="no">18</span><div><b>2.2 Repository的类层次关系 (diagms/hierarchy/structure)</b><span class="src"> · 718 字</span></div></div><div class="ch"><span class="no">19</span><div><b>2.3 CrudRepository方法详解</b><span class="src"> · 785 字</span><div class="quote">特别强调一下delete和save方法，因为在实际工作中有的人会画蛇添足，自己先去查询再做判断处理，其实Spring JPA底层都已经考虑到了。 <span class="src">[52人划线]</span></div></div></div><div class="ch"><span class="no">20</span><div><b>2.4 PagingAndSortingRepository方法详解</b><span class="src"> · 659 字</span></div></div><div class="ch"><span class="no">21</span><div><b>2.5 JpaRepository方法详解</b><span class="src"> · 446 字</span></div></div><div class="ch"><span class="no">22</span><div><b>2.6 Repository的实现类SimpleJpaRepository</b><span class="src"> · 418 字</span></div></div><div class="ch"><span class="no">23</span><div><b>第3章 定义查询方法</b><span class="src"> · 118 字</span></div></div><div class="ch"><span class="no">24</span><div><b>3.1 定义查询方法的配置方法</b><span class="src"> · 766 字</span></div></div><div class="ch"><span class="no">25</span><div><b>3.2 方法的查询策略设置</b><span class="src"> · 555 字</span></div></div><div class="ch"><span class="no">26</span><div><b>3.3 查询方法的创建</b><span class="src"> · 882 字</span></div></div><div class="ch"><span class="no">27</span><div><b>3.5 方法的查询策略的属性表达式</b><span class="src"> · 828 字</span></div></div><div class="ch"><span class="no">28</span><div><b>3.6 查询结果的处理</b><span class="src"> · 2268 字</span><div class="quote">Projections的应用场景还是挺多的，希望大家好好体会，以利用更优雅的代码实现不同的场景，不必用数组、冗余的对象去接收查询结果。 <span class="src">[42人划线]</span></div><div class="quote">当用到Pageable的时候会默认执行一条cout语句 <span class="src">[36人划线]</span></div></div></div><div class="ch"><span class="no">29</span><div><b>3.7 实现机制介绍</b><span class="src"> · 505 字</span></div></div><div class="ch"><span class="no">30</span><div><b>第4章 注解式查询方法</b><span class="src"> · 97 字</span></div></div><div class="ch"><span class="no">31</span><div><b>4.1 @Query详解</b><span class="src"> · 754 字</span></div></div><div class="ch"><span class="no">32</span><div><b>4.2 @Param用法</b><span class="src"> · 146 字</span></div></div><div class="ch"><span class="no">33</span><div><b>4.3 SpEL表达式的支持</b><span class="src"> · 319 字</span></div></div><div class="ch"><span class="no">34</span><div><b>4.4 @Modifying修改查询</b><span class="src"> · 235 字</span></div></div><div class="ch"><span class="no">35</span><div><b>4.5 @QueryHints</b><span class="src"> · 300 字</span></div></div><div class="ch"><span class="no">36</span><div><b>4.6 @Procedure储存过程的查询方法</b><span class="src"> · 1079 字</span></div></div><div class="ch"><span class="no">37</span><div><b>第5章 @Entity实例里面常用注解详解</b><span class="src"> · 170 字</span></div></div><div class="ch"><span class="no">38</span><div><b>5.1 javax.persistence概况介绍</b><span class="src"> · 636 字</span></div></div><div class="ch"><span class="no">39</span><div><b>5.2 基本注解</b><span class="src"> · 1910 字</span></div></div><div class="ch"><span class="no">40</span><div><b>5.3 关联关系注解</b><span class="src"> · 1165 字</span></div></div><div class="ch"><span class="no">41</span><div><b>5.4 Left join、Inner join与@EntityGraph</b><span class="src"> · 690 字</span></div></div><div class="ch"><span class="no">42</span><div><b>5.5 关于关系查询的一些坑</b><span class="src"> · 409 字</span></div></div><div class="ch"><span class="no">43</span><div><b>第二部分 晋级之高级部分</b><span class="src"> · 284 字</span></div></div><div class="ch"><span class="no">44</span><div><b>第6章 JpaRepository扩展详解</b><span class="src"> · 135 字</span></div></div><div class="ch"><span class="no">45</span><div><b>6.1 JpaRepository介绍</b><span class="src"> · 333 字</span></div></div><div class="ch"><span class="no">46</span><div><b>6.2 QueryByExampleExecutor的使用</b><span class="src"> · 4640 字</span></div></div><div class="ch"><span class="no">47</span><div><b>6.3 JpaSpecificationExecutor的详细使用</b><span class="src"> · 1798 字</span></div></div><div class="ch"><span class="no">48</span><div><b>6.4 自定义Repository</b><span class="src"> · 2883 字</span></div></div><div class="ch"><span class="no">49</span><div><b>第7章 Spring Data JPA的扩展</b><span class="src"> · 123 字</span></div></div><div class="ch"><span class="no">50</span><div><b>7.1 Auditing及其事件详解</b><span class="src"> · 2175 字</span><div class="quote">通过以上的三步，我们已经完成了auting的配置 <span class="src">[24人划线]</span></div></div></div><div class="ch"><span class="no">51</span><div><b>7.2 @Version处理乐观锁的问题</b><span class="src"> · 1021 字</span></div></div><div class="ch"><span class="no">52</span><div><b>7.3 对MvcWeb的支持</b><span class="src"> · 1956 字</span></div></div><div class="ch"><span class="no">53</span><div><b>7.4 @EnableJpaRepositories详解</b><span class="src"> · 1943 字</span></div></div><div class="ch"><span class="no">54</span><div><b>7.5 默认日志简单介绍</b><span class="src"> · 2693 字</span></div></div><div class="ch"><span class="no">55</span><div><b>7.6 Spring Boot JPA的版本问题</b><span class="src"> · 545 字</span></div></div><div class="ch"><span class="no">56</span><div><b>第8章 DataSource的配置</b><span class="src"> · 85 字</span></div></div><div class="ch"><span class="no">57</span><div><b>8.1 默认数据源的讲解</b><span class="src"> · 2329 字</span></div></div><div class="ch"><span class="no">58</span><div><b>8.2 AliDruidDataSource的配置</b><span class="src"> · 457 字</span></div></div><div class="ch"><span class="no">59</span><div><b>8.3 事务的处理及其讲解</b><span class="src"> · 3029 字</span></div></div><div class="ch"><span class="no">60</span><div><b>8.4 如何配置多数据源</b><span class="src"> · 578 字</span><div class="quote">随着微服务的推行，其实很少有多数据源的场景 <span class="src">[32人划线]</span></div></div></div><div class="ch"><span class="no">61</span><div><b>8.5 Naming命名策略详解及其实践</b><span class="src"> · 2493 字</span></div></div><div class="ch"><span class="no">62</span><div><b>8.6 完整的传统XML的配置方法</b><span class="src"> · 194 字</span></div></div><div class="ch"><span class="no">63</span><div><b>第三部分 延展部分</b><span class="src"> · 139 字</span></div></div><div class="ch"><span class="no">64</span><div><b>第9章 IntelliJ IDEA与Spring JPA</b><span class="src"> · 102 字</span></div></div><div class="ch"><span class="no">65</span><div><b>9.1 IntelliJ IDEA概述</b><span class="src"> · 192 字</span></div></div><div class="ch"><span class="no">66</span><div><b>9.2 DataBase插件</b><span class="src"> · 832 字</span></div></div><div class="ch"><span class="no">67</span><div><b>9.3 Persistence及JPA相关的插件介绍</b><span class="src"> · 1072 字</span></div></div><div class="ch"><span class="no">68</span><div><b>9.4 IntelliJ IDEA分析源码用到的视图</b><span class="src"> · 378 字</span></div></div><div class="ch"><span class="no">69</span><div><b>第10章 Spring Data Redis详解</b><span class="src"> · 1420 字</span></div></div><div class="ch"><span class="no">70</span><div><b>10.2 Spring Boot+Spring Data Redis配置</b><span class="src"> · 2768 字</span></div></div><div class="ch"><span class="no">71</span><div><b>10.3 Spring Data Redis结合Spring Cache 配置方法</b><span class="src"> · 5056 字</span></div></div><div class="ch"><span class="no">72</span><div><b>第11章 SpEL表达式讲解</b><span class="src"> · 63 字</span></div></div><div class="ch"><span class="no">73</span><div><b>11.1 SpEL介绍</b><span class="src"> · 820 字</span></div></div><div class="ch"><span class="no">74</span><div><b>11.2 SpEL的基础语法</b><span class="src"> · 820 字</span></div></div><div class="ch"><span class="no">75</span><div><b>11.3 主要的类及其原理</b><span class="src"> · 4166 字</span></div></div><div class="ch"><span class="no">76</span><div><b>第12章 Spring Data REST</b><span class="src"> · 134 字</span></div></div><div class="ch"><span class="no">77</span><div><b>12.1 快速入门</b><span class="src"> · 3079 字</span></div></div><div class="ch"><span class="no">78</span><div><b>12.2 Spring Data REST定制化</b><span class="src"> · 1618 字</span></div></div><div class="ch"><span class="no">79</span><div><b>12.3 Spring Boot 2.0加载原理</b><span class="src"> · 906 字</span></div></div><div class="ch"><span class="no">80</span><div><b>12.4 未来发展</b><span class="src"> · 246 字</span></div></div><div class="ch"><span class="no">81</span><div><b>附录1 Repository Query Method关键字列表</b><span class="src"> · 310 字</span></div></div><div class="ch"><span class="no">82</span><div><b>附录2 Repository Query Method返回值类型</b><span class="src"> · 350 字</span></div></div><div class="ch"><span class="no">83</span><div><b>附录3 JPA注解大全</b><span class="src"> · 306 字</span></div></div><div class="ch"><span class="no">84</span><div><b>附录4 Spring中涉及的注解</b><span class="src"> · 159 字</span></div></div><div class="ch"><span class="no">85</span><div><b>附录5 application.properties里面关于JPA的配置大全</b><span class="src"> · 276 字</span></div></div><div class="foot">来源：微信读书官方章节接口 + 热门划线接口，逐字原文　·　生成于 2026-11-01 13:10　·　开读即产（不等完读）</div></div></body></html>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Spring Data JPA从入门到精通 AI 大纲">
+<title>《Spring Data JPA从入门到精通》｜AI 大纲</title>
+<link rel="stylesheet" href="../../../assets/css/site.css">
+<link rel="stylesheet" href="../../../assets/css/reading-outline.css">
+
+</head>
+<body>
+<main class="page">
+  <header class="note-head">
+    <p class="eyebrow">AI OUTLINE · BEFORE READING</p>
+    <h1>《Spring Data JPA从入门到精通》AI 大纲</h1>
+    <p class="meta">作者：—　·　共 69 章 / 870 条　·　AI 读书 · 全书大纲</p>
+    <p><a href="../../../index.html">← 返回首页</a>　<a href="../../index.html">阅读归档索引</a>　<a href="outline.epub" download>下载 EPUB ↓</a></p>
+    <div class="chips"><span class="chip">全书视角</span><span class="chip">AI 生成</span><span class="chip">含原文摘录</span></div>
+    <p class="small">本大纲由 AI 读书（阅读端智能大纲）生成，是全书结构与要点的机器梳理，
+    <b>不等同于已亲读</b>；其中第 4 层条目为书中原句摘录。章节可展开查看。</p>
+  </header>
+  <div class="toc"><b>章节目录</b><ul>
+<li><a href="#ch0">内容简介</a></li>
+<li><a href="#ch1">“未来已经来临，只是尚未流行”</a></li>
+<li><a href="#ch2">追本溯源</a></li>
+<li><a href="#ch3">本书特色</a></li>
+<li><a href="#ch4">阅读指南</a></li>
+<li><a href="#ch5">技术支持</a></li>
+<li><a href="#ch6">1.1 市场上ORM框架比对</a></li>
+<li><a href="#ch7">1.2 JPA的介绍以及开源实现</a></li>
+<li><a href="#ch8">1.3 了解Spring Data</a></li>
+<li><a href="#ch9">1.4 Spring Data JPA的主要类及结构图</a></li>
+<li><a href="#ch10">2.1 Spring Data Common的Repository</a></li>
+<li><a href="#ch11">2.2 Repository的类层次关系 (diagms/hierarchy/structure)</a></li>
+<li><a href="#ch12">2.3 CrudRepository方法详解</a></li>
+<li><a href="#ch13">2.4 PagingAndSortingRepository方法详解</a></li>
+<li><a href="#ch14">2.5 JpaRepository方法详解</a></li>
+<li><a href="#ch15">2.6 Repository的实现类SimpleJpaRepository</a></li>
+<li><a href="#ch16">3.1 定义查询方法的配置方法</a></li>
+<li><a href="#ch17">3.2 方法的查询策略设置</a></li>
+<li><a href="#ch18">3.3 查询方法的创建</a></li>
+<li><a href="#ch19">3.5 方法的查询策略的属性表达式</a></li>
+<li><a href="#ch20">3.6 查询结果的处理</a></li>
+<li><a href="#ch21">3.7 实现机制介绍</a></li>
+<li><a href="#ch22">4.1 @Query详解</a></li>
+<li><a href="#ch23">4.2 @Param用法</a></li>
+<li><a href="#ch24">4.3 SpEL表达式的支持</a></li>
+<li><a href="#ch25">4.4 @Modifying修改查询</a></li>
+<li><a href="#ch26">4.5 @QueryHints</a></li>
+<li><a href="#ch27">4.6 @Procedure储存过程的查询方法</a></li>
+<li><a href="#ch28">5.1 javax.persistence概况介绍</a></li>
+<li><a href="#ch29">5.2 基本注解</a></li>
+<li><a href="#ch30">5.3 关联关系注解</a></li>
+<li><a href="#ch31">5.4 Left join、Inner join与@EntityGraph</a></li>
+<li><a href="#ch32">5.5 关于关系查询的一些坑</a></li>
+<li><a href="#ch33">第二部分 晋级之高级部分</a></li>
+<li><a href="#ch34">第6章 JpaRepository扩展详解</a></li>
+<li><a href="#ch35">6.1 JpaRepository介绍</a></li>
+<li><a href="#ch36">6.2 QueryByExampleExecutor的使用</a></li>
+<li><a href="#ch37">6.3 JpaSpecificationExecutor的详细使用</a></li>
+<li><a href="#ch38">6.4 自定义Repository</a></li>
+<li><a href="#ch39">第7章 Spring Data JPA的扩展</a></li>
+<li><a href="#ch40">7.1 Auditing及其事件详解</a></li>
+<li><a href="#ch41">7.2 @Version处理乐观锁的问题</a></li>
+<li><a href="#ch42">7.3 对MvcWeb的支持</a></li>
+<li><a href="#ch43">7.4 @EnableJpaRepositories详解</a></li>
+<li><a href="#ch44">7.5 默认日志简单介绍</a></li>
+<li><a href="#ch45">7.6 Spring Boot JPA的版本问题</a></li>
+<li><a href="#ch46">8.1 默认数据源的讲解</a></li>
+<li><a href="#ch47">8.2 AliDruidDataSource的配置</a></li>
+<li><a href="#ch48">8.3 事务的处理及其讲解</a></li>
+<li><a href="#ch49">8.4 如何配置多数据源</a></li>
+<li><a href="#ch50">8.5 Naming命名策略详解及其实践</a></li>
+<li><a href="#ch51">8.6 完整的传统XML的配置方法</a></li>
+<li><a href="#ch52">第三部分 延展部分</a></li>
+<li><a href="#ch53">第9章 IntelliJ IDEA与Spring JPA</a></li>
+<li><a href="#ch54">9.1 IntelliJ IDEA概述</a></li>
+<li><a href="#ch55">9.2 DataBase插件</a></li>
+<li><a href="#ch56">9.3 Persistence及JPA相关的插件介绍</a></li>
+<li><a href="#ch57">9.4 IntelliJ IDEA分析源码用到的视图</a></li>
+<li><a href="#ch58">第10章 Spring Data Redis详解</a></li>
+<li><a href="#ch59">10.2 Spring Boot+Spring Data Redis配置</a></li>
+<li><a href="#ch60">10.3 Spring Data Redis结合Spring Cache 配置方法</a></li>
+<li><a href="#ch61">11.1 SpEL介绍</a></li>
+<li><a href="#ch62">11.2 SpEL的基础语法</a></li>
+<li><a href="#ch63">11.3 主要的类及其原理</a></li>
+<li><a href="#ch64">第12章 Spring Data REST</a></li>
+<li><a href="#ch65">12.1 快速入门</a></li>
+<li><a href="#ch66">12.2 Spring Data REST定制化</a></li>
+<li><a href="#ch67">12.3 Spring Boot 2.0加载原理</a></li>
+<li><a href="#ch68">12.4 未来发展</a></li>
+</ul></div>
+<details class="ch" id="ch0"><summary>内容简介</summary>
+<div class="sec">
+<h4>本书内容简介</h4>
+<ul class="point">
+<li><b>本书以Spring Boot为技术基础，从入门到精通，由浅入深地介绍Spring Data JPA的使用。</b>
+</li>
+<li><b>本书分为12章，内容包括整体认识JPA、JPA基础查询方法、定义查询方法、注解式查询方法、@Entity实例里面常用注解详解、JpaRepository扩展详解、JPA的MVC扩展REST支持、DataSource的配置、乐观锁、SpEL表达式在Spring Data里面的应用、Spring Data Redis实现cacheable的实践、IntelliJ IDEA加快开发效率、Spring Data REST简单介绍等。</b>
+</li>
+<li><b>本书适合Java开发初学者、Java开发工程师、Java开发架构师阅读，也适合高等院校和培训学校相关专业的师生教学参考。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch1"><summary>“未来已经来临，只是尚未流行”</summary>
+<div class="sec">
+<h4>Spring Data JPA的优势</h4>
+<ul class="point">
+<li><b>Spring Data JPA底层以Hibernate为封装，对外提供了超级灵活的使用接口。</b>
+</li>
+<li><b>Spring Data JPA非常符合面向对象和REST的风格。</b>
+</li>
+<li><b>越来越多的API层面的封装都是以Spring Data JPA为基础的。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Data JPA与Spring Boot的结合</h4>
+<ul class="point">
+<li><b>Spring Data JPA与Spring Boot配合起来使用具有天然的优势。</b>
+</li>
+<li><b>越来越多的公司招聘会由传统的SSH、Spring、MyBitas技术要求逐步地变为Spring Boot、Spring Cloud、Spring Data等Spring 全家桶技术的要求。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch2"><summary>追本溯源</summary>
+<div class="sec">
+<h4>架构设计中的数据库操作层</h4>
+<ul class="point">
+<li><b>架构师在架构设计系统之前都要先设计各种业务模型、数据模型。</b>
+</li>
+<li><b>掌握Data这层的技术要领，从下往上学习，可能会更好掌握一些。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch3"><summary>本书特色</summary>
+<div class="sec">
+<h4>本书特色</h4>
+<ul class="point">
+<li><b>本书是Spring Data JPA开发必备书籍，针对Java开发者、Spring的使用者。</b>
+</li>
+<li><b>本书从介绍到使用再到原理和实践，可以作为一本很好的Spring Data JPA的实战手册。</b>
+</li>
+<li><b>本书的代码清晰，迭代完整，便于全面、完整地掌握和学习JPA。</b>
+</li>
+<li><b>本书注重从实战经验方面进行讲解，非常实用，一点即破。</b>
+</li>
+<li><b>本书原型PPT深受同事喜爱，并在企业内部培训的时候得到了很多Java程序员的肯定。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch4"><summary>阅读指南</summary>
+<div class="sec">
+<h4>本书内容概述</h4>
+<ul class="point">
+<li><b>本书以Spring Boot为开发基础和线索，大量采用了UML释义的讲解方式。</b>
+</li>
+<li><b>本书分为3个部分，共12章</b>
+<ul class="quote">
+<li>第一部分：基础部分，整体认识JPA、JPA基础查询方法、定义查询方法、注解式查询方法、@Entity实例里面常用注解详解，了解Spring Data JPA的基本使用和语法。</li>
+<li>第二部分：晋级之高级部分，JpaRepository详解、JPA的MVC扩展Rest支持、DataSource的配置、乐观锁等，了解其背后的实现动机及其原理。</li>
+<li>第三部分：延展部分，SpEL表达式在Spring Data里面的应用、Spring Data Redis实现cacheable的实践、IntelliJ IDEA加快开发效率、Spring Data Rest的介绍，直至整个Spring Data的生态。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Boot 2.0中的JPA变化</h4>
+<ul class="point">
+<li><b>Spring Boot 2.0的版本Spring Data JPA有了一些变化</b>
+<ul class="quote">
+<li>作者对Spring Boot 2.0中的JPA也做了一些总结，作为本书的配套阅读内容。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch5"><summary>技术支持</summary>
+<div class="sec">
+<h4>本书示例源代码下载地址为：https://github.com/zhangzhenhuajack/spring-data-jpa-guide。</h4>
+<ul class="point">
+</ul></div>
+<div class="sec">
+<h4>联系邮箱</h4>
+<ul class="point">
+<li><b>如果下载有问题，请联系电子邮箱booksaga@163.com，邮件主题为“Spring Data JPA从入门到精通”。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>QQ交流群</h4>
+<ul class="point">
+<li><b>交流QQ群号：240619787，559701472。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>作者微信二维码。</h4>
+<ul class="point">
+</ul></div>
+<div class="sec">
+<h4>实战可能超出本书范畴</h4>
+<ul class="point">
+<li><b>虽然本书是以Spring Boot为配置案例的教程，但是实际工作中，我们可能用XML甚至是混合的模式，还有可能是MyBatis的方式，所以实战不免会超出本书范畴。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch6"><summary>1.1 市场上ORM框架比对</summary>
+<div class="sec">
+<h4>MyBatis</h4>
+<ul class="point">
+<li><b>MyBatis着力于POJO与SQL之间的映射关系，使用起来十分灵活，上手简单，容易掌握</b>
+<ul class="quote">
+<li>MyBatis是Apache的一个开源项目iBatis，2010年这个项目由Apache Software Foundation迁移到了Google Code，并且改名为MyBatis。</li>
+<li>MyBatis比较适合互联应用公司的API场景。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Hibernate</h4>
+<ul class="point">
+<li><b>Hibernate是一个开放源代码的对象关系映射框架，对JDBC进行了非常轻量级的对象封装</b>
+<ul class="quote">
+<li>Hibernate着力对象与对象之间的关系，有自己的HQL查询语言，所以数据库移植性很好。</li>
+<li>Hibernate是完备的ORM框架，是符合JPA规范的。Hibernate有自己的缓存机制。</li>
+<li>Hibernate上手的角度来说比较难，比较适合企业级的应用系统开发。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Data JPA</h4>
+<ul class="point">
+<li><b>Spring Data JPA可以理解为JPA规范的再次封装抽象，底层还是使用了Hibernate的JPA技术实现</b>
+<ul class="quote">
+<li>Spring Data JPA引用JPQL(Java Persistence Query Language)查询语言，属于Spring整个生态体系的一部分。</li>
+<li>Spring Data JPA随着Spring Boot和Spring Cloud在市场上的流行，也逐渐进入大家的视野。</li>
+<li>Spring Data JPA使用起来比较方便，加快了开发的效率，使开发者不需要关心和配置更多的东西，完全可以沉浸在Spring的完整生态标准实现下。</li>
+<li>JPA上手简单，开发效率高，对对象的支持比较好，又有很大的灵活性，市场的认可度越来越高。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch7"><summary>1.2 JPA的介绍以及开源实现</summary>
+<div class="sec">
+<h4>JPA的介绍</h4>
+<ul class="point">
+<li><b>JPA是Java Persistence API的简称，是JDK 5.0注解或XML描述对象－关系表的映射关系，并将运行期的实体对象持久化到数据库中。</b>
+</li>
+<li><b>Sun引入新的JPA ORM规范出于两个原因：简化现有Java EE和Java SE应用开发工作；整合ORM技术，实现天下归一。</b>
+</li>
+<li><b>JPA包括一套API标准，面向对象的查询语言：Java Persistence Query Language(JPQL)，ORM(object/relational metadata)元数据的映射。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>JPA的开源实现</h4>
+<ul class="point">
+<li><b>Hibernate 3.2+、TopLink 10.1.3以及OpenJPA都提供了JPA的实现</b>
+<ul class="quote">
+<li>Hibernate 3.2+提供了JPA的实现。</li>
+<li>TopLink 10.1.3提供了JPA的实现。</li>
+<li>OpenJPA也提供了JPA的实现。</li>
+</ul>
+</li>
+<li><b>Spring的整合Spring Data JPA</b>
+<ul class="quote">
+<li>Spring Data JPA是Spring对JPA的一个扩展和封装，提供了更简洁、易用的API。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch8"><summary>1.3 了解Spring Data</summary>
+<div class="sec">
+<h4>Spring Data介绍</h4>
+<ul class="point">
+<li><b>Spring Data项目从2010年发展起来，提供一致的、基于Spring的数据访问编程模型</b>
+<ul class="quote">
+<li>Spring Data可以轻松地让开发者使用数据访问技术，包括关系数据库、非关系数据库(NoSQL)和基于云的数据服务。</li>
+</ul>
+</li>
+<li><b>Spring Data Common是Spring Data所有模块的公用部分，提供跨Spring数据项目的共享基础设施</b>
+<ul class="quote">
+<li>Spring Data Common包含了技术中立的库接口以及一个坚持java类的元数据模型。</li>
+</ul>
+</li>
+<li><b>Spring Data不仅对传统的数据库访问技术JDBC、Hibernate、JDO、TopLick、JPA、Mybitas做了很好的支持，还对NoSQL等非关系数据做了很好的支持</b>
+<ul class="quote">
+<li>Spring Data对NoSQL等非关系数据的支持，包括MongoDB、Redis、Apache Solr等。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Data的子项目</h4>
+<ul class="point">
+<li><b>Spring Data的主要子项目包括Spring Data Commons、Spring Data Gemfire、Spring Data JPA、Spring Data KeyValue、Spring Data LDAP、Spring Data MongoDB、Spring Data REST、Spring Data Redis、Spring Data for Apache Cassandra、Spring Data for Apache Solr</b>
+<ul class="quote">
+<li>社区支持的子项目包括Spring Data Aerospike、Spring Data Couchbase、Spring Data DynamoDB、Spring Data Elasticsearch、Spring Data Hazelcast、Spring Data Jest、Spring Data Neo4j、Spring Data Vault。</li>
+<li>其他子项目包括Spring Data JDBC Extensions、Spring for Apache Hadoop、Spring Content。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Data操作的主要特性</h4>
+<ul class="point">
+<li><b>Spring Data项目旨在为大家提供一种通用的编码模式，数据访问对象实现了对物理数据层的抽象，为编写查询方法提供了方便</b>
+<ul class="quote">
+<li>通过对象映射，实现域对象和持续化存储之间的转换，而模板提供的是对底层存储实体的访问实现。</li>
+</ul>
+</li>
+<li><b>Spring Data提供模板操作，如Spring Data Redis和Spring Data Riak</b>
+<ul class="quote">
+<li>强大的Repository和定制的数据存储对象的抽象映射。</li>
+</ul>
+</li>
+<li><b>Spring Data对数据访问对象的支持(Auting等)。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch9"><summary>1.4 Spring Data JPA的主要类及结构图</summary>
+<div class="sec">
+<h4>Spring Data JPA的主要类及结构图</h4>
+<ul class="point">
+<li><b>需要掌握和使用的类包括七个Repository接口和两个实现类</b>
+<ul class="quote">
+<li>CrudRepository (org.springframework.data.repository)。</li>
+<li>PagingAndSortingRepository (org.springframework.data.repository)。</li>
+<li>QueryByExampleExecutor (org.springframework.data.repository.query)。</li>
+<li>JpaRepository (org.springframework.data.jpa.repository)。</li>
+<li>JpaSpecificationExecutor (org.springframework.data.jpa.repository)。</li>
+<li>QueryDslPredicateExecutor (org.springframework.data.querydsl)。</li>
+<li>SimpleJpaRepository (org.springframework.data.jpa.repository.support)。</li>
+<li>QueryDslJpaRepository (org.springframework.data.jpa.repository.support)。</li>
+</ul>
+</li>
+<li><b>关系结构图如图1-5所示</b>
+<ul class="quote">
+<li>图中基本上都是我们要关心的类和接口。</li>
+</ul>
+</li>
+<li><b>需要了解的类，真正的JPA的底层封装类包括EntityManager和EntityManagerImpl</b>
+<ul class="quote">
+<li>EntityManager (javax.persistence)。</li>
+<li>EntityManagerImpl (org.hibernate.jpa.internal)。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>MySQL的快速开发实例</h4>
+<ul class="point">
+<li><b>环境要求：JDK 1.8，Maven 3.0+，IntelliJ IDEA。</b>
+</li>
+<li><b>第一步：创建数据库并建立user表</b>
+<ul class="quote">
+<li>创建一个数据的新用户并附上权限。</li>
+<li>创建一个表。</li>
+</ul>
+</li>
+<li><b>第二步：利用IntelliJ IDEA创建Example1</b>
+<ul class="quote">
+<li>选择JPA、MySQL和Web，一路Next然后完成得到一个工程。</li>
+</ul>
+</li>
+<li><b>第三步：创建或者修改application.properties文件</b>
+<ul class="quote">
+<li>内容如下。</li>
+</ul>
+</li>
+<li><b>第四步：创建一个@Entity，文件为src/main/java/example/example1/User.java。</b>
+</li>
+<li><b>第五步：创建一个Repository，文件为src/main/java/example/example1/UserRepository.java。</b>
+</li>
+<li><b>第六步：创建一个Controller。</b>
+</li>
+<li><b>第七步：直接运行Example1Application的main函数</b>
+<ul class="quote">
+<li>这时已经可以看到效果了。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch10"><summary>2.1 Spring Data Common的Repository</summary>
+<div class="sec">
+<h4>Spring Data Common的Repository概述</h4>
+<ul class="point">
+<li><b>Repository是Spring Data里面做数据库操作的最底层的抽象接口、最顶级的父类</b>
+<ul class="quote">
+<li>Repository位于Spring Data Common的lib里面。</li>
+<li>Repository的源码里面其实什么方法都没有，仅仅起到一个标识作用。</li>
+</ul>
+</li>
+<li><b>Repository主要作为标记接口捕获要使用的类型，并帮助你发现扩展此接口的接口</b>
+<ul class="quote">
+<li>管理域类以及域类的id类型作为类型参数。</li>
+<li>Spring底层做动态代理的时候发现只要是它的子类或者实现类，都代表储存库操作。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Repository的使用</h4>
+<ul class="point">
+<li><b>继承Repository接口，就可以使用Spring JPA里面提供的很多约定的方法查询和注解查询</b>
+<ul class="quote">
+<li>这个接口定义了所有Repostory操作的实体和ID两个泛型参数。</li>
+<li>我们不需要继承任何接口，只要继承这个接口。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch11"><summary>2.2 Repository的类层次关系 (diagms/hierarchy/structure)</summary>
+<div class="sec">
+<h4>使用IntelliJ IDEA查看Repository的类层次关系</h4>
+<ul class="point">
+<li><b>通过IntelliJ IDEA打开类Repository.class，单击Navigate→Type Hierarchy查看基类Repository的实现</b>
+<ul class="quote">
+<li>通过这个层次结构视图，我们就会明白基类Repository的实现，对工程里面的所有Repository了如指掌。</li>
+</ul>
+</li>
+<li><b>通过IntelliJ IDEA打开类Example1里面的UserRepository.java，右击选择show diagrams，用图表的方式查看类的层次关系</b>
+<ul class="quote">
+<li>用图表的方式查看类的层次关系，可以更直观地展示类的继承关系。</li>
+</ul>
+</li>
+<li><b>通过IntelliJ IDEA打开类QueryDslJpaRepository，右击，选择show diagrams，用图表的方式查看类的关系层次</b>
+<ul class="quote">
+<li>用图表的方式查看类的关系层次，可以更直观地展示类的继承关系。</li>
+</ul>
+</li>
+<li><b>通过IntelliJ IDEA打开类Example1里面的UserRepository.java，打开Navigate→File Structure，可以查看此类的结构以及有哪些方法</b>
+<ul class="quote">
+<li>以此类推到其他类上，可以查看所有类的结构和方法。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Repository实例分析</h4>
+<ul class="point">
+<li><b>通过实例分析，进一步理解Repository的类层次关系</b>
+<ul class="quote">
+<li>实例分析可以帮助我们更好地理解Repository的类层次关系，提高学习效率。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch12"><summary>2.3 CrudRepository方法详解</summary>
+<div class="sec">
+<h4>CrudRepository接口内容</h4>
+<ul class="point">
+<li><b>CrudRepository提供了公共的通用的CRUD方法</b>
+<ul class="quote">
+<li>保存实体方法，先检查传进去的实体是不是存在，然后判断是新增还是更新。</li>
+<li>批量保存，原理和步骤(1)相同，实现方法就是for循环调用上面的save方法。</li>
+<li>根据主键查询实体。</li>
+<li>根据主键判断实体是否存在。</li>
+<li>查询实体的所有列表。</li>
+<li>根据主键列表查询实体列表。</li>
+<li>查询总数。</li>
+<li>根据主键删除，JPA会先去查询一下，再做保存，不存在抛出异常。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>CrudRepository接口的使用示例</h4>
+<ul class="point">
+<li><b>自己的Repository继承CrudRepository即可</b>
+<ul class="quote">
+<li>第1章的示例我们修改如下：UserCrudRepository继承CrudRepository。</li>
+<li>第1章的示例UserController修改如下：然后启动运行就可以直接看效果了。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch13"><summary>2.4 PagingAndSortingRepository方法详解</summary>
+<div class="sec">
+<h4>PagingAndSortingRepository接口内容</h4>
+<ul class="point">
+<li><b>PagingAndSortingRepository继承CrudRepository所有的基本方法，增加了分页和排序等对查询结果进行限制的基本的、常用的、通用的一些分页方法。</b>
+</li>
+<li><b>PagingAndSortingRepository和CrudRepository都是Spring Data Common的标准接口，实现类包括Spring Data JPA的model里面的SimpleJpaRepository和Spring Data Mongodb的model里面的实现。</b>
+</li>
+<li><b>这些查询都会用到后面章节要讲的Specification查询方法。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>PagingAndSortingRepository使用示例</h4>
+<ul class="point">
+<li><b>继承PagingAndSortingRepository的接口即可，其他不用做任何改动</b>
+<ul class="quote">
+<li>UserPagingAndSortingRepository修改如下。</li>
+<li>UserController修改如下。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch14"><summary>2.5 JpaRepository方法详解</summary>
+<div class="sec">
+<h4>JpaRepository详解</h4>
+<ul class="point">
+<li><b>JpaRepository继承和拥有了QueryByExampleExecutor的相关方法</b>
+<ul class="quote">
+<li>JpaRepository继承了PagingAndSortingRepository类，也就继承了其所有方法。</li>
+<li>JpaRepository实现类也是SimpleJpaRepository。</li>
+</ul>
+</li>
+<li><b>JpaRepository支持Query By Example，批量删除，提高删除效率，手动刷新数据库的更改方法，并将默认实现的查询结果变成了List。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>JpaRepository的使用方法</h4>
+<ul class="point">
+<li><b>继承JpaRepository即可使用其方法</b>
+<ul class="quote">
+<li>使用JpaRepository只需要继承它即可，比如。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch15"><summary>2.6 Repository的实现类SimpleJpaRepository</summary>
+<div class="sec">
+<h4>SimpleJpaRepository概述</h4>
+<ul class="point">
+<li><b>SimpleJpaRepository是JPA整个关联数据库的所有Repository的接口实现类</b>
+<ul class="quote">
+<li>如果想进行扩展，可以继承此类，如QueryDsl的扩展，还有默认的处理机制。</li>
+</ul>
+</li>
+<li><b>SimpleJpaRepository是Spring JPA动态代理的实现类</b>
+<ul class="quote">
+<li>包括我们后面讲的Query Method。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>SimpleJpaRepository的实现机制</h4>
+<ul class="point">
+<li><b>通过EntityManger进行实体的操作</b>
+<ul class="quote">
+<li>JpaEntityInforMation里面保存着实体的相关信息以及crud方法的元数据等。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch16"><summary>3.1 定义查询方法的配置方法</summary>
+<div class="sec">
+<h4>Spring JPA Repository的实现原理</h4>
+<ul class="point">
+<li><b>Spring JPA Repository的实现原理是采用动态代理的机制</b>
+<ul class="quote">
+<li>实体Repository继承Spring Data Common里面的Repository接口。</li>
+<li>如果想有其他更多默认通用方法的实现，可以选择JpaRepository、PagingAndSortingRepository、CrudRepository等接口。</li>
+<li>如果不想扩展Spring数据接口，还可以使用它来注解存储库接口@RepositoryDefinition。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>定义查询方法的方式</h4>
+<ul class="point">
+<li><b>可以通过方法名称指定特定用于存储的查询和更新</b>
+<ul class="quote">
+<li>继承Spring Data Common里面的Repository接口。</li>
+</ul>
+</li>
+<li><b>可以通过使用@Query手动定义的查询</b>
+<ul class="quote">
+<li>继承JpaRepository、PagingAndSortingRepository、CrudRepository等接口。</li>
+<li>继承JpaSpecificationExecutor、QueryByExampleExecutor和自定义Response。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>自定义Repository的方式</h4>
+<ul class="point">
+<li><b>扩展CrudRepository公开了一套完整的方法来操纵实体</b>
+<ul class="quote">
+<li>如果希望对所暴露的方法有选择性，只需要将暴露的方法复制CrudRepository到域库中即可。</li>
+</ul>
+</li>
+<li><b>使用@RepositoryDefinition注解存储库接口</b>
+<ul class="quote">
+<li>为所有域存储库定义了一个公共基础接口，并将其暴露出来。</li>
+<li>findOne(…)和save(…)方法将被路由到由Spring Data提供的、你选择的存储库的基本存储库实现中。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch17"><summary>3.2 方法的查询策略设置</summary>
+<div class="sec">
+<h4>方法的查询策略设置</h4>
+<ul class="point">
+<li><b>通过@EnableJpaRepositories(queryLookupStrategy= QueryLookupStrategy.Key.CREATE_IF_NOT_FOUND)可以配置方法的查询策略</b>
+<ul class="quote">
+<li>CREATE：直接根据方法名进行创建。</li>
+<li>USE_DECLARED_QUERY：声明方式创建，即本书说的注解方式。</li>
+<li>CREATE_IF_NOT_FOUND：这个是默认的，以上两种方式的结合版。</li>
+</ul>
+</li>
+<li><b>除非有特殊需求，一般直接用默认的，不用管</b>
+<ul class="quote">
+<li>QueryLookupStrategy是策略的定义接口，JpaQueryLookupStrategy是具体策略的实现类。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch18"><summary>3.3 查询方法的创建</summary>
+<div class="sec">
+<h4>查询方法的创建</h4>
+<ul class="point">
+<li><b>查询方法名由查询策略(关键字)、查询字段和一些限制性条件组成</b>
+<ul class="quote">
+<li>待查询功能的方法名由查询策略(关键字)、查询字段和一些限制性条件组成。</li>
+<li>解析方法的实际结果取决于创建查询的持久性存储。</li>
+</ul>
+</li>
+<li><b>表达式通常是可以连接的运算符的属性遍历，你可以使用组合属性表达式AND和OR</b>
+<ul class="quote">
+<li>你还可以将运算关键字Between、LessThan、GreaterThan、Like作为属性表达式。</li>
+<li>受支持的操作员可能因数据存储而异，因此请参阅官方参考文档的相应部分内容。</li>
+</ul>
+</li>
+<li><b>该方法解析器支持设置一个IgnoreCase标志个别特性或支持忽略大小写</b>
+<ul class="quote">
+<li>是否支持忽略示例可能会因存储而异，因此请参阅参考文档中的相关章节，了解特定于场景的查询方法。</li>
+</ul>
+</li>
+<li><b>可以通过OrderBy在引用属性和提供排序方向(Asc或Desc)的查询方法中附加一个子句来应用静态排序</b>
+<ul class="quote">
+<li>要创建支持动态排序的查询方法来影响查询结果。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>关键字列表</h4>
+<ul class="point">
+<li><b>除了find的前缀之外，还有read…By、query…By、count…By和get…By等前缀</b>
+<ul class="quote">
+<li>使用的时候要配合不同的返回结果进行使用。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch19"><summary>3.5 方法的查询策略的属性表达式</summary>
+<div class="sec">
+<h4>属性表达式的解析过程</h4>
+<ul class="point">
+<li><b>解析算法首先将整个part(AddressZipCode)解释为属性，并使用该名称(uncapitalized)检查域类的属性。</b>
+</li>
+<li><b>如果算法成功，就使用该属性。如果不是，就拆分右侧驼峰部分的信号源到头部和尾部，并试图找出相应的属性</b>
+<ul class="quote">
+<li>在我们的例子中是AddressZip和Code。</li>
+<li>如果算法找到一个具有头部的属性，那么它需要尾部，并从那里继续构建树，然后按照刚刚描述的方式将尾部分割。</li>
+<li>如果第一个分割不匹配，就将分割点移动到左边(Address、ZipCode)，然后继续。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>属性表达式可能出现的歧义问题</h4>
+<ul class="point">
+<li><b>算法可能会选择错误的属性，比如Person类也有一个addressZip属性，该算法将在第一个分割轮中匹配，并且基本上会选择错误的属性</b>
+<ul class="quote">
+<li>最后失败(因为该类型addressZip可能没有code属性)。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>解决属性表达式歧义的方法</h4>
+<ul class="point">
+<li><b>在方法名称中手动定义遍历点，解决歧义</b>
+<ul class="quote">
+<li>所以我们的方法名称最终会是：AddressZipCode。</li>
+<li>当然Spring JPA里面是将下划线视为保留字符，但是强烈建议遵循标准Java命名约定(不使用属性名称中的下划线，而是使用骆驼示例)。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch20"><summary>3.6 查询结果的处理</summary>
+<div class="sec">
+<h4>参数选择分页和排序(Pageable/Sort)</h4>
+<ul class="point">
+<li><b>Pageable、Slice和Sort用于动态地将分页和排序应用于查询</b>
+<ul class="quote">
+<li>Pageable知道可用的元素和页面的总数，通过基础框架里面触发计数查询来计算总数。</li>
+<li>Slice只知道是否有下一个Slice可用，不会执行count。</li>
+<li>排序选项也通过Pageable实例处理，如果只需要排序，那么在Sort参数中添加一个参数即可。</li>
+</ul>
+</li>
+<li><b>限制查询结果的关键字first和top</b>
+<ul class="quote">
+<li>查询方法的结果可以通过关键字来限制first或top，其可以被互换地使用。</li>
+<li>可选的数值可以追加到顶部/第一个以指定要返回的最大结果大小。</li>
+<li>限制表达式也支持Distinct关键字。</li>
+<li>对于将结果集限制为一个实例的查询，支持将结果包装到一个实例中的Optional中。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>查询结果的不同形式(List/Stream/Page/Future)</h4>
+<ul class="point">
+<li><b>使用Java 8 Stream&lt;T&gt;作为返回类型来逐步处理查询方法的结果</b>
+<ul class="quote">
+<li>流的关闭问题，try cache是一种关闭方法。</li>
+</ul>
+</li>
+<li><b>使用Spring的异步方法执行功能异步的存储库查询</b>
+<ul class="quote">
+<li>使用java.util.concurrent.Future的返回类型。</li>
+<li>使用java.util.concurrent.CompletableFuture作为返回类型。</li>
+<li>使用org.springframework.util.concurrent.ListenableFuture作为返回类型。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Projections对查询结果的扩展</h4>
+<ul class="point">
+<li><b>Spring JPA对Projections扩展的支持是非常好的，允许对专用返回类型进行建模</b>
+<ul class="quote">
+<li>返回的字段和DB查询结果的字段是一一对应的，但有的时候，我们需要返回一些指定的字段，不需要全部返回，或者只返回一些复合型的字段，还要自己写逻辑。</li>
+<li>Spring Data正是考虑到了这一点，允许对专用返回类型进行建模，以便我们有更多的选择，将部分字段显示成视图对象。</li>
+</ul>
+</li>
+<li><b>Projections的应用场景还是挺多的，希望大家好好体会，以利用更优雅的代码实现不同的场景</b>
+<ul class="quote">
+<li>假设Person是一个正常的实体，和数据表Person一一对应，正常的写法如下。</li>
+<li>我们想仅仅返回其中与name相关的字段，应该怎么做呢？基于projections的思路，其实是比较容易的。我们只需要声明一个接口，包含要返回的属性的方法即可。</li>
+<li>查询关联的子对象，例如。</li>
+<li>@Value和SPEL也支持。</li>
+<li>还可以通过Spel表达式取到方法里面的参数值。</li>
+<li>这时可能有人会想，只能用interface吗？Dto支持吗？其实也是可以的，我们也可以定义自己的Dto实体类。</li>
+<li>支持动态projections。通过泛化，可以根据不同的业务情况返回不同的字段集合。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch21"><summary>3.7 实现机制介绍</summary>
+<div class="sec">
+<h4>QueryExecutorMethodInterceptor实现机制</h4>
+<ul class="point">
+<li><b>QueryExecutorMethodInterceptor是一个方法调用的拦截器</b>
+<ul class="quote">
+<li>当一个Repository上的查询方法被调用时，Advice拦截器会在方法真正地实现调用前先执行MethodInterceptor的invoke方法。</li>
+</ul>
+</li>
+<li><b>QueryExecutorMethodInterceptor的最重要的代码在构造器中</b>
+<ul class="quote">
+<li>构造器QueryExecutorMethodInterceptor(RepositoryInformation r, Object customImplementation, Object target)中包含了主要的算法逻辑。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>PartTree类介绍</h4>
+<ul class="point">
+<li><b>PartTree包含了主要的算法逻辑。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch22"><summary>4.1 @Query详解</summary>
+<div class="sec">
+<h4>@Query详解</h4>
+<ul class="point">
+<li><b>@Query语法及源码</b>
+<ul class="quote">
+<li>先看一下语法及其源码。</li>
+</ul>
+</li>
+<li><b>@Query用法</b>
+<ul class="quote">
+<li>使用命名查询为实体声明查询是一种有效的方法，对于少量查询很有效。</li>
+<li>声明式JPQL查询有一个好处，就是启动的时候就知道语法正确与否。</li>
+</ul>
+</li>
+<li><b>@Query排序</b>
+<ul class="quote">
+<li>在JPQL下想实现排序，直接用PageRequest或者直接用Sort参数都可以。</li>
+<li>在排序实例中实际使用的属性需要与实体模型里面的字段相匹配，这意味着它们需要解析为查询中使用的属性或别名。</li>
+</ul>
+</li>
+<li><b>@Query分页</b>
+<ul class="quote">
+<li>直接用Page对象接收接口，参数直接用Pageable的实现类即可。</li>
+<li>对原生SQL(以MySQL为例)的分页支持示例，但是支持得不是特别友好。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch23"><summary>4.2 @Param用法</summary>
+<div class="sec">
+<h4>@Param注解的使用</h4>
+<ul class="point">
+<li><b>使用@Param注解指定方法参数的具体名称，通过绑定的参数名字做查询条件</b>
+<ul class="quote">
+<li>默认情况下，参数是通过顺序绑定在查询语句上的，这容易出错。</li>
+<li>为了解决这个问题，你可以使用@ Param注解指定方法参数的具体名称，通过绑定的参数名字做查询条件。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch24"><summary>4.3 SpEL表达式的支持</summary>
+<div class="sec">
+<h4>Spring Data JPA 1.4后支持在@Query中使用SpEL表达式</h4>
+<ul class="point">
+<li><b>SpEL支持的变量如表4-1所示</b>
+<ul class="quote">
+<li>在查询语句中插入表达式。</li>
+</ul>
+</li>
+<li><b>SpEL的支持比较适合自定义的Repository</b>
+<ul class="quote">
+<li>如果想写一个通用的Repository接口，那么可以用这个表达式来处理。</li>
+<li>MappedTypeRepository作为一个公用的父类，自己的Repository可以继承它。</li>
+<li>当调用ConcreteRepository执行findAllByAttribute方法的时候执行结果如下。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch25"><summary>4.4 @Modifying修改查询</summary>
+<div class="sec">
+<h4>@Modifying注解实现只需要参数绑定的update查询的执行</h4>
+<ul class="point">
+<li><b>可以通过在@Modifying注解实现只需要参数绑定的update查询的执行</b>
+<ul class="quote">
+<li>简单地针对某些特定属性的更新也可以直接用基类里面提供的通用save。</li>
+<li>还有第三种方法，就是自定义Repository，使用EntityManager来进行更新操作。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>对删除操作的支持</h4>
+<ul class="point">
+<li><b>两种方式：一种是通过方法表达式，另一种是@Modifying和@Query注解</b>
+<ul class="quote">
+<li>通过方法表达式(参见第3章)。</li>
+<li>使用@Modifying和@Query注解。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch26"><summary>4.5 @QueryHints</summary>
+<div class="sec">
+<h4>@QueryHints简介</h4>
+<ul class="point">
+<li><b>@QueryHints是Spring Data JPA对数据库Hint Query语法的支持</b>
+<ul class="quote">
+<li>Spring Data JPA只支持一些固定的HintValue值，用来优化Query的作用。</li>
+</ul>
+</li>
+<li><b>@QueryHints的name是固定在类QueryHints中的</b>
+<ul class="quote">
+<li>QueryHint仅仅了解一下即可，一般的业务场景基本不用。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch27"><summary>4.6 @Procedure储存过程的查询方法</summary>
+<div class="sec">
+<h4>@Procedure储存过程的查询方法</h4>
+<ul class="point">
+<li><b>使用@NamedStoredProcedureQueries注释来调用存储过程</b>
+<ul class="quote">
+<li>存储过程使用了注释@NamedStoredProcedureQuery，并绑定到一个JPA表。</li>
+<li>procedureName是存储过程的名字。</li>
+<li>name是JPA中存储过程的名字。</li>
+<li>使用注释@StoredProcedureParameter来定义存储过程使用的IN/OUT参数。</li>
+</ul>
+</li>
+<li><b>直接通过自定义过的Repository完成储存过程的调用</b>
+<ul class="quote">
+<li>@Procedure的procedureName参数必须匹配@NamedStoredProcedureQuery的procedureName。</li>
+<li>@Procedure的name参数必须匹配@NamedStoredProcedureQuery的name。</li>
+<li>@Param必须匹配@StoredProcedureParameter注释的name参数。</li>
+<li>返回类型必须匹配：in_only_test存储过程返回是void，in_and_out_test存储过程必须返回String。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>@NamedQueries预定义查询</h4>
+<ul class="point">
+<li><b>在@Entity下增加@NamedQuery定义</b>
+<ul class="quote">
+<li>query里面的值也是JPQL。查询参数也要和实体对应起来。</li>
+</ul>
+</li>
+<li><b>与之相对应的还有@NamedNativeQuery</b>
+<ul class="quote">
+<li>用法一样，唯一不一样的是，query里面放置的是原生SQL语句，而非实体的字段名字。</li>
+</ul>
+</li>
+<li><b>@NamedQuery、@Query和方法定义查询的对比</b>
+<ul class="quote">
+<li>Spring JPA里面的优先级，@Query &gt; @NameQuery &gt; 方法定义查询。</li>
+<li>推荐使用的优先级：@Query &gt; 方法定义查询 &gt; @NameQuery。</li>
+<li>相同点是都不支持动态条件查询。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch28"><summary>5.1 javax.persistence概况介绍</summary>
+<div class="sec">
+<h4>javax.persistence概况介绍</h4>
+<ul class="point">
+<li><b>javax.persistence位于hibernate-jpa-**.jar包里面</b>
+<ul class="quote">
+<li>可以通过Intellij Idea的maven插件直接分析一下maven的依赖。</li>
+<li>也可以用$ mvn dependency:tree分析。</li>
+</ul>
+</li>
+<li><b>通过Intellij Idea的Diagram来看一下此模块类的关键关系</b>
+<ul class="quote">
+<li>图5-2显示了JPA的类的层次结构，包括核心类和JPA接口。</li>
+</ul>
+</li>
+<li><b>JPA的类的层次结构，包括核心类和JPA接口</b>
+<ul class="quote">
+<li>表5-1描述了每个在上述架构的显示单元。</li>
+</ul>
+</li>
+<li><b>上述的类和接口用于存储实体到数据库的一个记录</b>
+<ul class="quote">
+<li>帮助程序员通过减少自己编写的代码将数据存储到数据库中。</li>
+<li>使他们能够专注于更重要的业务活动代码，如数据库表映射的类编写代码。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch29"><summary>5.2 基本注解</summary>
+<div class="sec">
+<h4>@Entity注解</h4>
+<ul class="point">
+<li><b>@Entity定义对象将会成为被JPA管理的实体，将映射到指定的数据库表。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>@Table注解</h4>
+<ul class="point">
+<li><b>@Table指定数据库的表名。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>@Id注解</h4>
+<ul class="point">
+<li><b>@Id定义属性为数据库的主键，一个实体里面必须有一个。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>@IdClass注解</h4>
+<ul class="point">
+<li><b>@IdClass利用外部类的联合主键</b>
+<ul class="quote">
+<li>作为符合主键类，要满足以下几点要求：必须实现Serializable接口；必须有默认的public无参数的构造方法；必须覆盖equals和hashCode方法。</li>
+<li>UserBlogKey.class代码如下。</li>
+<li>UserBlogEntity.java要稍加改动：实体类上需要加@IdClass注解，主键上都得加@Id。</li>
+<li>UserBlogRepository中的改动如下。</li>
+<li>使用的时候。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>@GeneratedValue注解</h4>
+<ul class="point">
+<li><b>@GeneratedValue为主键生成策略</b>
+<ul class="quote">
+<li>GenerationType一共有以下4个值。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>@Basic注解</h4>
+<ul class="point">
+<li><b>@Basic表示属性是到数据库表的字段的映射。如果实体的字段上没有任何注解，默认即为@Basic。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>@Transient注解</h4>
+<ul class="point">
+<li><b>@Transient表示该属性并非一个到数据库表的字段的映射，表示非持久化属性，与@Basic作用相反。JPA映射数据库的时候忽略它。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>@Column注解</h4>
+<ul class="point">
+<li><b>@Column定义该属性对应数据库中的列名。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>@Temporal注解</h4>
+<ul class="point">
+<li><b>@Temporal用来设置Date类型的属性映射到对应精度的字段</b>
+<ul class="quote">
+<li>@Temporal(TemporalType.DATE)映射为日期∥date(只有日期)。</li>
+<li>@Temporal(TemporalType.TIME)映射为日期∥time(只有时间)。</li>
+<li>@Temporal(TemporalType.TIMESTAMP)映射为日期∥date time(日期+时间)。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>@Enumerated注解</h4>
+<ul class="point">
+<li><b>@Enumerated很好用，直接映射enum枚举类型的字段</b>
+<ul class="quote">
+<li>这时插入两条数据，数据库里面的值是MAIL/FMAIL，而不是“男性”/“女性”。如果我们用@Enumerated(EnumType.ORDINAL)，那么这时数据库里面的值是0,1。但是实际工作中，不建议用数字下标，因为枚举里面的属性值是会不断新增的，如果新增一个，位置变化了就惨了。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>@Lob注解</h4>
+<ul class="point">
+<li><b>@Lob 将属性映射成数据库支持的大对象类型</b>
+<ul class="quote">
+<li>Clob(Character Large Ojects)类型是长字符串类型，java.sql.Clob、Character[]、char[]和String将被映射为Clob类型。</li>
+<li>Blob(Binary Large Objects)类型是字节类型，java.sql.Blob、Byte[]、byte[]和实现了Serializable接口的类型将被映射为Blob类型。</li>
+<li>Clob、Blob占用内存空间较大，一般配合@Basic(fetch=FetchType.LAZY)将其设置为延迟加载。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>几个注释的配合使用</h4>
+<ul class="point">
+<li><b>@SqlResultSetMapping、@EntityResult、@ColumnResult可以配合@NamedNativeQuery一起使用，但是实际工作中不建议这样配置。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch30"><summary>5.3 关联关系注解</summary>
+<div class="sec">
+<h4>@JoinColumn定义外键关联的字段名称</h4>
+<ul class="point">
+<li><b>@JoinColumn主要配合@OneToOne、@ManyToOne、@OneToMany一起使用，单独使用没有意义</b>
+<ul class="quote">
+<li>@JoinColumns定义多个字段的关联关系。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>@OneToOne关联关系</h4>
+<ul class="point">
+<li><b>@OneToOne需要配合@JoinColumn一起使用，可以双向关联，也可以只配置一方</b>
+<ul class="quote">
+<li>如果需要双向关联，Employee的内容如下。</li>
+<li>当然也可以不选用mappedBy，和下面效果是一样的。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>@OneToMany与@ManyToOne关联关系</h4>
+<ul class="point">
+<li><b>@OneToMany与@ManyToOne可以相对存在，也可只存在一方</b>
+<ul class="quote">
+<li>必须和@JoinColumn配合使用才有效。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>@OrderBy关联查询时排序</h4>
+<ul class="point">
+<li><b>一般和@OneToMany一起使用</b>
+<ul class="quote">
+<li>用法示例。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>@JoinTable关联关系表</h4>
+<ul class="point">
+<li><b>如果对象与对象之间有一个关联关系表的时候，就会用到@JoinTable，一般和@ManyToMany一起使用</b>
+<ul class="quote">
+<li>假设Blog和Tag是多对多的关系，有一个关联关系表blog_tag_relation，表中有两个属性blog_id和tag_id，那么Blog实体里面的写法如下。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>@ManyToMany关联关系</h4>
+<ul class="point">
+<li><b>@ManyToMany表示多对多，和@OneToOne、@ManyToOne一样也有单向、双向之分</b>
+<ul class="quote">
+<li>单向双向和注解没有关系，只看实体类之间是否相互引用。</li>
+<li>示例：一个博客可以拥有多个标签，一个标签也可以使用在多个博客上，Blog和Tag就是多对多关系。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch31"><summary>5.4 Left join、Inner join与@EntityGraph</summary>
+<div class="sec">
+<h4>Left join与Inner join</h4>
+<ul class="point">
+<li><b>使用@Query的JQPL语法或Criteria API实现Left Join或者Inner Join来提高效率</b>
+<ul class="quote">
+<li>SQL真正执行的时候是由一条主表查询和N条子表查询组成的，这种查询效率一般比较低下。</li>
+<li>有时候我们需要用到Left Join或者Inner Join来提高效率。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>@EntityGraph</h4>
+<ul class="point">
+<li><b>JPA 2.1推出来的@EntityGraph、@NamedEntityGraph用来提高查询效率，很好地解决了N+1条SQL的问题</b>
+<ul class="quote">
+<li>两者需要配合起来使用，缺一不可。</li>
+<li>@NamedEntityGraph配置在@Entity上面，而@EntityGraph配置在Repository的查询方法上面。</li>
+</ul>
+</li>
+<li><b>先在Entity里面定义@NamedEntityGraph，其他都不变</b>
+<ul class="quote">
+<li>@NamedAttributeNode可以有多个，也可以有一个。</li>
+</ul>
+</li>
+<li><b>只需要在查询方法上加@EntityGraph注解即可，其中value就是@NamedEntityGraph中的Name</b>
+<ul class="quote">
+<li>实例配置如下。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch32"><summary>5.5 关于关系查询的一些坑</summary>
+<div class="sec">
+<h4>关于关系查询的一些坑</h4>
+<ul class="point">
+<li><b>所有的注解要么全配置在字段上，要么全配置在get方法上，不能混用</b>
+<ul class="quote">
+<li>混用就会启动不起来，但是语法配置没有问题。</li>
+</ul>
+</li>
+<li><b>所有的关联都是支持单向关联和双向关联的，视具体业务场景而定</b>
+<ul class="quote">
+<li>JSON序列化的时候使用双向注解会产生死循环，需要人为手动转化一次，或者使用@JsonIgnore。</li>
+</ul>
+</li>
+<li><b>在所有的关联查询中，表一般是不需要建立外键索引的</b>
+<ul class="quote">
+<li>@mappedBy的使用需要注意。</li>
+</ul>
+</li>
+<li><b>级联删除比较危险，建议考虑清楚，或者完全掌握。</b>
+</li>
+<li><b>不同的关联关系的配置，@JoinClumn里面的name、referencedColumnName代表的意思是不一样的</b>
+<ul class="quote">
+<li>很容易弄混，可以根据打印出来的SQL做调整。</li>
+</ul>
+</li>
+<li><b>当配置这些关联关系的时候建议大家直接在表上面，把外键建好，然后通过后面我们介绍的开发工具直接生成</b>
+<ul class="quote">
+<li>这样可以减少自己调试的时间。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch33"><summary>第二部分 晋级之高级部分</summary>
+<div class="sec">
+<h4>Spring Data JPA与Hibernate的关系</h4>
+<ul class="point">
+<li><b>Spring Data JPA是Hibernate的JPA的一次包装和升级</b>
+<ul class="quote">
+<li>Spring Data JPA给Hibernate带来了新瓶装旧酒，换汤不换药的感觉。</li>
+<li>Hibernate过来的开发小伙伴们可以平滑过渡。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>技术触类旁通的特性</h4>
+<ul class="point">
+<li><b>基本功掌握牢靠，任何用到的技术都值得深入研究、掌握全面一些</b>
+<ul class="quote">
+<li>后面章节我们将要介绍一些Spring Data JPA表现优秀的地方，也正是我们如果使用其他ORM框架可能需要手动去实现的部分。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch34"><summary>第6章 JpaRepository扩展详解</summary>
+<div class="sec">
+<h4>JpaRepository扩展的方法</h4>
+<ul class="point">
+<li><b>JpaRepository提供了基本的增删查改方法。</b>
+</li>
+<li><b>JpaRepository还提供了基于方法名和注解的扩展方法</b>
+<ul class="quote">
+<li>JpaRepository接口提供了基于方法名和注解的扩展方法，如findAll()、save()、delete()等。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>简单的应用场景</h4>
+<ul class="point">
+<li><b>在简单的增删查改场景中，可以直接使用JpaRepository提供的扩展方法，如findAll()、save()、delete()等。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>实际工作中稍微复杂的应用场景</h4>
+<ul class="point">
+<li><b>在实际工作中，可能需要根据业务需求自定义扩展方法</b>
+<ul class="quote">
+<li>在实际工作中，可能需要根据业务需求自定义扩展方法，如根据条件查询、分页查询等。</li>
+<li>可以通过继承JpaRepository接口，重写相应的方法来实现自定义扩展方法。</li>
+<li>也可以通过实现JpaRepository接口的接口方法，如findAll()、save()、delete()等，来实现自定义扩展方法。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch35"><summary>6.1 JpaRepository介绍</summary>
+<div class="sec">
+<h4>JpaRepository介绍</h4>
+<ul class="point">
+<li><b>JpaRepository是Spring Data项目对JPA实现的封装与扩展</b>
+<ul class="quote">
+<li>JpaRepository本身继承PagingAndSortingRepository接口，是针对JPA技术的接口。</li>
+</ul>
+</li>
+<li><b>JpaRepository提供flush()、saveAndFlush()、deleteInBatch()、deleteAllInBatch()等方法。</b>
+</li>
+<li><b>JpaRepository的实现类和子类，提供了一些非常优雅的方法</b>
+<ul class="quote">
+<li>结合第2章的UML图看其关联关系。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch36"><summary>6.2 QueryByExampleExecutor的使用</summary>
+<div class="sec">
+<h4>QueryByExampleExecutor的使用</h4>
+<ul class="point">
+<li><b>QueryByExampleExecutor是Spring Data JPA的基本功能</b>
+<ul class="quote">
+<li>继承JpaRepository接口后，自动拥有了按“实例”进行查询的诸多方法。</li>
+</ul>
+</li>
+<li><b>QueryByExampleExecutor通过Example对象创建查询</b>
+<ul class="quote">
+<li>Example对象由探针和ExampleMatcher组成。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>QueryByExampleExecutor详细配置</h4>
+<ul class="point">
+<li><b>Example主要包含三部分内容：Probe、ExampleMatcher、Example</b>
+<ul class="quote">
+<li>Probe：这是具有填充字段的域对象的实际实体类，即查询条的封装类。</li>
+<li>ExampleMatcher：ExampleMatcher有关于如何匹配特定字段的匹配规则，它可以重复使用在多个示例。</li>
+<li>Example：Example由探针和ExampleMatcher组成。它用于创建查询。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>QueryByExampleExecutor的使用示例</h4>
+<ul class="point">
+<li><b>通过一个现有的客户对象作为例子，查询和这个例子相匹配的对象</b>
+<ul class="quote">
+<li>要查询的是Customer对象，查询条件也是一个Customer对象。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>QueryByExampleExecutor的特点及约束</h4>
+<ul class="point">
+<li><b>支持动态查询，不支持过滤条件分组，仅支持字符串的开始/包含/结束/正则表达式匹配和其他属性类型的精确匹配</b>
+<ul class="quote">
+<li>即支持查询条件个数不固定的情况，如：客户列表中有多个过滤条件，用户使用时在“地址”查询框中输入了值，就需要按地址进行过滤，如果没有输入值，就忽略这个过滤条件。</li>
+<li>即不支持过滤条件用or(或)来连接，所有的过滤查件，都是简单一层的用and(并且)连接。</li>
+<li>查询时，对一个要进行匹配的属性(如：姓名name)，只能传入一个过滤条件值。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>ExampleMatcher详解</h4>
+<ul class="point">
+<li><b>Null值处理方式、默认字符串匹配方式、默认大小写忽略方式、属性Specifiers、忽略属性列表</b>
+<ul class="quote">
+<li>Null值处理方式：INCLUDE(包括)和IGNORE(忽略)。</li>
+<li>默认字符串匹配方式：DEFAULT(默认，效果同EXACT)、EXACT(相等)、STARTING(开始匹配)、ENDING(结束匹配)、CONTAINING(包含，模糊匹配)、REGEX(正则表达式)。</li>
+<li>默认大小写忽略方式：布尔型，当值为false时，即不忽略，大小不相等。</li>
+<li>属性Specifiers：各属性特定查询方式，描述了各个属性单独定义的查询方式，每个查询方式中包含4个元素：属性名、字符串匹配方式、大小写忽略方式、属性转换器。</li>
+<li>忽略属性列表：忽略的属性不参与查询过滤。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>QueryByExampleExecutor使用场景&amp;实际的使用</h4>
+<ul class="point">
+<li><b>使用一组静态或动态约束来查询数据存储、频繁重构域对象，而不用担心破坏现有查询、简单的查询的使用场景</b>
+<ul class="quote">
+<li>查询条件的表示有两部分：一是条件值，二是查询方式。条件值用实体对象(如Customer对象)来存储，相对简单，当页面传入过滤条件值时，存入相对应的属性中，没入传入时，属性保持默认值。查询方式是用匹配器ExampleMatcher来表示，情况相对复杂些，需要考虑的因素有：Null值的处理、基本类型的处理、忽略某些属性值、不同的过滤方式、大小写匹配。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>QueryByExampleExecutor的原理</h4>
+<ul class="point">
+<li><b>JpaSpecificationExecutor的实现类是SimpleJpaRepository，通过Exmaple实现了一套工具类和对Predicate的构建，进而实现了整个ExampleQuery的逻辑</b>
+<ul class="quote">
+<li>SimpleJpaRepository实现类中的关键源码。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch37"><summary>6.3 JpaSpecificationExecutor的详细使用</summary>
+<div class="sec">
+<h4>JpaSpecificationExecutor的使用方法</h4>
+<ul class="point">
+<li><b>JpaSpecificationExecutor是JPA 2.0提供的Criteria API，可以用于动态生成query</b>
+<ul class="quote">
+<li>Specification接口中只定义了如下一个方法：Predicate toPredicate(Root&lt;T&gt; root, CriteriaQuery&lt;?&gt; query, CriteriaBuilder cb)。</li>
+</ul>
+</li>
+<li><b>JpaSpecificationExecutor是针对Criteria API进行了predicate标准封装，帮我们封装了通过EntityManager的查询和使用细节</b>
+<ul class="quote">
+<li>通过这个入口，可以使用底层JPA的Criteria的所有方法。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Criteria概念的简单介绍</h4>
+<ul class="point">
+<li><b>Root&lt;T&gt;root代表了可以查询和操作的实体对象的根</b>
+<ul class="quote">
+<li>如果将实体对象比喻成表名，那root里面就是这张表里面的字段。</li>
+</ul>
+</li>
+<li><b>CriteriaQuery&lt;?&gt;query代表一个specific的顶层查询对象</b>
+<ul class="quote">
+<li>它包含着查询的各个部分，比如：select、from、where、group by、order by等。</li>
+</ul>
+</li>
+<li><b>CriteriaBuilder cb用来构建CritiaQuery的构建器对象</b>
+<ul class="quote">
+<li>构建简单的Predicate示例：cb.equal(root.get(&quot;age&quot;), 20)。</li>
+<li>构建组合的Predicate示例：cb.and(cb.equal(root.get(&quot;age&quot;), 20), cb.equal(root.get(&quot;name&quot;), &quot;张三&quot;))。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>JpaSpecificationExecutor示例</h4>
+<ul class="point">
+<li><b>新建两个实体，UserRepository需要继承JpaSpecificationExecutor</b>
+<ul class="quote">
+<li>User实体类。</li>
+<li>UserRepository类。</li>
+</ul>
+</li>
+<li><b>调用者UserInfoManager的写法</b>
+<ul class="quote">
+<li>UserInfoManager类。</li>
+<li>findByUserName方法。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Specification工作中的一些扩展</h4>
+<ul class="point">
+<li><b>引入一种工厂模式，帮我们做一些事情</b>
+<ul class="quote">
+<li>创建一个SpecificationFactory.Java。</li>
+</ul>
+</li>
+<li><b>配合Specifications使用</b>
+<ul class="quote">
+<li>Specifications是Spring Data JPA对Specification的聚合操作工具类。</li>
+<li>Specifications里面有以下4个方法：allMatching(Specification&lt;T&gt; spec)、anyMatching(Specification&lt;T&gt; spec)、noneMatching(Specification&lt;T&gt; spec)、oneMatching(Specification&lt;T&gt; spec)。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>JpaSpecificationExecutor实现原理</h4>
+<ul class="point">
+<li><b>SimpleJpaRepository实现类中的关键源码</b>
+<ul class="quote">
+<li>SimpleJpaRepository实现了JpaRepository接口，并继承了JpaSpecificationExecutor接口。</li>
+<li>SimpleJpaRepository中的findAll方法使用了JpaSpecificationExecutor接口的实现。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch38"><summary>6.4 自定义Repository</summary>
+<div class="sec">
+<h4>自定义Repository的实现方式</h4>
+<ul class="point">
+<li><b>继承JpaSpecificationExecutor通过CriteriaQuery实现任何逻辑</b>
+<ul class="quote">
+<li>通过CriteriaQuery几乎可以实现任何逻辑。</li>
+</ul>
+</li>
+<li><b>自己写独立接口继承CrudRepository，独立实现类利用EntityManager操作Criteria Query API实现任何逻辑。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>EntityManager介绍</h4>
+<ul class="point">
+<li><b>EntityManager主要给我们提供针对复杂的原生SQL的查询，find方法，JPQL的用法等方法</b>
+<ul class="quote">
+<li>【示例6.1】针对复杂的原生SQL的查询。</li>
+<li>【示例6.2】find方法。</li>
+<li>【示例6.3】JPQL的用法。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>自定义实现Repository的应用场景</h4>
+<ul class="point">
+<li><b>单个的接口特殊化的实现方式，私有的</b>
+<ul class="quote">
+<li>自定义存储库功能的接口。</li>
+<li>自定义存储库功能的实现。</li>
+<li>不排除，自己通过最底层的JdbcTemplate来实现逻辑。</li>
+<li>这个接口是为User单独写的，但是同时也可以继承和@Repository的任何子类。</li>
+<li>调用的地方，直接调用UserRepository即可。</li>
+</ul>
+</li>
+<li><b>公用的通用的场景的自定义方式</b>
+<ul class="quote">
+<li>声明定制共享行为的接口：@NoRepositoryBean。</li>
+<li>创建扩展了持久性技术特定的存储库基类的中间接口的实现。</li>
+<li>使用JavaConfig配置自定义MyRepositoryImpl作为其他接口的动态代理的实现基类。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>实际工作的应用场景</h4>
+<ul class="point">
+<li><b>逻辑删除场景</b>
+<ul class="quote">
+<li>如果框架级别的全局自定义Respository，那就在全局实现里面覆盖默认remove方法。</li>
+<li>一般是自定义一个特殊的删除Respository，让大家去根据不同的domain业务逻辑去选择使用此接口。</li>
+</ul>
+</li>
+<li><b>当有业务场景要覆盖SimpleJpaRepository默认实现的时候</b>
+<ul class="quote">
+<li>这种一般是具体情况具体分析，实现特殊化的自定义Respository即可。</li>
+</ul>
+</li>
+<li><b>UUID与ID的情况</b>
+<ul class="quote">
+<li>对外暴露的是UUID查询方法，而对内暴露的是Long类型的ID，这时候我们就可以自定义一个FindByIDOrUUID的底层实现方法，在自定义的Respository接口里面。</li>
+</ul>
+</li>
+<li><b>使用Querydsl</b>
+<ul class="quote">
+<li>Spring Data JPA里面还帮我们做了QuerydslJpaRepository，用来支持Querydsl的查询方法。</li>
+<li>当我们引入Querydsl的时候，Spring就会自动帮我们把SimpleJpaRepository的实现切换到QuerydslJpaRepository的实现。</li>
+</ul>
+</li>
+<li><b>动态查询条件</b>
+<ul class="quote">
+<li>由于Spring Data JPA里面的query method或者@query注解不支持动态查询条件，我们正常情况下将动态条件写在manager或者service里面。</li>
+<li>如果是针对资源的操作，并且和业务无关的查询，可以放在自定义Repository里面。</li>
+</ul>
+</li>
+<li><b>扩展JpaSpecificationExecutor使其更加优雅</b>
+<ul class="quote">
+<li>使用自定义的复杂查询，我们可以做到如下效果。</li>
+<li>如果对Spring Mvc比较熟悉的话，可以更进一步把其查询提交和规则直接封装到HandlerMethodArgumentResolver里面，把参数自动和规则匹配起来。</li>
+</ul>
+</li>
+<li><b>类似的RSQL解决方案</b>
+<ul class="quote">
+<li>与之类似的解决方案还有RSQL解决方案，可以参考Github上的此开源项目。</li>
+<li>RSQL(RESTful Service Query Language)是Feed Item Query Language(FIQL)的超集，是一种RESTful服务的查询语言。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch39"><summary>第7章 Spring Data JPA的扩展</summary>
+<div class="sec">
+<h4>Spring Data JPA的扩展</h4>
+<ul class="point">
+<li><b>本章主要介绍Spring Data JPA的一些扩展部分，有利于提高工作效率和代码的优雅度。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch40"><summary>7.1 Auditing及其事件详解</summary>
+<div class="sec">
+<h4>Auditing及其事件详解</h4>
+<ul class="point">
+<li><b>Spring Data JPA提供了审计功能的架构实现，提供了4个注解专门解决创建和修改记录的问题</b>
+<ul class="quote">
+<li>@CreatedBy：哪个用户创建的。</li>
+<li>@CreatedDate：创建的时间。</li>
+<li>@LastModifiedBy：修改实体的用户。</li>
+<li>@LastModifiedDate：最后一次修改时间。</li>
+</ul>
+</li>
+<li><b>通过实现AuditorAware接口的getCurrentAuditor()方法告诉JPA当前的用户是谁</b>
+<ul class="quote">
+<li>通过Security取。</li>
+<li>通过Request取。</li>
+</ul>
+</li>
+<li><b>通过@EnableJpaAuditing注解开启JPA的Auditing功能，并且告诉应用AuditorAware的实现类是谁</b>
+<ul class="quote">
+<li>具体配置方式如下。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>@MappedSuperclass</h4>
+<ul class="point">
+<li><b>将@Id、@CreatedBy、@CreatedDate、@LastModifiedBy与@LastModifiedDate抽象到一个公用的基类里面</b>
+<ul class="quote">
+<li>改进后我们新增一个AbstractAuditable的抽象类。</li>
+<li>我们每个需要Auditing的实体只需要继承AbstractAuditable即可。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Auditing原理解析</h4>
+<ul class="point">
+<li><b>AuditorEntityListener通过委托设计模式，委托AuditingHandler进行处理</b>
+<ul class="quote">
+<li>AuditingHandler的源码会发现，里面就是根据ID和Version来判断我们的对象是新增还是更新，从而来更改时间字段和User字段。</li>
+<li>User字段是通过AuditorAware的实现类来取的，并且AuditorAware没有默认实现类，只有我们自己的实现类，也就是AuditorAware的实现类必须我们自己来定义，否则启动会报错。</li>
+</ul>
+</li>
+<li><b>Java Persistence API底层又帮我们提供的Callbacks注解方式</b>
+<ul class="quote">
+<li>这个方法都是同步机制，一旦报错将会影响所有底层代码执行。实际工作中实现这些方法的时候，方法体里面开启异步线程或者消息队列来异步处理日志，或者更繁重的工作。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Listener事件的扩展</h4>
+<ul class="point">
+<li><b>自定义EntityListener</b>
+<ul class="quote">
+<li>假如，订单的状态变化可能对我们来说比较重要，我们需要定一个类去监听订单状态变更，通知相应的逻辑代码各自去干各自的活。</li>
+<li>第一步：新增一个OrderStatusAuditListener类，在相应的操作上添加Callbacks注解。</li>
+<li>第二步：我们的订单实体变化如下。</li>
+</ul>
+</li>
+<li><b>实际工作记录操作日志的实例</b>
+<ul class="quote">
+<li>我们通过自定义的ActionsLogsAuditListener来监听我们要处理日志的实体，然后将事件变更，通过消息队列进行异步处理，这样就可以完全解耦了。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch41"><summary>7.2 @Version处理乐观锁的问题</summary>
+<div class="sec">
+<h4>@Version乐观锁</h4>
+<ul class="point">
+<li><b>乐观锁使用对单条数据进行版本校验和比较，来保证本次的更新是最新的</b>
+<ul class="quote">
+<li>悲观锁：简单的理解就是把需要的数据全部加锁，在事务提交之前，这些数据全部不可读取和修改。</li>
+<li>乐观锁：使用对单条数据进行版本校验和比较，来保证本次的更新是最新的，否则就失败，效率要高很多。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>数据库操作举例说明</h4>
+<ul class="point">
+<li><b>悲观锁的做法是通过使用for update给这条语句加锁</b>
+<ul class="quote">
+<li>如果事务没有提交，其他任何读取和修改，都得排队等待。</li>
+</ul>
+</li>
+<li><b>乐观锁的做法是假设本次查询version=1，在更新操作时，带上这次查出来的Version</b>
+<ul class="quote">
+<li>只有和我们上次版本一样的时候才会更新，就不会出现互相覆盖的问题，保证了数据的原子性。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>@Version用法</h4>
+<ul class="point">
+<li><b>实体上的version字段加上@Version注解即可</b>
+<ul class="quote">
+<li>在没有@Version之前，我们都是自己手动维护这个version的，这样很有可能忘掉。</li>
+<li>或者是我们自己底层做框架，用AOP的思路做拦截底层维护这个Version的值。</li>
+<li>而Spring Data JPA的@Version就是通过AOP机制，帮我们动态维护这个Version，从而更优雅地实现乐观锁。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>实际调用</h4>
+<ul class="point">
+<li><b>insert和update的SQL语句都会带上version的操作</b>
+<ul class="quote">
+<li>当乐观锁更新失败的时候，会抛出异常org.springframework.orm.ObjectOptimisticLockingFailureException。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>实现原理关键代码</h4>
+<ul class="point">
+<li><b>当更新的时候一定要带上version，如果没有version，只有ID，系统认为是新增。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch42"><summary>7.3 对MvcWeb的支持</summary>
+<div class="sec">
+<h4>开启支持Spring Data Web的支持</h4>
+<ul class="point">
+<li><b>使用@EnableSpringDataWebSupport注解在JavaConfig类配置</b>
+<ul class="quote">
+<li>Spring容器将会帮我们配置注册几个基本组成部分：DomainClassConverter、HandlerMethodArgumentResolver。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>DomainClassConverter组件</h4>
+<ul class="point">
+<li><b>DomainClassConverter允许你使用域类型在你的Spring MVC控制器直接方法签名</b>
+<ul class="quote">
+<li>@EnableSpringDataWebSupport这个注解注入的DomainClassConverter组件，帮我们解决通过了让Spring MVC path变量转换成的id类型域类，最终通过调用访问实例，达到了userRepository.findOne(id)的效果。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>HandlerMethodArgumentResolvers可分页和排序</h4>
+<ul class="point">
+<li><b>通过@EnableSpringDataWebSupport注解也帮我们注册PageableHandlerMethodArgumentResolver的实例和SortHandlerMethodArgumentResolver的实例</b>
+<ul class="quote">
+<li>注册使得Pageable和Sort成为有效的控制器方法参数。</li>
+<li>请求的方式如下：$ curl http://127.0.0.1:8080/demo/user/page?page=2&amp;size=5&amp;sort=firstName。</li>
+<li>按照名称倒序显示结果。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>@PageableDefault改变默认的page和size</h4>
+<ul class="point">
+<li><b>@PageableDefault改变默认的page和size，我们假设默认显示第三页的内容，默认一个的大小是10条</b>
+<ul class="quote">
+<li>请求结果如下。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Page原理解析</h4>
+<ul class="point">
+<li><b>Spring通过动态代理机制绑定了Pageable的实现类PageRequest对象，用来存储请求中关于分写的相关参数</b>
+<ul class="quote">
+<li>我们通过debug来发现spring jpa返回我们的Page的实现类是PageImpl。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch43"><summary>7.4 @EnableJpaRepositories详解</summary>
+<div class="sec">
+<h4>Spring Data JPA加载Repositories配置简介</h4>
+<ul class="point">
+<li><b>XML配置：通过repositories标签定义基本方案，使用过滤器进行更细粒度的控制</b>
+<ul class="quote">
+<li>Spring Data通过repositories标签，允许你简单地定义一个基本方案。</li>
+<li>对于发现的每个接口，注册持久性特定于技术的基础设施FactoryBean创建合适的代理，处理调用查询的方法。</li>
+<li>每个bean注册的bean名称来源于接口名称，所以一个接口UserRepository将注册下userRepository的base-package属性允许通配符，你可以定义一个模式扫描包。</li>
+<li>使用&lt; include-filter / &gt;和&lt;exclude-filter /&gt;元素内的&lt;repositories /&gt;。元素的语义是完全等价的Spring的上下文名称空间。</li>
+</ul>
+</li>
+<li><b>基于JavaConfig，基于注解的存储库配置示例。</b>
+</li>
+<li><b>引用Spring Boot之后，只需添加@SpringBootApplication注解，@EnableJpaRepositories由JpaRepositoriesAutoConfiguration自动加载</b>
+<ul class="quote">
+<li>我们查看其源码，找到spring.factories默认加载了org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration，查看JpaRepositoriesAutoConfiguration源码发现其里面帮我们加载了@EnableJpaRepositories。</li>
+<li>当然了我们也可以在我们的javaconfig里面直接配置@EnableJpaRepositories，覆盖默认配置。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>@EnableJpaRepositories详解</h4>
+<ul class="point">
+<li><b>value等于basePackage，用于配置扫描Repositories所在的package及子package</b>
+<ul class="quote">
+<li>basePackages可以配置为单个字符串，也可以配置为字符串数组形式。</li>
+</ul>
+</li>
+<li><b>basePackageClasses指定Repository所在包的类</b>
+<ul class="quote">
+<li>测试的时候发现，配置包类的一个Repositories类，该包内其他Repositores也会被加。</li>
+</ul>
+</li>
+<li><b>includeFilters(包含过滤器)，该过滤区采用ComponentScan的过滤器类，哪些包含在内</b>
+<ul class="quote">
+<li>包括过滤器采用ComponentScan的过滤器类。</li>
+</ul>
+</li>
+<li><b>excludeFilters不包含过滤器，该过滤区采用ComponentScan的过滤器类，哪些不包含在内</b>
+<ul class="quote">
+<li>不包含过滤器采用ComponentScan的过滤器类。</li>
+</ul>
+</li>
+<li><b>repositoryImplementationPostfix实现类的默认尾部结束字符。</b>
+</li>
+<li><b>namedQueriesLocation</b>
+<ul class="quote">
+<li>内容如下。</li>
+</ul>
+</li>
+<li><b>queryLookupStrategy，构建条件查询的策略，包含三种方式CREATE，USE_DECLARED_QUERY，CREATE_IF_NOT_FOUND</b>
+<ul class="quote">
+<li>CREATE：按照接口名称自动构建查询。</li>
+<li>USE_DECLARED_QUERY：用户声明查询。</li>
+<li>CREATE_IF_NOT_FOUND：先搜索用户声明，不存在则自动构建，此策略针对通过接口名称自动生成查询的场景。</li>
+</ul>
+</li>
+<li><b>repositoryFactoryBeanClass，指定Repository的工厂类。</b>
+</li>
+<li><b>entityManagerFactoryRef，实体管理工厂引用名称，对应到@Bean注解对应的方法。</b>
+</li>
+<li><b>transactionManagerRef，事务管理工厂引用名称，对应到@Bean注解对应的方法。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>JpaRepositoriesAutoConfiguration源码解析</h4>
+<ul class="point">
+<li><b>此类加载了HibernateJpaAutoConfiguration，开启了JPA的默认配置文件</b>
+<ul class="quote">
+<li>还有类JpaRepositoriesAutoConfigureRegistrar开启了@EnableJpaRepositories源码如下。</li>
+<li>类关系图如图7-4所示。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch44"><summary>7.5 默认日志简单介绍</summary>
+<div class="sec">
+<h4>Spring Boot默认日志</h4>
+<ul class="point">
+<li><b>Spring Boot使用Commons Logging作为默认日志框架，但默认配置也提供了对常用日志的支持，如：Java Util Logging、Log4J、Log4J2和Logback</b>
+<ul class="quote">
+<li>默认情况下，Spring Boot会用Logback来记录日志，并用INFO级别输出到控制台。</li>
+</ul>
+</li>
+<li><b>SLF4J是一个针对于各类Java日志框架的统一Facade抽象</b>
+<ul class="quote">
+<li>SLF4J定义了统一的日志抽象接口，而真正的日志实现则是在运行时决定的。</li>
+<li>Logback是Log4j框架的作者开发的新一代日志框架，它效率更高、能够适应诸多的运行环境，同时天然支持SLF4J。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>控制台输出</h4>
+<ul class="point">
+<li><b>Spring Boot中默认配置ERROR、WARN和INFO级别的日志输出到控制台</b>
+<ul class="quote">
+<li>你还可以通过启动你的应用程序--debug标志来启用“调试”模式。</li>
+<li>在application.properties中配置debug=true，该属性置为true的时候，核心Logger(包含嵌入式容器、hibernate、Spring)会输出更多内容，但是你自己应用的日志并不会输出为DEBUG级别。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>文件输出</h4>
+<ul class="point">
+<li><b>默认情况下，Spring Boot将日志输出到控制台，不会写到日志文件</b>
+<ul class="quote">
+<li>如果要编写除控制台输出之外的日志文件，则需在application.properties中设置logging.file或logging.path属性。</li>
+<li>如果只配置logging.file，会在项目的当前路径下生成一个xxx.log日志文件。</li>
+<li>如果只配置logging.path，在/var/log文件夹生成一个日志文件为spring.log。</li>
+<li>默认情况下，日志文件的大小达到10MB时会切分一次，产生新的日志文件，默认级别为：ERROR、WARN、INFO。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>级别控制</h4>
+<ul class="point">
+<li><b>所有支持的日志记录系统都可以在Spring环境中设置记录级别</b>
+<ul class="quote">
+<li>格式为：&#x27;logging.level.* = LEVEL&#x27;。</li>
+<li>logging.level：日志级别控制前缀，*为包名或Logger名。</li>
+<li>LEVEL：选项TRACE、DEBUG、INFO、WARN、ERROR、FATAL、OFF。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>自定义日志配置</h4>
+<ul class="point">
+<li><b>通过系统属性和传统的Spring Boot外部配置文件依然可以很好地支持日志控制和管理</b>
+<ul class="quote">
+<li>根据不同的日志系统，你可以按如下规则组织配置文件名，就能被正确加载：Logback：logback-spring.xml, logback-spring.groovy, logback.xml, logback.groovy。Log4j：log4j-spring.properties, log4j-spring.xml, log4j.properties, log4j.xml。Log4j2：log4j2-spring.xml, log4j2.xml。JDK (Java Util Logging)：logging.properties。</li>
+<li>Spring Boot官方推荐优先使用带有-spring的文件名作为你的日志配置(如使用logback-spring.xml，而不是logback.xml)。</li>
+<li>如果想完全掌控日志配置，但又不想用logback.xml作为Logback配置的名字，可以通过logging.config属性指定自定义的名字。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch45"><summary>7.6 Spring Boot JPA的版本问题</summary>
+<div class="sec">
+<h4>Spring Boot JPA的版本问题</h4>
+<ul class="point">
+<li><b>Spring Boot默认引用的Spring Data JPA的1.11.8.RELEASE版本，而官方的Spring Data JPA的最新版本是2.0.1.RELEASE</b>
+<ul class="quote">
+<li>需要手动升级一下Spring Data JPA的版本。</li>
+</ul>
+</li>
+<li><b>Spring Boot的2.0版本呼之欲出，源码和代码层次结构优化了很多，但是还处于SNAPSHOT版本</b>
+<ul class="quote">
+<li>Spring Boot的2.0对应的Spring Data JPA的2.0.1.RELEASE最新版本。</li>
+<li>Spring Data JPA的2.0.1的升级没有做向下兼容，有些方法做了重构。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch46"><summary>8.1 默认数据源的讲解</summary>
+<div class="sec">
+<h4>默认数据源的查看方法</h4>
+<ul class="point">
+<li><b>日志法：通过开发工具IntelliJ IDEA的Debug的Console控制台，搜索“DataSource”</b>
+<ul class="quote">
+<li>在application.properties增加如下配置。</li>
+</ul>
+</li>
+<li><b>Debug方法：通过开发工具IntelliJ IDEA的Debug的Memory View视图搜索</b>
+<ul class="quote">
+<li>在manager里面的如下代码处“userRepository.findByLastName (names);” 设置一个断点。</li>
+</ul>
+</li>
+<li><b>原理分析方法：查看@EnableAutoConfiguration所在Jar包中的相关配置文件</b>
+<ul class="quote">
+<li>打开spring-boot-autoconfigure-1.5.8.RELEASE.jar/META-INF/spring.factories文件。</li>
+<li>打开JpaRepositoriesAutoConfiguration类。</li>
+<li>打开HibernateJpaAutoConfiguration类。</li>
+<li>打开DataSourceAutoConfiguration，这个时候我们发现最关键的类出现了。</li>
+<li>先看一下DataSourcePoolMetadataProvidersConfiguration类，内容如下：通过查看它的代码发现，Spring Boot为我们的DataSource提供了最常见的两种默认配置Tomcat的JDBC和Apache的dbcp，就看你引用哪个datasoure的jar包了。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>DataSource和JPA的配置属性</h4>
+<ul class="point">
+<li><b>DataSource的配置属性由spring.datasource开头</b>
+<ul class="quote">
+<li>@ConfigurationProperties(prefix = &quot;spring.datasource&quot;)告诉我们application.properties里面的DataSource相关的配置必须由spring.datasource开头。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>JpaBaseConfiguration</h4>
+<ul class="point">
+<li><b>JpaBaseConfiguration的父类JpaBaseConfiguration，打开关键内容如下</b>
+<ul class="quote">
+<li>这个时候我们发现了JpaProperties类。</li>
+<li>这个时候我们再打开Hibernate类。</li>
+<li>我们再打开Naming源码看一下命名规范：可以看到，这里面Naming命名策略，兼容了Hibernate4和Hibernate5并且给出了默认的策略。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Configuration思路</h4>
+<ul class="point">
+<li><b>在找配置项的时候，看看源码都支持哪些key，这些key分别代表什么意思，再到百度搜索</b>
+<ul class="quote">
+<li>我们实际工作中，遇到问题，经常看到开发人员用百度狂搜，看看别人是怎么配置的，然后试了半天发现怎么配置都没效果。其实这里给大家提供了一个思路，我们在找配置项的时候，看看源码都支持哪些key，这些key分别代表什么意思，再到百度搜索，这样我们才能对症下药，正确完美地完成配置文件的配置。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch47"><summary>8.2 AliDruidDataSource的配置</summary>
+<div class="sec">
+<h4>AliDruidDataSource的配置</h4>
+<ul class="point">
+<li><b>DruidDataSource继承了DataSourceProperties的配置。</b>
+</li>
+<li><b>DataSource的配置方法在DruidDataSourceWrapper中</b>
+<ul class="quote">
+<li>我们打开DruidDataSourceWrapper，就会发现了DataSource的配置方法。</li>
+</ul>
+</li>
+<li><b>连接池的配置方法在DruidDataSource类中</b>
+<ul class="quote">
+<li>如果再打开DruidDataSource类，就会发现了连接池的配置方法。</li>
+</ul>
+</li>
+<li><b>DruidAbstractDataSource包含了很多默认值。</b>
+</li>
+<li><b>Druid的更多配置在Druid的更多配置类中</b>
+<ul class="quote">
+<li>如果依次打开以下类：就会发现druid的更多配置。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch48"><summary>8.3 事务的处理及其讲解</summary>
+<div class="sec">
+<h4>默认@Transactional注解式事务</h4>
+<ul class="point">
+<li><b>@EnableTransactionManagement注解用于开启事务管理</b>
+<ul class="quote">
+<li>通过DataSource的研究步骤spring.factories里面默认加载TransactionAutoConfiguration类，查看源码可以确认里面已经加了此注解。</li>
+</ul>
+</li>
+<li><b>@Transactional注解中常用参数说明</b>
+<ul class="quote">
+<li>propagation：传播行为，包括REQUIRED、SUPPORTS、MANDATORY、REQUIRES_NEW、NOT_SUPPORTED、NEVER、NESTED。</li>
+<li>Isolation：隔离级别，包括DEFAULT、READ_UNCOMMITTED、READ_COMMITTED、REPEATABLE_READ、SERIALIZABLE。</li>
+</ul>
+</li>
+<li><b>@Transactional只能被应用到public方法上，对于其他非public的方法，如果标记了@Transactional也不会报错，但方法没有事务功能。</b>
+</li>
+<li><b>用spring事务管理器，由Spring来负责数据库的打开、提交、回滚</b>
+<ul class="quote">
+<li>默认遇到运行期例外(throw new RuntimeException(&quot;注释&quot;);)会回滚，即遇到不受检查(unchecked)的例外时回滚。</li>
+<li>而遇到需要捕获的例外(throw new Exception(&quot;注释&quot;);)不会回滚，即遇到受检查的例外(就是非运行时抛出的异常，编译器会检查到的异常叫受检查例外或说受检查异常)时，需我们指定方式来让事务回滚。</li>
+<li>要想所有异常都回滚，要加上@Transactional(rollbackFor={Exception.class,其他异常})。如果让unchecked例外不回滚，如@Transactional(notRollbackFor=RunTimeException.class)。</li>
+</ul>
+</li>
+<li><b>@Transactional注解应该只被应用到public可见度的方法上</b>
+<ul class="quote">
+<li>如果你在protected、private或者package-visible的方法上使用@Transactional注解，它也不会报错，但是这个被注解的方法将不会展示已配置的事务设置。</li>
+</ul>
+</li>
+<li><b>@Transactional注解可以被应用于接口定义和接口方法、类定义和类的public方法上</b>
+<ul class="quote">
+<li>然而，请注意仅仅@Transactional注解的出现不足以开启事务行为，它仅仅是一种元数据，能够被识别@Transactional注解和上述的配置适当的具有事务行为的beans所使用。</li>
+<li>Spring团队的建议是你在具体的类(或类的方法)上使用@Transactional注解，而不要使用在类所要实现的任何接口上。</li>
+</ul>
+</li>
+<li><b>事务有两种配置方法，一种是我们现在说的显式的注解式事务，还有一种是隐式事务，ASPECTJ的思路配置方法</b>
+<ul class="quote">
+<li>当我们在注解式事务下，不加注解service方法上是没有任何事务的。</li>
+<li>还有一种是隐式事务，ASPECTJ的思路配置方法，所以不是没有加@Transactional注解就一定没有事务。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>声明式事务</h4>
+<ul class="point">
+<li><b>只需要在我们的项目中新增一个子类AspectjTransactionConfig即可，Service就会自动拥有了事务</b>
+<ul class="quote">
+<li>可以加@Transactional来覆盖全局的配置。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch49"><summary>8.4 如何配置多数据源</summary>
+<div class="sec">
+<h4>在application.properties中定义两个DataSource</h4>
+<ul class="point">
+<li><b>定义两个DataSource用来读取application.properties中的不同配置</b>
+<ul class="quote">
+<li>主数据源配置为spring.datasource.one开头的配置。</li>
+<li>第二数据源配置为spring.datasource.two开头的配置。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>定义两个DataSourceConfigJava类</h4>
+<ul class="point">
+<li><b>两个DataSourceConfig类内容基本一样，思路就是管理两套DataSource，从而带来了两套transactionManager</b>
+<ul class="quote">
+<li>分别在这两个package下创建各自的实体和数据访问接口即可。</li>
+<li>当然了也可以通过@Transactional(rollbackFor = Exception.class, transactionManager= &quot;transactionManagerOne&quot;)来手动选择哪个数据源。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>多数据源的场景</h4>
+<ul class="point">
+<li><b>随着微服务的推行，其实很少有多数据源的场景的</b>
+<ul class="quote">
+<li>当出现的时候就要想想，模块划分的是否合理，是否可以通过服务去解决，但不排除Job等。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch50"><summary>8.5 Naming命名策略详解及其实践</summary>
+<div class="sec">
+<h4>命名策略详解</h4>
+<ul class="point">
+<li><b>Hibernate 4的隐式命名策略是org.springframework.boot.orm.jpa.hibernate.SpringNamingStrategy</b>
+<ul class="quote">
+<li>Hibernate 5将隐式命名策略拆分成了两步：implicitStrategy和physicalStrategy。</li>
+</ul>
+</li>
+<li><b>ImplicitNamingStrategy是从对象模型中提取一个合适的逻辑名称</b>
+<ul class="quote">
+<li>逻辑名称可以由用户指定，通过@Column和@Table等注解完成，也可以通过被Hibernate的ImplicitNamingStrategy指定。</li>
+</ul>
+</li>
+<li><b>PhysicalNamingStrategy是将上述的逻辑名称解析成物理名称</b>
+<ul class="quote">
+<li>物理名称是由Hibernate中的PhysicalNamingStrategy决定。</li>
+<li>PhysicalNamingStrategy永远是在ImplicitNamingStrategy之后执行的，并且永远会被执行到。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>实际工作中的扩展</h4>
+<ul class="point">
+<li><b>定义自己的PhysicalNamingStrategy，继承PhysicalNamingStrategyStandardImpl类</b>
+<ul class="quote">
+<li>内容如下。</li>
+</ul>
+</li>
+<li><b>修改application.properties，添加如下内容</b>
+<ul class="quote">
+<li>这样就可以让我的实体当中省去@column指定名称的过程。</li>
+</ul>
+</li>
+<li><b>实际工作中还是建议大家用显式@Table、@Column等注解比较好</b>
+<ul class="quote">
+<li>这样可以在我们扩展的MyPhysicalNamingStrategy做规则验证工作，避免有些程序员没有按照我们的数据库规范命名。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch51"><summary>8.6 完整的传统XML的配置方法</summary>
+<div class="sec">
+<h4>Spring Boot的约定大于配置思路</h4>
+<ul class="point">
+<li><b>Spring Boot采用约定大于配置的思路，减少了程序员的工作量</b>
+<ul class="quote">
+<li>Spring Boot有很多默认机制，帮我们程序员减少了很多工作量。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>完整的传统XML的配置方法</h4>
+<ul class="point">
+<li><b>实际工作中，我们需要了解的反倒比原来多很多</b>
+<ul class="quote">
+<li>实际场景可能有各种突发事件和Bug，都需要究其原因去分析。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch52"><summary>第三部分 延展部分</summary>
+<div class="sec">
+<h4>JPA生态周边工具介绍</h4>
+<ul class="point">
+<li><b>Spring Data JPA本身算是介绍完毕了，实际工作中可能环境、版本等诸多因素会导致有些细节要在实际配置中调试，但是本质的概念和模块是不会变的。</b>
+</li>
+<li><b>第三部分我们将介绍一下JPA生态的周边工具。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch53"><summary>第9章 IntelliJ IDEA与Spring JPA</summary>
+<div class="sec">
+<h4>IntelliJ IDEA与Spring JPA</h4>
+<ul class="point">
+<li><b>把每件一般的事做好显现不一般；把每件简单的事做好显现不简单；把每件平凡的事做好显现不平凡。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch54"><summary>9.1 IntelliJ IDEA概述</summary>
+<div class="sec">
+<h4>IntelliJ IDEA概述</h4>
+<ul class="point">
+<li><b>IntelliJ IDEA支持Java，也支持其他语言</b>
+<ul class="quote">
+<li>IntelliJ IDEA支持的语言包括Python、Kotlin、Scala等。</li>
+</ul>
+</li>
+<li><b>IntelliJ IDEA支持的语言框架包括Spring、Hibernate等。</b>
+</li>
+<li><b>本章重点介绍Spring Data JPA在IDEA中用到的插件。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch55"><summary>9.2 DataBase插件</summary>
+<div class="sec">
+<h4>IntelliJ IDEA支持的各种数据库</h4>
+<ul class="point">
+<li><b>IntelliJ IDEA支持MySQL、PostgreSQL、Microsoft SQL Server、Microsoft Azure、Oracle、Amazon Redshift、Sybase、DB2、SQLite、HyperSQL、Apache Derby和H2，以及各种内存数据库。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Database视图的使用</h4>
+<ul class="point">
+<li><b>在IntelliJ的最右边的Database视图中，我们可以添加各种DataSource的连接</b>
+<ul class="quote">
+<li>方便直观的各种数据库本身的操作界面。</li>
+<li>数据库表、字段、数据等直接编辑和修改，并且还会自动帮你生成相应的SQL语句。</li>
+<li>在右边还可以直接进行搜索表、字段等。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Query console的功能</h4>
+<ul class="point">
+<li><b>SQL控制台完美的提示</b>
+<ul class="quote">
+<li>查询历史、SQL查询数据结果的呈现。</li>
+<li>超强的数据导出工具和操作。</li>
+<li>Find Usages：可以查出代码里面哪里用到这张表。</li>
+<li>SQL Script：里面支持各种DDL的操作。</li>
+<li>Dump Data to File：导出功能相当的丰富，各种支持(导出CSV、导出text、导出SQL语句)。</li>
+<li>Import Data from File：也是比较常用且方便的工具，用于数据导入。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Diagrams直接生成数据模型图</h4>
+<ul class="point">
+<li><b>Diagrams直接生成数据模型图，唯一的缺陷是没有注释</b>
+<ul class="quote">
+<li>支持查看执行计划和SQL的参数。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Database插件的便利性</h4>
+<ul class="point">
+<li><b>个人觉得基本上你的电脑上不需要装任何其他数据库的client了。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch56"><summary>9.3 Persistence及JPA相关的插件介绍</summary>
+<div class="sec">
+<h4>Persistence界面开启</h4>
+<ul class="point">
+<li><b>打开Project Setting的设置界面，在Modules里面添加一个Hibernate模块</b>
+<ul class="quote">
+<li>创建一个Hibernate.cfg.xml文件(建议放在test目录)。</li>
+</ul>
+</li>
+<li><b>打开IntelliJ IDEA的右下角，就会多一个插件视图</b>
+<ul class="quote">
+<li>视图中有Persistence的ERP图和HQL控制台。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>利用Persistence生成Entity</h4>
+<ul class="point">
+<li><b>选中Persistence里面的Hibernate.xml，右击，打开生成Entity的界面</b>
+<ul class="quote">
+<li>选择要生成的实体的表和字段。</li>
+<li>包路径、实体后缀都可以改。</li>
+</ul>
+</li>
+<li><b>查看项目里面的所有的Repository和所有Entity</b>
+<ul class="quote">
+<li>Spring Data JPA使用的时候自动提示。</li>
+<li>当字段和表里面的字段不一致的时候的提示。</li>
+<li>当我们在书写Repository的时候也会根据我们的Entity和Database有很好的提示。</li>
+<li>Naming Strategy的提示。</li>
+<li>IntelliJ IDEA如果使用慢调优方法，利用JVM调优的方法，调一下它的堆的大小。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch57"><summary>9.4 IntelliJ IDEA分析源码用到的视图</summary>
+<div class="sec">
+<h4>IntelliJ IDEA分析源码用到的视图</h4>
+<ul class="point">
+<li><b>Hierarchy视图可以查看类的父亲和儿子有哪些</b>
+<ul class="quote">
+<li>每个人的工具的快捷键都不一样，我的是F4。</li>
+</ul>
+</li>
+<li><b>Structure视图可以清楚地看出本类里面有些什么东西</b>
+<ul class="quote">
+<li>通过这几个按钮可以很清楚地看出本类里面有些什么东西。</li>
+</ul>
+</li>
+<li><b>diagrams视图可以图形化分析类之间的关系及其调用关系</b>
+<ul class="quote">
+<li>可以图形化分析类之间的关系，及其调用关系，就是所谓的ER图。</li>
+</ul>
+</li>
+<li><b>debug视图可以针对每个断点，右键可以设置很多参数</b>
+<ul class="quote">
+<li>这个工具非常好的一点就是debug的值都在后面。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch58"><summary>第10章 Spring Data Redis详解</summary>
+<div class="sec">
+<h4>Redis之Jedis的使用</h4>
+<ul class="point">
+<li><b>Jedis是最受欢迎的Redis的Java版本的Client的实现端</b>
+<ul class="quote">
+<li>Jedis的使用方式属于裸用，就是不加任何修饰，直接通过Jedis操作Redis的N多特性。</li>
+</ul>
+</li>
+<li><b>Jedis的基本使用</b>
+<ul class="quote">
+<li>在单线程环境下使用Jedis。</li>
+<li>在单线程环境的正确使用姿势。</li>
+</ul>
+</li>
+<li><b>Jedis连接池的使用</b>
+<ul class="quote">
+<li>在多线程环境下使用Jedis连接池。</li>
+<li>工作中一般会做如下改进，来保证可用性。</li>
+</ul>
+</li>
+<li><b>Jedis高可用连接(master/salve)</b>
+<ul class="quote">
+<li>Jedis提供哨兵模式的使用，当发生故障的时候如何选择。</li>
+<li>生产正确姿势。</li>
+</ul>
+</li>
+<li><b>Jedis客户端分片</b>
+<ul class="quote">
+<li>Cluster和Sentinel的应用场景和使用方法基本上同理，目前切片个人觉得Jedis实现的还不是特别成熟。</li>
+</ul>
+</li>
+<li><b>Jedis需要关心的类图</b>
+<ul class="quote">
+<li>Jedis的客户端相对来说比较简单，主要的类如图10-1所示，底层原理就是基于Socket创建连接，然后通过redisClient发送Redis的命令到服务器端。</li>
+</ul>
+</li>
+<li><b>Jedis实际工作中的正确使用场景</b>
+<ul class="quote">
+<li>最常见的场景就是对Service这层的数据加缓存。</li>
+<li>第一种做法：通常初级程序员的做法：在Service方法中，在得到数据之前，先判断缓存里面有没有通过显式地调用JedisUtil类。如果没有就从DB层去捞取，然后再丢到Redis里面。在更新的时候显式地调用RedisUtils去更新缓存。</li>
+<li>第二种做法：稍微资深一点程序员的做法：可能会考虑自定义一个注解，放在每个方法上，有更新注解、有添加缓存注解，利用@Aspect拦截器机制，调用JedisUtils在拦截器里面处理上下文。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch59"><summary>10.2 Spring Boot+Spring Data Redis配置</summary>
+<div class="sec">
+<h4>Spring Boot与Spring Data Redis的配置方法</h4>
+<ul class="point">
+<li><b>Spring Boot自动加载的Configuration类。</b>
+</li>
+<li><b>JedisConnectionFactory的配置方式</b>
+<ul class="quote">
+<li>JedisConnectionFactory是Spring Data Redis的核心类，用于创建Redis连接。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>配置方法</h4>
+<ul class="point">
+<li><b>基本使用</b>
+<ul class="quote">
+<li>通过application.properties文件配置Redis连接信息。</li>
+</ul>
+</li>
+<li><b>连接池</b>
+<ul class="quote">
+<li>通过JedisConnectionFactory的setUsePool(true)方法启用连接池。</li>
+</ul>
+</li>
+<li><b>高可用连接</b>
+<ul class="quote">
+<li>使用哨兵高可用模式，通过RedisTemplate的setConnectionFactory方法设置SentinelConnectionFactory。</li>
+</ul>
+</li>
+<li><b>客户端分片</b>
+<ul class="quote">
+<li>使用Cluster分布式切片，通过RedisTemplate的setConnectionFactory方法设置ClusterConnectionFactory。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>RedisTemplate操作Redis的key/value</h4>
+<ul class="point">
+<li><b>通过RedisTemplate直接操作Redis的key/value</b>
+<ul class="quote">
+<li>RedisTemplate提供了多种方法，如opsForValue().set(key, value)用于设置key-value。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>RedisTemplate操作ValueOperations和HashOperations</h4>
+<ul class="point">
+<li><b>通过注入resdisTemplate操作ValueOperations和HashOperations</b>
+<ul class="quote">
+<li>ValueOperations用于操作单个key的值，HashOperations用于操作单个key下的多个field-value对。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Boot的配置方法总结</h4>
+<ul class="point">
+<li><b>Spring Boot提供了自动加载的Configuration类和JedisConnectionFactory的配置方式，方便开发者快速构建Redis应用。</b>
+</li>
+<li><b>通过RedisTemplate，可以方便地操作Redis的key/value，以及使用ValueOperations和HashOperations进行更高级的操作。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch60"><summary>10.3 Spring Data Redis结合Spring Cache 配置方法</summary>
+<div class="sec">
+<h4>Spring Cache介绍</h4>
+<ul class="point">
+<li><b>Spring 3.1之后引入了基于注释(annotation)的缓存(cache)技术</b>
+<ul class="quote">
+<li>Spring的缓存技术本质上不是一个具体的缓存实现方案(如EHCache或者Redis)，而是一个对缓存使用的抽象。</li>
+</ul>
+</li>
+<li><b>Spring Cache具备相当的灵活性，不仅能够使用SpEL(Spring Expression Language)来定义缓存的key和各种condition，还提供开箱即用的缓存临时存储方案，也支持和主流的专业缓存，例如Redis、EHCache集成。</b>
+</li>
+<li><b>Spring 4.1之后又改进了很多，Spring Cache属于Spring framework的一部分</b>
+<ul class="quote">
+<li>Spring 4.1之后，Spring Cache的配置和使用变得更加方便。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Cache里面的主要的类</h4>
+<ul class="point">
+<li><b>Cache接口用来统一不同的缓存技术</b>
+<ul class="quote">
+<li>Cache接口包含缓存的各种操作(增加、删除、获得缓存)。</li>
+</ul>
+</li>
+<li><b>CacheManager是Spring提供的各种缓存技术抽象接口</b>
+<ul class="quote">
+<li>通过CacheManager管理Spring Framework里面默认实现的CacheManager。</li>
+</ul>
+</li>
+<li><b>CacheResolver解析器，用于根据实际情况来动态解析使用哪个Cache</b>
+<ul class="quote">
+<li>默认实现的CacheResolver是ConcurrentMapCacheResolver。</li>
+</ul>
+</li>
+<li><b>KeyGenerator，当我们使用Cache注解的时候，默认key的生成规则</b>
+<ul class="quote">
+<li>默认key的生成规则是使用方法的简单名称作为key。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Cache里面的主要的注解</h4>
+<ul class="point">
+<li><b>@Cacheable应用到读取数据的方法上，即可缓存的方法</b>
+<ul class="quote">
+<li>调用方法时会自动把相应的数据放入缓存。</li>
+</ul>
+</li>
+<li><b>@CacheEvict：删除缓存，一般配置在删除方法上面。</b>
+</li>
+<li><b>@Caching：所有Cache注解的组合配置方法</b>
+<ul class="quote">
+<li>可以在一个方法上使用多个@Cacheable、@CachePut、@CacheEvict注解。</li>
+</ul>
+</li>
+<li><b>@CacheConfig：全局Cache配置。</b>
+</li>
+<li><b>@EnableCaching：开启SpringCache的默认配置。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Boot快速开始Demo</h4>
+<ul class="point">
+<li><b>pom.xml添加Spring Boot的jar依赖。</b>
+</li>
+<li><b>添加@EnableCaching注解开启Caching</b>
+<ul class="quote">
+<li>开启Caching后，使用@Cacheable、@CachePut等注解即可。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Boot Cache实现过程解析</h4>
+<ul class="point">
+<li><b>spring.factories文件，可以看到SpringBoot会默认加载org.springframework.boot.autoconfigure.cache. CacheAutoConfiguration配置文件</b>
+<ul class="quote">
+<li>spring-boot-starter-cache这个jar还会帮我们加载Spring Cache所需要的其他jar包，如spring-context和spring-context-support，是Spring Cache的核心jar包。</li>
+</ul>
+</li>
+<li><b>CacheAutoConfiguration关键源码解读</b>
+<ul class="quote">
+<li>通过@Conditional来判断是否满足条件进而加载Cache的配置文件。</li>
+<li>留下了很多定义和扩展的口子，如Reids，后面章节讲。</li>
+<li>寻找默认的@cache 的处理方法。</li>
+</ul>
+</li>
+<li><b>CacheConfigurationImportSelector</b>
+<ul class="quote">
+<li>当我们没有显式手动地指定CacheManager或者CacheResolver的时候，Spring Boot Cache会按照以下顺序查找Cache的默认实现者，并会自动导入各大提供商的config。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Cache和Spring Data Redis结合快速开始</h4>
+<ul class="point">
+<li><b>pom.xml里面的配置，引入Spring Boot，以1.5.9为例</b>
+<ul class="quote">
+<li>添加 spring-boot-starter-cache 和 spring-boot-starter-data-redis。</li>
+</ul>
+</li>
+<li><b>在application.properties里面做Redis相关配置</b>
+<ul class="quote">
+<li>通过第三节可以知道，我们这里默认用Redis的pool的配置方式。</li>
+</ul>
+</li>
+<li><b>添加@EnableCaching注解，开启cache</b>
+<ul class="quote">
+<li>直接使用Spring Data Cache的注解即可。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Boot实现过程</h4>
+<ul class="point">
+<li><b>引入spring-boot-starter-data-redis的时候，会自动把Spring Data Redis 的jar也加入进来，同时会激活RedisCacheConfiguration，把RedisCacheManager默认加载进来</b>
+<ul class="quote">
+<li>当我们引入spring-boot-starter-cache的时候，会自动加载CacheAutoConfiguration，并且里面CacheType有顺序，这时候会把RedisCacheManager激活。</li>
+</ul>
+</li>
+<li><b>实际工作的正确姿势</b>
+<ul class="quote">
+<li>先来分析一下Spring Boot的源码，我们知道关键类CacheConfigurationImportSelector，找到CacheConfigurations关键代码如下：通过上面代码，我们发现Redis的Type类型的Cache调用的是RedisCacheConfiguration。</li>
+<li>通过RedisCacheConfiguration其实可以发现很多，如可以自定义Redis的Configuration和自定义Redis的CacheManager。</li>
+<li>CachingConfigurer是Spring为我们预留的自定义接口，打开它的默认实现类CachingConfigurerSupport，通过继承此类就可以实现自定义cacheManager和KeyGenerator、CacheResolver、CacheErrorHandler。</li>
+</ul>
+</li>
+<li><b>实现自定义的配置</b>
+<ul class="quote">
+<li>新建RedisConfiguration，并且配置两个CacheManager。</li>
+<li>自定义KeyGenerator覆盖默认的Cache key生成规则，只需要在RedisConfiguration中增加如下配置即可。</li>
+<li>修改RedisTemplate和StringRedisTemplate的KeySerializer和ValueSerializer默认规则。</li>
+<li>使用的地方，其controller中的写法，配置如下：我们调用http://127.0.0.1:8080/hello/users 得到的结果如图10-9所示。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch61"><summary>11.1 SpEL介绍</summary>
+<div class="sec">
+<h4>SpEL介绍</h4>
+<ul class="point">
+<li><b>SpEL是Spring Expression Language的简称，用于在运行时查询和操作对象的动态语言</b>
+<ul class="quote">
+<li>SpEL的语法上类似于Unified EL，但提供了更多的特性，特别是方法调用和基本字符串模板函数。</li>
+</ul>
+</li>
+<li><b>SpEL在Spring产品中是作为表达式求值的核心基础模块，贯穿于Spring的整个项目模块</b>
+<ul class="quote">
+<li>几乎每个Spring模块都会依赖到SpEL。</li>
+<li>其本身也可以脱离Spring独立使用，spring-expression*.jar可以独立被其他任何项目开源地引用和使用。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>SpEL主要特点</h4>
+<ul class="point">
+<li><b>SpEL是一种功能强大的表达式语言，用于在运行时查询和操作对象的动态语言</b>
+<ul class="quote">
+<li>语法上类似于Unified EL，但提供了更多的特性，特别是方法调用和基本字符串模板函数。</li>
+</ul>
+</li>
+<li><b>SpEL有点类似目前已经有的许多其他的Java表达式语言，例如OGNL、 MVEL和JBoss EL，也有点类似Freemark表达式语言。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>SpEL使用方法</h4>
+<ul class="point">
+<li><b>在XML中使用SpEL，通过${#.....}作为模板语言表上符号</b>
+<ul class="quote">
+<li>类中的property或者构造方法用到#{}SpEL表达式。</li>
+</ul>
+</li>
+<li><b>在@注解中使用SpEL，例如@Value注解</b>
+<ul class="quote">
+<li>能被使用在fields或者setMethods或者method/constructor参数指定的默认值中，在运行的时候动态取值。</li>
+</ul>
+</li>
+<li><b>使用SpEL Java API，通过SpelExpressionParser简单地对字符串进行操作</b>
+<ul class="quote">
+<li>详细的用法下面详解。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch62"><summary>11.2 SpEL的基础语法</summary>
+<div class="sec">
+<h4>SpEL的基础语法</h4>
+<ul class="point">
+<li><b>SpEL表达式默认以 # 开始，以大括号进行包住</b>
+<ul class="quote">
+<li>注意要与Spring中的properties 进行区别，properties相关的表达式是以 $ 开始的大括号进行包住的。</li>
+</ul>
+</li>
+<li><b>Property placeholders不能包含SpEL表达式，但是SpEL表达式可以包含property的引用</b>
+<ul class="quote">
+<li>如果someProperty=2，那么效果将是#{ 2 + 2}，最终的结果将是4。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>逻辑运算操作</h4>
+<ul class="point">
+<li><b>“== /、mod == %、“+”符号也可以用来连接字符串。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>逻辑关系比较</h4>
+<ul class="point">
+<li><b>所有的逻辑关系比较符都有一个缩写的别称 (&lt;、&lt;=、&gt;、&gt;=)，对应的别称分别为 lt (less than)、le (less than or equal)、gt (greater than)、ge(greater than or equal)。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>逻辑关系</h4>
+<ul class="point">
+<li><b>and、or、not运算符</b>
+<ul class="quote">
+<li>and：只有当两个表达式都为true时，整个表达式才为true。</li>
+<li>or：只要有一个表达式为true，整个表达式就为true。</li>
+<li>not：对一个表达式取反，如果表达式为true，则取反之后为false；如果表达式为false，则取反之后为true。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>三元表达式&amp; Elvis运算符</h4>
+<ul class="point">
+<li><b>三元表达式：condition ? value1 : value2</b>
+<ul class="quote">
+<li>如果condition为true，则返回value1，否则返回value2。</li>
+</ul>
+</li>
+<li><b>Elvis运算符：value ?: default</b>
+<ul class="quote">
+<li>如果value不为null，则返回value，否则返回default。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>正则表达式的支持</h4>
+<ul class="point">
+<li><b>使用正则表达式进行字符串匹配</b>
+<ul class="quote">
+<li>例如：#{&#x27;abc&#x27;.matches(&#x27;a.*&#x27;)}，结果为true。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Bean的引用</h4>
+<ul class="point">
+<li><b>在Spring Context的整个上下文中，当使用Spring的注解的时候，可以直接引用Bean中的字段和方法</b>
+<ul class="quote">
+<li>通过@Component加载Bean：注解中使用的地方直接#{beanName.filder}即可。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>List和Map的操作</h4>
+<ul class="point">
+<li><b>SpEL直接读取Map和List里面的值</b>
+<ul class="quote">
+<li>例如：#{map[&#x27;key&#x27;]}，读取Map中key对应的值。</li>
+<li>例如：#{list[0]}，读取List中索引为0的元素。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch63"><summary>11.3 主要的类及其原理</summary>
+<div class="sec">
+<h4>ExpressionParser</h4>
+<ul class="point">
+<li><b>ExpressionParser用来解析一个字符串表达式，Expression用于对上面定义的字符串表达式求值</b>
+<ul class="quote">
+<li>调用parser.parseExpression和exp.getValue分别可能抛出ParseException和EvaluationException。</li>
+</ul>
+</li>
+<li><b>SpEL支持一系列广泛的特性，例如方法调用、访问属性、调用构造函数等</b>
+<ul class="quote">
+<li>String类的Bytes属性通过以下的方法调用：String.getBytes(&quot;UTF-8&quot;)。</li>
+<li>SpEL同时也支持级联属性调用，和标准的prop1.prop2.prop3方式是一样的，同样属性值设置也是类似的方式。</li>
+<li>除了使用字符串表达式，也可以调用String的构造函数：new String(&quot;Hello World&quot;)。</li>
+<li>针对泛型方法的使用，例如：public &lt;T&gt; T getValue(Class&lt;T&gt; desiredResultType)，使用这样的方法不需要将表达式的值转换成具体的结果类型。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>root object</h4>
+<ul class="point">
+<li><b>SpEL中更常见的用途是提供一个针对特定对象实例(叫做根对象)求值的表达式字符串</b>
+<ul class="quote">
+<li>使用方法有两种，具体用哪一种要看每次调用表达式求值时相应的对象实例是否每次都会变化。</li>
+</ul>
+</li>
+<li><b>通过EvaluationContext设置root object</b>
+<ul class="quote">
+<li>从Inventor类的实例中解析name属性。</li>
+</ul>
+</li>
+<li><b>在每次调用getValue的时候被设置Root Object</b>
+<ul class="quote">
+<li>上面这个例子中inventor类实例tesla直接在getValue中设置，表达式解析器底层框架会自动创建和管理一个默认的求值上下文，不需要被显式声明。</li>
+</ul>
+</li>
+<li><b>实际场景</b>
+<ul class="quote">
+<li>在很多使用场景下，理想的方式是事先配置好求值上下文，但是在实际调用中仍然可以给getValue设置一个不同的根对象。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>EvaluationContext</h4>
+<ul class="point">
+<li><b>EvaluationContext接口在求值表达式中需要解析属性、方法、字段的值以及类型</b>
+<ul class="quote">
+<li>其默认实现类StandardEvaluationContext使用反射机制来操作对象。</li>
+</ul>
+</li>
+<li><b>在StandardEvaluationContext中，可以使用setRootObject()方法显式设置根对象，或通过构造器直接传入根对象，还可以通过调用setVariable()和registerFunction()方法指定在表达式中用到的变量和函数</b>
+<ul class="quote">
+<li>变量和函数的使用在官方语言参考文档中的 Variables和Functions两章节有详细说明。</li>
+<li>使用StandardEvaluationContext还可以注册自定义的构造器解析器(ConstructorResolvers)、方法解析器(MethodResolvers)和属性存取器(PropertyAccessor)来扩展SpEL计算表达式，详见具体类的JavaDoc文档。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>类型转换</h4>
+<ul class="point">
+<li><b>SpEL默认使用Spring核心代码中的conversion service来做类型转换</b>
+<ul class="quote">
+<li>这个类本身内置了很多常用的转换器，同时也可以扩展使用自定义的类型转换器。</li>
+<li>另外一个核心功能是它可以识别泛型，这意味着当在表达式中使用泛型类型时SpEL会确保任何处理的对象的类型正确性。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>SpelParserConfiguration编译器配置</h4>
+<ul class="point">
+<li><b>可以通过使用一个解析器配置对象(org.springframework.expression.spel. SpelParserConfiguration)来配置SpEL表达式解析器</b>
+<ul class="quote">
+<li>这个配置对象可以控制一些表达式组件的行为。</li>
+<li>例如：数组或者集合元素查找的时候，如果当前位置对应的对象是Null，可以通过事先配置来自动创建元素。</li>
+<li>在设置的数组或者List位置越界时，可以自动增加数组或者List长度来兼容。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>表达式模板设置</h4>
+<ul class="point">
+<li><b>表达式模板运行在一段文本中混合包含一个或多个求值表达式模块</b>
+<ul class="quote">
+<li>各个求值块都通过可被自定义的前后缀字符分隔，一个通用的选择是使用#{ }作为分隔符。</li>
+<li>求值的字符串是通过字符文本random number is以及 #{} 分隔符中的表达式求值结果拼接起来的。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>主要类关系图如图11-2所示。</h4>
+<ul class="point">
+</ul></div>
+<div class="sec">
+<h4>SpEL支持的一些特性</h4>
+<ul class="point">
+<li><b>SpEL支持字符表达式、布尔和关系操作符、正则表达式、类表达式等</b>
+<ul class="quote">
+<li>访问properties、arrays、lists、maps等集合。</li>
+<li>方法调用、关系操作符、赋值、调用构造器、Bean对象引用、创建数组、内联lists、内联maps、三元操作符、变量复值。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Data JPA中SpEL支持</h4>
+<ul class="point">
+<li><b>Spring Data JPA 1.4以后，支持在@Query中使用SpEL表达式来接收变量</b>
+<ul class="quote">
+<li>SpEL支持的变量：正如我们第4章讲的@Query查询中的 #entityName保留关键字。</li>
+<li>SpEL支持提供对查询方法参数的访问。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Cache中SpEL支持</h4>
+<ul class="point">
+<li><b>@Cacheable中key、condition、unless属性对SpEL的支持</b>
+<ul class="quote">
+<li>@CachePut对SpEL支持的实例：而其中#result 是Spring Cache中SpEL保留关键字。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>@Value</h4>
+<ul class="point">
+<li><b>通过@Value取配置文件里面的key和value是最常见的场景。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Web验证应用场景</h4>
+<ul class="point">
+<li><b>验证输入内容。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>总结</h4>
+<ul class="point">
+<li><b>如果SpEL用好了，可以贯穿Spring项目的整个生命周期</b>
+<ul class="quote">
+<li>当自己写框架的时候，可以考虑支持SpEL的语法，特别是当需要自己自定义注解的时候。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch64"><summary>第12章 Spring Data REST</summary>
+<div class="sec">
+<h4>Spring Data REST简介</h4>
+<ul class="point">
+<li><b>Spring Data REST是一个用于快速构建RESTful风格的API的Server端框架。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch65"><summary>12.1 快速入门</summary>
+<div class="sec">
+<h4>Spring Data REST介绍</h4>
+<ul class="point">
+<li><b>JSON API和Spring Data REST是Java社区常见的对HTTP的服务接口返回的JSON解决方案</b>
+<ul class="quote">
+<li>JSON API来自JSON的数据传输，它被隐式地定义在Ember的REST风格数据适配器中。</li>
+<li>Spring Data REST是基于Spring Data Repositories分析实体之间的关系，为我们生成Hypermedia API(HATEOAS)风格的Http RESTFul API接口。</li>
+</ul>
+</li>
+<li><b>Spring Data REST通常构建在Spring Data Repositories之上，自动将其导出为REST资源的api</b>
+<ul class="quote">
+<li>Spring Data REST利用超媒体来允许客户端查找存储库暴露的功能，并将这些资源自动集成到相关的超媒体功能中。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>快速开始</h4>
+<ul class="point">
+<li><b>使用Gradle、Spring Boot 2.0、Spring Data JPA和Spring Data REST快速建一个REST风格的消费Server版API</b>
+<ul class="quote">
+<li>为本地数据库建立两张表(user 1对多 user_address)。</li>
+<li>利用Gradle创建一个项目目录，引入相关jar包。</li>
+<li>配置application.properties。</li>
+<li>编写DemoApplication。</li>
+<li>创建User和UserRepository实体和接口。</li>
+<li>启动application，访问API。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Repository资源接口介绍</h4>
+<ul class="point">
+<li><b>Spring Data REST的核心功能是导出Spring Data Repositories的资源</b>
+<ul class="quote">
+<li>对于此存储库，Spring Data REST在/orders显示集合资源。</li>
+<li>它还为URI模板/orders/{id}下的存储库管理的每个项目公开了一个项目资源。</li>
+</ul>
+</li>
+<li><b>默认状态码</b>
+<ul class="quote">
+<li>200 OK：适用于纯粹的GET请求。</li>
+<li>201 Created：针对创建新资源的POST和PUT请求。</li>
+<li>204 No Content：对于PUT、PATCH和DELETE请求，如果配置设置为不返回资源更新的响应体。</li>
+</ul>
+</li>
+<li><b>支持的HTTP方法</b>
+<ul class="quote">
+<li>GET：返回单个实体。</li>
+<li>PUT：更新资源。</li>
+<li>PATCH：与PUT类似，但部分更新资源状态。</li>
+<li>DELETE：删除暴露的资源。</li>
+<li>POST：从给定的请求正文创建一个新的实体。</li>
+</ul>
+</li>
+<li><b>分页排序</b>
+<ul class="quote">
+<li>Spring Data REST会识别一些影响页面大小和起始页码的URL参数。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch66"><summary>12.2 Spring Data REST定制化</summary>
+<div class="sec">
+<h4>使用@RepositoryRestResource改变Repository对应的Path</h4>
+<ul class="point">
+<li><b>默认情况下，导出器将使用域类的名称来显示你的CrudRepository</b>
+<ul class="quote">
+<li>Spring Data REST还应用“Evo Inflector”来将资源定义成复数。</li>
+</ul>
+</li>
+<li><b>通过添加@RepositoryRestResource注解，可以更改资源的路径</b>
+<ul class="quote">
+<li>例如，向更改users的path请添加如下注解：@RepositoryRestResource(path = &quot;user&quot;)。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用@RestResource 改变SearchPath</h4>
+<ul class="point">
+<li><b>@RestResource注解可以用于Repository中的方法和@Entity的实体关系上</b>
+<ul class="quote">
+<li>示例1：作用在UserRepository方法上，访问http://127.0.0.1:8070/api/user/search会得到如下结果(注意：names和findName变化位置)。</li>
+<li>示例2：也可以填写在@Entity中的关联关系上，可以通过http://127.0.0.1:8070/api/user/1/userAddresses访问子资源。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>改变返回结果</h4>
+<ul class="point">
+<li><b>Spring Data REST是利用Jackson来处理JSON结果的，所以Jackson的注解同样在此起作用</b>
+<ul class="quote">
+<li>Jackson的@JsonIgnore用于阻止password字段序列化为JSON。</li>
+<li>Jackson的@JsonProperty用于改变JSON返回字段的名字。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>隐藏某些Repository、Repository的查询方法或@Entity关系字段</h4>
+<ul class="point">
+<li><b>使用@RestResource、@RepositoryRestResource注解它们，并设置exported = false</b>
+<ul class="quote">
+<li>例如，要跳过Repository：@RepositoryRestResource(exported = false)。</li>
+<li>要跳过查询方法：@RestResource(exported = false)。</li>
+<li>跳过字段：@JsonIgnore。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>隐藏Repository的CRUD方法</h4>
+<ul class="point">
+<li><b>如果你不想在CrudRepository上公开保存或删除方法，则可以使用@RestResource(exported = false) 设置来覆盖要关闭的方法</b>
+<ul class="quote">
+<li>例如，为了防止HTTP用户调用CrudRepository的删除方法，请覆盖所有这些删除方法，并将注释添加到覆盖方法中。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>自定义JSON输出</h4>
+<ul class="point">
+<li><b>Spring Data REST提供与Spring HATEOAS的集成，并为用户提供一个扩展挂钩来更改向客户端出来的资源的表示</b>
+<ul class="quote">
+<li>Spring HATEOAS定义了一个用于处理实体的ResourceProcessor&lt;&gt;接口。</li>
+<li>类型为ResourceProcessor&lt;Resource&lt;T&gt;&gt;的所有bean将自动由Spring Data REST导出器拾取，并在序列化类型为T的实体时触发。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch67"><summary>12.3 Spring Boot 2.0加载原理</summary>
+<div class="sec">
+<h4>Spring Boot 2.0加载原理</h4>
+<ul class="point">
+<li><b>Spring Boot 2.0通过AutoConfigure帮我们做了自动加载RepositoryRest的事情</b>
+<ul class="quote">
+<li>AutoConfigure所在的jar包下面，我们可以找到spring.factories文件，里面有默认加载的类，我们可以找到org.springframework.boot.autoconfigure.data.rest.RepositoryRestMvcAutoConfiguration。</li>
+</ul>
+</li>
+<li><b>我们可以通过application.properties添加spring.data.rest***来配置Spring Data REST的很多默认值</b>
+<ul class="quote">
+<li>打开RepositoryRestProperties，我们可以看到有很多默认配置。</li>
+</ul>
+</li>
+<li><b>如果你有一个现成的Spring MVC应用程序，希望集成Spring Data REST，其实很简单</b>
+<ul class="quote">
+<li>你的Spring MVC配置(很可能在配置MVC资源的地方)的某处会向负责配置RepositoryRestController的JavaConfig类添加一个bean引用。类名称为org.springframework.data.rest.webmvc.RepositoryRestMvcConfiguration。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch68"><summary>12.4 未来发展</summary>
+<div class="sec">
+<h4>Spring Data REST的发展前景</h4>
+<ul class="point">
+<li><b>Spring Data REST是Spring的全家桶项目之一，对 Spring Security、Spring Boot、Spring Cloud等结合起来使用比较方便。</b>
+</li>
+<li><b>Spring Data REST可能会渐渐地进入大家的视野。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>JSON API协议的发展</h4>
+<ul class="point">
+<li><b>JSON API协议也在逐步进入程序员的视野</b>
+<ul class="quote">
+<li>JSON API规定了最新的REST的HTTP协议的格式和交互方式。</li>
+</ul>
+</li>
+<li><b>不知道不久的将来Spring是否会考虑支持JSON API的协议规范。</b>
+</li>
+</ul></div>
+</details>
+  <p class="site-footer">由 weread-auto 导出 · 供全书视角与后续精读对照　<span class="gcstat" id="gc_page_pv" style="display:none">本页阅读 <b id="gc_page_pv_num">–</b> 次</span></p>
+</main>
+<script>(function(){
+  function openId(id){
+    if(!id) return null;
+    var el = document.getElementById(id);
+    if(!el) return null;
+    var d = (el.tagName === 'DETAILS') ? el : (el.closest ? el.closest('details') : null);
+    if(d && !d.open) d.open = true;      // 关键：目录跳过来时把这一章展开
+    return el;
+  }
+  function go(id){
+    var el = openId(id);
+    if(!el) return;
+    // 展开会改变文档高度，等一帧再滚，免得停在错误位置
+    setTimeout(function(){ el.scrollIntoView({block:'start'}); }, 10);
+  }
+  function fromHash(){
+    var h = (location.hash || '').replace(/^#/, '');
+    if(h) go(decodeURIComponent(h));
+  }
+  document.addEventListener('click', function(e){
+    var a = (e.target && e.target.closest) ? e.target.closest('a[href^="#"]') : null;
+    if(!a) return;
+    var id = (a.getAttribute('href') || '').slice(1);
+    if(id) go(id);
+  }, false);
+  window.addEventListener('hashchange', fromHash, false);
+  // 手动展开某章时把锚点写回地址栏：刷新或分享链接能直接落回这一章
+  document.addEventListener('toggle', function(e){
+    var t = e.target;
+    if(t && t.tagName === 'DETAILS' && t.open && t.id && location.hash !== '#' + t.id){
+      try { history.replaceState(null, '', '#' + t.id); } catch(err) {}
+    }
+  }, true);
+  fromHash();
+})();
+</script>
+<script data-goatcounter="https://ae6623.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<!-- gc-fill:begin -->
+<script>
+(function(){
+  /* GoatCounter 计数端点只吃 .json（.txt 会 400 unknown extension），
+     没数据的路径也返回 404 + {"count":0,"count_unique":0}，所以按文本解析。 */
+  var C="ae6623", base="https://"+C+".goatcounter.com/counter";
+  function stat(p){
+    return fetch(base+p+".json",{credentials:"omit",cache:"no-store"})
+      .then(function(r){return r.text();})
+      .then(function(t){
+        try{
+          var d=JSON.parse(t), c=parseInt(d.count,10);
+          if(!isFinite(c))return null;
+          var u=parseInt(d.count_unique,10);
+          return {pv:String(c), uv:isFinite(u)?String(u):null};
+        }catch(e){return null}
+      })
+      .catch(function(){return null});
+  }
+  function put(id,v){var e=document.getElementById(id);if(e&&v!=null)e.textContent=v;}
+  stat("/*").then(function(d){
+    if(!d)return;
+    put("gc_site_pv_num",d.pv);
+    if(d.uv!=null){put("gc_site_uv_num",d.uv);}
+    else{var x=document.querySelectorAll(".visit-badge-uv");
+         for(var i=0;i<x.length;i++)x[i].style.display="none";}
+  });
+  var pp=document.getElementById("gc_page_pv");
+  if(pp&&location.pathname){
+    var path=location.pathname;
+    if(path.length>1&&path.charAt(path.length-1)==="/")path=path.slice(0,-1);
+    stat(path).then(function(d){
+      if(d){put("gc_page_pv_num",d.pv);pp.style.display="";}
+    });
+  }
+})();
+</script>
+<!-- gc-fill:end -->
+</body>
+</html>

@@ -1,21 +1,3603 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Service Mesh微服务架构设计 · AI 大纲</title><style>
-:root{--fg:#1f2328;--muted:#6b7280;--line:#e6e2da;--accent:#b45309;--bg:#fbfaf7}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.78 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
-.wrap{max-width:840px;margin:0 auto;padding:38px 22px 90px}
-h1{font-size:26px;line-height:1.35;margin:0 0 6px}
-.meta{color:var(--muted);font-size:14px;margin-bottom:20px}
-h2{font-size:19px;margin:34px 0 12px;padding-left:10px;border-left:4px solid var(--accent)}
-h3{font-size:16px;margin:18px 0 8px}
-p{margin:8px 0}
-.tag{display:inline-block;background:#f2ede2;color:#8a6d3b;font-size:12px;padding:1px 9px;border-radius:10px;margin-right:6px}
-ul,ol{padding-left:22px}li{margin:4px 0}
-.quote{border-left:3px solid #d8cfbd;padding:6px 12px;color:#4b4639;background:#f7f4ee;margin:8px 0;font-size:15px;border-radius:0 6px 6px 0}
-.src{color:var(--muted);font-size:12px}
-.ch{display:flex;gap:10px;padding:7px 0;border-bottom:1px dashed var(--line)}
-.ch .no{color:var(--accent);font-weight:600;min-width:34px;text-align:right}
-.card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:12px 0}
-.foot{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
-a{color:#8a5a00;text-decoration:none}a:hover{text-decoration:underline}
-.badge{font-size:12px;color:#8a6d3b;background:#f6f1e6;border:1px solid #eadfc6;border-radius:6px;padding:1px 7px}
-</style></head><body><div class="wrap"><h1>Service Mesh微服务架构设计</h1><div class="meta"><span class="tag">AI 大纲</span>刘俊海　·　共 78 章</div><h2>全书提要</h2><p>本书分为两篇，共计10章。基础篇（第1～3章），本篇着重讲解微服务架构和治理，以及Service Mesh技术当前的现状。第1章为微服务架构，聚焦微服务实施的时机、准备工作和具体实施等；第2章为微服务治理，通过服务治理解决引入微服务后带来的一系列挑战；第3章为Service Mesh概述，讲述为什么Service Mesh能够解决微服务治理中的痛点问题，以及Service Mesh的发展历程和当前现状。架构篇（第4～10章），本篇深入剖析Istio/Envoy在架构设计层面的原理和实现，以及Service Mesh未来展望。第4章详细分析Envoy的整体架构，并且就架构设计层面与Nginx进行全方位的对比分析；第5章分析Istio的整体架构以及各个组件的功能和设计；第6章和第7章分别从控制流与数据流的角度，分析请求的处理策略与配置以及在整个Service Mesh中的流向和处理；第8章讨论Istio的服务治理，重点聚焦可观测性和链路治理；第9章讨论如何将Service Mesh中的一些架构思想和设计运用到平常的工程架构中去。第10章展望Service Mesh技术在云原生架构下的未来和发展。其中，第4～7章为本书的重点章节，如果你没有充足的时间完成全书的阅读，可以选择阅读重点章节。如果你是有着一定经验的资深人员，本书会是一本不错的案头书。</p><h2>章节大纲（含各章热门划线原文）</h2><div class="ch"><span class="no">1</span><div><b>前言</b><span class="src"> · 1587 字</span></div></div><div class="ch"><span class="no">2</span><div><b>第一篇 基础篇</b><span class="src"> · 137 字</span></div></div><div class="ch"><span class="no">3</span><div><b>1.1 为什么需要微服务</b><span class="src"> · 1965 字</span><div class="quote">微服务不只是个技术问题，更多的是关于组织和团队的问题，系统架构和组织之间存在映射关系，如果组织结构不支持，则无法建立高效的系统架构，反之也是这样。 <span class="src">[48人划线]</span></div><div class="quote">通过将单个服务拆分成多个微服务，多个微服务可以独立开发、独立测试、独立运维，不同团队可以并行开发，互不影响，可以有力地支撑业务的快速迭代，方便业务创新和试错。 <span class="src">[33人划线]</span></div></div></div><div class="ch"><span class="no">4</span><div><b>1.2 微服务架构的挑战</b><span class="src"> · 1997 字</span><div class="quote">微服务架构最大的挑战在运维上，微服务的复杂性给微服务运维带来了很多难题 <span class="src">[22人划线]</span></div></div></div><div class="ch"><span class="no">5</span><div><b>1.3 微服务化的具体时机</b><span class="src"> · 1281 字</span><div class="quote">特别是在业务发展初期，团队人员不多，对微服务周边技术和基础设施的积累不够，贸然采取微服务架构，不仅无法带来预期的收益，还可能严重阻碍业务的快速迭代，严重时甚至可能变成一个灾难 <span class="src">[32人划线]</span></div></div></div><div class="ch"><span class="no">6</span><div><b>1.4 微服务化开展前的准备工作</b><span class="src"> · 8387 字</span></div></div><div class="ch"><span class="no">7</span><div><b>1.5 微服务实施</b><span class="src"> · 7090 字</span><div class="quote">一个请求的处理过程中经过的微服务个数不要超过5个 <span class="src">[51人划线]</span></div><div class="quote">微服务拆分的一个非常重要原则是无状态，无状态服务方便扩展和运维，所以无状态设计需要贯穿到微服务架构设计的全局层面进行思考。 <span class="src">[36人划线]</span></div></div></div><div class="ch"><span class="no">8</span><div><b>1.6 本章小结</b><span class="src"> · 260 字</span></div></div><div class="ch"><span class="no">9</span><div><b>第2章 微服务治理</b><span class="src"> · 113 字</span></div></div><div class="ch"><span class="no">10</span><div><b>2.1 微服务治理基础</b><span class="src"> · 2571 字</span></div></div><div class="ch"><span class="no">11</span><div><b>2.2 正向服务治理</b><span class="src"> · 3916 字</span></div></div><div class="ch"><span class="no">12</span><div><b>2.3 效果治理</b><span class="src"> · 951 字</span></div></div><div class="ch"><span class="no">13</span><div><b>2.4 可见可观测</b><span class="src"> · 6135 字</span></div></div><div class="ch"><span class="no">14</span><div><b>2.5 量化分析体系</b><span class="src"> · 1994 字</span></div></div><div class="ch"><span class="no">15</span><div><b>2.6 线上治理</b><span class="src"> · 4056 字</span></div></div><div class="ch"><span class="no">16</span><div><b>2.7 线下治理</b><span class="src"> · 3257 字</span></div></div><div class="ch"><span class="no">17</span><div><b>2.8 服务治理演进</b><span class="src"> · 2820 字</span></div></div><div class="ch"><span class="no">18</span><div><b>2.9 理想的服务治理架构</b><span class="src"> · 455 字</span></div></div><div class="ch"><span class="no">19</span><div><b>2.10 本章小结</b><span class="src"> · 107 字</span></div></div><div class="ch"><span class="no">20</span><div><b>第3章 下一代微服务框架Service Mesh概要</b><span class="src"> · 152 字</span></div></div><div class="ch"><span class="no">21</span><div><b>3.1 Service Mesh基础</b><span class="src"> · 3097 字</span></div></div><div class="ch"><span class="no">22</span><div><b>3.2 Service Mesh的发展历程</b><span class="src"> · 1577 字</span></div></div><div class="ch"><span class="no">23</span><div><b>3.3 Service Mesh项目Linkerd</b><span class="src"> · 4688 字</span></div></div><div class="ch"><span class="no">24</span><div><b>3.4 Service Mesh项目Istio</b><span class="src"> · 2464 字</span></div></div><div class="ch"><span class="no">25</span><div><b>3.5 Service Mesh其他解决方案</b><span class="src"> · 2433 字</span></div></div><div class="ch"><span class="no">26</span><div><b>3.6 Service Mesh云上产品</b><span class="src"> · 1881 字</span></div></div><div class="ch"><span class="no">27</span><div><b>3.7 Service Mesh标准化</b><span class="src"> · 378 字</span></div></div><div class="ch"><span class="no">28</span><div><b>3.8 本章小结</b><span class="src"> · 183 字</span></div></div><div class="ch"><span class="no">29</span><div><b>第二篇 架构篇</b><span class="src"> · 128 字</span></div></div><div class="ch"><span class="no">30</span><div><b>4.1 Envoy整体架构</b><span class="src"> · 2453 字</span><div class="quote">Envoy线程模型由负责控制流的主线程和负责数据流的工作线程组成，其中工作线程池的线程个数和CPU核数相当即可 <span class="src">[34人划线]</span></div></div></div><div class="ch"><span class="no">31</span><div><b>4.2 Envoy网络模型</b><span class="src"> · 7046 字</span></div></div><div class="ch"><span class="no">32</span><div><b>4.3 Envoy扩展模型</b><span class="src"> · 4559 字</span></div></div><div class="ch"><span class="no">33</span><div><b>4.4 Envoy数据平面API</b><span class="src"> · 2649 字</span></div></div><div class="ch"><span class="no">34</span><div><b>4.5 Envoy启动管理</b><span class="src"> · 3577 字</span></div></div><div class="ch"><span class="no">35</span><div><b>4.6 Envoy与Nginx架构层面的对比</b><span class="src"> · 5335 字</span></div></div><div class="ch"><span class="no">36</span><div><b>4.7 本章小结</b><span class="src"> · 92 字</span></div></div><div class="ch"><span class="no">37</span><div><b>第5章 Istio架构剖析</b><span class="src"> · 87 字</span></div></div><div class="ch"><span class="no">38</span><div><b>5.1 Istio整体架构</b><span class="src"> · 2772 字</span></div></div><div class="ch"><span class="no">39</span><div><b>5.2 Istio的Kubernetes基础</b><span class="src"> · 8350 字</span></div></div><div class="ch"><span class="no">40</span><div><b>5.3 Istio流量控制模型</b><span class="src"> · 6511 字</span></div></div><div class="ch"><span class="no">41</span><div><b>5.4 Mixer模型</b><span class="src"> · 3446 字</span></div></div><div class="ch"><span class="no">42</span><div><b>5.5 Istio安全</b><span class="src"> · 1605 字</span></div></div><div class="ch"><span class="no">43</span><div><b>5.6 Istio配置处理框架</b><span class="src"> · 1019 字</span></div></div><div class="ch"><span class="no">44</span><div><b>5.7 本章小结</b><span class="src"> · 64 字</span></div></div><div class="ch"><span class="no">45</span><div><b>第6章 Istio控制流设计</b><span class="src"> · 301 字</span></div></div><div class="ch"><span class="no">46</span><div><b>6.1 Envoy生命周期管理</b><span class="src"> · 3211 字</span></div></div><div class="ch"><span class="no">47</span><div><b>6.2 Istio配置变更管理</b><span class="src"> · 2773 字</span></div></div><div class="ch"><span class="no">48</span><div><b>6.3 控制平面和数据平面的XDS交互</b><span class="src"> · 2797 字</span></div></div><div class="ch"><span class="no">49</span><div><b>6.4 XDS配置生成</b><span class="src"> · 5102 字</span></div></div><div class="ch"><span class="no">50</span><div><b>6.5 XDS配置的Envoy处理</b><span class="src"> · 2925 字</span></div></div><div class="ch"><span class="no">51</span><div><b>6.6 本章小结</b><span class="src"> · 127 字</span></div></div><div class="ch"><span class="no">52</span><div><b>第7章 Istio数据流设计</b><span class="src"> · 671 字</span></div></div><div class="ch"><span class="no">53</span><div><b>7.1 Iptables</b><span class="src"> · 1652 字</span></div></div><div class="ch"><span class="no">54</span><div><b>7.2 监听管理</b><span class="src"> · 881 字</span></div></div><div class="ch"><span class="no">55</span><div><b>7.3 连接管理</b><span class="src"> · 791 字</span></div></div><div class="ch"><span class="no">56</span><div><b>7.4 网络I/O和缓冲区管理</b><span class="src"> · 1855 字</span></div></div><div class="ch"><span class="no">57</span><div><b>7.5 Thrift协议处理</b><span class="src"> · 1129 字</span></div></div><div class="ch"><span class="no">58</span><div><b>7.6 HTTP请求处理</b><span class="src"> · 5365 字</span></div></div><div class="ch"><span class="no">59</span><div><b>7.7 本章小结</b><span class="src"> · 107 字</span></div></div><div class="ch"><span class="no">60</span><div><b>第8章 Istio微服务治理</b><span class="src"> · 130 字</span></div></div><div class="ch"><span class="no">61</span><div><b>8.1 链路稳定性治理</b><span class="src"> · 4414 字</span></div></div><div class="ch"><span class="no">62</span><div><b>8.2 链路可观测性</b><span class="src"> · 1668 字</span></div></div><div class="ch"><span class="no">63</span><div><b>8.3 本章小结</b><span class="src"> · 106 字</span></div></div><div class="ch"><span class="no">64</span><div><b>第9章 Service Mesh架构的工程化设计</b><span class="src"> · 455 字</span></div></div><div class="ch"><span class="no">65</span><div><b>9.1 复用和解耦</b><span class="src"> · 1323 字</span></div></div><div class="ch"><span class="no">66</span><div><b>9.2 架构扩展机制</b><span class="src"> · 1019 字</span></div></div><div class="ch"><span class="no">67</span><div><b>9.3 性能设计</b><span class="src"> · 949 字</span></div></div><div class="ch"><span class="no">68</span><div><b>9.4 架构设计的权衡</b><span class="src"> · 1207 字</span></div></div><div class="ch"><span class="no">69</span><div><b>9.5 API和SDK设计</b><span class="src"> · 796 字</span></div></div><div class="ch"><span class="no">70</span><div><b>9.6 配置管理</b><span class="src"> · 2728 字</span></div></div><div class="ch"><span class="no">71</span><div><b>9.7 本章小结</b><span class="src"> · 59 字</span></div></div><div class="ch"><span class="no">72</span><div><b>第10章 Service Mesh与云原生架构</b><span class="src"> · 117 字</span></div></div><div class="ch"><span class="no">73</span><div><b>10.1 Service Mesh和Serverless</b><span class="src"> · 4630 字</span></div></div><div class="ch"><span class="no">74</span><div><b>10.2 东西向和南北向通信的统一</b><span class="src"> · 1059 字</span></div></div><div class="ch"><span class="no">75</span><div><b>10.3 云原生时代的Service Mesh</b><span class="src"> · 1151 字</span></div></div><div class="ch"><span class="no">76</span><div><b>10.4 Service Mesh现状和展望</b><span class="src"> · 1050 字</span></div></div><div class="ch"><span class="no">77</span><div><b>10.5 本章小结</b><span class="src"> · 103 字</span></div></div><div class="ch"><span class="no">78</span><div><b>附录 Service Mesh迁移的要点与原则</b><span class="src"> · 3847 字</span></div></div><div class="foot">来源：微信读书官方章节接口 + 热门划线接口，逐字原文　·　生成于 2026-11-01 13:10　·　开读即产（不等完读）</div></div></body></html>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Service Mesh微服务架构设计 AI 大纲">
+<title>《Service Mesh微服务架构设计》｜AI 大纲</title>
+<link rel="stylesheet" href="../../../assets/css/site.css">
+<link rel="stylesheet" href="../../../assets/css/reading-outline.css">
+
+</head>
+<body>
+<main class="page">
+  <header class="note-head">
+    <p class="eyebrow">AI OUTLINE · BEFORE READING</p>
+    <h1>《Service Mesh微服务架构设计》AI 大纲</h1>
+    <p class="meta">作者：—　·　共 72 章 / 1138 条　·　AI 读书 · 全书大纲</p>
+    <p><a href="../../../index.html">← 返回首页</a>　<a href="../../index.html">阅读归档索引</a>　<a href="outline.epub" download>下载 EPUB ↓</a></p>
+    <div class="chips"><span class="chip">全书视角</span><span class="chip">AI 生成</span><span class="chip">含原文摘录</span></div>
+    <p class="small">本大纲由 AI 读书（阅读端智能大纲）生成，是全书结构与要点的机器梳理，
+    <b>不等同于已亲读</b>；其中第 4 层条目为书中原句摘录。章节可展开查看。</p>
+  </header>
+  <div class="toc"><b>章节目录</b><ul>
+<li><a href="#ch0">第一篇 基础篇</a></li>
+<li><a href="#ch1">1.1 为什么需要微服务</a></li>
+<li><a href="#ch2">1.2 微服务架构的挑战</a></li>
+<li><a href="#ch3">1.3 微服务化的具体时机</a></li>
+<li><a href="#ch4">1.4 微服务化开展前的准备工作</a></li>
+<li><a href="#ch5">1.5 微服务实施</a></li>
+<li><a href="#ch6">1.6 本章小结</a></li>
+<li><a href="#ch7">第2章 微服务治理</a></li>
+<li><a href="#ch8">2.1 微服务治理基础</a></li>
+<li><a href="#ch9">2.2 正向服务治理</a></li>
+<li><a href="#ch10">2.3 效果治理</a></li>
+<li><a href="#ch11">2.4 可见可观测</a></li>
+<li><a href="#ch12">2.5 量化分析体系</a></li>
+<li><a href="#ch13">2.6 线上治理</a></li>
+<li><a href="#ch14">2.7 线下治理</a></li>
+<li><a href="#ch15">2.8 服务治理演进</a></li>
+<li><a href="#ch16">2.9 理想的服务治理架构</a></li>
+<li><a href="#ch17">2.10 本章小结</a></li>
+<li><a href="#ch18">第3章 下一代微服务框架Service Mesh概要</a></li>
+<li><a href="#ch19">3.1 Service Mesh基础</a></li>
+<li><a href="#ch20">3.2 Service Mesh的发展历程</a></li>
+<li><a href="#ch21">3.3 Service Mesh项目Linkerd</a></li>
+<li><a href="#ch22">3.4 Service Mesh项目Istio</a></li>
+<li><a href="#ch23">3.5 Service Mesh其他解决方案</a></li>
+<li><a href="#ch24">3.6 Service Mesh云上产品</a></li>
+<li><a href="#ch25">3.7 Service Mesh标准化</a></li>
+<li><a href="#ch26">3.8 本章小结</a></li>
+<li><a href="#ch27">第二篇 架构篇</a></li>
+<li><a href="#ch28">4.1 Envoy整体架构</a></li>
+<li><a href="#ch29">4.2 Envoy网络模型</a></li>
+<li><a href="#ch30">4.3 Envoy扩展模型</a></li>
+<li><a href="#ch31">4.4 Envoy数据平面API</a></li>
+<li><a href="#ch32">4.5 Envoy启动管理</a></li>
+<li><a href="#ch33">4.6 Envoy与Nginx架构层面的对比</a></li>
+<li><a href="#ch34">5.1 Istio整体架构</a></li>
+<li><a href="#ch35">5.2 Istio的Kubernetes基础</a></li>
+<li><a href="#ch36">5.3 Istio流量控制模型</a></li>
+<li><a href="#ch37">5.4 Mixer模型</a></li>
+<li><a href="#ch38">5.5 Istio安全</a></li>
+<li><a href="#ch39">5.6 Istio配置处理框架</a></li>
+<li><a href="#ch40">第6章 Istio控制流设计</a></li>
+<li><a href="#ch41">6.1 Envoy生命周期管理</a></li>
+<li><a href="#ch42">6.2 Istio配置变更管理</a></li>
+<li><a href="#ch43">6.3 控制平面和数据平面的XDS交互</a></li>
+<li><a href="#ch44">6.4 XDS配置生成</a></li>
+<li><a href="#ch45">6.5 XDS配置的Envoy处理</a></li>
+<li><a href="#ch46">6.6 本章小结</a></li>
+<li><a href="#ch47">第7章 Istio数据流设计</a></li>
+<li><a href="#ch48">7.1 Iptables</a></li>
+<li><a href="#ch49">7.2 监听管理</a></li>
+<li><a href="#ch50">7.3 连接管理</a></li>
+<li><a href="#ch51">7.4 网络I/O和缓冲区管理</a></li>
+<li><a href="#ch52">7.5 Thrift协议处理</a></li>
+<li><a href="#ch53">7.6 HTTP请求处理</a></li>
+<li><a href="#ch54">7.7 本章小结</a></li>
+<li><a href="#ch55">第8章 Istio微服务治理</a></li>
+<li><a href="#ch56">8.1 链路稳定性治理</a></li>
+<li><a href="#ch57">8.2 链路可观测性</a></li>
+<li><a href="#ch58">8.3 本章小结</a></li>
+<li><a href="#ch59">第9章 Service Mesh架构的工程化设计</a></li>
+<li><a href="#ch60">9.1 复用和解耦</a></li>
+<li><a href="#ch61">9.2 架构扩展机制</a></li>
+<li><a href="#ch62">9.3 性能设计</a></li>
+<li><a href="#ch63">9.4 架构设计的权衡</a></li>
+<li><a href="#ch64">9.5 API和SDK设计</a></li>
+<li><a href="#ch65">9.6 配置管理</a></li>
+<li><a href="#ch66">第10章 Service Mesh与云原生架构</a></li>
+<li><a href="#ch67">10.1 Service Mesh和Serverless</a></li>
+<li><a href="#ch68">10.2 东西向和南北向通信的统一</a></li>
+<li><a href="#ch69">10.3 云原生时代的Service Mesh</a></li>
+<li><a href="#ch70">10.4 Service Mesh现状和展望</a></li>
+<li><a href="#ch71">10.5 本章小结</a></li>
+</ul></div>
+<details class="ch" id="ch0"><summary>第一篇 基础篇</summary>
+<div class="sec">
+<h4>微服务架构概述</h4>
+<ul class="point">
+<li><b>微服务在解决业务复杂性、架构可扩展性等问题的同时，也带来了很多技术上的挑战。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch1"><summary>1.1 为什么需要微服务</summary>
+<div class="sec">
+<h4>传统单体服务的问题</h4>
+<ul class="point">
+<li><b>开发效率低，代码并入时经常会出现相互等待和代码并入冲突的现象</b>
+<ul class="quote">
+<li>所有开发者都在一个项目里面进行修改，多人同时操作一份代码，出错的概率也会增加。</li>
+</ul>
+</li>
+<li><b>可维护性差，业务修改和问题追查定位都非常困难</b>
+<ul class="quote">
+<li>单个开发者不太可能完全掌控整个业务，增加新功能或者修改原有功能时更多像是在打补丁。</li>
+</ul>
+</li>
+<li><b>架构扩展性差，不同模块可能有不同的架构要求，单体服务很难照顾到大家的差异化需求</b>
+<ul class="quote">
+<li>如果想针对某个模块进行新架构和新语言的调整与支持，也比较困难。</li>
+</ul>
+</li>
+<li><b>部署不灵活，任何一处很小的改动，都需要对整个服务进行编译、部署和上线</b>
+<ul class="quote">
+<li>这可能会影响整个系统的稳定性，同时很难对某个特定的模块进行单独的容量规划和部署设计。</li>
+</ul>
+</li>
+<li><b>健壮性差，单体服务的所有模块都在一起，某个模块出现严重问题，会导致整个业务不可用</b>
+<ul class="quote">
+<li>当业务代码规模很庞大时，系统的故障点会很多，严重影响业务的健壮性和可用性。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>微服务的定义</h4>
+<ul class="point">
+<li><b>微服务架构是将单个服务拆分成一系列小服务，这些小服务都拥有独立的进程，通过HTTP RESTful API之类的轻量级通信方式进行通信</b>
+<ul class="quote">
+<li>作为独立的业务服务，则可采用一些自动化部署机制独立部署，每个服务可以使用不同的开发语言和数据存储技术，实现去中心化的服务管理。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>微服务与康威定律</h4>
+<ul class="point">
+<li><b>康威定律指出，设计系统的组织，其产生的设计等同于组织之内、组织之间的沟通结构</b>
+<ul class="quote">
+<li>架构设计必须解决沟通问题，好的设计应该降低沟通复杂度。</li>
+<li>一个系统没法一次做完美，迭代升级应该是常态。</li>
+<li>人员组织结构一般会与系统设计趋同，你想要什么样的系统就需要什么样的组织结构。</li>
+<li>大系统终究会拆解成小系统，“合久必分，分而治之”。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>微服务的收益</h4>
+<ul class="point">
+<li><b>通过将单个服务拆分成多个微服务，多个微服务可以独立开发、独立测试、独立运维，不同团队可以并行开发，互不影响，可以有力地支撑业务的快速迭代，方便业务创新和试错</b>
+<ul class="quote">
+<li>互联网业务的两个显著特点是业务发展快和业务高并发，微服务在这两个方面均有很大的收益。</li>
+</ul>
+</li>
+<li><b>微服务架构将单个服务拆分为多个子服务，每个微服务均可以独立进行容量评估，非常灵活，可以很好地支撑业务的高并发需求</b>
+<ul class="quote">
+<li>互联网业务通过业务模式创新和运营模式创新，用户和流量变化很快，需要从架构层面支撑业务流量的伸缩变化。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch2"><summary>1.2 微服务架构的挑战</summary>
+<div class="sec">
+<h4>微服务架构的挑战</h4>
+<ul class="point">
+<li><b>服务拆分是微服务架构过程中最重要的一步</b>
+<ul class="quote">
+<li>糟糕的服务拆分会影响后续的服务化过程，严重时可能会导致大量的返工，甚至是推倒重来。</li>
+<li>好的服务化拆分，意味着服务化已经成功了一半。</li>
+</ul>
+</li>
+<li><b>微服务背景下，微服务的定位是实现特定的业务功能，因此会有大量新增微服务的需求</b>
+<ul class="quote">
+<li>业务写一个在线的服务，除了实现必需的功能外，还有众多非功能需求要考虑，常见的非功能需求有可扩展性、稳定性、兼容性、健壮性、安全性、性能等。</li>
+<li>微服务众多，如果大家没有遵循一致的开发模式和通信模式，跨微服务的沟通成本很大，会给开发、测试、运维等环节带来很大的开销。</li>
+</ul>
+</li>
+<li><b>微服务架构下，整个系统有一系列承载明确功能的微服务，通过一定的微服务通信组成，微服务架构的特点对软件测试也提出了一些挑战</b>
+<ul class="quote">
+<li>如何快速构建简单易用的测试环境，是一个很大的挑战。</li>
+<li>微服务架构下，依赖和网络的细微变化，就可能导致测试结果发生变化，给测试场景和测试用例的构造带来很多困难，如何增加测试的确定性，保障测试效率和效果，是摆在大家面前的一个重要问题。</li>
+<li>微服务架构对服务治理有很高的要求，微服务治理相关的非功能需求很多，如降级限流、超时熔断、容灾容错设计等，因此需要构建一套针对微服务非功能需求进行测试的基础设施，保证微服务治理相关的非功能需求的有效性，增加微服务的可用性和安全性。</li>
+<li>微服务背景下，服务个数变多，服务变更频繁，对自动化测试的要求也会更高，很多线下测试没有问题的服务，线上可能会出问题，如果能够构建一套生产环境可用的自动化测试基础设施，对微服务的测试效率和效果会有很大的帮助。</li>
+</ul>
+</li>
+<li><b>监控上，单体服务的监控比较简单，微服务背景下，一个服务变为多个服务，需要对多个服务分别进行监控，对多个服务之间的通信也需要监控，监控管理变得非常复杂</b>
+<ul class="quote">
+<li>部署上，微服务拓扑复杂，有太多服务需要维护和管理，并且服务变更很频繁，对服务的部署和运维提出很高的要求。</li>
+<li>问题追查上，单体服务的请求在一个服务内完成，微服务的请求由多个微服务协作完成，每个微服务也部署多个节点，整个调用链路很长，业务出现问题时，如何在比较短的时间内快速找出具体问题所在，是个很大的挑战。</li>
+<li>依赖管理上，微服务依赖众多，如果每个依赖发生故障都会影响系统的整体稳定性，系统就会变得非常脆弱，因此需要对服务的各种依赖进行有效管理，比如哪些是强依赖，哪些是弱依赖，依赖故障对整个系统的影响，这些问题都需要提前预估并制定相应的预案。</li>
+<li>容量管理上，如何在细粒度的状态下，更有效地管理数量庞大的微服务，如何预估系统的容量，业务爆炸式增长或者通过运营手段导致业务流量突增时，如何快速扩容？如何在保障业务稳定发展的同时，控制成本支出。微服务的容量管理和容量规划是个系统工程，需要在效率和成本之间有很好平衡，需要有完善的基础设施支持。精细化的容量管理需要做到可视化、可量化、可优化，对运维提出了很高的要求。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch3"><summary>1.3 微服务化的具体时机</summary>
+<div class="sec">
+<h4>微服务化的具体时机</h4>
+<ul class="point">
+<li><b>微服务拆分在业务发展初期可能阻碍业务的快速迭代</b>
+<ul class="quote">
+<li>团队人员不多，对微服务周边技术和基础设施的积累不够。</li>
+<li>单个服务开发、测试和部署都相对简单，遇到的技术难度相对较少。</li>
+</ul>
+</li>
+<li><b>微服务改造之前，应多进行一些微服务架构相关的技术储备</b>
+<ul class="quote">
+<li>当单体服务的痛点达到一定程度，已经影响业务的正常迭代效率，才需要考虑微服务改造。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>评估微服务拆分时机的业务视角</h4>
+<ul class="point">
+<li><b>频繁出现因为需求排队上线而延期的现象时，可以考虑进行微服务拆分</b>
+<ul class="quote">
+<li>微服务拆分后，大家可以独享服务的上线窗口，加快并行开发的效率。</li>
+</ul>
+</li>
+<li><b>频繁出现代码提交冲突的现象时，可以考虑进行微服务拆分</b>
+<ul class="quote">
+<li>微服务拆分可以提高并行开发的效率，同时减少出错的概率。</li>
+</ul>
+</li>
+<li><b>频繁出现一个简单功能特性需要同时修改众多文件的场景时，可以考虑进行微服务改造</b>
+<ul class="quote">
+<li>服务代码量太庞大，并且代码结构组织不好，各种时期的历史代码，以及一些临时添加的代码遍布各处。</li>
+<li>由于不了解代码的全貌，每次修改都小心翼翼，一不小心就很容易出错。</li>
+</ul>
+</li>
+<li><b>业务高并发不是微服务的一个重要拆分时机</b>
+<ul class="quote">
+<li>对于快速成长的业务，业务迭代效率永远是第一位的，其次才是业务稳定性。</li>
+<li>成本一般在业务发展到一定阶段，业务成熟并且模式比较固定的时候才会提到一定的高度。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch4"><summary>1.4 微服务化开展前的准备工作</summary>
+<div class="sec">
+<h4>微服务开发框架</h4>
+<ul class="point">
+<li><b>微服务开发框架是为了实现非功能需求，提高微服务开发效率</b>
+<ul class="quote">
+<li>一个运行良好的服务，不仅需要完成必需的功能需求，还要关注性能、稳定性、健壮性、兼容性、扩展性等诸多方面。</li>
+<li>业务服务的脚手架是指在不考虑和其他服务通信的情况下，如何快速搭建一个业务服务。</li>
+<li>微服务通信包含的东西很多，如网络模型、服务发现、流量路由、负载均衡、连接池管理等。</li>
+<li>集成公司内的其他基础设施，很多公司都会有一些自研或者在开源基础上二次开发的基础设施，比如各种中间件产品、配置中心、部署平台、监控平台等。</li>
+<li>微服务治理支持，系统经过微服务改造后，在效率、稳定性等环节都会遇到不少新的挑战，需要完善的服务治理支持。</li>
+</ul>
+</li>
+<li><b>微服务框架的选型考虑，应该从稳定性、易用性、调试与运维友好性这几个维度来考量</b>
+<ul class="quote">
+<li>稳定性和可靠性是第一位的，如果代码质量不高，经常出现一些不太好解释的现象，这样肯定会影响线上服务的可用性。</li>
+<li>易用性，首先API接口设计要非常简洁明确，没有什么歧义，使用起来非常方便，没有什么大的心智负担。</li>
+<li>调试与运维友好性常常被市面上的大多数微服务开发框架所忽略，很多框架经常号称自己有强大的性能表现，但很少有框架在调试和运维上下工夫。</li>
+<li>最后要考虑功能和性能，功能和性能要能够满足当前业务需求。</li>
+</ul>
+</li>
+<li><b>微服务改造时的语言选型考虑，不建议在微服务改造的时候进行语言层面的整体切换和重构</b>
+<ul class="quote">
+<li>每种语言背后都有一套完善的语言栈体系，语言栈切换过程中很容易踩到一些坑，同时微服务改造本身也是一个复杂度很高的过程，如果把微服务改造和语言切换这两个风险很高的事情放在一起进行，会导致整个微服务改造过程中的风险增加很多，当过程中出现问题时也很难排查和控制。</li>
+</ul>
+</li>
+<li><b>协议层面的扩展和增强，对微服务开发框架的整体思考，以及Thrift协议层面的扩展和增强</b>
+<ul class="quote">
+<li>Thrift服务治理整体架构分为业务层、服务层、协议层和传输层4个部分，其中业务层是服务的业务逻辑实现，客户端和服务端通过IDL接口进行交互，对开源Thrift的扩展与增强通过服务层、协议层和传输层来完成。</li>
+<li>服务层对开源Thrift进行两方面的增强：一个是客户端在集群管理方面的扩展，具体包括服务发现、流量路由、节点熔断和健康检查、负载均衡以及连接池管理等；还有一个是链路治理相关的插件实现，客户端和服务端分别提供通用的插件扩展机制，不同场景下进行相应的扩展和定制。</li>
+<li>开源Thrift在扩展性方面有着非常出色的设计，协议、传输和调度层面均可以方便地进行扩展，但唯独在RPC协议层面没有提供扩展的入口，协议层定位是提供RPC协议扩展支持，通过协议扩展，可以方便地支持很多服务治理特性。</li>
+<li>实际使用的Thrift过程中，经常会碰到一些通用的服务治理需求，比如分布式跟踪、全链路压测、多环境流量调度支持等，这些通用的服务治理能力最好是通过RPC协议的方式下沉到框架层面，对业务透明，否则每个业务人员都需要感知这些特性，因此在RPC协议层面进行扩展支持和增强是Thrift使用过程中不可回避的问题。</li>
+</ul>
+</li>
+<li><b>集群通信的“可靠性”，为了保证下游变更时上游无感知，调用下游服务时的SDK需要具备故障节点熔断和健康检查能力</b>
+<ul class="quote">
+<li>上游每次访问下游服务时均记录服务访问的metric指标，最核心的指标就是成功还是失败。</li>
+<li>为了判断下游服务的健康状况，针对每个下游节点引入了一个健康度的概念。</li>
+<li>当判定节点为故障节点后，还需要判断服务当前故障节点是否已经超过一定的阈值，如果故障节点过多且可用节点过少，服务的全部流量均会打到少量的可用节点上，这些节点可能会因为承载不了这么大的流量而雪崩。</li>
+<li>为了保证微服务集群通信的链路稳定和正常运行，下游节点熔断后还需要有相应的探测和恢复机制，也就是节点健康检查机制，一般有被动探测和主动探测两种方式。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>微服务标准化</h4>
+<ul class="point">
+<li><b>接口标准化，统一规范的接口标准可以大大减少沟通成本，提高开发和维护效率</b>
+<ul class="quote">
+<li>很多公司主流协议为HTTP协议和Protobuf/Thrift协议，HTTP协议开发、测试比较方便，而Protobuf/Thrift等二进制协议性能更好些。</li>
+<li>以Thrift协议来说，Thrift协议本身有自己的一套IDL，通过IDL生成标准服务代码，包含数据通路和类型定义，相对规范。</li>
+<li>为了保持微服务接口层面的一致性，实现微服务接口标准化，HTTP协议可以参考Thrift协议的思路，增加IDL描述支持。</li>
+</ul>
+</li>
+<li><b>日志标准化，各个微服务之间只有遵循相同的日志规范，才能方便后续的日志治理</b>
+<ul class="quote">
+<li>日志输出的目的不仅是发现问题，好的日志可以帮助我们快速排查出问题的原因，进而采取相应的应对措施，因此日志规范需要聚焦如何更加方便快捷地追查问题，提高问题追查的效率。</li>
+</ul>
+</li>
+<li><b>透传通道标准化，为了对微服务进行精细化的治理和管控，很多服务治理特性均需要在同一请求处理的各个环节获取到请求相关的服务治理信息</b>
+<ul class="quote">
+<li>透传通道就是为了实现上述所说的服务治理透明接入，思路是将服务治理相关的非功能需求信息从业务中解耦出来，在所有微服务之间进行传递。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>持续集成与发布</h4>
+<ul class="point">
+<li><b>研发全流程平台，微服务研发全流程包括很多环节，比如代码分支管理、代码review、测试准入、提测、自动化测试、服务部署、服务变更等</b>
+<ul class="quote">
+<li>研发工作流平台将研发全流程中的工作流串在一起，形成一个完整的闭环。</li>
+</ul>
+</li>
+<li><b>灰度发布，微服务化在架构层面是一个非常大的改动，为了不影响线上业务的稳定性，需要采用灰度发布的方式</b>
+<ul class="quote">
+<li>每一次发布均需要先进行小范围灰度，观察完全没有问题之后再放量发布。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch5"><summary>1.5 微服务实施</summary>
+<div class="sec">
+<h4>微服务拆分</h4>
+<ul class="point">
+<li><b>微服务拆分的原则</b>
+<ul class="quote">
+<li>无状态服务方便扩展和运维，需要贯穿到微服务架构设计的全局层面进行思考。</li>
+<li>服务拆分粒度并不是越细越好，需要结合当前团队的人员情况而定。</li>
+<li>遇到痛点问题时才进行拆分，非拆分不可时才启动微服务拆分。</li>
+<li>拆分后的微服务组织上层次不要过深，一个请求的处理过程中经过的微服务个数不要超过5个。</li>
+<li>对于拆分后的子服务来说，尽量避免相互依赖的场景。</li>
+</ul>
+</li>
+<li><b>微服务拆分的方法</b>
+<ul class="quote">
+<li>以数据为维度进行拆分，按照数据拆分，是微服务拆分中最常见的一种方式。</li>
+<li>按照使用场景拆分服务，这种拆分方式也比较常见。</li>
+<li>将核心逻辑和非核心逻辑拆分为不同的微服务，然后采用不同的高可用处理方案。</li>
+<li>按照变更频次对服务进行拆分，尽量将变化聚集到少部分微服务上面。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>微服务通信</h4>
+<ul class="point">
+<li><b>微服务通信方式选择，核心服务推荐均采用同步通信的方式，一些非核心服务可以采用异步通信的方式。</b>
+</li>
+<li><b>微服务编排，一些可以并行调用的场景推荐采用并行调用的方式，可以减少请求的整体耗时，提高用户体验。</b>
+</li>
+<li><b>API接口设计，需要尽可能简单易用，一个接口只实现一个确定的功能，不要设计复杂或者含义不明确的接口，避免滥用。</b>
+</li>
+<li><b>合理设置超时和重试，超时和重试设置不要只考虑当前链路，而要从请求全链路的角度，对超时和重试进行统一梳理。</b>
+</li>
+<li><b>数据一致性设计，同时操作多个微服务的场景，需要保证不同微服务之间的数据一致性，数据一致性设计尽量遵循简单的原则，除非特别场景，不要使用分布式事务。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>微服务稳定性保障</h4>
+<ul class="point">
+<li><b>稳定性保障的目标，故障预防，尽可能减少故障的产生；故障快速定位，完全不出故障的业务是不存在的，关键是出故障时能够快速发现故障；故障快速止损，发生故障后第一时间要进行业务止损，恢复业务的正常运行。</b>
+</li>
+<li><b>稳定性保障的6个维度，隔离，冗余，容灾容错，变更管理，时间相关故障管理与运维友好。</b>
+</li>
+<li><b>稳定性保障的设计建议，隔离机制的指导原则是将变和不变、重要和非重要区分开来；为了保证故障时冗余机制的可用性，事先需要进行完善的冗余容量规划；为了减少异常流量对系统的影响，服务开发和设计时需要采取防御性编程；为了提高变更的质量，减少变更带来的稳定性风险，需要从测试、上线和规范等多角度进行保障；为了实现运维友好的系统设计，系统需要将故障分析和定位时涉及的所有相关信息监控起来。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch6"><summary>1.6 本章小结</summary>
+<div class="sec">
+<h4>微服务架构概述</h4>
+<ul class="point">
+<li><b>微服务可以带来很多收益，同时在开发、测试以及运维上都会带来很大的挑战</b>
+<ul class="quote">
+<li>可以从是否影响业务迭代速度、是否出现并行开发而导致代码冲突等角度出发，判断当前是否合适进行微服务改造。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>微服务改造准备</h4>
+<ul class="point">
+<li><b>确定微服务改造后，需要提前从服务框架、服务标准化、服务持续集成和发布等方面提前准备，保证微服务的顺利开展。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>微服务架构设计</h4>
+<ul class="point">
+<li><b>首先要确定好微服务拆分的原则，良好的微服务拆分是保证微服务成功的一半</b>
+<ul class="quote">
+<li>然后从微服务通信、微服务稳定性保障等维度进行架构设计，保证微服务改造的高质量落地。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch7"><summary>第2章 微服务治理</summary>
+<div class="sec">
+<h4>微服务治理的问题域和挑战</h4>
+<ul class="point">
+<li><b>微服务化之后，在开发、测试、运维等各个环节都会带来很多挑战。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>服务治理的演进</h4>
+<ul class="point">
+<li><b>服务治理聚焦解决业务微服务化之后带来的突出问题。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>微服务治理的理想方案</h4>
+<ul class="point">
+<li><b>本章着重讨论服务治理的问题域和挑战，以及服务治理的演进，最后讨论微服务治理的理想方案。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch8"><summary>2.1 微服务治理基础</summary>
+<div class="sec">
+<h4>服务治理的由来</h4>
+<ul class="point">
+<li><b>单体服务时代没有服务治理的概念，随着单个服务慢慢演变和拆分为众多微服务组成的系统，服务提供者与服务使用者之间如果没有明确的契约和规范，会带来很大的沟通成本。</b>
+</li>
+<li><b>服务治理就是解决服务提供者和服务使用者之间的链路通信与治理</b>
+<ul class="quote">
+<li>服务治理主要包括服务定义和SLA，服务注册中心，服务生命周期管理，服务通信和链路治理，服务授权和通信安全等维度。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>服务治理的目标与愿景</h4>
+<ul class="point">
+<li><b>服务治理整体愿景是打造可见、可控、可追溯、可预测的全系统视图，立足全局，业务优先</b>
+<ul class="quote">
+<li>可见即所得，可见皆可控。</li>
+<li>服务治理必须做到深入业务需求，解决业务实际问题。</li>
+<li>服务治理要能溯源系统问题，提升定位效率。</li>
+<li>服务治理还要有能力提前发现全系统中的异常。</li>
+</ul>
+</li>
+<li><b>服务治理的目标是提供标准化、平台化、智能化的一站式服务治理设施，支持业务的稳定运行和高效迭代</b>
+<ul class="quote">
+<li>标准化是服务治理一切工作的基石。</li>
+<li>平台化是擎天柱，标准如果完全依靠人来执行，不仅效率非常低，也很难保证不会出现各种遗漏以及落地和标准不一致的现象，将标准进行平台化落地，可以保证服务治理标准可以高效、稳定执行。</li>
+<li>智能化是服务治理的理想状态，属于远景目标和仰望的星空，期望所有的服务治理工作能逐步通过自动化和智能化方式推进。</li>
+<li>一站式，强调服务治理的闭环体系，所有通用的可感、可控、可追溯治理均能通过闭环高效完成。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>服务治理的工作范畴</h4>
+<ul class="point">
+<li><b>服务治理的实际工作包括两部分：一站式的服务治理平台、普适性的服务开发框架</b>
+<ul class="quote">
+<li>一站式的服务治理平台作为服务治理输出的根据地，最重要的作用是服务治理规范的固化。</li>
+<li>普适性的服务开发框架，是服务治理团队非常重要的一个抓手，平台能做的事情是有限的，而广泛使用的开发框架则可以完成更多的事情。</li>
+</ul>
+</li>
+<li><b>服务治理具体工作范围可以概括为系统可见、系统可控、系统可追溯、系统可量化、可预测、立足全局、业务优先</b>
+<ul class="quote">
+<li>系统可见主要是服务治理平台的工作，具体包含服务静态描述，服务实时拓扑。</li>
+<li>系统可控打通服务治理平台和服务开发框架，为其他平台输出能力，具体包括路由切换、降级预案等。</li>
+<li>系统可追溯将问题现场进行录制，如流量录制、日志录制等方式，然后使用相应的跟踪和追溯系统，对典型场景下的常见问题进行回放和溯源，做到“一次录制，多次回放”。</li>
+<li>系统可量化、可预测系统可预测，是指预测业务接下来一段时间的行为，比如流量、容量、安全等，同时通过各种工具和平台检测系统的潜在风险。</li>
+<li>立足全局、业务优先服务治理的目的是解决业务的稳定性和效率问题，必须完全聚焦业务，从业务出发，重点解决业务当前的痛点问题。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>服务治理闭环体系</h4>
+<ul class="point">
+<li><b>服务治理本质上来说是解决微服务化后产生的一系列挑战，比如效率治理、稳定性治理、效果治理、性能成本治理等</b>
+<ul class="quote">
+<li>这些治理举措一般作用于设计开发阶段，我们可以称之为“正向治理”。</li>
+<li>在服务上线后，可以基于运行时的各种数据，进行综合治理和反馈，从而构成一个治理闭环。</li>
+</ul>
+</li>
+<li><b>在上述服务治理闭环中，通过多维度的度量数据收集，结合静态的服务元数据信息，构成一个完整的服务治理数据集，然后基于这些数据进行综合度量和分析</b>
+<ul class="quote">
+<li>根据分析结果会产生相应的控制和管控措施，分别从线上和线下两个维度进行综合治理，同时将治理结果负向反馈回来，作为进一步治理的输入。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch9"><summary>2.2 正向服务治理</summary>
+<div class="sec">
+<h4>效率治理</h4>
+<ul class="point">
+<li><b>基于流量录制和回放的测试</b>
+<ul class="quote">
+<li>通过录制线上真实流量，在线下进行回放，可以灵活地测试服务的各自功能。</li>
+<li>基于回放流量进行编辑修改，对服务依赖的第三方请求进行mock和定制，使代码开发变得简单方便，且可随改随测。</li>
+</ul>
+</li>
+<li><b>基于仿真环境的测试</b>
+<ul class="quote">
+<li>为了支持精细的灰度发布策略，需要根据一定的规则将线上流量分流到小流量集群。</li>
+<li>为了支持使用真实流量进行高仿真测试，还需要根据策略规则将一定流量引到仿真环境中。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>稳定性治理</h4>
+<ul class="point">
+<li><b>稳定性治理模型</b>
+<ul class="quote">
+<li>稳定性治理是一个对故障进行管理的过程，可以分为故障预防、故障发现、故障定位、故障止损以及故障恢复5个阶段。</li>
+<li>从各阶段的抓手上看，故障预防包括稳定性设计、风险度量分析体系以及变更管理这几个环节。</li>
+</ul>
+</li>
+<li><b>基于容器化的稳定性治理</b>
+<ul class="quote">
+<li>容器技术的使用可以很大程度上缓解微服务架构所带来的问题。</li>
+<li>容器环境下，由于镜像比较轻量，每次变更后，可以快速创建本次变更对应的镜像，同时可以基于本次镜像快速创建多个完全相同的测试环境。</li>
+<li>微服务架构下微服务个数比较多，并且每个服务的变更非常频繁，运维的工作量很大，借助容器镜像，可以把环境交付提前。</li>
+<li>微服务架构下流量变化很快，遇到突发大流量时，如果系统具备快速便捷的扩容/缩容能力，可以极大地提高系统的稳定性和灵活性。</li>
+<li>服务的云化架构，在运维层面和之前会有很大的差异，基础设施层面，比如部署系统、配置系统、监控系统等都需要针对上云进行相应的适配调整。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch10"><summary>2.3 效果治理</summary>
+<div class="sec">
+<h4>配置化</h4>
+<ul class="point">
+<li><b>配置化是软件对外提供的开放的能力，能够在不改动软件逻辑的情况下按照用户的设置执行特定的流程和功能</b>
+<ul class="quote">
+<li>业务系统虽然从功能特性上看迭代很快，但一旦业务模式确定后主流程是基本不变的，变的是针对各种业务场景的一些定制。</li>
+</ul>
+</li>
+<li><b>配置化的本质是对业务进行建模，把每个对象模型化，对系统进行抽象和建模</b>
+<ul class="quote">
+<li>需要业务架构层面对业务逻辑进行合理的抽象，识别出常见的业务变化点，针对变化进行建模。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>基于A/B测试的业务效果评估体系</h4>
+<ul class="point">
+<li><b>利用A/B测试来验证一些新特性或者调整，并以此来支撑我们在产品开发过程的决策。</b>
+</li>
+<li><b>效果评估需要先建立完善的业务指标体系，比如业务的一级和二级指标有哪些</b>
+<ul class="quote">
+<li>有了具体的业务指标，效果评估才有基础和依据。</li>
+</ul>
+</li>
+<li><b>需要有一个针对指标的效果评估平台，真正做到业务效果可视化、可量化、可优化</b>
+<ul class="quote">
+<li>效果评估平台可以让我们清楚地看到每个变更的效果，从而做出更明智的决策。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch11"><summary>2.4 可见可观测</summary>
+<div class="sec">
+<h4>服务可见性</h4>
+<ul class="point">
+<li><b>服务元数据平台负责维护服务相关的元数据信息</b>
+<ul class="quote">
+<li>服务层面，服务元数据平台汇聚了当前所有的服务列表，默认按照服务功能进行分类。</li>
+<li>服务基本信息包括服务描述、服务所有权、服务对外接口、服务SLA、服务的上下游拓扑、服务变更、服务接入和资源配额管理、服务线上部署和线下测试环境信息。</li>
+</ul>
+</li>
+<li><b>服务元数据平台的作用是将服务基本信息平台化</b>
+<ul class="quote">
+<li>服务元数据平台可以将服务接入、服务客服等日常工作从线下转移到线上，减少线下的人力成本开销。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>变更可见性</h4>
+<ul class="point">
+<li><b>通过对各个维度的变更进行系统的梳理和记录，方便出现故障时的追溯和定位</b>
+<ul class="quote">
+<li>服务变更是变更的最重要来源，常见的服务变更方式有应用变更、配置变更、数据变更以及预案变更等。</li>
+<li>对于微服务架构来说，除了关注当前服务的变更之外，还需要关注上下游依赖服务的变更，以及部署层面关联服务的变更。</li>
+<li>除了服务变更，还需要对服务周边的各个环境变更进行记录，比如网络变更、机器变更、机房变更、交换机变更。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>可观测性</h4>
+<ul class="point">
+<li><b>微服务架构下，各个微服务采用分布式部署，并且通过网络进行分布式通信，需要有完善的平台和工具体系，能够对微服务的运行状态进行全方位多维度的监控</b>
+<ul class="quote">
+<li>可观测性就是用于上述微服务状态监控的工具集合，具体分为Logging(日志系统)、Metrics(度量系统)和Tracing(分布式跟踪系统)3个层次。</li>
+</ul>
+</li>
+<li><b>Logging系统、Metric系统和Tracing系统关注的侧重点有所不同</b>
+<ul class="quote">
+<li>Logging系统对服务的运行状态和事件进行记录，比如调试日志、错误日志等。</li>
+<li>Metric系统侧重事件聚合，相比日志来说，Metric关注的对象相对小一些，比如服务QPS、成功率、耗时等。</li>
+<li>Tracing关注请求级别的处理，使用过程中一般先关注日志监控是否有问题，如果有问题通过Metric查看具体的服务和指标异常，最后通过Tracing进行全链路排查。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>标准化监控Metric</h4>
+<ul class="point">
+<li><b>监控标准化是在业务中埋点主动上报标准业务指标来满足业务监控需求的解决方案</b>
+<ul class="quote">
+<li>期望在业务完成标准上报之后，自动给业务提供调用关系拓扑、自动错误率监控、自动服务可用性计算、服务性能评估等高级功能。</li>
+</ul>
+</li>
+<li><b>为了实现监控标准化，针对监控项的收集和上报，需要制定一个规范</b>
+<ul class="quote">
+<li>如果各个业务或者一个业务的各个接口都按照上述的规范，那么可以在监控自动化上做到更高程度，避免人工配置。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>分布式跟踪Tracing</h4>
+<ul class="point">
+<li><b>通过分布式跟踪系统，可以建立一个以请求为中心的全局视图，查看请求处理过程中各个阶段的具体状态和处理情况</b>
+<ul class="quote">
+<li>2010年，Google发表了一篇名为《Dapper，a Large-Scale Distributed Systems Tracing Infrastructure》的论文，介绍了Google生产环境中大规模使用的分布式跟踪系统Dapper的设计原理和使用经验。</li>
+<li>之后Twitter根据这篇论文开发了自己的分布式跟踪系统Zipkin，并将其开源。现在不少国内外的大型互联网公司也都有自己的分布式跟踪系统，比如Uber的Jaeger、阿里的鹰眼、京东的Hydra、微博的Watchman等。</li>
+</ul>
+</li>
+<li><b>OpenTracing是一个轻量级的标准化层，希望通过OpenTracing实现分布式跟踪的兼容互通和标准化</b>
+<ul class="quote">
+<li>OpenTracing通过提供平台无关、语言无关的API，使得开发人员能够方便地替换追踪系统，目标是为全球的分布式追踪提供统一的概念和分布式跟踪标准。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch12"><summary>2.5 量化分析体系</summary>
+<div class="sec">
+<h4>稳定性风险度量</h4>
+<ul class="point">
+<li><b>制订一定的度量标准，对业务同学日常的稳定性建设进行度量</b>
+<ul class="quote">
+<li>以服务变更为例，可以结合变更规范制定一个量化标准——更信用分标准。</li>
+<li>按照变更信用分标准，对每周的上线单进行系统分析，并按团队汇总、量化和排名。</li>
+</ul>
+</li>
+<li><b>确定具体的度量指标，以及每个度量指标的标准评分</b>
+<ul class="quote">
+<li>具体评分并不是那么重要，关键是大家对度量标准能够达成一致，能够对稳定性日常工作有实际的量化指导效果。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>基于多维度监控的故障定位</h4>
+<ul class="point">
+<li><b>出现故障时，首先需要确定故障的影响面，可以基于场景和分布式跟踪拓扑将业务组织成一个全局的“灭火图”</b>
+<ul class="quote">
+<li>灭火图中包括所有核心服务的可用性指标，比如错误率、QPS、耗时等。</li>
+</ul>
+</li>
+<li><b>为了从纷繁复杂的众多事件中定位具体的原因，可以将各维度的监控报警、各种变更事件以事件的方式，按照时间轴整合成一个时间线</b>
+<ul class="quote">
+<li>有了事件时间线，我们就可以将关注焦点放到故障时间前一段时间内的监控告警事件以及变更事件上，从而根据具体的事件类型确定相应的预案和止损措施。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>风险分析</h4>
+<ul class="point">
+<li><b>基于线上实时的可观测数据，以及研发全流程的变更和操作数据，我们可以得出很多维度的报表和趋势数据</b>
+<ul class="quote">
+<li>这些维度可以涵盖服务治理的各个环节，比如链路SLA、超时重试、容量管理、强弱依赖关系等。</li>
+</ul>
+</li>
+<li><b>将当前数据和历史基准库进行比较，从中找到趋势和规律，进而发现潜在的风险</b>
+<ul class="quote">
+<li>实时治理数据分析后一些有价值的东西可以沉淀到历史基准库，作为后续风险分析的基础，进而形成一个风险分析的闭环机制。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch13"><summary>2.6 线上治理</summary>
+<div class="sec">
+<h4>线上预案体系</h4>
+<ul class="point">
+<li><b>将故障定位和预案执行打通，实现故障的快速定位和止损</b>
+<ul class="quote">
+<li>根据历史故障和一些先验知识将故障进行归类，建立相应的预案。</li>
+<li>判断预案触发的时机，以及当前是否应该执行预案。</li>
+</ul>
+</li>
+<li><b>线上服务稳定性故障大体可以归类为变更引起的故障、流量和容量变化引起的故障、依赖故障、机房、网络等硬件和环境故障以及其他故障</b>
+<ul class="quote">
+<li>变更引起的故障：系统广义的变更源很多，最常见的服务变更一般包含应用变更、配置变更和数据变更。</li>
+<li>流量和容量变化引起的故障：这类故障对应于之前稳定性保障中分析的输入流量突变。</li>
+<li>依赖故障：依赖服务故障会影响调用依赖服务的上游服务，依赖服务故障又分为强依赖服务故障和弱依赖服务故障。</li>
+<li>机房、网络等硬件和环境故障：硬件和环境故障的特点是没有办法预测，随机性和偶然性因素很大。</li>
+<li>其他故障：比如ID生成器溢出导致的故障。</li>
+</ul>
+</li>
+<li><b>故障的场景化是指根据上述稳定性故障的大类，再细化出一些方便识别判断的场景</b>
+<ul class="quote">
+<li>划分这些场景的目的是发生故障时，进一步识别故障的根因(不一定是最根本原因，而是从止损的角度进行归类)。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>基于Metric的预案自动触发</h4>
+<ul class="point">
+<li><b>对于降级、限流和冗余切流这几类比较明确的场景，可以基于Metric进行故障判断，并且和预案自动打通</b>
+<ul class="quote">
+<li>以依赖服务故障为例，可以根据Metric成功率指标同环比变化，判断依赖服务是否有异常。</li>
+<li>如果通过Metric发现当前确实有异常，先查询变更管理平台，依赖服务当前是否有相关的变更操作。</li>
+<li>如果没有变更操作，再判断当前对依赖服务的调用是强依赖还是弱依赖，如果是弱依赖，可以启动自动降级预案对依赖服务进行降级，如果是强依赖，降级肯定不能解决问题，可以通过预先制定好的冗余切换预案，启动服务级、集群级或者机房级别的流量切换。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>治理参数动态调整</h4>
+<ul class="point">
+<li><b>限流降级和切流是服务治理的3个利器，分别解决上游、下游和服务自身故障问题</b>
+<ul class="quote">
+<li>这些服务治理特性和实现本身并不复杂，使用时的关键和难点在于触发的具体时机。</li>
+</ul>
+</li>
+<li><b>以登录服务为例，说明如何设置治理参数以及限流的触发时机</b>
+<ul class="quote">
+<li>登录过程中需要使用加密算法对密码进行校验，一次登录过程CPU耗时1s，登录服务线上使用的服务器是40核，因此一台机器上登录服务的QPS大概是40左右。</li>
+<li>当某一秒有200个请求进到登录服务，我们希望服务可以在接下来的5s内，每秒完成40个请求。</li>
+<li>但通过观察上面的输出日志，我们可以看出结果并不是每秒稳定输出，而是在一段时间后，这一批请求都在很接近的时间被处理完。</li>
+<li>这涉及Golang的协程调度，并不是等到协程运行到阻塞点才交还CPU，这在逻辑上也是正确且应该的，目的是防止协程实现存在问题而将CPU全部消耗掉。</li>
+<li>这个逻辑对于CPU密集型的服务而言，在遇到尖峰流量时，就会产生我们不希望的结果。</li>
+<li>解决这个问题的方法就是单接口限流，通过处理能力计算出每秒最多能接收的请求量，超出就抛弃请求，防止大流量对服务质量的冲击。</li>
+<li>对于登录服务来说，可以把限流阈值设置为40QPS，超出部分就丢弃，通过单接口限流解决这个问题。</li>
+<li>但这个方案的问题也很明显：如果高CPU占用接口在梳理时被遗漏了，该接口消耗了绝大多数CPU，导致限流失效。</li>
+<li>同时新增加的接口，靠人和经验来评估限流值，也很容易遗漏设置。</li>
+<li>对于同时有I/O消耗型接口与CPU消耗型接口的服务，我们可以通过部署拆分将CPU消耗型接口和I/O消耗型接口独立部署，让它们互不影响。</li>
+<li>但这样并不能从根本上解决问题。因为计算型的接口不止一个，总不可能每一个计算型接口都单独部署集群。</li>
+<li>只要设置过的人都会遇到这个疑惑：到底要设置成多少合适？每个接口的限流设置稍微高一点，请求压力一大系统就可能总体过载。</li>
+<li>因此考虑到安全原则，实际情况中接口限流都是设置成非常安全但低效的阈值，但这样会导致大量的机器资源浪费，因此，我们必须抛弃这种安全但低效的阈值管理方式，寻找一种更加科学合理的流控方式。</li>
+<li>最后实际产出的技术方案是多重级联的自动流控，具体设计思路大体如下。</li>
+<li>带反馈机制的动态限流：任何接口在极限流量下，只要超出处理能力，就一定会出现接口超时，但因为有突发流量的控制，对外吞吐能力是稳定的。</li>
+<li>CPU限制：为了控制程序对CPU的使用，留给其他系统进程(如各种Agent)，同时为了防止通过流量阈值一次进入太多的请求，我们控制最多起40个Golang协程用于处理CPU消耗型的接口(这也是我们的突发限流)。</li>
+<li>过载保护：过载保护，即实际采用方案的连接数超过一定阈值就主动拒绝请求。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch14"><summary>2.7 线下治理</summary>
+<div class="sec">
+<h4>链路稳定性治理</h4>
+<ul class="point">
+<li><b>链路风险分析的重要性</b>
+<ul class="quote">
+<li>链路风险分析可以提前发现和解决服务通信相关的一大部分故障。</li>
+</ul>
+</li>
+<li><b>超时和SLA风险</b>
+<ul class="quote">
+<li>超时配置风险主要有两种：一种是超时时间和实际不相符；还有一种是上下游的超时设置不匹配。</li>
+<li>SLA风险也可以采用同样的思路进行分析。</li>
+</ul>
+</li>
+<li><b>强弱依赖或重试风险</b>
+<ul class="quote">
+<li>强弱依赖服务风险，是指链路通信之间的关系和预期不符。</li>
+<li>重试风险也可以采用同样的思路进行分析。</li>
+</ul>
+</li>
+<li><b>集群或拓扑风险</b>
+<ul class="quote">
+<li>集群部署风险或者拓扑风险没有通用的解决思路，需要针对具体的风险增加相应的风险应对措施。</li>
+</ul>
+</li>
+<li><b>链路调用风险</b>
+<ul class="quote">
+<li>当前服务调用超过20个下游服务，扇出过大，不太符合微服务的设计准则。</li>
+<li>微服务拆分和设计过程中，建议不要出现两个微服务相互依赖的场景。</li>
+</ul>
+</li>
+<li><b>链路风险分析的方法论思考</b>
+<ul class="quote">
+<li>发现风险是链路风险分析的第一步，为了能够持续发现系统新的风险，建议将风险分析和稳定性反模式结合起来。</li>
+<li>同时为了方便新增风险的检测，可以建立一个完善的风险分析框架。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>架构与资源治理</h4>
+<ul class="point">
+<li><b>通过实时拓扑图和静态的基准拓扑图进行比较，如果出现基准拓扑图中存在，而实时拓扑不存在的服务调用链路，说明当前链路不再使用，基于实时拓扑和基准拓扑的差异比较，可以考虑将这种冗余调用代码去除</b>
+<ul class="quote">
+<li>业务迭代过程中，可能会出现很多临时性的调用关系，调用关系使用一段时间后不再使用，长时间积累下去，可能会导致服务存在不少冗余代码，影响服务的可维护性。</li>
+</ul>
+</li>
+<li><b>为了保证变更的质量，服务在新增特性时通常会给它配置相应的特性开关，通过开关来区别不同版本的代码，随着架构的迭代升级，可能会导致不少版本的代码和分支不再使用，我们可以采用和上述冗余链路检测类似的方式</b>
+<ul class="quote">
+<li>当检测到特性开关判断总是返回特定值时，说明其他分支当前已经不再使用，可以提示相关人员，这类无用代码是否可以移除。</li>
+</ul>
+</li>
+<li><b>我们也可以从资源调用和使用报表中发现当前服务资源是否有使用不当的地方</b>
+<ul class="quote">
+<li>比如缓存资源遗漏设置过期时间，缓存资源设置的过期时间过大等。</li>
+<li>如果存储资源出现过大的对象，或者长期不再使用的数据，也可以反馈给业务方相关人员，以确定使用上是否需要进行调整。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch15"><summary>2.8 服务治理演进</summary>
+<div class="sec">
+<h4>远程Proxy方式</h4>
+<ul class="point">
+<li><b>API网关封装了服务访问和服务治理相关的具体逻辑</b>
+<ul class="quote">
+<li>客户端只需要使用简单的访问方式，统一访问API网关，由API网关来代理对后端服务的访问。</li>
+</ul>
+</li>
+<li><b>API网关和直接使用服务框架相比，优点是业务使用起来很简单，没有什么入门成本</b>
+<ul class="quote">
+<li>API网关也可以屏蔽多语言调用方使用方式的差异，避免了微服务框架语言级别的限制，多语言调用方均可以使用简单一致的调用方式访问后端服务，基本解决了多语言的服务治理问题。</li>
+</ul>
+</li>
+<li><b>API网关在提供便捷的服务访问和服务治理能力的同时，相应地也会有一些问题</b>
+<ul class="quote">
+<li>引入API网关，通信层面会增加一跳；如果是采用简单易用的VIP访问方式，还需要加上用于VIP解析的负载均衡服务这一跳，所以通信层面上比原来直接访问后端服务增加了二跳，性能上肯定会有一定的损耗。</li>
+<li>通信链路上多一跳就会多一个故障点，会对系统的整体稳定性和可用性有一定的影响。</li>
+<li>API网关简单易用的同时，灵活性和定制化支持不太好，很难支持复杂的服务治理定制化需求。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>基于智能客户端的服务框架</h4>
+<ul class="point">
+<li><b>和远程Proxy不同，基于智能客户端的服务框架采用和服务端直连的方式</b>
+<ul class="quote">
+<li>客户端和服务端直接通信，中间不经过任何节点，不仅性能提升，也增强了稳定性。</li>
+</ul>
+</li>
+<li><b>服务框架需要支持完善的流量调度和容错设计，同时需要支持常见的服务治理策略</b>
+<ul class="quote">
+<li>对于中小公司来说，开发或维护一款完善的服务框架的开销都是不小的。</li>
+</ul>
+</li>
+<li><b>服务框架作为Lib和客户端服务绑定在一起，因此是语言相关的</b>
+<ul class="quote">
+<li>每个语言均需要相应的服务框架，这会带来很高的多语言服务治理成本。</li>
+<li>由于和客户端服务绑定在一起部署，服务框架的迭代升级相对麻烦。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>本地Proxy</h4>
+<ul class="point">
+<li><b>本地网关又称为Sidecar，通过在每个服务实例对应的本地机器上部署实现服务治理功能的代理</b>
+<ul class="quote">
+<li>最有代表性的是Netfilx的微服务中间件Prana，初衷是将Netfilx OSS微服务治理套件的能力，通过HTTP API接口的方式，赋能给非Java语言使用，以很小的开销获得Netfilx OSS体系强大的服务治理能力。</li>
+<li>受到Netflix Prana的启发，Spring Cloud也推出了Spring Cloud Netflix Sidecar。</li>
+</ul>
+</li>
+<li><b>和API网关相比，本地网关的访问方式更为简单</b>
+<ul class="quote">
+<li>事先给本地网关绑定固定的端口号，业务服务通过“localhost：本地端口号”的方式即可访问，虽然和直接访问服务端相比多了一跳，由于是本地访问，比API网关的性能损耗要小。</li>
+<li>由于本地网关每个机器上都会有部署，因此API网关单个节点故障对系统稳定性的影响相对较小。</li>
+<li>本地网关和服务部署在一起，具有感知本地部署环境的能力，方便一些业务或者环境相关的服务治理特性的落地，比如机房级别的动态路由调整等。</li>
+</ul>
+</li>
+<li><b>本地网关最大的问题是运维上的复杂度比较高</b>
+<ul class="quote">
+<li>本地网关节点很多，并且业务服务对本地网关也是强依赖，因此需要对本地网关的部署、监控、升级、高可用保障等，都有一套完善的机制来保障。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch16"><summary>2.9 理想的服务治理架构</summary>
+<div class="sec">
+<h4>标准化</h4>
+<ul class="point">
+<li><b>标准化保证了微服务架构的通用性、可维护性和可移植性</b>
+<ul class="quote">
+<li>基于标准化的微服务基础设施，可以更方便地实现微服务自身的标准化。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>配置化</h4>
+<ul class="point">
+<li><b>配置化是保障微服务治理和微服务稳定性、敏捷性的关键</b>
+<ul class="quote">
+<li>理想的微服务基础设施，需要通过统一的治理平台，对服务治理的效果进行可视化度量。</li>
+<li>可以通过可视化界面方便地调整服务治理的策略，即时生效。</li>
+<li>通过配置化，可以建立服务治理策略调整和反馈的闭环机制，支撑服务治理特性的快速迭代。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>服务化</h4>
+<ul class="point">
+<li><b>服务化可以实现服务治理对业务的解耦合与透明</b>
+<ul class="quote">
+<li>如果可以将微服务基础设施服务化，通过标准化接口获取服务访问和服务治理能力。</li>
+<li>可以实现服务治理和微服务的并行开发和升级。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>平台化、产品化</h4>
+<ul class="point">
+<li><b>平台化、产品化的微服务基础设施，可以将服务治理能力通过开放平台，赋能给更多的微服务用户</b>
+<ul class="quote">
+<li>通过微服务基础设施的产品化，可以加快微服务基础设施的创新。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch17"><summary>2.10 本章小结</summary>
+<div class="sec">
+<h4>服务治理的工作范畴、典型痛点及解决方式</h4>
+<ul class="point">
+<li><b>服务治理的复杂度</b>
+<ul class="quote">
+<li>服务治理涉及服务发现、服务路由、服务限流、服务熔断、服务降级、服务授权、服务安全等多个方面。</li>
+</ul>
+</li>
+<li><b>服务治理的典型痛点</b>
+<ul class="quote">
+<li>服务间依赖关系复杂，难以管理。</li>
+<li>服务治理策略难以统一，不同服务可能需要不同的治理策略。</li>
+<li>服务治理策略的调整困难，需要停机或重启服务。</li>
+</ul>
+</li>
+<li><b>服务治理的解决方式</b>
+<ul class="quote">
+<li>使用服务注册与发现机制，简化服务间依赖关系的管理。</li>
+<li>使用服务治理框架，统一服务治理策略。</li>
+<li>使用Service Mesh，实现服务治理策略的动态调整和零停机。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>多语言服务治理的调整</h4>
+<ul class="point">
+<li><b>多语言服务治理的挑战</b>
+<ul class="quote">
+<li>不同语言的服务需要不同的治理策略。</li>
+<li>多语言服务治理需要考虑语言差异对治理策略的影响。</li>
+</ul>
+</li>
+<li><b>多语言服务治理的调整方式</b>
+<ul class="quote">
+<li>针对不同语言的服务，制定不同的治理策略。</li>
+<li>考虑语言差异对治理策略的影响，进行相应的调整。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch18"><summary>第3章 下一代微服务框架Service Mesh概要</summary>
+<div class="sec">
+<h4>Service Mesh概述</h4>
+<ul class="point">
+<li><b>Service Mesh是下一代微服务框架。</b>
+</li>
+<li><b>Service Mesh当前还存在局限和挑战。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch19"><summary>3.1 Service Mesh基础</summary>
+<div class="sec">
+<h4>Service Mesh定义及作用</h4>
+<ul class="point">
+<li><b>Service Mesh是一种基础设施层，负责解决服务间通信问题，实现请求的可靠传递。</b>
+</li>
+<li><b>Service Mesh主要解决微服务基础设施标准化、配置化、服务化和产品化问题，以及微服务的通信治理问题。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Service Mesh基本模式</h4>
+<ul class="point">
+<li><b>Service Mesh的基本模式分为Sidecar模式和第二代Service Mesh模式</b>
+<ul class="quote">
+<li>Sidecar模式：每个服务都有其代理，称为sidecar，负责处理所有与服务的网络通信。</li>
+<li>第二代Service Mesh模式：实现了控制平面和数据平面的分离。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>第二代Service Mesh架构</h4>
+<ul class="point">
+<li><b>第二代Service Mesh架构包括数据平面和控制平面</b>
+<ul class="quote">
+<li>数据平面负责代理微服务之间的通信。</li>
+<li>控制平面负责管理数据平面并定义策略。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Service Mesh对应用程序的影响</h4>
+<ul class="point">
+<li><b>Service Mesh对应用程序透明，可以方便地获取其带来的便捷性。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch20"><summary>3.2 Service Mesh的发展历程</summary>
+<div class="sec">
+<h4>Service Mesh的诞生</h4>
+<ul class="point">
+<li><b>2016年1月，Twitter前基础设施工程师William Morgan和Oliver Gould组建了一个名为Buoyant的公司，同时在GitHub上提交了第一个Linkerd版本Linkerd 0.0.7。这是业界第一个Service Mesh项目，标志着Service Mesh的诞生。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Service Mesh概念的提出</h4>
+<ul class="point">
+<li><b>2016年9月，开发Linkerd的Buoyant公司第一次提出了Service Mesh的概念。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Service Mesh项目的发展</h4>
+<ul class="point">
+<li><b>2017年1月，Linkerd加入CNCF，成为CNCF的第一个Service Mesh项目。</b>
+</li>
+<li><b>2017年4月，Linkerd 1.0版本发布，标志着Service Mesh正式进入可用阶段。</b>
+</li>
+<li><b>2017年5月，Istio 0.1版本发布，Istio一发布，就对Service Mesh界产生了巨大影响，直接导致Service Mesh之后的发展路径发生了一系列的变化。</b>
+</li>
+<li><b>2017年7月，Linkerd迫于Istio的压力，宣布和Istio集成。</b>
+</li>
+<li><b>2017年9月，Envoy加入CNCF，成为继Linkerd之后又一个Service Mesh项目。</b>
+</li>
+<li><b>2017年12月，Buoyant在KubeConf上发布了Conduit 0.1.0版本，由于Linkerd受到了Istio的压制，Buoyant希望Conduit可以和Istio进行竞争，Conduit的架构和Istio差不多，但相比之下更为聚焦，只支持Kubernetes平台。</b>
+</li>
+<li><b>2018年7月，Istio 1.0版本发布，进入生产可用阶段，同时Istio作为Service Mesh领域的平台和霸主地位已经不可动摇。</b>
+</li>
+<li><b>2018年8月，Buoyant发布最后一个Conduit版本Conduit 0.5，Conduit至此走进历史，后续会并入Linkerd 2.0。</b>
+</li>
+<li><b>2018年9月，Linkerd 2.0 GA版本发布，该版本提出了Service Ops的概念，标志着Linkerd正式退出了Service Mesh平台的争夺，成为Service Mesh解决方案提供商。</b>
+</li>
+<li><b>2018年11月，Envoy成为继Kubernetes、Prometheus之后第三个从CNCF毕业的项目。</b>
+</li>
+<li><b>2018年12月，亚马逊AWS推出了Service Mesh解决方案App Mesh，标志着云计算领域的绝对王者AWS开始进入Service Mesh领域。</b>
+</li>
+<li><b>2018年12月，Envoy和API Gateway提供商Kong同时发布新版本，Kong在新发布的Kong 1.0 GA中，正式增加了对Service Mesh的支持。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Service Mesh领域的竞争</h4>
+<ul class="point">
+<li><b>2019年3月20日，Istio 1.1版本在正式发布，这是Istio 1.0版本推出8个月后第一个正式版本，包括Sidecar资源、路由区域感知能力等众多特性。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch21"><summary>3.3 Service Mesh项目Linkerd</summary>
+<div class="sec">
+<h4>Linkerd演进</h4>
+<ul class="point">
+<li><b>Linkerd是云原生软件公司Buoyant推出的开源项目，是全球范围内第一个完善的Service Mesh项目</b>
+<ul class="quote">
+<li>Buoyant和Linkerd最早开始不断地宣扬Service Mesh技术理念，构建Service Mesh技术体系并成功推向市场。</li>
+</ul>
+</li>
+<li><b>Linkerd建立在Finagle之上，初衷是将Finagle强大的RPC集群通信与服务治理能力标准化和产品化</b>
+<ul class="quote">
+<li>Finagle除了支持广泛应用的基于请求/答复的RPC协议之外，还集成了如Thrift、Redis、Memcached、MySQL等多种协议。</li>
+</ul>
+</li>
+<li><b>Linkerd 2.0发布，Conduit正式并入Linkerd项目</b>
+<ul class="quote">
+<li>Conduit的目标是成为最快、最轻、最简单并且最安全的Service Mesh。</li>
+<li>Conduit使用Rust构建了快速、安全的数据平面，用Go开发了简单强大的控制平面。</li>
+<li>2018年9月，Linkerd 2.0发布，Conduit正式并入Linkerd项目，Conduit作为一个存在不到一年的短暂项目，变成了历史。</li>
+</ul>
+</li>
+<li><b>Linkerd后续可能会两条路线并存：提供包含数据平面和控制平面在内的全套轻量级Service Mesh解决方案；融入Istio生态体系中，仅提供数据平面</b>
+<ul class="quote">
+<li>一条路线是提供包含数据平面和控制平面在内的全套轻量级Service Mesh解决方案，这个过程中不做平台，不再强调可扩展性，直接提供用户需要的功能，解决用户的痛点问题，并且特别轻量，不需要用户过多地选择，卖点就是轻量。</li>
+<li>另一条路线是融入Istio生态体系中，仅提供数据平面。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Linkerd路由机制</h4>
+<ul class="point">
+<li><b>路由机制是Linkerd的核心，主要由服务识别、绑定、解析和负载均衡4个主要步骤组成</b>
+<ul class="quote">
+<li>识别是指根据请求确定请求调用服务的过程，识别阶段的输出是service name。</li>
+<li>绑定阶段输出的是client name，client name是目标集群的名称。</li>
+<li>解析是服务发现的过程，通过named组件将目标集群名称client name转换成一组可用的节点。</li>
+</ul>
+</li>
+<li><b>为了解决dtab无法动态修改的问题，更好地进行路由规则管理，Linkerd将dtab从linkerd代理中剥离出来，形成一个独立的服务named</b>
+<ul class="quote">
+<li>named服务独立部署，灵活支持各种路由规则的动态修改和下发。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Linkerd 2.0核心架构</h4>
+<ul class="point">
+<li><b>Linkerd也是分为控制平面和数据平面，其中控制平面由下面几个部分组成：Controller控制器、Web、Prometheus和Grafana</b>
+<ul class="quote">
+<li>Controller控制器由负责不同控制功能的多个容器组成，主要包括public-api、proxy-api、destination和tap。</li>
+<li>Web是Linkerd提供的仪表板。</li>
+<li>Prometheus负责Linkerd Metric信息的收集和存储。</li>
+<li>Grafana负责Linkered的可视化。</li>
+</ul>
+</li>
+<li><b>Linkered的数据平面采用的是Rust语言实现的轻量级高性能Proxy代理</b>
+<ul class="quote">
+<li>通过配置Iptables，它可以透明地管理Kubernetes Pod的入口和出口流量。</li>
+<li>Linkered支持HTTP、HTTP/2和TCP协议，通过按需诊断tap API，Linkered拥有强大的可视化监控和诊断能力。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch22"><summary>3.4 Service Mesh项目Istio</summary>
+<div class="sec">
+<h4>Envoy概述</h4>
+<ul class="point">
+<li><b>Envoy是一个用C++编写的云原生高性能边缘代理、中间代理和服务代理</b>
+<ul class="quote">
+<li>Envoy作为专门为微服务架构设计的通信总线，定位是作为Service Mesh的数据平面。</li>
+</ul>
+</li>
+<li><b>Envoy的核心设计理念是网络应该对应用服务透明，职责划分上比较明确</b>
+<ul class="quote">
+<li>当网络和应用程序出现故障时，可以很容易定位问题的具体根源。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Envoy架构</h4>
+<ul class="point">
+<li><b>Envoy内部可以分为数据平面、控制平面和管理平面3个部分</b>
+<ul class="quote">
+<li>控制平面用于对流量路由和转发相关的策略与配置进行管理。</li>
+<li>数据平面的流量转发就是基于控制平面下发的配置规则进行。</li>
+</ul>
+</li>
+<li><b>Envoy内置一个HTTP Server，作为Envoy的管理平面</b>
+<ul class="quote">
+<li>HTTP Server会注册一系列的Handler，对外暴露管理平面的API。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Envoy特性</h4>
+<ul class="point">
+<li><b>Envoy扩展性通过插件机制实现</b>
+<ul class="quote">
+<li>Envoy内部当前已经支持众多扩展点，通过网络协议插件和HTTP处理扩展插件，分别从通信协议和链路治理两个层面进行扩展。</li>
+</ul>
+</li>
+<li><b>配置动态化是Envoy架构层面最优雅的设计</b>
+<ul class="quote">
+<li>基于配置动态化设计，Envoy集群管理与流量转发相关的所有配置均可以通过XDS协议动态下发和生效。</li>
+</ul>
+</li>
+<li><b>Envoy支持如此众多特性的同时，仍然可以提供优秀的性能指标</b>
+<ul class="quote">
+<li>比如数据转发层面，Envoy采用异步事件驱动的方式，并且保证一个请求只会在一个线程内处理，减少了请求在线程间切换的开销。</li>
+<li>此外通过数据平面和控制平面分离，配置变更时，通过无锁机制保证数据转发的性能不受任何影响。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Istio概述</h4>
+<ul class="point">
+<li><b>Istio是Google、IBM和Lyft联合推出的开源微服务Service Mesh框架</b>
+<ul class="quote">
+<li>Istio旨在解决大量微服务的发现、连接、管理、监控以及安全等问题。</li>
+</ul>
+</li>
+<li><b>Istio综合了Google、IBM和Lyft在微服务领域的强大积累和经验，以Envoy为基础，将Envoy作为默认的数据平面</b>
+<ul class="quote">
+<li>Istio提供强大的控制平面能力。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Istio核心能力</h4>
+<ul class="point">
+<li><b>动态配置管理和下发</b>
+<ul class="quote">
+<li>Istio通过提供通用的配置管理能力，保证不同平台、不同环境下的配置均能够通过一致的方式对Envoy进行配置和下发。</li>
+</ul>
+</li>
+<li><b>Envoy生命周期管理和运行状态监控</b>
+<ul class="quote">
+<li>Istio负责Envoy的生命周期管理，启动Envoy，然后监控Envoy的运行状态。</li>
+</ul>
+</li>
+<li><b>通信安全</b>
+<ul class="quote">
+<li>Istio通过托管身份验证、授权和服务之间通信的双向TLS加密，保障通信的安全性。</li>
+</ul>
+</li>
+<li><b>策略控制</b>
+<ul class="quote">
+<li>对于一些核心资源，需要通过一定的策略，在不同消费服务以及服务的不同实例中进行分配。</li>
+</ul>
+</li>
+<li><b>遥测统计</b>
+<ul class="quote">
+<li>通过收集遥测统计相关的数据和指标，可以对服务进行全方位的监控。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch23"><summary>3.5 Service Mesh其他解决方案</summary>
+<div class="sec">
+<h4>国外其他Service Mesh项目</h4>
+<ul class="point">
+<li><b>Aspen Mesh由F5推出，基于Istio 1.0开发，提供托管的SaaS平台、丰富的UI仪表板、更多的实验特性和专业支持</b>
+<ul class="quote">
+<li>Aspen Mesh作为托管的SaaS平台。</li>
+<li>Aspen Mesh提供丰富的UI仪表板。</li>
+<li>Aspen Mesh有更多的实验特性。</li>
+<li>Aspen Mesh可获得Aspen Mesh工程师团队的专业支持。</li>
+</ul>
+</li>
+<li><b>Consul通过新增组件Connect实现对Service Mesh的支持，自动TLS加密和基于身份的认证实现安全的服务到服务通信</b>
+<ul class="quote">
+<li>Connect可自动将任何现有的Consul集群转换为Service Mesh解决方案。</li>
+<li>Connect通过自动TLS加密和基于身份的认证实现安全的服务到服务通信。</li>
+<li>证书轮换是自动的，不会导致停机。</li>
+</ul>
+</li>
+<li><b>NginMesh是Nginx推出的Service Mesh开源项目，提供负载均衡、服务发现、请求转发、路由规则、性能指标收集等功能</b>
+<ul class="quote">
+<li>NginMesh通过增加一定的管理手段，将Nginx作为Istio服务网格平台中的数据平面。</li>
+<li>NginMesh提供负载均衡、服务发现、请求转发、路由规则、性能指标收集等功能。</li>
+</ul>
+</li>
+<li><b>Kong通过在Kong实例之间添加MTLS和修改插件运行循环来支持Service Mesh部署模式</b>
+<ul class="quote">
+<li>Kong 1.0正式发布，通过在Kong实例之间添加MTLS和修改插件运行循环来支持Service Mesh部署模式。</li>
+<li>通过这些更改可以将Kong与服务的每个实例部署在一起，代理服务之间的信息流随服务的伸缩而自动伸缩。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Service Mesh在中国的发展</h4>
+<ul class="point">
+<li><b>阿里系采用两头出击的方式，Dubbo融入Istio/Envoy体系，蚂蚁金服Sofa Mesh控制平台基于Istio进行改进和扩展定制</b>
+<ul class="quote">
+<li>Dubbo当前的思路是，迎合Istio已成Service Mesh事实上大标准的大形势，将阿里当前成熟的服务治理基础设施融入Istio/Envoy体系。</li>
+<li>蚂蚁金服的Sofa Mesh控制平台基于Istio进行改进和扩展定制，数据平面采用完全自研的方式。</li>
+</ul>
+</li>
+<li><b>华为公有云和腾讯云的PaaS微服务治理平台当前均支持Service Mesh技术，其中华为公有云采用自研的方式，腾讯云的TSF微服务平台采用基于开源的Istio/Envoy技术栈，进行扩展和定制</b>
+<ul class="quote">
+<li>华为公有云采用自研的方式。</li>
+<li>腾讯云的TSF微服务平台采用基于开源的Istio/Envoy技术栈，进行扩展和定制。</li>
+</ul>
+</li>
+<li><b>微博是国内一线互联网公司中比较早在生产环境下实践Service Mesh技术的公司，积累了不少实战经验</b>
+<ul class="quote">
+<li>微博的Service Mesh实践是结合自身业务特点，完全从解决业务痛点问题出发而产生的。</li>
+<li>微博的Service Mesh技术实践也已经开源。</li>
+</ul>
+</li>
+<li><b>唯品会是国内最早进行Service Mesh相关探索和实践的公司，正在计划基于Service Mesh进行智能参数治理、智能故障分析和告警以及全链路服务综合治理等工作</b>
+<ul class="quote">
+<li>唯品会的主流技术栈是Java，并且有着成熟完善的Java服务治理体系OSP。</li>
+<li>唯品会正在计划基于Service Mesh进行智能参数治理、智能故障分析和告警以及全链路服务综合治理等工作，同时在筹备2019年将唯品会生产环境中使用的Service Mesh解决方案进行开源。</li>
+</ul>
+</li>
+<li><b>Service Mesh周边基础设施方面，国内当前也有了长足发展，尤其是分布式跟踪项目Skywalking发展迅速</b>
+<ul class="quote">
+<li>Skywalking发展迅速，后续值得持续关注。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch24"><summary>3.6 Service Mesh云上产品</summary>
+<div class="sec">
+<h4>AWS App Mesh</h4>
+<ul class="point">
+<li><b>AWS App Mesh是亚马逊AWS推出的Service Mesh产品</b>
+<ul class="quote">
+<li>AWS App Mesh可以轻松监控和控制在AWS上运行的微服务。</li>
+<li>App Mesh的推出标志着全球云计算领域的绝对领导者AWS正式加入到Service Mesh的竞争。</li>
+</ul>
+</li>
+<li><b>AWS App Mesh基于开源的数据平面代理Envoy构建</b>
+<ul class="quote">
+<li>使用Envoy管理AWS微服务的所有进出流量。</li>
+<li>控制平面是AWS自研，用于通过XDS API对Envoy进行配置和管理。</li>
+</ul>
+</li>
+<li><b>AWS App Mesh支持Kubernetes、Amazon ECS、Amazon EKS等多个平台。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Azure Service Fabric Mesh</h4>
+<ul class="point">
+<li><b>Service Fabric Mesh是微软公司出品的开源跨平台的分布式应用平台</b>
+<ul class="quote">
+<li>通过它可轻松开发、打包、部署和管理微服务。</li>
+<li>Service Fabric Mesh的理念是让微服务开发者关注应用程序本身，而不是集群。</li>
+</ul>
+</li>
+<li><b>Service Fabric Mesh也基于Envoy构建</b>
+<ul class="quote">
+<li>通过Envoy提供强大的流量调度和路由管理能力。</li>
+</ul>
+</li>
+<li><b>Service Fabric Mesh支持包括Kubernetes、Cloud Foundry、Docker Compose等众多编排平台。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Google Cloud Service Mesh</h4>
+<ul class="point">
+<li><b>Google Cloud在Service Mesh支持上围绕Istio展开</b>
+<ul class="quote">
+<li>2018年底，Google推出一键集成的Istio“Istio On GKE”。</li>
+<li>随后Google推出了Istio的完全托管版本Google Cloud Service Mesh。</li>
+</ul>
+</li>
+<li><b>Google Cloud还发布了一个重量级的流量管理产品Traffic Director</b>
+<ul class="quote">
+<li>Traffic Director提供对容器、VM等多种运行环境的支持。</li>
+<li>可以在多平台、多环境之间进行全局流量调度。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>SuperGloo</h4>
+<ul class="point">
+<li><b>SuperGloo是Solo.io公司推出的Service Mesh编排引擎</b>
+<ul class="quote">
+<li>SuperGloo提供两个主要收益：降低用户使用Service Mesh的复杂度；支持不同Service Mesh之间的互通，也支持多个Service Mesh平台之间的全局流量调度。</li>
+</ul>
+</li>
+<li><b>Solo.io围绕Service Mesh还发布了不少产品</b>
+<ul class="quote">
+<li>比如网关产品，目的是押注Service Mesh生态的基础设施和工具链体系。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch25"><summary>3.7 Service Mesh标准化</summary>
+<div class="sec">
+<h4>Service Mesh标准化的重要性</h4>
+<ul class="point">
+<li><b>不同Service Mesh之间迁移的成本非常高。</b>
+</li>
+<li><b>只有解决了标准化的问题，才能构建起Service Mesh生态的基石</b>
+<ul class="quote">
+<li>Service Mesh标准化，是Service Mesh发展过程中重要的一步。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Service Mesh标准化的进展</h4>
+<ul class="point">
+<li><b>CNCF以Envoy XdS v2 API为基础在筹建通用数据平面API。</b>
+</li>
+<li><b>微软牵头推出了Service Mesh Interface(简称SMI)</b>
+<ul class="quote">
+<li>SMI的目的是构建一套不同Service Mesh互通的标准。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch26"><summary>3.8 本章小结</summary>
+<div class="sec">
+<h4>Service Mesh的发展状况</h4>
+<ul class="point">
+<li><b>Service Mesh是微服务架构下的一种基础设施层，用于解决微服务通信、服务治理标准化等痛点问题。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Service Mesh的主要势力</h4>
+<ul class="point">
+<li><b>Linkerd和Istio是Service Mesh开源领域当前的两大主要势力</b>
+<ul class="quote">
+<li>Linkerd是一个开源的服务网格控制器，用于连接、监控和控制服务。</li>
+<li>Istio是一个开源的服务网格解决方案，提供了一种统一化的方式来连接、监控和控制服务。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>云服务厂商在Service Mesh领域的布局</h4>
+<ul class="point">
+<li><b>AWS、微软Azure、Google云均在Service Mesh领域开始布局</b>
+<ul class="quote">
+<li>AWS推出的Amazon App Mesh是一个完全托管的服务网格，提供用于连接、监控和控制微服务的统一平台。</li>
+<li>微软Azure推出的Azure Service Fabric Mesh是一个完全托管的服务网格，提供用于连接、监控和控制微服务的统一平台。</li>
+<li>Google云推出的Google Service Mesh是一个完全托管的服务网格，提供用于连接、监控和控制微服务的统一平台。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch27"><summary>第二篇 架构篇</summary>
+<div class="sec">
+<h4>Envoy的核心概念</h4>
+<ul class="point">
+<li><b>Envoy是一个开源的边缘和服务代理，用于处理服务间通信。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Envoy的核心组件</h4>
+<ul class="point">
+<li><b>Envoy主要由以下几个组件构成：Listener、Router、Cluster Manager、Endpoint Discovery Service、Health Checker、Stats Server</b>
+<ul class="quote">
+<li>Listener：监听请求，并根据路由规则将请求转发到相应的后端服务。</li>
+<li>Router：根据请求的HTTP方法和路径，将请求路由到相应的后端服务。</li>
+<li>Cluster Manager：负责管理服务实例，并在需要时添加或删除服务实例。</li>
+<li>Endpoint Discovery Service：负责发现服务的端点，以便将请求路由到正确的服务实例。</li>
+<li>Health Checker：负责检查服务实例的健康状况，以便将请求路由到健康的服务实例。</li>
+<li>Stats Server：负责收集和统计Envoy的各种指标数据。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Envoy的核心数据结构</h4>
+<ul class="point">
+<li><b>Envoy使用以下数据结构来存储和管理各种信息：Cluster、Endpoint、RouteConfiguration、Listener、Route</b>
+<ul class="quote">
+<li>Cluster：表示一个服务集群，包含多个服务实例。</li>
+<li>Endpoint：表示一个服务实例的地址信息。</li>
+<li>RouteConfiguration：表示一组路由规则，用于将请求路由到不同的服务实例。</li>
+<li>Listener：表示一个监听器，用于接收和转发请求。</li>
+<li>Route：表示一条路由规则，用于将请求路由到特定的服务实例。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>XDS API设计</h4>
+<ul class="point">
+<li><b>XDS是Envoy的动态配置API，用于动态更新Envoy的配置信息</b>
+<ul class="quote">
+<li>XDS包含多个子API，如Cluster、Listener、RouteConfiguration等。</li>
+<li>Envoy通过XDS从管理节点获取配置信息，并根据配置信息更新其内部状态。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Filter插件机制</h4>
+<ul class="point">
+<li><b>Filter是Envoy的插件系统，用于扩展Envoy的功能</b>
+<ul class="quote">
+<li>Filter可以处理请求和响应的数据包，提供各种功能，如身份验证、负载均衡、熔断等。</li>
+<li>Envoy支持多种类型的Filter，如HTTP Filter、Network Filter等。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Envoy的控制流和数据流</h4>
+<ul class="point">
+<li><b>Envoy的控制流包括请求的接收、处理和响应的发送</b>
+<ul class="quote">
+<li>请求的接收：Listener接收请求，并将其转发到相应的Router。</li>
+<li>请求的处理：Router根据路由规则将请求转发到相应的Cluster Manager，Cluster Manager再将其转发到相应的Endpoint。</li>
+<li>响应的发送：Endpoint处理请求后，将响应返回给Router，Router再将其返回给客户端。</li>
+</ul>
+</li>
+<li><b>Envoy的数据流包括请求和响应的数据包的传输</b>
+<ul class="quote">
+<li>请求的数据包：客户端将请求的数据包发送给Listener，Listener再将其转发给Router。</li>
+<li>响应的数据包：Endpoint将响应的数据包发送给Router，Router再将其转发给客户端。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch28"><summary>4.1 Envoy整体架构</summary>
+<div class="sec">
+<h4>Envoy整体架构的关键设计约束</h4>
+<ul class="point">
+<li><b>易用性是Service Mesh最重要的一个诉求</b>
+<ul class="quote">
+<li>对没有特殊要求的普通用户来说，需要能够真正做到Service Mesh接入过程完全透明，业务完全无感知，不需要修改任何代码和配置。</li>
+</ul>
+</li>
+<li><b>可用性是系统竞争力的关键一环</b>
+<ul class="quote">
+<li>一个频繁出故障的系统会给用户带来很大的业务损失，这样的系统对用户来说是没有价值的。</li>
+</ul>
+</li>
+<li><b>可观测性和可管理性使得我们可以查看系统的内部运行状态</b>
+<ul class="quote">
+<li>基于可观测性，我们可以使用数据驱动的思维，对系统的故障进行分析和定位，系统地精细化管控和运营。</li>
+</ul>
+</li>
+<li><b>扩展性主要用来提升系统的增量目标用户</b>
+<ul class="quote">
+<li>易用性、可用性和可观测性是提供基础目标用户体验的基石，也是系统的核心竞争力所在。</li>
+</ul>
+</li>
+<li><b>性能问题一般都可以通过横向与纵向扩展来解决</b>
+<ul class="quote">
+<li>对系统性能的要求，不能成为制约业务发展的短板。</li>
+</ul>
+</li>
+<li><b>良好的兼容性会使Service Mesh的迁移和推广路径更加清晰</b>
+<ul class="quote">
+<li>如果能够做到Service Mesh体系和非Service Mesh体系之间兼容与互通，会使存量服务的迁移更顺畅。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Envoy整体架构的设计原则</h4>
+<ul class="point">
+<li><b>网络透明性是Envoy架构层面总的指导原则</b>
+<ul class="quote">
+<li>网络对于应用程序来说应该是透明的，应用程序只需要按照标准化的方式使用网络，不需要感知网络的具体实现细节。</li>
+</ul>
+</li>
+<li><b>最终一致性是Envoy架构设计的另外一个重要指导原则</b>
+<ul class="quote">
+<li>Envoy在配置处理、统计子系统等多个场景都会采用基于最终一致性的设计。</li>
+</ul>
+</li>
+<li><b>对性能的折中考虑是Envoy的最后一个设计原则</b>
+<ul class="quote">
+<li>Envoy重视性能的同时，不会执着于极限性能，不会为了性能考虑，牺牲架构上的简单和易用性设计，不会为了极限性能牺牲代码的可维护性。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Envoy整体架构</h4>
+<ul class="point">
+<li><b>Envoy线程模型由负责控制流的主线程和负责数据流的工作线程组成</b>
+<ul class="quote">
+<li>所有工作线程同时监听Iptables透明拦截的Downstream客户端请求，监听器信息由监听发现服务LDS负责管理。</li>
+<li>监听到客户端请求后在当前线程中创建连接，后续该连接上的请求消息处理均在这个线程内完成。</li>
+</ul>
+</li>
+<li><b>Envoy的扩展性由Filter插件机制负责</b>
+<ul class="quote">
+<li>每个监听器下对应两类插件：一类是监听器相关的过滤插件，用于对监听行为进行扩展；另一类是网络过滤插件，负责建立请求连接、协议解析和路由工作。</li>
+</ul>
+</li>
+<li><b>Envoy请求处理需要的LDS、RDS、CDS和EDS配置信息由控制平面通过XDS协议动态下发给Envoy</b>
+<ul class="quote">
+<li>HTTP网络过滤插件通过路由发现服务RDS管理HTTP协议的路由。</li>
+<li>HTTP路由是个多层的树状结构，对应的是每个集群以及相应的匹配条件，其中集群信息由集群发现服务CDS管理。</li>
+<li>通过集群的负载均衡算法获取到相应的目标节点后，将Downstream请求信息转发给Upstream。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch29"><summary>4.2 Envoy网络模型</summary>
+<div class="sec">
+<h4>Envoy事件调度模型</h4>
+<ul class="point">
+<li><b>Envoy的请求处理和状态流转均依赖事件调度机制来实现</b>
+<ul class="quote">
+<li>Envoy事件调度相关实现在/source/common/event目录下。</li>
+</ul>
+</li>
+<li><b>Envoy事件调度模型以Libevent为基础，由DispatcherImpl负责管理</b>
+<ul class="quote">
+<li>DispatcherImpl::DispatcherImpl(TimeSystem&amp; time_system, Buffer::WatermarkFactoryPtr&amp;&amp; factory,  Api::Api&amp; api)。</li>
+</ul>
+</li>
+<li><b>Envoy事件调度模型分为事件创建和提交事件给调度器两部分</b>
+<ul class="quote">
+<li>Envoy通过FileEvent管理使用最频繁的网络I/O事件。</li>
+<li>对于定时器事件来说，通过DispatcherImpl：：createTimer创建定时器事件，通过TimerImpl：：enableTimer完成定时器的提交。</li>
+</ul>
+</li>
+<li><b>Envoy事件调度器也支持任务的异步触发，通过Dispat-cherImpl：：post投递具体任务</b>
+<ul class="quote">
+<li>DispatcherImpl通过post_timer_定时器触发异步任务的具体触发。</li>
+</ul>
+</li>
+<li><b>为了方便各个工作线程的事件触发和管理，减少不同线程处理时的锁开销，Envoy线程模型为每个线程创建一个事件调度器</b>
+<ul class="quote">
+<li>各模块直接传递指针对象到事件调度器，如果回调时对象已经被销毁，就会出现访问异常，因此必须对传递给事件调度器的指针对象的生命周期进行有效管理，Envoy使用延迟析构来解决这个问题。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Envoy线程模型</h4>
+<ul class="point">
+<li><b>Envoy采用控制流和数据流分离的思想，将线程模型主要分为主线程和工作线程两类</b>
+<ul class="quote">
+<li>Envoy的主线程负责控制流逻辑，主要是XDS配置更新、修改XDS相关的配置和数据。</li>
+<li>Envoy的工作线程负责数据流逻辑，主要是请求消息转发处理，转发处理时会查询XDS数据。统计信息也类似，工作线程负责修改统计信息，主线程负责对各个线程的统计信息进行汇总和统一上报。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>线程本地存储机制</h4>
+<ul class="point">
+<li><b>Envoy引入了TLS(线程本地存储)的概念，通过TLS，主线程上运行的代码可以分配到进程范围内的TLS槽</b>
+<ul class="quote">
+<li>TLS槽是一个允许O(1)访问的向量索引，主线程可以将任意数据放在TLS槽，然后通过事件的方式将数据变更发布到每个工作线程中。</li>
+<li>每个工作线程都会基于主线程的TLS槽数据，复制一份完全相同的线程本地数据，工作线程只需要访问本线程的线程本地数据，同时每个线程的事件调度器响应主线程发布的变更事件，触发线程本地数据的更新。</li>
+</ul>
+</li>
+<li><b>为了在工作线程和主线程之间实现配置与数据交互，需要在主线程和工作线程之间建立一条信息传递的管道</b>
+<ul class="quote">
+<li>各个工作线程的角色完全相同，相互之间不需要通信，它们均和主线程进行通信。</li>
+<li>由于主线程只有一个，各个工作线程通过全局变量main_thread_dispatcher_就可以和主线程进行通信。</li>
+<li>同时，Envoy工作线程启动后，向主线程注册自己的事件调度器，相当于表明自己的身份，当有事件发生时，主线程就可以通过注册的事件调度器进行事件通知。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch30"><summary>4.3 Envoy扩展模型</summary>
+<div class="sec">
+<h4>Envoy扩展模型概述</h4>
+<ul class="point">
+<li><b>插件是Envoy扩展性支持的重要方式</b>
+<ul class="quote">
+<li>通过插件扩展，可以支持不同的网络协议和链路治理特性，也可以对流量进行场景化定制处理。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>插件扩展机制</h4>
+<ul class="point">
+<li><b>插件注册机制：采用静态注册的方式，通过RegisterFactory类完成模板参数的实际注册</b>
+<ul class="quote">
+<li>在RegisterFactory类中，会通过模板参数声明一个类的成员变量，在类的构造函数中，调用registerFactory完成模板参数的实际注册。</li>
+<li>插件会通过Config：：Utility：：getAndCheckFactory函数获取注册的插件实例。</li>
+</ul>
+</li>
+<li><b>插件触发机制：使用插件前需要根据配置文件，使用插件工厂模板获取当前支持的插件工厂列表</b>
+<ul class="quote">
+<li>上述实例代码最后通过插件工厂模板的createFilterFactoryFromProto方法创建具体的插件工厂。</li>
+<li>使用插件前，根据上述返回的插件工厂列表构造具体的插件实例。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>网络相关插件</h4>
+<ul class="point">
+<li><b>监听过滤器：在接收到新连接请求，但还未进行实际的新连接创建工作之前触发，通过监听过滤器插件，可以调整连接元数据信息</b>
+<ul class="quote">
+<li>Envoy当前支持原目的地、原出发地、Proxy Protocol和TLS Inspestor这几种监听过滤器。</li>
+<li>Proxy Protocol监听过滤器基于Proxy Protocol协议获取客户端真实的IP地址。</li>
+</ul>
+</li>
+<li><b>网络过滤器：主要有两个层面的工作：一是连接相关的，二是协议相关的处理</b>
+<ul class="quote">
+<li>协议编解码处理，收到请求消息时对请求消息进行解码处理，获取上游流量路由和转发相关的元数据信息，收到上游的响应消息后，进行编码处理，返回给下游客户端。</li>
+<li>流量路由和转发，根据当前使用场景和请求元数据信息，决策最合适的Upstream上游。</li>
+<li>Upstream管理，获取与Upstream之间的连接，并建立和Upstream之间的安全通信，同时在Upstream异常时进行完善的容错处理。</li>
+</ul>
+</li>
+<li><b>协议相关过滤器：基于协议内容进行过滤和扩展处理</b>
+<ul class="quote">
+<li>Envoy当前对HTTP协议、Thrift协议等均有过滤器扩展支持，对HTTP协议的支持比较完善些，当前支持路由、限流、Lua扩展等多种扩展方式。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>其他扩展插件</h4>
+<ul class="point">
+<li><b>流量管理方面，支持的主要是各个网络协议均会用到的协议无关的一些插件</b>
+<ul class="quote">
+<li>比如健康检查扩展支持、重试和传输层扩展支持等。</li>
+</ul>
+</li>
+<li><b>可观测性是Envoy一个很大的亮点，Envoy在可观测性的几个核心维度——Metric、Log和Trace均有相应的框架支持。</b>
+</li>
+<li><b>Envoy还内置一些服务管理方面的插件支持，比如资源限制等。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch31"><summary>4.4 Envoy数据平面API</summary>
+<div class="sec">
+<h4>Envoy数据平面API概述</h4>
+<ul class="point">
+<li><b>流量管理的核心配置主要包含监听器配置、路由配置、集群配置以及集群节点配置</b>
+<ul class="quote">
+<li>这几种配置一块构成了Envoy流量路由和转发的核心。</li>
+</ul>
+</li>
+<li><b>流量管理配置当前有静态配置和动态配置两种方式</b>
+<ul class="quote">
+<li>静态配置是在Envoy服务启动时静态指定。</li>
+<li>动态配置是指在Envoy运行时，通过XDS协议的方式进行实时更新。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>XDS协议语义</h4>
+<ul class="point">
+<li><b>XDS协议分为资源请求和资源响应两个阶段</b>
+<ul class="quote">
+<li>Envoy会发送DiscoveryRequest资源请求消息。</li>
+<li>控制平面收到DiscoveryRequest请求消息，会通过DiscoveryResponse消息返回需要的资源信息。</li>
+</ul>
+</li>
+<li><b>version_info和nonce两个字段含义和使用上很容易混淆</b>
+<ul class="quote">
+<li>version_info表示当前处理成功的Discovery-Response消息的版本号。</li>
+<li>response_nonce表示对某个编号的DiscoveryResponse消息的回复。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>XDS协议通信</h4>
+<ul class="point">
+<li><b>XDS API当前支持两种协议，V1版本的REST协议方式和V2版本的数据平面gRPC协议</b>
+<ul class="quote">
+<li>V1版本的REST协议针对LDS、CDS、EDS和RDS等。</li>
+<li>V2版本引入了强大的gRPC协议，编码效率更高，同时，gRPC支持连接双向通信，带来了通信效率的极大提升。</li>
+</ul>
+</li>
+<li><b>Istio引入了ADS(Aggregated Discovery Service，聚合发现服务)的概念</b>
+<ul class="quote">
+<li>ADS将CDS、EDS、LDS、RDS等多个资源均放在一个gRPC连接上进行管理，更新时ADS默认就会按照正确的更新顺序依次更新XDS资源。</li>
+</ul>
+</li>
+<li><b>Envoy数据平面当前已经增加了增量更新语义Incremental XDS</b>
+<ul class="quote">
+<li>在配置发生变更时，Incremental XDS只会对变更部分进行更新。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch32"><summary>4.5 Envoy启动管理</summary>
+<div class="sec">
+<h4>Envoy启动方式</h4>
+<ul class="point">
+<li><b>Envoy启动分为通过静态配置启动、通过XDS协议获取动态配置启动以及热重启3种方式</b>
+<ul class="quote">
+<li>对于一个健壮的在线服务，大体需要包含网络监听和管理、集群管理、可观测性、通信安全等信息。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>正常启动</h4>
+<ul class="point">
+<li><b>Envoy启动就是一个解析启动配置，初始化Envoy核心数据结构，然后启动工作线程开始工作的过程</b>
+<ul class="quote">
+<li>配置解析：Envoy启动阶段是个很复杂的过程，具体梳理起来主要包括配置解析、监听管理初始化、工作线程初始化、协议处理插件初始化这样几件事情。</li>
+<li>核心对象初始化：配置解析完成后，就会进行Envoy核心对象的初始化，先看流量管理相关的几个核心管理类监听管理器ListenerManagerImpl和集群管理器ClusterManagerImpl。</li>
+<li>工作线程启动：核心对象初始化完成后，Envoy会根据配置的并发度创建一批工作线程，这些工作线程采用异步事件驱动的工作方式，每个线程启动一个独立的事件调度器，当有新的连接到来时，内核会选取一个工作线程进行新连接的处理。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>热重启</h4>
+<ul class="point">
+<li><b>Envoy热重启时，新进程启动时通知父进程热重启消息，同时使用父进程的监听FD创建监听器，启动完成后通知父进程进行退出处理</b>
+<ul class="quote">
+<li>Envoy热更新的主要逻辑实现在/source/server/hot_restart_impl.cc中。</li>
+<li>Envoy启动时有个启动参数restartEpoch，标识Envoy服务的当前编号，restartEpoch从0开始编号，每次重启时需要对这个编号加1，因此热重启时新旧Envoy进程的restartEpoch的序号连续，我们就可以基于这个序号关系建立新旧Envoy进程的unix domain socket通信。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch33"><summary>4.6 Envoy与Nginx架构层面的对比</summary>
+<div class="sec">
+<h4>Nginx和Envoy的功能与定位对比</h4>
+<ul class="point">
+<li><b>Nginx最核心的功能是Web服务器和反向代理服务器</b>
+<ul class="quote">
+<li>Web服务器完成对HTTP请求协议的解析和以HTTP协议格式响应请求、缓存、日志处理这些基本Web服务器功能。</li>
+<li>反向代理服务器完成对请求的转发、负载均衡、鉴权、限流、缓存、日志处理等代理常用功能。</li>
+</ul>
+</li>
+<li><b>Envoy的目标是透明接管微服务之间的通信流量</b>
+<ul class="quote">
+<li>将通信和服务治理功能从微服务中解耦，通过Envoy可以方便地增加对自定义协议的支持。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Nginx和Envoy的网络模型对比</h4>
+<ul class="point">
+<li><b>Nginx采用的是经典的多进程架构，Envoy采用了多线程的网络架构</b>
+<ul class="quote">
+<li>Nginx的master进程负责对worker进程进行管理，worker进程负责处理各种网络事件。</li>
+<li>Envoy一般会根据当前CPU核数创建相同个数的worker线程，所有worker线程同时对Envoy配置的监听器进行监听，接受新的连接。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Nginx和Envoy的连接处理对比</h4>
+<ul class="point">
+<li><b>Nginx通过worker_connections参数来控制每个worker能够建立的最大连接数</b>
+<ul class="quote">
+<li>当本进程当前连接数达到最大worker_connections的7/8时，本worker进程不会去试图拿accept锁，也不会去处理新连接。</li>
+</ul>
+</li>
+<li><b>Envoy当前发展很快，同时需要解决的问题很多，Envoy社区的人觉得这个问题当前的优先级还不够高，后续会根据具体情况对这个问题进行讨论和解决。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Nginx和Envoy的插件机制对比</h4>
+<ul class="point">
+<li><b>Nginx拥有强大的插件扩展能力，Envoy也提供了强大的插件扩展机制</b>
+<ul class="quote">
+<li>Nginx插件通过模块的方式提供，包括stream机制进行协议扩展，Handler方式处理HTTP请求，对HTTP请求和响应消息进行过滤，访问Upstream时的负载均衡等。</li>
+<li>Envoy的插件当前采用的是静态注册的方式，插件代码和Envoy代码一块进行编译，从最开始就支持插件的动态加载。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Nginx和Envoy的配置管理对比</h4>
+<ul class="point">
+<li><b>Nginx的配置格式使用自定义的方式，配置结构和配置解析过程都非常复杂</b>
+<ul class="quote">
+<li>配置组织上，Nginx采用层层嵌套的方式，最外层是核心模块的配置，主要包括events事件模块、http模块和stream模块。</li>
+<li>Nginx的配置解析代码可以说是Nginx整个源码体系中最晦涩难懂的部分，配置解析的核心代码在ngx_conf_file.c中，通过层层嵌套解析，形成了一棵树状的配置信息结构。</li>
+</ul>
+</li>
+<li><b>Envoy的配置管理部分设计得就比较优雅，配置格式直接使用了Protobuf 3</b>
+<ul class="quote">
+<li>复用了Protobuf 3的数据描述能力和自动代码生成机制，完全省去了配置解析的过程，并且也非常方便对配置格式的有效性进行验证。</li>
+<li>Nginx的配置都是静态配置，不支持任何形式的动态配置能力。</li>
+<li>动态配置能力是Envoy相比Nginx最核心的竞争力，通过动态配置，可以在线修改流量路由和链路治理策略，实现策略配置修改的即时生效。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Nginx和Envoy的内存管理对比</h4>
+<ul class="point">
+<li><b>Nginx内存管理通过Nginx内存池实现，Envoy在内存管理方面的支持还很粗糙</b>
+<ul class="quote">
+<li>通过内存池的良好设计，使用内存池进行内存管理时，不需要关注内存什么时候释放，连接销毁时会回收连接对应的内存资源。</li>
+<li>直接基于原生的内存管理库，内存释放时机管理通过智能指针管理内存的生命周期。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Nginx和Envoy的部署与运维对比</h4>
+<ul class="point">
+<li><b>Nginx采用多进程的通信架构，主进程负责维护工作进程的状态</b>
+<ul class="quote">
+<li>监控工作进程的状态，状态异常时会对工作进程进行重启。</li>
+<li>主进程也可以接收外界的管理信号，通知工作进程完成相应的操作。</li>
+</ul>
+</li>
+<li><b>Envoy是通过控制平面组件Pilot Agent和Sidecar-injection进行管理</b>
+<ul class="quote">
+<li>Pilot Agent负责管理Envoy的运行状态，当Envoy状态有问题时，Pilot Agent会将Envoy重启。</li>
+<li>Sidecar-injection负责Envoy的自动注入。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Nginx和Envoy的观测与诊断对比</h4>
+<ul class="point">
+<li><b>Envoy投入了大量的精力，已经全面支持Log、Metric、Trace等可观测机制</b>
+<ul class="quote">
+<li>并且每种观测方式均提供相应的扩展机制，Nginx在这方面相对逊色很多，可观测以及诊断支持上相对弱一些。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch34"><summary>5.1 Istio整体架构</summary>
+<div class="sec">
+<h4>Istio整体架构</h4>
+<ul class="point">
+<li><b>Istio在微服务之间建立连接，接管通信功能，对业务微服务屏蔽通信细节</b>
+<ul class="quote">
+<li>Istio通过流量控制、策略控制、遥测统计、Istio安全机制等对微服务进行监控和管理。</li>
+</ul>
+</li>
+<li><b>Istio整体架构分为控制平面(Control Plane)和数据平面(Data Plane)两部分</b>
+<ul class="quote">
+<li>数据平面除了负责实际流量转发工作的数据转发代理服务istio/proxy之外，还有几个关键组件：pilot-agent负责转发代理的启动和生命周期管理，istio-init负责流量透明拦截的配置，pilot-agent、istio-init和转发代理一同部署，共同为业务流量转发保驾护航。</li>
+<li>控制平面中，istio-telemetry提供可观测性支持，基于istio-telemetry可以掌控整个Istio集群当前的运行状态；istio-pilot和istio-policy分别负责流量控制和策略控制，观测到运行状态不符合预期时，可以通过istio-pilot对流量和路由转发进行控制与调整，通过istio-policy可以灵活动态地引入新的基础设施，对Istio运行进行精细化控制。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>数据平面组件</h4>
+<ul class="point">
+<li><b>istio/proxy是Istio在Envoy官方源码基础上的扩展实现，除了包括Envoy的全部功能外，还包括了一些扩展支持</b>
+<ul class="quote">
+<li>Istio扩展通过Envoy过滤器插件的方式提供，当前主要扩展是Mixer客户端的支持，基于该扩展可以与Mixer Server进行gRPC交互，完成策略检查、配额控制和遥测统计相关的工作。</li>
+</ul>
+</li>
+<li><b>pilot-agent是一个本地代理，负责管理istio/proxy服务的整个生命周期</b>
+<ul class="quote">
+<li>pilot-agent具体包括istio/proxy准备启动参数和配置文件，负责管理istio/proxy的启动过程，istio/proxy启动后的运行状态监控。</li>
+</ul>
+</li>
+<li><b>istio-init负责业务微服务的流量透明拦截，通过配置相应的流量拦截策略，可以将业务服务的所有出入流量转发到本地的数据平面代理节点处理</b>
+<ul class="quote">
+<li>Istio当前使用Iptables作为默认的流量拦截策略，istio-init通过istio-iptables.sh拦截配置，配置相应的Iptables规则，完成具体的流量拦截操作。</li>
+</ul>
+</li>
+<li><b>node-agent负责证书和密钥等安全信息的获取</b>
+<ul class="quote">
+<li>node-agent作为代理服务，接收数据平面代理节点的证书请求，转换成控制平面需要的格式，请求控制平面的证书管理服务，完成证书和密钥的获取和下发。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>控制平面组件</h4>
+<ul class="point">
+<li><b>istio-pilot负责Istio数据平面的XDS配置管理</b>
+<ul class="quote">
+<li>istio-pilot通过提供通用的流量管理模型和服务发现模型，对接不同的平台适配层。</li>
+<li>istio-pilot提供统一的XDS API，供Envoy服务调用。</li>
+</ul>
+</li>
+<li><b>sidecar-injector负责数据平面代理Sidecar的注入</b>
+<ul class="quote">
+<li>通过Sidecar的透明注入支持，可以减少Istio部署和运维上的复杂度。</li>
+</ul>
+</li>
+<li><b>istio-telemetry和istio-policy均属于Mixer服务，分别负责遥测统计和策略控制工作</b>
+<ul class="quote">
+<li>istio-telemetry和istio-policy的代码和二进制文件完全一样，之所以分开部署，是因为遥测统计和策略控制是两个差异很大的功能特性，分开部署方便采用不同的配置和管控方式，也可通过部署隔离避免相互之间的影响。</li>
+</ul>
+</li>
+<li><b>istio-catedal负责安全证书的管理和发放</b>
+<ul class="quote">
+<li>istio-catedal并不是唯一的证书管理方式，Istio当前支持Catedal、Vault和Google等多种证书管理方式，Catedal是当前默认的证书管理方式。</li>
+</ul>
+</li>
+<li><b>istio-galley是Istio1.1新引入的配置管理框架</b>
+<ul class="quote">
+<li>Istio将配置管理相关的工作抽象出一个单独的组件Galley，后续其他Istio组件不再需要单独和各种平台上的资源直接打交道，而是使用简易的接口和Galley进行交互，由Galley负责配置验证、配置变更管理、配置源管理、多平台适配等工作。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch35"><summary>5.2 Istio的Kubernetes基础</summary>
+<div class="sec">
+<h4>Kubernetes综述</h4>
+<ul class="point">
+<li><b>Kubernetes是Google 2014启动的开源项目，基于Google长达15年生产级环境下的集群管理经验。</b>
+</li>
+<li><b>Kubernetes设计理念包括声明式API设计和容错设计</b>
+<ul class="quote">
+<li>声明式API设计使得操作更容易被用户理解，基于Kubernetes声明式API可以以非常小的代价自定义扩展新的API。</li>
+<li>容错设计保证系统不出错是不可能实现的，因此系统设计时需要尽可能地对所有可能的错误进行容错处理。</li>
+</ul>
+</li>
+<li><b>Kubernetes核心概念包括Pod、Replication Controller、ReplicaSet、Deployment和Label</b>
+<ul class="quote">
+<li>Pod是Kubernetes创建或部署的基本单元，Pod内部的容器共享网络和存储资源。</li>
+<li>Replication Controller用于Pod的管理，它能够保证Pod持续运行。</li>
+<li>ReplicaSet是Replication Controller的升级版本，和Replication Controller的唯一差别是ReplicaSet增加了选择器支持。</li>
+<li>Deployment是新一代的Pod管理对象，与Replication Controller相比，它提供了更加完善的功能，使用起来也更加简单方便。</li>
+<li>Label是附着在对象上的key-value对，可以在创建对象的时候指定，也可以在对象创建后通过API的方式指定。</li>
+</ul>
+</li>
+<li><b>Kubernetes整体架构为主从分布式架构，主要由负责调度与控制逻辑的Master节点和执行实际工作的Node节点组成</b>
+<ul class="quote">
+<li>Master节点主要包含API Server、Scheduler、Controller Manager和集群资源和状态存储。</li>
+<li>Node节点主要包含Kubelet和Kube Proxy。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Kubernetes网络访问模型</h4>
+<ul class="point">
+<li><b>Kubernetes网络模型保证所有Pod IP均可以直接被其他所有Pod访问</b>
+<ul class="quote">
+<li>同一Pod内的多个容器，共享一个Pod IP地址，共用同一个Linux协议栈。</li>
+<li>Kubernetes网络模型保证：同一个Kubernetes集群内的任意Pod之间均可以相互访问。</li>
+</ul>
+</li>
+<li><b>Kubernetes Service提供了一种桥梁，它会为访问者提供一个固定访问地址，用于在访问时重定向到相应的后端</b>
+<ul class="quote">
+<li>Kubernetes Service有3种使用类型：ClusterIP、NodePort和Ingress LoadBalancer。</li>
+<li>Kubernetes中，Service的具体实现由Kube Proxy负责，实现了内部从Pod到Service及外部的从NodePort向Service的访问。</li>
+</ul>
+</li>
+<li><b>Kubernetes支持两种服务发现的方式：环境变量和DNS</b>
+<ul class="quote">
+<li>Pod创建的时候，服务的IP和Port会以环境变量的形式注入到Pod里。</li>
+<li>Kubernetes集群会内置一个DNS服务器，Service创建成功后，会在DNS服务器里导入一些记录。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Kubernetes API管理</h4>
+<ul class="point">
+<li><b>Kubernetes中，一切都是对象，Kubernetes对象yaml文件进行定义</b>
+<ul class="quote">
+<li>Kubernetes对象包含两个属性：Spec(对象定义)和Status(对象状态)。</li>
+<li>创建一个Kubernetes对象通常分为两步：创建对象描述文件，然后通过kubectl命令行接口创建对象。</li>
+</ul>
+</li>
+<li><b>Kubernetes API Server负责对Kubernetes API进行处理，具体处理包括准入控制、资源处理和存储处理3部分</b>
+<ul class="quote">
+<li>认证、授权等机制属于准入控制的范畴，通过各种准入机制保证Kubernetes资源的安全性和隔离性。</li>
+<li>变更和验证插件是Kubernetes非常有特色的特性，通过Admision Webhook机制对Kubernetes资源进行修改和验证。</li>
+<li>资源处理完成后，Kubernetes将对象资源存储到etcd中，并且通过相应的机制，通知当前对象的关注者，进行对象变更相关的处理。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Istio与Kubernetes的相互关系</h4>
+<ul class="point">
+<li><b>Istio正是解决Kubernetes集群的通信标准化问题，提供业务透明的通信解决方案</b>
+<ul class="quote">
+<li>Kubernetes的定位是服务调度和服务生命周期管理，微服务通信本身不属于Kubernetes的重点支持范畴。</li>
+</ul>
+</li>
+<li><b>Kubernetes提供的强大的基础设施，为Istio的运维提供了很大的帮助</b>
+<ul class="quote">
+<li>Service Mesh之前很长时间内没有流行起来，其根本原因是运维复杂度偏高，导致Service Mesh使用起来难度很大。</li>
+<li>基于Kubernetes提供的云化基础设施，有力地推动了Service Mesh的快速发展和落地。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch36"><summary>5.3 Istio流量控制模型</summary>
+<div class="sec">
+<h4>Istio流量控制模型</h4>
+<ul class="point">
+<li><b>Pilot作为Istio的配置中心，接收服务注册中心的服务注册信息，并处理后发送给相应的Envoy</b>
+<ul class="quote">
+<li>Pilot将Istio核心对象的变更和服务注册信息进行处理，发送给相应的Envoy，作为Envoy的动态配置。</li>
+</ul>
+</li>
+<li><b>Istio支持Kubernetes、Mesos、Cloud Foundry等众多云平台，每种云平台内部也支持不同的服务注册中心和对象管理方式</b>
+<ul class="quote">
+<li>Pilot定义了一个抽象的模型层，给不同层面的扩展提供一致的视图，当前主要包含对象通用配置和服务通用配置。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>流量管理API</h4>
+<ul class="point">
+<li><b>Istio流量管理相关的核心资源采用Kubernetes CRD的方式进行管理配置</b>
+<ul class="quote">
+<li>对于VirtualService、DestinationRule、ServiceEntry、Gateway、EnvoyFilter Kubernetes CRD等资源进行更新操作，直接通过kubectl工具来操作。</li>
+</ul>
+</li>
+<li><b>Istioctl负责Istio中Kubernetes CRD资源之外的修改和查询操作</b>
+<ul class="quote">
+<li>比如通过Istioctl proxy-config获取Proxy相关的配置，通过Istioctl kube-inject将Envoy Sidecar注入到Kubernetes Pod中。</li>
+</ul>
+</li>
+<li><b>Istio API负责对Istio数据平面进行控制和管理</b>
+<ul class="quote">
+<li>当前Istio API使用的是Istio 0.8版本开始引入的networking.istio.io/v1alpha3，当前仍处于v1alpha阶段。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Istio Mesh模型</h4>
+<ul class="point">
+<li><b>Istio提供了一组API接口，对Sidecar进行配置，Envoy获取XDS配置时，Istio就会根据当前Envoy的配置信息，获取匹配的XDS配置</b>
+<ul class="quote">
+<li>Istio Mesh主要由MeshConfig、MeshNetwork和ProxyConfig这几个维度，分别负责对Service Mesh整体配置、Service Mesh网络配置以及对某些Sidecar实例单独进行的个性化配置。</li>
+</ul>
+</li>
+<li><b>MeshConfig负责Istio集群Mesh相关的整体配置</b>
+<ul class="quote">
+<li>包括Envoy XDS相关配置、Mixer相关配置、Envoy监听和通信连接相关配置、流量控制相关配置、通信安全相关配置、Envoy可观测性配置等。</li>
+</ul>
+</li>
+<li><b>MeshNetworks负责Mesh集群内部的网络访问和路由设置</b>
+<ul class="quote">
+<li>每个Network通过唯一的网络名进行标识，设置主要有两类：一类是网络中的节点信息，通过NetworkEndpoints设置；另一类是Gateway相关设置，外界访问Istio内部服务时的Gateway地址通过IstioNetworkGateway进行设置。</li>
+</ul>
+</li>
+<li><b>ProxyConfig用于定义Envoy的定制化行为</b>
+<ul class="quote">
+<li>MeshConfig会指定Istio集群所有Envoy的共同行为，可以通过ProxyConfig进行场景化定制，比如Envoy配置文件地址、管理平面端口号、工作线程并发度等。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch37"><summary>5.4 Mixer模型</summary>
+<div class="sec">
+<h4>Mixer模型概述</h4>
+<ul class="point">
+<li><b>Mixer是负责提供策略控制和遥测统计的Istio组件</b>
+<ul class="quote">
+<li>Mixer通过调用前置检查、配额检查和统计观测信息上报等功能，实现策略控制和遥测统计。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Mixer基本概念</h4>
+<ul class="point">
+<li><b>适配器是Mixer处理不同基础设施后端的灵活性通过使用通用插件模型实现的</b>
+<ul class="quote">
+<li>Mixer当前内置了不少Adapter，常见的有Fluentd、Prometheus、Statsd、Redis Quota等。</li>
+</ul>
+</li>
+<li><b>属性是Mixer中一个非常重要的基础概念，用于描述服务请求的特征</b>
+<ul class="quote">
+<li>属性包含请求内容和请求环境相关的一些参数，比如请求大小、请求头、请求的来源IP地址、目标产生响应的时间戳、响应的状态码等。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Mixer通用配置模型</h4>
+<ul class="point">
+<li><b>Handler用于对Adapter进行参数配置和描述</b>
+<ul class="quote">
+<li>Handler的配置信息定义在spec字段中，spec中的数据结构则依赖于对应Adapter的要求。</li>
+</ul>
+</li>
+<li><b>Instance定义了属性到Adapter输入的映射关系</b>
+<ul class="quote">
+<li>Handler中定义的所有维度均会在这里定义和属性的映射关系。</li>
+</ul>
+</li>
+<li><b>Rule定义了特定Instance调用某一Handler的时机</b>
+<ul class="quote">
+<li>正是通过规则将输入的属性和Handler完成打通。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Mixer架构演进以及对性能的影响</h4>
+<ul class="point">
+<li><b>Mixer的引入解决了Istio策略控制和遥测统计方面的扩展性问题</b>
+<ul class="quote">
+<li>通过Mixer可以在不影响Envoy核心架构的基础上，灵活方便地支持新的插件和策略。</li>
+</ul>
+</li>
+<li><b>Mixer的引入带来了实实在在的性能问题</b>
+<ul class="quote">
+<li>Mixer采用的通用属性匹配策略，并且几乎每次请求都需要和Mixer Server进行交互，都会带来一定的性能损耗。</li>
+</ul>
+</li>
+<li><b>Istio 1.1支持用户对Mixer进行裁剪，通过一定的配置将Mixer特性关闭</b>
+<ul class="quote">
+<li>绝大多数场景中，对性能的需求大于策略检查的需求，因此Istio 1.1版本默认关闭Mixer特性。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch38"><summary>5.5 Istio安全</summary>
+<div class="sec">
+<h4>Istio安全基础</h4>
+<ul class="point">
+<li><b>认证和授权是通信安全的基础概念</b>
+<ul class="quote">
+<li>认证解决的是身份确认的问题，授权解决的是权限管理的问题。</li>
+</ul>
+</li>
+<li><b>身份是通信安全的基础，安全认证和授权过程中均需要用到</b>
+<ul class="quote">
+<li>Kubernetes、GCE和AWS等平台上均已经有自己的身份体系，Istio身份模型架构层面非常开放，直接复用这些业界主流云平台的账号体系，也支持用户自定义服务账户。</li>
+</ul>
+</li>
+<li><b>SPIFFE是一套用于服务之间进行身份识别的标准</b>
+<ul class="quote">
+<li>SPIFFE ID是服务的唯一标识，实现为URI。</li>
+<li>SVID(SPIFFE Verifiable Identity Document)标准：将SPIFFE ID编码到一个加密的可验证文档中。</li>
+<li>SVID API：颁发/撤销SVID的一套API标准。</li>
+</ul>
+</li>
+<li><b>Istio支持基于用户维度和基于服务维度两种认证方式</b>
+<ul class="quote">
+<li>基于用户的认证是对请求的终端用户进行验证，具体可以通过JWT(JSON Web Token)、Google Auth和自定义身份认证等方式进行。</li>
+<li>基于服务维度的认证采用双向TLS的方式，为每个服务提供强大的身份认证能力。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Istio认证架构</h4>
+<ul class="point">
+<li><b>Istio数据平面代理节点之间通过加密机制进行安全通信，为了保障安全通信的有效进行，通信双方需要通过认证机制来确认相互的身份信息</b>
+<ul class="quote">
+<li>需要一套完善的认证架构来保证认证的可靠、高效运行，具体包括证书管理、证书验证、证书传递等。</li>
+</ul>
+</li>
+<li><b>Istio当前针对每个Kubernetes节点部署一个Node Agent代理服务，用于代理本节点上的Envoy和证书管理服务器之间的证书获取</b>
+<ul class="quote">
+<li>完整的证书获取流程大体如下：Citadel创建一个gRPC服务来接受CSR请求；Envoy通过Envoy secret发现服务(SDS)API发送证书和密钥请求；Node Agent代理服务收到SDS请求后，节点代理会创建私钥和CSR，并将CSR及其凭据发送给Citadel进行签名；Citadel验证CSR中携带的凭证，并签署CSR以生成证书；节点代理通过Envoy SDS API将从Citadel接收的证书和私钥发送给Envoy。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch39"><summary>5.6 Istio配置处理框架</summary>
+<div class="sec">
+<h4>Istio配置处理框架概述</h4>
+<ul class="point">
+<li><b>Galley是Istio的配置管理中心，负责配置资源的验证、获取、处理和分发</b>
+<ul class="quote">
+<li>Galley充当了一个代理的角色，对配置变更订阅者屏蔽不同平台、不同环境下配置源的差异和使用细节。</li>
+<li>通过统一的MCP协议和配置变更订阅方进行交互，订阅者只需要指定当前关系的配置源以及相应的配置，配置源的配置发生变更时，Galley会接管配置处理的所有细节，将最新配置通过MCP协议同步给订阅方。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>配置验证</h4>
+<ul class="point">
+<li><b>Galley通过Kubernetes的Validating Admision Webhook机制，对Istio核心配置进行有效性验证</b>
+<ul class="quote">
+<li>Galley向Kubernetes注册Validating Admision Webhook插件，具体包括关注的资源信息以及Galley的地址。</li>
+<li>Galley启动后会创建HTTP服务器，然后等待Kubernetes API Server发过来的配置验证请求。</li>
+<li>Galley当前支持对Pilot资源和Mixer资源的验证，重点对配置资源的Scheme进行验证。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>配置变更处理和分发</h4>
+<ul class="point">
+<li><b>MCP是一个基于订阅的配置分发协议，用于Galley配置订阅方和配置提供方之间的配置交互</b>
+<ul class="quote">
+<li>MCP定义了一套完整的配置分发协议，具体包括配置提供方Source、配置订阅方Sink和配置资源本身。</li>
+<li>当配置提供方和订阅方建立订阅关系后，Galley负责检测配置资源变化，然后按照MCP协议的语义将变更后的配置发送给订阅方。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch40"><summary>第6章 Istio控制流设计</summary>
+<div class="sec">
+<h4>Istio控制流设计概述</h4>
+<ul class="point">
+<li><b>Istio控制流体系架构设计，主要提供两类能力：生命周期管理和动态配置能力</b>
+<ul class="quote">
+<li>生命周期管理，具体包含Envoy的自动注入、Envoy启动支持、Envoy运行状态监控以及Envoy异常处理等。</li>
+<li>动态配置能力，通过相应机制将用户配置转换为Envoy需要的场景化配置。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>生命周期管理</h4>
+<ul class="point">
+<li><b>自动注入：Istio通过自动注入机制，将Envoy代理注入到Pod中，简化了运维操作</b>
+<ul class="quote">
+<li>自动注入可以确保每个Pod都拥有一个Envoy代理实例，实现流量的透明转发和治理。</li>
+</ul>
+</li>
+<li><b>启动支持：Istio为Envoy提供启动支持，确保Envoy在启动时能够正确加载配置并初始化</b>
+<ul class="quote">
+<li>Istio通过配置管理工具，如Kubernetes ConfigMap或Kubernetes Secret，将Envoy的配置信息注入到容器中。</li>
+</ul>
+</li>
+<li><b>运行状态监控：Istio提供运行状态监控功能，帮助运维人员实时了解Envoy的运行状态</b>
+<ul class="quote">
+<li>Istio通过监控工具，如Prometheus和Grafana，收集Envoy的运行状态数据，并展示在监控界面上。</li>
+</ul>
+</li>
+<li><b>异常处理：Istio提供异常处理机制，当Envoy出现异常时，能够及时通知运维人员并自动恢复</b>
+<ul class="quote">
+<li>Istio通过日志记录和报警功能，将Envoy的异常信息发送给运维人员。</li>
+<li>Istio还提供自动重启和回滚机制，当Envoy出现异常时，能够自动重启或回滚到正常状态。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>动态配置能力</h4>
+<ul class="point">
+<li><b>Istio通过配置管理工具，如Kubernetes ConfigMap或Kubernetes Secret，将用户配置转换为Envoy需要的场景化配置</b>
+<ul class="quote">
+<li>Istio支持多种配置格式，如JSON、YAML和Protobuf等，方便用户根据实际需求选择合适的配置格式。</li>
+</ul>
+</li>
+<li><b>Istio支持动态配置更新，当用户修改配置时，Istio能够自动将新配置推送给Envoy</b>
+<ul class="quote">
+<li>Istio使用gRPC协议与Envoy进行通信，实现配置的动态更新。</li>
+<li>Istio还支持配置版本管理，确保Envoy始终使用最新的配置。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch41"><summary>6.1 Envoy生命周期管理</summary>
+<div class="sec">
+<h4>Envoy注入</h4>
+<ul class="point">
+<li><b>Envoy注入是通过相应的手段将Envoy注入到Envoy运行环境中</b>
+<ul class="quote">
+<li>手工注入是指使用istioctl工具构建包含Sidecar镜像的模板，然后通过kubectl apply–f xxx.yaml将包含Sidecar镜像的模板文件注入到Pod中。</li>
+<li>自动注入基于Kubernetes的Admision Webhook机制，在Pod资源创建过程中自动触发。</li>
+</ul>
+</li>
+<li><b>自动注入方式充分利用Kubernetes平台提供的机制和能力，实现了Sidecar透明接入，所以推荐使用自动注入的方式来完成Envoy的注入</b>
+<ul class="quote">
+<li>Istio的sidecar-injector服务负责自动注入的具体实现，sidecar-injector服务中首先创建一个用于Mutating Admision Webhook的Webhook资源实例，同时启动HTTP Server，接收Kubernetes发过来的自动注入请求。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Envoy启动管理</h4>
+<ul class="point">
+<li><b>Pilot-agent负责Envoy的启动和运行状态监控</b>
+<ul class="quote">
+<li>Pilot-agent会根据Envoy的类型，拼装相应的启动配置文件和启动参数，进行Envoy的启动或重启。</li>
+<li>同时通过探测和监控Envoy当前的运行状态，或者接收外界的配置变更等控制指令，对非正常状态的Envoy进行重启或调整。</li>
+</ul>
+</li>
+<li><b>Node ID是Envoy的唯一标识，由Istio控制平面负责生成</b>
+<ul class="quote">
+<li>节点类型是Envoy具体的运行模式，当前支持sidecar、ingress和router 3种运行模式。</li>
+<li>IP地址、节点ID信息和DNS域名具体和当前支持的服务注册中心相关，可以通过Pilot-agent的命令行参数的对应flag指定。</li>
+</ul>
+</li>
+<li><b>Envoy元数据负责Envoy自定义属性信息的维护</b>
+<ul class="quote">
+<li>元数据信息由控制平面Pilot-agent生成，作为Bootstrap启动信息的一部分，供Envoy服务启动时使用。</li>
+<li>Envoy启动后和控制平面交互获取当前节点的XDS信息时，会把本节点的Envoy元数据信息透传给控制平面，辅助控制平面生成相应的XDS配置信息。</li>
+</ul>
+</li>
+<li><b>Epoch是Envoy进程的启动序号，从0开始编号</b>
+<ul class="quote">
+<li>引入Epoch是为了管理Envoy的热重启。</li>
+</ul>
+</li>
+<li><b>Pilot-agent根据Envoy配置模板和当前的启动信息，生成相应的Envoy启动文件</b>
+<ul class="quote">
+<li>Envoy配置模板用于定义Envoy Bootstrap启动配置的格式。</li>
+<li>WriteBootstrap函数根据当前启动信息，在配置模板的基础生成相应的配置文件。</li>
+</ul>
+</li>
+<li><b>Envoy启动后，会记录当前Envoy的配置信息</b>
+<ul class="quote">
+<li>后续启动相关操作前会先比较新配置是否和当前配置相同，如果配置相同不进行任何处理，否则会继续启动流程。</li>
+<li>Envoy启动相关准备工作完成后，即可通过Exec命令启动Envoy进程，启动时将新Envoy进程的标准输出stdout和标准错误stderr进行重定向。</li>
+<li>启动完成后，通过监控Envoy进程的退出码，对Envoy的运行状态进行监控。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Envoy配置和运行状态监控</h4>
+<ul class="point">
+<li><b>Pilot-agent通过watch对象负责配置文件的监控</b>
+<ul class="quote">
+<li>配置文件变更感知和处理是通过单独启动一个Go协程的方式进行处理，具体处理函数是watchCerts。</li>
+<li>watchCerts通过fsnotify的机制来进行变更感知，感知到配置文件变化时，会调用watchFileEvents进行处理。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch42"><summary>6.2 Istio配置变更管理</summary>
+<div class="sec">
+<h4>Istio配置管理的通用机制</h4>
+<ul class="point">
+<li><b>Istio针对对象配置制定通用的Schema描述</b>
+<ul class="quote">
+<li>ProtoSchema结构包括对象范围、scheme对象名、类型、Plural、对象所在的组、对象版本、对象名、配置验证函数、MCP集合。</li>
+</ul>
+</li>
+<li><b>Istio根据IstioConfigTypes向配置中心注册关心的对象列表</b>
+<ul class="quote">
+<li>当对象信息发生变化时，配置中心将最新配置推送给Istio。</li>
+</ul>
+</li>
+<li><b>Istio通过Config对象来描述每个具体的对象实体</b>
+<ul class="quote">
+<li>Config对象包括对象元数据和对象实体两部分。</li>
+</ul>
+</li>
+<li><b>Istio通过ConfigStoreCache接口对Istio对象进行管理</b>
+<ul class="quote">
+<li>ConfigStoreCache提供了一组抽象接口，通过这些抽象接口完成对象的增删改查、存储和变更通知。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Kubernetes平台下配置管理和服务管理的具体实现</h4>
+<ul class="point">
+<li><b>Kubernetes配置中心通过Kubernetes CRD方式的初始化</b>
+<ul class="quote">
+<li>首先会读取配置文件，根据配置文件调用crd.NewClient创建kubernetes CRD Client。</li>
+<li>创建过程中会完成kubernetes CRD资源的注册。</li>
+</ul>
+</li>
+<li><b>Kubernetes服务注册中心负责Kubernetes平台服务和节点信息的获取与变更处理</b>
+<ul class="quote">
+<li>通过Kubernetes Informer机制关注Kubernetes核心资源的变化。</li>
+<li>当核心资源发生变化时通知Istio进行配置变更处理。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch43"><summary>6.3 控制平面和数据平面的XDS交互</summary>
+<div class="sec">
+<h4>Istio控制平面和数据平面的XDS交互</h4>
+<ul class="point">
+<li><b>Istio控制平面服务会专门启动一个gRPC Server，用于和Envoy之间的XDS数据交互</b>
+<ul class="quote">
+<li>Envoy启动时会通过调用这个接口和Pilot-discovery建立连接。</li>
+<li>Pilot-discovery会将该Envoy节点相关的全量配置信息通过ADS协议返回给Envoy。</li>
+<li>Pilot-discovery会管理与Envoy交互的每个连接。</li>
+<li>如果没有任何配置变更，则Pilot-discovery和Envoy之间不会有任何的通信交互。</li>
+<li>Pilot-discovery会监控配置变更事件，如果配置发生变更，则Pilot-discovery会轮询和Envoy的每个连接，将变更后的最新配置返回给Envoy。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>控制平面的gRPC Server启动</h4>
+<ul class="point">
+<li><b>gRPC Server启动后，会注册相应的回调函数，用于处理变更后的XDS</b>
+<ul class="quote">
+<li>注册服务变更通知函数。</li>
+<li>注册服务节点变更通知函数。</li>
+<li>如果configCache不为空，则注册配置变更通知函数。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Envoy的XDS请求</h4>
+<ul class="point">
+<li><b>GrpcMuxImpl的start函数会调用establishNewStream创建gRPC连接，并发起XDS请求流程</b>
+<ul class="quote">
+<li>通过GrpcMuxImpl：：onReceiveMessage进行XDS响应消息的解析和处理。</li>
+<li>onReceiveMessage主要通过watch-&gt;callbacks_.onConfigUpdate触发各个具体XDS资源的配置更新。</li>
+<li>各个XDS资源初始化时会通过SubscriptionFactory：：subscriptionFromConfigSource注册对ADS配置变更的关注。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Istio XDS配置下发</h4>
+<ul class="point">
+<li><b>StreamAggregatedResources函数负责新连接的处理，定义在pilot/pkg/proxy/envoy/v2/ads.go文件中</b>
+<ul class="quote">
+<li>StreamAggregatedResources函数首先调用newXdsConnection创建连接管理结构。</li>
+<li>然后启动一个新的协程单独负责新连接消息的解析，同时主流程进入等待逻辑，等待新的消息(主要是新请求消息和配置更新消息)。</li>
+<li>这个新的协程不是长驻协程，处理完请求后就会立即退出。</li>
+<li>receiveThread函数负责新协程的消息处理，主要是判断消息是否有问题，如果没有问题，将读到的请求消息放到reqChannel通道里面。</li>
+<li>StreamAggregatedResources函数的for循环是无限循环流程，这里会监控两个Channel通道的消息，一个是reqChannel的新连接消息，一个是pushChannel的配置变更消息。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Envoy的XDS消息接收</h4>
+<ul class="point">
+<li><b>GrpcMuxImpl的start函数中调用establishNewStream创建gRPC连接，并发起XDS请求流程</b>
+<ul class="quote">
+<li>通过GrpcMuxImpl：：onReceiveMessage进行XDS响应消息的解析和处理。</li>
+<li>onReceiveMessage中重点是通过watch-&gt;callbacks_.onConfigUpdate触发各个具体XDS资源的配置更新。</li>
+<li>各个XDS资源初始化时会通过SubscriptionFactory：：subscriptionFromConfigSource注册对ADS配置变更的关注。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch44"><summary>6.4 XDS配置生成</summary>
+<div class="sec">
+<h4>Istio 1.1版本之前的XDS交互问题</h4>
+<ul class="point">
+<li><b>不必要的配置数据下发</b>
+<ul class="quote">
+<li>每次XDS配置变更时，对整个Istio集群的XDS配置进行全量下发。</li>
+<li>海量数据下发，不仅会影响Pilot和Envoy之间网络传输的性能，同时XDS配置的编解码与存储也会消耗Envoy节点大量的计算和存储资源。</li>
+</ul>
+</li>
+<li><b>不必要的配置下发频率</b>
+<ul class="quote">
+<li>虽然Envoy节点A关注的服务信息只有两个，但当2000个服务的信息以及路由变化时，均需要向所有的Envoy节点下发全量的XDS配置信息。</li>
+<li>即使这些服务的信息和变更Envoy节点A根本不需要关注，这样就会产生大量不必要的XDS配置变更交互。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Istio 1.1版本引入的Envoy可见性概念</h4>
+<ul class="point">
+<li><b>通过Sidecar资源和ExportTo属性来定义</b>
+<ul class="quote">
+<li>Sidecar资源可以自定义设置一类Sidecar的行为，用于对数据平面代理进行精细化和场景化配置。</li>
+<li>ExportTo可以指定服务或者路由资源的作用域。</li>
+</ul>
+</li>
+<li><b>Istio还可以通过工作负载定义相应的标签，对关注的资源进行选取和过滤。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>XDS配置生成机制</h4>
+<ul class="point">
+<li><b>ConfigGenerator是Istio的XDS响应消息生成器</b>
+<ul class="quote">
+<li>ConfigGenerator负责生成和数据平台Envoy进行交互的各种XDS响应消息，当前包括监听器配置LDS、HTTP路由配置RDS、集群配置CDS。</li>
+</ul>
+</li>
+<li><b>ConfigGenerator支持多个维度的插件扩展</b>
+<ul class="quote">
+<li>Istio Pilot初始化时会注册当前使用的插件，XDS信息组织时会调用注册的插件回调函数进行扩展。</li>
+<li>Istio可以通过EnvoyFilter对象，对Envoy监听器的过滤链进行定制和扩展，实时控制Envoy的运行行为。</li>
+</ul>
+</li>
+<li><b>Istio引入了在线动态调整机制</b>
+<ul class="quote">
+<li>通过实时对Istio数据平面代理的监听器进行修改和调整，进行代理行为的个性化定制。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>XDS配置生成实现</h4>
+<ul class="point">
+<li><b>Envoy按照使用场景可以分为3种：model.Sidecar、model.Router和model.Ingress</b>
+<ul class="quote">
+<li>Router模式与Ingress模式均属于和应用服务不在一起部署的纯代理场景，在XDS配置方面没有任何区别，因此从XDS响应消息生成的角度看，可以归为一类，称为Gateway模式。</li>
+</ul>
+</li>
+<li><b>对于Sidecar模式来说，Envoy负责服务出入方向流量的透明拦截，并且出入方向的流量在监听管理、路由管理等方面有很大的区别，因此Sidecar的XDS配置均按照出入方向分别进行组织和管理</b>
+<ul class="quote">
+<li>Inbound方向代表的是发往本节点的流量，同时Inbound只会将请求转发到和当前Sidecar部署在同一个部署单元上的服务节点上，因此Inbound方向的集群信息和路由信息都比较确定，只需要获取到当前Sidecar节点对应的服务信息即可。</li>
+<li>Outbound方向代表的是从当前节点发往本节点外的流量，因此首先需要获取当前节点服务对应的上游服务列表，对于有作用域相关设置的Sidecar来说，需要根据作用域设置获取服务列表，对于没有作用域相关设置的Sidecar来说，返回的是注册中心的所有服务列表。</li>
+</ul>
+</li>
+<li><b>对于Gateway模式来说，Gateway对应的服务信息和路由信息通过Istio核心资源Gateway指定</b>
+<ul class="quote">
+<li>Gateway节点配置生成时，首先根据当前Gateway节点的工作负载标签，获取匹配的Gateway核心资源列表，然后将这些核心资源列表进行合并处理，产出一个逻辑的Gateway。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch45"><summary>6.5 XDS配置的Envoy处理</summary>
+<div class="sec">
+<h4>XDS配置变更的判断</h4>
+<ul class="point">
+<li><b>Envoy接收到控制平面发过来的XDS新配置后，首先需要对比新配置和当前配置，判断是否有变更</b>
+<ul class="quote">
+<li>针对配置变更判断，Envoy对当前配置和新配置分别计算Hash值。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>CDS配置的延迟处理</h4>
+<ul class="point">
+<li><b>为了减少频繁变更对Envoy CPU计算的消耗，Envoy针对这种场景采用变更延迟处理的方式</b>
+<ul class="quote">
+<li>CDS集群配置更新onClusterInit时，首先通过scheduleUpdate判断当前配置是否需要延迟处理，如果延迟处理，则当前不进行任何处理；否则，通过postThreadLocalClusterUpdate进行配置更新处理。</li>
+<li>只有纯粹的更新操作才会进行延迟和合并处理，对于有新增或者删除节点的配置更新消息来说，需要立即处理。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>集群和节点配置处理</h4>
+<ul class="point">
+<li><b>CDS和EDS负责集群和集群节点信息的管理</b>
+<ul class="quote">
+<li>集群管理器Cluster-ManagerImpl是Envoy集群管理的入口，负责Envoy集群相关配置和操作的管理。</li>
+<li>集群Cluster用于对Envoy的集群进行管理，主要包括集群节点信息、负载均衡、OutlierDetection和CircuitBreaker等。</li>
+<li>集群节点信息的维护是集群管理的重中之重，Envoy的集群节点信息整体上分为优先级、Locality两个层次。</li>
+</ul>
+</li>
+<li><b>Envoy接收到CDS、EDS分别下发的集群和节点配置变更后，主线程将根据最新配置构建出一颗新的集群配置树，然后通过TLS机制，通知所有的工作线程进行线程本地配置的更新</b>
+<ul class="quote">
+<li>对于集群和节点成员、节点状态信息的变化，当前主要有负载均衡、监控检查和节点熔断这几个子系统关注。</li>
+<li>Envoy的其他组件如果需要感知集群和节点相关的变更，可以通过如下系列接口注册相应的回调函数。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>路由配置处理</h4>
+<ul class="point">
+<li><b>RouteConfiguration用于对Envoy的路由进行管理</b>
+<ul class="quote">
+<li>通过RouteConfiguration、VirtualHost和Route多级路由结构，构建起一个完整的路由查找树。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>监听器配置处理</h4>
+<ul class="point">
+<li><b>监听器Listener用于管理Envoy网络监听相关的配置</b>
+<ul class="quote">
+<li>监听器通过Listener对象定义，包括name、address、filter_chains、use_original_dst、per_connection_buffer_limit_bytes、metadata、drain_type、listener_filters、listener_filters_timeout、transparent、freebind、socket_options和tcp_fast_open_queue_length等信息。</li>
+<li>监听器配置中两个重要的信息是listener_filters和filter_chains，前者是监听器对应的过滤链，用于对监听行为进行扩展定制；后者用于创建监听后的连接以及后续的请求处理。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch46"><summary>6.6 本章小结</summary>
+<div class="sec">
+<h4>Istio控制流入口</h4>
+<ul class="point">
+<li><b>从Envoy启动开始，对Istio的控制流的全部过程进行深入的剖析</b>
+<ul class="quote">
+<li>通过本章的学习，可以全面了解到Istio配置处理的原理和细节。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch47"><summary>第7章 Istio数据流设计</summary>
+<div class="sec">
+<h4>Istio数据流设计概述</h4>
+<ul class="point">
+<li><b>Istio数据流层面对通信流量的透明拦截和调度是Envoy最主要的价值所在</b>
+<ul class="quote">
+<li>以最主流的HTTP协议请求处理为例，全面分析Istio数据流端到端的全过程。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Client端Iptables的请求拦截</h4>
+<ul class="point">
+<li><b>Client端Iptables基于配置的Iptables过滤规则，将请求消息交给client端Envoy</b>
+<ul class="quote">
+<li>整个过程的主要处理步骤包括连接建立、数据解析、流量路由、负载均衡、Upstream访问等一系列处理，将请求转发Server端。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Client端Envoy处理</h4>
+<ul class="point">
+<li><b>Client端Envoy进行连接建立、数据解析、流量路由、负载均衡、Upstream访问等一系列处理，将请求转发Server端</b>
+<ul class="quote">
+<li>Server端Iptables基于配置的Iptables过滤规则，将发往本机的请求消息交给Server端Envoy。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Server端Iptables的请求拦截</h4>
+<ul class="point">
+<li><b>Server端Iptables基于配置的Iptables过滤规则，将发往本机的请求消息交给Server端Envoy</b>
+<ul class="quote">
+<li>Server端Envoy会进行连接建立、数据解析、将请求转发给本机的Server服务处理、将Server服务返回的响应消息返回给Client端Envoy。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Server端Envoy处理</h4>
+<ul class="point">
+<li><b>Server端Envoy会进行连接建立、数据解析、将请求转发给本机的Server服务处理、将Server服务返回的响应消息返回给Client端Envoy</b>
+<ul class="quote">
+<li>Client端Envoy负责解析Upstream的响应消息，然后返回给Client端。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch48"><summary>7.1 Iptables</summary>
+<div class="sec">
+<h4>Iptables的基本原理</h4>
+<ul class="point">
+<li><b>Iptables是基于Netfilter的数据包过滤系统</b>
+<ul class="quote">
+<li>Netfilter是Linux内核提供的一套完善的数据包处理框架。</li>
+<li>Iptables通过自己设定的规则以及处理动作对数据报文进行检测和处理。</li>
+</ul>
+</li>
+<li><b>Iptables分为内核模块和用户态两部分</b>
+<ul class="quote">
+<li>用户空间的Iptables位于/sbin/目录下，是用于设置规则的命令行工具。</li>
+</ul>
+</li>
+<li><b>链、表和规则是Iptables内核处理中非常重要的几个概念</b>
+<ul class="quote">
+<li>链也可以称为钩子，是指Iptables过滤的时机。</li>
+<li>表是负责完成某个过滤功能的模块。</li>
+<li>Iptables、表、链和规则之间是层层包含的关系。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Iptables在Istio中的使用</h4>
+<ul class="point">
+<li><b>Iptables负责对Envoy的入口和出口流量进行拦截</b>
+<ul class="quote">
+<li>针对入口流量拦截，假设所有的流量均需要定向到Envoy代理，8090是Envoy的监听端口，Iptables规则如下：Iptables –t nat –A PREROUTING –p tcp –j REDIRECT –to-port 8090。</li>
+<li>针对出口流量拦截，也是类似的思路，Iptables规则如下：Iptables –t nat –A OUTPUT –p tcp –j REDIRECT –to-port 8090。</li>
+</ul>
+</li>
+<li><b>Istio通过proxy_init组件进行基于Iptables的流量透明拦截</b>
+<ul class="quote">
+<li>proxy_init组件实际执行的命令是tools/deb/istio-iptables.sh(这是一个脚本程序，包括很多Iptables命令)，通过配置Iptables来劫持Pod中的流量。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch49"><summary>7.2 监听管理</summary>
+<div class="sec">
+<h4>监听管理概述</h4>
+<ul class="point">
+<li><b>Envoy使用监听器来具体管理监听请求工作，可以同时支持多个监听器，每个监听器负责一类网络请求的监听行为。</b>
+</li>
+<li><b>为了实现正确的流量路由和转发，Envoy的监听器分为两类：虚拟监听器和真实监听器</b>
+<ul class="quote">
+<li>虚拟监听器：需要绑定相应的端口号，同时配置相应的Iptables规则，将Iptables拦截的流量转发到虚拟监听器对应的端口上。</li>
+<li>真实监听器：用于处理Iptables拦截前的“真实目的地址”，虚拟监听器接收到监听请求时，按照一定的匹配规则查找对应的真实监听器，将新监听请求转交给真实监听器进行处理，真实监听器由于不需要和网络进行交互，因此不需要配置和绑定具体的端口号。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>监听器建立</h4>
+<ul class="point">
+<li><b>LDS配置首次获取或者更新时，均需要建立新的监听器</b>
+<ul class="quote">
+<li>新建监听器主要有两个工作：一个是对监听过滤插件和网络过滤插件进行初始化，供后续建立新连接时使用；还有一个是创建监听器对应的套接字。</li>
+</ul>
+</li>
+<li><b>对于需要绑定具体端口号的监听器来说，创建相应的套接字后，绑定到相应的端口</b>
+<ul class="quote">
+<li>对于热重启的场景来说，为了保证旧的Envoy进程优雅退出，新启动的Envoy进程直接使用旧进程的监听套接字，保证新旧进程之间完美衔接，从而不会带来流量的损失。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>监听器和工作线程绑定</h4>
+<ul class="point">
+<li><b>创建“逻辑”监听器后，会遍历当前所有的工作线程，将监听器加入到每个工作线程中</b>
+<ul class="quote">
+<li>Envoy下各个工作线程拥有独自的事件调度器，创建“逻辑”监听器后，会遍历当前所有的工作线程，将监听器加入到每个工作线程中，各个工作线程独立建立自己网络层面的监听器。</li>
+</ul>
+</li>
+<li><b>网络监听器具体由事件调度器DispatcherImpl触发创建</b>
+<ul class="quote">
+<li>Network::ListenerPtr DispatcherImpl::createListener(Network::Socket。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch50"><summary>7.3 连接管理</summary>
+<div class="sec">
+<h4>连接管理概述</h4>
+<ul class="point">
+<li><b>连接管理负责创建客户端连接，在实际创建网络层连接之前，需要根据客户端的元数据信息匹配适合的监听器和协议过滤插件</b>
+<ul class="quote">
+<li>协议过滤插件确定后，新连接相关的参数和准备工作就均已确定，从而可以进入网络层新连接的实际创建。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>监听器匹配</h4>
+<ul class="point">
+<li><b>新连接到来时会触发逻辑监听器的接收新连接逻辑onAccept函数，onAccept函数的主要逻辑是创建并执行监听过滤插件</b>
+<ul class="quote">
+<li>void ConnectionHandlerImpl::ActiveTcpListener::onAccept(Network::ConnectionSocketPtr)。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>协议过滤器匹配</h4>
+<ul class="point">
+<li><b>在Envoy中，每个监听器下会对应多个网络过滤插件，每个过滤插件对应一种网络协议类型，处理相应协议的请求解析和路由</b>
+<ul class="quote">
+<li>在进行监听器配置时会配置每个过滤插件的匹配条件(通过FilterChainMatch字段表示)，具体包含目的地址、目的端口号、源地址等，创建新连接时依次根据目的地址、目的端口号等进行匹配判断，查找最合适的网络过滤插件。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>创建新连接</h4>
+<ul class="point">
+<li><b>确定好新连接的网络过滤插件后，新连接对应的传输层也相应确定了，接下来就可以进行传输层新连接的创建流程</b>
+<ul class="quote">
+<li>newConnection负责新连接的创建。首先创建传输层的连接，然后提交读写就绪事件到事件调度器，等待新数据的到来。</li>
+<li>void ConnectionHandlerImpl::ActiveTcpListener::newConnection(Network::ConnectionSocketPtr)。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch51"><summary>7.4 网络I/O和缓冲区管理</summary>
+<div class="sec">
+<h4>网络I/O和缓冲区管理</h4>
+<ul class="point">
+<li><b>onFileEvent是所有网络事件的总入口，当新数据到来时，libevent就会触发对ConnectionImpl：：onFileEvent的调用，启动传输层的数据读取和解析流程</b>
+<ul class="quote">
+<li>传输层数据读取完成后，会通过插件机制，进行协议相关的解析和处理。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>传输层数据读取</h4>
+<ul class="point">
+<li><b>Envoy在传输层方面支持插件扩展，当前已经支持RawBuffer、TLS以及TAP等多种传输层协议</b>
+<ul class="quote">
+<li>RawBuffer是最基础的传输层实现，底层实际使用的是libevent的缓冲区管理机制evbuffer，将就绪的请求数据从内核接收到用户态的缓存区中。</li>
+<li>TLS是当前默认的传输层实现，也是Envoy安全特性的最集中体现，通过身份认证、证书等机制可以实现安全的微服务通信。</li>
+<li>TAP传输层就是为了实现类似的功能。在RawBuffer或TLS等基础传输层上进行一层TAP封装，接收到基础传输层的数据后，TAP按照事先配置好的规则进行流量匹配和筛选，比如根据HTTP消息头进行判断等，对符合要求的流量进行相应的录制处理，比如通过日志进行记录、通过gRPC协议发送到远端服务等。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>插件处理</h4>
+<ul class="point">
+<li><b>在传输层完成读取数据后，就开始进行核心的处理工作，包括协议解析、请求路由、链路治理和管控等</b>
+<ul class="quote">
+<li>Envoy实际的处理工作都通过插件的方式封装，当然最重要的是协议处理插件，负责相应协议的请求解析和流量转发，每种协议对应一个协议处理插件。</li>
+<li>新连接建立时已经通过FilterManagerImpl设置了连接对应的协议处理插件。请求数据读取完成时，通过FilterManagerImpl的onRead函数触发整个插件的读过滤过程。</li>
+<li>FilterManagerImpl的onRead会遍历所有的Upstream插件，每个插件主要完成两个工作：连接初始化，在连接刚创建时，触发插件的onNewConnection流程，插件会进行连接相关的初始化工作，比如初始化upstream连接等；数据处理，调用插件的onData函数，进行插件的具体协议解析和路由流程。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch52"><summary>7.5 Thrift协议处理</summary>
+<div class="sec">
+<h4>Thrift插件的整体架构</h4>
+<ul class="point">
+<li><b>ConnectionManager是Thrift插件的处理入口，负责请求整个处理过程的流程编排</b>
+<ul class="quote">
+<li>ConnectionManager从FilterManager接收到Thrift请求消息后，通过Decoder进行协议解码。</li>
+<li>ActiveRpc负责对下游发过来的请求消息进行处理，处理具体是通过注册到ActiveRpc上的DecodeFilter来完成的。</li>
+<li>Decoder解码完成后，路由插件对解析后的请求进行编码，并通过建立好的Upstream发送出去。</li>
+<li>Router注册Upstream连接的读写事件，Upstream响应消息到来时，会通过ResponseDecoder进行解码，然后进行一系列的处理后，通过Downstream连接返回给下游。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>协议解析</h4>
+<ul class="point">
+<li><b>Envoy的Thrift插件支持多种协议层和传输层实现</b>
+<ul class="quote">
+<li>协议层当前支持BinaryProtocol、CompactProtocol、TwitterProtocol、AutoProtocol等多种协议层实现。</li>
+<li>AutoProtocol是在BinaryProtocol、CompactProtocol、TwitterProtocol这些协议层基础上的抽象协议层，可以根据RPC请求内容，自动判断出当前请求对应的协议层类型。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>协议相关的插件机制</h4>
+<ul class="point">
+<li><b>Thrift内部通过插件机制实现链路治理特性的扩展</b>
+<ul class="quote">
+<li>Thrift插件初始化时会根据配置加载和初始化当前配置的插件列表。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch53"><summary>7.6 HTTP请求处理</summary>
+<div class="sec">
+<h4>HTTP请求处理流程</h4>
+<ul class="point">
+<li><b>HTTP请求处理的主要逻辑均通过HTTP过滤插件提供，分为请求头处理、请求体处理和Trails 3个阶段</b>
+<ul class="quote">
+<li>接收到HTTP请求消息后，首先创建HTTP协议解析器，对请求数据进行解析。</li>
+<li>请求解析完成后，就会进行Upstream请求的准备，这里包括完整的集群管理逻辑，具体是路由查找、负载均衡、连接池管理等。</li>
+<li>通过Upstream连接发送数据时，同时指定连接对应的读写函数，当Upstream响应数据到来时，通过已经注册的读写函数对Upstream响应消息进行解析，然后返回最终的响应消息给Downstream。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>协议解析</h4>
+<ul class="point">
+<li><b>Envoy中每种网络协议对应相应的协议过滤插件，HTTP请求到达时，触发ConnectionManagerImpl：：onData函数，正式进入HTTP的数据解析过程</b>
+<ul class="quote">
+<li>在ConnectionManagerImpl：：onData中，首先会根据当前配置创建相应的解析器，当前支持HTTP1和HTTP2两种方式，然后调用解析器的dispatch流程，开始协议数据的解析。</li>
+<li>HTTP1使用开源的HTTP消息解析器http-parse进行协议数据解析。</li>
+<li>使用http-parse时，首先通过http_parser_init初始化解析器，指定当前解析的是请求还是响应消息，然后调用http_parser_execute进行实际的解析操作，同时需要传入当前解析使用的回调函数。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>路由管理</h4>
+<ul class="point">
+<li><b>RDS负责HTTP请求的路由查找和管理，采用树状分层结构，根节点为虚拟主机层VirtualHost、然后是路由策略层Route，接着是可选的权重路由节点WeightRouteEntry，最后是叶子节点RouteEntry</b>
+<ul class="quote">
+<li>HTTP协议处理主要是由一系列HTTP过滤插件组成。其中Router过滤插件具体负责路由查找、负载均衡以及和上游Upstream之间的交互工作。</li>
+<li>由于目的路由节点RouteEntry承载了很多服务治理相关的特性，除了Router过滤插件之外，其他HTTP过滤插件也会用到目的路由RouteEntry。</li>
+<li>HTTP的路由缓存设置在HTTP消息头解析后触发，具体由refreshCachedRoute完成。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>HTTP过滤链处理</h4>
+<ul class="point">
+<li><b>decodeHeaders函数中，首先会调用refreshCachedRoute进行路由查找和路由缓存刷新流程</b>
+<ul class="quote">
+<li>refreshCachedRoute函数中，最重要的流程是通过snapped_route_config_-&gt;route查找到相应的路由信息，并缓存起来，供本次请求中后续的各个HTTP插件使用。</li>
+<li>路由查找成功后通过createFilterChain创建新请求对应的HTTP网络链。</li>
+<li>Envoy当前已经支持很多HTTP扩展插件，具体都在extensions/filters/http/目录下。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>负载均衡</h4>
+<ul class="point">
+<li><b>Envoy集群管理也是以优先级为基础进行组织的，单个集群按照优先级划分为不同的节点集合</b>
+<ul class="quote">
+<li>负载均衡选取时，Envoy默认只在最高优先级的候选集中进行选取。</li>
+<li>出于高可用的考虑，一般都会指定比最高优先级小的可用优先级为备选。</li>
+</ul>
+</li>
+<li><b>负载均衡选取过程中，Envoy默认优先选择健康的节点，但由于故障等，一个集群的健康节点比例过低时，按照健康节点的选取策略，集群的全部流量会全部涌向为数不多的健康节点上，容易引发健康节点因为流量过大而雪崩的现象，导致整个集群全部不可用</b>
+<ul class="quote">
+<li>为了解决这个问题，Envoy引入了恐慌阈值的概念，默认的恐慌阈值是50%，当健康节点占所有节点的比例下降到恐慌阈值时，选取节点时不再局限于健康节点范围内，而是在所有节点范围内选取。</li>
+</ul>
+</li>
+<li><b>区域感知负载均衡，顾名思义，负载均衡时优先选取和当前区域相同的服务节点</b>
+<ul class="quote">
+<li>hostSourceToUse是区域感知路由的核心实现，首先基于优先级选取初始候选集，默认采用选取健康节点的策略，如果触发恐慌阈值，则退化到选取当前所有节点。</li>
+<li>然后判断当前是否满足区域感知负载均衡的条件，如果不满足，则直接返回，否则通过区域感知路由算法获取合适的节点列表。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>连接池实现</h4>
+<ul class="point">
+<li><b>在Filter：：UpstreamRequest：：encodeHeaders函数里，会调用conn_pool_.newStream创建新的连接</b>
+<ul class="quote">
+<li>对于HTTP1来说，就是ConnPoolImpl：：newStream。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch54"><summary>7.7 本章小结</summary>
+<div class="sec">
+<h4>Istio的数据流入口</h4>
+<ul class="point">
+<li><b>监听管理、连接管理以及网络缓冲区管理是Istio数据流入口的关键机制</b>
+<ul class="quote">
+<li>监听管理负责接收和处理进入数据面的网络数据包。</li>
+<li>连接管理负责建立和管理数据面与数据面、控制面之间的连接。</li>
+<li>网络缓冲区管理负责数据的存储和转发。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>HTTP协议和Thrift协议的请求解析</h4>
+<ul class="point">
+<li><b>请求解析是协议处理的第一步，包括解码、路由和负载均衡等步骤</b>
+<ul class="quote">
+<li>解码：将网络数据包解码为可处理的格式。</li>
+<li>路由：根据请求的目标信息，将其路由到正确的目的地。</li>
+<li>负载均衡：将请求分发到多个后端服务实例上，以实现负载均衡。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>HTTP协议和Thrift协议的插件支持</h4>
+<ul class="point">
+<li><b>插件支持是协议处理的重要组成部分，可以扩展Istio的功能</b>
+<ul class="quote">
+<li>插件可以用于处理特定的请求类型或响应类型。</li>
+<li>插件可以用于实现自定义的路由策略或负载均衡算法。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>HTTP协议和Thrift协议的路由转发</h4>
+<ul class="point">
+<li><b>路由转发是将请求从源地址发送到目标地址的过程</b>
+<ul class="quote">
+<li>路由转发可以基于请求的元数据、目标地址等信息进行。</li>
+<li>路由转发可以支持多种路由策略，如轮询、最少连接等。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch55"><summary>第8章 Istio微服务治理</summary>
+<div class="sec">
+<h4>Istio链路的观测和治理</h4>
+<ul class="point">
+<li><b>基于链路可观测性，可以对系统的状态有全面的把控，也可以对链路进行相应的治理和控制。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch56"><summary>8.1 链路稳定性治理</summary>
+<div class="sec">
+<h4>超时机制</h4>
+<ul class="point">
+<li><b>同步阻塞通信场景下，可以直接通过socket选项SO_SNDTIMEO和SO_RCVTIMEO来分别设置读写超时。</b>
+</li>
+<li><b>Envoy属于典型的异步通信场景，I/O访问本来就是无阻塞返回，I/O就绪事件通过Epoll等I/O多路复用机制触发，这种场景下的超时时间一般由专门的定时器来触发</b>
+<ul class="quote">
+<li>以HTTP请求为例，当前支持请求级别的全局超时(global timeout)和单次超时(per timeout)两个层次的超时时间。</li>
+</ul>
+</li>
+<li><b>全局超时是在Upstream请求准备就绪的时候设置，单次超时是在Upstream连接建立后设置</b>
+<ul class="quote">
+<li>单次超时会判断当前是否需要重试，全局超时则不需要这个逻辑。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>重试机制和重试策略</h4>
+<ul class="point">
+<li><b>重试有3个重要场景或时机：Upstream连接失败、Upstream返回结果出错、Upstream处理超时</b>
+<ul class="quote">
+<li>对于Upstream连接失败和超时的场景，需要通过maybeRetryReset判断是否需要重试。</li>
+<li>对于Upstream返回结果出错的场景，需要通过shouldRetryHeaders进行重试逻辑的判断。</li>
+</ul>
+</li>
+<li><b>Envoy在判断出当前需要重试时，并不是立即进行重试，而是通过JitteredBackOffStrategy实现一个简单的重试退避策略</b>
+<ul class="quote">
+<li>首先通过开关变量设置当前的重试基准值base，然后基于基准值创建JitteredBackOffStrategy对象。</li>
+<li>JitteredBackOffStrategy基于指数退避的策略，通过随机值在指数max和max_interval_之间选取最小值，保证重试时间的退避性和离散性。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>节点熔断和健康检查机制</h4>
+<ul class="point">
+<li><b>当Upstream节点失败率较高时，Envoy支持节点熔断机制：通过一定的判断策略，将故障节点从负载均衡的候选节点集中剔除</b>
+<ul class="quote">
+<li>outlier detection的putHttpResponseCode会对HTTP错误码进行归类判断，比如当错误码为5××时，会通知主线程进行当前节点OutlierEjectionType：：CONSECUTIVE_5XX错误码的累加。</li>
+<li>主线程的DetectorImpl：：ejectHost函数负责具体的熔断判断逻辑。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>资源限制机制</h4>
+<ul class="point">
+<li><b>Envoy针对Upstream集群的一些关键资源，比如Upstream集群最大连接数、最大请求数等，通过resource manager进行管理</b>
+<ul class="quote">
+<li>resource manager进行资源管理的方式很简单，在资源创建时指定资源的配额限制，同时提供相应的资源更新和配额检查接口。</li>
+<li>为了实现资源管理的灵活性，resource manager针对每个资源设置一个开关变量key，从而通过开关特性机制动态修改资源的当前值。</li>
+<li>另外，针对每个资源设置一个stats项，当资源超过限额时设置stats状态为超出配额。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>全局限流机制</h4>
+<ul class="point">
+<li><b>Envoy当前支持网络层面和HTTP层面两种限流方式</b>
+<ul class="quote">
+<li>网络层面的限流可以针对需要限流的连接设置网络限流过滤器，这样当新连接创建时，Envoy会通过gRPC远程访问全局限流服务判断是否允许访问，如果不允许，限流插件会在新数据到来时直接返回出错提示。</li>
+<li>HTTP层面的限流是针对请求级别的，每个HTTP请求会有相应的路由，路由访问前，通过gRPC远程访问全局限流服务判断是否允许访问，如果不允许，则返回失败。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch57"><summary>8.2 链路可观测性</summary>
+<div class="sec">
+<h4>Envoy分布式跟踪支持</h4>
+<ul class="point">
+<li><b>Envoy分布式跟踪特性的初始化工作由MainImpl：：initializeTracers负责</b>
+<ul class="quote">
+<li>首先判断是否为HTTP协议，然后使用配置文件中指定的跟踪插件名，调用对应插件factory的HTTP Tracer创建函数，完成HTTP Tracer的初始化。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Envoy Metric支持</h4>
+<ul class="point">
+<li><b>Metric用于对Envoy的核心指标数据进行聚合，具体由stats子系统实现</b>
+<ul class="quote">
+<li>Stats包括3类核心统计数据：Counter(计数器)、Gauge(仪表盘)和Histogram(直方图)。</li>
+</ul>
+</li>
+<li><b>为了简化stats统计项的使用，stats提供了一组宏对Counter、Gauge和Histogram这几类统计项进行操作</b>
+<ul class="quote">
+<li>以Envoy监听器统计为例，介绍stats的使用方式。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Envoy Log支持</h4>
+<ul class="point">
+<li><b>Envoy Log当前只有对HTTP协议有着完善的支持，内置对HTTP访问日志的支持</b>
+<ul class="quote">
+<li>HTTP访问日志特性主要由日志过滤、日志格式化和日志输出3部分组成。</li>
+</ul>
+</li>
+<li><b>HTTP网络协议处理插件HttpConnectionManager负责HTTP协议的解析和路由转发处理，会解析HTTP启动配置，用于HTTP协议的处理</b>
+<ul class="quote">
+<li>针对access_log特性，调用access_log的工厂方法，根据access_log配置，创建相应的access_log实例。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch58"><summary>8.3 本章小结</summary>
+<div class="sec">
+<h4>Istio的链路稳定性治理能力。</h4>
+<ul class="point">
+</ul></div>
+<div class="sec">
+<h4>Istio的可观测性支持</h4>
+<ul class="point">
+<li><b>Istio基于优秀的架构设计和扩展机制，轻松地支持稳定性和可观测性方面的自定义扩展。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch59"><summary>第9章 Service Mesh架构的工程化设计</summary>
+<div class="sec">
+<h4>云计算和容器化环境下的架构设计挑战</h4>
+<ul class="point">
+<li><b>服务运行环境随时可变，基础设施即代码，配置化、自动化，可演化架构，数据驱动架构，生产环境驱动的架构。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Istio/Envoy的设计原则和架构思想</h4>
+<ul class="point">
+<li><b>Istio/Envoy等背后的一些设计原则和架构思想，对日常的微服务业务开发会有很多借鉴价值</b>
+<ul class="quote">
+<li>Istio/Envoy以及所依赖的Kubernetes，都是云计算和云原生时代非常有代表性的开源项目。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Istio/Envoy的设计原则和架构思想在实践中的应用</h4>
+<ul class="point">
+<li><b>本章接下来会重点剖析Istio/Envoy等背后的一些设计原则和架构思想，并结合一些具体实例进行剖析，看看这些架构思想在Istio/Envoy中是如何落地的</b>
+<ul class="quote">
+<li>具体实例分析。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch60"><summary>9.1 复用和解耦</summary>
+<div class="sec">
+<h4>数据平面和控制平面分离是Istio的核心架构思想</h4>
+<ul class="point">
+<li><b>数据平面代理直接负责和其他外部系统进行交互，通过Sidecar模式，将通信和通信链路治理功能从微服务中剥离出来</b>
+<ul class="quote">
+<li>Sidecar模式实现了通信基础设施的下沉和服务化，体现了架构解耦的思想，通过解耦减少了微服务的负担。</li>
+</ul>
+</li>
+<li><b>第二代Service Mesh最重要的标志就是控制平面和数据平面分离</b>
+<ul class="quote">
+<li>所有的代理服务都由控制平面掌控，通过控制平面可以控制整个系统，从而提供了强大的控制能力和策略能力。</li>
+<li>将具体的控制逻辑从数据平面移除，简化了数据平面的设计，并且数据平面不需要和外部系统进行交互，只聚焦在变更频率很低的流量路由和转发逻辑上，这提升了数据平面的稳定性。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Envoy的架构设计采用控制流和数据流解耦的方式</h4>
+<ul class="point">
+<li><b>主线程处理控制流逻辑，工作线程负责处理请求路由和转发</b>
+<ul class="quote">
+<li>通过这样的划分和解耦，简化了系统设计，提高了系统的可维护性。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>控制平面和数据平面分离的优缺点</h4>
+<ul class="point">
+<li><b>控制平面和数据平面分离可以保证数据平面的稳定性和可维护性，但会导致请求转发时增加两次RPC调用</b>
+<ul class="quote">
+<li>对于延迟敏感的场景，可以考虑将Mixer功能移到数据代理服务上完成，或者暂时先不开启Mixer特性。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>架构设计没有完美的方案，需要根据具体业务和场景进行折中和取舍</h4>
+<ul class="point">
+<li><b>架构设计没有完全通用的方案，只有适合业务的方案才是最好的方案。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch61"><summary>9.2 架构扩展机制</summary>
+<div class="sec">
+<h4>Istio的架构扩展机制</h4>
+<ul class="point">
+<li><b>Istio提供了多维度、多层次的插件扩展机制</b>
+<ul class="quote">
+<li>服务注册中心：服务管理上，可以提供自定义的服务注册中心支持。</li>
+<li>通信协议：不仅支持常见的HTTP协议和TCP协议，也对各种用户自定义协议提供支持。</li>
+<li>链路治理：不仅支持各种自定义的流量调度和流量管理，也可以支持用户以自定义的方式对请求进行加工处理。</li>
+<li>遥测和统计：支持多种适配器，并且可轻松地增加新的自定义适配器。</li>
+</ul>
+</li>
+<li><b>插件机制的本质是钩子回调函数</b>
+<ul class="quote">
+<li>插件注册就是将钩子回调函数挂在插件机制上，在事件到来时，触发回调函数的调用。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>服务注册中心插件机制</h4>
+<ul class="point">
+<li><b>Istio通过服务发现抽象接口进行服务发现基本能力的定义</b>
+<ul class="quote">
+<li>服务发现抽象接口定义了一个注册中心以提供基本的能力，各注册中心只需要实现这个接口。</li>
+</ul>
+</li>
+<li><b>插件回调和通知机制方面，服务注册中心提供了两个方向的回调触发</b>
+<ul class="quote">
+<li>将注册中心插件注册到Istio中，可以通过插件获得具体的服务发现能力。</li>
+<li>插件会提供服务变更抽象接口，Istio反向向插件中注册用于通知的回调函数，当注册中心发生变更时，插件会调用预注册的Istio回调函数。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Envoy Filter插件机制</h4>
+<ul class="point">
+<li><b>Envoy插件采用静态注册的方式，通过声明Registry：：RegisterFactory实例完成插件的注册</b>
+<ul class="quote">
+<li>RegisterFactory是一个模板类，定义在Envoy项目的/include/envoy/registry/registry.h文件中。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch62"><summary>9.3 性能设计</summary>
+<div class="sec">
+<h4>基于TLS的无锁设计</h4>
+<ul class="point">
+<li><b>Envoy通过map结构central_cache_保存每个scope内的Metric信息</b>
+<ul class="quote">
+<li>CentralCacheEntry定义包含StatMap counters_、StatMap gauges_和StatMap histograms_。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>多级缓存机制</h4>
+<ul class="point">
+<li><b>Istio Mixer检查处理时，在Mixer Client和Mixer Server上均增加相应的缓存模块</b>
+<ul class="quote">
+<li>缓存减少对Mixer以及后端基础设施的调用，提高系统的整体性能。</li>
+</ul>
+</li>
+<li><b>Kubernetes informer通过缓存提升系统性能，并保证数据一致性</b>
+<ul class="quote">
+<li>Kubernetes informer增加了对远端存储数据变更的监听，远端存储变化时会通知Kubernetes informer进行当前节点上的数据更新。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>批量更新机制</h4>
+<ul class="point">
+<li><b>Envoy在进行Metric上报和Mixer配额管理时采用异步批量的方式</b>
+<ul class="quote">
+<li>Metric数据积累到一定大小或者积累到一定时间后才进行实际的数据上报。</li>
+<li>Envoy每次从Mixer Server获取多个配额，当时间窗口内的配额用尽时，才进行配额获取和更新。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch63"><summary>9.4 架构设计的权衡</summary>
+<div class="sec">
+<h4>架构设计的权衡</h4>
+<ul class="point">
+<li><b>架构设计就是个权衡的过程，在无法满足所有需求的情况下，不需要同等对待所有的需求，架构设计的本质是取舍</b>
+<ul class="quote">
+<li>发现业务的根本需求，权衡哪些需求才是你真正关注的，哪些需求是当前可以舍弃的。</li>
+<li>根本需求也不是一成不变的，随着时间和业务的变化，根本需求也可能会发生变化。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>最终一致性在Envoy中的应用</h4>
+<ul class="point">
+<li><b>最终一致性是Envoy中非常重要的一个架构设计原则</b>
+<ul class="quote">
+<li>在线程模型、服务和配置发现等很多方面都能看到最终一致性的存在。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>微服务架构下的最终一致性</h4>
+<ul class="point">
+<li><b>对于分布式微服务来说，完全的强一致性是一个几乎不可能实现的事情</b>
+<ul class="quote">
+<li>微服务的服务发现和配置管理，采用强一致性语义，则网络故障造成网络分区会导致整个集群不可用。</li>
+<li>微服务宁可使用5分钟之前的配置数据，也不能容忍因为暂时的网络故障而导致服务不可用。</li>
+<li>从分布式系统的CAP原则看，服务发现和配置管理本质上是一个强调高可用而对一致性没有太高要求的CP需求，只要能做到最终一致即可。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Envoy的线程模型设计</h4>
+<ul class="point">
+<li><b>Envoy线程模型的设计就是围绕数据最终一致性这个原则来进行的</b>
+<ul class="quote">
+<li>Envoy主要由负责管理配置、统计等控制功能的主线程，以及负责流量路由与转发的工作线程组成。</li>
+<li>主线程和工作线程中均会访问的XDS配置信息可通过TLS的方式进行管理，同时基于最终一致性原则，每个工作线程维护一个本地XDS数据，数据更新操作由主线程负责，主线程会同时通知各个工作线程的事件调度器数据更新事件，各个工作线程在处理请求的间隙，由数据调度器触发本地XDS数据的更新，因此，各个线程更新配置信息的时间肯定是不一致的，但是可以保证最终均会触发相应的配置更新，达到最终一致性。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch64"><summary>9.5 API和SDK设计</summary>
+<div class="sec">
+<h4>声明式API设计</h4>
+<ul class="point">
+<li><b>声明式API是Kubernetes扩展性的基础，也是Kubernetes建立庞大生态体系的关键一环</b>
+<ul class="quote">
+<li>通过声明式API，可以对API资源进行在线更新。</li>
+<li>通过使用控制器模式，关注API资源的增删修改事件，完成业务逻辑的编写。</li>
+</ul>
+</li>
+<li><b>Istio的API对象采用声明式API的方式，通过定义Kubernetes CRD对象，实现Istio资源的扩展。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>代码自动生成机制</h4>
+<ul class="point">
+<li><b>代码自动生成是一种利用代码生成工具，根据流程图或者代码IDL描述完成代码的自动生成</b>
+<ul class="quote">
+<li>这种技术的优点是，可以提高开发效率，降低人力成本。</li>
+<li>本质上是让机器完成有一定规则和模式的重复性工作，把人从枯燥的程序化工作中解放出来，聚焦创新性工作。</li>
+</ul>
+</li>
+<li><b>Kubernetes的代码生成工具当前已经变成独立的项目code-generator</b>
+<ul class="quote">
+<li>使用code-generator可以非常快捷地开发自定义的资源控制器，从而直接控制Kubernetes API。</li>
+</ul>
+</li>
+<li><b>Istio中的Mixer模板、Adapter适配器均可通过代码自动生成功能生成</b>
+<ul class="quote">
+<li>增加新的模板时，只需要增加模板的proto描述，调用mixer_codegen.sh即可。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch65"><summary>9.6 配置管理</summary>
+<div class="sec">
+<h4>基于Protobuf 3的配置Scheme描述</h4>
+<ul class="point">
+<li><b>Istio和Envoy的API接口和静态配置均使用Protobuf 3进行管理</b>
+<ul class="quote">
+<li>Envoy数据平面启动时向控制平面发送通信请求，控制平面有配置变更时主动推送最新的配置需求。</li>
+<li>Istio的数据平面和控制平面的交互属于典型的双向通信场景，非常适合采用gRPC作为承载数据平面和控制平面之间通信的载体。</li>
+</ul>
+</li>
+<li><b>使用gRPC决定了数据平面和控制平面之间的通信协议基于Protobuf</b>
+<ul class="quote">
+<li>XDS API和XDS相关的数据采用Protobuf格式，包括集群信息、路由信息和监听器信息等。</li>
+</ul>
+</li>
+<li><b>Protobuf属于静态描述语言，数据的序列化和反序列化通过自动生成工具一键生成</b>
+<ul class="quote">
+<li>静态配置使用Protobuf时，可以省去手工编写配置解析代码的工作量，提高业务开发效率。</li>
+</ul>
+</li>
+<li><b>Protobuf在动态结构描述时的弱点，Protobuf 3增加了两个数据结构google.protobuf.Struct和google.protobuf.Any</b>
+<ul class="quote">
+<li>google.protobuf.Struct用于将任何消息转化成JSON格式，然后将该JSON对象以Struct类型的字段形式存放。</li>
+<li>google.protobuf.Any是将消息序列化成二进制流，以一种Byte数组的方式直接存放，编码效率高很多。</li>
+</ul>
+</li>
+<li><b>Envoy在Protobuf 3的基础上增加了Protobuf annotations(标记)</b>
+<ul class="quote">
+<li>比如Protobuf很难直接描述一个大于100小于1000的int32整数(但这个数使用JSON描述起来就非常方便)，那么可为Protobuf字段增加相应的标记。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>配置动态加载机制</h4>
+<ul class="point">
+<li><b>基于XDS协议的强大动态配置能力是Istio的一大核心优势</b>
+<ul class="quote">
+<li>XDS协议作为通用的配置交互协议，已被Istio作为子项目Galley的基础，用于Istio内部各个子系统之间的配置管理。</li>
+</ul>
+</li>
+<li><b>集群配置变更当前使用较多的方式是双缓存切换，这种方式不仅有锁开销，并且实现也比较复杂</b>
+<ul class="quote">
+<li>Envoy配置变更时数据平面和控制平面之间基于TLS的无锁化设计，给业务服务配置变更的处理提供了一个很好的思路，可以根据实际情况灵活参考。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch66"><summary>第10章 Service Mesh与云原生架构</summary>
+<div class="sec">
+<h4>Istio在Serverless通信场景下的使用</h4>
+<ul class="point">
+<li><b>Istio可以很好地解决微服务的通信和链路治理问题。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Istio在南北向通信场景下的使用</h4>
+<ul class="point">
+<li><b>Istio在其他通信场景下的使用，比如Serverless和南北向通信。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Istio在云原生时代的前景。</h4>
+<ul class="point">
+</ul></div>
+</details>
+<details class="ch" id="ch67"><summary>10.1 Service Mesh和Serverless</summary>
+<div class="sec">
+<h4>Serverless基础</h4>
+<ul class="point">
+<li><b>Serverless是云计算发展的产物，旨在解决资源预估和实际偏差导致的资源浪费问题</b>
+<ul class="quote">
+<li>Serverless架构下，业务不再需要固定的服务器资源，而是按需分配相应的服务资源。</li>
+<li>当业务请求比较多时，会多分配相应的服务实例；当业务请求比较少甚至为零时，可以不分配任何服务器资源。</li>
+</ul>
+</li>
+<li><b>Serverless架构相比之前的架构，最大的差异是：业务服务不再是固定的常驻进程，而是真正按需启动和关闭的服务实例</b>
+<ul class="quote">
+<li>Serverless架构可以提供按需使用的资源管理和简化业务运维复杂度两点优势。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Serverless基础架构</h4>
+<ul class="point">
+<li><b>Serverless中，按需执行的代码片断称为“函数”，它是Serverless资源管理和调度的基本单位</b>
+<ul class="quote">
+<li>Serverless需要对用户编写的函数进行管理，通过一定的方式将用户函数变成可调度、可运行的实例。</li>
+<li>事件驱动是Serverless非常重要的组成部分，Serverless一般会定义一组关注的事件类型，并提供相应的事件触发和订阅框架。</li>
+<li>在伸缩管理方面，监控函数当前的请求和资源。如果资源过多，则进行相应的资源回收；若资源不够，则增加相应的资源实例。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Serverless的发展历程和当前现状</h4>
+<ul class="point">
+<li><b>AWS Lambda开启了全新的Serverless时代，很多公有云提供商都推出了自己的Serverless支持</b>
+<ul class="quote">
+<li>AWS Lambda在可用性高的计算基础设施上运行代码，执行计算资源的所有管理工作。</li>
+<li>继AWS Lambda之后，很多公有云提供商都推出了自己的Serverless支持。2016年Google、Microsoft Azure相继推出自己的Cloud Function服务，2017年国内公有云提供商阿里云和腾讯云也分别推出了各自的Serverless产品。</li>
+</ul>
+</li>
+<li><b>Serverless当前还处于发展初期，正在快速地迭代，并且各个云厂商均推出一套自己的Serverless标准</b>
+<ul class="quote">
+<li>AWS Lambda最为强大，在语言方面，当前支持Node.js、Java、C#、Go和Python。</li>
+<li>Serverless当前还处于发展初期，正在快速地迭代，并且各个云厂商均推出一套自己的Serverless标准，所以这些Serverless是无法互通的。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Knative</h4>
+<ul class="point">
+<li><b>Knative是一个以Kubernetes和Istio为基础的Serverless开源架构方案</b>
+<ul class="quote">
+<li>Knative和以往Serverless解决方案最大的不同是，Knative不仅管理函数，它的定位是管理所有的工作负载。</li>
+<li>Knative不是实现一个具体的Serverless，而是构建一个能够运行标准化Serverless的平台。</li>
+</ul>
+</li>
+<li><b>Knative由Build、Serving和Eventing 3个核心组件组成</b>
+<ul class="quote">
+<li>Build负责构建工作，把用户定义的函数和应用构建成容器镜像。</li>
+<li>Serving负责计算工作，具体包含Serverless实例的路由和访问，以及Serverless实例的按需伸缩。</li>
+<li>Eventing负责事件工作，自动完成事件的绑定和触发执行。</li>
+</ul>
+</li>
+<li><b>Knative的Serving系统基于Kubernetes和Istio进行开发，利用Kubernetes强大的容器调度和生命周期管理能力以及Istio的通信和通信链路治理能力</b>
+<ul class="quote">
+<li>Knative Serving自身有更高一层的抽象能力，提供一组用来对应用和通信进行管理的抽象概念。</li>
+<li>auto scaling是Knative Serving实现工作负载自动伸缩的关键组件，当前还处于发展早期，有不少性能问题，很不成熟，Knative后续计划将auto scaling下沉，直接复用Kubernetes原生的auto scaling能力。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch68"><summary>10.2 东西向和南北向通信的统一</summary>
+<div class="sec">
+<h4>东西向通信和南北向通信的区别</h4>
+<ul class="point">
+<li><b>东西向通信解决业务内部各个微服务之间的通信和链路治理。</b>
+</li>
+<li><b>南北向通信解决的是集群和外部的交互问题</b>
+<ul class="quote">
+<li>南北向通信包含集群服务如何提供给外界访问，以及集群内部如何访问外界的服务。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Service Mesh聚焦东西向的微服务内部通信</h4>
+<ul class="point">
+<li><b>微服务内部服务通信的特点是流量不太大，QPS通常来说不太高，对性能总体要求不高，强调的是通信链路的精细化管控能力和稳定性保障能力。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>南北向通信的特点和挑战</h4>
+<ul class="point">
+<li><b>南北向通信的流量特别大，需要承载整个业务所有的对外流量，所以QPS非常高，对性能有着非常高的要求。</b>
+</li>
+<li><b>南北向通信位于业务内网和外部网络之间，需要对业务内网进行保护和拦截，防止非法和异常请求对内网的攻击和影响，因此南北向通信对安全有着非常高的要求。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Istio在东西向和南北向通信中的角色和挑战</h4>
+<ul class="point">
+<li><b>Istio本身主要是聚焦东西向的微服务内部通信，但在性能方面还有很多问题需要解决，不能完全满足南北向通信的需求。</b>
+</li>
+<li><b>从功能上看，东西向通信和南北向通信提供的能力差不多，但在性能上，南北向通信对性能有着非常高的要求，Istio在性能方面当前还有很多问题需要解决。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>如何改进Istio以适应南北向通信的需求</h4>
+<ul class="point">
+<li><b>如果不在架构上进行一定的调整，目前Istio还是很难直接胜任南北向通信的性能需求。</b>
+</li>
+<li><b>单纯从Istio的数据平面看，Envoy在设计上和Nginx相比各有千秋，同时Envoy的性能也足够出色，当前已经有不少基于Envoy的API网关解决方案。但综合数据平面和控制平面来看，Istio在性能方面还有很多需要改进的空间。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch69"><summary>10.3 云原生时代的Service Mesh</summary>
+<div class="sec">
+<h4>云原生架构</h4>
+<ul class="point">
+<li><b>云原生是一种方法，用于构建充分利用云计算模型优势的应用</b>
+<ul class="quote">
+<li>云原生概念最早于2013年由Pivotal的MattStine提出。</li>
+</ul>
+</li>
+<li><b>云原生包含一组应用模式，用于帮助企业快速、持续、可靠、规模化地交付业务软件</b>
+<ul class="quote">
+<li>云原生由微服务架构、DevOps和以容器为代表的敏捷基础架构组成。</li>
+</ul>
+</li>
+<li><b>云原生对应用架构最大的影响是服务不应该仅仅止步于云化，如果仅仅将服务迁移到云上，而对服务本身的架构没有进行云化适配改造，那么服务上云的收益无法最大化</b>
+<ul class="quote">
+<li>云原生应用架构的诉求是最大程度地利用云基础设施的优势，且应用自身的架构也需要升级。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>云原生和微服务</h4>
+<ul class="point">
+<li><b>云原生对微服务的影响不大，没有提出太多新的要求，云原生应用架构主要强调业务架构要面向敏捷和变化编程</b>
+<ul class="quote">
+<li>为了保证微服务在各个云平台之间能够透明迁移，微服务架构和服务治理需要有一定的可移植性，以及采用平台无关的通用方案。</li>
+<li>对于微服务通信最好不要用私有协议，因为私有协议和外部通用协议交互时需要进行频繁的协议转换。</li>
+<li>服务治理方面也是如此，如果大家使用的都是私有方案，那么通信和互通上效率就比较低。</li>
+</ul>
+</li>
+<li><b>为了实现微服务的可移植性，微服务通信和服务治理需要能够标准化和平台无关</b>
+<ul class="quote">
+<li>CNCF在这方面做了大量的工作，目的是建立一套完善的微服务基础设施标准，具体包括微服务通信、分布式跟踪、日志、度量、安全等。</li>
+<li>微服务只有实现了基础设施标准化，才能做到架构层面的平台无关性和可移植性，通过云任何时候均能按需提供和释放计算、网络、存储资源，支撑业务的持续可用和持续创新。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>云原生和Service Mesh</h4>
+<ul class="point">
+<li><b>Service Mesh是云原生落地过程中至关重要的一环，不可或缺</b>
+<ul class="quote">
+<li>应用为了实现云原生设计，需要持续轻量化，将业务需求和非业务需求解耦，业务只需要关注业务相关的功能需求，开发、测试和运维的效率才能大大提高。</li>
+<li>非功能需求解耦并下沉到Service Mesh中，微服务就会变得非常轻量化，方便进行云化部署和维护。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch70"><summary>10.4 Service Mesh现状和展望</summary>
+<div class="sec">
+<h4>Istio现状和挑战</h4>
+<ul class="point">
+<li><b>Istio过分追求优雅的架构设计，导致性能改进一直没有实质的进展</b>
+<ul class="quote">
+<li>Istio性能问题主要是因为Mixer多次远程服务访问开销和流量透明拦截带来的网络与处理开销。</li>
+</ul>
+</li>
+<li><b>Istio在Mixer和透明拦截上的性能优化当前都还处于尝试与探索阶段</b>
+<ul class="quote">
+<li>针对Mixer访问开销，Istio启动了Mixer v2项目，舍弃了当前Mixer v1架构上的解耦，将Mixer功能下沉到Envoy中。</li>
+<li>针对流量透明拦截带来的网络和访问开销，Envoy已经尝试通过Cilium技术来解决。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Service Mesh发展展望</h4>
+<ul class="point">
+<li><b>Istio当前发展上的一些困境，表现并没有如大家预期的那样，迅速一统Service Mesh领域</b>
+<ul class="quote">
+<li>这也给了其他Service Mesh解决方案一定的发展窗口期。</li>
+</ul>
+</li>
+<li><b>Service Mesh后续是Istio一枝独秀，还是百家争鸣，当前仍然需要持续观察。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch71"><summary>10.5 本章小结</summary>
+<div class="sec">
+<h4>Istio在Serverless场景下的现状与问题</h4>
+<ul class="point">
+<li><b>Istio在Serverless场景下，存在一些挑战，如服务发现、配置管理、遥测和日志记录等。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Istio在东西向和南北向通信场景下的现状与问题</h4>
+<ul class="point">
+<li><b>在东西向通信场景下，Istio可以实现流量管理、安全通信和策略执行等功能。</b>
+</li>
+<li><b>在南北向通信场景下，Istio可以实现服务网格的自动化管理、负载均衡和故障恢复等功能。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Istio在云原生领域的前景展望</h4>
+<ul class="point">
+<li><b>Istio作为云原生应用的网络基础设施，具有广泛的应用前景。</b>
+</li>
+<li><b>随着云原生技术的不断发展，Istio将在微服务架构中发挥越来越重要的作用。</b>
+</li>
+</ul></div>
+</details>
+  <p class="site-footer">由 weread-auto 导出 · 供全书视角与后续精读对照　<span class="gcstat" id="gc_page_pv" style="display:none">本页阅读 <b id="gc_page_pv_num">–</b> 次</span></p>
+</main>
+<script>(function(){
+  function openId(id){
+    if(!id) return null;
+    var el = document.getElementById(id);
+    if(!el) return null;
+    var d = (el.tagName === 'DETAILS') ? el : (el.closest ? el.closest('details') : null);
+    if(d && !d.open) d.open = true;      // 关键：目录跳过来时把这一章展开
+    return el;
+  }
+  function go(id){
+    var el = openId(id);
+    if(!el) return;
+    // 展开会改变文档高度，等一帧再滚，免得停在错误位置
+    setTimeout(function(){ el.scrollIntoView({block:'start'}); }, 10);
+  }
+  function fromHash(){
+    var h = (location.hash || '').replace(/^#/, '');
+    if(h) go(decodeURIComponent(h));
+  }
+  document.addEventListener('click', function(e){
+    var a = (e.target && e.target.closest) ? e.target.closest('a[href^="#"]') : null;
+    if(!a) return;
+    var id = (a.getAttribute('href') || '').slice(1);
+    if(id) go(id);
+  }, false);
+  window.addEventListener('hashchange', fromHash, false);
+  // 手动展开某章时把锚点写回地址栏：刷新或分享链接能直接落回这一章
+  document.addEventListener('toggle', function(e){
+    var t = e.target;
+    if(t && t.tagName === 'DETAILS' && t.open && t.id && location.hash !== '#' + t.id){
+      try { history.replaceState(null, '', '#' + t.id); } catch(err) {}
+    }
+  }, true);
+  fromHash();
+})();
+</script>
+<script data-goatcounter="https://ae6623.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<!-- gc-fill:begin -->
+<script>
+(function(){
+  /* GoatCounter 计数端点只吃 .json（.txt 会 400 unknown extension），
+     没数据的路径也返回 404 + {"count":0,"count_unique":0}，所以按文本解析。 */
+  var C="ae6623", base="https://"+C+".goatcounter.com/counter";
+  function stat(p){
+    return fetch(base+p+".json",{credentials:"omit",cache:"no-store"})
+      .then(function(r){return r.text();})
+      .then(function(t){
+        try{
+          var d=JSON.parse(t), c=parseInt(d.count,10);
+          if(!isFinite(c))return null;
+          var u=parseInt(d.count_unique,10);
+          return {pv:String(c), uv:isFinite(u)?String(u):null};
+        }catch(e){return null}
+      })
+      .catch(function(){return null});
+  }
+  function put(id,v){var e=document.getElementById(id);if(e&&v!=null)e.textContent=v;}
+  stat("/*").then(function(d){
+    if(!d)return;
+    put("gc_site_pv_num",d.pv);
+    if(d.uv!=null){put("gc_site_uv_num",d.uv);}
+    else{var x=document.querySelectorAll(".visit-badge-uv");
+         for(var i=0;i<x.length;i++)x[i].style.display="none";}
+  });
+  var pp=document.getElementById("gc_page_pv");
+  if(pp&&location.pathname){
+    var path=location.pathname;
+    if(path.length>1&&path.charAt(path.length-1)==="/")path=path.slice(0,-1);
+    stat(path).then(function(d){
+      if(d){put("gc_page_pv_num",d.pv);pp.style.display="";}
+    });
+  }
+})();
+</script>
+<!-- gc-fill:end -->
+</body>
+</html>

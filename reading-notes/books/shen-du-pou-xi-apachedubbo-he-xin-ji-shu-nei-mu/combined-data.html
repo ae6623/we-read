@@ -100,8 +100,9 @@
 <path class="ln" d="M692 805 L700 805"/>
 </svg></section>
 <section class="mmx-mod" aria-labelledby="oneline" data-key="oneline"><h2 id="oneline">一句话主旨</h2><p class="mmx-mod-note">本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。</p><p class="mmx-oneline">Dubbo是阿里巴巴开发的一个开源的高性能、高可用、可扩展的分布式RPC调用框架，致力于提供高性能和透明化的 RPC 远程调用服务解决方案</p></section>
-<section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" data-key="merged_guide"><h2 id="merged-guide-title">AI领读</h2><style>
-/* merged_guide 章内：mmx 组件样式（与完整版一致） */
+<section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" data-key="merged_guide"><h2 id="merged-guide-title">AI领读</h2>
+<style>
+/* merged_guide 章内：AI 大纲原生深层样式 */
 .merged-guide .sec{margin:10px 0 14px;padding-left:6px;border-left:2px solid #e5e0d6}
 .merged-guide .sec h4{font:600 .98rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.6em 0 .3em}
 .merged-guide ul.point{margin:.3em 0;padding-left:20px}
@@ -109,10 +110,2529 @@
 .merged-guide ul.quote{margin:.25em 0 .25em 20px;padding-left:18px;list-style:none}
 .merged-guide ul.quote::before{content:"原句";display:block;font-size:.72rem;color:#bf8247;
   letter-spacing:.1em;margin:.15em 0 .1em;font-weight:600}
+/* 小节层级追加的汇总原句节点，标签与要点下的原句区分开 */
 .merged-guide ul.quote.quote-node{margin-top:.5em;padding-top:.4em;border-top:1px dashed #eadfc9}
-.merged-guide ul.quote.quote-node::before{content:"热门划线 · 本章原文摘录"}
+.merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
 .merged-guide ul.quote>li{color:#4a4436;font-size:.93rem;margin:.2em 0;padding-left:10px;border-left:2px solid #bf8247}
-</style><p class="small">章节目录取自微信读书官方目录；展开各章即该章与各小节的热门划线原文（按划线人数排序），原句均为读者划线，非 AI 生成。</p><div class="toc-part"><span class="part-label">全书篇目（共 5 章 · 13 句热门划线）</span><details class="mmx-cn"><summary><span class="mmx-no">1</span><span class="mmx-name">序</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">暂无热门划线</p></div></details><details class="mmx-cn"><summary><span class="mmx-no">2</span><span class="mmx-name">前言</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">3 句热门划线</p><ul class="quote quote-node"><li>当新版本Dubbo升级了RPC层的逻辑时，使用者只需要升级Dubbo的版本就可以了，这是因为RPC层的修改对业务层使用者来说是透明的。</li><li>所有RPC框架要解决的一个问题是，如何让使用者无感知地发起远程过程调用，也就是让使用者在发起远程调用时有和本地调用一样的体验。</li><li>Dubbo框架和其他RPC框架一样，采用代理来实现该功能</li></ul></div></details><details class="mmx-cn"><summary><span class="mmx-no">3</span><span class="mmx-name">基础篇</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">2 个小节 · 5 句热门划线</p><div class="sec"><h4>第1章 Dubbo基础</h4><ul class="quote"><li>Registry负责服务注册与发现</li><li>服务消费方根据路由规则和设置的负载均衡算法选择一个服务提供者IP进行调用。</li></ul></div><div class="sec"><h4>1.2 本书Demo详解</h4><ul class="quote"><li>具体执行业务处理的逻辑不在sayHello（）方法所在的Dubbo内部线程池的线程里，所以Dubbo框架的线程不会被阻塞。</li><li>设置回调的这种方式不会阻塞业务调用线程，这是借助了Netty的异步通信机制，Netty底层的I/O线程会在接收到响应后自动回调注册的回调函数，不需要业务线程干预。</li><li>其实Dubbo还提供了一种本地服务暴露与引用的方式</li></ul></div></div></details><details class="mmx-cn"><summary><span class="mmx-no">4</span><span class="mmx-name">高级篇</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">3 个小节 · 5 句热门划线</p><div class="sec"><h4>2.4 Dubbo的动态编译原理</h4><ul class="quote"><li>Java程序要想运行首先需要使用javac把源代码编译为class字节码文件，然后使用JVM把class字节码文件加载到内存创建Class对象后，使用Class对象创建对象实例。</li></ul></div><div class="sec"><h4>2.5 Dubbo增强SPI</h4><ul class="quote"><li>所以这就需要一种违反双亲委派模型的方法，线程上下文类加载器ContextClassLoader就是用来解决这个问题的。</li><li>JDK中的SPI是面向接口编程的，服务规则提供者会在JRE的核心API里提供服务访问接口，而具体实现则由其他开发商提供。</li><li>如果一个类由类加载器加载，那么这个类依赖的类也是由相同的类加载器加载的。</li></ul></div><div class="sec"><h4>2.6 Dubbo使用JavaAssist减少反射调用开销</h4><ul class="quote"><li>而Wrapper1类是在Dubbo服务启动时生成的</li></ul></div></div></details><details class="mmx-cn"><summary><span class="mmx-no">5</span><span class="mmx-name">实践篇</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">暂无热门划线</p></div></details></div></section>
+</style>
+<p class="small">章节目录与 AI 大纲融合为一棵树：篇章分组即目录，展开各章即骨架与逐节 AI 大纲（要点 · 原句摘录）。</p>
+  <div class="toc-part"><span class="part-label">全书篇目（AI 大纲顺序）</span>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">1</span><span class="mmx-name">第1章 Dubbo基础</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 5 条要点 · 9 句原句摘录</p>
+<div class="sec">
+<h4>Dubbo概述</h4>
+<ul class="point">
+<li><b>Dubbo是阿里巴巴开发的一个开源的高性能的RPC调用框架</b>
+<ul class="quote"><li>Dubbo作为阿里巴巴SOA服务化治理方案的核心框架，目前它已从Apache孵化器项目毕业。</li></ul>
+</li>
+<li><b>Dubbo构建的分布式系统架构中各个组件服务的作用以及相互关系</b>
+<ul class="quote"><li>Provider为服务提供者集群，服务提供者负责暴露提供的服务，并将服务注册到服务注册中心。</li><li>Consumer为服务消费者集群，服务消费者通过RPC远程调用服务提供者提供的服务。</li><li>Registry负责服务注册与发现。</li><li>Monitor为监控中心，统计服务的调用次数和调用时间。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Dubbo作为阿里巴巴SOA服务化治理方案的核心框架，目前它已从Apache孵化器项目毕业。</li><li>Provider为服务提供者集群，服务提供者负责暴露提供的服务，并将服务注册到服务注册中心。</li><li>Consumer为服务消费者集群，服务消费者通过RPC远程调用服务提供者提供的服务。</li><li>Registry负责服务注册与发现。</li><li>Monitor为监控中心，统计服务的调用次数和调用时间。</li></ul>
+</div>
+<div class="sec">
+<h4>Dubbo组件关系</h4>
+<ul class="point">
+<li><b>服务提供方在启动时会将自己提供的服务注册到服务注册中心。</b>
+</li>
+<li><b>服务消费方在启动时会去服务注册中心订阅自己需要的服务的地址列表</b>
+<ul class="quote"><li>然后服务注册中心异步把消费方需要的服务接口的提供者的地址列表返回给服务消费方。</li><li>服务消费方根据路由规则和设置的负载均衡算法选择一个服务提供者IP进行调用。</li></ul>
+</li>
+<li><b>监控平台主要用来统计服务的调用次数和调用耗时</b>
+<ul class="quote"><li>即服务消费者和提供者在内存中累计调用服务的次数和耗时。</li><li>并每分钟定时发送一次统计数据到监控中心，监控中心则使用数据绘制图表来显示。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>然后服务注册中心异步把消费方需要的服务接口的提供者的地址列表返回给服务消费方。</li><li>服务消费方根据路由规则和设置的负载均衡算法选择一个服务提供者IP进行调用。</li><li>即服务消费者和提供者在内存中累计调用服务的次数和耗时。</li><li>并每分钟定时发送一次统计数据到监控中心，监控中心则使用数据绘制图表来显示。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">2</span><span class="mmx-name">1.2 本书Demo详解</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 9 个小节 · 14 条要点 · 39 句原句摘录</p>
+<div class="sec">
+<h4>本书Demo结构说明</h4>
+<ul class="point">
+<li><b>Demo使用Maven聚合功能构建，包含Consumer、Provider和SDK三个模块</b>
+<ul class="quote"><li>Consumer模块为服务消费者相关模块，包含普通调用、各种异步调用、泛化调用、基于扩展接口实现的自定义负载均衡策略、集群容错策略等。</li><li>Provider模块为服务提供者相关模块，包含服务接口的实现类、服务提供方的同步处理请求、各种异步处理请求的实现等。</li><li>SDK模块是一个二方包，用来存放服务接口，这是为了代码复用，在服务提供者和消费者(泛化调用除外)的模块里需要引入这个二方包。</li></ul>
+</li>
+<li><b>Demo使用ZooKeeper作为服务注册中心，基于Dubbo 2.7.1版本做讲解</b>
+<ul class="quote"><li>ZooKeeper已经启动，并且地址为127.0.0.1：2181。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Consumer模块为服务消费者相关模块，包含普通调用、各种异步调用、泛化调用、基于扩展接口实现的自定义负载均衡策略、集群容错策略等。</li><li>Provider模块为服务提供者相关模块，包含服务接口的实现类、服务提供方的同步处理请求、各种异步处理请求的实现等。</li><li>SDK模块是一个二方包，用来存放服务接口，这是为了代码复用，在服务提供者和消费者(泛化调用除外)的模块里需要引入这个二方包。</li><li>ZooKeeper已经启动，并且地址为127.0.0.1：2181。</li></ul>
+</div>
+<div class="sec">
+<h4>SDK模块</h4>
+<ul class="point">
+<li><b>SDK模块主要用来存放服务接口的定义与POJO类</b>
+<ul class="quote"><li>GreetingService接口类主要用来演示同步调用。</li><li>GrettingServiceAsync接口类主要用来演示基于定义CompletableFuture签名的接口如何实现异步执行。</li><li>GrettingServiceRpcContext接口类主要用来演示AsyncContext如何实现异步执行。</li><li>PoJo类，一个简单的POJO(Plain Ordinary Java Object，简单Java对象)对象，用于演示泛化调用时的参数转换。</li><li>Result类，POJO的返回值类型，用于演示泛化调用时的参数转换。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>GreetingService接口类主要用来演示同步调用。</li><li>GrettingServiceAsync接口类主要用来演示基于定义CompletableFuture签名的接口如何实现异步执行。</li><li>GrettingServiceRpcContext接口类主要用来演示AsyncContext如何实现异步执行。</li><li>PoJo类，一个简单的POJO(Plain Ordinary Java Object，简单Java对象)对象，用于演示泛化调用时的参数转换。</li><li>Result类，POJO的返回值类型，用于演示泛化调用时的参数转换。</li></ul>
+</div>
+<div class="sec">
+<h4>同步发布与调用服务</h4>
+<ul class="point">
+<li><b>服务提供端使用Dubbo API发布服务</b>
+<ul class="quote"><li>创建ServiceConfig实例，其泛型参数为GreetingService接口。</li><li>配置应用程序属性。</li><li>设置服务注册中心地址。</li><li>将接口与实现类设置到ServiceConfig实例。</li><li>设置服务分组与版本。</li><li>导出服务，启动NettyServer监听链接请求，并将服务注册到服务注册中心。</li></ul>
+</li>
+<li><b>服务消费端同步调用服务</b>
+<ul class="quote"><li>创建服务引用对象实例，其中泛型参数为GreetingService。</li><li>创建应用程序配置对象。</li><li>设置服务注册中心地址。</li><li>设置服务接口和超时时间。</li><li>设置自定义负载均衡策略与集群容错策略。</li><li>设置服务分组与版本。</li><li>引用服务。</li><li>设置隐式参数，然后服务提供者就可以在服务实现类方法里获取参数值。</li><li>同步发起远程调用，然后当前线程会被阻塞直到服务提供方把结果返回。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>创建ServiceConfig实例，其泛型参数为GreetingService接口。</li><li>配置应用程序属性。</li><li>设置服务注册中心地址。</li><li>将接口与实现类设置到ServiceConfig实例。</li><li>设置服务分组与版本。</li><li>导出服务，启动NettyServer监听链接请求，并将服务注册到服务注册中心。</li><li>创建服务引用对象实例，其中泛型参数为GreetingService。</li><li>创建应用程序配置对象。</li><li>设置服务注册中心地址。</li><li>设置服务接口和超时时间。</li><li>设置自定义负载均衡策略与集群容错策略。</li><li>设置服务分组与版本。</li><li>引用服务。</li><li>设置隐式参数，然后服务提供者就可以在服务实现类方法里获取参数值。</li><li>同步发起远程调用，然后当前线程会被阻塞直到服务提供方把结果返回。</li></ul>
+</div>
+<div class="sec">
+<h4>服务消费端异步调用服务</h4>
+<ul class="point">
+<li><b>Dubbo 2.6.*版本提供的异步调用</b>
+<ul class="quote"><li>创建引用实例，并设置属性。</li><li>设置调用为异步。</li><li>进行服务引用并且调用sayHello()方法，由于是异步调用，所以该方法马上返回null。</li><li>使用RpcContext.getContext().getFuture()获取future对象，然后在需要获取真实响应结果的地方调用future.get()来获取响应结果。</li></ul>
+</li>
+<li><b>Dubbo 2.7.*版本提供的异步调用</b>
+<ul class="quote"><li>直接使用RpcContext.getContext().getCompletableFuture()获取CompletableFuture类型的future，然后就可以基于CompletableFuture的能力做一系列操作。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>创建引用实例，并设置属性。</li><li>设置调用为异步。</li><li>进行服务引用并且调用sayHello()方法，由于是异步调用，所以该方法马上返回null。</li><li>使用RpcContext.getContext().getFuture()获取future对象，然后在需要获取真实响应结果的地方调用future.get()来获取响应结果。</li><li>直接使用RpcContext.getContext().getCompletableFuture()获取CompletableFuture类型的future，然后就可以基于CompletableFuture的能力做一系列操作。</li></ul>
+</div>
+<div class="sec">
+<h4>服务提供端异步执行</h4>
+<ul class="point">
+<li><b>基于定义CompletableFuture签名的接口实现异步执行</b>
+<ul class="quote"><li>通过上面的代码可知，基于定义CompletableFuture签名的接口实现异步执行需要接口方法的返回值为CompletableFuture，并且方法内部使用CompletableFuture.supplyAsync让本该由Dubbo内部线程池中的线程处理的服务，转换为由业务自定义线程池中的线程来处理。</li></ul>
+</li>
+<li><b>使用AsyncContext实现异步执行</b>
+<ul class="quote"><li>在Provider模块中，GrettingServiceAsyncContextImpl使用了AsyncContext实现异步执行，具体代码如下：代码1创建了一个自定义线程池用来执行业务处理；代码2.1调用RpcContext.startAsync()方法开启服务异步执行，返回一个asyncContext，然后把服务处理任务提交到业务线程池后sayHello()方法就直接返回了null；异步任务内首先执行代码2.2切换任务的上下文，然后休眠500ms充当任务执行；最后，代码2.3把任务执行结果写入异步上下文。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>通过上面的代码可知，基于定义CompletableFuture签名的接口实现异步执行需要接口方法的返回值为CompletableFuture，并且方法内部使用CompletableFuture.supplyAsync让本该由Dubbo内部线程池中的线程处理的服务，转换为由业务自定义线程池中的线程来处理。</li><li>在Provider模块中，GrettingServiceAsyncContextImpl使用了AsyncContext实现异步执行，具体代码如下：代码1创建了一个自定义线程池用来执行业务处理；代码2.1调用RpcContext.startAsync()方法开启服务异步执行，返回一个asyncContext，然后把服务处理任务提交到业务线程池后sayHello()方法就直接返回了null；异步任务内首先执行代码2.2切换任务的上下文，然后休眠500ms充当任务执行；最后，代码2.3把任务执行结果写入异步上下文。</li></ul>
+</div>
+<div class="sec">
+<h4>服务消费端泛化调用</h4>
+<ul class="point">
+<li><b>泛化接口调用方式主要在服务消费端没有API接口类及模型类元(比如入参和出参的POJO类)的情况下使用，其参数及返回值中没有对应的POJO类，所以所有POJO参数均转换为Map表示</b>
+<ul class="quote"><li>generic=true方式：在Consumer模块的APiGenericConsumerForTrue类中演示了这种方式，其代码如下：代码1创建引用实例，这里需要注意的是，在泛型调用时，泛型参数固定为GenericService；代码2设置泛化调用类型为true；代码3获取引用，注意泛化值类型固定为GenericService。</li><li>generic=bean方式：在Consumer模块的APiGenericConsumerForBean类中演示了这种方式，其代码如下：上面代码的不同之处在于代码2设置了泛型类型为bean，这意味着对参数使用JavaBean方式进行序列化，如代码4使用JavaBeanSerializeUtil.serialize把参数进行序列化，然后把序列化结果作为第三个参数，最后执行泛化调用。</li><li>generic=nativejava方式：在Consumer模块的APiGenericConsumerForNativeJava类中演示了这种方式，其代码如下：上面代码的不同之处在于代码2设置了泛型类型nativejava，这意味着对参数使用nativejava方式进行序列化，如代码4使用nativejava对把参数进行序列化，然后把序列化结果作为第三个参数，最后执行泛化调用。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>generic=true方式：在Consumer模块的APiGenericConsumerForTrue类中演示了这种方式，其代码如下：代码1创建引用实例，这里需要注意的是，在泛型调用时，泛型参数固定为GenericService；代码2设置泛化调用类型为true；代码3获取引用，注意泛化值类型固定为GenericService。</li><li>generic=bean方式：在Consumer模块的APiGenericConsumerForBean类中演示了这种方式，其代码如下：上面代码的不同之处在于代码2设置了泛型类型为bean，这意味着对参数使用JavaBean方式进行序列化，如代码4使用JavaBeanSerializeUtil.serialize把参数进行序列化，然后把序列化结果作为第三个参数，最后执行泛化调用。</li><li>generic=nativejava方式：在Consumer模块的APiGenericConsumerForNativeJava类中演示了这种方式，其代码如下：上面代码的不同之处在于代码2设置了泛型类型nativejava，这意味着对参数使用nativejava方式进行序列化，如代码4使用nativejava对把参数进行序列化，然后把序列化结果作为第三个参数，最后执行泛化调用。</li></ul>
+</div>
+<div class="sec">
+<h4>服务消费端本地服务mock与服务降级</h4>
+<ul class="point">
+<li><b>服务消费端本地服务mock主要用来做本地测试用，当服务提供端服务不可用时，使用本地mock服务可以模拟服务提供端来让服务消费方测试自己的功能</b>
+<ul class="quote"><li>要实现mock功能，首先需要消费端先实现服务接口的mock实现类，在Demo中我们是对接口com.books.dubbo.demo.api.GreetingService进行模拟(mock)的，其mock实现类为com.books.dubbo.demo.api.GreetingServiceMock。</li></ul>
+</li>
+<li><b>Dubbo提供了一些服务降级措施，当服务提供端某一个非关键的服务出错时，可以手动对消费端的调用进行降级</b>
+<ul class="quote"><li>force：return策略：当服务调用方设置某个接口的降级策略为这种方式时，服务调用方在调用该接口服务时会直接在客户端内返回设置的mock值，而不会在通过远程调用方式调用服务提供者。</li><li>fail：return策略：表示服务调用方调用服务提供方的服务失败后再返回mock值，与force：return的区别是前者如果调用服务提供者成功，则返回正常的结果，如果调用失败则返回mock的值。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>要实现mock功能，首先需要消费端先实现服务接口的mock实现类，在Demo中我们是对接口com.books.dubbo.demo.api.GreetingService进行模拟(mock)的，其mock实现类为com.books.dubbo.demo.api.GreetingServiceMock。</li><li>force：return策略：当服务调用方设置某个接口的降级策略为这种方式时，服务调用方在调用该接口服务时会直接在客户端内返回设置的mock值，而不会在通过远程调用方式调用服务提供者。</li><li>fail：return策略：表示服务调用方调用服务提供方的服务失败后再返回mock值，与force：return的区别是前者如果调用服务提供者成功，则返回正常的结果，如果调用失败则返回mock的值。</li></ul>
+</div>
+<div class="sec">
+<h4>隐式参数传递</h4>
+<ul class="point">
+<li><b>在Consumer模块的APiConsumer类中使用隐式参数设置</b>
+<ul class="quote"><li>在消费端发起远程调用前，通过RpcContext.getContext().setAttachment设置了key为company、value为alibaba的键值对，这个键值对会随着远程调用通过网络传递给服务提供端。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在消费端发起远程调用前，通过RpcContext.getContext().setAttachment设置了key为company、value为alibaba的键值对，这个键值对会随着远程调用通过网络传递给服务提供端。</li></ul>
+</div>
+<div class="sec">
+<h4>本地服务暴露与引用</h4>
+<ul class="point">
+<li><b>Dubbo还提供了一种本地服务暴露与引用的方式，这在同一个JVM进程中同时发布与调用同一个服务时显得比较重要</b>
+<ul class="quote"><li>在Demo的Provider模块的APiConsumerInJvm类中演示了本地服务暴露与引用的实例：在上面的代码中，exportService()方法导出服务(包含本地服务与远程服务)，referService()方法进行服务引用，由于在JVM内存在要引用的服务，所以实际是进行了本地调用。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在Demo的Provider模块的APiConsumerInJvm类中演示了本地服务暴露与引用的实例：在上面的代码中，exportService()方法导出服务(包含本地服务与远程服务)，referService()方法进行服务引用，由于在JVM内存在要引用的服务，所以实际是进行了本地调用。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">3</span><span class="mmx-name">1.3 小结</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 4 条要点 · 11 句原句摘录</p>
+<div class="sec">
+<h4>Dubbo组件关系简介</h4>
+<ul class="point">
+<li><b>Dubbo由服务提供方、服务消费方、服务注册中心、服务监控中心组成</b>
+<ul class="quote"><li>服务提供方：提供服务的应用，负责实现服务接口和序列化方式。</li><li>服务消费方：调用服务方提供的接口，实现业务逻辑。</li><li>服务注册中心：服务提供方注册服务，服务消费方订阅服务。</li><li>服务监控中心：负责监控服务运行状态，收集服务调用数据。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>服务提供方：提供服务的应用，负责实现服务接口和序列化方式。</li><li>服务消费方：调用服务方提供的接口，实现业务逻辑。</li><li>服务注册中心：服务提供方注册服务，服务消费方订阅服务。</li><li>服务监控中心：负责监控服务运行状态，收集服务调用数据。</li></ul>
+</div>
+<div class="sec">
+<h4>Dubbo基本使用方法</h4>
+<ul class="point">
+<li><b>使用ZooKeeper搭建服务注册中心</b>
+<ul class="quote"><li>下载并安装ZooKeeper。</li><li>启动ZooKeeper。</li></ul>
+</li>
+<li><b>服务提供方和消费方编写代码，并进行配置</b>
+<ul class="quote"><li>服务提供方编写服务接口和实现类，并添加@Service注解。</li><li>服务消费方编写服务调用代码，并添加@Reference注解。</li><li>在服务提供方和消费方的配置文件中添加Dubbo相关配置。</li></ul>
+</li>
+<li><b>运行服务提供方和消费方，进行测试</b>
+<ul class="quote"><li>运行服务提供方应用。</li><li>运行服务消费方应用。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>下载并安装ZooKeeper。</li><li>启动ZooKeeper。</li><li>服务提供方编写服务接口和实现类，并添加@Service注解。</li><li>服务消费方编写服务调用代码，并添加@Reference注解。</li><li>在服务提供方和消费方的配置文件中添加Dubbo相关配置。</li><li>运行服务提供方应用。</li><li>运行服务消费方应用。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">4</span><span class="mmx-name">高级篇</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 9 个小节 · 9 条要点 · 9 句原句摘录</p>
+<div class="sec">
+<h4>适配器类原理</h4>
+<ul class="point">
+<li><b>适配器类为Dubbo框架提供统一的接口，屏蔽底层实现差异</b>
+<ul class="quote"><li>适配器类包括ServiceConfig、ReferenceConfig等。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>适配器类包括ServiceConfig、ReferenceConfig等。</li></ul>
+</div>
+<div class="sec">
+<h4>动态编译原理</h4>
+<ul class="point">
+<li><b>Dubbo框架支持在运行时动态编译和加载服务提供者的代码</b>
+<ul class="quote"><li>动态编译使用Java的Instrumentation API实现。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>动态编译使用Java的Instrumentation API实现。</li></ul>
+</div>
+<div class="sec">
+<h4>增强SPI原理</h4>
+<ul class="point">
+<li><b>Dubbo框架使用增强的SPI机制来加载扩展点</b>
+<ul class="quote"><li>增强SPI通过在META-INF/services目录下放置配置文件来实现。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>增强SPI通过在META-INF/services目录下放置配置文件来实现。</li></ul>
+</div>
+<div class="sec">
+<h4>消费端的泛化调用实现原理</h4>
+<ul class="point">
+<li><b>消费端可以使用泛化调用来调用不关心具体实现的服务提供者</b>
+<ul class="quote"><li>泛化调用使用Java的反射机制实现。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>泛化调用使用Java的反射机制实现。</li></ul>
+</div>
+<div class="sec">
+<h4>消费端异步调用与服务提供端的异步执行</h4>
+<ul class="point">
+<li><b>消费端可以发起异步调用，服务提供端可以异步执行</b>
+<ul class="quote"><li>异步调用使用Dubbo框架提供的Future接口实现。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>异步调用使用Dubbo框架提供的Future接口实现。</li></ul>
+</div>
+<div class="sec">
+<h4>Dubbo框架的线程模型</h4>
+<ul class="point">
+<li><b>Dubbo框架使用线程池来处理请求</b>
+<ul class="quote"><li>线程池大小可以通过配置文件进行设置。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>线程池大小可以通过配置文件进行设置。</li></ul>
+</div>
+<div class="sec">
+<h4>消费端负载均衡策略</h4>
+<ul class="point">
+<li><b>Dubbo框架支持多种负载均衡策略</b>
+<ul class="quote"><li>负载均衡策略包括随机、轮询、最少活跃调用等。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>负载均衡策略包括随机、轮询、最少活跃调用等。</li></ul>
+</div>
+<div class="sec">
+<h4>消费端集群容错策略</h4>
+<ul class="point">
+<li><b>Dubbo框架支持多种集群容错策略</b>
+<ul class="quote"><li>集群容错策略包括Failover、Failfast、Failsafe等。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>集群容错策略包括Failover、Failfast、Failsafe等。</li></ul>
+</div>
+<div class="sec">
+<h4>并发控制原理</h4>
+<ul class="point">
+<li><b>Dubbo框架使用分布式锁和原子操作来保证并发安全</b>
+<ul class="quote"><li>分布式锁可以使用Redis、Zookeeper等实现。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>分布式锁可以使用Redis、Zookeeper等实现。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">5</span><span class="mmx-name">第2章 Dubbo框架内核原理剖析</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 3 条要点 · 15 句原句摘录</p>
+<div class="sec">
+<h4>Dubbo分层架构概述</h4>
+<ul class="point">
+<li><b>Dubbo分层架构设计，每层执行固定的功能，上层依赖下层提供的功能，下层的改变对上层不可见</b>
+<ul class="quote"><li>Service和Config层为API接口层，是为了让Dubbo使用方方便地发布服务和引用服务。</li><li>其他各层均为SPI(Service Provider Interface，服务提供者接口)层，SPI意味着下面各层都是组件化的，是可以被替换的。</li><li>Proxy服务代理层：该层主要是对服务消费端使用的接口进行代理，把本地调用透明地转换为远程调用。</li><li>Registry服务注册中心层：服务提供者启动时会把服务注册到服务注册中心，消费者启动时会去服务注册中心获取服务提供者的地址列表。</li><li>Cluster路由层：封装多个服务提供者的路由规则、负载均衡、集群容错的实现，并桥接服务注册中心。</li><li>Monitor监控层：用来统计RPC调用次数和调用耗时时间。</li><li>Protocol远程调用层：封装RPC调用逻辑。</li><li>Exchange信息交换层：封装请求响应模式，同步转异步。</li><li>Transport网络传输层：Mina和Netty抽象为统一接口。</li><li>Serialize数据序列化层：提供可以复用的一些工具。</li></ul>
+</li>
+<li><b>Dubbo增强了JDK中提供的标准SPI功能，增加了对扩展点IoC和AOP的支持</b>
+<ul class="quote"><li>一个扩展点可以直接使用setter()方法注入其他扩展点，并且不会一次性实例化扩展点的所有实现类。</li><li>增强的SPI是在具体用某一个实现类的时候才对具体实现类进行实例化。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Service和Config层为API接口层，是为了让Dubbo使用方方便地发布服务和引用服务。</li><li>其他各层均为SPI(Service Provider Interface，服务提供者接口)层，SPI意味着下面各层都是组件化的，是可以被替换的。</li><li>Proxy服务代理层：该层主要是对服务消费端使用的接口进行代理，把本地调用透明地转换为远程调用。</li><li>Registry服务注册中心层：服务提供者启动时会把服务注册到服务注册中心，消费者启动时会去服务注册中心获取服务提供者的地址列表。</li><li>Cluster路由层：封装多个服务提供者的路由规则、负载均衡、集群容错的实现，并桥接服务注册中心。</li><li>Monitor监控层：用来统计RPC调用次数和调用耗时时间。</li><li>Protocol远程调用层：封装RPC调用逻辑。</li><li>Exchange信息交换层：封装请求响应模式，同步转异步。</li><li>Transport网络传输层：Mina和Netty抽象为统一接口。</li><li>Serialize数据序列化层：提供可以复用的一些工具。</li><li>一个扩展点可以直接使用setter()方法注入其他扩展点，并且不会一次性实例化扩展点的所有实现类。</li><li>增强的SPI是在具体用某一个实现类的时候才对具体实现类进行实例化。</li></ul>
+</div>
+<div class="sec">
+<h4>Dubbo扩展点原理</h4>
+<ul class="point">
+<li><b>Dubbo扩展点接口的类都含有@SPI注解，这里注解中的&quot;dubbo&quot;说明Protocol扩展接口SPI的默认实现是DubboProtocol</b>
+<ul class="quote"><li>如果我们想自己写一个Protocol扩展接口的实现类，那么我们需要在实现类所在的Jar包内的META-INF/dubbo/目录下创建一个名字为org.apache.dubbo.rpc.Protocol的文本文件，然后配置它的内容为。</li><li>那么如何使用我们自定义的扩展实现呢？在Dubbo配置模块中，扩展点均有对应配置属性或标签，如下代码通过配置标签方式指定使用哪个扩展实现。</li><li>注意这里的name必须与Jar包内META-INF/dubbo/目录下的org.apache.dubbo.rpc.Protocol文件中的等号左侧的key的名字一致。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如果我们想自己写一个Protocol扩展接口的实现类，那么我们需要在实现类所在的Jar包内的META-INF/dubbo/目录下创建一个名字为org.apache.dubbo.rpc.Protocol的文本文件，然后配置它的内容为。</li><li>那么如何使用我们自定义的扩展实现呢？在Dubbo配置模块中，扩展点均有对应配置属性或标签，如下代码通过配置标签方式指定使用哪个扩展实现。</li><li>注意这里的name必须与Jar包内META-INF/dubbo/目录下的org.apache.dubbo.rpc.Protocol文件中的等号左侧的key的名字一致。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">6</span><span class="mmx-name">2.2 Dubbo远程调用细节</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 7 条要点 · 11 句原句摘录</p>
+<div class="sec">
+<h4>Dubbo服务发布与消费的概要流程</h4>
+<ul class="point">
+<li><b>服务提供者暴露一个服务的概要过程</b>
+<ul class="quote"><li>ServiceConfig类引用对外提供服务的实现类ref。</li><li>通过ProxyFactory接口的扩展实现类的getInvoker()方法使用ref生成一个AbstractProxyInvoker实例。</li><li>Dubbo协议的Invoker转为Exporter发生在DubboProtocol类的export()方法中。</li></ul>
+</li>
+<li><b>服务消费者消费一个服务的概要过程</b>
+<ul class="quote"><li>ReferenceConfig类的init()方法调用Protocol扩展接口实现类的refer()方法生成Invoker实例。</li><li>Dubbo协议的Invoker转换为客户端需要的接口，发生在ProxyFactory接口的扩展实现类的getProxy()方法中。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>ServiceConfig类引用对外提供服务的实现类ref。</li><li>通过ProxyFactory接口的扩展实现类的getInvoker()方法使用ref生成一个AbstractProxyInvoker实例。</li><li>Dubbo协议的Invoker转为Exporter发生在DubboProtocol类的export()方法中。</li><li>ReferenceConfig类的init()方法调用Protocol扩展接口实现类的refer()方法生成Invoker实例。</li><li>Dubbo协议的Invoker转换为客户端需要的接口，发生在ProxyFactory接口的扩展实现类的getProxy()方法中。</li></ul>
+</div>
+<div class="sec">
+<h4>服务提供者暴露一个服务的详细过程</h4>
+<ul class="point">
+<li><b>ServiceConfig类引用对外提供服务的实现类ref</b>
+<ul class="quote"><li>ServiceConfig是服务提供者的配置类。</li></ul>
+</li>
+<li><b>通过ProxyFactory接口的扩展实现类的getInvoker()方法使用ref生成一个AbstractProxyInvoker实例</b>
+<ul class="quote"><li>ProxyFactory接口是用于生成代理的接口。</li></ul>
+</li>
+<li><b>Dubbo协议的Invoker转为Exporter发生在DubboProtocol类的export()方法中</b>
+<ul class="quote"><li>DubboProtocol是Dubbo的协议实现类。</li><li>在这个过程中会先启动Netty Server监听服务连接，然后将服务注册到服务注册中心。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>ServiceConfig是服务提供者的配置类。</li><li>ProxyFactory接口是用于生成代理的接口。</li><li>DubboProtocol是Dubbo的协议实现类。</li><li>在这个过程中会先启动Netty Server监听服务连接，然后将服务注册到服务注册中心。</li></ul>
+</div>
+<div class="sec">
+<h4>服务消费者消费一个服务的详细过程</h4>
+<ul class="point">
+<li><b>ReferenceConfig类的init()方法调用Protocol扩展接口实现类的refer()方法生成Invoker实例</b>
+<ul class="quote"><li>ReferenceConfig是服务消费者的配置类。</li></ul>
+</li>
+<li><b>Dubbo协议的Invoker转换为客户端需要的接口，发生在ProxyFactory接口的扩展实现类的getProxy()方法中</b>
+<ul class="quote"><li>这个方法主要是使用代理对服务接口的调用转换为对Invoker的调用。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>ReferenceConfig是服务消费者的配置类。</li><li>这个方法主要是使用代理对服务接口的调用转换为对Invoker的调用。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">7</span><span class="mmx-name">2.3 Dubbo的适配器原理</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 3 条要点 · 6 句原句摘录</p>
+<div class="sec">
+<h4>Dubbo的适配器原理</h4>
+<ul class="point">
+<li><b>Dubbo使用适配器模式来选择使用哪一个扩展接口的实现类</b>
+<ul class="quote"><li>Dubbo会为每个SPI扩展接口动态生成一个对应的适配器类。</li><li>适配器类会根据传递的参数来使用增强SPI以选择不同的SPI实现。</li></ul>
+</li>
+<li><b>适配器类Protocol$Adaptive会根据传递的协议参数的不同，加载不同的Protocol的SPI实现</b>
+<ul class="quote"><li>当调用protocol.export(wrapperInvoker)时，实际是调用Protocol$Adaptive的对象实例的export()方法。</li><li>代码2使用Dubbo增强SPI方法getExtension()获取对应的SPI实现类，然后调用代码3来执行具体SPI实现类的export()方法。</li></ul>
+</li>
+<li><b>Dubbo框架会给每个SPI扩展接口动态生成一个对应的适配器类，并根据参数来使用增强SPI以选择不同的SPI实现</b>
+<ul class="quote"><li>扩展接口ProxyFactory的适配器类为ProxyFactory$Adaptive，其根据参数proxy来选择使用JdkProxyFactory还是使用JavassistProxyFactory做代理工厂。</li><li>扩展接口Registry的适配器类Registry$Adaptive则根据参数register来决定使用ZookeeperRegistry、RedisRegistry、MulticastRegistry、DubboRegistry中的哪一个作为服务注册中心。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Dubbo会为每个SPI扩展接口动态生成一个对应的适配器类。</li><li>适配器类会根据传递的参数来使用增强SPI以选择不同的SPI实现。</li><li>当调用protocol.export(wrapperInvoker)时，实际是调用Protocol$Adaptive的对象实例的export()方法。</li><li>代码2使用Dubbo增强SPI方法getExtension()获取对应的SPI实现类，然后调用代码3来执行具体SPI实现类的export()方法。</li><li>扩展接口ProxyFactory的适配器类为ProxyFactory$Adaptive，其根据参数proxy来选择使用JdkProxyFactory还是使用JavassistProxyFactory做代理工厂。</li><li>扩展接口Registry的适配器类Registry$Adaptive则根据参数register来决定使用ZookeeperRegistry、RedisRegistry、MulticastRegistry、DubboRegistry中的哪一个作为服务注册中心。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">8</span><span class="mmx-name">2.4 Dubbo的动态编译原理</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 3 条要点 · 4 句原句摘录</p>
+<div class="sec">
+<h4>Dubbo的动态编译原理</h4>
+<ul class="point">
+<li><b>Dubbo框架会为每个扩展接口生成其对应的适配器类的源码</b>
+<ul class="quote"><li>代码1是根据SPI扩展接口生成其对应的适配器类的源码，其返回的是一个字符串。</li></ul>
+</li>
+<li><b>选择具体的动态编译类的扩展实现对源码进行编译以生成适配器类的Class对象</b>
+<ul class="quote"><li>代码2使用增强SPI选择扩展接口Compiler的实现，这里默认为JavassistCompiler。</li><li>代码3调用JavassistCompiler的compile()方法并根据源代码生成Protocol$Adaptive的Class对象。</li></ul>
+</li>
+<li><b>调用Class对象的newInstance()方法生成扩展接口对应的适配器类的实例</b>
+<ul class="quote"><li>有了Class对象后，我们就可以使用newInstance()方法创建对象实例了。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>代码1是根据SPI扩展接口生成其对应的适配器类的源码，其返回的是一个字符串。</li><li>代码2使用增强SPI选择扩展接口Compiler的实现，这里默认为JavassistCompiler。</li><li>代码3调用JavassistCompiler的compile()方法并根据源代码生成Protocol$Adaptive的Class对象。</li><li>有了Class对象后，我们就可以使用newInstance()方法创建对象实例了。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">9</span><span class="mmx-name">2.5 Dubbo增强SPI</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 6 条要点 · 15 句原句摘录</p>
+<div class="sec">
+<h4>JDK标准SPI原理</h4>
+<ul class="point">
+<li><b>JDK中的SPI是面向接口编程的，服务规则提供者会在JRE的核心API里提供服务访问接口，而具体实现则由其他开发商提供</b>
+<ul class="quote"><li>例如，如果规范制定者在rt.jar包里定义了数据库的驱动接口java.sql.Driver，那么MySQL实现的开发商则会在MySQL的驱动包的META-INF/services文件夹下建立名称为java.sql.Driver的文件，文件内容就是MySQL对java.sql.Driver接口的实现类。</li></ul>
+</li>
+<li><b>ServiceLoader的加载器为Bootstrap，因为这里输出了null，并且从该类在rt.jar里面这一点也可以证明</b>
+<ul class="quote"><li>ServiceLoader的load()方法源码中，代码5获取了当前线程上下文加载器，这里是AppClassLoader。</li><li>代码6将该类加载器传递给新构造的ServiceLoader的成员变量loader。</li><li>代码7使用loader也就是AppClassLoader加载具体的驱动实现类的Class对象，代码8则使用Class对象调用newInstance()方法来创建对象实例。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>例如，如果规范制定者在rt.jar包里定义了数据库的驱动接口java.sql.Driver，那么MySQL实现的开发商则会在MySQL的驱动包的META-INF/services文件夹下建立名称为java.sql.Driver的文件，文件内容就是MySQL对java.sql.Driver接口的实现类。</li><li>ServiceLoader的load()方法源码中，代码5获取了当前线程上下文加载器，这里是AppClassLoader。</li><li>代码6将该类加载器传递给新构造的ServiceLoader的成员变量loader。</li><li>代码7使用loader也就是AppClassLoader加载具体的驱动实现类的Class对象，代码8则使用Class对象调用newInstance()方法来创建对象实例。</li></ul>
+</div>
+<div class="sec">
+<h4>增强SPI原理</h4>
+<ul class="point">
+<li><b>Dubbo的扩展点加载机制是基于JDK标准的SPI扩展机制增强而来的，Dubbo解决了JDK标准的SPI的以下问题：</b>
+<ul class="quote"><li>JDK标准的SPI会一次性实例化扩展点的所有实现，如果有些扩展实现初始化很耗时，但又没用上，那么加载就很浪费资源。</li><li>如果扩展点加载失败，是不会友好地向用户通知具体异常的。</li><li>增加了对扩展点IoC和AOP的支持，一个扩展点可以直接使用setter()方法注入其他扩展点，也可以对扩展点使用Wrapper类进行功能增强。</li></ul>
+</li>
+<li><b>ExtensionLoader的getAdaptiveExtension()方法是如何动态生成扩展接口对应的适配器类，以及getExtension()方法如何根据扩展实现类的名称找到对应的扩展实现类的</b>
+<ul class="quote"><li>步骤1获取当前扩展接口对应的ExtensionLoader对象，在Dubbo中每个扩展接口对应着自己的ExtensionLoader对象。</li><li>步骤2获取当前扩展接口对应的适配器对象，getAdaptiveExtension()方法的代码如下：上面的代码通过双重锁检查创建cachedAdaptiveInstance对象，接口对应的适配器对象就保存到这个对象里。</li><li>步骤3的createAdaptiveExtension()方法，因为具体创建适配器对象的是这个方法。createAdaptiveExtension()方法的代码如下：这里首先调用了步骤4的getAdaptiveExtensionClass().newInstance()以获取适配器对象的一个实例，然后调用步骤7的injectExtension()方法进行扩展点相互依赖注入(扩展点之间的依赖自动注入)。</li><li>步骤5的getExtensionClasses()方法是如何加载扩展接口的所有实现类的Class对象的。其内部最终调用了loadExtensionClasses()方法进行加载，loadExtensionClasses()方法的代码如下：拿Protocol协议来说，这里SPI被注解为@SPI(&quot;dubbo&quot;)，这里的cachedDefaultName就是dubbo。然后，loadDirectory()方法到META-INF/dubbo/internal/、META-INF/dubbo/、META-INF/services/目录下去加载具体的扩展实现类，比如Protocol协议默认实现类为DubboProtocol。</li><li>步骤7的injectExtension()方法进行扩展点实现类相互依赖自动注入(IoC功能)。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>JDK标准的SPI会一次性实例化扩展点的所有实现，如果有些扩展实现初始化很耗时，但又没用上，那么加载就很浪费资源。</li><li>如果扩展点加载失败，是不会友好地向用户通知具体异常的。</li><li>增加了对扩展点IoC和AOP的支持，一个扩展点可以直接使用setter()方法注入其他扩展点，也可以对扩展点使用Wrapper类进行功能增强。</li><li>步骤1获取当前扩展接口对应的ExtensionLoader对象，在Dubbo中每个扩展接口对应着自己的ExtensionLoader对象。</li><li>步骤2获取当前扩展接口对应的适配器对象，getAdaptiveExtension()方法的代码如下：上面的代码通过双重锁检查创建cachedAdaptiveInstance对象，接口对应的适配器对象就保存到这个对象里。</li><li>步骤3的createAdaptiveExtension()方法，因为具体创建适配器对象的是这个方法。createAdaptiveExtension()方法的代码如下：这里首先调用了步骤4的getAdaptiveExtensionClass().newInstance()以获取适配器对象的一个实例，然后调用步骤7的injectExtension()方法进行扩展点相互依赖注入(扩展点之间的依赖自动注入)。</li><li>步骤5的getExtensionClasses()方法是如何加载扩展接口的所有实现类的Class对象的。其内部最终调用了loadExtensionClasses()方法进行加载，loadExtensionClasses()方法的代码如下：拿Protocol协议来说，这里SPI被注解为@SPI(&quot;dubbo&quot;)，这里的cachedDefaultName就是dubbo。然后，loadDirectory()方法到META-INF/dubbo/internal/、META-INF/dubbo/、META-INF/services/目录下去加载具体的扩展实现类，比如Protocol协议默认实现类为DubboProtocol。</li><li>步骤7的injectExtension()方法进行扩展点实现类相互依赖自动注入(IoC功能)。</li></ul>
+</div>
+<div class="sec">
+<h4>扩展点的自动包装</h4>
+<ul class="point">
+<li><b>在Dubbo中你可以指定多个Wrapper类对指定的扩展点的实现类的方法进行增强</b>
+<ul class="quote"><li>当执行protocol.export(wrapperInvoker)方法时，实际调用的是适配器Protocol$Adaptive的export()方法，如果URL对象里面的protocol为dubbo，那么在没有扩展点自动包装时，protocol.export()方法返回的就是DubboProtocol的对象。</li><li>而在真正的情况下，Dubbo里使用ProtocolFilterWrapper、ProtocolListenerWrapper等Wrapper类对DubboProtocol对象进行包装增强。</li></ul>
+</li>
+<li><b>对扩展实现类使用收集的Wrapper类进行自动包装是在createExtension()方法里完成的</b>
+<ul class="quote"><li>上面的代码遍历了所有Wrapper类，并使用injectExtension一层层对扩展实现类进行功能增强。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>当执行protocol.export(wrapperInvoker)方法时，实际调用的是适配器Protocol$Adaptive的export()方法，如果URL对象里面的protocol为dubbo，那么在没有扩展点自动包装时，protocol.export()方法返回的就是DubboProtocol的对象。</li><li>而在真正的情况下，Dubbo里使用ProtocolFilterWrapper、ProtocolListenerWrapper等Wrapper类对DubboProtocol对象进行包装增强。</li><li>上面的代码遍历了所有Wrapper类，并使用injectExtension一层层对扩展实现类进行功能增强。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">10</span><span class="mmx-name">2.6 Dubbo使用JavaAssist减少反射调用开销</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 2 条要点 · 2 句原句摘录</p>
+<div class="sec">
+<h4>Dubbo使用JavaAssist减少反射调用开销</h4>
+<ul class="point">
+<li><b>Dubbo会给每个服务提供者的实现类生产一个Wrapper类，以减少反射的调用</b>
+<ul class="quote"><li>Wrapper类的invokeMethod最终直接调用的是服务提供者的具体方法，避免了反射开销。</li></ul>
+</li>
+<li><b>Wrapper类是在Dubbo服务启动时生成的，所以不会对运行时带来开销</b>
+<ul class="quote"><li>JavassistProxyFactory为每个服务提供者实现类生成了Wrapper类。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Wrapper类的invokeMethod最终直接调用的是服务提供者的具体方法，避免了反射开销。</li><li>JavassistProxyFactory为每个服务提供者实现类生成了Wrapper类。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">11</span><span class="mmx-name">2.7 小结</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 6 条要点 · 7 句原句摘录</p>
+<div class="sec">
+<h4>Dubbo框架的分层架构</h4>
+<ul class="point">
+<li><b>Dubbo框架分为服务提供方、服务注册与发现、服务消费者三层</b>
+<ul class="quote"><li>服务提供方负责实现服务接口，向注册中心注册服务。</li><li>服务注册与发现负责服务的注册与发现，服务消费者负责查找服务并调用。</li></ul>
+</li>
+<li><b>Dubbo框架除了最上面的两层，其他每层都是可以被替换的SPI组件</b>
+<ul class="quote"><li>Dubbo是一个扩展性极强的框架。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>服务提供方负责实现服务接口，向注册中心注册服务。</li><li>服务注册与发现负责服务的注册与发现，服务消费者负责查找服务并调用。</li><li>Dubbo是一个扩展性极强的框架。</li></ul>
+</div>
+<div class="sec">
+<h4>Dubbo核心的适配器原理以及增强SPI原理</h4>
+<ul class="point">
+<li><b>Dubbo核心的适配器原理：适配器模式，将不同的接口转换为统一的接口</b>
+<ul class="quote"><li>适配器模式可以将不兼容的类打包在一起，从而可以使用相同的接口。</li></ul>
+</li>
+<li><b>Dubbo增强SPI原理：通过增强SPI机制，Dubbo可以支持更多的服务治理功能</b>
+<ul class="quote"><li>增强SPI机制允许开发者扩展Dubbo框架的功能。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>适配器模式可以将不兼容的类打包在一起，从而可以使用相同的接口。</li><li>增强SPI机制允许开发者扩展Dubbo框架的功能。</li></ul>
+</div>
+<div class="sec">
+<h4>Dubbo使用JavaAssist减少反射调用开销</h4>
+<ul class="point">
+<li><b>JavaAssist是一个Java字节码处理库，可以用来生成、转换、分析Java字节码</b>
+<ul class="quote"><li>JavaAssist可以简化Java字节码的操作，提高开发效率。</li></ul>
+</li>
+<li><b>Dubbo使用JavaAssist减少反射调用开销，提高服务调用的效率</b>
+<ul class="quote"><li>通过JavaAssist，Dubbo可以将反射调用转换为直接调用，从而提高服务调用的效率。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>JavaAssist可以简化Java字节码的操作，提高开发效率。</li><li>通过JavaAssist，Dubbo可以将反射调用转换为直接调用，从而提高服务调用的效率。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">12</span><span class="mmx-name">第3章 远程服务发布与引用流程剖析</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 8 条要点 · 11 句原句摘录</p>
+<div class="sec">
+<h4>Dubbo服务发布端启动流程剖析</h4>
+<ul class="point">
+<li><b>ServiceConfig API用于发布服务，通过export()方法激活发布服务</b>
+<ul class="quote"><li>export()方法的核心代码是通过ScheduledExecutorService实现延迟发布。</li><li>如果没有设置延迟时间，则直接调用doExport()方法发布服务；如果设置了延迟发布，则等时间过期后调用doExport()方法来发布服务。</li></ul>
+</li>
+<li><b>doExportUrls()方法根据ServiceConfig里面的属性进行合法性检查</b>
+<ul class="quote"><li>在Dubbo中，一个服务可以被注册到多个服务注册中心。</li></ul>
+</li>
+<li><b>loadRegistries()方法加载所有的服务注册中心对象</b>
+<ul class="quote"><li>服务提供端导出服务具体使用的是下列代码：proxyFactory和protocol的定义为：由此可知，proxyFactory和protocol都是扩展接口的适配器类。</li></ul>
+</li>
+<li><b>proxyFactory.getInvoker(ref，(Class)interfaceClass，url)方法获取代理类</b>
+<ul class="quote"><li>这里首先把服务实现类转换为Wrapper类，是为了减少反射的调用，这里返回的是AbstractProxyInvoker对象，其内部重写doInvoke()方法，并委托给Wrapper实现具体功能。</li></ul>
+</li>
+<li><b>protocol.export(wrapperInvoker)方法导出服务</b>
+<ul class="quote"><li>如果为远程服务暴露，则其内部根据URL中Protocol的类型为registry，会选择Protocol的实现类RegistryProtocol。</li><li>如果为本地服务暴露，则其内部根据URL中Protocol的类型为injvm，会选择Protocol的实现类InjvmProtocol。</li></ul>
+</li>
+<li><b>RegistryProtocol中的export()方法通过doLocalExport启动了NettyServer进行监听服务</b>
+<ul class="quote"><li>doLocalExport内部主要调用DubboProtocol的export()方法。</li></ul>
+</li>
+<li><b>NettyServer的构造函数内部又调用了其父类AbstractServer的构造函数</b>
+<ul class="quote"><li>NettyServer的doOpen()方法启动了服务监听。</li></ul>
+</li>
+<li><b>RegistryProtocol中export()方法里的getRegistry()方法是如何获取服务注册中心和注册服务的</b>
+<ul class="quote"><li>首先通过适配器类来确定RegistryFactory的扩展实现为ZookeeperRegistryFactory，然后后者内部调用createRegistry()方法创建了一个ZookeeperRegistry作为ZooKeeper注册中心。</li><li>create()方法是递归函数，首先其调用了方法createPersistent()分别创建了节点/dubbo、/dubbo/com.books.dubbo.demo.api.GreetingService和/dubbo/com.books.dubbo.demo.api.GreetingService/providers，然后调用createEphemeral()方法创建了下列内容：服务注册到ZooKeeper后，消费端就可以在Providers节点下找到com.books.dubbo.demo.api.GreetingService服务的所有服务提供者，然后根据设置的负载均衡策略选择机器进行远程调用了。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>export()方法的核心代码是通过ScheduledExecutorService实现延迟发布。</li><li>如果没有设置延迟时间，则直接调用doExport()方法发布服务；如果设置了延迟发布，则等时间过期后调用doExport()方法来发布服务。</li><li>在Dubbo中，一个服务可以被注册到多个服务注册中心。</li><li>服务提供端导出服务具体使用的是下列代码：proxyFactory和protocol的定义为：由此可知，proxyFactory和protocol都是扩展接口的适配器类。</li><li>这里首先把服务实现类转换为Wrapper类，是为了减少反射的调用，这里返回的是AbstractProxyInvoker对象，其内部重写doInvoke()方法，并委托给Wrapper实现具体功能。</li><li>如果为远程服务暴露，则其内部根据URL中Protocol的类型为registry，会选择Protocol的实现类RegistryProtocol。</li><li>如果为本地服务暴露，则其内部根据URL中Protocol的类型为injvm，会选择Protocol的实现类InjvmProtocol。</li><li>doLocalExport内部主要调用DubboProtocol的export()方法。</li><li>NettyServer的doOpen()方法启动了服务监听。</li><li>首先通过适配器类来确定RegistryFactory的扩展实现为ZookeeperRegistryFactory，然后后者内部调用createRegistry()方法创建了一个ZookeeperRegistry作为ZooKeeper注册中心。</li><li>create()方法是递归函数，首先其调用了方法createPersistent()分别创建了节点/dubbo、/dubbo/com.books.dubbo.demo.api.GreetingService和/dubbo/com.books.dubbo.demo.api.GreetingService/providers，然后调用createEphemeral()方法创建了下列内容：服务注册到ZooKeeper后，消费端就可以在Providers节点下找到com.books.dubbo.demo.api.GreetingService服务的所有服务提供者，然后根据设置的负载均衡策略选择机器进行远程调用了。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">13</span><span class="mmx-name">3.2 Dubbo服务提供方如何处理请求</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 5 条要点 · 9 句原句摘录</p>
+<div class="sec">
+<h4>Dubbo服务提供方处理请求的时序图</h4>
+<ul class="point">
+<li><b>消费端发起TCP链接并完成后，服务提供方的NettyServer的connected方法会被激活</b>
+<ul class="quote"><li>Netty默认的线程模型为All，所有消息都派发到Dubbo内部的业务线程池。</li></ul>
+</li>
+<li><b>received事件被投递到线程池后进行异步处理</b>
+<ul class="quote"><li>线程池任务被激活后调用了HeaderExchangeHandler的received()方法。</li><li>如果请求不需要响应结果则直接调用DubboProtocol的received()方法，否则执行handleRequest()方法。</li><li>如果请求需要返回值则执行handleRequest()方法，其也是委托给DubboProtocol的reply()方法来执行的。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Netty默认的线程模型为All，所有消息都派发到Dubbo内部的业务线程池。</li><li>线程池任务被激活后调用了HeaderExchangeHandler的received()方法。</li><li>如果请求不需要响应结果则直接调用DubboProtocol的received()方法，否则执行handleRequest()方法。</li><li>如果请求需要返回值则执行handleRequest()方法，其也是委托给DubboProtocol的reply()方法来执行的。</li></ul>
+</div>
+<div class="sec">
+<h4>DubboProtocol的reply()方法处理流程</h4>
+<ul class="point">
+<li><b>使用getInvoker()方法获取调用方法对应的DubboExporter对象导出的Invoker对象</b>
+<ul class="quote"><li>导出的DubboExporter对象会保存到exporterMap中，这里的getInvoker获取的是RegistryProtocol$InvokerDelegate。</li></ul>
+</li>
+<li><b>把对端的地址设置到上下文对象中。</b>
+</li>
+<li><b>执行导出的Invoker的invoke()方法</b>
+<ul class="quote"><li>调用链经过Filter链后最终调用了服务提供方启动时AbstractProxyInvoker代理类创建的invoke()方法。</li><li>AbstractProxyInvoker的doInvoke()方法委托Wrapper类的invokeMethod执行具体逻辑，后者则通过调用服务提供方接口的实现类来执行本地服务。</li><li>如果返回值类型为CompletableFuture，或者如果是使用RpcContext.startAsync()开启异步执行的，则返回AsyncRpcResult对象，否则返回正常的RpcResult对象。</li><li>如果代码10发现结果为AsyncRpcResult，则说明是服务提供方的异步执行，此时返回对应的CompletableFuture对象，如果返回的是正常的RpcResult结果，则使用CompletableFuture.completedFuture(result)；把结果转换为CompletableFuture对象(即同步转异步)，以便统一处理。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>导出的DubboExporter对象会保存到exporterMap中，这里的getInvoker获取的是RegistryProtocol$InvokerDelegate。</li><li>调用链经过Filter链后最终调用了服务提供方启动时AbstractProxyInvoker代理类创建的invoke()方法。</li><li>AbstractProxyInvoker的doInvoke()方法委托Wrapper类的invokeMethod执行具体逻辑，后者则通过调用服务提供方接口的实现类来执行本地服务。</li><li>如果返回值类型为CompletableFuture，或者如果是使用RpcContext.startAsync()开启异步执行的，则返回AsyncRpcResult对象，否则返回正常的RpcResult对象。</li><li>如果代码10发现结果为AsyncRpcResult，则说明是服务提供方的异步执行，此时返回对应的CompletableFuture对象，如果返回的是正常的RpcResult结果，则使用CompletableFuture.completedFuture(result)；把结果转换为CompletableFuture对象(即同步转异步)，以便统一处理。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">14</span><span class="mmx-name">3.3 Dubbo服务消费方启动流程剖析</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 13 条要点 · 15 句原句摘录</p>
+<div class="sec">
+<h4>Dubbo服务消费方启动流程剖析</h4>
+<ul class="point">
+<li><b>服务消费方使用ReferenceConfig API来消费服务，执行get()方法生成远程调用代理类</b>
+<ul class="quote"><li>get()方法首先会执行init()方法，检查设置的mock是否正确，然后通过调用createProxy()方法来创建代理类。</li></ul>
+</li>
+<li><b>createProxy()方法的核心代码是判断是否需要开启本地引用，如果需要则创建JVM协议的本地引用，然后加载服务注册中心信息</b>
+<ul class="quote"><li>服务注册中心可以有多个。</li></ul>
+</li>
+<li><b>refprotocol是Protocol扩展接口的适配器类，调用refprotocol.refer(interfaceClass，urls.get(0))实际上是调用Protocol$Adaptive的refer()方法</b>
+<ul class="quote"><li>在Protocol$Adaptive的refer()方法内部，当我们设置了服务注册中心后，可以发现当前协议类型为registry，也就是说这里需要调用RegistryProtocol的refer()方法。</li></ul>
+</li>
+<li><b>RegistryProtocol的refer()方法被QosProtocolWrapper、ProtocolFilterWrapper、ProtocolListenerWrapper三个Wrapper类增强了，所以这里经过一层层调用后，最后才调用到RegistryProtocol的refer()方法</b>
+<ul class="quote"><li>doRefer()方法的代码1根据订阅的URL创建路由规则链，代码2的作用是向服务注册中心订阅服务提供者的服务，代码3则是调用扩展接口Cluster的适配器类的join()方法，根据参数选择配置的集群容错策略。</li></ul>
+</li>
+<li><b>ZooKeeper作为服务注册中心，从ZooKeeper获取服务提供者的地址列表，等ZooKeeper返回地址列表后会调用RegistryDirectory的notify()方法</b>
+<ul class="quote"><li>在notify()方法内，对元数据信息进行了分类保存。</li></ul>
+</li>
+<li><b>根据获取的最新的服务提供者URL地址，将其转换为具体的invoker列表，也就是说每个提供者的URL会被转换为一个Invoker对象</b>
+<ul class="quote"><li>将服务接口转换到invoker对象是通过调用protocol.refer(serviceType，url)来完成的，这里的protocol对象也是Protocol扩展接口的适配器对象，所以调用protocol.refer实际上是调用适配器Protocol$Adaptive的refer()方法。</li></ul>
+</li>
+<li><b>Dubbo使用了ProtocolListenerWrapper、ProtocolFilterWrapper等类对DubboProtocol进行了功能增强</b>
+<ul class="quote"><li>getClients()方法创建服务消费端的NettyClient对象。</li></ul>
+</li>
+<li><b>NettyClient的父类AbstractClient的构造函数中，首先调用了NettyClient的doOpen()方法</b>
+<ul class="quote"><li>doOpen()方法创建了一个启动NettyClient的bootstrap并对其进行设置，这里是把编解码器和自定义的nettyClientHandler添加到了链接Channel对应的管线里。</li></ul>
+</li>
+<li><b>在调用doOpen()方法后会调用NettyClient的doConnect()方法与服务提供者建立TCP链接</b>
+<ul class="quote"><li>另外需要注意的是，在NettyClient的父类AbstractEndpoint中确定了编解码器，这里默认为DubboCodec。</li></ul>
+</li>
+<li><b>在doOpen()方法中，代码NettyCodecAdapter adapter=new NettyCodecAdapter(getCodec()，getUrl()，NettyClient.this)；使用getCodec()方法获取了该编解码器并封装到NettyCodecAdapter适配器中，然后把编解码器设置到链接Channel的管线中</b>
+<ul class="quote"><li>这里需要注意三点：第一点，由于同一个服务提供者机器可以提供多个服务，那么消费者机器需要与同一个服务提供者机器提供的多个服务共享连接，还是与每个服务都建立一个连接？第二点，消费端是启动时就与服务提供者机器建立好连接吗？第三点，每个服务消费端与服务提供者集群中的所有机器都有连接吗？</li></ul>
+</li>
+<li><b>通过上面的代码可知，在默认情况下当消费端引用同一个服务提供者机器上多个服务时，这些服务复用一个Netty连接</b>
+<ul class="quote"><li>下面我们从initClient()方法里看第二个问题的答案：上面的代码默认lazy为false，所以当消费端启动时就与提供者建立了连接。</li></ul>
+</li>
+<li><b>在RegistryDirectory里维护了所有服务者的invoker列表，消费端发起远程调用时就是根据集群容错和负载均衡算法以及路由规则从invoker列表里选择一个进行调用的</b>
+<ul class="quote"><li>当服务提供者宕机的时候，ZooKeeper会通知更新这个invoker列表。</li></ul>
+</li>
+<li><b>集群容错扩展将Dubbo协议的invoker客户端转换为需要的接口</b>
+<ul class="quote"><li>在默认情况下，cluster的扩展接口实现为FailoverCluster，所以这里是调用FailoverCluster的join()方法。</li><li>实际上调用的时序图如图3.12所示。</li><li>图3.12中的步骤3将FailbackClusterInvoker对象返回到步骤2，下面看看MockClusterWrapper类的代码：从上面的代码可知，MockClusterWrapper类把FailoverClusterInvoker包装成了MockClusterInvoker实例，所以整个调用链最终调用返回的是MockClusterInvoker对象。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>get()方法首先会执行init()方法，检查设置的mock是否正确，然后通过调用createProxy()方法来创建代理类。</li><li>服务注册中心可以有多个。</li><li>在Protocol$Adaptive的refer()方法内部，当我们设置了服务注册中心后，可以发现当前协议类型为registry，也就是说这里需要调用RegistryProtocol的refer()方法。</li><li>doRefer()方法的代码1根据订阅的URL创建路由规则链，代码2的作用是向服务注册中心订阅服务提供者的服务，代码3则是调用扩展接口Cluster的适配器类的join()方法，根据参数选择配置的集群容错策略。</li><li>在notify()方法内，对元数据信息进行了分类保存。</li><li>将服务接口转换到invoker对象是通过调用protocol.refer(serviceType，url)来完成的，这里的protocol对象也是Protocol扩展接口的适配器对象，所以调用protocol.refer实际上是调用适配器Protocol$Adaptive的refer()方法。</li><li>getClients()方法创建服务消费端的NettyClient对象。</li><li>doOpen()方法创建了一个启动NettyClient的bootstrap并对其进行设置，这里是把编解码器和自定义的nettyClientHandler添加到了链接Channel对应的管线里。</li><li>另外需要注意的是，在NettyClient的父类AbstractEndpoint中确定了编解码器，这里默认为DubboCodec。</li><li>这里需要注意三点：第一点，由于同一个服务提供者机器可以提供多个服务，那么消费者机器需要与同一个服务提供者机器提供的多个服务共享连接，还是与每个服务都建立一个连接？第二点，消费端是启动时就与服务提供者机器建立好连接吗？第三点，每个服务消费端与服务提供者集群中的所有机器都有连接吗？</li><li>下面我们从initClient()方法里看第二个问题的答案：上面的代码默认lazy为false，所以当消费端启动时就与提供者建立了连接。</li><li>当服务提供者宕机的时候，ZooKeeper会通知更新这个invoker列表。</li><li>在默认情况下，cluster的扩展接口实现为FailoverCluster，所以这里是调用FailoverCluster的join()方法。</li><li>实际上调用的时序图如图3.12所示。</li><li>图3.12中的步骤3将FailbackClusterInvoker对象返回到步骤2，下面看看MockClusterWrapper类的代码：从上面的代码可知，MockClusterWrapper类把FailoverClusterInvoker包装成了MockClusterInvoker实例，所以整个调用链最终调用返回的是MockClusterInvoker对象。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">15</span><span class="mmx-name">3.4 Dubbo服务消费端一次远程调用过程</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 5 条要点 · 5 句原句摘录</p>
+<div class="sec">
+<h4>Dubbo服务消费端一次远程调用过程概述</h4>
+<ul class="point">
+<li><b>服务消费端通过ReferenceConfig的get()方法返回的是一个代理类，并且方法拦击器为InvokerInvocationHandler。</b>
+</li>
+<li><b>当消费方调用了服务的接口方法后会被InvokerInvocationHandler拦截，执行一次远程调用过程。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>RpcInvocation的创建</h4>
+<ul class="point">
+<li><b>createInvocation()方法创建了RpcInvocation，其中method为调用的方法，args为参数</b>
+<ul class="quote"><li>如果服务接口的方法的返回值为CompletableFuture类或者其子类，则需要设置标记future_returntype为true和async=true。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如果服务接口的方法的返回值为CompletableFuture类或者其子类，则需要设置标记future_returntype为true和async=true。</li></ul>
+</div>
+<div class="sec">
+<h4>集群容错策略FailoverClusterInvoker</h4>
+<ul class="point">
+<li><b>FailoverClusterInvoker首先根据设置的负载均衡策略LoadBalance的扩展实现，选择一个invoker作为远程调用者</b>
+<ul class="quote"><li>如果调用发生异常，则根据FailoverClusterInvoker的策略重新选择一个invoker进行调用。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如果调用发生异常，则根据FailoverClusterInvoker的策略重新选择一个invoker进行调用。</li></ul>
+</div>
+<div class="sec">
+<h4>DubboInvoker的doInvoke()方法</h4>
+<ul class="point">
+<li><b>程序首先获取远程调用Client，然后判断调用是否为异步调用、是否请求响应</b>
+<ul class="quote"><li>如果请求不需要响应结果则直接使用远程Client发起请求调用，然后将RpcContext上下文的future设置为null，并且返回空的RpcResult。</li><li>如果请求是异步请求，则保存远程Client发起请求后返回的future对象，并且设置到RpcContext上下文中，这样，调用方就可以通过RpcContext上下文获取该future。</li><li>如果请求为同步请求，则首先设置RpcContext上下文中的future对象为null，然后使用远程Client发起请求，然后在返回的future对象上调用get()方法，以同步等待远程调用结果的返回。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如果请求不需要响应结果则直接使用远程Client发起请求调用，然后将RpcContext上下文的future设置为null，并且返回空的RpcResult。</li><li>如果请求是异步请求，则保存远程Client发起请求后返回的future对象，并且设置到RpcContext上下文中，这样，调用方就可以通过RpcContext上下文获取该future。</li><li>如果请求为同步请求，则首先设置RpcContext上下文中的future对象为null，然后使用远程Client发起请求，然后在返回的future对象上调用get()方法，以同步等待远程调用结果的返回。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">16</span><span class="mmx-name">3.5 小结</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 4 条要点 · 13 句原句摘录</p>
+<div class="sec">
+<h4>Dubbo服务提供方启动流程</h4>
+<ul class="point">
+<li><b>Dubbo服务提供方启动流程包括加载配置、创建应用、创建Provider实例、注册服务</b>
+<ul class="quote"><li>加载配置：读取配置文件，获取服务提供方的信息。</li><li>创建应用：创建一个应用对象，用于管理当前应用的所有服务提供方实例。</li><li>创建Provider实例：根据配置信息，创建服务提供方实例。</li><li>注册服务：将服务提供方实例注册到注册中心。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>加载配置：读取配置文件，获取服务提供方的信息。</li><li>创建应用：创建一个应用对象，用于管理当前应用的所有服务提供方实例。</li><li>创建Provider实例：根据配置信息，创建服务提供方实例。</li><li>注册服务：将服务提供方实例注册到注册中心。</li></ul>
+</div>
+<div class="sec">
+<h4>Dubbo服务提供端如何处理请求</h4>
+<ul class="point">
+<li><b>服务提供端接收到请求后，根据路由规则选择最优的服务提供者进行调用</b>
+<ul class="quote"><li>路由规则包括随机、轮询、最少活跃调用等。</li><li>最少活跃调用是指选择最近最少被调用的服务提供者进行调用，以保证服务的稳定性。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>路由规则包括随机、轮询、最少活跃调用等。</li><li>最少活跃调用是指选择最近最少被调用的服务提供者进行调用，以保证服务的稳定性。</li></ul>
+</div>
+<div class="sec">
+<h4>Dubbo服务消费方启动流程</h4>
+<ul class="point">
+<li><b>Dubbo服务消费方启动流程包括加载配置、创建应用、创建Consumer实例、订阅服务</b>
+<ul class="quote"><li>加载配置：读取配置文件，获取服务消费方的信息。</li><li>创建应用：创建一个应用对象，用于管理当前应用的所有服务消费方实例。</li><li>创建Consumer实例：根据配置信息，创建服务消费方实例。</li><li>订阅服务：将服务消费方实例注册到注册中心，并订阅所需的服务。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>加载配置：读取配置文件，获取服务消费方的信息。</li><li>创建应用：创建一个应用对象，用于管理当前应用的所有服务消费方实例。</li><li>创建Consumer实例：根据配置信息，创建服务消费方实例。</li><li>订阅服务：将服务消费方实例注册到注册中心，并订阅所需的服务。</li></ul>
+</div>
+<div class="sec">
+<h4>如何发起一次远程过程调用</h4>
+<ul class="point">
+<li><b>服务消费方发起远程过程调用时，首先向注册中心查询服务提供者的地址列表，然后选择最优的服务提供者进行调用</b>
+<ul class="quote"><li>查询服务提供者地址列表：服务消费方通过注册中心获取服务提供者的地址列表。</li><li>选择最优的服务提供者：服务消费方根据路由规则选择最优的服务提供者进行调用。</li><li>发起远程过程调用：服务消费方通过负载均衡策略选择一台服务提供者进行远程过程调用。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>查询服务提供者地址列表：服务消费方通过注册中心获取服务提供者的地址列表。</li><li>选择最优的服务提供者：服务消费方根据路由规则选择最优的服务提供者进行调用。</li><li>发起远程过程调用：服务消费方通过负载均衡策略选择一台服务提供者进行远程过程调用。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">17</span><span class="mmx-name">第4章 Directory目录与Router路由服务</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 2 条要点 · 3 句原句摘录</p>
+<div class="sec">
+<h4>Directory目录</h4>
+<ul class="point">
+<li><b>Directory代表了多个invoker，其内部维护着一个List，并且这个List的内容是动态变化的</b>
+<ul class="quote"><li>当服务提供者集群新增或者减少机器时，服务注册中心就会推送当前服务提供者的地址列表，然后Directory中的List就会根据服务提供者地址列表相应变化。</li></ul>
+</li>
+<li><b>在Dubbo中，接口Directory的实现有RegistryDirectory和StaticDirectory两种</b>
+<ul class="quote"><li>RegistryDirectory管理的invoker列表是根据服务注册中心的推送变化而变化的。</li><li>StaticDirectory是当消费端使用了多注册中心时，其把所有服务注册中心的invoker列表汇集到一个invoker列表中。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>当服务提供者集群新增或者减少机器时，服务注册中心就会推送当前服务提供者的地址列表，然后Directory中的List就会根据服务提供者地址列表相应变化。</li><li>RegistryDirectory管理的invoker列表是根据服务注册中心的推送变化而变化的。</li><li>StaticDirectory是当消费端使用了多注册中心时，其把所有服务注册中心的invoker列表汇集到一个invoker列表中。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">18</span><span class="mmx-name">4.2 RegistryDirectory的创建</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 3 条要点 · 3 句原句摘录</p>
+<div class="sec">
+<h4>RegistryDirectory的创建流程</h4>
+<ul class="point">
+<li><b>RegistryDirectory是在服务消费端启动时创建的。</b>
+</li>
+<li><b>调用ReferenceConfig的get()方法，就意味着要创建一个对服务提供方的远程调用代理</b>
+<ul class="quote"><li>在2.1节中我们提到，ReferenceConfig代表一个要消费的服务的配置对象。</li></ul>
+</li>
+<li><b>在创建对远程服务提供者的代理时，第一步是调用RegistryProtocol类的refer()方法</b>
+<ul class="quote"><li>由于RegistryProtocol是一个SPI，所以这里是通过其适配器类Protocol$Adaptive进行间接调用的。</li><li>另外，这里的ProtocolListenerWrapper、QosProtocolWrapper和ProtocolFilterWrapper是对RegistryProtocol类的功能的增强。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在2.1节中我们提到，ReferenceConfig代表一个要消费的服务的配置对象。</li><li>由于RegistryProtocol是一个SPI，所以这里是通过其适配器类Protocol$Adaptive进行间接调用的。</li><li>另外，这里的ProtocolListenerWrapper、QosProtocolWrapper和ProtocolFilterWrapper是对RegistryProtocol类的功能的增强。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">19</span><span class="mmx-name">4.3 RegistryDirectory中invoker列表的更新</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 5 条要点 · 7 句原句摘录</p>
+<div class="sec">
+<h4>RegistryDirectory中invoker列表的更新流程</h4>
+<ul class="point">
+<li><b>创建完RegistryDirectory后，调用了其subscribe()方法，去ZooKeeper订阅需要调用的服务提供者的地址列表</b>
+<ul class="quote"><li>ZooKeeper服务端发现服务提供者地址列表发生变化后，会将地址列表推送到服务消费端。</li></ul>
+</li>
+<li><b>zkClient会回调该监听器的notify()方法</b>
+<ul class="quote"><li>同步返回了订阅的服务地址列表、路由规则、配置信息等。</li></ul>
+</li>
+<li><b>从ZooKeeper返回的服务提供者的信息里获取对应的路由规则，并使用保存到RouterChain里</b>
+<ul class="quote"><li>路由规则是通过管理控制台进行配置的。</li></ul>
+</li>
+<li><b>根据服务降级信息，重写URL并保存到overrideDirectoryUrl中，然后执行把服务提供者的URL列表转换为invoker列表，并保存到RouterChain里</b>
+<ul class="quote"><li>RouterChain里也保存了可用服务提供者对应的invokers列表和路由规则信息。</li><li>当服务消费方的集群容错策略要获取可用服务提供者对应的invoker列表时，会调用RouterChain的route()方法，其内部根据路由规则信息和invokers列表来提供服务。</li></ul>
+</li>
+<li><b>每个需要消费的服务都被包装为ReferenceConfig，在应用启动时会调用每个服务对应的ReferenceConfig的get()方法，然后会为每个服务创建一个自己的RegistryDirectory对象</b>
+<ul class="quote"><li>每个RegistryDirectory管理该服务提供者的地址列表、路由规则、动态配置等信息。</li><li>当服务提供者的信息发生变化时，RegistryDirectory会动态地得到变化通知，并自动更新。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>ZooKeeper服务端发现服务提供者地址列表发生变化后，会将地址列表推送到服务消费端。</li><li>同步返回了订阅的服务地址列表、路由规则、配置信息等。</li><li>路由规则是通过管理控制台进行配置的。</li><li>RouterChain里也保存了可用服务提供者对应的invokers列表和路由规则信息。</li><li>当服务消费方的集群容错策略要获取可用服务提供者对应的invoker列表时，会调用RouterChain的route()方法，其内部根据路由规则信息和invokers列表来提供服务。</li><li>每个RegistryDirectory管理该服务提供者的地址列表、路由规则、动态配置等信息。</li><li>当服务提供者的信息发生变化时，RegistryDirectory会动态地得到变化通知，并自动更新。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">20</span><span class="mmx-name">4.4 小结</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 2 条要点 · 4 句原句摘录</p>
+<div class="sec">
+<h4>RegistryDirectory的创建与更新</h4>
+<ul class="point">
+<li><b>RegistryDirectory在消费服务方创建，并根据服务注册中心推送的服务元数据动态更新</b>
+<ul class="quote"><li>消费服务方启动时，会创建一个RegistryDirectory实例。</li><li>当服务注册中心推送服务元数据到消费服务方时，RegistryDirectory会根据元数据更新服务提供者信息、路由等信息。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>消费服务方启动时，会创建一个RegistryDirectory实例。</li><li>当服务注册中心推送服务元数据到消费服务方时，RegistryDirectory会根据元数据更新服务提供者信息、路由等信息。</li></ul>
+</div>
+<div class="sec">
+<h4>消费端发起远程调用时获取服务提供者列表</h4>
+<ul class="point">
+<li><b>消费端发起远程调用时，从RouterChain中获取经过路由规则过滤后的服务提供者的invoker列表</b>
+<ul class="quote"><li>RouterChain是一个路由链，包含了多个路由规则。</li><li>当消费端发起远程调用时，会先从RouterChain中获取经过路由规则过滤后的服务提供者的invoker列表，然后再进行远程调用。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>RouterChain是一个路由链，包含了多个路由规则。</li><li>当消费端发起远程调用时，会先从RouterChain中获取经过路由规则过滤后的服务提供者的invoker列表，然后再进行远程调用。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">21</span><span class="mmx-name">第5章 Dubbo消费端服务mock与服务降级策略原理</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 2 条要点 · 6 句原句摘录</p>
+<div class="sec">
+<h4>服务降级原理</h4>
+<ul class="point">
+<li><b>降级策略注册</b>
+<ul class="quote"><li>使用代码可以将服务降级信息注册到ZooKeeper。</li><li>服务消费者启动时，会去订阅服务降级策略信息。</li><li>服务消费者发起远程调用时，会根据降级策略决定是否发起远程调用。</li></ul>
+</li>
+<li><b>服务消费端使用降级策略</b>
+<ul class="quote"><li>服务消费端是在MockClusterInvoker类的invoke()方法里使用降级策略。</li><li>如果URL里面含有mock字段，并且其值以force开头，则说明设置了force：return降级策略，那么直接调用doMockInvoke()方法，返回mock值，而不发起远程调用。</li><li>如果URL里面含有mock字段，并且其值以fail开头，则说明设置了fail：return降级策略，那么先发起远程调用，如果远程调用成功，则直接返回远程返回的结果；如果发起远程调用失败，则执行代码4.3，直接返回mock的值。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>使用代码可以将服务降级信息注册到ZooKeeper。</li><li>服务消费者启动时，会去订阅服务降级策略信息。</li><li>服务消费者发起远程调用时，会根据降级策略决定是否发起远程调用。</li><li>服务消费端是在MockClusterInvoker类的invoke()方法里使用降级策略。</li><li>如果URL里面含有mock字段，并且其值以force开头，则说明设置了force：return降级策略，那么直接调用doMockInvoke()方法，返回mock值，而不发起远程调用。</li><li>如果URL里面含有mock字段，并且其值以fail开头，则说明设置了fail：return降级策略，那么先发起远程调用，如果远程调用成功，则直接返回远程返回的结果；如果发起远程调用失败，则执行代码4.3，直接返回mock的值。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">22</span><span class="mmx-name">5.2 本地服务mock原理</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 4 条要点 · 10 句原句摘录</p>
+<div class="sec">
+<h4>mock合法性检查</h4>
+<ul class="point">
+<li><b>在ReferenceConfig的init()方法内调用checkMock来检查设置的mock的正确性</b>
+<ul class="quote"><li>如果代码1没有设置mock规则，则直接返回。</li><li>否则代码2对mock规则进行格式化。</li></ul>
+</li>
+<li><b>检查mock值是否合法，不合法将抛出异常</b>
+<ul class="quote"><li>由于我们的Demo是将mock设置为true，所以我们会看到代码4将检查mock接口的实现类是否符合规则。</li><li>MockInvoker.getMockObject的代码如下：如果代码5中的mock类型为true或者deafult，则mockService被设置为接口名称加上Mock。</li><li>然后代码6加载com.books.dubbo.demo.api.GreetingServicMock的字节码文件以创建Class对象，代码7则创建实例。</li><li>上面这些代码的作用是查看用户程序的classpath下是否存在mock类的实现com.books.dubbo.demo.api.GreetingServicMock，如果不存在，则抛出异常。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如果代码1没有设置mock规则，则直接返回。</li><li>否则代码2对mock规则进行格式化。</li><li>由于我们的Demo是将mock设置为true，所以我们会看到代码4将检查mock接口的实现类是否符合规则。</li><li>MockInvoker.getMockObject的代码如下：如果代码5中的mock类型为true或者deafult，则mockService被设置为接口名称加上Mock。</li><li>然后代码6加载com.books.dubbo.demo.api.GreetingServicMock的字节码文件以创建Class对象，代码7则创建实例。</li><li>上面这些代码的作用是查看用户程序的classpath下是否存在mock类的实现com.books.dubbo.demo.api.GreetingServicMock，如果不存在，则抛出异常。</li></ul>
+</div>
+<div class="sec">
+<h4>服务消费端使用mock服务</h4>
+<ul class="point">
+<li><b>mock服务与服务降级策略一样，也是在MockClusterInvoker中实现的</b>
+<ul class="quote"><li>由于我们设置的mock为true，所以这里的value为true，代码会执行到步骤3也就是fail-mock阶段。</li><li>这也说明了服务mock与服务降级的fail-mock功能相似，不同之处在于前者会设置mock服务实现类，而后者是返回设置的静态返回值。</li></ul>
+</li>
+<li><b>根据mock类型的不同，返回不同的mock值</b>
+<ul class="quote"><li>这里我们重点看看代码7，即mock实现类GreetingServiceMock如何返回mock值：如果缓存里含有mock实现类对应的invoker对象，则直接返回，否则使用getMockObject()方法创建对象实例，并进行代理后保存到缓存，然后返回。</li><li>在调用代理的invoke()方法后，就会调用mock实现类GreetingServiceMock的方法。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>由于我们设置的mock为true，所以这里的value为true，代码会执行到步骤3也就是fail-mock阶段。</li><li>这也说明了服务mock与服务降级的fail-mock功能相似，不同之处在于前者会设置mock服务实现类，而后者是返回设置的静态返回值。</li><li>这里我们重点看看代码7，即mock实现类GreetingServiceMock如何返回mock值：如果缓存里含有mock实现类对应的invoker对象，则直接返回，否则使用getMockObject()方法创建对象实例，并进行代理后保存到缓存，然后返回。</li><li>在调用代理的invoke()方法后，就会调用mock实现类GreetingServiceMock的方法。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">23</span><span class="mmx-name">5.3 小结</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 4 条要点 · 4 句原句摘录</p>
+<div class="sec">
+<h4>Dubbo服务降级</h4>
+<ul class="point">
+<li><b>如何对一个指定的服务进行服务降级</b>
+<ul class="quote"><li>通过在Dubbo的配置文件中配置降级策略进行服务降级。</li></ul>
+</li>
+<li><b>在Dubbo中如何实现服务降级</b>
+<ul class="quote"><li>使用Dubbo的降级API进行服务降级。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>通过在Dubbo的配置文件中配置降级策略进行服务降级。</li><li>使用Dubbo的降级API进行服务降级。</li></ul>
+</div>
+<div class="sec">
+<h4>Dubbo消费端服务mock原理</h4>
+<ul class="point">
+<li><b>Dubbo消费端服务mock原理</b>
+<ul class="quote"><li>使用Mock实现服务降级，不需要修改服务提供者的代码。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>使用Mock实现服务降级，不需要修改服务提供者的代码。</li></ul>
+</div>
+<div class="sec">
+<h4>如何在服务消费端使用mock功能</h4>
+<ul class="point">
+<li><b>在服务消费端使用mock功能</b>
+<ul class="quote"><li>在Dubbo的配置文件中配置mock策略进行服务mock。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在Dubbo的配置文件中配置mock策略进行服务mock。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">24</span><span class="mmx-name">第6章 Dubbo集群容错与负载均衡策略</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 4 条要点 · 10 句原句摘录</p>
+<div class="sec">
+<h4>Dubbo集群容错策略概述</h4>
+<ul class="point">
+<li><b>Dubbo提供了多种容错方案，默认模式为Failover Cluster，也就是失败重试</b>
+<ul class="quote"><li>当服务消费方调用服务提供者失败后，会自动切换到其他服务提供者服务器进行重试。</li><li>重试会带来更长延迟，可以通过retries=&quot;2&quot;来设置重试次数(不含第1次)。</li></ul>
+</li>
+<li><b>Dubbo的集群容错模式包括Failover Cluster、Failfast Cluster、Failsafe Cluster、Failback Cluster、Forking Cluster和Broadcast Cluster</b>
+<ul class="quote"><li>Failover Cluster：失败重试，用于读操作或者具有幂等的写操作。</li><li>Failfast Cluster：快速失败，用于非幂等性的写操作。</li><li>Failsafe Cluster：安全失败，用于写入审计日志等操作。</li><li>Failback Cluster：失败自动恢复，用于消息通知操作。</li><li>Forking Cluster：并行调用，用于实时性要求较高的读操作。</li><li>Broadcast Cluster：广播调用，用于通知所有提供者更新缓存或日志等本地资源信息。</li></ul>
+</li>
+<li><b>如果用户有定制化需求，可以根据Dubbo提供的扩展接口Cluster进行定制。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>当服务消费方调用服务提供者失败后，会自动切换到其他服务提供者服务器进行重试。</li><li>重试会带来更长延迟，可以通过retries=&quot;2&quot;来设置重试次数(不含第1次)。</li><li>Failover Cluster：失败重试，用于读操作或者具有幂等的写操作。</li><li>Failfast Cluster：快速失败，用于非幂等性的写操作。</li><li>Failsafe Cluster：安全失败，用于写入审计日志等操作。</li><li>Failback Cluster：失败自动恢复，用于消息通知操作。</li><li>Forking Cluster：并行调用，用于实时性要求较高的读操作。</li><li>Broadcast Cluster：广播调用，用于通知所有提供者更新缓存或日志等本地资源信息。</li></ul>
+</div>
+<div class="sec">
+<h4>集群容错策略的doInvoke()方法剖析</h4>
+<ul class="point">
+<li><b>所有集群容错策略都是继承自抽象类AbstractClusterInvoker</b>
+<ul class="quote"><li>服务消费端发起远程调用的一个简化时序图，调用集群容错是在服务降级策略后进行的。</li><li>集群容错FailoverClusterInvoker内部首先会调用父类AbstractClusterInvoker的list()方法来获取invoker列表。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>服务消费端发起远程调用的一个简化时序图，调用集群容错是在服务降级策略后进行的。</li><li>集群容错FailoverClusterInvoker内部首先会调用父类AbstractClusterInvoker的list()方法来获取invoker列表。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">25</span><span class="mmx-name">6.2 Failfast Cluster策略源码分析</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 3 条要点 · 0 句原句摘录</p>
+<div class="sec">
+<h4>FailfastClusterInvoker类的doInvoke()方法实现</h4>
+<ul class="point">
+<li><b>根据具体的负载均衡策略选择一个服务提供者对应的invoker对象。</b>
+</li>
+<li><b>使用选择的invoker对象发起远程RPC调用。</b>
+</li>
+<li><b>如果执行出错，则直接将异常抛给调用方，不进行任何补救措施。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">26</span><span class="mmx-name">6.3 Failsafe Cluster策略源码分析</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 3 条要点 · 0 句原句摘录</p>
+<div class="sec">
+<h4>FailsafeClusterInvoker类的doInvoke()方法</h4>
+<ul class="point">
+<li><b>根据具体的负载均衡策略选择一个服务提供者对应的invoker对象。</b>
+</li>
+<li><b>使用选择的invoker对象发起远程RPC调用。</b>
+</li>
+<li><b>该策略不会把异常抛给调用者。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">27</span><span class="mmx-name">6.4 Failover Cluster策略源码分析</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 2 条要点 · 6 句原句摘录</p>
+<div class="sec">
+<h4>FailoverClusterInvoker类的doInvoke()方法分析</h4>
+<ul class="point">
+<li><b>从URL参数里获取设置的重试次数，如果用户没有设置重试次数，则取默认值，默认值是重试2次</b>
+<ul class="quote"><li>代码2将获取的配置重试次数又加1了，这说明总共调用次数=重试次数+1(1是正常调用)，用户可以通过＜dubbo：reference retries=&quot;2&quot;/＞设置重试次数。</li></ul>
+</li>
+<li><b>循环重试调用，如果第一次调用成功，则直接跳出循环返回，否则循环重试</b>
+<ul class="quote"><li>在第一次调用时，不会运行代码3.1、代码3.2和代码3.3。</li><li>如果第一次调用出现异常，则会循环，这时候i=1，所以会执行代码3.1以检查是否有线程调用了当前ReferenceConfig的destroy()方法，销毁了当前消费者。</li><li>如果当前消费者实例已经被销毁，那么重试就没意义了，所以会抛出RpcException异常。</li><li>如果当前消费者实例没有被销毁，则执行代码3.2以重新获取当前服务提供者列表，这是因为从第一次调开始到现在可能提供者列表已经变化了，获取列表后，执行代码3.2又进行了一次校验。</li><li>如果校验通过，则执行代码3.4，以便根据负载均衡策略选择一个服务提供者，然后再次尝试调用。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>代码2将获取的配置重试次数又加1了，这说明总共调用次数=重试次数+1(1是正常调用)，用户可以通过＜dubbo：reference retries=&quot;2&quot;/＞设置重试次数。</li><li>在第一次调用时，不会运行代码3.1、代码3.2和代码3.3。</li><li>如果第一次调用出现异常，则会循环，这时候i=1，所以会执行代码3.1以检查是否有线程调用了当前ReferenceConfig的destroy()方法，销毁了当前消费者。</li><li>如果当前消费者实例已经被销毁，那么重试就没意义了，所以会抛出RpcException异常。</li><li>如果当前消费者实例没有被销毁，则执行代码3.2以重新获取当前服务提供者列表，这是因为从第一次调开始到现在可能提供者列表已经变化了，获取列表后，执行代码3.2又进行了一次校验。</li><li>如果校验通过，则执行代码3.4，以便根据负载均衡策略选择一个服务提供者，然后再次尝试调用。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">28</span><span class="mmx-name">6.5 Failback Cluster策略源码分析</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 5 条要点 · 0 句原句摘录</p>
+<div class="sec">
+<h4>FailbackClusterInvoker类的doInvoke()方法</h4>
+<ul class="point">
+<li><b>检查invokers是否合法，如果为空或元素为0个，则抛出异常。</b>
+</li>
+<li><b>根据负载均衡策略选择一个invoker，并发起远程RPC调用。</b>
+</li>
+<li><b>如果执行代码1和代码2抛出了异常，则执行代码3，即把当前请求上下文添加到定时器后，将一个空的RpcResult返回调用方。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>RetryTimerTask的任务内容</h4>
+<ul class="point">
+<li><b>创建了一个自定义定时器。</b>
+</li>
+<li><b>创建重试任务，并把任务添加到定时器，然后延迟5s执行定时任务。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">29</span><span class="mmx-name">6.6 Forking Cluster策略源码分析</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 4 条要点 · 6 句原句摘录</p>
+<div class="sec">
+<h4>ForkingClusterInvoker类的doInvoke()方法源码分析</h4>
+<ul class="point">
+<li><b>获取并行执行的参数，包括forks和timeout</b>
+<ul class="quote"><li>forks为并行执行的invoker个数，timeout为调用线程获取执行结果的超时时间。</li></ul>
+</li>
+<li><b>根据forks参数获取并行执行的invoker列表</b>
+<ul class="quote"><li>如果forks参数值小于等于0或者大于服务提供者机器的个数，则设置forks为提供者机器个数。</li></ul>
+</li>
+<li><b>使用线程池让invoker列表中的invoker并发执行</b>
+<ul class="quote"><li>执行完毕后会把返回结果放入并发安全的队列ref中。</li><li>这里的count用来记录远程调用过程中出现异常的次数，如果异常次数大于等于forks参数值，则说明有forks个并发调用全部失败了，这时候将把异常放到并发安全的队列ref中。</li></ul>
+</li>
+<li><b>调用队列ref的poll()方法，获取远程调用的结果</b>
+<ul class="quote"><li>poll()方法带有超时时间，并且当队列ref中含有元素或者超时时间到了的时候返回。</li><li>如果forks个调用都失败了，由于远程调用过程的超时时间和poll()方法的超时时间相同，并且远程调用是先发起的，那么这时poll()方法会返回代码3.1里面设置的异常信息。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>forks为并行执行的invoker个数，timeout为调用线程获取执行结果的超时时间。</li><li>如果forks参数值小于等于0或者大于服务提供者机器的个数，则设置forks为提供者机器个数。</li><li>执行完毕后会把返回结果放入并发安全的队列ref中。</li><li>这里的count用来记录远程调用过程中出现异常的次数，如果异常次数大于等于forks参数值，则说明有forks个并发调用全部失败了，这时候将把异常放到并发安全的队列ref中。</li><li>poll()方法带有超时时间，并且当队列ref中含有元素或者超时时间到了的时候返回。</li><li>如果forks个调用都失败了，由于远程调用过程的超时时间和poll()方法的超时时间相同，并且远程调用是先发起的，那么这时poll()方法会返回代码3.1里面设置的异常信息。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">30</span><span class="mmx-name">6.7 Broadcast Cluster策略源码分析</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 2 条要点 · 2 句原句摘录</p>
+<div class="sec">
+<h4>BroadcastClusterInvoker类介绍</h4>
+<ul class="point">
+<li><b>BroadcastClusterInvoker是Dubbo中实现广播调用的类</b>
+<ul class="quote"><li>广播调用是顺序轮询每个服务提供者进行调用的。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>广播调用是顺序轮询每个服务提供者进行调用的。</li></ul>
+</div>
+<div class="sec">
+<h4>doInvoke()方法源码分析</h4>
+<ul class="point">
+<li><b>doInvoke()方法中，广播调用是顺序轮询每个服务提供者进行调用的</b>
+<ul class="quote"><li>返回给调用方的result为最后一次远程调用返回的结果。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>返回给调用方的result为最后一次远程调用返回的结果。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">31</span><span class="mmx-name">6.8 如何基于扩展接口自定义集群容错策略</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 4 条要点 · 4 句原句摘录</p>
+<div class="sec">
+<h4>实现自定义集群容错策略的步骤</h4>
+<ul class="point">
+<li><b>实现Cluster接口</b>
+<ul class="quote"><li>MyCluster实现了Cluster的join接口。</li></ul>
+</li>
+<li><b>集成AbstractClusterInvoker类创建自己的ClusterInvoker类</b>
+<ul class="quote"><li>doInvoke方法需要重写，在该方法内用户就可以实现自己的集群容错策略。</li></ul>
+</li>
+<li><b>在org.apache.dubbo.rpc.cluster.Cluster目录下创建文件，并在文件里添加myCluster=org.apache.dubbo.demo.cluster.MyCluster</b>
+<ul class="quote"><li>这样就完成了自定义集群容错策略的配置。</li></ul>
+</li>
+<li><b>使用下面的方法将集群容错模式切换为myCluster</b>
+<ul class="quote"><li>这样就完成了自定义集群容错策略的切换。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>MyCluster实现了Cluster的join接口。</li><li>doInvoke方法需要重写，在该方法内用户就可以实现自己的集群容错策略。</li><li>这样就完成了自定义集群容错策略的配置。</li><li>这样就完成了自定义集群容错策略的切换。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">32</span><span class="mmx-name">6.9 Dubbo负载均衡策略概述</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 3 条要点 · 7 句原句摘录</p>
+<div class="sec">
+<h4>Dubbo负载均衡策略概述</h4>
+<ul class="point">
+<li><b>Dubbo提供了多种均衡策略，默认为random，也就是每次随机调用一台服务提供者的服务</b>
+<ul class="quote"><li>Random LoadBalance：随机策略。按照概率设置权重，比较均匀，并且可以动态调节提供者的权重。</li><li>RoundRobin LoadBalance：轮循策略。轮循，按公约后的权重设置轮循比率。</li><li>LeastActive LoadBalance：最少活跃调用数。如果每个提供者的活跃数相同，则随机选择一个。</li><li>ConsistentHash LoadBalance一致性Hash策略。一致性Hash，可以保证相同参数的请求总是发到同一提供者。</li></ul>
+</li>
+<li><b>如果有需要，可以基于Dubbo提供的扩展接口LoadBalance进行定制</b>
+<ul class="quote"><li>AbstractLoadBalance实现了LoadBalance接口，上面的各种负载均衡策略实际上就是继承了AbstractLoadBalance方法，但重写了其doSelect()方法。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Random LoadBalance：随机策略。按照概率设置权重，比较均匀，并且可以动态调节提供者的权重。</li><li>RoundRobin LoadBalance：轮循策略。轮循，按公约后的权重设置轮循比率。</li><li>LeastActive LoadBalance：最少活跃调用数。如果每个提供者的活跃数相同，则随机选择一个。</li><li>ConsistentHash LoadBalance一致性Hash策略。一致性Hash，可以保证相同参数的请求总是发到同一提供者。</li><li>AbstractLoadBalance实现了LoadBalance接口，上面的各种负载均衡策略实际上就是继承了AbstractLoadBalance方法，但重写了其doSelect()方法。</li></ul>
+</div>
+<div class="sec">
+<h4>负载均衡策略的doSelect()方法</h4>
+<ul class="point">
+<li><b>消费端发起远程调用后会先经过步骤4进行服务降级检查，如果发现没有设置降级策略，则会执行步骤5进入集群容错invoker</b>
+<ul class="quote"><li>其内部会先执行步骤6，以便从RegistryDirectory里获取经过服务路由规则过滤后的服务提供者的invokers列表。</li><li>然后，执行步骤8～步骤11，以便根据具体负载均衡策略从invoker列表中选择一个invoker，最后使用所选的invoker，执行步骤12以发起远程调用。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>其内部会先执行步骤6，以便从RegistryDirectory里获取经过服务路由规则过滤后的服务提供者的invokers列表。</li><li>然后，执行步骤8～步骤11，以便根据具体负载均衡策略从invoker列表中选择一个invoker，最后使用所选的invoker，执行步骤12以发起远程调用。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">33</span><span class="mmx-name">6.10 Random LoadBalance策略源码分析</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 2 条要点 · 9 句原句摘录</p>
+<div class="sec">
+<h4>RandomLoadBalance策略源码分析</h4>
+<ul class="point">
+<li><b>RandomLoadBalance类实现随机选择策略</b>
+<ul class="quote"><li>doSelect()方法计算服务提供者总个数，创建权重数组，计算第一个服务提供者的权重，累加所有服务提供者设置的权重，并记录所有服务提供者的权重是否都是一样的。</li><li>如果所有服务提供者权重都一样，则使用ThreadLocalRandom.current().nextInt(length)从所有服务提供者里随机选择一个服务提供者进行调用。</li><li>如果所有服务提供者权重不一样，那么在正常情况下应该选择权重最大的提供者来提供服务，但是Dubbo还考虑到另外一个因素，就是服务预热时间。</li></ul>
+</li>
+<li><b>计算权重的getWeight()方法</b>
+<ul class="quote"><li>获取用户对该服务提供者设置的权重，默认情况下权重都是100。</li><li>获取该服务提供者发布服务时的时间timestamp。</li><li>计算该服务已经发布了多少时间。</li><li>获取用户设置的该服务的预热时间，默认是10分钟。</li><li>如果该服务提供者还没过预热期，则让该服务提供者的预热时间参与计算权重calculateWarmupWeight。</li><li>如果服务提供者已经过了预热期，则这时就会按照用户设置的权重的大小来选择使用哪个服务提供者。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>doSelect()方法计算服务提供者总个数，创建权重数组，计算第一个服务提供者的权重，累加所有服务提供者设置的权重，并记录所有服务提供者的权重是否都是一样的。</li><li>如果所有服务提供者权重都一样，则使用ThreadLocalRandom.current().nextInt(length)从所有服务提供者里随机选择一个服务提供者进行调用。</li><li>如果所有服务提供者权重不一样，那么在正常情况下应该选择权重最大的提供者来提供服务，但是Dubbo还考虑到另外一个因素，就是服务预热时间。</li><li>获取用户对该服务提供者设置的权重，默认情况下权重都是100。</li><li>获取该服务提供者发布服务时的时间timestamp。</li><li>计算该服务已经发布了多少时间。</li><li>获取用户设置的该服务的预热时间，默认是10分钟。</li><li>如果该服务提供者还没过预热期，则让该服务提供者的预热时间参与计算权重calculateWarmupWeight。</li><li>如果服务提供者已经过了预热期，则这时就会按照用户设置的权重的大小来选择使用哪个服务提供者。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">34</span><span class="mmx-name">6.11 RoundRobin LoadBalance策略源码分析</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 7 条要点 · 6 句原句摘录</p>
+<div class="sec">
+<h4>RoundRobinLoadBalance策略源码分析</h4>
+<ul class="point">
+<li><b>RECYCLE_PERIOD是清理周期，如果服务提供者耗时RECYCLE_PERIOD还没有更新自己的WeightedRoundRobin对象，则会被自动回收。</b>
+</li>
+<li><b>updateLock用来确保更新methodWeightMap的线程安全，这里使用了原子变量的CAS操作，减少了因为使用锁带来的开销。</b>
+</li>
+<li><b>代码1获取当前调用方法组成的服务key</b>
+<ul class="quote"><li>对于调用com.books.dubbo.demo.api.GreetingService接口的String sayHello(String name)方法来说，key为dubbo/com.books.dubbo.demo.api.GreetingService：1.0.0.sayHello。</li></ul>
+</li>
+<li><b>代码2中，methodWeightMap是一个Map，其中key就是代码1计算的值</b>
+<ul class="quote"><li>value是一个map，其中key是每个服务提供者机器IP组成的方法的key。</li></ul>
+</li>
+<li><b>代码3遍历所有服务提供者，计算所有提供者对于该方法的总权重和和最大权重</b>
+<ul class="quote"><li>代码3.1计算当前机器对应的该方法的权重。</li><li>代码3.2更新该方法对应的权重(current的值)和更新时间，并记录权重最大(current最大)的服务提供者。</li></ul>
+</li>
+<li><b>代码4通过CAS操作，更新methodWeightMap对象。</b>
+</li>
+<li><b>代码5返回选择的提供者的Invoker对象，并把当前提供者对应的方法的权重(current)设置为当前值减去总权重，以便实现轮询对外提供服务</b>
+<ul class="quote"><li>这里RR算法并不是严格意义上的RR，因为选择提供者时还参考了其设置的权重。</li><li>如果大家把A、B、C的权重设置成一样的，那么就会发现将以顺序方式选中机器A、B、C作为服务提供者。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>对于调用com.books.dubbo.demo.api.GreetingService接口的String sayHello(String name)方法来说，key为dubbo/com.books.dubbo.demo.api.GreetingService：1.0.0.sayHello。</li><li>value是一个map，其中key是每个服务提供者机器IP组成的方法的key。</li><li>代码3.1计算当前机器对应的该方法的权重。</li><li>代码3.2更新该方法对应的权重(current的值)和更新时间，并记录权重最大(current最大)的服务提供者。</li><li>这里RR算法并不是严格意义上的RR，因为选择提供者时还参考了其设置的权重。</li><li>如果大家把A、B、C的权重设置成一样的，那么就会发现将以顺序方式选中机器A、B、C作为服务提供者。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">35</span><span class="mmx-name">6.12 LeastActive LoadBalance策略源码分析</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 2 条要点 · 6 句原句摘录</p>
+<div class="sec">
+<h4>LeastActiveLoadBalance策略源码分析</h4>
+<ul class="point">
+<li><b>LeastActiveLoadBalance类实现了最少活跃调用策略</b>
+<ul class="quote"><li>doSelect()方法是LeastActiveLoadBalance类的主要方法。</li></ul>
+</li>
+<li><b>doSelect()方法主要步骤</b>
+<ul class="quote"><li>初始化一系列的变量。</li><li>遍历所有服务提供者，过滤出所有的调用次数等于最小调用次数的服务提供者。</li><li>如果只有一个最小调用次数的服务提供者，则直接返回。</li><li>如果最小调用次数的invoker有多个并且权重不一样，则使用随机选择策略中的方法来选择一个。</li><li>如果最小调用次数的invoker有多个并且权重一样，则随机选择一个。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>doSelect()方法是LeastActiveLoadBalance类的主要方法。</li><li>初始化一系列的变量。</li><li>遍历所有服务提供者，过滤出所有的调用次数等于最小调用次数的服务提供者。</li><li>如果只有一个最小调用次数的服务提供者，则直接返回。</li><li>如果最小调用次数的invoker有多个并且权重不一样，则使用随机选择策略中的方法来选择一个。</li><li>如果最小调用次数的invoker有多个并且权重一样，则随机选择一个。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">36</span><span class="mmx-name">6.13 ConsistentHash LoadBalance策略源码分析</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 6 条要点 · 14 句原句摘录</p>
+<div class="sec">
+<h4>一致性Hash负载均衡策略原理</h4>
+<ul class="point">
+<li><b>一致性Hash利用Hash环对其进行了改进，解决了普通余数Hash伸缩性很差的问题</b>
+<ul class="quote"><li>一致性Hash，首先计算4个IP地址对应的Hash值，这4个值在一致性Hash环上的呈现。</li><li>在Hash环上按顺时针从整数0开始，一直到最大正整数，我们根据4个IP计算的Hash值肯定会落到这个Hash环上的某一个点，至此我们把服务器的4个IP映射到了一致性Hash环上。</li><li>当用户在客户端进行请求时，首先根据Hash(用户ID)计算路由规则(Hash值)，然后看Hash值落到了Hash环的哪个地方，根据Hash值在Hash环上的位置顺时针找距离最近的IP作为路由IP。</li></ul>
+</li>
+<li><b>一致性Hash具有单调性、分散性和平衡性</b>
+<ul class="quote"><li>单调性是指如果已经有一些请求通过Hash分派到了相应的服务器进行处理，当又有新的服务器加入到系统中时，应保证原有的请求可以被映射到原有的或者新增的服务器上，而不会被映射到原来的其他服务器上。</li><li>分散性是指上述情况发生的严重程度。</li><li>平衡性也就是指负载均衡，是指客户端Hash后的请求应该能够分散到不同的服务器上。</li></ul>
+</li>
+<li><b>虚拟节点的引入可以解决一致性Hash倾斜问题</b>
+<ul class="quote"><li>当服务器节点比较少的时候会出现上面所说的一致性Hash倾斜问题，一种解决方法是多加机器，但加机器是有成本的，那么就加虚拟节点。</li><li>当物理机器数目为M，虚拟节点为N的时候，实际Hash环上节点个数为M*(N+1)。</li></ul>
+</li>
+<li><b>均匀一致性Hash的目标是使每台服务器负载尽量均衡</b>
+<ul class="quote"><li>均衡的一致性Hash应该如图6.17所示。</li><li>如果服务器有N台，客户端的Hash值有M个，那么每台服务器应该处理大概M/N个用户的请求，也就是说每台服务器负载尽量均衡。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>一致性Hash，首先计算4个IP地址对应的Hash值，这4个值在一致性Hash环上的呈现。</li><li>在Hash环上按顺时针从整数0开始，一直到最大正整数，我们根据4个IP计算的Hash值肯定会落到这个Hash环上的某一个点，至此我们把服务器的4个IP映射到了一致性Hash环上。</li><li>当用户在客户端进行请求时，首先根据Hash(用户ID)计算路由规则(Hash值)，然后看Hash值落到了Hash环的哪个地方，根据Hash值在Hash环上的位置顺时针找距离最近的IP作为路由IP。</li><li>单调性是指如果已经有一些请求通过Hash分派到了相应的服务器进行处理，当又有新的服务器加入到系统中时，应保证原有的请求可以被映射到原有的或者新增的服务器上，而不会被映射到原来的其他服务器上。</li><li>分散性是指上述情况发生的严重程度。</li><li>平衡性也就是指负载均衡，是指客户端Hash后的请求应该能够分散到不同的服务器上。</li><li>当服务器节点比较少的时候会出现上面所说的一致性Hash倾斜问题，一种解决方法是多加机器，但加机器是有成本的，那么就加虚拟节点。</li><li>当物理机器数目为M，虚拟节点为N的时候，实际Hash环上节点个数为M*(N+1)。</li><li>均衡的一致性Hash应该如图6.17所示。</li><li>如果服务器有N台，客户端的Hash值有M个，那么每台服务器应该处理大概M/N个用户的请求，也就是说每台服务器负载尽量均衡。</li></ul>
+</div>
+<div class="sec">
+<h4>一致性HashLoadBalance策略源码分析</h4>
+<ul class="point">
+<li><b>ConsistentHashSelector类实现了ConsistentHash策略</b>
+<ul class="quote"><li>主要是根据所有服务提供者的invoker列表，生成从Hash环上的节点到服务提供者机器的映射关系，并存放到virtualInvokers中。</li></ul>
+</li>
+<li><b>调用方调用服务时，就是调用ConsistentHashSelector的select()方法来选择一个服务提供者</b>
+<ul class="quote"><li>代码1获取参与一致性Hash算法的key，默认是第一个参数，消费端可以设置hash.arguments指定哪几个参数参与计算。</li><li>代码2根据具体算法计算该key对应md5值。</li><li>代码3计算该key对应Hash环上哪一个点，并选择该点对应的服务提供者。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>主要是根据所有服务提供者的invoker列表，生成从Hash环上的节点到服务提供者机器的映射关系，并存放到virtualInvokers中。</li><li>代码1获取参与一致性Hash算法的key，默认是第一个参数，消费端可以设置hash.arguments指定哪几个参数参与计算。</li><li>代码2根据具体算法计算该key对应md5值。</li><li>代码3计算该key对应Hash环上哪一个点，并选择该点对应的服务提供者。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">37</span><span class="mmx-name">6.14 如何基于扩展接口自定义负载均衡策略</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 3 条要点 · 1 句原句摘录</p>
+<div class="sec">
+<h4>自定义负载均衡策略的实现</h4>
+<ul class="point">
+<li><b>实现LoadBalance接口，继承AbstractLoadBalance类</b>
+<ul class="quote"><li>在MyLoadBalance中实现LoadBalance的doSelect接口。</li></ul>
+</li>
+<li><b>在org.apache.dubbo.rpc.cluster.LoadBalance目录下创建文件，添加myLoadBalance=com.books.dubbo.demo.loadbalance.MyLoadBalance。</b>
+</li>
+<li><b>使用如下方法将负载均衡模式切换为myLoadBalance。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在MyLoadBalance中实现LoadBalance的doSelect接口。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">38</span><span class="mmx-name">6.15 小结</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 4 条要点 · 12 句原句摘录</p>
+<div class="sec">
+<h4>Dubbo框架提供的集群容错策略及实现原理</h4>
+<ul class="point">
+<li><b>Dubbo框架提供了Failover、Failfast、Failsafe、Failback、Forking、Broadcast等集群容错策略</b>
+<ul class="quote"><li>Failover策略：失败后选择另一个服务提供者提供服务。</li><li>Failfast策略：失败后直接抛出异常。</li><li>Failsafe策略：失败后执行fallback方法。</li><li>Failback策略：失败后定时重试。</li><li>Forking策略：将请求分发到多个服务提供者，只要有一个成功即返回。</li><li>Broadcast策略：将请求广播给所有服务提供者，然后返回第一个返回的结果。</li></ul>
+</li>
+<li><b>可以基于SPI接口实现自己的集群容错策略</b>
+<ul class="quote"><li>SPI(Service Provider Interface)接口是Java的标准服务发现机制。</li><li>通过实现SPI接口，可以自定义自己的集群容错策略。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Failover策略：失败后选择另一个服务提供者提供服务。</li><li>Failfast策略：失败后直接抛出异常。</li><li>Failsafe策略：失败后执行fallback方法。</li><li>Failback策略：失败后定时重试。</li><li>Forking策略：将请求分发到多个服务提供者，只要有一个成功即返回。</li><li>Broadcast策略：将请求广播给所有服务提供者，然后返回第一个返回的结果。</li><li>SPI(Service Provider Interface)接口是Java的标准服务发现机制。</li><li>通过实现SPI接口，可以自定义自己的集群容错策略。</li></ul>
+</div>
+<div class="sec">
+<h4>Dubbo框架提供的负载均衡策略及实现原理</h4>
+<ul class="point">
+<li><b>Dubbo框架提供了随机、轮询、最少活跃调用等负载均衡策略</b>
+<ul class="quote"><li>随机策略：按权重随机选择服务提供者。</li><li>轮询策略：按顺序逐个调用服务提供者。</li><li>最少活跃调用策略：优先选择最近最少使用的节点。</li></ul>
+</li>
+<li><b>可以基于SPI接口实现自己的负载均衡策略</b>
+<ul class="quote"><li>通过实现SPI接口，可以自定义自己的负载均衡策略。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>随机策略：按权重随机选择服务提供者。</li><li>轮询策略：按顺序逐个调用服务提供者。</li><li>最少活跃调用策略：优先选择最近最少使用的节点。</li><li>通过实现SPI接口，可以自定义自己的负载均衡策略。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">39</span><span class="mmx-name">第7章 Dubbo线程模型与线程池策略</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 2 条要点 · 6 句原句摘录</p>
+<div class="sec">
+<h4>Dubbo的线程模型概述</h4>
+<ul class="point">
+<li><b>Dubbo默认的底层网络通信使用的是Netty，服务提供方NettyServer使用两级线程池</b>
+<ul class="quote"><li>EventLoopGroup(boss)主要用来接收客户端的链接请求，并把完成TCP三次握手的连接分发给EventLoopGroup(worker)来处理。</li></ul>
+</li>
+<li><b>根据请求的消息类是被I/O线程处理还是被业务线程池处理，Dubbo提供了all、direct、message、execution、connection五种线程模型</b>
+<ul class="quote"><li>all(AllDispatcher类)：所有消息都派发到业务线程池。</li><li>direct(DirectDispatcher类)：所有消息都不派发到业务线程池，全部在IO线程上直接执行。</li><li>message(MessageOnlyDispatcher类)：只有请求响应消息派发到业务线程池，其他消息如连接事件、断开事件、心跳事件等，直接在I/O线程上执行。</li><li>execution(ExecutionDispatcher类)：只把请求类消息派发到业务线程池处理，但是响应、连接事件、断开事件、心跳事件等消息直接在I/O线程上执行。</li><li>connection(ConnectionOrderedDispatcher类)：在I/O线程上将连接事件、断开事件放入队列，有序地逐个执行，其他消息派发到业务线程池处理。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>EventLoopGroup(boss)主要用来接收客户端的链接请求，并把完成TCP三次握手的连接分发给EventLoopGroup(worker)来处理。</li><li>all(AllDispatcher类)：所有消息都派发到业务线程池。</li><li>direct(DirectDispatcher类)：所有消息都不派发到业务线程池，全部在IO线程上直接执行。</li><li>message(MessageOnlyDispatcher类)：只有请求响应消息派发到业务线程池，其他消息如连接事件、断开事件、心跳事件等，直接在I/O线程上执行。</li><li>execution(ExecutionDispatcher类)：只把请求类消息派发到业务线程池处理，但是响应、连接事件、断开事件、心跳事件等消息直接在I/O线程上执行。</li><li>connection(ConnectionOrderedDispatcher类)：在I/O线程上将连接事件、断开事件放入队列，有序地逐个执行，其他消息派发到业务线程池处理。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">40</span><span class="mmx-name">7.2 AllDispatcher源码剖析</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 1 条要点 · 0 句原句摘录</p>
+<div class="sec">
+<h4>AllDispatcher源码剖析</h4>
+<ul class="point">
+<li><b>AllDispatcher对应的是all线程模型的实现，把所有事件都直接交给业务线程池进行处理了。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">41</span><span class="mmx-name">7.3 DirectDispatcher源码剖析</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 1 条要点 · 1 句原句摘录</p>
+<div class="sec">
+<h4>DirectDispatcher源码剖析</h4>
+<ul class="point">
+<li><b>DirectDispatcher对应的是direct线程模型的实现，其代码如下</b>
+<ul class="quote"><li>通过上面的代码可知，direct线程模型的dispatch()方法直接返回了参数handler，所以其所有事件的处理都是在I/O线程上进行的。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>通过上面的代码可知，direct线程模型的dispatch()方法直接返回了参数handler，所以其所有事件的处理都是在I/O线程上进行的。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">42</span><span class="mmx-name">7.4 MessageOnlyDispatcher源码剖析</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 1 条要点 · 1 句原句摘录</p>
+<div class="sec">
+<h4>MessageOnlyDispatcher源码剖析</h4>
+<ul class="point">
+<li><b>MessageOnlyChannelHandler是MessageOnlyDispatcher的核心实现</b>
+<ul class="quote"><li>只有请求响应消息派发到业务线程池，其他耗时比较短的连接事件、断开事件、心跳事件等消息则直接在I/O线程上执行。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>只有请求响应消息派发到业务线程池，其他耗时比较短的连接事件、断开事件、心跳事件等消息则直接在I/O线程上执行。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">43</span><span class="mmx-name">7.5 ExecutionDispatcher源码剖析</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 1 条要点 · 2 句原句摘录</p>
+<div class="sec">
+<h4>ExecutionDispatcher源码剖析</h4>
+<ul class="point">
+<li><b>ExecutionDispatcher对应是execution线程模型的实现</b>
+<ul class="quote"><li>只把请求类消息派发到业务线程池处理，但是响应、连接事件、断开事件、心跳事件等消息则直接在I/O线程上执行。</li><li>响应类型的事件也是在I/O线程上执行的。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>只把请求类消息派发到业务线程池处理，但是响应、连接事件、断开事件、心跳事件等消息则直接在I/O线程上执行。</li><li>响应类型的事件也是在I/O线程上执行的。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">44</span><span class="mmx-name">7.6 ConnectionOrderedDispatcher源码剖析</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 3 条要点 · 5 句原句摘录</p>
+<div class="sec">
+<h4>ConnectionOrderedDispatcher源码剖析</h4>
+<ul class="point">
+<li><b>ConnectionOrderedChannelHandler是ConnectionOrderedDispatcher的核心实现</b>
+<ul class="quote"><li>在构造函数内创建一个只含有一个线程的线程池和一个有限元素的队列。</li><li>如果设置的参数connect.queue.capacity大于0，则设置为线程池队列容量，否则线程池队列容量为整数最大值。</li></ul>
+</li>
+<li><b>线程池用来实现把链接建立和链接断开事件进行顺序化处理</b>
+<ul class="quote"><li>先使用代码9检查线程池队列的元素个数，个数超过阈值则打印日志，然后把事件放入线程池队列，并使用单线程进行处理。</li><li>由于是单线程处理，所以其实是“多生产-单消费”模型，实现了把链接建立、链接断开事件的处理变为顺序化处理。</li></ul>
+</li>
+<li><b>请求事件和异常事件，这里是直接交给了线程池进行异步处理</b>
+<ul class="quote"><li>这个线程池不是connectionExecutor。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在构造函数内创建一个只含有一个线程的线程池和一个有限元素的队列。</li><li>如果设置的参数connect.queue.capacity大于0，则设置为线程池队列容量，否则线程池队列容量为整数最大值。</li><li>先使用代码9检查线程池队列的元素个数，个数超过阈值则打印日志，然后把事件放入线程池队列，并使用单线程进行处理。</li><li>由于是单线程处理，所以其实是“多生产-单消费”模型，实现了把链接建立、链接断开事件的处理变为顺序化处理。</li><li>这个线程池不是connectionExecutor。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">45</span><span class="mmx-name">7.7 线程模型的确定时机</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 3 条要点 · 4 句原句摘录</p>
+<div class="sec">
+<h4>线程模型的确定时机</h4>
+<ul class="point">
+<li><b>服务提供方启动NettyServer时确定线程模型</b>
+<ul class="quote"><li>服务提供方会启动NettyServer来监听消费方的链接。</li><li>构造函数中加载了具体的线程模型。</li></ul>
+</li>
+<li><b>通过ChannelHandlers的wrapInternal方法完成线程模型的加载</b>
+<ul class="quote"><li>ChannelHandlers.wrap(handler，ExecutorUtil.setThreadName(url，SERVER_THREAD_POOL_NAME))这个代码，该代码加载了具体的线程模型。</li></ul>
+</li>
+<li><b>根据URL里的线程模型来选择具体的Dispatcher实现类</b>
+<ul class="quote"><li>Dubbo提供的Dispatcher实现类，其默认的实现类是all。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>服务提供方会启动NettyServer来监听消费方的链接。</li><li>构造函数中加载了具体的线程模型。</li><li>ChannelHandlers.wrap(handler，ExecutorUtil.setThreadName(url，SERVER_THREAD_POOL_NAME))这个代码，该代码加载了具体的线程模型。</li><li>Dubbo提供的Dispatcher实现类，其默认的实现类是all。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">46</span><span class="mmx-name">7.8 如何基于扩展接口自定义线程模型</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 3 条要点 · 3 句原句摘录</p>
+<div class="sec">
+<h4>Dubbo线程模型扩展接口</h4>
+<ul class="point">
+<li><b>实现扩展接口Dispatcher</b>
+<ul class="quote"><li>Dispatcher是Dubbo提供的线程模型扩展接口。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Dispatcher是Dubbo提供的线程模型扩展接口。</li></ul>
+</div>
+<div class="sec">
+<h4>自定义线程模型Handler</h4>
+<ul class="point">
+<li><b>实现自己的Handler，例如MyChannelHandler</b>
+<ul class="quote"><li>在项目的src/main/resources目录下创建目录/META-INF/dubbo，并在该目录下创建文件org.apache.dubbo.remoting.Dispatcher，文件内容为mydispatcher=com.books.dubbo.demo.provider.mydispatcher.MyDispatcher。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在项目的src/main/resources目录下创建目录/META-INF/dubbo，并在该目录下创建文件org.apache.dubbo.remoting.Dispatcher，文件内容为mydispatcher=com.books.dubbo.demo.provider.mydispatcher.MyDispatcher。</li></ul>
+</div>
+<div class="sec">
+<h4>设置自定义线程模型</h4>
+<ul class="point">
+<li><b>在服务提供者启动时将线程模型设置为mydispatcher</b>
+<ul class="quote"><li>这样，服务提供者在处理请求时就会使用自定义的线程模型。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>这样，服务提供者在处理请求时就会使用自定义的线程模型。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">47</span><span class="mmx-name">7.9 Dubbo的线程池策略</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 1 条要点 · 4 句原句摘录</p>
+<div class="sec">
+<h4>Dubbo的线程池策略</h4>
+<ul class="point">
+<li><b>ThreadPool是一个扩展接口SPI，Dubbo提供了该扩展接口的一些实现</b>
+<ul class="quote"><li>FixedThreadPool：创建一个具有固定个数线程的线程池。</li><li>LimitedThreadPool：创建一个线程池，这个线程池中的线程个数随着需要量动态增加，但是数量不超过配置的阈值。另外，空闲线程不会被回收，会一直存在。</li><li>EagerThreadPool：创建一个线程池，在这个线程池中，当所有核心线程都处于忙碌状态时，将创建新的线程来执行新任务，而不是把任务放入线程池阻塞队列。</li><li>CachedThreadPool：创建一个自适应线程池，当线程空闲1分钟时，线程会被回收；当有新请求到来时，会创建新线程。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>FixedThreadPool：创建一个具有固定个数线程的线程池。</li><li>LimitedThreadPool：创建一个线程池，这个线程池中的线程个数随着需要量动态增加，但是数量不超过配置的阈值。另外，空闲线程不会被回收，会一直存在。</li><li>EagerThreadPool：创建一个线程池，在这个线程池中，当所有核心线程都处于忙碌状态时，将创建新的线程来执行新任务，而不是把任务放入线程池阻塞队列。</li><li>CachedThreadPool：创建一个自适应线程池，当线程空闲1分钟时，线程会被回收；当有新请求到来时，会创建新线程。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">48</span><span class="mmx-name">7.10 FixedThreadPool源码剖析</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 4 条要点 · 4 句原句摘录</p>
+<div class="sec">
+<h4>FixedThreadPool的创建</h4>
+<ul class="point">
+<li><b>获取用户设置的线程池中线程的名称前缀，如果没有设置，则使用默认名称Dubbo。</b>
+</li>
+<li><b>获取用户设置的线程池中线程的个数，如果没有设置，则使用默认的数值200。</b>
+</li>
+<li><b>获取用户设置的线程池的阻塞队列大小，如果没有设置，则使用默认的数值0。</b>
+</li>
+<li><b>使用JUC包里的ThreadPoolExecutor创建线程池</b>
+<ul class="quote"><li>ThreadPoolExecutor的核心线程个数和最大线程个数都设置为threads，所以创建的线程池是固定线程个数的线程池。</li><li>当队列元素为0时，阻塞队列使用的是SynchronousQueue；当队列元素小于0时，使用的是无界阻塞队列LinkedBlockingQueue；当队列元素大于0时，使用的是有界的LinkedBlockingQueue。</li><li>使用自定义的线程工厂NamedInternalThreadFactory来为线程创建自定义名称，并将线程设置为deamon线程。</li><li>线程池拒绝策略选择了AbortPolicyWithReport，意味着当线程池队列已满并且线程池中线程都忙碌时，新来的任务会被丢弃，并抛出RejectedExecutionException异常。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>ThreadPoolExecutor的核心线程个数和最大线程个数都设置为threads，所以创建的线程池是固定线程个数的线程池。</li><li>当队列元素为0时，阻塞队列使用的是SynchronousQueue；当队列元素小于0时，使用的是无界阻塞队列LinkedBlockingQueue；当队列元素大于0时，使用的是有界的LinkedBlockingQueue。</li><li>使用自定义的线程工厂NamedInternalThreadFactory来为线程创建自定义名称，并将线程设置为deamon线程。</li><li>线程池拒绝策略选择了AbortPolicyWithReport，意味着当线程池队列已满并且线程池中线程都忙碌时，新来的任务会被丢弃，并抛出RejectedExecutionException异常。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">49</span><span class="mmx-name">7.11 LimitedThreadPool源码剖析</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 5 条要点 · 0 句原句摘录</p>
+<div class="sec">
+<h4>LimitedThreadPool源码剖析</h4>
+<ul class="point">
+<li><b>获取用户设置的线程池中线程的名称前缀，如果没有设置，则使用默认名称Dubbo。</b>
+</li>
+<li><b>获取用户设置的线程池中核心线程的个数，如果没有设置，则使用默认的数值0。</b>
+</li>
+<li><b>获取用户设置的线程池中最大线程的个数，如果没有设置，则使用默认的数值200。</b>
+</li>
+<li><b>获取用户设置的线程池阻塞队列大小，如果没有设置，则使用默认的数值0。</b>
+</li>
+<li><b>使用JUC包里的ThreadPoolExecutor创建线程池。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">50</span><span class="mmx-name">7.12 EagerThreadPool源码剖析</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 4 条要点 · 7 句原句摘录</p>
+<div class="sec">
+<h4>EagerThreadPool的创建</h4>
+<ul class="point">
+<li><b>获取用户设置的线程池相关参数</b>
+<ul class="quote"><li>获取线程池中线程的名称前缀。</li><li>获取线程池中核心线程的个数。</li><li>获取线程池中最大线程的个数。</li><li>获取线程池阻塞队列大小。</li><li>获取线程被回收的空闲时间值。</li></ul>
+</li>
+<li><b>使用自定义线程池EagerThreadPoolExecutor和队列创建需要的线程池</b>
+<ul class="quote"><li>EagerThreadPoolExecutor与JUC包中的ThreadPoolExecutor不同之处在于，对于后者来说，当线程池核心线程个数达到设置的阈值时，新来的任务会被放入线程池队列，等队列满了以后，才会开启新线程来处理任务(前提是当前线程个数没有超过线程池最大线程个数)；而对于前者来说，当线程池核心线程个数达到设置的阈值时，新来的任务不会被放入线程池队列，而是会开启新线程来处理任务(前提是当前线程个数没有超过线程池最大线程个数)，当线程个数达到最大线程个数时，才会把任务放入线程池队列。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>获取线程池中线程的名称前缀。</li><li>获取线程池中核心线程的个数。</li><li>获取线程池中最大线程的个数。</li><li>获取线程池阻塞队列大小。</li><li>获取线程被回收的空闲时间值。</li><li>EagerThreadPoolExecutor与JUC包中的ThreadPoolExecutor不同之处在于，对于后者来说，当线程池核心线程个数达到设置的阈值时，新来的任务会被放入线程池队列，等队列满了以后，才会开启新线程来处理任务(前提是当前线程个数没有超过线程池最大线程个数)；而对于前者来说，当线程池核心线程个数达到设置的阈值时，新来的任务不会被放入线程池队列，而是会开启新线程来处理任务(前提是当前线程个数没有超过线程池最大线程个数)，当线程个数达到最大线程个数时，才会把任务放入线程池队列。</li></ul>
+</div>
+<div class="sec">
+<h4>EagerThreadPoolExecutor的功能实现</h4>
+<ul class="point">
+<li><b>在线程池核心线程个数大于等于核心线程个数时，执行代码4，把任务添加到队列而不是开启新线程</b>
+<ul class="quote"><li>EagerThreadPoolExecutor使用了自己的队列TaskQueue。</li></ul>
+</li>
+<li><b>如果当前线程池线程个数小于线程池设置的最大个数，则返回false，然后执行代码5新开启线程来处理当前任务。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>EagerThreadPoolExecutor使用了自己的队列TaskQueue。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">51</span><span class="mmx-name">7.13 CachedThreadPool源码剖析</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 6 条要点 · 0 句原句摘录</p>
+<div class="sec">
+<h4>CachedThreadPool的创建</h4>
+<ul class="point">
+<li><b>获取用户设置的线程池中线程的名称前缀，如果没有设置，则使用默认名称Dubbo。</b>
+</li>
+<li><b>获取用户设置的线程池中核心线程的个数，如果没有设置，则使用默认的数值0。</b>
+</li>
+<li><b>获取用户设置的线程池中最大线程的个数，如果没有设置，则使用默认的数值200。</b>
+</li>
+<li><b>获取用户设置的线程池阻塞队列大小，如果没有设置，则使用默认的数值0。</b>
+</li>
+<li><b>获取用户设置的线程被回收的空闲时间值，如果没有设置，则使用默认的数值60*1000。</b>
+</li>
+<li><b>使用JUC包的ThreadPoolExecutor创建线程池，需要注意的是，这里设置了线程池中线程空闲时间，当线程空闲时间达到后，线程会被回收。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">52</span><span class="mmx-name">7.14 线程池的确定时机</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 2 条要点 · 0 句原句摘录</p>
+<div class="sec">
+<h4>线程池的确定时机</h4>
+<ul class="point">
+<li><b>在WrappedChannelHandler的构造函数中，根据URL获取了扩展接口ThreadPool的SPI实现类。</b>
+</li>
+<li><b>ThreadPool的扩展接口，其默认设置是fixed。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">53</span><span class="mmx-name">7.15 如何基于扩展接口自定义线程池策略</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 4 条要点 · 4 句原句摘录</p>
+<div class="sec">
+<h4>实现扩展接口ThreadPool</h4>
+<ul class="point">
+<li><b>自定义线程池策略需要实现扩展接口ThreadPool</b>
+<ul class="quote"><li>扩展接口ThreadPool的代码实现。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>扩展接口ThreadPool的代码实现。</li></ul>
+</div>
+<div class="sec">
+<h4>创建线程池策略配置文件</h4>
+<ul class="point">
+<li><b>在项目的src/main/resources目录下创建目录/META-INF/dubbo</b>
+<ul class="quote"><li>在/META-INF/dubbo目录下创建文件org.apache.dubbo.common.threadpool.ThreadPool。</li></ul>
+</li>
+<li><b>在文件org.apache.dubbo.common.threadpool.ThreadPool中配置自定义线程池策略</b>
+<ul class="quote"><li>文件内容为mythreadpool=com.books.dubbo.demo.provider.mydispatcher.MyThreadPool。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在/META-INF/dubbo目录下创建文件org.apache.dubbo.common.threadpool.ThreadPool。</li><li>文件内容为mythreadpool=com.books.dubbo.demo.provider.mydispatcher.MyThreadPool。</li></ul>
+</div>
+<div class="sec">
+<h4>设置线程池策略</h4>
+<ul class="point">
+<li><b>在服务提供者启动时把线程池策略设置为mythreadpool</b>
+<ul class="quote"><li>如何在服务提供者启动时设置线程池策略。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如何在服务提供者启动时设置线程池策略。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">54</span><span class="mmx-name">7.16 小结</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 4 条要点 · 9 句原句摘录</p>
+<div class="sec">
+<h4>Dubbo框架提供的线程模型及实现原理</h4>
+<ul class="point">
+<li><b>Dubbo框架提供了固定线程池、线程池和单线程三种线程模型</b>
+<ul class="quote"><li>固定线程池：所有请求被分配到固定的线程上处理。</li><li>线程池：所有请求被分配到线程池中的线程上处理。</li><li>单线程：所有请求被顺序执行。</li></ul>
+</li>
+<li><b>Dubbo框架的线程模型是通过线程池策略来实现的</b>
+<ul class="quote"><li>线程池策略是线程模型的具体实现，不同的线程模型对应不同的线程池策略。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>固定线程池：所有请求被分配到固定的线程上处理。</li><li>线程池：所有请求被分配到线程池中的线程上处理。</li><li>单线程：所有请求被顺序执行。</li><li>线程池策略是线程模型的具体实现，不同的线程模型对应不同的线程池策略。</li></ul>
+</div>
+<div class="sec">
+<h4>Dubbo框架提供的线程池策略</h4>
+<ul class="point">
+<li><b>Dubbo框架提供了固定大小线程池、可变大小线程池和单线程池三种线程池策略</b>
+<ul class="quote"><li>固定大小线程池：线程池大小固定，无法根据请求量动态调整。</li><li>可变大小线程池：线程池大小可以根据请求量动态调整。</li><li>单线程池：线程池中只有一个线程，所有请求被顺序执行。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>固定大小线程池：线程池大小固定，无法根据请求量动态调整。</li><li>可变大小线程池：线程池大小可以根据请求量动态调整。</li><li>单线程池：线程池中只有一个线程，所有请求被顺序执行。</li></ul>
+</div>
+<div class="sec">
+<h4>基于SPI接口定制线程池策略或线程模型</h4>
+<ul class="point">
+<li><b>当业务需要定制线程池策略或者线程模型时，可以通过实现SPI接口来进行定制</b>
+<ul class="quote"><li>SPI(Service Provider Interface)接口是Java提供的一种服务发现机制，允许开发者自定义实现。</li><li>通过实现SPI接口，开发者可以根据业务需求定制线程池策略或者线程模型，以满足不同的业务场景。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>SPI(Service Provider Interface)接口是Java提供的一种服务发现机制，允许开发者自定义实现。</li><li>通过实现SPI接口，开发者可以根据业务需求定制线程池策略或者线程模型，以满足不同的业务场景。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">55</span><span class="mmx-name">第8章 Dubbo如何实现泛化引用</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 3 条要点 · 5 句原句摘录</p>
+<div class="sec">
+<h4>Dubbo泛化引用的概念和特点</h4>
+<ul class="point">
+<li><b>泛化接口调用方式主要是在服务消费端没有API接口类及模型类元的情况下使用</b>
+<ul class="quote"><li>泛化调用时服务消费模块不再需要引入SDK二方包。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>泛化调用时服务消费模块不再需要引入SDK二方包。</li></ul>
+</div>
+<div class="sec">
+<h4>服务消费端如何使用GenericImplFilter拦截泛化调用</h4>
+<ul class="point">
+<li><b>GenericImplFilter拦截泛化调用，把泛化参数进行校验并发起远程调用</b>
+<ul class="quote"><li>使用泛化调用时，服务消费端需要自定义实现GenericFilter接口。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>使用泛化调用时，服务消费端需要自定义实现GenericFilter接口。</li></ul>
+</div>
+<div class="sec">
+<h4>服务提供方如何使用GenericFilter拦截请求</h4>
+<ul class="point">
+<li><b>GenericFilter拦截请求，并把泛化参数进行反序列化处理，然后把请求转发给具体的服务进行执行</b>
+<ul class="quote"><li>服务提供方需要自定义实现GenericFilter接口。</li><li>服务提供方需要实现GenericFilter接口的doFilter方法，对泛化参数进行反序列化处理。</li><li>服务提供方需要实现GenericFilter接口的invoke方法，把请求转发给具体的服务进行执行。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>服务提供方需要自定义实现GenericFilter接口。</li><li>服务提供方需要实现GenericFilter接口的doFilter方法，对泛化参数进行反序列化处理。</li><li>服务提供方需要实现GenericFilter接口的invoke方法，把请求转发给具体的服务进行执行。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">56</span><span class="mmx-name">8.1 服务消费端GenericImplFilter源码分析</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 4 条要点 · 6 句原句摘录</p>
+<div class="sec">
+<h4>服务消费端GenericImplFilter源码分析</h4>
+<ul class="point">
+<li><b>GenericImplFilter是处理泛化调用的过滤器</b>
+<ul class="quote"><li>请求会经过包装类ProtocolFilterWrapper创建的责任链，其中只展示了责任链中的GenericImplFilter过滤器。</li></ul>
+</li>
+<li><b>GenericImplFilter判断是否为泛化调用，如果不是，则直接发起远程调用</b>
+<ul class="quote"><li>代码1判断是否为泛化调用，如果不是，则直接指向代码2发起远程调用。</li></ul>
+</li>
+<li><b>如果为泛化调用，则获取泛化参数，并进行参数类型判断</b>
+<ul class="quote"><li>代码1.1获取泛化参数。</li><li>代码1.2判断泛化调用是否为nativejava方式，如果是，则判断参数是否是byte[]类型的；如果不是，则说明参数传递错误，抛出异常。</li><li>在代码1.3中，如果泛化类型为bean方式，则判断参数是否为JavaBeanDescriptor类型；如果不是，则说明参数错误，抛出异常。</li></ul>
+</li>
+<li><b>把泛化类型设置到invocation的附加属性中</b>
+<ul class="quote"><li>泛化类型需要被传递给服务端，以便服务端根据具体泛化类型对参数进行反序列化处理。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>请求会经过包装类ProtocolFilterWrapper创建的责任链，其中只展示了责任链中的GenericImplFilter过滤器。</li><li>代码1判断是否为泛化调用，如果不是，则直接指向代码2发起远程调用。</li><li>代码1.1获取泛化参数。</li><li>代码1.2判断泛化调用是否为nativejava方式，如果是，则判断参数是否是byte[]类型的；如果不是，则说明参数传递错误，抛出异常。</li><li>在代码1.3中，如果泛化类型为bean方式，则判断参数是否为JavaBeanDescriptor类型；如果不是，则说明参数错误，抛出异常。</li><li>泛化类型需要被传递给服务端，以便服务端根据具体泛化类型对参数进行反序列化处理。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">57</span><span class="mmx-name">8.2 服务提供端GenericFilter源码分析</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 2 条要点 · 6 句原句摘录</p>
+<div class="sec">
+<h4>服务提供端GenericFilter源码分析</h4>
+<ul class="point">
+<li><b>GenericFilter是服务提供端处理请求的责任链中的一个过滤器</b>
+<ul class="quote"><li>服务提供端默认会把接收到的请求封装为ChannelEventRunnable任务，并投递到业务线程池以便及时释放I/O线程。</li></ul>
+</li>
+<li><b>GenericFilter处理请求的过程</b>
+<ul class="quote"><li>判断当前请求是不是泛化调用，如果不是泛化调用，则直接执行把请求传播下去。</li><li>如果是泛化调用，则获取调用方法的参数信息，然后获取调用方法的实例。</li><li>获取泛化引用方使用的泛化类型，并进行参数反序列化处理。</li><li>将请求传递到Filter链的下一个Filter，最后执行具体服务。</li><li>根据泛化类型对服务执行结果进行序列化处理。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>服务提供端默认会把接收到的请求封装为ChannelEventRunnable任务，并投递到业务线程池以便及时释放I/O线程。</li><li>判断当前请求是不是泛化调用，如果不是泛化调用，则直接执行把请求传播下去。</li><li>如果是泛化调用，则获取调用方法的参数信息，然后获取调用方法的实例。</li><li>获取泛化引用方使用的泛化类型，并进行参数反序列化处理。</li><li>将请求传递到Filter链的下一个Filter，最后执行具体服务。</li><li>根据泛化类型对服务执行结果进行序列化处理。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">58</span><span class="mmx-name">8.3 小结</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 2 条要点 · 4 句原句摘录</p>
+<div class="sec">
+<h4>使用Filter链中的GenericImplFilter对泛化调用的参数进行合法性校验</h4>
+<ul class="point">
+<li><b>Filter链中的GenericImplFilter可以用于对泛化调用的参数进行合法性校验</b>
+<ul class="quote"><li>通过实现GenericFilter接口，编写自定义的Filter类，对泛化调用的参数进行合法性校验。</li><li>在Filter链中添加自定义的Filter类，对泛化调用的参数进行合法性校验。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>通过实现GenericFilter接口，编写自定义的Filter类，对泛化调用的参数进行合法性校验。</li><li>在Filter链中添加自定义的Filter类，对泛化调用的参数进行合法性校验。</li></ul>
+</div>
+<div class="sec">
+<h4>使用Filter链中的GenericFilter对泛化请求进行处理</h4>
+<ul class="point">
+<li><b>Filter链中的GenericFilter可以用于对泛化请求进行处理</b>
+<ul class="quote"><li>通过实现GenericFilter接口，编写自定义的Filter类，对泛化请求进行处理。</li><li>在Filter链中添加自定义的Filter类，对泛化请求进行处理。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>通过实现GenericFilter接口，编写自定义的Filter类，对泛化请求进行处理。</li><li>在Filter链中添加自定义的Filter类，对泛化请求进行处理。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">59</span><span class="mmx-name">9.1 服务消费端并发控制</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 4 条要点 · 5 句原句摘录</p>
+<div class="sec">
+<h4>服务消费端并发控制</h4>
+<ul class="point">
+<li><b>ProtocolFilterWrapper类创建的Filter链中的ActiveLimitFilter()方法进行并发控制</b>
+<ul class="quote"><li>在DubboInvoker的invoke()方法真正向远端发起RPC请求前，请求会先经过ActiveLimitFilter的invoke()方法。</li></ul>
+</li>
+<li><b>RpcStatus中维护了一个并发安全的METHOD_STATISTICS缓存，用于统计远程调用状态</b>
+<ul class="quote"><li>key为服务接口，value为该服务接口中所有方法的一个缓存，后者ConcurrentMap＜String，RpcStatus＞的key为具体的方法，value为RpcStatus对象。</li></ul>
+</li>
+<li><b>beginCount()方法用于增加方法的并发激活数量，并判断是否超过最大并发数</b>
+<ul class="quote"><li>如果beginCount()方法返回了false，则让当前线程挂起timeout时间，然后当前线程会在timeout时间后再被唤醒，或者当其他线程调用了count的notifyAll()方法时被唤醒。</li><li>如果beginCount()方法返回了true，则说明当前方法的激活并发数没有达到最大值，此时将执行代码5，继续Filter链的调用，最终向远端发起调用。</li></ul>
+</li>
+<li><b>endCount()方法用于递减方法的激活并发数，并激活被阻塞的线程</b>
+<ul class="quote"><li>代码6还调用了当前方法对应的count的notifyAll()方法来激活代码4.1中被阻塞的线程。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在DubboInvoker的invoke()方法真正向远端发起RPC请求前，请求会先经过ActiveLimitFilter的invoke()方法。</li><li>key为服务接口，value为该服务接口中所有方法的一个缓存，后者ConcurrentMap＜String，RpcStatus＞的key为具体的方法，value为RpcStatus对象。</li><li>如果beginCount()方法返回了false，则让当前线程挂起timeout时间，然后当前线程会在timeout时间后再被唤醒，或者当其他线程调用了count的notifyAll()方法时被唤醒。</li><li>如果beginCount()方法返回了true，则说明当前方法的激活并发数没有达到最大值，此时将执行代码5，继续Filter链的调用，最终向远端发起调用。</li><li>代码6还调用了当前方法对应的count的notifyAll()方法来激活代码4.1中被阻塞的线程。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">60</span><span class="mmx-name">9.2 服务提供端并发控制</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 3 条要点 · 5 句原句摘录</p>
+<div class="sec">
+<h4>服务提供端并发控制</h4>
+<ul class="point">
+<li><b>ApiProviderForExecuteLimit使用了服务提供端并发控制</b>
+<ul class="quote"><li>对com.books.dubbo.demo.api.GreetingService接口中的所有方法进行了设置，每个方法最多同时处理10个请求。</li><li>也可以只设置接口GreetingService中的某一个方法的并发处理限制个数。</li></ul>
+</li>
+<li><b>在服务提供端，具体进行并发控制的是ProtocolFilterWrapper类创建的Filter链中的ExecuteLimitFilter()方法</b>
+<ul class="quote"><li>服务提供方的AbstractProxyInvoker的invoke()方法在真正执行服务处理的前，请求会先经过ExecuteLimitFilter的invoke()方法。</li><li>代码2获取设置的executes的值，代码3递增方法对应的激活并发数。如果并发数超过了设置最大值，则直接抛出异常，否则执行代码4继续Filter链的处理，正常执行服务处理，然后执行代码5将当前方法激活并发数减去1。</li></ul>
+</li>
+<li><b>服务提供方设置并发数后，如果同时请求数超过了设置的executes的值，则会抛出异常</b>
+<ul class="quote"><li>而不是像消费端设置actives时那样去等待。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>对com.books.dubbo.demo.api.GreetingService接口中的所有方法进行了设置，每个方法最多同时处理10个请求。</li><li>也可以只设置接口GreetingService中的某一个方法的并发处理限制个数。</li><li>服务提供方的AbstractProxyInvoker的invoke()方法在真正执行服务处理的前，请求会先经过ExecuteLimitFilter的invoke()方法。</li><li>代码2获取设置的executes的值，代码3递增方法对应的激活并发数。如果并发数超过了设置最大值，则直接抛出异常，否则执行代码4继续Filter链的处理，正常执行服务处理，然后执行代码5将当前方法激活并发数减去1。</li><li>而不是像消费端设置actives时那样去等待。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">61</span><span class="mmx-name">9.3 小结</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 3 条要点 · 0 句原句摘录</p>
+<div class="sec">
+<h4>Dubbo消费端对并发请求数的限制</h4>
+<ul class="point">
+<li><b>当激活并发量达到指定值后，当前客户端请求线程会被挂起，并等待。</b>
+</li>
+<li><b>如果等待超时了，则直接抛出异常，这时服务根本都没有发送到服务提供方服务器。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>Dubbo服务提供端对并发请求数的限制</h4>
+<ul class="point">
+<li><b>服务提供方在设置并发数量后，如果同时请求数量大于设置的executes值，则会直接抛出异常。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">62</span><span class="mmx-name">第10章 Dubbo隐式参数传递</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 2 条要点 · 2 句原句摘录</p>
+<div class="sec">
+<h4>Dubbo隐式参数传递的原理</h4>
+<ul class="point">
+<li><b>服务调用方通过RpcContext.getContext().setAttachment()方法设置附加属性键值对</b>
+<ul class="quote"><li>设置的键值对可以在服务提供方服务方法内获取。</li></ul>
+</li>
+<li><b>服务提供端使用ContextFilter对请求进行拦截，并从RpcInvocation中获取attachments中的键值对</b>
+<ul class="quote"><li>然后使用RpcContext.getContext().setAttachment设置到上下文对象中。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>设置的键值对可以在服务提供方服务方法内获取。</li><li>然后使用RpcContext.getContext().setAttachment设置到上下文对象中。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">63</span><span class="mmx-name">10.1 服务消费端AbstractClusterInvoker原理剖析</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 3 条要点 · 4 句原句摘录</p>
+<div class="sec">
+<h4>AbstractClusterInvoker原理剖析</h4>
+<ul class="point">
+<li><b>AbstractClusterInvoker是服务集群容错策略的抽象类</b>
+<ul class="quote"><li>默认的集群容错策略为FailoverClusterInvoker，其继承了AbstractClusterInvoker。</li></ul>
+</li>
+<li><b>服务消费端启动后最终会到达FailoverClusterInvoker的invoke()方法</b>
+<ul class="quote"><li>从上下文中获取附加属性并设置到RpcInvocation对象中。</li><li>RpcContext中的attachments是一个Map结构。</li></ul>
+</li>
+<li><b>清除操作是在ConsumerContextFilter的invoke()方法内完成的</b>
+<ul class="quote"><li>当请求发出去后，会清除当前与调用线程关联的线程变量里面的附加属性。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>默认的集群容错策略为FailoverClusterInvoker，其继承了AbstractClusterInvoker。</li><li>从上下文中获取附加属性并设置到RpcInvocation对象中。</li><li>RpcContext中的attachments是一个Map结构。</li><li>当请求发出去后，会清除当前与调用线程关联的线程变量里面的附加属性。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">64</span><span class="mmx-name">10.2 服务提供方ContextFilter原理剖析</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 1 条要点 · 3 句原句摘录</p>
+<div class="sec">
+<h4>服务提供方ContextFilter原理剖析</h4>
+<ul class="point">
+<li><b>ContextFilter过滤器在服务提供方接收请求后，将隐式参数设置到上下文对象中</b>
+<ul class="quote"><li>从invocation对象获取附加属性Map。</li><li>如果附加属性Map不为null，则添加附加属性到上下文对象的attachments对象里。</li><li>服务逻辑执行完毕后清除当前线程所关联的上下文对象，附加属性也会被回收。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>从invocation对象获取附加属性Map。</li><li>如果附加属性Map不为null，则添加附加属性到上下文对象的attachments对象里。</li><li>服务逻辑执行完毕后清除当前线程所关联的上下文对象，附加属性也会被回收。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">65</span><span class="mmx-name">10.3 小结</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 5 条要点 · 5 句原句摘录</p>
+<div class="sec">
+<h4>Dubbo实现隐式参数传递的过程</h4>
+<ul class="point">
+<li><b>在服务消费端的AbstractClusterInvoker类的invoke()方法内，把附加属性键值对放入RpcInvocation的attachments变量中</b>
+<ul class="quote"><li>附加属性键值对用于存储隐式参数。</li></ul>
+</li>
+<li><b>经过网络传输到服务提供端</b>
+<ul class="quote"><li>RpcInvocation的attachments变量通过网络传输到服务提供端。</li></ul>
+</li>
+<li><b>服务提供端使用ContextFilter对请求进行拦截，并从RpcInvocation中获取attachments中的键值对</b>
+<ul class="quote"><li>ContextFilter用于拦截请求，获取隐式参数。</li></ul>
+</li>
+<li><b>使用RpcContext.getContext().setAttachment将键值对设置到上下文中</b>
+<ul class="quote"><li>将获取到的键值对设置到RpcContext的上下文中。</li></ul>
+</li>
+<li><b>在服务提供方服务实现类方法里使用RpcContext.getContext().getAttachment()方法获取参数值</b>
+<ul class="quote"><li>在服务实现类方法里，通过RpcContext获取之前设置的隐式参数。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>附加属性键值对用于存储隐式参数。</li><li>RpcInvocation的attachments变量通过网络传输到服务提供端。</li><li>ContextFilter用于拦截请求，获取隐式参数。</li><li>将获取到的键值对设置到RpcContext的上下文中。</li><li>在服务实现类方法里，通过RpcContext获取之前设置的隐式参数。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">66</span><span class="mmx-name">第11章 Dubbo全链路异步</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 3 条要点 · 19 句原句摘录</p>
+<div class="sec">
+<h4>Dubbo全链路异步</h4>
+<ul class="point">
+<li><b>Dubbo以CompletableFuture为基础支持所有异步编程接口</b>
+<ul class="quote"><li>异步调用是基于NIO的非阻塞能力实现并行调用，服务消费端不需要启动多线程即可完成并行调用多个远程服务。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>异步调用是基于NIO的非阻塞能力实现并行调用，服务消费端不需要启动多线程即可完成并行调用多个远程服务。</li></ul>
+</div>
+<div class="sec">
+<h4>2.7.0版本前的异步调用实现</h4>
+<ul class="point">
+<li><b>2.7.0版本之前的异步调用能力比较弱，通过获取内置的ResponseFuture接口，可以设置回调，但获取ResponseFuture的API使用起来很不便，并且无法满足让多个Future协同工作的场景</b>
+<ul class="quote"><li>具体发起远程调用是在DubboInvoker的doInvoke()方法内，其中会区分是否为异步调用。</li><li>如果发现是异步调用，代码1.6会调用currentClient.request(inv，timeout)执行远程调用，该调用不会阻塞，而是马上返回一个future对象，返回的future对象会被适配器类FutureAdapter做包装，接着把包装结果设置到RpcContext里，然后返回SimpleAsyncRpcResult，SimpleAsyncRpcResult的构造函数保存了上下文对象。</li><li>为了探究2.7.0版本之前的异步调用的实现原理，我们需要看看代码1.6.1内到底做了什么。其中，currentClient是ReferenceCountExchangeClient的实例，我们首先看看如图11.2所示的时序图。</li><li>通过图11.2可知，代码1.6.1最终调用了HeaderExchangeChannel的request()方法，其代码如下：代码2创建了请求对象，然后代码3创建了一个future对象，代码4使用底层通信异步发送请求(使用Netty的I/O线程把请求写入远端)。因代码4是非阻塞的，所以会马上返回。</li><li>这里简单提一下，从用户线程发起远程调用到返回request，使用的都是用户线程。由于代码4 channel.send(req)会马上返回，所以不会阻塞用户线程。</li><li>为了探究异步实现，我们需要看看代码3中的DefaultFuture，其类图如图11.3所示。</li><li>从图11.3可以看到，DefaultFuture中有3个静态变量：由于是static变量，所以全部DefaultFuture实例共享这3个变量。</li><li>图11.3中的lock是一个独占锁，done是该锁的一个条件变量：lock和done是为了实现线程之间的通知等待模型，比如调用DefaultFuture的get()方法的线程为了获取响应结果，内部会调用done.await()方法挂起调用线程。当接收到响应结果后，调用方线程模型中线程池里的线程会调用received()方法，其内部会把响应结果设置到DefaultFuture内，然后调用done的signal()方法激活一个因调用done的await()系列方法而挂起的线程(比如调用get()方法被阻塞的线程)。</li><li>首先我们看看代码3是如何使用newFuture创建DefaultFuture对象的：其中，DefaultFuture构造函数如下：DefaultFuture内部保存了请求的信息，包含请求ID、请求通道、请求内容、超时时间，并且把当前DefaultFuture对象保存到缓存中，通道也保存到缓存中，缓存的key为请求ID。</li><li>代码5创建完DefaultFuture后，代码6检查超时情况，其代码如下：代码6.1创建了一个可执行任务，代码6.2则当设置的超时时间到了之后执行创建的任务，在任务内会检查调用是否已经完成，具体代码如下：当超时时间到了之后，上面的代码会检查任务是否已经完成，如果已经完成则直接返回，否则创建超时事件，并调用DefaultFuture.received把结果设置到future内。</li><li>到这里我们就讲完了newFuture()方法的作用，具体来说就是创建一个DefaultFuture对象，并启动一个定时器，然后在超时时间后检查是否已经有响应结果，如果有则直接返回，否则返回超时信息。</li><li>下面我们看看received(Channel channel，Response response)方法：从上面的代码可知，当发起的请求的结果返回时或者超时时间到了之后，会调用received()方法，其中代码7把请求ID对应的future从缓存中移除，然后调用doReceived()方法把响应结果设置到DefaultFuture的结果变量response中：在上面的代码中，doReceived()方法会把响应结果设置到response变量里，然后激活一个由于调用done的wait()方法被阻塞的线程(比如由于调用了get()系列方法导致线程阻塞的线程)。另外，如果在future上设置了回调，则会调用回调函数。</li><li>获取执行结果的get()方法如下：在上面的代码中，如果超时时间＜=0，则使用默认值1000；如果任务还没完成(响应结果还是为null)，则调用条件变量done的await()方法，让当前线程挂起timeout时间——若在timeout时间内得到了响应结果(也就是说received()方法被调用了)，则当前线程会被激活；如果已经得到响应结果，则直接执行代码14返回结果。</li><li>简单总结一下：本节一开始讲解了Dubbo异步调用链路流程图，当服务消费端业务线程发起请求后，会创建一个DefaultFuture对象并设置到RpcContext中，然后在启动I/O线程发起请求后调用线程就返回了null的结果；当业务线程从RpcContext获取future对象并调用其get()方法获取真实的响应结果后，当前线程会调用条件变量done的await()方法而挂起；当服务提供端把结果写回调用方之后，调用方线程模型中线程池里的线程会把结果写入DefaultFuture对象内的结果变量中，接着调用条件变量的signal()方法来激活业务线程，然后业务线程就会从get()方法返回响应结果。</li><li>这里所讲的这种实现异步调用的方式基于从返回的future调用get()方法，其缺点是，当业务线程调用get()方法后业务线程会被阻塞，这不是我们想要的，所以Dubbo提供了在future对象上设置回调函数的方式，让我们实现真正的异步调用。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>具体发起远程调用是在DubboInvoker的doInvoke()方法内，其中会区分是否为异步调用。</li><li>如果发现是异步调用，代码1.6会调用currentClient.request(inv，timeout)执行远程调用，该调用不会阻塞，而是马上返回一个future对象，返回的future对象会被适配器类FutureAdapter做包装，接着把包装结果设置到RpcContext里，然后返回SimpleAsyncRpcResult，SimpleAsyncRpcResult的构造函数保存了上下文对象。</li><li>为了探究2.7.0版本之前的异步调用的实现原理，我们需要看看代码1.6.1内到底做了什么。其中，currentClient是ReferenceCountExchangeClient的实例，我们首先看看如图11.2所示的时序图。</li><li>通过图11.2可知，代码1.6.1最终调用了HeaderExchangeChannel的request()方法，其代码如下：代码2创建了请求对象，然后代码3创建了一个future对象，代码4使用底层通信异步发送请求(使用Netty的I/O线程把请求写入远端)。因代码4是非阻塞的，所以会马上返回。</li><li>这里简单提一下，从用户线程发起远程调用到返回request，使用的都是用户线程。由于代码4 channel.send(req)会马上返回，所以不会阻塞用户线程。</li><li>为了探究异步实现，我们需要看看代码3中的DefaultFuture，其类图如图11.3所示。</li><li>从图11.3可以看到，DefaultFuture中有3个静态变量：由于是static变量，所以全部DefaultFuture实例共享这3个变量。</li><li>图11.3中的lock是一个独占锁，done是该锁的一个条件变量：lock和done是为了实现线程之间的通知等待模型，比如调用DefaultFuture的get()方法的线程为了获取响应结果，内部会调用done.await()方法挂起调用线程。当接收到响应结果后，调用方线程模型中线程池里的线程会调用received()方法，其内部会把响应结果设置到DefaultFuture内，然后调用done的signal()方法激活一个因调用done的await()系列方法而挂起的线程(比如调用get()方法被阻塞的线程)。</li><li>首先我们看看代码3是如何使用newFuture创建DefaultFuture对象的：其中，DefaultFuture构造函数如下：DefaultFuture内部保存了请求的信息，包含请求ID、请求通道、请求内容、超时时间，并且把当前DefaultFuture对象保存到缓存中，通道也保存到缓存中，缓存的key为请求ID。</li><li>代码5创建完DefaultFuture后，代码6检查超时情况，其代码如下：代码6.1创建了一个可执行任务，代码6.2则当设置的超时时间到了之后执行创建的任务，在任务内会检查调用是否已经完成，具体代码如下：当超时时间到了之后，上面的代码会检查任务是否已经完成，如果已经完成则直接返回，否则创建超时事件，并调用DefaultFuture.received把结果设置到future内。</li><li>到这里我们就讲完了newFuture()方法的作用，具体来说就是创建一个DefaultFuture对象，并启动一个定时器，然后在超时时间后检查是否已经有响应结果，如果有则直接返回，否则返回超时信息。</li><li>下面我们看看received(Channel channel，Response response)方法：从上面的代码可知，当发起的请求的结果返回时或者超时时间到了之后，会调用received()方法，其中代码7把请求ID对应的future从缓存中移除，然后调用doReceived()方法把响应结果设置到DefaultFuture的结果变量response中：在上面的代码中，doReceived()方法会把响应结果设置到response变量里，然后激活一个由于调用done的wait()方法被阻塞的线程(比如由于调用了get()系列方法导致线程阻塞的线程)。另外，如果在future上设置了回调，则会调用回调函数。</li><li>获取执行结果的get()方法如下：在上面的代码中，如果超时时间＜=0，则使用默认值1000；如果任务还没完成(响应结果还是为null)，则调用条件变量done的await()方法，让当前线程挂起timeout时间——若在timeout时间内得到了响应结果(也就是说received()方法被调用了)，则当前线程会被激活；如果已经得到响应结果，则直接执行代码14返回结果。</li><li>简单总结一下：本节一开始讲解了Dubbo异步调用链路流程图，当服务消费端业务线程发起请求后，会创建一个DefaultFuture对象并设置到RpcContext中，然后在启动I/O线程发起请求后调用线程就返回了null的结果；当业务线程从RpcContext获取future对象并调用其get()方法获取真实的响应结果后，当前线程会调用条件变量done的await()方法而挂起；当服务提供端把结果写回调用方之后，调用方线程模型中线程池里的线程会把结果写入DefaultFuture对象内的结果变量中，接着调用条件变量的signal()方法来激活业务线程，然后业务线程就会从get()方法返回响应结果。</li><li>这里所讲的这种实现异步调用的方式基于从返回的future调用get()方法，其缺点是，当业务线程调用get()方法后业务线程会被阻塞，这不是我们想要的，所以Dubbo提供了在future对象上设置回调函数的方式，让我们实现真正的异步调用。</li></ul>
+</div>
+<div class="sec">
+<h4>2.7.0版本提供的异步调用实现</h4>
+<ul class="point">
+<li><b>2.7.0版本提供的基于CompletableFuture的异步调用，可以直接获取到CompletableFuture，然后设置回调</b>
+<ul class="quote"><li>当业务线程发起远程调用时，会创建一个DefaultFuture实例，接着经过FutureAdapter把DefaultFuture转换为CompletableFuture实例，然后把CompletableFuture实例设置到RpcContext内。</li><li>业务线程从RpcContext获取该CompletableFuture后，设置业务回调函数。</li><li>当服务提供方把结果写回调用方之后，调用方的线程模型中线程池里的线程会调用DefaultFuture的received()方法，并把响应结果写入DefaultFuture，接着调用这里的代码6所设置的回调，回调内部的done()方法再把结果写入CompletableFuture，然后CompletableFuture会调用业务设置的业务回调函数。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>当业务线程发起远程调用时，会创建一个DefaultFuture实例，接着经过FutureAdapter把DefaultFuture转换为CompletableFuture实例，然后把CompletableFuture实例设置到RpcContext内。</li><li>业务线程从RpcContext获取该CompletableFuture后，设置业务回调函数。</li><li>当服务提供方把结果写回调用方之后，调用方的线程模型中线程池里的线程会调用DefaultFuture的received()方法，并把响应结果写入DefaultFuture，接着调用这里的代码6所设置的回调，回调内部的done()方法再把结果写入CompletableFuture，然后CompletableFuture会调用业务设置的业务回调函数。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">67</span><span class="mmx-name">11.2 服务提供端异步执行</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 6 条要点 · 7 句原句摘录</p>
+<div class="sec">
+<h4>Provider端异步执行的概念和意义</h4>
+<ul class="point">
+<li><b>Provider端异步执行将服务的处理逻辑从Dubbo内部线程池切换到业务自定义线程</b>
+<ul class="quote"><li>避免Dubbo线程池中的线程被过度占用，有助于避免不同服务间的互相影响。</li></ul>
+</li>
+<li><b>Provider端异步执行对节省资源和提升RPC响应性能是没有效果的</b>
+<ul class="quote"><li>如果服务处理比较耗时，虽然不是使用Dubbo框架内部线程处理，但还是需要业务自己的线程来处理。</li><li>会新增一次线程上下文切换(从Dubbo内部线程池线程切换到业务线程)。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>避免Dubbo线程池中的线程被过度占用，有助于避免不同服务间的互相影响。</li><li>如果服务处理比较耗时，虽然不是使用Dubbo框架内部线程处理，但还是需要业务自己的线程来处理。</li><li>会新增一次线程上下文切换(从Dubbo内部线程池线程切换到业务线程)。</li></ul>
+</div>
+<div class="sec">
+<h4>基于定义CompletableFuture签名的接口实现异步执行</h4>
+<ul class="point">
+<li><b>基于定义CompletableFuture签名的接口实现异步执行需要接口方法的返回值为CompletableFuture</b>
+<ul class="quote"><li>方法内部使用CompletableFuture.supplyAsync让本来该由Dubbo内部线程池中的线程处理的服务，转换为由业务自定义线程池中的线程来处理。</li></ul>
+</li>
+<li><b>调用sayHello()方法的线程是Dubbo线程模型线程池中的线程，而业务处理是由bizThreadpool中的线程来处理的</b>
+<ul class="quote"><li>代码2.1保存了RPC上下文对象，以便在业务处理线程中使用。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>方法内部使用CompletableFuture.supplyAsync让本来该由Dubbo内部线程池中的线程处理的服务，转换为由业务自定义线程池中的线程来处理。</li><li>代码2.1保存了RPC上下文对象，以便在业务处理线程中使用。</li></ul>
+</div>
+<div class="sec">
+<h4>使用AsyncContext实现异步执行</h4>
+<ul class="point">
+<li><b>RpcContext.startAsync()方法开启服务异步执行，然后返回一个asyncContext</b>
+<ul class="quote"><li>把服务处理任务提交到业务线程池后该方法就直接返回了null。</li></ul>
+</li>
+<li><b>在异步任务内，首先执行代码2.2切换任务的上下文，然后休眠500ms充当任务执行，最后代码2.3把任务执行结果写入异步上下文</b>
+<ul class="quote"><li>这里由于具体执行业务处理的逻辑不在sayHello()方法所在的Dubbo内部线程池的线程中，所以不会被阻塞。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>把服务处理任务提交到业务线程池后该方法就直接返回了null。</li><li>这里由于具体执行业务处理的逻辑不在sayHello()方法所在的Dubbo内部线程池的线程中，所以不会被阻塞。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">68</span><span class="mmx-name">11.3 异步调用与执行引入的新问题</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 3 条要点 · 6 句原句摘录</p>
+<div class="sec">
+<h4>Filter链在异步调用中的问题及解决方案</h4>
+<ul class="point">
+<li><b>在2.7.0版本之前，异步调用后，Filter链上的所有Filter获取的远端调用结果都是null</b>
+<ul class="quote"><li>服务消费端的调用在发起远程调用DubboInvoker的invoke()方法前进入Filter链，如果是异步调用，则DubboInvoker的invoke()方法会创建一个DefaultFuture对象并设置到RpcContext中，接着返回一个空的RpcResult，然后该RpcResult会一层层返回到Filter链中的Filter，最终返回到业务调用的sayHello()方法，得到结果null。</li><li>当调用方要获取真正的响应结果时，则需要首先从RpcContext获取future对象，然后调用其get()方法进行等待。</li></ul>
+</li>
+<li><b>在2.7.0版本中，DubboInvoker的invoke()方法返回的是SimpleAsyncRpcResult对象而不再是RpcResult</b>
+<ul class="quote"><li>SimpleAsyncRpcResult对象继承了AsyncRpcResult类，并且其中含有远程调用返回的DefaultFuture。</li><li>Filter链中的前一个Filter的结果会直接返回给后一个，而在2.7.0版本中，其代码被修改，等得到响应结果后首先执行beforeContext()函数，以恢复发起远程调用时线程对应的上下文对象，并保存响应线程对应的上下文对象，然后执行传递的fn()方法，也就是执行filter.onResponse(r，invoker，invocation)来调用当前Filter的onResponse()方法，最后再调用afterContext()，以恢复保存的响应线程中的上下文。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>服务消费端的调用在发起远程调用DubboInvoker的invoke()方法前进入Filter链，如果是异步调用，则DubboInvoker的invoke()方法会创建一个DefaultFuture对象并设置到RpcContext中，接着返回一个空的RpcResult，然后该RpcResult会一层层返回到Filter链中的Filter，最终返回到业务调用的sayHello()方法，得到结果null。</li><li>当调用方要获取真正的响应结果时，则需要首先从RpcContext获取future对象，然后调用其get()方法进行等待。</li><li>SimpleAsyncRpcResult对象继承了AsyncRpcResult类，并且其中含有远程调用返回的DefaultFuture。</li><li>Filter链中的前一个Filter的结果会直接返回给后一个，而在2.7.0版本中，其代码被修改，等得到响应结果后首先执行beforeContext()函数，以恢复发起远程调用时线程对应的上下文对象，并保存响应线程对应的上下文对象，然后执行传递的fn()方法，也就是执行filter.onResponse(r，invoker，invocation)来调用当前Filter的onResponse()方法，最后再调用afterContext()，以恢复保存的响应线程中的上下文。</li></ul>
+</div>
+<div class="sec">
+<h4>上下文对象传递在异步调用中的问题及解决方案</h4>
+<ul class="point">
+<li><b>在服务提供端使用异步执行后，由于真正执行服务处理的是另外的线程，而RpcContext内部的ThreadLocal变量是不能跨线程访问的</b>
+<ul class="quote"><li>在启动异步执行后，需要业务先保存上下文对象，然后在业务线程里再访问。</li><li>如果使用了AsyncContext方式的异步执行，则可以方便地使用signalContextSwitch()方法来实现Context的切换。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在启动异步执行后，需要业务先保存上下文对象，然后在业务线程里再访问。</li><li>如果使用了AsyncContext方式的异步执行，则可以方便地使用signalContextSwitch()方法来实现Context的切换。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">69</span><span class="mmx-name">第12章 本地服务暴露与引用原理</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 2 条要点 · 1 句原句摘录</p>
+<div class="sec">
+<h4>本地服务暴露与引用原理</h4>
+<ul class="point">
+<li><b>Dubbo提供了一种本地服务暴露与引用的方式</b>
+<ul class="quote"><li>在同一个JVM进程中同时发布与调用同一个服务时，这种方式显得比较重要。</li></ul>
+</li>
+<li><b>如果当前JVM内要调用的服务在本JVM进程内已有，则避免了一次远程过程调用，而是直接在JVM内进行通信。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在同一个JVM进程中同时发布与调用同一个服务时，这种方式显得比较重要。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">70</span><span class="mmx-name">12.1 本地服务暴露流程</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 3 条要点 · 5 句原句摘录</p>
+<div class="sec">
+<h4>本地服务暴露流程</h4>
+<ul class="point">
+<li><b>本地导出使用了injvm协议，这是一个伪协议，它不开启端口，不发起远程调用，只在JVM内直接关联，但执行Dubbo的Filter链。</b>
+</li>
+<li><b>ServiceConfig的exportLocal方法导出服务</b>
+<ul class="quote"><li>如果发现协议类型不是injvm，则创建一个新的URL对象，并且设置协议为injvm，然后设置Host为127.0.0.1，端口为0。</li><li>调用proxyFactory.getInvoker获取代理的对象。</li><li>调用protocol.export导出服务，其中的protocol也是扩展接口，这里与远程服务暴露不同之处在于协议类型为injvm，所以会加载扩展实现类InjvmProtocol。</li></ul>
+</li>
+<li><b>InjvmProtocol的export()方法做了什么</b>
+<ul class="quote"><li>export()方法返回了一个InjvmExporter对象，并保存了InjvmProtocol中的exporterMap变量。</li><li>InjvmExporter构造函数把自己放入InjvmProtocol管理的exporterMap缓存中去了。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如果发现协议类型不是injvm，则创建一个新的URL对象，并且设置协议为injvm，然后设置Host为127.0.0.1，端口为0。</li><li>调用proxyFactory.getInvoker获取代理的对象。</li><li>调用protocol.export导出服务，其中的protocol也是扩展接口，这里与远程服务暴露不同之处在于协议类型为injvm，所以会加载扩展实现类InjvmProtocol。</li><li>export()方法返回了一个InjvmExporter对象，并保存了InjvmProtocol中的exporterMap变量。</li><li>InjvmExporter构造函数把自己放入InjvmProtocol管理的exporterMap缓存中去了。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">71</span><span class="mmx-name">12.2 本地服务引用启动流程</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 5 条要点 · 8 句原句摘录</p>
+<div class="sec">
+<h4>本地服务引用启动流程</h4>
+<ul class="point">
+<li><b>消费端启动时会调用createProxy()方法来创建代理</b>
+<ul class="quote"><li>由函数shouldJvmRefer()决定是开启本地引用还是远程引用。</li><li>然后其内部会调用InjvmProtocol的isInjvmRefer()方法来进行判断。</li><li>后者又会调用其getExporter()方法从InjvmProtocol的缓存中查看是否有本地暴露的服务。</li></ul>
+</li>
+<li><b>在同一JVM内进行本地引用时，可以根据服务key从exporterMap中找到导出的invoker并返回</b>
+<ul class="quote"><li>对应每个扩展接口，在整个JVM内只会有一个InjvmProtocol的实例。</li><li>在本地服务导出时会把导出的服务保存到InjvmProtocol的内部缓存exporterMap中。</li></ul>
+</li>
+<li><b>执行代码1将创建一个本地URL，其中Host为127.0.0.1，Port为0，协议为injvm</b>
+<ul class="quote"><li>这些参数与本地服务导出时一致。</li></ul>
+</li>
+<li><b>装配好URL之后，调用refprotocol.refer(interfaceClass，url)进行服务引用</b>
+<ul class="quote"><li>由于协议类型为injvm，因此这里会返回SPI中缓存的InjvmProtocol对象。</li><li>并且该对象也是使用Wrapper包装后的，所以会经过一层层后才调用到InjvmProtocol的refer()方法。</li></ul>
+</li>
+<li><b>该方法返回了一个InjvmInvoker对象，并且保存了InjvmProtocol管理的exporterMap(其中保存了导出的本地服务)。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>由函数shouldJvmRefer()决定是开启本地引用还是远程引用。</li><li>然后其内部会调用InjvmProtocol的isInjvmRefer()方法来进行判断。</li><li>后者又会调用其getExporter()方法从InjvmProtocol的缓存中查看是否有本地暴露的服务。</li><li>对应每个扩展接口，在整个JVM内只会有一个InjvmProtocol的实例。</li><li>在本地服务导出时会把导出的服务保存到InjvmProtocol的内部缓存exporterMap中。</li><li>这些参数与本地服务导出时一致。</li><li>由于协议类型为injvm，因此这里会返回SPI中缓存的InjvmProtocol对象。</li><li>并且该对象也是使用Wrapper包装后的，所以会经过一层层后才调用到InjvmProtocol的refer()方法。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">72</span><span class="mmx-name">12.3 本地服务一次引用流程</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 2 条要点 · 1 句原句摘录</p>
+<div class="sec">
+<h4>本地服务一次引用流程</h4>
+<ul class="point">
+<li><b>发起本地调用后，会进入调用方的Filter链，并最终调用InjvmInvoker的invoke()方法</b>
+<ul class="quote"><li>InjvmInvoker的invoke()方法内部从JVM内唯一的InjvmProtocol实例里获取导出服务对应的InjvmExporter实例。</li></ul>
+</li>
+<li><b>先进入本地服务提供方的Filter链，然后最终调用代理拦截器AbstractProxyInvoker的invoke()方法以调用服务实现类的对应方法。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>InjvmInvoker的invoke()方法内部从JVM内唯一的InjvmProtocol实例里获取导出服务对应的InjvmExporter实例。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">73</span><span class="mmx-name">12.4 小结</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 1 条要点 · 0 句原句摘录</p>
+<div class="sec">
+<h4>Dubbo本地服务发布与引用的原理</h4>
+<ul class="point">
+<li><b>本地导出使用了injvm协议，这是一个伪协议，它不开启端口，不发起远程调用，只在JVM内直接关联，但执行Dubbo的Filter链。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">74</span><span class="mmx-name">第13章 Dubbo协议与网络传输</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 8 条要点 · 13 句原句摘录</p>
+<div class="sec">
+<h4>Dubbo协议概述</h4>
+<ul class="point">
+<li><b>Dubbo协议是服务提供方和消费方之间的通信协议</b>
+<ul class="quote"><li>服务消费端如何把服务请求信息序列化为二进制数据。</li><li>服务提供方如何把消费端发送的二进制数据反序列化为可识别的POJO对象。</li></ul>
+</li>
+<li><b>Dubbo协议采用了RPC的通信方式</b>
+<ul class="quote"><li>RPC是一种跨网络调用远程方法的通信方式。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>服务消费端如何把服务请求信息序列化为二进制数据。</li><li>服务提供方如何把消费端发送的二进制数据反序列化为可识别的POJO对象。</li><li>RPC是一种跨网络调用远程方法的通信方式。</li></ul>
+</div>
+<div class="sec">
+<h4>Dubbo协议的设计原则</h4>
+<ul class="point">
+<li><b>协议只负责数据的传输，不参与业务逻辑处理</b>
+<ul class="quote"><li>协议需要是轻量级的，易于扩展和兼容。</li></ul>
+</li>
+<li><b>协议需要支持多种序列化和反序列化方式</b>
+<ul class="quote"><li>序列化和反序列化是数据传输的关键步骤。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>协议需要是轻量级的，易于扩展和兼容。</li><li>序列化和反序列化是数据传输的关键步骤。</li></ul>
+</div>
+<div class="sec">
+<h4>Dubbo协议的数据序列化方式</h4>
+<ul class="point">
+<li><b>Dubbo协议支持多种序列化方式，包括Hessian、Java序列化、JSON等</b>
+<ul class="quote"><li>Hessian是一种高效的二进制序列化方式。</li><li>Java序列化是Java自带的序列化方式。</li><li>JSON是一种轻量级的数据交换格式。</li></ul>
+</li>
+<li><b>序列化方式的选择需要根据具体业务场景来决定</b>
+<ul class="quote"><li>不同的序列化方式有不同的优缺点，需要根据业务需求来选择。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Hessian是一种高效的二进制序列化方式。</li><li>Java序列化是Java自带的序列化方式。</li><li>JSON是一种轻量级的数据交换格式。</li><li>不同的序列化方式有不同的优缺点，需要根据业务需求来选择。</li></ul>
+</div>
+<div class="sec">
+<h4>Dubbo协议的网络传输方式</h4>
+<ul class="point">
+<li><b>Dubbo协议支持多种网络传输方式，包括TCP、UDP、HTTP等</b>
+<ul class="quote"><li>TCP是一种面向连接的、可靠的、基于字节流的传输层通信协议。</li><li>UDP是一种无连接的、不可靠的、基于数据报的传输层协议。</li><li>HTTP是一种基于TCP的应用层协议，用于传输超文本、图片、音频等多媒体信息。</li></ul>
+</li>
+<li><b>网络传输方式的选择需要根据具体业务场景来决定</b>
+<ul class="quote"><li>不同的网络传输方式有不同的优缺点，需要根据业务需求来选择。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>TCP是一种面向连接的、可靠的、基于字节流的传输层通信协议。</li><li>UDP是一种无连接的、不可靠的、基于数据报的传输层协议。</li><li>HTTP是一种基于TCP的应用层协议，用于传输超文本、图片、音频等多媒体信息。</li><li>不同的网络传输方式有不同的优缺点，需要根据业务需求来选择。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">75</span><span class="mmx-name">13.1 Dubbo协议</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 3 条要点 · 8 句原句摘录</p>
+<div class="sec">
+<h4>Dubbo协议概述</h4>
+<ul class="point">
+<li><b>Dubbo协议是建立在TCP之上的一种应用层协议</b>
+<ul class="quote"><li>Dubbo协议的内容由header和body两部分组成。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Dubbo协议的内容由header和body两部分组成。</li></ul>
+</div>
+<div class="sec">
+<h4>Dubbo协议报文格式</h4>
+<ul class="point">
+<li><b>header总包含了16字节的数据</b>
+<ul class="quote"><li>前两字节为魔数，用来标识一个帧的开始，固定为0xdabb。</li><li>紧跟其后的一字节是请求类型和序列化标记ID的组合结果。</li><li>再后面的一字节是只在响应报文里才设置，用来标示响应的结果码。</li><li>其后的8字节是请求ID。</li><li>最后的4字节是body内容的大小。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>前两字节为魔数，用来标识一个帧的开始，固定为0xdabb。</li><li>紧跟其后的一字节是请求类型和序列化标记ID的组合结果。</li><li>再后面的一字节是只在响应报文里才设置，用来标示响应的结果码。</li><li>其后的8字节是请求ID。</li><li>最后的4字节是body内容的大小。</li></ul>
+</div>
+<div class="sec">
+<h4>请求类型和序列化方式</h4>
+<ul class="point">
+<li><b>高四位标示请求类型，低四位标示序列化方式</b>
+<ul class="quote"><li>请求类型枚举值：0x00:心跳请求，0x01:普通调用，0x02:注册/注销，0x03:路由请求，0x04:集群容错，0x05:负载均衡，0x06:动态配置，0x07:授权请求，0x08:消息推送，0x09:自定义。</li><li>序列化方式枚举值：0x00:Java序列化，0x01:Hessian序列化，0x02:JSON序列化，0x03:PB序列化。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>请求类型枚举值：0x00:心跳请求，0x01:普通调用，0x02:注册/注销，0x03:路由请求，0x04:集群容错，0x05:负载均衡，0x06:动态配置，0x07:授权请求，0x08:消息推送，0x09:自定义。</li><li>序列化方式枚举值：0x00:Java序列化，0x01:Hessian序列化，0x02:JSON序列化，0x03:PB序列化。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">76</span><span class="mmx-name">13.2 服务消费方编码原理</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 4 条要点 · 14 句原句摘录</p>
+<div class="sec">
+<h4>服务消费方编码原理</h4>
+<ul class="point">
+<li><b>NettyCodecAdapter管理的编解码器被设置到Netty链接的Channel管线里</b>
+<ul class="quote"><li>消费端发起一次调用后，最终会通过DubboInvoker的doInvoke()方法内的远程调用客户端对象currentClient的request()方法把请求发送出去。</li><li>当网络传输使用Netty时，实际上是把请求转换为任务并投递到了NettyClient对应的Channel管理的异步队列里。</li></ul>
+</li>
+<li><b>Netty异步处理的写入时序图</b>
+<ul class="quote"><li>NioEventLoop关联的线程会把请求任务进行传递，即传递给该Channel管理的管线中的每个Handler。</li><li>其中一个Handler就是编解码处理器，也就是图13.3中的InternalEncoder，它又把任务委托给DubboCodec对请求任务进行编码。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>消费端发起一次调用后，最终会通过DubboInvoker的doInvoke()方法内的远程调用客户端对象currentClient的request()方法把请求发送出去。</li><li>当网络传输使用Netty时，实际上是把请求转换为任务并投递到了NettyClient对应的Channel管理的异步队列里。</li><li>NioEventLoop关联的线程会把请求任务进行传递，即传递给该Channel管理的管线中的每个Handler。</li><li>其中一个Handler就是编解码处理器，也就是图13.3中的InternalEncoder，它又把任务委托给DubboCodec对请求任务进行编码。</li></ul>
+</div>
+<div class="sec">
+<h4>DubboCodec的encode()方法</h4>
+<ul class="point">
+<li><b>encodeRequest对请求信息进行编码</b>
+<ul class="quote"><li>获取序列化扩展实现，默认为hession序列化方式。</li><li>创建Dubbo协议扩展头字节数组，由于Dubbo协议的协议头部分为16字节，所以这里创建了16字节的byte数组。</li><li>把魔数0xdabb写入协议头的前两字节。</li><li>则把请求类型与序列化类型标记到协议头第3字节。</li><li>把请求ID写入协议头的第5～12字节，由于是request类型，所以第4字节的响应码是不需要设置的。</li><li>使用代码1.1获取的序列化方式对象数据部分进行编码，并把协议数据部分写入缓存(buffer)。</li><li>刷新缓存。</li><li>如果检查合法，则把协议数据部分的大小写入协议头的第12～16字节。</li><li>则首先把缓存的写入下标移动到写入协议数据前的位置，然后把协议头写入缓存，这时缓存里存放了完整的Dubbo协议帧(协议头+协议数据体)，最后把缓存的写入下标设置为写入Dubbo协议帧后面的位置。</li></ul>
+</li>
+<li><b>encodeResponse对响应信息进行编码</b>
+<ul class="quote"><li>前者需要对协议头的第4字节写入响应类型。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>获取序列化扩展实现，默认为hession序列化方式。</li><li>创建Dubbo协议扩展头字节数组，由于Dubbo协议的协议头部分为16字节，所以这里创建了16字节的byte数组。</li><li>把魔数0xdabb写入协议头的前两字节。</li><li>则把请求类型与序列化类型标记到协议头第3字节。</li><li>把请求ID写入协议头的第5～12字节，由于是request类型，所以第4字节的响应码是不需要设置的。</li><li>使用代码1.1获取的序列化方式对象数据部分进行编码，并把协议数据部分写入缓存(buffer)。</li><li>刷新缓存。</li><li>如果检查合法，则把协议数据部分的大小写入协议头的第12～16字节。</li><li>则首先把缓存的写入下标移动到写入协议数据前的位置，然后把协议头写入缓存，这时缓存里存放了完整的Dubbo协议帧(协议头+协议数据体)，最后把缓存的写入下标设置为写入Dubbo协议帧后面的位置。</li><li>前者需要对协议头的第4字节写入响应类型。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">77</span><span class="mmx-name">13.3 服务发布方解码原理</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 7 条要点 · 8 句原句摘录</p>
+<div class="sec">
+<h4>客户端与服务端交互流程中的问题</h4>
+<ul class="point">
+<li><b>客户端发送数据时，实际是把数据写入TCP发送缓存里，如果发送的包的大小比TCP发送缓存的容量大，那么这个数据包就会被分成多个包，通过socket多次发送到服务端。而服务端获取数据是从接收缓存里获取的，假设服务端第一次从接收缓存里获取的数据是整个包的一部分，这时就产生了半包现象。</b>
+</li>
+<li><b>如果发送的数据包大小比TCP发送缓存的容量小，并且假设TCP缓存可以存放多个包，那么客户端和服务端的一次通信就可能传递了多个包，这时服务端就可能从接收缓存一下读取了多个包，这样就出现了粘包现象。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>服务提供端对Dubbo协议的内容进行解码的原理</h4>
+<ul class="point">
+<li><b>NettyServer启动时把NettyCodecAdapter内部管理的编解码器注入链接Channel的管线内。</b>
+</li>
+<li><b>在Netty中，每个Channel(NioSocketChannel)与NioEventLoopGroup中的某一个NioEventLoop固定关联，NettyServer会为每个接收的链接创建一个Channel对象，这个Channel对象也会与Worker NioEventLoopGroup中的某一个NioEventLoop固定关联。</b>
+</li>
+<li><b>当有读取事件时，NioEventLoop关联的线程会从缓存读取数据，然后把数据传递给该Channel管理的管线中的handler，这里会把数据传递给NettyCodecAdapter的内部类InternalDecoder。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>服务提供端对Dubbo协议的内容进行解码的具体过程</h4>
+<ul class="point">
+<li><b>在NettyCodecAdapter的InternalDecoder的channelRead()方法中，解码操作是在callDecode()方法中完成的</b>
+<ul class="quote"><li>callDecode()方法的代码中，decodeRemovalReentryProtection内部调用decode()方法。</li><li>decode()方法的代码中，首先检查魔数以便确定当前数据是Dubbo协议的数据。</li><li>decode()方法的代码中，判断是否读取到了一个完整的Dubbo协议帧头，如果不是，则返回NEED_MORE_INPUT。</li><li>decode()方法的代码中，解析出Dubbo协议帧数据部分(body)的大小，检查body的大小是否超过了设置的数据包大小，如果超过了，则抛出ExceedPayloadLimitException异常。</li><li>decode()方法的代码中，判断是否遇到了半包问题，如果是，则直接返回NEED_MORE_INPUT。</li><li>decode()方法的代码中，解析协议帧数据部分。</li></ul>
+</li>
+<li><b>在decodeBody()方法中是如何解析Dubbo协议帧数据部分的</b>
+<ul class="quote"><li>decodeBody()方法的代码比较简单，其流程与编码时的流程是相反的。</li><li>decode()方法在过程中使用“自定义协议header+body”的方式来解决粘包、半包问题，其中header记录了body的大小，这种方式便于协议的升级。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>callDecode()方法的代码中，decodeRemovalReentryProtection内部调用decode()方法。</li><li>decode()方法的代码中，首先检查魔数以便确定当前数据是Dubbo协议的数据。</li><li>decode()方法的代码中，判断是否读取到了一个完整的Dubbo协议帧头，如果不是，则返回NEED_MORE_INPUT。</li><li>decode()方法的代码中，解析出Dubbo协议帧数据部分(body)的大小，检查body的大小是否超过了设置的数据包大小，如果超过了，则抛出ExceedPayloadLimitException异常。</li><li>decode()方法的代码中，判断是否遇到了半包问题，如果是，则直接返回NEED_MORE_INPUT。</li><li>decode()方法的代码中，解析协议帧数据部分。</li><li>decodeBody()方法的代码比较简单，其流程与编码时的流程是相反的。</li><li>decode()方法在过程中使用“自定义协议header+body”的方式来解决粘包、半包问题，其中header记录了body的大小，这种方式便于协议的升级。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">78</span><span class="mmx-name">13.4 小结</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 4 条要点 · 10 句原句摘录</p>
+<div class="sec">
+<h4>Dubbo协议帧格式</h4>
+<ul class="point">
+<li><b>Dubbo协议帧由4部分组成：魔数、请求ID、序列化方式、数据</b>
+<ul class="quote"><li>魔数：固定为0xDabb。</li><li>请求ID：用于表示请求的唯一标识。</li><li>序列化方式：用于表示请求数据使用的序列化方式。</li><li>数据：用于表示请求的具体内容。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>魔数：固定为0xDabb。</li><li>请求ID：用于表示请求的唯一标识。</li><li>序列化方式：用于表示请求数据使用的序列化方式。</li><li>数据：用于表示请求的具体内容。</li></ul>
+</div>
+<div class="sec">
+<h4>服务消费端请求数据封装为Dubbo协议帧</h4>
+<ul class="point">
+<li><b>服务消费端把请求数据封装为Dubbo协议帧，并进行序列化处理</b>
+<ul class="quote"><li>请求数据：包括方法名、参数列表等。</li><li>序列化处理：使用Dubbo默认的序列化方式(Java序列化)。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>请求数据：包括方法名、参数列表等。</li><li>序列化处理：使用Dubbo默认的序列化方式(Java序列化)。</li></ul>
+</div>
+<div class="sec">
+<h4>服务提供方解决半包粘包问题</h4>
+<ul class="point">
+<li><b>服务提供方使用NIO进行通信，解决了半包粘包问题</b>
+<ul class="quote"><li>NIO：Non-blocking Input/Output，非阻塞输入输出。</li><li>半包粘包：指数据传输过程中，一个数据包被分成多个数据包发送，或者一个数据包被分成多个数据包接收。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>NIO：Non-blocking Input/Output，非阻塞输入输出。</li><li>半包粘包：指数据传输过程中，一个数据包被分成多个数据包发送，或者一个数据包被分成多个数据包接收。</li></ul>
+</div>
+<div class="sec">
+<h4>服务提供方解码后的数据转换为POJO类对象</h4>
+<ul class="point">
+<li><b>服务提供方使用Java反射机制，把解码后的数据转换为POJO类对象</b>
+<ul class="quote"><li>Java反射机制：Java提供的一种动态获取类的成员变量和方法，并调用其方法的功能。</li><li>POJO类对象：Plain Old Java Object，简单Java对象，指没有继承其他类的Java类。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Java反射机制：Java提供的一种动态获取类的成员变量和方法，并调用其方法的功能。</li><li>POJO类对象：Plain Old Java Object，简单Java对象，指没有继承其他类的Java类。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">79</span><span class="mmx-name">实践篇</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 7 条要点 · 0 句原句摘录</p>
+<div class="sec">
+<h4>使用Arthas研究Dubbo框架实现</h4>
+<ul class="point">
+<li><b>Arthas是阿里巴巴开源的Java诊断工具，可以用于在线诊断Java应用的各种问题。</b>
+</li>
+<li><b>通过Arthas，可以查看Dubbo服务的详细信息，如服务提供者、消费者、调用次数等。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>基于Dubbo的扩展接口实现IP维度的动态服务路由</h4>
+<ul class="point">
+<li><b>Dubbo提供了扩展接口，可以通过实现这些接口来扩展Dubbo的功能。</b>
+</li>
+<li><b>通过实现IP维度的动态服务路由，可以实现根据客户端IP地址来路由服务请求。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>基于CompletableFuture和Netty模拟RPC同步与纯异步调用</h4>
+<ul class="point">
+<li><b>CompletableFuture是Java 8中引入的一个新的并发编程工具，可以用于实现异步编程。</b>
+</li>
+<li><b>Netty是一个高性能的NIO框架，可以用于实现高性能的RPC调用。</b>
+</li>
+<li><b>通过结合CompletableFuture和Netty，可以实现RPC的同步和纯异步调用。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">80</span><span class="mmx-name">第14章 Dubbo实践</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 2 条要点 · 8 句原句摘录</p>
+<div class="sec">
+<h4>Arthas的简介与安装</h4>
+<ul class="point">
+<li><b>Arthas是Alibaba开源的Java诊断工具，可以帮助开发者解决各种问题</b>
+<ul class="quote"><li>这个类是从哪个Jar包加载的？为什么会报各种类相关的Exception？</li><li>我改的代码为什么没有执行到？难道是我没提交？分支搞错了？</li><li>遇到问题无法在线上调试，难道只能通过加日志再重新发布吗？</li><li>线上遇到某个用户的数据处理有问题，但线上同样无法调试，线下无法重现！</li><li>是否能够通过一个全局视角来查看系统的运行状况？</li><li>有什么办法可以监控到JVM的实时运行状态？</li></ul>
+</li>
+<li><b>安装Arthas需要下载arthas-boot.jar，并启动arthas-boot.jar</b>
+<ul class="quote"><li>下载arthas-boot.jar：wget https://alibaba.github.io/arthas/arthas-boot.jar。</li><li>启动arthas-boot.jar：java-jar arthas-boot.jar。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>这个类是从哪个Jar包加载的？为什么会报各种类相关的Exception？</li><li>我改的代码为什么没有执行到？难道是我没提交？分支搞错了？</li><li>遇到问题无法在线上调试，难道只能通过加日志再重新发布吗？</li><li>线上遇到某个用户的数据处理有问题，但线上同样无法调试，线下无法重现！</li><li>是否能够通过一个全局视角来查看系统的运行状况？</li><li>有什么办法可以监控到JVM的实时运行状态？</li><li>下载arthas-boot.jar：wget https://alibaba.github.io/arthas/arthas-boot.jar。</li><li>启动arthas-boot.jar：java-jar arthas-boot.jar。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">81</span><span class="mmx-name">14.2 查看扩展接口适配器类的源码</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 1 条要点 · 2 句原句摘录</p>
+<div class="sec">
+<h4>查看扩展接口适配器类的源码</h4>
+<ul class="point">
+<li><b>使用Arthas在服务启动的情况下查看某个适配器源码</b>
+<ul class="quote"><li>比如我们想查看扩展接口org.apache.dubbo.rpc.Protocol的适配器类源码，在启动Dubbo服务和Arthas后，在Arthas的控制台执行下面的命令即可。</li><li>同理，其他扩展接口的适配器类源码也可以使用类似的方法得到。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>比如我们想查看扩展接口org.apache.dubbo.rpc.Protocol的适配器类源码，在启动Dubbo服务和Arthas后，在Arthas的控制台执行下面的命令即可。</li><li>同理，其他扩展接口的适配器类源码也可以使用类似的方法得到。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">82</span><span class="mmx-name">14.3 查看服务提供端Wrapper类的源码</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 1 条要点 · 2 句原句摘录</p>
+<div class="sec">
+<h4>查看服务提供端Wrapper类的源码</h4>
+<ul class="point">
+<li><b>使用jad命令查看被包装后的服务实现类</b>
+<ul class="quote"><li>在启动Dubbo服务提供端和Arthas后，在Arthas的控制台执行jad命令。</li><li>这样就查看到了GreetingServiceImpl服务类被包装后的代码。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在启动Dubbo服务提供端和Arthas后，在Arthas的控制台执行jad命令。</li><li>这样就查看到了GreetingServiceImpl服务类被包装后的代码。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">83</span><span class="mmx-name">14.4 查询Dubbo启动后都有哪些Filter</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 3 条要点 · 2 句原句摘录</p>
+<div class="sec">
+<h4>查询Dubbo启动后都有哪些Filter</h4>
+<ul class="point">
+<li><b>使用Arthas的trace命令查看Filter链</b>
+<ul class="quote"><li>在启动Dubbo服务提供端和Arthas后，在Arthas的控制台执行如下命令。</li></ul>
+</li>
+<li><b>当前运行的服务提供端的Filter链中的Filter包括：</b>
+<ul class="quote"><li>xxx。</li></ul>
+</li>
+<li><b>在服务消费端启动后看其运行的Filter链中都有哪些Filter。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在启动Dubbo服务提供端和Arthas后，在Arthas的控制台执行如下命令。</li><li>xxx。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">84</span><span class="mmx-name">14.5 Demo验证RoundRobin LoadBalance负载均衡原理</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 2 条要点 · 2 句原句摘录</p>
+<div class="sec">
+<h4>RoundRobin LoadBalance负载均衡原理</h4>
+<ul class="point">
+<li><b>RoundRobin算法按权重轮询分配请求</b>
+<ul class="quote"><li>如果权重都一样，则实现真正意义上的RR轮询，次数相同。</li></ul>
+</li>
+<li><b>权重决定了轮询的次数</b>
+<ul class="quote"><li>权重越高，轮询次数越多。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如果权重都一样，则实现真正意义上的RR轮询，次数相同。</li><li>权重越高，轮询次数越多。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">85</span><span class="mmx-name">14.6 如何动态获取Dubbo服务提供方地址列表</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 4 条要点 · 8 句原句摘录</p>
+<div class="sec">
+<h4>动态获取Dubbo服务提供方地址列表的场景概述</h4>
+<ul class="point">
+<li><b>并行任务处理系统需要根据业务指定某个IP来进行调用</b>
+<ul class="quote"><li>系统接受一个大任务后会切割为若干子任务，然后把子任务分派到不同的机器上去执行。</li><li>这时就需要把子任务路由到指定的IP上去运行。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>系统接受一个大任务后会切割为若干子任务，然后把子任务分派到不同的机器上去执行。</li><li>这时就需要把子任务路由到指定的IP上去运行。</li></ul>
+</div>
+<div class="sec">
+<h4>原理与实现</h4>
+<ul class="point">
+<li><b>当服务提供方启动时，Dubbo会将服务注册到服务注册中心，这里我们使用的服务注册中心是ZooKeeper</b>
+<ul class="quote"><li>服务com.books.dubbo.demo.api.GreetingService注册到ZooKeeper后，其结构是如图14.3所示的树形结构。</li></ul>
+</li>
+<li><b>消费端启动时，Dubbo会去ZooKeeper上订阅/dubbo/com.books.dubbo.demo.api.GreetingService/providers节点下面的信息，也就是服务提供者列表信息</b>
+<ul class="quote"><li>我们可以基于这个原理来获取服务提供者列表，然后对信息进行过滤加工从而获取服务提供者地址列表。</li><li>并且注册ZooKeeper的一个监听器，当服务提供者机器增减后，动态更新保存的地址列表。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>服务com.books.dubbo.demo.api.GreetingService注册到ZooKeeper后，其结构是如图14.3所示的树形结构。</li><li>我们可以基于这个原理来获取服务提供者列表，然后对信息进行过滤加工从而获取服务提供者地址列表。</li><li>并且注册ZooKeeper的一个监听器，当服务提供者机器增减后，动态更新保存的地址列表。</li></ul>
+</div>
+<div class="sec">
+<h4>实现代码分析</h4>
+<ul class="point">
+<li><b>main()函数创建了一个ZooKeeperIpList对象，并且调用其init()方法</b>
+<ul class="quote"><li>init()方法内，首先执行代码1进行参数校验，然后执行代码2拼接要订阅的ZookeeperIpList的path。</li><li>拼接完成后dataid为/dubbo/com.books.dubbo.demo.api.GreetingService/providers，然后代码3创建zkClient订阅该dataid对应的path，并且注册监听器。</li><li>当path下的信息变化后会得到最新的列表。另外，这里使用parseIpList()方法解析获取的地址列表，解析完毕后保存到ipList中。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>init()方法内，首先执行代码1进行参数校验，然后执行代码2拼接要订阅的ZookeeperIpList的path。</li><li>拼接完成后dataid为/dubbo/com.books.dubbo.demo.api.GreetingService/providers，然后代码3创建zkClient订阅该dataid对应的path，并且注册监听器。</li><li>当path下的信息变化后会得到最新的列表。另外，这里使用parseIpList()方法解析获取的地址列表，解析完毕后保存到ipList中。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">86</span><span class="mmx-name">14.7 根据IP动态路由调用Dubbo服务</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 6 个小节 · 9 条要点 · 7 句原句摘录</p>
+<div class="sec">
+<h4>Dubbo的集群容错策略</h4>
+<ul class="point">
+<li><b>集群容错策略会先从RegistryDirectory获取所有服务提供者的invoker列表，然后使用负载均衡策略从中选择一个inovker来发起远程调用。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>实现指定IP调用的功能</h4>
+<ul class="point">
+<li><b>实现扩展接口Cluster</b>
+<ul class="quote"><li>从RpcContext.getContext()方法中获取了属性值IP，如果该值不为空，则说明指定了IP。</li><li>检查是否有可用的服务提供者，如果没有则抛出异常。</li><li>遍历invokers列表查找指定IP对应的invoker，如果没有指定IP对应的invoker，则抛出异常。</li><li>使用选择的invoker发起远程调用。</li></ul>
+</li>
+<li><b>修改框架的AbstractClusterInvoker</b>
+<ul class="quote"><li>把LoadBalance loadbalance=initLoadBalance(invokers，invocation)；修改为LoadBalance loadbalance=null；，因为我们不需要负载均衡了。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>从RpcContext.getContext()方法中获取了属性值IP，如果该值不为空，则说明指定了IP。</li><li>检查是否有可用的服务提供者，如果没有则抛出异常。</li><li>遍历invokers列表查找指定IP对应的invoker，如果没有指定IP对应的invoker，则抛出异常。</li><li>使用选择的invoker发起远程调用。</li><li>把LoadBalance loadbalance=initLoadBalance(invokers，invocation)；修改为LoadBalance loadbalance=null；，因为我们不需要负载均衡了。</li></ul>
+</div>
+<div class="sec">
+<h4>配置扩展实现</h4>
+<ul class="point">
+<li><b>把扩展实现配置到如图14.4所示的文件中。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>在消费端调用时进行设置</h4>
+<ul class="point">
+<li><b>创建ZookeeperIpList对象并初始化</b>
+<ul class="quote"><li>调用ZookeeperIpList的getIpList()方法获取所有服务提供者地址列表。</li></ul>
+</li>
+<li><b>轮询指定IP进行调用</b>
+<ul class="quote"><li>每次发起远程调用前，可以指定那一台服务提供方来提供服务。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>调用ZookeeperIpList的getIpList()方法获取所有服务提供者地址列表。</li><li>每次发起远程调用前，可以指定那一台服务提供方来提供服务。</li></ul>
+</div>
+<div class="sec">
+<h4>Dubbo服务直连功能</h4>
+<ul class="point">
+<li><b>服务直连功能只能在服务启动前指定一次，不能在每次发起远程调用前动态改变。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>广播的集群容错策略</h4>
+<ul class="point">
+<li><b>广播的集群容错策略可以给所有的提供者并发发送请求，但是该策略在广播时给每个提供者传递的参数是一样的，不能够同时给不同服务提供者传递不同的参数。</b>
+</li>
+<li><b>广播的集群容错策略返回结果不是所有提供者返回结果的聚合结果，而是其中一个提供者的结果。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">87</span><span class="mmx-name">14.8 基于CompletableFuture和Netty模拟RPC同步与纯异步调用</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 4 条要点 · 14 句原句摘录</p>
+<div class="sec">
+<h4>基于CompletableFuture和Netty模拟RPC同步与纯异步调用</h4>
+<ul class="point">
+<li><b>协议帧定义</b>
+<ul class="quote"><li>消息体，业务需要传递的内容。</li><li>请求ID，使用“：”把消息体与请求ID分开。</li><li>“|”标识一个协议帧的结束。</li></ul>
+</li>
+<li><b>RpcServer的实现</b>
+<ul class="quote"><li>创建NettyServer的boss与worker线程池。</li><li>创建业务NettyServerHandler。</li><li>启动服务，并且在端口12800监听客户端发来的链接。</li><li>同步等待服务监听套接字关闭。</li><li>关闭两级线程池，以便释放线程。</li></ul>
+</li>
+<li><b>RpcClient的实现</b>
+<ul class="quote"><li>创建一个NettyClient。</li><li>注册业务的NettyClientHandler处理器到链接Channel的管线里。</li><li>rpcSyncCall()方法：模拟同步远程调用。</li><li>rpcAsyncCall()方法：模拟异步远程调用。</li></ul>
+</li>
+<li><b>实例</b>
+<ul class="quote"><li>TestModelAsyncRpc类：同步调用rpcSyncCall()方法。</li><li>TestModelAsyncRpc2类：基于CompletableFuture的能力，并发发起多次调用，然后对返回的多个CompletableFuture进行运算。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>消息体，业务需要传递的内容。</li><li>请求ID，使用“：”把消息体与请求ID分开。</li><li>“|”标识一个协议帧的结束。</li><li>创建NettyServer的boss与worker线程池。</li><li>创建业务NettyServerHandler。</li><li>启动服务，并且在端口12800监听客户端发来的链接。</li><li>同步等待服务监听套接字关闭。</li><li>关闭两级线程池，以便释放线程。</li><li>创建一个NettyClient。</li><li>注册业务的NettyClientHandler处理器到链接Channel的管线里。</li><li>rpcSyncCall()方法：模拟同步远程调用。</li><li>rpcAsyncCall()方法：模拟异步远程调用。</li><li>TestModelAsyncRpc类：同步调用rpcSyncCall()方法。</li><li>TestModelAsyncRpc2类：基于CompletableFuture的能力，并发发起多次调用，然后对返回的多个CompletableFuture进行运算。</li></ul>
+</div>
+</div></details>
+  </div>
+</section>
 <section class="mmx-mod" aria-labelledby="views" data-key="views"><h2 id="views">核心观点初判</h2><p class="mmx-mod-note">按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。</p><ul class="mmx-views"><li><b>第 1–7 章</b>——含「序」至「高级篇」</li><li><b>第 8–14 章</b>——含「第2章 Dubbo框架内」至「2.7 小结」</li><li><b>第 15–21 章</b>——含「第3章 远程服务发布与引」至「4.2 Registry」</li><li><b>第 22–28 章</b>——含「4.3 Registry」至「6.2 Failfast」</li><li><b>第 29–35 章</b>——含「6.3 Failsafe」至「6.9 Dubbo负载均」</li><li><b>第 36–42 章</b>——含「6.10 Random 」至「第7章 Dubbo线程模」</li><li><b>第 43–49 章</b>——含「7.2 AllDispa」至「7.8 如何基于扩展接口」</li><li><b>第 50–56 章</b>——含「7.9 Dubbo的线程」至「7.15 如何基于扩展接」</li><li><b>第 57–63 章</b>——含「7.16 小结」至「9.1 服务消费端并发控」</li><li><b>第 64–70 章</b>——含「9.2 服务提供端并发控」至「第11章 Dubbo全链」</li><li><b>第 71–77 章</b>——含「11.2 服务提供端异步」至「12.3 本地服务一次引」</li><li><b>第 78–84 章</b>——含「12.4 小结」至「实践篇」</li><li><b>第 85–93 章</b>——含「第14章 Dubbo实践」至「14.9 小结」</li></ul></section>
 <section class="mmx-mod" aria-labelledby="coreask" data-key="coreask"><h2 id="coreask">核心追问（来自深读）</h2><div class="mmx-qa"><p class="mmx-q">Dubbo 解决的根本问题是什么，为什么在分布式/微服务场景下它比本地调用复杂得多？</p><p class="mmx-a">书里在提要中把背景讲得很清楚：单体应用时不同模块在同一 JVM 内，靠本地方法调用即可相互引用；而一旦拆成多体应用、部署到不同机器，就需要一套高效稳定的 RPC 框架来跨进程、跨网络调用。Dubbo 正是解决“远程服务如何像本地一样被透明调用”的问题——它要处理寻址、序列化、网络传输、负载均衡、容错等一系列本地调用根本不存在的环节，让服务消费方无需关心对端在哪台机器上。</p></div><div class="mmx-qa"><p class="mmx-q">Dubbo 的“增强 SPI”为什么被放在高级篇重点剖析，它和普通 SPI 有何不同？</p><p class="mmx-a">第 2.5 节“Dubbo 增强 SPI”在章节结构里占了很大篇幅（提要也明确列出），说明它是框架可扩展性的基石。Java 原生 SPI 只能一次性加载全部实现、缺乏按需与依赖注入能力；Dubbo 的增强 SPI 支持按 key 获取指定实现、依赖注入、自适应扩展（Adaptive）与包装类（Wrapper）链式增强，从而让框架各层（协议、注册中心、负载均衡等）都能被第三方无侵入地替换或叠加。理解它是读懂 Dubbo 可扩展设计的总钥匙。</p></div><div class="mmx-qa"><p class="mmx-q">从内核原理看，Dubbo 是怎么把“远程调用”做得高性能的？</p><p class="mmx-a">高级篇给出的线索集中在这几点：一是用 JavaAssist 在运行时生成字节码来减少反射调用开销（第 2.6 节），因为反射在高频调用下是性能瓶颈；二是动态编译原理（第 2.4 节）支撑了运行时生成类的加载；三是适配器原理（第 2.3 节）与线程模型、网络协议共同决定了请求的处理路径。再加上消费端的负载均衡策略、集群容错策略与并发控制，整套设计的目标就是“透明调用”之下的高吞吐与稳定。</p></div></section>
 <section class="mmx-mod" aria-labelledby="aiask" data-key="aiask"><h2 id="aiask">AI 问书</h2><p class="mmx-mod-note">以下问答依据本书全书提要、章节结构与热门划线原文整理，不虚构页码；标「推断」处为整理者补注。</p><div class="mmx-ask"><div class="aiqa-item"><h3>这本书的整体结构是怎样的，读者能收获什么？</h3><p>全书分三部分。基础篇先整体讲清用 Dubbo 搭建的系统由哪些模块组成、模块间如何调用，再基于 Demo 讲如何使用；高级篇剖析内核原理，包括适配器类、动态编译、增强 SPI、消费端泛化调用、异步调用与服务端异步执行、线程模型、负载均衡、集群容错、并发控制与网络协议；实践篇则借助 Arthas 与 Demo 探讨真实排障与落地（提要有“为”字截断，推断后半部分围绕实战调优与问题诊断）。整体定位是“使用 + 内核原理”的双轨深度剖析。</p></div><div class="aiqa-item"><h3>“泛化调用”和“异步调用”分别解决什么场景？</h3><p>从章节设置（第 2.5 节之后的“消费端泛化调用实现原理”“消费端异步调用与服务提供端异步执行”）可以推断两类能力：泛化调用让消费方在不依赖对端接口 jar 包的情况下发起调用，常用于网关、测试工具、动态代理等无法静态引入接口的场景；异步调用则把“等待结果”与“发起调用”解耦，提升消费端并发度，而服务提供端异步执行又进一步把业务处理从 IO 线程中剥离。二者都是为高弹性、高吞吐的线上系统服务的。</p></div><div class="aiqa-item"><h3>为什么作者要专门讲如何用 Arthas 来做实践？</h3><p>Arthas 是阿里开源的 Java 诊断工具，能在不重启、不改代码的前提下在线排查方法调用、参数、耗时与类加载问题。Dubbo 调用链横跨网络与多进程，传统日志排障效率低，Arthas 的 watch/trace 等命令恰好能切入 RPC 的方法级细节。作者把 Arthas 放进实践篇，意图是教读者把“原理知识”转化为“线上定位能力”，让书本不只停留在看懂源码，而是真正能在生产环境排雷（推断：这也呼应书名的“实战”取向）。</p></div></div></section>

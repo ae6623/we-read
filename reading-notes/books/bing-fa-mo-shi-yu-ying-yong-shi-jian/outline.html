@@ -1,21 +1,2178 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>并发模式与应用实践 · AI 大纲</title><style>
-:root{--fg:#1f2328;--muted:#6b7280;--line:#e6e2da;--accent:#b45309;--bg:#fbfaf7}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.78 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
-.wrap{max-width:840px;margin:0 auto;padding:38px 22px 90px}
-h1{font-size:26px;line-height:1.35;margin:0 0 6px}
-.meta{color:var(--muted);font-size:14px;margin-bottom:20px}
-h2{font-size:19px;margin:34px 0 12px;padding-left:10px;border-left:4px solid var(--accent)}
-h3{font-size:16px;margin:18px 0 8px}
-p{margin:8px 0}
-.tag{display:inline-block;background:#f2ede2;color:#8a6d3b;font-size:12px;padding:1px 9px;border-radius:10px;margin-right:6px}
-ul,ol{padding-left:22px}li{margin:4px 0}
-.quote{border-left:3px solid #d8cfbd;padding:6px 12px;color:#4b4639;background:#f7f4ee;margin:8px 0;font-size:15px;border-radius:0 6px 6px 0}
-.src{color:var(--muted);font-size:12px}
-.ch{display:flex;gap:10px;padding:7px 0;border-bottom:1px dashed var(--line)}
-.ch .no{color:var(--accent);font-weight:600;min-width:34px;text-align:right}
-.card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:12px 0}
-.foot{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
-a{color:#8a5a00;text-decoration:none}a:hover{text-decoration:underline}
-.badge{font-size:12px;color:#8a6d3b;background:#f6f1e6;border:1px solid #eadfc6;border-radius:6px;padding:1px 7px}
-</style></head><body><div class="wrap"><h1>并发模式与应用实践</h1><div class="meta"><span class="tag">AI 大纲</span>阿图尔·S.科德　·　共 42 章</div><h2>全书提要</h2><p>本书第1章介绍并发编程。正如你将看到的，并发本身就是一个领域。你将了解UNIX进程以及并发模式的管道和过滤器。本章涉及并发编程的综述，你可能已对这方面有所了解。第2章涵盖一些关键的基本概念，并介绍Java内存模型的本质。你将了解共享状态模型中出现的竞争条件和问题，并尝试第一个并发模式：手拉手锁定。第3章包括显式同步可变状态和监视器模式，你会看到这种方法存在很多问题。我们将详细介绍主动对象设计模式。第4章介绍线程如何通过生产者/消费者模式相互通信，并介绍线程通信的概念，然后解释主/从设计模式。本章还将介绍fork-join模式的一个特例：map-reduce模式。第5章讨论构建块，还将讨论阻塞队列、有界队列、锁存器、FutureTask、信号量、屏障、激活和安全等内容。最后，描述不可变性以及不可变数据结构固有的线程安全性。第6章介绍future并讨论它的一元性质，包括转型和单子模式，还将阐释future模式的构成，同时会介绍Promise类。第7章介绍actor范式。再次回顾主动对象模式，然后解释actor范式，特别是未明确的锁定性质。还将讨论ask与tell、become模式（并强调其不变性）、流水线、半同步或半异步，并通过示例代码进行说明。</p><h2>章节大纲（含各章热门划线原文）</h2><div class="ch"><span class="no">1</span><div><b>译者序</b><span class="src"> · 433 字</span></div></div><div class="ch"><span class="no">2</span><div><b>前言</b><span class="src"> · 2326 字</span></div></div><div class="ch"><span class="no">3</span><div><b>作者/评阅者简介</b><span class="src"> · 416 字</span></div></div><div class="ch"><span class="no">4</span><div><b>第1章 并发简介</b><span class="src"> · 701 字</span></div></div><div class="ch"><span class="no">5</span><div><b>1.1 并发轻而易举</b><span class="src"> · 3108 字</span></div></div><div class="ch"><span class="no">6</span><div><b>1.2 消息传递模型</b><span class="src"> · 4134 字</span></div></div><div class="ch"><span class="no">7</span><div><b>1.3 共享内存和共享状态模型</b><span class="src"> · 4682 字</span></div></div><div class="ch"><span class="no">8</span><div><b>1.4 模式和范式</b><span class="src"> · 4172 字</span></div></div><div class="ch"><span class="no">9</span><div><b>1.5 本章小结</b><span class="src"> · 235 字</span></div></div><div class="ch"><span class="no">10</span><div><b>第2章 并发模式初探</b><span class="src"> · 593 字</span></div></div><div class="ch"><span class="no">11</span><div><b>2.1 线程及其上下文</b><span class="src"> · 718 字</span></div></div><div class="ch"><span class="no">12</span><div><b>2.2 竞争条件</b><span class="src"> · 13793 字</span></div></div><div class="ch"><span class="no">13</span><div><b>2.3 本章小结</b><span class="src"> · 401 字</span></div></div><div class="ch"><span class="no">14</span><div><b>第3章 更多的线程模式</b><span class="src"> · 802 字</span></div></div><div class="ch"><span class="no">15</span><div><b>3.1 有界缓冲区</b><span class="src"> · 3375 字</span></div></div><div class="ch"><span class="no">16</span><div><b>3.2 读写锁</b><span class="src"> · 3476 字</span></div></div><div class="ch"><span class="no">17</span><div><b>3.3 计数信号量</b><span class="src"> · 887 字</span></div></div><div class="ch"><span class="no">18</span><div><b>3.4 我们自己的重入锁</b><span class="src"> · 708 字</span></div></div><div class="ch"><span class="no">19</span><div><b>3.5 倒计时锁存器</b><span class="src"> · 1652 字</span></div></div><div class="ch"><span class="no">20</span><div><b>3.6 循环屏障</b><span class="src"> · 1371 字</span></div></div><div class="ch"><span class="no">21</span><div><b>3.7 future任务</b><span class="src"> · 1876 字</span></div></div><div class="ch"><span class="no">22</span><div><b>3.8 本章小结</b><span class="src"> · 281 字</span></div></div><div class="ch"><span class="no">23</span><div><b>第4章 线程池</b><span class="src"> · 666 字</span></div></div><div class="ch"><span class="no">24</span><div><b>4.1 线程池</b><span class="src"> · 4643 字</span></div></div><div class="ch"><span class="no">25</span><div><b>4.2 fork-join池</b><span class="src"> · 6945 字</span></div></div><div class="ch"><span class="no">26</span><div><b>4.3 线程的工作窃取算法</b><span class="src"> · 1663 字</span></div></div><div class="ch"><span class="no">27</span><div><b>4.4 主动对象</b><span class="src"> · 2106 字</span></div></div><div class="ch"><span class="no">28</span><div><b>4.5 本章小结</b><span class="src"> · 301 字</span></div></div><div class="ch"><span class="no">29</span><div><b>第5章 提升并发性</b><span class="src"> · 414 字</span></div></div><div class="ch"><span class="no">30</span><div><b>5.1 无锁堆栈</b><span class="src"> · 1650 字</span></div></div><div class="ch"><span class="no">31</span><div><b>5.2 无锁的FIFO队列</b><span class="src"> · 7877 字</span></div></div><div class="ch"><span class="no">32</span><div><b>5.3 并发的哈希算法</b><span class="src"> · 2992 字</span></div></div><div class="ch"><span class="no">33</span><div><b>5.4 大锁的方法</b><span class="src"> · 1494 字</span></div></div><div class="ch"><span class="no">34</span><div><b>5.5 锁条纹设计模式</b><span class="src"> · 878 字</span></div></div><div class="ch"><span class="no">35</span><div><b>5.6 本章小结</b><span class="src"> · 360 字</span></div></div><div class="ch"><span class="no">36</span><div><b>第6章 函数式并发模式</b><span class="src"> · 408 字</span></div></div><div class="ch"><span class="no">37</span><div><b>6.1 不变性</b><span class="src"> · 4346 字</span></div></div><div class="ch"><span class="no">38</span><div><b>6.2 future模式</b><span class="src"> · 5998 字</span></div></div><div class="ch"><span class="no">39</span><div><b>6.3 本章小结</b><span class="src"> · 295 字</span></div></div><div class="ch"><span class="no">40</span><div><b>第7章 actor模式</b><span class="src"> · 286 字</span></div></div><div class="ch"><span class="no">41</span><div><b>7.1 消息驱动的并发</b><span class="src"> · 14948 字</span></div></div><div class="ch"><span class="no">42</span><div><b>7.2 本章小结</b><span class="src"> · 366 字</span></div></div><div class="foot">来源：微信读书官方章节接口 + 热门划线接口，逐字原文　·　生成于 2026-11-01 13:31　·　开读即产（不等完读）</div></div></body></html>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="并发模式与应用实践 AI 大纲">
+<title>《并发模式与应用实践》｜AI 大纲</title>
+<link rel="stylesheet" href="../../../assets/css/site.css">
+<link rel="stylesheet" href="../../../assets/css/reading-outline.css">
+
+</head>
+<body>
+<main class="page">
+  <header class="note-head">
+    <p class="eyebrow">AI OUTLINE · BEFORE READING</p>
+    <h1>《并发模式与应用实践》AI 大纲</h1>
+    <p class="meta">作者：—　·　共 41 章 / 584 条　·　AI 读书 · 全书大纲</p>
+    <p><a href="../../../index.html">← 返回首页</a>　<a href="../../index.html">阅读归档索引</a>　<a href="outline.epub" download>下载 EPUB ↓</a></p>
+    <div class="chips"><span class="chip">全书视角</span><span class="chip">AI 生成</span><span class="chip">含原文摘录</span></div>
+    <p class="small">本大纲由 AI 读书（阅读端智能大纲）生成，是全书结构与要点的机器梳理，
+    <b>不等同于已亲读</b>；其中第 4 层条目为书中原句摘录。章节可展开查看。</p>
+  </header>
+  <div class="toc"><b>章节目录</b><ul>
+<li><a href="#ch0">译者序</a></li>
+<li><a href="#ch1">作者/评阅者简介</a></li>
+<li><a href="#ch2">第1章 并发简介</a></li>
+<li><a href="#ch3">1.1 并发轻而易举</a></li>
+<li><a href="#ch4">1.2 消息传递模型</a></li>
+<li><a href="#ch5">1.3 共享内存和共享状态模型</a></li>
+<li><a href="#ch6">1.4 模式和范式</a></li>
+<li><a href="#ch7">1.5 本章小结</a></li>
+<li><a href="#ch8">第2章 并发模式初探</a></li>
+<li><a href="#ch9">2.1 线程及其上下文</a></li>
+<li><a href="#ch10">2.2 竞争条件</a></li>
+<li><a href="#ch11">2.3 本章小结</a></li>
+<li><a href="#ch12">第3章 更多的线程模式</a></li>
+<li><a href="#ch13">3.1 有界缓冲区</a></li>
+<li><a href="#ch14">3.2 读写锁</a></li>
+<li><a href="#ch15">3.3 计数信号量</a></li>
+<li><a href="#ch16">3.4 我们自己的重入锁</a></li>
+<li><a href="#ch17">3.5 倒计时锁存器</a></li>
+<li><a href="#ch18">3.6 循环屏障</a></li>
+<li><a href="#ch19">3.7 future任务</a></li>
+<li><a href="#ch20">3.8 本章小结</a></li>
+<li><a href="#ch21">第4章 线程池</a></li>
+<li><a href="#ch22">4.1 线程池</a></li>
+<li><a href="#ch23">4.2 fork-join池</a></li>
+<li><a href="#ch24">4.3 线程的工作窃取算法</a></li>
+<li><a href="#ch25">4.4 主动对象</a></li>
+<li><a href="#ch26">4.5 本章小结</a></li>
+<li><a href="#ch27">第5章 提升并发性</a></li>
+<li><a href="#ch28">5.1 无锁堆栈</a></li>
+<li><a href="#ch29">5.2 无锁的FIFO队列</a></li>
+<li><a href="#ch30">5.3 并发的哈希算法</a></li>
+<li><a href="#ch31">5.4 大锁的方法</a></li>
+<li><a href="#ch32">5.5 锁条纹设计模式</a></li>
+<li><a href="#ch33">5.6 本章小结</a></li>
+<li><a href="#ch34">第6章 函数式并发模式</a></li>
+<li><a href="#ch35">6.1 不变性</a></li>
+<li><a href="#ch36">6.2 future模式</a></li>
+<li><a href="#ch37">6.3 本章小结</a></li>
+<li><a href="#ch38">第7章 actor模式</a></li>
+<li><a href="#ch39">7.1 消息驱动的并发</a></li>
+<li><a href="#ch40">7.2 本章小结</a></li>
+</ul></div>
+<details class="ch" id="ch0"><summary>译者序</summary>
+<div class="sec">
+<h4>并发模式的重要性</h4>
+<ul class="point">
+<li><b>并发能极大地整合和提高系统的计算性能</b>
+<ul class="quote">
+<li>特别在以大数据、云计算为特征的信息时代，关于并发的学习和实践具有重大意义。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>本书的特点和价值</h4>
+<ul class="point">
+<li><b>本书通俗易懂，理论与实践紧密结合</b>
+<ul class="quote">
+<li>书中给出的代码简练、质量高，配图也直观明了、贴近生活。</li>
+</ul>
+</li>
+<li><b>对于渴望学习并发模式并希冀能快速实践的读者，将会带来立竿见影的效果。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>翻译本书的感谢</h4>
+<ul class="point">
+<li><b>翻译得到了同行、老师、学生和朋友的帮助与鼓励</b>
+<ul class="quote">
+<li>特别感谢甘健侯、张姝、李佳蓓、张利明以及姚贤明。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>译者对读者的承诺</h4>
+<ul class="point">
+<li><b>书中的文字与内容力求忠实于原著</b>
+<ul class="quote">
+<li>由于译者水平有限，加上时间仓促，译文中难免有疏漏之处，敬请读者批评指正。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch1"><summary>作者/评阅者简介</summary>
+<div class="sec">
+<h4>作者Atul S.Khot简介</h4>
+<ul class="point">
+<li><b>Atul S.Khot是一位自学成才的程序员，使用C和C++编写软件，并用Java进行过大量编程，另外还涉猎多种语言。</b>
+</li>
+<li><b>Atul经常在软件大会上发表演讲，还曾经担任Dobb博士产品奖评委</b>
+<ul class="quote">
+<li>他是Packt出版社出版的《Scala Functional Programming Patterns》和《Learning Functional Data Structures and Algorithms》的作者。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>评阅者Anubhava Srivastava简介</h4>
+<ul class="point">
+<li><b>Anubhava Srivastava是一名首席架构工程师，拥有超过22年的系统工程和IT架构经验。</b>
+</li>
+<li><b>Anubhava Srivastava撰写了Packt出版社出版的《Java 9 Regular Expressions》一书</b>
+<ul class="quote">
+<li>作为一名开源传播者，他积极参与各种开源开发，在一些流行的计算机编程问答网站如Stack Overflow上声誉/得分超过17万，并且在整体声誉排名中名列前0.5%。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch2"><summary>第1章 并发简介</summary>
+<div class="sec">
+<h4>并发的概念和重要性</h4>
+<ul class="point">
+<li><b>并发是处理多个任务同时进行的过程</b>
+<ul class="quote">
+<li>并发编程领域的诸多方面。</li>
+</ul>
+</li>
+<li><b>并发编程有助于应用程序扩展</b>
+<ul class="quote">
+<li>应用程序扩展性是非常重要的概念。</li>
+<li>水平扩展是当今大规模并行软件系统背后的关键技术。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>并发的两个主要模型：消息传递模型和共享内存模型</h4>
+<ul class="point">
+<li><b>消息传递模型通过管道实现并发实体间的通信</b>
+<ul class="quote">
+<li>我们使用“UNIX shell管道”描述消息传递模型。</li>
+</ul>
+</li>
+<li><b>共享内存模型中，并发实体共享同一内存空间</b>
+<ul class="quote">
+<li>我们将描述共享内存模型，并讨论显式同步为何带来如此多的问题。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>并发设计模式</h4>
+<ul class="point">
+<li><b>设计模式是上下文中出现的设计问题的解决方案</b>
+<ul class="quote">
+<li>通过掌握模式目录，有助于我们针对特定问题提出一个更好的设计方案。</li>
+</ul>
+</li>
+<li><b>本书将介绍常见的并发设计模式。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>实现并发的替代方法：actor范式和软件事务性内存</h4>
+<ul class="point">
+<li><b>actor范式通过将并发实体抽象为actor来实现并发</b>
+<ul class="quote">
+<li>actor范式是一种面向对象的并发模型。</li>
+</ul>
+</li>
+<li><b>软件事务性内存通过事务来实现并发</b>
+<ul class="quote">
+<li>软件事务性内存是一种编程范式，它提供了一种机制来保证多个事务同时访问共享数据时，数据的一致性和原子性。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch3"><summary>1.1 并发轻而易举</summary>
+<div class="sec">
+<h4>并发的定义与重要性</h4>
+<ul class="point">
+<li><b>并发是指可执行程序的某些部分同时运行</b>
+<ul class="quote">
+<li>我们使用术语“并行编程”作为并发编程的同义词。</li>
+</ul>
+</li>
+<li><b>并发现象在现实生活中无处不在</b>
+<ul class="quote">
+<li>例如，高速公路上的汽车行驶，收费站同时处理多辆汽车。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>推动并发的因素</h4>
+<ul class="point">
+<li><b>软件占用的内存变得越来越大，需要更多更快的CPU</b>
+<ul class="quote">
+<li>现在的数据库事务每秒都在增加，数据处理需求超出了任何一台机器的能力。</li>
+</ul>
+</li>
+<li><b>芯片制造商正在触及芯片速度的极限</b>
+<ul class="quote">
+<li>改进芯片以使CPU更快的办法具有固有的局限性。</li>
+</ul>
+</li>
+<li><b>云的兴起使得配置能力掌握在每个人手中</b>
+<ul class="quote">
+<li>你不需要花太多时间来测试新的想法，只需租用云上的一个处理基础架构，即可测试并实现你的想法。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>并发编程模型</h4>
+<ul class="point">
+<li><b>并发意味着多个任务并行地实现同一个目标</b>
+<ul class="quote">
+<li>类似群体中的沟通一样，我们需要与并发执行任务的实体进行通信和协调。</li>
+</ul>
+</li>
+<li><b>并发通信有两个著名的模型：消息传递模型和共享内存模型</b>
+<ul class="quote">
+<li>我们首先以著名的“UNIX shell管道”为例来讨论消息传递模型。紧接着，我们将深入研究共享内存的方法及其相关问题。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>分时与并发硬件的基本模型</h4>
+<ul class="point">
+<li><b>接待员让各方分享她的时间，她采用的这种方式工作使得每个人都可以分享她的一部分时间</b>
+<ul class="quote">
+<li>就像接待员同时做多件事一样(比如访客之间时间共享)，CPU将其时间共享给进程(正在运行的程序)，这就是在单个CPU上支持并发的方式。</li>
+</ul>
+</li>
+<li><b>如果我们将收费员的数量从3个增加到6个，我们就能将并行(同时)服务的汽车数量增加到6个</b>
+<ul class="quote">
+<li>那么将会产生一个令人愉悦的结果：排队的汽车会散开，每辆车都会更快得到服务。当我们执行并发程序时也是如此，因此，工作效率总体上会大幅度提升。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch4"><summary>1.2 消息传递模型</summary>
+<div class="sec">
+<h4>进程的基本概念</h4>
+<ul class="point">
+<li><b>进程是运行中的可执行程序</b>
+<ul class="quote">
+<li>shell查找可执行文件，使用系统调用与操作系统进行通信，从而创建子进程。</li>
+</ul>
+</li>
+<li><b>进程之间通过管道进行通信</b>
+<ul class="quote">
+<li>管道是使find进程能够与xargs进程通信的机制。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>协调和通信</h4>
+<ul class="point">
+<li><b>管道中的进程需要协调工作</b>
+<ul class="quote">
+<li>我们需要确保当find进程没有什么可报告时，egrep也应该停止。</li>
+<li>无论管道中的任何进程由于何种原因退出，整个管道也应该停止工作。</li>
+</ul>
+</li>
+<li><b>管道内置了隐式流控制，即背压</b>
+<ul class="quote">
+<li>较快的生产者(或消费者)会被迫等待，以便较慢的过滤器赶上。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>流控制</h4>
+<ul class="point">
+<li><b>流控制意味着我们正试图调节某种流</b>
+<ul class="quote">
+<li>当你告诉别人说话慢点，以便你可以听懂他们要说什么时，你就在试图控制话语的流动。</li>
+</ul>
+</li>
+<li><b>阻塞是一种进程级机制，而find(或任何其他筛选器)并不知道它是否处于阻塞状态</b>
+<ul class="quote">
+<li>如果管道由于xargs消费较慢而变满，find的输出调用将被阻塞，也就是说，进程正在等待，因此无法运行。</li>
+<li>反之亦然，此时，一个快速消费者阻塞一个空管道。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>分治策略</h4>
+<ul class="point">
+<li><b>分治策略是将一个可并行化的作业分成多个部分，每个部分都被并行处理</b>
+<ul class="quote">
+<li>GNU并行程序(https://www.gnu.org/software/parallel/)是一个在一个或多个节点上并行执行命令的工具。</li>
+<li>所有可用的内核都用于运行gzip，从而减少了总的处理时间。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>进程状态的概念</h4>
+<ul class="point">
+<li><b>每个进程都有自己的状态，并且这个状态对其他进程是隐藏的</b>
+<ul class="quote">
+<li>进程通过显式消息传递通道进行通信，就像管道引导水流一样。</li>
+</ul>
+</li>
+<li><b>状态的概念对于理解各种即将出现的并发模式来说非常重要</b>
+<ul class="quote">
+<li>我们可以将状态看作某个处理阶段的数据。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch5"><summary>1.3 共享内存和共享状态模型</summary>
+<div class="sec">
+<h4>共享内存和共享状态模型</h4>
+<ul class="point">
+<li><b>进程是用于并发执行线程的容器，线程共享进程内存，但两个并发运行的进程不共享内存或任何其他资源</b>
+<ul class="quote">
+<li>每个线程也有自己的堆栈，该堆栈用于在进程调用之后返回，并且还在堆栈上创建了作用域在本地的变量。</li>
+</ul>
+</li>
+<li><b>两个线程都通过进程的全局内存进行通信，有一个FIFO队列，生产者线程在其中输入文件名，而消费者线程则在条件允许时从中获取队列条目</b>
+<ul class="quote">
+<li>生产者可以根据需要或快或慢地生产产品，同样，消费者线程根据自身需要从队列中取出产品。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>线程交错——同步的需要</h4>
+<ul class="point">
+<li><b>线程需要锁定资源(即共享的可变数据结构)，问题在于显式锁定，如果正确同步的责任在于应用程序，那么某个人在某天可能会忘记正确地执行同步，然后一切都会失控</b>
+<ul class="quote">
+<li>为了说明正确同步的必要性，图1-18显示两个线程共享的整数变量。</li>
+<li>就像充当锁的电影票一样，每个Java对象都有一个锁，线程会获取它，并执行状态转换，然后解锁。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>竞争条件和海森堡bug</h4>
+<ul class="point">
+<li><b>丢失更新是竞争条件的一个例子，竞争条件意味着程序的正确性(它的预期工作方式)取决于被调度线程的相对时机</b>
+<ul class="quote">
+<li>引起延迟的原因可能是其他正在运行的程序、网络流量、OS(操作系统)调度决策和处理器时钟速度发生变化等。</li>
+<li>包含竞争条件的程序可能在不同时间表现出不同的行为。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>正确的内存可见性和happens-before原则</h4>
+<ul class="point">
+<li><b>关键字synchronized可以防止多个线程都去执行临界区，该关键字同时还可以确保线程的本地内存与共享内存正确同步</b>
+<ul class="quote">
+<li>当线程退出同步块时，它会发出“写入屏障(write barrier)”，从而将其缓存中的更改同步到共享内存。</li>
+<li>另一方面，当线程进入同步块时，它会发出“读取屏障(read barrier)”，所以会以共享内存的最新变化来更新它的本地缓存。</li>
+</ul>
+</li>
+<li><b>Java的volatile关键字可确保正确的内存可见性，你不需要只是为了确保正确的可见性而执行同步</b>
+<ul class="quote">
+<li>这个关键字还可以保证排序，这是一种happens-before关系。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>共享、阻塞和公平</h4>
+<ul class="point">
+<li><b>阻塞线程既昂贵又浪费，保持较小的临界区是一种公平对待所有线程的方法</b>
+<ul class="quote">
+<li>一旦等待的事件发生，线程就会回到可运行状态。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>异步与同步执行</h4>
+<ul class="point">
+<li><b>阻塞操作可以说是很糟糕了，因为它们浪费资源，同步执行允许任务按顺序执行，等待当前操作完成，然后再开始下一个操作</b>
+<ul class="quote">
+<li>例如，拨打电话是同步的，我们拨打号码，等待对方说“你好”，然后继续通话。</li>
+<li>而寄信是异步完成的，一个人不会寄出一封信并停止一切活动去等待对方的回复。</li>
+</ul>
+</li>
+<li><b>我们可以将工作流看作无阻塞任务和有阻塞任务的混合体，而不是阻塞和浪费空闲线程</b>
+<ul class="quote">
+<li>然后，我们使用future处理阻塞任务：future是一种抽象，表示最终将完成并返回结果或错误。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Java的非阻塞I/O</h4>
+<ul class="point">
+<li><b>Java NIO(New IO)是Java的非阻塞I/O API，它提供了诸如通道、缓冲区和选择器这样的抽象</b>
+<ul class="quote">
+<li>通道只是一个双向I/O流，单个线程可以监视应用程序已打开的所有通道，到达任何通道的数据都是一个事件，并且监听线程会得到它已经到达的通知。</li>
+<li>选择器使用事件通知：线程可以检查I/O是否完整，而不需要阻塞，单个线程可以处理多个并发连接。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch6"><summary>1.4 模式和范式</summary>
+<div class="sec">
+<h4>并发模式与范式</h4>
+<ul class="point">
+<li><b>并发模式试图避免显式锁定</b>
+<ul class="quote">
+<li>不变性是一个主要主题，它为我们提供了可持久化的数据结构。</li>
+<li>可持久化的数据结构在写入时执行智能复制，从而完全避免突变。</li>
+</ul>
+</li>
+<li><b>主动对象模式是一种典型的并发模式</b>
+<ul class="quote">
+<li>要使用这个主动对象，将有一个代理位于调用者线程和实际代码库之间，它把对API的每次调用转换为runnable，并将其放入阻塞队列(线程安全的FIFO队列)。</li>
+<li>在God对象中只有一个线程运行时，它将逐个执行队列中的runnable。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>事件驱动的架构</h4>
+<ul class="point">
+<li><b>事件驱动编程是一种编程风格，程序流由事件驱动</b>
+<ul class="quote">
+<li>GUI编程是事件驱动编程的一个例子，每一次按键以及鼠标按钮的按下、释放和鼠标的移动都会产生一系列事件。</li>
+<li>你可以插入一个回调函数，让它在接收到此类事件时被触发。</li>
+</ul>
+</li>
+<li><b>事件驱动架构有助于解耦系统的模块</b>
+<ul class="quote">
+<li>组件使用封装在消息中的事件进行通信，发出事件的组件对事件消费者一无所知。</li>
+<li>该体系结构本质上是异步的，事件消息的生产者不知道谁是消费者。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>响应式编程</h4>
+<ul class="point">
+<li><b>响应式编程是一种相关的编程范式，消息驱动体系结构是响应式应用程序的基础</b>
+<ul class="quote">
+<li>电子表格程序是响应式应用程序的一个很好的例子，如果我们设置一个公式并更改任何列值，则电子表格程序会做出反应，并计算新的结果列。</li>
+<li>可组合事件流使事件处理更容易理解，响应性扩展(Rx)是一个提供可组合可观察对象的框架。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>actor范式</h4>
+<ul class="point">
+<li><b>actor是线程的抽象，我们只使用消息传递模型来编写代码</b>
+<ul class="quote">
+<li>与actor对话的唯一方法是向其发送消息。</li>
+<li>我们应该始终使用tell而不是ask模式，在tell模式中，我们向actor发送消息，然后忘记它，也就是说，不会为等待答案而造成阻塞。</li>
+</ul>
+</li>
+<li><b>actor是轻量级实体，从经济角度来讲，actor的创造和销毁类似于Java对象的创建和销毁</b>
+<ul class="quote">
+<li>这些actor还允许添加监督和重启功能，从而使我们能够编写既健壮又灵活的系统。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>消息代理</h4>
+<ul class="point">
+<li><b>消息代理是一种架构模式，该模式用于通过“消息驱动范式”来集成应用程序</b>
+<ul class="quote">
+<li>例如，你可以创建一个Python应用程序，并将其与另一个用C或Java编写的应用程序集成。</li>
+<li>由于生产者和消费者完全解耦(它们甚至不知道其他方是否存在)，生产者和消费者应用程序甚至可以运行在不同的机器上，从而能够重叠处理，并提高整体吞吐量。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>软件事务性内存</h4>
+<ul class="point">
+<li><b>STM是一个类似的并发控制机制，它也是一种不同的范式，是基于锁来实现同步的替代方案</b>
+<ul class="quote">
+<li>就像数据库事务一样，线程做出修改，然后尝试提交更改。</li>
+<li>这种方案称为乐观锁定，在这里，我们不关心其他可能的并发事务，我们只是做出改变，希望提交成功。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>并行集合</h4>
+<ul class="point">
+<li><b>并行处理列表的抽象是非常好的想法，它会拆分列表，对每个子列表运行函数，并在最后整理结果</b>
+<ul class="quote">
+<li>例如，有一个数字列表，假设我们要对所有这些数字求和，这个操作可以通过使用线程在多个内核上并行执行。</li>
+<li>如果数据结构太大，以至于不能完全容纳在一台机器的内存中又该怎么办？我们可以将集合分散到一组机器上，Apache Spark框架为我们做到了这一点。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch7"><summary>1.5 本章小结</summary>
+<div class="sec">
+<h4>并发性在现实世界及软件世界的普遍性。</h4>
+<ul class="point">
+</ul></div>
+<div class="sec">
+<h4>消息传递和共享内存模型</h4>
+<ul class="point">
+<li><b>我们学习了消息传递和共享内存模型，并看到很多影响这两个模型的常见主题。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>显式锁定的问题</h4>
+<ul class="point">
+<li><b>如果共享内存模型使用显式锁定，则会出现许多问题。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>竞争条件、死锁、临界区和海森堡bug。</h4>
+<ul class="point">
+</ul></div>
+<div class="sec">
+<h4>异步性、actor范式和软件事务性内存。</h4>
+<ul class="point">
+</ul></div>
+<div class="sec">
+<h4>下一章的主题</h4>
+<ul class="point">
+<li><b>现在我们掌握了所有这些背景知识，在下一章中，我们将介绍一些核心并发模式。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch8"><summary>第2章 并发模式初探</summary>
+<div class="sec">
+<h4>并发模式初探</h4>
+<ul class="point">
+<li><b>通过竞争问题引出线程的上下文</b>
+<ul class="quote">
+<li>在现实生活中也充满着竞争，例如在交通高峰时段，人们可能因为堵车而错过约会。</li>
+<li>有了手机，我们可以轻松地同步我们的行程，在电影院及时相遇。</li>
+</ul>
+</li>
+<li><b>线程的上下文对于理解Java的并发工作方式至关重要</b>
+<ul class="quote">
+<li>单例设计模式和共享状态问题都与线程的上下文密切相关。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch9"><summary>2.1 线程及其上下文</summary>
+<div class="sec">
+<h4>线程及其上下文</h4>
+<ul class="point">
+<li><b>进程是线程的容器，线程共享进程的全局数据和可执行代码</b>
+<ul class="quote">
+<li>可执行代码是只读的，可以由线程自由共享。</li>
+<li>全局数据是可变的，是并发错误的根源。</li>
+</ul>
+</li>
+<li><b>线程上下文包含寄存器集和堆栈，有助于使线程运行时信息独立于另一个线程</b>
+<ul class="quote">
+<li>当调度程序抢占正在运行的线程时，它会备份线程上下文。</li>
+<li>调度程序会选择另一个可运行的线程并加载其上下文。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>线程安全的理解</h4>
+<ul class="point">
+<li><b>final变量和局部变量(包括函数参数)始终是线程安全的</b>
+<ul class="quote">
+<li>final变量是不可变的(即只读)，因此不存在多个线程同时更改值的问题。</li>
+<li>final变量在可见性方面也享有特殊地位。</li>
+</ul>
+</li>
+<li><b>可变静态实例变量是不安全的，如果它们不受保护，我们可以轻松创建竞争条件。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch10"><summary>2.2 竞争条件</summary>
+<div class="sec">
+<h4>并发错误及单例设计模式</h4>
+<ul class="point">
+<li><b>并发错误可能导致计数器值序列不可预测</b>
+<ul class="quote">
+<li>“++counter”操作由三个不同的操作组成：读取新值、修改新值并保存新值。</li>
+<li>线程的执行是相互不知道的，因此会在不知情的情况下发生干预，从而造成丢失更新。</li>
+</ul>
+</li>
+<li><b>单例设计模式确保只创建一个类实例</b>
+<ul class="quote">
+<li>将创建延迟到第一次使用时，然后只创建一个实例并重用它。</li>
+<li>使构造函数私有化，迫使客户端代码使用我们的public修饰的工厂方法getInstance()。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>监视器模式与线程安全性</h4>
+<ul class="point">
+<li><b>监视器模式使操作序列原子化</b>
+<ul class="quote">
+<li>Java通过其synchronized关键字来提供监视器。</li>
+<li>进入同步块(synchronized block)的线程将获取此锁，锁一直保持到块执行为止。</li>
+</ul>
+</li>
+<li><b>线程安全性、正确性和不变性是了解代码正确性的关键</b>
+<ul class="quote">
+<li>不变性是了解代码正确性的一个好工具。</li>
+<li>显式同步使得违反不变性的系统状态可能暴露。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>双重检查锁定与初始化Demand Holder模式</h4>
+<ul class="point">
+<li><b>双重检查锁定模式可以安全地创建实际实例</b>
+<ul class="quote">
+<li>第一次检查后有一个时间窗口，在这里可以进行上下文切换，另一个线程有机会进入同步块。</li>
+<li>第二次检查是同步的，并且只由一个线程执行，假设它是null。然后，拥有锁的线程向前推进，并创建实例。</li>
+</ul>
+</li>
+<li><b>初始化Demand Holder模式利用JVM的类加载语义简化实例的延迟创建</b>
+<ul class="quote">
+<li>getInstance()方法使用静态类LazyInitializationHolder，当首次调用getIn-stance()方法时，JVM将加载这个静态类。</li>
+<li>Java语言规范(JLS)确保类初始化阶段是按顺序的。所有后续的并发执行都将返回相同且被正确被初始化的实例，而且无须任何同步。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>显式锁定与手拉手模式</h4>
+<ul class="point">
+<li><b>显式锁让我们可以控制锁的粒度</b>
+<ul class="quote">
+<li>ReentrantLock具备synchronized关键字的功能。已经持有它的线程可以再次获取它，就像使用同步语义一样。</li>
+<li>ReentrantLock为我们提供了非阻塞tryLock()和可中断锁定。</li>
+</ul>
+</li>
+<li><b>手拉手模式允许其他线程同时处理列表</b>
+<ul class="quote">
+<li>如果线程在遍历列表时这样做(称为手拉手锁定)，则允许其他线程同时处理列表。</li>
+<li>我们确保始终从头节点开始按顺序获取锁，因此，图2-20中的锁定顺序不可能发生。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>生产者/消费者模式</h4>
+<ul class="point">
+<li><b>ReentrantLock允许线程向其他线程发送信号，我们使用这种机制来实现一个并发FIFO队列</b>
+<ul class="quote">
+<li>该类在其lck字段中持有可重入锁。当然，它还有两个Condition类型的字段：need-Space和needElem。</li>
+<li>生产者线程尝试将这些条目(items)压入队列，它首先获取lck锁，该方法代码的其余部分在这个锁下执行。</li>
+</ul>
+</li>
+<li><b>虚假和丢失的唤醒是并发编程中需要处理的问题</b>
+<ul class="quote">
+<li>我们需要在获取lck锁之后调用await。可能会出现图2-25所示的情况，没有被锁定，因此信号丢失；没有线程被唤醒，因此信号丢失。</li>
+<li>在循环中检查条件也是必需的，换句话说，线程唤醒后，必须重新测试该条件，然后再继续。这是处理“虚拟和丢失的唤醒”所必需的。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>比较和交换</h4>
+<ul class="point">
+<li><b>CAS操作将处理如下项：变量的内存位置(x)、变量的期望值(v)、需要设置的新值(nv)</b>
+<ul class="quote">
+<li>CAS操作会自动将x中的值更新为nv，但前提是x中的现有值与v匹配，否则，不采取任何行动。</li>
+<li>在这两种情况下，都返回x的现有值。对于每个CAS操作，执行以下三个操作：获得值、比较值、更新值。</li>
+</ul>
+</li>
+<li><b>CAS更新操作是原子操作，更重要的是它避免了线程的挂起(以及随后的恢复)</b>
+<ul class="quote">
+<li>当多个线程尝试执行CAS操作时，只有一个线程获胜并更新该值，但是，其他线程不会被挂起，CAS操作失败的线程可以重新尝试更新。</li>
+<li>使用CAS操作的情况下，通过扩展锁接口而不阻塞任何线程来实现锁定！但是，当多个线程争用锁时，会导致更激烈的争用，性能就会下降。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch11"><summary>2.3 本章小结</summary>
+<div class="sec">
+<h4>同步的必要性</h4>
+<ul class="point">
+<li><b>在实际环境和并发代码中，同步是必要的</b>
+<ul class="quote">
+<li>我们从竞争条件入手，无论是在实际环境中还是在并发代码中，我们看到了同步的必要性。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>竞争条件与volatile关键字</h4>
+<ul class="point">
+<li><b>竞争条件是多个线程访问共享资源时可能出现的问题</b>
+<ul class="quote">
+<li>我们详细了解了竞争条件，并了解了volatile关键字的作用。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>单例模式与监视器</h4>
+<ul class="point">
+<li><b>单例模式用于表示程序全局状态，监视器用于安全地共享状态</b>
+<ul class="quote">
+<li>我们研究了表示程序全局状态的单例模式，也了解了如何使用监视器安全地共享状态。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>可见性语义与双重检查锁定</h4>
+<ul class="point">
+<li><b>可见性语义是指一个线程对共享变量的修改，其他线程能够立即感知到</b>
+<ul class="quote">
+<li>我们纠正了可见性语义，并研究了称为双重检查锁定的优化。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>排序链表并发集合与手拉手设计模式</h4>
+<ul class="point">
+<li><b>使用锁可能导致粗粒度锁定，使用手拉手设计模式可以解决此问题</b>
+<ul class="quote">
+<li>我们研究了一个使用排序链表的并发集合实现的用例，使用锁可能导致粗粒度锁定，虽然语义上是正确的，但此方案只允许单个线程，这可能会损害并发性。</li>
+<li>解决方案是使用手拉手设计模式，我们对它进行了深入的研究，了解到显式锁如何为我们提供更好的解决方案，从而既保持正确性，又提高并发性。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>生产者/消费者设计模式与条件通信</h4>
+<ul class="point">
+<li><b>线程使用条件进行通信，正确使用条件需要考虑一些微妙之处</b>
+<ul class="quote">
+<li>我们介绍了生产者/消费者设计模式，我们了解了线程如何使用条件进行通信，我们还讨论了正确使用条件所涉及的微妙之处。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch12"><summary>第3章 更多的线程模式</summary>
+<div class="sec">
+<h4>有界缓冲区</h4>
+<ul class="point">
+<li><b>有界缓冲区是一种线程安全的容器，可以确保线程安全地读写数据</b>
+<ul class="quote">
+<li>有界缓冲区可以用于生产者-消费者模式，实现生产者和消费者之间的数据传递。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>客户端抛出异常和轮询</h4>
+<ul class="point">
+<li><b>客户端抛出异常是一种处理客户端请求的方式，轮询是一种检查客户端请求的方式</b>
+<ul class="quote">
+<li>客户端抛出异常可以在客户端处理异常，无需服务器端处理。</li>
+<li>轮询可以在服务器端检查客户端请求，实现服务器端和客户端之间的数据传递。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>读写锁</h4>
+<ul class="point">
+<li><b>读写锁是一种用于控制多个线程对共享资源访问的锁</b>
+<ul class="quote">
+<li>读写锁可以允许多个线程同时读共享资源，但只允许一个线程写共享资源。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>易读锁和公平锁</h4>
+<ul class="point">
+<li><b>易读锁是一种提高锁的可读性的锁，公平锁是一种保证公平性的锁</b>
+<ul class="quote">
+<li>易读锁可以让线程看到锁的状态，从而避免死锁。</li>
+<li>公平锁可以保证线程按照请求顺序获得锁。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>计数信号量</h4>
+<ul class="point">
+<li><b>计数信号量是一种用于控制多个线程对共享资源访问的锁</b>
+<ul class="quote">
+<li>计数信号量可以用于限制同时访问共享资源的线程数量。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>ReentrantLock</h4>
+<ul class="point">
+<li><b>ReentrantLock是一种可重入的锁，可以避免死锁</b>
+<ul class="quote">
+<li>ReentrantLock可以让线程在持有锁的情况下再次获得锁。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>倒计时门闩</h4>
+<ul class="point">
+<li><b>倒计时门闩是一种用于控制多个线程对共享资源访问的锁</b>
+<ul class="quote">
+<li>倒计时门闩可以用于限制同时访问共享资源的线程数量，并在达到限制时自动释放锁。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>循环屏障</h4>
+<ul class="point">
+<li><b>循环屏障是一种用于控制多个线程执行顺序的机制</b>
+<ul class="quote">
+<li>循环屏障可以确保多个线程按照指定的顺序执行。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>future任务</h4>
+<ul class="point">
+<li><b>future任务是一种用于异步执行任务的方式</b>
+<ul class="quote">
+<li>future任务可以在后台线程中执行任务，并在完成任务后返回结果。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch13"><summary>3.1 有界缓冲区</summary>
+<div class="sec">
+<h4>有界缓冲区的概念和特点</h4>
+<ul class="point">
+<li><b>有界缓冲区是容量有限的缓冲区，只能缓冲一定数量的元素</b>
+<ul class="quote">
+<li>当没有剩余空间来存储元素时，放置元素的生产者线程将等待某人消费某些元素。</li>
+<li>消费者线程不能从空缓冲区中获取元素，需要等待某人将元素插入缓冲区。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>有界缓冲区的实现策略</h4>
+<ul class="point">
+<li><b>抛出异常策略：当缓冲区满时，抛出BufFullException异常；当缓冲区空时，抛出BufEmptyException异常</b>
+<ul class="quote">
+<li>客户端代码需要保持轮询，以便从缓冲区中获取元素。</li>
+<li>客户端使用异常进行流控制，相当于使用异常作为复杂的GOTO语句。</li>
+</ul>
+</li>
+<li><b>轮询和睡眠策略：客户端看不见轮询，通过while循环和sleep方法来检查缓冲区状态</b>
+<ul class="quote">
+<li>put方法得到改进，我们仍然有轮询，但是，它不再是客户端契约的一部分。</li>
+<li>如果我们在同步方法中睡眠，其他线程将永远不会获得锁，这将出现死锁的情况。</li>
+</ul>
+</li>
+<li><b>使用条件变量的策略：通过wait()和notifyAll()方法实现线程间的同步</b>
+<ul class="quote">
+<li>put(v)方法非常简单，检查条件是在synchronized方法内部进行的。</li>
+<li>如果缓冲区为空，则使线程等待。条件通过后，由于我们知道这是执行getElem()调用的唯一线程，因此以下代码是线程安全的。</li>
+<li>我们保证会得到一个非空元素，最后，我们通知所有在缓冲区已满条件下挂起的线程，告诉它们至少有一个空位可插入元素。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch14"><summary>3.2 读写锁</summary>
+<div class="sec">
+<h4>读写锁的定义和原理</h4>
+<ul class="point">
+<li><b>读写锁是一种原始同步，允许对只读操作和独占写操作进行并发访问</b>
+<ul class="quote">
+<li>多个线程可以并发地读取数据，但对于写入或修改数据，需要独占锁。</li>
+</ul>
+</li>
+<li><b>写入者对写入数据具有独占访问权限，当前写入者完成操作之前，其他写入者和读取者将被阻塞。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>读写锁的实现</h4>
+<ul class="point">
+<li><b>使用RW锁同步内部映射</b>
+<ul class="quote">
+<li>get方法使用读取者锁，put方法使用写入者锁。</li>
+</ul>
+</li>
+<li><b>读写锁可以将优先权给予读取者或写入者</b>
+<ul class="quote">
+<li>易读的RwLock允许进行最大数量的并发读取，但在高争用的情况下，可能会使写入者处于饥饿状态。</li>
+<li>公平锁使早到的写入者可以获得锁。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>读写锁的优缺点</h4>
+<ul class="point">
+<li><b>读写锁的优点是提高读取并发性，缺点是对写入者不公平</b>
+<ul class="quote">
+<li>读写锁可以提高读取并发性，因为多个读取者可以同时访问数据。</li>
+<li>读写锁对写入者不公平，因为写入者可能会永远等待，从而挨饿。</li>
+</ul>
+</li>
+<li><b>公平锁的优点是对写入者公平，缺点是可能会导致读取并发性降低</b>
+<ul class="quote">
+<li>公平锁对写入者公平，因为如果写入者更早提出需要锁，它就会得到锁。</li>
+<li>公平锁可能会导致读取并发性降低，因为写入者可能会阻塞读取者。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch15"><summary>3.3 计数信号量</summary>
+<div class="sec">
+<h4>计数信号量的概念和作用</h4>
+<ul class="point">
+<li><b>计数信号量用于管理资源池，如线程池和连接池</b>
+<ul class="quote">
+<li>信号量初始化为初始容量cap，表示所配置的池大小。</li>
+</ul>
+</li>
+<li><b>当需求很高时，池可能会耗尽，请求线程应该处于休眠状态</b>
+<ul class="quote">
+<li>信号量的实现中，授予锁的代码段会检查计数是否达到容量，如果达到，则挂起的线程会醒来，并尝试获取池资源。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>计数信号量的实现</h4>
+<ul class="point">
+<li><b>Semaphore类包含一个计数器count，一个锁lck和一个条件变量condition。</b>
+</li>
+<li><b>acquire()方法用于请求资源，如果资源不足，则等待</b>
+<ul class="quote">
+<li>acquire()方法中，首先获取锁，然后检查计数器count是否等于容量，如果等于，则调用condition.await()等待，否则计数器count加1。</li>
+</ul>
+</li>
+<li><b>release()方法用于释放资源，唤醒等待的线程</b>
+<ul class="quote">
+<li>release()方法中，首先获取锁，然后计数器count减1，最后调用condition.signalAll()唤醒等待的线程。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch16"><summary>3.4 我们自己的重入锁</summary>
+<div class="sec">
+<h4>重入锁的实现</h4>
+<ul class="point">
+<li><b>类有两个字段：lockedBy线程引用和lockcount</b>
+<ul class="quote">
+<li>lockcount用于跟踪线程递归锁定自己的次数。</li>
+</ul>
+</li>
+<li><b>锁的语义：当且仅当锁处于释放状态时才能获得锁</b>
+<ul class="quote">
+<li>如果其他某个线程持有该锁，则线程需要等待。</li>
+</ul>
+</li>
+<li><b>使用线程引用跟踪锁的所有者是谁</b>
+<ul class="quote">
+<li>由于没有两个线程可以具有相同的对象引用，所以这是有效的。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>lock()和unlock()方法</h4>
+<ul class="point">
+<li><b>lock()方法用于获取锁</b>
+<ul class="quote">
+<li>如果锁已被其他线程持有，则线程需要等待。</li>
+</ul>
+</li>
+<li><b>unlock()方法用于释放锁</b>
+<ul class="quote">
+<li>如果线程已正确释放锁，那么lockCount变量将递减回0，我们将lockBy字段重置为null，从而释放锁，并将锁可用的信息广播给其他可能挂起的线程。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>锁的客户端契约</h4>
+<ul class="point">
+<li><b>在通过lock()方法多次进入锁以后，你需要通过unlock()方法将它们解锁相同次数</b>
+<ul class="quote">
+<li>我们之前使用的try和finally函数确保这个契约。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch17"><summary>3.5 倒计时锁存器</summary>
+<div class="sec">
+<h4>锁存器的概念和作用</h4>
+<ul class="point">
+<li><b>锁存器是一种同步器，用于确保除非发生某个必要的前提活动，否则其他活动将会等待它发生</b>
+<ul class="quote">
+<li>锁存器类似于一个大门，线程等待开门，一旦门打开，所有线程都可以进入。</li>
+</ul>
+</li>
+<li><b>锁存器用于确保所有正在处理的线程全部执行完成</b>
+<ul class="quote">
+<li>无论哪个线程将锁存器递减为0，该线程都会打开这个锁存器，因此主线程可以继续。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>倒计时锁存器的实现</h4>
+<ul class="point">
+<li><b>MyCountDownLatch类用于实现倒计时锁存器</b>
+<ul class="quote">
+<li>字段cnt对锁存器计数，lck和cond这两个字段用于实现同步语义。</li>
+</ul>
+</li>
+<li><b>await()方法检查计数cnt是否已降为0，如果是，则打开锁存器，并返回</b>
+<ul class="quote">
+<li>如果计数非0，则调用方线程将进入休眠状态，锁lck将被释放。</li>
+</ul>
+</li>
+<li><b>countDown()方法得到锁并减少计数cnt，如果计数达到0，则条件变量发生广播</b>
+<ul class="quote">
+<li>这会唤醒在await()方法中等待的挂起线程(如果有)。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch18"><summary>3.6 循环屏障</summary>
+<div class="sec">
+<h4>循环屏障的概念和特点</h4>
+<ul class="point">
+<li><b>循环屏障是另一种同步机制，要求所有线程都需要在某一点等待，然后才能继续运行</b>
+<ul class="quote">
+<li>屏障非常类似于倒计时锁存器，唯一的区别是所有线程都要等待其他伙伴线程完成。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>循环屏障的应用场景</h4>
+<ul class="point">
+<li><b>在晚餐结束前，由于每个人吃饭的速度不一样，并不是所有人都同时吃完，所以，他们再次等待(屏障)，然后，一旦所有人都吃完，就会出发去看电影</b>
+<ul class="quote">
+<li>这种等待其他伙伴加入，然后才开始玩乐的协议就是一个屏障。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>循环屏障的实现示例</h4>
+<ul class="point">
+<li><b>创建一个屏障并安装一个barrierAction，当所有线程都在barrier上等待时，就调用这个runnable</b>
+<ul class="quote">
+<li>我们有两个线程，分别是w1和w2。主线程生成它们，然后在屏障处等待。</li>
+<li>每个工作线程都只是休眠，之后打印一条消息，然后在屏障处等待。一旦所有线程都到达(在它们完成各自的处理之后)，屏障就会打开，所有线程都将继续完成。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch19"><summary>3.7 future任务</summary>
+<div class="sec">
+<h4>future任务的基本概念和特点</h4>
+<ul class="point">
+<li><b>future任务本质上是一个异步构造，其结果将在未来某个时候可用</b>
+<ul class="quote">
+<li>一旦计算完成，它将通过调用get()方法返回结果。</li>
+</ul>
+</li>
+<li><b>future任务有三种状态：等待运行、正在运行、完成</b>
+<ul class="quote">
+<li>如果它尚未完成，则调用get()的线程将休眠，直到计算完成且结果可用为止。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>future任务的实现和使用</h4>
+<ul class="point">
+<li><b>通过FutureTask类创建future任务，其中最贵的计算由一个callable负责完成</b>
+<ul class="quote">
+<li>这个callable的call()方法使线程休眠四秒钟，然后返回一个字符串结果。</li>
+</ul>
+</li>
+<li><b>使用future.get()方法获取计算结果，如果future尚未完成，则调用线程将休眠</b>
+<ul class="quote">
+<li>还有一个重载的get(long timeout，TimeUnit unit)方法可以避免永远等待。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>future任务的计时和性能分析</h4>
+<ul class="point">
+<li><b>使用timeTheCall方法对future.get()方法调用的时长进行计时</b>
+<ul class="quote">
+<li>第一次调用future.get()方法时，future处于正在运行状态，因此，结果尚未出来，需要很长时间才能完成。</li>
+<li>之后由于future处于完成状态，第二次和随后的调用就会迅速完成，结果能立即获得，因此很快就会返回。</li>
+</ul>
+</li>
+<li><b>在等待或正在运行状态下调用future上的get方法时，调用在4003毫秒内完成</b>
+<ul class="quote">
+<li>线程休眠4000毫秒，而该处理过程的其余时间仅3毫秒。</li>
+<li>其他两个调用立即完成，调用完成得如此之快，以至于用毫秒粒度不足以捕获它。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch20"><summary>3.8 本章小结</summary>
+<div class="sec">
+<h4>同步原语</h4>
+<ul class="point">
+<li><b>有界缓冲区可以防止重载应用程序耗尽内存。</b>
+</li>
+<li><b>可重入锁可以实现客户契约</b>
+<ul class="quote">
+<li>可重入锁允许多个线程同时访问共享资源，而不会导致数据竞争。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>读写锁</h4>
+<ul class="point">
+<li><b>读写锁是增加读取并发性的模式</b>
+<ul class="quote">
+<li>读写锁允许多个线程同时读取共享资源，但在写入时会阻塞其他线程的读取和写入操作。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>计数信号量、倒计时锁、屏障和future任务</h4>
+<ul class="point">
+<li><b>资源池使用计数信号量来实现</b>
+<ul class="quote">
+<li>例如，数据库连接池和线程池允许应用程序有效地池化和使用资源。</li>
+</ul>
+</li>
+<li><b>线程池为线程管理提供了相同的好处</b>
+<ul class="quote">
+<li>java.util.concurrent作为执行器框架的一部分，提供了一个灵活的线程池实现。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch21"><summary>第4章 线程池</summary>
+<div class="sec">
+<h4>线程池的需求和任务的概念</h4>
+<ul class="point">
+<li><b>线程池是处理并发任务的工具</b>
+<ul class="quote">
+<li>我们的重用的库代码经过了测试和验证，非常可靠，所以这组设计模式生成的代码具有鲁棒性。</li>
+</ul>
+</li>
+<li><b>任务是命令设计模式的具体体现，任务的定义与任务的执行相分离</b>
+<ul class="quote">
+<li>任务的定义与任务的执行相分离，使得任务可以独立地创建和运行，而不需要关心线程的创建和管理。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>线程池接口ExecutorService</h4>
+<ul class="point">
+<li><b>ExecutorService是Java的线程库中的池化工具</b>
+<ul class="quote">
+<li>实现ExecutorService的核心是阻塞队列。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>fork-join框架</h4>
+<ul class="point">
+<li><b>fork-join框架是一个动态线程池，它考虑到了内核数量和任务负载</b>
+<ul class="quote">
+<li>fork-join框架是Java 7中的主要线程池实现。</li>
+</ul>
+</li>
+<li><b>fork-join框架中的“工作窃取(work stealing)”概念</b>
+<ul class="quote">
+<li>工作窃取是fork-join框架的一个重要特性，它允许线程从其他线程的任务队列中窃取任务来执行，从而提高线程的利用率。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>主动对象设计模式</h4>
+<ul class="point">
+<li><b>主动对象设计模式是一种设计模式，它将对象的行为封装在方法中</b>
+<ul class="quote">
+<li>主动对象设计模式将对象的行为封装在方法中，而不是在状态变量中，从而避免了显式锁定和状态管理。</li>
+</ul>
+</li>
+<li><b>主动对象设计模式的实现</b>
+<ul class="quote">
+<li>在讨论完这种设计模式后，再用代码来实现它。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch22"><summary>4.1 线程池</summary>
+<div class="sec">
+<h4>线程池的概念和作用</h4>
+<ul class="point">
+<li><b>线程池是为了减少创建和销毁线程的开销，提高线程的复用率</b>
+<ul class="quote">
+<li>创建并行线程的成本很高，需要限制应用程序中的线程数量。</li>
+<li>每个线程都有自己的堆栈，它占用一定内存。</li>
+<li>由于每个Java线程都会映射到一个操作系统线程，所以，创建线程就会涉及系统调用，代价不小。</li>
+</ul>
+</li>
+<li><b>线程池可以共享任务，减少线程的创建和销毁</b>
+<ul class="quote">
+<li>客户端线程将任务委托给在后台执行任务的服务。</li>
+<li>必须有一个线程安全的通道，以便主线程通过该通道将任务发送到池线程。</li>
+<li>池中的其他空闲线程将等待新任务的到来。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>命令设计模式在线程池中的应用</h4>
+<ul class="point">
+<li><b>命令设计模式将任务定义与执行解耦</b>
+<ul class="quote">
+<li>客户下单到服务器，服务器将其记录下来，然后将订单传到厨房以准备菜肴。</li>
+<li>客户端线程相当于顾客，它创建一个runnable作为命令(其run方法表示任务)，这相当于被记下的食品订单。</li>
+<li>厨房相当于线程池，一个线程就像一个执行runnable命令的厨师。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>单词统计的线程池实现</h4>
+<ul class="point">
+<li><b>使用线程池统计文本文件中的单词数</b>
+<ul class="quote">
+<li>驱动器读取每一行文本并将其发送到线程池，每个线程通过递增共享的计数变量来统计单词。</li>
+<li>执行waitTermination(...)会等待所有池线程执行完毕。</li>
+</ul>
+</li>
+<li><b>使用callable和future实现线程池的单词统计</b>
+<ul class="quote">
+<li>这种方法的问题在于，你无法从run()方法返回值，因为该方法的返回值类型为void。</li>
+<li>在这种情况下，callable接口派上了用场。</li>
+<li>future有助于避免阻塞。我们启动所有计算，然后调用每个future的get()方法，但此方法可以被阻塞(如果计算长时间运行的话)。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>阻塞队列在线程池中的应用</h4>
+<ul class="point">
+<li><b>使用阻塞队列控制任务数量，避免线程死锁</b>
+<ul class="quote">
+<li>我们使用ArrayBlockingQueue将任务传递给池，代码为：taskQueue = new ArrayBlockingQueue(maxNumOfTasks);。</li>
+<li>如果某个生产者尝试放入超过队列容量的任务，就会阻塞此队列。</li>
+<li>限制任务数量可以控制队列，另外，我们之前也说过，如果队列已满，生产者将被迫等待。</li>
+</ul>
+</li>
+<li><b>使用自定义线程池类实现线程池</b>
+<ul class="quote">
+<li>我们使用MyThreadPool类，它是Thread类的子类。</li>
+<li>一旦将线程添加到池中，将调用每个线程的start()方法。</li>
+<li>注意，在doStop()方法中，我们先设置isDone标志为true，再中断线程。</li>
+<li>注意重写的run()方法：该方法不断循环运行，每次循环都从队列中取出任务，并调用其run方法，当isDone标志为true时，退出循环。</li>
+<li>该线程可能在调用take()时等待，并且可以想象会永远等待，它将永远看不到isDone标志值的变化！这就是我们在设置标志时需要中断线程的原因。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>线程中断语义</h4>
+<ul class="point">
+<li><b>interrupt()方法会取消当前线程的操作，需要针对中断对操作进行相应的设计</b>
+<ul class="quote">
+<li>这种操作的一个常见示例是Thread.sleep(...)方法。</li>
+<li>sleep()方法会中断，然后醒来，打印消息并退出。</li>
+<li>如果忽略线程池的中断，那么池线程将永远等待。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch23"><summary>4.2 fork-join池</summary>
+<div class="sec">
+<h4>fork-join池简介</h4>
+<ul class="point">
+<li><b>Java 7引入了专门的执行器服务，即fork-join API</b>
+<ul class="quote">
+<li>fork-join API根据可用的处理器数和其他参数(例如，并发任务的数量)来动态管理线程的数目。</li>
+<li>它还采用了一种称为“工作窃取”的重要模式。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Egrep——简易版</h4>
+<ul class="point">
+<li><b>fork-join API中的主题是递归任务</b>
+<ul class="quote">
+<li>类WordFinder继承自RecursiveTask&lt;List&lt;String&gt;&gt;类。</li>
+</ul>
+</li>
+<li><b>任务可以自己分叉(fork)出更多的子任务</b>
+<ul class="quote">
+<li>如果它是一个目录，则任务进入目录并产生更多的子任务来处理每个子条目。</li>
+<li>如果文件确实是文本文件，则grepInFile(...)方法在该文件中查找目标单词。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>为什么要使用递归任务</h4>
+<ul class="point">
+<li><b>递归任务适用于两种文件：如果它是一个目录，则任务进入目录并产生更多的子任务来处理每个子条目。</b>
+</li>
+<li><b>如果文件确实是文本文件，则grepInFile(...)方法在该文件中查找目标单词</b>
+<ul class="quote">
+<li>我们从该文件中创建一个lines流。</li>
+<li>程序将根据行是否包含给定单词来过滤流。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>任务并行性</h4>
+<ul class="point">
+<li><b>fork-join是一种并行设计模式</b>
+<ul class="quote">
+<li>我们构建并执行fork-join，以便当我们遇到目录时，执行过程会并行地分叉，最终该结果与更高层进行合并。</li>
+</ul>
+</li>
+<li><b>分治算法的一个著名例子是快速排序</b>
+<ul class="quote">
+<li>快速排序通过使用中值将数组分成两半来排序数组。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用fork-join API实现快速排序</h4>
+<ul class="point">
+<li><b>ForkJoinQuicksortTask类继承自RecursiveTask类</b>
+<ul class="quote">
+<li>该类合并并返回一个整型数组。</li>
+</ul>
+</li>
+<li><b>我们创建一组递归的fork-join任务，它们都放在tasks列表中</b>
+<ul class="quote">
+<li>该数组被划分为两个部分，并返回pivotIndex。</li>
+<li>我们通过复制数组中一定范围内的元素来创建两个新的子数组。</li>
+<li>我们将result变量初始化为一个包含枢轴元素的单元素数组，然后将此枢轴元素作为结果追加到第一个排序数组的末尾，接下来，我们将第二个排序数组追加到该结果的末尾，从而为我们提供一个完整的排序数组。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>map-reduce技术</h4>
+<ul class="point">
+<li><b>我们实际上是跨不同的线程分配工作</b>
+<ul class="quote">
+<li>合并(join)步骤将子结果减少(整理)为单个结果。</li>
+</ul>
+</li>
+<li><b>各种形式的map-reduce算法基本上都基于相同的原则</b>
+<ul class="quote">
+<li>十分普遍的例子是单词统计程序。我们有一个单词流(所有标点符号都被删除)，希望计算每个单词的频率，即它在流中出现的次数。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch24"><summary>4.3 线程的工作窃取算法</summary>
+<div class="sec">
+<h4>线程的工作窃取算法</h4>
+<ul class="point">
+<li><b>ForkJoinPool通过使用特定于线程的双端队列(deque)，将任务分散到每个线程</b>
+<ul class="quote">
+<li>每个线程都有自己的任务缓冲区，缓冲区是一个双端队列，它是一种数据结构，允许从缓冲区的两端压入和弹出。</li>
+</ul>
+</li>
+<li><b>空闲线程可以从一些过载的随机线程的双端队列中“窃取”任务</b>
+<ul class="quote">
+<li>可能会发生这样的情况：某些任务的计算很繁重，因此执行处理的线程可能需要更长时间；另一方面，其他池线程可能会获得更轻松的任务，并且不会有任何其余工作要做。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>TaskStealingThread类</h4>
+<ul class="point">
+<li><b>TaskStealingThread是线程类，继承自Thread</b>
+<ul class="quote">
+<li>成员变量arrTaskQueue是一个deque数组，成员变量rand用于生成随机索引，以便索引arrTaskQueue。</li>
+<li>成员变量myId保存此线程的deque在arrTaskQueue中的索引。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>工作窃取算法的实现</h4>
+<ul class="point">
+<li><b>线程通过无限循环获取任务并运行它们</b>
+<ul class="quote">
+<li>第一个(无限)循环开始：while (task != null) { task.run(); task = myTaskQueue.removeFirst(); }。</li>
+</ul>
+</li>
+<li><b>当任务队列为空时，线程尝试从其他线程的任务队列中窃取任务</b>
+<ul class="quote">
+<li>while (task == null) { Thread.yield(); int stealIndex = rand.nextInt(arrTaskQueue.length); if (!arrTaskQueue[stealIndex].isEmpty()) { task = arrTaskQueue[stealIndex].removeLast(); } }。</li>
+</ul>
+</li>
+<li><b>工作窃取与正常任务处理交织在一起</b>
+<ul class="quote">
+<li>一旦获取任务并运行它，我们首先会回过头来检查自己的队列。如果线程已被分配任务，则它会再次返回，并运行在自己队列中的任务。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch25"><summary>4.4 主动对象</summary>
+<div class="sec">
+<h4>遗留代码的线程安全问题</h4>
+<ul class="point">
+<li><b>遗留代码没有线程考虑，需要仔细同步对所有共享状态的访问</b>
+<ul class="quote">
+<li>遗留代码有副作用、异常、共享数据结构等难以预料的后果。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>隐藏和适应策略</h4>
+<ul class="point">
+<li><b>提供对遗留代码的受控访问，例如，将遗留代码隐藏为私有实例，并提供委托方法</b>
+<ul class="quote">
+<li>WrapperObject类的内部锁用于跨线程同步，这将使其线程安全，但并发将被序列化。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用代理策略</h4>
+<ul class="point">
+<li><b>利用代理设计模式，将逻辑编码为一个runnable，并将其作为任务放在队列中</b>
+<ul class="quote">
+<li>处理器线程消费任务队列中的任务，它只是线程和runnable(接口)，并在名为processorThread的成员变量中被跟踪。</li>
+<li>调用stop()方法来停止处理器线程，此方法直接中断线程，然后打印相应的告别消息并退出。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch26"><summary>4.5 本章小结</summary>
+<div class="sec">
+<h4>线程池的概念和优势</h4>
+<ul class="point">
+<li><b>线程池用于解决线程创建、调度和销毁的成本问题</b>
+<ul class="quote">
+<li>线程创建、调度和销毁的成本都是昂贵的，并且它们需要大量的计算。</li>
+</ul>
+</li>
+<li><b>线程池中的线程会被重用以执行任务，然后返回池中等待下一个任务</b>
+<ul class="quote">
+<li>池中的每个线程重复等待任务，而任务是一个短暂的计算单元。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Fork-join API和工作窃取策略</h4>
+<ul class="point">
+<li><b>Fork-join API是一种分治算法，它将大问题分解为小问题，然后合并结果</b>
+<ul class="quote">
+<li>我们详细介绍了fork-join API，并研究了它如何使用工作窃取策略。</li>
+</ul>
+</li>
+<li><b>工作窃取策略是一种线程调度策略，它可以让空闲的线程从其他线程那里窃取任务</b>
+<ul class="quote">
+<li>工作窃取策略可以有效地利用线程资源，提高程序的性能。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>主动对象设计模式和代理</h4>
+<ul class="point">
+<li><b>主动对象设计模式使用代理来隐藏内部的并发。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Map-reduce和并发哈希</h4>
+<ul class="point">
+<li><b>并发哈希是一种并发数据结构，可以提高Map-reduce程序的性能</b>
+<ul class="quote">
+<li>我们讨论了map-reduce主题，并引入了并发哈希。我们将在下一章中仔细研究这个引人入胜的数据结构，敬请关注。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch27"><summary>第5章 提升并发性</summary>
+<div class="sec">
+<h4>无锁的堆栈和队列</h4>
+<ul class="point">
+<li><b>无锁策略使用的是比较交换(CAS)</b>
+<ul class="quote">
+<li>CAS是一个复杂的编程模型，需要极其谨慎和深入的分析。</li>
+</ul>
+</li>
+<li><b>CAS需要避免ABA问题</b>
+<ul class="quote">
+<li>ABA问题是指一个线程看到的值A在经过一系列变化后又变回了A，但在这个过程中，A的值曾被其他线程改变过。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>常用的数据结构</h4>
+<ul class="point">
+<li><b>并发堆栈是一种线程安全的堆栈实现。</b>
+</li>
+<li><b>队列是一种线程安全的队列实现。</b>
+</li>
+<li><b>哈希表用于高效实现集合的抽象。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>提高并发性的策略</h4>
+<ul class="point">
+<li><b>使用显式锁定和分离锁设计模式</b>
+<ul class="quote">
+<li>显式锁定和分离锁设计模式是一种提高并发性的解决方案。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch28"><summary>5.1 无锁堆栈</summary>
+<div class="sec">
+<h4>无锁堆栈的概念和特点</h4>
+<ul class="point">
+<li><b>无锁算法比有锁算法更复杂，基于对单个变量进行原子更改，同时保持数据一致性。</b>
+</li>
+<li><b>后进先出(LIFO)堆栈是编程中很常见的数据结构，使用单链表来表示堆栈，链表的每个节点都保存一个值和一个指向下一个节点的指针。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>原子引用的概念和用法</h4>
+<ul class="point">
+<li><b>原子引用使得多个线程更新引用时不会导致不一致的情况发生</b>
+<ul class="quote">
+<li>更新原子引用时使用的方法是compareAndSet，该方法用到了CAS(compare and swap，比较和交换)指令。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>无锁堆栈的实现</h4>
+<ul class="point">
+<li><b>无锁堆栈是一个节点元素的单链表，使用原子引用来维护栈顶</b>
+<ul class="quote">
+<li>堆栈的push方法用于分配一个新的节点，该节点的next字段指向当前的栈顶，然后使用CAS尝试改变栈顶，以使这个新节点成为新的栈顶。</li>
+<li>pop方法采用类似的原理来移除栈顶节点。</li>
+</ul>
+</li>
+<li><b>不论CAS成功与否，这个无锁栈总是处于一致性的状态中</b>
+<ul class="quote">
+<li>push方法中，CAS成功时退出循环，注意循环条件是一个否定条件。</li>
+<li>pop方法中，如果oldHead为null，则返回null。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch29"><summary>5.2 无锁的FIFO队列</summary>
+<div class="sec">
+<h4>无锁的FIFO队列</h4>
+<ul class="point">
+<li><b>使用两个锁，一个锁用于保护插入操作(元素入队)，另一个锁用于从队列中取出元素(元素出队)</b>
+<ul class="quote">
+<li>成员变量size跟踪队列元素的数量，用它的值表示正确的条件变量。</li>
+<li>head和tail变量的修饰符是volatile，有关volatile变量的更多信息，请参阅第2章。</li>
+</ul>
+</li>
+<li><b>enq(v)方法插入元素，deq()方法从队列中弹出元素</b>
+<ul class="quote">
+<li>enq(v)方法检查队列是否已满，如果成立，则唤醒阻塞的消费者，通知它们在队列中有可用的空间。</li>
+<li>deq()方法检查队列是否为空，如果成立，则抛出异常。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>流程如何运作</h4>
+<ul class="point">
+<li><b>enq(v)方法根本没有引用head字段，deq()方法从未使用tail变量</b>
+<ul class="quote">
+<li>由于更新丢失，无法保证不会出现竞争条件。</li>
+</ul>
+</li>
+<li><b>当enq()方法处于添加元素过程中时，deq()线程可以弹出一个半初始化的节点</b>
+<ul class="quote">
+<li>如果size的值为0或非0，则至少有一个元素可供消费，这意味着生产者和消费者线程中至少有一个元素不同。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>无锁队列</h4>
+<ul class="point">
+<li><b>使用原子引用，还使用compareAndSet(...)调用来更改值</b>
+<ul class="quote">
+<li>此调用可能会失败，因为其他某个线程可能已经提前做了更改。</li>
+<li>由于我们假设只有一个线程，此调用会成功，我们将向队列添加一个元素。</li>
+</ul>
+</li>
+<li><b>deq()方法也依赖于使用compare-AndSet原语来实现线程安全</b>
+<ul class="quote">
+<li>如果队列为空，则该方法将抛出异常。</li>
+<li>如果head被正确更改，顺序执行时一切正常，这是最简单的情况。</li>
+<li>如果两个线程同时到达else分支，两者都在竞争获取相同的值，compareAndSet(...)调用保证了正确的语义。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>ABA问题</h4>
+<ul class="point">
+<li><b>CAS会询问“V的值是否仍为A？”，如果答案为“是”，则将其更新为新值</b>
+<ul class="quote">
+<li>如果我们计划自己管理节点池，那么可能会遇到ABA问题。</li>
+</ul>
+</li>
+<li><b>一个简单的原子引用无法解决这个问题，解决方案是通过使用AtomicStampedReference让它知道这些更改</b>
+<ul class="quote">
+<li>AtomicStampedReference类是一个AtomicReference，加上一个戳记(一个变量，每次更新变量时都会递增其值)。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch30"><summary>5.3 并发的哈希算法</summary>
+<div class="sec">
+<h4>并发的哈希算法</h4>
+<ul class="point">
+<li><b>哈希表通常用数组来实现，每个数组元素都是一个或多个数据项的列表</b>
+<ul class="quote">
+<li>哈希函数的值映射到数组的索引。</li>
+<li>每个Java对象都有一个hashCode()方法，它为对象提供一个整数，该整数除以数组长度得到的余数(模数)作为这个数组的索引。</li>
+</ul>
+</li>
+<li><b>对于添加、删除或检查操作都要查验集合是否包含某项等任何操作来说，首先需要获得数组(或表)的索引，然后做其余的处理工作</b>
+<ul class="quote">
+<li>基本思想是，在给定一个表和一个哈希函数的情况下，我们提供contains(key)方法、add(key，value)方法和remove(key)方法，它们具有恒定的平均时间。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>add(v)方法</h4>
+<ul class="point">
+<li><b>add(v)方法尝试将元素添加到集合中，如果v元素已经存在，则该方法只返回false</b>
+<ul class="quote">
+<li>首先，通过调用lock(x)方法获取可变状态(即表)的锁。</li>
+<li>接下来，它尝试将该元素添加到索引为bucket的数组持有的列表中。</li>
+<li>如果table[bucket]是一个数组列表。我们在列表中看看是否已经有该元素，如果有，我们不能再往列表中添加该元素(还记得唯一性保证吗？)，所以我们返回false。否则，我们将该元素添加到列表中，size实例字段加1表示该集合又新增了一个元素，并返回true。</li>
+</ul>
+</li>
+<li><b>如果任何一个桶列表变得太长时，即当其长度超过某个全局阈值时，我们将调整其大小</b>
+<ul class="quote">
+<li>有关算法复杂度的详细内容，请参见https://www.studytonight.com/data-structures/time-complexity-of-algorithms。</li>
+<li>其思想是把这些桶的容量扩大两倍，并重新对所有元素执行哈希操作，使得元素能被重新安排位置，这将确保元素更均匀分布到所有桶列表。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>contains(v)方法</h4>
+<ul class="point">
+<li><b>contains(v)方法用于搜索哈希集合中的元素。如果集合中有该元素，则contains(v)方法返回true，否则，它返回false</b>
+<ul class="quote">
+<li>它的算法思想很明显，涉及两个步骤：计算哈希值以获得桶的索引；每个数组元素都包含一个链表，我们使用contains(x)方法在链表中搜索。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch31"><summary>5.4 大锁的方法</summary>
+<div class="sec">
+<h4>BigLockHashSet的设计</h4>
+<ul class="point">
+<li><b>BigLockHashSet是HashSet的子类，使用重入锁</b>
+<ul class="quote">
+<li>重入锁使得持有锁的线程能够再次获取该锁，而不会被阻塞。</li>
+</ul>
+</li>
+<li><b>重写了lock()方法和unlock()方法，它们只是忽略了x参数</b>
+<ul class="quote">
+<li>这些方法只是对重入锁进行锁定和解锁，它没有使用传入的参数x。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>调整哈希集合大小的策略</h4>
+<ul class="point">
+<li><b>当任何一个列表变得太长而超过阈值时，我们会调整哈希集合的大小</b>
+<ul class="quote">
+<li>LIST_LEN_THRESHOLD常量用于下一节中描述的shouldResize()方法。</li>
+</ul>
+</li>
+<li><b>shouldResize()方法只是返回needsToResize标志的值，recheck()方法则遍历所有列表，并将它们的长度与阈值进行比较</b>
+<ul class="quote">
+<li>如果需要调整大小，我们会分配一个容量为原始容量两倍的新表，并遍历原始表的所有元素，然后重新执行散列操作，并将元素重新插入新表中。</li>
+<li>为什么需要调用recheck()方法呢？可能有这样的情况，在调用add和执行resize之间，其他一些线程可能已经完成大小的调整，因此，在执行resize之前，需要检查一下调整大小的条件是否满足。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch32"><summary>5.5 锁条纹设计模式</summary>
+<div class="sec">
+<h4>锁条纹设计模式介绍</h4>
+<ul class="point">
+<li><b>锁条纹模式使我们能够允许多个并发线程处理哈希集合，同时仍然可以确保线程安全。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>锁条纹模式工作原理</h4>
+<ul class="point">
+<li><b>我们维护的是锁数组，而不是单个锁</b>
+<ul class="quote">
+<li>锁数组中锁的数量最初等于哈希表中的桶数量。</li>
+<li>随着哈希集合中元素个数的增加，锁必将继续覆盖更多桶和元素。</li>
+</ul>
+</li>
+<li><b>元素的哈希码代表锁，lock方法和unlock方法使用此哈希码可以访问与该元素关联的锁</b>
+<ul class="quote">
+<li>之所以lock和unlock方法都接受正在被散列的元素，是因为早期版本没有用到它，但是这个版本需要锁定元素才能工作。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>锁条纹模式实现细节</h4>
+<ul class="point">
+<li><b>出现死锁怎么办？如果两个或多个线程调用resize()又会怎么样？</b>
+<ul class="quote">
+<li>请注意，我们始终按顺序锁定“锁数组”。如前几章所述，按序获取锁可以防止死锁。</li>
+</ul>
+</li>
+<li><b>如果另一个线程已经拥有锁，还可能在这个列表上读写吗？</b>
+<ul class="quote">
+<li>在这种情况下，调整大小操作将暂停执行，以等待线程释放锁。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch33"><summary>5.6 本章小结</summary>
+<div class="sec">
+<h4>提高数据结构的并发性</h4>
+<ul class="point">
+<li><b>使用隐式(或显式)同步是一个瓶颈，因此我们探索了替代方案</b>
+<ul class="quote">
+<li>我们使用Java并发库提供的比较和设置(CAS)原语观察无锁数据结构。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>无锁数据结构</h4>
+<ul class="point">
+<li><b>实现了一个无锁的LIFO堆栈和更复杂的无锁队列</b>
+<ul class="quote">
+<li>无锁算法比有锁同步算法更复杂。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>原子引用和ABA问题</h4>
+<ul class="point">
+<li><b>原子引用是基于CAS的算法的基础</b>
+<ul class="quote">
+<li>我们研究了ABA问题发生的情形，以及Atomic-StampedReference如何解决它。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>哈希和锁条纹设计模式</h4>
+<ul class="point">
+<li><b>哈希和锁条纹设计模式如何帮助提高哈希表的并发性</b>
+<ul class="quote">
+<li>掌握了所有这些知识后，我们将学习不变性和函数式编程，以及这种令人兴奋的模式如何帮助我们编写更好的并发程序。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch34"><summary>第6章 函数式并发模式</summary>
+<div class="sec">
+<h4>函数式并发模式</h4>
+<ul class="point">
+<li><b>函数式编程是一种函数式范式，其基石是不变性</b>
+<ul class="quote">
+<li>不变数据结构使用结构共享和持久数据结构来确保有良好的性能和安全保障。</li>
+</ul>
+</li>
+<li><b>future抽象视为异步计算的表示，异步计算以最佳方式使用线程</b>
+<ul class="quote">
+<li>Scala的future也是一个单子，能够提供可组装性(模块性)。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch35"><summary>6.1 不变性</summary>
+<div class="sec">
+<h4>不变性</h4>
+<ul class="point">
+<li><b>不可变对象是线程安全的，如果对象不可变，就无法更改对象</b>
+<ul class="quote">
+<li>多个线程可以同时读取这样的对象，当线程需要更改值时，它会创建一个修改后的副本。</li>
+</ul>
+</li>
+<li><b>Java字符串就是不可变的，可以很容易地共享它们</b>
+<ul class="quote">
+<li>变量s1、s2、s3和s4都指向内存中相同的字符串对象。</li>
+<li>当我们调用toUpperCase()方法时，我们得到的是修改后的另一个字符串副本。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>不可修改的包装器</h4>
+<ul class="point">
+<li><b>在可变集合上增加不变性的方法</b>
+<ul class="quote">
+<li>createList()方法创建、填充和包装ArrayList，ArrayList是一个可变的集合，这种编写代码的方式可以确保我们不会无意中漏掉可变列表。</li>
+</ul>
+</li>
+<li><b>装饰器readOnlyList将全部读取操作转发到该可变对象</b>
+<ul class="quote">
+<li>当我们尝试改变列表时，会碰到一个异常。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>持久数据结构</h4>
+<ul class="point">
+<li><b>术语“持久性”指的是被维护的同一数据结构的多个版本，多个版本由于“写时复制”而存在</b>
+<ul class="quote">
+<li>任何未使用的版本都会被当作垃圾回收。</li>
+</ul>
+</li>
+<li><b>append操作必须复制全部列表，当我们向只读列表追加内容时，就不可能实现结构化共享</b>
+<ul class="quote">
+<li>由于所有节点都被复制，因此append方法的复杂度为O(n)。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>递归和不变性</h4>
+<ul class="point">
+<li><b>在Scala中，无论何时使用集合，默认情况下它都是不可变集合</b>
+<ul class="quote">
+<li>当然，也有可变的集合，但是，你必须专门导入它们。</li>
+</ul>
+</li>
+<li><b>为了跟踪迭代，我们使用递归来实现遍历和循环</b>
+<ul class="quote">
+<li>这种办法避免了任何可变状态，如计数器。</li>
+<li>尾递归优化(TCO)是为了避免发生堆栈溢出问题。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch36"><summary>6.2 future模式</summary>
+<div class="sec">
+<h4>future模式简介</h4>
+<ul class="point">
+<li><b>future用于表达异步计算，调用线程可以利用future执行非阻塞操作</b>
+<ul class="quote">
+<li>future是占位符，如果调用时间太长，它最终会包含响应，或者可以超时。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>apply方法</h4>
+<ul class="point">
+<li><b>Future.apply方法接收一个函数作为参数，返回一个Future对象</b>
+<ul class="quote">
+<li>“body=&gt;T”句法是一个传名参数，这是该方法的一种简化形式。</li>
+<li>隐式参数与普通参数类似，你可以显式地将它们指定为普通参数，也可以不指定它们，如果不指定，Scala编译器将在周边有效范围内搜索值。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>future——线程映射</h4>
+<ul class="point">
+<li><b>apply(...)方法的最后部分是隐式的执行上下文，执行上下文是可以执行future的环境，它本质上是一个线程池</b>
+<ul class="quote">
+<li>Scala提供了一个使用ForkJoinPool的全局的ExecutionContext，这样，你不必再操心任务了，全局ExecutionContext将进行future计算，并将其打包到fork-join任务中。</li>
+<li>如果回忆一下第4章中关于线程池的讨论，你应该还记得fork-join线程池。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>future模式是异步的</h4>
+<ul class="point">
+<li><b>future模式通过并行执行，可以重叠操作的延迟，从而减少总延迟</b>
+<ul class="quote">
+<li>三个请求都是在同一时间被触发，而不是等待彼此完成，只有需要计算整体结果时，才用到这三个值。</li>
+<li>由于三个操作的延迟会重叠，总延迟就是三个延迟的最大值。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>糟糕的阻塞</h4>
+<ul class="point">
+<li><b>在阻塞性API的情况下，可以通过blocking方法提示阻塞上下文创建更多的线程</b>
+<ul class="quote">
+<li>blocking方法在检测到没有足够的线程来完成任务时，会使全局执行上下文生成其他线程。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>函数组合</h4>
+<ul class="point">
+<li><b>在函数式编程中，通过使用高阶函数将简单值组合成更复杂的值，这些高阶函数称为组合器</b>
+<ul class="quote">
+<li>例如，集合上的map方法生成一个新集合，其中包含原始集合中的元素，并使用指定的函数进行映射。</li>
+<li>future也是一个单子(monad)，以下代码显示了我们如何使用“for-comprehensions”来操作它们。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch37"><summary>6.3 本章小结</summary>
+<div class="sec">
+<h4>不可变值及其优势</h4>
+<ul class="point">
+<li><b>不可变值一旦被构造，就永远不会改变</b>
+<ul class="quote">
+<li>不变性可以完全排除任何共享状态的问题，因为无法更改值。</li>
+</ul>
+</li>
+<li><b>不可变代码可提高线程安全性</b>
+<ul class="quote">
+<li>当线程需要修改不可变数据结构时，可以使用写时复制技术。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>持久性数据结构</h4>
+<ul class="point">
+<li><b>持久性数据结构是同一数据结构的多个版本(副本)，结构共享有助于确保算法性能。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Scala的future</h4>
+<ul class="point">
+<li><b>future是一种用于表达异步计算的抽象</b>
+<ul class="quote">
+<li>future如何使用线程执行映射，以及如何避免阻塞底层线程。</li>
+</ul>
+</li>
+<li><b>future允许功能组合，即用于创建处理管道的功能设计模式。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch38"><summary>第7章 actor模式</summary>
+<div class="sec">
+<h4>函数式并发模式与actor模式</h4>
+<ul class="point">
+<li><b>函数式并发模式使用各种代码示例讨论了函数式并发模式。</b>
+</li>
+<li><b>actor模式将借助各种代码示例来讨论功能。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>共享状态范式与锁</h4>
+<ul class="point">
+<li><b>共享状态范式要求进行谨慎的状态管理</b>
+<ul class="quote">
+<li>锁使得状态操作成为原子操作，但是，这种方法可能会导致锁瓶颈。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>无锁数据结构</h4>
+<ul class="point">
+<li><b>无锁结构本身也很复杂。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>消息驱动范式与actor</h4>
+<ul class="point">
+<li><b>利用actor对状态进行封装，改变状态的唯一方法是向actor发送消息</b>
+<ul class="quote">
+<li>在这里，没有共享状态，取而代之的是利用actor对状态进行封装。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch39"><summary>7.1 消息驱动的并发</summary>
+<div class="sec">
+<h4>基于actor的程序</h4>
+<ul class="point">
+<li><b>actor包含状态、行为、信箱、子actor和父母</b>
+<ul class="quote">
+<li>一个actor系统包含若干actor和一个调度actor的线程池。</li>
+</ul>
+</li>
+<li><b>actor引用相当于电子邮件ID，可以发送消息</b>
+<ul class="quote">
+<li>一个人可能在办公室或在旅行，你仍然可以使用其电子邮件ID向其发送消息，这个人也可以回复发件人。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>状态封装</h4>
+<ul class="point">
+<li><b>状态相当于这些人的想法，它很好地封装在“人”里面</b>
+<ul class="quote">
+<li>初级开发人员由高级开发人员监督，而高级开发人员则由经理监督。</li>
+</ul>
+</li>
+<li><b>我们无法从外部更改变量，我们需要向actor发送一条消息，并由actor以它认为合适的方式调整状态</b>
+<ul class="quote">
+<li>用count变量存储共享可变状态，该变量跟踪到目前为止接收和处理的消息总数。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>并发性在哪里</h4>
+<ul class="point">
+<li><b>actor是更高级的抽象，它在线程之上运行</b>
+<ul class="quote">
+<li>我们有两个actor类(Make3From1和Make5From1)，其中，Make3From1接收消息，并将该消息三次发送到CountMessages这个actor，Make5From1也做相同的事情，只是它五次发送消息。</li>
+<li>当我们运行此代码时，输出结果如下(对代码进行修剪以显示最相关的信息)：前面的输出很有说明性，所有三个actor运行在三个不同的线程上，线程的名称是MyActorSystem-akka.actor.default-dispatcher-4。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>未处理的消息</h4>
+<ul class="point">
+<li><b>当我们发送没有模式可与之匹配的消息时，该消息会被丢弃</b>
+<ul class="quote">
+<li>receive方法什么都不做，它根本不处理任何消息。</li>
+<li>unhandled方法依次专门处理Int类型的消息，而其他类型的消息都委托给超类去处理。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>become模式</h4>
+<ul class="point">
+<li><b>使用receive方法可以定义actor的行为，而使用actor的上下文对象上的become方法可以更改actor的行为</b>
+<ul class="quote">
+<li>只要actor处理的消息少于5条，对于每条消息，都会增加计数并记录。</li>
+<li>一旦消息计数达到5条，则actor会更改其行为以丢弃所有消息。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>让它崩溃并恢复</h4>
+<ul class="point">
+<li><b>父actor也是子actor的监督者，我们可以做一些设置，以便对于每个崩溃的actor，另一个actor会复活并被放到相应的位置</b>
+<ul class="quote">
+<li>子actor只接受Int类型的消息，对其他消息，它抛出异常RunTimeException。</li>
+<li>基于监督策略，监督者会介入并重新创建actor。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>actor通信——ask模式</h4>
+<ul class="point">
+<li><b>“请求——响应模式”在日常编程中很常见，一个actor可以向另一个actor请求某些服务，调用者需要等待此响应</b>
+<ul class="quote">
+<li>actor应该永远不阻塞，如果一个actor阻塞，它会阻塞底层线程，从而使其他actor挨饿。</li>
+<li>akka.pattern包提供了名为“？”的ask操作符，此操作符向目标actor发送消息。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>actor通信——tell模式</h4>
+<ul class="point">
+<li><b>如果我们使用tell模式，生成的代码会更简单，更重要的是不需要超时，因为不使用future</b>
+<ul class="quote">
+<li>虽然不发回响应，但是会发送一个新类型的消息。</li>
+<li>future处理的结果将打包到Result(String)消息中，该消息只是一个示例类，它在Actor1的伴生对象中定义，我们也建议在其伴生对象中定义actor的消息。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>pipeTo模式</h4>
+<ul class="point">
+<li><b>有时需要ask模式，例如，服务actor可以进行Web服务调用，或触发数据库查询，而结果可能对进一步的处理是必需的</b>
+<ul class="quote">
+<li>这种情况显示在以下代码中：pipe(result) to self。</li>
+<li>它将获取future的结果，并将其转化为另一个发给自己的消息！此消息由以下子句处理：case (x: Int, b: Boolean) =&gt; log.info(s&quot;${x} is ${b}&quot;)。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch40"><summary>7.2 本章小结</summary>
+<div class="sec">
+<h4>Actor范式介绍</h4>
+<ul class="point">
+<li><b>通过类比现实世界的软件公司和员工来解释术语</b>
+<ul class="quote">
+<li>actor就像员工，actorRef就像员工编号，actor的状态封装就像员工的私人信息。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Actor的状态封装与线程映射</h4>
+<ul class="point">
+<li><b>actor的状态封装使得actor的行为可以预测</b>
+<ul class="quote">
+<li>actor的状态是私有的，只有actor自己可以访问和修改。</li>
+</ul>
+</li>
+<li><b>actor默认映射到一个线程，但也可以配置多个线程</b>
+<ul class="quote">
+<li>如果actor的数量远小于线程的数量，那么大多数时间actor都会在自己的线程上执行，这样可以减少线程切换的开销。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Actor的基本和常见模式</h4>
+<ul class="point">
+<li><b>become模式改变actor行为，使状态不可变。</b>
+</li>
+<li><b>监督模型在actor崩溃时重新启动副本</b>
+<ul class="quote">
+<li>在akka中，监督者负责管理和监控它的子actor，当子actor崩溃时，监督者会重新启动它。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Actor通信模式</h4>
+<ul class="point">
+<li><b>ask模式用于向actor发送请求并等待响应</b>
+<ul class="quote">
+<li>ask模式需要使用ActorRef.ask方法来发送请求，并等待actor的响应。</li>
+</ul>
+</li>
+<li><b>tell模式用于向actor发送消息，不等待响应</b>
+<ul class="quote">
+<li>tell模式使用ActorRef.tell方法来发送消息，不需要等待actor的响应。</li>
+</ul>
+</li>
+<li><b>pipeTo模式用于将结果发送给另一个actor。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用actor与future任务时的注意事项</h4>
+<ul class="point">
+<li><b>actor的响应可能是future任务</b>
+<ul class="quote">
+<li>如果actor的响应是一个future任务，那么需要使用Await.result方法来等待结果。</li>
+</ul>
+</li>
+<li><b>actor的响应可能是迭代器</b>
+<ul class="quote">
+<li>如果actor的响应是一个迭代器，那么需要使用foreach方法来遍历结果。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+  <p class="site-footer">由 weread-auto 导出 · 供全书视角与后续精读对照　<span class="gcstat" id="gc_page_pv" style="display:none">本页阅读 <b id="gc_page_pv_num">–</b> 次</span></p>
+</main>
+<script>(function(){
+  function openId(id){
+    if(!id) return null;
+    var el = document.getElementById(id);
+    if(!el) return null;
+    var d = (el.tagName === 'DETAILS') ? el : (el.closest ? el.closest('details') : null);
+    if(d && !d.open) d.open = true;      // 关键：目录跳过来时把这一章展开
+    return el;
+  }
+  function go(id){
+    var el = openId(id);
+    if(!el) return;
+    // 展开会改变文档高度，等一帧再滚，免得停在错误位置
+    setTimeout(function(){ el.scrollIntoView({block:'start'}); }, 10);
+  }
+  function fromHash(){
+    var h = (location.hash || '').replace(/^#/, '');
+    if(h) go(decodeURIComponent(h));
+  }
+  document.addEventListener('click', function(e){
+    var a = (e.target && e.target.closest) ? e.target.closest('a[href^="#"]') : null;
+    if(!a) return;
+    var id = (a.getAttribute('href') || '').slice(1);
+    if(id) go(id);
+  }, false);
+  window.addEventListener('hashchange', fromHash, false);
+  // 手动展开某章时把锚点写回地址栏：刷新或分享链接能直接落回这一章
+  document.addEventListener('toggle', function(e){
+    var t = e.target;
+    if(t && t.tagName === 'DETAILS' && t.open && t.id && location.hash !== '#' + t.id){
+      try { history.replaceState(null, '', '#' + t.id); } catch(err) {}
+    }
+  }, true);
+  fromHash();
+})();
+</script>
+<script data-goatcounter="https://ae6623.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<!-- gc-fill:begin -->
+<script>
+(function(){
+  /* GoatCounter 计数端点只吃 .json（.txt 会 400 unknown extension），
+     没数据的路径也返回 404 + {"count":0,"count_unique":0}，所以按文本解析。 */
+  var C="ae6623", base="https://"+C+".goatcounter.com/counter";
+  function stat(p){
+    return fetch(base+p+".json",{credentials:"omit",cache:"no-store"})
+      .then(function(r){return r.text();})
+      .then(function(t){
+        try{
+          var d=JSON.parse(t), c=parseInt(d.count,10);
+          if(!isFinite(c))return null;
+          var u=parseInt(d.count_unique,10);
+          return {pv:String(c), uv:isFinite(u)?String(u):null};
+        }catch(e){return null}
+      })
+      .catch(function(){return null});
+  }
+  function put(id,v){var e=document.getElementById(id);if(e&&v!=null)e.textContent=v;}
+  stat("/*").then(function(d){
+    if(!d)return;
+    put("gc_site_pv_num",d.pv);
+    if(d.uv!=null){put("gc_site_uv_num",d.uv);}
+    else{var x=document.querySelectorAll(".visit-badge-uv");
+         for(var i=0;i<x.length;i++)x[i].style.display="none";}
+  });
+  var pp=document.getElementById("gc_page_pv");
+  if(pp&&location.pathname){
+    var path=location.pathname;
+    if(path.length>1&&path.charAt(path.length-1)==="/")path=path.slice(0,-1);
+    stat(path).then(function(d){
+      if(d){put("gc_page_pv_num",d.pv);pp.style.display="";}
+    });
+  }
+})();
+</script>
+<!-- gc-fill:end -->
+</body>
+</html>

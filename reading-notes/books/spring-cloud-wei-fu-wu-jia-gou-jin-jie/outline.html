@@ -1,21 +1,4110 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Spring Cloud微服务架构进阶 · AI 大纲</title><style>
-:root{--fg:#1f2328;--muted:#6b7280;--line:#e6e2da;--accent:#b45309;--bg:#fbfaf7}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.78 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
-.wrap{max-width:840px;margin:0 auto;padding:38px 22px 90px}
-h1{font-size:26px;line-height:1.35;margin:0 0 6px}
-.meta{color:var(--muted);font-size:14px;margin-bottom:20px}
-h2{font-size:19px;margin:34px 0 12px;padding-left:10px;border-left:4px solid var(--accent)}
-h3{font-size:16px;margin:18px 0 8px}
-p{margin:8px 0}
-.tag{display:inline-block;background:#f2ede2;color:#8a6d3b;font-size:12px;padding:1px 9px;border-radius:10px;margin-right:6px}
-ul,ol{padding-left:22px}li{margin:4px 0}
-.quote{border-left:3px solid #d8cfbd;padding:6px 12px;color:#4b4639;background:#f7f4ee;margin:8px 0;font-size:15px;border-radius:0 6px 6px 0}
-.src{color:var(--muted);font-size:12px}
-.ch{display:flex;gap:10px;padding:7px 0;border-bottom:1px dashed var(--line)}
-.ch .no{color:var(--accent);font-weight:600;min-width:34px;text-align:right}
-.card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:12px 0}
-.foot{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
-a{color:#8a5a00;text-decoration:none}a:hover{text-decoration:underline}
-.badge{font-size:12px;color:#8a6d3b;background:#f6f1e6;border:1px solid #eadfc6;border-radius:6px;padding:1px 7px}
-</style></head><body><div class="wrap"><h1>Spring Cloud微服务架构进阶</h1><div class="meta"><span class="tag">AI 大纲</span>朱荣鑫 张天 黄迪璇　·　共 71 章</div><h2>全书提要</h2><p>本书详细介绍Spring Cloud 相关组件及其在微服务架构中的应用。全书共13 章，第1 章介绍微服务架构相关的基本概念；第2 章介绍Spring Cloud 中包含的组件以及Spring Cloud 约定的上下文；第3 章介绍Spring Cloud 的基础Spring Boot，包括如何构建一个Spring Boot 服务、Spring Boot 的配置等；第4～13 章详细讲解Spring Cloud 组件，包括Eureka（服务注册与发现）、OpenFeign（声明式RESTful 客户端）、Hystrix（断路器）、Ribbon（客户端负载均衡器）、Gateway（API 网关）、Config（配置中心）、Stream（消息驱动）、Bus（消息总线）、Security（认证与授权）、Sleuth（服务链路追踪）。本书的目标是深入到Spring Cloud 组件实现的技术内幕，并介绍了进阶应用的思路，为读者提供使用Spring Cloud 进行微服务架构实践的参考。</p><h2>章节大纲（含各章热门划线原文）</h2><div class="ch"><span class="no">1</span><div><b>前言</b><span class="src"> · 1696 字</span></div></div><div class="ch"><span class="no">2</span><div><b>第1章 微服务架构介绍</b><span class="src"> · 212 字</span></div></div><div class="ch"><span class="no">3</span><div><b>1.1 微服务架构的出现</b><span class="src"> · 4421 字</span></div></div><div class="ch"><span class="no">4</span><div><b>1.2 微服务架构的流派</b><span class="src"> · 3134 字</span><div class="quote">常见的微服务架构方案有四种，分别是ZeroC IceGrid、基于消息队列、Docker Swarm和Spring Cloud。下面分别介绍这四种方案。 <span class="src">[26人划线]</span></div></div></div><div class="ch"><span class="no">5</span><div><b>1.3 云原生与微服务</b><span class="src"> · 2401 字</span></div></div><div class="ch"><span class="no">6</span><div><b>1.4 本章小结</b><span class="src"> · 339 字</span></div></div><div class="ch"><span class="no">7</span><div><b>第2章 Spring Cloud总览</b><span class="src"> · 286 字</span></div></div><div class="ch"><span class="no">8</span><div><b>2.1 Spring Cloud架构</b><span class="src"> · 1819 字</span></div></div><div class="ch"><span class="no">9</span><div><b>2.2 Spring Cloud特性</b><span class="src"> · 7308 字</span></div></div><div class="ch"><span class="no">10</span><div><b>2.3 本章小结</b><span class="src"> · 214 字</span></div></div><div class="ch"><span class="no">11</span><div><b>第3章 Spring Cloud的基础：Spring Boot</b><span class="src"> · 399 字</span></div></div><div class="ch"><span class="no">12</span><div><b>3.1 Spring Boot简介</b><span class="src"> · 2502 字</span></div></div><div class="ch"><span class="no">13</span><div><b>3.2 构建一个微服务</b><span class="src"> · 2586 字</span></div></div><div class="ch"><span class="no">14</span><div><b>3.3 Spring Boot配置文件</b><span class="src"> · 10043 字</span></div></div><div class="ch"><span class="no">15</span><div><b>3.4 本章小结</b><span class="src"> · 278 字</span></div></div><div class="ch"><span class="no">16</span><div><b>第4章 服务注册与发现：Eureka</b><span class="src"> · 923 字</span></div></div><div class="ch"><span class="no">17</span><div><b>4.1 基础应用</b><span class="src"> · 9312 字</span></div></div><div class="ch"><span class="no">18</span><div><b>4.2 服务发现原理</b><span class="src"> · 1263 字</span></div></div><div class="ch"><span class="no">19</span><div><b>4.3 Eureka Client源码解析</b><span class="src"> · 23630 字</span></div></div><div class="ch"><span class="no">20</span><div><b>4.4 Eureka Server源码解析</b><span class="src"> · 19291 字</span></div></div><div class="ch"><span class="no">21</span><div><b>4.5 进阶应用</b><span class="src"> · 3127 字</span></div></div><div class="ch"><span class="no">22</span><div><b>4.6 本章小结</b><span class="src"> · 443 字</span></div></div><div class="ch"><span class="no">23</span><div><b>第5章 声明式RESTful客户端：Spring Cloud OpenFeign</b><span class="src"> · 387 字</span></div></div><div class="ch"><span class="no">24</span><div><b>5.1 基础应用</b><span class="src"> · 3458 字</span></div></div><div class="ch"><span class="no">25</span><div><b>5.2 源码分析</b><span class="src"> · 30877 字</span></div></div><div class="ch"><span class="no">26</span><div><b>5.3 进阶应用</b><span class="src"> · 2006 字</span></div></div><div class="ch"><span class="no">27</span><div><b>5.4 本章小结</b><span class="src"> · 318 字</span></div></div><div class="ch"><span class="no">28</span><div><b>第6章 断路器：Hystrix</b><span class="src"> · 471 字</span></div></div><div class="ch"><span class="no">29</span><div><b>6.1 基础应用</b><span class="src"> · 5551 字</span></div></div><div class="ch"><span class="no">30</span><div><b>6.2 Hystrix原理</b><span class="src"> · 2895 字</span></div></div><div class="ch"><span class="no">31</span><div><b>6.3 源码解析</b><span class="src"> · 36276 字</span></div></div><div class="ch"><span class="no">32</span><div><b>6.4 进阶应用</b><span class="src"> · 12893 字</span></div></div><div class="ch"><span class="no">33</span><div><b>6.5 本章小结</b><span class="src"> · 311 字</span></div></div><div class="ch"><span class="no">34</span><div><b>第7章 客户端负载均衡器：Spring Cloud Netflix Ribbon</b><span class="src"> · 468 字</span></div></div><div class="ch"><span class="no">35</span><div><b>7.1 负载均衡</b><span class="src"> · 797 字</span></div></div><div class="ch"><span class="no">36</span><div><b>7.2 基础应用</b><span class="src"> · 2160 字</span></div></div><div class="ch"><span class="no">37</span><div><b>7.3 源码分析</b><span class="src"> · 26590 字</span></div></div><div class="ch"><span class="no">38</span><div><b>7.4 进阶应用</b><span class="src"> · 5063 字</span></div></div><div class="ch"><span class="no">39</span><div><b>7.5 本章小结</b><span class="src"> · 330 字</span></div></div><div class="ch"><span class="no">40</span><div><b>第8章 API网关：Spring Cloud Gateway</b><span class="src"> · 682 字</span></div></div><div class="ch"><span class="no">41</span><div><b>8.1 Spring Cloud Gateway介绍</b><span class="src"> · 1115 字</span></div></div><div class="ch"><span class="no">42</span><div><b>8.2 基础应用</b><span class="src"> · 4399 字</span></div></div><div class="ch"><span class="no">43</span><div><b>8.3 源码解析</b><span class="src"> · 49301 字</span></div></div><div class="ch"><span class="no">44</span><div><b>8.4 应用进阶</b><span class="src"> · 6700 字</span></div></div><div class="ch"><span class="no">45</span><div><b>8.5 本章小结</b><span class="src"> · 355 字</span></div></div><div class="ch"><span class="no">46</span><div><b>第9章 配置中心：Spring Cloud Config</b><span class="src"> · 1001 字</span></div></div><div class="ch"><span class="no">47</span><div><b>9.1 基础应用</b><span class="src"> · 5765 字</span></div></div><div class="ch"><span class="no">48</span><div><b>9.2 源码解析</b><span class="src"> · 22596 字</span></div></div><div class="ch"><span class="no">49</span><div><b>9.3 应用进阶</b><span class="src"> · 5441 字</span></div></div><div class="ch"><span class="no">50</span><div><b>9.4 本章小结</b><span class="src"> · 513 字</span></div></div><div class="ch"><span class="no">51</span><div><b>第10章 消息驱动：Spring Cloud Stream</b><span class="src"> · 328 字</span></div></div><div class="ch"><span class="no">52</span><div><b>10.1 消息队列</b><span class="src"> · 1722 字</span></div></div><div class="ch"><span class="no">53</span><div><b>10.2 基础应用</b><span class="src"> · 3033 字</span></div></div><div class="ch"><span class="no">54</span><div><b>10.3 源码分析</b><span class="src"> · 45390 字</span></div></div><div class="ch"><span class="no">55</span><div><b>10.4 进阶应用</b><span class="src"> · 9589 字</span></div></div><div class="ch"><span class="no">56</span><div><b>10.5 本章小结</b><span class="src"> · 288 字</span></div></div><div class="ch"><span class="no">57</span><div><b>第11章 消息总线：Spring Cloud Bus</b><span class="src"> · 752 字</span></div></div><div class="ch"><span class="no">58</span><div><b>11.1 基础应用</b><span class="src"> · 4094 字</span></div></div><div class="ch"><span class="no">59</span><div><b>11.2 源码解析</b><span class="src"> · 13619 字</span></div></div><div class="ch"><span class="no">60</span><div><b>11.3 应用进阶</b><span class="src"> · 3417 字</span></div></div><div class="ch"><span class="no">61</span><div><b>11.4 本章小结</b><span class="src"> · 241 字</span></div></div><div class="ch"><span class="no">62</span><div><b>第12章 认证与授权：Spring Cloud Security</b><span class="src"> · 460 字</span></div></div><div class="ch"><span class="no">63</span><div><b>12.1 基础应用</b><span class="src"> · 16332 字</span></div></div><div class="ch"><span class="no">64</span><div><b>12.2 整体架构</b><span class="src"> · 2613 字</span></div></div><div class="ch"><span class="no">65</span><div><b>12.3 源码解析</b><span class="src"> · 68105 字</span></div></div><div class="ch"><span class="no">66</span><div><b>12.4 进阶应用</b><span class="src"> · 14646 字</span></div></div><div class="ch"><span class="no">67</span><div><b>12.5 本章小结</b><span class="src"> · 390 字</span></div></div><div class="ch"><span class="no">68</span><div><b>第13章 服务链路追踪：Spring Cloud Sleuth</b><span class="src"> · 356 字</span></div></div><div class="ch"><span class="no">69</span><div><b>13.1 链路监控组件简介</b><span class="src"> · 2345 字</span></div></div><div class="ch"><span class="no">70</span><div><b>13.2 基础应用</b><span class="src"> · 8973 字</span></div></div><div class="ch"><span class="no">71</span><div><b>13.3 本章小结</b><span class="src"> · 504 字</span></div></div><div class="foot">来源：微信读书官方章节接口 + 热门划线接口，逐字原文　·　生成于 2026-11-01 13:28　·　开读即产（不等完读）</div></div></body></html>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Spring Cloud微服务架构进阶 AI 大纲">
+<title>《Spring Cloud微服务架构进阶》｜AI 大纲</title>
+<link rel="stylesheet" href="../../../assets/css/site.css">
+<link rel="stylesheet" href="../../../assets/css/reading-outline.css">
+
+</head>
+<body>
+<main class="page">
+  <header class="note-head">
+    <p class="eyebrow">AI OUTLINE · BEFORE READING</p>
+    <h1>《Spring Cloud微服务架构进阶》AI 大纲</h1>
+    <p class="meta">作者：—　·　共 69 章 / 1342 条　·　AI 读书 · 全书大纲</p>
+    <p><a href="../../../index.html">← 返回首页</a>　<a href="../../index.html">阅读归档索引</a>　<a href="outline.epub" download>下载 EPUB ↓</a></p>
+    <div class="chips"><span class="chip">全书视角</span><span class="chip">AI 生成</span><span class="chip">含原文摘录</span></div>
+    <p class="small">本大纲由 AI 读书（阅读端智能大纲）生成，是全书结构与要点的机器梳理，
+    <b>不等同于已亲读</b>；其中第 4 层条目为书中原句摘录。章节可展开查看。</p>
+  </header>
+  <div class="toc"><b>章节目录</b><ul>
+<li><a href="#ch0">1.1 微服务架构的出现</a></li>
+<li><a href="#ch1">1.2 微服务架构的流派</a></li>
+<li><a href="#ch2">1.3 云原生与微服务</a></li>
+<li><a href="#ch3">1.4 本章小结</a></li>
+<li><a href="#ch4">第2章 Spring Cloud总览</a></li>
+<li><a href="#ch5">2.1 Spring Cloud架构</a></li>
+<li><a href="#ch6">2.2 Spring Cloud特性</a></li>
+<li><a href="#ch7">2.3 本章小结</a></li>
+<li><a href="#ch8">第3章 Spring Cloud的基础：Spring Boot</a></li>
+<li><a href="#ch9">3.1 Spring Boot简介</a></li>
+<li><a href="#ch10">3.2 构建一个微服务</a></li>
+<li><a href="#ch11">3.3 Spring Boot配置文件</a></li>
+<li><a href="#ch12">3.4 本章小结</a></li>
+<li><a href="#ch13">第4章 服务注册与发现：Eureka</a></li>
+<li><a href="#ch14">4.1 基础应用</a></li>
+<li><a href="#ch15">4.2 服务发现原理</a></li>
+<li><a href="#ch16">4.3 Eureka Client源码解析</a></li>
+<li><a href="#ch17">4.4 Eureka Server源码解析</a></li>
+<li><a href="#ch18">4.5 进阶应用</a></li>
+<li><a href="#ch19">4.6 本章小结</a></li>
+<li><a href="#ch20">第5章 声明式RESTful客户端：Spring Cloud OpenFeign</a></li>
+<li><a href="#ch21">5.1 基础应用</a></li>
+<li><a href="#ch22">5.2 源码分析</a></li>
+<li><a href="#ch23">5.3 进阶应用</a></li>
+<li><a href="#ch24">5.4 本章小结</a></li>
+<li><a href="#ch25">第6章 断路器：Hystrix</a></li>
+<li><a href="#ch26">6.1 基础应用</a></li>
+<li><a href="#ch27">6.2 Hystrix原理</a></li>
+<li><a href="#ch28">6.3 源码解析</a></li>
+<li><a href="#ch29">6.4 进阶应用</a></li>
+<li><a href="#ch30">6.5 本章小结</a></li>
+<li><a href="#ch31">第7章 客户端负载均衡器：Spring Cloud Netflix Ribbon</a></li>
+<li><a href="#ch32">7.1 负载均衡</a></li>
+<li><a href="#ch33">7.2 基础应用</a></li>
+<li><a href="#ch34">7.3 源码分析</a></li>
+<li><a href="#ch35">7.4 进阶应用</a></li>
+<li><a href="#ch36">7.5 本章小结</a></li>
+<li><a href="#ch37">第8章 API网关：Spring Cloud Gateway</a></li>
+<li><a href="#ch38">8.1 Spring Cloud Gateway介绍</a></li>
+<li><a href="#ch39">8.2 基础应用</a></li>
+<li><a href="#ch40">8.3 源码解析</a></li>
+<li><a href="#ch41">8.4 应用进阶</a></li>
+<li><a href="#ch42">8.5 本章小结</a></li>
+<li><a href="#ch43">第9章 配置中心：Spring Cloud Config</a></li>
+<li><a href="#ch44">9.1 基础应用</a></li>
+<li><a href="#ch45">9.2 源码解析</a></li>
+<li><a href="#ch46">9.3 应用进阶</a></li>
+<li><a href="#ch47">9.4 本章小结</a></li>
+<li><a href="#ch48">第10章 消息驱动：Spring Cloud Stream</a></li>
+<li><a href="#ch49">10.1 消息队列</a></li>
+<li><a href="#ch50">10.2 基础应用</a></li>
+<li><a href="#ch51">10.3 源码分析</a></li>
+<li><a href="#ch52">10.4 进阶应用</a></li>
+<li><a href="#ch53">10.5 本章小结</a></li>
+<li><a href="#ch54">第11章 消息总线：Spring Cloud Bus</a></li>
+<li><a href="#ch55">11.1 基础应用</a></li>
+<li><a href="#ch56">11.2 源码解析</a></li>
+<li><a href="#ch57">11.3 应用进阶</a></li>
+<li><a href="#ch58">11.4 本章小结</a></li>
+<li><a href="#ch59">第12章 认证与授权：Spring Cloud Security</a></li>
+<li><a href="#ch60">12.1 基础应用</a></li>
+<li><a href="#ch61">12.2 整体架构</a></li>
+<li><a href="#ch62">12.3 源码解析</a></li>
+<li><a href="#ch63">12.4 进阶应用</a></li>
+<li><a href="#ch64">12.5 本章小结</a></li>
+<li><a href="#ch65">第13章 服务链路追踪：Spring Cloud Sleuth</a></li>
+<li><a href="#ch66">13.1 链路监控组件简介</a></li>
+<li><a href="#ch67">13.2 基础应用</a></li>
+<li><a href="#ch68">13.3 本章小结</a></li>
+</ul></div>
+<details class="ch" id="ch0"><summary>1.1 微服务架构的出现</summary>
+<div class="sec">
+<h4>单体应用架构</h4>
+<ul class="point">
+<li><b>单体应用架构是将所有功能模块打包到一起部署和运行的应用架构</b>
+<ul class="quote">
+<li>单体应用架构类似于电影售票系统，采用分层架构，从上到下为表示层、业务层、数据访问层、DB层。</li>
+</ul>
+</li>
+<li><b>单体应用架构的优势在于开发和部署简单，易于调试和部署，通过负载均衡器可以轻松实现应用扩展</b>
+<ul class="quote">
+<li>单体应用的整体性能主要依赖于硬件资源和逻辑代码实现，应用架构自身不需要特别关注。</li>
+</ul>
+</li>
+<li><b>单体应用架构的缺点是可靠性低，复杂性高，持续部署困难，扩展能力受限，阻碍技术创新</b>
+<ul class="quote">
+<li>每个bug都可能会影响到整个应用的可靠性。</li>
+<li>单体应用巨大的代码库可能会令人望而生畏，特别是对团队新成员来说。</li>
+<li>巨大的单体应用本身就是频繁部署的一大障碍。</li>
+<li>单体架构只能进行一维扩展。</li>
+<li>单体应用往往使用统一的技术平台或方案解决所有问题，团队的每个成员都必须使用相同的开发语言和架构，想要引入新的框架或技术平台非常困难。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>SOA架构</h4>
+<ul class="point">
+<li><b>SOA架构的核心主体是服务，通过服务的流程化来实现业务的灵活性</b>
+<ul class="quote">
+<li>服务就像一堆“元器件”，这些元器件通过封装形成标准服务，它们有相同的接口和语义表达规则。</li>
+</ul>
+</li>
+<li><b>SOA架构由基础设施服务、企业服务总线、关键服务组件、开发工具、管理工具等五大部分组成</b>
+<ul class="quote">
+<li>基础设施：为整个SOA组件和框架提供一个可靠的运行环境，以及服务组件容器。</li>
+<li>企业服务总线：提供可靠消息传输、服务接入、协议转换、数据格式转换、基于内容的路由等功能。</li>
+<li>关键服务组件：SOA在各种业务服务组件的分类。</li>
+<li>开发工具和管理工具：提供完善的、可视化的服务开发和流程编排工具。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>微服务架构</h4>
+<ul class="point">
+<li><b>微服务架构是一种使用一系列粒度较小的服务来开发单个应用的方式</b>
+<ul class="quote">
+<li>每个服务运行在自己的进程中；服务间采用轻量级的方式进行通信(通常是HTTP API)。</li>
+<li>这些服务是基于业务逻辑和范围，通过自动化部署的机制来独立部署的，并且服务的集中管理应该是最低限度的。</li>
+</ul>
+</li>
+<li><b>微服务架构的优点是解决了复杂性问题，实现了团队并行开发，使得每个服务易于独立扩展</b>
+<ul class="quote">
+<li>通过将巨大单体式应用分解为多个服务的方法解决了复杂性问题。</li>
+<li>微服务架构模式使得团队并行开发得以推进，每个服务都可以由专门开发团队来开发。</li>
+<li>微服务架构模式中每个微服务独立都是部署的，开发者不需要协调其他服务部署对本服务的影响。</li>
+</ul>
+</li>
+<li><b>微服务架构的挑战是运维要求较高，分布式固有的复杂性，接口调整成本高，重复劳动，可测试性的挑战</b>
+<ul class="quote">
+<li>更多的服务意味着需要更多的运维投入。</li>
+<li>使用微服务构建的是分布式系统，系统容错、网络延迟、分布式事务等都会带来巨大的挑战。</li>
+<li>微服务之间通过接口进行通信，如果修改某个微服务的API，可能所有使用了该接口的微服务都需要做调整。</li>
+<li>很多服务可能都会使用到相同的功能，而这个功能并没有达到分解为一个微服务的程度，这个时候，可能各个服务都会开发这一功能，导致代码重复。</li>
+<li>在动态环境下，服务间的交互会产生非常微妙的行为，难以进行可视化及全面测试。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch1"><summary>1.2 微服务架构的流派</summary>
+<div class="sec">
+<h4>ZeroC IceGrid</h4>
+<ul class="point">
+<li><b>IceGrid是基于RPC框架Ice发展而来的一种微服务架构</b>
+<ul class="quote">
+<li>Ice不仅仅是一个RPC框架，它还为网络应用程序提供了一些补充服务。</li>
+</ul>
+</li>
+<li><b>IceGrid具有定位、部署和管理Ice服务器的功能</b>
+<ul class="quote">
+<li>IceGrid提供了对这种寻址信息使用符号名称的选项。</li>
+<li>当Ice客户端尝试访问chatRoomHost中的对象时，它会要求IceGrid提供与此符号名称关联的实际地址。</li>
+<li>可以配置IceGrid以各种方式启动服务器：手动(通过管理命令)、按需(无论何时请求服务器)和IceGrid始终保持服务器运行。</li>
+<li>IceGrid允许部署同一服务器的多个副本，并可以配置IceGrid将符号名称解析到此服务器副本的策略。</li>
+<li>IceGrid的管理工具可以完全控制已部署的应用程序。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>基于消息队列</h4>
+<ul class="point">
+<li><b>微服务之间采用发布消息与监听消息的方式来实现服务之间的交互</b>
+<ul class="quote">
+<li>消息中间件(MQ)是关键，它负责连通各个微服务，承担了整个系统互联互通的重任。</li>
+</ul>
+</li>
+<li><b>基于消息队列的微服务架构是全异步通信模式的一种设计</b>
+<ul class="quote">
+<li>各个组件之间没有直接的耦合关系，也不存在服务接口与服务调用的说法，服务之间通过消息来实现彼此的通信与业务流程的驱动。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Docker Swarm</h4>
+<ul class="point">
+<li><b>Swarm项目是Docker公司发布的三剑客中的一员，用来提供容器集群服务</b>
+<ul class="quote">
+<li>通过把多个Docker Engine聚集在一起，形成一个大的Docker Engine，对外提供容器的集群服务。</li>
+</ul>
+</li>
+<li><b>Swarm集群中有两种角色的节点：Manager和Worker</b>
+<ul class="quote">
+<li>Manager负责集群的管理、集群状态的维持及将任务(Task)调度到工作节点上等。</li>
+<li>Worker承载运行在Swarm集群中的容器实例，每个节点主动汇报其上运行的任务并维持同步状态。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Cloud</h4>
+<ul class="point">
+<li><b>Spring Cloud是一个基于Spring Boot实现的云应用开发工具，是一系列框架的集合</b>
+<ul class="quote">
+<li>Spring Boot秉持约定优于配置的思想，因此可以利用这些组件基本的默认行为来快速入门，并在需要的时候可以配置或扩展，以创建自定义解决方案。</li>
+</ul>
+</li>
+<li><b>Spring Cloud利用Spring Boot的开发便利性，巧妙地简化了分布式系统基础设施的开发</b>
+<ul class="quote">
+<li>如服务发现注册、配置中心、消息总线、负载均衡、断路器、数据监控等，都可以基于Spring Boot组件进行开发，做到一键启动和部署。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch2"><summary>1.3 云原生与微服务</summary>
+<div class="sec">
+<h4>云原生概述</h4>
+<ul class="point">
+<li><b>云原生应用的三大特征：容器化封装、动态管理、面向微服务</b>
+<ul class="quote">
+<li>容器化封装：以容器为基础，提高整体开发水平，形成代码和组件重用，简化云原生应用程序的维护。</li>
+<li>动态管理：通过集中式的编排调度系统来动态管理和调度。</li>
+<li>面向微服务：明确服务间的依赖，互相解耦。</li>
+</ul>
+</li>
+<li><b>云原生包含了一组应用的模式，用于帮助企业快速、持续、可靠、规模化地交付业务软件</b>
+<ul class="quote">
+<li>云原生由微服务架构、DevOps和以容器为代表的敏捷基础架构组成。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>12原则</h4>
+<ul class="point">
+<li><b>12原则由公有云PaaS的先驱Heroku于2012年提出，目的是告诉开发者如何利用云平台提供的便利来开发更具可靠性和扩展性、更加易于维护的云原生应用</b>
+<ul class="quote">
+<li>基准代码。</li>
+<li>显式声明依赖关系。</li>
+<li>在环境中存储配置。</li>
+<li>把后端服务当作附加资源。</li>
+<li>严格分离构建、发布和运行。</li>
+<li>无状态进程。</li>
+<li>通过端口绑定提供服务。</li>
+<li>通过进程模型进行扩展。</li>
+<li>快速启动和优雅终止。</li>
+<li>开发环境与线上环境等价。</li>
+<li>日志作为事件流。</li>
+<li>管理进程。</li>
+<li>API声明管理、认证和授权、监控与告警。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>容器化</h4>
+<ul class="point">
+<li><b>Docker是一个开源引擎，可以轻松地为任何应用创建一个轻量级的、可移植的、自给自足的容器</b>
+<ul class="quote">
+<li>Docker让开发工程师可以将他们的应用和依赖封装到一个可移植的容器中。</li>
+<li>Docker可以解决虚拟机能够解决的问题，同时也能够解决虚拟机由于资源要求过高而无法解决的问题。</li>
+</ul>
+</li>
+<li><b>一旦拥抱了容器，这就需要一个编排框架来调度和管理容器</b>
+<ul class="quote">
+<li>最常见的编排框架有Kubernetes、Mesos、Docker Swarm。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>DevOps</h4>
+<ul class="point">
+<li><b>DevOps是软件开发人员(Dev)和IT运维技术人员(Ops)之间的合作，目标是自动执行软件交付和基础架构更改流程</b>
+<ul class="quote">
+<li>它创造了一种文化和环境，可在其中快速、频繁且更可靠地构建、测试和发布软件。</li>
+<li>通过DevOps流水线加上Docker容器，可以实现自动化工程管理，实现开发、测试环境的自动申请和构建。</li>
+<li>自动化运维在合理保障应用高可用的前提下，能够提升资源利用率，降低成本。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>微服务</h4>
+<ul class="point">
+<li><b>微服务将单体业务系统分解为多个可独立部署的服务</b>
+<ul class="quote">
+<li>这个服务通常只关注某项业务，或者最小可提供业务价值的“原子”服务单元。</li>
+</ul>
+</li>
+<li><b>微服务架构有以下优势：更频繁和快速的部署，实现了持续的价值流动；扩展更多的部署组件本身可以加快部署；可以加快采用新技术的步伐；微服务提供独立、高效的服务扩展</b>
+<ul class="quote">
+<li>当人们将业务领域分解为可独立部署的环境时，能够将相关的变更周期解耦。</li>
+<li>在原本的单体应用中，由于沟通和协调的开销，在添加更多的人手时，往往会使软件开发流程变得更长。</li>
+<li>大型单体应用程序架构通常与对技术堆栈的长期保证有关。</li>
+<li>当且仅当相关联的负载需要它时，才缩放微服务。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch3"><summary>1.4 本章小结</summary>
+<div class="sec">
+<h4>微服务架构的优势与挑战</h4>
+<ul class="point">
+<li><b>微服务架构将单体应用从数据存储开始垂直拆分成多个不同的服务，每个服务都能独立部署，独立维护，独立扩展，服务与服务间通过诸如RESTful API的方式互相调用。</b>
+</li>
+<li><b>微服务架构并不能解决所有问题，所以一定要慎重考虑何时采用微服务，只有业务复杂到一定程度的时候才适合采用微服务架构</b>
+<ul class="quote">
+<li>微服务的理念和框架，使得它对团队的要求比较高，需要团队所有成员都要认可微服务的理念和治理框架，否则执行过程中会有很多问题。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch4"><summary>第2章 Spring Cloud总览</summary>
+<div class="sec">
+<h4>Spring Cloud简介</h4>
+<ul class="point">
+<li><b>Spring Cloud是一系列框架的有机集合，基于Spring Boot实现的云应用开发工具。</b>
+</li>
+<li><b>Spring Cloud为云原生应用开发中的服务发现与注册、熔断机制、服务路由、分布式配置中心、消息总线、负载均衡和链路监控等功能的实现提供了一种简单的开发方式。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Cloud架构及相关组件</h4>
+<ul class="point">
+<li><b>Spring Cloud架构包含服务发现与注册、熔断机制、服务路由、分布式配置中心、消息总线、负载均衡和链路监控等功能。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Cloud上下文和公共抽象是多个组件共用的部分。</h4>
+<ul class="point">
+</ul></div>
+</details>
+<details class="ch" id="ch5"><summary>2.1 Spring Cloud架构</summary>
+<div class="sec">
+<h4>Spring Cloud架构概述</h4>
+<ul class="point">
+<li><b>Spring Cloud是Spring社区推出的用于改善以前开发模式并适应微服务开发环境的框架。</b>
+</li>
+<li><b>Spring Cloud是拥有众多子项目的项目集合，所有版本由版本名和版本号组成</b>
+<ul class="quote">
+<li>Finchley和Edgware是版本名，名字是以伦敦地铁站命名并且遵循字母顺序。</li>
+<li>M9和SR3是版本号，M是里程碑的含义，SR代表着稳定版本。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Cloud组成</h4>
+<ul class="point">
+<li><b>Spring Cloud是在Spring Boot的基础上构建的，用于简化分布式系统构建的工具集</b>
+<ul class="quote">
+<li>Spring Cloud包含的组件众多，各个组件都有各自不同的特色和优点，为用户提供丰富的选择。</li>
+</ul>
+</li>
+<li><b>Spring Cloud技术体系包括服务注册与发现组件、服务调用组件、路由和过滤组件、配置中心组件、消息组件、安全控制组件、链路监控组件等</b>
+<ul class="quote">
+<li>服务注册与发现组件：Eureka、Zookeeper和Consul等。</li>
+<li>服务调用组件：Hystrix、Ribbon和OpenFeign。</li>
+<li>路由和过滤组件：包括Zuul和Spring Cloud Gateway。</li>
+<li>配置中心组件：Spring Cloud Config实现了配置集中管理、动态刷新等配置中心的功能。</li>
+<li>消息组件：Spring Cloud Stream和Spring Cloud Bus。</li>
+<li>安全控制组件：Spring Cloud Security基于OAuth2.0开放网络的安全标准，提供了微服务环境下的单点登录、资源授权和令牌管理等功能。</li>
+<li>链路监控组件：Spring Cloud Sleuth提供了全自动、可配置的数据埋点，以收集微服务调用链路上的性能数据，并可以结合Zipkin进行数据存储、统计和展示。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch6"><summary>2.2 Spring Cloud特性</summary>
+<div class="sec">
+<h4>Spring Cloud Context：应用上下文</h4>
+<ul class="point">
+<li><b>Bootstrap上下文提供额外的应用属性，支持从外部资源中加载配置文件</b>
+<ul class="quote">
+<li>Bootstrap上下文对于主程序来说是一个父级上下文。</li>
+<li>Bootstrap上下文使用与主程序不同的规则来加载外部配置。</li>
+</ul>
+</li>
+<li><b>应用上下文层级中，子级上下文将从父级中继承属性源和配置文件</b>
+<ul class="quote">
+<li>如果通过SpringApplication或者SpringApplicationBuilder来构建应用程序上下文，那么Bootstrap上下文将会成为该应用程序上下文的父级上下文。</li>
+<li>在Bootstrap上下文中扫描到的非空的PropertySourceLocators会以高优先级添加到CompositePropertySource中。</li>
+</ul>
+</li>
+<li><b>可以通过修改bootstrap.yml的位置或重载远程属性来自定义Bootstrap配置</b>
+<ul class="quote">
+<li>bootstrap.yml的位置可以通过在配置属性中设置spring.cloud.bootstrap.name(默认是bootstrap)或者spring.cloud.bootstrap.location来修改。</li>
+<li>通过Bootstrap上下文添加到应用程序的属性源通常是远程的，例如来自配置中心，通常本地的配置文件不能覆盖这些远程属性源。</li>
+</ul>
+</li>
+<li><b>Environment变化时，Config Client应用程序会监听EnvironmentChangeEvent事件，并重新绑定所有的@ConfigurationProperties的Bean实例，更新本地的配置属性</b>
+<ul class="quote">
+<li>Config Client默认不会使用轮询方法来监听Environment中的改变。</li>
+<li>在Spring Cloud中，Spring Cloud Config Server使用Spring Cloud Bus将EnvironmentChangeEvent广播到所有的Config Client中，通知它们Environment发生变化。</li>
+</ul>
+</li>
+<li><b>一个被标记为@RefreshScope的Spring Bean实例在配置发生变更时可以重新进行初始化</b>
+<ul class="quote">
+<li>被@RefreshScope修饰的Bean实例是懒加载的，即当它们被使用的时候才会进行初始化(方法被调用的时候)。</li>
+<li>RefreshScope是上下文中的一个Bean实例，它有一个公共方法refreshAll，该方法可以通过清除目标缓存来刷新作用域中的所有Bean实例。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Cloud Commons：公共抽象</h4>
+<ul class="point">
+<li><b>@EnableDiscoveryClient注解用于在META-INF/spring.factories文件中查找DiscoveryClient的实现</b>
+<ul class="quote">
+<li>DiscoveryClient目前的实现有Spring Cloud Netflix Eureka、Spring Cloud Consul Discovery和Spring Cloud Zookeeper Discovery。</li>
+<li>DiscoveryClient的实现类会自动将本地的Spring Boot服务注册到远程服务发现中心。</li>
+</ul>
+</li>
+<li><b>Spring Cloud Commons的ServiceRegister接口提供register(服务注册)和deregister(服务下线)方法</b>
+<ul class="quote">
+<li>每一个ServiceRegistry的实现都拥有自己的注册表实现，如Eureka、Consul等。</li>
+</ul>
+</li>
+<li><b>创建RestTemplate实例的时候，使用@LoadBalanced注解可以将RestTemplate自动配置为使用负载均衡的状态</b>
+<ul class="quote">
+<li>@LoadBalanced将使用Ribbon为RestTemplate执行负载均衡策略。</li>
+<li>创建负载均衡的RestTemplate不再能通过自动配置来创建，必须通过配置类创建。</li>
+</ul>
+</li>
+<li><b>负载均衡的RestTemplate可以添加失败重试机制</b>
+<ul class="quote">
+<li>默认情况下，失败重试机制是关闭的，启用方式是将Spring Retry添加到应用程序的类路径中。</li>
+<li>还可以设置spring.cloud. loadbalancer.retry.enabled=false禁止类路径中Spring retry的重试逻辑。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch7"><summary>2.3 本章小结</summary>
+<div class="sec">
+<h4>Spring Cloud与微服务架构的关系</h4>
+<ul class="point">
+<li><b>Spring Cloud不能与微服务或者微服务架构划上等号</b>
+<ul class="quote">
+<li>微服务架构是一种架构的理念，重点是微服务的设计原则。</li>
+<li>Spring Cloud是一个基于Spring Boot实现的服务治理工具包，关注全局的服务治理框架。</li>
+</ul>
+</li>
+<li><b>Spring Cloud是Java世界中微服务实践的最佳落地方案。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch8"><summary>第3章 Spring Cloud的基础：Spring Boot</summary>
+<div class="sec">
+<h4>Spring Boot功能和特点概述</h4>
+<ul class="point">
+<li><b>Spring Boot是Spring一套快速配置开发的脚手架</b>
+<ul class="quote">
+<li>Spring Boot可以基于Spring Boot快速集成开发单个Spring应用。</li>
+</ul>
+</li>
+<li><b>Spring Cloud是基于Spring Boot实现的云应用开发工具。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Boot项目搭建与开发流程</h4>
+<ul class="point">
+<li><b>搭建一个Spring Boot项目来快速了解基本开发流程</b>
+<ul class="quote">
+<li>使用Spring Initializr快速创建Spring Boot项目。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Boot配置文件及应用</h4>
+<ul class="point">
+<li><b>Spring Boot的配置文件包括application.properties和application.yml</b>
+<ul class="quote">
+<li>application.properties和application.yml是Spring Boot的默认配置文件。</li>
+</ul>
+</li>
+<li><b>Spring Boot支持多种配置方式</b>
+<ul class="quote">
+<li>配置文件、命令行参数、系统环境变量、Java系统属性。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch9"><summary>3.1 Spring Boot简介</summary>
+<div class="sec">
+<h4>Spring Boot简介</h4>
+<ul class="point">
+<li><b>Spring Boot是Pivotal团队于2013年推出的全新项目，主要用来简化Spring开发框架的开发、配置、调试和部署工作</b>
+<ul class="quote">
+<li>Spring Boot使用了特殊的方式来进行初始化配置，这使得开发者不需要额外定义样板化的配置。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Boot 2.0</h4>
+<ul class="point">
+<li><b>Spring Boot 2.0相对之前的1.x发生了以下的变化：不再支持JDK1.6和1.7, JDK最低要求1.8+，并支持1.9；支持Spring webflux/webflux.fn响应式的Web编程；提供Spring Data Cassandra、MongoDB、Couchbase和Redis的响应式自动配置及Starter POM；支持嵌入式的Netty；TLS配置和HTTP/2的支持：Tomcat、Reactor Netty、Undertow和Jetty；全新的体系结构，支持Spring MVC、WebFlux和Jersey；Spring Boot 2针对Quartz调度器提供了支持；极大简化了安全配置</b>
+<ul class="quote">
+<li>为了方便从1.x升级，Spring Boot发布了一个新的spring-boot-properties-migrator模块。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Boot与Spring Cloud</h4>
+<ul class="point">
+<li><b>Spring Cloud基于Spring Boot框架开发应用，为微服务开发中的架构问题提供了一整套的解决方案</b>
+<ul class="quote">
+<li>Spring Boot是Spring的一套快速配置脚手架，可以基于Spring Boot快速开发单个服务，Spring Cloud是一个基于Spring Boot实现的云应用开发工具。</li>
+<li>Spring Boot专注于快速、方便集成单个服务，Spring Cloud是关注全局的服务治理框架。</li>
+<li>Spring Boot使用了约定优先于配置的理念，有很多集成方案已经设置好，减少了用户的配置，Spring Cloud很大一部分是基于Spring Boot实现的。</li>
+<li>Spring Boot可以离开Spring Cloud独立使用开发项目，但是Spring Cloud离不开Spring Boot，属于依赖与被依赖的关系。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Boot核心特性</h4>
+<ul class="point">
+<li><b>Spring Boot是一个框架中的框架，它专注于框架的整合，让基础的框架能够更好地集成使用</b>
+<ul class="quote">
+<li>Spring Boot简化了集成过程中的模板化配置，提供了本应该由开发者自身去实现的Spring Bean配置，从而使开发者能够从繁琐的配置中解放出来，更专注于应用程序的业务逻辑。</li>
+</ul>
+</li>
+<li><b>Spring Boot具备以下特性：SpringApplication、外部化配置(External Configuration)、Profiles、日志(Logging)、MVC、嵌入式容器(Embedded Containers)、SQL、NoSQL、消息系统(Message)、测试(Testing)、自动配置(Auto-Configuration)、监控(Monitoring)</b>
+<ul class="quote">
+<li>SpringApplication：提供一种简便的方式来引导启动Spring应用程序，通过main的方式启动应用。</li>
+<li>外部化配置(External Configuration)：通过外部化配置的方式，可以让开发者自定义相关配置以使相同的应用运行于不同的环境中。</li>
+<li>Profiles:Spring Profiles可以将配置文件隔离成不同的模块，并且使这些模块中的配置只在特定的环境中生效。</li>
+<li>日志(Logging):Spring Boot完善的日志系统更利于开发者调试和监控应用程序。</li>
+<li>MVC:Spring Web MVC框架，使得开发者得心应手地搭建Web后端应用。</li>
+<li>嵌入式容器(Embedded Containers)：支持内置的Tomcat、Jetty和Undertow服务器，使得应用程序通过内嵌的服务器容器一键启动。</li>
+<li>SQL：提供了使用SQL数据库的广泛支持，从直接通过JDBC(JdbcTemplate)访问数据库到通过对象关系映射框架(如Hibernate)访问数据库等等。</li>
+<li>NoSQL：集成了大量的框架来提供使用NoSQL数据库的技术，支持Redis、MongoDB、Neo4j、Elasticsearch、Solr Cassandra、Couchbase和LDAP等诸多NoSQL数据库，这些NoSQL数据库的使用都可以由Spring Boot提供相关的自动配置实现。</li>
+<li>消息系统(Message)：提供了对消息系统的广泛支持，包括JMS、RabbitMQ、Kafka和WebSocket等。</li>
+<li>测试(Testing)：提供了一系列实用工具和注解，以帮助开发者测试应用程序。</li>
+<li>自动配置(Auto-Configuration)：自动配置不仅减少了Spring框架中本该由开发者自主实现Bean相关配置，也使得开发者具备根据自己的业务需要为应用程序定义各种特定Bean的能力。</li>
+<li>监控(Monitoring):Spring Boot的监控能够使开发者更好地掌控应用程序的运行状态。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch10"><summary>3.2 构建一个微服务</summary>
+<div class="sec">
+<h4>使用IDEA生成Spring Boot项目</h4>
+<ul class="point">
+<li><b>Spring Initializer创建项目。</b>
+</li>
+<li><b>设置项目的基本信息</b>
+<ul class="quote">
+<li>可以设置创建项目的包名、Group的Id、Artifact的Id和Java的版本等信息。</li>
+</ul>
+</li>
+<li><b>添加依赖</b>
+<ul class="quote">
+<li>首先是Spring Boot的版本，图中使用了2.0.0正式版。并且添加了Web开发的依赖，这里可以添加的依赖很多，如spring-boot-data、security、lombok等等。</li>
+<li>引入的依赖是在图3-3中选定的。指定项目的parent之后，就可以在引入依赖时，不再指定依赖的版本号。</li>
+<li>spring-boot-starter-web依赖包中内置了默认的容器Tomcat，如果想要使用其他容器，如Jetty和Undertow容器，可以进行如下修改，指定默认的容器为Jetty。</li>
+</ul>
+</li>
+<li><b>启动类与控制类</b>
+<ul class="quote">
+<li>SpringMVC中使用了3个注解作用于Chapter3BootDemoApplication类，分别是@Configuration(2.0.0版本中添加了@SpringBootConfiguration注解来代替Spring的标准配置注解@Configuration)、@EnableAutoConfiguration和@ComponentScan。</li>
+<li>@RestController组合了@Controller和@ResponseBody注解，表明该类可以处理HTTP请求，并且返回JSON类型的响应。</li>
+<li>Spring Initializer会自动为应用生成对应的启动类，一般以*Application方式进行命名。</li>
+<li>在启动类中增加控制类的端点，暴露出/test的端点。同时在application.properties中设置服务器启动的端点，如下所示：server.port=8000。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用Initial生成Spring Boot项目</h4>
+<ul class="point">
+<li><b>创建项目</b>
+<ul class="quote">
+<li>如图3-4所示，填写Group的Id、Artifact的Id和项目依赖。</li>
+<li>添加项目依赖时，根据输入的关键字，会有下拉框选择提示。</li>
+</ul>
+</li>
+<li><b>解压并导入项目</b>
+<ul class="quote">
+<li>解压下载好的项目之后，会发现项目结构和IDEA中生成的一样如图3-5所示，因为IDEA中调用的API接口是Spring官方的项目生成器接口。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch11"><summary>3.3 Spring Boot配置文件</summary>
+<div class="sec">
+<h4>Spring Boot默认配置文件</h4>
+<ul class="point">
+<li><b>Spring Boot会在resource文件夹下创建application.propertities的属性文件</b>
+<ul class="quote">
+<li>在application.propertities中加上了服务启动端口的配置，代码如下所示：server.port=8000。</li>
+</ul>
+</li>
+<li><b>SpringApplication类会搜索并加载application.properties文件来获取配置属性值</b>
+<ul class="quote">
+<li>SpringApplication类会在下面位置搜索该文件：当前目录的“/config”子目录、当前目录、classpath中的“/config”包、classpath。</li>
+<li>优先级按照从高到低的顺序排列。可以通过spring.config.name配置属性来指定不同的属性文件名称。还可以通过spring.config.location来添加额外的属性文件的搜索路径。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>外部化配置</h4>
+<ul class="point">
+<li><b>命令行参数、Java系统参数、操作系统环境变量、JNDI属性、RandomValuePropertySource生成的random.*属性、应用jar文件之外的属性文件、应用jar文件内部的属性文件、在应用配置Java类中通过@PropertySource注解声明的属性文件、通过SpringApplication#setDefaultProperties方法声明的默认属性</b>
+<ul class="quote">
+<li>有些系统会涉及一些数据库或其他第三方账户等信息，出于安全考虑，这些信息并不会提前配置在项目中。对于这种情况，可以在运行程序的时候通过参数指定一个外部配置文件的方式来解决。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>YAML</h4>
+<ul class="point">
+<li><b>YAML是JSON的超集，是一种非常方便的格式，它一般用于指定分层配置数据</b>
+<ul class="quote">
+<li>SpringApplication类能够自动支持YAML，将其作为Properties属性文件的替代者。</li>
+<li>SpringFramework提供了两个可用于加载YAML文档的类：YamlPropertiesFactoryBean将YAML加载为Properties; YamlMapFactoryBean将YAML加载为Map。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>自动载入外部属性到Bean</h4>
+<ul class="point">
+<li><b>当@EnableConfigurationProperties注解应用到@Configuration修饰的配置类时，任何被@ConfigurationProperties注解的Bean将自动由Environment配置</b>
+<ul class="quote">
+<li>这种风格的配置特别适合与SpringApplication的外部YAML配置配合使用。</li>
+<li>Spring Boot使用相对宽松的规则来将环境属性绑定到使用@ConfigurationProperties注解的Bean中，所以不需要环境属性名称和Bean属性名称完全匹配。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>多Profile</h4>
+<ul class="point">
+<li><b>Spring Boot使用Profile为不同环境提供不同配置，可以和全局Profile配合使用</b>
+<ul class="quote">
+<li>Spring通过配置spring.profiles.active指定激活某个具体的Profile。</li>
+<li>除了使用spring. profiles.active激活一个或者多个Profile之外，还可以用spring.profiles.include来叠加Profile。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Starter</h4>
+<ul class="point">
+<li><b>Starter方便了Spring各项依赖的集成，通过Starter，可以在Spring Boot中获取到所需相关技术的一站式支持</b>
+<ul class="quote">
+<li>例如当需要Spring中的Web支持时，可以通过引入spring-boot-starter-web这个Starter依赖，它将自动为项目配置一个内嵌的Tomcat以及开启Spring WebMvc的功能。</li>
+<li>更多的Starter可以通过官方文档查阅。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>自制一个Starter</h4>
+<ul class="point">
+<li><b>通过自定义一个Starter来理解Starter的运行机制</b>
+<ul class="quote">
+<li>创建Starter项目和导入依赖。</li>
+<li>定义过滤器。</li>
+<li>定义自动配置类。</li>
+<li>定义使自动配置类生效的注解。</li>
+<li>使用Starter。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Actuator</h4>
+<ul class="point">
+<li><b>Spring Boot提供了一系列额外的特性来帮助开发者监控和管理生产环境中的Spring Boot应用</b>
+<ul class="quote">
+<li>通过引入spring-boot-actuator模块，审计、健康检查和度量收集等监控功能都将会自动配置到Spring Boot应用中。</li>
+<li>Actuator的端点能够使开发者监控应用和与应用进行交互，Spring Boot中包含了一系列内置的端点，同时也允许自定义端点。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch12"><summary>3.4 本章小结</summary>
+<div class="sec">
+<h4>Spring Boot概述</h4>
+<ul class="point">
+<li><b>Spring Boot是伴随着Spring4.0诞生的，用于快速搭建Spring框架和启动Web容器。</b>
+</li>
+<li><b>Spring Boot继承了原有Spring框架的优秀基因，并简化了使用Spring的过程。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Boot的核心特性</h4>
+<ul class="point">
+<li><b>Spring Boot的哲学是约定大于配置，避免了很多的配置。</b>
+</li>
+<li><b>Spring Boot可以基于Spring Boot快速开发单个服务。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch13"><summary>第4章 服务注册与发现：Eureka</summary>
+<div class="sec">
+<h4>服务注册与发现概述</h4>
+<ul class="point">
+<li><b>微服务架构中，服务地址的动态变化和数量变动，迫切需要系统建立一个中心化的组件对各个微服务实例信息进行登记和管理，同时让各个微服务实例之间能够互相发现，从而达到互相调用的结果。</b>
+</li>
+<li><b>Spring Cloud Netflix Eureka是Spring Cloud提供用于服务发现和注册的基础组件</b>
+<ul class="quote">
+<li>Eureka作为一个开箱即用的基础组件，屏蔽了底层Server和Client交互的细节，使得开发者能够将精力更多地放在业务逻辑上，加快微服务架构的实施和项目的开发。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Eureka整体架构概述</h4>
+<ul class="point">
+<li><b>Eureka包括Server和Client两部分，Server是一个公共服务，为Client提供服务注册和发现的功能</b>
+<ul class="quote">
+<li>Client将自己的服务信息通过一定的方式登记到Server上，并在正常范围内维护自己信息一致性，方便其他服务发现自己，同时可以通过Server获取到自己依赖的其他服务信息，完成服务调用。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Eureka Client运行原理解析</h4>
+<ul class="point">
+<li><b>Eureka Client通过注册将服务信息上报给Eureka Server</b>
+<ul class="quote">
+<li>Eureka Client会定时向Eureka Server发送心跳，报告服务状态。</li>
+</ul>
+</li>
+<li><b>Eureka Client通过访问Eureka Server来获取其他服务信息</b>
+<ul class="quote">
+<li>当Eureka Client需要调用其他服务时，会先从Eureka Server获取服务列表，然后再进行服务调用。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Eureka Server源码讲解</h4>
+<ul class="point">
+<li><b>Eureka Server作为服务注册中心，维护了所有服务的信息</b>
+<ul class="quote">
+<li>Eureka Server会将服务信息保存在内存中，并提供查询接口供其他服务查询。</li>
+</ul>
+</li>
+<li><b>Eureka Server通过心跳机制来维护服务信息的一致性</b>
+<ul class="quote">
+<li>Eureka Server会定时检查服务的心跳，如果服务长时间未发送心跳，则会将该服务剔除。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Eureka配置属性与高级特性</h4>
+<ul class="point">
+<li><b>Eureka支持集群部署，提高可用性</b>
+<ul class="quote">
+<li>Eureka Server可以部署多个实例，组成集群，提高服务的可用性。</li>
+</ul>
+</li>
+<li><b>Eureka支持负载均衡，提高服务调用的效率</b>
+<ul class="quote">
+<li>Eureka Client在调用服务时，会使用负载均衡算法选择最优的服务实例。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch14"><summary>4.1 基础应用</summary>
+<div class="sec">
+<h4>Eureka简介</h4>
+<ul class="point">
+<li><b>Eureka是Netflix中一个RESTful风格的服务注册与发现的基础服务组件</b>
+<ul class="quote">
+<li>Eureka由两部分组成，一个是Eureka Server，提供服务注册和发现功能，另一个是Eureka Client，它简化了客户端与服务端之间的交互。</li>
+</ul>
+</li>
+<li><b>Eureka Client会定时将自己的信息注册到Eureka Server中，并从Server中发现其他服务</b>
+<ul class="quote">
+<li>Eureka Client中内置一个负载均衡器，用来进行基本的负载均衡。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>搭建Eureka服务注册中心</h4>
+<ul class="point">
+<li><b>可以搭建包含Eurake Server依赖的Spring Boot项目</b>
+<ul class="quote">
+<li>主要依赖有spring-cloud-starter-netflix-eureka-server，spring-boot-starter-actuator，spring-boot-starter-web。</li>
+</ul>
+</li>
+<li><b>在启动类中添加注解@EnableEurekaServer，表明该服务为注册中心</b>
+<ul class="quote">
+<li>@EnableEurekaServer会为项目自动配置必须的配置类。</li>
+</ul>
+</li>
+<li><b>在application.yml配置文件中添加Eureka Server的地址和配置</b>
+<ul class="quote">
+<li>server.port：8761，eureka.instance.hostname：standalone，eureka.instance.instance-id：${spring.application.name}:${vcap.application.instance_id:${random.value}}，eureka.client.register-with-eureka：false，eureka.client.fetch-registry：false，eureka.client.service-url：defaultZone：http://${eureka.instance.hostname}:${server.port}/eureka/。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>搭建Eureka服务提供者</h4>
+<ul class="point">
+<li><b>可以搭建包含Eurake Client依赖的Spring Boot项目</b>
+<ul class="quote">
+<li>主要依赖有spring-cloud-starter-netflix-eureka-client，spring-boot-starter-web。</li>
+</ul>
+</li>
+<li><b>在Spring Cloud的Finchley版本中，只要引入spring-cloud-starter-netflix-eureka-client的依赖，应用就会自动注册到Eureka Server</b>
+<ul class="quote">
+<li>在配置文件中添加Eureka Server的地址。</li>
+</ul>
+</li>
+<li><b>为服务提供者添加一个提供服务的接口</b>
+<ul class="quote">
+<li>@RestController注解的类，通过@RequestMapping(&quot;/hello/{name}&quot;)方法提供hello服务。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>搭建Eureka服务调用者</h4>
+<ul class="point">
+<li><b>可以搭建包含Eurake Client依赖的Spring Boot项目</b>
+<ul class="quote">
+<li>主要依赖有spring-cloud-starter-netflix-eureka-client，spring-boot-starter-web。</li>
+</ul>
+</li>
+<li><b>在application.yml添加eureka-client相关配置</b>
+<ul class="quote">
+<li>eureka.instance.hostname：client，eureka.instance.instance-id：${spring.application.name}:${vcap.application.instance_id:${random.value}}，eureka.client.service-url：defaultZone：http://localhost:8761/eureka/。</li>
+</ul>
+</li>
+<li><b>添加一个AskController向eureka-client-service请求sayHello的服务</b>
+<ul class="quote">
+<li>使用RestTemplate向eureka-client-service发起打招呼的请求，并直接返回对应的响应结果。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Eureka服务注册和发现</h4>
+<ul class="point">
+<li><b>搭建好Eureka Server、Eureka Client和Consul客户端的Spring Boot服务后，依次启动三个应用</b>
+<ul class="quote">
+<li>Eureka Server主页访问http://localhost:8761，可以看到展示当前注册到Eureka Server上的服务实例信息。</li>
+<li>服务间调用访问http://localhost:8762/ask，eureka-client将调用eureka-client-service的sayHello服务。</li>
+<li>与服务注册中心交换信息访问http://localhost:8765/service-instances/eureka-client，获取应用名为eureka-client(服务本身)的服务实例元数据。</li>
+</ul>
+</li>
+<li><b>DiscoveryClient是Spring Cloud中定义用来服务发现的公共接口</b>
+<ul class="quote">
+<li>在Eureka Client中注入DiscoveryClient，并从Eureka Server获取服务实例的信息。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Consul的简单应用</h4>
+<ul class="point">
+<li><b>Consul是由HashiCorp基于Go语言开发的服务软件，支持多数据中心、分布式和高可用的服务注册和发现</b>
+<ul class="quote">
+<li>Consul采用Raft算法保证服务的一致性，支持健康检查。</li>
+</ul>
+</li>
+<li><b>安装和启动Consul</b>
+<ul class="quote">
+<li>通过HomeBrew的方式安装Consul，命令为：brew install consul。</li>
+<li>通过-dev的方式启动单节点Consul。</li>
+</ul>
+</li>
+<li><b>搭建Consul客户端的Spring Boot服务</b>
+<ul class="quote">
+<li>可以搭建包含Consul依赖的Spring Boot项目，主要依赖有spring-cloud-starter-web，spring-cloud-starter-consul-discovery，spring-boot-starter-actuator。</li>
+<li>在application.ym文件中添加Consul客户端的相关配置。</li>
+</ul>
+</li>
+<li><b>查看Consul主界面</b>
+<ul class="quote">
+<li>启动consul-client服务，访问localhost:8500，将会发现consul-client已注册到Consul中。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch15"><summary>4.2 服务发现原理</summary>
+<div class="sec">
+<h4>Region与Availability Zone</h4>
+<ul class="point">
+<li><b>区域：AWS根据地理位置把某个地区的基础设施服务集合称为一个区域，区域之间相对独立</b>
+<ul class="quote">
+<li>在架构图上，us-east-1c、us-east-1d、us-east-1e表示AWS中的三个设施服务区域，这些区域中分别部署了一个Eureka集群。</li>
+</ul>
+</li>
+<li><b>可用区：AWS的每个区域都是由多个可用区组成的，而一个可用区一般都是由多个数据中心(简单理解成一个原子服务设施)组成的</b>
+<ul class="quote">
+<li>可用区与可用区之间是相互独立的，有独立的网络和供电等，保证了应用程序的高可用性。</li>
+<li>在上述的架构图中，一个可用区中可能部署了多个Eureka，一个区域中有多个可用区，这些Eureka共同组成了一个Eureka集群。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>组件与行为</h4>
+<ul class="point">
+<li><b>Application Service：是一个Eureka Client，扮演服务提供者的角色，提供业务服务，向Eureka Server注册和更新自己的信息，同时能从Eureka Server注册表中获取到其他服务的信息</b>
+<ul class="quote">
+<li>通过Eureka Server获取注册到其上其他服务的信息，从而根据信息找到所需的服务发起远程调用。</li>
+</ul>
+</li>
+<li><b>Eureka Server：扮演服务注册中心的角色，提供服务注册和发现的功能</b>
+<ul class="quote">
+<li>每个Eureka Cient向Eureka Server注册自己的信息，也可以通过Eureka Server获取到其他服务的信息达到发现和调用其他服务的目的。</li>
+</ul>
+</li>
+<li><b>Application Client：是一个Eureka Client，扮演了服务消费者的角色，通过Eureka Server获取注册到其上其他服务的信息，从而根据信息找到所需的服务发起远程调用。</b>
+</li>
+<li><b>Replicate:Eureka Server之间注册表信息的同步复制，使Eureka Server集群中不同注册表中服务实例信息保持一致</b>
+<ul class="quote">
+<li>当一个Eureka Server发生故障时，其他Eureka Server可以继续提供服务，保证服务的高可用性。</li>
+</ul>
+</li>
+<li><b>Make Remote Call：服务之间的远程调用。</b>
+</li>
+<li><b>Register：注册服务实例，Client端向Server端注册自身的元数据以供服务发现</b>
+<ul class="quote">
+<li>Client端向Server端发送注册请求，Server端返回注册成功响应。</li>
+</ul>
+</li>
+<li><b>Renew：续约，通过发送心跳到Server以维持和更新注册表中服务实例元数据的有效性</b>
+<ul class="quote">
+<li>Client端定期向Server端发送心跳，Server端收到心跳后更新服务实例元数据的有效期。</li>
+</ul>
+</li>
+<li><b>Cancel：服务下线，Client在关闭时主动向Server注销服务实例元数据</b>
+<ul class="quote">
+<li>Client端向Server端发送注销请求，Server端收到请求后从注册表中删除服务实例元数据。</li>
+</ul>
+</li>
+<li><b>Get Registry：获取注册表，Client向Server请求注册表信息，用于服务发现，从而发起服务间远程调用</b>
+<ul class="quote">
+<li>Client端向Server端发送获取注册表请求，Server端返回注册表信息。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch16"><summary>4.3 Eureka Client源码解析</summary>
+<div class="sec">
+<h4>Eureka Client源码解析</h4>
+<ul class="point">
+<li><b>Eureka Client通过Starter的方式引入依赖，Spring Boot将会为项目使用以下的自动配置类：EurekaClientAutoConfiguration、RibbonEurekaAutoConfiguration、EurekaDiscoveryClientConfiguration</b>
+<ul class="quote">
+<li>EurekaClientAutoConfiguration:Eureke Client自动配置类，负责Eureka Client中关键Beans的配置和初始化，如ApplicationInfoManager和EurekaClientConfig等。</li>
+<li>RibbonEurekaAutoConfiguration:Ribbon负载均衡相关配置。</li>
+<li>EurekaDiscoveryClientConfiguration：配置自动注册和应用的健康检查器。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>读取应用自身配置信息</h4>
+<ul class="point">
+<li><b>Spring Boot帮助Eureka Client完成很多必要Bean的属性读取和配置</b>
+<ul class="quote">
+<li>EurekaDiscoveryClientConfiguration中的属性读取和配置类。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>服务发现客户端</h4>
+<ul class="point">
+<li><b>DiscoveryClient是Eureka Client的核心类，包括与Eureka Server交互的关键逻辑</b>
+<ul class="quote">
+<li>DiscoveryClient职责：注册服务实例到Eureka Server中；发送心跳更新与Eureka Server的租约；在服务关闭时从Eureka Server中取消租约，服务下线；查询在Eureka Server中注册的服务实例列表。</li>
+<li>DiscoveryClient类结构：DiscoverClient继承了LookupService接口，LookupService作用是发现活跃的服务实例，主要方法如下：getApplication(String appName)；getApplications()；getInstancesById(String id)。</li>
+<li>DiscoveryClient构造函数：在DiscoveryClient构造函数中，Eureka Client会执行从Eureka Server中拉取注册表信息、服务注册、初始化发送心跳、缓存刷新(重新拉取注册表信息)和按需注册定时任务等操作。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>拉取注册表信息</h4>
+<ul class="point">
+<li><b>DiscoveryClient的构造函数中，调用了DiscoveryClient#fetchRegistry方法从Eureka Server中拉取注册表信息</b>
+<ul class="quote">
+<li>全量拉取注册表信息：一般只有在第一次拉取的时候，才会进行注册表信息的全量拉取，主要在DiscoveryClient# getAndStoreFullRegistry方法中进行。</li>
+<li>增量式拉取注册表信息：增量式的拉取方式，一般发生在第一次拉取注册表信息之后，拉取的信息定义为从某一段时间之后发生的所有变更信息，通常来讲是3分钟之内注册表的信息变化。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>服务注册</h4>
+<ul class="point">
+<li><b>在拉取完Eureka Server中的注册表信息并将其缓存在本地后，Eureka Client将向Eureka Server注册自身服务实例元数据</b>
+<ul class="quote">
+<li>Eureka Client会将自身服务实例元数据(封装在InstanceInfo中)发送到Eureka Server中请求服务注册，当Eureka Server返回204状态码时，说明服务注册成功。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>初始化定时任务</h4>
+<ul class="point">
+<li><b>DiscoveryClient通过定时发送心跳的方式与Eureka Server进行通信，维持自己在Server注册表上的租约</b>
+<ul class="quote">
+<li>缓存刷新定时任务与发送心跳定时任务：在DiscoveryClient #initScheduledTasks方法中，通过ScheduledExecutorService#schedule的方式提交缓存刷新任务和发送心跳任务。</li>
+<li>按需注册定时任务：按需注册定时任务的作用是当Eureka Client中的InstanceInfo或者status发生变化时，重新向Eureka Server发起注册请求，更新注册表中的服务实例信息，保证Eureka Server注册表中服务实例信息有效和可用。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>服务下线</h4>
+<ul class="point">
+<li><b>应用服务在关闭的时候，Eureka Client会主动向Eureka Server注销自身在注册表中的信息</b>
+<ul class="quote">
+<li>在销毁DiscoveryClient之前，会进行一系列清理工作，包括注销ApplicationInfoManager中的StatusChangeListener、取消定时任务、服务下线和关闭Jersey客户端等。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch17"><summary>4.4 Eureka Server源码解析</summary>
+<div class="sec">
+<h4>Eureka Server服务注册表</h4>
+<ul class="point">
+<li><b>InstanceRegistry是Eureka Server中注册表管理的核心接口</b>
+<ul class="quote">
+<li>InstanceRegistry分别继承了LeaseManager和LookupService接口。</li>
+<li>LeaseManager接口的功能是对注册到Eureka Server中的服务实例租约进行管理。</li>
+</ul>
+</li>
+<li><b>Lease代表一个Eureka Client服务实例信息的租约</b>
+<ul class="quote">
+<li>Lease中定义了租约的操作类型，分别是注册、下线、更新，同时提供了对租约中时间属性的各项操作。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>服务注册</h4>
+<ul class="point">
+<li><b>Eureka Client在发起服务注册时会将自身的服务实例元数据封装在InstanceInfo中，然后将InstanceInfo发送到Eureka Server</b>
+<ul class="quote">
+<li>服务注册的主要实现位于AbstractInstanceRegistry#registry方法中。</li>
+</ul>
+</li>
+<li><b>在服务注册过程中，会先获取一个读锁，防止其他线程对registry注册表进行数据操作，避免数据的不一致</b>
+<ul class="quote">
+<li>然后从resgitry查询对应的InstanceInfo租约是否已经存在注册表中，根据appName划分服务集群，使用InstanceId唯一标记服务实例。</li>
+<li>如果租约存在，比较两个租约中的InstanceInfo的最后更新时间lastDirtyTimestamp，保留时间戳大的服务实例信息InstanceInfo。</li>
+<li>如果租约不存在，意味这是一次全新的服务注册，将会进行自我保护的统计，创建新的租约保存InstanceInfo。</li>
+<li>接着将租约放到resgitry注册表中。</li>
+<li>之后将进行一系列缓存操作并根据覆盖状态规则设置服务实例的状态。</li>
+<li>最后设置服务实例租约的上线时间用于计算租约的有效时间，释放读锁并完成服务注册。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>接受服务心跳</h4>
+<ul class="point">
+<li><b>Eureka Client完成服务注册之后，它需要定时向Eureka Server发送心跳请求(默认30秒一次)，维持自己在Eureka Server中租约的有效性</b>
+<ul class="quote">
+<li>Eureka Server处理心跳请求的核心逻辑位于AbstractInstanceRegistry#renew方法中。</li>
+</ul>
+</li>
+<li><b>renew方法是对Eureka Client位于注册表中的租约的续租操作，不像register方法需要服务实例信息，仅根据服务实例的服务名和服务实例id即可更新对应租约的有效时间</b>
+<ul class="quote">
+<li>如果根据服务实例的appName和instanceInfoId查询出服务实例的租约，并且根据#getOverriddenInstanceStatus方法得到的instanceStatus不为InstanceStatus.UNKNOWN，那么更新租约中的有效时间，即更新租约Lease中的lastUpdateTimestamp，达到续约的目的。</li>
+<li>如果租约不存在，那么返回续租失败的结果。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>服务剔除</h4>
+<ul class="point">
+<li><b>如果Eureka Client在注册后，既没有续约，也没有下线(服务崩溃或者网络异常等原因)，那么服务的状态就处于不可知的状态，不能保证能够从该服务实例中获取到回馈，所以需要服务剔除</b>
+<ul class="quote">
+<li>AbstractInstanceRegistry#evict方法定时清理这些不稳定的服务，该方法会批量将注册表中所有过期租约剔除。</li>
+</ul>
+</li>
+<li><b>服务剔除将会遍历registry注册表，找出其中所有的过期租约，然后根据配置文件中续租百分比阀值和当前注册表的租约总数量计算出最大允许的剔除租约的数量(当前注册表中租约总数量减去当前注册表租约阀值)，分批次剔除过期的服务实例租约</b>
+<ul class="quote">
+<li>对过期的服务实例租约调用AbstractInstanceRegistry#internalCancel服务下线的方法将其从注册表中清除掉。</li>
+</ul>
+</li>
+<li><b>服务剔除#evict方法中有很多限制，都是为了保证Eureka Server的可用性</b>
+<ul class="quote">
+<li>自我保护时期不能进行服务剔除操作。</li>
+<li>过期操作是分批进行。</li>
+<li>服务剔除是随机逐个剔除，剔除均匀分布在所有应用中，防止在同一时间内同一服务集群中的服务全部过期被剔除，以致大量剔除发生时，在未进行自我保护前促使了程序的崩溃。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>服务下线</h4>
+<ul class="point">
+<li><b>Eureka Client在应用销毁时，会向Eureka Server发送服务下线请求，清除注册表中关于本应用的租约，避免无效的服务调用</b>
+<ul class="quote">
+<li>在服务剔除的过程中，也是通过服务下线的逻辑完成对单个服务实例过期租约的清除工作。</li>
+</ul>
+</li>
+<li><b>服务下线的主要实现代码位于AbstractInstanceRegistry#internalCancel方法中，仅需要服务实例的服务名和服务实例id即可完成服务下线</b>
+<ul class="quote">
+<li>首先通过registry根据服务名和服务实例id查询关于服务实例的租约Lease是否存在，统计最近请求下线的服务实例用于Eureka Server主页展示。</li>
+<li>如果租约不存在，返回下线失败；如果租约存在，从registry注册表中移除，设置租约的下线时间，同时在最近租约变更记录队列中添加新的下线记录，以用于Eureka Client的增量式获取注册表信息，最后设置repsonse缓存过期。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>集群同步</h4>
+<ul class="point">
+<li><b>如果Eureka Server是通过集群的方式进行部署，那么为了维护整个集群中Eureka Server注册表数据的一致性，势必需要一个机制同步Eureka Server集群中的注册表数据</b>
+<ul class="quote">
+<li>Eureka Server集群同步包含两个部分，一部分是Eureka Server在启动过程中从它的peer节点中拉取注册表信息，并将这些服务实例的信息注册到本地注册表中；另一部分是Eureka Server每次对本地注册表进行操作时，同时会将操作同步到它的peer节点中，达到集群注册表数据统一的目的。</li>
+</ul>
+</li>
+<li><b>Eureka Server初始化本地注册表信息</b>
+<ul class="quote">
+<li>在Eureka Server启动的过程中，会从它的peer节点中拉取注册表来初始化本地注册表，这部分主要通过PeerAwareInstanceRegistry#syncUp方法完成。</li>
+</ul>
+</li>
+<li><b>Eureka Server之间注册表信息的同步复制</b>
+<ul class="quote">
+<li>为了保证Eureka Server集群运行时注册表信息的一致性，每个Eureka Server在对本地注册表进行管理操作时，会将相应的操作同步到所有peer节点中。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>获取注册表中服务实例信息</h4>
+<ul class="point">
+<li><b>Eureka Server中获取注册表的服务实例信息主要通过两个方法实现：AbstractInstanceRegistry #getApplicationsFromMultipleRegions从多地区获取全量注册表数据，AbstractInstanceRegistry #getApplicationDeltasFromMultipleRegions从多地区获取增量式注册表数据</b>
+<ul class="quote">
+<li>getApplicationsFromMultipleRegions方法将会从多个地区中获取全量注册表信息，并封装成Applications返回。</li>
+<li>getApplicationDeltasFromMultipleRegions方法将会从多个地区中获取增量式注册表信息，并封装成Applications返回。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch18"><summary>4.5 进阶应用</summary>
+<div class="sec">
+<h4>Eureka Instance和Client的元数据</h4>
+<ul class="point">
+<li><b>Eureka中的标准元数据有主机名、IP地址、端口号、状态页url和健康检查url等</b>
+<ul class="quote">
+<li>开发者可以自定义元数据，这部分额外的数据可以通过键值对(key-value)的形式放在eureka.instance.metadataMap。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>状态页和健康检查页端口设置</h4>
+<ul class="point">
+<li><b>当spring-boot没有使用默认的应用上下文路径(context path)或者主分发器路径(Dispatch path)时，将会影响Eureka Server无法通过/actuator/health对Eureka Client进行健康检查，以及无法通过/actuator/info访问Eureka Client的信息接口</b>
+<ul class="quote">
+<li>例如设置成应用上下文路径为：server: servlet: context-path: /path。</li>
+<li>或者设置主分发器路径为：server: servlet: path: /path。</li>
+<li>为此需要对这些端点的URL进行更改，如下所示：server: servlet: path: /path server: eureka: instance: statusPageUrlPath: ${server.servlet.path}/actuator/info healthCheckUrlPath: ${server.servlet.path}/actuator/health。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>区域与可用区</h4>
+<ul class="point">
+<li><b>一个Eureka Client只属于一个区域，一个区域下有多个可用区，每个可用区下可能有多个Eureka Server(一个Eureka Server可以属于多个可用区)</b>
+<ul class="quote">
+<li>获取serverUrls的过程是层层递进的，从区域到可用区，优先添加服务实例所处的可用区的serverUrls，为了保证容错性，又把本区域中的其他的可用区也添加到了serverUrls。</li>
+<li>也可以直接告诉Eureka Client服务实例所处的可用区，并希望使用同一个可用区的Eureka Server进行注册(在Eureka Client无法与Eureke Server进行通信时，它将轮询向配置中其他的Eureka Server注册直到成功为止)，可以添加如下配置：eureka: instance: metadataMap: zone: us-east-zone-2 client: prefer-same-zone-eureka: true。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>高可用性服务注册中心</h4>
+<ul class="point">
+<li><b>通过部署多个注册中心实例，并让它们之间互相注册，增加高可用性</b>
+<ul class="quote">
+<li>可以设置不同的spring.profiles.active启动不同配置的Eureka Server，上述配置声明了两个Eureka Server的配置，它们之间是相互注册的。</li>
+<li>同时对Eureka Client添加多个注册节点，使得其能够尝试向其他的注册中心发起请求(当注册节点前面的Eureka Server无法通信时)，如下所示：eureka: client: service-url: defaultZone: http://localhost:8761/eureka/, http://localhost:8762/eureka/。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch19"><summary>4.6 本章小结</summary>
+<div class="sec">
+<h4>Eureka概述</h4>
+<ul class="point">
+<li><b>Eureka为Spring Cloud提供了高可用的服务发现与注册组件</b>
+<ul class="quote">
+<li>Eureka Server作为服务注册中心，为Eureka Client提供服务注册和服务发现的能力。</li>
+</ul>
+</li>
+<li><b>Eureka Server既可单机部署，也可以通过集群的方式进行部署</b>
+<ul class="quote">
+<li>通过自我保护机制和集群同步复制机制保证Eureka的高可用性和网络分区容忍性。</li>
+</ul>
+</li>
+<li><b>Eureka Client方便了与Eureka Server的交互</b>
+<ul class="quote">
+<li>它与Eureka Server的一切交互，包括服务注册、发送心跳续租、服务下线和服务发现，都是在后台自主完成的。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Eureka的缺陷</h4>
+<ul class="point">
+<li><b>集群间的同步复制是通过HTTP的方式进行，基于网络的不可靠性，集群中的Eureka Server间的注册表信息难免存在不同步的时间节点</b>
+<ul class="quote">
+<li>这不满足CAP中的C(数据一致性)。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch20"><summary>第5章 声明式RESTful客户端：Spring Cloud OpenFeign</summary>
+<div class="sec">
+<h4>OpenFeign基础应用</h4>
+<ul class="point">
+<li><b>OpenFeign是一个声明式RESTful网络请求客户端</b>
+<ul class="quote">
+<li>使用OpenFeign提供的注解修饰定义网络请求的接口类。</li>
+</ul>
+</li>
+<li><b>OpenFeign可以集成Ribbon和Hytrix来提供负载均衡和网络断路器的功能。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>OpenFeign源码分析</h4>
+<ul class="point">
+<li><b>OpenFeign的源码分析包括动态注册Spring实例定义(BeanDefinition)、实例初始化和函数调用与网络请求三部分</b>
+<ul class="quote">
+<li>动态注册Spring实例定义(BeanDefinition)：通过@Component注解，将OpenFeign的ClientFactoryBean注册到Spring容器中。</li>
+<li>实例初始化：通过@Autowired注入ClientFactoryBean，然后调用create方法创建动态代理对象。</li>
+<li>函数调用与网络请求：通过@FeignClient注解，指定目标服务的名称，然后直接调用方法发起网络请求。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>OpenFeign高级进阶用法</h4>
+<ul class="point">
+<li><b>OpenFeign相关的高级进阶用法</b>
+<ul class="quote">
+<li>自定义配置：通过@ConfigurationProperties注解，自定义OpenFeign的配置。</li>
+<li>自定义拦截器：通过FeignBuilder的builder()方法，自定义拦截器。</li>
+<li>自定义编码器/解码器：通过Encoder和Decoder接口，自定义编码器/解码器。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch21"><summary>5.1 基础应用</summary>
+<div class="sec">
+<h4>微服务之间的交互</h4>
+<ul class="point">
+<li><b>微服务提倡将一个原本独立的系统分成众多小型服务系统</b>
+<ul class="quote">
+<li>这些小型服务系统都在独立的进程中运行，通过各个小型服务系统之间的协作来实现原本独立系统的所有业务功能。</li>
+</ul>
+</li>
+<li><b>RESTful风格的网络请求是最为常见的交互方式之一</b>
+<ul class="quote">
+<li>RESTful网络请求是指RESTful风格的网络请求，其中REST是Resource Representational State Transfer的缩写，直接翻译即“资源表现层状态转移”。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>OpenFeign简介</h4>
+<ul class="point">
+<li><b>OpenFeign是一个声明式RESTful网络请求客户端</b>
+<ul class="quote">
+<li>OpenFeign会根据带有注解的函数信息构建出网络请求的模板，在发送网络请求之前，OpenFeign会将函数的参数值设置到这些请求模板中。</li>
+</ul>
+</li>
+<li><b>OpenFeign可以简化网络请求的实现，方便编程人员快速构建自己的网络请求应用</b>
+<ul class="quote">
+<li>虽然OpenFeign只能支持基于文本的网络请求，但是它可以极大简化网络请求的实现。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>代码示例</h4>
+<ul class="point">
+<li><b>服务注册中心</b>
+<ul class="quote">
+<li>OpenFeign可以配合Eureka等服务注册中心同时使用。</li>
+<li>关于Eureka的具体使用可以参考4.1节。</li>
+</ul>
+</li>
+<li><b>服务提供者</b>
+<ul class="quote">
+<li>Spring Cloud OpenFeign是声明式RESTful网络请求客户端，所以对服务提供者的实现方式没有任何影响。</li>
+<li>服务提供者只需要提供对外的网络请求接口就可，至于其具体实现既可以使用Spring MVC，也可以使用Jersey。</li>
+<li>需要将该服务注册到Eureka Server上。</li>
+</ul>
+</li>
+<li><b>服务消费者</b>
+<ul class="quote">
+<li>首先需要在pom文件中添加Eureka和OpenFeign相关的依赖。</li>
+<li>然后在工程的入口类上添加@EnableFeignClients注解开启Spring Cloud OpenFeign的自动化配置功能。</li>
+<li>接下来需要定义一个FeignServiceClient接口，通过@FeignClient注解来指定调用的远程服务名称。</li>
+<li>最后，在服务消费端项目的application.yml文件中配置Eureka服务注册中心的相关属性。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch22"><summary>5.2 源码分析</summary>
+<div class="sec">
+<h4>OpenFeign核心组件与概念</h4>
+<ul class="point">
+<li><b>FeignClientFactoryBean是创建@FeignClient修饰的接口类Bean实例的工厂类</b>
+<ul class="quote">
+<li>FeignClientFactoryBean通过getObject方法获取对应的Bean实例。</li>
+</ul>
+</li>
+<li><b>FeignContext是配置组件的上下文环境，保存着相关组件的不同实例</b>
+<ul class="quote">
+<li>FeignContext通过getInstance方法获取Client对象。</li>
+</ul>
+</li>
+<li><b>SynchronousMethodHandler是MethodHandler的子类，可以在FeignClient相应方法被调用时发送网络请求</b>
+<ul class="quote">
+<li>SynchronousMethodHandler通过executeAndDecode方法发送网络请求。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>OpenFeign动态注册BeanDefinition</h4>
+<ul class="point">
+<li><b>FeignClientsRegistrar通过registerBeanDefinitions方法注册FeignClient接口类的BeanDefinition</b>
+<ul class="quote">
+<li>registerBeanDefinitions方法主要做了两个事情，一是注册@EnableFeignClients提供的自定义配置类中的相关Bean实例，二是根据@EnableFeignClients提供的包信息扫描@FeignClient注解修饰的FeignCleint接口类，然后进行Bean实例注册。</li>
+</ul>
+</li>
+<li><b>FeignClientsRegistrar通过registerFeignClients方法扫描指定包下的类文件，注册@FeignClient注解修饰的接口类信息</b>
+<ul class="quote">
+<li>registerFeignClients方法依据@EnableFeignClients的属性获取要扫描的包路径信息，然后获取这些包下所有被@FeignClient注解修饰的接口类的BeanDefinition，最后调用registerFeignClient动态注册BeanDefinition。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>OpenFeign实例初始化</h4>
+<ul class="point">
+<li><b>FeignClientFactoryBean通过getObject方法获取对应的Bean实例</b>
+<ul class="quote">
+<li>getObject方法中，FeignContext的getInstance方法会从FeignContext的对应名称的子上下文中获取到Client类型的Bean实例。</li>
+</ul>
+</li>
+<li><b>Feign.Builder负责生成被@FeignClient修饰的FeignClient接口类实例</b>
+<ul class="quote">
+<li>Feign.Builder会设置FeignLoggerFactory、EncoderDecoder和Contract等组件，这些组件的Bean实例都是通过FeignContext获取的。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>OpenFeign函数调用和网络请求</h4>
+<ul class="point">
+<li><b>调用FeignClient接口类的函数时，最终函数调用会执行SynchronousMethodHandler的invoke方法</b>
+<ul class="quote">
+<li>SynchronousMethodHandler的invoke方法先创建了RequestTemplate对象，然后根据RequestTemplate生成Request对象，最后交给Client实例发送网络请求。</li>
+</ul>
+</li>
+<li><b>OpenFeign也提供了RequestInterceptor机制，在由RequestTemplate生成Request的过程中，会调用所有RequestInterceptor对RequestTemplate进行处理</b>
+<ul class="quote">
+<li>RequestInterceptor处理的具体实现如下所示：按照RequestTemplate来创建Request，使用请求拦截器为每个请求添加固定的header信息。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch23"><summary>5.3 进阶应用</summary>
+<div class="sec">
+<h4>Decoder与Encoder的定制化</h4>
+<ul class="point">
+<li><b>OpenFeign提供了默认的Decoder和Encoder实现，但使用者可以根据自己的业务选择其他的编解码方式</b>
+<ul class="quote">
+<li>自定义配置类中给出Decoder和Encoder的自定义Bean实例，OpenFeign就可以根据配置，自动使用我们提供的自定义实例进行编解码操作。</li>
+</ul>
+</li>
+<li><b>MappingJackson2HttpMessageConverter是转换JSON的底层转换器，还有其他如表5-1所示的转换器类型。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>请求/响应压缩</h4>
+<ul class="point">
+<li><b>通过配置属性可以让OpenFeign在发送请求时进行GZIP压缩</b>
+<ul class="quote">
+<li>feign.compression.request.enabled=true feign.compression.response.enabled=true。</li>
+<li>feign.compression.request.mime-types=text/xml, application/xml, application/json feign.compression.request.min-request-size=2048。</li>
+</ul>
+</li>
+<li><b>使用FeignContentGzipEncodingInterceptor可以实现请求的压缩</b>
+<ul class="quote">
+<li>在自定义配置文件中初始化FeignContentGzipEncodingInterceptor实例，供OpenFeign使用。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch24"><summary>5.4 本章小结</summary>
+<div class="sec">
+<h4>Spring Cloud中使用OpenFeign</h4>
+<ul class="point">
+<li><b>OpenFeign是一种声明式、模板化的HTTP客户端</b>
+<ul class="quote">
+<li>在Spring Cloud中使用OpenFeign，就可以在使用HTTP请求远程服务时获得与调用本地方法一样的编码体验。</li>
+</ul>
+</li>
+<li><b>Spring Cloud OpenFeign可以与Spring Cloud Netflix Ribbon和Spring Cloud Netflix Hystrix一起使用，来实现负载均衡与断路器机制。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch25"><summary>第6章 断路器：Hystrix</summary>
+<div class="sec">
+<h4>Hystrix简介</h4>
+<ul class="point">
+<li><b>Hystrix是Netflix的一个开源项目，能够在依赖服务失效的情况下，通过隔离系统依赖服务的方式，防止服务级联失败。</b>
+</li>
+<li><b>Hystrix提供失败回滚机制，使系统能够更快地从异常中恢复。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Hystrix服务断路作用的简单例子</h4>
+<ul class="point">
+<li><b>搭建用于演示Hystrix服务断路作用的简单例子</b>
+<ul class="quote">
+<li>通过一个简单的例子来演示Hystrix服务断路的作用。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Hystrix相关术语和设计原理</h4>
+<ul class="point">
+<li><b>Hystrix中相关术语和设计原理进行介绍</b>
+<ul class="quote">
+<li>对Hystrix中相关术语和设计原理进行介绍，包括Circuit Breaker(断路器)、Fallback(回滚)、Semaphore(信号量)等。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Hystrix的实现机制和运行原理</h4>
+<ul class="point">
+<li><b>从源码的角度分析Hystrix的实现机制和运行原理，包括Hystrix的启动过程、线程池、请求缓存、请求合并等。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Hystrix的配置属性和高级特性</h4>
+<ul class="point">
+<li><b>对Hystrix中的配置属性和高级特性进行介绍，包括Hystrix的配置项、监控、线程池、断路器策略等。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch26"><summary>6.1 基础应用</summary>
+<div class="sec">
+<h4>spring-cloud-netflix-hystrix简介</h4>
+<ul class="point">
+<li><b>Hystrix为微服务间的调用提供强有力的容错机制</b>
+<ul class="quote">
+<li>在通过第三方客户端访问(通常是通过网络)依赖服务出现高延迟或者失败时，为系统提供保护和控制。</li>
+<li>在复杂的分布式系统中防止级联失败(服务雪崩效应)。</li>
+<li>快速失败(Fail fast)同时能快速恢复。</li>
+<li>提供失败回滚(Fallback)和优雅的服务降级机制。</li>
+<li>提供近实时的监控、报警和运维控制手段。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>RestTemplate与Hystrix</h4>
+<ul class="point">
+<li><b>通过@HystrixCommand注解为getInstanceByServiceIdWithRestTemplate方法指定回滚的方法instanceInfoGetFail</b>
+<ul class="quote">
+<li>在getInstanceByServiceId WithRestTemplate方法中通过restTemplate调用feign-service服务的相关的接口，期望返回结果，通过@HystrixCommand注解将该方法纳入到Hystrix的监控中。</li>
+<li>在getInstanceByServiceId WithRestTemplate方法执行失败时，系统执行失败回滚方法，返回“error”结果。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>OpenFeign与Hystrix</h4>
+<ul class="point">
+<li><b>OpenFeign是自带Hystrix，但是默认没有打开，需要在application.yml中添加配置开启Hystrix</b>
+<ul class="quote">
+<li>在application.yml中添加以下配置开启Hystrix：feign: hystrix: enabled: true。</li>
+</ul>
+</li>
+<li><b>在启动类中添加@EnableFeignClients注解启动OpenFeign</b>
+<ul class="quote">
+<li>@SpringBootApplication @EnableCircuitBreaker @EnableFeignClients public class Chapter6HystrixApplication { public static void main(String[] args){ SpringApplication.run(Chapter6HystrixApplication.class, args); } @Bean @LoadBalanced RestTemplate restTemplate(){ return new RestTemplate(); } }。</li>
+</ul>
+</li>
+<li><b>添加FeginClient接口，调用feign-service服务，同时将InstanceClientFallBack指定为失败回滚类</b>
+<ul class="quote">
+<li>@FeignClient(value = &quot;feign-service&quot;, fallback = InstanceClientFallBack.class) public interface InstanceClient { @RequestMapping(value  =  &quot;/feign-service/instance/{serviceId}&quot;,  method  = RequestMethod.GET) public  Instance  getInstanceByServiceId(@PathVariable(&quot;serviceId&quot;) String serviceId); }。</li>
+<li>InstanceClientFallBack继承InstanceClient接口，提供相关回滚方法。</li>
+<li>在InstanceService添加相关的服务，直接调用instanceClient#getInstanceByServiceId方法。</li>
+<li>在InstanceController中添加相关的查看接口。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch27"><summary>6.2 Hystrix原理</summary>
+<div class="sec">
+<h4>服务雪崩效应</h4>
+<ul class="point">
+<li><b>服务雪崩效应是一种因服务提供者的不可用导致服务调用者的不可用，并将不可用逐渐放大的过程</b>
+<ul class="quote">
+<li>当A不可用时，将引起B和C的不可用，并将这种不可用放大到D、E、F，从而可能导致整个系统的不可用。</li>
+</ul>
+</li>
+<li><b>服务雪崩的产生一般有三个流程，首先是服务提供者不可用，然后重试会导致网络流量加大，最后导致服务调用者不可用</b>
+<ul class="quote">
+<li>服务提供者不可用的原因有很多：可能是因为服务器的宕机或者网络故障；也可能是因为程序存在的缺陷；也有可能是大量的请求导致服务提供者的资源受限无法及时响应；还有可能是因为缓存击穿造成服务提供者超负荷运行等等。</li>
+<li>在服务提供者不可用发生之后，用户可能无法忍受长时间的等待，不断地发送相同的请求，服务调用者重新调用服务提供者，同时服务提供者中可能存在对异常的重试机制，这些都会加大对服务提供者的请求流量。</li>
+<li>最后是服务调用者因为服务提供者的不可用导致了自身的崩溃。当服务调用者使用同步调用的时候，大量的等待线程将会耗尽线程池中的资源，最终导致服务调用者的宕机，无法响应用户的请求，服务雪崩效应就此发生了。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>断路器</h4>
+<ul class="point">
+<li><b>断路器模式用于预防服务雪崩效应</b>
+<ul class="quote">
+<li>断路器将远程方法调用包装到一个断路器对象中，用于监控方法调用过程的失败。</li>
+<li>一旦该方法调用发生的失败次数在一段时间内达到一定的阀值，那么这个断路器将会跳闸，在接下来时间里再次调用该方法将会被断路器直接返回异常，而不再发生该方法的真实调用。</li>
+</ul>
+</li>
+<li><b>断路器需要具备一定的开关转化逻辑</b>
+<ul class="quote">
+<li>关闭状态：断路器处于关闭状态，统计调用失败次数，在一段时间内达到一定的阀值后断路器打开。</li>
+<li>打开状态：断路器处于打开状态，对方法调用直接返回失败错误，不发生真正的方法调用。设置了一个重置时间，在重置时间结束后，断路器来到半开状态。</li>
+<li>半开状态：断路器处于半开状态，此时允许进行方法调用，当调用都成功了(或者成功到达一定的比例)，关闭断路器，否则认为服务没有恢复，重新打开断路器。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>服务降级操作</h4>
+<ul class="point">
+<li><b>服务降级是为了在整体资源不够的时候，适当放弃部分服务，将主要的资源投放到核心服务中</b>
+<ul class="quote">
+<li>在Hystrix中，当服务间调用发生问题时，它将采用备用的Fallback方法代替主方法执行并返回结果，对失败服务进行了服务降级。</li>
+<li>当调用服务失败次数在一段时间内超过了断路器的阀值时，断路器将打开，不再进行真正的方法调用，而是快速失败，直接执行Fallback逻辑，服务降级，减少服务调用者的资源消耗，保护服务调用者中的线程资源。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>资源隔离</h4>
+<ul class="point">
+<li><b>Hystrix通过将调用服务线程与服务访问的执行线程分隔开来，调用线程能够空出来去做其他的工作而不至于因为服务调用的执行阻塞过长时间</b>
+<ul class="quote">
+<li>在Hystrix中，将使用独立的线程池对应每一个服务提供者，用于隔离和限制这些服务。</li>
+<li>某个服务提供者的高延迟或者饱和资源受限只会发生在该服务提供者对应的线程池中。</li>
+</ul>
+</li>
+<li><b>Hystrix还可以通过信号量(计数器)来限制单个服务提供者的并发量</b>
+<ul class="quote">
+<li>如果通过信号量来控制系统负载，将不再允许设置超时控制和异步化调用，这就表示在服务提供者出现高延迟时，其调用线程将会被阻塞，直至服务提供者的网络请求超时。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Hystrix实现思路</h4>
+<ul class="point">
+<li><b>Hystrix将所有的远程调用逻辑封装到HystrixCommand或者HystrixObservableCommand对象中，这些远程调用将会在独立的线程中执行(资源隔离)，这里使用了设计模式中的命令模式</b>
+<ul class="quote">
+<li>Hystrix对访问耗时超过设置阀值的请求采用自动超时的策略。</li>
+<li>为每一个服务提供者维护一个线程池(或者信号量)，当线程池被占满时，对于该服务提供者的请求将会被直接拒绝(快速失败)而不是排队等待，减少系统的资源等待。</li>
+<li>针对请求服务提供者划分出成功、失效、超时和线程池被占满等四种可能出现的情况。</li>
+<li>断路器机制将在请求服务提供者失败次数超过一定阀值后手动或者自动切断服务一段时间。</li>
+<li>当请求服务提供者出现服务拒绝、超时和短路(多个服务提供者依次顺序请求，前面的服务提供者请求失败，后面的请求将不会发出)等情况时，执行其Fallback方法，服务降级。</li>
+<li>提供接近实时的监控和配置变更服务。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch28"><summary>6.3 源码解析</summary>
+<div class="sec">
+<h4>封装HystrixCommand</h4>
+<ul class="point">
+<li><b>使用@HystrixCommand注解来包装需要保护的远程调用方法</b>
+<ul class="quote">
+<li>@HystrixCommand注解的相关属性包括groupKey、commandKey、threadPoolKey、fallbackMethod、commandProperties、threadPoolProperties、ignoreExceptions和defaultFallback。</li>
+</ul>
+</li>
+<li><b>HystrixCommandAspect切面将被注解修饰的方法进行封装调用</b>
+<ul class="quote">
+<li>通过MetaHolderFactory构建出被注解修饰方法中用于构建HystrixCommand必要信息集合类MetaHolder。</li>
+<li>根据MetaHolder通过HystrixCommandFactory构建出合适的HystrixCommand。</li>
+<li>委托CommandExecutor执行HystrixCommand，得到结果。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>HystrixCommand类结构</h4>
+<ul class="point">
+<li><b>HystrixCommamd核心类图包括同步或异步执行命令的GenericCommand；请求合并执行命令的BatchHystrixCommand，以及异步回调执行命令的GenericObservableCommand</b>
+<ul class="quote">
+<li>GenericCommand是同步或异步执行命令的实现类。</li>
+<li>BatchHystrixCommand是请求合并执行命令的实现类。</li>
+<li>GenericObservableCommand是异步回调执行命令的实现类。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>异步回调执行命令</h4>
+<ul class="point">
+<li><b>AbstractCommand#observe方法创建一个方法ReplaySubject，通过toObservable方法获取到懒执行的Observable，并返回ReplaySubject给后续的观察者</b>
+<ul class="quote">
+<li>observe方法中，首先将创建一个方法ReplaySubject, rx中的Subject既是一个Observable也是一个Observer。</li>
+<li>接着调用toObservable方法获取到懒执行的Observable，通过创建的ReplaySubject订阅该Observable，启动Observable中相关命令，同时返回ReplaySubject给后续的观察者，用于订阅来获取执行结果。</li>
+</ul>
+</li>
+<li><b>AbstractCommand#toObservable方法通过Observable#defer方法来构建返回的Observable，保证toObservable方法返回的Observable是纯净的，并没有开始执行命令</b>
+<ul class="quote">
+<li>首先通过commandState查看当前的命令执行状态，保证命令未开始执行并且每条命令只能执行一次。</li>
+<li>如果允许请求缓存并且缓存存在的话，将尝试从缓存中获取对应的执行结果，并直接返回结果。</li>
+<li>如果无法获取缓存，通过applyHystrixSemantics方法构建用于返回的Observable。</li>
+<li>如果允许请求缓存，将Observable放置到缓存中用于下一次调用。</li>
+<li>最后为返回Observable添加提前定义好的回调方法。</li>
+</ul>
+</li>
+<li><b>HystrixRequestCache对Observable进行缓存操作，使用每个命令特有的cacheKey对Observable进行缓存，通过ConcurrentHashMap保存缓存结果以保证线程安全</b>
+<ul class="quote">
+<li>HystrixRequestCache中缓存的并不是直接的Observable，而是被封装好的HystrixCachedObservable。</li>
+<li>在HystrixCachedObservable中，通过ReplaySubject订阅需要缓存的Observable，保证了缓存的Observable能够多次执行。</li>
+</ul>
+</li>
+<li><b>applyHystrixSemantics回调方法中，通过AbstractCommand#applyHystrixSemantics方法声明Observable，它主要工作是判断断路器是否打开，以及尝试获取信号量用于执行命令</b>
+<ul class="quote">
+<li>首先通过断路器HystrixCircuitBreaker检查链路中的断路器是否开启，如果开启的话，执行断路失败逻辑handleShortCircuitViaFallback方法。</li>
+<li>如果通过断路器的检查，将会尝试获取信号量。如果不能获取信号量，那么执行信号量获取失败逻辑handleSemaphoreRejectionViaFallback方法。</li>
+<li>当上述检查都通过了，才执行executeCommandAndObserve方法获取执行命令的Observable，并为该Observable配置回调操作，该回调操作在命令执行结束后以及取消订阅时用于释放信号量。</li>
+</ul>
+</li>
+<li><b>executeCommandAndObserve方法主要用于为执行命令Observable配置执行失败的回调方法，对执行失败的结果进行记录和处理</b>
+<ul class="quote">
+<li>handleFallback失败回滚回调方法将根据执行过程中抛出的异常调用不同的方法进行处理，对线程获取失败处理用handleThreadPoolRejectionViaFallback方法，超时处理用handleTimeoutViaFallback方法，远程调用请求失败处理用handleBadRequestByEmittingError方法，Hystrix自身执行异常处理用handleFailureViaFallback方法。</li>
+<li>另外，我们还知道在applyHystrixSemantics方法中的断路失败处理handleShortCircuitViaFallback方法和获取信号量失败处理handleSemaphoreRejectionViaFallback方法。</li>
+</ul>
+</li>
+<li><b>executeCommandWithSpecifiedIsolation方法为命令构造了隔离的执行环境，提供两种资源隔离的方式，线程隔离和信号量隔离；如果Hystrix配置中开启了超时控制，还会通过Observable#lift方法将现有的Observable转化为添加了超时检查的Observable</b>
+<ul class="quote">
+<li>如果properties.executionIsolationStrategy().get()== ExecutionIsolationStrategy.THREAD将使用线程隔离的方式，ExecutionIsolationStrategy.SEMAPHORE将使用信号量隔离的方式。</li>
+<li>当以线程的方式隔离资源时，需要指定命令在哪一个线程执行，主要通过HystrixThreadPool#getScheduler方法获取相应的线程调度。</li>
+<li>信号量的获取在AbstractCommand #applyHystrixSemantics方法中执行。</li>
+</ul>
+</li>
+<li><b>getUserExecutionObservable方法将为命令获取在声明HystrixCommand时被包装的具体远程调用方法</b>
+<ul class="quote">
+<li>在getUserExecutionObservable方法中，通过getExecutionObservable抽象方法将具体实现延迟到子类中。</li>
+<li>HystrixCommand的默认实现GenericCommand中，run方法是通过创建HystrixCommand时传递的CommandActions提供具体实现。</li>
+<li>CommandActions持有commandAction和fallbackAction，分别对应HystrixCommand中远程调用方法和失败回滚方法。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>异步执行命令和同步执行命令</h4>
+<ul class="point">
+<li><b>HystrixCommand#queue方法中将AbstractCommand#toObservable获取到的Observable通过toBlocking转化为具备阻塞功能的BlockingObservable，再通过toFuture方法获取到能够执行run抽象方法的Future，最后通过Future得到正在异步执行的命令的执行结果</b>
+<ul class="quote">
+<li>queue方法中将AbstractCommand#toObservable获取到的Observable通过toBlocking转化为具备阻塞功能的BlockingObservable。</li>
+<li>再通过toFuture方法获取到能够执行run抽象方法的Future。</li>
+<li>最后通过Future得到正在异步执行的命令的执行结果。</li>
+</ul>
+</li>
+<li><b>HystrixCommand#execute方法通过queue获取到Future，使用Future#get方法获取到命令的执行结果，它将一直阻塞线程直到有执行结果返回</b>
+<ul class="quote">
+<li>execute方法通过queue获取到Future。</li>
+<li>使用Future#get方法获取到命令的执行结果。</li>
+<li>它将一直阻塞线程直到有执行结果返回。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>断路器逻辑</h4>
+<ul class="point">
+<li><b>HystrixCircuitBreaker是Hystrix提供断路器逻辑的核心接口，它通过HystrixCommandKey与每一个HystrixCommand绑定</b>
+<ul class="quote">
+<li>在HystrixCircuitBreaker.Factory中使用ConcurrentHashMap维持了基于HystrixCommandKey的HystrixCircuitBreaker的单例映射表，保证具备相同CommandKey的HystrixCommand对应同一个断路器。</li>
+</ul>
+</li>
+<li><b>HystrixCircuitBreaker有两个默认实现，一个是NoOpCircuitBreaker，顾名思义即空实现，不会发挥任何断路器的功能，另一个实现为HystrixCircuitBreakerImpl，为断路器的真正实现</b>
+<ul class="quote">
+<li>HystrixCircuitBreakerImpl中定义了三种状态：关闭、开启、半开，与在Hystrix原理中介绍的断路器的三种状态相对应。</li>
+<li>allowRequest方法代码如下所示：如果断路器强制打开、强制关闭、打开时间为空(即未打开)，则返回true，否则返回false。</li>
+<li>attemptExecution方法代码如下所示：如果断路器强制打开、强制关闭，则返回false，否则判断是否在半开状态，是则尝试将断路器的状态从打开修改为半开，否则返回false。</li>
+<li>markSuccess与#markNonSuccess方法代码如下所示：markSuccess方法在命令执行成功后进行调用，将断路器从半开状态转换为关闭状态，同时重置断路器在HystrixCommandMetrics的统计记录和设置断路器打开时间为-1(即关闭断路器)。markNonSuccess方法在命令执行失败后将断路器从半开状态转换为打开状态，同时重置断路器的打开时间，用于下一次的attemptExecution方法的执行。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>资源隔离</h4>
+<ul class="point">
+<li><b>在AbstractCommand#applyHystrixSemantics方法中，如果发现断路器关闭，将会尝试获取信号量</b>
+<ul class="quote">
+<li>信号量隔离主要由TryableSemaphore接口提供，它有两个实现类，其中一个是TryableSemaphoreNoOp，另一个具体的实现为TryableSemaphoreActual。</li>
+<li>TryableSemaphoreActual的实现相当简单，通过AtomicInteger记录当前请求信号量的线程数，与初始化设置的允许最大信号量数numberOfPermits(可以动态调整)进行比较，判断是否允许获取信号量。</li>
+</ul>
+</li>
+<li><b>线程隔离策略与信号量隔离策略的主要区别是，线程隔离策略将Observable的执行线程通过HystrixThreadPool# getScheduler方法进行了指定</b>
+<ul class="quote">
+<li>HystrixThreadPool的作用是将HystrixCommand#run方法指定到隔离的线程中执行。</li>
+<li>HystrixThreadPoolDefault中的线程池ThreadPoolExecutor通过HystrixConcurrencyStrategy策略生成。</li>
+<li>HystrixContextScheduler是Hystrix对rx中Scheduler调度器的重写，主要为了实现在Observable被退订时，不从线程池中获取线程执行命令，以及提供在命令执行过程中中断命令执行的能力(如在命令执行超时时中断命令执行)。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>请求超时监控</h4>
+<ul class="point">
+<li><b>在AbstractCommand#executeCommandAndObserve方法中，如果命令开启了执行超时控制的相关配置，Hystrix将会为Observable配置超时监控</b>
+<ul class="quote">
+<li>HystrixObservableTimeoutOperator中定义了一个超时监听器TimerListener，它将会在命令执行时间超过executionTimeoutInMilliseconds时被执行。</li>
+<li>通过ScheduledThreadPoolExecutor#scheduleAtFixedRate的方式启动定时任务，使tick方法能够在命令执行超时时执行，取消超时命令的执行并抛出超时异常。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>失败回滚逻辑</h4>
+<ul class="point">
+<li><b>Hystrix中执行失败回滚的逻辑主要封装在AbstractCommand#executeCommandAndObserve #handleFallback的异常回调方法中</b>
+<ul class="quote">
+<li>在handleFallback方法中对不同的执行错误调用不同的处理方法，主要有：对线程获取失败处理的handleThreadPoolRejectionViaFallback方法；执行超时处理的handleTimeoutViaFallback方法；远程调用请求失败处理的handleBadRequestByEmittingError方法；Hystrix自身执行异常处理的handleFailureViaFallback方法。</li>
+<li>除此之外，在applyHystrixSemantics中包括了断路失败处理方法和获取信号量失败处理方法：断路失败处理的handleShortCircuitViaFallback方法；获取信号量失败处理的#handleSemaphoreRejectionViaFallback方法。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch29"><summary>6.4 进阶应用</summary>
+<div class="sec">
+<h4>异步与异步回调执行命令</h4>
+<ul class="point">
+<li><b>异步执行命令需要定义函数的返回方式为Future</b>
+<ul class="quote">
+<li>命令的失败回滚方法也需要通过@HystrixCommand进行注解。</li>
+</ul>
+</li>
+<li><b>想要异步回调执行命令，只需要将包装函数的返回值设定为Observable即可</b>
+<ul class="quote">
+<li>通过设置observableExecutionMode来决定返回的Observable是否已经开始执行命令：EAGER将会返回通过AbstractCommand#observable方法生成的Observable，此时的命令已经开始执行了；而LAZY则会返回通过AbstractCommand#toObservable方法生成的Observable，返回的Observale必须订阅后才会真正开始执行命令。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>继承HystrixCommand</h4>
+<ul class="point">
+<li><b>继承HystrixCommand抽象类来实现特定的HystrixCommand子类</b>
+<ul class="quote">
+<li>run方法中是需要进行包装的远程调用函数，是必须要实现的抽象方法，getFallback方法是该命令执行失败后的失败回滚方法，属于可选实现。</li>
+<li>在构造HystrixCommand时至少要为它指定一个HystrixCommandGroupKey，在通过注解的方式生成HystrixCommand时，该值一般是注解方法所在类的运行时类名。</li>
+</ul>
+</li>
+<li><b>继承HystrixObservableCommand来构建以异步回调执行命令的Command</b>
+<ul class="quote">
+<li>调用方式如下所示：CustomHystrixObservableCommand command1 = new CustomHystrixObservableCommand(restTemplate, serviceId); Observable&lt;Instance&gt; observable1 = command1.observe(); CustomHystrixObservableCommand command2 = new CustomHystrixObservableCommand(restTemplate, serviceId); Observable&lt;Instance&gt; observable2 = command2.toObservable();。</li>
+<li>和CustomHystrixCommand一样，每个CustomHystrixObservableCommand只能执行一次(observe方法或者toObservable方法)，所以每次使用都要创建一个新的命令。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>请求合并</h4>
+<ul class="point">
+<li><b>Hystrix还提供了请求合并的功能，多个请求被合并为一个请求进行一次性处理，可以有效减少网络通信和线程池资源</b>
+<ul class="quote">
+<li>请求合并之后，一个请求原本可能在6毫秒之内能够结束，现在必须等待请求合并周期后(10毫秒)才能发送请求，增加了请求的时间(16毫秒)。但是请求合并在处理高并发和高延迟命令上效果极佳。</li>
+</ul>
+</li>
+<li><b>它提供两种方式进行请求合并：request-scoped收集一个HystrixRequestContext中的请求集合成一个批次；而globally-scoped将多个HystrixRequestContext中的请求集合成一个批次</b>
+<ul class="quote">
+<li>HystrixRequestContext中包含和管理着HystrixRequestVariableDefault, HystrixRequestVariableDefault中提供了请求范围内的相关变量，所以在同一请求中的多个线程可以分享状态，HystrixRequestContext也可以通过HystrixRequestVariableDefault收集到请求范围内相同的HystrixCommand进行合并。</li>
+</ul>
+</li>
+<li><b>单个请求需要使用@HystrixCollapser注解修饰，并指明batchMethod方法</b>
+<ul class="quote">
+<li>由于请求合并中不能同步等待结果，所以单个请求返回的结果为Future，即需要异步等待结果。</li>
+</ul>
+</li>
+<li><b>请求合并命令同样也可以通过自定义的方式实现，只需继承HystrixCollapser抽象类</b>
+<ul class="quote">
+<li>继承HystrixCollapser需要指定三个泛型，BatchReturnType是批量操作的返回值类型，ResponseType是单个操作的返回值类型，RequestArgumentType是单个操作的请求参数类型。</li>
+<li>在构造函数中需要指定CollapserKey，用来标记被合并请求的键值。CustomCollapseCommand同样可以通过Setter的方式修改默认配置。</li>
+<li>同时还需要实现三个方法，getRequestArgument方法获取被合并的单个请求的参数，createCommand方法用来生成进行批量请求的命令Command, mapResponseToRequests方法是将批量请求的结果与合并的请求进行匹配以返回对应的请求结果。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch30"><summary>6.5 本章小结</summary>
+<div class="sec">
+<h4>微服务架构下的服务雪崩问题</h4>
+<ul class="point">
+<li><b>微服务架构下，业务之间的耦合使微服务间不可避免地会发生相互调用。</b>
+</li>
+<li><b>由于网络故障或者程序故障，服务提供者很容易无法响应服务调用者的请求，引起服务雪崩，最坏情况下可能导致整个分布式系统的瘫痪。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Hystrix的作用和原理</h4>
+<ul class="point">
+<li><b>Hystrix为Spring Cloud中微服务间的相互调用提供了强大的容错保护</b>
+<ul class="quote">
+<li>它通过将服务调用者和服务提供者隔离的方式，在服务提供者失效的情况下，保护服务调用者的线程资源，保证系统的整体稳定性，防止服务雪崩效应的发生。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Hystrix提供的容错机制和手段</h4>
+<ul class="point">
+<li><b>Hystrix提供了很多服务容错的机制和手段，如断路器、资源隔离、失败回滚等</b>
+<ul class="quote">
+<li>断路器：当服务提供者出现故障，如响应时间过长或失败次数过多时，Hystrix会自动开启断路器，阻止服务调用者继续调用该服务，避免雪崩效应。</li>
+<li>资源隔离：Hystrix通过线程池、信号量等方式对资源进行隔离，防止单个服务调用者占用过多的系统资源，导致其他服务调用者无法正常执行。</li>
+<li>失败回滚：当服务调用失败时，Hystrix会执行失败回滚操作，如回滚数据库操作、重新发送消息等，确保数据的一致性和系统的稳定性。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Hystrix的监控功能</h4>
+<ul class="point">
+<li><b>Hystrix提供接近实时的执行监控，为服务的健康运行保驾护航</b>
+<ul class="quote">
+<li>通过监控面板，可以实时查看服务的运行状态、请求量、错误率等指标，及时发现和解决问题。</li>
+<li>通过熔断器开关状态、线程池使用情况等图表，可以直观地了解服务的运行状况，为优化和调整提供依据。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch31"><summary>第7章 客户端负载均衡器：Spring Cloud Netflix Ribbon</summary>
+<div class="sec">
+<h4>负载均衡相关概念和实现</h4>
+<ul class="point">
+<li><b>负载均衡器是管理HTTP和TCP服务客户端的工具</b>
+<ul class="quote">
+<li>Ribbon是Spring Cloud的负载均衡机制的实现。</li>
+</ul>
+</li>
+<li><b>Ribbon具有一系列带有名称的客户端，每个客户端由可配置的组件构成</b>
+<ul class="quote">
+<li>Spring Cloud通过RibbonClientConfiguration为每个Ribbon客户端创建一个ApplicationContext上下文来进行组件装配。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Ribbon的基本使用方法</h4>
+<ul class="point">
+<li><b>Ribbon可以与OpenFeign和RestTemplate进行无缝对接</b>
+<ul class="quote">
+<li>让OpenFeign和RestTemplate具有负载均衡的能力。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Ribbon的实现原理和代码详解</h4>
+<ul class="point">
+<li><b>Ribbon通过客户端列表(Client List)来存储服务实例信息</b>
+<ul class="quote">
+<li>客户端列表是一个动态的列表，可以添加、删除服务实例。</li>
+</ul>
+</li>
+<li><b>Ribbon通过轮询(Round Robin)算法来选择服务实例</b>
+<ul class="quote">
+<li>轮询算法是一种简单的负载均衡算法，按照顺序选择一个服务实例。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Ribbon的进阶应用</h4>
+<ul class="point">
+<li><b>Ribbon支持多种负载均衡策略</b>
+<ul class="quote">
+<li>除了轮询算法，Ribbon还支持随机算法、权重算法等。</li>
+</ul>
+</li>
+<li><b>Ribbon支持动态获取服务实例信息</b>
+<ul class="quote">
+<li>Ribbon可以通过服务发现机制(如Eureka)动态获取服务实例信息。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch32"><summary>7.1 负载均衡</summary>
+<div class="sec">
+<h4>负载均衡的概念和重要性</h4>
+<ul class="point">
+<li><b>负载均衡是将请求分发到多个服务器，避免服务器负载不均衡</b>
+<ul class="quote">
+<li>当系统面临大量的用户访问，负载过高的时候，通常会增加服务器数量来进行横向扩展。</li>
+<li>通过负载均衡，使得集群中服务器的负载保持在稳定高效的状态，从而提高整个系统的处理能力。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>负载均衡的分类</h4>
+<ul class="point">
+<li><b>负载均衡分为软件负载均衡和硬件负载均衡</b>
+<ul class="quote">
+<li>软件负载均衡使用独立的负载均衡程序或系统自带的负载均衡模块完成对请求的分配派发。</li>
+<li>硬件负载均衡通过特殊的硬件设备进行负载均衡的调配。</li>
+</ul>
+</li>
+<li><b>软负载均衡一般分为基于DNS的负载均衡和基于IP的负载均衡</b>
+<ul class="quote">
+<li>利用DNS实现负载均衡，就是在DNS服务器配置多个A记录，不同的DNS请求会解析到不同的IP地址。</li>
+<li>基于IP的负载均衡根据请求的IP进行负载均衡。LVS就是具有代表性的基于IP的负载均衡实现。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>反向代理负载均衡</h4>
+<ul class="point">
+<li><b>反向代理负载均衡的核心工作是代理根据一定规则，将HTTP请求转发到服务器集群的单一服务器上</b>
+<ul class="quote">
+<li>所有主流的Web服务器都热衷于支持基于反向代理的负载均衡。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>客户端负载均衡</h4>
+<ul class="point">
+<li><b>客户端负载均衡中，所有的客户端节点都有一份自己要访问的服务端地址列表，这些列表统统都是从服务注册中心获取的</b>
+<ul class="quote">
+<li>在Spring Cloud中我们如果想要使用客户端负载均衡，方法很简单，使用@LoadBalanced注解即可。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch33"><summary>7.2 基础应用</summary>
+<div class="sec">
+<h4>Ribbon与RestTemplate的结合使用</h4>
+<ul class="point">
+<li><b>使用@LoadBalanced修饰RestTemplate实例，使其使用Ribbon进行负载均衡</b>
+<ul class="quote">
+<li>@LoadBalanced注解修饰创建RestTemplate实例的@Bean函数。</li>
+</ul>
+</li>
+<li><b>使用@RibbonClient注解声明Ribbon客户端，并设置相关配置</b>
+<ul class="quote">
+<li>name属性可以设置客户端的名称。</li>
+<li>configuration属性则会设置Ribbon相关的自定义配置类。</li>
+</ul>
+</li>
+<li><b>通过配置类创建组件实例来覆盖Ribbon提供的默认组件实例</b>
+<ul class="quote">
+<li>重载IPing和IRule两个组件的实例，通过@Bean函数创建自定义实例。</li>
+</ul>
+</li>
+<li><b>在application.yml文件中对Ribbon进行配置</b>
+<ul class="quote">
+<li>设置服务端列表或者使用Eureka来获取服务端列表。</li>
+<li>关闭Eureka，则Ribbon无法从Eureka中获取服务端列表信息。</li>
+<li>使用listOfServers字段来设置服务端地址。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Ribbon与OpenFeign的集成</h4>
+<ul class="point">
+<li><b>OpenFeign默认使用Ribbon来进行网络请求的负载均衡</b>
+<ul class="quote">
+<li>当使用@FeignClient时，OpenFeign默认使用Ribbon。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch34"><summary>7.3 源码分析</summary>
+<div class="sec">
+<h4>Ribbon客户端的配置和实例初始化</h4>
+<ul class="point">
+<li><b>@RibbonClient注解可以声明Ribbon客户端，设置Ribbon客户端的名称和配置类</b>
+<ul class="quote">
+<li>@RibbonClient还会导入(import)RibbonClientConfigurationRegistrar类来动态注册Ribbon相关的BeanDefinition。</li>
+</ul>
+</li>
+<li><b>Ribbon对于组件实例的管理配置机制和OpenFeign相同，都是通过NamedContextFactory创建带名称的AnnotationConfigApplicationContext子上下文来存储并管理不同的组件实例</b>
+<ul class="quote">
+<li>在RibbonAutoConfiguration里会进行SpringClientFactory实例的初始化，并将所有的RibbonClientSpecification实例都设置给SpringClientFactory，供其在初始化Ribbon相关组件实例时使用。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Ribbon与OpenFeign的集成</h4>
+<ul class="point">
+<li><b>Ribbon是RESTful HTTP客户端OpenFeign负载均衡的默认实现</b>
+<ul class="quote">
+<li>FeignClientFactoryBean是创造FeignClient的工厂类，在其getObject方法中有一个分支判断，当请求URL不为空时，就会生成一个具有负载均衡的FeignClient。</li>
+</ul>
+</li>
+<li><b>LoadBalancerFeignClient实现了OpenFeign的Client接口，负责OpenFeign网络请求的发送和响应的接收，并带有客户端负载均衡机制</b>
+<ul class="quote">
+<li>LoadBalancerFeignClient#execute方法会将普通的Request对象转化为RibbonRequest，并使用FeignLoadBalancer实例来发送RibbonRequest。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>负载均衡器LoadBalancerClient</h4>
+<ul class="point">
+<li><b>LoadBalancerClient是Ribbon项目的核心类之一，可以在RestTemplate发送网络请求时替代RestTemplate进行网络调用</b>
+<ul class="quote">
+<li>LoadBalancerClient接口继承了ServiceInstanceChooser接口，其choose方法可以从服务器列表中依据负载均衡策略选出一个服务器实例。</li>
+</ul>
+</li>
+<li><b>RibbonLoadBalancerClient是LoadBalancerClient的实现类之一，它的execute方法会首先使用ILoadBalancer来选择服务器实例(Server)，然后将该服务器实例封装成RibbonServer对象，最后再调用LoadBalancerRequest的apply方法进行网络请求的处理</b>
+<ul class="quote">
+<li>getLoadBalancer方法直接调用了SpringClientFactory的getLoadBalancer方法。</li>
+<li>getServer方法则是直接调用了ILoadBalancer的chooseServer方法来使用负载均衡策。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>ILoadBalancer</h4>
+<ul class="point">
+<li><b>ILoadBalancer是Ribbon的关键类之一，它是定义负载均衡操作过程的接口</b>
+<ul class="quote">
+<li>Ribbon通过SpringClientFactory工厂类的getLoadBalancer方法可以获取ILoadBalancer实例。</li>
+</ul>
+</li>
+<li><b>ZoneAwareLoadBalancer是ILoadBalancer接口的实现类之一，它是Ribbon默认的ILoadBalancer接口的实例</b>
+<ul class="quote">
+<li>RibbonClientConfiguration中有关ZoneAwareLoadBalancer的配置如下所示。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>负载均衡策略实现</h4>
+<ul class="point">
+<li><b>IRule是定义Ribbon负载均衡策略的接口，你可以通过实现该接口来自定义自己的负载均衡策略</b>
+<ul class="quote">
+<li>IRule接口的choose方法就是从一堆服务器中根据一定规则选出一个服务器。</li>
+</ul>
+</li>
+<li><b>ZoneAvoidanceRule是Ribbon默认的IRule实例，它使用CompositePredicate来根据服务区的运行状况和服务器的可用性选择服务器</b>
+<ul class="quote">
+<li>ZoneAvoidanceRule的chooseServer方法会首先使用DynamicPropertyFactory来获取平均负载(triggeringLoadPerServerThreshold)和实例故障率(avoidZoneWithBlackoutPercetage)两个阈值，然后调用ZoneAvoidanceRule的getAvailableZones方法使用这两个阈值来获取所有可用的服务区(Zone)列表，每个服务区实例中包含了一定数量的服务器实例。</li>
+<li>然后调用ZoneAvoidanceRule的randomChooseZone方法从上述的服务区列表中随机选出一个服务区，最后调用该服务区对应BaseLoadBalancer实例的chooseServer方法获取到最终的服务器实例。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch35"><summary>7.4 进阶应用</summary>
+<div class="sec">
+<h4>Ribbon API的使用</h4>
+<ul class="point">
+<li><b>使用LoadBalancerBuilder的buildFixedServerListLoadBalancer创建出ILoadBalancer实例</b>
+<ul class="quote">
+<li>通过调用LoadBalancerCommand的submit方法传入匿名的ServerOperation来完成网络请求的发送。</li>
+</ul>
+</li>
+<li><b>FeignLoadBalancer就是使用Ribbon的LoadBalancerCommand来实现有关OpenFeign的网络请求</b>
+<ul class="quote">
+<li>FeignLoadBalancer将网络请求交给其Client实例处理。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用Netty发送网络请求</h4>
+<ul class="point">
+<li><b>Ribbon使用负载均衡策略选择完服务器之后，再交给Netty处理网络请求</b>
+<ul class="quote">
+<li>使用LoadBalancingHttpClient&lt;ByteBuf, ByteBuf&gt;的submit方法发送网络请求，底层默认使用Netty框架来进行网络请求。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>只读数据库的负载均衡实现</h4>
+<ul class="point">
+<li><b>通过集成Ribbon来实现读库之间的负载均衡</b>
+<ul class="quote">
+<li>定义DBServer类来继承Ribbon的Server类，用于存储只读数据库服务器的状态信息。</li>
+<li>定义一个DBLoadBalancer来继承BaseLoadBalancer类，通过WeightedResponseTimeRule对DBServer列表进行负载均衡选择，然后使用自定义的DBPing来检测数据库是否可用。</li>
+<li>使用DBLoadBalancer的过程也很简单，通过LoadBalancerCommand的withLoadBalancer来使用它，然后在submit的回调函数中使用选出的数据库和SQL语句交给其他组件来执行SQL操作。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch36"><summary>7.5 本章小结</summary>
+<div class="sec">
+<h4>负载均衡器的作用和Ribbon的使用</h4>
+<ul class="point">
+<li><b>负载均衡器可以将多台普通服务器组成一个服务集群，完成高并发的请求处理任务</b>
+<ul class="quote">
+<li>在需要处理大量用户请求的时候，通常都会引入负载均衡器。</li>
+</ul>
+</li>
+<li><b>Ribbon作为Spring Cloud的负载均衡组件，为开发者提供开箱即用的负载均衡能力</b>
+<ul class="quote">
+<li>Ribbon可以让开发者免于了解复杂的负载均衡策略，专注于业务逻辑的实现。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Ribbon的自定义负载均衡策略</h4>
+<ul class="point">
+<li><b>Ribbon为开发者预留了自定义负载均衡策略的接口</b>
+<ul class="quote">
+<li>有需求的开发者在Ribbon框架内部定制自己的负载均衡策略。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch37"><summary>第8章 API网关：Spring Cloud Gateway</summary>
+<div class="sec">
+<h4>API网关的概念和作用</h4>
+<ul class="point">
+<li><b>API网关是后端服务的唯一入口，封装了系统内部架构</b>
+<ul class="quote">
+<li>API网关为每个客户端提供一个定制的API。</li>
+</ul>
+</li>
+<li><b>API网关还可以负责身份验证、监控、负载均衡、限流、降级与应用检测等功能。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Cloud Gateway的相关特性</h4>
+<ul class="point">
+<li><b>Spring Cloud Gateway是Spring Cloud生态中的网关组件</b>
+<ul class="quote">
+<li>Spring Cloud Gateway基于Spring Boot 2.x和Spring Framework 5.x。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Cloud Gateway的基本功能</h4>
+<ul class="point">
+<li><b>通过网关服务和用户服务示例，讲解Spring Cloud Gateway的基本功能</b>
+<ul class="quote">
+<li>网关服务负责将请求路由到对应的用户服务。</li>
+<li>用户服务负责处理业务逻辑，返回响应给网关服务。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Cloud Gateway源码解析</h4>
+<ul class="point">
+<li><b>结合源码讲解Spring Cloud Gateway基本功能</b>
+<ul class="quote">
+<li>Spring Cloud Gateway的核心是基于RouterFunction和GatewayFilter的链式调用。</li>
+<li>RouterFunction负责根据请求的URL和参数，找到对应的处理函数。</li>
+<li>GatewayFilter负责在请求到达目标服务前，对请求进行过滤和处理。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Cloud Gateway进阶学习</h4>
+<ul class="point">
+<li><b>介绍如何使用限流机制和熔断降级等功能</b>
+<ul class="quote">
+<li>限流机制可以防止系统被过度请求，保护系统稳定。</li>
+<li>熔断降级可以在系统出现异常时，自动切换到备用策略，保证系统可用。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch38"><summary>8.1 Spring Cloud Gateway介绍</summary>
+<div class="sec">
+<h4>Spring Cloud Gateway介绍</h4>
+<ul class="point">
+<li><b>Spring Cloud Gateway是Spring Cloud的全新项目，基于Spring Boot 2，提供了一种简单而有效的途径来转发请求，并为它们提供横切关注点</b>
+<ul class="quote">
+<li>Spring Cloud Gateway旨在提供一种简单而有效的途径来转发请求，并为它们提供横切关注点，例如：安全性、监控/指标和弹性。</li>
+</ul>
+</li>
+<li><b>Spring Cloud Gateway具有基于Java 8编码，支持Spring Framework 5，支持Spring Boot 2，支持动态路由等特征</b>
+<ul class="quote">
+<li>Spring Cloud Gateway具有如下特征：基于Java 8编码；支持Spring Framework 5；支持Spring Boot 2；支持动态路由；支持内置到Spring Handler映射中的路由匹配；支持基于HTTP请求的路由匹配(Path、Method、Header、Host等)；过滤器作用于匹配的路由；过滤器可以修改下游HTTP请求和HTTP响应(增加/修改头部、增加/修改请求参数、改写请求路径等)；通过API或配置驱动；支持Spring Cloud DiscoveryClient配置路由，与服务发现与注册配合使用。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Cloud Gateway与Zuul的比较</h4>
+<ul class="point">
+<li><b>Spring Cloud Gateway建立在Spring Framework 5、Project Reactor和Spring Boot 2之上，使用非阻塞API，性能更优</b>
+<ul class="quote">
+<li>Spring Cloud Gateway还支持WebSocket，并且与Spring紧密集成，拥有更好的开发体验。</li>
+<li>根据官方提供的基准(benchmark)测试，Spring Cloud Gateway的RPS(每秒请求数)是Zuul的1.6倍。</li>
+</ul>
+</li>
+<li><b>Zuul基于Servlet 2.5，使用阻塞架构，不支持任何长连接，如WebSocket</b>
+<ul class="quote">
+<li>Zuul的设计模式和Nginx较像，每次I/O操作都是从工作线程中选择一个执行，请求线程被阻塞直到工作线程完成。</li>
+<li>Zuul已经发布了Zuul 2.x，基于Netty、非阻塞、支持长连接，但Spring Cloud目前还没有整合。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch39"><summary>8.2 基础应用</summary>
+<div class="sec">
+<h4>用户服务</h4>
+<ul class="point">
+<li><b>用户服务功能较为简单，需要注册到Consul上，并提供一个接口/test</b>
+<ul class="quote">
+<li>引入依赖：spring-cloud-starter-consul-discovery用于服务注册与发现，spring-boot-starter-web为启动类jar包，引入Web MVC和Tomcat等Web项目所需要的组件。</li>
+<li>配置文件：设置端口号为8005，且注册到Consul上的服务名为user。</li>
+<li>暴露接口：对外暴露/test接口，返回字符串ok即可。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>网关服务</h4>
+<ul class="point">
+<li><b>网关服务提供路由配置、路由断言和过滤器等功能</b>
+<ul class="quote">
+<li>引入依赖：需要引入的依赖包括spring-boot-starter-webflux，spring-cloud-gateway-core，spring-cloud-starter-consul-discovery，以及Kotlin相关的依赖。</li>
+<li>路由断言：定义了一个基于路径的路由断言匹配，当请求的路径为/testfun时，直接返回状态码200，且响应体为hello的字符串。</li>
+<li>过滤器：网关经常需要对路由请求进行过滤，对符合条件的请求进行一些操作，如增加请求头、增加请求参数、增加响应头和断路器等功能。</li>
+<li>自定义路由：除了通过Gateway提供的API自定义路由，还可以通过配置进行定义。</li>
+<li>Kotlin自定义路由：Spring Cloud Gateway支持使用Kotlin自定义路由。</li>
+<li>WebSocket：还可以配置WebSocket的网关路由。</li>
+<li>基于服务发现：网关与服务注册与发现组件进行结合，通过serviceId转发到具体的服务实例。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>客户端的访问</h4>
+<ul class="point">
+<li><b>发送一个请求到网关，由于加上了对应服务的前缀，所以请求地址为http://localhost:9090/user/test</b>
+<ul class="quote">
+<li>网关成功负载均衡到user-server，并返回了ok。</li>
+<li>响应的头部中包含了全局过滤器设置的头部X-Response-Default-Foo: Default-Bar。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch40"><summary>8.3 源码解析</summary>
+<div class="sec">
+<h4>API网关的作用与核心功能</h4>
+<ul class="point">
+<li><b>API网关是后端服务的统一入口，提供请求路由、协议转换、安全认证、服务鉴权、流量控制与日志监控等服务。</b>
+</li>
+<li><b>API网关的核心功能是路由的过滤和路由的定位</b>
+<ul class="quote">
+<li>Spring Cloud Gateway提供了非常丰富的路由过滤器和路由断言。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>初始化配置</h4>
+<ul class="point">
+<li><b>GatewayProperties是网关中主要的配置属性类</b>
+<ul class="quote">
+<li>routes是一个列表，对应的对象属性是路由定义RouteDefinition。</li>
+<li>defaultFilters是默认的路由过滤器，会应用到每个路由中。</li>
+<li>streamingMediaTypes默认支持两种类型：APPLICATION_STREAM_JSON和TEXT_EVENT_STREAM。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>网关处理器</h4>
+<ul class="point">
+<li><b>DispatcherHandler是HTTP请求的中央分发器，将请求匹配到相应的HandlerMapping</b>
+<ul class="quote">
+<li>DispatcherHandler实现了WebHandler接口，WebHandler接口用于处理Web请求。</li>
+<li>DispatcherHandler的构造函数会初始化HandlerMapping。</li>
+</ul>
+</li>
+<li><b>RoutePredicateHandlerMapping用于匹配具体的Route，并返回处理Route的FilteringWebHandler</b>
+<ul class="quote">
+<li>RoutePredicateHandlerMapping的构造函数接收两个参数：FilteringWebHandler网关过滤器和RouteLocator路由定位器。</li>
+<li>RoutePredicateHandlerMapping的getHandler方法，用于匹配请求的Route，并返回处理Route的FilteringWebHandler。</li>
+</ul>
+</li>
+<li><b>FilteringWebHandler通过创建所请求Route对应的GatewayFilterChain，在网关处进行过滤处理</b>
+<ul class="quote">
+<li>FilteringWebHandler的构造函数通过传入的全局过滤器，对这些过滤器进行适配处理。</li>
+<li>FilteringWebHandler#handle方法首先获取请求对应的路由的过滤器和全局过滤器，将两部分组合；然后对过滤器列表排序，AnnotationAwareOrderComparator是OrderComparator的子类，支持Spring的Ordered接口的优先级排序；最后按照优先级，生成过滤器链，对该请求进行过滤处理。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>路由定义定位器</h4>
+<ul class="point">
+<li><b>RouteDefinitionLocator接口定义了获取路由定义的方法</b>
+<ul class="quote">
+<li>RouteDefinitionLocator接口只有一个getRouteDefinitions方法，用以获取路由定义。</li>
+</ul>
+</li>
+<li><b>RouteDefinition定义了路由的主要信息</b>
+<ul class="quote">
+<li>在RouteDefinition中，主要有五个属性：路由id、URI转发地址、order优先级、PredicateDefinition路由断言定义和FilterDefinition过滤器的定义。</li>
+</ul>
+</li>
+<li><b>RouteDefinitionLocator有四个实现类：基于属性配置的(PropertiesRouteDefinitionLocator)、基于服务发现的(DiscoveryClientRouteDefinitionLocator)、组合方式的(CompositeRouteDefinitionLocator)和缓存方式的(CachingRouteDefinitionLocator)</b>
+<ul class="quote">
+<li>基于属性配置的路由定义定位器是PropertiesRouteDefinitionLocator，从类名就可以知道该类是从配置文件读取路由配置。</li>
+<li>基于服务发现的路由定义定位器是DiscoveryClientRouteDefinitionLocator，该类通过服务发现组件获取注册中心的服务信息，即路由定义的源变成了配置中心。</li>
+<li>缓存方式的路由定义定位器CachingRouteDefinitionLocator，通过传入的代理路由定义定位器来获取路由定义，并缓存到本地。</li>
+<li>组合方式的路由定义定位器CompositeRouteDefinitionLocator是一种组合模式，组合的逻辑很简单，通过传入的RouteDefinitionLocator类型的参数作为代理，路由定义实际上是由传入的路由定义定位器产生。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>路由定位器</h4>
+<ul class="point">
+<li><b>RouteLocator接口定义了获取路由的方法</b>
+<ul class="quote">
+<li>RouteLocator接口只有一个getRoutes方法用以获取路由信息。</li>
+</ul>
+</li>
+<li><b>Route路由定义了路由断言、过滤器、路由地址和路由的优先级等主要信息</b>
+<ul class="quote">
+<li>请求到达时，会在转发到代理的服务之前，依次经过路由断言进行匹配路由和网关过滤器处理。</li>
+</ul>
+</li>
+<li><b>RouteLocator有三个实现类：基于路由定义方式的(RouteDefinitionRouteLocator)、缓存方式的(CachingRouteLocator)和组合方式的(CompositeRouteLocator)</b>
+<ul class="quote">
+<li>路由的获取可以通过RouteDefinitionRouteLocator获取RouteDefinition，并将路由定义转换成Route。</li>
+<li>CachingRouteLocator是缓存路由的RouteLocator实现类。想要获取路由，只需要调用RouteLocator#getRoutes方法即可。</li>
+<li>CompositeRouteLocator是组合路由的RouteLocator实现类，可以组合多种RouteLocator的实现类，将具体实现类获取的路由进行组合，提供了统一访问路由的入口。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>路由断言</h4>
+<ul class="point">
+<li><b>Spring Cloud Gateway创建Route对象时，使用RoutePredicateFactory创建Predicate对象</b>
+<ul class="quote">
+<li>Predicate对象可以赋值给Route。简单来说，路由断言用于匹配请求对应的Route。</li>
+</ul>
+</li>
+<li><b>路由决策工厂RoutePredicateFactory包含的主要实现类有Datetime、请求的远端地址、路由权重、请求头部、Host地址、请求方法、请求URL中的路径和请求参数等类型的路由断言</b>
+<ul class="quote">
+<li>Datetime类型的断言工厂有三种，分别为：AfterRoutePredicateFactory、BeforeRoutePredicateFactory和BetweenRoutePredicateFactory。</li>
+<li>基于远端地址的断言工厂RemoteAddrRoutePredicateFactory属于根据请求IP进行路由决策的类型，接收CIDR(无类别域间路由)表示法(IPv4或IPv6)的字符串列表(列表最小长度为1)作为参数。</li>
+<li>Spring Cloud Gateway提供了基于路由权重的断言工厂，配置时指定分组和权重值即可。</li>
+<li>(1)基于Cookie的断言工厂CookieRoutePredicateFactory是Cookie类型的路由断言工厂，接收两个参数：cookie的名字和一个正则表达式。</li>
+<li>(2)基于头部的断言工厂HeaderRoutePredicateFactory是头部类型的路由断言工厂，接收两个参数：头部名和一个正则表达式。</li>
+<li>(3)基于Host地址的断言工厂HostRoutePredicateFactory是Host地址类型的路由断言工厂，接收一个参数：主机名的模式串。</li>
+<li>(4)基于请求方法的断言工厂MethodRoutePredicateFactory是请求类型的路由断言工厂，接收HTTP请求方法作为参数。</li>
+<li>(5)基于请求路径的断言工厂PathRoutePredicateFactory是基于请求路径的路由断言工厂，接收一个参数：Spring的PathMatcher模式串。</li>
+<li>(6)基于请求参数的断言工厂QueryRoutePredicateFactory是请求参数的路由断言工厂，接收两个参数：一个必须的请求param和一个可选的正则表达式。</li>
+<li>(7)基于请求体内容的断言工厂ReadBodyPredicateFactory可以根据请求体的内容进行路由判断。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>网关过滤器</h4>
+<ul class="point">
+<li><b>GatewayFilter网关过滤器用于拦截和链式处理Web请求</b>
+<ul class="quote">
+<li>GatewayFilter的定义如下所示：public interface GatewayFilter { Mono&lt;Void&gt; filter(ServerWebExchange exchange, GatewayFilterChain chain); }。</li>
+</ul>
+</li>
+<li><b>GatewayFilter有三个实现类，ModifyResponseGatewayFilter是一个内部类，用于修改响应体；OrderedGatewayFilter是一个有序的网关过滤器；GatewayFilterAdapter是一个适配器类，是定义在Web处理器中的内部类</b>
+<ul class="quote">
+<li>有序的GatewayFilter和GatewayFilterAdapter。</li>
+<li>GatewayFilterFactory的内部类。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>全局过滤器</h4>
+<ul class="point">
+<li><b>GlobalFilter接口与GatewayFilter具有相同的方法定义，全局过滤器是一系列特殊的过滤器，将会根据条件应用到所有的路由中</b>
+<ul class="quote">
+<li>全局过滤器用于拦截链式的Web请求，可以实现横切的、与应用无关的需求，比如安全、访问超时的设定等等。</li>
+</ul>
+</li>
+<li><b>全局过滤器的接口定义与网关过滤器GatewayFilter是一样的，下面通过类图看一下全局网关过滤器有哪些实现类，如图8-13所示</b>
+<ul class="quote">
+<li>从图中可以看到GlobalFilter有十个实现类，包括路由转发、负载均衡、ws路由、Netty路由等全局过滤器。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>API端点</h4>
+<ul class="point">
+<li><b>Spring Cloud Gateway提供了内置的端点，用于提供路由相关的操作，如过滤器列表、路由列表、单个路由信息等等</b>
+<ul class="quote">
+<li>Spring Cloud Gateway的内置端点纳管到Spring Boot-Actuator中。</li>
+</ul>
+</li>
+<li><b>Spring Cloud Gateway中提供了多个内置端点，包括路由操作、获取过滤器和路由刷新</b>
+<ul class="quote">
+<li>路由操作包括增加、删除单个路由，以及获取路由列表。</li>
+<li>获取过滤器有三个端点：全局过滤器列表、过滤器工厂列表和单个路由的联合过滤器。</li>
+<li>路由缓存刷新的实现如下所示：@PostMapping(&quot;/refresh&quot;) public Mono&lt;Void&gt; refresh(){ this.publisher.publishEvent(new RefreshRoutesEvent(this)); return Mono.empty(); }。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch41"><summary>8.4 应用进阶</summary>
+<div class="sec">
+<h4>限流机制</h4>
+<ul class="point">
+<li><b>限流是限制系统的输入和输出流量，以达到保护系统的目的</b>
+<ul class="quote">
+<li>系统上线之前，一般都会进行压测，压测之后吞吐量是可以被测算的。</li>
+<li>一旦达到了设定限制的阈值，就需要限制流量并采取一些措施以完成限制流量的目的。</li>
+</ul>
+</li>
+<li><b>常见的限流方案为：延迟处理、拒绝处理和部分拒绝处理等</b>
+<ul class="quote">
+<li>一般高并发系统常见的限流有：限制总并发数(比如数据库连接池、线程池)、限制瞬时并发数(如nginx的limit_conn模块，用来限制瞬时并发连接数)、限制时间窗口内的平均速率(如Guava的RateLimiter、nginx的limit_req模块，限制每秒的平均速率)。</li>
+<li>其他还有如限制远程接口调用速率、限制MQ的消费速率。另外还可以根据网络连接数、网络流量、CPU或内存负载等来限流。</li>
+</ul>
+</li>
+<li><b>常用的平滑限流算法有两种：漏桶算法和令牌桶算法</b>
+<ul class="quote">
+<li>漏桶算法——思路很简单，水(请求)先进入到漏桶里，漏桶以一定的速度出水(接口有响应速率)，当水流入速度过大会直接溢出(访问频率超过接口响应速率)，然后就拒绝请求，可以看出漏桶算法能强行限制数据的传输速率。</li>
+<li>令牌桶算法——和漏桶算法效果一样但方向相反，更加容易理解。随着时间流逝，系统会按恒定时间间隔(如果QPS=100，则间隔是10毫秒)往桶里加入令牌(Token，想象和漏洞漏水相反，有个水龙头在不断的加水)，如果桶已经满了就不再加了。新请求来临时，会各自拿走一个令牌，如果没有令牌可拿了就阻塞或者拒绝服务。</li>
+</ul>
+</li>
+<li><b>过滤器的应用有两种方式，一种方式是基于自定义过滤器接口；另一种方式是基于内置的限流过滤器配置实现</b>
+<ul class="quote">
+<li>基于内置的限流过滤器配置实现：在8.3.6节，介绍过限流过滤器，该限流过滤器基于漏桶算法是实现。</li>
+<li>基于过滤器接口的自定义实现：实现GatewayFilterFactory接口可以自定义过滤器的实现。限流过滤器的实现，是基于https://github.com/bbeck/token-bucket提供的令牌桶算法。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>熔断降级</h4>
+<ul class="point">
+<li><b>Spring Cloud Gateway支持Hystrix过滤器的应用</b>
+<ul class="quote">
+<li>所有的请求访问路径为/user/**，将会基于服务发现和负载均衡路由到用户服务，路由定义中使用了两个过滤器：路径类和Hystrix类。</li>
+<li>第二个过滤器则会应用Hystrix熔断与降级，将请求包装成名为myCommandName的路由指令RouteHystrixCommand, RouteHystrixCommand继承于HystrixObservableCommand，其内包含了Hystrix中断路、资源隔离等诸多断路器核心功能，当转发服务出现问题时，网关能对此进行快速失败，执行特定的失败逻辑，保护网关中的线程池安全，减少同步等待。</li>
+</ul>
+</li>
+<li><b>Spring Cloud Gateway支持定义fallback接口</b>
+<ul class="quote">
+<li>首先需要定义fallback接口，如下所示：@RequestMapping(&quot;/fallbackcontroller&quot;) public Map&lt;String, String&gt; fallbackcontroller(@RequestParam(&quot;a&quot;)String a){ return Collections.singletonMap(&quot;from&quot;, &quot;fallbackcontroller&quot;); }。</li>
+<li>然后我们将过滤器的配置做如下修改：filters: - StripPrefix=1 - name: Hystrix args: name: fallbackcmd fallbackUri: forward:/fallbackcontroller? a=test。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>网关重试过滤器</h4>
+<ul class="point">
+<li><b>当转发到代理服务时，遇到指定的服务端错误，如HTTP状态码为500时，我们可以设定请求重试一定数量</b>
+<ul class="quote">
+<li>除了对指定的异常重试之外，还可以指定请求的方法，GET或POST。</li>
+</ul>
+</li>
+<li><b>实验场景涉及：网关服务和用户服务</b>
+<ul class="quote">
+<li>客户端请求经过网关，请求用户服务的API接口，遇到指定的异常时，进行重试。</li>
+</ul>
+</li>
+<li><b>测试结果：根据上面的实现，访问的地址为http://localhost:9090/test/exception?key=abc&amp;count=2。按照用户服务实现的逻辑，用户服务将会重试一次后成功</b>
+<ul class="quote">
+<li>Retry count: 1 java.lang.IllegalArgumentException: temporarily broken] with root cause ... Retry count: 2。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch42"><summary>8.5 本章小结</summary>
+<div class="sec">
+<h4>API网关的作用与重要性</h4>
+<ul class="point">
+<li><b>API网关负责服务请求的路由、组合及协议转换</b>
+<ul class="quote">
+<li>客户端的所有请求都首先经过API网关，然后由它将请求路由到合适的微服务。</li>
+</ul>
+</li>
+<li><b>API网关是微服务架构中一个重要的基础服务</b>
+<ul class="quote">
+<li>API网关经常会调用多个微服务合并结果，以此来处理一个请求。</li>
+<li>它可以在Web协议(如HTTP与WebSocket)与内部使用的非Web友好协议之间转换。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Cloud Gateway的特性与优势</h4>
+<ul class="point">
+<li><b>Spring Cloud Gateway基于最新的Spring Boot 2.x开发，与Spring Cloud其他组件完美融合。</b>
+</li>
+<li><b>Spring Cloud Gateway提供了多种类型的路由断言和过滤器，并支持使用Netty转发HTTP请求</b>
+<ul class="quote">
+<li>不管是性能还是功能的易用性方面，Spring Cloud Gateway表现都很卓越，是一个极具潜力的项目。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch43"><summary>第9章 配置中心：Spring Cloud Config</summary>
+<div class="sec">
+<h4>分布式配置中心的需求与挑战</h4>
+<ul class="point">
+<li><b>随着微服务数量的不断增加，需要系统具备可伸缩和可扩展性，配置的更新更为麻烦。</b>
+</li>
+<li><b>业界关于分布式配置中心有多种开源的组件，如携程开源的Apollo、百度的Disconf、淘宝的Diamond等。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Cloud Config简介</h4>
+<ul class="point">
+<li><b>Spring Cloud中提供了分布式配置中心Spring Cloud Config，为外部配置提供了客户端和服务器端的支持</b>
+<ul class="quote">
+<li>Config服务端默认的存储实现是Git，这能够很容易地支持配置环境的标签版本，而且有各种工具方便地管理这些配置内容。</li>
+<li>Config配置服务还支持多种仓库的实现方式，如本地文件系统、SVN等。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>配置中心的实现</h4>
+<ul class="point">
+<li><b>本章第一小节将会实现一个简单的配置中心，包括配置服务器、客户端和Git仓库</b>
+<ul class="quote">
+<li>以基础应用的案例，引出微服务配置中心的主要功能。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>配置中心的工作原理</h4>
+<ul class="point">
+<li><b>配置中心的工作原理分为两部分：配置客户端和配置服务器</b>
+<ul class="quote">
+<li>配置客户端负责从配置服务器拉取配置信息，并在本地缓存。</li>
+<li>配置服务器负责存储和管理配置信息，提供配置信息的拉取和推送服务。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>配置中心的高级特性</h4>
+<ul class="point">
+<li><b>配置中心还支持安全保护、加密解密、多配置仓库等高级特性</b>
+<ul class="quote">
+<li>安全保护：通过访问控制列表(ACL)和令牌验证等方式，确保只有授权的用户才能访问配置信息。</li>
+<li>加密解密：支持对配置信息进行加密和解密，以保护敏感信息。</li>
+<li>多配置仓库：支持多个配置仓库，可以根据需要选择不同的配置源。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch44"><summary>9.1 基础应用</summary>
+<div class="sec">
+<h4>配置客户端</h4>
+<ul class="point">
+<li><b>依赖和入口类</b>
+<ul class="quote">
+<li>引入配置客户端的Starter。</li>
+<li>引入服务发现组件Consul的Starter。</li>
+</ul>
+</li>
+<li><b>启动类配置文件</b>
+<ul class="quote">
+<li>指定Consul注册中心的配置。</li>
+<li>spring.cloud.config的相关配置包括label、profile和service-id(即配置服务器的服务名称)。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>配置仓库</h4>
+<ul class="point">
+<li><b>建立配置仓库，选用Git作为配置仓库</b>
+<ul class="quote">
+<li>在配置仓库ConfigRepo中，新建两个环境的配置文件夹：dev和test。</li>
+<li>文件夹中分别存放Config客户端的配置文件。</li>
+</ul>
+</li>
+<li><b>配置规则</b>
+<ul class="quote">
+<li>配置客户端的请求地址和资源文件映射。</li>
+<li>配置资源文件同时支持YAML和Properties。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>服务端</h4>
+<ul class="point">
+<li><b>依赖和入口类</b>
+<ul class="quote">
+<li>引入服务发现Consul和spring-cloud-config-server。</li>
+<li>入口类添加@EnableConfigServer注解，启用Config Server。</li>
+</ul>
+</li>
+<li><b>启动类配置文件</b>
+<ul class="quote">
+<li>服务器端的配置信息主要有服务发现和配置仓库的配置信息。</li>
+<li>uri对应配置Git仓库地址。</li>
+<li>searchPaths对应配置仓库路径，这里指定了dev文件夹，区分了不同的部署环境。</li>
+<li>username对应访问Git仓库的用户名。</li>
+<li>password对应访问Git仓库的用户密码。</li>
+</ul>
+</li>
+<li><b>验证服务器端配置</b>
+<ul class="quote">
+<li>配置服务器端启动后，可以看到其拉取的Git仓库中的配置信息。</li>
+<li>Spring Cloud Config服务器端负责将Git中存储的配置文件发布成REST接口。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>配置验证</h4>
+<ul class="point">
+<li><b>客户端增加API接口</b>
+<ul class="quote">
+<li>增加一个API端点接口，端点很简单，用来获取cloud. version的值。</li>
+</ul>
+</li>
+<li><b>获取配置</b>
+<ul class="quote">
+<li>启动配置服务器端和客户端，可以使用POSTMAN或者浏览器等工具验证客户端是否正确获取了配置信息。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>配置动态更新</h4>
+<ul class="point">
+<li><b>引入依赖</b>
+<ul class="quote">
+<li>需要引入actuator监控模块，用于动态刷新相关的配置信息。</li>
+</ul>
+</li>
+<li><b>开启更新机制</b>
+<ul class="quote">
+<li>给加载变量的类标注@RefreshScope，使用该注解的类，在客户端执行/refresh的时候就会更新此类的变量值。</li>
+</ul>
+</li>
+<li><b>更改配置</b>
+<ul class="quote">
+<li>我们更改配置并提交到Git仓库。</li>
+</ul>
+</li>
+<li><b>测试</b>
+<ul class="quote">
+<li>打开命令行或者其他工具，输入命令“curl -X POST http://localhost:8000/actuator/refresh”，执行POST到刷新端点的请求。</li>
+<li>当我们再次访问/cloud/version接口，返回的结果则是Edgware.RELEASE。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch45"><summary>9.2 源码解析</summary>
+<div class="sec">
+<h4>配置中心的应用架构</h4>
+<ul class="point">
+<li><b>配置中心包括配置服务器、配置客户端和配置仓库</b>
+<ul class="quote">
+<li>配置服务器为配置客户端提供其对应的配置信息。</li>
+<li>配置客户端是除了配置服务器之外的应用服务，启动时从配置服务器拉取其对应的配置信息。</li>
+<li>配置仓库为配置服务器提供配置源信息，配置仓库的实现可以支持多种方式。</li>
+</ul>
+</li>
+<li><b>配置中心支持动态刷新配置信息，不需要重启应用</b>
+<ul class="quote">
+<li>结合消息总线提供的刷新API, webhook调用该端点API，达到动态刷新的效果。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>配置服务器</h4>
+<ul class="point">
+<li><b>Config Server配置类通过注解@EnableConfigServer开启应用服务对配置中心的支持</b>
+<ul class="quote">
+<li>当启用了Config Server之后，配置服务器在启动时就需要对Config Server进行自动配置。</li>
+</ul>
+</li>
+<li><b>Config Server获取指定服务的环境配置</b>
+<ul class="quote">
+<li>EnvironmentRepositoryConfiguration是环境仓库的配置，环境仓库支持如下的配置仓库形式：JDBC、Vault(HashiCorp开发的一款私密信息管理工具)、Svn、本地文件系统、Git库。</li>
+<li>EnvironmentRepository接口和SearchPathLocator接口，各类环境仓库都实现了顶级接口EnvironmentRepository和SearchPathLocator。</li>
+<li>JGit方式实现配置仓库，JGit也是一种环境仓储的方式，我们首先需要了解下JGit是什么？</li>
+<li>JGit获取最新的远端仓库配置，通过检查远端仓库的Git状态，进而判断本地仓库是否需要刷新。</li>
+<li>多JGit仓库实现，Config Server中还可以配置多个Git仓库，服务启动时会自动读取这些配置属性，Mul tipleJGitEnvironmentRepository是JGit实现的子类。</li>
+</ul>
+</li>
+<li><b>Config Server获取指定服务的资源文件</b>
+<ul class="quote">
+<li>ResourceRepositoryConfiguration是资源的配置类，在SearchPathLocator对象存在时，将ResourceRepository加入到Spring的上下文中。</li>
+<li>ResourceRepository接口的定义，返回的Resource是一个资源描述符的接口，用于抽象底层资源的实际类型，如文件或类路径资源。</li>
+</ul>
+</li>
+<li><b>Config Server提供的端点</b>
+<ul class="quote">
+<li>ConfigServerMvcConfiguration对控制器的端点进行配置，配置服务器对外提供的API端点包括三类：Environment、Resource以及加密解密的端点。</li>
+<li>获取Environment的端点，/{application}/{profile}[/{label}] /{application}-{profile}.yml /{label}/{application}-{profile}.yml /{application}-{profile}.properties /{label}/{application}-{profile}.properties。</li>
+<li>获取Resource的端点，/{name}/{profile}/{label}/** /{name}/{profile}/**。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>配置客户端</h4>
+<ul class="point">
+<li><b>Spring Boot的应用能够立刻体验Spring Cloud Config Server带来的优势，而且还能够收获与环境变化事件有关的特性</b>
+<ul class="quote">
+<li>当在依赖中添加了spring-cloud-config-client依赖，即可对Spring Cloud Config进行初始化配置。</li>
+</ul>
+</li>
+<li><b>客户端应用在启动时有两种配置方式：通过HTTP URI指定Config Server和通过服务发现指定Config Server</b>
+<ul class="quote">
+<li>通过HTTP URI指定Config Server，是每一个客户端应用默认的启动方式。</li>
+<li>通过服务发现指定Config Server，Config Client在启动时，首先会通过服务发现找到Config Server，然后从Config Server拉取其相应的配置信息，并用这些远端的属性资源初始化Spring的环境。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch46"><summary>9.3 应用进阶</summary>
+<div class="sec">
+<h4>为Config Server配置多个repo</h4>
+<ul class="point">
+<li><b>Config Server支持更复杂的需求，通过应用名与profile进行模式匹配</b>
+<ul class="quote">
+<li>pattern属性是一个数组，因此可以使用一个YAML数组来绑定多个pattern。</li>
+</ul>
+</li>
+<li><b>Config Server可以设置为在启动时即从远端仓库克隆</b>
+<ul class="quote">
+<li>默认情况下，Config Server只有在第一次请求时配置才会从远端克隆(clone)代码。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>客户端覆写远端的配置属性</h4>
+<ul class="point">
+<li><b>通过设置allowOverride、overrideNone、overrideSystemProperties属性，可以使本地配置优先级更高，且不能被远端仓库中的配置覆盖</b>
+<ul class="quote">
+<li>overrideNone：当allowOverride为true时，overrideNone设置为true，外部的配置优先级更低，而且不能覆盖任何存在的属性源。</li>
+<li>allowOverride：标识overrideSystemProperties属性是否启用。默认为true，设置为false意为禁止用户的设置。</li>
+<li>overrideSystemProperties：用来标识外部配置是否能够覆盖系统属性，默认为true。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>属性覆盖</h4>
+<ul class="point">
+<li><b>Config Server有一个属性覆盖overrides特性，允许将配置的属性强制应用到所有的应用服务</b>
+<ul class="quote">
+<li>声明属性覆盖，是一种map的格式，在spring.cloud.config.server.overrides后面增加键值对。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>安全保护</h4>
+<ul class="point">
+<li><b>Config Server中还可以配置HTTP Basic安全，拒绝非法用户的配置请求信息</b>
+<ul class="quote">
+<li>使用Spring Boot默认配置的HTTP Basic安全，只需要引入Spring Security的依赖。</li>
+<li>在Config Server中，增加安全的配置，包括用户名和密码。</li>
+<li>客户端需要增加相应的身份验证信息才能正确获取其对应的配置信息。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>加密解密</h4>
+<ul class="point">
+<li><b>如果远端配置源包含了加密的内容，在客户端HTTP请求之前，这些加密了的内容将会先被解密</b>
+<ul class="quote">
+<li>JCE环境安装：从Oracle官网下载不限长度的JCE，并替换JDK/jre/lib/security目录下的文件。</li>
+<li>对称加密与解密：配置一个密钥，并在Config Server中验证加密解密是否生效。</li>
+<li>非对称加密与解密：生成密钥对，并在Config Server中进行配置，然后验证加密解密是否生效。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>快速响应失败与重试机制</h4>
+<ul class="point">
+<li><b>设置启动配置的属性spring.cloud.config.failFast=true，则客户端会遇到异常而终止</b>
+<ul class="quote">
+<li>在某些情况下，当客户端不能连接到Config Server时，可能让服务启动失败更为适合。</li>
+</ul>
+</li>
+<li><b>使用重试机制进行不断尝试，需要添加spring-retry和spring-boot-starter-aop依赖</b>
+<ul class="quote">
+<li>spring-retry默认会尝试6次，初始回退间隔为1000毫秒，后续回退的指数为1.1。</li>
+<li>我们可以自定义这些配置，如max-attempts、multiplier、initial-interval、max-interval等。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch47"><summary>9.4 本章小结</summary>
+<div class="sec">
+<h4>Spring Cloud Config的作用和特性</h4>
+<ul class="point">
+<li><b>Spring Cloud Config基于云端存储配置信息，具有中心化、版本控制、支持动态更新、平台独立、语言独立等特性。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Cloud Config的使用场景</h4>
+<ul class="point">
+<li><b>在微服务架构中，每个微服务的业务单位进一步细化，服务经过拆分，微服务的数量变得庞大，需要一个集中的配置管理中心来管理不同环境的配置信息。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Cloud Config的不足之处和改进建议</h4>
+<ul class="point">
+<li><b>Spring Cloud Config的配置存储于Git，虽然隔离了配置的修改、权限、版本等问题，但也带来了一些不便之处。</b>
+</li>
+<li><b>Spring Cloud Config的功能可以进一步增加和丰富，如配置界面、实例配置监控等。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch48"><summary>第10章 消息驱动：Spring Cloud Stream</summary>
+<div class="sec">
+<h4>消息队列的概念</h4>
+<ul class="point">
+<li><b>消息队列是一种消息通信机制，用于在分布式系统中传递消息</b>
+<ul class="quote">
+<li>消息队列可以用于实现解耦、削峰填谷、异步处理等功能。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Cloud Stream基础应用</h4>
+<ul class="point">
+<li><b>Spring Cloud Stream使用Spring Integration连接消息中间件，实现消息事件驱动</b>
+<ul class="quote">
+<li>Spring Cloud Stream提供了多种消息中间件的绑定，如RabbitMQ、Kafka等。</li>
+</ul>
+</li>
+<li><b>基于Stream，开发者可以实现与消息队列相关的消息驱动型应用</b>
+<ul class="quote">
+<li>Spring Cloud的消息总线Bus就是基于Stream实现的。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Stream框架的实现原理和源码分析</h4>
+<ul class="point">
+<li><b>Stream框架基于Spring Integration和消息中间件，实现了消息的发送、接收和处理</b>
+<ul class="quote">
+<li>Spring Integration提供了丰富的组件和API，用于实现消息的转换、路由、过滤等功能。</li>
+</ul>
+</li>
+<li><b>Stream框架的源码分析，可以深入了解其实现细节和原理</b>
+<ul class="quote">
+<li>通过源码分析，可以学习到Stream框架的设计思路、架构设计、实现细节等。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Stream的进阶应用教程</h4>
+<ul class="point">
+<li><b>可以学习如何使用Stream框架实现更复杂的消息处理和应用</b>
+<ul class="quote">
+<li>例如，如何使用Stream框架实现分布式事务、消息确认、死信队列等功能。</li>
+</ul>
+</li>
+<li><b>可以学习如何优化Stream框架的性能和稳定性</b>
+<ul class="quote">
+<li>例如，如何配置消息中间件、如何调整消息的发送频率、如何处理消息的异常等。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch49"><summary>10.1 消息队列</summary>
+<div class="sec">
+<h4>消息队列的概念和作用</h4>
+<ul class="point">
+<li><b>消息队列中间件是分布式系统中最为重要的组件之一，主要用于解决应用耦合、异步消息和流量削锋等问题。</b>
+</li>
+<li><b>消息队列技术是分布式应用间交换信息的一种技术，消息可驻留在内存或磁盘上，以队列形式存储消息，直到它们被应用程序消费。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>消息队列的主要特点和常用组件</h4>
+<ul class="point">
+<li><b>消息队列的主要特点是异步处理和解耦</b>
+<ul class="quote">
+<li>主要的使用场景就是将比较耗时而且不需要同步返回结果的操作作为消息放入消息队列，从而实现异步处理。</li>
+<li>由于使用了消息队列，只要保证消息格式不变，消息的发送方和接受者并不需要彼此直接联系，也不会受到对方的影响，即解耦。</li>
+</ul>
+</li>
+<li><b>常用组件包括消息生产者、交换器、队列和消息消费者</b>
+<ul class="quote">
+<li>消息生产者就是生成消息并将消息发送给消息队列的应用。</li>
+<li>消息消费者则是接受消息队列发送的消息并消费的应用。</li>
+<li>交换器是用于接收生产者发送的消息，并根据路由规则将消息路由到一个或者多个队列中。</li>
+<li>队列是用于存储消息的容器，消息生产者生产的消息会存储到队列中，消息消费者则从队列中获取并消费消息。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>RabbitMQ中的消息队列组件</h4>
+<ul class="point">
+<li><b>RabbitMQ将整个消息队列应用分为消息生产者、交换器、队列和消息消费者四个组件</b>
+<ul class="quote">
+<li>生产者发送给消息队列的所有消息都要先经过交换器，再由交换器将消息路由到一个或者多个队列中。</li>
+<li>多个消息消费者可以订阅同一个队列，这时队列中的消息会分配给多个消息消费者进行处理。</li>
+</ul>
+</li>
+<li><b>RabbitMQ中的交换器类型有fanout、direct、topic和headers四种</b>
+<ul class="quote">
+<li>fanout类型的Exchange的路由规则会把所有发送到该交换器的消息路由到所有与它绑定的队列中。</li>
+<li>direct类型的交换器路由规则会把消息路由到那些绑定键值和该消息的路由键值完全匹配的队列中。</li>
+<li>topic类型的交换器在匹配规则上对direct进行了扩展，它与direct类型的交换器类似，也是将消息路由到绑定键值与该消息路由键值相匹配的队列中，但这里的匹配规则有些不同，它提供一些模糊匹配规则。</li>
+<li>headers类型的交换器不依赖于路由键值与绑定键值的匹配规则来路由消息，而是根据发送的消息内容中的headers属性进行匹配。</li>
+</ul>
+</li>
+<li><b>RabbitMQ发送消息的流程</b>
+<ul class="quote">
+<li>首先获取网络连接，之后依次获取通道，定义交换器和队列。</li>
+<li>使用一个绑定键值将队列绑定到一个交换器上，通过指定交换器和路由键值将消息发送到对应的队列上。</li>
+<li>消费者在接收时也是先获取连接、通道。然后指定一个队列，从队列上获取消息，它对交换器、路由键值及如何绑定都不关心，从对应的队列上获取消息就可以。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch50"><summary>10.2 基础应用</summary>
+<div class="sec">
+<h4>声明和绑定通道</h4>
+<ul class="point">
+<li><b>通过@EnableBinding注解将一个Spring应用转变成Spring Cloud Stream应用</b>
+<ul class="quote">
+<li>@EnableBinding注解本身拥有@Configuration注解来进行相关配置并且会触发Spring Cloud Stream框架的初始化机制。</li>
+</ul>
+</li>
+<li><b>Spring Cloud Stream提供了预先设置的三种接口来定义输入型通道和输出型通道：Source、Sink和Processor</b>
+<ul class="quote">
+<li>Source用来声明输出型通道，它的通道名称为output。</li>
+<li>Sink用来声明输入型通道，它的通道名称为input。</li>
+<li>Processor则用来声明输出输入型的通道。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>自定义通道</h4>
+<ul class="point">
+<li><b>使用@Input和@Output注解，编程人员可以给每个通道一个自定义的名称</b>
+<ul class="quote">
+<li>MesageInput和MessageOutput类分别声明了名称为input的输入型通道和名称为output的输出型通道。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>接收消息</h4>
+<ul class="point">
+<li><b>使用Spring Cloud Stream的@StreamListener注解可以进行消息的接收和消费</b>
+<ul class="quote">
+<li>@StreamListener注解基于Spring Messaging注解(比如说@MessageMapping、@JmsListener、@RabbitListener)，除此之外，该注解添加了内容(content)类型管理和类型强制等特性。</li>
+</ul>
+</li>
+<li><b>Spring Cloud Stream提供了可扩展的消息转换(MessageConverter)机制来处理数据转换</b>
+<ul class="quote">
+<li>假设，输入的Message对象有一个String类型的payload和一个值为application/json的contentType。在使用@StreamListener时，MessageConverter会使用消息的contentType来解析String类型的payload并赋值给Order对象。</li>
+</ul>
+</li>
+<li><b>Spring Cloud Stream支持将消息分配到多个@StreamListener修饰的方法</b>
+<ul class="quote">
+<li>为了能使用该分配机制，该方法不能有返回值，而且必须是单一类消息的处理方法。</li>
+</ul>
+</li>
+<li><b>使用注解的condition属性中的SpEL表达式可以设置@StreamListener接收消息的判断条件</b>
+<ul class="quote">
+<li>所有匹配了该条件判断的方法都会在同一个线程中被调用，但是方法调用相对顺序不能保证。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>配置</h4>
+<ul class="point">
+<li><b>开发人员在application.yml中设置Stream的相关配置</b>
+<ul class="quote">
+<li>可以bindings下面声明通道的绑定信息，并且指定进行通道绑定的绑定器，最后使用binders来声明使用的绑定器。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch51"><summary>10.3 源码分析</summary>
+<div class="sec">
+<h4>Stream的动态注册BeanDefinition</h4>
+<ul class="point">
+<li><b>@EnableBinding注解是Stream框架开始生效运转的起点</b>
+<ul class="quote">
+<li>@EnableBinding使用@Import注解导入了三个类，分别是：BindingServiceConfiguration、BindingBeansRegistrar和BinderFactoryConfiguration。</li>
+</ul>
+</li>
+<li><b>BindingBeansRegistrar实现了ImportBeanDefinitionRegistrar接口，用于向Spring容器动态注册BeanDefinition</b>
+<ul class="quote">
+<li>registerBeanDefinitions方法要动态注册@EnableBinding注解声明的接口类的BeanDefinition。</li>
+<li>registerBindingTargetBeanDefinitions方法会调用ReflectionUtils的doWithMethods方法来扫描接口类中的所有方法，然后为被@Input和@Output注解修饰的函数注册其返回值SubscribableChannel或者MessageChannel的BeanDefinition。</li>
+<li>registerBindingTargetsQualifiedBeanDefinitions是在注册registerBindingTargetBeanDefinition时使用到的工厂类BeanDefinition，这个工厂类用来生成registerBindingTargetBeanDefinition注册的Bean的实例。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>绑定服务</h4>
+<ul class="point">
+<li><b>BindableProxyFactory是Spring Cloud Stream比较核心的一个类，它最为重要的一项职责是声明通道接口类中相关类型的实例</b>
+<ul class="quote">
+<li>afterPropertiesSet方法处理所有由@Output注解注释的函数，生成函数返回值类型的实例存储在BoundTargetHolder变量中供后续使用。</li>
+<li>invoke方法根据缓存返回相应的channel对象，如果缓存中没有，则调用outputHolders.get(name).getBoundTarget()获取。</li>
+</ul>
+</li>
+<li><b>BindingService用于将通道通过绑定器Binder与相应的消息队列进行绑定</b>
+<ul class="quote">
+<li>SmartLifecycle是Spring框架中处理Bean实例生命周期的接口。其start方法加载BindingService实例并且调用之前注册的BindableProxyFactory实例的bindOutputs方法。</li>
+<li>OutputBindingLifecycle将调用名为MessageOutput和MessageInput这两个BindableProxyFactory实例的bindOutput方法。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>获取绑定器</h4>
+<ul class="point">
+<li><b>通过DefaultBinderFactory的getBinder方法获取具体的Binder来对相应的MessageChannel实例进行绑定</b>
+<ul class="quote">
+<li>BinderFactoryConfiguration是一个配置类，它会初始化两个重要的Bean实例，分别是BinderTypeRegistry和DefaultBinderFactory。</li>
+<li>DefaultBinderFactory的初始化依赖于BinderTypeRegistry获得的BinderType列表。</li>
+<li>getBinderConfigurations方法将是将bindingServiceProperties变量中的BinderProperties与BinderTypeRegistry中的inderType进行结合，封装成BinderConfiguration对象。</li>
+<li>DefaultBinderFactory的getBinderInstance方法中会生成一个ConfigurableApplicationContext上下文实例来创建Binder实例。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>绑定生产者</h4>
+<ul class="point">
+<li><b>BindingService的bindProducer方法会调用Binder的bindProducer方法，而bindProducer方法会先调用AbstractMessageChannelBinder的doBindProducer方法</b>
+<ul class="quote">
+<li>doBindProducer做了三件事情，首先调用ProvisioningProvider的provisionProducerDestination方法来创建ProducerDestination；然后调用createProducerMessageHandler方法来创建MessageHandler；最后调用SubscribableChannel的subscribe方法来绑定MessageHandler。</li>
+<li>ProvisioningProvider的provisionProducerDestination方法会创建一个ProducerDestination实例。</li>
+<li>doBindProducer方法做的第二件事情是调用createProducerMessageHandler方法创建MessageHandler实例。</li>
+<li>第三件事情就是最后调用SubscribableChannel的subscribe方法来绑定MessageHandler，到此绑定生产者的流程结束。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>消息发送的流程</h4>
+<ul class="point">
+<li><b>Stream框架通过MessageChannel发送消息，MessageChannel首先将消息发送给通过doBindProducer创建并绑定的SendingHandler对象，然后交由MessageHandler做发送前的准备工作，最后由RabbitTemplate调用RabbitMQ客户端的Channel实例将消息发送给RabbitMQ的服务端</b>
+<ul class="quote">
+<li>SendingHandler是AbstractMessageHandler的子类，MessageChannel有消息时，会将消息分发给SendingHandeer的handleMessageInternal方法，然后再由SendingHandler转发给对应的MessageHandler。</li>
+<li>delegate就是之前createProducerMessageHandler方法生成的MessageHandler实例，也就是AmqpOutboundEndpoint对象。</li>
+<li>send方法则是首先使用MessageConverter来转换消息对象，然后调用RabbitTemplate对象的send方法来发送请求。</li>
+<li>RabbitTemplate是简化与RabbitMQ消息交互的工具类，它封装了RabbitmMQ的Client端原生API接口。</li>
+<li>RabbitTemplate的doSend方法则会调用sendToRabbit方法，进行真正的消息发送。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>StreamListener注解的处理</h4>
+<ul class="point">
+<li><b>@StreamListener是一个可以修饰函数的注解，被它修饰的函数会用来接收输入型通道的消息</b>
+<ul class="quote">
+<li>Stream定义了StreamListenerAnnotationBeanPostProcessor类用来处理项目中的注解@StreamListener。</li>
+<li>StreamListenerAnnotationBeanPostProcessor实现了BeanPostProcessor接口，用来在Bean初始化之前和之后两个时间点对Bean实例进行处理。</li>
+<li>StreamListenerAnnotationBeanPostProcessor还实现了SmartInitializingSingleton接口，Spring容器会在单例类型的实例创建结束时调用所有SmartInitializingSingleton接口实现类的afterSingletonsInstantiated方法。</li>
+<li>ApplicationContext的getBean方法获取SubscribableChannel实例时，就会用到BindingBeansRegistrar中registerBindingTargetBeanDefinitions方法注册的BeanDefinition，最后由BindableProxyFactory来生成SubscribableChannel实例。</li>
+<li>当SubscribableChannel接收到消息时，会调用DispatchingStreamListenerMessageHandler的handleRequestMessage方法。</li>
+<li>findMatchingHandlers方法主要是根据ConditionalStreamListenerHandler的条件判断的Expression实例来判断ConditionalStreamListenerHandler是否适合处理当前这个Message。</li>
+<li>其中，ConditionalStreamListenerHandler的handleMessage方法就是直接调用它的StreamListenerMessageHandler成员变量的handleMessage方法。</li>
+<li>StreamListenerMessageHandler是AbstractReplyProducingMessageHandler的子类，其handleMessage方法最终会调用自己声明的handleRequestMessage方法。</li>
+<li>handleRequestMessage方法调用了InvocableHandlerMethod的invoke方法来调用对应的由@StreamListener注解修饰的方法。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>绑定消费者</h4>
+<ul class="point">
+<li><b>RabbitMessageChannelBinder的doBindConsumer方法会将输入型通道所对应的SubscribableChannel和具体的消息队列实体相连</b>
+<ul class="quote">
+<li>doBindConsumer方法主要做了三件事情，一是调用ProvisioningProvider的provisionConsumerDestination方法来创建ConsumerDestination，二是调用createConsumerEndpoint方法创建MessageProducer实例，三是生成DefaultBinding实例。</li>
+<li>RabbitExchangeQueueProvisioner的provisionConsumerDestination方法主要是创建并声明消息队列的Exchange和Queue实例，然后将二者进行绑定。</li>
+<li>doBindConsumer做的第二件事情就是调用createConsumerEndpoint方法来创建MessageProducer实例。</li>
+<li>doBindConsumer方法会判断AmqpInboundChannelAdapter是否实现了Lifecycle接口，如果是，则调用其start方法，开始启动监听消息的流程。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>消息的接收</h4>
+<ul class="point">
+<li><b>消息从RabbitMQ服务端到SubscribableChannel的流转过程，首先接收到消息的是InternalConsumer</b>
+<ul class="quote">
+<li>InternalConsumer继承了RabbitMQ Client API中的DefaultConsumer，当RabbitMQ对应的队列接收到消息之后，就会调用它的handleDelivery方法进行处理。</li>
+<li>BlockingQueueConsumer的成员变量queue是一个BlockingQueue类型的阻塞队列，用来暂时存储消息队列发送过来的消息。</li>
+<li>SimpleMessageListenerContainer会启动一个Runnable来轮询调用BlockingQueueConsumer的nextMessage方法，处理阻塞队列中的消息。</li>
+<li>AsyncMessageProcessingConsumer的run方法中会调用BlockingQueueConsumer的start方法。</li>
+<li>BlockingQueueConsumer的start方法中首先通过RabbitResourceHolder实例获取RabbitMQ的Channel实例，然后为该通道初始化InternalConsumer实例，最后调用consumeFromQueue方法使用InternalConsumer订阅消息队列中的Queue。</li>
+<li>consumeFromQueue方法将调用Channel的basicConsume方法来让InternalConsumer订阅对应的Queue。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch52"><summary>10.4 进阶应用</summary>
+<div class="sec">
+<h4>Binder For RocketMQ</h4>
+<ul class="point">
+<li><b>构建一个简单的RocketMQ的Binder</b>
+<ul class="quote">
+<li>在resources/META-INF/spring.binders文件中配置有关RocketMQ的Configuration类。</li>
+<li>RocketMessageChannelBinderConfiguration将会提供两个极其重要的Bean实例，分别为RocketMessageChannelBinder和RocketExchangeQueueProvisioner。</li>
+</ul>
+</li>
+<li><b>RocketMessageChannelBinder的实现</b>
+<ul class="quote">
+<li>RocketMessageChannelBinder继承了抽象类AbstractMessageChannelBinder，并实现了producerMessageHandler和createConsumerEndpoint方法。</li>
+<li>createProducerMessageHandler方法为了创建MessageHandler对象，将输出型通道的消息发送到消息队列上。</li>
+<li>createConsumerEndpoint方法首先创建了SimpleRocketMessageListenerContainer实例，然后将其作为参数创建RocketInboundChannelAdapter实例。</li>
+</ul>
+</li>
+<li><b>SimpleRocketMessageListenerContainer的实现</b>
+<ul class="quote">
+<li>SimpleRocketMessageListenerContainer的doStart函数会对RocketBlockingQueueConsumer实例初始化，并且启动SimpleRocketMessageListenerContainer的AsyncMessageProcessingConsumer。</li>
+<li>SimpleRocketMessageListenerContainer.AsyncMessageProcessingConsumer实现了Runnable接口，在run方法中会无限循环地调用SimpleRocketMessageListenerContainer本身的receiveAndExecute方法。</li>
+</ul>
+</li>
+<li><b>RocketBlockingQueueConsumer的实现</b>
+<ul class="quote">
+<li>RocketBlockingQueueConsumer有一个阻塞队列，用来存储RocketMQ传递给RocketBlockingQueueConsumer.InnerConsumer的消息。</li>
+<li>InnerConsumer实现的MessageListenerConcurrently接口是RocketMQ中用于并发接受异步消息的接口。</li>
+</ul>
+</li>
+<li><b>RocketInboundChannelAdapter的实现</b>
+<ul class="quote">
+<li>RocketInboundChannelAdapter实现了MessageProducer接口。它主要将SimpleRocket MessageListenerContainer传递过来的消息经过MessageTemplate传递给MessageChannel。</li>
+</ul>
+</li>
+<li><b>RocketProvisioningProvider的实现</b>
+<ul class="quote">
+<li>RocketProvisioningProvider实现了ProvisioningProvider接口，它有两个方法，分别是provisionProducerDestination和provisionConsumerDestination，用于创建ProducerDestination和ConsumerDestination。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>多实例</h4>
+<ul class="point">
+<li><b>Spring Cloud Stream通过spring.cloud.stream.instanceCount和spring.cloud.stream.instanceIndex属性表示应用实例的数量和索引</b>
+<ul class="quote">
+<li>当Spring Cloud Stream应用通过Spring Cloud Cloud Data Flow部署时，上述属性会自动配置。</li>
+<li>当Spring Cloud Stream应用独立部署时，运维人员必须对上述属性进行正确设置。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>分区</h4>
+<ul class="point">
+<li><b>通过设置partitionKeyExpression, partitionKeyExtractorClass和partitionCount属性可以将输出型的通道配置成分区发送的状态</b>
+<ul class="quote">
+<li>基于上述的例子配置，Stream会基于消息的payload.id来将消息分发到不同的分区中。</li>
+<li>如果SpringEL表达式不能满足你的需求，可以通过设置partitionKeyExtractorClass属性来计算分区键值。</li>
+<li>一旦消息的分区键计算出来，分区选择进程就会计算出一个目标分区ID，一般为0到partitionCount -1之间的一个值。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch53"><summary>10.5 本章小结</summary>
+<div class="sec">
+<h4>Spring Cloud Stream概述</h4>
+<ul class="point">
+<li><b>Spring Cloud Stream是一个用来为微服务应用构建消息驱动能力的框架。</b>
+</li>
+<li><b>Spring Cloud Stream基于Spring Boot来创建独立的、可用于生产的Spring应用程序。</b>
+</li>
+<li><b>Spring Cloud Stream通过使用Spring Integration来连接消息代理中间件以实现消息事件驱动。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Cloud Stream核心概念。</h4>
+<ul class="point">
+</ul></div>
+<div class="sec">
+<h4>Spring Cloud Stream与消息队列的连接</h4>
+<ul class="point">
+<li><b>通过自定义Spring Cloud Stream的Binder组件，开发者可以使用Stream和市面上的任何消息队列进行连接。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch54"><summary>第11章 消息总线：Spring Cloud Bus</summary>
+<div class="sec">
+<h4>Spring Cloud Bus概述</h4>
+<ul class="point">
+<li><b>ESB(企业服务总线)是SOA(面向服务架构)的一种常见的设计实践</b>
+<ul class="quote">
+<li>通过总线传输数据，解决系统之间紧密耦合、配置和引用混乱、服务调用关系错综复杂、难以统一管理、异构系统之间存在不兼容等问题。</li>
+</ul>
+</li>
+<li><b>Spring Cloud Bus基于Spring Cloud Stream，屏蔽了底层消息中间件的差异性</b>
+<ul class="quote">
+<li>Spring Cloud Bus可以非常容易地搭建消息总线，同时实现了一些消息总线中的常用功能。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Cloud Bus的应用</h4>
+<ul class="point">
+<li><b>以配置中心的动态更新作为基础应用的案例，引入Spring Cloud Bus的应用</b>
+<ul class="quote">
+<li>示例如何改造第9章中的配置服务中心。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Cloud Bus的主要功能</h4>
+<ul class="point">
+<li><b>事件的订阅与发布、事件监听的具体实现</b>
+<ul class="quote">
+<li>结合源码进行分析。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Cloud Bus的应用进阶</h4>
+<ul class="point">
+<li><b>定制一个注册事件，并完成事件的监听和发起</b>
+<ul class="quote">
+<li>实现事件的监听和发起。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch55"><summary>11.1 基础应用</summary>
+<div class="sec">
+<h4>微服务架构中配置中心的改进</h4>
+<ul class="point">
+<li><b>增加消息总线，连接Config-Server和Config-Client</b>
+<ul class="quote">
+<li>当配置提交到配置仓库时，利用webhook或者手动访问/actuator/bus-refresh端点，Config-Server将会将变更消息通知到各个客户端。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>配置服务器</h4>
+<ul class="point">
+<li><b>使用RabbitMQ作为消息中间件</b>
+<ul class="quote">
+<li>引入依赖spring-cloud-starter-bus-amqp。</li>
+<li>配置文件中增加RabbitMQ的配置信息。</li>
+<li>设置actuator在HTTP上暴露所有的控制端点。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>配置客户端</h4>
+<ul class="point">
+<li><b>引入依赖spring-cloud-starter-bus-amqp</b>
+<ul class="quote">
+<li>在之前的基础上，需要引入依赖spring-cloud-starter-bus-amqp。</li>
+<li>配置文件中增加rabbitmq的配置信息。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>结果验证</h4>
+<ul class="point">
+<li><b>启动Config Server和两个Config Client，验证新增端点信息</b>
+<ul class="quote">
+<li>在控制台的日志中，新增了两个端点/actuator/bus-refresh和/actuator/bus-env的端点信息。</li>
+</ul>
+</li>
+<li><b>打开rabbitmq的管理界面，验证SpringCloudBus的创建</b>
+<ul class="quote">
+<li>在“Exchanges”中，可以看到增加了SpringCloudBus。</li>
+</ul>
+</li>
+<li><b>Config Client访问/cloud/version接口，验证配置更新</b>
+<ul class="quote">
+<li>Config-Client-1和Config-Client-2返回的都是相同的结果：Edgware.RELEASE。</li>
+<li>提交配置到配置仓库，并发送POST请求/actuator /bus-refresh到Config Server，配置服务器重新获取配置仓库中的拉取配置。</li>
+<li>配置客户端的日志也相应地变化，通过消息总线接收到配置更新，并更新到相应的变更字段cloud.version。</li>
+<li>配置客户端再次访问/cloud/version接口，可以看到返回的是更新之后的结果Camden SR7。</li>
+</ul>
+</li>
+<li><b>验证/bus-refresh端点的细粒度更新推送</b>
+<ul class="quote">
+<li>/actuator/bus-refresh /{ destination }, destination对应服务名和端口，也可以手动设置。</li>
+</ul>
+</li>
+<li><b>追踪消息总线的事件</b>
+<ul class="quote">
+<li>设置spring.cloud.bus.trace.enabled=true实现，Spring Boot TraceRepository将显示每个事件的发送信息和每个服务实例的所有ACK。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch56"><summary>11.2 源码解析</summary>
+<div class="sec">
+<h4>Spring Cloud Bus的工作原理与主要功能</h4>
+<ul class="point">
+<li><b>Spring Cloud Bus是在Spring Cloud Stream的基础上进行的封装，对于指定主题的消息的发布与订阅是通过Spring Cloud Stream的具体Binder实现</b>
+<ul class="quote">
+<li>引入的依赖可以是spring-cloud-starter-bus-amqp或者是spring-cloud-starter-bus-kafka，分别对应于RabbitMQ和Kafka绑定器的实现。</li>
+</ul>
+</li>
+<li><b>Spring Cloud Bus的主要功能为对指定主题springCloudBus的消息订阅与发布，事件监听，包括刷新事件、环境变更事件、远端应用的ACK事件以及本地服务端发送事件等。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>事件的定义与事件监听器</h4>
+<ul class="point">
+<li><b>Spring的事件驱动模型由三部分组成：事件、事件发布者和事件订阅者</b>
+<ul class="quote">
+<li>事件：ApplicationEvent，继承自JDK的EventObject，所有事件将继承它，并通过source得到事件源。</li>
+<li>事件发布者：ApplicationEventPublisher及ApplicationEventMulticaster接口，使用这个接口，Service就拥有了发布事件的能力。</li>
+<li>事件订阅者：ApplicationListener，继承自JDK的EventListener，所有监听器将继承它。</li>
+</ul>
+</li>
+<li><b>Spring Cloud Bus中定义的多种事件类都继承了一个重要的抽象类RemoteApplicationEvent</b>
+<ul class="quote">
+<li>RemoteApplicationEvent定义了事件对象的公共属性：事件的源originService、事件的目的服务destinationService和随机生成的全局id。</li>
+<li>EnvironmentChangeRemoteApplicationEvent用于动态更新服务实例的环境属性。</li>
+<li>RefreshRemoteApplicationEvent刷新远端应用配置的事件。</li>
+<li>AckRemoteApplicationEvent确认远端应用事件。</li>
+<li>SentApplicationEvent发送应用事件。</li>
+<li>UnknownRemoteApplicationEvent未知的远端应用事件。</li>
+</ul>
+</li>
+<li><b>Spring Cloud Bus中，事件监听器的定义可以是实现ApplicationListener接口，或者是使用@EventListener注解的形式</b>
+<ul class="quote">
+<li>RefreshListener监听器对应的事件为RefreshRemoteApplicationEvent。</li>
+<li>EnvironmentChangeListener对应的事件类是EnvironmentChangeRemoteApplicationEvent。</li>
+<li>TraceListener的实现是通过注解@EventListener的形式，监听的事件为确认事件AckRemoteApplicationEvent和发送事件SentApplicationEvent。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>消息的订阅与发布</h4>
+<ul class="point">
+<li><b>Spring Cloud Bus在Spring Cloud Stream的基础上，将消息通道的定义以及消息订阅与发布进行了封装</b>
+<ul class="quote">
+<li>Bus中定义了springCloudBusInput和springCloudBusOutput两个通道，分别用于订阅与发布话题为springCloudBus的消息。</li>
+</ul>
+</li>
+<li><b>在META-INF/spring.factories中将EnableAutoConfiguration配置项设置为BusAutoConfiguration，在服务启动时会自动加载到Spring容器中</b>
+<ul class="quote">
+<li>@ConditionalOnBusEnabled注解是bus的开关，默认开启。</li>
+<li>@EnableBinding绑定了SpringCloudBusClient中定义的通道。</li>
+<li>@Output表示输出绑定目标将由框架创建，由该通道发送消息。</li>
+<li>acceptLocal是一个基于注解实现的事件监听器方法，监听的事件类型为RemoteApplicationEvent。</li>
+<li>@StreamListener注解是Spring Cloud Stream提供的，用来标识一个方法作为@EnableBinding绑定的输入通道的监听器。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>控制端点</h4>
+<ul class="point">
+<li><b>Spring Cloud Bus中提供了两个端点/bus-env和/bus-refresh</b>
+<ul class="quote">
+<li>/bus-refresh端点，实际调用时会加上前缀“actuator”，由Spring Boot Actuator统一纳管。</li>
+<li>/bus-env端点的功能是通过HTTP主动调用，发布EnvironmentChangeRemoteApplicationEvent事件。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch57"><summary>11.3 应用进阶</summary>
+<div class="sec">
+<h4>自定义实现一个RemoteApplicationEvent事件</h4>
+<ul class="point">
+<li><b>注册一个新的事件类型，只需要将自定义的事件放在org.springframework.cloud.bus. event子包中</b>
+<ul class="quote">
+<li>要自定义事件名称，可以在自定义类上使用@JsonTypeName，或者依赖于使用类的简单名称的默认策略。</li>
+</ul>
+</li>
+<li><b>通过@RemoteApplicationEventScan指定具体的包名来扫描RemoteApplicationEvent的子类</b>
+<ul class="quote">
+<li>使用@RemoteApplicationEventScan指定的包也会覆盖子包。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>自定义监听器</h4>
+<ul class="point">
+<li><b>在@RemoteApplicationEventScan注解中不指定任何值，使用该注解的类所在的包将会被注册</b>
+<ul class="quote">
+<li>我们还可以在@RemoteApplicationEventScan注解中指定要注册的value、basePackages和basePackageClasses。</li>
+</ul>
+</li>
+<li><b>当监听到CustomRemoteApplicationEvent事件时，输出该事件的详细日志</b>
+<ul class="quote">
+<li>日志信息包括Source、originService和destinationService。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>事件的发起者</h4>
+<ul class="point">
+<li><b>定义一个API接口，用以发起该事件</b>
+<ul class="quote">
+<li>控制类需要实现接口ApplicationContextAware和ApplicationEventPublisherAware，分别用于获取应用上下文和发布事件。</li>
+</ul>
+</li>
+<li><b>通过HTTP调用之后成功发布了事件，事件监听器处理了该事件。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch58"><summary>11.4 本章小结</summary>
+<div class="sec">
+<h4>Spring Cloud Bus概述</h4>
+<ul class="point">
+<li><b>Spring Cloud Bus建立在Spring Cloud Stream的基础上，将分布式系统中的节点和轻量的消息代理连接起来。</b>
+</li>
+<li><b>Spring Cloud Bus可以用来广播状态的改变(比如配置的改变)或者其他的管理工作。</b>
+</li>
+<li><b>消息总线就像是一个分布式Actuator，用于Spring Boot应用程序的扩展，但它也可以用作应用程序之间的通信通道。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch59"><summary>第12章 认证与授权：Spring Cloud Security</summary>
+<div class="sec">
+<h4>Spring Cloud Security前置知识</h4>
+<ul class="point">
+<li><b>OAuth2和JWT是Spring Cloud Security的前置知识</b>
+<ul class="quote">
+<li>OAuth2是一个授权框架，允许第三方应用访问受保护的资源。</li>
+<li>JWT是一种基于JSON的轻量级认证令牌。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Cloud Security整体设计结构</h4>
+<ul class="point">
+<li><b>Spring Cloud Security提供了基于HTTP的认证和授权服务</b>
+<ul class="quote">
+<li>Spring Cloud Security支持OAuth2和JWT两种认证方式。</li>
+<li>Spring Cloud Security提供了统一的认证和授权管理。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Security和Spring Security OAuth2设计与实现</h4>
+<ul class="point">
+<li><b>Spring Security提供了基于Java的认证和授权框架</b>
+<ul class="quote">
+<li>Spring Security支持多种认证方式，如基于表单、基于HTTP Basic、基于OAuth2等。</li>
+<li>Spring Security提供了基于角色的访问控制。</li>
+</ul>
+</li>
+<li><b>Spring Security OAuth2是Spring Security的OAuth2实现</b>
+<ul class="quote">
+<li>Spring Security OAuth2提供了基于OAuth2的认证和授权服务。</li>
+<li>Spring Security OAuth2支持多种OAuth2授权类型，如授权码、密码、客户端凭据等。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Security和Spring Security OAuth2配置属性</h4>
+<ul class="point">
+<li><b>Spring Security和Spring Security OAuth2提供了丰富的配置属性</b>
+<ul class="quote">
+<li>Spring Security提供了多种认证方式对应的配置属性。</li>
+<li>Spring Security OAuth2提供了OAuth2相关配置属性。</li>
+</ul>
+</li>
+<li><b>Spring Security和Spring Security OAuth2的配置属性可以通过配置文件或Java代码进行设置</b>
+<ul class="quote">
+<li>Spring Security的配置属性可以通过XML或Java代码进行设置。</li>
+<li>Spring Security OAuth2的配置属性可以通过YAML或Java代码进行设置。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch60"><summary>12.1 基础应用</summary>
+<div class="sec">
+<h4>应用的安全关注点：认证和授权</h4>
+<ul class="point">
+<li><b>认证(Authentication)和授权(Authoriztion)是应用安全的主要关注点</b>
+<ul class="quote">
+<li>在单体应用中，开发者可以通过简单的拦截器以及会话(Session)机制对用户的访问进行控制和记录。</li>
+<li>在分布式系统中，由于业务逻辑封装在各个微服务中，每个微服务都需要对用户的行为进行认证和许可。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>分布式系统中的安全控制方式</h4>
+<ul class="point">
+<li><b>可以通过一个中心化的权限管理系统，对用户的身份和权限进行统一的管理</b>
+<ul class="quote">
+<li>这种方式可以做到一次授权，多次多点使用。</li>
+<li>但是这个独立的安全微服务需要聚合各个微服务中的权限控制逻辑。</li>
+</ul>
+</li>
+<li><b>也可以将安全控制分散到各个微服务中，由各个微服务根据自身的业务对用户的访问进行管理和控制</b>
+<ul class="quote">
+<li>这种方式会导致安全管理过于分散，甚至每个微服务都有自己的一套实现方式，不利于统一管理。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Cloud Security简介</h4>
+<ul class="point">
+<li><b>Spring Cloud Security提供了一组基本的组件用来构建安全应用程序和服务</b>
+<ul class="quote">
+<li>它封装了Spring Securtiy、Spring Security OAuth2和Spring Security JWT的相关实现。</li>
+<li>同时提供自带的安全特性，致力于为Spring Cloud微服务提供快速创建常用安全模式的能力。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>OAuth2简介</h4>
+<ul class="point">
+<li><b>OAuth2是当前授权的行业标准，其重点在于为Web应用程序、桌面应用程序、移动设备以及室内设备的授权流程提供简单的客户端开发方式</b>
+<ul class="quote">
+<li>它为第三方应用提供对HTTP服务的有限访问，既可以是资源拥有者通过授权允许第三方应用获取HTTP服务，也可以是第三方以自己的名义获取访问权限。</li>
+</ul>
+</li>
+<li><b>OAuth2中主要分为了4种角色：Resource Owner(资源所有者)，Resource Server(资源服务器)，Client(客户端)，Authorization Server(授权服务器)</b>
+<ul class="quote">
+<li>在很多时候，资源服务器和授权服务器是合二为一的，在授权交互的时候作为授权服务器，在请求资源交互时作为资源服务器。</li>
+<li>授权服务器也可以是单独的实体，它可以发出由多个资源服务器接受的访问令牌。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>JWT简介</h4>
+<ul class="point">
+<li><b>JWT(JSON Web Token)作为一个开放的标准，通过紧凑(Compact)或者自包含(Self-contained)的方式，定义了用于在各方之间发送的安全JSON对象</b>
+<ul class="quote">
+<li>JWT可以很好地充当在上一节中介绍的访问令牌和刷新令牌的载体。</li>
+<li>只有授权服务器持有签发和验证JWT的密钥，那么就只有授权服务器能验证JWT的有效性以及发送带有签名的JWT，这就唯一保证了以JWT为载体的令牌的有效性和安全性。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>搭建授权服务器</h4>
+<ul class="point">
+<li><b>通过@EnableAuthorizationServer开启授权服务器的相关自动配置类</b>
+<ul class="quote">
+<li>通过继承AuthorizationServerConfigurerAdapter授权服务器配置适配器类，覆盖我们需要的配置。</li>
+</ul>
+</li>
+<li><b>在内存中配置一个客户端，它可以通过密码类型和授权码类型获取到访问令牌</b>
+<ul class="quote">
+<li>然后对tokenServices进行了配置，使用了JWT作为令牌的转换器。</li>
+<li>最后对授权端点的访问控制进行配置。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>配置资源服务器</h4>
+<ul class="point">
+<li><b>通过@EnableResourceServer开启资源服务器的相关自动配置类</b>
+<ul class="quote">
+<li>通过继承ResourceServerConfigurerAdapter资源服务器配置适配器类，覆盖所需配置。</li>
+</ul>
+</li>
+<li><b>配置了一个RemoteTokenServices用于从AuthorizationServer中获取令牌服务</b>
+<ul class="quote">
+<li>通过HTTP调用的方式解析访问令牌。</li>
+<li>在使用JWT作为令牌的载体可以减少这次网络的通信，因为JWT中的签名机制可以保证访问令牌的有效性，同时JWT的自包含性也保证了令牌中携带了足够的信息。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>访问受限资源</h4>
+<ul class="point">
+<li><b>访问受保护的资源接口/user/{userId}，需要向授权服务器请求访问令牌用以访问该受限接口</b>
+<ul class="quote">
+<li>首先直接访问不受保护的资源接口/instance/{serviceId}，可以直接获得结果。</li>
+<li>接着访问受保护的资源端口/user/{userId}，返回结果{&quot;error&quot;: &quot;unauthorized&quot;, &quot;error_description&quot;: &quot;Full authentication is required to access this resource&quot;}。</li>
+</ul>
+</li>
+<li><b>通过授权码类型获取访问令牌</b>
+<ul class="quote">
+<li>授权码类型请求地址为：http ://localhost:8766/oauth/authorize? client_id=client&amp;response_type=code&amp;redirect_uri=http://localhost:8888/login。</li>
+<li>获取授权码需要获得用户的授权，所以会被引导到登录界面，用户登录后同意授权。</li>
+<li>授权码将会通过回调地址获取，然后携带授权码访问“/oauth/token”获取到访问令牌。</li>
+</ul>
+</li>
+<li><b>通过密码类型获取访问令牌</b>
+<ul class="quote">
+<li>通过密码类型获取访问令牌需要在请求中直接携带用户的凭证，如用户的账号和密码。</li>
+<li>即可以获取到对应的访问令牌。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch61"><summary>12.2 整体架构</summary>
+<div class="sec">
+<h4>Spring Security架构</h4>
+<ul class="point">
+<li><b>Spring Security通过Servlet Filter对访问进行控制和拦截</b>
+<ul class="quote">
+<li>客户端发送请求到服务器中，由容器根据请求的URI将其交给相应的过滤器进行处理。</li>
+<li>过滤器调用链的顺序非常重要，这将影响到请求的处理结果。</li>
+</ul>
+</li>
+<li><b>Spring Security也是一个过滤器调用链中一个节点，它通过委托的方式将请求转交给一条过滤器调用链进行处理</b>
+<ul class="quote">
+<li>在容器中，这层中间层称为DelegatingFilterProxy，不是由Spring管理的。</li>
+<li>在FilterChainProxy中，包含了所有具备安全处理逻辑的过滤器调用链。</li>
+</ul>
+</li>
+<li><b>在WebSecurityConfigurerAdapter中，通过覆盖HttpSecurity对过滤器调用链进行组装和指定其匹配的路径以对访问安全进行控制</b>
+<ul class="quote">
+<li>通过HttpSecurity给特定路径配置相应的安全规则，其结果将由Spring Security为应用生成对应的过滤器调用链对访问进行控制。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Security OAuth2架构</h4>
+<ul class="point">
+<li><b>Spring Security OAuth2将应用分为两个部分：授权服务器和资源服务器</b>
+<ul class="quote">
+<li>授权服务器中持有用户的身份和权限信息，用于第三方客户端携带用户的授权请求访问令牌。</li>
+<li>资源服务器中持有用户的资源，允许第三方客户端携带授权服务器颁发的访问令牌访问受保护的用户资源。</li>
+</ul>
+</li>
+<li><b>Spring Security OAuth2作为Spring Security的子项目，对于Web安全的控制也是通过安全过滤器调用链实现</b>
+<ul class="quote">
+<li>在授权服务器中，ClientCredentialsTokenEndpointFilter对客户端的id和secret进行验证。</li>
+<li>通过配置ClientDetailsService，实现了通过ClientCredentialsTokenEndpointFilter过滤器对客户端的认证。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Cloud Security中的Security和OAuth2</h4>
+<ul class="point">
+<li><b>Spring Cloud Security意在为Spring Cloud提供用于构建安全应用程序和服务的基本组件，根本实现还是Spring Security</b>
+<ul class="quote">
+<li>Spring Cloud Security中包含了Security以及OAuth的主要依赖。</li>
+</ul>
+</li>
+<li><b>Spring Cloud Security也提供了用于快速搭建第三方登录客户端的实现</b>
+<ul class="quote">
+<li>如添加@EnableOAuth2Sso注解，用于快速搭建第三方登录客户端应用。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch62"><summary>12.3 源码解析</summary>
+<div class="sec">
+<h4>安全上下文</h4>
+<ul class="point">
+<li><b>SecurityContext是Spring Security中的安全上下文，绑定了当前请求中的认证信息Authentication，提供了当前用户的认证信息以及角色权限等内容</b>
+<ul class="quote">
+<li>SecurityContext通过在ThreadLocal中保存Authentication，与当前执行线程绑定，维护当前访问者的安全信息。</li>
+</ul>
+</li>
+<li><b>SecurityContextHolder作为SecurityContext持有者，为当前执行线程提供SecurityContext</b>
+<ul class="quote">
+<li>SecurityContextHolder的获取SecurityContext的方法为静态方法。</li>
+<li>SecurityContextHolder中清理安全上下文的方法。</li>
+</ul>
+</li>
+<li><b>SecurityContextHolderStrategy提供了SecurityContext的保存策略</b>
+<ul class="quote">
+<li>Spring Security提供三种具体实现，分别为：ThreadLocalSecurityHolderStrategy，GlobalSecurityContextHolderStrategy，InheritableThreadLocalSecurityHolderStrategy。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>认证</h4>
+<ul class="point">
+<li><b>Spring Security的安全主要分为两个核心模块，认证和授权</b>
+<ul class="quote">
+<li>认证能确定当前访问系统的用户是谁，是否是系统认证的用户，从而判断用户的请求能否继续进行。</li>
+</ul>
+</li>
+<li><b>AuthenticationManager作为认证管理器，是认证的主要接口</b>
+<ul class="quote">
+<li>AuthenticationManager的authenticate方法尝试认证一个传入的Authentication对象，并返回一个经过充分鉴定的Authentication对象。</li>
+</ul>
+</li>
+<li><b>ProviderManager是AuthenticationManager的默认实现，其内通过委托者模式提供对不同类型的Authentication进行认证</b>
+<ul class="quote">
+<li>ProviderManager中持有按照顺序排列的AuthenticationProvider列表。</li>
+</ul>
+</li>
+<li><b>AuthenticationProvider是真正进行认证的接口类，将对具体的Authentication进行认证</b>
+<ul class="quote">
+<li>在Spring Security中AuthenticationProvider有非常多的默认实现，如用户名密码认证的AbstractUserDetailsAuthenticationProvider，进行预认证的PreAuthenticationProvider、使用Google账号进行认证GoogleAccountsAuthenticationProvider，还有匿名认证的AnonymousAuthenticationProvider等等。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>授权</h4>
+<ul class="point">
+<li><b>一旦认证成功，那么Spring Security将进入授权部分</b>
+<ul class="quote">
+<li>如果应用中配置了对权限的控制，这将生成对应的过滤器对其进行权限控制。</li>
+</ul>
+</li>
+<li><b>AccessDecisionManager(授权管理器)的作用类似于AuthenticationManager，作为授权判定的主接口</b>
+<ul class="quote">
+<li>AccessDecisionManager#decide方法将传递三个参数，其中object表示被访问的资源，可以是Web接口等；configAttributes表示访问该资源所需要的规则，如需要什么的角色或者权限的要求；authentication表示当前访问的用户信息，其内携带着用户被授予的权限列表Collection&lt;? extends GrantedAuthority&gt;。</li>
+</ul>
+</li>
+<li><b>AccessDecisionVoter是AccessDecisionManager委托进行授权实际处理的接口，它根据用户具备的权限和访问安全事物所需要的权限规则判断是否允许访问</b>
+<ul class="quote">
+<li>AccessDecisionVoter类似陪审团中的陪审员，对用户的访问是否具备权限进行投票，AbstractAccessDecisionManager代表法官，它的具体实现是风格迥异的法官，具备不同的权限通过规则。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Security中的过滤器与拦截器</h4>
+<ul class="point">
+<li><b>Spring Security通过FilterChainProxy管理了所有的安全过滤器</b>
+<ul class="quote">
+<li>FilterChainProxy根据一定的路径匹配规则将请求委托转发到由Spring管理的过滤器Bean上，由过滤器调用链对请求进行过滤，其中的过滤操作包括认证和授权等。</li>
+</ul>
+</li>
+<li><b>安全过滤器的一般顺序和功能</b>
+<ul class="quote">
+<li>在安全过滤器调用链中，过滤器的顺序是非常重要的，它将决定Spring Security Web中认证和授权的流程与结果。</li>
+</ul>
+</li>
+<li><b>核心过滤器</b>
+<ul class="quote">
+<li>FilterSecurityInterceptor为授权拦截器。</li>
+<li>ExceptionTranslationFilter为异常处理转化过滤器。</li>
+<li>SecurityContextPersistenceFilter为上下文持久化过滤器。</li>
+<li>UsernamePasswordAuthenticationFilter为用户名密码认证过滤器。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>授权服务器</h4>
+<ul class="point">
+<li><b>@EnableAuthorizationServer(开启授权服务器)</b>
+<ul class="quote">
+<li>它会为应用进行一些关键的自动配置，主要有AuthorizationServerEndpointsConfiguration授权服务器相关端点的配置，以及AuthorizationServerSecurityConfiguration授权服务器的安全配置。</li>
+</ul>
+</li>
+<li><b>AuthorizationServerConfigurerAdapter(覆盖自动配置)</b>
+<ul class="quote">
+<li>AuthorizationServerConfigurerAdapter是一个配置适配器类，是Spring Security OAuth2提供给开发者对授权服务器中的相关配置Bean进行覆盖操作的自定义配置类。</li>
+</ul>
+</li>
+<li><b>ClientDetailsService(加载客户端信息)</b>
+<ul class="quote">
+<li>在OAuth2中，只有被授权服务器认证的客户端才能获取到访问令牌，所以开发者需要为授权服务器配置认证客户端的相关服务。</li>
+</ul>
+</li>
+<li><b>ClientCredentialsTokenEndpointFilter(表单方式认证客户端)</b>
+<ul class="quote">
+<li>客户端的认证过程会在安全过滤器调用链中进行，而进行具体处理的过滤器为ClientCredentialsTokenEndpointFilter。</li>
+</ul>
+</li>
+<li><b>BasicAuthenticationFilter(HTTP BASIC Authentication认证客户端)</b>
+<ul class="quote">
+<li>除了通过ClientCredentialsTokenEndpointFilter用表单的方式认证客户端，也可以通过HTTP BASIC认证方式对客户端进行认证，关键处理的过滤器为BasicAuthenticationFilter。</li>
+</ul>
+</li>
+<li><b>授权服务器端点</b>
+<ul class="quote">
+<li>令牌相关的端点主要包括如下三个端点：AuthorizationEndpoint、TokenEndpoint和CheckTokenEndpoint。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>资源服务器</h4>
+<ul class="point">
+<li><b>@EnableResourceServer(开启资源服务器)</b>
+<ul class="quote">
+<li>@EnableResourceServer是开启资源服务器的关键注解，它将为资源服务器配置Spring的安全过滤器对需要进行拦截的请求验证请求中的访问令牌的有效性。</li>
+</ul>
+</li>
+<li><b>ResourceServerSecurityConfigurer中有诸多资源服务器的核心配置，配置了用于进行OAuth2认证的OAuth2AuthenticationProcessingFilter、异常处理器(包括AccessDeniedHandler和AuthenticationEntryPoint，它们将被配置到ExceptionTranslationFilter中)、用于OAuth2认证的AuthenticationManager(注意该AuthenticationManager仅为OAuth认证服务，与Spring Security中普通认证过程中的AuthenticationManager不同)，以及用于从请求中解析出访问令牌的TokenExtractor。</b>
+</li>
+<li><b>ResourceServerConfigurerAdapter</b>
+<ul class="quote">
+<li>资源服务器也提供了ResourceServerConfigurerAdapter配置适配器类用于资源服务器在默认配置的基础上进行自定义配置，这些自定义配置将覆盖@EnableResourceServer中的默认配置。</li>
+</ul>
+</li>
+<li><b>OAuth2AuthenticationProcessingFilter过滤器是资源服务器中用来验证访问令牌的安全过滤器，在认证成功后会在SecurityContext中放入OAuth2Authentication以代表当前访问的用户身份。</b>
+</li>
+<li><b>ResourceServerTokenServices是资源服务器专用的令牌服务，提供的两个接口如下所示：根据访问令牌加载OAuth2认证信息、获取访问令牌的详情。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>令牌中继机制</h4>
+<ul class="point">
+<li><b>Spring Cloud Security除了对Spring Security和Spring Security OAuth2进行了封装，还为Spring Cloud的各个组件提供令牌中继的功能</b>
+<ul class="quote">
+<li>令牌中继主要体现在两个方面，一个是在Zuul Proxy，另一个是在微服务之间发生调用时。</li>
+<li>如果下游的微服务都是资源服务器，那么调用链经过的微服务都需要对访问令牌进行认证，这时我们可以通过OAuth2RestTemplate进行微服务之间的调用，它将在我们产生请求前将相关的访问令牌放到请求参数中。</li>
+<li>同样，OpenFeign也具备这样的能力，可以自动为请求添加访问令牌。它主要通过OAuth2FeignRequestInterceptor拦截器实现，在请求发出前在请求的头部添加访问令牌。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch63"><summary>12.4 进阶应用</summary>
+<div class="sec">
+<h4>Spring Security定制</h4>
+<ul class="point">
+<li><b>@EnableWebSecurity开启了Spring Security的默认配置</b>
+<ul class="quote">
+<li>@EnableWebSecurity引入了两个配置文件WebSecurityConfiguration和SpringWebMvcImportSelector，以及一个注解@EnableGlobalAuthentication。</li>
+</ul>
+</li>
+<li><b>WebSecurityConfiguration主要作用是为Spring Security配置FilterChainProxy</b>
+<ul class="quote">
+<li>通过使用WebSecurity生成名为springSecurityFilterChain的Bean(FilterChainProxy), springSecurityFilterChain在Spring MVC中将被DelegatingFilterProxy代理。</li>
+</ul>
+</li>
+<li><b>@EnableGlobalAuthentication开启了AuthenticationConfiguration的配置类，用来对AuthenticationManager进行配置</b>
+<ul class="quote">
+<li>AuthenticationManager是Spring Security中的认证管理器。</li>
+</ul>
+</li>
+<li><b>WebSecurityConfigurerAdapter适配器配置类提供简易的方式让我们对Spring Security的相关默认配置进行自定义</b>
+<ul class="quote">
+<li>通过WebSecurityConfigurerAdapter可以对Spring Security中AuthenticationManager、Web安全和HTTP安全中的自动配置进行覆盖设置，自定义属于开发者自己的应用安全规则。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>OAuth2定制</h4>
+<ul class="point">
+<li><b>授权服务器相关配置</b>
+<ul class="quote">
+<li>通过AuthorizationServerConfigurerAdapter配置适配器类进行覆盖操作的自定义配置。</li>
+<li>可以通过AuthorizationServerSecurityConfigurer配置OAuth2相关的端点的访问安全规则。</li>
+<li>在请求访问令牌的过程中，授权服务器会对请求的客户端进行认证，所以需要为授权服务器配置ClientDetailsService用于加载客户端信息。</li>
+<li>通过AuthorizationServerEndpointsConfigurer，开发者可以覆盖令牌端点中诸多委托类的相关实现。</li>
+</ul>
+</li>
+<li><b>资源服务器相关配置</b>
+<ul class="quote">
+<li>ResourceServerConfigurerAdapter配置适配类对资源服务器的自动配置进行覆盖配置。</li>
+<li>ResourceServerSecurityConfigurer允许开发者对资源服务器内认证访问令牌的方式进行配置。</li>
+<li>通过HttpSecurity可以为资源服务器提供如下配置：对哪些路径的访问需要验证访问令牌；访问的路径需要访问令牌对应用户的权限达到什么样的级别。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>SSO单点登录</h4>
+<ul class="point">
+<li><b>搭建第三方客户端服务</b>
+<ul class="quote">
+<li>构建一个oauth2-client应用，它将使用Spring Cloud Security提供的单点登录功能。</li>
+<li>在application.yaml中添加服务发现与注册相关配置。</li>
+<li>在application.yaml中添加第三方登录时使用的授权服务器信息。</li>
+<li>添加SecurityConfig配置文件，使用@EnableOAuth2Sso注解开启单点登录功能。</li>
+<li>为了返回授权用户的信息，我们在资源服务器resource-server中添加一个根据访问令牌获取用户认证信息的接口。</li>
+</ul>
+</li>
+<li><b>单点登录</b>
+<ul class="quote">
+<li>依次启动Eureka Server、授权服务器、资源服务器以及本服务。</li>
+<li>访问http://192.168.1.168:8888(使用本机地址访问)或者http://192.168.1.168:8888/index可以直接获取到请求结果。</li>
+<li>接着我们访问http://192.168.1.168:8888/user，这将会帮我们重定向到授权服务器的登录端点。</li>
+<li>登录后，同意授权，将会重定向到oauth2-client的http://192.168.1.168:8888/user，获取到我们需要的当前登录用户的用户认证信息。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch64"><summary>12.5 本章小结</summary>
+<div class="sec">
+<h4>Spring Cloud Security概述</h4>
+<ul class="point">
+<li><b>Spring Cloud Security提供基于Spring Security构建的符合OAuth2认证流程的安全框架</b>
+<ul class="quote">
+<li>Spring Cloud Security中既提供用了单体应用的Spring Security安全框架，也提供了基于Spring Secuiry构建的符合OAuth2认证流程的Spirng Security OAuth2安全框架。</li>
+</ul>
+</li>
+<li><b>Spring Security中提供两大核心功能：认证和授权</b>
+<ul class="quote">
+<li>认证：验证用户身份，确定用户是否有权访问受保护的资源。</li>
+<li>授权：确定用户可以访问哪些资源，对不同的资源设置不同的访问权限。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Security OAuth2概述</h4>
+<ul class="point">
+<li><b>Spring Security OAuth2划分了授权服务器和资源服务器</b>
+<ul class="quote">
+<li>授权服务器：为获得用户授权的第三方客户端颁发访问令牌。</li>
+<li>资源服务器：保护受限资源，允许携带访问令牌的请求访问资源。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Cloud Security的应用</h4>
+<ul class="point">
+<li><b>Spring Cloud Security为微服务的应用安全提供多方面支持</b>
+<ul class="quote">
+<li>通过Spring Cloud Security，开发者可以为自己的应用服务提供强大的安全保护。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch65"><summary>第13章 服务链路追踪：Spring Cloud Sleuth</summary>
+<div class="sec">
+<h4>微服务架构中的链路监控组件</h4>
+<ul class="point">
+<li><b>Spring Cloud Sleuth是Spring Cloud提供的链路监控组件</b>
+<ul class="quote">
+<li>Spring Cloud Sleuth提供了分布式链路追踪的解决方案。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Cloud Sleuth的基础应用</h4>
+<ul class="point">
+<li><b>Spring Cloud Sleuth有两种实践方式：独立使用和整合Zipkin</b>
+<ul class="quote">
+<li>整合Zipkin时，有两种不同的通信方式用于发送链路信息。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Cloud Sleuth整合Zipkin的两种通信方式</h4>
+<ul class="point">
+<li><b>HTTP方式发送链路信息</b>
+<ul class="quote">
+<li>通过HTTP方式发送链路信息时，可以使用Spring Cloud Sleuth提供的HTTP客户端。</li>
+</ul>
+</li>
+<li><b>Kafka方式发送链路信息</b>
+<ul class="quote">
+<li>通过Kafka方式发送链路信息时，需要配置相应的Kafka生产者。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch66"><summary>13.1 链路监控组件简介</summary>
+<div class="sec">
+<h4>链路监控组件简介</h4>
+<ul class="point">
+<li><b>分布式调用链路监控组件在这样的需求下产生</b>
+<ul class="quote">
+<li>最著名的是谷歌在公开论文中提到的Dapper组件。</li>
+</ul>
+</li>
+<li><b>市面上的APM(Application Performance Management)理论模型大多都是借鉴Google的Dapper论文</b>
+<ul class="quote">
+<li>笔者重点关注了以下几种APM组件：Zipkin、Pinpoint、Skywalking。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>常用的监控组件</h4>
+<ul class="point">
+<li><b>Zipkin、Pinpoint、Skywalking等是常用的APM组件</b>
+<ul class="quote">
+<li>Zipkin由Twitter公司开源，开放源代码的分布式跟踪系统。</li>
+<li>Pinpoint是一款对Java编写的大规模分布式系统的APM工具，是由韩国Naver公司开源的分布式跟踪组件。</li>
+<li>Skywalking是一款国产的APM组件，是一个对Java分布式应用程序集群的业务运行情况进行追踪、告警和分析的系统。</li>
+</ul>
+</li>
+<li><b>链路监控组件的选择要考虑探针的性能消耗、易用性、可扩展性和数据分析</b>
+<ul class="quote">
+<li>APM组件对服务的影响应该做到足够小。</li>
+<li>对于开发应用的程序员来说，是不需要知道有跟踪系统这回事的。</li>
+<li>能够支持的组件越多越好，或者提供便捷的插件开发API。</li>
+<li>跟踪系统能提供足够快的信息反馈，就可以对生产环境下的异常状况做出快速反应。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>基础概念</h4>
+<ul class="point">
+<li><b>Span是基本工作单元，一次链路调用创建一个Span</b>
+<ul class="quote">
+<li>通过一个64位ID标识它，使用UUID较为方便。</li>
+<li>Span中还有其他的数据，例如描述信息、时间戳、键值对的(注解)tag信息和parent-id等。</li>
+</ul>
+</li>
+<li><b>Trace类似于树结构的Span集合，表示一条调用链路</b>
+<ul class="quote">
+<li>存在唯一标识。</li>
+</ul>
+</li>
+<li><b>注解用来记录请求特定事件的相关信息</b>
+<ul class="quote">
+<li>通常包含四个注解信息：CS:Client Sent，SR:Server Receive，SS:Server Send，CR:Client Received。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch67"><summary>13.2 基础应用</summary>
+<div class="sec">
+<h4>Spring Cloud Sleuth简介</h4>
+<ul class="point">
+<li><b>Spring Cloud Sleuth为服务之间的调用提供链路追踪</b>
+<ul class="quote">
+<li>通过Sleuth可以很清楚地了解到一个服务请求经过了哪些服务，每个服务处理花费了多长。</li>
+</ul>
+</li>
+<li><b>Sleuth还可以进行耗时分析，可视化错误，对链路优化</b>
+<ul class="quote">
+<li>通过Sleuth可以很方便地了解到每个采样请求的耗时，从而分析出哪些服务调用比较耗时。</li>
+<li>对于程序未捕捉的异常，可以通过集成Zipkin服务界面看到。</li>
+<li>对于调用比较频繁的服务实施一些优化措施。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Cloud Sleuth特性</h4>
+<ul class="point">
+<li><b>提供对常见分布式跟踪数据模型的抽象：Traces、Spans(形成DAG)、注解和键值注解</b>
+<ul class="quote">
+<li>Spring Cloud Sleuth虽然基于HTrace，但与Zipkin(Dapper)兼容。</li>
+</ul>
+</li>
+<li><b>Sleuth记录了耗时操作的信息以辅助延时分析</b>
+<ul class="quote">
+<li>通过使用Sleuth，可以定位应用中的耗时原因。</li>
+</ul>
+</li>
+<li><b>Sleuth做了如下的工作：生成调用链的结构化数据，包括诸如自定义的织入层信息，比如HTTP，包括采样率配置以控制日志的容量，查询和可视化完全兼容Zipkin</b>
+<ul class="quote">
+<li>为了不写入太多的日志，以至于使生产环境的应用程序崩溃。</li>
+</ul>
+</li>
+<li><b>为Spring应用织入通用的组件，如Servlet过滤器、Zuul过滤器和OpenFeign客户端等等</b>
+<ul class="quote">
+<li>Sleuth可以在进程之间传播上下文(也称为背包)。</li>
+</ul>
+</li>
+<li><b>Spring Cloud Sleuth实现了OpenTracing的规范</b>
+<ul class="quote">
+<li>OpenTracing通过提供平台无关、厂商无关的API，使得开发人员能够方便地添加(或更换)追踪系统的实现。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Cloud Sleuth项目准备</h4>
+<ul class="point">
+<li><b>需要准备的项目有三个：Eureka Server，Sleuth Client A，Sleuth Client B</b>
+<ul class="quote">
+<li>Eureka Server：服务注册Server，作为其他客户端服务的注册中心。</li>
+<li>Sleuth Client A：客户端服务A，注册到Eureka Server。对外提供两个接口，一个接口暴露给客户端服务A，另一个接口调用客户端服务B，客户端服务之间通过OpenFeign进行HTTP调用。</li>
+<li>Sleuth Client B：同上。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Cloud Sleuth独立实现</h4>
+<ul class="point">
+<li><b>通过日志关联的方式将请求的链路串联起来</b>
+<ul class="quote">
+<li>服务A调用了服务B，这是一次完整的调用过程，TraceId在服务A和B中是相同的。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>集成Zipkin</h4>
+<ul class="point">
+<li><b>Zipkin是一个分布式的链路追踪系统，主要涉及Collector(收集agent的数据)、Storage(存储)和Web UI(图形化界面)</b>
+<ul class="quote">
+<li>Collector收集agent的数据有两种方式：HTTP调用和MQ(消息中间件)通信。</li>
+</ul>
+</li>
+<li><b>用HTTP通信方式收集链路调用信息</b>
+<ul class="quote">
+<li>Zipkin Server采用默认的内存数据库。</li>
+<li>客户端向zipkin-server程序发送数据使用的是HTTP的方式通信，每次发送时涉及连接和发送过程；当zipkin-server程序关闭或者重启过程中，会出现发送的数据丢失。</li>
+</ul>
+</li>
+<li><b>用MQ通信方式收集链路调用信息</b>
+<ul class="quote">
+<li>数据从保存在内存中改为持久化到数据库；将HTTP通信改为MQ异步方式通信，通过集成RabbitMQ或者Kafka，让Zipkin客户端将信息输出到MQ中，同时Zipkin Server从MQ中异步地消费链路调用信息。</li>
+<li>Zipkin Server的存储是基于JDBC数据库，在测试环境中部署一段时间之后，访问Zipkin UI将会变得很慢，究其原因，是链路监控产生的数据非常多，当多个应用程序运行一段时间之后，数据分析变得异常困难。Zipkin Server的存储也支持ElasticSearch，基于ElasticSearch的配置只需要将存储方式变为“elasticsearch”。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch68"><summary>13.3 本章小结</summary>
+<div class="sec">
+<h4>微服务架构的本质和特点</h4>
+<ul class="point">
+<li><b>微服务架构的本质是把整体的业务拆分成很多有特定明确功能的服务</b>
+<ul class="quote">
+<li>通过很多分散的小服务之间的配合，去解决更大、更复杂的问题。</li>
+</ul>
+</li>
+<li><b>微服务的特点决定了功能模块的部署是分布式的</b>
+<ul class="quote">
+<li>大部分功能模块都是单独部署运行的。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>分布式调用链监控组件在微服务架构中的重要性</h4>
+<ul class="point">
+<li><b>客户端应用服务引入Spring Cloud Sleuth的包就可以记录链路调用的日志信息</b>
+<ul class="quote">
+<li>对于业务服务的开发者来说是透明的。</li>
+</ul>
+</li>
+<li><b>结合Zipkin，将日志信息发送到Zipkin存储，Zipkin UI展示了请求的Trace列表</b>
+<ul class="quote">
+<li>可以具体分析某次请求的耗时原因。</li>
+<li>当请求出错时，可以快速定位到出错的业务服务和具体的方法。</li>
+<li>Zipkin还可以分析服务与服务之间的依赖关系，绘制成整个系统的应用拓扑，使得每个服务都能够清楚自己的上下游服务。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Cloud Sleuth在微服务架构中的应用。</h4>
+<ul class="point">
+</ul></div>
+</details>
+  <p class="site-footer">由 weread-auto 导出 · 供全书视角与后续精读对照　<span class="gcstat" id="gc_page_pv" style="display:none">本页阅读 <b id="gc_page_pv_num">–</b> 次</span></p>
+</main>
+<script>(function(){
+  function openId(id){
+    if(!id) return null;
+    var el = document.getElementById(id);
+    if(!el) return null;
+    var d = (el.tagName === 'DETAILS') ? el : (el.closest ? el.closest('details') : null);
+    if(d && !d.open) d.open = true;      // 关键：目录跳过来时把这一章展开
+    return el;
+  }
+  function go(id){
+    var el = openId(id);
+    if(!el) return;
+    // 展开会改变文档高度，等一帧再滚，免得停在错误位置
+    setTimeout(function(){ el.scrollIntoView({block:'start'}); }, 10);
+  }
+  function fromHash(){
+    var h = (location.hash || '').replace(/^#/, '');
+    if(h) go(decodeURIComponent(h));
+  }
+  document.addEventListener('click', function(e){
+    var a = (e.target && e.target.closest) ? e.target.closest('a[href^="#"]') : null;
+    if(!a) return;
+    var id = (a.getAttribute('href') || '').slice(1);
+    if(id) go(id);
+  }, false);
+  window.addEventListener('hashchange', fromHash, false);
+  // 手动展开某章时把锚点写回地址栏：刷新或分享链接能直接落回这一章
+  document.addEventListener('toggle', function(e){
+    var t = e.target;
+    if(t && t.tagName === 'DETAILS' && t.open && t.id && location.hash !== '#' + t.id){
+      try { history.replaceState(null, '', '#' + t.id); } catch(err) {}
+    }
+  }, true);
+  fromHash();
+})();
+</script>
+<script data-goatcounter="https://ae6623.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<!-- gc-fill:begin -->
+<script>
+(function(){
+  /* GoatCounter 计数端点只吃 .json（.txt 会 400 unknown extension），
+     没数据的路径也返回 404 + {"count":0,"count_unique":0}，所以按文本解析。 */
+  var C="ae6623", base="https://"+C+".goatcounter.com/counter";
+  function stat(p){
+    return fetch(base+p+".json",{credentials:"omit",cache:"no-store"})
+      .then(function(r){return r.text();})
+      .then(function(t){
+        try{
+          var d=JSON.parse(t), c=parseInt(d.count,10);
+          if(!isFinite(c))return null;
+          var u=parseInt(d.count_unique,10);
+          return {pv:String(c), uv:isFinite(u)?String(u):null};
+        }catch(e){return null}
+      })
+      .catch(function(){return null});
+  }
+  function put(id,v){var e=document.getElementById(id);if(e&&v!=null)e.textContent=v;}
+  stat("/*").then(function(d){
+    if(!d)return;
+    put("gc_site_pv_num",d.pv);
+    if(d.uv!=null){put("gc_site_uv_num",d.uv);}
+    else{var x=document.querySelectorAll(".visit-badge-uv");
+         for(var i=0;i<x.length;i++)x[i].style.display="none";}
+  });
+  var pp=document.getElementById("gc_page_pv");
+  if(pp&&location.pathname){
+    var path=location.pathname;
+    if(path.length>1&&path.charAt(path.length-1)==="/")path=path.slice(0,-1);
+    stat(path).then(function(d){
+      if(d){put("gc_page_pv_num",d.pv);pp.style.display="";}
+    });
+  }
+})();
+</script>
+<!-- gc-fill:end -->
+</body>
+</html>

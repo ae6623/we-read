@@ -1,21 +1,5322 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>深入分布式缓存：从原理到实践 · AI 大纲</title><style>
-:root{--fg:#1f2328;--muted:#6b7280;--line:#e6e2da;--accent:#b45309;--bg:#fbfaf7}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.78 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
-.wrap{max-width:840px;margin:0 auto;padding:38px 22px 90px}
-h1{font-size:26px;line-height:1.35;margin:0 0 6px}
-.meta{color:var(--muted);font-size:14px;margin-bottom:20px}
-h2{font-size:19px;margin:34px 0 12px;padding-left:10px;border-left:4px solid var(--accent)}
-h3{font-size:16px;margin:18px 0 8px}
-p{margin:8px 0}
-.tag{display:inline-block;background:#f2ede2;color:#8a6d3b;font-size:12px;padding:1px 9px;border-radius:10px;margin-right:6px}
-ul,ol{padding-left:22px}li{margin:4px 0}
-.quote{border-left:3px solid #d8cfbd;padding:6px 12px;color:#4b4639;background:#f7f4ee;margin:8px 0;font-size:15px;border-radius:0 6px 6px 0}
-.src{color:var(--muted);font-size:12px}
-.ch{display:flex;gap:10px;padding:7px 0;border-bottom:1px dashed var(--line)}
-.ch .no{color:var(--accent);font-weight:600;min-width:34px;text-align:right}
-.card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:12px 0}
-.foot{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
-a{color:#8a5a00;text-decoration:none}a:hover{text-decoration:underline}
-.badge{font-size:12px;color:#8a6d3b;background:#f6f1e6;border:1px solid #eadfc6;border-radius:6px;padding:1px 7px}
-</style></head><body><div class="wrap"><h1>深入分布式缓存：从原理到实践</h1><div class="meta"><span class="tag">AI 大纲</span>于君泽　·　共 93 章</div><h2>全书提要</h2><p>本书的产生要追溯到多年前。笔者一直对缓存技术抱有热情，关注开源框架的发展，亦在工作中关注所遇、所见，乃至所听的案例。从应用程序研发方面看分布式缓存，并不需要所有的程序员都具备开发一套组件的能力，但是需要具备正确使用它的能力。正如易宝CTO陈斌老师所言：“解决雪崩问题的最好办法是不发生雪崩”。不论是在硅谷互联网公司里还是在国内的互联网平台上，曾多次遇到过海量规模的交易瞬间吞噬平台的悲惨故事。笔者亦了解一些缓存因为代码缺陷或者使用不当被击穿的案例，不同数量级的请求产生的结果有天壤之别，不可不慎。</p><h2>章节大纲（含各章热门划线原文）</h2><div class="ch"><span class="no">1</span><div><b>赞誉</b><span class="src"> · 1901 字</span></div></div><div class="ch"><span class="no">2</span><div><b>推荐序1</b><span class="src"> · 563 字</span></div></div><div class="ch"><span class="no">3</span><div><b>推荐序2</b><span class="src"> · 1000 字</span></div></div><div class="ch"><span class="no">4</span><div><b>推荐序3</b><span class="src"> · 810 字</span><div class="quote">解决雪崩问题的最好办法是不发生雪崩 <span class="src">[36人划线]</span></div></div></div><div class="ch"><span class="no">5</span><div><b>作者寄语</b><span class="src"> · 2790 字</span></div></div><div class="ch"><span class="no">6</span><div><b>前言</b><span class="src"> · 1872 字</span><div class="quote">解决雪崩问题的最好办法是不发生雪崩” <span class="src">[34人划线]</span></div></div></div><div class="ch"><span class="no">7</span><div><b>第1章 缓存为王</b><span class="src"> · 87 字</span></div></div><div class="ch"><span class="no">8</span><div><b>1.1 什么是缓存？</b><span class="src"> · 873 字</span></div></div><div class="ch"><span class="no">9</span><div><b>1.2 为什么使用缓存？</b><span class="src"> · 1875 字</span><div class="quote">如果说音乐是时间的艺术，那么，缓存就是软件系统中关于时间的艺术。“缓存为王”本质上是系统性能为王，对用户而言就是用户体验为王。 <span class="src">[51人划线]</span></div></div></div><div class="ch"><span class="no">10</span><div><b>1.3 从网站的架构发展看缓存</b><span class="src"> · 1113 字</span></div></div><div class="ch"><span class="no">11</span><div><b>1.4 客户端缓存</b><span class="src"> · 4555 字</span></div></div><div class="ch"><span class="no">12</span><div><b>1.5 网络中的缓存</b><span class="src"> · 2190 字</span><div class="quote">反向代理与正向代理相反，对于客户端而言代理服务器就像是源服务器，并且客户端不需要进行设置。客户端向反向代理发送普通请求，接着反向代理将判断向何处转发请求，并将从源服务器获得的内容返回给客户端。 <span class="src">[98人划线]</span></div><div class="quote">如果这些反向代理服务器能够做到和用户来自同一个网络，那么用户访问反向代理服务器，就会得到很高质量的响应速度，所以可以将这样的反向代理缓存称为边缘缓存。 <span class="src">[42人划线]</span></div></div></div><div class="ch"><span class="no">13</span><div><b>1.6 服务端缓存</b><span class="src"> · 8797 字</span><div class="quote">如果当前已经缓存的表未达到table_cache数目，则会将新表添加进来；若已经达到此值，MySQL将根据缓存表的最后查询时间、查询率等规则释放之前的缓存。 <span class="src">[36人划线]</span></div><div class="quote">在CPU缓存淘汰和虚拟内存系统中效果很好。然而在直接应用与代理缓存中效果欠佳，因为Web访问的时间局部性常常变化很大。 <span class="src">[36人划线]</span></div></div></div><div class="ch"><span class="no">14</span><div><b>第2章 分布式系统理论</b><span class="src"> · 245 字</span></div></div><div class="ch"><span class="no">15</span><div><b>2.1 分布式系统概论</b><span class="src"> · 980 字</span></div></div><div class="ch"><span class="no">16</span><div><b>2.2 分布式系统概念</b><span class="src"> · 4361 字</span><div class="quote">所谓幂等性就是调用1次和调用N次要返回一样的结果。 <span class="src">[60人划线]</span></div><div class="quote">和并发的区别：并发和并行是即相似又有区别的两个概念，并行是指两个或者多个事件在同一时刻发生；而并发是指两个或多个事件在同一时间间隔内发生。 <span class="src">[48人划线]</span></div></div></div><div class="ch"><span class="no">17</span><div><b>2.3 分布式系统理论</b><span class="src"> · 11058 字</span><div class="quote">如果不要求P（不允许分区），则C（强一致性）和A（可用性）是可以保证的。但其实分区不是你想不想的问题，而是始终会存在，因此CA的系统更多的是允许分区后各子系统依然保持CA。 <span class="src">[48人划线]</span></div><div class="quote">Paxos协议是一个解决分布式系统中，多个节点之间就某个值（提案）达成一致（决议）的通信协议。它能够处理在少数节点离线的情况下，剩余的多数节点仍然能够达成一致。 <span class="src">[48人划线]</span></div></div></div><div class="ch"><span class="no">18</span><div><b>2.4 分布式系统设计策略</b><span class="src"> · 3438 字</span></div></div><div class="ch"><span class="no">19</span><div><b>2.5 分布式系统设计实践</b><span class="src"> · 3486 字</span><div class="quote">Flicker的方案是启用两台数据库服务器来生成ID，通过区分auto_increment的起始值和步长来生成奇偶数的ID。 <span class="src">[34人划线]</span></div></div></div><div class="ch"><span class="no">20</span><div><b>第3章 动手写缓存</b><span class="src"> · 149 字</span></div></div><div class="ch"><span class="no">21</span><div><b>3.1 缓存定义的规范</b><span class="src"> · 2158 字</span></div></div><div class="ch"><span class="no">22</span><div><b>3.2 缓存框架的实现</b><span class="src"> · 9055 字</span></div></div><div class="ch"><span class="no">23</span><div><b>3.3 缓存框架的使用示例</b><span class="src"> · 592 字</span></div></div><div class="ch"><span class="no">24</span><div><b>第4章 Ehcache与Guava Cache</b><span class="src"> · 528 字</span></div></div><div class="ch"><span class="no">25</span><div><b>4.1 Ehcache的主要特性</b><span class="src"> · 1123 字</span></div></div><div class="ch"><span class="no">26</span><div><b>4.2 Ehcache使用介绍</b><span class="src"> · 8043 字</span></div></div><div class="ch"><span class="no">27</span><div><b>4.3 Ehcache集群介绍</b><span class="src"> · 3104 字</span></div></div><div class="ch"><span class="no">28</span><div><b>4.4 Ehcache的适用场景</b><span class="src"> · 1811 字</span></div></div><div class="ch"><span class="no">29</span><div><b>4.5 Guava Cache的使用</b><span class="src"> · 3584 字</span></div></div><div class="ch"><span class="no">30</span><div><b>4.6 本章小结</b><span class="src"> · 269 字</span></div></div><div class="ch"><span class="no">31</span><div><b>第5章 从Memcached开始了解集中式缓存</b><span class="src"> · 804 字</span></div></div><div class="ch"><span class="no">32</span><div><b>5.1 Memcached基本知识</b><span class="src"> · 3507 字</span><div class="quote">Memcached客户端会通过一些路由算法选择具体定向到哪台Memcached缓存服务器。也就是说分布式能力是在客户端代码中实现的。 <span class="src">[51人划线]</span></div></div></div><div class="ch"><span class="no">33</span><div><b>5.2 Memcached内存存储</b><span class="src"> · 1896 字</span></div></div><div class="ch"><span class="no">34</span><div><b>5.3 典型问题解析</b><span class="src"> · 3573 字</span><div class="quote">解决之道：把巨热数据的key发布到所有服务器上，每个服务器给对应的key一个别名，比如：get key:xxx =&gt; get key:xxx#N <span class="src">[48人划线]</span></div></div></div><div class="ch"><span class="no">35</span><div><b>5.4 Memcached客户端分析</b><span class="src"> · 5323 字</span></div></div><div class="ch"><span class="no">36</span><div><b>5.5 Memcached周边工具发展</b><span class="src"> · 1873 字</span></div></div><div class="ch"><span class="no">37</span><div><b>第6章 Memcached周边技术</b><span class="src"> · 525 字</span></div></div><div class="ch"><span class="no">38</span><div><b>6.1 Twemcache</b><span class="src"> · 4520 字</span></div></div><div class="ch"><span class="no">39</span><div><b>6.2 Twemproxy</b><span class="src"> · 9418 字</span></div></div><div class="ch"><span class="no">40</span><div><b>6.3 Mcrouter</b><span class="src"> · 10364 字</span></div></div><div class="ch"><span class="no">41</span><div><b>第7章 Redis探秘</b><span class="src"> · 301 字</span></div></div><div class="ch"><span class="no">42</span><div><b>7.1 数据结构</b><span class="src"> · 10922 字</span></div></div><div class="ch"><span class="no">43</span><div><b>7.2 客户端与服务器的交互</b><span class="src"> · 8932 字</span></div></div><div class="ch"><span class="no">44</span><div><b>7.3 单机处理逻辑</b><span class="src"> · 2246 字</span></div></div><div class="ch"><span class="no">45</span><div><b>7.4 持久化</b><span class="src"> · 3819 字</span></div></div><div class="ch"><span class="no">46</span><div><b>第8章 分布式Redis</b><span class="src"> · 1079 字</span></div></div><div class="ch"><span class="no">47</span><div><b>8.1 水平拆分（sharding）</b><span class="src"> · 1431 字</span></div></div><div class="ch"><span class="no">48</span><div><b>8.2 主备复制（replication）</b><span class="src"> · 1662 字</span></div></div><div class="ch"><span class="no">49</span><div><b>8.3 故障转移（failover）</b><span class="src"> · 2165 字</span></div></div><div class="ch"><span class="no">50</span><div><b>8.4 Redis Cluster</b><span class="src"> · 9428 字</span></div></div><div class="ch"><span class="no">51</span><div><b>第9章 Tair探秘</b><span class="src"> · 363 字</span></div></div><div class="ch"><span class="no">52</span><div><b>9.1 Tair总体架构</b><span class="src"> · 324 字</span></div></div><div class="ch"><span class="no">53</span><div><b>9.2 Config Server简介</b><span class="src"> · 2401 字</span></div></div><div class="ch"><span class="no">54</span><div><b>9.3 Data Server简介</b><span class="src"> · 2415 字</span></div></div><div class="ch"><span class="no">55</span><div><b>9.4 Tair高可用和负载均衡</b><span class="src"> · 15199 字</span></div></div><div class="ch"><span class="no">56</span><div><b>9.5 存储引擎</b><span class="src"> · 2166 字</span></div></div><div class="ch"><span class="no">57</span><div><b>9.6 Tair的API</b><span class="src"> · 7551 字</span></div></div><div class="ch"><span class="no">58</span><div><b>第10章 EVCache探秘</b><span class="src"> · 505 字</span></div></div><div class="ch"><span class="no">59</span><div><b>10.1 EVCache项目介绍</b><span class="src"> · 6838 字</span></div></div><div class="ch"><span class="no">60</span><div><b>10.2 EVCache的使用场景</b><span class="src"> · 1588 字</span></div></div><div class="ch"><span class="no">61</span><div><b>10.3 EVCache的性能</b><span class="src"> · 2613 字</span></div></div><div class="ch"><span class="no">62</span><div><b>10.4 EVCache的高可用性</b><span class="src"> · 1112 字</span></div></div><div class="ch"><span class="no">63</span><div><b>10.5 源码与示例</b><span class="src"> · 14174 字</span></div></div><div class="ch"><span class="no">64</span><div><b>第11章 Aerospike原理及广告业务应用</b><span class="src"> · 592 字</span></div></div><div class="ch"><span class="no">65</span><div><b>11.1 Aerospike架构</b><span class="src"> · 2003 字</span></div></div><div class="ch"><span class="no">66</span><div><b>11.2 Aerospike具体实现</b><span class="src"> · 3449 字</span></div></div><div class="ch"><span class="no">67</span><div><b>11.3 Aerospike集群配置和部署</b><span class="src"> · 4689 字</span></div></div><div class="ch"><span class="no">68</span><div><b>11.4 Aerospike与Redis的对比</b><span class="src"> · 903 字</span></div></div><div class="ch"><span class="no">69</span><div><b>11.5 Aeropsike在广告行业的具体应用</b><span class="src"> · 8102 字</span></div></div><div class="ch"><span class="no">70</span><div><b>第12章 社交场景架构进化：从数据库到缓存</b><span class="src"> · 284 字</span></div></div><div class="ch"><span class="no">71</span><div><b>12.1 社交业务示例</b><span class="src"> · 2495 字</span></div></div><div class="ch"><span class="no">72</span><div><b>12.2 关系（relation）的存储</b><span class="src"> · 7279 字</span><div class="quote">DB每次变更时，在DB的事务中向变更表插入一条记录，同时有一个唯一的变更ID或者叫版本号，随后再在缓存中进行修改时，同时也设置这个版本号，再回过来删除DB的这条变更记录 <span class="src">[44人划线]</span></div></div></div><div class="ch"><span class="no">73</span><div><b>12.3 帖子（post）的存储</b><span class="src"> · 3560 字</span></div></div><div class="ch"><span class="no">74</span><div><b>12.4 时间线（timeline）的存储</b><span class="src"> · 5222 字</span><div class="quote">假设某一个用户同时被多个follower的timeline查询着，那么这些并发的查询可以只访问一次DB，称为代理的查询优化。 <span class="src">[34人划线]</span></div></div></div><div class="ch"><span class="no">75</span><div><b>第13章 缓存在社交网络Feed系统中的架构实践</b><span class="src"> · 325 字</span></div></div><div class="ch"><span class="no">76</span><div><b>13.1 Feed系统架构</b><span class="src"> · 1556 字</span></div></div><div class="ch"><span class="no">77</span><div><b>13.2 Feed缓存模型</b><span class="src"> · 2147 字</span></div></div><div class="ch"><span class="no">78</span><div><b>13.3 Feed缓存架构的设计</b><span class="src"> · 4820 字</span></div></div><div class="ch"><span class="no">79</span><div><b>13.4 Feed缓存的扩展</b><span class="src"> · 4572 字</span></div></div><div class="ch"><span class="no">80</span><div><b>13.5 Feed缓存的服务化</b><span class="src"> · 3938 字</span></div></div><div class="ch"><span class="no">81</span><div><b>第14章 典型电商应用与缓存</b><span class="src"> · 585 字</span></div></div><div class="ch"><span class="no">82</span><div><b>14.1 电商类应用的挑战及特点</b><span class="src"> · 1181 字</span></div></div><div class="ch"><span class="no">83</span><div><b>14.2 应用数据静态化架构高性能单页Web应用</b><span class="src"> · 2849 字</span></div></div><div class="ch"><span class="no">84</span><div><b>14.3 应用多级缓存模式支撑海量读服务</b><span class="src"> · 5287 字</span></div></div><div class="ch"><span class="no">85</span><div><b>14.4 构建需求响应式亿级商品详情页</b><span class="src"> · 9277 字</span></div></div><div class="ch"><span class="no">86</span><div><b>第15章 同程凤凰缓存系统基于Redis的设计与实践</b><span class="src"> · 148 字</span></div></div><div class="ch"><span class="no">87</span><div><b>15.1 同程凤凰缓存系统要解决什么问题</b><span class="src"> · 9555 字</span></div></div><div class="ch"><span class="no">88</span><div><b>15.2 用好Redis先运维好它</b><span class="src"> · 7464 字</span></div></div><div class="ch"><span class="no">89</span><div><b>15.3 凤凰缓存系统的使用效果</b><span class="src"> · 269 字</span></div></div><div class="ch"><span class="no">90</span><div><b>第16章 新的旅程</b><span class="src"> · 251 字</span></div></div><div class="ch"><span class="no">91</span><div><b>16.1 更好的引入缓存技术</b><span class="src"> · 2376 字</span></div></div><div class="ch"><span class="no">92</span><div><b>16.2 缓存分类总结</b><span class="src"> · 971 字</span></div></div><div class="ch"><span class="no">93</span><div><b>16.3 缓存知识结构更多Tips</b><span class="src"> · 13464 字</span></div></div><div class="foot">来源：微信读书官方章节接口 + 热门划线接口，逐字原文　·　生成于 2026-11-01 13:28　·　开读即产（不等完读）</div></div></body></html>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="深入分布式缓存：从原理到实践 AI 大纲">
+<title>《深入分布式缓存：从原理到实践》｜AI 大纲</title>
+<link rel="stylesheet" href="../../../assets/css/site.css">
+<link rel="stylesheet" href="../../../assets/css/reading-outline.css">
+
+</head>
+<body>
+<main class="page">
+  <header class="note-head">
+    <p class="eyebrow">AI OUTLINE · BEFORE READING</p>
+    <h1>《深入分布式缓存：从原理到实践》AI 大纲</h1>
+    <p class="meta">作者：—　·　共 88 章 / 1821 条　·　AI 读书 · 全书大纲</p>
+    <p><a href="../../../index.html">← 返回首页</a>　<a href="../../index.html">阅读归档索引</a>　<a href="outline.epub" download>下载 EPUB ↓</a></p>
+    <div class="chips"><span class="chip">全书视角</span><span class="chip">AI 生成</span><span class="chip">含原文摘录</span></div>
+    <p class="small">本大纲由 AI 读书（阅读端智能大纲）生成，是全书结构与要点的机器梳理，
+    <b>不等同于已亲读</b>；其中第 4 层条目为书中原句摘录。章节可展开查看。</p>
+  </header>
+  <div class="toc"><b>章节目录</b><ul>
+<li><a href="#ch0">赞誉</a></li>
+<li><a href="#ch1">作者寄语</a></li>
+<li><a href="#ch2">1.1 什么是缓存？</a></li>
+<li><a href="#ch3">1.2 为什么使用缓存？</a></li>
+<li><a href="#ch4">1.3 从网站的架构发展看缓存</a></li>
+<li><a href="#ch5">1.4 客户端缓存</a></li>
+<li><a href="#ch6">1.5 网络中的缓存</a></li>
+<li><a href="#ch7">1.6 服务端缓存</a></li>
+<li><a href="#ch8">第2章 分布式系统理论</a></li>
+<li><a href="#ch9">2.1 分布式系统概论</a></li>
+<li><a href="#ch10">2.2 分布式系统概念</a></li>
+<li><a href="#ch11">2.3 分布式系统理论</a></li>
+<li><a href="#ch12">2.4 分布式系统设计策略</a></li>
+<li><a href="#ch13">2.5 分布式系统设计实践</a></li>
+<li><a href="#ch14">第3章 动手写缓存</a></li>
+<li><a href="#ch15">3.1 缓存定义的规范</a></li>
+<li><a href="#ch16">3.2 缓存框架的实现</a></li>
+<li><a href="#ch17">3.3 缓存框架的使用示例</a></li>
+<li><a href="#ch18">第4章 Ehcache与Guava Cache</a></li>
+<li><a href="#ch19">4.1 Ehcache的主要特性</a></li>
+<li><a href="#ch20">4.2 Ehcache使用介绍</a></li>
+<li><a href="#ch21">4.3 Ehcache集群介绍</a></li>
+<li><a href="#ch22">4.4 Ehcache的适用场景</a></li>
+<li><a href="#ch23">4.5 Guava Cache的使用</a></li>
+<li><a href="#ch24">4.6 本章小结</a></li>
+<li><a href="#ch25">第5章 从Memcached开始了解集中式缓存</a></li>
+<li><a href="#ch26">5.1 Memcached基本知识</a></li>
+<li><a href="#ch27">5.2 Memcached内存存储</a></li>
+<li><a href="#ch28">5.3 典型问题解析</a></li>
+<li><a href="#ch29">5.4 Memcached客户端分析</a></li>
+<li><a href="#ch30">5.5 Memcached周边工具发展</a></li>
+<li><a href="#ch31">第6章 Memcached周边技术</a></li>
+<li><a href="#ch32">6.1 Twemcache</a></li>
+<li><a href="#ch33">6.2 Twemproxy</a></li>
+<li><a href="#ch34">6.3 Mcrouter</a></li>
+<li><a href="#ch35">第7章 Redis探秘</a></li>
+<li><a href="#ch36">7.1 数据结构</a></li>
+<li><a href="#ch37">7.2 客户端与服务器的交互</a></li>
+<li><a href="#ch38">7.3 单机处理逻辑</a></li>
+<li><a href="#ch39">7.4 持久化</a></li>
+<li><a href="#ch40">第8章 分布式Redis</a></li>
+<li><a href="#ch41">8.1 水平拆分（sharding）</a></li>
+<li><a href="#ch42">8.2 主备复制（replication）</a></li>
+<li><a href="#ch43">8.3 故障转移（failover）</a></li>
+<li><a href="#ch44">8.4 Redis Cluster</a></li>
+<li><a href="#ch45">第9章 Tair探秘</a></li>
+<li><a href="#ch46">9.1 Tair总体架构</a></li>
+<li><a href="#ch47">9.2 Config Server简介</a></li>
+<li><a href="#ch48">9.3 Data Server简介</a></li>
+<li><a href="#ch49">9.4 Tair高可用和负载均衡</a></li>
+<li><a href="#ch50">9.5 存储引擎</a></li>
+<li><a href="#ch51">9.6 Tair的API</a></li>
+<li><a href="#ch52">第10章 EVCache探秘</a></li>
+<li><a href="#ch53">10.1 EVCache项目介绍</a></li>
+<li><a href="#ch54">10.2 EVCache的使用场景</a></li>
+<li><a href="#ch55">10.3 EVCache的性能</a></li>
+<li><a href="#ch56">10.4 EVCache的高可用性</a></li>
+<li><a href="#ch57">10.5 源码与示例</a></li>
+<li><a href="#ch58">第11章 Aerospike原理及广告业务应用</a></li>
+<li><a href="#ch59">11.1 Aerospike架构</a></li>
+<li><a href="#ch60">11.2 Aerospike具体实现</a></li>
+<li><a href="#ch61">11.3 Aerospike集群配置和部署</a></li>
+<li><a href="#ch62">11.4 Aerospike与Redis的对比</a></li>
+<li><a href="#ch63">11.5 Aeropsike在广告行业的具体应用</a></li>
+<li><a href="#ch64">第12章 社交场景架构进化：从数据库到缓存</a></li>
+<li><a href="#ch65">12.1 社交业务示例</a></li>
+<li><a href="#ch66">12.2 关系（relation）的存储</a></li>
+<li><a href="#ch67">12.3 帖子（post）的存储</a></li>
+<li><a href="#ch68">12.4 时间线（timeline）的存储</a></li>
+<li><a href="#ch69">第13章 缓存在社交网络Feed系统中的架构实践</a></li>
+<li><a href="#ch70">13.1 Feed系统架构</a></li>
+<li><a href="#ch71">13.2 Feed缓存模型</a></li>
+<li><a href="#ch72">13.3 Feed缓存架构的设计</a></li>
+<li><a href="#ch73">13.4 Feed缓存的扩展</a></li>
+<li><a href="#ch74">13.5 Feed缓存的服务化</a></li>
+<li><a href="#ch75">第14章 典型电商应用与缓存</a></li>
+<li><a href="#ch76">14.1 电商类应用的挑战及特点</a></li>
+<li><a href="#ch77">14.2 应用数据静态化架构高性能单页Web应用</a></li>
+<li><a href="#ch78">14.3 应用多级缓存模式支撑海量读服务</a></li>
+<li><a href="#ch79">14.4 构建需求响应式亿级商品详情页</a></li>
+<li><a href="#ch80">第15章 同程凤凰缓存系统基于Redis的设计与实践</a></li>
+<li><a href="#ch81">15.1 同程凤凰缓存系统要解决什么问题</a></li>
+<li><a href="#ch82">15.2 用好Redis先运维好它</a></li>
+<li><a href="#ch83">15.3 凤凰缓存系统的使用效果</a></li>
+<li><a href="#ch84">第16章 新的旅程</a></li>
+<li><a href="#ch85">16.1 更好的引入缓存技术</a></li>
+<li><a href="#ch86">16.2 缓存分类总结</a></li>
+<li><a href="#ch87">16.3 缓存知识结构更多Tips</a></li>
+</ul></div>
+<details class="ch" id="ch0"><summary>赞誉</summary>
+<div class="sec">
+<h4>本书赞誉</h4>
+<ul class="point">
+<li><b>本书围绕分布式缓存的基础概念、开源框架、应用案例三方面进行讲解，从理论到实战，循序渐进，深入浅出。</b>
+</li>
+<li><b>本书是作者们的用心之作，给业界以借鉴和启发</b>
+<ul class="quote">
+<li>分布式缓存，是任何一个互联网公司在成长过程中都会面临的技术难题。</li>
+<li>本书作者结合理论研究和长期的互联网行业从业经验，深入浅出地介绍了分布式系统理论和分布式缓存实战。</li>
+</ul>
+</li>
+<li><b>本书是专门讲述分布式缓存的书籍，所有作者都是多年工作在网站架构一线的老司机，值得信赖</b>
+<ul class="quote">
+<li>缓存是软件性能优化的大杀器，分布式缓存是网站架构的必杀技。</li>
+<li>目前市面上专门讲述分布式缓存的书籍不多，幸运的是本书就是一本这方面的专著。</li>
+</ul>
+</li>
+<li><b>本书从理论到实践，详细剖析了分布式缓存的实现原理以及应用案例，是一本接地气的好书</b>
+<ul class="quote">
+<li>从十几年前的Ehcache到最近几年流行的Redis，从CDN、浏览器、API Gateway到后端微服务，以及数据访问层的二级缓存，缓存无处不在。</li>
+<li>在体验为王、唯快不破的时代，分布式缓存是关键。</li>
+</ul>
+</li>
+<li><b>本书对不同的缓存类型、实现手段、算法策略做了非常细致的讲解，适合开发者和架构师们全面学习</b>
+<ul class="quote">
+<li>随着现代应用对速度的要求越来越高，对缓存机制的使用也越来越常见、越来越频繁。</li>
+<li>本书以缓存机制的基本原理为开始，逐渐过渡至缓存系统的组建以及使用上面，全书分析和讲解了多个缓存系统，并列举了缓存的各种使用场景。</li>
+</ul>
+</li>
+<li><b>本书的几位作者都是大型分布式环境下历练出来的沙场老将，丰富的经验和翔实的案例，对于互联网行业的技术人员来说，颇有裨益</b>
+<ul class="quote">
+<li>不同的存储介质，读写性能有很大的差异，价格亦是如此，性能越好的介质，价格就越高。</li>
+<li>把最常访问的数据放在读写性能最好的设备上，达到成本和性能的均衡，这便诞生了缓存。</li>
+</ul>
+</li>
+<li><b>本书集合了缓存理论、开源缓存系统、大规模业务中缓存的具体实践，全方位解读了分布式缓存设计</b>
+<ul class="quote">
+<li>互联网高性能系统设计的核心之一就是缓存系统的设计。</li>
+<li>本书既能够帮助读者深入理解分布式缓存系统，又提供了很好的架构设计案例供参考。</li>
+</ul>
+</li>
+<li><b>缓存是互联网架构中最关键的环节，本书作者在缓存的性能及高可用方面有丰富的经验</b>
+<ul class="quote">
+<li>缓存是当前互联网的基石，极大弥补了关系型数据库的天然缺陷。</li>
+<li>缓存技术也是每一个架构师的必修课，从最初的Memcached，到Redis及各种扩展架构，发展至今已经有些百花齐放的感觉。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch1"><summary>作者寄语</summary>
+<div class="sec">
+<h4>刘璟宇对本书的寄语</h4>
+<ul class="point">
+<li><b>刘璟宇负责编写了Tair章节，合作编写了缓存周边、动手写缓存章节</b>
+<ul class="quote">
+<li>在一年多的时间里，工作之余的大部分时间，都投入到了书的编写中。</li>
+</ul>
+</li>
+<li><b>感谢家人、右军、其他伙伴的支持</b>
+<ul class="quote">
+<li>有因为大促工作量激增，有因为工作变动导致工余时间减少，感谢右军持续的鼓励，感谢一同编写本书的其他伙伴及时的帮助。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>陈波对本书的寄语</h4>
+<ul class="point">
+<li><b>陈波从2009年新浪微博发展之初就参与微博平台系统的的研发及架构工作</b>
+<ul class="quote">
+<li>经历了微博从起步到当前月活用户数亿的大型互联网系统的技术演进过程。</li>
+</ul>
+</li>
+<li><b>感谢@TimYang、@zhulei、@liudaoru等良师益友，以及@右军的邀请和大力组织，@Mis晓晓 的包容和支持</b>
+<ul class="quote">
+<li>系统演进中经历了很多曲折、困难、不眠之夜，多亏了@TimYang、@zhulei、@liudaoru等那么多良师益友，一路上大家志同道合披荆斩棘，回头看经历的种种困难却正好是不断进步的印记。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>何涛对本书的寄语</h4>
+<ul class="point">
+<li><b>何涛从事数据访问层工作期间，对缓存有了更深入的了解</b>
+<ul class="quote">
+<li>在支持的同时，对缓存也有了更深入的了解，也促使我思考如何将这些实践经验分享给更多的人。</li>
+</ul>
+</li>
+<li><b>本书涉及的分布式缓存体系非常全面，从分布式、Redis、Memcached等原理的剖析到大量的一线实践案例</b>
+<ul class="quote">
+<li>并且对分布式缓存应用当中的一些痛点、难点进行了深入的阐述。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>宋慧庆对本书的寄语</h4>
+<ul class="point">
+<li><b>宋慧庆有幸参与本书第11章“Aerospike原理及广告业务应用”的编写</b>
+<ul class="quote">
+<li>本人虽然在互联网广告行业摸爬打滚十余年，但对于写书确实是赶鸭子上架头一回。</li>
+</ul>
+</li>
+<li><b>感谢右军兄及其他几位一同写书的弟兄的鞭策和鼓励</b>
+<ul class="quote">
+<li>若如此辜负右军兄及其他几位一同写书的弟兄，于心不忍，日后亦无颜面对他们。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>程超对本书的寄语</h4>
+<ul class="point">
+<li><b>程超主要负责第3章、第4章，同此参与合作编写了第6章</b>
+<ul class="quote">
+<li>虽然我自己经常写一些博客文章，但是写书和写博客是完全不一样的过程。</li>
+</ul>
+</li>
+<li><b>感谢右军和孙海亮对我进行认真的指导，让我的写作水平有了非常大的提高</b>
+<ul class="quote">
+<li>当我第一篇稿子定稿的时候，我内心的成就感是很难用言语来表达的。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>邱硕对本书的寄语</h4>
+<ul class="point">
+<li><b>邱硕负责编写本书第14章，关注缓存优化</b>
+<ul class="quote">
+<li>Web应用相对于传统的软件，在服务的吞吐量方面有更高的要求，也是其面临的主要难点之一。</li>
+</ul>
+</li>
+<li><b>感谢本书主笔于君泽的坚持，也感谢其他每一位作者的投入</b>
+<ul class="quote">
+<li>好的写作依赖于热情和投入，而书籍的编写又需要长时间的毅力和坚持。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>曹洪伟对本书的寄语</h4>
+<ul class="point">
+<li><b>曹洪伟参与本书创作，分享缓存技术经验</b>
+<ul class="quote">
+<li>作为一个70后的老码农，一个半吊子全栈工匠，在中生代技术(freshman Technology)社区有幸认识了很多志同道合的技术人。</li>
+</ul>
+</li>
+<li><b>感谢自己的妻儿，感谢家人对自己的支持</b>
+<ul class="quote">
+<li>希望这本书能够不负众望。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>张开涛对本书的寄语</h4>
+<ul class="point">
+<li><b>张开涛负责重新设计详情页架构，运用大量缓存技术提升性能</b>
+<ul class="quote">
+<li>在实战中通过运用大量缓存技术提升性能、解决棘手问题。</li>
+</ul>
+</li>
+<li><b>希望读者看完本书后能学到一招半式并应用到实战中</b>
+<ul class="quote">
+<li>要用好缓存并不是那么容易的。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>王晓波对本书的寄语</h4>
+<ul class="point">
+<li><b>王晓波介绍同程旅游的凤凰缓存系统(phoenix)</b>
+<ul class="quote">
+<li>同程旅游的凤凰缓存系统(phoenix)是如何云化管理同程全部的缓存集群，并治理各应用中的缓存使用的。</li>
+</ul>
+</li>
+<li><b>希望本书能够给踩到同样坑事的读者带来帮助和快乐</b>
+<ul class="quote">
+<li>回首这些坑事，历历在目。各种困难、各种痛苦伴随着凤凰缓存系统从构想到多个版本的更新上线。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch2"><summary>1.1 什么是缓存？</summary>
+<div class="sec">
+<h4>缓存的概念和重要性</h4>
+<ul class="point">
+<li><b>缓存是系统快速响应中的一种关键技术，是一组被保存起来以备将来使用的东西。</b>
+</li>
+<li><b>缓存无处不在，这或许就是缓存为王的一个原因</b>
+<ul class="quote">
+<li>缓存一词与语境有着紧密的关系，缓存在不同场景有着不同的意义，采用的技术手段也是不同的。</li>
+<li>不涉及操作系统和硬件的缓存，根据在软件系统中所处位置的不同，缓存大体可以分为三类：客户端缓存；服务端缓存；网络中的缓存。</li>
+<li>根据规模和部署方式缓存也可以分为：单体缓存；缓存集群；分布式缓存。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>缓存的种类</h4>
+<ul class="point">
+<li><b>根据在软件系统中所处位置的不同，缓存大体可以分为三类：客户端缓存；服务端缓存；网络中的缓存</b>
+<ul class="quote">
+<li>客户端缓存：例如浏览器缓存，用于存储用户最近访问过的网页和文件，以便下次访问时能够快速加载。</li>
+<li>服务端缓存：例如数据库缓存，用于存储经常访问的数据，减少数据库的访问压力，提高数据访问速度。</li>
+<li>网络中的缓存：例如CDN缓存，用于存储静态资源，如图片、CSS、JavaScript等，加快资源的加载速度。</li>
+</ul>
+</li>
+<li><b>根据规模和部署方式缓存也可以分为：单体缓存；缓存集群；分布式缓存</b>
+<ul class="quote">
+<li>单体缓存：缓存部署在单个服务器上，适用于小型应用或初创公司。</li>
+<li>缓存集群：缓存部署在多个服务器上，通过负载均衡等技术提高缓存的可用性和性能。</li>
+<li>分布式缓存：缓存部署在多个服务器上，通过分布式技术实现数据的共享和负载均衡。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch3"><summary>1.2 为什么使用缓存？</summary>
+<div class="sec">
+<h4>用户体验的重要性</h4>
+<ul class="point">
+<li><b>用户体验是评价软件产品的重要指标</b>
+<ul class="quote">
+<li>用户体验在人机交互技术发展过程中受到了相当的重视。</li>
+<li>用户体验的关注度与传统的三大可用性指标(即效率、效益和基本主观满意度)不相上下。</li>
+</ul>
+</li>
+<li><b>用户体验是主观的，且注重实际应用</b>
+<ul class="quote">
+<li>用户体验是人们对正在使用或期望使用的产品、系统或者服务的认知印象和回应。</li>
+<li>用户在使用一个产品或系统之前、使用期间和使用之后的全部感受，包括情感、信仰、喜好、认知印象、生理反应、心理反应、行为和成就等各个方面。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>系统性能对用户体验的影响</h4>
+<ul class="point">
+<li><b>系统性能是软件产品自身对用户体验的关键性因素之一</b>
+<ul class="quote">
+<li>由于感受软件性能的主体是人，不同的人对于同样的软件可能有不同的主观感受。</li>
+<li>系统性能是一种非功能特性，它关注的不是某种特定的功能，而是在完成该功能时所展示出来的及时性。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>系统性能的指标</h4>
+<ul class="point">
+<li><b>响应时间、延迟时间、吞吐量，并发用户数和资源利用率等几个方面是系统性能的指标</b>
+<ul class="quote">
+<li>响应时间是指系统对用户请求做出响应的时间。</li>
+<li>吞吐量是指系统在单位时间内处理请求的数量。</li>
+<li>并发用户数是指系统可以同时承载的正常使用系统功能的用户数量。</li>
+<li>资源利用率反映的是在一段时间内资源平均被占用的情况。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>缓存技术对系统性能的影响</h4>
+<ul class="point">
+<li><b>通过在各个层面应用缓存技术，整个系统的性能将大幅提高</b>
+<ul class="quote">
+<li>缓存离客户端更近，从缓存请求内容比从源服务器所用时间更少，呈现速度更快，系统就显得更灵敏。</li>
+<li>缓存数据的重复使用，大大降低了用户的带宽使用，其实也是一种变相的省钱(如果流量要付费的话)，同时保证了带宽请求在一个低水平上，更容易维护。</li>
+</ul>
+</li>
+<li><b>使用缓存技术，可以降低系统的响应时间，减少网络传输时间和应用延迟时间，进而提高了系统的吞吐量，增加了系统的并发用户数</b>
+<ul class="quote">
+<li>利用缓存还可以最小化系统的工作量，使用了缓存就可以不必反复从数据源中查找，缓存所创建或提供的同一条数据更好地利用了系统的资源。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>“缓存为王”的本质</h4>
+<ul class="point">
+<li><b>“缓存为王”本质上是系统性能为王，对用户而言就是用户体验为王</b>
+<ul class="quote">
+<li>如果说音乐是时间的艺术，那么，缓存就是软件系统中关于时间的艺术。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch4"><summary>1.3 从网站的架构发展看缓存</summary>
+<div class="sec">
+<h4>网站架构的发展历程</h4>
+<ul class="point">
+<li><b>最初的网站架构是物理主机，运行着应用服务器和数据库</b>
+<ul class="quote">
+<li>随着网站特色吸引用户访问，系统压力增大，响应速度变慢。</li>
+</ul>
+</li>
+<li><b>将应用服务器和数据库服务器从物理上分离开来，系统恢复以前的响应速度</b>
+<ul class="quote">
+<li>技术上没有新的要求，系统支撑住了更高的流量，并且不会让数据库和应用服务器互相影响。</li>
+</ul>
+</li>
+<li><b>缓存开始登场，减少数据库连接资源的竞争和对数据库读的压力</b>
+<ul class="quote">
+<li>可以选择采用静态页面缓存，减少对Web服务器的压力以及减少对数据库连接资源的竞争。</li>
+<li>动态缓存登场，将动态页面里相对静态的部分也缓存起来。</li>
+</ul>
+</li>
+<li><b>数据缓存来了，降低数据库的负载</b>
+<ul class="quote">
+<li>将系统中重复获取的数据信息从数据库加载到本地。</li>
+</ul>
+</li>
+<li><b>增加Web服务器，使用缓存同步机制以及共享文件系统或共享存储</b>
+<ul class="quote">
+<li>如何保持应用服务器中数据缓存信息的同步成为一个问题。</li>
+</ul>
+</li>
+<li><b>数据库调优，优化数据库自身的缓存，采用数据库集群以及分库分表的策略</b>
+<ul class="quote">
+<li>分库分表的规则是有些复杂的，考虑增加一个通用的框架来实现分库分表的数据访问，这个就是数据访问层(Data Access Layer, DAL)。</li>
+<li>分布式缓存来了，将大量的数据缓存转移到分布式缓存上。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>缓存技术在系统各层面的应用</h4>
+<ul class="point">
+<li><b>缓存技术在系统架构发展的各个阶段都有应用</b>
+<ul class="quote">
+<li>缓存技术是解除烦恼的灵丹妙药，证明了什么是缓存为王。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch5"><summary>1.4 客户端缓存</summary>
+<div class="sec">
+<h4>客户端缓存概述</h4>
+<ul class="point">
+<li><b>客户端缓存相对于其他端的缓存而言，要简单一些，而且通常是和服务端以及网络侧的应用或缓存配合使用的。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>页面缓存</h4>
+<ul class="point">
+<li><b>页面缓存有两层含义：一个是页面自身对某些元素或全部元素进行缓存；另一层意思是服务端将静态页面或动态页面的元素进行缓存，然后给客户端使用</b>
+<ul class="quote">
+<li>页面缓存是将之前渲染的页面保存为文件，当用户再次访问时可以避开网络连接，从而减少负载，提升性能和用户体验。</li>
+</ul>
+</li>
+<li><b>HTML5提供的离线应用缓存机制，使得网页应用可以离线使用</b>
+<ul class="quote">
+<li>开启离线缓存的步骤如下：准备用于描述页面需要缓存的资源列表清单文件(manifest text/cache-manifest)；在需要离线使用的页面中添加manifest属性，指定缓存清单文件的路径。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>浏览器缓存</h4>
+<ul class="point">
+<li><b>浏览器缓存是根据一套与服务器约定的规则进行工作的，工作规则很简单：检查以确保副本是最新的，通常只要一次会话</b>
+<ul class="quote">
+<li>浏览器会在硬盘上专门开辟一个空间来存储资源副本作为缓存。</li>
+</ul>
+</li>
+<li><b>HTTP1.0提供了一些很基本的缓存特性，例如在服务器侧设置Expires的HTTP头来告诉客户端在重新请求文件之前缓存多久是安全的</b>
+<ul class="quote">
+<li>通过if-modified-since的条件请求来使用缓存。</li>
+</ul>
+</li>
+<li><b>HTTP 1.1有了较大的增强，缓存系统被形式化了，引入了实体标签e-tag</b>
+<ul class="quote">
+<li>e-tag是文件或对象的唯一标识，这意味着可以请求一个资源，以及提供所持有的文件，然后询问服务器这个文件是否有变化。</li>
+<li>如果某一个文件的e-tag是有效的，那么服务器会生成304-Not Modified应答，并提供正确文件的e-tag，否则，发送200-OK应答。</li>
+</ul>
+</li>
+<li><b>Cache-Control与Expires的功能一致，都是指明当前资源的有效期，控制浏览器是直接从浏览器缓存取数据还是重新发请求到服务器取数据</b>
+<ul class="quote">
+<li>一般情况下，使用Cache-Control/Expires会配合Last-Modified/ETag一起使用，因为即使服务器设置缓存时间，当用户点击“刷新”按钮时，浏览器会忽略缓存继续向服务器发送请求，这时Last-Modified/ETag将能够很好利用服务端的返回码304，从而减少响应开销。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>APP上的缓存</h4>
+<ul class="point">
+<li><b>APP可以将内容缓存在内存、文件或本地数据库(例如SQLite)中</b>
+<ul class="quote">
+<li>APP使用数据库缓存的方法：在下载完数据文件后，把文件的相关信息，如URL、路径、下载时间、过期时间等存放到数据库，下次下载的时候根据URL先从数据库中查询，如果查询到当前时间并未过期，就根据路径读取本地文件，从而实现缓存的效果。</li>
+<li>对于APP中的某些界面，可以采用文件缓存的方法。这种方法使用文件操作的相关API得到文件的最后修改时间，与当前时间判断是否过期，从而实现缓存效果，操作简单，代价较低。</li>
+</ul>
+</li>
+<li><b>在iOS开发中，SDWebImage是一个很棒的图片缓存框架</b>
+<ul class="quote">
+<li>SDWebImage是个比较大的类库，提供一个UIImageView的类以支持远程加载来自网络的图片，具有缓存管理、异步下载、同一个URL下载次数控制和优化等特征。</li>
+<li>在APP请求同一个URL时，SDWebImage会从缓存中取得图片。将第三个参数设置为SDWebImageRefreshCached就可以实现图片更新操作。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch6"><summary>1.5 网络中的缓存</summary>
+<div class="sec">
+<h4>Web代理缓存</h4>
+<ul class="point">
+<li><b>Web代理缓存是将Web代理作为缓存的一种技术</b>
+<ul class="quote">
+<li>Web代理默认说的是正向代理，用户向代理服务器发送一个请求并指定目标服务器，然后代理服务向源服务器转交请求并将获得的内容返回给客户端。</li>
+<li>反向代理与正向代理相反，对于客户端而言代理服务器就像是源服务器，并且客户端不需要进行设置。</li>
+<li>透明代理的意思是客户端根本不需要知道有代理服务器的存在，由代理服务器改变客户端请求的报文字段，并会传送真实的IP地址。</li>
+</ul>
+</li>
+<li><b>Web代理缓存的作用跟浏览器的内置缓存类似，只是介于浏览器和互联网之间</b>
+<ul class="quote">
+<li>当通过代理服务器进行网络访问时，浏览器不是直接到Web服务器去取回网页而是向Web代理发出请求，由代理服务器来取回浏览器所需要的信息并传送给浏览器。</li>
+<li>Web代理缓存有很大的存储空间，不断将新获取的数据储存到本地的存储器上，如果浏览器所请求的数据在Web代理的缓存上已经存在而且是最新的，那么就不重新从Web服务器取数据，而是直接将缓存的数据传送给用户的浏览器，这样就能显著提高浏览速度和效率。</li>
+</ul>
+</li>
+<li><b>Squid是较流行的Web代理缓存工具</b>
+<ul class="quote">
+<li>Squid支持建立复杂的缓存层级结构，拥有详细的日志、高性能缓存以及用户认证支持。</li>
+<li>Squid同时支持各种插件，例如，Squid Guard就是一个提供URL过滤的插件，对于屏蔽某些站点和内容十分有用。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>边缘缓存</h4>
+<ul class="point">
+<li><b>反向代理缓存可以缓存原始资源服务器的资源，特别是静态的数据</b>
+<ul class="quote">
+<li>很多Web服务器就具备反向代理的功能，比如大名鼎鼎的Nginx。</li>
+</ul>
+</li>
+<li><b>边缘缓存在网络上位于靠近用户的一侧，可以处理来自不同用户的请求，主要用于向用户提供静态的内容，以减少应用服务器的介入</b>
+<ul class="quote">
+<li>边缘缓存的一个有名的开源工具就是Varnish，在默认情况下进行保守缓存。</li>
+<li>Varnish的一个特性是使用虚拟内存，精妙之处在于利用了操作系统的管理机制。</li>
+<li>Varnish可以高度定制如何处理请求，缓存哪些内容。</li>
+</ul>
+</li>
+<li><b>CDN是Content Delivery Network的简称，即“内容分发网络”的意思</b>
+<ul class="quote">
+<li>使用CDN之后，客户端与服务器通信如图1-10所示。</li>
+<li>CDN边缘节点的缓存策略因服务商不同而有所变化，但一般都会遵循HTTP标准协议，通过HTTP响应头中的Cache-control: max-age的字段来设置CDN边缘节点的数据缓存时间。</li>
+<li>CDN服务商一般会提供基于文件后缀、目录等多个维度来指定在CDN上的缓存时间，为用户提供更精细化的缓存管理。</li>
+<li>CDN边缘节点对开发者来说是透明的，开发者可以通过CDN服务商提供的“刷新缓存”接口来清理位于CDN边缘节点上的缓存数据。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch7"><summary>1.6 服务端缓存</summary>
+<div class="sec">
+<h4>服务端缓存的重要性</h4>
+<ul class="point">
+<li><b>服务端缓存是系统性能的重中之重</b>
+<ul class="quote">
+<li>数据库是整个系统中的“慢性子”，有时候数据库调优能够以小搏大，在不改变架构和代码逻辑的前提下，缓存参数的调整往往是条捷径。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>数据库缓存</h4>
+<ul class="point">
+<li><b>数据库缓存是一类特殊的缓存，是数据库自身的缓存机制</b>
+<ul class="quote">
+<li>以MySQL为例，MySQL中使用了查询缓冲机制，将SELECT语句和查询结果存放在缓冲区中，以后对于同样的SELECT语句，将直接从缓冲区中读取结果，以节省查询时间，提高了SQL查询的效率。</li>
+</ul>
+</li>
+<li><b>MySQL的查询缓存</b>
+<ul class="quote">
+<li>Query cache作用于整个MySQL实例，主要用于缓存MySQL中的ResultSet，也就是一条SQL语句执行的结果集，所以仅仅只能针对select语句。</li>
+<li>Query Cache的使用需要多个参数配合，其中最为关键的是query_cache_size和query_cache_type，前者设置用于缓存ResultSet的内存大小，后者设置在何种场景下使用Query Cache。</li>
+<li>检查Query Cache是否合理，可以通过在MySQL控制台执行以下命令观察：SHOW VARIABLES LIKE &#x27;%query_cache%&#x27;; SHOW STATUS LIKE &#x27;Qcache%&#x27;;。</li>
+<li>通过调节以下几个参数可以知道query_cache_size设置得是否合理：Qcache inserts；Qcache hits；Qcache lowmem prunes；Qcache free blocks。</li>
+<li>其中Qcache_hits表示多少次命中，通过这个参数我们可以查看到Query Cache的基本效果；而Qcache_inserts表示多少次未命中然后插入。通过“Qcache_hits”和“Qcache_inserts”两个参数可以算出Query Cache的命中率：Query Cache命中率=Qcache_hits / (Qcache_hits+Qcache_inserts)。</li>
+<li>Innodb的缓存性能：当使用InnoDB存储引擎的时候，innodb_buffer_pool_size参数可能是影响性能的最为关键的一个参数了，用来设置用于缓存InnoDB索引及数据块的内存区域大小，更像是Oracle数据库的db_cache_size。</li>
+<li>table_cache是一个非常重要的MySQL性能参数，主要用于设置table高速缓存的数量。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>平台级缓存</h4>
+<ul class="point">
+<li><b>平台级缓存在这里指的是用来写带有缓存特性的应用框架，或者可用于缓存功能的专用库</b>
+<ul class="quote">
+<li>在Java语言中，缓存框架更多，例如Ehcache, Cacheonix, Voldemort, JBoss Cache, OSCache等等。</li>
+</ul>
+</li>
+<li><b>Ehcache是现在最流行的纯Java开源缓存框架</b>
+<ul class="quote">
+<li>Ehcache有如下特点：轻量快速；良性伸缩；简洁灵活；标准支持；强扩展性；数据持久；缓存监听；分布式缓存。</li>
+</ul>
+</li>
+<li><b>Voldemort是一款基于Java开发的分布式键-值缓存系统</b>
+<ul class="quote">
+<li>Voldemort有如下特点：缓存数据可以自动在各个服务器节点之间同步复制；每一个服务器的缓存数据被横向分割，因此是总缓存的一个子集；严格保持缓存的一致性；提供服务器宕机快速恢复方案；可配置的数据存储引擎；可配置的数据序列化方式；每一个数据项都有版本标识，用来保证数据的完整性和可用性；每一个缓存节点都是独立的，因此任何一个节点的故障都不会影响系统的正常运行。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>应用级缓存</h4>
+<ul class="point">
+<li><b>当平台级缓存不能满足系统性能要求的时候，就要考虑使用应用级缓存了</b>
+<ul class="quote">
+<li>应用级缓存，需要开发者通过代码来实现缓存机制。这里是NoSQL的胜场，不论是Redis还是MongoDB，以及Memcached都可以作为应用级缓存的重要技术。</li>
+</ul>
+</li>
+<li><b>Redis是一款开源的、基于BSD许可的、高级键值对缓存和存储系统</b>
+<ul class="quote">
+<li>Redis支持主从同步，数据可以从主服务器向任意数量的从服务器同步，从服务器可以是关联其他从服务器的主服务器。</li>
+<li>Redis 3.0版本加入cluster功能，解决了Redis单点无法横向扩展的问题。</li>
+</ul>
+</li>
+<li><b>一个使用了Redis集群和其他多种缓存技术的应用系统架构</b>
+<ul class="quote">
+<li>首先，用户的请求被负载均衡服务分发到Nginx上，此处常用的负载均衡算法是轮询或者一致性哈希，轮询可以使服务器的请求更加均衡，而一致性哈希可以提升Nginx应用的缓存命中率。</li>
+<li>接着，Nginx应用服务器读取本地缓存，实现本地缓存的方式可以是Lua Shared Dict，或者面向磁盘或内存的Nginx Proxy Cache，以及本地的Redis实现等，如果本地缓存命中则直接返回。</li>
+<li>如果Nginx应用服务器的本地缓存没有命中，就会进一步读取相应的分布式缓存——Redis分布式缓存的集群，可以考虑使用主从架构来提升性能和吞吐量，如果分布式缓存命中则直接返回相应数据，并回写到Nginx应用服务器的本地缓存中。</li>
+<li>如果Redis分布式缓存也没有命中，则会回源到Tomcat集群，在回源到Tomcat集群时也可以使用轮询和一致性哈希作为负载均衡算法。</li>
+<li>在Tomcat集群应用中，首先读取本地平台级缓存，如果平台级缓存命中则直接返回数据，并会同步写到主Redis集群，然后再同步到从Redis集群。</li>
+<li>如果所有缓存都没有命中，系统就只能查询数据库或其他相关服务获取相关数据并返回，当然，我们已经知道数据库也是有缓存的。</li>
+</ul>
+</li>
+<li><b>缓存算法</b>
+<ul class="quote">
+<li>缓存命中：当客户发起一个请求时，系统接收到这个请求，如果该请求的数据是在缓存中，这一数据就会被使用，这一行为叫作缓存命中。</li>
+<li>没有命中：cache miss是没有命中。如果缓存中还有存储空间，那么没有命中的对象会被存储到缓存中来。</li>
+<li>存储成本：当没有缓存命中时，系统会从数据库或其他数据源取出数据，然后放入缓存。而把这个数据放入缓存所需要的时间和空间，就是存储成本。</li>
+<li>缓存失效：当存储在缓存中的数据需要更新时，就意味着缓存中的这一数据失效了。</li>
+<li>替代策略：当缓存没有命中时，并且缓存容量已经满了，就需要在缓存中去除一条旧数据，然后加入一条新数据，而到底应该去除哪些数据，就是由替代策略决定的。</li>
+<li>替代策略的具体实现就是缓存算法，这里简要介绍一下主流的缓存算法：Least-Recently-Used(LRU)、Least-Frequently-Used(LFU)、Least Recently Used 2(LRU2)、Two Queues(2Q)、SIZE、LRU-Threshold、Log(Size)+LRU、Hyper-G、Pitkow/Recker、Lowest-Latency-First、Hybrid Hybrid、Lowest Relative Value(LRV)、Adaptive Replacement Cache(ARC)、Most Recently Used(MRU)、First in First out(FIFO)、Random Cache。</li>
+</ul>
+</li>
+<li><b>使用公有云的缓存服务</b>
+<ul class="quote">
+<li>动态扩容：用户可以通过控制面板升级所需的Redis存储空间，扩容的过程中服务不需要中断或停止，整个扩容过程对用户是透明的且无感知的。</li>
+<li>数据多备：数据保存在一主一备两台机器中，其中一台机器宕机了，数据还在另外一台机器上有备份。</li>
+<li>自动容灾：主机宕机后系统能自动检测并切换到备机上，实现了服务的高可用性。</li>
+<li>成本较低：在很多情况下，为了使Redis的性能更好，需要购买一台专门的服务器用于Redis的存储服务，但这样会导致某些资源的浪费，购买Redis云存储服务就能很好地解决这样的问题。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch8"><summary>第2章 分布式系统理论</summary>
+<div class="sec">
+<h4>分布式系统概论</h4>
+<ul class="point">
+<li><b>分布式理论体系宏大精深，可以通过一大厚本专著来专门阐述</b>
+<ul class="quote">
+<li>本书难以尽述之，本章拟从分布式系统概论、分布式系统概念、分布式系统理论，比如Paxos、分布式系统设计策略、心跳检测、分布式系统设计实践、全局ID生成等几个方面略勾画之。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>分布式系统概念</h4>
+<ul class="point">
+<li><b>分布式系统是由多个相互连接、相互协作的计算机组成的网络系统</b>
+<ul class="quote">
+<li>分布式系统中的计算机通过网络进行通信和协作，共同完成特定的任务。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>分布式系统理论</h4>
+<ul class="point">
+<li><b>Paxos、Raft协议等是分布式系统理论的一部分</b>
+<ul class="quote">
+<li>Master-Slave节点切换需要心跳检测、Redis多节点选主也有相应的理论体系(Paxos或者Raft协议等)支撑。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>分布式系统设计策略</h4>
+<ul class="point">
+<li><b>一致性哈希、路由表甚至负载均衡是常见的分布式服务调用策略</b>
+<ul class="quote">
+<li>一致性哈希可以实现数据的均匀分布，提高系统的可扩展性和可用性。</li>
+<li>路由表可以实现数据的路由和转发，提高系统的灵活性和可扩展性。</li>
+<li>负载均衡可以实现请求的分配和调度，提高系统的性能和可用性。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>心跳检测</h4>
+<ul class="point">
+<li><b>心跳检测是分布式系统中常用的状态检查机制</b>
+<ul class="quote">
+<li>通过定期发送心跳消息来检测节点是否存活，如果节点长时间未响应，则判断为失效，进行故障转移。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>分布式系统设计实践</h4>
+<ul class="point">
+<li><b>分布式系统设计需要考虑系统的可靠性、可用性、可扩展性和可维护性</b>
+<ul class="quote">
+<li>可靠性是指系统在特定条件下能够持续稳定运行的能力。</li>
+<li>可用性是指系统在特定条件下能够正常提供服务的时间比例。</li>
+<li>可扩展性是指系统能够适应业务需求变化的能力。</li>
+<li>可维护性是指系统维护和升级的难易程度。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>全局ID生成</h4>
+<ul class="point">
+<li><b>全局ID生成是分布式系统中常见的任务，需要保证ID的唯一性和连续性</b>
+<ul class="quote">
+<li>可以使用UUID、Snowflake等算法来生成全局唯一ID。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch9"><summary>2.1 分布式系统概论</summary>
+<div class="sec">
+<h4>分布式系统概论</h4>
+<ul class="point">
+<li><b>分布式系统是一个内涵极度丰富的领域</b>
+<ul class="quote">
+<li>单就应用层次而言就涉及分布式缓存、分布式存储、分布式文件系统、分布式锁、分布式事务、分布式调度任务、分布式调度计算、分布式消息、分布式采集等等。</li>
+</ul>
+</li>
+<li><b>Kleinrock出了分布式系统行为的几个根本原则</b>
+<ul class="quote">
+<li>分布式程序设计语言：基本结构。</li>
+<li>理论基础：全局状态和事件排序；逻辑时钟和物理时钟。</li>
+<li>分布式操作系统：互斥和选举；死锁的检测和解决方法；自稳定；任务调度和负载平衡。</li>
+<li>分布式通信：一对一通信；组(collective)通信。</li>
+<li>可靠性：一致性；错误恢复；可靠通信。</li>
+<li>分布式数据管理：复制数据的一致性；分布式并发控制。</li>
+<li>应用：分布式操作系统；分布式文件系统；分布式数据库系统；分布式共享存储器；异型处理。</li>
+</ul>
+</li>
+<li><b>Coulouris在Distributed Systems-Concepts and Design(5th Edition)一书中表达了他们对分布式系统(概念及设计实现)的观点</b>
+<ul class="quote">
+<li>中间件部分提及了远程对象、组件、Web Service、P2P系统。</li>
+<li>在shared data又补充了非常重要的分布式事务一章。</li>
+</ul>
+</li>
+<li><b>cmu卡内基·梅隆大学的一份课程介绍，该课程属于博士学位的课程</b>
+<ul class="quote">
+<li>目标包括3点：要了解操作系统和分布式系统中的尖端技术，以及为什么和如何实现；了解如何从事系统研究；通过一个学期的研究项目，来研究系统的新想法。</li>
+<li>内容涉及：并发、线程、并行、Ordering和Races；存储和远程DMA；事务处理和数据库；通用故障恢复(Paxos等)；安全策略。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch10"><summary>2.2 分布式系统概念</summary>
+<div class="sec">
+<h4>进程与线程</h4>
+<ul class="point">
+<li><b>进程是具有一定独立功能的程序关于某个数据集合上的一次运行活动，进程是系统进行资源分配和调度的一个独立单位。</b>
+</li>
+<li><b>线程是进程的一个实体，是CPU调度和分派的基本单位，它是比进程更小的能独立运行的基本单位</b>
+<ul class="quote">
+<li>线程自己基本上不拥有系统资源，只拥有一点在运行中必不可少的资源(如程序计数器、一组寄存器和栈)，但是它可与同属一个进程的其他的线程共享进程所拥有的全部资源。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>并发</h4>
+<ul class="point">
+<li><b>并发是指多个线程在操作时，系统只有一个CPU，则它根本不可能真正同时进行一个以上的线程，它只能把CPU运行时间划分成若干个时间段，再将时间段分配给各个线程执行</b>
+<ul class="quote">
+<li>在一个时间段的线程代码运行时，其他线程处于挂起状态。</li>
+</ul>
+</li>
+<li><b>应用层的并发概念可以推广之，定义为单位时间内对于共享资源的访问</b>
+<ul class="quote">
+<li>比如在数据库单条记录更新时，一条在更新，一条并发请求则处于等待状态。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>锁</h4>
+<ul class="point">
+<li><b>锁(lock)作为用于保护临界区(critical section)的一种机制，被广泛应用在多线程程序中</b>
+<ul class="quote">
+<li>比如Java(synchronized , ReentrantLock…)。</li>
+</ul>
+</li>
+<li><b>减少或规避锁争用的几种策略：分拆锁；分离锁；避免共享变量缓存；使用并发容器如Amino；使用Immutable数据和ThreadLocal中的数据</b>
+<ul class="quote">
+<li>分拆锁(lock splitting)和分离锁(lock striping)。如果一个锁守护多个相互独立的状态变量，你可能能够通过分拆锁，使每一个锁守护不同的变量，从而改进可伸缩性。</li>
+<li>分拆锁有时候可以被扩展，分成若干加锁块的集合，并且它们归属于相互独立的对象，这样的情况就是分离锁。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>并行</h4>
+<ul class="point">
+<li><b>当系统有一个以上的CPU时，则线程的操作有可能非并发</b>
+<ul class="quote">
+<li>当一个CPU执行一个线程时，另一个CPU可以执行另一个线程，两个线程互不抢占CPU资源，可以同时进行，这种方式我们称之为并行(Parallel)。</li>
+</ul>
+</li>
+<li><b>并发和并行的区别：并发和并行是即相似又有区别的两个概念，并行是指两个或者多个事件在同一时刻发生；而并发是指两个或多个事件在同一时间间隔内发生。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>集群</h4>
+<ul class="point">
+<li><b>集群是一组相互独立的、通过高速网络互联的计算机，它们构成了一个组，并以单一系统的模式加以管理</b>
+<ul class="quote">
+<li>一个客户与集群相互作用时，集群像是一个独立的服务器。</li>
+</ul>
+</li>
+<li><b>集群配置是用于提高可用性和可伸缩性</b>
+<ul class="quote">
+<li>分布式系统可以表达为很多机器组成的集群，靠彼此之间的网络通信，担当的角色可能不同，共同完成同一件事情的系统。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>状态特性</h4>
+<ul class="point">
+<li><b>在大部分应用中都提倡服务无状态，分布式环境中的任何节点(Node)也是无状态的</b>
+<ul class="quote">
+<li>无状态是指不保存存储状态，则可以随意重启和替代，便于做扩展。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>系统重发与幂等性</h4>
+<ul class="point">
+<li><b>网络重发是指用户访问一个应用，该应用需要调用一个远程服务，如果app1访问service B的链路出现网络异常，用户得到操作失败的反馈，为了减少失败率，httpClient的设计一般增加重发(retry)的机制</b>
+<ul class="quote">
+<li>我们可以看看DefaultMethodRetryHandler(commons-httpclient-3.0)的代码，默认retry次数为3。</li>
+</ul>
+</li>
+<li><b>幂等性就是调用1次和调用N次要返回一样的结果</b>
+<ul class="quote">
+<li>比如一次转账动作，A账户转账1000到B账户，由于网络调用超时，客户端client基于上述保障成功率的原因发起了retry，那么最终应该转账1000还是2000呢，客户的意愿是1000。只需要在设计上加上调用订单号就可以规避这个问题，多次重发，调用的订单号一样，则在服务提供方内部只做一次真实转账动作就行了。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>硬件异常</h4>
+<ul class="point">
+<li><b>服务器宕机、网络异常、磁盘故障、机房级异常都是硬件异常</b>
+<ul class="quote">
+<li>服务器宕机的原因可能是服务器停电、内存错误等等故障，换言之，服务器故障是大概率事件。</li>
+<li>网络异常的原因可能是消息丢失、网络包数据错误。</li>
+<li>磁盘故障是高概率事件，我们一般区分故障为软件故障和硬件故障，而硬件故障又可以分为系统引起的，例如主板的IDE接口松动、与其他硬件设备不兼容、电源不稳定等等，而另一个就是硬盘本身的故障了，如出现坏道、分区表损坏、病毒等。</li>
+<li>机房级异常比如光纤出了问题，异地机房可以继续提供服务。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch11"><summary>2.3 分布式系统理论</summary>
+<div class="sec">
+<h4>CAP理论</h4>
+<ul class="point">
+<li><b>CAP理论提出了分布式系统中的一致性、可用性、分区容忍性的取舍问题</b>
+<ul class="quote">
+<li>一致性(C)：在分布式系统中的所有数据备份，在同一时刻是否有同样的值。</li>
+<li>可用性(A)：在集群中一部分节点故障后，集群整体是否还能响应客户端的读写请求。</li>
+<li>分区容忍性(P)：以实际效果而言，分区相当于对通信的时限要求。</li>
+</ul>
+</li>
+<li><b>CAP理论中，CA without P、CP without A、AP wihtout C三种选择</b>
+<ul class="quote">
+<li>CA without P：如果不要求P(不允许分区)，则C(强一致性)和A(可用性)是可以保证的。</li>
+<li>CP without A：如果不要求A(可用性)，相当于每个请求都需要在Server之间强一致，而P(分区)会导致同步时间无限延长，如此CP也是可以保证的。</li>
+<li>AP wihtout C：要高可用并允许分区，则需放弃一致性。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>CAP理论澄清</h4>
+<ul class="point">
+<li><b>“三选二”是一个伪命题，CAP在大多数时候允许完美的C和A</b>
+<ul class="quote">
+<li>分区很少出现，CAP在大多数时候允许完美的C和A。但当分区存在或可感知其影响的情况下，就要预备一种策略去探知分区并显式处理其影响。</li>
+</ul>
+</li>
+<li><b>ACID、BASE、CAP的关系更复杂一些，也因此引起更多误解</b>
+<ul class="quote">
+<li>ACID和BASE这两个术语都好记有余而精确不足，出现较晚的BASE硬凑的感觉更明显，它是“Basically Available, Soft state, Eventually consistent(基本可用、软状态、最终一致性)”的首字母缩写。</li>
+<li>CAP与ACID的关系更复杂一些，其中一个原因是ACID的C和A字母所代表的概念不同于CAP的C和A。还有一个原因是选择可用性只部分地影响ACID约束。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Paxos算法</h4>
+<ul class="point">
+<li><b>Paxos协议是一个解决分布式系统中，多个节点之间就某个值(提案)达成一致(决议)的通信协议</b>
+<ul class="quote">
+<li>它能够处理在少数节点离线的情况下，剩余的多数节点仍然能够达成一致。</li>
+</ul>
+</li>
+<li><b>Paxos协议分为Prepare阶段和Accept阶段</b>
+<ul class="quote">
+<li>Prepare阶段：Proposer发送Prepare，Acceptor应答Prepare。</li>
+<li>Accept阶段：Proposer发送Accept，Acceptor应答Accept。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>2PC(两阶段提交协议)</h4>
+<ul class="point">
+<li><b>2PC是一种典型的原子提交协议，它是一种由协调器来处理分布式原子参与者是提交或者回滚事务的分布式算法</b>
+<ul class="quote">
+<li>该协议包括2个阶段：提交请求阶段或者叫投票阶段，提交阶段。</li>
+</ul>
+</li>
+<li><b>2PC最大的不足是提交协议是阻塞型协议</b>
+<ul class="quote">
+<li>如果事务协调器宕机，某些参与者将无法解决他们的事务。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>3PC(三阶段提交协议)</h4>
+<ul class="point">
+<li><b>3PC是在2PC的基础上增加了一次交互，也就是preCommit(又称预提交)</b>
+<ul class="quote">
+<li>只要预提交都成功，则一定要保证doCommit提交成功，即使协调器在下一阶段不可用，或者调用超时。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Raft算法</h4>
+<ul class="point">
+<li><b>Raft提供了和Paxos算法相同的功能和性能，但是它的算法结构和Paxos不同</b>
+<ul class="quote">
+<li>Raft算法更加容易理解并且更容易构建实际的系统。</li>
+</ul>
+</li>
+<li><b>Raft算法分为2个阶段，首先是选举过程，然后在选举出来的领导人带领进行正常操作，比如日志复制等</b>
+<ul class="quote">
+<li>任何一个服务器都可以成为一个候选者，它向其他服务器(选民)发出要求选举自己的请求。</li>
+<li>其他服务器同意了，回复OK(同意)指令，此时如果有一个Follower服务器宕机，没有收到请求选举的要求，则只要达到半数以上的票数，候选人还是可以成为领导者的。</li>
+<li>这样，这个候选者就成为领导者，它可以向选民们发出要执行具体操作动作的指令，比如进行日志复制。</li>
+<li>如果一旦这个Leader宕机崩溃了，那么Follower中会有一个成为候选者，发出邀票选举，相当于再次执行1)～2)的步骤。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Lease机制</h4>
+<ul class="point">
+<li><b>Lease是由授权者授予分布式环境一段时间内的承诺</b>
+<ul class="quote">
+<li>以图2-18缓存服务器为例，缓存服务器(Server)把数据分发给对应的节点NodeA、NodeB以及NodeC。其中节点A、B得到数据v01，有效期为12:00:00，而节点C收到数据v02，有效期为12:15:00。</li>
+</ul>
+</li>
+<li><b>当时间到12:00:01时，此时v01的数据过期，则NodeA、NodeB会删除本地数据</b>
+<ul class="quote">
+<li>而此时Server会阻塞一直到已发布的所有Lease都已经超时过期，再更新数据并发出新的Lease。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>解决“脑裂”问题</h4>
+<ul class="point">
+<li><b>脑裂(split-brain)，指在一个高可用(HA)系统中，当联系着的两个节点断开联系时，本来为一个整体的系统，分裂为两个独立节点</b>
+<ul class="quote">
+<li>这时两个节点开始争抢共享资源，结果会导致系统混乱，数据损坏。</li>
+</ul>
+</li>
+<li><b>通过心跳检测做主备切换的时候，就存在不确定性</b>
+<ul class="quote">
+<li>比如Slave提供服务了，但此前被判死的Master又“复活”了，还在继续工作，则对应用程序逻辑带来未知因素，其中就包括抢夺资源。</li>
+</ul>
+</li>
+<li><b>设置仲裁机制，例如设置第三方检测服务器(Monitor)</b>
+<ul class="quote">
+<li>当Slave确定准备接管Master时，让Monitor也ping一下Master，如果没有通讯，则判断其“死亡”。</li>
+<li>同时Master在对外提供服务时，每隔一段时间比如10s由Master服务器ping Slave服务器和Monitor，如果均出现异常，则暂定业务操作，重试。</li>
+<li>重试多次之后则退出程序执行或者执行服务器重启操作。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Quorum NWR</h4>
+<ul class="point">
+<li><b>NWR是一种在分布式存储系统中用于控制一致性级别的一种策略</b>
+<ul class="quote">
+<li>在Amazon的Dynamo云存储系统中，就应用NWR来控制一致性。</li>
+</ul>
+</li>
+<li><b>W＞N/2，W+R＞N，这2个公式的意思是写操作要确保成功的份数应该高于同一份数据拷贝总份数的一半；同时，写操作加上读操作的总份数也要高于同一份数据拷贝总份数</b>
+<ul class="quote">
+<li>一般采取N=3、R=2、W=2的配置，W=2，可以保障大多数写成功，而R=2，则能保障读到大多数一致的最新版本。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>MVCC</h4>
+<ul class="point">
+<li><b>MVCC，全称Multiversion concurrency control，翻译为基于多版本并发控制</b>
+<ul class="quote">
+<li>由于MVCC是一种宽松的设计，读写相互不阻塞，可以获得较好的并发性能。</li>
+</ul>
+</li>
+<li><b>不同数据库对于MVCC的具体实现有差异</b>
+<ul class="quote">
+<li>MySQL的InnoDB是这样做的：引擎给每张表都增加2个字段，分别叫作create version和delete version。</li>
+<li>插入操作时：记录的创建版本号就是事务版本号。</li>
+<li>更新操作时：采用的是先标记旧的那行记录为已删除，并且删除版本号是事务版本号，然后插入一行新记录的方式。</li>
+<li>删除操作时：就把事务版本号作为删除版本号。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Gossip</h4>
+<ul class="point">
+<li><b>Gossip就是一种去中心化思路的分布式协议，解决状态在集群中的传播和状态一致性的保证两个问题</b>
+<ul class="quote">
+<li>因为其实现简单，具备较高的容错性和性能，成为分布式系统最广泛使用的状态同步协议之一。</li>
+</ul>
+</li>
+<li><b>状态的传播：以Gossip协议同步状态的思路类似于流言的传播</b>
+<ul class="quote">
+<li>A节点率先知道了某个流言(msg)，它首先将此信息传播到集群中的部分节点(比如相邻的两个节点)B和C，后者再将其传递到它们所选择的“部分”节点。</li>
+<li>对于集群中出现的部分网络分割，消息也能通过别的路径传播到整个集群。</li>
+</ul>
+</li>
+<li><b>状态的一致：状态同步的第二个问题：对于同一条状态信息，不同的节点可能掌握的值不同，也能通过基于Gossip通信思路构建的协议包版本得到解决</b>
+<ul class="quote">
+<li>例如水平拆分的Redis缓存集群，初始状态下hash桶在各个节点的分布，此时各个节点预先通过某种协议(比如Gossip)得知了集群的状态全集，此时新加入了节点D，D分担了C的某个hash桶，此时C/D和集群中其他节点就C所拥有哪些hash这件事发生了分歧。</li>
+<li>各个节点的本地副本保存的集群全量状态也可能用来表示各个节点的存活状态。对于部分网络分割的情况，例如A和C的网络断开，但A和C本身都正常运行，此时A和C互相无法通信，C会将A标记为不可用状态。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch12"><summary>2.4 分布式系统设计策略</summary>
+<div class="sec">
+<h4>分布式系统设计策略</h4>
+<ul class="point">
+<li><b>分布式系统本质是通过低廉的硬件攒在一起以获得更好的吞吐量、性能以及可用性等</b>
+<ul class="quote">
+<li>一台设备坏了，可以通过负载均衡和路由到其他设备上。</li>
+</ul>
+</li>
+<li><b>分布式系统有一些通用的设计策略，首先要解决心跳问题</b>
+<ul class="quote">
+<li>一台服务器判定存活状态，才能执行任务，否则则不能。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>心跳检测</h4>
+<ul class="point">
+<li><b>在分布式环境中，如何检测一个节点出现了故障乃至无法工作了？</b>
+<ul class="quote">
+<li>传统解决这一命题是采用心跳检测的手段。</li>
+</ul>
+</li>
+<li><b>心跳检测本身也是有效资源利用和成本之间的一种权衡</b>
+<ul class="quote">
+<li>如果迟迟不能判断节点是否“死亡”，会影响业务逻辑的处理。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>高可用设计</h4>
+<ul class="point">
+<li><b>系统高可用性的常用设计模式包括三种：主备(Master-SLave)、互备(Active-Active)和集群(Cluster)模式</b>
+<ul class="quote">
+<li>主备模式就是Active-Standby模式，当主机宕机时，备机接管主机的一切工作。</li>
+<li>互备模式指两台主机同时运行各自的服务工作且相互监测情况。</li>
+<li>集群模式是指有多个节点在运行，同时可以通过主控节点分担服务请求。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>容错性</h4>
+<ul class="point">
+<li><b>容错顾名思义就是IT系统对于错误包容的能力，这里的容错确切地说是容故障(Fault)，而并非容错误(Error)</b>
+<ul class="quote">
+<li>以前文提及的TFS为例，TFS集群需要容错(一个集群宕掉咋办？)、NameServer需要容错、DataServer也需要容错。</li>
+</ul>
+</li>
+<li><b>容错的处理是保障分布式环境下相应系统的高可用或者健壮性</b>
+<ul class="quote">
+<li>一个典型的案例就是对于缓存失效雪崩问题的解决方案。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>负载均衡</h4>
+<ul class="point">
+<li><b>负载均衡集群：其关键在于使用多台集群服务器共同分担计算任务</b>
+<ul class="quote">
+<li>把网络请求及计算分配到集群可用服务器上去，从而达到可用性及较好的用户操作体验。</li>
+</ul>
+</li>
+<li><b>负载均衡器有硬件解决方案，也有软件解决方案</b>
+<ul class="quote">
+<li>硬件解决方案有著名的F5，软件有LVS、HAProxy、Nginx等。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch13"><summary>2.5 分布式系统设计实践</summary>
+<div class="sec">
+<h4>全局ID生成</h4>
+<ul class="point">
+<li><b>UUID</b>
+<ul class="quote">
+<li>UUID由当前日期和时间、时钟序列、全局唯一的IEEE机器识别号组成。</li>
+<li>优势：API简单、易用；不足：占用空间大、字符串本身无法加工，可读性不强。</li>
+</ul>
+</li>
+<li><b>ID生成表模式</b>
+<ul class="quote">
+<li>使用id生成表，比较经典的是Flicker的案例。</li>
+<li>优势简单易用，也有一定的高可用方案；不足是使用了mysql数据库的独特语法REPLACE INTO。</li>
+</ul>
+</li>
+<li><b>Snowflake</b>
+<ul class="quote">
+<li>Twitter在把存储系统从MySQL迁移到Cassandra的过程中由于Cassandra没有顺序ID生成机制，于是自己开发了一套全局唯一ID生成服务：Snowflake。</li>
+<li>优点：高性能，低延迟；独立的应用；按时间有序；缺点：需要独立的开发和部署。</li>
+</ul>
+</li>
+<li><b>结合缓存方案</b>
+<ul class="quote">
+<li>可以采取ID生成表模式成批获取id比如1000放到本地缓存(Local cache)，这样在client使用的时候可进一步提升性能。</li>
+<li>优点：高性能，低延迟；缺点：ID不连贯。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>哈希取模</h4>
+<ul class="point">
+<li><b>哈希方式是最常见的数据分布方式，实现方式是通过可以描述记录的业务的id或key，通过Hash函数的计算求余。</b>
+</li>
+<li><b>如果id分布不均匀可能出现计算、存储倾斜的问题，在某个节点上分布过重。</b>
+</li>
+<li><b>拆分数据库也存在扩容的问题，解决方法是先预设足够大的逻辑库，比如100个库，随着物理负载的增加，把对应的逻辑库迁移到新增的物理库上即可，对于应用透明，相当于在应用和物理数据库之间增加了一层映射关系。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>一致性哈希</h4>
+<ul class="point">
+<li><b>一致性哈希算法是在1997年由麻省理工学院提出的一种分布式哈希(DHT)实现算法。</b>
+</li>
+<li><b>如果一台服务器不可用，则受影响的数据仅仅是此服务器到其环空间中前一台服务器(即沿着逆时针方向行走遇到的第一台服务器)之间数据，其他不会受到影响。</b>
+</li>
+<li><b>为了尽可能均匀地分布节点和数据，一种常见的改进算法是引入虚节点的概念，系统会创建许多虚拟节点，个数远大于当前节点的个数，均匀分布到一致性哈希值域环上。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>路由表</h4>
+<ul class="point">
+<li><b>什么情况下走到路由表模式，一般在于需要全局计算的节点。</b>
+</li>
+<li><b>采用路由表存在一个风险，就是数据是集中式管理的，存在单点风险。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>数据拆分</h4>
+<ul class="point">
+<li><b>Cobar是一个著名的阿里巴巴开源的分布式数据库中间件。</b>
+</li>
+<li><b>路由函数定义，应用在路由规则的算法定义中，路由函数可以自定义扩展。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch14"><summary>第3章 动手写缓存</summary>
+<div class="sec">
+<h4>动手写缓存的原因和目的</h4>
+<ul class="point">
+<li><b>了解缓存的类型、缓存的标准、缓存的实现及原理</b>
+<ul class="quote">
+<li>市面上有许多开源的缓存框架，如Redis、Memcached、Ehcache等。</li>
+<li>通过自己动手写缓存，可以更深入地理解缓存的相关知识。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch15"><summary>3.1 缓存定义的规范</summary>
+<div class="sec">
+<h4>JSR 107规范的主要内容及特性</h4>
+<ul class="point">
+<li><b>JSR 107规范定义了一种对Java对象临时在内存中进行缓存的方法</b>
+<ul class="quote">
+<li>新规范的主要内容如下：为应用程序提供缓存Java对象的功能；定义了一套通用的缓存概念和工具；最小化开发人员使用缓存的学习成本；最大化应用程序在使用不同缓存实现之间的可移植性；支持进程内和分布式的缓存实现；支持by-value和by-reference的缓存对象；定义遵照JSR-175的缓存注解，定义一套Java编程语言的元数据。</li>
+</ul>
+</li>
+<li><b>CacheManager接口负责保存和控制一系列的缓存</b>
+<ul class="quote">
+<li>主要特性包括：能从缓存中读取数据；能将数据写入到缓存中；缓存具有原子性操作；具有缓存事件监听器；具有缓存注解；保存缓存的KEY和VALUE类型应该为泛型。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>新规范的API介绍</h4>
+<ul class="point">
+<li><b>Cache API(javax.cache)作为实现的类库</b>
+<ul class="quote">
+<li>通过如下的Maven进行引入：&lt;dependency&gt;&lt;groupId&gt;javax.cache&lt;/groupId&gt;&lt;artifactId&gt;cache-api&lt;/artifactId&gt;&lt;version&gt;1.0.0&lt;/version&gt; &lt;/dependency&gt;。</li>
+</ul>
+</li>
+<li><b>Cache API定义了4个核心概念：CachingProvider、CacheManager、Cache、Entry</b>
+<ul class="quote">
+<li>CachingProvider：定义了创建、配置、获取、管理和控制多个CacheManager。</li>
+<li>CacheManager：定义了创建、配置、获取、管理和控制多个唯一命名的Cache，这些Cache存在于CacheManager的上下文中。</li>
+<li>Cache：是一个类似Map的数据结构并临时存储以Key为索引的值。</li>
+<li>Entry：是一个存储在Cache中的key-value对。</li>
+</ul>
+</li>
+<li><b>Store-By-Value和Store-By-Reference是两种不同的缓存实现</b>
+<ul class="quote">
+<li>Store-By-Value：指在key/value存入缓存时，将其值拷贝一份存入缓存。</li>
+<li>Store-By-Reference：指在key/value存入缓存时，直接将其引用存入缓存。</li>
+</ul>
+</li>
+<li><b>缓存过期策略</b>
+<ul class="quote">
+<li>过期策略可以在配置时提供一个ExpiryPolicy实现的设置。</li>
+<li>ExpiryPolicy将返回下列值之一：持续时间等于缓存配置的过期时间；Duration.ZERO表明数据目前已经是过期的。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch16"><summary>3.2 缓存框架的实现</summary>
+<div class="sec">
+<h4>缓存框架的实现</h4>
+<ul class="point">
+<li><b>缓存框架选取了最基本的get(获取缓存)、put(放入缓存)、remove(根据key值删除缓存)、clear(清空缓存)方法</b>
+<ul class="quote">
+<li>这些方法是实际工作中当中最常用的功能。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>缓存的架构介绍</h4>
+<ul class="point">
+<li><b>框架定义为客户端层、缓存提供层、缓存管理层、缓存存储层</b>
+<ul class="quote">
+<li>客户端层：使用者直接通过该层与数据进行交互。</li>
+<li>缓存提供层：主要对缓存管理层的生命周期进行维护，负责缓存管理层的创建、保存、获取以及销毁。</li>
+<li>缓存管理层：主要对缓存客户端的生命周期进行维护，负责缓存客户端的创建、保存、获取以及销毁。</li>
+<li>缓存存储层：负责数据以什么样的形式进行存储。</li>
+</ul>
+</li>
+<li><b>缓存存储层又分为基本存储层、LRU存储层和Weak存储层</b>
+<ul class="quote">
+<li>基本存储层：是以普通的ConcurrentHashMap为存储核心，数据不淘汰。</li>
+<li>LRU存储层：是以最近最少用为原则进行的数据存储和缓存淘汰机制。</li>
+<li>Weak存储层：是以弱引用为原则的数据存储和缓存淘汰机制。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>设计思路以及知识点详解</h4>
+<ul class="point">
+<li><b>设计类图，CacheProvider、CacheManager、Cache是抽象出来的最基础的缓存接口</b>
+<ul class="quote">
+<li>Cache是提供最终缓存实现的基础接口，其实现类是CsCache107，初始化时即持有一个BasicDataStore对象。</li>
+</ul>
+</li>
+<li><b>缓存框架的SPI机制，利用Java SPI机制进行组件的发现与加载</b>
+<ul class="quote">
+<li>SPI的全名为Service Provider Interface，是JDK内置的一种服务提供发现机制。</li>
+<li>当服务的提供者，提供了服务接口的一种实现之后，在jar包的META-INF/services/目录里同时创建一个以服务接口命名的文件。</li>
+</ul>
+</li>
+<li><b>解读缓存数据层，缓存数据层实际承担的责任主要是缓存数据的存储和缓存的淘汰机制</b>
+<ul class="quote">
+<li>目前框架一共实现了三个实现类分别是：LRUDataStore、WeakDataStore和BaseDataStore。</li>
+<li>我们先来分析一下LRUDataStore的设计原理：基于引用的淘汰算法，是一种简单有效的算法，由JVM的GC进行回收。</li>
+<li>基于LRU的淘汰算法，LRU(Least recently used，最近最少使用)算法根据数据的历史访问记录来进行淘汰数据，其核心思想是“如果数据最近被访问过，那么将来被访问的概率也更高”。</li>
+</ul>
+</li>
+<li><b>解读缓存管理层(CacheManager)，CacheManager的实现类是CsCache107Manager，它主要负责管理多个Cache客户端实例，以及负责缓存客户端实例的创建、销毁、获取等</b>
+<ul class="quote">
+<li>缓存实例创建的实现代码如下：缓存客户端实例的创建，缓存池是用ConcurrentMap来实现的，用以缓存已经创建好的缓存实例。</li>
+<li>缓存实例获取的实现代码如下：缓存实例获取，从缓存池中获取缓存实例，如果获取为空则返回null。</li>
+</ul>
+</li>
+<li><b>解读数据客户端层，缓存客户端层主要是针对实际使用者的，在工程结构中主要涉及两个类，分别是：CsCache和CsCache107</b>
+<ul class="quote">
+<li>CsCache关键代码和实现原理如下：构造方法，参数是传入数据存储和淘汰策略对象，根据key值获取缓存数据，缓存数据的存储。</li>
+<li>CsCache107对象实际上是对CsCache对象根据JSR107规范，使用了代理模式进行包装。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch17"><summary>3.3 缓存框架的使用示例</summary>
+<div class="sec">
+<h4>缓存框架的使用示例</h4>
+<ul class="point">
+<li><b>获取缓存提供层对象</b>
+<ul class="quote">
+<li>CachingProvider cachingProvider = Caching.getCachingProvider();。</li>
+</ul>
+</li>
+<li><b>获取缓存管理层对象</b>
+<ul class="quote">
+<li>CacheManager manager = cachingProvider.getCacheManager();。</li>
+</ul>
+</li>
+<li><b>创建缓存实例对象</b>
+<ul class="quote">
+<li>Cache&lt;String,  User&gt;  cache  =  (Cache&lt;String,  User&gt;)  manager&lt;String,  User, Configuration&lt;String,  User&gt;&gt;  createCache(&quot;Test&quot;,  new  MutableConfiguration&lt;String, User&gt;());。</li>
+</ul>
+</li>
+<li><b>将User数据对象存放到缓存中</b>
+<ul class="quote">
+<li>cache.put(key, user);。</li>
+</ul>
+</li>
+<li><b>从缓存中获取User数据对象</b>
+<ul class="quote">
+<li>System.out.println(&quot;Hello &quot; + cache.get(key).getName());。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch18"><summary>第4章 Ehcache与Guava Cache</summary>
+<div class="sec">
+<h4>Ehcache简介</h4>
+<ul class="point">
+<li><b>Ehcache是一个用Java实现的使用简单、高速、线程安全的缓存管理类库</b>
+<ul class="quote">
+<li>Ehcache提供了用内存、磁盘文件存储，以及分布式存储等多种灵活的管理方案。</li>
+</ul>
+</li>
+<li><b>Ehcache从Hibernate发展而来，逐渐涵盖了全部功能</b>
+<ul class="quote">
+<li>Ehcache具有快速、简单、低消耗、依赖性小、扩展性强、支持对象或序列化缓存、支持缓存或元素的失效、提供LRU/LFU/FIFO缓存策略、支持内存缓存及磁盘缓存、采用分布式缓存机制等特点。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Ehcache 3.0特性介绍</h4>
+<ul class="point">
+<li><b>Ehcache 3.0采用了新的缓存存储接口，使得缓存存储更加灵活</b>
+<ul class="quote">
+<li>Ehcache 3.0支持使用JSR-107 compliant缓存注解。</li>
+</ul>
+</li>
+<li><b>Ehcache 3.0支持更多的缓存策略。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Ehcache与Spring结合案例</h4>
+<ul class="point">
+<li><b>使用Ehcache作为Spring的缓存管理器</b>
+<ul class="quote">
+<li>在Spring配置文件中配置Ehcache。</li>
+</ul>
+</li>
+<li><b>在Spring中使用Ehcache的注解进行缓存</b>
+<ul class="quote">
+<li>使用@Cacheable、@CachePut、@CacheEvict注解进行缓存操作。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Guava Cache简介</h4>
+<ul class="point">
+<li><b>Guava Cache和Ehcache一样也是本地缓存，但在细分领域也有不同的应用场景</b>
+<ul class="quote">
+<li>Guava Cache是Google提供的一个本地缓存框架。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Guava Cache的使用</h4>
+<ul class="point">
+<li><b>使用Guava Cache的基本步骤</b>
+<ul class="quote">
+<li>创建Cache实例。</li>
+<li>使用Cache进行缓存操作。</li>
+</ul>
+</li>
+<li><b>Guava Cache的常用方法</b>
+<ul class="quote">
+<li>get(K key)：获取缓存值。</li>
+<li>put(K key, V value)：添加或更新缓存值。</li>
+<li>invalidate(K key)：使指定键对应的缓存值失效。</li>
+<li>invalidateAll(Iterable&lt;? extends K&gt; keys)：使指定键列表对应的缓存值失效。</li>
+<li>cleanUp()：清理缓存。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch19"><summary>4.1 Ehcache的主要特性</summary>
+<div class="sec">
+<h4>Ehcache的主要特性</h4>
+<ul class="point">
+<li><b>Ehcache是最快的Java缓存之一，提供LRU、LFU和FIFO缓存策略</b>
+<ul class="quote">
+<li>Ehcache的线程机制是为大型高并发系统设计的。</li>
+<li>Ehcache支持基于Cache和基于Element的过期策略。</li>
+<li>Ehcache提供了LRU、LFU和FIFO缓存淘汰算法。</li>
+</ul>
+</li>
+<li><b>缓存数据有两级：内存和磁盘，无须担心容量问题</b>
+<ul class="quote">
+<li>缓存在内存和硬盘存储可以伸缩到GB。</li>
+<li>在大内存的情况下，所有进程可以支持数百GB的吞吐。</li>
+</ul>
+</li>
+<li><b>缓存数据会在虚拟机重启的过程中写入磁盘</b>
+<ul class="quote">
+<li>Ehcache是第一个引入缓存数据持久化存储的开源Java缓存框架。</li>
+<li>缓存的数据可以在机器重启后从磁盘上重新获得。</li>
+</ul>
+</li>
+<li><b>可以通过RMI、可插入API等方式进行分布式缓存</b>
+<ul class="quote">
+<li>通过Terracotta的缓存集群：缓存发现是自动完成的。</li>
+<li>使用RMI、JGroups或者JMS来冗余缓存数据。</li>
+<li>可靠的分发：使用TCP的内建分发机制。</li>
+<li>缓存API：支持RESTFUL和SOAP二种协议，没有语言限制。</li>
+</ul>
+</li>
+<li><b>具有缓存和缓存管理器的侦听接口</b>
+<ul class="quote">
+<li>缓存管理器监听器：允许注册实现了CacheManagerEventListener接口的监听器。</li>
+<li>缓存事件监听器：允许注册实现了CacheEventListener接口的监听器。</li>
+</ul>
+</li>
+<li><b>提供Hibernate的缓存实现</b>
+<ul class="quote">
+<li>Hibernate默认二级缓存是不启动的，启动二级缓存通过采用Ehcache来实现。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch20"><summary>4.2 Ehcache使用介绍</summary>
+<div class="sec">
+<h4>Ehcache架构图</h4>
+<ul class="point">
+<li><b>Ehcache架构共分为四大部分：Cache Replication、In-Process APIS、Network APIS、Ehcache Core</b>
+<ul class="quote">
+<li>Cache Replication：主要负责缓存同步的几种实现，主要包括TerraCotta、RMI、JMS和JGroup四种方式。</li>
+<li>In-Process APIS：主要包括Ehcache对外常用的API，包括JRuby、Hibernate、JMX、SOAP API、Cache Server五种API。</li>
+<li>Network APIS：包括的是Ehcache的通信协议，主要有RESTful API、SOAP API和JMX API等。</li>
+<li>Ehcache Core：是缓存管理器，可以通过单例或者多例的方式创建，也是Ehcache的入口类。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>缓存数据过期策略</h4>
+<ul class="point">
+<li><b>Ehcache主要提供了三种缓存过期策略：FIFO、LFU、LRU</b>
+<ul class="quote">
+<li>FIFO：根据数据的写入时间，数据先进先出。</li>
+<li>LFU：最少被使用，缓存的元素有一个hit属性，hit值最小的将会被清出缓存。</li>
+<li>LRU：最近最少使用，缓存的元素有一个时间戳，当缓存容量满了，而又需要腾出地方来缓存新的元素的时候，那么现有缓存元素中时间戳离当前时间最远的元素将被清出缓存。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Ehcache缓存的基本用法</h4>
+<ul class="point">
+<li><b>创建CacheManager</b>
+<ul class="quote">
+<li>使用缓存首先要创建CacheManager，通过create方法创建CacheManager一共有五种方法。</li>
+<li>以newInstance方法创建CacheManager一共有五种方法。</li>
+</ul>
+</li>
+<li><b>将数据存放到缓存中</b>
+<ul class="quote">
+<li>将数据存放到缓存中的方法如下：Element element = new Element(key, value); Cache cache = cacheManager.getCache(cacheName); cache.put(element);。</li>
+</ul>
+</li>
+<li><b>获取缓存</b>
+<ul class="quote">
+<li>获取缓存的方法如下：Cache cache = cacheManager.getCache(cacheName); Element element = cache.get(key); Object data = element.getObjectValue(); //获取到的缓存数据。</li>
+</ul>
+</li>
+<li><b>删除缓存</b>
+<ul class="quote">
+<li>删除缓存的方法如下：Cache cache = cacheManager.getCache(&quot;cacheName&quot;); //根据key来移除一个元素 cache.remove(&quot;key&quot;);。</li>
+</ul>
+</li>
+<li><b>修改缓存</b>
+<ul class="quote">
+<li>修改缓存的方法如下：Cache cache = cacheManager.getCache(&quot;cacheName&quot;); cache.put(new Element(&quot;key&quot;, &quot;value1&quot;)); //替换元素的时候只有Cache中已经存在对应key的元素时才会替换，否则将不会替换成功。 cache.replace(new Element(&quot;key&quot;, &quot;value2&quot;));。</li>
+</ul>
+</li>
+<li><b>关闭缓存</b>
+<ul class="quote">
+<li>官方推荐在程序里面调用CacheManager的shutdown()方法来将当前CacheManager进行关闭。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>在Spring中使用Ehcache</h4>
+<ul class="point">
+<li><b>配置文件介绍</b>
+<ul class="quote">
+<li>在Spring配置文件中加入下面的配置信息：&lt;bean id=&quot;ehcache&quot; class=&quot;org.springframework.cache.ehcache.EhCacheManagerFactoryBean&quot;&gt;&lt;property name=&quot;configLocation&quot; value=&quot;classpath:ehcache/ehcache.xml&quot;/&gt; &lt;/bean&gt; &lt;bean  id=&quot;cacheManager&quot;  class=&quot;org.springframework.cache.ehcache.EhCache- CacheManager&quot;&gt;&lt;property name=&quot;cacheManager&quot; ref=&quot;ehcache&quot;/&gt; &lt;/bean&gt; &lt;! -- 启用缓存注解开关 --&gt;&lt;cache:annotation-driven cache-manager=&quot;cacheManager&quot;/&gt;。</li>
+</ul>
+</li>
+<li><b>用Spring注解使用Ehcache缓存</b>
+<ul class="quote">
+<li>Spring为缓存功能提供了注解功能，使用的过程中需要启动注解，开启方式如下所示：&lt;cache:annotation-driven cache-manager=&quot;cacheManager&quot;/&gt;。</li>
+<li>Spring提供了四个方法级的缓存注解分别是：@Cacheable、@CachePut、@CachEvict、@CacheConfig。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch21"><summary>4.3 Ehcache集群介绍</summary>
+<div class="sec">
+<h4>Ehcache集群介绍</h4>
+<ul class="point">
+<li><b>Ehcache是进程中的缓存系统，需要用到集群方案解决数据同步问题</b>
+<ul class="quote">
+<li>当某个节点对缓存数据进行更新，这些更新的数据无法在其他节点中共享，这不仅会降低节点运行的效率，而且会导致数据不同步的情况发生。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>集群的方式</h4>
+<ul class="point">
+<li><b>EhCache支持五种集群方案：Terracotta、RMI、JMS、JGroup、Ehcache Server</b>
+<ul class="quote">
+<li>RMI是一种点对点的基于Java对象的通讯方式。</li>
+<li>JMS是两个应用程序之间进行异步通信的API。</li>
+<li>Ehcache也支持缓存服务器集群模式，缓存数据集中在Ehcache Server中存放，Ehcache Server之间做数据复制。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>如何配置集群</h4>
+<ul class="point">
+<li><b>配置集群需要了解清楚三个概念，服务提供者、服务监听和事件监听</b>
+<ul class="quote">
+<li>服务提供者：在ehcache.xml配置文件中有两种配置方法，一种是通过广播的方式，服务间自动发现，动态更新存活服务的列表；另一种就是在配置文件中配置好静态服务列表。</li>
+<li>服务监听：服务Listener用来监听集群中其他服务器的Ehcache消息，所以Listener要监听本机端口。</li>
+<li>事件监听器：事件监听器主要是配置Replicator监听本地缓存的增删改查事件，然后发送到集群中其他服务器。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch22"><summary>4.4 Ehcache的适用场景</summary>
+<div class="sec">
+<h4>Ehcache的适用场景</h4>
+<ul class="point">
+<li><b>Ehcache作为本地缓存会有一些场景的使用约束</b>
+<ul class="quote">
+<li>比较少的更新数据表的情况下。</li>
+<li>对并发要求不是很严格的情况。</li>
+<li>对一致性要求不高的情况下。</li>
+</ul>
+</li>
+<li><b>Ehcache作为本地缓存能够给我们使用便利和性能提升的同时，也有其一些问题所在，比如缓存漂移和数据库的瓶颈</b>
+<ul class="quote">
+<li>缓存漂移(Cache Drift)：每个应用节点只管理自己的缓存，在更新某个节点的时候，不会影响到其他的节点，这样数据之间可能就不同步了。</li>
+<li>数据库瓶颈(Database Bottlenecks)：对于单实例的应用来说，缓存可以保护数据库的读风暴；但是在集群的环境下，每一个应用节点都要定期保持数据最新，节点越多，要维持这样的情况对数据库的开销也越大。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>在实际工作中如何更好地使用</h4>
+<ul class="point">
+<li><b>将Ehcache作为集中式缓存的二级本地缓存</b>
+<ul class="quote">
+<li>当缓存系统宕机后，服务器应用的本地缓存还能继续抗住大量请求。</li>
+</ul>
+</li>
+<li><b>使用二级缓存的好处是减少缓存数据的网络传输开销，当集中式缓存出现故障的时候，Ehcache等本地缓存依然能够支撑应用程序正常使用，增加了程序的健壮性</b>
+<ul class="quote">
+<li>另外使用二级缓存策略可以在一定程度上阻止缓存穿透问题。</li>
+</ul>
+</li>
+<li><b>根据CAP原理我们可以知道，如果要使用强一致性缓存(根据自身业务决定)，集中式缓存是最佳选择，如(Redis, Memcached等)</b>
+<ul class="quote">
+<li>方案一：定时轮询。</li>
+<li>方案二：主动通知。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch23"><summary>4.5 Guava Cache的使用</summary>
+<div class="sec">
+<h4>Guava Cache的适用场景</h4>
+<ul class="point">
+<li><b>Guava Cache适用于愿意消耗一些本地内存空间来提升速度的场景</b>
+<ul class="quote">
+<li>数据对一致性要求不高，就可以不用放到Redis等集中缓存中。</li>
+<li>使用本地内存做缓存的时候，需要考虑缓存的数据总量不能超出服务器内存。</li>
+</ul>
+</li>
+<li><b>Guava Cache适用于更新锁定的场景</b>
+<ul class="quote">
+<li>当请求查询某一个key的时候，如果不存在则从源中读取，然后再回填到本地缓存中，这时如果并发量非常大，可能会有多个请求同时从源中读取数据，然后再回填到本地缓存，造成多次执行的情况。</li>
+<li>Guava Cache可以在CacheLoader的load方法中加以控制，对同一个key，只让一个请求去源中读取数据，而其他请求阻塞等待结果。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Guava Cache的创建方式</h4>
+<ul class="point">
+<li><b>通过CacheLoader创建方式</b>
+<ul class="quote">
+<li>在构建Cache对象的时候定义一个CacheLoader来获取数据，在缓存不存在的时候能够自动加载数据到缓存中。</li>
+<li>这种创建方式适用的场景是：在创建的时候采用指定的加载缓存的方式，经常用作从数据库中获取和缓存数据。</li>
+</ul>
+</li>
+<li><b>通过Callable callback创建方式</b>
+<ul class="quote">
+<li>这个方法返回缓存中相应的值，如果未获取到缓存值则调用Callable方法。</li>
+<li>这种方式比较灵活，可以在获取缓存的指定Callable对象，在缓存中获取不到数据的时候，可以动态决定采用哪种方式加载数据到缓存。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>缓存数据删除</h4>
+<ul class="point">
+<li><b>被动删除分为三种实现方式，分别是：基于数据大小的删除、基于过期时间删除、基于引用的删除</b>
+<ul class="quote">
+<li>按照缓存的大小来删除，如果缓存容量即将到达指定的大小时，就会把不常用的键值对从cache中移除。</li>
+<li>在Guava Cache中提供了两个方法可以基于过期时间删除：expireAfterAccess(long, TimeUnit)：某个key最后一次访问后，再隔多长时间后删除。expireAfterWrite(long, TimeUnit)：某个key被创建后，再隔多长时间后删除。</li>
+<li>这种方式主要是基于Java的垃圾回收机制，判断缓存的数据引用的关系，如果没有被引用，则Guava Cache会将该数据删除。</li>
+</ul>
+</li>
+<li><b>主动删除分为三种实现方式</b>
+<ul class="quote">
+<li>通过Cache.invalidate(Object key)方法删除指定key的缓存。</li>
+<li>通过Cache.invalidateAll()方法删除所有缓存。</li>
+<li>通过Cache.cleanUp()方法清除缓存中所有过期数据。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>并发场景下的使用</h4>
+<ul class="point">
+<li><b>Guava Cache提供了一个refreshAfterWrite定时刷新数据的配置项</b>
+<ul class="quote">
+<li>刷新时只有一个请求回源取数据，其他请求会阻塞在一个固定的时间段，如果在这个时间段内没有获得新值就直接返回旧值，这样请求被blocked情况就变的可控。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch24"><summary>4.6 本章小结</summary>
+<div class="sec">
+<h4>Ehcache和Guava Cache的适用场景</h4>
+<ul class="point">
+<li><b>Ehcache适用于需要支持持久化和集群解决方案的情况。</b>
+</li>
+<li><b>Guava Cache适用于只需要简单的缓存功能，且对特性要求不高的场景。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch25"><summary>第5章 从Memcached开始了解集中式缓存</summary>
+<div class="sec">
+<h4>Memcached的概念和作用</h4>
+<ul class="point">
+<li><b>Memcached是高性能的分布式内存缓存服务器，用来缓存访问的热点数据，减轻数据库的负担。</b>
+</li>
+<li><b>Memcached通过缓存数据库查询结果，减少数据库访问次数，以提高动态Web应用的速度，提高可扩展性。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Memcached的应用现状</h4>
+<ul class="point">
+<li><b>Memcached在Facebook的规模已经超过28TB，总服务器数量超过800台</b>
+<ul class="quote">
+<li>Facebook在朋友关系更新、热点数据、缓存与MySQL一致性、多机房数据一致性等方面存在挑战。</li>
+</ul>
+</li>
+<li><b>从LiveJournal到Facebook，是Memcached应用的极大发展，缓存数据量也从30G这个级别跃升为28TB(实际数据可能还在增长)，增长了近千倍。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch26"><summary>5.1 Memcached基本知识</summary>
+<div class="sec">
+<h4>Memcached的安装与启动</h4>
+<ul class="point">
+<li><b>Debian/Ubuntu系统安装Memcached</b>
+<ul class="quote">
+<li>安装libevent-dev。</li>
+<li>下载Memcached压缩包。</li>
+<li>解压Memcached压缩包。</li>
+<li>进入解压目录，执行`./configure`，然后`make &amp;&amp; make test &amp;&amp; sudo make install`。</li>
+</ul>
+</li>
+<li><b>启动Memcached服务</b>
+<ul class="quote">
+<li>使用命令`/usr/local/memcached -d -m 1024 -u root -l 127.0.0.1 -p 11211 -c 1024 -P /usr/local/memcached/memcached.pid`启动Memcached服务。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Memcached的常用命令</h4>
+<ul class="point">
+<li><b>Memcached标准命令结构：command &lt;key&gt; &lt;flags&gt;&lt;expiration time&gt;&lt;bytes&gt;&lt;value&gt;</b>
+<ul class="quote">
+<li>set qiang 0 0 4 good。qiang代表设置的key；第一个0，代表flag，这里描述为不用做序列化转换；第二个0，代表过期时间不失效；4代表value的长度；good，代表设置到Memcached的value。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Memcached使用场景</h4>
+<ul class="point">
+<li><b>减少数据库压力的场景</b>
+<ul class="quote">
+<li>第一次访问，缓存数据未命中，则从数据库中获取数据并存储到Memcached中，第二次访问则直接从缓存中获取数据。</li>
+</ul>
+</li>
+<li><b>更新链路场景</b>
+<ul class="quote">
+<li>应用服务器对key进行更新，先对DB进行更新后，再对缓存进行更新。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Memcached特征</h4>
+<ul class="point">
+<li><b>协议简单、基于libevent的事件处理、内置内存存储方式、客户端分布式</b>
+<ul class="quote">
+<li>Memcached和客户端通信并不使用复杂的XML等格式，而是使用简单的基于文本协议或者二进制协议。</li>
+<li>Memcached使用libevent库，因此能在Linux、BSD、Solaris等操作系统上发挥其高性能。</li>
+<li>为了提高性能，Memcached中保存的数据都存储在Memcached内置的内存存储空间中。</li>
+<li>Memcached尽管是“分布式”缓存服务器，但服务器端并没有分布式功能。各个Memcached实例不会互相通信以共享信息。它的分布式主要是通过客户端实现的。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Memcached的一些问题</h4>
+<ul class="point">
+<li><b>无法备份，重启无法恢复：重启无法恢复的问题，只能通过持久化解决</b>
+<ul class="quote">
+<li>兼容Memcached的协议，持久化的解决方案有MemcacheDB，以及Tokyo Cabinet和Tokyo Tyrant配合使用。</li>
+</ul>
+</li>
+<li><b>无法查询：前面谈过Memcached的存储机制，不能按各种条件的key查询，比如范围查询。</b>
+</li>
+<li><b>没有提供内置的安全机制。</b>
+</li>
+<li><b>单点故障failover:Memcached不支持任何fail-over/high-availability机制，因为它是作为cache使用的，不是原始数据源，这也是其一大特点</b>
+<ul class="quote">
+<li>面对单点故障，可以通过主从模式解决问题。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch27"><summary>5.2 Memcached内存存储</summary>
+<div class="sec">
+<h4>Memcached的内存存储机制</h4>
+<ul class="point">
+<li><b>Memcached采用Slab Allocation机制分配和管理内存</b>
+<ul class="quote">
+<li>通过将内存分割成不同尺寸的块，并将相同尺寸的块分成组。</li>
+</ul>
+</li>
+<li><b>Slab Allocation机制解决了内存碎片问题，但可能导致内存无法有效利用</b>
+<ul class="quote">
+<li>分配的是特定长度的内存。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Memcached的内存优化</h4>
+<ul class="point">
+<li><b>Memcached允许通过设置Growth Factor因子来控制slab之间的差异</b>
+<ul class="quote">
+<li>以优化内存使用。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Memcached的数据存储结构</h4>
+<ul class="point">
+<li><b>Memcached将数据打包成item，包括键、键长、用户定义的flag、值长、后缀Buffer和后缀长等部分。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Memcached的过期策略</h4>
+<ul class="point">
+<li><b>如果设置了过期时间，item在指定时间后未被访问则会失效。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch28"><summary>5.3 典型问题解析</summary>
+<div class="sec">
+<h4>Memcached的内存管理</h4>
+<ul class="point">
+<li><b>Memcached的内存是有限的，对于大量的或者过期的数据，需要进行有效管理</b>
+<ul class="quote">
+<li>单一服务节点无法突破单机内存上限。</li>
+<li>缓存如果因为网络波动、机器故障等原因不可用，会让访问全部穿透到数据库层。</li>
+<li>单一服务节点无法突破单实例请求峰值上限。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>过期机制</h4>
+<ul class="point">
+<li><b>Memcached有两种过期机制，一种是Lazy Expiration，另一种是LRU算法</b>
+<ul class="quote">
+<li>Lazy Expiration: Memcached内部不会监视记录是否过期，而是在get时查看记录的时间戳，检查记录是否过期。</li>
+<li>LRU算法：LRU顾名思义就是最近最少使用算法。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>哈希算法</h4>
+<ul class="point">
+<li><b>Memcached进行分布式部署依赖的核心便是Hash算法</b>
+<ul class="quote">
+<li>假如现在需要扩容一台Memcached实例，那么该Hash算法便修改为：hash (key) mod 4，这会导致历史所有的数据都无法找到，导致大量的访问回源。</li>
+<li>在分布式集群中，对机器的添加、删除，或者机器故障后自动脱离集群这些操作是分布式集群管理最基本的功能，使用一致性hash可以很好地解决动态变化环境下使用Memcached扩缩容带来的大量数据失效问题。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>热点问题</h4>
+<ul class="point">
+<li><b>热点数据就是hot数据，场景不同，热点数据也有差异，可以进一步分为热点数据和巨热数据</b>
+<ul class="quote">
+<li>数据访问热点(读热点问题)，比如电商的Detail详情页面。</li>
+<li>巨热数据的处理方式，在Facebook有一招，就是通过多个key_index(key:xxx#N)，来获取热点key的数据。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>缓存与数据库的更新问题</h4>
+<ul class="point">
+<li><b>缓存和数据库更新的一致性，这是一个常常会讨论的问题</b>
+<ul class="quote">
+<li>如果更新数据库，再删除缓存时出现这样的情况，数据操作更新成功，缓存更新失败，结果是缓存中存在旧的数据，用户获取到旧信息，存在不一致性。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>别把缓存当存储</h4>
+<ul class="point">
+<li><b>在分布式架构下，一切系统都可能fail，无论是缓存、存储(包括数据库)还是应用服务器</b>
+<ul class="quote">
+<li>即使使用有持久化机制的cache，如果作为唯一存储的话也要慎用。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>命名空间</h4>
+<ul class="point">
+<li><b>假如很多不同的业务系统同时使用一套Memcached服务，那么很有可能存在key的冲突</b>
+<ul class="quote">
+<li>对key设置一个命名空间，不同的系统使用不同的命名空间，便能很好进行数据隔离。</li>
+<li>使用key的&quot;前缀&quot;来模拟命名空间：比如A是用户服务，可以对所有的key增加一个userId_前缀，比如：&quot;userid_111&quot;, B是订单服务，则对所有key增加orderid_的前缀，比如：orderid_111。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>CAS</h4>
+<ul class="point">
+<li><b>CAS主要解决原子操作的问题</b>
+<ul class="quote">
+<li>比如用户操作一个key对应的value，需要保证在操作当中，value不允许被其他访问操作，如果被操作过，则操作失败。</li>
+<li>Memcached的CAS(Check-and-Set)机制便是解决该问题：首先使用gets指令获取key-value及key对应value的版本号version；然后操作产生新的value值；最后使用CAS指令重新提交key-value，并附带之前的版本号version。当服务端判断CAS操作中的版本号不是最新的时候，则认为该key的值已经被修改，本次CAS操作失败。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch29"><summary>5.4 Memcached客户端分析</summary>
+<div class="sec">
+<h4>Memcached的Client</h4>
+<ul class="point">
+<li><b>客户端主要的功能点包含：Memcached协议的封装，连接池的实现，sharding机制，故障转移，序列化等机制。</b>
+</li>
+<li><b>通过表5-5对Java的客户端Spymemcached, Xmemcached, memcache-client-forjava进行功能上的对比，可以了解三个客户端整体的功能差异。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spymemcached设计思想解析</h4>
+<ul class="point">
+<li><b>Spymemcached主要有以下特性：Memcached协议完善支持，同时支持Text和Binary协议；异步：使用NIO作为底层通信框架；集群：默认支持服务器集群的sharding机制；自动恢复：网络闪断，会进行异步重连，自动恢复；failover机制，提供可扩展的容错机制；支持批量get，本地进行数据的聚合；序列化：默认支持JDK序列化机制，可自定义扩展；超时机制，支持访问超时等设置。</b>
+</li>
+<li><b>整体设计：API接口：对外提供同步的接口和异步的接口调用。任务封装：将访问的操作及callback封装为Task。路由机制：通过默认的Sharding策略(支持arrayMod和Ketama)，选择key对应的连接(connection)。将Task放到对应连接的队列。Selector线程异步获取连接队列的Task，进行协议的封装及发送。收到Memcached返回的包，会找到对应的Task，调用callback进行回调，对返回结果进行协议的解析，并进行序列化。</b>
+</li>
+<li><b>API接口设计：对外的API接口一般是对Memcached协议的原生命令进行封装，比如调用get (userid)接口，实际上客户端会转换为get userid命令发送到Memcached服务器，调用set(userid, &quot;11&quot;)，则客户端会转换为：set userid 0 0 2 11发送到服务器端。对外API接口一般有两种：同步接口(比如get)(和异步接口(比如asyncGet), Get返回的是数据(阻塞获取数据，一般性能较差)，而asyncGet返回的是future(异步获取数据，socket收到响应数据后，会进行回调通知)。</b>
+</li>
+<li><b>线程设计：Spymemcached主要涉及两类线程：业务线程和selector线程。业务线程的工作：封装请求task，对象的序列化，封装发送的协议，并将task放到对应连接的队列上。对收到的数据进行反序列化为对象。Selector线程的工作：读取连接的队列，将队列的task的数据发送到mc端。读取mc端返回的数据，协议的处理，及通知业务线程。对失败的节点进行自动重连。</b>
+</li>
+<li><b>sharding机制及容错：路由机制：路由是通过请求的key，选择对应的连接节点。路由机制的设计主要考虑两个方面：平衡性和单调性。容错：如果key路由到服务对应的节点，但是服务节点挂掉了，该如何处理？自动重连：失败的节点，会从正常的队列中摘除，添加到重连队列中，定期对该节点进行重连。重连成功，再添加到正常的队列中。failover处理：Spy默认支持三种容错机制：Redistribute, Retry, Cancel。</b>
+</li>
+<li><b>序列化：序列化主要是将对象转换为二进制，反序列化是将二进制转换为对象。一般衡量序列化的性能主要有如下几点：序列化之后包的大小；序列化时间；序列化对CPU损耗；序列化对GC影响。Spymemcached提供了自定义扩展的序列化机制，只需要实现Transcoder的encode和decode接口即可。Spymemcached提供了默认的序列化实现，SerializingTranscoder。实现的主要思路是根据不同的数据类型，使用不同的序列化方式。</b>
+</li>
+<li><b>反序列化：通过读取flag，确定数据的序列化方式，然后按照序列化的逆过程进行反序列化。</b>
+</li>
+<li><b>扩缩容：实现动态扩缩容考虑点：操作的便利性；单调性。下面介绍结合ZooKeeper来实现动态的扩缩容。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch30"><summary>5.5 Memcached周边工具发展</summary>
+<div class="sec">
+<h4>InnoDB Memcached Plugin</h4>
+<ul class="point">
+<li><b>InnoDB Memcached Plugin在InnoDB引擎内置了Memcached</b>
+<ul class="quote">
+<li>用户可以使用Memcached接口直接操作MySQL中的InnoDB表。</li>
+<li>InnoDB可以把多列的值拼接到Memcached的单个value中。</li>
+<li>数据在内存和磁盘间转换是自动的，简化应用逻辑。</li>
+<li>数据存储在MySQL数据库中，防止缓存崩溃、中断。</li>
+<li>Memcached获得高可用能力，该能力由Master Server组合MySQL复制技术提供。</li>
+</ul>
+</li>
+<li><b>InnoDB Memcached Plugin和Memcached相比，性能还是较差</b>
+<ul class="quote">
+<li>在MySQL上面使用MC，不利于系统的解耦和扩展性的设计。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Twemcache</h4>
+<ul class="point">
+<li><b>Twemcache是Twitter提交到开源的缓存技术</b>
+<ul class="quote">
+<li>Twemcache是fork Memcached v.1.4.4的一个开源产品。</li>
+<li>Twemcache是Twitter在大规模扩展的生产环境下经过验证的。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Twemproxy</h4>
+<ul class="point">
+<li><b>Twemproxy是Twitter开源出来的快速的单线程代理程序</b>
+<ul class="quote">
+<li>Twemproxy支持Memcached ASCII协议和Redis协议。</li>
+<li>Twemproxy使用C语言编写，使用Apache 2.0 License授权。</li>
+</ul>
+</li>
+<li><b>Twemproxy的主要功能有：失败节点自动删除；支持设置自定义HashTag；减少与后端cache服务器的直接连接数；提供多种hash算法和分布算法，将数据分片到后端多个cache实例上；可以部署多个Twemproxy，客户端自动选择其中一个，避免单点故障；支持状态监控；高吞吐量。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>MemcacheDB</h4>
+<ul class="point">
+<li><b>MemcacheDB是新浪互动社区技术团队2007年的一项重大的技术成果</b>
+<ul class="quote">
+<li>MemcacheDB兼容大部分Memcached命令的调用，数据实时落地，支持主从复制等功能。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>MemcacheQ</h4>
+<ul class="point">
+<li><b>MemcacheQ是新浪基于MemcacheDB开发的一款高性能队列服务程序。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Mcrouter</h4>
+<ul class="point">
+<li><b>Mcrouter是一个Memcached协议的路由器，被Facebook用在全球各大数据中心中的数十个集群几千个服务器之间控制流量</b>
+<ul class="quote">
+<li>Mcrouter适用于大规模的级别中，在峰值的时候，Mcrouter处理接近50亿的请求/秒。</li>
+<li>Mcrouter有丰富的路由算法和很多优异的特性。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Tokyo Cabinet和Tokyo Tyrant</h4>
+<ul class="point">
+<li><b>Tokyo Cabinet是一个DBM数据库，Tokyo Tyrant是由同一作者开发的Tokyo Cabinet数据库网络接口</b>
+<ul class="quote">
+<li>Tokyo Cabinet在整个数据库中既没有数据表的概念也没有数据类型的概念，它由一系列key-value对的记录构成，key和vlaue既可以是二进制数据也可以为字符数据，它们的长度可以是任意长度的字节序列，所有的记录都保存在文件中。</li>
+<li>Tokyo Tyrant拥有Memcached兼容协议，也可以通过HTTP协议进行数据交换。</li>
+<li>Tokyo Tyrant和Tokyo Cabinet可支持高并发的分布式持久存储系统，对任何原有Memcached客户端来讲，可以将Tokyo Tyrant看成是一个Memcached，但是，它的数据是可以持久存储的。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch31"><summary>第6章 Memcached周边技术</summary>
+<div class="sec">
+<h4>Memcached集群服务的重要性</h4>
+<ul class="point">
+<li><b>单机缓存系统服务能力有限，无法满足大型互联网应用的需求</b>
+<ul class="quote">
+<li>单机缓存系统受单个主机处理器、内存等资源的限制。</li>
+<li>大型互联网应用需要更大的数据访问量和缓存更多的数据。</li>
+</ul>
+</li>
+<li><b>集群服务可以利用资源优势提供更好的性能和更大的存储容量</b>
+<ul class="quote">
+<li>集群服务将多个缓存实例以集群的方式提供服务。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>缓存集群设计考虑因素</h4>
+<ul class="point">
+<li><b>可扩展性：集群可以方便通过扩充机器来提供更高的缓存能力。</b>
+</li>
+<li><b>高可用性：集群能够对应用提供可靠的服务，实现缓存服务的高可用性。</b>
+</li>
+<li><b>可维护性：集群能够方便监控和运维。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Memcached的定制版Twemcache</h4>
+<ul class="point">
+<li><b>Twemcache是Memcached的定制版，提高了性能和资源利用率</b>
+<ul class="quote">
+<li>Twemcache通过优化内存使用和I/O操作，提高了性能。</li>
+<li>Twemcache通过负载均衡和内存回收策略，提高了资源利用率。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>开源的缓存集群方案Twemproxy</h4>
+<ul class="point">
+<li><b>Twemproxy是一个高性能的代理和负载均衡器，支持多种缓存策略</b>
+<ul class="quote">
+<li>Twemproxy支持Memcached和Redis协议，可以代理多个缓存实例。</li>
+<li>Twemproxy支持轮询、最少连接、IP哈希等负载均衡策略。</li>
+<li>Twemproxy支持LRU、LFU、TTL等缓存策略。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Mcrouter</h4>
+<ul class="point">
+<li><b>Mcrouter是Facebook开源的Memcached路由代理，支持多种路由策略</b>
+<ul class="quote">
+<li>Mcrouter支持Memcached协议，可以代理多个Memcached实例。</li>
+<li>Mcrouter支持一致性哈希、向量哈希、范围哈希等路由策略。</li>
+<li>Mcrouter支持Failover、Failback、Weight等负载均衡策略。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch32"><summary>6.1 Twemcache</summary>
+<div class="sec">
+<h4>Twemcache概述</h4>
+<ul class="point">
+<li><b>Twemcache是Twitter Memcached的缩写，由Twitter研发团队开发，并在Twitter内部大量应用的高性能内存对象缓存系统。</b>
+</li>
+<li><b>Twemcache在github上的托管地址：https://github.com/twitter/twemcache。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Twemcache的设计原理</h4>
+<ul class="point">
+<li><b>Twemcache中大量使用了多线程，每产生一个任务就会有一个对应的线程去执行</b>
+<ul class="quote">
+<li>Aggregator线程主要负责采集Twemcache的运行状态。</li>
+<li>Klogger线程负责采集打印所有工作线程的日志。</li>
+<li>主进程负责所有的初始化工作，负责执行主进程通知的所有任务工作，侦听主进程的管道IO事件和网络IO事件。</li>
+</ul>
+</li>
+<li><b>Twemcache将TCP/UDP/UNIX域进行了统一处理</b>
+<ul class="quote">
+<li>TCP和UNIX域套接字流程是一样的，UDP不用建立连接则少了listen+accept的过程。</li>
+<li>在UDP通信初始化时，主进程会对每个工作线程的管道t-&gt;thread_send_fd写字符，从而触发所有工作线程，注册conn的读事件(此时conn不代表一个完整的连接，只含有服务端信息)，并变更conn的事件域为t-&gt;base，这样所有线程都监听fd的报文。</li>
+</ul>
+</li>
+<li><b>Twemcache中的存储模型</b>
+<ul class="quote">
+<li>slabclass是一个数组，每个Slab对应不同大小的item, size表示该槽的item大小。</li>
+<li>需要slabclass数组的原因是item是变长的，预分配全部大小相同的item会造成大量碎片。</li>
+<li>当一个slab用完，新的分配请求到来时，则分配一个新的slab。</li>
+<li>比较重要的两个属性是free_item和nfree_itemq, free_item指向当前槽中第一个空闲的item, nfree_itemq是一个链表，所有使用过被删除了的item会放入其中重复利用。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Twemcache的安装及命令行详解</h4>
+<ul class="point">
+<li><b>目前Twemcache的安装环境是在Mac系统或Linux系统中进行的，暂不支持Windows操作系统</b>
+<ul class="quote">
+<li>第一步：通过托管地址下载Twemcache的安装包twemcache-master.zip并且解压。</li>
+<li>第二步：使用如下命令进行构建。</li>
+<li>第三步：也可以使用指定路径的libevent来构建Twemcache。</li>
+<li>第四步：还可以使用libevent静态链接库构建Twemcache。</li>
+<li>第五步：使用调试和诊断模式构建。</li>
+<li>第六步：启用调试模式，禁用诊断模式的构建。</li>
+</ul>
+</li>
+<li><b>Twemcache缓存没有配置文件，很多参数都是在启动的时候加载到命令行中的</b>
+<ul class="quote">
+<li>Usage: twemcache [-? hVCELdkrDS] [-o output file] [-v verbosity level] [-A stats aggr interval] [-t threads] [-P pid file] [-u user] [-x command logging entry] [-X command logging file] [-R max requests] [-c max conns] [-b backlog] [-p port] [-U udp port] [-l interface] [-s unix path] [-a access mask] [-M eviction strategy] [-f factor] [-m max memory] [-n min item chunk size] [-I slab size] [-z slab profile]。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>基于Java的Twemcache用法</h4>
+<ul class="point">
+<li><b>使用Spymemcached来作为连接Twemcache的客户端</b>
+<ul class="quote">
+<li>假定项目采用Maven来管理，在pom文件中引入：&lt;dependency&gt;&lt;groupId&gt;net.spy&lt;/groupId&gt;&lt;artifactId&gt;spymemcached&lt;/artifactId&gt;&lt;version&gt;2.10.0&lt;/version&gt; &lt;/dependency&gt;。</li>
+<li>Java示例代码如下：MemcachedClient mcc = null; try { // 本地连接Memcached服务 mcc = new MemcachedClient(new InetSocketAddress(&quot;127.0.0.1&quot;, 11211)); mcc.set(&quot;hello-world&quot;, 1, &quot;test&quot;); //设置值 System.out.println(&quot;Connection to server sucessful.&quot;); System.out.println(&quot;Print value :&quot; + mcc.get(&quot;hello-world&quot;)); //获取值 } catch (Exception e) { System.out.println(e); } finally { if(mcc != null) mcc.shutdown(); // 关闭连接 }。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch33"><summary>6.2 Twemproxy</summary>
+<div class="sec">
+<h4>Twemproxy概述</h4>
+<ul class="point">
+<li><b>Twemproxy是Twitter开源项目，单线程代理程序，支持Memcached ASCII协议和Redis协议。</b>
+</li>
+<li><b>Twemproxy通过引入一个代理层，将应用程序后端的多台Redis或Memcached实例进行统一管理</b>
+<ul class="quote">
+<li>当某个节点宕掉时，Twemproxy可以自动将它从集群中剔除，而当缓存系统恢复服务时，Twemproxy也会自动连接。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Twemproxy的常用部署模式</h4>
+<ul class="point">
+<li><b>一组LVS作为四层负载均衡，后面挂载一个Twemproxy对等集群，Twemproxy后端挂载多个Redis或Memcached缓存服务，组成一个集群，整体对外提供服务</b>
+<ul class="quote">
+<li>Twemproxy节点之间的配置完全相同，由客户端根据一定算法或随机选择任何一个Twemproxy进行连接。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Twemproxy的可扩展性</h4>
+<ul class="point">
+<li><b>通过扩展Twemproxy节点，即可完成Twemproxy对等集群的扩容</b>
+<ul class="quote">
+<li>基于Twemproxy的集群方案包含LVS层、Twemproxy层、cache层，每一层都有相应的高可用性保证。</li>
+<li>当缓存服务集群在容量产生瓶颈的时候，可通过更改Twemproxy配置中的servers字段，通过增加缓存服务器的数量来实现扩容。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Twemproxy源代码简析</h4>
+<ul class="point">
+<li><b>Twemproxy核心启动流程在core_ctx_create函数中实现</b>
+<ul class="quote">
+<li>ctx-&gt;evb = event_base_create(EVENT_SIZE, &amp;core_core);</li>
+<li>Twemproxy启动完成后会启动core_loop, core_loop的主要功能是调用epoll_wait。</li>
+</ul>
+</li>
+<li><b>Twemproxy的核心数据结构是server_pool，代表了配置文件中的一个pool</b>
+<ul class="quote">
+<li>server_pool中包含多个后端缓存服务，可以是Redis，也可以是Memcached，都被抽象为struct server数据结构。</li>
+</ul>
+</li>
+<li><b>在Twemproxy内部消息流转过程中，使用了msg和mbuf两种数据结构，来实现Zero Copy</b>
+<ul class="quote">
+<li>在客户端或服务端socket被触发读操作的时候，会调用conn-&gt;recv。</li>
+<li>msg_recv函数的主要逻辑是一个循环，conn-&gt;recv_next接收一个新的msg, msg_recv_chain函数则接收一个msg中的所有mbuf。</li>
+<li>如果msg_parsed检查到msg中最后一个mbuf中没有多余的数据时，就直接调用conn-&gt;recv_done，如果有后续命令的数据，则申请一个新的mbuf，将多余的数据拷贝到新申请的mbuf，并申请一个新的msg实例，再将多接收的数据挂载到新生成msg实例的nmsg上。</li>
+<li>最后调用conn-&gt;recv_done进行后续处理。conn-&gt;recv_done可以被初始化为req_recv_done或rsp_recv_done，这里只分析req_recv_done，因为resp_recv_done的处理逻辑是与之相似的。</li>
+<li>如果req_recv_done中是多主键操作，首先检查这些主键是否路由到同一个后端服务器，如果不是，则拆分成多个msg，然后调用req_forward进行转发。</li>
+<li>req_forward从客户端收取的msg数据结构，放入后端conn的imsg_q中，等待发送，并将后端conn注册到epoll，等待写事件。在core_core收到可写事件后，最终调用msg_send_chain进行数据发送。</li>
+<li>msg_send_chain用于发送一个conn上的一个msg挂载的所有mbuf。conn_sendv最终将调用sendv系统函数，将多个mbuf缓存的数据发送出去。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch34"><summary>6.3 Mcrouter</summary>
+<div class="sec">
+<h4>Mcrouter概述</h4>
+<ul class="point">
+<li><b>Mcrouter是一个基于Memcached协议的路由器，适用于大规模的集群中</b>
+<ul class="quote">
+<li>Mcrouter可以在峰值的时候，每秒处理接近50亿个请求。</li>
+</ul>
+</li>
+<li><b>Mcrouter的主要特性包括支持标准的Memcached ASCII协议，多个客户端可以通过连接Mcrouter共享后端Memcached的连接池，多种hash算法可供选择，灵活的路由，支持前缀路由，复制模式连接池，支持流量复制，在线更新配置，支持后端的Memcached健康检测和失败后的自动保护，对cold集群热身，在后端连接池/集群广播接收到的操作，可靠删除，多集群支持，QoS支持，支持超大对象，Mcrouter支持本地缓存，实现多级高速缓存，IPv6和SSL的支持。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Mcrouter路由算法</h4>
+<ul class="point">
+<li><b>Mcrouter提供了非常丰富的路由算法，包括AllAsyncRoute、AllFastestRoute、AllInitialRoute、AllMajorityRoute、AllSyncRoute、DevNullRoute、ErrorRoute、FailoverRoute、FailoverWithExptimeRoute、HashRoute、HostIdRoute、LatestRoute、MigrateRoute、MissFailoverRoute、ModifyExptimeRoute、NullRoute、PrefixSelectorRoute、PoolRoute、RandomRoute、WarmUpRoute等。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>典型的使用场景</h4>
+<ul class="point">
+<li><b>分片池(Sharded pools)：Mcrouter可以将请求按照缓存key的哈希值发送到不同的Memcached服务器上</b>
+<ul class="quote">
+<li>这样缓存数据将被均匀地分布在不同的Memcached服务器上，同时对同一个缓存的操作也将按照缓存key的哈希值发送到同一台Memcached服务器上。</li>
+</ul>
+</li>
+<li><b>复制池(Replicated pools)：Mcrouter支持随机发送一个get请求到复制池中，如果请求在复制池中的第一个服务上失败，将从其他服务上获取数据</b>
+<ul class="quote">
+<li>同时发送send和delete到复制池将被池内的所有服务主机接受。</li>
+</ul>
+</li>
+<li><b>前缀路由(Prefix routing)：Mcrouter可以根据key前缀把客户端分配到不同的Memcahed池</b>
+<ul class="quote">
+<li>例如可以把以”a&quot;为前缀的所有key分配到一个“workload1&quot;池，把以&quot;b&quot;为前缀的所有key分配到另外一个&quot; workload2&quot;池，把以&quot;ab&quot;为前缀的所有key分配到另外一个&quot; workload3&quot;池，其他的key都分配到&quot;wildcard&quot; 池。</li>
+</ul>
+</li>
+<li><b>缓存预热(Cold cache warm up)：Mcrouter提供了一种方法来为“cold cache”预热，而不对性能产生影响</b>
+<ul class="quote">
+<li>这个想法很简单：用已有的一个“warm cache”去填充“cold cache”。</li>
+</ul>
+</li>
+<li><b>两级缓存(Two level caching)：当一个单一Memcached服务池出现超载情况时，我们可以使用一种二级高速缓存架构</b>
+<ul class="quote">
+<li>例如，除了一个大容量的共享缓存，可以给客户端额外增加一个附加Memcached实例。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Mcrouter的可扩展性</h4>
+<ul class="point">
+<li><b>Mcrouter集群内部也可以是多个相同配置的对等节点，可以通过在LVS上增加节点的方式完成扩容</b>
+<ul class="quote">
+<li>缓存服务或缓存集群服务在容量上产生瓶颈的时候，都可以通过更改Mcrouter的配置，增加缓存服务器的数量。</li>
+</ul>
+</li>
+<li><b>Mcrouter通过以下能力确保在后端Memcached发生故障时的可靠性：心跳检测和自动故障转移，多集群互备，可靠的删除操作，保障服务质量</b>
+<ul class="quote">
+<li>心跳检测和自动故障转移：Mcrouter能够通过心跳握手来检测每个Memcached实例的状态。一旦Mcrouter将一个Memcached实例标记为无响应，它会直接将所有的请求转移到另一个可用的Memcached实例上。</li>
+<li>多集群互备：通过在请求key里面增加自定义的前缀，可以把请求备份到多个Memcached池或者集群。</li>
+<li>可靠的删除操作：Mcrouter尽量保证所有的删除操作都被执行。Mcrouter将所有的删除操作都记录到硬盘上，防止由于网络中断或者其他原因导致的Memcached不可用。</li>
+<li>保障服务质量：Mcrouter允许以主机、池或者集群为单位设置任何请求(比如：get/set/delete)的速率阈值，当请求个数超过阈值时，剩下的请求将会被拒绝服务。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Mcrouter源码简要解析</h4>
+<ul class="point">
+<li><b>Mcrouter采用了大量C++11的语法，并引入了fiber进行流程异步化组装</b>
+<ul class="quote">
+<li>Mcrouter依赖于Facebook两个开源组件： Folly和fbthrift。</li>
+<li>在启动时，会启动多个相互独立的线程，使用libevent的线程来处理请求。</li>
+<li>处理请求路由到后端进行编排时，Mcrouter将任务包装成context，使用轻量级线程(folly::fibers::fiber)进行异步化处理。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch35"><summary>第7章 Redis探秘</summary>
+<div class="sec">
+<h4>Redis概述</h4>
+<ul class="point">
+<li><b>Redis是一个key-value存储系统，由Salvatore Sanfilippo开发，使用ANSI C语言编写，遵守BSD协议。</b>
+</li>
+<li><b>Redis运行于独立的进程，通过网络协议和应用交互，将数据保存在内存中，并提供多种手段持久化内存数据</b>
+<ul class="quote">
+<li>Redis具备跨服务器的水平拆分、复制的分布式特性。</li>
+</ul>
+</li>
+<li><b>Redis的value本身具有结构化的特点，对于value提供了丰富的操作</b>
+<ul class="quote">
+<li>基于内存存储的特点使得Redis与传统的关系型数据库相比，拥有极高的吞吐量和响应性能。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch36"><summary>7.1 数据结构</summary>
+<div class="sec">
+<h4>Redis数据结构概述</h4>
+<ul class="point">
+<li><b>Redis作为key-value存储系统，数据结构是扁平化的</b>
+<ul class="quote">
+<li>Redis没有传统关系型数据库的table模型，schema所对应的db仅以编号区分。</li>
+<li>同一个db内，key作为顶层模型，其值是扁平化的，即db本身就是key值的命名空间。</li>
+</ul>
+</li>
+<li><b>Redis将丰富的数据结构功能放到了单条key-value的内部</b>
+<ul class="quote">
+<li>Redis常用的value包含5种类型：string、list、set、map、sorted-set。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>String数据结构</h4>
+<ul class="point">
+<li><b>String能表达字节串、整数、浮点数三种值的类型</b>
+<ul class="quote">
+<li>三种类型间根据具体场景由redis完成相互间自动转型。</li>
+</ul>
+</li>
+<li><b>String型的value具备基本操作和Compare-And-Set原子类操作</b>
+<ul class="quote">
+<li>基本操作包括GET、SET、INCR、DECR等。</li>
+<li>Compare-And-Set原子类操作根据给定key是否存在设置value值。</li>
+</ul>
+</li>
+<li><b>在Redis内部，作为字节串承载的String型value内部以int、SDS(simple dynamic string)作为结构存储</b>
+<ul class="quote">
+<li>int用来存放整型数据，sds存放字节/字符串和浮点型数据。</li>
+<li>sds结构中，buf数组存储了字节串的内容，但它本身的长度通常大于所存储的内容的长度。</li>
+<li>buf的扩容与缩容：当对串进行业务操作后结果超出了buf的现有容量时，sds会对buf进行扩容。</li>
+<li>字节串与字符串：sds中存储的内容可以是ASCII字符串，也可以是字节串。</li>
+<li>sds编码的优化：对于很多短小的字节串，sds长度较小，可以把redisObject和sds连续存放。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>List数据结构</h4>
+<ul class="point">
+<li><b>List即列表对象，用于存储String序列</b>
+<ul class="quote">
+<li>List类型的主要操作包括RPUSH/LPUSH、RPOP/LPOP、LINDEX、LRANGE、LTRIM等。</li>
+<li>Redis针对list还包含了更复杂的操作，方便类似生产者消费者模式场景的实现：BLPOP/BRPOP、BLPOPPUSH/ BRPOPPUSH。</li>
+</ul>
+</li>
+<li><b>List类型的value对象内部以linkedlist或ziplist承载</b>
+<ul class="quote">
+<li>当List的元素个数和单个元素的长度较小时，Redis会采用ziplist实现以减少内存占用，否则采用linkedlist结构。</li>
+<li>linkedlist内部实现是双向链表，和大多数程序语言标准库的实现类似。</li>
+<li>ziplist作为List对象承载实现时，通常用于List的元素个数不多且元素本身长度不大的情况。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Map数据结构</h4>
+<ul class="point">
+<li><b>Map型的value在Redis中又叫Hash，它的最初实现是一个哈希表</b>
+<ul class="quote">
+<li>Map的语义和大多数程序语言语义一致：包含若干个key-value，其中key不重复。</li>
+<li>map内部的key和value不能再嵌套map了，它只能是String型所能表达的内容：整形、浮点型、字节串。</li>
+</ul>
+</li>
+<li><b>map可以用hashtable和ziplist两种承载方式来实现</b>
+<ul class="quote">
+<li>对于数据量较小的map，采用ziplist实现。</li>
+<li>哈希表在Redis中分为三层，自底向上分别是：dictEntry、dictht、dict。</li>
+<li>ziplist实现下，map的大多数操作的复杂度不再是O(1)了，由哈希遍历变成了链表的顺序遍历，复杂度变成O(N)。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Set数据结构</h4>
+<ul class="point">
+<li><b>Set类似List，但它是一个无序集合，其中的元素不重复</b>
+<ul class="quote">
+<li>Set包含的操作和大多数程序语言类似：SADD/SREM/SISMEMBER、SCARD/SMEMBERS/SRANDMEMBER等。</li>
+<li>Redis还包含多个set间的复合操作，SINTER/SUNION/SDIFF：分别实现多个set的交集、并集和差集。</li>
+</ul>
+</li>
+<li><b>Set在Redis中以intset或hashtable来存储</b>
+<ul class="quote">
+<li>当set中只包含整数型的元素时，采用intset作为实现。</li>
+<li>intset的核心元素是一个字节数组，其中从小到大地有序存放着set的元素。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Sorted-Set数据结构</h4>
+<ul class="point">
+<li><b>Sorted-Set是redis特有的数据类型，类似Map是一个key-value对，但它是一个有序的key-value对</b>
+<ul class="quote">
+<li>key:key-value对中的键，在一个sorted-set中不重复；value：是一个浮点数，称为score；有序：sorted-set内部按照score从小到大排序。</li>
+<li>由于sorted-set本身包含排序信息，在普通set的基础上，sorted-set新增了一系列和排序相关的操作：ZRANK、ZRANGE、ZRANGEBYSCORE、ZSCORE、ZINCRBY。</li>
+</ul>
+</li>
+<li><b>Sorted-Set类型的value对象内部以ziplist或skiplist+hashtable来实现</b>
+<ul class="quote">
+<li>作为ziplist的实现方式和map类似。</li>
+<li>对于更通用的场景，sorted-set采用skiplist(跳表)来实现。</li>
+<li>跳表是一种实现顺序相关操作的较高效的数据结构，但它对于简单的ZSCORE操作效率并不高，Redis在实现sorted-set时，同时使用hashtable和skiplist。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch37"><summary>7.2 客户端与服务器的交互</summary>
+<div class="sec">
+<h4>客户端/服务器协议</h4>
+<ul class="point">
+<li><b>Redis的交互协议分为网络模型和序列化协议两部分</b>
+<ul class="quote">
+<li>网络模型讨论数据交互的组织方式。</li>
+<li>序列化协议讨论数据本身如何序列化。</li>
+</ul>
+</li>
+<li><b>客户端/服务器端交互的是序列化后的协议数据，协议数据分为不同的类型</b>
+<ul class="quote">
+<li>inline command：表示Redis命令，首字符为Redis命令名的字符。</li>
+<li>simple string：首字符为’+’；后续字符为string的内容，且该string不能包含’\r’或’\n’两个字符；最后以&quot;\r\n&quot;结束。</li>
+<li>bulk string：首字符为’$&#x27;，紧随其后的是string数据的长度，“\r\n”之后紧跟着string的内容本身(可以包含包括’\r’和’\n’在内的特殊字符)，最后以“\r\n”结束。</li>
+<li>error：对于服务器端返回的内容，客户端需要有简单的手段识别它是正常的执行结果还是异常信息，并对此分别处理，例如将异常信息抛出。</li>
+<li>integer：以’:’字符开头，紧跟着整型数字本身，最后以&quot;\r\n&quot;结尾。</li>
+<li>array：以&quot;*&quot;字符开头，紧跟着数组的长度，&quot;\r\n&quot;之后是数组中每个元素的序列化数据。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>请求/响应模式</h4>
+<ul class="point">
+<li><b>请求/响应模式是客户端发送请求数据，服务器发送响应数据</b>
+<ul class="quote">
+<li>对应关系：每一个请求数据有且仅有一个对应的响应数据。</li>
+<li>时序：响应数据的发送发生在“ 服务器完全接收到其对应的请求数据” 之后。</li>
+</ul>
+</li>
+<li><b>客户端可以通过串行化实现或pipeline实现请求/响应模式</b>
+<ul class="quote">
+<li>串行化实现：客户端收完第一个请求的响应之后，再发起第二个请求。</li>
+<li>pipeline实现：可将请求数据批量发送到服务器，再批量地从服务器连接的字节流中依次读取每个响应数据。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>事务模式</h4>
+<ul class="point">
+<li><b>事务模式可以将批量执行的语句原子化</b>
+<ul class="quote">
+<li>通过和redis服务器两阶段的交互做到批量命令原子化执行的事务效果。</li>
+<li>一次原子化批量执行的客户端/服务器交互过程包括：MULTI命令开启事务，随后发送的请求都只暂存在服务器端的连接上，最后通过EXEC一次性批量执行(发生实际的数据修改)，并将所有执行结果作为一个响应，以array类型的协议数据返回给客户端。</li>
+</ul>
+</li>
+<li><b>事务的一致性、只读操作和乐观锁的可串行化事务隔离是事务模式的关键特性</b>
+<ul class="quote">
+<li>事务的一致性：当入队阶段出现语法错误时，不执行后续EXEC，不会对数据实际产生影响。当EXEC中有一条请求执行失败时，后续请求继续执行，只在返回客户端的array型响应中标记这条出错的结果，由客户端的应用程序决定如何恢复，Redis自身不包含回滚机制。</li>
+<li>事务的只读操作：批量请求在服务器端一次性执行，应用程序需要一开始就在入队阶段(未真正执行时)确定每次写操作的值，也就是说，每个请求的参数取值不能依赖上一次请求的执行结果。</li>
+<li>乐观锁的可串行化事务隔离：Redis通过WATCH机制实现乐观锁解决上述一致性问题。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>脚本模式</h4>
+<ul class="point">
+<li><b>脚本模式允许客户端向服务器提交一个脚本，后者结构化地(分支、循环)编排业务事务中的多个Redis操作</b>
+<ul class="quote">
+<li>客户端发送eval lua_script_string 2 key1 key2 first second给服务器端。</li>
+<li>服务器端解析lua_script_string并根据string本身的内容通过sha1计算出sha值，存放到redisServer对象的lua_scripts成员变量中，它为map类型，sha作为键。</li>
+<li>服务器端原子化地通过内置lua环境执行lua_script_string，后者可能包含对Redis的方法调用比如set key命令。</li>
+<li>执行完成后将lua的结果转化成Redis的类型返回给客户端。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>发布/订阅模式</h4>
+<ul class="point">
+<li><b>发布/订阅模式是一个客户端触发，多个客户端被动接收，通过服务器的中转</b>
+<ul class="quote">
+<li>角色关系：客户端分为发布者和订阅者两种角色；发布端和订阅者通过channel关联。</li>
+<li>交互方向：发布者和Redis服务器的交互仍为请求/响应模式；服务器向订阅者发送数据(推送)；时序：推送发生在服务器收到发布者消息之后。</li>
+</ul>
+</li>
+<li><b>channel分为普通channel和pattern channel两类</b>
+<ul class="quote">
+<li>普通channel：订阅者通过SUBSCRIBE/UNSUBSCRIBE将自己绑定/解绑到某个channel上；发布者的publish命令指定某个消息发送到哪个channel，再由服务器将消息转发给channel上绑定的订阅者。</li>
+<li>pattern channel：订阅者通过PSUBSCRIBE/PUNSUBSCRIBE将自己绑定/解绑到某个pattern channel上；发布者的publish命令指定某个消息发送到哪个channel，再由服务器通过channel的名字和pattern channel的名字做匹配，匹配成功则将消息转发给这个pattern channel上绑定的订阅者。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch38"><summary>7.3 单机处理逻辑</summary>
+<div class="sec">
+<h4>Redis的单线程处理逻辑</h4>
+<ul class="point">
+<li><b>Redis服务器端对于命令的处理是单线程的</b>
+<ul class="quote">
+<li>I/O层面却同时面向多个客户端并发地提供服务。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>多路复用框架</h4>
+<ul class="point">
+<li><b>Redis通过多路复用框架实现并发到内部单线程的转化</b>
+<ul class="quote">
+<li>从多路复用框架中select出已经ready的fileDescriptor。</li>
+<li>对于上一步已经ready的fd, redis会分别对每个fd上已ready的事件进行处理。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>定时任务处理</h4>
+<ul class="point">
+<li><b>Redis由事件驱动运转，有一个对象持续地流转并记录着Redis的事件状态</b>
+<ul class="quote">
+<li>events和fired共同维护着和多路复用框架交互的各个事件。</li>
+<li>aeTimeEvent* 以链表的形式维护着待处理的定时任务。</li>
+</ul>
+</li>
+<li><b>aeApiPoll方法最多等到待处理定时任务中最近的一个的执行时刻</b>
+<ul class="quote">
+<li>如果多路复用框架未返回已ready的事件，则Redis直接执行定时任务。</li>
+<li>每次一个aeTimeEvent执行结束后，都会根据其timeProc方法的返回值更改其下次执行的时间。</li>
+<li>如果timeProc返回AE_NOMORE，则将aeTimeEvent删除之。</li>
+</ul>
+</li>
+<li><b>Redis只有一个周期性定时任务serverCron</b>
+<ul class="quote">
+<li>serverCron负责：主动地处理过期key；执行命令执行频度、网络读写、内存使用等统计信息；hash表的增量rehase；内存数据持久化逻辑(BGSAVE/AOF)；清理过期的客户端连接；主备复制的重连。</li>
+<li>serverCron通过redisServer类的hz属性进行控制。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch39"><summary>7.4 持久化</summary>
+<div class="sec">
+<h4>Redis持久化概述</h4>
+<ul class="point">
+<li><b>Redis提供数据访问服务时使用的是驻存在内存中的数据，重启后消失，需要持久化到本地磁盘。</b>
+</li>
+<li><b>Redis的持久化有两种方式：全量模式和增量模式。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>基于全量模式的持久化</h4>
+<ul class="point">
+<li><b>全量持久化即在持久化触发的时刻，将当时的状态(所有db的key-value值)完全保存下来，形成一个snapshot</b>
+<ul class="quote">
+<li>Redis的全量写入包含两种方式：SAVE和BGSAVE。</li>
+<li>SAVE可以由客户端显式触发，也可以在redis shutdown时触发，无论以哪种形式触发，SAVE本身都是以普通命令的方式执行——单线程串行化地执行一个一个命令。</li>
+<li>BGSAVE可以由客户端通过命令显示触发、可以通过配置由定时任务触发(例如当上次持久化离现在已经积累了一定次数的变更且间隔时间超过一定值)，也可以在master-slave的分布式结构下由slave节点触发。</li>
+</ul>
+</li>
+<li><b>Redis重启时，通过加载最近一个snapshot数据，可将Redis恢复至最近一次持久化时的状态上</b>
+<ul class="quote">
+<li>从Redis启动到进入前文所述事件处理主循环时，Redis会从本地磁盘加载之前持久化的文件，将内存置于文件所描述的数据“状态”时，再受理后续来自客户端的数据访问命令。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>基于增量模式的持久化</h4>
+<ul class="point">
+<li><b>增量持久化保存的则是状态的每一次“变迁”</b>
+<ul class="quote">
+<li>在Redis中，增量持久化称为AOF(append-only file)方式，在此基础上以rewrite机制优化性能。</li>
+<li>Redis仅对数据的变化进行存储。</li>
+</ul>
+</li>
+<li><b>AOF的回放时机和全量回放一致，一旦存在AOF, Redis会选择增量回放而不是全量</b>
+<ul class="quote">
+<li>AOF通过loadAppendOnlyFile方法回放数据，回放过程其实就是将AOF中保存的命令重新执行一遍。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>基于增量模式持久化的优化</h4>
+<ul class="point">
+<li><b>Redis通过rewrite机制合并历史AOF记录</b>
+<ul class="quote">
+<li>随着Redis持续的执行命令，灰色方框中的增量数据会积累到大于某个状态快照的程度，此时将这些增量用快照来代替，以减少磁盘空间占用。</li>
+<li>rewrite通过bgrewrite方法实现，主循环运行到定时任务处理时，一旦Redis发现Rewrite条件满足，则通过rewriteAppendOnlyFileBackground函数fork出一个子进程，后者创建完成后获得了Redis主进程的数据状态，子进程将状态写入rewrite的AOF文件中。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch40"><summary>第8章 分布式Redis</summary>
+<div class="sec">
+<h4>Redis单实例的挑战</h4>
+<ul class="point">
+<li><b>数据量伸缩和访问量伸缩的挑战</b>
+<ul class="quote">
+<li>单实例Redis存储的key-value对的数量受限于单机的内存和磁盘容量。</li>
+<li>单实例Redis单线程地运行，吞吐量受限于单次请求处理的平均时耗。</li>
+</ul>
+</li>
+<li><b>单点故障的挑战</b>
+<ul class="quote">
+<li>Redis持久化机制一定程度上缓解了宕机/重启带来的业务数据丢失问题，但当单实例所在的物理节点发生不可恢复故障时，如何保证业务数据不丢以及如何在故障期间迅速地恢复对应业务数据的可用性也成为单点结构的挑战。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>分布式Redis的解决方案</h4>
+<ul class="point">
+<li><b>水平拆分</b>
+<ul class="quote">
+<li>分布式环境下，节点分为不同的分组，每个分组处理业务数据的一个子集，分组之间的数据无交集。</li>
+<li>数据无交集的特性使得水平拆分解决了数据量瓶颈，随着分组的增加，单个分组承载的数据子集更小，即通过增加分组来伸缩数据量。</li>
+<li>同时水平拆分也也解决了访问量瓶颈，业务数据全集的请求被分摊到了不同分组，随着分组数的增加，数据全集的总吞吐量也增加，访问量的伸缩性得以实现。</li>
+</ul>
+</li>
+<li><b>主备复制</b>
+<ul class="quote">
+<li>同一份业务数据存在多个副本，对数据的每次访问根据一定规则分发到某一个或多个副本上执行。</li>
+<li>通过W+R&gt;N的读写配置可以做到读取数据内容的实时性。</li>
+<li>随着N的增加，当读写访问量差不多时，业务的吞吐量相比单实例会提升到逼近2倍。</li>
+</ul>
+</li>
+<li><b>故障转移</b>
+<ul class="quote">
+<li>当业务数据所在的节点故障时，这部分业务数据转移到其他节点上进行，使得故障节点在恢复期间，对应的业务数据仍然可用。</li>
+<li>为了支撑故障转移，业务数据需要保持多个副本，位于不同的节点上。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Redis的分布式实现</h4>
+<ul class="point">
+<li><b>sharding：水平拆分的支持。</b>
+</li>
+<li><b>replication：作为读写分离和故障转移的基础。</b>
+</li>
+<li><b>fail-detect：和replication配合，支撑故障转移。</b>
+</li>
+<li><b>cluster(all-in-one)：完整的分布式解决方案。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch41"><summary>8.1 水平拆分（sharding）</summary>
+<div class="sec">
+<h4>水平拆分(sharding)的概念和目的</h4>
+<ul class="point">
+<li><b>水平拆分是为了解决数据量和访问量增加后对单节点造成的性能压力</b>
+<ul class="quote">
+<li>水平拆分后的每个节点存储和处理的数据原则上没有交集，使得节点间相互独立。</li>
+<li>通过数据分布和路由请求的配合，可以做到数据存放和数据访问对水平拆分的适配。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>数据分布</h4>
+<ul class="point">
+<li><b>数据分布指的是一种映射关系f，每个业务数据key都能通过这种映射确定唯一的实例I</b>
+<ul class="quote">
+<li>常用的是映射有3种：hash映射、范围映射、hash和范围结合。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>请求路由</h4>
+<ul class="point">
+<li><b>请求路由是根据请求中涉及的Key，用对应的数据分布算法得出数据位于哪个实例，再将请求路由至该实例</b>
+<ul class="quote">
+<li>需要关注数据跨实例问题：只读的跨实例请求、跨实例的原子读写请求。</li>
+<li>在Redis Cluster之前，通常通过proxy代理层处理sharding逻辑。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch42"><summary>8.2 主备复制（replication）</summary>
+<div class="sec">
+<h4>主备复制的概念和流程</h4>
+<ul class="point">
+<li><b>Redis采用主备复制的方式保证一致性</b>
+<ul class="quote">
+<li>所有节点中，有一个节点为主节点(master)它对外提供写入服务，所有的数据变更由外界对master的写入触发，之后Redis内部异步地将数据从主节点复制到其他节点(slave)上。</li>
+</ul>
+</li>
+<li><b>主备复制由slave主动触发，主要流程包括六个步骤</b>
+<ul class="quote">
+<li>首先slave向master发起SYNC命令。</li>
+<li>master收到SYNC后，开启BGSAVE操作。</li>
+<li>BGSAVE完成后，master将快照信息发送给slave。</li>
+<li>发送期间，master收到的来自用户客户端的新的写命令，除了正常地响应之外，都再存入一份到backlog队列。</li>
+<li>快照信息发送完成后，master继续发送backlog队列信息。</li>
+<li>backlog发送完成后，后续的写操作同时发给slave，保持实时地异步复制。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>断点续传</h4>
+<ul class="point">
+<li><b>Redis的PSYNC(Partial Sync)可以用于替代SYNC，做到master-slave基于断点续传的主备同步协议</b>
+<ul class="quote">
+<li>master-slave两端通过维护一个offset记录当前已经同步过的命令，slave断开期间，master的客户端命令会保持在缓存中，在slave重连之后，告知master断开时的最新offset, master则将缓存中大于offset的数据发送给slave，而断开前已经同步过的数据，则不再重新同步，这样减少了数据传输开销。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch43"><summary>8.3 故障转移（failover）</summary>
+<div class="sec">
+<h4>Redis集群的failover机制</h4>
+<ul class="point">
+<li><b>Redis集群通过主备关系实现高可用性</b>
+<ul class="quote">
+<li>当master故障时，slave可以成为新的master，对外提供读写服务。</li>
+</ul>
+</li>
+<li><b>需要解决故障发现、failover决策协商机制等问题</b>
+<ul class="quote">
+<li>一个daemon进程监控着所有的master-slave节点，但存在单点问题。</li>
+<li>引入多个daemon，解决了可用性问题，但带来了一致性问题。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>sentinel间的相互感知</h4>
+<ul class="point">
+<li><b>sentinel节点间因为共同监视了同一个master节点从而相互也关联了起来</b>
+<ul class="quote">
+<li>新加入的sentinel节点需要和有相同监视的master的其他sentinel节点相互感知。</li>
+</ul>
+</li>
+<li><b>所有需要相互感知的sentinel都向他们共同的master节点上订阅相同的channel</b>
+<ul class="quote">
+<li>新加入的sentinel节点向这个channel发布一条消息，包含了自己信息，该channel的订阅者们就可以发现这个新的sentinel。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>master的故障发现</h4>
+<ul class="point">
+<li><b>sentinel节点通过定期地向master发送心跳包判断其存活状态</b>
+<ul class="quote">
+<li>一旦发现master没有正确地响应，sentinel将此master置为“主观不可用态”。</li>
+</ul>
+</li>
+<li><b>当确认的sentinel节点数&gt;=quorum时，则判定为该master为“客观不可用”</b>
+<ul class="quote">
+<li>随后进入failover流程。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>failover决策</h4>
+<ul class="point">
+<li><b>当一台master真正宕机后，可能多个sentinel节点同时发现了此问题并通过交互确认了相互的“主观不可用态”猜想，同时达到“客观不可用态”，同时打算发起failover</b>
+<ul class="quote">
+<li>最终只能有一个sentinel节点作为failover的发起者，此时需要开始一个leader选举的过程。</li>
+</ul>
+</li>
+<li><b>Redis的sentinel机制采用类似Raft协议实现这个选举算法</b>
+<ul class="quote">
+<li>leader sentinel确定之后，从master所有的slave中依据一定的规则选取一个作为新的master，告知其他slave连接这个新的master。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch44"><summary>8.4 Redis Cluster</summary>
+<div class="sec">
+<h4>Redis Cluster的拓扑结构</h4>
+<ul class="point">
+<li><b>Redis Cluster由多个Redis节点组构成，每个节点组对应数据sharding的一个分片</b>
+<ul class="quote">
+<li>节点组内部分为主备两类节点，对应前述章节的master和slave节点。</li>
+<li>只有master节点对用户提供写服务，读服务可以由master或者slave提供。</li>
+</ul>
+</li>
+<li><b>Redis Cluster的节点间通过Redis Cluster Bus交互，交换关键信息</b>
+<ul class="quote">
+<li>数据分片(slot)和节点的对应关系。</li>
+<li>集群中每个节点可用状态。</li>
+<li>集群结构(配置)发生变更时，通过一定的协议对配置信息达成一致。</li>
+<li>publish/subscribe(发布/订阅)功能在cluster版的内部实现所需要交互的信息。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Redis Cluster配置的一致性</h4>
+<ul class="point">
+<li><b>Redis Cluster通过引入两个自增的epoch变量来使得集群配置在各个节点间达成最终一致</b>
+<ul class="quote">
+<li>配置信息的数据结构：每个节点内部都保存了集群的配置信息，这些信息存储在clusterState中。</li>
+<li>信息交互：由于去中心化的架构下不存在统一的配置中心，各个节点对整个集群状态的认知来自于节点间的信息交互。</li>
+<li>一致性的达成：当集群结构不发生变化的时候，集群中的各个节点通过gossip协议可以在几轮交互之后得知全集群的结构信息，且达到一致的状态。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Redis Cluster的sharding</h4>
+<ul class="point">
+<li><b>Redis Cluster将所有的数据划分为16384个分片(slot)，每个分片负责其中一部分</b>
+<ul class="quote">
+<li>数据分布的算法为：slotId=crc16(key)%16384。</li>
+<li>客户端根据slotId决定将请求路由到哪个Redis节点。</li>
+</ul>
+</li>
+<li><b>Redis Cluster的客户端相比单机Redis需要具备路由语义的识别能力，且具备一定的路由缓存能力</b>
+<ul class="quote">
+<li>当client访问的key不在对应Redis节点的slots中，Redis返回给client一个moved命令，告知其正确的路由信息。</li>
+<li>当cluster处在数据重分布(目前由人工触发)过程中时，可以通过ask命令控制客户端的路由。</li>
+</ul>
+</li>
+<li><b>分片的迁移：在一个稳定的Redis Cluster下，每一个slot对应的节点是确定的，但是在某些情况下，节点和分片的对应关系需要发生变更</b>
+<ul class="quote">
+<li>新的节点作为master加入。</li>
+<li>某个节点分组需要下线。</li>
+<li>负载不均需要调整slot分布。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Redis Cluster的failover</h4>
+<ul class="point">
+<li><b>Redis Cluster也具备一套完整的节点故障发现、故障状态一致性保证、主备切换机制</b>
+<ul class="quote">
+<li>failover的完整过程：故障发现、故障确认、slave选举、集群结构变更。</li>
+<li>故障发现：当某个master宕机时，宕机事件如何被集群其他节点感知。</li>
+<li>故障确认：多个节点就某个master是否宕机如何达成一致。</li>
+<li>slave选举：集群确认了某个master确实宕机后，如何将它的slave升级成新的master。</li>
+<li>结构变更通知：当slave收到超过半数的master的同意回复时，该slave顺利的替代B成为新master，此时它会以最新的epoch通过PONG消息广播自己成为master的信息，让集群中的其他节点尽快地更新拓扑信息。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Redis Cluster的可用性和性能</h4>
+<ul class="point">
+<li><b>Redis Cluster的读写分离：对于有读写分离需求的场景，应用对于某些读的请求允许舍弃一定的数据一致性，以换取更高的读吞吐量</b>
+<ul class="quote">
+<li>默认情况下，数据分片映射关系中，某个slot对应的节点一定是一个master节点，客户端通过MOVED消息得知的集群拓扑结构也只会将请求路由到各个master中，即便客户端将读请求直接发送到slave上，后者也会回复MOVED到master的响应。</li>
+<li>为此，Redis Cluster引入了READONLY命令。客户端向slave发送该命令后，slave对于读操作，将不再MOVED回master而是直接处理，这称为slave的READONLY模式。通过READWRITE命令，可将slave的readonly模式重置。</li>
+</ul>
+</li>
+<li><b>master单点保护：假设集群的结构如图8-14所示：A、B这两个master分别有1、2个自己的slave，假设A1发生宕机，集群变成图8-15所示的结构：此时A成为了单点，一旦A再次宕机，将造成不可用。此时Redis Cluster会将B的某一个slave(假设是B1)进行副本迁移，让其变成A的slave，如图8-16所示</b>
+<ul class="quote">
+<li>这使得集群中每个master至少有一个slave，即高可用状态。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch45"><summary>第9章 Tair探秘</summary>
+<div class="sec">
+<h4>Tair概述</h4>
+<ul class="point">
+<li><b>Tair是淘宝开发的一个优秀的分布式高可用的key/value存储引擎</b>
+<ul class="quote">
+<li>Tair采用服务端自动负载均衡的方式，使客户端逻辑简单。</li>
+</ul>
+</li>
+<li><b>Tair分为持久化和非持久化两种使用方式</b>
+<ul class="quote">
+<li>非持久化的Tair可以看成是一个分布式缓存。</li>
+<li>持久化的Tair将数据存放于磁盘中。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Tair的存储引擎</h4>
+<ul class="point">
+<li><b>最新版本的Tair项目中实现了以下4种存储引擎：mdb、fdb、kdb和ldb</b>
+<ul class="quote">
+<li>这4种存储引擎分别基于四种开源的key/value数据库：Memcached、Firebird、Kyoto Cabinet和LevelDB。</li>
+<li>其中Firebird是关系型存储数据库，Memcached、Kyoto Cabinet和LevelDB是NoSQL数据库。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch46"><summary>9.1 Tair总体架构</summary>
+<div class="sec">
+<h4>Tair总体架构</h4>
+<ul class="point">
+<li><b>Tair集群主要包括Client、Config Server和DataServer三个不同的应用</b>
+<ul class="quote">
+<li>Config Server通过和Data Server的心跳(HeartBeat)维护集群中可用的节点，并根据可用的节点，构建数据的在集群中的分布信息。</li>
+<li>Client在初始化时，从Config Server处获取数据的分布信息，根据分布信息和相应的Data Server交互完成用户的请求。</li>
+<li>Data Server负责数据的存储，并按照Config Server的指示完成数据的复制和迁移工作。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch47"><summary>9.2 Config Server简介</summary>
+<div class="sec">
+<h4>Tair Config Server简介</h4>
+<ul class="point">
+<li><b>Tair的Config Server维护了集群内可用Data Server的信息，构建数据分布的对照表，以达到负载均衡和高可用的目标</b>
+<ul class="quote">
+<li>Config Server和client相互配合根据对照表决定数据的具体分布。</li>
+<li>如果Data Server宕机或扩容，Config Server负责协调数据迁移、管理进度，将数据迁移到负载较小的节点上。</li>
+</ul>
+</li>
+<li><b>Config Server维护的对照表有版本概念，由于集群变动或管理触发，构建新的对照表后，对照表的版本号递增</b>
+<ul class="quote">
+<li>通过Data Server的心跳，将新表同步给数据节点。</li>
+<li>客户端和Data Server交互时，Data Server每次都把自己缓存的对照表版本号放入response结构中，返回给客户端。</li>
+<li>客户端将Data Server的对照表版本号和自己缓存的对照表版本号比较，如果不相同，会主动和Config Server通信，请求新的对照表。</li>
+</ul>
+</li>
+<li><b>Tair的Config Server使客户端使用时，不需要配置数据节点列表，也不需要处理节点的状态变化</b>
+<ul class="quote">
+<li>这使得Tair对最终用户来说使用和配置都很简单。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Config Server的主要组件</h4>
+<ul class="point">
+<li><b>tair_cfg_svr.cpp、server_conf_thread.cpp：Config server的主文件</b>
+<ul class="quote">
+<li>tair_cfg_svr被执行后，会检查参数和配置，然后启动几个主要的线程：task_queue_thread，packet_transport，server_conf_thread，heartbeat_transport。</li>
+</ul>
+</li>
+<li><b>conf_server_table_manager.cpp：管理对照表的辅助类</b>
+<ul class="quote">
+<li>提供对照表持久化、取得一些元信息等功能，还提供打印对照表的功能，方便调试。</li>
+</ul>
+</li>
+<li><b>table_builder.cpp、table_builder1.cpp、table_builder2.cpp：构造对照表的实际逻辑</b>
+<ul class="quote">
+<li>table_builder，是基类，定义了构造对照表的主体逻辑。</li>
+<li>table_builder1，构建负载均衡策略对照表的实现类，继承了table_builder类。</li>
+<li>table_builder2，构建多数据中心策略对照表的实现类，继承了table_builder类。</li>
+</ul>
+</li>
+<li><b>group_info.cpp：负责处理group.conf和持久化文件$TAIR_DATA_DIR/data/group_1_server_table</b>
+<ul class="quote">
+<li>通过读取配置和持久化的信息，构建Data Server位置信息，供Config Server主逻辑使用。</li>
+</ul>
+</li>
+<li><b>server_info：记录Data Server存活信息的主要数据结构</b>
+<ul class="quote">
+<li>serverid:Data server在集群里的唯一标识，由ip和port构成。</li>
+<li>last_time：记录最后一次接收到该Data Server心跳时间。</li>
+<li>status：表示该Data Server的状态，有三种状态。</li>
+</ul>
+</li>
+<li><b>server_info_file_mapper.cpp、server_info_allocator.cpp：实现了server_info持久化逻辑</b>
+<ul class="quote">
+<li>持久化的文件存放在$TAIR_DATA_DIR/data目录下。</li>
+<li>server_info_allocator维护了server_info持久化化文件集合和其中包含的server_info数量。</li>
+</ul>
+</li>
+<li><b>stat_info_detail.cpp：存储统计信息</b>
+<ul class="quote">
+<li>主要的数据结构vector&lt;u64&gt; data_holder，包含GETCOUNT, PUTCOUNT, EVICTCOUNT, REMOVECOUNT, HITCOUNT, DATASIZE, USESIZE, ITEMCOUNT。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch48"><summary>9.3 Data Server简介</summary>
+<div class="sec">
+<h4>Data Server简介</h4>
+<ul class="point">
+<li><b>Data Server负责数据的物理存储，并根据Config Server构建的对照表完成数据的复制和迁移工作。</b>
+</li>
+<li><b>Data Server具备抽象的存储引擎层，可以很方便地添加新存储引擎</b>
+<ul class="quote">
+<li>Tair默认包含两个存储引擎：mdb和fdb。</li>
+</ul>
+</li>
+<li><b>Data Server支持自动的复制和迁移，增强数据的安全性</b>
+<ul class="quote">
+<li>当数据写入一个Data Server(主节点)后，主节点会根据对照表自动将数据写入到其他备份节点。</li>
+<li>当有新Data Server加入或者有Data Server不可用时，Config Server会根据当前可用的Data Server列表，重新构建对照表。</li>
+</ul>
+</li>
+<li><b>Data Server内置了一个插件容器，可以支持热插拔插件</b>
+<ul class="quote">
+<li>插件由Config Server配置，Config Server会将插件配置同步给各个数据节点，数据节点会负责加载/卸载相应的插件。</li>
+<li>插件分为request和response两类，可以分别在request和response时执行相应的操作。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Data Server的主要组成模块</h4>
+<ul class="point">
+<li><b>Data Server的主要应用逻辑在tair_server.cpp中实现</b>
+<ul class="quote">
+<li>在tair_server::start函数中，启动了几个线程：task_queue_thread、duplicate_task_queue_thread、heartbeat。</li>
+<li>tbnet::transport提供了epoll处理支持，包括监听端口、连接复用等。</li>
+<li>task_queue_thread，用于处理客户端的请求包，例如，put、get、range等命令的请求包。</li>
+<li>duplicate_task_queue_thread，用于处理其他Data server发送来的数据复制相关的请求包。</li>
+<li>request_processor，处理由task_queue和duplicate_task_queue两个线程解包出来的命令，实现put、get、range等命令的逻辑。</li>
+<li>heartbeat用于处理心跳数据，数据包的处理由heartbeat_thread:: handlePacket进行处理。</li>
+</ul>
+</li>
+<li><b>通过重载的process函数，request_processor处理put、get、range等请求</b>
+<ul class="quote">
+<li>Tair接收到请求后，会循环处理每一个key，如果key在迁移，会发送数据迁移的响应给客户端，客户端重新获取数据分布后，到新的Data Server操作相应的数据。</li>
+<li>处理过程中会调用性能监控工具，统计相应的性能数据。</li>
+</ul>
+</li>
+<li><b>业务流程的第二层定义在tair_manager.cpp中实现</b>
+<ul class="quote">
+<li>get的流程，确定bucket -&gt; 调用storage_mgr获取数据 -&gt; 返回数据。</li>
+<li>put的流程，将area合并到key里 -&gt; 调用storage_mgr -&gt; 通过hash_table确定怎样复制数据。</li>
+</ul>
+</li>
+<li><b>存储引擎的接口在storage_manager.cpp中实现</b>
+<ul class="quote">
+<li>不同的存储引擎支持的主要功能(还有一些辅助功能没有列出)如表9-1所示。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch49"><summary>9.4 Tair高可用和负载均衡</summary>
+<div class="sec">
+<h4>Tair高可用和负载均衡的实现</h4>
+<ul class="point">
+<li><b>Tair通过对照表和数据迁移两大功能支撑高可用和负载均衡</b>
+<ul class="quote">
+<li>对照表将数据分为若干个桶，并根据机器数量、机器位置进行负载均衡和副本放置，确保数据分布均匀，并且在多机房有数据副本。</li>
+<li>在集群发生变化时，会重新计算对照表，并进行数据迁移。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>对照表的初始化</h4>
+<ul class="point">
+<li><b>对照表的初始化过程包括对照表的生成和重建</b>
+<ul class="quote">
+<li>在tair_cfg_svr程序启动之后，会调用tair_config_server::start()，这个方法会调用my_server_conf_thread.start()。</li>
+<li>my_server_conf_thread有个属性table_builder_thread builder_thread，这个类在构造方法里，会调用自己的start方法，把自己启动为一个线程。这个线程会每秒钟检查一次是否需要重新构造对照表。如果需要重新构造，就调用组对象的rebuild方法重新构建对照表。</li>
+</ul>
+</li>
+<li><b>对照表的重建有三种策略选择，可以通过group.conf中的_build_strategy配置项进行配置</b>
+<ul class="quote">
+<li>_build_strategy=1表示所有机器不分机房。</li>
+<li>_build_strategy=2表示按照机房分组。</li>
+<li>_build_strategy=3表示让Config server自动决定使用哪种模式。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>负载均衡策略</h4>
+<ul class="point">
+<li><b>采用负载均衡策略(_build_strategy=1)建出的对照表将使bucket会均衡分布到集群中的Data server上</b>
+<ul class="quote">
+<li>假设共有X个桶，Y个副本，N个节点，那么在负载均衡优先的策略下，每个节点存放桶最少的个数为：(X*Y)/N。</li>
+<li>如果(X*Y)%N等于0，每个节点就会存放相同数量的桶。如果(X*Y)%N不等于0，那么将有(X*Y)%N个节点将负载(X*Y)/N+1个桶。</li>
+</ul>
+</li>
+<li><b>单机架负载均衡策略情况下，对照表的初始化过程相对简单</b>
+<ul class="quote">
+<li>假设Tair正常运行时，有M1～M6节点存活，列表如表9-2所示。</li>
+<li>假设集群处于稳定状态，某一时刻的对照表如表9-3所示。</li>
+<li>假设在某一时刻，节点M4宕机，Tair开始重构对照表的过程。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>多机架支持</h4>
+<ul class="point">
+<li><b>Tair的设计考虑了多机架支持，在机架/机房灾难的时候，确保异地有数据备份</b>
+<ul class="quote">
+<li>假设我们搭建Tair集群后，配置数据的副本数为3，搭建5个Data Server分布在两个机架上。Tair在建立对照表的时候，会确保每一份数据至少在两个机架的Data Server上至少有一个副本，如果数据在某一个机架上有两份副本，Tair会尽量使这两份副本分布在不同的Data Server上。</li>
+</ul>
+</li>
+<li><b>Tair在多机架情况下对照表的建立过程包括对照表的生成和重建</b>
+<ul class="quote">
+<li>Config server建立Data server列表之后，将调用group_info::rebuild方法重建对照表。</li>
+<li>第一步，由于新启动，对对照表进行初始化。</li>
+<li>第二步，计算每个Data Server上当前存放的数据副本数量和主副本数量。</li>
+<li>第三步，计算每个Data server的容量上限。</li>
+<li>第四步，确定每个副本存放的Data Server。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>数据迁移</h4>
+<ul class="point">
+<li><b>Tair每次重新构造对照表之后，会将新的对照表发送给Data Server，Data Server拿到新的对照表后，将需要迁移的数据迁移到对应的Data Server</b>
+<ul class="quote">
+<li>Data Server收到新的对照表后，通过计算，如果发现需要迁移的数据列表不为空，就通过migrate_manager::set_migrate_server_list方法，把迁移列表写入migrate_manager的迁移列表里。</li>
+<li>migrate_manager是Data server启动后，就启动的一个线程，不断扫描自己的迁移表，发现迁移表不为空的时候，就进行数据迁移的工作。</li>
+<li>具体的迁移逻辑在migrate_manager::do_migrate_one_bucket方法里，主要的逻辑是，开始迁移数据时，设置current_migrating_bucket为当前正在迁移的桶id，之后，Data server写入这个桶时，都会写入redolog。然后migrate_manager开始迁移内存中桶的数据(或ldb文件中的数据)。数据迁移完成后，迁移redolog。redolog迁移完成后，将这个桶标记为迁移完成，并把迁移完成信息发送给Config Server。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch50"><summary>9.5 存储引擎</summary>
+<div class="sec">
+<h4>Tair的存储引擎</h4>
+<ul class="point">
+<li><b>Tair的存储引擎有一个抽象层，只要满足存储引擎需要的接口，便可以很方便地替换Tair底层的存储引擎</b>
+<ul class="quote">
+<li>比如，如果有需要，可以对bdb、tc甚至MySQL进行包装，作为Tair的存储引擎。</li>
+</ul>
+</li>
+<li><b>开源的Tair默认包含四个存储引擎：mdb、fdb、kdb、ldb</b>
+<ul class="quote">
+<li>分别基于四种开源的数据存储：Memcached、Firebird、Kyoto Cabinet和LevelDB。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>mdb存储引擎</h4>
+<ul class="point">
+<li><b>mdb是一个高效的缓存存储引擎，它有着和memcached类似的内存管理方式</b>
+<ul class="quote">
+<li>mdb支持使用share memory，这使得我们在重启Tair数据节点的进程时不会导致数据的丢失。</li>
+</ul>
+</li>
+<li><b>Tair MDB最主要的四个数据结构为：mem_pool，mem_cache，cache_hash_map，mdb_area_stat</b>
+<ul class="quote">
+<li>mem_pool主要用于内存管理，Tair通过将内存分为若干个page管理内存。</li>
+<li>mem_cache中主要存放了slab_manager的列表。</li>
+<li>cache_hash_map中主要存储了一个hashtable，这个hashtable是一个hash表，按照数据的key进行hash, hash冲突的时候，产生一个链表。</li>
+<li>mdb_area_stat中维护了area的相关数据，主要记录了area的数据量限制和属于某个area的所有数据的链表。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch51"><summary>9.6 Tair的API</summary>
+<div class="sec">
+<h4>Tair的key/value相关API</h4>
+<ul class="point">
+<li><b>key/value操作API包括get、put、incr、decr、lock、unlock、batchPut、batchGet、batchLock、batchUnlock、hideByProxy、expire等</b>
+<ul class="quote">
+<li>get(short ns, byte[] key, TairOption opt)：获取某个key的值。</li>
+<li>getHidden(short ns, byte[] key, TairOption opt)：用于获取被标记为隐藏的key。</li>
+<li>put(short ns, byte[] key, byte[] value, TairOption opt)：设置key/value。</li>
+<li>incr(short ns, byte[] key, int value, int defaultValue, TairOption opt)：对计数器扣减。</li>
+<li>incr(short ns, byte[] key, int value, int defaultValue, int lowBound, int upperBound, TairOption opt)：对计数器增加。</li>
+<li>setCount(short ns, byte[] key, int count, TairOption opt)：对计数器设置值。</li>
+<li>decr(short ns, byte[] key, int value, int defaultValue, TairOption opt)：对计数器扣减。</li>
+<li>decr(short ns, byte[] key, int value, int defaultValue, int lowBound, int upperBound, TairOption opt)：对计数器扣减。</li>
+<li>lock(short ns, byte[] key, TairOption opt)：锁定某个key。</li>
+<li>unlock(short ns, byte[] key, TairOption opt)：解除某个key的锁定。</li>
+<li>batchPut(short ns, Map&lt;byte[], byte[]&gt; kv, TairOption opt)：批量put。</li>
+<li>batchGet(short ns, List&lt;byte[]&gt; keys, TairOption opt)：批量get。</li>
+<li>batchLock(short ns, List&lt;byte[]&gt; keys, TairOption opt)：批量锁定。</li>
+<li>batchUnlock(short ns, List&lt;byte[]&gt; keys, TairOption opt)：批量解锁。</li>
+<li>hideByProxy(short ns, byte[] key, TairOption opt)：隐藏某个key。</li>
+<li>expire(short ns, byte[] key, TairOption opt)：设置某个key的失效时间。</li>
+</ul>
+</li>
+<li><b>Tair中的每个数据都包含版本号，版本号在每次更新后都会递增</b>
+<ul class="quote">
+<li>这个特性可以帮助防止数据的并发更新导致的问题。</li>
+<li>Tair无法解决这个问题，但是引入了version机制避免这样的问题。</li>
+<li>在执行put操作的时候，会首先把原来存储的数据拿出来，对比version。</li>
+<li>如果version不匹配，返回错误；如果version匹配，则更新数据，并增加版本号。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Tair的prefix相关API</h4>
+<ul class="point">
+<li><b>prefix操作，类似于Redis的hash数据类型</b>
+<ul class="quote">
+<li>支持的API包括prefixPut、prefixGet、prefixGetHidden、prefixPutMulti、prefixPutMulti、prefixSetCountMulti、prefixGetMulti、prefixGetHiddenMulti、prefixSetCount、prefixIncr、prefixIncr、prefixDecr、prefixDecr、prefixIncrMulti、prefixIncrMulti、prefixDecrMulti、prefixDecrMulti、batchPrefixGetMulti、batchPrefixGetHiddenMulti、getRange、deleteRange、getRangeKey、getRangeValue。</li>
+</ul>
+</li>
+<li><b>Tair在接收到含有prefix的请求后，会按照prefix计算hash，因此，同一个namespace下的同一个prefix，会hash到同一个hashtable位置，形成一个链表</b>
+<ul class="quote">
+<li>后续通过prefix操作时，都是操作的这个链表。</li>
+</ul>
+</li>
+<li><b>Range操作注意，mdb、fdb、kdb引擎不支持range操作，需要更换为ldb引擎</b>
+<ul class="quote">
+<li>使用getRange的示例代码如下。</li>
+<li>运行结果如下。</li>
+<li>结果分析：成功获取到了前缀为leo的key-value对应关系。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch52"><summary>第10章 EVCache探秘</summary>
+<div class="sec">
+<h4>EVCache概述</h4>
+<ul class="point">
+<li><b>EVCache是一个开源、快速的分布式缓存，基于Memcached的内存存储和Spymem-cached客户端实现。</b>
+</li>
+<li><b>EVCache主要用在亚马逊弹性计算云服务(AWS EC2)的基础设施上，为云计算做了优化。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>EVCache的主要功能</h4>
+<ul class="point">
+<li><b>分布式键值对存储</b>
+<ul class="quote">
+<li>EVCache实现的主要功能包括分布式键值对存储。</li>
+</ul>
+</li>
+<li><b>亚马逊云服务的跨区域数据复制</b>
+<ul class="quote">
+<li>EVCache可以实现跨区域数据复制。</li>
+</ul>
+</li>
+<li><b>注册和自动发现新节点或者新服务。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>EVCache的应用场景</h4>
+<ul class="point">
+<li><b>对上下文一致性要求不高的场景。</b>
+</li>
+<li><b>可扩展性可以处理非常大的流量。</b>
+</li>
+<li><b>提供了健壮的应用编程接口。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch53"><summary>10.1 EVCache项目介绍</summary>
+<div class="sec">
+<h4>EVCache项目介绍</h4>
+<ul class="point">
+<li><b>EVCache是Netflix开源软件项目中的一个重要成员，位于控制平面，是一个被广泛使用的数据缓存服务</b>
+<ul class="quote">
+<li>EVCache所提供的低延迟且高可用的缓存方案可以很好地满足Netflix微服务架构需要，也用来做一般数据的存储。</li>
+</ul>
+</li>
+<li><b>EVCache具有分布式的键值对存储，数据可以跨越亚马逊云服务的可用区进行复制等特点</b>
+<ul class="quote">
+<li>通过Netflix内部的命名服务进行注册，自动发现新节点和服务。</li>
+<li>为了存储数据，键是非空字符串，值可以是非空的字节数组，基本类型，或者序列化对象，且小于1 MB。</li>
+<li>作为通用的缓存集群被各种应用使用，支持可选的缓存名称，通过命名空间避免主键冲突。</li>
+<li>一般的缓存命中率在99%以上。</li>
+<li>与Netflix驻留数据框架能够良好协作，典型的访问次序：内存→EVCache→Cassandra/SimpleDB/S3。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>EVCache的由来</h4>
+<ul class="point">
+<li><b>EVCache是为了应对用户和服务日益增长的需求，Netflix在全球建立了EVCache分布式系统</b>
+<ul class="quote">
+<li>Netflix的服务在全球130个多个国家上线了，很多国家都可以使用。</li>
+<li>为了应对用户和服务日益增长的需求，Netflix在全球建立了EVCache分布式系统。</li>
+</ul>
+</li>
+<li><b>EVCache是专门为这些情况而设计的缓存产品，这是建立在于全局复制基础上的，同时也考虑了强一致性</b>
+<ul class="quote">
+<li>例如，如果爱尔兰和弗吉尼亚的推荐内容有轻微差别，这些差别不会伤害到用户浏览和观看体验，对于非重要的数据，会严重依赖最终一致性模型进行复制，本地和全局两个缓存的差别保持在一个可以容忍的很短的时间内，这就大大简化了数据的复制。</li>
+<li>EVCache的并不需要处理全局锁、事务更新、部分提交回滚或其他分布式一致性有关的复杂问题。即使在跨区域复制变慢的情况下，也不会影响性能和本地缓存的可靠性，所有复制都是异步的，复制系统能够在不影响本地缓存操作的情况下悄悄地进行。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>EVCache的发展</h4>
+<ul class="point">
+<li><b>EVCache作为Netflix系统中最大的子系统之一，在系统优化中占有相当的比例，地位独一无二</b>
+<ul class="quote">
+<li>所有数据存储在内存的成本随着用户基数的增长而上扬，单日个性化批处理输出将加载超过5 TB的数据到EVCache集群。</li>
+<li>数据存储成本是存储数据与全局副本个数的乘积。</li>
+</ul>
+</li>
+<li><b>Netflix开始使用RocksDB来降低EVCache的存储成本，同时保持了相对低的请求延迟</b>
+<ul class="quote">
+<li>Netflix引入了多级缓存机制，即同时使用RAM和SSD。</li>
+<li>根据不同区域不同数据访问的情况，Netflix构建了一个系统将热数据存储在RAM，冷数据存储在硬盘。</li>
+<li>内存型EVCache集群运行在AWS r3系列的实例类型上，对大规模内存的使用进行了优化。通过转移到i2系列的实例上，在相同的RAM和CPU的条件下，可以获得比SSD存储(r3系)扩大十倍的增益(80→800GB，从r3.xlarge到i2.xlarge)。</li>
+<li>Netflix也降级了实例的大小到小型内存实例上。结合这两点，就可以在数千台服务器上做优先的成本优化了。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>EVCache的演进</h4>
+<ul class="point">
+<li><b>Moneta项目在EVCahce服务器中引入了2个新的进程：Rend和Mnemonic</b>
+<ul class="quote">
+<li>Rend是用Go语言写的一个高性能代理，Mnemonic是一个基于RocksDB的硬盘型键值对存储。</li>
+<li>Mnemonic重用了Rend服务器组件来处理协议解析(如Memcached协议)，连接管理和并行锁。</li>
+</ul>
+</li>
+<li><b>Rend代理服务是一个高性能服务器，使用二进制和文本Memcached协议进行通信</b>
+<ul class="quote">
+<li>Rend的职责是管理L1和L2缓存的关系，根据不同的内部使用场景采用不同的策略，还具有裁剪数据的特性，能够将数据分割成固定的大小插入到Memcached中以避免内存分配时的病态行为。</li>
+<li>Rend的设计是模块化的，并且可配置。</li>
+</ul>
+</li>
+<li><b>Mnemonic存储是基于RocksDB的L2解决方案，在硬盘上存储数据</b>
+<ul class="quote">
+<li>Mnemonic中有趣的部分是在C++的核心层封装了RocksDB。</li>
+<li>Mnemonic处理Memcached协议风格的请求，实现了Memcached的所需操作，包括TTL支持。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch54"><summary>10.2 EVCache的使用场景</summary>
+<div class="sec">
+<h4>EVCache的使用场景</h4>
+<ul class="point">
+<li><b>EVCache在Netflix服务系统中有超过25个的不同用例</b>
+<ul class="quote">
+<li>一个特殊的用例是用户主页，决定哪些内容展示给一个特定的用户，这就需要知道该用户的兴趣爱好，观影历史，队列，评分等。</li>
+</ul>
+</li>
+<li><b>Netflix的用户体验重度依赖于大容量、低时延、全球可用的缓存数据层</b>
+<ul class="quote">
+<li>例如，用户坐在沙发上看电影或者电视节目，在用户的每一次交互中都有缓存的身影，从会话存储到视频历史，到用户状态，都得益于EVCache的稳定和高容错性。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>典型用例——向用户推荐与已看历史中节目类似的电影或者电视节目</h4>
+<ul class="point">
+<li><b>内容相似性推荐服务给出了与已看历史中节目类似的电影或者电视节目的相似性列表</b>
+<ul class="quote">
+<li>一旦计算出了相似性，就存储在SimpleDB/S3中，前端使用EVCache。</li>
+</ul>
+</li>
+<li><b>当任何应用或者算法需要这些数据的时候，可以从EVCache提取数据，并返回结果</b>
+<ul class="quote">
+<li>1)一个客户向Web应用发了一个页面请求，处理这一请求需要得到一个电影或电视节目的相似性列表。</li>
+<li>2)Web应用查询EVCache来得到这些数据，这样场景的典型缓存命中率高于99.9%。</li>
+<li>3)如果缓存没有命中，Web应用将调用相似性计算服务来计算这些数据。</li>
+<li>4)如果已经计算过的数据也没有命中的话，相似性计算服务将从SimpleDB中读取数据。</li>
+<li>5)相似性计算服务在计算出电影或电视节目的数据后，将数据写入到EVCache中。</li>
+<li>6)最后，相似性计算服务生成客户端所需要的响应并返回给客户端。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>典型部署</h4>
+<ul class="point">
+<li><b>EVCache是线性扩展的，通过容量监控，可以在一分钟内扩容，在几分钟内完成重新均衡和数据预热</b>
+<ul class="quote">
+<li>需要注意的是，Netflix有一个漂亮的容量模型，所有容量的改变并不频繁，而且在管理缓存命中率时有更好的扩容方法。</li>
+</ul>
+</li>
+<li><b>单节点部署</b>
+<ul class="quote">
+<li>启动的时候，EVCache服务器将各个实例注册到命名服务。</li>
+<li>在Web应用启动的时候，初始化EVCache客户端库，查询命名服务中的EVCache服务器列表，然后建立链接。</li>
+<li>当Web应用需要执行CRUD操作的时候，客户端通过键值选择一个实例来执行这些操作，使用一致性哈希将数据分片到集群上。</li>
+</ul>
+</li>
+<li><b>多可用区部署</b>
+<ul class="quote">
+<li>在可用区A和可用区B中各有一个EVCache集群，每个集群有3个实例，一个Web应用。</li>
+<li>集群启动的时候，可用区A的一个EVCache服务器实例向命名服务注册，声明可用区A和B都可以使用。</li>
+<li>在可用区A中的Web应用启动期间，Web应用初始化EVCache客户端来查询命名服务中的所有EVcache服务器实例，建立跨可用区的连接。</li>
+<li>当Zone-A需要从一个键读取数据的时候，EVCache客户端查询可用区Zone-A中的EVCache服务器实例，并从这个实例获取数据。</li>
+<li>当可用区Zone-A中的Web应用需要写或删除一个键的数据的时候，EVCache客户端查询可用区A和B中的EVCache服务器实例，并且写入或删除它。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch55"><summary>10.3 EVCache的性能</summary>
+<div class="sec">
+<h4>EVCache集群的性能</h4>
+<ul class="point">
+<li><b>EVCache集群在峰值每秒可以处理200K[H2]B的请求</b>
+<ul class="quote">
+<li>极端情况下，Netflix生产系统中部署的EVCache经常要处理超过每秒3000万请求，数千个Memcached实例存储上百个以十亿计的对象。</li>
+</ul>
+</li>
+<li><b>EVCache集群响应的平均时延大约是1～5毫米，99%都不会多于20毫秒</b>
+<ul class="quote">
+<li>EVCache集群的缓存命中率高于99%。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>全局化复制时的性能问题</h4>
+<ul class="point">
+<li><b>全局化复制的特点在于：队列中的复制消息只包含主键和一些元数据，并不包括实际需要更新写入的数据本身</b>
+<ul class="quote">
+<li>保存大量数据会加重Kafka的消耗，这里通过小而快速的Kafka部署，Kafka中不会保留所有缓存中已经存在的数据。</li>
+<li>复制中继服务会从本地缓存中抓取这些数据，因此也不再需要在Kafka中再有一份拷贝了。</li>
+</ul>
+</li>
+<li><b>99%的端到端复制延迟要求是在1秒以下，Netflix试图在各个地区在批处理消息时以牺牲一点延迟而得以提高吞吐量，99%的延迟时间大概在400ms左右</b>
+<ul class="quote">
+<li>使用持久连接，在中继服务服务之间使用持久连接以后，延迟和稳定性大大提高了。</li>
+<li>将多个消息汇集到一个请求以填满一个TCP窗口，这种方式会在集群之间提高吞吐量和降低时间延迟。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Moneta项目中的组件性能</h4>
+<ul class="point">
+<li><b>Rend的性能</b>
+<ul class="quote">
+<li>Rend自身有着很高的吞吐量，单个服务器，请求不发往后端存储，每秒可以处理286万请求。</li>
+<li>Rend可以承受每秒22.5万的插入操作，每秒20万的读操作。</li>
+<li>Rend拥有了2倍读和30倍写的速度提升。</li>
+</ul>
+</li>
+<li><b>Mnemonic数据存储的性能</b>
+<ul class="quote">
+<li>在预计算负载的期间，能够达到99%的读请求时延在9ms左右。</li>
+<li>对于同等水平的流量，99%的读操作削减到～600μs。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch56"><summary>10.4 EVCache的高可用性</summary>
+<div class="sec">
+<h4>EVCache的高可用性</h4>
+<ul class="point">
+<li><b>EVCache通过无数据丢失的高速缓存部署，可以避免缓存故障</b>
+<ul class="quote">
+<li>尽管个别实例可能会消亡，并且可能会定期这样做，但不会影响客户端应用程序。</li>
+</ul>
+</li>
+<li><b>EVCache拥有强大的容错能力，有很多服务使用EVCache作为一个独立的存储机制</b>
+<ul class="quote">
+<li>这意味着数据除了EVCache没有更适合的地方存放。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>AWS的多可用区</h4>
+<ul class="point">
+<li><b>AWS云服务在全球不同的地方都有数据中心，通过AWS的区域，一方面可以使得AWS云服务在地理位置上更加靠近用户，另一方面使得用户可以选择不同的区域存储他们的数据以满足法规遵循方面的要求</b>
+<ul class="quote">
+<li>AWS的每个区域一般由多个可用区(AZ)组成，而可用区一般是由多个数据中心组成。</li>
+<li>可用区与可用区之间在设计上是相互独立的，也就是说它们会有独立的供电、独立的网络等，这样假如一个可用区出现问题时也不会影响另外的可用区。</li>
+<li>在一个区域内，可用区与可用区之间通过高速网络连接，从而保证很低的延时。</li>
+</ul>
+</li>
+<li><b>EVCache实例通过将Amazon EC2放到多个可用区，能够预防应用的单点故障</b>
+<ul class="quote">
+<li>无论在相同的物理区域内还是在不同的物理区域之间，在多个AZ上运行独立的应用都是非常重要的。</li>
+<li>如果一个可用区失效了，在其他可用区上的应用可以继续运行，从而实现高可用性。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>EVCache对AWS高可用性的增强</h4>
+<ul class="point">
+<li><b>EVCache集群是不会挂掉的，当其中的实例偶然挂掉的时候，通过一致性哈希跨集群分片来使缓存的影响降到最低</b>
+<ul class="quote">
+<li>在保持高可用性的同时，操作EVCache集群的总体成本很低。</li>
+<li>缓存没有命中时访问亚马逊云服务的成本较高，如访问SimpleDB, AWS S3, EC2上的Cassandra等等。</li>
+<li>EVCache集群的总体成本在高稳定、线性扩展的条件下还是令人满意的。</li>
+</ul>
+</li>
+<li><b>EVCache除了跨可用区复制之外，还提供了跨区域复制，对基于AWS的高可用性进行了增强</b>
+<ul class="quote">
+<li>隐藏在需求后面的是数据或状态所需要的每个请求服务，必须是跨地区可用的。</li>
+<li>高可靠性数据库和高性能缓存是支持分布式架构的基础设施，一个典型场景是将缓存架构于数据库前面或其他持久存储前面。</li>
+<li>如果没有缓存的全局复制，一个地区的会员切换到另外一个地区时，会在新的地区缓存中没有原地区的数据，这种情况称为冷缓存。</li>
+<li>处理这种缓存数据丢失的办法只有重新从数据库加载，但是这种方式会延长响应时间并对数据库形成巨大冲击。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch57"><summary>10.5 源码与示例</summary>
+<div class="sec">
+<h4>EVCache源码浅析</h4>
+<ul class="point">
+<li><b>EVCache开源项目在github上的位置是https://github.com/Netflix/EVCache，以gradle作为构建工具</b>
+<ul class="quote">
+<li>除了与gradle相关的封装和文档资源外，主要提供了EVCacheproxy和EVCacheClient以及客户端示例代码。</li>
+</ul>
+</li>
+<li><b>EVCacheproxy提供了RESTful风格的编程接口，方便其他语言使用EVCache缓存服务</b>
+<ul class="quote">
+<li>在EVCacheClient中最醒目的文件是EVCache.java，它是一个抽象接口，定义了15种与服务器之间的操作。</li>
+</ul>
+</li>
+<li><b>EVCache抽象接口还定义了若干操作方法，更重要的是，采用创建者模式提供了Builder内部类</b>
+<ul class="quote">
+<li>通过应用名称、缓存名称、存活时间和转码器就可以创建一个EVCache缓存对象。</li>
+</ul>
+</li>
+<li><b>EVCache客户端将应用和网络做了分离，可以很方便地支持支持任何基于Memcached相关协议的客户端，易于扩展</b>
+<ul class="quote">
+<li>工具类在每个项目中都很常见，EVCache开源项目中的工具类有四个：EVCacheConfig, ServerConfigCircularIterator, Sneaky和ZoneFallbackIterator。</li>
+<li>异常处理也是每个项目中必不可少的，EVCache开源项目中异常类的继承关系如图10-18所示。</li>
+<li>EVCache开源项目中采用的是SpyMemcached来支持Memcached的协议。</li>
+<li>连接模块主要以工厂模式来实现客户端与服务器的连接管理，EVCache的BaseConnection-Factory同样继承自SpyMemcached的BinaryConnectionFactory。</li>
+<li>类EVCacheEvent描述了EVCache调用过程中的相关事件，主要功能包括：获得一个调用——Call的实体，应用名称，缓存的名称；设置/获取键的列表；设置/获取TTL；设置/获取缓存数据；设置/获取Latch；设置/获取其他属性等。</li>
+<li>EVCache提供了三个接口用于定义度量与监控的维度：Stats：操作完成的时间，以及每次的缓存命中和没有命中；Operation：记录启动和停止的时间，以及操作时长；EVCacheMetricsMBean：用于获得度量的具体参数。</li>
+<li>异步操作是EVCache的一个特色，主要是通过java.util.concurrent.Future实现的。</li>
+<li>线程池模块是EVCache的核心，基本上由四部分组成：线程池管理，节点管理，服务器群组配置和连接检测。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>EVCache示例</h4>
+<ul class="point">
+<li><b>由于Netflix没有开源EVcache的服务器部分，这里直接使用Memchached作为服务器，在Mac OS上展示EVCache的使用</b>
+<ul class="quote">
+<li>在Mac OS上，brew是一个很好的包管理器，使用brew来安装Memcached非常方便。</li>
+<li>为了模拟一个EVCache服务器群组，这里在本机上启动4个Memcached的实例，以默认端口11211开始，每个实例的缓存大小为1MB。</li>
+</ul>
+</li>
+<li><b>从github上克隆EVCache项目，执行gradle完成编译与构建</b>
+<ul class="quote">
+<li>由于要下载诸多第三方依赖，所以时间稍显漫长，严重依赖于所在网络的速度了，编译并构建成功的提示如下：BUILD SUCCESSFUL Total time: 47 mins 55.708 secs。</li>
+</ul>
+</li>
+<li><b>EVCache开源项目中给出的示例程序是一个独立的Java应用，使用本机的Memcached实例完成读写操作</b>
+<ul class="quote">
+<li>示例程序默认使用两个Memcached进程，将端口为11211和11212的两个实例作为一个数据分片的两个副本集。</li>
+<li>对于写操作，使用Future实现异步操作，在写入键值对的同时，需要指定缓存数据的生存周期。</li>
+<li>对于读操作，示例程序只是简单的调用了get方法。</li>
+<li>在main函数中，先写入了10个键值对，存活周期是24小时，然后在读出来打印就完成了示例程序的意图。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch58"><summary>第11章 Aerospike原理及广告业务应用</summary>
+<div class="sec">
+<h4>Aerospike简介</h4>
+<ul class="point">
+<li><b>Aerospike是一个分布式的，可扩展的键-值存储的NoSQL数据库。</b>
+</li>
+<li><b>Aerospike支持灵活的数据模式，并且支持满足ACID特性的事务。</b>
+</li>
+<li><b>Aerospike的主要优势是采用混合存储架构，数据索引信息存储在RAM中，而数据本身可以存储在SSD或HDD中。</b>
+</li>
+<li><b>Aerospike针对采用多核处理器和多处理器机器的现代硬件进行了优化</b>
+<ul class="quote">
+<li>通过直接硬盘访问(绕过文件系统)，可以带来难以置信的性能。</li>
+</ul>
+</li>
+<li><b>Aerospike主要应用于百G，数T等大规模并且并发在数万以上，对读写性能要求较高的场景。</b>
+</li>
+<li><b>Aerospike Server能够根据需求安装到多个数据中心多个集群的多个节点上</b>
+<ul class="quote">
+<li>方便扩展，只需要将节点添加到集群即可，Aerospike群集将自动在所有可用的服务器之间重新平衡数据负载，无须分片，无须人工干预。</li>
+<li>降低运维成本，具有业界最低的TCO(总体拥有成本)。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Aerospike架构原理。</h4>
+<ul class="point">
+</ul></div>
+<div class="sec">
+<h4>Aerospike集群部署的详细步骤。</h4>
+<ul class="point">
+</ul></div>
+<div class="sec">
+<h4>Aerospike基本用法。</h4>
+<ul class="point">
+</ul></div>
+<div class="sec">
+<h4>Aerospike在广告行业中的应用。</h4>
+<ul class="point">
+</ul></div>
+</details>
+<details class="ch" id="ch59"><summary>11.1 Aerospike架构</summary>
+<div class="sec">
+<h4>Aerospike架构概述</h4>
+<ul class="point">
+<li><b>Aerospike架构针对以下三个主要目标：创建一个满足当今网络平台应用的可弹性扩展平台；提供与传统数据库一样的鲁棒性和可靠性(比如ACID)；以最小的人工参与，提高运维效率，降低运维成本。</b>
+</li>
+<li><b>Aerospike整体架构分为三个层次：Client Layer, Distribution Layer, Data layer</b>
+<ul class="quote">
+<li>Client Layer负责访问Aerospike Server中的数据。</li>
+<li>Distribution Layer负责管理cluster内部数据的平衡分布、备份、容错和不同cluster之间的数据同步。</li>
+<li>Data Layer负责数据的存储。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Client Layer</h4>
+<ul class="point">
+<li><b>Aerospike Client支持绝大部分主流的语言，具有高效性、稳定性和连接池等特点</b>
+<ul class="quote">
+<li>Client的基础架构确保请求都能够到相应的节点上读写数据，减少响应时间。</li>
+<li>如果节点出错，不需要重启client端，并且保持服务的正确性。</li>
+<li>为了减少频繁的open/close TCP操作，Client会在内部维护一个连接池保持长连接。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Distribution Layer</h4>
+<ul class="point">
+<li><b>Distribution Layer主要包含三个模块：Cluster Management Module, Data Migration Module, Transaction Processing Module</b>
+<ul class="quote">
+<li>Cluster Management Module基于“Paxos-like Consensus Voting Process”算法来管理和维护cluster内的所有节点。</li>
+<li>Data Migration Module当有节点添加或移除时，该模块保证数据的重新分布。</li>
+<li>Transaction Processing Module确保读写的一致性，写操作先写Replica，再写Master。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Data Layer</h4>
+<ul class="point">
+<li><b>Aerospike是schema-less的键-值数据库，数据存储模式包括命名空间、索引和磁盘</b>
+<ul class="quote">
+<li>命名空间：数据存在namespace中(类比RDBMS中的database); namespace可以分为不同的sets(tables)和records(rows)；每条record包含一个唯一的key和一个或多个bins值(相当于cloumns)。</li>
+<li>索引：Aerospike Indexes包含Primary Indexes和Second Indexes，为了更高的性能，Aerospike Indexes只存储在内存中并不会存储在SSD中。</li>
+<li>磁盘：与其他基于文件系统数据库的不同之处，在于Aerospike为了达到更好的性能选择了直接访问SSD中的raw blocks(raw device)，并特别优化了Aerospike的最小化读、大块写和并行SSD来增加响应速度和吞吐量。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Aerospike XDR(Cross Data-Center Replication)</h4>
+<ul class="point">
+<li><b>Aerospike XDR同步的基本单位是record，具有实时性和稳定性</b>
+<ul class="quote">
+<li>实时性：Aerospike XDR同步的基本单位是record。</li>
+<li>稳定性：类似于Aerospike Client, XDR也具有良好的稳定性和错误处理能力，无论是local cluster的节点错误或是remote cluster的节点错误，XDR都能够保证服务的正确性。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch60"><summary>11.2 Aerospike具体实现</summary>
+<div class="sec">
+<h4>Aerospike集群管理</h4>
+<ul class="point">
+<li><b>集群管理子系统处理节点成员身份，并确保当前成员和所有集群中的节点保持一致</b>
+<ul class="quote">
+<li>集群管理子系统的具体目标是：在集群中的所有节点上达到当前集群成员的单一一致视图；自动检测新节点到达/离开的无缝集群重新配置；检测网络故障，并适应这种网络故障；最小化检测和适应集群成员资格更改的时间。</li>
+</ul>
+</li>
+<li><b>每个Aerospike节点都会自动分配唯一的节点标识符，是由MAC地址和监听端口组成的一个函数，集群视图由元组定义：&lt;cluster_key, succession_list&gt;</b>
+<ul class="quote">
+<li>cluster_key是一个随机生成的8字节值，用于标识集群视图的实例。</li>
+<li>succession_list是作为集群一部分的唯一节点标识符集合，它使Aerospike节点能够使用相同的成员节点集来区分两个集群视图。</li>
+</ul>
+</li>
+<li><b>通过在节点之间周期性地交换心跳消息来检测节点的到达或离开</b>
+<ul class="quote">
+<li>集群中的每个节点维护一个邻接表，它是最近向该节点发送心跳消息的其他节点的列表。</li>
+<li>离开集群的节点由于在可配置的超时时间间隔内没有检测到心跳消息，之后，它将从邻接列表中删除。</li>
+</ul>
+</li>
+<li><b>替代心跳机制：除了常规的心跳消息外，还使用节点间定期交换的其他消息作为备用的二次心跳机制</b>
+<ul class="quote">
+<li>例如，副本的写入被用作替代心跳消息。</li>
+</ul>
+</li>
+<li><b>节点健康评分：集群中的每个节点通过计算平均消息丢失来评估每个相邻节点的运行状态评分</b>
+<ul class="quote">
+<li>平均消息丢失超过所有节点的标准差的两倍的节点是异常值，并被认为是不健康的。</li>
+</ul>
+</li>
+<li><b>集群视图改变：从11.2.1节可知，邻接表一旦发生改变，就会触发运行一个Paxos共识算法来确定一个新的集群视图</b>
+<ul class="quote">
+<li>Aerospike把邻接表中节点标识符最高的节点当Proposer，并承担Proposal的角色。</li>
+<li>通过优化该算法尽可能减少集群中单个故障节点的影响。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>数据分布</h4>
+<ul class="point">
+<li><b>使用RipeMD160(RACE原始完整性校验消息摘要)算法将记录的主键散列成160字节的摘要，Digest Space被分为4096个不重叠的“分区”</b>
+<ul class="quote">
+<li>记录根据主键摘要进行分区。</li>
+</ul>
+</li>
+<li><b>索引和数据的分配结合数据分布散列函数，最终导致节点间数据分布一致性</b>
+<ul class="quote">
+<li>写入可能需要基于复制因子的多个节点之间的通信。</li>
+</ul>
+</li>
+<li><b>分区分配算法为每个分区生成复制列表，分区复制列表中的第一个节点是该分区的主节点，第二个节点是第一个的副本，第三个节点是第二个的副本，依此类推</b>
+<ul class="quote">
+<li>分区分配的结果称为分区映射。</li>
+<li>在一个格式正确的集群中，在任何给定的时间只有一个分区的主控。</li>
+<li>默认情况下，所有读/写流量都指向主节点。</li>
+<li>读取也可以通过运行时配置设置统一分布在所有副本中。</li>
+<li>Aerospike支持任何数量的副本，从单个副本到与集群中的节点一样多的副本。</li>
+</ul>
+</li>
+<li><b>分区分配算法具有确定性，实现群集中所有节点上的主分区和副本分区的统一分配，以及在集群视图更改期间，尽量减少分区的移动</b>
+<ul class="quote">
+<li>函数REPLICATION_LIST_ASSIGN(partitionid)为每个分区生成复制列表。</li>
+<li>函数NODE_HASH_COMPUTE(nodeid, partitionid)计算节点和分区的哈希值。</li>
+<li>考虑有节点挂掉的情况，很容易从分区复制列表中看出，该节点将简单地从复制列表中删除，导致所有后续节点的左移位。</li>
+<li>如果此节点没有托管分区的副本，则此分区将不需要数据迁移。</li>
+<li>如果这个节点托管有数据的副本，一个新节点将取代它的位置。</li>
+<li>一旦达成了新的集群视图，集群中的所有节点都将运行分布式分区分配算法，并将主节点和一个或多个副本节点分配给每个分区。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch61"><summary>11.3 Aerospike集群配置和部署</summary>
+<div class="sec">
+<h4>Aerospike集群配置和部署概述</h4>
+<ul class="point">
+<li><b>Aerospike集群配置和部署简单，只需做相应配置，并保证集群中所有的节点在同一个局域网内</b>
+<ul class="quote">
+<li>Aerospike通过机架感知的方式组成一个集群。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>搭建集群的方式与配置</h4>
+<ul class="point">
+<li><b>Aerospike使用Multicast(UDP)组播方式和Mesh(TCP)网格方式定义一个集群</b>
+<ul class="quote">
+<li>Multicast利用IP :POST(IP地址和端口号)向局域网内可达的机器发送心跳信息。</li>
+<li>Mesh使用一个Aerospike服务器的地址来加入集群，使用TCP点对点心跳连接。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>部署集群</h4>
+<ul class="point">
+<li><b>安装Aerospike Server集群，并进行相应的配置</b>
+<ul class="quote">
+<li>下载Aerospike Server相应的版本并进行解压。</li>
+<li>初始化Aerospike的home目录。</li>
+<li>配置集群的心跳方式。</li>
+<li>配置数据的储存方式。</li>
+<li>启动各机器的各个Aerospike实例。</li>
+</ul>
+</li>
+<li><b>安装Aeropsike工具包和集群监控控制台(AMC)</b>
+<ul class="quote">
+<li>安装Aeropsike工具包。</li>
+<li>安装集群监控控制台(AMC)。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch62"><summary>11.4 Aerospike与Redis的对比</summary>
+<div class="sec">
+<h4>Aerospike与Redis的对比</h4>
+<ul class="point">
+<li><b>Aerospike是多线程的，Redis是单线程的</b>
+<ul class="quote">
+<li>Redis需要开发人员自己管理分片并提供分片算法用于在各分片之间平衡数据。</li>
+<li>在Redis中，为了增加吞吐量，需要增加Redis分片的数量，并重构分片算法及重新平衡数据，这通常需要停机。</li>
+<li>在Redis中，如果需要复制及故障转移功能，则需要开发人员自己在应用程序层同步数据。</li>
+<li>Aerospike可以自动处理分片工作，动态增加数据卷和吞吐量，无须停机，并且Aerospike可以自动平衡数据和流量。</li>
+<li>Aerospike可以透明地完成故障转移。</li>
+</ul>
+</li>
+<li><b>Aerospike既可以完全在内存中运行，也可以利用Flash/SSD存储的优点，而Redis则完全依赖于内存存储。</b>
+</li>
+<li><b>从数据结构来看，Aerospike只支持单一的key/bins的结构，而redis支持的数据格式相对来说是多样化的，既有key/value，也有队列，数组，集合等。</b>
+</li>
+<li><b>从文档社区来看，Redis的社区相对成熟，有非常完善的文档和广泛的使用；而Aerospike社区不成熟，文档除了官网和国外的一些介绍，目前还没有系统的中文资料。</b>
+</li>
+<li><b>从主流应用来看，Redis主要是网页索引等更多需要高性能的架构中，而Aerospike则更加有针对性，主要是为了广告系统存储用户属性数据而设计。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Aerospike在广告行业中的应用</h4>
+<ul class="point">
+<li><b>Aerospike可以存储用户属性数据，满足广告系统对低延迟和高吞吐量的需求。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch63"><summary>11.5 Aeropsike在广告行业的具体应用</summary>
+<div class="sec">
+<h4>Aerospike在个性化推荐广告中的应用</h4>
+<ul class="point">
+<li><b>个性化推荐广告是建立在了解和掌握消费者独特的偏好和习性的基础之上，对消费者的购买需求做出准确的预期或引导</b>
+<ul class="quote">
+<li>用户行为日志收集系统收集日志之后推送到ETL做数据的清洗和转换，把ETL过后的数据发送到推荐引擎计算每个消费者的推荐结果。</li>
+<li>推荐逻辑包括规则和算法两部分，具体的规则有用户最近浏览、加入购物车、加入收藏等，算法则包括商品相似性、用户相似性、文本相似性、图片相似性等算法。</li>
+</ul>
+</li>
+<li><b>Aerospike的性能最优，能够方便地动态扩展，因此被选择为用户推荐信息的数据库</b>
+<ul class="quote">
+<li>在Aerospike Client端，为了更快的响应速度，选择了Aerospike Java，实现了异步和同步的读写操作。</li>
+<li>在Aerospike Server端，设置Replication factor=2，在确保当有一个node错误时服务的稳定性，并且避免硬件的浪费。同时在保持单机性能的情况下通过增加nodes数量，扩展Aerospike性能。</li>
+<li>在Aerospike Storage端，因为Aerospike要求不同的namespace必须在不同的物理设备上，所以我们只创建了必要的namespaces，动态的添加sets来分区不同的数据。为了更好地分离硬件和数据，我们选择了RAID 5，保证磁盘的损坏不影响数据。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Aerospike在实时竞价广告中的应用</h4>
+<ul class="point">
+<li><b>实时竞价广告是一种利用第三方技术在数以百万计的网站上针对每一个用户展示行为进行评估以及出价的竞价技术</b>
+<ul class="quote">
+<li>DSP竞价(RTB：实时竞价)胜出的关键是DMP能够根据用户的历史浏览等数据分析和定位用户属性。</li>
+<li>其中实时竞价广告中非常重要的一个环节就是UserProfile(用户画像)。</li>
+</ul>
+</li>
+<li><b>Aerospike被用作高性能的Nosql数据库，存储用户画像的标签结果</b>
+<ul class="quote">
+<li>分别通过HDFS和HBASE对日志进行离线和实时的分析，然后把用户画像的标签结果存入高性能的Nosql数据库Aerospike中，同时把数据备份到异地数据中心。</li>
+<li>前端广告投放请求通过决策引擎(投放引擎)向用户画像数据库中读取相应的用户画像数据，然后根据竞价算法出价进行竞价。</li>
+</ul>
+</li>
+<li><b>在用户画像系统中，缓存主要用来存储用户(设备)的标签属性</b>
+<ul class="quote">
+<li>根据不同的定向规则，定义的缓存数据格式不同。</li>
+<li>用户数据统一存储在缓存库UPF中，然后根据用户ID的加密类型(加密方式有MD5、SHA1、明文)分不同的缓存表，同时也会为每一个第三方adx请求过来的数据建立一个缓存库，主要的作用是为了多方数据的打通和相互利用。</li>
+</ul>
+</li>
+<li><b>在实践过程中遇到的问题及解决方案</b>
+<ul class="quote">
+<li>问题1：在用户画像系统中，经常要对各种标签的总人数进行统计。为了更快地获得统计结果，就需要用到索引的功能。</li>
+<li>问题2：在高并发写入和读的时候，性能瓶颈在带宽上。这个问题可以通过Aeospike提供的用户自定义函数(UDF)来进行优化。</li>
+<li>问题3：在搭建集群的时候就需要根据具体的业务情况搭建好namespace，否则在后续添加的时候会比较麻烦。</li>
+<li>问题4：对内存和磁盘的使用建议不要超过机器容量的60%。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch64"><summary>第12章 社交场景架构进化：从数据库到缓存</summary>
+<div class="sec">
+<h4>社交场景架构进化背景</h4>
+<ul class="point">
+<li><b>社交类应用面临业务吞吐量增加的性能风险。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>数据库解决方案及其问题</h4>
+<ul class="point">
+<li><b>relation、post、timeline三个模型的相关场景基于数据库的解决方案</b>
+<ul class="quote">
+<li>relation模型：关系表，存储用户之间的关系。</li>
+<li>post模型：消息表，存储用户发布的消息。</li>
+<li>timeline模型：时间线表，存储用户看到的所有消息。</li>
+</ul>
+</li>
+<li><b>数据库解决方案的问题：性能瓶颈</b>
+<ul class="quote">
+<li>随着业务吞吐量的增加，数据库的读写压力增大，导致性能瓶颈。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>缓存解决方案</h4>
+<ul class="point">
+<li><b>针对relation、post、timeline三个模型的相关场景引入缓存方案</b>
+<ul class="quote">
+<li>relation模型：使用缓存存储用户之间的关系，减少对数据库的访问。</li>
+<li>post模型：使用缓存存储用户发布的消息，减少对数据库的访问。</li>
+<li>timeline模型：使用缓存存储用户看到的所有消息，减少对数据库的访问。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>多机房部署中的缓存应用</h4>
+<ul class="point">
+<li><b>在机房本身面临瓶颈时，应用缓存辅助其多机房部署</b>
+<ul class="quote">
+<li>通过缓存分片，将请求分散到不同的机房，减轻单个机房的负载。</li>
+<li>使用缓存同步机制，保证多机房数据的一致性。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch65"><summary>12.1 社交业务示例</summary>
+<div class="sec">
+<h4>社交业务示例概述</h4>
+<ul class="point">
+<li><b>示例应用类似于微博的及时文本发布系统，允许用户相互关注并且浏览其关注用户发布的文本。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>业务模型</h4>
+<ul class="point">
+<li><b>发布内容(post)，单向关注(follow)，基于时间的内容流(timeline)</b>
+<ul class="quote">
+<li>有8个用户，其中用户A和A′关注了用户B，用户B又关注了用户C和C′。</li>
+<li>通过“关注”关系连接的各个用户就会形成一幅幅有向图，它们的边是关注关系，节点是用户。</li>
+<li>每一个用户都会发表帖子(post)，这些帖子根据时间排序，形成了帖子发布者的timeline。</li>
+<li>针对每一个用户的followee，其timeline根据其中post的发表时间排序，组成了这个用户的feed。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>业务场景</h4>
+<ul class="point">
+<li><b>主要页面包括feed页、timeline页和relation页</b>
+<ul class="quote">
+<li>feed页用于展示用户的followee们发布的帖子。</li>
+<li>timeline页用于展示指定用户发布的所有帖子。</li>
+<li>relation页展示用户的关系相关信息，包含两个子页面：followee页和follower页。</li>
+</ul>
+</li>
+<li><b>主要操作包括关系相关操作和内容相关操作</b>
+<ul class="quote">
+<li>关系相关操作：用户可以为自己增加、删除followee，即关注某个其他用户或者对其他某个用户取消关注；可以删除follower，即取消其他某个用户对自己的关注。</li>
+<li>内容相关操作：用户可以发布新的帖子，每当新帖子发布时，该用户的follower就可以在自己的feed页面看到帖子的内容、发布时间等信息；该用户的timeline页面也会展示出这条帖子。用户还可以删除自己发布的帖子，一旦删除，follower们的feed页里将不再出现这条帖子；用户自身的timeline页面也不再展示。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>业务特点</h4>
+<ul class="point">
+<li><b>海量的数据、高访问量、用户分布的非均匀、时间分布的非均匀、用户+时间的非均匀分布</b>
+<ul class="quote">
+<li>亿级的用户数量，每个用户千级的帖子数量，平均千级的follower/followee数量。</li>
+<li>每秒十万量级的平均页面访问，每秒万量级的帖子发布。</li>
+<li>部分用户的帖子数量/follower数量、相关页面访问量会超出其他用户一到数个量级。</li>
+<li>高峰时段的访问量、数据变更量高出非高峰时段一到数个量级；高峰时段的长短也非均匀分布，存在日常的高峰时段和突发事件的高峰时段。</li>
+<li>某个用户可能突然在某个时间成为热点用户，其follower可能陡增数个量级。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch66"><summary>12.2 关系（relation）的存储</summary>
+<div class="sec">
+<h4>基于DB的最简方案</h4>
+<ul class="point">
+<li><b>relation表主要有两个字段followerId和followeeId，一行relation记录表示用户关系拓扑的一条边</b>
+<ul class="quote">
+<li>userInfo表关注每个用户的详细信息，比如用户名、注册时间等描述信息。</li>
+</ul>
+</li>
+<li><b>某用户timeline/feed页面的relation摘要信息展示，可以通过两条SQL实现</b>
+<ul class="quote">
+<li>SELECT COUNT(＊) FROM table_relation WHERE followerId=&#x27;userB&#x27;;</li>
+<li>SELECT COUNT(＊) FROM table_relation WHERE followeeId=&#x27;userB&#x27;;</li>
+</ul>
+</li>
+<li><b>某用户relation页面详细信息展示，分成两个子页面：follower列表展示和followee列表展示</b>
+<ul class="quote">
+<li>SELECT followeeId FROM table_relation WHERE followerId=&#x27;userB&#x27;;</li>
+<li>SELECT userId, userInfo FROM table_user_info WHERE userId IN (#followeeId#...);</li>
+<li>SELECT followerId FROM table_relation WHERE followeeId=&#x27;userB&#x27;;</li>
+<li>SELECT userId, userInfo FROM table_user_info WHERE userId IN (#followerId#...);</li>
+</ul>
+</li>
+<li><b>某用户关注/取消关注某用户</b>
+<ul class="quote">
+<li>INSERT INTO table_relation (followerId, followeeId) VALUES (&#x27;userB&#x27;, &#x27;userC&#x27;) ;</li>
+<li>DELETE FROM table_relation WHERE followerId=&#x27;userB&#x27; and followeeId=&#x27;userC&#x27;。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>DB的sharding方案</h4>
+<ul class="point">
+<li><b>将原有的relation表垂直拆分为followee表和follower表，分表记录某个用户的关注者和被关注者</b>
+<ul class="quote">
+<li>接下来再对followee和follower两张表分别基于userId进行水平拆分。</li>
+</ul>
+</li>
+<li><b>某用户timeline/feed页面的relation摘要信息展示，可以通过两条SQL实现</b>
+<ul class="quote">
+<li>calculate sharding slide index by userB SELECT COUNT(＊) FROM table_followee_xx WHERE userId=&#x27;userB&#x27;;</li>
+<li>SELECT COUNT(＊) FROM table_follower_xx WHERE userId =&#x27;userB&#x27;;</li>
+</ul>
+</li>
+<li><b>某用户relation页面详细信息展示，分成两个子页面：follower列表展示和followee列表展示</b>
+<ul class="quote">
+<li>calculate sharding slide index by userB SELECT followeeId FROM table_followee WHERE followerId=&#x27;userB&#x27;;</li>
+<li>SELECT followerId FROM table_follower WHERE followeeId=&#x27;userB&#x27;;</li>
+<li>calculate sharding slide index by follower/followee Ids SELECT userId, userInfo FROM table_user_info WHERE userId IN (#followerId#..., #followerId#);</li>
+</ul>
+</li>
+<li><b>某用户关注某用户</b>
+<ul class="quote">
+<li>calculate sharding slide index by userB START TRANSACTION; INSERT INTO table_follower (userId, followerId) VALUES (‘userB&#x27;, &#x27;userC&#x27;) ; INSERT INTO table_followee (userId, followeeId) VALUES (‘userB&#x27;, &#x27;userC&#x27;) ; COMMIT。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>引入缓存</h4>
+<ul class="point">
+<li><b>在DB层，增加userInfo表的冗余信息，将每个用户的关注者和被关注者的数量存入DB</b>
+<ul class="quote">
+<li>同时引入缓存层，需要注意的是，与关系相关的两张表，在缓存层对应的value变成了列表。</li>
+<li>同时userInfo和userCnt相关信息也分别放入了不同的缓存表中，将DB的一张表分为两张缓存表，原因是info信息和cnt信息的展示场景不同，不同key的频度也不同。</li>
+<li>在最上层，对访问量极高的用户的info信息进行服务器端的本地缓存。</li>
+</ul>
+</li>
+<li><b>某用户timeline/feed页面的relation摘要信息展示：展示方式变成了首先根据用户B作为key查询缓存，未命中时，再查询DB</b>
+<ul class="quote">
+<li>某用户relation页面详细信息展示，分成两个子页面：follower列表展示和followee列表展示：同样首先查询follower和followee的缓存，对于频繁被查询的热点用户，它的数据一定在缓存中，由此将DB数据量最多、访问频度最高的用户挡在缓存外。</li>
+<li>对于每个用户的info信息，热点用户由于被更多的用户关注，他更有可能在详情页面被查询到，所以这类用户总是在本地缓存中能够查询到。同时，本地缓存设置一个不长的过期时间，使得它和分布式缓存层或者数据库层的数据不会长时间不同步。过期时间的设置和存放本地缓存的服务器数量相关。</li>
+<li>某用户关注/取消关注某用户：每一次插入/删除DB的记录时，同时需要对对应缓存的list进行变更。我们可以利用Redis的list/set类型value的原子操作，在一次Redis交互内实现list/set的增删。同时在DB的一个事务中，同时更新userInfo表的cnt字段。</li>
+<li>DB和缓存无法共处于同一个ACID的事务，所以当DB更新之后的缓存更新，通过在DB和缓存中引入两张变更表即可保证更新事件不丢失：DB每次变更时，在DB的事务中向变更表插入一条记录，同时有一个唯一的变更ID或者叫版本号，随后再在缓存中进行修改时，同时也设置这个版本号，再回过来删除DB的这条变更记录。如果缓存更新失败，通过引入定时任务补偿的方式保证变更一定会同步到缓存。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>缓存的优化方案</h4>
+<ul class="point">
+<li><b>对于实时变更着的follower/followee数量的频繁查询，采用数据库的count函数来实现无法保证性能和吞吐量，即便引入缓存，为了保证缓存的时效性，也会因较短间隔的DB count查询引发性能问题。这些问题通过引入单独的计数服务使得count计算做到O(1)的查询复杂度可以得到缓解</b>
+<ul class="quote">
+<li>计数服务可以设计成key-value结构，持久化到分布式缓存，key为用户id, value为该用户的follower/followee数量。</li>
+<li>对于value的写入，可以利用上述增量化模块，订阅用户收到的变更事件。对于follow事件，直接对key对应的value做自增操作；对于unfollow事件，则做自减操作。</li>
+<li>同时通过对增量化模块中的每个事件记录产生的版本(也可根据时间本身自增来实现)，和对计数器每个key进行版本记录，可以实现去重防丢失等需求。</li>
+</ul>
+</li>
+<li><b>当需要查看某个用户的relation详情页时，涉及对follower/followee列表的分页查询。通常单个用户关注的人数量有限，绝大多数用户在1000以内，且每次对第一页的查询频度远高于后续分页，那么无论直接将列表存入DB或是分布式缓存，都能做到较高的吞吐量</b>
+<ul class="quote">
+<li>但是，对于热点用户的follower，情况更加复杂一些：follower的数量不可控，使得即便是小概率的翻页操作，对于follower很多的热点用户，仍然是高访问量的操作；且每次翻页的扫描成本很高。</li>
+<li>针对热点用户的follower列表查询问题，采用基于增量化的实现辅助解决。首先，同一个用户follower列表的前N页(假设为前5页)的访问概率占到总访问量的绝大部分(假设超过99%)，而前N页的follower个数是常数个(假设每页展示20个follower，前5页只有100个follower需要展示)；其次，follower列表的展示以follow时间进行排序，最近加入的follower通常排在最前，即增量化模块的最新数据最有可能放在首N页。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch67"><summary>12.3 帖子（post）的存储</summary>
+<div class="sec">
+<h4>基于DB的方案</h4>
+<ul class="point">
+<li><b>单张表存储帖子，包括userId, postTime, content</b>
+<ul class="quote">
+<li>userId记录这个帖子是谁发的。</li>
+<li>postTime记录发布时刻，这里只需精确到秒即可。</li>
+<li>content记录帖子内容。</li>
+</ul>
+</li>
+<li><b>对userId+postTime建立二级索引，使得查看特定用户按照时间排列的所有帖子的操作变得更快</b>
+<ul class="quote">
+<li>根据PostId查询帖子内容：select * from post where postId=?。</li>
+<li>查询某个用户发送的帖子列表：select * from post where userId=? and posttime between ? and ?。</li>
+</ul>
+</li>
+<li><b>查询优化：将userId和postTime信息冗余进postId中，去掉二级索引减少回表</b>
+<ul class="quote">
+<li>postId首6位为userId，每一位是0～9/A～Z这36个字符中的某一个，6位可以表示21亿个不同的用户，后续时间戳(精确到秒)可以标识70年范围内的任意一秒，单个用户每秒发放的帖子不超过两位seq表达的最大值。</li>
+<li>对于查询某个用户发送的帖子列表的场景，SQL变成了：select * from post where postId between postId1 and postId2。</li>
+</ul>
+</li>
+<li><b>吞吐量优化：引入水平拆分(sharding)使得数据量和吞吐量线性伸缩</b>
+<ul class="quote">
+<li>水平拆分以userId作为拆分字段，相同userId的数据存放在相同DB分片上。</li>
+</ul>
+</li>
+<li><b>DB方案的问题：读写分离仍然存在数据延迟问题，且存储效率低</b>
+<ul class="quote">
+<li>采用读写分离之后仍然存在数据延迟问题。当读库数量较多时(随着读取量水平伸缩)，为保证写入的可用性，通常复制会采用异步方式进行。异步化的引入使得读库的写入时间难以保证。</li>
+<li>同时sns的特点是近期数据访问频繁，较早的数据极少访问。而读写分离一旦引入，意味着每一条记录都需要存储多份。当这些数据刚刚发布时，它们是较新的访问频繁的数据，但是随着时间的推移，它们逐渐不再被访问，但是仍然保持着多份副本。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>引入服务端缓存</h4>
+<ul class="point">
+<li><b>缓存设计：key为userId+时间戳(精确到星期)，value为redis的hash类型，field为postId, value为帖子内容</b>
+<ul class="quote">
+<li>expire设置为1星期，即最多同时存在两个星期的数据。</li>
+</ul>
+</li>
+<li><b>服务端缓存的问题：热点用户的查询仍然存在问题</b>
+<ul class="quote">
+<li>假设热点用户的follower数量极高(1亿follower,10%活跃)，意味着这个热点用户所在redis服务器的查询频度为1000万每秒，造成单点。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>本地缓存</h4>
+<ul class="point">
+<li><b>本地缓存顶层key为用户id, value为该用户近期发布的帖子</b>
+<ul class="quote">
+<li>相同key内value的逐出规则为基于时间的先进先出(较早的帖子首先逐出), key键的逐出规则为基于user的访问频度较少先出。</li>
+</ul>
+</li>
+<li><b>本地缓存的数据同步问题</b>
+<ul class="quote">
+<li>对于帖子的新增，问题不大，因为即便本地缓存没有数据，降级为查询一次服务端缓存即可。</li>
+<li>对相同用户针对相同时间范围的查询，通过并发控制，做到单台服务器一个并发，即便对热点用户，落到服务端缓存的流量也是可控的(每台服务器一个并发)。</li>
+<li>但对于帖子的删除，情况会有些不同。当本地缓存查到有数据时，如何知道该数据是否已被删除？可以采取的解法是为每个缓存中的用户保留一个最近更新时间，当这个用户的本地缓存上次查询服务端缓存距当前超过一定时间(假设1秒)时，再重新查询一次服务端缓存。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch68"><summary>12.4 时间线（timeline）的存储</summary>
+<div class="sec">
+<h4>时间线(timeline)的存储挑战</h4>
+<ul class="point">
+<li><b>timeline的内容受用户间relation影响，当relation关系复杂时，timeline的性能将会受到挑战</b>
+<ul class="quote">
+<li>随着用户间relation关系的变化，某个用户的timeline也随之变化。</li>
+<li>一个用户对自己帖子的增删，会影响到多个其他用户的timeline。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>基于DB的方案——push模式</h4>
+<ul class="point">
+<li><b>push模式的特点是：用户每次新增一条帖子，将此帖子“推”到他/她的follower所在的DB分片上</b>
+<ul class="quote">
+<li>Timeline表记录着每个userId的timeline里所看到他/她关注的用户的帖子。</li>
+<li>常见的操作包括用户E根据时间浏览自己timeline下一定时间范围内的帖子，用户E follow了新用户B，用户E unfollow了用户B。</li>
+</ul>
+</li>
+<li><b>push模式下的优化：将原有的postId字段替换为postId&#x27;，后者在格式上由(posterId+time+seq)更改为(time+posterId+seq)</b>
+<ul class="quote">
+<li>替换之后，上述查询操作变为：select postId from timeline where userId=? and postId between &#x27;time1%&#x27; and &#x27;time2%&#x27;。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>基于DB的方案——pull模式</h4>
+<ul class="point">
+<li><b>pull模式下用户每次新增/删除一个帖子时不需要同步到他/她的所有follower</b>
+<ul class="quote">
+<li>对于更加频繁的读操作(用户查看一段时间内所有followee的帖子)时，需要用户对自己的所有followee的帖子进行按时间的扫描。</li>
+</ul>
+</li>
+<li><b>pull模式的下的优化——push/pull结合</b>
+<ul class="quote">
+<li>当某个用户发布了一个帖子时，只需将post同步到100个数据库分片上，假设存储这个副本的表叫post_rep。</li>
+<li>虽然单台DB的查询降低到了1万次每秒，但是每次查询的复杂度增加了。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>增量查询引入服务端缓存</h4>
+<ul class="point">
+<li><b>定制的服务端内存缓存，实现timeline增量查询的读写优化</b>
+<ul class="quote">
+<li>这个定制化的缓存结构保存了多个“增量列表”。</li>
+<li>每当用户发布了一个帖子，他/她的follower需要在1～2秒内看到这条帖子，而上述每个“增量列表”保存的是10秒内的数据，意味着增量列表是不断更新着的。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch69"><summary>第13章 缓存在社交网络Feed系统中的架构实践</summary>
+<div class="sec">
+<h4>社交网络Feed系统架构的发展历程</h4>
+<ul class="point">
+<li><b>新浪微博作为移动社交时代的重量级社交分享平台，拥有庞大的用户群和海量的数据。</b>
+</li>
+<li><b>面对庞大用户群的海量访问，良好架构且不断改进的缓存体系具有非常重要的支撑作用。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Feed系统的缓存模型</h4>
+<ul class="point">
+<li><b>Feed系统的缓存模型是分布式的，可以支持海量数据的存储和访问。</b>
+</li>
+<li><b>缓存模型需要支持数据的快速更新和失效，以保证数据的实时性和一致性。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Feed体系架构</h4>
+<ul class="point">
+<li><b>Feed体系架构包括客户端缓存、服务器端缓存和数据库缓存三个层次</b>
+<ul class="quote">
+<li>客户端缓存可以减轻服务器端的压力，提高用户体验。</li>
+<li>服务器端缓存可以减轻数据库的压力，提高系统性能。</li>
+<li>数据库缓存可以进一步提高数据访问的速度，保证系统的稳定性。</li>
+</ul>
+</li>
+<li><b>Feed体系架构需要支持水平扩展和垂直扩展，以适应业务规模的变化。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>缓存体系如何伴随业务规模来扩展及演进</h4>
+<ul class="point">
+<li><b>随着业务规模的扩大，缓存体系需要不断地进行优化和升级，以适应新的需求和挑战。</b>
+</li>
+<li><b>缓存体系的扩展和演进需要考虑性能、可用性、可维护性等多个因素，以保证系统的稳定性和可扩展性。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch70"><summary>13.1 Feed系统架构</summary>
+<div class="sec">
+<h4>Feed系统架构的核心</h4>
+<ul class="point">
+<li><b>Feed的聚合与分发，用户打开Feed首页后能看到关注人的feed信息列表，同时用户发表的feed需要分发给粉丝或指定用户。</b>
+</li>
+<li><b>Feed信息的组装与展现。</b>
+</li>
+<li><b>用户关系管理，即用户及其关注/粉丝关系的管理。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>中小型Feed系统的架构</h4>
+<ul class="point">
+<li><b>通过同步push模式进行分发，用户每发表一条feed，后端系统根据用户的粉丝列表进行全量推送</b>
+<ul class="quote">
+<li>粉丝用户通过自己的inbox来查看所有最新的feed。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>大型Feed系统的架构改进</h4>
+<ul class="point">
+<li><b>对原有架构进行模块化、平台化改进，把底层存储构建为基础服务，然后基于基础服务构建业务服务平台</b>
+<ul class="quote">
+<li>对数据存储进行了多维度拆分，并大量使用cache进行性能加速。</li>
+<li>将同步push模式改成了异步hybrid模式，即pull+push模式。</li>
+<li>用户发表feed后首先写入消息队列，由队列处理机进行异步更新，更新时不再push到所有粉丝的inbox，而是存放到发表者自己的outbox。</li>
+<li>用户查看时，通过pull模式对关注人的outbox进行实时聚合获取。</li>
+<li>基于性能方面的考虑，部分个性化数据仍然先push到目标用户的inbox。</li>
+<li>用户访问时，系统将用户自己的inbox和TA所有的关注人outbox一起进行聚合，最终得到Feed列表。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>大型Feed系统的架构优化</h4>
+<ul class="point">
+<li><b>对Feed架构进行服务化、云化改进，形成典型的Feed系统架构</b>
+<ul class="quote">
+<li>对外主要以移动客户端、Web主站、开放平台三种方式提供服务，并通过平台接入层访问Feed平台体系。</li>
+<li>平台服务层把各种业务进行模块化拆分，把诸如Feed计算、Feed内容、关系、用户、评论等分解为独立的服务模块，对每个模块实现服务化架构，通过标准化协议进行统一访问。</li>
+<li>中间层通过各种服务组件来构建统一的标准化服务体系。</li>
+<li>存储层主要通过MySQL、HBase、Redis、分布式文件等对业务数据提供落地存储服务。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>大型Feed系统的SLA要求</h4>
+<ul class="point">
+<li><b>核心接口可用性要达到99.99%，响应时间在10～40ms以内，数据访问高达百万级QPS，数据的平均获取时间要在5ms以内。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch71"><summary>13.2 Feed缓存模型</summary>
+<div class="sec">
+<h4>Feed系统的核心数据及处理过程</h4>
+<ul class="point">
+<li><b>Feed系统的核心数据主要包括：用户/关系、feed id/content以及包含计数在内的各种feed状态</b>
+<ul class="quote">
+<li>Feed系统处理用户的各种操作的过程，实际是一个以核心数据为基础的实时获取并计算更新的过程。</li>
+</ul>
+</li>
+<li><b>处理用户的一个操作请求，主要包括关注关系的获取、feed id的聚合、feed内容的聚合三部分</b>
+<ul class="quote">
+<li>最终转换到资源后端就是一个获取各种关系、feed、状态等资源数据并进行聚合组装的过程。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Feed系统的缓存设计</h4>
+<ul class="point">
+<li><b>缓存体系在Feed系统占有重要位置，可以说缓存设计决定了一个Feed系统的优劣</b>
+<ul class="quote">
+<li>一个典型的Feed系统的缓存设计主要分为INBOX、OUTBOX、SOCIAL GRAPH、CONTENT、EXISTENCE、CONTENT共六部分。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Feed缓存各层的详细说明</h4>
+<ul class="point">
+<li><b>INBOX缓存层用于存放聚合效率低的feed id(类似定向微博directed feed)</b>
+<ul class="quote">
+<li>INBOX是以访问者UID来构建key的，其更新方式是先gets到本地，变更后再cas到异地Memcached缓存。</li>
+</ul>
+</li>
+<li><b>OUTBOX缓存层用于直接缓存用户发表的普通类型feed id</b>
+<ul class="quote">
+<li>其中outbox又主要分为vector cache和archive data cache; vector cache用于缓存最新发表的feed id、comment id等，按具体业务类型分池放置。如果用户最近没有发表新feed, vector cache为空，就要获取archive data里的feed id。</li>
+</ul>
+</li>
+<li><b>SOCIAL GRAPH缓存层主要包括用户的关注关系及用户的user信息</b>
+<ul class="quote">
+<li>用户的关注关系主要包括用户的关注(following)列表、粉丝(follower)列表、双向列表等。</li>
+</ul>
+</li>
+<li><b>CONTENT缓存层主要包括热门feed的content、全量feed的content</b>
+<ul class="quote">
+<li>热门feed是指热点事件爆发时，引发热点事件的源feed。由于热门feed被访问的频率远大于普通feed，所以热门feed需要独立缓存，并缓存多份，以提高缓存的访问性能。</li>
+</ul>
+</li>
+<li><b>EXISTENCE缓存层主要用于缓存各种存在性判断的业务</b>
+<ul class="quote">
+<li>诸如是否已赞(liked)、是否已阅读(readed)这类需求。</li>
+</ul>
+</li>
+<li><b>COUNTER缓存用于缓存各种计数</b>
+<ul class="quote">
+<li>Feed系统中计数众多，如用户的feed发表数、关注数、粉丝数，单条feed的评论数、转发数、赞数及阅读数，话题相关计数等。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Feed缓存组件的选择</h4>
+<ul class="point">
+<li><b>Feed系统中的缓存一般可以直接采用Memcached、Redis、Pika等开源组件</b>
+<ul class="quote">
+<li>新浪微博也是如此，在Feed平台内，Memcached使用最为广泛，占有60%以上的内存容量和访问量，Redis、Pika主要用于缓存social graph相关数据，自研类组件主要用于计数、存在性判断等业务。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch72"><summary>13.3 Feed缓存架构的设计</summary>
+<div class="sec">
+<h4>简单数据类型的缓存设计</h4>
+<ul class="point">
+<li><b>Memcached作为缓存组件，适用于简单KV数据类型</b>
+<ul class="quote">
+<li>Memcached的海量数据、大并发访问场景，不能简单将多种数据进行混存。</li>
+</ul>
+</li>
+<li><b>需要进行容量评估，分析业务待缓存数据的平均size、数量、峰值读写QPS等</b>
+<ul class="quote">
+<li>缓存数据的size分布会影响Memcached的slab分布，size差异大的不同数据不能混存。</li>
+</ul>
+</li>
+<li><b>随着业务量和用户量的不断快速增加，系统初期混部的核心业务缓存数据需要进行分拆及统一规划</b>
+<ul class="quote">
+<li>为了保障服务的可用性，运维人员可以进行服务调配，使每组缓存资源池尽量独立部署在同一个IDC内。</li>
+<li>如果机器故障宕机，可能会导致核心业务的缓存节点不可用，进而大量请求穿透到DB层，给DB带来巨大的压力，极端情况下会引发雪崩，这种情况可以参考微博Feed系统的做法，引入了Main-HA双层架构。</li>
+<li>对后端数据的缓存访问，会先访问Main层，如果miss继续访问HA层，如果HA层命中，则返回client结果后，再将value回写到Main层，后续对相同key的访问可以直接在Main层命中。</li>
+<li>由于Main-HA两层cache中数据不尽相同，通过Main-HA结构，业务可以获得更高的命中率。同时，即便出现部分Main节点不可用，也可以通过HA层保证缓存的命中率、可用性。</li>
+<li>同时还可以进一步采取其他措施，来提升Memcached缓存层的可用性及运维性：Memcached内存池提前设置足够的分片数，并采用取模hash分布，在部分节点故障时，立即用新节点替换异常节点，避免数据漂移引入脏数据；根据不同的访问频率、容量，对Memcached实例进行搭配部署，提高机器使用率；对Memcached资源进行统一的监控，并提供各种维度的查询和预警。</li>
+<li>随着业务访问量进一步增加，特别是在峰值期间，社交网络中的突发事件出现爆发式的传播，Main-HA结构也会出现问题，主要是部分缓存节点的带宽被打满、CPU/负荷过载，导致Memcached响应严重变慢。微博也曾多次遇到这种问题，通过深入分析，我们发现问题的主因是大量热数据的集中访问，导致缓存服务节点过载，单个节点不能承载热数据的访问量(比如明星发表微博所在的节点)，于是我们进一步引入了L1结构。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>集合类数据的缓存设计</h4>
+<ul class="point">
+<li><b>Redis提供了丰富的集合类存储结构，支持list、set、zset(sorted set)、hash，并提供了丰富的api接口用于服务端计算</b>
+<ul class="quote">
+<li>微博Feed系统内部也广泛使用Redis，当前有数千个Redis实例，存储了千亿条记录，每天提供万亿级别的读写操作。</li>
+</ul>
+</li>
+<li><b>可以采用典型的Master-slave方式进行部署访问</b>
+<ul class="quote">
+<li>每个业务数据提前分拆到多个hash节点(如8、16个)，每个hash节点使用独立的端口，每个hash节点有一个master和多个slave。</li>
+<li>监控系统实时监控master、slave的状态，在必要时进行主从切换。</li>
+<li>Master、多个slave都采用域名方式对外暴露服务，这样master、slave变更后，只更新域名服务器即可。</li>
+<li>因为根据域名访问多个slave可能存在请求不均衡的现象，同时主从切换后client需要能够快速感知，所以需要在client端实现负载均衡和主从切换后的IP感知，微博采用clientBalancer组件来实现，目前已开源。</li>
+</ul>
+</li>
+<li><b>通过在Redis前端部署Memcached，来缓存中间计算结果、全量集合数据，可以很好地提升系统的读取性能，还可以减少slave数量来降低整体内存占用</b>
+<ul class="quote">
+<li>全列表读取采用Memcached的get来抗读，Memcached miss后，才读取Redis或DB层并回写，由于Memcached的多线程实现方式及对纯粹二进制kv的高效读取，可以用较少的Memcached内存换取全列表获取性能的大幅提升。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>其他类型数据的缓存设计</h4>
+<ul class="point">
+<li><b>对于存在性判断业务，判断一个用户是否赞了某条feed、是否阅读了某条feed等，需要进行了定制化的缓存组件开发</b>
+<ul class="quote">
+<li>微博开发了用于存在性判断的cache组件Phantom，内存占用降为原有的10%～20%，读写性能基本不变。</li>
+</ul>
+</li>
+<li><b>对于计数类业务，存储一个key为8字节、value为4字节的计数，Redis需要耗费65+字节，内存有效负荷小于(8+4)/65=18.5%，需要进行了定制化的缓存组件开发</b>
+<ul class="quote">
+<li>微博开发了用于计数的cache组件CounterService，内存占用降为原有的10%以下，同时通过SSD的引入，单机支撑容量进一步增大1个数量级。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch73"><summary>13.4 Feed缓存的扩展</summary>
+<div class="sec">
+<h4>Redis的扩展</h4>
+<ul class="point">
+<li><b>Redis通过psync实现了增量复制，一定程度上缓解了主从连接断开会引发全量复制的问题</b>
+<ul class="quote">
+<li>在Redis 2.8版本之前，几乎每次slave连接master都会导致一次全量复制。</li>
+<li>自2.8版本后，Redis通过psync实现了增量复制。</li>
+</ul>
+</li>
+<li><b>微博Feed调整了Redis的持久化机制，将全量数据有机的保存在RDB和AOF中</b>
+<ul class="quote">
+<li>通过bgsave构建RDB并落地，同时将当前AOF文件及POSITION也记录在RDB中，新数据写入记入AOF, AOF按固定size不断滚动存储，这样RDB和此后的所有AOF文件构成一份全量的Redis数据记录。</li>
+</ul>
+</li>
+<li><b>微博Feed扩展了longset数据结构，降低内存占用的同时，常规读写性能几乎相同</b>
+<ul class="quote">
+<li>对于miss后的数据重建，可以通过client端构建longset二进制结构一次性写入，实现O(1)的时间复杂度。</li>
+</ul>
+</li>
+<li><b>微博Feed实现了热升级功能，Redis版本升级时，只需要替换新的lib.so文件，无须重新加载数据</b>
+<ul class="quote">
+<li>Redis的核心处理逻辑封装到lib.so文件，缓存数据保存在全局变量中，通过调用lib.so中的函数来操作缓存数据。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>计数器的扩展</h4>
+<ul class="point">
+<li><b>微博开发了计数服务组件CounterService，解决千亿级的历史海量计数以及每天十亿级的新增计数的问题</b>
+<ul class="quote">
+<li>对于计数业务，经典的构建模型有两种：db+cache模式和全量存在Redis中。</li>
+<li>直接使用Redis的计数模型存在严重的成本和性能问题。</li>
+</ul>
+</li>
+<li><b>CounterService组件的架构包括内存优化、Schema支持多列、冷热数据分离，LRU缓存，异步IO线程访问冷数据等特性</b>
+<ul class="quote">
+<li>通过预先分配的内存数组Table存储计数，并且采用double hash解决冲突，避免Redis实现中的大量指针开销。</li>
+<li>一个feed id对应的多个计数可以作为一条计数记录，还支持动态增减计数列，每列的计数内存使用精简到bit。</li>
+<li>根据时间维度，近期的热数据放在内存，之前的冷数据放在磁盘，降低机器成本。</li>
+<li>之前的冷数据如果被频繁访问则放到LRU缓存进行加速。</li>
+<li>冷数据的加载不影响服务的整体性能。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>存在性判断的扩展</h4>
+<ul class="point">
+<li><b>微博Feed基于BloomFilter算法开发了Phantom，大幅降低内存占用</b>
+<ul class="quote">
+<li>BloomFilter利用bit数组来表示一个集合，可以快速判断一个元素是否属于这个集合。</li>
+<li>这种算法存在一定的误判率，因为可能存在一个元素虽然不在集合中，但k次hash都被命中的情况。</li>
+</ul>
+</li>
+<li><b>Phantom组件采用Redis协议格式，目前主要支持bfset、bfget、bfmset、mfmget四组指令</b>
+<ul class="quote">
+<li>主线程采用循环队列实现缓存过期策略，通过将所有key排序并划分区间，依次将所有的key存放在不同的table中并滚动，数值越大的key放在越新的table中。</li>
+<li>Phantom落地也采用RDB+AOF模式，执行落地操作时，将循环队列中的所有table写入RDB文件，并在RDB中记录当前时刻的AOF文件名及位置，后续的数据恢复可以直接加载RDB及之后AOF即可。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch74"><summary>13.5 Feed缓存的服务化</summary>
+<div class="sec">
+<h4>Feed缓存服务化的背景和需求</h4>
+<ul class="point">
+<li><b>随着业务的发展，Feed缓存的访问量、容量都会非常大，需要简化业务前端的配置，简化开发、运维。</b>
+</li>
+<li><b>系统开发一般会主要选择一种语言开发，这时候，如果公司其他部门也想使用，但由于用的是其他开发语言如PHP，就没法简单推广了。</b>
+</li>
+<li><b>资源的可运维性也不足，基于IP、端口运维复杂性比较高。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Feed缓存服务化的方案及策略</h4>
+<ul class="point">
+<li><b>引入了一个proxy层，用于接受并路由业务对资源的请求</b>
+<ul class="quote">
+<li>通过cacheProxy支持多种协议(Memcached、Redis等)、多种业务访问，不同业务通过namespace Prefix进行区分。</li>
+</ul>
+</li>
+<li><b>引入一个updateServer层，用于处理写请求和数据同步</b>
+<ul class="quote">
+<li>updateServer首先更新本地资源，成功后再路由到master idc的updateServer。</li>
+<li>Master idc的updateServer接受所有write请求，记录到AOF，并逐级复制到其他idc的updateServer，实现idc间的cache数据同步。</li>
+</ul>
+</li>
+<li><b>引入cluster，并内嵌了Memcached Cluster、Redis cluster等的访问策略</b>
+<ul class="quote">
+<li>包括多层的更新、读取，以及miss后的穿透、回写等。</li>
+</ul>
+</li>
+<li><b>接入配置中心，可以方便地支持API化、脚本化管理资源和proxy</b>
+<ul class="quote">
+<li>运维把cache资源/updateServer的IP端口、hash算法、分布式策略等也以配置的形式注册在配置中心。</li>
+<li>cacheProxy、updateServer启动后通过到配置中心订阅这些资源IP及访问方式，从而正确连接并访问后端缓存资源。</li>
+<li>client端即可到配置中心订阅这些cacheProxy列表，然后选择最佳的cacheProxy节点访问各种缓存资源。</li>
+</ul>
+</li>
+<li><b>接入监控体系，方便查看缓存体系的服务状态</b>
+<ul class="quote">
+<li>把cacheProxy、updateServer、后端各种缓存资源纳入到了Graphite体系。</li>
+<li>通过日志工具将缓存的访问日志、内部状态推送到Graphite系统，用dashboard直接展现或者按需聚合后展现。</li>
+<li>通过clusterManager对缓存资源、 cacheProxy等进行实时状态探测及聚合分析，结合Graphite的历史数据，监控缓存资源的SLA，必要时进行监控报警。</li>
+</ul>
+</li>
+<li><b>Web化管理，通过Web界面管理缓存的整个生命周期</b>
+<ul class="quote">
+<li>通过缓存层管理组件clusterManager(微博内部叫captain)，把之前的API化、脚本化管理进一步的升级为界面化管理。</li>
+</ul>
+</li>
+<li><b>其他服务化策略</b>
+<ul class="quote">
+<li>对于部分缓存节点故障，Memcached可以通过有多级Cache解决，Redis、CounterService、Phantom等通过master-slave切换、多slave来解决。</li>
+<li>对于较多缓存/cacheProxy节点异常，我们通过重新部署新节点来替换异常节点，并通过captain在线通知配置中心，进而使新节点快速生效来解决。</li>
+<li>对于updateServer节点异常，cacheProxy会将请求通过一致性hash均分路由到其他节点处理。</li>
+<li>对于配置中心的故障，可以通过访问端的snapshot机制，利用之前的snapshot信息来访问cacheProxy或后端缓存资源。</li>
+<li>对于运维，可以通过Graphite、 clusterManager实现标准化运维，节点故障、扩缩容按标准流程进行界面操作即可。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Feed缓存服务化的实践总结</h4>
+<ul class="point">
+<li><b>缓存服务化未来的道路还很长，需要进一步的对各Cache服务组件进行打磨和升级</b>
+<ul class="quote">
+<li>微博缓存体系架构也会在这条路上不断前行。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch75"><summary>第14章 典型电商应用与缓存</summary>
+<div class="sec">
+<h4>分布式系统的CAP理论</h4>
+<ul class="point">
+<li><b>一致性(C)：在分布式系统中的所有数据备份，在同一时刻是否是同样的值。</b>
+</li>
+<li><b>可用性(A)：在集群中一部分节点故障后，集群整体是否还能响应客户端的读写请求。</b>
+</li>
+<li><b>分区容忍性(P)：系统如果不能在时限内达成数据一致性，就意味着发生了分区的情况。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>电商领域的CAP权衡</h4>
+<ul class="point">
+<li><b>电商领域是典型的要在CAP做出权衡的业务领域</b>
+<ul class="quote">
+<li>从参与者来区分有用户、商户、平台运营人员。</li>
+<li>从基础领域模型来看有商品、订单、库存、库房、营销、物流、干系人等。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>电商平台的需求</h4>
+<ul class="point">
+<li><b>用户诉求：买到好东西，支付方便，安全快捷。</b>
+</li>
+<li><b>商户诉求：业务模式上解决快速回款，技术上解决对账清晰，数据准确。</b>
+</li>
+<li><b>平台诉求：越来越多的用户，越来越多的品类，越来越好的商家。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>电商平台面临的挑战</h4>
+<ul class="point">
+<li><b>及时响应性的用户需求</b>
+<ul class="quote">
+<li>我购买成功，还是失败。</li>
+</ul>
+</li>
+<li><b>数据准确性需求</b>
+<ul class="quote">
+<li>我的钱有没有多扣。</li>
+</ul>
+</li>
+<li><b>平台海量请求的诉求</b>
+<ul class="quote">
+<li>营销活动、秒杀、大促等。</li>
+</ul>
+</li>
+<li><b>高可用的诉求</b>
+<ul class="quote">
+<li>每一秒都是钱，每一笔成交背后都是收入，如果平台不可用，对应可以直接换算成资金损失。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch76"><summary>14.1 电商类应用的挑战及特点</summary>
+<div class="sec">
+<h4>电商类应用的挑战</h4>
+<ul class="point">
+<li><b>电商业务需要不断试错以及营销驱动，三天两头搞活动、上新产品是司空见惯的事情，风险非同一般</b>
+<ul class="quote">
+<li>对于若干年前的银行而言，如果机房、专线网络、运维没有变更，基本上不会出问题。但是对于不断试错以及营销驱动的电商业务而言，三天两头搞活动、上新产品是司空见惯的事情。规模小一点还好，骂你的人少，对于大电商而言则无异于是高速公路上换轮胎，或者叫作给飞行中的飞机换引擎，可见风险非同一般。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>电商类应用的特点</h4>
+<ul class="point">
+<li><b>稳定性决定服务能力</b>
+<ul class="quote">
+<li>在前几个月，某电商网站搞“买200减100”活动，才进行了2小时就卡得不行。购物车的商品无法下单结算，查看商品详情也非常慢，属于一路塞车的节奏。</li>
+</ul>
+</li>
+<li><b>高并发性场景</b>
+<ul class="quote">
+<li>比如秒杀场景，除了高流量以外，压力在于秒杀商品的高并发，那么热点商品拆分、上缓存、队列等技术自然就很重要了。</li>
+</ul>
+</li>
+<li><b>业务发展性能也得发展</b>
+<ul class="quote">
+<li>例如，有一个系统做支付链路的规则决策，起初可能就4万行代码；后来增加到8万，现在又增加到10万。代码行增加了，该应用的职责增加了，也可能调用逻辑的运算复杂度也增加了。那么如何保持对外API的TPS不降低，RT不降低？</li>
+</ul>
+</li>
+<li><b>产品快速试错</b>
+<ul class="quote">
+<li>以我们的一个团队为例，7个人1年做了400多个需求。大家都知道满足需求，实现业务价值是软件的天职，无论是为了更好适应未来发展的平台化能力也好、新特性也好，这些只能在业务发展的过程中做。在做这么多需求的过程中，除了技术以外，对于业务包括规则要有深度把握，包括上下游的一些问题。如有评估不到位，问题就大了。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch77"><summary>14.2 应用数据静态化架构高性能单页Web应用</summary>
+<div class="sec">
+<h4>单页Web应用的应用场景及挑战</h4>
+<ul class="point">
+<li><b>单页Web应用在电商网站中非常常见，如首页、频道页、广告页等。</b>
+</li>
+<li><b>传统的构建方式一般通过静态化实现，但灵活性不是很好</b>
+<ul class="quote">
+<li>页面模板部分变更了需要重新全部生成。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>静态化单页Web应用方案</h4>
+<ul class="point">
+<li><b>将生成的静态页推送到相关服务器</b>
+<ul class="quote">
+<li>使用这种方式要考虑文件操作的原子化问题。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>动态化单页Web应用方案的整体架构</h4>
+<ul class="point">
+<li><b>分为CMS系统、控制系统和前端展示系统三大系统</b>
+<ul class="quote">
+<li>CMS系统可以配置页面的模板和数据。</li>
+<li>控制系统是用于版本降级和灰度发布的。</li>
+<li>前端展示系统可获取当前URL，使用URL作为KEY首先从本机“发布数据存储Redis”获取数据。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>CMS系统</h4>
+<ul class="point">
+<li><b>模板动态在CMS系统中维护，原始数据存储到“元数据存储MySQL”中</b>
+<ul class="quote">
+<li>模板不是一个静态文件，而是存储在CMS中的一条数据，最终发布到“发布数据存储Redis”中。</li>
+<li>比如频道页一般需要前端访问的URL、分类、轮播图、商品楼层数据等，这些数据按照相应的维度存储在CMS系统中。</li>
+</ul>
+</li>
+<li><b>提供发布到“发布数据存储Redis”的控制，提供三个发布按钮：正式版本、灰度版本和预发布版本</b>
+<ul class="quote">
+<li>将CMS系统中的原始数据和模板数据组装成聚合数据(JSON存储)同步到“发布数据存储Redis”。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>前端展示系统</h4>
+<ul class="point">
+<li><b>模板和数据都是动态获取的，然后使用动态获取的模板和数据进行渲染</b>
+<ul class="quote">
+<li>使用URL作为KEY首先从本机“发布数据存储Redis”获取数据。如果没有数据或者异常则从主“发布数据存储Redis”获取。如果主“发布数据存储Redis”也发生了异常，那么会直接调用CMS系统暴露的API直接从元数据存储MySQL中获取数据进行处理。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>控制系统</h4>
+<ul class="point">
+<li><b>用于版本降级和灰度发布</b>
+<ul class="quote">
+<li>版本降级：假设当前线上的版本遇到问题了，想要快速切换回上一个版本，可以使用控制系统实现。</li>
+<li>灰度发布：在控制系统控制哪些URL需要灰度发布和灰度发布的比例。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>数据和模板动态化</h4>
+<ul class="point">
+<li><b>将数据和模板都进行动态化存储，这样可以在CMS进行数据和模板的变更</b>
+<ul class="quote">
+<li>实现了前端和后端开发人员的分离。</li>
+<li>前端开发人员进行CMS数据配置和模板开发，而后端开发人员只进行系统的维护。</li>
+<li>因为模板的动态化存储，每次发布新的模板不需要重启前端展示系统，后端开发人员更好地得到了解放。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>多版本机制</h4>
+<ul class="point">
+<li><b>将数据和模板分为多版本后，可以实现预发布版本、灰度版本和正式版本</b>
+<ul class="quote">
+<li>预发布版本：更容易让测试人员在实际环境进行验证。</li>
+<li>灰度版本：只需要简单的开关控制，就可以进行A/B测试。</li>
+<li>正式版本：存储多个历史正式版本，假设最新的正式版本出现问题，可以非常快速地切换回之前的版本。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch78"><summary>14.3 应用多级缓存模式支撑海量读服务</summary>
+<div class="sec">
+<h4>多级缓存介绍</h4>
+<ul class="point">
+<li><b>多级缓存是在整个系统架构的不同系统层级进行数据缓存，以提升访问效率</b>
+<ul class="quote">
+<li>整体流程分析：首先接入Nginx将请求负载均衡到应用Nginx，接着应用Nginx读取本地缓存，如果本地缓存命中则直接返回。如果Nginx本地缓存没命中，则会读取相应的分布式缓存，如果分布式缓存命中则直接返回相应数据(并回写到Nginx本地缓存)。如果分布式缓存也没有命中，则会回源到Tomcat集群，在回源到Tomcat集群时也可以使用轮询和一致性哈希作为负载均衡算法。在Tomcat应用中，首先读取本地堆缓存，如果有则直接返回(并会写到主Redis集群)。作为可选部分，如果步骤4没有命中可以再尝试一次读主Redis集群操作，目的是防止当从Redis集群有问题时的流量冲击。如果所有缓存都没有命中，只能查询DB或相关服务获取相关数据并返回。步骤7返回的数据异步写到主Redis集群。</li>
+</ul>
+</li>
+<li><b>应用整体分了三部分缓存：应用Nginx本地缓存、分布式缓存、Tomcat堆缓存</b>
+<ul class="quote">
+<li>应用Nginx本地缓存用来解决热点缓存问题，分布式缓存用来减少访问回源率、Tomcat堆缓存用于防止相关缓存失效/崩溃之后的冲击。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>如何缓存数据</h4>
+<ul class="point">
+<li><b>对于缓存的数据我们可以考虑不过期缓存和带过期时间缓存</b>
+<ul class="quote">
+<li>不过期缓存场景一般思路：使用Cache-Aside模式，首先写数据库，如果成功，则写缓存。</li>
+<li>过期缓存机制，即采用懒加载，一般用于缓存其他系统的数据、缓存空间有限、低频热点缓存等场景。</li>
+</ul>
+</li>
+<li><b>对于电商系统，一个商品可能拆成如基础属性、图片列表、上下架、规格参数、商品介绍等，最好将数据进行维度化并增量更新</b>
+<ul class="quote">
+<li>按照不同维度接收MQ进行更新。</li>
+</ul>
+</li>
+<li><b>要警惕缓存中的大Value，尤其是使用Redis时</b>
+<ul class="quote">
+<li>遇到这种情况时可以考虑使用多线程实现的缓存来缓存大Value；或者对Value进行压缩；或者将Value拆分为多个小Value，客户端再进行查询、聚合。</li>
+</ul>
+</li>
+<li><b>对于那些访问非常频繁的热点缓存，如果每次都去远程缓存系统中获取，可能会因为访问量太大导致远程缓存系统请求过多、负载过高或者带宽过高等问题</b>
+<ul class="quote">
+<li>一种解决方案是通过挂更多地从缓存，客户端通过负载均衡机制读取从缓存系统数据。</li>
+<li>也可以在客户端所在的应用/ 代理层本地存储一份，从而避免访问远程缓存。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>分布式缓存与应用负载均衡</h4>
+<ul class="point">
+<li><b>分布式缓存一般采用分片实现，即将数据分散到多个实例或多台服务器</b>
+<ul class="quote">
+<li>算法一般采用取模和一致性哈希。</li>
+</ul>
+</li>
+<li><b>应用负载均衡一般采用轮询和一致性哈希</b>
+<ul class="quote">
+<li>一致性哈希可以根据应用请求的URL或者URL参数将相同的请求转发到同一个节点。</li>
+<li>轮询即将请求均匀地转发到每个服务器。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>热点数据与更新缓存</h4>
+<ul class="point">
+<li><b>热点数据会造成服务器压力过大，导致服务器性能、吞吐量、带宽达到极限</b>
+<ul class="quote">
+<li>可以用如下几个方案去解决：单机全量缓存+主从；分布式缓存+应用本地热点；建立实时热点发现系统来发现热点。</li>
+</ul>
+</li>
+<li><b>更新缓存与原子性</b>
+<ul class="quote">
+<li>如果多个应用同时操作一份数据很可能造成缓存数据是脏数据，解决办法有：更新数据时使用更新时间戳或者版本对比，如果使用Redis可以利用其单线程机制进行原子化更新；使用如canal订阅数据库binlog；将更新请求按照相应的规则分散到多个队列，然后每个队列进行单线程更新，更新时拉取最新的数据保存；用分布式锁，更新之前获取相关的锁。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>缓存崩溃与快速修复</h4>
+<ul class="point">
+<li><b>当缓存数据是可丢失的情况时，我们可以选择一致性哈希算法</b>
+<ul class="quote">
+<li>对于取模机制如果其中一个实例故障，如果摘除此实例将导致大量缓存不命中，瞬间大流量可能导致后端DB/服务出现问题。</li>
+<li>对于一致性哈希机制如果其中一个实例故障，摘除此实例将只影响一致性哈希环上的部分缓存不命中，不会导致瞬间大量回源到后端DB/服务，但是也会产生一些影响。</li>
+</ul>
+</li>
+<li><b>如果出现之前说到的一些问题，可以考虑如下方案：主从机制，做好冗余；如果因为缓存导致应用可用性已经下降可以考虑：部分用户降级，然后慢慢减少降级量；后台通过Worker预热缓存数据</b>
+<ul class="quote">
+<li>也就是如果整个缓存集群故障，而且没有备份，那么只能去慢慢将缓存重建。为了让部分用户还是可用的，可以根据系统承受能力，通过降级方案让一部分用户先用起来，将这些用户相关的缓存重建。另外通过后台Worker进行缓存数据的预热。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch79"><summary>14.4 构建需求响应式亿级商品详情页</summary>
+<div class="sec">
+<h4>商品详情页的重要性及前端结构</h4>
+<ul class="point">
+<li><b>商品详情页是电商网站流量和订单的主要入口，需要快速响应个性化需求。</b>
+</li>
+<li><b>商品详情页前端结构包括商品维度、主商品维度、分类维度等，部分信息通过异步加载。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>单品页技术架构发展历程</h4>
+<ul class="point">
+<li><b>从最初的IIS+C#+SQL Server到架构3.0，实现了数据闭环、数据维度化、拆分系统等设计原则。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>详情页架构设计原则</h4>
+<ul class="point">
+<li><b>数据闭环、数据维度化、拆分系统、Worker无状态化+任务化等，以提高性能和可扩展性。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>商品详情页架构遇到的问题及优化</h4>
+<ul class="point">
+<li><b>SSD性能差、键值存储选型压测、数据量大时JIMDB同步不动等问题，通过优化和调整得到了解决。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch80"><summary>第15章 同程凤凰缓存系统基于Redis的设计与实践</summary>
+<div class="sec">
+<h4>同程凤凰缓存系统基于Redis的设计与实践</h4>
+<ul class="point">
+<li><b>分享同程凤凰缓存系统在基于Redis方面的设计与实践</b>
+<ul class="quote">
+<li>除了会列举我们工作过程中遇到各种问题和误区外，还会给出我们相应的解决办法。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch81"><summary>15.1 同程凤凰缓存系统要解决什么问题</summary>
+<div class="sec">
+<h4>同程凤凰缓存系统要解决的问题</h4>
+<ul class="point">
+<li><b>秒杀抢购活动对后端技术的支撑提出挑战</b>
+<ul class="quote">
+<li>秒杀抢购一开始，卡顿、打不开的故障就会此起彼伏。</li>
+<li>服务器根本承受不了，CPU占用率很多时候都接近了100%，请求的积压也很严重。</li>
+</ul>
+</li>
+<li><b>关系型数据库在秒杀抢购场景下的问题</b>
+<ul class="quote">
+<li>大部分关系型数据库没有真正的分布式解决方案，最多做一个主从分离或多加从库分担读取的压力。</li>
+<li>秒杀抢购是数据集中式超高并发的读，所以一般的关系型数据库因为它本身局限性很难支撑这样瞬间突发的高并发。</li>
+</ul>
+</li>
+<li><b>NoSQL数据库在秒杀抢购场景下的优势</b>
+<ul class="quote">
+<li>NoSQL数据库方案，这些方案也都提供了丰富的数据类型，拥有原子性操作和强大的并发性能特性。</li>
+<li>数据在抢购活动开始前被先放到NoSQL数据库里，产生的订单数据先被放到队列中，然后通过队列慢慢消化。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Redis用法的凌乱</h4>
+<ul class="point">
+<li><b>Redis使用中的问题</b>
+<ul class="quote">
+<li>Redis从使用的角度来讲是需要像应用服务一样去治理的。</li>
+<li>开发者和运维人员在使用Redis时遇到的各种问题。</li>
+</ul>
+</li>
+<li><b>Redis使用问题的解决方案</b>
+<ul class="quote">
+<li>开启主从+Keepalived，用虚IP地址在master和slave两边漂移，master挂了直接切换到slave。</li>
+<li>开启数据落盘，根据业务需要决定落盘规则，有AOF的，也有RDB的。</li>
+<li>多开几场培训，跟大家讲讲Redis的用法和规范。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>从实际案例再看Redis的使用</h4>
+<ul class="point">
+<li><b>第一个案例：Redis过度依赖导致的问题</b>
+<ul class="quote">
+<li>对Redis过度依赖，Redis看似简单而方便地为系统带来了性能提升和稳定性，但在使用中缺乏对不同场景的数据的分离造成了一个逻辑上的单点问题。</li>
+<li>Redis的问题就应该在基础缓存层来解决，这样即使还有类似的情况也没有问题，因为基础缓存层已经能适应这样的用法，也会让应用层的设计更为简单。</li>
+</ul>
+</li>
+<li><b>第二个案例：Redis作为日志系统的问题</b>
+<ul class="quote">
+<li>一个非法日志服务的存在，表面上是管理问题，实质上还是技术问题，因为Redis的使用无法像关系型数据库那样有DBA的监管，它的运维者无法管理和提前知道里面放的是什么数据，开发者也无须任何申明就可以向Redis中写入数据并使用，所以这里我们发现Redis的使用没这些场景的管理后在长期的使用中比较容易失控，我们需要一个对Redis使用可治理和管控的透明层。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>如何改变Redis用不好的误区</h4>
+<ul class="point">
+<li><b>搭建完善的监控系统</b>
+<ul class="quote">
+<li>预警，不能等到发生了，我们才发现问题。</li>
+</ul>
+</li>
+<li><b>控制和引导Redis的使用</b>
+<ul class="quote">
+<li>自己研发的Redis客户端，在使用时就开始控制和引导。</li>
+</ul>
+</li>
+<li><b>Redis的部分角色要改，将Redis由storage角色降低为cache角色</b>
+<ul class="quote">
+<li>除非有特殊需求，否则一律以缓存角色对待。</li>
+</ul>
+</li>
+<li><b>Redis的持久化方案要重新做，需要自己研发一个基于Redis协议的持久化方案，让使用者可以把Redis当DB用</b>
+<ul class="quote">
+<li>让缓存在一个可管可控的场景下稳定的运维，让开发者可以安全并肆无忌惮继续乱用Redis，但这个“乱”是被虚拟化的乱，因为它的底层是可以治理的。</li>
+</ul>
+</li>
+<li><b>Redis的高可用要按照场景分开，根据不同的场景决定采用不同的高可用方案。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>凤凰缓存系统对Redis系统化改造</h4>
+<ul class="point">
+<li><b>基于Docker将Redis改造成一个云化的缓存系统</b>
+<ul class="quote">
+<li>平台最基本的要求就是具备资源计算、资源调度功能，且资源分配无须人工参与。</li>
+<li>对用户来讲，拿到的应该是直接可用的资源，并且天生自带高可用、自动备份、监控告警、日志分析等功能，无须用户关心资源背后的事情。</li>
+</ul>
+</li>
+<li><b>改造监控系统，将其改造为一个完整的监控系统</b>
+<ul class="quote">
+<li>这个系统会不断地收集整个云环境中的服务器和Redis等各方面的相关信息，根据具体的阈值报警，并且通知到运维系统，运维系统再基于运维数据来自动故障转移、扩容等等。</li>
+</ul>
+</li>
+<li><b>开发调度系统，对整个云进行微调</b>
+<ul class="quote">
+<li>Redis的用量大了，会自动扩容；扩容空间不够了，会自动分片；网络流量大了，也会自动负载均衡。</li>
+</ul>
+</li>
+<li><b>在客户端上进一步下功夫，支持场景配置</b>
+<ul class="quote">
+<li>客户端每次用Redis的时候，必须把场景上报给系统。</li>
+<li>增加场景配置之后，在缓存服务的中心节点，就可以把它分开，同一个应用里面两个比较重要的场景就会不用到同一个Redis，避免无法降级一个内容过于复杂的Redis实例。</li>
+</ul>
+</li>
+<li><b>对于Proxy我们也进行了升级，新的Proxy完全实现了Redis的协议和其他的缓存服务协议，如Memcache</b>
+<ul class="quote">
+<li>Proxy可以解决客户端过重的问题，在很多情况下，升级客户端是很难进行的事。</li>
+<li>再好的程序员写出来的东西还是可能会有bug的，如果客户端发现了一个bug需要紧急升级，我们不大可能一下去升级线上几千个应用。</li>
+<li>因此我们的Proxy方案中也加入了之前在客户端做的很多事情，我们的想法就是让每一个项目的每一个开发者自己开发的代码是干净的，不要在他的代码里面嵌额外的东西，访问的就是一个Redis。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch82"><summary>15.2 用好Redis先运维好它</summary>
+<div class="sec">
+<h4>传统的Redis运维方式</h4>
+<ul class="point">
+<li><b>统一大集群方式部署</b>
+<ul class="quote">
+<li>扩容比较方便，直接在集群内新增机器即可，使用者完全无感知。</li>
+<li>利用率高，运维简单，只需要关注整个集群的大小就可以，不需要关心里面某个Redis的具体状态。</li>
+<li>客户端使用方便，无论哪个项目，面对的就是一组Redis，内部的细节对客户端来说是透明的。</li>
+<li>扩容虽然方便，但是具体某个项目用了多少，无法获知，极端情况下有些项目超时设置不合理，写入数据大于过期和删除的数据，极有可能会导致整个Redis的内存一直增长直到用完。</li>
+<li>整个超大的Redis的内部其实还是由各个小Redis组成的，每个key都单独存储到小的Redis内部，那么如果某个key很热，读取访问非常频繁，很有可能将某个小Redis的网卡打满，导致的结果就是1个分片直接不可用，而项目又是集体共享一组Redis，某个分片不可用，可能导致的结果就很难评估。</li>
+</ul>
+</li>
+<li><b>多集群分散式部署</b>
+<ul class="quote">
+<li>隔离性非常好，各个项目之间互不影响，不会因为某个项目的动作导致整个集群受到影响。</li>
+<li>灵活性高，针对各个项目的使用情况的不同可以定制不同的部署方式，可以最大化利用Redis。</li>
+<li>部署麻烦，要针对各个项目单独部署，各个项目的定制又各有不同。</li>
+<li>客户端使用麻烦，不同的Redis有自己的IP、端口，经常容易搞混，当某个Redis需要停机维护时，又需要通知具体项目修改IP地址，非常麻烦。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Redis的Docker化部署</h4>
+<ul class="point">
+<li><b>Docker是一个非常好的自动化部署工具</b>
+<ul class="quote">
+<li>一个新机器配置好后直接就能通过Docker的RESTful API进行操作。</li>
+</ul>
+</li>
+<li><b>Redis在Docker下的CPU控制</b>
+<ul class="quote">
+<li>Redis本身对CPU的使用敏感性不是很大，所以我们在CPU的使用隔离限制上不需要花太多的精力。用Docker隔离分配就可以满足需求。</li>
+</ul>
+</li>
+<li><b>Redis在Docker下的内存控制</b>
+<ul class="quote">
+<li>在内存的控制上，就相对麻烦一点，Redis的内存使用有两个属性，实际使用的内存和操作系统分配的内存，反映在Redis上就是used_memory(实际使用的内存)和used_memory_rss(操作系统分配的内存)这两个参数，maxmemory实际控制的是used_memory，而不是used_memory_rss，由于Redis在后端执行RDB操作或者频繁地增删改产生大量的碎片，rss的值就会变得比较大。如果通过Docker强制限制内存，这个进程很可能直接就被kill了，所以，在内存上，我们没有采用Docker控制，而是通过自己的监控程序进行控制。</li>
+</ul>
+</li>
+<li><b>Docker网卡的控制</b>
+<ul class="quote">
+<li>用Redis都有个很头疼的问题，就是Redis的网卡打满问题，由于Redis的性能很高，在大并发请求下，很容易将网卡打满。通常情况下，1台服务器上都会跑几十个Redis实例，一旦网卡打满，很容易干扰到应用层可用性。所以我们基于开源的Contiv netplugin项目，限制了网卡的使用，主要功能是提供基于Policy的网络和存储管理。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>凤凰缓存系统对Redis的监控</h4>
+<ul class="point">
+<li><b>监控的基础主要是收集服务器和Redis的运作信息，并将这些信息丢入一个信息处理管道，在分析之前结合经验数据输出一系列的具体处理方式</b>
+<ul class="quote">
+<li>搜集器是我们利用Go开发的一个程序，这个程序搜集两个部分的数据，即服务器本身的数据和Redis的数据。</li>
+<li>存储器负责存储监控数据，它对外就是一组RESTful API。</li>
+<li>分析器的工作是从查询ES开始的，针对各种数据进行分析和处理，然后产出各种具体处理意见，提交给执行器。</li>
+<li>执行器是一个根据处理意见进行处理的分析程序，简单分类问题并结合处理意见进行判断是人工介入还是先自动处理。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>凤凰缓存系统对Redis的集群分片优化</h4>
+<ul class="point">
+<li><b>Redis的集群分片我们在凤凰缓存系统中进行了完整的私有实现</b>
+<ul class="quote">
+<li>Redis 3.0集群中，采用slot(槽)的概念，一共分成16384个槽。</li>
+<li>对于每个进入Redis的键值对，根据key进行散列，分配到这16384个slot中的某一个中。</li>
+<li>整套的Redis集群基于集群中的每个node(节点)负责分摊这16384个slot中的一部分，也就是说，每个slot都对应一个node负责处理。</li>
+</ul>
+</li>
+<li><b>为了增加集群的可访问性，官方推荐的方案是将node配置成主从结构</b>
+<ul class="quote">
+<li>这时，如果主节点失效，Redis Cluster会根据选举算法从slave节点中选择一个上升为主节点，整个集群继续对外提供服务。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>客户端在运维中的作用</h4>
+<ul class="point">
+<li><b>系统调整后Proxy接入地址改变的问题，平滑切换的问题</b>
+<ul class="quote">
+<li>我们提供的是一套完整的配置管理系统——分布式的配置系统。</li>
+<li>服务器端对Redis接入的操作和修改都会通知配置中心，然后，再由配置中心分发到所有的客户端，客户端接收到配置更新后，会修改自己的连接平滑过渡。</li>
+</ul>
+</li>
+<li><b>类似KEYS这样的命令导致redis堵塞的问题</b>
+<ul class="quote">
+<li>我们将容易导致CPU打满的命令和普通的命令区分了开来，并提供了自己的实现。</li>
+<li>Redis服务有两个版本，基础版和Plus版。普通版只有最基础的Redis命令，在大部分场景的使用下，都不会引起问题。Plus版从普通版继承而来，里面添加了大量的Redis复杂操作命令，当正常使用的时候，直接在普通版中操作数据；当需要高级功能，可以自动转换到Plus版，这样一些特殊的命也可以无脑使用了。</li>
+</ul>
+</li>
+<li><b>应用操作异常的发生地详细信息不透明的问题</b>
+<ul class="quote">
+<li>我们在客户端中记下了完整的操作日志信息，并整合到凤凰缓存系统的监控后台。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>凤凰缓存系统在Redis运维上的工具</h4>
+<ul class="point">
+<li><b>Redis运行状态监控</b>
+<ul class="quote">
+<li>我们基于Redis的monitor命令，开发了一个Redis监控程序。</li>
+<li>当开始监控某个Redis时，会发送monitor命令，然后，Redis会将它接收到的命令源源不断的吐给我们，我们接到后，就可以进行分析。</li>
+</ul>
+</li>
+<li><b>Redis的数据迁移</b>
+<ul class="quote">
+<li>我们开发了一个迁移工具，专门在Redis中迁移数据。</li>
+<li>这个程序在启动之后，会冒充自己是Redis的一个从机，然后发送从机命令从主机同步数据，主机在把数据发送给程序之后，程序会对这些数据进行解析，解析之后的内容写到具体的后端Redis中，这样，就完成了两个Redis间的数据转换。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch83"><summary>15.3 凤凰缓存系统的使用效果</summary>
+<div class="sec">
+<h4>凤凰缓存系统的自动化管理</h4>
+<ul class="point">
+<li><b>凤凰系统上线后，所有Redis实例的申请到销毁过程都由系统自动化完成</b>
+<ul class="quote">
+<li>在凤凰系统上运行着5000多个Redis实例、上百TB的内存。</li>
+</ul>
+</li>
+<li><b>凤凰系统每天会将异常的信息实时发送给各个负责人，并自动处理绝大多数异常</b>
+<ul class="quote">
+<li>对于少部分无法判定的问题会通知运维人员来做具体的判定和操作。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>凤凰缓存系统的使用效果</h4>
+<ul class="point">
+<li><b>凤凰系统上线后，几乎就没有再出现过Redis的故障了</b>
+<ul class="quote">
+<li>曾经焦头烂额的Redis如今已经被凤凰系统驯得服服帖帖。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch84"><summary>第16章 新的旅程</summary>
+<div class="sec">
+<h4>缓存知识体系概述</h4>
+<ul class="point">
+<li><b>缓存涉及分布式概念、缓存分类、缓存各种知识点Tips等。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch85"><summary>16.1 更好的引入缓存技术</summary>
+<div class="sec">
+<h4>缓存引入前的考量</h4>
+<ul class="point">
+<li><b>分析业务的应用规模、访问量级</b>
+<ul class="quote">
+<li>对于规模不大的小系统或系统发展初始阶段，引入缓存并不能带来明显的性能提升。</li>
+<li>对于具有一定规模的常规业务系统(特别是互联网系统)，数据规模、访问量较大，且持续快速增加，需要引入缓存。</li>
+</ul>
+</li>
+<li><b>分析系统架构，在合适的模块、层次引入缓存</b>
+<ul class="quote">
+<li>考虑各个缓存系统之间的更新方式、一致性保障策略等。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>缓存组件的选择</h4>
+<ul class="point">
+<li><b>根据缓存位置、待存数据类型、访问方式、内存效率等情况选择最适合的缓存组件</b>
+<ul class="quote">
+<li>对于简单KV数据类型，如微博Feed系统中的feed content、feed列表、用户信息等，最适合以memcached作为缓存组件。</li>
+<li>对于需要部分获取、事务型变更、缓存端计算的集合类数据，拥有丰富数据结构和访问接口的Redis也许会更适合。</li>
+<li>对于对存储效率、访问性能等有更高要求的业务场景，结合业务特性进行缓存组件的定制化设计与开发。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>缓存架构的设计</h4>
+<ul class="point">
+<li><b>设计业务数据对应的缓存结构及缓存容量规划</b>
+<ul class="quote">
+<li>如微博在用Memcached缓存feed content时，最初采用json、xml格式进行缓存，后来又改为更紧促的PB(protocol buffer)结构。</li>
+<li>对feed content的容量规划设计，则包含了content的平均size、缓存数据量、峰值读写QPS、命中率、过期时间、平均穿透加载时间等。</li>
+</ul>
+</li>
+<li><b>设计缓存的读写策略、分布策略、过期策略等</b>
+<ul class="quote">
+<li>如在海量数据、大并发访问场景下使用Redis时，要考虑如何在主从之间进行读写分离，要考虑key的hash算法、分布策略，以使数据分散和请求访问更均衡。</li>
+<li>同时还要考虑如何让冷数据/过期数据更快从内存剔除(如主动删除冷数据、低峰scan清理过期数据)，让更多的热数据常驻内存，从而确保缓存有持续的高命中率。</li>
+</ul>
+</li>
+<li><b>设计缓存的一致性、高可用性方案</b>
+<ul class="quote">
+<li>如微博在memcached对feed vector进行更新时，如果该vector不存在则不更新，待有请求时再从持久层获取最新数据，如果该vector存在，则通过MAIN层的CAS、HA层/L1层的SET来进行更新和一致性保证。</li>
+<li>又如微博对Redis采用DNS方式进行主从的访问及运维，如果是master故障，运维系统可以根据策略快速选择新的master，并将其他所有slave指向新的master，并更新DNS，确保Redis缓存的快速恢复。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>缓存系统的监控及演进</h4>
+<ul class="point">
+<li><b>对缓存系统进行实时监控报警，在缓存组件出现故障或无法满足(突发流量)需求时，进行修复及快速扩展</b>
+<ul class="quote">
+<li>监控可以采用集中探测的方式，也可以采用分布式汇报的方式，具体探测方案需要根据监控系统的特点进行确定。</li>
+</ul>
+</li>
+<li><b>随着业务发展和访问规模的变化，缓存架构也需要不断进行优化及演进</b>
+<ul class="quote">
+<li>如在微博发展过程中，单个核心数据的访问量从万级别增加到十万、百万级别，同时突发事件可能在短时间带来30%以上的访问流量，微博为此在memcached先后引入Main-HA、 L1-Main-HA多层结构，以确保缓存系统持续的高可用性。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch86"><summary>16.2 缓存分类总结</summary>
+<div class="sec">
+<h4>按宿主层次区分缓存</h4>
+<ul class="point">
+<li><b>本地缓存/进程内缓存：应用服务器本地的缓存模式</b>
+<ul class="quote">
+<li>本地缓存又称为进程内缓存，进程内缓存直接访问进程所属内存，无须做进程间通信，速度是各种缓存方式中最高的。</li>
+<li>本地缓存又可分为堆内缓存和堆外缓存，堆内缓存对GC的影响较大，堆外缓存又会增加额外的序列化和反序列化的开销。</li>
+</ul>
+</li>
+<li><b>进程间缓存：如果进程内缓存较大，那么重启后，缓存就需要重新加载</b>
+<ul class="quote">
+<li>可以通过在本机单独启动一个进程专门放缓存，通过Domain Socket通信。</li>
+</ul>
+</li>
+<li><b>远程缓存：远程缓存(Remote Cache)特指需要跨服务器访问的缓存</b>
+<ul class="quote">
+<li>远程缓存一般缓存数据存放于单独的缓存服务器上，典型的如Memcached、Redis。</li>
+</ul>
+</li>
+<li><b>二级缓存：就是本地缓存和远程缓存的结合</b>
+<ul class="quote">
+<li>对于大量易变的数据，一般是散列到分布式部署的远程缓存，减少不必要的DB层访问，来获得大幅的性能提升。</li>
+<li>对于不易改变但访问量巨大的数据，则可以进一步放置到本地缓存，来获得比远程缓存高3-4个数量级的访问性能。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>按存储介质区分缓存</h4>
+<ul class="point">
+<li><b>内存缓存：内存缓存就是把数据驻留在内存中</b>
+<ul class="quote">
+<li>内存缓存支持高速并发访问，读写高效和简单，能满足大部分需求场景，但宕机或者服务重启会导致数据丢失。</li>
+</ul>
+</li>
+<li><b>持久化缓存：持久化缓存则会把数据写入到磁盘</b>
+<ul class="quote">
+<li>持久化缓存读写性能较低，但容量更大、成本更低。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>按架构层次区分缓存</h4>
+<ul class="point">
+<li><b>页面缓存、浏览器缓存、Web服务器缓存、反向代理缓存和应用级缓存</b>
+<ul class="quote">
+<li>数据库也有对应的缓存机制，本书不涵盖数据库缓存的内容。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch87"><summary>16.3 缓存知识结构更多Tips</summary>
+<div class="sec">
+<h4>缓存使用模式</h4>
+<ul class="point">
+<li><b>Cache-Aside模式：业务代码中管理维护缓存</b>
+<ul class="quote">
+<li>读场景，先从缓存中获取数据，如果没有命中，则回源到存储系统并将源数据放入缓存供下次使用。</li>
+<li>写场景，先将数据写入到存储系统，写入成功后同步将数据写入缓存。或者写入成功后将缓存数据过期，下次读取时再加载缓存。</li>
+</ul>
+</li>
+<li><b>Cache-As-SoR模式：把Cache当作SoR，业务代码只对Cache操作</b>
+<ul class="quote">
+<li>Read-Through模式：当我们业务代码获取数据时，如果有返回，则先访问缓存；如果没有，则从数据库加载，然后放入缓存。</li>
+<li>Refresh-Ahead模式：业务代码访问数据时，仅调用cache的get操作。通过设定数据的过期时间在数据过期时，自动从数据库重新加载数据的模式。</li>
+<li>Write-Through模式：业务代码首先调用Cache写，实际由Cache更新缓存数据和存储数据。</li>
+<li>Write-Behind模式：业务代码只更新到缓存数据，什么时候更新到数据库，由缓存到数据库的同步策略决定。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>缓存协议</h4>
+<ul class="point">
+<li><b>Redis协议：RESP(REdis Serialization Protocol)</b>
+<ul class="quote">
+<li>redis通过CRLF(\r\n )进行拆包，主要包含两部分：类型和data。</li>
+<li>redis主要协议实现有pipeline，事务，pub/sub, cluster等。</li>
+</ul>
+</li>
+<li><b>Memcached协议：文本(classic ASCII)和二进制(binary)协议</b>
+<ul class="quote">
+<li>文本协议和Redis比较类似，也是通过CRLF(\r\n )来进行拆包。</li>
+<li>Binary协议简单高效，支持更多的特性，扩展性更强。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>缓存连接池</h4>
+<ul class="point">
+<li><b>Jedis客户端：连接池是基于common-pool</b>
+<ul class="quote">
+<li>单点连接池：连接池里面放置的是空闲连接，如果被使用(borrow)掉，连接池就会少一个连接，连接使用完后进行放回(return)，连接池会增加一个可用连接。如果没有可用连接，便会新建连接。</li>
+<li>sharding连接池：相较于单点连接池，sharding连接池里面的连接为redis1和redis2两个连接。每次申请使用一个连接，实际上是拿到了两个不同的连接，然后通过sharding选择具体访问哪一个redis。</li>
+<li>Cluster连接池：在客户端启动的时候，会从某一个redis服务上面，获取到后端cluster集群上面所有的redis服务列表(比如redis1和redis2)，并且对每一个redis服务建立独立的连接池。</li>
+</ul>
+</li>
+<li><b>Spymemcached客户端：IO为NIO的实现，在异步系统中可以极大提升系统的性能</b>
+<ul class="quote">
+<li>客户端实现了连接的多路复用，一个连接可以多个请求同时复用，可以通过极少的连接支持较高的访问。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>几个关注点</h4>
+<ul class="point">
+<li><b>集群组建方式：客户端sharding、proxy和服务集群三种方式</b>
+<ul class="quote">
+<li>客户端sharding：key在客户端通过一致性hash进行sharding。</li>
+<li>proxy：proxy实现对后端缓存服务的集群管理。</li>
+<li>服务端集群：主要是Redis的cluster机制，基于Gossip协议实现。</li>
+</ul>
+</li>
+<li><b>统计：需要对缓存进行关键数据的监控</b>
+<ul class="quote">
+<li>进程内缓存的监控项目如表16-2所示。</li>
+<li>对于进程外缓存，除监控进程内缓存的各种指标外，一般还需要监控cpu、进程内存使用情况、连接数等数据。</li>
+</ul>
+</li>
+<li><b>GC影响：二级缓存存在热key或者大key等难以解决的问题，可以通过本地缓存来有效的解决</b>
+<ul class="quote">
+<li>堆内缓存的空间由JVM分配及回收，由于缓存的数据量一般较大，堆内缓存对GC的影响较大。</li>
+<li>堆外缓存是直接在Page Cache中申请内存，生命周期不由JVM管理。</li>
+</ul>
+</li>
+<li><b>序列化：访问缓存，需要进行序列化和反序列化</b>
+<ul class="quote">
+<li>序列化带来的性能损耗是非常可观的，笔者曾遇到在Redis批量获取的场景下，使用JDK对象序列化机制，每次批量获取100条数据，每条数据均需要进行反序列化的开销，导致CPU运行非常高，对应用的正常服务带来很大的影响。</li>
+</ul>
+</li>
+<li><b>缓存命中率：缓存的命中率越高则表示使用缓存的收益越高</b>
+<ul class="quote">
+<li>如何监控缓存的命中率：在Memcached中，运行state命令可以查看Memcached服务的状态信息，其中cmd_get表示总的get次数，get_hits表示get的总命中次数，命中率 = get_hits/cmd_get。</li>
+<li>影响缓存命中率的几个因素：业务场景和业务需求、缓存的设计、缓存容量和基础设施、其他因素。</li>
+<li>提高缓存命中率的方法：应用尽可能地通过缓存直接获取数据，并避免缓存失效。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>管理缓存</h4>
+<ul class="point">
+<li><b>缓存穿透：如果查询的某一个数据在缓存中一直不存在，就会造成每一次请求都会回源</b>
+<ul class="quote">
+<li>缓存穿透的第二个场景：网站并发访问高，一个缓存如果失效，可能出现多个进程同时查询DB，同时设置缓存的情况，如果并发确实很大，这也可能造成回源系统压力过大。</li>
+</ul>
+</li>
+<li><b>缓存失效：引起这个问题的主要原因还是高并发的时候，平时我们设定一个缓存的过期时间时，可能有一些会设置1分钟，5分钟，并发很高可能会出现在某一个时间同时生成了很多的缓存，并且过期时间都一样，这个时候就可能引发过期时间到后，这些缓存同时失效，请求全部转发到DB, DB可能会压力过重</b>
+<ul class="quote">
+<li>将缓存失效时间分散开，比如我们可以在原有的失效时间基础上增加一个随机值，比如1-5分钟随机，这样每一个缓存的过期时间的重复率就会降低，就很难引发集体失效的事件。</li>
+</ul>
+</li>
+<li><b>淘汰算法：为更有效利用内存，并维持缓存中对象数量不会过多，缓存组件应该具有灵活的淘汰策略</b>
+<ul class="quote">
+<li>LRU(Least recently used，最近最少使用)算法根据数据的历史访问记录来进行淘汰数据，其核心思想是“如果数据最近被访问过，那么将来被访问的概率也更高”。</li>
+<li>另一种比较科学的实现是LRU-K。LRU-K中的K代表最近使用的次数，因此LRU可以认为是LRU-1。LRU-K的主要目的是为了解决LRU算法“缓存污染”的问题，其核心思想是将“最近使用过1次”的判断标准扩展为“最近使用过K次”。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>缓存可用性</h4>
+<ul class="point">
+<li><b>为提高缓存系统的可用性，在部分缓存节点异常时仍可保证数据的访问，我们可以采用主备方案，用备用Cache层来承接已故障的主cache节点；也可以采用cluster集群方案，每个cluster节点拥有多个slave节点，slave节点不仅可以分担master节点的访问压力，在master节点异常时，还可以选择一个slave节点晋级为新的master</b>
+<ul class="quote">
+<li>主备方案：缓存的主要目标是提升性能，理论上缓存数据丢失或者缓存不可用，不会影响数据正确性，数据库里还有数据呢！但是由于缓存的存在，挡住了大部分访问，如果缓存服务器挂掉，则存在大量的请求穿透到数据库，这对数据库访问是灾难性的，有可能数据库完全不能承受这样的压力而宕机。</li>
+<li>cluster方案：如8.4节的Redis Cluster方案，一个Redis Cluster由多个Cluster节点组构成。不同节点组服务的数据无交集，即每一个节点组对应数据的一个分片。节点组内部分为主备两类节点，对应前述的master和slave节点，两者数据准实时一致，通过异步化的主备复制机制保证。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>数据一致性</h4>
+<ul class="point">
+<li><b>在绝大部分场景下，追求最终一致性</b>
+<ul class="quote">
+<li>大部分情况下对于缓存数据与数据库数据的一致性没有绝对强一致性要求，那么在写缓存失败的情况下，可以通过补偿动作进行，达到最终一致性。</li>
+<li>保持最终一致性的方法有很多，再举一列。京东采用了通过canal更新缓存原子性的方法。</li>
+</ul>
+</li>
+<li><b>强一致性：可以使用InnoDB memcached插件结合MySQL来解决缓存数据与数据库数据一致性问题</b>
+<ul class="quote">
+<li>在安装配置中就能发现，cache_policies表定义了缓存策略，包含如下选择：innodb_only：只使用InnoDB作为数据存储。cache-only：只使用传统的Memcached引擎作为后端存储。caching：二者皆使用，如果在Memcached里找不到，就查询InnoDB。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>热点数据处理</h4>
+<ul class="point">
+<li><b>设计缓存时，使用sharding或者cluster模式，来将不同的key , sharding到不同的机器上面，避免所有请求访问同一台机器导致性能瓶颈</b>
+<ul class="quote">
+<li>对于同一个key的访问都是在同一个缓存服务，如果出现热key，很容易出现性能瓶颈。一般的解决方案为：主从，预热和本地缓存等。</li>
+</ul>
+</li>
+<li><b>数据预热：提前把数据读入到缓存的做法就是数据预热处理</b>
+<ul class="quote">
+<li>数据预热处理要注意一些细节问题：是否有监控机制确保预热数据都写成功了！笔者曾经遇到部分数据成功而影响高峰期业务的案例；数据预热配备回滚方案，遇到紧急回滚时便于操作。对于新建cache server集群，也可以通过数据预热模式来做一番手脚。预热数据量的考量，要做好容量评估。在容量允许的范围内预热全量，否则预热访问量高的。预热过程中需要注意是否会因为批量数据库操作或慢sql等引发数据库性能问题。</li>
+</ul>
+</li>
+<li><b>非预期热点策略：对于非预期热点问题，一般建立实时热点发现系统来发现热点</b>
+<ul class="quote">
+<li>通过实时统计访问分布式缓存的热点key，把对应的key推到本地缓存中，满足离用户最近的原则。当然，使用本地缓存，业务上要容忍本地缓存和分布式缓存的非完全一致。</li>
+</ul>
+</li>
+<li><b>多级缓存模式：类似于秒杀这类场景，一旦某个热点触发了一台机器的限流阀值，那么这台机器Cache的数据都将无效，进而间接导致Cache被击穿，请求落地应用层数据库出现雪崩现象</b>
+<ul class="quote">
+<li>这类问题需要与具体Cache产品结合才能有比较好的解决，一个通用的解决思路就是在Cache的client端做本地cache，当发现热点数据时直接Cache在client里，而不要请求到Cache的Server。</li>
+</ul>
+</li>
+<li><b>数据复制模式：在Facebook有一招，就是通过多个key_index(key:xxx#N)来解决数据的热点读问题</b>
+<ul class="quote">
+<li>解决方案是所有热点key发布到所有web服务器；每个服务器的key有对应别名，可以通过client端的算法路由到某台服务器；做删除动作时，删除所有的别名key。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>注意事项Tips</h4>
+<ul class="point">
+<li><b>慎把缓存当存储：关键链路中，如果无法容忍缓存不可用带来的致命危机，那么还是应该把缓存仅作为提升性能的手段，如果缓存不可用，可以访问数据库兜底</b>
+<ul class="quote">
+<li>缓存本身的高可用是另外一个话题。</li>
+</ul>
+</li>
+<li><b>缓存就近原则：缓存所有的策略均是优先访问离自己最近的数据</b>
+<ul class="quote">
+<li>CPU缓存：离CPU越近，访问速度最快。</li>
+<li>客户端缓存：本地缓存能比远程缓存获得较高的性能。</li>
+<li>CDN缓存：用户端优化的常见手段便是CDN，静态资源一般通过CDN缓存提升访问性能。</li>
+</ul>
+</li>
+<li><b>并发控制手段：保证并发控制的一些常用高性能手段有：乐观锁、Latch、mutex、CAS等</b>
+<ul class="quote">
+<li>多版本的并发控制MVCC通常是保证一致性的重要手段。</li>
+<li>Latch是处理数据库内部机制的一种策略。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+  <p class="site-footer">由 weread-auto 导出 · 供全书视角与后续精读对照　<span class="gcstat" id="gc_page_pv" style="display:none">本页阅读 <b id="gc_page_pv_num">–</b> 次</span></p>
+</main>
+<script>(function(){
+  function openId(id){
+    if(!id) return null;
+    var el = document.getElementById(id);
+    if(!el) return null;
+    var d = (el.tagName === 'DETAILS') ? el : (el.closest ? el.closest('details') : null);
+    if(d && !d.open) d.open = true;      // 关键：目录跳过来时把这一章展开
+    return el;
+  }
+  function go(id){
+    var el = openId(id);
+    if(!el) return;
+    // 展开会改变文档高度，等一帧再滚，免得停在错误位置
+    setTimeout(function(){ el.scrollIntoView({block:'start'}); }, 10);
+  }
+  function fromHash(){
+    var h = (location.hash || '').replace(/^#/, '');
+    if(h) go(decodeURIComponent(h));
+  }
+  document.addEventListener('click', function(e){
+    var a = (e.target && e.target.closest) ? e.target.closest('a[href^="#"]') : null;
+    if(!a) return;
+    var id = (a.getAttribute('href') || '').slice(1);
+    if(id) go(id);
+  }, false);
+  window.addEventListener('hashchange', fromHash, false);
+  // 手动展开某章时把锚点写回地址栏：刷新或分享链接能直接落回这一章
+  document.addEventListener('toggle', function(e){
+    var t = e.target;
+    if(t && t.tagName === 'DETAILS' && t.open && t.id && location.hash !== '#' + t.id){
+      try { history.replaceState(null, '', '#' + t.id); } catch(err) {}
+    }
+  }, true);
+  fromHash();
+})();
+</script>
+<script data-goatcounter="https://ae6623.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<!-- gc-fill:begin -->
+<script>
+(function(){
+  /* GoatCounter 计数端点只吃 .json（.txt 会 400 unknown extension），
+     没数据的路径也返回 404 + {"count":0,"count_unique":0}，所以按文本解析。 */
+  var C="ae6623", base="https://"+C+".goatcounter.com/counter";
+  function stat(p){
+    return fetch(base+p+".json",{credentials:"omit",cache:"no-store"})
+      .then(function(r){return r.text();})
+      .then(function(t){
+        try{
+          var d=JSON.parse(t), c=parseInt(d.count,10);
+          if(!isFinite(c))return null;
+          var u=parseInt(d.count_unique,10);
+          return {pv:String(c), uv:isFinite(u)?String(u):null};
+        }catch(e){return null}
+      })
+      .catch(function(){return null});
+  }
+  function put(id,v){var e=document.getElementById(id);if(e&&v!=null)e.textContent=v;}
+  stat("/*").then(function(d){
+    if(!d)return;
+    put("gc_site_pv_num",d.pv);
+    if(d.uv!=null){put("gc_site_uv_num",d.uv);}
+    else{var x=document.querySelectorAll(".visit-badge-uv");
+         for(var i=0;i<x.length;i++)x[i].style.display="none";}
+  });
+  var pp=document.getElementById("gc_page_pv");
+  if(pp&&location.pathname){
+    var path=location.pathname;
+    if(path.length>1&&path.charAt(path.length-1)==="/")path=path.slice(0,-1);
+    stat(path).then(function(d){
+      if(d){put("gc_page_pv_num",d.pv);pp.style.display="";}
+    });
+  }
+})();
+</script>
+<!-- gc-fill:end -->
+</body>
+</html>

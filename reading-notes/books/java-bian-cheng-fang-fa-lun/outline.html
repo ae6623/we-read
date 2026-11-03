@@ -1,21 +1,2930 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Java编程方法论：响应式Spring Reactor 3设计与实现 · AI 大纲</title><style>
-:root{--fg:#1f2328;--muted:#6b7280;--line:#e6e2da;--accent:#b45309;--bg:#fbfaf7}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.78 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
-.wrap{max-width:840px;margin:0 auto;padding:38px 22px 90px}
-h1{font-size:26px;line-height:1.35;margin:0 0 6px}
-.meta{color:var(--muted);font-size:14px;margin-bottom:20px}
-h2{font-size:19px;margin:34px 0 12px;padding-left:10px;border-left:4px solid var(--accent)}
-h3{font-size:16px;margin:18px 0 8px}
-p{margin:8px 0}
-.tag{display:inline-block;background:#f2ede2;color:#8a6d3b;font-size:12px;padding:1px 9px;border-radius:10px;margin-right:6px}
-ul,ol{padding-left:22px}li{margin:4px 0}
-.quote{border-left:3px solid #d8cfbd;padding:6px 12px;color:#4b4639;background:#f7f4ee;margin:8px 0;font-size:15px;border-radius:0 6px 6px 0}
-.src{color:var(--muted);font-size:12px}
-.ch{display:flex;gap:10px;padding:7px 0;border-bottom:1px dashed var(--line)}
-.ch .no{color:var(--accent);font-weight:600;min-width:34px;text-align:right}
-.card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:12px 0}
-.foot{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
-a{color:#8a5a00;text-decoration:none}a:hover{text-decoration:underline}
-.badge{font-size:12px;color:#8a6d3b;background:#f6f1e6;border:1px solid #eadfc6;border-radius:6px;padding:1px 7px}
-</style></head><body><div class="wrap"><h1>Java编程方法论：响应式Spring Reactor 3设计与实现</h1><div class="meta"><span class="tag">AI 大纲</span>知秋　·　共 83 章</div><h2>全书提要</h2><p>本书主要专注于解读Spring Reactor 3的代码设计与实现。全书共10章，其中第1、2章将从接口的设计入手，逐渐深入介绍Reactor中Flux源与订阅者Subscriber的诸多交互实现细节；第3章将通过对调度器的研究来向读者展示其中的优秀设计，可以帮助读者更好地掌握Java并发库，同时可以使读者对使用Reactor进行异步编程有更好的认识；第4章将接触到一些常用的Reactor操作，方便读者写出可重用度高、逻辑清晰的代码；第5、6、7章将着重分析Reactor中Processor的设计实现，不仅讲述了它的使用场景，还讲解了其中的内在原理，以及如何应对未来项目开发过程中可能遇到的种种问题；第8章将介绍并分析Reactor特别提供的Context，这是Reactor为了应对生产-订阅模式下的响应式编程在异步环境中对订阅关系上下文进行管理所产生的问题而给出的解决方案，Spring Framework 5.2中的响应式事务也是基于它实现的；第9章将主要介绍Reactor中的测试，同时带着读者一步一步设计实现一个针对Reactor项目的测试库；第10章将主要介绍Reactor中的调试，可以教会读者根据不同的需求采取不同的调试方式。</p><h2>章节大纲（含各章热门划线原文）</h2><div class="ch"><span class="no">1</span><div><b>内容简介</b><span class="src"> · 589 字</span></div></div><div class="ch"><span class="no">2</span><div><b>推荐序一</b><span class="src"> · 3530 字</span></div></div><div class="ch"><span class="no">3</span><div><b>推荐序二</b><span class="src"> · 4140 字</span></div></div><div class="ch"><span class="no">4</span><div><b>推荐序三</b><span class="src"> · 861 字</span></div></div><div class="ch"><span class="no">5</span><div><b>推荐序四</b><span class="src"> · 737 字</span></div></div><div class="ch"><span class="no">6</span><div><b>推荐序五</b><span class="src"> · 776 字</span></div></div><div class="ch"><span class="no">7</span><div><b>推荐序六</b><span class="src"> · 1121 字</span></div></div><div class="ch"><span class="no">8</span><div><b>推荐序七</b><span class="src"> · 1158 字</span></div></div><div class="ch"><span class="no">9</span><div><b>前言</b><span class="src"> · 1259 字</span></div></div><div class="ch"><span class="no">10</span><div><b>第1章 响应式编程概述</b><span class="src"> · 286 字</span></div></div><div class="ch"><span class="no">11</span><div><b>1.1 并发与并行的关系</b><span class="src"> · 843 字</span></div></div><div class="ch"><span class="no">12</span><div><b>1.2 如何理解响应式编程中的背压</b><span class="src"> · 705 字</span></div></div><div class="ch"><span class="no">13</span><div><b>1.3 源码接口设计启示</b><span class="src"> · 1016 字</span></div></div><div class="ch"><span class="no">14</span><div><b>1.4 如何看待众多函数表达式</b><span class="src"> · 438 字</span></div></div><div class="ch"><span class="no">15</span><div><b>1.5 Reactor与RxJava的对比</b><span class="src"> · 1772 字</span></div></div><div class="ch"><span class="no">16</span><div><b>1.6 小结</b><span class="src"> · 133 字</span></div></div><div class="ch"><span class="no">17</span><div><b>第2章 对Flux的探索</b><span class="src"> · 563 字</span></div></div><div class="ch"><span class="no">18</span><div><b>2.1 对Flux.subscribe订阅逻辑的解读</b><span class="src"> · 3954 字</span></div></div><div class="ch"><span class="no">19</span><div><b>2.2 用Flux.create创建源</b><span class="src"> · 5285 字</span></div></div><div class="ch"><span class="no">20</span><div><b>2.3 蛇行走位的QueueSubscription</b><span class="src"> · 3747 字</span></div></div><div class="ch"><span class="no">21</span><div><b>2.4 Mono的二三事</b><span class="src"> · 1047 字</span></div></div><div class="ch"><span class="no">22</span><div><b>2.5 通过BaseSubscriber自定义订阅者</b><span class="src"> · 629 字</span></div></div><div class="ch"><span class="no">23</span><div><b>2.6 将常见的监听器改造成响应式结构</b><span class="src"> · 1140 字</span></div></div><div class="ch"><span class="no">24</span><div><b>2.7 Flux.push的特殊使用场景及细节探索</b><span class="src"> · 722 字</span></div></div><div class="ch"><span class="no">25</span><div><b>2.8 对Flux.handle的解读</b><span class="src"> · 1863 字</span></div></div><div class="ch"><span class="no">26</span><div><b>2.9 小结</b><span class="src"> · 234 字</span></div></div><div class="ch"><span class="no">27</span><div><b>第3章 调度器</b><span class="src"> · 1414 字</span></div></div><div class="ch"><span class="no">28</span><div><b>3.1 深入理解Schedulers.elastic</b><span class="src"> · 7731 字</span></div></div><div class="ch"><span class="no">29</span><div><b>3.2 深入解读publishOn</b><span class="src"> · 6707 字</span></div></div><div class="ch"><span class="no">30</span><div><b>3.3 深入解读subscribeOn</b><span class="src"> · 2633 字</span></div></div><div class="ch"><span class="no">31</span><div><b>3.4 Flux.parallel&amp;Flowable.parallel的并行玩法</b><span class="src"> · 3242 字</span></div></div><div class="ch"><span class="no">32</span><div><b>3.5 ParallelFlux.runOn&amp;ParallelFlowable.runOn的调度实现</b><span class="src"> · 1065 字</span></div></div><div class="ch"><span class="no">33</span><div><b>3.6 小结</b><span class="src"> · 318 字</span></div></div><div class="ch"><span class="no">34</span><div><b>第4章 对Reactor操作的解读</b><span class="src"> · 135 字</span></div></div><div class="ch"><span class="no">35</span><div><b>4.1 filter操作</b><span class="src"> · 121 字</span></div></div><div class="ch"><span class="no">36</span><div><b>4.2 transform操作</b><span class="src"> · 1009 字</span></div></div><div class="ch"><span class="no">37</span><div><b>4.3 compose与transformDeferred操作</b><span class="src"> · 843 字</span></div></div><div class="ch"><span class="no">38</span><div><b>4.4 批处理操作</b><span class="src"> · 3935 字</span></div></div><div class="ch"><span class="no">39</span><div><b>4.5 merge和mergeSequential操作</b><span class="src"> · 387 字</span></div></div><div class="ch"><span class="no">40</span><div><b>4.6 flatMap和flatMapSequential操作</b><span class="src"> · 313 字</span></div></div><div class="ch"><span class="no">41</span><div><b>4.7 concatMap操作</b><span class="src"> · 374 字</span></div></div><div class="ch"><span class="no">42</span><div><b>4.8 combineLatest操作</b><span class="src"> · 288 字</span></div></div><div class="ch"><span class="no">43</span><div><b>4.9 ConnectableFlux的二三事及对reactor-bug的分析</b><span class="src"> · 3889 字</span></div></div><div class="ch"><span class="no">44</span><div><b>4.10 小结</b><span class="src"> · 215 字</span></div></div><div class="ch"><span class="no">45</span><div><b>第5章 对Processor的探索</b><span class="src"> · 851 字</span></div></div><div class="ch"><span class="no">46</span><div><b>5.1 UnicastProcessor详解</b><span class="src"> · 1098 字</span></div></div><div class="ch"><span class="no">47</span><div><b>5.2 DirectProcessor详解</b><span class="src"> · 1381 字</span></div></div><div class="ch"><span class="no">48</span><div><b>5.3 EmitterProcessor详解</b><span class="src"> · 1630 字</span></div></div><div class="ch"><span class="no">49</span><div><b>5.4 ReplayProcessor详解</b><span class="src"> · 5142 字</span></div></div><div class="ch"><span class="no">50</span><div><b>5.5 小结</b><span class="src"> · 179 字</span></div></div><div class="ch"><span class="no">51</span><div><b>第6章 TopicProcessor及Reactor中匹配Disruptor的实现代码</b><span class="src"> · 1459 字</span></div></div><div class="ch"><span class="no">52</span><div><b>6.1 初识TopicProcessor</b><span class="src"> · 1496 字</span></div></div><div class="ch"><span class="no">53</span><div><b>6.2 TopicProcessor构造器</b><span class="src"> · 2812 字</span></div></div><div class="ch"><span class="no">54</span><div><b>6.3 对RingBuffer中publish方法的解读</b><span class="src"> · 1714 字</span></div></div><div class="ch"><span class="no">55</span><div><b>6.4 对MultiProducerRingBuffer的解读</b><span class="src"> · 5489 字</span></div></div><div class="ch"><span class="no">56</span><div><b>6.5 TopicProcessor.onSubscribe及类BossEventLoopGroup的设计</b><span class="src"> · 2718 字</span></div></div><div class="ch"><span class="no">57</span><div><b>6.6 TopicProcessor.subscribe及类WorkerEventLoopGroup的设计</b><span class="src"> · 7899 字</span></div></div><div class="ch"><span class="no">58</span><div><b>6.7 小结</b><span class="src"> · 317 字</span></div></div><div class="ch"><span class="no">59</span><div><b>第7章 对WorkQueueProcessor的解读</b><span class="src"> · 1400 字</span></div></div><div class="ch"><span class="no">60</span><div><b>7.1 WorkQueueProcessor的requestTask</b><span class="src"> · 1720 字</span></div></div><div class="ch"><span class="no">61</span><div><b>7.2 WorkQueueProcessor的subscribe</b><span class="src"> · 1340 字</span></div></div><div class="ch"><span class="no">62</span><div><b>7.3 冷热数据源的区别</b><span class="src"> · 982 字</span></div></div><div class="ch"><span class="no">63</span><div><b>7.4 实例详解</b><span class="src"> · 716 字</span></div></div><div class="ch"><span class="no">64</span><div><b>7.5 小结</b><span class="src"> · 220 字</span></div></div><div class="ch"><span class="no">65</span><div><b>第8章 Reactor中特供的Context</b><span class="src"> · 145 字</span></div></div><div class="ch"><span class="no">66</span><div><b>8.1 Context的设计缘由</b><span class="src"> · 813 字</span></div></div><div class="ch"><span class="no">67</span><div><b>8.2 对Context的解读</b><span class="src"> · 3573 字</span></div></div><div class="ch"><span class="no">68</span><div><b>8.3 小结</b><span class="src"> · 241 字</span></div></div><div class="ch"><span class="no">69</span><div><b>第9章 Reactor中的测试</b><span class="src"> · 387 字</span></div></div><div class="ch"><span class="no">70</span><div><b>9.1 StepVerifier测试源码解析</b><span class="src"> · 2809 字</span></div></div><div class="ch"><span class="no">71</span><div><b>9.2 StepVerifier测试应用</b><span class="src"> · 1725 字</span></div></div><div class="ch"><span class="no">72</span><div><b>9.3 操作时间测试</b><span class="src"> · 2585 字</span></div></div><div class="ch"><span class="no">73</span><div><b>9.4 使用StepVerifier进行后置验证</b><span class="src"> · 382 字</span></div></div><div class="ch"><span class="no">74</span><div><b>9.5 关于Context的测试</b><span class="src"> · 1864 字</span></div></div><div class="ch"><span class="no">75</span><div><b>9.6 使用TestPublisher对自定义中间操作进行测试</b><span class="src"> · 3428 字</span></div></div><div class="ch"><span class="no">76</span><div><b>9.7 使用PublisherProbe检查执行路径</b><span class="src"> · 1776 字</span></div></div><div class="ch"><span class="no">77</span><div><b>9.8 小结</b><span class="src"> · 117 字</span></div></div><div class="ch"><span class="no">78</span><div><b>第10章 Reactor中的调试</b><span class="src"> · 100 字</span></div></div><div class="ch"><span class="no">79</span><div><b>10.1 启用调试模式</b><span class="src"> · 1423 字</span></div></div><div class="ch"><span class="no">80</span><div><b>10.2 在调试模式下读取堆栈跟踪信息</b><span class="src"> · 3015 字</span></div></div><div class="ch"><span class="no">81</span><div><b>10.3 通过checkpoint方式进行调试</b><span class="src"> · 354 字</span></div></div><div class="ch"><span class="no">82</span><div><b>10.4 记录订阅关系下与操作流程相关的日志</b><span class="src"> · 158 字</span></div></div><div class="ch"><span class="no">83</span><div><b>10.5 小结</b><span class="src"> · 212 字</span></div></div><div class="foot">来源：微信读书官方章节接口 + 热门划线接口，逐字原文　·　生成于 2026-11-01 13:10　·　开读即产（不等完读）</div></div></body></html>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Java编程方法论：响应式Spring Reactor 3设计与实现 AI 大纲">
+<title>《Java编程方法论：响应式Spring Reactor 3设计与实现》｜AI 大纲</title>
+<link rel="stylesheet" href="../../../assets/css/site.css">
+<link rel="stylesheet" href="../../../assets/css/reading-outline.css">
+
+</head>
+<body>
+<main class="page">
+  <header class="note-head">
+    <p class="eyebrow">AI OUTLINE · BEFORE READING</p>
+    <h1>《Java编程方法论：响应式Spring Reactor 3设计与实现》AI 大纲</h1>
+    <p class="meta">作者：—　·　共 75 章 / 831 条　·　AI 读书 · 全书大纲</p>
+    <p><a href="../../../index.html">← 返回首页</a>　<a href="../../index.html">阅读归档索引</a>　<a href="outline.epub" download>下载 EPUB ↓</a></p>
+    <div class="chips"><span class="chip">全书视角</span><span class="chip">AI 生成</span><span class="chip">含原文摘录</span></div>
+    <p class="small">本大纲由 AI 读书（阅读端智能大纲）生成，是全书结构与要点的机器梳理，
+    <b>不等同于已亲读</b>；其中第 4 层条目为书中原句摘录。章节可展开查看。</p>
+  </header>
+  <div class="toc"><b>章节目录</b><ul>
+<li><a href="#ch0">内容简介</a></li>
+<li><a href="#ch1">第1章 响应式编程概述</a></li>
+<li><a href="#ch2">1.1 并发与并行的关系</a></li>
+<li><a href="#ch3">1.2 如何理解响应式编程中的背压</a></li>
+<li><a href="#ch4">1.3 源码接口设计启示</a></li>
+<li><a href="#ch5">1.4 如何看待众多函数表达式</a></li>
+<li><a href="#ch6">1.5 Reactor与RxJava的对比</a></li>
+<li><a href="#ch7">1.6 小结</a></li>
+<li><a href="#ch8">第2章 对Flux的探索</a></li>
+<li><a href="#ch9">2.1 对Flux.subscribe订阅逻辑的解读</a></li>
+<li><a href="#ch10">2.2 用Flux.create创建源</a></li>
+<li><a href="#ch11">2.3 蛇行走位的QueueSubscription</a></li>
+<li><a href="#ch12">2.4 Mono的二三事</a></li>
+<li><a href="#ch13">2.5 通过BaseSubscriber自定义订阅者</a></li>
+<li><a href="#ch14">2.6 将常见的监听器改造成响应式结构</a></li>
+<li><a href="#ch15">2.7 Flux.push的特殊使用场景及细节探索</a></li>
+<li><a href="#ch16">2.8 对Flux.handle的解读</a></li>
+<li><a href="#ch17">2.9 小结</a></li>
+<li><a href="#ch18">第3章 调度器</a></li>
+<li><a href="#ch19">3.1 深入理解Schedulers.elastic</a></li>
+<li><a href="#ch20">3.2 深入解读publishOn</a></li>
+<li><a href="#ch21">3.3 深入解读subscribeOn</a></li>
+<li><a href="#ch22">3.4 Flux.parallel&amp;Flowable.parallel的并行玩法</a></li>
+<li><a href="#ch23">3.5 ParallelFlux.runOn&amp;ParallelFlowable.runOn的调度实现</a></li>
+<li><a href="#ch24">3.6 小结</a></li>
+<li><a href="#ch25">第4章 对Reactor操作的解读</a></li>
+<li><a href="#ch26">4.1 filter操作</a></li>
+<li><a href="#ch27">4.2 transform操作</a></li>
+<li><a href="#ch28">4.3 compose与transformDeferred操作</a></li>
+<li><a href="#ch29">4.4 批处理操作</a></li>
+<li><a href="#ch30">4.5 merge和mergeSequential操作</a></li>
+<li><a href="#ch31">4.6 flatMap和flatMapSequential操作</a></li>
+<li><a href="#ch32">4.7 concatMap操作</a></li>
+<li><a href="#ch33">4.8 combineLatest操作</a></li>
+<li><a href="#ch34">4.9 ConnectableFlux的二三事及对reactor-bug的分析</a></li>
+<li><a href="#ch35">4.10 小结</a></li>
+<li><a href="#ch36">第5章 对Processor的探索</a></li>
+<li><a href="#ch37">5.1 UnicastProcessor详解</a></li>
+<li><a href="#ch38">5.2 DirectProcessor详解</a></li>
+<li><a href="#ch39">5.3 EmitterProcessor详解</a></li>
+<li><a href="#ch40">5.4 ReplayProcessor详解</a></li>
+<li><a href="#ch41">5.5 小结</a></li>
+<li><a href="#ch42">第6章 TopicProcessor及Reactor中匹配Disruptor的实现代码</a></li>
+<li><a href="#ch43">6.1 初识TopicProcessor</a></li>
+<li><a href="#ch44">6.2 TopicProcessor构造器</a></li>
+<li><a href="#ch45">6.3 对RingBuffer中publish方法的解读</a></li>
+<li><a href="#ch46">6.4 对MultiProducerRingBuffer的解读</a></li>
+<li><a href="#ch47">6.5 TopicProcessor.onSubscribe及类BossEventLoopGroup的设计</a></li>
+<li><a href="#ch48">6.6 TopicProcessor.subscribe及类WorkerEventLoopGroup的设计</a></li>
+<li><a href="#ch49">6.7 小结</a></li>
+<li><a href="#ch50">第7章 对WorkQueueProcessor的解读</a></li>
+<li><a href="#ch51">7.1 WorkQueueProcessor的requestTask</a></li>
+<li><a href="#ch52">7.2 WorkQueueProcessor的subscribe</a></li>
+<li><a href="#ch53">7.3 冷热数据源的区别</a></li>
+<li><a href="#ch54">7.4 实例详解</a></li>
+<li><a href="#ch55">7.5 小结</a></li>
+<li><a href="#ch56">第8章 Reactor中特供的Context</a></li>
+<li><a href="#ch57">8.1 Context的设计缘由</a></li>
+<li><a href="#ch58">8.2 对Context的解读</a></li>
+<li><a href="#ch59">8.3 小结</a></li>
+<li><a href="#ch60">第9章 Reactor中的测试</a></li>
+<li><a href="#ch61">9.1 StepVerifier测试源码解析</a></li>
+<li><a href="#ch62">9.2 StepVerifier测试应用</a></li>
+<li><a href="#ch63">9.3 操作时间测试</a></li>
+<li><a href="#ch64">9.4 使用StepVerifier进行后置验证</a></li>
+<li><a href="#ch65">9.5 关于Context的测试</a></li>
+<li><a href="#ch66">9.6 使用TestPublisher对自定义中间操作进行测试</a></li>
+<li><a href="#ch67">9.7 使用PublisherProbe检查执行路径</a></li>
+<li><a href="#ch68">9.8 小结</a></li>
+<li><a href="#ch69">第10章 Reactor中的调试</a></li>
+<li><a href="#ch70">10.1 启用调试模式</a></li>
+<li><a href="#ch71">10.2 在调试模式下读取堆栈跟踪信息</a></li>
+<li><a href="#ch72">10.3 通过checkpoint方式进行调试</a></li>
+<li><a href="#ch73">10.4 记录订阅关系下与操作流程相关的日志</a></li>
+<li><a href="#ch74">10.5 小结</a></li>
+</ul></div>
+<details class="ch" id="ch0"><summary>内容简介</summary>
+<div class="sec">
+<h4>Spring Reactor 3代码设计与实现概述</h4>
+<ul class="point">
+<li><b>本书主要专注于解读Spring Reactor 3的代码设计与实现。</b>
+</li>
+<li><b>全书共10章，涵盖了Reactor中Flux源与订阅者Subscriber的交互实现细节、调度器的设计、Reactor操作、Processor的设计实现、Context的介绍与分析、Reactor测试以及调试等内容。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Reactor中Flux源与订阅者Subscriber的交互实现细节。</h4>
+<ul class="point">
+</ul></div>
+<div class="sec">
+<h4>调度器的设计与理解</h4>
+<ul class="point">
+<li><b>通过对调度器的研究来向读者展示其中的优秀设计</b>
+<ul class="quote">
+<li>调度器是Reactor的重要组成部分，它负责控制任务的执行顺序和时机。</li>
+<li>调度器的设计需要考虑线程安全、性能、可扩展性等因素。</li>
+<li>Reactor提供了多种调度器实现，包括DirectScheduler、ThreadPoolScheduler、ParallelScheduler等。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Reactor操作</h4>
+<ul class="point">
+<li><b>接触到一些常用的Reactor操作，方便读者写出可重用度高、逻辑清晰的代码</b>
+<ul class="quote">
+<li>Reactor提供了一系列的操作符，如map、filter、flatMap、reduce等，这些操作符可以用于对Flux流进行处理和转换。</li>
+<li>Reactor还提供了一些辅助方法，如subscribe、block、then等，这些方法可以用于订阅流、等待流完成、组合多个流等。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Processor的设计实现</h4>
+<ul class="point">
+<li><b>着重分析Reactor中Processor的设计实现，不仅讲述了它的使用场景，还讲解了其中的内在原理，以及如何应对未来项目开发过程中可能遇到的种种问题</b>
+<ul class="quote">
+<li>Processor是Reactor中的一个重要组件，它可以将一个Flux流转换为另一个Flux流，并支持背压(backpressure)机制。</li>
+<li>Processor的实现需要考虑线程安全、性能、可扩展性等因素。</li>
+<li>Reactor提供了多种Processor实现，包括EmitterProcessor、BehaviorProcessor、AsyncProcessor等。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Reactor中的Context</h4>
+<ul class="point">
+<li><b>介绍并分析Reactor特别提供的Context，这是Reactor为了应对生产-订阅模式下的响应式编程在异步环境中对订阅关系上下文进行管理所产生的问题而给出的解决方案</b>
+<ul class="quote">
+<li>Context是Reactor中的一个重要概念，它提供了一种在异步环境中传递上下文信息的方式。</li>
+<li>Reactor中的Context可以用于传递订阅关系、请求上下文、用户身份等信息。</li>
+<li>Spring Framework 5.2中的响应式事务也是基于Reactor的Context实现的。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Reactor测试</h4>
+<ul class="point">
+<li><b>主要介绍Reactor中的测试，同时带着读者一步一步设计实现一个针对Reactor项目的测试库</b>
+<ul class="quote">
+<li>Reactor提供了丰富的测试工具和方法，可以帮助开发人员编写高质量的测试用例。</li>
+<li>设计实现一个针对Reactor项目的测试库，需要考虑测试覆盖率、测试可维护性、测试可重用性等因素。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Reactor调试</h4>
+<ul class="point">
+<li><b>主要介绍Reactor中的调试，可以教会读者根据不同的需求采取不同的调试方式</b>
+<ul class="quote">
+<li>Reactor提供了多种调试工具和方法，可以帮助开发人员快速定位和解决问题。</li>
+<li>根据不同的需求采取不同的调试方式，可以提高调试效率和准确性。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch1"><summary>第1章 响应式编程概述</summary>
+<div class="sec">
+<h4>响应式编程概述</h4>
+<ul class="point">
+<li><b>响应式编程是基于事件驱动模式来进行编程的</b>
+<ul class="quote">
+<li>对整个代码的设计应该是针对消费者来进行的。</li>
+</ul>
+</li>
+<li><b>响应式编程通过把复杂的逻辑拆分开，然后将其分割成一个个小任务进行封装</b>
+<ul class="quote">
+<li>比如，看电影，有些画面我们不想看，那就闭上眼睛；有些声音不想听，那就捂上耳朵。</li>
+<li>这就是对消费者的增强包装，我们把复杂的逻辑拆分开，然后将其分割成一个个小任务进行封装，于是就有了诸如filter、map、skip、limit等操作。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch2"><summary>1.1 并发与并行的关系</summary>
+<div class="sec">
+<h4>并发与并行的关系</h4>
+<ul class="point">
+<li><b>并发并不意味着并行，并行是在多核CPU上同一时间运行多个任务或者一个任务分为多块同时执行(如ForkJoin)。</b>
+</li>
+<li><b>单核CPU的话，就不要考虑并行了</b>
+<ul class="quote">
+<li>多线程就意味着并发，但是并行只发生在这些线程在同一时间调度、分配到不同CPU上执行的情况下。</li>
+</ul>
+</li>
+<li><b>线程只是一个对象，不要把它想象成CPU中的某一个执行核心</b>
+<ul class="quote">
+<li>CPU时间片会切换执行这些线程。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch3"><summary>1.2 如何理解响应式编程中的背压</summary>
+<div class="sec">
+<h4>响应式编程中的背压概念</h4>
+<ul class="point">
+<li><b>背压是数据流从上游源生产者向下游消费者传输过程中，若上游源生产速度大于下游消费者消费速度，导致数据溢出的一种情况。</b>
+</li>
+<li><b>背压机制应该放在连接元素生产者和消费者的地方，即它是生产者和消费者的衔接者</b>
+<ul class="quote">
+<li>背压机制应该具有承载元素的能力，也就是它必须是一个容器。</li>
+<li>背压机制仅起承载作用是不够的，正因为上游进行了承压，所以下游可以按需请求元素，也可以在中间根据实际情况进行限流。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>背压机制的实现方式</h4>
+<ul class="point">
+<li><b>使用队列作为背压机制的容器，存储与下发的元素应该有先后顺序。</b>
+</li>
+<li><b>上下游共同实现了背压机制，下游可以按需请求元素，也可以在中间根据实际情况进行限流</b>
+<ul class="quote">
+<li>正因为上游进行了承压，所以下游可以按需请求元素。</li>
+<li>也可以在中间根据实际情况进行限流，以此上下游共同实现了背压机制。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch4"><summary>1.3 源码接口设计启示</summary>
+<div class="sec">
+<h4>Flow类中的接口定义</h4>
+<ul class="point">
+<li><b>Flow类中包含了4个接口定义：Publisher、Subscriber、Subscription和Processor</b>
+<ul class="quote">
+<li>Publisher通过subscribe方法与Subscriber产生订阅关系。</li>
+<li>Subscriber依靠onSubscribe与上游源生产者产生联系。</li>
+<li>Subscription用来接收生产者所生产的元素，如果其支持背压，那么就和大坝蓄水一样。</li>
+<li>Processor同时具有Publisher和Subscriber的功能。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Reactor中的源码实现</h4>
+<ul class="point">
+<li><b>Reactor中Flux＃fromArray所涉及的FluxArray的源码理解</b>
+<ul class="quote">
+<li>FluxArray通过继承Flux&lt;T&gt;来对外表示自己的生产源身份。</li>
+<li>FluxArray依靠内部类对所传入的Subscriber进行包装增强。</li>
+</ul>
+</li>
+<li><b>Reactor中Flux＃filter涉及的FluxFilter的理解</b>
+<ul class="quote">
+<li>FluxFilter从功能增强处理的角度来说，其依靠的是内部类对所传入的Subscriber进行包装增强。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>装饰器模式的应用</h4>
+<ul class="point">
+<li><b>对subscribe(Subscriber&lt;？super T&gt;subscriber)所传入的Subscriber进行功能增强</b>
+<ul class="quote">
+<li>从Subscriber这个角度讲，使用的是装饰增强模式。</li>
+<li>但从外面来看，其整体定义的依然是一个Flux或者Mono。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>代码层面的微服务设计模板</h4>
+<ul class="point">
+<li><b>可以以这套API接口设计作为参考，衍生出很多规范逻辑的开发实现</b>
+<ul class="quote">
+<li>比如众多的Rx衍生操作API的设计实现，它们都是按照一套模板来实现的。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch5"><summary>1.4 如何看待众多函数表达式</summary>
+<div class="sec">
+<h4>函数式接口的定义和规范</h4>
+<ul class="point">
+<li><b>函数式接口遵循一个标准动作的设计定义思路</b>
+<ul class="quote">
+<li>无论是条件判断表达式Predicate还是无返回值动作处理函数BiConsumer，都遵循一个标准动作的设计定义思路。</li>
+</ul>
+</li>
+<li><b>通过default方法来对同类动作进行编排</b>
+<ul class="quote">
+<li>一套拳法可能由很多小套路组成，这些小套路也都遵循着规范。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>函数式设计的优点</h4>
+<ul class="point">
+<li><b>函数式设计更倾向于干净利落，凸显自己要做的事情。</b>
+</li>
+<li><b>函数式设计开发是面向未知实现开发的一种方式</b>
+<ul class="quote">
+<li>基于这些动作进行的一整套流程设计，由于我们无须关心具体某个函数式接口如何实现，因此完全可以这么说，函数式设计开发是面向未知实现开发的一种方式。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>函数式设计与响应式编程的结合</h4>
+<ul class="point">
+<li><b>响应式编程很好地结合了函数式编程思维。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch6"><summary>1.5 Reactor与RxJava的对比</summary>
+<div class="sec">
+<h4>Reactor与RxJava的对比</h4>
+<ul class="point">
+<li><b>Reactor 3推荐用于Java 8+，RxJava 2推荐用于Java 6+或函数需要做异常检查</b>
+<ul class="quote">
+<li>RxJava 2和Reactor共用了一套接口API标准Reactive Streams Commons。</li>
+</ul>
+</li>
+<li><b>RxJava 3、RxJava 2直接通过新添加的Flowable类型来实现Publisher的接口定义</b>
+<ul class="quote">
+<li>RxJava 2依然保留了RxJava 1中的Observable、Completable和Single，并引入了支持Optional的Single升级版——Maybe类型。</li>
+</ul>
+</li>
+<li><b>Reactor中，Mono和Flux两种类型都实现了Publisher接口，同时两者皆实现了背压机制</b>
+<ul class="quote">
+<li>Flux可以对标RxJava 2中的Flowable类型，而Mono可以被理解为RxJava 2中对Single的背压加强版。</li>
+</ul>
+</li>
+<li><b>Reactor 3基于JDK中提供的java.util.function来设计实现，可以轻松地从java.util.stream.Stream转换为Flux，也可以很轻松地由后者转换为前者</b>
+<ul class="quote">
+<li>可以很轻松实现CompletableFuture与Mono之间的互相转换，也可以轻松而安全地基于Optional类型的元素创建Mono。</li>
+</ul>
+</li>
+<li><b>Reactor 3可以更好地服务于Spring Framework 5，也更适应最新版本的JDK</b>
+<ul class="quote">
+<li>Reactor 3可以更好地服务于Spring Framework 5。</li>
+<li>Reactor 3也更适应最新版本的JDK。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Reactor与RxJava的不同之处</h4>
+<ul class="point">
+<li><b>RxJava不得不自行定义了一些函数式接口，而Reactor 3则是基于JDK中提供的java.util.function来设计实现的。</b>
+</li>
+<li><b>可以很轻松地从java.util.stream.Stream转换为Flux，也可以很轻松地由后者转换为前者。</b>
+</li>
+<li><b>同样，可以很轻松地实现CompletableFuture与Mono之间的互相转换，也可以轻松而安全地基于Optional类型的元素创建Mono。</b>
+</li>
+<li><b>Reactor 3可以更好地服务于Spring Framework 5，也更适应最新版本的JDK。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Reactor的主要组成部分</h4>
+<ul class="point">
+<li><b>Core：是Reactor的核心实现库，其作用与RxJava 2的核心实现的作用是一样的。</b>
+</li>
+<li><b>IPC：可以认为它是针对encode、decode、send(unicast、multicast或request/response)及服务连接而设计的支持背压的组件。</b>
+</li>
+<li><b>Addons：其中包括reactor-adapter、reactor-logback和reactor-extra。</b>
+</li>
+<li><b>Reactive Streams Commons：是RxJava 2和Reactor共用的一套接口API标准。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch7"><summary>1.6 小结</summary>
+<div class="sec">
+<h4>响应式编程相关概念及RxJava和Reactor的区别</h4>
+<ul class="point">
+<li><b>响应式编程是一种编程范式，用于处理异步事件和数据流。</b>
+</li>
+<li><b>RxJava和Reactor都是流行的响应式编程框架，但它们在实现和API上有很大的区别</b>
+<ul class="quote">
+<li>RxJava是基于观察者模式实现的，而Reactor是基于反应式流规范(Reactive Streams)实现的。</li>
+<li>RxJava提供了丰富的操作符，而Reactor的操作符相对较少，但更强调响应式流的抽象。</li>
+<li>RxJava的API更加灵活，但学习曲线较陡峭；Reactor的API更加简洁，易于上手。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch8"><summary>第2章 对Flux的探索</summary>
+<div class="sec">
+<h4>Flux的基本概念和核心方法</h4>
+<ul class="point">
+<li><b>Flux是可以发出0到N个元素的生产者，实现了Publisher&lt;T&gt;接口</b>
+<ul class="quote">
+<li>Publisher&lt;T&gt;接口的核心方法是public void subscribe(Subscriber&lt;？super T&gt;s)。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Flux的订阅过程</h4>
+<ul class="point">
+<li><b>产生订阅后，会调用生产源Flux的subscribe方法，接着调用订阅者Subscriber的onSubscribe方法</b>
+<ul class="quote">
+<li>执行的是我们针对Subscription定义的一些代码逻辑Consumer&lt;？super Subscription&gt;。</li>
+<li>该代码逻辑主要用于调用Subscription＃request方法，Flux内部进行了背压设计。</li>
+</ul>
+</li>
+<li><b>接着执行我们定义的onNext方法</b>
+<ul class="quote">
+<li>onNext方法即图中圆形所代表的代码逻辑。</li>
+</ul>
+</li>
+<li><b>如果生产源的所有元素都能够正常下发完毕，则调用我们定义的onComplete方法</b>
+<ul class="quote">
+<li>onComplete方法即图中方块I所代表的代码逻辑。</li>
+</ul>
+</li>
+<li><b>如果生产源下发的元素在消费过程中产生了异常，则调用我们定义的onError方法</b>
+<ul class="quote">
+<li>onError方法即图中方块X所代表的代码逻辑。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch9"><summary>2.1 对Flux.subscribe订阅逻辑的解读</summary>
+<div class="sec">
+<h4>Flux.subscribe订阅逻辑的解读</h4>
+<ul class="point">
+<li><b>LambdaSubscriber实现了CoreSubscriber接口，Flux留了一个抽象的subscribe方法，留给具体的实现类来实现</b>
+<ul class="quote">
+<li>CoreSubscriber继承了org.reactivestreams.Subscriber接口，同时加入了一些Reactor 3特有的Context功能实现。</li>
+</ul>
+</li>
+<li><b>如果订阅者发出的元素请求数量小于或等于0，则请求不会产生onError事件，而只会简单地忽略错误</b>
+<ul class="quote">
+<li>当元素请求数量n小于或等于0时，会产生一个onError事件，并标明此事件为参数异常事件类型。</li>
+<li>Reactor 3.1+中的实现方式：这里仅记录了日志，并没有产生onError事件。</li>
+</ul>
+</li>
+<li><b>currentContext主要用于元素下发过程中的中间操作或者中间定义的订阅者上，内部涉及的Context，主要用于存储此订阅者产生订阅到结束这一过程中的信息</b>
+<ul class="quote">
+<li>如果已经结束下发，那么采用放弃策略Operators.onNextDropped。</li>
+<li>如果往队列中添加元素失败，那么针对这个异常包装出一个错误事件Operators.onOperatorError，用于下发错误。</li>
+</ul>
+</li>
+<li><b>在LambdaSubscriber中，有一种很实用的使用原子类的方法，即AtomicXxxFieldUpdater的技法应用</b>
+<ul class="quote">
+<li>首先，定义一个volatile变量：volatile Subscription subscription。</li>
+<li>然后，因为此变量是一个Subscription类型对象，所以通过AtomicReferenceFieldUpdater.new Updater(LambdaSubscriber.class，Subscription.class，&quot;subscription&quot;)将其加入原子类管理字段中，也就是LambdaSubscriber.class类下的一个类型为Subscription.class的volatile变量字段，其字段名称为subscription，并得到一个AtomicReferenceFieldUpdater类型的变量S。</li>
+<li>最后，通过S.getAndSet(this，Operators.cancelledSubscription())将此subscription变量的值通过原子类操作进行改变。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch10"><summary>2.2 用Flux.create创建源</summary>
+<div class="sec">
+<h4>Flux.create源创建</h4>
+<ul class="point">
+<li><b>Flux.create需要传入的参数emitter和背压策略</b>
+<ul class="quote">
+<li>Consumer方法接收的参数类型为？super FluxSink&lt;T&gt;。</li>
+</ul>
+</li>
+<li><b>FluxSink拥有与RxJava 2中的FlowableEmitter相似的能力</b>
+<ul class="quote">
+<li>Reactor 3直接省掉了诸多麻烦的包装，直接调用java.util.function.Consumer轻装上阵。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>FluxCreate细节探索</h4>
+<ul class="point">
+<li><b>subscribe方法首先做的是根据背压策略包装一个用于做元素下发动作的sink类</b>
+<ul class="quote">
+<li>只有在产生订阅的时候(即调用subscribe方法的时候)，才会进行元素的生产、下发。</li>
+</ul>
+</li>
+<li><b>用于承接上游源生产者与下游订阅者之间联系的BaseSink的相关源码</b>
+<ul class="quote">
+<li>对于上面源码BaseSink中定义的volatile变量的一些操作，我们理解起来应该完全没有压力。</li>
+<li>request(long n)存在于Reactor 3库中的很多地方，其实现的整体思路与RxJava 2中的思路没太多差别。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Flux的快速包装方法</h4>
+<ul class="point">
+<li><b>支持背压的方法：just、fromArray、fromIterable、fromStream、empty、error(Throwable error)、never、range(int start，int count)</b>
+<ul class="quote">
+<li>just：可以指定序列中包含的全部元素。创建的Flux源序列会在发布元素之后自动结束。</li>
+<li>fromArray、fromIterable和fromStream：可以从一个数组、Iterable对象或Stream对象中创建Flux对象。</li>
+<li>empty：创建一个不包含任何元素，只发布结束消息的源序列。</li>
+<li>error(Throwable error)：创建一个只包含错误消息的源序列。</li>
+<li>never：创建一个不包含任何消息通知的序列。</li>
+<li>range(int start，int count)：创建包含从start起始的count个Integer对象的源序列。</li>
+</ul>
+</li>
+<li><b>不支持背压的方法：interval(Duration period)、interval(Duration delay，Duration period)</b>
+<ul class="quote">
+<li>interval(Duration period)和interval(Duration delay，Duration period)：创建一个包含了从0开始递增的Long对象的源序列。其中包含的元素按照指定的间隔时间来发布。除了间隔时间外，还可以指定起始元素发布之前的延迟时间，指定的时间间隔和延迟时间的单位为ms。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Reactor 3中的generate方法</h4>
+<ul class="point">
+<li><b>generate方法通过同步和逐一方式来产生Flux元素序列</b>
+<ul class="quote">
+<li>元素序列的产生是通过调用SynchronousSink对象的next、complete和error(Throwable)方法来完成的。</li>
+<li>逐一产生是指在具体的元素产生逻辑中，next方法最多只能被调用一次。</li>
+</ul>
+</li>
+<li><b>generate方法的另一种形式：generate(Callable&lt;S&gt; stateSupplier，BiFunction&lt;S，SynchronousSink&lt;T&gt;，S&gt;generator)</b>
+<ul class="quote">
+<li>stateSupplier用于提供初始的状态对象。</li>
+<li>在产生元素序列时，状态对象会作为generator的第一个参数传入，可以在对应的逻辑中对该状态对象进行修改，以供下一次产生时使用。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch11"><summary>2.3 蛇行走位的QueueSubscription</summary>
+<div class="sec">
+<h4>QueueSubscription接口的作用和优化方式</h4>
+<ul class="point">
+<li><b>QueueSubscription接口主要用于对那些内部有队列支持的subscription进行优化</b>
+<ul class="quote">
+<li>对于那些有固定数量大小的同步源序列，可以通过拉取的方式来发射元素。</li>
+<li>那些异步源序列，则同时扮演了queue和subscription两种角色，其中的大部分操作都是将元素存储至一个又一个队列数组中。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>无界队列SpscLinkedArrayQueue的实现</h4>
+<ul class="point">
+<li><b>SpscLinkedArrayQueue通过原子化操作和多线程安全设计实现无界队列</b>
+<ul class="quote">
+<li>首先得到一个原子类型的数组，把该数组最后一个位置空出来，用于存储下一个数组的引用。</li>
+<li>在存储一个元素A时，若发现将该元素存储到数组中会造成数组内部空间占满，那么此时在A要存储的位置放置一个关键字元素NEXT。</li>
+<li>在设定队列中单个数组长度的时候，c的大小必须为2N，以适应无界队列场景并确定所存储元素在数组中的位置。</li>
+<li>在将元素存储到这个数组中的时候，使用this.mask=c-1空出了两个位置，用来判断我们是否需要切换新的数组。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>QueueSubscription.requestFusion的催化效应</h4>
+<ul class="point">
+<li><b>requestFusion方法用来做策略判断，根据订阅者(也就是中间操作)所传入的支持的模式，源做出相应的反馈</b>
+<ul class="quote">
+<li>作为一个订阅者(即消费者)，下游操作会调用上一个操作实现的requestFusion方法，你传入的参数所代表的模式可以从SYNC、ASYNC或者ANY等任选其一(但绝不能是NONE)。</li>
+<li>上游的操作对于requestFusion方法的具体实现，所返回的模式结果应该是NONE、SYNC或ASYNC三者之一(但绝不能是ANY)。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch12"><summary>2.4 Mono的二三事</summary>
+<div class="sec">
+<h4>Mono的基本概念和特点</h4>
+<ul class="point">
+<li><b>Mono用于处理只有0个或1个元素的源序列</b>
+<ul class="quote">
+<li>当根据用户的id查找用户的时候，其返回结果要么为空，要么是一位用户。</li>
+</ul>
+</li>
+<li><b>Mono与Flux、Single、Completable和Maybe的关系</b>
+<ul class="quote">
+<li>Single用于处理单值源序列，与Mono很相似。</li>
+<li>Completable来专门应对空序列或者只关注源下发结束的状况。</li>
+<li>Maybe属于Single和Completable两者的结合体，可以发射0个、1个或错误的事件。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Mono的静态方法</h4>
+<ul class="point">
+<li><b>fromCallable、fromCompletionStage、fromFuture、fromRunnable和fromSupplier方法。</b>
+</li>
+<li><b>delay(Duration duration)方法</b>
+<ul class="quote">
+<li>创建一个Mono源序列，在指定的延迟时间之后，产生数字0作为唯一元素下发，然后调用actual.onComplete。</li>
+</ul>
+</li>
+<li><b>ignoreElements(Publisher&lt;T&gt; source)方法</b>
+<ul class="quote">
+<li>创建一个Mono源序列，忽略作为源的Publisher中的所有元素，只产生结束消息。</li>
+</ul>
+</li>
+<li><b>justOrEmpty(Optional&lt;？extends T&gt; data)和justOrEmpty(T data)方法</b>
+<ul class="quote">
+<li>从一个Optional对象或可能为null的对象中创建Mono。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Mono的创建方式</h4>
+<ul class="point">
+<li><b>通过create方法来使用MonoSink创建Mono</b>
+<ul class="quote">
+<li>在这里，就不对其源码进行深入分析了，感兴趣的读者可以自行查阅源码。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch13"><summary>2.5 通过BaseSubscriber自定义订阅者</summary>
+<div class="sec">
+<h4>通过BaseSubscriber自定义订阅者</h4>
+<ul class="point">
+<li><b>继承BaseSubscriber实现自定义的Subscriber</b>
+<ul class="quote">
+<li>重写onSubscribe和onNext方法。</li>
+</ul>
+</li>
+<li><b>在subscribe方法中使用匿名类实现BaseSubscriber</b>
+<ul class="quote">
+<li>在hookOnSubscribe中调用requestUnbounded方法。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch14"><summary>2.6 将常见的监听器改造成响应式结构</summary>
+<div class="sec">
+<h4>监听器的注册过程</h4>
+<ul class="point">
+<li><b>监听器的注册过程其实就是将这个bean添加进一个容器的过程</b>
+<ul class="quote">
+<li>这个容器可以是一个List对象，也可以是一个Set对象，还可以是一个Map对象，根据不同的使用场景而变化。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>事件处理流程</h4>
+<ul class="point">
+<li><b>当产生事件时，根据事件类型，获取相应的支持处理该类型的监听器，得到监听器后进行遍历处理即可</b>
+<ul class="quote">
+<li>我们把这个下发事件的过程放在一个全新的线程中执行，这样可以达到异步效果。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>响应式监听器的实现</h4>
+<ul class="point">
+<li><b>创建了一个源，自定义源的核心逻辑在于next和complete操作，其下发类型由next方法所传递的参数类型决定</b>
+<ul class="quote">
+<li>确定了这些后，下面需要确定业务逻辑，主要是注册操作。</li>
+<li>然后思考，平时监听器需要一个相应的Handler来处理事件，那么此处为了简化逻辑，将本应由Handler处理的直接由监听器对应的方法实现，主要是处理、消费所下发的事件。</li>
+<li>假如是在Spring中操作，可以理解为给此监听器内的相应Handler进行赋值。</li>
+<li>假如这个监听器对应了一个List集合的事件处理Handlers，那么就可以在自定义的Subscriber的onNext方法内根据特定匹配条件来选择最合适的Handler。</li>
+<li>我们之前介绍过FluxCreate中的源码，在这里，回顾一下与此处内容相关的部分源码：可以看到，只有在产生订阅的时候才会执行Consumer&lt;？super FluxSink&gt;source所代表的逻辑。</li>
+<li>对于监听器Demo来说，通过Flux.create得到的源会在产生订阅后引发执行source.accept，这时相应Handler的定义才会正式注册，在这里不会为新建的监听器对象分配内存，以此做到按需分配内存，提高程序性能。</li>
+<li>理解这个逻辑之后，可以知道事件分发也只有在产生订阅之后才可以进行，即调用myEventProcessor.dataChunk(&quot;foo&quot;，&quot;bar&quot;，&quot;baz&quot;)；同样，若想解除监听，调用Flux.create所传参数中定义的myEventProcessor.processComplete即可解除订阅关系。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch15"><summary>2.7 Flux.push的特殊使用场景及细节探索</summary>
+<div class="sec">
+<h4>Flux.push方法的特殊使用场景及细节探索</h4>
+<ul class="point">
+<li><b>Flux.push是Flux.create的一个变种，其只适用于处理单个线程下生产者产生的事件</b>
+<ul class="quote">
+<li>通过CreateMode.PUSH_ONLY确定了createMode：createMode==CreateMode.PUSH_PULL？new SerializedSink&lt;&gt;(sink)：sink，也就是直接使用的是原汁原味的BufferAsyncSink对象。</li>
+</ul>
+</li>
+<li><b>SerializedSink通过原子类的方式操作volatile变量wip，保证一次只能有一个元素下发</b>
+<ul class="quote">
+<li>在next方法中通过WIP的CAS操作来保证一次只能有一个元素下发，元素下发后将WIP再减1，这样其就会被重置为0。</li>
+<li>假如同时有多个源在不同的线程中并发产生元素，那么发生冲突后，CAS操作失败的那个源会直接将元素加入备用队列中，以此来达到对多个源产生的元素执行序列化下发操作的目的。</li>
+</ul>
+</li>
+<li><b>如果确定生产端只有一个线程在生产元素，可以直接使用Flux.push，减少一层包装并提高性能。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch16"><summary>2.8 对Flux.handle的解读</summary>
+<div class="sec">
+<h4>Flux.handle方法解读</h4>
+<ul class="point">
+<li><b>Flux.handle是一个中间操作，类似于源产生者</b>
+<ul class="quote">
+<li>在上游源下发元素并调用FluxHandle中包装的订阅者HandleSubscriber的onNext方法时，才会调用biconsumer。</li>
+</ul>
+</li>
+<li><b>HandleSubscriber是ConditionalSubscriber的一种实现，根据订阅者的类型需求差异而进行的二次包装</b>
+<ul class="quote">
+<li>HandleSubscriber＃onNext实现里，BiConsumer&lt;？super T，SynchronousSink&lt;R&gt;&gt;handler接收了两个参数，其中一个是上游源正常下发的元素，而HandleSubscriber类实例以SynchronousSink的身份作为另一个参数传入handler中。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>SynchronousSink接口的设计</h4>
+<ul class="point">
+<li><b>SynchronousSink&lt;R&gt;在实现了FluxSink、Subscription接口后才可以下发元素</b>
+<ul class="quote">
+<li>在调用BiConsumer&lt;？super T，SynchronousSink&lt;R&gt;&gt;函数式动作的时候，我们在FluxHandle.subscribe中设定的HandleSubscriber对象就可以作为第二个参数传入BiConsumer了。</li>
+</ul>
+</li>
+<li><b>按照开放-封闭原则，使用者无需操心SynchronousSink的实现</b>
+<ul class="quote">
+<li>在自定义类似的源或操作的时候，请按照下面给出的代码思路进行设计实现。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>HandleSubscriber的实现</h4>
+<ul class="point">
+<li><b>HandleSubscriber实现了InnerOperator接口，并实现了SynchronousSink接口</b>
+<ul class="quote">
+<li>HandleSubscriber＃next等对SynchronousSink接口的实现，同时HandleSubscriber作为CoreSubscriber，又可以看到其中的HandleSubscriber＃onNext的实现。</li>
+</ul>
+</li>
+<li><b>HandleSubscriber将处理结果赋值给data变量，然后衔接中间操作所传入的真正的订阅者，调用其onNext方法</b>
+<ul class="quote">
+<li>在执行handler的时候，其中的sink.next就表示调用的是HandleSubscriber的next实现，它会将BiConsumer&lt;？super T，SynchronousSink&lt;R&gt;&gt;实现逻辑中的处理结果赋值给HandleSubscriber中定义的data变量。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Demo演示</h4>
+<ul class="point">
+<li><b>通过一个Demo来看一下具体的应用</b>
+<ul class="quote">
+<li>执行结果如下。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch17"><summary>2.9 小结</summary>
+<div class="sec">
+<h4>Reactor中源的订阅和创建的基本细节</h4>
+<ul class="point">
+<li><b>介绍了很多实用的代码使用技巧，需要读者反复“消化”并应用到自己的项目实战中。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch18"><summary>第3章 调度器</summary>
+<div class="sec">
+<h4>调度器的概念和作用</h4>
+<ul class="point">
+<li><b>调度器可以指定操作执行的方式和所在的线程。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>不同类型的调度器实现</h4>
+<ul class="point">
+<li><b>在当前线程中调度任务的调度器，通过Schedulers.immediate方法来创建</b>
+<ul class="quote">
+<li>通过Schedulers.immediate方法来创建在当前线程中调度任务的调度器。</li>
+</ul>
+</li>
+<li><b>通过单一的可复用的线程调度任务的调度器，通过Schedulers.single方法来创建</b>
+<ul class="quote">
+<li>当各个调用者调用Schedulers.single方法后，都会重用同一个线程，直到这个Scheduler的状态被设定为disposed。</li>
+<li>如果你希望为每次调用都指定一个全新的线程，可以使用Schedulers.newSingle方法。</li>
+</ul>
+</li>
+<li><b>使用弹性线程池调度任务的调度器，通过Schedulers.elastic方法来创建</b>
+<ul class="quote">
+<li>该调度器角色与RxJava 2中的Schedulers.IO发挥的作用一样。</li>
+<li>当首次需要调用Schedulers.elastic方法时，会创建一个新的线程池，而且这个线程池中闲置的线程可以被重用。</li>
+<li>如果一个线程的闲置时间太长(默认时间是60s)，则会被销毁。</li>
+</ul>
+</li>
+<li><b>一个为需要执行并行任务而设计的，拥有固定线程数量的线程池调度器，通过Schedulers.parallel方法来创建</b>
+<ul class="quote">
+<li>其中的线程数量取决于CPU的核数。</li>
+</ul>
+</li>
+<li><b>从已有的ExecutorService对象中创建调度器，通过Schedulers.fromExecutorService(ExecutorService)方法来创建</b>
+<ul class="quote">
+<li>可以使用newXXX来创建各种类型的全新的scheduler实例。</li>
+<li>例如，通过Schedulers.newElastic(yourScheduleName)方法，可以创建一个全新的名字为yourScheduleName的elastic scheduler实例。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>调度器的使用场景</h4>
+<ul class="point">
+<li><b>某些操作默认已经使用了特定类型的调度器</b>
+<ul class="quote">
+<li>比如，使用Flux.interval(Duration.ofMillis(300))方法创建的源，就使用了由Schedulers.parallel方法创建的调度器。</li>
+</ul>
+</li>
+<li><b>可以通过操作来人为地改变调度器实例</b>
+<ul class="quote">
+<li>Flux.interval(Duration.ofMillis(300)，Schedulers.newSingle(&quot;test&quot;))。</li>
+</ul>
+</li>
+<li><b>也可以通过publishOn和subscribeOn方法切换执行操作的调度器</b>
+<ul class="quote">
+<li>publishOn方法切换的是元素消费操作执行时所在的线程。</li>
+<li>subscribeOn方法切换的是源中元素生产逻辑执行时所在的线程。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch19"><summary>3.1 深入理解Schedulers.elastic</summary>
+<div class="sec">
+<h4>Schedulers.elastic深入解读</h4>
+<ul class="point">
+<li><b>elastic方法调用了cache方法，然后传入了相应的策略</b>
+<ul class="quote">
+<li>reactor.core.scheduler.Schedulers＃single()：cache(CACHED_SINGLE，SINGLE，SINGLE_SUPPLIER)和reactor.core.scheduler.Schedulers＃parallel()：cache(CACHED_PARALLEL，PARALLEL，PARALLEL_SUPPLIER)，它们其实是一类方法，只是采用的策略不一样。</li>
+</ul>
+</li>
+<li><b>cache方法通过接收一个引用原子类AtomicReference reference获取了缓存的CachedScheduler</b>
+<ul class="quote">
+<li>当不需要创建CachedScheduler的时候，就接收一个supplier.get，其Supplier&lt;Scheduler&gt;supplier是一个传入动作，按需加载，俗称懒加载。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>CachedScheduler的启示</h4>
+<ul class="point">
+<li><b>CachedScheduler会作为适配模式对Scheduler进行适配</b>
+<ul class="quote">
+<li>从CachedScheduler的角度来看，就是适配Scheduler的多样性，其内部实现很简单，所有代码逻辑直接由具体类型的Scheduler来实现。</li>
+</ul>
+</li>
+<li><b>假如想要自定义所创建线程的一些信息，就可以通过实现ThreadFactory接口来完成</b>
+<ul class="quote">
+<li>reactor.core.scheduler.Schedulers.Factory接口里都是一些default默认实现方法，这也是为了API设计的美观和统一。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>ElasticScheduler的类定义思路</h4>
+<ul class="point">
+<li><b>调度器可以提交任务，它应该有一个管理任务执行者的容器，每一个任务执行者应该包裹一个线程</b>
+<ul class="quote">
+<li>对于人来说，一个人可以手里做着一个任务，同时提前接收自己可以承受的其他任务，为了尽量贴合现实，此处的任务执行者也具备这个属性，所以这个任务执行者应该是一个有且只有一个线程的单线程线程池。</li>
+</ul>
+</li>
+<li><b>ElasticScheduler类就需要实现Scheduler和Supplier接口，后者是为匹配Schedulers＃decorateExecutorService(String，Supplier)的第2个参数而设定的</b>
+<ul class="quote">
+<li>同时，为了获取操作过程中的一些信息，这里会实现Scannable接口。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>对Schedulers.decorateExecutorService的解读</h4>
+<ul class="point">
+<li><b>Schedulers＃decorateExecutorService得到的ScheduledExecutorService exec来提交任务</b>
+<ul class="quote">
+<li>由于ScheduledExecutorService属于大对象，因此创建起来很麻烦，我们希望可以重复利用它，其可以对任务执行器进行缓存或超时释放管理。</li>
+</ul>
+</li>
+<li><b>CachedService将对任务执行器进行的缓存或超时释放管理放在了它的dispose方法中</b>
+<ul class="quote">
+<li>在任务执行完毕后，要进行最终的判断，假如cached.exec不为null，而且并没有SHUTDOWN，那么就要对ExecutorService设定闲置过期的效果。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>对ElasticScheduler.schedule的解读</h4>
+<ul class="point">
+<li><b>首先会看到一个关键的抽取方法pick，具体源码如下</b>
+<ul class="quote">
+<li>在这里，就可以将之前提及的独立的点给联系起来了。cache会在ElasticScheduler类初始化的时候被赋值为null，所以在第一次调用pick的时候e绝对为null，于是会创建CachedService实例。</li>
+</ul>
+</li>
+<li><b>Schedulers.directSchedule中还传入了new DirectScheduleTask(task，cached)实例，这也是核心点</b>
+<ul class="quote">
+<li>上述源码对我们传入的Runnable对象执行了增强操作，而我们关注的是其run方法内的finally操作，这个操作很重要，即执行cached.dispose方法。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>对ElasticScheduler.DirectScheduleTask的解读</h4>
+<ul class="point">
+<li><b>在ElasticScheduler中，由于每个订阅关系在调用createWorker方法时，都会执行pick操作</b>
+<ul class="quote">
+<li>因此本质上若从ElasticScheduler的cache中获取不到ExecutorService对象，就创建一个新的，这样也就不会发生同一时间两个订阅关系使用的是同一个ExecutorService对象的情况了。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>对Schedulers.directSchedule的解读</h4>
+<ul class="point">
+<li><b>关于SchedulerTask，比较简单，就是针对相关执行任务所涉及Future的管理</b>
+<ul class="quote">
+<li>在SchedulerTask sr=new SchedulerTask(task)；中，SchedulerTask内的future字段会通过sr.setFuture(f)进行设定。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>对ElasticScheduler.ElasticWorker的解读</h4>
+<ul class="point">
+<li><b>如果我们想要查看这个ScheduledExecutorService单线程线程池中的某个发布-订阅关系下的任务进度，该怎么办？</b>
+<ul class="quote">
+<li>这时我们就要考虑为Worker设计一个专门的队列来管理自己旗下的任务，我们可以在Worker的实现类中设定一个Composite字段，然后通过实现Scannable接口提供的scanUnsafe方法来获取该订阅关系在Worker中属于它自己的剩余任务数量。</li>
+</ul>
+</li>
+<li><b>当一个任务结束的时候，通过继承AtomicBoolean来进行简单的控制</b>
+<ul class="quote">
+<li>在上面的ElasticWorker＃dispose中，可以很明确地看到，这个方法调用了ElasticWorker作为AtomicBoolean原子类角色的compareAndSet(false，true)方法，用来进行状态控制。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>ElasticScheduler小结</h4>
+<ul class="point">
+<li><b>至此，我们对ElasticScheduler的方方面面都进行了讲解，其他调度器从复杂度上说都比这个调度器要低，所以不再赘述</b>
+<ul class="quote">
+<li>读者感兴趣的话可以自行探索，也可以观看本书配套视频的相应内容，其中对此处的源码设计进行了完全解读。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch20"><summary>3.2 深入解读publishOn</summary>
+<div class="sec">
+<h4>publishOn流程概述</h4>
+<ul class="point">
+<li><b>publishOn操作处于整个订阅操作链中，从上游源获取元素，然后从所关联的Scheduler中获取一个worker，调用worker.schedule并向下游下发元素</b>
+<ul class="quote">
+<li>在RxJava 2中，定义的顺序是从前往后，而执行的顺序则是从后往前，先对订阅者进行包装。</li>
+<li>在publishOn内，会将下发元素的消费逻辑交给worker.schedule执行，即元素的消费逻辑都会在这个worker所携带的线程中执行。</li>
+</ul>
+</li>
+<li><b>默认获取的是SMALL_SUPPLIER，而SpscArrayQueue是一个有界队列</b>
+<ul class="quote">
+<li>在已经使用了Reactor 3的情况下，完全可以使用其提供的现成的队列工具类，包括之前接触过的调度器的工具类实现。</li>
+<li>传入了一个Supplier&lt;Queue&lt;T&gt;&gt;类型的函数表达式，是因为其内部要实现一个大量占据内存的队列，所以我们按需加载，只有在产生订阅的时候，才真的进行内存分配，提高程序性能。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>对FluxPublishOn的解读</h4>
+<ul class="point">
+<li><b>FluxPublishOn的subscribe逻辑和RxJava 2中的flowable.FlowableObserveOn＃subscribeActual的逻辑是一样的，都需要先获取一个Worker实例，然后将其与所传入的CoreSubscriber、queueSupplier等一起包装为一个PublishOnSubscriber</b>
+<ul class="quote">
+<li>对于代码中传入的scheduler参数，我也不知道有什么用处，它的功能都由worker实现了，因此其可能是进行代码迭代时未及时删除的冗余代码。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>对PublishOnSubscriber的解读</h4>
+<ul class="point">
+<li><b>PublishOnSubscriber首先应该实现Runnable接口，若其既要为CoreSubscriber又要为Subscription的话，直接选择实现InnerOperator接口即可</b>
+<ul class="quote">
+<li>为了适配worker进行调度，PublishOnSubscriber首先应该实现Runnable接口。</li>
+<li>若其既要为CoreSubscriber又要为Subscription的话，直接选择实现InnerOperator接口即可。</li>
+</ul>
+</li>
+<li><b>PublishOnSubscriber实现了QueueSubscription接口，并对requestFusion进行设定，做到了对sourceMode进行控制</b>
+<ul class="quote">
+<li>对于订阅者来说，若想要与Subscription沟通，订阅者只能从自己的onSubscribe方法中获取Subscription实例并调用它的request方法。</li>
+<li>当sourceMode==ASYNC时，第一个publishOn操作的outputFused=true，那么就会执行runBackfused。</li>
+<li>当元素生产速度小于消费速度时，在FluxPublishOn中出现的情况是暂存元素队列调用poll方法得到的是null。我们要做的就是对调用该poll方法得到的元素是否是null进行判断，即PublishOnSubscriber＃runAsync方法中的empty=v==null，如果empty为true，那么就跳出循环，等待下次下发元素。</li>
+<li>当元素生产速度大于消费速度时，工作的线程会不断地从FluxPublishOn的暂存队列中获取元素进行消费，这样就不会出现消费线程反复切换的情况了。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch21"><summary>3.3 深入解读subscribeOn</summary>
+<div class="sec">
+<h4>subscribeOn操作的行为细节</h4>
+<ul class="point">
+<li><b>subscribeOn操作主要针对的是发生订阅的线程，也就是对生产初始元素的线程的设定</b>
+<ul class="quote">
+<li>在调用subscribe方法后会切换线程。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>subscribeOn操作的实现逻辑</h4>
+<ul class="point">
+<li><b>subscribeOn操作的实现逻辑与RxJava 2中的Flowable＃subscribeOn(io.reactivex.Scheduler，boolean)的实现逻辑如出一辙</b>
+<ul class="quote">
+<li>与publishOn操作相比，其相对简单。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>请求异步化的问题</h4>
+<ul class="point">
+<li><b>当使用Flux＃create(Consumer，FluxSink.OverflowStrategy)作为源的时候，我们可以在生产元素的过程中执行一些阻塞等待操作</b>
+<ul class="quote">
+<li>请求可能会因元素生产过程迟迟没有结束而产生阻塞，进而导致消费线程阻塞。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>subscribeOn操作的参数设置</h4>
+<ul class="point">
+<li><b>默认的情况下，subscribeOn传入的第2个参数为true</b>
+<ul class="quote">
+<li>如果不设置，默认情况下，requestOnSeparateThread为true，也就是说当下游没有publishOn这种切换线程的操作，而且恰好中间产生了拉取元素的请求时，生产元素的过程有阻塞，即生产元素的速度小于消费元素的速度。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>subscribeOn操作与publishOn操作的配合使用</h4>
+<ul class="point">
+<li><b>需要将subscribeOn操作放在publishOn操作之前</b>
+<ul class="quote">
+<li>worker中提交了一个任务，假如所提交的线程池中只有一个线程，任务就会进入排队状态，只有在彻底生产完元素之后，请求才会执行，也才会消费接下来的元素。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>解决阻塞异常的方法</h4>
+<ul class="point">
+<li><b>将请求任务执行线程和元素生产任务线程分开</b>
+<ul class="quote">
+<li>我们只需要在subscribeOn中指定第2个参数为false即可，这样requestUpstream中的if(！requestOnSeparateThread||Thread.currentThread()==THREAD.get(this))直接成立，在元素消费任务线程中直接进行请求。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch22"><summary>3.4 Flux.parallel&amp;Flowable.parallel的并行玩法</summary>
+<div class="sec">
+<h4>Flux.parallel与Flowable.parallel的并行玩法</h4>
+<ul class="point">
+<li><b>Flux.parallel将数据元素根据指定的参数parallelism分割成多个与数量相匹配的组。</b>
+</li>
+<li><b>为每个组都匹配一个订阅者，将同一个源生产的元素按一定规则分配给每一个订阅者</b>
+<ul class="quote">
+<li>对同一个源生产的元素按规律分割，然后产生等同于parallelism个生产-订阅关系。</li>
+</ul>
+</li>
+<li><b>针对每一个生产-订阅关系，分别使用调度器来完成这种多任务并行操作。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Flux.parallel的实现细节</h4>
+<ul class="point">
+<li><b>默认情况下，指定的parallelism为可用的处理器数量</b>
+<ul class="quote">
+<li>假如本机CPU支持超线程，那么根据开启超线程后的CPU线程总量进行计算。</li>
+</ul>
+</li>
+<li><b>调用Flux中的一个静态方法，得到的结果类型为ParallelFlux</b>
+<ul class="quote">
+<li>其大部分内容一看便懂，我们主要会查看其子类ParallelSource。</li>
+</ul>
+</li>
+<li><b>validate方法主要用于对分配的订阅者数组长度和并行处理的数量进行比较判断</b>
+<ul class="quote">
+<li>在默认的情况下，在对订阅者数组进行初始化的时候，其中包装了parallelism个LambdaSubscriber。</li>
+</ul>
+</li>
+<li><b>参与订阅后，首先调用的是订阅者的onSubscribe方法</b>
+<ul class="quote">
+<li>首先执行setupSubscribers方法，然后会对上游源发出拉取元素请求，将该请求标记为A。</li>
+<li>在setupSubscribers方法中，那些产生订阅关系的拉取元素请求和这个A请求是分开的，也就是说s.request请求的是主源，子Subscriber请求的是按策略分下去的元素分发者ParallelSourceInner，所以在这里该SourceInner充当的角色是Subscription。</li>
+<li>分别调用每一个订阅者的onSubscribe(new ParallelSourceInner&lt;&gt;(this，j，m))方法，根据我们所知，在调用onSubscribe时，主要会执行其中的Subscription＃request方法。</li>
+</ul>
+</li>
+<li><b>请求后就需要下发元素了，接着看看ParallelSource.ParallelSourceMain＃onNext方法</b>
+<ul class="quote">
+<li>与之前接触过的publishOn有点像，会先往队列中添加下发元素，不同的是这里执行的是drain方法，而publishOn执行的是任务的调度方法trySchedule。</li>
+<li>drainAsync用于执行队列queue中元素的获取下发，其所做的动作与FluxPublishOn.PublishOnSubscriber＃runAsync的代码逻辑比较一致，只不过为了适配下发策略，实现上稍有不同。</li>
+</ul>
+</li>
+<li><b>每一个订阅者都可能有publishOn操作的增强包装，以完成并发消费调度</b>
+<ul class="quote">
+<li>为了更易于操作，下一节会涉及ParallelFlux.runOn方法细节，实现类似的调度功能。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch23"><summary>3.5 ParallelFlux.runOn&amp;ParallelFlowable.runOn的调度实现</summary>
+<div class="sec">
+<h4>ParallelFlux.runOn&amp;ParallelFlowable.runOn的调度实现</h4>
+<ul class="point">
+<li><b>为每一个订阅者都分配一个FluxPublishOn.PublishOnSubscriber来做调度操作</b>
+<ul class="quote">
+<li>订阅动作依然只是发生一次，其内是通过drain方法针对subscribers数组中的子subscriber来进行元素的下发操作。</li>
+</ul>
+</li>
+<li><b>使用PublishOnSubscriber执行调度操作时，会将元素存放到一个queue中</b>
+<ul class="quote">
+<li>每一个下游订阅者接收到的Subscription都为ParallelSourceInner，而ParallelSourceInner并没有实现QueueSubscription接口，所以也就无须考虑上游是否有策略来通过公用队列利用PublishOnSubscriber＃onSubscribe方法限制下游runOn消费元素的并行调度。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch24"><summary>3.6 小结</summary>
+<div class="sec">
+<h4>调度器源码级实现及其内在问题</h4>
+<ul class="point">
+<li><b>本章讲解了很多调度器源码级的实现，以及其各种各样的内在问题</b>
+<ul class="quote">
+<li>其中也包括一些值得借鉴的实现方法。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Reactor 3中的操作及其实现逻辑</h4>
+<ul class="point">
+<li><b>Reactor 3中的操作实现逻辑与RxJava 2中的一样</b>
+<ul class="quote">
+<li>本书还提供了更深入的视频版源码解读分享，感兴趣的读者可以结合起来一起学习，以获得更多的收获。</li>
+</ul>
+</li>
+<li><b>对于一些没有涉及过的内容，我会带着大家一起体验一下</b>
+<ul class="quote">
+<li>这也是对RxJava 2相关源码解读内容的补充。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch25"><summary>第4章 对Reactor操作的解读</summary>
+<div class="sec">
+<h4>使用Operator得到的好处</h4>
+<ul class="point">
+<li><b>代码可重用，代码干净整洁，更加专注于业务实现等。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch26"><summary>4.1 filter操作</summary>
+<div class="sec">
+<h4>filter操作的行为示意图</h4>
+<ul class="point">
+<li><b>对源中下发的元素进行过滤，只留下满足Predicate指定条件的元素</b>
+<ul class="quote">
+<li>只输出1到10中的所有偶数。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch27"><summary>4.2 transform操作</summary>
+<div class="sec">
+<h4>transform操作简介</h4>
+<ul class="point">
+<li><b>transform操作用于将上游Flux通过一定的自定义逻辑转换并生成想要得到的目标Flux</b>
+<ul class="quote">
+<li>如果图4-2中flux-&gt;flux.take(v)里的v为1，则只获取第1个元素，执行完操作就结束下发元素。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>transform操作与RxJava 2中的compose操作的对比</h4>
+<ul class="point">
+<li><b>transform操作与RxJava 2中的compose操作的作用是一样的，只是两者实现上有细微的差别</b>
+<ul class="quote">
+<li>Reactor中的实现更加简单、粗暴。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Reactor中transform操作的实现</h4>
+<ul class="point">
+<li><b>通过java.util.function.Function接口来统一transform操作的参数类型和返回类型</b>
+<ul class="quote">
+<li>在Reactor 3中，通过transform操作，可以在一个方法中封装一系列操作，然后将此方法作为参数传入。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>transform操作的执行过程</h4>
+<ul class="point">
+<li><b>每一个中间操作主要实现了两个功能：对源的传递与包装所传订阅者并使其具有特定的能力</b>
+<ul class="quote">
+<li>只有在真正产生订阅的时候，才会对订阅者进行层层包装。</li>
+<li>对于图4-3中的3种颜色(这里可将订阅者lambdaSubscriber看作蓝色，其他两种颜色是白色和黑色)，应该清楚其代表的含义和在实际应用中应该注意的地方。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch28"><summary>4.3 compose与transformDeferred操作</summary>
+<div class="sec">
+<h4>compose与transformDeferred操作的概念和区别</h4>
+<ul class="point">
+<li><b>compose操作是在产生订阅时再执行代码逻辑，使用Supplier实现</b>
+<ul class="quote">
+<li>通过Flux.defer(...)实现compose操作。</li>
+</ul>
+</li>
+<li><b>transformDeferred操作是延时执行代码逻辑，将通用操作放在一个包装过的subscriber中执行</b>
+<ul class="quote">
+<li>transformDeferred(Function)是compose操作的改名，语义更加明确。</li>
+<li>transformDeferred在编译的时候并不会替换transformer，只有在真正产生订阅关系的时候，才会执行transformer这个Function对象所定义的代码逻辑。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>transformDeferred操作的源码解析</h4>
+<ul class="point">
+<li><b>transformDeferred(...)中封装的操作属于一个黑盒状态的可变的操作</b>
+<ul class="quote">
+<li>通过一个原子类状态进行控制，可以得到不同的结果。</li>
+</ul>
+</li>
+<li><b>从Publisher的角度来看，各个操作返回的源是Stateless</b>
+<ul class="quote">
+<li>当我们包装的通用操作可以选择策略的时候，可以选择transform操作。</li>
+<li>若在产生具体订阅时才会发生原子类的相关状态变化，那么在这种场景下必须选择transformDeferred操作。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>transformDeferred操作的实例分析</h4>
+<ul class="point">
+<li><b>通过图4-4对上面的源码进行解读，来带给大家一个更直观的感受</b>
+<ul class="quote">
+<li>执行结果如下。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch29"><summary>4.4 批处理操作</summary>
+<div class="sec">
+<h4>buffer操作</h4>
+<ul class="point">
+<li><b>buffer操作代表了一系列关于FluxBufferXXX封装的操作，用于把当前源中的元素收集到集合(默认是ArrayList)中，并把集合对象作为流中的新元素下发</b>
+<ul class="quote">
+<li>buffer方法可以指定list所存储元素的最大数量maxSize，以及要跳过的前skip个元素。</li>
+<li>bufferTimeout方法在指定的时间间隔内收集元素，直到时间间隔结束。</li>
+<li>bufferUntil和bufferWhile操作来进行元素的收集，直到Predicate返回true。</li>
+</ul>
+</li>
+<li><b>buffer操作可以通过toStream方法把Flux源转换成JDK 8中的Stream对象，然后通过forEach方法来进行输出</b>
+<ul class="quote">
+<li>interval的元素产生采用了调度器，所以是异步的，而转换成Stream对象可以保证主线程在产生完元素之前不会退出，从而可以正确地输出源中的所有元素。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>window操作</h4>
+<ul class="point">
+<li><b>window操作的作用类似于buffer操作，不同的是window操作是把当前源中的元素收集到其他Flux源序列中，因此返回值类型是Flux&lt;Flux&lt;T&gt;&gt;</b>
+<ul class="quote">
+<li>对于window(int maxSize)，其默认设定的是Queues.get(maxSize)的队列，假如这个maxSize&lt;=10_000_000，则该队列就是一个有界队列。</li>
+<li>对于window(int maxSize，int skip)，其默认设定的是无界队列。</li>
+</ul>
+</li>
+<li><b>window操作也有一系列相关联的操作，如window、windowTimeout、windowUntil、windowWhile及windowWhen操作等</b>
+<ul class="quote">
+<li>window操作往往是序列化的(即顺序化的)。</li>
+<li>对于window(int maxSize，int skip)，其中的skip与buffer(int maxSize，int skip)中的skip并非表示该单词表面意思上的跳过，我们可以将其理解为创建一个新集合的契机，但并不会直接抛弃老集合。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>groupBy操作</h4>
+<ul class="point">
+<li><b>groupBy操作会通过一个策略key将一个Flux&lt;T&gt;分割为多个用于批处理的组</b>
+<ul class="quote">
+<li>分割出来的每一个组都是GroupedFlux&lt;T&gt;类型的元素，其可以根据keyMapper中的K来获取。</li>
+</ul>
+</li>
+<li><b>与buffer和window操作不同，groupBy操作过程的特性就注定了在它的这些组中的元素没有顺序</b>
+<ul class="quote">
+<li>组的产生是根据元素所分配的组是否存在来决定的，不存在就创建组，后续的元素则根据匹配策略添加到相应的组中，所以组的创建没有什么绝对顺序，完全由源中的元素决定，而且创建的几个组可以同时存在。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch30"><summary>4.5 merge和mergeSequential操作</summary>
+<div class="sec">
+<h4>merge和mergeSequential操作的区别</h4>
+<ul class="point">
+<li><b>merge操作按照所有源中元素的实际产生顺序进行合并。</b>
+</li>
+<li><b>mergeSequential操作按照所有源被订阅的顺序，以源为单位进行合并</b>
+<ul class="quote">
+<li>mergeSequential操作内部的每个源都会单独产生一个订阅关系，然后将生产出的元素下发到同一个队列中，整个过程中所有的源都是按顺序依次执行的。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>mergeSequential操作的原理</h4>
+<ul class="point">
+<li><b>每个源都会单独产生一个订阅关系，然后将生产出的元素下发到同一个队列中</b>
+<ul class="quote">
+<li>上一个源的所有元素下发完毕后才会开始下一个源中的操作。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch31"><summary>4.6 flatMap和flatMapSequential操作</summary>
+<div class="sec">
+<h4>flatMap和flatMapSequential操作的概念和区别</h4>
+<ul class="point">
+<li><b>flatMap和flatMapSequential操作用于从源中的每个元素所指向的子源中得到其中的所有元素，再把所有源中的元素进行合并。</b>
+</li>
+<li><b>flatMapSequential和flatMap操作之间的区别与mergeSequential和merge操作之间的区别是一样的。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>flatMap操作的示意图</h4>
+<ul class="point">
+<li><b>通过两个示意图来更形象地展示这两个操作</b>
+<ul class="quote">
+<li>图4-15展示了flatMap操作的示意图。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>flatMapSequential操作的示意图。</h4>
+<ul class="point">
+</ul></div>
+<div class="sec">
+<h4>flatMap和flatMapSequential操作的Demo对比</h4>
+<ul class="point">
+<li><b>用一个Demo来对这两个API进行对比</b>
+<ul class="quote">
+<li>执行结果如下(读者可自行与上面的图进行对比)。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch32"><summary>4.7 concatMap操作</summary>
+<div class="sec">
+<h4>concatMap操作的基本概念和特点</h4>
+<ul class="point">
+<li><b>concatMap操作是根据源中的每个元素来获取一个子源，再把所有子源进行合并的。</b>
+</li>
+<li><b>concatMap操作会根据初始源中的元素顺序依次将获取到的子源进行合并。</b>
+</li>
+<li><b>concatMap操作对所获取到的子源的订阅是动态进行的</b>
+<ul class="quote">
+<li>与flatMapSequential操作不同的是，concatMap操作在合并之前并不会订阅由初始源下发元素所得到的所有的子源。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>concatMap操作与其他操作的对比</h4>
+<ul class="point">
+<li><b>concatMap操作与flatMap操作的区别在于，concatMap操作会根据初始源中的元素顺序依次将获取到的子源进行合并。</b>
+</li>
+<li><b>concatMap操作与flatMapSequential操作的区别在于，concatMap操作对所获取到的子源的订阅是动态进行的。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>concatMap操作的用法示例</h4>
+<ul class="point">
+<li><b>通过一个Demo来展示concatMap操作的用法</b>
+<ul class="quote">
+<li>执行结果如下。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch33"><summary>4.8 combineLatest操作</summary>
+<div class="sec">
+<h4>combineLatest操作简介</h4>
+<ul class="point">
+<li><b>combineLatest操作会把所有源中最新产生的元素合并成一个新的元素下发</b>
+<ul class="quote">
+<li>只要其中任何一个源中产生了新元素，合并操作就会执行一次，然后下发新产生的元素。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>combineLatest操作的实现逻辑</h4>
+<ul class="point">
+<li><b>combineLatest操作的实现逻辑与RxJava中的相同</b>
+<ul class="quote">
+<li>之前在《Java编程方法论：响应式RxJava与代码设计实战》一书中介绍过，有多个源发出元素，针对其中一个源来说，其发出的某一个元素只寻找离自己最近发出的元素进行合并。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch34"><summary>4.9 ConnectableFlux的二三事及对reactor-bug的分析</summary>
+<div class="sec">
+<h4>ConnectableFlux的概念和作用</h4>
+<ul class="point">
+<li><b>ConnectableFlux用于在订阅者和源产生订阅后推迟订阅逻辑的执行时间</b>
+<ul class="quote">
+<li>在某些情况下，你不仅希望在一个订阅者和源产生订阅后推迟它整个订阅逻辑的执行时间，同时也希望在订阅者达到一定数量或激活一个策略条件的时候才触发真正的订阅操作和数据/元素的产生和下发。</li>
+</ul>
+</li>
+<li><b>ConnectableFlux返回值类型主要有两个，即publish和replay</b>
+<ul class="quote">
+<li>publish：当源面对来自订阅它的各个订阅者的请求时，通过将这些请求转发给源来进行动态的处理。</li>
+<li>replay：在第一次订阅的时候产生数据，并将其缓存起来，缓存大小可自行定义。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>publish和replay操作的区别和示例</h4>
+<ul class="point">
+<li><b>publish操作通过将请求转发给源来进行动态的处理，如果其中任何一个订阅者的待请求元素数量变为0，那么源会暂停所有元素的下发或拉取操作</b>
+<ul class="quote">
+<li>执行结果如下：前两个订阅者在执行co.connect()；前并不会真正产生订阅，第3个订阅者是在真正产生订阅之后加进来的。</li>
+</ul>
+</li>
+<li><b>replay操作在第一次订阅的时候产生数据，并将其缓存起来，缓存大小可自行定义，若后续又有订阅者添加进来，则直接下发缓存中存储的元素</b>
+<ul class="quote">
+<li>在这里，只设定了暂存两个元素。为了提升效果，将Thread.sleep时间延长到10000ms，执行代码后发现，输出了两个连续的Three，表示缓存了两个元素。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>ConnectableFlux的其他方法和管理下游订阅关系</h4>
+<ul class="point">
+<li><b>connect：在已有订阅关系下，在你认为合适的时机，就可以调用这个方法，用来触发产生内部真正的订阅关系</b>
+<ul class="quote">
+<li>在调用co.connect也引出了另一个话题，ConnectableFlux提供了一些其他方法来管理这些下游订阅关系与上下游的联系。</li>
+</ul>
+</li>
+<li><b>autoConnect(n)：与connect方法的作用一样，只是添加了一个自动触发的条件，当订阅者数量达到n时，就触发真正的connect操作</b>
+<ul class="quote">
+<li>读者需要将refCount(int，Duration)和refCount(n)区分开，两者在实现上有很大的区别，在订阅者数满足n个的条件后，两者都会进行正常的连接，使用refCount(int，Duration)，在订阅者取消订阅，真正断开连接之前，会等待Duration的时间，以方便后续新的订阅者可以补充进来，然后继续下发元素，这时不会再关心订阅者数是否达到n。</li>
+</ul>
+</li>
+<li><b>refCount(n)：这个方法不仅可以用于跟踪接入的订阅关系，还可以用于跟踪这些订阅关系的解除状况</b>
+<ul class="quote">
+<li>在连接期间，假如有订阅者取消了订阅关系，而且现存订阅者数不够n个，这时并不会断开连接，而后续有订阅者加入并且有订阅关系的订阅者数达到n个的时候，则会立马断开连接。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Reactor-bug的分析</h4>
+<ul class="point">
+<li><b>Reactor开发者自己也说refCount(n)方法处于混沌中</b>
+<ul class="quote">
+<li>在正常执行3次之后，也就是在两次Thread.sleep(3000)之间产生的下发元素刚好是3个(每秒下发1个元素)，接下来One取消订阅，但依然产生了元素，然后Four补充上来，连接了一次，但同时带来了不好的消息，即彻底结束了订阅。</li>
+</ul>
+</li>
+<li><b>Reactor开发者的意图很费解，后续订阅者的加入本来就是正常的业务，假如确实需要一个条件来整体结束并中断所有订阅关系，也不应该如此草率</b>
+<ul class="quote">
+<li>在调用dispose方法后，可以反映到日志中的动作就是disconnectAction方法，在有订阅关系的订阅者数组长度大于0的情况下，清空下发元素队列里的元素，然后下发一个错误事件。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch35"><summary>4.10 小结</summary>
+<div class="sec">
+<h4>Reactor Operator的解读</h4>
+<ul class="point">
+<li><b>读书、读代码时不要尽信，要有自己的思考和保持怀疑精神</b>
+<ul class="quote">
+<li>通过相应的Demo来对代码进行判断、反问。</li>
+</ul>
+</li>
+<li><b>对于这些操作的使用方法，大家也可以查看官方文档最后的操作场景使用总结</b>
+<ul class="quote">
+<li>在实际开发过程中应根据使用场景对操作API方法进行恰当的选择。</li>
+</ul>
+</li>
+<li><b>若读者希望学习更多Reactor操作，可以查看本书配套视频中的相关源码解读。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch36"><summary>第5章 对Processor的探索</summary>
+<div class="sec">
+<h4>Processor的特性及实现类</h4>
+<ul class="point">
+<li><b>Processor既是一个Publisher，同时也是一个Subscriber</b>
+<ul class="quote">
+<li>Processor可以同时行使两者的权力。</li>
+</ul>
+</li>
+<li><b>Processor有两个实现类MonoProcessor和FluxProcessor</b>
+<ul class="quote">
+<li>FluxProcessor是抽象类，其又可以衍生出UnicastProcessor、EmitterProcessor、ReplayProcessor、WorkQueueProcessor和TopicProcessor等几个针对场景的特定功能类。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Processor的创建及使用</h4>
+<ul class="point">
+<li><b>通过特定类的create方法来创建一个Processor实例</b>
+<ul class="quote">
+<li>若想将其单独作为一个初始生产源，则可以调用已经创建好的Processor实例的sink方法。</li>
+</ul>
+</li>
+<li><b>可以通过调用Processor实例的sink方法创建一个SerializedSink或SerializeOnRequestSink</b>
+<ul class="quote">
+<li>SerializedSink和SerializeOnRequestSink内部调用的都是FluxCreate.createSink中的相关方法。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>元素生产顺序的控制</h4>
+<ul class="point">
+<li><b>想要控制元素的生产顺序，只能从Processor这个源头做起</b>
+<ul class="quote">
+<li>假如在多个线程中调用sink.next(n)方法，会产生很多元素，而作为订阅Processor的订阅者没办法控制元素的生产顺序。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch37"><summary>5.1 UnicastProcessor详解</summary>
+<div class="sec">
+<h4>UnicastProcessor的行为细节</h4>
+<ul class="point">
+<li><b>UnicastProcessor通过一个自定义的queue来实现背压，而且需要注意的是，其只允许有且仅有一个subscriber</b>
+<ul class="quote">
+<li>UnicastProcessor可以在多个线程中生产元素，相当于有多个生产源同时生产、下发元素，这时如何做到元素的有序下发呢？这就要利用本章开头部分讲到的SerializedSink来进行控制了。</li>
+</ul>
+</li>
+<li><b>UnicastProcessor可以作为订阅者与上游源生产者之间产生订阅关系，如果其与多个分布在不同线程中的上游源生产者产生了订阅关系，那么就会出现一个问题，这就是当有一个生产者的元素下发完毕的时候，是其他线程中的生产者继续下发元素，还是会出现其他情况？</b>
+<ul class="quote">
+<li>通过&lt;1&gt;可以知道，这里是通过自定义队列来控制背压程度的。</li>
+<li>通过&lt;2&gt;的subscribe可知，这里是通过原子类操作once==0&amp;&amp;ONCE.compareAndSet(this，0，1)来控制订阅者数的，当产生第2个订阅关系的时候，果断进入else语句块，也就是下发一个错误事件，日志会输出UnicastProcessor allows only a single Subscriber错误。</li>
+<li>通过&lt;3&gt;的onNext可知，假如元素下发结束，且调用了sink.next，那么就会执行Operators.onNextDropped(t，currentContext())。而在其他时候，会先将下发元素放到自定义的队列中，默认实现中是一个无界队列，最后执行drain方法。</li>
+<li>在订阅了上游源的情况下，会在上游元素下发完毕的时候调用UnicastProcessor对象的onComplete方法，其中的done会被设定为true。结合&lt;3&gt;处的onNext，如果UnicastProcessor作为订阅者与上游不同线程中的多个元素生产者之间存在订阅关系，那么只要有一个生产者生产的元素下发完毕，其他生产者生产的元素就会被直接抛弃。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>UnicastProcessor的Demo</h4>
+<ul class="point">
+<li><b>执行结果符合前面的描述。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch38"><summary>5.2 DirectProcessor详解</summary>
+<div class="sec">
+<h4>DirectProcessor的行为细节</h4>
+<ul class="point">
+<li><b>DirectProcessor可以接收0到 n个Subscriber，并不支持背压</b>
+<ul class="quote">
+<li>DirectProcessor内部没有用于存储元素的数据结构。</li>
+</ul>
+</li>
+<li><b>当DirectProcessor对象作为源生产者存在的时候，若订阅者中有一个元素请求数量为0，那么就移除该订阅者，同时向该订阅者发送一个错误事件</b>
+<ul class="quote">
+<li>错误日志输出的是Can&#x27;t deliver value due to lack of requests。</li>
+</ul>
+</li>
+<li><b>当DirectProcessor实例作为订阅者订阅一个发布源的时候，发布源下发元素完毕时会调用DirectProcessor实例的onComplete方法</b>
+<ul class="quote">
+<li>在其内部会调用SUBSCRIBERS.getAndSet(this，TERMINATED)，获取到订阅DirectProcessor实例的订阅者，并对它们进行遍历，一一调用它们各自的onComplete方法。</li>
+</ul>
+</li>
+<li><b>当DirectProcessor实例同时作为订阅者接收上游源下发的元素，那么后续接收的元素都会被抛弃</b>
+<ul class="quote">
+<li>SUBSCRIBERS.getAndSet(this，TERMINATED)在get操作之后会紧接着执行一个set操作，将subscribers的值设定为TERMINATED。</li>
+</ul>
+</li>
+<li><b>当DirectProcessor作为发布源角色，有订阅者订阅时，会先将订阅者包装为DirectInner，然后调用add(p)方法</b>
+<ul class="quote">
+<li>在调用DirectProcessor实例的onComplete方法后，如果有新的订阅者订阅DirectProcessor，add(p)方法会返回false。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>DirectProcessor的功能细节展示</h4>
+<ul class="point">
+<li><b>在上面的Demo中，首先下发000，从源码中可以知道，这里的subscribers=EMPTY，所以并没有看到元素的下发输出</b>
+<ul class="quote">
+<li>在&lt;2&gt;处发生了订阅，然后会下发xxx。</li>
+</ul>
+</li>
+<li><b>在&lt;3&gt;处，DirectProcessor实例以订阅者角色参与了订阅，这里就是关键所在，上游源在元素发布结束的时候会调用DirectProcessor(作为订阅者)的onComplete方法</b>
+<ul class="quote">
+<li>接下来就是subscribers==TERMINATED这个关键点了，这也对应了后面输出的3条onNextDropped日志。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch39"><summary>5.3 EmitterProcessor详解</summary>
+<div class="sec">
+<h4>EmitterProcessor概述</h4>
+<ul class="point">
+<li><b>EmitterProcessor可以同时有多个订阅者，并为订阅者提供背压支持。</b>
+</li>
+<li><b>EmitterProcessor的布尔类型的本地变量autoCancel，其可以在调用EmitterProcessor＃create时进行设定，它的主要作用是在EmitterProcessor的订阅者一个个都解除订阅且订阅关系数归0后，自动清除内部的缓存队列，并停止接收新的订阅关系。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>EmitterInner的作用</h4>
+<ul class="point">
+<li><b>EmitterInner继承了FluxPublish.PubSubInner，其作用是对类似Publish操作情况下的多个订阅者进行管理</b>
+<ul class="quote">
+<li>之前在ConnectableFlux中已经进行了详细的讲解，此处不再赘述。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>autoCancel的实现</h4>
+<ul class="point">
+<li><b>若在调用EmitterProcessor＃create时设定autoCancel为true，而EmitterProcessor的订阅者为EMPTY，就会自动清除内部的缓存队列，并停止接收新的订阅关系</b>
+<ul class="quote">
+<li>查看EmitterProcessor.EmitterInner＃removeAndDrainParent中的parent.remove(this)调用，它是autoCancel实现其价值的关键所在。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>EmitterProcessor的设计思路</h4>
+<ul class="point">
+<li><b>将第1排横箭头中的元素和下面方框中的EmitterProcessor.create作为一个订阅关系进行考虑，然后将方框和下面两个横箭头看作另一层订阅关系来处理</b>
+<ul class="quote">
+<li>这样在设计业务和代码的时候也就简单了很多。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>EmitterProcessor的代码细节问题</h4>
+<ul class="point">
+<li><b>EmitterProcessor的sink方法直接调用的是父类FluxProcessor＃sink的实现，而其中有onSubscribe(s)调用</b>
+<ul class="quote">
+<li>onSubscribe(s)调用了FluxProcessor子类，这里是EmitterProcessor的具体重写实现。</li>
+<li>Operators.setOnce(S，this，s)的代码逻辑之前也接触过，只不过没有对其可能发生的异常进行过分析。</li>
+<li>setOnce的表面语义是只能设置一次，不能设置第二次，也就是在重复设定的时候，就会报一个重复设定的错误，毕竟一个订阅者同时订阅两处生产源是不合理的，提示错误也很符合代码健壮性的需求。</li>
+<li>在我们的Demo中，除了在emitterProcessor.sink中调用了onSubscribe，在Flux.just(&quot;Hello&quot;，&quot;DockerX&quot;).subscribe(emitterProcessor)内部也进行了调用。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch40"><summary>5.4 ReplayProcessor详解</summary>
+<div class="sec">
+<h4>ReplayProcessor概述</h4>
+<ul class="point">
+<li><b>ReplayProcessor可以对上游元素生产者或通过它自己创建的Sink实例下发的元素进行缓存，后来的新订阅者可以重复接收这些元素。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>ReplayProcessor#create策略</h4>
+<ul class="point">
+<li><b>分为缓存无限元素和有限元素两种情况</b>
+<ul class="quote">
+<li>缓存的是可重复下发的元素，元素不会随着一次下发而消失，缓存的形式不是队列，而是使用了另一种数据结构。</li>
+</ul>
+</li>
+<li><b>cacheLast只缓存最后一个元素</b>
+<ul class="quote">
+<li>最初调用该API的时候，其实没有元素下发，只是返回一个create(1)，所调用的create(historySize，false)方法的API表示所缓存的元素个数为1，不支持无限缓存。</li>
+</ul>
+</li>
+<li><b>createSizeAndTimeout结合历史元素的缓存数量和元素缓存时间限制来设计</b>
+<ul class="quote">
+<li>createSizeAndTimeout(historySize, timeout, scheduledExecutor)。</li>
+</ul>
+</li>
+<li><b>基于时间调度的ReplayProcessor，缓存的历史元素有过期时间限制</b>
+<ul class="quote">
+<li>通过FluxReplay.SizeAndTimeBoundReplayBuffer实现的基于时间调度的ReplayProcessor。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>ReplayProcessor#subscribe分析</h4>
+<ul class="point">
+<li><b>SUBSCRIBERS的初始值被设定为FluxReplay.ReplaySubscriber＃EMPTY</b>
+<ul class="quote">
+<li>EMPTY=new ReplaySubscription[0]。</li>
+</ul>
+</li>
+<li><b>subscribe会首先包装一个ReplaySubscription，然后执行actual.onSubscribe(rs)</b>
+<ul class="quote">
+<li>通过add(rs)将这个ReplaySubscription添加进subscribers数组中。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>LambdaSubscriber与上游源联系的“中间人”</h4>
+<ul class="point">
+<li><b>LambdaSubscriber与上游源联系的“中间人”就是Subscription对象</b>
+<ul class="quote">
+<li>若想要一路平稳地解除这个订阅关系，就必须进行反本溯源。</li>
+<li>在订阅者解除订阅关系的时候，在上游管理多个订阅者的情况下，解除订阅关系的操作可以直接在一个Subscription中执行。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>ReplayProcessor的onNext方法源码分析</h4>
+<ul class="point">
+<li><b>在buffer对象的isDone返回false的情况下，将下发元素添加到该buffer中</b>
+<ul class="quote">
+<li>然后遍历之前对订阅者进行包装的ReplaySubscription，一一下发元素。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>UnboundedReplayBuffer本地字段的定义和构造函数</h4>
+<ul class="point">
+<li><b>初始的时候head和tail都为n，而batchSize代表这个链表上每一个节点的容量</b>
+<ul class="quote">
+<li>一个包含了batchSize个元素及指向下一个数组的引用的数组。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>UnboundedReplayBuffer的add方法</h4>
+<ul class="point">
+<li><b>往buffer中添加元素的时候，会添加到tail数组中</b>
+<ul class="quote">
+<li>获取当前的tailIndex，其若在数组的最后一个位置(a.length-1)，则新建下一个数组b，然后将b的引用放在上一个数组a的tailIndex的位置，即a[i]=b，将下发元素存于b[0]位置，即b[0]=value，同时将指向下一个位置的引用设置为1，即tailIndex=1。</li>
+<li>若tailIndex指向的是其他位置，那么就将值设定在这个位置上，并将此位置+1赋值给tailIndex，即tailIndex=i+1，最后的size++表示已下发元素的个数。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>UnboundedReplayBuffer中我们关心的另一个方法replay</h4>
+<ul class="point">
+<li><b>我们一般会用replayNormal方法实现正常的调用</b>
+<ul class="quote">
+<li>这个方法的实现细节比较多。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>ReplayProcessor的onNext方法的源码分析</h4>
+<ul class="point">
+<li><b>针对每一个ReplayInner实例，因为订阅者加入的先后顺序是不一样的，所以在获取元素时，理应给自己打一个标记戳index</b>
+<ul class="quote">
+<li>标记元素获取到哪个位置了，此标记针对的是ReplayInner实例消费到上游源所有下发元素中的某个位置，如果该消费index等于UnboundedReplayBuffer中定义的size，那么ReplayInner实例已经将UnboundedReplayBuffer所缓存的元素消费完毕。</li>
+<li>因为获取的是UnboundedReplayBuffer中定义的每个数组中的元素，所以需要数组位置索引才能确定所获取的元素，此处将其设定为tailIndex。</li>
+<li>同样，当前获取的元素所在的数组应该存储于ReplayInner中，这样才会方便获取下一个元素，也符合使用习惯。</li>
+<li>这样也就有了针对ReplayInner字段的设计。</li>
+<li>明白上面字段的设计意义后，接下来的事情就好办了。首先获取ReplayInner对象要获取的下发元素的相关信息。</li>
+<li>然后，对照着下面一段源码来看接下来的流程。在rs.requested数量与循环标记元素e不相等的情况下，判断rs是否已经Cancelled，如果返回false，则跳过此语句块。</li>
+<li>接着判断所获取元素的总index是否已经达到size，若达到且done为true，就设定rs的node为null，然后调用rs内部包裹的下游订阅者(也就是前面所提到的二级订阅者)的onComplete方法。</li>
+<li>另外，done为true的情况分两种，即正常结束和出现异常，而若done为false，跳出while循环即可。</li>
+<li>继续判断tailIndex是否与batchSize相等，即若tailIndex==n为true，就通过node[tailIndex]获取指向一个数组的索引对象。</li>
+<li>当跳出while(e！=r){...}循环时，会将最后保存的那个数组的临时变量赋值给ReplayInner对象，即在for循环最后执行rs.node(node)。</li>
+<li>此处还要做一件事，那就是在tailIndex==n(即ReplayInner对象消费到一个数组中的最后一个位置)时，通过node=(Object[])node[tailIndex]来获取ReplayBuffer中的下一个数组，以便继续消费后面的元素，同时，使tailIndex指向所获取新数组的第一个位置，即tailIndex=0。</li>
+<li>接着从数组中获取相应的元素，然后进行元素的下发即可。</li>
+<li>ReplayInner对象所包裹的这个二级订阅者获取的总的元素为index+1，并将tailIndex指向下一个将要获取的元素的位置。</li>
+<li>接着做在e的数量等于元素请求数量的时候要做的事情，前面有过介绍，这里不再赘述。</li>
+<li>每执行for循环一次，都需要设定一次ReplayInner对象的字段属性，以方便在跳出循环的情况下，获取并下发元素。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Demo演示ReplayProcessor</h4>
+<ul class="point">
+<li><b>通过一个Demo来展示ReplayProcessor中的细节</b>
+<ul class="quote">
+<li>执行结果如下。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>sink.next(&quot;000&quot;)没有产生元素下发日志的原因</h4>
+<ul class="point">
+<li><b>在上游源与ReplayProcessor已经存在订阅关系的情况下，后续若又有新的上游源要与ReplayProcessor产生订阅关系，则ReplayProcessor会拒绝</b>
+<ul class="quote">
+<li>若继续调用sink.next(&quot;000&quot;)，由FluxProcessor＃sink相关源码可知，我们得到的sink对象类型为FluxCreate.IgnoreSink，在调用它的next方法时，因之前sink已经调用了它自己的cancel方法，所以会忽略该下发元素。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch41"><summary>5.5 小结</summary>
+<div class="sec">
+<h4>Processor类型简介</h4>
+<ul class="point">
+<li><b>Processor中设计相对简单的几种类型的讲解</b>
+<ul class="quote">
+<li>读者可以根据需要在实际的项目中选择相应的类型来应用。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>TopicProcessor与WorkQueueProcessor的解读</h4>
+<ul class="point">
+<li><b>TopicProcessor与WorkQueueProcessor的实现都比较复杂，所以专门分两章进行详解</b>
+<ul class="quote">
+<li>建议读者仔细阅读源码，如果觉得理解起来有困难，可先学习相关用法，之后再慢慢研读源码。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch42"><summary>第6章 TopicProcessor及Reactor中匹配Disruptor的实现代码</summary>
+<div class="sec">
+<h4>TopicProcessor简介</h4>
+<ul class="point">
+<li><b>TopicProcessor是一个异步处理器，可以转发从上游多个元素生产者下发的元素</b>
+<ul class="quote">
+<li>当你打算并发地调用TopicProcessor实例的onNext、onComplete或者onError方法时，或者在TopicProcessor实例订阅了一个并发产生元素的上游Publisher的情况下，必须进行共享设置。</li>
+</ul>
+</li>
+<li><b>TopicProcessor实例的订阅者都会被分配到一个唯一的线程中</b>
+<ul class="quote">
+<li>当Auto-Cancel可用时，即在autoCancel为true的情况下，只有TopicProcessor实例的所有订阅者都解除了订阅关系，才会发送一个cancel信号给上游源生产者。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>TopicProcessor的特性</h4>
+<ul class="point">
+<li><b>支持并发调用，但需要进行共享设置</b>
+<ul class="quote">
+<li>在TopicProcessor实例订阅了一个并发产生元素的上游Publisher的情况下，必须进行共享设置。</li>
+</ul>
+</li>
+<li><b>本意是基于一个主题进行元素的下发消费，订阅者往往要求元素按生产顺序消费</b>
+<ul class="quote">
+<li>即便是在多线程消费的情况下，也要按下发元素的顺序消费。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>TopicProcessor的订阅与取消订阅</h4>
+<ul class="point">
+<li><b>订阅者通过TopicProcessor实例的subscribe方法进行订阅</b>
+<ul class="quote">
+<li>当不只有一个Subscriber订阅TopicProcessor实例的时候，在这些Subscriber的元素请求数量没有被耗尽的情况下，它们会接收到一样的事件。</li>
+</ul>
+</li>
+<li><b>订阅者通过TopicProcessor实例的unsubscribe方法进行取消订阅</b>
+<ul class="quote">
+<li>当TopicProcessor实例的所有订阅者都解除了订阅关系，才会发送一个cancel信号给上游源生产者。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>TopicProcessor的线程与执行</h4>
+<ul class="point">
+<li><b>每个Subscriber线程都会跟踪与之相关的request需求及其在RingBuffer中的正确索引</b>
+<ul class="quote">
+<li>Executor是可以自定义的，在它确定固定线程的数量之后，也就确定了到底允许多少个Subscriber可以并发执行。</li>
+</ul>
+</li>
+<li><b>当Publisher消耗完下游的元素请求数量时，它的订阅者将无法再读到Next信号，但还可以读到Complete和Error信号</b>
+<ul class="quote">
+<li>当一个Subscriber的元素请求数量为Long.MAX的时候，不支持背压，也就是说，如果订阅者的消费能力匹配不上元素的生产能力，上游源生产者将会产生风险。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>TopicProcessor的数据存储</h4>
+<ul class="point">
+<li><b>TopicProcessor用一个RingBuffer数据结构来存储上游推送来的信号元素</b>
+<ul class="quote">
+<li>RingBuffer是一个环形队列，可以高效地处理大量的数据。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch43"><summary>6.1 初识TopicProcessor</summary>
+<div class="sec">
+<h4>TopicProcessor的设计思路</h4>
+<ul class="point">
+<li><b>TopicProcessor会根据一个主题来进行元素的消费，上游应该只有一个Publisher可以在多个线程内执行元素的下发操作。</b>
+</li>
+<li><b>TopicProcessor可能有多个订阅者，这些下游订阅者会接收订阅时下发的元素，但每一个订阅者所做的事情可能不同，消费一个元素的时间也可能不同，那么就需要进行上下游之间元素的存储与消费进度控制</b>
+<ul class="quote">
+<li>当前所有订阅者都消费过的元素没有保存价值，因此这里使用环形队列来做一个衔接上下文的基础数据结构，通过游标和相对位置并结合CAS操作来进行协调控制。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>TopicProcessor的创建</h4>
+<ul class="point">
+<li><b>TopicProcessor的配置项比较多，所以使用了Builder</b>
+<ul class="quote">
+<li>需要配置一些我们需要的工具，其中有两个ExecutorService(即executor与requestTaskExecutor)，一个是用来分配订阅者线程的(面向下游消费者)，另一个是用来执行请求任务的(面向上游源生产者)。</li>
+</ul>
+</li>
+<li><b>RingBuffer需要根据自身长度与所传入的数值做&amp;运算来快速确定偏移量，所以此处的bufferSize必须为2的n次方</b>
+<ul class="quote">
+<li>在create方法中，由于share的默认值为false，所以通过create方法得到的TopicProcessor对象不适合上游并发产生元素的场景。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>TopicProcessor的响应式规范</h4>
+<ul class="point">
+<li><b>如果上游Topic-Publisher在一个单线程内生产下发元素的话，结合响应式规范，它的整体状况应该如图6-3所示</b>
+<ul class="quote">
+<li>方框中有一句0-1 thread if parent onSubscribe，意指如果有上游源的话，其只能在一个线程内产生元素。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>TopicProcessor的订阅与错误处理</h4>
+<ul class="point">
+<li><b>TopicProcessor的第2个订阅者在订阅期间发生了一个错误，即第2个订阅者解除了订阅关系，但不影响第1个订阅者请求元素的下发、获取</b>
+<ul class="quote">
+<li>图6-4中方框上方的3个圆与下发箭头所代表的颜色不同，这表示上游源产生的3个元素在不同的线程中进行下发。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch44"><summary>6.2 TopicProcessor构造器</summary>
+<div class="sec">
+<h4>Slot和RingBuffer.newSequence的定义</h4>
+<ul class="point">
+<li><b>Slot是一个可重用的数据容器，用于定义环形队列RingBuffer的槽。</b>
+</li>
+<li><b>Sequence是用来跟踪RingBuffer和事件处理进度的并发序列类</b>
+<ul class="quote">
+<li>Sequence支持多种并发操作，如CAS及顺序写入。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>UnsafeSequence的实现</h4>
+<ul class="point">
+<li><b>UnsafeSequence是RingBuffer.Sequence接口的实现类，其同时还继承了RhsPadding类</b>
+<ul class="quote">
+<li>UnsafeSequence操作数据的核心依然是原子类。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>RingBuffer读操作的调控调度策略</h4>
+<ul class="point">
+<li><b>RingBuffer.Reader barrier是一个很重要的组件，其可以通过给定的等待策略(waitStrategy)，使用游标序列和消费序列来调控RingBuffer元素的生产者和消费者(consumer)</b>
+<ul class="quote">
+<li>Reader给我们最多的就是waitFor、signal、alert等类似于AQS、CyclicBarrier、CountDownLatch的相关底层实现，而这些实现的核心就是对线程的控制与分配。</li>
+<li>waitFor内涉及了两个代码逻辑，一个是waitStrategy.waitFor，另一个是sequenceProducer.getHighestPublishedSequence，前者从订阅者的角度考虑消费进度，后者是生产者可提供的最大消费进度。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>WaitStrategy的不同实现</h4>
+<ul class="point">
+<li><b>默认的等待策略是WaitStrategy.phasedOffLiteLock</b>
+<ul class="quote">
+<li>phasedOff策略是针对消费者的等待策略，这里的barrier可以看作轮号游戏。</li>
+<li>当我们对吞吐量和低延时的需求度比不上对CPU计算资源的需求度的时候，可以通过Thread.yield来让出当前线程所占用的CPU计算资源。</li>
+<li>如果下一次执行10000次while循环，cursor.getAsLong())&gt;=sequence依然不成立(即雏鸟依然看不到虫子)，就进行超时判断：当超时timeDelta大于100(yieldTimeoutNanos在TopicProcessor中的默认值)时，调用LiteBlocking＃waitFor方法，进入锁操作，这里依然是为了使cursorSequence.getAsLong())&gt;=sequence成功，不成功便进行Condition锁排队，同时线程进入挂起状态。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch45"><summary>6.3 对RingBuffer中publish方法的解读</summary>
+<div class="sec">
+<h4>RingBuffer中publish方法的解读</h4>
+<ul class="point">
+<li><b>消费者通过RingBuffer.Reader＃waitFor等待获取生产者生产的匹配自己的元素序列号</b>
+<ul class="quote">
+<li>消费者不需要等待的情况有，因自身消费元素的速度比较慢，慢于元素的生产速度，其消费进度甚至可能会影响上游元素的入环进度。</li>
+</ul>
+</li>
+<li><b>TopicProcessor将元素下发给它的订阅者调用的是onNext方法，这也是元素入环的关键业务</b>
+<ul class="quote">
+<li>先从环形队列中获取下一个可允许存储元素的序列号，然后根据这个序列号获取相应的存储数据的Slot对象，然后将这个Slot的值设定为所下发的o，接着将这个准备好的元素所在的序列号通过ringBuffer.publish(seqId)发布出去，以方便等待着的订阅者获得可用序列号。</li>
+</ul>
+</li>
+<li><b>为了保证环形队列中存入的数据的槽Slot与订阅者要获取的数据的槽Slot不冲突，需要设计一个RingBuffer拓展类UnsafeRingBuffer，为RingBuffer加入一些针对当前场景下的元素进行添加与读取的控制API，将barrier控制加入其中</b>
+<ul class="quote">
+<li>生产者下发数据，必定存在针对数据入环的控制操作，而数据的消费操作只是对环内数据进行读取，所以我们可以不需要考虑消费者有多复杂，只需要考虑在其读取数据的位置设置位置锁，而这个位置锁是做在barrier之上的。</li>
+</ul>
+</li>
+<li><b>RingBuffer.createMultiProducer中的几个参数，factory为Supplier&lt;Slot&lt;IN&gt;&gt;的一个lambda函数，中间两个参数比较简单，最后说一下this参数，此时它(EventLoopProcessor)是一个Runnable对象</b>
+<ul class="quote">
+<li>EventLoopProcessor并没有对Runnable接口的run方法进行实现，需要在它的子类中实现，也就是上述源码中&lt;4&gt;处的代码实现，这里是一个开关语句条件判断，其实就是为了确认这个Processor还能否使用，在能用的情况下判断TopicProcessor的订阅者数是否为0，条件为真就抛出异常并跳出当前线程。</li>
+</ul>
+</li>
+<li><b>MultiProducerRingBuffer为RingBufferProducer的一个拓展子类，而RingBufferProducer也是Disruptor并发框架库中的重要的一环</b>
+<ul class="quote">
+<li>UnsafeRingBuffer中的next和publish方法都是由MultiProducerRingBuffer对象实例实现的。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch46"><summary>6.4 对MultiProducerRingBuffer的解读</summary>
+<div class="sec">
+<h4>MultiProducerRingBuffer的基本概念和作用</h4>
+<ul class="point">
+<li><b>RingBufferProducer是用于维护游标所有权的，以及通过对该所有权的控制来执行元素的添加或删除操作</b>
+<ul class="quote">
+<li>我们必须知道消费者正在操作的槽位，这些信息都需要进行统计，这样才方便我们根据这些信息进行管理。</li>
+</ul>
+</li>
+<li><b>RingBufferProducer与消费者进行交互的接入点是RingBufferProducer＃newBarrier</b>
+<ul class="quote">
+<li>RingBufferProducer＃newBarrier用于得到可供读取的最大序列号。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>RingBuffer中的UnsafeSupport</h4>
+<ul class="point">
+<li><b>MultiProducerRingBuffer通过RingBuffer.getUnsafe得到了UNSAFE实例</b>
+<ul class="quote">
+<li>在上面的源码中，首先通过反射操作Unsafe.class.getDeclaredField(&quot;theUnsafe&quot;)得到了unsafeField，接下来执行maybeUnsafe=unsafeField.get(null)，传入了一个null。</li>
+</ul>
+</li>
+<li><b>Unsafe对象可以直接通过给定的内存地址来操作数据，不要将其用于不太确定的代码</b>
+<ul class="quote">
+<li>在对某个公共变量进行多线程操作的过程中，往往线程中会保存一份该公共变量的数据，假如操作的这个公共变量不是volatile变量，那么Unsafe操作就会直接通过内存地址在内存中修改数据，而这一操作并不会引起线程局部缓存TLAB的刷新，这样就会出现危险。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>RingBuffer中的next与publish操作</h4>
+<ul class="point">
+<li><b>MultiProducerRingBuffer＃next方法会获取当前的游标值current，然后得到其下一个位置next</b>
+<ul class="quote">
+<li>执行wrapPoint=next-bufferSize；后会出现一个场景，假如有一个400m的环形跑道，小明跑了599m，对小明来讲，他要获取的下一个值就是600，也就是next，他在环内的位置也就是wrapPoint，在这个场景下，即距离开始位置200m的地方。</li>
+</ul>
+</li>
+<li><b>当上游源生产者下发元素到环形队列中时，需要先获取下一个要存储元素的序列位置，如果已达到最慢订阅者正在消费位置的参考序列号，那么在获取下一个位置时就应该等待，直到该订阅者消费完手中的元素，获得下一个位置的元素为止</b>
+<ul class="quote">
+<li>如果该最慢订阅者的位置用cachedGatingSequence表示，那么wrapPoint指向的其实是cachedGatingSequence+1。</li>
+<li>如果订阅者消费元素的速度比生产者生产、下发元素的速度快，那么订阅者的序列号和环形队列的游标值相等。</li>
+<li>当没有生产足够填充环形队列一圈的元素的时候，cachedGatingSequence是小于或等于current的，这时只需要通过CAS将cursor值设置为下一个位置即可。</li>
+</ul>
+</li>
+<li><b>publish的实现就是首先设定可用序列号，然后唤醒订阅者等待线程</b>
+<ul class="quote">
+<li>在这里，相关源码已经在前面讲解过了，不再赘述。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch47"><summary>6.5 TopicProcessor.onSubscribe及类BossEventLoopGroup的设计</summary>
+<div class="sec">
+<h4>TopicProcessor.onSubscribe方法</h4>
+<ul class="point">
+<li><b>TopicProcessor.onSubscribe方法首先获取了RingBuffer的当前游标所指位置，可用其设定minimum</b>
+<ul class="quote">
+<li>RingBuffer的addGatingSequence方法内部使用了一个装饰模式，由RingBufferProducer的实例对象的addGatingSequence方法实现。</li>
+<li>将minimum加入限制操作序列的数组gatingSequences中。</li>
+</ul>
+</li>
+<li><b>在线程池中执行请求任务</b>
+<ul class="quote">
+<li>通过requestTaskExecutor.execute将请求需求单独放在一个线程中处理。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>EventLoopProcessor作为订阅者的操作</h4>
+<ul class="point">
+<li><b>通过Subscription的request方法发送请求</b>
+<ul class="quote">
+<li>临时变量limit在bufferSize为1时被设定为1，在其他情况下，其被设定为bufferSize的二分之一。</li>
+<li>将初始游标值设置为-1，若要判断是否需要请求元素，首先要判断该Processor是否不可用，如果可用，进一步判断该TopicProcessor的下游订阅者数量是否为0。</li>
+<li>向上游发起请求，即执行upstream.request(bufferSize)。</li>
+</ul>
+</li>
+<li><b>EventLoopProcessor作为订阅者要与上游保持联系，确保自己能够动态监控元素请求数量</b>
+<ul class="quote">
+<li>当达到定义的界限值时就再次刷新元素请求数量(也就是再次发出请求)。</li>
+<li>parent.readWait.waitFor(c，readCount，parent)，其中的readWait字段EventLoopProcessor被定义为WaitStrategy.liteBlocking，其内部的WaitStrategy.LiteBlocking＃waitFor方法表示当游标所指序列号小于我们传入的c时，就等待着，而当游标所指序列号达到c时，说明环形队列中的元素消耗过半，那么就再次请求添加元素请求数量，一次添加limit+(cursor-c)个元素请求数量。</li>
+<li>生产者和消费者的交集点就是readWait，对于TopicProcessor来说，这里的readCount是一个函数表达式()-&gt; SUBSCRIBER_COUNT.get(TopicProcessor.this)==0？minimum.getAsLong()：ringBuffer.getMinimumGatingSequence(minimum))，其值与下游针对TopicProcessor的订阅者数量息息相关。</li>
+<li>在下游有多个订阅者的情况下，由于每个下游订阅者的消费速度可能不同，这导致环形队列对上游元素的获取、插入的需求也有所差别，这时就要通过readWait来进行控制。</li>
+<li>此处的parent.readWait需要与this.barrier=ringBuffer.newReader区分开。readWait获得的等待策略是基于LiteBlocking类来实现的，主要用于协调上游元素生产和下游元素请求之间的关系。而this.barrier用于下游订阅者对元素的获取、等待，它默认是基于PhasedOff类来实现的。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch48"><summary>6.6 TopicProcessor.subscribe及类WorkerEventLoopGroup的设计</summary>
+<div class="sec">
+<h4>TopicProcessor.subscribe方法的设计</h4>
+<ul class="point">
+<li><b>TopicProcessor的订阅者状态通过0==terminated来判断</b>
+<ul class="quote">
+<li>如果其不相等，就代表结束了订阅者状态。</li>
+</ul>
+</li>
+<li><b>每次订阅都会重新生成、下发一份数据</b>
+<ul class="quote">
+<li>在产生订阅关系的时候，从RingBuffer中获取元素。</li>
+</ul>
+</li>
+<li><b>冷数据源数据的生产、下发，其内部优先使用Flux.generate</b>
+<ul class="quote">
+<li>具体参考reactor.core.publisher.EventLoopProcessor＃coldSource的源码。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>TopicProcessor结束订阅者状态时的处理</h4>
+<ul class="point">
+<li><b>将状态值terminated由0变为1</b>
+<ul class="quote">
+<li>结束还要分为正常结束和非正常结束。</li>
+</ul>
+</li>
+<li><b>正常结束的情况下，上游的Subscription会被置空，解除引用关系</b>
+<ul class="quote">
+<li>方便垃圾回收，然后向下游发出结束信号。</li>
+<li>下游处理完结束信号后会将下游的executor关闭。</li>
+<li>最后解除上游被挂起的请求线程的挂起状态。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>TopicProcessor的冷数据源实现</h4>
+<ul class="point">
+<li><b>当生产者正常结束时，解除线程的挂起状态，然后关闭executor</b>
+<ul class="quote">
+<li>也就是当上游源的元素发布完毕时，就关闭线程池。</li>
+</ul>
+</li>
+<li><b>当再次有下游订阅者对TopicProcessor产生订阅的时候，获取的就是冷数据源了</b>
+<ul class="quote">
+<li>下游订阅者会订阅通过TopicProcessor＃subscribe中的coldSource方法得到的数据源。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>TopicProcessor的线程池设计</h4>
+<ul class="point">
+<li><b>每个订阅者都位于一个单独的线程中执行自己的任务</b>
+<ul class="quote">
+<li>此处的设计类似于Netty的WorkerEventLoopGroup。</li>
+</ul>
+</li>
+<li><b>在executor中执行TopicInner对象包含的任务</b>
+<ul class="quote">
+<li>TopicInner需要实现Runnable接口。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>TopicInner＃run的实现</h4>
+<ul class="point">
+<li><b>等待订阅者发送请求，即设定pendingRequest的值</b>
+<ul class="quote">
+<li>这也就对应了TopicInner＃request中调用的addCap方法，用来跳出waitRequestOrTerminalEvent中的while循环。</li>
+</ul>
+</li>
+<li><b>判断TopicInner包装的Subscriber，该订阅者请求元素的数量是否等于Long.MAX_VALUE</b>
+<ul class="quote">
+<li>假如其默认值是LambdaSubscriber，那么就调用s.request(Long.MAX_VALUE)。</li>
+</ul>
+</li>
+<li><b>当while(true)循环执行结束的时候，即该执行线程执行逻辑即将终了</b>
+<ul class="quote">
+<li>记得要从RingBuffer的控制限制队列中删除当前这个线程所操作的订阅者所属的序列。</li>
+<li>同时将processor所记录的订阅者数量减1。</li>
+<li>并且此TopicInner对象会将自己的running状态设定为false(即一个Boolean原子类)。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch49"><summary>6.7 小结</summary>
+<div class="sec">
+<h4>Reactor 3对Disruptor并发框架库的第三方实现。</h4>
+<ul class="point">
+</ul></div>
+<div class="sec">
+<h4>TopicProcessor对类EventLoopGroup设计方法的借鉴是开发基础库和框架时应掌握的方法。</h4>
+<ul class="point">
+</ul></div>
+<div class="sec">
+<h4>扇入和扇出是模块复用和复杂度的概念，本书不深入讨论，可自行查找资料。</h4>
+<ul class="point">
+</ul></div>
+<div class="sec">
+<h4>WorkQueueProcessor与TopicProcessor的区别</h4>
+<ul class="point">
+<li><b>第7章将探讨与TopicProcessor相似的WorkQueueProcessor，分析两者区别。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch50"><summary>第7章 对WorkQueueProcessor的解读</summary>
+<div class="sec">
+<h4>WorkQueueProcessor概述</h4>
+<ul class="point">
+<li><b>WorkQueueProcessor与TopicProcessor相似，但仅部分遵守了Reactive Streams规范</b>
+<ul class="quote">
+<li>WorkQueueProcessor会将上游源下发的元素仅分配给下游订阅者中的一个，所有订阅者共享同一份元素请求的数量需求。</li>
+<li>WorkQueueProcessor不能保证元素向下游分发会始终按照订阅者的订阅顺序依次循环分配。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>WorkQueueProcessor的特性</h4>
+<ul class="point">
+<li><b>WorkQueueProcessor是一个异步的Processor，支持多个元素生产线程并发下发元素</b>
+<ul class="quote">
+<li>当将shared设置为true的时候，其支持多个元素生产线程并发下发元素。</li>
+</ul>
+</li>
+<li><b>WorkQueueProcessor使用了RingBuffer数据结构来推送数据。</b>
+</li>
+<li><b>在一定的条件下，WorkQueueProcessor并不会对每一个subscriber创建一个线程，因此其比TopicProcessor的伸缩性更好</b>
+<ul class="quote">
+<li>能够支持的subscriber的最大个数由线程池executor决定。</li>
+<li>不要把WorkQueueProcessor添加过多的subscriber，这样会增加RingBuffer内限制序列的个数，也就变相地增加了各个消费线程等待挂起与执行的切换次数。</li>
+<li>最好使用ThreadPoolExecutor或者ForkJoinPool，Processor可以检测它们的容量并在订阅者过多的时候抛出异常。</li>
+</ul>
+</li>
+<li><b>WorkQueueProcessor不遵循Reactive Streams规范，所以其比TopicProcessor消耗的资源更少</b>
+<ul class="quote">
+<li>所有subscriber的元素请求数量会被累加在一起，然后WorkQueueProcessor每次只会给其中一个subscriber推送数据，也就是所有下游订阅者消费下发元素的数量总和与上游Publisher发布元素的数量总和相等。</li>
+<li>与TopicProcessor的fan-out广播模式相比，WorkQueueProcessor中的模式更类似于round-robin模式，但不保证是公平的round-robin模式。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>WorkQueueProcessor的应用示例</h4>
+<ul class="point">
+<li><b>通过一个Demo来展示WorkQueueProcessor的工作原理</b>
+<ul class="quote">
+<li>IntStream.range(1，20)中包含了1～19的元素，结合上面所述，来理解一下为什么出现了3个Three(不保证公平的round-robin模式)。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch51"><summary>7.1 WorkQueueProcessor的requestTask</summary>
+<div class="sec">
+<h4>WorkQueueProcessor的requestTask方法</h4>
+<ul class="point">
+<li><b>WorkQueueProcessor不会获取当前游标或做写入序列号的限制，只需获取下游相应订阅者在订阅时写入的限制序列号中最小的那个即可</b>
+<ul class="quote">
+<li>每次下发元素到环形队列的行为只需要顾及下游订阅者中最小的限制序列号即可，这也就导致可能有多个下游订阅者被挂起、等待同一个序列元素。</li>
+</ul>
+</li>
+<li><b>上游在调用WorkQueueProcessor的onNext方法的时候，会调用RingBuffer的next方法，通过将当前游标值与当前获得的最小限制序列号进行比较，取两者较小的进行设定</b>
+<ul class="quote">
+<li>在当前游标值等于cachedGatingSequence值或上游元素还未将环形队列存满一圈时，不会进入if判断语句块，而会返回下一个可往RingBuffer中存储元素的位置，同时onNext方法会执行ringBuffer.publish(seqId)，对外宣称该位置元素可以读取了。</li>
+</ul>
+</li>
+<li><b>下游订阅者，在与它相关的元素消费下发逻辑WorkQueueProcessor.WorkQueueInner＃run中，通过nextSequence=processor.workSequence.getAsLong()+1L可知，下游各个订阅者共享了WorkQueueProcessor的workSequence</b>
+<ul class="quote">
+<li>每个下游订阅者每次获取的nextSequence并不是彼此独立管理的，而是要依靠这个共享的workSequence，即WorkQueueInner的sequence会随着workSequence的改变而改变，没有独立性。</li>
+<li>sequence字段代表此WorkQueueInner对象当前消费到的序列处。因为这些订阅者共享了同一个RingBuffer中的元素消费进度，所以多个订阅者同样会在此通过CAS操作来确定自己下发元素的权限。</li>
+<li>接着就是正常下发元素的代码逻辑了，unbounded与之前的TopicProcessor是一样的，此处不再解释。</li>
+<li>TopicProcessor会在下发完可用序列后设定限制为返回的当前可用序列号availableSequence：sequence.set(availableSequence)。各个订阅者间并不共享同一个消费进度，而是独享自己的消费进度，这也是与WorkQueueProcessor不同之处。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch52"><summary>7.2 WorkQueueProcessor的subscribe</summary>
+<div class="sec">
+<h4>WorkQueueProcessor的subscribe逻辑</h4>
+<ul class="point">
+<li><b>判断是否为冷数据源，并处理不同情况</b>
+<ul class="quote">
+<li>如果是冷数据源，按照TopicProcessor的处理逻辑。</li>
+<li>否则，对订阅者进行WorkQueueInner包装，并控制数量。</li>
+</ul>
+</li>
+<li><b>订阅者数量由WorkQueueProcessor中定义的字段的executor值决定</b>
+<ul class="quote">
+<li>可以是ThreadPoolExecutor或ForkJoinPool。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>WorkQueueProcessor的异常处理机制</h4>
+<ul class="point">
+<li><b>当订阅者消费出错时，会重新将元素交给正常订阅者</b>
+<ul class="quote">
+<li>并在WorkQueueInner＃run中捕获异常并重新加入异常元素消费队列。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch53"><summary>7.3 冷热数据源的区别</summary>
+<div class="sec">
+<h4>冷热数据源的区别</h4>
+<ul class="point">
+<li><b>冷数据源在每产生一次订阅关系时，都会重新产生元素，没有订阅则不会生产数据。</b>
+</li>
+<li><b>热数据源会在没产生订阅关系的情况下，提前产生元素</b>
+<ul class="quote">
+<li>Reactor中最常见的热数据源操作就是just，从Flux＃just的定义可知，它需要一个确定的元素或一个包含多个元素的数组，然后在每产生一次订阅关系的时候就重新将这个元素或数组下发一遍。</li>
+<li>如果是一个冷数据源，在每产生一次订阅关系时就要发生一次HTTP调用，即在需要产生订阅关系的时候，都要发生一次HTTP调用，然后将新得到的值下发给这次的订阅者。</li>
+</ul>
+</li>
+<li><b>为了得到我们想要的效果，参数应该是一个函数式动作</b>
+<ul class="quote">
+<li>参数应该是一个函数式动作，即()-&gt;httpclient(&quot;xxx&quot;)，然后在产生订阅关系的时候，得到httpclient(&quot;xxx&quot;)，这也就意味着得到结果元素，然后执行下发操作。</li>
+<li>若返回的是包含多个元素的结果，则可以执行Flux的defer(Supplier&lt;？extends Publisher&lt;T&gt;&gt;supplier)操作；若返回的是只包含一个元素结果，则执行defer(Supplier&lt;？extends Mono&lt;？extends T&gt;&gt;supplier)操作，将FluxJust的实例化操作推迟，传参为()-&gt;Flux.just(httpclient(&quot;xxx&quot;))。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch54"><summary>7.4 实例详解</summary>
+<div class="sec">
+<h4>冷数据源和热数据源的区别</h4>
+<ul class="point">
+<li><b>冷数据源无论有几个订阅者，都会得到所有元素</b>
+<ul class="quote">
+<li>通过图7-3来展示上面Demo的执行过程，可以看到，无论有几个订阅者，都会得到图7-3左上角方框中所有小圆代表的元素。</li>
+</ul>
+</li>
+<li><b>热数据源的生产者并不会因后产生的订阅者而重新生成数据并下发</b>
+<ul class="quote">
+<li>在图7-4中，上游源生产者的4个元素在publish操作处分开了，订阅关系产生有先有后，生产者并不会因后产生的订阅者而重新生成数据并下发，生产者自始至终只执行了一次生成数据的过程。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>EmitterProcessor的使用</h4>
+<ul class="point">
+<li><b>EmitterProcessor内部使用了类似于publish的方式来进行多订阅者的管理</b>
+<ul class="quote">
+<li>从订阅者的角度来看，订阅者彼此之间是相互独立的，虽然实际上它们共有一个订阅关系，但得到的结果是不同的。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>UnicastProcessor的改造</h4>
+<ul class="point">
+<li><b>可以通过Flux.publish来对UnicastProcessor的订阅者进行管理，然后通过autoConnect操作来实现下游订阅者接收到的元素是其进行订阅时上游源生产者正在生产、下发的元素的效果</b>
+<ul class="quote">
+<li>这里除了多增加了一个map转换加工操作外，其他效果是一样的。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch55"><summary>7.5 小结</summary>
+<div class="sec">
+<h4>WorkQueueProcessor的讲解</h4>
+<ul class="point">
+<li><b>WorkQueueProcessor是Reactor中的一种线程池，用于处理异步任务</b>
+<ul class="quote">
+<li>WorkQueueProcessor内部使用BlockingQueue来存储任务。</li>
+<li>WorkQueueProcessor可以指定线程池的核心线程数、最大线程数和队列容量。</li>
+</ul>
+</li>
+<li><b>WorkQueueProcessor的使用场景</b>
+<ul class="quote">
+<li>在需要处理大量异步任务时，可以使用WorkQueueProcessor来提高处理效率。</li>
+<li>在需要实现线程池的弹性伸缩时，可以使用WorkQueueProcessor。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>冷热数据源的探讨</h4>
+<ul class="point">
+<li><b>冷热数据源是数据库连接池中的一种优化策略</b>
+<ul class="quote">
+<li>热数据源是指经常被访问的数据源，应该分配更多的连接。</li>
+<li>冷数据源是指不经常被访问的数据源，应该分配较少的连接。</li>
+</ul>
+</li>
+<li><b>冷热数据源的使用场景</b>
+<ul class="quote">
+<li>在需要处理大量数据时，可以使用冷热数据源来提高数据库连接的利用率。</li>
+<li>在需要实现数据库连接池的弹性伸缩时，可以使用冷热数据源。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Reactor中的Context</h4>
+<ul class="point">
+<li><b>Context是Reactor中的一种上下文传递机制</b>
+<ul class="quote">
+<li>Context可以携带一些额外的信息，例如请求ID、用户信息等。</li>
+<li>Context可以在多个组件之间传递，例如从父组件传递到子组件。</li>
+</ul>
+</li>
+<li><b>Context的使用场景</b>
+<ul class="quote">
+<li>在需要传递额外信息时，可以使用Context。</li>
+<li>在需要实现请求的追踪和日志记录时，可以使用Context。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch56"><summary>第8章 Reactor中特供的Context</summary>
+<div class="sec">
+<h4>Context在Reactor中的应用</h4>
+<ul class="point">
+<li><b>Context是从Reactor 3.1.0版本开始加入的。</b>
+</li>
+<li><b>Spring Framework 5.2中的响应式事务是基于Context实现的。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch57"><summary>8.1 Context的设计缘由</summary>
+<div class="sec">
+<h4>Reactor中的并发操作及其问题</h4>
+<ul class="point">
+<li><b>Reactor中有大量针对并发操作的应用，如原子类、无界队列、环形队列的设计应用等</b>
+<ul class="quote">
+<li>这些设计无形中都增加了我们掌握Reactor的难度。</li>
+</ul>
+</li>
+<li><b>在响应式编程中，一个线程很可能被用于处理多个异步订阅关系，一个订阅关系在元素下发的过程中往往也可能从一个线程切换到另一个线程</b>
+<ul class="quote">
+<li>这样也会带来一个问题，在非响应式开发的项目中，我们往往会在一个线程内将任务处理完，也就是说我们可能会在线程的上下文中存储一些对象数据，方便我们在整个执行过程中使用它们，同时，在线程生命周期结束时会将所存储的数据销毁。</li>
+<li>在响应式开发项目中，这样就有点不合适了。假如这时还要强行使用ThreadLocal来共享数据，那么很可能会出现意想不到的状况。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>ContextAPI的设计目的</h4>
+<ul class="point">
+<li><b>ContextAPI与ThreadLocal的功能相似，专门用于服务Flux或者Mono单个订阅关系的上下文存储</b>
+<ul class="quote">
+<li>假如订阅关系A在ThreadLocal中存储了一个键值对&lt;a，b&gt;，然后恰好运行订阅关系A的线程切换到运行订阅关系B的线程了，那么在订阅关系B中也可以通过键a获取值b，这就造成了订阅关系A的资源泄露。</li>
+<li>正因为如此，从Reactor 3.1.0版本开始，Reactor给我们提供了ContextAPI来解决此类问题。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch58"><summary>8.2 对Context的解读</summary>
+<div class="sec">
+<h4>Context的解读与应用</h4>
+<ul class="point">
+<li><b>Context是以订阅者为主体来设计的，用于维护整个订阅过程上下文中产生的额外信息</b>
+<ul class="quote">
+<li>在产生订阅关系的时候，订阅者由后往前一层层被中间操作包装，所以会先执行subscriberContext操作涉及的subscribe方法。</li>
+<li>执行完doOnContext函数后，再将得到的Context对象与传入的订阅者包装出一个新的订阅者ContextStartSubscriber，在这个订阅者内重写currentContext方法，使其返回传入之前得到的c。</li>
+</ul>
+</li>
+<li><b>Context具有不可变性，一旦不再使用获得的对象，就可以将其抛弃，而不是在该对象的基础上修改内部值</b>
+<ul class="quote">
+<li>从上面的Context2＃put方法可以清晰地看到，当key相同的时候，其执行的并不是update操作，而是重新创建了一个对象。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Context与订阅者的绑定特性</h4>
+<ul class="point">
+<li><b>Context与订阅者的绑定特性是由订阅者的currentContext方法来决定的，而不是由某个Context对象来决定的</b>
+<ul class="quote">
+<li>若要认定一个Context对象专属于某个订阅者，则必须通过currentContext方法来将该Context对象与此订阅者绑定在一起。</li>
+</ul>
+</li>
+<li><b>Context与订阅者的绑定特性实现了类ThreadLocal效果，只不过ThreadLocal是针对线程来设定的，而Reactor中实现的Context是针对订阅者来设定的</b>
+<ul class="quote">
+<li>在contextSimple2的&lt;3&gt;处，获得了一个全新的MonoCurrentContext实例，根据flatMap的特性，其根据一个上游元素来获取新源(也可以叫作子源)并与下游订阅者之间产生订阅关系。</li>
+<li>这里要注意，上游初始源从订阅者的currentContext中获取到的Context使用了Context＃put操作，这时会得到一个全新的Context对象，该对象与&lt;2&gt;处map操作中订阅者的currentContext对象不是同一个对象。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Reactor Context在项目中的应用</h4>
+<ul class="point">
+<li><b>当用户通过HTTP访问服务器来执行一个任务的时候，会通过验证一个关联ID来执行不一样的策略</b>
+<ul class="quote">
+<li>因为涉及元素的下发动作，所以这个策略会被放在上游，而这个策略是根据订阅者来制定的，因此根据不同的订阅者可能会产生不一样的策略。</li>
+<li>这个策略刚好会影响元素的下发，那么就要从每一个订阅者手中拿到相应的数据来进行判断，这时如何获取数据就是我们面临的大问题了。</li>
+</ul>
+</li>
+<li><b>在整个订阅过程中，订阅者的currentContext都与自身绑定，不会被其他订阅关系影响，所以在这里直接获取订阅者的currentContext，并判断其中的相应条件</b>
+<ul class="quote">
+<li>对于订阅者存储的这些信息，可以在下游操作链中通过Mono的subscriberContext相关方法将其加入订阅者的currentContext中。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch59"><summary>8.3 小结</summary>
+<div class="sec">
+<h4>Reactor 3.1.0版本新增内容</h4>
+<ul class="point">
+<li><b>本章内容不多，但却是Reactor 3.1.0版本中新增的内容，而且比较实用。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>上下游之间的交互有时候很必要。</h4>
+<ul class="point">
+</ul></div>
+<div class="sec">
+<h4>API的选用思路</h4>
+<ul class="point">
+<li><b>参数类型、方法名、返回值类型就是一个方法的核心，也是接口定义的核心</b>
+<ul class="quote">
+<li>在设计层面，重要的不是方法的实现过程，而是方法的目的。</li>
+<li>这就好比种瓜得瓜，种豆得豆，而方法就是“种”这个动作，传入的参数类型就是豆或瓜，返回值类型也是豆或瓜，凡事都讲究因果。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch60"><summary>第9章 Reactor中的测试</summary>
+<div class="sec">
+<h4>Reactor中的测试</h4>
+<ul class="point">
+<li><b>Reactor提供了专门的reactor-test测试模块</b>
+<ul class="quote">
+<li>在Maven项目中，需要添加以下依赖。</li>
+</ul>
+</li>
+<li><b>reactor-test主要进行了两方面的测试</b>
+<ul class="quote">
+<li>针对上游及通过一系列操作得到的新源的测试：使用StepVerifier。</li>
+<li>针对自定义的一系列操作(包括Reactor库提供的操作API，通过compose或transform操作组合出的通用操作)的测试：使用TestPublisher。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch61"><summary>9.1 StepVerifier测试源码解析</summary>
+<div class="sec">
+<h4>StepVerifier测试源码解析</h4>
+<ul class="point">
+<li><b>StepVerifier测试库的设计实现思路</b>
+<ul class="quote">
+<li>对源做测试，将从源的创建，元素的下发、结束，以及订阅关系中的Context等几个方面来进行设计和实现。</li>
+</ul>
+</li>
+<li><b>StepVerifier的接口定义</b>
+<ul class="quote">
+<li>定义reactor.test.StepVerifier.LastStep接口，用于验证异常结束或正常结束。</li>
+<li>通过Step接口来聚合验证操作，并继承LastStep接口。</li>
+<li>设计一个接口FirstStep并继承Step接口，用于测试上游源生产元素的代码逻辑。</li>
+<li>定义reactor.test.StepVerifier.ContextExpectations接口，用于测试订阅者的Context。</li>
+</ul>
+</li>
+<li><b>StepVerifier的接口实现</b>
+<ul class="quote">
+<li>将每一个测试内容包装成一个事件，然后将其加入一个容器，最后在验证的时候遍历该容器中所存事件，依次执行。</li>
+<li>使用FirstStep的实现实例，即DefaultStepVerifierBuilder实例，该实例的类型为FirstStep。</li>
+<li>在生成SignalEvent实例的时候，可以根据自己的需要来自定义BiFunction的实现。</li>
+<li>在new SignalEvent(BiFunction，String)传入的这个BiFunction函数式实现中，如果下发的不是OnError，而是一个异常，那么就会调用fail方法，并返回其结果Optional.of(new AssertionError(prefix+String.format(msg，args)+&quot;)&quot;))。</li>
+</ul>
+</li>
+<li><b>StepVerifier的验证</b>
+<ul class="quote">
+<li>expectError返回的结果类型是DefaultStepVerifier，在设定完执行脚本后，执行就好了。</li>
+<li>首先获得create处设定的Publisher源，然后对设定的一系列条件进行包装，得到一个Subscriber，最后产生订阅关系。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch62"><summary>9.2 StepVerifier测试应用</summary>
+<div class="sec">
+<h4>StepVerifier测试应用</h4>
+<ul class="point">
+<li><b>通过自定义源和测试脚本动作，使用StepVerifier进行测试</b>
+<ul class="quote">
+<li>定义一个Flux源，创建一个包装类DefaultStepVerifierBuilder，对源进行加工和包装，使其最后一个元素为异常对象。</li>
+<li>期望上游源下发的第一个signal为onNext，下发的期望值为&quot;foo&quot;。</li>
+<li>期望上游源下发的最后一个signal为onError，其内部包含的异常信息为&quot;custom&quot;。</li>
+<li>调用verify方法来触发测试。</li>
+</ul>
+</li>
+<li><b>StepVerifier的API比较多，应根据情况选用适当的方法</b>
+<ul class="quote">
+<li>当下发的signal为onNext时，如果所下发signal为其他类型或者onNext所携带元素的值不符合我们的期望，就会出现一个AssertionError异常。</li>
+<li>当你下发的signal为onNext且你希望对下发的元素进行一些内在操作时，例如，下发的元素是一个引用类型对象，如数组，若要求这个下发数组的长度为8，这时就可以使用consumeNextWith(Consumer&lt;T&gt;)。</li>
+<li>更多的情况是，根据实际情况暂停一段时间(比如热数据源在下发元素的过程中可能由于I/O因素导致时间间隔不一样，不一样的时间间隔会得到不一样的元素，因此要根据实际情况来进行区分)，或者先执行另一个任务(任意一个自定义任务)再继续执行下发元素的任务，那么在这里可以使用thenAwait(Duration)与then(Runnable)。</li>
+</ul>
+</li>
+<li><b>对于expectComplete、expectError及其所有的衍生方法，需要再次提醒的是，它们内部都调用了verify方法，也就是说，我们无须专门调用此方法</b>
+<ul class="quote">
+<li>verify方法并没有超时的概念，也就是说，其有可能会永久阻塞。</li>
+<li>有些时候，我们可以根据实际情况设定一个执行超时时间，可以将这个超时时间设定为全局使用，也可以使用verify(Duration)进行指定，全局使用时可以调用StepVerifier＃setDefaultTimeout(Duration)方法。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch63"><summary>9.3 操作时间测试</summary>
+<div class="sec">
+<h4>StepVerifier的虚拟时钟功能</h4>
+<ul class="point">
+<li><b>StepVerifier.withVirtualTime方法可以创建出使用虚拟时钟的StepVerifier</b>
+<ul class="quote">
+<li>StepVerifier一般不会直接接收一个简单的热数据源Flux作为输入，而是接收一个Supplier函数动作。</li>
+</ul>
+</li>
+<li><b>通过StepVerifier.withVirtualTime创建的StepVerifier，可以在配置好订阅者之后，延迟创建待测试的Flux</b>
+<ul class="quote">
+<li>假如只将Mono.delay(Duration.ofDays(1))作为参数传入，其会立即执行，这很可能不符合我们的要求。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>期望时间的测试方法</h4>
+<ul class="point">
+<li><b>通过thenAwait(Duration)方法可以让测试过程以Duration这个虚拟时钟前进</b>
+<ul class="quote">
+<li>thenAwait(Duration)方法会暂停验证步骤(允许事件信号延迟发出)。</li>
+</ul>
+</li>
+<li><b>通过expectNoEvent(Duration)方法可以让整个过程持续一定的时间，期间如果有任何事件信号发出，则表示测试失败</b>
+<ul class="quote">
+<li>在expectNoEvent处于等待状态期间，由于expectNoEvent中的NoEvent会执行其中的run方法，因此会将monitorSignal设定为true。</li>
+<li>若等待期间上游源有元素下发的话，结合onExpectation实现，可以发现，它会抛出异常，这也就实现了这个方法的语义。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用StepVerifier.withVirtualTime进行测试</h4>
+<ul class="point">
+<li><b>对监听器的响应式结构化的细节解读</b>
+<ul class="quote">
+<li>在&lt;1&gt;处，expectSubscription会作为一个事件加入script，此时一旦产生订阅关系，就会执行DEFAULT_ONSUBSCRIBE_STEP中定义的代码逻辑，判断signal.isOnSubscribe。</li>
+<li>既然提到了signal.isOnSubscribe，那就要关注一下Subscriber。由verify方法可知，它在内部实例化了一个DefaultVerifySubscriber对象。</li>
+<li>那么可以知道，在产生订阅关系的时候，会先调用订阅者的onSubscribe方法，从这里可以看到，它会执行onExpectation方法，也就是说，假如monitorSignal为true，就会抛出AssertionError异常。</li>
+</ul>
+</li>
+<li><b>通过thenAwait(Duration)和expectNoEvent(Duration)方法进行测试</b>
+<ul class="quote">
+<li>这时会抛出java.lang.AssertionError：expectation failed(expected no event：onSubscribe(false))异常，而then(...)会通过一个task来执行下发元素的操作，以此给大家展示它的一个应用场景。</li>
+<li>正常执行上述测试代码，是完全没问题的，但若打开&lt;1&gt;处的注释，再次执行测试代码，就会抛出java.lang.AssertionError：unexpected end during a no-event expectation异常。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch64"><summary>9.4 使用StepVerifier进行后置验证</summary>
+<div class="sec">
+<h4>使用StepVerifier进行后置验证</h4>
+<ul class="point">
+<li><b>verifyThenAssertThat会返回一个StepVerifier.Assertions对象，可以用其来校验整个测试成功结束后的一些状态</b>
+<ul class="quote">
+<li>verifyThenAssertThat在调用verify前会设定Hooks的一些实现，在执行verify后就可以获得一个包含这些状态信息的DefaultStepVerifierAssertions对象。</li>
+</ul>
+</li>
+<li><b>可以通过下面的Demo来对其使用方法进行展示</b>
+<ul class="quote">
+<li>这里涉及了几种收集丢弃元素的事件类型。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch65"><summary>9.5 关于Context的测试</summary>
+<div class="sec">
+<h4>Context在测试中的设定</h4>
+<ul class="point">
+<li><b>使用StepVerifierOptions对象配置Context</b>
+<ul class="quote">
+<li>通过StepVerifierOptions类的create方法得到这个类的实例。</li>
+<li>通过调用该对象的withInitialContext来进行配置。</li>
+</ul>
+</li>
+<li><b>对操作时间的测试，可以对调度器进行自定义配置，也可以对订阅者的初始元素请求数量进行配置。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Context在测试中的使用</h4>
+<ul class="point">
+<li><b>通过Mono.subscriberContext获取订阅者Context元素内容。</b>
+</li>
+<li><b>使用expectAccessibleContext和expectNoAccessibleContext进行测试</b>
+<ul class="quote">
+<li>expectNoAccessibleContext的业务比较简单，只需要判断得到的Context是否为null即可。</li>
+<li>expectAccessibleContext方法返回的DefaultContextExpectations实例中，其对各种情况的包装最后都需要调用then方法来返回主测试线。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用andThen方法进行多个条件过滤元素的操作</h4>
+<ul class="point">
+<li><b>DefaultContextExpectations类通过step.consumeSubscriptionWith方法将它的消费逻辑衔接了起来，使之回到step所代表的主测试线</b>
+<ul class="quote">
+<li>这与Consumer＃andThen有异曲同工之妙。</li>
+</ul>
+</li>
+<li><b>同样，DefaultContextExpectations类内部的其他方法，如contains、hasSize、hasKey的内部都是利用Consumer＃andThen的衔接设计来实现的</b>
+<ul class="quote">
+<li>我们在编写代码时也可以做到对多个条件分別进行包装、连接，以方便重用代码。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch66"><summary>9.6 使用TestPublisher对自定义中间操作进行测试</summary>
+<div class="sec">
+<h4>TestPublisher的基本概念和API</h4>
+<ul class="point">
+<li><b>TestPublisher是Publisher&lt;T&gt;、PublisherProbe&lt;T&gt;的实现类。</b>
+</li>
+<li><b>TestPublisher提供next、emit、complete和error等方法用于下发元素和信号</b>
+<ul class="quote">
+<li>next(T)及next(T，T...)，发出1～n个onNext信号。</li>
+<li>emit(T...)与next起同样的作用，并且会执行complete。</li>
+<li>complete会发出终止信号onComplete。</li>
+<li>error(Throwable)会发出异常信号onError。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>TestPublisher的创建方式</h4>
+<ul class="point">
+<li><b>使用create方法可以得到一个正常的TestPublisher</b>
+<ul class="quote">
+<li>TestPublisher的create方法返回一个DefaultTestPublisher实例。</li>
+</ul>
+</li>
+<li><b>使用createNonCompliant方法可以创建一个“特殊功能”的TestPublisher</b>
+<ul class="quote">
+<li>createNonCompliant方法需要传入由TestPublisher.Violation通过枚举指定的一组选项。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>TestPublisher的测试用法</h4>
+<ul class="point">
+<li><b>使用TestPublisher.createNoncompliant规避空指针异常</b>
+<ul class="quote">
+<li>在正常的情况下，并没有设定Violation.ALLOW_NULL，即条件成立，空指针异常包含的信息与我们测试的期望值相符。</li>
+</ul>
+</li>
+<li><b>测试请求数充足时的状况</b>
+<ul class="quote">
+<li>当元素请求剩余数量为0且并不存在Violation.REQUEST_OVERFLOW这个条件设定的时候，就移除这个订阅者，同时会给我们真正的订阅者下发一个onError事件。</li>
+</ul>
+</li>
+<li><b>测试产生的Signal事件的测试流程</b>
+<ul class="quote">
+<li>emit会在下发完元素之后执行complete，此时会调用订阅者DefaultVerifySubscriber的onComplete方法。</li>
+<li>onExpectation(Signal.complete())方法用于对Signal.complete事件进行测试，在其中会对事件类型进行判断，以选择对应的处理策略。</li>
+<li>此时，就要从我们编制的测试列表中获取下一项测试内容(只获取，并不移除)：this.script.peek，看看它是什么类型的事件。</li>
+<li>根据我们在misbehavingAllowsOverflow这个Demo中的设定，下一个事件类型为SignalEvent，这时就会执行onSignal(actualSignal)方法，将通过Signal.complete得到的事件作为参数传入其中。</li>
+<li>此时，就要从我们编制的测试列表中获取下一项测试内容(获取并移除)：this.script.poll，并对当前的Signal进行测试：signalEvent.test(actualSignal)。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch67"><summary>9.7 使用PublisherProbe检查执行路径</summary>
+<div class="sec">
+<h4>使用PublisherProbe检查执行路径</h4>
+<ul class="point">
+<li><b>在Reactor 3.1之前的版本中，需要为每一种状态维护一个AtomicBoolean变量，然后在相应的doOn*方法中观察它们的值</b>
+<ul class="quote">
+<li>这好像有些复杂，有没有更简单的方法？</li>
+</ul>
+</li>
+<li><b>在Reactor 3.1.0之后的版本中，可以使用PublisherProbe来实现以上效果</b>
+<ul class="quote">
+<li>在&lt;1&gt;处，创建了一个探针(Probe)，它会转化为一个空序列源。</li>
+<li>在&lt;2&gt;处，需要使用probe.mono来替换我们在上一个Demo中设定的Mono&lt;Void&gt;类型的对象testFallback。</li>
+<li>在&lt;3&gt;处，序列结束之后，你可以用探针来判断序列是否已使用，你可以检查它是从哪(条路径)被订阅的。</li>
+<li>在&lt;4&gt;处，对于请求也是一样的。</li>
+<li>在&lt;5&gt;处，可以判断执行过程是否被取消了(即调用了Subscription＃cancel方法)。</li>
+</ul>
+</li>
+<li><b>DefaultPublisherProbe的内部实现依然是对我们Demo中的那些原子类变量的封装</b>
+<ul class="quote">
+<li>在这里，可以看到AtomicLongArray的实际应用，下面对它进行总结。</li>
+<li>AtomicLongArray内部维护的是索引对应的原子类变量，所以这里定义了一个包含3个元素的AtomicLongArray，同时设定3个final常量SUBSCRIBED、CANCELLED、REQUESTED来对应AtomicLongArray游标位置。</li>
+<li>接着可以根据这几个常量对应的数组位置所在的原子类变量值来判断相应方法有没有被调用过。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch68"><summary>9.8 小结</summary>
+<div class="sec">
+<h4>Reactor中的测试原理及方法</h4>
+<ul class="point">
+<li><b>通过对原理的学习，可以更好地驾驭测试的节奏</b>
+<ul class="quote">
+<li>根据项目的不同情况来合理地选择测试API。</li>
+</ul>
+</li>
+<li><b>根据相应的实现原理，希望大家可以学到更多实用的设计理念和具体用法。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch69"><summary>第10章 Reactor中的调试</summary>
+<div class="sec">
+<h4>Reactor中的调试</h4>
+<ul class="point">
+<li><b>Reactor提供了相应的辅助功能来帮助开发人员进行调试。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch70"><summary>10.1 启用调试模式</summary>
+<div class="sec">
+<h4>启用调试模式</h4>
+<ul class="point">
+<li><b>在程序开始的地方添加Hook.onOperator等来启用调试模式</b>
+<ul class="quote">
+<li>在启用调试模式之后，在执行所有的操作时，都会保存额外的与操作链相关的信息。</li>
+<li>当出现错误时，这些信息会作为堆栈异常信息的一部分输出。</li>
+</ul>
+</li>
+<li><b>调用Hooks.onOperatorDebug时，其实就是定义了一个回调操作，然后将其加入onEachOperatorHooks中</b>
+<ul class="quote">
+<li>接着更新调用链，通过createOrUpdateOpHook中的实现并结合之前讲过的以JDK中java.util.function.Function接口为核心的函数过滤链设计，最后得到操作链。</li>
+</ul>
+</li>
+<li><b>OnOperatorDebug根据源的Mono或Flux类型最终得到的都是由MonoOnAssembly或FluxOnAssembly包装的实现</b>
+<ul class="quote">
+<li>其内部主要设定了一个Throwable fail(Throwable t)。</li>
+<li>在产生异常的时候，使用这个fail方法对异常进行包装，这样就可以得到具体位置的异常信息。</li>
+</ul>
+</li>
+<li><b>我们更多的还是将Hooks.onEachOperatorHook用于实现全局性质的代码调试</b>
+<ul class="quote">
+<li>在一开始就定义Hooks.onEachOperatorHook，如在flatMap、map等操作前进行定义，这样会对所定义的操作进行二次包装，如果产生异常，会调用onAssembly操作对所包装的操作类产生的异常进行包装并下发。</li>
+</ul>
+</li>
+<li><b>需要记住的是，千万要在测试源实例化之前定义Hooks.onOperatorDebug，否则调试模式在产生订阅时不会生效。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch71"><summary>10.2 在调试模式下读取堆栈跟踪信息</summary>
+<div class="sec">
+<h4>调试模式下读取堆栈跟踪信息的原理</h4>
+<ul class="point">
+<li><b>通过Assert断言来发现异常产生的位置</b>
+<ul class="quote">
+<li>在FluxOnAssembly.OnAssemblySubscriber＃fail方法中对此异常进行分解包装。</li>
+</ul>
+</li>
+<li><b>e.printStackTrace与Suppressed的结合</b>
+<ul class="quote">
+<li>在Suppressed中有内容的时候，在异常输出日志中会将其打印出来。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>OnAssemblySubscriber＃fail方法的源码细节</h4>
+<ul class="point">
+<li><b>snapshotStack是用来对异常进行信息抽取包装的</b>
+<ul class="quote">
+<li>在第一次产生异常的时候，snapshotStack初始时其为空。</li>
+</ul>
+</li>
+<li><b>通过OnAssemblyException的构造函数可以知道，chainOrder添加了相关内容</b>
+<ul class="quote">
+<li>使用snapshotStack.getStackTrace方法得到了一个栈跟踪的数组。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>异常信息的打印顺序</h4>
+<ul class="point">
+<li><b>首先打印当前的异常类</b>
+<ul class="quote">
+<li>OnAssemblyException作为一个RuntimeException，其message不为null。</li>
+</ul>
+</li>
+<li><b>将整个调用链由最初到现在一步步打印出来</b>
+<ul class="quote">
+<li>日志中的一堆“at”。</li>
+</ul>
+</li>
+<li><b>针对存放的suppressed进行遍历输出</b>
+<ul class="quote">
+<li>在其中打印对象的时候会调用toString方法。</li>
+</ul>
+</li>
+<li><b>若有ourCause，则输出。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>调试模式的特殊应用</h4>
+<ul class="point">
+<li><b>自定义一个全局操作，并将其作为操作链中的最后一个中间操作执行</b>
+<ul class="quote">
+<li>在本节中，我们依然未涉及一些内容，例如FluxOnAssembly.OnAssemblySubscriber＃fail方法在set不为null的情况下，要对snapshotStack.checkpointed进行判断，这到底是为什么？同样，在最后的Demo中，可以看到使用了log操作，限于篇幅，也没有进行深入讲解。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch72"><summary>10.3 通过checkpoint方式进行调试</summary>
+<div class="sec">
+<h4>通过checkpoint方式进行调试</h4>
+<ul class="point">
+<li><b>通过checkpoint方式对特定的操作链启用调试模式</b>
+<ul class="quote">
+<li>在map操作之后添加了一个名为test的检查点。</li>
+<li>当出问题时，检查点名称会出现在异常堆栈信息中。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch73"><summary>10.4 记录订阅关系下与操作流程相关的日志</summary>
+<div class="sec">
+<h4>记录订阅关系下与操作流程相关的日志</h4>
+<ul class="point">
+<li><b>通过添加log操作来实现</b>
+<ul class="quote">
+<li>执行了log操作并指定了日志分类的名称为“Test”。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch74"><summary>10.5 小结</summary>
+<div class="sec">
+<h4>本章的主要内容</h4>
+<ul class="point">
+<li><b>本章通过对源码细节的解读和具体实例，展示了与调试相关的源码和具体应用。</b>
+</li>
+<li><b>对Reactor的整体解读也到此结束。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>后续的学习计划</h4>
+<ul class="point">
+<li><b>在本系列另一本书中，我们会对Reactor-Netty进行深入解读</b>
+<ul class="quote">
+<li>并以此来展示Netty和Reactor是如何一步步融合的。</li>
+<li>同时会告诉大家Spring WebFlux是如何在Reactor-Netty的基础上一步步设计实现的。</li>
+</ul>
+</li>
+<li><b>通过学习这些内容，大家就可以彻底掌握一整套响应式底层实现方法了。</b>
+</li>
+</ul></div>
+</details>
+  <p class="site-footer">由 weread-auto 导出 · 供全书视角与后续精读对照　<span class="gcstat" id="gc_page_pv" style="display:none">本页阅读 <b id="gc_page_pv_num">–</b> 次</span></p>
+</main>
+<script>(function(){
+  function openId(id){
+    if(!id) return null;
+    var el = document.getElementById(id);
+    if(!el) return null;
+    var d = (el.tagName === 'DETAILS') ? el : (el.closest ? el.closest('details') : null);
+    if(d && !d.open) d.open = true;      // 关键：目录跳过来时把这一章展开
+    return el;
+  }
+  function go(id){
+    var el = openId(id);
+    if(!el) return;
+    // 展开会改变文档高度，等一帧再滚，免得停在错误位置
+    setTimeout(function(){ el.scrollIntoView({block:'start'}); }, 10);
+  }
+  function fromHash(){
+    var h = (location.hash || '').replace(/^#/, '');
+    if(h) go(decodeURIComponent(h));
+  }
+  document.addEventListener('click', function(e){
+    var a = (e.target && e.target.closest) ? e.target.closest('a[href^="#"]') : null;
+    if(!a) return;
+    var id = (a.getAttribute('href') || '').slice(1);
+    if(id) go(id);
+  }, false);
+  window.addEventListener('hashchange', fromHash, false);
+  // 手动展开某章时把锚点写回地址栏：刷新或分享链接能直接落回这一章
+  document.addEventListener('toggle', function(e){
+    var t = e.target;
+    if(t && t.tagName === 'DETAILS' && t.open && t.id && location.hash !== '#' + t.id){
+      try { history.replaceState(null, '', '#' + t.id); } catch(err) {}
+    }
+  }, true);
+  fromHash();
+})();
+</script>
+<script data-goatcounter="https://ae6623.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<!-- gc-fill:begin -->
+<script>
+(function(){
+  /* GoatCounter 计数端点只吃 .json（.txt 会 400 unknown extension），
+     没数据的路径也返回 404 + {"count":0,"count_unique":0}，所以按文本解析。 */
+  var C="ae6623", base="https://"+C+".goatcounter.com/counter";
+  function stat(p){
+    return fetch(base+p+".json",{credentials:"omit",cache:"no-store"})
+      .then(function(r){return r.text();})
+      .then(function(t){
+        try{
+          var d=JSON.parse(t), c=parseInt(d.count,10);
+          if(!isFinite(c))return null;
+          var u=parseInt(d.count_unique,10);
+          return {pv:String(c), uv:isFinite(u)?String(u):null};
+        }catch(e){return null}
+      })
+      .catch(function(){return null});
+  }
+  function put(id,v){var e=document.getElementById(id);if(e&&v!=null)e.textContent=v;}
+  stat("/*").then(function(d){
+    if(!d)return;
+    put("gc_site_pv_num",d.pv);
+    if(d.uv!=null){put("gc_site_uv_num",d.uv);}
+    else{var x=document.querySelectorAll(".visit-badge-uv");
+         for(var i=0;i<x.length;i++)x[i].style.display="none";}
+  });
+  var pp=document.getElementById("gc_page_pv");
+  if(pp&&location.pathname){
+    var path=location.pathname;
+    if(path.length>1&&path.charAt(path.length-1)==="/")path=path.slice(0,-1);
+    stat(path).then(function(d){
+      if(d){put("gc_page_pv_num",d.pv);pp.style.display="";}
+    });
+  }
+})();
+</script>
+<!-- gc-fill:end -->
+</body>
+</html>

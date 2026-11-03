@@ -1,21 +1,5628 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Spring实战（第5版） · AI 大纲</title><style>
-:root{--fg:#1f2328;--muted:#6b7280;--line:#e6e2da;--accent:#b45309;--bg:#fbfaf7}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.78 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
-.wrap{max-width:840px;margin:0 auto;padding:38px 22px 90px}
-h1{font-size:26px;line-height:1.35;margin:0 0 6px}
-.meta{color:var(--muted);font-size:14px;margin-bottom:20px}
-h2{font-size:19px;margin:34px 0 12px;padding-left:10px;border-left:4px solid var(--accent)}
-h3{font-size:16px;margin:18px 0 8px}
-p{margin:8px 0}
-.tag{display:inline-block;background:#f2ede2;color:#8a6d3b;font-size:12px;padding:1px 9px;border-radius:10px;margin-right:6px}
-ul,ol{padding-left:22px}li{margin:4px 0}
-.quote{border-left:3px solid #d8cfbd;padding:6px 12px;color:#4b4639;background:#f7f4ee;margin:8px 0;font-size:15px;border-radius:0 6px 6px 0}
-.src{color:var(--muted);font-size:12px}
-.ch{display:flex;gap:10px;padding:7px 0;border-bottom:1px dashed var(--line)}
-.ch .no{color:var(--accent);font-weight:600;min-width:34px;text-align:right}
-.card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:12px 0}
-.foot{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
-a{color:#8a5a00;text-decoration:none}a:hover{text-decoration:underline}
-.badge{font-size:12px;color:#8a6d3b;background:#f6f1e6;border:1px solid #eadfc6;border-radius:6px;padding:1px 7px}
-</style></head><body><div class="wrap"><h1>Spring实战（第5版）</h1><div class="meta"><span class="tag">AI 大纲</span>克雷格·沃斯　·　共 125 章</div><h2>全书提要</h2><p>本书是一本经典而实用的畅销Spring 学习指南。 第5 版涵盖了Spring 5.0 和Spring Boot 2.0 里程碑式的更新。全书分为5 个部分，共19 章。第1 部分（第1～5 章）涵盖了构建Spring 应用的基础话题。第2 部分（第6～9章）讨论如何将Spring 应用与其他应用进行集成。第3 部分（第10～12 章）探讨Spring对反应式编程提供的全新支持。第4 部分（第13～15 章）拆分单体应用模型，介绍SpringCloud 和微服务开发。第5 部分（第16～19 章）讨论如何为应用投入生产环境做准备以及如何进行部署。本书既适合刚开始学习Spring Boot 和Spring 框架的Java 开发人员快速上手，也适合经验丰富的Spring 开发人员学习Spring 的新特性，尤其适用于企业级Java 开发人员。</p><h2>章节大纲（含各章热门划线原文）</h2><div class="ch"><span class="no">1</span><div><b>内容提要</b><span class="src"> · 357 字</span></div></div><div class="ch"><span class="no">2</span><div><b>译者序</b><span class="src"> · 1002 字</span></div></div><div class="ch"><span class="no">3</span><div><b>关于本书</b><span class="src"> · 2977 字</span></div></div><div class="ch"><span class="no">4</span><div><b>前言</b><span class="src"> · 818 字</span></div></div><div class="ch"><span class="no">5</span><div><b>致谢</b><span class="src"> · 1026 字</span></div></div><div class="ch"><span class="no">6</span><div><b>资源与支持</b><span class="src"> · 1063 字</span></div></div><div class="ch"><span class="no">7</span><div><b>第1部分 Spring基础</b><span class="src"> · 462 字</span></div></div><div class="ch"><span class="no">8</span><div><b>第1章 Spring起步</b><span class="src"> · 618 字</span><div class="quote">唯一不变的就是变化 <span class="src">[70人划线]</span></div><div class="quote">另外一个崭新的关注点是反应式编程，它致力于通过非阻塞操作提供更好的扩展性并提升性能。 <span class="src">[60人划线]</span></div></div></div><div class="ch"><span class="no">9</span><div><b>1.1 什么是Spring</b><span class="src"> · 2471 字</span><div class="quote">因为Spring XML配置是一种过时的方式，所以我们主要关注Spring基于Java的配置。 <span class="src">[119人划线]</span></div><div class="quote">任何实际的应用程序都是由很多组件组成的，每个组件负责整个应用功能的一部分，这些组件需要与其他的应用元素进行协调以完成自己的任务。当应用程序运行时，需要以某种方式创建并引入这些组件。 <span class="src">[112人划线]</span></div></div></div><div class="ch"><span class="no">10</span><div><b>1.2 初始化Spring应用</b><span class="src"> · 9013 字</span><div class="quote">@SpringBootApplication是一个组合注解，它组合了3个其他的注解。 <span class="src">[144人划线]</span></div><div class="quote">如果你不是Spring Tool Suite用户，那也没有关系，我们依然可以做朋友。 <span class="src">[112人划线]</span></div></div></div><div class="ch"><span class="no">11</span><div><b>1.3 编写Spring应用</b><span class="src"> · 8526 字</span><div class="quote">组合使用JSP和Spring Boot需要克服一些挑战 <span class="src">[60人划线]</span></div></div></div><div class="ch"><span class="no">12</span><div><b>1.4 俯瞰Spring风景线</b><span class="src"> · 2322 字</span></div></div><div class="ch"><span class="no">13</span><div><b>1.5 小结</b><span class="src"> · 295 字</span></div></div><div class="ch"><span class="no">14</span><div><b>第2章 开发Web应用</b><span class="src"> · 440 字</span></div></div><div class="ch"><span class="no">15</span><div><b>2.1 展现信息</b><span class="src"> · 10202 字</span><div class="quote">这个依赖将会在开发阶段为你提供Lombok注解（例如@Data） <span class="src">[68人划线]</span></div><div class="quote">通常，我喜欢只在类级别上使用@RequestMapping，以便于指定基本路径。在每个处理器方法上，我会使用更具体的@GetMapping、@PostMapping等注解。 <span class="src">[56人划线]</span></div></div></div><div class="ch"><span class="no">16</span><div><b>2.2 处理表单提交</b><span class="src"> · 5644 字</span></div></div><div class="ch"><span class="no">17</span><div><b>2.3 校验表单输入</b><span class="src"> · 4695 字</span><div class="quote">它使用@NotNull和@Size注解来声明这些校验规则。 <span class="src">[52人划线]</span></div></div></div><div class="ch"><span class="no">18</span><div><b>2.4 使用视图控制器</b><span class="src"> · 2099 字</span></div></div><div class="ch"><span class="no">19</span><div><b>2.5 选择视图模板库</b><span class="src"> · 2317 字</span><div class="quote">唯一需要注意的是，在将应用部署到生产环境之前，一定要删除这一行代码（或者将其设置为true） <span class="src">[54人划线]</span></div></div></div><div class="ch"><span class="no">20</span><div><b>2.6 小结</b><span class="src"> · 403 字</span></div></div><div class="ch"><span class="no">21</span><div><b>第3章 使用数据</b><span class="src"> · 394 字</span></div></div><div class="ch"><span class="no">22</span><div><b>3.1 使用JDBC读取和写入数据</b><span class="src"> · 20479 字</span><div class="quote">如果在应用的根类路径下存在名为schema.sql的文件，那么在应用启动的时候将会基于数据库执行这个文件中的SQL。 <span class="src">[108人划线]</span></div></div></div><div class="ch"><span class="no">23</span><div><b>3.2 使用Spring Data JPA持久化数据</b><span class="src"> · 8611 字</span></div></div><div class="ch"><span class="no">24</span><div><b>3.3 小结</b><span class="src"> · 192 字</span></div></div><div class="ch"><span class="no">25</span><div><b>第4章 保护Spring</b><span class="src"> · 362 字</span></div></div><div class="ch"><span class="no">26</span><div><b>4.1 启用Spring Security</b><span class="src"> · 1291 字</span></div></div><div class="ch"><span class="no">27</span><div><b>4.2 配置Spring Security</b><span class="src"> · 18167 字</span></div></div><div class="ch"><span class="no">28</span><div><b>4.3 保护Web请求</b><span class="src"> · 6427 字</span></div></div><div class="ch"><span class="no">29</span><div><b>4.4 了解用户是谁</b><span class="src"> · 2257 字</span></div></div><div class="ch"><span class="no">30</span><div><b>4.5 小结</b><span class="src"> · 273 字</span></div></div><div class="ch"><span class="no">31</span><div><b>第5章 使用配置属性</b><span class="src"> · 605 字</span></div></div><div class="ch"><span class="no">32</span><div><b>5.1 细粒度的自动配置</b><span class="src"> · 6170 字</span><div class="quote">它们是在数据源就绪之后要用到数据库上的SQL脚本。这就是不使用Spring Boot时我们配置DataSource bean的方法 <span class="src">[72人划线]</span></div></div></div><div class="ch"><span class="no">33</span><div><b>5.2 创建自己的配置属性</b><span class="src"> · 6556 字</span></div></div><div class="ch"><span class="no">34</span><div><b>5.3 使用profile进行配置</b><span class="src"> · 4691 字</span><div class="quote">这样部署到该机器上的任何应用就都会激活prod profile，对应的属性会比默认profile具备更高的优先级 <span class="src">[54人划线]</span></div></div></div><div class="ch"><span class="no">35</span><div><b>5.4 小结</b><span class="src"> · 216 字</span></div></div><div class="ch"><span class="no">36</span><div><b>第2部分 Spring集成</b><span class="src"> · 374 字</span></div></div><div class="ch"><span class="no">37</span><div><b>第6章 创建REST服务</b><span class="src"> · 675 字</span></div></div><div class="ch"><span class="no">38</span><div><b>6.1 编写RESTful控制器</b><span class="src"> · 12093 字</span></div></div><div class="ch"><span class="no">39</span><div><b>6.2 启用超媒体</b><span class="src"> · 11840 字</span></div></div><div class="ch"><span class="no">40</span><div><b>6.3 启用数据后端服务</b><span class="src"> · 9172 字</span></div></div><div class="ch"><span class="no">41</span><div><b>6.4 小结</b><span class="src"> · 300 字</span></div></div><div class="ch"><span class="no">42</span><div><b>第7章 消费REST服务</b><span class="src"> · 939 字</span></div></div><div class="ch"><span class="no">43</span><div><b>7.1 使用RestTemplate消费REST端点</b><span class="src"> · 5046 字</span></div></div><div class="ch"><span class="no">44</span><div><b>7.2 使用Traverson导航REST API</b><span class="src"> · 2585 字</span></div></div><div class="ch"><span class="no">45</span><div><b>7.3 小结</b><span class="src"> · 80 字</span></div></div><div class="ch"><span class="no">46</span><div><b>第8章 发送异步消息</b><span class="src"> · 777 字</span></div></div><div class="ch"><span class="no">47</span><div><b>8.1 使用JMS发送消息</b><span class="src"> · 14672 字</span></div></div><div class="ch"><span class="no">48</span><div><b>8.2 使用RabbitMQ和AMQP</b><span class="src"> · 12580 字</span></div></div><div class="ch"><span class="no">49</span><div><b>8.3 使用Kafka的消息</b><span class="src"> · 5772 字</span></div></div><div class="ch"><span class="no">50</span><div><b>8.4 小结</b><span class="src"> · 287 字</span></div></div><div class="ch"><span class="no">51</span><div><b>第9章 Spring集成</b><span class="src"> · 681 字</span></div></div><div class="ch"><span class="no">52</span><div><b>9.1 声明一个简单的集成流</b><span class="src"> · 8675 字</span></div></div><div class="ch"><span class="no">53</span><div><b>9.2 Spring Integration功能概览</b><span class="src"> · 13913 字</span></div></div><div class="ch"><span class="no">54</span><div><b>9.3 创建Email集成流</b><span class="src"> · 5841 字</span></div></div><div class="ch"><span class="no">55</span><div><b>9.4 小结</b><span class="src"> · 185 字</span></div></div><div class="ch"><span class="no">56</span><div><b>第3部分 反应式Spring</b><span class="src"> · 287 字</span></div></div><div class="ch"><span class="no">57</span><div><b>第10章 理解反应式编程</b><span class="src"> · 901 字</span></div></div><div class="ch"><span class="no">58</span><div><b>10.1 反应式编程概览</b><span class="src"> · 3248 字</span><div class="quote">反应式流旨在提供无阻塞回压的异步流处理标准 <span class="src">[68人划线]</span></div></div></div><div class="ch"><span class="no">59</span><div><b>10.2 初识Reactor</b><span class="src"> · 2449 字</span></div></div><div class="ch"><span class="no">60</span><div><b>10.3 使用常见的反应式操作</b><span class="src"> · 17540 字</span></div></div><div class="ch"><span class="no">61</span><div><b>10.4 小结</b><span class="src"> · 246 字</span></div></div><div class="ch"><span class="no">62</span><div><b>第11章 开发反应式API</b><span class="src"> · 309 字</span></div></div><div class="ch"><span class="no">63</span><div><b>11.1 使用Spring WebFlux</b><span class="src"> · 7054 字</span></div></div><div class="ch"><span class="no">64</span><div><b>11.2 定义函数式请求处理器</b><span class="src"> · 3558 字</span></div></div><div class="ch"><span class="no">65</span><div><b>11.3 测试反应式控制器</b><span class="src"> · 6773 字</span></div></div><div class="ch"><span class="no">66</span><div><b>11.4 反应式消费REST API</b><span class="src"> · 7892 字</span></div></div><div class="ch"><span class="no">67</span><div><b>11.5 保护反应式Web API</b><span class="src"> · 4550 字</span></div></div><div class="ch"><span class="no">68</span><div><b>11.6 小结</b><span class="src"> · 297 字</span></div></div><div class="ch"><span class="no">69</span><div><b>第12章 反应式持久化数据</b><span class="src"> · 679 字</span></div></div><div class="ch"><span class="no">70</span><div><b>12.1 理解Spring Data的反应式概况</b><span class="src"> · 3711 字</span></div></div><div class="ch"><span class="no">71</span><div><b>12.2 使用反应式的Cassandra repository</b><span class="src"> · 14073 字</span></div></div><div class="ch"><span class="no">72</span><div><b>12.3 编写反应式的MongoDB repository</b><span class="src"> · 9401 字</span></div></div><div class="ch"><span class="no">73</span><div><b>12.4 小结</b><span class="src"> · 277 字</span></div></div><div class="ch"><span class="no">74</span><div><b>第4部分 云原生Spring</b><span class="src"> · 261 字</span></div></div><div class="ch"><span class="no">75</span><div><b>第13章 注册和发现服务</b><span class="src"> · 560 字</span></div></div><div class="ch"><span class="no">76</span><div><b>13.1 思考微服务</b><span class="src"> · 1898 字</span></div></div><div class="ch"><span class="no">77</span><div><b>13.2 搭建服务注册中心</b><span class="src"> · 7350 字</span></div></div><div class="ch"><span class="no">78</span><div><b>13.3 注册和发现服务</b><span class="src"> · 8164 字</span></div></div><div class="ch"><span class="no">79</span><div><b>13.4 小结</b><span class="src"> · 278 字</span></div></div><div class="ch"><span class="no">80</span><div><b>第14章 管理配置</b><span class="src"> · 706 字</span></div></div><div class="ch"><span class="no">81</span><div><b>14.1 共享配置</b><span class="src"> · 1048 字</span></div></div><div class="ch"><span class="no">82</span><div><b>14.2 运行配置服务器</b><span class="src"> · 6698 字</span></div></div><div class="ch"><span class="no">83</span><div><b>14.3 消费共享配置</b><span class="src"> · 1526 字</span></div></div><div class="ch"><span class="no">84</span><div><b>14.4 提供特定应用和profile的属性</b><span class="src"> · 2835 字</span></div></div><div class="ch"><span class="no">85</span><div><b>14.5 保持配置属性的私密性</b><span class="src"> · 8217 字</span></div></div><div class="ch"><span class="no">86</span><div><b>14.6 在运行时刷新配置属性</b><span class="src"> · 9769 字</span></div></div><div class="ch"><span class="no">87</span><div><b>14.7 小结</b><span class="src"> · 321 字</span></div></div><div class="ch"><span class="no">88</span><div><b>第15章 处理失败和延迟</b><span class="src"> · 69 字</span></div></div><div class="ch"><span class="no">89</span><div><b>15.1 理解断路器模式</b><span class="src"> · 1695 字</span></div></div><div class="ch"><span class="no">90</span><div><b>15.2 声明断路器</b><span class="src"> · 5748 字</span></div></div><div class="ch"><span class="no">91</span><div><b>15.3 监控失败</b><span class="src"> · 4050 字</span></div></div><div class="ch"><span class="no">92</span><div><b>15.4 聚合多个Hystrix流</b><span class="src"> · 1735 字</span></div></div><div class="ch"><span class="no">93</span><div><b>15.5 小结</b><span class="src"> · 233 字</span></div></div><div class="ch"><span class="no">94</span><div><b>第5部分 部署Spring</b><span class="src"> · 382 字</span></div></div><div class="ch"><span class="no">95</span><div><b>第16章 使用Spring Boot Actuator</b><span class="src"> · 486 字</span></div></div><div class="ch"><span class="no">96</span><div><b>16.1 Actuator概览</b><span class="src"> · 1712 字</span></div></div><div class="ch"><span class="no">97</span><div><b>16.2 消费Actuator端点</b><span class="src"> · 17137 字</span></div></div><div class="ch"><span class="no">98</span><div><b>16.3 自定义Actuator</b><span class="src"> · 10864 字</span></div></div><div class="ch"><span class="no">99</span><div><b>16.4 保护Actuator</b><span class="src"> · 1839 字</span></div></div><div class="ch"><span class="no">100</span><div><b>16.5 小结</b><span class="src"> · 484 字</span></div></div><div class="ch"><span class="no">101</span><div><b>第17章 管理Spring</b><span class="src"> · 378 字</span></div></div><div class="ch"><span class="no">102</span><div><b>17.1 使用Spring Boot Admin</b><span class="src"> · 4197 字</span></div></div><div class="ch"><span class="no">103</span><div><b>17.2 探索Admin服务器</b><span class="src"> · 2647 字</span></div></div><div class="ch"><span class="no">104</span><div><b>17.3 保护Admin服务器</b><span class="src"> · 1984 字</span></div></div><div class="ch"><span class="no">105</span><div><b>17.4 小结</b><span class="src"> · 306 字</span></div></div><div class="ch"><span class="no">106</span><div><b>第18章 使用JMX监控Spring</b><span class="src"> · 370 字</span></div></div><div class="ch"><span class="no">107</span><div><b>18.1 使用Actuator MBean</b><span class="src"> · 1290 字</span></div></div><div class="ch"><span class="no">108</span><div><b>18.2 创建自己的MBean</b><span class="src"> · 1774 字</span></div></div><div class="ch"><span class="no">109</span><div><b>18.3 发送通知</b><span class="src"> · 1171 字</span></div></div><div class="ch"><span class="no">110</span><div><b>18.4 小结</b><span class="src"> · 254 字</span></div></div><div class="ch"><span class="no">111</span><div><b>第19章 部署Spring</b><span class="src"> · 742 字</span></div></div><div class="ch"><span class="no">112</span><div><b>19.1 权衡各种部署方案</b><span class="src"> · 931 字</span></div></div><div class="ch"><span class="no">113</span><div><b>19.2 构建和部署WAR文件</b><span class="src"> · 2921 字</span></div></div><div class="ch"><span class="no">114</span><div><b>19.3 推送JAR文件到Cloud Foundry上</b><span class="src"> · 2822 字</span></div></div><div class="ch"><span class="no">115</span><div><b>19.4 在Docker容器中运行Spring Boot</b><span class="src"> · 3692 字</span></div></div><div class="ch"><span class="no">116</span><div><b>19.5 以终为始</b><span class="src"> · 181 字</span></div></div><div class="ch"><span class="no">117</span><div><b>19.6 小结</b><span class="src"> · 440 字</span></div></div><div class="ch"><span class="no">118</span><div><b>附录 初始化Spring应用</b><span class="src"> · 256 字</span></div></div><div class="ch"><span class="no">119</span><div><b>A.1 使用Spring Tool Suite初始化项目</b><span class="src"> · 1181 字</span></div></div><div class="ch"><span class="no">120</span><div><b>A.2 使用IntelliJ IDEA初始化项目</b><span class="src"> · 759 字</span></div></div><div class="ch"><span class="no">121</span><div><b>A.3 使用NetBeans初始化项目</b><span class="src"> · 828 字</span></div></div><div class="ch"><span class="no">122</span><div><b>A.4 在start.spring.io中初始化项目</b><span class="src"> · 1062 字</span></div></div><div class="ch"><span class="no">123</span><div><b>A.5 使用命令行初始化项目</b><span class="src"> · 2101 字</span></div></div><div class="ch"><span class="no">124</span><div><b>A.6 使用元框架创建Spring应用</b><span class="src"> · 310 字</span></div></div><div class="ch"><span class="no">125</span><div><b>A.7 构建和运行项目</b><span class="src"> · 300 字</span></div></div><div class="foot">来源：微信读书官方章节接口 + 热门划线接口，逐字原文　·　生成于 2026-11-01 13:28　·　开读即产（不等完读）</div></div></body></html>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Spring实战（第5版） AI 大纲">
+<title>《Spring实战（第5版）》｜AI 大纲</title>
+<link rel="stylesheet" href="../../../assets/css/site.css">
+<link rel="stylesheet" href="../../../assets/css/reading-outline.css">
+
+</head>
+<body>
+<main class="page">
+  <header class="note-head">
+    <p class="eyebrow">AI OUTLINE · BEFORE READING</p>
+    <h1>《Spring实战（第5版）》AI 大纲</h1>
+    <p class="meta">作者：—　·　共 120 章 / 1640 条　·　AI 读书 · 全书大纲</p>
+    <p><a href="../../../index.html">← 返回首页</a>　<a href="../../index.html">阅读归档索引</a>　<a href="outline.epub" download>下载 EPUB ↓</a></p>
+    <div class="chips"><span class="chip">全书视角</span><span class="chip">AI 生成</span><span class="chip">含原文摘录</span></div>
+    <p class="small">本大纲由 AI 读书（阅读端智能大纲）生成，是全书结构与要点的机器梳理，
+    <b>不等同于已亲读</b>；其中第 4 层条目为书中原句摘录。章节可展开查看。</p>
+  </header>
+  <div class="toc"><b>章节目录</b><ul>
+<li><a href="#ch0">内容提要</a></li>
+<li><a href="#ch1">译者序</a></li>
+<li><a href="#ch2">关于本书</a></li>
+<li><a href="#ch3">资源与支持</a></li>
+<li><a href="#ch4">第1部分 Spring基础</a></li>
+<li><a href="#ch5">第1章 Spring起步</a></li>
+<li><a href="#ch6">1.1 什么是Spring</a></li>
+<li><a href="#ch7">1.2 初始化Spring应用</a></li>
+<li><a href="#ch8">1.3 编写Spring应用</a></li>
+<li><a href="#ch9">1.4 俯瞰Spring风景线</a></li>
+<li><a href="#ch10">1.5 小结</a></li>
+<li><a href="#ch11">第2章 开发Web应用</a></li>
+<li><a href="#ch12">2.1 展现信息</a></li>
+<li><a href="#ch13">2.2 处理表单提交</a></li>
+<li><a href="#ch14">2.3 校验表单输入</a></li>
+<li><a href="#ch15">2.4 使用视图控制器</a></li>
+<li><a href="#ch16">2.5 选择视图模板库</a></li>
+<li><a href="#ch17">2.6 小结</a></li>
+<li><a href="#ch18">第3章 使用数据</a></li>
+<li><a href="#ch19">3.1 使用JDBC读取和写入数据</a></li>
+<li><a href="#ch20">3.2 使用Spring Data JPA持久化数据</a></li>
+<li><a href="#ch21">3.3 小结</a></li>
+<li><a href="#ch22">第4章 保护Spring</a></li>
+<li><a href="#ch23">4.1 启用Spring Security</a></li>
+<li><a href="#ch24">4.2 配置Spring Security</a></li>
+<li><a href="#ch25">4.3 保护Web请求</a></li>
+<li><a href="#ch26">4.4 了解用户是谁</a></li>
+<li><a href="#ch27">4.5 小结</a></li>
+<li><a href="#ch28">第5章 使用配置属性</a></li>
+<li><a href="#ch29">5.1 细粒度的自动配置</a></li>
+<li><a href="#ch30">5.2 创建自己的配置属性</a></li>
+<li><a href="#ch31">5.3 使用profile进行配置</a></li>
+<li><a href="#ch32">5.4 小结</a></li>
+<li><a href="#ch33">第2部分 Spring集成</a></li>
+<li><a href="#ch34">第6章 创建REST服务</a></li>
+<li><a href="#ch35">6.1 编写RESTful控制器</a></li>
+<li><a href="#ch36">6.2 启用超媒体</a></li>
+<li><a href="#ch37">6.3 启用数据后端服务</a></li>
+<li><a href="#ch38">6.4 小结</a></li>
+<li><a href="#ch39">第7章 消费REST服务</a></li>
+<li><a href="#ch40">7.1 使用RestTemplate消费REST端点</a></li>
+<li><a href="#ch41">7.2 使用Traverson导航REST API</a></li>
+<li><a href="#ch42">第8章 发送异步消息</a></li>
+<li><a href="#ch43">8.1 使用JMS发送消息</a></li>
+<li><a href="#ch44">8.2 使用RabbitMQ和AMQP</a></li>
+<li><a href="#ch45">8.3 使用Kafka的消息</a></li>
+<li><a href="#ch46">8.4 小结</a></li>
+<li><a href="#ch47">第9章 Spring集成</a></li>
+<li><a href="#ch48">9.1 声明一个简单的集成流</a></li>
+<li><a href="#ch49">9.2 Spring Integration功能概览</a></li>
+<li><a href="#ch50">9.3 创建Email集成流</a></li>
+<li><a href="#ch51">9.4 小结</a></li>
+<li><a href="#ch52">第3部分 反应式Spring</a></li>
+<li><a href="#ch53">第10章 理解反应式编程</a></li>
+<li><a href="#ch54">10.1 反应式编程概览</a></li>
+<li><a href="#ch55">10.2 初识Reactor</a></li>
+<li><a href="#ch56">10.3 使用常见的反应式操作</a></li>
+<li><a href="#ch57">10.4 小结</a></li>
+<li><a href="#ch58">第11章 开发反应式API</a></li>
+<li><a href="#ch59">11.1 使用Spring WebFlux</a></li>
+<li><a href="#ch60">11.2 定义函数式请求处理器</a></li>
+<li><a href="#ch61">11.3 测试反应式控制器</a></li>
+<li><a href="#ch62">11.4 反应式消费REST API</a></li>
+<li><a href="#ch63">11.5 保护反应式Web API</a></li>
+<li><a href="#ch64">11.6 小结</a></li>
+<li><a href="#ch65">第12章 反应式持久化数据</a></li>
+<li><a href="#ch66">12.1 理解Spring Data的反应式概况</a></li>
+<li><a href="#ch67">12.2 使用反应式的Cassandra repository</a></li>
+<li><a href="#ch68">12.3 编写反应式的MongoDB repository</a></li>
+<li><a href="#ch69">12.4 小结</a></li>
+<li><a href="#ch70">第4部分 云原生Spring</a></li>
+<li><a href="#ch71">第13章 注册和发现服务</a></li>
+<li><a href="#ch72">13.1 思考微服务</a></li>
+<li><a href="#ch73">13.2 搭建服务注册中心</a></li>
+<li><a href="#ch74">13.3 注册和发现服务</a></li>
+<li><a href="#ch75">13.4 小结</a></li>
+<li><a href="#ch76">第14章 管理配置</a></li>
+<li><a href="#ch77">14.1 共享配置</a></li>
+<li><a href="#ch78">14.2 运行配置服务器</a></li>
+<li><a href="#ch79">14.3 消费共享配置</a></li>
+<li><a href="#ch80">14.4 提供特定应用和profile的属性</a></li>
+<li><a href="#ch81">14.5 保持配置属性的私密性</a></li>
+<li><a href="#ch82">14.6 在运行时刷新配置属性</a></li>
+<li><a href="#ch83">14.7 小结</a></li>
+<li><a href="#ch84">15.1 理解断路器模式</a></li>
+<li><a href="#ch85">15.2 声明断路器</a></li>
+<li><a href="#ch86">15.3 监控失败</a></li>
+<li><a href="#ch87">15.4 聚合多个Hystrix流</a></li>
+<li><a href="#ch88">15.5 小结</a></li>
+<li><a href="#ch89">第5部分 部署Spring</a></li>
+<li><a href="#ch90">第16章 使用Spring Boot Actuator</a></li>
+<li><a href="#ch91">16.1 Actuator概览</a></li>
+<li><a href="#ch92">16.2 消费Actuator端点</a></li>
+<li><a href="#ch93">16.3 自定义Actuator</a></li>
+<li><a href="#ch94">16.4 保护Actuator</a></li>
+<li><a href="#ch95">16.5 小结</a></li>
+<li><a href="#ch96">第17章 管理Spring</a></li>
+<li><a href="#ch97">17.1 使用Spring Boot Admin</a></li>
+<li><a href="#ch98">17.2 探索Admin服务器</a></li>
+<li><a href="#ch99">17.3 保护Admin服务器</a></li>
+<li><a href="#ch100">17.4 小结</a></li>
+<li><a href="#ch101">第18章 使用JMX监控Spring</a></li>
+<li><a href="#ch102">18.1 使用Actuator MBean</a></li>
+<li><a href="#ch103">18.2 创建自己的MBean</a></li>
+<li><a href="#ch104">18.3 发送通知</a></li>
+<li><a href="#ch105">18.4 小结</a></li>
+<li><a href="#ch106">第19章 部署Spring</a></li>
+<li><a href="#ch107">19.1 权衡各种部署方案</a></li>
+<li><a href="#ch108">19.2 构建和部署WAR文件</a></li>
+<li><a href="#ch109">19.3 推送JAR文件到Cloud Foundry上</a></li>
+<li><a href="#ch110">19.4 在Docker容器中运行Spring Boot</a></li>
+<li><a href="#ch111">19.5 以终为始</a></li>
+<li><a href="#ch112">19.6 小结</a></li>
+<li><a href="#ch113">A.1 使用Spring Tool Suite初始化项目</a></li>
+<li><a href="#ch114">A.2 使用IntelliJ IDEA初始化项目</a></li>
+<li><a href="#ch115">A.3 使用NetBeans初始化项目</a></li>
+<li><a href="#ch116">A.4 在start.spring.io中初始化项目</a></li>
+<li><a href="#ch117">A.5 使用命令行初始化项目</a></li>
+<li><a href="#ch118">A.6 使用元框架创建Spring应用</a></li>
+<li><a href="#ch119">A.7 构建和运行项目</a></li>
+</ul></div>
+<details class="ch" id="ch0"><summary>内容提要</summary>
+<div class="sec">
+<h4>本书简介</h4>
+<ul class="point">
+<li><b>本书是一本经典而实用的畅销Spring学习指南。</b>
+</li>
+<li><b>第5版涵盖了Spring 5.0和Spring Boot 2.0里程碑式的更新。</b>
+</li>
+<li><b>全书分为5个部分，共19章。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>第一部分：构建Spring应用的基础话题</h4>
+<ul class="point">
+<li><b>第1～5章涵盖了构建Spring应用的基础话题</b>
+<ul class="quote">
+<li>第1章：Spring概述：了解Spring框架的起源、核心组件和生态系统。</li>
+<li>第2章：Spring IoC容器：学习如何通过Spring IoC容器管理对象及其依赖关系。</li>
+<li>第3章：Spring AOP：了解Spring AOP的基本概念和实现方式。</li>
+<li>第4章：Spring数据访问：学习如何使用Spring Data访问数据库和其他数据源。</li>
+<li>第5章：Spring MVC：学习如何使用Spring MVC构建Web应用程序。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>第二部分：将Spring应用与其他应用进行集成</h4>
+<ul class="point">
+<li><b>第6～9章讨论如何将Spring应用与其他应用进行集成</b>
+<ul class="quote">
+<li>第6章：Web集成：学习如何使用Spring MVC与其他Web技术集成。</li>
+<li>第7章：安全集成：了解如何使用Spring Security保护Spring应用程序。</li>
+<li>第8章：测试集成：学习如何使用Spring测试框架对Spring应用程序进行测试。</li>
+<li>第9章：部署集成：了解如何使用Spring Boot和Docker进行应用程序的部署。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>第三部分：Spring对反应式编程提供的全新支持</h4>
+<ul class="point">
+<li><b>第10～12章探讨Spring对反应式编程提供的全新支持</b>
+<ul class="quote">
+<li>第10章：反应式编程基础：了解反应式编程的基本概念和模型。</li>
+<li>第11章：Spring反应式编程：学习如何使用Spring框架支持反应式编程。</li>
+<li>第12章：Spring WebFlux：了解如何使用Spring WebFlux构建反应式Web应用程序。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>第四部分：拆分单体应用模型，介绍Spring Cloud和微服务开发</h4>
+<ul class="point">
+<li><b>第13～15章拆分单体应用模型，介绍Spring Cloud和微服务开发</b>
+<ul class="quote">
+<li>第13章：微服务架构：了解微服务架构的基本概念和设计原则。</li>
+<li>第14章：Spring Cloud：学习如何使用Spring Cloud实现微服务架构。</li>
+<li>第15章：Spring Boot微服务：了解如何使用Spring Boot构建微服务应用程序。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>第五部分：为应用投入生产环境做准备以及如何进行部署</h4>
+<ul class="point">
+<li><b>第16～19章讨论如何为应用投入生产环境做准备以及如何进行部署</b>
+<ul class="quote">
+<li>第16章：生产就绪：了解如何确保Spring应用程序在生产环境中稳定运行。</li>
+<li>第17章：性能优化：学习如何优化Spring应用程序的性能。</li>
+<li>第18章：监控与日志：了解如何使用Spring Boot Actuator和Logback进行应用程序的监控和日志记录。</li>
+<li>第19章：部署：了解如何使用不同的部署策略将Spring应用程序部署到生产环境。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch1"><summary>译者序</summary>
+<div class="sec">
+<h4>《Spring实战》的发展历程及影响</h4>
+<ul class="point">
+<li><b>《Spring实战》已经更新到第5版，成为企业级Java开发的事实标准</b>
+<ul class="quote">
+<li>Spring Boot和Spring Cloud相关的技术引领潮流，成为Java工程师的必备技能。</li>
+</ul>
+</li>
+<li><b>Spring的设计理念是不断优化和革新，让Java应用的开发更加便利和高效</b>
+<ul class="quote">
+<li>从XML配置、注解配置，再到Spring Boot的自动化配置，Spring在不断简化。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>对技术的深度思考</h4>
+<ul class="point">
+<li><b>真正的技术是技术规范、设计原理等内在稳定不变的知识</b>
+<ul class="quote">
+<li>想要在新知识层出不穷的领域中不被淘汰，我们更应该去追求一些内在稳定不变的知识。</li>
+</ul>
+</li>
+<li><b>希望读者能够通过这本书，去更多地探究一些Spring底层的设计和实现原理。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>译者序的撰写背景</h4>
+<ul class="point">
+<li><b>译者张卫滨参与了3个版本的《Spring实战》翻译</b>
+<ul class="quote">
+<li>2007年春天，张卫滨在天津大学图书馆借到第1版的《Spring实战》。</li>
+</ul>
+</li>
+<li><b>译者张卫滨对Spring的发展有深刻的理解和认识</b>
+<ul class="quote">
+<li>Spring之所以能够在技术不断更新换代的IT领域长盛不衰，并且引领技术架构发展的潮流，是因为它一直没有偏离最初的目标。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>对读者的感谢和期望</h4>
+<ul class="point">
+<li><b>感谢何品对本书第10章关于反应式编程的翻译和术语规范的工作</b>
+<ul class="quote">
+<li>本书第10章关于反应式编程的初稿由何品翻译，张卫滨负责统稿修改。</li>
+</ul>
+</li>
+<li><b>希望这本书对读者有所帮助，并欢迎读者与张卫滨联系</b>
+<ul class="quote">
+<li>如果读者在阅读中遇到问题，可以通过levinzhang1981 @126.com或者微信levinzhang1981与张卫滨联系。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch2"><summary>关于本书</summary>
+<div class="sec">
+<h4>本书的目的和内容</h4>
+<ul class="point">
+<li><b>编写《Spring实战(第5版)》的目的是让读者学会使用Spring框架、Spring Boot以及Spring生态系统中各种辅助部分构建令人赞叹的应用程序</b>
+<ul class="quote">
+<li>本书首先介绍如何使用Spring和Spring Boot开发基于Web、以数据库作为后端的Java应用。</li>
+<li>随后进行必要的扩展，展现如何与其他应用进行集成、使用反应式类型进行编程，以及将应用拆分为离散的微服务。</li>
+<li>最后讨论如何准备应用的部署。</li>
+</ul>
+</li>
+<li><b>本书适用于刚刚开始学习Spring Boot和Spring框架的Java开发人员，也适用于想要超越基础知识并学习Spring新特性的经验丰富的Spring开发者</b>
+<ul class="quote">
+<li>尽管Spring生态系统中的每个项目都提供了完善的文档，但是本书所做的是所有参考文档都无法做到的事情：提供一个实用的、项目驱动的指南，将Spring的各种元素组合起来形成一个真正的应用。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>本书的组织结构</h4>
+<ul class="point">
+<li><b>本书分成了5个部分，共计19章</b>
+<ul class="quote">
+<li>第1部分涵盖构建Spring应用的基础话题。</li>
+<li>第2部分讨论如何将Spring应用与其他应用进行集成。</li>
+<li>第3部分探讨Spring对反应式编程提供的全新支持。</li>
+<li>第4部分将会拆分单体应用模型，介绍Spring Cloud和微服务开发。</li>
+<li>在第5部分中，我们将会讨论如何做好将应用投入生产环境的准备，并看一下如何进行部署。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>本书中的代码示例</h4>
+<ul class="point">
+<li><b>本书包含许多源代码的样例，有的是编号的程序清单，有的是普通文本内嵌的源码</b>
+<ul class="quote">
+<li>源代码都使用固定宽度的字体排版，以便将其与普通文本分开。</li>
+<li>有时代码也会使用粗体显示，以便于强调此处代码与本章前面步骤的变更。</li>
+<li>在许多情况下，原始源代码会重新格式化；我们添加了换行符和重新缩进，以适应书中可用的页面空间。</li>
+<li>本书中样例的源码可以通过异步社区的本书页面下载。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>其他在线资源</h4>
+<ul class="point">
+<li><b>Spring的Web站点有很多有用的起步指南</b>
+<ul class="quote">
+<li>其中一部分就是由本书的作者编写的。</li>
+</ul>
+</li>
+<li><b>StackOverflow上的Spring标签和Spring Boot是一个询问Spring问题和帮助别人的好地方</b>
+<ul class="quote">
+<li>帮助解决别人的Spring问题是学习Spring的好办法。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>关于作者</h4>
+<ul class="point">
+<li><b>克雷格·沃斯(Craig Walls)是Pivotal的首席工程师，是Spring框架的热心推动者</b>
+<ul class="quote">
+<li>他经常在本地用户组和会议上发言，撰写关于Spring的文章。</li>
+<li>在不琢磨代码的时候，Craig正在计划去迪士尼世界或迪士尼乐园的下一次旅行，他希望尽可能多地陪伴他的妻子和两个女儿。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>关于封面</h4>
+<ul class="point">
+<li><b>《Spring实战(第5版)》的封面人物是“Le Caraco”，也就是约旦西南部卡拉克(Karak)省的居民</b>
+<ul class="quote">
+<li>该省的首府是Al-Karak，那里的山顶有座城堡，对死海和周边的平原有着极佳的视野。</li>
+<li>这幅图出自1796年出版的法国旅游图书，Encyclopédiedes Voyages，由J.G.St.Sauveur编写。</li>
+<li>在那时，为了娱乐而去旅游还是相对新鲜的做法，而像这样的旅游指南是很流行的，它能够让旅行家和足不出户的人们了解法国其他地区和国外的居民。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch3"><summary>资源与支持</summary>
+<div class="sec">
+<h4>本书配套资源</h4>
+<ul class="point">
+<li><b>本书源代码；</b>
+</li>
+<li><b>书中彩图文件。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>提交勘误</h4>
+<ul class="point">
+<li><b>欢迎您将发现的问题反馈给我们，帮助我们提升图书的质量</b>
+<ul class="quote">
+<li>当您发现错误时，请登录异步社区，按书名搜索，进入本书页面，点击“提交勘误”，输入勘误信息，点击“提交”按钮即可。</li>
+<li>本书的作者和编辑会对您提交的勘误进行审核，确认并接受后，您将获赠异步社区的100积分。积分可用于在异步社区兑换优惠券、样书或奖品。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>与我们联系</h4>
+<ul class="point">
+<li><b>如果您对本书有任何疑问或建议，请您发邮件给我们</b>
+<ul class="quote">
+<li>请在邮件标题中注明本书书名，以便我们更高效地做出反馈。</li>
+<li>如果您有兴趣出版图书、录制教学视频，或者参与图书翻译、技术审校等工作，可以发邮件给我们。</li>
+<li>如果学校、培训机构或企业想批量购买本书或异步社区出版的其他图书，也可以发邮件给我们。</li>
+<li>如果您在网上发现有针对异步社区出品图书的各种形式的盗版行为，包括对图书全部或部分内容的非授权传播，请您将怀疑有侵权行为的链接发邮件给我们。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>关于异步社区和异步图书</h4>
+<ul class="point">
+<li><b>“异步社区”是人民邮电出版社旗下IT专业图书社区，致力于出版精品IT技术图书和相关学习产品，为作译者提供优质出版服务</b>
+<ul class="quote">
+<li>异步社区创办于2015年8月，提供大量精品IT技术图书和电子书，以及高品质技术文章和视频课程。</li>
+</ul>
+</li>
+<li><b>“异步图书”是由异步社区编辑团队策划出版的精品IT专业图书的品牌</b>
+<ul class="quote">
+<li>异步图书的出版领域包括软件开发、大数据、AI、测试、前端、网络技术等。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch4"><summary>第1部分 Spring基础</summary>
+<div class="sec">
+<h4>Spring和Spring Boot核心知识</h4>
+<ul class="point">
+<li><b>Spring和Spring Boot简介</b>
+<ul class="quote">
+<li>Spring是一个用于简化企业级Java应用开发的框架。</li>
+<li>Spring Boot是一个用于简化新Spring应用的初始搭建以及开发过程的框架。</li>
+</ul>
+</li>
+<li><b>构建第一个Spring应用Taco Cloud</b>
+<ul class="quote">
+<li>初始化Spring项目。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring MVC</h4>
+<ul class="point">
+<li><b>在浏览器中显示模型数据</b>
+<ul class="quote">
+<li>使用@Controller注解定义控制器类。</li>
+<li>使用@RequestMapping注解定义请求映射。</li>
+<li>使用ModelMap对象向视图传递数据。</li>
+</ul>
+</li>
+<li><b>处理和验证表单输入</b>
+<ul class="quote">
+<li>使用@ModelAttribute注解绑定表单输入。</li>
+<li>使用@Valid注解进行表单验证。</li>
+</ul>
+</li>
+<li><b>选择视图模板库</b>
+<ul class="quote">
+<li>Thymeleaf：基于XML的模板引擎。</li>
+<li>FreeMarker：基于Java的模板引擎。</li>
+<li>Velocity：基于Java的模板引擎。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>数据持久化</h4>
+<ul class="point">
+<li><b>使用Spring的JDBC模板插入数据</b>
+<ul class="quote">
+<li>定义数据源。</li>
+<li>创建JDBC模板。</li>
+<li>使用JDBC模板执行SQL语句。</li>
+</ul>
+</li>
+<li><b>使用Spring Data声明JPA repository</b>
+<ul class="quote">
+<li>定义实体类。</li>
+<li>定义Repository接口。</li>
+<li>使用Spring Data JPA自动生成Repository实现。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring应用程序的安全性</h4>
+<ul class="point">
+<li><b>自动配置Spring安全性</b>
+<ul class="quote">
+<li>使用@EnableWebSecurity注解启用Spring Security。</li>
+<li>自定义用户存储。</li>
+</ul>
+</li>
+<li><b>声明自定义登录页面</b>
+<ul class="quote">
+<li>使用@EnableWebMvcSecurity注解启用Spring Security的Web MVC支持。</li>
+<li>自定义登录页面。</li>
+</ul>
+</li>
+<li><b>防止跨站请求伪造(CSRF)攻击</b>
+<ul class="quote">
+<li>使用@EnableWebSecurity注解启用CSRF保护。</li>
+<li>配置CSRF保护。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>配置属性</h4>
+<ul class="point">
+<li><b>细粒度调整自动配置bean</b>
+<ul class="quote">
+<li>使用@ConfigurationProperties注解绑定配置属性。</li>
+<li>使用@Bean和@Configuration注解定义配置类。</li>
+</ul>
+</li>
+<li><b>让应用组件使用配置属性</b>
+<ul class="quote">
+<li>使用@Value注解注入配置属性。</li>
+<li>使用@Autowired注解注入配置属性。</li>
+</ul>
+</li>
+<li><b>使用Spring profile</b>
+<ul class="quote">
+<li>定义Spring profile。</li>
+<li>激活Spring profile。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch5"><summary>第1章 Spring起步</summary>
+<div class="sec">
+<h4>Spring和Spring Boot的必备知识</h4>
+<ul class="point">
+<li><b>Spring框架在不断发展，以解决现代应用开发中的问题</b>
+<ul class="quote">
+<li>Spring框架通过引入Spring Boot简化自己的开发模型。</li>
+</ul>
+</li>
+<li><b>Spring框架能帮助你开发各种类型的应用</b>
+<ul class="quote">
+<li>不管你是开发以数据库作为支撑的简单Web应用，还是围绕微服务构建一个现代应用，Spring框架都能帮助你达成目标。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>初始化Spring项目</h4>
+<ul class="point">
+<li><b>使用Spring Initializr初始化Spring项目</b>
+<ul class="quote">
+<li>Spring Initializr可以帮助你快速创建一个基于Spring Boot的应用程序。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring生态系统概览</h4>
+<ul class="point">
+<li><b>Spring生态系统包括众多开源项目，如Spring Boot、Spring Data、Spring Security等</b>
+<ul class="quote">
+<li>Spring Boot提供了快速构建独立、生产级别的基于Spring框架的应用程序的简便方法。</li>
+<li>Spring Data提供了简化数据库访问和管理的工具。</li>
+<li>Spring Security提供了安全解决方案，保护你的应用程序免受常见网络攻击。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch6"><summary>1.1 什么是Spring</summary>
+<div class="sec">
+<h4>Spring的核心概念</h4>
+<ul class="point">
+<li><b>Spring的核心是提供了一个容器，通常称为Spring应用上下文，它们会创建和管理应用组件</b>
+<ul class="quote">
+<li>这些组件也可以称为bean，会在Spring应用上下文中装配在一起，从而形成一个完整的应用程序。</li>
+</ul>
+</li>
+<li><b>Spring及其一系列的相关库提供了Web框架、各种持久化可选方案、安全框架、与其他系统集成、运行时监控、微服务支持、反应式编程以及众多现代应用开发所需的特性。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring的组件装配方式</h4>
+<ul class="point">
+<li><b>Spring使用基于依赖注入(dependency injection，DI)的模式实现组件装配</b>
+<ul class="quote">
+<li>此时，组件不会再去创建它所依赖的组件并管理它们的生命周期，使用依赖注入的应用依赖于单独的实体(容器)来创建和维护所有的组件，并将其注入到需要它们的bean中。</li>
+</ul>
+</li>
+<li><b>Spring Boot提供了自动配置的能力，能够基于类路径中的条目、环境变量和其他因素合理猜测需要配置的组件并将它们装配在一起</b>
+<ul class="quote">
+<li>Spring Boot大幅度减少了构建应用所需的显式配置的数量(不管是XML配置还是Java配置)。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring的配置方式</h4>
+<ul class="point">
+<li><b>在历史上，指导Spring应用上下文将bean装配在一起的方式是使用一个或多个XML文件</b>
+<ul class="quote">
+<li>例如，如下的XML描述了两个bean，也就是InventoryService bean和ProductService bean，并且通过构造器参数将InventoryService装配到了ProductService中。</li>
+</ul>
+</li>
+<li><b>在最近的Spring版本中，基于Java的配置更为常见</b>
+<ul class="quote">
+<li>@Configuration注解会告知Spring这是一个配置类，会为Spring应用上下文提供bean。</li>
+<li>这个配置类的方法使用@Bean注解进行了标注，表明这些方法所返回的对象会以bean的形式添加到Spring的应用上下文中(默认情况下，这些bean所对应的bean ID与定义它们的方法名称是相同的)。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Boot的特性</h4>
+<ul class="point">
+<li><b>Spring Boot是Spring框架的扩展，提供了很多增强生产效率的方法</b>
+<ul class="quote">
+<li>最为大家所熟知的增强方法就是自动配置(autoconfiguration)，Spring Boot能够基于类路径中的条目、环境变量和其他因素合理猜测需要配置的组件并将它们装配在一起。</li>
+</ul>
+</li>
+<li><b>Spring Boot极大地改善了Spring的开发，因此很难想象在没有它的情况下如何开发Spring应用</b>
+<ul class="quote">
+<li>因此，本书会将Spring和Spring Boot当成一回事。我们会尽可能多地使用Spring Boot，只有在必要的时候才使用显式配置。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch7"><summary>1.2 初始化Spring应用</summary>
+<div class="sec">
+<h4>使用Spring Tool Suite初始化Spring项目</h4>
+<ul class="point">
+<li><b>在Spring Tool Suite中点击File菜单，选择New，接下来选择Spring Starter Project</b>
+<ul class="quote">
+<li>向导的第一页会询问一些项目的通用信息，比如项目名称、描述和其他必要的信息。</li>
+<li>向导的下一页会让我们选择要添加到项目中的依赖。</li>
+<li>默认情况下，新项目的向导会调用Spring Initializr来生成项目。</li>
+</ul>
+</li>
+<li><b>在点击Finish之后，项目会从Initializr下载并加载到工作空间中</b>
+<ul class="quote">
+<li>要等待它加载和构建，然后你就可以开始开发应用功能了。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>检查Spring项目的结构</h4>
+<ul class="point">
+<li><b>项目加载到IDE中之后，我们将其展开，看一下其中都包含什么内容</b>
+<ul class="quote">
+<li>这就是一个典型的Maven或Gradle项目结构，其中应用的源码放到了“src/main/java”中，测试代码放到了“src/test/java”中，而非Java的资源放到了“src/main/resources”。</li>
+</ul>
+</li>
+<li><b>在pom.xml文件中，我们第一个需要注意的地方就是&lt;packaging&gt;</b>
+<ul class="quote">
+<li>我们选择了将应用构建成一个可执行的JAR文件，而不是WAR文件。</li>
+</ul>
+</li>
+<li><b>接下来，请留意&lt;parent&gt;元素，更具体来说是它的&lt;version&gt;子元素</b>
+<ul class="quote">
+<li>这表明我们的项目要以spring-boot-starter-parent作为其父POM。</li>
+</ul>
+</li>
+<li><b>既然我们谈到了依赖的话题，那么需要注意在&lt;dependencies&gt;元素下声明了3个依赖</b>
+<ul class="quote">
+<li>在某种程度上，你可能会对前两个更熟悉一些。它们直接对应我们在Spring Tool Suite新项目向导中点击Finish之前所选择的Web和Thymeleaf依赖。</li>
+<li>第三个依赖提供了很多有用的测试功能。</li>
+</ul>
+</li>
+<li><b>构建规范还包含一个Spring Boot插件</b>
+<ul class="quote">
+<li>这个插件提供了一些重要的功能。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>引导应用</h4>
+<ul class="point">
+<li><b>我们同时还需要一个最小化的Spring配置，以引导该应用</b>
+<ul class="quote">
+<li>这就是TacoCloudApplication类所做的事情。</li>
+</ul>
+</li>
+<li><b>这个main()方法会调用SpringApplication中静态的run()方法，后者会真正执行应用的引导过程</b>
+<ul class="quote">
+<li>在传递给run()的两个参数中，一个是配置类，另一个是命令行参数。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>测试应用</h4>
+<ul class="point">
+<li><b>Spring Initializr为我们提供了一个测试类作为起步</b>
+<ul class="quote">
+<li>程序清单1.3展现了这个测试类的概况。</li>
+</ul>
+</li>
+<li><b>注意这个类带有@RunWith(SpringRunner.class)注解</b>
+<ul class="quote">
+<li>@RunWith是JUnit的注解，它会提供一个测试运行器(runner)来指导JUnit如何运行测试。</li>
+<li>在本例中，为JUnit提供的是SpringRunner，这是一个Spring提供的测试运行器，它会创建测试运行所需的Spring应用上下文。</li>
+</ul>
+</li>
+<li><b>@SpringBootTest会告诉JUnit在启动测试的时候要添加上Spring Boot的功能</b>
+<ul class="quote">
+<li>从这个测试类开始，我们可以将这个测试类视同为在main()方法中调用SpringApplication.run()。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch8"><summary>1.3 编写Spring应用</summary>
+<div class="sec">
+<h4>处理Web请求</h4>
+<ul class="point">
+<li><b>Spring MVC的核心是控制器(controller)的理念</b>
+<ul class="quote">
+<li>控制器是处理请求并以某种方式进行信息响应的类。</li>
+</ul>
+</li>
+<li><b>HomeController是一个简单的控制器类，用于处理对根路径“/”的请求</b>
+<ul class="quote">
+<li>HomeController带有@Controller注解，Spring的组件扫描功能会自动发现它，并创建一个HomeController实例作为Spring应用上下文中的bean。</li>
+<li>home()方法带有@GetMapping注解，表明如果针对“/”发送HTTP GET请求，那么这个方法将会处理请求。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>定义视图</h4>
+<ul class="point">
+<li><b>使用Thymeleaf定义Taco Cloud的主页模板</b>
+<ul class="quote">
+<li>模板名称是由逻辑视图名派生而来的，再加上“/templates/”前缀和“.html”后缀。</li>
+<li>唯一需要注意的一行代码是用于展现Taco Cloud Logo的&lt;img&gt;标签。它使用了Thymeleaf的th:src属性和@{...}表达式，以便于引用相对于上下文路径的图片。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>测试控制器</h4>
+<ul class="point">
+<li><b>Spring Boot对测试提供了强大的支持，使得测试Web应用变得非常简单</b>
+<ul class="quote">
+<li>对于主页来说，我们所编写的测试在复杂性上与主页本身差不多。</li>
+<li>测试需要针对根路径“/”发送一个HTTP GET请求并期望得到成功结果，其中视图名称为home并且结果内容包含“Welcome to...”。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>构建和运行应用</h4>
+<ul class="point">
+<li><b>使用Spring Boot Dashboard在IDE中运行应用</b>
+<ul class="quote">
+<li>确保taco-cloud应用程序在项目列表中能够显示出来，然后点击启动按钮，应用程序应该就能立即启动。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>了解Spring Boot DevTools</h4>
+<ul class="point">
+<li><b>DevTools为Spring开发人员提供了一些便利的开发期工具</b>
+<ul class="quote">
+<li>代码变更后应用会自动重启。</li>
+<li>当面向浏览器的资源(如模板、JavaScript、样式表)等发生变化时，会自动刷新浏览器。</li>
+<li>自动禁用模板缓存。</li>
+<li>如果使用H2数据库的话，内置了H2控制台。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>回顾一下</h4>
+<ul class="point">
+<li><b>使用Spring进行开发的一个重要收益是你可以只关注满足应用需求的代码，无须考虑如何满足框架的需求</b>
+<ul class="quote">
+<li>我们所编写的每行代码都致力于实现生成主页的目标。</li>
+<li>Spring(以及Spring Boot)可以视为感受不到框架的框架(frameworkless framework)。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Boot自动配置</h4>
+<ul class="point">
+<li><b>Spring Boot的自动配置将会探测到Web和Thymeleaf starter的依赖，并自动完成如下功能</b>
+<ul class="quote">
+<li>在Spring应用上下文中配置bean以启用Spring MVC。</li>
+<li>在Spring应用上下文中配置嵌入式的Tomcat服务器。</li>
+<li>配置Thymeleaf视图解析器，以便于使用Thymeleaf模板渲染Spring MVC视图。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch9"><summary>1.4 俯瞰Spring风景线</summary>
+<div class="sec">
+<h4>Spring核心框架</h4>
+<ul class="point">
+<li><b>Spring核心框架是Spring领域中一切的基础，提供了核心容器和依赖注入框架。</b>
+</li>
+<li><b>Spring MVC是Spring的Web框架，可以用来创建REST API</b>
+<ul class="quote">
+<li>在第2章中，我们将会更深入地介绍Spring MVC，并在第6章重新学习如何使用它来创建REST API。</li>
+</ul>
+</li>
+<li><b>Spring核心框架还提供了一些对数据持久化的基础支持，尤其是基于模板的JDBC支持</b>
+<ul class="quote">
+<li>在第3章中，你将会看到如何使用JdbcTemplate。</li>
+</ul>
+</li>
+<li><b>最新版本的Spring中，还添加了对反应式(reactive)风格编程的支持，其中包括名为Spring WebFlux的新反应式Web框架</b>
+<ul class="quote">
+<li>在第3部分中，我们将会学习Spring反应式编程模型，并在第11章专门学习Spring WebFlux。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Boot</h4>
+<ul class="point">
+<li><b>Spring Boot带来了很多收益，包括starter依赖和自动配置</b>
+<ul class="quote">
+<li>在本书中，我们会尽可能多地使用Spring Boot，并避免任何形式的显式配置，除非显式配置是绝对必要的。</li>
+</ul>
+</li>
+<li><b>Spring Boot还提供了大量其他有用的特性，如Actuator、灵活的环境属性规范、额外的测试支持等</b>
+<ul class="quote">
+<li>Actuator能够洞察应用运行时的内部工作状况，包括指标、线程dump信息、应用的健康状况以及应用可用的环境属性。</li>
+<li>灵活的环境属性规范。</li>
+<li>在核心框架的测试辅助功能之上提供了对测试的额外支持。</li>
+</ul>
+</li>
+<li><b>Spring Boot还提供了一个基于Groovy脚本的编程模型，称为Spring Boot命令行接口(Command-Line Interface，CLI)</b>
+<ul class="quote">
+<li>使用Spring Boot CLI，我们可以将整个应用程序编写为Groovy脚本的集合，并通过命令行运行它们。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Data</h4>
+<ul class="point">
+<li><b>Spring Data将应用程序的数据repository定义为简单的Java接口，在定义驱动存储和检索数据的方法时使用一种命名约定即可</b>
+<ul class="quote">
+<li>Spring Data能够处理多种不同类型的数据库，包括关系型数据库(JPA)、文档数据库(Mongo)、图数据库(Neo4j)等。</li>
+<li>在第3章中，我们将使用Spring Data为Taco Cloud应用程序创建repository。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Security</h4>
+<ul class="point">
+<li><b>Spring Security解决了应用程序通用的安全性需求，包括身份验证、授权和API安全性</b>
+<ul class="quote">
+<li>Spring Security的范围太大，在本书中无法得到充分的介绍，但是我们将在第4章和第11章中讨论一些常见的使用场景。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Integration和Spring Batch</h4>
+<ul class="point">
+<li><b>Spring Integration解决了实时集成问题，Spring Batch解决的则是批处理集成的问题</b>
+<ul class="quote">
+<li>在实时集成中，数据在可用时马上就会得到处理。</li>
+<li>相反，Spring Batch解决的则是批处理集成的问题，在此过程中，数据可以收集一段时间，直到某个触发器(可能是一个时间触发器)发出信号，表示该处理批量数据了才会对数据进行批处理。</li>
+<li>我们将会在第9章中研究Spring Batch和Spring Integration。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Cloud</h4>
+<ul class="point">
+<li><b>Spring Cloud是使用Spring开发云原生应用程序的一组项目</b>
+<ul class="quote">
+<li>Spring Cloud覆盖了很多领域，本书不可能面面俱到，我们将在第13～15章中研究Spring Cloud的一些常见组件。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch10"><summary>1.5 小结</summary>
+<div class="sec">
+<h4>Spring的简化开发</h4>
+<ul class="point">
+<li><b>Spring旨在简化开发人员所面临的挑战，比如创建Web应用程序、处理数据库、保护应用程序以及实现微服务。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Boot的易用性</h4>
+<ul class="point">
+<li><b>Spring Boot构建在Spring之上，通过简化依赖管理、自动配置和运行时洞察，使Spring更加易用。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Initializr的使用</h4>
+<ul class="point">
+<li><b>Spring应用程序可以使用Spring Initializr进行初始化，它基于Web的应用，并且为大多数Java开发环境提供了原生支持。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring组件的声明与发现</h4>
+<ul class="point">
+<li><b>在Spring应用上下文中，组件(通常称为bean)既可以使用Java或XML显式声明，也可以通过组件扫描发现，还可以使用Spring Boot自动配置功能实现自动化配置。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch11"><summary>第2章 开发Web应用</summary>
+<div class="sec">
+<h4>在浏览器中展现模型数据</h4>
+<ul class="point">
+<li><b>Spring MVC能完成各种各样的事情，包括处理数据、从数据库中读取信息以及与其他应用进行交互。</b>
+</li>
+<li><b>用户对应用程序的第一印象来源于用户界面，UI是以浏览器中的Web应用的形式来展现的</b>
+<ul class="quote">
+<li>在第1章中，我们创建了第一个Spring MVC控制器来展现应用的主页。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>处理和校验表单输入</h4>
+<ul class="point">
+<li><b>在本章中，我们将会开发Taco Cloud的第一个主要功能：设计定制taco的能力</b>
+<ul class="quote">
+<li>在这个过程中，我们将会深入研究Spring MVC并会看到如何展现模型数据和处理表单输入。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch12"><summary>2.1 展现信息</summary>
+<div class="sec">
+<h4>Taco Cloud应用概述</h4>
+<ul class="point">
+<li><b>Taco Cloud是一个可以在线订购taco的地方，允许客户展现其创意，能够让他们通过丰富的配料设计自己的taco。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>构建领域类</h4>
+<ul class="point">
+<li><b>Ingredient类定义了我们所需的领域对象，包括taco配料的名称、类型和ID</b>
+<ul class="quote">
+<li>Ingredient类使用了Lombok库，通过@Data注解自动生成getter和setter方法，以及equals()、hashCode()、toString()等方法。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>创建控制器类</h4>
+<ul class="point">
+<li><b>DesignTacoController处理路径为“/design”的HTTP GET请求，构建配料的列表，并将配料数据传递给要渲染为HTML的视图模板</b>
+<ul class="quote">
+<li>showDesignForm()方法构建了一个Ingredient对象的列表，并根据配料类型过滤列表。</li>
+<li>showDesignForm()方法最后返回“design”，这是视图的逻辑名称，会用来将模型渲染到视图上。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>设计视图</h4>
+<ul class="point">
+<li><b>使用Thymeleaf模板引擎，设计taco的完整页面，展现模型中的配料列表，并包含一个Submit按钮，以及用户用来定义其作品名称的输入域</b>
+<ul class="quote">
+<li>在Thymeleaf模板中，我们使用th:each属性，针对wrap request属性所对应集合中的每个元素重复渲染&lt;div&gt;。</li>
+<li>在&lt;div&gt;元素中，有一个&lt;input&gt;复选框元素，还有一个为复选框提供标签的&lt;span&gt;元素。复选框使用Thymeleaf的th:value来为渲染出的&lt;input&gt;元素设置value属性，这里会将其设置为所找到的ingredient的id属性。&lt;span&gt;元素使用th:text将“INGREDIENT”占位符文本替换为ingredient的name属性。</li>
+<li>完整的模板包含了一个Taco Cloud的logo图片以及对样式表的&lt;link&gt;引用。在这两个场景中，都使用了Thymeleaf的@{}操作符，用来生成一个相对上下文的路径，以便于引用我们需要的静态制件(artifact)。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch13"><summary>2.2 处理表单提交</summary>
+<div class="sec">
+<h4>处理表单提交</h4>
+<ul class="point">
+<li><b>使用@PostMapping来处理POST请求</b>
+<ul class="quote">
+<li>@PostMapping与类级别的@RequestMapping协作，指定processDesign()方法要处理针对“/design”的POST请求。</li>
+</ul>
+</li>
+<li><b>表单中的输入域会绑定到Taco对象</b>
+<ul class="quote">
+<li>Taco是一个非常简单的Java领域对象，其中包含了几项属性。</li>
+<li>表单中的name输入域只需要捕获一个简单的文本值。因此，Taco的name属性是String类型的。</li>
+<li>配料的复选框也有文本值，但是用户可能会选择一个或多个，所以它们所绑定的ingredients属性是一个List&lt;String&gt;，能够捕获选中的每种配料。</li>
+</ul>
+</li>
+<li><b>processDesign()方法对Taco对象没有执行任何操作，只是返回了一个String类型的值</b>
+<ul class="quote">
+<li>这个值代表了一个要展现给用户的视图。但是，区别在于processDesign()返回的值带有“redirect:”前缀，表明这是一个重定向视图。</li>
+</ul>
+</li>
+<li><b>在OrderController中添加另外一个方法，以便于处理针对“/orders”的POST请求</b>
+<ul class="quote">
+<li>当调用processOrder()方法处理所提交的订单时，我们会得到一个Order对象，它的属性绑定了所提交的表单域。</li>
+<li>Order与Taco非常相似，是一个非常简单的类，其中包含了订单的信息。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>订单表单的视图</h4>
+<ul class="point">
+<li><b>orderForm.html就是典型的HTML/Thymeleaf内容</b>
+<ul class="quote">
+<li>这里的&lt;form&gt;标签和程序清单2.3中的&lt;form&gt;标签有所不同，它指定了一个表单的action。</li>
+<li>我们明确指明表单要POST提交到“/orders”上(使用Thymeleaf的@{...}操作符指定相对上下文的路径)。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch14"><summary>2.3 校验表单输入</summary>
+<div class="sec">
+<h4>校验表单输入的重要性</h4>
+<ul class="point">
+<li><b>没有校验的表单输入可能导致用户提交错误的数据</b>
+<ul class="quote">
+<li>用户可能不选择任何配料，或者输入空的快递地址，甚至将他们喜欢的歌词作为信用卡号进行提交。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring支持Java的Bean校验API</h4>
+<ul class="point">
+<li><b>Spring Boot自动添加Validation API以及Validation API的Hibernate实现到项目中</b>
+<ul class="quote">
+<li>我们甚至不需要做任何特殊的操作，这是因为Validation API以及Validation API的Hibernate实现将会作为Spring Boot web starter的传递性依赖自动添加到项目中。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>声明校验规则</h4>
+<ul class="point">
+<li><b>在要被校验的类上声明校验规则</b>
+<ul class="quote">
+<li>对于Taco类来说，我们想要确保name属性不能为空或null，同时希望选中的配料至少要包含一项。</li>
+<li>对于Order类来说，我们必须要给Order类添加注解。对于地址相关的属性，我们只想确保用户没有提交空白字段。</li>
+<li>支付相关的字段就比较复杂了。我们不仅要确保ccNumber属性不为空，还要保证它所包含的值是一个合法的信用卡号码。ccExpiration属性必须符合MM/YY格式(两位的月份和年份)。ccCVV属性需要是一个3位的数字。</li>
+</ul>
+</li>
+<li><b>校验注解都包含了一个message属性，该属性定义了当输入的信息不满足声明的校验规则时要给用户展现的消息</b>
+<ul class="quote">
+<li>如果输入的信息不满足声明的校验规则，那么就会显示message属性中定义的消息。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>在表单绑定的时候执行校验</h4>
+<ul class="point">
+<li><b>为控制器方法中的Taco或Order参数添加一个Java Bean Validation API的@Valid注解</b>
+<ul class="quote">
+<li>@Valid注解会告诉Spring MVC要对提交的Taco对象进行校验，而校验时机是在它绑定完表单数据之后、调用processDesign()之前。</li>
+<li>如果存在校验错误，那么这些错误的细节将会捕获到一个Errors对象中并传递给processDesign()。</li>
+<li>为了对提交的Order对象进行校验，OrderController的processOrder()方法也需要进行类似的变更。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>展现校验错误</h4>
+<ul class="point">
+<li><b>Thymeleaf提供了便捷访问Errors对象的方法，这就是借助fields及其th:errors属性</b>
+<ul class="quote">
+<li>&lt;span&gt;元素使用class属性来为错误添加样式，以引起用户的注意。</li>
+<li>th:if属性来决定是否要显示该元素。fields属性的hasErrors()方法会检查ccNumber域是否存在错误，如果存在，就将会渲染&lt;span&gt;。</li>
+<li>th:errors属性引用了ccNumber输入域，如果该输入域存在错误，那么它会将&lt;span&gt;元素的占位符内容替换为校验信息。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch15"><summary>2.4 使用视图控制器</summary>
+<div class="sec">
+<h4>声明视图控制器</h4>
+<ul class="point">
+<li><b>使用WebMvcConfigurer接口配置视图控制器</b>
+<ul class="quote">
+<li>实现WebMvcConfigurer接口并覆盖addViewControllers方法。</li>
+<li>在addViewControllers方法中，调用registry的addViewController()方法，将“/”传递了进去，视图控制器将会针对该路径执行GET请求。</li>
+<li>基于ViewControllerRegistration对象调用setViewName()方法，指明当请求“/”的时候要转发到“home”视图上。</li>
+</ul>
+</li>
+<li><b>视图控制器可以将请求转发到任何视图</b>
+<ul class="quote">
+<li>视图控制器不处理任何业务逻辑，只负责将请求转发到相应的视图。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用不同的模板模型</h4>
+<ul class="point">
+<li><b>Spring支持多种视图方案</b>
+<ul class="quote">
+<li>除了Thymeleaf，Spring还支持JSP、Freemarker等模板引擎。</li>
+</ul>
+</li>
+<li><b>可以通过配置类中的WebMvcConfigurer接口来选择视图模型</b>
+<ul class="quote">
+<li>实现WebMvcConfigurer接口并覆盖configureViewResolvers方法，在该方法中指定视图解析器。</li>
+<li>视图解析器负责将视图名称解析为实际的视图对象，如JSP、Freemarker等。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch16"><summary>2.5 选择视图模板库</summary>
+<div class="sec">
+<h4>选择视图模板库</h4>
+<ul class="point">
+<li><b>Spring Boot支持多种常见的模板方案。</b>
+</li>
+<li><b>选择想要的视图模板库，将其作为依赖项添加到构建文件中</b>
+<ul class="quote">
+<li>你只需要选择想要的视图模板库，将其作为依赖项添加到构建文件中，然后就可以在“/templates”目录下编写模板了。</li>
+</ul>
+</li>
+<li><b>Spring Boot会探测到你所选择的模板库，并自动配置为Spring MVC控制器生成视图所需的各种组件</b>
+<ul class="quote">
+<li>Spring Boot的自动配置功能会探测到存在Thymeleaf并自动为我们配置Thymeleaf bean。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>缓存模板</h4>
+<ul class="point">
+<li><b>默认情况下，模板只有在第一次使用的时候解析一次，解析的结果会被后续的请求所使用</b>
+<ul class="quote">
+<li>对于生产环境来说，这是一个很棒的特性，它能防止每次请求时多余的模板解析过程，因此有助于提升性能。</li>
+</ul>
+</li>
+<li><b>在开发期，可以禁用缓存，以便于看到变更效果</b>
+<ul class="quote">
+<li>假设我们启动完应用之后访问taco的设计页面，然后决定对它做一些修改，但是当我们刷新Web浏览器的时候显示的依然是原始的版本。要想看到变更效果，就必须重新启动应用，这当然是非常不方便的。</li>
+<li>唯一需要注意的是，在将应用部署到生产环境之前，一定要删除这一行代码(或者将其设置为true)。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch17"><summary>2.6 小结</summary>
+<div class="sec">
+<h4>Spring MVC概述</h4>
+<ul class="point">
+<li><b>Spring MVC是一个基于注解的Web框架</b>
+<ul class="quote">
+<li>通过像@RequestMapping、@GetMapping和@PostMapping这样的注解来启用请求处理方法的声明。</li>
+</ul>
+</li>
+<li><b>大多数的请求处理方法最终会返回一个视图的逻辑名称</b>
+<ul class="quote">
+<li>请求会转发到这样的视图上(同时会带有任意的模型数据)。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring MVC的校验功能</h4>
+<ul class="point">
+<li><b>Spring MVC支持校验，这是通过Java Bean Validation API和Validation API的实现(如Hibernate Validator)完成的</b>
+<ul class="quote">
+<li>校验可以在控制器方法中通过@Valid注解进行启用。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>视图控制器</h4>
+<ul class="point">
+<li><b>对于没有模型数据和逻辑处理的HTTP GET请求，可以使用视图控制器</b>
+<ul class="quote">
+<li>视图控制器会返回一个视图的名称，而不会尝试处理请求。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring MVC支持的视图方案</h4>
+<ul class="point">
+<li><b>Spring支持各种视图方案，包括FreeMarker、Groovy Templates和Mustache</b>
+<ul class="quote">
+<li>除了Thymeleaf之外，开发者可以选择其他视图技术。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch18"><summary>第3章 使用数据</summary>
+<div class="sec">
+<h4>使用Spring的JdbcTemplate</h4>
+<ul class="point">
+<li><b>Spring的JdbcTemplate可以消除样板式代码</b>
+<ul class="quote">
+<li>JdbcTemplate是Spring对JDBC(Java Database Connectivity)的支持，可以简化数据库操作。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用SimpleJdbcInsert插入数据</h4>
+<ul class="point">
+<li><b>SimpleJdbcInsert可以简化数据的插入操作</b>
+<ul class="quote">
+<li>SimpleJdbcInsert是Spring提供的一个工具类，可以方便地执行INSERT操作。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用Spring Data声明JPA repository</h4>
+<ul class="point">
+<li><b>Spring Data可以简化数据repository的编写</b>
+<ul class="quote">
+<li>Spring Data提供了一种基于注解的方式，可以快速地生成数据repository。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch19"><summary>3.1 使用JDBC读取和写入数据</summary>
+<div class="sec">
+<h4>Spring对JDBC的支持</h4>
+<ul class="point">
+<li><b>Spring通过JdbcTemplate简化JDBC操作</b>
+<ul class="quote">
+<li>JdbcTemplate提供了一种特殊的方式，开发人员在对关系型数据库执行SQL操作的时候能够避免使用JDBC时常见的繁文缛节和样板式代码。</li>
+</ul>
+</li>
+<li><b>JdbcTemplate使得数据库操作更加简单</b>
+<ul class="quote">
+<li>使用JdbcTemplate，开发人员不需要创建连接、创建语句或执行查询的时候，可能会出现很多错误。这就要求我们捕获SQLException，它对于找出哪里出现了问题或如何解决问题可能有所帮助，也可能毫无用处。</li>
+<li>在创建连接、创建语句或执行查询的时候，可能会出现很多错误。这就要求我们捕获SQLException，它对于找出哪里出现了问题或如何解决问题可能有所帮助，也可能毫无用处。</li>
+<li>程序清单3.2中的代码显然要比程序清单3.1中的原始JDBC示例简单得多。这里没有创建任何的连接和语句。而且，在方法完成之后不需要对这些对象进行清理。最后，这里也没有任何catch代码块中无法处理的异常。剩下的代码仅仅关注执行查询(调用JdbcTemplate的queryForObject())和将结果映射到Ingredient对象(在mapRowToIngredient()方法中)上。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>调整领域对象以适应持久化</h4>
+<ul class="point">
+<li><b>为Taco和Order类添加id和createdAt字段</b>
+<ul class="quote">
+<li>我们需要将id字段添加到Taco和Order类中。</li>
+<li>我们还会为每个对象添加一个字段来捕获它所创建的日期和时间。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用JdbcTemplate</h4>
+<ul class="point">
+<li><b>定义JDBC repository</b>
+<ul class="quote">
+<li>我们的Ingredient repository需要完成如下操作：查询所有的配料信息，将它们放到一个Ingredient对象的集合中；根据id，查询单个Ingredient；保存Ingredient对象。</li>
+</ul>
+</li>
+<li><b>使用JdbcTemplate查询数据库</b>
+<ul class="quote">
+<li>findAll()和findOne()以相同的方式使用了JdbcTemplate。findAll()方法预期返回一个对象的集合，它使用了JdbcTemplate的query()方法。query()会接受要执行的SQL以及Spring RowMapper的一个实现(用来将结果集中的每行数据映射为一个对象)。query ()方法还能以最终参数的形式接收查询中所需的任意参数。但是，在本例中，我们不需要任何参数。</li>
+<li>findOne()方法预期只会返回一个Ingredient对象，所以它使用了JdbcTemplate的queryForObject()方法，而不是query()方法。queryForObject()方法的运行方式和query()非常类似，只不过它只返回一个对象，而不是对象的List。在本例中，它接受要执行的查询、RowMapper以及要获取的Ingredient的id，该id会替换查询中的“?”。</li>
+</ul>
+</li>
+<li><b>插入一行数据</b>
+<ul class="quote">
+<li>JdbcTemplate的update()方法可以用来执行向数据库中写入或更新数据的查询语句。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>定义模式和预加载数据</h4>
+<ul class="point">
+<li><b>创建表的SQL</b>
+<ul class="quote">
+<li>create table if not exists Ingredient (id varchar(4) not null, name varchar(25) not null, type varchar(10) not null);</li>
+<li>create table if not exists Taco (id identity, name varchar(50) not null, createdAt timestamp not null);</li>
+<li>create table if not exists Taco_Ingredients (taco bigint not null, ingredient varchar(4) not null);</li>
+<li>alter table Taco_Ingredients add foreign key (taco) references Taco(id);</li>
+<li>alter table Taco_Ingredients add foreign key (ingredient) references Ingredient(id);</li>
+<li>create table if not exists Taco_Order (id identity, deliveryName varchar(50) not null, deliveryStreet varchar(50) not null, deliveryCity varchar(50) not null, deliveryState varchar(2) not null, deliveryZip varchar(10) not null, ccNumber varchar(16) not null, ccExpiration varchar(5) not null, ccCVV varchar(3) not null, placedAt timestamp not null);</li>
+<li>create table if not exists Taco_Order_Tacos (tacoOrder bigint not null, taco bigint not null);</li>
+<li>alter table Taco_Order_Tacos add foreign key (tacoOrder) references Taco_Order(id);</li>
+<li>alter table Taco_Order_Tacos add foreign key (taco) references Taco(id);</li>
+</ul>
+</li>
+<li><b>在应用的根类路径下存在名为schema.sql的文件，那么在应用启动的时候将会基于数据库执行这个文件中的SQL。</b>
+</li>
+<li><b>Spring Boot还会在应用启动的时候执行根类路径下名为data.sql的文件。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>插入数据</h4>
+<ul class="point">
+<li><b>使用JdbcTemplate保存数据</b>
+<ul class="quote">
+<li>为了实现TacoRepository，我们需要用save()方法首先保存必要的taco设计细节(比如，名称和创建时间)，然后对Taco对象中的每种配料都插入一行数据到Taco_Ingredients中。</li>
+<li>当向Taco中插入一行数据的时候，我们需要知道数据库生成的ID，这样我们才可以在每个配料信息中引用它。</li>
+<li>对于TacoRepository来说，剩下的事情就是将它注入到DesignTacoController中，并在保存taco的时候调用它。</li>
+</ul>
+</li>
+<li><b>使用SimpleJdbcInsert插入数据</b>
+<ul class="quote">
+<li>首先，我们要创建一个JdbcOrderRepository，它是OrderRepository的实现。</li>
+<li>save()方法实际上没有保存任何内容，只是定义了保存Order及其关联的Taco对象的流程，并将实际的持久化任务委托给了saveOrderDetails()和saveTacoToOrder()。</li>
+<li>SimpleJdbcInsert有两个非常有用的方法来执行数据插入操作：execute()和execute AndReturnKey()。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch20"><summary>3.2 使用Spring Data JPA持久化数据</summary>
+<div class="sec">
+<h4>Spring Data JPA简介</h4>
+<ul class="point">
+<li><b>Spring Data是一个非常大的伞形项目，由多个子项目组成，其中大多数子项目都关注对不同的数据库类型进行数据持久化。</b>
+</li>
+<li><b>Spring Data JPA是基于关系型数据库进行JPA持久化的子项目。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>添加Spring Data JPA到项目中</h4>
+<ul class="point">
+<li><b>Spring Boot应用可以通过JPA starter来添加Spring Data JPA</b>
+<ul class="quote">
+<li>这个starter依赖不仅会引入Spring Data JPA，还会传递性地将Hibernate作为JPA实现引入进来。</li>
+</ul>
+</li>
+<li><b>如果想要使用不同的JPA实现，需要排除Hibernate依赖并将所选择的JPA库包含进来</b>
+<ul class="quote">
+<li>例如，如果想要使用EclipseLink来替代Hibernate，就需要修改构建文件，排除hibernate-entitymanager依赖，并添加eclipselink依赖。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>将领域对象标注为实体</h4>
+<ul class="point">
+<li><b>为了将Ingredient声明为JPA实体，它必须添加@Entity注解</b>
+<ul class="quote">
+<li>它的id属性需要使用@Id注解，以便于将其指定为数据库中唯一标识该实体的属性。</li>
+</ul>
+</li>
+<li><b>Taco类现在添加了@Entity注解，并为其id属性添加了@Id注解</b>
+<ul class="quote">
+<li>因为我们要依赖数据库自动生成ID值，所以在这里还为id属性设置了@GeneratedValue，将它的strategy设置为AUTO。</li>
+</ul>
+</li>
+<li><b>Order所需的变更就是Taco的翻版，但是，在类级别这里有了一个新的注解，即@Table</b>
+<ul class="quote">
+<li>它表明Order实体应该持久化到数据库中名为Taco_Order的表中。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>声明JPA repository</h4>
+<ul class="point">
+<li><b>我们可以扩展CrudRepository接口来声明JPA repository</b>
+<ul class="quote">
+<li>CrudRepository定义了很多用于CRUD(创建、读取、更新、删除)操作的方法。</li>
+</ul>
+</li>
+<li><b>Spring Data会检查repository接口的所有方法，解析方法的名称，并基于被持久化的对象来试图推测方法的目的</b>
+<ul class="quote">
+<li>Spring Data定义了一组小型的领域特定语言(Domain-Specific Language，DSL)，在这里持久化的细节都是通过repository方法的签名来描述的。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>自定义JPA repository</h4>
+<ul class="point">
+<li><b>如果我们的需求并不局限于基本持久化，那又该怎么办呢？接下来，我们看一下如何自定义repository来执行特定领域的查询</b>
+<ul class="quote">
+<li>假设除了CrudRepository提供的基本CRUD操作之外，我们还需要获取投递到指定邮编(Zip)的订单。实际上，我们只需要添加如下的方法声明到OrderRepository中，这个问题就解决了：List&lt;Order&gt; findByDeliveryZip(String deliveryZip);。</li>
+<li>Spring Data能够知道这个方法是要查找Order的，因为我们使用Order对CrudRepository进行了参数化。方法名findByDeliveryZip()确定该方法需要根据deliveryZip属性相匹配来查找Order，而deliveryZip的值是作为参数传递到方法中来的。</li>
+<li>尽管方法名称约定对于相对简单的查询非常有用，但是，不难想象，对于更为复杂的查询，方法名可能会面临失控的风险。在这种情况下，可以将方法定义为任何你想要的名称，并为其添加@Query注解，从而明确指明方法调用时要执行的查询。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch21"><summary>3.3 小结</summary>
+<div class="sec">
+<h4>Spring的JdbcTemplate简化JDBC使用</h4>
+<ul class="point">
+<li><b>JdbcTemplate能够简化JDBC编程，提高开发效率</b>
+<ul class="quote">
+<li>Spring的JdbcTemplate提供了一套简洁易用的API，可以方便地执行SQL语句，获取结果集，处理异常等。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>PreparedStatementCreator和KeyHolder获取数据库生成的ID值</h4>
+<ul class="point">
+<li><b>在需要知道数据库所生成的ID值时，可以组合使用PreparedStatementCreator和KeyHolder</b>
+<ul class="quote">
+<li>PreparedStatementCreator用于创建预处理语句，KeyHolder用于保存自动生成的主键值。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>SimpleJdbcInsert简化数据插入</h4>
+<ul class="point">
+<li><b>SimpleJdbcInsert可以简化数据的插入操作，无需编写复杂的SQL语句</b>
+<ul class="quote">
+<li>SimpleJdbcInsert提供了一种简洁的方式，可以方便地插入一条或多条数据，同时还可以自动生成主键值。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Data JPA简化JPA持久化</h4>
+<ul class="point">
+<li><b>Spring Data JPA能够极大地简化JPA持久化，我们只需编写repository接口即可</b>
+<ul class="quote">
+<li>Spring Data JPA提供了一套基于JPA的持久层框架，可以方便地实现数据的查询、插入、更新和删除等操作，无需编写复杂的JPA代码。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch22"><summary>第4章 保护Spring</summary>
+<div class="sec">
+<h4>自动配置Spring Security</h4>
+<ul class="point">
+<li><b>Spring Security提供自动配置功能，简化了安全配置过程</b>
+<ul class="quote">
+<li>Spring Security默认提供了许多安全配置，如认证、授权、登录、CSRF防护等。</li>
+<li>通过在Spring Boot项目中添加@EnableWebSecurity注解，可以启用Spring Security的自动配置功能。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>设置自定义的用户存储</h4>
+<ul class="point">
+<li><b>Spring Security支持自定义用户存储，可以根据需要选择不同的存储方式</b>
+<ul class="quote">
+<li>默认情况下，Spring Security使用内存中的用户存储。</li>
+<li>可以通过实现UserDetailsService接口来自定义用户存储。</li>
+<li>可以通过配置ldap、数据库等方式来实现自定义用户存储。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>自定义登录页</h4>
+<ul class="point">
+<li><b>Spring Security支持自定义登录页，可以根据需要设计个性化的登录页面</b>
+<ul class="quote">
+<li>默认情况下，Spring Security使用内置的登录页面。</li>
+<li>可以通过配置模板引擎来自定义登录页面。</li>
+<li>可以通过继承AbstractAuthenticationFilter类来自定义登录逻辑。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>防范CSRF攻击</h4>
+<ul class="point">
+<li><b>Spring Security提供CSRF防护功能，可以有效防止跨站请求伪造攻击</b>
+<ul class="quote">
+<li>默认情况下，Spring Security已启用CSRF防护。</li>
+<li>可以通过配置WebSecurityConfigurerAdapter类来自定义CSRF防护策略。</li>
+<li>可以通过添加CSRF参数到表单或请求头来传递CSRF令牌。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>知道用户是谁</h4>
+<ul class="point">
+<li><b>Spring Security提供认证和授权功能，可以知道用户是谁以及用户具有哪些权限</b>
+<ul class="quote">
+<li>默认情况下，Spring Security使用基于内存的认证和授权。</li>
+<li>可以通过实现UserDetailsService接口来自定义用户认证和授权。</li>
+<li>可以通过配置WebSecurityConfigurerAdapter类来自定义认证和授权策略。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch23"><summary>4.1 启用Spring Security</summary>
+<div class="sec">
+<h4>启用Spring Security</h4>
+<ul class="point">
+<li><b>将Spring Boot security starter依赖添加到构建文件中</b>
+<ul class="quote">
+<li>在项目的pom.xml文件中，添加&lt;dependency&gt;条目。</li>
+</ul>
+</li>
+<li><b>应用启动时，自动配置功能会探测到Spring Security出现在了类路径中，并初始化一些基本的安全配置</b>
+<ul class="quote">
+<li>所有的HTTP请求路径都需要认证。</li>
+<li>不需要特定的角色和权限。</li>
+<li>没有登录页面。</li>
+<li>认证过程是通过HTTP basic认证对话框实现的。</li>
+<li>系统只有一个用户，用户名为user。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>配置Spring Security以满足Taco Cloud的安全需求</h4>
+<ul class="point">
+<li><b>配置一个合适的用户存储，这样就能有多个用户了</b>
+<ul class="quote">
+<li>为了满足Taco Cloud的安全需求，我们需要编写一些显式的配置，覆盖掉自动配置为我们提供的功能。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch24"><summary>4.2 配置Spring Security</summary>
+<div class="sec">
+<h4>Spring Security配置基础</h4>
+<ul class="point">
+<li><b>Spring Security支持基于Java的配置，更加易于阅读和编写</b>
+<ul class="quote">
+<li>使用基于Java的Spring Security配置完成Taco Cloud安全性需要的所有设置。</li>
+</ul>
+</li>
+<li><b>Spring Security默认会提示登录，但现在的登录表单更加友好</b>
+<ul class="quote">
+<li>如果此时你再次访问Taco Cloud主页，那么系统依然会提示你进行登录，但不再是提示HTTP basic认证的对话框，而是会展现如图4.2所示的登录表单。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>基于内存的用户存储</h4>
+<ul class="point">
+<li><b>用户信息可以存储在内存之中，适用于测试和简单的应用</b>
+<ul class="quote">
+<li>假设我们只有数量有限的几个用户，而且这些用户几乎不会发生变化，在这种情况下，将这些用户定义成安全配置的一部分是非常简单的。</li>
+</ul>
+</li>
+<li><b>基于内存的用户存储不支持用户编辑，如果需要新增、移除或变更用户，那么你要对代码做出必要的修改，然后重新构建和部署应用</b>
+<ul class="quote">
+<li>对于Taco Cloud应用来说，我们希望顾客能够在应用中进行注册，并且能够管理自己的用户账号，这明显与内存用户存储的限制不符。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>基于JDBC的用户存储</h4>
+<ul class="point">
+<li><b>用户信息通常会在关系型数据库中进行维护，基于JDBC的用户存储方案会更加合理一些</b>
+<ul class="quote">
+<li>程序清单4.3展示了使用JDBC对存储在关系型数据库中的用户信息进行认证所需的Spring Security配置。</li>
+</ul>
+</li>
+<li><b>可以通过重写默认的用户查询功能，自定义用户详情查询</b>
+<ul class="quote">
+<li>尽管最少配置能够让一切运转起来，但是它对我们的数据库模式有一些要求，预期某些存储用户数据的表已经存在。</li>
+<li>如果你的数据库与上述的不一致，那么你会希望在查询上有更多的控制权，如果是这样，那么我们可以按照程序清单4.4所示的方式配置自己的查询。</li>
+</ul>
+</li>
+<li><b>使用转码后的密码，提高安全性</b>
+<ul class="quote">
+<li>为了解决这个问题，我们需要借助passwordEncoder()方法指定一个密码转码器(encoder)。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>以LDAP作为后端的用户存储</h4>
+<ul class="point">
+<li><b>配置Spring Security使用基于LDAP认证，可以配置密码比对，引用远程的LDAP服务器，配置嵌入式的LDAP服务器</b>
+<ul class="quote">
+<li>方法userSearchFilter()和groupSearchFilter()用来为基础LDAP查询提供过滤条件，它们分别用于搜索用户和组。</li>
+<li>默认情况下，在登录表单中提供的密码将会与用户的LDAP条目中的userPassword属性进行比对。</li>
+<li>如果你的LDAP服务器在另一台机器上，那么可以使用contextSource()方法来配置这个地址。</li>
+<li>如果你没有现成的LDAP服务器供认证使用，Spring Security还为我们提供了嵌入式的LDAP服务器。</li>
+</ul>
+</li>
+<li><b>配置用户搜索过滤器和组搜索过滤器</b>
+<ul class="quote">
+<li>userSearchBase()方法为查找用户提供了基础查询。</li>
+<li>同样的，groupSearchBase()为查找组指定了基础查询。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>自定义用户认证</h4>
+<ul class="point">
+<li><b>创建领域对象，以及展现和持久化用户信息的repository接口</b>
+<ul class="quote">
+<li>当Taco Cloud的顾客注册应用的时候，它们需要提供除用户名和密码之外的更多信息。</li>
+<li>User类要比第3章所定义的实体都更加复杂，除了定义了一些属性之外，User类还实现了Spring Security的UserDetails接口。</li>
+<li>UserRepository接口还定义了一个findByUsername()方法(将会在用户详情服务中用到，以便于根据用户名查找User)。</li>
+</ul>
+</li>
+<li><b>创建用户详情服务，实现UserDetailsService接口</b>
+<ul class="quote">
+<li>Spring Security的UserDetailsService是一个相当简单直接的接口。</li>
+<li>UserRepositoryUserDetailsService通过构造器将UserRepository注入进来。</li>
+<li>loadByUsername()方法有一个简单的规则：它决不能返回null。</li>
+</ul>
+</li>
+<li><b>为Taco Cloud创建一个注册页面，供用户注册本应用</b>
+<ul class="quote">
+<li>尽管在安全性方面，Spring Security会为我们处理很多事情，但是它没有直接涉及用户注册的流程，所以我们需要借助Spring MVC的一些技能来完成这个任务。</li>
+<li>当表单提交的时候，processRegistration()方法会处理HTTP POST请求。</li>
+<li>RegistrationController注入了一个PasswordEncoder，这其实就是我们在前面所声明的PasswordEncoder。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch25"><summary>4.3 保护Web请求</summary>
+<div class="sec">
+<h4>配置WebSecurityConfigurerAdapter</h4>
+<ul class="point">
+<li><b>configure()方法接受一个HttpSecurity对象，能够用来配置在Web级别该如何处理安全性</b>
+<ul class="quote">
+<li>我们可以使用HttpSecurity配置的功能包括：在为某个请求提供服务之前，需要预先满足特定的条件；配置自定义的登录页；支持用户退出应用；预防跨站请求伪造。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>保护请求</h4>
+<ul class="point">
+<li><b>确保只有认证过的用户才能发起对“/design”和“/orders”的请求，而其他请求对所有用户均可用</b>
+<ul class="quote">
+<li>对authorizeRequests()的调用会返回一个对象(ExpressionInterceptUrlRegistry)，基于它我们可以指定URL路径和这些路径的安全需求。</li>
+<li>在声明请求路径的安全需求时，hasRole()和permitAll()只是众多方法中的两个。</li>
+<li>我们还可以使用access()方法，通过为其提供SpEL表达式来声明更丰富的安全规则。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>创建自定义的登录页</h4>
+<ul class="point">
+<li><b>告诉Spring Security自定义登录页的路径是什么</b>
+<ul class="quote">
+<li>这可以通过调用传入到configure()中的HttpSecurity对象的formLogin()方法来实现。</li>
+</ul>
+</li>
+<li><b>需要有一个控制器来处理对该路径的请求</b>
+<ul class="quote">
+<li>因为我们的登录页非常简单，只有一个视图，没有其他内容，所以我们可以很简单地在WebConfig中将其声明为一个视图控制器。</li>
+</ul>
+</li>
+<li><b>自己定义登录页的视图</b>
+<ul class="quote">
+<li>我们目前使用了Thymeleaf作为模板引擎，所以如下的Thymeleaf就能实现我们的要求。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>退出</h4>
+<ul class="point">
+<li><b>启用退出功能，我们只需在HttpSecurity对象上调用logout方法</b>
+<ul class="quote">
+<li>这样会搭建一个安全过滤器，该过滤器会拦截对“/logout”的请求。</li>
+</ul>
+</li>
+<li><b>为了提供退出功能，我们需要为应用的视图添加一个退出表单和按钮</b>
+<ul class="quote">
+<li>当用户点击按钮的时候，他们的session将会被清理，这样他们就退出应用了。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>防止跨站请求伪造</h4>
+<ul class="point">
+<li><b>Spring Security提供了内置的CSRF保护，默认它就是启用的，我们不需要显式配置它</b>
+<ul class="quote">
+<li>我们唯一需要做的就是确保应用中的每个表单都要有一个名为“_csrf”的字段，它会持有CSRF token。</li>
+<li>Spring Security甚至进一步简化了将token放到请求的“_csrf”属性中这一任务。</li>
+<li>在Thymeleaf模板中，我们可以按照如下的方式在隐藏域中渲染CSRF token。</li>
+<li>如果你使用Spring MVC的JSP标签库或者Spring Security的Thymeleaf方言，那么甚至都不用明确包含这个隐藏域(这个隐藏域会自动生成)。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch26"><summary>4.4 了解用户是谁</summary>
+<div class="sec">
+<h4>在Order实体和User实体之间实现关联</h4>
+<ul class="point">
+<li><b>为Order类添加一个@ManyToOne注解的user属性</b>
+<ul class="quote">
+<li>这个属性上的@ManyToOne注解表明一个订单只能属于一个用户，但是，一个用户却可以有多个订单。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>确定用户是谁的多种方式</h4>
+<ul class="point">
+<li><b>注入Principal对象到控制器方法中</b>
+<ul class="quote">
+<li>我们可以使用Principal的名称从UserRepository中查找用户了。</li>
+</ul>
+</li>
+<li><b>注入Authentication对象到控制器方法中</b>
+<ul class="quote">
+<li>有了Authentication对象之后，我们就可以调用getPrincipal()来获取principal对象，在本例中，也就是一个User对象。</li>
+</ul>
+</li>
+<li><b>使用SecurityContextHolder来获取安全上下文</b>
+<ul class="quote">
+<li>尽管这个代码片段充满了安全性相关的代码，但是它与前文所述的其他方法相比有一个优势：它可以在应用程序的任何地方使用，而不仅仅是在控制器的处理器方法中。</li>
+</ul>
+</li>
+<li><b>使用@AuthenticationPrincipal注解来标注方法</b>
+<ul class="quote">
+<li>@AuthenticationPrincipal非常好的一点在于它不需要类型转换(前文中的Authentication则需要进行类型转换)，同时能够将安全相关的代码仅仅局限于注解本身。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch27"><summary>4.5 小结</summary>
+<div class="sec">
+<h4>Spring Security的自动配置</h4>
+<ul class="point">
+<li><b>Spring Security的自动配置是实现基本安全性功能的好办法</b>
+<ul class="quote">
+<li>大多数的应用都需要显式的安全配置，这样才能满足特定的安全需求。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>用户详情的管理</h4>
+<ul class="point">
+<li><b>用户详情可以通过用户存储进行管理，它的后端可以是关系型数据库、LDAP或完全自定义实现。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>CSRF攻击的防范</h4>
+<ul class="point">
+<li><b>Spring Security会自动防范CSRF攻击。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>已认证用户的信息获取</h4>
+<ul class="point">
+<li><b>已认证用户的信息可以通过SecurityContext对象来获取</b>
+<ul class="quote">
+<li>SecurityContext对象可由SecurityContextHolder.getContext()返回。</li>
+</ul>
+</li>
+<li><b>可以借助@AuthenticationPrincipal注解将已认证用户信息注入到控制器中。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch28"><summary>第5章 使用配置属性</summary>
+<div class="sec">
+<h4>Spring Boot自动配置的简化作用</h4>
+<ul class="point">
+<li><b>Spring Boot的自动配置能够极大地简化Spring应用的开发</b>
+<ul class="quote">
+<li>十多年来，我们都是使用Spring XML设置属性值，然后调用bean实例的setter方法。</li>
+<li>在使用自动配置之后，我们突然发现在没有显式配置的情况下，如何为bean设置属性变得不那么显而易见了。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>配置属性的概念和设置方式</h4>
+<ul class="point">
+<li><b>配置属性只是Spring应用上下文中bean的属性，可以通过多个源进行设置</b>
+<ul class="quote">
+<li>包括JVM系统属性、命令行参数以及环境变量。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用配置属性微调Spring Boot的自动配置。</h4>
+<ul class="point">
+</ul></div>
+</details>
+<details class="ch" id="ch29"><summary>5.1 细粒度的自动配置</summary>
+<div class="sec">
+<h4>Spring Boot中的配置属性</h4>
+<ul class="point">
+<li><b>Spring Boot中有两种不同(但相关)的配置：bean装配和属性注入</b>
+<ul class="quote">
+<li>bean装配：声明在Spring应用上下文中创建哪些应用组件以及它们之间如何互相注入的配置。</li>
+<li>属性注入：设置Spring应用上下文中bean的值的配置。</li>
+</ul>
+</li>
+<li><b>Spring的环境抽象是各种配置属性的一站式服务</b>
+<ul class="quote">
+<li>Spring环境会拉取多个属性源，包括：JVM系统属性；操作系统环境变量；命令行参数；应用属性配置文件。</li>
+<li>它会将这些属性聚合到一个源中，通过这个源可以注入到Spring的bean中。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>配置数据源</h4>
+<ul class="point">
+<li><b>通过配置属性设置数据库URL和凭证信息会更加简单</b>
+<ul class="quote">
+<li>如果想要开始使用MySQL数据库，那么可以把如下的配置属性添加到application.yml中：spring: datasource: url: jdbc:mysql://localhost/tacocloud username: tacodb password: tacopassword。</li>
+<li>Spring Boot会根据数据库URL的结构推算出来JDBC驱动类，如果这样做有问题的话，我们依然可以通过spring.datasource.driver-class-name属性来进行设置。</li>
+</ul>
+</li>
+<li><b>spring.datasource.schema和spring.datasource.data属性可以用来指定数据库初始化脚本</b>
+<ul class="quote">
+<li>spring: datasource: schema: - order-schema.sql - ingredient-schema.sql - taco-schema.sql - user-schema.sql data: - ingredients.sql。</li>
+</ul>
+</li>
+<li><b>如果想要在JNDI中配置数据源并让Spring去那里进行查找，我们可以使用spring.datasource.jndi-name搭建自己的数据源</b>
+<ul class="quote">
+<li>spring: datasource: jndi-name: java:/comp/env/jdbc/tacoCloudDS。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>配置嵌入式服务器</h4>
+<ul class="point">
+<li><b>通过设置server.port属性为0，可以让服务器任选一个可用的端口</b>
+<ul class="quote">
+<li>尽管我们将server.port属性显式设置成了0，但是服务器并不会真的在端口0上启动。</li>
+</ul>
+</li>
+<li><b>可以通过设置server.ssl.key-store、server.ssl.key-store-password和server.ssl.key-password属性来启用HTTPS</b>
+<ul class="quote">
+<li>server: port: 8443 ssl: key-store: file:///path/to/mykeys.jks key-store-password: letmein key-password: letmein。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>配置日志</h4>
+<ul class="point">
+<li><b>通过创建logback.xml文件，可以完全控制应用的日志文件</b>
+<ul class="quote">
+<li>&lt;configuration&gt; &lt;appender name=&quot;STDOUT&quot; class=&quot;ch.qos.logback.core.ConsoleAppender&quot;&gt;&lt;encoder&gt;&lt;pattern&gt; %d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n &lt;/pattern&gt; &lt;/encoder&gt; &lt;/appender&gt;&lt;logger name=&quot;root&quot; level=&quot;INFO&quot;/&gt; &lt;root level=&quot;INFO&quot;&gt; &lt;appender-ref ref=&quot;STDOUT&quot; /&gt; &lt;/root&gt; &lt;/configuration&gt;。</li>
+</ul>
+</li>
+<li><b>可以通过创建以logging.level作为前缀的属性，来设置日志级别</b>
+<ul class="quote">
+<li>logging: level: root: WARN org.springframework.security: DEBUG。</li>
+</ul>
+</li>
+<li><b>可以通过设置logging.path和logging.file属性，来指定日志写入到哪个文件中</b>
+<ul class="quote">
+<li>logging: path: /var/logs/ file: TacoCloud.log level: root: WARN org.springframework.security: DEBUG。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用特定的属性值</h4>
+<ul class="point">
+<li><b>可以从其他的配置属性派生值</b>
+<ul class="quote">
+<li>例如，假设(不管基于什么原因)我们想要设置一个名为greeting.welcome的属性，它的值来源于名为spring.application.name的另一个属性。为了实现该功能，在设置greeting.welcome的时候，我们可以使用${}占位符标记：greeting: welcome: ${spring.application.name}。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch30"><summary>5.2 创建自己的配置属性</summary>
+<div class="sec">
+<h4>Spring Boot使用@ConfigurationProperties注解支持配置属性的注入</h4>
+<ul class="point">
+<li><b>通过在OrderController中添加@ConfigurationProperties注解，并将前缀设置为taco.orders，可以将每页订单数量设置为自定义的配置属性</b>
+<ul class="quote">
+<li>配置属性持有者bean可以将配置数据从控制器和其他应用程序类中抽离出来，使多个bean更容易共享一些通用的配置。</li>
+<li>为配置属性创建元数据可以为使用这些属性的人提供文档，消除IDE上的警告信息，并具备自动补全功能。</li>
+<li>使用Spring profile可以搭建特定环境的配置，以适应不同的部署环境。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch31"><summary>5.3 使用profile进行配置</summary>
+<div class="sec">
+<h4>使用profile进行配置</h4>
+<ul class="point">
+<li><b>profile是一种条件化的配置，在运行时，根据哪些profile处于激活状态，可以使用或忽略不同的bean、配置类和配置属性</b>
+<ul class="quote">
+<li>为了开发和调试方便，我们希望使用嵌入式的H2数据库，并且Taco Cloud代码的日志级别为DEBUG。</li>
+<li>在生产环境中，我们希望使用外部的MySQL数据库，并将日志级别设置为WARN。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>定义特定profile的属性</h4>
+<ul class="point">
+<li><b>创建另外一个YAML或属性文件，其中只包含用于生产环境的属性</b>
+<ul class="quote">
+<li>例如，我们可以创建一个新的名为application-prod.yml的文件，其中包含如下属性。</li>
+<li>spring。</li>
+<li>datasource。</li>
+<li>url: jdbc:mysql://localhost/tacocloud。</li>
+<li>username: tacouser。</li>
+<li>password: tacopassword。</li>
+<li>logging。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch32"><summary>5.4 小结</summary>
+<div class="sec">
+<h4>Spring bean的@ConfigurationProperties注解。</h4>
+<ul class="point">
+</ul></div>
+<div class="sec">
+<h4>配置属性的设置方式</h4>
+<ul class="point">
+<li><b>配置属性可以通过命令行参数、环境变量、JVM系统属性、属性文件或YAML文件等方式进行设置。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>配置属性对自动配置的覆盖</h4>
+<ul class="point">
+<li><b>配置属性可以用来覆盖自动配置相关的设置，包括指定数据源URL和日志级别。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring profile与属性源的协同使用</h4>
+<ul class="point">
+<li><b>Spring profile可以与属性源协同使用，从而能够基于激活的profile条件化地设置配置属性。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch33"><summary>第2部分 Spring集成</summary>
+<div class="sec">
+<h4>Spring MVC在REST API开发中的应用</h4>
+<ul class="point">
+<li><b>使用Spring MVC定义REST端点</b>
+<ul class="quote">
+<li>Spring MVC通过@RestController注解定义REST端点。</li>
+</ul>
+</li>
+<li><b>启用超媒体REST资源</b>
+<ul class="quote">
+<li>Spring MVC通过@EnableHypermediaSupport注解启用超媒体支持。</li>
+</ul>
+</li>
+<li><b>使用Spring Data REST自动生成基于repository的REST端点</b>
+<ul class="quote">
+<li>Spring Data REST通过@RepositoryRestResource注解自动生成REST端点。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring应用消费REST API的方法</h4>
+<ul class="point">
+<li><b>使用RestTemplate消费REST API。</b>
+</li>
+<li><b>使用WebClient消费REST API</b>
+<ul class="quote">
+<li>WebClient是Spring WebFlux提供的一个用于消费REST API的客户端。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring应用与消息队列的集成</h4>
+<ul class="point">
+<li><b>使用Spring Integration项目实现声明式应用集成</b>
+<ul class="quote">
+<li>Spring Integration项目提供了用于实现企业级集成模式(EIP)的API。</li>
+</ul>
+</li>
+<li><b>实时处理数据、定义集成流以及与外部系统(如Email和文件系统)集成的功能。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch34"><summary>第6章 创建REST服务</summary>
+<div class="sec">
+<h4>在Spring MVC中定义REST端点</h4>
+<ul class="point">
+<li><b>使用Spring MVC的控制器创建RESTful端点</b>
+<ul class="quote">
+<li>编写几个新的Spring MVC控制器，它们会使用REST端点来暴露后端功能。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>启用超链接REST资源</h4>
+<ul class="point">
+<li><b>将Spring Data repository暴露为REST端点。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>自动化基于repository的REST端点</h4>
+<ul class="point">
+<li><b>使用Spring Data JPA自动生成CRUD操作</b>
+<ul class="quote">
+<li>Spring Data JPA可以自动生成基于repository的REST端点。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>测试和保护REST服务</h4>
+<ul class="point">
+<li><b>使用Postman测试REST服务。</b>
+</li>
+<li><b>使用Spring Security保护REST服务</b>
+<ul class="quote">
+<li>Spring Security是一个用于保护Web应用的安全框架。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch35"><summary>6.1 编写RESTful控制器</summary>
+<div class="sec">
+<h4>是否要采用SPA</h4>
+<ul class="point">
+<li><b>SPA在展现和后端处理上解耦，提供为相同的后端功能开发多个用户界面的机会</b>
+<ul class="quote">
+<li>SPA还为与其他可以使用API的应用程序集成创造了可能性。</li>
+</ul>
+</li>
+<li><b>如果只需要在Web页面上显示信息，MPA是一种更简单的设计</b>
+<ul class="quote">
+<li>MPA更适用于只需要在Web页面上显示信息的情况。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>从服务器中检索数据</h4>
+<ul class="point">
+<li><b>Angular客户端代码通过HTTP请求与REST API进行通信</b>
+<ul class="quote">
+<li>在Angular代码中，我们定义了RecentTacosComponent组件，它会展现最新创建的taco。</li>
+<li>在RecentTacosComponent的ngOnInit()方法中，RecentTacosComponent使用注入的Http模块来针对http://localhost:8080/design/recent地址发送HTTP GET请求。</li>
+</ul>
+</li>
+<li><b>创建一个新的控制器来处理针对“/design/recent”的HTTP GET请求</b>
+<ul class="quote">
+<li>控制器名为DesignTacoController，由@RestController注解声明。</li>
+<li>@RequestMapping注解，再加上recentTacos()方法上的@GetMapping注解，两者结合起来指定recentTacos()方法将会负责处理针对“/design/recent”的GET请求。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>发送数据到服务器端</h4>
+<ul class="point">
+<li><b>通过Angular组件处理表单提交，向API发送数据</b>
+<ul class="quote">
+<li>在客户端代码方面，我们通过一个名为DesignComponent的新Angular组件来处理taco设计表单。</li>
+<li>在onSubmit()方法中，我们调用了HttpClient的post()方法而不是get()方法。</li>
+</ul>
+</li>
+<li><b>在DesignTacoController中编写一个方法处理该请求并保存该taco设计</b>
+<ul class="quote">
+<li>postTaco()方法使用了@PostMapping注解，而不是@GetMapping。</li>
+<li>方法的Taco参数带有@RequestBody注解，表明请求应该被转换为一个Taco对象并绑定到该参数上。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>在服务器上更新数据</h4>
+<ul class="point">
+<li><b>使用@PutMapping和@PatchMapping来更新资源</b>
+<ul class="quote">
+<li>PUT请求的真正目的是执行大规模的替换(replacement)操作，而不是更新操作。</li>
+<li>HTTP PATCH的目的是对资源数据打补丁或局部更新。</li>
+</ul>
+</li>
+<li><b>patchOrder()方法比putOrder()方法要更复杂一些，需要更多的智慧来执行更新</b>
+<ul class="quote">
+<li>对于patchMapping()来说，为了符合HTTP PATCH的语义，方法体需要更多的智慧才行。</li>
+<li>在这里，我们不是用新发送过来的数据完全替换已有的订单，而是探查传入Order对象的每个字段，并将所有非null的值应用到已有的订单上。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>删除服务器上的数据</h4>
+<ul class="point">
+<li><b>使用@DeleteMapping注解声明处理DELETE请求的方法</b>
+<ul class="quote">
+<li>@DeleteMapping会指定deleteOrder()方法负责处理针对“/orders/{orderId}”的DELETE请求。</li>
+<li>这个方法中的代码会负责真正删除订单。</li>
+</ul>
+</li>
+<li><b>deleteOrder()方法唯一需要注意的是它使用了@ResponseStatus注解，以确保响应的HTTP状态码为204(NO CONTENT)</b>
+<ul class="quote">
+<li>对于已经不存在的资源，我们没有必要返回任何的资源数据给客户端，因此DELETE请求通常并没有响应体，我们需要以HTTP状态码的形式让客户端知道不要期望得到任何的内容。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch36"><summary>6.2 启用超媒体</summary>
+<div class="sec">
+<h4>超媒体作为应用状态引擎(HATEOAS)的概念和优势</h4>
+<ul class="point">
+<li><b>HATEOAS是一种创建自描述API的方式，API所返回的资源中会包含相关资源的链接</b>
+<ul class="quote">
+<li>客户端只需要了解最少的API URL信息就能导航整个API。</li>
+</ul>
+</li>
+<li><b>超媒体方式能够掌握API所提供的资源之间的关系，客户端能够基于API的URL中所发现的关系对它们进行遍历</b>
+<ul class="quote">
+<li>如果API启用了超媒体功能，那么API将会描述自己的URL，从而减轻客户端对其进行硬编码的痛苦。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>在Spring HATEOAS中添加超链接</h4>
+<ul class="point">
+<li><b>Spring HATEOAS提供了两个主要的类型来表示超链接资源：Resource和Resources</b>
+<ul class="quote">
+<li>Resource代表一个资源，而Resources代表资源的集合。</li>
+</ul>
+</li>
+<li><b>使用ControllerLinkBuilder可以避免在URL中使用硬编码的主机名</b>
+<ul class="quote">
+<li>ControllerLinkBuilder非常智能，它能自动探知主机名是什么，这样就能避免对其进行硬编码。</li>
+<li>ControllerLinkBuilder还提供了流畅的API，允许我们相对于控制器的基础URL构建链接。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>创建资源装配器</h4>
+<ul class="point">
+<li><b>为了将Taco对象转换成TacoResource对象，我们需要创建一个资源装配器(resource assembler)</b>
+<ul class="quote">
+<li>TacoResourceAssembler有一个默认的构造器，会告诉超类(ResourceAssemblerSupport)在创建TacoResource中的链接时将会使用DesignTacoController来确定所有URL的基础路径。</li>
+<li>instantiateResource()方法进行了重写，以便基于给定的Taco实例化TacoResource。</li>
+<li>toResource()方法，这是在扩展ResourceAssemblerSupport时唯一强制实现的方法。在这里，我们告诉它要通过Taco创建TacoResource，并且要设置一个self链接，这个链接的URL是根据Taco对象的id属性衍生出来的。</li>
+</ul>
+</li>
+<li><b>我们需要为配料创建一个新的资源装配器</b>
+<ul class="quote">
+<li>IngredientResourceAssembler与TacoResourceAssembler非常相似，但是它使用的是Ingredient和IngredientResource对象而不是Taco和TacoResource对象。</li>
+<li>这个新版本的TacoResource会创建一个static final的IngredientResourceAssembler实例，并且会使用它的toResource()方法将给定Taco对象的Ingredient列表转换成IngredientResource列表。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>命名嵌套式的关联关系</h4>
+<ul class="point">
+<li><b>@Relation注解能够帮助我们消除JSON字段名和Java代码中定义的资源类名之间的耦合</b>
+<ul class="quote">
+<li>通过为TacoResource添加@Relation注解，我们就能指定Spring HATEOAS该如何命名结果JSON中的字段名。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch37"><summary>6.3 启用数据后端服务</summary>
+<div class="sec">
+<h4>Spring Data REST简介</h4>
+<ul class="point">
+<li><b>Spring Data REST会为Spring Data创建的repository自动生成REST API。</b>
+</li>
+<li><b>将Spring Data REST starter添加到构建文件中之后，应用的自动配置功能会为Spring Data(包括Spring Data JPA、Spring Data Mongo等)创建的所有repository自动创建REST API。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>调整资源路径和关系名称</h4>
+<ul class="point">
+<li><b>Spring Data REST会尝试使用相关实体类的复数形式，但有时会出现错误</b>
+<ul class="quote">
+<li>Spring Data REST将“taco”的复数形式计算成了“tacoes”。</li>
+</ul>
+</li>
+<li><b>通过为Taco添加一个简单的注解，我们就能调整关系名和路径</b>
+<ul class="quote">
+<li>@RestResource注解能够为实体提供任何我们想要的关系名和路径。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>分页和排序</h4>
+<ul class="point">
+<li><b>默认情况下，请求集合资源都会返回第一页的20个条目，但可以通过在请求中指定page和size参数调整具体的页数和每页的数量</b>
+<ul class="quote">
+<li>例如，我们想要请求第一页的taco，但是希望包含5个条目，就可以发送如下的GET请求(使用curl)：$ curl &quot;localhost:8080/api/tacos?size=5&quot;。</li>
+<li>如果taco的数量超过了5个，我们可以通过使用page参数获取第二页的taco：$ curl &quot;localhost:8080/api/tacos?size=5&amp;page=1&quot;。</li>
+</ul>
+</li>
+<li><b>sort参数允许我们根据实体的某个属性对结果进行排序</b>
+<ul class="quote">
+<li>例如，我们想要获取最近创建的12条taco进行UI展示，就可以混合使用分页和排序参数实现：$ curl &quot;localhost:8080/api/tacos?sort=createdAt,desc&amp;page=0&amp;size=12&quot;。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>添加自定义的端点</h4>
+<ul class="point">
+<li><b>Spring Data REST能够很好地为执行CRUD操作的Spring Data repository创建端点，但有时候，我们需要脱离默认的CRUD API，创建处理核心问题的端点</b>
+<ul class="quote">
+<li>我们当然可以在带有@RestController注解的bean中实现任意的端点，以此来补充Spring Data REST端点的不足。</li>
+</ul>
+</li>
+<li><b>Spring Data REST提供了一个新的注解@RepositoryRestController，这个注解可以用到控制器类上，这样控制器类所有映射的基础路径就会与Spring Data REST端点配置的基础路径相同</b>
+<ul class="quote">
+<li>在使用@RepositoryRestController注解的控制器中，所有映射将会具有和spring.data.rest.base-path属性值一样的前缀(我们之前将这个属性的值配置成了“/api”)。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>为Spring Data端点添加自定义的超链接</h4>
+<ul class="point">
+<li><b>通过声明资源处理器(resource processor)bean，我们可以为Spring Data REST自动包含的链接列表继续添加链接</b>
+<ul class="quote">
+<li>Spring Data HATEOAS提供了一个ResourceProcessor接口，能够在资源通过API返回之前对其进行操作。</li>
+<li>对于我们的场景来说，需要一个ResourceProcessor实现，为PagedResources&lt;Resource&lt;Taco&gt;&gt;类型的资源(也就是“/api/tacos”端点所返回的类型)添加recents链接。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch38"><summary>6.4 小结</summary>
+<div class="sec">
+<h4>REST端点的创建</h4>
+<ul class="point">
+<li><b>Spring MVC可以用来创建REST端点</b>
+<ul class="quote">
+<li>控制器与面向浏览器的控制器遵循相同的编程模型。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>数据直接写入响应体</h4>
+<ul class="point">
+<li><b>控制器处理方法可以添加@ResponseBody注解或者返回ResponseEntity对象</b>
+<ul class="quote">
+<li>为了绕过视图和模型的逻辑并将数据直接写入响应体中。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>@RestController注解的简化作用</h4>
+<ul class="point">
+<li><b>使用@RestController注解可以简化REST控制器</b>
+<ul class="quote">
+<li>处理器方法中就不需要添加@ResponseBody注解了。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring HATEOAS的超链接功能</h4>
+<ul class="point">
+<li><b>Spring HATEOAS为Spring MVC控制器返回的资源启用了超链接功能。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Data REST的自动导出功能</h4>
+<ul class="point">
+<li><b>Spring Data repository可以自动导出为REST API。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch39"><summary>第7章 消费REST服务</summary>
+<div class="sec">
+<h4>使用RestTemplate消费REST API</h4>
+<ul class="point">
+<li><b>RestTemplate是Spring核心框架提供的简单、同步REST客户端</b>
+<ul class="quote">
+<li>RestTemplate可以用于发送HTTP请求并处理响应。</li>
+</ul>
+</li>
+<li><b>RestTemplate的使用示例</b>
+<ul class="quote">
+<li>使用RestTemplate发起GET请求。</li>
+<li>使用RestTemplate发起POST请求。</li>
+<li>使用RestTemplate发起PUT请求。</li>
+<li>使用RestTemplate发起DELETE请求。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用Traverson导航超媒体API</h4>
+<ul class="point">
+<li><b>Traverson是Spring HATEOAS提供的支持超链接、同步的REST客户端</b>
+<ul class="quote">
+<li>Traverson可以用于导航REST API中的超媒体链接。</li>
+</ul>
+</li>
+<li><b>Traverson的使用示例</b>
+<ul class="quote">
+<li>使用Traverson发起GET请求。</li>
+<li>使用Traverson发起POST请求。</li>
+<li>使用Traverson发起PUT请求。</li>
+<li>使用Traverson发起DELETE请求。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch40"><summary>7.1 使用RestTemplate消费REST端点</summary>
+<div class="sec">
+<h4>RestTemplate简介</h4>
+<ul class="point">
+<li><b>RestTemplate是Spring提供的一个工具类，用于简化与REST资源的交互</b>
+<ul class="quote">
+<li>RestTemplate提供了41个与REST资源交互的方法。</li>
+<li>RestTemplate对每种标准的HTTP方法都提供了至少一个方法。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>GET资源</h4>
+<ul class="point">
+<li><b>使用getForObject()和getForEntity()方法获取资源</b>
+<ul class="quote">
+<li>getForObject()方法的第二个参数是响应应该绑定的类型。</li>
+<li>getForEntity()返回的是一个包裹领域对象的ResponseEntity对象。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>PUT资源</h4>
+<ul class="point">
+<li><b>使用put()方法发送HTTP PUT请求</b>
+<ul class="quote">
+<li>put()方法的3个变种形式都会接收一个Object，它会被序列化并发送至给定的URL。</li>
+<li>put()方法返回的是void，所以没有必要处理返回值。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>DELETE资源</h4>
+<ul class="point">
+<li><b>使用delete()方法删除资源</b>
+<ul class="quote">
+<li>我们只为delete()提供了URL(以String的形式指定)和URL变量值。</li>
+<li>URL能够以URI对象的方式来指定，并且URL参数也能够以Map的方式来声明。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>POST资源</h4>
+<ul class="point">
+<li><b>使用postForObject()、postForLocation()和postForEntity()方法发送HTTP POST请求</b>
+<ul class="quote">
+<li>postForObject()方法接收一个String类型的URL规范、要提交给服务器端的对象以及响应体应该绑定的领域类型。</li>
+<li>postForLocation()返回的是新创建资源的URI，而不是资源对象本身。</li>
+<li>postForEntity()同时需要地址和响应载荷。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch41"><summary>7.2 使用Traverson导航REST API</summary>
+<div class="sec">
+<h4>Traverson简介</h4>
+<ul class="point">
+<li><b>Traverson是Spring应用中开箱即用的消费超媒体API的解决方案</b>
+<ul class="quote">
+<li>Traverson来源于Spring Data HATEOAS项目，灵感来源于同名的JavaScript库。</li>
+</ul>
+</li>
+<li><b>Traverson通过遍历API关系名的方式来消费API</b>
+<ul class="quote">
+<li>要使用Traverson，首先我们要用API的基础URI来实例化一个Traverson对象。</li>
+<li>有了Traverson对象之后，我们就可以通过以下链接使用API。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Traverson的使用</h4>
+<ul class="point">
+<li><b>通过调用Traverson对象的follow()方法，可以导航至链接关系名为ingredients的资源</b>
+<ul class="quote">
+<li>ParameterizedTypeReference&lt;Resources&lt;Ingredient&gt;&gt; ingredientType = new ParameterizedTypeReference&lt;Resources&lt;Ingredient&gt;&gt;() {};</li>
+<li>Resources&lt;Ingredient&gt; ingredientRes = traverson.follow(&quot;ingredients&quot;).toObject(ingredientType);</li>
+</ul>
+</li>
+<li><b>通过跟踪tacos链接，然后从这里开始，跟踪recents链接，可以得到感兴趣的资源</b>
+<ul class="quote">
+<li>ParameterizedTypeReference&lt;Resources&lt;Taco&gt;&gt; tacoType = new ParameterizedTypeReference&lt;Resources&lt;Taco&gt;&gt;() {};</li>
+<li>Resources&lt;Taco&gt; tacoRes = traverson.follow(&quot;tacos&quot;, &quot;recents&quot;).toObject(tacoType);</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Traverson与RestTemplate的结合使用</h4>
+<ul class="point">
+<li><b>Traverson能够导航HATEOAS的API并消费其资源，但无法通过这些API写入或删除资源</b>
+<ul class="quote">
+<li>当你既要导航API又要更新或删除资源时，你需要组合使用RestTemplate和Traverson。</li>
+</ul>
+</li>
+<li><b>Traverson可以导航至创建新资源的链接，然后可以将这个链接传递给RestTemplate来执行POST、PUT、DELETE或任何其他需要的HTTP请求</b>
+<ul class="quote">
+<li>例如，我们想要为Taco Cloud菜单添加一个新的Ingredient，可以通过调用addIngredient()方法将Traverson和RestTemplate组合起来，向API提交了一个新的Ingredient。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch42"><summary>第8章 发送异步消息</summary>
+<div class="sec">
+<h4>异步消息的概念和特点</h4>
+<ul class="point">
+<li><b>异步消息是一个应用程序向另一个应用程序间接发送消息的一种方式</b>
+<ul class="quote">
+<li>这种间接性能够为进行通信的应用带来更松散的耦合和更大的可伸缩性。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用JMS、RabbitMQ和Kafka发送消息</h4>
+<ul class="point">
+<li><b>Spring提供了3种异步消息方案：Java消息服务(Java Message Service，JMS)、RabbitMQ和高级消息队列协议(Advanced Message Queueing Protocol)、Apache Kafka</b>
+<ul class="quote">
+<li>除了基础的发送和接收消息之外，我们还会看一下Spring对消息驱动POJO的支持，它是一种与EJB的消息驱动Bean(Message-Driven Bean，MDB)类似的消息接收方式。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch43"><summary>8.1 使用JMS发送消息</summary>
+<div class="sec">
+<h4>搭建JMS环境</h4>
+<ul class="point">
+<li><b>选择Apache ActiveMQ还是更新的Apache ActiveMQ Artemis代理</b>
+<ul class="quote">
+<li>如果选择使用Apache ActiveMQ，那么我们需要添加如下的依赖到项目的pom.xml文件中：&lt;dependency&gt;&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;&lt;artifactId&gt;spring-boot-starter-activemq&lt;/artifactId&gt; &lt;/dependency&gt;。</li>
+<li>如果选择使用ActiveMQ Artemis，那么starter依赖将会如下所示：&lt;dependency&gt;&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;&lt;artifactId&gt;spring-boot-starter-artemis&lt;/artifactId&gt; &lt;/dependency&gt;。</li>
+</ul>
+</li>
+<li><b>配置Spring创建到代理的连接</b>
+<ul class="quote">
+<li>默认情况下，Spring会假定Artemis代理在localhost的61616端口运行。</li>
+<li>对于开发来说，这样是没有问题的，但是一旦要将应用部署到生产环境，我们就需要设置一些属性来告诉Spring该如何访问代理。</li>
+<li>最有用的属性如表8.1所示。</li>
+<li>如果选择使用ActiveMQ而不是Artemis，那么需要使用ActiveMQ特定的属性，如表8.2所示。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用JmsTemplate发送消息</h4>
+<ul class="point">
+<li><b>JmsTemplate是Spring对JMS集成支持功能的核心</b>
+<ul class="quote">
+<li>JmsTemplate消除了大量传统使用JMS时所需的样板代码。</li>
+</ul>
+</li>
+<li><b>JmsTemplate有多个用来发送消息的方法</b>
+<ul class="quote">
+<li>send()方法都需要MessageCreator来生成Message对象。</li>
+<li>convertAndSend()方法会接受Object对象，并且会在幕后自动将Object转换为Message。</li>
+<li>convertAndSend()会自动将Object转换为Message，但同时还能接受一个MessagePostProcessor对象，用来在发送之前对Message进行自定义。</li>
+</ul>
+</li>
+<li><b>配置消息转换器</b>
+<ul class="quote">
+<li>默认情况下，将会使用SimpleMessageConverter，但是它需要被发送的对象实现Serializable。</li>
+<li>为了使用不同的消息转换器，我们必须要做的事情就是将选中的消息转换器实例声明为一个bean。</li>
+</ul>
+</li>
+<li><b>对消息进行后期处理</b>
+<ul class="quote">
+<li>我们可以传递一个MessagePostProcessor作为convertAndSend()的最后一个参数，借助它我们可以在Message创建之后做任何想做的事情。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>接收JMS消息</h4>
+<ul class="point">
+<li><b>使用JmsTemplate来接收消息</b>
+<ul class="quote">
+<li>JmsTemplate提供了多个对代理的拉取方法，其中包括：Message receive() throws JmsException; Message receive(Destination destination) throws JmsException; Message receive(String destinationName) throws JmsException; Object receiveAndConvert() throws JmsException; Object receiveAndConvert(Destination destination) throws JmsException; Object receiveAndConvert(String destinationName) throws JmsException;。</li>
+</ul>
+</li>
+<li><b>声明消息监听器</b>
+<ul class="quote">
+<li>要创建能够对JMS消息做出反应的消息监听器，我们需要为组件中的某个方法添加@JmsListener注解。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch44"><summary>8.2 使用RabbitMQ和AMQP</summary>
+<div class="sec">
+<h4>RabbitMQ和AMQP的基本概念</h4>
+<ul class="point">
+<li><b>RabbitMQ是AMQP最杰出的实现，提供了比JMS更高级的消息路由策略</b>
+<ul class="quote">
+<li>JMS消息使用目的地名称来寻址，接收者要从这里检索消息，而AMQP消息使用Exchange和routing key来寻址，这样消息就与接收者要监听的队列解耦了。</li>
+</ul>
+</li>
+<li><b>Exchange和队列的关系是，消息会通过routing key发送至Exchange，而消息要在队列中被消费</b>
+<ul class="quote">
+<li>Exchange负责将它路由到一个或多个队列中，这个过程会根据Exchange的类型、Exchange和队列之间的binding以及消息的routing key进行路由。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>添加RabbitMQ到Spring中</h4>
+<ul class="point">
+<li><b>将Spring Boot的AMQP starter依赖添加到构建文件中</b>
+<ul class="quote">
+<li>替换上文中Artemis或ActiveMQ starter的位置。</li>
+</ul>
+</li>
+<li><b>自动配置功能会为我们创建一个AMQP连接工厂和RabbitTemplate bean</b>
+<ul class="quote">
+<li>我们只需要添加这项依赖就可以了。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>通过RabbitTemplate发送消息</h4>
+<ul class="point">
+<li><b>RabbitTemplate与JmsTemplate类似，提供了一组相似的方法</b>
+<ul class="quote">
+<li>但是，我们将会看到，这里有一些细微的差异，这是与RabbitMQ独特的运行方式有关的。</li>
+</ul>
+</li>
+<li><b>使用RabbitTemplate发送消息方面，我们可以使用与JmsTemplate中同名的send()和convertAndSend()方法</b>
+<ul class="quote">
+<li>但是，与JmsTemplate的方法只是将消息路由至队列或主题不同，RabbitTemplate会按照Exchanges和routing key来发送消息。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>接收来自RabbitMQ的消息</h4>
+<ul class="point">
+<li><b>使用RabbitTemplate从队列拉取消息。</b>
+</li>
+<li><b>将消息推送至带有@RabbitListener注解的方法</b>
+<ul class="quote">
+<li>Spring提供了RabbitListener实现消息驱动的RabbitMQ bean，对应于JmsListener。</li>
+<li>为了声明当消息抵达RabbitMQ队列时某个方法应该被调用，我们可以为bean的方法添加@RabbitListener注解。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch45"><summary>8.3 使用Kafka的消息</summary>
+<div class="sec">
+<h4>Apache Kafka概述</h4>
+<ul class="point">
+<li><b>Kafka是一种分布式消息代理，具有可扩展性和弹性，通过主题分区实现消息发布/订阅。</b>
+</li>
+<li><b>Kafka设计为集群运行，每个节点可担任一个或多个主题的首领，负责数据复制到其他节点。</b>
+</li>
+<li><b>Kafka主题可划分为多个分区，每个节点是某个主题一个或多个分区的首领，主题责任在节点间拆分。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring搭建Kafka消息环境</h4>
+<ul class="point">
+<li><b>为Spring搭建Kafka消息环境需添加依赖，Spring Boot自动配置Kafka，创建KafkaTemplate。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>KafkaTemplate的使用</h4>
+<ul class="point">
+<li><b>KafkaTemplate通过泛型类型化，直接处理领域类型，发送消息时提供主题、分区、key、时间戳和载荷等参数。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch46"><summary>8.4 小结</summary>
+<div class="sec">
+<h4>异步消息的概念和特点</h4>
+<ul class="point">
+<li><b>异步消息在要通信的应用程序之间提供了一个中间层，实现更松散的耦合和更强的可扩展性。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring支持的异步消息实现方式</h4>
+<ul class="point">
+<li><b>Spring支持使用JMS、RabbitMQ或Apache Kafka实现异步消息</b>
+<ul class="quote">
+<li>应用程序可以使用基于模板的客户端(JmsTemplate、RabbitTemplate或KafkaTemplate)向消息代理发送消息。</li>
+<li>接收消息的应用程序可以借助相同的基于模板的客户端以拉取模式消费消息。</li>
+<li>通过使用消息监听器注解(@JmsListener、@RabbitListener或@KafkaListener)，消息也可以推送至消费者的bean方法中。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch47"><summary>第9章 Spring集成</summary>
+<div class="sec">
+<h4>Spring集成的基本概念</h4>
+<ul class="point">
+<li><b>Spring Integration是众多集成模式的现成实现</b>
+<ul class="quote">
+<li>Spring Integration实现的企业集成模式在《企业集成模式》中进行了归类。</li>
+</ul>
+</li>
+<li><b>每个模式都实现为一个组件，消息会通过该组件在管道中传递数据</b>
+<ul class="quote">
+<li>借助Spring配置，我们可以将这些组件组装成一个管道，数据可以通过这个管道来流动。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>实时处理数据</h4>
+<ul class="point">
+<li><b>使用Spring Integration的Java DSL定义集成流</b>
+<ul class="quote">
+<li>我们从定义一个简单的集成流开始，这个流包含了Spring Integration的众多特性和特点。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>与外部系统的集成</h4>
+<ul class="point">
+<li><b>应用程序可能需要读取或发送Email、与外部API交互或者对写入数据库的数据做出反应</b>
+<ul class="quote">
+<li>由于数据是在外部系统读取或写入的，应用可能需要以某种方式处理这些数据，这样才能转换为应用程序自己的领域类。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch48"><summary>9.1 声明一个简单的集成流</summary>
+<div class="sec">
+<h4>添加Spring Integration依赖</h4>
+<ul class="point">
+<li><b>添加Spring Boot starter依赖</b>
+<ul class="quote">
+<li>对于Maven构建来讲，必要的依赖如下所示：&lt;dependency&gt;&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;&lt;artifactId&gt;spring-boot-starter-integration&lt;/artifactId&gt; &lt;/dependency&gt;。</li>
+</ul>
+</li>
+<li><b>添加Spring Integration的文件端点模块依赖</b>
+<ul class="quote">
+<li>第二项依赖是Spring Integration的文件端点模块&lt;dependency&gt;&lt;groupId&gt;org.springframework.integration&lt;/groupId&gt;&lt;artifactId&gt;spring-integration-file&lt;/artifactId&gt; &lt;/dependency&gt;。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>创建消息网关接口</h4>
+<ul class="point">
+<li><b>使用@MessagingGateway注解创建消息网关接口</b>
+<ul class="quote">
+<li>@MessagingGateway(defaultRequestChannel=&quot;textInChannel&quot;)声明消息网关。</li>
+</ul>
+</li>
+<li><b>声明消息网关的接口方法</b>
+<ul class="quote">
+<li>writeToFile()方法以String类型的形式接受一个文件名，另外一个String包含了要写入文件中的文本。</li>
+<li>filename参数上带有@Header注解，表明传递给filename的值应该包含在消息头信息中(通过FileHeaders.FILENAME声明，它将会被解析成file_name)，而不是放到消息载荷(payload)中。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用XML定义集成流</h4>
+<ul class="point">
+<li><b>配置textInChannel、fileWriterChannel和转换器</b>
+<ul class="quote">
+<li>我们首先配置了一个名为textInChannel的通道。</li>
+<li>我们还配置了一个转换器(transformer)，它会从textInChannel接收消息。</li>
+<li>随后，我们配置了名为fileWriterChannel的通道。</li>
+</ul>
+</li>
+<li><b>配置出站通道适配器</b>
+<ul class="quote">
+<li>我们使用int-file命名空间配置了出站通道适配器。</li>
+<li>按照我们的配置，它从fileWriterChannel接收消息，并将消息的载荷写入到一个文件中，这个文件的名称是由消息头信息中的file_name属性指定的，而存入的目录则是由这里的directory属性指定的。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用Java配置集成流</h4>
+<ul class="point">
+<li><b>声明转换器和文件写入的消息处理器</b>
+<ul class="quote">
+<li>我们声明了两个bean：一个转换器，还有一个文件写入的消息处理器。</li>
+<li>转换器是GenericTransformer，使用lambda表达式为其提供实现，这里调用了消息文本的toUpperCase()方法。</li>
+<li>负责文件写入的bean则使用了@ServiceActivator注解，表明它会接受来自fileWriter Channel的消息，并且会将消息传递给FileWritingMessageHandler实例所定义的服务。</li>
+</ul>
+</li>
+<li><b>显式声明通道</b>
+<ul class="quote">
+<li>如果名为textInChannel和fileWriterChannel的bean不存在，那么这两个通道将会自动创建。</li>
+<li>但是，如果你想要更加精确地控制通道配置，那么可以按照如下的方式显式构建这些bean。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用Spring Integration的DSL配置</h4>
+<ul class="point">
+<li><b>在一个bean方法中定义整个流</b>
+<ul class="quote">
+<li>Integration Flows类初始化构建器API，我们可以通过这个API来定义流。</li>
+<li>在程序清单9.4中，我们首先从名为textInchannel的通道接收消息，然后进入一个转换器，将消息载荷转换成大写形式。</li>
+<li>通过转换器之后，消息会由出站通道适配器来进行处理。</li>
+<li>这个适配器是由Spring Integration file模块的Files类型创建的。</li>
+<li>最后，通过对get()的调用返回要构建的IntegrationFlow。</li>
+</ul>
+</li>
+<li><b>显式声明通道</b>
+<ul class="quote">
+<li>对于连接转换器和出站通道适配器的通道，我们甚至没有通过名字引用它。</li>
+<li>如果需要显式配置通道，那么我们可以在流定义的时候通过调用channel()来引用它的名称。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch49"><summary>9.2 Spring Integration功能概览</summary>
+<div class="sec">
+<h4>Spring Integration功能概览</h4>
+<ul class="point">
+<li><b>Spring Integration涵盖了大量的集成场景</b>
+<ul class="quote">
+<li>Spring Integration将所有的内容放到一章中是不现实的。</li>
+</ul>
+</li>
+<li><b>集成流是由一个或多个组件组成的</b>
+<ul class="quote">
+<li>组件包括：通道、过滤器、转换器、路由器、切分器、聚合器、服务激活器、通道适配器和网关。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>消息通道</h4>
+<ul class="point">
+<li><b>消息通道是消息穿行集成通道的一种方式</b>
+<ul class="quote">
+<li>Spring Integration提供了多种通道实现，如PublishSubscribeChannel、QueueChannel、PriorityChannel、RendezvousChannel、DirectChannel、ExecutorChannel和FluxMessageChannel。</li>
+</ul>
+</li>
+<li><b>如果使用QueueChannel，消费者必须配置一个poller</b>
+<ul class="quote">
+<li>例如，声明一个QueueChannel bean，我们需要确保消费者配置成轮询该通道的消息。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>过滤器</h4>
+<ul class="point">
+<li><b>过滤器放置于集成管道的中间，它能够根据断言允许或拒绝消息进入流程的下一步</b>
+<ul class="quote">
+<li>例如，假设消息包含了整型的值，它们要通过名为numberChannel的通道进行发布，但是我们只想让偶数进入名为evenNumberChannel的通道。在这种情况下，我们可以使用@Filter注解定义一个过滤器。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>转换器</h4>
+<ul class="point">
+<li><b>转换器会对消息执行一些操作，一般会形成不同的消息，有可能还会产生不同的载荷类型</b>
+<ul class="quote">
+<li>例如，假设整型值会通过名为numberChannel的通道进行发布，我们希望将这些数字转换成它们的罗马数字形式，以String类型来表示。在这种情况下，我们可以声明一个GenericTransformer类型的bean并为其添加@Transformer注解。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>路由器</h4>
+<ul class="point">
+<li><b>路由器能够基于某个路由断言，实现集成流的分支，从而将消息发送至不同的通道上</b>
+<ul class="quote">
+<li>例如，假设我们有一个名为numberChannel的通道，它会传输整型值。我们想要将带有偶数的消息定向到名为evenChannel的通道，将带有奇数的消息定向到名为oddChannel的通道。要在集成流中创建这样一个路由器，我们可以声明一个AbstractMessageRouter类型的bean，并为其添加@Router注解。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>切分器</h4>
+<ul class="point">
+<li><b>切分器将会负责切分并处理这些消息</b>
+<ul class="quote">
+<li>在我们将消息载荷切分为两个或更多不同类型的消息时，通常定义一个POJO就足够了，它提取传入消息不同的组成部分，并以元素集合的形式返回。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>服务激活器</h4>
+<ul class="point">
+<li><b>服务激活器接收来自输入通道的消息并将这些消息发送至一个MessageHandler的实现</b>
+<ul class="quote">
+<li>例如，@Bean @ServiceActivator(inputChannel=&quot;someChannel&quot;) public MessageHandler sysoutHandler() { return message -&gt; { System.out.println(&quot;Message payload: &quot; + message.getPayload()); }; }。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>网关</h4>
+<ul class="point">
+<li><b>通过网关，应用可以提交数据到集成流中，并且能够可选地接收流的结果作为响应</b>
+<ul class="quote">
+<li>例如，FileWriterGateway是一个单向的网关，它有一个接受String类型的方法，该方法会将文本写入到文件中，返回void。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>通道适配器</h4>
+<ul class="point">
+<li><b>通道适配器代表了集成流的入口和出口</b>
+<ul class="quote">
+<li>根据要将什么数据源引入集成流，入站通道适配器可以有很多种形式。</li>
+<li>出站通道适配器是集成流的终点，会将最终的消息传递给应用或其他外部系统。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>端点模块</h4>
+<ul class="point">
+<li><b>Spring Integration提供了二十多个包含通道适配器(同时包括入站和出站的适配器)的端点模块</b>
+<ul class="quote">
+<li>大多数应用程序所使用的只是Spring Integration所提供功能的九牛一毛。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch50"><summary>9.3 创建Email集成流</summary>
+<div class="sec">
+<h4>创建Email集成流</h4>
+<ul class="point">
+<li><b>集成流将轮询Taco Cloud的taco订单Email的收件箱、解析Email中的订单细节并将订单提交给Taco Cloud来进行处理</b>
+<ul class="quote">
+<li>入站通道适配器将会使用Email端点模块摄取Taco Cloud收件箱中的Email到集成流中。</li>
+<li>集成流的下一步会将Email解析为订单对象，这些订单对象会被传递给另一个处理器，从而将订单提交至Taco Cloud的REST API中。</li>
+</ul>
+</li>
+<li><b>EmailProperties类捕获处理Taco Cloud Email的特定信息</b>
+<ul class="quote">
+<li>EmailProperties会捕获生成IMAP URL的属性，这个流会使用这个URL连接Taco Cloud Email服务器并轮询Email。</li>
+<li>在捕获的属性中包括Email用户的用户名和密码以及IMAP服务器的主机、要轮询的邮箱以及邮箱轮询的频率(默认为30秒)。</li>
+</ul>
+</li>
+<li><b>使用Java DSL定义集成流</b>
+<ul class="quote">
+<li>tacoOrderEmailFlow()方法定义了taco Email订单流由3个不同的组件组成：MAP Email入站通道适配器、将Email转换成订单对象的转换器、处理器(作为出站通道适配器)。</li>
+<li>EmailToOrderTransformer是Spring Integration Transformer接口的实现，扩展了AbstractMailMessageTransformer，它将传入的Email解析为Order对象。</li>
+<li>OrderSubmitMessageHandler实现了Spring Integration的GenericHandler，它会处理带有Order载荷的消息，使用注入的RestTemplate利用POST请求将Order提交至ApiProperties对象指定的URL。</li>
+</ul>
+</li>
+<li><b>使用RestTemplate和ApiProperties提交订单</b>
+<ul class="quote">
+<li>为了满足GenericHandler接口的要求，OrderSubmitMessageHandler重写了handle()方法，这个方法接收传入的Order对象，并使用注入的RestTemplate利用POST请求将Order提交至ApiProperties对象指定的URL。</li>
+<li>为了使用RestTemplate，并自动注入OrderSubmitMessageHandler中，我们需要在项目的构建文件中添加Spring Boot web starter依赖。</li>
+<li>我们可以在application.yml中通过如下的配置条目禁用Spring MVC的自动配置：spring.main.web-application-type: none。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch51"><summary>9.4 小结</summary>
+<div class="sec">
+<h4>Spring Integration定义流的能力</h4>
+<ul class="point">
+<li><b>Spring Integration能够定义流，在进入和离开应用的时候可以对数据进行处理。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>集成流的配置风格</h4>
+<ul class="point">
+<li><b>集成流可以使用XML、Java或简洁的Java DSL配置风格来进行定义。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>消息网关和通道适配器的作用</h4>
+<ul class="point">
+<li><b>消息网关和通道适配器会作为集成流的入口和出口。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>消息在集成流中的处理</h4>
+<ul class="point">
+<li><b>在流动的过程中，消息可以进行转换、切分、聚合、路由，也可以由服务激活器对其进行处理。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>消息通道的作用</h4>
+<ul class="point">
+<li><b>消息通道连接集成流中的各个组件。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch52"><summary>第3部分 反应式Spring</summary>
+<div class="sec">
+<h4>使用Reactor项目进行反应式编程的基础知识</h4>
+<ul class="point">
+<li><b>Reactor项目是支撑Spring 5反应式特性的反应式编程库。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Reactor中常用的反应式操作</h4>
+<ul class="point">
+<li><b>Reactor提供了一系列反应式操作，如map、filter、flatMap等</b>
+<ul class="quote">
+<li>map：将流中的每个元素都转换为另一种形式。</li>
+<li>filter：过滤流中的元素，只保留满足条件的元素。</li>
+<li>flatMap：将流中的每个元素都转换为另一个流，并将这些流连接起来。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring WebFlex框架的介绍</h4>
+<ul class="point">
+<li><b>Spring WebFlex框架借用了很多Spring MVC的理念，为Web开发提供了新的反应式模型。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>通过Spring Data对Cassandra和Mongo数据库进行读写，实现反应式数据持久化。</h4>
+<ul class="point">
+</ul></div>
+</details>
+<details class="ch" id="ch53"><summary>第10章 理解反应式编程</summary>
+<div class="sec">
+<h4>反应式编程概览</h4>
+<ul class="point">
+<li><b>反应式编程类似于真实的报纸订阅方式，可以并行地执行任务</b>
+<ul class="quote">
+<li>命令式的代码由一组任务组成，每次只运行一项任务，每项任务又都依赖于前面的任务。</li>
+<li>反应式的代码定义了一组用来处理数据的任务，但是这些任务可以并行地执行。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Reactor项目简介</h4>
+<ul class="point">
+<li><b>Reactor是一个反应式编程库，是Spring 5反应式编程功能的基础</b>
+<ul class="quote">
+<li>在我们学习使用Spring构建反应式控制器和repository之前，理解Reactor是非常重要的。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>反应式地处理数据</h4>
+<ul class="point">
+<li><b>反应式编程允许每项任务处理数据的一部分子集，并将结果交给处理流程中的下一项任务</b>
+<ul class="quote">
+<li>数据会按批次进行处理，在前一项任务还没有完成对当前数据批次的处理时，不能将这些数据递交给下一项处理任务。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch54"><summary>10.1 反应式编程概览</summary>
+<div class="sec">
+<h4>反应式编程概述</h4>
+<ul class="point">
+<li><b>反应式编程是一种可以替代命令式编程的编程范式</b>
+<ul class="quote">
+<li>反应式编程解决了命令式编程中的一些限制。</li>
+</ul>
+</li>
+<li><b>反应式编程不是银弹，应实用主义为上</b>
+<ul class="quote">
+<li>反应式编程对于某些使用场景来说的确是完美的，但是在其他的一些场景中可能不那么适用。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>命令式编程与反应式编程的区别</h4>
+<ul class="point">
+<li><b>命令式编程理念简单，但存在阻塞线程的问题</b>
+<ul class="quote">
+<li>命令式编程可以一次一个地按照顺序将代码编写为需要遵循的指令列表。</li>
+<li>在执行一项任务的时候，特别是IO任务，触发这项任务的线程实际上是被阻塞的。</li>
+</ul>
+</li>
+<li><b>反应式编程本质上是函数式的和声明式的，支持异步处理任意大小的数据集</b>
+<ul class="quote">
+<li>反应式编程描述了数据将会流经的管道或者流。</li>
+<li>反应式流可以在数据可用时立即开始处理。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>反应式流定义</h4>
+<ul class="point">
+<li><b>反应式流是由Netflix、Lightbend和Pivotal的工程师于2013年年底开始制定的一种规范</b>
+<ul class="quote">
+<li>反应式流旨在提供无阻塞回压的异步流处理标准。</li>
+</ul>
+</li>
+<li><b>反应式流规范可以总结为4个接口：Publisher、Subscriber、Subscription和Processor</b>
+<ul class="quote">
+<li>Publisher负责生成数据，并将数据发送给Subscription。</li>
+<li>Subscriber可以通过调用request()方法来请求Publisher发送数据，或者通过调用cancel()方法表明它不再对数据感兴趣并且取消订阅。</li>
+<li>Processor接口，它是Subscriber和Publisher的组合。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Java的流和反应式流的对比</h4>
+<ul class="point">
+<li><b>Java的流通常都是同步的，并且只能处理有限的数据集</b>
+<ul class="quote">
+<li>从本质上来说，它们只是使用函数来对集合进行迭代的一种方式。</li>
+</ul>
+</li>
+<li><b>反应式流支持异步处理任意大小的数据集，同样也包括无限数据集</b>
+<ul class="quote">
+<li>只要数据就绪，它们就能实时地处理数据，并且能够通过回压来避免压垮数据的消费者。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch55"><summary>10.2 初识Reactor</summary>
+<div class="sec">
+<h4>反应式编程的概念和特点</h4>
+<ul class="point">
+<li><b>反应式编程意味着要构建数据将要流经的管道</b>
+<ul class="quote">
+<li>当数据流经管道时，可以对它们进行某种形式的修改或者使用。</li>
+</ul>
+</li>
+<li><b>反应式编程使用数据流经处理管线的方式，而不是按步骤执行</b>
+<ul class="quote">
+<li>在处理管线的每一步，都对数据进行了某种形式的加工，但是我们不能判断数据会在哪个线程上执行操作。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Reactor的核心类型：Mono和Flux</h4>
+<ul class="point">
+<li><b>Mono和Flux都实现了反应式流的Publisher接口</b>
+<ul class="quote">
+<li>Flux代表具有零个、一个或者多个(可能是无限个)数据项的管道。</li>
+<li>Mono是一种特殊的反应式类型，针对数据项不超过一个的场景，它进行了优化。</li>
+</ul>
+</li>
+<li><b>Mono和Flux与RxJava的类型可以互相转换</b>
+<ul class="quote">
+<li>虽然我们在本书中主要介绍Reactor，但是Reactor和RxJava的类型可以互相转换。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>绘制反应式流图</h4>
+<ul class="point">
+<li><b>反应式流程通常使用弹珠图表示</b>
+<ul class="quote">
+<li>弹珠图的展现形式非常简单，在顶部描述了数据流经Flux或者Mono的时间线，在中间描述了要执行的操作，在底部描述了结果形成的Flux或者Mono的时间线。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>添加Reactor依赖</h4>
+<ul class="point">
+<li><b>要开始使用Reactor，请将下面的依赖项添加到项目的构建文件中</b>
+<ul class="quote">
+<li>&lt;dependency&gt;&lt;groupId&gt;io.projectreactor&lt;/groupId&gt;&lt;artifactId&gt;reactor-core&lt;/artifactId&gt; &lt;/dependency&gt;`。</li>
+<li>&lt;dependency&gt;&lt;groupId&gt;io.projectreactor&lt;/groupId&gt;&lt;artifactId&gt;reactor-test&lt;/artifactId&gt;&lt;scope&gt;test&lt;/scope&gt; &lt;/dependency&gt;`。</li>
+</ul>
+</li>
+<li><b>如果要在非Spring Boot项目中使用Reactor，就需要在构建文件中设置Reactor的BOM</b>
+<ul class="quote">
+<li>&lt;dependencyManagement&gt;&lt;dependencies&gt;&lt;dependency&gt;&lt;groupId&gt;io.projectreactor&lt;/groupId&gt;&lt;artifactId&gt;reactor-bom&lt;/artifactId&gt;&lt;version&gt;Bismuth-RELEASE&lt;/version&gt; &lt;type&gt;pom&lt;/type&gt;&lt;scope&gt;import&lt;/scope&gt; &lt;/dependency&gt; &lt;/dependencies&gt; &lt;/dependencyManagement&gt;`。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch56"><summary>10.3 使用常见的反应式操作</summary>
+<div class="sec">
+<h4>创建反应式类型</h4>
+<ul class="point">
+<li><b>根据对象创建Flux或Mono</b>
+<ul class="quote">
+<li>使用Flux或Mono上的静态just()方法来创建一个反应式类型。</li>
+<li>订阅反应式类型就如同你打开数据流的水龙头。</li>
+</ul>
+</li>
+<li><b>根据集合创建Flux</b>
+<ul class="quote">
+<li>可以调用Flux上的静态方法fromArray()，并传入一个源数组。</li>
+<li>如果我们需要根据java.util.List、java.util.Set或者其他任意java.lang.Iterable的实现来创建Flux，那么可以将其传递给静态的fromIterable()方法。</li>
+<li>我们有一个Java Stream，并且希望将其用作Flux的源，那么可以调用fromStream()方法。</li>
+</ul>
+</li>
+<li><b>生成Flux的数据</b>
+<ul class="quote">
+<li>有时候我们根本没有可用的数据，而只是想要一个作为计数器的Flux，它会在每次发送新值时增加1。要创建一个计数器Flux，我们可以使用静态方法range()。</li>
+<li>另一个与range()方法类似的Flux创建方法是interval()。与range()方法一样，interval()方法会创建一个发布递增值的Flux。interval()的特殊之处在于，我们不是给它设置一个起始值和结束值，而是指定一个应该每隔多长时间发出值的间隔时间。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>组合反应式类型</h4>
+<ul class="point">
+<li><b>合并反应式类型</b>
+<ul class="quote">
+<li>要将一个Flux与另一个Flux合并，可以使用mergeWith()方法。</li>
+<li>如果我们不想使用Tuple2，而想要使用其他类型，就可以为zip()方法提供一个合并函数来生成你想要的任何对象。</li>
+</ul>
+</li>
+<li><b>选择第一个反应式类型进行发布</b>
+<ul class="quote">
+<li>first()操作会在两个Flux对象中选择第一个发布值的Flux，并再次发布它的值。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>转换和过滤反应式流</h4>
+<ul class="point">
+<li><b>从反应式类型中过滤数据</b>
+<ul class="quote">
+<li>skip操作将创建一个新的Flux，它会首先跳过指定数量的数据项，然后从源Flux中发布剩余的数据项。</li>
+<li>take操作只发布第一批指定数量的数据项，然后将取消订阅。</li>
+<li>filter操作允许我们根据任何条件进行选择性地发布。</li>
+<li>distinct操作(如图10.15所示)，形成的Flux将只会发布源Flux中尚未发布过的数据项。</li>
+</ul>
+</li>
+<li><b>映射反应式数据</b>
+<ul class="quote">
+<li>map操作会创建一个新的Flux，只是在重新发布它所接收的每个对象之前会执行给定Function指定的转换。</li>
+<li>对于flatMap操作，我们可能需要一些思考和练习才能完全掌握。flatMap并不像map操作那样简单地将一个对象转换到另一个对象，而是将对象转换为新的Mono或Flux。</li>
+</ul>
+</li>
+<li><b>在反应式流上缓存数据</b>
+<ul class="quote">
+<li>buffer操作可以帮助你解决这个问题。我们给定一个包含多个String值的Flux，其中每个值代表一种水果的名称，我们可以创建一个新的包含List集合的Flux，其中每个List只有不超过指定数量的元素。</li>
+<li>如果由于某些原因需要将Flux发布的所有数据项都收集到一个List中，那么可以使用不带参数的buffer()方法。</li>
+<li>一种更加有趣的收集Flux发出的数据项的方法是将它们收集到Map中。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>在反应式类型上执行逻辑操作</h4>
+<ul class="point">
+<li><b>all()和any()方法可以实现这样的逻辑</b>
+<ul class="quote">
+<li>all()方法应用于源Flux，会产生布尔类型的Mono。</li>
+<li>如果至少有一个元素匹配条件即可，而不是要求所有元素均满足条件，那么any()就是我们所需的方法。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch57"><summary>10.4 小结</summary>
+<div class="sec">
+<h4>反应式编程的基本概念</h4>
+<ul class="point">
+<li><b>反应式编程涉及创建数据流经的处理管道。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>反应式流规范的定义</h4>
+<ul class="point">
+<li><b>反应式流规范定义了4种类型：Publisher、Subscriber、Subscription和Processor。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Reactor项目</h4>
+<ul class="point">
+<li><b>Reactor项目实现了反应式流规范，将反应式流的定义抽象为两个主要的类型，即Flux和Mono</b>
+<ul class="quote">
+<li>Flux和Mono为每种类型都提供数百个操作。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring 5与Reactor的集成</h4>
+<ul class="point">
+<li><b>Spring 5利用Reactor提供了反应式控制器、repository、REST客户端以及其他反应式框架的支持。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch58"><summary>第11章 开发反应式API</summary>
+<div class="sec">
+<h4>使用Spring WebFlux</h4>
+<ul class="point">
+<li><b>Spring WebFlux是Spring 5中新添加的反应式Web框架</b>
+<ul class="quote">
+<li>Spring WebFlux与Spring MVC非常相似，易于使用。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>编写和测试反应式的控制器以及客户端</h4>
+<ul class="point">
+<li><b>利用Spring 5的反应式编程模型重新讨论在第6章中编写的控制器</b>
+<ul class="quote">
+<li>我们已经掌握的如何在Spring中构建REST API的知识依然有用。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>消费REST API</h4>
+<ul class="point">
+<li><b>讨论如何消费REST API</b>
+<ul class="quote">
+<li>Spring WebFlux提供了强大的工具来构建和消费REST API。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>保护反应式Web应用</h4>
+<ul class="point">
+<li><b>讨论如何保护反应式Web应用</b>
+<ul class="quote">
+<li>Spring WebFlux提供了强大的工具来保护Web应用。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch59"><summary>11.1 使用Spring WebFlux</summary>
+<div class="sec">
+<h4>Spring WebFlux简介</h4>
+<ul class="point">
+<li><b>Spring WebFlux是Spring 5引入的一个非阻塞、异步的Web框架</b>
+<ul class="quote">
+<li>Spring WebFlux在很大程度上是基于Reactor项目的。</li>
+</ul>
+</li>
+<li><b>Spring WebFlux并不会绑定Servlet API，所以它构建在Reactive HTTP API之上</b>
+<ul class="quote">
+<li>Spring WebFlux可以运行在任意非阻塞Web容器中，包括Netty、Undertow、Tomcat、Jetty或任意Servlet 3.1及以上的容器。</li>
+</ul>
+</li>
+<li><b>Spring MVC和Spring WebFlux之间最显著的区别在于，我们要将哪个依赖项添加到构建文件中</b>
+<ul class="quote">
+<li>在使用Spring WebFlux时，我们需要添加Spring Boot WebFlux starter依赖项，而不是标准的Web starter(例如，spring-boot-starter-web)。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>编写反应式控制器</h4>
+<ul class="point">
+<li><b>反应式控制器应该返回Flux或Mono，而不是领域类型和集合</b>
+<ul class="quote">
+<li>如果repository一开始就给我们一个Flux那就更好了，就没有必要进行转换了。</li>
+</ul>
+</li>
+<li><b>控制器方法也可以返回RxJava类型，如Observable、Single和Completable</b>
+<ul class="quote">
+<li>假设在DesignTacoController和后端repository之间有一个服务，处理的是RxJava类型，那么recentTacos()方法可以编写为：@GetMapping(&quot;/recent&quot;) public Observable&lt;Taco&gt; recentTacos() { return tacoService.getRecentTacos(); }。</li>
+<li>类似的，tacoById()方法可以编写成处理RxJava Single类型，而不是Mono类型：@GetMapping(&quot;/{id}&quot;) public Single&lt;Taco&gt; tacoById(@PathVariable(&quot;id&quot;) Long id) { return tacoService.lookupTaco(id); }。</li>
+<li>除此之外，Spring WebFlux控制器方法还可以返回RxJava的Completable，后者等价于Reactor中的Mono&lt;Void&gt;。WebFlux也可以返回Flowable，替换Observable或Reactor的Flux。</li>
+</ul>
+</li>
+<li><b>通过接受Mono或Flux作为处理器方法的输入，方法会立即调用，不用等待从请求体中解析生成Taco</b>
+<ul class="quote">
+<li>例如，postTaco()接受一个Mono&lt;Taco&gt;并调用了repository的saveAll()方法。我们将会在第12章看到这个repository能够接受反应式流Publisher的任意实现，包括Mono或Flux。saveAll()方法返回了一个Flux&lt;Taco&gt;，但我们想要的是Mono。我们知道该Flux最多只能发布一个Taco，所以调用next()方法获取postTaco()方法要返回的Mono&lt;Taco&gt;。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch60"><summary>11.2 定义函数式请求处理器</summary>
+<div class="sec">
+<h4>Spring MVC基于注解的编程模型的缺点</h4>
+<ul class="point">
+<li><b>注解该做什么以及注解如何做之间的割裂</b>
+<ul class="quote">
+<li>注解本身定义了该做什么，而具体如何去做则是在框架代码的其他部分定义的。</li>
+</ul>
+</li>
+<li><b>自定义或扩展变得复杂，需要修改注解之外的代码</b>
+<ul class="quote">
+<li>这样的变更需要修改注解之外的代码，代码的调试也是比较麻烦的，因为我们无法在注解上设置断点。</li>
+</ul>
+</li>
+<li><b>熟悉其他语言和框架的Spring新手会觉得基于注解的Spring MVC(和WebFlux)与他们之前掌握的知识有很大的差异。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring 5引入的函数式编程模型</h4>
+<ul class="point">
+<li><b>使用起来更像一个库，而不是一个框架</b>
+<ul class="quote">
+<li>能够让我们在不使用注解的情况下将请求映射到处理器代码中。</li>
+</ul>
+</li>
+<li><b>使用Spring的函数式编程模型编写API会涉及4个主要的类型：RequestPredicate、RouterFunction、ServerRequest、ServerResponse</b>
+<ul class="quote">
+<li>RequestPredicate：声明要处理的请求类型。</li>
+<li>RouterFunction：声明如何将请求路由到处理器代码中。</li>
+<li>ServerRequest：代表一个HTTP请求，包括对请求头和请求体的访问。</li>
+<li>ServerResponse：代表一个HTTP响应，包括响应头和响应体信息。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>函数式编程模型的实际应用</h4>
+<ul class="point">
+<li><b>使用函数式风格重新实现DesignTacoController的功能</b>
+<ul class="quote">
+<li>routerFunction()方法声明了一个RouterFunction&lt;?&gt; bean，处理针对“/design/taco”的GET请求以及针对“/design”的POST请求。</li>
+<li>recents()方法处理针对“/design/taco”的GET请求，使用注入的TacoRepository得到一个Flux&lt;Taco&gt;，然后从中得到12个条目。</li>
+<li>postTaco()方法处理针对“/design”的POST请求，它会从传入的ServerRequest中抽取Mono&lt;Taco&gt;，使用TacoRepository方法来进行保存，随后使用save()返回的Mono&lt;Taco&gt;作为响应。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch61"><summary>11.3 测试反应式控制器</summary>
+<div class="sec">
+<h4>Spring 5引入WebTestClient</h4>
+<ul class="point">
+<li><b>WebTestClient让Spring WebFlux编写的反应式控制器的测试变得非常容易</b>
+<ul class="quote">
+<li>WebTestClient是一个新的测试工具类。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>测试GET请求</h4>
+<ul class="point">
+<li><b>使用WebTestClient测试DesignTacoController中的recentTacos()方法</b>
+<ul class="quote">
+<li>对于recentTacos()方法，我们想断言如果针对“/design/recent”路径发送HTTP GET请求，那么将会得到JSON载荷的响应并且taco的数量不会超过12个。</li>
+<li>testClient.get().uri(&quot;/design/recent&quot;).exchange().expectStatus().isOk().expectBody().jsonPath(&quot;$&quot;).isArray().jsonPath(&quot;$&quot;).isNotEmpty().jsonPath(&quot;$[0].id&quot;).isEqualTo(tacos[0].getId().toString()).jsonPath(&quot;$[0].name&quot;).isEqualTo(&quot;Taco 1&quot;).jsonPath(&quot;$[1].id&quot;).isEqualTo(tacos[1].getId().toString()).jsonPath(&quot;$[1].name&quot;).isEqualTo(&quot;Taco 2&quot;).jsonPath(&quot;$[11].id&quot;).isEqualTo(tacos[11].getId().toString()).jsonPath(&quot;$[11].name&quot;).isEqualTo(&quot;Taco 12&quot;).jsonPath(&quot;$[12]&quot;).doesNotExist().jsonPath(&quot;$[12]&quot;).doesNotExist();。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>测试POST请求</h4>
+<ul class="point">
+<li><b>使用WebTestClient测试DesignTacoController的taco创建API</b>
+<ul class="quote">
+<li>我们会编写一个对taco创建API的测试，也就是提交POST请求到“/design”。</li>
+<li>testClient.post().uri(&quot;/design&quot;).contentType(MediaType.APPLICATION_JSON).body(unsavedTacoMono, Taco.class).exchange().expectStatus().isCreated().expectBody(Taco.class).isEqualTo(savedTaco);。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用实时服务器进行测试</h4>
+<ul class="point">
+<li><b>为测试类添加@RunWith和@SpringBootTest，并自动织入WebTestClient</b>
+<ul class="quote">
+<li>通过将webEnvironment属性设置为WebEnvironment.RANDOM_PORT，我们要求Spring启动一个运行时服务器并监听任意选择的端口。</li>
+<li>我们发现，这个新版本的shouldReturnRecentTacos()代码要少得多。我们不再需要创建WebTestClient，因为可以使用自动织入的实例。另外，也不需要mock TacoRepository，因为Spring将会创建DesignTacoController实例并将一个真正的TacoRepository注入进来。在新版本的测试方法中，我们使用JSONPath表达式来校验数据库提供的值。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch62"><summary>11.4 反应式消费REST API</summary>
+<div class="sec">
+<h4>WebClient简介</h4>
+<ul class="point">
+<li><b>WebClient是RestTemplate的反应式版本，可以发送和接收反应式类型</b>
+<ul class="quote">
+<li>WebClient的使用方式与RestTemplate有很大的差别，它有一个流畅(fluent)的构建者风格接口。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>获取资源</h4>
+<ul class="point">
+<li><b>使用WebClient发送HTTP GET请求，获取资源</b>
+<ul class="quote">
+<li>通过WebClient的create()方法创建一个新的WebClient实例，然后使用get()和uri()定义对http://localhost:8080/ingredients/{id}的GET请求。</li>
+<li>调用retrieve()方法执行请求，然后调用bodyToMono()将响应体的载荷抽取到Mono&lt;Ingredient&gt;中。</li>
+</ul>
+</li>
+<li><b>使用WebClient获取多个资源，使用bodyToFlux()</b>
+<ul class="quote">
+<li>大部分而言，获取多个条目与获取单个条目是相同的，最大的差异在于我们不再是使用bodyToMono()将响应体抽取为Mono，而是使用bodyToFlux()将其抽取为一个Flux。</li>
+<li>在数据流过之前，我们可以对Flux添加一些额外的操作(过滤、映射等)，因此，非常重要的一点就是要订阅结果所形成的Flux，否则请求将始终不会发送。</li>
+</ul>
+</li>
+<li><b>对长时间运行的请求进行超时处理</b>
+<ul class="quote">
+<li>为了避免客户端请求被缓慢的网络或服务阻塞，我们可以使用Flux或Mono的timeout()方法，为等待数据发布的过程设置一个时长限制。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>发送资源</h4>
+<ul class="point">
+<li><b>使用WebClient发送数据，使用post()方法</b>
+<ul class="quote">
+<li>如果我们有一个Mono&lt;Ingredient&gt;，并且想要将Mono发布的Ingredient对象以POST请求的形式发送到相对路径“/ingredients”的URI上，我们所需要做的就是使用post()方法来替换get()，并通过body()方法指明要使用Mono来填充请求体。</li>
+</ul>
+</li>
+<li><b>使用WebClient发送PUT请求，更新资源</b>
+<ul class="quote">
+<li>如果我们没有要发送的Mono或Flux，而只有原始的领域对象，那么可以使用syncBody()方法。</li>
+<li>如果我们不是使用POST请求，而是想要使用PUT请求更新一个Ingredient，就可以使用put()来替换post()，并相应地调整URI路径。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>删除资源</h4>
+<ul class="point">
+<li><b>使用WebClient删除资源，使用delete()方法</b>
+<ul class="quote">
+<li>WebClient还支持通过其delete()方法移除资源，例如，根据ID删除配料。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>处理错误</h4>
+<ul class="point">
+<li><b>使用WebClient处理错误，使用onStatus()方法</b>
+<ul class="quote">
+<li>如果出现400级别和500级别的状态码，WebClient就会记录失败信息；否则，就会默默忽略掉。</li>
+<li>我们可以添加一个自定义的错误处理器，在这个处理器中可以提供将状态码转换为自己所选择的Throwable的代码。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>交换请求</h4>
+<ul class="point">
+<li><b>使用WebClient交换请求，使用exchange()方法</b>
+<ul class="quote">
+<li>exchange()方法会返回ClientResponse类型的Mono，我们可以对它采用各种反应式操作，以便于探测和使用整个响应中的数据，包括载荷、头信息和cookie。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch63"><summary>11.5 保护反应式Web API</summary>
+<div class="sec">
+<h4>Spring Security在Spring WebFlux中的应用</h4>
+<ul class="point">
+<li><b>Spring Security可以保护基于Servlet的Spring MVC和反应式的Spring WebFlux应用。</b>
+</li>
+<li><b>Spring Security的反应式和非反应式配置模型仅有几项很小的差异</b>
+<ul class="quote">
+<li>Spring WebFlux与Spring MVC有着独立的依赖关系，但与之不同，Spring Security是作为同一个Spring Boot Security starter提供的。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>配置反应式Web应用的安全性</h4>
+<ul class="point">
+<li><b>反应式安全配置类使用@EnableWebFluxSecurity注解，而不是@EnableWebSecurity</b>
+<ul class="quote">
+<li>这个新的配置类没有使用@EnableWebSecurity，而是使用了@EnableWebFluxSecurity注解。</li>
+</ul>
+</li>
+<li><b>配置是通过给定的ServerHttpSecurity对象进行声明的，而不是通过HttpSecurity对象</b>
+<ul class="quote">
+<li>我们可以通过ServerHttpSecurity，调用authorizeExchange()，它大致等价于authorizeRequests()，都是用来声明请求级的安全性的。</li>
+</ul>
+</li>
+<li><b>在映射路径的时候，我们依然可以使用Ant风格的通配符路径，但是这里要使用pathMatchers()，而不是antMatchers()</b>
+<ul class="quote">
+<li>这样做的结果就是，我们不再需要声明Ant风格的路径“/**”来捕获所有请求，因为anyExchange()会映射所有的路径。</li>
+</ul>
+</li>
+<li><b>因为我们将SecurityWebFilterChain声明为一个bean，而不是重写框架方法，所以我们需要调用build()方法将所有的安全规则聚合到一个要返回的SecurityWebFilterChain对象中</b>
+<ul class="quote">
+<li>securityWebFilterChain()的方法体与前面配置的configure()方法没有太大的差异，但是也有略微的修改。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>配置反应式的用户详情服务</h4>
+<ul class="point">
+<li><b>在反应式的安全配置中，我们不再重写configure()方法，而是声明一个ReactiveUserDetailsService bean</b>
+<ul class="quote">
+<li>ReactiveUserDetailsService是UserDetailsService的反应式等价形式。</li>
+</ul>
+</li>
+<li><b>ReactiveUserDetailsService只需要实现一个方法，返回Mono&lt;UserDetails&gt;的findByUsername()方法</b>
+<ul class="quote">
+<li>因为UserRepository.findByUsername()方法所返回的是Mono&lt;User&gt;，所以可以对它进行链式操作，比如进行map()操作，将Mono&lt;User&gt;映射为Mono&lt;UserDetails&gt;。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch64"><summary>11.6 小结</summary>
+<div class="sec">
+<h4>Spring WebFlux和函数式编程模型</h4>
+<ul class="point">
+<li><b>Spring WebFlux提供了一个反应式的Web框架，它的编程模型是与Spring MVC对应的，甚至共享了很多相同的注解。</b>
+</li>
+<li><b>Spring 5还提供了函数式编程模型，作为Spring WebFlux的替代方案。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>反应式控制器的测试</h4>
+<ul class="point">
+<li><b>反应式控制器可以使用WebTestClient来进行测试。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring 5的WebClient</h4>
+<ul class="point">
+<li><b>在客户端，Spring 5提供了WebClient，也就是Spring RestTemplate的反应式等价实现。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Security 5在WebFlux中的应用</h4>
+<ul class="point">
+<li><b>在保护Web应用方面，尽管WebFlux在底层有一些区别，但是Spring Security 5为反应式安全所提供的编程模型与非反应式Spring MVC应用相比并没有特别大的差异。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch65"><summary>第12章 反应式持久化数据</summary>
+<div class="sec">
+<h4>Spring Data反应式repository的基本概念</h4>
+<ul class="point">
+<li><b>Spring Data反应式repository是Spring Data的一个新组件，用于支持反应式编程模型。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>为Cassandra和MongoDB编写反应式repository的方法</h4>
+<ul class="point">
+<li><b>为Cassandra编写反应式repository的方法</b>
+<ul class="quote">
+<li>使用`ReactiveCrudRepository`接口。</li>
+</ul>
+</li>
+<li><b>为MongoDB编写反应式repository的方法</b>
+<ul class="quote">
+<li>使用`ReactiveMongoRepository`接口。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>如何以反应式方式使用非反应式repository</h4>
+<ul class="point">
+<li><b>通过`MongoTemplate`和`CassandraTemplate`将非反应式repository转换为反应式repository</b>
+<ul class="quote">
+<li>对于Cassandra，使用`ReactiveCassandraTemplate`。</li>
+<li>对于MongoDB，使用`ReactiveMongoTemplate`。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Cassandra数据模型的介绍</h4>
+<ul class="point">
+<li><b>Cassandra是一个高度可扩展的NoSQL数据库，使用键值存储模型。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch66"><summary>12.1 理解Spring Data的反应式概况</summary>
+<div class="sec">
+<h4>Spring Data反应式模型和非反应式模型的区别</h4>
+<ul class="point">
+<li><b>Spring Data反应式的本质是在反应式repository的方法中，要接受和返回Mono和Flux，而不是领域实体和集合</b>
+<ul class="quote">
+<li>例如，在获取Ingredient对象的repository中，可以声明为Flux&lt;Ingredient&gt; findByType(Ingredient.Type type);。</li>
+<li>在保存Taco的时候，repository的saveAll()方法签名如下所示：&lt;Taco&gt; Flux&lt;Taco&gt; saveAll(Publisher&lt;Taco&gt; tacoPublisher);。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>反应式和非反应式类型之间的转换</h4>
+<ul class="point">
+<li><b>可以将非反应式阻塞代码隔离在repository中，在应用的其他地方，我们都可以使用反应式类型</b>
+<ul class="quote">
+<li>例如，使用Flux.fromIterable()将非反应式的List转换为Flux。</li>
+<li>使用Mono.just()和Flux的fromIterable()、fromArray()和fromStream()方法，将非反应式阻塞代码隔离在repository中。</li>
+<li>如果我们有一个Mono或Flux，此时需要调用非反应式JPA repository的save()方法，我们可以使用Mono.block()或Flux.toIterable()方法将其抽取到领域类型或Iterable中。</li>
+<li>要避免阻塞的抽取操作，还有一种更具反应式的方法，就是订阅Mono或Flux，并在其发布每个元素的时候执行所需的操作。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>开发反应式repository</h4>
+<ul class="point">
+<li><b>Spring Data最令人赞叹的特性之一就是我们只须声明repository接口即可，在运行时Spring Data会自动实现它们</b>
+<ul class="quote">
+<li>这些数据库在后端提供数据持久化功能，Spring应用可以真正实现从Web层到数据库的端到端反应式流。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch67"><summary>12.2 使用反应式的Cassandra repository</summary>
+<div class="sec">
+<h4>启用Spring Data Cassandra</h4>
+<ul class="point">
+<li><b>添加反应式Spring Data Cassandra的Spring Boot starter依赖</b>
+<ul class="quote">
+<li>如果不打算为Cassandra编写反应式repository，那么我们可以在构建文件中添加如下依赖：&lt;dependency&gt;&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;&lt;artifactId&gt;spring-boot-starter-data-cassandra&lt;/artifactId&gt; &lt;/dependency&gt;。</li>
+<li>如果我们主要关注编写反应式repository，那么需要使用另外一个支持反应式Cassandra repository的starter依赖：&lt;dependency&gt;&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;&lt;artifactId&gt;spring-boot-starter-data-cassandra-reactive&lt;/artifactId&gt; &lt;/dependency&gt;。</li>
+</ul>
+</li>
+<li><b>配置键空间名称</b>
+<ul class="quote">
+<li>创建一个键空间，并使用简单策略的复制和持久性写入。</li>
+<li>配置spring.data.cassandra.keyspace-name属性，告诉Spring Data Cassandra该如何使用该键空间。</li>
+</ul>
+</li>
+<li><b>配置Cassandra集群连接</b>
+<ul class="quote">
+<li>默认情况下，Spring Data Cassandra会假定Cassandra在本地运行并监听9092端口。如果事实并非如此，那么在生产环境的配置中我们可能还要配置spring.data.cassandra.contact-points和spring.data.cassandra.port属性。</li>
+<li>我们可能还需要设置Cassandra集群的用户名和密码。这可以通过设置spring.data.cassandra.username和spring.data.cassandra.password属性来实现。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>理解Cassandra的数据模型</h4>
+<ul class="point">
+<li><b>Cassandra表可能有任意数量的列，但是并不是所有的行都会用到这些列。</b>
+</li>
+<li><b>Cassandra数据库被分割为多个分区。给定表中的任何一行都可以由一个或多个分区管理，但是不太可能每个分区都拥有所有的行。</b>
+</li>
+<li><b>Cassandra表有两种键：分区键和集群键。Cassandra会对每一行的分区键执行哈希操作，以确定由哪个分区管理该行。集群键决定了行在分区中维护的顺序(不一定是它们在查询结果中出现的顺序)。</b>
+</li>
+<li><b>Cassandra对读操作进行了极大的优化。因此，较为常见和推荐的做法是让表实现高度非规范化，并让数据跨多个表进行复制。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>将领域对象映射为Cassandra持久化</h4>
+<ul class="point">
+<li><b>使用@Table注解，表明配料将会持久化到名为ingredients的表中。</b>
+</li>
+<li><b>id属性依然是主键，但它只是两个主键列中的一个而已。具体来讲，id属性使用了@PrimaryKeyColumn注解，并且type的值为PrimaryKeyType.PARTITIONED。这表明id属性要作为分区键，用来确定taco数据的每一行要写入到哪个分区中。</b>
+</li>
+<li><b>createdAt属性映射到了另外一个主键列。但是，在本例中，@PrimaryKeyColumn的type属性设置成了PrimaryKeyType.CLUSTERED，这意味着createdAt会作为集群键。按照前文所述，集群键用来确定行在集群中的顺序。更具体来讲，我们将顺序设置为降序，所以，在给定的分区中，较新的行会优先出现在taco表中。</b>
+</li>
+<li><b>ingredients属性是一个IngredientUDT对象的List，而不再是Ingredient对象的List。Cassandra表是高度非规范化的，因此可能会包含与其他表重复的数据。尽管ingredient表代表了所有可用配料的记录，但是taco所选择的配料会重复保存到ingredients列中。我们不会简单地引用ingredients表中的一行或多行，而是会让ingredients属性包含所有已选配料的完整数据。</b>
+</li>
+<li><b>我们不能将Ingredient用作用户定义类型，因为@Table注解已经将其映射成了Cassandra中的一个持久化实体。所以，我们必须创建一个新的类，定义该如何将配料信息存储到taco表的ingredients列上。IngredientUDT类(其中UDT代表了用户定义类型，即user-defined type)就是完成这项工作的。</b>
+</li>
+<li><b>Order类与Taco/TacoUDT之间的关系类似于前文中Taco和Ingredient/IngredientUDT之间的关系。也就是说，我们不是通过外键将不同表中的多行数据关联在一起，而是让Order表包含所有的taco数据，以便于优化表的快速读取。</b>
+</li>
+<li><b>UserUDT更有趣一点，因为它包含了3个属性，而不是两个。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>编写反应式Cassandra repository</h4>
+<ul class="point">
+<li><b>扩展ReactiveCassandraRepository或ReactiveCrudRepository</b>
+<ul class="quote">
+<li>如果我们想要插入很多数据，那么可能需要选择ReactiveCassandraRepository；否则，最好选择ReactiveCrudRepository，因为在不同数据库类型之间它更具可移植性。</li>
+</ul>
+</li>
+<li><b>自定义的查询方法应该要么返回Mono(要返回的值不超过一个)，要么返回Flux(会有多个返回值)。</b>
+</li>
+<li><b>使用@AllowFiltering注解使结果的过滤变成了现实</b>
+<ul class="quote">
+<li>按照Cassandra的特点，在查询表的时候，我们不能像在关系型数据库的SQL中那样简单地使用where子句。Cassandra对读取进行了优化，但是使用where子句进行过滤可能会拖慢其他快速查询的速度。即便如此，根据一个或多个列对表进行查询还是非常有用的。因此，@AllowFiltering注解使结果的过滤变成了现实，它可以作为这些场景的可用方案。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch68"><summary>12.3 编写反应式的MongoDB repository</summary>
+<div class="sec">
+<h4>启用Spring Data MongoDB</h4>
+<ul class="point">
+<li><b>将Spring Data MongoDB starter添加到项目的构建文件中</b>
+<ul class="quote">
+<li>如果你使用非反应式的MongoDB，那么需要将spring-boot-starter-data-mongodb依赖添加到构建文件中。</li>
+<li>为了测试和开发的便利性，我们可以选择使用嵌入式的Mongo数据库，将Flapdoodle Embedded MongoDB依赖添加到构建文件中。</li>
+</ul>
+</li>
+<li><b>设置Spring Data MongoDB的属性，让Spring Data MongoDB知道访问何处的Mongo数据库以及该如何进行访问</b>
+<ul class="quote">
+<li>spring.data.mongodb.host：Mongo运行的主机名(默认为localhost)。</li>
+<li>spring.data.mongodb.port：Mongo服务器监听的端口(默认为27017)。</li>
+<li>spring.data.mongodb.username：访问安全Mongo数据库的用户名。</li>
+<li>spring.data.mongodb.password：访问安全Mongo数据库的密码。</li>
+<li>spring.data.mongodb.database：数据库名(默认为test)。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>将领域对象映射为文档</h4>
+<ul class="point">
+<li><b>使用@Document注解将领域类型声明为要持久化到MongoDB中的文档</b>
+<ul class="quote">
+<li>默认情况下，集合名是基于类名的，只不过第一个字母会变成小写。</li>
+<li>我们可以通过设置@Document的collection属性改变这种行为。</li>
+</ul>
+</li>
+<li><b>使用@Id注解将某个属性指明为文档的ID</b>
+<ul class="quote">
+<li>@Id注解可以用到任意Serializable类型上。</li>
+<li>如果选择使用String属性作为ID，我们就可以在保存的时候让Mongo自动设置一个值给它。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>编写反应式的MongoDB repository接口</h4>
+<ul class="point">
+<li><b>在ReactiveCrudRepository和ReactiveMongoRepository之间进行选择</b>
+<ul class="quote">
+<li>ReactiveMongoRepository提供多个特殊的insert()方法，它们针对新文档的持久化进行了优化，而ReactiveCrudRepository依赖save()方法来保存新文档和已有的文档。</li>
+</ul>
+</li>
+<li><b>定义将Ingredient对象持久化为文档的repository</b>
+<ul class="quote">
+<li>ReactiveMongoRepository提供的优化没有太多的用处，我们可以让IngredientRepository扩展ReactiveCrudRepository。</li>
+</ul>
+</li>
+<li><b>定义将Taco持久化为MongoDB中的文档的repository</b>
+<ul class="quote">
+<li>ReactiveMongoRepository优化过的insert()方法就很有价值了。</li>
+</ul>
+</li>
+<li><b>定义OrderRepository接口</b>
+<ul class="quote">
+<li>我们会频繁创建Order文档，所以OrderRepository扩展了ReactiveMongoRepository，从而充分利用其insert()方法所带来的优化。</li>
+</ul>
+</li>
+<li><b>定义UserRepository接口</b>
+<ul class="quote">
+<li>与其他repository类似，它扩展了ReactiveMongoRepository(当然，它也可以扩展ReactiveCrudRepository)。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch69"><summary>12.4 小结</summary>
+<div class="sec">
+<h4>Spring Data支持为多种数据库创建反应式repository</h4>
+<ul class="point">
+<li><b>Spring Data支持为Cassandra、MongoDB、Couchbase和Redis数据库创建反应式repository。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Data的反应式repository与非反应式repository的编程模型相同。</h4>
+<ul class="point">
+</ul></div>
+<div class="sec">
+<h4>非反应式repository可以调整为使用Mono和Flux，但保存和获取数据时依然是阻塞的。</h4>
+<ul class="point">
+</ul></div>
+<div class="sec">
+<h4>在使用非关系数据库时，需要理解如何恰当地为数据建模</h4>
+<ul class="point">
+<li><b>这个建模过程决定了数据库最终如何存储数据。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch70"><summary>第4部分 云原生Spring</summary>
+<div class="sec">
+<h4>微服务架构介绍</h4>
+<ul class="point">
+<li><b>微服务是一种软件开发架构风格，它将一个大型应用程序拆分成多个小型服务</b>
+<ul class="quote">
+<li>每个服务都运行在自己的进程中，并独立部署和扩展。</li>
+<li>服务之间通过轻量级的通信机制（如HTTP/REST）进行交互。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Cloud和微服务开发</h4>
+<ul class="point">
+<li><b>Spring Cloud提供了一系列用于构建微服务架构的框架和工具</b>
+<ul class="quote">
+<li>Spring Cloud可以简化微服务架构的开发和运维。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>服务发现</h4>
+<ul class="point">
+<li><b>服务发现是微服务架构中的一个关键组件，它允许服务之间相互发现并注册</b>
+<ul class="quote">
+<li>Spring和Netflix的Eureka服务注册中心可以实现基于Spring的微服务的注册和发现。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>中心化的配置</h4>
+<ul class="point">
+<li><b>Spring Cloud的Config Server可以为应用中的所有微服务提供中心化的配置</b>
+<ul class="quote">
+<li>Config Server可以集中管理应用的配置信息，并支持动态刷新。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>断路器模式</h4>
+<ul class="point">
+<li><b>Netflix Hystrix可以实现断路器模式，让服务面对失败时更具弹性</b>
+<ul class="quote">
+<li>当某个服务出现故障时，断路器会自动打开，阻止请求继续发送到该服务，从而避免雪崩效应。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch71"><summary>第13章 注册和发现服务</summary>
+<div class="sec">
+<h4>微服务概述</h4>
+<ul class="point">
+<li><b>微服务是一系列小的、独立的应用程序，它们协同工作以提供完整应用的功能。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>创建服务注册中心</h4>
+<ul class="point">
+<li><b>服务注册中心是用于存储和查找微服务实例的组件。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>注册和发现服务</h4>
+<ul class="point">
+<li><b>使用Spring Cloud套件中的组件进行服务注册和发现。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch72"><summary>13.1 思考微服务</summary>
+<div class="sec">
+<h4>单体应用的挑战</h4>
+<ul class="point">
+<li><b>单体应用难以理解，代码库越大，理解每个组件在整个应用程序中所担任的角色就越困难。</b>
+</li>
+<li><b>单体应用难以测试，随着应用的不断增长，全面的集成和验收测试会变得更加复杂。</b>
+</li>
+<li><b>单体应用更容易出现库冲突，实现某个特性所需要的依赖可能会与其他特定的依赖不兼容。</b>
+</li>
+<li><b>单体应用的扩展较为低效，如果处于扩展的目的要将应用程序部署到更多的硬件上，那么我们必须要将整个应用部署到更多的服务器上，即便应用程序中很小的一部分需要扩展也同样如此。</b>
+</li>
+<li><b>单体应用中的技术决策是针对整个单体应用的，当为应用程序选择语言、运行时平台、框架和库的时候，整个应用程序都会遵循我们的选择，即便我们所做的选择只是为了支持某个单独的用户场景时同样如此。</b>
+</li>
+<li><b>单体应用需要大量的操作过程才能投入生产环境，单体应用程序的规模和复杂性通常需要更严格的开发过程和更周全的测试周期，这样才能保证所部署的应用程序是高质量的，才能避免引入bug。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>微服务架构的优势</h4>
+<ul class="point">
+<li><b>微服务易于理解，每个微服务与应用程序的其他微服务之间有一个很小且有限的契约。</b>
+</li>
+<li><b>微服务易于测试，事情越小，就越便于测试。</b>
+</li>
+<li><b>微服务较少受到库不兼容的影响，因为每个微服务都有自己的构建依赖项的集合，而这些依赖项不会与其他的微服务共享，所以不太可能会出现库冲突的现象。</b>
+</li>
+<li><b>微服务能够独立扩展，如果指定的微服务需要更多的处理能力，那么内存分配和/或实例数量可以按比例增加，而不会影响整体应用中其他微服务的内存和实例数量。</b>
+</li>
+<li><b>每个微服务可以选择不同的技术，每个微服务可以选择完全不同的语言、平台、框架和库。</b>
+</li>
+<li><b>微服务可以更加频繁地发布到生产环境中，尽管微服务架构的应用是由许多微服务组成的，但是部署每个微服务的时候，并不需要其他的微服务都已经部署就绪。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>微服务架构的挑战</h4>
+<ul class="point">
+<li><b>微服务架构是一种分布式架构，有自己需要应对的挑战，包括网络延迟。</b>
+</li>
+<li><b>在迁移至微服务架构时，我们需要记住这一点，因为很多的远程调用会累积并降低应用的速度。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>是否应该采用微服务架构</h4>
+<ul class="point">
+<li><b>如果你的应用相对比较小或者比较简单，那么最初最好依然采用单体架构。</b>
+</li>
+<li><b>随着它的不断发展，再考虑将其拆分为微服务。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Cloud搭建服务注册中心</h4>
+<ul class="point">
+<li><b>服务注册中心是微服务架构中每个服务知道它要协作的其他服务在哪里的关键。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch73"><summary>13.2 搭建服务注册中心</summary>
+<div class="sec">
+<h4>Eureka服务注册中心介绍</h4>
+<ul class="point">
+<li><b>Eureka是Spring Cloud Netflix中的一个子项目，提供Netflix的服务注册中心功能</b>
+<ul class="quote">
+<li>Eureka可以确保所有服务都能互相发现。</li>
+</ul>
+</li>
+<li><b>Eureka的服务实例启动时，会按照名称将自己注册到Eureka中</b>
+<ul class="quote">
+<li>在Eureka注册时，服务的名称是相同的，可以有多个完全等价的实例。</li>
+</ul>
+</li>
+<li><b>Eureka还对外暴露了REST API，服务可以自行进行注册，也可以发现其他的服务</b>
+<ul class="quote">
+<li>“/eureka/apps”端点会列出注册中心所有服务实例的细节。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>配置Eureka</h4>
+<ul class="point">
+<li><b>配置Eureka使其接受当前的孤独状态</b>
+<ul class="quote">
+<li>将eureka.instance.hostname属性设置为localhost。</li>
+<li>将eureka.client.fetch-registry和eureka.client.register-with-eureka属性设置为false。</li>
+<li>设置eureka.client.service-url属性，包含zone名称与该zone下一个或多个Eureka服务器之间的映射关系。</li>
+</ul>
+</li>
+<li><b>指定Eureka的服务器端口</b>
+<ul class="quote">
+<li>修改默认的服务器端口，例如设置server.port属性为8761。</li>
+</ul>
+</li>
+<li><b>禁用自我保护模式</b>
+<ul class="quote">
+<li>将eureka.server.enable-self-preservation属性设置为false。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>扩展Eureka</h4>
+<ul class="point">
+<li><b>在生产环境中，我们可能至少需要两个Eureka实例，以实现高可用性</b>
+<ul class="quote">
+<li>使用Spring profile，然后针对两个profile各启动一次。</li>
+<li>每个profile都按照自己的配置需要指定了端口和eureka.instance.hostname。</li>
+<li>设置两个略显牵强的other.eureka.host和other.eureka.port属性，在每个profile中它们都指向了其他的Eureka实例。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch74"><summary>13.3 注册和发现服务</summary>
+<div class="sec">
+<h4>注册和发现服务</h4>
+<ul class="point">
+<li><b>将服务注册到Eureka服务注册中心</b>
+<ul class="quote">
+<li>添加Eureka客户端依赖到服务应用的构建文件中。</li>
+<li>设置spring.application.name属性以更改服务在Eureka中的注册名称。</li>
+<li>为服务配置两个或更多的Eureka实例以避免注册失败。</li>
+</ul>
+</li>
+<li><b>消费Eureka中注册的服务</b>
+<ul class="quote">
+<li>使用支持负载均衡的RestTemplate消费服务。</li>
+<li>使用WebClient消费服务。</li>
+<li>定义Feign客户端接口消费服务。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch75"><summary>13.4 小结</summary>
+<div class="sec">
+<h4>Spring Cloud Netflix Eureka服务注册中心的创建</h4>
+<ul class="point">
+<li><b>使用自动配置和@EnableEurekaServer注解，可以轻松创建Netflix Eureka服务注册中心</b>
+<ul class="quote">
+<li>Spring Cloud Netflix提供了Eureka的自动配置类，通过@EnableEurekaServer注解，可以启动Eureka服务器。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>微服务在Eureka中的注册与发现</h4>
+<ul class="point">
+<li><b>微服务可以使用名字将它们自身注册到Eureka中，这样可以被其他服务发现</b>
+<ul class="quote">
+<li>Eureka客户端会向Eureka Server发送心跳，如果Eureka Server在15分钟内没有收到某个微服务的心跳，Eureka Server将会注销该服务。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Ribbon作为客户端负载均衡器</h4>
+<ul class="point">
+<li><b>Ribbon能够根据名称查找服务并选择实例</b>
+<ul class="quote">
+<li>Ribbon通过在运行时获取服务的信息，根据负载均衡策略选择一个实例进行请求。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用RestTemplate和Feign进行负载均衡</h4>
+<ul class="point">
+<li><b>客户端代码可以使用RestTemplate，利用Ribbon进行负载均衡</b>
+<ul class="quote">
+<li>RestTemplate是Spring Web提供的一个模板类，可以发送HTTP请求。</li>
+</ul>
+</li>
+<li><b>也可以将REST客户端定义为接口，由Feign在运行期自动实现</b>
+<ul class="quote">
+<li>Feign是一个基于动态代理机制，根据注解和选择的机器，拼接请求URL，发起请求的Java客户端。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>客户端代码不需要硬编码它们所消费的服务的地址</h4>
+<ul class="point">
+<li><b>Ribbon和Feign都支持服务发现，客户端代码不需要硬编码它们所消费的服务的地址</b>
+<ul class="quote">
+<li>使用Ribbon时，客户端代码不需要知道服务的具体地址，只需要知道服务的名称。</li>
+<li>使用Feign时，客户端代码只需要定义接口，Feign会自动根据注解和选择的机器，拼接请求URL，发起请求。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch76"><summary>第14章 管理配置</summary>
+<div class="sec">
+<h4>Spring Cloud Config Server</h4>
+<ul class="point">
+<li><b>Spring Cloud Config Server是为指定应用中所有服务提供集中式配置的一个服务</b>
+<ul class="quote">
+<li>在微服务架构中，多个服务之间的配置属性是通用的，通过集中式配置可以避免跨多个应用服务重复进行配置。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>创建Config Server的客户端</h4>
+<ul class="point">
+<li><b>Config Server的客户端可以通过Spring Cloud的注解或配置文件来使用</b>
+<ul class="quote">
+<li>使用@EnableConfigServer注解启用Config Server的客户端。</li>
+<li>在配置文件中添加spring.cloud.config.uri属性来指定Config Server的地址。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>存储敏感配置</h4>
+<ul class="point">
+<li><b>可以将敏感配置存储在Git仓库中，并通过环境变量或系统属性来访问</b>
+<ul class="quote">
+<li>在Git仓库中创建一个名为敏感配置的文件，例如application-sensitive.yml。</li>
+<li>在应用的配置文件中，使用${key}的形式引用敏感配置的值，例如spring.datasource.password=${database.password}。</li>
+<li>在启动应用时，可以通过环境变量或系统属性来设置敏感配置的值，例如export DATABASE_PASSWORD=my_password。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>自动化刷新配置</h4>
+<ul class="point">
+<li><b>Config Server支持定时刷新配置，可以通过Spring Boot的actuator端点来触发刷新</b>
+<ul class="quote">
+<li>在Config Server的配置文件中，添加spring.cloud.config.server.bootstrap.enabled=true属性来启用自动刷新。</li>
+<li>在应用的配置文件中，添加spring.cloud.config.server.bootstrap.refresh.enabled=true属性来启用自动刷新。</li>
+<li>通过访问/actuator/refresh端点，可以触发Config Server的自动刷新。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch77"><summary>14.1 共享配置</summary>
+<div class="sec">
+<h4>Spring Cloud Config Server简介</h4>
+<ul class="point">
+<li><b>Spring Cloud Config Server提供了中心化的配置功能</b>
+<ul class="quote">
+<li>应用中的所有微服务均可以依赖该服务器来获取配置。</li>
+<li>因为它是中心化的，所以是一个一站式的配置商店，所有的服务都可以使用它，另外它还能够为特定服务提供专门的配置。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>共享配置的优势</h4>
+<ul class="point">
+<li><b>配置不再需要和应用程序代码一起打包和部署</b>
+<ul class="quote">
+<li>配置的变更或回滚就都不需要重新构建和重新部署应用了。</li>
+<li>配置甚至可以在运行时进行变更，无须重新启动应用。</li>
+</ul>
+</li>
+<li><b>共享通用配置的微服务不需要管理自己的属性设置副本</b>
+<ul class="quote">
+<li>如果需要对属性进行变更，那么这些变更只需在一个地方执行一次就可以应用到所有的微服务上。</li>
+</ul>
+</li>
+<li><b>敏感配置可以进行加密，并且能够与应用代码分开进行维护</b>
+<ul class="quote">
+<li>应用可以按需获取未加密的值，而不需要应用程序提供解密信息相关的代码。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>如何使用Spring Cloud Config Server</h4>
+<ul class="point">
+<li><b>创建并运行Config Server</b>
+<ul class="quote">
+<li>使用Config Server的第一步就是创建并运行该服务器。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch78"><summary>14.2 运行配置服务器</summary>
+<div class="sec">
+<h4>Spring Cloud Config Server概述</h4>
+<ul class="point">
+<li><b>Config Server为配置数据提供了中心化的数据源</b>
+<ul class="quote">
+<li>Config Server暴露了REST API，客户端(也就是其他的服务)可以通过它来消费配置属性。</li>
+</ul>
+</li>
+<li><b>Config Server的配置来源于Config Server之外，通常来源于一个像Git这样的源码控制系统</b>
+<ul class="quote">
+<li>将配置信息存储在像Git这样的源码控制系统中，配置可以像应用源码那样实现版本化、使用分支、添加标签、恢复和指摘(blame)。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>启用配置服务器</h4>
+<ul class="point">
+<li><b>为Config Server创建一个全新的项目，并添加Config Server依赖</b>
+<ul class="quote">
+<li>使用Spring Initializr或它的某个客户端(比如Spring Tool Suite中的New Spring Starter Project向导)。</li>
+<li>在pom.xml文件中添加如下的依赖：&lt;dependency&gt;&lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;&lt;artifactId&gt;spring-cloud-config-server&lt;/artifactId&gt; &lt;/dependency&gt;。</li>
+</ul>
+</li>
+<li><b>为某个配置类添加@EnableConfigServer，以启用Config Server</b>
+<ul class="quote">
+<li>通常，我会将@EnableConfigServer放到主类中。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>填充配置仓库</h4>
+<ul class="point">
+<li><b>提交application.properties或application.yml文件到Git仓库的根路径下</b>
+<ul class="quote">
+<li>这个配置文件与前面章节的配置是不同的，它是Config Server将要对外提供的配置。</li>
+</ul>
+</li>
+<li><b>从Git子路径下提供配置</b>
+<ul class="quote">
+<li>按照代码的组织风格，你可能想要将配置信息存储到Git仓库的子目录下，而不是放到根路径下。</li>
+</ul>
+</li>
+<li><b>从Git分支或标签下提供配置</b>
+<ul class="quote">
+<li>默认情况下，Config Server会提供Git中master分支下的配置。</li>
+</ul>
+</li>
+<li><b>为Git后端提供认证</b>
+<ul class="quote">
+<li>Config Server检索配置信息的后端Git仓库很可能会使用用户名和密码进行保护。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch79"><summary>14.3 消费共享配置</summary>
+<div class="sec">
+<h4>Spring Cloud Config Server客户端的配置</h4>
+<ul class="point">
+<li><b>添加spring-cloud-starter-config依赖到项目的Maven构建文件中</b>
+<ul class="quote">
+<li>相同的依赖也可以在Spring Initializr中通过选择标签为Config Client的复选框添加进来。</li>
+</ul>
+</li>
+<li><b>通过设置spring.cloud.config.uri配置Config Server的位置</b>
+<ul class="quote">
+<li>默认情况下，它会假定Config Server运行在localhost并监听8888端口。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Config Server与Eureka服务注册中心的关系</h4>
+<ul class="point">
+<li><b>Config Server可以注册到Eureka中，并让每个微服务像发现其他服务那样去查找Config Server</b>
+<ul class="quote">
+<li>如果喜欢这种模式，就需要将Config Server变成服务发现的客户端，并将spring.cloud.config.discovery.enabled属性设置为false。</li>
+</ul>
+</li>
+<li><b>这种方式的缺点在于，每个服务在启动的时候都要调用两次外部的服务</b>
+<ul class="quote">
+<li>第一次调用Eureka发现Config Server的位置，第二次调用Config Server获取配置数据。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Config Server提供的配置方式</h4>
+<ul class="point">
+<li><b>提供特定应用专有的配置，或者提供当应用在特定profile处于激活状态时才可用的配置</b>
+<ul class="quote">
+<li>我们看一下Config Server的另一面，看看使用它的几种方式，包括提供特定应用和特定profile的属性。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch80"><summary>14.4 提供特定应用和profile的属性</summary>
+<div class="sec">
+<h4>提供特定应用和profile的属性的概念和重要性</h4>
+<ul class="point">
+<li><b>Config Server会考虑应用的名称和激活profile的名称，为客户端返回特定应用和特定profile的配置数据</b>
+<ul class="quote">
+<li>应用的名称可以通过spring.application.name属性来指定。</li>
+<li>激活的profile可以通过spring.profiles.active属性进行设置。</li>
+</ul>
+</li>
+<li><b>提供面向特定应用和profile的属性，Config Server本身也没有太多需要做的，真正比较重要的是，这些属性在支撑Git仓库中该如何进行存储。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>提供特定应用的属性</h4>
+<ul class="point">
+<li><b>将配置文件的名称命名为该应用spring.application.name属性的值，以便Config Server提供该应用特有的配置</b>
+<ul class="quote">
+<li>在Taco Cloud应用中，我们将应用拆分成了多个微服务，分别是ingredient-service、order-service、taco-service和user-service，我们可以在每个服务的spring.application.name属性中指定它的名称。</li>
+<li>不管服务应用的名称是什么，所有的应用都会接收来自application.yml文件的配置。但是，在向Config Server发起请求的时候，每个服务应用的spring.application.name的属性值会一同发送(作为请求路径的第一部分)，如果存在匹配的属性文件，那么该文件中的属性将会一并返回。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>提供来自profile的属性</h4>
+<ul class="point">
+<li><b>Config Server采用与单个Spring Boot应用完全相同的方式，提供了对特定profile属性的支持</b>
+<ul class="quote">
+<li>提供特定profile的“.properties”或YAML文件。</li>
+<li>在一个YAML文件中提供多个profile配置组，它们之间以“---”和spring.profiles分割开。</li>
+</ul>
+</li>
+<li><b>在应用从Config Server获取配置信息的时候，Config Server会识别哪个profile处于激活状态，并返回相应的属性集</b>
+<ul class="quote">
+<li>如果活跃profile是production，那么两个属性集(application.yml和application-production.yml)都将会返回，并且application- production.yml中的属性会优先于application.yml中的默认属性。</li>
+<li>我们还可以使用同样的命名约定指定适用于特定应用且特定profile的属性，也就是将属性文件命名为应用名加中划线再加profile名的形式。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch81"><summary>14.5 保持配置属性的私密性</summary>
+<div class="sec">
+<h4>在Git中加密属性</h4>
+<ul class="point">
+<li><b>Config Server可以通过存储在Git中的属性文件提供加密值</b>
+<ul class="quote">
+<li>为了启用加密属性功能，我们使用一个加密秘钥来配置Config Server，在将属性值提供给客户端应用之前，Config Server要使用这个秘钥对属性值进行解密。</li>
+</ul>
+</li>
+<li><b>Config Server支持对称秘钥和非对称秘钥</b>
+<ul class="quote">
+<li>要设置对称秘钥，我们可以在Config Server自己的配置中将encrypt.key属性设置为加密和解密秘钥的值。</li>
+<li>为了更加安全一些，我们可以让Config Server使用非对称的RSA秘钥对或引用一个keystore。</li>
+</ul>
+</li>
+<li><b>Config Server暴露了一个“/encrypt”端口会帮助我们实现加密功能</b>
+<ul class="quote">
+<li>我们需要做的就是提交一个POST请求到“/encrypt”端点，其中包括要加密的数据。</li>
+</ul>
+</li>
+<li><b>默认情况下，Config Server提供的所有加密值只是在后端Git仓库中处于加密的状态，它们在对外提供之前会解密</b>
+<ul class="quote">
+<li>这意味着，消费这个配置的客户端应用并不需要任何特殊的代码和配置就能接收Git中已加密的属性。</li>
+</ul>
+</li>
+<li><b>如果你想要让Config Server以未解密的形式对外提供加密属性，那么可以将spring.cloud.config.server.encrypt.enabled属性设置为false</b>
+<ul class="quote">
+<li>这样导致的结果就是Config Server在提供所有的属性值的时候完全按照Git仓库设置的样子进行发送，包括已加密的属性值。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>在Vault中存储私密信息</h4>
+<ul class="point">
+<li><b>HashiCorp Vault是一个私密管理工具，对于敏感的配置数据，Vault是一个更有吸引力的Config Server后端支撑方案</b>
+<ul class="quote">
+<li>为了开始使用Vault，我们需要参考Vault Web站点的安装指南下载并安装vault命令行工具。</li>
+</ul>
+</li>
+<li><b>启动Vault服务器</b>
+<ul class="quote">
+<li>在开发模式下使用如下的命令启动服务器：$ vault server -dev -dev-root-token-id=roottoken。</li>
+</ul>
+</li>
+<li><b>对Vault服务器的所有访问都需要向服务器提供一个token</b>
+<ul class="quote">
+<li>根token是一个管理token，这意味着除了其他功能之外，它允许我们创建其他的token。</li>
+</ul>
+</li>
+<li><b>使用Vault 0.10.0或之后的版本的话，Vault与Config Server协作使用之前还有其他的两条命令需要执行</b>
+<ul class="quote">
+<li>Vault运行方式的一些变更会导致一个标准的私密后端与Config Server不兼容。以下两个命令会重新创建名为secret的后端，以兼容Config Server：$ vault secrets disable secret $ vault secrets enable -path=secret kv。</li>
+</ul>
+</li>
+<li><b>写入私密信息到Vault中</b>
+<ul class="quote">
+<li>借助vault命令，可以很容易将私密信息写入Vault中。</li>
+</ul>
+</li>
+<li><b>在Config Server中启用Vault后端</b>
+<ul class="quote">
+<li>为了将Vault添加为Config Server的后端，我们至少需要将Vault添加为激活的profile。</li>
+</ul>
+</li>
+<li><b>在Config Server客户端设置Vault token</b>
+<ul class="quote">
+<li>spring.cloud.config.token属性会告诉Config Server客户端在每次向Config Server发送请求的时候都要带上给定的token。</li>
+</ul>
+</li>
+<li><b>写入特定应用和特定profile的私密信息</b>
+<ul class="quote">
+<li>如果我们想要写入针对给定应用的私密属性，就需要将路径中的application部分改成应用的名称。</li>
+<li>如果我们不指定profile，写入Vault的私密信息就会成为默认profile属性的一部分。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch82"><summary>14.6 在运行时刷新配置属性</summary>
+<div class="sec">
+<h4>Spring Cloud Config Server的配置属性刷新功能</h4>
+<ul class="point">
+<li><b>Spring Cloud Config Server能够刷新正在运行的应用程序的配置属性，而不需要停机</b>
+<ul class="quote">
+<li>一旦变更推送到支撑的Git仓库或Vault私密仓库，应用中的每个微服务就都可以立即进行刷新。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>手动刷新配置属性</h4>
+<ul class="point">
+<li><b>Config Server客户端启用一个特殊的“/actuator/refresh”端点，对每个服务的这个端点发送HTTP POST请求将会强制配置客户端从Config Server的后端检索最新的配置</b>
+<ul class="quote">
+<li>我们可以在任意时间发送HTTP POST请求到“/actuator/refresh”，通知它从后端仓库刷新配置属性。</li>
+<li>POST请求的响应告诉我们greeting.message已经发生变化了。但是，真正的证据还是要靠再次向“/hello”路径发送GET请求。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>自动刷新配置属性</h4>
+<ul class="point">
+<li><b>Config Server能够借助名为Spring Cloud Bus的Spring Cloud项目将配置变更自动通知到每个客户端</b>
+<ul class="quote">
+<li>在配置Git仓库上创建一个webhook，当Git仓库有任何变化(比如所有的推送)时，都会通知Config Server。</li>
+<li>Config Server会对webhook POST请求做出响应，借助某种消息代理以消息的方式广播该变更。</li>
+<li>每个Config Server客户端应用订阅该通知，对通知消息做出响应，也就是会使用Config Server中的新属性值刷新它们的环境。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>在Config Server中处理webhook更新</h4>
+<ul class="point">
+<li><b>添加spring-cloud-config-monitor依赖到Config Server的配置文件，启用“/monitor”端点</b>
+<ul class="quote">
+<li>这项依赖添加完成之后，自动配置功能会发挥作用，从而启用“/monitor”端点。</li>
+</ul>
+</li>
+<li><b>添加对Spring Cloud Stream的依赖，使“/monitor”端点能够发布通知消息给参与的Config Server客户端</b>
+<ul class="quote">
+<li>如果使用RabbitMQ，就需要将Spring Cloud Stream RabbitMQ绑定依赖添加到Config Server的构建文件中。</li>
+<li>如果你更喜欢Kafka，那么需要添加如下的Spring Cloud Stream Kafka依赖。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>创建Gogs的通知提取器</h4>
+<ul class="point">
+<li><b>GogsPropertyPathNotificationExtractor用于提取Gogs webhook POST请求中的配置变更信息</b>
+<ul class="quote">
+<li>GogsPropertyPathNotificationExtractor如何运行的细节与我们的讨论没有太大关系，并且在Spring Cloud Config Server内置对Gogs的支持之后，就更加无关紧要了。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>在Config Server的客户端中启用自动刷新</h4>
+<ul class="point">
+<li><b>添加spring-cloud-starter-bus-amqp或spring-cloud-starter-bus-kafka依赖，启用属性的自动刷新</b>
+<ul class="quote">
+<li>这样会添加AMQP(如RabbitMQ)Spring Cloud Bus starter到构建文件中。</li>
+<li>如果使用Kafka，就需要添加如下的依赖。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch83"><summary>14.7 小结</summary>
+<div class="sec">
+<h4>Spring Cloud Config Server概述</h4>
+<ul class="point">
+<li><b>Spring Cloud Config Server提供了中心化的配置数据源</b>
+<ul class="quote">
+<li>Config Server能够用于微服务架构应用中的所有微服务。</li>
+</ul>
+</li>
+<li><b>Config Server提供的属性是通过后端的Git或Vault仓库维护的。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Config Server的配置提供方式</h4>
+<ul class="point">
+<li><b>Config Server除了暴露给所有Config Server客户端的全局属性，还能提供特定profile和特定应用的配置。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>敏感数据的保护</h4>
+<ul class="point">
+<li><b>敏感数据能够保持私密，这可以在后端Git仓库中通过对其进行加密来实现，也可以通过在Vault后端存储私密信息来实现。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Config Server客户端的属性刷新</h4>
+<ul class="point">
+<li><b>Config Server客户端能够借助手动或自动刷新得到新的属性</b>
+<ul class="quote">
+<li>前者通过Actuator端点来实现，后者通过Spring Cloud Bus和Git webhooks来实现。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch84"><summary>15.1 理解断路器模式</summary>
+<div class="sec">
+<h4>断路器模式的概念和原理</h4>
+<ul class="point">
+<li><b>断路器模式是随着Michael Nygard的Release It!(第2版，Pragmatic Bookshelf，2018)一书流行起来的，解决了我们所编写的代码可能会失败的问题。</b>
+</li>
+<li><b>断路器模式的理念很简单，非常类似于现实世界中的电路断路器</b>
+<ul class="quote">
+<li>在电路断路器中，当开关处于闭合位置时，电流能够流过断路器，为房间中的电灯、电视、电脑和其他设备供电。</li>
+<li>如果线路中出现故障，比如功率骤增，断路器就会打开，在电流损坏电子设备或房屋失火之前切断电流。</li>
+</ul>
+</li>
+<li><b>软件中的断路器起初会处于关闭状态，允许进行方法的调用。如果因为某种原因，方法调用失败了(比如时间超出了定义的阈值)，断路器就会打开，就不会对失败的方法再执行调用了</b>
+<ul class="quote">
+<li>软件断路器的区别在于它提供了后备(fallback)行为和自校正功能。</li>
+<li>如果被保护的方法在给定的失败阈值内发生了失败，那么可以调用一个后备方法代替它的位置。</li>
+<li>在断路器处于打开状态之后，几乎始终都会调用后备方法。</li>
+<li>处于打开状态的断路器偶尔会进入半开状态，并尝试调用发生失败的方法：如果依然失败，断路器就恢复为打开状态；如果调用成功，它会认为问题已经解决，断路器会回到闭合状态。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>断路器模式的应用场景</h4>
+<ul class="point">
+<li><b>调用REST的方法、执行数据库查询的方法、可能会比较慢的方法是添加断路器的首选</b>
+<ul class="quote">
+<li>这些方法可能会因为远程服务不可用或者返回HTTP 500响应而失败。</li>
+<li>这些方法可能会因为数据库不响应或者模式变更破坏了应用而导致失败。</li>
+<li>它们不一定会失败，但是如果耗费太长时间才能完成工作就可能会被视为失败。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Netflix Hystrix简介</h4>
+<ul class="point">
+<li><b>Netflix Hystrix是断路器模式的Java实现</b>
+<ul class="quote">
+<li>Hystrix断路器实现为一个切面，会在目标方法发生失败的时候触发后备方法。</li>
+<li>为了实现断路器模式，这个切面还会跟踪目标方法失败的频率；如果失败率超过了某个阈值，那么所有的请求都会转发至后备方法。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Cloud Netflix对Hystrix的支持</h4>
+<ul class="point">
+<li><b>Spring Cloud Netflix包含对Hystrix的支持，提供了一个简单的编程模型</b>
+<ul class="quote">
+<li>为方法添加@HystrixCommand注解并提供一个后备方法，就可以为该方法声明断路器。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch85"><summary>15.2 声明断路器</summary>
+<div class="sec">
+<h4>声明断路器</h4>
+<ul class="point">
+<li><b>添加Spring Cloud Netflix Hystrix starter依赖到每个服务的构建文件中</b>
+<ul class="quote">
+<li>在Maven pom.xml文件中添加依赖。</li>
+</ul>
+</li>
+<li><b>声明Spring Cloud release train的依赖管理</b>
+<ul class="quote">
+<li>在pom.xml文件的&lt;dependencyManagement&gt;代码块中添加依赖。</li>
+</ul>
+</li>
+<li><b>在应用的主配置类上添加@EnableHystrix</b>
+<ul class="quote">
+<li>为IngredientServiceApplication添加@EnableHystrix注解。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>缓解延迟</h4>
+<ul class="point">
+<li><b>断路器会将超时时间设置为1秒，可以通过Hystrix命令属性调整超时值</b>
+<ul class="quote">
+<li>默认情况下，所有带有@HystrixCommand注解的方法都会在1秒之后超时。</li>
+<li>为了将getAllIngredients()的超时时间更加严格地设置为0.5秒，那么我们可以将超时设置为500。</li>
+<li>如果我们希望放松限制，那么可以将其设置成一个更大的值。或者，如果你认为这里不应该使用超时功能，那么可以将execution.timeout.enabled属性设置为false，直接将超时功能移除。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>管理断路器的阈值</h4>
+<ul class="point">
+<li><b>如果断路器保护的方法调用超过20次，而且50%以上的调用在10秒的时间内发生失败，那么断路器就会进入打开状态</b>
+<ul class="quote">
+<li>在5秒之后，断路器进入半开状态，将会再次尝试调用原始的方法。</li>
+</ul>
+</li>
+<li><b>可以通过设置Hystrix命令属性调整失败和重试的阈值</b>
+<ul class="quote">
+<li>circuitBreaker.requestVolumeThreshold：在给定的时间范围内，方法应该被调用的次数。</li>
+<li>circuitBreaker.errorThresholdPercentage：在给定的时间范围内，方法调用产生失败的百分比。</li>
+<li>metrics.rollingStats.timeInMilliseconds：控制请求量和错误百分比的滚动时间周期。</li>
+<li>circuitBreaker.sleepWindowInMilliseconds：处于打开状态的断路器要经过多长时间才会进入半开状态，进入半开状态之后，将会再次尝试失败的原始方法。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch86"><summary>15.3 监控失败</summary>
+<div class="sec">
+<h4>Hystrix流监控</h4>
+<ul class="point">
+<li><b>Hystrix流包括方法被调用了多少次，调用成功了多少次，后备方法调用了多少次，方法超时了多少次等信息</b>
+<ul class="quote">
+<li>Hystrix流是由Actuator端点提供的，通过“/actuator/hystrix.stream”路径对外暴露。</li>
+</ul>
+</li>
+<li><b>默认情况下，大多数的端点都是禁用的，可以通过在每个应用的application.yml文件中添加相应的配置启用Hystrix端点</b>
+<ul class="quote">
+<li>在management:endpoints:web:exposure:include属性放到Config Server对外提供配置属性的application.yml文件中，这样全局所有的服务就都可以使用它了。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Hystrix Dashboard简介</h4>
+<ul class="point">
+<li><b>Hystrix Dashboard可以实时监控正在运行中的应用的健康状况</b>
+<ul class="quote">
+<li>要使用Hystrix Dashboard，首先创建一个Spring Boot应用并添加对Hystrix dashboard starter的依赖。</li>
+<li>项目初始化之后，我们可以通过为主配置类添加@EnableHystrixDashboard注解来启用Hystrix dashboard。</li>
+<li>在开发阶段，我们可能会让Hystrix Dashboard与其他服务一起在本地机器运行，还包括Eureka和Config Server。因此，为了避免端口冲突，我们需要为Hystrix Dashboard选取一个唯一的端口。</li>
+</ul>
+</li>
+<li><b>Hystrix Dashboard主页显示了各个服务的Hystrix流，以及每个断路器的实时数据</b>
+<ul class="quote">
+<li>在Hystrix流监视器中，我们可以设置延迟和标题。</li>
+<li>点击Monitor Stream按钮，我们就可以进入Hystrix流的监视器页面了，每个断路器都会显示为一个图表并且还带有一些有用的指标数据。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>理解Hystrix的线程模型</h4>
+<ul class="point">
+<li><b>Hystrix会为每项依赖指派一个线程池，避免调用者线程一直等待</b>
+<ul class="quote">
+<li>当Hystrix命令调用时，它将会在来自Hystrix托管的线程池的某个线程中执行。</li>
+</ul>
+</li>
+<li><b>线程池监视器显示了线程池的活跃状态以及它的健康状况</b>
+<ul class="quote">
+<li>右上角显示线程池的名称，其下方是线程池中的线程每秒钟处理请求的数量。</li>
+<li>线程池监视器的左下角显示活跃线程、排队线程、线程池的大小等信息。</li>
+<li>在右下角显示线程池的其他信息：最大活跃线程、执行次数、线程队列大小等。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch87"><summary>15.4 聚合多个Hystrix流</summary>
+<div class="sec">
+<h4>Turbine简介</h4>
+<ul class="point">
+<li><b>Turbine是一个将多个微服务的所有Hystrix流聚合到一个Hystrix流中的工具。</b>
+</li>
+<li><b>Spring Cloud Netflix支持以类似于创建其他Spring Cloud服务的方式创建Turbine服务</b>
+<ul class="quote">
+<li>要创建Turbine服务，我们需要创建一个新的Spring Boot项目并将Turbine starter依赖添加到构建文件中。</li>
+<li>在创建完新项目之后，我们需要启用Turbine。为了实现这一点，我们需要在应用的主配置类上添加@EnableTurbine注解。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Turbine配置</h4>
+<ul class="point">
+<li><b>Turbine会消费多个微服务的流并将它们的断路器指标合并到一个流中</b>
+<ul class="quote">
+<li>Turbine会作为Eureka的客户端，发现那些需要聚合到自己的流的服务。</li>
+</ul>
+</li>
+<li><b>Turbine需要配置要聚合的服务</b>
+<ul class="quote">
+<li>turbine.app-config属性会接受一个由逗号分隔的服务名称列表，Turbine会在Eureka中查找它们并聚合它们的Hystrix流。</li>
+<li>除了turbine.app-config之外，我们还将turbine.cluster-name-expression属性设置成了“&#x27;default&#x27;”。这表明Turbine会收集名为default的集群中的所有聚合流。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Turbine与Hystrix Dashboard集成</h4>
+<ul class="point">
+<li><b>启动Turbine服务器并让Hystrix dashboard访问http://localhost:8989/turbine.stream地址上的流</b>
+<ul class="quote">
+<li>现在，特定应用的所有断路器都将会展现在断路器dashboard上。</li>
+</ul>
+</li>
+<li><b>Hystrix dashboard能够展现所有服务的所有断路器要归功于Turbine</b>
+<ul class="quote">
+<li>这样，我们就能够一站式地监控Taco Cloud应用所有断路器的健康状况了。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch88"><summary>15.5 小结</summary>
+<div class="sec">
+<h4>断路器模式能够优雅地进行失败处理。</h4>
+<ul class="point">
+</ul></div>
+<div class="sec">
+<h4>Hystrix实现断路器模式</h4>
+<ul class="point">
+<li><b>Hystrix能够在某个方法失败或执行太慢的时候启用后备行为。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Hystrix提供断路器指标信息</h4>
+<ul class="point">
+<li><b>Hystrix提供的每个断路器都会以数据流的方式发布指标信息，以便于监控应用的健康状况。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Hystrix Dashboard是一个可视化断路器指标的Web应用。</h4>
+<ul class="point">
+</ul></div>
+<div class="sec">
+<h4>Turbine聚合Hystrix流</h4>
+<ul class="point">
+<li><b>Turbine能够将多个应用的Hystrix流聚合到一个流中，以便在Hystrix Dashboard中统一进行可视化展现。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch89"><summary>第5部分 部署Spring</summary>
+<div class="sec">
+<h4>Spring Boot Actuator是Spring Boot的一个扩展，以REST端点和JMX MBean的形式暴露正在运行中的应用的内部状况。</h4>
+<ul class="point">
+</ul></div>
+<div class="sec">
+<h4>Spring Boot Admin</h4>
+<ul class="point">
+<li><b>Spring Boot Admin基于Actuator提供了一个用户友好的、基于浏览器的管理型应用</b>
+<ul class="quote">
+<li>我们将会看到如何注册客户端应用以及如何保护Admin Server。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>以JMX MBean的形式暴露和消费Spring bean。</h4>
+<ul class="point">
+</ul></div>
+<div class="sec">
+<h4>将Spring应用部署到各种生产环境中</h4>
+<ul class="point">
+<li><b>Spring Boot和相关的Spring项目有很多特性，使得Spring Boot应用的部署有些不同。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch90"><summary>第16章 使用Spring Boot Actuator</summary>
+<div class="sec">
+<h4>在Spring Boot项目中启用Actuator</h4>
+<ul class="point">
+<li><b>Actuator提供了生产环境可用的特性，包括监控Spring Boot应用和获取它的各种指标。</b>
+</li>
+<li><b>Actuator的特性是通过各种端点提供的，这些端点可以通过HTTP调用，也可以通过JMX MBean来使用</b>
+<ul class="quote">
+<li>在本章中，我们主要关注HTTP端点，而对JMX端点的介绍留到第19章。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>探索Actuator的端点</h4>
+<ul class="point">
+<li><b>通过HTTP端点，可以查看应用的行为、检查应用的健康状况，甚至触发影响应用运行的各种操作</b>
+<ul class="quote">
+<li>Actuator提供了很多端点，例如：/health、/info、/metrics等。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>自定义Actuator</h4>
+<ul class="point">
+<li><b>可以通过自定义端点来扩展Actuator的功能</b>
+<ul class="quote">
+<li>例如，可以创建一个自定义端点来记录应用的日志信息。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>保护Actuator</h4>
+<ul class="point">
+<li><b>为了安全起见，需要保护Actuator，防止未授权访问</b>
+<ul class="quote">
+<li>可以通过配置Spring Security来保护Actuator。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch91"><summary>16.1 Actuator概览</summary>
+<div class="sec">
+<h4>Actuator概述</h4>
+<ul class="point">
+<li><b>Actuator是负责控制和移动装置的组件，在Spring Boot应用中，Spring Boot Actuator扮演了相同的角色</b>
+<ul class="quote">
+<li>通过Actuator暴露的端点，我们可以获取一个正在运行中的应用的内部状态。</li>
+</ul>
+</li>
+<li><b>在Spring Boot应用中启用Actuator，需要在构建文件中添加对Actuator starter的依赖</b>
+<ul class="quote">
+<li>在Spring Boot应用的Maven pom.xml文件中，添加如下的&lt;dependency&gt;条目就能完成该任务：&lt;dependency&gt;&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;&lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt; &lt;/dependency&gt;。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>启用和禁用Actuator端点</h4>
+<ul class="point">
+<li><b>默认情况下，只有“/health”和“/info”端点是启用的</b>
+<ul class="quote">
+<li>大多数Actuator端点会携带敏感信息，所以应该保护起来。</li>
+</ul>
+</li>
+<li><b>我们可以使用Spring Security来锁定Actuator，通过management.endpoints.web.exposure.include和management.endpoints.web.exposure.exclude属性，我们可以指定哪些端点想要暴露出来</b>
+<ul class="quote">
+<li>management.endpoints.web.exposure.include属性也可以接受星号(*)作为通配符，表明所有的Actuator端点都会对外暴露。</li>
+<li>如果除了个别端点之外，我们想暴露其他的所有端点，那么一般来讲更简单的方式是通过通配符将它们全部包含进来，然后明确排除一部分。</li>
+<li>如果你决定对外公开比“/health”和“/info”更多的信息，那么最好配置Spring Security来限制对其他端点的访问。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch92"><summary>16.2 消费Actuator端点</summary>
+<div class="sec">
+<h4>Actuator端点的介绍和使用</h4>
+<ul class="point">
+<li><b>Actuator是一个真正的宝藏，我们可以通过表16.1列出的HTTP端点获取正在运行中的应用的有用信息</b>
+<ul class="quote">
+<li>作为HTTP端点，它们可以像任意REST API那样被消费，我们可以选择任意的HTTP客户端，包括Spring的RestTemplate和WebClient、基于浏览器的JavaScript应用以及简单的curl命令行客户端。</li>
+</ul>
+</li>
+<li><b>为了了解Actuator都提供了哪些端点，我们可以向Actuator的基础路径发送一个GET请求</b>
+<ul class="quote">
+<li>如果使用curl向“/actuator”发送一个请求，那么我们将会看到如下所示的响应。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>获取应用的基础信息</h4>
+<ul class="point">
+<li><b>“/info”端点告诉我们关于应用的信息，而“/health”端点则告诉我们应用健康状况的信息</b>
+<ul class="quote">
+<li>请求关于应用的信息，我们可以请求“/info”端点。</li>
+<li>探查应用的健康状况，发送HTTP GET请求到“/health”端点将会得到一个简单的JSON响应，其中包含了应用的健康状态。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>查看配置细节</h4>
+<ul class="point">
+<li><b>“/beans”“/conditions”“/env”“/configprops”“/mappings”和“/loggers”端点可以回答我们关于应用配置的问题</b>
+<ul class="quote">
+<li>获取bean的装配报告，要研究Spring应用上下文，最基础的端点就是“/beans”。</li>
+<li>阐述自动装配，我们可以向“/conditions”发送GET请求，这样我们会知道自动装配过程中都发生了什么。</li>
+<li>探查环境和配置属性，除了知道应用的bean是如何装配在一起的，我们可能还对有哪些可用的环境属性以及bean中都注入了哪些配置属性感兴趣。</li>
+<li>HTTP映射导览，尽管Spring MVC(以及Spring WebFlux)编程模型非常易于处理HTTP请求，我们只需要为方法添加请求映射注解即可，但是我们很难对应用整体能够处理哪些HTTP请求以及每种组件分别处理哪些请求有一个整体的了解。</li>
+<li>管理日志级别，对于任何应用来说，日志都是很重要的特性。日志是一种审计方式，也是一种较为粗略的调试方法。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>查看应用的活动</h4>
+<ul class="point">
+<li><b>“/httptrace”“/threaddump”和“/heapdump”端点可以帮助我们监视运行中应用的活动</b>
+<ul class="quote">
+<li>“/heapdump”端点可能是最难以详细阐述的Actuator端点。简而言之，它会下载一个gzip压缩的HPROF堆转储文件，该文件可以用来跟踪内存和线程问题。</li>
+<li>跟踪HTTP活动，“/httptrace”端点能够报告应用所处理的最近100个请求的详情。</li>
+<li>监控线程，“/threaddump”端点能够生成一个当前线程活动的快照。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>获取应用的指标</h4>
+<ul class="point">
+<li><b>“/metrics”端点能够报告运行中的应用程序所生成的各种度量指标</b>
+<ul class="quote">
+<li>这里涉及太多的指标，所以本章不可能面面俱到地介绍。相反，我们可以只关注一个指标分类，即http.server.requests，以它作为样例介绍如何消费“/metrics”端点。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch93"><summary>16.3 自定义Actuator</summary>
+<div class="sec">
+<h4>为“/info”端点提供信息</h4>
+<ul class="point">
+<li><b>通过创建前缀为“info.”的属性为“/info”端点添加数据。</b>
+</li>
+<li><b>使用InfoContributor接口以编程的方式为“/info”端点添加任何想要的信息</b>
+<ul class="quote">
+<li>Spring Boot提供了名为InfoContributor的接口，允许我们以编程的方式为“/info”端点添加任何想要的信息。</li>
+<li>Spring Boot甚至提供了InfoContributor接口的几个实现，你肯定会发现它们非常有用。</li>
+</ul>
+</li>
+<li><b>注入构建信息到“/info”端点中</b>
+<ul class="quote">
+<li>Spring Boot提供了一些内置的InfoContributor实现，它们能够自动添加信息到“/info”端点的结果中。</li>
+<li>其中有一个实现是BuildInfoContributor，它能够将项目构建文件中的信息添加到“/info”端点的结果中。</li>
+</ul>
+</li>
+<li><b>暴露Git提交信息</b>
+<ul class="quote">
+<li>如果我们的项目使用Git进行源码控制，那么我们可以在“/info”端点中包含Git提交信息。</li>
+<li>为了实现这一点，我们需要添加如下的插件到Maven项目的pom.xml文件中。</li>
+<li>如果你是Gradle用户，也不用担心，我们可以将一个功能相同的插件放到build.gradle文件中。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>实现自定义的健康指示器</h4>
+<ul class="point">
+<li><b>创建一个实现了HealthIndicator接口的bean。</b>
+</li>
+<li><b>健康状况由每天中的时间所决定</b>
+<ul class="quote">
+<li>这个疯狂的健康指示器首先会判断当前是什么时间。如果是下午，那么所返回的健康状态是OUT_OF_SERVICE，其中还包含导致该状态的原因详情。</li>
+<li>即便是在午饭前，这个健康指示器也有10%的概率报告DOWN状态，因为它使用随机数来决定应用是否正常启动。</li>
+<li>如果随机数的值小于0.1，那么状态将是DOWN，否则状态将是UP。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>注册自定义的指标</h4>
+<ul class="point">
+<li><b>使用Micrometer发布指标</b>
+<ul class="quote">
+<li>Actuator的指标是由Micrometer实现的。这是一个供应商中立的指标门面，借助它，我们能够发送任意想要的指标，并在所选的第三方监控系统中对其进行展现。</li>
+</ul>
+</li>
+<li><b>为每种配料声明了一个计数器</b>
+<ul class="quote">
+<li>我们可以看到，TacoMetrics通过其构造器注入了MeterRegistry。它还扩展了AbstractRepositoryEventListener，这是Spring Data中的一个类，能够拦截repository事件。</li>
+<li>我们重写了onAfterCreate()方法，这样每当保存新的Taco对象时都会得到通知。</li>
+<li>在onAfterCreate()中，我们为每种配料声明了一个计数器，其中标签名为ingredient，标签值为配料ID。</li>
+<li>如果给定标签的计数器已经存在，就会重用已有的计数器。计数器会不断递增，表明使用该配料又创建了一个taco。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>创建自定义的端点</h4>
+<ul class="point">
+<li><b>通过为类添加@Endpoint注解来实现Actuator端点</b>
+<ul class="quote">
+<li>Actuator端点的定义与控制器有很大的差异。Actuator端点并不是使用@Controller或@RestController注解来标注类，而是通过为类添加@Endpoint注解来实现的。</li>
+</ul>
+</li>
+<li><b>使用@ReadOperation、@WriteOperation和@DeleteOperation注解实现端点操作</b>
+<ul class="quote">
+<li>NotesEndpoint提供了各种类型的操作。</li>
+<li>notes()方法使用了@ReadOperation注解。当它被调用的时候，将会返回一个可用笔记的列表。</li>
+<li>addNote()方法使用了@WriteOperation注解。当它被调用的时候，将会根据给定的文本创建一个新的笔记并添加到列表中。</li>
+<li>deleteNote()方法使用了@DeleteOperation注解。当它被调用的时候，将会根据给定的索引删除一条笔记。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch94"><summary>16.4 保护Actuator</summary>
+<div class="sec">
+<h4>保护Actuator的重要性</h4>
+<ul class="point">
+<li><b>我们可能不想让别人窥探Actuator暴露的信息。</b>
+</li>
+<li><b>因为Actuator提供了一些操作来修改环境变量和日志级别，所以最好对Actuator进行保护，只有具有对应权限的客户端才能消费这些端点。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用Spring Security保护Actuator</h4>
+<ul class="point">
+<li><b>因为所有的端点都集中在“/actuator”基础路径下，所以很容易将授权规则应用到所有的Actuator端点上</b>
+<ul class="quote">
+<li>例如，只有具有ROLE_ADMIN权限的用户才能调用Actuator端点，那么我们可以重写WebSecurityConfigurerAdapter的configure()方法。</li>
+</ul>
+</li>
+<li><b>Spring Boot提供了EndpointRequest，借助EndpointRequest，我们可以将相同的安全要求用到Actuator上，而且不需要硬编码路径</b>
+<ul class="quote">
+<li>EndpointRequest.toAnyEndpoint()方法会返回一个请求匹配器，它会匹配所有的Actuator端点。</li>
+<li>如果你想要将某些端点从请求匹配器中移除，那么我们可以调用excluding()方法，通过名称进行声明。</li>
+<li>如果我们只是想将安全性用到其中一部分Actuator端点中，那么可以调用to()来替换toAnyEndpoint()，并使用名称指明这些端点。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch95"><summary>16.5 小结</summary>
+<div class="sec">
+<h4>Spring Boot Actuator概述</h4>
+<ul class="point">
+<li><b>Spring Boot Actuator提供了多个端点，能够让我们探查Spring Boot应用内部的运行状况。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Actuator端点的启用与暴露</h4>
+<ul class="point">
+<li><b>大多数的Actuator端点默认是禁用的，可以通过设置management.endpoints.web.exposure.include和management.endpoints.web.exposure.exclude属性有选择地对外暴露</b>
+<ul class="quote">
+<li>management.endpoints.web.exposure.include属性用于包含要暴露的端点。</li>
+<li>management.endpoints.web.exposure.exclude属性用于排除要暴露的端点。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>可写入的Actuator端点</h4>
+<ul class="point">
+<li><b>“/loggers”和“/env”端点允许写入操作，这样能够在运行时改变应用的配置</b>
+<ul class="quote">
+<li>“/loggers”端点可以修改日志配置。</li>
+<li>“/env”端点可以修改环境变量。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>/info端点</h4>
+<ul class="point">
+<li><b>“/info”端点可以暴露应用的构建和Git提交的详情</b>
+<ul class="quote">
+<li>通过/info端点，可以查看应用的版本、构建时间、Git提交等信息。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>自定义健康指示器和应用指标</h4>
+<ul class="point">
+<li><b>自定义的健康指示器可以反映应用的健康状况，以便于跟踪外部集成系统的健康状态。</b>
+</li>
+<li><b>自定义的应用指标可以通过Micrometer进行注册，让Spring Boot应用与多种流行的指标引擎进行集成</b>
+<ul class="quote">
+<li>Micrometer是一个开源的，用于测量和监控应用程序性能的库。</li>
+<li>通过Micrometer，可以将自定义的应用指标暴露给Datadog、New Relic和Prometheus等流行的指标引擎。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Actuator的Web端点安全</h4>
+<ul class="point">
+<li><b>Actuator的Web端点可以通过Spring Security进行保护，与Spring Web应用的其他端点非常相似</b>
+<ul class="quote">
+<li>Spring Security是一个用于保护Java Web应用的安全框架。</li>
+<li>通过配置Spring Security，可以控制哪些用户可以访问Actuator的Web端点。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch96"><summary>第17章 管理Spring</summary>
+<div class="sec">
+<h4>搭建Spring Boot Admin</h4>
+<ul class="point">
+<li><b>Spring Boot Admin是一个用于监控和管理Spring Boot应用程序的Web应用。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>注册客户端应用</h4>
+<ul class="point">
+<li><b>Spring Boot Admin允许您注册客户端应用，以便您可以查看和管理它们。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用Actuator端点</h4>
+<ul class="point">
+<li><b>Spring Boot Admin使用Actuator端点来监控和管理Spring Boot应用程序</b>
+<ul class="quote">
+<li>Actuator端点返回的是JSON响应，所以对于如何使用它们并没有任何限制。</li>
+<li>在本章中，我们将会看到基于Actuator端点构建的前端用户界面(UI)，从而使这些端点更易于使用，而且有些实时数据是很难直接通过调用Actuator使用的。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>保护Admin服务器</h4>
+<ul class="point">
+<li><b>Spring Boot Admin服务器需要保护，以防止未经授权的访问。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch97"><summary>17.1 使用Spring Boot Admin</summary>
+<div class="sec">
+<h4>Spring Boot Admin简介</h4>
+<ul class="point">
+<li><b>Spring Boot Admin是一个管理类的Web前端应用，使得Actuator的端点更易于被人类所使用。</b>
+</li>
+<li><b>Spring Boot Admin分为两个主要的组件：Spring Boot Admin服务器和它的客户端</b>
+<ul class="quote">
+<li>Admin服务器负责收集并展现Actuator数据，而展现的数据则是由一个或多个Spring Boot应用提供的，这些应用就是Spring Boot Admin的客户端。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>创建Admin服务器</h4>
+<ul class="point">
+<li><b>使用Spring Boot Initializr创建一个新的Spring Boot项目并选择标签为Spring Boot Admin (Server)的复选框</b>
+<ul class="quote">
+<li>这样会将如下的依赖添加到&lt;dependencies&gt;代码块中：&lt;dependency&gt;&lt;groupId&gt;de.codecentric&lt;/groupId&gt;&lt;artifactId&gt;spring-boot-admin-starter-server&lt;/artifactId&gt; &lt;/dependency&gt;。</li>
+</ul>
+</li>
+<li><b>在主配置类上添加@EnableAdminServer注解</b>
+<ul class="quote">
+<li>现在，我们的Admin服务器已经准备就绪。如果此时启动应用并在浏览器中访问http://localhost:9090，那么我们将会看到如图17.2所示的效果。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>注册Admin客户端</h4>
+<ul class="point">
+<li><b>每个应用显式向Admin服务器注册自身</b>
+<ul class="quote">
+<li>为了让Spring Boot应用注册为Admin服务器的客户端，我们必须将Spring Boot Admin client starter添加到项目的构建文件中。</li>
+<li>客户端库准备就绪之后，我们需要配置Admin服务器的位置。这样的话，客户端就可以将自身注册进去。</li>
+</ul>
+</li>
+<li><b>Admin通过Eureka服务注册中心发现服务</b>
+<ul class="quote">
+<li>如果想让Admin服务器来发现服务，唯一需要做的事情就是添加Spring Cloud Netflix Eureka Client starter到Admin服务器的构建文件中。</li>
+<li>Admin服务器启用了Eureka客户端功能之后，什么事情都不需要做了。我们可以直接略过上文所述的客户端配置，因为Admin会自动发现注册在Eureka中的服务并展现它们的Actuator数据。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch98"><summary>17.2 探索Admin服务器</summary>
+<div class="sec">
+<h4>Admin服务器概述</h4>
+<ul class="point">
+<li><b>Admin服务器可以查看运行中应用的大量信息</b>
+<ul class="quote">
+<li>包括通用的健康信息，通过Micrometer和“/metrics”端点发布的所有指标，环境属性，包和类的日志级别，线程跟踪细节，HTTP请求的跟踪情况，审计日志等。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>查看应用基本的健康状况和信息</h4>
+<ul class="point">
+<li><b>Admin服务器在Details选项卡下展现了应用的健康状况和基本信息</b>
+<ul class="quote">
+<li>包括应用JVM的统计信息，如处理器、线程和内存使用。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>观察核心指标</h4>
+<ul class="point">
+<li><b>Admin服务器Metrics选项卡下的UI界面可以很容易地消费应用所生成的指标数据</b>
+<ul class="quote">
+<li>可以设置想要查看的一个或多个指标，展示的是实时数据，会自动更新。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>探查环境属性</h4>
+<ul class="point">
+<li><b>Admin服务器在Environment选项卡下以更美观的形式展现了应用的所有可用环境变量</b>
+<ul class="quote">
+<li>可以使用属性名或值对可用属性进行过滤，还允许我们设置或重写环境属性。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>查看和设置日志级别</h4>
+<ul class="point">
+<li><b>Admin服务器的Loggers选项卡基于“/loggers”端点提供了一个非常易于使用的UI页面</b>
+<ul class="quote">
+<li>默认情况下，Admin服务器会展现所有包和类的日志级别，可以通过名称和/或显式配置的日志级别来进行过滤。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>监控线程</h4>
+<ul class="point">
+<li><b>Spring Boot Admin UI中的Threads选项卡能够实时查看应用中所有的线程</b>
+<ul class="quote">
+<li>“/threaddump”端点只是捕获某个时刻的快照，Threads选项卡中的条形图与之不同，它是持续更新的。</li>
+<li>要查看某个线程的细节信息，可以点击列表中的线程行。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>跟踪HTTP请求</h4>
+<ul class="point">
+<li><b>Spring Boot Admin UI的Http Traces选项卡展现了Actuator“/httptrace”端点的数据</b>
+<ul class="quote">
+<li>与“/httptrace”端点返回请求时最近的100个请求不同，Http Traces选项卡列出了完整的HTTP请求历史。</li>
+<li>Http Traces选项卡包含了一个随时间变化的HTTP流量的堆积图，使用不同的颜色来表示成功和失败的请求。</li>
+<li>在堆积图的下方展现了跟踪历史，应用接收到的每个请求都会对应一行。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch99"><summary>17.3 保护Admin服务器</summary>
+<div class="sec">
+<h4>为Admin服务器启用登录功能</h4>
+<ul class="point">
+<li><b>使用Spring Security保护Admin服务器</b>
+<ul class="quote">
+<li>添加Spring Boot security starter到Admin服务器的构建文件中。</li>
+<li>将简单的管理员用户名和密码配置在application.yml中。</li>
+</ul>
+</li>
+<li><b>配置Spring Security的各种方式，为Admin服务器提供更丰富的安全模式。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>为Actuator启用认证</h4>
+<ul class="point">
+<li><b>Admin服务器的客户端应用可以通过直接向Admin服务器注册自身或被Eureka发现的方式提供凭证信息给Admin服务器</b>
+<ul class="quote">
+<li>如果应用是直接向Admin服务器注册自身，那么可以在注册时发送凭证信息。</li>
+<li>如果应用是由Admin服务器通过Eureka发现的，那么我们需要设置eureka.instance.metadata-map.user.name和eureka.instance.metadata-map.user.password。</li>
+</ul>
+</li>
+<li><b>用户名和密码必须要设置在所有向Admin服务器注册的应用中</b>
+<ul class="quote">
+<li>这里给定的值必须要匹配Actuator端点HTTP Basic认证头信息所需的用户名和密码。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch100"><summary>17.4 小结</summary>
+<div class="sec">
+<h4>Spring Boot Admin服务器的作用</h4>
+<ul class="point">
+<li><b>Spring Boot Admin服务器能够消费一个或多个Spring Boot应用的Actuator端点，并在一个用户友好的Web应用中展现数据。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Boot Admin服务器的注册方式</h4>
+<ul class="point">
+<li><b>Spring Boot可以向Admin服务器注册自身，也可以通过Eureka被Admin服务器自动发现。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Boot Admin服务器与Actuator端点的区别</h4>
+<ul class="point">
+<li><b>与捕获应用状态快照的Actuator端点不同，Admin服务器可以展现应用内部运行状况的实时视图。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Boot Admin服务器的功能</h4>
+<ul class="point">
+<li><b>借助Admin服务器能够很容易地过滤Actuator结果，在有些场景下，还可以以可视化图表的形式展现数据。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Boot Admin服务器的安全</h4>
+<ul class="point">
+<li><b>因为Admin服务器就是一个Spring Boot应用，所以可以使用任意可用的Spring Security方式来保护它。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch101"><summary>第18章 使用JMX监控Spring</summary>
+<div class="sec">
+<h4>使用Actuator端点的MBean</h4>
+<ul class="point">
+<li><b>Spring Boot应用中，JMX会自动启用，Actuator的所有端点均会暴露为MBean</b>
+<ul class="quote">
+<li>Actuator提供了许多端点，如health、info、beans等，这些端点都可以通过JMX进行访问和管理。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>将Spring bean暴露为MBean</h4>
+<ul class="point">
+<li><b>Spring应用上下文中的bean可以通过@ManagedResource注解暴露为MBean</b>
+<ul class="quote">
+<li>使用@ManagedResource注解，可以指定bean的MBean名称、描述、对象名策略等信息。</li>
+<li>通过@ManagedOperation注解，可以定义bean的操作方法，这些方法可以被JMX客户端调用。</li>
+<li>通过@ManagedAttribute注解，可以定义bean的属性，这些属性可以被JMX客户端查询和设置。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>发布通知</h4>
+<ul class="point">
+<li><b>Spring Bean可以通过@NotificationListener注解发布通知</b>
+<ul class="quote">
+<li>使用@NotificationListener注解，可以监听MBean中的通知事件，并在事件发生时进行处理。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch102"><summary>18.1 使用Actuator MBean</summary>
+<div class="sec">
+<h4>使用Actuator MBean</h4>
+<ul class="point">
+<li><b>Actuator端点默认就是对外暴露的，可以通过设置management.endpoints.jmx.exposure.include和management.endpoints.jmx.exposure.exclude属性来缩小可选的范围</b>
+<ul class="quote">
+<li>例如，我们想要限制Actuator端点只暴露“/health”“/info”“/bean”和“/conditions”端点，那么可以按照如下的方式设置management.endpoints.jmx.exposure.include：management.endpoints.jmx.exposure.include: health,info,bean,conditions。</li>
+<li>我们只想排除其中的几个端点的话，可以按照如下的方式设置management.endpoints. jmx.exposure.exclude属性：management.endpoints.jmx.exposure.exclude: env,metrics。</li>
+</ul>
+</li>
+<li><b>在JConsole中调用一个或多个Actuator MBean所托管的操作，可以在左侧树中展开MBean端点，然后在Operations下选择所需的操作</b>
+<ul class="quote">
+<li>例如，你想要探查tacos.ingredients包的日志级别，那么可以展开Loggers MBean并点击名为loggerLevels的操作。</li>
+<li>在点击loggerLevels按钮之后，将会弹出一个对话框，展现来自“/loggers”端点MBean的响应。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch103"><summary>18.2 创建自己的MBean</summary>
+<div class="sec">
+<h4>创建自己的MBean</h4>
+<ul class="point">
+<li><b>使用@ManagedResource注解，将bean导出为JMX MBean</b>
+<ul class="quote">
+<li>在bean类上添加@ManagedResource注解。</li>
+<li>在方法或属性上添加@ManagedOperation或@ManagedAttribute。</li>
+</ul>
+</li>
+<li><b>示例：TacoCounter MBean</b>
+<ul class="quote">
+<li>TacoCounter类使用了@Service注解，所以它将会被组件扫描功能所发现并且会注册一个实例作为bean存放到Spring应用上下文中。</li>
+<li>它还使用了@ManagedResource注解，表明这个bean是一个MBean。</li>
+<li>作为MBean，它暴露了一个属性和一个操作。getTacoCount()方法使用了@ManagedAttribute注解，将会暴露为一个MBean属性；而increment()方法使用了@ManagedOperation注解，将会暴露为MBean操作。</li>
+<li>每当通过TacoRepository保存Taco的时候，TacoCounter都会得到通知，在创建和保存新Taco对象的时候，onAfterCreate()方法将会被调用，我们在这里让计数器增加1。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch104"><summary>18.3 发送通知</summary>
+<div class="sec">
+<h4>发送通知</h4>
+<ul class="point">
+<li><b>MBeans可以通过NotificationPublisher推送通知到感兴趣的JMX客户端</b>
+<ul class="quote">
+<li>NotificationPublisher有一个sendNotification()方法，当得到一个Notification对象时，它会发送通知给任意订阅该MBean的JMX客户端。</li>
+</ul>
+</li>
+<li><b>要让某个MBean发送通知，它必须要实现NotificationPublisherAware接口</b>
+<ul class="quote">
+<li>该接口要求实现一个setNotificationPublisher()方法。</li>
+</ul>
+</li>
+<li><b>示例：每创建100个taco就发送一个通知</b>
+<ul class="quote">
+<li>我们可以修改TacoCounter类，让它实现NotificationPublisherAware，并使用注入的NotificationPublisher每创建100个taco时就发送通知。</li>
+<li>在JMX客户端中，我们需要订阅TacoCounter MBean来接收通知。每创建100个taco，客户端就会收到通知。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch105"><summary>18.4 小结</summary>
+<div class="sec">
+<h4>Actuator端点作为MBean使用</h4>
+<ul class="point">
+<li><b>大多数Actuator端点都可以作为MBean使用，可以被JMX客户端消费。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring自动启用JMX</h4>
+<ul class="point">
+<li><b>Spring会自动启用JMX，用来监控Spring应用上下文中的bean。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring bean导出为MBean</h4>
+<ul class="point">
+<li><b>Spring bean可以通过添加@ManagedResource注解导出为MBean</b>
+<ul class="quote">
+<li>通过为bean类添加@ManagedOperation和@ManagedAttribute注解，它的方法和属性可以导出为托管的操作和属性。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring bean发送通知给JMX客户端</h4>
+<ul class="point">
+<li><b>Spring bean可以使用NotificationPublisher发送通知给JMX客户端。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch106"><summary>第19章 部署Spring</summary>
+<div class="sec">
+<h4>Spring Boot应用的部署方案</h4>
+<ul class="point">
+<li><b>Spring Boot提供了多种部署方案，包括WAR文件、JAR文件和Docker容器化</b>
+<ul class="quote">
+<li>与大多数以WAR文件部署的Java Web应用不同，Spring Boot提供了多种部署方案。</li>
+<li>在开始学习如何部署Spring Boot应用之前，我们看一下所有的可选方案并选择最适合需求的几种。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch107"><summary>19.1 权衡各种部署方案</summary>
+<div class="sec">
+<h4>Spring Boot应用的部署方式</h4>
+<ul class="point">
+<li><b>可以以多种方式构建和运行Spring Boot应用</b>
+<ul class="quote">
+<li>使用Spring Tool Suite或IntelliJ IDEA在IDE中运行应用。</li>
+<li>在命令行中通过Maven spring-boot:run goal或Gradle bootRun任务运行应用。</li>
+<li>使用Maven或Gradle生成一个可执行的JAR文件，既可以在命令行运行，也可以部署到云中。</li>
+<li>使用Maven或Gradle生成一个WAR文件，以部署到传统的Java应用服务器中。</li>
+</ul>
+</li>
+<li><b>部署到生产环境或其他非开发环境，可执行的JAR文件或者传统的WAR文件才是可行方案</b>
+<ul class="quote">
+<li>如果必须要将应用部署到Tomcat、WebSphere、WebLogic或其他传统的Java应用服务器中，其实我们别无选择，只能将应用构建为WAR文件。</li>
+<li>如果你计划将应用部署到云中，不管是Cloud Foundry、Amazon Web Services(AWS)、Azure、Google Cloud Platform还是其他云平台，那么可执行的JAR文件是最佳选择。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Boot应用的部署场景</h4>
+<ul class="point">
+<li><b>将Spring Boot应用以WAR文件的形式部署到Java应用服务器中</b>
+<ul class="quote">
+<li>构建Spring Boot应用为WAR文件。</li>
+<li>部署WAR文件到Java应用服务器。</li>
+</ul>
+</li>
+<li><b>将Spring Boot应用作为可执行的JAR文件，推送到Cloud Foundry中</b>
+<ul class="quote">
+<li>构建Spring Boot应用为可执行的JAR文件。</li>
+<li>将JAR文件推送到Cloud Foundry。</li>
+</ul>
+</li>
+<li><b>将Spring Boot应用打包到Docker容器中，将其部署到任何支持Docker形式的平台中</b>
+<ul class="quote">
+<li>将Spring Boot应用打包到Docker容器。</li>
+<li>部署Docker容器到支持Docker的平台。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch108"><summary>19.2 构建和部署WAR文件</summary>
+<div class="sec">
+<h4>构建和部署WAR文件</h4>
+<ul class="point">
+<li><b>Spring Boot应用构建为WAR文件并不困难，Initializr会确保所生成的项目包含servlet initializer类，并且构建文件调整为生成WAR文件</b>
+<ul class="quote">
+<li>在Initializr创建应用的时候，如果选择了WAR方案，其实并没有额外要做的事情了。</li>
+</ul>
+</li>
+<li><b>SpringBootServletInitializer是一个能够感知Spring Boot环境的特殊SpringWebApplicationInitializer实现，用于配置Spring DispatcherServlet</b>
+<ul class="quote">
+<li>SpringBootServletInitializer会查找Spring应用上下文中所有Filter、Servlet或ServletContextInitializer类型的bean，并将它们绑定到servlet容器中。</li>
+</ul>
+</li>
+<li><b>使用Maven进行构建时，需要在pom.xml中的&lt;packaging&gt;元素设置成war；使用Gradle构建时，需要在build.gradle文件中应用war插件</b>
+<ul class="quote">
+<li>Maven构建：$ mvnw package。</li>
+<li>Gradle构建：$ gradlew build。</li>
+</ul>
+</li>
+<li><b>构建成功后，WAR文件将会出现在target目录下，可以部署到应用服务器中</b>
+<ul class="quote">
+<li>不同应用服务器的部署过程会有所差异，所以请参考应用服务器部署过程的相关文档。</li>
+</ul>
+</li>
+<li><b>虽然构建了适用于Servlet 3.0(或更高版本)部署的WAR文件，但是这个WAR文件依然可以像可执行JAR文件那样在命令行中执行</b>
+<ul class="quote">
+<li>使用一个部署制件，我们同时实现了两种部署方案。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>将微服务放到应用服务器中</h4>
+<ul class="point">
+<li><b>微服务通常和其他的应用一样，应该可以独立部署</b>
+<ul class="quote">
+<li>尽管离开了Taco Cloud应用的上下文之后，配料服务也没有太大的用处，但是没有理由不能将其部署到Tomcat或其他应用服务器中。</li>
+</ul>
+</li>
+<li><b>WAR文件作为Java部署的主流方案已经有20多年的历史了，但是它们确实是为将应用程序部署到传统Java应用服务器而设计的</b>
+<ul class="quote">
+<li>按照我们所选择的平台，现代云部署方案并不需要WAR文件，有些甚至都不支持这种格式。</li>
+<li>随着我们进入云部署的新时代，JAR文件可能是更好的选择。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch109"><summary>19.3 推送JAR文件到Cloud Foundry上</summary>
+<div class="sec">
+<h4>云计算平台的选择</h4>
+<ul class="point">
+<li><b>PaaS提供了现成的应用部署平台，可以很容易在运行时对应用进行扩展</b>
+<ul class="quote">
+<li>PaaS包含多种可以绑定到应用上的附加服务(比如数据库和消息代理)。</li>
+</ul>
+</li>
+<li><b>Cloud Foundry是一个开源的PaaS平台，提供了开源和基于商业的发行版</b>
+<ul class="quote">
+<li>Cloud Foundry甚至可以运行在防火墙之内的公司数据中心里面，提供私有云方案。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>推送JAR文件到Cloud Foundry</h4>
+<ul class="point">
+<li><b>WAR文件格式过于重量级，更简单的可执行JAR文件更适合部署到Cloud Foundry中</b>
+<ul class="quote">
+<li>使用Maven构建项目的话，我们可以使用Maven包装器执行package goal。</li>
+<li>如果使用Gradle，那么我们可以使用Gradle包装器运行build任务。</li>
+</ul>
+</li>
+<li><b>使用cf命令将JAR文件推送至Cloud Foundry</b>
+<ul class="quote">
+<li>cf push命令的第一个参数指定了在Cloud Foundry中该应用的名称。</li>
+<li>使用--random-route选项，它会为我们随机生成一个子域。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Cloud Foundry服务的绑定与使用</h4>
+<ul class="point">
+<li><b>使用cf marketplace命令查看PWS提供的所有服务</b>
+<ul class="quote">
+<li>PWS提供了一个完全托管的MongoDB服务，名为mlab。</li>
+</ul>
+</li>
+<li><b>使用cf create-service命令创建mlab实例</b>
+<ul class="quote">
+<li>该命令会按照沙箱(sandbox)服务计划创建一个mlab服务，名为ingredientdb。</li>
+</ul>
+</li>
+<li><b>使用cf bind-service命令将服务绑定到应用上</b>
+<ul class="quote">
+<li>服务绑定完成之后，我们需要重新部署(re-stage)应用才能使绑定生效。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Boot应用在Cloud Foundry上的部署</h4>
+<ul class="point">
+<li><b>Cloud Foundry是一个非常棒的PaaS方案，与Spring项目之间的关系，所以会在这两者之间提供一些协同的功能</b>
+<ul class="quote">
+<li>对于Spring Boot应用的部署来讲，Cloud Foundry是一个非常棒的PaaS方案。</li>
+</ul>
+</li>
+<li><b>将应用程序打包到Docker容器中，然后发布到云中</b>
+<ul class="quote">
+<li>在将应用程序推进到AWS这样的基础设施即服务(Infrastructure-as-a-Service, IAAS)平台时更是如此。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch110"><summary>19.4 在Docker容器中运行Spring Boot</summary>
+<div class="sec">
+<h4>Docker容器在云环境中的应用</h4>
+<ul class="point">
+<li><b>Docker已经成为事实标准，很多云环境都接受以Docker容器的形式部署应用</b>
+<ul class="quote">
+<li>包括AWS、Microsoft Azure、Google Cloud Platform和Pivotal Web Services。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用Spotify的Maven插件创建Docker容器</h4>
+<ul class="point">
+<li><b>Spotify提供了一个Maven插件，可以轻而易举地将Spring Boot的构建结果创建为Docker容器</b>
+<ul class="quote">
+<li>需要将其添加到Spring Boot项目pom.xml文件的&lt;build&lt;plugins&gt;代码块下。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Docker镜像的创建与配置</h4>
+<ul class="point">
+<li><b>在&lt;configuration&gt;代码块下，设置了一些属性，用于指导如何创建Docker镜像</b>
+<ul class="quote">
+<li>&lt;repository&gt;描述了在Docker仓库中该Docker镜像的名称。</li>
+<li>在&lt;buildArgs&gt;元素下面，声明镜像要包含Maven构建所生成的JAR文件。</li>
+</ul>
+</li>
+<li><b>Docker镜像的所有定义都位于一个名叫Dockerfile的文件中</b>
+<ul class="quote">
+<li>FROM指令声明了新镜像要基于哪个基础镜像。</li>
+<li>ENV指令设置了环境变量。</li>
+<li>VOLUME指令在容器中创建了一个mount点。</li>
+<li>ARG指令声明了一个要在构建期传入的参数。</li>
+<li>COPY指令会将给定路径下的某个文件复制到另外一个路径下。</li>
+<li>ENTRYPOINT描述了容器启动的时候要执行什么操作。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>在Docker容器中运行Spring Boot</h4>
+<ul class="point">
+<li><b>通过docker run命令运行配料服务容器，并链接它到刚刚启动的Mongo容器上</b>
+<ul class="quote">
+<li>因为我们配置了容器中的Spring Boot应用运行在8081端口上，所以-p参数可以将内部端口映射到主机的8080端口上。</li>
+<li>--link参数能够将我们的容器链接到名为tacocloud-mongo的容器上，并为其分配mongo主机名，这样Spring Data就可以使用该主机名连接它了。</li>
+<li>最后，我们指定了容器要运行的镜像名称(也就是tacocloud/ingredient-service)。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>将Docker镜像推送至Dockerhub或其他Docker镜像仓库</h4>
+<ul class="point">
+<li><b>使用如下的Maven命令推送镜像</b>
+<ul class="quote">
+<li>$ mvnw dockerfile:push。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch111"><summary>19.5 以终为始</summary>
+<div class="sec">
+<h4>以终为始</h4>
+<ul class="point">
+<li><b>虽然本书必须要结束了，但是你的Spring征程才刚刚开始</b>
+<ul class="quote">
+<li>利用本书所学的知识，用Spring构建令人赞叹的应用吧！</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch112"><summary>19.6 小结</summary>
+<div class="sec">
+<h4>Spring应用部署环境</h4>
+<ul class="point">
+<li><b>Spring应用可以部署到多种不同的环境中，包括传统的应用服务器、像Cloud Foundry这样的平台即服务环境，或者Docker容器。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>WAR文件与可运行JAR文件</h4>
+<ul class="point">
+<li><b>在构建WAR文件的时候，我们应当包含一个SpringBootServletInitializr的子类，确保Spring的DispatcherServlet恰当地进行了配置。</b>
+</li>
+<li><b>构建可运行的JAR文件允许将Spring Boot应用部署到多个云平台上，而且能够避免WAR文件带来的开销。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Docker容器化Spring应用</h4>
+<ul class="point">
+<li><b>借助Spotify的Maven Dockerfile插件，能够非常容易地容器化Spring应用</b>
+<ul class="quote">
+<li>它会在Docker容器中包装一个可执行的JAR文件，容器可以部署到任何支持Docker的环境中，其中包括像Amazon Web Services、Microsoft Azure、Google Cloud Platform、Pivotal Web Services (PWS)、Pivotal Container Service (PKS)这样的云供应商。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch113"><summary>A.1 使用Spring Tool Suite初始化项目</summary>
+<div class="sec">
+<h4>使用Spring Tool Suite初始化项目</h4>
+<ul class="point">
+<li><b>在File &gt; New菜单中选择Spring Starter Project菜单项</b>
+<ul class="quote">
+<li>这是一个使用Spring Tool Suite初始化Spring项目的简单描述。更详细的阐述，可以参考1.2.1小节。</li>
+</ul>
+</li>
+<li><b>定义项目的基本信息，比如项目名称、坐标(group ID和artifact ID)、版本和基础包名</b>
+<ul class="quote">
+<li>我们也可以确定项目使用Maven还是Gradle来构建，还可以声明构建生成JAR文件还是WAR文件，以及使用哪个版本的Java，甚至还能使用其他的JVM语言，比如Groovy或Kotlin。</li>
+</ul>
+</li>
+<li><b>在项目依赖页中，我们可以指定项目需要的所有依赖</b>
+<ul class="quote">
+<li>其中，有些依赖是Spring Boot Starter依赖，有些依赖是Spring项目常用的依赖。</li>
+<li>可用的依赖都列在左侧，以分组的形式进行组织，可以展开和收缩。如果在查找依赖时遇到麻烦，还可以对依赖进行搜索，以便于缩小可选范围。</li>
+<li>要将某个依赖添加到所生成的项目中，我们只需要选中依赖名称前面的复选框即可。已经选中的依赖会显示在右侧Selected标题下面。如果想要移除依赖，可以点击已选中依赖前面的×，也可以点击Clear Selection按钮清除所有已选的依赖。</li>
+<li>为了增加便利性，如果你发现在项目中特定的一组依赖始终(或者经常)会用到，那么你可以在选择完这些依赖后点击Make Default按钮，这样在下一次创建项目的时候它们会预先选中。</li>
+</ul>
+</li>
+<li><b>点击Finish按钮就可以生成项目并添加到工作空间中了</b>
+<ul class="quote">
+<li>如果你想要使用http://start.spring.io之外的其他Initializr，可以点击Next按钮来设置Initializr的基础URL。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch114"><summary>A.2 使用IntelliJ IDEA初始化项目</summary>
+<div class="sec">
+<h4>使用IntelliJ IDEA初始化Spring项目</h4>
+<ul class="point">
+<li><b>在File &gt; New菜单下选择Project菜单项</b>
+<ul class="quote">
+<li>点击Next按钮进入下一页。</li>
+</ul>
+</li>
+<li><b>在Type输入域中选择Maven Project或Gradle Project</b>
+<ul class="quote">
+<li>填写完必要的项目信息后，点击Next按钮。</li>
+</ul>
+</li>
+<li><b>选择项目依赖</b>
+<ul class="quote">
+<li>在最左侧，依赖是按照分类来组织的。选中某个分类时，这个分类对应的可选项会显示在中间区域。已经选中的依赖将会(按照分类)列在最右侧。</li>
+</ul>
+</li>
+<li><b>输入项目的名称并指定项目要放到磁盘的什么位置</b>
+<ul class="quote">
+<li>点击Finish按钮，项目将会创建并加载到IntelliJ IDEA的工作空间中。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch115"><summary>A.3 使用NetBeans初始化项目</summary>
+<div class="sec">
+<h4>使用NetBeans创建新项目</h4>
+<ul class="point">
+<li><b>选择File菜单的New Project菜单项</b>
+<ul class="quote">
+<li>在新项目向导的第一页，选择Maven，然后在右侧的项目列表中选择Spring Boot Initializr Project。</li>
+</ul>
+</li>
+<li><b>设置项目的基本信息</b>
+<ul class="quote">
+<li>在新项目向导的第二页，设置项目名称、版本以及Maven pom.xml文件中定义项目的其他信息。</li>
+</ul>
+</li>
+<li><b>选择项目的依赖</b>
+<ul class="quote">
+<li>在新项目向导的依赖页，选择想要使用的Spring Boot版本，并指定项目的依赖。</li>
+</ul>
+</li>
+<li><b>声明项目的一些详情信息</b>
+<ul class="quote">
+<li>在新项目向导的最后一页，声明项目的名称以及文件系统中的位置，并通过Maven Spring Boot插件运行和调试项目。</li>
+</ul>
+</li>
+<li><b>点击Finish按钮，项目创建完成</b>
+<ul class="quote">
+<li>在设置完项目的所有信息后，点击Finish按钮，项目将会创建并添加到NetBeans的工作空间中。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch116"><summary>A.4 在start.spring.io中初始化项目</summary>
+<div class="sec">
+<h4>使用start.spring.io初始化项目</h4>
+<ul class="point">
+<li><b>在Web浏览器中访问https://start.spring.io</b>
+<ul class="quote">
+<li>我们将会看到简单版本的Spring Initializr Web用户界面。</li>
+</ul>
+</li>
+<li><b>在简单版本的Initializr Web应用中填写基本信息</b>
+<ul class="quote">
+<li>使用Maven还是Gradle进行构建。</li>
+<li>开发项目要使用什么语言。</li>
+<li>基于什么版本的Spring Boot进行构建。</li>
+<li>项目的group和artifact ID。</li>
+</ul>
+</li>
+<li><b>通过Search for Dependencies文本框中输入搜索条件来指明依赖</b>
+<ul class="quote">
+<li>例如，输入“web”来搜索带有“web”关键字的依赖。</li>
+</ul>
+</li>
+<li><b>点击Generate Project按钮，让Initializr初始化项目并下载为zip文件</b>
+<ul class="quote">
+<li>然后，我们就可以解压该文件并导入你所选择的IDE或文本编辑器了。</li>
+</ul>
+</li>
+<li><b>点击Generate Project下的Switch to the full version链接，进行更细粒度地控制项目创建的过程</b>
+<ul class="quote">
+<li>完整版本能够让我们重写这些衍生值/默认值。</li>
+<li>在完整版本的用户界面中，搜索框依然是可用的。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch117"><summary>A.5 使用命令行初始化项目</summary>
+<div class="sec">
+<h4>使用curl命令初始化项目</h4>
+<ul class="point">
+<li><b>curl命令是最简单的初始化Spring项目的方式</b>
+<ul class="quote">
+<li>curl https://start.spring.io/starter.zip -o demo.zip。</li>
+</ul>
+</li>
+<li><b>可以通过发送请求至基础Initializr URL获取参数列表和可用依赖项的列表</b>
+<ul class="quote">
+<li>curl https://start.spring.io。</li>
+</ul>
+</li>
+<li><b>可以指定一些详情信息和依赖，例如：dependencies=web,data-jpa</b>
+<ul class="quote">
+<li>% curl https://start.spring.io/starter.tgz \。</li>
+<li>-d dependencies=web,data-jpa \。</li>
+<li>-d type=gradle-project \。</li>
+<li>-d baseDir=my-dir | tar -xzvf -。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Spring Boot命令行接口</h4>
+<ul class="point">
+<li><b>Spring Boot CLI是另一种初始化Spring应用的方案</b>
+<ul class="quote">
+<li>% sdk install springboot。</li>
+</ul>
+</li>
+<li><b>使用方式与curl非常类似，这里我们要使用的命令是spring init</b>
+<ul class="quote">
+<li>% spring init。</li>
+</ul>
+</li>
+<li><b>spring init的很多参数与curl方案的参数相同或相似</b>
+<ul class="quote">
+<li>例如：--dependencies=web --java-version=1.7。</li>
+<li>例如：--dependencies=web,jpa --type=gradle-project。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch118"><summary>A.6 使用元框架创建Spring应用</summary>
+<div class="sec">
+<h4>使用元框架创建Spring应用</h4>
+<ul class="point">
+<li><b>Grails和JHipster是基于Spring和Spring Boot构建的框架，提供了快速开发Spring应用的能力</b>
+<ul class="quote">
+<li>Grails和JHipster在更高层级上提供了快速开发Spring应用的能力，同时依然能够使用Spring和Spring Boot所提供的所有功能。</li>
+</ul>
+</li>
+<li><b>这些元框架都有自己独特的开发模型，实际上，它们本身就是框架</b>
+<ul class="quote">
+<li>每个元框架都值得写一本书。</li>
+</ul>
+</li>
+<li><b>我们不会深入研究如何使用这些元框架来初始化Spring项目，在这里将它们列出来只是让读者知道还有初始化和开发Spring应用的其他方式。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch119"><summary>A.7 构建和运行项目</summary>
+<div class="sec">
+<h4>使用java -jar命令运行应用</h4>
+<ul class="point">
+<li><b>无论是使用JAR文件还是WAR文件，都可以使用java -jar命令来运行应用</b>
+<ul class="quote">
+<li>使用java -jar demo.jar运行应用。</li>
+<li>使用java -jar demo.war运行应用。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用Spring Boot Maven或Gradle插件运行应用</h4>
+<ul class="point">
+<li><b>Maven构建的项目可以使用mvn spring-boot:run命令运行。</b>
+</li>
+<li><b>Gradle构建的项目可以使用gradle bootRun命令运行。</b>
+</li>
+</ul></div>
+</details>
+  <p class="site-footer">由 weread-auto 导出 · 供全书视角与后续精读对照　<span class="gcstat" id="gc_page_pv" style="display:none">本页阅读 <b id="gc_page_pv_num">–</b> 次</span></p>
+</main>
+<script>(function(){
+  function openId(id){
+    if(!id) return null;
+    var el = document.getElementById(id);
+    if(!el) return null;
+    var d = (el.tagName === 'DETAILS') ? el : (el.closest ? el.closest('details') : null);
+    if(d && !d.open) d.open = true;      // 关键：目录跳过来时把这一章展开
+    return el;
+  }
+  function go(id){
+    var el = openId(id);
+    if(!el) return;
+    // 展开会改变文档高度，等一帧再滚，免得停在错误位置
+    setTimeout(function(){ el.scrollIntoView({block:'start'}); }, 10);
+  }
+  function fromHash(){
+    var h = (location.hash || '').replace(/^#/, '');
+    if(h) go(decodeURIComponent(h));
+  }
+  document.addEventListener('click', function(e){
+    var a = (e.target && e.target.closest) ? e.target.closest('a[href^="#"]') : null;
+    if(!a) return;
+    var id = (a.getAttribute('href') || '').slice(1);
+    if(id) go(id);
+  }, false);
+  window.addEventListener('hashchange', fromHash, false);
+  // 手动展开某章时把锚点写回地址栏：刷新或分享链接能直接落回这一章
+  document.addEventListener('toggle', function(e){
+    var t = e.target;
+    if(t && t.tagName === 'DETAILS' && t.open && t.id && location.hash !== '#' + t.id){
+      try { history.replaceState(null, '', '#' + t.id); } catch(err) {}
+    }
+  }, true);
+  fromHash();
+})();
+</script>
+<script data-goatcounter="https://ae6623.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<!-- gc-fill:begin -->
+<script>
+(function(){
+  /* GoatCounter 计数端点只吃 .json（.txt 会 400 unknown extension），
+     没数据的路径也返回 404 + {"count":0,"count_unique":0}，所以按文本解析。 */
+  var C="ae6623", base="https://"+C+".goatcounter.com/counter";
+  function stat(p){
+    return fetch(base+p+".json",{credentials:"omit",cache:"no-store"})
+      .then(function(r){return r.text();})
+      .then(function(t){
+        try{
+          var d=JSON.parse(t), c=parseInt(d.count,10);
+          if(!isFinite(c))return null;
+          var u=parseInt(d.count_unique,10);
+          return {pv:String(c), uv:isFinite(u)?String(u):null};
+        }catch(e){return null}
+      })
+      .catch(function(){return null});
+  }
+  function put(id,v){var e=document.getElementById(id);if(e&&v!=null)e.textContent=v;}
+  stat("/*").then(function(d){
+    if(!d)return;
+    put("gc_site_pv_num",d.pv);
+    if(d.uv!=null){put("gc_site_uv_num",d.uv);}
+    else{var x=document.querySelectorAll(".visit-badge-uv");
+         for(var i=0;i<x.length;i++)x[i].style.display="none";}
+  });
+  var pp=document.getElementById("gc_page_pv");
+  if(pp&&location.pathname){
+    var path=location.pathname;
+    if(path.length>1&&path.charAt(path.length-1)==="/")path=path.slice(0,-1);
+    stat(path).then(function(d){
+      if(d){put("gc_page_pv_num",d.pv);pp.style.display="";}
+    });
+  }
+})();
+</script>
+<!-- gc-fill:end -->
+</body>
+</html>

@@ -120,8 +120,9 @@
 <path class="ln" d="M692 991 L700 991"/>
 </svg></section>
 <section class="mmx-mod" aria-labelledby="oneline" data-key="oneline"><h2 id="oneline">一句话主旨</h2><p class="mmx-mod-note">本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。</p><p class="mmx-oneline">TypeScript是一种由微软开发的、开源的编程语言，近两年来发展很迅猛，已经成为很多大型项目的标配</p></section>
-<section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" data-key="merged_guide"><h2 id="merged-guide-title">AI领读</h2><style>
-/* merged_guide 章内：mmx 组件样式（与完整版一致） */
+<section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" data-key="merged_guide"><h2 id="merged-guide-title">AI领读</h2>
+<style>
+/* merged_guide 章内：AI 大纲原生深层样式 */
 .merged-guide .sec{margin:10px 0 14px;padding-left:6px;border-left:2px solid #e5e0d6}
 .merged-guide .sec h4{font:600 .98rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.6em 0 .3em}
 .merged-guide ul.point{margin:.3em 0;padding-left:20px}
@@ -129,10 +130,4422 @@
 .merged-guide ul.quote{margin:.25em 0 .25em 20px;padding-left:18px;list-style:none}
 .merged-guide ul.quote::before{content:"原句";display:block;font-size:.72rem;color:#bf8247;
   letter-spacing:.1em;margin:.15em 0 .1em;font-weight:600}
+/* 小节层级追加的汇总原句节点，标签与要点下的原句区分开 */
 .merged-guide ul.quote.quote-node{margin-top:.5em;padding-top:.4em;border-top:1px dashed #eadfc9}
-.merged-guide ul.quote.quote-node::before{content:"热门划线 · 本章原文摘录"}
+.merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
 .merged-guide ul.quote>li{color:#4a4436;font-size:.93rem;margin:.2em 0;padding-left:10px;border-left:2px solid #bf8247}
-</style><p class="small">章节目录取自微信读书官方目录；展开各章即该章与各小节的热门划线原文（按划线人数排序），原句均为读者划线，非 AI 生成。</p><div class="toc-part"><span class="part-label">全书篇目（共 15 章 · 41 句热门划线）</span><details class="mmx-cn"><summary><span class="mmx-no">1</span><span class="mmx-name">译者序</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">暂无热门划线</p></div></details><details class="mmx-cn"><summary><span class="mmx-no">2</span><span class="mmx-name">前言</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">暂无热门划线</p></div></details><details class="mmx-cn"><summary><span class="mmx-no">3</span><span class="mmx-name">第1章 为什么要使用TypeScript</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">2 个小节 · 7 句热门划线</p><div class="sec"><h4>1.1 开始使用TypeScript</h4><ul class="quote"><li>TypeScript代码会被编译成JavaScript代码，JavaScript代码才是实际被执行的代码。</li></ul></div><div class="sec"><h4>1.2 选择TypeScript的理由</h4><ul class="quote"><li>类型系统能够提高代码的质量和可维护性。</li><li>类型是出色的文档形式之一，函数签名是一个定理，而函数体是具体的实现。</li><li>TypeScript提供了一个浮动的标准来衡量你希望在声明中投入多少努力；投入的越多，你获得的类型安全和代码智能提示就越多</li><li>类型有利于代码的重构，它有利于编译器在编译时而不是运行时捕获错误。</li><li>类型错误不会阻止JavaScript的正常运行</li><li>类型可以由环境来定义</li></ul></div></div></details><details class="mmx-cn"><summary><span class="mmx-no">4</span><span class="mmx-name">第2章 JavaScript常见语法</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">7 个小节 · 14 句热门划线</p><ul class="quote quote-node"><li>TypeScript将试图保护你免受无意义的JavaScript代码的影响（所以你不需要记住这些东西）。</li><li>TypeScript只是带有文档的JavaScript</li></ul><div class="sec"><h4>2.1 相等</h4><ul class="quote"><li>在TypeScript中，string类型的数据==number类型的数据，以及string类型的数据===number类型的数据，都会在编译时报错。因此，你完全不必担心因隐式类型转换而引发的问题。</li></ul></div><div class="sec"><h4>2.2 引用</h4><ul class="quote"><li>除字面量外，JavaScript中的任何对象（包括函数、数组、正则表达式等）都是一个引用。</li></ul></div><div class="sec"><h4>2.3 null和undefined</h4><ul class="quote"><li>JSON标准支持编码null，但是不支持undefined。当JSON编码具有null属性的对象时，这个属性将会包含null值；然而当一个属性undefined时，在编码后，它就会被删除。</li><li>在JavaScript以及它的扩展TypeScript中，null和undefined表示不同的意思。</li><li>因此，为了检查一个变量是否已经被定义，或者是否在全局作用域上，通常会使用typeof。</li></ul></div><div class="sec"><h4>2.4 this</h4><ul class="quote"><li>在函数内对this关键字的访问实际上都是由函数的实际调用方式控制的。它通常被称为调用上下文</li></ul></div><div class="sec"><h4>2.5 闭包</h4><ul class="quote"><li>在JavaScript中，闭包是指一个函数有权力访问定义在它外部作用域的任何变量。</li><li>闭包是JavaScript最好的语法之一</li></ul></div><div class="sec"><h4>2.6 数字</h4><ul class="quote"><li>它是一个双精度的64位的number。</li><li>不要将此库用于UI（User Interface，用户界面）或以性能为目的的运算，如图表、canvas画图等</li></ul></div><div class="sec"><h4>2.7 truthy</h4><ul class="quote"><li>通过操作符！！，你可以很容易地将某些值转化为布尔类型的值（true或false）。</li><li>会切换到与原始对象匹配的布尔值</li></ul></div></div></details><details class="mmx-cn"><summary><span class="mmx-no">5</span><span class="mmx-name">第3章 JavaScript新语法特性</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">5 个小节 · 8 句热门划线</p><div class="sec"><h4>3.1 类</h4><ul class="quote"><li>TypeScript类支持静态属性，静态属性会被所有的实例共享</li><li>注意：你可以很轻易地改写父类中的成员（这里修改了add），而你的成员仍然可以使用父类的函数（super.函数名）。</li></ul></div><div class="sec"><h4>3.2 箭头函数</h4><ul class="quote"><li>如果在浏览器中运行这段代码，函数中的this将会指向window，因为window将执行函数growOld，可以使用箭头函数来修复它。</li></ul></div><div class="sec"><h4>3.4 let</h4><ul class="quote"><li>用let代替var，可以让你得到一个与外界变量相隔离的、真实的、唯一的元素</li><li>如果变量的名称已经在周围作用域中被使用，那么就会创建一个新的变量名称</li></ul></div><div class="sec"><h4>3.5 const</h4><ul class="quote"><li>const在可读性和可维护性方面，都称得上是一个良好的实践。并且它可以避免使用魔法字面量，示例如下。</li></ul></div><div class="sec"><h4>3.6 解构</h4><ul class="quote"><li>一个常见的用例是忽略某些属性</li><li>解构可以使代码的可读性和可维护性大大提高。数组解构可以让你像使用元组一样使用数组。</li></ul></div></div></details><details class="mmx-cn"><summary><span class="mmx-no">6</span><span class="mmx-name">第4章 TypeScript项目构成</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">1 个小节 · 2 句热门划线</p><div class="sec"><h4>4.3 模块</h4><ul class="quote"><li>ES模块：它并没有准备好。</li><li>在bar.ts文件里使用import时，它不仅允许你使用从其他文件导入的内容，还会将此文件bar.ts标记为一个模块，在文件内定义的声明也不会“污染”全局命名空间。</li></ul></div></div></details><details class="mmx-cn"><summary><span class="mmx-no">7</span><span class="mmx-name">第5章 快速创建TypeScript项目</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">暂无热门划线</p></div></details><details class="mmx-cn"><summary><span class="mmx-no">8</span><span class="mmx-name">第6章 TypeScript类型系统</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">6 个小节 · 9 句热门划线</p><div class="sec"><h4>6.9 可调用</h4><ul class="quote"><li>你可以使用类型别名或接口来表示一个可被调用的类型注解。</li><li>可实例化只是可调用类型注解的一种特殊情况，它用new作为前缀。这意味着你需要使用new关键字去调用它。</li></ul></div><div class="sec"><h4>6.10 类型断言</h4><ul class="quote"><li>类型断言纯粹是一个编译时语法，同时，它也为编译器提供了分析代码的方法。</li></ul></div><div class="sec"><h4>6.11 Freshness</h4><ul class="quote"><li>如果你想使用Freshness，可能需要将所有成员都标记为可选，这样你就仍然能够捕获拼写错误了</li></ul></div><div class="sec"><h4>6.15 泛型</h4><ul class="quote"><li>设计泛型的关键动机是在成员之间提供有意义的类型约束，这些成员可以是类的实例成员、类的方法、函数的参数、函数返回值。</li></ul></div><div class="sec"><h4>6.17 类型兼容性</h4><ul class="quote"><li>参数越少越好，例如，函数能够选择性地忽略一些多余的参数，但是你得保证有足够的参数被使用。</li><li>由于TypeScript具有结构类型系统，类型参数只有在被成员使用时，才会影响兼容性。</li></ul></div><div class="sec"><h4>6.20 索引签名</h4><ul class="quote"><li>当你向索引签名传入一个其他对象时，JavaScript会在得到结果之前先调用toString方法。</li><li>TypeScript会报错，是因为添加的索引签名并不兼容它原有的类型，使用交叉类型</li></ul></div></div></details><details class="mmx-cn"><summary><span class="mmx-no">9</span><span class="mmx-name">第7章 关于JSX</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">暂无热门划线</p></div></details><details class="mmx-cn"><summary><span class="mmx-no">10</span><span class="mmx-name">第8章 TypeScript编译选项设置</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">暂无热门划线</p></div></details><details class="mmx-cn"><summary><span class="mmx-no">11</span><span class="mmx-name">第9章 TypeScript错误处理</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">暂无热门划线</p></div></details><details class="mmx-cn"><summary><span class="mmx-no">12</span><span class="mmx-name">第10章 开发与测试工具</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">1 句热门划线</p><ul class="quote quote-node"><li>一个有趣的事实是npm并不是一个缩写，所以它不会有扩展后的名字，但是我们一般称之为node package manager（包管理工具）</li></ul></div></details><details class="mmx-cn"><summary><span class="mmx-no">13</span><span class="mmx-name">第11章 提示与建议</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">暂无热门划线</p></div></details><details class="mmx-cn"><summary><span class="mmx-no">14</span><span class="mmx-name">第12章 TypeScript代码风格指南与代码约定</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">暂无热门划线</p></div></details><details class="mmx-cn"><summary><span class="mmx-no">15</span><span class="mmx-name">第13章 TypeScript编译原理</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">暂无热门划线</p></div></details></div></section>
+</style>
+<p class="small">章节目录与 AI 大纲融合为一棵树：篇章分组即目录，展开各章即骨架与逐节 AI 大纲（要点 · 原句摘录）。</p>
+  <div class="toc-part"><span class="part-label">全书篇目（AI 大纲顺序）</span>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">1</span><span class="mmx-name">译者序</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 6 条要点 · 0 句原句摘录</p>
+<div class="sec">
+<h4>本书的特点和价值</h4>
+<ul class="point">
+<li><b>知识点全面，不仅涵盖了官方文档的大部分知识点，对于官方文档中没有却经常遇到的知识点，也做了细致的讲解。</b>
+</li>
+<li><b>示例丰富，简单易懂，书中的例子，大都来自作者对日常工作的总结，我们甚至可以直接将它们用于自己的开发工作。</b>
+</li>
+<li><b>深入编译原理，在与TypeScript编译原理相关的章节中，本书对如何把TypeScript编译为JavaScript做了详尽的解析。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>本书的翻译和更新</h4>
+<ul class="point">
+<li><b>本书是由郭文超和他的朋友开始翻译，后来何小磊、柳星、徐野等越来越多的开发者加入翻译、审校的队伍中。</b>
+</li>
+<li><b>随着TypeScript的不断更新和发展，本书涉及的内容也有所更新，为了更便于阅读，在与作者沟通之后，译者对部分内容进行了优化，对部分章节进行了组合和增删。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>本书对TypeScript开发者的价值</h4>
+<ul class="point">
+<li><b>即使TypeScript已经历多次更新，但对于想要深入了解TypeScript的开发者来说，本书仍大有益处。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">2</span><span class="mmx-name">1.1 开始使用TypeScript</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 4 条要点 · 5 句原句摘录</p>
+<div class="sec">
+<h4>TypeScript编译器和编辑器的准备</h4>
+<ul class="point">
+<li><b>TypeScript编译器是OSS，可以在源代码和npm上找到</b>
+<ul class="quote"><li>TypeScript代码会被编译成JavaScript代码，JavaScript代码才是实际被执行的代码。</li></ul>
+</li>
+<li><b>推荐使用Visual Studio Code(以下简称VS Code)和我所写的扩展工具作为TypeScript编辑器</b>
+<ul class="quote"><li>当然还有其他许多IDE(Integrated Development Environment，集成开发环境)也支持TypeScript。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>TypeScript代码会被编译成JavaScript代码，JavaScript代码才是实际被执行的代码。</li><li>当然还有其他许多IDE(Integrated Development Environment，集成开发环境)也支持TypeScript。</li></ul>
+</div>
+<div class="sec">
+<h4>TypeScript版本的选择</h4>
+<ul class="point">
+<li><b>建议使用稳定的版本，因为随着时间的推移，不断更新的编译器的测试用例将会捕获越来越多的Bug</b>
+<ul class="quote"><li>在安装TypeScript之前，需要先安装npm。</li><li>然后可以使用命令行来安装TypeScript。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在安装TypeScript之前，需要先安装npm。</li><li>然后可以使用命令行来安装TypeScript。</li></ul>
+</div>
+<div class="sec">
+<h4>获取源代码</h4>
+<ul class="point">
+<li><b>源代码可以在Basarat的GitHub个人主页上找到</b>
+<ul class="quote"><li>大多数代码示例都可以直接复制到VS Code中运行。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>大多数代码示例都可以直接复制到VS Code中运行。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">3</span><span class="mmx-name">1.2 选择TypeScript的理由</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 3 条要点 · 9 句原句摘录</p>
+<div class="sec">
+<h4>TypeScript的类型系统</h4>
+<ul class="point">
+<li><b>类型系统能够提高代码的质量和可维护性</b>
+<ul class="quote"><li>类型有利于代码的重构，它有利于编译器在编译时而不是运行时捕获错误。</li><li>类型是出色的文档形式之一，函数签名是一个定理，而函数体是具体的实现。</li></ul>
+</li>
+<li><b>TypeScript通过JavaScript即TypeScript、类型可以是隐式的、类型可以是显式的、类型是结构化的、类型错误不会阻止JavaScript的正常运行、类型可以由环境来定义等方式降低入门门槛</b>
+<ul class="quote"><li>JavaScript即TypeScript：TypeScript为JavaScript代码提供了编译时的类型安全。由TypeScript的名字就可以看出，这种做法并不奇怪。最棒的是这些类型是完全可选的。写在.js文件里的JavaScript代码，可以被重新命名为.ts文件，TypeScript仍然会返回与原始JavaScript文件相同的.js文件。被设计成JavaScript的“超集”，并且带有可选的类型系统，TypeScript是经过慎重考虑并有意这样做的。</li><li>类型可以是隐式的：TypeScript将尽可能多地去推断类型信息，以便在代码开发过程中以极小的成本为你提供类型安全。</li><li>类型可以是显式的：正如之前所提到的，TypeScript会尽可能安全地推断类型。然而，你可以使用类型注解来做下面的事情。</li><li>类型是结构化的：在一些语言(尤其是带有名义上的类型系统的语言)里，静态类型会导致一些不必要的方式的存在，因为即使知道代码可以正常工作，语言的语义也会迫使你复制周围的一些东西。这就跟AutoMapper这样的东西对C＃来说非常重要是一个道理。在TypeScript中，我们真的希望类型对JavaScript初学者来说是非常简单的，因此，TypeScript的类型是结构化的。这意味着鸭子类型是一流的语言结构。</li><li>类型错误不会阻止JavaScript的正常运行：为了方便把JavaScript代码迁移到TypeScript，即使存在编译错误，在默认情况下，TypeScript代码也会尽可能地被编译为JavaScript代码。</li><li>类型可以由环境来定义：TypeScript的主要目标之一是让人们能够安全、轻松地在TypeScript中使用现有的JavaScript库。它可以通过声明来做到这一点。TypeScript提供了一个浮动的标准来衡量你希望在声明中投入多少努力；投入的越多，你获得的类型安全和代码智能提示就越多。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>类型有利于代码的重构，它有利于编译器在编译时而不是运行时捕获错误。</li><li>类型是出色的文档形式之一，函数签名是一个定理，而函数体是具体的实现。</li><li>JavaScript即TypeScript：TypeScript为JavaScript代码提供了编译时的类型安全。由TypeScript的名字就可以看出，这种做法并不奇怪。最棒的是这些类型是完全可选的。写在.js文件里的JavaScript代码，可以被重新命名为.ts文件，TypeScript仍然会返回与原始JavaScript文件相同的.js文件。被设计成JavaScript的“超集”，并且带有可选的类型系统，TypeScript是经过慎重考虑并有意这样做的。</li><li>类型可以是隐式的：TypeScript将尽可能多地去推断类型信息，以便在代码开发过程中以极小的成本为你提供类型安全。</li><li>类型可以是显式的：正如之前所提到的，TypeScript会尽可能安全地推断类型。然而，你可以使用类型注解来做下面的事情。</li><li>类型是结构化的：在一些语言(尤其是带有名义上的类型系统的语言)里，静态类型会导致一些不必要的方式的存在，因为即使知道代码可以正常工作，语言的语义也会迫使你复制周围的一些东西。这就跟AutoMapper这样的东西对C＃来说非常重要是一个道理。在TypeScript中，我们真的希望类型对JavaScript初学者来说是非常简单的，因此，TypeScript的类型是结构化的。这意味着鸭子类型是一流的语言结构。</li><li>类型错误不会阻止JavaScript的正常运行：为了方便把JavaScript代码迁移到TypeScript，即使存在编译错误，在默认情况下，TypeScript代码也会尽可能地被编译为JavaScript代码。</li><li>类型可以由环境来定义：TypeScript的主要目标之一是让人们能够安全、轻松地在TypeScript中使用现有的JavaScript库。它可以通过声明来做到这一点。TypeScript提供了一个浮动的标准来衡量你希望在声明中投入多少努力；投入的越多，你获得的类型安全和代码智能提示就越多。</li></ul>
+</div>
+<div class="sec">
+<h4>支持未来的JavaScript所具有的功能</h4>
+<ul class="point">
+<li><b>TypeScript为当前的JavaScript引擎提供了许多计划在ES6中使用的功能</b>
+<ul class="quote"><li>TypeScript团队正在积极添加这些功能，这些功能会随着时间的推移而越来越多。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>TypeScript团队正在积极添加这些功能，这些功能会随着时间的推移而越来越多。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">4</span><span class="mmx-name">第2章 JavaScript常见语法</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 5 条要点 · 5 句原句摘录</p>
+<div class="sec">
+<h4>JavaScript即TypeScript</h4>
+<ul class="point">
+<li><b>TypeScript是JavaScript的超集，只是编译器或IDE实际可以使用的文档。</b>
+</li>
+<li><b>TypeScript只是提供一种新的语法，并不会帮助你解决Bug</b>
+<ul class="quote"><li>TypeScript只是将你提供的JavaScript里所有的方法标准化了。</li></ul>
+</li>
+<li><b>TypeScript是一种新的语言，它使你远离运行时</b>
+<ul class="quote"><li>TypeScript将试图保护你免受无意义的JavaScript代码的影响。</li><li>实际上，TypeScript只是JavaScript的一个编译器，与其他没有类型系统的编译器相比，TypeScript在类型系统方面做得更好。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>TypeScript只是将你提供的JavaScript里所有的方法标准化了。</li><li>TypeScript将试图保护你免受无意义的JavaScript代码的影响。</li><li>实际上，TypeScript只是JavaScript的一个编译器，与其他没有类型系统的编译器相比，TypeScript在类型系统方面做得更好。</li></ul>
+</div>
+<div class="sec">
+<h4>TypeScript让JavaScript更美好</h4>
+<ul class="point">
+<li><b>TypeScript将试图保护你免受无意义的JavaScript代码的影响</b>
+<ul class="quote"><li>所以你不需要记住这些东西。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>所以你不需要记住这些东西。</li></ul>
+</div>
+<div class="sec">
+<h4>学习JavaScript仍然是必要的</h4>
+<ul class="point">
+<li><b>关于JavaScript的一些知识，你仍然需要去学习，以免不知所措</b>
+<ul class="quote"><li>接下来我们将讨论它们。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>接下来我们将讨论它们。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">5</span><span class="mmx-name">2.1 相等</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 5 条要点 · 3 句原句摘录</p>
+<div class="sec">
+<h4>JavaScript中的相等判断</h4>
+<ul class="point">
+<li><b>==比较会发生隐式类型转换</b>
+<ul class="quote"><li>自动将字符串类型转换为数字类型。</li></ul>
+</li>
+<li><b>===比较不会发生隐式类型转换</b>
+<ul class="quote"><li>避免隐式类型转换带来的问题。</li></ul>
+</li>
+<li><b>TypeScript中，string类型的数据==number类型的数据，以及string类型的数据===number类型的数据，都会在编译时报错。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>自动将字符串类型转换为数字类型。</li><li>避免隐式类型转换带来的问题。</li></ul>
+</div>
+<div class="sec">
+<h4>严格的相等判断</h4>
+<ul class="point">
+<li><b>使用deep-equal进行深度检查</b>
+<ul class="quote"><li>deep-equal的npm包安装命令为npm install deep-equal。</li></ul>
+</li>
+<li><b>通常需要检查一些id。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>deep-equal的npm包安装命令为npm install deep-equal。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">6</span><span class="mmx-name">2.2 引用</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 1 条要点 · 2 句原句摘录</p>
+<div class="sec">
+<h4>JavaScript中的引用</h4>
+<ul class="point">
+<li><b>JavaScript中的任何对象(包括函数、数组、正则表达式等)都是一个引用</b>
+<ul class="quote"><li>这意味着这些对象一旦发生变化，这种变化将会贯穿整个引用。</li><li>并且在将它们赋值给一个新变量后，它们的引用也是相等的。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>这意味着这些对象一旦发生变化，这种变化将会贯穿整个引用。</li><li>并且在将它们赋值给一个新变量后，它们的引用也是相等的。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">7</span><span class="mmx-name">2.3 null和undefined</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 8 个小节 · 9 条要点 · 9 句原句摘录</p>
+<div class="sec">
+<h4>null和undefined的区别</h4>
+<ul class="point">
+<li><b>变量没有初始化：undefined。</b>
+</li>
+<li><b>变量不可用：null。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>检查是否相等</h4>
+<ul class="point">
+<li><b>在JavaScript中，用==进行比较时，null和undefined相等</b>
+<ul class="quote"><li>推荐使用==null来检查undefined和null。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>推荐使用==null来检查undefined和null。</li></ul>
+</div>
+<div class="sec">
+<h4>检查根级别上的undefined</h4>
+<ul class="point">
+<li><b>在严格模式下，如果使用foo，并且foo为undefined，那么你将会得到一个ReferenceError的异常</b>
+<ul class="quote"><li>为了检查一个变量是否已经被定义，或者是否在全局作用域上，通常会使用typeof。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>为了检查一个变量是否已经被定义，或者是否在全局作用域上，通常会使用typeof。</li></ul>
+</div>
+<div class="sec">
+<h4>限制显式地使用undefined</h4>
+<ul class="point">
+<li><b>TypeScript可以让你把结构与值分开记录，你应该使用一个类型注解。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>Node风格的回调函数</h4>
+<ul class="point">
+<li><b>在Node风格的回调函数中，如果不存在任何错误，通常会把err设置为null</b>
+<ul class="quote"><li>不管怎样，你通常只需要使用truthy进行检查即可。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>不管怎样，你通常只需要使用truthy进行检查即可。</li></ul>
+</div>
+<div class="sec">
+<h4>不要把undefined作为有效的表示方式</h4>
+<ul class="point">
+<li><b>使用undefined可能会让一个函数变得比较可怕，将它改写成如下这样，则会好很多</b>
+<ul class="quote"><li>例如，使用undefined可能会让一个函数变得比较可怕。</li><li>而将它改写成如下这样，则会好很多。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>例如，使用undefined可能会让一个函数变得比较可怕。</li><li>而将它改写成如下这样，则会好很多。</li></ul>
+</div>
+<div class="sec">
+<h4>JSON和序列化</h4>
+<ul class="point">
+<li><b>JSON标准支持编码null，但是不支持undefined</b>
+<ul class="quote"><li>当JSON编码具有null属性的对象时，这个属性将会包含null值。</li><li>然而当一个属性undefined时，在编码后，它就会被删除。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>当JSON编码具有null属性的对象时，这个属性将会包含null值。</li><li>然而当一个属性undefined时，在编码后，它就会被删除。</li></ul>
+</div>
+<div class="sec">
+<h4>小结</h4>
+<ul class="point">
+<li><b>TypeScript团队并不会使用null，Douglas Crockford认为使用null是一个糟糕的想法，我们应该都使用undefined</b>
+<ul class="quote"><li>Node.js风格的代码库把Error的参数设置为null并作为标准，因为它表示“有些东西目前不可用”。</li><li>我个人并不在意是否要区分这两者，因为大多数项目所使用的库都具有不同的观点，但是都使用==null来排除这两者。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Node.js风格的代码库把Error的参数设置为null并作为标准，因为它表示“有些东西目前不可用”。</li><li>我个人并不在意是否要区分这两者，因为大多数项目所使用的库都具有不同的观点，但是都使用==null来排除这两者。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">8</span><span class="mmx-name">2.4 this</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 2 条要点 · 0 句原句摘录</p>
+<div class="sec">
+<h4>函数内对this关键字的访问由调用上下文控制</h4>
+<ul class="point">
+<li><b>函数内对this关键字的访问实际上都是由函数的实际调用方式控制的，它通常被称为调用上下文。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>使用箭头函数可以断开类中的this与调用上下文的连接</h4>
+<ul class="point">
+<li><b>如果要将类中的this与调用上下文断开连接，请使用箭头函数。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">9</span><span class="mmx-name">2.5 闭包</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 4 条要点 · 3 句原句摘录</p>
+<div class="sec">
+<h4>闭包的定义及特性</h4>
+<ul class="point">
+<li><b>闭包是指一个函数有权力访问定义在它外部作用域的任何变量</b>
+<ul class="quote"><li>内部函数有权力访问外部作用域的变量variableInOuter Function。</li></ul>
+</li>
+<li><b>闭包即使在返回外部函数之后，内部函数依然可以从外部作用域中访问变量</b>
+<ul class="quote"><li>变量始终绑定在内部函数中，并没有依赖于外部函数。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>内部函数有权力访问外部作用域的变量variableInOuter Function。</li><li>变量始终绑定在内部函数中，并没有依赖于外部函数。</li></ul>
+</div>
+<div class="sec">
+<h4>闭包的应用</h4>
+<ul class="point">
+<li><b>闭包允许你轻松地组合对象，例如，使用模板模式。</b>
+</li>
+<li><b>闭包也是使像Node.js这样的运行环境成为可能的一个因素</b>
+<ul class="quote"><li>不用担心现在不理解它，以后你会理解的。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>不用担心现在不理解它，以后你会理解的。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">10</span><span class="mmx-name">2.6 数字</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 7 个小节 · 10 条要点 · 11 句原句摘录</p>
+<div class="sec">
+<h4>JavaScript数字类型特性</h4>
+<ul class="point">
+<li><b>JavaScript中只有一个数字类型，是一个双精度的64位的number。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>十进制与二进制浮点数问题</h4>
+<ul class="point">
+<li><b>二进制浮点数不能正确映射到十进制数</b>
+<ul class="quote"><li>对于真正的十进制数据，请使用后面提到的big.js。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>对于真正的十进制数据，请使用后面提到的big.js。</li></ul>
+</div>
+<div class="sec">
+<h4>整数限制与检查</h4>
+<ul class="point">
+<li><b>由内置数字类型表示的整数限制是Number.MAX_SAFE_INTEGER和Number.MIN_SAFE_INTEGER</b>
+<ul class="quote"><li>安全性指的是该值不能是存在舍入(round)误差的结果。</li></ul>
+</li>
+<li><b>使用ES6的Number.isSafeInteger检查整数是否安全</b>
+<ul class="quote"><li>任何加法或减法都会导致结果的舍入。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>安全性指的是该值不能是存在舍入(round)误差的结果。</li><li>任何加法或减法都会导致结果的舍入。</li></ul>
+</div>
+<div class="sec">
+<h4>big.js库的使用</h4>
+<ul class="point">
+<li><b>big.js是专为完美的十进制运算和超出整数值的安全计算设计的第三方库</b>
+<ul class="quote"><li>big.js的安装命令很简单。</li><li>使用big.js的一个简单示例。</li></ul>
+</li>
+<li><b>不要将此库用于UI(User Interface，用户界面)或以性能为目的的运算</b>
+<ul class="quote"><li>如图表、canvas画图等。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>big.js的安装命令很简单。</li><li>使用big.js的一个简单示例。</li><li>如图表、canvas画图等。</li></ul>
+</div>
+<div class="sec">
+<h4>NaN值的处理</h4>
+<ul class="point">
+<li><b>当一个被计算出来的数字不能表示为一个有效数字时，JavaScript会返回一个特殊的NaN值</b>
+<ul class="quote"><li>相等的检查不适用于NaN值，要使用Number.isNaN来代替。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>相等的检查不适用于NaN值，要使用Number.isNaN来代替。</li></ul>
+</div>
+<div class="sec">
+<h4>无穷大值的处理</h4>
+<ul class="point">
+<li><b>数字的边界值可以用静态的Number.MAX_VALUE和-Number.MAX_VALUE的值来表示</b>
+<ul class="quote"><li>超出边界但是精度没有改变的值都被限制在此范围内。</li><li>超出边界且精度已经改变的值，用Infinity或-Infinity表示。</li></ul>
+</li>
+<li><b>比较运算符＜和＞可以在Infinity值上正常工作</b>
+<ul class="quote"><li>你可以使用Infinity值，或者像下面这样使用Number类的静态成员。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>超出边界但是精度没有改变的值都被限制在此范围内。</li><li>超出边界且精度已经改变的值，用Infinity或-Infinity表示。</li><li>你可以使用Infinity值，或者像下面这样使用Number类的静态成员。</li></ul>
+</div>
+<div class="sec">
+<h4>最小值的处理</h4>
+<ul class="point">
+<li><b>在number中可表示的最小非零值可以用Number类的静态成员Number.MIN_VALUE来表示</b>
+<ul class="quote"><li>小于MIN_VALUE的值会被转换为0。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>小于MIN_VALUE的值会被转换为0。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">11</span><span class="mmx-name">2.7 truthy</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 5 条要点 · 3 句原句摘录</p>
+<div class="sec">
+<h4>JavaScript中的truthy概念</h4>
+<ul class="point">
+<li><b>JavaScript有一个thuthy的概念，用来定义在某些位置上被评估为true的代码</b>
+<ul class="quote"><li>例如，下面的代码在JavaScript中会被认为是truthy的(在if条件语句中，条件为除0以外的任何数字都会被认为true，即判断结果是truthy的)。</li></ul>
+</li>
+<li><b>如果代码不是truthy的，则会被认为是falsy的。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>例如，下面的代码在JavaScript中会被认为是truthy的(在if条件语句中，条件为除0以外的任何数字都会被认为true，即判断结果是truthy的)。</li></ul>
+</div>
+<div class="sec">
+<h4>truthy和falsy的示例</h4>
+<ul class="point">
+<li><b>除0以外的任何数字都会被JavaScript认为是true</b>
+<ul class="quote"><li>例如，1、2、3等数字在JavaScript中都会被判断为true。</li></ul>
+</li>
+<li><b>null、undefined、&#x27;&#x27;、0、false、NaN会被JavaScript认为是false。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>例如，1、2、3等数字在JavaScript中都会被判断为true。</li></ul>
+</div>
+<div class="sec">
+<h4>使用操作符！！转换值</h4>
+<ul class="point">
+<li><b>通过操作符！！，你可以很容易地将某些值转化为布尔类型的值(true或false)</b>
+<ul class="quote"><li>例如！！foo，它使用了两次！，第1个！用来将其(在这里是foo)转换为布尔值(truthy-！＞false，falsy-！＞true)，但是这一操作使其逻辑反转；第2个！，将会切换到与原始对象匹配的布尔值(例如，truthy-！＞false-！＞true)。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>例如！！foo，它使用了两次！，第1个！用来将其(在这里是foo)转换为布尔值(truthy-！＞false，falsy-！＞true)，但是这一操作使其逻辑反转；第2个！，将会切换到与原始对象匹配的布尔值(例如，truthy-！＞false-！＞true)。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">12</span><span class="mmx-name">第3章 JavaScript新语法特性</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 1 条要点 · 2 句原句摘录</p>
+<div class="sec">
+<h4>TypeScript支持ES6及更高版本的新语法特性</h4>
+<ul class="point">
+<li><b>TypeScript允许在能运行ES3和ES5代码的JavaScript引擎中使用ES6及更高版本的一系列功能</b>
+<ul class="quote"><li>并不是所有这些功能都被计划添加到JavaScript中，但它们可以为代码结构和可维护性提供很好的帮助。</li><li>另外，你可以选择性地忽略项目中没有意义的结构，即使最终你会使用它们之中的绝大多数代码。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>并不是所有这些功能都被计划添加到JavaScript中，但它们可以为代码结构和可维护性提供很好的帮助。</li><li>另外，你可以选择性地忽略项目中没有意义的结构，即使最终你会使用它们之中的绝大多数代码。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">13</span><span class="mmx-name">3.1 类</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 3 条要点 · 9 句原句摘录</p>
+<div class="sec">
+<h4>JavaScript中类的概念和重要性</h4>
+<ul class="point">
+<li><b>类作为“一等公民”的重要原因在于提供有用的抽象化结构，为开发者提供使用类的一致方法，以及熟知面向对象的开发者已经对类有所了解。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>TypeScript中的类及其特性</h4>
+<ul class="point">
+<li><b>TypeScript中的类支持单继承，静态属性和成员，访问修饰符，抽象类，构造器，属性初始化等特性</b>
+<ul class="quote"><li>继承(extends)：TypeScript中的类支持使用extends关键字实现单继承。</li><li>静态(static)：TypeScript类支持静态属性，静态属性会被所有的实例共享。</li><li>访问修饰符：TypeScript支持访问修饰符public、private、protected，它们决定了成员的可访问性。</li><li>抽象(abstract)：abstract也可以被认为是一个访问修饰符，之所以单独介绍它，是因为与前面提到的修饰符不同，abstract可以作用在类及类的任何成员上。</li><li>构造器(constructor)：构造器(constructor)是可选的，类不是必须要有一个构造器。</li><li>属性初始化：这是TypeScript(实际上是ES7)提供的一个特性，你可以在类的构造器外初始化类中的任何成员。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>继承(extends)：TypeScript中的类支持使用extends关键字实现单继承。</li><li>静态(static)：TypeScript类支持静态属性，静态属性会被所有的实例共享。</li><li>访问修饰符：TypeScript支持访问修饰符public、private、protected，它们决定了成员的可访问性。</li><li>抽象(abstract)：abstract也可以被认为是一个访问修饰符，之所以单独介绍它，是因为与前面提到的修饰符不同，abstract可以作用在类及类的任何成员上。</li><li>构造器(constructor)：构造器(constructor)是可选的，类不是必须要有一个构造器。</li><li>属性初始化：这是TypeScript(实际上是ES7)提供的一个特性，你可以在类的构造器外初始化类中的任何成员。</li></ul>
+</div>
+<div class="sec">
+<h4>TypeScript中的类继承机制</h4>
+<ul class="point">
+<li><b>TypeScript使用IIFE来处理类的继承，并通过__extends函数来实现基类到子类的属性复制和原型链设置</b>
+<ul class="quote"><li>IIFE允许TypeScript使用变量_super来捕获基类。</li><li>__extends函数做了两件事情：将基类的静态成员复制到子类，设置子类函数的原型。</li><li>d.prototype.__proto__=b.prototype的重要性在于，它允许你将成员函数添加到子类，并从基类继承其他函数。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>IIFE允许TypeScript使用变量_super来捕获基类。</li><li>__extends函数做了两件事情：将基类的静态成员复制到子类，设置子类函数的原型。</li><li>d.prototype.__proto__=b.prototype的重要性在于，它允许你将成员函数添加到子类，并从基类继承其他函数。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">14</span><span class="mmx-name">3.2 箭头函数</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 6 个小节 · 7 条要点 · 14 句原句摘录</p>
+<div class="sec">
+<h4>箭头函数的特性</h4>
+<ul class="point">
+<li><b>箭头函数也被称为胖箭头函数或lambda函数</b>
+<ul class="quote"><li>一个较常用的箭头函数的特性是()=＞something。</li></ul>
+</li>
+<li><b>箭头函数的主要目的</b>
+<ul class="quote"><li>你不再需要书写function。</li><li>从词义上说，它包含了this的意义。</li><li>从词义上说，它包含了argument的意义。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>一个较常用的箭头函数的特性是()=＞something。</li><li>你不再需要书写function。</li><li>从词义上说，它包含了this的意义。</li><li>从词义上说，它包含了argument的意义。</li></ul>
+</div>
+<div class="sec">
+<h4>箭头函数的用处</h4>
+<ul class="point">
+<li><b>语法简洁，如果你计划把函数交给其他人调用，使用箭头函数也会非常有效</b>
+<ul class="quote"><li>如果你想自己调用一个箭头函数，this将拥有正确的上下文。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如果你想自己调用一个箭头函数，this将拥有正确的上下文。</li></ul>
+</div>
+<div class="sec">
+<h4>箭头函数是危险的</h4>
+<ul class="point">
+<li><b>如果你想让this成为调用时的上下文，你并不应该使用箭头函数</b>
+<ul class="quote"><li>如果文档提及有关this的功能，那么你应该使用一个普通函数而不是箭头函数。</li><li>如果你准备使用arguments关键字，那么也不应该使用箭头函数。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如果文档提及有关this的功能，那么你应该使用一个普通函数而不是箭头函数。</li><li>如果你准备使用arguments关键字，那么也不应该使用箭头函数。</li></ul>
+</div>
+<div class="sec">
+<h4>箭头函数和使用this的库</h4>
+<ul class="point">
+<li><b>很多库使用this，例如jQuery迭代器会使用this向你传递正在迭代的对象</b>
+<ul class="quote"><li>如果想通过this访问该库及使用时的上下文，只需要使用像_self这样的临时变量即可。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如果想通过this访问该库及使用时的上下文，只需要使用像_self这样的临时变量即可。</li></ul>
+</div>
+<div class="sec">
+<h4>箭头函数和继承</h4>
+<ul class="point">
+<li><b>箭头函数作为类的属性可以很好地处理继承</b>
+<ul class="quote"><li>当你尝试重写子类中的函数时，它们并不能使用super关键字。</li><li>属性将会继续使用this调用。</li><li>由于只有一个this，这样的函数不能参与对super的调用(super只适用于原型成员)。</li><li>你可以通过在子类中重写此函数来轻松绕过这条规则。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>当你尝试重写子类中的函数时，它们并不能使用super关键字。</li><li>属性将会继续使用this调用。</li><li>由于只有一个this，这样的函数不能参与对super的调用(super只适用于原型成员)。</li><li>你可以通过在子类中重写此函数来轻松绕过这条规则。</li></ul>
+</div>
+<div class="sec">
+<h4>快速返回对象</h4>
+<ul class="point">
+<li><b>有时，你需要一个只返回简单对象字面量的函数</b>
+<ul class="quote"><li>这会在JavaScript运行时被解析为包含JavaScript标签的块。</li><li>可以用()包围对象字面量的方式来修复它。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>这会在JavaScript运行时被解析为包含JavaScript标签的块。</li><li>可以用()包围对象字面量的方式来修复它。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">15</span><span class="mmx-name">3.3 rest参数</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 2 条要点 · 1 句原句摘录</p>
+<div class="sec">
+<h4>rest参数的定义和用法</h4>
+<ul class="point">
+<li><b>rest参数，即用...+参数名的形式表示最后一个参数</b>
+<ul class="quote"><li>rest参数能让你在函数中快速获取多个参数，并将它们转化为数组。</li></ul>
+</li>
+<li><b>rest参数可以在任意函数中使用，如普通函数、箭头函数、类成员函数。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>rest参数能让你在函数中快速获取多个参数，并将它们转化为数组。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">16</span><span class="mmx-name">3.4 let</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 5 个小节 · 6 条要点 · 15 句原句摘录</p>
+<div class="sec">
+<h4>JavaScript中let变量的作用域</h4>
+<ul class="point">
+<li><b>JavaScript中的变量是函数作用域，不同于其他许多语言的块作用域</b>
+<ul class="quote"><li>在if块内并没有创建一个新的变量作用域，变量foo在if块内外都是相同的。</li></ul>
+</li>
+<li><b>用let代替var，可以让你得到一个与外界变量相隔离的、真实的、唯一的元素</b>
+<ul class="quote"><li>另一个使用let来避免错误的地方是循环。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在if块内并没有创建一个新的变量作用域，变量foo在if块内外都是相同的。</li><li>另一个使用let来避免错误的地方是循环。</li></ul>
+</div>
+<div class="sec">
+<h4>函数创建新的作用域</h4>
+<ul class="point">
+<li><b>在JavaScript中函数也可以创建一个新的作用域</b>
+<ul class="quote"><li>这种行为是你所期望的，如果没有它，在JavaScript中写代码将会非常困难。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>这种行为是你所期望的，如果没有它，在JavaScript中写代码将会非常困难。</li></ul>
+</div>
+<div class="sec">
+<h4>生成JavaScript</h4>
+<ul class="point">
+<li><b>TypeScript编译生成的JavaScript中，只是简单地将let重命名为var</b>
+<ul class="quote"><li>如果变量的名称已经在周围作用域中被使用，那么就会创建一个新的变量名称。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如果变量的名称已经在周围作用域中被使用，那么就会创建一个新的变量名称。</li></ul>
+</div>
+<div class="sec">
+<h4>switch语句中的let</h4>
+<ul class="point">
+<li><b>你可以在{}中包装你的case，用来在不同的case状态中复用变量名称</b>
+<ul class="quote"><li>例如。</li><li>switch (foo) {。</li><li>case 1。</li><li>let i = 0;</li><li>break;</li><li>case 2。</li><li>let i = 1;</li><li>default。</li><li>let i = 2;</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>例如。</li><li>switch (foo) {。</li><li>case 1。</li><li>let i = 0;</li><li>break;</li><li>case 2。</li><li>let i = 1;</li><li>default。</li><li>let i = 2;</li></ul>
+</div>
+<div class="sec">
+<h4>闭包中的let</h4>
+<ul class="point">
+<li><b>闭包会对性能产生影响(它们需要存储周围的状态)</b>
+<ul class="quote"><li>一个修复的方法是，在每个循环中创建一个新的变量。</li><li>使用let代替var，会在每个循环中创建一个变量i。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>一个修复的方法是，在每个循环中创建一个新的变量。</li><li>使用let代替var，会在每个循环中创建一个变量i。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">17</span><span class="mmx-name">3.5 const</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 5 个小节 · 5 条要点 · 0 句原句摘录</p>
+<div class="sec">
+<h4>const声明必须初始化。</h4>
+<ul class="point">
+</ul>
+</div>
+<div class="sec">
+<h4>赋值符号的左边不能是一个常量</h4>
+<ul class="point">
+<li><b>常量在创建之后不能被改变，所以当你尝试给一个新的变量赋值时，在编译时会报错。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>块作用域</h4>
+<ul class="point">
+<li><b>const创建的块作用域与let相似。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>深层次的不变性</h4>
+<ul class="point">
+<li><b>const也可以处理对象字面量，以保护变量引用。</b>
+</li>
+<li><b>const仍然允许对象的子属性的改变。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>建议尽量使用const</h4>
+<ul class="point">
+<li><b>除非你计划延迟初始化变量，或者重新分配(这种情况请使用let)。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">18</span><span class="mmx-name">3.6 解构</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 8 条要点 · 7 句原句摘录</p>
+<div class="sec">
+<h4>对象解构</h4>
+<ul class="point">
+<li><b>解构允许你在一行代码中进行操作，否则可能需要多行代码</b>
+<ul class="quote"><li>在没有解构时，你必须从rect中逐个挑选x、y、width、height。</li></ul>
+</li>
+<li><b>你可以使用解构从结构中获取更深层次的数据</b>
+<ul class="quote"><li>在对象解构中使用rest，你可以从一个对象中选择任意数量的元素，也可以获取剩余元素组成的对象。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在没有解构时，你必须从rect中逐个挑选x、y、width、height。</li><li>在对象解构中使用rest，你可以从一个对象中选择任意数量的元素，也可以获取剩余元素组成的对象。</li></ul>
+</div>
+<div class="sec">
+<h4>数组解构</h4>
+<ul class="point">
+<li><b>数组解构实际上是指编译器在执行[0]、[1]、[2]……，但是这些值并不存在</b>
+<ul class="quote"><li>一个常见的编程问题：如何在不使用第3个变量的情况下交换两个变量。使用TypeScript的解决办法如下。</li></ul>
+</li>
+<li><b>通过使用解构和rest，你可以从数组中选择任意数量的元素，也可以获取剩余元素组成的一个数组</b>
+<ul class="quote"><li>在数组解构中使用rest。</li></ul>
+</li>
+<li><b>你可以通过简单地将其位置留空(即，，)来忽略任何索引</b>
+<ul class="quote"><li>在数组解构中忽略某些成员。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>一个常见的编程问题：如何在不使用第3个变量的情况下交换两个变量。使用TypeScript的解决办法如下。</li><li>在数组解构中使用rest。</li><li>在数组解构中忽略某些成员。</li></ul>
+</div>
+<div class="sec">
+<h4>生成JavaScript</h4>
+<ul class="point">
+<li><b>当编译目标不是ES6时，生成的JavaScript只涉及创建临时变量</b>
+<ul class="quote"><li>就如同本地并不支持解构，必须手动实现一样。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>就如同本地并不支持解构，必须手动实现一样。</li></ul>
+</div>
+<div class="sec">
+<h4>小结</h4>
+<ul class="point">
+<li><b>解构可以使代码的可读性和可维护性大大提高</b>
+<ul class="quote"><li>通过减少代码的体积并使它具有更清晰的目标。</li></ul>
+</li>
+<li><b>数组解构可以让你像使用元组一样使用数组。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>通过减少代码的体积并使它具有更清晰的目标。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">19</span><span class="mmx-name">3.7 扩展运算符</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 6 条要点 · 6 句原句摘录</p>
+<div class="sec">
+<h4>扩展运算符的常见用法</h4>
+<ul class="point">
+<li><b>apply：将数组扩展到函数参数中</b>
+<ul class="quote"><li>使用扩展运算符，你只需要在参数前加上...就可以做到这一点。</li></ul>
+</li>
+<li><b>在解构中使用：更容易捕获数组的其余元素</b>
+<ul class="quote"><li>这里使用扩展运算符，只是为了让你在解构时更容易捕获数组的其余元素。</li></ul>
+</li>
+<li><b>数组扩展：轻松地将扩展后的数组放入另一个数组</b>
+<ul class="quote"><li>你可以把扩展后的数组放入任意位置，并获得期望的效果。</li></ul>
+</li>
+<li><b>对象扩展：把一个对象放入另一个对象</b>
+<ul class="quote"><li>一个常见的用例是向对象中添加属性，而不是改变原始属性。</li><li>对于对象来说，扩展的顺序很重要。它的工作原理和Object.assign相似，并且可以做你所期待的事情——后面的属性覆盖前面的属性。</li><li>另一个简单的用例是实现浅拷贝。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>使用扩展运算符，你只需要在参数前加上...就可以做到这一点。</li><li>这里使用扩展运算符，只是为了让你在解构时更容易捕获数组的其余元素。</li><li>你可以把扩展后的数组放入任意位置，并获得期望的效果。</li><li>一个常见的用例是向对象中添加属性，而不是改变原始属性。</li><li>对于对象来说，扩展的顺序很重要。它的工作原理和Object.assign相似，并且可以做你所期待的事情——后面的属性覆盖前面的属性。</li><li>另一个简单的用例是实现浅拷贝。</li></ul>
+</div>
+<div class="sec">
+<h4>扩展运算符的优点</h4>
+<ul class="point">
+<li><b>apply是一个你经常在JavaScript中使用的功能，所以当有一个不需要在this代码关键字上使用“丑陋”的null的新语法时，感觉是非常棒的。</b>
+</li>
+<li><b>当你在部分数组上对数组进行操作时，这提供了一种简洁的语法，专门用于将数组移出(解构)或将其写入(分配)另外的数组。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">20</span><span class="mmx-name">3.8 for...of</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 5 个小节 · 5 条要点 · 8 句原句摘录</p>
+<div class="sec">
+<h4>for...of 迭代数组</h4>
+<ul class="point">
+<li><b>for...of 能按预期迭代数组</b>
+<ul class="quote"><li>你期望得到9，2，5，但是实际得到了索引0，1，2。</li><li>在下面的迭代中，它能按你的预期去迭代数组。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>你期望得到9，2，5，但是实际得到了索引0，1，2。</li><li>在下面的迭代中，它能按你的预期去迭代数组。</li></ul>
+</div>
+<div class="sec">
+<h4>for...of 迭代字符串</h4>
+<ul class="point">
+<li><b>TypeScript中使用for...of迭代字符串是没有任何问题的。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>生成JavaScript</h4>
+<ul class="point">
+<li><b>TypeScript中的for...of代码将会被编译成标准的for循环</b>
+<ul class="quote"><li>对于目标为ES6之前的编译版本来说，TypeScript中的for...of代码将会被编译成标准的for(var i=0；i＜list.length；i++)循环。</li><li>你可以看到在使用for...of时，目的会更明确，且需要编写的代码量，以及你需要提供的变量名称也会减少。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>对于目标为ES6之前的编译版本来说，TypeScript中的for...of代码将会被编译成标准的for(var i=0；i＜list.length；i++)循环。</li><li>你可以看到在使用for...of时，目的会更明确，且需要编写的代码量，以及你需要提供的变量名称也会减少。</li></ul>
+</div>
+<div class="sec">
+<h4>限制</h4>
+<ul class="point">
+<li><b>如果编译目标不是ES6及其之后的版本，编译生成的代码会假定对象上存在属性长度，并且可以通过数字来索引对象</b>
+<ul class="quote"><li>例如obj[2]。因此它只支持传统JavaScript引擎上的string和array。</li><li>如果TypeScript了解到你并没有使用array或string，将会抛出一个错误提示：不是arrayo类型或string类型的。</li><li>你应该只把for...of用于已经确定的数组或字符串上。注意，将来的TypeScript版本可能会删除此限制。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>例如obj[2]。因此它只支持传统JavaScript引擎上的string和array。</li><li>如果TypeScript了解到你并没有使用array或string，将会抛出一个错误提示：不是arrayo类型或string类型的。</li><li>你应该只把for...of用于已经确定的数组或字符串上。注意，将来的TypeScript版本可能会删除此限制。</li></ul>
+</div>
+<div class="sec">
+<h4>小结</h4>
+<ul class="point">
+<li><b>for...of可能会让审核你的代码的人感到高兴</b>
+<ul class="quote"><li>下次当你想迭代数组元素时，就让for...of来替你完成吧。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>下次当你想迭代数组元素时，就让for...of来替你完成吧。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">21</span><span class="mmx-name">3.9 迭代</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 4 条要点 · 5 句原句摘录</p>
+<div class="sec">
+<h4>迭代的基本概念</h4>
+<ul class="point">
+<li><b>迭代是面向对象编程语言常见的设计模式</b>
+<ul class="quote"><li>迭代器是一个实现Iterator接口的对象。</li></ul>
+</li>
+<li><b>迭代器允许从属于对象的一些序列或集合中取出一个值</b>
+<ul class="quote"><li>IteratorResult是value和done的健值对。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>迭代器是一个实现Iterator接口的对象。</li><li>IteratorResult是value和done的健值对。</li></ul>
+</div>
+<div class="sec">
+<h4>ES6中的迭代器</h4>
+<ul class="point">
+<li><b>ES6定义了iterable协议，如果它实现了Iterable接口，那么它就包含了[Symbol.iterator]</b>
+<ul class="quote"><li>现在，frame.next()和for循环都能正常使用IterableIterator接口了。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>现在，frame.next()和for循环都能正常使用IterableIterator接口了。</li></ul>
+</div>
+<div class="sec">
+<h4>迭代器的应用</h4>
+<ul class="point">
+<li><b>迭代器不必迭代有限值，一个典型的例子是Fibonacci队列</b>
+<ul class="quote"><li>使用ES5来构建代码，通过使用带有ES5的ES6库(将es6.d.ts添加到项目中)来实现编译。</li><li>编译后的代码应该可以运行在Node 4及其以上的版本，以及Google Chrome和一些其他浏览器中。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>使用ES5来构建代码，通过使用带有ES5的ES6库(将es6.d.ts添加到项目中)来实现编译。</li><li>编译后的代码应该可以运行在Node 4及其以上的版本，以及Google Chrome和一些其他浏览器中。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">22</span><span class="mmx-name">3.10 模板字符串</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 6 条要点 · 8 句原句摘录</p>
+<div class="sec">
+<h4>模板字符串的用途</h4>
+<ul class="point">
+<li><b>字符串插值</b>
+<ul class="quote"><li>模板字符串允许从一些静态字符串+一些变量中生成字符串。</li><li>在插值${和}中的任何占位符，都可以被看作JavaScript表达式来处理和执行。</li></ul>
+</li>
+<li><b>多行字符串</b>
+<ul class="quote"><li>模板字符串可以轻松创建多行字符串。</li><li>在使用TypeScript时，你可以使用模板字符串。</li></ul>
+</li>
+<li><b>标记模板</b>
+<ul class="quote"><li>你可以在模板字符串前放置一个函数，它被称为tag。</li><li>所有静态字面量都将作为第1个参数传入数组。</li><li>占位符表达式的所有值都将作为其余参数传入，最常见的情况是，使用rest参数将这些参数转换为数组。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>模板字符串允许从一些静态字符串+一些变量中生成字符串。</li><li>在插值${和}中的任何占位符，都可以被看作JavaScript表达式来处理和执行。</li><li>模板字符串可以轻松创建多行字符串。</li><li>在使用TypeScript时，你可以使用模板字符串。</li><li>你可以在模板字符串前放置一个函数，它被称为tag。</li><li>所有静态字面量都将作为第1个参数传入数组。</li><li>占位符表达式的所有值都将作为其余参数传入，最常见的情况是，使用rest参数将这些参数转换为数组。</li></ul>
+</div>
+<div class="sec">
+<h4>生成JavaScript</h4>
+<ul class="point">
+<li><b>如果编译目标是ES6以上的版本，那么生成的代码会非常简单</b>
+<ul class="quote"><li>多行字符串会被编译成转义字符串，字符串插值会被编译为字符串连接，标记模板则被称为函数调用。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>多行字符串会被编译成转义字符串，字符串插值会被编译为字符串连接，标记模板则被称为函数调用。</li></ul>
+</div>
+<div class="sec">
+<h4>小结</h4>
+<ul class="point">
+<li><b>多行字符串和字符串插值在任何语言中都是很受欢迎的。</b>
+</li>
+<li><b>标记模板允许你创建功能强大的字符串实用程序。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">23</span><span class="mmx-name">3.11 Promise</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 5 个小节 · 12 条要点 · 20 句原句摘录</p>
+<div class="sec">
+<h4>Promise类简介</h4>
+<ul class="point">
+<li><b>Promise类存在于许多现代的JavaScript引擎中，可以轻松地被polyfill。</b>
+</li>
+<li><b>Promise的主要目的是用同步的代码替换异步/回调函数的代码。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>回调函数风格的代码及其问题</h4>
+<ul class="point">
+<li><b>使用回调函数创建可靠的异步代码是困难的</b>
+<ul class="quote"><li>一个简单的loadJSONSync函数会有如下结果：一个有效的返回值、一个文件系统错误或一个JSON.parse错误。</li><li>在使用基于回调的异步函数时，要记住以下两点：永远不要调用两次回调函数；永远不要抛出错误。</li></ul>
+</li>
+<li><b>JSON.parse会抛出错误，导致回调函数执行了两次</b>
+<ul class="quote"><li>当JSON.parse被传入错误的JSON文件，并且回调函数一直未被调用而导致程序崩溃时，JSON.parse会抛出错误。</li><li>如果回调函数(cb)，而不是JSON.parse，会抛出一个错误。因为我们将它包装在try/catch中，当catch执行时，我们将会再次执行回调函数，即回调函数执行了两次。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>一个简单的loadJSONSync函数会有如下结果：一个有效的返回值、一个文件系统错误或一个JSON.parse错误。</li><li>在使用基于回调的异步函数时，要记住以下两点：永远不要调用两次回调函数；永远不要抛出错误。</li><li>当JSON.parse被传入错误的JSON文件，并且回调函数一直未被调用而导致程序崩溃时，JSON.parse会抛出错误。</li><li>如果回调函数(cb)，而不是JSON.parse，会抛出一个错误。因为我们将它包装在try/catch中，当catch执行时，我们将会再次执行回调函数，即回调函数执行了两次。</li></ul>
+</div>
+<div class="sec">
+<h4>使用Promise处理异步和回调函数</h4>
+<ul class="point">
+<li><b>创建一个Promise，通过resolve和reject函数设置Promise的状态</b>
+<ul class="quote"><li>一个Promise可以处于pending、fulfilled或rejected状态。</li></ul>
+</li>
+<li><b>订阅Promise的状态，通过then函数(如果resolved)和catch函数(如果reject)。</b>
+</li>
+<li><b>Promise的链式调用，一旦有了一个Promise，你就可以使用then函数来创建链式的Promise了</b>
+<ul class="quote"><li>如果从链中的任何一个函数返回一个Promise，当值是resolved时，只有.then会被调用。</li><li>你可以使用单个.catch来捕获前面的链中抛出的异常。</li><li>catch实际上返回了一个新的Promise(有效地创建了一个新的Promise)。</li><li>在then(或catch)中抛出的任何同步错误都会导致返回的Promise失败。</li><li>给定的错误(当catch启用一个新的Promise时)只调用相关的(最靠近尾部的)catch。</li><li>只有在前面的链中抛出错误时，才会调用catch。</li></ul>
+</li>
+<li><b>TypeScript和Promise，TypeScript的优点在于它通过Promise链能理解从Promise传过来的值</b>
+<ul class="quote"><li>当然，它也能理解返回值可能为Promise的任何非包装函数。</li></ul>
+</li>
+<li><b>转换回调风格的函数以返回Promise，只需把函数的调用包裹在一个Promise中，并在有错误发生时，使用reject；如果一切正常，则使用resolve</b>
+<ul class="quote"><li>例如，包裹fs.readFile。</li><li>最可靠的方式是手写代码来实现它，这样会非常简单，不会像上文的实例那样冗长，例如将setTimeout转化为一个Promise的delay函数。</li><li>注意：在Node.js中已经有一个花哨的函数了，它可以为你提供这样的node style function=＞promise returning function魔法。</li><li>webpack能够“开箱即用”util模块，你也可以在浏览器中使用它。</li><li>如果你有一个Node回调风格的函数作为成员，请使用bind来确保拥有正确的this。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>一个Promise可以处于pending、fulfilled或rejected状态。</li><li>如果从链中的任何一个函数返回一个Promise，当值是resolved时，只有.then会被调用。</li><li>你可以使用单个.catch来捕获前面的链中抛出的异常。</li><li>catch实际上返回了一个新的Promise(有效地创建了一个新的Promise)。</li><li>在then(或catch)中抛出的任何同步错误都会导致返回的Promise失败。</li><li>给定的错误(当catch启用一个新的Promise时)只调用相关的(最靠近尾部的)catch。</li><li>只有在前面的链中抛出错误时，才会调用catch。</li><li>当然，它也能理解返回值可能为Promise的任何非包装函数。</li><li>例如，包裹fs.readFile。</li><li>最可靠的方式是手写代码来实现它，这样会非常简单，不会像上文的实例那样冗长，例如将setTimeout转化为一个Promise的delay函数。</li><li>注意：在Node.js中已经有一个花哨的函数了，它可以为你提供这样的node style function=＞promise returning function魔法。</li><li>webpack能够“开箱即用”util模块，你也可以在浏览器中使用它。</li><li>如果你有一个Node回调风格的函数作为成员，请使用bind来确保拥有正确的this。</li></ul>
+</div>
+<div class="sec">
+<h4>并行流程控制</h4>
+<ul class="point">
+<li><b>Promise.all函数，你可以使用该函数等待n个Promise完成</b>
+<ul class="quote"><li>如果你提供一个含有n个Promise的数组，它将返回一个包含n个已resolved的值的数组。</li></ul>
+</li>
+<li><b>Promise.race函数来处理这种情况，只要有一个settled就可以了</b>
+<ul class="quote"><li>有时，你可能希望运行多个异步任务，但这些任务只要有一个settled就可以了。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如果你提供一个含有n个Promise的数组，它将返回一个包含n个已resolved的值的数组。</li><li>有时，你可能希望运行多个异步任务，但这些任务只要有一个settled就可以了。</li></ul>
+</div>
+<div class="sec">
+<h4>将回调函数转为Promise</h4>
+<ul class="point">
+<li><b>最可靠的方法是手写，例如将setTimeout转换为Promise形式的delay函数</b>
+<ul class="quote"><li>请注意，Node.js中有一个便利的包装函数，它可以给你node style function=＞promise returning function的技巧。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>请注意，Node.js中有一个便利的包装函数，它可以给你node style function=＞promise returning function的技巧。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">24</span><span class="mmx-name">3.12 generators</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 4 条要点 · 6 句原句摘录</p>
+<div class="sec">
+<h4>generators函数</h4>
+<ul class="point">
+<li><b>generators函数用来创建惰性迭代器</b>
+<ul class="quote"><li>generators函数根据需要会返回无限的整数列表。</li></ul>
+</li>
+<li><b>generators函数可以让一个函数暂停执行，并将继续执行的权力交给调用者</b>
+<ul class="quote"><li>generators函数只有当你在generators对象上调用next时才开始执行。</li><li>一旦遇到yield语句，generators函数将会暂停执行。</li><li>当next被调用时，generators函数会恢复执行。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>generators函数根据需要会返回无限的整数列表。</li><li>generators函数只有当你在generators对象上调用next时才开始执行。</li><li>一旦遇到yield语句，generators函数将会暂停执行。</li><li>当next被调用时，generators函数会恢复执行。</li></ul>
+</div>
+<div class="sec">
+<h4>generators函数的双向通信</h4>
+<ul class="point">
+<li><b>通过iterator.next(value.ToInject)控制yield表达式的结果</b>
+<ul class="quote"><li>因为yield返回了传递给迭代器next函数的参数，而所有的迭代器next函数都接受任意类型的参数，因此，TypeScript总是会把any分配给yield操作符的返回值。</li><li>你可以将所得结果的类型强制转化为你期望的类型，并确保仅将该类型的值传递给下一个。</li></ul>
+</li>
+<li><b>通过iterator.throw(error)抛出一个异常。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>因为yield返回了传递给迭代器next函数的参数，而所有的迭代器next函数都接受任意类型的参数，因此，TypeScript总是会把any分配给yield操作符的返回值。</li><li>你可以将所得结果的类型强制转化为你期望的类型，并确保仅将该类型的值传递给下一个。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">25</span><span class="mmx-name">3.13 async/await</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 4 条要点 · 5 句原句摘录</p>
+<div class="sec">
+<h4>async/await的实现原理</h4>
+<ul class="point">
+<li><b>async/await的实现基于generators</b>
+<ul class="quote"><li>generators允许我们停止函数执行，放置一个值，抛出异常。</li></ul>
+</li>
+<li><b>wrapToReturnPromise函数执行generators函数来获取generators，接着使用generator.next()，如果值是Promise，则它会捕获Promise，并根据其结果调用generator.next(result)或generator.throw(error)。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>generators允许我们停止函数执行，放置一个值，抛出异常。</li></ul>
+</div>
+<div class="sec">
+<h4>TypeScript对async/await的支持</h4>
+<ul class="point">
+<li><b>TypeScript从1.7版本之后开始支持async/await</b>
+<ul class="quote"><li>异步函数以async关键字为前缀，await将暂停执行，直到异步函数返回Promise执行完成的结果，并且返回非Promise包装后的值。</li></ul>
+</li>
+<li><b>TypeScript 2.1版本添加了ES3和ES5运行时的功能</b>
+<ul class="quote"><li>这意味着无论你在何种环境下，都可以自由地使用async/await。</li><li>我们可以在TypeScript 2.1版本中使用async/await，许多浏览器都支持它。</li><li>你需要为Promise添加全局的polyfill。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>异步函数以async关键字为前缀，await将暂停执行，直到异步函数返回Promise执行完成的结果，并且返回非Promise包装后的值。</li><li>这意味着无论你在何种环境下，都可以自由地使用async/await。</li><li>我们可以在TypeScript 2.1版本中使用async/await，许多浏览器都支持它。</li><li>你需要为Promise添加全局的polyfill。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">26</span><span class="mmx-name">第4章 TypeScript项目构成</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 1 条要点 · 1 句原句摘录</p>
+<div class="sec">
+<h4>TypeScript项目构成</h4>
+<ul class="point">
+<li><b>TypeScript项目组织中的各项功能</b>
+<ul class="quote"><li>编译上下文、声明空间、模块、命名空间和动态导入表达式。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>编译上下文、声明空间、模块、命名空间和动态导入表达式。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">27</span><span class="mmx-name">4.1 编译上下文</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 7 条要点 · 7 句原句摘录</p>
+<div class="sec">
+<h4>编译上下文定义</h4>
+<ul class="point">
+<li><b>编译上下文是用来给文件分组，告诉TypeScript哪些文件是有效的、哪些是无效的。</b>
+</li>
+<li><b>编译上下文还包含正在被使用的编译选项的信息。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>tsconfig.json文件</h4>
+<ul class="point">
+<li><b>开始使用tsconfig.json是一件比较容易的事，你只需要写下{}即可</b>
+<ul class="quote"><li>TypeScript将会把此目录和子目录下的所有.ts文件作为编译上下文的一部分，它还会包含一部分默认的编译选项。</li></ul>
+</li>
+<li><b>你可以通过compilerOptions来定制编译选项</b>
+<ul class="quote"><li>关于这些(或者更多)编译选项，稍后将会讨论。</li></ul>
+</li>
+<li><b>使用tsc命令行手动运行TypeScript编译器</b>
+<ul class="quote"><li>运行tsc，它会在当前目录或父级目录下寻找tsconfig.json文件。</li><li>运行tsc-p./path-to-project-directory。</li><li>使用tsc-w来启用TypeScript编译器的观测模式，在检测到文件改动之后，它将重新进行编译。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>TypeScript将会把此目录和子目录下的所有.ts文件作为编译上下文的一部分，它还会包含一部分默认的编译选项。</li><li>关于这些(或者更多)编译选项，稍后将会讨论。</li><li>运行tsc，它会在当前目录或父级目录下寻找tsconfig.json文件。</li><li>运行tsc-p./path-to-project-directory。</li><li>使用tsc-w来启用TypeScript编译器的观测模式，在检测到文件改动之后，它将重新进行编译。</li></ul>
+</div>
+<div class="sec">
+<h4>指定文件</h4>
+<ul class="point">
+<li><b>你也可以显式地指定需要编译的文件。</b>
+</li>
+<li><b>还可以使用include和exclude选项来指定需要包含的文件和排除的文件</b>
+<ul class="quote"><li>使用globs：**/*(示例如some/folder/**/*)意味着能够匹配所有的文件夹和文件。</li><li>扩展名为.ts/.tsx，当开启allowJs：true选项时，扩展名可以是.js/.jsx。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>使用globs：**/*(示例如some/folder/**/*)意味着能够匹配所有的文件夹和文件。</li><li>扩展名为.ts/.tsx，当开启allowJs：true选项时，扩展名可以是.js/.jsx。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">28</span><span class="mmx-name">4.2 声明空间</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 4 条要点 · 4 句原句摘录</p>
+<div class="sec">
+<h4>类型声明空间</h4>
+<ul class="point">
+<li><b>类型声明空间包含用来当作类型注解的内容</b>
+<ul class="quote"><li>你可以将Foo、Bar、Bas作为类型注解使用。</li></ul>
+</li>
+<li><b>尽管你定义了interface Bar，却并不能够把它作为一个变量来使用</b>
+<ul class="quote"><li>出现提示错误：不能发现名称Bar的原因是名称Bar并未定义在变量声明空间中。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>你可以将Foo、Bar、Bas作为类型注解使用。</li><li>出现提示错误：不能发现名称Bar的原因是名称Bar并未定义在变量声明空间中。</li></ul>
+</div>
+<div class="sec">
+<h4>变量声明空间</h4>
+<ul class="point">
+<li><b>变量声明空间包含可用作变量的内容</b>
+<ul class="quote"><li>class Foo提供了一个类型Foo到类型声明空间，此外它还提供了一个变量Foo到变量声明空间。</li></ul>
+</li>
+<li><b>我们并不能把一些如interface定义的内容当作变量使用</b>
+<ul class="quote"><li>提示不能发现名称foo的原因是，名称foo没有定义在类型声明空间里。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>class Foo提供了一个类型Foo到类型声明空间，此外它还提供了一个变量Foo到变量声明空间。</li><li>提示不能发现名称foo的原因是，名称foo没有定义在类型声明空间里。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">29</span><span class="mmx-name">4.3 模块</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 6 个小节 · 9 条要点 · 23 句原句摘录</p>
+<div class="sec">
+<h4>全局模块</h4>
+<ul class="point">
+<li><b>全局命名空间是危险的，因为它会与文件内的代码命名相冲突</b>
+<ul class="quote"><li>在相同的项目里创建了一个新的文件bar.ts，TypeScript类型系统将会允许你使用变量foo，就像它在全局中可用一样。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在相同的项目里创建了一个新的文件bar.ts，TypeScript类型系统将会允许你使用变量foo，就像它在全局中可用一样。</li></ul>
+</div>
+<div class="sec">
+<h4>文件模块</h4>
+<ul class="point">
+<li><b>文件模块也被称为外部模块，如果在TypeScript文件的根级别位置含有import或export，那么它会在这个文件中创建一个本地的作用域</b>
+<ul class="quote"><li>在全局命名空间里，我们不再有foo，这可以通过创建一个新文件bar.ts来证明。</li><li>如果你想在bar.ts里使用来自foo.ts的内容，你必须显式地导入它。</li></ul>
+</li>
+<li><b>文件模块(外部模块)拥有强大的功能和较强的可用性</b>
+<ul class="quote"><li>使用module：commonjs选项来代替这些生成JavaScript的选项，将会是一个好主意。</li><li>怎么书写TypeScript模块呢？这也是一件让人困惑的事。今天我们应该这么做：使用ES模块语法代替import foo=require(&#x27;foo&#x27;)即import/require语法。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在全局命名空间里，我们不再有foo，这可以通过创建一个新文件bar.ts来证明。</li><li>如果你想在bar.ts里使用来自foo.ts的内容，你必须显式地导入它。</li><li>使用module：commonjs选项来代替这些生成JavaScript的选项，将会是一个好主意。</li><li>怎么书写TypeScript模块呢？这也是一件让人困惑的事。今天我们应该这么做：使用ES模块语法代替import foo=require(&#x27;foo&#x27;)即import/require语法。</li></ul>
+</div>
+<div class="sec">
+<h4>ES模块语法</h4>
+<ul class="point">
+<li><b>使用export关键字导出一个变量或类型</b>
+<ul class="quote"><li>export的写法除了上面这种，还有另外一种。</li><li>你也可以用重命名变量的方式导出。</li></ul>
+</li>
+<li><b>使用import关键字导入一个变量或一个类型</b>
+<ul class="quote"><li>通过重命名的方式导入变量或类型。</li><li>除了指定加载某个输出值，还可以使用整体加载，即用星号(*)指定一个对象，将所有输出值都加载到这个对象上面。</li><li>只导入模块。</li><li>从其他模块导入后整体导出。</li><li>从其他模块导入后，部分导出。</li><li>通过重命名，部分导出从另一个模块导入的项目。</li><li>默认导入/导出。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>export的写法除了上面这种，还有另外一种。</li><li>你也可以用重命名变量的方式导出。</li><li>通过重命名的方式导入变量或类型。</li><li>除了指定加载某个输出值，还可以使用整体加载，即用星号(*)指定一个对象，将所有输出值都加载到这个对象上面。</li><li>只导入模块。</li><li>从其他模块导入后整体导出。</li><li>从其他模块导入后，部分导出。</li><li>通过重命名，部分导出从另一个模块导入的项目。</li><li>默认导入/导出。</li></ul>
+</div>
+<div class="sec">
+<h4>模块路径</h4>
+<ul class="point">
+<li><b>存在两种截然不同的模块，它们是由导入语句时不同的路径写法所引起的</b>
+<ul class="quote"><li>相对模块路径，以.开头，例如./someFile，或者../../someFolder/someFile等。</li><li>其他动态查找模块，如core-js、typestyle、react或react/core等。</li></ul>
+</li>
+<li><b>在提及查找模式后，我将使用一个概念性术语——place来解释它</b>
+<ul class="quote"><li>如果这个place表示一个文件，如foo.ts。</li><li>或者，这个place是一个文件夹，并且存在一个文件foo/index.ts。</li><li>或者，这个place是一个文件夹，并且存在一个foo/package.json文件，在该文件中指定types的文件存在。</li><li>也或者，这个place是一个文件夹，并且存在一个package.json文件，在该文件中指定main的文件存在。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>相对模块路径，以.开头，例如./someFile，或者../../someFolder/someFile等。</li><li>其他动态查找模块，如core-js、typestyle、react或react/core等。</li><li>如果这个place表示一个文件，如foo.ts。</li><li>或者，这个place是一个文件夹，并且存在一个文件foo/index.ts。</li><li>或者，这个place是一个文件夹，并且存在一个foo/package.json文件，在该文件中指定types的文件存在。</li><li>也或者，这个place是一个文件夹，并且存在一个package.json文件，在该文件中指定main的文件存在。</li></ul>
+</div>
+<div class="sec">
+<h4>import/require只是导入类型</h4>
+<ul class="point">
+<li><b>导入的语法如下，它实际上只做了两件事</b>
+<ul class="quote"><li>导入foo模块的所有类型信息。</li><li>确定foo模块运行时的依赖关系。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>导入foo模块的所有类型信息。</li><li>确定foo模块运行时的依赖关系。</li></ul>
+</div>
+<div class="sec">
+<h4>globals.d.ts</h4>
+<ul class="point">
+<li><b>如果你的团队里有TypeScript初学者，你可以给他们提供一个globals.d.ts文件，用来将一些接口或类放入全局命名空间里</b>
+<ul class="quote"><li>对于任何需要编译成JavaScript的代码，我们强烈建议把它们放入文件模块里。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>对于任何需要编译成JavaScript的代码，我们强烈建议把它们放入文件模块里。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">30</span><span class="mmx-name">4.4 命名空间</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 4 条要点 · 3 句原句摘录</p>
+<div class="sec">
+<h4>命名空间的基本概念和用法</h4>
+<ul class="point">
+<li><b>命名空间允许匿名函数向现有对象添加内容，或者创建一个新对象，然后向该对象添加内容</b>
+<ul class="quote"><li>something||(something={})允许匿名函数function(something){}向现有对象添加内容，或者创建一个新对象，然后向该对象添加内容。</li></ul>
+</li>
+<li><b>命名空间是支持嵌套的</b>
+<ul class="quote"><li>你可以在Utility命名空间下嵌套一个命名空间Messaging。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>something||(something={})允许匿名函数function(something){}向现有对象添加内容，或者创建一个新对象，然后向该对象添加内容。</li><li>你可以在Utility命名空间下嵌套一个命名空间Messaging。</li></ul>
+</div>
+<div class="sec">
+<h4>TypeScript中的命名空间</h4>
+<ul class="point">
+<li><b>TypeScript提供了namespace关键字来描述这种分组</b>
+<ul class="quote"><li>namespace关键字编译后的JavaScript代码，与我们早些时候看到的JavaScript代码一样。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>namespace关键字编译后的JavaScript代码，与我们早些时候看到的JavaScript代码一样。</li></ul>
+</div>
+<div class="sec">
+<h4>命名空间的使用建议</h4>
+<ul class="point">
+<li><b>对于大多数项目，建议使用外部模块和命名空间，来快速演示和移植旧的JavaScript代码。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">31</span><span class="mmx-name">4.5 动态导入表达式</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 6 条要点 · 2 句原句摘录</p>
+<div class="sec">
+<h4>动态导入表达式的介绍</h4>
+<ul class="point">
+<li><b>动态导入表达式是ECMAScript的一个新功能，允许你在程序的任意位置异步加载一个模块。</b>
+</li>
+<li><b>webpack bundler有一个拆分代码的功能，允许你将代码拆分为许多块，这些块在将来可以被异步下载</b>
+<ul class="quote"><li>你可以在程序中首先提供一个最小的程序启动包，并在将来异步加载其他模块。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>你可以在程序中首先提供一个最小的程序启动包，并在将来异步加载其他模块。</li></ul>
+</div>
+<div class="sec">
+<h4>TypeScript 2.4动态导入表达式的自动生成包块和代码拆分</h4>
+<ul class="point">
+<li><b>TypeScript 2.4动态导入表达式将自动生成包块，并自动对最终生成的JavaScript代码进行拆分</b>
+<ul class="quote"><li>这依赖于我们正在使用的tsconfig.json配置文件。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>这依赖于我们正在使用的tsconfig.json配置文件。</li></ul>
+</div>
+<div class="sec">
+<h4>webpack实现代码分割的两种方式</h4>
+<ul class="point">
+<li><b>使用import()，这是ECMAScript的提案。</b>
+</li>
+<li><b>require.ensure()，这是webpack的具体实现。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>如何配置webpack和TypeScript 2.4以实现动态导入表达式和代码分割</h4>
+<ul class="point">
+<li><b>使用&quot;module&quot;：&quot;esnext&quot;选项，TypeScript生成模拟的import()语句，该语句将被输入以便webpack进行代码拆分。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">32</span><span class="mmx-name">第5章 快速创建TypeScript项目</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 9 条要点 · 8 句原句摘录</p>
+<div class="sec">
+<h4>在Node.js中使用TypeScript</h4>
+<ul class="point">
+<li><b>创建一个Node.js项目的package.json文件</b>
+<ul class="quote"><li>运行命令：npm init-y。</li></ul>
+</li>
+<li><b>添加TypeScript</b>
+<ul class="quote"><li>运行命令：npm run install typescript--save-dev。</li></ul>
+</li>
+<li><b>添加node.d.ts</b>
+<ul class="quote"><li>运行命令：npm install@types/node--save-dev。</li></ul>
+</li>
+<li><b>为TypeScript选项初始化一个tsconfig.json文件</b>
+<ul class="quote"><li>运行命令：npx tsc--init--rootDir src--outDir lib--esModuleInterop--resolveJsonModule--lib es6，dom--module commonjs。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>运行命令：npm init-y。</li><li>运行命令：npm run install typescript--save-dev。</li><li>运行命令：npm install@types/node--save-dev。</li><li>运行命令：npx tsc--init--rootDir src--outDir lib--esModuleInterop--resolveJsonModule--lib es6，dom--module commonjs。</li></ul>
+</div>
+<div class="sec">
+<h4>实时编译和运行</h4>
+<ul class="point">
+<li><b>添加ts-node</b>
+<ul class="quote"><li>运行命令：npm install ts-node--save-dev。</li></ul>
+</li>
+<li><b>添加nodemon</b>
+<ul class="quote"><li>运行命令：npm install nodemon--save-dev。</li></ul>
+</li>
+<li><b>为你的package.json添加一个script目标。</b>
+</li>
+<li><b>运行npm start</b>
+<ul class="quote"><li>当你编辑index.ts时，nodemon将会重新运行命令ts-node，ts-node将会通过tscongig.json和已经安装的TypeScript版本来自动编译，ts-node通过Node.js运行输出JavaScript。</li></ul>
+</li>
+<li><b>运行npm run build</b>
+<ul class="quote"><li>当你准备好部署JavaScript应用程序时，运行npm run build。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>运行命令：npm install ts-node--save-dev。</li><li>运行命令：npm install nodemon--save-dev。</li><li>当你编辑index.ts时，nodemon将会重新运行命令ts-node，ts-node将会通过tscongig.json和已经安装的TypeScript版本来自动编译，ts-node通过Node.js运行输出JavaScript。</li><li>当你准备好部署JavaScript应用程序时，运行npm run build。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">33</span><span class="mmx-name">5.2 在浏览器中使用TypeScript</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 3 条要点 · 10 句原句摘录</p>
+<div class="sec">
+<h4>在浏览器中使用TypeScript</h4>
+<ul class="point">
+<li><b>使用TypeScript+React来获得一个快速的项目设置</b>
+<ul class="quote"><li>安装Node.js和Git。</li><li>打开作者Basarat的GitHub网页，搜索“typescript-react”，使用里面的内容来作为一个例子。</li></ul>
+</li>
+<li><b>项目设置详解</b>
+<ul class="quote"><li>创建文件夹。</li><li>创建tsconfig.json。</li><li>创建package.json。</li><li>创建一个webpack.config.js。</li><li>src/app/app.ts是前端应用的入口处。</li></ul>
+</li>
+<li><b>发布应用</b>
+<ul class="quote"><li>通过执行命令npm install typescript@latest react@latest react-dom@latest@types/react@latest@types/react-dom@latest webpack@latest webpack-dev-server@latest webpack-cli@latest ts-loader@latest clean-webpack-plugin@latest html-webpack-plugin@latest--save-exact，你可以获取最新的包。</li><li>通过执行命令npm run start进行实时开发。</li><li>通过运行npm run build构建生产环境的资源文件。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>安装Node.js和Git。</li><li>打开作者Basarat的GitHub网页，搜索“typescript-react”，使用里面的内容来作为一个例子。</li><li>创建文件夹。</li><li>创建tsconfig.json。</li><li>创建package.json。</li><li>创建一个webpack.config.js。</li><li>src/app/app.ts是前端应用的入口处。</li><li>通过执行命令npm install typescript@latest react@latest react-dom@latest@types/react@latest@types/react-dom@latest webpack@latest webpack-dev-server@latest webpack-cli@latest ts-loader@latest clean-webpack-plugin@latest html-webpack-plugin@latest--save-exact，你可以获取最新的包。</li><li>通过执行命令npm run start进行实时开发。</li><li>通过运行npm run build构建生产环境的资源文件。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">34</span><span class="mmx-name">5.3 创建一个TypeScript模块</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 5 条要点 · 10 句原句摘录</p>
+<div class="sec">
+<h4>创建一个TypeScript模块</h4>
+<ul class="point">
+<li><b>在tsconfig.json里，需要拥有outDir、declaration和include选项</b>
+<ul class="quote"><li>outDir：lib，这会在lib文件夹中生成声明和js文件。</li><li>declaration：true，这会在lib文件夹中生成声明和js文件。</li><li>include：[&#x27;./src/**/*&#x27;]，这将会包含src目录下的所有文件。</li></ul>
+</li>
+<li><b>在package.json文件中，需要拥有&quot;main&quot;和&quot;types&quot;选项</b>
+<ul class="quote"><li>&quot;main&quot;：&quot;lib/index&quot;，这告诉Node.js需要加载lib/index.js。</li><li>&quot;types&quot;：&quot;lib/index&quot;，这告诉TypeScript需要加载lib.index.d.ts。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>outDir：lib，这会在lib文件夹中生成声明和js文件。</li><li>declaration：true，这会在lib文件夹中生成声明和js文件。</li><li>include：[&#x27;./src/**/*&#x27;]，这将会包含src目录下的所有文件。</li><li>&quot;main&quot;：&quot;lib/index&quot;，这告诉Node.js需要加载lib/index.js。</li><li>&quot;types&quot;：&quot;lib/index&quot;，这告诉TypeScript需要加载lib.index.d.ts。</li></ul>
+</div>
+<div class="sec">
+<h4>管理依赖项</h4>
+<ul class="point">
+<li><b>devDependencies：当你的包在开发时依赖于另外一个包时，你应该把它们作为devDependencies来安装</b>
+<ul class="quote"><li>TypeScript包通常被放入devDependencies中，因为你只是用它来构建包，消费者可以使用带有或不带有TypeScript的包。</li><li>如果你的包依赖于其他JavaScript开发者的包，并且想以类型安全的形式使用它，则需要把它们的声明(如@types/foo)放入devDependencies中。</li></ul>
+</li>
+<li><b>peerDependencies：如果你的包严重依赖于(而不是需要配合使用)另外一个包，如React，那么，就像使用原始js包一样，需要把它们放入peerDependencies中</b>
+<ul class="quote"><li>当开发包时，你可以获得包中指定的依赖版本。</li><li>当有人安装你的包时，他们不会安装它的dependency，但是他们会得到一条警告——必须安装包中所缺少的peerDependencies。</li></ul>
+</li>
+<li><b>dependencies：如果你的包包含了另外一个包(即使在编译后，也可以给内部使用)，你应该把它们放到dependencies中</b>
+<ul class="quote"><li>这样，当别人安装你的包时，就会安装你的包中的任意一个依赖。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>TypeScript包通常被放入devDependencies中，因为你只是用它来构建包，消费者可以使用带有或不带有TypeScript的包。</li><li>如果你的包依赖于其他JavaScript开发者的包，并且想以类型安全的形式使用它，则需要把它们的声明(如@types/foo)放入devDependencies中。</li><li>当开发包时，你可以获得包中指定的依赖版本。</li><li>当有人安装你的包时，他们不会安装它的dependency，但是他们会得到一条警告——必须安装包中所缺少的peerDependencies。</li><li>这样，当别人安装你的包时，就会安装你的包中的任意一个依赖。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">35</span><span class="mmx-name">第6章 TypeScript类型系统</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 2 条要点 · 0 句原句摘录</p>
+<div class="sec">
+<h4>TypeScript类型系统概述</h4>
+<ul class="point">
+<li><b>TypeScript的类型系统被设计为可选的，因此，你的JavaScript就是TypeScript。</b>
+</li>
+<li><b>TypeScript不会阻止JavaScript的运行，即使存在类型错误也不例外，这能让你的JavaScript逐步迁移至TypeScript。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">36</span><span class="mmx-name">6.1 基本概念</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 11 个小节 · 11 条要点 · 17 句原句摘录</p>
+<div class="sec">
+<h4>TypeScript基本注解</h4>
+<ul class="point">
+<li><b>类型注解使用TypeAnnotation语法，任何内容都可以用作类型注解</b>
+<ul class="quote"><li>在类型声明空间中可用的任何内容都可以用作类型注解。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在类型声明空间中可用的任何内容都可以用作类型注解。</li></ul>
+</div>
+<div class="sec">
+<h4>基本类型注解</h4>
+<ul class="point">
+<li><b>JavaScript的基本类型也同样适应于TypeScript的类型系统，因此string、number、boolean也可以被用作类型注解</b>
+<ul class="quote"><li>string、number、boolean是JavaScript的基本类型，也可以被用作TypeScript的类型注解。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>string、number、boolean是JavaScript的基本类型，也可以被用作TypeScript的类型注解。</li></ul>
+</div>
+<div class="sec">
+<h4>数组注解</h4>
+<ul class="point">
+<li><b>TypeScript为数组提供了专门的类型语法，使用后缀[]，可以注解数组</b>
+<ul class="quote"><li>你可以使用后缀[]，根据需要补充任何有效的类型注解(如boolean[])。</li><li>它能确保你安全地执行任何与数组有关的操作，也能防止一些如赋值错误类型给成员的行为。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>你可以使用后缀[]，根据需要补充任何有效的类型注解(如boolean[])。</li><li>它能确保你安全地执行任何与数组有关的操作，也能防止一些如赋值错误类型给成员的行为。</li></ul>
+</div>
+<div class="sec">
+<h4>接口注解</h4>
+<ul class="point">
+<li><b>接口是TypeScript的一个核心知识，能将多个类型注解合并成一个类型注解</b>
+<ul class="quote"><li>在这里，我们把类型注解first：string+second：string合并到了一个新的类型注解Name里，这样就能强制对每个成员进行类型检查了。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在这里，我们把类型注解first：string+second：string合并到了一个新的类型注解Name里，这样就能强制对每个成员进行类型检查了。</li></ul>
+</div>
+<div class="sec">
+<h4>内联类型注解</h4>
+<ul class="point">
+<li><b>使用内联注解语法注解任何内容，可以快速提供一个类型注解</b>
+<ul class="quote"><li>内联类型能为你快速提供一个类型注解。它可以帮助你省去为类型起名的麻烦。</li><li>如果你发现需要多次使用相同的内联注解，那么考虑把它重构为一个接口(或type alias，它会在接下来的部分提到)是一个不错的主意。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>内联类型能为你快速提供一个类型注解。它可以帮助你省去为类型起名的麻烦。</li><li>如果你发现需要多次使用相同的内联注解，那么考虑把它重构为一个接口(或type alias，它会在接下来的部分提到)是一个不错的主意。</li></ul>
+</div>
+<div class="sec">
+<h4>特殊类型</h4>
+<ul class="point">
+<li><b>any、null、undefined和void是TypeScript中的特殊类型</b>
+<ul class="quote"><li>any在TypeScript类型系统中占有特殊的地位，它为你提供一个类型系统的“后门”，TypeScript将会把类型检查关闭。</li><li>在类型系统中，JavaScript中的null和undefined字面量和其他被标注为any的变量一样，都能被赋值给任意类型的变量。</li><li>：void用来表示一个函数没有返回值。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>any在TypeScript类型系统中占有特殊的地位，它为你提供一个类型系统的“后门”，TypeScript将会把类型检查关闭。</li><li>在类型系统中，JavaScript中的null和undefined字面量和其他被标注为any的变量一样，都能被赋值给任意类型的变量。</li><li>：void用来表示一个函数没有返回值。</li></ul>
+</div>
+<div class="sec">
+<h4>泛型</h4>
+<ul class="point">
+<li><b>泛型在计算机科学中，许多算法和数据结构并不会依赖于对象的实际类型</b>
+<ul class="quote"><li>例如，一个函数接收一个列表，并且返回这个列表的反向排序，这里的约束介于传入函数的参数和函数的返回值之间。</li><li>因为函数reverse的返回值类型与它接收的参数的类型一样，所以当你传入var sample=[1，2，3]时，TypeScript就能推断出reverse为number[]类型，从而能为你提供类型安全。</li><li>当你向函数reverse传入一个类型为string[]类型的数组时，TypeScript也能推断出返回结果也是string[]类型的，而且是类型安全的。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>例如，一个函数接收一个列表，并且返回这个列表的反向排序，这里的约束介于传入函数的参数和函数的返回值之间。</li><li>因为函数reverse的返回值类型与它接收的参数的类型一样，所以当你传入var sample=[1，2，3]时，TypeScript就能推断出reverse为number[]类型，从而能为你提供类型安全。</li><li>当你向函数reverse传入一个类型为string[]类型的数组时，TypeScript也能推断出返回结果也是string[]类型的，而且是类型安全的。</li></ul>
+</div>
+<div class="sec">
+<h4>联合类型注解</h4>
+<ul class="point">
+<li><b>联合类型使用|作为类型注解，如string|number</b>
+<ul class="quote"><li>关于联合类型注解，一个常见的示例是一个可以接收单个对象或对象数组的函数。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>关于联合类型注解，一个常见的示例是一个可以接收单个对象或对象数组的函数。</li></ul>
+</div>
+<div class="sec">
+<h4>交叉类型</h4>
+<ul class="point">
+<li><b>交叉类型可以让你安全地使用JavaScript中的extends模式</b>
+<ul class="quote"><li>在这种模式下，你可以根据两个对象创建一个新对象，新对象拥有两个对象所有的功能。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在这种模式下，你可以根据两个对象创建一个新对象，新对象拥有两个对象所有的功能。</li></ul>
+</div>
+<div class="sec">
+<h4>元组类型</h4>
+<ul class="point">
+<li><b>TypeScript类型系统支持元组，使用[typeofmember1，typeofmember2]能够为元组添加类型注解</b>
+<ul class="quote"><li>元组可以包含任意数量的成员。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>元组可以包含任意数量的成员。</li></ul>
+</div>
+<div class="sec">
+<h4>类型别名</h4>
+<ul class="point">
+<li><b>TypeScript提供了为类型注解设置别名的便捷语法，你可以使用type SomeName=someValidTypeAnnotation来创建别名</b>
+<ul class="quote"><li>与接口不同，你可以为任意的类型注解提供类型别名，这在联合类型和交叉类型中比较实用。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>与接口不同，你可以为任意的类型注解提供类型别名，这在联合类型和交叉类型中比较实用。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">37</span><span class="mmx-name">6.2 迁移JavaScript代码至TypeScript</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 5 个小节 · 13 条要点 · 15 句原句摘录</p>
+<div class="sec">
+<h4>迁移JavaScript代码至TypeScript的步骤</h4>
+<ul class="point">
+<li><b>添加一个tsconfig.json文件</b>
+<ul class="quote"><li>所有的JavaScript都是有效的TypeScript，把文件扩展名从.js改成.ts将不会造成任何负面影响。</li></ul>
+</li>
+<li><b>把文件扩展名从.js改成.ts，开始使用any来减少错误</b>
+<ul class="quote"><li>TypeScript会立即对代码进行类型检查，你的JavaScript代码可能并不像想象中那样整洁，因此你可能会收到一些报错信息。</li></ul>
+</li>
+<li><b>开始在TypeScript中写代码，尽可能减少any的使用</b>
+<ul class="quote"><li>你的重点是在逐步更新旧代码库的同时，用TypeScript编写新代码。</li></ul>
+</li>
+<li><b>回到旧代码，开始添加类型注解，并修复已识别的错误</b>
+<ul class="quote"><li>使用类型断言来减少此类错误。</li></ul>
+</li>
+<li><b>为第三方JavaScript代码定义环境声明</b>
+<ul class="quote"><li>你可以将你的JavaScript代码改成TypeScript代码，但是你不能让整个世界都使用TypeScript。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>所有的JavaScript都是有效的TypeScript，把文件扩展名从.js改成.ts将不会造成任何负面影响。</li><li>TypeScript会立即对代码进行类型检查，你的JavaScript代码可能并不像想象中那样整洁，因此你可能会收到一些报错信息。</li><li>你的重点是在逐步更新旧代码库的同时，用TypeScript编写新代码。</li><li>使用类型断言来减少此类错误。</li><li>你可以将你的JavaScript代码改成TypeScript代码，但是你不能让整个世界都使用TypeScript。</li></ul>
+</div>
+<div class="sec">
+<h4>减少错误</h4>
+<ul class="point">
+<li><b>使用any来解决大部分的报错问题</b>
+<ul class="quote"><li>虽然这些错误是有效的，并且在大多数情况下，根据这些错误所推断出的信息比代码库的不同部分的原始作者想象的更好，但是你的重点是在逐步更新旧代码库的同时，用TypeScript编写新代码。</li></ul>
+</li>
+<li><b>使用类型断言来减少此类错误</b>
+<ul class="quote"><li>从另一方面来说，你可能想用any来做类型注解。</li><li>不要像下面这样。</li><li>使用此种方式来减少错误是危险的，但是它允许你将注意力转移到你的新TypeScript代码错误上。当离开一段代码时，你需要留下//TODO：的注释。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>虽然这些错误是有效的，并且在大多数情况下，根据这些错误所推断出的信息比代码库的不同部分的原始作者想象的更好，但是你的重点是在逐步更新旧代码库的同时，用TypeScript编写新代码。</li><li>从另一方面来说，你可能想用any来做类型注解。</li><li>不要像下面这样。</li><li>使用此种方式来减少错误是危险的，但是它允许你将注意力转移到你的新TypeScript代码错误上。当离开一段代码时，你需要留下//TODO：的注释。</li></ul>
+</div>
+<div class="sec">
+<h4>第三方JavaScript代码</h4>
+<ul class="point">
+<li><b>创建一个vendor.d.ts文件作为开始，然后向文件里添加东西</b>
+<ul class="quote"><li>对于维护良好的、强类型定义的JavaScript库，排名在90%之前的声明文件几乎都存在于名为DefinitelyTyped的对象存储仓库里。</li><li>尽管如此，创建一个声明文件这种快速但不好的方式是减小使用TypeScript初始阻力的重要步骤。</li></ul>
+</li>
+<li><b>通过type关键字来快速实现显式的注解</b>
+<ul class="quote"><li>有时，你可能想在某些内容(如jQuery)上添加显式的注解，并且你会在类型声明空间中使用它。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>对于维护良好的、强类型定义的JavaScript库，排名在90%之前的声明文件几乎都存在于名为DefinitelyTyped的对象存储仓库里。</li><li>尽管如此，创建一个声明文件这种快速但不好的方式是减小使用TypeScript初始阻力的重要步骤。</li><li>有时，你可能想在某些内容(如jQuery)上添加显式的注解，并且你会在类型声明空间中使用它。</li></ul>
+</div>
+<div class="sec">
+<h4>第三方npm模块</h4>
+<ul class="point">
+<li><b>快速定义一个全局模块</b>
+<ul class="quote"><li>例如，对于jQuery，如果你想把它作为一个模块来使用，可以通过以下方式实现。</li><li>然后，可以在必要时导入它。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>例如，对于jQuery，如果你想把它作为一个模块来使用，可以通过以下方式实现。</li><li>然后，可以在必要时导入它。</li></ul>
+</div>
+<div class="sec">
+<h4>额外的非JavaScript资源</h4>
+<ul class="point">
+<li><b>允许你导入任何文件，例如.css文件</b>
+<ul class="quote"><li>如果你使用的是webpack样式加载器或css模块的话，你只需要在globals.d.ts中添加如下代码即可。</li></ul>
+</li>
+<li><b>使用import*as foo from&#x27;./some/file.css&#x27;语句。</b>
+</li>
+<li><b>想使用HTML模板，如Angular，你可以这样做。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如果你使用的是webpack样式加载器或css模块的话，你只需要在globals.d.ts中添加如下代码即可。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">38</span><span class="mmx-name">6.3 @types</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 4 条要点 · 6 句原句摘录</p>
+<div class="sec">
+<h4>TypeScript的优势</h4>
+<ul class="point">
+<li><b>TypeScript社区已经记录了将近90%的顶级JavaScript项目</b>
+<ul class="quote"><li>这意味着，你可以以交互式和探索性的方式来使用这些项目，而无须在单独的窗口上打开相应文档以确保输入正确。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>这意味着，你可以以交互式和探索性的方式来使用这些项目，而无须在单独的窗口上打开相应文档以确保输入正确。</li></ul>
+</div>
+<div class="sec">
+<h4>使用@types</h4>
+<ul class="point">
+<li><b>通过npm来安装和使用@types</b>
+<ul class="quote"><li>例如为jQuery添加声明文件。</li></ul>
+</li>
+<li><b>@types支持全局和模块类型定义</b>
+<ul class="quote"><li>全局@types：在默认情况下，TypeScript会自动包含支持全局使用的任何定义。</li><li>模块@types：对于jQuery来说，通常建议使用模块。安装模块@types之后，不需要进行特别的配置，你就可以像使用模块一样使用它了。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>例如为jQuery添加声明文件。</li><li>全局@types：在默认情况下，TypeScript会自动包含支持全局使用的任何定义。</li><li>模块@types：对于jQuery来说，通常建议使用模块。安装模块@types之后，不需要进行特别的配置，你就可以像使用模块一样使用它了。</li></ul>
+</div>
+<div class="sec">
+<h4>控制全局</h4>
+<ul class="point">
+<li><b>通过配置tsconfig.json的compilerOptions.types选项，引入有意义的类型</b>
+<ul class="quote"><li>例如，在配置compilerOptions.types：[&quot;jquery&quot;]之后，只允许使用jQuery的@types包。</li><li>即使安装了另一个声明文件，如npm install@types/node，它的全局变量(如process)也不会泄漏到你的代码中，直到你将它们添加到tsconfig.json类型选项中。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>例如，在配置compilerOptions.types：[&quot;jquery&quot;]之后，只允许使用jQuery的@types包。</li><li>即使安装了另一个声明文件，如npm install@types/node，它的全局变量(如process)也不会泄漏到你的代码中，直到你将它们添加到tsconfig.json类型选项中。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">39</span><span class="mmx-name">6.4 环境声明</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 5 条要点 · 5 句原句摘录</p>
+<div class="sec">
+<h4>环境声明的定义和作用</h4>
+<ul class="point">
+<li><b>环境声明允许你安全地使用现有的JavaScript库，并且能让你的JavaScript、CoffeeScript或其他需要编译成JavaScript的语言逐步迁移至TypeScript。</b>
+</li>
+<li><b>学习为第三方JavaScript库编写环境声明模式，是一种为TypeScript写注解的比较好的实践。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>声明文件的使用</h4>
+<ul class="point">
+<li><b>通过declare关键字来告诉TypeScript，你正在试图表述一个在其他地方已经存在的代码</b>
+<ul class="quote"><li>你可以选择把这些声明放入.ts或.d.ts里。</li><li>如果一个文件有扩展名.d.ts，这意味着每个根级别的声明都必须以declare关键字作为前缀。</li></ul>
+</li>
+<li><b>环境声明就像你与编译器之间的一个约定，如果在编译时它们不存在，但是你却使用了它们，事情将会在没有警告的情况下中断</b>
+<ul class="quote"><li>环境声明就像是一个文档。如果源文件更新了，那么环境声明也应该同步更新。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>你可以选择把这些声明放入.ts或.d.ts里。</li><li>如果一个文件有扩展名.d.ts，这意味着每个根级别的声明都必须以declare关键字作为前缀。</li><li>环境声明就像是一个文档。如果源文件更新了，那么环境声明也应该同步更新。</li></ul>
+</div>
+<div class="sec">
+<h4>变量声明</h4>
+<ul class="point">
+<li><b>使用接口来告诉TypeScript编辑器关于process变量的消息</b>
+<ul class="quote"><li>这允许其他人扩充这些全局变量，并且告诉TypeScript有关这些变量的修改。</li><li>例如，添加一个exitWithLogging函数至process。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>这允许其他人扩充这些全局变量，并且告诉TypeScript有关这些变量的修改。</li><li>例如，添加一个exitWithLogging函数至process。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">40</span><span class="mmx-name">6.5 接口</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 6 条要点 · 6 句原句摘录</p>
+<div class="sec">
+<h4>TypeScript接口的定义和声明方式</h4>
+<ul class="point">
+<li><b>TypeScript接口中有很多方式来声明变量的结构</b>
+<ul class="quote"><li>示例A使用内联注解，示例B使用接口。</li></ul>
+</li>
+<li><b>TypeScript接口是开放式的，这是TypeScript的一个重要原则</b>
+<ul class="quote"><li>允许你使用接口来模仿JavaScript的可扩展性。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>示例A使用内联注解，示例B使用接口。</li><li>允许你使用接口来模仿JavaScript的可扩展性。</li></ul>
+</div>
+<div class="sec">
+<h4>类可以实现接口</h4>
+<ul class="point">
+<li><b>使用implements关键字来确保类与接口的兼容性</b>
+<ul class="quote"><li>在implements存在的情况下，外部Point接口的任何更改都将导致代码库中的编译错误。</li></ul>
+</li>
+<li><b>implements限制了类实例的结构</b>
+<ul class="quote"><li>像foo：Point=MyPoint这样的代码，与其并不是一回事。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在implements存在的情况下，外部Point接口的任何更改都将导致代码库中的编译错误。</li><li>像foo：Point=MyPoint这样的代码，与其并不是一回事。</li></ul>
+</div>
+<div class="sec">
+<h4>并非每个接口都很容易实现</h4>
+<ul class="point">
+<li><b>接口旨在声明JavaScript中可能存在的任意结构</b>
+<ul class="quote"><li>思考以下示例，其可以使用new来调用某些内容。</li></ul>
+</li>
+<li><b>你可以使用接口声明所有“疯狂的”的JavaScript，甚至可以安全地在TypeScript中使用它们</b>
+<ul class="quote"><li>但并不意味着你可以使用TypeScript类来实现它们。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>思考以下示例，其可以使用new来调用某些内容。</li><li>但并不意味着你可以使用TypeScript类来实现它们。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">41</span><span class="mmx-name">6.6 枚举</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 8 个小节 · 8 条要点 · 18 句原句摘录</p>
+<div class="sec">
+<h4>数字枚举与数字类型</h4>
+<ul class="point">
+<li><b>TypeScript的枚举类型是基于数字的，可以将数字类型赋值给枚举类型的实例</b>
+<ul class="quote"><li>任何其他与数字类型相兼容的对象也可以赋值给枚举类型的实例。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>任何其他与数字类型相兼容的对象也可以赋值给枚举类型的实例。</li></ul>
+</div>
+<div class="sec">
+<h4>数字枚举与字符串类型</h4>
+<ul class="point">
+<li><b>TypeScript枚举类型可以编译成JavaScript，可以使用Tristate变量来把字符串枚举类型改造成一个数字或数字类型的枚举</b>
+<ul class="quote"><li>Tristate[&#x27;False&#x27;]=0的意思是将Tristate对象里的False成员值设置为0。</li><li>JavaScript运行时执行的下一行代码是Tristate[0]=&#x27;False&#x27;。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Tristate[&#x27;False&#x27;]=0的意思是将Tristate对象里的False成员值设置为0。</li><li>JavaScript运行时执行的下一行代码是Tristate[0]=&#x27;False&#x27;。</li></ul>
+</div>
+<div class="sec">
+<h4>改变与数字枚举相关联的数字</h4>
+<ul class="point">
+<li><b>可以通过指定特定值的方式来改变与枚举成员相关联的数字</b>
+<ul class="quote"><li>从3开始依次递增。</li><li>通常建议用=1进行初始化，因为在枚举类型值里，它能让你做一个安全可靠的检查。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>从3开始依次递增。</li><li>通常建议用=1进行初始化，因为在枚举类型值里，它能让你做一个安全可靠的检查。</li></ul>
+</div>
+<div class="sec">
+<h4>使用数字枚举做标记</h4>
+<ul class="point">
+<li><b>枚举的一个很好的用途是用来作标记，这些标记允许你检查一组条件中的某个条件是否为真</b>
+<ul class="quote"><li>使用左移的位运算符，将数字1的二进制码向左移动得到数字0001、0010、0100和1000(换成十进制数值结果是1、2、4、8)。</li><li>使用|=来添加一个标记。</li><li>组合使用&amp;=和～来清理一个标记。</li><li>使用|来合并标记。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>使用左移的位运算符，将数字1的二进制码向左移动得到数字0001、0010、0100和1000(换成十进制数值结果是1、2、4、8)。</li><li>使用|=来添加一个标记。</li><li>组合使用&amp;=和～来清理一个标记。</li><li>使用|来合并标记。</li></ul>
+</div>
+<div class="sec">
+<h4>字符串枚举</h4>
+<ul class="point">
+<li><b>枚举类型的值，也可以是字符串类型的</b>
+<ul class="quote"><li>它们提供了有意义且可调试的字符串，因此可以被更容易地处理和调试。</li><li>你可以使用它们来做简单的字符串比较。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>它们提供了有意义且可调试的字符串，因此可以被更容易地处理和调试。</li><li>你可以使用它们来做简单的字符串比较。</li></ul>
+</div>
+<div class="sec">
+<h4>常量枚举</h4>
+<ul class="point">
+<li><b>使用常量枚举可以在运行执行时，查找变量Tristate和Tristate.False，性能提升</b>
+<ul class="quote"><li>这将会被编译为如下所示的代码。</li><li>编译器将会内联枚举的任何用法(0而不是Tristate.False)；但不会为枚举类型生成任何JavaScript代码(在这个例子中，运行时没有Tristate变量)，因为它使用内联语法。</li><li>常量枚举preserveConstEnums选项，使用内联语法对性能有明显的提升作用。</li><li>然而，你可能想让编译器仍然把枚举类型编译成JavaScript，以便用于上述示例中从字符串到数字或从数字到字符串的查找。在这种情景下，你可以使用编译标记--preserveConstEnums，它会编译出var Tristate的定义，以便你在运行时可以手动使用Tristate[&#x27;False&#x27;]或Tristate[0]，而且这不会以任何方式影响内联。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>这将会被编译为如下所示的代码。</li><li>编译器将会内联枚举的任何用法(0而不是Tristate.False)；但不会为枚举类型生成任何JavaScript代码(在这个例子中，运行时没有Tristate变量)，因为它使用内联语法。</li><li>常量枚举preserveConstEnums选项，使用内联语法对性能有明显的提升作用。</li><li>然而，你可能想让编译器仍然把枚举类型编译成JavaScript，以便用于上述示例中从字符串到数字或从数字到字符串的查找。在这种情景下，你可以使用编译标记--preserveConstEnums，它会编译出var Tristate的定义，以便你在运行时可以手动使用Tristate[&#x27;False&#x27;]或Tristate[0]，而且这不会以任何方式影响内联。</li></ul>
+</div>
+<div class="sec">
+<h4>有静态方法的枚举</h4>
+<ul class="point">
+<li><b>可以使用enum+namespace的声明方式向枚举类型添加静态方法</b>
+<ul class="quote"><li>我们将静态成员isBusinessDay添加到枚举上。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>我们将静态成员isBusinessDay添加到枚举上。</li></ul>
+</div>
+<div class="sec">
+<h4>开放式枚举</h4>
+<ul class="point">
+<li><b>只有在不使用模块时，开放式枚举才有意义，而你应该使用模块</b>
+<ul class="quote"><li>这意味着你可以跨多个文件拆分和扩展枚举的定义。</li><li>你应该在枚举的延续声明中，初始化第1个成员(这里指DarkRed=3)，以使生成的代码不是先前定义的枚举类型值，如0、1、2等。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>这意味着你可以跨多个文件拆分和扩展枚举的定义。</li><li>你应该在枚举的延续声明中，初始化第1个成员(这里指DarkRed=3)，以使生成的代码不是先前定义的枚举类型值，如0、1、2等。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">42</span><span class="mmx-name">6.7 lib.d.ts</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 7 个小节 · 8 条要点 · 15 句原句摘录</p>
+<div class="sec">
+<h4>lib.d.ts文件的作用与重要性</h4>
+<ul class="point">
+<li><b>lib.d.ts文件包含JavaScript运行时及DOM中存在的各种常见的JavaScript环境声明</b>
+<ul class="quote"><li>它自动包含在TypeScript项目的编译上下文中。</li><li>它能让你快速开始书写经过类型检查的JavaScript代码。</li></ul>
+</li>
+<li><b>可以通过指定--noLib的编译器命令行标记，或者在tsconfig.json中指定选项noLib：true，从上下文中排除此文件</b>
+<ul class="quote"><li>这段代码的类型检查结果显示正常，因为lib.d.ts为所有JavaScript对象定义了toString方法。</li><li>如果你在noLib选项下使用相同的代码，这也会出现类型检查错误。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>它自动包含在TypeScript项目的编译上下文中。</li><li>它能让你快速开始书写经过类型检查的JavaScript代码。</li><li>这段代码的类型检查结果显示正常，因为lib.d.ts为所有JavaScript对象定义了toString方法。</li><li>如果你在noLib选项下使用相同的代码，这也会出现类型检查错误。</li></ul>
+</div>
+<div class="sec">
+<h4>观察lib.d.ts的内容</h4>
+<ul class="point">
+<li><b>lib.d.ts的内容主要是一些变量声明，如window、document、math等，以及一些类似的接口声明，如Window、Document、Math</b>
+<ul class="quote"><li>阅读全局内容的文档和类型注解的最简单的方法是输入你知道有效的代码，如Math.floor，然后在IDE上按F12键，跳转到定义上。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>阅读全局内容的文档和类型注解的最简单的方法是输入你知道有效的代码，如Math.floor，然后在IDE上按F12键，跳转到定义上。</li></ul>
+</div>
+<div class="sec">
+<h4>修改本地类型</h4>
+<ul class="point">
+<li><b>在TypeScript中，接口是开放式的，这意味着当你想使用不存在的成员时，只需要将它们添加到lib.d.ts的接口声明中即可</b>
+<ul class="quote"><li>你需要在全局模块中做这些修改，以使这些接口与lib.d.ts相关联。</li><li>我建议你创建一个名为globals.d.ts的特殊文件。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>你需要在全局模块中做这些修改，以使这些接口与lib.d.ts相关联。</li><li>我建议你创建一个名为globals.d.ts的特殊文件。</li></ul>
+</div>
+<div class="sec">
+<h4>使用你自己定义的lib.d.ts</h4>
+<ul class="point">
+<li><b>使用--noLib布尔编译器标记会导致TypeScript排除被自动包含的lib.d.ts文件</b>
+<ul class="quote"><li>运行JavaScript的环境与基于标准浏览器运行时的环境有很大不同。</li><li>你希望在代码里严格控制全局变量，例如，lib.d.ts将item定义为全局变量，你不希望它泄漏到你的代码里。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>运行JavaScript的环境与基于标准浏览器运行时的环境有很大不同。</li><li>你希望在代码里严格控制全局变量，例如，lib.d.ts将item定义为全局变量，你不希望它泄漏到你的代码里。</li></ul>
+</div>
+<div class="sec">
+<h4>编译目标对lib.d.ts的影响</h4>
+<ul class="point">
+<li><b>将编译目标设置为ES6，能导致lib.d.ts包含更多的像Promise这样的现代的环境声明</b>
+<ul class="quote"><li>编译器目标的这种神奇作用，改变了代码的环境，这对某些人来说是理想的，但是却对另外一些人造成了困扰，因为它将编译出的代码与环境混为一谈了。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>编译器目标的这种神奇作用，改变了代码的环境，这对某些人来说是理想的，但是却对另外一些人造成了困扰，因为它将编译出的代码与环境混为一谈了。</li></ul>
+</div>
+<div class="sec">
+<h4>--lib选项</h4>
+<ul class="point">
+<li><b>有时，你想要解耦编译目标(即生成的JavaScript版本)和环境库支持之间的关系</b>
+<ul class="quote"><li>例如，对于Promise，你的编译目标是--target es5，但是你仍然想使用Promise，这时，你可以使用--lib选项来显示地控制lib。</li><li>注意：使用--lib选项可以将任何lib与--target解耦。</li><li>你可以通过命令行或在tsconfig.json中提供此选项(推荐)来对它们进行解耦。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>例如，对于Promise，你的编译目标是--target es5，但是你仍然想使用Promise，这时，你可以使用--lib选项来显示地控制lib。</li><li>注意：使用--lib选项可以将任何lib与--target解耦。</li><li>你可以通过命令行或在tsconfig.json中提供此选项(推荐)来对它们进行解耦。</li></ul>
+</div>
+<div class="sec">
+<h4>在旧JavaScript引擎中使用polyfill</h4>
+<ul class="point">
+<li><b>要使用一些新功能如Map、Set、Promise(随着时间推移会变化)，你可以使用现代的lib选项，并安装core-js</b>
+<ul class="quote"><li>接着，在你的项目里导入它。</li><li>它会为你polyfill这些运行时功能。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>接着，在你的项目里导入它。</li><li>它会为你polyfill这些运行时功能。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">43</span><span class="mmx-name">6.8 函数</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 5 个小节 · 5 条要点 · 10 句原句摘录</p>
+<div class="sec">
+<h4>参数注解</h4>
+<ul class="point">
+<li><b>可以注解函数参数，就像注解其他变量一样</b>
+<ul class="quote"><li>使用内联类型注解，也可以使用接口注解等其他方式。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>使用内联类型注解，也可以使用接口注解等其他方式。</li></ul>
+</div>
+<div class="sec">
+<h4>返回类型注解</h4>
+<ul class="point">
+<li><b>在函数参数列表之后，使用与变量相同的样式来注解返回类型</b>
+<ul class="quote"><li>使用了一个接口，但你可以自由地使用其他注解方式，例如，内联注解。</li><li>如果你不打算从函数中返回任何内容，则可以将其标注为：void。通常你可以删除void，让TypeScript去推导出来。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>使用了一个接口，但你可以自由地使用其他注解方式，例如，内联注解。</li><li>如果你不打算从函数中返回任何内容，则可以将其标注为：void。通常你可以删除void，让TypeScript去推导出来。</li></ul>
+</div>
+<div class="sec">
+<h4>可选参数</h4>
+<ul class="point">
+<li><b>将参数标记为可选参数，当调用者没有提供该参数时，你也可以提供一个默认值</b>
+<ul class="quote"><li>在参数声明后使用=someValue。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在参数声明后使用=someValue。</li></ul>
+</div>
+<div class="sec">
+<h4>重载</h4>
+<ul class="point">
+<li><b>TypeScript允许声明函数重载，这对于文档和类型安全来说很实用</b>
+<ul class="quote"><li>如果仔细查看代码，就会发现a、b、c、d的值会根据传入的参数数量的变化而变化。此函数也只需要1个、2个或4个参数。可以使用函数重载来强制执行和记录这些约束，你只需多次声明函数头即可。</li><li>最后一个函数头是在函数体内实际处于活动状态但不可用于外部的那个。</li><li>这里前3个函数头可有效调用padding。</li><li>当然，最终声明(从函数内部看到的真正声明)与所有重载兼容是很重要的。因为这是函数体需要考虑的函数调用的真实情况。</li><li>注意：TypeScript中的函数重载没有任何运行时的开销。它只允许记录你希望的调用函数的方式，并且编译器会检查其余代码。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如果仔细查看代码，就会发现a、b、c、d的值会根据传入的参数数量的变化而变化。此函数也只需要1个、2个或4个参数。可以使用函数重载来强制执行和记录这些约束，你只需多次声明函数头即可。</li><li>最后一个函数头是在函数体内实际处于活动状态但不可用于外部的那个。</li><li>这里前3个函数头可有效调用padding。</li><li>当然，最终声明(从函数内部看到的真正声明)与所有重载兼容是很重要的。因为这是函数体需要考虑的函数调用的真实情况。</li><li>注意：TypeScript中的函数重载没有任何运行时的开销。它只允许记录你希望的调用函数的方式，并且编译器会检查其余代码。</li></ul>
+</div>
+<div class="sec">
+<h4>声明函数</h4>
+<ul class="point">
+<li><b>类型注解是描述现有实现类型的一种方式，在没有提供函数实现的情况下，有两种声明函数类型的方式</b>
+<ul class="quote"><li>上面代码中的两个例子完全相同。但是，当你想使用函数重载时，只能使用第一种方式。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>上面代码中的两个例子完全相同。但是，当你想使用函数重载时，只能使用第一种方式。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">44</span><span class="mmx-name">6.9 可调用</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 4 条要点 · 6 句原句摘录</p>
+<div class="sec">
+<h4>可调用类型注解的定义</h4>
+<ul class="point">
+<li><b>可调用类型注解可以用类型别名或接口来表示</b>
+<ul class="quote"><li>它可以表示一个返回值为string的函数。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>它可以表示一个返回值为string的函数。</li></ul>
+</div>
+<div class="sec">
+<h4>可调用类型注解的实例</h4>
+<ul class="point">
+<li><b>可调用接口可提供多个调用注解，来指定特殊的函数重载</b>
+<ul class="quote"><li>当然，与任何接口的主体一样，也可以将可调用接口的主体当作变量的类型注解。</li><li>这也可以用于内联注解。</li></ul>
+</li>
+<li><b>箭头函数可以用来指定可调用的类型签名</b>
+<ul class="quote"><li>例如，在一个以number类型为参数，以string类型为返回值的函数中，你可以这么写。</li><li>注意：它只能作为简单的箭头函数来使用，你无法使用重载。如果想使用重载，你必须使用完整的{(someArgs)：someReturn}的语法。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>当然，与任何接口的主体一样，也可以将可调用接口的主体当作变量的类型注解。</li><li>这也可以用于内联注解。</li><li>例如，在一个以number类型为参数，以string类型为返回值的函数中，你可以这么写。</li><li>注意：它只能作为简单的箭头函数来使用，你无法使用重载。如果想使用重载，你必须使用完整的{(someArgs)：someReturn}的语法。</li></ul>
+</div>
+<div class="sec">
+<h4>可实例化类型注解</h4>
+<ul class="point">
+<li><b>可实例化只是可调用类型注解的一种特殊情况，它用new作为前缀</b>
+<ul class="quote"><li>这意味着你需要使用new关键字去调用它。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>这意味着你需要使用new关键字去调用它。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">45</span><span class="mmx-name">6.10 类型断言</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 6 个小节 · 8 条要点 · 11 句原句摘录</p>
+<div class="sec">
+<h4>类型断言的概念和作用</h4>
+<ul class="point">
+<li><b>类型断言是TypeScript中的一种机制，用于告诉编译器你比它更了解这个类型</b>
+<ul class="quote"><li>TypeScript类型断言纯粹是用来告诉编译器，你比它更了解这个类型，并且它不应该再发出错误提示。</li></ul>
+</li>
+<li><b>类型断言的一个常见示例是将代码从JavaScript迁移到TypeScript</b>
+<ul class="quote"><li>这里的代码发出了错误警告，因为foo的类型推断为{}，即具有零属性的对象。因此，你不能在它的属性上添加bar或bas，你可以通过类型断言来避免此问题。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>TypeScript类型断言纯粹是用来告诉编译器，你比它更了解这个类型，并且它不应该再发出错误提示。</li><li>这里的代码发出了错误警告，因为foo的类型推断为{}，即具有零属性的对象。因此，你不能在它的属性上添加bar或bas，你可以通过类型断言来避免此问题。</li></ul>
+</div>
+<div class="sec">
+<h4>类型断言的语法</h4>
+<ul class="point">
+<li><b>使用as Foo语法来进行类型断言</b>
+<ul class="quote"><li>最初的断言语法如下所示。</li><li>为了保持一致，我们建议你使用as Foo语法来为类型断言。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>最初的断言语法如下所示。</li><li>为了保持一致，我们建议你使用as Foo语法来为类型断言。</li></ul>
+</div>
+<div class="sec">
+<h4>类型断言与类型转换的区别</h4>
+<ul class="point">
+<li><b>类型断言纯粹是一个编译时语法，而类型转换通常意味着某种运行时的支持</b>
+<ul class="quote"><li>类型断言之所以不被称为“类型转换”，是因为转换通常意味着某种运行时的支持。但是，类型断言纯粹是一个编译时语法，同时，它也为编译器提供了分析代码的方法。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>类型断言之所以不被称为“类型转换”，是因为转换通常意味着某种运行时的支持。但是，类型断言纯粹是一个编译时语法，同时，它也为编译器提供了分析代码的方法。</li></ul>
+</div>
+<div class="sec">
+<h4>类型断言的风险和注意事项</h4>
+<ul class="point">
+<li><b>类型断言应该小心谨慎地使用，因为它可能会隐藏错误</b>
+<ul class="quote"><li>在很多情景下，断言能让你更容易地从遗留项目中迁移代码，甚至将其他代码粘贴、复制到你的项目中。然而，你应该小心谨慎地使用断言。</li><li>如果你没有按约定添加属性，TypeScript编译器并不会对此发出错误警告。</li><li>另一个常见的思路是使用类型断言来提供代码提示。这也会存在一个同样的问题，如果你忘了某个属性，编译器同样也不会发出错误警告。</li></ul>
+</li>
+<li><b>在某些情景下，你可能需要创建一个临时变量，但至少，你不会做出承诺(因为可能是错误的)，而会依靠类型推断来检查你的代码。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在很多情景下，断言能让你更容易地从遗留项目中迁移代码，甚至将其他代码粘贴、复制到你的项目中。然而，你应该小心谨慎地使用断言。</li><li>如果你没有按约定添加属性，TypeScript编译器并不会对此发出错误警告。</li><li>另一个常见的思路是使用类型断言来提供代码提示。这也会存在一个同样的问题，如果你忘了某个属性，编译器同样也不会发出错误警告。</li></ul>
+</div>
+<div class="sec">
+<h4>双重断言的使用场景</h4>
+<ul class="point">
+<li><b>当使用者了解传入参数更具体的类型时，类型断言就能按预期工作</b>
+<ul class="quote"><li>然而，下面例子中的代码将会报错，尽管使用者已经使用了类型断言。</li><li>如果你仍然想使用那个类型，可以使用双重断言。但首先要断言成兼容所有类型的any，让编译器不再报错。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>然而，下面例子中的代码将会报错，尽管使用者已经使用了类型断言。</li><li>如果你仍然想使用那个类型，可以使用双重断言。但首先要断言成兼容所有类型的any，让编译器不再报错。</li></ul>
+</div>
+<div class="sec">
+<h4>TypeScript怎么确定单个断言是否足够</h4>
+<ul class="point">
+<li><b>当S类型是T类型的子集，或者T类型是S类型的子集时，S能被成功断言成T</b>
+<ul class="quote"><li>这是为了在进行类型断言时的安全性而考虑的，毫无根据的断言是危险的，如果你想这么做，可以使用any。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>这是为了在进行类型断言时的安全性而考虑的，毫无根据的断言是危险的，如果你想这么做，可以使用any。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">46</span><span class="mmx-name">6.11 Freshness</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 6 条要点 · 5 句原句摘录</p>
+<div class="sec">
+<h4>Freshness的概念和作用</h4>
+<ul class="point">
+<li><b>Freshness是为了确保对象字面量在结构上类型兼容。</b>
+</li>
+<li><b>Freshness只会发生在对象字面量上，对函数参数不会进行类型检查</b>
+<ul class="quote"><li>如果没有Freshness，我们可能会去查看调用的logName({name：&#x27;matt&#x27;，job：&#x27;being awesome&#x27;})，继而认为logName可能会使用job属性做一些事情，然而实际上logName并没有使用它。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如果没有Freshness，我们可能会去查看调用的logName({name：&#x27;matt&#x27;，job：&#x27;being awesome&#x27;})，继而认为logName可能会使用job属性做一些事情，然而实际上logName并没有使用它。</li></ul>
+</div>
+<div class="sec">
+<h4>Freshness的优缺点</h4>
+<ul class="point">
+<li><b>结构类型非常方便，可以方便地将代码从JavaScript迁移至TypeScript，并且会提供类型安全。</b>
+</li>
+<li><b>结构类型会误导你，让你认为某些东西接收的数据比实际的多</b>
+<ul class="quote"><li>例如，TypeScript发出了错误警告，提示你对象字面量中的job属性没有在函数中使用。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>例如，TypeScript发出了错误警告，提示你对象字面量中的job属性没有在函数中使用。</li></ul>
+</div>
+<div class="sec">
+<h4>Freshness的使用场景</h4>
+<ul class="point">
+<li><b>与具有可选成员的接口一起使用</b>
+<ul class="quote"><li>如果没有对对象字面量进行检查，当你输入错误单词时，就不会发出错误警告。</li></ul>
+</li>
+<li><b>React state的使用</b>
+<ul class="quote"><li>通常，在一个组件中，当你调用setState时，只会使用少量属性，而不是传入所有的属性。</li><li>如果想使用Freshness，可能需要将所有成员都标记为可选，这样你就仍然能够捕获拼写错误了。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如果没有对对象字面量进行检查，当你输入错误单词时，就不会发出错误警告。</li><li>通常，在一个组件中，当你调用setState时，只会使用少量属性，而不是传入所有的属性。</li><li>如果想使用Freshness，可能需要将所有成员都标记为可选，这样你就仍然能够捕获拼写错误了。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">47</span><span class="mmx-name">6.12 类型保护</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 7 个小节 · 7 条要点 · 5 句原句摘录</p>
+<div class="sec">
+<h4>typeof运算符在类型保护中的应用</h4>
+<ul class="point">
+<li><b>TypeScript会推导出在条件块中的变量类型</b>
+<ul class="quote"><li>TypeScript能够辨别在string上是否存在特定的函数，以及是否出现了拼写错误。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>TypeScript能够辨别在string上是否存在特定的函数，以及是否出现了拼写错误。</li></ul>
+</div>
+<div class="sec">
+<h4>instanceof运算符在类型保护中的应用</h4>
+<ul class="point">
+<li><b>TypeScript能理解else，知道在其他块中的类型并不是if中的类型。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>in操作符在类型保护中的应用</h4>
+<ul class="point">
+<li><b>in操作符可以安全地检查一个对象上是否存在一个属性</b>
+<ul class="quote"><li>它通常也被用作类型保护。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>它通常也被用作类型保护。</li></ul>
+</div>
+<div class="sec">
+<h4>字面量类型保护</h4>
+<ul class="point">
+<li><b>使用===、==、！==、！=来区分字面量类型</b>
+<ul class="quote"><li>这甚至也适用于联合类型的字面量类型。你可以检查它们共有的属性名字，来区分联合类型。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>这甚至也适用于联合类型的字面量类型。你可以检查它们共有的属性名字，来区分联合类型。</li></ul>
+</div>
+<div class="sec">
+<h4>strictNullChecks编译属性下的null和undefined</h4>
+<ul class="point">
+<li><b>使用==null和！==null来区分null和undefined。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>使用自定义的类型保护</h4>
+<ul class="point">
+<li><b>创建用户自定义的类型保护函数</b>
+<ul class="quote"><li>这只是一个返回值为类似于someArgumentName is SomeType的函数。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>这只是一个返回值为类似于someArgumentName is SomeType的函数。</li></ul>
+</div>
+<div class="sec">
+<h4>类型保护和回调函数</h4>
+<ul class="point">
+<li><b>TypeScript并不能假设类型保护在回调中一直有效</b>
+<ul class="quote"><li>修复它很简单，只需要把推断的安全值存放在本地的局部变量中，这可以自动确保它不会在外部被更改，并且TypeScript可以很容易地理解这一点。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>修复它很简单，只需要把推断的安全值存放在本地的局部变量中，这可以自动确保它不会在外部被更改，并且TypeScript可以很容易地理解这一点。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">48</span><span class="mmx-name">6.13 字面量类型</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 5 个小节 · 7 条要点 · 7 句原句摘录</p>
+<div class="sec">
+<h4>字面量类型</h4>
+<ul class="point">
+<li><b>字面量是JavaScript本身提供的一个准确变量</b>
+<ul class="quote"><li>字面量类型包括字符串字面量、boolean和number字面量。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>字面量类型包括字符串字面量、boolean和number字面量。</li></ul>
+</div>
+<div class="sec">
+<h4>字符串字面量</h4>
+<ul class="point">
+<li><b>字符串字面量可以作为类型使用</b>
+<ul class="quote"><li>创建了一个被称为foo的变量，它只接受一个字面量值为Hello的变量。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>创建了一个被称为foo的变量，它只接受一个字面量值为Hello的变量。</li></ul>
+</div>
+<div class="sec">
+<h4>boolean和number字面量</h4>
+<ul class="point">
+<li><b>TypeScript同样也提供boolean和number的字面量类型。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>推断</h4>
+<ul class="point">
+<li><b>TypeScript会推断变量的类型</b>
+<ul class="quote"><li>通常，你会得到一个类似于“string类型的数据不能被赋值给foo类型”的错误提示。</li></ul>
+</li>
+<li><b>可以使用类型断言或类型注解来帮助TypeScript推断正确的类型</b>
+<ul class="quote"><li>你可以使用一个简单的类型断言来告诉TypeScript你想推断的字面量。</li><li>或者以类型注解的方式，来帮助TypeScript推断正确的类型。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>通常，你会得到一个类似于“string类型的数据不能被赋值给foo类型”的错误提示。</li><li>你可以使用一个简单的类型断言来告诉TypeScript你想推断的字面量。</li><li>或者以类型注解的方式，来帮助TypeScript推断正确的类型。</li></ul>
+</div>
+<div class="sec">
+<h4>用例：基于字符串的枚举</h4>
+<ul class="point">
+<li><b>可以使用带有字符串字面量的联合类型，来模拟一个基于字符串的枚举类型</b>
+<ul class="quote"><li>TypeScript的枚举类型是基于数字的。</li></ul>
+</li>
+<li><b>可以使用keyof、typeof来生成字符串的联合类型</b>
+<ul class="quote"><li>下面是一个完整的示例。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>TypeScript的枚举类型是基于数字的。</li><li>下面是一个完整的示例。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">49</span><span class="mmx-name">6.14 readonly</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 9 条要点 · 7 句原句摘录</p>
+<div class="sec">
+<h4>readonly的使用</h4>
+<ul class="point">
+<li><b>在接口里使用readonly来标记属性</b>
+<ul class="quote"><li>readonly能让属性以一种更安全的方式工作。</li></ul>
+</li>
+<li><b>在接口和类型里使用readonly。</b>
+</li>
+<li><b>指定一个类的属性为readonly，然后在声明时或在构造函数中初始化它们。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>readonly能让属性以一种更安全的方式工作。</li></ul>
+</div>
+<div class="sec">
+<h4>readonly的用例</h4>
+<ul class="point">
+<li><b>readonly的映射类型，它接收一个泛型T，用来把它的所有属性都标记为readonly。</b>
+</li>
+<li><b>React.js中，你可以将props和state标记为不可变数据</b>
+<ul class="quote"><li>React.js是一个喜欢用不可变数据的库，你可以将props和state标记为不可变数据。</li><li>然而，你并没有必要这么做，因为React的声明文件已经把它们标记为readonly了。</li></ul>
+</li>
+<li><b>绝对不可变，你可以把索引签名标记为只读</b>
+<ul class="quote"><li>如果你想以不变的方式使用原生的JavaScript数组，可以使用TypeScript提供的ReadonlyArray＜T＞接口。</li></ul>
+</li>
+<li><b>自动推断，在一些情况下，编译器能把一些特定的属性推断为readonly</b>
+<ul class="quote"><li>例如在一个class中，如果有一个只有getter、没有setter的属性，它就能被推断为是只读的。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>React.js是一个喜欢用不可变数据的库，你可以将props和state标记为不可变数据。</li><li>然而，你并没有必要这么做，因为React的声明文件已经把它们标记为readonly了。</li><li>如果你想以不变的方式使用原生的JavaScript数组，可以使用TypeScript提供的ReadonlyArray＜T＞接口。</li><li>例如在一个class中，如果有一个只有getter、没有setter的属性，它就能被推断为是只读的。</li></ul>
+</div>
+<div class="sec">
+<h4>readonly与const的区别</h4>
+<ul class="point">
+<li><b>readonly用于属性，该属性可以被修改</b>
+<ul class="quote"><li>readonly能确保属性不能直接被使用者修改，但是当你把这个属性交给其他并没有做出这种保证的使用者(出于类型兼容的原因而被允许)时，他们可以修改它。</li></ul>
+</li>
+<li><b>const用于变量，该变量不能重新赋值给其他任何事物</b>
+<ul class="quote"><li>const能确保变量不能被重新赋值。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>readonly能确保属性不能直接被使用者修改，但是当你把这个属性交给其他并没有做出这种保证的使用者(出于类型兼容的原因而被允许)时，他们可以修改它。</li><li>const能确保变量不能被重新赋值。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">50</span><span class="mmx-name">6.15 泛型</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 6 条要点 · 6 句原句摘录</p>
+<div class="sec">
+<h4>泛型的动机和示例</h4>
+<ul class="point">
+<li><b>泛型可以在成员之间提供有意义的类型约束</b>
+<ul class="quote"><li>这些成员可以是类的实例成员、类的方法、函数的参数、函数返回值。</li></ul>
+</li>
+<li><b>泛型可以使代码更简单，无论什么类型的数据被放进队列中，被弹出的类型都与放入的类型一样</b>
+<ul class="quote"><li>在JavaScript/TypeScript中，对一个先进先出的数据结构——队列的简单实现。</li><li>使用泛型，将让事情变得很简单。</li></ul>
+</li>
+<li><b>泛型可以用于函数参数，标注你希望参数匹配的类型</b>
+<ul class="quote"><li>在reverse函数里提供了对函数参数和函数返回值的约束。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>这些成员可以是类的实例成员、类的方法、函数的参数、函数返回值。</li><li>在JavaScript/TypeScript中，对一个先进先出的数据结构——队列的简单实现。</li><li>使用泛型，将让事情变得很简单。</li><li>在reverse函数里提供了对函数参数和函数返回值的约束。</li></ul>
+</div>
+<div class="sec">
+<h4>泛型设计模式</h4>
+<ul class="point">
+<li><b>仅使用一次的泛型并不比一个类型断言更为安全</b>
+<ul class="quote"><li>泛型T只在一个地方被使用了，它并没有在成员之间提供约束。</li></ul>
+</li>
+<li><b>使用Promise＜T＞作为一个函数的返回值，比使用一些如Promise＜any＞这样的备选方案要好很多</b>
+<ul class="quote"><li>请注意，你仍然需要显式地注解你需要的类型，但是getJSON＜T＞的签名config=＞Promise＜T＞能够让你减少一些关键的步骤，你不需要注解loadUsers的返回类型，因为它能够被推断出来。</li></ul>
+</li>
+<li><b>泛型被用于函数参数，标注你希望参数匹配的类型。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>泛型T只在一个地方被使用了，它并没有在成员之间提供约束。</li><li>请注意，你仍然需要显式地注解你需要的类型，但是getJSON＜T＞的签名config=＞Promise＜T＞能够让你减少一些关键的步骤，你不需要注解loadUsers的返回类型，因为它能够被推断出来。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">51</span><span class="mmx-name">6.16 类型推断</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 8 条要点 · 13 句原句摘录</p>
+<div class="sec">
+<h4>TypeScript类型推断规则</h4>
+<ul class="point">
+<li><b>变量的类型根据定义来推断</b>
+<ul class="quote"><li>这是一个类型从右向左“流动”的示例。</li></ul>
+</li>
+<li><b>函数的返回类型能根据return语句来推断</b>
+<ul class="quote"><li>这是一个类型从底部“流出”的例子。</li></ul>
+</li>
+<li><b>函数的参数类型或返回值也可以通过赋值来推断</b>
+<ul class="quote"><li>在下面的代码中，foo是一个加法器，它使数字成为a、b的类型，即number类型。</li><li>如果你为一个回调函数的参数创建一个函数，这个赋值规则也同样适用。</li></ul>
+</li>
+<li><b>结构化的存在(对象字面量)的类型也能被推断</b>
+<ul class="quote"><li>例如，在下面这种情况下，foo的类型会被推断为{a：number，b：number}。</li><li>数组也一样。</li></ul>
+</li>
+<li><b>解构的类型也能被推断</b>
+<ul class="quote"><li>如果是在数组中，则如下所示。</li><li>如果函数参数能够被推断出来，那么解构亦是如此。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>这是一个类型从右向左“流动”的示例。</li><li>这是一个类型从底部“流出”的例子。</li><li>在下面的代码中，foo是一个加法器，它使数字成为a、b的类型，即number类型。</li><li>如果你为一个回调函数的参数创建一个函数，这个赋值规则也同样适用。</li><li>例如，在下面这种情况下，foo的类型会被推断为{a：number，b：number}。</li><li>数组也一样。</li><li>如果是在数组中，则如下所示。</li><li>如果函数参数能够被推断出来，那么解构亦是如此。</li></ul>
+</div>
+<div class="sec">
+<h4>类型推断的注意事项</h4>
+<ul class="point">
+<li><b>如果无法从赋值中推断出函数参数类型，则类型也将不会流入函数参数</b>
+<ul class="quote"><li>例如，在以下情况下，编译器并不知道foo的类型，因此无法推断a或b的类型。</li><li>然而，如果foo添加了类型注解，函数参数也就能被推断了(a、b都能被推断为number类型)。</li></ul>
+</li>
+<li><b>尽管在一般情况下，TypeScript能推断出函数返回值的类型，但是它可能并不是你想要的</b>
+<ul class="quote"><li>例如，下面的foo函数，它的返回值为any。</li><li>这是因为返回值的类型被一个缺少类型定义的addOne函数所影响，因为a是any，所以addOne返回值为any，foo的返回值也是any。</li></ul>
+</li>
+<li><b>标记noImplicitAny用来指示编译器，在无法推断一个变量的类型时，发出一个错误(或者只将其作为一个隐式的any)</b>
+<ul class="quote"><li>此时，你可以做如下处理：通过显式添加：any的类型注解，来让它成为一个any类型；通过一些更准确的类型注解来帮助TypeScript推断类型。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>例如，在以下情况下，编译器并不知道foo的类型，因此无法推断a或b的类型。</li><li>然而，如果foo添加了类型注解，函数参数也就能被推断了(a、b都能被推断为number类型)。</li><li>例如，下面的foo函数，它的返回值为any。</li><li>这是因为返回值的类型被一个缺少类型定义的addOne函数所影响，因为a是any，所以addOne返回值为any，foo的返回值也是any。</li><li>此时，你可以做如下处理：通过显式添加：any的类型注解，来让它成为一个any类型；通过一些更准确的类型注解来帮助TypeScript推断类型。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">52</span><span class="mmx-name">6.17 类型兼容性</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 7 个小节 · 11 条要点 · 17 句原句摘录</p>
+<div class="sec">
+<h4>类型兼容性的概念和稳定性</h4>
+<ul class="point">
+<li><b>类型兼容性用于确定一个类型能否赋值给其他类型</b>
+<ul class="quote"><li>例如，string类型与number类型不兼容，因此不能相互赋值。</li></ul>
+</li>
+<li><b>TypeScript类型系统设计得很方便，它允许你有一些不正确的行为</b>
+<ul class="quote"><li>任何类型都能被赋值给any，这意味着编译器允许你做任何想做的事情。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>例如，string类型与number类型不兼容，因此不能相互赋值。</li><li>任何类型都能被赋值给any，这意味着编译器允许你做任何想做的事情。</li></ul>
+</div>
+<div class="sec">
+<h4>类型兼容性的结构化特性</h4>
+<ul class="point">
+<li><b>TypeScript对象是一种结构化的类型，这意味着只要结构匹配，名称也就无关紧要了</b>
+<ul class="quote"><li>这允许你动态地创建对象(就像你在Vanilla JS中所做的那样)，并且如果能被推断，则该对象就仍然具有安全性。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>这允许你动态地创建对象(就像你在Vanilla JS中所做的那样)，并且如果能被推断，则该对象就仍然具有安全性。</li></ul>
+</div>
+<div class="sec">
+<h4>类型兼容性的变体概念</h4>
+<ul class="point">
+<li><b>对简单的类型Base和Child来说，如果Child是Base的子类，则Child的实例能被赋值给Base类型的变量</b>
+<ul class="quote"><li>这是多态性。</li></ul>
+</li>
+<li><b>在由Base和Child组合的复杂类型的类型兼容性中，它取决于相似场景下的Base与Child的变体</b>
+<ul class="quote"><li>● 协变(Covariant)：只在同一个方向兼容。</li><li>● 逆变(Contravariant)：只在相反的方向兼容。</li><li>● 双向协变(Bivariant)：包括同一个方向和不同方向的兼容。</li><li>● 不变(Invariant)：如果类型不完全相同，则它们是不兼容的。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>这是多态性。</li><li>● 协变(Covariant)：只在同一个方向兼容。</li><li>● 逆变(Contravariant)：只在相反的方向兼容。</li><li>● 双向协变(Bivariant)：包括同一个方向和不同方向的兼容。</li><li>● 不变(Invariant)：如果类型不完全相同，则它们是不兼容的。</li></ul>
+</div>
+<div class="sec">
+<h4>类型兼容性的函数特性</h4>
+<ul class="point">
+<li><b>当你比较两个函数时，返回类型必须包含足够的数据</b>
+<ul class="quote"><li>参数越少越好，例如，函数能够选择性地忽略一些多余的参数，但是你得保证有足够的参数被使用。</li></ul>
+</li>
+<li><b>可选的参数(预先确定的)和rest参数是兼容的</b>
+<ul class="quote"><li>可选的参数(如上面例子中的bar)与不可选的参数(如上面例子中的foo)，只有在strictNullChecks为false时兼容。</li></ul>
+</li>
+<li><b>函数参数类型是双向协变的</b>
+<ul class="quote"><li>同样地，你也可以把Array＜Child＞赋值给Array＜Base＞(协变)，因为函数是兼容的。</li><li>数组的协变需要所有的函数Array＜Child＞都能被赋值给Array＜Base＞。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>参数越少越好，例如，函数能够选择性地忽略一些多余的参数，但是你得保证有足够的参数被使用。</li><li>可选的参数(如上面例子中的bar)与不可选的参数(如上面例子中的foo)，只有在strictNullChecks为false时兼容。</li><li>同样地，你也可以把Array＜Child＞赋值给Array＜Base＞(协变)，因为函数是兼容的。</li><li>数组的协变需要所有的函数Array＜Child＞都能被赋值给Array＜Base＞。</li></ul>
+</div>
+<div class="sec">
+<h4>类型兼容性的枚举特性</h4>
+<ul class="point">
+<li><b>枚举与数字类型相互兼容</b>
+<ul class="quote"><li>来自不同枚举的枚举变量，被认为是不兼容的。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>来自不同枚举的枚举变量，被认为是不兼容的。</li></ul>
+</div>
+<div class="sec">
+<h4>类型兼容性的类特性</h4>
+<ul class="point">
+<li><b>只比较实例成员和方法，构造函数和静态成员不起作用</b>
+<ul class="quote"><li>私有的和受保护的成员必须来自相同的类。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>私有的和受保护的成员必须来自相同的类。</li></ul>
+</div>
+<div class="sec">
+<h4>类型兼容性的泛型特性</h4>
+<ul class="point">
+<li><b>由于TypeScript具有结构类型系统，类型参数只有在被成员使用时，才会影响兼容性</b>
+<ul class="quote"><li>如在下面的例子中，T对兼容性没有影响。</li><li>当T被成员使用时，它将在实例化泛型后影响兼容性。</li><li>如果尚未实例化泛型参数，则在检查兼容性之前将其替换为any。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如在下面的例子中，T对兼容性没有影响。</li><li>当T被成员使用时，它将在实例化泛型后影响兼容性。</li><li>如果尚未实例化泛型参数，则在检查兼容性之前将其替换为any。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">53</span><span class="mmx-name">6.18 never</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 4 条要点 · 7 句原句摘录</p>
+<div class="sec">
+<h4>never类型定义</h4>
+<ul class="point">
+<li><b>never类型是TypeScript中的底部类型，表示永远不会发生的事情</b>
+<ul class="quote"><li>一个从来不会有返回值的函数，例如，如果函数内含有while(true){}的话。</li><li>一个总会抛出错误的函数，如function foo(){throw new Error(&#x27;Not Implemented&#x27;)}，foo的返回类型是never。</li></ul>
+</li>
+<li><b>never类型只能被赋值给另外一个never类型</b>
+<ul class="quote"><li>你可以将never用作类型注解。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>一个从来不会有返回值的函数，例如，如果函数内含有while(true){}的话。</li><li>一个总会抛出错误的函数，如function foo(){throw new Error(&#x27;Not Implemented&#x27;)}，foo的返回类型是never。</li><li>你可以将never用作类型注解。</li></ul>
+</div>
+<div class="sec">
+<h4>never类型的关键用例</h4>
+<ul class="point">
+<li><b>在never的上下文中调用never函数</b>
+<ul class="quote"><li>never类型只能被赋值给另外一个never类型，因此你可以用它来进行编译时的全面检查。</li></ul>
+</li>
+<li><b>never与void的差异</b>
+<ul class="quote"><li>void表示没有任何类型，never表示永远不存在的值的类型。</li><li>当一个函数返回空值时，它会返回一个void；但是，当一个函数根本就没有返回值，或者总是抛出错误时，它会返回一个never。</li><li>当strictNullChecking为false时，void指可以被赋值的类型，但是never不能赋值给其他任何类型，除了never。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>never类型只能被赋值给另外一个never类型，因此你可以用它来进行编译时的全面检查。</li><li>void表示没有任何类型，never表示永远不存在的值的类型。</li><li>当一个函数返回空值时，它会返回一个void；但是，当一个函数根本就没有返回值，或者总是抛出错误时，它会返回一个never。</li><li>当strictNullChecking为false时，void指可以被赋值的类型，但是never不能赋值给其他任何类型，除了never。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">54</span><span class="mmx-name">6.19 辨析联合类型</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 6 个小节 · 7 条要点 · 7 句原句摘录</p>
+<div class="sec">
+<h4>辨析联合类型</h4>
+<ul class="point">
+<li><b>当类中含有字面量成员时，我们可以用该类的属性来辨析联合类型</b>
+<ul class="quote"><li>Square和Rectangle的联合类型是Shape。</li><li>Square和Rectangle有共同成员kind，因此kind存在于Shape中。</li></ul>
+</li>
+<li><b>TypeScript将会认为你所使用的对象类型必须要具有特定的字面量，并且为你进行类型缩小</b>
+<ul class="quote"><li>如果你使用类型保护风格的检查(即==、===、！=、！==)，或者使用具有判断性的属性(在这里是kind)，TypeScript将会认为你所使用的对象类型必须要具有特定的字面量，并且为你进行类型缩小。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Square和Rectangle的联合类型是Shape。</li><li>Square和Rectangle有共同成员kind，因此kind存在于Shape中。</li><li>如果你使用类型保护风格的检查(即==、===、！=、！==)，或者使用具有判断性的属性(在这里是kind)，TypeScript将会认为你所使用的对象类型必须要具有特定的字面量，并且为你进行类型缩小。</li></ul>
+</div>
+<div class="sec">
+<h4>详细的检查</h4>
+<ul class="point">
+<li><b>你可以使用一个下沉的思想，来确保块中的类型能够被推断为与never类型相兼容</b>
+<ul class="quote"><li>例如，你可以添加一个详细的检查来捕获错误。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>例如，你可以添加一个详细的检查来捕获错误。</li></ul>
+</div>
+<div class="sec">
+<h4>switch</h4>
+<ul class="point">
+<li><b>你还可以通过switch来实现上面的例子。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>strictNullChecks</h4>
+<ul class="point">
+<li><b>如果你使用strictNullChecks来做详细的检查，你应该返回_exhaustiveCheck变量，类型为never</b>
+<ul class="quote"><li>否则TypeScript可能会抛出“并非所有的路径都有返回值”的错误。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>否则TypeScript可能会抛出“并非所有的路径都有返回值”的错误。</li></ul>
+</div>
+<div class="sec">
+<h4>版本控制</h4>
+<ul class="point">
+<li><b>假设有一个如下的数据结构，你可以通过创建一个新的带有字面量数字类型的联合类型来添加版本控制</b>
+<ul class="quote"><li>将版本0标记成undefined，如果你使用了strictNullChecks选项，它将能正常工作。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>将版本0标记成undefined，如果你使用了strictNullChecks选项，它将能正常工作。</li></ul>
+</div>
+<div class="sec">
+<h4>Redux</h4>
+<ul class="point">
+<li><b>把Redux与TypeScript一起使用，可以有效地防止拼写错误，并且能提高重构和书写文档化代码的能力</b>
+<ul class="quote"><li>下面是添加了TypeScript类型注解的Redux的要点。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>下面是添加了TypeScript类型注解的Redux的要点。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">55</span><span class="mmx-name">6.20 索引签名</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 7 个小节 · 10 条要点 · 10 句原句摘录</p>
+<div class="sec">
+<h4>JavaScript中的索引签名</h4>
+<ul class="point">
+<li><b>JavaScript会在得到结果之前先调用toString方法</b>
+<ul class="quote"><li>只要索引位置使用了obj，toString方法都将被调用。</li></ul>
+</li>
+<li><b>数组会稍有不同，对于一个number类型的索引签名来说，JavaScript引擎将尝试去优化</b>
+<ul class="quote"><li>number应该被视为有效的对象访问器(这与string不同)。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>只要索引位置使用了obj，toString方法都将被调用。</li><li>number应该被视为有效的对象访问器(这与string不同)。</li></ul>
+</div>
+<div class="sec">
+<h4>TypeScript索引签名</h4>
+<ul class="point">
+<li><b>TypeScript会抛出一个错误提示，防止初学者“砸伤自己的脚”</b>
+<ul class="quote"><li>在对象上默认执行的toString方法非常糟糕，例如在V8(一个JavaScript引擎)上总是会返回[object Object]。</li></ul>
+</li>
+<li><b>TypeScript的索引签名必须是string或number类型的</b>
+<ul class="quote"><li>数字类型是被允许的，这是因为它需要数组或元组的支持。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在对象上默认执行的toString方法非常糟糕，例如在V8(一个JavaScript引擎)上总是会返回[object Object]。</li><li>数字类型是被允许的，这是因为它需要数组或元组的支持。</li></ul>
+</div>
+<div class="sec">
+<h4>声明一个索引签名</h4>
+<ul class="point">
+<li><b>可以通过声明[index：string]：{message：string}来实现</b>
+<ul class="quote"><li>索引签名的名称，如{[index：string]：{message：string}}里的index，除提高了可读性外，并没有任何意义。</li></ul>
+</li>
+<li><b>所有明确的成员都必须符合索引签名</b>
+<ul class="quote"><li>这是为了安全性考虑，以便任何字符串访问都能得到相同的结果。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>索引签名的名称，如{[index：string]：{message：string}}里的index，除提高了可读性外，并没有任何意义。</li><li>这是为了安全性考虑，以便任何字符串访问都能得到相同的结果。</li></ul>
+</div>
+<div class="sec">
+<h4>使用一组有限的字符串字面量</h4>
+<ul class="point">
+<li><b>索引签名可以要求索引字符串是字符串联合类型中的一员</b>
+<ul class="quote"><li>这通常与keyof或typeof一起使用来获取变量的类型。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>这通常与keyof或typeof一起使用来获取变量的类型。</li></ul>
+</div>
+<div class="sec">
+<h4>同时拥有string和number类型的索引签名</h4>
+<ul class="point">
+<li><b>string类型的索引签名比number类型的索引签名更严格</b>
+<ul class="quote"><li>这是故意设计的，它允许你有如下类型。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>这是故意设计的，它允许你有如下类型。</li></ul>
+</div>
+<div class="sec">
+<h4>设计模式：索引签名的嵌套</h4>
+<ul class="point">
+<li><b>把索引签名分离到自己的属性里，如命名为nest，或children、subnodes等</b>
+<ul class="quote"><li>尽量不要用这种方式把字符串索引签名与有效变量混合使用。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>尽量不要用这种方式把字符串索引签名与有效变量混合使用。</li></ul>
+</div>
+<div class="sec">
+<h4>从索引签名中排除某些属性</h4>
+<ul class="point">
+<li><b>使用交集类型绕过它</b>
+<ul class="quote"><li>尽管你可以声明它为已存在的TypeScript类型建模，但是你不能使用TypeScript创建如下的对象。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>尽管你可以声明它为已存在的TypeScript类型建模，但是你不能使用TypeScript创建如下的对象。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">56</span><span class="mmx-name">6.21 类型移动</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 6 个小节 · 7 条要点 · 8 句原句摘录</p>
+<div class="sec">
+<h4>TypeScript类型移动的概念和动机</h4>
+<ul class="point">
+<li><b>TypeScript类型系统允许进行类型移动和类型切片</b>
+<ul class="quote"><li>TypeScript的设计目的之一是让你无缝与JavaScript这样高动态的语言一起工作。</li></ul>
+</li>
+<li><b>类型移动的关键动机是自动更新相关内容和友好的错误提示</b>
+<ul class="quote"><li>当你改变了其中一个内容时，其他相关的内容都会自动更新。</li><li>当有事情变糟糕时，你会得到一个友好的错误提示，就像一个被精心设计的约束系统。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>TypeScript的设计目的之一是让你无缝与JavaScript这样高动态的语言一起工作。</li><li>当你改变了其中一个内容时，其他相关的内容都会自动更新。</li><li>当有事情变糟糕时，你会得到一个友好的错误提示，就像一个被精心设计的约束系统。</li></ul>
+</div>
+<div class="sec">
+<h4>复制类型和值</h4>
+<ul class="point">
+<li><b>使用import关键字复制类型和值</b>
+<ul class="quote"><li>如果你使用命名空间或模块，那么就只能使用import关键字。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如果你使用命名空间或模块，那么就只能使用import关键字。</li></ul>
+</div>
+<div class="sec">
+<h4>捕获变量的类型</h4>
+<ul class="point">
+<li><b>通过typeof操作符在类型注解中使用变量</b>
+<ul class="quote"><li>你就可以告诉编译器，一个变量的类型与其他类型相同。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>你就可以告诉编译器，一个变量的类型与其他类型相同。</li></ul>
+</div>
+<div class="sec">
+<h4>捕获类成员的类型</h4>
+<ul class="point">
+<li><b>声明一个用于类型捕获的变量</b>
+<ul class="quote"><li>与捕获变量的类型相似，你只需要声明一个用于类型捕获的变量即可。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>与捕获变量的类型相似，你只需要声明一个用于类型捕获的变量即可。</li></ul>
+</div>
+<div class="sec">
+<h4>捕获字符串类型</h4>
+<ul class="point">
+<li><b>使用const定义一个变量来捕获它的类型</b>
+<ul class="quote"><li>在这个例子里，bar有字面量类型Hello World。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在这个例子里，bar有字面量类型Hello World。</li></ul>
+</div>
+<div class="sec">
+<h4>捕获键的名称</h4>
+<ul class="point">
+<li><b>使用keyof操作符捕获一个类型的键的名称</b>
+<ul class="quote"><li>例如，你可以使用它来捕获变量的键名称，方法是首先使用typeof来获取变量的类型。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>例如，你可以使用它来捕获变量的键名称，方法是首先使用typeof来获取变量的类型。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">57</span><span class="mmx-name">6.22 异常处理</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 5 个小节 · 7 条要点 · 11 句原句摘录</p>
+<div class="sec">
+<h4>JavaScript中的异常处理</h4>
+<ul class="point">
+<li><b>JavaScript有一个Error类，用于处理异常</b>
+<ul class="quote"><li>你可以通过throw关键字来抛出一个错误，然后通过try/catch块来捕获此错误。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>你可以通过throw关键字来抛出一个错误，然后通过try/catch块来捕获此错误。</li></ul>
+</div>
+<div class="sec">
+<h4>错误子类型</h4>
+<ul class="point">
+<li><b>除内置的Error类外，还有一些额外的内置错误，它们继承自Error类</b>
+<ul class="quote"><li>RangeError：当数字类型的变量或参数超出其有效范围时，会出现RangeError的错误提示。</li><li>ReferenceError：当引用无效时，会出现ReferenceError的错误提示。</li><li>SyntaxError：当解析无效的JavaScript代码时，会出现SyntaxError的错误提示。</li><li>TypeError：当变量或参数不是有效类型时，会出现TypeError的错误提示。</li><li>URIError：当向encodeURI()和decodeURI()传入无效参数时，会出现URIError的错误提示。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>RangeError：当数字类型的变量或参数超出其有效范围时，会出现RangeError的错误提示。</li><li>ReferenceError：当引用无效时，会出现ReferenceError的错误提示。</li><li>SyntaxError：当解析无效的JavaScript代码时，会出现SyntaxError的错误提示。</li><li>TypeError：当变量或参数不是有效类型时，会出现TypeError的错误提示。</li><li>URIError：当向encodeURI()和decodeURI()传入无效参数时，会出现URIError的错误提示。</li></ul>
+</div>
+<div class="sec">
+<h4>尽量使用Error</h4>
+<ul class="point">
+<li><b>使用Error对象的基本好处是，它能自动跟踪堆栈的属性构建及生成位置</b>
+<ul class="quote"><li>原始字符串会带来非常痛苦的调试体验，并使日志中的错误分析复杂化。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>原始字符串会带来非常痛苦的调试体验，并使日志中的错误分析复杂化。</li></ul>
+</div>
+<div class="sec">
+<h4>并不是一定要throw一个错误</h4>
+<ul class="point">
+<li><b>你并不是一定要throw一个错误，还可以传递一个Error对象</b>
+<ul class="quote"><li>这种方式在Node.js回调函数中非常常见，它用第1个参数作为错误对象来进行回调处理。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>这种方式在Node.js回调函数中非常常见，它用第1个参数作为错误对象来进行回调处理。</li></ul>
+</div>
+<div class="sec">
+<h4>exceptional的用例</h4>
+<ul class="point">
+<li><b>不清楚从哪里抛出错误</b>
+<ul class="quote"><li>下一个开发者可能并不清楚哪个函数会抛出错误。</li></ul>
+</li>
+<li><b>希望优雅地捕获错误</b>
+<ul class="quote"><li>你可以通过为每个可能抛出错误的代码进行显式捕获，来使其更为优雅。</li></ul>
+</li>
+<li><b>在类型系统中未被很好地表示</b>
+<ul class="quote"><li>除非你想用非常通用的方式(try/catch)来处理错误，否则不要抛出错误。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>下一个开发者可能并不清楚哪个函数会抛出错误。</li><li>你可以通过为每个可能抛出错误的代码进行显式捕获，来使其更为优雅。</li><li>除非你想用非常通用的方式(try/catch)来处理错误，否则不要抛出错误。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">58</span><span class="mmx-name">6.23 混合</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 3 条要点 · 5 句原句摘录</p>
+<div class="sec">
+<h4>混合的概念和实现方式</h4>
+<ul class="point">
+<li><b>混合是一个函数，接受一个类，并返回一个带有附加功能的类</b>
+<ul class="quote"><li>传入一个构造函数。</li><li>创建一个带有新功能，并且扩展构造函数的新类。</li><li>返回这个新类。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>传入一个构造函数。</li><li>创建一个带有新功能，并且扩展构造函数的新类。</li><li>返回这个新类。</li></ul>
+</div>
+<div class="sec">
+<h4>混合的示例</h4>
+<ul class="point">
+<li><b>创建一个构造函数</b>
+<ul class="quote"><li>“混合”接受一个类，并使用新功能来扩展它。因此，我们需要定义构造函数的类型。</li></ul>
+</li>
+<li><b>扩展一个类并返回它</b>
+<ul class="quote"><li>示例如下。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>“混合”接受一个类，并使用新功能来扩展它。因此，我们需要定义构造函数的类型。</li><li>示例如下。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">59</span><span class="mmx-name">6.24 ThisType</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 5 条要点 · 9 句原句摘录</p>
+<div class="sec">
+<h4>ThisType的基本概念和用法</h4>
+<ul class="point">
+<li><b>ThisType允许在对象字面量中输入this，并提供通过上下文类型控制this类型的便捷方式</b>
+<ul class="quote"><li>ThisType只有在--noImplicitThis的选项下才有效。</li></ul>
+</li>
+<li><b>对象字面量方法中的this类型判断规则</b>
+<ul class="quote"><li>如果方法显式地指定了this参数，那么this具有该参数的类型。</li><li>否则，如果方法由带有this参数的签名进行上下文输入，那么this就具有该参数的类型。</li><li>或者，如果--noImplicitThis选项已经被启用，并且对象字面量中包含由ThisType＜T＞输入的上下文类型，那么this的类型为T。</li><li>或者，如果--noImplicitThis选项已经被启用，并且对象字面量中不包含由ThisType＜T＞输入的上下文类型，那么this的类型为该上下文类型。</li><li>或者，如果--noImplicitThis选项已经被启用，则this具有该对象字面量的类型。</li><li>或者，this的类型为any。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>ThisType只有在--noImplicitThis的选项下才有效。</li><li>如果方法显式地指定了this参数，那么this具有该参数的类型。</li><li>否则，如果方法由带有this参数的签名进行上下文输入，那么this就具有该参数的类型。</li><li>或者，如果--noImplicitThis选项已经被启用，并且对象字面量中包含由ThisType＜T＞输入的上下文类型，那么this的类型为T。</li><li>或者，如果--noImplicitThis选项已经被启用，并且对象字面量中不包含由ThisType＜T＞输入的上下文类型，那么this的类型为该上下文类型。</li><li>或者，如果--noImplicitThis选项已经被启用，则this具有该对象字面量的类型。</li><li>或者，this的类型为any。</li></ul>
+</div>
+<div class="sec">
+<h4>ThisType在函数表达式中的应用</h4>
+<ul class="point">
+<li><b>当使用--noImplicitThis，并且函数表达式赋值给obj.xxx或obj[xxx]的目标时，在函数中this的类型将会是obj。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>ThisType在API转换参数中的应用</h4>
+<ul class="point">
+<li><b>可以创建一个新的ThisType＜T＞标记接口，用于在上下文中表明转换后的类型</b>
+<ul class="quote"><li>尤其是当字面量中的上下文类型为ThisType＜T＞，或者包含ThisType＜T＞的交集时，会显得尤为有效，对象字面量方法中this的类型为T。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>尤其是当字面量中的上下文类型为ThisType＜T＞，或者包含ThisType＜T＞的交集时，会显得尤为有效，对象字面量方法中this的类型为T。</li></ul>
+</div>
+<div class="sec">
+<h4>ThisType的接口声明</h4>
+<ul class="point">
+<li><b>ThisType＜T＞的接口，在lib.d.ts中只是被声明为空的接口</b>
+<ul class="quote"><li>除了可以在对象字面量上下文中被识别外，该接口的作用等同于任何一个空接。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>除了可以在对象字面量上下文中被识别外，该接口的作用等同于任何一个空接。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">60</span><span class="mmx-name">第7章 关于JSX</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 4 条要点 · 4 句原句摘录</p>
+<div class="sec">
+<h4>JSX概述</h4>
+<ul class="point">
+<li><b>JSX是ECMAScript的类似于XML的语法扩展，没有特定的语义。</b>
+</li>
+<li><b>JSX被各种转译器使用，并把它们所接收的内容转换为标准的ECMAScript。</b>
+</li>
+<li><b>JSX允许用户在JavaScript中书写类似于HTML的视图代码</b>
+<ul class="quote"><li>使用相同的代码去检查你的JavaScript和HTML视图层部分。</li><li>让视图层了解运行时的上下文，即加强传统MVC中的控制器与视图层的连接。</li><li>复用JavaScript设计模式对HTML部分进行维护。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>使用相同的代码去检查你的JavaScript和HTML视图层部分。</li><li>让视图层了解运行时的上下文，即加强传统MVC中的控制器与视图层的连接。</li><li>复用JavaScript设计模式对HTML部分进行维护。</li></ul>
+</div>
+<div class="sec">
+<h4>JSX的主要用户和应用</h4>
+<ul class="point">
+<li><b>JSX的主要用户来自Facebook的React.js</b>
+<ul class="quote"><li>React.js是一个用于构建用户界面的JavaScript库。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>React.js是一个用于构建用户界面的JavaScript库。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">61</span><span class="mmx-name">7.1 React JSX</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 17 条要点 · 14 句原句摘录</p>
+<div class="sec">
+<h4>React JSX使用TypeScript的要点</h4>
+<ul class="point">
+<li><b>使用后缀为.tsx的文件。</b>
+</li>
+<li><b>在tsconfig.json配置文件的compilerOptions里，设置选项&quot;jsx&quot;：&quot;react&quot;。</b>
+</li>
+<li><b>在项目里为JSX和React安装声明文件：npm i-D@types/react@types/react-dom。</b>
+</li>
+<li><b>在.tsx文件中导入React：import*as React from&#x27;react&#x27;。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>HTML标签与组件</h4>
+<ul class="point">
+<li><b>React能渲染HTML标签和React组件</b>
+<ul class="quote"><li>使用React.createElement(&#x27;div&#x27;)渲染HTML标签。</li><li>使用React.createElement(MyComponent)渲染React组件。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>使用React.createElement(&#x27;div&#x27;)渲染HTML标签。</li><li>使用React.createElement(MyComponent)渲染React组件。</li></ul>
+</div>
+<div class="sec">
+<h4>类型检查</h4>
+<ul class="point">
+<li><b>HTML标签被标记为JSX.IntrinsicElements.foo类型</b>
+<ul class="quote"><li>在react-jsx.d.ts文件中，已经定义了所有主要标签的类型。</li></ul>
+</li>
+<li><b>函数组件使用React.FunctionComponent接口定义</b>
+<ul class="quote"><li>函数组件接收一个props参数。</li></ul>
+</li>
+<li><b>类组件根据组件的props属性进行类型检查</b>
+<ul class="quote"><li>组件的props属性类型与React.Component＜Props，State＞类匹配。</li></ul>
+</li>
+<li><b>React JSX提示：接受组件的实例</b>
+<ul class="quote"><li>使用React.ReactElement＜T＞注解类组件的实例化结果。</li></ul>
+</li>
+<li><b>React JSX提示：可接收组件的接口</b>
+<ul class="quote"><li>使用React.ReactElement＜T＞的接口注解一个类组件实例化的返回值。</li></ul>
+</li>
+<li><b>React JSX提示：接受可以作为props的组件，并使用JSX渲染的组件</b>
+<ul class="quote"><li>类型React.Component＜Props＞是React.ComponentClass＜P＞与React.StatelessComponent＜P＞的组合。</li></ul>
+</li>
+<li><b>React JSX提示：泛型组件</b>
+<ul class="quote"><li>泛型组件能完全按预期工作。</li></ul>
+</li>
+<li><b>泛型函数</b>
+<ul class="quote"><li>泛型函数可以像下面这样正常工作。</li><li>在泛型参数里，使用extends来提示编译器这是个泛型。</li></ul>
+</li>
+<li><b>React提示：强类型的ref</b>
+<ul class="quote"><li>使用强类型ref的基本做法是，将变量初始化为ref和null的联合类型，然后将其初始化为回调。</li></ul>
+</li>
+<li><b>类型断言</b>
+<ul class="quote"><li>使用as Foo语法进行类型断言。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在react-jsx.d.ts文件中，已经定义了所有主要标签的类型。</li><li>函数组件接收一个props参数。</li><li>组件的props属性类型与React.Component＜Props，State＞类匹配。</li><li>使用React.ReactElement＜T＞注解类组件的实例化结果。</li><li>使用React.ReactElement＜T＞的接口注解一个类组件实例化的返回值。</li><li>类型React.Component＜Props＞是React.ComponentClass＜P＞与React.StatelessComponent＜P＞的组合。</li><li>泛型组件能完全按预期工作。</li><li>泛型函数可以像下面这样正常工作。</li><li>在泛型参数里，使用extends来提示编译器这是个泛型。</li><li>使用强类型ref的基本做法是，将变量初始化为ref和null的联合类型，然后将其初始化为回调。</li><li>使用as Foo语法进行类型断言。</li></ul>
+</div>
+<div class="sec">
+<h4>默认的props</h4>
+<ul class="point">
+<li><b>对于具有默认props的有状态的组件，你可以使用一个null操作符来告诉TypeScript，一个属性将由外部(React)提供</b>
+<ul class="quote"><li>这不是理想的方案，但这是我能想到的最简单的、代码最少的解决方案。</li></ul>
+</li>
+<li><b>对于使用默认props的SFC(Stateless Functioinal Components，无状态的函数组件)，我建议你使用简单的JavaScript参数，因为这同样适用于TypeScript类型系统。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>这不是理想的方案，但这是我能想到的最简单的、代码最少的解决方案。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">62</span><span class="mmx-name">7.2 非React JSX</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 3 条要点 · 5 句原句摘录</p>
+<div class="sec">
+<h4>TypeScript在React中使用JSX之外的其他东西</h4>
+<ul class="point">
+<li><b>使用&quot;jsx&quot;：&quot;preserve&quot;选项来禁用React的样式触发</b>
+<ul class="quote"><li>JSX将按原样被触发，然后你可以使用自定义转译器来转化JSX部分。</li></ul>
+</li>
+<li><b>定制JSX.IntrinsicElements的接口成员</b>
+<ul class="quote"><li>控制哪些HTML标签可用，以及如何对其进行类型检查。</li></ul>
+</li>
+<li><b>自定义jsxFactory</b>
+<ul class="quote"><li>通过--jsxFactory＜JSX factory Name＞和--jsx react选项，你可以使用与默认的React方式不同的jsx Factory。</li><li>你可以使用jsxPragma为每个文件指定不同的jsxFactory。</li><li>如果使用了--jsx react命令，则该文件将会被触发使用在JSX语法中指定的Factory。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>JSX将按原样被触发，然后你可以使用自定义转译器来转化JSX部分。</li><li>控制哪些HTML标签可用，以及如何对其进行类型检查。</li><li>通过--jsxFactory＜JSX factory Name＞和--jsx react选项，你可以使用与默认的React方式不同的jsx Factory。</li><li>你可以使用jsxPragma为每个文件指定不同的jsxFactory。</li><li>如果使用了--jsx react命令，则该文件将会被触发使用在JSX语法中指定的Factory。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">63</span><span class="mmx-name">第8章 TypeScript编译选项设置</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 2 条要点 · 1 句原句摘录</p>
+<div class="sec">
+<h4>TypeScript编译选项设置</h4>
+<ul class="point">
+<li><b>TypeScript允许你自定义类型系统的边界</b>
+<ul class="quote"><li>TypeScript不同于传统的编程语言，它可以让你自己设置类型系统的边界。</li></ul>
+</li>
+<li><b>TypeScript有很多选项都可以精确地控制类型系统的边界。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>TypeScript不同于传统的编程语言，它可以让你自己设置类型系统的边界。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">64</span><span class="mmx-name">8.1 boolean选项</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 2 条要点 · 0 句原句摘录</p>
+<div class="sec">
+<h4>boolean选项</h4>
+<ul class="point">
+<li><b>boolean选项可以被指定为tsconfig.json下的compilerOptions，或者使用命令行。</b>
+</li>
+<li><b>所有这些选项的默认设置都是false。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">65</span><span class="mmx-name">8.2 noImplicitAny</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 3 条要点 · 3 句原句摘录</p>
+<div class="sec">
+<h4>noImplicitAny选项的作用</h4>
+<ul class="point">
+<li><b>noImplicitAny选项会标记无法被推断的类型的情况</b>
+<ul class="quote"><li>如果开启了noImplicitAny选项，TypeScript将会认为没有注解的函数参数是any类型的。</li></ul>
+</li>
+<li><b>开启noImplicitAny选项可以提高代码的安全性</b>
+<ul class="quote"><li>noImplicitAny选项可以帮助开发者发现潜在的类型错误。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如果开启了noImplicitAny选项，TypeScript将会认为没有注解的函数参数是any类型的。</li><li>noImplicitAny选项可以帮助开发者发现潜在的类型错误。</li></ul>
+</div>
+<div class="sec">
+<h4>如何处理无法被推断的类型</h4>
+<ul class="point">
+<li><b>可以对函数参数进行注解，明确类型</b>
+<ul class="quote"><li>如果你想抛弃安全性，你可以把参数标记为any。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如果你想抛弃安全性，你可以把参数标记为any。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">66</span><span class="mmx-name">8.3 strictNullChecks</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 3 条要点 · 7 句原句摘录</p>
+<div class="sec">
+<h4>TypeScript的strictNullChecks模式</h4>
+<ul class="point">
+<li><b>在strictNullChecks模式下，null和undefined是不同的</b>
+<ul class="quote"><li>并不是所有的Member都会提供年龄，所以age是一个可选属性，也就是说age的值可能为undefined。</li><li>在严格的null检查模式下，这个错误将会在编译时被捕获。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>并不是所有的Member都会提供年龄，所以age是一个可选属性，也就是说age的值可能为undefined。</li><li>在严格的null检查模式下，这个错误将会在编译时被捕获。</li></ul>
+</div>
+<div class="sec">
+<h4>非空断言操作符(!)</h4>
+<ul class="point">
+<li><b>非空断言操作符可以用来断言运算对象是非null和非undefined的</b>
+<ul class="quote"><li>注意，它只是一个断言，就像类型断言一样，你需要确保该值不为空。</li><li>一个非null的断言实质上意味着你在告诉编译器“我知道它不是null，但是请让我使用它，即使它不是null”。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>注意，它只是一个断言，就像类型断言一样，你需要确保该值不为空。</li><li>一个非null的断言实质上意味着你在告诉编译器“我知道它不是null，但是请让我使用它，即使它不是null”。</li></ul>
+</div>
+<div class="sec">
+<h4>明确赋值断言操作符(:)</h4>
+<ul class="point">
+<li><b>明确赋值断言操作符可以告诉TypeScript你已经在其他地方对它进行了初始化</b>
+<ul class="quote"><li>你可以使用明确赋值断言，在属性名后加后缀，来告诉TypeScript你已经在其他地方(不是在构造器中)对它进行了初始化。</li><li>你也可以将此操作符与变量声明一起使用。</li><li>就像所有的断言一样，你在告诉编译器让它相信你，让编译器不再抛出错误，即使代码并没有被分配属性。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>你可以使用明确赋值断言，在属性名后加后缀，来告诉TypeScript你已经在其他地方(不是在构造器中)对它进行了初始化。</li><li>你也可以将此操作符与变量声明一起使用。</li><li>就像所有的断言一样，你在告诉编译器让它相信你，让编译器不再抛出错误，即使代码并没有被分配属性。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">67</span><span class="mmx-name">9.1 解读错误</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 3 条要点 · 5 句原句摘录</p>
+<div class="sec">
+<h4>TypeScript错误信息分类</h4>
+<ul class="point">
+<li><b>TypeScript的错误信息分为简洁的错误信息和详细的错误信息</b>
+<ul class="quote"><li>简洁的错误信息提供了一个编译器对错误号及错误信息的常规描述。</li><li>详细的错误信息是为了引导用户了解错误发生的原因。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>简洁的错误信息提供了一个编译器对错误号及错误信息的常规描述。</li><li>详细的错误信息是为了引导用户了解错误发生的原因。</li></ul>
+</div>
+<div class="sec">
+<h4>简洁的错误信息与详细的错误信息的对比</h4>
+<ul class="point">
+<li><b>简洁的错误信息没有提供更深层次的信息，例如，这个错误为什么会发生</b>
+<ul class="quote"><li>详细的错误信息则提供了更多的信息，帮助开发者了解错误发生的原因。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>详细的错误信息则提供了更多的信息，帮助开发者了解错误发生的原因。</li></ul>
+</div>
+<div class="sec">
+<h4>如何在IDE提示工具中显示一个错误</h4>
+<ul class="point">
+<li><b>IDE通常会在详细的错误提示之后显示一个简洁的版本</b>
+<ul class="quote"><li>你通常可能只会阅读详细的错误信息版本，从而在头脑中思考错误发生的原因。</li><li>当你想寻找类似的错误时(使用TSXXX错误编号，或者部分错误信息)，请使用简洁的错误信息版本。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>你通常可能只会阅读详细的错误信息版本，从而在头脑中思考错误发生的原因。</li><li>当你想寻找类似的错误时(使用TSXXX错误编号，或者部分错误信息)，请使用简洁的错误信息版本。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">68</span><span class="mmx-name">9.2 常见的错误</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 5 个小节 · 6 条要点 · 0 句原句摘录</p>
+<div class="sec">
+<h4>TS2304错误</h4>
+<ul class="point">
+<li><b>TypeScript会试图避免拼写错误和使用变量，因此在使用一些额外的库时，你需要明确地声明所使用的任何内容。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>TS2307错误</h4>
+<ul class="point">
+<li><b>你可能把第三方库作为模块来使用了，并且缺少与之对应的环境声明文件。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>TS1148错误</h4>
+<ul class="point">
+<li><b>想了解更多请查看本书中与模块相关的内容。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>捕获不能有类型注解的简短变量</h4>
+<ul class="point">
+<li><b>TypeScript会保护你免受JavaScript代码错误的影响，因此，请使用类型保护。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>接口ElementClass不能同时扩展两个Component类型</h4>
+<ul class="point">
+<li><b>删除node_modules和任何package-lock(或yarn lock)，然后再一次执行npm install。</b>
+</li>
+<li><b>如果这不起作用，就去查找无效的模块，并将其报告给相关项目。你所使用的所有模块都应该将react.d.ts作为peerDependency，而不是dependency来使用。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">69</span><span class="mmx-name">第10章 开发与测试工具</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 5 个小节 · 9 条要点 · 9 句原句摘录</p>
+<div class="sec">
+<h4>npm简介</h4>
+<ul class="point">
+<li><b>npm是Node默认安装的包管理工具</b>
+<ul class="quote"><li>npm包托管地址见参考资料[23]。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>npm包托管地址见参考资料[23]。</li></ul>
+</div>
+<div class="sec">
+<h4>npm的基本设置</h4>
+<ul class="point">
+<li><b>npm包使用package.json文件来管理</b>
+<ul class="quote"><li>你可以使用npm init-y来快速生成package.json文件。</li></ul>
+</li>
+<li><b>npm包安装在./node_modules文件夹下</b>
+<ul class="quote"><li>通常会在.gitignore中会包含此文件夹。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>你可以使用npm init-y来快速生成package.json文件。</li><li>通常会在.gitignore中会包含此文件夹。</li></ul>
+</div>
+<div class="sec">
+<h4>安装和更新包</h4>
+<ul class="point">
+<li><b>使用npm install＜something＞来安装包文件</b>
+<ul class="quote"><li>这会将React自动添加到你的package.json的dependencies中。</li></ul>
+</li>
+<li><b>使用npm audit对你的Node项目进行审查</b>
+<ul class="quote"><li>它将高亮显示包以及包依赖项中可能存在的任何漏洞。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>这会将React自动添加到你的package.json的dependencies中。</li><li>它将高亮显示包以及包依赖项中可能存在的任何漏洞。</li></ul>
+</div>
+<div class="sec">
+<h4>npm脚本</h4>
+<ul class="point">
+<li><b>使用一组有限的命令行参数来构建基本脚本</b>
+<ul class="quote"><li>例如，为TypeScript编译器运行tsc的命令行脚本。</li></ul>
+</li>
+<li><b>你可以在--后面传入多个标记</b>
+<ul class="quote"><li>例如，在下面的例子中build：more与something--foo-f-d--bar有相同的作用。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>例如，为TypeScript编译器运行tsc的命令行脚本。</li><li>例如，在下面的例子中build：more与something--foo-f-d--bar有相同的作用。</li></ul>
+</div>
+<div class="sec">
+<h4>公有包和私有包</h4>
+<ul class="point">
+<li><b>公有包默认是公有的，任何人都能向npm发布一个包</b>
+<ul class="quote"><li>在下载公有包时，不需要账号。</li></ul>
+</li>
+<li><b>私有包需要注册一个付费的项目才能发布</b>
+<ul class="quote"><li>你需要有有权限的账户才能下载私有包。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在下载公有包时，不需要账号。</li><li>你需要有有权限的账户才能下载私有包。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">70</span><span class="mmx-name">10.2 在Jest中使用TypeScript</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 6 个小节 · 15 条要点 · 15 句原句摘录</p>
+<div class="sec">
+<h4>在Jest中使用TypeScript</h4>
+<ul class="point">
+<li><b>TypeScript可以与你想用的任何一个JavaScript测试框架一起使用</b>
+<ul class="quote"><li>最糟糕的情况下，你也可以做一个简单的转换，把TypeScript转换为JavaScript，然后，用你想用的方式来进行测试。</li></ul>
+</li>
+<li><b>Jest是一个出色的单元测试选项，它提供了良好的对TypeScript的支持</b>
+<ul class="quote"><li>假设你从一个简单的package.json开始，并假设所有的TypeScript文件都在src文件夹中。对于一个“干净”的项目，我们始终推荐使用src文件夹，即使没有使用Jest。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>最糟糕的情况下，你也可以做一个简单的转换，把TypeScript转换为JavaScript，然后，用你想用的方式来进行测试。</li><li>假设你从一个简单的package.json开始，并假设所有的TypeScript文件都在src文件夹中。对于一个“干净”的项目，我们始终推荐使用src文件夹，即使没有使用Jest。</li></ul>
+</div>
+<div class="sec">
+<h4>安装Jest</h4>
+<ul class="point">
+<li><b>使用npm来安装Jest，并安装Jest对应的types(@types/jest)和TypeScript预处理器(ts-jest)</b>
+<ul class="quote"><li>安装Jest包。</li><li>安装Jest对应的types(@types/jest)。</li><li>为Jest安装TypeScript预处理器(ts-jest)，它可以让Jest动态地转化TypeScript，并添加内置的source-map支持。</li></ul>
+</li>
+<li><b>将它们保存到你的开发时的dependencies(测试几乎总是使用开发时的dependency)。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>安装Jest包。</li><li>安装Jest对应的types(@types/jest)。</li><li>为Jest安装TypeScript预处理器(ts-jest)，它可以让Jest动态地转化TypeScript，并添加内置的source-map支持。</li></ul>
+</div>
+<div class="sec">
+<h4>配置Jest</h4>
+<ul class="point">
+<li><b>在项目的根目录下添加jest.config.js文件，并指定所有的TypeScript文件都放入你项目中的src目录下</b>
+<ul class="quote"><li>我们总是建议将所有的TypeScript文件，都放入你项目中的src目录下(假设你确实是这样做的，并且使用roots选项来指定它)。</li><li>transform选项只是告诉Jest为ts/tsx文件使用ts-jest。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>我们总是建议将所有的TypeScript文件，都放入你项目中的src目录下(假设你确实是这样做的，并且使用roots选项来指定它)。</li><li>transform选项只是告诉Jest为ts/tsx文件使用ts-jest。</li></ul>
+</div>
+<div class="sec">
+<h4>运行测试</h4>
+<ul class="point">
+<li><b>在根目录下运行npx jest，Jest将执行你指定的任何测试</b>
+<ul class="quote"><li>在运行测试时，可以在npm script中添加一条script，允许你使用一个简单的npm t来运行测试。</li><li>甚至可以使用npm t----watch命令来运行观察模式。</li><li>在观察模式下运行Jest：npx jest--watch。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在运行测试时，可以在npm script中添加一条script，允许你使用一个简单的npm t来运行测试。</li><li>甚至可以使用npm t----watch命令来运行观察模式。</li><li>在观察模式下运行Jest：npx jest--watch。</li></ul>
+</div>
+<div class="sec">
+<h4>测试示例</h4>
+<ul class="point">
+<li><b>普通测试示例</b>
+<ul class="quote"><li>对于一个如下的foo.ts文件，其测试文件，一个简单的foo.test.ts。</li></ul>
+</li>
+<li><b>异步示例：Jest内置对async/await的支持</b>
+<ul class="quote"><li>使用async/await的测试示例。</li></ul>
+</li>
+<li><b>Enzyme示例</b>
+<ul class="quote"><li>首先，执行npm i enzyme@types/enzyme enzyme-to-json enzyme-adapter-react-16-D，安装Enzyme、Enzyme的类型、一个对于Enzyme来说更好的序列化工具，以及用于React版本的enzyme-adapter-react。</li><li>然后，在你的jest.config.js文件中，添加snapshotSerializers和setupTestFrameworkScriptFile。</li><li>最后，创建src/setupEnzyme.ts文件。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>对于一个如下的foo.ts文件，其测试文件，一个简单的foo.test.ts。</li><li>使用async/await的测试示例。</li><li>首先，执行npm i enzyme@types/enzyme enzyme-to-json enzyme-adapter-react-16-D，安装Enzyme、Enzyme的类型、一个对于Enzyme来说更好的序列化工具，以及用于React版本的enzyme-adapter-react。</li><li>然后，在你的jest.config.js文件中，添加snapshotSerializers和setupTestFrameworkScriptFile。</li><li>最后，创建src/setupEnzyme.ts文件。</li></ul>
+</div>
+<div class="sec">
+<h4>选择Jest的理由</h4>
+<ul class="point">
+<li><b>内置的断言库。</b>
+</li>
+<li><b>强大的TypeScript支持。</b>
+</li>
+<li><b>非常可靠的测试观察模式。</b>
+</li>
+<li><b>快照测试。</b>
+</li>
+<li><b>内置的测试覆盖率报告。</b>
+</li>
+<li><b>内置的async/await支持。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">71</span><span class="mmx-name">10.3 Prettier</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 3 条要点 · 4 句原句摘录</p>
+<div class="sec">
+<h4>Prettier的安装与使用</h4>
+<ul class="point">
+<li><b>安装Prettier</b>
+<ul class="quote"><li>执行命令npm install prettier-D。</li></ul>
+</li>
+<li><b>在package.json中添加script</b>
+<ul class="quote"><li>在package.json中添加&quot;scripts&quot;: {&quot;prettier&quot;: &quot;prettier&quot;}。</li></ul>
+</li>
+<li><b>使用Prettier</b>
+<ul class="quote"><li>在构建服务器上执行命令npm run prettier：check。</li><li>在开发环境(或pre commit hook)中执行命令npm run prettier：write。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>执行命令npm install prettier-D。</li><li>在package.json中添加&quot;scripts&quot;: {&quot;prettier&quot;: &quot;prettier&quot;}。</li><li>在构建服务器上执行命令npm run prettier：check。</li><li>在开发环境(或pre commit hook)中执行命令npm run prettier：write。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">72</span><span class="mmx-name">10.4 Husky</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 5 条要点 · 2 句原句摘录</p>
+<div class="sec">
+<h4>Husky的作用</h4>
+<ul class="point">
+<li><b>Husky能够防止错误的提交、推送及更多其他问题的出现。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>Husky的使用场景</h4>
+<ul class="point">
+<li><b>如果你想在commit之前运行JavaScript/TypeScript代码，那么Husky可能是一个好的选择</b>
+<ul class="quote"><li>例如，你可以使用Husky来确保文件被Prettier自动格式化。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>例如，你可以使用Husky来确保文件被Prettier自动格式化。</li></ul>
+</div>
+<div class="sec">
+<h4>Husky的设置步骤</h4>
+<ul class="point">
+<li><b>首先执行npm install husky-D命令，然后在package.json中添加script</b>
+<ul class="quote"><li>现在，无论你什么时候提交代码，代码都会自动格式化。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>现在，无论你什么时候提交代码，代码都会自动格式化。</li></ul>
+</div>
+<div class="sec">
+<h4>Husky的工作原理</h4>
+<ul class="point">
+<li><b>如果你已经推送了代码，就简单地用prettier来提交它们。</b>
+</li>
+<li><b>如果你还没有推送代码，就修改你最后一次提交的内容。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">73</span><span class="mmx-name">10.5 ESlint</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 5 个小节 · 5 条要点 · 0 句原句摘录</p>
+<div class="sec">
+<h4>ESLint现在可以用于TypeScript的lint。</h4>
+<ul class="point">
+</ul>
+</div>
+<div class="sec">
+<h4>安装ESlint需要使用的包</h4>
+<ul class="point">
+<li><b>安装eslint、eslint-plugin-react、@typescript-eslint-parse和@typescript-eslint/eslint-plugin等包。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>配置ESlint需要创建.eslintrc.js文件</h4>
+<ul class="point">
+<li><b>在项目根目录下创建.eslintrc.js文件。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>运行ESlint需要在package.json中添加scripts</h4>
+<ul class="point">
+<li><b>在package.json中添加scripts，通过运行npm run lint来验证。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>在VS Code中配置ESlint需要安装插件，并将相关设置添加到settings.json文件中</h4>
+<ul class="point">
+<li><b>安装ESLint插件。</b>
+</li>
+<li><b>将相关设置添加到settings.json文件中。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">74</span><span class="mmx-name">10.6 Changelog</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 3 条要点 · 6 句原句摘录</p>
+<div class="sec">
+<h4>使用conventional-changelog生成变更日志</h4>
+<ul class="point">
+<li><b>conventional-changelog是一个遵循约定从提交消息中生成变更日志的项目</b>
+<ul class="quote"><li>常见的约定是Angular项目的信息提交约定。</li></ul>
+</li>
+<li><b>安装conventional-changelog</b>
+<ul class="quote"><li>首先执行install命令。</li><li>在package.json中添加script。</li><li>为了能自动将新的git commit和tag plus发布到npm，你需要添加一个postrelease命令，这个设置是可选的。</li></ul>
+</li>
+<li><b>发布变更日志</b>
+<ul class="quote"><li>发布命令如下所示。</li><li>根据提交的信息，major、minor、patch是自动确定的，你可以通过--release-as来指定特殊的版本。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>常见的约定是Angular项目的信息提交约定。</li><li>首先执行install命令。</li><li>在package.json中添加script。</li><li>为了能自动将新的git commit和tag plus发布到npm，你需要添加一个postrelease命令，这个设置是可选的。</li><li>发布命令如下所示。</li><li>根据提交的信息，major、minor、patch是自动确定的，你可以通过--release-as来指定特殊的版本。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">75</span><span class="mmx-name">11.1 名义化类型</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 5 条要点 · 2 句原句摘录</p>
+<div class="sec">
+<h4>使用字面量类型</h4>
+<ul class="point">
+<li><b>优点：不需要进行类型断言。</b>
+</li>
+<li><b>缺点：如上面的结构{type，value}可能不那么尽如人意，而且需要服务器序列化支持。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>使用枚举</h4>
+<ul class="point">
+<li><b>创建一个只有名字的枚举</b>
+<ul class="quote"><li>利用这个枚举与实际结构体创建一个交叉类型(&amp;)。</li></ul>
+</li>
+<li><b>当实际结构体只是一个字符串时，如下所示。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>利用这个枚举与实际结构体创建一个交叉类型(&amp;)。</li></ul>
+</div>
+<div class="sec">
+<h4>使用接口</h4>
+<ul class="point">
+<li><b>在类型上添加一个不用的属性，用来打破类型兼容性</b>
+<ul class="quote"><li>在需要时使用类型断言。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在需要时使用类型断言。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">76</span><span class="mmx-name">11.2 状态函数</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 1 条要点 · 1 句原句摘录</p>
+<div class="sec">
+<h4>JavaScript/TypeScript中没有静态函数的功能</h4>
+<ul class="point">
+<li><b>JavaScript/TypeScript使用class来实现类似静态函数的功能</b>
+<ul class="quote"><li>通过包裹着本地变量的抽象变量，如class。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>通过包裹着本地变量的抽象变量，如class。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">77</span><span class="mmx-name">11.4 泛型的实例化类型</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 2 条要点 · 3 句原句摘录</p>
+<div class="sec">
+<h4>泛型的实例化类型</h4>
+<ul class="point">
+<li><b>通过复制一个具有泛型参数的类型，并用具体类型代替泛型的类型注解，可以创建一个专用的版本</b>
+<ul class="quote"><li>FooNumber与Foo相同，但只把它看作一个在使用new运算符调用时的Foo＜Number＞实例。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>FooNumber与Foo相同，但只把它看作一个在使用new运算符调用时的Foo＜Number＞实例。</li></ul>
+</div>
+<div class="sec">
+<h4>继承</h4>
+<ul class="point">
+<li><b>在基类上使用修饰器，继承类可能没有与基类相同的行为，因为它不再被修饰器包裹</b>
+<ul class="quote"><li>如果没有一个单独的类，你仍然需要写出一个有效的强制/断言模式。</li><li>建议使用如下的断言模式。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如果没有一个单独的类，你仍然需要写出一个有效的强制/断言模式。</li><li>建议使用如下的断言模式。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">78</span><span class="mmx-name">11.5 对象字面量的惰性初始化</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 4 条要点 · 4 句原句摘录</p>
+<div class="sec">
+<h4>TypeScript对象字面量初始化的问题</h4>
+<ul class="point">
+<li><b>TypeScript会进行类型推断，认为等号左边foo的类型即为等号右边{}的类型</b>
+<ul class="quote"><li>由于{}本没有任何属性，因此，如果像上面那样给foo添加属性，就会报错。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>由于{}本没有任何属性，因此，如果像上面那样给foo添加属性，就会报错。</li></ul>
+</div>
+<div class="sec">
+<h4>最好的解决方案</h4>
+<ul class="point">
+<li><b>在为变量赋值的同时，添加属性及其对应的值</b>
+<ul class="quote"><li>这种写法也较容易通过其他人或工具的代码审核，对后期维护也是有利的。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>这种写法也较容易通过其他人或工具的代码审核，对后期维护也是有利的。</li></ul>
+</div>
+<div class="sec">
+<h4>快速解决方案</h4>
+<ul class="point">
+<li><b>利用TypeScript的“类型断言”机制让代码顺利通过编译</b>
+<ul class="quote"><li>这种方法可能会导致类型安全问题，因为TypeScript的类型检查被绕过。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>这种方法可能会导致类型安全问题，因为TypeScript的类型检查被绕过。</li></ul>
+</div>
+<div class="sec">
+<h4>折中的解决方案</h4>
+<ul class="point">
+<li><b>创建interface，方便撰写类型文档，而且TypeScript会参与类型检查</b>
+<ul class="quote"><li>使用interface还可以确保类型安全，例如这种情况。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>使用interface还可以确保类型安全，例如这种情况。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">79</span><span class="mmx-name">11.6 类是有用的</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 4 条要点 · 2 句原句摘录</p>
+<div class="sec">
+<h4>类在JavaScript中的应用</h4>
+<ul class="point">
+<li><b>类在JavaScript中很常见，利用JavaScript的闭包</b>
+<ul class="quote"><li>如果你使用文件模块(全局变量确实是个错误)，那么你的文件实际上与上面的例子是相同的，都不是全局变量。</li></ul>
+</li>
+<li><b>类可以让开发者更好地组织他们的代码</b>
+<ul class="quote"><li>尽管我并不是一个特别喜欢使用继承的人，但是我确实发现让开发者使用类，可以在一定程度上更好地组织他们的代码。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如果你使用文件模块(全局变量确实是个错误)，那么你的文件实际上与上面的例子是相同的，都不是全局变量。</li><li>尽管我并不是一个特别喜欢使用继承的人，但是我确实发现让开发者使用类，可以在一定程度上更好地组织他们的代码。</li></ul>
+</div>
+<div class="sec">
+<h4>类在可视化工具中的应用</h4>
+<ul class="point">
+<li><b>在创建基于类的更出色的可视化工具中，类更常见。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>类在项目理解和维护中的作用</h4>
+<ul class="point">
+<li><b>类有利于对项目的理解和维护。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">80</span><span class="mmx-name">11.7 默认导出被认为是有害的</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 9 个小节 · 10 条要点 · 8 句原句摘录</p>
+<div class="sec">
+<h4>默认导出在可维护性方面的问题</h4>
+<ul class="point">
+<li><b>在foo.ts中重构Foo，bar.ts文件不会被重新命名。</b>
+</li>
+<li><b>如果需要从foo.ts文件中导出更多有用的信息，必须兼顾导入语法。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>默认导出的可发现性差</h4>
+<ul class="point">
+<li><b>不能智能地辨别一个模块是否有默认导出</b>
+<ul class="quote"><li>当你像下面这样使用默认导出时，你将什么也得不到(它可能有默认导出，也可能没有)。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>当你像下面这样使用默认导出时，你将什么也得不到(它可能有默认导出，也可能没有)。</li></ul>
+</div>
+<div class="sec">
+<h4>自动完成</h4>
+<ul class="point">
+<li><b>不管是否了解导出，都可以在import{/*here*/}from&#x27;./foo&#x27;的光标位置自动完成</b>
+<ul class="quote"><li>从而让开发者了解导出模块的信息。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>从而让开发者了解导出模块的信息。</li></ul>
+</div>
+<div class="sec">
+<h4>与CommonJS互用的问题</h4>
+<ul class="point">
+<li><b>使用默认导出将会是一个糟糕的体验</b>
+<ul class="quote"><li>对于必须使用const{default}=require(&#x27;module/foo&#x27;)，而不是const{Foo}=require(&#x27;module/foo&#x27;)的CommonJS用户来说。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>对于必须使用const{default}=require(&#x27;module/foo&#x27;)，而不是const{Foo}=require(&#x27;module/foo&#x27;)的CommonJS用户来说。</li></ul>
+</div>
+<div class="sec">
+<h4>防止拼写错误</h4>
+<ul class="point">
+<li><b>在开发时使用import Foo from&#x27;./foo&#x27;，你并不会得到有关拼写的任何错误</b>
+<ul class="quote"><li>其他人可能会这么写import foo from&#x27;./foo&#x27;。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>其他人可能会这么写import foo from&#x27;./foo&#x27;。</li></ul>
+</div>
+<div class="sec">
+<h4>关于TypeScript自动导入</h4>
+<ul class="point">
+<li><b>自动导入的快速修复功能效果很好</b>
+<ul class="quote"><li>当你使用Foo和自动导入时，将会写下import {Foo} from&#x27;./foo&#x27;，这是从某个模块中导出的确切名称。</li><li>有一些工具尝试使用一些技巧去阅读和推断默认导出的名字，但是这些技巧推断的内容是不全面的。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>当你使用Foo和自动导入时，将会写下import {Foo} from&#x27;./foo&#x27;，这是从某个模块中导出的确切名称。</li><li>有一些工具尝试使用一些技巧去阅读和推断默认导出的名字，但是这些技巧推断的内容是不全面的。</li></ul>
+</div>
+<div class="sec">
+<h4>关于再次导出</h4>
+<ul class="point">
+<li><b>再次导出是没必要的，但是在npm包的根文件index中却很常见</b>
+<ul class="quote"><li>这也强制你手动命名默认导出，如import Foo from&#x27;./foo&#x27;；export {Foo}(默认导出)和export*from&#x27;./foo&#x27;(命名导出)。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>这也强制你手动命名默认导出，如import Foo from&#x27;./foo&#x27;；export {Foo}(默认导出)和export*from&#x27;./foo&#x27;(命名导出)。</li></ul>
+</div>
+<div class="sec">
+<h4>关于动态导入</h4>
+<ul class="point">
+<li><b>默认导出会以default的名字暴露自己。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>当不是类也不是函数时，需要两行语句</h4>
+<ul class="point">
+<li><b>这可以是一个函数或类的声明，也可以是一个非命名/类型注解的对象</b>
+<ul class="quote"><li>否则会需要两行语句，如下所示。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>否则会需要两行语句，如下所示。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">81</span><span class="mmx-name">11.8 减少setter属性的使用</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 2 条要点 · 2 句原句摘录</p>
+<div class="sec">
+<h4>减少setter属性的使用</h4>
+<ul class="point">
+<li><b>使用更精确的set/get函数，减少使用setter/getter</b>
+<ul class="quote"><li>使用foo.setBar(value)时，开发者会意识到在foo里可能会引起一些改变。</li></ul>
+</li>
+<li><b>使用不同的函数，查找的应用效果会更好</b>
+<ul class="quote"><li>在TypeScript工具中，如果你找到了getter或setter的引用，你就可以同时得到这两个函数。而使用显式的函数调用，则只能获得对相关函数的引用。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>使用foo.setBar(value)时，开发者会意识到在foo里可能会引起一些改变。</li><li>在TypeScript工具中，如果你找到了getter或setter的引用，你就可以同时得到这两个函数。而使用显式的函数调用，则只能获得对相关函数的引用。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">82</span><span class="mmx-name">11.9 谨慎使用--outFile</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 9 个小节 · 12 条要点 · 13 句原句摘录</p>
+<div class="sec">
+<h4>运行时错误</h4>
+<ul class="point">
+<li><b>类的继承在运行时中断</b>
+<ul class="quote"><li>例如，如果你没有按正确的顺序编译它(如tsc bar.ts foo.ts)，虽然它能被编译成功，但是会在运行时抛出ReferenceError错误。</li></ul>
+</li>
+<li><b>模块拆分在运行时失败</b>
+<ul class="quote"><li>例如，如果你没有用正确的顺序编译它，它会在运行时将NaN赋值给bar。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>例如，如果你没有按正确的顺序编译它(如tsc bar.ts foo.ts)，虽然它能被编译成功，但是会在运行时抛出ReferenceError错误。</li><li>例如，如果你没有用正确的顺序编译它，它会在运行时将NaN赋值给bar。</li></ul>
+</div>
+<div class="sec">
+<h4>快速编译</h4>
+<ul class="point">
+<li><b>--out选项实际上使用了较慢的构建方式</b>
+<ul class="quote"><li>如果你使用--out编译选项，却没有使用一些hack，单独的.ts文件是不会被编译成单独的.js文件的。</li></ul>
+</li>
+<li><b>Source Map需要重新构建</b>
+<ul class="quote"><li>由于Source Map对位置信息敏感，且基于长度编码，因此，大部分Source Map都需要在编译时重新构建(如果你使用Source Map的话)。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如果你使用--out编译选项，却没有使用一些hack，单独的.ts文件是不会被编译成单独的.js文件的。</li><li>由于Source Map对位置信息敏感，且基于长度编码，因此，大部分Source Map都需要在编译时重新构建(如果你使用Source Map的话)。</li></ul>
+</div>
+<div class="sec">
+<h4>全局作用域</h4>
+<ul class="point">
+<li><b>--outFile仍然在window上</b>
+<ul class="quote"><li>你可以使用命名空间，但是如果你在浏览器中打开的话，--outFile仍然在window上。</li></ul>
+</li>
+<li><b>命名冲突问题</b>
+<ul class="quote"><li>如果你的公司有多个独立工作的团队，当有人决定尝试集成两个独立编写的应用程序时，则很可能存在命名冲突。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>你可以使用命名空间，但是如果你在浏览器中打开的话，--outFile仍然在window上。</li><li>如果你的公司有多个独立工作的团队，当有人决定尝试集成两个独立编写的应用程序时，则很可能存在命名冲突。</li></ul>
+</div>
+<div class="sec">
+<h4>难以分析</h4>
+<ul class="point">
+<li><b>使用内部模块会使代码难以单独查看</b>
+<ul class="quote"><li>在了解实际上是从哪里导入的这些东西之前，人们需要了解很多代码库。</li><li>使用内部模块也会使代码难以单独查看，例如在GitHub上。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在了解实际上是从哪里导入的这些东西之前，人们需要了解很多代码库。</li><li>使用内部模块也会使代码难以单独查看，例如在GitHub上。</li></ul>
+</div>
+<div class="sec">
+<h4>难以扩展</h4>
+<ul class="point">
+<li><b>难以扩展是由于运行时的随机错误、编译时的时间较长，以及难以理解的代码共同作用所导致的结果。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>_references.ts</h4>
+<ul class="point">
+<li><b>_references.ts没有被tsconfig.json支持</b>
+<ul class="quote"><li>所以你需要手动对文件进行排序。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>所以你需要手动对文件进行排序。</li></ul>
+</div>
+<div class="sec">
+<h4>代码重用</h4>
+<ul class="point">
+<li><b>隐式依赖关系使得代码难以移植</b>
+<ul class="quote"><li>如果你想在另一个项目中重用存在隐式依赖关系的代码，那么在没有运行时错误提示的情况下，很难移植它。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如果你想在另一个项目中重用存在隐式依赖关系的代码，那么在没有运行时错误提示的情况下，很难移植它。</li></ul>
+</div>
+<div class="sec">
+<h4>多目标</h4>
+<ul class="point">
+<li><b>在Node.js之类的环境下重用浏览器中的代码需要转换模块系统或使用hack</b>
+<ul class="quote"><li>如果你想在Node.js之类的环境下重用浏览器中的代码(如测试APIs)，你将不得不将其转换到新的模块系统或使用不好的hack，让Node.js的global成为你新的全局变量(如window)。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如果你想在Node.js之类的环境下重用浏览器中的代码(如测试APIs)，你将不得不将其转换到新的模块系统或使用不好的hack，让Node.js的global成为你新的全局变量(如window)。</li></ul>
+</div>
+<div class="sec">
+<h4>单独编译</h4>
+<ul class="point">
+<li><b>文件无法被单独编译，如a.ts</b>
+<ul class="quote"><li>根据不同的b.ts的形式，它将有不同的输出。</li><li>因此a.ts不能被单独编译。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>根据不同的b.ts的形式，它将有不同的输出。</li><li>因此a.ts不能被单独编译。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">83</span><span class="mmx-name">11.10 TypeScript的静态构造函数</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 1 条要点 · 0 句原句摘录</p>
+<div class="sec">
+<h4>TypeScript的静态构造函数</h4>
+<ul class="point">
+<li><b>TypeScript中的class没有静态构造函数的功能，但是可以通过调用它自己来实现相同的效果。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">84</span><span class="mmx-name">11.11 单例模式</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 2 条要点 · 1 句原句摘录</p>
+<div class="sec">
+<h4>单例模式及其替代方案</h4>
+<ul class="point">
+<li><b>单例模式可以用来解决所有代码必须被写到一个class中的问题。</b>
+</li>
+<li><b>如果不想延迟初始化，可以使用命名空间来代替</b>
+<ul class="quote"><li>对大部分使用者来说，命名空间可以用模块来代替。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>对大部分使用者来说，命名空间可以用模块来代替。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">85</span><span class="mmx-name">11.12 函数参数</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 3 条要点 · 2 句原句摘录</p>
+<div class="sec">
+<h4>函数参数的问题</h4>
+<ul class="point">
+<li><b>函数参数过多或参数类型相同时，调用函数容易出错</b>
+<ul class="quote"><li>例如，函数foo(flagB，flagA)，可能会错误地调用为foo(flagA，flagB)。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>例如，函数foo(flagB，flagA)，可能会错误地调用为foo(flagA，flagB)。</li></ul>
+</div>
+<div class="sec">
+<h4>函数改为接收对象的形式</h4>
+<ul class="point">
+<li><b>函数变为接收对象的形式后，调用函数更加清晰</b>
+<ul class="quote"><li>函数现在将会被foo({flagA，flagB})这样的形式调用。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>函数现在将会被foo({flagA，flagB})这样的形式调用。</li></ul>
+</div>
+<div class="sec">
+<h4>注意事项</h4>
+<ul class="point">
+<li><b>如果函数足够简单，而且你不希望增加代码，那么请忽略这个建议。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">86</span><span class="mmx-name">11.13 构建切换</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 2 条要点 · 2 句原句摘录</p>
+<div class="sec">
+<h4>使用webpack进行构建切换</h4>
+<ul class="point">
+<li><b>在package.json script里，添加不同的编译目标</b>
+<ul class="quote"><li>假设你已经安装并执行了npm install webpack--save-dev，那么你现在就可以运行npm run build：test了。</li></ul>
+</li>
+<li><b>使用环境变量进行构建切换</b>
+<ul class="quote"><li>我们使用process.env.NODE_ENV，只是因为绝大多数JavaScript库中都使用此变量，例如React。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>假设你已经安装并执行了npm install webpack--save-dev，那么你现在就可以运行npm run build：test了。</li><li>我们使用process.env.NODE_ENV，只是因为绝大多数JavaScript库中都使用此变量，例如React。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">87</span><span class="mmx-name">11.14 barrel</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 3 条要点 · 5 句原句摘录</p>
+<div class="sec">
+<h4>barrel的概念和作用</h4>
+<ul class="point">
+<li><b>barrel就像一个容器，它的作用是把分散在多个模块的导出合并到一个模块里</b>
+<ul class="quote"><li>一般来说，barrel本身就是一个包含模块的文件，用于重新导出其他多个模块选定导出的东西。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>一般来说，barrel本身就是一个包含模块的文件，用于重新导出其他多个模块选定导出的东西。</li></ul>
+</div>
+<div class="sec">
+<h4>barrel的使用场景</h4>
+<ul class="point">
+<li><b>在库中，具有多个函数的模块，可以通过barrel文件简化导入</b>
+<ul class="quote"><li>如果不用barrel，那么用户在导入时就需要3条import语句。</li><li>但如果我们在同级添加barrel文件demo/index.ts，然后这样定义它，用户就可以直接用1条import语句从barrel file导入所有东西了。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如果不用barrel，那么用户在导入时就需要3条import语句。</li><li>但如果我们在同级添加barrel文件demo/index.ts，然后这样定义它，用户就可以直接用1条import语句从barrel file导入所有东西了。</li></ul>
+</div>
+<div class="sec">
+<h4>命名导出的使用</h4>
+<ul class="point">
+<li><b>在barrel file里可以把要导出的函数挂载到一个变量下，并进行命名导出</b>
+<ul class="quote"><li>例如，在baz.ts中定义了两个函数getBaz和setBaz，不想在demo模块上直接提供这两个接口，你可以把它们挂载到一个变量下。</li><li>在barrel file里把它们全部导入并进行命名，然后导出命名后的名称，这样，用户需要这样调用。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>例如，在baz.ts中定义了两个函数getBaz和setBaz，不想在demo模块上直接提供这两个接口，你可以把它们挂载到一个变量下。</li><li>在barrel file里把它们全部导入并进行命名，然后导出命名后的名称，这样，用户需要这样调用。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">88</span><span class="mmx-name">11.16 类型安全的Event Emitter</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 1 条要点 · 3 句原句摘录</p>
+<div class="sec">
+<h4>类型安全的Event Emitter</h4>
+<ul class="point">
+<li><b>为每个事件类型创建一个Emitter</b>
+<ul class="quote"><li>事件的类型能以变量的形式被发现。</li><li>Event Emitter非常容易被重构。</li><li>事件数据结构是类型安全的。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>事件的类型能以变量的形式被发现。</li><li>Event Emitter非常容易被重构。</li><li>事件数据结构是类型安全的。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">89</span><span class="mmx-name">11.17 Reflect Metadata</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 6 条要点 · 7 句原句摘录</p>
+<div class="sec">
+<h4>Reflect Metadata简介</h4>
+<ul class="point">
+<li><b>Reflect Metadata是ES7的一个提案，用于在声明时添加和读取元数据。</b>
+</li>
+<li><b>TypeScript在1.5以上的版本中已经支持Reflect Metadata</b>
+<ul class="quote"><li>通过执行npm i reflect-metadata-save命令，并在tsconfig.json里配置emitDecoratorMetadata选项即可。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>通过执行npm i reflect-metadata-save命令，并在tsconfig.json里配置emitDecoratorMetadata选项即可。</li></ul>
+</div>
+<div class="sec">
+<h4>获取类型信息</h4>
+<ul class="point">
+<li><b>Reflect.getMetadata API可以获取属性类型、函数参数类型和返回值类型</b>
+<ul class="quote"><li>在vue-property-decorator 6.1及其以下的版本中，通过使用Reflect.getMetadata API，Prop Decorator能获取属性类型并将其传至Vue。</li><li>通过Reflect.getMetadata(&quot;design：paramtypes&quot;，target，key)和Reflect.getMetadata(&quot;design：returntype&quot;，target，key)，也可以分别获取函数参数类型和返回值类型。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在vue-property-decorator 6.1及其以下的版本中，通过使用Reflect.getMetadata API，Prop Decorator能获取属性类型并将其传至Vue。</li><li>通过Reflect.getMetadata(&quot;design：paramtypes&quot;，target，key)和Reflect.getMetadata(&quot;design：returntype&quot;，target，key)，也可以分别获取函数参数类型和返回值类型。</li></ul>
+</div>
+<div class="sec">
+<h4>自定义metadataKey</h4>
+<ul class="point">
+<li><b>Reflect Metadata可用于自定义metadataKey，并在合适的时机获取它的值</b>
+<ul class="quote"><li>示例代码如下。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>示例代码如下。</li></ul>
+</div>
+<div class="sec">
+<h4>用例</h4>
+<ul class="point">
+<li><b>控制反转和依赖注入是基于Reflect Metadata实现的。</b>
+</li>
+<li><b>Controller、Get、POST等Decorator也是基于Reflect Metadata实现的</b>
+<ul class="quote"><li>这次，我们将metadataKey定义在descriptor的value上。</li><li>接着，创建一个函数，映射出route。</li><li>最后，只需要把与route相关的信息绑定在express或koa上就可以了。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>这次，我们将metadataKey定义在descriptor的value上。</li><li>接着，创建一个函数，映射出route。</li><li>最后，只需要把与route相关的信息绑定在express或koa上就可以了。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">90</span><span class="mmx-name">11.18 协变与逆变</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 6 条要点 · 3 句原句摘录</p>
+<div class="sec">
+<h4>协变与逆变的定义及示例</h4>
+<ul class="point">
+<li><b>协变指的是返回值类型是协变的，即A≼B意味着(T → A)≼(T → B)。</b>
+</li>
+<li><b>逆变指的是参数类型是逆变的，即A≼B意味着(B → T)≼(A → T)。</b>
+</li>
+<li><b>在TypeScript中，参数类型是双向协变的，也就是说既是协变又是逆变的，但这并不安全。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>协变与逆变的实例分析</h4>
+<ul class="point">
+<li><b>在问题“Greyhound → Greyhound”，“Greyhound → Animal”，“Animal → Animal”，“Animal → Greyhound”中，只有“Animal → Greyhound”的类型是安全的</b>
+<ul class="quote"><li>f可能会以任何狗的品种作为参数来调用，而所有的狗都是动物。</li><li>它可能会假设结果是一条狗，而所有的灰狗都是狗。</li></ul>
+</li>
+<li><b>在问题“List＜Dog＞能否为List＜Animal＞的子类”中，如果列表是不可变的，那么答案是肯定的，如果列表是可变的，那么答案绝对是否定的</b>
+<ul class="quote"><li>假设我需要一串List＜Animal＞，而你传给我一串List＜Dog＞。由于我认为我拥有的是一串List＜Animal＞，我可能会尝试向列表插入一个Cat。那么你的List＜Dog＞里就会有一个Cat！类型系统不应该允许这种情况发生。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>f可能会以任何狗的品种作为参数来调用，而所有的狗都是动物。</li><li>它可能会假设结果是一条狗，而所有的灰狗都是狗。</li><li>假设我需要一串List＜Animal＞，而你传给我一串List＜Dog＞。由于我认为我拥有的是一串List＜Animal＞，我可能会尝试向列表插入一个Cat。那么你的List＜Dog＞里就会有一个Cat！类型系统不应该允许这种情况发生。</li></ul>
+</div>
+<div class="sec">
+<h4>协变与逆变在编程语言中的表现</h4>
+<ul class="point">
+<li><b>在Java中，数组既是可变的，又是协变的，这并不安全。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">91</span><span class="mmx-name">第12章 TypeScript代码风格指南与代码约定</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 2 条要点 · 2 句原句摘录</p>
+<div class="sec">
+<h4>TypeScript代码风格指南与代码约定</h4>
+<ul class="point">
+<li><b>推荐一些TypeScript的代码风格和代码约定</b>
+<ul class="quote"><li>这些规定有助于打破一些僵局。</li></ul>
+</li>
+<li><b>更需要注意的内容，这些内容在前面的章节中也有所涉及</b>
+<ul class="quote"><li>类型断言很糟糕，属性setter很糟糕。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>这些规定有助于打破一些僵局。</li><li>类型断言很糟糕，属性setter很糟糕。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">92</span><span class="mmx-name">12.2 类</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 2 条要点 · 2 句原句摘录</p>
+<div class="sec">
+<h4>类命名规范</h4>
+<ul class="point">
+<li><b>使用PascalCase形式为类命名</b>
+<ul class="quote"><li>在标准的JavaScript中通常是这么做的。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在标准的JavaScript中通常是这么做的。</li></ul>
+</div>
+<div class="sec">
+<h4>类的属性和方法命名规范</h4>
+<ul class="point">
+<li><b>类的属性和方法使用camelCase方式进行命名</b>
+<ul class="quote"><li>自然地遵循变量和函数命名的约定。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>自然地遵循变量和函数命名的约定。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">93</span><span class="mmx-name">12.3 接口</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 2 条要点 · 2 句原句摘录</p>
+<div class="sec">
+<h4>接口的命名规范</h4>
+<ul class="point">
+<li><b>使用PascalCase形式为接口命名</b>
+<ul class="quote"><li>接口命名和类相同。</li></ul>
+</li>
+<li><b>接口成员使用camelCase方式进行命名</b>
+<ul class="quote"><li>接口成员命名和类的成员使用相同方式进行命名。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>接口命名和类相同。</li><li>接口成员命名和类的成员使用相同方式进行命名。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">94</span><span class="mmx-name">12.5 命名空间</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 1 条要点 · 1 句原句摘录</p>
+<div class="sec">
+<h4>命名空间的命名规范</h4>
+<ul class="point">
+<li><b>命名空间使用PascalCase形式进行命名</b>
+<ul class="quote"><li>命名空间实际上只是一个具有静态成员的类，类的命名形式是PascalCase，因此，命名空间的命名形式也是PascalCase。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>命名空间实际上只是一个具有静态成员的类，类的命名形式是PascalCase，因此，命名空间的命名形式也是PascalCase。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">95</span><span class="mmx-name">12.6 枚举类型</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 2 条要点 · 2 句原句摘录</p>
+<div class="sec">
+<h4>枚举类型的命名规范</h4>
+<ul class="point">
+<li><b>枚举类型使用PascalCase形式进行命名</b>
+<ul class="quote"><li>原因：和类相同。</li></ul>
+</li>
+<li><b>枚举类型成员使用PascalCase形式进行命名</b>
+<ul class="quote"><li>原因：遵循TypeScript团队惯例，例如SyntaxKind.StringLiteral，这也有助于将其他语言的代码生成转换为TypeScript代码。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>原因：和类相同。</li><li>原因：遵循TypeScript团队惯例，例如SyntaxKind.StringLiteral，这也有助于将其他语言的代码生成转换为TypeScript代码。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">96</span><span class="mmx-name">12.7 null和undefined</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 2 条要点 · 3 句原句摘录</p>
+<div class="sec">
+<h4>null和undefined的使用建议</h4>
+<ul class="point">
+<li><b>null和undefined通常用于在值之间保持结构的一致性，建议使用类型来显式地表示结构</b>
+<ul class="quote"><li>在正常情况下，建议使用undefined，将返回对象改为类似于{valid：boolean，value？：Foo}的结构。</li><li>如果它是API的一部分，则建议使用null。</li></ul>
+</li>
+<li><b>建议使用truthy来检查一个对象是否为null或undefined</b>
+<ul class="quote"><li>使用==undefined/！=undefined而不是===/！==来检查元素上的null/undefined，这适用于null/undefined，但不适用于其他falsy值(如&#x27;&#x27;、0、false)。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在正常情况下，建议使用undefined，将返回对象改为类似于{valid：boolean，value？：Foo}的结构。</li><li>如果它是API的一部分，则建议使用null。</li><li>使用==undefined/！=undefined而不是===/！==来检查元素上的null/undefined，这适用于null/undefined，但不适用于其他falsy值(如&#x27;&#x27;、0、false)。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">97</span><span class="mmx-name">12.8 格式化</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 2 条要点 · 2 句原句摘录</p>
+<div class="sec">
+<h4>TypeScript代码格式化</h4>
+<ul class="point">
+<li><b>TypeScript编译器附带了一个格式化服务，可以自动格式化代码。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>代码格式化建议</h4>
+<ul class="point">
+<li><b>建议使用单引号，2个空格进行缩进</b>
+<ul class="quote"><li>使用分号，声明数组时使用foos：Foo[]。</li><li>根据需求选择使用type或interface。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>使用分号，声明数组时使用foos：Foo[]。</li><li>根据需求选择使用type或interface。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">98</span><span class="mmx-name">第13章 TypeScript编译原理</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 7 个小节 · 7 条要点 · 15 句原句摘录</p>
+<div class="sec">
+<h4>TypeScript编译器结构</h4>
+<ul class="point">
+<li><b>TypeScript编译器分为Scanner扫描器、Parser解析器、Binder绑定器、Checker检查器、Emitter发射器五个关键部分</b>
+<ul class="quote"><li>Scanner扫描器负责将源码转换为token流。</li><li>Parser解析器负责将token流转换为AST。</li><li>Binder绑定器负责将AST转换为符号。</li><li>Checker检查器负责验证符号和AST的语义正确性。</li><li>Emitter发射器负责将AST和检查结果转换为JavaScript代码。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Scanner扫描器负责将源码转换为token流。</li><li>Parser解析器负责将token流转换为AST。</li><li>Binder绑定器负责将AST转换为符号。</li><li>Checker检查器负责验证符号和AST的语义正确性。</li><li>Emitter发射器负责将AST和检查结果转换为JavaScript代码。</li></ul>
+</div>
+<div class="sec">
+<h4>BYOTS项目</h4>
+<ul class="point">
+<li><b>BYOTS项目通过公开内部API让编译器API使用起来更简单</b>
+<ul class="quote"><li>你可以在全局范围上公开你的TypeScript所使用的本地变量。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>你可以在全局范围上公开你的TypeScript所使用的本地变量。</li></ul>
+</div>
+<div class="sec">
+<h4>语法和语义的区别</h4>
+<ul class="point">
+<li><b>语法正确并不意味着语义也正确</b>
+<ul class="quote"><li>例如，下面的TypeScript代码，语法是合理的，但是语义却不正确。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>例如，下面的TypeScript代码，语法是合理的，但是语义却不正确。</li></ul>
+</div>
+<div class="sec">
+<h4>TypeScript编译器处理概览</h4>
+<ul class="point">
+<li><b>SourceCode(源代码)～～扫描器-＞token流～～解析器-＞AST(Abstract Syntax Tree，抽象语法树)～～绑定器-＞Symbol(符号)～～检查器-＞类型验证～～发射器-＞JavaScript代码</b>
+<ul class="quote"><li>符号是TypeScript语义系统的主要构造块。</li><li>符号和AST是检查器用来验证源代码语义的。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>符号是TypeScript语义系统的主要构造块。</li><li>符号和AST是检查器用来验证源代码语义的。</li></ul>
+</div>
+<div class="sec">
+<h4>TypeScript编译器核心工具</h4>
+<ul class="point">
+<li><b>core.ts是TypeScript编译器使用的核心工具集</b>
+<ul class="quote"><li>其中let objectAllocator：ObjectAllocator是一个定义为全局单例的变量，它提供以下定义：getNodeConstructor、getSymbolConstructor、getTypeConstructor、getSignatureConstructor。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>其中let objectAllocator：ObjectAllocator是一个定义为全局单例的变量，它提供以下定义：getNodeConstructor、getSymbolConstructor、getTypeConstructor、getSignatureConstructor。</li></ul>
+</div>
+<div class="sec">
+<h4>TypeScript编译器关键数据结构</h4>
+<ul class="point">
+<li><b>types.ts包含整个编译器所使用的关键数据结构和接口</b>
+<ul class="quote"><li>SyntaxKind AST：节点类型通过SyntaxKind枚举进行识别。</li><li>TypeChecker：类型检查器提供的接口。</li><li>CompilerHost：用于程序(Program)和系统(System)之间的交互。</li><li>Node AST节点。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>SyntaxKind AST：节点类型通过SyntaxKind枚举进行识别。</li><li>TypeChecker：类型检查器提供的接口。</li><li>CompilerHost：用于程序(Program)和系统(System)之间的交互。</li><li>Node AST节点。</li></ul>
+</div>
+<div class="sec">
+<h4>TypeScript编译器系统文件</h4>
+<ul class="point">
+<li><b>system.ts，TypeScript编译器与操作系统的所有交互均通过System接口进行</b>
+<ul class="quote"><li>接口及其实现(WScript和Node)均定义在system.ts中。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>接口及其实现(WScript和Node)均定义在system.ts中。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">99</span><span class="mmx-name">13.2 程序</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 4 条要点 · 4 句原句摘录</p>
+<div class="sec">
+<h4>Program的定义与构成</h4>
+<ul class="point">
+<li><b>Program定义在program.ts中，包含SourceFile和编译选项。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>CompilerHost的使用</h4>
+<ul class="point">
+<li><b>CompilerHost是与操作环境进行交互的机制</b>
+<ul class="quote"><li>Program使用-＞CompilerHost使用-＞System。</li></ul>
+</li>
+<li><b>用CompilerHost做中间层的原因是，这样可以让接口对Program的需求进行细粒度的调整，而无需考虑操作环境的需求</b>
+<ul class="quote"><li>例如，Program无需关心System的fileExists函数。</li><li>System还有其他的使用者(如测试)。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Program使用-＞CompilerHost使用-＞System。</li><li>例如，Program无需关心System的fileExists函数。</li><li>System还有其他的使用者(如测试)。</li></ul>
+</div>
+<div class="sec">
+<h4>SourceFile的获取</h4>
+<ul class="point">
+<li><b>程序提供了一个API，用于获取SourceFile：getSourceFiles()：SourceFile[]</b>
+<ul class="quote"><li>其得到的每个元素均是一个抽象语法树的根节点(被称作SourceFile)。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>其得到的每个元素均是一个抽象语法树的根节点(被称作SourceFile)。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">100</span><span class="mmx-name">13.3 抽象语法树</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 5 个小节 · 10 条要点 · 15 句原句摘录</p>
+<div class="sec">
+<h4>Node节点</h4>
+<ul class="point">
+<li><b>Node是抽象语法树的基本构造块，通常表示非末端节点。</b>
+</li>
+<li><b>Node的接口包括TextRange、parent?等关键成员</b>
+<ul class="quote"><li>TextRange：标识该节点在源文件中的起止位置。</li><li>parent？：Node：指当前节点(在AST中)的父节点。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>TextRange：标识该节点在源文件中的起止位置。</li><li>parent？：Node：指当前节点(在AST中)的父节点。</li></ul>
+</div>
+<div class="sec">
+<h4>SourceFile</h4>
+<ul class="point">
+<li><b>SourceFile是一个AST的根节点，包含在Program中。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>AST技巧：访问子节点</h4>
+<ul class="point">
+<li><b>使用ts.forEachChild函数访问AST任意节点的所有子节点</b>
+<ul class="quote"><li>该函数主要检查node.kind并据此判断Node的接口，然后在其子节点上调用cbNode。</li><li>如果想获得某AST点的所有子节点，只要调用该节点的成员函数.getChildren即可。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>该函数主要检查node.kind并据此判断Node的接口，然后在其子节点上调用cbNode。</li><li>如果想获得某AST点的所有子节点，只要调用该节点的成员函数.getChildren即可。</li></ul>
+</div>
+<div class="sec">
+<h4>AST技巧：SyntaxKind枚举</h4>
+<ul class="point">
+<li><b>SyntaxKind被定义为一个常量枚举，方便内联</b>
+<ul class="quote"><li>这是一个常量枚举，方便内联(例如，ts.SyntaxKind.EndOfFileToken会变为1)，这样在使用AST时就不会有处理引用的额外开销了。</li><li>但编译时需要使用--preserve ConstEnums来编译标记，以便枚举在运行时仍然可用。</li></ul>
+</li>
+<li><b>用下面的函数，将枚举成员转化为可读的字符串</b>
+<ul class="quote"><li>例如，ts.SyntaxKind.EndOfFileToken会变为&#x27;EndOfFileToken&#x27;。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>这是一个常量枚举，方便内联(例如，ts.SyntaxKind.EndOfFileToken会变为1)，这样在使用AST时就不会有处理引用的额外开销了。</li><li>但编译时需要使用--preserve ConstEnums来编译标记，以便枚举在运行时仍然可用。</li><li>例如，ts.SyntaxKind.EndOfFileToken会变为&#x27;EndOfFileToken&#x27;。</li></ul>
+</div>
+<div class="sec">
+<h4>AST杂项</h4>
+<ul class="point">
+<li><b>杂项是指在源文本中对于正常理解代码来说不太重要的部分</b>
+<ul class="quote"><li>例如，空白、注释、冲突标记等。</li></ul>
+</li>
+<li><b>杂项的所有权</b>
+<ul class="quote"><li>在通常情况下，token拥有它后面同一行到下一个token之前的所有杂项。</li><li>对于文件中的前导(leading)和结束(ending)注释来说，源文件中的第1个token拥有所有开始的杂项；而文件最后的一些杂项则附加到文件结束符上，该token长度为0。</li></ul>
+</li>
+<li><b>杂项API</b>
+<ul class="quote"><li>节点的注释可以通过下面的函数来获取。</li><li>对于function而言，getLeadingCommentRanges只返回最后的两个注释//bye和/*hi*/。</li><li>另外，在debugger语句结束的位置，调用getTrailingCommentRanges会得到注释/*hello*/。</li></ul>
+</li>
+<li><b>token start和full start的位置</b>
+<ul class="quote"><li>token start，比较自然的版本，即一个token文本在文件中开始的位置。</li><li>full start，是指扫描器从上一个重要token开始扫描的位置。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>例如，空白、注释、冲突标记等。</li><li>在通常情况下，token拥有它后面同一行到下一个token之前的所有杂项。</li><li>对于文件中的前导(leading)和结束(ending)注释来说，源文件中的第1个token拥有所有开始的杂项；而文件最后的一些杂项则附加到文件结束符上，该token长度为0。</li><li>节点的注释可以通过下面的函数来获取。</li><li>对于function而言，getLeadingCommentRanges只返回最后的两个注释//bye和/*hi*/。</li><li>另外，在debugger语句结束的位置，调用getTrailingCommentRanges会得到注释/*hello*/。</li><li>token start，比较自然的版本，即一个token文本在文件中开始的位置。</li><li>full start，是指扫描器从上一个重要token开始扫描的位置。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">101</span><span class="mmx-name">13.4 扫描器</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 4 条要点 · 3 句原句摘录</p>
+<div class="sec">
+<h4>TypeScript扫描器的源代码位置和作用</h4>
+<ul class="point">
+<li><b>扫描器的源代码位于scanner.ts中，负责将源代码转化为抽象语法树(AST)。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>解析器对扫描器的使用</h4>
+<ul class="point">
+<li><b>解析器使用initializeState函数根据需要启动扫描器</b>
+<ul class="quote"><li>解析器创建了一个扫描器的单例，以避免重复创建扫描器造成的开销。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>解析器创建了一个扫描器的单例，以避免重复创建扫描器造成的开销。</li></ul>
+</div>
+<div class="sec">
+<h4>扫描器状态</h4>
+<ul class="point">
+<li><b>调用scan后，扫描器更新其局部状态，如扫描位置、当前token详情等</b>
+<ul class="quote"><li>扫描器提供了一组工具函数来获取当前扫描器的状态。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>扫描器提供了一组工具函数来获取当前扫描器的状态。</li></ul>
+</div>
+<div class="sec">
+<h4>独立扫描器的使用</h4>
+<ul class="point">
+<li><b>即使TypeScript解析器有单例扫描器，你仍然可以使用createScanner创建独立的扫描器</b>
+<ul class="quote"><li>用setText/setTextPos随意扫描文件的不同位置。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>用setText/setTextPos随意扫描文件的不同位置。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">102</span><span class="mmx-name">13.5 解析器</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 6 条要点 · 13 句原句摘录</p>
+<div class="sec">
+<h4>TypeScript解析器的实现</h4>
+<ul class="point">
+<li><b>解析器使用单例模式，由解析器函数管理扫描器</b>
+<ul class="quote"><li>解析器实际上被实现为namespace Parser，其中包含解析器的各种状态变量和单例扫描器(const scanner)。</li><li>该扫描器由解析器函数管理。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>解析器实际上被实现为namespace Parser，其中包含解析器的各种状态变量和单例扫描器(const scanner)。</li><li>该扫描器由解析器函数管理。</li></ul>
+</div>
+<div class="sec">
+<h4>程序对解析器的使用</h4>
+<ul class="point">
+<li><b>解析器由程序间接驱动，通过CompilerHost</b>
+<ul class="quote"><li>parseSourceFile不仅准备好了解析器的状态，还调用initializeState准备好了扫描器的状态。</li><li>然后，使用parseSourceFileWorker继续解析源代码。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>parseSourceFile不仅准备好了解析器的状态，还调用initializeState准备好了扫描器的状态。</li><li>然后，使用parseSourceFileWorker继续解析源代码。</li></ul>
+</div>
+<div class="sec">
+<h4>解析器的使用示例</h4>
+<ul class="point">
+<li><b>获取一个源文件的AST并输出它</b>
+<ul class="quote"><li>这段代码会输出以下内容。</li><li>如果你把头向左倾，上面的代码看起来会像一棵(右侧)树。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>这段代码会输出以下内容。</li><li>如果你把头向左倾，上面的代码看起来会像一棵(右侧)树。</li></ul>
+</div>
+<div class="sec">
+<h4>解析器函数</h4>
+<ul class="point">
+<li><b>parseSourceFileWorker函数会先创建一个SourceFile AST节点，然后从parseStatements函数开始解析源代码</b>
+<ul class="quote"><li>一旦返回了结果，就用额外信息(如nodeCount、identifierCount等)来完善SourceFile节点。</li></ul>
+</li>
+<li><b>parseStatements函数是最重要的parseFoo系函数之一，它根据扫描器返回的当前token来进行切换(调用相应的parseFoo函数)</b>
+<ul class="quote"><li>例如，如果当前token是一个SemicolonToken(分号标记)，那么它会调用paserEmptyStatement为空语句创建一个AST节点。</li></ul>
+</li>
+<li><b>解析器有一系列parseFoo函数用来创建类型为Foo的节点</b>
+<ul class="quote"><li>该过程的典型示例是解析空语句(如；；；；；；)时要用的parseEmptyStatement()函数。</li><li>它展示了3个关键函数：createNode、parseExpected和finishNode。</li><li>createNode函数负责创建节点，设置传入的SyntaxKind(语法类别)和初始位置。</li><li>parseExpected函数会检查解析器状态中的当前token是否与指定的SyntaxKind相匹配。</li><li>finishNode函数设置节点的end位置，并添加一些有用的信息。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>一旦返回了结果，就用额外信息(如nodeCount、identifierCount等)来完善SourceFile节点。</li><li>例如，如果当前token是一个SemicolonToken(分号标记)，那么它会调用paserEmptyStatement为空语句创建一个AST节点。</li><li>该过程的典型示例是解析空语句(如；；；；；；)时要用的parseEmptyStatement()函数。</li><li>它展示了3个关键函数：createNode、parseExpected和finishNode。</li><li>createNode函数负责创建节点，设置传入的SyntaxKind(语法类别)和初始位置。</li><li>parseExpected函数会检查解析器状态中的当前token是否与指定的SyntaxKind相匹配。</li><li>finishNode函数设置节点的end位置，并添加一些有用的信息。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">103</span><span class="mmx-name">13.6 绑定器</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 8 个小节 · 8 条要点 · 12 句原句摘录</p>
+<div class="sec">
+<h4>绑定器的作用和主要职责</h4>
+<ul class="point">
+<li><b>绑定器将源代码的各部分连接成一个相关的类型系统，供检查器使用</b>
+<ul class="quote"><li>绑定器的主要职责是创建符号(Symbol)。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>绑定器的主要职责是创建符号(Symbol)。</li></ul>
+</div>
+<div class="sec">
+<h4>符号的定义和作用</h4>
+<ul class="point">
+<li><b>符号将AST中的声明节点与其他声明连接到相同的实体上</b>
+<ul class="quote"><li>符号的构造器定义在core.ts上，绑定器实际上通过objectAllocator.getSymbolConstructor来获取构造器。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>符号的构造器定义在core.ts上，绑定器实际上通过objectAllocator.getSymbolConstructor来获取构造器。</li></ul>
+</div>
+<div class="sec">
+<h4>检查器对绑定器的使用</h4>
+<ul class="point">
+<li><b>绑定器被类型检查器在内部调用，而检查器又被程序调用</b>
+<ul class="quote"><li>SourceFile是绑定器的工作单元，binder.ts由checker.ts驱动。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>SourceFile是绑定器的工作单元，binder.ts由checker.ts驱动。</li></ul>
+</div>
+<div class="sec">
+<h4>绑定器函数</h4>
+<ul class="point">
+<li><b>bindSourceFile和mergeSymbolTable是两个关键的绑定器函数</b>
+<ul class="quote"><li>bindSourceFile主要用来检查file.locals是否被定义了，如果没有，则交给(本地函数)bind来处理。</li><li>bind能处理任意节点(不只是SourceFile)，它做的第一件事是分配node.parent，即使parent变量已经被设置，绑定器在bindChildren函数的处理中仍会再次设置；然后交给bindWorker做很多“重活儿”；最后调用bindChildren。</li><li>bindWorker依据node.kind(SyntaxKind类型)进行切换，并将工作委托给合适的bindXXX函数(也定义在binder.ts中)。</li><li>bindXXX系函数有一些通用的模式和工具函数。其中最常用的一个是createSymbol函数，其全部代码如下所示。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>bindSourceFile主要用来检查file.locals是否被定义了，如果没有，则交给(本地函数)bind来处理。</li><li>bind能处理任意节点(不只是SourceFile)，它做的第一件事是分配node.parent，即使parent变量已经被设置，绑定器在bindChildren函数的处理中仍会再次设置；然后交给bindWorker做很多“重活儿”；最后调用bindChildren。</li><li>bindWorker依据node.kind(SyntaxKind类型)进行切换，并将工作委托给合适的bindXXX函数(也定义在binder.ts中)。</li><li>bindXXX系函数有一些通用的模式和工具函数。其中最常用的一个是createSymbol函数，其全部代码如下所示。</li></ul>
+</div>
+<div class="sec">
+<h4>绑定器声明</h4>
+<ul class="point">
+<li><b>节点和符号间的连接由几个函数执行</b>
+<ul class="quote"><li>其中一个用于绑定SourceFile节点和源文件符号(在外部模块的情况下)的函数是addDeclarationToSymbol。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>其中一个用于绑定SourceFile节点和源文件符号(在外部模块的情况下)的函数是addDeclarationToSymbol。</li></ul>
+</div>
+<div class="sec">
+<h4>绑定器容器</h4>
+<ul class="point">
+<li><b>AST的节点可以被当作容器</b>
+<ul class="quote"><li>容器是一个抽象的概念(没有相关的数据结构)。该概念是由一些东西驱动的，ContainerFlags枚举是其中之一。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>容器是一个抽象的概念(没有相关的数据结构)。该概念是由一些东西驱动的，ContainerFlags枚举是其中之一。</li></ul>
+</div>
+<div class="sec">
+<h4>绑定器符号表</h4>
+<ul class="point">
+<li><b>符号表(SymbolTable)是以一个简单的HashMap实现的</b>
+<ul class="quote"><li>符号表通过绑定进行初始化，下面是编译器使用的一些符号表。</li><li>符号表使用符号来填充，主要是通过调用declareSymbol来进行的。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>符号表通过绑定进行初始化，下面是编译器使用的一些符号表。</li><li>符号表使用符号来填充，主要是通过调用declareSymbol来进行的。</li></ul>
+</div>
+<div class="sec">
+<h4>绑定器错误报告</h4>
+<ul class="point">
+<li><b>绑定错误被添加到源文件的bindDiagnostics列表中</b>
+<ul class="quote"><li>一个绑定时错误检测的例子是，在严格模式下使用eval或arguments作为变量名。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>一个绑定时错误检测的例子是，在严格模式下使用eval或arguments作为变量名。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">104</span><span class="mmx-name">13.7 检查器</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 4 条要点 · 3 句原句摘录</p>
+<div class="sec">
+<h4>检查器的使用</h4>
+<ul class="point">
+<li><b>检查器是由程序初始化的</b>
+<ul class="quote"><li>调用栈的代码示例。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>调用栈的代码示例。</li></ul>
+</div>
+<div class="sec">
+<h4>与发射器的联系</h4>
+<ul class="point">
+<li><b>真正的类型检查在调用getDiagnostics时才会发生</b>
+<ul class="quote"><li>当该函数被调用，例如当向Program.emit发出请求时，检查器会返回一个EmitResolver。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>当该函数被调用，例如当向Program.emit发出请求时，检查器会返回一个EmitResolver。</li></ul>
+</div>
+<div class="sec">
+<h4>全局命名空间合并</h4>
+<ul class="point">
+<li><b>在initializeTypeChecker中存在以下代码，将所有global符号都合并到let globals：SymbolTable={}符号表中</b>
+<ul class="quote"><li>mergeSymbolTable主要调用mergeSymbol函数。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>mergeSymbolTable主要调用mergeSymbol函数。</li></ul>
+</div>
+<div class="sec">
+<h4>检查器错误报告</h4>
+<ul class="point">
+<li><b>检查器使用本地的error函数报告错误。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">105</span><span class="mmx-name">13.8 发射器</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 7 条要点 · 9 句原句摘录</p>
+<div class="sec">
+<h4>TypeScript编译器的两个发射器</h4>
+<ul class="point">
+<li><b>emitter.ts：把TypeScript编译为JavaScript的发射器。</b>
+</li>
+<li><b>declarationEmitter.ts：为TypeScript源文件创建声明文件。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>Program对发射器的使用</h4>
+<ul class="point">
+<li><b>Program提供了一个emit函数，该函数主要将功能委托给emitter.ts中的emitFiles函数</b>
+<ul class="quote"><li>emitWorker(通过emitFiles参数)给发射器提供一个EmitResolver。</li><li>EmitResolver由程序的TypeChecker提供，基本上它是一个来自createChecker的本地函数的子集。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>emitWorker(通过emitFiles参数)给发射器提供一个EmitResolver。</li><li>EmitResolver由程序的TypeChecker提供，基本上它是一个来自createChecker的本地函数的子集。</li></ul>
+</div>
+<div class="sec">
+<h4>发射器函数</h4>
+<ul class="point">
+<li><b>emitFiles函数定义在emitter.ts中，负责调用emitJavaScript函数</b>
+<ul class="quote"><li>EmitHost是CompilerHost的简化版，在运行时，很多用例实际上都是CompilerHost。</li><li>在emitFiles中，最有趣的调用栈如下所示。</li></ul>
+</li>
+<li><b>emitJavaScript函数设置了一批本地变量和函数，然后交给本地函数emitSourceFile去发射文本</b>
+<ul class="quote"><li>emitSourceFile函数设置currentSourceFile，然后交给本地函数emit去处理。</li><li>emit函数处理注释和实际的JavaScript的发射。</li></ul>
+</li>
+<li><b>emitJavaScriptWorker函数通过简单地调用相应的emitXXX函数来完成递归</b>
+<ul class="quote"><li>例如emitFunctionDeclaration。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>EmitHost是CompilerHost的简化版，在运行时，很多用例实际上都是CompilerHost。</li><li>在emitFiles中，最有趣的调用栈如下所示。</li><li>emitSourceFile函数设置currentSourceFile，然后交给本地函数emit去处理。</li><li>emit函数处理注释和实际的JavaScript的发射。</li><li>例如emitFunctionDeclaration。</li></ul>
+</div>
+<div class="sec">
+<h4>发射器SourceMap</h4>
+<ul class="point">
+<li><b>emitter.ts中的大部分代码是函数emitJavaScript的代码，它主要是设置一批本地变量并交给emitSourceFile处理</b>
+<ul class="quote"><li>重要的函数调用：initializeEmitterWithSourceMaps，该函数是emitJavaScript的本地函数，它覆盖了部分已定义的本地函数。</li><li>也就是说大部分的发射器代码不关心SourceMap，它们以相同的方式使用这些含有或不含有SourceMap的本地函数。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>重要的函数调用：initializeEmitterWithSourceMaps，该函数是emitJavaScript的本地函数，它覆盖了部分已定义的本地函数。</li><li>也就是说大部分的发射器代码不关心SourceMap，它们以相同的方式使用这些含有或不含有SourceMap的本地函数。</li></ul>
+</div>
+</div></details>
+  </div>
+</section>
 <section class="mmx-mod" aria-labelledby="views" data-key="views"><h2 id="views">核心观点初判</h2><p class="mmx-mod-note">按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。</p><ul class="mmx-views"><li><b>第 1–7 章</b>——含「译者序」至「第2章 JavaScri」</li><li><b>第 8–14 章</b>——含「2.1 相等」至「2.7 truthy」</li><li><b>第 15–21 章</b>——含「第3章 JavaScri」至「3.6 解构」</li><li><b>第 22–28 章</b>——含「3.7 扩展运算符」至「3.13 async/a」</li><li><b>第 29–35 章</b>——含「第4章 TypeScri」至「第5章 快速创建Type」</li><li><b>第 36–42 章</b>——含「5.2 在浏览器中使用T」至「6.4 环境声明」</li><li><b>第 43–49 章</b>——含「6.5 接口」至「6.11 Freshne」</li><li><b>第 50–56 章</b>——含「6.12 类型保护」至「6.18 never」</li><li><b>第 57–63 章</b>——含「6.19 辨析联合类型」至「第7章 关于JSX」</li><li><b>第 64–70 章</b>——含「7.1 React JS」至「第9章 TypeScri」</li><li><b>第 71–77 章</b>——含「9.1 解读错误」至「10.5 ESlint」</li><li><b>第 78–84 章</b>——含「10.6 Changel」至「11.5 对象字面量的惰」</li><li><b>第 85–91 章</b>——含「11.6 类是有用的」至「11.12 函数参数」</li><li><b>第 92–98 章</b>——含「11.13 构建切换」至「第12章 TypeScr」</li><li><b>第 99–105 章</b>——含「12.1 变量和函数」至「12.7 null和un」</li><li><b>第 106–114 章</b>——含「12.8 格式化」至「13.8 发射器」</li></ul></section>
 <section class="mmx-mod" aria-labelledby="top10" data-key="top10"><h2 id="top10">原文金句 · 持续积累</h2><p class="mmx-mod-note">以下原句取自本书 AI 大纲落库的原文摘录（book_outline.quote），按大纲顺序节选，非 AI 生成；更多见逐章深读页。</p><ol class="mmx-qlist"><li><blockquote>「在JavaScript中，闭包是指一个函数有权力访问定义在它外部作用域的任何变量。」</blockquote><cite>本书正文</cite></li><li><blockquote>「类型系统能够提高代码的质量和可维护性。」</blockquote><cite>本书正文</cite></li><li><blockquote>「类型是出色的文档形式之一，函数签名是一个定理，而函数体是具体的实现。」</blockquote><cite>本书正文</cite></li><li><blockquote>「当你向索引签名传入一个其他对象时，JavaScript会在得到结果之前先调用toString方法。」</blockquote><cite>本书正文</cite></li><li><blockquote>「通过操作符！！，你可以很容易地将某些值转化为布尔类型的值（true或false）。」</blockquote><cite>本书正文</cite></li><li><blockquote>「TypeScript提供了一个浮动的标准来衡量你希望在声明中投入多少努力；投入的越多，你获得的类型安全和代码智能提示就越多」</blockquote><cite>本书正文</cite></li><li><blockquote>「类型有利于代码的重构，它有利于编译器在编译时而不是运行时捕获错误。」</blockquote><cite>本书正文</cite></li><li><blockquote>「TypeScript代码会被编译成JavaScript代码，JavaScript代码才是实际被执行的代码。」</blockquote><cite>本书正文</cite></li><li><blockquote>「在TypeScript中，string类型的数据==number类型的数据，以及string类型的数据===number类型的数据，都会在编译时报错。因此，你完全不必担心因隐式类型转换而引发的问题。」</blockquote><cite>本书正文</cite></li><li><blockquote>「JSON标准支持编码null，但是不支持undefined。当JSON编码具有null属性的对象时，这个属性将会包含null值；然而当一个属性undefined时，在编码后，它就会被删除。」</blockquote><cite>本书正文</cite></li></ol></section>
 <section class="mmx-mod" aria-labelledby="coreask" data-key="coreask"><h2 id="coreask">核心追问（来自深读）</h2><div class="mmx-qa"><p class="mmx-q">作者为什么说「类型是出色的文档形式之一，函数签名是定理，函数体是实现」？</p><p class="mmx-a">第5章「1.2 选择 TypeScript 的理由」一条高划线（54人）把这个类比讲得很妙：类型是文档，函数签名（输入/输出类型）像一条「定理」——它声明了契约；函数体则是这条契约的「实现」。意思是，类型注解让调用者在读代码前就能从签名知道「给我什么、还你什么」，无需钻进实现细节。同章另一条（70人）说「类型系统能够提高代码的质量和可维护性」，正呼应这一点：类型把「约定」写进编译期，比注释更不容易过期，也比口口相传的团队规范更可靠。</p></div><div class="mmx-qa"><p class="mmx-q">「TypeScript 代码会被编译成 JavaScript，JS 才是实际被执行的」——这为什么是理解 TS 的钥匙？</p><p class="mmx-a">第4章「1.1 开始使用 TypeScript」一条高划线（39人）点明：TS 代码编译成 JS，JS 才是真正执行的代码。这把 TS 的「本质」说清楚了——它是一层编译期的类型安全外衣，运行时不存类型。由此推出两个关键推论：第一，TS 的类型错误只在编译期拦截，运行时行为与 JS 完全一致（所以第8章说 string==number 在编译期就报错，39人，免去隐式转换坑）；第二，任何 TS 救不了的运行期问题（如浏览器里 this 指向 window，第17章用箭头函数修，36人）仍要靠对 JS 本身的理解。学 TS 不能脱离 JS。</p></div><div class="mmx-qa"><p class="mmx-q">书里为什么反复拿 TypeScript 和 JavaScript 的「坑」对比着讲（相等、null/undefined、this）？</p><p class="mmx-a">因为 TS 的价值恰恰在于「补 JS 的洞」。第8章（39人）展示 TS 下 string 与 number 的 == / === 都编译报错，直接消灭 JS 最臭名昭著的隐式转换；第10章（39人）区分 null 与 undefined，还点出 JSON 标准支持 null 不支持 undefined（undefined 属性在编码后被删除）——这正是前端序列化常踩的雷；第17章（36人）讲 this 指向，TS 配合箭头函数缓解。作者先讲 JS 这些「坑」，再给 TS 的「护栏」，读者才能体会类型系统不是束缚，而是把已经存在的危险提前挡下。</p></div></section>

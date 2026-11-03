@@ -1,21 +1,2650 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>RocketMQ实战与原理解析 · AI 大纲</title><style>
-:root{--fg:#1f2328;--muted:#6b7280;--line:#e6e2da;--accent:#b45309;--bg:#fbfaf7}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.78 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
-.wrap{max-width:840px;margin:0 auto;padding:38px 22px 90px}
-h1{font-size:26px;line-height:1.35;margin:0 0 6px}
-.meta{color:var(--muted);font-size:14px;margin-bottom:20px}
-h2{font-size:19px;margin:34px 0 12px;padding-left:10px;border-left:4px solid var(--accent)}
-h3{font-size:16px;margin:18px 0 8px}
-p{margin:8px 0}
-.tag{display:inline-block;background:#f2ede2;color:#8a6d3b;font-size:12px;padding:1px 9px;border-radius:10px;margin-right:6px}
-ul,ol{padding-left:22px}li{margin:4px 0}
-.quote{border-left:3px solid #d8cfbd;padding:6px 12px;color:#4b4639;background:#f7f4ee;margin:8px 0;font-size:15px;border-radius:0 6px 6px 0}
-.src{color:var(--muted);font-size:12px}
-.ch{display:flex;gap:10px;padding:7px 0;border-bottom:1px dashed var(--line)}
-.ch .no{color:var(--accent);font-weight:600;min-width:34px;text-align:right}
-.card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:12px 0}
-.foot{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
-a{color:#8a5a00;text-decoration:none}a:hover{text-decoration:underline}
-.badge{font-size:12px;color:#8a6d3b;background:#f6f1e6;border:1px solid #eadfc6;border-radius:6px;padding:1px 7px}
-</style></head><body><div class="wrap"><h1>RocketMQ实战与原理解析</h1><div class="meta"><span class="tag">AI 大纲</span>杨开元　·　共 80 章</div><h2>全书提要</h2><p>本书作者是阿里资深数据专家，对RocketMQ有深入的研究，并有大量的实践经验。在写这本书之前，作者不仅系统、深入地阅读了RocketMQ的源代码，而且还向RocketMQ的官方开发团队深入了解了它的诸多设计细节。作者结合自己多年使用RocketMQ的经验，从开发和运维两个维度，给出了大部分场景下的优秀实践，能帮助读者在学会使用和用好RocketMQ的同时，尽量少“踩坑”。</p><h2>章节大纲（含各章热门划线原文）</h2><div class="ch"><span class="no">1</span><div><b>推荐序</b><span class="src"> · 834 字</span></div></div><div class="ch"><span class="no">2</span><div><b>前言</b><span class="src"> · 1723 字</span></div></div><div class="ch"><span class="no">3</span><div><b>第1章 快速入门</b><span class="src"> · 78 字</span></div></div><div class="ch"><span class="no">4</span><div><b>1.1 消息队列功能介绍</b><span class="src"> · 1585 字</span><div class="quote">数据的产生方只需要把各自的数据写入一个消息队列即可，数据使用方根据各自需求订阅感兴趣的数据，不同数据团队所订阅的数据可以重复也可以不重复，互不干扰，也不必和数据产生方关联。 <span class="src">[72人划线]</span></div><div class="quote">通过利用消息队列，把大量的请求暂存起来，分散到相对长的一段时间内处理，能大大提高系统的稳定性和用户体验。 <span class="src">[54人划线]</span></div></div></div><div class="ch"><span class="no">5</span><div><b>1.2 RocketMQ简介</b><span class="src"> · 487 字</span><div class="quote">RocketMQ是使用Java语言开发的，比起Kafka的Scala语言和RabbitMQ的Erlang语言，更容易找到技术人员进行定制开发。 <span class="src">[48人划线]</span></div></div></div><div class="ch"><span class="no">6</span><div><b>1.3 快速上手RocketMQ</b><span class="src"> · 1876 字</span></div></div><div class="ch"><span class="no">7</span><div><b>1.4 本章小结</b><span class="src"> · 159 字</span></div></div><div class="ch"><span class="no">8</span><div><b>第2章 生产环境下的配置和使用</b><span class="src"> · 159 字</span></div></div><div class="ch"><span class="no">9</span><div><b>2.1 RocketMQ各部分角色介绍</b><span class="src"> · 861 字</span><div class="quote">一是发信者，二是收信者，三是负责暂存、传输的邮局，四是负责协调各个地方邮局的管理机构。对应到RocketMQ中，这四个角色就是Producer、Consumer、Broker和NameServer。 <span class="src">[72人划线]</span></div></div></div><div class="ch"><span class="no">10</span><div><b>2.2 多机集群配置和部署</b><span class="src"> · 2799 字</span></div></div><div class="ch"><span class="no">11</span><div><b>2.3 发送/接收消息示例</b><span class="src"> · 1986 字</span></div></div><div class="ch"><span class="no">12</span><div><b>2.4 常用管理命令</b><span class="src"> · 1691 字</span></div></div><div class="ch"><span class="no">13</span><div><b>2.5 通过图形界面管理集群</b><span class="src"> · 422 字</span></div></div><div class="ch"><span class="no">14</span><div><b>2.6 本章小结</b><span class="src"> · 200 字</span></div></div><div class="ch"><span class="no">15</span><div><b>第3章 用适合的方式发送和接收消息</b><span class="src"> · 154 字</span></div></div><div class="ch"><span class="no">16</span><div><b>3.1 不同类型的消费者</b><span class="src"> · 10428 字</span><div class="quote">长轮询方式的局限性，是在HOLD住Consumer请求的时候需要占用资源，它适合用在消息队列这种客户端连接数可控的场景中。 <span class="src">[120人划线]</span></div><div class="quote">RocketMQ支持两种消息模式：Clustering和Broadcasting。 <span class="src">[64人划线]</span></div></div></div><div class="ch"><span class="no">17</span><div><b>3.2 不同类型的生产者</b><span class="src"> · 4233 字</span><div class="quote">写一个高质量的生产者程序，重点在于对发送结果的处理，要充分考虑各种异常，写清对应的处理逻辑。 <span class="src">[68人划线]</span></div></div></div><div class="ch"><span class="no">18</span><div><b>3.3 如何存储队列位置信息</b><span class="src"> · 3875 字</span></div></div><div class="ch"><span class="no">19</span><div><b>3.4 自定义日志输出</b><span class="src"> · 2259 字</span></div></div><div class="ch"><span class="no">20</span><div><b>3.5 本章小结</b><span class="src"> · 220 字</span></div></div><div class="ch"><span class="no">21</span><div><b>第4章 分布式消息队列的协调者</b><span class="src"> · 201 字</span></div></div><div class="ch"><span class="no">22</span><div><b>4.1 NameServer的功能</b><span class="src"> · 2740 字</span></div></div><div class="ch"><span class="no">23</span><div><b>4.2 各个角色间的交互流程</b><span class="src"> · 2498 字</span></div></div><div class="ch"><span class="no">24</span><div><b>4.3 底层通信机制</b><span class="src"> · 5368 字</span></div></div><div class="ch"><span class="no">25</span><div><b>4.4 本章小结</b><span class="src"> · 273 字</span></div></div><div class="ch"><span class="no">26</span><div><b>第5章 消息队列的核心机制</b><span class="src"> · 136 字</span></div></div><div class="ch"><span class="no">27</span><div><b>5.1 消息存储和发送</b><span class="src"> · 846 字</span></div></div><div class="ch"><span class="no">28</span><div><b>5.2 消息存储结构</b><span class="src"> · 1062 字</span></div></div><div class="ch"><span class="no">29</span><div><b>5.3 高可用性机制</b><span class="src"> · 752 字</span></div></div><div class="ch"><span class="no">30</span><div><b>5.4 同步刷盘和异步刷盘</b><span class="src"> · 438 字</span></div></div><div class="ch"><span class="no">31</span><div><b>5.5 同步复制和异步复制</b><span class="src"> · 556 字</span><div class="quote">应该把Master和Save配置成ASYNC_FLUSH的刷盘方式，主从之间配置成SYNC_MASTER的复制方式 <span class="src">[108人划线]</span></div></div></div><div class="ch"><span class="no">32</span><div><b>5.6 本章小结</b><span class="src"> · 281 字</span></div></div><div class="ch"><span class="no">33</span><div><b>第6章 可靠性优先的使用场景</b><span class="src"> · 73 字</span></div></div><div class="ch"><span class="no">34</span><div><b>6.1 顺序消息</b><span class="src"> · 2389 字</span><div class="quote">在发送端，要做到把同一业务ID的消息发送到同一个Message Queue；在消费过程中，要做到从同一个Message Queue读取的消息不被并发处理，这样才能达到部分有序 <span class="src">[48人划线]</span></div></div></div><div class="ch"><span class="no">35</span><div><b>6.2 消息重复问题</b><span class="src"> · 379 字</span><div class="quote">解决消息重复有两种方法：第一种方法是保证消费逻辑的幂等性（多次调用和一次调用效果相同）；另一种方法是维护一个已消费消息的记录，消费前查询这个消息是否被消费过。这两种方法都需要使用者自己实现。 <span class="src">[136人划线]</span></div></div></div><div class="ch"><span class="no">36</span><div><b>6.3 动态增减机器</b><span class="src"> · 2419 字</span></div></div><div class="ch"><span class="no">37</span><div><b>6.4 各种故障对消息的影响</b><span class="src"> · 1040 字</span></div></div><div class="ch"><span class="no">38</span><div><b>6.5 消息优先级</b><span class="src"> · 1328 字</span></div></div><div class="ch"><span class="no">39</span><div><b>6.6 本章小结</b><span class="src"> · 188 字</span></div></div><div class="ch"><span class="no">40</span><div><b>第7章 吞吐量优先的使用场景</b><span class="src"> · 102 字</span></div></div><div class="ch"><span class="no">41</span><div><b>7.1 在Broker端进行消息过滤</b><span class="src"> · 3592 字</span></div></div><div class="ch"><span class="no">42</span><div><b>7.2 提高Consumer处理能力</b><span class="src"> · 1170 字</span></div></div><div class="ch"><span class="no">43</span><div><b>7.3 Consumer的负载均衡</b><span class="src"> · 3294 字</span><div class="quote">可见Message Queue数量设置过小不利于做负载均衡，通常情况下，应把一个Topic的Message Queue数设置为16。 <span class="src">[45人划线]</span></div></div></div><div class="ch"><span class="no">44</span><div><b>7.4 提高Producer的发送速度</b><span class="src"> · 908 字</span></div></div><div class="ch"><span class="no">45</span><div><b>7.5 系统性能调优的一般流程</b><span class="src"> · 1658 字</span></div></div><div class="ch"><span class="no">46</span><div><b>7.6 本章小结</b><span class="src"> · 219 字</span></div></div><div class="ch"><span class="no">47</span><div><b>第8章 和其他系统交互</b><span class="src"> · 24 字</span></div></div><div class="ch"><span class="no">48</span><div><b>8.1 在SpringBoot中使用RocketMQ</b><span class="src"> · 2673 字</span></div></div><div class="ch"><span class="no">49</span><div><b>8.2 直接使用云上RocketMQ</b><span class="src"> · 1640 字</span></div></div><div class="ch"><span class="no">50</span><div><b>8.3 RocketMQ与Spark、Flink对接</b><span class="src"> · 368 字</span></div></div><div class="ch"><span class="no">51</span><div><b>8.4 自定义开发运维工具</b><span class="src"> · 1305 字</span></div></div><div class="ch"><span class="no">52</span><div><b>8.5 本章小结</b><span class="src"> · 160 字</span></div></div><div class="ch"><span class="no">53</span><div><b>第9章 首个Apache中间件顶级项目</b><span class="src"> · 163 字</span></div></div><div class="ch"><span class="no">54</span><div><b>9.1 RocketMQ的前世今生</b><span class="src"> · 464 字</span></div></div><div class="ch"><span class="no">55</span><div><b>9.2 Apache顶级项目（TLP）之路</b><span class="src"> · 955 字</span></div></div><div class="ch"><span class="no">56</span><div><b>9.3 源码结构</b><span class="src"> · 334 字</span></div></div><div class="ch"><span class="no">57</span><div><b>9.4 不断迭代的代码</b><span class="src"> · 493 字</span></div></div><div class="ch"><span class="no">58</span><div><b>9.5 本章小结</b><span class="src"> · 112 字</span></div></div><div class="ch"><span class="no">59</span><div><b>第10章 NameServer源码解析</b><span class="src"> · 115 字</span></div></div><div class="ch"><span class="no">60</span><div><b>10.1 模块入口代码的功能</b><span class="src"> · 2102 字</span></div></div><div class="ch"><span class="no">61</span><div><b>10.2 NameServer的总控逻辑</b><span class="src"> · 1476 字</span></div></div><div class="ch"><span class="no">62</span><div><b>10.3 核心业务逻辑处理</b><span class="src"> · 2051 字</span></div></div><div class="ch"><span class="no">63</span><div><b>10.4 集群状态存储</b><span class="src"> · 1663 字</span></div></div><div class="ch"><span class="no">64</span><div><b>10.5 本章小结</b><span class="src"> · 187 字</span></div></div><div class="ch"><span class="no">65</span><div><b>第11章 最常用的消费类</b><span class="src"> · 123 字</span></div></div><div class="ch"><span class="no">66</span><div><b>11.1 整体流程</b><span class="src"> · 6659 字</span></div></div><div class="ch"><span class="no">67</span><div><b>11.2 消息的并发处理</b><span class="src"> · 3799 字</span></div></div><div class="ch"><span class="no">68</span><div><b>11.3 生产者消费者的底层类</b><span class="src"> · 5370 字</span></div></div><div class="ch"><span class="no">69</span><div><b>11.4 本章小结</b><span class="src"> · 196 字</span></div></div><div class="ch"><span class="no">70</span><div><b>第12章 主从同步机制</b><span class="src"> · 163 字</span></div></div><div class="ch"><span class="no">71</span><div><b>12.1 同步属性信息</b><span class="src"> · 1746 字</span></div></div><div class="ch"><span class="no">72</span><div><b>12.2 同步消息体</b><span class="src"> · 2209 字</span></div></div><div class="ch"><span class="no">73</span><div><b>12.3 sync_master和async_master</b><span class="src"> · 2072 字</span></div></div><div class="ch"><span class="no">74</span><div><b>12.4 本章小结</b><span class="src"> · 179 字</span></div></div><div class="ch"><span class="no">75</span><div><b>第13章 基于Netty的通信实现</b><span class="src"> · 175 字</span></div></div><div class="ch"><span class="no">76</span><div><b>13.1 Netty介绍</b><span class="src"> · 405 字</span></div></div><div class="ch"><span class="no">77</span><div><b>13.2 Netty架构总览</b><span class="src"> · 3134 字</span></div></div><div class="ch"><span class="no">78</span><div><b>13.3 Netty用法示例</b><span class="src"> · 4504 字</span></div></div><div class="ch"><span class="no">79</span><div><b>13.4 RocketMQ基于Netty的通信功能实现</b><span class="src"> · 8069 字</span></div></div><div class="ch"><span class="no">80</span><div><b>13.5 本章小结</b><span class="src"> · 242 字</span></div></div><div class="foot">来源：微信读书官方章节接口 + 热门划线接口，逐字原文　·　生成于 2026-11-01 13:15　·　开读即产（不等完读）</div></div></body></html>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="RocketMQ实战与原理解析 AI 大纲">
+<title>《RocketMQ实战与原理解析》｜AI 大纲</title>
+<link rel="stylesheet" href="../../../assets/css/site.css">
+<link rel="stylesheet" href="../../../assets/css/reading-outline.css">
+
+</head>
+<body>
+<main class="page">
+  <header class="note-head">
+    <p class="eyebrow">AI OUTLINE · BEFORE READING</p>
+    <h1>《RocketMQ实战与原理解析》AI 大纲</h1>
+    <p class="meta">作者：—　·　共 75 章 / 764 条　·　AI 读书 · 全书大纲</p>
+    <p><a href="../../../index.html">← 返回首页</a>　<a href="../../index.html">阅读归档索引</a>　<a href="outline.epub" download>下载 EPUB ↓</a></p>
+    <div class="chips"><span class="chip">全书视角</span><span class="chip">AI 生成</span><span class="chip">含原文摘录</span></div>
+    <p class="small">本大纲由 AI 读书（阅读端智能大纲）生成，是全书结构与要点的机器梳理，
+    <b>不等同于已亲读</b>；其中第 4 层条目为书中原句摘录。章节可展开查看。</p>
+  </header>
+  <div class="toc"><b>章节目录</b><ul>
+<li><a href="#ch0">1.1 消息队列功能介绍</a></li>
+<li><a href="#ch1">1.2 RocketMQ简介</a></li>
+<li><a href="#ch2">1.3 快速上手RocketMQ</a></li>
+<li><a href="#ch3">1.4 本章小结</a></li>
+<li><a href="#ch4">第2章 生产环境下的配置和使用</a></li>
+<li><a href="#ch5">2.1 RocketMQ各部分角色介绍</a></li>
+<li><a href="#ch6">2.2 多机集群配置和部署</a></li>
+<li><a href="#ch7">2.3 发送/接收消息示例</a></li>
+<li><a href="#ch8">2.4 常用管理命令</a></li>
+<li><a href="#ch9">2.5 通过图形界面管理集群</a></li>
+<li><a href="#ch10">2.6 本章小结</a></li>
+<li><a href="#ch11">第3章 用适合的方式发送和接收消息</a></li>
+<li><a href="#ch12">3.1 不同类型的消费者</a></li>
+<li><a href="#ch13">3.2 不同类型的生产者</a></li>
+<li><a href="#ch14">3.3 如何存储队列位置信息</a></li>
+<li><a href="#ch15">3.4 自定义日志输出</a></li>
+<li><a href="#ch16">3.5 本章小结</a></li>
+<li><a href="#ch17">第4章 分布式消息队列的协调者</a></li>
+<li><a href="#ch18">4.1 NameServer的功能</a></li>
+<li><a href="#ch19">4.2 各个角色间的交互流程</a></li>
+<li><a href="#ch20">4.3 底层通信机制</a></li>
+<li><a href="#ch21">4.4 本章小结</a></li>
+<li><a href="#ch22">第5章 消息队列的核心机制</a></li>
+<li><a href="#ch23">5.1 消息存储和发送</a></li>
+<li><a href="#ch24">5.2 消息存储结构</a></li>
+<li><a href="#ch25">5.3 高可用性机制</a></li>
+<li><a href="#ch26">5.4 同步刷盘和异步刷盘</a></li>
+<li><a href="#ch27">5.5 同步复制和异步复制</a></li>
+<li><a href="#ch28">5.6 本章小结</a></li>
+<li><a href="#ch29">6.1 顺序消息</a></li>
+<li><a href="#ch30">6.2 消息重复问题</a></li>
+<li><a href="#ch31">6.3 动态增减机器</a></li>
+<li><a href="#ch32">6.4 各种故障对消息的影响</a></li>
+<li><a href="#ch33">6.5 消息优先级</a></li>
+<li><a href="#ch34">6.6 本章小结</a></li>
+<li><a href="#ch35">第7章 吞吐量优先的使用场景</a></li>
+<li><a href="#ch36">7.1 在Broker端进行消息过滤</a></li>
+<li><a href="#ch37">7.2 提高Consumer处理能力</a></li>
+<li><a href="#ch38">7.3 Consumer的负载均衡</a></li>
+<li><a href="#ch39">7.4 提高Producer的发送速度</a></li>
+<li><a href="#ch40">7.5 系统性能调优的一般流程</a></li>
+<li><a href="#ch41">7.6 本章小结</a></li>
+<li><a href="#ch42">8.1 在SpringBoot中使用RocketMQ</a></li>
+<li><a href="#ch43">8.2 直接使用云上RocketMQ</a></li>
+<li><a href="#ch44">8.3 RocketMQ与Spark、Flink对接</a></li>
+<li><a href="#ch45">8.4 自定义开发运维工具</a></li>
+<li><a href="#ch46">8.5 本章小结</a></li>
+<li><a href="#ch47">第9章 首个Apache中间件顶级项目</a></li>
+<li><a href="#ch48">9.1 RocketMQ的前世今生</a></li>
+<li><a href="#ch49">9.2 Apache顶级项目（TLP）之路</a></li>
+<li><a href="#ch50">9.3 源码结构</a></li>
+<li><a href="#ch51">9.4 不断迭代的代码</a></li>
+<li><a href="#ch52">9.5 本章小结</a></li>
+<li><a href="#ch53">第10章 NameServer源码解析</a></li>
+<li><a href="#ch54">10.1 模块入口代码的功能</a></li>
+<li><a href="#ch55">10.2 NameServer的总控逻辑</a></li>
+<li><a href="#ch56">10.3 核心业务逻辑处理</a></li>
+<li><a href="#ch57">10.4 集群状态存储</a></li>
+<li><a href="#ch58">10.5 本章小结</a></li>
+<li><a href="#ch59">第11章 最常用的消费类</a></li>
+<li><a href="#ch60">11.1 整体流程</a></li>
+<li><a href="#ch61">11.2 消息的并发处理</a></li>
+<li><a href="#ch62">11.3 生产者消费者的底层类</a></li>
+<li><a href="#ch63">11.4 本章小结</a></li>
+<li><a href="#ch64">第12章 主从同步机制</a></li>
+<li><a href="#ch65">12.1 同步属性信息</a></li>
+<li><a href="#ch66">12.2 同步消息体</a></li>
+<li><a href="#ch67">12.3 sync_master和async_master</a></li>
+<li><a href="#ch68">12.4 本章小结</a></li>
+<li><a href="#ch69">第13章 基于Netty的通信实现</a></li>
+<li><a href="#ch70">13.1 Netty介绍</a></li>
+<li><a href="#ch71">13.2 Netty架构总览</a></li>
+<li><a href="#ch72">13.3 Netty用法示例</a></li>
+<li><a href="#ch73">13.4 RocketMQ基于Netty的通信功能实现</a></li>
+<li><a href="#ch74">13.5 本章小结</a></li>
+</ul></div>
+<details class="ch" id="ch0"><summary>1.1 消息队列功能介绍</summary>
+<div class="sec">
+<h4>消息队列的基本概念和功能</h4>
+<ul class="point">
+<li><b>消息队列是“先进先出”的一种数据结构，但要求很高</b>
+<ul class="quote">
+<li>要消除单点故障，保证消息传输的可靠性，并且还能应对大流量的冲击。</li>
+</ul>
+</li>
+<li><b>分布式消息队列可以提供应用解耦、流量消峰、消息分发等功能</b>
+<ul class="quote">
+<li>已经成为大型互联网服务架构里标配的中间件。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>消息队列的应用解耦功能</h4>
+<ul class="point">
+<li><b>复杂的应用里会存在多个子系统，如果各个子系统之间的耦合性太高，整体系统的可用性就会大幅降低</b>
+<ul class="quote">
+<li>以电商应用为例，用户创建订单后，如果耦合调用库存系统、物流系统、支付系统，任何一个子系统出了故障或者因为升级等原因暂时不可用，都会造成下单操作异常，影响用户使用体验。</li>
+</ul>
+</li>
+<li><b>通过利用消息队列，把大量的请求暂存起来，分散到相对长的一段时间内处理，能大大提高系统的稳定性和用户体验</b>
+<ul class="quote">
+<li>如果订单系统每秒最多能处理一万次下单，这个处理能力应对正常时段的下单是绰绰有余的，正常时段我们下单后一秒内就能返回结果。在双十一零点的时候，如果没有消息队列这种缓冲机制，为了保证系统稳定，只能在订单超过一万次后就不允许用户下单了；如果有消息队列做缓冲，我们可以取消这个限制，把一秒内下的订单分散成一段时间来处理，这时有些用户可能在下单后十几秒才能收到下单成功的状态，但是也比不能下单的体验要好。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>消息队列的流量消峰功能</h4>
+<ul class="point">
+<li><b>通过利用消息队列，把大量的请求暂存起来，分散到相对长的一段时间内处理，能大大提高系统的稳定性和用户体验</b>
+<ul class="quote">
+<li>在双十一零点的时候，如果没有消息队列这种缓冲机制，为了保证系统稳定，只能在订单超过一万次后就不允许用户下单了；如果有消息队列做缓冲，我们可以取消这个限制，把一秒内下的订单分散成一段时间来处理，这时有些用户可能在下单后十几秒才能收到下单成功的状态，但是也比不能下单的体验要好。</li>
+</ul>
+</li>
+<li><b>使用消息队列进行流量消峰，很多时候不是因为能力不够，而是出于经济性的考量</b>
+<ul class="quote">
+<li>比如有的业务系统，流量最高峰也不会超过一万QPS，而平时只有一千左右的QPS。这种情况下我们就可以用个普通性能的服务器(只支持一千左右的QPS就可以)，然后加个消息队列作为高峰期的缓冲，无须花大笔资金部署能处理上万QPS的服务器。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>消息队列的消息分发功能</h4>
+<ul class="point">
+<li><b>数据的产生方只需要把各自的数据写入一个消息队列即可，数据使用方根据各自需求订阅感兴趣的数据</b>
+<ul class="quote">
+<li>不同数据团队所订阅的数据可以重复也可以不重复，互不干扰，也不必和数据产生方关联。</li>
+</ul>
+</li>
+<li><b>消息队列已经成为数据处理系统不可或缺的一部分</b>
+<ul class="quote">
+<li>各个子系统将日志数据不停地写入消息队列，不同的数据处理系统有各自的Offset，互不影响。</li>
+<li>甚至某个团队处理完的结果数据也可以写入消息队列，作为数据的产生方，供其他团队使用，避免重复计算。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch1"><summary>1.2 RocketMQ简介</summary>
+<div class="sec">
+<h4>RocketMQ的发展历程</h4>
+<ul class="point">
+<li><b>Notify主要使用了推模型，解决了事务消息。</b>
+</li>
+<li><b>MetaQ主要使用了拉模型，解决了顺序消息和海量堆积的问题。</b>
+</li>
+<li><b>RocketMQ基于长轮询的拉取方式，兼有两者的优点。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>RocketMQ在阿里内部的应用</h4>
+<ul class="point">
+<li><b>在阿里内部，RocketMQ很好地服务了集团大大小小上千个应用</b>
+<ul class="quote">
+<li>在每年的双十一当天，更有不可思议的万亿级消息通过RocketMQ流转。</li>
+<li>在2017年的双十一当天，整个阿里巴巴集团通过RocketMQ流转的线上消息达到了万亿级，峰值TPS达到5600万。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>RocketMQ的优势</h4>
+<ul class="point">
+<li><b>RocketMQ已经成为Apache顶级项目。</b>
+</li>
+<li><b>RocketMQ是使用Java语言开发的，比起Kafka的Scala语言和RabbitMQ的Erlang语言，更容易找到技术人员进行定制开发。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch2"><summary>1.3 快速上手RocketMQ</summary>
+<div class="sec">
+<h4>RocketMQ的下载、安装和配置</h4>
+<ul class="point">
+<li><b>RocketMQ的Binary版是一些编译好的jar和辅助的shell脚本</b>
+<ul class="quote">
+<li>可以从官网找到下载链接。</li>
+<li>也可以下载源码自己编译。</li>
+</ul>
+</li>
+<li><b>系统要求：64bit的Linux、Unix或Mac，Java版本大于等于JDK1.8</b>
+<ul class="quote">
+<li>如果需要从GitHub上下载源码和编译的话，需要安装Maven 3.2.x和Git。</li>
+</ul>
+</li>
+<li><b>RocketMQ当前的最新版本是4.2.0</b>
+<ul class="quote">
+<li>以Binary版本为例说明如何快速使用。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>启动消息队列服务</h4>
+<ul class="point">
+<li><b>启动单机的消息队列服务比较简单，不需要写配置文件，只需要依次启动本机的NameServer和Broker即可</b>
+<ul class="quote">
+<li>启动NameServer：nohup sh bin/mqnamesrv &amp;。</li>
+<li>启动Broker：nohup sh bin/mqbroker -n localhost:9876&amp;。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>用命令行发送和接收消息</h4>
+<ul class="point">
+<li><b>运行示例程序，发送和接收消息</b>
+<ul class="quote">
+<li>发送消息：export NAMESRV_ADDR=localhost:9876；sh bin/tools.sh org.apache.rocketmq.example.quickstart.Producer。</li>
+<li>接收消息：sh bin/tools.sh org.apache.rocketmq.example.quickstart.Consumer。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>关闭消息队列</h4>
+<ul class="point">
+<li><b>消息队列被启动后，如果不主动关闭，则会一直在后台运行，占用系统资源</b>
+<ul class="quote">
+<li>关闭NameServer和Broker：sh bin/mqshutdown broker；sh bin/mqshutdown namesrv。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch3"><summary>1.4 本章小结</summary>
+<div class="sec">
+<h4>消息队列的功能及RocketMQ的诞生</h4>
+<ul class="point">
+<li><b>消息队列用于解耦生产者和消费者，提高系统的可扩展性和可靠性。</b>
+</li>
+<li><b>RocketMQ是阿里开源的消息队列，具有高可用、高性能、高并发等特点。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>RocketMQ快速上手</h4>
+<ul class="point">
+<li><b>通过命令示例，读者可以快速启动一个RocketMQ服务，并尝试发送和接收简单的消息。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch4"><summary>第2章 生产环境下的配置和使用</summary>
+<div class="sec">
+<h4>RocketMQ角色介绍</h4>
+<ul class="point">
+<li><b>RocketMQ有四个角色：NameServer、Broker、Producer和Consumer</b>
+<ul class="quote">
+<li>NameServer：集群的管理器，负责维护消息队列的元数据。</li>
+<li>Broker：消息的存储和转发中心。</li>
+<li>Producer：消息的发送者。</li>
+<li>Consumer：消息的接收者。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>高可用的分布式消息队列集群搭建</h4>
+<ul class="point">
+<li><b>需要三台以上服务器，一台作为NameServer，其余作为Broker</b>
+<ul class="quote">
+<li>NameServer集群可以保证高可用，一台挂掉后，整个集群仍然可用。</li>
+<li>Broker需要启动多个，以实现负载均衡和高可用。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>RocketMQ的Consumer使用方法与常用命令</h4>
+<ul class="point">
+<li><b>Consumer通过拉取(Pull)的方式从Broker获取消息</b>
+<ul class="quote">
+<li>Consumer可以主动拉取消息，也可以由Broker推送消息。</li>
+</ul>
+</li>
+<li><b>Consumer常用的命令有：创建订阅、订阅关系推送、消费偏移量提交等</b>
+<ul class="quote">
+<li>createSubscription：创建订阅。</li>
+<li>subscribe：订阅关系推送。</li>
+<li>commitOffset：消费偏移量提交。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>RocketMQ的Producer使用方法与常用命令</h4>
+<ul class="point">
+<li><b>Producer通过发送(Send)的方式将消息发送到Broker</b>
+<ul class="quote">
+<li>Producer可以发送普通消息，也可以发送顺序消息。</li>
+</ul>
+</li>
+<li><b>Producer常用的命令有：发送消息、发送批量消息、发送延迟消息等</b>
+<ul class="quote">
+<li>sendMessage：发送消息。</li>
+<li>sendBatchMessage：发送批量消息。</li>
+<li>sendDelayMessage：发送延迟消息。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch5"><summary>2.1 RocketMQ各部分角色介绍</summary>
+<div class="sec">
+<h4>RocketMQ各部分角色介绍</h4>
+<ul class="point">
+<li><b>RocketMQ由四部分组成：Producer、Consumer、Broker和NameServer</b>
+<ul class="quote">
+<li>Producer负责发送消息。</li>
+<li>Consumer负责接收消息。</li>
+<li>Broker负责暂存、传输消息。</li>
+<li>NameServer负责协调各个地方邮局的管理机构。</li>
+</ul>
+</li>
+<li><b>启动RocketMQ的顺序是先启动NameServer，再启动Broker</b>
+<ul class="quote">
+<li>消息队列已经可以提供服务了，想发送消息就使用Producer来发送，想接收消息就使用Consumer来接收。</li>
+</ul>
+</li>
+<li><b>为了消除单点故障，增加可靠性或增大吞吐量，可以在多台机器上部署多个NameServer和Broker</b>
+<ul class="quote">
+<li>为每个Broker部署一个或多个Slave。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Topic和Message Queue介绍</h4>
+<ul class="point">
+<li><b>一个分布式消息队列中间件部署好以后，可以给很多个业务提供服务，同一个业务也有不同类型的消息要投递，这些不同类型的消息以不同的Topic名称来区分</b>
+<ul class="quote">
+<li>发送和接收消息前，先创建Topic。</li>
+</ul>
+</li>
+<li><b>有了Topic以后，还需要解决性能问题，一个Topic可以根据需求设置一个或多个Message Queue</b>
+<ul class="quote">
+<li>Message Queue类似分区或Partition。</li>
+<li>Topic有了多个Message Queue后，消息可以并行地向各个Message Queue发送，消费者也可以并行地从多个Message Queue读取消息并消费。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch6"><summary>2.2 多机集群配置和部署</summary>
+<div class="sec">
+<h4>多机集群配置和部署</h4>
+<ul class="point">
+<li><b>用两台物理机搭建出双主、双从、无单点故障的高可用RocketMQ集群</b>
+<ul class="quote">
+<li>首先在这两台机器上分别启动NameServer(nohup sh bin/mqnamesrv &amp;)，得到一个无单点的NameServer服务。</li>
+<li>然后启动Broker，每台机器上都要分别启动一个Master角色的Broker和一个Slave角色的Broker，并互为主备。</li>
+</ul>
+</li>
+<li><b>Broker的配置文件介绍</b>
+<ul class="quote">
+<li>namesrvAddr=192.168.100.131:9876; 192.168.100.132:9876，NamerServer的地址，可以是多个。</li>
+<li>brokerClusterName=DefaultCluster，Cluster的地址，如果集群机器数比较多，可以分成多个Cluster，每个Cluster供一个业务群使用。</li>
+<li>brokerName=broker-a，Broker的名称，Master和Slave通过使用相同的Broker名称来表明相互关系，以说明某个Slave是哪个Master的Slave。</li>
+<li>brokerId=0，一个Master Borker可以有多个Slave,0表示Master，大于0表示不同Slave的ID。</li>
+<li>fileReservedTime=48，在磁盘上保存消息的时长，单位是小时，自动删除超时的消息。</li>
+<li>deleteWhen=04，与fileReservedTime参数呼应，表明在几点做消息删除动作，默认值04表示凌晨4点。</li>
+<li>brokerRole=SYNC_MASTER，brokerRole有3种：SYNC_MASTER、ASYNC_MASTER、SLAVE。关键词SYNC和ASYNC表示Master和Slave之间同步消息的机制，SYNC的意思是当Slave和Master消息同步完成后，再返回发送成功的状态。</li>
+<li>flushDiskType=ASYNC_FLUSH，flushDiskType表示刷盘策略，分为SYNC_FLUSH和ASYNC_FLUSH两种，分别代表同步刷盘和异步刷盘。</li>
+<li>listenPort=10911，Broker监听的端口号，如果一台机器上启动了多个Broker，则要设置不同的端口号，避免冲突。</li>
+<li>storePathRootDir=/home/rocketmq/store-a，存储消息以及一些配置信息的根目录。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch7"><summary>2.3 发送/接收消息示例</summary>
+<div class="sec">
+<h4>创建并启动Producer</h4>
+<ul class="point">
+<li><b>创建DefaultMQProducer对象，设置GroupName和NameServer地址后启动</b>
+<ul class="quote">
+<li>DefaultMQProducer Producer = new DefaultMQProducer(&quot;please_rename_unique_group_name&quot;);</li>
+<li>producer.setNamesrvAddr(&quot;192.168.100.131:9876&quot;);</li>
+<li>Producer.start();</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>发送消息</h4>
+<ul class="point">
+<li><b>把待发送的消息拼装成Message对象，使用Producer来发送</b>
+<ul class="quote">
+<li>for (int i = 0; i &lt; 100; i++) {。</li>
+<li>Message msg = new Message(&quot;TopicTest&quot; /＊ Topic ＊/, &quot;TagA&quot; /＊ Tag ＊/, (&quot;Hello RocketMQ &quot; + i).getBytes(RemotingHelper.DEFAULT_CHARSET) /＊ Message body ＊/ );</li>
+<li>SendResult sendResult = Producer.send(msg);</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>创建并启动Consumer</h4>
+<ul class="point">
+<li><b>创建DefaultMQPushConsumer对象，设置GroupName、NameServer地址以及端口号，指明要操作的Topic名称</b>
+<ul class="quote">
+<li>DefaultMQPushConsumer Consumer = new DefaultMQPushConsumer(&quot;please rename to unique group name&quot;);</li>
+<li>Consumer.setNamesrvAddr(&quot;192.168.249.47:9876&quot;);</li>
+<li>Consumer.subscribe(&quot;TopicTest”, &quot;＊&quot;);</li>
+</ul>
+</li>
+<li><b>注册回调函数，处理接收到的消息</b>
+<ul class="quote">
+<li>Consumer.registerMessageListener(new MessageListenerConcurrently() {。</li>
+<li>public ConsumeConcurrentlyStatus consumeMessage(List&lt;MessageExt&gt; msgs, ConsumeConcurrentlyContext context) {。</li>
+<li>System.out.printf(Thread.currentThread().getName()  +  &quot; Receive New Messages: &quot; + msgs + &quot;%n&quot;);</li>
+<li>return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;</li>
+<li>}。</li>
+</ul>
+</li>
+<li><b>启动Consumer实例</b>
+<ul class="quote">
+<li>Consumer.start();</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch8"><summary>2.4 常用管理命令</summary>
+<div class="sec">
+<h4>创建/修改Topic</h4>
+<ul class="point">
+<li><b>使用updateTopic指令创建/修改Topic</b>
+<ul class="quote">
+<li>updateTopic支持支持的参数包括：topic、readQueueNums、writeQueueNums、perm、topicFilterType、topicSysFlag、orderType、topicType。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>删除Topic</h4>
+<ul class="point">
+<li><b>使用deleteTopic指令删除Topic</b>
+<ul class="quote">
+<li>deleteTopic支持支持的参数包括：topic。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>创建/修改订阅组</h4>
+<ul class="point">
+<li><b>使用updateSubGroup指令创建/修改订阅组</b>
+<ul class="quote">
+<li>updateSubGroup支持支持的参数包括：consumerGroup、consumeEnable、consumeFromWhere、topic、messageModel、brokerRole、flushDiskType、flushInterval、flushSize、retryQueueNums、retryMaxTimes、retryInterval、suspendStatus。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>删除订阅组</h4>
+<ul class="point">
+<li><b>使用deleteSubGroup指令删除订阅组</b>
+<ul class="quote">
+<li>deleteSubGroup支持支持的参数包括：consumerGroup。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>更新Broker配置</h4>
+<ul class="point">
+<li><b>使用updateBrokerConfig指令更新Broker配置</b>
+<ul class="quote">
+<li>updateBrokerConfig支持支持的参数包括：brokerId、clusterName、brokerName、ip、port、storePathRootDir、deleteWhen、fileReservedTime、brokerRole、consumeEnable、messageModel、brokerRole、flushDiskType、flushInterval、flushSize、retryQueueNums、retryMaxTimes、retryInterval、suspendStatus、unitMode、brokerClusterName、haMasterId、slaveIds、masterSlaveSwitchEnable、readMode、storeMode、topicSysFlag、autoCreateTopicEnable、autoDeleteTopicEnable、autoSplitEnable、autoSplitPolicy、autoCreateSubscriptionGroupEnable、autoDeleteSubscriptionGroupEnable、unitName、topicFilterType、topicSysFlag、orderType、topicType。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>更新Topic的读写权限</h4>
+<ul class="point">
+<li><b>使用updateTopicPerm指令更新Topic的读写权限</b>
+<ul class="quote">
+<li>updateTopicPerm支持支持的参数包括：topic、readPerm、writePerm。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>查询Topic的路由信息</h4>
+<ul class="point">
+<li><b>使用TopicRoute指令查询Topic的路由信息</b>
+<ul class="quote">
+<li>TopicRoute支持支持的参数包括：topic。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>查看Topic列表信息</h4>
+<ul class="point">
+<li><b>使用TopicList指令查看Topic列表信息</b>
+<ul class="quote">
+<li>TopicList支持支持的参数包括：clusterName。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>查看Topic统计信息</h4>
+<ul class="point">
+<li><b>使用TopicStats指令查看Topic统计信息</b>
+<ul class="quote">
+<li>TopicStats支持支持的参数包括：topic。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>根据时间查询消息</h4>
+<ul class="point">
+<li><b>使用printMsg指令根据时间查询消息</b>
+<ul class="quote">
+<li>printMsg支持支持的参数包括：topic、beginTime、endTime、maxMsgNums。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>根据消息ID查询消息</h4>
+<ul class="point">
+<li><b>使用queryMsgById指令根据消息ID查询消息</b>
+<ul class="quote">
+<li>queryMsgById支持支持的参数包括：topic、msgId。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>查看集群消息</h4>
+<ul class="point">
+<li><b>使用clusterList指令查看集群消息</b>
+<ul class="quote">
+<li>clusterList支持支持的参数包括：clusterName。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch9"><summary>2.5 通过图形界面管理集群</summary>
+<div class="sec">
+<h4>通过图形界面管理集群</h4>
+<ul class="point">
+<li><b>启动运维服务，从页面上直观看到消息队列集群的状态</b>
+<ul class="quote">
+<li>运维服务程序是个SpringBoot项目，需要从GitHub上的apache/rocketmq-externals里下载源码。</li>
+<li>进入下载源码的目录，运行如下命令即可启动：mvn spring-boot:run。</li>
+<li>服务启动后，在浏览器里访问server_ip_address:8080(server_ip_address是启动rocketmq-console的机器IP)地址就可看到集群的状态。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch10"><summary>2.6 本章小结</summary>
+<div class="sec">
+<h4>生产环境中RocketMQ集群的搭建</h4>
+<ul class="point">
+<li><b>机器角色、集群配置和部署</b>
+<ul class="quote">
+<li>集群角色包括：NameServer、Broker、Producer、Consumer。</li>
+<li>集群配置包括：集群名称、Broker IP列表、Broker端口、ZooKeeper集群地址。</li>
+<li>集群部署包括：安装NameServer、安装Broker、启动NameServer和Broker。</li>
+</ul>
+</li>
+<li><b>集群管理</b>
+<ul class="quote">
+<li>通过NameServer查看集群状态。</li>
+<li>通过NameServer进行Topic的管理。</li>
+<li>通过NameServer进行消息的发送和消费。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch11"><summary>第3章 用适合的方式发送和接收消息</summary>
+<div class="sec">
+<h4>生产者和消费者的角色和特点</h4>
+<ul class="point">
+<li><b>生产者向消息队列写入数据，消费者从消息队列里读取数据</b>
+<ul class="quote">
+<li>RocketMQ的大部分用户只需要和生产者、消费者打交道。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>不同类型生产者和消费者的特点</h4>
+<ul class="point">
+<li><b>同步发送消息的生产者</b>
+<ul class="quote">
+<li>同步发送消息的生产者，在发送消息时会等待消息被写入到磁盘才返回。</li>
+</ul>
+</li>
+<li><b>异步发送消息的生产者</b>
+<ul class="quote">
+<li>异步发送消息的生产者，发送消息后立即返回，不等待消息被写入到磁盘。</li>
+</ul>
+</li>
+<li><b>消费者拉取消息，需要主动从消息队列中获取消息。</b>
+</li>
+<li><b>消费者订阅消息，消息队列会自动将消息推送给订阅者。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Offset和Log</h4>
+<ul class="point">
+<li><b>Offset用于标识每个消费者在分区中消费的位置</b>
+<ul class="quote">
+<li>每个消费者在分区中都有一个唯一的Offset。</li>
+</ul>
+</li>
+<li><b>Log是消息队列中存储消息的日志文件</b>
+<ul class="quote">
+<li>Log由多个MessageSet组成，每个MessageSet包含多个Message。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch12"><summary>3.1 不同类型的消费者</summary>
+<div class="sec">
+<h4>DefaultMQPushConsumer的使用</h4>
+<ul class="point">
+<li><b>DefaultMQPushConsumer需要设置三个参数：Consumer的GroupName，NameServer的地址和端口号，Topic的名称</b>
+<ul class="quote">
+<li>Consumer的GroupName用于把多个Consumer组织到一起，提高并发处理能力，GroupName需要和消息模式(MessageModel)配合使用。</li>
+<li>NameServer的地址和端口号，可以填写多个，用分号隔开，达到消除单点故障的目的。</li>
+<li>Topic名称用来标识消息类型，需要提前创建。</li>
+</ul>
+</li>
+<li><b>DefaultMQPushConsumer主要功能实现在DefaultMQPushConsumerImpl类中，消息的处理逻辑是在pullMessage这个函数里的PullCallBack中</b>
+<ul class="quote">
+<li>DefaultMQPushConsuer的源码中有很多PullRequest语句，比如DefaultMQPushConsumerImpl.this.executePullRequestImmediately(pullRequest)。</li>
+<li>“长轮询”方式通过Client端和Server端的配合，达到既拥有Pull的优点，又能达到保证实时性的目的。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>DefaultMQPushConsumer的处理流程</h4>
+<ul class="point">
+<li><b>DefaultMQPushConsuer的源码中有很多PullRequest语句，比如DefaultMQPushConsumerImpl.this.executePullRequestImmediately(pullRequest)</b>
+<ul class="quote">
+<li>这是通过“长轮询”方式达到Push效果的方法，长轮询方式既有Pull的优点，又兼具Push方式的实时性。</li>
+</ul>
+</li>
+<li><b>“长轮询”方式通过Client端和Server端的配合，达到既拥有Pull的优点，又能达到保证实时性的目的</b>
+<ul class="quote">
+<li>Broker接到新消息请求后，如果队列里没有新消息，并不急于返回，通过一个循环不断查看状态，每次waitForRunning一段时间(默认是5秒)，然后后再Check。</li>
+<li>默认情况下当Broker一直没有新消息，第三次Check的时候，等待时间超过Request里面的BrokerSuspendMaxTimeMillis，就返回空结果。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>DefaultMQPushConsumer的流量控制</h4>
+<ul class="point">
+<li><b>PushConsumer有个线程池，消息处理逻辑在各个线程里同时执行</b>
+<ul class="quote">
+<li>Pull获得的消息，如果直接提交到线程池里执行，很难监控和控制。</li>
+</ul>
+</li>
+<li><b>PushConsumer会判断获取但还未处理的消息个数、消息总大小、Offset的跨度，任何一个值超过设定的大小就隔一段时间再拉取消息，从而达到流量控制的目的</b>
+<ul class="quote">
+<li>此外ProcessQueue还可以辅助实现顺序消费的逻辑。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>DefaultMQPullConsumer</h4>
+<ul class="point">
+<li><b>使用DefaultMQPullConsumer像使用DefaultMQPushConsumer一样需要设置各种参数，写处理消息的函数，同时还需要做额外的事情</b>
+<ul class="quote">
+<li>获取Message Queue并遍历。</li>
+<li>维护Offsetstore。</li>
+<li>根据不同的消息状态做不同的处理。</li>
+</ul>
+</li>
+<li><b>PullConsumer需要用户自己处理遍历Message Queue、保存Offset，所以PullConsumer有更多的自主性和灵活性</b>
+<ul class="quote">
+<li>实际情况中可以把while(true)放到外层，达到无限循环的目的。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Consumer的启动、关闭流程</h4>
+<ul class="point">
+<li><b>PullConsumer在使用过程中，可以根据实际需要暂停、停止、启动消费过程</b>
+<ul class="quote">
+<li>需要注意的是Offset的保存，要在程序的异常处理部分增加把Offset写入磁盘方面的处理。</li>
+</ul>
+</li>
+<li><b>DefaultMQPushConsumer的退出，要调用shutdown()函数，以便释放资源、保存Offset等</b>
+<ul class="quote">
+<li>这个调用要加到Consumer所在应用的退出逻辑中。</li>
+</ul>
+</li>
+<li><b>DefaultMQPushConsumer在启动的时候，会做各种配置检查，然后连接NameServer获取Topic信息</b>
+<ul class="quote">
+<li>启动时如果遇到异常，比如无法连接NameServer，程序仍然可以正常启动不报错(日志里有WARN信息)。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch13"><summary>3.2 不同类型的生产者</summary>
+<div class="sec">
+<h4>DefaultMQProducer</h4>
+<ul class="point">
+<li><b>DefaultMQProducer是生产者发送消息默认使用的类</b>
+<ul class="quote">
+<li>发送消息要经过五个步骤：设置Producer的GroupName，设置InstanceName，设置发送失败重试次数，设置NameServer地址，组装消息并发送。</li>
+</ul>
+</li>
+<li><b>消息的发送有同步和异步两种方式</b>
+<ul class="quote">
+<li>同步方式：在第2章的例子中用的是同步方式。</li>
+<li>异步方式：上面的代码使用的是异步方式。</li>
+</ul>
+</li>
+<li><b>消息发送的返回状态有四种：FLUSH_DISK_TIMEOUT、FLUSH_SLAVE_TIMEOUT、SLAVE_NOT_AVAILABLE、SEND_OK</b>
+<ul class="quote">
+<li>FLUSH_DISK_TIMEOUT：表示没有在规定时间内完成刷盘。</li>
+<li>FLUSH_SLAVE_TIMEOUT：表示在主备方式下，并且Broker被设置成SYNC_MASTER方式，没有在设定时间内完成主从同步。</li>
+<li>SLAVE_NOT_AVAILABLE：这个状态产生的场景和FLUSH_SLAVE_TIMEOUT类似，表示在主备方式下，并且Broker被设置成SYNC_MASTER，但是没有找到被配置成Slave的Broker。</li>
+<li>SEND_OK：表示发送成功。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>发送延迟消息</h4>
+<ul class="point">
+<li><b>RocketMQ支持发送延迟消息，Broker收到这类消息后，延迟一段时间再处理</b>
+<ul class="quote">
+<li>延迟消息的使用方法是在创建Message对象时，调用setDelayTimeLevel(int level)方法设置延迟时间。</li>
+<li>目前延迟的时间不支持任意设置，仅支持预设值的时间长度(1s/5s/10s/30s/1m/2m/3m/4m/5m/6m/7m/8m/9m/10m/20m/30m/1h/2h)。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>自定义消息发送规则</h4>
+<ul class="point">
+<li><b>如果业务需要我们把消息发送到指定的Message Queue里，可以用MessageQueueSelector</b>
+<ul class="quote">
+<li>发送消息的时候，把MessageQueueSelector的对象作为参数，使用public SendResult send(Message msg, MessageQueueSelector selector, Object arg)函数发送消息即可。</li>
+<li>在MessageQueueSelector的实现中，根据传入的Object参数，或者根据Message消息内容确定把消息发往那个Message Queue，返回被选中的Message Queue。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>对事务的支持</h4>
+<ul class="point">
+<li><b>RocketMQ的事务消息，是指发送消息事件和其他事件需要同时成功或同时失败</b>
+<ul class="quote">
+<li>RocketMQ采用两阶段提交的方式实现事务消息。</li>
+<li>客户端有三个类来支持用户实现事务消息，第一个类是LocalTransactionExecuter，用来实例化步骤3)的逻辑，根据情况返回LocalTransactionState. ROLLBACK_MESSAGE或者LocalTransactionState.COMMIT_MESSAGE状态。第二个类是TransactionMQProducer，它的用法和DefaultMQProducer类似，要通过它启动一个Producer并发消息，但是比DefaultMQProducer多设置本地事务处理函数和回查状态函数。第三个类是TransactionCheckListener，实现步骤5)中MQ服务器的回查请求，返回LocalTransactionState.ROLLBACK_MESSAGE或者LocalTransactionState.COMMIT_MESSAGE。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch14"><summary>3.3 如何存储队列位置信息</summary>
+<div class="sec">
+<h4>Offset的含义和存储位置</h4>
+<ul class="point">
+<li><b>Offset是指某个Topic下的一条消息在某个Message Queue里的位置</b>
+<ul class="quote">
+<li>通过Offset的值可以定位到这条消息，或者指示Consumer从这条消息开始向后继续处理。</li>
+</ul>
+</li>
+<li><b>Offset的存储位置分为本地文件类型和Broker代存的类型两种</b>
+<ul class="quote">
+<li>在DefaultMQPushConsumer里的BROADCASTING模式下，每个Consumer都收到这个Topic的全部消息，各个Consumer间相互没有干扰，RocketMQ使用LocalFileOffsetStore，把Offset存到本地。</li>
+<li>在DefaultMQPushConsumer来说，默认是CLUSTERING模式，也就是同一个Consumer group里的多个消费者每人消费一部分，各自收到的消息内容不一样。这种情况下，由Broker端存储和控制Offset的值，使用RemoteBrokerOffsetStore结构。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>OffsetStore的使用和存储机制</h4>
+<ul class="point">
+<li><b>OffsetStore使用Json格式存储</b>
+<ul class="quote">
+<li>代码清单3-10 Offsetstore的内容示例。</li>
+</ul>
+</li>
+<li><b>在使用DefaultMQPushConsumer的时候，我们不用关心OffsetStore的事，但是如果PullConsumer，我们就要自己处理OffsetStore了</b>
+<ul class="quote">
+<li>在3.1.4节的PullConsumer示例中，代码里把Offset存到了内存，没有持久化存储，这样就可能因为程序的异常或重启而丢失Offset，在实际应用中不推荐这样做。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>如何设置Consumer读取消息的初始位置</h4>
+<ul class="point">
+<li><b>DefaultMQPushConsumer类里有个函数用来设置从哪儿开始消费消息</b>
+<ul class="quote">
+<li>比如setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_FIRST_OFFSET)，这个语句设置从最小的Offset开始读取。</li>
+<li>如果从队列开始到感兴趣的消息之间有很大的范围，用CONSUME_FROM_FIRST_OFFSET参数就不合适了，可以设置从某个时间开始消费消息，比如Consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_TIMESTAMP), Consumer. setConsumeTimestamp(&quot;20131223171201&quot;)，时间戳格式是精确到秒的。</li>
+</ul>
+</li>
+<li><b>设置读取位置不是每次都有效，它的优先级默认在Offset Store后面</b>
+<ul class="quote">
+<li>比如在DefaultMQPushConsumer的BROADCASTING方式下，默认是从Broker里读取某个Topic对应ConsumerGroup的Offset，当读取不到Offset的时候，ConsumeFromWhere的设置才生效。</li>
+<li>大部分情况下这个设置在Consumer Group初次启动时有效。如果Consumer正常运行后被停止，然后再启动，会接着上次的Offset开始消费，ConsumeFromWhere的设置无效。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch15"><summary>3.4 自定义日志输出</summary>
+<div class="sec">
+<h4>RocketMQ日志配置方式</h4>
+<ul class="point">
+<li><b>Log配置可以通过JVM启动参数、环境变量、代码中的设置语句这三种方式来配置</b>
+<ul class="quote">
+<li>想更改RocketMQ Client的Log level，可以通过-Drocketmq.Client.LogLevel来设置，或者在程序启动时使用System.setProperty(&quot;rocketmq.Client.LogLevel&quot;, &quot;WARN&quot;)来设置。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>RocketMQ日志实现</h4>
+<ul class="point">
+<li><b>RocketMQ的Log实现是基于slf4j的，支持Logback、Log4j</b>
+<ul class="quote">
+<li>RocketMQ Client里已经有Logback的相关包，可以直接使用Logback。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>自定义Log配置</h4>
+<ul class="point">
+<li><b>把rocketmq.Client.Log.loadconfig参数设置为false，然后把Logback.xml放到maven项目的resources文件夹下</b>
+<ul class="quote">
+<li>在Logback.xml示例配置里，在原有RocketMQ日志的基础上，增加了STDOUT输出，这样可以把RocketMQ的日志输出到应用系统console中。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>设置日志输出级别和位置</h4>
+<ul class="point">
+<li><b>根据实际情况，设置每个模块的输出Level，或者把日志输出到特定的位置</b>
+<ul class="quote">
+<li>具体的设置方法可以参考Logback的日志配置文档：https://Logback.qos.ch/manual/configuration.html。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch16"><summary>3.5 本章小结</summary>
+<div class="sec">
+<h4>Consumer和Producer的类型及使用场景</h4>
+<ul class="point">
+<li><b>Consumer分为Push Consumer和Pull Consumer</b>
+<ul class="quote">
+<li>Push Consumer：消息会主动推送给Consumer。</li>
+<li>Pull Consumer：Consumer主动从服务器拉取消息。</li>
+</ul>
+</li>
+<li><b>Producer分为同步发送和异步发送</b>
+<ul class="quote">
+<li>同步发送：发送消息后需要等待服务器返回结果。</li>
+<li>异步发送：发送消息后不需要等待服务器返回结果。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Offset和Log的理解和应用</h4>
+<ul class="point">
+<li><b>Offset机制是正确使用RocketMQ的基础</b>
+<ul class="quote">
+<li>Offset表示消息在分区中的位置。</li>
+<li>每个分区都有一个Offset。</li>
+</ul>
+</li>
+<li><b>合理使用Log可以大幅提高开发、调试的效率</b>
+<ul class="quote">
+<li>Log是消息的存储和检索系统。</li>
+<li>通过查看Log，可以了解消息的消费情况。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch17"><summary>第4章 分布式消息队列的协调者</summary>
+<div class="sec">
+<h4>消息队列集群中的配置信息管理</h4>
+<ul class="point">
+<li><b>消息队列集群由很多台机器组成，每个机器的角色、IP地址都不相同，而且这些信息是变动的。</b>
+</li>
+<li><b>NameServer的存在主要是为了解决这类问题，由NameServer维护这些配置信息、状态信息，其他角色都通过NameServer来协同执行。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch18"><summary>4.1 NameServer的功能</summary>
+<div class="sec">
+<h4>NameServer的功能</h4>
+<ul class="point">
+<li><b>NameServer是整个消息队列中的状态服务器，集群的各个组件通过它来了解全局的信息</b>
+<ul class="quote">
+<li>各个角色的机器都要定期向NameServer上报自己的状态，超时不上报的话，NameServer会认为某个机器出故障不可用了，其他的组件会把这个机器从可用列表里移除。</li>
+</ul>
+</li>
+<li><b>NameServer可以部署多个，相互之间独立，其他角色同时向多个NameServer机器上报状态信息，从而达到热备份的目的</b>
+<ul class="quote">
+<li>NameServer本身是无状态的，也就是说NameServer中的Broker、Topic等状态信息不会持久存储，都是由各个角色定时上报并存储到内存中的(NameServer支持配置参数的持久化，一般用不到)。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>集群状态的存储结构</h4>
+<ul class="point">
+<li><b>集群的状态保存在RouteInfoManager类的五个变量中</b>
+<ul class="quote">
+<li>topicQueueTable：存储了所有Topic的属性信息。</li>
+<li>BrokerAddrTable：存储着一个BrokerName对应的属性信息。</li>
+<li>ClusterAddrTable：存储的是集群中Cluster的信息。</li>
+<li>BrokerLiveTable：存储的内容是这台Broker机器的实时状态。</li>
+<li>filterServerTable：存储的是和这个Broker关联的多个Filter Server的地址。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>状态维护逻辑</h4>
+<ul class="point">
+<li><b>NameServer的主要逻辑在DefaultRequestProcessor类中，根据上报消息里的请求码做相应的处理，更新存储的对应信息</b>
+<ul class="quote">
+<li>当NameServer和Broker的长连接断掉以后，onChannelDestroy函数会被调用，把这个Broker的信息清理出去。</li>
+</ul>
+</li>
+<li><b>NameServer还有定时检查时间戳的逻辑，Broker向NameServer发送的心跳会更新时间戳，当NameServer检查到时间戳长时间没有更新后，便会触发清理逻辑</b>
+<ul class="quote">
+<li>是每10秒检查一次，时间戳超过2分钟则认为Broker已失效。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch19"><summary>4.2 各个角色间的交互流程</summary>
+<div class="sec">
+<h4>Topic的创建流程</h4>
+<ul class="point">
+<li><b>创建Topic的命令是updateTopic</b>
+<ul class="quote">
+<li>updateTopic的选项包括b、c、t、r、w、p、o、u、s等。</li>
+</ul>
+</li>
+<li><b>创建Topic的请求被发往对应的Broker</b>
+<ul class="quote">
+<li>Broker接到创建Topic的请求后，执行具体的创建逻辑。</li>
+</ul>
+</li>
+<li><b>Broker向NameServer发送注册信息</b>
+<ul class="quote">
+<li>NameServer完成创建Topic的逻辑后，其他客户端才能发现新增的Topic。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>NameServer的作用</h4>
+<ul class="point">
+<li><b>NameServer负责存储和管理元数据</b>
+<ul class="quote">
+<li>NameServer存储的元数据内容包括Topic、Queue、Consumer等。</li>
+</ul>
+</li>
+<li><b>NameServer需要向其他组件发送注册信息</b>
+<ul class="quote">
+<li>Broker需要向NameServer发送注册信息，以便其他客户端发现新增的Topic。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>为何不用ZooKeeper</h4>
+<ul class="point">
+<li><b>ZooKeeper功能强大，但RocketMQ不需要进行Master选举等功能</b>
+<ul class="quote">
+<li>RocketMQ的架构设计决定了它不需要进行Master选举，用不到这些复杂的功能。</li>
+</ul>
+</li>
+<li><b>RocketMQ的NameServer只有很少的代码，容易维护</b>
+<ul class="quote">
+<li>所以不需要再依赖另一个中间件，从而减少整体维护成本。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch20"><summary>4.3 底层通信机制</summary>
+<div class="sec">
+<h4>RocketMQ的通信相关代码在Remoting模块里</h4>
+<ul class="point">
+<li><b>RemotingService为最上层接口，定义了三个方法：start()、shutdown()、registerRPCHook(RPCHook rpcHook)。</b>
+</li>
+<li><b>RemotingClient和RemotingServer继承RemotingService接口，并增加了自己特有的方法</b>
+<ul class="quote">
+<li>RemotingClient的主要函数定义包括：registerProcessor()、invokeSync()、invokeAsync()、invokeOneway()、updateNameServerAddressList()。</li>
+</ul>
+</li>
+<li><b>NettyRemotingClient和NettyRemotingServer分别实现了RemotingClient和RemotingServer，而且都继承了NettyRemotingAbstract类</b>
+<ul class="quote">
+<li>通过上面的封装，RocketMQ各个模块间的通信，可以通过发送统一格式的自定义消息(RemotingCommand)来完成，各个模块间的通信实现简洁明了。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>RocketMQ自己定义了一个通信协议</h4>
+<ul class="point">
+<li><b>协议格式包括四部分：大端4个字节整数、大端4个字节整数、Json序列化的数据、应用自定义二进制序列化的数据</b>
+<ul class="quote">
+<li>第一部分是大端4个字节整数，值等于第二、三、四部分长度的总和。</li>
+<li>第二部分是大端4个字节整数，值等于第三部分的长度。</li>
+<li>第三部分是通过Json序列化的数据。</li>
+<li>第四部分是通过应用自定义二进制序列化的数据。</li>
+</ul>
+</li>
+<li><b>消息的解码过程在RemotingCommand的decode函数里</b>
+<ul class="quote">
+<li>decode函数首先获取消息的总长度，然后读取消息头部的长度，接着读取消息头部的数据，最后读取消息体数据。</li>
+</ul>
+</li>
+<li><b>对应的消息编码过程在RemotingCommand的encode函数中</b>
+<ul class="quote">
+<li>encode函数首先计算消息的总长度，然后写入消息头部的长度，接着写入消息头部的数据，最后写入消息体数据。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>RocketMQ是基于Netty库来完成RemotingServer和RemotingClient具体的通信实现的</h4>
+<ul class="point">
+<li><b>Netty是个事件驱动的网络编程框架，它屏蔽了Java Socket、NIO等复杂细节</b>
+<ul class="quote">
+<li>用户只需用好Netty，就可以实现一个“网络编程专家+并发编程专家”水平的Server、Client网络程序。</li>
+</ul>
+</li>
+<li><b>RocketMQ利用Netty实现的通信类是NettyRemotingServer和NettyRemotingClient</b>
+<ul class="quote">
+<li>用户也可以参考这两个类的实现来学习使用Netty。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch21"><summary>4.4 本章小结</summary>
+<div class="sec">
+<h4>NameServer的功能</h4>
+<ul class="point">
+<li><b>NameServer在RocketMQ集群中扮演调度中心的角色</b>
+<ul class="quote">
+<li>各个Producer、Consumer上报自己的状态上去，同时从NameServer获取其他角色的状态信息。</li>
+</ul>
+</li>
+<li><b>NameServer被设计得很轻量级，代码量少并且几乎无磁盘存储，所有的功能都通过内存高效完成。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>底层通信机制</h4>
+<ul class="point">
+<li><b>RocketMQ基于Netty对底层通信做了很好的抽象</b>
+<ul class="quote">
+<li>使得通信功能逻辑清晰，代码简单。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch22"><summary>第5章 消息队列的核心机制</summary>
+<div class="sec">
+<h4>Broker在RocketMQ中的作用</h4>
+<ul class="point">
+<li><b>Broker是RocketMQ的核心，大部分“重量级”工作都是由Broker完成的</b>
+<ul class="quote">
+<li>Broker包括接收Producer发过来的消息、处理Consumer的消费消息请求、消息的持久化存储、消息的HA机制以及服务端过滤功能等。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch23"><summary>5.1 消息存储和发送</summary>
+<div class="sec">
+<h4>分布式队列的数据存储</h4>
+<ul class="point">
+<li><b>分布式队列需要将数据持久化存储到磁盘</b>
+<ul class="quote">
+<li>分布式队列因为有高可靠性的要求，所以数据要通过磁盘进行持久化存储。</li>
+</ul>
+</li>
+<li><b>磁盘存储消息的速度可以匹配上网络的数据传输速度</b>
+<ul class="quote">
+<li>目前的高性能磁盘，顺序写速度可以达到600MB/s，超过了一般网卡的传输速度。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>消息存储和发送的速度优化</h4>
+<ul class="point">
+<li><b>使用mmap的方式，可以省去向用户态的内存复制，提高速度</b>
+<ul class="quote">
+<li>这种机制在Java中是通过MappedByteBuffer实现的。</li>
+</ul>
+</li>
+<li><b>RocketMQ充分利用了mmap的特性，也就是所谓的“零拷贝”技术，提高消息存盘和网络发送的速度</b>
+<ul class="quote">
+<li>通过使用mmap的方式，RocketMQ可以省去向用户态的内存复制，提高速度。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch24"><summary>5.2 消息存储结构</summary>
+<div class="sec">
+<h4>RocketMQ消息存储结构概述</h4>
+<ul class="point">
+<li><b>RocketMQ消息的存储是由ConsumeQueue和CommitLog配合完成的</b>
+<ul class="quote">
+<li>消息真正的物理存储文件是CommitLog, ConsumeQueue是消息的逻辑队列。</li>
+</ul>
+</li>
+<li><b>CommitLog以物理文件的方式存放，每台Broker上的CommitLog被本机器所有ConsumeQueue共享</b>
+<ul class="quote">
+<li>文件地址：${user.home} \store\${commitlog}\${fileName}。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>CommitLog和ConsumeQueue的设计优势</h4>
+<ul class="point">
+<li><b>CommitLog顺序写，可以大大提高写入效率</b>
+<ul class="quote">
+<li>利用操作系统的pagecache机制，可以批量地从磁盘读取，作为cache存到内存中，加速后续的读取速度。</li>
+</ul>
+</li>
+<li><b>ConsumeQueue里只存偏移量信息，尺寸有限，大部分可被全部读入内存</b>
+<ul class="quote">
+<li>这个中间结构的操作速度很快，可以认为是内存读取的速度。</li>
+</ul>
+</li>
+<li><b>CommitLog里存储了Consume Queues、Message Key、Tag等所有信息，即使ConsumeQueue丢失，也可以通过commitLog完全恢复出来</b>
+<ul class="quote">
+<li>为了保证CommitLog和ConsumeQueue的一致性。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>文件系统存储结构</h4>
+<ul class="point">
+<li><b>Broker在文件系统中存储的各个文件包括commitlog文件夹、consumequeue文件夹，还有在config文件夹中Topic、Consumer的相关信息</b>
+<ul class="quote">
+<li>最下面那个文件夹index存的是索引文件，这个文件用来加快消息查询的速度。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch25"><summary>5.3 高可用性机制</summary>
+<div class="sec">
+<h4>Master和Slave的区别及作用</h4>
+<ul class="point">
+<li><b>Master角色的Broker支持读和写，Slave角色的Broker仅支持读</b>
+<ul class="quote">
+<li>Producer只能和Master角色的Broker连接写入消息。</li>
+<li>Consumer可以连接Master角色的Broker，也可以连接Slave角色的Broker来读取消息。</li>
+</ul>
+</li>
+<li><b>当Master不可用或者繁忙的时候，Consumer会被自动切换到从Slave读</b>
+<ul class="quote">
+<li>Consumer仍然可以从Slave读取消息，不影响Consumer程序。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>发送端的高可用性实现</h4>
+<ul class="point">
+<li><b>在创建Topic的时候，把Topic的多个Message Queue创建在多个Broker组上</b>
+<ul class="quote">
+<li>这样当一个Broker组的Master不可用后，其他组的Master仍然可用，Producer仍然可以发送消息。</li>
+</ul>
+</li>
+<li><b>RocketMQ目前还不支持把Slave自动转成Master，如果机器资源不足，需要把Slave转成Master，则要手动停止Slave角色的Broker，更改配置文件，用新的配置文件启动Broker。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch26"><summary>5.4 同步刷盘和异步刷盘</summary>
+<div class="sec">
+<h4>RocketMQ消息存储和刷盘方式</h4>
+<ul class="point">
+<li><b>RocketMQ消息存储到磁盘上，保证断电后恢复，存储的消息量超出内存的限制</b>
+<ul class="quote">
+<li>消息在通过Producer写入RocketMQ的时候，有两种写磁盘方式，异步刷盘方式和同步刷盘方式。</li>
+</ul>
+</li>
+<li><b>异步刷盘方式：在返回写成功状态时，消息可能只是被写入了内存的PAGECACHE，写操作的返回快，吞吐量大</b>
+<ul class="quote">
+<li>当内存里的消息量积累到一定程度时，统一触发写磁盘动作，快速写入。</li>
+</ul>
+</li>
+<li><b>同步刷盘方式：在返回写成功状态时，消息已经被写入磁盘</b>
+<ul class="quote">
+<li>消息写入内存的PAGECACHE后，立刻通知刷盘线程刷盘，然后等待刷盘完成，刷盘线程执行完成后唤醒等待的线程，返回消息写成功的状态。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>刷盘方式的配置</h4>
+<ul class="point">
+<li><b>同步刷盘还是异步刷盘，是通过Broker配置文件里的flushDiskType参数设置的</b>
+<ul class="quote">
+<li>这个参数被配置成SYNC_FLUSH、ASYNC_FLUSH中的一个。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch27"><summary>5.5 同步复制和异步复制</summary>
+<div class="sec">
+<h4>同步复制和异步复制的定义及优劣</h4>
+<ul class="point">
+<li><b>同步复制是等Master和Slave均写成功后才反馈给客户端写成功状态。</b>
+</li>
+<li><b>异步复制方式是只要Master写成功即可反馈给客户端写成功状态</b>
+<ul class="quote">
+<li>在异步复制方式下，系统拥有较低的延迟和较高的吞吐量。</li>
+<li>如果Master出了故障，有些数据因为没有被写入Slave，有可能会丢失。</li>
+<li>在同步复制方式下，如果Master出故障，Slave上有全部的备份数据，容易恢复，但是同步复制会增大数据写入延迟，降低系统吞吐量。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>同步复制和异步复制的配置方式</h4>
+<ul class="point">
+<li><b>通过Broker配置文件里的brokerRole参数进行设置</b>
+<ul class="quote">
+<li>这个参数可以被设置成ASYNC_MASTER、SYNC_MASTER、SLAVE三个值中的一个。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>实际应用中的同步复制和异步复制设置建议</h4>
+<ul class="point">
+<li><b>把Master和Save配置成ASYNC_FLUSH的刷盘方式，主从之间配置成SYNC_MASTER的复制方式</b>
+<ul class="quote">
+<li>这样即使有一台机器出故障，仍然能保证数据不丢，是个不错的选择。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch28"><summary>5.6 本章小结</summary>
+<div class="sec">
+<h4>RocketMQ消息队列实现的难点及核心</h4>
+<ul class="point">
+<li><b>“队列”本身的实现是难点，需要基于磁盘做一个读写效率高的队列</b>
+<ul class="quote">
+<li>实现不好就会使磁盘操作成为整个系统的瓶颈，无法提升系统的吞吐量。</li>
+</ul>
+</li>
+<li><b>RocketMQ基于“顺序写”“随机读”的原则来设计，利用“零拷贝”技术，克服了磁盘操作的瓶颈。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>主从机制的设计</h4>
+<ul class="point">
+<li><b>主从机制是为了高可用性而设计的，数据被及时复制到多个机器</b>
+<ul class="quote">
+<li>当一台机器出故障后，整体系统依然可用。</li>
+</ul>
+</li>
+<li><b>可靠性和性能能直接有个权衡，RocketMQ把选择权留给用户</b>
+<ul class="quote">
+<li>用户根据具体的业务场景来选择要更高的可靠性，还是要更高的效率。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch29"><summary>6.1 顺序消息</summary>
+<div class="sec">
+<h4>顺序消息的概念和分类</h4>
+<ul class="point">
+<li><b>顺序消息是指消息的消费顺序和产生顺序相同</b>
+<ul class="quote">
+<li>在有些业务逻辑下，必须保证顺序，比如订单的生成、付款、发货。</li>
+</ul>
+</li>
+<li><b>顺序消息分为全局顺序消息和部分顺序消息</b>
+<ul class="quote">
+<li>全局顺序消息指某个Topic下的所有消息都要保证顺序。</li>
+<li>部分顺序消息只要保证每一组消息被顺序消费即可。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>全局顺序消息的实现</h4>
+<ul class="point">
+<li><b>默认情况下，RocketMQ不保证顺序</b>
+<ul class="quote">
+<li>创建一个Topic，默认八个写队列，八个读队列，消息可能被写入任意一个队列里。</li>
+<li>在数据的读取过程中，可能有多个Consumer，每个Consumer也可能启动多个线程并行处理，所以消息被哪个Consumer消费，被消费的顺序和写入的顺序是否一致是不确定的。</li>
+</ul>
+</li>
+<li><b>要保证全局顺序消息，需要先把Topic的读写队列数设置为一，然后Producer和Consumer的并发设置也要是一</b>
+<ul class="quote">
+<li>这样做可以消除所有的并发处理，各部分都设置成单线程处理。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>部分顺序消息的实现</h4>
+<ul class="point">
+<li><b>发送端使用MessageQueueSelector类来控制把消息发往哪个Message Queue</b>
+<ul class="quote">
+<li>在发送端，要做到把同一业务ID的消息发送到同一个Message Queue。</li>
+</ul>
+</li>
+<li><b>消费端通过使用MessageListenerOrderly类来解决单Message Queue的消息被并发处理的问题</b>
+<ul class="quote">
+<li>在消费过程中，要做到从同一个Message Queue读取的消息不被并发处理。</li>
+<li>Consumer使用MessageListenerOrderly的时候，下面四个Consumer的设置依旧可以使用：setConsumeThreadMin、setConsumeThreadMax、setPullBatchSize、setConsumeMessageBatchMaxSize。</li>
+<li>MessageListenerOrderly并不是简单地禁止并发处理，在MessageListenerOrderly的实现中，为每个Consumer Queue加个锁，消费每个消息前，需要先获得这个消息对应的Consumer Queue所对应的锁，这样保证了同一时间，同一个Consumer Queue的消息不被并发消费，但不同Consumer Queue的消息可以并发处理。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch30"><summary>6.2 消息重复问题</summary>
+<div class="sec">
+<h4>消息重复问题的原因及解决方法</h4>
+<ul class="point">
+<li><b>消息重复一般情况下不会发生，但是如果消息量大，网络有波动，消息重复就是个大概率事件</b>
+<ul class="quote">
+<li>比如Producer有个函数setRetryTimesWhenSendFailed，设置在同步方式下自动重试的次数，默认值是2，这样当第一次发送消息时，Broker端接收到了消息但是没有正确返回发送成功的状态，就造成了消息重复。</li>
+</ul>
+</li>
+<li><b>解决消息重复有两种方法：保证消费逻辑的幂等性，维护一个已消费消息的记录</b>
+<ul class="quote">
+<li>保证消费逻辑的幂等性，多次调用和一次调用效果相同。</li>
+<li>维护一个已消费消息的记录，消费前查询这个消息是否被消费过。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch31"><summary>6.3 动态增减机器</summary>
+<div class="sec">
+<h4>动态增减NameServer</h4>
+<ul class="point">
+<li><b>NameServer是RocketMQ集群的协调者，各个组件通过NameServer获取各种属性和地址信息</b>
+<ul class="quote">
+<li>NameServer主要功能包括两部分：一个各个Broker定期上报自己的状态信息到NameServer；另一个是各个客户端，包括Producer、Consumer，以及命令行工具，通过NameServer获取最新的状态信息。</li>
+</ul>
+</li>
+<li><b>有四种方式可设置NameServer的地址，优先级由高到低依次是：通过代码设置，使用Java启动参数设置，通过Linux环境变量设置，通过HTTP服务来设置</b>
+<ul class="quote">
+<li>通过代码设置，比如在Producer中，通过Producer.setNamesrvAddr (&quot;name-server1-ip:port; name-server2-ip:port&quot;)来设置。</li>
+<li>使用Java启动参数设置，对应的option是rocketmq.namesrv.addr。</li>
+<li>通过Linux环境变量设置，在启动前设置变量：NAMESRV_ADDR。</li>
+<li>通过HTTP服务来设置，当上述方法都没有使用，程序会向一个HTTP地址发送请求来获取NameServer地址。</li>
+</ul>
+</li>
+<li><b>第4种方式支持动态增加NameServer，无须重启其他组件</b>
+<ul class="quote">
+<li>使用这种方式后其他组件会每隔2分钟请求一次该URL，获取最新的NameServer地址。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>动态增减Broker</h4>
+<ul class="point">
+<li><b>动态增加Broker不会对原有的Topic产生影响，原来创建好的Topic中数据的读写依然在原来的那些Broker上进行</b>
+<ul class="quote">
+<li>集群扩容后，可以把新建的Topic指定到新的Broker机器上，均衡利用资源。</li>
+<li>通过updateTopic命令更改现有的Topic配置，在新加的Broker上创建新的队列。</li>
+</ul>
+</li>
+<li><b>减少Broker要看是否有持续运行的Producer，如果Topic只有一个Master Broker，停掉这个Broker后，消息的发送肯定会受到影响</b>
+<ul class="quote">
+<li>当某个Topic有多个Master Broker，停了其中一个，这时候是否会丢失消息呢？答案和Producer使用的发送消息的方式有关，如果使用同步方式send(msg)发送，在DefaultMQProducer内部有个自动重试逻辑，其中一个Broker停了，会自动向另一个Broker发消息，不会发生丢消息现象。</li>
+<li>如果使用异步方式发送send(msg, callback)，或者用sendOneWay方式，会丢失切换过程中的消息。</li>
+<li>如果Producer程序能够暂停，在有一个Master和一个Slave的情况下也可以顺利切换。可以关闭Producer后关闭Master Broker，这个时候所有的读取都会被定向到Slave机器，消费消息不受影响。把Master Broker机器置换完后，基于原来的数据启动这个Master Broker，然后再启动Producer程序正常发送消息。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch32"><summary>6.4 各种故障对消息的影响</summary>
+<div class="sec">
+<h4>各种故障对消息的影响</h4>
+<ul class="point">
+<li><b>Broker正常关闭，启动；</b>
+</li>
+<li><b>Broker异常Crash，然后启动；</b>
+</li>
+<li><b>OS Crash，重启；</b>
+</li>
+<li><b>机器断电，但能马上恢复供电；</b>
+</li>
+<li><b>磁盘损坏；</b>
+</li>
+<li><b>CPU、主板、内存等关键设备损坏。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>消息可靠性的保证</h4>
+<ul class="point">
+<li><b>多Master，每个Master带有Slave；</b>
+</li>
+<li><b>主从之间设置成SYNC_MASTER；</b>
+</li>
+<li><b>Producer用同步方式写；</b>
+</li>
+<li><b>刷盘策略设置成SYNC_FLUSH。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch33"><summary>6.5 消息优先级</summary>
+<div class="sec">
+<h4>消息优先级的需求及处理方法</h4>
+<ul class="point">
+<li><b>应用程序处理多种类型的消息，不同消息的优先级不同</b>
+<ul class="quote">
+<li>RocketMQ是个先入先出的队列，不支持消息级别或者Topic级别的优先级。</li>
+</ul>
+</li>
+<li><b>业务中简单的优先级需求，可以通过间接的方式解决</b>
+<ul class="quote">
+<li>如果当前Topic里有多种相似类型的消息，可以把这三种相似类型的消息分拆到两个Topic里。</li>
+<li>如果某家门店订单量大增，这家门店对应的MessageQueue消息数增多，等待时间增长，但不会造成其他家门店等待时间增长。</li>
+<li>对这种要求，或者逻辑更复杂的要求，就要用户自己编码实现优先级控制。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>消息优先级的实现方式</h4>
+<ul class="point">
+<li><b>如果上述的三类消息在一个Topic里，可以使用PullConsumer，自主控制MessageQueue的遍历，以及消息的读取。</b>
+</li>
+<li><b>如果上述三类消息在三个Topic下，需要启动三个Consumer，实现逻辑控制三个Consumer的消费。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch34"><summary>6.6 本章小结</summary>
+<div class="sec">
+<h4>消息顺序与并发执行</h4>
+<ul class="point">
+<li><b>在要求消息顺序的场景下，既要并发执行，又能保证消息顺序</b>
+<ul class="quote">
+<li>RocketMQ在设计上，有重试机制来保证消息不丢，造成的结果是可能存在消息重复。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>故障场景下的应对策略</h4>
+<ul class="point">
+<li><b>在可能的故障场景下，保证不丢消息、不中断服务</b>
+<ul class="quote">
+<li>下一章将讨论处理大数据量消息的方法。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch35"><summary>第7章 吞吐量优先的使用场景</summary>
+<div class="sec">
+<h4>提高RocketMQ集群吞吐量的方法</h4>
+<ul class="point">
+<li><b>在消息生产端，使用批量发送消息，减少网络开销</b>
+<ul class="quote">
+<li>批量发送消息可以减少网络开销，提高消息发送的效率。</li>
+</ul>
+</li>
+<li><b>在消息消费端，使用多线程消费，提高消费速度</b>
+<ul class="quote">
+<li>多线程消费可以提高消息消费的速度，提高集群的吞吐量。</li>
+</ul>
+</li>
+<li><b>在消息存储端，使用SSD硬盘，提高磁盘读写速度</b>
+<ul class="quote">
+<li>SSD硬盘可以提高磁盘读写速度，提高消息存储的效率。</li>
+</ul>
+</li>
+<li><b>在消息集群间，使用负载均衡，分摊请求压力</b>
+<ul class="quote">
+<li>负载均衡可以分摊请求压力，提高集群的吞吐量。</li>
+</ul>
+</li>
+<li><b>在消息发送时，使用消息确认机制，保证消息的可靠性</b>
+<ul class="quote">
+<li>消息确认机制可以保证消息的可靠性，但可能会增加消息发送的延迟。</li>
+</ul>
+</li>
+<li><b>在消息消费时，使用消息过滤机制，减少不必要的消费</b>
+<ul class="quote">
+<li>消息过滤机制可以减少不必要的消费，提高消费效率。</li>
+</ul>
+</li>
+<li><b>在消息存储时，使用消息压缩机制，减少存储空间</b>
+<ul class="quote">
+<li>消息压缩机制可以减少存储空间，提高存储效率。</li>
+</ul>
+</li>
+<li><b>在消息处理时，使用消息续传机制，防止消息丢失</b>
+<ul class="quote">
+<li>消息续传机制可以防止消息丢失，提高消息的可靠性。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch36"><summary>7.1 在Broker端进行消息过滤</summary>
+<div class="sec">
+<h4>消息的Tag和Key</h4>
+<ul class="point">
+<li><b>Tag用在Consumer的代码中，用来进行服务端消息过滤，Key主要用于通过命令行查询消息</b>
+<ul class="quote">
+<li>对一个应用来说，尽可能只用一个Topic，不同的消息子类型用Tag来标识(每条消息只能有一个Tag)。</li>
+<li>发送消息设置了Key以后，以后可以根据这个Key来查找消息。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>通过Tag进行过滤</h4>
+<ul class="point">
+<li><b>使用Tag方式过滤非常高效，Broker端可以在ConsumeQueue中做这种过滤，只从CommitLog里读取过滤后被命中的消息</b>
+<ul class="quote">
+<li>Consume Queue的第三部分存储的是Tag对应的hashcode，是一个定长的字符串，通过Tag过滤的过程就是对比定长的hashcode。</li>
+<li>经过hashcode对比，符合要求的消息被从CommitLog读取出来，不用担心Hash冲突问题，消息在被消费前，会对比完整的Message Tag字符串，消除Hash冲突造成的误读。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>用SQL表达式的方式进行过滤</h4>
+<ul class="point">
+<li><b>使用SQL表达式的方式对消息进行过滤，用法如下(目前只支持在PushConsumer中实现这种过滤)</b>
+<ul class="quote">
+<li>默认MQPushConsumer consumer = new 默认MQPushConsumer(&quot;please_rename_unique_group_name_4&quot;); // only subsribe messages have property a, also a &gt;=0 and a &lt;= 3 consumer.subscribe(&quot;TopicTest&quot;, MessageSelector.bySql(&quot;a between 0 and 3&quot;);</li>
+<li>类似SQL的过滤表达式，支持如下语法：数字对比，比如&gt;、&gt;=、&lt;、&lt;=、BETWEEN、=；字符串对比，比如=、&lt;&gt;、IN；IS NULL or IS NOT NULL；逻辑符号AND、OR、NOT。</li>
+<li>支持的数据类型：数字型，比如123、3.1415；字符型，比如’abc&#x27;、注意必须用单引号；NULL，这个特殊字符；布尔型，TRUEorFALSE。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Filter Server方式过滤</h4>
+<ul class="point">
+<li><b>Filter Server是一种比SQL表达式更灵活的过滤方式，允许用户自定义Java函数，根据Java函数的逻辑对消息进行过滤</b>
+<ul class="quote">
+<li>要使用Filter Server，首先要在启动Broker前在配置文件里加上filterServerNums = 3这样的配置，Broker在启动的时候，就会在本机启动3个Filter Server进程。</li>
+<li>Filter Server类似一个RocketMQ的Consumer进程，它从本机Broker获取消息，然后根据用户上传过来的Java函数进行过滤，过滤后的消息再传给远端的Consumer。</li>
+<li>这种方式会占用很多Broker机器的CPU资源，要根据实际情况谨慎使用。上传的java代码也要经过检查，不能有申请大内存、创建线程等这样的操作，否则容易造成Broker服务器宕机。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch37"><summary>7.2 提高Consumer处理能力</summary>
+<div class="sec">
+<h4>提高Consumer处理能力的方法</h4>
+<ul class="point">
+<li><b>提高消费并行度</b>
+<ul class="quote">
+<li>在同一个ConsumerGroup下，可以通过增加Consumer实例的数量来提高并行度。</li>
+<li>通过提高单个Consumer实例中的并行处理的线程数，可以在同一个Consumer内增加并行度来提高吞吐量。</li>
+</ul>
+</li>
+<li><b>以批量方式进行消费</b>
+<ul class="quote">
+<li>设置Consumer的consumeMessageBatchMaxSize这个参数，默认是1，如果设置为N，在消息多的时候每次收到的是个长度为N的消息链表。</li>
+</ul>
+</li>
+<li><b>检测延时情况，跳过非重要消息</b>
+<ul class="quote">
+<li>当某个队列的消息数堆积到90000条以上，就直接丢弃，以便快速追上发送消息的进度。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch38"><summary>7.3 Consumer的负载均衡</summary>
+<div class="sec">
+<h4>Consumer的负载均衡实现</h4>
+<ul class="point">
+<li><b>DefaultMQPushConsumer的负载均衡过程不需要使用者操心，客户端程序会自动处理</b>
+<ul class="quote">
+<li>每个DefaultMQPushConsumer启动后，会马上会触发一个doRebalance动作。</li>
+<li>在同一个ConsumerGroup里加入新的DefaultMQPushConsumer时，各个Consumer都会被触发doRebalance动作。</li>
+</ul>
+</li>
+<li><b>负载均衡的结果与Topic的Message Queue数量，以及ConsumerGroup里的Consumer的数量有关</b>
+<ul class="quote">
+<li>负载均衡的分配粒度只到Message Queue，把Topic下的所有Message Queue分配到不同的Consumer中。</li>
+<li>Message Queue数量设置过小不利于做负载均衡，通常情况下，应把一个Topic的Message Queue数设置为16。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>DefaultMQPullConsumer的负载均衡</h4>
+<ul class="point">
+<li><b>Pull Consumer可以看到所有的Message Queue，而且从哪个Message Queue读取消息，读消息时的Offset都由使用者控制</b>
+<ul class="quote">
+<li>使用者可以实现任何特殊方式的负载均衡。</li>
+</ul>
+</li>
+<li><b>用户通过更改MessageQueueListenerImpl的实现来做自己的负载均衡策略</b>
+<ul class="quote">
+<li>registerMessageQueueListener函数在有新的Consumer加入或退出时被触发。</li>
+<li>MQPullConsumerScheduleService类的实现里，实现负载均衡的代码。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch39"><summary>7.4 提高Producer的发送速度</summary>
+<div class="sec">
+<h4>Oneway方式发送消息</h4>
+<ul class="point">
+<li><b>Oneway方式只发送请求不等待应答，将数据写入客户端的Socket缓冲区就返回</b>
+<ul class="quote">
+<li>Oneway方式发送消息的耗时可以缩短到微秒级。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>增加Producer的并发量</h4>
+<ul class="point">
+<li><b>使用多个Producer同时发送，引入并发窗口，在窗口内消息可以并发地写入DirectMem中</b>
+<ul class="quote">
+<li>RocketMQ无论在HDD还是SSD磁盘情况下都能保持较高的写入性能。</li>
+<li>目前在阿里内部经过调优的服务器上，写入性能达到90万+的TPS。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Linux操作系统层级进行调优</h4>
+<ul class="point">
+<li><b>使用EXT4文件系统，IO调度算法使用deadline算法</b>
+<ul class="quote">
+<li>EXT4创建/删除文件的性能比EXT3及其他文件系统要好。</li>
+<li>deadline算法保证超时(达到最终期限时间)的队列中的IO请求会优先被处理。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch40"><summary>7.5 系统性能调优的一般流程</summary>
+<div class="sec">
+<h4>系统性能调优的一般流程</h4>
+<ul class="point">
+<li><b>搭建测试环境，查看硬件利用率</b>
+<ul class="quote">
+<li>使用TOP命令查看CPU和内存的利用率。</li>
+<li>使用Linux的sar命令查看网卡使用情况。</li>
+<li>用iostat查看磁盘的使用情况。</li>
+</ul>
+</li>
+<li><b>定位系统瓶颈</b>
+<ul class="quote">
+<li>确定网卡和磁盘是否繁忙。</li>
+<li>如果这三者都没有到使用极限，可能是CPU利用率没有发挥出来。</li>
+</ul>
+</li>
+<li><b>使用Java的profiling工具来找出程序的具体问题</b>
+<ul class="quote">
+<li>比如jvisualvm、jstack、perfJ等。</li>
+<li>通过这些工具，可以逐步定位出是哪些Java线程比较慢，哪个函数占用的时间多，是否因为存在锁造成了忙等的情况，然后通过不断的更改测试，找到影响性能的关键代码，最终解决问题。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch41"><summary>7.6 本章小结</summary>
+<div class="sec">
+<h4>消息过滤</h4>
+<ul class="point">
+<li><b>在服务端进行消息过滤可以减少无效消息传输造成的带宽浪费</b>
+<ul class="quote">
+<li>Tag是最常用的一种高效过滤方式。</li>
+<li>还可以用SQL表达式、FilterServer来过滤消息。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>增加集群的机器数量</h4>
+<ul class="point">
+<li><b>提高并发性，要根据实际场景增加Broker、Consumer或Producer角色的机器数量。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch42"><summary>8.1 在SpringBoot中使用RocketMQ</summary>
+<div class="sec">
+<h4>在Spring Boot项目中直接使用RocketMQ</h4>
+<ul class="point">
+<li><b>在pom.xml中加入RocketMQ的依赖</b>
+<ul class="quote">
+<li>依赖的groupId为org.apache.rocketmq，artifactId为rocketmq-client，版本为4.2.0。</li>
+</ul>
+</li>
+<li><b>在application.properties文件里加入RocketMQ的参数</b>
+<ul class="quote">
+<li>NameServer的地址、GoupName名称和Topic名称是几个重要的参数。</li>
+<li>可以把发送消息和消费消息的功能封装成Service，供其他代码引用。</li>
+<li>Producer和Consumer的初始化比较慢，所以适合把初始化操作代码写到@PostConstruct函数里，把关闭操作代码写到@PreDestroy函数里。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>通过Spring Messaging方式使用RocketMQ</h4>
+<ul class="point">
+<li><b>添加依赖</b>
+<ul class="quote">
+<li>在pom.xml中添加spring-boot-starter-rocketmq依赖。</li>
+</ul>
+</li>
+<li><b>配置参数</b>
+<ul class="quote">
+<li>在properties文件中加入spring.rocketmq.name-server、spring.rocketmq.producer.group等配置选项。</li>
+</ul>
+</li>
+<li><b>引入模板</b>
+<ul class="quote">
+<li>使用基于不同消息队列收发消息的代码类似，方便在不同的消息队列间切换。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch43"><summary>8.2 直接使用云上RocketMQ</summary>
+<div class="sec">
+<h4>直接使用云上RocketMQ的优势</h4>
+<ul class="point">
+<li><b>省去部署、运维的繁琐工作，加快核心产品的上线速度</b>
+<ul class="quote">
+<li>产品迭代的节奏越来越快，尤其对于中小型公司来说，直接使用云产品可以省去部署、运维的繁琐工作。</li>
+<li>当业务量上升到一定规模，业务形态基本稳定后，再自己部署、运维或二次开发独立的中间件产品。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>如何使用阿里云MQ产品</h4>
+<ul class="point">
+<li><b>参考阿里云MQ的说明文档进行开发</b>
+<ul class="quote">
+<li>比如阿里云MQ文档中的发送消息Demo。</li>
+</ul>
+</li>
+<li><b>设置TCP接入域名，使用阿里云账号的Key, Secret和相应域名</b>
+<ul class="quote">
+<li>在发送消息前，必须调用start方法来启动Producer，只需调用一次即可。</li>
+<li>循环发送消息，打印Message ID，以便用于消息发送状态查询。</li>
+<li>在应用退出前，可以销毁Producer对象。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch44"><summary>8.3 RocketMQ与Spark、Flink对接</summary>
+<div class="sec">
+<h4>RocketMQ与Spark、Flink对接的方式</h4>
+<ul class="point">
+<li><b>如果不考虑并发性，可以在自己的程序中启动RocketMQ的Consumer或Producer，负责从RocketMQ集群获取或发送消息，同时再启动Spark或Flink的Client程序，负责和Spark或Flink交互。</b>
+</li>
+<li><b>如果需要利用Spark、Flink本身的并发处理，需要实现相应的Connector</b>
+<ul class="quote">
+<li>RocketMQ和Spark的Connector有了实现，代码在https://github.com/apache/rocketmq-externals/tree/master/rocketmq-spark。</li>
+<li>RocketMQ和Flink的Connector当前正在开发中，有兴趣的也可以参与贡献代码。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch45"><summary>8.4 自定义开发运维工具</summary>
+<div class="sec">
+<h4>开源版本运维工具功能介绍</h4>
+<ul class="point">
+<li><b>配置页面可以设置NaveServer的地址，修改服务是否使用VIPChannel</b>
+<ul class="quote">
+<li>如果版本小于3.5.8，请设置不使用VIPChannel。</li>
+<li>否则保持默认值(VIPChannel用于实现读写分离，是3.5.8以后的版本才增加的功能)。</li>
+</ul>
+</li>
+<li><b>驾驶舱中可以查看Broker的消息量，还可以查看单一主题的消息量</b>
+<ul class="quote">
+<li>可以查看Broker的消息量(总量/5分钟图)。</li>
+<li>还可以查看单一主题的消息量(总量/趋势图)。</li>
+</ul>
+</li>
+<li><b>集群信息页面可以查看集群数量、地址、主从的分布情况，还可以查看Broker的运行状态信息和配置信息</b>
+<ul class="quote">
+<li>可以查看集群数量、地址、主从的分布情况。</li>
+<li>还可以查看Broker的运行状态信息和配置信息。</li>
+</ul>
+</li>
+<li><b>Topic页面展示所有的主题，可以通过搜索框进行过滤，筛选普通/重试/死信类型的主题</b>
+<ul class="quote">
+<li>可以通过搜索框进行过滤，筛选普通/重试/死信类型的主题。</li>
+<li>还可以添加/更新主题，修改主题的配置参数。</li>
+<li>还可以查看每个主题的消息投递状态，消息的路由信息。</li>
+<li>还可以向某个主题发送测试消息和重置消费位点(Offset)。</li>
+</ul>
+</li>
+<li><b>Consumer信息页面展示所有的消费组，还可以通过搜索框进行搜索，手动刷新页面或每隔五秒定时刷新页面</b>
+<ul class="quote">
+<li>可以通过搜索框进行搜索。</li>
+<li>还可以手动刷新页面或每隔五秒定时刷新页面。</li>
+<li>按照订阅组/数量/TPS/延迟进行排序，添加/更新消费组等。</li>
+</ul>
+</li>
+<li><b>Producer信息页面，可以通过Topic和Group查询在线的消息生产者信息</b>
+<ul class="quote">
+<li>可以通过Topic和Group查询在线的消息生产者信息。</li>
+<li>信息包含客户端的主机、版本等。</li>
+</ul>
+</li>
+<li><b>消息查询页面，可以根据Topic的时间、Key和消息ID进行消息查询</b>
+<ul class="quote">
+<li>可以根据Topic的时间、Key和消息ID进行消息查询。</li>
+<li>消息详情可以展示这条消息的详细内容。</li>
+<li>消息详情可以查看消息对应的具体消费组的消费情况。</li>
+<li>可以向指定的消费组重发消息。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>基于Tools模块开发自定义运维工具</h4>
+<ul class="point">
+<li><b>RocketMQ-Console是一个基于Spring Boot开发的运维页面工具，我们可以参考它的源码进行自定义功能的运维工具开发</b>
+<ul class="quote">
+<li>RocketMQ源码中有一个Tools模块，MQAdmin相关命令的实现就在这里。</li>
+<li>如果我们熟悉了MQAdmin命令的功能，就很容易找到实现某个功能的源码。</li>
+</ul>
+</li>
+<li><b>Tools模块源码中有一个command包，里面列出了各个组件相关的命令，如果想实现自定义的运维功能，可以直接从这里查找并参考它的源码</b>
+<ul class="quote">
+<li>RocketMQ是使用Java语言开发的，比起Kafka的Scala语言和RabbitMQ的Erlang语言，更容易找到技术人员进行定制开发。</li>
+<li>大规模使用后，遇到“疑难杂症”也可以直接查看源码，找到深层次的原因。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch46"><summary>8.5 本章小结</summary>
+<div class="sec">
+<h4>与SpringBoot、Spark、Flink等软件进行交互</h4>
+<ul class="point">
+<li><b>RocketMQ可以作为SpringBoot、Spark、Flink等软件的中间件</b>
+<ul class="quote">
+<li>RocketMQ可以与其他系统进行交互，实现分布式事务。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用云端的RocketMQ产品</h4>
+<ul class="point">
+<li><b>阿里云、腾讯云等云服务提供商都提供了RocketMQ服务</b>
+<ul class="quote">
+<li>使用云端的RocketMQ产品可以节省运维成本。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>自定义开发运维工具</h4>
+<ul class="point">
+<li><b>可以根据业务需求，自定义开发运维工具</b>
+<ul class="quote">
+<li>自定义开发运维工具可以提高运维效率。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch47"><summary>第9章 首个Apache中间件顶级项目</summary>
+<div class="sec">
+<h4>RocketMQ项目概况</h4>
+<ul class="point">
+<li><b>RocketMQ是Apache的顶级项目，是一个分布式消息队列系统。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch48"><summary>9.1 RocketMQ的前世今生</summary>
+<div class="sec">
+<h4>阿里消息中间件的起源和发展</h4>
+<ul class="point">
+<li><b>阿里消息中间件起源于2001年的五彩石项目，Notify应运而生</b>
+<ul class="quote">
+<li>Notify用于交易核心消息的流转。</li>
+</ul>
+</li>
+<li><b>2010年，B2B开始大规模使用ActiveMQ作为消息内核</b>
+<ul class="quote">
+<li>随着阿里业务的快速发展，急需一款支持顺序消息，拥有海量消息堆积能力的消息中间件。</li>
+</ul>
+</li>
+<li><b>MetaQ 1.0在2011年诞生，2012年发展到了3.0版本，并抽象出了通用的消息引擎RocketMQ</b>
+<ul class="quote">
+<li>随后，对RocketMQ进行了开源，阿里的消息中间件正式走入了公众视野。</li>
+</ul>
+</li>
+<li><b>2015年，RocketMQ已经经历了多年双十一的洗礼，在可用性、可靠性以及稳定性等方面都有出色的表现</b>
+<ul class="quote">
+<li>与此同时，云计算大行其道，阿里消息中间件基于RocketMQ推出了Aliware MQ 1.0，开始为阿里云上成千上万家企业提供消息服务。</li>
+</ul>
+</li>
+<li><b>2016年，MetaQ在双十一期间承载了万亿级消息的流转，跨越了一个新的里程碑，同时RocketMQ进入Apache孵化。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch49"><summary>9.2 Apache顶级项目（TLP）之路</summary>
+<div class="sec">
+<h4>Apache顶级项目(TLP)之路</h4>
+<ul class="point">
+<li><b>RocketMQ的开源模式尝试把开源世界和专有世界完美地结合起来</b>
+<ul class="quote">
+<li>RocketMQ的未来希望像Redhat、CentOS或Fedora这些产品那样，把产品簇的协同发展效应体现在RocketMQ的演进中。</li>
+</ul>
+</li>
+<li><b>Apache社区的重要理念是Community over Code</b>
+<ul class="quote">
+<li>社区是判断一个孵化项目能否毕业的重要考核标准。</li>
+</ul>
+</li>
+<li><b>RocketMQ在进入Apache之前，已经开源了3年时间，历经多次双十一洗礼，社区也有不错的Active Contributors</b>
+<ul class="quote">
+<li>在准备申请进入Apache之前，团队甚至包括社区对RocketMQ做了大量重塑工作。</li>
+</ul>
+</li>
+<li><b>RocketMQ完成了从3.0到4.0的悄然升级，4.0是个过渡版本，也是在Apache开启孵化的版本</b>
+<ul class="quote">
+<li>通过孵化，像精细设计、代码Review、编码规约、分支模型、发布规约等软件研发流程被重视起来。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch50"><summary>9.3 源码结构</summary>
+<div class="sec">
+<h4>RocketMQ源码结构</h4>
+<ul class="point">
+<li><b>RocketMQ整个项目是用Maven来管理的，共有十几个模块</b>
+<ul class="quote">
+<li>主要功能通过broker、client、common、namesrv、remoting、store、tools这几个模块实现。</li>
+</ul>
+</li>
+<li><b>namesrv、broker、client这三个模块是RocketMQ的核心模块</b>
+<ul class="quote">
+<li>namesrv是分布式队列集群的协调者。</li>
+<li>broker实现了消息队列的主体。</li>
+<li>client包括生产者和消费者，包括使用消息队列的很多辅助方式。</li>
+</ul>
+</li>
+<li><b>common模块包括一些公共的功能类实现，如字符串处理、数据结构等。</b>
+</li>
+<li><b>remoting是通信相关功能的实现</b>
+<ul class="quote">
+<li>remoting包括TCP/IP、HTTP、Netty等多种通信方式。</li>
+</ul>
+</li>
+<li><b>store是消息存储的实现</b>
+<ul class="quote">
+<li>store包括内存存储、文件存储、数据库存储等多种存储方式。</li>
+</ul>
+</li>
+<li><b>tools主要是管理工具，用来管理集群</b>
+<ul class="quote">
+<li>tools包括启动、关闭、监控等管理功能。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch51"><summary>9.4 不断迭代的代码</summary>
+<div class="sec">
+<h4>RocketMQ源码在GitHub上的更新与结构</h4>
+<ul class="point">
+<li><b>RocketMQ的源码在GitHub上一直不断更新</b>
+<ul class="quote">
+<li>GitHub上的代码结构是未发布版的。</li>
+</ul>
+</li>
+<li><b>RocketMQ有很多和RocketMQ紧密相关的功能，比如管理控制台，以及和Redis、Spark、Flink对接的插件等</b>
+<ul class="quote">
+<li>这些代码被放到一个单独的GitHub库中。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>如何贡献代码</h4>
+<ul class="point">
+<li><b>官网的指南页面是必读的，地址是http://rocketmq.apache.org/docs/how-to-contribute/</b>
+<ul class="quote">
+<li>根据文档说明的步骤，提交PR即可。</li>
+</ul>
+</li>
+<li><b>可以查看某个功能的PR，看看大家的讨论和设计思路，对理解源码也有帮助。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch52"><summary>9.5 本章小结</summary>
+<div class="sec">
+<h4>RocketMQ的历史和现状</h4>
+<ul class="point">
+<li><b>RocketMQ是阿里最优秀的中间件之一。</b>
+</li>
+<li><b>RocketMQ目前作为Apache顶级项目。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch53"><summary>第10章 NameServer源码解析</summary>
+<div class="sec">
+<h4>NameServer的主要功能</h4>
+<ul class="point">
+<li><b>NameServer是消息中间件RocketMQ的管理中心，负责存储消息的元数据</b>
+<ul class="quote">
+<li>NameServer存储了Topic到Broker的映射关系。</li>
+<li>NameServer存储了ConsumerGroup到Consumer的映射关系。</li>
+</ul>
+</li>
+<li><b>NameServer还负责处理Broker的注册与发现</b>
+<ul class="quote">
+<li>Broker启动时会向NameServer发送注册请求。</li>
+<li>Broker宕机时，NameServer会删除其注册信息。</li>
+</ul>
+</li>
+<li><b>NameServer还提供了丰富的心跳机制，保证了Broker和NameServer之间的可用性</b>
+<ul class="quote">
+<li>Broker会定时向NameServer发送心跳。</li>
+<li>NameServer如果长时间未收到某个Broker的心跳，会认为该Broker已宕机，并将其从注册信息中删除。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>NameServer源码分析</h4>
+<ul class="point">
+<li><b>NameServer的启动过程</b>
+<ul class="quote">
+<li>NameServer的启动主要包括初始化NameServer的属性、创建ServerTransport、创建NettyServer等步骤。</li>
+</ul>
+</li>
+<li><b>NameServer的处理逻辑</b>
+<ul class="quote">
+<li>NameServer主要处理Broker的注册与发现、消费组的创建与删除、Topic的创建与删除等请求。</li>
+<li>NameServer处理请求的逻辑主要基于Netty框架，通过Handler和ChannelHandler来实现。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch54"><summary>10.1 模块入口代码的功能</summary>
+<div class="sec">
+<h4>NameServer入口代码的功能</h4>
+<ul class="point">
+<li><b>NameServer的启动入口是NamesrvStartup，用来协块各个调模功能的代码是NamesrvController。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>解析命令行参数</h4>
+<ul class="point">
+<li><b>-c命令行参数用来指定配置文件的位置；-p命令行参数用来打印所有配置项的值</b>
+<ul class="quote">
+<li>解析命令行参数后，如果发现-c参数，则读取配置文件，并调用MixAll.properties2Object方法将配置信息设置到namesrvConfig和nettyServerConfig中。</li>
+<li>如果发现-p参数，则打印所有配置项的值，然后程序退出。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>初始化NameServer的Controller</h4>
+<ul class="point">
+<li><b>根据解析出的配置参数，调用controller.initialize()来初始化，然后调用controller.start()让NameServer开始服务</b>
+<ul class="quote">
+<li>注册ShutdownHookThread，当程序退出的时候会调用controller.shutdown来做退出前的清理工作。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch55"><summary>10.2 NameServer的总控逻辑</summary>
+<div class="sec">
+<h4>NameServer总控逻辑</h4>
+<ul class="point">
+<li><b>Nameserver是集群的协调者，接收其他角色报上来的状态，然后根据请求返回相应的状态</b>
+<ul class="quote">
+<li>NameserverController把执行线程池初始化好。</li>
+<li>启动负责通信的服务remotingServer。</li>
+<li>remotingServer监听一些端口，收到Broker、Client等发过来的请求后，根据请求的命令，调用不同的Processor来处理。</li>
+</ul>
+</li>
+<li><b>启动了一个默认是8个线程的线程池，还有两个定时执行的线程</b>
+<ul class="quote">
+<li>一个用来扫描失效的Broker(scanNotActiveBroker)。</li>
+<li>另一个用来打印配置信息(printAllPeriodically)。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch56"><summary>10.3 核心业务逻辑处理</summary>
+<div class="sec">
+<h4>NameServer的核心业务逻辑</h4>
+<ul class="point">
+<li><b>Network通信服务模块收到请求后，就调用DefaultRequestProcessor来处理</b>
+<ul class="quote">
+<li>DefaultRequestProcessor根据RequestCode调用不同的函数来处理。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>NameServer的主要功能</h4>
+<ul class="point">
+<li><b>REGISTER_BROKER是在集群中新加入一个Broker机器。</b>
+</li>
+<li><b>GET_ROUTEINTO_BY_TOPIC是请求获取一个Topic的路由信息。</b>
+</li>
+<li><b>WIPE_WRITE_PERM_OF_BROKER是删除一个Broker的写权限。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch57"><summary>10.4 集群状态存储</summary>
+<div class="sec">
+<h4>RouteInfoManager的存储结构</h4>
+<ul class="point">
+<li><b>RouteInfoManager包含多个HashMap，用于存储集群的各种元数据</b>
+<ul class="quote">
+<li>topicQueueTable：存储topic和QueueData的对应关系。</li>
+<li>brokerAddrTable：存储brokerName和BrokerData的对应关系。</li>
+<li>clusterAddrTable：存储clusterName和brokerName的对应关系。</li>
+<li>brokerLiveTable：存储brokerAddr和BrokerLiveInfo的对应关系。</li>
+<li>filterServerTable：存储brokerAddr和FilterServer的对应关系。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>锁机制的选择和使用</h4>
+<ul class="point">
+<li><b>在NameServer的场景中，读取操作多，更改操作少，所以选择读写锁能大大提高效率</b>
+<ul class="quote">
+<li>读写锁是可重入的，多次获取锁不会出现问题。</li>
+</ul>
+</li>
+<li><b>锁的获取和执行逻辑要放到一个try{}里，然后在finally{}中释放</b>
+<ul class="quote">
+<li>以deleteTopic函数为例，看一下锁的使用方式。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch58"><summary>10.5 本章小结</summary>
+<div class="sec">
+<h4>NameServer模块源码分析</h4>
+<ul class="point">
+<li><b>NameServer是一个功能重要但是代码量不大的模块</b>
+<ul class="quote">
+<li>选择这个模块入手，比较容易理解。</li>
+</ul>
+</li>
+<li><b>认真读懂一个模块后就可以对作者的代码风格、设计偏好等有基本的了解。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch59"><summary>第11章 最常用的消费类</summary>
+<div class="sec">
+<h4>DefaultMQPushConsumer类的作用</h4>
+<ul class="point">
+<li><b>DefaultMQPushConsumer类让消费消息变得简单</b>
+<ul class="quote">
+<li>这个类为我们做了很多事情，包括创建消息消费者、创建消息主题、创建消息生产者、发送消息等。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch60"><summary>11.1 整体流程</summary>
+<div class="sec">
+<h4>DefaultMQPushConsumer的上层接口类</h4>
+<ul class="point">
+<li><b>DefaultMQPushConsumer类在org.apache.rocketmq.client.consumer包中，担任着上层接口的角色</b>
+<ul class="quote">
+<li>DefaultMQPushConsumer类常用的是最后这个构造函数，只传入一个consumer Group名称作为参数。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>DefaultMQPushConsumer的实现者</h4>
+<ul class="point">
+<li><b>DefaultMQPushConsumerImpl具体实现了DefaultMQPushConsumer的业务逻辑</b>
+<ul class="quote">
+<li>首先初始化MQClientInstance，并且设置好rebalance策略和pullApiWraper。</li>
+<li>然后是确定OffsetStore，根据消费消息方式的不同，OffsetStore的类型也不同。</li>
+<li>然后是初始化consumeMessageService，根据对消息顺序需求的不同，使用不同的Service类型。</li>
+<li>最后调用MQClientInstance的start方法，开始获取数据。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>获取消息逻辑</h4>
+<ul class="point">
+<li><b>获取消息的逻辑实现在public void pullMessage(final PullRequest pullRequest)函数中</b>
+<ul class="quote">
+<li>前半部分是进行一些判断，是进行流量控制的逻辑。</li>
+<li>中间是对返回消息结果做处理的逻辑。</li>
+<li>最后是发送获取消息请求的逻辑。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch61"><summary>11.2 消息的并发处理</summary>
+<div class="sec">
+<h4>并发处理过程</h4>
+<ul class="point">
+<li><b>ConsumeMessageConcurrentlyService类定义了三个线程池</b>
+<ul class="quote">
+<li>一个主线程池用来正常执行收到的消息。</li>
+<li>另外两个都是单线程的线程池，一个用来执行推迟消费的消息，另一个用来定期清理超时消息。</li>
+</ul>
+</li>
+<li><b>消息的处理结果可能有不同的值，主要的两个是CONSUME_SUCCESS和RECONSUME_LATER</b>
+<ul class="quote">
+<li>如果消费不成功，要把消息提交到scheduledExecutorService线程池中，5秒后再执行。</li>
+<li>如果消费模式是CLUSTERING模式，未消费成功的消息会先被发送回Broker，供这个ConsumerGroup里的其他Consumer消费，如果发送回Broker失败，再调用RECONSUME_LATER。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>ProcessQueue对象</h4>
+<ul class="point">
+<li><b>ProcessQueue对象里主要的内容是一个TreeMap和一个读写锁</b>
+<ul class="quote">
+<li>TreeMap里以Message Queue的Offset作为Key，以消息内容的引用为Value，保存了所有从MessageQueue获取到但是还未被处理的消息。</li>
+<li>读写锁控制着多个线程对TreeMap对象的并发访问。</li>
+</ul>
+</li>
+<li><b>有了ProcessQueue对象，可以随时停止、启动消息的消费，同时也可用于帮助实现顺序消费消息</b>
+<ul class="quote">
+<li>顺序消息是通过ConsumeMessageOrderlyService类实现的，主要流程和ConsumeMessageConcurrentlyService类似，区别只是在对并发消费的控制上。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch62"><summary>11.3 生产者消费者的底层类</summary>
+<div class="sec">
+<h4>MQClientInstance类的创建规则</h4>
+<ul class="point">
+<li><b>MQClientInstance是客户端各种类型的Consumer和Producer的底层类</b>
+<ul class="quote">
+<li>MQClientInstance首先从NameServer获取并保存各种配置信息，比如Topic的Route信息。</li>
+<li>MQClientInstance还会通过MQClientAPIImpl类实现消息的收发，也就是从Broker获取消息或者发送消息到Broker。</li>
+</ul>
+</li>
+<li><b>一个MQClientInstance对象可以被多个Consumer或Producer公用</b>
+<ul class="quote">
+<li>通过MQClientManager.getInstance().getAndCreateMQClientInstance(this.defaultMQProducer, rpcHook)来创建MQClientInstance。</li>
+<li>系统中维护了ConcurrentMap&lt;String/* clientId */, MQClientInstance&gt;factoryTable这个Map对象，每创建一个新的MQClientInstance，都会以clientId作为Key放入Map结构中。</li>
+</ul>
+</li>
+<li><b>在普通情况下，一个用到RocketMQ客户端的Java程序，或者说一个JVM进程只要有一个MQClientInstance实例就够了</b>
+<ul class="quote">
+<li>如果创建Consumer或者Producer类型的时候不手动指定InstanceName，进程中只会有一个MQClientInstance对象。</li>
+<li>有些情况下只有一个MQClientInstance对象是不够的，比如一个Java程序需要连接两个RoceketMQ集群，从一个集群读取消息，发送到另一个集群，一个MQClientInstance对象无法支持这种场景。这种情况下一定要手动指定不同的InstanceName，底层会创建两个MQClientInstance对象。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>MQClientInstance类的功能</h4>
+<ul class="point">
+<li><b>Start函数中的MQClientAPIImpl对象用来负责底层消息通信，然后启动pullMessageService和rebalanceService</b>
+<ul class="quote">
+<li>在类的成员变量中，用topicRouteTable、brokerAddrTable等来存储从NameServer中获得的集群状态信息。</li>
+<li>通过一个ScheduledTask来维护这些信息。</li>
+</ul>
+</li>
+<li><b>MQClientInstance会定时进行如下几个操作：获取NameServer地址、更新TopicRoute信息、清理离线的Broker和保存消费者的Offset</b>
+<ul class="quote">
+<li>如果null == this.clientConfig.getNamesrvAddr()，则每隔10秒获取一次NameServer地址。</li>
+<li>每隔1分钟更新一次TopicRoute信息。</li>
+<li>每隔10秒清理一次离线的Broker。</li>
+<li>每隔10秒保存一次消费者的Offset。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch63"><summary>11.4 本章小结</summary>
+<div class="sec">
+<h4>DefaultMQPushConsumerImpl类分析</h4>
+<ul class="point">
+<li><b>DefaultMQPushConsumerImpl是RocketMQ的客户端API中最核心的一个类</b>
+<ul class="quote">
+<li>它实现了MQConsumer接口，提供了消费者处理消息的方法。</li>
+</ul>
+</li>
+<li><b>DefaultMQPushConsumerImpl的构造函数需要传入两个参数：NamesrvAddr和Topic</b>
+<ul class="quote">
+<li>NamesrvAddr是NameServer的地址，Topic是要订阅的主题。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Consumer的并发处理过程分析</h4>
+<ul class="point">
+<li><b>Consumer的并发处理过程包括四个步骤：创建消息队列、创建消费者、创建消息处理器、启动消费线程</b>
+<ul class="quote">
+<li>创建消息队列：根据Topic和Queue个数，创建对应数量的消息队列。</li>
+<li>创建消费者：根据ConsumerGroup和Topic，创建对应的消费者。</li>
+<li>创建消息处理器：每个消费者都会对应一个消息处理器，用于处理消费到的消息。</li>
+<li>启动消费线程：每个消费者都会启动一个消费线程，用于从消息队列中获取消息并处理。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>客户端Class统一的底层通信类MQClientInstance分析</h4>
+<ul class="point">
+<li><b>MQClientInstance是客户端类统一的底层通信类</b>
+<ul class="quote">
+<li>它提供了客户端与NameServer、Broker之间的通信功能。</li>
+</ul>
+</li>
+<li><b>MQClientInstance的构造函数需要传入两个参数：NamesrvAddr和ClientIP</b>
+<ul class="quote">
+<li>NamesrvAddr是NameServer的地址，ClientIP是客户端的IP地址。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch64"><summary>第12章 主从同步机制</summary>
+<div class="sec">
+<h4>RocketMQ的Broker角色</h4>
+<ul class="point">
+<li><b>Master角色的机器接收到消息后，要把内容同步到Slave机器上</b>
+<ul class="quote">
+<li>一旦Master宕机，Slave机器依然可以提供服务。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Master和Slave角色机器间同步功能实现的源码分析。</h4>
+<ul class="point">
+</ul></div>
+</details>
+<details class="ch" id="ch65"><summary>12.1 同步属性信息</summary>
+<div class="sec">
+<h4>Slave角色定时同步元数据信息</h4>
+<ul class="point">
+<li><b>Broker在启动时，判断自己的角色是否是Slave，是的话就启动定时同步任务</b>
+<ul class="quote">
+<li>如果角色是Slave，且HaMasterAddress不为空，长度大于等于6，则更新HaMasterAddress，并设置updateMasterHAServerAddrPeriodically为false。</li>
+<li>如果角色是Slave，且HaMasterAddress为空，或长度小于6，则设置updateMasterHAServerAddrPeriodically为true。</li>
+</ul>
+</li>
+<li><b>定时任务中调用syncTopicConfig()、syncConsumerOffset()、syncDelayOffset()和syncSubscriptionGroupConfig()进行元数据同步</b>
+<ul class="quote">
+<li>以syncConsumerOffset为例，其基本逻辑是组装一个RemotingCommand，底层通过Netty将消息发送到Master角色的Broker，然后获取Offset信息。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch66"><summary>12.2 同步消息体</summary>
+<div class="sec">
+<h4>同步消息体的方法</h4>
+<ul class="point">
+<li><b>CommitLog和元数据信息的不同</b>
+<ul class="quote">
+<li>CommitLog的数据量比元数据要大。</li>
+<li>对实时性和可靠性要求也不一样。</li>
+</ul>
+</li>
+<li><b>Master和Slave之间消息体内容的同步。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>HAService的实现</h4>
+<ul class="point">
+<li><b>HAService是实现commitLog同步的主体</b>
+<ul class="quote">
+<li>默认是在Master机器上执行。</li>
+</ul>
+</li>
+<li><b>当Broker角色是Slave的时候，MasterAddr的值会被正确设置</b>
+<ul class="quote">
+<li>HAClient试图通过Java NIO函数去连接Master角色的Broker。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>HAClient的连接</h4>
+<ul class="point">
+<li><b>Slave角色连接Master</b>
+<ul class="quote">
+<li>连接成功以后，通过对比Master和Slave的Offset，不断进行同步。</li>
+</ul>
+</li>
+<li><b>Master角色有相应的监听代码</b>
+<ul class="quote">
+<li>通过Java NIO函数去监听Slave角色的连接。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch67"><summary>12.3 sync_master和async_master</summary>
+<div class="sec">
+<h4>sync_master和async_master配置参数</h4>
+<ul class="point">
+<li><b>sync_master是同步方式，master角色Broker中的消息要立刻同步过去。</b>
+</li>
+<li><b>async_master是异步方式，master角色Broker中的消息是通过异步处理的方式同步到Slave角色的机器上的。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>sync_master下的消息同步流程</h4>
+<ul class="point">
+<li><b>Master每次写消息的时候，都会等待向Slave同步消息的过程，同步完成后再返回</b>
+<ul class="quote">
+<li>如果服务.isSlaveOK(result.getWroteOffset() + result.getWroteBytes())，则进行同步。</li>
+<li>如果服务.isSlaveOK(result.getWroteOffset() + result.getWroteBytes())返回false，则告诉生产者，slave不可用。</li>
+<li>如果同步失败，则返回FLUSH_SLAVE_TIMEOUT。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch68"><summary>12.4 本章小结</summary>
+<div class="sec">
+<h4>Master和Slave角色的Broker之间同步信息功能的实现</h4>
+<ul class="point">
+<li><b>同步的信息分为两种类型，实现方式各不相同：元数据信息采用基于Netty的command方式来同步消息；commitLog信息同步方式是直接基于Java NIO来实现。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch69"><summary>第13章 基于Netty的通信实现</summary>
+<div class="sec">
+<h4>RocketMQ底层通信实现机制</h4>
+<ul class="point">
+<li><b>RocketMQ选择基于Netty库来实现底层的通信功能</b>
+<ul class="quote">
+<li>基于TCP协议和Socket实现一个高效、稳定的通信程序并不容易，有很多大大小小的“坑”等待着经验不足的开发者。</li>
+<li>RocketMQ选择不重复发明轮子，基于Netty库来实现底层的通信功能。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch70"><summary>13.1 Netty介绍</summary>
+<div class="sec">
+<h4>Netty介绍</h4>
+<ul class="point">
+<li><b>Netty是一个网络应用框架，提供异步事件驱动的方式，可以快速地开发出高性能的网络应用程序</b>
+<ul class="quote">
+<li>Netty可以简化网络程序的开发过程。</li>
+</ul>
+</li>
+<li><b>Netty从许多协议实现中吸收了丰富的经验，比如FTP、SMTP、HTTP等许多基于二进制和文本的传统协议</b>
+<ul class="quote">
+<li>借助Netty，可以比较容易地开发出达到Java网络专家+并发编程专家水平的通信程序。</li>
+</ul>
+</li>
+<li><b>了解Netty前需要对Java NIO有个基本的了解，熟悉Channel、ByteBuffer、Selector等基本概念</b>
+<ul class="quote">
+<li>对于Java网络编程经验不多的读者，可以试着先用Java NIO的基本类写一个简单的Client/Server程序，然后再用Netty对比着实现一遍，这样比较容易理解Netty里各种组件存在的原因。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch71"><summary>13.2 Netty架构总览</summary>
+<div class="sec">
+<h4>Netty架构总览</h4>
+<ul class="point">
+<li><b>Netty主要分为三部分：底层零拷贝技术和统一通信模型，基于JVM实现的传输层，常用协议支持</b>
+<ul class="quote">
+<li>读者可以参考架构图做一个基本的了解，如果读者想深入了解的话可以阅读一些专门介绍Netty的书籍。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>重新实现ByteBuffer</h4>
+<ul class="point">
+<li><b>Netty使用自己重新实现的buffer API，而不是使用NIO的ByteBuffer来表示一个连续的字节序列</b>
+<ul class="quote">
+<li>新实现的buffer类型ByteBuf可以从底层解决ByteBuffer的一些问题，是一种更适合日常网络应用开发需要的缓存类型。</li>
+</ul>
+</li>
+<li><b>ByteBuf有读操作和写操作，为了便于用户使用，该缓冲区维护了读索引和写索引</b>
+<ul class="quote">
+<li>可读段表示缓冲区实际存储的可用数据。当用户使用read或者skip方法时，将会增加读索引。</li>
+<li>读索引之前的数据将进入废弃段，表示该数据已被使用过了。</li>
+<li>用户可主动使用discardReadBytes清空废弃段以便得到更多的可写空间。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>统一的异步I/O接口</h4>
+<ul class="point">
+<li><b>Netty有一个被称为Channel的统一异步I/O编程接口，这个编程接口抽象了所有点对点的通信操作</b>
+<ul class="quote">
+<li>如果应用是基于Netty的某一种传输方式来实现的，则可以快速迁移到另一种传输实现上。</li>
+</ul>
+</li>
+<li><b>Netty提供了几种拥有相同编程接口的基本传输实现：基于NIO的TCP/IP传输，基于OIO的TCP/IP传输，基于OIO的UDP/IP传输，本地传输</b>
+<ul class="quote">
+<li>切换不同的传输实现通常只需修改几行代码，而且由于核心API具有高度的可扩展性，很容易定制自己的传输实现。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>基于拦截链模式的事件模型</h4>
+<ul class="point">
+<li><b>Netty的事件模型采用严格的层次结构来区分不同的事件类型</b>
+<ul class="quote">
+<li>Netty也允许在不破坏现有代码的情况下实现自己的事件类型。</li>
+</ul>
+</li>
+<li><b>ChannelPipeline内部的一个ChannelEvent被一组ChannelHandler处理</b>
+<ul class="quote">
+<li>这个管道是Intercepting Filter(拦截过滤器)模式的一种高级形式的实现，因此对于一个事件如何被处理，以及管道内部处理器间的交互过程，用户拥有绝对的控制力。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>高级组件</h4>
+<ul class="point">
+<li><b>Netty提供了一组构建在其核心模块之上的codec实现，是一种可扩展、可重用、可单元测试，并且是多层的codec框架，为用户提供容易维护的codec代码</b>
+<ul class="quote">
+<li>从业务逻辑代码中分离协议处理部分可以让代码结构变得更清晰，但是如果从零开始实现会有很高的复杂性。</li>
+</ul>
+</li>
+<li><b>Netty还提供对SSL / TLS的支持，不同于传统阻塞式的I/O实现，在NIO模式下支持SSL功能不能只是简单地包装一下流数据并进行加密或解密工作</b>
+<ul class="quote">
+<li>在Netty内部，SslHandler封装了所有艰难的细节，以及使用SSLEngine可能带来的陷阱。</li>
+</ul>
+</li>
+<li><b>HTTP是互联网上最受欢迎的协议，与现有的HTTP实现相比，Netty的HTTP实现是相当与众不同的</b>
+<ul class="quote">
+<li>在HTTP消息的低层交互过程中用户拥有绝对的控制力，因为Netty的HTTP实现只是一些HTTP Codec和HTTP消息类的简单组合，不存在任何限制。</li>
+</ul>
+</li>
+<li><b>Netty的WebSockets实现，WebSockets允许双向，全双工通信信道</b>
+<ul class="quote">
+<li>WebSocket协议已经被IETF列为RFC 6455规范，并且Netty实现了RFC 6455和一些老版本的规范。</li>
+</ul>
+</li>
+<li><b>此外Netty还支持Google Protocol Buffer</b>
+<ul class="quote">
+<li>通过使用ProtobufEncoder和ProtobufDecoder，我们可以把Google Protocol Buffers编译器(protoc)生成的消息类放入Netty的codec实现中。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch72"><summary>13.3 Netty用法示例</summary>
+<div class="sec">
+<h4>Netty用法示例：Discard服务器</h4>
+<ul class="point">
+<li><b>实现DISCARD协议只需忽略所有收到的数据</b>
+<ul class="quote">
+<li>DiscardServerHandler继承自ChannelInboundHandlerAdapter，覆盖了chanelRead()事件处理方法。</li>
+<li>收到的消息类型是ByteBuf，为了实现DISCARD协议，处理器不得不忽略所有接收到的消息。ByteBuf是一个引用计数对象，这个对象必须显式地调用release()方法来释放。</li>
+</ul>
+</li>
+<li><b>当出现Throwable对象，即当Netty由于IO错误或者处理器在处理事件抛出异常时，exceptionCaught()事件处理方法会被调用</b>
+<ul class="quote">
+<li>在大部分情况下，捕获的异常应该被记录下来并且把关联的Channel关闭掉。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>查看收到的数据</h4>
+<ul class="point">
+<li><b>在DiscardServerHandler类的channelRead()方法里添加一些代码，打印出它到底接收到了什么</b>
+<ul class="quote">
+<li>通过System.out.print((char) in.readByte())和System.out.flush()来打印接收到的数据。</li>
+<li>可以在这里调用in.release()，如果再次运行telnet命令，我们就能看到服务端会打印出它所接收到的消息。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch73"><summary>13.4 RocketMQ基于Netty的通信功能实现</summary>
+<div class="sec">
+<h4>RocketMQ基于Netty的通信功能实现</h4>
+<ul class="point">
+<li><b>RocketMQ的通信部分代码量并不多，代码结构清晰</b>
+<ul class="quote">
+<li>RemotingServer和RemotingClient分别对应通信的服务端和客户端。</li>
+</ul>
+</li>
+<li><b>RocketMQ通信模块的顶层结构是RemotingServer和RemotingClient</b>
+<ul class="quote">
+<li>RemotingServer类中比较重要的是：localListenPort、registerProcessor和registerDefaultProcessor。</li>
+<li>RemotingClient类和RemotingServer类相对应，比较重要的方法是updateNameServerAddressList、invokeSync和invokeOneway。</li>
+</ul>
+</li>
+<li><b>NettyRemotingServer和NettyRemotingClient分别实现了RemotingServer与RemotingClient这两个接口</b>
+<ul class="quote">
+<li>这些共有函数被提取到NettyRemotingAbstract共同继承的父类中。</li>
+</ul>
+</li>
+<li><b>RocketMQ各个组件间的通信需要频繁地在字节码和RemotingCommand间相互转换</b>
+<ul class="quote">
+<li>Netty提供了codec支持，这个频繁的操作只需要一行设置就可以完成：pipeline()addLast(new NettyEncoder(), new NettyDecoder() ......。</li>
+</ul>
+</li>
+<li><b>基于Netty实现的Server或Client程序，具体代码在NettyRemotingServer和NettyRemotingClient这两个类中</b>
+<ul class="quote">
+<li>ServerBootstrap的BossEventLoop使用的是单线程的NioEventLoopGroup, workerEventLoop在Linux平台使用的是默认3个线程的EpollEventLoopGroup，在非Linux平台使用的是3个线程的NioEventLoopGroup。</li>
+<li>RocketMQ对通信过程的另一个抽象是Processor和Executor，当接收到一个消息后，直接根据消息的类型调用对应的Processor和Executor，把通信过程和业务逻辑分离开来。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch74"><summary>13.5 本章小结</summary>
+<div class="sec">
+<h4>Netty基础知识</h4>
+<ul class="point">
+<li><b>Netty被用在很多开源软件的底层通信部分</b>
+<ul class="quote">
+<li>RocketMQ以Netty为基础，实现了一种机制，把通信功能和消息处理功能分离。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>RocketMQ通信机制</h4>
+<ul class="point">
+<li><b>不同类型的通信内容被抽象成发送带有对应类型代码的Command</b>
+<ul class="quote">
+<li>根据类型代码查找对应的Processor和Executor来执行。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+  <p class="site-footer">由 weread-auto 导出 · 供全书视角与后续精读对照　<span class="gcstat" id="gc_page_pv" style="display:none">本页阅读 <b id="gc_page_pv_num">–</b> 次</span></p>
+</main>
+<script>(function(){
+  function openId(id){
+    if(!id) return null;
+    var el = document.getElementById(id);
+    if(!el) return null;
+    var d = (el.tagName === 'DETAILS') ? el : (el.closest ? el.closest('details') : null);
+    if(d && !d.open) d.open = true;      // 关键：目录跳过来时把这一章展开
+    return el;
+  }
+  function go(id){
+    var el = openId(id);
+    if(!el) return;
+    // 展开会改变文档高度，等一帧再滚，免得停在错误位置
+    setTimeout(function(){ el.scrollIntoView({block:'start'}); }, 10);
+  }
+  function fromHash(){
+    var h = (location.hash || '').replace(/^#/, '');
+    if(h) go(decodeURIComponent(h));
+  }
+  document.addEventListener('click', function(e){
+    var a = (e.target && e.target.closest) ? e.target.closest('a[href^="#"]') : null;
+    if(!a) return;
+    var id = (a.getAttribute('href') || '').slice(1);
+    if(id) go(id);
+  }, false);
+  window.addEventListener('hashchange', fromHash, false);
+  // 手动展开某章时把锚点写回地址栏：刷新或分享链接能直接落回这一章
+  document.addEventListener('toggle', function(e){
+    var t = e.target;
+    if(t && t.tagName === 'DETAILS' && t.open && t.id && location.hash !== '#' + t.id){
+      try { history.replaceState(null, '', '#' + t.id); } catch(err) {}
+    }
+  }, true);
+  fromHash();
+})();
+</script>
+<script data-goatcounter="https://ae6623.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<!-- gc-fill:begin -->
+<script>
+(function(){
+  /* GoatCounter 计数端点只吃 .json（.txt 会 400 unknown extension），
+     没数据的路径也返回 404 + {"count":0,"count_unique":0}，所以按文本解析。 */
+  var C="ae6623", base="https://"+C+".goatcounter.com/counter";
+  function stat(p){
+    return fetch(base+p+".json",{credentials:"omit",cache:"no-store"})
+      .then(function(r){return r.text();})
+      .then(function(t){
+        try{
+          var d=JSON.parse(t), c=parseInt(d.count,10);
+          if(!isFinite(c))return null;
+          var u=parseInt(d.count_unique,10);
+          return {pv:String(c), uv:isFinite(u)?String(u):null};
+        }catch(e){return null}
+      })
+      .catch(function(){return null});
+  }
+  function put(id,v){var e=document.getElementById(id);if(e&&v!=null)e.textContent=v;}
+  stat("/*").then(function(d){
+    if(!d)return;
+    put("gc_site_pv_num",d.pv);
+    if(d.uv!=null){put("gc_site_uv_num",d.uv);}
+    else{var x=document.querySelectorAll(".visit-badge-uv");
+         for(var i=0;i<x.length;i++)x[i].style.display="none";}
+  });
+  var pp=document.getElementById("gc_page_pv");
+  if(pp&&location.pathname){
+    var path=location.pathname;
+    if(path.length>1&&path.charAt(path.length-1)==="/")path=path.slice(0,-1);
+    stat(path).then(function(d){
+      if(d){put("gc_page_pv_num",d.pv);pp.style.display="";}
+    });
+  }
+})();
+</script>
+<!-- gc-fill:end -->
+</body>
+</html>

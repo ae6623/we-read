@@ -64,8 +64,9 @@
 <path class="ln" d="M692 495 L700 495"/>
 </svg></section>
 <section class="mmx-mod" aria-labelledby="oneline" data-key="oneline"><h2 id="oneline">一句话主旨</h2><p class="mmx-mod-note">本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。</p><p class="mmx-oneline">本书主要围绕构建分布式系统架构的“中间件”实践展开介绍</p></section>
-<section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" data-key="merged_guide"><h2 id="merged-guide-title">AI领读</h2><style>
-/* merged_guide 章内：mmx 组件样式（与完整版一致） */
+<section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" data-key="merged_guide"><h2 id="merged-guide-title">AI领读</h2>
+<style>
+/* merged_guide 章内：AI 大纲原生深层样式 */
 .merged-guide .sec{margin:10px 0 14px;padding-left:6px;border-left:2px solid #e5e0d6}
 .merged-guide .sec h4{font:600 .98rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.6em 0 .3em}
 .merged-guide ul.point{margin:.3em 0;padding-left:20px}
@@ -73,10 +74,2775 @@
 .merged-guide ul.quote{margin:.25em 0 .25em 20px;padding-left:18px;list-style:none}
 .merged-guide ul.quote::before{content:"原句";display:block;font-size:.72rem;color:#bf8247;
   letter-spacing:.1em;margin:.15em 0 .1em;font-weight:600}
+/* 小节层级追加的汇总原句节点，标签与要点下的原句区分开 */
 .merged-guide ul.quote.quote-node{margin-top:.5em;padding-top:.4em;border-top:1px dashed #eadfc9}
-.merged-guide ul.quote.quote-node::before{content:"热门划线 · 本章原文摘录"}
+.merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
 .merged-guide ul.quote>li{color:#4a4436;font-size:.93rem;margin:.2em 0;padding-left:10px;border-left:2px solid #bf8247}
-</style><p class="small">章节目录取自微信读书官方目录；展开各章即该章与各小节的热门划线原文（按划线人数排序），原句均为读者划线，非 AI 生成。</p><div class="toc-part"><span class="part-label">全书篇目（共 4 章 · 144 句热门划线）</span><details class="mmx-cn"><summary><span class="mmx-no">1</span><span class="mmx-name">前言</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">暂无热门划线</p></div></details><details class="mmx-cn"><summary><span class="mmx-no">2</span><span class="mmx-name">第1篇 开发工具准备</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">4 个小节 · 17 句热门划线</p><div class="sec"><h4>1.1 分布式系统概述</h4><ul class="quote"><li>• 可用与可靠性：说直白点，可靠性量化的指标是给定周期内系统无故障运行的平均时间，而可用性量化的指标是给定周期内系统无故障运行的总时间；</li><li>随着时间的推移，数据库及文件的数据量越来越多，由于服务器的容量是有限的，原有系统架构已经不足以支撑，此时需要将Web应用、数据库、文件存储服务拆分出来作为独立的服务，以此来避免存储瓶颈，如图1.2所示。</li><li>• 内聚性和透明性：分布式系统是建立在网络之上的软件系统，所以具有高度的内聚性和透明性。</li><li>经过统计与监测，发现系统对于某些表有大量的请求，此时为了减少DB的压力，我们会进行分库分表，即根据业务来拆分数据库，此种系统架构如图1.5所示。</li><li>而分布式系统需要保证故障发生时，系统仍然是可用的，即在某个或者某些节点发生故障的情况下，需要将该节点所负责的计算和存储任务转移到其他节点。</li><li>当请求并发量上去了，而单台Web服务器（比如Tomcat）不足以支撑应用的时候，此时我们会考虑引入缓存及集群，以改善系统的整体性能，此种系统架构如图1.3所示。</li><li>除此之外，为了加速网站的访问速度，尤其是加速静态资源的访问，会将系统的大部分静态资源存放到CDN中，并加入反向代理的配置，从而减少访问网站时直接去服务器读取静态数据。</li><li>经过调查发现，在大多数互联网应用系统中，用户的读请求数量往往大于写请求，它们会相互竞争，在这个时候往往写操作会受到影响，导致数据库出现存储瓶颈（可以参考春节抢票高峰期12306的访问情况）。</li><li>为了保证这些节点上的状态一致，分布式系统必须解决一致性问题，其实就是在多个节点集群部署下，如何保证多个节点在给定的时间内，操作或者存储的数据只有一份。</li></ul></div><div class="sec"><h4>1.2 分布式中间件概述</h4><ul class="quote"><li>Redisson是“架设在Redis基础上的一个Java驻内存数据网络(In-Memory Data Grid)”，可以简单地理解为Redisson是Redis的一个升级版，它充分利用了Redis键值对数据库提供的一系列优势，为使用者提供了一系列具有分布式特性的常用工具类。</li></ul></div><div class="sec"><h4>2.1 Spring Boot概述</h4><ul class="quote"><li>再加上Spring Boot的设计者崇尚“习惯大于配置”的理念，使得Spring Boot应用集成主流框架及Spring生态系统时极为方便、快速，开发者可以更加专注于应用本身的业务逻辑。</li><li>• Spring Boot内置了监控组件Actuator，只需要引入相应的起步依赖，就可以基于HTTP、SSH和Telnet等方式对运行中的应用进行监控。</li><li>• 整合大部分的第三方框架或主流框架时，只需要直接引入Spring Boot内置的Start Jar即可，这个特性称为“起步依赖”，可以很方便地进行包管理。</li><li>项目整体上来看也更加精简，扩展性也变得更强，对于整个团队的开发和维护来说，更大程度地节约了成本。</li><li>而随着近几年互联网经济的快速发展、微服务和分布式系统架构的流行，Spring Boot的到来使得Java项目的开发变得更为简单、方便和快速，极大地提高了开发和部署效率，同时也给企业带来了诸多收益。</li></ul></div><div class="sec"><h4>2.2 搭建规范与搭建流程</h4><ul class="quote"><li>这3个模块的依赖层级关系为：server依赖model，model依赖api，最终构成了典型的Maven聚合型多模块项目。</li><li>其中，在BookController中开发了info方法，用于接收书籍的编码及书名信息，最终方法原样返回书籍对象实体的信息。</li></ul></div></div></details><details class="mmx-cn"><summary><span class="mmx-no">3</span><span class="mmx-name">第2篇 开发实战</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">26 个小节 · 123 句热门划线</p><div class="sec"><h4>3.1 Redis概述与典型应用场景介绍</h4><ul class="quote"><li>而在项目中使用Redis的过程中，一般情况下是需要自定义配置上述两个操作Bean组件的，比如指定缓存中Key与Value的序列化策略等配置。</li><li>用户最近访问过的数据记录在数据库中将采用“日期字段”作为标记，频繁查询的实现是采用该日期字段与当前时间做“时间差”的比较查询，这种方式是相当耗时的。</li><li>采用Redis的有序集合(Sorted Set)可以很好地实现用户的排名，避免了传统的基于数据库级别的Order By及Group By查询所带来的性能问题。</li><li>由于Redis是基于内存的、采用Key-Value结构化存储的NoSQL数据库，加上其底层采用单线程和多路I/O复用模型，所以Redis的查询速度很快。</li><li>此时各种典型的新型互联网架构应势而生，如面向SOA的系统架构、分库分表的应用架构、微服务/分布式系统架构，以及基于各种分布式中间件的应用架构等层出不穷。</li><li>对于高并发访问某些数据的情况，Redis可以将这些数据预先装载在缓存中，每次高并发过来的请求则可以直接从缓存中获取，减少高并发访问给数据库带来的压力。</li><li>在缓存中创建一个key，设置其名字为redis:order:no:10011（按照自己的习惯取名即可，但是建议最好具有某种含义），设置其值为10011，命令为set redis:order:no:1001110011。</li><li>众所周知，在早期的互联网Web 1.0时代，大部分企业还是采用传统的企业级单体应用架构，而一时间“蜂拥而来”的巨大用户流量显然使得此种架构再也难以支撑下去。</li><li>根据Redis官方提供的数据，它可以实现每秒查询的次数达到10万次，即QPS为100000+，这在某种程度上足以满足大部分的高并发请求。</li></ul></div><div class="sec"><h4>3.4 Redis实战场景之缓存穿透</h4><ul class="quote"><li>这种问题产生的原因其实主要是因为大量的Key在某个时间点或者某个时间段过期失效导致的。</li><li>然后打开Postman或者浏览器，首先假设先获取商品编号为book_10010的书籍信息，链接为http://127.0.0.1:8087/middleware/cache/pass/item/info?itemCode=book_10010，由于是首次查询，因而缓存中不存在该商品信息，而直接从数据库查询获取商品详情。</li><li>采用MyBatis的逆向工程生成该实体类对应的Model、Mapper和Mapper.xml，并将这3个文件存放至model模块下不同的目录中，目录结构如图3.29所示。</li><li>这种方案在一定程度上可以减少数据库频繁查询的压力！</li><li>缓存雪崩：指的是在某个时间点，缓存中的Key集体发生过期失效致使大量查询数据库的请求都落在了DB（数据库）上，导致数据库负载过高，压力暴增，甚至有可能“压垮”数据库。</li></ul></div><div class="sec"><h4>4.1 整体业务流程介绍</h4><ul class="quote"><li>然后是“用户拆红包”的业务逻辑，主要是从缓存系统的红包随机金额队列中弹出一个随机金额，如果金额不为空，则表示该用户抢到红包了，缓存系统中红包个数减1，同时异步记录用户抢红包的记录并结束流程；</li><li>最后是缓存中间件Redis操作模块，主要用于发红包时缓存红包个数和由随机数算法产生的红包随机金额列表，同时将借助Redis单线程特性与操作的原子性实现抢红包时的锁操作。</li></ul></div><div class="sec"><h4>4.2 数据库表设计与环境搭建</h4><ul class="quote"><li>为此在项目的api模块引入两个类，分别是BaseResponse类和StatusCode类，源代码如下。</li><li>这种格式主要是借鉴了HTTP协议的响应模型，即响应信息应当包含状态码、状态码的描述和响应数据。</li></ul></div><div class="sec"><h4>4.3 “红包金额”随机生成算法实战</h4><ul class="quote"><li>蒙特卡罗方法是由著名科学家、“计算机科学之父”和“博弈论之父”冯·诺依曼提出的，此种方法又可称为统计模拟法、随机抽样技术，是一种以概率和统计理论方法为基础的计算方法。</li><li>在数学与计算机科学领域存在着多种随机数生成算法，不同的算法可以说是各有千秋，适用的场景也不尽相同。</li><li>从两次单元测试方法运行的结果来看，可以得出小红包金额的生成满足随机性、概率平等性，以及所有小红包金额之和等于总金额等特性。</li></ul></div><div class="sec"><h4>4.4 “发红包”模块实战</h4><ul class="quote"><li>打开Postman，在地址栏中输入“发红包”请求对应的链接，即http://127.0.0.1:8087/middleware/red/packet/hand/out，选择请求方式为Post，并在请求体中输入请求参数，如下：</li><li>单击运行应用程序的启动入口类MainApplication，观察控制台的输出信息，如果没有报错，则表示项目启动成功。</li></ul></div><div class="sec"><h4>4.5 “抢红包”模块实战</h4><ul class="quote"><li>众所周知，高并发请求其实本质上是高并发多线程，多线程的高并发如果出现抢占共享资源而不加以控制的话，将会带来各种各样的并发安全问题，数据不一致便是其中典型的一种。</li><li>所谓的“高并发”，其实指的就是在同一时刻突然有成千上万甚至上百万、上千万数量级的请求到达后端接口。</li><li>每次发起请求后再查看Postman的响应结果，将会看到对应的金额信息，同时再查看数据库red_rob_record表的记录，可以发现已经成功将抢到红包的用户和其金额等信息记录在了数据库表中，如图4.26所示。</li><li>在整个自测过程中，缺陷在于Postman不断发起的请求几乎并非“同一时刻”，即这些请求几乎都是“串行”、有时间间隔的，而这并不能达到实际生产环境中“秒级高并发请求”的要求。</li><li>由于此时缓存系统中已经缓存了该用户抢到的红包记录，因而后端会直接将缓存在Redis中的该用户抢到的红包金额返回给前端，而不会执行“点红包”和“拆红包”的业务处理逻辑。</li><li>从系统架构角度分析，“抢红包”业务模块对应的后端处理逻辑需要保证接口的稳定性、可扩展性和扛高并发性，对于相应接口的设计需要尽可能做到低耦合和服务的高内聚，因而在代码实战过程中，采用的是面向接口和服务进行编程。</li></ul></div><div class="sec"><h4>4.6 Jmeter压力测试高并发抢红包</h4><ul class="quote"><li>在下一节中将从代码的角度剖析为何会出现这种问题，并针对这样的问题介绍相应的解决方案，然后通过代码方式实现。</li><li>它可以通过产生来自不同类别的压力，模拟实际生产环境中高并发产生的巨大负载，从而对应用服务器、网络或对象整体性能进行测试，并对产生的测试结果进行分析和反馈。</li><li>访问http://jmeter.apache.org/download_jmeter.cgi，选择最新的版本单击下载即可，如图4.29所示。</li></ul></div><div class="sec"><h4>5.1 RabbitMQ简介</h4><ul class="quote"><li>早期的很多抢票软件每当赶上春运高峰期时，经常会出现“网站崩溃”“单击购买车票后却一直没响应”等状况，某种程度上是因为在某一时刻产生的高并发，或者定时频繁拉取数据库得到的数据量过大等状况，导致内存、CPU、网络和数据库服务等负载过高所引起的。</li><li>然而，实际却存在着一些特殊情况，比如用户抢到火车票后，由于各种原因而迟迟没有付款，过了30分钟后仍然没有支付车票的价格，导致系统自动取消该笔订单。</li><li>以“商城用户抢购商品”为例，商城为了吸引用户流量，会不定期地举办线上商城热门商品的抢购活动，当抢购活动开始之前，用户犹如“守株待兔”一般会盯在屏幕前等待活动的开始，当活动开始之时，由于商品数量有限，所有的用户几乎会在同一时刻单击“抢购”按钮开始进行商品的抢购，整体流程如图5.5所示。</li><li>以“用户注册”为实际场景，传统的企业级应用处理用户注册的流程，首先是用户在界面上输入用户名、邮箱或手机号等信息，确认无误后，单击“注册”按钮提交相关信息，前端会将这个信息提交到后端相关接口进行处理，后端在接收到这些信息后，会先对这些信息进行最基本的校验，校验成功后会将信息写入数据库相关数据表中，而为了用户注册的安全性，后端会调用邮件服务器提供的接口发送一封邮件验证用户的合法性，或者调用短信服务的发送短信验证码接口给用户进行验证，最后才将响应信息返回给前端用户，并提示“注册成功”，整个流程如图5.3所示。</li><li>安装过程中，需要同时安装RabbitMQ的管理控制台，即RabbitMQ的后端控制台，其提供的人性化界面主要用于更好地管理消息、队列、交换机、路由、通道、消费者实例和用户等信息。</li><li>消息中间件RabbitMQ的引入可以大大地改善系统的整体业务流程和性能，如图5.6为引入RabbitMQ后系统的整体处理流程。</li><li>可以看到RabbitMQ的引入，将“一条线走到底”的业务服务模块进行了解耦，系统接口的整体响应时间也明显降低了许多，即实现了“低延迟”。</li><li>而消息中间件RabbitMQ的引入，不管是从业务层面还是应用的性能层面，都大大得到了改善，如图5.8为引入RabbitMQ消息中间件后“抢票成功后30分钟内未付款的处理流程”的优化。</li><li>图5.9中所看到的是笔者在本地开发环境中使用RabbitMQ产生的历史消息队列，单击某条队列，可以看到队列的详情，包括名称、绑定的路由和交换机、持久化策略和消费者实例等信息，如图5.10所示。</li><li>RabbitMQ除了可以实现消息实时异步分发之外，在某些业务场景下，还能实现消息的延时和延迟处理。</li></ul></div><div class="sec"><h4>5.2 Spring Boot项目整合RabbitMQ</h4><ul class="quote"><li>由图5.15可以知道，一个基本的消息模型是由队列、交换机和路由组成，并由生产者生产消息并发送到该消息模型中，同时，消费者监听该消费模型中的队列，如果有消息到来，则由消费者进行监听消费处理。</li><li>加入RabbitMQ的Spring Boot起步依赖Jar后，如果网络畅通的话，即可很快将该jar包下载下来，否则，则需要稍等片刻。</li></ul></div><div class="sec"><h4>5.3 RabbitMQ多种消息模型实战</h4><ul class="quote"><li>TopicExchange消息模型适用于“发布订阅主题式”的场景，在实际应用系统中，几乎所有的业务场景都适用，而且从上述代码实现中可以得知，TopicExchange消息模型包含了FanoutExchange消息模型和DirectExchange消息模型的功能特性，即凡是这两种消息模型适用的业务场景，基于TopicExchange的消息模型也是适用的，从某种程度上讲，TopicExchange模型是一种强有力的、具有普适性的消息模型。</li></ul></div><div class="sec"><h4>5.4 RabbitMQ确认消费机制</h4><ul class="quote"><li>在RabbitmqConfig配置类中创建相应的队列、交换机、路由及其绑定，同时，再创建一个基于自动确认消费模式的“监听器容器工厂实例”，目的是用于指定特定的队列对应的消费者采用“自动确认消费”的模式，其源代码如下：</li><li>顾名思义，NONE指的是“无须确认”机制，即生产者将消息发送至队列，消费者监听到该消息时，无须发送任何反馈信息给RabbitMQ服务器。</li><li>消费者在监听消费处理消息的时候，可能会出现监听失败或者直接崩溃等问题，导致消息所在的队列找不到对应的消费者而不断地重新入队列，最终出现消息被重复消费的现象。</li></ul></div><div class="sec"><h4>5.5 典型应用场景实战之用户登录成功写日志</h4><ul class="quote"><li>开发“接收并处理用户登录实体信息”的控制器UserController，主要用于校验前端用户提交的相关登录信息，并将校验通过后的数据传递给Service层进行处理，其源代码如下：</li><li>定义用户单击登录按钮时，后端需要接收的用户登录信息，主要包括用户名和密码，在这里将其封装成实体类UserLoginDto进行接收，其源代码如下：</li><li>而在整个业务流程中，“用户登录”A是主流程，“记录用户登录轨迹”B是辅助流程，因而在实际业务开发过程中，B业务流程的处理不应当影响A业务流程的执行，即“记录用户登录轨迹”业务应当独立出来并采用异步线程进行处理。</li><li>此时观察控制台的输出信息，会发现当前用户名确实是存在于数据库中，而且其登录密码也是匹配的，输出信息如图5.61所示。</li></ul></div><div class="sec"><h4>6.1 死信队列概述</h4><ul class="quote"><li>在传统企业级应用系统中，实现消息、业务数据的延迟处理一般是通过开启定时器的方式，轮询扫描并获取数据库表中满足条件的业务数据记录，然后比较数据记录的业务时间和当前时间。</li><li>这种队列跟普通的队列相比，最大的差异在于消息一旦进入普通队列将会立即被消费处理，而延迟队列则是会过一定的时间再进行消费。</li><li>选购完毕，单击去付款按钮后，将会跳转到支付页面，此时系统会为用户生成一笔对应购物车中商品的订单，并将该订单的状态设置为0，即代表“未付款”，同时将该订单的id或者订单编号塞入RabbitMQ的延迟队列中，并设置延迟时间为30分钟。</li><li>对于这种处理方式，定时器是每隔一定的时间频率不间断地去扫描数据库表，并不断地获取满足业务条件的数据，直到手动关闭该定时器（如果不关闭的话，定时器开启的线程将一直运行下去）。</li><li>当用户在商城平台看到满意的商品时，单击“加入购物车”按钮，即可将商品加入自己的购物车内。</li><li>而消息中间件RabbitMQ的引入，不管是从业务层面还是从应用的性能层面，都得到了很大的改善。</li></ul></div><div class="sec"><h4>6.2 RabbitMQ死信队列实战</h4><ul class="quote"><li>从图6.5中可以看出，生产者生产的消息在死信队列构成的消息模型中整体的传输流程是这样的：首先消息将到达第一个中转站（即“基本消息模型”中的“基本交换机”），由于基本交换机和基本路由绑定，并对应到指定的“死信队列”，因而消息将进入第一个暂存区，即“死信队列”中，而死信队列不同于一般的普通队列。</li><li>相对于传统定时器的轮询处理方式，死信队列具有占用系统资源少（比如不需要再轮询数据库获取数据，减少DB层面资源的消耗）、人为干预很少（只需要搭建好死信队列消息模型，就可以不需要再去干预了），以及自动消费处理（当指定的延迟时间一到，消息将自动被路由到实际的队列进行处理）等优势。</li><li>它由三大部分组成（死信交换机、死信路由和TTL存活时间）当消息进入死信队列时，TTL（即存活时间）便开始进入倒计时，当存活时间一到，消息将进入第二个中转站，即“真正的消息模型”中的死信交换机。</li></ul></div><div class="sec"><h4>7.1 分布式锁概述</h4><ul class="quote"><li>• 基于数据库级别的乐观锁：主要是通过在查询、操作共享数据记录时带上一个标识字段version，通过version来控制每次对数据记录执行的更新操作。</li><li>• 高可用：指的是获取或释放锁的机制必须高可用而且性能极佳。</li><li>这是因为集群、分布式部署的服务实例一般是部署在不同机器上的，在分布式系统架构下，此种资源共享将不再是传统的线程共享，而是跨JVM进程之间资源的共享了。</li><li>当抢购活动开始时，正常情况下，在某一时刻前端会产生巨大的用户流量，当蜂拥而来的用户抢购请求同一时刻到达系统后端时（在这里我们暂且假设接口不会瞬间被压垮），后端接口首先会“查询商品当前的库存”，如果充足，则代表用户可以抢购该商品，同时“商品的库存需要减1”，并最终更新数据库的商品库存表。</li><li>本节开篇主要介绍了传统单体应用时代在遇到此种情况时的处理方式，即“锁”机制，它指的是一种可以用于控制并发线程访问、操作共享资源的方法或者解决方案，主要是借助JDK自身提供的相关工具加以实现，这种方式在很长一段时间内确实起到了一定的作用。</li><li>• 基于Redis的原子操作：主要是通过Redis提供的原子操作SETNX与EXPIRE来实现。</li><li>从该业务流程中可以得知，“共享资源”即为“银行账户的余额”，而不同线程发起的共享访问操作包括“存钱进该银行账户”和“从该银行账户取钱”。</li><li>除此之外，本节还着重介绍了分布式锁的几点设计要求及分布式锁的多种实现方式，从中可以得知分布式锁在很大程度上需要借助一些开源的框架、组件来实现。</li><li>• 可重入：指的是该分布式锁最好是一把可重入锁，即当前机器的当前线程在彼时如果没有获取到锁，那么在等待一定的时间后一定要保证可以再被获取到。</li><li>• 排他性：这一点跟单体应用时代加的“锁”是一个道理，即需要保证分布式部署、服务集群部署的环境下，被共享的资源如数据或者代码块在同一时间内只能被一台机器上的一个线程执行。</li><li>此种业务场景总体的流程是这样的：用户在前端界面输入相关信息（比如用户名、密码等）之后，“疯狂”地单击注册按钮，此时前端虽然做了一些控制操作（比如“置灰”），却仍然不可避免地存在一些不可控制的因素，导致前端提交了多次重复的、相同的用户信息到系统后端，系统后端相关接口在执行“查询用户名是否存在”和“插入用户信息进数据库”等操作时，由于“来不及”处理线程并发的情况，导致最终出现“用户数据表”中存在两条甚至多条相同的用户信息记录。</li><li>它指的是在分布式部署的环境下，通过锁机制让多个客户端或者多个服务进程互斥地对共享资源进行访问，从而避免出现并发安全、数据不一致等问题。</li></ul></div><div class="sec"><h4>7.2 基于数据库实现分布式锁</h4><ul class="quote"><li>对于数据库级别悲观锁的实现，目前Oracle、MySQL数据库是采用如下的伪SQL来实现的：</li><li>在Jmeter主界面单击“启动”按钮，即可发起1秒内并发100个线程的请求，其中，每个请求携带的参数数据都是“用户账户id为10011，申请提现金额为40”。</li><li>理想情况下，这种处理逻辑是没问题的，然而理想终归是理想。</li><li>当用户在前端多次单击“提现”按钮（可能是恶意的行为，亦或是黑客恶意进行攻击）时，将很有可能出现典型的并发现象，即同一时刻可能会产生多个“提现余额”的并发请求线程。</li><li>当这些请求到达后端相关接口时，正常情况下，接口会查询账户的余额，并判断当前剩余的金额是否足够被提取，如果足够，则更新当前账户的余额，最终账户余额的值为“账户剩下的金额”减去“申请提现的金额”。</li><li>在“线程组”选项区域下分别建立“HTTP请求”与“CSV数据文件设置”两个子选项，并设置“HTTP请求”选项中的相关参数取值，这些参数的取值都可以从上一节采用Postman工具测试时填写的请求信息中复制过来。</li><li>打开Jmeter的安装目录，单击bin文件夹，再双击jmeter.sh文件，稍等片刻即可进入Jmeter的主界面，如图7.19所示。</li><li>对于“CSV数据文件设置”选项，则只需要指定读取的CSV文件所在的目录即可，如图7.22所示。</li><li>而该CSV数据文件的内容则很简单，主要是用于存储每次前端发起申请提现请求时的金额参数amount，在这里暂且指定为40元即可，如图7.23所示。</li><li>由于后端接口在处理每一个请求时需要先取出当前账户的剩余金额，再去判断是否足够金额被提取，如果金额足够被提取，则在当前账户余额的基础上减去提现金额，最终将剩余的金额更新回“账户余额”字段中。</li><li>在Jmeter主界面中新建一个测试计划，命名为“高并发测试-乐观锁”，然后右击该测试计划，选择“新建”命令，新建一个线程组。</li><li>这种处理逻辑在前面已经详细进行剖析了，属于典型的“并发安全”，会出现“数据不一致”的现象，最终出现的结果是：账户余额字段的值变成了负数。</li></ul></div><div class="sec"><h4>7.3 基于Redis实现分布式锁</h4><ul class="quote"><li>在Jmeter主界面中建立一个新的测试计划“高并发测试-基于Redis”，并在该测试计划下建立一个线程组，指定1秒内并发的线程个数为1000个，如图7.41所示。</li><li>对于Redis而言，不管其外层应用系统并发了N多个线程，当每个线程需要使用Redis的原子操作或命令时，是需要进行“排队等待”的，即在Redis的底层基础架构中，同一时刻、同一个部署节点只允许一个线程执行某种操作。</li><li>从实际的业务角度分析，这应该是一个不可分割的整体，即“共享资源”，当高并发产生多线程时，如果不加以控制，将很有可能出现并发安全的问题，即“数据不一致”的状况。</li><li>其中典型的数据结构包括字符串String、列表List、集合Set、散列存储Map及有序集合SortedSet等，读者可以自行前往本书第3、4章进行回顾。</li><li>除此之外，还可以打开数据库表user_reg观察相应的数据记录，可以看到确实出现了“同一个用户名重复注册了多次”，即所谓的“重复提交”，如图7.46所示。</li></ul></div><div class="sec"><h4>7.4 基于ZooKeeper实现分布式锁</h4><ul class="quote"><li>除此之外，ZooKeeper还是一种典型的分布式数据一致性的解决方案，应用程序可以基于ZooKeeper实现诸如数据发布/订阅、负载均衡、命名服务、分布式协调/通知、集群管理、分布式锁和分布式队列等功能。</li><li>同时，为了测试的准确性与方便性，可以将“CSV数据文件设置”选项中CSV文件的测试用例更换为一批新的用户名，如图7.58所示。</li><li>单击Jmeter主界面的“启动”按钮，即可发起1秒内并发1000个线程的请求。</li><li>从图7.53中可以看出，ZooKeeper实现分布式锁功能的核心流程在于创建“临时顺序节点ZNode”以及采用Watcher监听机制监听临时节点的增减，从而判断当前的线程能够成功获取到锁。</li><li>最后还可以观察数据库表user_reg中的相关数据记录，可以看到同一个用户名只成功插入了一次，如图7.60所示。</li><li>//采用互斥锁组件尝试获取分布式锁，其中尝试的最大时间在这里设置为10秒</li><li>Watcher监听器：指的是“事件监听器”，由于ZooKeeper允许用户在指定的节点ZNode上注册“监听”事件，因而当该节点触发一些特定的事件时，ZooKeeper服务端即Server会将事件通知到感兴趣的客户端Client上，从而让客户端做出相对应的措施。</li></ul></div><div class="sec"><h4>7.5 典型应用场景之书籍抢购模块设计与实战</h4><ul class="quote"><li>在如今微服务、分布式系统架构盛行的时代，分布式锁的应用实施不仅给整体系统架构带来了性能和质量的提升，也给企业应用和业务带来了大规模扩展的可能，直接或者间接地给企业带来了可观的盈利性收入，从某种角度上看，“分布式锁”确实是一大“功臣”！</li></ul></div><div class="sec"><h4>8.1 Redisson概述</h4><ul class="quote"><li>• 多种连接方式：指作为客户端的应用系统可以拥有多种方式连接到Redisson所在的服务节点，比如同步连接的方式、异步连接的方式及异步流连接的方式等。</li><li>• 数据序列化：指对象的序列化和反序列化方式，从而实现Java对象在Redis的存储和读取功能。</li><li>• 分布式对象：可以说大部分数据组件都是Redisson所特有的，比如布隆过滤器、BitSet、基于订阅发布式的话题功能等。</li><li>与此同时，Redisson还结合了各种具有丰富特色的分布式服务、分布式对象、分布式集合及分布式锁等数据组件，更进一步地简化了分布式环境中程序之间的相互协作。</li><li>它充分利用Redis的Key-Value（键值对）数据结构及基于内存数据库所提供的一系列优势，使得原本作为协调单机多线程并发程序的工具包获得了协调分布式多机多线程并发系统的能力，大大降低了设计和研发大规模分布式系统架构的难度。</li><li>• 集合数据分片：Redisson可以通过自身的分片算法，将一个大集合拆分为若干个片段，然后将拆分后的片段均匀地分布到集群里的各个节点中，以保证每个节点分配到的片段数量大体相同。</li><li>• 分布式集合：这一点和原生的缓存中间件Redis所提供的数据结构类似，包括列表List、集合Set、映射Map，以及Redisson所特有的延迟队列等数据组件。</li><li>可重入锁，顾名思义，指的是当前线程如果没有获取到对共享资源的锁，将会等待一定的时间重新获取。</li></ul></div><div class="sec"><h4>8.2 Redisson常见功能组件实战</h4><ul class="quote"><li>RMap功能组件实现了Java对象中的java.util.concurrent.ConcurrentMap接口和java.util.Map接口，不仅拥有Map和ConcurrentMap相应的操作方法，同时自身也提供了丰富的Redisson特有的操作方法，而且几乎每种方法还提供了多种不同的操作方式，以下代码为RMap提供的多种不同操作方式的“添加元素”的put()方法。</li><li>与消息中间件RabbitMQ的基本消息模型类似，Redisson的基于发布-订阅式主题主要由3大部分组成，即生产者、消费者和消息。</li><li>对于延迟队列功能组件，相信读者并不陌生，在前面介绍分布式消息中间件RabbitMQ死信队列的相关章节中已经有所提及。</li><li>在实际业务场景中，不管是采用哪一种功能组件作为“队列”，其底层核心的执行逻辑仍旧是借助“基于发布-订阅式的主题”来实现的，如图8.23所示。</li><li>为此，Redisson分布式对象提供了一种经过高度封装的数据组件，即布隆过滤器，开发者可以直接拿来使用，即真正做到了“开箱即用”。</li><li>基于Redis的分布式集合中的数据结构“映射Map”，是开源中间件Redisson提供给开发者的另一种高性能功能组件，在Redisson里称为RMap。</li></ul></div><div class="sec"><h4>8.3 分布式锁实战</h4><ul class="quote"><li>它指的是在分布式部署的环境下，通过锁机制让多个客户端或者多个服务进程和线程互斥地对共享资源进行访问，从而避免出现并发安全、数据不一致等问题。</li></ul></div><div class="sec"><h4>9.1 整体业务流程介绍与分析</h4><ul class="quote"><li>• 点赞排行榜模块：主要是根据数据库中点赞的总数对文章/博客进行排序（从大到小或者从小到大的顺序都是可以的）。</li><li>尤其是在如今终端手机普及的移动互联网时代，更是涌现出了许多实用、优秀、吸引用户的产品，这些产品凭借着自身操作的便捷性和贴近用户生活习惯的特性，以及极佳的用户体验等优势，在各自的领域绽放光芒。</li><li>当用户执行点赞操作时，系统后端首先会查询当前用户是否已经点赞过该博客了，如果已经点赞过了，则直接返回点赞成功；</li><li>最后，采用MyBatis的逆向生成该数据库表的实体类Entity、Mapper操作接口，以及对应的动态SQL配置文件Mapper.xml。</li><li>• 点赞模块：主要是用于接收前端用户的点赞请求，处理并存储用户的点赞信息，最终将该点赞记录存储至数据库中，并设置其状态为1，代表当前用户已经点赞当前博客了。</li><li>“排行榜”的产生在实际项目中可以有多种方式，有的是直接借助缓存中间件的相关组件进行实现，有的是直接借助数据库如MySQL的Group By和Order By关键字实现，不同的实现方式性能不一样，适用的业务场景也不尽相同。</li><li>在正常情况下，一个“正规”的分布式系统架构一般不止由一个分布式中间件组成，而是由多个中间件协同合作，提供一系列的服务，共同完成项目中某些业务模块或者服务的处理等。</li></ul></div><div class="sec"><h4>9.2 “点赞与取消点赞”操作模块实战</h4><ul class="quote"><li>另外一种是针对高并发产生多线程的情况下加“分布式锁”的处理方式。</li><li>对于“点赞”操作，正常情况下，用户在界面上单击“点赞”按钮时，会将当前用户的账户id、博客/文章的id等请求信息提交到系统后端相应的接口，并等待后端接口的响应信息。</li></ul></div><div class="sec"><h4>9.3 “排行榜”业务模块实战</h4><ul class="quote"><li>从图9.14中可以看出，笔者采用的是借助综合中间件Redisson中的功能组件，即列表RList，并结合数据库MySQL的Group By和Order By关键字进行了综合实现。</li></ul></div></div></details><details class="mmx-cn"><summary><span class="mmx-no">4</span><span class="mmx-name">第3篇 总结</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">4 句热门划线</p><ul class="quote quote-node"><li>重点介绍了RabbitMQ的几种消息模型，包括基于FanoutExchange的消息模型、基于DirectExchange的消息模型，以及基于TopicExchange的消息模型。</li><li>本书主要介绍了4种分布式锁，分别为基于数据库的乐观锁和悲观锁，基于缓存中间件Redis的原子操作实现的分布式锁和基于服务协调中间件ZooKeeper的有序临时节点和Watcher机制实现的分布式锁，以及基于综合中间件Redisson实现的分布式锁。</li><li>读者也可以自行根据笔者提供的业务流程图，动手实现跟笔者不一样的代码，也许会有比笔者提供的现有方案更为高效的解决方案。</li><li>除此之外，还介绍了RabbitMQ的“多实例消费者”消费机制及几种典型的确认消费模式，以及如何采用RabbitTemplate操作组件和@RabbitListener注解实现消息的发送和接收。</li></ul></div></details></div></section>
+</style>
+<p class="small">章节目录与 AI 大纲融合为一棵树：篇章分组即目录，展开各章即骨架与逐节 AI 大纲（要点 · 原句摘录）。</p>
+  <div class="toc-part"><span class="part-label">全书篇目（AI 大纲顺序）</span>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">1</span><span class="mmx-name">第1篇 开发工具准备</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 2 条要点 · 2 句原句摘录</p>
+<div class="sec">
+<h4>分布式系统的概述、发展历程、特性及常见问题</h4>
+<ul class="point">
+<li><b>分布式系统凭借其具有高吞吐、强扩展、高并发、低延迟及灵活部署等特点，大大促进了互联网的飞速发展，给企业带来了巨大的收益。</b>
+</li>
+<li><b>分布式中间件是分布式系统中关键的组件，它是一种独立的基础系统软件或者服务程序，处于操作系统软件与用户的应用软件中间，可作为独立的软件系统运转</b>
+<ul class="quote"><li>随着业务的发展和用户流量的上升，对互联网系统或者服务程序则提出了新的挑战，其中，高吞吐、高并发、强扩展、灵活部署及低延迟等俨然成为急需解决的需求。</li><li>为此，作为枢纽的中间件也从“集中式”发展为“分布式”，如基于Redis的分布式缓存、基于RabbitMQ的分布式消息中间件、基于Elasticsearch的分布式全文搜索引擎、基于ZooKeeper的分布式锁等。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>随着业务的发展和用户流量的上升，对互联网系统或者服务程序则提出了新的挑战，其中，高吞吐、高并发、强扩展、灵活部署及低延迟等俨然成为急需解决的需求。</li><li>为此，作为枢纽的中间件也从“集中式”发展为“分布式”，如基于Redis的分布式缓存、基于RabbitMQ的分布式消息中间件、基于Elasticsearch的分布式全文搜索引擎、基于ZooKeeper的分布式锁等。</li></ul>
+</div>
+<div class="sec">
+<h4>分布式中间件概述、常见分布式中间件及其典型应用场景介绍。</h4>
+<ul class="point">
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">2</span><span class="mmx-name">1.1 分布式系统概述</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 13 条要点 · 20 句原句摘录</p>
+<div class="sec">
+<h4>分布式系统概述</h4>
+<ul class="point">
+<li><b>分布式系统是建立在网络之上的软件系统，具有高度的内聚性和透明性。</b>
+</li>
+<li><b>分布式系统可以随着业务的增长动态扩展自己的系统组件，从而提高系统整体的处理能力</b>
+<ul class="quote"><li>垂直扩展：优化系统的性能或者升级硬件。</li><li>水平扩展：增加计算单元(如服务器等)以扩展系统的规模。</li></ul>
+</li>
+<li><b>分布式系统具有高可用与可靠性，给定周期内系统无故障运行的平均时间，和给定周期内系统无故障运行的总时间</b>
+<ul class="quote"><li>可用性量化的指标是给定周期内系统无故障运行的总时间。</li><li>可靠性量化的指标是给定周期内系统无故障运行的平均时间。</li></ul>
+</li>
+<li><b>分布式系统的设计初衷便是利用更多的机器，实现更强大的计算和存储能力，即实现高性能。</b>
+</li>
+<li><b>分布式系统为了提高可用性和可靠性，一般会引入冗余(副本)，需要解决一致性问题</b>
+<ul class="quote"><li>一致性问题：在多个节点集群部署下，如何保证多个节点在给定的时间内，操作或者存储的数据只有一份。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>垂直扩展：优化系统的性能或者升级硬件。</li><li>水平扩展：增加计算单元(如服务器等)以扩展系统的规模。</li><li>可用性量化的指标是给定周期内系统无故障运行的总时间。</li><li>可靠性量化的指标是给定周期内系统无故障运行的平均时间。</li><li>一致性问题：在多个节点集群部署下，如何保证多个节点在给定的时间内，操作或者存储的数据只有一份。</li></ul>
+</div>
+<div class="sec">
+<h4>分布式系统发展历程</h4>
+<ul class="point">
+<li><b>单点集中式Web应用是分布式系统发展的第一阶段</b>
+<ul class="quote"><li>单点集中式Web应用系统架构总体上来看还是比较简单的，一般以后台管理应用为主。</li><li>单点集中式Web应用系统架构的优点是适用于小型项目，发布便捷，对于运维的工作量也比较小。</li><li>单点集中式Web应用系统架构的缺点在于若是该台服务器宕机了，整个应用将无法访问。</li></ul>
+</li>
+<li><b>应用与文件服务及数据库单独拆分是分布式系统发展的第二阶段</b>
+<ul class="quote"><li>随着时间的推移，数据库及文件的数据量越来越多，由于服务器的容量是有限的，原有系统架构已经不足以支撑，此时需要将Web应用、数据库、文件存储服务拆分出来作为独立的服务。</li></ul>
+</li>
+<li><b>引入缓存与集群，改善系统整体性能是分布式系统发展的第三阶段</b>
+<ul class="quote"><li>当请求并发量上去了，而单台Web服务器(比如Tomcat)不足以支撑应用的时候，此时我们会考虑引入缓存及集群，以改善系统的整体性能。</li></ul>
+</li>
+<li><b>数据库读写分离，并提供反向代理及CDN加速访问服务是分布式系统发展的第四阶段</b>
+<ul class="quote"><li>经过调查发现，在大多数互联网应用系统中，用户的读请求数量往往大于写请求，它们会相互竞争，在这个时候往往写操作会受到影响，导致数据库出现存储瓶颈。</li><li>为了加速网站的访问速度，尤其是加速静态资源的访问，会将系统的大部分静态资源存放到CDN中，并加入反向代理的配置，从而减少访问网站时直接去服务器读取静态数据。</li></ul>
+</li>
+<li><b>分布式文件系统与分布式数据库是分布式系统发展的第五阶段</b>
+<ul class="quote"><li>经过统计与监测，发现系统对于某些表有大量的请求，此时为了减少DB的压力，我们会进行分库分表，即根据业务来拆分数据库。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>单点集中式Web应用系统架构总体上来看还是比较简单的，一般以后台管理应用为主。</li><li>单点集中式Web应用系统架构的优点是适用于小型项目，发布便捷，对于运维的工作量也比较小。</li><li>单点集中式Web应用系统架构的缺点在于若是该台服务器宕机了，整个应用将无法访问。</li><li>随着时间的推移，数据库及文件的数据量越来越多，由于服务器的容量是有限的，原有系统架构已经不足以支撑，此时需要将Web应用、数据库、文件存储服务拆分出来作为独立的服务。</li><li>当请求并发量上去了，而单台Web服务器(比如Tomcat)不足以支撑应用的时候，此时我们会考虑引入缓存及集群，以改善系统的整体性能。</li><li>经过调查发现，在大多数互联网应用系统中，用户的读请求数量往往大于写请求，它们会相互竞争，在这个时候往往写操作会受到影响，导致数据库出现存储瓶颈。</li><li>为了加速网站的访问速度，尤其是加速静态资源的访问，会将系统的大部分静态资源存放到CDN中，并加入反向代理的配置，从而减少访问网站时直接去服务器读取静态数据。</li><li>经过统计与监测，发现系统对于某些表有大量的请求，此时为了减少DB的压力，我们会进行分库分表，即根据业务来拆分数据库。</li></ul>
+</div>
+<div class="sec">
+<h4>分布式系统特性</h4>
+<ul class="point">
+<li><b>分布式系统具有内聚性和透明性、可扩展性、可用与可靠性、高性能、一致性等特性</b>
+<ul class="quote"><li>内聚性和透明性：分布式系统是建立在网络之上的软件系统，所以具有高度的内聚性和透明性。</li><li>可扩展性：分布式系统可以随着业务的增长动态扩展自己的系统组件，从而提高系统整体的处理能力。</li><li>可用与可靠性：说直白点，可靠性量化的指标是给定周期内系统无故障运行的平均时间，而可用性量化的指标是给定周期内系统无故障运行的总时间。</li><li>高性能：不管是单机系统还是分布式系统，性能始终是关键指标。</li><li>一致性：分布式系统为了提高可用性和可靠性，一般会引入冗余(副本)。为了保证这些节点上的状态一致，分布式系统必须解决一致性问题。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>内聚性和透明性：分布式系统是建立在网络之上的软件系统，所以具有高度的内聚性和透明性。</li><li>可扩展性：分布式系统可以随着业务的增长动态扩展自己的系统组件，从而提高系统整体的处理能力。</li><li>可用与可靠性：说直白点，可靠性量化的指标是给定周期内系统无故障运行的平均时间，而可用性量化的指标是给定周期内系统无故障运行的总时间。</li><li>高性能：不管是单机系统还是分布式系统，性能始终是关键指标。</li><li>一致性：分布式系统为了提高可用性和可靠性，一般会引入冗余(副本)。为了保证这些节点上的状态一致，分布式系统必须解决一致性问题。</li></ul>
+</div>
+<div class="sec">
+<h4>分布式系统常见问题</h4>
+<ul class="point">
+<li><b>分布式系统中，节点间本质上是通过网络通信，而网络有些时候并没有那么可靠</b>
+<ul class="quote"><li>常见的网络问题有网络延时、丢包和消息丢失等。</li></ul>
+</li>
+<li><b>当分布式的节点数目达到一定规模后，整个系统出现故障的概率将变高</b>
+<ul class="quote"><li>分布式系统需要保证故障发生时，系统仍然是可用的，即在某个或者某些节点发生故障的情况下，需要将该节点所负责的计算和存储任务转移到其他节点。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>常见的网络问题有网络延时、丢包和消息丢失等。</li><li>分布式系统需要保证故障发生时，系统仍然是可用的，即在某个或者某些节点发生故障的情况下，需要将该节点所负责的计算和存储任务转移到其他节点。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">3</span><span class="mmx-name">1.2 分布式中间件概述</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 3 条要点 · 6 句原句摘录</p>
+<div class="sec">
+<h4>分布式中间件概述</h4>
+<ul class="point">
+<li><b>中间件是一种独立的基础系统软件或者服务程序，处于操作系统软件与用户的应用软件中间，具有很好的独立性，可作为独立的软件系统运转</b>
+<ul class="quote"><li>Redis、RabbitMQ、ZooKeeper、Elasticsearch、Nginx等是常用的中间件，可实现缓存、消息队列、分布式锁、全文搜索及负载均衡等功能。</li></ul>
+</li>
+<li><b>随着互联网的飞速发展，高吞吐、高并发、低延迟和负载均衡已成为普遍性的需求，因此，作为枢纽的中间件也从单点的“集中式”发展为“分布式”</b>
+<ul class="quote"><li>常见的基于Redis的分布式缓存、基于RabbitMQ的分布式消息中间件、基于ZooKeeper的分布式锁，以及基于Elasticsearch的全文搜索引擎等。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Redis、RabbitMQ、ZooKeeper、Elasticsearch、Nginx等是常用的中间件，可实现缓存、消息队列、分布式锁、全文搜索及负载均衡等功能。</li><li>常见的基于Redis的分布式缓存、基于RabbitMQ的分布式消息中间件、基于ZooKeeper的分布式锁，以及基于Elasticsearch的全文搜索引擎等。</li></ul>
+</div>
+<div class="sec">
+<h4>常见中间件介绍</h4>
+<ul class="point">
+<li><b>Redis、Redisson、RabbitMQ、ZooKeeper等是常见的中间件</b>
+<ul class="quote"><li>Redis是一个开源的、基于内存存储、采用Key-Value(键值对)格式存储的内存数据库，支持多种数据类型。</li><li>Redisson是“架设在Redis基础上的一个Java驻内存数据网络(In-Memory Data Grid)”，可以简单地理解为Redisson是Redis的一个升级版，它充分利用了Redis键值对数据库提供的一系列优势，为使用者提供了一系列具有分布式特性的常用工具类。</li><li>RabbitMQ是一款应用相当广泛并开源的消息中间件，可用于实现消息异步分发、模块解耦、接口限流等功能。</li><li>ZooKeeper是一个开源的分布式应用程序协调服务，可以为分布式应用提供一致性服务，简称ZK。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Redis是一个开源的、基于内存存储、采用Key-Value(键值对)格式存储的内存数据库，支持多种数据类型。</li><li>Redisson是“架设在Redis基础上的一个Java驻内存数据网络(In-Memory Data Grid)”，可以简单地理解为Redisson是Redis的一个升级版，它充分利用了Redis键值对数据库提供的一系列优势，为使用者提供了一系列具有分布式特性的常用工具类。</li><li>RabbitMQ是一款应用相当广泛并开源的消息中间件，可用于实现消息异步分发、模块解耦、接口限流等功能。</li><li>ZooKeeper是一个开源的分布式应用程序协调服务，可以为分布式应用提供一致性服务，简称ZK。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">4</span><span class="mmx-name">1.3 本书核心知识要点</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 8 条要点 · 16 句原句摘录</p>
+<div class="sec">
+<h4>本书核心知识要点</h4>
+<ul class="point">
+<li><b>本书着重介绍目前比较流行的中间件及其相关技术要点</b>
+<ul class="quote"><li>书中首先会讲解中间件的相关基础概念，让读者对其有初步的认识。</li><li>之后会采用实际的典型应用案例“实战”中间件，真正地将中间件应用到实际的业务场景中，从而让读者掌握中间件的核心技术及实际应用场景。</li></ul>
+</li>
+<li><b>采用微服务框架Spring Boot搭建企业级的微服务项目，然后一步一步地引入中间件的配置与相关依赖，从而实战相关的技术要点。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>书中首先会讲解中间件的相关基础概念，让读者对其有初步的认识。</li><li>之后会采用实际的典型应用案例“实战”中间件，真正地将中间件应用到实际的业务场景中，从而让读者掌握中间件的核心技术及实际应用场景。</li></ul>
+</div>
+<div class="sec">
+<h4>分布式缓存中间件Redis</h4>
+<ul class="point">
+<li><b>介绍Redis的相关基础概念、安装与简单用法</b>
+<ul class="quote"><li>以代码“实战”Redis支持的各种常见数据类型。</li></ul>
+</li>
+<li><b>以目前两个典型的业务场景“缓存穿透”与“缓存雪崩”，巩固读者对Redis相关知识点的理解</b>
+<ul class="quote"><li>最后以典型的案例“抢红包设计与实战”，带领读者体验Redis在实际项目中的应用。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>以代码“实战”Redis支持的各种常见数据类型。</li><li>最后以典型的案例“抢红包设计与实战”，带领读者体验Redis在实际项目中的应用。</li></ul>
+</div>
+<div class="sec">
+<h4>分布式消息中间件RabbitMQ</h4>
+<ul class="point">
+<li><b>介绍RabbitMQ的相关基础概念、作用及常见的业务场景</b>
+<ul class="quote"><li>认识RabbitMQ涉及的相关专用词汇。</li><li>以实际代码“实战”RabbitMQ的几种消息模型。</li><li>掌握如何采用RabbitTemplate组件发送消息、采用@RabbitListener接受消息等。</li></ul>
+</li>
+<li><b>以典型的应用场景“用户操作异步写日志”实战案例，巩固RabbitMQ的相关知识点</b>
+<ul class="quote"><li>介绍RabbitMQ死信队列的相关基础概念、作用及常见的应用场景。</li><li>认识死信队列DLX、DLK和TTL等相关专用名词。</li><li>以实例实现死信队列的消息模型。</li><li>最后以典型应用场景“商城平台用户支付超时”为案例进行巩固。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>认识RabbitMQ涉及的相关专用词汇。</li><li>以实际代码“实战”RabbitMQ的几种消息模型。</li><li>掌握如何采用RabbitTemplate组件发送消息、采用@RabbitListener接受消息等。</li><li>介绍RabbitMQ死信队列的相关基础概念、作用及常见的应用场景。</li><li>认识死信队列DLX、DLK和TTL等相关专用名词。</li><li>以实例实现死信队列的消息模型。</li><li>最后以典型应用场景“商城平台用户支付超时”为案例进行巩固。</li></ul>
+</div>
+<div class="sec">
+<h4>分布式锁</h4>
+<ul class="point">
+<li><b>介绍分布式锁的相关概念、作用与常见的应用场景</b>
+<ul class="quote"><li>以实际的典型应用场景“秒杀系统设计与实战”为案例驱动。</li><li>以多种实现方式(数据库乐观锁/悲观锁、Redis原子操作、ZooKeeper分布式锁及Redisson分布式锁)配备实际代码实现分布式锁。</li></ul>
+</li>
+<li><b>介绍Redisson及其分布式锁，包括其相关基础概念和作用</b>
+<ul class="quote"><li>以实际的应用场景“高性能点赞和评论模块设计与实战”为案例驱动。</li><li>带领读者对该案例展开业务流程分析，进行数据库表设计及项目的整合搭建。</li><li>最终以代码的形式实现高性能的点赞与评论功能。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>以实际的典型应用场景“秒杀系统设计与实战”为案例驱动。</li><li>以多种实现方式(数据库乐观锁/悲观锁、Redis原子操作、ZooKeeper分布式锁及Redisson分布式锁)配备实际代码实现分布式锁。</li><li>以实际的应用场景“高性能点赞和评论模块设计与实战”为案例驱动。</li><li>带领读者对该案例展开业务流程分析，进行数据库表设计及项目的整合搭建。</li><li>最终以代码的形式实现高性能的点赞与评论功能。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">5</span><span class="mmx-name">1.4 本书实战要求与建议</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 4 条要点 · 3 句原句摘录</p>
+<div class="sec">
+<h4>本书实战要求与建议</h4>
+<ul class="point">
+<li><b>读者须具备Java及Spring Boot方面的相关基础知识</b>
+<ul class="quote"><li>本书的实战代码以微框架Spring Boot为奠基整合相关依赖，从而实现中间件的相关技术要点。</li></ul>
+</li>
+<li><b>读者需在自己的开发机器上安装最基本的软件</b>
+<ul class="quote"><li>如JDK(1.7或者1.8版均可)、MySQL(5.6或者5.7版均可)、Maven(3.3.x版本或者更高版本均可)等。</li></ul>
+</li>
+<li><b>读者一定要多动手、多写代码</b>
+<ul class="quote"><li>只有代码写多了，才能知道可能会出现的问题及如何解决这些问题，才能将所学之物转化为自己的经验。</li></ul>
+</li>
+<li><b>笔者总结的7个词：沉下心、坚持、多动手、多反思、多做笔记、享受代码、享受Bug。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>本书的实战代码以微框架Spring Boot为奠基整合相关依赖，从而实现中间件的相关技术要点。</li><li>如JDK(1.7或者1.8版均可)、MySQL(5.6或者5.7版均可)、Maven(3.3.x版本或者更高版本均可)等。</li><li>只有代码写多了，才能知道可能会出现的问题及如何解决这些问题，才能将所学之物转化为自己的经验。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">6</span><span class="mmx-name">2.1 Spring Boot概述</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 8 条要点 · 12 句原句摘录</p>
+<div class="sec">
+<h4>Spring Boot概述</h4>
+<ul class="point">
+<li><b>Spring Boot是Spring“全家桶”中的一员，其设计目的是用来简化Spring应用中烦琐的搭建及开发过程</b>
+<ul class="quote"><li>Spring Boot只需要使用极少的配置，就可以快速得到一个正常运行的应用程序，开发人员从此不再需要定义样板化的配置。</li></ul>
+</li>
+<li><b>Spring Boot给企业“快速”开发微而小的项目提供了可能，同时也给传统系统架构的改进及升级带来了诸多方便</b>
+<ul class="quote"><li>随着近几年互联网经济的快速发展、微服务和分布式系统架构的流行，Spring Boot的到来使得Java项目的开发变得更为简单、方便和快速，极大地提高了开发和部署效率，同时也给企业带来了诸多收益。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Spring Boot只需要使用极少的配置，就可以快速得到一个正常运行的应用程序，开发人员从此不再需要定义样板化的配置。</li><li>随着近几年互联网经济的快速发展、微服务和分布式系统架构的流行，Spring Boot的到来使得Java项目的开发变得更为简单、方便和快速，极大地提高了开发和部署效率，同时也给企业带来了诸多收益。</li></ul>
+</div>
+<div class="sec">
+<h4>Spring Boot的优势</h4>
+<ul class="point">
+<li><b>Spring Boot可以帮助开发者快速搭建企业级应用，借助开发工具如IntelliJ IDEA，几乎只需要几个步骤就能简单地构建一个项目</b>
+<ul class="quote"><li>Spring Boot整合了常用的、大部分的框架(包括它们的使用方式以及常用配置)。</li></ul>
+</li>
+<li><b>Spring Boot可以自动整合主流框架和大部分的第三方框架，即“自动装配”</b>
+<ul class="quote"><li>Spring Boot只需要加入Spring Boot内置的针对第三方框架的“起步依赖”，即内置的jar包即可，不再需要编写大量的样板代码、注释与XML配置。</li></ul>
+</li>
+<li><b>Spring Boot由于内嵌了Servlet容器(如Tomcat)，其搭建的项目可以直接打成jar包，并在安装有Java运行环境的机器上采用java–jar xxx.jar的命令直接运行</b>
+<ul class="quote"><li>Spring Boot还能对运行中的应用进行状态监控。</li></ul>
+</li>
+<li><b>Spring Boot相对于Spring搭建的项目代码和配置文件更少，不再需要对第三方框架的配置而“烦恼”了</b>
+<ul class="quote"><li>项目整体上来看也更加精简，扩展性也变得更强，对于整个团队的开发和维护来说，更大程度地节约了成本。</li></ul>
+</li>
+<li><b>Spring Boot是Spring家族中的一员，所以对于Spring Boot应用而言，其与Spring生态系统如Spring ORM、Spring JDBC、Spring Data、Spring Security等的集成非常方便、容易</b>
+<ul class="quote"><li>再加上Spring Boot的设计者崇尚“习惯大于配置”的理念，使得Spring Boot应用集成主流框架及Spring生态系统时极为方便、快速，开发者可以更加专注于应用本身的业务逻辑。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Spring Boot整合了常用的、大部分的框架(包括它们的使用方式以及常用配置)。</li><li>Spring Boot只需要加入Spring Boot内置的针对第三方框架的“起步依赖”，即内置的jar包即可，不再需要编写大量的样板代码、注释与XML配置。</li><li>Spring Boot还能对运行中的应用进行状态监控。</li><li>项目整体上来看也更加精简，扩展性也变得更强，对于整个团队的开发和维护来说，更大程度地节约了成本。</li><li>再加上Spring Boot的设计者崇尚“习惯大于配置”的理念，使得Spring Boot应用集成主流框架及Spring生态系统时极为方便、快速，开发者可以更加专注于应用本身的业务逻辑。</li></ul>
+</div>
+<div class="sec">
+<h4>Spring Boot的几大特性</h4>
+<ul class="point">
+<li><b>Spring Boot遵循“习惯优于配置”的理念，即使用Spring Boot开发项目时，我们只需要使用很少的配置，大多数使用默认配置即可</b>
+<ul class="quote"><li>Spring Boot可以帮助开发者快速搭建应用，并自动整合主流框架和大部分的第三方框架，即“自动装配”。</li><li>应用可以不需要使用XML配置，而只需要自动配置和采用Java Config配置相关组件即可。</li><li>Spring Boot可以采用内置的Servlet容器，并采用简单的命令直接执行项目，可以不需要借助外置的容器如Tomcat而运行。</li><li>整合大部分的第三方框架或主流框架时，只需要直接引入Spring Boot内置的Start Jar即可，这个特性称为“起步依赖”，可以很方便地进行包管理。</li><li>Spring Boot内置了监控组件Actuator，只需要引入相应的起步依赖，就可以基于HTTP、SSH和Telnet等方式对运行中的应用进行监控。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Spring Boot可以帮助开发者快速搭建应用，并自动整合主流框架和大部分的第三方框架，即“自动装配”。</li><li>应用可以不需要使用XML配置，而只需要自动配置和采用Java Config配置相关组件即可。</li><li>Spring Boot可以采用内置的Servlet容器，并采用简单的命令直接执行项目，可以不需要借助外置的容器如Tomcat而运行。</li><li>整合大部分的第三方框架或主流框架时，只需要直接引入Spring Boot内置的Start Jar即可，这个特性称为“起步依赖”，可以很方便地进行包管理。</li><li>Spring Boot内置了监控组件Actuator，只需要引入相应的起步依赖，就可以基于HTTP、SSH和Telnet等方式对运行中的应用进行监控。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">7</span><span class="mmx-name">2.2 搭建规范与搭建流程</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 14 条要点 · 20 句原句摘录</p>
+<div class="sec">
+<h4>Spring Boot项目搭建规范</h4>
+<ul class="point">
+<li><b>规范化搭建微服务项目将有助于团队开发、维护及对代码的理解。</b>
+</li>
+<li><b>“基于Maven构建多模块”的方式搭建的每个模块各司其职，负责应用的不同功能</b>
+<ul class="quote"><li>“父模块”聚合了多个子模块，包括api、model及server模块。</li><li>这3个模块的依赖层级关系为：server依赖model，model依赖api，最终构成了典型的Maven聚合型多模块项目。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>“父模块”聚合了多个子模块，包括api、model及server模块。</li><li>这3个模块的依赖层级关系为：server依赖model，model依赖api，最终构成了典型的Maven聚合型多模块项目。</li></ul>
+</div>
+<div class="sec">
+<h4>Spring Boot项目搭建流程</h4>
+<ul class="point">
+<li><b>打开开发工具IntelliJ IDEA，然后选择File菜单下的New→New Project命令，即创建新项目的命令</b>
+<ul class="quote"><li>单击Next按钮，进入Maven多模块项目的命名界面。</li><li>单击Next按钮进入下一步，选择项目的存储目录。</li><li>单击Finish按钮，如果项目的存储目录是新建的，则会弹出一个对话框，询问是否创建一个新的文件目录，这里只需要单击OK按钮即可。</li></ul>
+</li>
+<li><b>进入项目的初始界面，这个pom.xml即为父模块的依赖配置文件</b>
+<ul class="quote"><li>指定整个项目资源的编码及项目编译时采用的JDK版本。</li></ul>
+</li>
+<li><b>开始创建各个子模块及每个子模块最基本的一些依赖配置信息</b>
+<ul class="quote"><li>首先是创建子模块api，然后直接单击Next按钮，命名子模块为api，最终单击Finish按钮即可。</li><li>按照上面创建api子模块的步骤，同样，也可以用于创建子模块model。</li><li>按照同样的方式创建最后一个模块，即核心的server模块。</li></ul>
+</li>
+<li><b>至此，项目的各个模块已经初步搭建好了</b>
+<ul class="quote"><li>其中，在server模块中指定了整个项目的启动类(也称为应用的入口)MainApplication。</li><li>为了能使用Spring Boot内置容器将整个项目“跑”起来，需要对MainApplication进行“改造”。</li></ul>
+</li>
+<li><b>为了能将项目最终发布为完整的服务，我们为项目引入application.properties配置文件</b>
+<ul class="quote"><li>并将其放置在server模块的resources目录下。</li><li>同时采用Navicat Premium在本地创建一个没有任何表的数据库db_middleware，并将其相关配置信息配置在application.properties中。</li></ul>
+</li>
+<li><b>在上面的application.properties配置文件中，我们引入了半ORM(对象实体映射)框架MyBatis的配置文件mybatis-config.xml</b>
+<ul class="quote"><li>这个文件可以通过右击resources目录，然后选择New→mybatis-config命令来创建。</li></ul>
+</li>
+<li><b>为应用引入日志配置文件log4j.properties作为整个应用的日志记录</b>
+<ul class="quote"><li>其内容配置如下。</li></ul>
+</li>
+<li><b>最终server模块下resources目录的配置文件包含了3个核心文件：项目配置文件application.properties、日志配置文件log4j.properties及MyBatis配置文件mybatis-config.xml</b>
+<ul class="quote"><li>至此，整个应用的搭建就完成了。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>单击Next按钮，进入Maven多模块项目的命名界面。</li><li>单击Next按钮进入下一步，选择项目的存储目录。</li><li>单击Finish按钮，如果项目的存储目录是新建的，则会弹出一个对话框，询问是否创建一个新的文件目录，这里只需要单击OK按钮即可。</li><li>指定整个项目资源的编码及项目编译时采用的JDK版本。</li><li>首先是创建子模块api，然后直接单击Next按钮，命名子模块为api，最终单击Finish按钮即可。</li><li>按照上面创建api子模块的步骤，同样，也可以用于创建子模块model。</li><li>按照同样的方式创建最后一个模块，即核心的server模块。</li><li>其中，在server模块中指定了整个项目的启动类(也称为应用的入口)MainApplication。</li><li>为了能使用Spring Boot内置容器将整个项目“跑”起来，需要对MainApplication进行“改造”。</li><li>并将其放置在server模块的resources目录下。</li><li>同时采用Navicat Premium在本地创建一个没有任何表的数据库db_middleware，并将其相关配置信息配置在application.properties中。</li><li>这个文件可以通过右击resources目录，然后选择New→mybatis-config命令来创建。</li><li>其内容配置如下。</li><li>至此，整个应用的搭建就完成了。</li></ul>
+</div>
+<div class="sec">
+<h4>写个Hello World吧</h4>
+<ul class="point">
+<li><b>在server模块创建controller包和entity包，分别用于存放整个应用接收外部访问请求时的处理器及实体对象信息</b>
+<ul class="quote"><li>并在controller包下创建BookController类，在entity包下创建Book类。</li></ul>
+</li>
+<li><b>BookController类开发的代码如下</b>
+<ul class="quote"><li>在BookController中开发了info方法，用于接收书籍的编码及书名信息，最终方法原样返回书籍对象实体的信息。</li></ul>
+</li>
+<li><b>实体对象Book类的代码如下</b>
+<ul class="quote"><li>Book类封装了“书籍实体”所拥有的相关字段信息。</li></ul>
+</li>
+<li><b>单击运行按钮，将应用“跑”起来，然后打开浏览器或者Postman，在地址栏中输入http://localhost:8087/middleware/book/info?bookNo=10010&amp;bookName=分布式中间件，即可得到书籍对象实体的返回信息</b>
+<ul class="quote"><li>从运行结果及接口请求的过程来看，上节搭建的项目已经成功运行，项目发布的接口也能被正常访问。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>并在controller包下创建BookController类，在entity包下创建Book类。</li><li>在BookController中开发了info方法，用于接收书籍的编码及书名信息，最终方法原样返回书籍对象实体的信息。</li><li>Book类封装了“书籍实体”所拥有的相关字段信息。</li><li>从运行结果及接口请求的过程来看，上节搭建的项目已经成功运行，项目发布的接口也能被正常访问。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">8</span><span class="mmx-name">2.3 总结</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 2 条要点 · 0 句原句摘录</p>
+<div class="sec">
+<h4>Spring Boot概念、优势及特性</h4>
+<ul class="point">
+<li><b>Spring Boot的诞生给Java程序员带来了诸多方便，也给企业的传统Spring应用和系统架构带来可升级和扩展的福音。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>搭建微服务项目的规范。</h4>
+<ul class="point">
+</ul>
+</div>
+<div class="sec">
+<h4>使用IntelliJ IDEA等开发工具搭建微服务项目的步骤。</h4>
+<ul class="point">
+</ul>
+</div>
+<div class="sec">
+<h4>微服务项目的实战案例</h4>
+<ul class="point">
+<li><b>采用实际的业务需求“获取对象实体信息”作为实战案例，为整个微服务项目的搭建画上圆满的句号。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">9</span><span class="mmx-name">第2篇 开发实战</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 8 个小节 · 14 条要点 · 16 句原句摘录</p>
+<div class="sec">
+<h4>Redis简述</h4>
+<ul class="point">
+<li><b>Redis是一个基于BSD开源的项目，同时也是一个基于内存的Key-Value结构化存储的存储系统</b>
+<ul class="quote"><li>Redis在实际生产环境中可以将其作为数据库、缓存和消息中间件来使用。</li></ul>
+</li>
+<li><b>Redis支持多种数据结构，包括字符串String、列表List、集合Set、有序集合Sorted Set和散列Hash等</b>
+<ul class="quote"><li>在实际业务环境中可以实现类似于热点数据存储、非结构化数据存储和消息分发等功能。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Redis在实际生产环境中可以将其作为数据库、缓存和消息中间件来使用。</li><li>在实际业务环境中可以实现类似于热点数据存储、非结构化数据存储和消息分发等功能。</li></ul>
+</div>
+<div class="sec">
+<h4>Spring Boot整合Redis</h4>
+<ul class="point">
+<li><b>使用StringRedisTemplate及RedisTemplate组件编写Hello World，初步感受Redis在实际微服务项目中的应用。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>Redis典型的数据结构</h4>
+<ul class="point">
+<li><b>以一个典型的实际业务场景为案例“实战”Redis，巩固Redis在实际互联网项目中的应用。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>消息中间件RabbitMQ</h4>
+<ul class="point">
+<li><b>RabbitMQ是一个开源的消息队列中间件，基于Erlang语言开发</b>
+<ul class="quote"><li>RabbitMQ具有高可用、高并发、分布式等特点。</li></ul>
+</li>
+<li><b>RabbitMQ支持多种消息模型，包括点对点模型和发布订阅模型</b>
+<ul class="quote"><li>点对点模型中，消息生产者将消息发送给指定的消息消费者。</li><li>发布订阅模型中，消息生产者将消息发布到交换机，然后由交换机根据路由规则将消息转发给相应的消息消费者。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>RabbitMQ具有高可用、高并发、分布式等特点。</li><li>点对点模型中，消息生产者将消息发送给指定的消息消费者。</li><li>发布订阅模型中，消息生产者将消息发布到交换机，然后由交换机根据路由规则将消息转发给相应的消息消费者。</li></ul>
+</div>
+<div class="sec">
+<h4>死信队列/延迟队列实战</h4>
+<ul class="point">
+<li><b>死信队列用于处理无法被正常消费的消息</b>
+<ul class="quote"><li>当消息消费者无法正常处理消息时，消息会进入死信队列。</li></ul>
+</li>
+<li><b>延迟队列用于处理需要延迟处理的消息</b>
+<ul class="quote"><li>延迟队列可以设置消息的延迟时间，当延迟时间到达时，消息会被重新放入队列等待处理。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>当消息消费者无法正常处理消息时，消息会进入死信队列。</li><li>延迟队列可以设置消息的延迟时间，当延迟时间到达时，消息会被重新放入队列等待处理。</li></ul>
+</div>
+<div class="sec">
+<h4>分布式锁实战</h4>
+<ul class="point">
+<li><b>分布式锁用于保证多个进程或线程对共享资源的互斥访问</b>
+<ul class="quote"><li>分布式锁可以使用基于数据库、Redis、Zookeeper等实现的锁。</li></ul>
+</li>
+<li><b>分布式锁的实现需要考虑锁的获取、释放和超时机制</b>
+<ul class="quote"><li>在获取锁时，需要检查锁是否已经被其他进程或线程持有。</li><li>在释放锁时，需要确保锁已经被当前进程或线程持有。</li><li>在超时机制中，需要设置锁的超时时间，当锁的超时时间到达时，自动释放锁。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>分布式锁可以使用基于数据库、Redis、Zookeeper等实现的锁。</li><li>在获取锁时，需要检查锁是否已经被其他进程或线程持有。</li><li>在释放锁时，需要确保锁已经被当前进程或线程持有。</li><li>在超时机制中，需要设置锁的超时时间，当锁的超时时间到达时，自动释放锁。</li></ul>
+</div>
+<div class="sec">
+<h4>综合中间件Redisson</h4>
+<ul class="point">
+<li><b>Redisson是一个基于Java的分布式协调服务框架</b>
+<ul class="quote"><li>Redisson提供了丰富的分布式对象和服务，如分布式锁、集合、映射、队列等。</li></ul>
+</li>
+<li><b>Redisson支持多种数据结构，包括字符串String、列表List、集合Set、有序集合Sorted Set和散列Hash等</b>
+<ul class="quote"><li>Redisson可以用于实现分布式缓存、分布式锁、分布式集合等功能。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Redisson提供了丰富的分布式对象和服务，如分布式锁、集合、映射、队列等。</li><li>Redisson可以用于实现分布式缓存、分布式锁、分布式集合等功能。</li></ul>
+</div>
+<div class="sec">
+<h4>Redisson典型应用场景实战之高性能点赞</h4>
+<ul class="point">
+<li><b>高性能点赞系统需要解决高并发点赞的问题</b>
+<ul class="quote"><li>在高并发场景下，需要保证点赞操作的原子性和持久性。</li></ul>
+</li>
+<li><b>Redisson可以用于实现高性能点赞系统</b>
+<ul class="quote"><li>Redisson提供了分布式锁和原子操作，可以保证点赞操作的原子性和持久性。</li><li>Redisson提供了分布式集合，可以用于存储点赞记录和点赞计数。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在高并发场景下，需要保证点赞操作的原子性和持久性。</li><li>Redisson提供了分布式锁和原子操作，可以保证点赞操作的原子性和持久性。</li><li>Redisson提供了分布式集合，可以用于存储点赞记录和点赞计数。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">10</span><span class="mmx-name">3.2 Redis的使用</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 2 条要点 · 0 句原句摘录</p>
+<div class="sec">
+<h4>Redis的使用</h4>
+<ul class="point">
+<li><b>在本地开发环境下快速安装Redis，以及如何使用简单的命令行实现Redis的相关操作。</b>
+</li>
+<li><b>整合Redis，介绍其在实际项目中的两个核心操作组件StringRedisTemplate及RedisTemplate的自定义注入配置。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">11</span><span class="mmx-name">3.1 Redis概述与典型应用场景介绍</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 7 个小节 · 15 条要点 · 45 句原句摘录</p>
+<div class="sec">
+<h4>Redis概述</h4>
+<ul class="point">
+<li><b>Redis是一款免费、开源、遵循BSD协议的高性能结构化存储数据库</b>
+<ul class="quote"><li>Redis可以满足目前企业大部分应用中对于高性能数据存储的需求。</li><li>Redis也是NoSQL(Not Only SQL)，即非关系型数据库的一种，内置多种丰富多彩的数据结构，如字符串String、列表List、集合Set、散列Hash等。</li></ul>
+</li>
+<li><b>Redis的诞生与互联网Web 2.0时代的需求有关</b>
+<ul class="quote"><li>在早期的互联网Web 1.0时代，大部分企业还是采用传统的企业级单体应用架构，而一时间“蜂拥而来”的巨大用户流量显然使得此种架构再也难以支撑下去。</li><li>各种典型的新型互联网架构应势而生，如面向SOA的系统架构、分库分表的应用架构、微服务/分布式系统架构，以及基于各种分布式中间件的应用架构等层出不穷。</li></ul>
+</li>
+<li><b>Redis在高并发场景下的优势</b>
+<ul class="quote"><li>Redis是基于内存的、采用Key-Value结构化存储的NoSQL数据库，加上其底层采用单线程和多路I/O复用模型，所以Redis的查询速度很快。</li><li>根据Redis官方提供的数据，它可以实现每秒查询的次数达到10万次，即QPS为100000+，这在某种程度上足以满足大部分的高并发请求。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Redis可以满足目前企业大部分应用中对于高性能数据存储的需求。</li><li>Redis也是NoSQL(Not Only SQL)，即非关系型数据库的一种，内置多种丰富多彩的数据结构，如字符串String、列表List、集合Set、散列Hash等。</li><li>在早期的互联网Web 1.0时代，大部分企业还是采用传统的企业级单体应用架构，而一时间“蜂拥而来”的巨大用户流量显然使得此种架构再也难以支撑下去。</li><li>各种典型的新型互联网架构应势而生，如面向SOA的系统架构、分库分表的应用架构、微服务/分布式系统架构，以及基于各种分布式中间件的应用架构等层出不穷。</li><li>Redis是基于内存的、采用Key-Value结构化存储的NoSQL数据库，加上其底层采用单线程和多路I/O复用模型，所以Redis的查询速度很快。</li><li>根据Redis官方提供的数据，它可以实现每秒查询的次数达到10万次，即QPS为100000+，这在某种程度上足以满足大部分的高并发请求。</li></ul>
+</div>
+<div class="sec">
+<h4>Redis的典型应用场景</h4>
+<ul class="point">
+<li><b>热点数据的存储与展示</b>
+<ul class="quote"><li>“热点数据”可以理解为大部分用户频繁访问的数据，这些数据对于所有的用户来说，访问将得到同一个结果。</li><li>如果采用传统的“查询数据库”的方法获取热点数据，将大大增加数据库的压力，而降低数据库的读写性能。</li></ul>
+</li>
+<li><b>最近访问的数据</b>
+<ul class="quote"><li>用户最近访问过的数据记录在数据库中将采用“日期字段”作为标记，频繁查询的实现是采用该日期字段与当前时间做“时间差”的比较查询，这种方式是相当耗时的。</li><li>而采用Redis的List作为“最近访问的足迹”的数据结构，将大大降低数据库频繁的查询请求。</li></ul>
+</li>
+<li><b>并发访问</b>
+<ul class="quote"><li>对于高并发访问某些数据的情况，Redis可以将这些数据预先装载在缓存中，每次高并发过来的请求则可以直接从缓存中获取，减少高并发访问给数据库带来的压力。</li></ul>
+</li>
+<li><b>排名</b>
+<ul class="quote"><li>“排行榜”在很多互联网产品中也是比较常见的。</li><li>采用Redis的有序集合(Sorted Set)可以很好地实现用户的排名，避免了传统的基于数据库级别的Order By及Group By查询所带来的性能问题。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>“热点数据”可以理解为大部分用户频繁访问的数据，这些数据对于所有的用户来说，访问将得到同一个结果。</li><li>如果采用传统的“查询数据库”的方法获取热点数据，将大大增加数据库的压力，而降低数据库的读写性能。</li><li>用户最近访问过的数据记录在数据库中将采用“日期字段”作为标记，频繁查询的实现是采用该日期字段与当前时间做“时间差”的比较查询，这种方式是相当耗时的。</li><li>而采用Redis的List作为“最近访问的足迹”的数据结构，将大大降低数据库频繁的查询请求。</li><li>对于高并发访问某些数据的情况，Redis可以将这些数据预先装载在缓存中，每次高并发过来的请求则可以直接从缓存中获取，减少高并发访问给数据库带来的压力。</li><li>“排行榜”在很多互联网产品中也是比较常见的。</li><li>采用Redis的有序集合(Sorted Set)可以很好地实现用户的排名，避免了传统的基于数据库级别的Order By及Group By查询所带来的性能问题。</li></ul>
+</div>
+<div class="sec">
+<h4>Redis的安装与使用</h4>
+<ul class="point">
+<li><b>在Windows开发环境下安装Redis</b>
+<ul class="quote"><li>打开浏览器，访问Redis托管在GitHub开源平台上的下载链接https://github.com/MicrosoftArchive/redis/tags。</li><li>选择最新版本win-3.2.100，单击即可。下载完成后，将其解压到某个没有包含中文目录或特殊符号的磁盘目录下。</li><li>双击redis-server.exe，如果可以看到如图3.3所示的界面，即代表Redis服务已经启动成功。</li></ul>
+</li>
+<li><b>在Windows环境下使用Redis</b>
+<ul class="quote"><li>双击redis-cli.exe文件，如果可以看到如图3.4所示的界面，即表示开发者可以以命令行的方式操作本地的Redis服务了。</li><li>查看Redis缓存中存储的所有key，命令为：keys*。</li><li>在缓存中创建一个key，设置其名字为redis:order:no:10011(按照自己的习惯取名即可，但是建议最好具有某种含义)，设置其值为10011，命令为set redis:order:no:1001110011。</li><li>查看缓存中指定key的取值，如获取刚刚创建的key：redis:order:no:10011的取值，命令为get redis:order:no:10011。</li><li>删除缓存中指定的key，如删除key：redis:order:no:10011，命令为del redis:order:no:10011。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>打开浏览器，访问Redis托管在GitHub开源平台上的下载链接https://github.com/MicrosoftArchive/redis/tags。</li><li>选择最新版本win-3.2.100，单击即可。下载完成后，将其解压到某个没有包含中文目录或特殊符号的磁盘目录下。</li><li>双击redis-server.exe，如果可以看到如图3.3所示的界面，即代表Redis服务已经启动成功。</li><li>双击redis-cli.exe文件，如果可以看到如图3.4所示的界面，即表示开发者可以以命令行的方式操作本地的Redis服务了。</li><li>查看Redis缓存中存储的所有key，命令为：keys*。</li><li>在缓存中创建一个key，设置其名字为redis:order:no:10011(按照自己的习惯取名即可，但是建议最好具有某种含义)，设置其值为10011，命令为set redis:order:no:1001110011。</li><li>查看缓存中指定key的取值，如获取刚刚创建的key：redis:order:no:10011的取值，命令为get redis:order:no:10011。</li><li>删除缓存中指定的key，如删除key：redis:order:no:10011，命令为del redis:order:no:10011。</li></ul>
+</div>
+<div class="sec">
+<h4>Spring Boot项目整合Redis</h4>
+<ul class="point">
+<li><b>在配置文件application.properties中加入Redis的连接配置</b>
+<ul class="quote"><li>#redis。</li><li>#连接到本地的Redis服务，即127.0.0.1；端口为6379。</li><li>spring.redis.host=127.0.0.1。</li><li>spring.redis.port=6379。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>#redis。</li><li>#连接到本地的Redis服务，即127.0.0.1；端口为6379。</li><li>spring.redis.host=127.0.0.1。</li><li>spring.redis.port=6379。</li></ul>
+</div>
+<div class="sec">
+<h4>Redis自定义注入Bean组件配置</h4>
+<ul class="point">
+<li><b>自定义注入配置操作组件RedisTemplate与StringRedisTemplate的相关属性</b>
+<ul class="quote"><li>对于Spring Boot项目整合Redis，最主要的Bean操作组件莫过于RedisTemplate跟StringRedisTemplate，后者其实是前者的一种特殊体现。</li><li>在项目中使用Redis的过程中，一般情况下是需要自定义配置上述两个操作Bean组件的，比如指定缓存中Key与Value的序列化策略等配置。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>对于Spring Boot项目整合Redis，最主要的Bean操作组件莫过于RedisTemplate跟StringRedisTemplate，后者其实是前者的一种特殊体现。</li><li>在项目中使用Redis的过程中，一般情况下是需要自定义配置上述两个操作Bean组件的，比如指定缓存中Key与Value的序列化策略等配置。</li></ul>
+</div>
+<div class="sec">
+<h4>RedisTemplate实战</h4>
+<ul class="point">
+<li><b>采用RedisTemplate将字符串信息写入缓存中，并读取出来展示到控制台上</b>
+<ul class="quote"><li>定义字符串内容及存入缓存的key。</li><li>Redis通用的操作组件。</li><li>将字符串信息写入缓存中。</li><li>从缓存中读取内容。</li></ul>
+</li>
+<li><b>采用RedisTemplate将对象信息序列化为JSON格式的字符串后写入缓存中，然后将其读取出来，最后反序列化解析其中的内容并展示在控制台上</b>
+<ul class="quote"><li>构造对象信息。</li><li>Redis通用的操作组件。</li><li>将序列化后的信息写入缓存中。</li><li>从缓存中读取内容。</li><li>反序列化解析其中的内容并展示在控制台上。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>定义字符串内容及存入缓存的key。</li><li>Redis通用的操作组件。</li><li>将字符串信息写入缓存中。</li><li>从缓存中读取内容。</li><li>构造对象信息。</li><li>Redis通用的操作组件。</li><li>将序列化后的信息写入缓存中。</li><li>从缓存中读取内容。</li><li>反序列化解析其中的内容并展示在控制台上。</li></ul>
+</div>
+<div class="sec">
+<h4>StringRedisTemplate实战</h4>
+<ul class="point">
+<li><b>采用StringRedisTemplate将字符串信息写入缓存中，并读取出来展示到控制台上</b>
+<ul class="quote"><li>定义字符串内容及存入缓存的key。</li><li>Redis通用的操作组件。</li><li>将字符串信息写入缓存中。</li><li>从缓存中读取内容。</li></ul>
+</li>
+<li><b>采用StringRedisTemplate将对象信息序列化为JSON格式字符串后写入缓存中，然后将其读取出来，最后反序列化解析其中的内容并展示在控制台上</b>
+<ul class="quote"><li>构造对象信息。</li><li>Redis通用的操作组件。</li><li>将序列化后的信息写入缓存中。</li><li>从缓存中读取内容。</li><li>反序列化解析其中的内容并展示在控制台上。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>定义字符串内容及存入缓存的key。</li><li>Redis通用的操作组件。</li><li>将字符串信息写入缓存中。</li><li>从缓存中读取内容。</li><li>构造对象信息。</li><li>Redis通用的操作组件。</li><li>将序列化后的信息写入缓存中。</li><li>从缓存中读取内容。</li><li>反序列化解析其中的内容并展示在控制台上。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">12</span><span class="mmx-name">3.3 Redis常见数据结构实战</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 6 条要点 · 8 句原句摘录</p>
+<div class="sec">
+<h4>Redis常见数据结构实战</h4>
+<ul class="point">
+<li><b>字符串</b>
+<ul class="quote"><li>将用户个人信息存储至缓存中，实现每次前端请求获取用户个人详情时直接从缓存中读取。</li></ul>
+</li>
+<li><b>列表</b>
+<ul class="quote"><li>将一组已经排好序的用户对象列表存储在缓存中，按照排名的先后顺序获取出来并输出打印到控制台上。</li></ul>
+</li>
+<li><b>集合</b>
+<ul class="quote"><li>给定一组用户姓名列表，要求剔除具有相同姓名的人员并组成新的集合，存放至缓存中并用于前端访问。</li></ul>
+</li>
+<li><b>有序集合</b>
+<ul class="quote"><li>找出一个星期内手机话费单次充值金额前6名的用户列表，要求按照充值金额从大到小的顺序进行排序，并存至缓存中。</li></ul>
+</li>
+<li><b>哈希Hash存储</b>
+<ul class="quote"><li>构造学生对象列表和水果对象列表，分别遍历不同的对象列表，并采用Hash哈希存储至缓存中。</li></ul>
+</li>
+<li><b>Key失效与判断是否存在</b>
+<ul class="quote"><li>在调用SETEX方法中指定Key的过期时间。</li><li>采用RedisTemplate操作组件的Expire()方法指定失效的Key。</li><li>判断缓存中的Key是否存在，即通过redisTemplate.hasKey()方法，传入一个Key的名称参数，即可获取缓存中该Key是否仍然存在。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>将用户个人信息存储至缓存中，实现每次前端请求获取用户个人详情时直接从缓存中读取。</li><li>将一组已经排好序的用户对象列表存储在缓存中，按照排名的先后顺序获取出来并输出打印到控制台上。</li><li>给定一组用户姓名列表，要求剔除具有相同姓名的人员并组成新的集合，存放至缓存中并用于前端访问。</li><li>找出一个星期内手机话费单次充值金额前6名的用户列表，要求按照充值金额从大到小的顺序进行排序，并存至缓存中。</li><li>构造学生对象列表和水果对象列表，分别遍历不同的对象列表，并采用Hash哈希存储至缓存中。</li><li>在调用SETEX方法中指定Key的过期时间。</li><li>采用RedisTemplate操作组件的Expire()方法指定失效的Key。</li><li>判断缓存中的Key是否存在，即通过redisTemplate.hasKey()方法，传入一个Key的名称参数，即可获取缓存中该Key是否仍然存在。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">13</span><span class="mmx-name">3.4 Redis实战场景之缓存穿透</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 8 条要点 · 14 句原句摘录</p>
+<div class="sec">
+<h4>缓存穿透的定义和问题</h4>
+<ul class="point">
+<li><b>缓存穿透是指查询一个一定不存在的数据，由于缓存是不命中时需要从数据库查询，查不到数据则不写入缓存，这将导致这个不存在的数据每次请求都要到数据库去查询，造成缓存穿透</b>
+<ul class="quote"><li>在正常情况下，如果一个查询返回的数据为空(不管是数据不存在，还是系统故障)，我们都会把这条数据存入缓存，但这样就会导致这个不存在的数据每次请求都要到数据库去查询，造成缓存穿透。</li></ul>
+</li>
+<li><b>缓存穿透将导致数据库压力过大，甚至可能压垮数据库</b>
+<ul class="quote"><li>如果有人利用这种漏洞进行恶意攻击，例如：大规模地对不存在的数据进行查询操作，那么数据库将不堪重负，可能会造成系统崩溃。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在正常情况下，如果一个查询返回的数据为空(不管是数据不存在，还是系统故障)，我们都会把这条数据存入缓存，但这样就会导致这个不存在的数据每次请求都要到数据库去查询，造成缓存穿透。</li><li>如果有人利用这种漏洞进行恶意攻击，例如：大规模地对不存在的数据进行查询操作，那么数据库将不堪重负，可能会造成系统崩溃。</li></ul>
+</div>
+<div class="sec">
+<h4>缓存穿透的解决方案</h4>
+<ul class="point">
+<li><b>将查询数据库得到的数据也存入缓存中，但设置一个较短的过期时间</b>
+<ul class="quote"><li>当查询数据库后，将查询结果进行缓存，但一定要设置一个较短的过期时间，最长不超过五分钟。</li></ul>
+</li>
+<li><b>对缓存中的Key设置过期时间，从而避免缓存穿透。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>当查询数据库后，将查询结果进行缓存，但一定要设置一个较短的过期时间，最长不超过五分钟。</li></ul>
+</div>
+<div class="sec">
+<h4>缓存穿透实战过程</h4>
+<ul class="point">
+<li><b>在Spring Boot整合Redis的项目中，以“商城用户访问某个热销的商品”为实战案例，演示上述缓存穿透的解决方案</b>
+<ul class="quote"><li>在数据库中建立数据库表，命名为item，创建数据库表语句如下。</li><li>采用MyBatis的逆向工程生成该实体类对应的Model、Mapper和Mapper.xml，并将这3个文件存放至model模块下不同的目录中。</li><li>在启动类MainApplication加上@MapperScan注解，用于扫描MyBatis动态SQL对应的Mapper接口所在的包。</li><li>建立对应的控制层Controller与实际业务逻辑处理层Service。</li><li>其中，CachePassController用于接收前端用户“获取热销商品信息”的访问请求，代码如下。</li><li>而CachePassService则为真正的核心业务逻辑处理类，完整的代码如下。</li></ul>
+</li>
+<li><b>单击运行MainApplication类，即可将整个应用程序运行起来</b>
+<ul class="quote"><li>然后打开Postman或者浏览器，首先假设先获取商品编号为book_10010的书籍信息，链接为http://127.0.0.1:8087/middleware/cache/pass/item/info?itemCode=book_10010，由于是首次查询，因而缓存中不存在该商品信息，而直接从数据库查询获取商品详情。</li><li>接着再次多次发起同样的获取书籍编号为“book_10010”的访问请求，链接同样为http://127.0.0.1:8087/middleware/cache/pass/item/info?itemCode=book_10010。再看控制台的输出结果，可以发现以后的所有请求都将从缓存中查询。</li><li>最后发起多次获取书籍编号为“book_10012”的访问请求，请求访问链接为http://127.0.0.1:8087/middleware/cache/pass/item/info?itemCode=book_10012。此时由于缓存中不存在这个书籍编号，因而首先会查询数据库，又由于数据库中不存在该书籍记录，所以数据库查询结果为Null，然后将此结果塞入缓存中，并设置一定的TTL，下次再发起同样的请求时则直接查询数据库。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在数据库中建立数据库表，命名为item，创建数据库表语句如下。</li><li>采用MyBatis的逆向工程生成该实体类对应的Model、Mapper和Mapper.xml，并将这3个文件存放至model模块下不同的目录中。</li><li>在启动类MainApplication加上@MapperScan注解，用于扫描MyBatis动态SQL对应的Mapper接口所在的包。</li><li>建立对应的控制层Controller与实际业务逻辑处理层Service。</li><li>其中，CachePassController用于接收前端用户“获取热销商品信息”的访问请求，代码如下。</li><li>而CachePassService则为真正的核心业务逻辑处理类，完整的代码如下。</li><li>然后打开Postman或者浏览器，首先假设先获取商品编号为book_10010的书籍信息，链接为http://127.0.0.1:8087/middleware/cache/pass/item/info?itemCode=book_10010，由于是首次查询，因而缓存中不存在该商品信息，而直接从数据库查询获取商品详情。</li><li>接着再次多次发起同样的获取书籍编号为“book_10010”的访问请求，链接同样为http://127.0.0.1:8087/middleware/cache/pass/item/info?itemCode=book_10010。再看控制台的输出结果，可以发现以后的所有请求都将从缓存中查询。</li><li>最后发起多次获取书籍编号为“book_10012”的访问请求，请求访问链接为http://127.0.0.1:8087/middleware/cache/pass/item/info?itemCode=book_10012。此时由于缓存中不存在这个书籍编号，因而首先会查询数据库，又由于数据库中不存在该书籍记录，所以数据库查询结果为Null，然后将此结果塞入缓存中，并设置一定的TTL，下次再发起同样的请求时则直接查询数据库。</li></ul>
+</div>
+<div class="sec">
+<h4>其他典型问题介绍</h4>
+<ul class="point">
+<li><b>缓存雪崩：指的是在某个时间点，缓存中的Key集体发生过期失效致使大量查询数据库的请求都落在了DB(数据库)上，导致数据库负载过高，压力暴增，甚至有可能“压垮”数据库</b>
+<ul class="quote"><li>这种问题产生的原因其实主要是因为大量的Key在某个时间点或者某个时间段过期失效导致的。</li></ul>
+</li>
+<li><b>缓存击穿：指缓存中某个频繁被访问的Key(可以称为“热点Key”)，在不停地扛着前端的高并发请求，当这个Key突然在某个瞬间过期失效时，持续的高并发访问请求就“穿破”缓存，直接请求数据库，导致数据库压力在某一瞬间暴增</b>
+<ul class="quote"><li>这个问题产生的原因主要是热点的Key过期失效了，而在实际情况中，既然这个Key可以被当作“热点”频繁访问，那么就应该设置这个Key永不过期，这样前端的高并发请求将几乎永远不会落在数据库上。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>这种问题产生的原因其实主要是因为大量的Key在某个时间点或者某个时间段过期失效导致的。</li><li>这个问题产生的原因主要是热点的Key过期失效了，而在实际情况中，既然这个Key可以被当作“热点”频繁访问，那么就应该设置这个Key永不过期，这样前端的高并发请求将几乎永远不会落在数据库上。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">14</span><span class="mmx-name">3.5 总结</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 5 个小节 · 7 条要点 · 0 句原句摘录</p>
+<div class="sec">
+<h4>Redis简介</h4>
+<ul class="point">
+<li><b>Redis是一个基于BSD开源的项目，同时也是一个基于内存的Key-Value结构化存储的数据库。</b>
+</li>
+<li><b>Redis在实际生产环境中有广泛的应用。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>Redis的安装与使用</h4>
+<ul class="point">
+<li><b>在本地快速安装Redis并采用命令行的形式介绍相关命令的使用。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>Redis与Spring Boot整合</h4>
+<ul class="point">
+<li><b>基于Spring Boot项目整合Redis，并实现两大核心操作组件RedisTemplate和StringRedisTemplate的自定义注入配置。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>RedisTemplate操作组件的使用</h4>
+<ul class="point">
+<li><b>采用RedisTemplate操作组件配备各种典型的应用场景演示了各种数据类型的使用，包括字符串String、列表List、集合Set、有序集合SortedSet及哈希Hash存储。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>Redis典型问题及解决方案</h4>
+<ul class="point">
+<li><b>Redis在应用过程产生的几大典型问题，包括缓存穿透、缓存雪崩和缓存击穿。</b>
+</li>
+<li><b>以缓存穿透作为代表，以代码形式演示了缓存穿透的解决方案。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">15</span><span class="mmx-name">第4章 Redis典型应用场景实战之抢红包系统</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 5 个小节 · 12 条要点 · 12 句原句摘录</p>
+<div class="sec">
+<h4>抢红包系统整体业务流程介绍、业务流程分析和业务模块划分</h4>
+<ul class="point">
+<li><b>“抢红包”起初是在微信中兴起并得到普及的，给企业带来了巨大的用户流量</b>
+<ul class="quote"><li>“发红包”与“抢红包”的业务着实给企业带来了巨大的用户流量。</li></ul>
+</li>
+<li><b>自主设计一款能“扛住”用户高并发请求的抢红包系统。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>“发红包”与“抢红包”的业务着实给企业带来了巨大的用户流量。</li></ul>
+</div>
+<div class="sec">
+<h4>系统整体开发环境的搭建、相关数据库表的设计及整体开发流程介绍。</h4>
+<ul class="point">
+</ul>
+</div>
+<div class="sec">
+<h4>“红包金额”随机数算法之二倍均值法的介绍、分析、代码实战和自测</h4>
+<ul class="point">
+<li><b>“红包金额”随机数算法之二倍均值法的介绍</b>
+<ul class="quote"><li>二倍均值法是一种生成随机数的方法。</li></ul>
+</li>
+<li><b>“红包金额”随机数算法之二倍均值法的分析</b>
+<ul class="quote"><li>二倍均值法可以生成较为均匀的随机数。</li></ul>
+</li>
+<li><b>“红包金额”随机数算法之二倍均值法的代码实战</b>
+<ul class="quote"><li>在Java中，可以使用java.util.Random类生成随机数。</li></ul>
+</li>
+<li><b>“红包金额”随机数算法之二倍均值法的自测</b>
+<ul class="quote"><li>自测可以检验算法的正确性和效果。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>二倍均值法是一种生成随机数的方法。</li><li>二倍均值法可以生成较为均匀的随机数。</li><li>在Java中，可以使用java.util.Random类生成随机数。</li><li>自测可以检验算法的正确性和效果。</li></ul>
+</div>
+<div class="sec">
+<h4>“发红包”“抢红包”业务模块的分析、代码实战和自测，采用Jmeter工具压力测试高并发下抢红包出现的问题</h4>
+<ul class="point">
+<li><b>“发红包”“抢红包”业务模块的分析</b>
+<ul class="quote"><li>“发红包”业务模块需要生成红包金额和红包个数。</li><li>“抢红包”业务模块需要用户输入抢红包的顺序号。</li></ul>
+</li>
+<li><b>“发红包”“抢红包”业务模块的代码实战</b>
+<ul class="quote"><li>在Java中，可以使用Java并发包中的类来实现并发功能。</li></ul>
+</li>
+<li><b>“发红包”“抢红包”业务模块的自测</b>
+<ul class="quote"><li>自测可以检验业务模块的正确性和效果。</li></ul>
+</li>
+<li><b>采用Jmeter工具压力测试高并发下抢红包出现的问题</b>
+<ul class="quote"><li>Jmeter是一款开源的压力测试工具，可以用来测试系统的并发性能。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>“发红包”业务模块需要生成红包金额和红包个数。</li><li>“抢红包”业务模块需要用户输入抢红包的顺序号。</li><li>在Java中，可以使用Java并发包中的类来实现并发功能。</li><li>自测可以检验业务模块的正确性和效果。</li><li>Jmeter是一款开源的压力测试工具，可以用来测试系统的并发性能。</li></ul>
+</div>
+<div class="sec">
+<h4>对高并发下产生的问题进行分析，并采用分布式锁对整体业务逻辑进行优化</h4>
+<ul class="point">
+<li><b>对高并发下产生的问题进行分析</b>
+<ul class="quote"><li>高并发下，可能会出现数据不一致、系统崩溃等问题。</li></ul>
+</li>
+<li><b>采用分布式锁对整体业务逻辑进行优化</b>
+<ul class="quote"><li>分布式锁可以保证在高并发下，同一时间只有一个用户可以抢红包。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>高并发下，可能会出现数据不一致、系统崩溃等问题。</li><li>分布式锁可以保证在高并发下，同一时间只有一个用户可以抢红包。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">16</span><span class="mmx-name">4.1 整体业务流程介绍</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 6 条要点 · 11 句原句摘录</p>
+<div class="sec">
+<h4>抢红包系统业务流程</h4>
+<ul class="point">
+<li><b>抢红包系统由信息流、业务流和资金流组成</b>
+<ul class="quote"><li>信息流包括用户操作背后的请求通信和红包信息在不同用户与用户群中的流转等。</li><li>业务流主要包括发红包、点红包和抢红包等业务逻辑。</li><li>资金流主要包括红包背后的资金转账和入账等流程。</li></ul>
+</li>
+<li><b>抢红包系统整体业务流程包括发红包和抢红包</b>
+<ul class="quote"><li>发红包流程包括输入总金额与红包个数，确认后生成红包图样。</li><li>抢红包流程包括用户点红包和用户拆红包。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>信息流包括用户操作背后的请求通信和红包信息在不同用户与用户群中的流转等。</li><li>业务流主要包括发红包、点红包和抢红包等业务逻辑。</li><li>资金流主要包括红包背后的资金转账和入账等流程。</li><li>发红包流程包括输入总金额与红包个数，确认后生成红包图样。</li><li>抢红包流程包括用户点红包和用户拆红包。</li></ul>
+</div>
+<div class="sec">
+<h4>业务流程分析</h4>
+<ul class="point">
+<li><b>发红包流程包括输入总金额与红包个数，确认后生成红包图样</b>
+<ul class="quote"><li>用户单击进入某个群，然后单击发红包按钮，输入总金额与红包个数，最后确认，输入支付密码后，将在群界面生成一个红包的图样。</li></ul>
+</li>
+<li><b>抢红包流程包括用户点红包和用户拆红包</b>
+<ul class="quote"><li>用户点红包的业务逻辑主要用于判断缓存系统中红包个数是否大于0。</li><li>用户拆红包的业务逻辑主要是从缓存系统的红包随机金额队列中弹出一个随机金额，如果金额不为空，则表示该用户抢到红包了，缓存系统中红包个数减1，同时异步记录用户抢红包的记录并结束流程；如果金额为空，则意味着用户来晚一步，红包已被抢光。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>用户单击进入某个群，然后单击发红包按钮，输入总金额与红包个数，最后确认，输入支付密码后，将在群界面生成一个红包的图样。</li><li>用户点红包的业务逻辑主要用于判断缓存系统中红包个数是否大于0。</li><li>用户拆红包的业务逻辑主要是从缓存系统的红包随机金额队列中弹出一个随机金额，如果金额不为空，则表示该用户抢到红包了，缓存系统中红包个数减1，同时异步记录用户抢红包的记录并结束流程；如果金额为空，则意味着用户来晚一步，红包已被抢光。</li></ul>
+</div>
+<div class="sec">
+<h4>业务模块划分</h4>
+<ul class="point">
+<li><b>系统包括两大核心业务模块，即发红包模块和抢红包模块</b>
+<ul class="quote"><li>发红包模块对应发红包业务流程。</li><li>抢红包模块对应点红包及拆红包业务流程。</li></ul>
+</li>
+<li><b>系统整体业务操作过程中，将产生各种各样的核心业务数据，这部分数据将由数据操作DB模块存储至数据库中</b>
+<ul class="quote"><li>缓存中间件Redis操作模块，主要用于发红包时缓存红包个数和由随机数算法产生的红包随机金额列表，同时将借助Redis单线程特性与操作的原子性实现抢红包时的锁操作。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>发红包模块对应发红包业务流程。</li><li>抢红包模块对应点红包及拆红包业务流程。</li><li>缓存中间件Redis操作模块，主要用于发红包时缓存红包个数和由随机数算法产生的红包随机金额列表，同时将借助Redis单线程特性与操作的原子性实现抢红包时的锁操作。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">17</span><span class="mmx-name">4.2 数据库表设计与环境搭建</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 6 条要点 · 14 句原句摘录</p>
+<div class="sec">
+<h4>数据库表设计</h4>
+<ul class="point">
+<li><b>抢红包系统主要由发红包记录表、红包明细金额表和抢红包记录表构成</b>
+<ul class="quote"><li>发红包记录表用于记录发红包时红包相关信息。</li><li>红包明细金额表用于记录每个红包对应的随机金额信息。</li><li>抢红包记录表用于记录用户抢到的红包金额。</li></ul>
+</li>
+<li><b>这3张表的主键都用id字段表示，用户账号用user_id字段表示</b>
+<ul class="quote"><li>发红包记录表中的id字段表示主键，user_id字段表示用户id。</li><li>红包明细金额表中的id字段表示主键，record_id字段表示红包记录id。</li><li>抢红包记录表中的id字段表示主键，user_id字段表示用户账号。</li></ul>
+</li>
+<li><b>金额包括红包总金额、每个红包随机金额和抢到红包时的金额，在数据库表中的存储采用“分”作为存储单位</b>
+<ul class="quote"><li>1元等于100分。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>发红包记录表用于记录发红包时红包相关信息。</li><li>红包明细金额表用于记录每个红包对应的随机金额信息。</li><li>抢红包记录表用于记录用户抢到的红包金额。</li><li>发红包记录表中的id字段表示主键，user_id字段表示用户id。</li><li>红包明细金额表中的id字段表示主键，record_id字段表示红包记录id。</li><li>抢红包记录表中的id字段表示主键，user_id字段表示用户账号。</li><li>1元等于100分。</li></ul>
+</div>
+<div class="sec">
+<h4>开发环境搭建</h4>
+<ul class="point">
+<li><b>采用MyBatis的逆向工程生成这3张数据库表对应的实体类Entity、数据库操作Mapper接口及写动态SQL的配置文件Mapper.xml</b>
+<ul class="quote"><li>开发3个实体类：RedRecord类、RedDetail类和RedRobRecord类。</li><li>开发3个Mapper接口：RedDetailMapper接口、RedRecordMapper接口和RedRobRecordMapper接口。</li><li>开发动态SQL所在的配置文件Mapper.xml：RedDetailMapper.xml、RedRecordMapper.xml和RedRobRecordMapper.xml。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>开发3个实体类：RedRecord类、RedDetail类和RedRobRecord类。</li><li>开发3个Mapper接口：RedDetailMapper接口、RedRecordMapper接口和RedRobRecordMapper接口。</li><li>开发动态SQL所在的配置文件Mapper.xml：RedDetailMapper.xml、RedRecordMapper.xml和RedRobRecordMapper.xml。</li></ul>
+</div>
+<div class="sec">
+<h4>开发流程介绍</h4>
+<ul class="point">
+<li><b>用户发起的请求主要包括“发红包”和“抢红包”请求</b>
+<ul class="quote"><li>对于发红包请求的处理，后端主要是根据用户输入的金额和个数预生成相应的红包随机金额列表，并将红包的总个数及对应的随机金额列表缓存至Redis中，同时将红包的总金额、随机金额列表和红包全局唯一标识串等信息异步记录到相应的数据库表中。</li><li>对于抢红包请求的处理，后端接口首先接收前端用户账号及红包全局唯一标识串等请求信息，并假设用户账号合法性等信息全部校验通过，然后开始处理用户“点红包”的逻辑，主要是从缓存系统中获取当前剩余红包的个数，根据红包个数是否大于0判断是否仍然还有红包。</li></ul>
+</li>
+<li><b>我们约定了处理用户请求信息后将返回统一的响应格式</b>
+<ul class="quote"><li>这种格式主要是借鉴了HTTP协议的响应模型，即响应信息应当包含状态码、状态码的描述和响应数据。</li><li>为此在项目的api模块引入两个类，分别是BaseResponse类和StatusCode类。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>对于发红包请求的处理，后端主要是根据用户输入的金额和个数预生成相应的红包随机金额列表，并将红包的总个数及对应的随机金额列表缓存至Redis中，同时将红包的总金额、随机金额列表和红包全局唯一标识串等信息异步记录到相应的数据库表中。</li><li>对于抢红包请求的处理，后端接口首先接收前端用户账号及红包全局唯一标识串等请求信息，并假设用户账号合法性等信息全部校验通过，然后开始处理用户“点红包”的逻辑，主要是从缓存系统中获取当前剩余红包的个数，根据红包个数是否大于0判断是否仍然还有红包。</li><li>这种格式主要是借鉴了HTTP协议的响应模型，即响应信息应当包含状态码、状态码的描述和响应数据。</li><li>为此在项目的api模块引入两个类，分别是BaseResponse类和StatusCode类。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">18</span><span class="mmx-name">4.3 “红包金额”随机生成算法实战</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 5 个小节 · 7 条要点 · 9 句原句摘录</p>
+<div class="sec">
+<h4>随机数算法的基本概念和要求</h4>
+<ul class="point">
+<li><b>随机数算法是数学算法中的一种，主要是在算法中引入一个或多个随机因素，通过随机数选择算法的下一步操作，从而产生某种约定范围内的随机数值</b>
+<ul class="quote"><li>在数学与计算机科学领域存在着多种随机数生成算法，不同的算法可以说是各有千秋，适用的场景也不尽相同。</li></ul>
+</li>
+<li><b>蒙特卡罗方法是一种典型的随机数生成算法</b>
+<ul class="quote"><li>蒙特卡罗方法是由著名科学家、“计算机科学之父”和“博弈论之父”冯·诺依曼提出的，此种方法又可称为统计模拟法、随机抽样技术，是一种以概率和统计理论方法为基础的计算方法。</li><li>蒙特卡罗方法生成随机数的主要步骤包括：针对实际问题建立一个简单且便于实现的概率统计模型，基于模型的随机变量建立抽样方法，在计算机上进行模拟测试，抽取足够多的随机数，对模拟实验结果进行统计分析，给出所求解的估计值，这就是最终产生的随机数。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在数学与计算机科学领域存在着多种随机数生成算法，不同的算法可以说是各有千秋，适用的场景也不尽相同。</li><li>蒙特卡罗方法是由著名科学家、“计算机科学之父”和“博弈论之父”冯·诺依曼提出的，此种方法又可称为统计模拟法、随机抽样技术，是一种以概率和统计理论方法为基础的计算方法。</li><li>蒙特卡罗方法生成随机数的主要步骤包括：针对实际问题建立一个简单且便于实现的概率统计模型，基于模型的随机变量建立抽样方法，在计算机上进行模拟测试，抽取足够多的随机数，对模拟实验结果进行统计分析，给出所求解的估计值，这就是最终产生的随机数。</li></ul>
+</div>
+<div class="sec">
+<h4>红包随机金额生成算法要求</h4>
+<ul class="point">
+<li><b>抢红包系统后端需要保证预生成红包金额的随机性和概率平等性</b>
+<ul class="quote"><li>即间接性地保证每个用户抢到的红包金额是随机产生且概率是平等的即可。</li></ul>
+</li>
+<li><b>抢红包系统后端还需保证所有人抢到的红包金额之和等于总金额M，每个参与抢红包的用户，当抢到红包(即红包金额不为Null)时，金额应至少是1分钱，即0.01元</b>
+<ul class="quote"><li>这一点由于是采用预生成的方式，因而可以交给随机数生成算法进行控制。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>即间接性地保证每个用户抢到的红包金额是随机产生且概率是平等的即可。</li><li>这一点由于是采用预生成的方式，因而可以交给随机数生成算法进行控制。</li></ul>
+</div>
+<div class="sec">
+<h4>二倍均值法简介</h4>
+<ul class="point">
+<li><b>二倍均值法的核心思想是根据每次剩余的总金额M和剩余人数N，执行M/N再乘以2的操作得到一个边界值E，然后制定一个从0到E的随机区间，在这个随机区间内将产生一个随机金额R，此时总金额M将更新为M-R，剩余人数N更新为N-1</b>
+<ul class="quote"><li>再继续重复上述执行流程，以此类推，直至最终剩余人数N-1为0，即代表随机数已经产生完毕。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>再继续重复上述执行流程，以此类推，直至最终剩余人数N-1为0，即代表随机数已经产生完毕。</li></ul>
+</div>
+<div class="sec">
+<h4>红包随机金额生成算法实战</h4>
+<ul class="point">
+<li><b>通过二倍均值法的算法执行流程图可以看出，其核心执行逻辑在于不断地更新总金额M和剩余人数N，并根据M和N组成一个随机区间，最终在这个区间内产生一个随机金额</b>
+<ul class="quote"><li>如此不断地进行循环迭代，直至N-1为0，此时剩余的金额即为最后一个随机金额。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如此不断地进行循环迭代，直至N-1为0，此时剩余的金额即为最后一个随机金额。</li></ul>
+</div>
+<div class="sec">
+<h4>红包随机金额生成算法自测</h4>
+<ul class="point">
+<li><b>通过Java单元测试方法进行测试，可以得出小红包金额的生成满足随机性、概率平等性，以及所有小红包金额之和等于总金额等特性</b>
+<ul class="quote"><li>每次运行该测试方法时，将产生一批新的随机金额列表。</li><li>从两次单元测试方法运行的结果来看，可以得出小红包金额的生成满足随机性、概率平等性，以及所有小红包金额之和等于总金额等特性。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>每次运行该测试方法时，将产生一批新的随机金额列表。</li><li>从两次单元测试方法运行的结果来看，可以得出小红包金额的生成满足随机性、概率平等性，以及所有小红包金额之和等于总金额等特性。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">19</span><span class="mmx-name">4.4 “发红包”模块实战</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 8 条要点 · 12 句原句摘录</p>
+<div class="sec">
+<h4>“发红包”模块的业务流程</h4>
+<ul class="point">
+<li><b>用户进入群，单击发红包的按钮，输入总金额与红包个数后，确认并输入支付密码，将在群界面生成一个红包图样</b>
+<ul class="quote"><li>在整个业务流程中，系统后端接口需要根据红包个数N和总金额M采用二倍均值法拆分成多个随机金额，并生成红包的全局唯一标识串返回给前端。</li><li>前端用户发起抢红包请求时将带上这个标识串参数，从而实现后续的“点红包”“拆红包”流程。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在整个业务流程中，系统后端接口需要根据红包个数N和总金额M采用二倍均值法拆分成多个随机金额，并生成红包的全局唯一标识串返回给前端。</li><li>前端用户发起抢红包请求时将带上这个标识串参数，从而实现后续的“点红包”“拆红包”流程。</li></ul>
+</div>
+<div class="sec">
+<h4>“发红包”模块的业务模块分析</h4>
+<ul class="point">
+<li><b>“发红包”模块的核心处理逻辑在于接受前端发红包者设定的红包总金额M和总个数N，后端接口根据这两个参数，采用二倍均值法生成N个随机金额的红包</b>
+<ul class="quote"><li>最后将红包个数N与随机金额列表List存至缓存中，同时将相关数据异步记录到数据库中。</li></ul>
+</li>
+<li><b>后端接口在接收到前端用户发红包的请求时，将采用当前的时间戳(纳秒级别)作为红包全局唯一标识串</b>
+<ul class="quote"><li>并将这一标识串返回给前端，后续用户发起“抢红包”的请求时，将会带上这一参数，目的是为了给发出的红包打标记，并根据这一标记去缓存中查询红包个数和随机金额列表等数据。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>最后将红包个数N与随机金额列表List存至缓存中，同时将相关数据异步记录到数据库中。</li><li>并将这一标识串返回给前端，后续用户发起“抢红包”的请求时，将会带上这一参数，目的是为了给发出的红包打标记，并根据这一标记去缓存中查询红包个数和随机金额列表等数据。</li></ul>
+</div>
+<div class="sec">
+<h4>“发红包”模块的整体流程实战</h4>
+<ul class="point">
+<li><b>处理发红包请求的RedPacketController，主要用于接收前端用户请求的参数并执行响应的判断处理逻辑</b>
+<ul class="quote"><li>“发红包”请求对应的处理方法需要接受红包总金额、个数和发红包者账号id参数信息，并要求请求方式为Post，数据采用JSON的格式进行提交。</li></ul>
+</li>
+<li><b>IRedPacketService为红包业务逻辑处理接口，主要包括对“发红包”与“抢红包”逻辑的处理</b>
+<ul class="quote"><li>IRedPacketService接口对应的实现类RedPacketService主要用于处理真正的业务逻辑。</li></ul>
+</li>
+<li><b>“红包业务逻辑处理过程数据记录接口”服务IRedService，主要用于将发红包时红包的相关信息与抢红包时用户抢到的红包金额等信息记入数据库中</b>
+<ul class="quote"><li>其实现类RedService的源代码中，定义了发红包时红包全局唯一标识串等信息操作接口Mapper、发红包时随机数算法生成的随机金额列表等信息操作接口Mapper、抢红包时相关数据信息操作接口Mapper。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>“发红包”请求对应的处理方法需要接受红包总金额、个数和发红包者账号id参数信息，并要求请求方式为Post，数据采用JSON的格式进行提交。</li><li>IRedPacketService接口对应的实现类RedPacketService主要用于处理真正的业务逻辑。</li><li>其实现类RedService的源代码中，定义了发红包时红包全局唯一标识串等信息操作接口Mapper、发红包时随机数算法生成的随机金额列表等信息操作接口Mapper、抢红包时相关数据信息操作接口Mapper。</li></ul>
+</div>
+<div class="sec">
+<h4>业务模块自测</h4>
+<ul class="point">
+<li><b>使用Postman工具测试抢红包系统发红包业务的整体流程</b>
+<ul class="quote"><li>单击运行应用程序的启动入口类MainApplication，观察控制台的输出信息，如果没有报错，则表示项目启动成功。</li><li>打开Postman，在地址栏中输入“发红包”请求对应的链接，即http://127.0.0.1:8087/middleware/red/packet/hand/out，选择请求方式为Post，并在请求体中输入请求参数。</li><li>单击Send按钮即可发起“发红包”请求。</li></ul>
+</li>
+<li><b>查看数据库中的red_record数据库表和red_detail数据库表</b>
+<ul class="quote"><li>发出红包时会将其相关信息记录到数据库中。</li><li>生成的小红包随机金额信息记录到了数据库中。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>单击运行应用程序的启动入口类MainApplication，观察控制台的输出信息，如果没有报错，则表示项目启动成功。</li><li>打开Postman，在地址栏中输入“发红包”请求对应的链接，即http://127.0.0.1:8087/middleware/red/packet/hand/out，选择请求方式为Post，并在请求体中输入请求参数。</li><li>单击Send按钮即可发起“发红包”请求。</li><li>发出红包时会将其相关信息记录到数据库中。</li><li>生成的小红包随机金额信息记录到了数据库中。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">20</span><span class="mmx-name">4.5 “抢红包”模块实战</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 14 条要点 · 17 句原句摘录</p>
+<div class="sec">
+<h4>“抢红包”业务模块分析</h4>
+<ul class="point">
+<li><b>“抢红包”模块需要实现两大业务逻辑，包括点红包业务逻辑和拆红包业务逻辑。</b>
+</li>
+<li><b>“抢红包”业务模块对应的后端处理逻辑需要保证接口的稳定性、可扩展性和扛高并发性</b>
+<ul class="quote"><li>从系统架构角度分析，“抢红包”业务模块对应的后端处理逻辑需要保证接口的稳定性、可扩展性和扛高并发性，对于相应接口的设计需要尽可能做到低耦合和服务的高内聚，因而在代码实战过程中，采用的是面向接口和服务进行编程。</li></ul>
+</li>
+<li><b>“抢红包”业务模块对应的后端接口需要频繁地访问缓存系统Redis，用于获取红包剩余个数和随机金额列表。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>从系统架构角度分析，“抢红包”业务模块对应的后端处理逻辑需要保证接口的稳定性、可扩展性和扛高并发性，对于相应接口的设计需要尽可能做到低耦合和服务的高内聚，因而在代码实战过程中，采用的是面向接口和服务进行编程。</li></ul>
+</div>
+<div class="sec">
+<h4>“抢红包”业务模块整体流程</h4>
+<ul class="point">
+<li><b>开发处理发红包请求的RedPacketController，这个类文件已经在上一节中建立好了，在这里只需要添加一个处理抢红包请求的方法即可</b>
+<ul class="quote"><li>@RequestMapping(value = prefix+&quot;/rob&quot;,method = RequestMethod.GET)。</li><li>public BaseResponse rob(@RequestParam Integer userId, @RequestParam String redId){。</li></ul>
+</li>
+<li><b>对于红包业务逻辑处理接口中的抢红包方法，是定义在IRedPacketService接口的rob()方法中的，相应的实现类为RedPacketService</b>
+<ul class="quote"><li>@Override。</li><li>public BigDecimal rob(Integer userId,String redId) throws Exception {。</li></ul>
+</li>
+<li><b>当用户抢到红包后，需要将当前用户的账号信息及抢到的金额等信息记入数据库中</b>
+<ul class="quote"><li>这一实现逻辑是通过调用redService实现类的recordRobRedPacket()方法实现的。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>@RequestMapping(value = prefix+&quot;/rob&quot;,method = RequestMethod.GET)。</li><li>public BaseResponse rob(@RequestParam Integer userId, @RequestParam String redId){。</li><li>@Override。</li><li>public BigDecimal rob(Integer userId,String redId) throws Exception {。</li><li>这一实现逻辑是通过调用redService实现类的recordRobRedPacket()方法实现的。</li></ul>
+</div>
+<div class="sec">
+<h4>“抢红包”业务模块自测</h4>
+<ul class="point">
+<li><b>以“发红包”业务模块自测中发出的红包作为测试数据，即redId的取值为redis:red:packet:10010:177565921763957</b>
+<ul class="quote"><li>打开Postman，在地址栏中输入以下链接用于发起当前用户抢红包的请求，URL为http://127.0.0.1:8087/middleware/red/packet/rob?userId=10010&amp;redId=redis:red:packet:10010:177565921763957，表示当前账号id为10010的用户发起了抢红包的请求，单击Send按钮即可发起请求操作。</li></ul>
+</li>
+<li><b>如果此时在Postman对同一个链接URL再次发起Send请求时，即意味着“当前用户再次发起抢红包的操作”</b>
+<ul class="quote"><li>由于此时缓存系统中已经缓存了该用户抢到的红包记录，因而后端会直接将缓存在Redis中的该用户抢到的红包金额返回给前端，而不会执行“点红包”和“拆红包”的业务处理逻辑。</li></ul>
+</li>
+<li><b>我们换一个用户账号id为10011，而其他参数的取值保持不变的链接URLhttp://127.0.0.1:8087/middleware/red/packet/rob?userId=10011&amp;redId=redis:red:packet:10010:177565921763957，这个URL表示当前用户10011也看到了群里有人发出了红包，因而也发起了抢红包的操作</b>
+<ul class="quote"><li>单击Send按钮即可发起请求，然后再观察控制台的输出结果和Postman的响应结果。可以看到，当前用户抢到的红包金额为0.61元。</li></ul>
+</li>
+<li><b>重复步骤(3)再进行10次自测，其中发起请求的链接URL保持不变，而只需要更改一下userId的取值，将其取值设定成10012、10013、10014、10015……即可</b>
+<ul class="quote"><li>每次发起请求后再查看Postman的响应结果，将会看到对应的金额信息，同时再查看数据库red_rob_record表的记录，可以发现已经成功将抢到红包的用户和其金额等信息记录在了数据库表中。</li></ul>
+</li>
+<li><b>最后是打开数据库中的两个数据库表：red_detail和red_rob_record</b>
+<ul class="quote"><li>其中，red_detail表存储的是“发红包”业务模块中用户发出红包后采用二倍均值法生成的随机金额列表；而red_rob_record表存储的是群成员抢到红包时用户账号和抢到的红包金额等信息。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>打开Postman，在地址栏中输入以下链接用于发起当前用户抢红包的请求，URL为http://127.0.0.1:8087/middleware/red/packet/rob?userId=10010&amp;redId=redis:red:packet:10010:177565921763957，表示当前账号id为10010的用户发起了抢红包的请求，单击Send按钮即可发起请求操作。</li><li>由于此时缓存系统中已经缓存了该用户抢到的红包记录，因而后端会直接将缓存在Redis中的该用户抢到的红包金额返回给前端，而不会执行“点红包”和“拆红包”的业务处理逻辑。</li><li>单击Send按钮即可发起请求，然后再观察控制台的输出结果和Postman的响应结果。可以看到，当前用户抢到的红包金额为0.61元。</li><li>每次发起请求后再查看Postman的响应结果，将会看到对应的金额信息，同时再查看数据库red_rob_record表的记录，可以发现已经成功将抢到红包的用户和其金额等信息记录在了数据库表中。</li><li>其中，red_detail表存储的是“发红包”业务模块中用户发出红包后采用二倍均值法生成的随机金额列表；而red_rob_record表存储的是群成员抢到红包时用户账号和抢到的红包金额等信息。</li></ul>
+</div>
+<div class="sec">
+<h4>总结</h4>
+<ul class="point">
+<li><b>“抢红包”业务模块建立在“发红包”业务基础之上，是整个系统的核心流程</b>
+<ul class="quote"><li>它主要包括两大核心业务，即“点红包”和“拆红包”业务。</li></ul>
+</li>
+<li><b>本节主要是采用代码实战的方式实现这一整块业务逻辑</b>
+<ul class="quote"><li>内容主要包含整体业务模块的分析、实现代码和整体业务模块的自测。</li></ul>
+</li>
+<li><b>高并发请求的问题及解决方案</b>
+<ul class="quote"><li>在整个自测过程中，缺陷在于Postman不断发起的请求几乎并非“同一时刻”，即这些请求几乎都是“串行”、有时间间隔的，而这并不能达到实际生产环境中“秒级高并发请求”的要求。</li><li>所谓的“高并发”，其实指的就是在同一时刻突然有成千上万甚至上百万、上千万数量级的请求到达后端接口。</li><li>例如，春节期间微信群的抢红包，当某个成员发出红包后，正常情况下群里的所有成员均会点该红包图样，发起抢红包的请求。而这些请求中的很大一部分是在同一时刻同时到达后端接口的，在当前“抢红包”业务模块的代码实现过程中，并没有考虑高并发抢红包的情况。</li><li>众所周知，高并发请求其实本质上是高并发多线程，多线程的高并发如果出现抢占共享资源而不加以控制的话，将会带来各种各样的并发安全问题，数据不一致便是其中典型的一种。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>它主要包括两大核心业务，即“点红包”和“拆红包”业务。</li><li>内容主要包含整体业务模块的分析、实现代码和整体业务模块的自测。</li><li>在整个自测过程中，缺陷在于Postman不断发起的请求几乎并非“同一时刻”，即这些请求几乎都是“串行”、有时间间隔的，而这并不能达到实际生产环境中“秒级高并发请求”的要求。</li><li>所谓的“高并发”，其实指的就是在同一时刻突然有成千上万甚至上百万、上千万数量级的请求到达后端接口。</li><li>例如，春节期间微信群的抢红包，当某个成员发出红包后，正常情况下群里的所有成员均会点该红包图样，发起抢红包的请求。而这些请求中的很大一部分是在同一时刻同时到达后端接口的，在当前“抢红包”业务模块的代码实现过程中，并没有考虑高并发抢红包的情况。</li><li>众所周知，高并发请求其实本质上是高并发多线程，多线程的高并发如果出现抢占共享资源而不加以控制的话，将会带来各种各样的并发安全问题，数据不一致便是其中典型的一种。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">21</span><span class="mmx-name">4.6 Jmeter压力测试高并发抢红包</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 6 条要点 · 9 句原句摘录</p>
+<div class="sec">
+<h4>Apache Jmeter压力测试工具的介绍与安装</h4>
+<ul class="point">
+<li><b>Apache Jmeter是Apache组织开发的基于Java的压力测试工具</b>
+<ul class="quote"><li>它可以通过产生来自不同类别的压力，模拟实际生产环境中高并发产生的巨大负载，从而对应用服务器、网络或对象整体性能进行测试，并对产生的测试结果进行分析和反馈。</li></ul>
+</li>
+<li><b>使用Jmeter压力测试工具之前，需要前往Apache官网获取Jmeter压力测试工具包</b>
+<ul class="quote"><li>访问http://jmeter.apache.org/download_jmeter.cgi，选择最新的版本单击下载即可。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>它可以通过产生来自不同类别的压力，模拟实际生产环境中高并发产生的巨大负载，从而对应用服务器、网络或对象整体性能进行测试，并对产生的测试结果进行分析和反馈。</li><li>访问http://jmeter.apache.org/download_jmeter.cgi，选择最新的版本单击下载即可。</li></ul>
+</div>
+<div class="sec">
+<h4>高并发抢红包请求的压力测试设置</h4>
+<ul class="point">
+<li><b>在Jmeter中新建一个测试计划，然后在该测试计划下新建线程组，最后在线程组下新建“HTTP请求”“CSV数据文件设置”“查看结果树”</b>
+<ul class="quote"><li>新建线程组，设置1秒内并发的线程数为10个。</li><li>新建HTTP请求，设置请求的协议、所在的服务器名称或IP、端口、请求方法和请求路径等信息，重点是该HTTP请求的请求参数。</li><li>新建CSV数据文件设置，设定几个固定的用户账户id列表，用于发起高并发请求时从此文件中随机读取用户账户id值，从而赋值给请求参数userId。</li><li>在线程组下新建“察看结果树”选项，目的是为了查看发起请求后系统的响应结果。</li></ul>
+</li>
+<li><b>在进行高并发压力测试之前，需要通过Postman发起“发红包”请求，从而在缓存系统中生成红包剩余总个数和红包随机金额列表</b>
+<ul class="quote"><li>请求数据如下：{ &quot;userId&quot;:10030, &quot;total&quot;:10, &quot;amount&quot;:500 }。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>新建线程组，设置1秒内并发的线程数为10个。</li><li>新建HTTP请求，设置请求的协议、所在的服务器名称或IP、端口、请求方法和请求路径等信息，重点是该HTTP请求的请求参数。</li><li>新建CSV数据文件设置，设定几个固定的用户账户id列表，用于发起高并发请求时从此文件中随机读取用户账户id值，从而赋值给请求参数userId。</li><li>在线程组下新建“察看结果树”选项，目的是为了查看发起请求后系统的响应结果。</li><li>请求数据如下：{ &quot;userId&quot;:10030, &quot;total&quot;:10, &quot;amount&quot;:500 }。</li></ul>
+</div>
+<div class="sec">
+<h4>高并发抢红包请求的压力测试结果分析</h4>
+<ul class="point">
+<li><b>仔细分析测试结果会发现一个很明显的Bug，即同一个用户竟然抢到了多个不同随机金额的小红包</b>
+<ul class="quote"><li>这个问题也可以通过查看数据库表red_rob_record的数据记录而得出。</li></ul>
+</li>
+<li><b>从技术层面分析，这其实就是高并发多线程产生的并发安全导致的</b>
+<ul class="quote"><li>在下一节中将从代码的角度剖析为何会出现这种问题，并针对这样的问题介绍相应的解决方案，然后通过代码方式实现。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>这个问题也可以通过查看数据库表red_rob_record的数据记录而得出。</li><li>在下一节中将从代码的角度剖析为何会出现这种问题，并针对这样的问题介绍相应的解决方案，然后通过代码方式实现。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">22</span><span class="mmx-name">4.7 问题分析与优化方案</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 6 条要点 · 9 句原句摘录</p>
+<div class="sec">
+<h4>问题分析与优化方案</h4>
+<ul class="point">
+<li><b>程序员在本地或测试环境中对代码进行测试，但在实际生产环境中出现问题的原因</b>
+<ul class="quote"><li>开发者并没有将这份代码置于实际的生产环境中接受考验，从而导致自己自认为代码是“完美无瑕”的。</li></ul>
+</li>
+<li><b>“同一个用户抢到多个红包”问题的原因</b>
+<ul class="quote"><li>后端接口并没有考虑到高并发请求的情况，导致同一个用户抢到多个红包的情况发生。</li></ul>
+</li>
+<li><b>优化方案介绍</b>
+<ul class="quote"><li>分布式锁的出现主要是为了解决分布式系统中高并发请求时并发访问共享资源导致并发安全的问题。</li></ul>
+</li>
+<li><b>优化方案之Redis分布式锁实战</b>
+<ul class="quote"><li>通过Redis的原子操作setIfAbsent()方法对该业务逻辑加分布式锁。</li><li>设定该分布式锁的过期时间为24小时。</li></ul>
+</li>
+<li><b>加分布式锁后的压力测试</b>
+<ul class="quote"><li>再发起高并发请求，观察控制台的输出结果会发现，不会再出现“同一用户抢到多个红包金额”的现象了。</li><li>观察数据库表red_rob_record的数据记录，发现确实没有出现“同一个用户抢到多个红包”的现象。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>开发者并没有将这份代码置于实际的生产环境中接受考验，从而导致自己自认为代码是“完美无瑕”的。</li><li>后端接口并没有考虑到高并发请求的情况，导致同一个用户抢到多个红包的情况发生。</li><li>分布式锁的出现主要是为了解决分布式系统中高并发请求时并发访问共享资源导致并发安全的问题。</li><li>通过Redis的原子操作setIfAbsent()方法对该业务逻辑加分布式锁。</li><li>设定该分布式锁的过期时间为24小时。</li><li>再发起高并发请求，观察控制台的输出结果会发现，不会再出现“同一用户抢到多个红包金额”的现象了。</li><li>观察数据库表red_rob_record的数据记录，发现确实没有出现“同一个用户抢到多个红包”的现象。</li></ul>
+</div>
+<div class="sec">
+<h4>不足之处</h4>
+<ul class="point">
+<li><b>系统从业务层面的角度看，还是存在着些许问题</b>
+<ul class="quote"><li>当发出的红包没有被抢完时，请问该如何处理剩下的红包？</li><li>对于目前的系统而言，是暂时没有实现这一功能的，算是其中的不足之处吧。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>当发出的红包没有被抢完时，请问该如何处理剩下的红包？</li><li>对于目前的系统而言，是暂时没有实现这一功能的，算是其中的不足之处吧。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">23</span><span class="mmx-name">4.8 总结</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 7 条要点 · 7 句原句摘录</p>
+<div class="sec">
+<h4>抢红包系统的设计与开发</h4>
+<ul class="point">
+<li><b>借鉴微信红包模式，自主设计抢红包系统</b>
+<ul class="quote"><li>用户发出固定金额的红包，让若干个人抢。</li></ul>
+</li>
+<li><b>系统业务流程梳理、模块划分</b>
+<ul class="quote"><li>对系统进行整体业务流程的梳理，并对其进行了分析和模块划分。</li></ul>
+</li>
+<li><b>数据库设计、开发环境搭建和整体开发流程介绍。</b>
+</li>
+<li><b>随机数生成算法：二倍均值法的介绍与演示</b>
+<ul class="quote"><li>采用“预生成”的方式生成随机金额列表。</li></ul>
+</li>
+<li><b>“发红包”和“抢红包”两大业务模块的开发流程分析与代码演示</b>
+<ul class="quote"><li>采用自测的方式对相应的接口进行了测试。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>用户发出固定金额的红包，让若干个人抢。</li><li>对系统进行整体业务流程的梳理，并对其进行了分析和模块划分。</li><li>采用“预生成”的方式生成随机金额列表。</li><li>采用自测的方式对相应的接口进行了测试。</li></ul>
+</div>
+<div class="sec">
+<h4>系统性能测试与优化</h4>
+<ul class="point">
+<li><b>使用Jmeter模拟高并发请求对系统接口进行压力测试</b>
+<ul class="quote"><li>出现“同一个用户会抢到多个红包金额”的现象。</li></ul>
+</li>
+<li><b>并发安全问题分析与解决</b>
+<ul class="quote"><li>对核心业务处理逻辑加同步控制操作，即加分布式锁。</li><li>基于Redis的分布式锁解决了上述问题。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>出现“同一个用户会抢到多个红包金额”的现象。</li><li>对核心业务处理逻辑加同步控制操作，即加分布式锁。</li><li>基于Redis的分布式锁解决了上述问题。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">24</span><span class="mmx-name">第5章 消息中间件RabbitMQ</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 5 个小节 · 8 条要点 · 21 句原句摘录</p>
+<div class="sec">
+<h4>消息中间件RabbitMQ在企业级应用中的作用</h4>
+<ul class="point">
+<li><b>消息中间件RabbitMQ可以降低应用系统接口层面的整体响应时间。</b>
+</li>
+<li><b>RabbitMQ在一些典型的应用场景和业务模块处理中具有重要的作用</b>
+<ul class="quote"><li>业务服务模块解耦、异步通信、高并发限流、超时业务和数据延迟处理等。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>业务服务模块解耦、异步通信、高并发限流、超时业务和数据延迟处理等。</li></ul>
+</div>
+<div class="sec">
+<h4>RabbitMQ的基本概念和术语</h4>
+<ul class="point">
+<li><b>消息、队列、交换机、路由和各种典型的消息模型是RabbitMQ相关专有词汇</b>
+<ul class="quote"><li>消息：消息是消息中间件中传输的数据单元。</li><li>队列：消息队列用于存储消息的容器。</li><li>交换机：交换机用于接收消息，并根据路由规则将消息路由到相应的队列。</li><li>路由：路由是交换机用来决定消息路由到哪个队列的规则。</li><li>消息模型：消息模型定义了消息如何在交换机和队列之间传递。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>消息：消息是消息中间件中传输的数据单元。</li><li>队列：消息队列用于存储消息的容器。</li><li>交换机：交换机用于接收消息，并根据路由规则将消息路由到相应的队列。</li><li>路由：路由是交换机用来决定消息路由到哪个队列的规则。</li><li>消息模型：消息模型定义了消息如何在交换机和队列之间传递。</li></ul>
+</div>
+<div class="sec">
+<h4>基于Spring Boot整合RabbitMQ</h4>
+<ul class="point">
+<li><b>在本地安装RabbitMQ服务</b>
+<ul class="quote"><li>安装Erlang环境。</li><li>安装RabbitMQ服务。</li></ul>
+</li>
+<li><b>自定义注入相关Bean配置，采用RabbitMQ相关组件，通过代码实现消息的发送和接收</b>
+<ul class="quote"><li>创建基于Spring Boot的RabbitMQ项目。</li><li>配置连接工厂。</li><li>创建发送消息的生产者。</li><li>创建接收消息的消费者。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>安装Erlang环境。</li><li>安装RabbitMQ服务。</li><li>创建基于Spring Boot的RabbitMQ项目。</li><li>配置连接工厂。</li><li>创建发送消息的生产者。</li><li>创建接收消息的消费者。</li></ul>
+</div>
+<div class="sec">
+<h4>RabbitMQ的消息模型和消息确认消费机制</h4>
+<ul class="point">
+<li><b>基于搭建的Spring Boot项目为基础整合RabbitMQ，并自定义注入相关Bean配置，采用RabbitMQ相关组件，通过代码实现消息的发送和接收</b>
+<ul class="quote"><li>实现基于FanoutExchange的消息模型。</li><li>实现基于DirectExchange的消息模型。</li><li>实现基于TopicExchange的消息模型。</li></ul>
+</li>
+<li><b>介绍RabbitMQ的几种消息确认消费机制</b>
+<ul class="quote"><li>开启消息确认机制。</li><li>手动确认消费。</li><li>自动确认消费。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>实现基于FanoutExchange的消息模型。</li><li>实现基于DirectExchange的消息模型。</li><li>实现基于TopicExchange的消息模型。</li><li>开启消息确认机制。</li><li>手动确认消费。</li><li>自动确认消费。</li></ul>
+</div>
+<div class="sec">
+<h4>RabbitMQ在实战中的应用场景</h4>
+<ul class="point">
+<li><b>采用RabbitMQ“实战”典型的应用场景，即“用户登录成功异步写日志”</b>
+<ul class="quote"><li>创建用户登录成功日志记录服务。</li><li>创建发送登录成功日志消息的生产者。</li><li>创建接收登录成功日志消息的消费者。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>创建用户登录成功日志记录服务。</li><li>创建发送登录成功日志消息的生产者。</li><li>创建接收登录成功日志消息的消费者。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">25</span><span class="mmx-name">5.1 RabbitMQ简介</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 5 个小节 · 12 条要点 · 24 句原句摘录</p>
+<div class="sec">
+<h4>RabbitMQ简介</h4>
+<ul class="point">
+<li><b>RabbitMQ是市面上为数不多的分布式消息中间件，应用广泛</b>
+<ul class="quote"><li>根据目前官方提供的数据，在全球范围内有诸多小型初创企业和大型公司共部署了35000多个RabbitMQ生产节点。</li></ul>
+</li>
+<li><b>RabbitMQ是开源并实现了高级消息队列协议(即AMQP)的消息中间件</b>
+<ul class="quote"><li>RabbitMQ既支持单一节点的部署，同时也支持多个节点的集群部署。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>根据目前官方提供的数据，在全球范围内有诸多小型初创企业和大型公司共部署了35000多个RabbitMQ生产节点。</li><li>RabbitMQ既支持单一节点的部署，同时也支持多个节点的集群部署。</li></ul>
+</div>
+<div class="sec">
+<h4>认识RabbitMQ</h4>
+<ul class="point">
+<li><b>RabbitMQ是应用和部署“最”广泛的开源消息代理</b>
+<ul class="quote"><li>官方对于RabbitMQ的介绍还是相当隆重的，称RabbitMQ是目前应用和部署“最”广泛的开源消息代理。</li></ul>
+</li>
+<li><b>RabbitMQ在如今盛行的分布式系统中主要起到存储分发消息、异步通信和解耦业务模块等作用</b>
+<ul class="quote"><li>RabbitMQ在易用性、扩展性和高可用性等方面均表现不俗。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>官方对于RabbitMQ的介绍还是相当隆重的，称RabbitMQ是目前应用和部署“最”广泛的开源消息代理。</li><li>RabbitMQ在易用性、扩展性和高可用性等方面均表现不俗。</li></ul>
+</div>
+<div class="sec">
+<h4>典型应用场景介绍</h4>
+<ul class="point">
+<li><b>异步通信和服务解耦</b>
+<ul class="quote"><li>以“用户注册”为实际场景，传统的企业级应用处理用户注册的流程，首先是用户在界面上输入用户名、邮箱或手机号等信息，确认无误后，单击“注册”按钮提交相关信息，前端会将这个信息提交到后端相关接口进行处理，后端在接收到这些信息后，会先对这些信息进行最基本的校验，校验成功后会将信息写入数据库相关数据表中，而为了用户注册的安全性，后端会调用邮件服务器提供的接口发送一封邮件验证用户的合法性，或者调用短信服务的发送短信验证码接口给用户进行验证，最后才将响应信息返回给前端用户，并提示“注册成功”，整个流程如图5.3所示。</li><li>从图5.3的流程可以看出，用户从单击“注册”按钮，提交相关信息之后便需要经历“漫长”的等待时间，整体的等待时间约等于“写入数据库”+“邮箱验证”+“短信确认”的处理时间之和。在处理过程中如果发邮件和发短信业务逻辑出现异常，整个流程将会终止，很显然这种处理方式对于当前互联网用户来说几乎不能接受。</li><li>仔细分析用户注册的整个流程，不难发现其核心的业务逻辑在于“判断用户注册信息的合法性并将信息写入数据库”，而“发送邮件”和“短信验证”服务在某种程度上并不归属于“用户注册”的核心流程，因而可以将相应的服务从其中解耦出来，并采用消息中间件如RabbitMQ进行异步通信，如图5.4所示。</li><li>RabbitMQ的引入，将“一条线走到底”的业务服务模块进行了解耦，系统接口的整体响应时间也明显降低了许多，即实现了“低延迟”。从用户的角度上看，这将给用户带来很好的体验效果。</li></ul>
+</li>
+<li><b>接口限流和消息分发</b>
+<ul class="quote"><li>以“商城用户抢购商品”为例，商城为了吸引用户流量，会不定期地举办线上商城热门商品的抢购活动，当抢购活动开始之前，用户犹如“守株待兔”一般会盯在屏幕前等待活动的开始，当活动开始之时，由于商品数量有限，所有的用户几乎会在同一时刻单击“抢购”按钮开始进行商品的抢购，整体流程如图5.5所示。</li><li>在抢购活动开始的那一刻，将会产生巨大的用户抢购流量，这些请求几乎在同一时间到达后端系统接口。而在正常的情况下，后端系统接口在接收到前端发送过来的请求时，会执行如下流程：首先会校验用户和商品等信息的合法性，当校验通过之后，会判断当前商品的库存是否充足，如果充足，则代表当前用户将能成功抢购到商品，最后将用户抢购成功的相关数据记入数据库，并异步通知用户抢购成功，尽快进行付款等。</li><li>然而，通过仔细分析发现，后端系统接口在处理用户抢购的整体业务流程“太长”，而在这整块业务逻辑的处理过程中，存在着先取出库存再进行判断，最后再进行减1的更新操作，在高并发的情况下，这些业务操作会给系统带来诸多的问题。比如，商品超卖、数据不一致、用户等待时间长、系统接口挂掉等现象。</li><li>消息中间件RabbitMQ的引入可以大大地改善系统的整体业务流程和性能，如图5.6为引入RabbitMQ后系统的整体处理流程。</li><li>由图5.6可以看出，RabbitMQ的引入主要是从以下两个方面来优化系统的整体处理流程：接口限流和消息异步分发。</li></ul>
+</li>
+<li><b>业务延迟处理</b>
+<ul class="quote"><li>RabbitMQ除了可以实现消息实时异步分发之外，在某些业务场景下，还能实现消息的延时和延迟处理。下面以“春运12306抢票”为例进行说明。</li><li>春运抢票相信读者都不陌生，当我们用12306抢票软件抢到火车票时，12306官方会提醒用户“请在30分钟内付款”。正常情况下用户会立即付款，然后输入相应的支付密码支付火车票的价格。扣款成功后，12306官方会发送邮件或者短信，通知用户抢票和付款成功。</li><li>然而，实际却存在着一些特殊情况，比如用户抢到火车票后，由于各种原因而迟迟没有付款，过了30分钟后仍然没有支付车票的价格，导致系统自动取消该笔订单。</li><li>早期很多抢票软件每当赶上春运高峰期时，经常会出现“网站崩溃”“单击购买车票后却一直没响应”等状况，某种程度上是因为在某一时刻产生的高并发，或者定时频繁拉取数据库得到的数据量过大等状况，导致内存、CPU、网络和数据库服务等负载过高所引起的。</li><li>而消息中间件RabbitMQ的引入，不管是从业务层面还是应用的性能层面，都大大得到了改善，如图5.8为引入RabbitMQ消息中间件后“抢票成功后30分钟内未付款的处理流程”的优化。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>以“用户注册”为实际场景，传统的企业级应用处理用户注册的流程，首先是用户在界面上输入用户名、邮箱或手机号等信息，确认无误后，单击“注册”按钮提交相关信息，前端会将这个信息提交到后端相关接口进行处理，后端在接收到这些信息后，会先对这些信息进行最基本的校验，校验成功后会将信息写入数据库相关数据表中，而为了用户注册的安全性，后端会调用邮件服务器提供的接口发送一封邮件验证用户的合法性，或者调用短信服务的发送短信验证码接口给用户进行验证，最后才将响应信息返回给前端用户，并提示“注册成功”，整个流程如图5.3所示。</li><li>从图5.3的流程可以看出，用户从单击“注册”按钮，提交相关信息之后便需要经历“漫长”的等待时间，整体的等待时间约等于“写入数据库”+“邮箱验证”+“短信确认”的处理时间之和。在处理过程中如果发邮件和发短信业务逻辑出现异常，整个流程将会终止，很显然这种处理方式对于当前互联网用户来说几乎不能接受。</li><li>仔细分析用户注册的整个流程，不难发现其核心的业务逻辑在于“判断用户注册信息的合法性并将信息写入数据库”，而“发送邮件”和“短信验证”服务在某种程度上并不归属于“用户注册”的核心流程，因而可以将相应的服务从其中解耦出来，并采用消息中间件如RabbitMQ进行异步通信，如图5.4所示。</li><li>RabbitMQ的引入，将“一条线走到底”的业务服务模块进行了解耦，系统接口的整体响应时间也明显降低了许多，即实现了“低延迟”。从用户的角度上看，这将给用户带来很好的体验效果。</li><li>以“商城用户抢购商品”为例，商城为了吸引用户流量，会不定期地举办线上商城热门商品的抢购活动，当抢购活动开始之前，用户犹如“守株待兔”一般会盯在屏幕前等待活动的开始，当活动开始之时，由于商品数量有限，所有的用户几乎会在同一时刻单击“抢购”按钮开始进行商品的抢购，整体流程如图5.5所示。</li><li>在抢购活动开始的那一刻，将会产生巨大的用户抢购流量，这些请求几乎在同一时间到达后端系统接口。而在正常的情况下，后端系统接口在接收到前端发送过来的请求时，会执行如下流程：首先会校验用户和商品等信息的合法性，当校验通过之后，会判断当前商品的库存是否充足，如果充足，则代表当前用户将能成功抢购到商品，最后将用户抢购成功的相关数据记入数据库，并异步通知用户抢购成功，尽快进行付款等。</li><li>然而，通过仔细分析发现，后端系统接口在处理用户抢购的整体业务流程“太长”，而在这整块业务逻辑的处理过程中，存在着先取出库存再进行判断，最后再进行减1的更新操作，在高并发的情况下，这些业务操作会给系统带来诸多的问题。比如，商品超卖、数据不一致、用户等待时间长、系统接口挂掉等现象。</li><li>消息中间件RabbitMQ的引入可以大大地改善系统的整体业务流程和性能，如图5.6为引入RabbitMQ后系统的整体处理流程。</li><li>由图5.6可以看出，RabbitMQ的引入主要是从以下两个方面来优化系统的整体处理流程：接口限流和消息异步分发。</li><li>RabbitMQ除了可以实现消息实时异步分发之外，在某些业务场景下，还能实现消息的延时和延迟处理。下面以“春运12306抢票”为例进行说明。</li><li>春运抢票相信读者都不陌生，当我们用12306抢票软件抢到火车票时，12306官方会提醒用户“请在30分钟内付款”。正常情况下用户会立即付款，然后输入相应的支付密码支付火车票的价格。扣款成功后，12306官方会发送邮件或者短信，通知用户抢票和付款成功。</li><li>然而，实际却存在着一些特殊情况，比如用户抢到火车票后，由于各种原因而迟迟没有付款，过了30分钟后仍然没有支付车票的价格，导致系统自动取消该笔订单。</li><li>早期很多抢票软件每当赶上春运高峰期时，经常会出现“网站崩溃”“单击购买车票后却一直没响应”等状况，某种程度上是因为在某一时刻产生的高并发，或者定时频繁拉取数据库得到的数据量过大等状况，导致内存、CPU、网络和数据库服务等负载过高所引起的。</li><li>而消息中间件RabbitMQ的引入，不管是从业务层面还是应用的性能层面，都大大得到了改善，如图5.8为引入RabbitMQ消息中间件后“抢票成功后30分钟内未付款的处理流程”的优化。</li></ul>
+</div>
+<div class="sec">
+<h4>RabbitMQ后端控制台介绍</h4>
+<ul class="point">
+<li><b>RabbitMQ是采用Erlang语言开发的、遵循AMQP协议并建立在强大的Erlang OTP平台的消息队列</b>
+<ul class="quote"><li>在安装RabbitMQ服务之前，需要先安装Erlang，之后再前往官方网站下载相应的RabbitMQ安装包即可安装。</li><li>安装过程中，需要同时安装RabbitMQ的管理控制台，即RabbitMQ的后端控制台，其提供的人性化界面主要用于更好地管理消息、队列、交换机、路由、通道、消费者实例和用户等信息。</li></ul>
+</li>
+<li><b>安装完成后，打开浏览器，在地址栏输入http://127.0.0.1:15672/并回车，输入guest/guest(即默认的用户名和密码)，单击Login，即可进入RabbitMQ的后端管理控制台</b>
+<ul class="quote"><li>图5.9中所看到的是笔者在本地开发环境中使用RabbitMQ产生的历史消息队列，单击某条队列，可以看到队列的详情，包括名称、绑定的路由和交换机、持久化策略和消费者实例等信息。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在安装RabbitMQ服务之前，需要先安装Erlang，之后再前往官方网站下载相应的RabbitMQ安装包即可安装。</li><li>安装过程中，需要同时安装RabbitMQ的管理控制台，即RabbitMQ的后端控制台，其提供的人性化界面主要用于更好地管理消息、队列、交换机、路由、通道、消费者实例和用户等信息。</li><li>图5.9中所看到的是笔者在本地开发环境中使用RabbitMQ产生的历史消息队列，单击某条队列，可以看到队列的详情，包括名称、绑定的路由和交换机、持久化策略和消费者实例等信息。</li></ul>
+</div>
+<div class="sec">
+<h4>基于Spring的事件驱动模型实战</h4>
+<ul class="point">
+<li><b>Spring的事件驱动模型，顾名思义是通过“事件驱动”的方式实现业务模块之间的交互</b>
+<ul class="quote"><li>在传统企业级Spring应用系统中，正是通过事件驱动模型实现信息的异步通信和业务模块的解耦。</li></ul>
+</li>
+<li><b>Spring的事件驱动模型主要由3部分组成，包括发送消息的生产者、消息(或事件)和监听接收消息的消费者</b>
+<ul class="quote"><li>这三者是绑定在一起的，可以说是“形影不离”。</li></ul>
+</li>
+<li><b>接下来我们将基于前面章节搭建好的项目，以实际的案例和代码的方式演示Spring的事件驱动模型</b>
+<ul class="quote"><li>需求为：将用户登录成功后的相关信息封装成实体对象，由生产者采用异步的方式发送给消费者，消费者监听到消息后进行相应的处理并执行其他的业务逻辑。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在传统企业级Spring应用系统中，正是通过事件驱动模型实现信息的异步通信和业务模块的解耦。</li><li>这三者是绑定在一起的，可以说是“形影不离”。</li><li>需求为：将用户登录成功后的相关信息封装成实体对象，由生产者采用异步的方式发送给消费者，消费者监听到消息后进行相应的处理并执行其他的业务逻辑。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">26</span><span class="mmx-name">5.2 Spring Boot项目整合RabbitMQ</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 5 个小节 · 7 条要点 · 9 句原句摘录</p>
+<div class="sec">
+<h4>RabbitMQ相关词汇介绍</h4>
+<ul class="point">
+<li><b>RabbitMQ是一款用于接收、存储和转发消息的开源中间件</b>
+<ul class="quote"><li>RabbitMQ可以实现消息分发、异步通信和业务模块解耦等功能。</li></ul>
+</li>
+<li><b>RabbitMQ的核心要点其实在于消息、消息模型、生产者和消费者</b>
+<ul class="quote"><li>RabbitMQ的“消息模型”有许多种，包括基于FanoutExchange的消息模型、基于DirectExchange的消息模型和基于TopicExchange的消息模型等。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>RabbitMQ可以实现消息分发、异步通信和业务模块解耦等功能。</li><li>RabbitMQ的“消息模型”有许多种，包括基于FanoutExchange的消息模型、基于DirectExchange的消息模型和基于TopicExchange的消息模型等。</li></ul>
+</div>
+<div class="sec">
+<h4>Spring Boot项目整合RabbitMQ</h4>
+<ul class="point">
+<li><b>在server模块的pom.xml中加入RabbitMQ的起步依赖</b>
+<ul class="quote"><li>代码如下。</li><li>加入RabbitMQ的Spring Boot起步依赖Jar后，如果网络畅通的话，即可很快将该jar包下载下来，否则，则需要稍等片刻。</li></ul>
+</li>
+<li><b>需要加入RabbitMQ的相关配置，即在application.properties配置文件中需要加入RabbitMQ的配置</b>
+<ul class="quote"><li>代码如下。</li><li>至此，Spring Boot项目整合RabbitMQ的准备工作已经完成了。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>代码如下。</li><li>加入RabbitMQ的Spring Boot起步依赖Jar后，如果网络畅通的话，即可很快将该jar包下载下来，否则，则需要稍等片刻。</li><li>代码如下。</li><li>至此，Spring Boot项目整合RabbitMQ的准备工作已经完成了。</li></ul>
+</div>
+<div class="sec">
+<h4>自定义注入配置Bean相关组件</h4>
+<ul class="point">
+<li><b>在Spring Boot整合RabbitMQ的项目中，为了能方便地使用RabbitMQ的相关操作组件并跟踪消息在发送过程中的状态，可以在项目中自定义注入和配置Bean相关组件</b>
+<ul class="quote"><li>下面我们将需要加入自定义配置的Bean组件放到RabbitmqConfig配置类中。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>下面我们将需要加入自定义配置的Bean组件放到RabbitmqConfig配置类中。</li></ul>
+</div>
+<div class="sec">
+<h4>RabbitMQ发送 接收消息实战</h4>
+<ul class="point">
+<li><b>在基于Spring Boot整合RabbitMQ的项目中创建队列、交换机、路由及其绑定，并采用多种方式实现消息的发送和接收</b>
+<ul class="quote"><li>由图5.15可以知道，一个基本的消息模型是由队列、交换机和路由组成，并由生产者生产消息并发送到该消息模型中，同时，消费者监听该消费模型中的队列，如果有消息到来，则由消费者进行监听消费处理。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>由图5.15可以知道，一个基本的消息模型是由队列、交换机和路由组成，并由生产者生产消息并发送到该消息模型中，同时，消费者监听该消费模型中的队列，如果有消息到来，则由消费者进行监听消费处理。</li></ul>
+</div>
+<div class="sec">
+<h4>其他发送接收消息方式实战</h4>
+<ul class="point">
+<li><b>RabbitMQ在实际的应用系统中，除了可以采用上述所讲的发送字节型(通过getBytes()方法或者序列化方法)的消息和采用@RabbitListener接收字节数组类型的消息之外，还可以通过发送、接收“对象类型”的方式实现消息的发送和接收</b>
+<ul class="quote"><li>以“生产者发送人员对象信息到基本的消息模型中，并由消费者进行监听消费处理”为案例，进行代码实际演示。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>以“生产者发送人员对象信息到基本的消息模型中，并由消费者进行监听消费处理”为案例，进行代码实际演示。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">27</span><span class="mmx-name">5.3 RabbitMQ多种消息模型实战</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 6 条要点 · 6 句原句摘录</p>
+<div class="sec">
+<h4>基于FanoutExchange的消息模型实战</h4>
+<ul class="point">
+<li><b>FanoutExchange具有“广播消息”的作用，即当消息进入交换机这个“中转站”时，交换机会检查哪个队列跟自己是绑定在一起的，找到相应的队列后，将消息传输到相应的绑定队列中，并最终由队列对应的消费者进行监听消费</b>
+<ul class="quote"><li>基于FanoutExchange的模型不能称为真正的“消息模型”，但是该消息模型中仍旧含有交换机、队列和“隐形的路由”。</li></ul>
+</li>
+<li><b>FanoutExchange消息模型适用于“业务数据需要广播式传输”的场景</b>
+<ul class="quote"><li>比如“用户操作写日志”。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>基于FanoutExchange的模型不能称为真正的“消息模型”，但是该消息模型中仍旧含有交换机、队列和“隐形的路由”。</li><li>比如“用户操作写日志”。</li></ul>
+</div>
+<div class="sec">
+<h4>基于DirectExchange的消息模型实战</h4>
+<ul class="point">
+<li><b>DirectExchange具有“直连传输消息”的作用，即当消息进入交换机这个“中转站”时，交换机会检查哪个路由跟自己绑定在一起，并根据生产者发送消息指定的路由进行匹配，如果能找到对应的绑定模型，则将消息直接路由传输到指定的队列，最终由队列对应的消费者进行监听消费</b>
+<ul class="quote"><li>基于DirectExchange消息模型在实际生产环境中具有很广泛的应用。</li></ul>
+</li>
+<li><b>DirectExchange消息模型适用于业务数据需要直接传输并被消费的场景</b>
+<ul class="quote"><li>比如业务服务模块之间的信息交互。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>基于DirectExchange消息模型在实际生产环境中具有很广泛的应用。</li><li>比如业务服务模块之间的信息交互。</li></ul>
+</div>
+<div class="sec">
+<h4>基于TopicExchange的消息模型实战</h4>
+<ul class="point">
+<li><b>TopicExchange是一种“发布-主题-订阅”式的交换机，在实际生产环境中同样具有很广泛的应用</b>
+<ul class="quote"><li>TopicExchange消息模型同样是由交换机、路由和队列严格绑定构成，与前面介绍的另外两种消息模型相比，最大的不同之处在于其支持“通配式”的路由，即可以通过为路由的名称指定特定的通配符“*”和“#”，从而绑定到不同的队列中。</li></ul>
+</li>
+<li><b>TopicExchange消息模型适用于“发布订阅主题式”的场景</b>
+<ul class="quote"><li>在实际应用系统中，几乎所有的业务场景都适用，而且从上述代码实现中可以得知，TopicExchange消息模型包含了FanoutExchange消息模型和DirectExchange消息模型的功能特性，即凡是这两种消息模型适用的业务场景，基于TopicExchange的消息模型也是适用的，从某种程度上讲，TopicExchange模型是一种强有力的、具有普适性的消息模型。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>TopicExchange消息模型同样是由交换机、路由和队列严格绑定构成，与前面介绍的另外两种消息模型相比，最大的不同之处在于其支持“通配式”的路由，即可以通过为路由的名称指定特定的通配符“*”和“#”，从而绑定到不同的队列中。</li><li>在实际应用系统中，几乎所有的业务场景都适用，而且从上述代码实现中可以得知，TopicExchange消息模型包含了FanoutExchange消息模型和DirectExchange消息模型的功能特性，即凡是这两种消息模型适用的业务场景，基于TopicExchange的消息模型也是适用的，从某种程度上讲，TopicExchange模型是一种强有力的、具有普适性的消息模型。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">28</span><span class="mmx-name">5.4 RabbitMQ确认消费机制</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 4 条要点 · 14 句原句摘录</p>
+<div class="sec">
+<h4>消息高可用和确认消费</h4>
+<ul class="point">
+<li><b>RabbitMQ提供发送确认、持久化和消息确认机制保证消息高可用和准确消费</b>
+<ul class="quote"><li>发送出去的消息不知道到底有没有发送成功，RabbitMQ会要求生产者在发送完消息之后进行“发送确认”。</li><li>RabbitMQ服务出现了宕机和崩溃等问题，导致其需要执行重启操作，如果此时队列中仍然有大量的消息还未被消费，则很有可能在重启RabbitMQ服务的过程中发生消息丢失的现象。</li><li>消费者在监听消费处理消息的时候，可能会出现监听失败或者直接崩溃等问题，导致消息所在的队列找不到对应的消费者而不断地重新入队列，最终出现消息被重复消费的现象。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>发送出去的消息不知道到底有没有发送成功，RabbitMQ会要求生产者在发送完消息之后进行“发送确认”。</li><li>RabbitMQ服务出现了宕机和崩溃等问题，导致其需要执行重启操作，如果此时队列中仍然有大量的消息还未被消费，则很有可能在重启RabbitMQ服务的过程中发生消息丢失的现象。</li><li>消费者在监听消费处理消息的时候，可能会出现监听失败或者直接崩溃等问题，导致消息所在的队列找不到对应的消费者而不断地重新入队列，最终出现消息被重复消费的现象。</li></ul>
+</div>
+<div class="sec">
+<h4>常见的确认消费模式介绍</h4>
+<ul class="point">
+<li><b>RabbitMQ的消息“确认消费”模式有3种：NONE、AUTO和MANUAL</b>
+<ul class="quote"><li>NONE指的是“无须确认”机制，即生产者将消息发送至队列，消费者监听到该消息时，无须发送任何反馈信息给RabbitMQ服务器。</li><li>AUTO指的是“自动确认”机制，即生产者将消息发送至队列，消费者监听到该消息时，需要发送一个AUTO ACK的反馈信息给RabbitMQ服务器，之后该消息将在RabbitMQ的队列中被移除。</li><li>MANUAL是一种“人为手动确认消费”机制，即生产者将消息发送至队列，消费者监听到该消息时需要手动地“以代码的形式”发送一个ACK的反馈信息给RabbitMQ服务器，之后该消息将在RabbitMQ的队列中被移除，同时告知生产者，消息已经成功发送并且已经成功被消费者监听消费了。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>NONE指的是“无须确认”机制，即生产者将消息发送至队列，消费者监听到该消息时，无须发送任何反馈信息给RabbitMQ服务器。</li><li>AUTO指的是“自动确认”机制，即生产者将消息发送至队列，消费者监听到该消息时，需要发送一个AUTO ACK的反馈信息给RabbitMQ服务器，之后该消息将在RabbitMQ的队列中被移除。</li><li>MANUAL是一种“人为手动确认消费”机制，即生产者将消息发送至队列，消费者监听到该消息时需要手动地“以代码的形式”发送一个ACK的反馈信息给RabbitMQ服务器，之后该消息将在RabbitMQ的队列中被移除，同时告知生产者，消息已经成功发送并且已经成功被消费者监听消费了。</li></ul>
+</div>
+<div class="sec">
+<h4>基于自动确认消费模式实战</h4>
+<ul class="point">
+<li><b>基于AUTO的自动确认消费机制其实是RabbitMQ提供的一种默认确认消费机制，由于其使用起来比较简单，因而在实际的生产环境中具有很广泛的应用</b>
+<ul class="quote"><li>在RabbitmqConfig配置类中创建相应的队列、交换机、路由及其绑定，同时，再创建一个基于自动确认消费模式的“监听器容器工厂实例”，目的是用于指定特定的队列对应的消费者采用“自动确认消费”的模式。</li><li>开发用于生产消息的生产者KnowledgePublisher相关功能，其源代码中设置了消息的传输格式为JSON，并设置了交换机、路由和队列的绑定。</li><li>开发用于监听消费消息的消费者KnowledgeConsumer的相关功能，其源代码中实现了“RabbitMQ通道确认消息监听器”，即ChannelAwareMessageListener接口，并实现onMessage()方法。</li><li>在Java单元测试类RabbitmqTest中开发Java单元测试方法，用于触发生产者发送消息。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在RabbitmqConfig配置类中创建相应的队列、交换机、路由及其绑定，同时，再创建一个基于自动确认消费模式的“监听器容器工厂实例”，目的是用于指定特定的队列对应的消费者采用“自动确认消费”的模式。</li><li>开发用于生产消息的生产者KnowledgePublisher相关功能，其源代码中设置了消息的传输格式为JSON，并设置了交换机、路由和队列的绑定。</li><li>开发用于监听消费消息的消费者KnowledgeConsumer的相关功能，其源代码中实现了“RabbitMQ通道确认消息监听器”，即ChannelAwareMessageListener接口，并实现onMessage()方法。</li><li>在Java单元测试类RabbitmqTest中开发Java单元测试方法，用于触发生产者发送消息。</li></ul>
+</div>
+<div class="sec">
+<h4>基于手动确认消费模式实战</h4>
+<ul class="point">
+<li><b>基于MANUAL的“手动”确认消费机制相对于AUTO的“自动”确认消费机制而言则比较复杂，因为其需要在“消费者处理完消息的逻辑”之后，手动编写代码进行确认消费，最终将该消息从队列中移除，从而避免消息被重复投入队列而被重复消费</b>
+<ul class="quote"><li>在RabbitmqConfig配置类中创建队列、交换机和路由等相关组件，同时需要创建“基于MANUAL手动确认消费模式”对应的消费者所在的监听器容器工厂实例，目的是用于设置消息的确认消费模式为MANUAL。</li><li>进行消息监听器(即消费者)KnowledgeManualConsumer相关功能的开发。由于其采用手动确认消费的模式，因而该监听器需要实现“RabbitMQ通道确认消息监听器”，即ChannelAwareMessageListener接口，并实现onMessage()方法。</li><li>开发用于发送消息的生产者KnowledgeManualPublisher，其源代码中设置了消息的传输格式为JSON，并设置了交换机、路由和队列的绑定。</li><li>在Java单元测试类RabbitmqTest中开发单元测试方法，用于触发生产者发送消息。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在RabbitmqConfig配置类中创建队列、交换机和路由等相关组件，同时需要创建“基于MANUAL手动确认消费模式”对应的消费者所在的监听器容器工厂实例，目的是用于设置消息的确认消费模式为MANUAL。</li><li>进行消息监听器(即消费者)KnowledgeManualConsumer相关功能的开发。由于其采用手动确认消费的模式，因而该监听器需要实现“RabbitMQ通道确认消息监听器”，即ChannelAwareMessageListener接口，并实现onMessage()方法。</li><li>开发用于发送消息的生产者KnowledgeManualPublisher，其源代码中设置了消息的传输格式为JSON，并设置了交换机、路由和队列的绑定。</li><li>在Java单元测试类RabbitmqTest中开发单元测试方法，用于触发生产者发送消息。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">29</span><span class="mmx-name">5.5 典型应用场景实战之用户登录成功写日志</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 6 个小节 · 12 条要点 · 23 句原句摘录</p>
+<div class="sec">
+<h4>用户登录成功写日志的整体业务流程介绍与分析</h4>
+<ul class="point">
+<li><b>“用户登录”操作是主流程，“记录用户登录轨迹”是辅助流程</b>
+<ul class="quote"><li>在整个业务流程中，“用户登录”A是主流程，“记录用户登录轨迹”B是辅助流程。</li><li>在实际业务开发过程中，B业务流程的处理不应当影响A业务流程的执行，即“记录用户登录轨迹”业务应当独立出来并采用异步线程进行处理。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在整个业务流程中，“用户登录”A是主流程，“记录用户登录轨迹”B是辅助流程。</li><li>在实际业务开发过程中，B业务流程的处理不应当影响A业务流程的执行，即“记录用户登录轨迹”业务应当独立出来并采用异步线程进行处理。</li></ul>
+</div>
+<div class="sec">
+<h4>数据库表设计</h4>
+<ul class="point">
+<li><b>进行用户信息表和日志记录表的设计</b>
+<ul class="quote"><li>用户信息表主要包含用户id、用户名和登录密码等字段。</li><li>日志记录表主要包含用户id、用户操作所属模块、操作数据和备注等字段。</li></ul>
+</li>
+<li><b>采用MyBatis逆向工程生成user和sys-log这两个表对应的实体类、Mapper操作接口和对应的动态SQL所在的配置文件Mapper.xml</b>
+<ul class="quote"><li>用户实体类User包含用户id、用户名、密码和创建时间等字段。</li><li>系统日志记录类SysLog包含主键id、用户id、用户操作所属模块、操作数据、备注和操作时间等字段。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>用户信息表主要包含用户id、用户名和登录密码等字段。</li><li>日志记录表主要包含用户id、用户操作所属模块、操作数据和备注等字段。</li><li>用户实体类User包含用户id、用户名、密码和创建时间等字段。</li><li>系统日志记录类SysLog包含主键id、用户id、用户操作所属模块、操作数据、备注和操作时间等字段。</li></ul>
+</div>
+<div class="sec">
+<h4>开发环境搭建</h4>
+<ul class="point">
+<li><b>采用MVC(MoDel View Controller，模型—视图—控制器)的开发模式，搭建整体业务流程对应的开发环境</b>
+<ul class="quote"><li>定义用户单击登录按钮时，后端需要接收的用户登录信息，主要包括用户名和密码，在这里将其封装成实体类UserLoginDto进行接收。</li><li>开发“接收并处理用户登录实体信息”的控制器UserController，主要用于校验前端用户提交的相关登录信息，并将校验通过后的数据传递给Service层进行处理。</li><li>开发用户登录服务UserService类相关功能，用于实现用户登录逻辑。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>定义用户单击登录按钮时，后端需要接收的用户登录信息，主要包括用户名和密码，在这里将其封装成实体类UserLoginDto进行接收。</li><li>开发“接收并处理用户登录实体信息”的控制器UserController，主要用于校验前端用户提交的相关登录信息，并将校验通过后的数据传递给Service层进行处理。</li><li>开发用户登录服务UserService类相关功能，用于实现用户登录逻辑。</li></ul>
+</div>
+<div class="sec">
+<h4>基于TopicExchange构建日志消息模型</h4>
+<ul class="point">
+<li><b>在RabbitmqConfig配置类中创建相应的队列、交换机和路由等相关组件，即构建“日志消息模型”</b>
+<ul class="quote"><li>创建队列loginQueue。</li><li>创建交换机loginExchange。</li><li>创建绑定loginBinding。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>创建队列loginQueue。</li><li>创建交换机loginExchange。</li><li>创建绑定loginBinding。</li></ul>
+</div>
+<div class="sec">
+<h4>异步发送接收登录日志消息实战</h4>
+<ul class="point">
+<li><b>在LogPublisher类中开发相应的方法，用于将相关消息发送给RabbitMQ的队列，并被相应的消费者监听消费</b>
+<ul class="quote"><li>设置消息传输格式为JSON。</li><li>设置交换机。</li><li>设置路由。</li><li>发送消息。</li></ul>
+</li>
+<li><b>开发“用户登录成功写日志”队列对应的消费者的相关功能，即LogConsumer类的相关方法</b>
+<ul class="quote"><li>监听消费并处理用户登录成功后的消息。</li><li>调用日志记录服务-用于记录用户登录成后将相关登录信息记入数据库。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>设置消息传输格式为JSON。</li><li>设置交换机。</li><li>设置路由。</li><li>发送消息。</li><li>监听消费并处理用户登录成功后的消息。</li><li>调用日志记录服务-用于记录用户登录成后将相关登录信息记入数据库。</li></ul>
+</div>
+<div class="sec">
+<h4>整体业务模块自测实战</h4>
+<ul class="point">
+<li><b>打开Postman，在地址栏输入http://127.0.0.1:8087/middleware/user/login，选择请求方法为POST，选择Body为JSON(application/json)，并在请求体中输入相应的参数取值</b>
+<ul class="quote"><li>请求体中输入相应的参数取值，表示用户单击登录按钮时提交的相应参数。</li></ul>
+</li>
+<li><b>在Postman请求界面上，单击Send按钮，即可提交相关请求信息到后端相应的接口</b>
+<ul class="quote"><li>此时观察控制台的输出信息，会发现当前用户名确实是存在于数据库中，而且其登录密码也是匹配的。</li></ul>
+</li>
+<li><b>观察数据库表sys_log的记录，即可看到数据库中已经成功插入了一条记录，该记录表示当前用户名为jack的登录日志</b>
+<ul class="quote"><li>再观察Postman得到的响应结果，可以发现其返回了“登录成功”的响应信息。</li></ul>
+</li>
+<li><b>如果在Postman中输入数据库不存在的用户名或者错误的登录密码，则会得到“登录失败”的响应结果</b>
+<ul class="quote"><li>此时是不会将相应的用户登录信息写入数据库和RabbitMQ的队列中的。</li></ul>
+</li>
+<li><b>打开浏览器，在地址栏输入http://127.0.0.1:15672并回车，输入账号和密码(均为guest)进入RabbitMQ的后端控制台，即可查看相应的队列表</b>
+<ul class="quote"><li>为“用户登录成功异步写日志”对应的队列详情。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>请求体中输入相应的参数取值，表示用户单击登录按钮时提交的相应参数。</li><li>此时观察控制台的输出信息，会发现当前用户名确实是存在于数据库中，而且其登录密码也是匹配的。</li><li>再观察Postman得到的响应结果，可以发现其返回了“登录成功”的响应信息。</li><li>此时是不会将相应的用户登录信息写入数据库和RabbitMQ的队列中的。</li><li>为“用户登录成功异步写日志”对应的队列详情。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">30</span><span class="mmx-name">5.6 总结</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 4 条要点 · 7 句原句摘录</p>
+<div class="sec">
+<h4>分布式消息中间件RabbitMQ的重要性</h4>
+<ul class="point">
+<li><b>RabbitMQ在企业级应用、微服务系统中充当着重要的角色</b>
+<ul class="quote"><li>它可以通过异步通信等方式降低应用系统接口层面整体的响应时间。</li><li>对传统应用高内聚的多服务模块进行服务模块的解耦等。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>它可以通过异步通信等方式降低应用系统接口层面整体的响应时间。</li><li>对传统应用高内聚的多服务模块进行服务模块的解耦等。</li></ul>
+</div>
+<div class="sec">
+<h4>RabbitMQ相关知识要点</h4>
+<ul class="point">
+<li><b>消息中间件RabbitMQ的相关专有名词、典型应用场景、常见的几种消息模型、消息的高可用和常见的几种确认消费机制。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>RabbitMQ的功能特性及其在实际项目中起到的作用</h4>
+<ul class="point">
+<li><b>高并发接口限流、异步通信、服务解耦和业务延迟处理等</b>
+<ul class="quote"><li>高并发接口限流：通过令牌桶算法实现限流，保证系统稳定运行。</li><li>异步通信：通过消息中间件实现异步通信，降低系统耦合度，提高系统吞吐量。</li><li>服务解耦：通过消息中间件实现服务解耦，提高系统可维护性和可扩展性。</li><li>业务延迟处理：通过消息中间件实现业务延迟处理，提高系统响应速度。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>高并发接口限流：通过令牌桶算法实现限流，保证系统稳定运行。</li><li>异步通信：通过消息中间件实现异步通信，降低系统耦合度，提高系统吞吐量。</li><li>服务解耦：通过消息中间件实现服务解耦，提高系统可维护性和可扩展性。</li><li>业务延迟处理：通过消息中间件实现业务延迟处理，提高系统响应速度。</li></ul>
+</div>
+<div class="sec">
+<h4>实际生产环境中的典型应用场景“用户登录成功异步写日志”案例</h4>
+<ul class="point">
+<li><b>对该场景进行了整体业务流程的分析和模块划分，并基于此进行数据库表的设计和开发环境的搭建</b>
+<ul class="quote"><li>帮助读者理解并掌握RabbitMQ相关专有名词、消息模型、消息的高可用，以及消息的发送、接收方式等知识要点，达到学以致用的目的。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>帮助读者理解并掌握RabbitMQ相关专有名词、消息模型、消息的高可用，以及消息的发送、接收方式等知识要点，达到学以致用的目的。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">31</span><span class="mmx-name">第6章 死信队列/延迟队列实战</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 9 条要点 · 19 句原句摘录</p>
+<div class="sec">
+<h4>死信队列/延迟队列简介、作用及典型应用场景</h4>
+<ul class="point">
+<li><b>死信队列/延迟队列简介</b>
+<ul class="quote"><li>死信队列/延迟队列是分布式消息中间件RabbitMQ提供的功能。</li></ul>
+</li>
+<li><b>死信队列/延迟队列的作用</b>
+<ul class="quote"><li>用于延时、延迟处理指定的业务逻辑。</li></ul>
+</li>
+<li><b>死信队列/延迟队列的典型应用场景</b>
+<ul class="quote"><li>商城平台订单超过30分钟未支付将自动关闭。</li><li>商城订单完成后，如果用户一直未评价，5天后将自动好评。</li><li>会员到期前15天和到期前3天分别发送短信提醒。</li><li>延迟1小时发送邮件。</li><li>延迟30分钟提交报表等。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>死信队列/延迟队列是分布式消息中间件RabbitMQ提供的功能。</li><li>用于延时、延迟处理指定的业务逻辑。</li><li>商城平台订单超过30分钟未支付将自动关闭。</li><li>商城订单完成后，如果用户一直未评价，5天后将自动好评。</li><li>会员到期前15天和到期前3天分别发送短信提醒。</li><li>延迟1小时发送邮件。</li><li>延迟30分钟提交报表等。</li></ul>
+</div>
+<div class="sec">
+<h4>死信队列的相关专有词汇和消息模型</h4>
+<ul class="point">
+<li><b>死信队列的相关专有词汇</b>
+<ul class="quote"><li>死信交换机(Dead Letter Exchange, DLX)。</li><li>死信路由(Dead Letter Routing, DLR)。</li><li>延迟队列(Delay Queue)。</li></ul>
+</li>
+<li><b>死信队列的消息模型</b>
+<ul class="quote"><li>死信队列是交换机的一种特殊形式，用于处理无法被正常消费的消息。</li><li>当消息在队列中长时间无法被消费时，它会被发送到一个特殊的交换机上，这个交换机就是死信交换机。</li><li>死信交换机接收到死信消息后，会根据死信路由配置，将消息路由到指定的队列中。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>死信交换机(Dead Letter Exchange, DLX)。</li><li>死信路由(Dead Letter Routing, DLR)。</li><li>延迟队列(Delay Queue)。</li><li>死信队列是交换机的一种特殊形式，用于处理无法被正常消费的消息。</li><li>当消息在队列中长时间无法被消费时，它会被发送到一个特殊的交换机上，这个交换机就是死信交换机。</li><li>死信交换机接收到死信消息后，会根据死信路由配置，将消息路由到指定的队列中。</li></ul>
+</div>
+<div class="sec">
+<h4>基于Spring Boot项目搭建死信队列消息模型</h4>
+<ul class="point">
+<li><b>搭建死信队列消息模型</b>
+<ul class="quote"><li>基于Spring Boot项目，使用RabbitMQ官方提供的AmqpAdmin和RabbitTemplate等工具，搭建死信队列消息模型。</li></ul>
+</li>
+<li><b>编写代码实现消息的发送和接收</b>
+<ul class="quote"><li>使用RabbitTemplate发送消息到死信队列。</li><li>使用RabbitTemplate从死信队列中接收消息。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>基于Spring Boot项目，使用RabbitMQ官方提供的AmqpAdmin和RabbitTemplate等工具，搭建死信队列消息模型。</li><li>使用RabbitTemplate发送消息到死信队列。</li><li>使用RabbitTemplate从死信队列中接收消息。</li></ul>
+</div>
+<div class="sec">
+<h4>死信队列模型构建及消息的延迟发送和接收</h4>
+<ul class="point">
+<li><b>构建死信队列模型</b>
+<ul class="quote"><li>以实际应用场景“商城平台订单支付超时”为案例，构建死信队列模型。</li></ul>
+</li>
+<li><b>消息的延迟发送和接收</b>
+<ul class="quote"><li>使用RabbitTemplate发送延迟消息到死信队列。</li><li>使用RabbitTemplate从死信队列中接收延迟消息。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>以实际应用场景“商城平台订单支付超时”为案例，构建死信队列模型。</li><li>使用RabbitTemplate发送延迟消息到死信队列。</li><li>使用RabbitTemplate从死信队列中接收延迟消息。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">32</span><span class="mmx-name">6.1 死信队列概述</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 3 条要点 · 9 句原句摘录</p>
+<div class="sec">
+<h4>死信队列概述</h4>
+<ul class="point">
+<li><b>死信队列是RabbitMQ队列中的一种，指进入该队列中的消息会被延迟消费的队列</b>
+<ul class="quote"><li>这种队列跟普通的队列相比，最大的差异在于消息一旦进入普通队列将会立即被消费处理，而延迟队列则是会过一定的时间再进行消费。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>这种队列跟普通的队列相比，最大的差异在于消息一旦进入普通队列将会立即被消费处理，而延迟队列则是会过一定的时间再进行消费。</li></ul>
+</div>
+<div class="sec">
+<h4>死信队列的作用</h4>
+<ul class="point">
+<li><b>死信队列可以实现特定的消息或业务数据等待一定的时间TTL后，再被消费者监听消费处理</b>
+<ul class="quote"><li>在传统企业级应用系统中，实现消息、业务数据的延迟处理一般是通过开启定时器的方式，轮询扫描并获取数据库表中满足条件的业务数据记录，然后比较数据记录的业务时间和当前时间。</li><li>如果当前时间大于记录中的业务时间，则说明该数据记录已经超过了指定的时间而未被处理，此时需要执行相应的业务逻辑，比如失效该数据记录、发送通知信息给指定的用户等。</li><li>对于这种处理方式，定时器是每隔一定的时间频率不间断地去扫描数据库表，并不断地获取满足业务条件的数据，直到手动关闭该定时器(如果不关闭的话，定时器开启的线程将一直运行下去)。</li><li>消息中间件RabbitMQ的引入，不管是从业务层面还是从应用的性能层面，都得到了很大的改善。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在传统企业级应用系统中，实现消息、业务数据的延迟处理一般是通过开启定时器的方式，轮询扫描并获取数据库表中满足条件的业务数据记录，然后比较数据记录的业务时间和当前时间。</li><li>如果当前时间大于记录中的业务时间，则说明该数据记录已经超过了指定的时间而未被处理，此时需要执行相应的业务逻辑，比如失效该数据记录、发送通知信息给指定的用户等。</li><li>对于这种处理方式，定时器是每隔一定的时间频率不间断地去扫描数据库表，并不断地获取满足业务条件的数据，直到手动关闭该定时器(如果不关闭的话，定时器开启的线程将一直运行下去)。</li><li>消息中间件RabbitMQ的引入，不管是从业务层面还是从应用的性能层面，都得到了很大的改善。</li></ul>
+</div>
+<div class="sec">
+<h4>典型应用场景介绍</h4>
+<ul class="point">
+<li><b>死信队列在实际生产环境中确实能起到很好的作用，比如上面讲的“成功抢到票后30分钟内未付款的处理流程”就是比较典型的一种</b>
+<ul class="quote"><li>当用户在商城平台看到满意的商品时，单击“加入购物车”按钮，即可将商品加入自己的购物车内。</li><li>选购完毕，单击去付款按钮后，将会跳转到支付页面，此时系统会为用户生成一笔对应购物车中商品的订单，并将该订单的状态设置为0，即代表“未付款”，同时将该订单的id或者订单编号塞入RabbitMQ的延迟队列中，并设置延迟时间为30分钟。</li><li>如果用户在30分钟内选择了某种付款方式并进行了付款，则系统将更新该订单id对应的订单支付状态为1，即已付款，同时更新订单中所包含的商品对应的库存；</li><li>如果用户在30分钟内迟迟未付款，则RabbitMQ的延迟队列对应的消费者将会在30分钟后监听到该订单的id，根据该订单的id查询数据库的订单数据表，如果该订单的付款状态仍然为0(即未付款)，则表示用户已经超过30分钟而仍然未付款，此时则需要使该笔订单失效，同时更新回退商品库存。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>当用户在商城平台看到满意的商品时，单击“加入购物车”按钮，即可将商品加入自己的购物车内。</li><li>选购完毕，单击去付款按钮后，将会跳转到支付页面，此时系统会为用户生成一笔对应购物车中商品的订单，并将该订单的状态设置为0，即代表“未付款”，同时将该订单的id或者订单编号塞入RabbitMQ的延迟队列中，并设置延迟时间为30分钟。</li><li>如果用户在30分钟内选择了某种付款方式并进行了付款，则系统将更新该订单id对应的订单支付状态为1，即已付款，同时更新订单中所包含的商品对应的库存；</li><li>如果用户在30分钟内迟迟未付款，则RabbitMQ的延迟队列对应的消费者将会在30分钟后监听到该订单的id，根据该订单的id查询数据库的订单数据表，如果该订单的付款状态仍然为0(即未付款)，则表示用户已经超过30分钟而仍然未付款，此时则需要使该笔订单失效，同时更新回退商品库存。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">33</span><span class="mmx-name">6.2 RabbitMQ死信队列实战</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 8 条要点 · 12 句原句摘录</p>
+<div class="sec">
+<h4>死信队列的基本概念和优势</h4>
+<ul class="point">
+<li><b>死信队列具有占用系统资源少、人为干预很少和自动消费处理等优势</b>
+<ul class="quote"><li>相对于传统定时器的轮询处理方式，死信队列具有占用系统资源少(比如不需要再轮询数据库获取数据，减少DB层面资源的消耗)、人为干预很少(只需要搭建好死信队列消息模型，就可以不需要再去干预了)，以及自动消费处理(当指定的延迟时间一到，消息将自动被路由到实际的队列进行处理)等优势。</li></ul>
+</li>
+<li><b>任何需要延迟、延时处理的业务都可以用上“死信队列”这个强大的组件。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>相对于传统定时器的轮询处理方式，死信队列具有占用系统资源少(比如不需要再轮询数据库获取数据，减少DB层面资源的消耗)、人为干预很少(只需要搭建好死信队列消息模型，就可以不需要再去干预了)，以及自动消费处理(当指定的延迟时间一到，消息将自动被路由到实际的队列进行处理)等优势。</li></ul>
+</div>
+<div class="sec">
+<h4>死信队列专有词汇介绍</h4>
+<ul class="point">
+<li><b>死信队列中增加了DLX、DLK和TTL这3个成员</b>
+<ul class="quote"><li>DLX，即Dead Letter Exchange，中文为死信交换机，是交换机的一种类型，只是属于特殊的类型。</li><li>DLK，即Dead Letter Routing-Key，中文为死信路由，同样也是一种特殊的路由，主要是跟DLX组合在一起构成死信队列。</li><li>TTL，即Time To Live，指进入死信队列中的消息可以存活的时间。</li></ul>
+</li>
+<li><b>当消息在一个队列中发生以下几种情况时，才会出现“死信”的情况</b>
+<ul class="quote"><li>消息被拒绝(比如调用basic.reject或者basic.nack方法时即可实现)并且不再重新投递，即requeue参数的取值为false。</li><li>消息超过了指定的存活时间(比如通过调用messageProperties.setExpiration()设置TTL时间即可实现)。</li><li>队列达到最大长度了。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>DLX，即Dead Letter Exchange，中文为死信交换机，是交换机的一种类型，只是属于特殊的类型。</li><li>DLK，即Dead Letter Routing-Key，中文为死信路由，同样也是一种特殊的路由，主要是跟DLX组合在一起构成死信队列。</li><li>TTL，即Time To Live，指进入死信队列中的消息可以存活的时间。</li><li>消息被拒绝(比如调用basic.reject或者basic.nack方法时即可实现)并且不再重新投递，即requeue参数的取值为false。</li><li>消息超过了指定的存活时间(比如通过调用messageProperties.setExpiration()设置TTL时间即可实现)。</li><li>队列达到最大长度了。</li></ul>
+</div>
+<div class="sec">
+<h4>死信队列消息模型实战</h4>
+<ul class="point">
+<li><b>死信队列由DLX(死信交换机)、DLK(死信路由)和TTL(存活时间)组成</b>
+<ul class="quote"><li>死信交换机和死信路由是必需的组成成分，而TTL即存活时间是非必需的组成成分。</li></ul>
+</li>
+<li><b>消息在死信队列构成的消息模型中整体的传输流程</b>
+<ul class="quote"><li>首先消息将到达第一个中转站(即“基本消息模型”中的“基本交换机”)，由于基本交换机和基本路由绑定，并对应到指定的“死信队列”，因而消息将进入第一个暂存区，即“死信队列”中。</li><li>当消息进入死信队列时，TTL(即存活时间)便开始进入倒计时，当存活时间一到，消息将进入第二个中转站，即“真正的消息模型”中的死信交换机。</li><li>由于死信交换机和死信路由绑定，并对应到指定的“真正的队列”，因而此时消息将不做停留，而是直接被路由到第二个暂存区，即“真正的队列”中，最终该消息被“真正的队列”对应的消费者监听消费。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>死信交换机和死信路由是必需的组成成分，而TTL即存活时间是非必需的组成成分。</li><li>首先消息将到达第一个中转站(即“基本消息模型”中的“基本交换机”)，由于基本交换机和基本路由绑定，并对应到指定的“死信队列”，因而消息将进入第一个暂存区，即“死信队列”中。</li><li>当消息进入死信队列时，TTL(即存活时间)便开始进入倒计时，当存活时间一到，消息将进入第二个中转站，即“真正的消息模型”中的死信交换机。</li><li>由于死信交换机和死信路由绑定，并对应到指定的“真正的队列”，因而此时消息将不做停留，而是直接被路由到第二个暂存区，即“真正的队列”中，最终该消息被“真正的队列”对应的消费者监听消费。</li></ul>
+</div>
+<div class="sec">
+<h4>死信队列延迟发送消息实战</h4>
+<ul class="point">
+<li><b>生产者发送消息时，可以在发送消息的方法里面设置消息的TTL</b>
+<ul class="quote"><li>当消息和队列同时都设置了TTL时，则取较短时间的值。</li></ul>
+</li>
+<li><b>消费者监听消费消息的方法体只是打印监听到的实体类信息，如果需要执行实际的业务逻辑，则在其中进行编写即可。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>当消息和队列同时都设置了TTL时，则取较短时间的值。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">34</span><span class="mmx-name">6.3 典型应用场景实战之商城平台订单支付超时</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 7 个小节 · 13 条要点 · 23 句原句摘录</p>
+<div class="sec">
+<h4>商城平台订单支付超时整体业务场景介绍</h4>
+<ul class="point">
+<li><b>用户下单支付超时的业务场景核心处理流程关键在于自动检测用户下单记录是否已经超过了支付时间</b>
+<ul class="quote"><li>对于传统的企业级应用系统而言，主要是采用“定时查询”的方式来实现。</li><li>在高并发产生的大数据量的场景下，定时器的方式将显得“捉襟见肘”。</li></ul>
+</li>
+<li><b>分布式消息中间件RabbitMQ提供了死信队列，即它可以实现“延迟一定的时间处理业务数据”的功能</b>
+<ul class="quote"><li>由于“用户下单”这种业务场景具有时效性，因而可以在处理用户下单的业务逻辑中，将“超时时间”即TTL设置为死信队列的组成成分，将“下单记录id”充当消息发送至死信队列中。</li><li>然后只需要在“真正队列”对应的消费者中监听消费该消息，当消费者能监听到消息时，即代表着该下单记录已经超过了30分钟。</li><li>此时可以根据获取到的消息，即“下单记录id”，作为查询条件前往数据库表中查询相应的记录。</li><li>如果该下单记录的支付状态为“未付款”或者“已保存”，则代表该用户下单记录已经支付超时了，此时需要将该记录更新为失效状态。</li><li>如果该下单记录的支付状态为“已付款”，则代表该用户已经在30分钟内成功支付了该笔订单。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>对于传统的企业级应用系统而言，主要是采用“定时查询”的方式来实现。</li><li>在高并发产生的大数据量的场景下，定时器的方式将显得“捉襟见肘”。</li><li>由于“用户下单”这种业务场景具有时效性，因而可以在处理用户下单的业务逻辑中，将“超时时间”即TTL设置为死信队列的组成成分，将“下单记录id”充当消息发送至死信队列中。</li><li>然后只需要在“真正队列”对应的消费者中监听消费该消息，当消费者能监听到消息时，即代表着该下单记录已经超过了30分钟。</li><li>此时可以根据获取到的消息，即“下单记录id”，作为查询条件前往数据库表中查询相应的记录。</li><li>如果该下单记录的支付状态为“未付款”或者“已保存”，则代表该用户下单记录已经支付超时了，此时需要将该记录更新为失效状态。</li><li>如果该下单记录的支付状态为“已付款”，则代表该用户已经在30分钟内成功支付了该笔订单。</li></ul>
+</div>
+<div class="sec">
+<h4>整体业务流程分析</h4>
+<ul class="point">
+<li><b>用户下单：用户单击“去结算”或者“去支付”按钮时，在数据库相关数据表中插入一笔用户下单记录，并设置支付状态为“已保存”</b>
+<ul class="quote"><li>用户下单流程主要由三大核心业务流程组成，即用户下单、死信队列发送和延迟监听下单记录、更新用户下单记录状态。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>用户下单流程主要由三大核心业务流程组成，即用户下单、死信队列发送和延迟监听下单记录、更新用户下单记录状态。</li></ul>
+</div>
+<div class="sec">
+<h4>数据库设计</h4>
+<ul class="point">
+<li><b>设计一张“用户下单记录表”来记录用户的下单历史记录</b>
+<ul class="quote"><li>“用户下单记录表”的DDL(Data Definition Language，数据库表数据结构的定义)语句。</li></ul>
+</li>
+<li><b>设计一张“RabbitMQ失效下单记录的历史记录表”。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>“用户下单记录表”的DDL(Data Definition Language，数据库表数据结构的定义)语句。</li></ul>
+</div>
+<div class="sec">
+<h4>构建RabbitMQ死信队列消息模型</h4>
+<ul class="point">
+<li><b>在RabbitmqConfig配置类中构建“用户下单支付超时”对应的死信队列消息模型</b>
+<ul class="quote"><li>创建死信队列。</li><li>创建“基本消息模型”的基本交换机 - 面向生产者。</li><li>创建“基本消息模型”的基本绑定-基本交换机+基本路由 - 面向生产者。</li><li>创建真正队列 - 面向消费者。</li><li>创建死信交换机。</li><li>创建死信路由及其绑定。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>创建死信队列。</li><li>创建“基本消息模型”的基本交换机 - 面向生产者。</li><li>创建“基本消息模型”的基本绑定-基本交换机+基本路由 - 面向生产者。</li><li>创建真正队列 - 面向消费者。</li><li>创建死信交换机。</li><li>创建死信路由及其绑定。</li></ul>
+</div>
+<div class="sec">
+<h4>Controller层开发用户下单及订单失效功能</h4>
+<ul class="point">
+<li><b>开发用于接收并处理用户前端请求的控制层UserOrderController</b>
+<ul class="quote"><li>UserOrderController主要用于接收前端用户下单时的相关信息。</li></ul>
+</li>
+<li><b>开发用于处理核心业务逻辑的服务层Service</b>
+<ul class="quote"><li>Service层主要包含两大核心功能，即“用户下单”功能与“更新用户下单记录的状态”功能。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>UserOrderController主要用于接收前端用户下单时的相关信息。</li><li>Service层主要包含两大核心功能，即“用户下单”功能与“更新用户下单记录的状态”功能。</li></ul>
+</div>
+<div class="sec">
+<h4>“用户下单支付超时”延迟发送接收实战</h4>
+<ul class="point">
+<li><b>开发用于发送消息的生产者DeadOrderPublisher类的相关功能</b>
+<ul class="quote"><li>DeadOrderPublisher类主要用于将用户下单记录id充当消息发送给死信队列。</li></ul>
+</li>
+<li><b>开发用于监听消费消息，即“订单记录id”的消费者的功能</b>
+<ul class="quote"><li>DeadOrderConsumer类主要用于根据该id信息前往数据库查询相应的记录，判断该下单记录的支付状态是否仍然为“已保存”，如果是，则代表用户已经超过了指定时间而没有支付该笔订单。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>DeadOrderPublisher类主要用于将用户下单记录id充当消息发送给死信队列。</li><li>DeadOrderConsumer类主要用于根据该id信息前往数据库查询相应的记录，判断该下单记录的支付状态是否仍然为“已保存”，如果是，则代表用户已经超过了指定时间而没有支付该笔订单。</li></ul>
+</div>
+<div class="sec">
+<h4>“用户下单支付超时”整体功能自测</h4>
+<ul class="point">
+<li><b>打开浏览器模拟工具Postman，在地址栏中输入“访问用户下单”的请求链接http://127.0.0.1:8087/middleware/user/order/push，选择HTTP请求方法为Post，并选择请求体的数据格式为JSON(application/json)</b>
+<ul class="quote"><li>请求体的数据表示当前用户id为10011，购物车对应的订单编号为20190412001。</li></ul>
+</li>
+<li><b>观察控制台的输出结果，可以看到用户已经成功下单，并生成了订单记录id，同时该id也已经被充当消息成功发送至RabbitMQ的死信队列中</b>
+<ul class="quote"><li>稍微等待10秒(因为在创建死信队列中，组成成分TTL的取值为10秒)，即可看到消费者已经成功监听到该消息，并执行了相应的超时失效下单记录的逻辑。</li></ul>
+</li>
+<li><b>观察数据库表user_order的数据记录，可以发现用户下单的数据已经成功存储至数据库中</b>
+<ul class="quote"><li>由于该用户在指定的时间内没有进行付款，因而该下单记录也已被更新为“失效”状态。</li><li>同时在数据库表mq_order中记录了失效下单记录的历史数据。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>请求体的数据表示当前用户id为10011，购物车对应的订单编号为20190412001。</li><li>稍微等待10秒(因为在创建死信队列中，组成成分TTL的取值为10秒)，即可看到消费者已经成功监听到该消息，并执行了相应的超时失效下单记录的逻辑。</li><li>由于该用户在指定的时间内没有进行付款，因而该下单记录也已被更新为“失效”状态。</li><li>同时在数据库表mq_order中记录了失效下单记录的历史数据。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">35</span><span class="mmx-name">6.4 总结</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 6 个小节 · 5 条要点 · 1 句原句摘录</p>
+<div class="sec">
+<h4>死信队列的概念和作用</h4>
+<ul class="point">
+<li><b>死信队列指的是消息进入队列之后将不会立即被消费，而是等待一定的时间再被消费者监听消费的队列。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>死信队列的应用场景</h4>
+<ul class="point">
+<li><b>商城平台订单支付超时</b>
+<ul class="quote"><li>订单支付超时后，将订单状态修改为已关闭，并发送通知给用户。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>订单支付超时后，将订单状态修改为已关闭，并发送通知给用户。</li></ul>
+</div>
+<div class="sec">
+<h4>死信队列的组成成分</h4>
+<ul class="point">
+<li><b>死信交换机、死信路由和死信队列。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>死信队列消息模型的构建</h4>
+<ul class="point">
+<li><b>通过设置TTL(Time to Live)属性来控制消息的过期时间。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>Redisson实现延时、延迟处理指定业务逻辑的功能。</h4>
+<ul class="point">
+</ul>
+</div>
+<div class="sec">
+<h4>总结</h4>
+<ul class="point">
+<li><b>死信队列是分布式消息中间件RabbitMQ提供的一种实现延时、延迟处理指定业务逻辑的功能的组件。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">36</span><span class="mmx-name">第7章 分布式锁实战</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 3 条要点 · 0 句原句摘录</p>
+<div class="sec">
+<h4>分布式锁概述</h4>
+<ul class="point">
+<li><b>分布式锁的概念、出现背景、典型应用场景及常见的几种实现方式。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>分布式锁的常见实现方式</h4>
+<ul class="point">
+<li><b>介绍分布式锁常见的3种实现方式，并配以实际的代码进行实现，使读者理解并掌握分布式锁相关的知识要点和技术应用。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>分布式锁在实际生产环境中的应用</h4>
+<ul class="point">
+<li><b>以典型的应用场景“书籍抢购系统”为案例，配备实际的代码实现分布式锁，进一步帮助读者掌握分布式锁在实际生产环境中的应用。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">37</span><span class="mmx-name">7.1 分布式锁概述</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 5 个小节 · 12 条要点 · 25 句原句摘录</p>
+<div class="sec">
+<h4>分布式锁概述</h4>
+<ul class="point">
+<li><b>传统单体应用时代，通过加同步互斥锁的机制进行控制</b>
+<ul class="quote"><li>这种方式在很长一段时间内确实能起到一定的作用。</li></ul>
+</li>
+<li><b>分布式系统架构下，传统采取加锁的方式将不再起作用</b>
+<ul class="quote"><li>集群、分布式部署的服务实例一般是部署在不同机器上的，在分布式系统架构下，此种资源共享将不再是传统的线程共享，而是跨JVM进程之间资源的共享了。</li></ul>
+</li>
+<li><b>分布式锁应运而生，用于解决分布式系统架构下的资源共享问题</b>
+<ul class="quote"><li>分布式锁，也是一种锁机制，只不过是专门应对“分布式”的环境而出现的，它并不是一种全新的中间件或者组件，而只是一种机制，一种实现方式，甚至可以说是一种解决方案。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>这种方式在很长一段时间内确实能起到一定的作用。</li><li>集群、分布式部署的服务实例一般是部署在不同机器上的，在分布式系统架构下，此种资源共享将不再是传统的线程共享，而是跨JVM进程之间资源的共享了。</li><li>分布式锁，也是一种锁机制，只不过是专门应对“分布式”的环境而出现的，它并不是一种全新的中间件或者组件，而只是一种机制，一种实现方式，甚至可以说是一种解决方案。</li></ul>
+</div>
+<div class="sec">
+<h4>锁机制</h4>
+<ul class="point">
+<li><b>单体应用时代，通过JDK自身提供的关键字或者并发工具类Synchronized、Lock和RetreenLock等加以实现</b>
+<ul class="quote"><li>这种访问控制机制业界普遍亲切地称之为“锁”。</li></ul>
+</li>
+<li><b>“银行ATM存钱、取钱”案例中，传统锁机制导致数据不一致</b>
+<ul class="quote"><li>“共享资源”即为“银行账户的余额”，而不同线程发起的共享访问操作包括“存钱进该银行账户”和“从该银行账户取钱”。</li><li>由于没有加“同步访问”控制机制，导致“账户余额”这一共享资源最终出现了数据不一致的结果。</li></ul>
+</li>
+<li><b>Synchronized关键字解决并发安全问题的代码实现</b>
+<ul class="quote"><li>通过在共享资源“账户余额”直接加锁，每次并发产生的线程需要对共享资源执行操作之前，比如“存钱”或者“取钱”操作，会要求当前线程获取该共享资源的同步锁，如果能获取成功，则执行相应的操作，如果获取失败，该线程将进入堵塞、等待的状态，直到其他线程释放了对该共享资源的同步锁，才能执行相应的操作，否则将一直进入等待状态。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>这种访问控制机制业界普遍亲切地称之为“锁”。</li><li>“共享资源”即为“银行账户的余额”，而不同线程发起的共享访问操作包括“存钱进该银行账户”和“从该银行账户取钱”。</li><li>由于没有加“同步访问”控制机制，导致“账户余额”这一共享资源最终出现了数据不一致的结果。</li><li>通过在共享资源“账户余额”直接加锁，每次并发产生的线程需要对共享资源执行操作之前，比如“存钱”或者“取钱”操作，会要求当前线程获取该共享资源的同步锁，如果能获取成功，则执行相应的操作，如果获取失败，该线程将进入堵塞、等待的状态，直到其他线程释放了对该共享资源的同步锁，才能执行相应的操作，否则将一直进入等待状态。</li></ul>
+</div>
+<div class="sec">
+<h4>分布式锁登场</h4>
+<ul class="point">
+<li><b>分布式锁是专门应对“分布式”的环境而出现的，它并不是一种全新的中间件或者组件，而只是一种机制，一种实现方式，甚至可以说是一种解决方案</b>
+<ul class="quote"><li>它指的是在分布式部署的环境下，通过锁机制让多个客户端或者多个服务进程互斥地对共享资源进行访问，从而避免出现并发安全、数据不一致等问题。</li></ul>
+</li>
+<li><b>分布式锁的设计要求包括排他性、避免死锁、高可用、可重入、公平锁(可选)</b>
+<ul class="quote"><li>排他性：这一点跟单体应用时代加的“锁”是一个道理，即需要保证分布式部署、服务集群部署的环境下，被共享的资源如数据或者代码块在同一时间内只能被一台机器上的一个线程执行。</li><li>避免死锁：指的是当前线程获取到锁之后，经过一段有限的时间(该时间一般用于执行实际的业务逻辑)，一定要被释放(正常情况或者异常情况下释放)。</li><li>高可用：指的是获取或释放锁的机制必须高可用而且性能极佳。</li><li>可重入：指的是该分布式锁最好是一把可重入锁，即当前机器的当前线程在彼时如果没有获取到锁，那么在等待一定的时间后一定要保证可以再被获取到。</li><li>公平锁(可选)：这并非硬性的要求，指的是不同机器的不同线程在获取锁时最好保证几率是一样的，即应当保证来自不同机器的并发线程可以公平获取到锁。</li></ul>
+</li>
+<li><b>分布式锁的常见实现方式包括基于数据库级别的乐观锁、悲观锁、基于Redis的原子操作、基于ZooKeeper的互斥排它锁，以及基于开源框架Redisson的分布式锁</b>
+<ul class="quote"><li>基于数据库级别的乐观锁：主要是通过在查询、操作共享数据记录时带上一个标识字段version，通过version来控制每次对数据记录执行的更新操作。</li><li>基于数据库级别的悲观锁：在这里以MySQL的InnoDB引擎为例，它主要是通过在查询共享的数据记录时加上For Update字眼，表示该共享的数据记录已经被当前线程锁住了(行级别锁、表级别锁)，只有当该线程操作完成并提交事务之后，才会释放该锁，从而其他线程才能获取到该数据记录。</li><li>基于Redis的原子操作：主要是通过Redis提供的原子操作SETNX与EXPIRE来实现。SETNX表示只有当Key在Redis不存在时才能设置成功，通常这个Key需要设计为与共享的资源有联系，用于间接地当作“锁”，并采用EXPIRE操作释放获取的锁。</li><li>基于ZooKeeper的互斥排它锁：这种机制主要是通过ZooKeeper在指定的标识字符串(通常这个标识字符串需要设计为跟共享资源有联系，即可以间接地当作“锁”)下维护一个临时有序的节点列表Node List，并保证同一时刻并发线程访问共享资源时只能有一个最小序号的节点(即代表获取到锁的线程)，该节点对应的线程即可执行访问共享资源的操作。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>它指的是在分布式部署的环境下，通过锁机制让多个客户端或者多个服务进程互斥地对共享资源进行访问，从而避免出现并发安全、数据不一致等问题。</li><li>排他性：这一点跟单体应用时代加的“锁”是一个道理，即需要保证分布式部署、服务集群部署的环境下，被共享的资源如数据或者代码块在同一时间内只能被一台机器上的一个线程执行。</li><li>避免死锁：指的是当前线程获取到锁之后，经过一段有限的时间(该时间一般用于执行实际的业务逻辑)，一定要被释放(正常情况或者异常情况下释放)。</li><li>高可用：指的是获取或释放锁的机制必须高可用而且性能极佳。</li><li>可重入：指的是该分布式锁最好是一把可重入锁，即当前机器的当前线程在彼时如果没有获取到锁，那么在等待一定的时间后一定要保证可以再被获取到。</li><li>公平锁(可选)：这并非硬性的要求，指的是不同机器的不同线程在获取锁时最好保证几率是一样的，即应当保证来自不同机器的并发线程可以公平获取到锁。</li><li>基于数据库级别的乐观锁：主要是通过在查询、操作共享数据记录时带上一个标识字段version，通过version来控制每次对数据记录执行的更新操作。</li><li>基于数据库级别的悲观锁：在这里以MySQL的InnoDB引擎为例，它主要是通过在查询共享的数据记录时加上For Update字眼，表示该共享的数据记录已经被当前线程锁住了(行级别锁、表级别锁)，只有当该线程操作完成并提交事务之后，才会释放该锁，从而其他线程才能获取到该数据记录。</li><li>基于Redis的原子操作：主要是通过Redis提供的原子操作SETNX与EXPIRE来实现。SETNX表示只有当Key在Redis不存在时才能设置成功，通常这个Key需要设计为与共享的资源有联系，用于间接地当作“锁”，并采用EXPIRE操作释放获取的锁。</li><li>基于ZooKeeper的互斥排它锁：这种机制主要是通过ZooKeeper在指定的标识字符串(通常这个标识字符串需要设计为跟共享资源有联系，即可以间接地当作“锁”)下维护一个临时有序的节点列表Node List，并保证同一时刻并发线程访问共享资源时只能有一个最小序号的节点(即代表获取到锁的线程)，该节点对应的线程即可执行访问共享资源的操作。</li></ul>
+</div>
+<div class="sec">
+<h4>典型应用场景介绍</h4>
+<ul class="point">
+<li><b>重复提交场景</b>
+<ul class="quote"><li>用户在前端界面输入相关信息后，疯狂地单击注册按钮，前端虽然做了一些控制操作，却仍然不可避免地存在一些不可控制的因素，导致前端提交了多次重复的、相同的用户信息到系统后端。</li><li>“查询用户名是否存在”与“插入用户信息进数据库”这两个操作应当是一个“完整性”的综合操作，对于并发的多线程而言，这个综合操作就是被共享的资源，因而为了控制线程的并发访问，我们需要在综合操作之前加入“分布式锁”，确保高并发下同一时刻只能有一个线程获取到分布式锁。</li></ul>
+</li>
+<li><b>商城高并发抢单场景</b>
+<ul class="quote"><li>当抢购活动开始时，正常情况下，在某一时刻前端会产生巨大的用户流量，当蜂拥而来的用户抢购请求同一时刻到达系统后端时，后端接口首先会“查询商品当前的库存”，如果充足，则代表用户可以抢购该商品，同时“商品的库存需要减1”，并最终更新数据库的商品库存表。</li><li>“查库存”“判断库存是否充足”及“库存减1更新”这3个操作应该合在一起，是整个“高并发抢单”的核心业务逻辑，也是多个并发线程访问的“共享资源”。因而为了控制线程的并发访问，避免最终出现库存超卖的现象，我们需要在该组合操作之前加入“分布式锁”，确保高并发下同一时刻只能有一个线程获取到分布式锁，并执行核心的业务逻辑。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>用户在前端界面输入相关信息后，疯狂地单击注册按钮，前端虽然做了一些控制操作，却仍然不可避免地存在一些不可控制的因素，导致前端提交了多次重复的、相同的用户信息到系统后端。</li><li>“查询用户名是否存在”与“插入用户信息进数据库”这两个操作应当是一个“完整性”的综合操作，对于并发的多线程而言，这个综合操作就是被共享的资源，因而为了控制线程的并发访问，我们需要在综合操作之前加入“分布式锁”，确保高并发下同一时刻只能有一个线程获取到分布式锁。</li><li>当抢购活动开始时，正常情况下，在某一时刻前端会产生巨大的用户流量，当蜂拥而来的用户抢购请求同一时刻到达系统后端时，后端接口首先会“查询商品当前的库存”，如果充足，则代表用户可以抢购该商品，同时“商品的库存需要减1”，并最终更新数据库的商品库存表。</li><li>“查库存”“判断库存是否充足”及“库存减1更新”这3个操作应该合在一起，是整个“高并发抢单”的核心业务逻辑，也是多个并发线程访问的“共享资源”。因而为了控制线程的并发访问，避免最终出现库存超卖的现象，我们需要在该组合操作之前加入“分布式锁”，确保高并发下同一时刻只能有一个线程获取到分布式锁，并执行核心的业务逻辑。</li></ul>
+</div>
+<div class="sec">
+<h4>小结</h4>
+<ul class="point">
+<li><b>“高并发下并发访问共享资源”在实际生产环境中是很常见的，此种业务场景在某种程度上虽然可以给企业带来收益，但同时也给应用系统带来了诸多问题，“数据不一致”便是其中典型的一种</b>
+<ul class="quote"><li>本节开篇主要介绍了传统单体应用时代在遇到此种情况时的处理方式，即“锁”机制，它指的是一种可以用于控制并发线程访问、操作共享资源的方法或者解决方案，主要是借助JDK自身提供的相关工具加以实现，这种方式在很长一段时间内确实起到了一定的作用。</li><li>然而，在服务集群、系统分布式部署的环境下，传统单体应用的“锁”机制却显得捉襟见肘，力不从心，为此，“分布式锁”出现了。分布式锁，顾名思义，主要是一种在分布式系统架构下控制并发线程访问共享资源的方式(当然也适用于单体应用的情况)。</li><li>除此之外，本节还着重介绍了分布式锁的几点设计要求及分布式锁的多种实现方式，从中可以得知分布式锁在很大程度上需要借助一些开源的框架、组件来实现。</li><li>最后，本节还介绍了分布式锁在实际生产环境中几种典型的应用场景，值得一提的是，这些应用场景在后续章节中会再次进行介绍，并配以实际的代码进行实现。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>本节开篇主要介绍了传统单体应用时代在遇到此种情况时的处理方式，即“锁”机制，它指的是一种可以用于控制并发线程访问、操作共享资源的方法或者解决方案，主要是借助JDK自身提供的相关工具加以实现，这种方式在很长一段时间内确实起到了一定的作用。</li><li>然而，在服务集群、系统分布式部署的环境下，传统单体应用的“锁”机制却显得捉襟见肘，力不从心，为此，“分布式锁”出现了。分布式锁，顾名思义，主要是一种在分布式系统架构下控制并发线程访问共享资源的方式(当然也适用于单体应用的情况)。</li><li>除此之外，本节还着重介绍了分布式锁的几点设计要求及分布式锁的多种实现方式，从中可以得知分布式锁在很大程度上需要借助一些开源的框架、组件来实现。</li><li>最后，本节还介绍了分布式锁在实际生产环境中几种典型的应用场景，值得一提的是，这些应用场景在后续章节中会再次进行介绍，并配以实际的代码进行实现。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">38</span><span class="mmx-name">7.2 基于数据库实现分布式锁</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 7 个小节 · 9 条要点 · 25 句原句摘录</p>
+<div class="sec">
+<h4>乐观锁简介</h4>
+<ul class="point">
+<li><b>乐观锁是一种“佛系”的实现方式，它总是认为不会产生并发的问题</b>
+<ul class="quote"><li>每次从数据库中获取数据时总认为不会有其他线程对该数据进行修改，因此不会上锁。</li><li>在更新时其会判断其他线程在这之前有没有对该数据进行修改，通常是采用“版本号version”机制进行实现。</li></ul>
+</li>
+<li><b>“版本号version”机制的执行流程是这样的：当前线程取出数据记录时，会顺带把版本号字段version的值取出来，最后在更新该数据记录时，将该version的取值作为更新的条件</b>
+<ul class="quote"><li>当更新成功之后，同时将版本号version的值加1，而其他同时获取到该数据记录的线程在更新时由于version已经不是当初获取的那个数据记录，因而将更新失败，从而避免并发多线程访问共享数据时出现数据不一致的现象。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>每次从数据库中获取数据时总认为不会有其他线程对该数据进行修改，因此不会上锁。</li><li>在更新时其会判断其他线程在这之前有没有对该数据进行修改，通常是采用“版本号version”机制进行实现。</li><li>当更新成功之后，同时将版本号version的值加1，而其他同时获取到该数据记录的线程在更新时由于version已经不是当初获取的那个数据记录，因而将更新失败，从而避免并发多线程访问共享数据时出现数据不一致的现象。</li></ul>
+</div>
+<div class="sec">
+<h4>乐观锁实战</h4>
+<ul class="point">
+<li><b>以实际生产环境中典型的应用场景“用户提现金额”为案例，采用version版本号机制的“乐观锁”实现分布式锁</b>
+<ul class="quote"><li>对于“余额提现”，相信各位读者并不陌生。“网易支付”PC端应用便是其中一种典型的例子，当用户账户有余额时，单击“提现申请”按钮，即可进入提现余额的申请界面，输入提现金额跟提现账户(比如某银行卡等)后，单击“提现”，即可将申请的余额提现到指定的用户账号内。</li><li>当用户在前端多次单击“提现”按钮(可能是恶意的行为，亦或是黑客恶意进行攻击)时，将很有可能出现典型的并发现象，即同一时刻可能会产生多个“提现余额”的并发请求线程。</li><li>当这些请求到达后端相关接口时，正常情况下，接口会查询账户的余额，并判断当前剩余的金额是否足够被提取，如果足够，则更新当前账户的余额，最终账户余额的值为“账户剩下的金额”减去“申请提现的金额”。</li><li>理想情况下，这种处理逻辑是没问题的，然而理想终归是理想。实际中，当用户明知自己的账户余额不够提取时(即账户余额小于提现金额)，却多次单击“提现”操作，导致同一时刻产生了并发线程。</li><li>由于后端接口在处理每一个请求时需要先取出当前账户的剩余金额，再去判断是否足够金额被提取，如果金额足够被提取，则在当前账户余额的基础上减去提现金额，最终将剩余的金额更新回“账户余额”字段中。</li><li>这种处理逻辑在前面已经详细进行剖析了，属于典型的“并发安全”，会出现“数据不一致”的现象，最终出现的结果是：账户余额字段的值变成了负数。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>对于“余额提现”，相信各位读者并不陌生。“网易支付”PC端应用便是其中一种典型的例子，当用户账户有余额时，单击“提现申请”按钮，即可进入提现余额的申请界面，输入提现金额跟提现账户(比如某银行卡等)后，单击“提现”，即可将申请的余额提现到指定的用户账号内。</li><li>当用户在前端多次单击“提现”按钮(可能是恶意的行为，亦或是黑客恶意进行攻击)时，将很有可能出现典型的并发现象，即同一时刻可能会产生多个“提现余额”的并发请求线程。</li><li>当这些请求到达后端相关接口时，正常情况下，接口会查询账户的余额，并判断当前剩余的金额是否足够被提取，如果足够，则更新当前账户的余额，最终账户余额的值为“账户剩下的金额”减去“申请提现的金额”。</li><li>理想情况下，这种处理逻辑是没问题的，然而理想终归是理想。实际中，当用户明知自己的账户余额不够提取时(即账户余额小于提现金额)，却多次单击“提现”操作，导致同一时刻产生了并发线程。</li><li>由于后端接口在处理每一个请求时需要先取出当前账户的剩余金额，再去判断是否足够金额被提取，如果金额足够被提取，则在当前账户余额的基础上减去提现金额，最终将剩余的金额更新回“账户余额”字段中。</li><li>这种处理逻辑在前面已经详细进行剖析了，属于典型的“并发安全”，会出现“数据不一致”的现象，最终出现的结果是：账户余额字段的值变成了负数。</li></ul>
+</div>
+<div class="sec">
+<h4>Jmeter高并发测试乐观锁</h4>
+<ul class="point">
+<li><b>采用Jmeter压力测试工具测试“用户账户余额提现”的场景，让读者真正地了解高并发情况下并发线程访问共享资源时出现并发安全的问题</b>
+<ul class="quote"><li>打开Jmeter的安装目录，单击bin文件夹，再双击jmeter.sh文件，稍等片刻即可进入Jmeter的主界面。</li><li>在Jmeter主界面中新建一个测试计划，命名为“高并发测试-乐观锁”，然后右击该测试计划，选择“新建”命令，新建一个线程组。</li><li>在“线程组”选项区域下分别建立“HTTP请求”与“CSV数据文件设置”两个子选项，并设置“HTTP请求”选项中的相关参数取值。</li><li>对于“CSV数据文件设置”选项，则只需要指定读取的CSV文件所在的目录即可。</li><li>该CSV数据文件的内容则很简单，主要是用于存储每次前端发起申请提现请求时的金额参数amount，在这里暂且指定为40元即可。</li><li>除此之外，还需要在数据库表user_account中添加一个用户账户余额记录信息。</li><li>在Jmeter主界面单击“启动”按钮，即可发起1秒内并发100个线程的请求，其中，每个请求携带的参数数据都是“用户账户id为10011，申请提现金额为40”。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>打开Jmeter的安装目录，单击bin文件夹，再双击jmeter.sh文件，稍等片刻即可进入Jmeter的主界面。</li><li>在Jmeter主界面中新建一个测试计划，命名为“高并发测试-乐观锁”，然后右击该测试计划，选择“新建”命令，新建一个线程组。</li><li>在“线程组”选项区域下分别建立“HTTP请求”与“CSV数据文件设置”两个子选项，并设置“HTTP请求”选项中的相关参数取值。</li><li>对于“CSV数据文件设置”选项，则只需要指定读取的CSV文件所在的目录即可。</li><li>该CSV数据文件的内容则很简单，主要是用于存储每次前端发起申请提现请求时的金额参数amount，在这里暂且指定为40元即可。</li><li>除此之外，还需要在数据库表user_account中添加一个用户账户余额记录信息。</li><li>在Jmeter主界面单击“启动”按钮，即可发起1秒内并发100个线程的请求，其中，每个请求携带的参数数据都是“用户账户id为10011，申请提现金额为40”。</li></ul>
+</div>
+<div class="sec">
+<h4>悲观锁简介</h4>
+<ul class="point">
+<li><b>悲观锁是一种“消极、悲观”的处理方式，它总是假设事情的发生是在最坏的情况</b>
+<ul class="quote"><li>每次并发线程在获取数据的时候认为其他线程会对数据进行修改，因而每次在获取数据时都会上锁，而其他线程访问该数据的时候就会发生阻塞的现象，最终只有当前线程释放了该共享资源的锁，其他线程才能获取到锁，并对共享资源进行操作。</li></ul>
+</li>
+<li><b>在传统的关系型数据库中就用到了很多类似悲观锁的机制，比如行锁、表锁、读锁和写锁等</b>
+<ul class="quote"><li>对于数据库级别悲观锁的实现，目前Oracle、MySQL数据库是采用如下的伪SQL来实现的：select 字段列表 from 数据库表 for update。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>每次并发线程在获取数据的时候认为其他线程会对数据进行修改，因而每次在获取数据时都会上锁，而其他线程访问该数据的时候就会发生阻塞的现象，最终只有当前线程释放了该共享资源的锁，其他线程才能获取到锁，并对共享资源进行操作。</li><li>对于数据库级别悲观锁的实现，目前Oracle、MySQL数据库是采用如下的伪SQL来实现的：select 字段列表 from 数据库表 for update。</li></ul>
+</div>
+<div class="sec">
+<h4>悲观锁实战</h4>
+<ul class="point">
+<li><b>以实际生产环境中典型的应用场景“用户账户余额提现”为例，实现悲观锁</b>
+<ul class="quote"><li>在UserAccountMapper操作接口中添加与“悲观锁”相关的功能方法。</li><li>在DataBaseLockService类中采用“悲观锁”的方式开发余额申请提现的核心处理功能。</li><li>调整DataBaseLockController调用“处理用户账户余额提现申请”的方法。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在UserAccountMapper操作接口中添加与“悲观锁”相关的功能方法。</li><li>在DataBaseLockService类中采用“悲观锁”的方式开发余额申请提现的核心处理功能。</li><li>调整DataBaseLockController调用“处理用户账户余额提现申请”的方法。</li></ul>
+</div>
+<div class="sec">
+<h4>Jmeter高并发测试悲观锁</h4>
+<ul class="point">
+<li><b>采用Jmeter压力测试工具对“悲观锁”实现的逻辑进行压力测试</b>
+<ul class="quote"><li>在压力测试之前，首先需要在数据库表user_account中添加一条测试数据。</li><li>在Jmeter主界面中单击“HTTP请求”选项栏，并将请求参数的userId的取值调整为10013，然后单击“启动”按钮，即可发起1秒内并发100个线程的请求，每个请求携带的请求参数均为userId与amount，取值分别为10013与40。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在压力测试之前，首先需要在数据库表user_account中添加一条测试数据。</li><li>在Jmeter主界面中单击“HTTP请求”选项栏，并将请求参数的userId的取值调整为10013，然后单击“启动”按钮，即可发起1秒内并发100个线程的请求，每个请求携带的请求参数均为userId与amount，取值分别为10013与40。</li></ul>
+</div>
+<div class="sec">
+<h4>小结</h4>
+<ul class="point">
+<li><b>本节主要介绍了如何基于数据库实现分布式锁，包括基于数据库的乐观锁和基于数据库的悲观锁</b>
+<ul class="quote"><li>重点介绍了这两种方式的相关知识要点，包括其基本概念、执行流程和性能分析。</li><li>并以实际生产环境中典型的应用场景“用户账户余额提现”为案例，配以实际的代码进行实现，同时采用Jmeter测试工具对这两种实现方式的性能进行了压力测试。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>重点介绍了这两种方式的相关知识要点，包括其基本概念、执行流程和性能分析。</li><li>并以实际生产环境中典型的应用场景“用户账户余额提现”为案例，配以实际的代码进行实现，同时采用Jmeter测试工具对这两种实现方式的性能进行了压力测试。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">39</span><span class="mmx-name">7.3 基于Redis实现分布式锁</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 7 条要点 · 10 句原句摘录</p>
+<div class="sec">
+<h4>Redis温故而知新</h4>
+<ul class="point">
+<li><b>Redis是一款高性能的、基于Key-Value存储结构的内存数据库，具有丰富的数据结构及人性化的开发辅助工具</b>
+<ul class="quote"><li>Redis中的典型的数据结构包括字符串String、列表List、集合Set、散列存储Map及有序集合SortedSet等。</li></ul>
+</li>
+<li><b>Redis可以实现诸如热点数据存储、并发访问控制、排行榜及队列等典型的应用场景</b>
+<ul class="quote"><li>并发访问控制指的正是本章所介绍的如何控制并发多线程对共享资源的访问，即如何采用Redis实现分布式锁。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Redis中的典型的数据结构包括字符串String、列表List、集合Set、散列存储Map及有序集合SortedSet等。</li><li>并发访问控制指的正是本章所介绍的如何控制并发多线程对共享资源的访问，即如何采用Redis实现分布式锁。</li></ul>
+</div>
+<div class="sec">
+<h4>分布式锁的实现流程与原理分析</h4>
+<ul class="point">
+<li><b>Redis实现分布式锁的核心主要是基于SETNX跟EXPIRE操作实现的</b>
+<ul class="quote"><li>SETNX操作用于获取“锁”，EXPIRE操作用于设置Key的过期时间。</li></ul>
+</li>
+<li><b>Redis的操作命令可以实现分布式锁的功能，主要是得益于Redis的单线程机制</b>
+<ul class="quote"><li>对于Redis而言，不管其外层应用系统并发了N多个线程，当每个线程需要使用Redis的原子操作或命令时，是需要进行“排队等待”的，即在Redis的底层基础架构中，同一时刻、同一个部署节点只允许一个线程执行某种操作。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>SETNX操作用于获取“锁”，EXPIRE操作用于设置Key的过期时间。</li><li>对于Redis而言，不管其外层应用系统并发了N多个线程，当每个线程需要使用Redis的原子操作或命令时，是需要进行“排队等待”的，即在Redis的底层基础架构中，同一时刻、同一个部署节点只允许一个线程执行某种操作。</li></ul>
+</div>
+<div class="sec">
+<h4>基于Redis实战实现分布式锁</h4>
+<ul class="point">
+<li><b>以实际生产环境中典型的应用场景“用户重复提交注册信息”为案例，配以实际的代码讲解如何基于Redis实现分布式锁</b>
+<ul class="quote"><li>对于“用户注册”的业务场景，当高并发产生多线程时，如果不加以控制，将很有可能出现并发安全的问题，即“数据不一致”的状况。</li><li>“用户重复提交注册信息”这一业务场景中使用的分布式锁是属于“一次性锁”，即同一时刻并发的线程所携带的“相同数据”(在该业务场景中指的是用户名参数)只能允许一个线程通过，而其他线程将获取锁失败，从而结束自身的业务流程。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>对于“用户注册”的业务场景，当高并发产生多线程时，如果不加以控制，将很有可能出现并发安全的问题，即“数据不一致”的状况。</li><li>“用户重复提交注册信息”这一业务场景中使用的分布式锁是属于“一次性锁”，即同一时刻并发的线程所携带的“相同数据”(在该业务场景中指的是用户名参数)只能允许一个线程通过，而其他线程将获取锁失败，从而结束自身的业务流程。</li></ul>
+</div>
+<div class="sec">
+<h4>Jmeter高并发测试</h4>
+<ul class="point">
+<li><b>通过Jmeter工具进行高并发压力测试，观察控制台的输出结果和数据库表user_reg的数据记录</b>
+<ul class="quote"><li>在Jmeter主界面中建立一个新的测试计划“高并发测试-基于Redis”，并在该测试计划下建立一个线程组，指定1秒内并发的线程个数为1000个。</li><li>打开数据库表user_reg观察相应的数据记录，可以看到确实出现了“同一个用户名重复注册了多次”，即所谓的“重复提交”。</li></ul>
+</li>
+<li><b>将UserRegController中接收用于前端请求信息的处理逻辑调整为“加分布式锁”的处理并重新运行项目</b>
+<ul class="quote"><li>观察IDEA控制台的输出结果，可以惊喜地看到“加了分布式锁”之后，同一个用户名只能成功被注册一次。</li><li>打开数据库表user_reg观察相应的数据记录，可以看到“同一个用户名确实只能成功被注册一次”，即达到了控制对共享资源操作的目的。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在Jmeter主界面中建立一个新的测试计划“高并发测试-基于Redis”，并在该测试计划下建立一个线程组，指定1秒内并发的线程个数为1000个。</li><li>打开数据库表user_reg观察相应的数据记录，可以看到确实出现了“同一个用户名重复注册了多次”，即所谓的“重复提交”。</li><li>观察IDEA控制台的输出结果，可以惊喜地看到“加了分布式锁”之后，同一个用户名只能成功被注册一次。</li><li>打开数据库表user_reg观察相应的数据记录，可以看到“同一个用户名确实只能成功被注册一次”，即达到了控制对共享资源操作的目的。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">40</span><span class="mmx-name">7.4 基于ZooKeeper实现分布式锁</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 6 个小节 · 11 条要点 · 20 句原句摘录</p>
+<div class="sec">
+<h4>ZooKeeper简介与作用</h4>
+<ul class="point">
+<li><b>ZooKeeper是一款开源的分布式服务协调中间件</b>
+<ul class="quote"><li>ZooKeeper设计的初衷是开发一个通用的无单点问题的分布式协调框架。</li></ul>
+</li>
+<li><b>ZooKeeper是分布式数据一致性的解决方案</b>
+<ul class="quote"><li>应用程序可以基于ZooKeeper实现诸如数据发布/订阅、负载均衡、命名服务、分布式协调/通知、集群管理、分布式锁和分布式队列等功能。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>ZooKeeper设计的初衷是开发一个通用的无单点问题的分布式协调框架。</li><li>应用程序可以基于ZooKeeper实现诸如数据发布/订阅、负载均衡、命名服务、分布式协调/通知、集群管理、分布式锁和分布式队列等功能。</li></ul>
+</div>
+<div class="sec">
+<h4>分布式锁的实现流程与原理分析</h4>
+<ul class="point">
+<li><b>ZooKeeper通过创建与共享资源相关的“临时顺序节点”和采用其提供的监听器Watcher机制，从而控制多线程对共享资源的并发访问</b>
+<ul class="quote"><li>ZooKeeper实现分布式锁功能的核心流程在于创建“临时顺序节点ZNode”以及采用Watcher监听机制监听临时节点的增减，从而判断当前的线程能够成功获取到锁。</li></ul>
+</li>
+<li><b>ZooKeeper底层基础架构的核心部分正是由节点和监听器这两个组件组成</b>
+<ul class="quote"><li>节点：在ZooKeeper中，“节点”分为两种类型，第一种是指构成集群的机器，我们称之为机器节点；第二种则是指数据模型中的数据单元，我们称之为数据节点，即前文介绍的ZNode。</li><li>Watcher监听器：指的是“事件监听器”，由于ZooKeeper允许用户在指定的节点ZNode上注册“监听”事件，因而当该节点触发一些特定的事件时，ZooKeeper服务端即Server会将事件通知到感兴趣的客户端Client上，从而让客户端做出相对应的措施。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>ZooKeeper实现分布式锁功能的核心流程在于创建“临时顺序节点ZNode”以及采用Watcher监听机制监听临时节点的增减，从而判断当前的线程能够成功获取到锁。</li><li>节点：在ZooKeeper中，“节点”分为两种类型，第一种是指构成集群的机器，我们称之为机器节点；第二种则是指数据模型中的数据单元，我们称之为数据节点，即前文介绍的ZNode。</li><li>Watcher监听器：指的是“事件监听器”，由于ZooKeeper允许用户在指定的节点ZNode上注册“监听”事件，因而当该节点触发一些特定的事件时，ZooKeeper服务端即Server会将事件通知到感兴趣的客户端Client上，从而让客户端做出相对应的措施。</li></ul>
+</div>
+<div class="sec">
+<h4>Spring Boot整合ZooKeeper</h4>
+<ul class="point">
+<li><b>在Spring Boot搭建的项目中添加ZooKeeper的相关依赖与配置文件</b>
+<ul class="quote"><li>添加ZooKeepr的相关依赖，这些依赖的jar包是配置在server模块的pom.xml文件中的。</li><li>将ZooKeeper服务所在的相关地址配置到项目配置文件application.xml中。</li></ul>
+</li>
+<li><b>使用ZooKeeper高度封装后的客户端Curator框架，对ZooKeeper进行相应的操作</b>
+<ul class="quote"><li>在应用程序的启动入口类MainApplication中添加自定义注入CuratorFramework实例。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>添加ZooKeepr的相关依赖，这些依赖的jar包是配置在server模块的pom.xml文件中的。</li><li>将ZooKeeper服务所在的相关地址配置到项目配置文件application.xml中。</li><li>在应用程序的启动入口类MainApplication中添加自定义注入CuratorFramework实例。</li></ul>
+</div>
+<div class="sec">
+<h4>基于ZooKeeper实现分布式锁</h4>
+<ul class="point">
+<li><b>在UserRegService服务类中添加“采用ZooKeeper分布式锁处理用户重复提交注册请求”的功能方法</b>
+<ul class="quote"><li>创建ZooKeeper互斥锁组件实例，需要将监控用的客户端实例、精心构造的共享资源作为构造参数。</li><li>采用互斥锁组件尝试获取分布式锁，其中尝试的最大时间在这里设置为10秒。</li></ul>
+</li>
+<li><b>调整控制器UserRegController中“处理用户提交请求”方法的核心处理逻辑为“ZooKeeper分布式锁的处理方式”</b>
+<ul class="quote"><li>校验提交的用户名、密码等信息。</li><li>定义返回信息实例。</li><li>处理用户提交请求-加ZooKeeper分布式锁。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>创建ZooKeeper互斥锁组件实例，需要将监控用的客户端实例、精心构造的共享资源作为构造参数。</li><li>采用互斥锁组件尝试获取分布式锁，其中尝试的最大时间在这里设置为10秒。</li><li>校验提交的用户名、密码等信息。</li><li>定义返回信息实例。</li><li>处理用户提交请求-加ZooKeeper分布式锁。</li></ul>
+</div>
+<div class="sec">
+<h4>Jmeter高并发测试</h4>
+<ul class="point">
+<li><b>对采用ZooKeeper分布式锁“控制多线程对共享资源的并发访问”的代码逻辑进行压力测试</b>
+<ul class="quote"><li>打开该测试计划，在“线程组”选项中设置1秒内并发的线程个数为1000个。</li><li>为了测试的准确性与方便性，可以将“CSV数据文件设置”选项中CSV文件的测试用例更换为一批新的用户名。</li><li>单击Jmeter主界面的“启动”按钮，即可发起1秒内并发1000个线程的请求。</li></ul>
+</li>
+<li><b>观察控制台的输出信息，可以看到“ZooKeeper分布式锁”确实做到了，实现了多线程对共享资源的并发访问</b>
+<ul class="quote"><li>最后还可以观察数据库表user_reg中的相关数据记录，可以看到同一个用户名只成功插入了一次。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>打开该测试计划，在“线程组”选项中设置1秒内并发的线程个数为1000个。</li><li>为了测试的准确性与方便性，可以将“CSV数据文件设置”选项中CSV文件的测试用例更换为一批新的用户名。</li><li>单击Jmeter主界面的“启动”按钮，即可发起1秒内并发1000个线程的请求。</li><li>最后还可以观察数据库表user_reg中的相关数据记录，可以看到同一个用户名只成功插入了一次。</li></ul>
+</div>
+<div class="sec">
+<h4>小结</h4>
+<ul class="point">
+<li><b>本节主要介绍了另外一种可以实现“控制并发线程对共享资源的访问”的方式，即基于ZooKeeper的“分布式锁”进行实现</b>
+<ul class="quote"><li>介绍了这种方式的实现流程与底层的执行原理。</li><li>除此之外，还介绍了ZooKeeper的基本概念、作用、功能特性、典型的应用场景及本地开发环境的安装配置。</li><li>最终以Spring Boot整合ZooKeeper的项目作为奠基，以实际生产环境中典型的应用场景“用户重复提交注册信息”作为实战案例，配以实际的代码进行了讲解。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>介绍了这种方式的实现流程与底层的执行原理。</li><li>除此之外，还介绍了ZooKeeper的基本概念、作用、功能特性、典型的应用场景及本地开发环境的安装配置。</li><li>最终以Spring Boot整合ZooKeeper的项目作为奠基，以实际生产环境中典型的应用场景“用户重复提交注册信息”作为实战案例，配以实际的代码进行了讲解。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">41</span><span class="mmx-name">7.5 典型应用场景之书籍抢购模块设计与实战</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 7 个小节 · 14 条要点 · 18 句原句摘录</p>
+<div class="sec">
+<h4>分布式锁的应用场景及重要性</h4>
+<ul class="point">
+<li><b>分布式锁在微服务、分布式系统架构中的应用</b>
+<ul class="quote"><li>分布式锁的应用实施不仅给整体系统架构带来了性能和质量的提升，也给企业应用和业务带来了大规模扩展的可能，直接或者间接地给企业带来了可观的盈利性收入。</li></ul>
+</li>
+<li><b>分布式锁在书籍抢购模块中的作用</b>
+<ul class="quote"><li>书籍抢购模块中，分布式锁用于保证在多线程环境下，同一时间只有一个用户能够成功抢购到书籍。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>分布式锁的应用实施不仅给整体系统架构带来了性能和质量的提升，也给企业应用和业务带来了大规模扩展的可能，直接或者间接地给企业带来了可观的盈利性收入。</li><li>书籍抢购模块中，分布式锁用于保证在多线程环境下，同一时间只有一个用户能够成功抢购到书籍。</li></ul>
+</div>
+<div class="sec">
+<h4>书籍抢购模块的整体业务流程介绍与分析</h4>
+<ul class="point">
+<li><b>书籍抢购的整体业务流程</b>
+<ul class="quote"><li>用户在抢购活动开始时，会不断地单击“抢购”按钮进行下单，后端接口会处理用户的抢购请求。</li></ul>
+</li>
+<li><b>书籍抢购的核心流程</b>
+<ul class="quote"><li>查询并判断当前用户是否抢购过该本书籍。</li><li>查询并判断当前书籍的库存是否充足。</li><li>更新书籍的库存并插入用户抢购的记录。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>用户在抢购活动开始时，会不断地单击“抢购”按钮进行下单，后端接口会处理用户的抢购请求。</li><li>查询并判断当前用户是否抢购过该本书籍。</li><li>查询并判断当前书籍的库存是否充足。</li><li>更新书籍的库存并插入用户抢购的记录。</li></ul>
+</div>
+<div class="sec">
+<h4>数据库表设计与用例设计</h4>
+<ul class="point">
+<li><b>书籍库存记录表的设计</b>
+<ul class="quote"><li>书籍库存记录表包含主键id、书籍编号、库存和是否上架等字段。</li></ul>
+</li>
+<li><b>书籍抢购记录表的设计</b>
+<ul class="quote"><li>书籍抢购记录表包含主键id、用户id、书籍编号和抢购时间等字段。</li></ul>
+</li>
+<li><b>MyBatis逆向工程生成的实体类、Mapper操作接口及SQL配置文件</b>
+<ul class="quote"><li>生成了书籍库存实体BookStock对应的Mapper操作接口BookStockMapper和SQL配置文件BookStockMapper.xml。</li><li>生成了书籍抢购记录实体BookRob对应的Mapper操作接口BookRobMapper和SQL配置文件BookRobMapper.xml。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>书籍库存记录表包含主键id、书籍编号、库存和是否上架等字段。</li><li>书籍抢购记录表包含主键id、用户id、书籍编号和抢购时间等字段。</li><li>生成了书籍库存实体BookStock对应的Mapper操作接口BookStockMapper和SQL配置文件BookStockMapper.xml。</li><li>生成了书籍抢购记录实体BookRob对应的Mapper操作接口BookRobMapper和SQL配置文件BookRobMapper.xml。</li></ul>
+</div>
+<div class="sec">
+<h4>书籍抢购核心业务逻辑开发实战</h4>
+<ul class="point">
+<li><b>BookRobController的开发</b>
+<ul class="quote"><li>BookRobController用于接收前端用户抢购书籍请求，并调用BookRobService的核心业务逻辑处理。</li></ul>
+</li>
+<li><b>BookRobService的开发</b>
+<ul class="quote"><li>BookRobService包含不加分布式锁和加分布式锁两种情况下的功能。</li><li>BookRobService中使用ZooKeeper分布式锁实现加锁功能。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>BookRobController用于接收前端用户抢购书籍请求，并调用BookRobService的核心业务逻辑处理。</li><li>BookRobService包含不加分布式锁和加分布式锁两种情况下的功能。</li><li>BookRobService中使用ZooKeeper分布式锁实现加锁功能。</li></ul>
+</div>
+<div class="sec">
+<h4>Jmeter重现“库存超卖”的问题</h4>
+<ul class="point">
+<li><b>Jmeter压力测试的步骤和配置</b>
+<ul class="quote"><li>Jmeter建立测试计划，配置CSV数据文件，发起1秒内并发1000个线程的请求。</li></ul>
+</li>
+<li><b>数据库记录结果分析</b>
+<ul class="quote"><li>库存超卖，高并发产生的多线程对共享资源进行了并发访问，导致出现了数据不一致的现象。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Jmeter建立测试计划，配置CSV数据文件，发起1秒内并发1000个线程的请求。</li><li>库存超卖，高并发产生的多线程对共享资源进行了并发访问，导致出现了数据不一致的现象。</li></ul>
+</div>
+<div class="sec">
+<h4>采用分布式锁解决问题</h4>
+<ul class="point">
+<li><b>ZooKeeper分布式锁的实现原理是由ZNode节点的创建、删除与监听机制构成的。</b>
+</li>
+<li><b>BookRobService中使用ZooKeeper分布式锁的实现</b>
+<ul class="quote"><li>BookRobService中创建ZooKeeper互斥锁组件实例，使用互斥锁组件尝试获取分布式锁。</li><li>在处理完核心业务逻辑之后，需要释放该分布式锁。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>BookRobService中创建ZooKeeper互斥锁组件实例，使用互斥锁组件尝试获取分布式锁。</li><li>在处理完核心业务逻辑之后，需要释放该分布式锁。</li></ul>
+</div>
+<div class="sec">
+<h4>小结</h4>
+<ul class="point">
+<li><b>通过实际业务场景的代码实战，理解分布式锁的作用和实现方式</b>
+<ul class="quote"><li>以实际生产环境中的典型应用场景书籍商城抢购书籍为案例，配备实际的代码实现该业务场景的相关业务模块，并基于ZooKeeper的分布式锁解决了该业务场景在高并发下产生的库存超卖问题。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>以实际生产环境中的典型应用场景书籍商城抢购书籍为案例，配备实际的代码实现该业务场景的相关业务模块，并基于ZooKeeper的分布式锁解决了该业务场景在高并发下产生的库存超卖问题。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">42</span><span class="mmx-name">7.6 总结</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 5 条要点 · 4 句原句摘录</p>
+<div class="sec">
+<h4>分布式数据一致性问题</h4>
+<ul class="point">
+<li><b>高并发产生的多线程对共享资源进行并发访问时，可能导致数据不一致或并非预想的结果</b>
+<ul class="quote"><li>数据重复提交、手机号重复充值、库存超卖等均为典型的场景。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>数据重复提交、手机号重复充值、库存超卖等均为典型的场景。</li></ul>
+</div>
+<div class="sec">
+<h4>分布式锁的引入和作用</h4>
+<ul class="point">
+<li><b>分布式锁是在分布式的环境下对共享资源加锁，避免多线程访问时出现并发安全的问题</b>
+<ul class="quote"><li>加分布式锁，其实最直接的目的在于为核心的处理逻辑赢得足够的时间，避免高并发产生多线程访问共享资源时，系统后端接口出现“来不及”判断的状况，从而最终避免出现“数据不一致”的问题。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>加分布式锁，其实最直接的目的在于为核心的处理逻辑赢得足够的时间，避免高并发产生多线程访问共享资源时，系统后端接口出现“来不及”判断的状况，从而最终避免出现“数据不一致”的问题。</li></ul>
+</div>
+<div class="sec">
+<h4>分布式锁的基本概念、出现背景、典型应用场景及常见的3种实现方式</h4>
+<ul class="point">
+<li><b>分布式锁的基本概念、出现背景、典型应用场景。</b>
+</li>
+<li><b>常见的3种实现方式包括基于数据库级别的乐观锁和悲观锁，基于Redis的原子操作，以及基于ZooKeeper实现的分布式锁</b>
+<ul class="quote"><li>每种实现方式各有优缺点，适应的业务场景也不尽相同。在实际项目中，可以根据具体的业务、系统规模、准确性要求等指标，采取适当的方式实现分布式锁，对并发线程共享的资源加锁，从而避免出现数据不一致的现象。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>每种实现方式各有优缺点，适应的业务场景也不尽相同。在实际项目中，可以根据具体的业务、系统规模、准确性要求等指标，采取适当的方式实现分布式锁，对并发线程共享的资源加锁，从而避免出现数据不一致的现象。</li></ul>
+</div>
+<div class="sec">
+<h4>分布式锁在实际生产环境中的应用案例</h4>
+<ul class="point">
+<li><b>本章配备了丰富的来源于实际生产环境中的典型应用场景案例，以实际的代码实现分布式锁</b>
+<ul class="quote"><li>将分布式锁真正应用到实际项目中，从而加深读者对分布式锁相关技术要点的理解，进一步掌握分布式锁在实际生产环境中的应用。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>将分布式锁真正应用到实际项目中，从而加深读者对分布式锁相关技术要点的理解，进一步掌握分布式锁在实际生产环境中的应用。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">43</span><span class="mmx-name">第8章 综合中间件Redisson</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 5 个小节 · 5 条要点 · 5 句原句摘录</p>
+<div class="sec">
+<h4>Redisson简介</h4>
+<ul class="point">
+<li><b>Redisson是架设在Redis基础上实现Java驻内存数据网格的综合中间件</b>
+<ul class="quote"><li>Redisson设计的初衷是促进实施者对Redis的关注进行分离，让使用者可以将更多的精力集中地放在处理业务逻辑上，从而更好地拆分应用的整体系统架构。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Redisson设计的初衷是促进实施者对Redis的关注进行分离，让使用者可以将更多的精力集中地放在处理业务逻辑上，从而更好地拆分应用的整体系统架构。</li></ul>
+</div>
+<div class="sec">
+<h4>基于Spring Boot搭建的项目整合Redisson</h4>
+<ul class="point">
+<li><b>添加Redisson的相关依赖包、整合核心配置文件，以及自定义注入相关Bean操作组件</b>
+<ul class="quote"><li>Spring Boot整合Redisson，可以方便地让Java应用系统使用分布式缓存功能。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Spring Boot整合Redisson，可以方便地让Java应用系统使用分布式缓存功能。</li></ul>
+</div>
+<div class="sec">
+<h4>Redisson典型的常见数据组件实现</h4>
+<ul class="point">
+<li><b>Redisson的分布式对象和分布式集合等</b>
+<ul class="quote"><li>Redisson提供了丰富的数据组件，包括分布式锁、集合、映射、队列等。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Redisson提供了丰富的数据组件，包括分布式锁、集合、映射、队列等。</li></ul>
+</div>
+<div class="sec">
+<h4>Redisson提供的不同类型分布式锁的实现方式、作用及各自的性能对比</h4>
+<ul class="point">
+<li><b>Redisson提供了多种分布式锁的实现方式，包括基于Redis的set命令实现分布式锁、基于Redisson的分布式锁接口实现自定义分布式锁等</b>
+<ul class="quote"><li>Redisson的分布式锁具有高性能、可重入、可超时、可等待等特性。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Redisson的分布式锁具有高性能、可重入、可超时、可等待等特性。</li></ul>
+</div>
+<div class="sec">
+<h4>Redisson在实际生产环境中的应用案例</h4>
+<ul class="point">
+<li><b>采用Redisson提供的各种数据组件及分布式锁，解决业务场景中出现的典型问题</b>
+<ul class="quote"><li>以实际生产环境中的典型应用场景为案例，展示Redisson在实际应用中的效果和优势。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>以实际生产环境中的典型应用场景为案例，展示Redisson在实际应用中的效果和优势。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">44</span><span class="mmx-name">8.1 Redisson概述</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 10 条要点 · 17 句原句摘录</p>
+<div class="sec">
+<h4>Redisson概述</h4>
+<ul class="point">
+<li><b>Redisson是一款免费、开源的中间件，基于Redis实现，拥有一系列分布式系统功能特性</b>
+<ul class="quote"><li>Redisson内置了一系列的分布式对象、分布式集合、分布式锁及分布式服务等诸多功能特性。</li></ul>
+</li>
+<li><b>Redisson是建立在缓存中间件Redis的基础上实现的一款具有高性能且操作更为便捷的“综合中间件”</b>
+<ul class="quote"><li>Redisson充分利用Redis的Key-Value(键值对)数据结构及基于内存数据库所提供的一系列优势，使得原本作为协调单机多线程并发程序的工具包获得了协调分布式多机多线程并发系统的能力，大大降低了设计和研发大规模分布式系统架构的难度。</li><li>Redisson还结合了各种具有丰富特色的分布式服务、分布式对象、分布式集合及分布式锁等数据组件，更进一步地简化了分布式环境中程序之间的相互协作。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Redisson内置了一系列的分布式对象、分布式集合、分布式锁及分布式服务等诸多功能特性。</li><li>Redisson充分利用Redis的Key-Value(键值对)数据结构及基于内存数据库所提供的一系列优势，使得原本作为协调单机多线程并发程序的工具包获得了协调分布式多机多线程并发系统的能力，大大降低了设计和研发大规模分布式系统架构的难度。</li><li>Redisson还结合了各种具有丰富特色的分布式服务、分布式对象、分布式集合及分布式锁等数据组件，更进一步地简化了分布式环境中程序之间的相互协作。</li></ul>
+</div>
+<div class="sec">
+<h4>Redisson的功能特性</h4>
+<ul class="point">
+<li><b>Redisson提供了多种连接方式、数据序列化、集合数据分片、分布式对象、分布式集合、分布式锁、分布式服务等诸多功能特性</b>
+<ul class="quote"><li>多种连接方式：指作为客户端的应用系统可以拥有多种方式连接到Redisson所在的服务节点，比如同步连接的方式、异步连接的方式及异步流连接的方式等。</li><li>数据序列化：指对象的序列化和反序列化方式，从而实现Java对象在Redis的存储和读取功能。</li><li>集合数据分片：Redisson可以通过自身的分片算法，将一个大集合拆分为若干个片段，然后将拆分后的片段均匀地分布到集群里的各个节点中，以保证每个节点分配到的片段数量大体相同。</li><li>分布式对象：可以说大部分数据组件都是Redisson所特有的，比如布隆过滤器、BitSet、基于订阅发布式的话题功能等。</li><li>分布式集合：这一点和原生的缓存中间件Redis所提供的数据结构类似，包括列表List、集合Set、映射Map，以及Redisson所特有的延迟队列等数据组件。</li><li>分布式锁：是Redisson至关重要的组件。目前在Java应用系统中使用Redisson最多的功能特性当属分布式锁了，其提供了可重入锁、一次性锁、读写锁等组件。</li><li>分布式服务：指可以实现不在同一个Host(机器节点)的远程服务之间的调度。除此之外，还包括定时任务的调度等。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>多种连接方式：指作为客户端的应用系统可以拥有多种方式连接到Redisson所在的服务节点，比如同步连接的方式、异步连接的方式及异步流连接的方式等。</li><li>数据序列化：指对象的序列化和反序列化方式，从而实现Java对象在Redis的存储和读取功能。</li><li>集合数据分片：Redisson可以通过自身的分片算法，将一个大集合拆分为若干个片段，然后将拆分后的片段均匀地分布到集群里的各个节点中，以保证每个节点分配到的片段数量大体相同。</li><li>分布式对象：可以说大部分数据组件都是Redisson所特有的，比如布隆过滤器、BitSet、基于订阅发布式的话题功能等。</li><li>分布式集合：这一点和原生的缓存中间件Redis所提供的数据结构类似，包括列表List、集合Set、映射Map，以及Redisson所特有的延迟队列等数据组件。</li><li>分布式锁：是Redisson至关重要的组件。目前在Java应用系统中使用Redisson最多的功能特性当属分布式锁了，其提供了可重入锁、一次性锁、读写锁等组件。</li><li>分布式服务：指可以实现不在同一个Host(机器节点)的远程服务之间的调度。除此之外，还包括定时任务的调度等。</li></ul>
+</div>
+<div class="sec">
+<h4>Redisson的典型应用场景</h4>
+<ul class="point">
+<li><b>Redisson在“去重业务”场景中的应用</b>
+<ul class="quote"><li>Redisson分布式对象提供了一种高性能的数据组件“布隆过滤器”。</li></ul>
+</li>
+<li><b>Redisson也可以实现类似于“消息中间件RabbitMQ”所提供的消息队列功能</b>
+<ul class="quote"><li>这一功能主要是通过Redisson分布式对象中的一个组件“基于发布订阅模式的主题”功能实现的。</li></ul>
+</li>
+<li><b>Redisson的另外一种典型应用场景“延迟队列”</b>
+<ul class="quote"><li>Redisson的“阻塞式队列”相当于RabbitMQ的“死信队列”，主要起到“暂存、缓冲”的作用，当设置的过期时间或存活时间TTL一到，消息将进入真正的队列，被消费者监听消费。</li></ul>
+</li>
+<li><b>Redisson典型应用场景之分布式锁</b>
+<ul class="quote"><li>Redisson提供了多种“分布式锁”供开发者使用，包括“可重入锁”“一次性锁”“联锁”“红锁RedLock”及“读写锁”等。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Redisson分布式对象提供了一种高性能的数据组件“布隆过滤器”。</li><li>这一功能主要是通过Redisson分布式对象中的一个组件“基于发布订阅模式的主题”功能实现的。</li><li>Redisson的“阻塞式队列”相当于RabbitMQ的“死信队列”，主要起到“暂存、缓冲”的作用，当设置的过期时间或存活时间TTL一到，消息将进入真正的队列，被消费者监听消费。</li><li>Redisson提供了多种“分布式锁”供开发者使用，包括“可重入锁”“一次性锁”“联锁”“红锁RedLock”及“读写锁”等。</li></ul>
+</div>
+<div class="sec">
+<h4>Spring Boot整合Redisson</h4>
+<ul class="point">
+<li><b>在Spring Boot项目中加入Redisson的依赖包</b>
+<ul class="quote"><li>在server模块的pom.xml配置文件中加入Redisson的依赖包。</li></ul>
+</li>
+<li><b>自定义注入Redisson相关操作的Bean组件</b>
+<ul class="quote"><li>在RedissonConfig类中自定义注入配置操作Redisson的客户端实例。</li></ul>
+</li>
+<li><b>测试Redisson的配置概况</b>
+<ul class="quote"><li>编写一个简单的单元测试方法，打印输出目前Redisson在该Spring Boot项目中的配置概况。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在server模块的pom.xml配置文件中加入Redisson的依赖包。</li><li>在RedissonConfig类中自定义注入配置操作Redisson的客户端实例。</li><li>编写一个简单的单元测试方法，打印输出目前Redisson在该Spring Boot项目中的配置概况。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">45</span><span class="mmx-name">8.2 Redisson常见功能组件实战</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 6 条要点 · 12 句原句摘录</p>
+<div class="sec">
+<h4>Redisson常见功能组件实战</h4>
+<ul class="point">
+<li><b>Redisson的布隆过滤器</b>
+<ul class="quote"><li>布隆过滤器(Bloom Filter)在实际生产环境中主要用于“判断一个元素是否存在于大数据量的集合中”。</li><li>Redisson分布式对象提供了一种经过高度封装的数据组件，即布隆过滤器，开发者可以直接拿来使用，即真正做到了“开箱即用”。</li></ul>
+</li>
+<li><b>Redisson的发布-订阅式主题</b>
+<ul class="quote"><li>基于发布-订阅式的主题是Redisson提供给开发者使用的另一个高性能功能组件，可以实现类似消息中间件RabbitMQ的消息通信的功能。</li><li>与消息中间件RabbitMQ的基本消息模型类似，Redisson的基于发布-订阅式主题主要由3大部分组成，即生产者、消费者和消息。</li></ul>
+</li>
+<li><b>Redisson的数据结构之映射Map</b>
+<ul class="quote"><li>基于Redis的分布式集合中的数据结构“映射Map”，是开源中间件Redisson提供给开发者的另一种高性能功能组件，在Redisson里称为RMap。</li><li>RMap功能组件实现了Java对象中的java.util.concurrent.ConcurrentMap接口和java.util.Map接口，不仅拥有Map和ConcurrentMap相应的操作方法，同时自身也提供了丰富的Redisson特有的操作方法，而且几乎每种方法还提供了多种不同的操作方式。</li></ul>
+</li>
+<li><b>Redisson的数据结构之集合Set</b>
+<ul class="quote"><li>基于Redis的分布式集合中的功能组件RSet则主要是实现了Java对象中的java.util.Set接口，该功能组件可以保证集合中每个元素的唯一性。</li><li>Redisson还为集合Set这一功能组件提供了一系列具有不同功能特性的数据结构，包括有序集合功能组件SortedSet、计分排序集合功能组件ScoredSortedSet，以及字典排序集合功能组件LexSortedSet等。</li></ul>
+</li>
+<li><b>Redisson的队列Queue实战</b>
+<ul class="quote"><li>基于Redis的分布式队列Queue是Redisson提供的又一个功能组件，按照不同的特性，分布式队列Queue还可以分为双端队列Deque、阻塞队列Blocking Queue、有界阻塞队列(Bounded Blocking Queue)、阻塞双端队列(Blocking Deque)、阻塞公平队列(Blocking Fair Queue)、阻塞公平双端队列(Blocking Fair Deque)等功能组件。</li><li>在实际业务场景中，不管是采用哪一种功能组件作为“队列”，其底层核心的执行逻辑仍旧是借助“基于发布-订阅式的主题”来实现的。</li></ul>
+</li>
+<li><b>Redisson的延迟队列Delayed Queue实战</b>
+<ul class="quote"><li>对于延迟队列功能组件，相信读者并不陌生，在前面介绍分布式消息中间件RabbitMQ死信队列的相关章节中已经有所提及。</li><li>Redisson提供了“延迟队列”这个强大的功能组件，它可以解决RabbitMQ死信队列出现的缺陷，即不管在什么时候，消息将按照TTL从小到大的顺序先后被真正的队列监听、消费。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>布隆过滤器(Bloom Filter)在实际生产环境中主要用于“判断一个元素是否存在于大数据量的集合中”。</li><li>Redisson分布式对象提供了一种经过高度封装的数据组件，即布隆过滤器，开发者可以直接拿来使用，即真正做到了“开箱即用”。</li><li>基于发布-订阅式的主题是Redisson提供给开发者使用的另一个高性能功能组件，可以实现类似消息中间件RabbitMQ的消息通信的功能。</li><li>与消息中间件RabbitMQ的基本消息模型类似，Redisson的基于发布-订阅式主题主要由3大部分组成，即生产者、消费者和消息。</li><li>基于Redis的分布式集合中的数据结构“映射Map”，是开源中间件Redisson提供给开发者的另一种高性能功能组件，在Redisson里称为RMap。</li><li>RMap功能组件实现了Java对象中的java.util.concurrent.ConcurrentMap接口和java.util.Map接口，不仅拥有Map和ConcurrentMap相应的操作方法，同时自身也提供了丰富的Redisson特有的操作方法，而且几乎每种方法还提供了多种不同的操作方式。</li><li>基于Redis的分布式集合中的功能组件RSet则主要是实现了Java对象中的java.util.Set接口，该功能组件可以保证集合中每个元素的唯一性。</li><li>Redisson还为集合Set这一功能组件提供了一系列具有不同功能特性的数据结构，包括有序集合功能组件SortedSet、计分排序集合功能组件ScoredSortedSet，以及字典排序集合功能组件LexSortedSet等。</li><li>基于Redis的分布式队列Queue是Redisson提供的又一个功能组件，按照不同的特性，分布式队列Queue还可以分为双端队列Deque、阻塞队列Blocking Queue、有界阻塞队列(Bounded Blocking Queue)、阻塞双端队列(Blocking Deque)、阻塞公平队列(Blocking Fair Queue)、阻塞公平双端队列(Blocking Fair Deque)等功能组件。</li><li>在实际业务场景中，不管是采用哪一种功能组件作为“队列”，其底层核心的执行逻辑仍旧是借助“基于发布-订阅式的主题”来实现的。</li><li>对于延迟队列功能组件，相信读者并不陌生，在前面介绍分布式消息中间件RabbitMQ死信队列的相关章节中已经有所提及。</li><li>Redisson提供了“延迟队列”这个强大的功能组件，它可以解决RabbitMQ死信队列出现的缺陷，即不管在什么时候，消息将按照TTL从小到大的顺序先后被真正的队列监听、消费。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">46</span><span class="mmx-name">8.3 分布式锁实战</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 4 条要点 · 4 句原句摘录</p>
+<div class="sec">
+<h4>分布式锁的必要性</h4>
+<ul class="point">
+<li><b>在分布式部署的环境下，传统单体应用出现的“并发线程访问共享资源”的场景演变为“跨JVM进程之间的访问共享资源”</b>
+<ul class="quote"><li>为了控制“分布式系统架构”下，并发线程访问共享资源时出现“数据不一致”等现象，“分布式锁”诞生了。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>为了控制“分布式系统架构”下，并发线程访问共享资源时出现“数据不一致”等现象，“分布式锁”诞生了。</li></ul>
+</div>
+<div class="sec">
+<h4>重温分布式锁</h4>
+<ul class="point">
+<li><b>分布式锁是一种锁机制，专门应对“分布式”的环境而设计的</b>
+<ul class="quote"><li>它指的是在分布式部署的环境下，通过锁机制让多个客户端或者多个服务进程和线程互斥地对共享资源进行访问，从而避免出现并发安全、数据不一致等问题。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>它指的是在分布式部署的环境下，通过锁机制让多个客户端或者多个服务进程和线程互斥地对共享资源进行访问，从而避免出现并发安全、数据不一致等问题。</li></ul>
+</div>
+<div class="sec">
+<h4>分布式锁之一次性锁实战</h4>
+<ul class="point">
+<li><b>一次性锁适用于那些在同一时刻而且是在很长的一段时间内，仍然只允许只有一个线程访问共享资源的场景</b>
+<ul class="quote"><li>比如用户注册、重复提交、抢红包等业务场景。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>比如用户注册、重复提交、抢红包等业务场景。</li></ul>
+</div>
+<div class="sec">
+<h4>分布式锁之可重入锁实战</h4>
+<ul class="point">
+<li><b>可重入锁适用于那些在同一时刻并发产生多线程时，虽然在某一时刻不能获取到分布式锁，但是却允许隔一定的时间重新获取到“分布式锁”并操作共享资源的场景</b>
+<ul class="quote"><li>典型的应用场景当属商城平台高并发抢购商品的业务。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>典型的应用场景当属商城平台高并发抢购商品的业务。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">47</span><span class="mmx-name">8.4 总结</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 5 个小节 · 10 条要点 · 9 句原句摘录</p>
+<div class="sec">
+<h4>Redisson概述</h4>
+<ul class="point">
+<li><b>Redisson是一款高性能分布式中间件</b>
+<ul class="quote"><li>Redisson可以让使用者将更多精力集中放在业务逻辑的处理上，从而更好地拆分应用整体的系统架构。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Redisson可以让使用者将更多精力集中放在业务逻辑的处理上，从而更好地拆分应用整体的系统架构。</li></ul>
+</div>
+<div class="sec">
+<h4>Redisson的基本概念、作用、功能特性及典型应用场景</h4>
+<ul class="point">
+<li><b>Redisson的基本概念、作用、功能特性</b>
+<ul class="quote"><li>Redisson是一款分布式Java对象存储库，提供了丰富的功能组件。</li></ul>
+</li>
+<li><b>Redisson的典型应用场景</b>
+<ul class="quote"><li>Redisson可以应用于分布式锁、布隆过滤器、基于发布-订阅式的主题、数据结构之映射Map、集合Set，以及队列Queue和延迟队列Delayed Queue等场景。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Redisson是一款分布式Java对象存储库，提供了丰富的功能组件。</li><li>Redisson可以应用于分布式锁、布隆过滤器、基于发布-订阅式的主题、数据结构之映射Map、集合Set，以及队列Queue和延迟队列Delayed Queue等场景。</li></ul>
+</div>
+<div class="sec">
+<h4>Redisson的搭建与使用</h4>
+<ul class="point">
+<li><b>基于Spring Boot搭建的项目整合Redisson</b>
+<ul class="quote"><li>添加Redisson的相关依赖包、整合核心配置文件及自定义注入Bean相关操作组件。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>添加Redisson的相关依赖包、整合核心配置文件及自定义注入Bean相关操作组件。</li></ul>
+</div>
+<div class="sec">
+<h4>Redisson常见数据组件功能实现</h4>
+<ul class="point">
+<li><b>Redisson的布隆过滤器</b>
+<ul class="quote"><li>布隆过滤器是一种空间效率极高的概率型数据结构，用于判断一个元素是否在一个集合中。</li></ul>
+</li>
+<li><b>Redisson的基于发布-订阅式的主题</b>
+<ul class="quote"><li>发布-订阅式通信模式是一种一对多的通信模式，消息的发送者（发布者）和接收者（订阅者）之间不需要建立直接连接。</li></ul>
+</li>
+<li><b>Redisson的数据结构之映射Map</b>
+<ul class="quote"><li>Redisson的映射Map实现了Map接口，提供了丰富的操作方法。</li></ul>
+</li>
+<li><b>Redisson的集合Set实现了Set接口，提供了丰富的操作方法。</b>
+</li>
+<li><b>Redisson的队列Queue和延迟队列Delayed Queue提供了丰富的操作方法。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>布隆过滤器是一种空间效率极高的概率型数据结构，用于判断一个元素是否在一个集合中。</li><li>发布-订阅式通信模式是一种一对多的通信模式，消息的发送者（发布者）和接收者（订阅者）之间不需要建立直接连接。</li><li>Redisson的映射Map实现了Map接口，提供了丰富的操作方法。</li></ul>
+</div>
+<div class="sec">
+<h4>Redisson的分布式锁</h4>
+<ul class="point">
+<li><b>可重入锁和一次性锁</b>
+<ul class="quote"><li>可重入锁指的是同一线程多次获取锁时，会获得同一个锁对象，不需要再次获取锁。</li><li>一次性锁指的是同一线程获取锁后，会获得一个锁对象，再次获取锁会获取一个新的锁对象。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>可重入锁指的是同一线程多次获取锁时，会获得同一个锁对象，不需要再次获取锁。</li><li>一次性锁指的是同一线程获取锁后，会获得一个锁对象，再次获取锁会获取一个新的锁对象。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">48</span><span class="mmx-name">第9章 Redisson典型应用场景实战之高性能点赞</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 4 条要点 · 0 句原句摘录</p>
+<div class="sec">
+<h4>Redisson典型应用场景实战之高性能点赞</h4>
+<ul class="point">
+<li><b>对“点赞”业务场景进行整体介绍、分析、模块划分，并根据划分好的业务模块进行数据库设计。</b>
+</li>
+<li><b>对“点赞和取消点赞”业务模块进行介绍与分析，并采用MVCM开发模式，以实际的代码实现相关功能。</b>
+</li>
+<li><b>对“点赞排行榜”业务模块进行介绍与分析，并采用“Redis+数据库”的Group By和Order By模式进行代码实现。</b>
+</li>
+<li><b>对整体的开发流程做一个回顾与总结。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">49</span><span class="mmx-name">9.1 整体业务流程介绍与分析</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 6 条要点 · 12 句原句摘录</p>
+<div class="sec">
+<h4>业务背景介绍</h4>
+<ul class="point">
+<li><b>互联网时代，企业通过产品及服务留住用户群体，实现企业盈利</b>
+<ul class="quote"><li>企业为了抓住用户流量，实现自身业绩的增长，一般会设计并推广自身研发的产品。</li><li>这些产品凭借着自身操作的便捷性和贴近用户生活习惯的特性，以及极佳的用户体验等优势，在各自的领域绽放光芒。</li></ul>
+</li>
+<li><b>分布式系统架构可以应对高并发的用户请求</b>
+<ul class="quote"><li>在正常情况下，一个“正规”的分布式系统架构一般不止由一个分布式中间件组成，而是由多个中间件协同合作，提供一系列的服务，共同完成项目中某些业务模块或者服务的处理等。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>企业为了抓住用户流量，实现自身业绩的增长，一般会设计并推广自身研发的产品。</li><li>这些产品凭借着自身操作的便捷性和贴近用户生活习惯的特性，以及极佳的用户体验等优势，在各自的领域绽放光芒。</li><li>在正常情况下，一个“正规”的分布式系统架构一般不止由一个分布式中间件组成，而是由多个中间件协同合作，提供一系列的服务，共同完成项目中某些业务模块或者服务的处理等。</li></ul>
+</div>
+<div class="sec">
+<h4>业务流程介绍与分析</h4>
+<ul class="point">
+<li><b>“点赞”业务模块包含两大核心操作，即点赞与取消点赞</b>
+<ul class="quote"><li>当用户执行点赞操作时，系统后端首先会查询当前用户是否已经点赞过该博客了，如果已经点赞过了，则直接返回点赞成功；如果没有点赞过，当用户点赞时系统后端会记录一条该文章的点赞记录至数据库中，并设置该记录当前的状态为1，表示当前用户已点赞该博客了。</li><li>当用户执行取消点赞操作时，系统后端接口将首先判断当前用户是否已经点赞过该文章。如果已经点赞过了，则直接使该点赞记录失效，即将该记录的状态置为0，表示当前用户已经取消点赞该文章；如果当前用户没有点赞过该博客，则直接返回取消点赞成功的提醒信息即可。</li></ul>
+</li>
+<li><b>“排行榜”的产生在实际项目中可以有多种方式</b>
+<ul class="quote"><li>有的是直接借助缓存中间件的相关组件进行实现，有的是直接借助数据库如MySQL的Group By和Order By关键字实现，不同的实现方式性能不一样，适用的业务场景也不尽相同。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>当用户执行点赞操作时，系统后端首先会查询当前用户是否已经点赞过该博客了，如果已经点赞过了，则直接返回点赞成功；如果没有点赞过，当用户点赞时系统后端会记录一条该文章的点赞记录至数据库中，并设置该记录当前的状态为1，表示当前用户已点赞该博客了。</li><li>当用户执行取消点赞操作时，系统后端接口将首先判断当前用户是否已经点赞过该文章。如果已经点赞过了，则直接使该点赞记录失效，即将该记录的状态置为0，表示当前用户已经取消点赞该文章；如果当前用户没有点赞过该博客，则直接返回取消点赞成功的提醒信息即可。</li><li>有的是直接借助缓存中间件的相关组件进行实现，有的是直接借助数据库如MySQL的Group By和Order By关键字实现，不同的实现方式性能不一样，适用的业务场景也不尽相同。</li></ul>
+</div>
+<div class="sec">
+<h4>业务模块划分与数据库设计</h4>
+<ul class="point">
+<li><b>“点赞”业务场景主要由4大操作模块构成，即点赞、取消点赞、点赞排行榜及缓存模块构成</b>
+<ul class="quote"><li>点赞模块：主要是用于接收前端用户的点赞请求，处理并存储用户的点赞信息，最终将该点赞记录存储至数据库中，并设置其状态为1，代表当前用户已经点赞当前博客了。</li><li>取消点赞模块：同理，该操作模块主要用于接收前端用户取消点赞的请求，处理并更新用户取消点赞的记录。即主要是将数据库中用户对该博客的点赞记录的状态置为0，代表当前用户已经取消点赞当前博客了。</li><li>缓存模块：指用于缓存用户点赞、取消点赞的相关信息。在这里主要采用Redisson作为中间件进行辅助，并负责设计、构造存储至缓存中格式为“博客id：用户id”的Key。</li><li>点赞排行榜模块：主要是根据数据库中点赞的总数对文章/博客进行排序(从大到小或者从小到大的顺序都是可以的)。</li></ul>
+</li>
+<li><b>数据库设计环节</b>
+<ul class="quote"><li>对于“点赞”业务场景，其实核心操作主要是“点赞博客”及“取消点赞博客”，因而主要的数据库表包含“博客点赞记录表”。</li><li>采用MyBatis的逆向生成该数据库表的实体类Entity、Mapper操作接口，以及对应的动态SQL配置文件Mapper.xml。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>点赞模块：主要是用于接收前端用户的点赞请求，处理并存储用户的点赞信息，最终将该点赞记录存储至数据库中，并设置其状态为1，代表当前用户已经点赞当前博客了。</li><li>取消点赞模块：同理，该操作模块主要用于接收前端用户取消点赞的请求，处理并更新用户取消点赞的记录。即主要是将数据库中用户对该博客的点赞记录的状态置为0，代表当前用户已经取消点赞当前博客了。</li><li>缓存模块：指用于缓存用户点赞、取消点赞的相关信息。在这里主要采用Redisson作为中间件进行辅助，并负责设计、构造存储至缓存中格式为“博客id：用户id”的Key。</li><li>点赞排行榜模块：主要是根据数据库中点赞的总数对文章/博客进行排序(从大到小或者从小到大的顺序都是可以的)。</li><li>对于“点赞”业务场景，其实核心操作主要是“点赞博客”及“取消点赞博客”，因而主要的数据库表包含“博客点赞记录表”。</li><li>采用MyBatis的逆向生成该数据库表的实体类Entity、Mapper操作接口，以及对应的动态SQL配置文件Mapper.xml。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">50</span><span class="mmx-name">9.2 “点赞与取消点赞”操作模块实战</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 7 条要点 · 14 句原句摘录</p>
+<div class="sec">
+<h4>“点赞与取消点赞”业务流程分析</h4>
+<ul class="point">
+<li><b>“点赞”操作模块的执行流程</b>
+<ul class="quote"><li>用户在界面上单击“点赞”按钮时，会将当前用户的账户id、博客/文章的id等请求信息提交到系统后端相应的接口，并等待后端接口的响应信息。</li><li>“点赞”操作模块对应的系统后端接口在接收到相应的请求信息后，首先会进行“例行检查”，即校验数据的合法性，如果校验通过，会继续查询当前用户是否已经“点赞”当前博客/文章了，即查询数据库中是否有相应的“点赞记录”，如果没有相应的记录，则代表当前用户还没有“点赞”该博客。</li><li>此时可以将相应的请求信息插入到数据库中，同时，还需要将相应的数据记录存入缓存中，即将相应的点赞记录的“点赞状态(1=已点赞；0=取消点赞)”更新为1，最终将相应的响应结果返回给前端。</li></ul>
+</li>
+<li><b>“取消点赞”操作模块的执行流程</b>
+<ul class="quote"><li>“取消点赞”操作模块对应的系统后端接口在接收到相应的请求信息后，首先会进行“例行检查”，即校验数据的合法性。</li><li>如果校验通过，会继续查询当前数据库中是否有相应的“点赞记录”，如果存在相应的记录，则代表当前用户已经“点赞”该博客，此时可以将相应记录的“点赞状态(1=已点赞；0=取消点赞)”更新为0，代表当前用户已经“取消点赞”当前博客了。</li><li>与此同时，还需要将相应的数据记录更新至缓存中，最终将相应的响应结果返回给前端。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>用户在界面上单击“点赞”按钮时，会将当前用户的账户id、博客/文章的id等请求信息提交到系统后端相应的接口，并等待后端接口的响应信息。</li><li>“点赞”操作模块对应的系统后端接口在接收到相应的请求信息后，首先会进行“例行检查”，即校验数据的合法性，如果校验通过，会继续查询当前用户是否已经“点赞”当前博客/文章了，即查询数据库中是否有相应的“点赞记录”，如果没有相应的记录，则代表当前用户还没有“点赞”该博客。</li><li>此时可以将相应的请求信息插入到数据库中，同时，还需要将相应的数据记录存入缓存中，即将相应的点赞记录的“点赞状态(1=已点赞；0=取消点赞)”更新为1，最终将相应的响应结果返回给前端。</li><li>“取消点赞”操作模块对应的系统后端接口在接收到相应的请求信息后，首先会进行“例行检查”，即校验数据的合法性。</li><li>如果校验通过，会继续查询当前数据库中是否有相应的“点赞记录”，如果存在相应的记录，则代表当前用户已经“点赞”该博客，此时可以将相应记录的“点赞状态(1=已点赞；0=取消点赞)”更新为0，代表当前用户已经“取消点赞”当前博客了。</li><li>与此同时，还需要将相应的数据记录更新至缓存中，最终将相应的响应结果返回给前端。</li></ul>
+</div>
+<div class="sec">
+<h4>Controller层接收请求信息</h4>
+<ul class="point">
+<li><b>PraiseController类用于接收前端用户提交的“点赞”和“取消点赞”请求</b>
+<ul class="quote"><li>PraiseController类定义了“点赞”和“取消点赞”的方法，并定义了相应的请求前缀。</li><li>在“点赞方法”中，提供了两种不同的实现方式，一种是采用传统的即不加“分布式锁”的方式；另外一种是针对高并发产生多线程的情况下加“分布式锁”的处理方式。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>PraiseController类定义了“点赞”和“取消点赞”的方法，并定义了相应的请求前缀。</li><li>在“点赞方法”中，提供了两种不同的实现方式，一种是采用传统的即不加“分布式锁”的方式；另外一种是针对高并发产生多线程的情况下加“分布式锁”的处理方式。</li></ul>
+</div>
+<div class="sec">
+<h4>Service层插入 更新并缓存记录信息</h4>
+<ul class="point">
+<li><b>IPraiseService接口定义了“点赞”业务涉及的所有操作模块所对应的服务处理</b>
+<ul class="quote"><li>IPraiseService接口定义了“点赞”操作、“取消点赞”操作、“获取博客点赞总数”，以及获取排行榜等操作。</li></ul>
+</li>
+<li><b>PraiseService实现类提供了“点赞”操作模块的实现逻辑。</b>
+</li>
+<li><b>RedisPraise实现类提供了缓存“点赞和取消点赞”操作时产生的记录信息，以及“触发排行榜”和“获取排行榜”等操作方法</b>
+<ul class="quote"><li>RedisPraise实现类中提供了缓存“点赞和取消点赞”操作时产生的记录信息，以及“获取博客总的点赞数”的实现逻辑。</li><li>RedisPraise实现类中提供了“触发博客点赞总数排行榜”和“获得博客点赞排行榜”的方法，这些方法将在下一节进行开发。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>IPraiseService接口定义了“点赞”操作、“取消点赞”操作、“获取博客点赞总数”，以及获取排行榜等操作。</li><li>RedisPraise实现类中提供了缓存“点赞和取消点赞”操作时产生的记录信息，以及“获取博客总的点赞数”的实现逻辑。</li><li>RedisPraise实现类中提供了“触发博客点赞总数排行榜”和“获得博客点赞排行榜”的方法，这些方法将在下一节进行开发。</li></ul>
+</div>
+<div class="sec">
+<h4>业务模块自测</h4>
+<ul class="point">
+<li><b>对“点赞”业务场景中的点赞操作、取消点赞操作及获取点赞总数操作模块进行测试</b>
+<ul class="quote"><li>在Postman中对同一个“博客id”采用不同的“用户id”，发起“点赞”请求和“取消点赞”请求。</li><li>观察数据库表的记录信息，可以看到相应用户的“点赞”信息和“取消点赞”信息已经成功记录在数据库表praise中了。</li><li>从Postman得到的响应结果中得知当前“博客id”为100的当前的“点赞总数”为9个。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在Postman中对同一个“博客id”采用不同的“用户id”，发起“点赞”请求和“取消点赞”请求。</li><li>观察数据库表的记录信息，可以看到相应用户的“点赞”信息和“取消点赞”信息已经成功记录在数据库表praise中了。</li><li>从Postman得到的响应结果中得知当前“博客id”为100的当前的“点赞总数”为9个。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">51</span><span class="mmx-name">9.3 “排行榜”业务模块实战</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 9 条要点 · 14 句原句摘录</p>
+<div class="sec">
+<h4>“排行榜”业务流程分析</h4>
+<ul class="point">
+<li><b>“排行榜”模块的整体实现流程</b>
+<ul class="quote"><li>作者采用的是借助综合中间件Redisson中的功能组件，即列表RList，并结合数据库MySQL的Group By和Order By关键字进行了综合实现。</li></ul>
+</li>
+<li><b>保证排行榜对应的SQL的正确性</b>
+<ul class="quote"><li>该SQL将直接用于产生“排行榜”，即包含“博客id”“点赞总数”等字段的已经排好序的实体对象列表。</li><li>如果该SQL的执行结果不正确，那其他的操作流程将是在做无用功。</li></ul>
+</li>
+<li><b>提供一种触发机制，实时触发缓存中排行榜的更新</b>
+<ul class="quote"><li>用户在前端执行某些操作时，将实时触发缓存中排行榜的更新。</li><li>这主要是通过触发这样的一段代码逻辑：重新获取排好序的实体对象列表，并更新缓存中的排行榜。</li><li>当然，这一段代码逻辑也可以通过异步的方式进行触发。</li><li>在一些对实时性要求不高的业务模块，也可以只通过定时的方式主动触发缓存中的排行榜。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>作者采用的是借助综合中间件Redisson中的功能组件，即列表RList，并结合数据库MySQL的Group By和Order By关键字进行了综合实现。</li><li>该SQL将直接用于产生“排行榜”，即包含“博客id”“点赞总数”等字段的已经排好序的实体对象列表。</li><li>如果该SQL的执行结果不正确，那其他的操作流程将是在做无用功。</li><li>用户在前端执行某些操作时，将实时触发缓存中排行榜的更新。</li><li>这主要是通过触发这样的一段代码逻辑：重新获取排好序的实体对象列表，并更新缓存中的排行榜。</li><li>当然，这一段代码逻辑也可以通过异步的方式进行触发。</li><li>在一些对实时性要求不高的业务模块，也可以只通过定时的方式主动触发缓存中的排行榜。</li></ul>
+</div>
+<div class="sec">
+<h4>接收前端请求并触发缓存排行榜</h4>
+<ul class="point">
+<li><b>在控制器PraiseController类中开发“获取点赞排行榜”的请求方法</b>
+<ul class="quote"><li>通过调用praiseService.getRankWithRedisson()方法获取“点赞排行榜”。</li></ul>
+</li>
+<li><b>“点赞服务处理类”PraiseService中的getRankWithRedisson()方法主要用于通过缓存的方式获取“点赞排行榜”</b>
+<ul class="quote"><li>redisPraise.getBlogPraiseRank()方法返回排行榜。</li></ul>
+</li>
+<li><b>在“点赞服务处理类”PraiseService中还提供了不采用缓存的方式获取“点赞排行榜”的方式</b>
+<ul class="quote"><li>praiseMapper.getPraiseRank()方法返回排行榜。</li></ul>
+</li>
+<li><b>缓存服务处理接口中“触发博客点赞总数排行榜”方法，以及“获得博客点赞排行榜”方法的实现逻辑</b>
+<ul class="quote"><li>redisPraise.rankBlogPraise()方法根据数据库查询语句得到已经排好序的博客实体对象列表，更新至缓存中。</li><li>redisPraise.getBlogPraiseRank()方法获取缓存中最新的排行榜。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>通过调用praiseService.getRankWithRedisson()方法获取“点赞排行榜”。</li><li>redisPraise.getBlogPraiseRank()方法返回排行榜。</li><li>praiseMapper.getPraiseRank()方法返回排行榜。</li><li>redisPraise.rankBlogPraise()方法根据数据库查询语句得到已经排好序的博客实体对象列表，更新至缓存中。</li><li>redisPraise.getBlogPraiseRank()方法获取缓存中最新的排行榜。</li></ul>
+</div>
+<div class="sec">
+<h4>业务模块自测</h4>
+<ul class="point">
+<li><b>在RedisPraise类的“取消点赞博客”方法中调用“触发更新缓存中排行榜”的方法</b>
+<ul class="quote"><li>如果result&gt;0，表示更新成功，同时更新缓存中相应博客的用户点赞记录，触发更新缓存中的排行榜。</li></ul>
+</li>
+<li><b>在“点赞博客”的方法addPraiseLock()和addPraise()中加入“触发更新缓存中排行榜”的方法调用</b>
+<ul class="quote"><li>如果成功插入博客点赞记录，则输出打印相应的信息，并将用户点赞记录添加至缓存中，触发更新缓存中的排行榜。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如果result&gt;0，表示更新成功，同时更新缓存中相应博客的用户点赞记录，触发更新缓存中的排行榜。</li><li>如果成功插入博客点赞记录，则输出打印相应的信息，并将用户点赞记录添加至缓存中，触发更新缓存中的排行榜。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">52</span><span class="mmx-name">9.4 总结</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 8 条要点 · 0 句原句摘录</p>
+<div class="sec">
+<h4>高性能分布式系统架构的重要性</h4>
+<ul class="point">
+<li><b>高性能的分布式系统架构对于一个企业的产品和应用而言是至关重要的。</b>
+</li>
+<li><b>高性能、高可用的“中间件”对于分布式系统架构而言同样也是很重要的。</b>
+</li>
+<li><b>特别是在一些高并发的应用场景中，“中间件”可以起到很好的辅助作用。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>Redisson在“点赞”业务中的应用</h4>
+<ul class="point">
+<li><b>“点赞”应用场景的整体业务流程，对该业务流程进行了整体分析及模块划分，并基于划分好的操作模块进行数据库设计，最终采用MyBatis逆向工程，生成相应数据库表的实体类、Mapper操作接口及对应的动态SQL配置文件Mapper.xml。</b>
+</li>
+<li><b>“点赞”业务场景中出现的背景及整体的业务流程，对该业务的整体实现流程进行了深入剖析，并基于分析得到的结果对整体业务场景进行了模块划分及数据库设计，从中可以得知“点赞”应用场景主要包含点赞模块、取消点赞模块、获取点赞总数模块及排行榜模块，最后对相应的操作模块以实际代码进行了实现。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>业务流程的多样性和代码实现方式</h4>
+<ul class="point">
+<li><b>虽然每个操作模块的业务流程几乎是固定的，但是对于该应用场景中每个操作模块的代码实现却可以有不同的实现方式。</b>
+</li>
+<li><b>所谓的“有一千个读者，就有一千个哈姆雷特”，指的便是一种业务流程可以有多种不同的代码实现方式。</b>
+</li>
+<li><b>但不管怎么实现，最终都应该保证每个操作模块的输入、输出结果不仅是正确的，而且还应该是高性能的，即应当减少代码对数据库频繁的I/O(输入/输出)操作。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">53</span><span class="mmx-name">第3篇 总结</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 8 条要点 · 16 句原句摘录</p>
+<div class="sec">
+<h4>分布式系统架构的演进</h4>
+<ul class="point">
+<li><b>单体应用时代，关注项目的可用性</b>
+<ul class="quote"><li>项目只需要最大程度地保证项目可以运行、业务流程可以正常开展，就可说明该项目的开发是“成功的”。</li></ul>
+</li>
+<li><b>按照“业务”或者“模块”拆分的系统架构时代，关注分库分表及服务划分</b>
+<ul class="quote"><li>服务与服务之间独立部署、“单兵作战”，主要用于提供与自身业务服务相关的逻辑。</li><li>服务与服务虽然是独立部署，但却允许通过网络或者某种协商一致的协议进行通信，共同完成某项“任务”。</li></ul>
+</li>
+<li><b>分布式系统架构时代，关注系统架构的规模及可扩展性，以及业务及用户在突发增长时系统架构的可用性和高效性</b>
+<ul class="quote"><li>在这个时代的Java企业级应用系统架构中，中间件的引入可以说起到了至关重要的作用。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>项目只需要最大程度地保证项目可以运行、业务流程可以正常开展，就可说明该项目的开发是“成功的”。</li><li>服务与服务之间独立部署、“单兵作战”，主要用于提供与自身业务服务相关的逻辑。</li><li>服务与服务虽然是独立部署，但却允许通过网络或者某种协商一致的协议进行通信，共同完成某项“任务”。</li><li>在这个时代的Java企业级应用系统架构中，中间件的引入可以说起到了至关重要的作用。</li></ul>
+</div>
+<div class="sec">
+<h4>分布式中间件实战</h4>
+<ul class="point">
+<li><b>分布式缓存中间件Redis，重点介绍了它的基本概念及典型的应用场景</b>
+<ul class="quote"><li>Redis在本地开发环境如Windows系统中的安装与使用，并基于Spring Boot整合搭建的项目对Redis的常见数据结构进行了代码实战。</li><li>以实际生产环境中的典型应用场景“抢红包系统的设计与开发”为案例，配备实际的代码实现。</li></ul>
+</li>
+<li><b>分布式消息中间件RabbitMQ，主要介绍了它的基本概念、典型应用场景及在实际生产环境中的作用</b>
+<ul class="quote"><li>重点介绍了RabbitMQ的几种消息模型，包括基于FanoutExchange的消息模型、基于DirectExchange的消息模型，以及基于TopicExchange的消息模型。</li><li>介绍了RabbitMQ的“多实例消费者”消费机制及几种典型的确认消费模式，以及如何采用RabbitTemplate操作组件和@RabbitListener注解实现消息的发送和接收。</li><li>将“死信队列”拿出来独立为专门的章节进行介绍，主要介绍了“死信队列/延迟队列”的基本概念及其典型应用场景。</li><li>以实际生产环境中的典型应用场景“用户下单支付超时”为案例，配以实际代码进行了实战演示。</li></ul>
+</li>
+<li><b>分布式锁，介绍了一种可以在分布式环境中控制多线程对共享资源访问的机制</b>
+<ul class="quote"><li>主要介绍了4种分布式锁，分别为基于数据库的乐观锁和悲观锁，基于缓存中间件Redis的原子操作实现的分布式锁和基于服务协调中间件ZooKeeper的有序临时节点和Watcher机制实现的分布式锁，以及基于综合中间件Redisson实现的分布式锁。</li><li>其中，主要介绍了中间件ZooKeeper的相关基本概念及其底层基础架构的实现原理。</li></ul>
+</li>
+<li><b>综合中间件Redisson，虽然可以把它当做是Redis的升级版，但是它却拥有比Redis功能更为强大、性能更为高效的功能</b>
+<ul class="quote"><li>主要介绍了Redisson的基本概念、典型应用场景及其常见的功能组件。</li><li>在最后还以实际生产环境中的典型业务场景“高性能点赞”为案例，配以实际的代码进行了实战演示。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Redis在本地开发环境如Windows系统中的安装与使用，并基于Spring Boot整合搭建的项目对Redis的常见数据结构进行了代码实战。</li><li>以实际生产环境中的典型应用场景“抢红包系统的设计与开发”为案例，配备实际的代码实现。</li><li>重点介绍了RabbitMQ的几种消息模型，包括基于FanoutExchange的消息模型、基于DirectExchange的消息模型，以及基于TopicExchange的消息模型。</li><li>介绍了RabbitMQ的“多实例消费者”消费机制及几种典型的确认消费模式，以及如何采用RabbitTemplate操作组件和@RabbitListener注解实现消息的发送和接收。</li><li>将“死信队列”拿出来独立为专门的章节进行介绍，主要介绍了“死信队列/延迟队列”的基本概念及其典型应用场景。</li><li>以实际生产环境中的典型应用场景“用户下单支付超时”为案例，配以实际代码进行了实战演示。</li><li>主要介绍了4种分布式锁，分别为基于数据库的乐观锁和悲观锁，基于缓存中间件Redis的原子操作实现的分布式锁和基于服务协调中间件ZooKeeper的有序临时节点和Watcher机制实现的分布式锁，以及基于综合中间件Redisson实现的分布式锁。</li><li>其中，主要介绍了中间件ZooKeeper的相关基本概念及其底层基础架构的实现原理。</li><li>主要介绍了Redisson的基本概念、典型应用场景及其常见的功能组件。</li><li>在最后还以实际生产环境中的典型业务场景“高性能点赞”为案例，配以实际的代码进行了实战演示。</li></ul>
+</div>
+<div class="sec">
+<h4>对读者的建议</h4>
+<ul class="point">
+<li><b>读者在学习本书介绍的相关中间件时，千万不要“眼高手低”，而应当贯彻“实战为主，理论为辅”的理念</b>
+<ul class="quote"><li>结合相应的业务流程图，多动手进行代码编写。</li><li>读者也可以自行根据笔者提供的业务流程图，动手实现跟笔者不一样的代码，也许会有比笔者提供的现有方案更为高效的解决方案。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>结合相应的业务流程图，多动手进行代码编写。</li><li>读者也可以自行根据笔者提供的业务流程图，动手实现跟笔者不一样的代码，也许会有比笔者提供的现有方案更为高效的解决方案。</li></ul>
+</div>
+</div></details>
+  </div>
+</section>
 <section class="mmx-mod" aria-labelledby="views" data-key="views"><h2 id="views">核心观点初判</h2><p class="mmx-mod-note">按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。</p><ul class="mmx-views"><li><b>第 1–7 章</b>——含「前言」至「第2章 搭建微服务项目」</li><li><b>第 8–14 章</b>——含「2.1 Spring B」至「3.3 Redis常见数」</li><li><b>第 15–21 章</b>——含「3.4 Redis实战场」至「4.4 “发红包”模块实」</li><li><b>第 22–28 章</b>——含「4.5 “抢红包”模块实」至「5.2 Spring B」</li><li><b>第 29–35 章</b>——含「5.3 RabbitMQ」至「6.2 RabbitMQ」</li><li><b>第 36–42 章</b>——含「6.3 典型应用场景实战」至「7.4 基于ZooKee」</li><li><b>第 43–49 章</b>——含「7.5 典型应用场景之书」至「8.4 总结」</li><li><b>第 50–55 章</b>——含「第9章 Redisson」至「第3篇 总结」</li></ul></section>
 <section class="mmx-mod" aria-labelledby="top10" data-key="top10"><h2 id="top10">原文金句 · 持续积累</h2><p class="mmx-mod-note">以下原句取自本书 AI 大纲落库的原文摘录（book_outline.quote），按大纲顺序节选，非 AI 生成；更多见逐章深读页。</p><ol class="mmx-qlist"><li><blockquote>「• 点赞排行榜模块：主要是根据数据库中点赞的总数对文章/博客进行排序（从大到小或者从小到大的顺序都是可以的）。」</blockquote><cite>本书正文</cite></li><li><blockquote>「对于数据库级别悲观锁的实现，目前Oracle、MySQL数据库是采用如下的伪SQL来实现的：」</blockquote><cite>本书正文</cite></li><li><blockquote>「蒙特卡罗方法是由著名科学家、“计算机科学之父”和“博弈论之父”冯·诺依曼提出的，此种方法又可称为统计模拟法、随机抽样技术，是一种以概率和统计理论方法为基础的计算方法。」</blockquote><cite>本书正文</cite></li><li><blockquote>「在Jmeter主界面单击“启动”按钮，即可发起1秒内并发100个线程的请求，其中，每个请求携带的参数数据都是“用户账户id为10011，申请提现金额为40”。」</blockquote><cite>本书正文</cite></li><li><blockquote>「众所周知，高并发请求其实本质上是高并发多线程，多线程的高并发如果出现抢占共享资源而不加以控制的话，将会带来各种各样的并发安全问题，数据不一致便是其中典型的一种。」</blockquote><cite>本书正文</cite></li><li><blockquote>「理想情况下，这种处理逻辑是没问题的，然而理想终归是理想。」</blockquote><cite>本书正文</cite></li><li><blockquote>「除此之外，ZooKeeper还是一种典型的分布式数据一致性的解决方案，应用程序可以基于ZooKeeper实现诸如数据发布/订阅、负载均衡、命名服务、分布式协调/通知、集群管理、分布式锁和分布式队列等功能。」</blockquote><cite>本书正文</cite></li><li><blockquote>「当用户在前端多次单击“提现”按钮（可能是恶意的行为，亦或是黑客恶意进行攻击）时，将很有可能出现典型的并发现象，即同一时刻可能会产生多个“提现余额”的并发请求线程。」</blockquote><cite>本书正文</cite></li><li><blockquote>「尤其是在如今终端手机普及的移动互联网时代，更是涌现出了许多实用、优秀、吸引用户的产品，这些产品凭借着自身操作的便捷性和贴近用户生活习惯的特性，以及极佳的用户体验等优势，在各自的领域绽放光芒。」</blockquote><cite>本书正文</cite></li><li><blockquote>「• 基于数据库级别的乐观锁：主要是通过在查询、操作共享数据记录时带上一个标识字段version，通过version来控制每次对数据记录执行的更新操作。」</blockquote><cite>本书正文</cite></li></ol></section>
 <section class="mmx-mod" aria-labelledby="coreask" data-key="coreask"><h2 id="coreask">核心追问（来自深读）</h2><div class="mmx-qa"><p class="mmx-q">分布式锁为什么做了三种实现，而不是选一个最优解？</p><p class="mmx-a">因为三种实现对应三种不同的失效模型，没有免费的午餐。数据库版靠行锁或版本号：划线说“基于数据库级别的乐观锁……通过在查询、操作共享数据记录时带上一个标识字段version”（1690人划线），悲观锁则是 select … for update 的伪SQL（1746人划线）——简单、强一致，但吞吐低、连接占用高。Redis版靠 SETNX 加过期时间，性能最好，但持有者可能在自己没察觉时已经丢锁。ZooKeeper版靠临时顺序节点，“是一种典型的分布式数据一致性的解决方案”（1711人划线），能感知会话失效，代价是依赖ZK集群与更高延迟。选型不是选最强，是选你能承受哪种失败。</p></div><div class="mmx-qa"><p class="mmx-q">抢红包的金额算法为什么不能纯随机？</p><p class="mmx-a">因为纯随机会产生极端值：前面的人可能拿走大半，后面的人只剩几分钱，体验直接崩坏。书里用的是带约束的随机（二倍均值一类）：每次取值的上限是“剩余均值×2”，既保证期望公平，又保留波动。划线提到“蒙特卡罗方法……以概率和统计理论方法为基础的计算方法”（1740人划线），说明作者是用统计模拟验证分布，而不是拍脑袋定参数。真正难的是两个硬约束：每人至少一分、总额必须发完——这两条会让均匀与随机打架，实现里通常要做尾数补偿，否则最后一个人可能拿到负数或零。</p></div><div class="mmx-qa"><p class="mmx-q">缓存穿透为什么要布多道防线，而不是加个布隆过滤器就完事？</p><p class="mmx-a">因为穿透的成因不止一种。请求一个不存在的key，缓存不命中就打库，这是查无此物型；恶意构造大量随机key，这是攻击型；热点key过期瞬间大量请求同时回源，这是击穿型。三种成因对应三种药：空值缓存与布隆过滤器挡查无此物，限流与参数校验挡攻击，互斥锁或逻辑过期挡击穿。书里第3.4节把它们放在一个实战场景里讲，用意是先判断是哪一种，再选工具。只记住“加布隆过滤器”，遇到击穿照样崩，因为击穿的关键不是“不存在”，而是“同时”。</p></div></section>

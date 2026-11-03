@@ -86,8 +86,9 @@
 <path class="ln" d="M692 681 L700 681"/>
 </svg></section>
 <section class="mmx-mod" aria-labelledby="oneline" data-key="oneline"><h2 id="oneline">一句话主旨</h2><p class="mmx-mod-note">本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。</p><p class="mmx-oneline">主要介绍基于Java的并行程序设计基础、思路、方法和实战</p></section>
-<section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" data-key="merged_guide"><h2 id="merged-guide-title">AI领读</h2><style>
-/* merged_guide 章内：mmx 组件样式（与完整版一致） */
+<section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" data-key="merged_guide"><h2 id="merged-guide-title">AI领读</h2>
+<style>
+/* merged_guide 章内：AI 大纲原生深层样式 */
 .merged-guide .sec{margin:10px 0 14px;padding-left:6px;border-left:2px solid #e5e0d6}
 .merged-guide .sec h4{font:600 .98rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.6em 0 .3em}
 .merged-guide ul.point{margin:.3em 0;padding-left:20px}
@@ -95,10 +96,3420 @@
 .merged-guide ul.quote{margin:.25em 0 .25em 20px;padding-left:18px;list-style:none}
 .merged-guide ul.quote::before{content:"原句";display:block;font-size:.72rem;color:#bf8247;
   letter-spacing:.1em;margin:.15em 0 .1em;font-weight:600}
+/* 小节层级追加的汇总原句节点，标签与要点下的原句区分开 */
 .merged-guide ul.quote.quote-node{margin-top:.5em;padding-top:.4em;border-top:1px dashed #eadfc9}
-.merged-guide ul.quote.quote-node::before{content:"热门划线 · 本章原文摘录"}
+.merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
 .merged-guide ul.quote>li{color:#4a4436;font-size:.93rem;margin:.2em 0;padding-left:10px;border-left:2px solid #bf8247}
-</style><p class="small">章节目录取自微信读书官方目录；展开各章即该章与各小节的热门划线原文（按划线人数排序），原句均为读者划线，非 AI 生成。</p><div class="toc-part"><span class="part-label">全书篇目（共 11 章 · 59 句热门划线）</span><details class="mmx-cn"><summary><span class="mmx-no">1</span><span class="mmx-name">内容简介</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">暂无热门划线</p></div></details><details class="mmx-cn"><summary><span class="mmx-no">2</span><span class="mmx-name">前言</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">暂无热门划线</p></div></details><details class="mmx-cn"><summary><span class="mmx-no">3</span><span class="mmx-name">第1章 走入并行世界</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">4 个小节 · 22 句热门划线</p><div class="sec"><h4>1.1 何去何从的并行计算</h4><ul class="quote"><li>于是，Git诞生了。</li><li>多线程间如何保证线程安全，如何正确理解线程间的无序性、可见性，如何尽可能地设计并行程序，如何将串行程序改造为并行程序。</li><li>使用并行也不完全是出于性能的考虑，而有时候，我们会很自然地那么做。</li></ul></div><div class="sec"><h4>1.2 你必须知道的几个概念</h4><ul class="quote"><li>如果线程的智力不够，且都秉承着“谦让”的原则，主动将资源释放给他人使用，那么就会导致资源不断地在两个线程间跳动，而没有一个线程可以同时拿到所有资源正常执行。这种情况就是活锁。</li><li>饥饿是指某一个或者多个线程因为种种原因无法获得所需要的资源，导致一直无法执行。</li><li>并发偏重于多个任务交替执行，而多个任务之间有可能还是串行的，而并行是真正意义上的“同时执行”</li><li>临界区用来表示一种公共资源或者说共享数据，可以被多个线程使用。但是每一次，只能有一个线程使用它，一旦临界区资源被占用，其他线程要想使用这个资源就必须等待。</li><li>同步和异步通常用来形容一次方法调用。同步方法调用一旦开始，调用者必须等到方法调用返回后，才能继续后续的行为。异步方法调用更像一个消息传递，一旦开始，方法调用就会立即返回，调用者就可以继续后续的操作</li><li>一个CPU一次只能执行一条指令</li><li>活锁是一种非常有趣的情况。</li><li>阻塞和非阻塞通常用来形容多线程间的相互影响。比如一个线程占用了临界区资源，那么其他所有需要这个资源的线程就必须在这个临界区中等待。等待会导致线程挂起，这种情况就是阻塞。</li></ul></div><div class="sec"><h4>1.3 并发级别</h4><ul class="quote"><li>对于无障碍的线程来说，一旦检测到这种情况，它就会立即对自己所做的修改进行回滚，确保数据安全。但如果没有数据竞争发生，那么线程就可以顺利完成自己的工作，走出临界区。</li><li>但如果锁是公平的，按照先来后到的规则，那么饥饿就不会产生，不管新来的线程优先级多高，要想获得资源，就必须乖乖排队，这样所有的线程都有机会执行</li><li>一种可行的无障碍实现可以依赖一个“一致性标记”来实现。</li><li>但在写数据的时候，先取得原始数据的副本，接着只修改副本数据（这就是为什么读可以不加控制），修改完成后，在合适的时机回写数据</li><li>而任何对资源有修改操作的线程，在修改数据前，都需要更新这个一致性标记，表示数据不再安全。</li><li>在无锁的调用中，一个典型的特点是可能会包含一个无穷循环。在这个循环中，线程会不断尝试修改共享变量。如果没有冲突，修改成功，那么程序退出，否则继续尝试修改</li><li>一种典型的无等待结构就是RCU（Read Copy Update）</li></ul></div><div class="sec"><h4>1.5 回到Java：JMM</h4><ul class="quote"><li>线程A的指令执行顺序在线程B看来是没有保证的。如果运气好的话，线程B也许真的可以看到和线程A一样的执行顺序。</li><li>volatile规则：volatile变量的写先于读发生，这保证了volatile变量的可见性。</li><li>在一个线程中观察另外一个线程的变量，它们的值是否能观测到、何时能观测到是没有保证的。</li><li>对于32位系统来说，long型数据的读写不是原子性的（因为long型数据有64位）</li></ul></div></div></details><details class="mmx-cn"><summary><span class="mmx-no">4</span><span class="mmx-name">第2章 Java并行程序基础</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">5 个小节 · 17 句热门划线</p><div class="sec"><h4>2.2 初始线程：线程的基本操作</h4><ul class="quote"><li>Thread.sleep()方法由于中断而抛出异常，此时，它会清除中断标记，如果不加处理，那么在下一次循环开始时，就无法捕获这个中断，故在异常处理中，再次设置中断标记位</li><li>线程中断并不会使线程立即退出，而是给线程发送一个通知，告知目标线程，有人希望你退出啦！</li><li>object.notify()方法被调用时，它就会从这个等待队列中随机选择一个线程，并将其唤醒。这里希望大家注意的是，这个选择是不公平的，并不是先等待的线程就会优先被选择，这个选择完全是随机的。</li><li>wait()方法会释放目标对象的锁，而Thread.sleep()方法不会释放任何资源。</li><li>join()方法的本质是让调用线程wait()方法在当前线程对象实例上。</li><li>中断的功能更为强劲</li><li>Thread.interrupt()方法是一个实例方法</li><li>Object.wait()方法并不能随便调用。它必须包含在对应的synchronzied语句中，无论是wait()方法或者notify()方法都需要首先获得目标对象的一个监视器。</li><li>当在一个对象实例上调用wait()方法后，当前线程就会在这个对象上等待。</li></ul></div><div class="sec"><h4>2.3 volatile与Java内存模型（JMM）</h4><ul class="quote"><li>加入关键字volatile声明，告诉编译器，这个long型数据，你要格外小心，因为它会不断地被修改。</li></ul></div><div class="sec"><h4>2.6 先做重要的事：线程优先级</h4><ul class="quote"><li>高优先级的线程在大部分情况下，都会首先完成任务</li></ul></div><div class="sec"><h4>2.7 线程安全的概念与关键字synchronized</h4><ul class="quote"><li>volatile关键字并不能真正保证线程安全。它只能确保一个线程修改了数据后，其他线程能够看到这个改动。但当两个线程同时修改某一个数据时，依然会产生冲突。</li><li>直接作用于静态方法：相当于对当前类加锁，进入同步代码前要获得当前类的锁。</li><li>线程1和线程2同时读取i为0，并各自计算得到i=1，并先后写入这个结果，因此，虽然i++被执行了两次，但是实际i的值只增加了1。</li></ul></div><div class="sec"><h4>2.8 程序中的幽灵：隐蔽的错误</h4><ul class="quote"><li>注意：改进的方法很简单，使用线程安全的Vector代替ArrayList即可。</li><li>如此一来，我们就可以明白问题所在了，由于在多个线程间，并不一定能够看到同一个i对象（因为i对象一直在变），因此，两个线程每次加锁可能都加在了不同的对象实例上，从而导致对临界区代码控制出现问题。</li><li>由于多线程的冲突，这个链表的结构已经遭到了破坏，链表成环了</li></ul></div></div></details><details class="mmx-cn"><summary><span class="mmx-no">5</span><span class="mmx-name">第3章 JDK并发包</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">3 个小节 · 12 句热门划线</p><div class="sec"><h4>3.1 多线程的团队协作：同步控制</h4><ul class="quote"><li>读操作并不对数据的完整性造成破坏</li><li>漏桶算法的基本思想是：利用一个缓存区，当有请求进入系统时，无论请求的速率如何，都先在缓存区内保存，然后以固定的流速流出缓存区进行处理，如图3.4所示。</li><li>一个线程连续两次获得同一把锁是允许的。如果不允许这么操作，那么同一个线程在第2次获得锁时，将会和自己产生死锁。程序就会“卡死”在第2次申请锁的过程中。</li><li>允许多个线程同时访问：信号量（Semaphore）</li><li>ReadWriteLock是JDK 5中提供的读写分离锁。读写分离锁可以有效地帮助减少锁竞争，提升系统性能</li><li>这个工具通常用来控制线程等待，它可以让某一个线程等待直到倒计数结束，再开始执行。</li><li>公平锁看起来很优美，但是要实现公平锁必然要求系统维护一个有序队列，因此公平锁的实现成本比较高，性能却非常低下，因此，在默认情况下，锁是非公平的。</li></ul></div><div class="sec"><h4>3.2 线程复用：线程池</h4><ul class="quote"><li>使用自定义线程池时，要根据应用的具体情况，选择合适的并发队列作为任务的缓冲。当线程资源紧张时，不同的并发队列对系统行为和性能的影响均不同。</li><li>注入不同的exceutor的实现，例如使用固定大小线程池替代DirectExecutor，无须修改代码便可以使程序拥有不同的行为，这也正是DirectExecutor的用意所在</li><li>一个值得注意的地方是，当一个线程试图“帮助”其他线程时，总是从任务队列的底部开始获取数据，而线程试图执行自己的任务时，则是从相反的顶部开始获取数据。因此这种行为也十分有利于避免数据竞争。</li><li>ThreadPoolExecutor表示一个线程池。Executors类则扮演着线程池工厂的角色，通过Executors可以取得一个拥有特定功能的线程池。</li></ul></div><div class="sec"><h4>3.3 不要重复发明轮子：JDK的并发容器</h4><ul class="quote"><li>ConcurrentLinkedQueue类应该算是在高并发环境中性能最好的队列就可以了。它之所以能有很好的性能，是因为其内部复杂的实现。</li></ul></div></div></details><details class="mmx-cn"><summary><span class="mmx-no">6</span><span class="mmx-name">第4章 锁的优化及注意事项</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">2 个小节 · 2 句热门划线</p><div class="sec"><h4>4.1 有助于提高锁性能的几点建议</h4><ul class="quote"><li>有助于提高锁性能的几点建议</li></ul></div><div class="sec"><h4>4.4 无锁</h4><ul class="quote"><li>与众不同的并发策略：比较交换</li></ul></div></div></details><details class="mmx-cn"><summary><span class="mmx-no">7</span><span class="mmx-name">第5章 并行模式与算法</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">5 个小节 · 6 句热门划线</p><div class="sec"><h4>5.1 探讨单例模式</h4><ul class="quote"><li>因为这是一种非常丑陋、复杂的方法，甚至在低版本的JDK中都不能保证正确性。因此，绝不推荐大家使用。</li></ul></div><div class="sec"><h4>5.2 不变模式</h4><ul class="quote"><li>同时还需要注意，不变模式和只读属性是有一定的区别的。不变模式比只读属性具有更强的一致性和不变性。对只读属性的对象而言，对象本身不能被其他线程修改，但是对象的自身状态却可能自行修改。</li></ul></div><div class="sec"><h4>5.3 生产者-消费者模式</h4><ul class="quote"><li>生产者-消费者模式很好地对生产者线程和消费者线程进行解耦，优化了系统整体结构。同时，由于缓冲区的作用，允许生产者线程和消费者线程存在执行上的性能差异，从一定程度上缓解了性能瓶颈对系统性能的影响。</li><li>注意：生产者-消费者模式中的内存缓冲区的主要功能是数据在多线程间的共享，此外，通过该缓冲区，可以缓解生产者和消费者间的性能差。</li></ul></div><div class="sec"><h4>5.4 高性能的生产者-消费者模式：无锁的实现</h4><ul class="quote"><li>读取数据时，为了防止多个消费者处理同一个数据，也使用CAS操作进行数据保护。</li></ul></div><div class="sec"><h4>5.10 准备好了再通知我：网络NIO</h4><ul class="quote"><li>它倾向于让CPU进行IO等待</li></ul></div></div></details><details class="mmx-cn"><summary><span class="mmx-no">8</span><span class="mmx-name">第6章 Java 8/9/10与并发</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">暂无热门划线</p></div></details><details class="mmx-cn"><summary><span class="mmx-no">9</span><span class="mmx-name">第7章 使用Akka构建高并发程序</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">暂无热门划线</p></div></details><details class="mmx-cn"><summary><span class="mmx-no">10</span><span class="mmx-name">第8章 并行程序调试</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">暂无热门划线</p></div></details><details class="mmx-cn"><summary><span class="mmx-no">11</span><span class="mmx-name">第9章 多线程优化示例—Jetty核心代码分析</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">暂无热门划线</p></div></details></div></section>
+</style>
+<p class="small">章节目录与 AI 大纲融合为一棵树：篇章分组即目录，展开各章即骨架与逐节 AI 大纲（要点 · 原句摘录）。</p>
+  <div class="toc-part"><span class="part-label">全书篇目（AI 大纲顺序）</span>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">1</span><span class="mmx-name">内容简介</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 8 个小节 · 10 条要点 · 22 句原句摘录</p>
+<div class="sec">
+<h4>并行程序设计基础</h4>
+<ul class="point">
+<li><b>Java进行并行程序设计的基本方法</b>
+<ul class="quote"><li>并行程序设计的目的是充分利用多核CPU的计算能力。</li><li>并行程序设计需要考虑数据分割、任务分配和结果汇总等问题。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>并行程序设计的目的是充分利用多核CPU的计算能力。</li><li>并行程序设计需要考虑数据分割、任务分配和结果汇总等问题。</li></ul>
+</div>
+<div class="sec">
+<h4>JDK对并行程序的支持</h4>
+<ul class="point">
+<li><b>JDK提供了丰富的API和工具，支持并行程序开发</b>
+<ul class="quote"><li>Java. util. concurrent包提供了许多线程池、同步器和原子操作类。</li><li>Java 8引入了Stream API，可以方便地实现并行操作。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Java. util. concurrent包提供了许多线程池、同步器和原子操作类。</li><li>Java 8引入了Stream API，可以方便地实现并行操作。</li></ul>
+</div>
+<div class="sec">
+<h4>锁的优化和提高并行程序性能级别的方法和思路</h4>
+<ul class="point">
+<li><b>锁的优化主要包括避免死锁、减小锁粒度和锁竞争</b>
+<ul class="quote"><li>避免死锁可以通过避免共享资源、按序加锁和使用tryLock等方法实现。</li><li>减小锁粒度可以通过将大任务拆分为小任务，或者使用读写锁等方法实现。</li><li>锁竞争可以通过减少锁持有时间、使用并发锁和锁松弛等方法降低。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>避免死锁可以通过避免共享资源、按序加锁和使用tryLock等方法实现。</li><li>减小锁粒度可以通过将大任务拆分为小任务，或者使用读写锁等方法实现。</li><li>锁竞争可以通过减少锁持有时间、使用并发锁和锁松弛等方法降低。</li></ul>
+</div>
+<div class="sec">
+<h4>并行的基本设计模式</h4>
+<ul class="point">
+<li><b>并行设计模式包括生产者-消费者模式、流水线模式、主从模式等</b>
+<ul class="quote"><li>生产者-消费者模式用于解决任务生产者和任务消费者之间的同步问题。</li><li>流水线模式用于提高并行处理效率，将任务划分为多个阶段进行处理。</li><li>主从模式用于解决多线程之间的协作问题，其中一个线程作为主线程，其他线程作为从线程。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>生产者-消费者模式用于解决任务生产者和任务消费者之间的同步问题。</li><li>流水线模式用于提高并行处理效率，将任务划分为多个阶段进行处理。</li><li>主从模式用于解决多线程之间的协作问题，其中一个线程作为主线程，其他线程作为从线程。</li></ul>
+</div>
+<div class="sec">
+<h4>Java 8/9/10对并行程序的支持和改进</h4>
+<ul class="point">
+<li><b>Java 8引入了Stream API，可以方便地实现并行操作</b>
+<ul class="quote"><li>Stream API提供了丰富的操作符，可以方便地对集合进行过滤、映射、排序等操作。</li><li>Stream API支持并行操作，可以通过parallel()方法指定并行流。</li></ul>
+</li>
+<li><b>Java 9引入了新的内存管理器ZGC，可以大幅提高并行程序的性能</b>
+<ul class="quote"><li>ZGC具有低延迟、高吞吐量的特点，适合用于大规模并发的场景。</li><li>ZGC通过压缩堆内存，可以减少内存占用，提高程序的并发性能。</li></ul>
+</li>
+<li><b>Java 10引入了新的垃圾回收器Epsilon GC，可以大幅减少垃圾回收对程序性能的影响</b>
+<ul class="quote"><li>Epsilon GC是一种低延迟的垃圾回收器，它几乎不占用CPU资源。</li><li>Epsilon GC适用于对延迟要求极高的场景，如金融、游戏等。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Stream API提供了丰富的操作符，可以方便地对集合进行过滤、映射、排序等操作。</li><li>Stream API支持并行操作，可以通过parallel()方法指定并行流。</li><li>ZGC具有低延迟、高吞吐量的特点，适合用于大规模并发的场景。</li><li>ZGC通过压缩堆内存，可以减少内存占用，提高程序的并发性能。</li><li>Epsilon GC是一种低延迟的垃圾回收器，它几乎不占用CPU资源。</li><li>Epsilon GC适用于对延迟要求极高的场景，如金融、游戏等。</li></ul>
+</div>
+<div class="sec">
+<h4>Akka的使用方法</h4>
+<ul class="point">
+<li><b>Akka是一个用于构建高并发、分布式和容错系统的框架</b>
+<ul class="quote"><li>Akka支持Actor模型，可以方便地实现并发任务的管理和调度。</li><li>Akka提供了丰富的API和工具，支持集群、持久化和路由等功能。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Akka支持Actor模型，可以方便地实现并发任务的管理和调度。</li><li>Akka提供了丰富的API和工具，支持集群、持久化和路由等功能。</li></ul>
+</div>
+<div class="sec">
+<h4>并行程序的调试方法</h4>
+<ul class="point">
+<li><b>并行程序调试需要考虑多线程之间的交互和同步问题</b>
+<ul class="quote"><li>使用线程Dump工具分析线程状态，找出线程死锁、阻塞等问题。</li><li>使用断点、单步执行等调试手段，逐步跟踪程序的执行过程。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>使用线程Dump工具分析线程状态，找出线程死锁、阻塞等问题。</li><li>使用断点、单步执行等调试手段，逐步跟踪程序的执行过程。</li></ul>
+</div>
+<div class="sec">
+<h4>高并发优化例子分析</h4>
+<ul class="point">
+<li><b>Jetty代码在高并发优化方面的例子</b>
+<ul class="quote"><li>Jetty使用了线程池来处理请求，提高了服务器的并发处理能力。</li><li>Jetty使用了连接池来管理数据库连接，减少了数据库连接的开销。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Jetty使用了线程池来处理请求，提高了服务器的并发处理能力。</li><li>Jetty使用了连接池来管理数据库连接，减少了数据库连接的开销。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">2</span><span class="mmx-name">第1章 走入并行世界</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 2 条要点 · 1 句原句摘录</p>
+<div class="sec">
+<h4>并行计算的现状与挑战</h4>
+<ul class="point">
+<li><b>Linus Torvalds对并行计算的观点</b>
+<ul class="quote"><li>Linus Torvalds认为“忘掉那该死的并行吧！”。</li></ul>
+</li>
+<li><b>并行计算并非必然成为未来的大趋势。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Linus Torvalds认为“忘掉那该死的并行吧！”。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">3</span><span class="mmx-name">1.1 何去何从的并行计算</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 5 条要点 · 9 句原句摘录</p>
+<div class="sec">
+<h4>Linus Torvalds对并行计算的看法</h4>
+<ul class="point">
+<li><b>Linus认为并行计算只在图像处理和服务端编程两个领域有实际应用</b>
+<ul class="quote"><li>图像处理往往拥有极大的计算量，可能超过单核CPU的计算能力，所以自然需要引入多核计算。</li><li>服务端程序需要承受很大的用户访问压力，并行程序也就自然成了唯一的出路。</li></ul>
+</li>
+<li><b>Linus认为并行程序的设计和实现异常复杂，只有“疯子”才会叫嚣并行就是未来</b>
+<ul class="quote"><li>并行程序的设计和实现不仅体现在程序的功能分离上，多线程间的协调性、乱序性都会成为程序正确执行的障碍。</li><li>混乱的程序难以阅读、难以理解，更难以调试。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>图像处理往往拥有极大的计算量，可能超过单核CPU的计算能力，所以自然需要引入多核计算。</li><li>服务端程序需要承受很大的用户访问压力，并行程序也就自然成了唯一的出路。</li><li>并行程序的设计和实现不仅体现在程序的功能分离上，多线程间的协调性、乱序性都会成为程序正确执行的障碍。</li><li>混乱的程序难以阅读、难以理解，更难以调试。</li></ul>
+</div>
+<div class="sec">
+<h4>摩尔定律的失效</h4>
+<ul class="point">
+<li><b>摩尔定律在CPU的计算性能上可能已经失效</b>
+<ul class="quote"><li>Intel已经研制出了4GHz芯片，但可以看到，在近10年的发展中，CPU主频的提升已经明显遇到了一些暂时不可逾越的瓶颈。</li><li>就目前的硅电路而言，很有可能已经走到了头。我们的制造工艺已经精确到了纳米了。1纳米是10-9米，也就是十亿分之一米。这已经是一个相当小的数字了。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Intel已经研制出了4GHz芯片，但可以看到，在近10年的发展中，CPU主频的提升已经明显遇到了一些暂时不可逾越的瓶颈。</li><li>就目前的硅电路而言，很有可能已经走到了头。我们的制造工艺已经精确到了纳米了。1纳米是10-9米，也就是十亿分之一米。这已经是一个相当小的数字了。</li></ul>
+</div>
+<div class="sec">
+<h4>多核CPU的发展</h4>
+<ul class="point">
+<li><b>从2005年开始，我们已经不再追求单核的计算速度，而着迷于研究如何将多个独立的计算单元整合到单独的CPU中，也就是我们所说的多核CPU</b>
+<ul class="quote"><li>短短十几年的发展，家用型CPU，比如Intel i7 就可以拥有4核心，甚至8核心。而专业服务器则通常可以配有几个独立的CPU，每一个CPU都拥有多达8个甚至更多的内核。</li><li>从整体上看，专业服务器的内核总数甚至可以达到几百个。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>短短十几年的发展，家用型CPU，比如Intel i7 就可以拥有4核心，甚至8核心。而专业服务器则通常可以配有几个独立的CPU，每一个CPU都拥有多达8个甚至更多的内核。</li><li>从整体上看，专业服务器的内核总数甚至可以达到几百个。</li></ul>
+</div>
+<div class="sec">
+<h4>并行计算的挑战</h4>
+<ul class="point">
+<li><b>如何让多个CPU有效并且正确地工作也就成了一门技术，甚至是很大的学问</b>
+<ul class="quote"><li>比如，多线程间如何保证线程安全，如何正确理解线程间的无序性、可见性，如何尽可能地设计并行程序，如何将串行程序改造为并行程序。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>比如，多线程间如何保证线程安全，如何正确理解线程间的无序性、可见性，如何尽可能地设计并行程序，如何将串行程序改造为并行程序。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">4</span><span class="mmx-name">1.2 你必须知道的几个概念</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 5 个小节 · 10 条要点 · 9 句原句摘录</p>
+<div class="sec">
+<h4>同步(Synchronous)和异步(Asynchronous)</h4>
+<ul class="point">
+<li><b>同步方法调用一旦开始，调用者必须等到方法调用返回后，才能继续后续的行为。</b>
+</li>
+<li><b>异步方法调用更像一个消息传递，一旦开始，方法调用就会立即返回，调用者就可以继续后续的操作</b>
+<ul class="quote"><li>异步方法通常会在另外一个线程中“真实”地执行。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>异步方法通常会在另外一个线程中“真实”地执行。</li></ul>
+</div>
+<div class="sec">
+<h4>并发(Concurrency)和并行(Parallelism)</h4>
+<ul class="point">
+<li><b>并发偏重于多个任务交替执行，而多个任务之间有可能还是串行的。</b>
+</li>
+<li><b>并行是真正意义上的“同时执行”</b>
+<ul class="quote"><li>如果系统内只有一个CPU，而使用多进程或者多线程任务，那么真实环境中这些任务不可能是真实并行的，在这种情况下多进程或者多线程就是并发的，而不是并行的。</li><li>真实的并行也只可能出现在拥有多个CPU的系统中(比如多核CPU)。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如果系统内只有一个CPU，而使用多进程或者多线程任务，那么真实环境中这些任务不可能是真实并行的，在这种情况下多进程或者多线程就是并发的，而不是并行的。</li><li>真实的并行也只可能出现在拥有多个CPU的系统中(比如多核CPU)。</li></ul>
+</div>
+<div class="sec">
+<h4>临界区</h4>
+<ul class="point">
+<li><b>临界区用来表示一种公共资源或者说共享数据，可以被多个线程使用。但是每一次，只能有一个线程使用它</b>
+<ul class="quote"><li>一旦临界区资源被占用，其他线程要想使用这个资源就必须等待。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>一旦临界区资源被占用，其他线程要想使用这个资源就必须等待。</li></ul>
+</div>
+<div class="sec">
+<h4>阻塞(Blocking)和非阻塞(Non-Blocking)</h4>
+<ul class="point">
+<li><b>阻塞是指一个线程占用了临界区资源，那么其他所有需要这个资源的线程就必须在这个临界区中等待</b>
+<ul class="quote"><li>等待会导致线程挂起。</li></ul>
+</li>
+<li><b>非阻塞的意思与之相反，它强调没有一个线程可以妨碍其他线程执行，所有的线程都会尝试不断前向执行</b>
+<ul class="quote"><li>有关这个概念，将在本章“并发级别”一节中做更详细的描述。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>等待会导致线程挂起。</li><li>有关这个概念，将在本章“并发级别”一节中做更详细的描述。</li></ul>
+</div>
+<div class="sec">
+<h4>死锁(Deadlock)、饥饿(Starvation)和活锁(Livelock)</h4>
+<ul class="point">
+<li><b>死锁是指多个线程因争夺资源而相互等待，导致所有线程都无法继续执行的情况</b>
+<ul class="quote"><li>图1.6显示了一个死锁的发生。</li></ul>
+</li>
+<li><b>饥饿是指某一个或者多个线程因为种种原因无法获得所需要的资源，导致一直无法执行</b>
+<ul class="quote"><li>比如它的线程优先级可能太低，而高优先级的线程不断抢占它需要的资源，导致低优先级线程无法工作。</li></ul>
+</li>
+<li><b>活锁是一种非常有趣的情况，如果线程的智力不够，且都秉承着“谦让”的原则，主动将资源释放给他人使用，那么就会导致资源不断地在两个线程间跳动，而没有一个线程可以同时拿到所有资源正常执行</b>
+<ul class="quote"><li>这种情况就是活锁。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>图1.6显示了一个死锁的发生。</li><li>比如它的线程优先级可能太低，而高优先级的线程不断抢占它需要的资源，导致低优先级线程无法工作。</li><li>这种情况就是活锁。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">5</span><span class="mmx-name">1.3 并发级别</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 6 个小节 · 6 条要点 · 9 句原句摘录</p>
+<div class="sec">
+<h4>并发级别的分类</h4>
+<ul class="point">
+<li><b>并发的级别分为阻塞、无饥饿、无障碍、无锁、无等待几种。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>阻塞</h4>
+<ul class="point">
+<li><b>阻塞的线程在其他线程释放资源之前，无法继续执行</b>
+<ul class="quote"><li>使用synchronized关键字或者重入锁时，得到的就是阻塞的线程。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>使用synchronized关键字或者重入锁时，得到的就是阻塞的线程。</li></ul>
+</div>
+<div class="sec">
+<h4>无饥饿(Starvation-Free)</h4>
+<ul class="point">
+<li><b>无饥饿的线程调度总是倾向于先满足高优先级的线程</b>
+<ul class="quote"><li>非公平锁允许高优先级的线程插队，可能导致低优先级线程产生饥饿。</li><li>公平锁按照先来后到的规则，不会产生饥饿。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>非公平锁允许高优先级的线程插队，可能导致低优先级线程产生饥饿。</li><li>公平锁按照先来后到的规则，不会产生饥饿。</li></ul>
+</div>
+<div class="sec">
+<h4>无障碍(Obstruction-Free)</h4>
+<ul class="point">
+<li><b>无障碍是一种最弱的非阻塞调度，两个线程如果无障碍地执行，不会因为临界区的问题导致一方被挂起</b>
+<ul class="quote"><li>无障碍的线程一旦检测到数据竞争，就会立即对自己所做的修改进行回滚，确保数据安全。</li><li>无障碍的多线程程序并不一定能顺畅运行，因为当临界区中存在严重的冲突时，所有的线程可能都会不断地回滚自己的操作，而没有一个线程可以走出临界区。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>无障碍的线程一旦检测到数据竞争，就会立即对自己所做的修改进行回滚，确保数据安全。</li><li>无障碍的多线程程序并不一定能顺畅运行，因为当临界区中存在严重的冲突时，所有的线程可能都会不断地回滚自己的操作，而没有一个线程可以走出临界区。</li></ul>
+</div>
+<div class="sec">
+<h4>无锁(Lock-Free)</h4>
+<ul class="point">
+<li><b>无锁的并行都是无障碍的，所有的线程都能尝试对临界区进行访问，但不同的是，无锁的并发保证必然有一个线程能够在有限步内完成操作离开临界区</b>
+<ul class="quote"><li>在无锁的调用中，一个典型的特点是可能会包含一个无穷循环，线程会不断尝试修改共享变量。</li><li>无锁的并行总能保证有一个线程是可以胜出的，不至于全军覆没。至于临界区中竞争失败的线程，它们必须不断重试，直到自己获胜。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在无锁的调用中，一个典型的特点是可能会包含一个无穷循环，线程会不断尝试修改共享变量。</li><li>无锁的并行总能保证有一个线程是可以胜出的，不至于全军覆没。至于临界区中竞争失败的线程，它们必须不断重试，直到自己获胜。</li></ul>
+</div>
+<div class="sec">
+<h4>无等待(Wait-Free)</h4>
+<ul class="point">
+<li><b>无等待则在无锁的基础上更进一步扩展，它要求所有的线程都必须在有限步内完成，这样就不会引起饥饿问题</b>
+<ul class="quote"><li>一种典型的无等待结构就是RCU(Read Copy Update)，对数据的读可以不加控制，所有的读线程都是无等待的。</li><li>但在写数据的时候，先取得原始数据的副本，接着只修改副本数据，修改完成后，在合适的时机回写数据。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>一种典型的无等待结构就是RCU(Read Copy Update)，对数据的读可以不加控制，所有的读线程都是无等待的。</li><li>但在写数据的时候，先取得原始数据的副本，接着只修改副本数据，修改完成后，在合适的时机回写数据。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">6</span><span class="mmx-name">1.4 有关并行的两个重要定律</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 5 条要点 · 11 句原句摘录</p>
+<div class="sec">
+<h4>并行程序的重要性</h4>
+<ul class="point">
+<li><b>并行程序可以提高程序的整体性能</b>
+<ul class="quote"><li>将串行程序改造为并发程序，一般来说可以提高程序的整体性能。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>将串行程序改造为并发程序，一般来说可以提高程序的整体性能。</li></ul>
+</div>
+<div class="sec">
+<h4>Amdahl定律</h4>
+<ul class="point">
+<li><b>Amdahl定律定义了串行系统并行化后的加速比的计算公式和理论上限</b>
+<ul class="quote"><li>加速比 = 优化前系统耗时 / 优化后系统耗时。</li><li>如果CPU处理器数量趋于无穷，那么加速比与系统的串行化比例成反比。</li><li>如果系统中必须有50%的代码串行执行，那么系统的最大加速比为2。</li></ul>
+</li>
+<li><b>为了提高系统的速度，仅增加CPU处理器的数量并不一定能起到有效的作用</b>
+<ul class="quote"><li>需要从根本上修改程序的串行行为，提高系统内可并行化的模块比重，在此基础上，合理增加并行处理器数量，才能以最小的投入，得到最大的加速比。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>加速比 = 优化前系统耗时 / 优化后系统耗时。</li><li>如果CPU处理器数量趋于无穷，那么加速比与系统的串行化比例成反比。</li><li>如果系统中必须有50%的代码串行执行，那么系统的最大加速比为2。</li><li>需要从根本上修改程序的串行行为，提高系统内可并行化的模块比重，在此基础上，合理增加并行处理器数量，才能以最小的投入，得到最大的加速比。</li></ul>
+</div>
+<div class="sec">
+<h4>Gustafson定律</h4>
+<ul class="point">
+<li><b>Gustafson定律也试图说明处理器个数、串行化比例和加速比之间的关系</b>
+<ul class="quote"><li>加速比都被定义为优化前的系统耗时除以优化后的系统耗时。</li><li>如果串行化比例很小，并行化比例很大，那么加速比就是处理器的个数。</li><li>只要不断地累加处理器，就能获得更快的速度。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>加速比都被定义为优化前的系统耗时除以优化后的系统耗时。</li><li>如果串行化比例很小，并行化比例很大，那么加速比就是处理器的个数。</li><li>只要不断地累加处理器，就能获得更快的速度。</li></ul>
+</div>
+<div class="sec">
+<h4>Amdahl定律和Gustafson定律的关系</h4>
+<ul class="point">
+<li><b>Amdahl定律和Gustafson定律的结论不同，但它们并不矛盾</b>
+<ul class="quote"><li>两者的差异其实是因为这两个定律对同一个客观事实从不同角度去审视后的结果，它们的侧重点有所不同。</li><li>如果系统中没有可被并行化的代码(即F = 1)，那么对于这两个定律，其加速比都是1。</li><li>如果系统中可被并行化代码的比例达到100%，那么这两个定律得到的加速比都是n(处理器个数)。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>两者的差异其实是因为这两个定律对同一个客观事实从不同角度去审视后的结果，它们的侧重点有所不同。</li><li>如果系统中没有可被并行化的代码(即F = 1)，那么对于这两个定律，其加速比都是1。</li><li>如果系统中可被并行化代码的比例达到100%，那么这两个定律得到的加速比都是n(处理器个数)。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">7</span><span class="mmx-name">1.5 回到Java：JMM</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 5 个小节 · 12 条要点 · 8 句原句摘录</p>
+<div class="sec">
+<h4>Java内存模型(JMM)概述</h4>
+<ul class="point">
+<li><b>JMM是Java并发程序的基础，用于保证多个线程间可以有效地、正确地协同工作</b>
+<ul class="quote"><li>并发程序要比串行程序复杂很多，其中一个重要原因是并发程序中数据访问的一致性和安全性将会受到严重挑战。</li><li>我们需要在深入了解并行机制的前提下，再定义一种规则，保证多个线程间可以有效地、正确地协同工作。而JMM也就是为此而生的。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>并发程序要比串行程序复杂很多，其中一个重要原因是并发程序中数据访问的一致性和安全性将会受到严重挑战。</li><li>我们需要在深入了解并行机制的前提下，再定义一种规则，保证多个线程间可以有效地、正确地协同工作。而JMM也就是为此而生的。</li></ul>
+</div>
+<div class="sec">
+<h4>原子性(Atomicity)</h4>
+<ul class="point">
+<li><b>原子性是指一个操作是不可中断的，即使是在多个线程一起执行的时候</b>
+<ul class="quote"><li>对于一个静态全局变量int i，两个线程同时对它赋值，线程A给它赋值1，线程B给它赋值为-1。那么不管这两个线程以何种方式、何种步调工作，i的值要么是1，要么是-1。线程A和线程B之间是没有干扰的。这就是原子性的一个特点，不可被中断。</li><li>如果我们不使用int型数据而使用long型数据，可能就没有那么幸运了。对于32位系统来说，long型数据的读写不是原子性的(因为long型数据有64位)。也就是说，如果两个线程同时对long型数据进行写入(或者读取)，则对线程之间的结果是有干扰的。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>对于一个静态全局变量int i，两个线程同时对它赋值，线程A给它赋值1，线程B给它赋值为-1。那么不管这两个线程以何种方式、何种步调工作，i的值要么是1，要么是-1。线程A和线程B之间是没有干扰的。这就是原子性的一个特点，不可被中断。</li><li>如果我们不使用int型数据而使用long型数据，可能就没有那么幸运了。对于32位系统来说，long型数据的读写不是原子性的(因为long型数据有64位)。也就是说，如果两个线程同时对long型数据进行写入(或者读取)，则对线程之间的结果是有干扰的。</li></ul>
+</div>
+<div class="sec">
+<h4>可见性(Visibility)</h4>
+<ul class="point">
+<li><b>可见性是指当一个线程修改了某一个共享变量的值时，其他线程是否能够立即知道这个修改</b>
+<ul class="quote"><li>如果一个线程修改了某一个全局变量，那么其他线程未必可以马上知道这个改动。</li><li>可见性问题是一个综合性问题。除上面提到的缓存优化或者硬件优化(有些内存读写可能不会立即触发，而会先进入一个硬件队列等待)会导致可见性问题以外，指令重排(这个问题将在下一节中详细讨论)及编辑器的优化，也有可能导致一个线程的修改不会立即被其他线程察觉。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如果一个线程修改了某一个全局变量，那么其他线程未必可以马上知道这个改动。</li><li>可见性问题是一个综合性问题。除上面提到的缓存优化或者硬件优化(有些内存读写可能不会立即触发，而会先进入一个硬件队列等待)会导致可见性问题以外，指令重排(这个问题将在下一节中详细讨论)及编辑器的优化，也有可能导致一个线程的修改不会立即被其他线程察觉。</li></ul>
+</div>
+<div class="sec">
+<h4>有序性(Ordering)</h4>
+<ul class="point">
+<li><b>有序性问题可能是三个问题中最难理解的了，对于一个线程的执行代码而言，我们总是习惯性地认为代码是从前往后依次执行的</b>
+<ul class="quote"><li>在并发时，程序的执行可能就会出现乱序。给人的直观感觉就是：写在前面的代码，会在后面执行。</li><li>之所以需要做指令重排，就是为了尽量少地中断流水线。当然了，指令重排只是减少中断的一种技术，实际上，在CPU的设计中，我们还会使用更多的软硬件技术来防止中断，不过对它们的讨论已经远远超出本书范围，有兴趣的读者可以查阅相关资料。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在并发时，程序的执行可能就会出现乱序。给人的直观感觉就是：写在前面的代码，会在后面执行。</li><li>之所以需要做指令重排，就是为了尽量少地中断流水线。当然了，指令重排只是减少中断的一种技术，实际上，在CPU的设计中，我们还会使用更多的软硬件技术来防止中断，不过对它们的讨论已经远远超出本书范围，有兴趣的读者可以查阅相关资料。</li></ul>
+</div>
+<div class="sec">
+<h4>Happen-Before规则</h4>
+<ul class="point">
+<li><b>程序顺序原则：一个线程内保证语义的串行性。</b>
+</li>
+<li><b>volatile规则：volatile变量的写先于读发生，这保证了volatile变量的可见性。</b>
+</li>
+<li><b>锁规则：解锁(unlock)必然发生在随后的加锁(lock)前。</b>
+</li>
+<li><b>传递性：A先于B，B先于C，那么A必然先于C。</b>
+</li>
+<li><b>线程的start()方法先于它的每一个动作。</b>
+</li>
+<li><b>线程的所有操作先于线程的终结(Thread.join())。</b>
+</li>
+<li><b>线程的中断(interrupt())先于被中断线程的代码。</b>
+</li>
+<li><b>对象的构造函数的执行、结束先于finalize()方法。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">8</span><span class="mmx-name">第2章 Java并行程序基础</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 1 条要点 · 1 句原句摘录</p>
+<div class="sec">
+<h4>Java并行程序基础</h4>
+<ul class="point">
+<li><b>Java并行程序的设计基础</b>
+<ul class="quote"><li>学习如何构建一个正确、健壮并且高效的并行系统。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>学习如何构建一个正确、健壮并且高效的并行系统。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">9</span><span class="mmx-name">2.1 有关线程你必须知道的事</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 6 条要点 · 11 句原句摘录</p>
+<div class="sec">
+<h4>进程和线程的基本概念</h4>
+<ul class="point">
+<li><b>进程是程序关于某数据集合上的一次运行活动，是系统进行资源分配和调度的基本单位</b>
+<ul class="quote"><li>程序是指令、数据及其组织形式的描述，进程是程序的实体。</li></ul>
+</li>
+<li><b>线程是轻量级进程，是程序执行的最小单位</b>
+<ul class="quote"><li>使用多线程而不是用多进程去进行并发程序的设计，是因为线程间的切换和调度的成本远远小于进程。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>程序是指令、数据及其组织形式的描述，进程是程序的实体。</li><li>使用多线程而不是用多进程去进行并发程序的设计，是因为线程间的切换和调度的成本远远小于进程。</li></ul>
+</div>
+<div class="sec">
+<h4>线程和进程的关系</h4>
+<ul class="point">
+<li><b>进程是一个容器，线程是进程中的一个执行单元</b>
+<ul class="quote"><li>进程是“活”的，或者说是正在被执行的，线程是“活”的，或者说是正在被执行的。</li></ul>
+</li>
+<li><b>线程之间可以进行协作，也可以进行资源竞争</b>
+<ul class="quote"><li>当三个人住在一起时(相当于三个线程)，有时候可能就会有些小冲突，比如，当女儿占着电视机看动画片时，爸爸就不能看体育频道了，这就是线程间的资源竞争。</li><li>大部分时候，线程之间还是协作关系(如果我们创建线程是用来打架的，那么创建它干什么呢？)。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>进程是“活”的，或者说是正在被执行的，线程是“活”的，或者说是正在被执行的。</li><li>当三个人住在一起时(相当于三个线程)，有时候可能就会有些小冲突，比如，当女儿占着电视机看动画片时，爸爸就不能看体育频道了，这就是线程间的资源竞争。</li><li>大部分时候，线程之间还是协作关系(如果我们创建线程是用来打架的，那么创建它干什么呢？)。</li></ul>
+</div>
+<div class="sec">
+<h4>线程的生命周期</h4>
+<ul class="point">
+<li><b>线程的所有状态都在Thread中的State枚举中定义</b>
+<ul class="quote"><li>NEW状态表示刚刚创建的线程，这种线程还没开始执行。</li><li>RUNNABLE状态表示线程所需的一切资源都已经准备好了。</li><li>BLOCKED阻塞状态，这时线程就会暂停执行，直到获得请求的锁。</li><li>WAITING和TIMED_WAITING都表示等待状态。</li><li>TERMINATED状态，表示结束。</li></ul>
+</li>
+<li><b>从NEW状态出发后，线程不能再回到NEW状态，同理，处于TERMINATED状态的线程也不能再回到RUNNABLE状态</b>
+<ul class="quote"><li>一旦等到了期望的事件，线程就会再次执行，进入RUNNABLE状态。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>NEW状态表示刚刚创建的线程，这种线程还没开始执行。</li><li>RUNNABLE状态表示线程所需的一切资源都已经准备好了。</li><li>BLOCKED阻塞状态，这时线程就会暂停执行，直到获得请求的锁。</li><li>WAITING和TIMED_WAITING都表示等待状态。</li><li>TERMINATED状态，表示结束。</li><li>一旦等到了期望的事件，线程就会再次执行，进入RUNNABLE状态。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">10</span><span class="mmx-name">2.2 初始线程：线程的基本操作</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 6 个小节 · 16 条要点 · 20 句原句摘录</p>
+<div class="sec">
+<h4>新建线程</h4>
+<ul class="point">
+<li><b>使用new关键字创建一个线程对象，并且将它start()起来</b>
+<ul class="quote"><li>线程start()后，会新建一个线程并让这个线程执行run()方法。</li></ul>
+</li>
+<li><b>调用start()方法和直接调用run()方法的区别</b>
+<ul class="quote"><li>start()方法会新建一个线程并让这个线程执行run()方法，而run()方法只会在当前线程中串行执行run()方法中的代码。</li></ul>
+</li>
+<li><b>重写run()方法自定义线程</b>
+<ul class="quote"><li>可以通过继承线程Thread，重写run()方法来自定义线程。</li><li>也可以使用Runnable接口来实现同样的操作。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>线程start()后，会新建一个线程并让这个线程执行run()方法。</li><li>start()方法会新建一个线程并让这个线程执行run()方法，而run()方法只会在当前线程中串行执行run()方法中的代码。</li><li>可以通过继承线程Thread，重写run()方法来自定义线程。</li><li>也可以使用Runnable接口来实现同样的操作。</li></ul>
+</div>
+<div class="sec">
+<h4>终止线程</h4>
+<ul class="point">
+<li><b>线程执行完毕就会结束，无须手工关闭</b>
+<ul class="quote"><li>一些服务端的后台线程可能会常驻系统，它们通常不会正常终结。</li></ul>
+</li>
+<li><b>stop()方法被废弃而不推荐使用</b>
+<ul class="quote"><li>stop()方法过于暴力，强行把执行到一半的线程终止，可能会引起一些数据不一致的问题。</li></ul>
+</li>
+<li><b>使用stopMe()方法自行决定线程何时退出</b>
+<ul class="quote"><li>增加一个stopMe()方法，当stopMe()方法被调用，stopme就被设置为true，此时，线程就自动退出了。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>一些服务端的后台线程可能会常驻系统，它们通常不会正常终结。</li><li>stop()方法过于暴力，强行把执行到一半的线程终止，可能会引起一些数据不一致的问题。</li><li>增加一个stopMe()方法，当stopMe()方法被调用，stopme就被设置为true，此时，线程就自动退出了。</li></ul>
+</div>
+<div class="sec">
+<h4>线程中断</h4>
+<ul class="point">
+<li><b>线程中断并不会使线程立即退出，而是给线程发送一个通知</b>
+<ul class="quote"><li>至于目标线程接到通知后如何处理，则完全由目标线程自行决定。</li></ul>
+</li>
+<li><b>Thread.interrupt()方法是一个实例方法，它通知目标线程中断</b>
+<ul class="quote"><li>中断标志位表示当前线程已经被中断了。</li></ul>
+</li>
+<li><b>Thread.isInterrupted()方法也是实例方法，它判断当前线程是否被中断</b>
+<ul class="quote"><li>通过检查中断标志位。</li></ul>
+</li>
+<li><b>Thread.interrupted()方法也可用来判断当前线程的中断状态，但同时会清除当前线程的中断标志位状态。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>至于目标线程接到通知后如何处理，则完全由目标线程自行决定。</li><li>中断标志位表示当前线程已经被中断了。</li><li>通过检查中断标志位。</li></ul>
+</div>
+<div class="sec">
+<h4>等待(wait)和通知(notify)</h4>
+<ul class="point">
+<li><b>Object类提供了wait()方法和notify()方法，用于多线程之间的协作</b>
+<ul class="quote"><li>当在一个对象实例上调用wait()方法后，当前线程就会在这个对象上等待。</li><li>当object.notify()方法被调用时，它就会从这个等待队列中随机选择一个线程，并将其唤醒。</li></ul>
+</li>
+<li><b>Object.wait()方法并不能随便调用，它必须包含在对应的synchronzied语句中</b>
+<ul class="quote"><li>在执行wait()方法前，必须获得目标对象的一个监视器。</li><li>wait()方法在执行后，会释放这个监视器。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>当在一个对象实例上调用wait()方法后，当前线程就会在这个对象上等待。</li><li>当object.notify()方法被调用时，它就会从这个等待队列中随机选择一个线程，并将其唤醒。</li><li>在执行wait()方法前，必须获得目标对象的一个监视器。</li><li>wait()方法在执行后，会释放这个监视器。</li></ul>
+</div>
+<div class="sec">
+<h4>挂起(suspend)和继续执行(resume)线程</h4>
+<ul class="point">
+<li><b>suspend()方法在导致线程暂停的同时，并不会释放任何锁资源</b>
+<ul class="quote"><li>其他任何线程想要访问被它占用的锁时，都会被牵连，导致无法正常继续运行。</li></ul>
+</li>
+<li><b>使用wait()方法和notify()方法，在应用层面实现suspend()方法和resume()方法功能</b>
+<ul class="quote"><li>在代码第5行，用标记变量suspendme表示当前线程是否被挂起。</li><li>同时，增加了suspendMe()和resumeMe()两个方法，分别用于挂起线程和继续执行线程。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>其他任何线程想要访问被它占用的锁时，都会被牵连，导致无法正常继续运行。</li><li>在代码第5行，用标记变量suspendme表示当前线程是否被挂起。</li><li>同时，增加了suspendMe()和resumeMe()两个方法，分别用于挂起线程和继续执行线程。</li></ul>
+</div>
+<div class="sec">
+<h4>等待线程结束(join)和谦让(yeild)</h4>
+<ul class="point">
+<li><b>join()操作可以让一个线程等待另一个线程执行完毕</b>
+<ul class="quote"><li>第一个join()方法表示无限等待，它会一直阻塞当前线程，直到目标线程执行完毕。</li><li>第二个方法给出了一个最大等待时间，如果超过给定时间目标线程还在执行，当前线程也会因为“等不及了”，而继续往下执行。</li></ul>
+</li>
+<li><b>Thread.yield()方法会使当前线程让出CPU</b>
+<ul class="quote"><li>对Thread.yield()方法的调用就好像是在说：“我已经完成了一些最重要的工作了，我可以休息一下了，可以给其他线程一些工作机会啦！”。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>第一个join()方法表示无限等待，它会一直阻塞当前线程，直到目标线程执行完毕。</li><li>第二个方法给出了一个最大等待时间，如果超过给定时间目标线程还在执行，当前线程也会因为“等不及了”，而继续往下执行。</li><li>对Thread.yield()方法的调用就好像是在说：“我已经完成了一些最重要的工作了，我可以休息一下了，可以给其他线程一些工作机会啦！”。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">11</span><span class="mmx-name">2.3 volatile与Java内存模型（JMM）</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 3 条要点 · 5 句原句摘录</p>
+<div class="sec">
+<h4>volatile关键字的作用</h4>
+<ul class="point">
+<li><b>volatile告诉虚拟机，这个变量极有可能会被某些程序或者线程修改</b>
+<ul class="quote"><li>为了确保这个变量被修改后，应用程序范围内的所有线程都能够“看到”这个改动，虚拟机就必须采用一些特殊的手段，保证这个变量的可见性等特点。</li></ul>
+</li>
+<li><b>volatile能保证数据的可见性和有序性</b>
+<ul class="quote"><li>在虚拟机的Client模式下，由于JIT并没有做足够的优化，在主线程修改ready变量的状态后，ReaderThread可以发现这个改动，并退出程序。</li><li>但是在Server模式下，由于系统优化的结果，ReaderThread线程无法“看到”主线程中的修改，导致ReaderThread永远无法退出。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>为了确保这个变量被修改后，应用程序范围内的所有线程都能够“看到”这个改动，虚拟机就必须采用一些特殊的手段，保证这个变量的可见性等特点。</li><li>在虚拟机的Client模式下，由于JIT并没有做足够的优化，在主线程修改ready变量的状态后，ReaderThread可以发现这个改动，并退出程序。</li><li>但是在Server模式下，由于系统优化的结果，ReaderThread线程无法“看到”主线程中的修改，导致ReaderThread永远无法退出。</li></ul>
+</div>
+<div class="sec">
+<h4>volatile与原子性的关系</h4>
+<ul class="point">
+<li><b>volatile并不能代替锁，它也无法保证一些复合操作的原子性</b>
+<ul class="quote"><li>比如下面的例子，通过关键字volatile是无法保证i++的原子性操作的。</li><li>执行上述代码，如果第6行i++是原子性的，那么最终的值应该是100 000(10个线程各累加10 000次)。但实际上，上述代码的输出总是会小于100 000。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>比如下面的例子，通过关键字volatile是无法保证i++的原子性操作的。</li><li>执行上述代码，如果第6行i++是原子性的，那么最终的值应该是100 000(10个线程各累加10 000次)。但实际上，上述代码的输出总是会小于100 000。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">12</span><span class="mmx-name">2.4 分门别类的管理：线程组</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 5 条要点 · 7 句原句摘录</p>
+<div class="sec">
+<h4>线程组的概念和作用</h4>
+<ul class="point">
+<li><b>线程组可以将相同功能的线程放置在同一个线程组里，方便管理</b>
+<ul class="quote"><li>对于多线程来说，将它们都装进对应的篮子里，可以轻松处理几十个甚至上百个线程。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>对于多线程来说，将它们都装进对应的篮子里，可以轻松处理几十个甚至上百个线程。</li></ul>
+</div>
+<div class="sec">
+<h4>线程组的创建和使用</h4>
+<ul class="point">
+<li><b>使用Thread的构造函数，指定线程所属的线程组，将线程和线程组关联起来</b>
+<ul class="quote"><li>上述代码第3行建立了一个名为“PrintGroup”的线程组，并将T1和T2两个线程加入这个组中。</li><li>第4、5两行代码创建了两个线程，使用Thread的构造函数，指定线程所属的线程组，将线程和线程组关联起来。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>上述代码第3行建立了一个名为“PrintGroup”的线程组，并将T1和T2两个线程加入这个组中。</li><li>第4、5两行代码创建了两个线程，使用Thread的构造函数，指定线程所属的线程组，将线程和线程组关联起来。</li></ul>
+</div>
+<div class="sec">
+<h4>线程组的功能和方法</h4>
+<ul class="point">
+<li><b>activeCount()方法可以获得活动线程的总数，list()方法可以打印这个线程组中所有的线程信息</b>
+<ul class="quote"><li>第8行代码展示了线程组的activeCount()方法可以获得活动线程的总数，但由于线程是动态的，因此这个值只是一个估计值，无法精确。</li><li>第9行代码展示了线程组的list()方法可以打印这个线程组中所有的线程信息，对调试有一定帮助。</li></ul>
+</li>
+<li><b>stop()方法会停止线程组中所有的线程，使用时需要格外谨慎</b>
+<ul class="quote"><li>线程组还有一个值得注意的方法stop()，它会停止线程组中所有的线程。这看起来是一个很方便的功能，但是它会遇到和Thread.stop()方法相同的问题，因此使用时也需要格外谨慎。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>第8行代码展示了线程组的activeCount()方法可以获得活动线程的总数，但由于线程是动态的，因此这个值只是一个估计值，无法精确。</li><li>第9行代码展示了线程组的list()方法可以打印这个线程组中所有的线程信息，对调试有一定帮助。</li><li>线程组还有一个值得注意的方法stop()，它会停止线程组中所有的线程。这看起来是一个很方便的功能，但是它会遇到和Thread.stop()方法相同的问题，因此使用时也需要格外谨慎。</li></ul>
+</div>
+<div class="sec">
+<h4>线程组的命名建议</h4>
+<ul class="point">
+<li><b>在创建线程和线程组的时候，给它们取一个好听的名字，方便系统出现问题时追踪</b>
+<ul class="quote"><li>对于计算机来说，也许名字并不重要，但是在系统出现问题时，你很有可能会导出系统内所有线程，你拿到的如果是一连串的Thread-0、Thread-1、Thread-2，我想你一定会头疼。而你看到的如果是类似HttpHandler、FTPService这样的名字，则会心情倍爽。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>对于计算机来说，也许名字并不重要，但是在系统出现问题时，你很有可能会导出系统内所有线程，你拿到的如果是一连串的Thread-0、Thread-1、Thread-2，我想你一定会头疼。而你看到的如果是类似HttpHandler、FTPService这样的名字，则会心情倍爽。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">13</span><span class="mmx-name">2.5 驻守后台：守护线程（Daemon）</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 4 条要点 · 4 句原句摘录</p>
+<div class="sec">
+<h4>守护线程的定义和特性</h4>
+<ul class="point">
+<li><b>守护线程是一种特殊的线程，在后台默默地完成一些系统性的服务</b>
+<ul class="quote"><li>比如垃圾回收线程、JIT线程就可以理解为守护线程。</li></ul>
+</li>
+<li><b>守护线程要守护的对象已经不存在了，那么整个应用程序就应该结束</b>
+<ul class="quote"><li>当一个Java应用内只有守护线程时，Java虚拟机就会自然退出。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>比如垃圾回收线程、JIT线程就可以理解为守护线程。</li><li>当一个Java应用内只有守护线程时，Java虚拟机就会自然退出。</li></ul>
+</div>
+<div class="sec">
+<h4>守护线程的使用</h4>
+<ul class="point">
+<li><b>设置守护线程必须在线程start()之前设置</b>
+<ul class="quote"><li>如果不小心忽略了下面的异常信息，你就很可能察觉不到这个错误，你就会诧异为什么程序永远停不下来了呢？</li></ul>
+</li>
+<li><b>守护线程被设置为守护线程后，系统中只有主线程为用户线程，程序才会结束</b>
+<ul class="quote"><li>在这个例子中，由于t被设置为守护线程，系统中只有主线程main为用户线程，因此在main线程休眠2秒后退出时，整个程序也随之结束。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如果不小心忽略了下面的异常信息，你就很可能察觉不到这个错误，你就会诧异为什么程序永远停不下来了呢？</li><li>在这个例子中，由于t被设置为守护线程，系统中只有主线程main为用户线程，因此在main线程休眠2秒后退出时，整个程序也随之结束。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">14</span><span class="mmx-name">2.6 先做重要的事：线程优先级</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 4 条要点 · 5 句原句摘录</p>
+<div class="sec">
+<h4>线程优先级的基本概念</h4>
+<ul class="point">
+<li><b>线程优先级是Java中线程可以有自己的优先级，优先级高的线程在竞争资源时会更有优势</b>
+<ul class="quote"><li>优先级高的线程可能也会抢占失败，这只是一个概率问题。</li></ul>
+</li>
+<li><b>线程的优先级调度和底层操作系统有密切的关系，在各个平台上表现不一</b>
+<ul class="quote"><li>这种优先级产生的后果也可能不容易预测，无法精准控制。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>优先级高的线程可能也会抢占失败，这只是一个概率问题。</li><li>这种优先级产生的后果也可能不容易预测，无法精准控制。</li></ul>
+</div>
+<div class="sec">
+<h4>线程优先级的设置与影响</h4>
+<ul class="point">
+<li><b>在Java中，使用1到10表示线程优先级，数字越大则优先级越高</b>
+<ul class="quote"><li>一般可以使用内置的三个静态标量表示：Thread.MIN_PRIORITY、Thread.NORM_PRIORITY、Thread.MAX_PRIORITY。</li></ul>
+</li>
+<li><b>高优先级的线程在大部分情况下，都会首先完成任务</b>
+<ul class="quote"><li>对count累加前，我们使用关键字synchronized产生了一次资源竞争，目的是使得优先级的差异表现得更为明显。</li><li>试运行多次，HightPriority总是比LowPriority快。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>一般可以使用内置的三个静态标量表示：Thread.MIN_PRIORITY、Thread.NORM_PRIORITY、Thread.MAX_PRIORITY。</li><li>对count累加前，我们使用关键字synchronized产生了一次资源竞争，目的是使得优先级的差异表现得更为明显。</li><li>试运行多次，HightPriority总是比LowPriority快。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">15</span><span class="mmx-name">2.7 线程安全的概念与关键字synchronized</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 6 条要点 · 10 句原句摘录</p>
+<div class="sec">
+<h4>线程安全的概念</h4>
+<ul class="point">
+<li><b>并行程序开发的一大关注重点是线程安全</b>
+<ul class="quote"><li>程序并行化是为了获得更高的执行效率，但高效率不能以牺牲正确性为代价。</li></ul>
+</li>
+<li><b>线程安全就是并行程序的根基</b>
+<ul class="quote"><li>如果程序并行化后，连基本的执行结果的正确性都无法保证，那么并行程序本身也就没有任何意义了。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>程序并行化是为了获得更高的执行效率，但高效率不能以牺牲正确性为代价。</li><li>如果程序并行化后，连基本的执行结果的正确性都无法保证，那么并行程序本身也就没有任何意义了。</li></ul>
+</div>
+<div class="sec">
+<h4>线程安全的问题及解决方案</h4>
+<ul class="point">
+<li><b>使用volatile关键字后，多线程不安全的恶果有所改善，但不能真正保证线程安全</b>
+<ul class="quote"><li>当两个线程同时修改某一个数据时，依然会产生冲突。</li></ul>
+</li>
+<li><b>要从根本上解决这个问题，就必须保证多个线程在对i进行操作时完全同步</b>
+<ul class="quote"><li>当线程A在写入时，线程B不仅不能写，同时也不能读。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>当两个线程同时修改某一个数据时，依然会产生冲突。</li><li>当线程A在写入时，线程B不仅不能写，同时也不能读。</li></ul>
+</div>
+<div class="sec">
+<h4>synchronized关键字的作用与用法</h4>
+<ul class="point">
+<li><b>synchronized的作用是实现线程间的同步，保证线程间的安全性</b>
+<ul class="quote"><li>关键字synchronized可以有多种用法，这里做一个简单的整理。</li><li>指定加锁对象：对给定对象加锁，进入同步代码前要获得给定对象的锁。</li><li>直接作用于实例方法：相当于对当前实例加锁，进入同步代码前要获得当前实例的锁。</li><li>直接作用于静态方法：相当于对当前类加锁，进入同步代码前要获得当前类的锁。</li></ul>
+</li>
+<li><b>synchronized可以保证线程间的可见性和有序性</b>
+<ul class="quote"><li>从可见性的角度上讲，关键字synchronized可以完全替代关键字volatile的功能。</li><li>就有序性而言，由于关键字synchronized限制每次只有一个线程可以访问同步块，因此，无论同步块内的代码如何被乱序执行，只要保证串行语义一致，那么执行结果总是一样的。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>关键字synchronized可以有多种用法，这里做一个简单的整理。</li><li>指定加锁对象：对给定对象加锁，进入同步代码前要获得给定对象的锁。</li><li>直接作用于实例方法：相当于对当前实例加锁，进入同步代码前要获得当前实例的锁。</li><li>直接作用于静态方法：相当于对当前类加锁，进入同步代码前要获得当前类的锁。</li><li>从可见性的角度上讲，关键字synchronized可以完全替代关键字volatile的功能。</li><li>就有序性而言，由于关键字synchronized限制每次只有一个线程可以访问同步块，因此，无论同步块内的代码如何被乱序执行，只要保证串行语义一致，那么执行结果总是一样的。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">16</span><span class="mmx-name">2.8 程序中的幽灵：隐蔽的错误</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 4 条要点 · 12 句原句摘录</p>
+<div class="sec">
+<h4>无提示的错误案例</h4>
+<ul class="point">
+<li><b>程序运行错误，却没有任何提示</b>
+<ul class="quote"><li>求两个整数的平均值，结果得到一个负数。</li><li>这是一个典型的溢出问题，v1+v2的结果导致了int的溢出。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>求两个整数的平均值，结果得到一个负数。</li><li>这是一个典型的溢出问题，v1+v2的结果导致了int的溢出。</li></ul>
+</div>
+<div class="sec">
+<h4>并发下的ArrayList</h4>
+<ul class="point">
+<li><b>多线程同时向一个ArrayList中添加容器，可能导致程序出错</b>
+<ul class="quote"><li>程序正常结束，ArrayList的最终大小确实200万。</li><li>程序抛出异常，ArrayList在扩容过程中，内部一致性被破坏。</li><li>出现了一个非常隐蔽的错误，打印出的ArrayList的大小不正确。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>程序正常结束，ArrayList的最终大小确实200万。</li><li>程序抛出异常，ArrayList在扩容过程中，内部一致性被破坏。</li><li>出现了一个非常隐蔽的错误，打印出的ArrayList的大小不正确。</li></ul>
+</div>
+<div class="sec">
+<h4>并发下诡异的HashMap</h4>
+<ul class="point">
+<li><b>多线程同时对HashMap进行put()方法操作，可能导致程序出错</b>
+<ul class="quote"><li>程序正常结束，并且结果也是符合预期的，HashMap的大小为100 000。</li><li>程序正常结束，但结果不符合预期，而是一个小于100 000的数字。</li><li>程序永远无法结束，由于多线程的冲突，HashMap的链表结构已经遭到了破坏，链表成环了。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>程序正常结束，并且结果也是符合预期的，HashMap的大小为100 000。</li><li>程序正常结束，但结果不符合预期，而是一个小于100 000的数字。</li><li>程序永远无法结束，由于多线程的冲突，HashMap的链表结构已经遭到了破坏，链表成环了。</li></ul>
+</div>
+<div class="sec">
+<h4>初学者常见的问题：错误的加锁</h4>
+<ul class="point">
+<li><b>在进行多线程同步时，加锁是保证线程安全的重要手段之一，但加锁也必须是合理的</b>
+<ul class="quote"><li>假设我们需要一个计数器，这个计数器会被多个线程同时访问。为了确保数据正确性，我们自然需要对计数器加锁，因此，就有了以下代码。</li><li>但结果却得到了一个比20 000 000小很多的数字，比如15 992 526。这说明什么问题呢？一定是这段程序并没有真正做到线程安全！但把锁加在变量i上又有什么问题呢？似乎加锁的逻辑也是无懈可击的。</li><li>要解释这个问题，得从Integer说起。在Java中，Integer属于不变对象，即对象一旦被创建，就不可能被修改。也就是说，如果你有一个Integer对象代表1，那么它就永远表示1，你不可能修改Integer对象的值，使它为2。</li><li>由于在多个线程间，并不一定能够看到同一个i对象(因为i对象一直在变)，因此，两个线程每次加锁可能都加在了不同的对象实例上，从而导致对临界区代码控制出现问题。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>假设我们需要一个计数器，这个计数器会被多个线程同时访问。为了确保数据正确性，我们自然需要对计数器加锁，因此，就有了以下代码。</li><li>但结果却得到了一个比20 000 000小很多的数字，比如15 992 526。这说明什么问题呢？一定是这段程序并没有真正做到线程安全！但把锁加在变量i上又有什么问题呢？似乎加锁的逻辑也是无懈可击的。</li><li>要解释这个问题，得从Integer说起。在Java中，Integer属于不变对象，即对象一旦被创建，就不可能被修改。也就是说，如果你有一个Integer对象代表1，那么它就永远表示1，你不可能修改Integer对象的值，使它为2。</li><li>由于在多个线程间，并不一定能够看到同一个i对象(因为i对象一直在变)，因此，两个线程每次加锁可能都加在了不同的对象实例上，从而导致对临界区代码控制出现问题。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">17</span><span class="mmx-name">第3章 JDK并发包</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 4 条要点 · 4 句原句摘录</p>
+<div class="sec">
+<h4>JDK并发包概述</h4>
+<ul class="point">
+<li><b>JDK内部提供了大量实用的API和框架以支持并发程序</b>
+<ul class="quote"><li>JDK并发包主要分为三大部分：同步控制工具、线程池支持和并发容器。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>JDK并发包主要分为三大部分：同步控制工具、线程池支持和并发容器。</li></ul>
+</div>
+<div class="sec">
+<h4>同步控制工具</h4>
+<ul class="point">
+<li><b>JDK提供了丰富多彩的多线程控制方法</b>
+<ul class="quote"><li>除了关键字synchronized，还有ReentrantLock、Semaphore、CountDownLatch、CyclicBarrier等同步控制工具。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>除了关键字synchronized，还有ReentrantLock、Semaphore、CountDownLatch、CyclicBarrier等同步控制工具。</li></ul>
+</div>
+<div class="sec">
+<h4>线程池支持</h4>
+<ul class="point">
+<li><b>使用线程池将能在很大程度上提高线程调度的性能</b>
+<ul class="quote"><li>JDK提供了Executor、ThreadPoolExecutor、ScheduledThreadPoolExecutor等线程池实现。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>JDK提供了Executor、ThreadPoolExecutor、ScheduledThreadPoolExecutor等线程池实现。</li></ul>
+</div>
+<div class="sec">
+<h4>并发容器</h4>
+<ul class="point">
+<li><b>JDK提供了一些专为并行访问所设计的容器，如CopyOnWriteArrayList、ConcurrentHashMap等</b>
+<ul class="quote"><li>这些容器绝对是高效、安全、稳定的实用工具。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>这些容器绝对是高效、安全、稳定的实用工具。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">18</span><span class="mmx-name">3.1 多线程的团队协作：同步控制</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 9 个小节 · 15 条要点 · 26 句原句摘录</p>
+<div class="sec">
+<h4>同步控制的重要性</h4>
+<ul class="point">
+<li><b>同步控制是并发程序必不可少的重要手段</b>
+<ul class="quote"><li>关键字synchronized就是一种最简单的控制方法，它决定了一个线程是否可以访问临界区资源。</li><li>Object.wait()方法和Object.notify()方法起到了线程等待和通知的作用。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>关键字synchronized就是一种最简单的控制方法，它决定了一个线程是否可以访问临界区资源。</li><li>Object.wait()方法和Object.notify()方法起到了线程等待和通知的作用。</li></ul>
+</div>
+<div class="sec">
+<h4>重入锁</h4>
+<ul class="point">
+<li><b>重入锁可以完全替代关键字synchronized</b>
+<ul class="quote"><li>在JDK 5.0的早期版本中，重入锁的性能远远优于关键字synchronized，但从JDK 6.0开始，JDK在关键字synchronized上做了大量的优化，使得两者的性能差距并不大。</li></ul>
+</li>
+<li><b>重入锁使用java.util.concurrent.locks.ReentrantLock类来实现</b>
+<ul class="quote"><li>与关键字synchronized相比，重入锁有着显示的操作过程。开发人员必须手动指定何时加锁，何时释放锁。</li></ul>
+</li>
+<li><b>重入锁提供了一些高级功能，比如，重入锁可以提供中断处理的能力</b>
+<ul class="quote"><li>对于关键字synchronized来说，如果一个线程在等待锁，那么结果只有两种情况，要么它获得这把锁继续执行，要么它就保持等待。而使用重入锁，则提供另外一种可能，那就是线程可以被中断。</li><li>除了等待外部通知之外，要避免死锁还有另外一种方法，那就是限时等待。</li><li>公平锁的一大特点是：它不会产生饥饿现象。只要你排队，最终还是可以等到资源的。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在JDK 5.0的早期版本中，重入锁的性能远远优于关键字synchronized，但从JDK 6.0开始，JDK在关键字synchronized上做了大量的优化，使得两者的性能差距并不大。</li><li>与关键字synchronized相比，重入锁有着显示的操作过程。开发人员必须手动指定何时加锁，何时释放锁。</li><li>对于关键字synchronized来说，如果一个线程在等待锁，那么结果只有两种情况，要么它获得这把锁继续执行，要么它就保持等待。而使用重入锁，则提供另外一种可能，那就是线程可以被中断。</li><li>除了等待外部通知之外，要避免死锁还有另外一种方法，那就是限时等待。</li><li>公平锁的一大特点是：它不会产生饥饿现象。只要你排队，最终还是可以等到资源的。</li></ul>
+</div>
+<div class="sec">
+<h4>Condition</h4>
+<ul class="point">
+<li><b>Condition对象与wait()方法和notify()方法的作用是大致相同的</b>
+<ul class="quote"><li>但是wait()方法和notify()方法是与synchronized关键字合作使用的，而Condition是与重入锁相关联的。</li></ul>
+</li>
+<li><b>Condition接口提供的基本方法包括await()、awaitUninterruptibly()、signal()和signalAll()</b>
+<ul class="quote"><li>await()方法会使当前线程等待，同时释放当前锁，当其他线程中使用signal()方法或者signalAll()方法时，线程会重新获得锁并继续执行。或者当线程被中断时，也能跳出等待。</li><li>awaitUninterruptibly()方法与await()方法基本相同，但是它并不会在等待过程中响应中断。</li><li>singal()方法用于唤醒一个在等待中的线程，singalAll()方法会唤醒所有在等待中的线程。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>但是wait()方法和notify()方法是与synchronized关键字合作使用的，而Condition是与重入锁相关联的。</li><li>await()方法会使当前线程等待，同时释放当前锁，当其他线程中使用signal()方法或者signalAll()方法时，线程会重新获得锁并继续执行。或者当线程被中断时，也能跳出等待。</li><li>awaitUninterruptibly()方法与await()方法基本相同，但是它并不会在等待过程中响应中断。</li><li>singal()方法用于唤醒一个在等待中的线程，singalAll()方法会唤醒所有在等待中的线程。</li></ul>
+</div>
+<div class="sec">
+<h4>信号量(Semaphore)</h4>
+<ul class="point">
+<li><b>信号量为多线程协作提供了更为强大的控制方法</b>
+<ul class="quote"><li>信号量是对锁的扩展。无论是内部锁synchronized还是重入锁ReentrantLock，一次都只允许一个线程访问一个资源，而信号量却可以指定多个线程，同时访问某一个资源。</li></ul>
+</li>
+<li><b>信号量的主要逻辑方法有：acquire()、acquireUninterruptibly()、tryAcquire()和release()</b>
+<ul class="quote"><li>acquire()方法尝试获得一个准入的许可。若无法获得，则线程会等待，直到有线程释放一个许可或者当前线程被中断。</li><li>acquireUninterruptibly()方法和acquire()方法类似，但是不响应中断。</li><li>tryAcquire()方法尝试获得一个许可，如果成功则返回true，失败则返回false，它不会进行等待，立即返回。</li><li>release()方法用于在线程访问资源结束后释放一个许可，以使其他等待许可的线程可以进行资源访问。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>信号量是对锁的扩展。无论是内部锁synchronized还是重入锁ReentrantLock，一次都只允许一个线程访问一个资源，而信号量却可以指定多个线程，同时访问某一个资源。</li><li>acquire()方法尝试获得一个准入的许可。若无法获得，则线程会等待，直到有线程释放一个许可或者当前线程被中断。</li><li>acquireUninterruptibly()方法和acquire()方法类似，但是不响应中断。</li><li>tryAcquire()方法尝试获得一个许可，如果成功则返回true，失败则返回false，它不会进行等待，立即返回。</li><li>release()方法用于在线程访问资源结束后释放一个许可，以使其他等待许可的线程可以进行资源访问。</li></ul>
+</div>
+<div class="sec">
+<h4>ReadWriteLock读写锁</h4>
+<ul class="point">
+<li><b>读写锁可以有效地帮助减少锁竞争，提升系统性能</b>
+<ul class="quote"><li>读写锁允许多个线程同时读，使得B1、B2、B3之间真正并行。但是，考虑到数据完整性，写写操作和读写操作间依然是需要相互等待和持有锁的。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>读写锁允许多个线程同时读，使得B1、B2、B3之间真正并行。但是，考虑到数据完整性，写写操作和读写操作间依然是需要相互等待和持有锁的。</li></ul>
+</div>
+<div class="sec">
+<h4>倒计数器：CountDownLatch</h4>
+<ul class="point">
+<li><b>CountDownLatch是一个非常实用的多线程控制工具类</b>
+<ul class="quote"><li>“Count Down”在英文中意为倒计数，Latch意为门闩的意思。如果翻译成为倒计数门闩，我想大家都会不知所云吧！因此，这里简单地称之为倒计数器。</li></ul>
+</li>
+<li><b>CountDownLatch的构造函数接收一个整数作为参数，即当前这个计数器的计数个数</b>
+<ul class="quote"><li>对于倒计数器，一种典型的场景就是火箭发射。在火箭发射前，为了保证万无一失，往往还要对各项设备、仪器进行检查。只有等所有检查都完成后，引擎才能点火。这种场景就非常适合使用CountDownLatch。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>“Count Down”在英文中意为倒计数，Latch意为门闩的意思。如果翻译成为倒计数门闩，我想大家都会不知所云吧！因此，这里简单地称之为倒计数器。</li><li>对于倒计数器，一种典型的场景就是火箭发射。在火箭发射前，为了保证万无一失，往往还要对各项设备、仪器进行检查。只有等所有检查都完成后，引擎才能点火。这种场景就非常适合使用CountDownLatch。</li></ul>
+</div>
+<div class="sec">
+<h4>循环栅栏：CyclicBarrier</h4>
+<ul class="point">
+<li><b>CyclicBarrier可以理解为循环栅栏</b>
+<ul class="quote"><li>栅栏就是一种障碍物，比如，通常在私人宅邸的周围就可以围上一圈栅栏，阻止闲杂人等入内。这里当然就是用来阻止线程继续执行，要求线程在栅栏外等待。前面Cyclic意为循环，也就是说这个计数器可以反复使用。</li></ul>
+</li>
+<li><b>CyclicBarrier比CountDownLatch略微强大一些，它可以接收一个参数作为barrierAction</b>
+<ul class="quote"><li>所谓barrierAction就是当计数器一次计数完成后，系统会执行的动作。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>栅栏就是一种障碍物，比如，通常在私人宅邸的周围就可以围上一圈栅栏，阻止闲杂人等入内。这里当然就是用来阻止线程继续执行，要求线程在栅栏外等待。前面Cyclic意为循环，也就是说这个计数器可以反复使用。</li><li>所谓barrierAction就是当计数器一次计数完成后，系统会执行的动作。</li></ul>
+</div>
+<div class="sec">
+<h4>线程阻塞工具类：LockSupport</h4>
+<ul class="point">
+<li><b>LockSupport是一个非常方便实用的线程阻塞工具，它可以在线程内任意位置让线程阻塞</b>
+<ul class="quote"><li>与Thread.suspend()方法相比，它弥补了由于resume()方法发生导致线程无法继续执行的情况。和Object.wait()方法相比，它不需要先获得某个对象的锁，也不会抛出InterruptedException异常。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>与Thread.suspend()方法相比，它弥补了由于resume()方法发生导致线程无法继续执行的情况。和Object.wait()方法相比，它不需要先获得某个对象的锁，也不会抛出InterruptedException异常。</li></ul>
+</div>
+<div class="sec">
+<h4>Guava和RateLimiter限流</h4>
+<ul class="point">
+<li><b>RateLimiter正是采用了令牌桶算法</b>
+<ul class="quote"><li>一种简单的限流算法就是给出一个单位时间，然后使用一个计数器counter统计单位时间内收到的请求数量，当请求数量超过门限时，余下的请求丢弃或者等待。但这种简单的算法有一个严重的问题，就是很难控制边界时间上的请求。</li><li>更为一般化的限流算法有两种：漏桶算法和令牌桶算法。</li><li>漏桶算法的基本思想是：利用一个缓存区，当有请求进入系统时，无论请求的速率如何，都先在缓存区内保存，然后以固定的流速流出缓存区进行处理。</li><li>令牌桶算法是一种反向的漏桶算法。在令牌桶算法中，桶中存放的不再是请求，而是令牌。处理程序只有拿到令牌后，才能对请求进行处理。如果没有令牌，那么处理程序要么丢弃请求，要么等待可用的令牌。为了限制流速，该算法在每个单位时间产生一定量的令牌存入桶中。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>一种简单的限流算法就是给出一个单位时间，然后使用一个计数器counter统计单位时间内收到的请求数量，当请求数量超过门限时，余下的请求丢弃或者等待。但这种简单的算法有一个严重的问题，就是很难控制边界时间上的请求。</li><li>更为一般化的限流算法有两种：漏桶算法和令牌桶算法。</li><li>漏桶算法的基本思想是：利用一个缓存区，当有请求进入系统时，无论请求的速率如何，都先在缓存区内保存，然后以固定的流速流出缓存区进行处理。</li><li>令牌桶算法是一种反向的漏桶算法。在令牌桶算法中，桶中存放的不再是请求，而是令牌。处理程序只有拿到令牌后，才能对请求进行处理。如果没有令牌，那么处理程序要么丢弃请求，要么等待可用的令牌。为了限制流速，该算法在每个单位时间产生一定量的令牌存入桶中。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">19</span><span class="mmx-name">3.2 线程复用：线程池</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 11 个小节 · 14 条要点 · 20 句原句摘录</p>
+<div class="sec">
+<h4>线程复用的必要性</h4>
+<ul class="point">
+<li><b>线程的创建和关闭需要花费时间，如果为每一个小的任务都创建一个线程，则很有可能出现创建和销毁线程所占用的时间大于该线程真实工作所消耗的时间的情况</b>
+<ul class="quote"><li>线程本身也是要占用内存空间的，大量的线程会抢占宝贵的内存资源，如果处理不当，可能会导致Out of Memory异常。</li><li>即便没有，大量的线程回收也会给GC带来很大的压力，延长GC的停顿时间。</li></ul>
+</li>
+<li><b>对线程的使用必须掌握一个度，在有限的范围内增加线程的数量可以明显提高系统的吞吐量，一旦超出了这个范围，大量的线程只会拖垮应用系统</b>
+<ul class="quote"><li>在实际生产环境中，线程的数量必须得到控制。盲目创建大量线程对系统性能是有伤害的。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>线程本身也是要占用内存空间的，大量的线程会抢占宝贵的内存资源，如果处理不当，可能会导致Out of Memory异常。</li><li>即便没有，大量的线程回收也会给GC带来很大的压力，延长GC的停顿时间。</li><li>在实际生产环境中，线程的数量必须得到控制。盲目创建大量线程对系统性能是有伤害的。</li></ul>
+</div>
+<div class="sec">
+<h4>线程池的基本概念</h4>
+<ul class="point">
+<li><b>线程池是为了避免系统频繁地创建和销毁线程，我们可以让创建的线程复用</b>
+<ul class="quote"><li>在线程池中，总有那么几个活跃线程。当你需要使用线程时，可以从池子中随便拿一个空闲线程，当完成工作时，并不急着关闭线程，而是将这个线程退回到线程池中，方便其他人使用。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在线程池中，总有那么几个活跃线程。当你需要使用线程时，可以从池子中随便拿一个空闲线程，当完成工作时，并不急着关闭线程，而是将这个线程退回到线程池中，方便其他人使用。</li></ul>
+</div>
+<div class="sec">
+<h4>JDK对线程池的支持</h4>
+<ul class="point">
+<li><b>JDK提供了一套Executor框架，帮助开发人员有效地进行线程控制，其本质就是一个线程池</b>
+<ul class="quote"><li>Executor框架提供了各种类型的线程池，主要有以下工厂方法：newFixedThreadPool()、newSingleThreadExecutor()、newCachedThreadPool()、newSingleThreadScheduledExecutor()、newScheduledThreadPool()。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Executor框架提供了各种类型的线程池，主要有以下工厂方法：newFixedThreadPool()、newSingleThreadExecutor()、newCachedThreadPool()、newSingleThreadScheduledExecutor()、newScheduledThreadPool()。</li></ul>
+</div>
+<div class="sec">
+<h4>核心线程池的内部实现</h4>
+<ul class="point">
+<li><b>ThreadPoolExecutor类是最重要的构造函数，它包含以下参数：corePoolSize、maximumPoolSize、keepAliveTime、unit、workQueue、threadFactory、handler</b>
+<ul class="quote"><li>workQueue指被提交但未执行的任务队列，它是一个BlockingQueue接口的对象，仅用于存放Runnable对象。</li><li>参数threadFactory和handler分别用于创建线程和拒绝策略。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>workQueue指被提交但未执行的任务队列，它是一个BlockingQueue接口的对象，仅用于存放Runnable对象。</li><li>参数threadFactory和handler分别用于创建线程和拒绝策略。</li></ul>
+</div>
+<div class="sec">
+<h4>拒绝策略</h4>
+<ul class="point">
+<li><b>当任务数量超过系统实际承载能力时，就要用到拒绝策略了</b>
+<ul class="quote"><li>JDK内置的四种拒绝策略：AbortPolicy策略、CallerRunsPolicy策略、DiscardOldestPolicy策略、DiscardPolicy策略。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>JDK内置的四种拒绝策略：AbortPolicy策略、CallerRunsPolicy策略、DiscardOldestPolicy策略、DiscardPolicy策略。</li></ul>
+</div>
+<div class="sec">
+<h4>自定义线程创建：ThreadFactory</h4>
+<ul class="point">
+<li><b>ThreadFactory是一个接口，它只有一个用来创建线程的方法</b>
+<ul class="quote"><li>自定义线程池可以帮助我们做不少事，比如，我们可以跟踪线程池究竟在何时创建了多少线程，也可以自定义线程的名称、组以及优先级等信息，甚至可以任性地将所有的线程设置为守护线程。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>自定义线程池可以帮助我们做不少事，比如，我们可以跟踪线程池究竟在何时创建了多少线程，也可以自定义线程的名称、组以及优先级等信息，甚至可以任性地将所有的线程设置为守护线程。</li></ul>
+</div>
+<div class="sec">
+<h4>扩展线程池</h4>
+<ul class="point">
+<li><b>ThreadPoolExecutor是一个可以扩展的线程池，它提供了beforeExecute()、afterExecute()和terminated()三个接口用来对线程池进行控制</b>
+<ul class="quote"><li>以beforeExecute()、afterExecute()两个接口为例，它们在ThreadPoolExecutor.Worker.runTask()方法内部提供了这样的实现。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>以beforeExecute()、afterExecute()两个接口为例，它们在ThreadPoolExecutor.Worker.runTask()方法内部提供了这样的实现。</li></ul>
+</div>
+<div class="sec">
+<h4>优化线程池线程数量</h4>
+<ul class="point">
+<li><b>线程池的大小对系统的性能有一定的影响，过大或者过小的线程数量都无法发挥最优的系统性能</b>
+<ul class="quote"><li>一般来说，确定线程池的大小需要考虑CPU数量、内存大小等因素。</li><li>在Java Concurrency in Practice一书中给出了估算线程池大小的公式：Nthreads = Ncpu×Ucpu×(1 + W/C)。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>一般来说，确定线程池的大小需要考虑CPU数量、内存大小等因素。</li><li>在Java Concurrency in Practice一书中给出了估算线程池大小的公式：Nthreads = Ncpu×Ucpu×(1 + W/C)。</li></ul>
+</div>
+<div class="sec">
+<h4>在线程池中寻找堆栈</h4>
+<ul class="point">
+<li><b>线程池很有可能会“吃”掉程序抛出的异常，导致我们对程序的错误一无所知</b>
+<ul class="quote"><li>一种最简单的方法就是放弃submit()方法，改用execute()方法。</li><li>扩展我们的ThreadPoolExecutor线程池，让它在调度任务之前，先保存一下提交任务线程的堆栈信息。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>一种最简单的方法就是放弃submit()方法，改用execute()方法。</li><li>扩展我们的ThreadPoolExecutor线程池，让它在调度任务之前，先保存一下提交任务线程的堆栈信息。</li></ul>
+</div>
+<div class="sec">
+<h4>分而治之：Fork/Join框架</h4>
+<ul class="point">
+<li><b>Fork/Join框架是一种分而治之的思想，用于处理大量数据</b>
+<ul class="quote"><li>Fork一词的原始含义是吃饭用的叉子，也有分叉的意思。在Linux平台中，方法fork()用来创建子进程，使得系统进程可以多一个执行分支。在Java中也沿用了类似的命名方式。</li><li>而join()方法的含义在之前的章节中已经解释过，这里表示等待。</li></ul>
+</li>
+<li><b>ForkJoinPool线程池是Fork/Join框架的实现，它使用一个无锁的栈来管理空闲线程</b>
+<ul class="quote"><li>如果一个工作线程暂时取不到可用的任务，则可能会被挂起，挂起的线程将会被压入由线程池维护的栈中。待将来有任务可用时，再从栈中唤醒这些线程。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Fork一词的原始含义是吃饭用的叉子，也有分叉的意思。在Linux平台中，方法fork()用来创建子进程，使得系统进程可以多一个执行分支。在Java中也沿用了类似的命名方式。</li><li>而join()方法的含义在之前的章节中已经解释过，这里表示等待。</li><li>如果一个工作线程暂时取不到可用的任务，则可能会被挂起，挂起的线程将会被压入由线程池维护的栈中。待将来有任务可用时，再从栈中唤醒这些线程。</li></ul>
+</div>
+<div class="sec">
+<h4>Guava中对线程池的扩展</h4>
+<ul class="point">
+<li><b>DirectExecutor线程池是一个简单但是非常重要的线程池实现，它总是将任务在当前线程中直接执行</b>
+<ul class="quote"><li>从软件设计的角度上说，抽象是软件设计的根本和精髓。将不同业务的共同属性提取并抽象成模型非常有利于对不同业务的统一处理。</li><li>对于线程池来说，其技术目的是为了复用线程以提高运行效率，但其业务需求却是去异步执行一段业务指令。但是有时候，异步并不是必要的。</li></ul>
+</li>
+<li><b>MoreExecutors还提供了将普通线程池转为Daemon线程池的方法</b>
+<ul class="quote"><li>在很多场合，我们并不希望后台线程池阻止程序的退出，当系统执行完成后，即便有线程池存在，依然希望进程结束执行。此时，就可以使用MoreExecutors.getExitingExecutorService()方法。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>从软件设计的角度上说，抽象是软件设计的根本和精髓。将不同业务的共同属性提取并抽象成模型非常有利于对不同业务的统一处理。</li><li>对于线程池来说，其技术目的是为了复用线程以提高运行效率，但其业务需求却是去异步执行一段业务指令。但是有时候，异步并不是必要的。</li><li>在很多场合，我们并不希望后台线程池阻止程序的退出，当系统执行完成后，即便有线程池存在，依然希望进程结束执行。此时，就可以使用MoreExecutors.getExitingExecutorService()方法。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">20</span><span class="mmx-name">3.3 不要重复发明轮子：JDK的并发容器</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 7 个小节 · 14 条要点 · 23 句原句摘录</p>
+<div class="sec">
+<h4>JDK的并发容器简介</h4>
+<ul class="point">
+<li><b>JDK提供的并发容器大部分在java.util.concurrent包中</b>
+<ul class="quote"><li>ConcurrentHashMap：高效的并发HashMap。</li><li>CopyOnWriteArrayList：读多写少的场合，性能非常好。</li><li>ConcurrentLinkedQueue：高效的并发队列，使用链表实现。</li><li>BlockingQueue：阻塞队列，非常适合作为数据共享的通道。</li><li>ConcurrentSkipListMap：跳表的实现，使用跳表的数据结构进行快速查找。</li></ul>
+</li>
+<li><b>java.util下的Vector是线程安全的，Collections工具类可以帮助我们将任意集合包装成线程安全的集合。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>ConcurrentHashMap：高效的并发HashMap。</li><li>CopyOnWriteArrayList：读多写少的场合，性能非常好。</li><li>ConcurrentLinkedQueue：高效的并发队列，使用链表实现。</li><li>BlockingQueue：阻塞队列，非常适合作为数据共享的通道。</li><li>ConcurrentSkipListMap：跳表的实现，使用跳表的数据结构进行快速查找。</li></ul>
+</div>
+<div class="sec">
+<h4>线程安全的HashMap</h4>
+<ul class="point">
+<li><b>使用Collections.synchronizedMap()方法包装HashMap</b>
+<ul class="quote"><li>Collections.synchronizedMap()方法会生成一个名为SynchronizedMap的Map。</li><li>SynchronizedMap内包装了一个Map，通过mutex实现对这个m的互斥操作。</li></ul>
+</li>
+<li><b>ConcurrentHashMap是专业的并发HashMap，更适合多线程的场合</b>
+<ul class="quote"><li>有关ConcurrentHashMap的具体实现细节，大家可以参考“锁的优化及注意事项”一章。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Collections.synchronizedMap()方法会生成一个名为SynchronizedMap的Map。</li><li>SynchronizedMap内包装了一个Map，通过mutex实现对这个m的互斥操作。</li><li>有关ConcurrentHashMap的具体实现细节，大家可以参考“锁的优化及注意事项”一章。</li></ul>
+</div>
+<div class="sec">
+<h4>有关List的线程安全</h4>
+<ul class="point">
+<li><b>ArrayList和Vector都使用数组作为其内部实现，但Vector是线程安全的，而ArrayList不是</b>
+<ul class="quote"><li>LinkedList使用链表的数据结构实现了List，但LinkedList并不是线程安全的。</li></ul>
+</li>
+<li><b>可以使用Collections.synchronizedList()方法来包装任意List</b>
+<ul class="quote"><li>此时生成的List对象就是线程安全的了。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>LinkedList使用链表的数据结构实现了List，但LinkedList并不是线程安全的。</li><li>此时生成的List对象就是线程安全的了。</li></ul>
+</div>
+<div class="sec">
+<h4>高效读写的队列：深度剖析ConcurrentLinkedQueue类</h4>
+<ul class="point">
+<li><b>ConcurrentLinkedQueue类使用链表作为其数据结构，性能在高并发环境中是最好的</b>
+<ul class="quote"><li>ConcurrentLinkedQueue类内部有两个重要的字段，head和tail，分别表示链表的头部和尾部，它们都是Node类型。</li><li>对于head来说，它永远不会为null，并且通过head及succ()后继方法一定能完整地遍历整个链表。对于tail来说，它自然应该表示队列的末尾。</li></ul>
+</li>
+<li><b>ConcurrentLinkedQueue类的内部实现非常复杂，它允许在运行时链表处于多个不同的状态</b>
+<ul class="quote"><li>以tail为例，一般来说，我们期望tail总是为链表的末尾，但实际上，tail的更新并不是及时的，可能会产生拖延现象。</li><li>插入节点时tail的更新会产生滞后，并且每次更新会跳跃两个元素。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>ConcurrentLinkedQueue类内部有两个重要的字段，head和tail，分别表示链表的头部和尾部，它们都是Node类型。</li><li>对于head来说，它永远不会为null，并且通过head及succ()后继方法一定能完整地遍历整个链表。对于tail来说，它自然应该表示队列的末尾。</li><li>以tail为例，一般来说，我们期望tail总是为链表的末尾，但实际上，tail的更新并不是及时的，可能会产生拖延现象。</li><li>插入节点时tail的更新会产生滞后，并且每次更新会跳跃两个元素。</li></ul>
+</div>
+<div class="sec">
+<h4>高效读取：不变模式下的CopyOnWriteArrayList类</h4>
+<ul class="point">
+<li><b>CopyOnWriteArrayList类在读操作时，是完全不用加锁的，并且写入也不会阻塞读取操作</b>
+<ul class="quote"><li>读取代码没有任何同步控制和锁操作，理由就是内部数组array不会发生修改，只会被另外一个array替换，因此可以保证数据安全。</li></ul>
+</li>
+<li><b>写入操作使用锁，当然这个锁仅限于控制写-写的情况</b>
+<ul class="quote"><li>其重点在于第7行代码进行了内部元素的完整复制。因此，会生成一个新的数组newElements。将新的元素加入newElements，然后在第9行使用新的数组替换老的数组，修改就完成了。整个过程不会影响读取，并且修改完后，读取线程可以立即“察觉”到这个修改。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>读取代码没有任何同步控制和锁操作，理由就是内部数组array不会发生修改，只会被另外一个array替换，因此可以保证数据安全。</li><li>其重点在于第7行代码进行了内部元素的完整复制。因此，会生成一个新的数组newElements。将新的元素加入newElements，然后在第9行使用新的数组替换老的数组，修改就完成了。整个过程不会影响读取，并且修改完后，读取线程可以立即“察觉”到这个修改。</li></ul>
+</div>
+<div class="sec">
+<h4>数据共享通道：BlockingQueue</h4>
+<ul class="point">
+<li><b>BlockingQueue是一个接口，并非一个具体的实现，它的主要实现有ArrayBlockingQueue类和LinkedBlockingQueue类</b>
+<ul class="quote"><li>ArrayBlockingQueue类是基于数组实现的，而LinkedBlockingQueue类是基于链表的。</li><li>ArrayBlockingQueue类更适合做有界队列，因为队列中可容纳的最大元素需要在队列创建时指定。而LinkedBlockingQueue类适合做无界队列，或者那些边界值非常大的队列，因为其内部元素可以动态增加。</li></ul>
+</li>
+<li><b>BlockingQueue之所以适合作为数据共享的通道，其关键还在于Blocking上</b>
+<ul class="quote"><li>当服务线程处理完成队列中所有的消息后，它如何知道下一条消息何时到来呢？一种最简单的做法是让这个线程按照一定的时间间隔不停地循环和监控这个队列。这是一种可行的方案，但显然造成了不必要的资源浪费，而且循环周期也难以确定。BlockingQueue很好地解决了这个问题。它会让服务线程在队列为空时进行等待，当有新的消息进入队列后，自动将线程唤醒。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>ArrayBlockingQueue类是基于数组实现的，而LinkedBlockingQueue类是基于链表的。</li><li>ArrayBlockingQueue类更适合做有界队列，因为队列中可容纳的最大元素需要在队列创建时指定。而LinkedBlockingQueue类适合做无界队列，或者那些边界值非常大的队列，因为其内部元素可以动态增加。</li><li>当服务线程处理完成队列中所有的消息后，它如何知道下一条消息何时到来呢？一种最简单的做法是让这个线程按照一定的时间间隔不停地循环和监控这个队列。这是一种可行的方案，但显然造成了不必要的资源浪费，而且循环周期也难以确定。BlockingQueue很好地解决了这个问题。它会让服务线程在队列为空时进行等待，当有新的消息进入队列后，自动将线程唤醒。</li></ul>
+</div>
+<div class="sec">
+<h4>随机数据结构：跳表(SkipList)</h4>
+<ul class="point">
+<li><b>跳表是一种可以用来快速查找的数据结构，有点类似于平衡树</b>
+<ul class="quote"><li>对平衡树的插入和删除往往很可能导致平衡树进行一次全局的调整，而对跳表的插入和删除只需要对整个数据结构的局部进行操作即可。</li><li>跳表的另外一个特点是随机算法。跳表的本质是同时维护了多个链表，并且链表是分层的。</li></ul>
+</li>
+<li><b>实现这一数据结构的类是ConcurrentSkipListMap</b>
+<ul class="quote"><li>和HashMap不同，对跳表的遍历输出是有序的。</li><li>跳表的内部实现由几个关键的数据结构组成。首先是Node，一个Node表示一个节点，里面含有key和value(就是Map的key和value)两个重要的元素。每个Node还会指向下一个Node，因此还有一个元素next。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>对平衡树的插入和删除往往很可能导致平衡树进行一次全局的调整，而对跳表的插入和删除只需要对整个数据结构的局部进行操作即可。</li><li>跳表的另外一个特点是随机算法。跳表的本质是同时维护了多个链表，并且链表是分层的。</li><li>和HashMap不同，对跳表的遍历输出是有序的。</li><li>跳表的内部实现由几个关键的数据结构组成。首先是Node，一个Node表示一个节点，里面含有key和value(就是Map的key和value)两个重要的元素。每个Node还会指向下一个Node，因此还有一个元素next。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">21</span><span class="mmx-name">3.4 使用JMH进行性能测试</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 7 个小节 · 15 条要点 · 28 句原句摘录</p>
+<div class="sec">
+<h4>JMH简介</h4>
+<ul class="point">
+<li><b>JMH是一个在OpenJDK项目中发布的，专门用于性能测试的框架，其精度可以到达毫秒级</b>
+<ul class="quote"><li>通过JMH可以对多个方法的性能进行定量分析。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>通过JMH可以对多个方法的性能进行定量分析。</li></ul>
+</div>
+<div class="sec">
+<h4>Hello JMH</h4>
+<ul class="point">
+<li><b>使用Maven进行导入JMH的jar包</b>
+<ul class="quote"><li>一个最简单的JMH程序如下：其中被度量的代码为函数wellHelloThere()。类似于JUnit，被度量代码用注解＠Benchmark标注，这里仅仅为一个空函数。</li></ul>
+</li>
+<li><b>在Eclipse中运行上述代码，需要进行一些预配置</b>
+<ul class="quote"><li>在Eclipse中，需要首先安装Maven插件m2e-apt。</li><li>设置APT模式。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>一个最简单的JMH程序如下：其中被度量的代码为函数wellHelloThere()。类似于JUnit，被度量代码用注解＠Benchmark标注，这里仅仅为一个空函数。</li><li>在Eclipse中，需要首先安装Maven插件m2e-apt。</li><li>设置APT模式。</li></ul>
+</div>
+<div class="sec">
+<h4>JMH的基本概念和配置</h4>
+<ul class="point">
+<li><b>Mode表示JMH的测量方式和角度，共有4种：Throughput、AverageTime、SampleTime、SingleShotTime</b>
+<ul class="quote"><li>Throughput：整体吞吐量，表示1秒内可以执行多少次调用。</li><li>AverageTime：调用的平均时间，指每一次调用所需要的时间。</li><li>SampleTime：随机取样，最后输出取样结果的分布。</li><li>SingleShotTime：只运行一次，往往同时把 warmup 次数设为0，用于测试冷启动时的性能。</li></ul>
+</li>
+<li><b>迭代是JMH的一次测量单位，一次迭代表示1秒</b>
+<ul class="quote"><li>在这一秒内会不间断调用被测方法，并采样计算吞吐量、平均时间等。</li></ul>
+</li>
+<li><b>预热由于Java虚拟机的JIT的存在，同一个方法在JIT编译前后的时间将会不同</b>
+<ul class="quote"><li>通常只考虑方法在JIT编译后的性能。</li></ul>
+</li>
+<li><b>状态可以指定一个对象的作用范围，范围主要有两种：Benchmark级别和Thread线程级别</b>
+<ul class="quote"><li>对于measureUnshared()方法，每个不同的测试线程都有自己的数据复制，而对于measureShared()方法，所有测试线程共享一份数据。</li></ul>
+</li>
+<li><b>配置类在测试开始前，首先要对测试进行配置</b>
+<ul class="quote"><li>通常需要指定一些参数，比如指定测试类(include)、使用的进程个数(fork)、预热迭代次数(warmupIterations)。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Throughput：整体吞吐量，表示1秒内可以执行多少次调用。</li><li>AverageTime：调用的平均时间，指每一次调用所需要的时间。</li><li>SampleTime：随机取样，最后输出取样结果的分布。</li><li>SingleShotTime：只运行一次，往往同时把 warmup 次数设为0，用于测试冷启动时的性能。</li><li>在这一秒内会不间断调用被测方法，并采样计算吞吐量、平均时间等。</li><li>通常只考虑方法在JIT编译后的性能。</li><li>对于measureUnshared()方法，每个不同的测试线程都有自己的数据复制，而对于measureShared()方法，所有测试线程共享一份数据。</li><li>通常需要指定一些参数，比如指定测试类(include)、使用的进程个数(fork)、预热迭代次数(warmupIterations)。</li></ul>
+</div>
+<div class="sec">
+<h4>理解JMH中的Mode</h4>
+<ul class="point">
+<li><b>吞吐量和方法执行的平均时间是最为常用的统计方式</b>
+<ul class="quote"><li>吞吐量的测量方法：其输出结果通常如下：上面这行代码表示每秒可以进行约10个操作(即10次方法调用)。</li><li>统计方法的平均执行时间的设置如下：它的一种可能的输出如下：上面这行代码表示每个操作需要约100毫秒。</li></ul>
+</li>
+<li><b>采样，即不再计算每个执行方法的平均执行时间，而是通过采样得到部分方法的执行时间</b>
+<ul class="quote"><li>一种可能的输出如下：它表示，在采样到的方法中，平均的执行时间是100 323μs。其中，有一半的调用在100 270μs内完成，90%的调用在100 794μs内完成，全部的采样调用均在101 974μs内完成。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>吞吐量的测量方法：其输出结果通常如下：上面这行代码表示每秒可以进行约10个操作(即10次方法调用)。</li><li>统计方法的平均执行时间的设置如下：它的一种可能的输出如下：上面这行代码表示每个操作需要约100毫秒。</li><li>一种可能的输出如下：它表示，在采样到的方法中，平均的执行时间是100 323μs。其中，有一半的调用在100 270μs内完成，90%的调用在100 794μs内完成，全部的采样调用均在101 974μs内完成。</li></ul>
+</div>
+<div class="sec">
+<h4>理解JMH中的State</h4>
+<ul class="point">
+<li><b>JMH中的State可以理解为变量或者数据模型的作用域，通常包括整个Benchmark级别和Thread线程级别</b>
+<ul class="quote"><li>声明了两个数据模型，一个是Benchmark级别，另一个是Thread级别。</li><li>使用Benchmark方法对上述模型进行访问。</li><li>对于measureUnshared()方法，每个不同的测试线程都有自己的数据复制，而对于measureShared()方法，所有测试线程共享一份数据。因此，测试结果也有很大不同。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>声明了两个数据模型，一个是Benchmark级别，另一个是Thread级别。</li><li>使用Benchmark方法对上述模型进行访问。</li><li>对于measureUnshared()方法，每个不同的测试线程都有自己的数据复制，而对于measureShared()方法，所有测试线程共享一份数据。因此，测试结果也有很大不同。</li></ul>
+</div>
+<div class="sec">
+<h4>有关性能的一些思考</h4>
+<ul class="point">
+<li><b>性能调优就是要加快系统的执行，因此就是要尽可能使用执行速度快的组件</b>
+<ul class="quote"><li>有时候，我们会不自觉地询问，哪个组件更快，哪个方法更快？但是，这个看起来很简单的问题却是没有答案的。</li><li>在大部分场景中，并没有绝对的快或者慢。性能需要从不同角度、不同场景进行评估和取舍。</li></ul>
+</li>
+<li><b>对性能的优化和研究就是需要在各种不同的场景下，对组件进行全方位的性能分析，并结合实际应用情况进行取舍和权衡</b>
+<ul class="quote"><li>下面以HashMap和ConcurrentHashMap为例进行性能分析和比较。</li><li>首先，从严格意义上说，这两个模块无法进行比较，因为它们的功能是不等价的。只有在等价的功能下，去比较性能才是有意义的。</li><li>其次，虽然同属于Map接口的实现，但依然很难说HashMap和ConcurrentHashMap谁快谁慢。</li><li>最后，除了执行时间的比较，还有空间使用的比较，显而易见，ConcurrentHashMap内存结构更加复杂，也使用了更多的内存空间。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>有时候，我们会不自觉地询问，哪个组件更快，哪个方法更快？但是，这个看起来很简单的问题却是没有答案的。</li><li>在大部分场景中，并没有绝对的快或者慢。性能需要从不同角度、不同场景进行评估和取舍。</li><li>下面以HashMap和ConcurrentHashMap为例进行性能分析和比较。</li><li>首先，从严格意义上说，这两个模块无法进行比较，因为它们的功能是不等价的。只有在等价的功能下，去比较性能才是有意义的。</li><li>其次，虽然同属于Map接口的实现，但依然很难说HashMap和ConcurrentHashMap谁快谁慢。</li><li>最后，除了执行时间的比较，还有空间使用的比较，显而易见，ConcurrentHashMap内存结构更加复杂，也使用了更多的内存空间。</li></ul>
+</div>
+<div class="sec">
+<h4>CopyOnWriteArrayList类与ConcurrentLinkedQueue类</h4>
+<ul class="point">
+<li><b>CopyOnWriteArrayList类和ConcurrentLinkedQueue类是两个重要的高并发队列</b>
+<ul class="quote"><li>CopyOnWriteArrayList类通过写复制来提升并发能力。</li><li>ConcurrentLinkedQueue类则通过CAS操作和锁分离来提高系统性能。</li></ul>
+</li>
+<li><b>在并发条件下，写的性能远远低于读的性能</b>
+<ul class="quote"><li>对于CopyOnWriteArrayList类来说，当内部存有1000个元素的时候，由于复制的成本，写性能要远远低于只包含少数元素的List，但依然优于ConcurrentLinkedQueue类。</li><li>就读性能而言，进行只读不写的Get操作，两者性能都不错。但是由于实现上的差异，ConcurrentLinkedQueue类的size操作明显要慢于CopyOnWriteArrayList类的。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>CopyOnWriteArrayList类通过写复制来提升并发能力。</li><li>ConcurrentLinkedQueue类则通过CAS操作和锁分离来提高系统性能。</li><li>对于CopyOnWriteArrayList类来说，当内部存有1000个元素的时候，由于复制的成本，写性能要远远低于只包含少数元素的List，但依然优于ConcurrentLinkedQueue类。</li><li>就读性能而言，进行只读不写的Get操作，两者性能都不错。但是由于实现上的差异，ConcurrentLinkedQueue类的size操作明显要慢于CopyOnWriteArrayList类的。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">22</span><span class="mmx-name">第4章 锁的优化及注意事项</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 5 条要点 · 6 句原句摘录</p>
+<div class="sec">
+<h4>锁的性能问题及优化</h4>
+<ul class="point">
+<li><b>锁竞争会导致程序的性能下降。</b>
+</li>
+<li><b>锁粒度越小，性能越高</b>
+<ul class="quote"><li>减小锁粒度，让锁只作用于最小的数据单元，可以降低锁竞争，提高性能。</li></ul>
+</li>
+<li><b>锁分离，按需加锁</b>
+<ul class="quote"><li>将大锁分解为小锁，按业务逻辑对锁进行分离，可以降低锁竞争，提高性能。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>减小锁粒度，让锁只作用于最小的数据单元，可以降低锁竞争，提高性能。</li><li>将大锁分解为小锁，按业务逻辑对锁进行分离，可以降低锁竞争，提高性能。</li></ul>
+</div>
+<div class="sec">
+<h4>多线程环境的开销</h4>
+<ul class="point">
+<li><b>多线程环境需要额外维护多线程环境的特有信息</b>
+<ul class="quote"><li>对于多线程应用来说，系统除了处理功能需求外，还需要额外维护多线程环境的特有信息，如线程本身的元数据、线程的调度、线程上下文的切换等。</li></ul>
+</li>
+<li><b>并行计算可以更合理地进行任务调度，充分利用各个CPU资源</b>
+<ul class="quote"><li>在单核CPU上采用并行算法的效率一般要低于原始的串行算法的效率，其根本原因也在于此。</li><li>并行计算之所以能提高系统的性能，并不是因为它“少干活”了，而是因为并行计算可以更合理地进行任务调度，充分利用各个CPU资源。</li><li>合理的并发，才能将多核CPU的性能发挥到极致。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>对于多线程应用来说，系统除了处理功能需求外，还需要额外维护多线程环境的特有信息，如线程本身的元数据、线程的调度、线程上下文的切换等。</li><li>在单核CPU上采用并行算法的效率一般要低于原始的串行算法的效率，其根本原因也在于此。</li><li>并行计算之所以能提高系统的性能，并不是因为它“少干活”了，而是因为并行计算可以更合理地进行任务调度，充分利用各个CPU资源。</li><li>合理的并发，才能将多核CPU的性能发挥到极致。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">23</span><span class="mmx-name">4.1 有助于提高锁性能的几点建议</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 5 个小节 · 9 条要点 · 11 句原句摘录</p>
+<div class="sec">
+<h4>减少锁持有时间</h4>
+<ul class="point">
+<li><b>线程持有锁的时间越长，锁的竞争程度也就越激烈</b>
+<ul class="quote"><li>如果要求100个人各自填写自己的身份信息，但是只给他们一支笔，那么如果每个人拿着笔的时间都很长，总体所花的时间就会很长。</li></ul>
+</li>
+<li><b>只在必要时进行同步，减少线程持有锁的时间</b>
+<ul class="quote"><li>在改进的代码中只针对mutextMethod()方法做了同步，锁占用的时间相对较短，因此能有更高的并行度。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如果要求100个人各自填写自己的身份信息，但是只给他们一支笔，那么如果每个人拿着笔的时间都很长，总体所花的时间就会很长。</li><li>在改进的代码中只针对mutextMethod()方法做了同步，锁占用的时间相对较短，因此能有更高的并行度。</li></ul>
+</div>
+<div class="sec">
+<h4>减小锁粒度</h4>
+<ul class="point">
+<li><b>减小锁粒度是一种削弱多线程锁竞争的有效手段</b>
+<ul class="quote"><li>ConcurrentHashMap类内部进一步细分了若干个小的HashMap，称之为段(SEGMENT)。</li></ul>
+</li>
+<li><b>减小锁粒度会带来一个新的问题，即当系统需要取得全局锁时，其消耗的资源会比较多</b>
+<ul class="quote"><li>虽然ConcurrentHashMap类的put()方法很好地分离了锁，但是当试图访问ConcurrentHashMap类的全局信息时，就需要同时取得所有段的锁方能顺利实施。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>ConcurrentHashMap类内部进一步细分了若干个小的HashMap，称之为段(SEGMENT)。</li><li>虽然ConcurrentHashMap类的put()方法很好地分离了锁，但是当试图访问ConcurrentHashMap类的全局信息时，就需要同时取得所有段的锁方能顺利实施。</li></ul>
+</div>
+<div class="sec">
+<h4>用读写分离锁来替换独占锁</h4>
+<ul class="point">
+<li><b>在读多写少的场合，读写锁对系统性能是很有好处的</b>
+<ul class="quote"><li>因为如果系统在读写数据时均只使用独占锁，那么读操作和写操作间、读操作和读操作间、写操作和写操作间均不能做到真正的并发，并且需要相互等待。</li><li>而读操作本身不会影响数据的完整性和一致性。因此，从理论上讲，在大部分情况下，可以允许多线程同时读，读写锁正是实现了这种功能。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>因为如果系统在读写数据时均只使用独占锁，那么读操作和写操作间、读操作和读操作间、写操作和写操作间均不能做到真正的并发，并且需要相互等待。</li><li>而读操作本身不会影响数据的完整性和一致性。因此，从理论上讲，在大部分情况下，可以允许多线程同时读，读写锁正是实现了这种功能。</li></ul>
+</div>
+<div class="sec">
+<h4>锁分离</h4>
+<ul class="point">
+<li><b>如果将读写锁的思想进一步延伸，就是锁分离</b>
+<ul class="quote"><li>读写锁根据读写操作功能上的不同，进行了有效的锁分离。</li><li>依据应用程序的功能特点，使用类似的分离思想，也可以对独占锁进行分离。</li></ul>
+</li>
+<li><b>通过takeLock和putLock两把锁，LinkedBlockingQueue实现了取数据和写数据的分离</b>
+<ul class="quote"><li>take()方法和put()方法就此相互独立，它们之间不存在锁竞争关系，只需要在take()方法和take()方法间、put()方法和put()方法间分别对takeLock和putLock进行竞争。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>读写锁根据读写操作功能上的不同，进行了有效的锁分离。</li><li>依据应用程序的功能特点，使用类似的分离思想，也可以对独占锁进行分离。</li><li>take()方法和put()方法就此相互独立，它们之间不存在锁竞争关系，只需要在take()方法和take()方法间、put()方法和put()方法间分别对takeLock和putLock进行竞争。</li></ul>
+</div>
+<div class="sec">
+<h4>锁粗化</h4>
+<ul class="point">
+<li><b>虚拟机在遇到一连串连续地对同一个锁不断进行请求和释放的操作时，便会把所有的锁操作整合成对锁的一次请求</b>
+<ul class="quote"><li>这个操作叫作锁的粗化。</li></ul>
+</li>
+<li><b>在开发过程中，大家也应该有意识地在合理的场合进行锁的粗化</b>
+<ul class="quote"><li>尤其当在循环内请求锁时，一种更加合理的做法应该是在外层只请求一次锁。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>这个操作叫作锁的粗化。</li><li>尤其当在循环内请求锁时，一种更加合理的做法应该是在外层只请求一次锁。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">24</span><span class="mmx-name">4.2 Java虚拟机对锁优化所做的努力</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 4 条要点 · 13 句原句摘录</p>
+<div class="sec">
+<h4>Java虚拟机对锁优化所做的努力</h4>
+<ul class="point">
+<li><b>锁偏向是一种针对加锁操作的优化手段</b>
+<ul class="quote"><li>如果一个线程获得了锁，那么锁就进入偏向模式。</li><li>对于几乎没有锁竞争的场合，偏向锁有比较好的优化效果。</li><li>对于锁竞争比较激烈的场合，其效果不佳。</li></ul>
+</li>
+<li><b>轻量级锁是锁偏向失败后的优化手段</b>
+<ul class="quote"><li>轻量级锁的操作也很方便，它只是简单地将对象头部作为指针指向持有锁的线程堆栈的内部。</li><li>如果线程获得轻量级锁成功，则可以顺利进入临界区。</li><li>如果轻量级锁加锁失败，则表示其他线程抢先争夺到了锁，那么当前线程的锁请求就会膨胀为重量级锁。</li></ul>
+</li>
+<li><b>自旋锁是锁膨胀后的优化手段</b>
+<ul class="quote"><li>当前线程暂时无法获得锁，而且什么时候可以获得锁是一个未知数，也许在几个CPU时钟周期后就可以得到锁。</li><li>虚拟机会让当前线程做几个空循环(这也是自旋的含义)，在经过若干次循环后，如果可以得到锁，那么就顺利进入临界区。</li><li>如果还不能获得锁，才会真的将线程在操作系统层面挂起。</li></ul>
+</li>
+<li><b>锁消除是一种更彻底的锁优化</b>
+<ul class="quote"><li>Java虚拟机在JIT编译时，通过对运行上下文的扫描，去除不可能存在共享资源竞争的锁。</li><li>逃逸分析是锁消除涉及的一项关键技术。</li><li>逃逸分析必须在-server模式下进行，可以使用-XX:+DoEscapeAnalysis参数打开逃逸分析。</li><li>使用-XX:+EliminateLocks参数可以打开锁消除。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如果一个线程获得了锁，那么锁就进入偏向模式。</li><li>对于几乎没有锁竞争的场合，偏向锁有比较好的优化效果。</li><li>对于锁竞争比较激烈的场合，其效果不佳。</li><li>轻量级锁的操作也很方便，它只是简单地将对象头部作为指针指向持有锁的线程堆栈的内部。</li><li>如果线程获得轻量级锁成功，则可以顺利进入临界区。</li><li>如果轻量级锁加锁失败，则表示其他线程抢先争夺到了锁，那么当前线程的锁请求就会膨胀为重量级锁。</li><li>当前线程暂时无法获得锁，而且什么时候可以获得锁是一个未知数，也许在几个CPU时钟周期后就可以得到锁。</li><li>虚拟机会让当前线程做几个空循环(这也是自旋的含义)，在经过若干次循环后，如果可以得到锁，那么就顺利进入临界区。</li><li>如果还不能获得锁，才会真的将线程在操作系统层面挂起。</li><li>Java虚拟机在JIT编译时，通过对运行上下文的扫描，去除不可能存在共享资源竞争的锁。</li><li>逃逸分析是锁消除涉及的一项关键技术。</li><li>逃逸分析必须在-server模式下进行，可以使用-XX:+DoEscapeAnalysis参数打开逃逸分析。</li><li>使用-XX:+EliminateLocks参数可以打开锁消除。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">25</span><span class="mmx-name">4.3 人手一支笔：ThreadLocal</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 5 条要点 · 5 句原句摘录</p>
+<div class="sec">
+<h4>ThreadLocal的简单使用</h4>
+<ul class="point">
+<li><b>ThreadLocal是线程的局部变量，只有当前线程可以访问</b>
+<ul class="quote"><li>既然是只有当前线程可以访问的数据，自然是线程安全的。</li></ul>
+</li>
+<li><b>为每一个线程分配一个对象的工作并不是由ThreadLocal来完成的，而是需要在应用层面保证的</b>
+<ul class="quote"><li>如果在应用上为每一个线程分配了相同的对象实例，那么ThreadLocal也不能保证线程安全。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>既然是只有当前线程可以访问的数据，自然是线程安全的。</li><li>如果在应用上为每一个线程分配了相同的对象实例，那么ThreadLocal也不能保证线程安全。</li></ul>
+</div>
+<div class="sec">
+<h4>ThreadLocal的实现原理</h4>
+<ul class="point">
+<li><b>ThreadLocalMap可以理解为一个Map，它是定义在Thread内部的成员</b>
+<ul class="quote"><li>设置到ThreadLocal中的数据，也正是写入了threadLocals的这个Map。</li></ul>
+</li>
+<li><b>线程退出时，Thread类会进行一些清理工作，其中就包括清理ThreadLocalMap</b>
+<ul class="quote"><li>如果使用线程池就意味着当前线程未必会退出，如果这样，将一些大的对象设置到ThreadLocal中，可能会使系统出现内存泄漏的可能。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>设置到ThreadLocal中的数据，也正是写入了threadLocals的这个Map。</li><li>如果使用线程池就意味着当前线程未必会退出，如果这样，将一些大的对象设置到ThreadLocal中，可能会使系统出现内存泄漏的可能。</li></ul>
+</div>
+<div class="sec">
+<h4>对性能有何帮助</h4>
+<ul class="point">
+<li><b>为每一个线程分配一个独立的对象对系统性能也许是有帮助的</b>
+<ul class="quote"><li>如果共享对象对于竞争的处理容易引起性能损失，我们还是应该考虑使用ThreadLocal为每个线程分配单独的对象。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如果共享对象对于竞争的处理容易引起性能损失，我们还是应该考虑使用ThreadLocal为每个线程分配单独的对象。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">26</span><span class="mmx-name">4.4 无锁</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 10 个小节 · 15 条要点 · 19 句原句摘录</p>
+<div class="sec">
+<h4>无锁的概念和优势</h4>
+<ul class="point">
+<li><b>无锁是一种乐观的策略，它会假设对资源的访问是没有冲突的</b>
+<ul class="quote"><li>无锁的策略使用一种叫作比较交换(CAS，Compare And Swap)的技术来鉴别线程冲突，一旦检测到冲突产生，就重试当前操作直到没有冲突为止。</li></ul>
+</li>
+<li><b>无锁对死锁问题天生免疫，并且线程间的相互影响也远远比基于锁的方式要小</b>
+<ul class="quote"><li>使用无锁的方式完全没有锁竞争带来的系统开销，也没有线程间频繁调度带来的开销，因此，它要比基于锁的方式拥有更优越的性能。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>无锁的策略使用一种叫作比较交换(CAS，Compare And Swap)的技术来鉴别线程冲突，一旦检测到冲突产生，就重试当前操作直到没有冲突为止。</li><li>使用无锁的方式完全没有锁竞争带来的系统开销，也没有线程间频繁调度带来的开销，因此，它要比基于锁的方式拥有更优越的性能。</li></ul>
+</div>
+<div class="sec">
+<h4>比较交换(CAS)技术</h4>
+<ul class="point">
+<li><b>CAS算法的过程包含三个参数CAS(V,E,N)，其中V表示要更新的变量，E表示预期值，N表示新值</b>
+<ul class="quote"><li>仅当V值等于E值时，才会将V的值设为N，如果V值和E值不同，说明已经有其他线程做了更新，则当前线程什么都不做。</li></ul>
+</li>
+<li><b>CAS操作是抱着乐观的态度进行的，它总是认为自己可以成功完成操作</b>
+<ul class="quote"><li>当多个线程同时使用CAS操作一个变量时，只有一个会胜出，并成功更新，其余均会失败。失败的线程不会被挂起，仅是被告知失败，并且允许再次尝试，当然也允许失败的线程放弃操作。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>仅当V值等于E值时，才会将V的值设为N，如果V值和E值不同，说明已经有其他线程做了更新，则当前线程什么都不做。</li><li>当多个线程同时使用CAS操作一个变量时，只有一个会胜出，并成功更新，其余均会失败。失败的线程不会被挂起，仅是被告知失败，并且允许再次尝试，当然也允许失败的线程放弃操作。</li></ul>
+</div>
+<div class="sec">
+<h4>无锁的线程安全整数：AtomicInteger</h4>
+<ul class="point">
+<li><b>AtomicInteger中保存了一个核心字段value和一个保存着value字段在AtomicInteger对象中的偏移量offset</b>
+<ul class="quote"><li>AtomicInteger的使用非常简单，这里给出一个示例：第6行的AtomicInteger.incrementAndGet()方法会使用CAS操作将自己加1，同时也会返回当前值(这里忽略了当前值)。</li></ul>
+</li>
+<li><b>incrementAndGet()方法的第2行for循环会不断进行尝试，直到成功</b>
+<ul class="quote"><li>第3行的get()取得当前值，接着加1后得到新值next。这里，我们就得到了CAS必需的两个参数：期望值及新值。使用compareAndSet()方法将新值next写入，成功的条件是在写入的时刻，当前的值应该要等于刚刚取得的current。如果不是这样，则说明AtomicInteger的值在第3行到第5行代码之间又被其他线程修改过了。当前线程看到的状态就是一个过期状态。因此，compareAndSet返回失败，需要进行下一次重试，直到成功。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>AtomicInteger的使用非常简单，这里给出一个示例：第6行的AtomicInteger.incrementAndGet()方法会使用CAS操作将自己加1，同时也会返回当前值(这里忽略了当前值)。</li><li>第3行的get()取得当前值，接着加1后得到新值next。这里，我们就得到了CAS必需的两个参数：期望值及新值。使用compareAndSet()方法将新值next写入，成功的条件是在写入的时刻，当前的值应该要等于刚刚取得的current。如果不是这样，则说明AtomicInteger的值在第3行到第5行代码之间又被其他线程修改过了。当前线程看到的状态就是一个过期状态。因此，compareAndSet返回失败，需要进行下一次重试，直到成功。</li></ul>
+</div>
+<div class="sec">
+<h4>Java中的指针：Unsafe类</h4>
+<ul class="point">
+<li><b>Unsafe类封装了一些类似指针的操作，如compareAndSwapInt()方法</b>
+<ul class="quote"><li>compareAndSwapInt()方法的几个参数含义如下：第一个参数o为给定的对象，offset为对象内的偏移量(其实就是一个字段到对象头部的偏移量，通过这个偏移量可以快速定位字段)，expected表示期望值，x表示要设置的值。如果指定的字段的值等于expected，那么就把它设置为x。</li></ul>
+</li>
+<li><b>Unsafe类还提供了一些方法，主要有以下几种(以int操作为例，其他数据类型是类似的)</b>
+<ul class="quote"><li>如果大家还记得“3.3.4高效读写的队列：深度剖析ConcurrentLinkedQueue类”一节中描述的ConcurrentLinkedQueue类实现，应该对ConcurrentLinkedQueue类中的Node还有些印象。Node的一些CAS操作也都是使用Unsafe类来实现的。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>compareAndSwapInt()方法的几个参数含义如下：第一个参数o为给定的对象，offset为对象内的偏移量(其实就是一个字段到对象头部的偏移量，通过这个偏移量可以快速定位字段)，expected表示期望值，x表示要设置的值。如果指定的字段的值等于expected，那么就把它设置为x。</li><li>如果大家还记得“3.3.4高效读写的队列：深度剖析ConcurrentLinkedQueue类”一节中描述的ConcurrentLinkedQueue类实现，应该对ConcurrentLinkedQueue类中的Node还有些印象。Node的一些CAS操作也都是使用Unsafe类来实现的。</li></ul>
+</div>
+<div class="sec">
+<h4>无锁的对象引用：AtomicReference</h4>
+<ul class="point">
+<li><b>AtomicReference和AtomicInteger非常类似，不同之处就在于AtomicInteger是对整数的封装，而AtomicReference则是对应普通的对象引用</b>
+<ul class="quote"><li>AtomicReference无法解决上述问题的根本原因是，对象在修改过程中丢失了状态信息，对象值本身与状态被画上了等号。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>AtomicReference无法解决上述问题的根本原因是，对象在修改过程中丢失了状态信息，对象值本身与状态被画上了等号。</li></ul>
+</div>
+<div class="sec">
+<h4>带有时间戳的对象引用：AtomicStampedReference</h4>
+<ul class="point">
+<li><b>AtomicStampedReference正是这么做的。它内部不仅维护了对象值，还维护了一个时间戳</b>
+<ul class="quote"><li>当AtomicStampedReference对应的数值被修改时，除了更新数据本身外，还必须要更新时间戳。</li><li>当AtomicStampedReference设置对象值时，对象值及时间戳都必须满足期望值，写入才会成功。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>当AtomicStampedReference对应的数值被修改时，除了更新数据本身外，还必须要更新时间戳。</li><li>当AtomicStampedReference设置对象值时，对象值及时间戳都必须满足期望值，写入才会成功。</li></ul>
+</div>
+<div class="sec">
+<h4>数组也能无锁：AtomicIntegerArray</h4>
+<ul class="point">
+<li><b>AtomicIntegerArray本质上是对int[]类型的封装，使用Unsafe类通过CAS的方式控制int[]在多线程下的安全性</b>
+<ul class="quote"><li>它提供了以下几个核心API。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>它提供了以下几个核心API。</li></ul>
+</div>
+<div class="sec">
+<h4>让普通变量也享受原子操作：AtomicIntegerFieldUpdater</h4>
+<ul class="point">
+<li><b>AtomicIntegerFieldUpdater可以让你在不改动(或者极少改动)原有代码的基础上，让普通的变量也享受CAS操作带来的线程安全性</b>
+<ul class="quote"><li>根据数据类型不同，Updater有三种，分别是AtomicIntegerFieldUpdater、AtomicLong-FieldUpdater和AtomicReferenceFieldUpdater。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>根据数据类型不同，Updater有三种，分别是AtomicIntegerFieldUpdater、AtomicLong-FieldUpdater和AtomicReferenceFieldUpdater。</li></ul>
+</div>
+<div class="sec">
+<h4>挑战无锁算法：无锁的Vector实现</h4>
+<ul class="point">
+<li><b>LockFreeVector的特点是可以根据需求动态扩展其内部空间</b>
+<ul class="quote"><li>我们使用二维数组来表示LockFreeVector的内部存储。</li><li>定义一个称为Descriptor的元素。它的作用是使用CAS操作写入新数据。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>我们使用二维数组来表示LockFreeVector的内部存储。</li><li>定义一个称为Descriptor的元素。它的作用是使用CAS操作写入新数据。</li></ul>
+</div>
+<div class="sec">
+<h4>让线程之间互相帮助：细看SynchronousQueue的实现</h4>
+<ul class="point">
+<li><b>SynchronousQueue内部会维护一个线程等待队列</b>
+<ul class="quote"><li>等待队列中会保存等待线程及相关数据的信息。</li></ul>
+</li>
+<li><b>Transferer.transfer()函数的实现是SynchronousQueue的核心</b>
+<ul class="quote"><li>如果等待队列为空，或者队列中节点的类型和本次操作是一致的，那么将当前操作压入队列等待。</li><li>如果等待队列中的元素和本次操作是互补的(比如等待操作是读，而本次操作是写)，那么就插入一个“完成”状态的节点，并且让它“匹配”到一个等待节点上。接着弹出这两个节点，并且使得对应的两个线程继续执行。</li><li>如果线程发现等待队列的节点就是“完成”节点，那么帮助这个节点完成任务，其流程和步骤(2)是一致的。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>等待队列中会保存等待线程及相关数据的信息。</li><li>如果等待队列为空，或者队列中节点的类型和本次操作是一致的，那么将当前操作压入队列等待。</li><li>如果等待队列中的元素和本次操作是互补的(比如等待操作是读，而本次操作是写)，那么就插入一个“完成”状态的节点，并且让它“匹配”到一个等待节点上。接着弹出这两个节点，并且使得对应的两个线程继续执行。</li><li>如果线程发现等待队列的节点就是“完成”节点，那么帮助这个节点完成任务，其流程和步骤(2)是一致的。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">27</span><span class="mmx-name">4.5 有关死锁的问题</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 4 条要点 · 5 句原句摘录</p>
+<div class="sec">
+<h4>死锁的定义及产生原因</h4>
+<ul class="point">
+<li><b>死锁是多个线程相互占用对方需要的资源，而都不进行释放，导致彼此之间相互等待对方释放资源，产生了无限制等待的现象。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>死锁的场景示例</h4>
+<ul class="point">
+<li><b>哲学家就餐问题是一个描述死锁的经典场景</b>
+<ul class="quote"><li>假设有五位哲学家围坐在一张圆桌旁，做以下两件事情之一：吃饭和思考。</li><li>因为用一只餐叉很难吃到意大利面，所以假设哲学家必须用两只餐叉吃东西。他们只能使用自己左右手边的那两只餐叉。</li><li>哲学家从来不交谈，这就很危险，可能产生死锁，每个哲学家都拿着左手的餐叉，永远都在等右边的餐叉(或者相反)。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>假设有五位哲学家围坐在一张圆桌旁，做以下两件事情之一：吃饭和思考。</li><li>因为用一只餐叉很难吃到意大利面，所以假设哲学家必须用两只餐叉吃东西。他们只能使用自己左右手边的那两只餐叉。</li><li>哲学家从来不交谈，这就很危险，可能产生死锁，每个哲学家都拿着左手的餐叉，永远都在等右边的餐叉(或者相反)。</li></ul>
+</div>
+<div class="sec">
+<h4>死锁的检测与解决</h4>
+<ul class="point">
+<li><b>使用JDK提供的一套专业工具可以检测死锁</b>
+<ul class="quote"><li>首先，我们可以使用jps命令得到Java进程的进程ID，接着使用jstack命令得到线程的线程堆栈。</li></ul>
+</li>
+<li><b>避免死锁的有效做法是使用重入锁</b>
+<ul class="quote"><li>通过重入锁的中断或者限时等待可以有效规避死锁带来的问题。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>首先，我们可以使用jps命令得到Java进程的进程ID，接着使用jstack命令得到线程的线程堆栈。</li><li>通过重入锁的中断或者限时等待可以有效规避死锁带来的问题。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">28</span><span class="mmx-name">第5章 并行模式与算法</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 2 条要点 · 2 句原句摘录</p>
+<div class="sec">
+<h4>并行程序设计的重要性</h4>
+<ul class="point">
+<li><b>并行程序设计比串行程序设计复杂得多</b>
+<ul class="quote"><li>前人会总结一些武术套路，对于初学者来说，不需要发挥自己的想象力，只要按照武术套路出拳就可以了。</li><li>等练到了一定的高度，就不必拘泥于套路了。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>前人会总结一些武术套路，对于初学者来说，不需要发挥自己的想象力，只要按照武术套路出拳就可以了。</li><li>等练到了一定的高度，就不必拘泥于套路了。</li></ul>
+</div>
+<div class="sec">
+<h4>并行设计模式及算法</h4>
+<ul class="point">
+<li><b>这些都是前人的经验总结，大家可以在熟知其思想和原理的基础上，再根据自己的需求进行扩展，可能会达到更好的效果。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">29</span><span class="mmx-name">5.1 探讨单例模式</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 4 条要点 · 5 句原句摘录</p>
+<div class="sec">
+<h4>单例模式的概念和好处</h4>
+<ul class="point">
+<li><b>单例模式是一种对象创建模式，用于产生一个对象的具体实例，它可以确保系统中一个类只产生一个实例</b>
+<ul class="quote"><li>对于频繁使用的对象，可以省略new操作花费的时间。</li><li>由于new操作的次数减少，因而对系统内存的使用频率也会降低，这将减轻GC压力，缩短GC停顿时间。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>对于频繁使用的对象，可以省略new操作花费的时间。</li><li>由于new操作的次数减少，因而对系统内存的使用频率也会降低，这将减轻GC压力，缩短GC停顿时间。</li></ul>
+</div>
+<div class="sec">
+<h4>单例模式的实现方式</h4>
+<ul class="point">
+<li><b>饿汉式单例</b>
+<ul class="quote"><li>优点是性能优越，缺点是Singleton构造函数，或者说Singleton实例在什么时候创建是不受控制的。</li></ul>
+</li>
+<li><b>懒汉式单例</b>
+<ul class="quote"><li>优点是只在instance第一次使用时创建对象，缺点是并发环境下加锁，竞争激烈的场合对性能可能产生一定的影响。</li></ul>
+</li>
+<li><b>静态内部类单例</b>
+<ul class="quote"><li>优点是既解决了线程安全问题，又实现了延迟加载，只有在getInstance()方法第一次被调用时，StaticSingleton的实例才会被创建。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>优点是性能优越，缺点是Singleton构造函数，或者说Singleton实例在什么时候创建是不受控制的。</li><li>优点是只在instance第一次使用时创建对象，缺点是并发环境下加锁，竞争激烈的场合对性能可能产生一定的影响。</li><li>优点是既解决了线程安全问题，又实现了延迟加载，只有在getInstance()方法第一次被调用时，StaticSingleton的实例才会被创建。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">30</span><span class="mmx-name">5.2 不变模式</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 11 条要点 · 5 句原句摘录</p>
+<div class="sec">
+<h4>不变模式的概念和优点</h4>
+<ul class="point">
+<li><b>不变模式是依靠对象的不变性，确保其在没有同步操作的多线程环境中依然保持内部状态的一致性和正确性。</b>
+</li>
+<li><b>不变模式天生就是多线程友好的，其核心思想是，一个对象一旦被创建，它的内部状态将永远不会发生改变</b>
+<ul class="quote"><li>没有一个线程可以修改其内部状态和数据，同时其内部状态也绝不会自行发生改变。</li></ul>
+</li>
+<li><b>不变模式比只读属性具有更强的一致性和不变性</b>
+<ul class="quote"><li>对只读属性的对象而言，对象本身不能被其他线程修改，但是对象的自身状态却可能自行修改。</li><li>不变模式则要求，无论出于什么原因，对象自创建后，其内部状态和数据保持绝对的稳定。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>没有一个线程可以修改其内部状态和数据，同时其内部状态也绝不会自行发生改变。</li><li>对只读属性的对象而言，对象本身不能被其他线程修改，但是对象的自身状态却可能自行修改。</li><li>不变模式则要求，无论出于什么原因，对象自创建后，其内部状态和数据保持绝对的稳定。</li></ul>
+</div>
+<div class="sec">
+<h4>不变模式的使用场景</h4>
+<ul class="point">
+<li><b>当对象创建后，其内部状态和数据不再发生任何变化。</b>
+</li>
+<li><b>对象需要被共享，被多线程频繁访问。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>不变模式的实现</h4>
+<ul class="point">
+<li><b>去除setter方法及所有修改自身属性的方法。</b>
+</li>
+<li><b>将所有属性设置为私有，并用final标记，确保其不可修改。</b>
+</li>
+<li><b>确保没有子类可以重载修改它的行为。</b>
+</li>
+<li><b>有一个可以创建完整对象的构造函数。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>不变模式在Java语言中的应用</h4>
+<ul class="point">
+<li><b>在Java语言中，不变模式的实现很简单，只需要注意以上四点即可。</b>
+</li>
+<li><b>JDK中，不变模式的应用非常广泛，其中，最为典型的就是java.lang.String类</b>
+<ul class="quote"><li>所有的元数据类、包装类都是使用不变模式实现的。</li><li>基本数据类型和String类型在实际的软件开发中应用极其广泛，使用不变模式后，所有实例的方法均不需要进行同步操作，保证了它们在多线程环境下的性能。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>所有的元数据类、包装类都是使用不变模式实现的。</li><li>基本数据类型和String类型在实际的软件开发中应用极其广泛，使用不变模式后，所有实例的方法均不需要进行同步操作，保证了它们在多线程环境下的性能。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">31</span><span class="mmx-name">5.3 生产者-消费者模式</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 7 条要点 · 11 句原句摘录</p>
+<div class="sec">
+<h4>生产者-消费者模式的基本概念和特点</h4>
+<ul class="point">
+<li><b>生产者-消费者模式是一个经典的多线程设计模式，它为多线程间的协作提供了良好的解决方案</b>
+<ul class="quote"><li>在生产者-消费者模式中，通常有两类线程，即若干个生产者线程和若干个消费者线程。</li><li>生产者线程负责提交用户请求，消费者线程则负责具体处理生产者提交的任务。</li></ul>
+</li>
+<li><b>生产者和消费者之间通过共享内存缓冲区进行通信</b>
+<ul class="quote"><li>内存缓冲区的主要功能是数据在多线程间的共享，此外，通过该缓冲区，可以缓解生产者和消费者间的性能差。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在生产者-消费者模式中，通常有两类线程，即若干个生产者线程和若干个消费者线程。</li><li>生产者线程负责提交用户请求，消费者线程则负责具体处理生产者提交的任务。</li><li>内存缓冲区的主要功能是数据在多线程间的共享，此外，通过该缓冲区，可以缓解生产者和消费者间的性能差。</li></ul>
+</div>
+<div class="sec">
+<h4>生产者-消费者模式的核心组件</h4>
+<ul class="point">
+<li><b>共享内存缓冲区是生产者-消费者模式的核心组件，它作为生产者和消费者间的通信桥梁</b>
+<ul class="quote"><li>生产者不需要知道消费者的存在，消费者也不需要知道生产者的存在。</li><li>由于内存缓冲区的存在，允许生产者和消费者在执行速度上存在时间差。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>生产者不需要知道消费者的存在，消费者也不需要知道生产者的存在。</li><li>由于内存缓冲区的存在，允许生产者和消费者在执行速度上存在时间差。</li></ul>
+</div>
+<div class="sec">
+<h4>生产者-消费者模式的主要角色</h4>
+<ul class="point">
+<li><b>生产者线程负责创建PCData对象，并将它加入BlockigQueue队列中</b>
+<ul class="quote"><li>PCData对象表示一个生产任务，或者相关任务的数据。</li></ul>
+</li>
+<li><b>消费者线程从BlockigQueue队列中获取PCData对象，并进行相应的计算</b>
+<ul class="quote"><li>生产者对象和消费者对象均引用同一个BlockigQueue实例。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>PCData对象表示一个生产任务，或者相关任务的数据。</li><li>生产者对象和消费者对象均引用同一个BlockigQueue实例。</li></ul>
+</div>
+<div class="sec">
+<h4>生产者-消费者模式的实现</h4>
+<ul class="point">
+<li><b>BlockingQueue充当了共享内存缓冲区，用于维护任务或数据队列(PCData对象)</b>
+<ul class="quote"><li>建议大家先回顾一下第3章有关BlockingQueue的相关知识，它对于理解整个生产者和消费者结构有重要的帮助。</li></ul>
+</li>
+<li><b>实现一个基于生产者-消费者模式的求整数平方的并行程序</b>
+<ul class="quote"><li>首先，生产者线程的实现如下，它构建PCData对象，并放入BlockingQueue队列中。</li><li>对应的消费者的实现如下。它从BlockingQueue队列中取出PCData对象，并进行相应的计算。</li><li>在主函数中，创建三个生产者和三个消费者，并让它们协作运行。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>建议大家先回顾一下第3章有关BlockingQueue的相关知识，它对于理解整个生产者和消费者结构有重要的帮助。</li><li>首先，生产者线程的实现如下，它构建PCData对象，并放入BlockingQueue队列中。</li><li>对应的消费者的实现如下。它从BlockingQueue队列中取出PCData对象，并进行相应的计算。</li><li>在主函数中，创建三个生产者和三个消费者，并让它们协作运行。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">32</span><span class="mmx-name">5.4 高性能的生产者-消费者模式：无锁的实现</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 7 条要点 · 12 句原句摘录</p>
+<div class="sec">
+<h4>无锁的缓存框架：Disruptor</h4>
+<ul class="point">
+<li><b>Disruptor框架是由LMAX公司开发的一款高效的无锁内存队列</b>
+<ul class="quote"><li>Disruptor框架使用无锁的方式实现了一个环形队列(RingBuffer)，非常适合实现生产者-消费者模式，比如事件和消息的发布。</li></ul>
+</li>
+<li><b>Disruptor框架要求我们必须将数组的大小设置为2的整数次方</b>
+<ul class="quote"><li>这样通过sequence ＆(queueSize-1)就能立即定位到实际的元素位置index，这比取余(%)操作快得多。</li></ul>
+</li>
+<li><b>Disruptor框架的环形队列的另外一个好处就是可以做到完全的内存复用</b>
+<ul class="quote"><li>在系统的运行过程中，不会有新的空间需要分配或者老的空间需要回收，大大减少系统分配空间及回收空间的额外开销。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Disruptor框架使用无锁的方式实现了一个环形队列(RingBuffer)，非常适合实现生产者-消费者模式，比如事件和消息的发布。</li><li>这样通过sequence ＆(queueSize-1)就能立即定位到实际的元素位置index，这比取余(%)操作快得多。</li><li>在系统的运行过程中，不会有新的空间需要分配或者老的空间需要回收，大大减少系统分配空间及回收空间的额外开销。</li></ul>
+</div>
+<div class="sec">
+<h4>用Disruptor框架实现生产者-消费者模式的案例</h4>
+<ul class="point">
+<li><b>生产者不断产生整数，消费者读取生产者的数据，并计算其平方</b>
+<ul class="quote"><li>生产者需要一个RingBuffer的引用，也就是环形缓冲区。它有一个重要的方法pushData()将产生的数据推入缓冲区。</li><li>消费者实现为WorkHandler接口，它来自Disruptor框架。消费者的作用是读取数据进行处理。这里，数据的读取已经由Disruptor框架进行封装了，onEvent()方法为框架的回调方法。因此，这里只需要简单地进行数据处理即可。</li><li>还需要一个产生PCData对象的工厂类。它会在Disruptor框架系统初始化时，构造所有的缓冲区中的对象实例(之前说过Disruptor框架会预先分配空间)。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>生产者需要一个RingBuffer的引用，也就是环形缓冲区。它有一个重要的方法pushData()将产生的数据推入缓冲区。</li><li>消费者实现为WorkHandler接口，它来自Disruptor框架。消费者的作用是读取数据进行处理。这里，数据的读取已经由Disruptor框架进行封装了，onEvent()方法为框架的回调方法。因此，这里只需要简单地进行数据处理即可。</li><li>还需要一个产生PCData对象的工厂类。它会在Disruptor框架系统初始化时，构造所有的缓冲区中的对象实例(之前说过Disruptor框架会预先分配空间)。</li></ul>
+</div>
+<div class="sec">
+<h4>提高消费者的响应时间：选择合适的策略</h4>
+<ul class="point">
+<li><b>Disruptor框架提供了几种策略，这些策略由WaitStrategy接口进行封装，主要有以下几种实现：BlockingWaitStrategy、SleepingWaitStrategy、YieldingWaitStrategy、BusySpinWaitStrategy</b>
+<ul class="quote"><li>BlockingWaitStrategy：这是默认的策略。使用BlockingWaitStrategy和使用BlockingQueue是非常类似的，它们都使用锁和条件(Condition)进行数据的监控和线程的唤醒。</li><li>SleepingWaitStrategy：这个策略对CPU的消耗与BlockingWaitStrategy类似。它会在循环中不断等待数据。它会先进行自旋等待，如果不成功，则使用Thread.yield()方法方法让出CPU，并最终使用LockSupport.parkNanos(1)进行线程休眠，以确保不占用太多的CPU数据。</li><li>YieldingWaitStrategy：这个策略用于低延时的场合。消费者线程会不断循环监控缓冲区的变化，在循环内部，它会使用Thread.yield()方法让出CPU给别的线程执行时间。</li><li>BusySpinWaitStrategy：这个是最疯狂的等待策略了。它就是一个死循环！消费者线程会尽最大努力疯狂监控缓冲区的变化。因此，它会吃掉所有的CPU资源。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>BlockingWaitStrategy：这是默认的策略。使用BlockingWaitStrategy和使用BlockingQueue是非常类似的，它们都使用锁和条件(Condition)进行数据的监控和线程的唤醒。</li><li>SleepingWaitStrategy：这个策略对CPU的消耗与BlockingWaitStrategy类似。它会在循环中不断等待数据。它会先进行自旋等待，如果不成功，则使用Thread.yield()方法方法让出CPU，并最终使用LockSupport.parkNanos(1)进行线程休眠，以确保不占用太多的CPU数据。</li><li>YieldingWaitStrategy：这个策略用于低延时的场合。消费者线程会不断循环监控缓冲区的变化，在循环内部，它会使用Thread.yield()方法让出CPU给别的线程执行时间。</li><li>BusySpinWaitStrategy：这个是最疯狂的等待策略了。它就是一个死循环！消费者线程会尽最大努力疯狂监控缓冲区的变化。因此，它会吃掉所有的CPU资源。</li></ul>
+</div>
+<div class="sec">
+<h4>CPU Cache的优化：解决伪共享问题</h4>
+<ul class="point">
+<li><b>Disruptor框架充分考虑了CPU缓存的伪共享问题，其核心组件Sequence会被频繁访问，其基本结构如下</b>
+<ul class="quote"><li>虽然在Sequence中，主要使用的只有value，但是通过LhsPadding和RhsPadding在这个value的前后安置了一些占位空间，使得value可以无冲突的存在于缓存中。</li></ul>
+</li>
+<li><b>对于Disruptor框架的环形缓冲区RingBuffer，它内部的数组是通过以下语句构造的</b>
+<ul class="quote"><li>注意：实际产生的数组大小是缓冲区实际大小再加上两倍的BUFFER_PAD。这就相当于在这个数组的头部和尾部各增加了BUFFER_PAD个填充，使得整个数组被载入Cache时不会因为受到其他变量的影响而失效。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>虽然在Sequence中，主要使用的只有value，但是通过LhsPadding和RhsPadding在这个value的前后安置了一些占位空间，使得value可以无冲突的存在于缓存中。</li><li>注意：实际产生的数组大小是缓冲区实际大小再加上两倍的BUFFER_PAD。这就相当于在这个数组的头部和尾部各增加了BUFFER_PAD个填充，使得整个数组被载入Cache时不会因为受到其他变量的影响而失效。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">33</span><span class="mmx-name">5.5 Future模式</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 5 个小节 · 8 条要点 · 18 句原句摘录</p>
+<div class="sec">
+<h4>Future模式介绍</h4>
+<ul class="point">
+<li><b>Future模式是多线程开发中非常常见的一种设计模式，它的核心思想是异步调用</b>
+<ul class="quote"><li>当我们需要调用一个函数方法时，如果这个函数执行得很慢，那么我们就要进行等待。</li><li>有时候，我们可能并不急着要结果。因此，我们可以让被调者立即返回，让它在后台慢慢处理这个请求。</li></ul>
+</li>
+<li><b>Future模式有点类似在网上买东西，支付完成后，手机并没有办法立即送到家里，但是在电脑上会立即产生一个订单</b>
+<ul class="quote"><li>这个订单就是将来发货或者领取手机的重要凭证，这个凭证也就是Future模式中会给出的一个契约。</li><li>在支付活动结束后，大家不会傻傻地等着手机到来，而是各忙各的。而这张订单就成了商家配货、发货的驱动力。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>当我们需要调用一个函数方法时，如果这个函数执行得很慢，那么我们就要进行等待。</li><li>有时候，我们可能并不急着要结果。因此，我们可以让被调者立即返回，让它在后台慢慢处理这个请求。</li><li>这个订单就是将来发货或者领取手机的重要凭证，这个凭证也就是Future模式中会给出的一个契约。</li><li>在支付活动结束后，大家不会傻傻地等着手机到来，而是各忙各的。而这张订单就成了商家配货、发货的驱动力。</li></ul>
+</div>
+<div class="sec">
+<h4>Future模式的主要角色</h4>
+<ul class="point">
+<li><b>Future模式的主要参与者包括客户端、服务端、RealData和FutureData</b>
+<ul class="quote"><li>客户端负责发起请求，并消费返回的数据。</li><li>服务端负责处理客户端的请求，并返回结果。</li><li>RealData是最终需要使用的数据模型，它的构造很慢。</li><li>FutureData是用来提取RealData的一个“订单”，它可以立即返回。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>客户端负责发起请求，并消费返回的数据。</li><li>服务端负责处理客户端的请求，并返回结果。</li><li>RealData是最终需要使用的数据模型，它的构造很慢。</li><li>FutureData是用来提取RealData的一个“订单”，它可以立即返回。</li></ul>
+</div>
+<div class="sec">
+<h4>Future模式的简单实现</h4>
+<ul class="point">
+<li><b>Data接口有两个重要的实现，一个是RealData，也就是真实数据，另外一个就是FutureData</b>
+<ul class="quote"><li>FutureData实现了一个快速返回的RealData包装。</li><li>当使用FutrueData的getResult()方法时，如果实际的数据没有准备好，那么程序就会阻塞，等RealData准备好并注入FutureData中才最终返回数据。</li></ul>
+</li>
+<li><b>Client主要实现了获取FutureData，开启构造RealData的线程，并在接受请求后，很快返回FutureData</b>
+<ul class="quote"><li>注意，它不会等待数据真的构造完毕再返回，而是立即返回FutureData，即使这个时候FutureData内并没有真实数据。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>FutureData实现了一个快速返回的RealData包装。</li><li>当使用FutrueData的getResult()方法时，如果实际的数据没有准备好，那么程序就会阻塞，等RealData准备好并注入FutureData中才最终返回数据。</li><li>注意，它不会等待数据真的构造完毕再返回，而是立即返回FutureData，即使这个时候FutureData内并没有真实数据。</li></ul>
+</div>
+<div class="sec">
+<h4>JDK中的Future模式</h4>
+<ul class="point">
+<li><b>JDK内部已经为我们准备好了一套完整的Future模式的实现</b>
+<ul class="quote"><li>Future接口类似于前文描述的订单或者说是契约。通过它，你可以得到真实的数据。</li><li>RunnableFuture继承了Future和Runnable两个接口，其中run()方法用于构造真实的数据。</li><li>FutureTask类有一个内部类Sync，一些实质性的工作会委托Sync类实现。而Sync类最终会调用Callable接口，完成实际数据的组装工作。</li></ul>
+</li>
+<li><b>JDK还为Future接口提供了一些简单的控制功能。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Future接口类似于前文描述的订单或者说是契约。通过它，你可以得到真实的数据。</li><li>RunnableFuture继承了Future和Runnable两个接口，其中run()方法用于构造真实的数据。</li><li>FutureTask类有一个内部类Sync，一些实质性的工作会委托Sync类实现。而Sync类最终会调用Callable接口，完成实际数据的组装工作。</li></ul>
+</div>
+<div class="sec">
+<h4>Guava对Future模式的支持</h4>
+<ul class="point">
+<li><b>Guava增强了Future模式，增加了对Future模式完成时的回调接口</b>
+<ul class="quote"><li>使用Guava改写上一节中的FutureMain可以得到更好的效果。</li><li>上述代码第3行使用MoreExecutors.listeningDecorator()方法将一个普通的线程池包装为一个包含通知功能的Future线程池。</li><li>第5行将Callable任务提交到线程池中，并得到一个ListenableFuture。与Future相比，ListenableFuture拥有完成时的通知功能。</li><li>第7行向ListenableFuture中添加回调函数，即当Future执行完成后，则执行第8到14行的回调代码。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>使用Guava改写上一节中的FutureMain可以得到更好的效果。</li><li>上述代码第3行使用MoreExecutors.listeningDecorator()方法将一个普通的线程池包装为一个包含通知功能的Future线程池。</li><li>第5行将Callable任务提交到线程池中，并得到一个ListenableFuture。与Future相比，ListenableFuture拥有完成时的通知功能。</li><li>第7行向ListenableFuture中添加回调函数，即当Future执行完成后，则执行第8到14行的回调代码。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">34</span><span class="mmx-name">5.6 并行流水线</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 5 条要点 · 10 句原句摘录</p>
+<div class="sec">
+<h4>并行算法的局限性</h4>
+<ul class="point">
+<li><b>执行过程中有数据相关性的运算都是无法完美并行化的</b>
+<ul class="quote"><li>如果B+C没有执行完成，则永远算不出(B+C)×B，这就是数据相关性。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如果B+C没有执行完成，则永远算不出(B+C)×B，这就是数据相关性。</li></ul>
+</div>
+<div class="sec">
+<h4>流水线思想的引入</h4>
+<ul class="point">
+<li><b>流水线思想可以借鉴到程序开发中，有效地将有依赖关系的操作分配在不同的线程中进行计算</b>
+<ul class="quote"><li>找四个人来做一个玩偶是毫无意义的，但是，如果你现在要制作的不是1个玩偶，而是1万个玩偶，那情况就不同了。你可以找四个人，第一个人只负责组装身体，完成后交给第二个人；第二个人只负责安装头部和四肢，完成后交付第三人；第三人只负责穿衣服，完成后交付第四人；第四人只负责包装发货。</li><li>一旦流水线满载，每次只需要一步(假设一个玩偶需要四步)就可以产生一个玩偶。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>找四个人来做一个玩偶是毫无意义的，但是，如果你现在要制作的不是1个玩偶，而是1万个玩偶，那情况就不同了。你可以找四个人，第一个人只负责组装身体，完成后交给第二个人；第二个人只负责安装头部和四肢，完成后交付第三人；第三人只负责穿衣服，完成后交付第四人；第四人只负责包装发货。</li><li>一旦流水线满载，每次只需要一步(假设一个玩偶需要四步)就可以产生一个玩偶。</li></ul>
+</div>
+<div class="sec">
+<h4>并行流水线的实现</h4>
+<ul class="point">
+<li><b>将计算过程拆分为三个步骤，每个线程只负责自己的工作</b>
+<ul class="quote"><li>P1:A＝B+C。</li><li>P2:D＝A×B。</li><li>P3:D=D/2。</li></ul>
+</li>
+<li><b>定义一个在线程间携带结果进行信息交换的载体</b>
+<ul class="quote"><li>P1取得封装了两个操作数的Msg，并进行求和，将结果传递给乘法线程P2。</li><li>P2计算相乘结果后，将中间结果传递给除法线程P3。</li><li>P3将收到的P2的结果除以2后输出最终的结果。</li></ul>
+</li>
+<li><b>提交任务的主线程，开启流水线的计算</b>
+<ul class="quote"><li>上述代码第13行将数据提交给P1加法线程，开启流水线的计算。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>P1:A＝B+C。</li><li>P2:D＝A×B。</li><li>P3:D=D/2。</li><li>P1取得封装了两个操作数的Msg，并进行求和，将结果传递给乘法线程P2。</li><li>P2计算相乘结果后，将中间结果传递给除法线程P3。</li><li>P3将收到的P2的结果除以2后输出最终的结果。</li><li>上述代码第13行将数据提交给P1加法线程，开启流水线的计算。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">35</span><span class="mmx-name">5.7 并行搜索</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 5 条要点 · 6 句原句摘录</p>
+<div class="sec">
+<h4>并行搜索的概念和策略</h4>
+<ul class="point">
+<li><b>并行搜索需要额外增加一些线程间的通信机制，使各个线程可以有效运行。</b>
+</li>
+<li><b>一种简单的策略就是将原始数据集合按照期望的线程数进行分割，每个线程各自独立搜索</b>
+<ul class="quote"><li>如果我们计划使用两个线程进行搜索，那么就可以把一个数组或集合分割成两个。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如果我们计划使用两个线程进行搜索，那么就可以把一个数组或集合分割成两个。</li></ul>
+</div>
+<div class="sec">
+<h4>并行搜索的实现</h4>
+<ul class="point">
+<li><b>定义线程池、线程数量及存放结果的变量result</b>
+<ul class="quote"><li>在result中，我们会保存符合条件的元素在arr数组中的下标，默认为-1，表示没有找到给定元素。</li></ul>
+</li>
+<li><b>并发搜索会要求每个线程查找arr中的一段，因此，搜索函数必须指定线程需要搜索的起始和结束位置</b>
+<ul class="quote"><li>上述代码第4行，首先通过result判断是否已经有其他线程找到了需要的结果。如果已经找到，则立即返回不再进行查找。如果没有找到，则进行下一步搜索。</li><li>第7行代码成立则表示当前线程找到了需要的数据，那么就会将结果保存到result变量中。这里使用CAS操作，如果设置失败，则表示其他线程已经先我一步找到了结果。因此，可以无视失败的情况，找到结果后，进行返回。</li></ul>
+</li>
+<li><b>定义一个线程进行查找，它会调用前面的pSearch()方法</b>
+<ul class="quote"><li>最后是pSearch()方法并行查找函数，它会根据线程数量对arr数组进行划分，并建立对应的任务提交给线程池处理。</li><li>上述代码中使用了JDK内置的Future模式，其中第4～8行将原始数组arr划分为若干段，并根据划分结果建立子任务。每一个子任务都会返回一个Future对象，通过Future对象可以获得线程组得到的最终结果。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在result中，我们会保存符合条件的元素在arr数组中的下标，默认为-1，表示没有找到给定元素。</li><li>上述代码第4行，首先通过result判断是否已经有其他线程找到了需要的结果。如果已经找到，则立即返回不再进行查找。如果没有找到，则进行下一步搜索。</li><li>第7行代码成立则表示当前线程找到了需要的数据，那么就会将结果保存到result变量中。这里使用CAS操作，如果设置失败，则表示其他线程已经先我一步找到了结果。因此，可以无视失败的情况，找到结果后，进行返回。</li><li>最后是pSearch()方法并行查找函数，它会根据线程数量对arr数组进行划分，并建立对应的任务提交给线程池处理。</li><li>上述代码中使用了JDK内置的Future模式，其中第4～8行将原始数组arr划分为若干段，并根据划分结果建立子任务。每一个子任务都会返回一个Future对象，通过Future对象可以获得线程组得到的最终结果。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">36</span><span class="mmx-name">5.8 并行排序</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 3 条要点 · 6 句原句摘录</p>
+<div class="sec">
+<h4>并行排序的概念和意义</h4>
+<ul class="point">
+<li><b>排序是一项非常常用的操作，使用并行算法代替串行算法可以更有效地利用CPU。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>奇偶交换排序</h4>
+<ul class="point">
+<li><b>奇偶交换排序将排序过程分为两个阶段，奇交换和偶交换，每一阶段内，所有的比较和交换是没有数据相关性的，因此，每一次比较和交换都可以独立执行，也就可以并行化了</b>
+<ul class="quote"><li>奇偶交换排序的串行实现中，exchFlag用来记录当前迭代是否发生了数据交换，而start变量用来表示是奇交换还是偶交换。</li><li>奇偶排序的任务类中，主要工作是进行数据比较和必要的交换。</li><li>并行排序的主体是pOddEvenSort()方法，它使用CountDownLatch记录线程数量，对于每一次迭代，使用单独的线程对每一次元素比较和交换进行操作。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>奇偶交换排序的串行实现中，exchFlag用来记录当前迭代是否发生了数据交换，而start变量用来表示是奇交换还是偶交换。</li><li>奇偶排序的任务类中，主要工作是进行数据比较和必要的交换。</li><li>并行排序的主体是pOddEvenSort()方法，它使用CountDownLatch记录线程数量，对于每一次迭代，使用单独的线程对每一次元素比较和交换进行操作。</li></ul>
+</div>
+<div class="sec">
+<h4>希尔排序</h4>
+<ul class="point">
+<li><b>希尔排序将整个数组根据间隔h分割为若干个子数组，它们相互穿插在一起，每一次排序时，分别对每一个子数组进行排序</b>
+<ul class="quote"><li>希尔排序的一个主要优点是，即使一个较小的元素在数组的末尾，由于每次元素移动都以h为间隔进行，因此数组末尾的小元素可以在很少的交换次数下，就被置换到最接近元素最终位置的地方。</li><li>希尔排序的串行实现中，第4～6行计算一个合适的h值，接着正式进行希尔排序。第8行的for循环进行间隔为h的插入排序，每次排序结束后，递减h的值。直到h为1，退化为插入排序。</li><li>希尔排序的并行实现中，定义ShellSortTask作为并行任务。一个ShellSortTask的作用是根据给定的起始位置和h对子数组进行排序，因此可以完全并行化。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>希尔排序的一个主要优点是，即使一个较小的元素在数组的末尾，由于每次元素移动都以h为间隔进行，因此数组末尾的小元素可以在很少的交换次数下，就被置换到最接近元素最终位置的地方。</li><li>希尔排序的串行实现中，第4～6行计算一个合适的h值，接着正式进行希尔排序。第8行的for循环进行间隔为h的插入排序，每次排序结束后，递减h的值。直到h为1，退化为插入排序。</li><li>希尔排序的并行实现中，定义ShellSortTask作为并行任务。一个ShellSortTask的作用是根据给定的起始位置和h对子数组进行排序，因此可以完全并行化。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">37</span><span class="mmx-name">5.9 并行算法：矩阵乘法</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 4 条要点 · 12 句原句摘录</p>
+<div class="sec">
+<h4>并行算法在矩阵乘法中的应用</h4>
+<ul class="point">
+<li><b>矩阵乘法是图像处理、神经网络、模式识别等领域的重要数学方法</b>
+<ul class="quote"><li>矩阵A和矩阵B相乘，得到的是4行4列的矩阵，并且新矩阵中每一个元素为矩阵A和矩阵B对应行列的乘积求和。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>矩阵A和矩阵B相乘，得到的是4行4列的矩阵，并且新矩阵中每一个元素为矩阵A和矩阵B对应行列的乘积求和。</li></ul>
+</div>
+<div class="sec">
+<h4>矩阵乘法的并行化实现策略</h4>
+<ul class="point">
+<li><b>将矩阵A进行水平分割，得到子矩阵A1和A2，矩阵B进行垂直分割，得到子矩阵B1和B2</b>
+<ul class="quote"><li>分别计算这些子矩阵的乘积，再将结果进行拼接就能得到原始矩阵A和B的乘积。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>分别计算这些子矩阵的乘积，再将结果进行拼接就能得到原始矩阵A和B的乘积。</li></ul>
+</div>
+<div class="sec">
+<h4>使用Fork/Join框架实现并行矩阵相乘</h4>
+<ul class="point">
+<li><b>定义一个任务类MatrixMulTask，它会进行矩阵相乘的计算，如果输入矩阵的粒度比较大，则会再次进行任务分解</b>
+<ul class="quote"><li>MatrixMulTask类由三个参数构成，分别是需要计算的矩阵双方，以及计算结果位于父矩阵相乘结果中的位置。</li><li>矩阵分解方式，如图5.18所示。</li><li>在子任务返回后，在第42～48行将返回的四个矩阵m1、m2、m3和m4拼接成新的矩阵作为最终结果。</li><li>如果矩阵的粒度足够小就直接进行运算而不进行分解。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>MatrixMulTask类由三个参数构成，分别是需要计算的矩阵双方，以及计算结果位于父矩阵相乘结果中的位置。</li><li>矩阵分解方式，如图5.18所示。</li><li>在子任务返回后，在第42～48行将返回的四个矩阵m1、m2、m3和m4拼接成新的矩阵作为最终结果。</li><li>如果矩阵的粒度足够小就直接进行运算而不进行分解。</li></ul>
+</div>
+<div class="sec">
+<h4>使用jMatrices开源软件进行矩阵计算</h4>
+<ul class="point">
+<li><b>jMatrices提供了Matrix、MatrixOperator等API，方便矩阵计算</b>
+<ul class="quote"><li>Matrix：代表一个矩阵。</li><li>MatrixOperator.multiply(Matrix, Matrix)：矩阵相乘。</li><li>Matrix.row()：获得矩阵的行数。</li><li>Matrix.getSubMatrix()：获得矩阵的子矩阵。</li><li>MatrixOperator.horizontalConcatenation(Matrix,Matrix)：将两个矩阵进行水平连接。</li><li>MatrixOperator.verticalConcatenation(Matrix,Matrix)：将两个矩阵进行垂直连接。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Matrix：代表一个矩阵。</li><li>MatrixOperator.multiply(Matrix, Matrix)：矩阵相乘。</li><li>Matrix.row()：获得矩阵的行数。</li><li>Matrix.getSubMatrix()：获得矩阵的子矩阵。</li><li>MatrixOperator.horizontalConcatenation(Matrix,Matrix)：将两个矩阵进行水平连接。</li><li>MatrixOperator.verticalConcatenation(Matrix,Matrix)：将两个矩阵进行垂直连接。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">38</span><span class="mmx-name">5.10 准备好了再通知我：网络NIO</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 7 条要点 · 8 句原句摘录</p>
+<div class="sec">
+<h4>Java NIO简介</h4>
+<ul class="point">
+<li><b>Java NIO是New IO的简称，提供了一套不同于Java 标准IO的操作机制。</b>
+</li>
+<li><b>NIO与并发并无直接的关系，但是使用NIO技术可以大大提高线程的使用效率。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>基于Socket的服务端多线程模式</h4>
+<ul class="point">
+<li><b>服务器会为每一个客户端连接启用一个线程，这个新的线程将全心全意为这个客户端服务</b>
+<ul class="quote"><li>服务器还会额外使用一个派发线程，用于接受客户端连接。</li></ul>
+</li>
+<li><b>这种多线程的服务器开发模式是极其常用的，但是，如果你想让你的程序工作得更加有效，就必须知道这种模式的一个重大弱点—它倾向于让CPU进行IO等待</b>
+<ul class="quote"><li>服务线程在等待IO而已，让高速运转的CPU去等待极其低效的网络IO是非常不合算的行为。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>服务器还会额外使用一个派发线程，用于接受客户端连接。</li><li>服务线程在等待IO而已，让高速运转的CPU去等待极其低效的网络IO是非常不合算的行为。</li></ul>
+</div>
+<div class="sec">
+<h4>使用NIO进行网络编程</h4>
+<ul class="point">
+<li><b>使用Java的NIO就可以将上节的网络IO等待时间从业务处理线程中抽取出来</b>
+<ul class="quote"><li>在NIO中的一个关键组件Channel，Channel有点类似于流，一个Channel可以和文件或者网络Socket对应。</li><li>和Channel一起使用的另外一个重要组件就是Buffer，大家可以简单地把Buffer理解成一个内存区域或者byte数组。</li><li>另外一个与Channel密切相关的是Selector(选择器)，在Channel的众多实现中，有一个SelectableChannel实现，表示可被选择的通道。</li></ul>
+</li>
+<li><b>一个Selector可以由一个线程进行管理，而一个SocketChannel则可以表示一个客户端连接，因此这就构成由一个或者极少数线程来处理大量客户端连接的结构</b>
+<ul class="quote"><li>当与客户端连接的数据没有准备好时，Selector会处于等待状态，而一旦有任何一个SocketChannel准备好了数据，Selector就能立即得到通知，获取数据进行处理。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在NIO中的一个关键组件Channel，Channel有点类似于流，一个Channel可以和文件或者网络Socket对应。</li><li>和Channel一起使用的另外一个重要组件就是Buffer，大家可以简单地把Buffer理解成一个内存区域或者byte数组。</li><li>另外一个与Channel密切相关的是Selector(选择器)，在Channel的众多实现中，有一个SelectableChannel实现，表示可被选择的通道。</li><li>当与客户端连接的数据没有准备好时，Selector会处于等待状态，而一旦有任何一个SocketChannel准备好了数据，Selector就能立即得到通知，获取数据进行处理。</li></ul>
+</div>
+<div class="sec">
+<h4>使用NIO来实现客户端</h4>
+<ul class="point">
+<li><b>NIO也可以用来创建客户端，核心的元素也是Selector、Channel和SelectionKey</b>
+<ul class="quote"><li>首先，我们需要初始化Selector和Channel，创建一个SocketChannel实例，并设置为非阻塞模式，创建了一个Selector，将SocketChannel绑定到Socket上，但由于当前Channel是非阻塞的，因此当connect()方法返回时，连接并不一定建立成功，在后续使用这个连接时，还需要使用finishConnect()方法再次确认，将这个Channel和Selector进行绑定，并注册了感兴趣的事件作为连接(OP_CONNECT)。</li><li>初始化完成后，就是程序的主要执行逻辑，通过Selector得到已经准备好的事件，如果当前没有任何事件准备就绪，这里就会阻塞，主要处理两个事件，首先是表示连接就绪的Connct事件(由connect()函数处理)，以及表示通道可读的Read事件(由read()函数处理)。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>首先，我们需要初始化Selector和Channel，创建一个SocketChannel实例，并设置为非阻塞模式，创建了一个Selector，将SocketChannel绑定到Socket上，但由于当前Channel是非阻塞的，因此当connect()方法返回时，连接并不一定建立成功，在后续使用这个连接时，还需要使用finishConnect()方法再次确认，将这个Channel和Selector进行绑定，并注册了感兴趣的事件作为连接(OP_CONNECT)。</li><li>初始化完成后，就是程序的主要执行逻辑，通过Selector得到已经准备好的事件，如果当前没有任何事件准备就绪，这里就会阻塞，主要处理两个事件，首先是表示连接就绪的Connct事件(由connect()函数处理)，以及表示通道可读的Read事件(由read()函数处理)。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">39</span><span class="mmx-name">5.11 读完了再通知我：AIO</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 6 条要点 · 10 句原句摘录</p>
+<div class="sec">
+<h4>AIO的基本概念和特点</h4>
+<ul class="point">
+<li><b>AIO是异步IO的缩写，它不是在IO准备好时再通知线程，而是在IO操作已经完成后，再给线程发出通知。</b>
+</li>
+<li><b>AIO是完全不会阻塞的，业务逻辑将变成一个回调函数，等待IO操作完成后，由系统自动触发。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>AIO EchoServer的实现</h4>
+<ul class="point">
+<li><b>使用AsynchronousServerSocketChannel异步Channel作为服务器</b>
+<ul class="quote"><li>绑定8000端口为服务器端口。</li><li>使用AsynchronousServerSocketChannel异步Channel作为服务器，变量名为server。</li></ul>
+</li>
+<li><b>AsynchronousServerSocketChannel.accept()方法会立即返回，它并不会真的等待客户端的到来</b>
+<ul class="quote"><li>AsynchronousServerSocketChannel.accept()方法实际上做了两件事，第一，发起accept请求，告诉系统可以开始监听端口了。第二，注册CompletionHandler实例，告诉系统一旦有客户端前来连接，如果连接成功，就去执行CompletionHandler.completed()方法；如果连接失败，就去执行CompletionHandler.failed()方法。</li></ul>
+</li>
+<li><b>CompletionHandler.completed()方法的实现</b>
+<ul class="quote"><li>当completed()方法被执行时，意味着已经有客户端成功连接了。</li><li>第11行使用read()方法读取客户的数据，这里要注意，AsynchronousSocketChannel.read()方法也是异步的，换句话说它不会等待读取完成了再返回，而是立即返回，返回的结果是一个Future，因此这里就是Future模式的典型应用。</li><li>将数据回写给客户端，这里调用的是AsynchronousSocketChannel.write()方法，这个方法不会等待数据全部写完，也是立即返回的。</li><li>在第20行，服务器进行下一个客户端连接的准备，同时关闭当前正在处理的客户端连接。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>绑定8000端口为服务器端口。</li><li>使用AsynchronousServerSocketChannel异步Channel作为服务器，变量名为server。</li><li>AsynchronousServerSocketChannel.accept()方法实际上做了两件事，第一，发起accept请求，告诉系统可以开始监听端口了。第二，注册CompletionHandler实例，告诉系统一旦有客户端前来连接，如果连接成功，就去执行CompletionHandler.completed()方法；如果连接失败，就去执行CompletionHandler.failed()方法。</li><li>当completed()方法被执行时，意味着已经有客户端成功连接了。</li><li>第11行使用read()方法读取客户的数据，这里要注意，AsynchronousSocketChannel.read()方法也是异步的，换句话说它不会等待读取完成了再返回，而是立即返回，返回的结果是一个Future，因此这里就是Future模式的典型应用。</li><li>将数据回写给客户端，这里调用的是AsynchronousSocketChannel.write()方法，这个方法不会等待数据全部写完，也是立即返回的。</li><li>在第20行，服务器进行下一个客户端连接的准备，同时关闭当前正在处理的客户端连接。</li></ul>
+</div>
+<div class="sec">
+<h4>AIO Echo客户端的实现</h4>
+<ul class="point">
+<li><b>客户端进行网络连接，并注册了连接成功的回调函数CompletionHandler&lt;Void,Object&gt;</b>
+<ul class="quote"><li>连接成功后会进入代码第7行，进行数据写入，向服务端发送数据。</li><li>写入完成后，会通知回调接口CompletionHandler&lt;Integer,Object&gt;进入第10行，开始，准备进行数据读取，从服务端读取回写的数据。</li><li>成功读取所有数据后会回调CompletionHandler&lt;Integer, ByteBuffer&gt;接口，进入第15行，打印接收到的数据。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>连接成功后会进入代码第7行，进行数据写入，向服务端发送数据。</li><li>写入完成后，会通知回调接口CompletionHandler&lt;Integer,Object&gt;进入第10行，开始，准备进行数据读取，从服务端读取回写的数据。</li><li>成功读取所有数据后会回调CompletionHandler&lt;Integer, ByteBuffer&gt;接口，进入第15行，打印接收到的数据。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">40</span><span class="mmx-name">第6章 Java 8/9/10与并发</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 3 条要点 · 6 句原句摘录</p>
+<div class="sec">
+<h4>Java 8的新特性</h4>
+<ul class="point">
+<li><b>Java 8增加了函数式编程的功能</b>
+<ul class="quote"><li>Java 8最主要的改进是增加了函数式编程的功能。</li><li>Java 8中新增的一些与并行相关的API，却以函数式编程的范式出现。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Java 8最主要的改进是增加了函数式编程的功能。</li><li>Java 8中新增的一些与并行相关的API，却以函数式编程的范式出现。</li></ul>
+</div>
+<div class="sec">
+<h4>函数式编程简介</h4>
+<ul class="point">
+<li><b>函数式编程是一种编程范式，它将计算过程视为数学上的函数求值</b>
+<ul class="quote"><li>函数式编程强调的是函数的计算过程，而非变量之间的关系。</li><li>函数式编程中，函数的参数和返回值是无状态的，即函数在执行过程中不会改变外部变量的值。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>函数式编程强调的是函数的计算过程，而非变量之间的关系。</li><li>函数式编程中，函数的参数和返回值是无状态的，即函数在执行过程中不会改变外部变量的值。</li></ul>
+</div>
+<div class="sec">
+<h4>Java 8中的函数式编程API</h4>
+<ul class="point">
+<li><b>Java 8中新增了一些与并行相关的API，如Stream API、Lambda表达式等</b>
+<ul class="quote"><li>Stream API提供了一种新的处理数据的方式，可以将流中的数据进行处理和转换。</li><li>Lambda表达式是一种更简洁的表示函数的方式，可以在需要的地方直接定义函数。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Stream API提供了一种新的处理数据的方式，可以将流中的数据进行处理和转换。</li><li>Lambda表达式是一种更简洁的表示函数的方式，可以在需要的地方直接定义函数。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">41</span><span class="mmx-name">6.1 Java 8的函数式编程简介</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 6 个小节 · 8 条要点 · 10 句原句摘录</p>
+<div class="sec">
+<h4>函数作为一等公民</h4>
+<ul class="point">
+<li><b>函数可以作为参数传递给另外一个函数</b>
+<ul class="quote"><li>使用jQuery时，each()函数的参数是一个匿名函数。</li></ul>
+</li>
+<li><b>一个函数可以作为另外一个函数的返回值</b>
+<ul class="quote"><li>在JavaScript代码中，函数f1的返回值是函数f2。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>使用jQuery时，each()函数的参数是一个匿名函数。</li><li>在JavaScript代码中，函数f1的返回值是函数f2。</li></ul>
+</div>
+<div class="sec">
+<h4>无副作用</h4>
+<ul class="point">
+<li><b>函数的副作用指的是函数在调用过程中，除给出了返回值之外，还修改了函数外部的状态</b>
+<ul class="quote"><li>如果一个函数肆意修改全局或者外部状态，当系统出现问题时，我们可能很难判断究竟是哪个函数引起的问题。</li></ul>
+</li>
+<li><b>显式函数指函数与外界交换数据的唯一渠道就是参数和返回值，显式函数不会去读取或者修改函数的外部状态</b>
+<ul class="quote"><li>与之相对的是隐式函数，隐式函数除参数和返回值外，还会读取外部信息，或者修改外部信息。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如果一个函数肆意修改全局或者外部状态，当系统出现问题时，我们可能很难判断究竟是哪个函数引起的问题。</li><li>与之相对的是隐式函数，隐式函数除参数和返回值外，还会读取外部信息，或者修改外部信息。</li></ul>
+</div>
+<div class="sec">
+<h4>声明式的(Declarative)</h4>
+<ul class="point">
+<li><b>声明式的编程方式下，你不再需要提供明确的指令操作，所有的细节指令将会更好地被程序库封装</b>
+<ul class="quote"><li>对于声明式的编程范式，你要做的只是提出你的要求，声明你的用意即可。</li><li>有关循环及判断循环是否结束等操作都被简单地封装在程序库中。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>对于声明式的编程范式，你要做的只是提出你的要求，声明你的用意即可。</li><li>有关循环及判断循环是否结束等操作都被简单地封装在程序库中。</li></ul>
+</div>
+<div class="sec">
+<h4>不变的对象</h4>
+<ul class="point">
+<li><b>在函数式编程中，几乎所有传递的对象都不会被轻易修改</b>
+<ul class="quote"><li>代码第2行看似对每一个数组成员执行了加1的操作。但是在操作完成后，在最后一行打印arr数组所有的成员值时，你还是会发现，数组成员并没有变化。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>代码第2行看似对每一个数组成员执行了加1的操作。但是在操作完成后，在最后一行打印arr数组所有的成员值时，你还是会发现，数组成员并没有变化。</li></ul>
+</div>
+<div class="sec">
+<h4>易于并行</h4>
+<ul class="point">
+<li><b>由于对象都处于不变的状态，因此函数式编程更加易于并行</b>
+<ul class="quote"><li>我们之所以要关注线程安全，一个很重要的原因是当多个线程对同一个对象进行写操作时，容易将这个对象“写坏”。</li><li>但是，由于对象是不变的，因此，在多线程环境下，也就没有必要进行任何同步操作了。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>我们之所以要关注线程安全，一个很重要的原因是当多个线程对同一个对象进行写操作时，容易将这个对象“写坏”。</li><li>但是，由于对象是不变的，因此，在多线程环境下，也就没有必要进行任何同步操作了。</li></ul>
+</div>
+<div class="sec">
+<h4>更少的代码</h4>
+<ul class="point">
+<li><b>函数式编程更加简明扼要，使用Java用更少的代码完成更多的工作</b>
+<ul class="quote"><li>Clojure语言(一种运行于JVM的函数式语言)的爱好者就宣称，使用Clojure可以将Java代码行数减少到原有的十分之一。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Clojure语言(一种运行于JVM的函数式语言)的爱好者就宣称，使用Clojure可以将Java代码行数减少到原有的十分之一。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">42</span><span class="mmx-name">6.2 函数式编程基础</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 7 条要点 · 8 句原句摘录</p>
+<div class="sec">
+<h4>FunctionalInterface注释</h4>
+<ul class="point">
+<li><b>FunctionalInterface用于表明接口是一个函数式接口</b>
+<ul class="quote"><li>函数式接口只能有一个抽象方法。</li></ul>
+</li>
+<li><b>函数式接口的实例可以由方法引用或者lambda表达式进行构造</b>
+<ul class="quote"><li>lambda表达式即匿名函数，它是一段没有函数名的函数体，可以作为参数直接传递给相关的调用者。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>函数式接口只能有一个抽象方法。</li><li>lambda表达式即匿名函数，它是一段没有函数名的函数体，可以作为参数直接传递给相关的调用者。</li></ul>
+</div>
+<div class="sec">
+<h4>接口默认方法</h4>
+<ul class="point">
+<li><b>Java 8开始，接口也可以包含若干个实例方法</b>
+<ul class="quote"><li>一个对象实例，将拥有来自多个不同接口的实例方法。</li></ul>
+</li>
+<li><b>接口默认实现对于整个函数式编程的流式表达非常重要</b>
+<ul class="quote"><li>比如，大家熟悉的java.util.Comparator接口，它在JDK 1.2时就已经被引入了，用于在排序时给出两个对象实例的具体比较逻辑。在Java 8中，Comparator接口新增了若干个默认方法，用于多个比较器的整合。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>一个对象实例，将拥有来自多个不同接口的实例方法。</li><li>比如，大家熟悉的java.util.Comparator接口，它在JDK 1.2时就已经被引入了，用于在排序时给出两个对象实例的具体比较逻辑。在Java 8中，Comparator接口新增了若干个默认方法，用于多个比较器的整合。</li></ul>
+</div>
+<div class="sec">
+<h4>lambda表达式</h4>
+<ul class="point">
+<li><b>lambda表达式即匿名函数，它是一段没有函数名的函数体，可以作为参数直接传递给相关的调用者</b>
+<ul class="quote"><li>lambda表达式也可以访问外部的局部变量。</li><li>对于lambda表达式而言，即使去掉上述的final定义，程序依然可以编译通过，Java 8会自动地将在lambda表达式中使用的变量视为final。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>lambda表达式也可以访问外部的局部变量。</li><li>对于lambda表达式而言，即使去掉上述的final定义，程序依然可以编译通过，Java 8会自动地将在lambda表达式中使用的变量视为final。</li></ul>
+</div>
+<div class="sec">
+<h4>方法引用</h4>
+<ul class="point">
+<li><b>方法引用是Java 8中提出的用来简化lambda表达式的一种手段</b>
+<ul class="quote"><li>方法引用使用“::”定义，“::”的前半部分表示类名或者实例名，后半部分表示方法名称。</li></ul>
+</li>
+<li><b>方法引用也可以直接使用构造函数</b>
+<ul class="quote"><li>当使用User::new创建接口实例时，系统会根据UserFactory.create()的函数签名来选择合适的User构造函数。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>方法引用使用“::”定义，“::”的前半部分表示类名或者实例名，后半部分表示方法名称。</li><li>当使用User::new创建接口实例时，系统会根据UserFactory.create()的函数签名来选择合适的User构造函数。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">43</span><span class="mmx-name">6.3 一步一步走入函数式编程</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 6 条要点 · 8 句原句摘录</p>
+<div class="sec">
+<h4>Java 8中的函数式编程</h4>
+<ul class="point">
+<li><b>Java 8引入了Stream API，支持对集合和数组进行遍历和处理</b>
+<ul class="quote"><li>Arrays.stream()方法返回了一个流对象，类似于集合或者数组，它将给予我们遍历处理流内元素的功能。</li></ul>
+</li>
+<li><b>forEach()方法是Stream API中的重要方法，用于对每个流内的对象进行处理</b>
+<ul class="quote"><li>forEach()函数会依次将流内的元素送入IntConsumer进行处理，循环过程被封装在函数forEach()内部，也就是JDK框架内。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Arrays.stream()方法返回了一个流对象，类似于集合或者数组，它将给予我们遍历处理流内元素的功能。</li><li>forEach()函数会依次将流内的元素送入IntConsumer进行处理，循环过程被封装在函数forEach()内部，也就是JDK框架内。</li></ul>
+</div>
+<div class="sec">
+<h4>Lambda表达式</h4>
+<ul class="point">
+<li><b>Lambda表达式是匿名对象实现的一种新的方式</b>
+<ul class="quote"><li>表达式由“-&gt;”分割，左半部分表示参数，右半部分表示实现体。</li></ul>
+</li>
+<li><b>Java 8中对lambda表达式的处理几乎等同于匿名类的实现</b>
+<ul class="quote"><li>使用虚拟机参数-Djdk.internal.lambda.dumpProxyClasses启动带有lambda表达式的Java小程序，可以看到lambda表达式相关的中间类型确实实现了IntConsumer接口。</li><li>在实现accept()方法时，它内部委托给了一个名为HelloFunction6.lambda$0()的方法，这个方法是编译时自动生成的。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>表达式由“-&gt;”分割，左半部分表示参数，右半部分表示实现体。</li><li>使用虚拟机参数-Djdk.internal.lambda.dumpProxyClasses启动带有lambda表达式的Java小程序，可以看到lambda表达式相关的中间类型确实实现了IntConsumer接口。</li><li>在实现accept()方法时，它内部委托给了一个名为HelloFunction6.lambda$0()的方法，这个方法是编译时自动生成的。</li></ul>
+</div>
+<div class="sec">
+<h4>方法引用</h4>
+<ul class="point">
+<li><b>方法引用是Lambda表达式的一种简化形式</b>
+<ul class="quote"><li>通过方法引用的推导，你甚至连参数声明和传递都可以省略。</li></ul>
+</li>
+<li><b>方法引用可以简化匿名类的编写，与接口的默认方法相结合，还可以使用更顺畅的流式API对各种组件进行更自由的装配</b>
+<ul class="quote"><li>这里首先使用函数引用，直接定义了两个IntConsumer接口实例，一个指向标准输出，另一个指向标准错误。</li><li>用接口默认函数IntConsumer.addThen()将两个IntConsumer进行组合，得到一个新的IntConsumer，这个新的IntConsumer会依次调用outprintln和errprintln，完成对数组中元素的处理。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>通过方法引用的推导，你甚至连参数声明和传递都可以省略。</li><li>这里首先使用函数引用，直接定义了两个IntConsumer接口实例，一个指向标准输出，另一个指向标准错误。</li><li>用接口默认函数IntConsumer.addThen()将两个IntConsumer进行组合，得到一个新的IntConsumer，这个新的IntConsumer会依次调用outprintln和errprintln，完成对数组中元素的处理。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">44</span><span class="mmx-name">6.4 并行流与并行排序</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 5 条要点 · 8 句原句摘录</p>
+<div class="sec">
+<h4>使用并行流过滤数据</h4>
+<ul class="point">
+<li><b>Java 8可以在接口不变的情况下，将流改为并行流</b>
+<ul class="quote"><li>这样，就可以很自然地使用多线程进行集合中的数据处理。</li></ul>
+</li>
+<li><b>使用parallel()方法得到一个并行流，然后在并行流上进行过滤</b>
+<ul class="quote"><li>此时，PrimeUtil.isPrime()函数会被多线程并发调用，应用于流中的所有元素。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>这样，就可以很自然地使用多线程进行集合中的数据处理。</li><li>此时，PrimeUtil.isPrime()函数会被多线程并发调用，应用于流中的所有元素。</li></ul>
+</div>
+<div class="sec">
+<h4>从集合得到并行流</h4>
+<ul class="point">
+<li><b>在函数式编程中，我们可以从集合得到一个流或者并行流</b>
+<ul class="quote"><li>从集合对象List中，我们使用stream()方法可以得到一个流。</li><li>如果希望将这段代码并行化，则可以使用parallelStream()函数。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>从集合对象List中，我们使用stream()方法可以得到一个流。</li><li>如果希望将这段代码并行化，则可以使用parallelStream()函数。</li></ul>
+</div>
+<div class="sec">
+<h4>并行排序</h4>
+<ul class="point">
+<li><b>对于普通数组，Java 8也提供了简单的并行功能</b>
+<ul class="quote"><li>比如，对于数组排序，我们有Arrays.sort()方法，当然这是串行排序，但在Java 8中可以使用新增的Arrays.parallelSort()方法直接使用并行排序。</li></ul>
+</li>
+<li><b>Arrays中还增加了一些API用于数组中数据的赋值</b>
+<ul class="quote"><li>这是一个函数式味道很浓的接口，它的第二个参数是一个函数式接口。</li><li>如果我们想给数组中每一个元素都附上一个随机值，则可以这么做。</li><li>当然，以上过程是串行的。但是只要使用setAll()方法对应的并行版本，你就可以很快将它执行在多个CPU上。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>比如，对于数组排序，我们有Arrays.sort()方法，当然这是串行排序，但在Java 8中可以使用新增的Arrays.parallelSort()方法直接使用并行排序。</li><li>这是一个函数式味道很浓的接口，它的第二个参数是一个函数式接口。</li><li>如果我们想给数组中每一个元素都附上一个随机值，则可以这么做。</li><li>当然，以上过程是串行的。但是只要使用setAll()方法对应的并行版本，你就可以很快将它执行在多个CPU上。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">45</span><span class="mmx-name">6.5 增强的Future：CompletableFuture</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 7 个小节 · 8 条要点 · 11 句原句摘录</p>
+<div class="sec">
+<h4>CompletableFuture简介</h4>
+<ul class="point">
+<li><b>CompletableFuture是Java 8新增的一个超大型工具类，它实现了Future接口和CompletionStage接口</b>
+<ul class="quote"><li>CompletionStage接口拥有多达约40种方法，为函数式编程中的流式调用做准备。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>CompletionStage接口拥有多达约40种方法，为函数式编程中的流式调用做准备。</li></ul>
+</div>
+<div class="sec">
+<h4>完成了就通知我</h4>
+<ul class="point">
+<li><b>可以手动设置CompletableFuture的完成状态</b>
+<ul class="quote"><li>AskThread在执行到第12行代码时会阻塞，因为CompletableFuture中根本没有它所需要的数据，整个CompletableFuture处于未完成状态。</li><li>当计算完成后，可以将最终数据载入CompletableFuture，并标记为完成状态。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>AskThread在执行到第12行代码时会阻塞，因为CompletableFuture中根本没有它所需要的数据，整个CompletableFuture处于未完成状态。</li><li>当计算完成后，可以将最终数据载入CompletableFuture，并标记为完成状态。</li></ul>
+</div>
+<div class="sec">
+<h4>异步执行任务</h4>
+<ul class="point">
+<li><b>通过CompletableFuture提供的进一步封装，我们很容易实现Future模式那样的异步调用</b>
+<ul class="quote"><li>supplyAsync()方法用于那些需要返回值的场景，比如计算某个数据等。</li><li>runAsync()方法用于没有返回值的场景，比如，仅仅是简单地执行某一个异步动作。</li><li>在这两对方法中，都有一个方法可以接收一个Executor参数，这就使我们可以让Supplier&lt;U&gt;或者Runnable在指定的线程池中工作。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>supplyAsync()方法用于那些需要返回值的场景，比如计算某个数据等。</li><li>runAsync()方法用于没有返回值的场景，比如，仅仅是简单地执行某一个异步动作。</li><li>在这两对方法中，都有一个方法可以接收一个Executor参数，这就使我们可以让Supplier&lt;U&gt;或者Runnable在指定的线程池中工作。</li></ul>
+</div>
+<div class="sec">
+<h4>流式调用</h4>
+<ul class="point">
+<li><b>使用CompletionStage的40个接口进行函数式的流式API调用</b>
+<ul class="quote"><li>在第15行执行CompletableFuture.get()方法，目的是等待calc()函数执行完成。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在第15行执行CompletableFuture.get()方法，目的是等待calc()函数执行完成。</li></ul>
+</div>
+<div class="sec">
+<h4>CompletableFuture中的异常处理</h4>
+<ul class="point">
+<li><b>如果CompletableFuture在执行过程中遇到异常，那么我们可以用函数式编程的风格来优雅地处理这些异常</b>
+<ul class="quote"><li>exceptionally()方法中处理异常，并返回一个默认的值。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>exceptionally()方法中处理异常，并返回一个默认的值。</li></ul>
+</div>
+<div class="sec">
+<h4>组合多个CompletableFuture</h4>
+<ul class="point">
+<li><b>可以使用thenCompose()方法，它的签名如下：一个CompletableFuture可以在执行完成后，将执行结果通过Function接口传递给下一个CompletionStage实例进行处理</b>
+<ul class="quote"><li>上述代码第8行，将处理后的结果传递给thenCompose()方法，并进一步传递给后续新生成的CompletableFuture实例。</li></ul>
+</li>
+<li><b>另外一种组合多个CompletableFuture的方法是thenCombine()方法，它的签名如下：方法thenCombine()首先完成当前CompletableFuture和other的执行。接着，将这两者的执行结果传递给BiFunction，并返回代表BiFunction实例的CompletableFuture对象</b>
+<ul class="quote"><li>上述代码中，首先生成两个CompletableFuture实例，接着使用thenCombine()方法组合这两个CompletableFuture，将两者的执行结果进行累加，并将其累加结果转为字符串输出。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>上述代码第8行，将处理后的结果传递给thenCompose()方法，并进一步传递给后续新生成的CompletableFuture实例。</li><li>上述代码中，首先生成两个CompletableFuture实例，接着使用thenCombine()方法组合这两个CompletableFuture，将两者的执行结果进行累加，并将其累加结果转为字符串输出。</li></ul>
+</div>
+<div class="sec">
+<h4>支持timeout的CompletableFuture</h4>
+<ul class="point">
+<li><b>在JDK 9以后CompletableFuture增加了timeout功能。如果一个任务在给定时间内没有完成，则直接抛出异常</b>
+<ul class="quote"><li>本例中CompletableFuture.orTimeout()方法指定Future的执行时间不能超过1秒，如果超过1秒， 则抛出TimeoutException异常。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>本例中CompletableFuture.orTimeout()方法指定Future的执行时间不能超过1秒，如果超过1秒， 则抛出TimeoutException异常。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">46</span><span class="mmx-name">6.6 读写锁的改进：StampedLock</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 5 条要点 · 21 句原句摘录</p>
+<div class="sec">
+<h4>StampedLock使用示例</h4>
+<ul class="point">
+<li><b>StampedLock提供了一种乐观的读策略，使得乐观锁完全不会阻塞写线程</b>
+<ul class="quote"><li>StampedLock.tryOptimisticRead()方法试图尝试一次乐观读，它会返回一个类似于时间戳的邮戳整数stamp。</li><li>在读取时，首先使用了StampedLock.tryOptimisticRead()方法，读取x和y的值。</li><li>在第18行使用validate()方法，判断这个stamp是否在读过程发生期间被修改过。</li></ul>
+</li>
+<li><b>StampedLock通过引入乐观读来增加系统的并行度</b>
+<ul class="quote"><li>如果stamp没有被修改过，则认为这次读取是有效的，因此就可以跳转到第27行进行数据处理。</li><li>也可以升级锁的级别，将乐观锁变为悲观锁。</li><li>在退出临界区时，不要忘记释放写锁或者读锁。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>StampedLock.tryOptimisticRead()方法试图尝试一次乐观读，它会返回一个类似于时间戳的邮戳整数stamp。</li><li>在读取时，首先使用了StampedLock.tryOptimisticRead()方法，读取x和y的值。</li><li>在第18行使用validate()方法，判断这个stamp是否在读过程发生期间被修改过。</li><li>如果stamp没有被修改过，则认为这次读取是有效的，因此就可以跳转到第27行进行数据处理。</li><li>也可以升级锁的级别，将乐观锁变为悲观锁。</li><li>在退出临界区时，不要忘记释放写锁或者读锁。</li></ul>
+</div>
+<div class="sec">
+<h4>StampedLock的小陷阱</h4>
+<ul class="point">
+<li><b>StampedLock内部实现时，使用类似于CAS操作的死循环反复尝试的策略，没有处理有关中断的逻辑</b>
+<ul class="quote"><li>在它挂起线程时，使用的是Unsafe.park()函数，而park()函数在遇到线程中断时，会直接返回。</li><li>在StampedLock的死循环逻辑中，没有处理有关中断的逻辑，这就会导致阻塞在park()方法上的线程被中断后，再次进入循环。</li><li>当退出条件得不到满足时，就会发生疯狂占用CPU的情况。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在它挂起线程时，使用的是Unsafe.park()函数，而park()函数在遇到线程中断时，会直接返回。</li><li>在StampedLock的死循环逻辑中，没有处理有关中断的逻辑，这就会导致阻塞在park()方法上的线程被中断后，再次进入循环。</li><li>当退出条件得不到满足时，就会发生疯狂占用CPU的情况。</li></ul>
+</div>
+<div class="sec">
+<h4>有关StampedLock的实现思想</h4>
+<ul class="point">
+<li><b>StampedLock的内部实现是基于CLH锁的，CLH锁是一种自旋锁，它保证没有饥饿发生，并且可以保证FIFO(First-In-First-Out)的服务顺序</b>
+<ul class="quote"><li>CLH锁的基本思想如下：锁维护一个等待线程队列，所有申请锁但是没有成功的线程都记录在这个队列中。</li><li>每一个节点(一个节点代表一个线程)保存一个标记位(locked)，用于判断当前线程是否已经释放锁。</li><li>当一个线程试图获得锁时，取得当前等待队列的尾部节点作为其前序节点，并使用类似如下代码判断前序节点是否已经成功释放锁。</li></ul>
+</li>
+<li><b>StampedLock正是基于这种思想，但是实现上更为复杂</b>
+<ul class="quote"><li>在StampedLock内部，会维护一个等待链表队列。</li><li>state表示当前锁的状态，它是一个long型整数，有64位，其中，倒数第8位表示写锁状态，如果该位为1，则表示当前由写锁占用。</li><li>一次成功的乐观读必须保证当前锁没有写锁占用。</li><li>如果在乐观读后，有线程申请了写锁，那么state的状态就会改变。</li><li>乐观锁失败后，则可以提升锁级别，使用悲观读锁。</li><li>悲观读会尝试设置state状态，它会将state加1，用于统计读线程的数量。</li><li>在acquireRead()方法中，线程会在不同条件下进行若干次自旋，试图通过CAS操作获得锁。</li><li>acquireWrite()方法和acquireRead()方法非常类似，也是通过自旋尝试、加入等待队列直至最终Unsafe.park()方法挂起线程的逻辑进行。</li><li>释放锁时与加锁动作相反，以unlockWrite()方法为例。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>CLH锁的基本思想如下：锁维护一个等待线程队列，所有申请锁但是没有成功的线程都记录在这个队列中。</li><li>每一个节点(一个节点代表一个线程)保存一个标记位(locked)，用于判断当前线程是否已经释放锁。</li><li>当一个线程试图获得锁时，取得当前等待队列的尾部节点作为其前序节点，并使用类似如下代码判断前序节点是否已经成功释放锁。</li><li>在StampedLock内部，会维护一个等待链表队列。</li><li>state表示当前锁的状态，它是一个long型整数，有64位，其中，倒数第8位表示写锁状态，如果该位为1，则表示当前由写锁占用。</li><li>一次成功的乐观读必须保证当前锁没有写锁占用。</li><li>如果在乐观读后，有线程申请了写锁，那么state的状态就会改变。</li><li>乐观锁失败后，则可以提升锁级别，使用悲观读锁。</li><li>悲观读会尝试设置state状态，它会将state加1，用于统计读线程的数量。</li><li>在acquireRead()方法中，线程会在不同条件下进行若干次自旋，试图通过CAS操作获得锁。</li><li>acquireWrite()方法和acquireRead()方法非常类似，也是通过自旋尝试、加入等待队列直至最终Unsafe.park()方法挂起线程的逻辑进行。</li><li>释放锁时与加锁动作相反，以unlockWrite()方法为例。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">47</span><span class="mmx-name">6.7 原子类的增强</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 7 条要点 · 8 句原句摘录</p>
+<div class="sec">
+<h4>LongAdder的性能优势</h4>
+<ul class="point">
+<li><b>LongAdder通过热点分离，将竞争的数据进行分解，提高了并行度</b>
+<ul class="quote"><li>LongAdder将AtomicInteger的内部核心数据value分离成一个数组，每个线程访问时，通过哈希等算法映射到其中一个数字进行计数，而最终的计数结果则为这个数组的求和累加。</li></ul>
+</li>
+<li><b>LongAdder在多线程条件下，如果大家修改base都没有冲突，那么也没有必要扩展为cell数组</b>
+<ul class="quote"><li>一旦base修改发生冲突，就会初始化cell数组，使用新的策略。</li><li>如果使用cell数组更新后，发现在某一个cell上的更新依然发生冲突，那么系统就会尝试创建新的cell，或者将cell的数量加倍，以减少冲突的可能。</li></ul>
+</li>
+<li><b>LongAddr的性能超越普通的原子操作</b>
+<ul class="quote"><li>锁操作耗时约1784ms，普通原子操作耗时约695ms，而LongAddr仅需要227ms。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>LongAdder将AtomicInteger的内部核心数据value分离成一个数组，每个线程访问时，通过哈希等算法映射到其中一个数字进行计数，而最终的计数结果则为这个数组的求和累加。</li><li>一旦base修改发生冲突，就会初始化cell数组，使用新的策略。</li><li>如果使用cell数组更新后，发现在某一个cell上的更新依然发生冲突，那么系统就会尝试创建新的cell，或者将cell的数量加倍，以减少冲突的可能。</li><li>锁操作耗时约1784ms，普通原子操作耗时约695ms，而LongAddr仅需要227ms。</li></ul>
+</div>
+<div class="sec">
+<h4>LongAddr的优化手段</h4>
+<ul class="point">
+<li><b>LongAddr避免了伪共享问题</b>
+<ul class="quote"><li>对于LongAddr中的每一个cell，它的定义如下所示，在上述代码第1行声明了cell类为sun.misc.Contended，Java虚拟机自动为cell解决伪共享问题。</li></ul>
+</li>
+<li><b>在我们自己代码中也可以使用sun.misc.Contended来解决伪共享问题</b>
+<ul class="quote"><li>但是需要额外使用虚拟机参数-XX:-RestrictContended，否则，这个注释将被忽略。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>对于LongAddr中的每一个cell，它的定义如下所示，在上述代码第1行声明了cell类为sun.misc.Contended，Java虚拟机自动为cell解决伪共享问题。</li><li>但是需要额外使用虚拟机参数-XX:-RestrictContended，否则，这个注释将被忽略。</li></ul>
+</div>
+<div class="sec">
+<h4>LongAccumulator的功能增强</h4>
+<ul class="point">
+<li><b>LongAccumulator是LongAdder的功能扩展，可以实现任意函数操作</b>
+<ul class="quote"><li>用下面的构造函数创建一个LongAccumulator实例，第一个参数accumulatorFunction就是需要执行的二元函数(接收两个long型参数并返回long)，第二个参数是初始值。</li></ul>
+</li>
+<li><b>LongAccumulator通过Long::max识别最大值并保存在内部</b>
+<ul class="quote"><li>上述代码第2行构造了LongAccumulator实例，由于我们要过滤最大值，因此传入Long::max函数句柄。当有数据通过accumulate()方法传入LongAccumulator后，LongAccumulator会通过Long::max识别最大值并保存在内部(很可能是cell数组内，也可能是base)。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>用下面的构造函数创建一个LongAccumulator实例，第一个参数accumulatorFunction就是需要执行的二元函数(接收两个long型参数并返回long)，第二个参数是初始值。</li><li>上述代码第2行构造了LongAccumulator实例，由于我们要过滤最大值，因此传入Long::max函数句柄。当有数据通过accumulate()方法传入LongAccumulator后，LongAccumulator会通过Long::max识别最大值并保存在内部(很可能是cell数组内，也可能是base)。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">48</span><span class="mmx-name">6.8 ConcurrentHashMap的增强</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 5 个小节 · 7 条要点 · 9 句原句摘录</p>
+<div class="sec">
+<h4>ConcurrentHashMap的foreach操作</h4>
+<ul class="point">
+<li><b>foreach操作的接口是一个Consumer或者BiConsumer，用于对Map的数据进行消费。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>ConcurrentHashMap的reduce操作</h4>
+<ul class="point">
+<li><b>reduce操作对Map的数据进行处理的同时会将其转为另一种形式</b>
+<ul class="quote"><li>可以认为这是foreach操作的Function版本。</li></ul>
+</li>
+<li><b>reduce操作的示例，用于并行计算ConcurrentHashMap中所有value的总和</b>
+<ul class="quote"><li>第一个参数parallelismThreshold表示并行度，表示一个并行任务可以处理的元素个数(估算值)。</li><li>如果设置为Long.MAX_VALUE，则表示完全禁用并行，设置为1则表示使用最大并行可能。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>可以认为这是foreach操作的Function版本。</li><li>第一个参数parallelismThreshold表示并行度，表示一个并行任务可以处理的元素个数(估算值)。</li><li>如果设置为Long.MAX_VALUE，则表示完全禁用并行，设置为1则表示使用最大并行可能。</li></ul>
+</div>
+<div class="sec">
+<h4>ConcurrentHashMap的条件插入</h4>
+<ul class="point">
+<li><b>computeIfAbsent()函数是线程安全的高效方法，用于条件插入</b>
+<ul class="quote"><li>当元素不存在时需要创建并且将对象插入Map中，而当Map中已经存在该元素时，则直接获得当前在Map中的元素。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>当元素不存在时需要创建并且将对象插入Map中，而当Map中已经存在该元素时，则直接获得当前在Map中的元素。</li></ul>
+</div>
+<div class="sec">
+<h4>ConcurrentHashMap的search操作</h4>
+<ul class="point">
+<li><b>search操作会在Map中找到第一个使得Function返回不为null的值</b>
+<ul class="quote"><li>比如，下面的代码将找到Map中可以被25整除的一个数。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>比如，下面的代码将找到Map中可以被25整除的一个数。</li></ul>
+</div>
+<div class="sec">
+<h4>ConcurrentHashMap的其他新方法</h4>
+<ul class="point">
+<li><b>mappingCount()方法返回Map中的条目总数</b>
+<ul class="quote"><li>有别于size()方法，该方法返回是long型数据。</li><li>如果在执行该方法时，同时存在并发的插入或者删除操作，则结果是不准确的。</li></ul>
+</li>
+<li><b>newKeySet()方法返回一个线程安全的Set</b>
+<ul class="quote"><li>在JDK中，Set的实现依附于Map，实际上，Set是Map的一种特殊情况。</li><li>如果需要一个线程安全的高效并发HashSet，那么基于ConcurrentHashMap的实现是最好的选择。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>有别于size()方法，该方法返回是long型数据。</li><li>如果在执行该方法时，同时存在并发的插入或者删除操作，则结果是不准确的。</li><li>在JDK中，Set的实现依附于Map，实际上，Set是Map的一种特殊情况。</li><li>如果需要一个线程安全的高效并发HashSet，那么基于ConcurrentHashMap的实现是最好的选择。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">49</span><span class="mmx-name">6.9 发布和订阅模式</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 5 个小节 · 11 条要点 · 14 句原句摘录</p>
+<div class="sec">
+<h4>反应式编程简介</h4>
+<ul class="point">
+<li><b>反应式编程用于处理异步流中的数据</b>
+<ul class="quote"><li>每当应用收到数据项，便会对它进行处理。</li></ul>
+</li>
+<li><b>反应式编程以流的形式处理数据，因此其内存使用效率会更高。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>每当应用收到数据项，便会对它进行处理。</li></ul>
+</div>
+<div class="sec">
+<h4>Publisher和Subscriber</h4>
+<ul class="point">
+<li><b>Publisher将数据发布到流中，Subscriber则负责处理这些数据</b>
+<ul class="quote"><li>Subscriber是订阅者，用来处理数据。</li><li>Subscription表示对订阅数据的处理。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Subscriber是订阅者，用来处理数据。</li><li>Subscription表示对订阅数据的处理。</li></ul>
+</div>
+<div class="sec">
+<h4>反应式编程的主要API</h4>
+<ul class="point">
+<li><b>Subscriber的四个方法：onSubscribe()、onNext()、onError()、onComplete()</b>
+<ul class="quote"><li>onSubscribe()：订阅者注册后被调用的第一个方法。</li><li>onNext()：当有下一个数据项准备好时，进行通知。</li><li>onError()：当发生无法恢复的异常时被调用。</li><li>onComplete()：当没有更多数据需要处理时被调用。</li></ul>
+</li>
+<li><b>Subscription的两个方法：request()、cancel()</b>
+<ul class="quote"><li>request()：设定请求的数据个数。</li><li>cancel()：Subscriber停止接受新的消息。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>onSubscribe()：订阅者注册后被调用的第一个方法。</li><li>onNext()：当有下一个数据项准备好时，进行通知。</li><li>onError()：当发生无法恢复的异常时被调用。</li><li>onComplete()：当没有更多数据需要处理时被调用。</li><li>request()：设定请求的数据个数。</li><li>cancel()：Subscriber停止接受新的消息。</li></ul>
+</div>
+<div class="sec">
+<h4>简单的发布订阅例子</h4>
+<ul class="point">
+<li><b>订阅者注册后，首先调用onSubscribe()方法</b>
+<ul class="quote"><li>第6行代码onSubscribe()方法在注册后首先被调用。</li></ul>
+</li>
+<li><b>订阅者通过request()方法请求数据流中的数据</b>
+<ul class="quote"><li>第9行代码请求一个数据流中的数据，这行代码非常重要，没有它，订阅者将无法消费数据。</li></ul>
+</li>
+<li><b>数据发布后，通过close()方法关闭发布者</b>
+<ul class="quote"><li>第14行代码将数据发布到SubmissionPublisher中，数据发布后，通过close()方法关闭发布者。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>第6行代码onSubscribe()方法在注册后首先被调用。</li><li>第9行代码请求一个数据流中的数据，这行代码非常重要，没有它，订阅者将无法消费数据。</li><li>第14行代码将数据发布到SubmissionPublisher中，数据发布后，通过close()方法关闭发布者。</li></ul>
+</div>
+<div class="sec">
+<h4>数据处理链</h4>
+<ul class="point">
+<li><b>发布者-订阅者模式可以通过数据处理链对数据进行流式处理</b>
+<ul class="quote"><li>一个泛化的数据转换模块如下。</li></ul>
+</li>
+<li><b>在处理链中，使用function包含数据转换的具体逻辑。</b>
+</li>
+<li><b>处理逻辑可以通过再次发布，以便进行后续处理</b>
+<ul class="quote"><li>在第17行的onNext()方法中，使用该逻辑对数据进行处理，并同时将处理结果再次发布，以便进行后续处理。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>一个泛化的数据转换模块如下。</li><li>在第17行的onNext()方法中，使用该逻辑对数据进行处理，并同时将处理结果再次发布，以便进行后续处理。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">50</span><span class="mmx-name">第7章 使用Akka构建高并发程序</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 4 条要点 · 4 句原句摘录</p>
+<div class="sec">
+<h4>Akka简介</h4>
+<ul class="point">
+<li><b>Akka是一款遵循Apache 2许可的开源项目，可以在Java中使用</b>
+<ul class="quote"><li>Akka是用Scala创建的，但可以在Java中使用。</li></ul>
+</li>
+<li><b>Akka提供了一种名为Actor的并发模型，其粒度比线程小</b>
+<ul class="quote"><li>在系统中启用大量的Actor。</li></ul>
+</li>
+<li><b>Akka中提供了一套容错机制，允许在Actor出现异常时，进行一些恢复或者重置操作。</b>
+</li>
+<li><b>通过Akka不仅可以在单机上构建高并发程序，也可以在网络中构建分布式程序，并提供位置透明的Actor定位服务</b>
+<ul class="quote"><li>不仅可以在单机上构建高并发程序，也可以在网络中构建分布式程序。</li><li>提供位置透明的Actor定位服务。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Akka是用Scala创建的，但可以在Java中使用。</li><li>在系统中启用大量的Actor。</li><li>不仅可以在单机上构建高并发程序，也可以在网络中构建分布式程序。</li><li>提供位置透明的Actor定位服务。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">51</span><span class="mmx-name">7.1 新并发模型：Actor</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 4 条要点 · 4 句原句摘录</p>
+<div class="sec">
+<h4>Akka中的Actor</h4>
+<ul class="point">
+<li><b>Actor是Akka中的执行单元</b>
+<ul class="quote"><li>在Akka中，你可以完全忘记线程了，Actor就是你的全新执行单元。</li></ul>
+</li>
+<li><b>Actor之间的通信方式类似于人与人之间的对话</b>
+<ul class="quote"><li>老师问同学5乘以5是多少呀？同学听到问题后，想了想，回答说是25。Actor之间的通信方式和上述对话形式几乎是一模一样的。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在Akka中，你可以完全忘记线程了，Actor就是你的全新执行单元。</li><li>老师问同学5乘以5是多少呀？同学听到问题后，想了想，回答说是25。Actor之间的通信方式和上述对话形式几乎是一模一样的。</li></ul>
+</div>
+<div class="sec">
+<h4>Actor模型与传统的Java并行程序的区别</h4>
+<ul class="point">
+<li><b>传统Java并行程序是基于面向对象的方法，通过对象的方法调用进行信息的传递</b>
+<ul class="quote"><li>如果对象的方法会修改对象本身的状态，那么在多线程情况下，就有可能出现对象状态的不一致，所以我们必须对这类方法调用进行同步。</li></ul>
+</li>
+<li><b>Actor模型中，我们失去了对象的方法调用，我们并不是通过调用Actor对象的某一个方法来告诉Actor你需要做什么，而是给Actor发送一条消息</b>
+<ul class="quote"><li>当一个Actor收到消息后，它有可能会根据消息的内容做出某些行为，包括更改自身状态。但是，在这种情况下，这个状态的更改是Actor自己进行的，并不是由外界被迫进行的。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如果对象的方法会修改对象本身的状态，那么在多线程情况下，就有可能出现对象状态的不一致，所以我们必须对这类方法调用进行同步。</li><li>当一个Actor收到消息后，它有可能会根据消息的内容做出某些行为，包括更改自身状态。但是，在这种情况下，这个状态的更改是Actor自己进行的，并不是由外界被迫进行的。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">52</span><span class="mmx-name">7.2 Akka之Hello World</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 7 条要点 · 12 句原句摘录</p>
+<div class="sec">
+<h4>Akka中的Actor</h4>
+<ul class="point">
+<li><b>Akka中的Actor是无类型的，也支持有类型的Actor</b>
+<ul class="quote"><li>继承了UntypedActor后，就不能再继承系统中的其他类了。</li><li>有类型的Actor可以使用系统中的其他类型构造，从而缓解Java单继承的问题。</li></ul>
+</li>
+<li><b>Actor之间通过显示的消息发送来传递信息</b>
+<ul class="quote"><li>当系统内有多个Actor存在时，Akka会自动在线程池中选择线程来执行我们的Actor。</li><li>一个值得注意的地方是：不要在一个Actor中执行耗时的代码，这样可能会导致其他Actor的调度出现问题。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>继承了UntypedActor后，就不能再继承系统中的其他类了。</li><li>有类型的Actor可以使用系统中的其他类型构造，从而缓解Java单继承的问题。</li><li>当系统内有多个Actor存在时，Akka会自动在线程池中选择线程来执行我们的Actor。</li><li>一个值得注意的地方是：不要在一个Actor中执行耗时的代码，这样可能会导致其他Actor的调度出现问题。</li></ul>
+</div>
+<div class="sec">
+<h4>Hello World程序示例</h4>
+<ul class="point">
+<li><b>HelloWorld Actor通过preStart()方法创建Greeter实例并向其发送GREET消息</b>
+<ul class="quote"><li>preStart()方法是Akka的回调方法，在Actor启动前，会被Akka框架调用。</li><li>在HelloWorld中创建了Greeter的实例，并且向它发送GREET消息。</li></ul>
+</li>
+<li><b>Greeter Actor收到GREET消息后打印“Hello World”，并向消息发送方发送DONE信息</b>
+<ul class="quote"><li>当Greeter收到GREET消息时，就会在控制台打印“Hello World”。</li><li>并且向消息发送方发送DONE信息。</li></ul>
+</li>
+<li><b>HelloWorld Actor收到DONE消息后，再向Greeter发送GREET消息，接着将自己停止</b>
+<ul class="quote"><li>在收到DONE消息后，它会再向Greeter发送GREET消息。</li><li>接着将自己停止。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>preStart()方法是Akka的回调方法，在Actor启动前，会被Akka框架调用。</li><li>在HelloWorld中创建了Greeter的实例，并且向它发送GREET消息。</li><li>当Greeter收到GREET消息时，就会在控制台打印“Hello World”。</li><li>并且向消息发送方发送DONE信息。</li><li>在收到DONE消息后，它会再向Greeter发送GREET消息。</li><li>接着将自己停止。</li></ul>
+</div>
+<div class="sec">
+<h4>ActorSystem的创建和配置</h4>
+<ul class="point">
+<li><b>ActorSystem表示管理和维护Actor的系统，一个应用程序只需要一个ActorSystem就够用了</b>
+<ul class="quote"><li>ActorSystem.create()函数的第一个参数“Hello”为系统名称，第二个参数为配置文件。</li></ul>
+</li>
+<li><b>配置文件samplehello.conf的内容包括简单地配置日志级别为INFO</b>
+<ul class="quote"><li>执行上述代码，可以看到以下输出：第一行打印了HelloWorld Actor的路径。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>ActorSystem.create()函数的第一个参数“Hello”为系统名称，第二个参数为配置文件。</li><li>执行上述代码，可以看到以下输出：第一行打印了HelloWorld Actor的路径。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">53</span><span class="mmx-name">7.3 有关消息投递的一些说明</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 8 条要点 · 7 句原句摘录</p>
+<div class="sec">
+<h4>消息的重要性及不可变性</h4>
+<ul class="point">
+<li><b>消息是Akka应用的核心组件，应满足不可变性</b>
+<ul class="quote"><li>可变的消息无法高效的在并发环境中使用。</li></ul>
+</li>
+<li><b>典型的不可变对象的实现</b>
+<ul class="quote"><li>使用final声明字段为常量，构造完成后不能再改变。</li><li>对于values字段，final关键字只能保证values引用的不可变性，无法保证values对象的不可变性。</li><li>构造了一个不可变的List对象，实现彻底的不可变性。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>可变的消息无法高效的在并发环境中使用。</li><li>使用final声明字段为常量，构造完成后不能再改变。</li><li>对于values字段，final关键字只能保证values引用的不可变性，无法保证values对象的不可变性。</li><li>构造了一个不可变的List对象，实现彻底的不可变性。</li></ul>
+</div>
+<div class="sec">
+<h4>消息投递策略</h4>
+<ul class="point">
+<li><b>至多一次投递：每一条消息最多会被投递一次，可能偶尔会出现消息投递失败，而导致消息丢失。</b>
+</li>
+<li><b>至少一次投递：每一条消息至少会被投递一次，直到成功为止，接受者可能会收到重复的消息，但不会发生消息丢失。</b>
+</li>
+<li><b>精确的消息投递：所有的消息保证被精确地投递并成功接收一次，既不会有丢失，也不会有重复接收。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>消息投递可靠性的问题</h4>
+<ul class="point">
+<li><b>没有必要在Akka层保证消息的可靠性，消息的可靠性更应该从应用的业务层去维护</b>
+<ul class="quote"><li>也许在有些时候，丢失一些消息完全是符合应用要求的。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>也许在有些时候，丢失一些消息完全是符合应用要求的。</li></ul>
+</div>
+<div class="sec">
+<h4>消息投递的顺序性</h4>
+<ul class="point">
+<li><b>Akka可以在一定程度上保证顺序性</b>
+<ul class="quote"><li>Actor A1向Actor A2顺序发送了M1、M2和M3三条消息，Actor A3向Actor A2顺序发送了M4、M5和M6三条消息，那么系统可以保证：如果M1没有丢失，那它一定先于M2和M3被Actor A2收到。如果M2没有丢失，那它一定先于M3被Actor A2收到。如果M4没有丢失，那它一定先于M5和M6被Actor A2收到。如果M5没有丢失，那它一定先于M6被Actor A2收到。对Actor A2来说，来自Actor A1和Actor A3的消息可能交织在一起，没有顺序保证。</li></ul>
+</li>
+<li><b>消息投递规则不具备可传递性</b>
+<ul class="quote"><li>Actor A向Actor C发送了M1，接着，Actor A向Actor B发送了M2，Actor B将M2转发给Actor C，那么在这种情况下，Actor C收到M1和M2的先后顺序是没有保证的。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Actor A1向Actor A2顺序发送了M1、M2和M3三条消息，Actor A3向Actor A2顺序发送了M4、M5和M6三条消息，那么系统可以保证：如果M1没有丢失，那它一定先于M2和M3被Actor A2收到。如果M2没有丢失，那它一定先于M3被Actor A2收到。如果M4没有丢失，那它一定先于M5和M6被Actor A2收到。如果M5没有丢失，那它一定先于M6被Actor A2收到。对Actor A2来说，来自Actor A1和Actor A3的消息可能交织在一起，没有顺序保证。</li><li>Actor A向Actor C发送了M1，接着，Actor A向Actor B发送了M2，Actor B将M2转发给Actor C，那么在这种情况下，Actor C收到M1和M2的先后顺序是没有保证的。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">54</span><span class="mmx-name">7.4 Actor的生命周期</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 7 条要点 · 6 句原句摘录</p>
+<div class="sec">
+<h4>Actor的生命周期</h4>
+<ul class="point">
+<li><b>Actor在actorOf()函数被调用后开始建立，Actor实例创建后会回调preStart()方法</b>
+<ul class="quote"><li>在这个方法里，我们可以进行一些资源的初始化工作。</li></ul>
+</li>
+<li><b>当Actor被重启时，会回调preRestart()方法，接着系统会创建一个新的Actor对象实例</b>
+<ul class="quote"><li>当新的Actor实例创建后，会回调postRestart()方法，表示启动完成，同时新的实例将会代替旧的实例。</li></ul>
+</li>
+<li><b>停止一个Actor有很多方式，你可以调用stop()方法或者给Actor发送一个PosionPill(毒药丸)</b>
+<ul class="quote"><li>当Actor停止时，postStop()方法会被调用，同时这个Actor的监视者会收到一个Terminated消息。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在这个方法里，我们可以进行一些资源的初始化工作。</li><li>当新的Actor实例创建后，会回调postRestart()方法，表示启动完成，同时新的实例将会代替旧的实例。</li><li>当Actor停止时，postStop()方法会被调用，同时这个Actor的监视者会收到一个Terminated消息。</li></ul>
+</div>
+<div class="sec">
+<h4>创建带有生命周期回调函数的Actor</h4>
+<ul class="point">
+<li><b>MyWorker Actor重载了preStart()和postStop()两个方法</b>
+<ul class="quote"><li>我们可以使用preStart()方法来初始化一些资源，使用postStop()方法来进行资源的释放。</li></ul>
+</li>
+<li><b>当MyWorker收到WORKING消息时，就打印“I am working”，收到DONE消息时，打印“Stop working”。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>我们可以使用preStart()方法来初始化一些资源，使用postStop()方法来进行资源的释放。</li></ul>
+</div>
+<div class="sec">
+<h4>为MyWorker指定一个监视者</h4>
+<ul class="point">
+<li><b>WatchActor会在它的上下文中watch一个Actor</b>
+<ul class="quote"><li>如果将来这个被监视的Actor的退出终止，WatchActor就能收到一条Terminated消息。</li></ul>
+</li>
+<li><b>当MyWorker因为意外停止工作，监视者就会收到一个通知</b>
+<ul class="quote"><li>在这里，我们将简单地打印终止消息Terminated中的相关Actor路径，并且关闭整个ActorSystem。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如果将来这个被监视的Actor的退出终止，WatchActor就能收到一条Terminated消息。</li><li>在这里，我们将简单地打印终止消息Terminated中的相关Actor路径，并且关闭整个ActorSystem。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">55</span><span class="mmx-name">7.5 监督策略</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 7 条要点 · 8 句原句摘录</p>
+<div class="sec">
+<h4>Akka框架的监督策略</h4>
+<ul class="point">
+<li><b>Akka框架提供了OneForOneStrategy和AllForOneStrategy两种监督策略</b>
+<ul class="quote"><li>OneForOneStrategy策略，父Actor只会对出问题的子Actor进行处理，比如重启或者停止。</li><li>AllForOneStrategy策略，父Actor会对出问题的子Actor及它所有的兄弟都进行处理。</li></ul>
+</li>
+<li><b>默认策略是OneForOneStrategy策略。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>OneForOneStrategy策略，父Actor只会对出问题的子Actor进行处理，比如重启或者停止。</li><li>AllForOneStrategy策略，父Actor会对出问题的子Actor及它所有的兄弟都进行处理。</li></ul>
+</div>
+<div class="sec">
+<h4>自定义监督策略</h4>
+<ul class="point">
+<li><b>可以通过构造一个自定义的监督策略来指定Actor的失败处理方式</b>
+<ul class="quote"><li>当失败时，我们可以无视这个错误，继续执行Actor，就像什么事都没发生过一样。</li><li>或者可以重启Actor，甚至可以让Actor彻底停止工作。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>当失败时，我们可以无视这个错误，继续执行Actor，就像什么事都没发生过一样。</li><li>或者可以重启Actor，甚至可以让Actor彻底停止工作。</li></ul>
+</div>
+<div class="sec">
+<h4>SupervisorStrategy的使用和设置</h4>
+<ul class="point">
+<li><b>需要定义一个父Actor，把它作为所有子Actor的监督者</b>
+<ul class="quote"><li>父Actor可以对子Actor进行监督，监控Actor的行为是否有异常。</li></ul>
+</li>
+<li><b>可以通过覆盖父类的supervisorStrategy()方法，设置使用自定义的监督策略。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>父Actor可以对子Actor进行监督，监控Actor的行为是否有异常。</li></ul>
+</div>
+<div class="sec">
+<h4>RestartActor的实现</h4>
+<ul class="point">
+<li><b>RestartActor模拟了一些异常情况</b>
+<ul class="quote"><li>第32行会抛出NullPointerException，而第34行因为除以零，所以会抛出ArithmeticException。</li></ul>
+</li>
+<li><b>根据自定义的策略，RestartActor在遇到异常后会重启</b>
+<ul class="quote"><li>根据自定义的策略，这将导致它重启，因此，这就有了第3行的preRestart。</li><li>经过3次重启后，超过了监督策略中的单位时间内的重试上限，因此系统不会再进行尝试，而是直接关闭RestartActor。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>第32行会抛出NullPointerException，而第34行因为除以零，所以会抛出ArithmeticException。</li><li>根据自定义的策略，这将导致它重启，因此，这就有了第3行的preRestart。</li><li>经过3次重启后，超过了监督策略中的单位时间内的重试上限，因此系统不会再进行尝试，而是直接关闭RestartActor。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">56</span><span class="mmx-name">7.6 选择Actor</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 3 条要点 · 5 句原句摘录</p>
+<div class="sec">
+<h4>Akka中的ActorSelection类</h4>
+<ul class="point">
+<li><b>ActorSelection类用于有效管理大量Actor并进行批量通信</b>
+<ul class="quote"><li>ActorSelection提供了一种机制，允许我们向一组Actor发送消息，而无需知道它们的具体地址。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>ActorSelection提供了一种机制，允许我们向一组Actor发送消息，而无需知道它们的具体地址。</li></ul>
+</div>
+<div class="sec">
+<h4>使用actorSelection()方法获取代表所有满足条件的ActorSelection</h4>
+<ul class="point">
+<li><b>actorSelection()方法返回一个ActorSelection对象，代表所有满足条件的Actor</b>
+<ul class="quote"><li>ActorSelection对象可以使用&quot;*&quot;和&quot;?&quot;通配符来匹配Actor的名称。</li><li>例如，&quot;user/*/inbox&quot;可以匹配所有以&quot;user/&quot;开头的Actor，并且它们的名称以&quot;/inbox&quot;结尾。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>ActorSelection对象可以使用&quot;*&quot;和&quot;?&quot;通配符来匹配Actor的名称。</li><li>例如，&quot;user/*/inbox&quot;可以匹配所有以&quot;user/&quot;开头的Actor，并且它们的名称以&quot;/inbox&quot;结尾。</li></ul>
+</div>
+<div class="sec">
+<h4>向所有worker Actor发送消息</h4>
+<ul class="point">
+<li><b>使用ActorSelection对象向所有满足条件的Actor发送消息</b>
+<ul class="quote"><li>可以使用ActorSelection对象的tell()方法向所有满足条件的Actor发送消息。</li><li>例如，&quot;user/*/inbox&quot;.tell(&quot;Hello, world!&quot;)将向所有以&quot;user/&quot;开头的Actor，并且它们的名称以&quot;/inbox&quot;结尾的Actor发送消息&quot;Hello, world!&quot;。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>可以使用ActorSelection对象的tell()方法向所有满足条件的Actor发送消息。</li><li>例如，&quot;user/*/inbox&quot;.tell(&quot;Hello, world!&quot;)将向所有以&quot;user/&quot;开头的Actor，并且它们的名称以&quot;/inbox&quot;结尾的Actor发送消息&quot;Hello, world!&quot;。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">57</span><span class="mmx-name">7.7 消息收件箱（Inbox）</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 5 条要点 · 4 句原句摘录</p>
+<div class="sec">
+<h4>Akka框架中的消息收件箱(Inbox)</h4>
+<ul class="point">
+<li><b>Akka框架已经为我们准备了一个名叫“收件箱”的组件，使用它可以很方便地对Actor进行消息发送和接收</b>
+<ul class="quote"><li>所有Actor之间的通信都是通过消息来进行的。</li><li>我们并不一定要构建一个Actor来控制整个系统，使用收件箱可以很方便地对Actor进行消息发送和接收。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>所有Actor之间的通信都是通过消息来进行的。</li><li>我们并不一定要构建一个Actor来控制整个系统，使用收件箱可以很方便地对Actor进行消息发送和接收。</li></ul>
+</div>
+<div class="sec">
+<h4>邮箱的使用</h4>
+<ul class="point">
+<li><b>邮箱的使用很简单，可以根据ActorSystem构造一个与之绑定的邮箱Inbox。</b>
+</li>
+<li><b>使用邮箱监视Actor，这样就能在Actor停止后得到一个消息通知</b>
+<ul class="quote"><li>上述代码第6行使用邮箱监视MyWorker。</li></ul>
+</li>
+<li><b>通过邮箱向Actor发送消息</b>
+<ul class="quote"><li>上述代码第7～9行通过邮箱向MyWorker发送消息。</li></ul>
+</li>
+<li><b>进行消息接收，如果发现Actor已经停止工作，则关闭整个ActorSystem。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>上述代码第6行使用邮箱监视MyWorker。</li><li>上述代码第7～9行通过邮箱向MyWorker发送消息。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">58</span><span class="mmx-name">7.8 消息路由</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 6 条要点 · 7 句原句摘录</p>
+<div class="sec">
+<h4>Akka消息路由概述</h4>
+<ul class="point">
+<li><b>Akka使用路由器组件(Router)来封装消息的调度</b>
+<ul class="quote"><li>系统提供了几种实用的消息路由策略，比如，轮询选择Actor进行消息发送，随机消息发送，将消息发送给最为空闲的Actor，甚至是在组内广播消息。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>系统提供了几种实用的消息路由策略，比如，轮询选择Actor进行消息发送，随机消息发送，将消息发送给最为空闲的Actor，甚至是在组内广播消息。</li></ul>
+</div>
+<div class="sec">
+<h4>消息路由的使用方式</h4>
+<ul class="point">
+<li><b>通过Router构造函数指定路由策略和一组被路由的Actor(Routee)</b>
+<ul class="quote"><li>Router就会根据给定的消息路由策略进行消息投递。</li></ul>
+</li>
+<li><b>当有消息需要传递给这组Actor时，只需要将消息投递给这个Router即可</b>
+<ul class="quote"><li>Router会根据给定的消息路由策略进行消息投递。</li></ul>
+</li>
+<li><b>可以将不再需要的Actor从工作组中移除</b>
+<ul class="quote"><li>如果发现系统中没有可用的Actor，就会直接关闭系统。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Router就会根据给定的消息路由策略进行消息投递。</li><li>Router会根据给定的消息路由策略进行消息投递。</li><li>如果发现系统中没有可用的Actor，就会直接关闭系统。</li></ul>
+</div>
+<div class="sec">
+<h4>消息路由策略示例</h4>
+<ul class="point">
+<li><b>使用RoundRobinRoutingLogic路由策略，对所有的Routee进行轮询消息发送</b>
+<ul class="quote"><li>当有消息需要传递给这5个MyWorker时，只需要将消息投递给这个Router即可。</li><li>WORKING消息被轮流发送给这5个worker。</li></ul>
+</li>
+<li><b>可以修改路由策略，观察不同路由策略下的消息投递方式</b>
+<ul class="quote"><li>除了RoundRobinRoutingLogic，还可以尝试BroadcastRoutingLogic广播策略、RandomRoutingLogic随机投递策略、SmallestMailbox-RoutingLogic空闲Actor优先投递策略。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>当有消息需要传递给这5个MyWorker时，只需要将消息投递给这个Router即可。</li><li>WORKING消息被轮流发送给这5个worker。</li><li>除了RoundRobinRoutingLogic，还可以尝试BroadcastRoutingLogic广播策略、RandomRoutingLogic随机投递策略、SmallestMailbox-RoutingLogic空闲Actor优先投递策略。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">59</span><span class="mmx-name">7.9 Actor的内置状态转换</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 3 条要点 · 3 句原句摘录</p>
+<div class="sec">
+<h4>Actor的内置状态转换</h4>
+<ul class="point">
+<li><b>Actor内部消息处理函数可以拥有多个不同的状态</b>
+<ul class="quote"><li>在特定的状态下，可以对同一消息进行不同的处理，状态之间也可以任意切换。</li></ul>
+</li>
+<li><b>become()方法用于切换Actor的状态</b>
+<ul class="quote"><li>become()方法接收一个Procedure参数，Procedure在这里可以表示一种Actor的状态，更重要的是它封装了在这种状态下的消息处理逻辑。</li></ul>
+</li>
+<li><b>Actor的状态切换后，后续的消息就直接交由当前状态处理</b>
+<ul class="quote"><li>一旦完成状态切换，当后续有新的消息送达时，就不会再由onReceive()函数处理了。由于angry和happy本身就是消息处理函数，因此后续的消息就直接交由当前状态处理(angry或者happy)，从而很好地封装了Actor的多个不同处理逻辑。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在特定的状态下，可以对同一消息进行不同的处理，状态之间也可以任意切换。</li><li>become()方法接收一个Procedure参数，Procedure在这里可以表示一种Actor的状态，更重要的是它封装了在这种状态下的消息处理逻辑。</li><li>一旦完成状态切换，当后续有新的消息送达时，就不会再由onReceive()函数处理了。由于angry和happy本身就是消息处理函数，因此后续的消息就直接交由当前状态处理(angry或者happy)，从而很好地封装了Actor的多个不同处理逻辑。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">60</span><span class="mmx-name">7.10 询问模式：Actor中的Future</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 3 条要点 · 6 句原句摘录</p>
+<div class="sec">
+<h4>Actor中的Future模式</h4>
+<ul class="point">
+<li><b>Actor之间通过异步消息通信，发送消息后只能等待Actor的返回</b>
+<ul class="quote"><li>当你发送一条消息给一个Actor后，你通常只能等待Actor的返回。</li><li>与同步方法不同，在你发送异步消息后，接受消息的Actor可能根本来不及处理你的消息，调用方就已经返回了。</li></ul>
+</li>
+<li><b>使用ask()方法发送消息并等待返回</b>
+<ul class="quote"><li>ask()方法不会等待worker处理，会立即返回一个Future对象。</li><li>使用Await方法等待worker的返回，并打印返回结果。</li></ul>
+</li>
+<li><b>使用pipe()函数将Future重定向到另一个Actor</b>
+<ul class="quote"><li>pipe()函数不会阻塞程序，它会立即返回。</li><li>printer Actor通过pipe()方法得到worker的输出结果，并打印在控制台上。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>当你发送一条消息给一个Actor后，你通常只能等待Actor的返回。</li><li>与同步方法不同，在你发送异步消息后，接受消息的Actor可能根本来不及处理你的消息，调用方就已经返回了。</li><li>ask()方法不会等待worker处理，会立即返回一个Future对象。</li><li>使用Await方法等待worker的返回，并打印返回结果。</li><li>pipe()函数不会阻塞程序，它会立即返回。</li><li>printer Actor通过pipe()方法得到worker的输出结果，并打印在控制台上。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">61</span><span class="mmx-name">7.11 多个Actor同时修改数据：Agent</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 5 条要点 · 13 句原句摘录</p>
+<div class="sec">
+<h4>Akka中的Agent</h4>
+<ul class="point">
+<li><b>Agent提供了对一个变量的异步更新</b>
+<ul class="quote"><li>当一个Actor希望改变Agent的值时，它会向Agent下发一个动作。</li><li>当多个Actor同时改变Agent时，这些action将会在ExecutionContext中被并发调度执行。</li></ul>
+</li>
+<li><b>Agent的修改可以使用send()和alter()两种方法</b>
+<ul class="quote"><li>send()方法没有返回值，而alter()方法会返回一个Future对象，便于跟踪Agent的执行。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>当一个Actor希望改变Agent的值时，它会向Agent下发一个动作。</li><li>当多个Actor同时改变Agent时，这些action将会在ExecutionContext中被并发调度执行。</li><li>send()方法没有返回值，而alter()方法会返回一个Future对象，便于跟踪Agent的执行。</li></ul>
+</div>
+<div class="sec">
+<h4>使用Agent进行多个Actor同时修改数据的示例</h4>
+<ul class="point">
+<li><b>定义了一个累加的Actor：CounterActor</b>
+<ul class="quote"><li>累计动作action addMapper，对Agent的值进行修改，这里简单地加1。</li></ul>
+</li>
+<li><b>在CounterActor的消息处理函数onReceive()中，对全局的counterAgent进行累加操作</b>
+<ul class="quote"><li>alter()方法指定了累加动作addMapper。</li><li>由于我们希望在将来知道累加行为是否完成，因此在这里将返回的Future对象进行收集。</li></ul>
+</li>
+<li><b>程序的主函数中，创建了10个CounterActor对象，并使用Inbox与CounterActor进行通信</b>
+<ul class="quote"><li>第12～16行使用Inbox与CounterActor进行通信。</li><li>第14行的消息将触发CounterActor进行累加操作。</li><li>第20～30行系统将等待10个CounterActor运行结束。</li><li>执行完成后，我们便已经收集了所有的Future。</li><li>在第32行，将所有的Future进行串行组合(使用sequence()方法)，构造了一个整体的Future，并为它创建onComplete()回调函数。</li><li>在所有的Agent操作执行完成后，onComplete()方法就会被调用。</li><li>在这个例子中，我们简单地输出最终的counterAgent值，并关闭系统。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>累计动作action addMapper，对Agent的值进行修改，这里简单地加1。</li><li>alter()方法指定了累加动作addMapper。</li><li>由于我们希望在将来知道累加行为是否完成，因此在这里将返回的Future对象进行收集。</li><li>第12～16行使用Inbox与CounterActor进行通信。</li><li>第14行的消息将触发CounterActor进行累加操作。</li><li>第20～30行系统将等待10个CounterActor运行结束。</li><li>执行完成后，我们便已经收集了所有的Future。</li><li>在第32行，将所有的Future进行串行组合(使用sequence()方法)，构造了一个整体的Future，并为它创建onComplete()回调函数。</li><li>在所有的Agent操作执行完成后，onComplete()方法就会被调用。</li><li>在这个例子中，我们简单地输出最终的counterAgent值，并关闭系统。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">62</span><span class="mmx-name">7.12 像数据库一样操作内存数据：软件事务内存</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 4 条要点 · 9 句原句摘录</p>
+<div class="sec">
+<h4>软件事务内存(STM)的定义和特点</h4>
+<ul class="point">
+<li><b>STM是一种支持事务的编程技术，具有隔离性、原子性和一致性</b>
+<ul class="quote"><li>STM的事务和数据库中所说的事务非常类似。</li><li>与数据库事务不同的是，内存事务不具备持久性。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>STM的事务和数据库中所说的事务非常类似。</li><li>与数据库事务不同的是，内存事务不具备持久性。</li></ul>
+</div>
+<div class="sec">
+<h4>STM在多个Actor协作完成一项工作中的应用</h4>
+<ul class="point">
+<li><b>在协作事务中，如果一个Actor处理失败，那么根据事务的原子性，其他Actor所进行的操作必须要回滚</b>
+<ul class="quote"><li>假设有一个公司要给员工发放福利，公司账户里有100元，每次公司账户会给员工账户转一笔钱，假设转账10元，那么公司账户中应该减去10元，同时，员工账户中应该增加10元，这两个操作必须同时完成，或者同时不完成。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>假设有一个公司要给员工发放福利，公司账户里有100元，每次公司账户会给员工账户转一笔钱，假设转账10元，那么公司账户中应该减去10元，同时，员工账户中应该增加10元，这两个操作必须同时完成，或者同时不完成。</li></ul>
+</div>
+<div class="sec">
+<h4>STM的实现示例</h4>
+<ul class="point">
+<li><b>CompanyActor和EmployeeActor分别用于管理公司账户和雇员账户，通过Coordinated协调者进行事务的启动和管理</b>
+<ul class="quote"><li>在第12～23行中，我们尝试进行了19次汇款，第一次汇款额度为1元，第二次为2元，依此类推，最后一笔汇款为19元。</li><li>在第13行新建一个Coordinated协调者，并且将这个协调者当作消息发送给company。当company收到这个协调者消息后，自动成为这个事务的第一个成员。</li><li>在CompanyActor中，首先判断接收的msg是否是Coordinated。如果是Coordinated，则表示这是一个新事务的开始。在第8行获得事务的参数，也就是需要转账的金额。接着在第9行调用Coordinated.coordinate()方法，将employee加入当前事务中，这样这个事务中就有两个参与者了。</li><li>第11行调用Coordinated.atomic()函数定义原子执行块作为这个事务的一部分。在这个执行块中，对公司账户进行余额调整(第17行)，但是当汇款额度大于可用余额时，就会抛出异常，宣告失败。</li><li>作为转账接收方的雇员账户如下：上述代码第2行设置雇员账户初始金额是50元。第6行判断消息是否为Coordinated，如果是，则当前Actor会自动加入Coordinated指定的事务。第10行定义原子操作，在这个操作中将修改雇员账户余额。在这里，我们并没有给出异常情况的判断，只要接收到转入金额，一律将其增加到雇员账户中。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在第12～23行中，我们尝试进行了19次汇款，第一次汇款额度为1元，第二次为2元，依此类推，最后一笔汇款为19元。</li><li>在第13行新建一个Coordinated协调者，并且将这个协调者当作消息发送给company。当company收到这个协调者消息后，自动成为这个事务的第一个成员。</li><li>在CompanyActor中，首先判断接收的msg是否是Coordinated。如果是Coordinated，则表示这是一个新事务的开始。在第8行获得事务的参数，也就是需要转账的金额。接着在第9行调用Coordinated.coordinate()方法，将employee加入当前事务中，这样这个事务中就有两个参与者了。</li><li>第11行调用Coordinated.atomic()函数定义原子执行块作为这个事务的一部分。在这个执行块中，对公司账户进行余额调整(第17行)，但是当汇款额度大于可用余额时，就会抛出异常，宣告失败。</li><li>作为转账接收方的雇员账户如下：上述代码第2行设置雇员账户初始金额是50元。第6行判断消息是否为Coordinated，如果是，则当前Actor会自动加入Coordinated指定的事务。第10行定义原子操作，在这个操作中将修改雇员账户余额。在这里，我们并没有给出异常情况的判断，只要接收到转入金额，一律将其增加到雇员账户中。</li></ul>
+</div>
+<div class="sec">
+<h4>STM的优势</h4>
+<ul class="point">
+<li><b>无论转账操作是否成功，公司账户和雇员账户的金额总是一致的。当转账失败时，雇员账户的余额并不会增加</b>
+<ul class="quote"><li>这就是软件事务内存的作用。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>这就是软件事务内存的作用。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">63</span><span class="mmx-name">7.13 一个有趣的例子：并发粒子群的实现</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 9 条要点 · 16 句原句摘录</p>
+<div class="sec">
+<h4>粒子群算法简介</h4>
+<ul class="point">
+<li><b>粒子群算法是一种进化计算技术，源于对鸟群捕食行为的研究</b>
+<ul class="quote"><li>粒子群算法与遗传算法相似，是一种基于迭代的优化算法。</li><li>与遗传算法相比，PSO的实现简单得多，参数配置也相对较少。</li></ul>
+</li>
+<li><b>粒子群算法通过模拟鸟群的觅食行为，寻找问题的最优解</b>
+<ul class="quote"><li>在程序中，我们可以模拟大量的小鸟，小鸟的觅食点正是问题的解。</li><li>解越优秀，意味着食物越是丰盛，因此，模拟的小鸟会从自己的位置出发以一定的速度向最优点的方向移动。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>粒子群算法与遗传算法相似，是一种基于迭代的优化算法。</li><li>与遗传算法相比，PSO的实现简单得多，参数配置也相对较少。</li><li>在程序中，我们可以模拟大量的小鸟，小鸟的觅食点正是问题的解。</li><li>解越优秀，意味着食物越是丰盛，因此，模拟的小鸟会从自己的位置出发以一定的速度向最优点的方向移动。</li></ul>
+</div>
+<div class="sec">
+<h4>粒子群算法的计算过程</h4>
+<ul class="point">
+<li><b>粒子群算法包括初始化粒子、计算适应度、更新粒子的速度和位置等步骤</b>
+<ul class="quote"><li>初始化所有粒子，粒子的位置随机生成。计算每个粒子当前的适应度，并将此设为当前粒子的个体最优解。</li><li>所有粒子将自己的个体最优值发送给管理者Master。Master获得所有粒子的信息后，筛选出全局最优解。</li><li>Master将gBest通知所有粒子，所有粒子便知道全局最优点的位置。</li><li>所有粒子根据自己的个体最优解和全局最优解，更新自己的速度，在有了速度后，再更新自己的位置。</li></ul>
+</li>
+<li><b>粒子群算法的计算过程具有一定的随机性，但可以通过大量例子保证计算效果稳定</b>
+<ul class="quote"><li>在这个标准的粒子群算法中，由于所有粒子都会向全局最优靠拢，因此其跳出局部最优的能力并不算太强。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>初始化所有粒子，粒子的位置随机生成。计算每个粒子当前的适应度，并将此设为当前粒子的个体最优解。</li><li>所有粒子将自己的个体最优值发送给管理者Master。Master获得所有粒子的信息后，筛选出全局最优解。</li><li>Master将gBest通知所有粒子，所有粒子便知道全局最优点的位置。</li><li>所有粒子根据自己的个体最优解和全局最优解，更新自己的速度，在有了速度后，再更新自己的位置。</li><li>在这个标准的粒子群算法中，由于所有粒子都会向全局最优靠拢，因此其跳出局部最优的能力并不算太强。</li></ul>
+</div>
+<div class="sec">
+<h4>粒子群算法的应用</h4>
+<ul class="point">
+<li><b>粒子群算法广泛应用于函数优化和神经网络训练等方面</b>
+<ul class="quote"><li>以粒子群算法为代表的进化计算，可以说是最优化计算中的通用方法。</li><li>几乎一切最优化问题都可以通过这种随机搜索的模式解决，其成本低、难度小、效果好，因此颇受欢迎。</li></ul>
+</li>
+<li><b>粒子群算法可以用于解决资金规划等优化问题</b>
+<ul class="quote"><li>假设现在有400万元，要求4年内使用完，尝试制订资金的使用规划，使4年收益之和最大。</li><li>对于类似的优化问题，正是粒子群算法的涉猎范围。当使用粒子群算法时，我们可以先随机给出若干个满足提交的资金规划方案。接着，根据粒子群的演化公式，不断调整各个粒子的位置(粒子的每一个位置代表一套方案)，逐步探索更优的方案。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>以粒子群算法为代表的进化计算，可以说是最优化计算中的通用方法。</li><li>几乎一切最优化问题都可以通过这种随机搜索的模式解决，其成本低、难度小、效果好，因此颇受欢迎。</li><li>假设现在有400万元，要求4年内使用完，尝试制订资金的使用规划，使4年收益之和最大。</li><li>对于类似的优化问题，正是粒子群算法的涉猎范围。当使用粒子群算法时，我们可以先随机给出若干个满足提交的资金规划方案。接着，根据粒子群的演化公式，不断调整各个粒子的位置(粒子的每一个位置代表一套方案)，逐步探索更优的方案。</li></ul>
+</div>
+<div class="sec">
+<h4>使用Akka实现粒子群</h4>
+<ul class="point">
+<li><b>Akka的Actor模型可以模拟整个粒子群计算的场景</b>
+<ul class="quote"><li>由于多个Actor可以复用一个线程，而Actor本身作为轻量级的并发执行单元可以有极其大量的存在。</li></ul>
+</li>
+<li><b>使用Actor的模式与粒子群算法之间有着天生匹配度</b>
+<ul class="quote"><li>粒子群算法由于涉及多个甚至是极其大量的粒子参与运算，因此它隐含着并行计算的模式。</li></ul>
+</li>
+<li><b>通过Akka实现粒子群算法可以解决资金规划等优化问题</b>
+<ul class="quote"><li>执行上述代码，运行一小段时间，你就可以得到如下输出(截取部分)：上述输出表示，当粒子群随机初始化时，最优解为36.15万元，但随着粒子的搜索，这个投资方案被逐步优化，由37.88万元一直上升到43.02万元。根据前面的求解，我们知道这个投资方案的最优结果是43.09万元，可见粒子群的搜索结果和全局最优解已经非常接近了。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>由于多个Actor可以复用一个线程，而Actor本身作为轻量级的并发执行单元可以有极其大量的存在。</li><li>粒子群算法由于涉及多个甚至是极其大量的粒子参与运算，因此它隐含着并行计算的模式。</li><li>执行上述代码，运行一小段时间，你就可以得到如下输出(截取部分)：上述输出表示，当粒子群随机初始化时，最优解为36.15万元，但随着粒子的搜索，这个投资方案被逐步优化，由37.88万元一直上升到43.02万元。根据前面的求解，我们知道这个投资方案的最优结果是43.09万元，可见粒子群的搜索结果和全局最优解已经非常接近了。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">64</span><span class="mmx-name">第8章 并行程序调试</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 1 条要点 · 1 句原句摘录</p>
+<div class="sec">
+<h4>并行程序调试的特点和难度</h4>
+<ul class="point">
+<li><b>并行程序调试要比串行程序调试复杂得多</b>
+<ul class="quote"><li>现代IDE开发环境可以在一定程度上缓建并发程序调试的难度。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>现代IDE开发环境可以在一定程度上缓建并发程序调试的难度。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">65</span><span class="mmx-name">8.1 准备实验样本</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 2 条要点 · 0 句原句摘录</p>
+<div class="sec">
+<h4>定义一个简单的类，作为实验样本</h4>
+<ul class="point">
+<li><b>这里使用的JDK版本为JDK 8u5。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>使用调试重现多线程下访问ArrayList的错误</h4>
+<ul class="point">
+<li><b>上述代码是在多线程下访问ArrayList，因此是错误的写法。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">66</span><span class="mmx-name">8.2 正式起航</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 3 条要点 · 4 句原句摘录</p>
+<div class="sec">
+<h4>Eclipse调试环境简介</h4>
+<ul class="point">
+<li><b>Eclipse调试Java程序时，程序执行到断点处，当前的线程就会被挂起。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>条件断点的设置</h4>
+<ul class="point">
+<li><b>为断点设置条件，使其只对特定线程生效</b>
+<ul class="quote"><li>在条件断点中指定断点条件是当前线程而不是主线程main。</li><li>取得当前线程名称，并判断是否为主线程。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在条件断点中指定断点条件是当前线程而不是主线程main。</li><li>取得当前线程名称，并判断是否为主线程。</li></ul>
+</div>
+<div class="sec">
+<h4>调试被中断的线程</h4>
+<ul class="point">
+<li><b>设置条件断点后，可以调试被中断的t1和t2线程</b>
+<ul class="quote"><li>再次调试这段代码，我们就可以调试被中断的t1和t2线程了。</li><li>当前正在执行的几个线程，这里显示了t1、t2和t3。由于t3线程并没有使用ArrayList，因此，它处于Running状态，并保持执行，而t1和t2两个线程都在ArrayList.add()方法中被挂起。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>再次调试这段代码，我们就可以调试被中断的t1和t2线程了。</li><li>当前正在执行的几个线程，这里显示了t1、t2和t3。由于t3线程并没有使用ArrayList，因此，它处于Running状态，并保持执行，而t1和t2两个线程都在ArrayList.add()方法中被挂起。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">67</span><span class="mmx-name">8.3 挂起整个虚拟机</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 4 条要点 · 3 句原句摘录</p>
+<div class="sec">
+<h4>挂起整个虚拟机的概念和设置</h4>
+<ul class="point">
+<li><b>挂起整个虚拟机是设置断点类型为挂起整个Java虚拟机，而不仅仅是挂起相关线程。</b>
+</li>
+<li><b>在Eclipse的全局配置中可以设置断点模式行为为挂起虚拟机</b>
+<ul class="quote"><li>在默认情况下，调试器只会挂起遇到断点的线程。</li><li>如果你希望所有断点的模式都是挂起虚拟机而不是挂起线程，则可以在Eclipse的全局配置中设置。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在默认情况下，调试器只会挂起遇到断点的线程。</li><li>如果你希望所有断点的模式都是挂起虚拟机而不是挂起线程，则可以在Eclipse的全局配置中设置。</li></ul>
+</div>
+<div class="sec">
+<h4>挂起虚拟机模式下的系统状态</h4>
+<ul class="point">
+<li><b>在挂起虚拟机模式下，程序进入断点后的状态是所有线程全部处于挂起状态</b>
+<ul class="quote"><li>不论当前线程是否接触到了断点，这种模式可以排除其他线程对被调试线程的干扰。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>不论当前线程是否接触到了断点，这种模式可以排除其他线程对被调试线程的干扰。</li></ul>
+</div>
+<div class="sec">
+<h4>挂起整个虚拟机的潜在问题</h4>
+<ul class="point">
+<li><b>使用挂起整个虚拟机模式有时候会引发调试器或者虚拟机的一些问题，导致系统不能正常工作。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">68</span><span class="mmx-name">8.4 调试进入ArrayList内部</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 5 条要点 · 4 句原句摘录</p>
+<div class="sec">
+<h4>ArrayList的工作方式和多线程问题</h4>
+<ul class="point">
+<li><b>ArrayList在初始化时，默认会分配10个数组空间，当数组空间消耗完毕后，ArrayList就会进行自动扩容</b>
+<ul class="quote"><li>在每次add()函数时，系统总要事先检查一下内部空间是否满足所需的大小，如果不满足，就会扩容，否则就正常添加元素。</li></ul>
+</li>
+<li><b>多线程共同访问ArrayList的问题在于：在ArrayList容量快用完时，如果两个线程同时进入add()函数，并同时判断认为系统满足继续添加元素而不需要扩容，那么两者都不会进行扩容操作，之后，两个线程先后向系统写入自己的数据，那么必然有一个线程会将数据写到边界外，从而产生了ArrayIndexOutOfBoundsException</b>
+<ul class="quote"><li>当容量没有饱和时，显然不会发生ArrayIndexOutOfBoundsException的问题，因此可以直接忽略这些情况。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在每次add()函数时，系统总要事先检查一下内部空间是否满足所需的大小，如果不满足，就会扩容，否则就正常添加元素。</li><li>当容量没有饱和时，显然不会发生ArrayIndexOutOfBoundsException的问题，因此可以直接忽略这些情况。</li></ul>
+</div>
+<div class="sec">
+<h4>调试ArrayList.add()函数</h4>
+<ul class="point">
+<li><b>在ArrayList.add()函数中设置断点，当进入add()函数后，如果当前ArrayList的容量为9(当前的最大容量为10)，则触发断点。</b>
+</li>
+<li><b>选中t1线程，让它进行容量检查，并让它在追加元素的语句前停止</b>
+<ul class="quote"><li>在t1增加元素之前，选中t2线程，并让t2进入add()函数完成容量检查。</li></ul>
+</li>
+<li><b>让t2进行元素追加，此时，当t2试图向ArrayList追加元素时，追加操作并没有如我们预期一样完成，因为此时size的值已经超过了elementData的边界</b>
+<ul class="quote"><li>ArrayIndexOutOfBoundsException异常位于t2线程中。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在t1增加元素之前，选中t2线程，并让t2进入add()函数完成容量检查。</li><li>ArrayIndexOutOfBoundsException异常位于t2线程中。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">69</span><span class="mmx-name">第9章 多线程优化示例—Jetty核心代码分析</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 3 条要点 · 3 句原句摘录</p>
+<div class="sec">
+<h4>Jetty核心代码分析</h4>
+<ul class="point">
+<li><b>Jetty是一个基于Java实现的、免费的HTTP服务器和Servlet容器</b>
+<ul class="quote"><li>该项目成立于1995年，到目前为止Jetty已经成为与Tomcat齐名的、使用最为广泛的Java Web容器之一。</li></ul>
+</li>
+<li><b>大量成功应用都基于Jetty开发</b>
+<ul class="quote"><li>如Apache Geromino、JBoss、IBM Tivoli、Cisco SESM等。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>该项目成立于1995年，到目前为止Jetty已经成为与Tomcat齐名的、使用最为广泛的Java Web容器之一。</li><li>如Apache Geromino、JBoss、IBM Tivoli、Cisco SESM等。</li></ul>
+</div>
+<div class="sec">
+<h4>多线程优化角度切入</h4>
+<ul class="point">
+<li><b>本章将从多线程优化角度切入，通过分析Jetty的核心代码，来一窥Jetty在高并发优化中所做的一些努力</b>
+<ul class="quote"><li>这些编程技巧和软件设计方法也可以在工作实践中复用。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>这些编程技巧和软件设计方法也可以在工作实践中复用。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">70</span><span class="mmx-name">9.1 Jetty简介与架构</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 3 条要点 · 2 句原句摘录</p>
+<div class="sec">
+<h4>Jetty简介</h4>
+<ul class="point">
+<li><b>Jetty是一个基于Handler容器的Web服务器</b>
+<ul class="quote"><li>Jetty由Server和Connector两个核心组件构成。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Jetty由Server和Connector两个核心组件构成。</li></ul>
+</div>
+<div class="sec">
+<h4>Jetty架构</h4>
+<ul class="point">
+<li><b>Server是Jetty的核心元素，负责处理客户端连接请求，并将请求分配给处理队列。</b>
+</li>
+<li><b>Connector负责接收客户端连接请求</b>
+<ul class="quote"><li>Jetty的所有组件都遵循LifeCycle接口，实现可管理生命周期，基于观察者模式。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Jetty的所有组件都遵循LifeCycle接口，实现可管理生命周期，基于观察者模式。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">71</span><span class="mmx-name">9.2 Jetty服务器初始化</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 5 个小节 · 7 条要点 · 14 句原句摘录</p>
+<div class="sec">
+<h4>Jetty服务器初始化线程池</h4>
+<ul class="point">
+<li><b>Jetty使用QueuedThreadPool作为线程池</b>
+<ul class="quote"><li>QueuedThreadPool可以设置最大和最小线程数，以及线程空闲退出时间。</li><li>QueuedThreadPool没有核心线程数的概念，只要没有空闲线程处理新任务，它就会立即开启新的线程。</li></ul>
+</li>
+<li><b>Jetty使用BlockingArrayQueue作为任务队列</b>
+<ul class="quote"><li>BlockingArrayQueue是一个基于数组的队列，可以是有界的，也可以是无界动态扩展的。</li><li>BlockingArrayQueue有3个重要的参数：初始大小、扩展增量和最大容量。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>QueuedThreadPool可以设置最大和最小线程数，以及线程空闲退出时间。</li><li>QueuedThreadPool没有核心线程数的概念，只要没有空闲线程处理新任务，它就会立即开启新的线程。</li><li>BlockingArrayQueue是一个基于数组的队列，可以是有界的，也可以是无界动态扩展的。</li><li>BlockingArrayQueue有3个重要的参数：初始大小、扩展增量和最大容量。</li></ul>
+</div>
+<div class="sec">
+<h4>Jetty初始化ScheduledExecutorScheduler</h4>
+<ul class="point">
+<li><b>ScheduledExecutorScheduler是对JDK线程池ScheduledThreadPoolExecutor的包装</b>
+<ul class="quote"><li>ScheduledThreadPoolExecutor是JDK内置的线程池，用于任务调度。</li><li>ScheduledExecutorScheduler为其在Jetty中的包装，通过定制ThreadFactory将调度者线程实例暴露给ScheduledExecutorScheduler，以完成线程dump等管理工作。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>ScheduledThreadPoolExecutor是JDK内置的线程池，用于任务调度。</li><li>ScheduledExecutorScheduler为其在Jetty中的包装，通过定制ThreadFactory将调度者线程实例暴露给ScheduledExecutorScheduler，以完成线程dump等管理工作。</li></ul>
+</div>
+<div class="sec">
+<h4>Jetty初始化ByteBufferPool</h4>
+<ul class="point">
+<li><b>ByteBufferPool就是一个ByteBuffer的对象池，其作用是复用ByteBuffer</b>
+<ul class="quote"><li>相对于每次申请ByteBuffer而言，复用ByteBuffer，尤其是复用直接内存的ByteBuffer将会从一定程度上降低GC的压力。</li><li>由于不需要每次申请空间，也可以节省对象创建的开销，特别是对于直接内存(直接内存的申请比堆内存慢)会有更好的优化效果。</li></ul>
+</li>
+<li><b>ArrayByteBufferPool是ByteBufferPool的一种重要实现</b>
+<ul class="quote"><li>ArrayByteBufferPool中的对象并不完全等价，而是按照大小分类，并根据实际的请求，找到一个最合适的ByteBuffer返回。</li><li>ByteBufferPool内部由一组Bucket组成，用于管理这些大小不一的ByteBuffer。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>相对于每次申请ByteBuffer而言，复用ByteBuffer，尤其是复用直接内存的ByteBuffer将会从一定程度上降低GC的压力。</li><li>由于不需要每次申请空间，也可以节省对象创建的开销，特别是对于直接内存(直接内存的申请比堆内存慢)会有更好的优化效果。</li><li>ArrayByteBufferPool中的对象并不完全等价，而是按照大小分类，并根据实际的请求，找到一个最合适的ByteBuffer返回。</li><li>ByteBufferPool内部由一组Bucket组成，用于管理这些大小不一的ByteBuffer。</li></ul>
+</div>
+<div class="sec">
+<h4>Jetty维护ConnectionFactory</h4>
+<ul class="point">
+<li><b>在初始化过程中，Jetty还会维护一组ConnectionFactory对象，用来创建在一个Connector上的给定Connection</b>
+<ul class="quote"><li>每当服务器接收一个连接，Jetty便会创建一个Connection对象来维护连接和相关数据。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>每当服务器接收一个连接，Jetty便会创建一个Connection对象来维护连接和相关数据。</li></ul>
+</div>
+<div class="sec">
+<h4>计算ServerConnector的线程数量</h4>
+<ul class="point">
+<li><b>在ServerConnector初始化过程中，Jetty还需要分配工作在Accept和Select上的线程数量</b>
+<ul class="quote"><li>线程数量的计算是基于系统可用的CPU数量的，因此首先需要取得系统CPU核心数。</li><li>设置并分配Accept线程，默认推荐为：Accept线程数量总是在1到4个之间。并且只有在32核以上时，才会达到4个Accept线程。</li><li>接着还会计算Selector的线程数量，默认推荐为：Selector的线程数量会由ServerConnectorManager维护，它维护了一组ManagedSelector，每个ManagedSelector表示一个Selector线程，即在此确定了ManagedSelector的数量。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>线程数量的计算是基于系统可用的CPU数量的，因此首先需要取得系统CPU核心数。</li><li>设置并分配Accept线程，默认推荐为：Accept线程数量总是在1到4个之间。并且只有在32核以上时，才会达到4个Accept线程。</li><li>接着还会计算Selector的线程数量，默认推荐为：Selector的线程数量会由ServerConnectorManager维护，它维护了一组ManagedSelector，每个ManagedSelector表示一个Selector线程，即在此确定了ManagedSelector的数量。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">72</span><span class="mmx-name">9.3 启动Jetty服务器</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 5 个小节 · 5 条要点 · 25 句原句摘录</p>
+<div class="sec">
+<h4>设置启动状态</h4>
+<ul class="point">
+<li><b>LifeCycle接口有一个抽象类实现AbstractLifeCycle，用以维护对象的基本运行状态</b>
+<ul class="quote"><li>start阶段的状态变迁和回调。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>start阶段的状态变迁和回调。</li></ul>
+</div>
+<div class="sec">
+<h4>注册ShutdownMonitor</h4>
+<ul class="point">
+<li><b>Jetty服务器会注册ShutdownMonitor服务用以接收远程关闭命令</b>
+<ul class="quote"><li>ShutdownMonitor是一个典型的单例模式，使用Java内部类实现。</li><li>在ShutdownMonitor中，将开启一个本地端口用于监听系统关闭消息。</li><li>ShutdownMonitor内部维护了一组LifeCycle对象，并使用独立的线程监听给定的本地端口，一旦收到指令，则通知这些LifeCycle对象(比如Server)退出系统。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>ShutdownMonitor是一个典型的单例模式，使用Java内部类实现。</li><li>在ShutdownMonitor中，将开启一个本地端口用于监听系统关闭消息。</li><li>ShutdownMonitor内部维护了一组LifeCycle对象，并使用独立的线程监听给定的本地端口，一旦收到指令，则通知这些LifeCycle对象(比如Server)退出系统。</li></ul>
+</div>
+<div class="sec">
+<h4>计算系统的线程数量</h4>
+<ul class="point">
+<li><b>Jetty会取得初始化过程中创建的QueuedThreadPool，同时计算所需的Acceptor线程和Selector线程的总数</b>
+<ul class="quote"><li>这里将在初始化阶段已经计算好的线程数量进行合计，得到最终所需的线程数，并使用needed变量保存。</li><li>Jetty中的Acceptor和Selector线程都是向QueuedThreadPool申请的，因此所需线程总数needed不能超过QueuedThreadPool的最大线程数，否则系统无法正常启动。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>这里将在初始化阶段已经计算好的线程数量进行合计，得到最终所需的线程数，并使用needed变量保存。</li><li>Jetty中的Acceptor和Selector线程都是向QueuedThreadPool申请的，因此所需线程总数needed不能超过QueuedThreadPool的最大线程数，否则系统无法正常启动。</li></ul>
+</div>
+<div class="sec">
+<h4>启动QueuedThreadPool</h4>
+<ul class="point">
+<li><b>Jetty将会启动QueuedThreadPool，也就是Jetty的核心业务线程池</b>
+<ul class="quote"><li>该线程池启动时，会创建_minThreads个线程(默认为8个线程)，且线程名以“qtp”为开头。</li><li>QueuedThreadPool中一共有8个线程，在QueuedThreadPool启动初期，并不会有任务提交到线程池中，因此所有的线程都处于空闲状态。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>该线程池启动时，会创建_minThreads个线程(默认为8个线程)，且线程名以“qtp”为开头。</li><li>QueuedThreadPool中一共有8个线程，在QueuedThreadPool启动初期，并不会有任务提交到线程池中，因此所有的线程都处于空闲状态。</li></ul>
+</div>
+<div class="sec">
+<h4>启动Connector</h4>
+<ul class="point">
+<li><b>Connector是Server的核心，并代表一个服务端的端口，ServerConnector是该接口的一个重要实现，也是最重要的一个Connector</b>
+<ul class="quote"><li>首先，Connector要开启所有的Selector线程。</li><li>上述代码第6行将selector任务提交到QueuedThreadPool线程池。</li><li>在Selector线程和Acceptor线程执行过程中，会修改当前线程的名字，以标识线程的作用。</li><li>这里的Selector线程数量和Acceptor线程数量应该和“9.2.5计算ServerConnector的线程数量”中的计算结果相一致。</li><li>在Jetty中，由SelectorManager管理所有的Selector线程，包括Selector线程的创建、启动和调度。</li><li>每一个Selector线程都被封装为ManagedSelector进行管理。</li><li>ManagedSelector是一个Runnable接口的实现，并最终被提交到QueuedThreadPool线程池执行。</li><li>图9.7中的两个Selector线程就是ManagedSelector的。</li><li>图9.8显示了SelectorManager的基本结构。</li><li>在Selector线程启动完成后，Jetty会尝试创建Acceptor线程。</li><li>根据系统初始化时的设置，如果Acceptor线程数量大于1，则会创建并管理相关线程，在如下代码的第5行，将Acceptor提交到QueuedThreadPool线程池。</li><li>Acceptor线程被提交启动后首先会修改线程名字以标识其作用。</li><li>接着会设置线程优先级并将当前线程向_acceptor数组注册，最终在服务器端口上等待客户端连接。</li><li>在默认情况下，channel是阻塞的，也就是在上述第6行代码系统会等待客户端连接。</li><li>但如果初始化过程中得到的Acceptor线程数量为0，则表示不适用单独的Acceptor线程，那么channel就会设置为非阻塞模式。</li><li>ServerConnector的部分启动代码。</li><li>Connector启动完成后，根据AbstractLifeCycle的统一管理，会设置Connector的内部状态为STARTED，并发送Started事件通知给相关Listener。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>首先，Connector要开启所有的Selector线程。</li><li>上述代码第6行将selector任务提交到QueuedThreadPool线程池。</li><li>在Selector线程和Acceptor线程执行过程中，会修改当前线程的名字，以标识线程的作用。</li><li>这里的Selector线程数量和Acceptor线程数量应该和“9.2.5计算ServerConnector的线程数量”中的计算结果相一致。</li><li>在Jetty中，由SelectorManager管理所有的Selector线程，包括Selector线程的创建、启动和调度。</li><li>每一个Selector线程都被封装为ManagedSelector进行管理。</li><li>ManagedSelector是一个Runnable接口的实现，并最终被提交到QueuedThreadPool线程池执行。</li><li>图9.7中的两个Selector线程就是ManagedSelector的。</li><li>图9.8显示了SelectorManager的基本结构。</li><li>在Selector线程启动完成后，Jetty会尝试创建Acceptor线程。</li><li>根据系统初始化时的设置，如果Acceptor线程数量大于1，则会创建并管理相关线程，在如下代码的第5行，将Acceptor提交到QueuedThreadPool线程池。</li><li>Acceptor线程被提交启动后首先会修改线程名字以标识其作用。</li><li>接着会设置线程优先级并将当前线程向_acceptor数组注册，最终在服务器端口上等待客户端连接。</li><li>在默认情况下，channel是阻塞的，也就是在上述第6行代码系统会等待客户端连接。</li><li>但如果初始化过程中得到的Acceptor线程数量为0，则表示不适用单独的Acceptor线程，那么channel就会设置为非阻塞模式。</li><li>ServerConnector的部分启动代码。</li><li>Connector启动完成后，根据AbstractLifeCycle的统一管理，会设置Connector的内部状态为STARTED，并发送Started事件通知给相关Listener。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">73</span><span class="mmx-name">9.4 处理HTTP请求</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 4 条要点 · 8 句原句摘录</p>
+<div class="sec">
+<h4>Acceptor线程接受用户请求并选择合适的Selector线程进行处理</h4>
+<ul class="point">
+<li><b>Acceptor线程将对应的channel设置为非阻塞模式，并配置socket相关的属性</b>
+<ul class="quote"><li>配置socket相关的属性(如TCP_NODELAY和SO_LINGER)。</li></ul>
+</li>
+<li><b>SelectorManager会选择合适的ManagedSelector进行处理，尽量高效地将请求均匀地分到所有的ManagedSelector中</b>
+<ul class="quote"><li>_selectorIndex不是一个线程安全的原子操作，之所以不坚持使用一个安全的变量，是因为这里只需要_selectorIndex发生变化即可，并不要求计算的精确性。</li><li>在多线程程序设计中，这是一个非常重要的思想。我们必须深刻理解到：线程安全永远是相对于应用的，如果应用本身并不要求精确的线程安全，那么力求绝对的线程安全就是一种资源浪费。</li><li>由于这里并不需要精确地将任务派发给Selector线程，事实上从概率上来说，最终所有的任务会非常均匀的分配给各个Selector线程，因此这里只是选择了一种最高效的做法。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>配置socket相关的属性(如TCP_NODELAY和SO_LINGER)。</li><li>_selectorIndex不是一个线程安全的原子操作，之所以不坚持使用一个安全的变量，是因为这里只需要_selectorIndex发生变化即可，并不要求计算的精确性。</li><li>在多线程程序设计中，这是一个非常重要的思想。我们必须深刻理解到：线程安全永远是相对于应用的，如果应用本身并不要求精确的线程安全，那么力求绝对的线程安全就是一种资源浪费。</li><li>由于这里并不需要精确地将任务派发给Selector线程，事实上从概率上来说，最终所有的任务会非常均匀的分配给各个Selector线程，因此这里只是选择了一种最高效的做法。</li></ul>
+</div>
+<div class="sec">
+<h4>ManageredSelector处理请求</h4>
+<ul class="point">
+<li><b>ManageredSelector使用一个特殊的ConcurrentArrayQueue队列来保存这些任务</b>
+<ul class="quote"><li>ConcurrentArrayQueue并非JDK自带的高并发集合，而是由Jetty独立实现的。</li><li>ConcurrentArrayQueue与ConcurrentLinkedQueue非常类似，也是一个无界队列，并且也是对高并发相当友好的一种实现。</li><li>ConcurrentArrayQueue内部使用若干个Block存储数据，一个Block为一个数组，两个Block之间以链表的方式连接。当已有Block都满载时，ConcurrentArrayQueue会新建Block存储数据以达到动态扩展的目的。</li><li>此外，ConcurrentArrayQueue的实现还有两个特点，第一，它充分考虑了伪共享的问题，对于常用的头部索引和尾部索引都使用一定量的填充，以确保这两个变量处于单独的缓存行中；第二，ConcurrentArrayQueue大量使用CAS操作，完全在应用层处理线程冲突，是一种典型的无锁实现，因此对高并发特别友好。</li></ul>
+</li>
+<li><b>当ManagedSelector从_changes中得到请求时，它并不会在ManageredSelector线程中具体处理该请求，而是将这个任务再次提交到QueuedThreadPool，由其他空闲线程处理，从而避免Selector线程产生阻塞。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>ConcurrentArrayQueue并非JDK自带的高并发集合，而是由Jetty独立实现的。</li><li>ConcurrentArrayQueue与ConcurrentLinkedQueue非常类似，也是一个无界队列，并且也是对高并发相当友好的一种实现。</li><li>ConcurrentArrayQueue内部使用若干个Block存储数据，一个Block为一个数组，两个Block之间以链表的方式连接。当已有Block都满载时，ConcurrentArrayQueue会新建Block存储数据以达到动态扩展的目的。</li><li>此外，ConcurrentArrayQueue的实现还有两个特点，第一，它充分考虑了伪共享的问题，对于常用的头部索引和尾部索引都使用一定量的填充，以确保这两个变量处于单独的缓存行中；第二，ConcurrentArrayQueue大量使用CAS操作，完全在应用层处理线程冲突，是一种典型的无锁实现，因此对高并发特别友好。</li></ul>
+</div>
+</div></details>
+  </div>
+</section>
 <section class="mmx-mod" aria-labelledby="views" data-key="views"><h2 id="views">核心观点初判</h2><p class="mmx-mod-note">按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。</p><ul class="mmx-views"><li><b>第 1–7 章</b>——含「内容简介」至「1.4 有关并行的两个重」</li><li><b>第 8–14 章</b>——含「1.5 回到Java：J」至「2.5 驻守后台：守护线」</li><li><b>第 15–21 章</b>——含「2.6 先做重要的事：线」至「3.3 不要重复发明轮子」</li><li><b>第 22–28 章</b>——含「3.4 使用JMH进行性」至「4.5 有关死锁的问题」</li><li><b>第 29–35 章</b>——含「第5章 并行模式与算法」至「5.6 并行流水线」</li><li><b>第 36–42 章</b>——含「5.7 并行搜索」至「6.1 Java 8的函」</li><li><b>第 43–49 章</b>——含「6.2 函数式编程基础」至「6.8 Concurre」</li><li><b>第 50–56 章</b>——含「6.9 发布和订阅模式」至「7.5 监督策略」</li><li><b>第 57–63 章</b>——含「7.6 选择Actor」至「7.12 像数据库一样操」</li><li><b>第 64–70 章</b>——含「7.13 一个有趣的例子」至「第9章 多线程优化示例—」</li><li><b>第 71–74 章</b>——含「9.1 Jetty简介与」至「9.4 处理HTTP请求」</li></ul></section>
 <section class="mmx-mod" aria-labelledby="top10" data-key="top10"><h2 id="top10">原文金句 · 持续积累</h2><p class="mmx-mod-note">以下原句取自本书 AI 大纲落库的原文摘录（book_outline.quote），按大纲顺序节选，非 AI 生成；更多见逐章深读页。</p><ol class="mmx-qlist"><li><blockquote>「注意：改进的方法很简单，使用线程安全的Vector代替ArrayList即可。」</blockquote><cite>本书正文</cite></li><li><blockquote>「如果线程的智力不够，且都秉承着“谦让”的原则，主动将资源释放给他人使用，那么就会导致资源不断地在两个线程间跳动，而没有一个线程可以同时拿到所有资源正常执行。这种情况就是活锁。」</blockquote><cite>本书正文</cite></li><li><blockquote>「volatile关键字并不能真正保证线程安全。它只能确保一个线程修改了数据后，其他线程能够看到这个改动。但当两个线程同时修改某一个数据时，依然会产生冲突。」</blockquote><cite>本书正文</cite></li><li><blockquote>「对于无障碍的线程来说，一旦检测到这种情况，它就会立即对自己所做的修改进行回滚，确保数据安全。但如果没有数据竞争发生，那么线程就可以顺利完成自己的工作，走出临界区。」</blockquote><cite>本书正文</cite></li><li><blockquote>「但如果锁是公平的，按照先来后到的规则，那么饥饿就不会产生，不管新来的线程优先级多高，要想获得资源，就必须乖乖排队，这样所有的线程都有机会执行」</blockquote><cite>本书正文</cite></li><li><blockquote>「使用自定义线程池时，要根据应用的具体情况，选择合适的并发队列作为任务的缓冲。当线程资源紧张时，不同的并发队列对系统行为和性能的影响均不同。」</blockquote><cite>本书正文</cite></li><li><blockquote>「线程A的指令执行顺序在线程B看来是没有保证的。如果运气好的话，线程B也许真的可以看到和线程A一样的执行顺序。」</blockquote><cite>本书正文</cite></li><li><blockquote>「Thread.sleep()方法由于中断而抛出异常，此时，它会清除中断标记，如果不加处理，那么在下一次循环开始时，就无法捕获这个中断，故在异常处理中，再次设置中断标记位」</blockquote><cite>本书正文</cite></li><li><blockquote>「因为这是一种非常丑陋、复杂的方法，甚至在低版本的JDK中都不能保证正确性。因此，绝不推荐大家使用。」</blockquote><cite>本书正文</cite></li><li><blockquote>「直接作用于静态方法：相当于对当前类加锁，进入同步代码前要获得当前类的锁。」</blockquote><cite>本书正文</cite></li></ol></section>
 <section class="mmx-mod" aria-labelledby="coreask" data-key="coreask"><h2 id="coreask">核心追问（来自深读）</h2><div class="mmx-qa"><p class="mmx-q">这本书把“并发”与“并行”区分开，对实际开发有什么意义？</p><p class="mmx-a">书中划线明确：“并发偏重多个任务交替执行，而并行是真正意义上的同时执行”，并指出“并发级别”包含无障碍、公平锁等层次。这种区分的意义在于——程序员常把“加了多线程”误当作“性能提升”，但并发设计的关键不在线程多，而在正确划分竞争与协作的边界。理解并发级别（如公平锁可消除饥饿）能帮助选择合适的同步策略，避免活锁、饥饿这类隐蔽错误。</p></div><div class="mmx-qa"><p class="mmx-q">为什么作者反复强调 volatile 不能保证线程安全？</p><p class="mmx-a">热门划线点出：“volatile并不能真正保证线程安全，它只确保一个线程修改后其他线程能看到改动；当两个线程同时修改同一数据时仍会冲突。”这是并发编程最常见的误解来源。作者借此传递核心认知：可见性（visibility）与原子性（atomicity）是两回事，volatile解决前者不解决后者，真正需要复合操作（如i++）时必须用锁或原子类。这一提醒直接对应新手最容易踩的坑。</p></div><div class="mmx-qa"><p class="mmx-q">书中“活锁”的例子揭示了什么设计教训？</p><p class="mmx-a">划线描述：若线程“都秉承谦让原则，主动释放资源给他人，就会导致资源在两个线程间跳动，谁都拿不到全部资源正常执行”，这就是活锁。它揭示的设计教训是——过度“礼貌”的调度反而会让系统空转。真正健壮的并发要靠明确的锁顺序、超时与回退策略，而不是寄望于每个参与者都自觉退让。这是从“道德直觉”到“工程机制”的关键转折。</p></div></section>

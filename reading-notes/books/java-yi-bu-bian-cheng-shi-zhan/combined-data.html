@@ -64,8 +64,9 @@
 <path class="ln" d="M692 495 L700 495"/>
 </svg></section>
 <section class="mmx-mod" aria-labelledby="oneline" data-key="oneline"><h2 id="oneline">一句话主旨</h2><p class="mmx-mod-note">本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。</p><p class="mmx-oneline">本书涵盖了Java中常见的异步编程场景，包括单JVM内的异步编程、跨主机通过网络通信的远程过程调用的异步调用与异步处理，以及Web请求的异步</p></section>
-<section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" data-key="merged_guide"><h2 id="merged-guide-title">AI领读</h2><style>
-/* merged_guide 章内：mmx 组件样式（与完整版一致） */
+<section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" data-key="merged_guide"><h2 id="merged-guide-title">AI领读</h2>
+<style>
+/* merged_guide 章内：AI 大纲原生深层样式 */
 .merged-guide .sec{margin:10px 0 14px;padding-left:6px;border-left:2px solid #e5e0d6}
 .merged-guide .sec h4{font:600 .98rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.6em 0 .3em}
 .merged-guide ul.point{margin:.3em 0;padding-left:20px}
@@ -73,10 +74,2250 @@
 .merged-guide ul.quote{margin:.25em 0 .25em 20px;padding-left:18px;list-style:none}
 .merged-guide ul.quote::before{content:"原句";display:block;font-size:.72rem;color:#bf8247;
   letter-spacing:.1em;margin:.15em 0 .1em;font-weight:600}
+/* 小节层级追加的汇总原句节点，标签与要点下的原句区分开 */
 .merged-guide ul.quote.quote-node{margin-top:.5em;padding-top:.4em;border-top:1px dashed #eadfc9}
-.merged-guide ul.quote.quote-node::before{content:"热门划线 · 本章原文摘录"}
+.merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
 .merged-guide ul.quote>li{color:#4a4436;font-size:.93rem;margin:.2em 0;padding-left:10px;border-left:2px solid #bf8247}
-</style><p class="small">章节目录取自微信读书官方目录；展开各章即该章与各小节的热门划线原文（按划线人数排序），原句均为读者划线，非 AI 生成。</p><div class="toc-part"><span class="part-label">全书篇目（共 10 章 · 14 句热门划线）</span><details class="mmx-cn"><summary><span class="mmx-no">1</span><span class="mmx-name">前言</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">暂无热门划线</p></div></details><details class="mmx-cn"><summary><span class="mmx-no">2</span><span class="mmx-name">第1章 认识异步编程</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">2 个小节 · 5 句热门划线</p><div class="sec"><h4>1.1 异步编程概念与作用</h4><ul class="quote"><li>比如发起网络IO请求时，调用线程就会处于同步阻塞等待响应结果的状态，而这时候调用线程明明可以去做其他事情，等网络IO响应结果返回后再对结果进行处理</li></ul></div><div class="sec"><h4>1.2 异步编程场景</h4><ul class="quote"><li>需要异步地处理一些事情，而不需要知道异步任务的结果。</li><li>在Servlet3.0规范前，Servlet容器对Servlet的处理都是每个请求对应一个线程这种1 : 1的模式进行处理的</li><li>使用Future确实可以获取异步任务的执行结果，但是获取其结果还是会阻塞调用线程的，并没有实现完全异步化处理，</li><li>每当我们需要执行异步任务时，可以直接开启一个线程来实现，也可以把异步任务封装为任务对象投递到线程池中来执行</li></ul></div></div></details><details class="mmx-cn"><summary><span class="mmx-no">3</span><span class="mmx-name">第2章 显式使用线程和线程池实现异步编程</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">3 个小节 · 3 句热门划线</p><div class="sec"><h4>2.1 显式使用线程实现异步编程</h4><ul class="quote"><li>Java中有两种方式来显式开启一个线程进行异步处理</li></ul></div><div class="sec"><h4>2.2 显式使用线程池实现异步编程</h4><ul class="quote"><li>如何显式使用线程池实现异步编程</li></ul></div><div class="sec"><h4>2.3 总结</h4><ul class="quote"><li>虽然线程池方式提供了线程复用可以获取任务返回值，但是获取返回值时还是需要阻塞调用线程的</li></ul></div></div></details><details class="mmx-cn"><summary><span class="mmx-no">4</span><span class="mmx-name">第3章 基于JDK中的Future实现异步编程</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">1 个小节 · 1 句热门划线</p><div class="sec"><h4>3.3 JDK中的CompletableFuture</h4><ul class="quote"><li>不同点是它使用了工作窃取算法来提高性能，其内部每个工作线程都关联自己的内存队列，正常情况下每个线程从自己队列里面获取任务并执行，当本身队列没有任务时，当前线程会去其他线程关联的队列里面获取任务来执行。</li></ul></div></div></details><details class="mmx-cn"><summary><span class="mmx-no">5</span><span class="mmx-name">第4章 Spring框架中的异步执行</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">暂无热门划线</p></div></details><details class="mmx-cn"><summary><span class="mmx-no">6</span><span class="mmx-name">第5章 基于反应式编程实现异步编程</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">1 个小节 · 1 句热门划线</p><div class="sec"><h4>5.3 基于RxJava实现异步编程</h4><ul class="quote"><li>可知上述操作与jdk8 stream相比更加简洁</li></ul></div></div></details><details class="mmx-cn"><summary><span class="mmx-no">7</span><span class="mmx-name">第6章 Web Ser vlet的异步非阻塞处理</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">暂无热门划线</p></div></details><details class="mmx-cn"><summary><span class="mmx-no">8</span><span class="mmx-name">第7章 Spring WebFlux的异步非阻塞处理</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">1 个小节 · 1 句热门划线</p><div class="sec"><h4>7.2 Reactive编程 &amp; Reactor库</h4><ul class="quote"><li>Reactive Streams的主要目的是让订阅者控制发布者生成数据的速度。</li></ul></div></div></details><details class="mmx-cn"><summary><span class="mmx-no">9</span><span class="mmx-name">第8章 高性能异步编程框架和中间件</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">2 个小节 · 3 句热门划线</p><div class="sec"><h4>8.3 高性能线程间消息传递库—Disruptor</h4><ul class="quote"><li>当多个线程同时修改一个Cache行里的多个变量时，由于同时只能有一个线程操作缓存行，因而相比每个变量放到一个Cache行性能会有所下降，这就是伪共享。</li><li>实现中只有一种情况需要实际锁定—当使用BlockingWaitStrategy策略时，这仅仅是为了使用条件变量</li></ul></div><div class="sec"><h4>8.4 异步、分布式、基于消息驱动的框架—Akka</h4><ul class="quote"><li>封装本身不确保对象内部数据的一致性，在没有对对象的方法在修改数据施加一定同步措施时，对象内的数据就会在多线程访问下变得不确定了。</li></ul></div></div></details><details class="mmx-cn"><summary><span class="mmx-no">10</span><span class="mmx-name">第9章 Go语言的异步编程能力</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">暂无热门划线</p></div></details></div></section>
+</style>
+<p class="small">章节目录与 AI 大纲融合为一棵树：篇章分组即目录，展开各章即骨架与逐节 AI 大纲（要点 · 原句摘录）。</p>
+  <div class="toc-part"><span class="part-label">全书篇目（AI 大纲顺序）</span>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">1</span><span class="mmx-name">1.1 异步编程概念与作用</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 3 条要点 · 9 句原句摘录</p>
+<div class="sec">
+<h4>同步编程的问题</h4>
+<ul class="point">
+<li><b>同步编程方式下，每个线程同时只能发起一个请求并同步等待返回，导致系统性能瓶颈</b>
+<ul class="quote"><li>为了提高系统性能，需要引入更多的线程来实现并行化处理。</li><li>多线程下对共享资源进行访问时，不可避免会引入资源争用和并发问题。</li><li>操作系统层面对线程的个数是有限制的，不可能通过无限增加线程数来提供系统性能。</li><li>使用同步阻塞的编程方式还会浪费资源，比如发起网络IO请求时，调用线程就会处于同步阻塞等待响应结果的状态。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>为了提高系统性能，需要引入更多的线程来实现并行化处理。</li><li>多线程下对共享资源进行访问时，不可避免会引入资源争用和并发问题。</li><li>操作系统层面对线程的个数是有限制的，不可能通过无限增加线程数来提供系统性能。</li><li>使用同步阻塞的编程方式还会浪费资源，比如发起网络IO请求时，调用线程就会处于同步阻塞等待响应结果的状态。</li></ul>
+</div>
+<div class="sec">
+<h4>异步编程的概念与作用</h4>
+<ul class="point">
+<li><b>异步编程是可以让程序并行运行的一种手段，其可以让程序中的一个工作单元与主应用程序线程分开独立运行</b>
+<ul class="quote"><li>在工作单元运行结束后，会通知主应用程序线程它的运行结果或者失败原因。</li></ul>
+</li>
+<li><b>使用异步编程可以提高应用程序的性能和响应能力等</b>
+<ul class="quote"><li>当调用线程使用异步方式发起网络IO请求后，调用线程就不会同步阻塞等待响应结果，而是在内存保存请求上下文后，马上返回去做其他事情。</li><li>等网络IO响应结果返回后再使用IO线程通知业务线程响应结果已经返回，由业务线程对结果进行处理。</li><li>异步调用方式提高了线程的利用率，让系统有更多的线程资源来处理更多的请求。</li><li>在移动应用程序中，使用异步编程时，当发起请求后，调用线程会马上返回，具体返回结果会通过UI线程异步进行渲染，且在这期间用户可以使用移动设备的其他功能。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在工作单元运行结束后，会通知主应用程序线程它的运行结果或者失败原因。</li><li>当调用线程使用异步方式发起网络IO请求后，调用线程就不会同步阻塞等待响应结果，而是在内存保存请求上下文后，马上返回去做其他事情。</li><li>等网络IO响应结果返回后再使用IO线程通知业务线程响应结果已经返回，由业务线程对结果进行处理。</li><li>异步调用方式提高了线程的利用率，让系统有更多的线程资源来处理更多的请求。</li><li>在移动应用程序中，使用异步编程时，当发起请求后，调用线程会马上返回，具体返回结果会通过UI线程异步进行渲染，且在这期间用户可以使用移动设备的其他功能。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">2</span><span class="mmx-name">1.2 异步编程场景</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 6 个小节 · 11 条要点 · 13 句原句摘录</p>
+<div class="sec">
+<h4>异步编程场景概述</h4>
+<ul class="point">
+<li><b>异步编程用于处理一些事情，而不需要知道异步任务的结果</b>
+<ul class="quote"><li>比如在调用线程里面异步打日志，为了不让日志打印阻塞调用线程，会把日志设置为异步方式。</li></ul>
+</li>
+<li><b>Future可以用于等待异步任务的执行结果</b>
+<ul class="quote"><li>比如调用线程要等任务A执行完毕后再顺序执行任务B，并且把两者的执行结果拼接起来供前端展示使用。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>比如在调用线程里面异步打日志，为了不让日志打印阻塞调用线程，会把日志设置为异步方式。</li><li>比如调用线程要等任务A执行完毕后再顺序执行任务B，并且把两者的执行结果拼接起来供前端展示使用。</li></ul>
+</div>
+<div class="sec">
+<h4>Future和CompletableFuture</h4>
+<ul class="point">
+<li><b>Future可以获取异步任务的执行结果，但是获取其结果还是会阻塞调用线程的</b>
+<ul class="quote"><li>在JDK8中提供了CompletableFuture来弥补其缺点。</li></ul>
+</li>
+<li><b>CompletableFuture类允许以非阻塞方式和基于通知的方式处理结果</b>
+<ul class="quote"><li>其通过设置回调函数方式，让主线程彻底解放出来，实现了实际意义上的异步处理。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在JDK8中提供了CompletableFuture来弥补其缺点。</li><li>其通过设置回调函数方式，让主线程彻底解放出来，实现了实际意义上的异步处理。</li></ul>
+</div>
+<div class="sec">
+<h4>Reactor、RxJava等Reactive API</h4>
+<ul class="point">
+<li><b>Reactor、RxJava等反应式API也提供Java 8 Stream的运算符，但它们更适用于流序列(不仅仅是集合)</b>
+<ul class="quote"><li>并允许定义一个转换操作的管道，该管道将应用于通过它的数据。</li><li>Reactive旨在处理同步或异步操作，并允许你对元素进行缓冲(buffer)、合并(merge)、连接(join)等各种转换。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>并允许定义一个转换操作的管道，该管道将应用于通过它的数据。</li><li>Reactive旨在处理同步或异步操作，并允许你对元素进行缓冲(buffer)、合并(merge)、连接(join)等各种转换。</li></ul>
+</div>
+<div class="sec">
+<h4>网络请求的异步调用</h4>
+<ul class="point">
+<li><b>NIO的出现让实现网络请求的异步调用变得简单</b>
+<ul class="quote"><li>高性能异步、基于事件驱动的网络编程框架Netty的出现让我们从编写繁杂的Java NIO程序中解放出来。</li></ul>
+</li>
+<li><b>使用异步编程可以提高系统的性能</b>
+<ul class="quote"><li>在异步调用情况下，线程A可以并发地调用服务B和服务C，而不再是顺序的。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>高性能异步、基于事件驱动的网络编程框架Netty的出现让我们从编写繁杂的Java NIO程序中解放出来。</li><li>在异步调用情况下，线程A可以并发地调用服务B和服务C，而不再是顺序的。</li></ul>
+</div>
+<div class="sec">
+<h4>Web请求的异步处理</h4>
+<ul class="point">
+<li><b>Servlet 3.0规范中提供了异步处理的能力</b>
+<ul class="quote"><li>让Servlet容器中的线程可以及时释放，具体Servlet业务处理逻辑是在业务自己的线程池内来处理。</li></ul>
+</li>
+<li><b>Servlet 3.1规范提供了非阻塞IO来解决这个问题</b>
+<ul class="quote"><li>虽然Servlet技术栈的不断发展实现了异步处理与非阻塞IO，但是其异步是不彻底的。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>让Servlet容器中的线程可以及时释放，具体Servlet业务处理逻辑是在业务自己的线程池内来处理。</li><li>虽然Servlet技术栈的不断发展实现了异步处理与非阻塞IO，但是其异步是不彻底的。</li></ul>
+</div>
+<div class="sec">
+<h4>异步编程框架和语言支持</h4>
+<ul class="point">
+<li><b>Disruptor、Akka、Apache RocketMetaQ等框架提供了高性能的异步处理能力</b>
+<ul class="quote"><li>Disruptor通过为事件(event)预先分配内存、无锁CAS算法、缓冲行填充、两阶段协议提交来实现多线程并发地处理不同的元素。</li><li>Akka基于Actor模式实现了天然支持分布式的使用消息进行异步处理的服务。</li><li>Apache RocketMetaQ实现了应用间的异步解耦、流量削峰。</li></ul>
+</li>
+<li><b>Go语言通过语言层面内置的goroutine与channel可以轻松实现复杂的异步处理能力。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Disruptor通过为事件(event)预先分配内存、无锁CAS算法、缓冲行填充、两阶段协议提交来实现多线程并发地处理不同的元素。</li><li>Akka基于Actor模式实现了天然支持分布式的使用消息进行异步处理的服务。</li><li>Apache RocketMetaQ实现了应用间的异步解耦、流量削峰。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">3</span><span class="mmx-name">1.3 总结</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 2 条要点 · 5 句原句摘录</p>
+<div class="sec">
+<h4>异步编程的概念与作用</h4>
+<ul class="point">
+<li><b>异步编程是一种编程模式，允许程序在等待某个长时间运行的任务(如网络请求)完成时，不阻塞线程并继续执行其他任务。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>Java中异步编程的场景</h4>
+<ul class="point">
+<li><b>在Java中，异步编程主要应用于以下场景：</b>
+<ul class="quote"><li>响应式编程：通过使用`rxjava`等库，可以方便地实现响应式编程，处理异步操作的结果。</li><li>异步HTTP请求：使用`CompletableFuture`或`java.util.concurrent.Future`等类，可以方便地实现异步HTTP请求。</li><li>异步数据库操作：使用`java.util.concurrent.Future`等类，可以方便地实现异步数据库操作。</li><li>异步消息队列：使用`RabbitMQ`、`Kafka`等消息队列中间件，可以方便地实现异步消息处理。</li><li>异步文件操作：使用`java.nio`等包，可以方便地实现异步文件操作。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>响应式编程：通过使用`rxjava`等库，可以方便地实现响应式编程，处理异步操作的结果。</li><li>异步HTTP请求：使用`CompletableFuture`或`java.util.concurrent.Future`等类，可以方便地实现异步HTTP请求。</li><li>异步数据库操作：使用`java.util.concurrent.Future`等类，可以方便地实现异步数据库操作。</li><li>异步消息队列：使用`RabbitMQ`、`Kafka`等消息队列中间件，可以方便地实现异步消息处理。</li><li>异步文件操作：使用`java.nio`等包，可以方便地实现异步文件操作。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">4</span><span class="mmx-name">第2章 显式使用线程和线程池实现异步编程</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 6 条要点 · 12 句原句摘录</p>
+<div class="sec">
+<h4>显式使用线程实现异步编程</h4>
+<ul class="point">
+<li><b>线程实现异步编程的基本原理</b>
+<ul class="quote"><li>线程创建后，会进入就绪状态，等待CPU调度执行。</li><li>当线程所执行的任务完成时，线程进入阻塞状态，等待新的任务。</li></ul>
+</li>
+<li><b>线程实现异步编程的缺点</b>
+<ul class="quote"><li>线程创建和切换开销大。</li><li>线程可能会阻塞，等待IO操作完成。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>线程创建后，会进入就绪状态，等待CPU调度执行。</li><li>当线程所执行的任务完成时，线程进入阻塞状态，等待新的任务。</li><li>线程创建和切换开销大。</li><li>线程可能会阻塞，等待IO操作完成。</li></ul>
+</div>
+<div class="sec">
+<h4>显式使用线程池实现异步编程</h4>
+<ul class="point">
+<li><b>线程池实现异步编程的基本原理</b>
+<ul class="quote"><li>线程池创建后，会创建多个工作线程，等待任务队列中的任务。</li><li>当任务队列中有任务时，线程池会分配一个工作线程来执行任务，执行完任务后，线程会返回线程池，等待新的任务。</li></ul>
+</li>
+<li><b>线程池实现异步编程的优点</b>
+<ul class="quote"><li>减少线程创建和切换的开销。</li><li>避免线程阻塞，提高系统吞吐量。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>线程池创建后，会创建多个工作线程，等待任务队列中的任务。</li><li>当任务队列中有任务时，线程池会分配一个工作线程来执行任务，执行完任务后，线程会返回线程池，等待新的任务。</li><li>减少线程创建和切换的开销。</li><li>避免线程阻塞，提高系统吞吐量。</li></ul>
+</div>
+<div class="sec">
+<h4>线程池实现原理</h4>
+<ul class="point">
+<li><b>线程池的核心组件</b>
+<ul class="quote"><li>工作线程：线程池创建后，会创建多个工作线程，等待任务队列中的任务。</li><li>任务队列：用于存储待处理的任务。</li></ul>
+</li>
+<li><b>线程池的创建和关闭</b>
+<ul class="quote"><li>创建线程池：通过ThreadPoolExecutor类的构造方法创建线程池。</li><li>关闭线程池：通过shutdown()方法关闭线程池。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>工作线程：线程池创建后，会创建多个工作线程，等待任务队列中的任务。</li><li>任务队列：用于存储待处理的任务。</li><li>创建线程池：通过ThreadPoolExecutor类的构造方法创建线程池。</li><li>关闭线程池：通过shutdown()方法关闭线程池。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">5</span><span class="mmx-name">2.1 显式使用线程实现异步编程</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 5 个小节 · 7 条要点 · 7 句原句摘录</p>
+<div class="sec">
+<h4>同步编程模型下的任务执行</h4>
+<ul class="point">
+<li><b>同步编程模型下，一个线程中要做两件事情，按顺序执行</b>
+<ul class="quote"><li>main线程内首先执行了doSomethingA方法，然后执行了doSomethingB方法。</li></ul>
+</li>
+<li><b>两个方法是顺序执行的，导致整个过程耗时4s左右。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>main线程内首先执行了doSomethingA方法，然后执行了doSomethingB方法。</li></ul>
+</div>
+<div class="sec">
+<h4>显式使用Thread实现异步编程的两种方式</h4>
+<ul class="point">
+<li><b>第一种方式是使用lambda表达式创建一个java.lang.Runnable接口的匿名实现类，然后将其作为Thread的参数并启动</b>
+<ul class="quote"><li>在main函数所在线程内首先使用lambda表达式创建了一个java.lang.Runnable接口的匿名实现类，用来异步执行doSomethingA任务，然后将其作为Thread的参数并启动。</li><li>这时候线程A与main线程并发运行，任务doSomethingA与任务doSomethingB并发运行。</li></ul>
+</li>
+<li><b>第二种方式是创建Thread的匿名类的实现，并重写了run方法，然后启动了线程执行。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在main函数所在线程内首先使用lambda表达式创建了一个java.lang.Runnable接口的匿名实现类，用来异步执行doSomethingA任务，然后将其作为Thread的参数并启动。</li><li>这时候线程A与main线程并发运行，任务doSomethingA与任务doSomethingB并发运行。</li></ul>
+</div>
+<div class="sec">
+<h4>线程池的使用</h4>
+<ul class="point">
+<li><b>线程池可以大大减少线程创建与销毁开销，并且可以有效限制创建的线程个数</b>
+<ul class="quote"><li>每当执行异步任务时，会直接创建一个Thread来执行异步任务，这在生产实践中是不建议使用的，因为线程创建与销毁是有开销的，并且没有限制线程的个数，如果使用不当可能会把系统线程用尽，从而造成错误。</li><li>在生产环境中一般创建一个线程池，然后使用线程池中的线程来执行异步任务，线程池中的线程是可以被复用的，这可以大大减少线程创建与销毁开销；另外线程池可以有效限制创建的线程个数。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>每当执行异步任务时，会直接创建一个Thread来执行异步任务，这在生产实践中是不建议使用的，因为线程创建与销毁是有开销的，并且没有限制线程的个数，如果使用不当可能会把系统线程用尽，从而造成错误。</li><li>在生产环境中一般创建一个线程池，然后使用线程池中的线程来执行异步任务，线程池中的线程是可以被复用的，这可以大大减少线程创建与销毁开销；另外线程池可以有效限制创建的线程个数。</li></ul>
+</div>
+<div class="sec">
+<h4>Future的使用</h4>
+<ul class="point">
+<li><b>Future可以让我们在任务执行完毕后获取任务执行结果</b>
+<ul class="quote"><li>上面使用Thread执行的异步任务并没有返回值，如果我们想异步执行一个任务，并且需要在任务执行完毕后获取任务执行结果，则上面这个方式是满足不了的，这时候就需要用到JDK中的Future了。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>上面使用Thread执行的异步任务并没有返回值，如果我们想异步执行一个任务，并且需要在任务执行完毕后获取任务执行结果，则上面这个方式是满足不了的，这时候就需要用到JDK中的Future了。</li></ul>
+</div>
+<div class="sec">
+<h4>声明式的异步编程方式</h4>
+<ul class="point">
+<li><b>Java中提供了很多封装良好的类库来解决声明式的异步编程方式</b>
+<ul class="quote"><li>针对第3个问题，Java中提供了很多封装良好的类库来解决，在下面章节我们会一一详细介绍。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>针对第3个问题，Java中提供了很多封装良好的类库来解决，在下面章节我们会一一详细介绍。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">6</span><span class="mmx-name">2.2 显式使用线程池实现异步编程</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 7 条要点 · 18 句原句摘录</p>
+<div class="sec">
+<h4>显式使用线程池实现异步编程</h4>
+<ul class="point">
+<li><b>使用线程池执行异步任务，可以避免线程的频繁创建与销毁，对线程个数也起到了限制作用</b>
+<ul class="quote"><li>创建线程池，设置线程池核心线程个数为当前物理机的CPU核数，最大线程个数为当前物理机CPU核数的2倍。</li><li>把异步任务提交到了线程池内运行，而不是直接开启一个新线程来运行。</li></ul>
+</li>
+<li><b>可以向线程池投递一个Callable类型的异步任务，并且获取其执行结果</b>
+<ul class="quote"><li>doSomethingA方法具有String类型的返回值，使用lambda表达式将Callable类型的任务提交到线程池，提交后会马上返回一个Future对象。</li><li>在futureA上调用get()方法阻塞等待异步任务的执行结果。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>创建线程池，设置线程池核心线程个数为当前物理机的CPU核数，最大线程个数为当前物理机CPU核数的2倍。</li><li>把异步任务提交到了线程池内运行，而不是直接开启一个新线程来运行。</li><li>doSomethingA方法具有String类型的返回值，使用lambda表达式将Callable类型的任务提交到线程池，提交后会马上返回一个Future对象。</li><li>在futureA上调用get()方法阻塞等待异步任务的执行结果。</li></ul>
+</div>
+<div class="sec">
+<h4>线程池ThreadPoolExecutor原理剖析</h4>
+<ul class="point">
+<li><b>线程池作为异步执行的利器，我们有必要讲解下其内部实现，以便让大家对异步编程有更深入的理解</b>
+<ul class="quote"><li>线程池的主要状态列举如下：RUNNING、SHUTDOWN、STOP、TIDYING、TERMINATED。</li><li>线程池状态之间转换路径：RUNNING→SHUTDOWN、RUNNING或者SHUTDOWN→STOP、SHUTDOWN→TIDYING、STOP→TIDYING、TIDYING→TERMINATED。</li></ul>
+</li>
+<li><b>提交任务到线程池原理解析</b>
+<ul class="quote"><li>public void execute(Runnable command)提交任务到线程池的逻辑：如果任务为null，则抛出NPE异常；获取当前线程池的状态+线程个数变量的组合值；当前线程池线程个数是否小于corePoolSize，小于则开启新线程运行；如果线程池处于RUNNING状态，则添加任务到阻塞队列；如果队列满了，则新增线程，新增失败则执行拒绝策略。</li><li>public Future&lt;? &gt; submit(Runnable task)方法提交任务的逻辑：NPE判断；包装任务为FutureTask；投递到线程池执行；返回ftask。</li><li>public Future submit(Runnable task, T result)方法的逻辑，其代码如下：两个参数的submit方法类似，不同在于该方法接收的是含有返回值的Callable类型的任务，最终也是转换为FutureTask后提交到线程池，并返回。</li></ul>
+</li>
+<li><b>线程池中任务执行原理解析</b>
+<ul class="quote"><li>当用户线程提交任务到线程池后，在线程池没有执行拒绝策略的情况下，用户线程会马上返回，而提交的任务要么直接切换到线程池中的Worker线程来执行，要么先放入线程池的阻塞队列里面，稍后再由Worker线程来执行。</li><li>Worker的构造函数内首先设置Worker的运行状态status为-1，是为了避免当前Worker在调用runWorker方法前被中断。</li><li>在runWorker方法的代码2所示，如果当前task==null或者调用getTask从任务队列获取的任务返回null，则跳转到代码3执行清理工作，当前Worker也就退出执行了。</li><li>代码3执行清理任务，其代码如下：统计整个线程池完成的任务个数，并从工作集里面删除当前woker；尝试设置线程池状态为TERMINATED，如果当前是shutdonw状态并且工作队列为空，或者当前是stop状态且当前线程池里面没有活动线程，则设置线程池状态为TERMINATED；判断当前线程中的线程个数是否小于核心线程个数，如果是则新增一个线程。</li></ul>
+</li>
+<li><b>关闭线程池原理解析</b>
+<ul class="quote"><li>public void shutdown()方法的代码逻辑：权限检查；设置当前线程池状态为SHUTDOWN，如果已经是SHUTDOWN则直接返回；设置中断标志；尝试状态变为TERMINATED。</li><li>public void shutdownNow()方法的代码逻辑：权限检查；设置线程池状态为stop；中断所有线程；移动队列任务到tasks；终止状态。</li></ul>
+</li>
+<li><b>线程池的拒绝策略解析</b>
+<ul class="quote"><li>线程池是通过池化少量线程来提供线程复用的，当调用线程向线程池中投递大量任务后，线程池可能就处于饱和状态了。所谓饱和状态是指当前线程池队列已经满了，并且线程池中的线程已经达到了最大线程个数。当线程池处于饱和状态时，再向线程池投递任务，而对于投递的任务如何处理，是由线程池拒绝策略决定的。</li><li>线程池中提供了RejectedExecutionHandler接口，用来提供对线程池拒绝策略的抽象。</li><li>线程池中提供了一系列该接口的实现供我们使用，如AbortPolicy、CallerRunsPolicy、DiscardPolicy、DiscardOldestPolicy。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>线程池的主要状态列举如下：RUNNING、SHUTDOWN、STOP、TIDYING、TERMINATED。</li><li>线程池状态之间转换路径：RUNNING→SHUTDOWN、RUNNING或者SHUTDOWN→STOP、SHUTDOWN→TIDYING、STOP→TIDYING、TIDYING→TERMINATED。</li><li>public void execute(Runnable command)提交任务到线程池的逻辑：如果任务为null，则抛出NPE异常；获取当前线程池的状态+线程个数变量的组合值；当前线程池线程个数是否小于corePoolSize，小于则开启新线程运行；如果线程池处于RUNNING状态，则添加任务到阻塞队列；如果队列满了，则新增线程，新增失败则执行拒绝策略。</li><li>public Future&lt;? &gt; submit(Runnable task)方法提交任务的逻辑：NPE判断；包装任务为FutureTask；投递到线程池执行；返回ftask。</li><li>public Future submit(Runnable task, T result)方法的逻辑，其代码如下：两个参数的submit方法类似，不同在于该方法接收的是含有返回值的Callable类型的任务，最终也是转换为FutureTask后提交到线程池，并返回。</li><li>当用户线程提交任务到线程池后，在线程池没有执行拒绝策略的情况下，用户线程会马上返回，而提交的任务要么直接切换到线程池中的Worker线程来执行，要么先放入线程池的阻塞队列里面，稍后再由Worker线程来执行。</li><li>Worker的构造函数内首先设置Worker的运行状态status为-1，是为了避免当前Worker在调用runWorker方法前被中断。</li><li>在runWorker方法的代码2所示，如果当前task==null或者调用getTask从任务队列获取的任务返回null，则跳转到代码3执行清理工作，当前Worker也就退出执行了。</li><li>代码3执行清理任务，其代码如下：统计整个线程池完成的任务个数，并从工作集里面删除当前woker；尝试设置线程池状态为TERMINATED，如果当前是shutdonw状态并且工作队列为空，或者当前是stop状态且当前线程池里面没有活动线程，则设置线程池状态为TERMINATED；判断当前线程中的线程个数是否小于核心线程个数，如果是则新增一个线程。</li><li>public void shutdown()方法的代码逻辑：权限检查；设置当前线程池状态为SHUTDOWN，如果已经是SHUTDOWN则直接返回；设置中断标志；尝试状态变为TERMINATED。</li><li>public void shutdownNow()方法的代码逻辑：权限检查；设置线程池状态为stop；中断所有线程；移动队列任务到tasks；终止状态。</li><li>线程池是通过池化少量线程来提供线程复用的，当调用线程向线程池中投递大量任务后，线程池可能就处于饱和状态了。所谓饱和状态是指当前线程池队列已经满了，并且线程池中的线程已经达到了最大线程个数。当线程池处于饱和状态时，再向线程池投递任务，而对于投递的任务如何处理，是由线程池拒绝策略决定的。</li><li>线程池中提供了RejectedExecutionHandler接口，用来提供对线程池拒绝策略的抽象。</li><li>线程池中提供了一系列该接口的实现供我们使用，如AbortPolicy、CallerRunsPolicy、DiscardPolicy、DiscardOldestPolicy。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">7</span><span class="mmx-name">2.3 总结</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 4 条要点 · 8 句原句摘录</p>
+<div class="sec">
+<h4>Java中显式创建线程的方式实现异步编程及其问题</h4>
+<ul class="point">
+<li><b>显式创建线程方式实现异步编程</b>
+<ul class="quote"><li>通过继承Thread类或实现Runnable接口来创建线程。</li></ul>
+</li>
+<li><b>显式创建线程方式存在的问题</b>
+<ul class="quote"><li>线程创建成本高，线程创建和销毁都需要时间。</li><li>线程管理困难，需要手动控制线程的启动、停止和同步。</li><li>线程安全问题，需要手动处理线程同步和竞争问题。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>通过继承Thread类或实现Runnable接口来创建线程。</li><li>线程创建成本高，线程创建和销毁都需要时间。</li><li>线程管理困难，需要手动控制线程的启动、停止和同步。</li><li>线程安全问题，需要手动处理线程同步和竞争问题。</li></ul>
+</div>
+<div class="sec">
+<h4>显式使用线程池实现异步编程及其原理</h4>
+<ul class="point">
+<li><b>显式使用线程池实现异步编程</b>
+<ul class="quote"><li>通过ThreadPoolExecutor类来创建线程池。</li></ul>
+</li>
+<li><b>线程池的实现原理</b>
+<ul class="quote"><li>线程池内部维护了一个无界的工作队列，用于存放待处理的任务。</li><li>线程池根据核心线程数、最大线程数、任务队列大小等参数来创建线程。</li><li>线程池中的线程在处理完任务后，会被放回空闲线程池，以便后续使用。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>通过ThreadPoolExecutor类来创建线程池。</li><li>线程池内部维护了一个无界的工作队列，用于存放待处理的任务。</li><li>线程池根据核心线程数、最大线程数、任务队列大小等参数来创建线程。</li><li>线程池中的线程在处理完任务后，会被放回空闲线程池，以便后续使用。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">8</span><span class="mmx-name">第3章 基于JDK中的Future实现异步编程</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 2 条要点 · 1 句原句摘录</p>
+<div class="sec">
+<h4>使用Future实现异步编程</h4>
+<ul class="point">
+<li><b>FutureTask用于实现异步编程，通过FutureTask可以获取异步任务的结果。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>CompletableFuture介绍</h4>
+<ul class="point">
+<li><b>CompletableFuture是JDK 8引入的异步编程工具，可以与其他API结合使用</b>
+<ul class="quote"><li>CompletableFuture的内部实现原理包括三个阶段：启动、完成和异常处理。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>CompletableFuture的内部实现原理包括三个阶段：启动、完成和异常处理。</li></ul>
+</div>
+<div class="sec">
+<h4>CompletableFuture与JDK Stream结合可以实现更高效的异步编程。</h4>
+<ul class="point">
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">9</span><span class="mmx-name">3.1 JDK中的Future</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 6 个小节 · 6 条要点 · 16 句原句摘录</p>
+<div class="sec">
+<h4>Future接口的类图结构</h4>
+<ul class="point">
+<li><b>Future类共有5个接口方法</b>
+<ul class="quote"><li>V get() throws InterruptedException, ExecutionException：等待异步计算任务完成，并返回结果。</li><li>V get(long timeout, TimeUnit unit)throws InterruptedException, ExecutionException, TimeoutException：相比get()方法多了超时时间。</li><li>boolean isDone()：如果计算任务已经完成则返回true，否则返回false。</li><li>boolean cancel(boolean mayInterruptIfRunning)：尝试取消任务的执行。</li><li>boolean isCancelled()：如果任务在执行完毕前被取消了，则该方法返回true，否则返回false。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>V get() throws InterruptedException, ExecutionException：等待异步计算任务完成，并返回结果。</li><li>V get(long timeout, TimeUnit unit)throws InterruptedException, ExecutionException, TimeoutException：相比get()方法多了超时时间。</li><li>boolean isDone()：如果计算任务已经完成则返回true，否则返回false。</li><li>boolean cancel(boolean mayInterruptIfRunning)：尝试取消任务的执行。</li><li>boolean isCancelled()：如果任务在执行完毕前被取消了，则该方法返回true，否则返回false。</li></ul>
+</div>
+<div class="sec">
+<h4>get()方法</h4>
+<ul class="point">
+<li><b>等待异步计算任务完成，并返回结果</b>
+<ul class="quote"><li>如果当前任务计算还没完成则会阻塞调用线程直到任务完成。</li><li>如果在等待结果的过程中有其他线程取消了该任务，则调用线程抛出CancellationException异常。</li><li>如果在等待结果的过程中有其他线程中断了该线程，则调用线程抛出InterruptedException异常。</li><li>如果任务计算过程中抛出了异常，则调用线程会抛出ExecutionException异常。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如果当前任务计算还没完成则会阻塞调用线程直到任务完成。</li><li>如果在等待结果的过程中有其他线程取消了该任务，则调用线程抛出CancellationException异常。</li><li>如果在等待结果的过程中有其他线程中断了该线程，则调用线程抛出InterruptedException异常。</li><li>如果任务计算过程中抛出了异常，则调用线程会抛出ExecutionException异常。</li></ul>
+</div>
+<div class="sec">
+<h4>get(long timeout, TimeUnit unit)方法</h4>
+<ul class="point">
+<li><b>相比get()方法多了超时时间</b>
+<ul class="quote"><li>当线程调用了该方法后，在任务结果没有计算出来前调用线程不会一直被阻塞，而是会在等待timeout个unit单位的时间后抛出TimeoutException异常后返回。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>当线程调用了该方法后，在任务结果没有计算出来前调用线程不会一直被阻塞，而是会在等待timeout个unit单位的时间后抛出TimeoutException异常后返回。</li></ul>
+</div>
+<div class="sec">
+<h4>isDone()方法</h4>
+<ul class="point">
+<li><b>如果计算任务已经完成则返回true，否则返回false</b>
+<ul class="quote"><li>任务完成是指任务正常完成了、由于抛出异常而完成了或者任务被取消了。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>任务完成是指任务正常完成了、由于抛出异常而完成了或者任务被取消了。</li></ul>
+</div>
+<div class="sec">
+<h4>cancel(boolean mayInterruptIfRunning)方法</h4>
+<ul class="point">
+<li><b>尝试取消任务的执行</b>
+<ul class="quote"><li>如果当前任务已经完成或者任务已经被取消了，则尝试取消任务会失败。</li><li>如果任务还没被执行时调用了取消任务，则任务将永远不会被执行。</li><li>如果任务已经开始运行了，这时候取消任务，则参数mayInterruptIfRunning将决定是否要将正在执行任务的线程中断，如果为true则标识要中断，否则标识不中断。</li><li>当调用取消任务后，再调用isDone()方法，后者会返回true，随后调用isCancelled()方法也会一直返回true。</li><li>如果任务不能被取消，比如任务完成后已经被取消了，则该方法会返回false。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如果当前任务已经完成或者任务已经被取消了，则尝试取消任务会失败。</li><li>如果任务还没被执行时调用了取消任务，则任务将永远不会被执行。</li><li>如果任务已经开始运行了，这时候取消任务，则参数mayInterruptIfRunning将决定是否要将正在执行任务的线程中断，如果为true则标识要中断，否则标识不中断。</li><li>当调用取消任务后，再调用isDone()方法，后者会返回true，随后调用isCancelled()方法也会一直返回true。</li><li>如果任务不能被取消，比如任务完成后已经被取消了，则该方法会返回false。</li></ul>
+</div>
+<div class="sec">
+<h4>isCancelled()方法</h4>
+<ul class="point">
+<li><b>如果任务在执行完毕前被取消了，则该方法返回true，否则返回false。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">10</span><span class="mmx-name">3.2 JDK中的FutureTask</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 6 个小节 · 11 条要点 · 25 句原句摘录</p>
+<div class="sec">
+<h4>FutureTask概述</h4>
+<ul class="point">
+<li><b>FutureTask代表了一个可被取消的异步计算任务，实现了Future接口</b>
+<ul class="quote"><li>FutureTask任务的结果只有当任务完成后才能获取，并且只能通过get系列方法获取。</li><li>一旦任务被执行完成，任务将不能重启，除非运行时使用了runAndReset方法。</li></ul>
+</li>
+<li><b>FutureTask中的任务可以是Callable类型，也可以是Runnable类型</b>
+<ul class="quote"><li>FutureTask类型的任务可以被提交到线程池执行。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>FutureTask任务的结果只有当任务完成后才能获取，并且只能通过get系列方法获取。</li><li>一旦任务被执行完成，任务将不能重启，除非运行时使用了runAndReset方法。</li><li>FutureTask类型的任务可以被提交到线程池执行。</li></ul>
+</div>
+<div class="sec">
+<h4>FutureTask的类图结构</h4>
+<ul class="point">
+<li><b>FutureTask实现了Future接口的所有方法，并且实现了Runnable接口</b>
+<ul class="quote"><li>FutureTask中变量state是一个使用volatile关键字修饰的int类型，用来记录任务状态。</li><li>类图中callable是有返回值的可执行任务，创建FutureTask对象时，可以通过构造函数传递该任务。</li><li>类图中outcome是任务运行的结果，可以通过get系列方法来获取该结果。</li><li>类图中runner变量，记录了运行该任务的线程，这个是在FutureTask的run方法内使用CAS函数设置的。</li><li>类图中waiters变量是一个WaitNode节点，是用Treiber stack实现的无锁栈，栈顶元素用waiters代表。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>FutureTask中变量state是一个使用volatile关键字修饰的int类型，用来记录任务状态。</li><li>类图中callable是有返回值的可执行任务，创建FutureTask对象时，可以通过构造函数传递该任务。</li><li>类图中outcome是任务运行的结果，可以通过get系列方法来获取该结果。</li><li>类图中runner变量，记录了运行该任务的线程，这个是在FutureTask的run方法内使用CAS函数设置的。</li><li>类图中waiters变量是一个WaitNode节点，是用Treiber stack实现的无锁栈，栈顶元素用waiters代表。</li></ul>
+</div>
+<div class="sec">
+<h4>FutureTask的run()方法</h4>
+<ul class="point">
+<li><b>如果任务不是初始化的NEW状态，或者使用CAS设置runner为当前线程失败，则直接返回</b>
+<ul class="quote"><li>这个可以防止同一个FutureTask对象被提交给多个线程来执行，导致run方法被多个线程同时执行造成混乱。</li></ul>
+</li>
+<li><b>如果任务不为null，并且任务状态为NEW，则执行任务</b>
+<ul class="quote"><li>执行任务，如果OK则设置ran标记为true。</li><li>执行任务出现异常，则标记false，并且设置异常。</li></ul>
+</li>
+<li><b>任务执行正常，则设置结果</b>
+<ul class="quote"><li>使用CAS尝试设置任务状态state为COMPLETING，如果CAS成功，则把任务结果设置到outcome变量，并且将任务状态设置为NORMAL终止状态，然后调用finishCompletion唤醒所有因为等待结果而被阻塞的线程。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>这个可以防止同一个FutureTask对象被提交给多个线程来执行，导致run方法被多个线程同时执行造成混乱。</li><li>执行任务，如果OK则设置ran标记为true。</li><li>执行任务出现异常，则标记false，并且设置异常。</li><li>使用CAS尝试设置任务状态state为COMPLETING，如果CAS成功，则把任务结果设置到outcome变量，并且将任务状态设置为NORMAL终止状态，然后调用finishCompletion唤醒所有因为等待结果而被阻塞的线程。</li></ul>
+</div>
+<div class="sec">
+<h4>FutureTask的get()方法</h4>
+<ul class="point">
+<li><b>等待异步计算任务完成，并返回结果</b>
+<ul class="quote"><li>如果当前任务计算还没完成则会阻塞调用线程直到任务完成。</li><li>如果在等待结果的过程中有其他线程取消了该任务，则调用线程会抛出CancellationException异常。</li><li>如果在等待结果的过程中有线程中断了该线程，则抛出InterruptedException异常。</li><li>如果任务计算过程中抛出了异常，则会抛出ExecutionException异常。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如果当前任务计算还没完成则会阻塞调用线程直到任务完成。</li><li>如果在等待结果的过程中有其他线程取消了该任务，则调用线程会抛出CancellationException异常。</li><li>如果在等待结果的过程中有线程中断了该线程，则抛出InterruptedException异常。</li><li>如果任务计算过程中抛出了异常，则会抛出ExecutionException异常。</li></ul>
+</div>
+<div class="sec">
+<h4>FutureTask的cancel(boolean mayInterruptIfRunning)方法</h4>
+<ul class="point">
+<li><b>尝试取消任务的执行</b>
+<ul class="quote"><li>如果当前任务已经完成或者任务已经被取消了，则尝试取消任务会失败。</li><li>如果任务还没被执行时调用了取消任务，则任务将永远不会被执行。</li><li>如果任务已经开始运行了，这时取消任务，则由参数mayInterruptIfRunning决定是否要将正在执行任务的线程中断，如果为true则标识要中断，否则标识不中断。</li></ul>
+</li>
+<li><b>移除并激活所有因为等待结果而被阻塞的线程</b>
+<ul class="quote"><li>当调用取消任务后，再调用isDone()方法，后者会返回true，随后调用isCancelled()方法也会一直返回true。</li><li>如果任务不能被取消，比如任务已经完成了，任务已经被取消了，则该方法会返回false。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如果当前任务已经完成或者任务已经被取消了，则尝试取消任务会失败。</li><li>如果任务还没被执行时调用了取消任务，则任务将永远不会被执行。</li><li>如果任务已经开始运行了，这时取消任务，则由参数mayInterruptIfRunning决定是否要将正在执行任务的线程中断，如果为true则标识要中断，否则标识不中断。</li><li>当调用取消任务后，再调用isDone()方法，后者会返回true，随后调用isCancelled()方法也会一直返回true。</li><li>如果任务不能被取消，比如任务已经完成了，任务已经被取消了，则该方法会返回false。</li></ul>
+</div>
+<div class="sec">
+<h4>FutureTask的局限性</h4>
+<ul class="point">
+<li><b>FutureTask并不能清楚地表达多个FutureTask之间的关系。</b>
+</li>
+<li><b>为了从Future获取结果，我们必须调用get()方法，而该方法还是会在任务执行完毕前阻塞调用线程</b>
+<ul class="quote"><li>我们真正想要的是可以将两个或者多个异步计算结合在一起变成一个。</li><li>对反应式编程的支持，也就是当任务计算完成后能进行通知，并且可以以计算结果作为一个行为动作的参数进行下一步计算。</li><li>可以通过编程的方式手动设置(代码的方式)Future的结果。</li><li>可以等多个Future对应的计算结果都出来后做一些事情。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>我们真正想要的是可以将两个或者多个异步计算结合在一起变成一个。</li><li>对反应式编程的支持，也就是当任务计算完成后能进行通知，并且可以以计算结果作为一个行为动作的参数进行下一步计算。</li><li>可以通过编程的方式手动设置(代码的方式)Future的结果。</li><li>可以等多个Future对应的计算结果都出来后做一些事情。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">11</span><span class="mmx-name">3.3 JDK中的CompletableFuture</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 6 个小节 · 20 条要点 · 23 句原句摘录</p>
+<div class="sec">
+<h4>CompletableFuture概述</h4>
+<ul class="point">
+<li><b>CompletableFuture是一个可以通过编程方式显式地设置计算结果和状态以便让任务结束的Future</b>
+<ul class="quote"><li>CompletableFuture除了含有可以直接操作任务状态和结果的方法外，还实现了CompletionStage接口的一些方法。</li></ul>
+</li>
+<li><b>CompletableFuture任务可能有一些依赖其计算结果的行为方法，这些行为方法被收集到一个无锁基于CAS操作来链接起来的链表组成的栈中</b>
+<ul class="quote"><li>当CompletableFuture的计算任务完成后，会自动弹出栈中的行为方法并执行。</li></ul>
+</li>
+<li><b>ForkJoinPool本身也是一种ExecutorService，与其他ExecutorService(比如ThreadPoolExecutor)相比，不同点是它使用了工作窃取算法来提高性能</b>
+<ul class="quote"><li>ForkJoinPool中有一个静态的线程池commonPool可用且适用大多数情况。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>CompletableFuture除了含有可以直接操作任务状态和结果的方法外，还实现了CompletionStage接口的一些方法。</li><li>当CompletableFuture的计算任务完成后，会自动弹出栈中的行为方法并执行。</li><li>ForkJoinPool中有一个静态的线程池commonPool可用且适用大多数情况。</li></ul>
+</div>
+<div class="sec">
+<h4>显式设置CompletableFuture结果</h4>
+<ul class="point">
+<li><b>CompletableFuture是一种可以通过编程显式设置结果的future</b>
+<ul class="quote"><li>代码0创建了一个线程池，代码1创建了一个CompletableFuture对象，代码2将提交任务到异步线程池中执行。</li><li>代码3调用future的get()方法企图获取future的结果，如果future的结果没有被设置，则调用线程会被阻塞。</li><li>在代码2创建的任务内，代码2.1表示休眠3s，模拟异步任务的执行，代码2.2则表示在休眠3s后，调用future的complete方法设置future的结果，设置完结果后，所有由于调用future的get()方法而被阻塞的线程会被激活，并返回设置的结果。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>代码0创建了一个线程池，代码1创建了一个CompletableFuture对象，代码2将提交任务到异步线程池中执行。</li><li>代码3调用future的get()方法企图获取future的结果，如果future的结果没有被设置，则调用线程会被阻塞。</li><li>在代码2创建的任务内，代码2.1表示休眠3s，模拟异步任务的执行，代码2.2则表示在休眠3s后，调用future的complete方法设置future的结果，设置完结果后，所有由于调用future的get()方法而被阻塞的线程会被激活，并返回设置的结果。</li></ul>
+</div>
+<div class="sec">
+<h4>基于CompletableFuture实现异步计算与结果转换</h4>
+<ul class="point">
+<li><b>基于runAsync系列方法实现无返回值的异步计算</b>
+<ul class="quote"><li>当你想异步执行一个任务，并且不需要任务的执行结果时可以使用该方法。</li></ul>
+</li>
+<li><b>基于supplyAsync系列方法实现有返回值的异步计算</b>
+<ul class="quote"><li>当你想异步执行一个任务，并且需要任务的执行结果时可以使用该方法。</li></ul>
+</li>
+<li><b>基于thenRun实现异步任务A，执行完毕后，激活异步任务B执行</b>
+<ul class="quote"><li>这种方式激活的异步任务B是拿不到任务A的执行结果的。</li></ul>
+</li>
+<li><b>基于thenAccept实现异步任务A，执行完毕后，激活异步任务B执行</b>
+<ul class="quote"><li>这种方式激活的异步任务B是可以拿到任务A的执行结果的。</li></ul>
+</li>
+<li><b>基于thenApply实现异步任务A，执行完毕后，激活异步任务B执行</b>
+<ul class="quote"><li>这种方式激活的异步任务B是可以拿到任务A的执行结果的，并且可以获取到异步任务B的执行结果。</li></ul>
+</li>
+<li><b>基于whenComplete设置回调函数，当异步任务执行完毕后进行回调，不会阻塞调用线程</b>
+<ul class="quote"><li>当我们使用CompletableFuture实现异步编程时，大多数时候是不需要显式创建线程池，并投递任务到线程池内的。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>当你想异步执行一个任务，并且不需要任务的执行结果时可以使用该方法。</li><li>当你想异步执行一个任务，并且需要任务的执行结果时可以使用该方法。</li><li>这种方式激活的异步任务B是拿不到任务A的执行结果的。</li><li>这种方式激活的异步任务B是可以拿到任务A的执行结果的。</li><li>这种方式激活的异步任务B是可以拿到任务A的执行结果的，并且可以获取到异步任务B的执行结果。</li><li>当我们使用CompletableFuture实现异步编程时，大多数时候是不需要显式创建线程池，并投递任务到线程池内的。</li></ul>
+</div>
+<div class="sec">
+<h4>多个CompletableFuture进行组合运算</h4>
+<ul class="point">
+<li><b>基于thenCompose实现当一个CompletableFuture执行完毕后，执行另外一个CompletableFuture</b>
+<ul class="quote"><li>I，等doSomethingOne执行完毕后，接着执行doSomethingTwo。</li></ul>
+</li>
+<li><b>基于thenCombine实现当两个并发运行的CompletableFuture任务都完成后，使用两者的结果作为参数再执行一个异步任务</b>
+<ul class="quote"><li>result = doSomethingOne(&quot;123&quot;).thenCombine(doSomethingTwo(&quot;456&quot;), (one, two) -&gt; { return one + &quot; &quot; + two; });。</li></ul>
+</li>
+<li><b>基于allOf等待多个并发运行的CompletableFuture任务执行完毕</b>
+<ul class="quote"><li>等待所有future都完成。</li></ul>
+</li>
+<li><b>基于anyOf等多个并发运行的CompletableFuture任务中有一个执行完毕就返回</b>
+<ul class="quote"><li>等待某一个future完成。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>I，等doSomethingOne执行完毕后，接着执行doSomethingTwo。</li><li>result = doSomethingOne(&quot;123&quot;).thenCombine(doSomethingTwo(&quot;456&quot;), (one, two) -&gt; { return one + &quot; &quot; + two; });。</li><li>等待所有future都完成。</li><li>等待某一个future完成。</li></ul>
+</div>
+<div class="sec">
+<h4>异常处理</h4>
+<ul class="point">
+<li><b>CompletableFuture提供了completeExceptionally方法来处理异常情况</b>
+<ul class="quote"><li>当出现异常时把异常信息设置到future内部。</li><li>还可以修改代码3为：System.out.println(future.exceptionally(t -&gt; &quot;default&quot;).get()); // 默认值，实现当出现异常时返回默认值。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>当出现异常时把异常信息设置到future内部。</li><li>还可以修改代码3为：System.out.println(future.exceptionally(t -&gt; &quot;default&quot;).get()); // 默认值，实现当出现异常时返回默认值。</li></ul>
+</div>
+<div class="sec">
+<h4>CompletableFuture概要原理</h4>
+<ul class="point">
+<li><b>一个CompletionStage代表着一个异步计算节点，当另外一个CompletionStage计算节点完成后，当前CompletionStage会执行或者计算一个值</b>
+<ul class="quote"><li>一个节点(CompletionStage)的计算执行可以被表述为一个函数、消费者、可执行的Runable(例如使用apply、accept、run方法)，具体取决于这个节点是否需要参数或者产生结果。</li></ul>
+</li>
+<li><b>CompletionStage节点可以使用3种模式来执行：默认执行、默认异步执行(使用async后缀的方法)和用户自定义的线程执行器执行(通过传递一个Executor方式)</b>
+<ul class="quote"><li>一个节点的执行可以通过一到两个节点的执行完成来触发。一个节点依赖的其他节点通常使用then前缀的方法来进行组织。</li></ul>
+</li>
+<li><b>类图中result字段用来存放任务执行的结果，如果不为null，则标识任务已经执行完成</b>
+<ul class="quote"><li>而计算任务本身也可能需要返回null值，所以使用AltResult(如下代码)来包装计算任务返回null的情况(ex等于null的时候), AltResult也被用来存放当任务执行出现异常时候的异常信息(ex不为null的时候)。</li></ul>
+</li>
+<li><b>类图中stack字段是当前任务执行完毕后要触发的一系列行为的入口，由于一个任务执行后可以触发多个行为，所以所有行为被组织成一个链表结构，并且使用Treiber stack实现了无锁基于CAS的链式栈</b>
+<ul class="quote"><li>stack存放栈顶行为节点，stack是Completion类型的。</li></ul>
+</li>
+<li><b>类图中asyncPool是用来执行异步任务的线程池，如果支持并发则默认为ForkJoinPool.commonPool()，否则是ThreadPerTaskExecutor</b>
+<ul class="quote"><li>runAsync方法会马上返回一个CompletableFuture对象，并且当前线程不会被阻塞；代码3投递AsyncRun任务到线程池后，线程池线程会执行其run方法。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>一个节点(CompletionStage)的计算执行可以被表述为一个函数、消费者、可执行的Runable(例如使用apply、accept、run方法)，具体取决于这个节点是否需要参数或者产生结果。</li><li>一个节点的执行可以通过一到两个节点的执行完成来触发。一个节点依赖的其他节点通常使用then前缀的方法来进行组织。</li><li>而计算任务本身也可能需要返回null值，所以使用AltResult(如下代码)来包装计算任务返回null的情况(ex等于null的时候), AltResult也被用来存放当任务执行出现异常时候的异常信息(ex不为null的时候)。</li><li>stack存放栈顶行为节点，stack是Completion类型的。</li><li>runAsync方法会马上返回一个CompletableFuture对象，并且当前线程不会被阻塞；代码3投递AsyncRun任务到线程池后，线程池线程会执行其run方法。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">12</span><span class="mmx-name">3.4 JDK8 Stream &amp; CompletableFuture</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 5 条要点 · 6 句原句摘录</p>
+<div class="sec">
+<h4>JDK8 Stream</h4>
+<ul class="point">
+<li><b>JDK8中提供了流式对数据进行处理的功能</b>
+<ul class="quote"><li>使用声明式编程会让我们对业务的表达更清晰。</li><li>使用流可以让我们很方便地对数据集进行并行处理。</li></ul>
+</li>
+<li><b>Stream操作符包括filter、map、collect等</b>
+<ul class="quote"><li>filter操作符用于过滤出满足条件的元素。</li><li>map操作符用于将元素转换为另一种形式。</li><li>collect操作符用于将流中的元素收集到集合中。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>使用声明式编程会让我们对业务的表达更清晰。</li><li>使用流可以让我们很方便地对数据集进行并行处理。</li><li>filter操作符用于过滤出满足条件的元素。</li><li>map操作符用于将元素转换为另一种形式。</li><li>collect操作符用于将流中的元素收集到集合中。</li></ul>
+</div>
+<div class="sec">
+<h4>当Stream遇见CompletableFuture</h4>
+<ul class="point">
+<li><b>使用CompletableFuture.supplyAsync方法把rpc的同步调用转换为了异步。</b>
+</li>
+<li><b>使用future的join方法来阻塞获取每个异步任务执行完毕，然后返回执行结果，最后使用collect操作把所有的结果收集到resultList。</b>
+</li>
+<li><b>运行上面的代码会发现耗时大大减少了，这可以证明上面10个rpc调用时是并发运行的，并不是串行执行</b>
+<ul class="quote"><li>注意：具体这10个rpc请求是否全部并发运行取决于CompletableFuture内线程池内线程的个数，如果你的机器是单核的或者线程池内线程个数为1，那么这10个任务还是会顺序执行的。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>注意：具体这10个rpc请求是否全部并发运行取决于CompletableFuture内线程池内线程的个数，如果你的机器是单核的或者线程池内线程个数为1，那么这10个任务还是会顺序执行的。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">13</span><span class="mmx-name">3.5 总结</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 3 条要点 · 2 句原句摘录</p>
+<div class="sec">
+<h4>使用FutureTask实现异步编程及其缺点</h4>
+<ul class="point">
+<li><b>FutureTask实现异步编程属于命令式编程，需要显式创建线程池并提交任务到线程池。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>CompletableFuture如何解决其缺点</h4>
+<ul class="point">
+<li><b>CompletableFuture属于声明式编程，简化了异步编程的复杂性</b>
+<ul class="quote"><li>使用CompletableFuture实现异步编程属于声明式编程，一般情况下不需要我们显式创建线程池并提交任务到线程池，这大大减轻了编程者的负担。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>使用CompletableFuture实现异步编程属于声明式编程，一般情况下不需要我们显式创建线程池并提交任务到线程池，这大大减轻了编程者的负担。</li></ul>
+</div>
+<div class="sec">
+<h4>CompletableFuture与JDK Stream完美结合</h4>
+<ul class="point">
+<li><b>CompletableFuture与JDK Stream的结合，可以实现更高级的异步编程功能</b>
+<ul class="quote"><li>本章多为实践类型，希望大家可以动手实践本章实例，以加深理解。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>本章多为实践类型，希望大家可以动手实践本章实例，以加深理解。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">14</span><span class="mmx-name">第4章 Spring框架中的异步执行</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 1 条要点 · 1 句原句摘录</p>
+<div class="sec">
+<h4>Spring框架中的异步执行</h4>
+<ul class="point">
+<li><b>Spring Framework使用TaskExecutor和TaskScheduler接口提供异步执行和任务调度的抽象</b>
+<ul class="quote"><li>本章着重讲解基于TaskExecutor支撑的注解@Async是如何实现异步处理的。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>本章着重讲解基于TaskExecutor支撑的注解@Async是如何实现异步处理的。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">15</span><span class="mmx-name">4.1 Spring中对TaskExecutor的抽象</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 3 条要点 · 8 句原句摘录</p>
+<div class="sec">
+<h4>Spring中对TaskExecutor的抽象</h4>
+<ul class="point">
+<li><b>TaskExecutor接口与java.util.concurrent.Executor是等价的</b>
+<ul class="quote"><li>TaskExecutor接口具有单个方法execute(Runnable task)，该方法基于线程池的语义和配置接收要执行的任务。</li></ul>
+</li>
+<li><b>Spring框架本身内置了很多类型的TaskExecutor实现</b>
+<ul class="quote"><li>SimpleAsyncTaskExecutor：不会复用线程，对应每个请求会新创建一个对应的线程来执行。</li><li>SyncTaskExecutor：不会异步地执行提交的任务，而是会同步使用调用线程来执行。</li><li>ConcurrentTaskExecutor：是对JDK5中的java.util.concurrent.Executor的一个包装。</li><li>SimpleThreadPoolTaskExecutor：监听Spring的生命周期回调，用于可能需要Quartz和非Quartz组件共享的线程池。</li><li>ThreadPoolTaskExecutor：只能在Java 5环境中使用，公开了bean属性，用于配置java.util.concurrent.ThreadPoolExecutor。</li><li>TimerTaskExecutor：使用单个java.util.Timer对象作为其内部异步线程来执行任务。</li></ul>
+</li>
+<li><b>如果不符合需要，可以通过实现TaskExecutor接口来定制自己的执行器</b>
+<ul class="quote"><li>Spring框架本身提供了很多TaskExecutor的实现，但是如果不符合你的需要，你可以通过实现TaskExecutor接口来定制自己的执行器。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>TaskExecutor接口具有单个方法execute(Runnable task)，该方法基于线程池的语义和配置接收要执行的任务。</li><li>SimpleAsyncTaskExecutor：不会复用线程，对应每个请求会新创建一个对应的线程来执行。</li><li>SyncTaskExecutor：不会异步地执行提交的任务，而是会同步使用调用线程来执行。</li><li>ConcurrentTaskExecutor：是对JDK5中的java.util.concurrent.Executor的一个包装。</li><li>SimpleThreadPoolTaskExecutor：监听Spring的生命周期回调，用于可能需要Quartz和非Quartz组件共享的线程池。</li><li>ThreadPoolTaskExecutor：只能在Java 5环境中使用，公开了bean属性，用于配置java.util.concurrent.ThreadPoolExecutor。</li><li>TimerTaskExecutor：使用单个java.util.Timer对象作为其内部异步线程来执行任务。</li><li>Spring框架本身提供了很多TaskExecutor的实现，但是如果不符合你的需要，你可以通过实现TaskExecutor接口来定制自己的执行器。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">16</span><span class="mmx-name">4.2 如何在Spring中使用异步执行</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 7 条要点 · 16 句原句摘录</p>
+<div class="sec">
+<h4>使用TaskExecutor实现异步执行</h4>
+<ul class="point">
+<li><b>通过xml方式向Spring容器中注入TaskExecutor的实现者ThreadPoolTaskExecutor的实例</b>
+<ul class="quote"><li>核心线程个数设置为5，最大线程个数设置为10。</li><li>线程池中非核心线程空闲60s后会被自动回收。</li><li>线程池阻塞队列的大小为20。</li><li>线程池的拒绝策略设置为CallerRunsPolicy。</li></ul>
+</li>
+<li><b>在Spring容器中使用TaskExecutor</b>
+<ul class="quote"><li>通过setter访问器注入了TaskExecutor的属性。</li><li>调用printMessages方法触发异步任务执行。</li></ul>
+</li>
+<li><b>关闭执行器，释放线程</b>
+<ul class="quote"><li>在AsyncExecutorExample中添加shutdown方法。</li><li>修改ThreadPoolTaskExecutor注入的配置，设置waitForTasksToCompleteOnShutdown为true。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>核心线程个数设置为5，最大线程个数设置为10。</li><li>线程池中非核心线程空闲60s后会被自动回收。</li><li>线程池阻塞队列的大小为20。</li><li>线程池的拒绝策略设置为CallerRunsPolicy。</li><li>通过setter访问器注入了TaskExecutor的属性。</li><li>调用printMessages方法触发异步任务执行。</li><li>在AsyncExecutorExample中添加shutdown方法。</li><li>修改ThreadPoolTaskExecutor注入的配置，设置waitForTasksToCompleteOnShutdown为true。</li></ul>
+</div>
+<div class="sec">
+<h4>使用注解@Async实现异步执行</h4>
+<ul class="point">
+<li><b>在方法上添加@Async注释，以便异步执行该方法</b>
+<ul class="quote"><li>调用线程将在调用含有@Async注释的方法时立即返回。</li><li>该方法的实际执行将发生在Spring的TaskExecutor异步处理器线程中。</li></ul>
+</li>
+<li><b>开启注解@Async的解析</b>
+<ul class="quote"><li>基于xml配置Bean时需要加入&lt;task:annotation-driven /&gt;配置，才可以开启异步处理。</li><li>在基于注解的情况下可以添加@EnableAsync注解来启动异步处理。</li></ul>
+</li>
+<li><b>指定自己的执行器来执行异步任务</b>
+<ul class="quote"><li>在xml配置自己的执行器，代码如下所示。</li><li>异步任务是使用我们自己的线程池执行器执行的。</li></ul>
+</li>
+<li><b>使用@Async注解遇到异常时的处理</b>
+<ul class="quote"><li>当@Async方法具有Future类型返回值时，很容易管理在方法执行期间抛出的异常。</li><li>对于void返回类型来说，异常未被捕获且无法传输。这时候可以提供AsyncUncaughtExceptionHandler来处理该类异常。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>调用线程将在调用含有@Async注释的方法时立即返回。</li><li>该方法的实际执行将发生在Spring的TaskExecutor异步处理器线程中。</li><li>基于xml配置Bean时需要加入&lt;task:annotation-driven /&gt;配置，才可以开启异步处理。</li><li>在基于注解的情况下可以添加@EnableAsync注解来启动异步处理。</li><li>在xml配置自己的执行器，代码如下所示。</li><li>异步任务是使用我们自己的线程池执行器执行的。</li><li>当@Async方法具有Future类型返回值时，很容易管理在方法执行期间抛出的异常。</li><li>对于void返回类型来说，异常未被捕获且无法传输。这时候可以提供AsyncUncaughtExceptionHandler来处理该类异常。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">17</span><span class="mmx-name">4.3 @Async注解异步执行原理</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 6 条要点 · 24 句原句摘录</p>
+<div class="sec">
+<h4>Spring使用@Async注解实现异步执行的原理</h4>
+<ul class="point">
+<li><b>Spring对标注@Async注解的类进行代理</b>
+<ul class="quote"><li>代理后的类代码框架中，会使用CompletableFuture.supplyAsync开启了一个异步任务，并且使用默认的SimpleAsync TaskExecutor线程池作为异步处理线程。</li></ul>
+</li>
+<li><b>AnnotationAsyncExecutionInterceptor的invoke方法处理标注@Async的方法</b>
+<ul class="quote"><li>方法1获取被代理的目标对象的Class对象。</li><li>方法2获取被代理的方法。</li><li>方法3根据规则获取使用哪个执行器TaskExecutor执行被代理的方法。</li><li>方法4使用Callable包装要执行的方法。</li><li>方法5提交包装的Callable任务到指定执行器。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>代理后的类代码框架中，会使用CompletableFuture.supplyAsync开启了一个异步任务，并且使用默认的SimpleAsync TaskExecutor线程池作为异步处理线程。</li><li>方法1获取被代理的目标对象的Class对象。</li><li>方法2获取被代理的方法。</li><li>方法3根据规则获取使用哪个执行器TaskExecutor执行被代理的方法。</li><li>方法4使用Callable包装要执行的方法。</li><li>方法5提交包装的Callable任务到指定执行器。</li></ul>
+</div>
+<div class="sec">
+<h4>添加@EnableAsync注解后发生的变化</h4>
+<ul class="point">
+<li><b>ConfigurationClassPostProcessor会解析其中的@Import(AsyncConfigurationSelector.class)，并把AsyncConfigurationSelector的实例注入Spring容器</b>
+<ul class="quote"><li>AsyncConfigurationSelector实现了ImportSelector接口的selectImports方法，根据AdviceMode参数返回需要导入到Spring容器的Bean的全路径包名。</li><li>默认情况下的adviceMode为PROXY，所以会把ProxyAsyncConfiguration的实例注入Spring容器。</li></ul>
+</li>
+<li><b>ProxyAsyncConfiguration的asyncAdvisor方法添加了@Bean注解，所以该方法返回的Bean也会被注入Spring容器</b>
+<ul class="quote"><li>该方法创建了AsyncAnnotationBean PostProcessor处理器，所以AsyncAnnotationBeanPostProcessor的一个实例会被注入Spring容器中。</li><li>由于其实现了BeanFactoryAware接口，所以Spring框架会调用其setBeanFactory(BeanFactory beanFactory)方法把Spring BeanFactory(存放bean的容器)注入该Bean。</li><li>在AsyncAnnotationBeanPostProcessor的setBeanFactory(BeanFactory beanFactory)方法内创建了一个AsyncAnnotationAdvisor对象用来对Spring容器中符合条件(这里为含有@Async注解的方法的Bean)的Bean的方法进行功能增强。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>AsyncConfigurationSelector实现了ImportSelector接口的selectImports方法，根据AdviceMode参数返回需要导入到Spring容器的Bean的全路径包名。</li><li>默认情况下的adviceMode为PROXY，所以会把ProxyAsyncConfiguration的实例注入Spring容器。</li><li>该方法创建了AsyncAnnotationBean PostProcessor处理器，所以AsyncAnnotationBeanPostProcessor的一个实例会被注入Spring容器中。</li><li>由于其实现了BeanFactoryAware接口，所以Spring框架会调用其setBeanFactory(BeanFactory beanFactory)方法把Spring BeanFactory(存放bean的容器)注入该Bean。</li><li>在AsyncAnnotationBeanPostProcessor的setBeanFactory(BeanFactory beanFactory)方法内创建了一个AsyncAnnotationAdvisor对象用来对Spring容器中符合条件(这里为含有@Async注解的方法的Bean)的Bean的方法进行功能增强。</li></ul>
+</div>
+<div class="sec">
+<h4>使用&lt;task:annotation-driven/&gt;标签开启异步处理的过程</h4>
+<ul class="point">
+<li><b>&lt;task:annotation-driven/&gt;是使用AnnotationDrivenBeanDefinition Parser来进行解析的</b>
+<ul class="quote"><li>其主要是用来创建AsyncAnnotationBeanPostProcessor在Spring容器中的元数据定义，并注册到Spring容器中。</li></ul>
+</li>
+<li><b>注册PostProcessor(parserContext, builder, TaskManagementConfigUtils.ASYNC_ANNOTATION_PROCESSOR_BEAN_NAME)</b>
+<ul class="quote"><li>BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(&quot;org.springframework.scheduling.annotation.AsyncAnnotationBeanPostProcessor&quot;);</li><li>builder.getRawBeanDefinition().setSource(source);</li><li>String executor = element.getAttribute(&quot;executor&quot;);</li><li>if (StringUtils.hasText(executor)) {。</li><li>builder.addPropertyReference(&quot;executor&quot;, executor);</li><li>}。</li><li>String exceptionHandler = element.getAttribute(&quot;exception-handler&quot;);</li><li>if (StringUtils.hasText(exceptionHandler)) {。</li><li>builder.addPropertyReference(&quot;exceptionHandler&quot;, exceptionHandler);</li><li>if (Boolean.valueOf(element.getAttribute(AopNamespaceUtils.PROXY_TARGET_CLASS_ATTRIBUTE))) {。</li><li>builder.addPropertyValue(&quot;proxyTargetClass&quot;, true);</li><li>registerPostProcessor(parserContext, builder, TaskManagementConfigUtils.ASYNC_ANNOTATION_PROCESSOR_BEAN_NAME);</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>其主要是用来创建AsyncAnnotationBeanPostProcessor在Spring容器中的元数据定义，并注册到Spring容器中。</li><li>BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(&quot;org.springframework.scheduling.annotation.AsyncAnnotationBeanPostProcessor&quot;);</li><li>builder.getRawBeanDefinition().setSource(source);</li><li>String executor = element.getAttribute(&quot;executor&quot;);</li><li>if (StringUtils.hasText(executor)) {。</li><li>builder.addPropertyReference(&quot;executor&quot;, executor);</li><li>}。</li><li>String exceptionHandler = element.getAttribute(&quot;exception-handler&quot;);</li><li>if (StringUtils.hasText(exceptionHandler)) {。</li><li>builder.addPropertyReference(&quot;exceptionHandler&quot;, exceptionHandler);</li><li>if (Boolean.valueOf(element.getAttribute(AopNamespaceUtils.PROXY_TARGET_CLASS_ATTRIBUTE))) {。</li><li>builder.addPropertyValue(&quot;proxyTargetClass&quot;, true);</li><li>registerPostProcessor(parserContext, builder, TaskManagementConfigUtils.ASYNC_ANNOTATION_PROCESSOR_BEAN_NAME);</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">18</span><span class="mmx-name">4.4 总结</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 1 条要点 · 1 句原句摘录</p>
+<div class="sec">
+<h4>使用@Async进行异步处理</h4>
+<ul class="point">
+<li><b>使用@Async实现异步编程属于声明式编程，减轻编程者的负担</b>
+<ul class="quote"><li>一般情况下不需要我们显式创建线程池并提交任务到线程池。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>一般情况下不需要我们显式创建线程池并提交任务到线程池。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">19</span><span class="mmx-name">第5章 基于反应式编程实现异步编程</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 6 条要点 · 11 句原句摘录</p>
+<div class="sec">
+<h4>反应式编程简介</h4>
+<ul class="point">
+<li><b>反应式编程是一种编程范式，用于处理并发和异步操作</b>
+<ul class="quote"><li>反应式编程基于观察者模式，将异步操作转化为可组合的响应式流。</li></ul>
+</li>
+<li><b>反应式编程可以简化异步编程的复杂性，提高代码的可读性和可维护性</b>
+<ul class="quote"><li>反应式编程通过将异步操作转化为可组合的响应式流，使得代码更简洁，更易于理解。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>反应式编程基于观察者模式，将异步操作转化为可组合的响应式流。</li><li>反应式编程通过将异步操作转化为可组合的响应式流，使得代码更简洁，更易于理解。</li></ul>
+</div>
+<div class="sec">
+<h4>反应式编程的特点与价值</h4>
+<ul class="point">
+<li><b>反应式编程具有响应性、弹性、可组合性等特点</b>
+<ul class="quote"><li>响应性：反应式编程可以立即对变化做出响应。</li><li>弹性：反应式编程可以处理高并发和容错。</li><li>可组合性：反应式编程可以将多个操作组合成一个响应式流。</li></ul>
+</li>
+<li><b>反应式编程可以提高开发效率和代码质量</b>
+<ul class="quote"><li>反应式编程可以减少代码的复杂性，提高代码的可读性和可维护性。</li><li>反应式编程可以更好地处理并发和异步操作，提高程序的稳定性和可靠性。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>响应性：反应式编程可以立即对变化做出响应。</li><li>弹性：反应式编程可以处理高并发和容错。</li><li>可组合性：反应式编程可以将多个操作组合成一个响应式流。</li><li>反应式编程可以减少代码的复杂性，提高代码的可读性和可维护性。</li><li>反应式编程可以更好地处理并发和异步操作，提高程序的稳定性和可靠性。</li></ul>
+</div>
+<div class="sec">
+<h4>基于反应式编程实现异步编程</h4>
+<ul class="point">
+<li><b>使用RxJava实现异步编程</b>
+<ul class="quote"><li>RxJava是一个反应式编程库，可以用于处理并发和异步操作。</li><li>RxJava提供了丰富的操作符，可以方便地组合和转换响应式流。</li></ul>
+</li>
+<li><b>使用Reactor实现异步编程</b>
+<ul class="quote"><li>Reactor是另一个反应式编程库，可以用于处理并发和异步操作。</li><li>Reactor提供了类似于RxJava的操作符，可以方便地组合和转换响应式流。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>RxJava是一个反应式编程库，可以用于处理并发和异步操作。</li><li>RxJava提供了丰富的操作符，可以方便地组合和转换响应式流。</li><li>Reactor是另一个反应式编程库，可以用于处理并发和异步操作。</li><li>Reactor提供了类似于RxJava的操作符，可以方便地组合和转换响应式流。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">20</span><span class="mmx-name">5.1 反应式编程概述</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 7 个小节 · 19 条要点 · 24 句原句摘录</p>
+<div class="sec">
+<h4>反应式编程概述</h4>
+<ul class="point">
+<li><b>反应式编程是一种涉及数据流和变化传播的异步编程范式</b>
+<ul class="quote"><li>反应式编程可以通过所采用的编程语言轻松地表达静态或动态数据流。</li></ul>
+</li>
+<li><b>使用反应式方式构建的反应式系统会更加灵活、松耦合、可伸缩</b>
+<ul class="quote"><li>反应式方式构建的系统对系统的失败情况也更有包容性，当失败确实发生时，它们的应对方案会是比较优雅得体而非混乱不可预知的。</li><li>反应式系统具有很高的即时响应性，为用户提供了高效的交互反馈。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>反应式编程可以通过所采用的编程语言轻松地表达静态或动态数据流。</li><li>反应式方式构建的系统对系统的失败情况也更有包容性，当失败确实发生时，它们的应对方案会是比较优雅得体而非混乱不可预知的。</li><li>反应式系统具有很高的即时响应性，为用户提供了高效的交互反馈。</li></ul>
+</div>
+<div class="sec">
+<h4>反应式编程的特征</h4>
+<ul class="point">
+<li><b>即时响应性：只要有可能，系统就会及时地做出响应</b>
+<ul class="quote"><li>即时响应是可用性和实用性的基石，并且即时响应意味着可以快速地检测到问题并且可以有效地对其进行处理。</li></ul>
+</li>
+<li><b>回弹性：系统在面临失败时仍然保持即时响应性</b>
+<ul class="quote"><li>回弹性是通过复制、遏制、隔离以及委托来实现的。</li></ul>
+</li>
+<li><b>弹性：系统在不断变化的工作负载下仍保持即时响应性</b>
+<ul class="quote"><li>反应式系统可以通过增加或减少分配用于服务这些输入的资源来对输入速率的变化做出反应。</li></ul>
+</li>
+<li><b>消息驱动：反应式系统依靠异步消息传递在组件之间建立边界</b>
+<ul class="quote"><li>使用显式的消息传递，可以通过在系统中构造并监视消息流队列，并在必要时应用回压来实现负载管理、弹性以及流量控制。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>即时响应是可用性和实用性的基石，并且即时响应意味着可以快速地检测到问题并且可以有效地对其进行处理。</li><li>回弹性是通过复制、遏制、隔离以及委托来实现的。</li><li>反应式系统可以通过增加或减少分配用于服务这些输入的资源来对输入速率的变化做出反应。</li><li>使用显式的消息传递，可以通过在系统中构造并监视消息流队列，并在必要时应用回压来实现负载管理、弹性以及流量控制。</li></ul>
+</div>
+<div class="sec">
+<h4>反应式编程的价值、形式、实现手段</h4>
+<ul class="point">
+<li><b>反应式编程是一种编程理念，其实施的第一步是创建反应式扩展库</b>
+<ul class="quote"><li>Microsoft在．NET生态系统中创建了Reactive Extensions(Rx)库，然后RxJava在JVM上实现了Java版本的Reactive Extensions(Rx)库。</li></ul>
+</li>
+<li><b>反应式编程API提供Java 8 Stream等运算符，但它们更适用于任何流序列，并允许定义一个转换操作的管道</b>
+<ul class="quote"><li>它们旨在处理同步或异步操作，并允许缓冲、合并、连接或对数据应用各种转换。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Microsoft在．NET生态系统中创建了Reactive Extensions(Rx)库，然后RxJava在JVM上实现了Java版本的Reactive Extensions(Rx)库。</li><li>它们旨在处理同步或异步操作，并允许缓冲、合并、连接或对数据应用各种转换。</li></ul>
+</div>
+<div class="sec">
+<h4>为什么需要异步反应式编程库</h4>
+<ul class="point">
+<li><b>Java 8中的Stream缺少与时间相关的操作，无法处理延迟的操作</b>
+<ul class="quote"><li>Stream是基于拉的，并且只能使用一次，缺少与时间相关的操作。</li><li>虽然可以执行并行计算，但无法指定使用业务本身的线程池。</li><li>另外它也还没有设计用于处理延迟的操作，例如I/O操作。</li></ul>
+</li>
+<li><b>并行化方法不是灵丹妙药，获得硬件的全部功能才是必要的</b>
+<ul class="quote"><li>使用更多线程和更多的硬件资源，资源利用率的这种扩展很快就会引入争用和并发问题。</li><li>一旦程序涉及一些延迟(特别是I/O，例如数据库请求或网络调用)，资源就会被浪费。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Stream是基于拉的，并且只能使用一次，缺少与时间相关的操作。</li><li>虽然可以执行并行计算，但无法指定使用业务本身的线程池。</li><li>另外它也还没有设计用于处理延迟的操作，例如I/O操作。</li><li>使用更多线程和更多的硬件资源，资源利用率的这种扩展很快就会引入争用和并发问题。</li><li>一旦程序涉及一些延迟(特别是I/O，例如数据库请求或网络调用)，资源就会被浪费。</li></ul>
+</div>
+<div class="sec">
+<h4>Java异步编程模型</h4>
+<ul class="point">
+<li><b>CallBacks：异步方法没有返回值，但需要额外的回调函数</b>
+<ul class="quote"><li>多个Callback难以组合在一起，这将会很快导致代码难以阅读和维护。</li></ul>
+</li>
+<li><b>Futures：异步方法立即返回Future，异步线程计算任务，并当结果计算出来后设置到Future</b>
+<ul class="quote"><li>一起编排多个Future是可行的但不容易，并且它们不支持延迟计算和高级错误处理。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>多个Callback难以组合在一起，这将会很快导致代码难以阅读和维护。</li><li>一起编排多个Future是可行的但不容易，并且它们不支持延迟计算和高级错误处理。</li></ul>
+</div>
+<div class="sec">
+<h4>Reactor反应式库的实现</h4>
+<ul class="point">
+<li><b>Reactor反应式库让接口返回值都修改为Flux，可以在Flux上施加不同的操作符</b>
+<ul class="quote"><li>基于Reactor编写的代码逻辑属于声明式编程，比较通俗易懂，代码量也比较少，并且不含重复代码。</li></ul>
+</li>
+<li><b>Reactor本身提供了更多的开箱即用的操作符</b>
+<ul class="quote"><li>使用Reactor来实现上面功能的代码相比使用CompletableFuture实现相同功能来说，更简洁和通俗易懂。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>基于Reactor编写的代码逻辑属于声明式编程，比较通俗易懂，代码量也比较少，并且不含重复代码。</li><li>使用Reactor来实现上面功能的代码相比使用CompletableFuture实现相同功能来说，更简洁和通俗易懂。</li></ul>
+</div>
+<div class="sec">
+<h4>Reactive编程思想实现的反应式库的优势</h4>
+<ul class="point">
+<li><b>代码的可组合性和可读性</b>
+<ul class="quote"><li>可组合性指的是编排多个异步任务的能力。</li><li>编排任务的能力与代码的可读性和可维护性紧密相关。</li></ul>
+</li>
+<li><b>数据作为一个用丰富的运算符词汇表操纵的流程</b>
+<ul class="quote"><li>在Reactive编程中，运算符是我们装配线中类比的工作站。</li><li>每个运算符都会向发布者添加行为，并将上一步的发布者包装到新实例中。</li></ul>
+</li>
+<li><b>在订阅之前没有任何事情发生。</b>
+</li>
+<li><b>回压或消费者向生产者发出信号表明发射元素过快的能力</b>
+<ul class="quote"><li>如果装配线中某一点出现堵塞，受影响的工作站可向上游发出信号以限制原材料的向下流动。</li></ul>
+</li>
+<li><b>高级但高价值的抽象，与并发无关</b>
+<ul class="quote"><li>Reactive编程提供了丰富的组合选项，其中代码反映了抽象过程的组织，并且所有内容通常都保持在同一级别(嵌套最小化)。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>可组合性指的是编排多个异步任务的能力。</li><li>编排任务的能力与代码的可读性和可维护性紧密相关。</li><li>在Reactive编程中，运算符是我们装配线中类比的工作站。</li><li>每个运算符都会向发布者添加行为，并将上一步的发布者包装到新实例中。</li><li>如果装配线中某一点出现堵塞，受影响的工作站可向上游发出信号以限制原材料的向下流动。</li><li>Reactive编程提供了丰富的组合选项，其中代码反映了抽象过程的组织，并且所有内容通常都保持在同一级别(嵌套最小化)。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">21</span><span class="mmx-name">5.2 Reactive Streams规范</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 8 条要点 · 10 句原句摘录</p>
+<div class="sec">
+<h4>Reactive Streams规范简介</h4>
+<ul class="point">
+<li><b>Reactive Streams的目的是提供一个使用非阻塞回压功能对异步流进行处理的标准</b>
+<ul class="quote"><li>Reactive Streams的主要目标是管理跨异步边界的流数据交换。</li><li>回压是该模型的组成部分，以便允许在线程之间协调的队列有界。</li></ul>
+</li>
+<li><b>Reactive Streams规范由API接口和技术兼容性工具包(TCK)组成</b>
+<ul class="quote"><li>API接口：Reactive Streams规定的一组接口，规范实现者需要实现这些接口，以便实现规范的不同实现库之间的互操作性。</li><li>技术兼容性工具包(TCK)：用于实现一致测试的标准测试套件。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Reactive Streams的主要目标是管理跨异步边界的流数据交换。</li><li>回压是该模型的组成部分，以便允许在线程之间协调的队列有界。</li><li>API接口：Reactive Streams规定的一组接口，规范实现者需要实现这些接口，以便实现规范的不同实现库之间的互操作性。</li><li>技术兼容性工具包(TCK)：用于实现一致测试的标准测试套件。</li></ul>
+</div>
+<div class="sec">
+<h4>Reactive Streams规范的核心概念</h4>
+<ul class="point">
+<li><b>Publisher(发布者)：产生一个可能包含无限元素的数据流</b>
+<ul class="quote"><li>为响应对Publisher.subscribe(订阅服务发布对象)的调用，subscriber(订阅者)上方法的可能调用序列由以下协议给出：onSubscribe onNext* (onError | onComplete)?。</li></ul>
+</li>
+<li><b>Subscriber(订阅者)：用来消费Publisher生产的数据流中的元素</b>
+<ul class="quote"><li>Subscriber(订阅者)的onSubscribe方法将总是会被通知(调用)，跟随调用的可能是无限次onNext方法(根据Subscriber的请求元素个数)，也可能是onError方法(出错时)或者onComplete方法(消费完毕时)。</li></ul>
+</li>
+<li><b>Subscription(订阅关系)，维持Subscriber和Publisher之间的关系</b>
+<ul class="quote"><li>订阅者Subscriber可以通过它来向Publisher请求更多的元素或者取消消费。</li></ul>
+</li>
+<li><b>Processor(处理器)：代表一个处理阶段，其既是订阅者又是发布者</b>
+<ul class="quote"><li>Processor(处理器)同时遵循双方的规范。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>为响应对Publisher.subscribe(订阅服务发布对象)的调用，subscriber(订阅者)上方法的可能调用序列由以下协议给出：onSubscribe onNext* (onError | onComplete)?。</li><li>Subscriber(订阅者)的onSubscribe方法将总是会被通知(调用)，跟随调用的可能是无限次onNext方法(根据Subscriber的请求元素个数)，也可能是onError方法(出错时)或者onComplete方法(消费完毕时)。</li><li>订阅者Subscriber可以通过它来向Publisher请求更多的元素或者取消消费。</li><li>Processor(处理器)同时遵循双方的规范。</li></ul>
+</div>
+<div class="sec">
+<h4>Reactive Streams规范的实现</h4>
+<ul class="point">
+<li><b>Reactive Streams规范的实现者可以自由实现规范未涵盖的其他功能</b>
+<ul class="quote"><li>只要它们符合API要求，并且通过TCK中的测试即可。</li></ul>
+</li>
+<li><b>Reactor或者RxJava等反应库提供了丰富的运算符</b>
+<ul class="quote"><li>这些涉及很多方面，从简单的转换和过滤到复杂的编排和错误处理。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>只要它们符合API要求，并且通过TCK中的测试即可。</li><li>这些涉及很多方面，从简单的转换和过滤到复杂的编排和错误处理。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">22</span><span class="mmx-name">5.3 基于RxJava实现异步编程</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 5 个小节 · 9 条要点 · 16 句原句摘录</p>
+<div class="sec">
+<h4>RxJava简介</h4>
+<ul class="point">
+<li><b>RxJava是Reactive Extensions的Java VM实现，用于通过使用可观察序列来编写异步和基于事件的程序</b>
+<ul class="quote"><li>RxJava扩展了观察者模式以支持数据/事件序列，并添加了允许以声明方式组合数据序列的运算符。</li><li>RxJava试图做得非常轻量级，它仅仅作为单个JAR实现，仅关注Observable抽象和相关的高阶运算函数。</li></ul>
+</li>
+<li><b>RxJava版本2将直接实现Reactive Streams接口并遵守规范</b>
+<ul class="quote"><li>版本1的API并不是基于Reactive Streams接口实现的，因此RxJava v1需要一个适配器。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>RxJava扩展了观察者模式以支持数据/事件序列，并添加了允许以声明方式组合数据序列的运算符。</li><li>RxJava试图做得非常轻量级，它仅仅作为单个JAR实现，仅关注Observable抽象和相关的高阶运算函数。</li><li>版本1的API并不是基于Reactive Streams接口实现的，因此RxJava v1需要一个适配器。</li></ul>
+</div>
+<div class="sec">
+<h4>RxJava基本用法</h4>
+<ul class="point">
+<li><b>使用Flowable.fromArray方法把ipList列表元素转换为Flowable流对象</b>
+<ul class="quote"><li>Flowable流对象中的元素就是ip地址。</li></ul>
+</li>
+<li><b>使用map操作符把流中的每个ip地址转换为rpcCall调用的结果后返回一个新的Flowable流对象</b>
+<ul class="quote"><li>新的Flowable流中的元素为调用rpcCall的结果。</li></ul>
+</li>
+<li><b>使用subscribe方法订阅新的Flowable流，并设置回调函数，当接收到元素后打印元素内容</b>
+<ul class="quote"><li>运行如上代码会发现耗时为20s左右，这是因为上述代码每次调用rpcCall方法都是按同步顺序进行的，调用的线程都是main函数所在线程。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Flowable流对象中的元素就是ip地址。</li><li>新的Flowable流中的元素为调用rpcCall的结果。</li><li>运行如上代码会发现耗时为20s左右，这是因为上述代码每次调用rpcCall方法都是按同步顺序进行的，调用的线程都是main函数所在线程。</li></ul>
+</div>
+<div class="sec">
+<h4>RxJava异步调用</h4>
+<ul class="point">
+<li><b>使用observeOn方法让rpcCall的执行由main函数所在线程切换到IO线程</b>
+<ul class="quote"><li>运行如上代码可知不需要等10次rpc调用全部执行完毕，main函数就退出了，这是因为IO线程是Deamon线程，而JVM退出的条件是当前没有用户线程存在，当前唯一的用户线程(main函数所在线程)已经退出了，所以JVM就退出了。</li></ul>
+</li>
+<li><b>使用subscribeOn方法让发射元素的逻辑从main函数所在线程切换到了IO线程</b>
+<ul class="quote"><li>再次运行上面代码后会发现代码2的耗时远远小于1s，这是因为代码1流中的元素发射与接收操作全部都异步化了。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>运行如上代码可知不需要等10次rpc调用全部执行完毕，main函数就退出了，这是因为IO线程是Deamon线程，而JVM退出的条件是当前没有用户线程存在，当前唯一的用户线程(main函数所在线程)已经退出了，所以JVM就退出了。</li><li>再次运行上面代码后会发现代码2的耗时远远小于1s，这是因为代码1流中的元素发射与接收操作全部都异步化了。</li></ul>
+</div>
+<div class="sec">
+<h4>RxJava自定义线程池</h4>
+<ul class="point">
+<li><b>使用自定义线程池进行rpc调用</b>
+<ul class="quote"><li>代码2.3使用subscribeOn切换线程时使用的就是我们自己创建的POOL_EXECUTOR线程池。</li><li>这里由于POOL_EXECUTOR内部默认创建的是用户线程，所以必须要调用代码4销毁用户线程，这样当前jvm才会正常退出。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>代码2.3使用subscribeOn切换线程时使用的就是我们自己创建的POOL_EXECUTOR线程池。</li><li>这里由于POOL_EXECUTOR内部默认创建的是用户线程，所以必须要调用代码4销毁用户线程，这样当前jvm才会正常退出。</li></ul>
+</div>
+<div class="sec">
+<h4>RxJava高级操作符</h4>
+<ul class="point">
+<li><b>使用defer操作符延迟计算</b>
+<ul class="quote"><li>AtomicInteger count = new AtomicInteger();</li><li>Observable.range(1, 10)。</li><li>.doOnNext(ignored -&gt; count.incrementAndGet())。</li><li>.ignoreElements()。</li><li>.andThen(Single.defer(() -&gt; Single.just(count.get())))。</li><li>.subscribe(System.out::println);</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>AtomicInteger count = new AtomicInteger();</li><li>Observable.range(1, 10)。</li><li>.doOnNext(ignored -&gt; count.incrementAndGet())。</li><li>.ignoreElements()。</li><li>.andThen(Single.defer(() -&gt; Single.just(count.get())))。</li><li>.subscribe(System.out::println);</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">23</span><span class="mmx-name">5.4 基于Reactor实现异步编程</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 5 个小节 · 6 条要点 · 12 句原句摘录</p>
+<div class="sec">
+<h4>Reactor反应式库的引入与使用</h4>
+<ul class="point">
+<li><b>Reactor反应式库是反应式编程规范的一个实现，与RxJava基本等同</b>
+<ul class="quote"><li>Reactor中的流操作符与RxJava基本都是等同的。</li></ul>
+</li>
+<li><b>在Java项目中可以通过引入jar的方式，单独使用Reactor</b>
+<ul class="quote"><li>需要引入BOM配置。</li><li>需要引入BOM中具体的与Reactor库相关的依赖。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Reactor中的流操作符与RxJava基本都是等同的。</li><li>需要引入BOM配置。</li><li>需要引入BOM中具体的与Reactor库相关的依赖。</li></ul>
+</div>
+<div class="sec">
+<h4>Reactor中的反应式类型</h4>
+<ul class="point">
+<li><b>Reactor中有两种反应式类型：Mono与Flux</b>
+<ul class="quote"><li>Mono代表着0或1个元素的流对象。</li><li>Flux代表含有0或N个元素的流对象。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Mono代表着0或1个元素的流对象。</li><li>Flux代表含有0或N个元素的流对象。</li></ul>
+</div>
+<div class="sec">
+<h4>Reactor与RxJava的转换</h4>
+<ul class="point">
+<li><b>把RxJava中的反应式类型Flowable修改为Reactor中的Flux即可</b>
+<ul class="quote"><li>只需要修改反应式类型，其他代码逻辑基本不变。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>只需要修改反应式类型，其他代码逻辑基本不变。</li></ul>
+</div>
+<div class="sec">
+<h4>Reactor中的并发调度线程池</h4>
+<ul class="point">
+<li><b>Reactor使用Schedulers来抽象统一API背后的并发调度线程池</b>
+<ul class="quote"><li>Schedulers.elastic()：线程池中的线程是可以复用的，按需创建与空闲回收，该调度器适用于I/O密集型任务。</li><li>Schedulers.parallel()：含有固定个数的线程池，该调度器适用于计算密集型任务。</li><li>Schedulers.single()：单一线程来执行任务。</li><li>Schedulers.immediate()：立刻使用调用线程来执行。</li><li>Schedulers.fromExecutor()：将已有的Executor转换为Scheduler来执行任务。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Schedulers.elastic()：线程池中的线程是可以复用的，按需创建与空闲回收，该调度器适用于I/O密集型任务。</li><li>Schedulers.parallel()：含有固定个数的线程池，该调度器适用于计算密集型任务。</li><li>Schedulers.single()：单一线程来执行任务。</li><li>Schedulers.immediate()：立刻使用调用线程来执行。</li><li>Schedulers.fromExecutor()：将已有的Executor转换为Scheduler来执行任务。</li></ul>
+</div>
+<div class="sec">
+<h4>Reactor中的线程切换</h4>
+<ul class="point">
+<li><b>Reactor中使用publishOn来实现对等的功能</b>
+<ul class="quote"><li>切换当前调用线程为Schedulers.single()中的线程，后续的操作将会在切换的线程上执行。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>切换当前调用线程为Schedulers.single()中的线程，后续的操作将会在切换的线程上执行。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">24</span><span class="mmx-name">5.5 总结</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 6 条要点 · 1 句原句摘录</p>
+<div class="sec">
+<h4>传统基于CallBack与Future实现异步编程的缺点</h4>
+<ul class="point">
+<li><b>基于CallBack的异步编程，回调地狱问题严重</b>
+<ul class="quote"><li>在复杂的业务场景中，回调地狱问题更加明显，代码难以维护。</li></ul>
+</li>
+<li><b>Future无法取消，只能靠抛出异常来终止，这在某些场景下并不适用。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在复杂的业务场景中，回调地狱问题更加明显，代码难以维护。</li></ul>
+</div>
+<div class="sec">
+<h4>Reactive编程带来的好处</h4>
+<ul class="point">
+<li><b>Reactive编程使得异步编程更加简洁、可读性更强。</b>
+</li>
+<li><b>Reactive编程提供了强大的错误处理能力，可以更加方便地处理异步错误。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>基于RxJava与Reactor库实现异步编程</h4>
+<ul class="point">
+<li><b>RxJava与Reactor是Java中流行的Reactive编程库，可以帮助我们方便地实现异步编程。</b>
+</li>
+<li><b>可以使用RxJava与Reactor库提供的各种操作符来处理异步操作，如map、filter、flatMap等。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">25</span><span class="mmx-name">第6章 Web Ser vlet的异步非阻塞处理</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 4 条要点 · 7 句原句摘录</p>
+<div class="sec">
+<h4>Servlet3.0规范前的同步处理模型及其缺点</h4>
+<ul class="point">
+<li><b>Servlet3.0规范前的同步处理模型导致性能瓶颈</b>
+<ul class="quote"><li>在Servlet3.0规范前，Servlet容器使用同步处理模型处理请求，每个请求都会阻塞Servlet容器的线程，导致性能瓶颈。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在Servlet3.0规范前，Servlet容器使用同步处理模型处理请求，每个请求都会阻塞Servlet容器的线程，导致性能瓶颈。</li></ul>
+</div>
+<div class="sec">
+<h4>Servlet3.0规范提供的异步处理能力</h4>
+<ul class="point">
+<li><b>Servlet3.0规范通过提供AsyncContext和Callback接口实现异步处理</b>
+<ul class="quote"><li>Servlet3.0规范引入了AsyncContext接口，用于在Servlet容器中管理异步请求的上下文。</li><li>Servlet3.0规范还提供了Callback接口，用于在异步请求完成时回调Servlet容器。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Servlet3.0规范引入了AsyncContext接口，用于在Servlet容器中管理异步请求的上下文。</li><li>Servlet3.0规范还提供了Callback接口，用于在异步请求完成时回调Servlet容器。</li></ul>
+</div>
+<div class="sec">
+<h4>Servlet3.1规范提供的非阻塞IO能力</h4>
+<ul class="point">
+<li><b>Servlet3.1规范通过提供Nonblocking IO和ServletInputStream/ServletOutputStream实现非阻塞IO</b>
+<ul class="quote"><li>Servlet3.1规范引入了Nonblocking IO API，允许Servlet容器以非阻塞方式处理请求。</li><li>Servlet3.1规范还提供了ServletInputStream和ServletOutputStream接口，用于在Servlet容器中处理非阻塞IO。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Servlet3.1规范引入了Nonblocking IO API，允许Servlet容器以非阻塞方式处理请求。</li><li>Servlet3.1规范还提供了ServletInputStream和ServletOutputStream接口，用于在Servlet容器中处理非阻塞IO。</li></ul>
+</div>
+<div class="sec">
+<h4>Spring MVC中提供的异步处理能力</h4>
+<ul class="point">
+<li><b>Spring MVC通过提供@Async注解和AsyncHandlerInterceptor实现异步处理</b>
+<ul class="quote"><li>Spring MVC提供了@Async注解，用于标注需要异步处理的方法。</li><li>Spring MVC还提供了AsyncHandlerInterceptor接口，用于拦截需要异步处理的方法。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Spring MVC提供了@Async注解，用于标注需要异步处理的方法。</li><li>Spring MVC还提供了AsyncHandlerInterceptor接口，用于拦截需要异步处理的方法。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">26</span><span class="mmx-name">6.1 Servlet概述</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 6 条要点 · 5 句原句摘录</p>
+<div class="sec">
+<h4>Servlet概述</h4>
+<ul class="point">
+<li><b>Servlet是一个基于Java技术的Web组件，由容器管理，生成动态内容</b>
+<ul class="quote"><li>Servlet是与平台无关的Java类格式，它们被编译为与具体平台无关的字节码，可以被基于Java技术的Web Server动态加载并运行。</li></ul>
+</li>
+<li><b>容器(有时称为Servlet引擎)是Web服务器为支持Servlet功能扩展的部分</b>
+<ul class="quote"><li>客户端通过Servlet容器实现请求/应答模型与Servlet交互。</li></ul>
+</li>
+<li><b>Servlet容器是Web Server或Application Server的一部分，其提供基于请求/响应模型的网络服务</b>
+<ul class="quote"><li>Servlet容器也包含了管理Servlet生命周期的能力，Servlet是运行在Servlet容器内的。</li></ul>
+</li>
+<li><b>所有Servlet容器必须支持基于HTTP协议的请求/响应模型，并且可以选择性支持基于HTTPS协议的请求/应答模型</b>
+<ul class="quote"><li>容器必须实现的HTTP协议版本包含HTTP/1.0和HTTP/1.1。</li></ul>
+</li>
+<li><b>Servlet容器应该使Servlet执行在一个安全限制的环境中</b>
+<ul class="quote"><li>在Java平台标准版(J2SE, v.1.3或更高)或者Java平台企业版(Java EE, v.1.3或更高)的环境下，这些限制应该被放置在Java平台定义的安全许可架构中。</li></ul>
+</li>
+<li><b>常见的比较经典的Servlet容器实现有Tomcat和Jetty。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Servlet是与平台无关的Java类格式，它们被编译为与具体平台无关的字节码，可以被基于Java技术的Web Server动态加载并运行。</li><li>客户端通过Servlet容器实现请求/应答模型与Servlet交互。</li><li>Servlet容器也包含了管理Servlet生命周期的能力，Servlet是运行在Servlet容器内的。</li><li>容器必须实现的HTTP协议版本包含HTTP/1.0和HTTP/1.1。</li><li>在Java平台标准版(J2SE, v.1.3或更高)或者Java平台企业版(Java EE, v.1.3或更高)的环境下，这些限制应该被放置在Java平台定义的安全许可架构中。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">27</span><span class="mmx-name">6.2 Servlet 3.0 提供的异步处理能力</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 9 条要点 · 13 句原句摘录</p>
+<div class="sec">
+<h4>Servlet 3.0 提供的异步处理能力</h4>
+<ul class="point">
+<li><b>Servlet 3.0 规范中引入了异步处理请求的能力</b>
+<ul class="quote"><li>处理线程可以及时返回容器并执行其他任务。</li></ul>
+</li>
+<li><b>异步处理可以及时释放Servlet容器线程，提高服务器能提供的并发请求数量</b>
+<ul class="quote"><li>具体处理请求响应的逻辑已经不再是Servlet调用线程来做了，Servlet内开启异步处理后会立刻释放Servlet容器线程。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>处理线程可以及时返回容器并执行其他任务。</li><li>具体处理请求响应的逻辑已经不再是Servlet调用线程来做了，Servlet内开启异步处理后会立刻释放Servlet容器线程。</li></ul>
+</div>
+<div class="sec">
+<h4>在SpringBoot中设置Servlet为异步处理</h4>
+<ul class="point">
+<li><b>使用注解@WebServlet来标识MyServlet是一个Servlet，其中asyncSupported为true代表要异步执行</b>
+<ul class="quote"><li>然后框架就会知道该Servlet要启动异步处理功能。</li></ul>
+</li>
+<li><b>MyServlet的Service方法中调用HttpServletRequest的startAsync()方法开启异步调用</b>
+<ul class="quote"><li>该方法返回一个AsyncContext，其中保存了与请求/响应相关的上下文信息。</li></ul>
+</li>
+<li><b>提交异步任务后，异步任务的执行还是由容器中的其他线程来具体执行的</b>
+<ul class="quote"><li>这里异步任务中代码3.1休眠3s是为了模拟耗时操作。</li><li>代码3.2从asyncContext中获取响应对象，并把响应结果写入响应对象。</li><li>代码3.3则调用asyncContext.complete()标识异步任务执行完毕。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>然后框架就会知道该Servlet要启动异步处理功能。</li><li>该方法返回一个AsyncContext，其中保存了与请求/响应相关的上下文信息。</li><li>这里异步任务中代码3.1休眠3s是为了模拟耗时操作。</li><li>代码3.2从asyncContext中获取响应对象，并把响应结果写入响应对象。</li><li>代码3.3则调用asyncContext.complete()标识异步任务执行完毕。</li></ul>
+</div>
+<div class="sec">
+<h4>使用自定义线程池进行异步处理</h4>
+<ul class="point">
+<li><b>创建自己的JVM内全局的线程池。</b>
+</li>
+<li><b>把异步任务提交到了我们的线程池来执行</b>
+<ul class="quote"><li>这时候整个处理流程是：Tomcat容器收到请求后，从容器中获取一个线程来执行Filter链，接着把请求同步转发到MyServlet的service方法来执行，然后代码3把具体请求处理的逻辑异步切换到我们业务线程池来执行，此时MyServlet就返回了，并释放容器线程。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>这时候整个处理流程是：Tomcat容器收到请求后，从容器中获取一个线程来执行Filter链，接着把请求同步转发到MyServlet的service方法来执行，然后代码3把具体请求处理的逻辑异步切换到我们业务线程池来执行，此时MyServlet就返回了，并释放容器线程。</li></ul>
+</div>
+<div class="sec">
+<h4>使用AsyncListener接口对异步执行结果进行响应</h4>
+<ul class="point">
+<li><b>实现AsyncListener接口来对异步执行结果进行响应</b>
+<ul class="quote"><li>比如基于上面代码，我们添加AsyncListener接口后代码如下。</li></ul>
+</li>
+<li><b>通过AsyncListener接口的各个方法对异步处理的结果进行处理</b>
+<ul class="quote"><li>onTimeout：异步处理超时。</li><li>onStartAsync：异步处理开始。</li><li>onError：异步处理出错。</li><li>onComplete：异步处理完成。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>比如基于上面代码，我们添加AsyncListener接口后代码如下。</li><li>onTimeout：异步处理超时。</li><li>onStartAsync：异步处理开始。</li><li>onError：异步处理出错。</li><li>onComplete：异步处理完成。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">28</span><span class="mmx-name">6.3 Servlet 3.1 提供的非阻塞IO能力</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 4 条要点 · 6 句原句摘录</p>
+<div class="sec">
+<h4>Servlet 3.1 提供的非阻塞IO能力</h4>
+<ul class="point">
+<li><b>Servlet 3.0规范让Servlet的执行变为了异步，但是其IO还是阻塞式的</b>
+<ul class="quote"><li>IO阻塞是说，在Servlet处理请求时，从ServletInputStream中读取请求体时是阻塞的。</li></ul>
+</li>
+<li><b>Servlet 3.1规范中提供了非阻塞IO处理方式</b>
+<ul class="quote"><li>Web容器中的非阻塞请求处理有助于增加Web容器可同时处理请求的连接数量。</li><li>Servlet容器的非阻塞IO允许开发人员在数据可用时读取数据或在数据可写时写数据。</li><li>基于内核的能力，Servlet3.1允许我们在ServletInputStream上通过函数setReadListener注册一个监听器，该监听器在发现内核有数据时才会进行回调处理函数。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>IO阻塞是说，在Servlet处理请求时，从ServletInputStream中读取请求体时是阻塞的。</li><li>Web容器中的非阻塞请求处理有助于增加Web容器可同时处理请求的连接数量。</li><li>Servlet容器的非阻塞IO允许开发人员在数据可用时读取数据或在数据可写时写数据。</li><li>基于内核的能力，Servlet3.1允许我们在ServletInputStream上通过函数setReadListener注册一个监听器，该监听器在发现内核有数据时才会进行回调处理函数。</li></ul>
+</div>
+<div class="sec">
+<h4>ReadListener的使用</h4>
+<ul class="point">
+<li><b>当内核发现有数据已经就绪时，就会回调其onDataAvailable方法</b>
+<ul class="quote"><li>这里代码3.1通过inputStream.isReady()发现数据已经准备就绪后，就可以从中读取数据了。</li></ul>
+</li>
+<li><b>当请求体的数据全部读取完毕后才会调用onAllDataRead方法</b>
+<ul class="quote"><li>在这个方法内我们使用业务线程池对请求进行处理，并把结果写回请求方。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>这里代码3.1通过inputStream.isReady()发现数据已经准备就绪后，就可以从中读取数据了。</li><li>在这个方法内我们使用业务线程池对请求进行处理，并把结果写回请求方。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">29</span><span class="mmx-name">6.4 Spring Web MVC的异步处理能力</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 9 条要点 · 15 句原句摘录</p>
+<div class="sec">
+<h4>Spring Web MVC概述</h4>
+<ul class="point">
+<li><b>Spring Web MVC是基于Servlet API构建的Web框架</b>
+<ul class="quote"><li>Spring MVC的出现让我们不用再聚焦在具体的Servlet上，而是直接编写与业务相关的controller。</li></ul>
+</li>
+<li><b>DispatcherServlet是Spring MVC的请求处理中心</b>
+<ul class="quote"><li>DispatcherServlet使用Java配置或webxml根据Servlet规范进行声明和映射。</li><li>DispatcherServlet使用Spring配置来发现请求映射、视图解析、异常处理等所需的委托组件。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Spring MVC的出现让我们不用再聚焦在具体的Servlet上，而是直接编写与业务相关的controller。</li><li>DispatcherServlet使用Java配置或webxml根据Servlet规范进行声明和映射。</li><li>DispatcherServlet使用Spring配置来发现请求映射、视图解析、异常处理等所需的委托组件。</li></ul>
+</div>
+<div class="sec">
+<h4>Spring MVC的异步处理能力</h4>
+<ul class="point">
+<li><b>Spring MVC与Servlet 3.0异步请求处理有很深的集成</b>
+<ul class="quote"><li>DeferredResult和Callable作为controller方法中的返回值，并为单个异步返回值提供基本支持。</li><li>controller可以流式传输多个值，包括SSE和原始数据。</li><li>controller可以使用反应式客户端并返回反应式类型，以进行反应式处理。</li></ul>
+</li>
+<li><b>Spring MVC内部通过调用request.startAsync()将ServletRequest置于异步模式</b>
+<ul class="quote"><li>Servlet(以及任何Filter)可以退出(同时容器线程也得到了释放)，但响应保持打开状态，以便进行后续处理(异步处理完毕后使用其把结果写回请求方)。</li><li>Spring MVC内部对request.startAsync()的调用返回AsyncContext，可以使用它来进一步控制异步处理。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>DeferredResult和Callable作为controller方法中的返回值，并为单个异步返回值提供基本支持。</li><li>controller可以流式传输多个值，包括SSE和原始数据。</li><li>controller可以使用反应式客户端并返回反应式类型，以进行反应式处理。</li><li>Servlet(以及任何Filter)可以退出(同时容器线程也得到了释放)，但响应保持打开状态，以便进行后续处理(异步处理完毕后使用其把结果写回请求方)。</li><li>Spring MVC内部对request.startAsync()的调用返回AsyncContext，可以使用它来进一步控制异步处理。</li></ul>
+</div>
+<div class="sec">
+<h4>基于DeferredResult的异步处理</h4>
+<ul class="point">
+<li><b>controller方法可以使用DeferredResult包装任何支持的方法返回值</b>
+<ul class="quote"><li>创建一个业务线程池BIZ_POOL，然后controller方法在listPost DeferredResult内创建了一个DeferredResult对象，接着向业务线程池BIZ_POOL提交我们的请求处理逻辑(其内部处理完毕后把结果设置到创建的DeferredResult)，最后返回创建的DeferredResult对象。</li></ul>
+</li>
+<li><b>Spring MVC内部在personDeferredResult方法返回后会保存DeferredResult对象到内存队列或者列表，然后会调用request.startAsync()开启异步处理</b>
+<ul class="quote"><li>释放分配给当前请求的容器线程，与此同时当前请求的DispatcherServlet和所有filters也执行完毕了，但是response流还是保持打开(因为任务执行结果还没写回)。</li><li>最终在业务线程池中执行的异步任务会产生一个结果，该结果会被设置到DeferredResult对象，然后设置的回调函数会被调用，接着Spring MVC会分派请求结果回到Servlet容器继续完成处理，DispatcherServlet被再次调用，使用返回的异步结果继续进行处理，最终把响应结果写回请求方。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>创建一个业务线程池BIZ_POOL，然后controller方法在listPost DeferredResult内创建了一个DeferredResult对象，接着向业务线程池BIZ_POOL提交我们的请求处理逻辑(其内部处理完毕后把结果设置到创建的DeferredResult)，最后返回创建的DeferredResult对象。</li><li>释放分配给当前请求的容器线程，与此同时当前请求的DispatcherServlet和所有filters也执行完毕了，但是response流还是保持打开(因为任务执行结果还没写回)。</li><li>最终在业务线程池中执行的异步任务会产生一个结果，该结果会被设置到DeferredResult对象，然后设置的回调函数会被调用，接着Spring MVC会分派请求结果回到Servlet容器继续完成处理，DispatcherServlet被再次调用，使用返回的异步结果继续进行处理，最终把响应结果写回请求方。</li></ul>
+</div>
+<div class="sec">
+<h4>基于Callable实现异步处理</h4>
+<ul class="point">
+<li><b>controller中的方法可以使用java.util.concurrent.Callable包装任何支持的返回类型</b>
+<ul class="quote"><li>返回一个异步任务后就直接返回了，其中的异步任务会使用Spring框架内部的TaskExecutor线程池来执行。</li></ul>
+</li>
+<li><b>Spring MVC内部在listPostCall方法返回后，调用request.startAsync()开启异步处理，然后提交Callable任务到内部线程池TaskExecutor(非容器线程)中进行异步执行</b>
+<ul class="quote"><li>释放分配给当前请求的容器线程，与此同时当前请求的DispatcherServlet和所有filters也执行完毕了，但是response流还是保持打开(因为Callable任务执行结果还没写回)。</li><li>最终在线程池TaskExecutor中执行的异步任务会产生一个结果，然后Spring MVC会分派请求结果回到Servlet容器继续完成处理，DispatcherServlet被再次调用，使用返回的异步结果继续进行处理，最终把响应结果写回请求方。</li></ul>
+</li>
+<li><b>可以通过自定义自己的线程池来执行异步处理</b>
+<ul class="quote"><li>向容器注入了一个WebMvcConfigurer的bean，然后在其configureAsyncSupport方法中创建了一个业务线程池，并把其设置到AsyncSupport Configurer中，则当容器进行异步处理时就会使用我们设置的线程池。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>返回一个异步任务后就直接返回了，其中的异步任务会使用Spring框架内部的TaskExecutor线程池来执行。</li><li>释放分配给当前请求的容器线程，与此同时当前请求的DispatcherServlet和所有filters也执行完毕了，但是response流还是保持打开(因为Callable任务执行结果还没写回)。</li><li>最终在线程池TaskExecutor中执行的异步任务会产生一个结果，然后Spring MVC会分派请求结果回到Servlet容器继续完成处理，DispatcherServlet被再次调用，使用返回的异步结果继续进行处理，最终把响应结果写回请求方。</li><li>向容器注入了一个WebMvcConfigurer的bean，然后在其configureAsyncSupport方法中创建了一个业务线程池，并把其设置到AsyncSupport Configurer中，则当容器进行异步处理时就会使用我们设置的线程池。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">30</span><span class="mmx-name">6.5 总结</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 4 条要点 · 7 句原句摘录</p>
+<div class="sec">
+<h4>Servlet 3.0前的Servlet同步处理模型及其缺点</h4>
+<ul class="point">
+<li><b>Servlet 3.0前的Servlet同步处理模型在处理高并发请求时，性能较差</b>
+<ul class="quote"><li>同步处理模型需要等待一个请求处理完毕才能处理下一个请求。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>同步处理模型需要等待一个请求处理完毕才能处理下一个请求。</li></ul>
+</div>
+<div class="sec">
+<h4>Servlet 3.0提供的异步处理能力</h4>
+<ul class="point">
+<li><b>Servlet 3.0通过提供AsyncContext和@Asnyc注解，支持异步处理</b>
+<ul class="quote"><li>AsyncContext用于在Servlet中实现异步处理。</li><li>@Asnyc注解用于标记一个方法为异步方法。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>AsyncContext用于在Servlet中实现异步处理。</li><li>@Asnyc注解用于标记一个方法为异步方法。</li></ul>
+</div>
+<div class="sec">
+<h4>Servlet 3.1的非阻塞IO能力</h4>
+<ul class="point">
+<li><b>Servlet 3.1通过提供NonBlocking IO和ServletInputStream.setReadListener，支持非阻塞IO</b>
+<ul class="quote"><li>NonBlocking IO用于提高Servlet处理请求的效率。</li><li>ServletInputStream.setReadListener用于监听请求输入流的数据读取事件。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>NonBlocking IO用于提高Servlet处理请求的效率。</li><li>ServletInputStream.setReadListener用于监听请求输入流的数据读取事件。</li></ul>
+</div>
+<div class="sec">
+<h4>Spring MVC中提供的异步处理能力</h4>
+<ul class="point">
+<li><b>Spring MVC通过提供@Async注解和AsyncTaskExecutor，支持异步处理</b>
+<ul class="quote"><li>@Async注解用于标记一个方法为异步方法。</li><li>AsyncTaskExecutor用于执行异步任务。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>@Async注解用于标记一个方法为异步方法。</li><li>AsyncTaskExecutor用于执行异步任务。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">31</span><span class="mmx-name">第7章 Spring WebFlux的异步非阻塞处理</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 2 条要点 · 3 句原句摘录</p>
+<div class="sec">
+<h4>Spring WebFlux技术栈介绍</h4>
+<ul class="point">
+<li><b>Spring框架5.0中引入的新的WebFlux技术栈</b>
+<ul class="quote"><li>WebFlux存在的价值与意义。</li><li>并发模型与适用场景。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>WebFlux存在的价值与意义。</li><li>并发模型与适用场景。</li></ul>
+</div>
+<div class="sec">
+<h4>基于WebFlux实现异步编程</h4>
+<ul class="point">
+<li><b>如何基于WebFlux实现异步编程</b>
+<ul class="quote"><li>WebFlux内部的实现原理。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>WebFlux内部的实现原理。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">32</span><span class="mmx-name">7.1 Spring WebFlux概述</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 3 条要点 · 4 句原句摘录</p>
+<div class="sec">
+<h4>Spring WebFlux概述</h4>
+<ul class="point">
+<li><b>Spring WebFlux是Spring 5.0版中添加的，它是完全无阻塞的，支持Reactive Streams回压</b>
+<ul class="quote"><li>Spring WebFlux中的Flux源自Reactor库中的Flux流对象。</li></ul>
+</li>
+<li><b>Spring WebFlux既不是基于Servlet API构建的，也不需要额外的异步请求处理功能</b>
+<ul class="quote"><li>Spring WebFlux在设计上是异步的，其对异步的处理是内置于框架规范中的。</li></ul>
+</li>
+<li><b>Spring MVC和Spring WebFlux都支持异步和反应式作为controller方法中的返回值</b>
+<ul class="quote"><li>Spring MVC甚至支持流媒体，包括反应性回压功能，但是其对响应的写入仍然是阻塞的。</li><li>WebFlux则不同，其依赖于非阻塞IO，并且每次写入都不需要额外的线程进行支持。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Spring WebFlux中的Flux源自Reactor库中的Flux流对象。</li><li>Spring WebFlux在设计上是异步的，其对异步的处理是内置于框架规范中的。</li><li>Spring MVC甚至支持流媒体，包括反应性回压功能，但是其对响应的写入仍然是阻塞的。</li><li>WebFlux则不同，其依赖于非阻塞IO，并且每次写入都不需要额外的线程进行支持。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">33</span><span class="mmx-name">7.2 Reactive编程 &amp; Reactor库</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 4 条要点 · 7 句原句摘录</p>
+<div class="sec">
+<h4>Reactive编程</h4>
+<ul class="point">
+<li><b>Reactive编程是指围绕变化做出反应的编程模型</b>
+<ul class="quote"><li>比如对IO事件做出反应的网络组件、对鼠标事件做出反应的UI控制器等。</li></ul>
+</li>
+<li><b>Reactive Streams是一个规范，用于定义具有回压的异步组件之间的交互</b>
+<ul class="quote"><li>数据存储库(充当发布者)可以产生数据(从数据库迭代出数据)，然后HTTP服务器(充当订阅服务器)可以把迭代出的数据写入请求响应中。</li><li>Reactive Streams的主要目的是让订阅者控制发布者生成数据的速度。</li><li>Reactive Streams的目的是建立回压的一种机制和一个边界限制。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>比如对IO事件做出反应的网络组件、对鼠标事件做出反应的UI控制器等。</li><li>数据存储库(充当发布者)可以产生数据(从数据库迭代出数据)，然后HTTP服务器(充当订阅服务器)可以把迭代出的数据写入请求响应中。</li><li>Reactive Streams的主要目的是让订阅者控制发布者生成数据的速度。</li><li>Reactive Streams的目的是建立回压的一种机制和一个边界限制。</li></ul>
+</div>
+<div class="sec">
+<h4>Reactor库</h4>
+<ul class="point">
+<li><b>Reactor提供Mono和Flux API流类型，其提供了与ReactiveX词汇表对齐的丰富运算符</b>
+<ul class="quote"><li>Reactor是一个Reactive Streams库，因此它的所有运营商都支持非阻塞反压功能。</li></ul>
+</li>
+<li><b>WebFlux要求Reactor作为核心依赖，但它可以通过Reactive Streams与其他反应库(比如RxJava)进行交互操作</b>
+<ul class="quote"><li>WebFlux API接收普通Publisher作为输入，在内部使其适配Reactor类型，使用它并返回Flux或Mono作为输出。</li><li>只要可行(例如带注解的controller), WebFlux就会透明地适配RxJava或其他反应库的使用。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Reactor是一个Reactive Streams库，因此它的所有运营商都支持非阻塞反压功能。</li><li>WebFlux API接收普通Publisher作为输入，在内部使其适配Reactor类型，使用它并返回Flux或Mono作为输出。</li><li>只要可行(例如带注解的controller), WebFlux就会透明地适配RxJava或其他反应库的使用。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">34</span><span class="mmx-name">7.3 WebFlux服务器</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 6 条要点 · 7 句原句摘录</p>
+<div class="sec">
+<h4>Spring WebFlux服务器概述</h4>
+<ul class="point">
+<li><b>Spring WebFlux可以在多种容器上运行，包括Tomcat、Jetty、Servlet 3.1+容器以及非Servlet容器(如Netty和Undertow)。</b>
+</li>
+<li><b>Spring Boot有一个WebFlux启动器(starter)，可以自动启动，默认使用Netty作为服务器</b>
+<ul class="quote"><li>通过更改Maven或Gradle依赖项可以轻松切换到Tomcat、Jetty或Undertow服务器。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>通过更改Maven或Gradle依赖项可以轻松切换到Tomcat、Jetty或Undertow服务器。</li></ul>
+</div>
+<div class="sec">
+<h4>不同服务器与Spring WebFlux的集成方式</h4>
+<ul class="point">
+<li><b>Tomcat、Jetty容器可以与Spring MVC、WebFlux一起使用，但使用方式不同</b>
+<ul class="quote"><li>Spring MVC依赖于Servlet阻塞IO，并允许应用程序在需要时直接使用Servlet API。</li><li>Spring WebFlux依赖于Servlet 3.1非阻塞IO，并在低级适配器后面使用Servlet API，而不是直接使用。</li></ul>
+</li>
+<li><b>Undertow作为服务器时，Spring WebFlux直接使用Undertow API而不使用Servlet API。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Spring MVC依赖于Servlet阻塞IO，并允许应用程序在需要时直接使用Servlet API。</li><li>Spring WebFlux依赖于Servlet 3.1非阻塞IO，并在低级适配器后面使用Servlet API，而不是直接使用。</li></ul>
+</div>
+<div class="sec">
+<h4>WebFlux服务器的工作原理</h4>
+<ul class="point">
+<li><b>HttpHandler是WebFlux中处理请求和响应的最小抽象</b>
+<ul class="quote"><li>HttpHandler接口只有一个方法来处理请求和响应：handle(ServerHttpRequest request, ServerHttpResponse response)。</li></ul>
+</li>
+<li><b>不同类型的服务器只需要添加一个适配器来适配HttpHandler即可</b>
+<ul class="quote"><li>基于Reactor Netty实现服务器时，使用ReactorHttpHandlerAdapter适配器。</li><li>基于Tomcat实现服务器时，使用TomcatHttpHandlerAdapter适配器。</li><li>WebFlux提供的HttpHandler层以下是通用的基础设施，上层具体服务器只需要创建自己的适配器，即可方便地使用WebFlux底层功能。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>HttpHandler接口只有一个方法来处理请求和响应：handle(ServerHttpRequest request, ServerHttpResponse response)。</li><li>基于Reactor Netty实现服务器时，使用ReactorHttpHandlerAdapter适配器。</li><li>基于Tomcat实现服务器时，使用TomcatHttpHandlerAdapter适配器。</li><li>WebFlux提供的HttpHandler层以下是通用的基础设施，上层具体服务器只需要创建自己的适配器，即可方便地使用WebFlux底层功能。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">35</span><span class="mmx-name">7.4 WebFlux的并发模型</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 3 条要点 · 2 句原句摘录</p>
+<div class="sec">
+<h4>Spring MVC和Spring WebFlux的并发模型差异</h4>
+<ul class="point">
+<li><b>Spring MVC假设应用程序可以阻塞当前线程，使用大型线程池来化解请求期间的潜在阻塞问题。</b>
+</li>
+<li><b>Spring WebFlux假设应用程序不会阻塞，使用小的固定大小的线程池(事件循环IO工作线程)来处理请求</b>
+<ul class="quote"><li>如果确实需要使用阻塞库，Reactor和RxJava提供了publishOn和observeOn运算符将流上的后续操作切换到其他的线程上进行处理。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如果确实需要使用阻塞库，Reactor和RxJava提供了publishOn和observeOn运算符将流上的后续操作切换到其他的线程上进行处理。</li></ul>
+</div>
+<div class="sec">
+<h4>Reactor和RxJava中的线程切换</h4>
+<ul class="point">
+<li><b>Reactor和RxJava可以使用操作符声明逻辑，并且在运行时形成一个反应流，其中数据在不同的阶段按顺序处理</b>
+<ul class="quote"><li>这样做的一个主要好处是它可以使应用程序中的数据处于线程安全的状态，因为该反应流中的应用程序代码永远不会被并发调用。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>这样做的一个主要好处是它可以使应用程序中的数据处于线程安全的状态，因为该反应流中的应用程序代码永远不会被并发调用。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">36</span><span class="mmx-name">7.5 WebFlux对性能的影响</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 3 条要点 · 3 句原句摘录</p>
+<div class="sec">
+<h4>WebFlux对性能的影响</h4>
+<ul class="point">
+<li><b>反应式和非阻塞编程通常不会使应用程序运行得更快</b>
+<ul class="quote"><li>在某些情况下它们可以(例如使用WebClient并行执行远程调用)做到更快。</li></ul>
+</li>
+<li><b>以非阻塞的方式来执行，需要做更多的额外工作，并且可能会增加处理所需的时间。</b>
+</li>
+<li><b>反应式和非阻塞的关键好处是能够使用少量固定数量的线程和更少的内存实现系统可伸缩性</b>
+<ul class="quote"><li>这使得应用程序在负载下更具弹性，因为它们以更可预测的方式扩展。</li><li>但是为了得到这些好处，需要付出一些代价(比如不可预测的网络IO)。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在某些情况下它们可以(例如使用WebClient并行执行远程调用)做到更快。</li><li>这使得应用程序在负载下更具弹性，因为它们以更可预测的方式扩展。</li><li>但是为了得到这些好处，需要付出一些代价(比如不可预测的网络IO)。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">37</span><span class="mmx-name">7.6 WebFlux的编程模型</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 8 条要点 · 11 句原句摘录</p>
+<div class="sec">
+<h4>WebFlux的编程模型</h4>
+<ul class="point">
+<li><b>Spring WebFlux提供了两种编程模型以供选择：带注解的controller和函数式端点</b>
+<ul class="quote"><li>带注解的controller与Spring MVC一致，并基于spring-web模块的相同注解。</li><li>函数式端点基于Lambda，轻量级和函数式编程模型。</li></ul>
+</li>
+<li><b>WebFlux需要底层提供运行时的支持，可以在Tomcat、Jetty、Servlet 3.1+容器及非Servlet容器(如Netty和Undertow)上运行。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>带注解的controller与Spring MVC一致，并基于spring-web模块的相同注解。</li><li>函数式端点基于Lambda，轻量级和函数式编程模型。</li></ul>
+</div>
+<div class="sec">
+<h4>WebFlux注解式编程模型</h4>
+<ul class="point">
+<li><b>Spring WebFlux提供了基于注释的编程模型，其中@Controller和@RestController组件使用注释来表达请求映射、请求输入、处理异常等</b>
+<ul class="quote"><li>带注释的Controllers具有灵活的方法签名，并且不用继承基类，也不必实现特定的接口。</li></ul>
+</li>
+<li><b>WebFlux默认运行在Netty服务器上，controller的执行是使用Netty的IO线程进行执行的</b>
+<ul class="quote"><li>如果controller的执行比较耗时，则会把IO线程耗尽，从而不能再处理其他请求。</li></ul>
+</li>
+<li><b>可以在反应式类型上施加publishOn运算，让controller逻辑的执行切换到其他线程，以便及时释放IO线程</b>
+<ul class="quote"><li>通过Schedulers.elastic()切换到异步线程执行。</li><li>使用Schedulers.fromExecutor (bizPoolExecutor)转换我们自己的线程池为WebFlux所需的Scheduler，这样在处理元素时就会使用我们自己的线程池线程进行处理。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>带注释的Controllers具有灵活的方法签名，并且不用继承基类，也不必实现特定的接口。</li><li>如果controller的执行比较耗时，则会把IO线程耗尽，从而不能再处理其他请求。</li><li>通过Schedulers.elastic()切换到异步线程执行。</li><li>使用Schedulers.fromExecutor (bizPoolExecutor)转换我们自己的线程池为WebFlux所需的Scheduler，这样在处理元素时就会使用我们自己的线程池线程进行处理。</li></ul>
+</div>
+<div class="sec">
+<h4>WebFlux函数式编程模型</h4>
+<ul class="point">
+<li><b>Spring WebFlux包括轻量级的函数式编程模型，其中函数用于路由和处理请求，并且其规范是为不变性而设计的</b>
+<ul class="quote"><li>函数式编程模型是基于注解的编程模型的替代方案，但两者都在相同的Reactive Core基础库上运行。</li></ul>
+</li>
+<li><b>在WebFlux的函数式编程模型中，使用HandlerFunction处理HTTP请求，RouterFunction是一个接收ServerRequest并返回延迟的HandlerFunction(即Mono)的函数</b>
+<ul class="quote"><li>HandlerFunction相当于在基于注解的编程模型中标注@RequestMapping注解的方法体。</li><li>RouterFunction相当于@RequestMapping注解本身，两者的主要区别在于，路由器功能不仅提供数据，还提供行为。</li></ul>
+</li>
+<li><b>controller方法是在业务线程内异步执行的，这和注解编程的执行逻辑是一致的</b>
+<ul class="quote"><li>通过RouterFunctions.route()方法创建Router Function的builder对象，注册GET方式请求的路由。</li><li>创建一个FunctionPersonHandler，用来提供不同的Handler-Function对不同请求进行处理。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>函数式编程模型是基于注解的编程模型的替代方案，但两者都在相同的Reactive Core基础库上运行。</li><li>HandlerFunction相当于在基于注解的编程模型中标注@RequestMapping注解的方法体。</li><li>RouterFunction相当于@RequestMapping注解本身，两者的主要区别在于，路由器功能不仅提供数据，还提供行为。</li><li>通过RouterFunctions.route()方法创建Router Function的builder对象，注册GET方式请求的路由。</li><li>创建一个FunctionPersonHandler，用来提供不同的Handler-Function对不同请求进行处理。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">38</span><span class="mmx-name">7.7 WebFlux原理浅尝</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 4 条要点 · 8 句原句摘录</p>
+<div class="sec">
+<h4>Reactor Netty概述</h4>
+<ul class="point">
+<li><b>Reactor Netty提供基于Netty框架的无阻塞和回压的TCP / HTTP / UDP客户端和服务器</b>
+<ul class="quote"><li>在WebFlux中主要使用其创建的HTTP服务器。</li></ul>
+</li>
+<li><b>HttpServer提供易于使用且易于配置的HttpServer类，并添加了Reactive Streams回压</b>
+<ul class="quote"><li>默认情况下，主机(Host)配置为任何本地地址，并且系统在调用绑定操作时可选取临时端口(port)。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在WebFlux中主要使用其创建的HTTP服务器。</li><li>默认情况下，主机(Host)配置为任何本地地址，并且系统在调用绑定操作时可选取临时端口(port)。</li></ul>
+</div>
+<div class="sec">
+<h4>WebFlux服务器启动流程</h4>
+<ul class="point">
+<li><b>SpringBoot的启动流程包括创建应用程序上下文、创建并启动HTTP服务器、启动服务</b>
+<ul class="quote"><li>创建容器应用程序上下文时应根据环境类型的不同而创建不同的应用程序上下文。</li><li>从应用程序上下文对应的Bean工厂中获取ReactiveWebServerFactory的实例，以便后面创建Web服务器。</li><li>在应用程序上下文刷新的finishRefresh阶段调用了startReactiveWebServer方法来启动服务。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>创建容器应用程序上下文时应根据环境类型的不同而创建不同的应用程序上下文。</li><li>从应用程序上下文对应的Bean工厂中获取ReactiveWebServerFactory的实例，以便后面创建Web服务器。</li><li>在应用程序上下文刷新的finishRefresh阶段调用了startReactiveWebServer方法来启动服务。</li></ul>
+</div>
+<div class="sec">
+<h4>WebFlux一次服务调用流程</h4>
+<ul class="point">
+<li><b>服务调用流程包括接收请求、处理请求、返回响应</b>
+<ul class="quote"><li>当我们在浏览器敲入http://127.0.0.1:8080/getPerson时，会向WebFlux中的Netty服务器发起请求。</li><li>服务器中的Boss监听线程会接收该请求，并在完成TCP三次握手后，把连接套接字通道注册到worker线程池的某个NioEventLoop中来处理。</li><li>然后该NioEventLoop中对应的线程就会轮询该套接字上的读写事件并进行处理。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>当我们在浏览器敲入http://127.0.0.1:8080/getPerson时，会向WebFlux中的Netty服务器发起请求。</li><li>服务器中的Boss监听线程会接收该请求，并在完成TCP三次握手后，把连接套接字通道注册到worker线程池的某个NioEventLoop中来处理。</li><li>然后该NioEventLoop中对应的线程就会轮询该套接字上的读写事件并进行处理。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">39</span><span class="mmx-name">7.8 WebFlux的适用场景</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 7 条要点 · 8 句原句摘录</p>
+<div class="sec">
+<h4>WebFlux与Servlet的关系及适用场景</h4>
+<ul class="point">
+<li><b>WebFlux与Servlet的设计是为了保持连续性和一致性，可以并排使用</b>
+<ul class="quote"><li>两者的关系、共同点以及各自的特性。</li></ul>
+</li>
+<li><b>如果你的Spring MVC应用程序运行正常，则无须更改</b>
+<ul class="quote"><li>命令式编程是编写、理解和调试代码的最简单方法。</li></ul>
+</li>
+<li><b>如果你已使用非阻塞Web栈，则可以考虑使用WebFlux</b>
+<ul class="quote"><li>Spring WebFlux提供与此相同的执行模型优势，并且提供了可用的服务器选择(Netty、Tomcat、Jetty、Undertow和Servlet 3.1+容器)，还提供了可选择的编程模型(带注解的controller和函数式Web端点)，以及可选择的反应库(Reactor、RxJava或其他)。</li></ul>
+</li>
+<li><b>如果你对与Java 8 Lambdas或Kotlin一起使用的轻量级、功能性Web框架感兴趣，则可以使用Spring WebFlux函数式Web端点</b>
+<ul class="quote"><li>对于较小的应用程序或具有较低复杂要求的微服务而言，这也是一个不错的选择，可以让你从更高的透明度和控制中受益。</li></ul>
+</li>
+<li><b>在微服务架构中，你可以将应用程序与Spring MVC、Spring WebFlux控制器、Spring WebFlux函数式端点混合使用</b>
+<ul class="quote"><li>在两个框架中支持相同的基于注解的编程模型，可以更轻松地重用知识，同时为正确的工作选择合适的工具。</li></ul>
+</li>
+<li><b>评估应用程序的一种简单方法是检查其依赖性</b>
+<ul class="quote"><li>如果你要使用阻塞持久性API(JPA, JDBC)或网络API，则Spring MVC至少是常见体系结构的最佳选择。</li><li>从技术上讲，Reactor和RxJava都可以在单独的线程上执行阻塞调用，但是你无法充分利用非阻塞的Web技术栈。</li></ul>
+</li>
+<li><b>如果你有一个调用远程服务的Spring MVC应用程序，则可尝试使用反应式WebClient</b>
+<ul class="quote"><li>你可以直接从Spring MVC控制器方法返回反应式类型(Reactor、RxJava或其他)。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>两者的关系、共同点以及各自的特性。</li><li>命令式编程是编写、理解和调试代码的最简单方法。</li><li>Spring WebFlux提供与此相同的执行模型优势，并且提供了可用的服务器选择(Netty、Tomcat、Jetty、Undertow和Servlet 3.1+容器)，还提供了可选择的编程模型(带注解的controller和函数式Web端点)，以及可选择的反应库(Reactor、RxJava或其他)。</li><li>对于较小的应用程序或具有较低复杂要求的微服务而言，这也是一个不错的选择，可以让你从更高的透明度和控制中受益。</li><li>在两个框架中支持相同的基于注解的编程模型，可以更轻松地重用知识，同时为正确的工作选择合适的工具。</li><li>如果你要使用阻塞持久性API(JPA, JDBC)或网络API，则Spring MVC至少是常见体系结构的最佳选择。</li><li>从技术上讲，Reactor和RxJava都可以在单独的线程上执行阻塞调用，但是你无法充分利用非阻塞的Web技术栈。</li><li>你可以直接从Spring MVC控制器方法返回反应式类型(Reactor、RxJava或其他)。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">40</span><span class="mmx-name">7.9 总结</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 2 条要点 · 2 句原句摘录</p>
+<div class="sec">
+<h4>Spring 5.0引入的新的异步非阻塞的WebFlux技术栈</h4>
+<ul class="point">
+<li><b>WebFlux从规范上支持异步处理，基于Reactor库天然支持反应式编程</b>
+<ul class="quote"><li>WebFlux使用少量固定线程来实现系统可伸缩性。</li></ul>
+</li>
+<li><b>WebFlux与Servlet技术栈是并行存在的</b>
+<ul class="quote"><li>WebFlux相信在不久的将来会得到大范围使用。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>WebFlux使用少量固定线程来实现系统可伸缩性。</li><li>WebFlux相信在不久的将来会得到大范围使用。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">41</span><span class="mmx-name">第8章 高性能异步编程框架和中间件</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 5 个小节 · 5 条要点 · 10 句原句摘录</p>
+<div class="sec">
+<h4>Netty</h4>
+<ul class="point">
+<li><b>Netty是一个异步、基于事件驱动的网络编程框架</b>
+<ul class="quote"><li>Netty提供了对TCP/UDP和HTTP的灵活支持。</li><li>Netty的设计目标是提供简单、高效的API，以及高性能、高可靠性的网络通信服务。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Netty提供了对TCP/UDP和HTTP的灵活支持。</li><li>Netty的设计目标是提供简单、高效的API，以及高性能、高可靠性的网络通信服务。</li></ul>
+</div>
+<div class="sec">
+<h4>Apache Dubbo</h4>
+<ul class="point">
+<li><b>Apache Dubbo是一个高性能RPC框架</b>
+<ul class="quote"><li>Dubbo支持多种负载均衡策略和多种集群容错模式。</li><li>Dubbo还提供了丰富的服务治理功能，如服务注册与发现、动态配置、监控等。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Dubbo支持多种负载均衡策略和多种集群容错模式。</li><li>Dubbo还提供了丰富的服务治理功能，如服务注册与发现、动态配置、监控等。</li></ul>
+</div>
+<div class="sec">
+<h4>Disruptor</h4>
+<ul class="point">
+<li><b>Disruptor是一个高性能线程间消息传递库</b>
+<ul class="quote"><li>Disruptor使用环形缓冲区作为消息队列，实现了无锁化设计。</li><li>Disruptor的性能非常高，可以达到每秒处理数百万条消息。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Disruptor使用环形缓冲区作为消息队列，实现了无锁化设计。</li><li>Disruptor的性能非常高，可以达到每秒处理数百万条消息。</li></ul>
+</div>
+<div class="sec">
+<h4>Akka</h4>
+<ul class="point">
+<li><b>Akka是一个异步、分布式、基于消息驱动的框架</b>
+<ul class="quote"><li>Akka提供了丰富的组件和API，支持Actor模型、响应式编程等。</li><li>Akka还提供了集群、持久化、路由等功能。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Akka提供了丰富的组件和API，支持Actor模型、响应式编程等。</li><li>Akka还提供了集群、持久化、路由等功能。</li></ul>
+</div>
+<div class="sec">
+<h4>Apache RocketMQ</h4>
+<ul class="point">
+<li><b>Apache RocketMQ是一个高性能分布式消息框架</b>
+<ul class="quote"><li>RocketMQ具有高可用、高并发、低延迟的特点。</li><li>RocketMQ还支持消息的顺序性、持久化、过滤、重试等功能。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>RocketMQ具有高可用、高并发、低延迟的特点。</li><li>RocketMQ还支持消息的顺序性、持久化、过滤、重试等功能。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">42</span><span class="mmx-name">8.1 异步、基于事件驱动的网络编程框架—Netty</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 12 条要点 · 12 句原句摘录</p>
+<div class="sec">
+<h4>Netty概述</h4>
+<ul class="point">
+<li><b>Netty是一个异步、基于事件驱动的网络应用程序框架</b>
+<ul class="quote"><li>Netty对Java NIO进行了封装，简化了TCP或者UDP服务器的网络编程开发。</li></ul>
+</li>
+<li><b>Netty将网络编程逻辑与业务逻辑处理分离开来</b>
+<ul class="quote"><li>Netty内部会自动处理好网络与异步处理逻辑。</li></ul>
+</li>
+<li><b>Netty的应用广泛，如Apache Dubbo、Apache RocketMq、Zuul 2.0服务网关、Spring WebFlux、Sofa-Bolt底层网络通信等。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Netty对Java NIO进行了封装，简化了TCP或者UDP服务器的网络编程开发。</li><li>Netty内部会自动处理好网络与异步处理逻辑。</li></ul>
+</div>
+<div class="sec">
+<h4>Netty的线程模型</h4>
+<ul class="point">
+<li><b>Netty Server端启动时会创建两个NioEventLoop Group线程池组</b>
+<ul class="quote"><li>boss组用来接收客户端发来的连接，worker组则负责对完成TCP三次握手的连接进行处理。</li></ul>
+</li>
+<li><b>Netty Client部分启动时会创建一个NioEventLoopGroup</b>
+<ul class="quote"><li>用来发起请求并对建立TCP三次连接的套接字的读写事件进行处理。</li></ul>
+</li>
+<li><b>Netty的异步非阻塞能力是通过在ChannelPipeline中判断调用NioSocketChannel的write的调用线程是不是其对应的NioEventLoop中的线程来实现的</b>
+<ul class="quote"><li>如果调用线程是IO线程，则会在IO线程上执行写入。</li><li>如果发现调用线程不是IO线程，则会把写入请求封装为WriteTask并投递到与其对应的NioEventLoop中的队列里面，然后等其对应的NioEventLoop中的线程轮询连接套接字的读写事件时捎带从队列里面取出来并执行。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>boss组用来接收客户端发来的连接，worker组则负责对完成TCP三次握手的连接进行处理。</li><li>用来发起请求并对建立TCP三次连接的套接字的读写事件进行处理。</li><li>如果调用线程是IO线程，则会在IO线程上执行写入。</li><li>如果发现调用线程不是IO线程，则会把写入请求封装为WriteTask并投递到与其对应的NioEventLoop中的队列里面，然后等其对应的NioEventLoop中的线程轮询连接套接字的读写事件时捎带从队列里面取出来并执行。</li></ul>
+</div>
+<div class="sec">
+<h4>TCP半包与粘包问题</h4>
+<ul class="point">
+<li><b>半包现象是指服务器只读取了客户端序列化对象后的一部分，反序列会报错。</b>
+</li>
+<li><b>粘包现象是指服务端从接收缓存就可能一下读取了多个包，出现粘包现象，由于服务端从接收缓存获取的二进制流是多个对象转换来的，所以在后续的反序列化时肯定也会出错。</b>
+</li>
+<li><b>解决半包与粘包问题的方案有：应用层设计协议时，把协议包分为header和body；在多个包之间添加分隔符；包定长</b>
+<ul class="quote"><li>比较常见的方案是应用层设计协议时，把协议包分为header和body(比如图8-4为Dubbo协议帧格式), header里面记录body长度，当服务端从接收缓冲区读取数据后，如果发现数据大小小于包的长度则说明出现了半包，这时候就回退读取缓存的指针，等待下次读事件到来时再次测试。如果发现数据大小大于包长度则看大小是否是包长度的整数倍，如果是则循环读取多个包，否则就是出现了多个整包+半包(粘包)。</li><li>第二种方案是在多个包之间添加分隔符，使用分隔符来判断一个包的结束。</li><li>还有一种方案是包定长，就是每个包大小固定长度。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>比较常见的方案是应用层设计协议时，把协议包分为header和body(比如图8-4为Dubbo协议帧格式), header里面记录body长度，当服务端从接收缓冲区读取数据后，如果发现数据大小小于包的长度则说明出现了半包，这时候就回退读取缓存的指针，等待下次读事件到来时再次测试。如果发现数据大小大于包长度则看大小是否是包长度的整数倍，如果是则循环读取多个包，否则就是出现了多个整包+半包(粘包)。</li><li>第二种方案是在多个包之间添加分隔符，使用分隔符来判断一个包的结束。</li><li>还有一种方案是包定长，就是每个包大小固定长度。</li></ul>
+</div>
+<div class="sec">
+<h4>基于Netty与CompletableFuture实现RPC异步调用</h4>
+<ul class="point">
+<li><b>首先我们基于Netty开发一个简单的demo来模拟RpcServer，也就是服务提供方程序</b>
+<ul class="quote"><li>RpcServer的代码包括配置创建两级线程池，创建业务处理hander，启动服务，并且在指定端口监听，等待服务监听套接字关闭，优雅关闭两级线程池，以便释放线程。</li></ul>
+</li>
+<li><b>然后我们基于Netty开发一个简单的demo来模拟RpcClient，也就是服务消费方程序</b>
+<ul class="quote"><li>RpcClient的代码包括配置客户端，发起链接请求，并同步等待链接完成，关闭，根据消息内容和请求id，拼接消息帧，rpcAsyncCall，rpcSyncCall。</li></ul>
+</li>
+<li><b>最后我们看如何把异步调用改造为Reactive编程风格，这里基于RxJava让异步调用返回结果为Flowable</b>
+<ul class="quote"><li>可以在RpcClient里面新增一个方法：rpcAsyncCallFlowable，将返回的CompletableFuture转换为Flowable即可。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>RpcServer的代码包括配置创建两级线程池，创建业务处理hander，启动服务，并且在指定端口监听，等待服务监听套接字关闭，优雅关闭两级线程池，以便释放线程。</li><li>RpcClient的代码包括配置客户端，发起链接请求，并同步等待链接完成，关闭，根据消息内容和请求id，拼接消息帧，rpcAsyncCall，rpcSyncCall。</li><li>可以在RpcClient里面新增一个方法：rpcAsyncCallFlowable，将返回的CompletableFuture转换为Flowable即可。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">43</span><span class="mmx-name">8.2 高性能RPC框架—Apache Dubbo</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 7 条要点 · 10 句原句摘录</p>
+<div class="sec">
+<h4>Apache Dubbo概述</h4>
+<ul class="point">
+<li><b>Apache Dubbo是阿里巴巴开源的一个高性能RPC框架</b>
+<ul class="quote"><li>Dubbo致力于提供高性能和透明化的RPC远程调用服务解决方案。</li></ul>
+</li>
+<li><b>Dubbo框架中的各个组件的作用以及相互关系</b>
+<ul class="quote"><li>Provider为服务提供者集群，负责暴露提供的服务，并将服务注册到服务注册中心。</li><li>Consumer为服务消费者集群，通过RPC远程调用服务提供者提供的服务。</li><li>Registry负责服务注册与发现。</li><li>Monitor为统计服务的调用次数和调用时间的监控中心。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Dubbo致力于提供高性能和透明化的RPC远程调用服务解决方案。</li><li>Provider为服务提供者集群，负责暴露提供的服务，并将服务注册到服务注册中心。</li><li>Consumer为服务消费者集群，通过RPC远程调用服务提供者提供的服务。</li><li>Registry负责服务注册与发现。</li><li>Monitor为统计服务的调用次数和调用时间的监控中心。</li></ul>
+</div>
+<div class="sec">
+<h4>Dubbo的异步调用</h4>
+<ul class="point">
+<li><b>异步调用是发生在服务消费端的，基于NIO的非阻塞能力实现并行调用</b>
+<ul class="quote"><li>服务消费端不需要启动多线程即可完成并行调用多个远程服务。</li></ul>
+</li>
+<li><b>调用线程异步调用发起后会马上返回一个Future，并在Future上设置一个回调函数</b>
+<ul class="quote"><li>当服务提供方返回结果后，调用方的IO线程会把响应结果传递给Dubbo框架内部线程池中的线程，后者则会回调注册的回调函数。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>服务消费端不需要启动多线程即可完成并行调用多个远程服务。</li><li>当服务提供方返回结果后，调用方的IO线程会把响应结果传递给Dubbo框架内部线程池中的线程，后者则会回调注册的回调函数。</li></ul>
+</div>
+<div class="sec">
+<h4>Dubbo的异步执行</h4>
+<ul class="point">
+<li><b>Provider端异步执行将服务的处理逻辑从Dubbo内部线程池切换到业务自定义线程</b>
+<ul class="quote"><li>避免Dubbo线程池中线程被过度占用，有助于避免不同服务间的互相影响。</li></ul>
+</li>
+<li><b>Provider端异步执行对节省资源和提升RPC响应性能是没有效果的</b>
+<ul class="quote"><li>如果服务处理比较耗时，虽然不是使用Dubbo框架的内部线程，但还是需要业务自己的线程来处理，另外副作用还有会新增一次线程上下文切换(从Dubbo内部线程池线程切换到业务线程)。</li></ul>
+</li>
+<li><b>Dubbo 2.7.0版本提供了基于CompletableFuture签名的接口实现异步执行的功能</b>
+<ul class="quote"><li>基于定义CompletableFuture签名的接口实现异步执行需要接口方法返回值为CompletableFuture，并且方法内部使用CompletableFuture.supplyAsync让本来应由Dubbo内部线程池中线程处理的服务，转为由业务自定义线程池中线程来处理。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>避免Dubbo线程池中线程被过度占用，有助于避免不同服务间的互相影响。</li><li>如果服务处理比较耗时，虽然不是使用Dubbo框架的内部线程，但还是需要业务自己的线程来处理，另外副作用还有会新增一次线程上下文切换(从Dubbo内部线程池线程切换到业务线程)。</li><li>基于定义CompletableFuture签名的接口实现异步执行需要接口方法返回值为CompletableFuture，并且方法内部使用CompletableFuture.supplyAsync让本来应由Dubbo内部线程池中线程处理的服务，转为由业务自定义线程池中线程来处理。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">44</span><span class="mmx-name">8.3 高性能线程间消息传递库—Disruptor</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 10 条要点 · 14 句原句摘录</p>
+<div class="sec">
+<h4>Disruptor概述</h4>
+<ul class="point">
+<li><b>Disruptor是一个高性能的线程间消息传递库</b>
+<ul class="quote"><li>Disruptor源于LMAX对并发性、性能和非阻塞算法的研究。</li></ul>
+</li>
+<li><b>Disruptor提供了多播能力、事件预分配、无锁、缓存行填充等关键功能</b>
+<ul class="quote"><li>Disruptor中的同一个消息会向所有消费者发送，即多播能力。</li><li>为事件预先分配内存，避免运行时因频繁地进行垃圾回收与内存分配而增加开销。</li><li>可选择无锁，使用两阶段协议，让多个线程可同时修改不同元素。</li><li>缓存行填充，避免伪共享。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Disruptor源于LMAX对并发性、性能和非阻塞算法的研究。</li><li>Disruptor中的同一个消息会向所有消费者发送，即多播能力。</li><li>为事件预先分配内存，避免运行时因频繁地进行垃圾回收与内存分配而增加开销。</li><li>可选择无锁，使用两阶段协议，让多个线程可同时修改不同元素。</li><li>缓存行填充，避免伪共享。</li></ul>
+</div>
+<div class="sec">
+<h4>Disruptor的特性详解</h4>
+<ul class="point">
+<li><b>Disruptor具有多播能力，所有事件都会发布给所有消费者</b>
+<ul class="quote"><li>当有多个消费者在同一个Disruptor上监听事件时，所有事件都会发布给所有消费者。</li></ul>
+</li>
+<li><b>Disruptor的目标之一是在低延迟环境中使用，用户可以预先为Disruptor中的事件分配其所需的存储空间</b>
+<ul class="quote"><li>在构造Ring Buffer期间，EventFactory由用户提供，并将在Disruptor的Ring Buffer中每个事件元素创建时被调用。</li></ul>
+</li>
+<li><b>Disruptor使用无锁算法来实现，所有内存可见性和正确性保证都是使用内存屏障或CAS操作实现的</b>
+<ul class="quote"><li>在Disruptor的实现中只有一种情况需要实际锁定—当使用BlockingWaitStrategy策略时，这仅仅是为了使用条件变量，以便在等待新事件到达时parked消费线程。</li><li>Disruptor则使用两阶段协议，让多个线程可同时修改不同元素，需要注意，消费元素时只能读取到已经提交的元素。</li></ul>
+</li>
+<li><b>Disruptor通过缓存行填充，让数组中的每个元素独占一个缓存行从而解决了伪共享问题的出现</b>
+<ul class="quote"><li>另外为了避免Ring Buffer中序列号(定位元素的游标)与其他元素共享缓存行，对其也进行了缓存行填充，以提高访问序列号时缓存的命中率。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>当有多个消费者在同一个Disruptor上监听事件时，所有事件都会发布给所有消费者。</li><li>在构造Ring Buffer期间，EventFactory由用户提供，并将在Disruptor的Ring Buffer中每个事件元素创建时被调用。</li><li>在Disruptor的实现中只有一种情况需要实际锁定—当使用BlockingWaitStrategy策略时，这仅仅是为了使用条件变量，以便在等待新事件到达时parked消费线程。</li><li>Disruptor则使用两阶段协议，让多个线程可同时修改不同元素，需要注意，消费元素时只能读取到已经提交的元素。</li><li>另外为了避免Ring Buffer中序列号(定位元素的游标)与其他元素共享缓存行，对其也进行了缓存行填充，以提高访问序列号时缓存的命中率。</li></ul>
+</div>
+<div class="sec">
+<h4>基于Disruptor实现异步编程</h4>
+<ul class="point">
+<li><b>创建Ring Buffer中存放的事件对象，并实现EventFactory接口</b>
+<ul class="quote"><li>LongEventFactory实现了EventFactory接口，用于创建LongEvent对象。</li></ul>
+</li>
+<li><b>创建具体的消费者用来消费生产的元素，并实现EventHandler接口</b>
+<ul class="quote"><li>JournalConsumer、ReplicationConsumer和ApplicationConsumer分别实现了EventHandler接口，用于消费LongEvent对象。</li></ul>
+</li>
+<li><b>使用原生API方式发布数据，发布者代码需要实现消息发布的两阶段</b>
+<ul class="quote"><li>LongEventProducer实现了消息发布的两阶段，即获取Ring Buffer的槽中对象并修改，第二阶段发布可用数据。</li></ul>
+</li>
+<li><b>将所有组件连接在一起，启动Disruptor，并创建生产者</b>
+<ul class="quote"><li>代码1创建了一个事件对象生成的工厂对象；代码2指定Ring Buffer的大小；代码3构造Disruptor对象；代码4注册消费者；代码5启动Disruptor；代码6从Disruptor中获取Ring Buffer；代码7创建了一个生产者LongEventProducer实例；代码8循环创建100个数据，然后调用LongEventProducer的onData方法把事件发送出去。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>LongEventFactory实现了EventFactory接口，用于创建LongEvent对象。</li><li>JournalConsumer、ReplicationConsumer和ApplicationConsumer分别实现了EventHandler接口，用于消费LongEvent对象。</li><li>LongEventProducer实现了消息发布的两阶段，即获取Ring Buffer的槽中对象并修改，第二阶段发布可用数据。</li><li>代码1创建了一个事件对象生成的工厂对象；代码2指定Ring Buffer的大小；代码3构造Disruptor对象；代码4注册消费者；代码5启动Disruptor；代码6从Disruptor中获取Ring Buffer；代码7创建了一个生产者LongEventProducer实例；代码8循环创建100个数据，然后调用LongEventProducer的onData方法把事件发送出去。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">45</span><span class="mmx-name">8.4 异步、分布式、基于消息驱动的框架—Akka</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 9 条要点 · 27 句原句摘录</p>
+<div class="sec">
+<h4>Akka概述</h4>
+<ul class="point">
+<li><b>Akka是一个工具包，用于在JVM上构建高并发、分布式、弹性、基于消息驱动的应用程序</b>
+<ul class="quote"><li>Akka使用Actor模型，提高了抽象级别，允许我们专注于业务逻辑的处理。</li></ul>
+</li>
+<li><b>Akka的特性包括可以更简单地构建并发和分布式系统，回弹性设计，高性能，弹性和分散性，反应流数据</b>
+<ul class="quote"><li>Akka基于Actor模型和Streams，让我们可以构建可伸缩的，并且可以高效使用服务器资源，使用多个服务器进行扩展的系统。</li><li>Akka遵守“反应式宣言”的原则，让我们编写出可以在出现故障时能够自我修复，并保持响应能力的系统。</li><li>在单台计算机上可以处理高达每秒5000万条消息。内存占用少；每GB堆可以创建约250万个actor(参与者)。</li><li>分布式系统没有单点故障，具有跨节点的负载平衡和自适应路由。具有群集分片的事件源和CQRS(Command Query Responsibility Segregation，读写责任分离)。使用CRDT(Conflict-free Replicated Data Types，无冲突的复制数据类型)实现最终一致性的分布式数据。</li><li>具有回压的异步非阻塞流处理。完全异步和基于流的HTTP服务器和客户端为构建微服务提供了一个很好的平台。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Akka使用Actor模型，提高了抽象级别，允许我们专注于业务逻辑的处理。</li><li>Akka基于Actor模型和Streams，让我们可以构建可伸缩的，并且可以高效使用服务器资源，使用多个服务器进行扩展的系统。</li><li>Akka遵守“反应式宣言”的原则，让我们编写出可以在出现故障时能够自我修复，并保持响应能力的系统。</li><li>在单台计算机上可以处理高达每秒5000万条消息。内存占用少；每GB堆可以创建约250万个actor(参与者)。</li><li>分布式系统没有单点故障，具有跨节点的负载平衡和自适应路由。具有群集分片的事件源和CQRS(Command Query Responsibility Segregation，读写责任分离)。使用CRDT(Conflict-free Replicated Data Types，无冲突的复制数据类型)实现最终一致性的分布式数据。</li><li>具有回压的异步非阻塞流处理。完全异步和基于流的HTTP服务器和客户端为构建微服务提供了一个很好的平台。</li></ul>
+</div>
+<div class="sec">
+<h4>传统编程模型存在的问题</h4>
+<ul class="point">
+<li><b>对封装特性的挑战：多线程下修改对象内的数据，大多情况下会导致数据被污染，产生脏数据</b>
+<ul class="quote"><li>对象只能在单线程情况下保证封装的安全性，也就是保证对象封装的数据的线程安全性。</li><li>虽然锁看起来是保证多线程下封特性比较直接的方式，但实际上使用锁的效率低下，并且在任何实际规模的应用中都容易导致死锁的产生。</li><li>本地锁是经常使用的，但是如果尝试将其扩展为分布式锁则是有代价的，并且其横向扩展的潜力有限。</li></ul>
+</li>
+<li><b>对共享内存在现代计算机架构上的误解：在现在多核CPU的硬件架构中，多线程之间不再有真正的共享内存</b>
+<ul class="quote"><li>CPU核心之间显式传递数据块(Cache行)将和网络中不同计算机之间传递数据一样。</li><li>除了通过使用volatile修饰共享的变量或使用原子数据结构保证共享变量内存可见性之外，一个更严格和原则上的方法是将状态保持在并发实体本地，并通过消息显式在并发实体之间传播数据或事件。</li></ul>
+</li>
+<li><b>对调用堆栈的误解：为了在当前系统上实现任何有意义的并发性和提高性能，线程必须以高效的方式在彼此之间委派任务，而不会阻塞</b>
+<ul class="quote"><li>使用这种类型的任务委派并发(甚至在网络/分布式计算中更是如此)，基于调用堆栈的错误处理会导致崩溃。</li><li>具有工作委派的并发系统需要处理服务故障，并需要具有从故障中恢复的原则与方法。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>对象只能在单线程情况下保证封装的安全性，也就是保证对象封装的数据的线程安全性。</li><li>虽然锁看起来是保证多线程下封特性比较直接的方式，但实际上使用锁的效率低下，并且在任何实际规模的应用中都容易导致死锁的产生。</li><li>本地锁是经常使用的，但是如果尝试将其扩展为分布式锁则是有代价的，并且其横向扩展的潜力有限。</li><li>CPU核心之间显式传递数据块(Cache行)将和网络中不同计算机之间传递数据一样。</li><li>除了通过使用volatile修饰共享的变量或使用原子数据结构保证共享变量内存可见性之外，一个更严格和原则上的方法是将状态保持在并发实体本地，并通过消息显式在并发实体之间传播数据或事件。</li><li>使用这种类型的任务委派并发(甚至在网络/分布式计算中更是如此)，基于调用堆栈的错误处理会导致崩溃。</li><li>具有工作委派的并发系统需要处理服务故障，并需要具有从故障中恢复的原则与方法。</li></ul>
+</div>
+<div class="sec">
+<h4>Actor模型解决了传统编程模型的问题</h4>
+<ul class="point">
+<li><b>Actor模型概述：每个Actor代表一个基本的计算单元，其可以接收消息并基于消息做一些计算处理</b>
+<ul class="quote"><li>在Actor模型中，每个Actor都有自己的地址，Actor之间通过地址相互通过消息通信。</li><li>Akka中对失败的处理使用了“让它崩溃”的理念，这部分关键代码被监控者监控着(每个Actor实际就是一个监控者)，监控者的唯一职责是知道失败后该干什么。</li></ul>
+</li>
+<li><b>Actor模型解决了传统编程模型的问题：使用消息传递避免锁和阻塞，使用Actor优雅地处理错误</b>
+<ul class="quote"><li>通过将执行与信号分离(方法调用方式会转换任务的执行权，消息传递则不会)来保留封装性。</li><li>不需要锁。只能通过消息修改Actor的内部状态，而消息是顺序处理的，以试图消除保持不变性时的竞争问题。</li><li>在任何地方都没有使用锁，发送者也不会被阻塞。可以在十几个线程上有效地调度数百万个Actor，从而充分发挥现代CPU的潜力。</li><li>Actor的状态是本地的而不是共享的，更改和数据通过消息进行传递，这与现代系统中内存的实际工作方式相对应。</li><li>当目标Actor上运行被代理的任务发生错误时，比如任务内参数校验错误或者执行抛出了NPE异常等。在这种情况下，目标Actor封装的服务是完整的，只是任务执行本身发生了错误。目标Actor应该向消息发送方回复一条消息，提示错误情况。</li><li>当服务本身遇到内部错误时，Akka强制将所有Actor组织成树状层次结构，即创建另一个Actor的Actor成为该新Actor的父节点。这与操作系统将进程组织到树结构中的方式非常相似。就像进程一样，当一个Actor失败时，它的父Actor会收到通知，并且可以对失败做出反应。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在Actor模型中，每个Actor都有自己的地址，Actor之间通过地址相互通过消息通信。</li><li>Akka中对失败的处理使用了“让它崩溃”的理念，这部分关键代码被监控者监控着(每个Actor实际就是一个监控者)，监控者的唯一职责是知道失败后该干什么。</li><li>通过将执行与信号分离(方法调用方式会转换任务的执行权，消息传递则不会)来保留封装性。</li><li>不需要锁。只能通过消息修改Actor的内部状态，而消息是顺序处理的，以试图消除保持不变性时的竞争问题。</li><li>在任何地方都没有使用锁，发送者也不会被阻塞。可以在十几个线程上有效地调度数百万个Actor，从而充分发挥现代CPU的潜力。</li><li>Actor的状态是本地的而不是共享的，更改和数据通过消息进行传递，这与现代系统中内存的实际工作方式相对应。</li><li>当目标Actor上运行被代理的任务发生错误时，比如任务内参数校验错误或者执行抛出了NPE异常等。在这种情况下，目标Actor封装的服务是完整的，只是任务执行本身发生了错误。目标Actor应该向消息发送方回复一条消息，提示错误情况。</li><li>当服务本身遇到内部错误时，Akka强制将所有Actor组织成树状层次结构，即创建另一个Actor的Actor成为该新Actor的父节点。这与操作系统将进程组织到树结构中的方式非常相似。就像进程一样，当一个Actor失败时，它的父Actor会收到通知，并且可以对失败做出反应。</li></ul>
+</div>
+<div class="sec">
+<h4>基于Akka实现异步编程</h4>
+<ul class="point">
+<li><b>基于Akka实现本地异步编程：通过Actor实现一个简单的加法器</b>
+<ul class="quote"><li>ClientActor创建子Actor CalculatorActor，并处理消息。</li><li>CalculatorActor接收消息后，计算加法，然后把结果返回给消息发送者。</li></ul>
+</li>
+<li><b>基于Akka实现远程异步编程：通过Actor进行远程调用</b>
+<ul class="quote"><li>把Actor CalculatorActor放到远端的Actor系统中作为服务提供端，ClientActor则作为调用客户端的Actor。</li><li>服务端Actor系统启动时会加载application.conf配置文件，然后基于系统创建了用于计算的Actor CalculatorActor。</li><li>客户端Actor需要修改子Actor的创建，并添加application.conf配置文件，配置文件内容。</li><li>客户端用来在端口2553监听别人对自己的请求，客户端还需要修改服务启动代码，把创建Actor系统的代码修改为指定代码。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>ClientActor创建子Actor CalculatorActor，并处理消息。</li><li>CalculatorActor接收消息后，计算加法，然后把结果返回给消息发送者。</li><li>把Actor CalculatorActor放到远端的Actor系统中作为服务提供端，ClientActor则作为调用客户端的Actor。</li><li>服务端Actor系统启动时会加载application.conf配置文件，然后基于系统创建了用于计算的Actor CalculatorActor。</li><li>客户端Actor需要修改子Actor的创建，并添加application.conf配置文件，配置文件内容。</li><li>客户端用来在端口2553监听别人对自己的请求，客户端还需要修改服务启动代码，把创建Actor系统的代码修改为指定代码。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">46</span><span class="mmx-name">8.5 高性能分布式消息框架—Apache RocketMQ</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 3 条要点 · 7 句原句摘录</p>
+<div class="sec">
+<h4>Apache RocketMQ概述</h4>
+<ul class="point">
+<li><b>Apache RocketMQ是一个分布式消息传递和流数据的平台，具有低延迟、高性能和可靠性、万亿级容量和灵活的可伸缩性</b>
+<ul class="quote"><li>RocketMQ具有多种功能：发布/订阅消息传递模型、定时消息发送、按时间或偏移量追溯消息、日志中心流、大数据整合、可靠的FIFO消息队列和在同一队列中保证严格的有序消息传递、高效的推拉消费模型、单个队列中的百万级消息累积容量、多种消息传递协议，例如JMS和OpenMessaging、灵活的分布式横向扩展部署架构、快速的批量消息交换系统、各种消息过滤器机制，例如SQL和Tag、用于隔离测试和云隔离群集的Docker映像、功能丰富的管理仪表板，用于配置、指标和监视、访问控制列表、信息追踪。</li></ul>
+</li>
+<li><b>RocketMQ主要由4部分组成，分别为NameServer集群、Broker集群、Producer集群和Consumer集群</b>
+<ul class="quote"><li>NameServer集群：名称服务集群，提供轻量级的服务发现与路由服务，每个名称服务器记录了全部Broker的路由信息，并且提供相应的读写服务，支持快速存储扩展。</li><li>Broker集群：Broker集群，Broker通过提供轻量级的主题和队列机制来维护消息存储。它支持推和拉两种模型，包含容错机制(2个副本或3个副本)，并提供了强大的平滑峰值，提供积累数以亿计的消息并保证其在原始时间顺序的被消费能力。此外，Broker也提供灾难恢复、丰富的度量统计和警报机制，所有这些能力在传统的消息传递系统里都是没有的。</li><li>Producer集群：生产者集群，提供分布式部署，分布式的生产者发送消息到Broker集群，具体选择哪一个Broker机器是通过一定的负载均衡策略来决定的，发送消息中支持故障快速恢复，并且具有较低的延迟。</li><li>Consumer集群：消费者在推和拉模型中支持分布式部署。它还支持集群消费和消息广播。它提供实时消息订阅机制，可以满足大多数消费者的需求。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>RocketMQ具有多种功能：发布/订阅消息传递模型、定时消息发送、按时间或偏移量追溯消息、日志中心流、大数据整合、可靠的FIFO消息队列和在同一队列中保证严格的有序消息传递、高效的推拉消费模型、单个队列中的百万级消息累积容量、多种消息传递协议，例如JMS和OpenMessaging、灵活的分布式横向扩展部署架构、快速的批量消息交换系统、各种消息过滤器机制，例如SQL和Tag、用于隔离测试和云隔离群集的Docker映像、功能丰富的管理仪表板，用于配置、指标和监视、访问控制列表、信息追踪。</li><li>NameServer集群：名称服务集群，提供轻量级的服务发现与路由服务，每个名称服务器记录了全部Broker的路由信息，并且提供相应的读写服务，支持快速存储扩展。</li><li>Broker集群：Broker集群，Broker通过提供轻量级的主题和队列机制来维护消息存储。它支持推和拉两种模型，包含容错机制(2个副本或3个副本)，并提供了强大的平滑峰值，提供积累数以亿计的消息并保证其在原始时间顺序的被消费能力。此外，Broker也提供灾难恢复、丰富的度量统计和警报机制，所有这些能力在传统的消息传递系统里都是没有的。</li><li>Producer集群：生产者集群，提供分布式部署，分布式的生产者发送消息到Broker集群，具体选择哪一个Broker机器是通过一定的负载均衡策略来决定的，发送消息中支持故障快速恢复，并且具有较低的延迟。</li><li>Consumer集群：消费者在推和拉模型中支持分布式部署。它还支持集群消费和消息广播。它提供实时消息订阅机制，可以满足大多数消费者的需求。</li></ul>
+</div>
+<div class="sec">
+<h4>基于Apache RocketMQ实现系统间异步解耦</h4>
+<ul class="point">
+<li><b>通过Broker让生产者集群与消费者集群之间实现了异步解耦</b>
+<ul class="quote"><li>生产者发送消息使用的是同步发送方式，其线程模型如图8-21所示。调用线程调用RocketmqClient的send方法发送消息后，其内部会首先创建一个ResponseFuture对象，并切换到IO线程把请求发送到Broker，接着调用线程会调用ResponseFuture的wait方法阻塞调用线程，等IO线程把请求写入TCP发送Buffer后，IO线程会设置ResponseFuture对象说请求已经完成，然后调用线程就会从wait方法返回。</li><li>RocketMQ也提供了异步发送消息方式，这种方式下发送消息后调用线程会马上返回，然后等发送成功后会回调用户注册的监听器。异步发送消息代码如下：如上代码4.3在发送消息的同时设置了一个CallBack，调用该方法后，该方法会马上返回，然后等真的把消息投递到Broker后，底层IO线程会回调设置的Callback来通知，消息已经发送成功或者消息发送失败的原因，这时候其线程模型如图8-22所示。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>生产者发送消息使用的是同步发送方式，其线程模型如图8-21所示。调用线程调用RocketmqClient的send方法发送消息后，其内部会首先创建一个ResponseFuture对象，并切换到IO线程把请求发送到Broker，接着调用线程会调用ResponseFuture的wait方法阻塞调用线程，等IO线程把请求写入TCP发送Buffer后，IO线程会设置ResponseFuture对象说请求已经完成，然后调用线程就会从wait方法返回。</li><li>RocketMQ也提供了异步发送消息方式，这种方式下发送消息后调用线程会马上返回，然后等发送成功后会回调用户注册的监听器。异步发送消息代码如下：如上代码4.3在发送消息的同时设置了一个CallBack，调用该方法后，该方法会马上返回，然后等真的把消息投递到Broker后，底层IO线程会回调设置的Callback来通知，消息已经发送成功或者消息发送失败的原因，这时候其线程模型如图8-22所示。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">47</span><span class="mmx-name">第9章 Go语言的异步编程能力</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 6 条要点 · 6 句原句摘录</p>
+<div class="sec">
+<h4>Go语言的线程模型</h4>
+<ul class="point">
+<li><b>Go语言使用goroutine进行并发编程</b>
+<ul class="quote"><li>goroutine是Go语言中轻量级的线程。</li></ul>
+</li>
+<li><b>Go语言的调度器负责分配CPU资源</b>
+<ul class="quote"><li>调度器是Go语言运行时系统的一部分，负责分配CPU资源给goroutine。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>goroutine是Go语言中轻量级的线程。</li><li>调度器是Go语言运行时系统的一部分，负责分配CPU资源给goroutine。</li></ul>
+</div>
+<div class="sec">
+<h4>使用goroutine与channel实现异步编程</h4>
+<ul class="point">
+<li><b>goroutine通过channel进行通信</b>
+<ul class="quote"><li>channel是Go语言中的一种同步机制，用于在goroutine之间传递数据。</li></ul>
+</li>
+<li><b>使用select语句实现多路复用</b>
+<ul class="quote"><li>select语句允许等待多个channel中的任何一个事件发生。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>channel是Go语言中的一种同步机制，用于在goroutine之间传递数据。</li><li>select语句允许等待多个channel中的任何一个事件发生。</li></ul>
+</div>
+<div class="sec">
+<h4>基于goroutine与channel构建支持回压、异步编程的管道</h4>
+<ul class="point">
+<li><b>管道可以实现生产者-消费者模式</b>
+<ul class="quote"><li>管道是一种特殊的channel，可以用于实现生产者-消费者模式。</li></ul>
+</li>
+<li><b>管道支持回压，可以控制生产的速度</b>
+<ul class="quote"><li>通过设置channel的缓冲区大小，可以控制生产的速度。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>管道是一种特殊的channel，可以用于实现生产者-消费者模式。</li><li>通过设置channel的缓冲区大小，可以控制生产的速度。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">48</span><span class="mmx-name">9.1 Go语言概述</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 4 条要点 · 5 句原句摘录</p>
+<div class="sec">
+<h4>Go语言中的并发模型</h4>
+<ul class="point">
+<li><b>Go鼓励使用channel在goroutine之间传递对共享数据的引用</b>
+<ul class="quote"><li>Go中不仅在语言层面提供了锁等低级并发同步原语，而且提供了goroutine和channel这种优雅而独特的结构化开发并发软件的方式。</li><li>Go的并发原语—goroutine和channel提供了一种优雅而独特的结构化开发并发软件的方式。Go鼓励使用channel在goroutine之间传递对共享数据的引用，而不是明确地使用锁来保护对共享数据的访问。</li></ul>
+</li>
+<li><b>Go的并发模型采用了通道，体现为CSP的一个变种</b>
+<ul class="quote"><li>之所以选择CSP，一方面是因为Google的开发工程师对它的熟悉程度，另一方面因为CSP具有一种无须对其模型做任何深入的改变就能轻易添加到过程性编程模型中的特性。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Go中不仅在语言层面提供了锁等低级并发同步原语，而且提供了goroutine和channel这种优雅而独特的结构化开发并发软件的方式。</li><li>Go的并发原语—goroutine和channel提供了一种优雅而独特的结构化开发并发软件的方式。Go鼓励使用channel在goroutine之间传递对共享数据的引用，而不是明确地使用锁来保护对共享数据的访问。</li><li>之所以选择CSP，一方面是因为Google的开发工程师对它的熟悉程度，另一方面因为CSP具有一种无须对其模型做任何深入的改变就能轻易添加到过程性编程模型中的特性。</li></ul>
+</div>
+<div class="sec">
+<h4>Go语言中的线程模型</h4>
+<ul class="point">
+<li><b>Go中一个操作系统线程对应多个goroutine</b>
+<ul class="quote"><li>用户可以创建的goroutine个数只受内存大小限制，而且上下文切换发生在用户态，切换速度比较快，并且开销比较小，所以Go中一台机器可以创建百万个goroutine。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>用户可以创建的goroutine个数只受内存大小限制，而且上下文切换发生在用户态，切换速度比较快，并且开销比较小，所以Go中一台机器可以创建百万个goroutine。</li></ul>
+</div>
+<div class="sec">
+<h4>Go语言中的异步编程</h4>
+<ul class="point">
+<li><b>在Go中只需要在要异步执行的方法前面加上go关键字，就可以让方法与主goroutine并发运行</b>
+<ul class="quote"><li>另外结合goroutine和channel，可以方便地实现异步非阻塞回压功能。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>另外结合goroutine和channel，可以方便地实现异步非阻塞回压功能。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">49</span><span class="mmx-name">9.2 Go语言的线程模型</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 14 条要点 · 18 句原句摘录</p>
+<div class="sec">
+<h4>一对一模型</h4>
+<ul class="point">
+<li><b>用户线程与内核线程是一一对应的</b>
+<ul class="quote"><li>当从程序入口点(比如main函数)启动后，操作系统就创建了一个进程。这个main函数所在的线程就是主线程。</li><li>在main函数内当我们使用高级语言创建一个用户线程的时候，其实对应创建了一个内核线程。</li></ul>
+</li>
+<li><b>优点是在多处理器上多个线程可以真正实现并行运行</b>
+<ul class="quote"><li>当一个线程由于网络IO等原因被阻塞时，其他线程不受影响。</li></ul>
+</li>
+<li><b>缺点是用户线程的个数受到限制，且线程切换开销较大</b>
+<ul class="quote"><li>由于一般操作系统会限制内核线程的个数，所以用户线程的个数会受到限制。</li><li>当用户线程比如执行IO操作(执行系统调用)时，需要从用户态的用户程序执行切换到内核态执行内核操作，然后等执行完毕后又会从内核态切换到用户态执行用户程序，而这个切换操作开销是比较大的。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>当从程序入口点(比如main函数)启动后，操作系统就创建了一个进程。这个main函数所在的线程就是主线程。</li><li>在main函数内当我们使用高级语言创建一个用户线程的时候，其实对应创建了一个内核线程。</li><li>当一个线程由于网络IO等原因被阻塞时，其他线程不受影响。</li><li>由于一般操作系统会限制内核线程的个数，所以用户线程的个数会受到限制。</li><li>当用户线程比如执行IO操作(执行系统调用)时，需要从用户态的用户程序执行切换到内核态执行内核操作，然后等执行完毕后又会从内核态切换到用户态执行用户程序，而这个切换操作开销是比较大的。</li></ul>
+</div>
+<div class="sec">
+<h4>多对一模型</h4>
+<ul class="point">
+<li><b>多个用户线程对应一个内核线程</b>
+<ul class="quote"><li>同一个用户线程只能对应一个内核线程，这时候对应同一个内核线程的多个用户线程的上下文切换是由用户态的运行时线程库来做的，而不是由操作系统调度系统来做的。</li></ul>
+</li>
+<li><b>优点是上下文切换在用户态，因而切换速度很快，开销很小</b>
+<ul class="quote"><li>可创建的用户线程的数量可以很多，只受内存大小限制。</li></ul>
+</li>
+<li><b>缺点是不能很好地利用多核CPU进行并发运行</b>
+<ul class="quote"><li>当该内核线程对应的一个用户线程被阻塞挂起时，该内核线程对应的其他用户线程也不能运行，因为这时候内核线程已经被阻塞挂起了。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>同一个用户线程只能对应一个内核线程，这时候对应同一个内核线程的多个用户线程的上下文切换是由用户态的运行时线程库来做的，而不是由操作系统调度系统来做的。</li><li>可创建的用户线程的数量可以很多，只受内存大小限制。</li><li>当该内核线程对应的一个用户线程被阻塞挂起时，该内核线程对应的其他用户线程也不能运行，因为这时候内核线程已经被阻塞挂起了。</li></ul>
+</div>
+<div class="sec">
+<h4>多对多模型</h4>
+<ul class="point">
+<li><b>结合一对一和多对一模型的特点，让大量的用户线程对应少数几个内核线程</b>
+<ul class="quote"><li>每个内核线程对应多个用户线程，每个用户线程又可以对应多个内核线程。</li></ul>
+</li>
+<li><b>优点是可以充分利用多核CPU提升运行效能</b>
+<ul class="quote"><li>当一个用户线程阻塞后，其对应的当前内核线程会被阻塞，但是被阻塞的内核线程对应的其他用户线程可以切换到其他内核线程上继续运行。</li></ul>
+</li>
+<li><b>对用户线程个数没有限制，理论上只要内存够用可以无限创建</b>
+<ul class="quote"><li>goroutine(G)的数量则是由用户程序自己来确定，理论上只要内存够大，可以无限制创建。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>每个内核线程对应多个用户线程，每个用户线程又可以对应多个内核线程。</li><li>当一个用户线程阻塞后，其对应的当前内核线程会被阻塞，但是被阻塞的内核线程对应的其他用户线程可以切换到其他内核线程上继续运行。</li><li>goroutine(G)的数量则是由用户程序自己来确定，理论上只要内存够大，可以无限制创建。</li></ul>
+</div>
+<div class="sec">
+<h4>Go语言的线程模型</h4>
+<ul class="point">
+<li><b>Go线程模型属于多对多线程模型</b>
+<ul class="quote"><li>Go中使用Go语句创建的goroutine可以认为是轻量级的用户线程。</li></ul>
+</li>
+<li><b>Go线程模型包含3个概念：内核线程(M)、goroutine(G)和逻辑处理器(P)</b>
+<ul class="quote"><li>在Go中每个逻辑处理器(P)会绑定到某一个内核线程上，每个逻辑处理器(P)内有一个本地队列，用来存放Go运行时分配的goroutine。</li></ul>
+</li>
+<li><b>在Go中存在两级调度，一级是操作系统的调度系统，一级是Go的运行时调度系统</b>
+<ul class="quote"><li>操作系统的调度系统调度逻辑处理器占用CPU时间片运行。</li><li>Go的运行时调度系统调度某个goroutine在逻辑处理上运行。</li></ul>
+</li>
+<li><b>使用Go语句创建一个goroutine后，创建的goroutine会被放入Go运行时调度器的全局运行队列中</b>
+<ul class="quote"><li>Go运行时调度器会把全局队列中的goroutine分配给不同的逻辑处理器(P)，分配的goroutine会被放到逻辑处理器(P)的本地队列中。</li><li>当本地队列中某个goroutine就绪后，待分配到时间片后就可以在逻辑处理器上运行了。</li></ul>
+</li>
+<li><b>为了避免某些goroutine出现饥饿现象，被分配到某一个逻辑处理器(P)上的多个goroutine是分时在该逻辑处理器上运行的，而不是独占运行直到结束</b>
+<ul class="quote"><li>如果一个goroutine阻塞OS线程，例如等待输入，则该OS线程对应的逻辑处理器(P)中的其他goroutine将迁移到其他OS线程，以便它们继续运行。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Go中使用Go语句创建的goroutine可以认为是轻量级的用户线程。</li><li>在Go中每个逻辑处理器(P)会绑定到某一个内核线程上，每个逻辑处理器(P)内有一个本地队列，用来存放Go运行时分配的goroutine。</li><li>操作系统的调度系统调度逻辑处理器占用CPU时间片运行。</li><li>Go的运行时调度系统调度某个goroutine在逻辑处理上运行。</li><li>Go运行时调度器会把全局队列中的goroutine分配给不同的逻辑处理器(P)，分配的goroutine会被放到逻辑处理器(P)的本地队列中。</li><li>当本地队列中某个goroutine就绪后，待分配到时间片后就可以在逻辑处理器上运行了。</li><li>如果一个goroutine阻塞OS线程，例如等待输入，则该OS线程对应的逻辑处理器(P)中的其他goroutine将迁移到其他OS线程，以便它们继续运行。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">50</span><span class="mmx-name">9.3 goroutine与channel</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 10 条要点 · 18 句原句摘录</p>
+<div class="sec">
+<h4>goroutine</h4>
+<ul class="point">
+<li><b>goroutine是Go中的轻量级线程，占用更少的堆栈空间</b>
+<ul class="quote"><li>每个goroutine可以认为是一个轻量级的线程，其占用更少的堆栈空间，并且需要的堆栈空间大小可以随着程序的运行需要动态增加或者空闲回收。</li></ul>
+</li>
+<li><b>goroutine在Go中是最小的运行单位</b>
+<ul class="quote"><li>当我们启动了一个Go程序后，运行main函数的就是一个goroutine。</li></ul>
+</li>
+<li><b>main函数所在goroutine结束，整个进程也就结束了</b>
+<ul class="quote"><li>在Go中整个进程的生命周期是与main函数所在goroutine一致的，只要main函数所在goroutine结束，整个进程也就结束了，而不管是否还有其他goroutine在运行。</li></ul>
+</li>
+<li><b>让一个运行中的goroutine停止，可以让其在一个channel上监听停止信号</b>
+<ul class="quote"><li>代码创建了一个无缓冲通道quit来做反向通知子线程停止。</li><li>代码2开启了一个goroutine，该goroutine内使用了无限循环。内部代码2.1使用了select结构，其中第一个case是从通道quit内读取元素，由于quit通道一开始没有元素，所以这个case分支不会被执行，而是转向执行default分支。default分支用来执行具体的业务，这里是休眠1s然后打印输出。这个goroutine的作用就是间隔1s执行打印输出，并且等quit通道内有元素时执行return退出当前goroutine。</li><li>代码4关闭通道quit，关闭通道quit后会向通道quit内写入一个零值元素，这里代码3先让主goroutine休眠3s是为了在关闭quit通道前让子goroutine有机会执行一些时间。</li><li>代码4关闭通道quit后，子goroutine内的select语句的第一个case就会从quit读取操作中返回，然后子goroutine就执行return退出了。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>每个goroutine可以认为是一个轻量级的线程，其占用更少的堆栈空间，并且需要的堆栈空间大小可以随着程序的运行需要动态增加或者空闲回收。</li><li>当我们启动了一个Go程序后，运行main函数的就是一个goroutine。</li><li>在Go中整个进程的生命周期是与main函数所在goroutine一致的，只要main函数所在goroutine结束，整个进程也就结束了，而不管是否还有其他goroutine在运行。</li><li>代码创建了一个无缓冲通道quit来做反向通知子线程停止。</li><li>代码2开启了一个goroutine，该goroutine内使用了无限循环。内部代码2.1使用了select结构，其中第一个case是从通道quit内读取元素，由于quit通道一开始没有元素，所以这个case分支不会被执行，而是转向执行default分支。default分支用来执行具体的业务，这里是休眠1s然后打印输出。这个goroutine的作用就是间隔1s执行打印输出，并且等quit通道内有元素时执行return退出当前goroutine。</li><li>代码4关闭通道quit，关闭通道quit后会向通道quit内写入一个零值元素，这里代码3先让主goroutine休眠3s是为了在关闭quit通道前让子goroutine有机会执行一些时间。</li><li>代码4关闭通道quit后，子goroutine内的select语句的第一个case就会从quit读取操作中返回，然后子goroutine就执行return退出了。</li></ul>
+</div>
+<div class="sec">
+<h4>channel</h4>
+<ul class="point">
+<li><b>通道可以理解为一个并发安全的队列，生产者goroutine可以向通道里放入元素，消费者goroutine可以从通道里获取元素</b>
+<ul class="quote"><li>从队列大小来看，通道可以分为有缓冲通道和无缓冲通道，无缓冲通道里最多有一个元素，有缓冲通道里面可以有很多元素。</li><li>另外，通道还是有方向的，如果一个通道只允许向里面放元素，但是不允许从里面取元素，则称之为单向的发送通道(向通道里写元素)，例如var ch chan &lt;-int声明了一个发送通道；如果一个通道只允许从里面获取元素，而不允许向其中写入元素，则称之为接收通道(从通道里读取元素)，例如var ch &lt;-chan int声明了一个接收通道；如果一个通道既可以从中读取元素，又可以向其中写入元素，则称之为双向通道，例如var ch chan int声明了一个双向通道。</li><li>另外通道是可以关闭的，当调用close(ch)关闭通道ch后，不能再向通道ch写入元素，但是可以从通道读取元素。</li></ul>
+</li>
+<li><b>在Go中创建一个无缓冲的通道可以使用下面两种方式</b>
+<ul class="quote"><li>var c chan int c = make(chan int)。</li><li>c := make(chan int)。</li></ul>
+</li>
+<li><b>在Go中创建一个有缓冲的通道使用下面两种方式</b>
+<ul class="quote"><li>var c chan int c = make(chan int, 1)。</li><li>c := make(chan int, 1)。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>从队列大小来看，通道可以分为有缓冲通道和无缓冲通道，无缓冲通道里最多有一个元素，有缓冲通道里面可以有很多元素。</li><li>另外，通道还是有方向的，如果一个通道只允许向里面放元素，但是不允许从里面取元素，则称之为单向的发送通道(向通道里写元素)，例如var ch chan &lt;-int声明了一个发送通道；如果一个通道只允许从里面获取元素，而不允许向其中写入元素，则称之为接收通道(从通道里读取元素)，例如var ch &lt;-chan int声明了一个接收通道；如果一个通道既可以从中读取元素，又可以向其中写入元素，则称之为双向通道，例如var ch chan int声明了一个双向通道。</li><li>另外通道是可以关闭的，当调用close(ch)关闭通道ch后，不能再向通道ch写入元素，但是可以从通道读取元素。</li><li>var c chan int c = make(chan int)。</li><li>c := make(chan int)。</li><li>var c chan int c = make(chan int, 1)。</li><li>c := make(chan int, 1)。</li></ul>
+</div>
+<div class="sec">
+<h4>构建管道实现异步编程</h4>
+<ul class="point">
+<li><b>管道是由一系列节点组成，这些节点使用通道连接起来</b>
+<ul class="quote"><li>其中每个节点是一组运行相同功能的goroutine，在每个阶段goroutine从上游通道获取元素，然后对该数据执行某些操作，然后把操作后的结果再写入下游的通道。</li><li>除了第一个和最后一个节点，每个节点可以有任意多个输入和输出通道，第一个节点有时候被称为数据源或者生产者，最后一个节点被称为数据终点或者消费者。</li></ul>
+</li>
+<li><b>管道中的扇出操作是指多个函数可以从同一个通道里面读取元素，直到该通道被关闭了</b>
+<ul class="quote"><li>这提供了一种把大任务分配给一组工作者以并发处理的方法，这充分利用了多核CPU和IO。</li></ul>
+</li>
+<li><b>另外一个函数可以从多个输入通道读取元素并进行处理，比如把读取的元素输出到一个通道，这称为“扇入操作”</b>
+<ul class="quote"><li>可以更改管道以运行两个sq实例，每个实例从相同的输入通道读取。在结果中引入一个新函数merge，以便扇出数据到一个通道。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>其中每个节点是一组运行相同功能的goroutine，在每个阶段goroutine从上游通道获取元素，然后对该数据执行某些操作，然后把操作后的结果再写入下游的通道。</li><li>除了第一个和最后一个节点，每个节点可以有任意多个输入和输出通道，第一个节点有时候被称为数据源或者生产者，最后一个节点被称为数据终点或者消费者。</li><li>这提供了一种把大任务分配给一组工作者以并发处理的方法，这充分利用了多核CPU和IO。</li><li>可以更改管道以运行两个sq实例，每个实例从相同的输入通道读取。在结果中引入一个新函数merge，以便扇出数据到一个通道。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">51</span><span class="mmx-name">9.4 总结</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 6 条要点 · 10 句原句摘录</p>
+<div class="sec">
+<h4>Go语言的线程模型</h4>
+<ul class="point">
+<li><b>Go语言采用协程(goroutine)进行并发编程</b>
+<ul class="quote"><li>协程是Go语言中轻量级的线程，协程的调度由Go运行时系统进行。</li></ul>
+</li>
+<li><b>协程的启动和停止通过go关键字进行</b>
+<ul class="quote"><li>go关键字用于启动一个新的协程。</li><li>协程的停止通过关闭channel或者从协程中返回实现。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>协程是Go语言中轻量级的线程，协程的调度由Go运行时系统进行。</li><li>go关键字用于启动一个新的协程。</li><li>协程的停止通过关闭channel或者从协程中返回实现。</li></ul>
+</div>
+<div class="sec">
+<h4>并发原语goroutine与channel</h4>
+<ul class="point">
+<li><b>goroutine是Go语言中的并发执行单元</b>
+<ul class="quote"><li>goroutine可以理解为轻量级的线程，协程的调度由Go运行时系统进行。</li></ul>
+</li>
+<li><b>channel是Go语言中用于线程间通信的管道</b>
+<ul class="quote"><li>channel是Go语言中提供的一种并发安全的数据结构，可以用来在协程之间传递数据。</li><li>channel具有缓冲区，可以缓存数据，支持多路复用。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>goroutine可以理解为轻量级的线程，协程的调度由Go运行时系统进行。</li><li>channel是Go语言中提供的一种并发安全的数据结构，可以用来在协程之间传递数据。</li><li>channel具有缓冲区，可以缓存数据，支持多路复用。</li></ul>
+</div>
+<div class="sec">
+<h4>基于goroutine与channel构建管道</h4>
+<ul class="point">
+<li><b>管道是一种基于goroutine与channel的异步编程模式</b>
+<ul class="quote"><li>管道由两个goroutine组成，一个用于写入数据，一个用于读取数据。</li><li>管道的缓冲区可以缓存数据，支持多路复用。</li></ul>
+</li>
+<li><b>管道可以实现异步编程和回压功能</b>
+<ul class="quote"><li>通过管道，我们可以将一个协程产生的数据传递给另一个协程进行处理，实现异步编程。</li><li>通过关闭管道或者设置缓冲区的大小，可以实现回压功能，防止数据过多导致协程阻塞。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>管道由两个goroutine组成，一个用于写入数据，一个用于读取数据。</li><li>管道的缓冲区可以缓存数据，支持多路复用。</li><li>通过管道，我们可以将一个协程产生的数据传递给另一个协程进行处理，实现异步编程。</li><li>通过关闭管道或者设置缓冲区的大小，可以实现回压功能，防止数据过多导致协程阻塞。</li></ul>
+</div>
+</div></details>
+  </div>
+</section>
 <section class="mmx-mod" aria-labelledby="views" data-key="views"><h2 id="views">核心观点初判</h2><p class="mmx-mod-note">按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。</p><ul class="mmx-views"><li><b>第 1–7 章</b>——含「前言」至「2.1 显式使用线程实现」</li><li><b>第 8–14 章</b>——含「2.2 显式使用线程池实」至「3.4 JDK8 Str」</li><li><b>第 15–21 章</b>——含「3.5 总结」至「第5章 基于反应式编程实」</li><li><b>第 22–28 章</b>——含「5.1 反应式编程概述」至「6.1 Servlet概」</li><li><b>第 29–35 章</b>——含「6.2 Servlet 」至「7.2 Reactive」</li><li><b>第 36–42 章</b>——含「7.3 WebFlux服」至「7.9 总结」</li><li><b>第 43–49 章</b>——含「第8章 高性能异步编程框」至「8.6 总结」</li><li><b>第 50–54 章</b>——含「第9章 Go语言的异步编」至「9.4 总结」</li></ul></section>
 <section class="mmx-mod" aria-labelledby="coreask" data-key="coreask"><h2 id="coreask">核心追问（来自深读）</h2><div class="mmx-qa"><p class="mmx-q">CompletableFuture 补上了 Future 的哪个致命缺口？</p><p class="mmx-a">补的是组合与回调。Future只能 get() 阻塞等待或轮询 isDone()，无法表达“完成后接着做下一件事”，更无法把多个异步任务编成一条链。CompletableFuture把任务变成可组合的值：thenApply 与 thenCompose 串行，thenCombine 并行合并，allOf 与 anyOf 汇聚，异常走 exceptionally 与 handle。书里第3章按 Future、FutureTask、CompletableFuture、Stream 的顺序讲，就是要让你看到：前两者解决异步执行，第三个才解决异步编排。这是JDK8之后Java异步真正的分水岭。</p></div><div class="mmx-qa"><p class="mmx-q">@Async 有哪几种“看起来生效其实没生效”？</p><p class="mmx-a">三种。一是自调用：同类内部方法互相调用不走代理，注解形同虚设；二是线程池未配置，用了默认执行器，每次新建线程，高并发下直接打爆；三是异常被吞，返回void时异常进了默认处理器，调用方完全无感。书里4.3节专门讲@Async的实现原理（代理加TaskExecutor），用意就是让你知道它依赖Spring的代理机制——凡是绕过代理的调用（this调用、private方法、final类）都不会异步。理解这一点，比记住注解怎么加更重要，因为失效是静默的，不会报错。</p></div><div class="mmx-qa"><p class="mmx-q">WebFlux 到底提升了什么，又没提升什么？</p><p class="mmx-a">提升的是单位线程能承载的并发连接数，不是单请求的延迟。书里7.5节标题是“WebFlux对性能的影响”，篇幅只有246字——这个克制的篇幅本身就是态度：作者没有把它写成性能银弹。收益来自事件循环模型：少量线程处理大量连接，避免阻塞等待时线程被占住。但如果瓶颈是数据库慢查询、CPU密集计算或下游同步调用，换成WebFlux一点用没有，反而因为要处处非阻塞而增加复杂度。它优化的是等待，不是计算；判断标准应该是“你的时间花在等还是算”。</p></div></section>
 <section class="mmx-mod" aria-labelledby="aiask" data-key="aiask"><h2 id="aiask">AI 问书</h2><p class="mmx-mod-note">以下问答依据本书全书提要、章节结构与章节大纲整理；本书无热门划线素材，故不引划线原文，标「推断」处为整理者补注。</p><div class="mmx-ask"><div class="aiqa-item"><h3>这本书的“异步光谱”是怎么铺开的？</h3><p>从内到外五层。第一层是单JVM内的线程与线程池（第2章）；第二层是JDK的Future体系与CompletableFuture（第3章）；第三层是框架层，Spring的TaskExecutor抽象与@Async（第4章）；第四层是编程范式，反应式编程、Reactive Streams规范、RxJava与Reactor（第5章）；第五层是Web与网络，Servlet异步、WebFlux（第6至7章），再到Netty、Dubbo、Disruptor、Akka、RocketMQ（第8章）。最后用Go的goroutine与channel收尾。这条线是异步的粒度越来越大：从方法到请求到服务。</p></div><div class="aiqa-item"><h3>为什么最后一章要讲 Go？</h3><p>因为它是另一种答案。Java的异步是在语言之外解决的：线程池、回调、Future、反应式，都是库与框架层面的补丁；Go是在语言层面把并发做成一等公民——goroutine轻量、channel通信、调度器自动把海量goroutine映射到少量操作系统线程。放在书末，等于给读者一个对照系：你学的这一整套CompletableFuture与Reactor，本质上是在没有语言级并发原语的前提下用库模拟出来的。看懂这一点，就不会把某一种API当成真理，也不会把“异步”等同于“回调”（推断：书末定位为横向对照，作者未明说此意图）。</p></div><div class="aiqa-item"><h3>反应式编程的代价是什么？</h3><p>三样。可读性：一段业务逻辑被拆成算子链，堆栈信息失去意义，出错时很难定位；调试：链路是异步的，断点跳来跳去；心智负担：背压、调度器切换、冷热流，每一条都能让人翻车。收益是流控能力——Reactive Streams的 request(n) 机制让消费者能反向告诉生产者慢一点，这是回调式异步做不到的。所以判断标准很清楚：如果你的问题是下游扛不住上游的推，反应式值得；如果只是“想少写几个线程”，那是用大炮打蚊子。</p></div></div></section>

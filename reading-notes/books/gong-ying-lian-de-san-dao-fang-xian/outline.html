@@ -1,21 +1,3521 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>供应链的三道防线：需求预测、库存计划、供应链执行 · AI 大纲</title><style>
-:root{--fg:#1f2328;--muted:#6b7280;--line:#e6e2da;--accent:#b45309;--bg:#fbfaf7}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.78 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
-.wrap{max-width:840px;margin:0 auto;padding:38px 22px 90px}
-h1{font-size:26px;line-height:1.35;margin:0 0 6px}
-.meta{color:var(--muted);font-size:14px;margin-bottom:20px}
-h2{font-size:19px;margin:34px 0 12px;padding-left:10px;border-left:4px solid var(--accent)}
-h3{font-size:16px;margin:18px 0 8px}
-p{margin:8px 0}
-.tag{display:inline-block;background:#f2ede2;color:#8a6d3b;font-size:12px;padding:1px 9px;border-radius:10px;margin-right:6px}
-ul,ol{padding-left:22px}li{margin:4px 0}
-.quote{border-left:3px solid #d8cfbd;padding:6px 12px;color:#4b4639;background:#f7f4ee;margin:8px 0;font-size:15px;border-radius:0 6px 6px 0}
-.src{color:var(--muted);font-size:12px}
-.ch{display:flex;gap:10px;padding:7px 0;border-bottom:1px dashed var(--line)}
-.ch .no{color:var(--accent);font-weight:600;min-width:34px;text-align:right}
-.card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:12px 0}
-.foot{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
-a{color:#8a5a00;text-decoration:none}a:hover{text-decoration:underline}
-.badge{font-size:12px;color:#8a6d3b;background:#f6f1e6;border:1px solid #eadfc6;border-radius:6px;padding:1px 7px}
-</style></head><body><div class="wrap"><h1>供应链的三道防线：需求预测、库存计划、供应链执行</h1><div class="meta"><span class="tag">AI 大纲</span>刘宝红 赵玲　·　共 59 章</div><h2>全书提要</h2><p>为高层管理，理清供应链挑战的整体应对理念，为供应链人士，提供需求预测、库存计划的技术解决方案，企业规模大不相同，问题却惊人地相似：供应链的成本做不低，交付做不快，库存水平居高不下。解决方案必须从供应链的三道防线着手，所有的预测都是错的，但有效整合需求与供应端信息的预测错得最少。这是供应链的第一道防线。预测不准怎么办？那就得靠第二道防线：科学合理地建立安全库存，以应对需求和供应的不确定性。安全库存不意味着绝对“安全”，而是一定波动范围内的“安全”。当安全库存被突破时，就需要执行实施来弥补。这就是供应链的第三道防线。</p><h2>章节大纲（含各章热门划线原文）</h2><div class="ch"><span class="no">1</span><div><b>序一 貌似没做到，实则没想到</b><span class="src"> · 2296 字</span><div class="quote">所有的预测都是错的，但错多错少可不一样。有效对接销售和供应链，制定“准确度最高的错误的预测”，提高首发命准率，这就是需求预测，也是供应链的第一道防线的核心任务。 <span class="src">[180人划线]</span></div><div class="quote">计划的本质是三分技术、七分管理。我们的一大误区就是过于强调计划的技术特性，而忽视其管理本质，这也是导致供应链计划做不好的一个根本原因。 <span class="src">[162人划线]</span></div></div></div><div class="ch"><span class="no">2</span><div><b>序二 给读者的几点说明</b><span class="src"> · 2838 字</span><div class="quote">我和赵玲女士信奉的是日本质量哲学：面对不完美，你见一个灭一个，得到的自然就是完美；这就好比你把所有的坑都填了，这路自然就平了一样。 <span class="src">[170人划线]</span></div><div class="quote">需求预测要“从数据开始，由判断结束” <span class="src">[168人划线]</span></div></div></div><div class="ch"><span class="no">3</span><div><b>作者简介</b><span class="src"> · 1595 字</span></div></div><div class="ch"><span class="no">4</span><div><b>赵玲</b><span class="src"> · 1706 字</span></div></div><div class="ch"><span class="no">5</span><div><b>引言 供应链的三道防线</b><span class="src"> · 1057 字</span><div class="quote">企业有三大支柱职能：研发（产品管理）设计个好产品，营销（需求管理）卖个好价钱，供应链（供应管理）以合适的成本和速度生产出来、配送出去。 <span class="src">[306人划线]</span></div></div></div><div class="ch"><span class="no">6</span><div><b>需求预测：供应链的第一道防线</b><span class="src"> · 2350 字</span><div class="quote">销售是最糟糕的预测者，却是最佳的调整者，你可以依赖他们的判断来优化预测，而不是由他们来做预测。 <span class="src">[520人划线]</span></div><div class="quote">低估业务的可重复性，其实是把所有的产品、所有的业务都当作例外来处理，完全依赖销售来预测，是计划没能力或者不作为的体现。 <span class="src">[351人划线]</span></div></div></div><div class="ch"><span class="no">7</span><div><b>库存计划：供应链的第二道防线</b><span class="src"> · 2416 字</span><div class="quote">但问题是，对于不同产品来说，需求的不确定性、供应的不确定性、有货率的要求都可能不同，所以一刀切的结果，就是有些产品短缺，有些产品过剩。过剩与短缺并存，是这些企业的普遍挑战。 <span class="src">[170人划线]</span></div></div></div><div class="ch"><span class="no">8</span><div><b>供应链执行：供应链的第三道防线</b><span class="src"> · 1941 字</span><div class="quote">表面上，企业的麻烦是这些难以有效应对的“例外”造成的；但实际上，更多的是来自那些本来可以有效应对的“例内”。 <span class="src">[144人划线]</span></div></div></div><div class="ch"><span class="no">9</span><div><b>第一篇 供应链的第一道防线：需求预测</b><span class="src"> · 57 字</span><div class="quote">所有的预测都是错的，但错多错少不一样。 <span class="src">[273人划线]</span></div></div></div><div class="ch"><span class="no">10</span><div><b>你没法回避需求预测</b><span class="src"> · 3075 字</span><div class="quote">预测驱动也叫推式供应链，订单驱动也叫拉式供应链。 <span class="src">[286人划线]</span></div><div class="quote">订单是供应链双方力量博弈的结果，由弱势一方来承担预测的风险。 <span class="src">[168人划线]</span></div></div></div><div class="ch"><span class="no">11</span><div><b>需求预测是“从数据开始，由判断结束”</b><span class="src"> · 2754 字</span><div class="quote">可重复性越高，数据的成分就越多；可重复性越低，判断的成分就越多。越是在产品生命周期的两头，判断的成分越多；越是在成熟稳定时期，数据的成分越多。 <span class="src">[168人划线]</span></div><div class="quote">需求预测是从数据开始，由判断结束：先根据需求历史做个基准预测（数据），然后搜集销售、市场、产品管理、高层管理等的意见（判断），修正预测。所有的预测都是错的，但整合了历史数据和专业判断的预测错得最少。 <span class="src">[154人划线]</span></div></div></div><div class="ch"><span class="no">12</span><div><b>从数据开始：谁的数据</b><span class="src"> · 2200 字</span></div></div><div class="ch"><span class="no">13</span><div><b>从数据里面学什么：以发货记录为例</b><span class="src"> · 5419 字</span></div></div><div class="ch"><span class="no">14</span><div><b>由判断结束：谁的判断，判断什么</b><span class="src"> · 2256 字</span><div class="quote">所有的短缺都是以过剩结束 <span class="src">[216人划线]</span></div></div></div><div class="ch"><span class="no">15</span><div><b>寻找和管理“大石头”（一）：聚焦重点，好钢用在刀刃上</b><span class="src"> · 2309 字</span></div></div><div class="ch"><span class="no">16</span><div><b>寻找和管理“大石头”（二）：尽早发现，尽快纠错</b><span class="src"> · 4586 字</span></div></div><div class="ch"><span class="no">17</span><div><b>寻找和管理“大石头”（三）：他没说，你问了没有</b><span class="src"> · 3522 字</span><div class="quote">证明他们傻不是解决方案，弥补他们的能力不足才是。 <span class="src">[306人划线]</span></div><div class="quote">闭环执行增加了执行的可靠性，使得销售得以专注管理需求 <span class="src">[153人划线]</span></div></div></div><div class="ch"><span class="no">18</span><div><b>谁在做需求预测：兼谈计划的进化史</b><span class="src"> · 5164 字</span></div></div><div class="ch"><span class="no">19</span><div><b>计划与执行的分离：某快消品公司的组织设计案例</b><span class="src"> · 3835 字</span></div></div><div class="ch"><span class="no">20</span><div><b>需求计划做什么：快消品行业为例</b><span class="src"> · 3075 字</span><div class="quote">需求预测的“从数据开始”，指的是可重复的基准需求历史，这是个关键假定，一定要遵守。 <span class="src">[180人划线]</span></div></div></div><div class="ch"><span class="no">21</span><div><b>什么样的人适合做需求计划</b><span class="src"> · 2933 字</span></div></div><div class="ch"><span class="no">22</span><div><b>需求预测汇报给哪个部门</b><span class="src"> · 3049 字</span></div></div><div class="ch"><span class="no">23</span><div><b>如何做准预测：选择合适的预测颗粒度</b><span class="src"> · 6366 字</span></div></div><div class="ch"><span class="no">24</span><div><b>案例：谁的预测更准，销售还是计划</b><span class="src"> · 6180 字</span></div></div><div class="ch"><span class="no">25</span><div><b>为什么一线销售做不好需求预测</b><span class="src"> · 5397 字</span></div></div><div class="ch"><span class="no">26</span><div><b>既然做不好，为什么一线销售还在做预测</b><span class="src"> · 2793 字</span></div></div><div class="ch"><span class="no">27</span><div><b>销售提需求，计划做判断，如何</b><span class="src"> · 1262 字</span></div></div><div class="ch"><span class="no">28</span><div><b>需求计划的绩效考核</b><span class="src"> · 6586 字</span></div></div><div class="ch"><span class="no">29</span><div><b>预测不是衡量准确性，而是偏差率</b><span class="src"> · 2709 字</span></div></div><div class="ch"><span class="no">30</span><div><b>【专题一】长周期物料的预测：需求预测的一大难点</b><span class="src"> · 3058 字</span></div></div><div class="ch"><span class="no">31</span><div><b>【专题二】计划体系改进：你不能忽视现状的合理性</b><span class="src"> · 5846 字</span></div></div><div class="ch"><span class="no">32</span><div><b>【专题三】改善计划以改善供应链：一个本土企业的变革之路</b><span class="src"> · 4647 字</span></div></div><div class="ch"><span class="no">33</span><div><b>本篇小结</b><span class="src"> · 979 字</span></div></div><div class="ch"><span class="no">34</span><div><b>第二篇 供应链的第二道防线：库存计划</b><span class="src"> · 2825 字</span></div></div><div class="ch"><span class="no">35</span><div><b>安全库存的设置：库存计划的看家本领</b><span class="src"> · 10325 字</span></div></div><div class="ch"><span class="no">36</span><div><b>会设安全库存，再订货点就很容易</b><span class="src"> · 5748 字</span></div></div><div class="ch"><span class="no">37</span><div><b>为什么不能一刀切地设置库存水位</b><span class="src"> · 2611 字</span></div></div><div class="ch"><span class="no">38</span><div><b>库存计划要学赌场，而不是赌徒</b><span class="src"> · 1199 字</span></div></div><div class="ch"><span class="no">39</span><div><b>【专题一】VMI是好东西，对供应商也是</b><span class="src"> · 8016 字</span></div></div><div class="ch"><span class="no">40</span><div><b>【专题二】“长尾”产品：库存计划的终极挑战</b><span class="src"> · 9883 字</span></div></div><div class="ch"><span class="no">41</span><div><b>库存计划的优化：组织和系统的博弈</b><span class="src"> · 4113 字</span></div></div><div class="ch"><span class="no">42</span><div><b>高库存、高服务水平是怎么来的</b><span class="src"> · 1783 字</span></div></div><div class="ch"><span class="no">43</span><div><b>库存究竟多少才算合理</b><span class="src"> · 4588 字</span></div></div><div class="ch"><span class="no">44</span><div><b>四分法来识别、管控库存风险</b><span class="src"> · 4794 字</span></div></div><div class="ch"><span class="no">45</span><div><b>库存控制：应对“打不死的妖怪”</b><span class="src"> · 2320 字</span></div></div><div class="ch"><span class="no">46</span><div><b>【案例】三管齐下缩短周转周期，降低周转库存</b><span class="src"> · 4044 字</span></div></div><div class="ch"><span class="no">47</span><div><b>降库存要避免互扣人质的死循环</b><span class="src"> · 3593 字</span></div></div><div class="ch"><span class="no">48</span><div><b>降库存是推动意志力极限</b><span class="src"> · 1665 字</span></div></div><div class="ch"><span class="no">49</span><div><b>本篇小结</b><span class="src"> · 1084 字</span></div></div><div class="ch"><span class="no">50</span><div><b>第三篇 供应链的第三道防线：供应链执行</b><span class="src"> · 978 字</span></div></div><div class="ch"><span class="no">51</span><div><b>催货是有学问的</b><span class="src"> · 3834 字</span></div></div><div class="ch"><span class="no">52</span><div><b>把自己做成大客户，驱动供应商快速响应</b><span class="src"> · 3894 字</span></div></div><div class="ch"><span class="no">53</span><div><b>要不要给供应商预测</b><span class="src"> · 3933 字</span></div></div><div class="ch"><span class="no">54</span><div><b>计划能随意变动吗：你得尊重供应链的刚性</b><span class="src"> · 1658 字</span></div></div><div class="ch"><span class="no">55</span><div><b>人都在忙什么？在做信息系统的事</b><span class="src"> · 4054 字</span></div></div><div class="ch"><span class="no">56</span><div><b>ERP：信息系统的核心应用</b><span class="src"> · 9851 字</span></div></div><div class="ch"><span class="no">57</span><div><b>电子商务：供应商的电子连接</b><span class="src"> · 8797 字</span></div></div><div class="ch"><span class="no">58</span><div><b>本篇小结</b><span class="src"> · 1022 字</span></div></div><div class="ch"><span class="no">59</span><div><b>后记：每一次相遇都是久别重逢</b><span class="src"> · 873 字</span></div></div><div class="foot">来源：微信读书官方章节接口 + 热门划线接口，逐字原文　·　生成于 2026-11-01 13:24　·　开读即产（不等完读）</div></div></body></html>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="供应链的三道防线：需求预测、库存计划、供应链执行 AI 大纲">
+<title>《供应链的三道防线：需求预测、库存计划、供应链执行》｜AI 大纲</title>
+<link rel="stylesheet" href="../../../assets/css/site.css">
+<link rel="stylesheet" href="../../../assets/css/reading-outline.css">
+
+</head>
+<body>
+<main class="page">
+  <header class="note-head">
+    <p class="eyebrow">AI OUTLINE · BEFORE READING</p>
+    <h1>《供应链的三道防线：需求预测、库存计划、供应链执行》AI 大纲</h1>
+    <p class="meta">作者：—　·　共 57 章 / 1122 条　·　AI 读书 · 全书大纲</p>
+    <p><a href="../../../index.html">← 返回首页</a>　<a href="../../index.html">阅读归档索引</a>　<a href="outline.epub" download>下载 EPUB ↓</a></p>
+    <div class="chips"><span class="chip">全书视角</span><span class="chip">AI 生成</span><span class="chip">含原文摘录</span></div>
+    <p class="small">本大纲由 AI 读书（阅读端智能大纲）生成，是全书结构与要点的机器梳理，
+    <b>不等同于已亲读</b>；其中第 4 层条目为书中原句摘录。章节可展开查看。</p>
+  </header>
+  <div class="toc"><b>章节目录</b><ul>
+<li><a href="#ch0">序一 貌似没做到，实则没想到</a></li>
+<li><a href="#ch1">序二 给读者的几点说明</a></li>
+<li><a href="#ch2">作者简介</a></li>
+<li><a href="#ch3">赵玲</a></li>
+<li><a href="#ch4">引言 供应链的三道防线</a></li>
+<li><a href="#ch5">需求预测：供应链的第一道防线</a></li>
+<li><a href="#ch6">库存计划：供应链的第二道防线</a></li>
+<li><a href="#ch7">供应链执行：供应链的第三道防线</a></li>
+<li><a href="#ch8">你没法回避需求预测</a></li>
+<li><a href="#ch9">需求预测是“从数据开始，由判断结束”</a></li>
+<li><a href="#ch10">从数据开始：谁的数据</a></li>
+<li><a href="#ch11">从数据里面学什么：以发货记录为例</a></li>
+<li><a href="#ch12">由判断结束：谁的判断，判断什么</a></li>
+<li><a href="#ch13">寻找和管理“大石头”（一）：聚焦重点，好钢用在刀刃上</a></li>
+<li><a href="#ch14">寻找和管理“大石头”（二）：尽早发现，尽快纠错</a></li>
+<li><a href="#ch15">寻找和管理“大石头”（三）：他没说，你问了没有</a></li>
+<li><a href="#ch16">谁在做需求预测：兼谈计划的进化史</a></li>
+<li><a href="#ch17">计划与执行的分离：某快消品公司的组织设计案例</a></li>
+<li><a href="#ch18">需求计划做什么：快消品行业为例</a></li>
+<li><a href="#ch19">什么样的人适合做需求计划</a></li>
+<li><a href="#ch20">需求预测汇报给哪个部门</a></li>
+<li><a href="#ch21">如何做准预测：选择合适的预测颗粒度</a></li>
+<li><a href="#ch22">案例：谁的预测更准，销售还是计划</a></li>
+<li><a href="#ch23">为什么一线销售做不好需求预测</a></li>
+<li><a href="#ch24">既然做不好，为什么一线销售还在做预测</a></li>
+<li><a href="#ch25">销售提需求，计划做判断，如何</a></li>
+<li><a href="#ch26">需求计划的绩效考核</a></li>
+<li><a href="#ch27">预测不是衡量准确性，而是偏差率</a></li>
+<li><a href="#ch28">【专题一】长周期物料的预测：需求预测的一大难点</a></li>
+<li><a href="#ch29">【专题二】计划体系改进：你不能忽视现状的合理性</a></li>
+<li><a href="#ch30">【专题三】改善计划以改善供应链：一个本土企业的变革之路</a></li>
+<li><a href="#ch31">本篇小结</a></li>
+<li><a href="#ch32">第二篇 供应链的第二道防线：库存计划</a></li>
+<li><a href="#ch33">安全库存的设置：库存计划的看家本领</a></li>
+<li><a href="#ch34">会设安全库存，再订货点就很容易</a></li>
+<li><a href="#ch35">为什么不能一刀切地设置库存水位</a></li>
+<li><a href="#ch36">库存计划要学赌场，而不是赌徒</a></li>
+<li><a href="#ch37">【专题一】VMI是好东西，对供应商也是</a></li>
+<li><a href="#ch38">【专题二】“长尾”产品：库存计划的终极挑战</a></li>
+<li><a href="#ch39">库存计划的优化：组织和系统的博弈</a></li>
+<li><a href="#ch40">高库存、高服务水平是怎么来的</a></li>
+<li><a href="#ch41">库存究竟多少才算合理</a></li>
+<li><a href="#ch42">四分法来识别、管控库存风险</a></li>
+<li><a href="#ch43">库存控制：应对“打不死的妖怪”</a></li>
+<li><a href="#ch44">【案例】三管齐下缩短周转周期，降低周转库存</a></li>
+<li><a href="#ch45">降库存要避免互扣人质的死循环</a></li>
+<li><a href="#ch46">降库存是推动意志力极限</a></li>
+<li><a href="#ch47">本篇小结</a></li>
+<li><a href="#ch48">第三篇 供应链的第三道防线：供应链执行</a></li>
+<li><a href="#ch49">催货是有学问的</a></li>
+<li><a href="#ch50">把自己做成大客户，驱动供应商快速响应</a></li>
+<li><a href="#ch51">要不要给供应商预测</a></li>
+<li><a href="#ch52">计划能随意变动吗：你得尊重供应链的刚性</a></li>
+<li><a href="#ch53">人都在忙什么？在做信息系统的事</a></li>
+<li><a href="#ch54">ERP：信息系统的核心应用</a></li>
+<li><a href="#ch55">电子商务：供应商的电子连接</a></li>
+<li><a href="#ch56">本篇小结</a></li>
+</ul></div>
+<details class="ch" id="ch0"><summary>序一 貌似没做到，实则没想到</summary>
+<div class="sec">
+<h4>本土企业供应链的问题及其根源</h4>
+<ul class="point">
+<li><b>本土企业供应链的问题表面上看是执行不到位，根源却都离不开计划</b>
+<ul class="quote">
+<li>需求预测变动频繁，紧急需求频发，没有足够的响应时间。</li>
+</ul>
+</li>
+<li><b>很多企业没有独立的需求计划职能，库存计划拍脑袋，信息系统落后</b>
+<ul class="quote">
+<li>需求计划由销售、生产计划甚至老总兼任。</li>
+<li>库存水位一刀切，统一设成一定天数的用量。</li>
+<li>BOM、库存和主数据准确度太低，物料需求计划MRP没法跑。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>供应链的三道防线</h4>
+<ul class="point">
+<li><b>需求预测是供应链的第一道防线的核心任务</b>
+<ul class="quote">
+<li>制定“准确度最高的错误的预测”。</li>
+</ul>
+</li>
+<li><b>安全库存是供应链的第二道防线的核心任务</b>
+<ul class="quote">
+<li>建立安全库存，以应对需求和供应的不确定性。</li>
+<li>如何科学合理地设置库存水位，兼顾客户服务水平和库存周转率。</li>
+</ul>
+</li>
+<li><b>供应链执行是供应链的第三道防线的核心任务</b>
+<ul class="quote">
+<li>当安全库存被突破时，就需要执行来弥补。</li>
+<li>比如，赶工加急，压缩响应周期；整合供应商，集中采购额，驱动供应商更快响应等。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>供应链三道防线的实践挑战</h4>
+<ul class="point">
+<li><b>计划上的先天不足，加上执行上的拖泥带水，导致这三道防线没法建好</b>
+<ul class="quote">
+<li>最常见的就是需求预测准确度太低，第一道防线习惯性地失守。</li>
+<li>那作为第二道防线，安全库存自然就顶不住，导致所有的“石头”都落到执行者的头上，供应链就不可避免地陷入救火模式。</li>
+<li>而计划呢，就不得不花费大量的精力来管理供应，比如催货加急，导致花在需求预测、库存计划上的时间更少。</li>
+<li>计划上的资源投入不足，导致需求预测和库存计划做得更差，给后续的执行带来更多问题。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>本书的目标和主要内容</h4>
+<ul class="point">
+<li><b>本书的重点是计划，即需求预测和库存计划，兼顾供应链执行</b>
+<ul class="quote">
+<li>计划的本质是三分技术、七分管理。</li>
+<li>这本书都是从管理的角度入手，在管理层面阐述需求预测、库存计划和供应链执行的解决方案。</li>
+</ul>
+</li>
+<li><b>本书希望能提供供应链问题的整体解决方案，给需求预测、库存计划提供技术解决方案</b>
+<ul class="quote">
+<li>对于高层管理，希望这本书提供了供应链问题的整体解决方案。</li>
+<li>对于供应链人士，希望这本书能给需求预测、库存计划提供技术解决方案。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch1"><summary>序二 给读者的几点说明</summary>
+<div class="sec">
+<h4>本书的创作背景与整合过程</h4>
+<ul class="point">
+<li><b>本书是几十篇文章整合而成的，大部分是我写的，小部分是赵玲女士写的</b>
+<ul class="quote">
+<li>我花了一年的工夫，连续写了6稿。</li>
+<li>赵玲女士通读审稿两遍，做了很多修改完善的工作。</li>
+</ul>
+</li>
+<li><b>有些部分还能看得出独立文章的模样，有些概念、有些案例会在不同地方重复出现</b>
+<ul class="quote">
+<li>有些重复是必要的，因为重要的概念要多次讲到，才能真正体会。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>本书的主要内容和目的</h4>
+<ul class="point">
+<li><b>本书的目的是给大家新的方法论，比如供应链的三道防线，来系统解决成本、交付和库存问题</b>
+<ul class="quote">
+<li>需求预测要“从数据开始，由判断结束”，全书出现好几十次，因为这是做好需求预测的关键。</li>
+<li>本书就是聚焦中间治乱的问题，基本的思路在蓝皮书中有阐述，这里用整本书的篇幅，纳入大量的案例，更系统、更全面地阐述供应链计划，兼顾供应链执行，以降低运营成本，提高库存周转，同时改善按时交货率。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>本书的特色和价值</h4>
+<ul class="point">
+<li><b>本书有些地方内容不紧凑，不是我们为凑字数而堆砌，而是因为没有足够的精力来精简</b>
+<ul class="quote">
+<li>我花了几个月的时间，先后删掉近70000字，剩下20来万字，还是没有精简到我希望的地步。</li>
+</ul>
+</li>
+<li><b>本书与作者以前写的三本书有区别和联系</b>
+<ul class="quote">
+<li>这本书是《供应链管理：高成本、高库存、重资产的解决方案》(蓝皮书)的延伸。</li>
+<li>一本接一本地写书，我曾经非常在意不同书之间的内容搭接与重复。后来想通了，重复也没关系，因为在供应链管理领域，有些话题是任何一本书都没法回避的。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>对读者的期望和建议</h4>
+<ul class="point">
+<li><b>欢迎读者提供改进的建议</b>
+<ul class="quote">
+<li>如果你有任何改进的建议，欢迎随时给我Email，或者微信。</li>
+</ul>
+</li>
+<li><b>希望读者多读书，多交流</b>
+<ul class="quote">
+<li>如果你喜欢这本书，或者我的文章，欢迎告诉你的朋友和同事。</li>
+<li>我平均每两个月来国内一次，在上海、深圳等地举办系列培训，欢迎你和同事、朋友来参加。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>致谢</h4>
+<ul class="point">
+<li><b>感谢广大读者，这么多年来不离不弃，一路同行</b>
+<ul class="quote">
+<li>我的业务模式很简单：只要1000个读者中有一个来参加我的培训，或者邀请我去给他们公司内训，就解决了我的衣食之忧。</li>
+</ul>
+</li>
+<li><b>感谢众多的客户和学员，他们为本书提供了大量的案例和反馈</b>
+<ul class="quote">
+<li>书中的大量案例数据来自客户，我们对具体的数字都做了一系列调整。</li>
+</ul>
+</li>
+<li><b>感谢编辑的努力</b>
+<ul class="quote">
+<li>像这么一本20多万字的书，从赵玲和我完成初稿递交出版社，经过一道又一道的编辑、校对、审核，到最终读者拿到手上，需要小半年时间。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch2"><summary>作者简介</summary>
+<div class="sec">
+<h4>刘宝红的个人简介</h4>
+<ul class="point">
+<li><b>刘宝红是畅销书《采购与供应链管理：一个实践者的角度》等的作者</b>
+<ul class="quote">
+<li>他的专著《采购与供应链管理：一个实践者的角度》于2012年由机械工业出版社出版，2015年再版，并多次印刷，每年居供应链管理门类销量榜首。</li>
+<li>他的第二本专著《供应链管理：高成本、高库存、重资产的解决方案》自2016年5月出版以来，迅速跃居供应链管理综合排名榜首。</li>
+<li>他的第三本专著《供应链管理：实践者的专家之路》于2017年4月出版，很快便成为供应链职业发展和职能建设领域的最爱。</li>
+</ul>
+</li>
+<li><b>刘宝红是“供应链管理专栏”(www.scm-blog.com)创始人，西斯国际执行总监</b>
+<ul class="quote">
+<li>他坚持原创，探讨、传播供应链管理的基本实践，年访问量数百万人次。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>刘宝红的职业经历</h4>
+<ul class="point">
+<li><b>刘宝红在供应链管理领域有十几年的丰富经历，主要来自硅谷高科技界，集中在制造行业</b>
+<ul class="quote">
+<li>他先在半导体设备制造行业，从事供应商开发和管理，在全球采购产品、服务和技术。</li>
+<li>后转入供应链计划领域，支持一高科技公司每年13亿美元的服务备件业务。</li>
+</ul>
+</li>
+<li><b>刘宝红的团队分布在美国、德国、法国、日本、韩国、新加坡、中国大陆和中国台湾，客户遍及亚太、欧洲和北美。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>刘宝红的合作与培训</h4>
+<ul class="point">
+<li><b>刘宝红跟海尔、华为和中国移动等有多年合作，并为几十家海内外企业提供内训服务</b>
+<ul class="quote">
+<li>他的内训客户还包括大批新兴电商，比如找钢网、美菜网、史泰博、Wook、微鲸科技、小米等。</li>
+</ul>
+</li>
+<li><b>刘先生推出一系列培训，先后培训了千百家国内外公司的员工，全面覆盖汽车家电、电信设备、航空航天、机械制造、石油石化、快时尚等多个行业。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>刘宝红的教育背景与认证</h4>
+<ul class="point">
+<li><b>刘先生毕业于同济大学，师从丁士昭教授，获项目管理硕士学位。</b>
+</li>
+<li><b>刘先生后赴美国，在亚利桑那州立大学读商学院，获供应链管理的MBA</b>
+<ul class="quote">
+<li>留学期间，他在美国高级采购研究中心(CAPS Research)做辅助研究，广泛接触采购与供应链管理的最佳实践。</li>
+</ul>
+</li>
+<li><b>刘先生是美国供应管理协会(ISM)认证的注册采购经理(C.P.M.)，通过APICS的生产与库存管理认证(CPIM)，接受了亚利桑那州立大学、摩托罗拉和霍尼韦尔的六西格玛培训，是六西格玛黑带。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch3"><summary>赵玲</summary>
+<div class="sec">
+<h4>赵玲的个人背景和经历</h4>
+<ul class="point">
+<li><b>赵玲女士在供应链管理领域拥有20年的理论研究和实战经验</b>
+<ul class="quote">
+<li>职业生涯早期供职于上海航天设备制造总厂、立邦涂料、美国惠氏、恒寿堂药业等甲方企业担任供应链管理职能。</li>
+<li>职业生涯中后期作为资深咨询顾问、供应链方案架构师任职于金蝶公司、SAP中国研究院和SAP中国等乙方企业。</li>
+</ul>
+</li>
+<li><b>赵玲女士于2010年创立了上海驭策供应链管理有限公司</b>
+<ul class="quote">
+<li>专注于供应链核心体系——计划领域的培训、咨询、研究和创新工作。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>赵玲的专业成就</h4>
+<ul class="point">
+<li><b>赵玲女士作为中国需求计划管理领域的开拓者，创建了《CDMP需求预测规划师认证培训课程》</b>
+<ul class="quote">
+<li>成为IIF国际预测者协会在中国唯一授权的需求预测培训课程讲师。</li>
+</ul>
+</li>
+<li><b>赵玲女士同时是一位资深的供应链计划管理咨询师，主导设计了Demand Driven需求计划管理系统和数字化S&amp;OP产销协同规划引擎D.O.E.S</b>
+<ul class="quote">
+<li>Demand Driven需求计划管理系统是一款基于大型数据库和数学建模技术并融合了完美工作流的企业数据共享和协同预测平台。</li>
+<li>D.O.E.S S&amp;OP产销协同规划引擎致力于解决企业最重要的承上启下的战术策略层优化和日常产销规划。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>赵玲的客户案例</h4>
+<ul class="point">
+<li><b>赵玲女士服务过的客户包括立邦涂料、亨氏集团、霍尼韦尔、康明斯、康师傅集团、顾家家居、浙江传化、康佳、欧莱雅、农夫山泉、汉高、宇通客车、三全食品、娇兰佳人、百胜、维他奶、耀泰、无限极、罗氏诊断、梅里埃诊断、欧普照明、如新中国等。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>赵玲的新书介绍</h4>
+<ul class="point">
+<li><b>赵玲女士将在2018年10月推出由其主笔，并再次与刘宝红老师携手的新书《教你打造超级需求计划管理体系》</b>
+<ul class="quote">
+<li>该书将填补国内需求计划管理领域理论体系和实践管理的空白，为企业需求计划管理这一全新业务领域提供指导和帮助。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch4"><summary>引言 供应链的三道防线</summary>
+<div class="sec">
+<h4>供应链的三道防线</h4>
+<ul class="point">
+<li><b>需求预测、库存计划和供应链执行是供应链的三道防线</b>
+<ul class="quote">
+<li>需求预测是第一道防线，目标是把大部分洪水给拦住。</li>
+<li>拦不住的溢出来，流到第二道防线，由安全库存来应对。</li>
+<li>安全库存对付不了的，则由第三道防线——供应链执行来补救。</li>
+</ul>
+</li>
+<li><b>供应链的三道防线直接影响运营成本和库存成本</b>
+<ul class="quote">
+<li>对于一般的企业，产品成本的70%左右是给供应商的，采购在其中发挥巨大的作用。</li>
+<li>但是，人们习惯性地忽视了运营成本和库存成本，因为两者主要是隐形成本。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>需求预测</h4>
+<ul class="point">
+<li><b>所有的预测都是错的，但错多错少不一样，要尽力做出准确度最高的错误的预测，提高首发命中率。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>库存计划</h4>
+<ul class="point">
+<li><b>所有的预测都是错的，所以我们设立安全库存或安全产能来应对。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>供应链执行</h4>
+<ul class="point">
+<li><b>预测失败，安全库存不够，最终要靠供应链的执行能力来弥补。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch5"><summary>需求预测：供应链的第一道防线</summary>
+<div class="sec">
+<h4>需求预测的基本方法论</h4>
+<ul class="point">
+<li><b>“从数据开始，由判断结束”是需求预测的基本方法论</b>
+<ul class="quote">
+<li>在历史数据分析的基础上，计划做出基准预测。</li>
+<li>根据营销等的反馈(判断)，做出适当调整，成为最终的需求预测。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>需求预测的常见误区</h4>
+<ul class="point">
+<li><b>误区1：销售提需求，计划做判断</b>
+<ul class="quote">
+<li>销售是没有数据的，他们的任务是跟人打交道，不是跟数字打交道，做预测就是拍脑袋为主。</li>
+<li>计划缺失一线市场信息，相比销售，计划更加远离需求，怎么能做好判断呢？</li>
+</ul>
+</li>
+<li><b>误区2：胡子眉毛一把抓，无法突出重点做判断</b>
+<ul class="quote">
+<li>计划没有提炼出真正需要销售判断的产品来。</li>
+<li>真正需要一线销售反馈的，是那些需求集中在有限客户的产品。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>需求预测的正确做法</h4>
+<ul class="point">
+<li><b>需求预测是三分技术、七分管理</b>
+<ul class="quote">
+<li>企业最大的挑战不是选择什么样的预测模型，而是建立销售与运营对接的流程。</li>
+<li>有数据的出数据(计划)，有判断的出判断(销售)，把公司前后端最佳的智慧凝聚到一起，做出准确度最高的判断，尽量提高首发命中的概率。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch6"><summary>库存计划：供应链的第二道防线</summary>
+<div class="sec">
+<h4>库存计划的重要性</h4>
+<ul class="point">
+<li><b>预测注定是错的，安全库存和安全产能是应对不确定性的第二道防线</b>
+<ul class="quote">
+<li>安全库存生来就是为应对不确定性，不用解释。</li>
+<li>工厂在设计产能时，正常的产能利用率一般为80%上下，剩下的20%就是安全产能。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>库存计划中的误区</h4>
+<ul class="point">
+<li><b>库存水位一刀切，短缺与过剩并存</b>
+<ul class="quote">
+<li>对于不同产品来说，需求的不确定性、供应的不确定性、有货率的要求都可能不同，所以一刀切的结果，就是有些产品短缺，有些产品过剩。</li>
+</ul>
+</li>
+<li><b>服务水平没有清晰的定义</b>
+<ul class="quote">
+<li>服务水平就是客户给我们订单，我们何时能够给客户发货。</li>
+<li>有货率越高，安全库存就越高；反之亦然。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>库存计划的改进方法</h4>
+<ul class="point">
+<li><b>安全库存也得遵循“从数据开始，由判断结束”的决策模式</b>
+<ul class="quote">
+<li>先分析历史需求、历史供应的模式和不确定性，套用数理统计的公式，计算出理论上的安全库存。</li>
+<li>然后，根据实际情况来调整。</li>
+</ul>
+</li>
+<li><b>加强数据分析，计划就能做得更好，减轻短缺和过剩的问题</b>
+<ul class="quote">
+<li>对短缺和过剩，计划习惯性地把矛头指向销售、客户。</li>
+<li>在不可为之处外，还有很多可为之处，安全库存的设置就是例子。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch7"><summary>供应链执行：供应链的第三道防线</summary>
+<div class="sec">
+<h4>供应链执行的重要性</h4>
+<ul class="point">
+<li><b>执行力强，并不是说执行就做得不错，因为是以高昂的运营成本为代价</b>
+<ul class="quote">
+<li>信息化程度低，员工深陷琐碎杂务。</li>
+<li>供应商的选择和管理不到位，没法有效驱动供应商快速响应。</li>
+<li>催货流程不清晰，资源重复浪费严重。</li>
+</ul>
+</li>
+<li><b>执行问题让供应链的绩效问题更加复杂化</b>
+<ul class="quote">
+<li>信息化水平低，比如有的公司连ERP系统都没有。</li>
+<li>计划决策投入不足，计划就做不好，给执行带来更多挑战。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>供应链执行面临的挑战</h4>
+<ul class="point">
+<li><b>企业围绕“例外”问题设计了解决方案，而这解决方案却往往不能有效应对“例内”问题</b>
+<ul class="quote">
+<li>比如有个公司，由于有些产品集中在单个客户上，风险较高，就让一线销售做需求预测，不光是那些客户集中度高的产品(“例外”)，而且包括通用的产品(“例内”)。</li>
+<li>对于需求稳定，特别是多个客户通用的产品，销售的预测准确度更低，显著不如计划用简单的统计模型，单纯凭借需求历史做预测来得准。</li>
+</ul>
+</li>
+<li><b>企业在“例内”问题上还有很长的路要走</b>
+<ul class="quote">
+<li>只要把这些“例内”问题解决好，我们就比以前做得好，我们就比我们的竞争对手做得好，这就是竞争优势。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>供应链执行的实施策略</h4>
+<ul class="point">
+<li><b>通过有效地构建三道防线，把成本控制住，库存降下来，同时提高客户交付水平</b>
+<ul class="quote">
+<li>信息化，旨在通过自动化解放员工，以便把更多资源投入到高附加值的活动中，比如需求预测和库存计划。</li>
+<li>供应商的选择与管理方面，我们会简要阐述组织、流程和系统的能力建设。</li>
+<li>在供应链执行上，我们还重点讨论是否给供应商分享需求预测，以及如何分享。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch8"><summary>你没法回避需求预测</summary>
+<div class="sec">
+<h4>预测和订单的区别及其在供应链中的作用</h4>
+<ul class="point">
+<li><b>预测和订单都是供应链的一部分，订单也会改变，数量、日期、配置都有可能改变，甚至会取消</b>
+<ul class="quote">
+<li>订单是供应链双方力量博弈的结果，由弱势一方来承担预测的风险。</li>
+</ul>
+</li>
+<li><b>预测和订单的区别在于对预测风险的承担</b>
+<ul class="quote">
+<li>当你是大客户时，你的胳膊粗，给供应商一个预测，供应商就开始备料、备产能，预测失败的话，往往是供应商买单。</li>
+<li>当你是小客户时，你的胳膊细，就不得不给供应商下订单，预测失败的话，你的仓库里多了一堆没用的东西。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>推拉结合供应链中的需求预测</h4>
+<ul class="point">
+<li><b>供应链既没有百分之百的推，也没有百分之百的拉，每条供应链都是推拉结合</b>
+<ul class="quote">
+<li>先根据需求预测推到一定地步，以获取规模效益，降低成本，提高响应速度。</li>
+<li>再由客户订单拉动，以满足差异化的需求，并降低库存风险。</li>
+</ul>
+</li>
+<li><b>需求预测是供应链的第一推动力</b>
+<ul class="quote">
+<li>凡是建库存，不管是成品、半成品还是原材料，都离不开需求预测。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>需求预测的重要性</h4>
+<ul class="point">
+<li><b>供应链的响应能力有限，需求预测是提高预测准确度、更好匹配需求与供应的关键</b>
+<ul class="quote">
+<li>响应周期越长，响应能力越有限，对需求预测的依赖就越高，这也意味着需求预测要做得越早。</li>
+<li>需求预测越早，准确度就越低，陷入了死循环。</li>
+</ul>
+</li>
+<li><b>没有预测，意味着有多个预测，给跨职能、跨公司的沟通造成诸多问题</b>
+<ul class="quote">
+<li>生产需要预测来准备产能，采购需要预测来备料，财务需要预测来做预算。</li>
+<li>最终的需求只有一个，这意味着，在这N个预测中，至少有N-1个是错的；而错的结果呢，就是库存。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch9"><summary>需求预测是“从数据开始，由判断结束”</summary>
+<div class="sec">
+<h4>需求预测的定义和重要性</h4>
+<ul class="point">
+<li><b>需求预测是从数据开始，由判断结束的过程</b>
+<ul class="quote">
+<li>先根据需求历史做个基准预测(数据)，然后搜集销售、市场、产品管理、高层管理等的意见(判断)，修正预测。</li>
+</ul>
+</li>
+<li><b>需求预测提高了首发命准的概率，增加了供应链第一道防线的胜算。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>需求预测的依据</h4>
+<ul class="point">
+<li><b>需求历史数据是需求预测的基础</b>
+<ul class="quote">
+<li>基本假定是业务的重复性，人们习惯性地低估业务的重复性。</li>
+</ul>
+</li>
+<li><b>销售、市场、产品管理、高层管理等职能的判断也是需求预测的重要依据</b>
+<ul class="quote">
+<li>对于还没发生的，销售、市场、产品管理等接近市场需求的职能，高层管理也是最有预判的。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>需求预测的比例分配</h4>
+<ul class="point">
+<li><b>可重复性越高，数据的成分就越多；可重复性越低，判断的成分就越多</b>
+<ul class="quote">
+<li>越是在产品生命周期的两头，判断的成分越多；越是在成熟稳定时期，数据的成分越多。</li>
+</ul>
+</li>
+<li><b>客户或地域越集中，判断的成分越多；客户或地域越分散，数据在决策中的角色就越重</b>
+<ul class="quote">
+<li>在快消品、家电、手机等行业，产品生命周期短，市场竞争异常充分，市场促销、季节性需求、新老产品交替，给生产与供应带来诸多挑战，需要计划人员更多地与销售、市场、产品等职能互动，每周甚至每天调整计划，这也意味着前端职能的判断比例很高。</li>
+<li>在工业产品行业，特别是MRO领域，批量小，品种多，料号动辄以十万计，每个计划员需要管理的SKU(存货单元)非常多，但只有很少的SKU需要借助市场、销售等的判断，绝大多数的SKU可以通过需求历史、装机量等数据来计划，而且库存水位一经设定，往往数月甚至数年可以不变。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>需求预测的跨职能特性</h4>
+<ul class="point">
+<li><b>有数据的没判断，有判断的没数据，注定需求预测是个跨职能行为</b>
+<ul class="quote">
+<li>供应链部门有数据，但远离客户，对市场需求的判断有限。</li>
+<li>销售、市场、产品管理等有判断，但远离信息系统，对数据的掌握有限。</li>
+</ul>
+</li>
+<li><b>跨职能的任务，如果由任何单一职能来完成，得到的注定是次优化的解决方案</b>
+<ul class="quote">
+<li>企业大了，全国、全球运营，后端动辄有几十个计划人员，前端有几百个甚至几千个销售，分布在不同地域、不同时区，说不同的语言，中间再加上几十几百个产品管理、市场营销人员，针对成百成千的产品，要把前后端有效连接起来，其复杂度可想而知。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch10"><summary>从数据开始：谁的数据</summary>
+<div class="sec">
+<h4>需求预测的数据来源问题</h4>
+<ul class="point">
+<li><b>制造商通常以工厂发货数据为基础预测未来需求</b>
+<ul class="quote">
+<li>工厂发货与门店的销售数据之间，还隔着通路库存。</li>
+</ul>
+</li>
+<li><b>通路库存数据收集困难重重</b>
+<ul class="quote">
+<li>经销商大小不一，管理水平参差不齐，准确度、时效性都是大挑战。</li>
+<li>销售为了达到当期的销售目标，就故意低估渠道的库存，好多向渠道压货。</li>
+<li>渠道为了得到更多的返点，有时候也会虚报通路库存等。</li>
+</ul>
+</li>
+<li><b>信息系统支持不足是另一个大挑战</b>
+<ul class="quote">
+<li>没有信息系统支持，手工根本没法承担那么大的工作量。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>需求预测的理想数据来源</h4>
+<ul class="point">
+<li><b>最理想的就是越过渠道，直接利用零售终端的销售历史</b>
+<ul class="quote">
+<li>协同计划、预测和补货(CPFR)就是打通制造商和零售商的通道。</li>
+</ul>
+</li>
+<li><b>CPFR自问世几十年来，因为诸多商务问题、技术问题，一直没法大规模应用</b>
+<ul class="quote">
+<li>比如沃尔玛每卖掉一瓶洗发水，销售终端POS一扫描，数据就传递给宝洁，供宝洁制订计划、预测、安排补货。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>获取经销商、零售商数据的尝试</h4>
+<ul class="point">
+<li><b>买数据是一种传统的做法</b>
+<ul class="quote">
+<li>厂商给渠道商、零售商一定的报酬(通常以返点的形式)，条件是获取他们的销售数据。</li>
+</ul>
+</li>
+<li><b>通过数据分析，为经销商提供有力的决策依据，从而换取经销商的进出存数据</b>
+<ul class="quote">
+<li>有个企业开发了一个嵌入式程序，轻松获取经销商的进销存数据，帮助自己预测需求、计划库存。</li>
+<li>基于从经销商处获取的数据，该公司为经销商提供各种报表分析服务，作为获取数据的回报。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>“工业4.0”对数据获取的影响</h4>
+<ul class="point">
+<li><b>“工业4.0”一大目的就是更快、更准、更经济地获取用户端的数据</b>
+<ul class="quote">
+<li>比如设备在什么地方运作、产能利用率有多高、关键备件的更换情况等。</li>
+</ul>
+</li>
+<li><b>获取用户端的数据有巨大的经济利益</b>
+<ul class="quote">
+<li>对于像GE这样的设备制造商来说，高达三分之一的营收来自备件、服务相关的售后市场。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch11"><summary>从数据里面学什么：以发货记录为例</summary>
+<div class="sec">
+<h4>发货数据的时间单元选择</h4>
+<ul class="point">
+<li><b>周是比月更理想的时间单元，能提供更多数据样本</b>
+<ul class="quote">
+<li>管理能力越强，管理力度越深，企业的时间单元就越小，越可能用周而不是月。</li>
+<li>按月划分，一个季度只有3个控制点；按周划分，就有13个控制点，意味着13次发现问题、解决问题的机会。</li>
+</ul>
+</li>
+<li><b>按天划分数据点过多，可能误导增加安全库存</b>
+<ul class="quote">
+<li>需求的“噪声”会不必要地放大，可能误导你多放安全库存来应对。</li>
+<li>按天划分，数据可能更加不符合正态分布。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>客户的期望与企业实际交付能力的分析</h4>
+<ul class="point">
+<li><b>发货历史可以给出客户期望与供应链能力的判断</b>
+<ul class="quote">
+<li>客户订单是什么时候录入的(订单录入日期)，客户希望什么时候发货(客户需求日期)，我们是什么时候实际发货的(发货日期)。</li>
+<li>客户期望呢，就是需求日期与录入日期之间的差值；录入日期与发货日期之间的差值呢，就是企业的实际交付表现。</li>
+</ul>
+</li>
+<li><b>通过发货历史分析客户的行为变化</b>
+<ul class="quote">
+<li>对于交货周期长的产品，客户A给你们的订单更少了，或者纯粹没了。</li>
+<li>对于交货周期短的产品，这个客户的需求一直在上升；而对于同类但交期长的产品，这个客户的需求一直在下降。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>发货数据中的客户信息</h4>
+<ul class="point">
+<li><b>客户的订货习惯可以反映其运营水平</b>
+<ul class="quote">
+<li>每周还是每月下订单？是不是接受部分发货？</li>
+<li>订货越频繁，需求量就相对越稳定，计划也就越容易。</li>
+</ul>
+</li>
+<li><b>客户的集中度需要在需求预测和需求管理时特别关注</b>
+<ul class="quote">
+<li>对于特定的料号，是否有客户占了相当的比例。</li>
+<li>积极对接销售，了解信息系统外的信息；紧盯客户的需求变化，及时采取补救措施。</li>
+</ul>
+</li>
+<li><b>需求的变动性需要差异化管理和设定规则</b>
+<ul class="quote">
+<li>基于13个星期的发货历史，你可以计算每个料号的需求标准差，跟13周平均需求值相除，就得到度量变动性的变异系数。</li>
+<li>过去4周的平均需求与过去8周的相比，上升或下降超过一定比例，就需要额外关注等。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>发货记录中的其他信息</h4>
+<ul class="point">
+<li><b>订货频率是需求预测的重要决策参数</b>
+<ul class="quote">
+<li>订货频率越高，需求相对越稳定，需求预测的准确度越高，库存风险越低。</li>
+</ul>
+</li>
+<li><b>货物的发货地点可以反映仓库的计划能力</b>
+<ul class="quote">
+<li>某个客户默认是由最近的仓库A发货，但货物实际是从较远的仓库B发送的，那往往意味着仓库A的计划薄弱，没有备足货，造成更高的运营成本。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>数据远比我们想象的要多</h4>
+<ul class="point">
+<li><b>数据远比我们想象的要多，而且我们并不需要多准确的数据才能做预测</b>
+<ul class="quote">
+<li>以有名的“芝加哥有多少个钢琴调音师”为例，通过分解问题，用一些蛛丝马迹的信息，配以简单的假设，照样可以得到足够好的预测。</li>
+<li>新产品，新项目，不管数据多么匮乏，总比“芝加哥的钢琴调音师”案例中的要丰富。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>光有数据，没有判断会怎么样</h4>
+<ul class="point">
+<li><b>不能简单地光“从数据开始”，更重要的是还要“由判断结束”</b>
+<ul class="quote">
+<li>对于需求预测来说，数据分析一定要和业务判断相配合，离开了判断，数据往往是没意义的，经不住业务推敲，分析的结果自然是误导的。</li>
+<li>“由判断结束”还有一层含义，就是这数字看上去有没有道理。要知道，直觉告诉你有问题的数据，八成有问题。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch12"><summary>由判断结束：谁的判断，判断什么</summary>
+<div class="sec">
+<h4>判断的来源和对象</h4>
+<ul class="point">
+<li><b>判断主要来自销售，还有市场、产品管理、高层管理及其他接近需求的职能。</b>
+</li>
+<li><b>判断特定的客户、地区还是全国、全球的需求。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>计划和销售的视角差异</h4>
+<ul class="point">
+<li><b>计划天然地着眼全局，销售习惯于着眼具体的地域、具体的客户</b>
+<ul class="quote">
+<li>计划在预测产品需求时，考虑的是所有的客户、所有的地区。</li>
+<li>销售，特别是一线销售，则习惯于着眼具体的地域、具体的客户。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>需求预测的分解和判断</h4>
+<ul class="point">
+<li><b>要求销售做判断，一定要把需求预测分解到适当的层面，针对特定的产品，找到合适的人来做判断</b>
+<ul class="quote">
+<li>如果判断主要集中在销售大区层面，那就分解到销售大区。</li>
+<li>如果得依赖地上跑的销售，那就得分解到客户，再找到对应的销售。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>“由判断结束”的实例分析</h4>
+<ul class="point">
+<li><b>对于一个产品，假定未来13周的预测是每周200个，其中有个大客户，需求历史占总需求的30%，征求销售的判断，就是找到这个客户对应的销售，给他这个客户的销售历史，并告诉他我们给该客户的需求预测是每周60个，让他看看这数字如何</b>
+<ul class="quote">
+<li>销售就开始“讲故事”，说该客户的产能在飙升，对我们的产品需求会提高20%左右。</li>
+<li>这意味着每周的预测会增加8个左右，在此基础上，计划把总体预测从100调到108，完成“从数据开始，由判断结束”的需求预测流程。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>“大石头”的识别和管理</h4>
+<ul class="point">
+<li><b>真正重要的，是那些需求集中在有限客户的产品</b>
+<ul class="quote">
+<li>比如一个产品虽然有25个客户，但其中一个客户的需求占比是40%，其余的客户都平均分布。</li>
+<li>这样的产品—客户组合就是“大石头”，要从众多的“沙子”中筛选出来，让对应的销售重点关照，有的放矢地管理需求变动。</li>
+</ul>
+</li>
+<li><b>过滤“沙子”，筛选出“大石头”意味着大量的分析工作，你不能指望几十、几百个销售人员或者他们的助理来做这分析工作；计划职能处于更好的位置，来统一做这样的分析</b>
+<ul class="quote">
+<li>要知道，“从数据开始”也包括找出这些“大石头”，并呈现给相应的销售，而且只呈现他的客户的那一部分。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch13"><summary>寻找和管理“大石头”（一）：聚焦重点，好钢用在刀刃上</summary>
+<div class="sec">
+<h4>聚焦重点，好钢用在刀刃上</h4>
+<ul class="point">
+<li><b>通过需求历史，制定大多产品的需求预测</b>
+<ul class="quote">
+<li>对于特定产品，这个客户的项目没需求，另一个客户的项目会有需求。</li>
+</ul>
+</li>
+<li><b>识别、管理客户集中度高的产品</b>
+<ul class="quote">
+<li>在过去半年(26周)的需求历史基础上，分析了每个产品的客户构成，把那些单一客户集中度超过50%的产品找了出来。</li>
+<li>对于客户集中度的百分比，可根据产品的补货周期、需求变动性等因素来调整。</li>
+</ul>
+</li>
+<li><b>导入“26周频率”的概念，帮助分类产品</b>
+<ul class="quote">
+<li>按照26周频率把所有的产品分成26类，充当横轴。</li>
+<li>26周频率越高，表明该产品的需求越频繁，相应地客户也越分散。</li>
+</ul>
+</li>
+<li><b>为需要销售提供判断的产品设置独特的分类号</b>
+<ul class="quote">
+<li>比如X、Y是通用产品，U、V是独特产品，指导销售聚焦管理此类产品。</li>
+<li>还有些公司用生命周期来标识这样的产品。</li>
+</ul>
+</li>
+<li><b>认识到不完美并不意味着不能够进行一定完善</b>
+<ul class="quote">
+<li>只要我们能够更好地识别“大石头”，后端的供应链与前端销售更紧密地配合，我们就能做得比以前好，比我们的竞争对手好。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch14"><summary>寻找和管理“大石头”（二）：尽早发现，尽快纠错</summary>
+<div class="sec">
+<h4>需求预测的挑战与应对策略</h4>
+<ul class="point">
+<li><b>预测准确度低，预测错了但知道得太晚</b>
+<ul class="quote">
+<li>需求预测的结果要么是短缺，要么是过剩，但问题是因为供应链上的库存有冗余，信息传递有延迟，等我们知道了，已经太晚了。</li>
+</ul>
+</li>
+<li><b>尽早发现，尽快纠错</b>
+<ul class="quote">
+<li>如果我们跟踪需求，识别变化，及时了解变化背后的原因，我们可以及早发现问题，及早纠偏。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>需求变动预警系统的设计</h4>
+<ul class="point">
+<li><b>通过监测实际需求，尽早探知那些关键的需求变化</b>
+<ul class="quote">
+<li>对于需求来说，这就是监控每个产品、每个客户的需求，发现显著变化的端倪，就及时提醒计划、销售、市场、产品管理等。</li>
+</ul>
+</li>
+<li><b>设计了一套预警机制，及时驱动销售判断未来需求走向，调整需求预测，并和供应链一道采取应急措施</b>
+<ul class="quote">
+<li>比如客户导入了竞争对手，对我们产品的需求会减少，这从需求历史就可以看出。我们及早识别，让销售尽快跟进客户，即使挽救不了市场份额，也至少让客户把现有的库存都消耗掉。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>需求变动预警系统的应用</h4>
+<ul class="point">
+<li><b>针对每个料号，一定要分解到相应的每个客户上</b>
+<ul class="quote">
+<li>对于案例公司来说，很多料号只是供应给有限的几家客户，但料号—客户组合也有32000多个。</li>
+</ul>
+</li>
+<li><b>通过销量的变化幅度和销货成本两个维度进行筛选</b>
+<ul class="quote">
+<li>我们的第一道过滤器是销量的变化幅度(百分比)。</li>
+<li>对于这20000多个料号—客户组合，你还是没法都当作例外来管理，那就继续缩小。于是我们就导入第二道过滤器：销货成本。</li>
+</ul>
+</li>
+<li><b>对筛选出的“大石头”进行进一步分门别类，以有针对性地采取行动</b>
+<ul class="quote">
+<li>比如图1-7是按照变化幅度(%)和金额(销货成本)来分解。</li>
+<li>对于管理层来说，金额更容易引起注意，所以这里我们用销货成本的金额变化来呈现“大石头”的影响。</li>
+</ul>
+</li>
+<li><b>按照优先级从高到低排序，指导团队把资源优先投入到最重要的地方</b>
+<ul class="quote">
+<li>首先是销量变化：如果升降幅超过50%，这表明变动非常大，优先级为1;25%～50%为2;15%～25%为3。</li>
+<li>然后我们看销货成本变化：升降幅超过50万元的，表明变化非常大，优先级为1；升降幅为5万～10万元的，优先级为3。</li>
+<li>最后是13周频率的变化，一个对大多数人来说比较陌生的概念，让我们在这里加以说明。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch15"><summary>寻找和管理“大石头”（三）：他没说，你问了没有</summary>
+<div class="sec">
+<h4>寻找和管理“大石头”</h4>
+<ul class="point">
+<li><b>“大石头”的特点：产品比较独特，客户比较集中，单价相对高，地域性、季节性相对强，供应周期比较长，需求变动比较大等。</b>
+</li>
+<li><b>通过需求历史分析，识别出对供应链影响巨大的产品—客户组合</b>
+<ul class="quote">
+<li>在一个60亿美元营收的大型设备制造商，我们按照下述方式，对该公司的50000多个备件SKU，对应几百个客户层层分析，最后得到100多个对供应链影响巨大的产品—客户组合来。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>管理变化，调整预测</h4>
+<ul class="point">
+<li><b>把“大石头”分配给计划员和销售人员，盯紧这些潜在的问题</b>
+<ul class="quote">
+<li>计划员找到销售，说上个月，你的客户对这个产品的需求增幅(或降幅)超过30%，因为这个客户是该产品的主要客户(比如45%的销量归这个客户)，它的需求变化对供应链影响很大。我们想了解这变化是一次性的，还是需要调整预测。</li>
+</ul>
+</li>
+<li><b>设计例会，由计划员主持，关键的一线销售人员参加，系统地问些很具体的问题，识别变化，管理变化</b>
+<ul class="quote">
+<li>这个会议有三个特点：①会议有固定的议程，比如客户产能的变化、销售的市场开拓计划、关键产品的替代计划，以及上面提到的高风险、高影响的产品；②落实到具体的产品、规格、型号，以及客户端的具体信息，比如产线、设备等；③有具体的行动，比如定量的变化通过表格传递给计划部门，定性的变化通过Email、会议纪要来沟通，供计划和供应链来调整预测、采取行动，比如通知生产和供应商，万一这个项目能够拿下来的话，有没有足够的产能、长周期物料来支持。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>对“大石头”的闭环管理</h4>
+<ul class="point">
+<li><b>市场、销售主动或被动地识别显著的需求变化，计划调整需求预测后，由生产、采购来执行；执行部门反馈给计划，计划再反馈给市场、销售，这就是理想的闭环管理</b>
+<ul class="quote">
+<li>在很多管理能力低下的企业，这个闭环并不能发生：营销确认了需求变化，就开始祈祷能拿到货；计划调整了需求预测，就以为自己的事儿做完了；生产、采购能做到哪里就做到哪里，客户只能自求多福。</li>
+<li>解决方案呢？如果计划和供应链不改变能力，建立可靠的闭环执行体系，你不能期待销售改变行为。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>聚焦重点客户的重点变化</h4>
+<ul class="point">
+<li><b>重点客户制造的麻烦一般比非重点客户多</b>
+<ul class="quote">
+<li>有个几十亿美元的公司在跟踪客户的需求变化，虽然客户有几十个，但60%的需求变化来自前5位重点客户。</li>
+</ul>
+</li>
+<li><b>对于需求计划和供应链来说，最简单、最直观的识别方法，就是谁给你制造的麻烦最多，谁就可能是最重要的客户</b>
+<ul class="quote">
+<li>你可以统计急单的数量。有个公司有专门的催货小组，每个催货要求来了，就登记在一个Excel表格上，分配给一个催货员，这样很容易分析客户的急单数量。</li>
+<li>对于那些加急需求很多的客户来说，不管是自身的计划能力不足，需求管理不到位，还是业务变化大，都值得我们花更多的精力来管理。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch16"><summary>谁在做需求预测：兼谈计划的进化史</summary>
+<div class="sec">
+<h4>需求预测的发展历程</h4>
+<ul class="point">
+<li><b>企业小的时候，需求计划由老板兼职</b>
+<ul class="quote">
+<li>企业刚起步时，生产什么产品，生产多少，都是老板来拍板。</li>
+</ul>
+</li>
+<li><b>企业有一定规模，需求计划成为销售、采购、内部用户等的兼职工作</b>
+<ul class="quote">
+<li>执行职能最接近需求，所以最可能知道预测。</li>
+</ul>
+</li>
+<li><b>企业规模大了，需求计划需要成立专职的需求计划职能</b>
+<ul class="quote">
+<li>伴随着计划与执行的分离，计划也从分散向集中转变。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>让听到炮声的人做计划的误区</h4>
+<ul class="point">
+<li><b>听得到炮声的人有能力做计划吗？</b>
+<ul class="quote">
+<li>优秀的人往往被调到听不到炮声的地方了。</li>
+</ul>
+</li>
+<li><b>计划下沉的结果不仅是全局视角的缺失，而且是责任下放而导致责任机制缺失</b>
+<ul class="quote">
+<li>在那些管理相对完善的全球公司，供应链计划有较高的决策权。</li>
+<li>在信息系统的支撑下，它们做出的决策，比如需求预测、采购申请、补货申请等是不允许被修改的。</li>
+<li>它们的计划和执行有严格界限、清楚的规则，来确保计划在执行层面被不折不扣地执行。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>为什么没法建立独立的计划职能</h4>
+<ul class="point">
+<li><b>企业的系统、流程的能力越是不足，就越得依赖有能力的人</b>
+<ul class="quote">
+<li>因为信息系统能力不足、销售与运营的对接流程不畅，就只能由最接近需求，也是最熟悉需求的职能来兼职计划。</li>
+</ul>
+</li>
+<li><b>专业分工的结果是对流程、系统的要求更高</b>
+<ul class="quote">
+<li>表面上看，供应链管不好，是因为没法集成不同的职能；实际上，却是专业化分工不够，事情就做不到位。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch17"><summary>计划与执行的分离：某快消品公司的组织设计案例</summary>
+<div class="sec">
+<h4>快消品公司采购与供应链的挑战</h4>
+<ul class="point">
+<li><b>需求预测薄弱，采购计划准确度低。</b>
+</li>
+<li><b>供应商有选择，没管理，交付、质量问题频发。</b>
+</li>
+<li><b>采购人员一竿子插到底，效率低下，缺乏必要的监督和约束，采购贪腐风险大。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>组织结构调整的必要性</h4>
+<ul class="point">
+<li><b>需求预测上多头管理，效率低下</b>
+<ul class="quote">
+<li>多个采购员跟营销、设计联系，制定需求预测。</li>
+</ul>
+</li>
+<li><b>采购员忙于订单层面的操作，没有时间来管理供应商绩效</b>
+<ul class="quote">
+<li>现有供应商不能满足需求，那就再找新的供应商，结果是学习曲线长，质量风险大。</li>
+<li>采购额分散，更加难以驱动供应商快速响应。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>组织结构调整的建议</h4>
+<ul class="point">
+<li><b>计划与执行分离：设立专门的采购计划，由专人来对接销售，制订需求计划，转化为采购计划，并且负责仓储管理</b>
+<ul class="quote">
+<li>有了独立的计划职能，并不意味着计划的问题会解决：计划，特别是需求计划，要遵循“从数据开始，由判断结束”的计划流程，而销售是这个流程中的关键构成。</li>
+</ul>
+</li>
+<li><b>供应商管理与订单管理分离：设立专门的人负责供应商开发(寻源)，再由专职的采购员负责不同采购项的订单处理</b>
+<ul class="quote">
+<li>两层分离的好处，是有专人负责供应商层面的事，比如供应商选择和整体绩效管理。</li>
+<li>两层分离的挑战，则是这两个子职能之间的对接和职责划分。</li>
+</ul>
+</li>
+<li><b>采购与付款分离：由专人负责合同履行及支付</b>
+<ul class="quote">
+<li>把供应商的合同管理和付款单列出来，确保有基本的风险管控，避免伴随“一竿子插到底”的贪腐风险。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>组织结构调整的实施建议</h4>
+<ul class="point">
+<li><b>单列计划职能，而且让计划汇报给销售，等日后需求预测流程完善后，再把计划转移到供应链部门</b>
+<ul class="quote">
+<li>销售经理对需求预测负责，责任机制会驱动他重视需求预测。</li>
+<li>计划人员和销售人员都汇报到销售经理，销售经理也可以更好地利用组织措施来打通流程，驱动两者合作。</li>
+</ul>
+</li>
+<li><b>暂时不分离供应商管理和订单操作，而是改善ERP系统和采购订单管理流程，等系统和流程的能力较强时，推动供应商和订单层面的两层分离</b>
+<ul class="quote">
+<li>鉴于企业快速发展的现状，第二种方案的风险可控性较高，特别是已经决定要分离计划与执行的情况下。</li>
+<li>对于系统和流程建设，我们也可以这样来理解：当前“一竿子插到底”的方式下，所有的知识、信息都储存在负责的采购人员头脑中，或者采购人员的计算机上，需要的系统和流程支持力度最小。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch18"><summary>需求计划做什么：快消品行业为例</summary>
+<div class="sec">
+<h4>需求计划员在需求预测和S&amp;OP流程中的角色和职责</h4>
+<ul class="point">
+<li><b>需求计划管理需求预测流程，并制定需求预测，作为采购和库存计划的依据</b>
+<ul class="quote">
+<li>在不同的行业、不同的公司，需求计划的汇报部门会有不同，预测频率也可能不同，工作侧重点和方式都会有不同。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>分析上月预测结果</h4>
+<ul class="point">
+<li><b>需求计划员的工作从看上个月实际准确率(或偏差率)开始，分析哪些产品或系列低卖，哪些超卖</b>
+<ul class="quote">
+<li>比如：产品的经销商进货超卖，是因为经销商出货多，还是经销商库存的增加？经销商出货超卖是因为有个团购，这个团购是否会持续？</li>
+<li>经销商库存增加，是因为销售的季末冲刺(为达到本季销售目标而向渠道压货)，下个月就会回调？经销商库存一般是多少，能够覆盖多少天的需求？这是一个常规压货品类吗？</li>
+<li>新品销量未达预期，才卖到预测量的一半。到底会这样掉下去了，还是只是时间进度问题？</li>
+</ul>
+</li>
+<li><b>经过自己的分析和跟市场、销售的沟通，才是做好了预测准确率报表分析</b>
+<ul class="quote">
+<li>这也会帮助我们“清洗历史数据”(比如把历史需求中不可重复的剔除)，从而得到更加准确的统计模型，指导我们调整后面的预测。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>清洗历史数据，做基准预测</h4>
+<ul class="point">
+<li><b>对于具体的产品，可在需求预测软件里标记，多少销量来自非重复的促销，多少本来有需求，但因为缺货没能卖掉</b>
+<ul class="quote">
+<li>通过这样的“削峰填谷”之后，得到的才是基准需求历史。</li>
+</ul>
+</li>
+<li><b>需求计划就开始“闭门造车”，做一版基准预测</b>
+<ul class="quote">
+<li>基于足够多的历史数据，利用统计模型，软件可以帮助我们跑出一版数字。</li>
+<li>首先，要提防“垃圾进，垃圾出”。数据有问题，或者没有进行足够的分析和清洗，统计模型自然会跑偏。</li>
+<li>其次，要选择合适的统计模型。这需要通过重复实践，并结合行业特点。</li>
+<li>最后，如果是没有足够历史数据的新品，统计软件也不能“无中生有”，就只能参照类似产品的历史数据。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>开预测会议，结合业务计划调整预测</h4>
+<ul class="point">
+<li><b>需求预测会议是征求关联部门的判断，对基准预测做出调整</b>
+<ul class="quote">
+<li>开会前，大家都要预先做好准备工作。</li>
+<li>经过这个会议，一个“闭门造车”的基准预测就结合上了业务计划，促销和新品都放进去了。</li>
+<li>但会议成果不光是一版数字，重要的是，需求计划需要记录下数字背后的假设。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>开预测决策会议，解决缺口与分歧</h4>
+<ul class="point">
+<li><b>做完了基准预测，结合了业务计划，但是跟财务给的指标还是有差距，或者部门之间有分歧。那好，带到决策会议上由总经理决定</b>
+<ul class="quote">
+<li>决策会议的结果就是本月预测的最终版，需求计划根据会议决定，按照每个SKU预测，交由负责供应计划的同事，供他们完成产品的采购或生产计划。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>供应及分拨计划</h4>
+<ul class="point">
+<li><b>需求计划还要进行产品生命周期管理，比如上市如何上得顺利，下市如何下得省钱，都需要跟供应计划做充分的沟通</b>
+<ul class="quote">
+<li>如果组织还比较小，这两类计划可以由同一个人来担任，那么他就要结合大仓库存做好采购计划，传给工厂，并且对工厂发货、运输、进口等环节进行跟进。</li>
+<li>如果你有区域分仓(RDC)，但没有专门的分仓计划员的话，那需求计划还要负责库存分配工作。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>当月销售监测</h4>
+<ul class="point">
+<li><b>预测准，不光是估出来的，更是执行出来的</b>
+<ul class="quote">
+<li>根据采购提前期的不同，很多公司考核的预测准确率是M-2甚至M-3。但到了当月，需求计划仍然不能想着“反正预测已成定型”，就地等死，而要跟进销售进度和重点SKU的状况，及时跟市场、销售了解情况，解决问题。</li>
+<li>此外，需求计划偶尔还需要去跑一下市场，看看渠道情况。若是消费品，自己用一用，感受产品效果。这些不仅增加自己对产品的判断，而且增加和销售、市场的共同语言，从而促进沟通。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch19"><summary>什么样的人适合做需求计划</summary>
+<div class="sec">
+<h4>需求计划人员的资质要求</h4>
+<ul class="point">
+<li><b>需求计划人员需要具备分析能力、协作沟通能力和业务知识</b>
+<ul class="quote">
+<li>分析能力是需求计划的看家本领，需要掌握vlookup函数和数据透视表等工具。</li>
+<li>协作沟通能力是需求计划的核心能力，需要与销售、市场、产品等职能的人员配合。</li>
+<li>业务知识是需求计划的基础，需要了解产品、业务知识，以有效对接销售、市场、产品和高层管理。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>需求计划的重要性</h4>
+<ul class="point">
+<li><b>公司需要重视计划，给计划员工更好的薪酬</b>
+<ul class="quote">
+<li>公司没有重视计划，员工更喜欢做采购，而不是计划。</li>
+<li>重视计划就是资源的投入，给计划员工更好的薪酬。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>分析能力的评估</h4>
+<ul class="point">
+<li><b>面试需求计划人员时，可以通过三个问题评估其分析能力</b>
+<ul class="quote">
+<li>第一个问题是会不会用vlookup函数，反映一个人是否经常用Excel分析数据。</li>
+<li>第二个问题是会不会用数据透视表，透视表是Excel中的基本功能，让我们以不同的方式来分析数据。</li>
+<li>第三个问题是什么是正态分布，这是评估应聘者的数理统计知识。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>提高需求计划人员的影响力</h4>
+<ul class="point">
+<li><b>需求计划人员的影响力来自行政影响力和个人影响力</b>
+<ul class="quote">
+<li>行政影响力是需求计划职位的影响力，需要公司赋予需求计划人员。</li>
+<li>个人影响力是需求计划人员个人的信用和能力，需要做好本职工作，体现作为中间环节的价值。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch20"><summary>需求预测汇报给哪个部门</summary>
+<div class="sec">
+<h4>需求预测的职责与组织结构</h4>
+<ul class="point">
+<li><b>需求计划的全职化是专业化的结果，需要大量的组织协调和数据分析工作</b>
+<ul class="quote">
+<li>需求计划的全职化，一方面是专业化的结果，另一方面也是因为这个职能对接市场、销售、产品、品牌、高管、供应链甚至客户，有很多组织协调工作，再加上大量的数据分析工作，不是专职就很难高质量完成。</li>
+</ul>
+</li>
+<li><b>需求计划应该汇报到供应链职能，或者销售、市场等更接近客户的职能</b>
+<ul class="quote">
+<li>当需求计划流程比较完善的时候，需求计划一般汇报到供应链职能。</li>
+<li>否则的话，要考虑汇报到销售、市场等更接近客户的职能。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>需求预测汇报给销售或市场的原因及影响</h4>
+<ul class="point">
+<li><b>当前端销售和后端的供应链对接不畅时，需求计划必须汇报到销售或市场</b>
+<ul class="quote">
+<li>供应链没法有效得到销售的职业判断，汇报给供应链容易导致需求计划成为“寡妇职位”，难以有效发挥作用。</li>
+</ul>
+</li>
+<li><b>需求计划汇报给销售或市场，会造成计划与执行的二度分离，增加计划与执行交互优化的难度</b>
+<ul class="quote">
+<li>二度分离下，计划和执行对接不畅，相互了解更少，所以交互优化就更加困难。</li>
+<li>需求计划汇报给销售或市场，还会造成弱者更弱，强者更强的局面。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>需求预测流程的优化</h4>
+<ul class="point">
+<li><b>需求预测看上去是个职能，其实更重要的是个流程，或者说流程型职能</b>
+<ul class="quote">
+<li>所以，不能单纯从组织的角度来解决需求预测问题——任何组织措施都很难弥补基本流程的缺失。</li>
+</ul>
+</li>
+<li><b>最终的解决方案还是要从打通销售与运营的协调流程着手</b>
+<ul class="quote">
+<li>需要强调的是，需求预测看上去是个职能，其实更重要的是个流程，或者说流程型职能。</li>
+<li>当需求计划流程稳健后，前后端各司其职，需求计划则可以转移到供应链管理，以增加计划和执行的互动与优化。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch21"><summary>如何做准预测：选择合适的预测颗粒度</summary>
+<div class="sec">
+<h4>预测的颗粒度及其重要性</h4>
+<ul class="point">
+<li><b>预测的颗粒度越大，预测的准确度越高</b>
+<ul class="quote">
+<li>颗粒度大的地方做预测，技术上的优势是显而易见的。</li>
+</ul>
+</li>
+<li><b>预测的颗粒度是个三维概念：组织、产品和时间</b>
+<ul class="quote">
+<li>三大维度在不同层次形成多种组合，预测的准确度也是。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>组织颗粒度对预测准确度的影响</h4>
+<ul class="point">
+<li><b>预测的组织范围越大，预测的准确度越高</b>
+<ul class="quote">
+<li>预测全国的需求，要比预测上海市杨浦区的准确度高。</li>
+<li>预测全公司的需求，要比预测分公司的准确度高。</li>
+<li>预测总库的需求，要比预测各地区库的准确度高。</li>
+</ul>
+</li>
+<li><b>组织的颗粒度越小，绩效考核越具体，责任越容易落实</b>
+<ul class="quote">
+<li>绩效考核的天然倾向是分散，比如指标的层层分解。</li>
+<li>计划天生就是个集中的概念，组织层面越集中，组织的颗粒度越大，预测的准确度越高。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>时间颗粒度对预测准确度的影响</h4>
+<ul class="point">
+<li><b>预测的时间颗粒度越大，预测的准确度就越高</b>
+<ul class="quote">
+<li>预测一年的需求，一般会比预测一个月更准确。</li>
+<li>预测一个月的需求，一般会比预测一周、一天的需求更准确。</li>
+</ul>
+</li>
+<li><b>管理能力和职能力量对比影响时间颗粒度的选取</b>
+<ul class="quote">
+<li>管理能力越薄弱，时间的颗粒度就越大。</li>
+<li>在职能力量对比上，销售、市场等前端职能的力量越大，需求预测的时间颗粒度往往也越大。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>产品颗粒度对预测准确度的影响</h4>
+<ul class="point">
+<li><b>产品线的颗粒度最大，指一群相关的产品，功能类似，销售给同一顾客群，经过相同的销售途径等。</b>
+</li>
+<li><b>产品规格型号，或者叫存货单元(SKU)，颗粒度最小</b>
+<ul class="quote">
+<li>对于财务、销售来说，其年度目标按照产品线即可；但对于生产线来说，必须得落实到规格型号，才能运作物料需求计划MRP来驱动供应链。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>“自来水模式”的预测机制</h4>
+<ul class="point">
+<li><b>“自来水模式”下，需求计划部门负责编制公司层面的需求预测，一线销售等支持部门并不做预测</b>
+<ul class="quote">
+<li>“自来水模式”的基本逻辑是，只要我们在公司/工厂层面预测好了，各分公司、省区、客户要多少就领多少得了。</li>
+</ul>
+</li>
+<li><b>“自来水模式”有一定的前提，比如产品的定制化程度低、需求相对分散等</b>
+<ul class="quote">
+<li>这种模式在消费品、零售、电商等行业比较普遍。</li>
+<li>对于总库、地区库、子库等构成的多阶段库存模式也适用。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>自下而上的预测汇总</h4>
+<ul class="point">
+<li><b>定制化程度越高，需求知识越在前端的销售、市场、产品管理等职能</b>
+<ul class="quote">
+<li>比如每台几百万元的大型设备，往往会根据客户需求定制。</li>
+<li>即使同一客户，不同时期的配置也可能不同。</li>
+</ul>
+</li>
+<li><b>对于很多企业来说，“自来水模式”和自下而上的汇总会并存，我们姑且称之为“混合模式”</b>
+<ul class="quote">
+<li>比如新产品刚导入时，往往是针对具体的客户、具体的地域，自下而上的汇总模式或许更适合。</li>
+<li>而进入量产期，客户更加多元化，自上而下的“自来水模式”就可能更合适。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>SKU和SKU泛滥</h4>
+<ul class="point">
+<li><b>SKU是stock keeping unit的缩写，直译过来是存货单元</b>
+<ul class="quote">
+<li>同样的款式、同样的颜色，中号跟小号是不同的存货单元，所以得由两个不同的SKU编码来识别。</li>
+</ul>
+</li>
+<li><b>SKU数量泛滥，造成批量越来越小，复杂度越来越高，规模效益越来越低</b>
+<ul class="quote">
+<li>随着业务的多元化和全球化，以及为了维持高速增长，企业不得不进入杂七杂八的边角料市场，SKU数量也会不可避免地膨胀。</li>
+<li>让人忧心的是，企业并没有充分认识到SKU泛滥的严重程度，而且习惯性地低估SKU的复杂度，在大批量行业尤其如此。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch22"><summary>案例：谁的预测更准，销售还是计划</summary>
+<div class="sec">
+<h4>销售兼职计划的问题</h4>
+<ul class="point">
+<li><b>企业习惯性地低估业务的重复性</b>
+<ul class="quote">
+<li>即使是项目驱动的业务，不同客户、不同项目需要同类产品的重复性还是相当高。</li>
+</ul>
+</li>
+<li><b>销售离客户更近，只是说他们有更好的判断，并不意味着他们有更好的数据</b>
+<ul class="quote">
+<li>没有人知道得比数据更多。即使简单的数据分析，也可以给我们很多信息，那些销售没有能力提供的信息。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>需求预测的准确度对比</h4>
+<ul class="point">
+<li><b>对于需求频繁的产品，计划用简单的指数平滑法就能打败销售提需求</b>
+<ul class="quote">
+<li>对于慢动产品(13周频率＜9)，销售预测更准的产品数更多。</li>
+<li>对于快动产品(13周频率≥9)，计划的预测更准。</li>
+</ul>
+</li>
+<li><b>对于需求不频繁、客户集中度高的产品，销售的需求预测准确度更高</b>
+<ul class="quote">
+<li>在独家料号上，销售的优势明显。</li>
+<li>在那些多家客户使用、需求频率也很高的料号上，销售的预测不如计划的准。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>销售怎么做需求预测的</h4>
+<ul class="point">
+<li><b>每个销售负责自己的需求预测，要么是客户提供，要么是自己算，最后汇总到一起，成为这个大客户的需求预测</b>
+<ul class="quote">
+<li>这是典型的兼职行为：每个月都是不同的销售来整合，增加了历史经验传承的难度。</li>
+</ul>
+</li>
+<li><b>他们主要是依赖客户的各分公司提需求，一般一个月一次，由销售人员每个月两次修正</b>
+<ul class="quote">
+<li>客户提的是3个月需求。他们根据生产计划乘以单机用量，加上安全库存，扣掉手头的数量，乘以份额，就是给销售的预测。</li>
+<li>客户的采购自己做——又是兼职做计划。销售也会按照客户的方法来验算。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>需求预测的虚高与虚低</h4>
+<ul class="point">
+<li><b>销售做预测，习惯性地虚高</b>
+<ul class="quote">
+<li>对于该客户的几百个产品，我们发现有339个产品不管是销售提需求，还是计划用指数平滑法预测，两者都在高估，即6个月的累计误差都为过剩。</li>
+</ul>
+</li>
+<li><b>销售提需求，往往只有上，没有下</b>
+<ul class="quote">
+<li>需求预测高估了，比如在过去两个月的预测是100个/月，而实际需求是70个/月，那每月就高估了30个，两个月下来需求预测就有60个没用掉。</li>
+<li>在案例公司，销售习惯性地保留预测高估部分，除了大家熟悉的保守心理外，还有两个原因：一方面，他们希望这样来“锁住”库存，不让别的客户拿走；另一方面，虽说按道理每月销售都要评估逾期需求，在信息系统里删掉多余预测，但这是销售的兼职的兼职，得不到足够的重视，因而没有系统地做。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch23"><summary>为什么一线销售做不好需求预测</summary>
+<div class="sec">
+<h4>一线销售做不好需求预测的原因</h4>
+<ul class="point">
+<li><b>一线销售兼职做需求预测，注定做不好</b>
+<ul class="quote">
+<li>企业规模大了，业务越来越复杂，产品越来越多，客户越来越多，一线销售兼职做需求预测注定做不好。</li>
+</ul>
+</li>
+<li><b>绩效考核决定了销售会提高于实际能力的目标</b>
+<ul class="quote">
+<li>老总习惯于给他们高于实际能力的目标，比如年销量定为1000万元，尽管老总认为能做到800万元就不错了，销售自己也认为800万元是个更靠谱的数字。</li>
+</ul>
+</li>
+<li><b>销售提需求时会有很多感情因素</b>
+<ul class="quote">
+<li>比如有个公司的销售提需求，前三个季度都是虚高，第四季度毫无例外都是虚低，原因也是绩效考核。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>需求预测与销售计划的区别</h4>
+<ul class="point">
+<li><b>销售计划是围绕销售目标制订的计划，自上而下，出于绩效考核的目的，一般总是会更激进。</b>
+</li>
+<li><b>需求计划是基于过往历史和职业经验，对未来需求的理性判断</b>
+<ul class="quote">
+<li>需求预测就是用供应链的理性对抗营销的感性的过程。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>一线销售做预测的问题</h4>
+<ul class="point">
+<li><b>一线销售做预测，夹杂太多的情感因素，导致决策不客观</b>
+<ul class="quote">
+<li>比如过于注重有货率，最后以牺牲库存为代价。</li>
+</ul>
+</li>
+<li><b>一线销售做预测，预测颗粒度太小，准确度很低</b>
+<ul class="quote">
+<li>每个销售平均预测全公司千分之一的需求，预测的颗粒度这么小，一线销售们提的需求自然准确度很低。</li>
+</ul>
+</li>
+<li><b>一线销售做预测，存在法不责众的从众心理</b>
+<ul class="quote">
+<li>每个销售都知道，自己的需求只占总需求的千分之一，预测不准没关系，还有那999个别的销售呢。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>应对一线销售做预测的方法</h4>
+<ul class="point">
+<li><b>需求预测交给专职的计划人员</b>
+<ul class="quote">
+<li>家里面，妈妈们从来不会由爸爸、孩子决定做多少饭；但企业里，为什么一而再，再而三地由一线销售做预测呢？</li>
+</ul>
+</li>
+<li><b>让销售与计划的分离，以及分离后的销售与运营协调机制</b>
+<ul class="quote">
+<li>在成熟环境中，我们不是通过把不同责任整合到同一职位来提高决策质量，而是通过专业化，以及专业化后的跨职能协作来做出更好的决策。</li>
+</ul>
+</li>
+<li><b>细化销售的考核，比如有个公司对于每月的销售目标，要求销售在上月底要拿到下月50%的订单，当月10日前拿到70%～80%的订单，当月20日前拿到100%的订单，而且订单需要提前7天拿到</b>
+<ul class="quote">
+<li>这其实是把一个月拆解成3部分，销售可以压货，但每天每周都在压货，而不是月末、季末一次性大幅压货，需求也就相对平稳多了。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch24"><summary>既然做不好，为什么一线销售还在做预测</summary>
+<div class="sec">
+<h4>一线销售做预测的原因</h4>
+<ul class="point">
+<li><b>企业在系统、流程能力不足情况下的理性选择</b>
+<ul class="quote">
+<li>信息系统能力不足，如果设置独立的计划职能，就面临既没有数据，又没有判断的窘境。</li>
+<li>流程不通畅是另一个能力问题，比如有的公司设有计划职能，由生产计划兼职需求计划，但销售并不提供什么反馈意见，或者纯粹置之不理。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>小贴士：即便考核，也没法让一线销售“做准”需求预测</h4>
+<ul class="point">
+<li><b>以考核代替管理，需求计划天生是个跨职能行为，需要后端的计划和前端的销售来配合完成</b>
+<ul class="quote">
+<li>有些产品，比如标准化程度高的，可以主要依赖数据来预测；另一些产品，比如定制化程度高的，则主要依赖判断。</li>
+<li>数据、判断的比例虽然不同，但都涉及跨职能协作。在这两个企业，管理不到位，跨职能协作流程不健全，跨职能的行为就由单一职能完成，注定是次优化的结果，考核并不能解决问题。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch25"><summary>销售提需求，计划做判断，如何</summary>
+<div class="sec">
+<h4>销售提需求的问题</h4>
+<ul class="point">
+<li><b>销售没数字，导致需求预测不准确</b>
+<ul class="quote">
+<li>一线销售人员要么整天在路上，敲客户的门，争取新项目、新订单；要么因为没兑现承诺，被客户骂得狗血喷头，整天催货。</li>
+<li>有几个销售因为需求预测不准被开掉的？所以，对于销售提的数字，你得非常小心才对。</li>
+</ul>
+</li>
+<li><b>计划没判断能力，导致需求预测质量不高</b>
+<ul class="quote">
+<li>相比销售、市场、高层管理，计划职能离客户更远，哪能做出更好的判断来？</li>
+<li>这种做法的副作用是，销售知道，他们提的数字，不管准不准，计划都会调整，那他们还会不会在数据分析上下功夫？当然不会，随便给个数字得了。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>计划调整的问题</h4>
+<ul class="point">
+<li><b>计划调整导致销售对过程失去控制</b>
+<ul class="quote">
+<li>最终预测是计划定的，而销售不知道计划会怎么调整他们提供的数据。</li>
+<li>没法控制过程，销售就控制结果：我给你预测，你想怎么调整就怎么调整，我管不着，也没法管；但不管怎样调整，你都得保证给我备足够的货，断货的话把你的脑袋拧下来。</li>
+</ul>
+</li>
+<li><b>计划调整增加库存，导致呆滞库存问题严重</b>
+<ul class="quote">
+<li>压力之下，计划为了避免短缺，势必增加库存，导致呆滞库存的问题更加严重。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>解决方案</h4>
+<ul class="point">
+<li><b>计划熟悉系统、数据，提供数字；销售熟悉客户、市场，提供判断</b>
+<ul class="quote">
+<li>两相结合，完成“从数据开始，由判断结束”的闭环流程。</li>
+<li>这是个不可割裂的跨职能协作过程，整合了供应链前后两端的最佳智慧，才能制定准确度最高的错误的预测——所有的预测都是错的，但结合前后端跨职能最佳智慧的这个预测错得最少。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch26"><summary>需求计划的绩效考核</summary>
+<div class="sec">
+<h4>需求计划与供应链三大指标的关系</h4>
+<ul class="point">
+<li><b>需求计划直接影响到客户服务水平、资产周转率和运营成本</b>
+<ul class="quote">
+<li>需求计划是有效对接需求和供应的关键环节，从最大程度上决定了客户服务水平。</li>
+<li>需求计划也直接影响到运营成本，比如预测失败导致的赶工加急、产线员工闲置等。</li>
+</ul>
+</li>
+<li><b>需求计划对多个供应链绩效有明显的杠杆效应</b>
+<ul class="quote">
+<li>需求计划提高了，不但可以提高订单交付率，降低库存，还能降低运营成本、采购成本、物流成本，提高生产效率。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>需求计划的绩效考核指标</h4>
+<ul class="point">
+<li><b>需求计划一定要由表面上相互矛盾，但实质上相辅相成的指标来驱动</b>
+<ul class="quote">
+<li>这样，需求计划才能兼顾多方利益，做出更为均衡的决策。</li>
+</ul>
+</li>
+<li><b>需求计划得由相互矛盾的指标驱动，兼顾效率和效益</b>
+<ul class="quote">
+<li>它的支持职能呢，比如生产、采购也得如此。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>需求预测准确度的考核问题</h4>
+<ul class="point">
+<li><b>需求预测是个过程指标，其本身并没有实质意义</b>
+<ul class="quote">
+<li>企业做预测的目的不是准不准，而是为更好地对接需求与供应，提高客户服务水平的同时，控制库存水平，降低运营成本。</li>
+</ul>
+</li>
+<li><b>对需求预测准确度的考核，是通过客户服务水平、库存周转率等直接KPI来实现的</b>
+<ul class="quote">
+<li>我们可以通过后三者来度量需求预测的质量。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>销售老总对需求预测的最终结果负责</h4>
+<ul class="point">
+<li><b>销售的任务就是把客户不要的卖掉</b>
+<ul class="quote">
+<li>如果销售的老总不对需求预测的最终结果负责，计划就习惯性地成了销售业绩不达标的替罪羊。</li>
+</ul>
+</li>
+<li><b>销售的老总对需求预测最终负责时，他会驱动他的销售努力弥补计划的不足，解决多余库存的问题</b>
+<ul class="quote">
+<li>这时候，需求预测才有可能同时约束销售和供应链：供应链按照需求预测生产出来，销售得按照预测卖出去。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>按哪个预测评估准确度，非限制性预测还是限制性预测</h4>
+<ul class="point">
+<li><b>按非限制性预测进行评估，反映了市场需求与公司供应能力的客观偏差，是从公司的视角来管理偏差</b>
+<ul class="quote">
+<li>在供应能力充裕的情况下，销售敢预测供应就敢生产，产生的慢动库存是需要销售承担责任的。</li>
+<li>在供应能力不足的情况下，由于供应限制而丧失销量，不揭示的话，那对销售而言也是不公平的。</li>
+</ul>
+</li>
+<li><b>以限制性预测为基准，则是从运营部门的视角来评估其对公司的承诺，是对操作执行偏差的评估</b>
+<ul class="quote">
+<li>如果以限制性预测600作为基准，预测准确度则接近100%，从预测准确度的角度讲，不需要做任何偏差解释和采取纠偏措施。</li>
+<li>如果以非限制性预测1000作为基准，那么60%的准确度需要解释原因，从而揭示了供应能力不足的问题，以便采取改进措施。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch27"><summary>预测不是衡量准确性，而是偏差率</summary>
+<div class="sec">
+<h4>预测的偏差率而非准确性</h4>
+<ul class="point">
+<li><b>预测就如赌博，赌对说明了成功没有必然性</b>
+<ul class="quote">
+<li>我们其实很难分析赌对的原因，除了基本的“从数据开始，由判断结束”的需求预测流程，以及选择更合适的数理统计模型。</li>
+</ul>
+</li>
+<li><b>成功并不能让我们更聪明多少，也很难复制，人之所以变聪明，是因为我们从失败中学习</b>
+<ul class="quote">
+<li>具体地说，就是坚守基本准则，尽量避免失败，这样就增加成功的概率。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>预测偏差的计算</h4>
+<ul class="point">
+<li><b>实际值与预测值的差就是偏差，但预测是个循环更新的过程</b>
+<ul class="quote">
+<li>如果每月滚动的话，每一个月就有个预测。</li>
+</ul>
+</li>
+<li><b>预测偏差的计算取决于供应链的响应周期</b>
+<ul class="quote">
+<li>在有些行业，生产周期加上长周期物料的采购提前期，大概在3个月左右，因此，理论上讲，用3个月前的预测(M-3)最合理。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>预测差异的分析</h4>
+<ul class="point">
+<li><b>我们感兴趣的有几个方面：绝对偏差(绝对值)、相对偏差(百分比)、偏差的方向(偏见)</b>
+<ul class="quote">
+<li>绝对偏差就是20。除以实际需求80，就得到绝对百分比偏差25%。</li>
+<li>相对偏差(百分比)可以清楚地判断预测与实际的偏差方向，以揭示需求预测中的系统性偏见。</li>
+<li>偏差的方向(偏见)可以揭示需求预测中的系统性偏见。</li>
+</ul>
+</li>
+<li><b>预测的累计偏差一般不独立使用，而是和别的偏差指标一起用</b>
+<ul class="quote">
+<li>一旦汇总，我们可能冒丧失某些信息、掩盖某些问题的风险。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>预测的纠偏措施</h4>
+<ul class="point">
+<li><b>需求预测虽说是“预测”，但其实大部分时间都在纠偏</b>
+<ul class="quote">
+<li>发现差异，分析差异，理解差异，采取纠偏措施，比如更换统计模型，与销售、市场、产品管理会面讨论，和关联职能协商等。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch28"><summary>【专题一】长周期物料的预测：需求预测的一大难点</summary>
+<div class="sec">
+<h4>长周期物料的需求预测难点</h4>
+<ul class="point">
+<li><b>长周期物料对供应链的影响深远</b>
+<ul class="quote">
+<li>长周期物料比如芯片，比如显示屏，比如定制化程度高的关键零部件。</li>
+</ul>
+</li>
+<li><b>长周期物料难以预测，难以执行</b>
+<ul class="quote">
+<li>一个行业的门槛，主要也是由这些长周期物料决定的。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>长周期物料的需求预测方法</h4>
+<ul class="point">
+<li><b>在长周期物料层面独立做需求计划</b>
+<ul class="quote">
+<li>有的企业是由销售负责，根据销售产品一年内的预测需求，结合历史消耗记录制定，每月更新一次。</li>
+<li>有的企业是由物控、生产计划、计划+销售+采购一起讨论等。</li>
+<li>有的企业是由产品经理负责。</li>
+<li>有的企业是市场和计划共同决定。</li>
+<li>还有的企业是由计划和采购部门共同给出长期预测，同时让供应商也适量备库存。</li>
+<li>还有的企业专门设立一个部门，叫CPMC，集中管理长周期物料，基本每周都在和销售回顾预测。</li>
+</ul>
+</li>
+<li><b>端到端的思维，贯通客户端与供应端</b>
+<ul class="quote">
+<li>长周期物料的预测关键是端到端的思维，即贯通客户端与供应端，再回到客户端，并不断修正。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>长周期物料的需求预测策略</h4>
+<ul class="point">
+<li><b>明确长周期物料对应的成品，是MTS还是MTO模式</b>
+<ul class="quote">
+<li>在按库存生产(MTS)下，成品库存可以作为缓冲，应对长周期物料的预测不准。</li>
+<li>对于按订单生产(MTO)的产品来说，长周期物料就更难对付。</li>
+</ul>
+</li>
+<li><b>把长周期层层剥开，在成品、半成品等环节建一定的柔性库存</b>
+<ul class="quote">
+<li>拉推结合的决策很难，一是涉及供应链利益和风险共担，二是此类库存的建立也要基于预测。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>长周期物料的需求预测执行</h4>
+<ul class="point">
+<li><b>作为采购方，有所作为比无所作为要重要</b>
+<ul class="quote">
+<li>放手不管，由供应商自己捣鼓预测，预测准确度只能更差。</li>
+<li>相反，作为采购方，你得有所作为，制定需求预测，与供应商沟通、协作。</li>
+</ul>
+</li>
+<li><b>针对具体的预测，要落实到供应商的下级供应商</b>
+<ul class="quote">
+<li>每天的订单交货必须逐行落实，保证在途库存按期到达，提高工单中的物料齐套率。</li>
+<li>如果有设计变更，一定要非常小心地管理，维护供应商的正当利益。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch29"><summary>【专题二】计划体系改进：你不能忽视现状的合理性</summary>
+<div class="sec">
+<h4>本土企业计划体系改进的挑战</h4>
+<ul class="point">
+<li><b>本土企业的计划体系改进需要考虑现状的合理性</b>
+<ul class="quote">
+<li>企业行为是理性的，它们做什么或者不做什么，怎么做，其实都是对现有能力的最佳反照。</li>
+<li>在企业里，尽管有些做法不是你希望看到的，但你不能忽视现状的合理性。</li>
+</ul>
+</li>
+<li><b>本土企业的计划职能往往由执行职能兼职</b>
+<ul class="quote">
+<li>在很多公司，计划与执行合并在同一职能，甚至是同一岗位。</li>
+<li>执行职能兼职计划的问题有三：时间不足、专业能力不够、不利于计划的持续改进。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>计划体系改进的必要性</h4>
+<ul class="point">
+<li><b>企业到了一定规模，计划由执行来兼职的做法不合理</b>
+<ul class="quote">
+<li>在建制完善的公司，计划有计划部门，执行有执行部门。</li>
+<li>既然不合理，这种兼职的做法为什么会存在呢？我们下面想说的是，在计划所依赖的系统、流程和人员技能不足的情况下，由执行职能来兼职做计划，是一种理性选择。</li>
+</ul>
+</li>
+<li><b>数据不足，系统不完善，计划就只能依靠经验来应对</b>
+<ul class="quote">
+<li>而在一个门店，谁的经验最丰富？店长和厨师长。</li>
+<li>这不，店长兼职做计划，预测每天、每周每道菜能卖多少；厨师长兼职MRP的工作，把每道菜的BOM打开，根据库存状况，计算每种原材料的净需求，驱动中央厨房和供应链来执行。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>计划体系改进的实施策略</h4>
+<ul class="point">
+<li><b>提升组织、流程、系统的综合能力</b>
+<ul class="quote">
+<li>能力就是组织、流程、系统的综合。</li>
+<li>就计划和执行分离来说，设立专门的计划职能是个组织措施，但分离后两者之间需要流程来对接，管理能力不足时，计划和执行之间的对接困难。</li>
+<li>流程和系统没法有效支持组织，计划和执行就无法真正分离，只能一锅粥地往前走。</li>
+</ul>
+</li>
+<li><b>改变能力以改变行为，从而打破这已经形成平衡的管理方式</b>
+<ul class="quote">
+<li>公司A并购了B后，在有些领域犯了错，用公司A的做法替代了公司B的，但公司B的组织、系统、流程能力没有改进，公司A的做法没法落地，结果影响了对有些大客户的服务。</li>
+<li>公司A认识到，对于公司B的备件计划，不能简单地改变当前做法，而是要提高公司B的计划能力，才能改变他们的现行做法。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch30"><summary>【专题三】改善计划以改善供应链：一个本土企业的变革之路</summary>
+<div class="sec">
+<h4>X公司供应链管理瓶颈及改善需求</h4>
+<ul class="point">
+<li><b>X公司供应链管理遇到瓶颈，表现为运营端的成本压力和供应链对营销端的支持乏力</b>
+<ul class="quote">
+<li>X公司物流费用占比很高，淡旺季明显，频繁的切换难以控制，导致生产成本居高不下。</li>
+<li>库存结构不合理，造成交付问题多多、调拨成本高昂，同时也影响了产品新鲜度，带来大量的临期产品处理费用。</li>
+</ul>
+</li>
+<li><b>X公司意识到预测准确性是成本、交付和库存问题的最大根源，提升预测准确性成为X公司最迫切的愿望之一</b>
+<ul class="quote">
+<li>预测准确性是成本、交付和库存问题的最大根源。</li>
+<li>提升预测准确性是个系统工程，需要瞩目整个后端运营的神经中枢——供应链计划。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>X公司供应链改善之路</h4>
+<ul class="point">
+<li><b>第一阶段：补齐信息系统短板，希望借助IT系统走出管理困境</b>
+<ul class="quote">
+<li>2009年，X公司开始寻找合适的供应链计划工具，2010年，引入供应网络规划系统，进行产能规划、仓储布点规划和发货路径优化。</li>
+<li>2011年又引入供应链计划系统，实现需求预测、协同计划、主生产计划、补货计划等业务信息化。</li>
+</ul>
+</li>
+<li><b>第二阶段：系统领先流程，变革推行遇到阻力</b>
+<ul class="quote">
+<li>由于缺乏业务咨询的支持，需求计划、补货计划、主生产计划等主要模块的实施历程相当漫长。</li>
+<li>第一次选择：CIO，但CIO的挑战有二：①他同时负责很多IT项目，投入此项目的精力有限；②供应链计划涉及很多的业务逻辑细节，CIO更多是信息系统导向，没有能力深度理解和梳理业务流程。</li>
+<li>第二次选择：物流部总监，但物流总监忙于日常琐碎的、具体的执行类工作，而供应链计划系统是以抽象思维、逻辑思考为主。物流总监缺乏相关的专业知识，对项目的热情、参与力度和引导力度都不够。</li>
+<li>第三次选择：成立全新的供应链市场统筹部，整合职能部门中的计划职能，包括原属销售部门的需求计划、原属生管部门的供应计划、原属物流部门的补货计划。</li>
+</ul>
+</li>
+<li><b>第三阶段：供应链渗透前端，支持通路，实现订单和库存管控的模式变革</b>
+<ul class="quote">
+<li>由供应链市场统筹部总监领衔，X公司推动了供应链计划优化的第三阶段，主要是下述几个领域的持续改善：产能规划、仓储规划、物流路径规划、需求计划、主生产计划、大宗物料需求计划等。</li>
+<li>在订单管理方面，X公司把全国订单供需平衡也纳入供应链市场统筹部。原来的做法是配送中心和经销商自下而上地上单，现在，X公司调整了这个做法：对于自己的配送中心，改为自上而下由系统主动推动补货建议，物流部门可以修改调整，这样提高了货物配送的全局优化，提升了铺货效率和均衡性；对于经销商，为了获取真实的需求信息，不再给经销商库存信息，要求经销商不看库存上单(盲上单制)，避免了供应导向下的抢货、囤货等博弈行为。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch31"><summary>本篇小结</summary>
+<div class="sec">
+<h4>需求预测的定义与重要性</h4>
+<ul class="point">
+<li><b>需求预测是三分技术，七分管理</b>
+<ul class="quote">
+<li>三分技术是“从数字出发”，即基于需求历史制定基准预测。</li>
+<li>七分管理是“由判断结束”，即由销售、市场、产品管理等熟悉需求的职能调整预测。</li>
+</ul>
+</li>
+<li><b>需求预测的跨职能本性是需求预测最为挑战的地方</b>
+<ul class="quote">
+<li>企业大了，有数据的没判断，有判断的没数据。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>改善需求预测的跨职能协作</h4>
+<ul class="point">
+<li><b>计划要加强分析能力，制定更好的基准预测，筛选出客户集中度高的“大石头”</b>
+<ul class="quote">
+<li>让前端的销售好钢用在刀刃上，集中精力来应对客户集中度高的产品预测。</li>
+</ul>
+</li>
+<li><b>销售要对需求预测的最终结果负责，驱动销售通过执行来弥补计划的不足</b>
+<ul class="quote">
+<li>销售要更好地对接需求与供应。</li>
+<li>呆滞成品库存的最后解决方案，还得来自销售。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>需求计划的三个阶段</h4>
+<ul class="point">
+<li><b>公司小的时候，老板做计划；规模稍大，执行部门做计划；企业大了就得有专职的计划团队</b>
+<ul class="quote">
+<li>销售提需求就是典型的兼职计划，其本质是企业的系统、流程能力不足，需要通过组织力量来弥补。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>需求预测的精细化管理</h4>
+<ul class="point">
+<li><b>让计划主导需求较稳定的产品预测，让销售更多聚焦客户集中度高、变动较大的产品预测</b>
+<ul class="quote">
+<li>通过具体的案例，来分析如何精细化管理。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>需求预测的三个专题</h4>
+<ul class="point">
+<li><b>长周期物料的预测是供应链计划最为挑战的领域之一，其根本解决方案还是“从数据开始，由判断结束”</b>
+<ul class="quote">
+<li>长周期物料的预测挑战。</li>
+<li>长周期物料的预测解决方案。</li>
+</ul>
+</li>
+<li><b>计划体系的改变必须兼顾组织、流程和信息系统</b>
+<ul class="quote">
+<li>计划体系的改变挑战。</li>
+<li>计划体系的改变解决方案。</li>
+</ul>
+</li>
+<li><b>改善计划以改善供应链绩效</b>
+<ul class="quote">
+<li>改善计划挑战。</li>
+<li>改善计划解决方案。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>需求预测在供应链管理中的重要性</h4>
+<ul class="point">
+<li><b>计划是供应链的引擎，需求计划是计划领域的重中之重</b>
+<ul class="quote">
+<li>需求计划是供应链的原始推动力。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch32"><summary>第二篇 供应链的第二道防线：库存计划</summary>
+<div class="sec">
+<h4>库存计划的重要性</h4>
+<ul class="point">
+<li><b>库存是供应链各环节上的黏合剂，应对不确定性、有效对接需求和供应</b>
+<ul class="quote">
+<li>库存就如你在银行里的存款，是个好东西。</li>
+</ul>
+</li>
+<li><b>库存计划是供应链的第二道防线，对付需求的不确定性</b>
+<ul class="quote">
+<li>安全库存是库存的关键构成，也是最难对付的库存。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>安全库存的设定</h4>
+<ul class="point">
+<li><b>安全库存的高低取决于需求的不确定性、供应的不确定性和服务水平的要求</b>
+<ul class="quote">
+<li>需求的不确定性越大，需要的安全库存就越多。</li>
+<li>供应越不确定，需要的安全库存就越多。</li>
+<li>服务水平要求越高，安全库存水位也就越高。</li>
+</ul>
+</li>
+<li><b>安全库存的设置大都是拍脑袋，一刀切</b>
+<ul class="quote">
+<li>在很多公司，安全库存只是停留在执行层面，甚至没法引起运营层面的足够重视。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>库存计划的实施难点</h4>
+<ul class="point">
+<li><b>大多数人没法把服务水平(有货率)和库存水位有效地联系起来</b>
+<ul class="quote">
+<li>很多人本能地知道，提高库存水位，服务水平就会提高。但是，把安全库存从8提高到10，或者降低到6，服务水平会改变多少，就不知道了。</li>
+</ul>
+</li>
+<li><b>库存计划人员的天职是平衡服务水平和库存水平，但在有些公司，计划员层面竟然没有库存周转率和服务水平的指标</b>
+<ul class="quote">
+<li>没有指标驱动，做得好坏就完全靠良知。没压力就没动力，哪能做得精？做不精，哪能做得好？</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch33"><summary>安全库存的设置：库存计划的看家本领</summary>
+<div class="sec">
+<h4>量化需求的不确定性</h4>
+<ul class="point">
+<li><b>通过计算需求历史的不确定性，来估算未来需求的不确定性</b>
+<ul class="quote">
+<li>需求的重复性是个重要的假设，也符合实践中的很多情况。</li>
+<li>需求的标准差代表的就是需求的变动性。它统计的是实际需求与预测值之间的差异。标准差越大，表明需求的变动性越大，反之亦然。</li>
+</ul>
+</li>
+<li><b>假设需求符合正态分布，但在需求很不稳定，或者需求很低的情况下，正态分布往往不合适</b>
+<ul class="quote">
+<li>在需求相对比较稳定、需求相对频繁的情况下一般会成立。</li>
+<li>如果需求很不稳定，或者需求很低的情况下，我们得找更合适的分布来模拟，比如泊松分布，相应地找出类似于标准差的参数，来量化需求的变动性。</li>
+</ul>
+</li>
+<li><b>数据样本的大小会影响需求不确定性的量化结果</b>
+<ul class="quote">
+<li>样本数太小，代表性就不好。这就如用一系列的点来模拟正态分布曲线——点数越多，画出的曲线就越准确。</li>
+<li>要获取更多数据点，一种做法是用更长的需求历史，比如选取52周的需求，我们的风险是失去了需求的代表性，特别是那些季节性明显的产品。另一种做法呢，就是把需求拆分得更细，比如把每周拆分成每天，我们的风险是需求可能不再符合正态分布，得用二项分布等来描述。</li>
+</ul>
+</li>
+<li><b>当需求陡变时，如何量化需求的不确定性</b>
+<ul class="quote">
+<li>对淡旺季明显的产品来说，每年大部分生意就集中在那么几个月。旺季一旦来临，需求增长就很快；过了旺季，需求就急速下降。这时候，我们在计算需求的变动性时，就不能简单地拿需求历史跟平均需求相比，而是要把需求历史与相应时段的预测值比较，计算实际需求与预测值之间的差值，围绕差值计算其标准差。</li>
+<li>对于很多企业来说，当需求陡升或者陡降时，需求的不确定性不容易计算，因为它们虽然有需求历史，但不一定有同期相应的需求预测数据。解决方案一，就是用现在的预测方法，比如季节性预测模型，套到去年同期数据上，“预测”去年相应时段的需求，然后按照上述方法来计算偏差。解决方案二，也是很多企业常用的，就是根据历史经验，按一定天数的平均需求来设定安全库存，在需求上升阶段，适当多放点；在需求下降阶段，适当少放点。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>量化供应的不确定性</h4>
+<ul class="point">
+<li><b>供应的不确定性一般指供应周期的不确定性</b>
+<ul class="quote">
+<li>在企业的ERP系统里，围绕订单会有多个时间点，包括订单发出的日期和收到货物的日期。这两个的差值就是供应周期，在这里也是交期。</li>
+<li>供应商的交期或生产线的生产周期只是供应周期的一部分。实际上，供应周期是从需求产生到补货上架之间的整个周期，包括需求产生到补货订单产生、供应商/生产线的交期、验收入库等多个时段。</li>
+</ul>
+</li>
+<li><b>供应周期的构成及影响因素</b>
+<ul class="quote">
+<li>整个供应周期包括以下几部分：①订单发送周期，即从需求产生，到采购订单发出给供应商所需要的时间；②供应商的交期，即下订单日期和收货日期之间的差值；③入库及验收，即供应商送货来了，登录到ERP里，验收好后，产品放到货架上所需要的时间。</li>
+<li>企业的信息化水平越低、管理能力越弱，供应周期就越长，不确定性也就越高。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>量化服务水平(有货率)</h4>
+<ul class="point">
+<li><b>服务水平(有货率)就是当需求产生时，比如客户下订单，多大概率下我们有现成的库存来满足订单</b>
+<ul class="quote">
+<li>当需求相对频繁时，企业一般会设预测，比如每周预测需求是80个，然后每周按照80个的平均需求来补货。当需求符合正态分布时，这意味着一半的情况下，每周的需求会高于80个；一半的情况下，每周的需求会低于80个。如果每周的供应是80个的话，这意味着50%的概率下，需求能够马上得到满足；50%的概率下，需求没法立即满足。</li>
+<li>而要达到更高的服务水平(有货率)，我们就得设置安全库存。</li>
+</ul>
+</li>
+<li><b>服务水平(有货率)与库存成本的关系</b>
+<ul class="quote">
+<li>随着服务水平的提升，安全库存呈几何倍数上涨。尤其当服务水平达到一定高度后，要提升同样百分比的服务水平，需要付出十几倍、几十倍的安全库存代价。</li>
+<li>高昂的安全库存意味着高昂的库存成本，而高昂的库存成本则以吞噬利润为代价。</li>
+<li>服务水平不是越高越好，企业要在服务水平与库存成本之间取得平衡。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>综合需求的不确定性、供应的不确定性和服务水平，计算安全库存</h4>
+<ul class="point">
+<li><b>把需求和供应的不确定性(标准差)整合成一个综合的标准差，乘以一个服务水平系数(Z值)，就得到最终的安全库存</b>
+<ul class="quote">
+<li>综合标准差的公式有点复杂，根号下的前半部分是需求的不确定性，后半部分是供应的不确定性。因为时间单位等不同，所以会有些换算。</li>
+<li>在实际应用中，安全库存的计算公式往往会简化，比如假定供应周期恒定，因为有时候供应周期数据难以收集到。</li>
+</ul>
+</li>
+<li><b>安全库存的设置是个“从数据开始，由判断结束”的过程</b>
+<ul class="quote">
+<li>量化需求的不确定性、量化供应的不确定性、量化服务水平(有货率)的要求，计算出一个基准的安全库存，然后根据具体业务情况来调整。</li>
+<li>我们常犯的错误，就是“从判断开始，由判断结束”，凭经验、拍脑袋设置一定天数的用量作为安全库存。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch34"><summary>会设安全库存，再订货点就很容易</summary>
+<div class="sec">
+<h4>再订货点法的概念和参数</h4>
+<ul class="point">
+<li><b>再订货点法是一种库存管理方法，当库存降到预设的水位(再订货点，ROP)，就启动订货机制</b>
+<ul class="quote">
+<li>再订货点法直接影响总体库存水平、客户服务水平和运营成本。</li>
+</ul>
+</li>
+<li><b>再订货点ROP由补货周期内的平均需求和安全库存构成</b>
+<ul class="quote">
+<li>平均需求预测×补货周期。</li>
+<li>为了应对需求和供应的不确定性。</li>
+</ul>
+</li>
+<li><b>订货量ROQ是每当订货时，需要订多少</b>
+<ul class="quote">
+<li>订货成本越高，订货量ROQ就越大。</li>
+<li>需求量越大，ROQ就越大。</li>
+<li>库存持有成本越高，ROQ就越小。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>再订货点法的特点和假设</h4>
+<ul class="point">
+<li><b>再订货点法的特点是定量不定期</b>
+<ul class="quote">
+<li>每次订货的时候，订货量都一样。</li>
+<li>随时都能订货，但什么时候订货，却不知道。</li>
+</ul>
+</li>
+<li><b>再订货点机制假定补货周期是固定的</b>
+<ul class="quote">
+<li>如果补货周期有不确定性，我们就得增加安全库存来应对。</li>
+</ul>
+</li>
+<li><b>再订货点法还有一些别的假设、变种</b>
+<ul class="quote">
+<li>再订货点法看上去是库存计划的一种方式，其实是供应链的三道防线的结合体。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>再订货点法的变种</h4>
+<ul class="point">
+<li><b>不定期，不定量：系统随时检查库存，一旦低于再订货点，就驱动补货，补齐到最高库存水位</b>
+<ul class="quote">
+<li>在库存水位设计上，这个变种有两个参数：再订货点ROP和最高库存Max，每次的订货量=Max-净库存。</li>
+</ul>
+</li>
+<li><b>定期，不定量：系统定期检查库存，补齐到最高库存水位</b>
+<ul class="quote">
+<li>定时补货简单易行，不用随时去监控库存水位，也不用零星补货，人工成本、运输成本也较低。</li>
+<li>缺点就是拉长了补货周期，增加了平均库存量。</li>
+</ul>
+</li>
+<li><b>定期，定量：这种模式设再订货点和订货量两个参数，但不是随时检查库存补货，而是定期</b>
+<ul class="quote">
+<li>比如你在客户那里建了寄售库存，限于信息技术和诸多限制，客户没法消耗一个就更新一次库存，而是每周更新一次，把上一周用的减掉。</li>
+<li>然后作为供应商，你开始判断是否要补货：如果库存高于再订货点，不补；如果低于再订货点，补一个订货量ROQ；补了一个ROQ还没达到再订货点ROP，那就再补一个ROQ的量，直到超过ROP。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>设再订货点，还是安全库存+预测</h4>
+<ul class="point">
+<li><b>再订货点=补货周期内的平均需求+安全库存，但没法传递需求的时间维度</b>
+<ul class="quote">
+<li>再订货点没法平滑需求变动，除非手工干预，前端的需求波动会直接传递给供应链。</li>
+</ul>
+</li>
+<li><b>安全库存+需求预测模式下，需求预测的数量维度和时间维度都能设立</b>
+<ul class="quote">
+<li>对于后续需求，一旦客户的订单录入ERP系统，它会“消耗”预先设好的需求预测，而不是直接转化成给供应商的指令，这样就平滑了需求的起起伏伏。</li>
+</ul>
+</li>
+<li><b>再订货点没法传递需求预测，而安全库存+需求预测则可以更灵活地呈现需求的变化</b>
+<ul class="quote">
+<li>对于供应商来说，再订货点传递的只是一个一个的订单，很难翻译成准确的预测，难以有效指导原材料备货和产能规划。</li>
+<li>在多重供应链的情况下，这个问题就更加突出，根本没法在多个供应链伙伴间传递需求预测。</li>
+<li>再订货点也不无优点。对于一般人来说，它的最大优点是简单，好理解，操作、维护起来也容易，因为它只有两个参数：订货点和订货量。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch35"><summary>为什么不能一刀切地设置库存水位</summary>
+<div class="sec">
+<h4>库存水位一刀切的问题</h4>
+<ul class="point">
+<li><b>库存水位一刀切没有考虑到产品的采购提前期、需求的变动性、供应商的交期稳定性</b>
+<ul class="quote">
+<li>库存水位设得太低，导致产品经常性地断货。</li>
+<li>库存水位设得太高，导致库存积压，增加运营成本。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>供应链执行的影响</h4>
+<ul class="point">
+<li><b>供应商的交期、补货周期、需求的变动性等因素影响库存水位设置</b>
+<ul class="quote">
+<li>供应商的交期不是一样长，有的料号平均交期10天出头，有的都快20天了。</li>
+<li>补货周期还包括订单发送、来料验收、节假日和周末等，整个补货周期在3周左右。</li>
+<li>需求的变动性也不同，一部分产品的变异系数更大，大于1；而另一部分产品的需求变动性更小，小于1。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>精细化管理的必要性</h4>
+<ul class="point">
+<li><b>精细化管理就是差异化管理，根据不同的情况采取有针对性的措施</b>
+<ul class="quote">
+<li>供方的产能情况在改变，原来短缺的，现在可能过剩；原来过剩的，现在可能短缺，所以供应周期也会改变，相应的变动性也是。</li>
+<li>买方的经营状况、市场形势也在改变，需求的模式、需求的不确定性也在改变。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>跨境电商库存计划的案例分析</h4>
+<ul class="point">
+<li><b>一刀切的安全库存设置导致部分产品过剩，部分产品短缺</b>
+<ul class="quote">
+<li>安全库存分布在1.4周到4.8周之间，有的产品放1.4周的量作为安全库存，就可以达到92%的有货率；而有的产品呢，则需要放4.8周的量，才能达到相同的有货率。</li>
+</ul>
+</li>
+<li><b>安全库存跟平均需求量的关系，需求量越大，需要的安全库存的周数就越少</b>
+<ul class="quote">
+<li>随着平均需求的上升，安全库存的周数呈轻微的下降趋势。</li>
+</ul>
+</li>
+<li><b>安全库存的周数与变异系数之间存在显著的正相关，变异系数越小，安全库存的周数就越小</b>
+<ul class="quote">
+<li>如果采取一刀切，设2周或3周的量作为安全库存，对那些变动性小的产品，安全库存可能太高；对那些变动性大的产品，安全库存可能太低。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch36"><summary>库存计划要学赌场，而不是赌徒</summary>
+<div class="sec">
+<h4>库存计划的本质与赌场思维</h4>
+<ul class="point">
+<li><b>库存计划就如赌博，企业做生意就如赌博</b>
+<ul class="quote">
+<li>在已知的信息基础上，结合对未知的判断，要么赌中，要么赌不中。</li>
+</ul>
+</li>
+<li><b>职业经理人的任务，就是争取提高赌中的概率，以最小的总成本做成最多的业务。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>赌场思维与赌徒思维的区别</h4>
+<ul class="point">
+<li><b>赌徒是典型的“从判断开始，由判断结束”，赌场则是典型的数据驱动</b>
+<ul class="quote">
+<li>在一个具体的赌博上，赌场可能输给赌徒；但在整体上，赌场的赢面要比赌徒大。</li>
+</ul>
+</li>
+<li><b>企业就是开赌场的，但问题是，我们往往以赌徒的方式赌博，包括库存计划。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>库存计划的数理统计模型</h4>
+<ul class="point">
+<li><b>对这种情况，却有更好的数理统计模型来模拟，比如泊松分布</b>
+<ul class="quote">
+<li>比如你有10000个产品，大多数的需求量很低。针对每个产品，你可以用泊松分布来模拟需求，根据需求预测设定库存水位，对应的就得到这个产品的有货率。</li>
+<li>所有的产品加在一起，就得到整体有货率和库存投资。然后调整来尽量提高整体有货率，但降低总的库存投资：便宜的多备些，有货率更高；昂贵的少备些，有货率相对低一些。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>库存计划的优化策略</h4>
+<ul class="point">
+<li><b>赌徒着眼点是战斗，聚焦局部优化，赌场则着眼战役，聚焦全局优化</b>
+<ul class="quote">
+<li>从0到1(备1个库存)容易，凭经验即可。但从1到2、从2到3就远没有那么简单了。离开数据分析，渐进式的库存增加、减少就很难做精。</li>
+<li>在数据分析和数理统计的支持下，虽然在具体的产品上可能输掉，但在众多产品中能优化有货率和总库存。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch37"><summary>【专题一】VMI是好东西，对供应商也是</summary>
+<div class="sec">
+<h4>VMI的概念和优势</h4>
+<ul class="point">
+<li><b>VMI是供应商管理库存的缩写，由沃尔玛和宝洁于20世纪80年代率先导入。</b>
+</li>
+<li><b>VMI简化了客户与供应商之间的产品流、信息流和资金流，降低了双方的交易成本，降低了供应链的总库存</b>
+<ul class="quote">
+<li>操作得当，VMI的目标是把库存维持在最低水位和最高水位之间，达到一定的服务水平(有货率)。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>VMI和寄售的区别</h4>
+<ul class="point">
+<li><b>VMI和寄售没关系：VMI说的是库存的管理责任，寄售说的是库存的所有权</b>
+<ul class="quote">
+<li>在实践中，你可以用VMI而不用寄售，可以用寄售而不用VMI。</li>
+<li>当然两者并用的情况也很常见，以至于业界一旦提到VMI，首先想到的是库存也归供应商持有(寄售)。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>VMI对供应商的好处</h4>
+<ul class="point">
+<li><b>VMI提高了客户服务水平，降低了整个供应链的库存</b>
+<ul class="quote">
+<li>在建立VMI前，客户有一堆库存，供应商有一堆库存；建立VMI之后，两堆库存变成一堆，总库存就下降了。</li>
+</ul>
+</li>
+<li><b>供应商在产品流、信息流和资金流上得到的好处，应该可以抵消库存带来的额外成本</b>
+<ul class="quote">
+<li>先说产品流。有VMI之前，产品的流动是由订单驱动的，建立VMI之后，供应商可以参照最低、最高库存水位和需求预测，比如每天生产250个，产线安排就平稳多了。</li>
+<li>再说信息流。有VMI之前，信息围绕订单流动。有了VMI之后，供应商只需要知道三类信息即可：最低、最高库存目标水平，当前的实际库存，以及需求预测，这样就可以指导整个生产和补货。</li>
+<li>最后说资金流。有VMI之前是订单驱动，每个订单都得结一次账，有了VMI之后，一般每两周或一个月结一次账，统计一下总共用掉多少，乘以单价就是总价，资金流就简单多了。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>VMI的库存水位设置</h4>
+<ul class="point">
+<li><b>最低库存其实就是安全库存，最高库存Max=最低库存Min+周转库存+补货量</b>
+<ul class="quote">
+<li>最低库存是VMI的警戒线。在设计良好的VMI系统，一旦手头库存低于最低库存，客户的信息系统会自动给供应商催货指令。</li>
+<li>最高库存Max的设置要综合考虑经济订货量、需求预测、仓储空间、补货频次、供应商的执行能力等多个因素。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>VMI对供应链三道防线的挑战</h4>
+<ul class="point">
+<li><b>VMI要求给供应商提供每天或每周的预测，而且跨度要至少覆盖供应商的交期</b>
+<ul class="quote">
+<li>对需求预测质量差、需求管理薄弱的企业来说是个很大的挑战。</li>
+</ul>
+</li>
+<li><b>VMI的库存计划水平更高，而这主要是采购方的任务</b>
+<ul class="quote">
+<li>最低、最高库存水位设置不合理，导致积压的积压，短缺的短缺。</li>
+</ul>
+</li>
+<li><b>VMI把更多任务转移给供应商，对那些管理粗放的供应商来说，这意味着相当大的风险</b>
+<ul class="quote">
+<li>这些供应商管理能力低下，按照客户的订单生产尚可，按照VMI的一整套参数来排产，则是莫大的挑战。</li>
+<li>VMI对多点寻源策略也是个挑战。在管理粗放的企业，多点寻源非常普遍，比如同一个料号，分配给多个供应商生产。</li>
+<li>在供应商管理上，VMI是严格地要求有选择、有管理。更准确地说，是重选择、重管理。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch38"><summary>【专题二】“长尾”产品：库存计划的终极挑战</summary>
+<div class="sec">
+<h4>“长尾”需求远比我们想象的常见</h4>
+<ul class="point">
+<li><b>“长尾”需求是供应链末端的需求，具有需求细分和小众化的特点</b>
+<ul class="quote">
+<li>需求越是细分，或者说越是在供应链的末端，就越呈现小众化。</li>
+</ul>
+</li>
+<li><b>零售业、电商、备品备件等行业都存在“长尾”需求</b>
+<ul class="quote">
+<li>零售业中，规模巨大如沃尔玛者，但到了具体的门店，落实到那每个门店平均140000种具体的产品上时，大多产品每年也就卖掉那么几次，即典型的“长尾”。</li>
+<li>电商中，虽然电商大都冲着“爆款”去，但“爆款”毕竟是极少的产品，大多产品的销量都非常低，但又不能不放点库存，结果是成为慢动库存。</li>
+<li>备品备件是另一个典型的“长尾”需求很普遍的行业，这主要是让那些昂贵的设备正常运转。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>“长尾”需求用泊松分布模拟更准确</h4>
+<ul class="point">
+<li><b>泊松分布是描述单位时间(或空间)内随机事件发生的次数的分布，适用于“长尾”需求的库存计划</b>
+<ul class="quote">
+<li>泊松分布符合三个条件：平均值、随机性、独立性。</li>
+</ul>
+</li>
+<li><b>用泊松分布计算“长尾”需求的库存水位，可以更准确地预测需求</b>
+<ul class="quote">
+<li>假定这个产品的补货周期是8个星期，那补货周期内的平均需求就是1.85，这就是泊松分布中唯一需要的参数：平均值。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>简单法则来指导“长尾”需求的计划</h4>
+<ul class="point">
+<li><b>成本—频率体系是用单位成本和需求频率两个维度，来决定备哪些，不备哪些产品</b>
+<ul class="quote">
+<li>单位成本在5000美元及以上是A档，这些产品很贵，占总数的1%。</li>
+<li>1500～5000美元是B档，这些产品相对贵，占总数的2%。</li>
+<li>150～1500美元是C档，占20%。</li>
+<li>25～150美元是D档，占25%。</li>
+<li>25美元以下是E档，这都是些低值产品，超过一半的产品都属于这个门类。</li>
+<li>需求频率。这个公司采取12月频率，即对于一个特定的产品，在过去12个月里，有多少个月有需求。</li>
+</ul>
+</li>
+<li><b>备件损耗指数是跨职能智慧的结晶，是在没有足够需求历史情况下的最佳判断</b>
+<ul class="quote">
+<li>一类备件(损耗指数1)：易耗品，每年更换13次或以上。</li>
+<li>二类备件(损耗指数2)：易耗品，每年更换4～12次。</li>
+<li>三类备件(损耗指数3)：易耗品，每年更换1～3次；</li>
+<li>四类备件(损耗指数4)：非易耗品，平均寿命为1年或更短。</li>
+<li>五类备件(损耗指数5)：非易耗品，平均寿命在1年以上。</li>
+<li>六类备件(损耗指数6)：按照设计规范不会坏，但如果损坏或丢失，设备运营会受到严重影响。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch39"><summary>库存计划的优化：组织和系统的博弈</summary>
+<div class="sec">
+<h4>库存计划的优化目标</h4>
+<ul class="point">
+<li><b>库存优化的目标是全局优化，增加整体胜算，以最小的库存投资来达到整体的服务水平目标</b>
+<ul class="quote">
+<li>库存计划就是赌博，放在“长尾”需求上尤其如此。</li>
+<li>我们都是赌徒，但要像赌场那样去赌，提高总体赢面。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>库存优化软件的挑战</h4>
+<ul class="point">
+<li><b>市面上的库存计划软件大都针对单个产品，无法做多个产品的组合优化</b>
+<ul class="quote">
+<li>沃顿商学院的教授Morris Cohen等人开发了一个服务备件计划系统，叫SPO，专门针对“长尾”需求明显的服务备件进行库存优化。</li>
+<li>SPO软件基于多年的研究，在需求预测、库存计划方面有非常优秀的计算逻辑，但一般的计划员不懂。</li>
+</ul>
+</li>
+<li><b>优化软件系统“歧视”高价产品，导致计划员不敢轻易遵循软件系统的建议</b>
+<ul class="quote">
+<li>SPO一类的软件的建议往往就是1元的备很多，达到99.99999%的有货率；10000元的一个都不要备，有货率为0，但所有产品一起，能达到95%的整体有货率。</li>
+<li>稍有业务常识的人都知道，这不行。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>库存优化的解决方案</h4>
+<ul class="point">
+<li><b>把产品按照单价划分为不同的组，每个组内进行互相比较</b>
+<ul class="quote">
+<li>比如单价1～10元的放一组，10～100元的放一组，5000～10000元的放一组。</li>
+<li>这样，10000元一个的产品不和1元一个的比较，而是跟单价差不多的比较。</li>
+</ul>
+</li>
+<li><b>设定最低有货率，比如5000～10000元的那一组，至少要达到85%的有货率。</b>
+</li>
+<li><b>把计划人员的判断输入到系统里，给软件系统一定的约束</b>
+<ul class="quote">
+<li>比如有一堆库存是出于“政治原因”建的，那好，我们可以告诉软件系统，优化库存计划时，把这些库存排除在外。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>库存优化在工业品环境中的挑战</h4>
+<ul class="point">
+<li><b>工业品环境错综复杂，基于计划软件系统的库存优化很难做到位</b>
+<ul class="quote">
+<li>在大型工业设备领域，有些昂贵的零部件坏掉后，要修复再用，否则成本太高。</li>
+<li>有些零件修理过几次，就彻底坏了，没法继续修理。这时“维修池”又不够大了，需要投入一些新零件，返回到新旧交替的阶段。</li>
+<li>为了降低成本，供应商在不断推出新的零件，替代那些成本高、效果差的老零件。而新老代替的过程需要人工介入。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>库存优化的基本策略</h4>
+<ul class="point">
+<li><b>分析库存，纵向、横向比较，不同计划员之间比较，把最佳实践固化成简单法则，全面推广</b>
+<ul class="quote">
+<li>对于那些单价很高、全球需求很低的产品，比如有个A3产品，当时备货时需求历史还不长，没法有效判断需求，就在全球的15个地方仓库都备；现在有了相当的需求历史了，发现手头的库存大概能支持5年的用量。那好，强制把10个库存点的库存水位清零，让这10个成为多余库存，大概3年后就可以消耗掉50000美元的库存，而带来的服务水平风险呢，其实非常小。</li>
+<li>有个工业设备公司做分析，发现没有及时发货的产品中，有相当一部分是非常便宜的产品，比如几毛钱一个的螺丝钉、螺母、垫片等。计划员一般按照平均需求来设定库存水位，比如备1个月的量；但客户下订单时，因为便宜，有时候会一下子订几个月的量，结果公司手头就没有足够的料给客户，导致服务水平指标偏低，客户和销售都有意见。那好，这个公司就分析所有客户过去24个月的需求，把所有订单的第一高剔除(这有可能是异常值)，确保库存水位不低于第二高的订单量。整个分析做完，全球增加了几十万美元的库存，对于一个有过亿美元库存的公司来说，这点投资相当有限，但整体有货率却提高了几个点，值。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>库存优化与人性</h4>
+<ul class="point">
+<li><b>库存优化是跟人性打交道，用数据分析的理性来平衡计划人员的感性</b>
+<ul class="quote">
+<li>在贵的产品上不够冒险，在便宜的产品上不够保守，可以说是计划人员的天性。</li>
+<li>数据也要由系统来分析——人分析就避免不了感性判断。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>库存优化与组织和系统的博弈</h4>
+<ul class="point">
+<li><b>不管计划软件系统建议怎么做，计划人员总是有各种理由，继续按自己的老一套来</b>
+<ul class="quote">
+<li>企业大了，计划人员的水平良莠不齐，很多人的水平显然不如软件系统，虽然软件系统并不完美。</li>
+<li>但是，系统很少能斗得过组织——系统是死的，人是活的，那些计划人员总是有足够多的理由或借口，置系统的建议于不顾。</li>
+</ul>
+</li>
+<li><b>有些企业采取分散的组织，把计划分散到基层，是用组织措施来弥补信息系统的短板</b>
+<ul class="quote">
+<li>企业原来没有好的计划系统，就不得不依赖人的经验。</li>
+<li>当企业上了计划系统后，这些人其实就成了计划系统的最大绊脚石。</li>
+</ul>
+</li>
+<li><b>把库存计划的权限集中，让最优秀的那几个计划员来负责</b>
+<ul class="quote">
+<li>专业能力高了，人少了，组织和系统就更容易磨合，建立计划人员与计划系统的契合，推动库存优化。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch40"><summary>高库存、高服务水平是怎么来的</summary>
+<div class="sec">
+<h4>“两高”企业的存在及其原因</h4>
+<ul class="point">
+<li><b>“两高”企业是库存一大堆，但客户要的没有，服务水平很低；最好的企业是库存最低，但客户服务水平却最高。</b>
+</li>
+<li><b>“两高”企业的存在，有很多必然原因，如企业重视服务水平而忽视库存，以及指标层层嵌套导致高服务水平、高库存水平并存</b>
+<ul class="quote">
+<li>服务水平日日谈、月月谈，不达标，解决方案呢，自然是花钱消灾，多加库存了。</li>
+<li>有些“两高”企业管理得相当不错，有成套的指标。这些指标层层嵌套，结果是让一些指标远远超出目标，成为“两高”的另一个原因。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>供应链的灵活性不足</h4>
+<ul class="point">
+<li><b>围绕不同的业务需求，供应链没法有效地差异化服务</b>
+<ul class="quote">
+<li>对于不同的客户，ERP系统很难区别对待，比如说一般客户的订单，我们即使有货，也不要发，留给可能来的重点客户的订单。</li>
+<li>企业能做的就是一看到客户订单，有货就发。这又从客观上导致在产品层面上，得计划98%的有货率——如果是95%的话，你就很难达到重点客户的98%目标。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>库存指标难以有效设置</h4>
+<ul class="point">
+<li><b>库存指标好度量，不管是库存金额还是周转率，都简单易懂，但目标值却很难设定</b>
+<ul class="quote">
+<li>究竟库存多高、周转多少次算合理？谁也不知道。</li>
+<li>库存指标达不到，找些理由来解释也罢，搪塞也罢，这次被敲打一下，以后就变成了“合法”的库存。下次的库存指标呢，则在这次库存的基础上加些，所以库存总是在增长。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch41"><summary>库存究竟多少才算合理</summary>
+<div class="sec">
+<h4>库存合理性的理解</h4>
+<ul class="point">
+<li><b>库存是结果，是公司综合能力的体现</b>
+<ul class="quote">
+<li>库存不合理，那是因为作为一个企业，我们的能力有短板，过程没做好，结果自然就不好。</li>
+</ul>
+</li>
+<li><b>讨论库存多少合理是个伪命题，至少走不到哪里去</b>
+<ul class="quote">
+<li>因为不同料号之间相互影响(比如齐套率)，以及种种历史遗留问题，从绝对数量上讨论整体库存的合理与否，消耗了大量的资源，但解决不了什么问题。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>库存的边际周转率</h4>
+<ul class="point">
+<li><b>库存的边际周转率是对业务的单位新增量，新增库存要达到的周转率</b>
+<ul class="quote">
+<li>库存的边际周转率计算公式：库存的边际周转率=业务增长量/库存增量。</li>
+</ul>
+</li>
+<li><b>对于新增业务，库存的边际增量会递减</b>
+<ul class="quote">
+<li>周转库存与业务量成正比，即周转周期乘以平均需求。</li>
+<li>安全库存有——当业务越多时，相对的变动也就越小，需要的安全库存也就相对越少。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>优化能力来优化库存</h4>
+<ul class="point">
+<li><b>能力不改变，结果即使改变，也没法持久；要持久地改变结果，就得改变能力</b>
+<ul class="quote">
+<li>能力呢，则是组织、系统和流程的有机结合。</li>
+</ul>
+</li>
+<li><b>对于企业来说，库存优化不能只奔结果而去，还得改变能力以改变结果</b>
+<ul class="quote">
+<li>就系统而言，企业起步的时候信息系统一般滞后，其短板由组织来弥补，比如分散化经营，决策权下放到基层。</li>
+<li>就库存计划来说，我们实施计划软件，目的是给计划人员更好的工具，以弥补组织能力的短板。</li>
+<li>那剩下的人怎么办？让他们继续工作在经验层面，不是做计划决策，而是跟销售、客户紧密对接，管理变化，及时沟通给专业的计划人员。</li>
+<li>问题都在数据里——我们不需要别人告知；稍做数据分析，就如这里的短缺分析，就能知道问题在哪里。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch42"><summary>四分法来识别、管控库存风险</summary>
+<div class="sec">
+<h4>库存四分法的基本概念</h4>
+<ul class="point">
+<li><b>四分法将整个供应链的库存分为周转库存、安全库存、过剩库存和风险库存</b>
+<ul class="quote">
+<li>周转库存：维持正常的周转所需，对原材料来说就是采购提前期，对成品来说就是制造周期和运输时间。</li>
+<li>安全库存：为应对需求和供应的不确定性而设立。</li>
+<li>过剩库存：理论上，一旦超出周转和安全库存，就是过剩库存。</li>
+<li>风险库存：所有的库存都有风险，但超出周转、安全和过剩库存的部分风险最大。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>库存四分法在供应链库存风险管控中的应用</h4>
+<ul class="point">
+<li><b>通过四分法识别和判断不同库存的风险，并采取相应措施</b>
+<ul class="quote">
+<li>对于周转库存，需要关注周转周期是否合理。</li>
+<li>对于安全库存，需要关注安全库存水位设置是否合理。</li>
+<li>对于过剩库存，需要关注超出部分的风险。</li>
+<li>对于风险库存，需要特别关注，分析其来源，以便在料号层面采取措施。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>库存四分法在实际案例中的应用</h4>
+<ul class="point">
+<li><b>通过案例公司分析原材料库存，发现风险库存问题</b>
+<ul class="quote">
+<li>案例公司的在途+在库库存合起来有几亿元，风险库存总额为1亿多元，占所有库存的近30%。</li>
+<li>风险库存中，有些是新产品的，因为需求历史低，所以这里高估了。但更多的是些关键元器件，总共占了5000多万元的风险库存。</li>
+<li>实际的采购提前期增加了，在途库存就得增加。但数字对不上，有些芯片，采购提前期涨到26周了，但为什么要下30几周的订单呢？</li>
+</ul>
+</li>
+<li><b>通过四分法帮助另一个企业分析原材料库存，发现风险库存问题</b>
+<ul class="quote">
+<li>该企业的在库、在途库存，其中大部分是风险库存，足够这个企业用一年了。</li>
+<li>根源在于短缺时的过激反应，不管什么时候，都得遵循基本的准则，比如只买提前期内的量；如果要超出提前期，一定要理解风险，认真评估风险，只承担“经过计算”的风险。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>短缺和过剩的关系</h4>
+<ul class="point">
+<li><b>所有的短缺，最后总是以过剩收尾</b>
+<ul class="quote">
+<li>2016～2017年，关键元器件大面积短缺，企业的自然反应就是增加安全库存、拔高预测、更早提前下订单。但问题是，所有的短缺都会过去，面临的是过剩。</li>
+<li>增加安全库存不解决你眼下的短缺问题，供应商产能问题解决了，反而造成后续的过剩问题。</li>
+<li>周转库存也是同样的道理，供应商的交期增加到200多天时，你得提前给供应商下更多的订单，这大幅增加了周转库存。如果你仔细跟踪供应商的实际交期的话，我们至少有3次机会来取消部分在途订单。</li>
+<li>等短缺变成过剩了，采购方就降低安全库存、减少需求预测、取消在途订单，长时间不给供应商下订单；供应商以为天要塌下来了，就关闭生产线，把工人打发走，慢慢地消耗库存。等过剩库存消耗得差不多了，大家就都开始下订单，却发现供应商的交期开始延长，于是短缺的恐慌就开始蔓延，接下来就是新一轮的增加安全库存、拔高需求预测、提前给供应商下更多的单子。周而复始，短缺和过剩交替出现，所有的短缺都由过剩结束，而所有的过剩也是短缺的开始。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch43"><summary>库存控制：应对“打不死的妖怪”</summary>
+<div class="sec">
+<h4>库存控制的难点和挑战</h4>
+<ul class="point">
+<li><b>库存是企业各种能力的综合体现，跟我们做的每一件事都有关</b>
+<ul class="quote">
+<li>设计做得不好，独特零部件多，库存就高。</li>
+<li>设计变更带来库存，就更不用说。</li>
+<li>质量一出问题，我们的第一选择就是多备些库存，以防不测。</li>
+<li>供应商的按时交货率越低，库存的齐套率越低，库存就越高。</li>
+<li>物流运输也影响库存：从中国海运到欧洲需要4个星期，这注定就有4个星期的在途库存。</li>
+<li>生产排程做得差，生产周期就长，产线上的过程库存就高。</li>
+<li>应收账款是库存：货物发送给客户了，还没收到钱，那还是你的库存。</li>
+<li>应付账款也是库存，不过是供应商的库存罢了。</li>
+</ul>
+</li>
+<li><b>库存啥时候都是一大堆，但老总们平常不注意</b>
+<ul class="quote">
+<li>有时候明知道库存高、呆滞库存一大堆，也当作“必要之恶”。</li>
+</ul>
+</li>
+<li><b>库存是各种问题的焦点，需要各个职能都努力才能降下来。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>库存反弹的原因及影响</h4>
+<ul class="point">
+<li><b>频繁的降库存运动导入更多的不确定性，而供应链的自然反应呢，就是增加安全库存来应对</b>
+<ul class="quote">
+<li>比如拿成品库存来说，一般企业会用历史销售数据作为制定库存水位的依据。在库存运动期间，出货量显著增加，但在随后的一段时间显著减少，两者都增加了历史需求的波动性，库存的计算公式会提示增加安全库存。</li>
+</ul>
+</li>
+<li><b>库存取决于企业和供应链的整体运营水平，是结果，而不是根源</b>
+<ul class="quote">
+<li>不触及根源，库存大都会反弹，到降库存运动最终以失败告终。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>库存的分类及应对措施</h4>
+<ul class="point">
+<li><b>周转库存是维持正常运转所必需的，根源是周转周期</b>
+<ul class="quote">
+<li>只有缩短周转周期，才能从根本上降低周转库存。</li>
+<li>产品的标准化设计、产品与工艺设计的交互优化、精益生产等措施，从根本上都是为增加可制造性，缩短周转周期，从而降低周转库存。</li>
+</ul>
+</li>
+<li><b>安全库存是应对不确定因素的，根源是不确定性</b>
+<ul class="quote">
+<li>只有降低不确定性，才能从根本上降低安全库存。</li>
+<li>产品的标准化设计增加了规模效益，降低了需求和供应的不确定性。</li>
+<li>提高供应商的按时交货率，降低了供应端的不确定性。</li>
+<li>周转周期缩短了，相应的不确定性也会降低。</li>
+</ul>
+</li>
+<li><b>多余库存既不是支持正常运转，又不是应对不确定因素的，根源是人的行为</b>
+<ul class="quote">
+<li>控制多余库存必须从组织行为上着手。</li>
+<li>促进供应链上的信息共享、推动协同计划、预测与补货、提高决策水平，都是控制多余库存的有效举措。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch44"><summary>【案例】三管齐下缩短周转周期，降低周转库存</summary>
+<div class="sec">
+<h4>推动“六周计划”，全面缩短供应商的采购提前期</h4>
+<ul class="point">
+<li><b>“六周计划”力图把供应商的交期全面压缩到6个星期以内</b>
+<ul class="quote">
+<li>这涉及产品的标准化设计、精益生产、生产工艺的优化。</li>
+</ul>
+</li>
+<li><b>在供应商处建立过程库存可以显著缩短交货周期，降低供应链的整体库存水平</b>
+<ul class="quote">
+<li>例如，有一系列部件在硅谷做好粗胚，大致需要6个星期；然后运到亚利桑那，经过精加工，运回硅谷，总共3个月左右。该公司决定在精加工处建立粗胚的中间库存，以缩短响应周期。</li>
+<li>以前整条供应链虽说是订单拉动，但为应对供应不稳、生产需求变动等，该公司在成品层次维持相当高的安全库存；现在前段是推(基于预测)，后段是拉(基于订单)，虽然粗胚的中间库存增加了，但因为交货周期缩短、供应的不确定因素减少，成品的安全库存水位却明显下降，而且因为成品价格远高于粗胚，供应链的总库存金额反倒更低。</li>
+</ul>
+</li>
+<li><b>采购不愿意在供应商处建立过程库存，因为这增加了采购的责任，而且一旦成为呆滞库存，就需要采购去处理</b>
+<ul class="quote">
+<li>成品的库存虽然高，但属于计划部门，不关采购的事；现在设了粗胚库存，就变成了采购的问题，多一事不如少一事，采购自然不愿意。</li>
+</ul>
+</li>
+<li><b>对于有一定用量、用量较稳定、设计变更少的物料，该公司通过VMI来让供应商在现场建立库存，维持一定的库存水平，同时按照预测来补货</b>
+<ul class="quote">
+<li>这看上去是给供应商库存负担，但减少了赶工加急，也让供应商的生产排程更加平稳，生产成本会下降。</li>
+<li>这样，对采购方来说，在计划到位、需求相对变化不大的情况下，采购提前期为零；对供应商来说，除了生产成本降低外，供应商一般会得到一定的业务量承诺，降低了业务风险和不确定因素，从而也降低成本。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>全面缩短生产、调试、安装周期</h4>
+<ul class="point">
+<li><b>导入精益生产和JIT，对传统的生产线进行改组</b>
+<ul class="quote">
+<li>精益生产的看板管理体系等简化了物料流，生产现场更加井井有条，生产线员工的效率显著提高。</li>
+<li>但是，设备行业的周期性很强，业务起伏波动非常大，对精益生产是个挑战，注定没法推行JIT。</li>
+</ul>
+</li>
+<li><b>推动产品的模块化设计，降低生产组装周期</b>
+<ul class="quote">
+<li>模块化设计后，越来越多的组件、模块甚至子系统都由供应商做好，公司进行最后的组装与测试，这样生产组装的周期就降下来了，这个过程也是轻资产的过程。</li>
+<li>模块化设计的好处还在于成品可以分开运送到客户处，节省运输成本、缩短时间，也降低在途库存。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>优化流程、系统，缩短信息周转周期</h4>
+<ul class="point">
+<li><b>需求信息从最终客户传到最末端的供应商，动辄就得几个星期</b>
+<ul class="quote">
+<li>供应链越复杂，流程就越复杂，需求信息从最终客户传到最末端的供应商，动辄就得几个星期。</li>
+<li>这也意味着周转周期增加了几个星期。</li>
+</ul>
+</li>
+<li><b>层层审批增加了流程的周转周期</b>
+<ul class="quote">
+<li>批处理也是，比如这个公司的流程是每周五晚上给供应商提供一次预测，这意味着可能高达7天的延误。</li>
+<li>很多供应商周一早晨安排各种例会，往往来不及消化上周客户的预测变化，一些重大问题就可能得等下一周的例会来解决。</li>
+</ul>
+</li>
+<li><b>公司成立了流程改进小组，从跨职能层面审视信息流，进行公司层面的流程优化</b>
+<ul class="quote">
+<li>为此，该公司提出一个口号，就是“缩短我们所做的任何事情的周期”。</li>
+<li>不过有趣的是，该公司是设备行业，处于供应链的末端，“牛鞭效应”肆虐，生意好的时候半年能翻一番，忙订单都忙不过来，哪有时间来优化流程？</li>
+<li>生意不好了，业务量3个月就能掉下来一半，百分之二三十的人都得开掉，人少了，自然也没有资源来优化流程。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>聚焦成本vs．聚焦库存</h4>
+<ul class="point">
+<li><b>成本就如库存，是结果，不是根源；根源是时间，比如周转周期</b>
+<ul class="quote">
+<li>如果能系统地把周转周期缩短，库存会降下来，成本也是。</li>
+</ul>
+</li>
+<li><b>竞争是基于时间的，而不是成本</b>
+<ul class="quote">
+<li>日本企业关注的是时间，时间缩短了，成本就降低；美国企业关注的是成本，但因为根本的时间没缩短，成本也没法持久控制。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch45"><summary>降库存要避免互扣人质的死循环</summary>
+<div class="sec">
+<h4>库存问题的解决方式</h4>
+<ul class="point">
+<li><b>解决问题有两种方式，一种是通过转嫁给别人来解决问题，另一种是通过解决问题来解决问题</b>
+<ul class="quote">
+<li>库存比成本难降，一个原因就是你没法简单地把库存问题转嫁出去。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>只有加了该加的，才能降下该降的；不解决短缺问题，就没法解决过剩问题</h4>
+<ul class="point">
+<li><b>供应链要降低库存，自然要从那些库存过高的产品入手</b>
+<ul class="quote">
+<li>征求销售的意见，销售的答复往往是你不能降——他们看不到库存过高的产品。</li>
+<li>他们眼睛里都是库存过低，处于短缺的产品。</li>
+</ul>
+</li>
+<li><b>要解决过剩问题，首先要解决短缺问题</b>
+<ul class="quote">
+<li>要降低库存，首先要增加库存。</li>
+<li>要省钱，首先要花钱。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>少打总库的主意：总库多备，子库少备，降库存的重点在子库</h4>
+<ul class="point">
+<li><b>总库和子库、总部和分部之间也存在互扣人质的博弈</b>
+<ul class="quote">
+<li>总部要降库存，分部不支持，或者阳奉阴违而不了了之。</li>
+<li>总部对子库的控制力度小，降不了子库的库存，就在总库上打主意。</li>
+</ul>
+</li>
+<li><b>只有总库加上该加的库存，才可能降下子库该降的库存</b>
+<ul class="quote">
+<li>总库增加库存，提高有货率，缩短了给子库的补货周期，降低给子库补货的不确定性，子库就能降低安全库存。</li>
+<li>子库数量众多，每个库降一点，总量就相当可观，除去总库加上去的部分，总体库存还是降低了。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>少打速动产品的主意：降库存的焦点是高值慢动品</h4>
+<ul class="point">
+<li><b>企业在降库存时，为了很快见效，常见的做法是打速动产品的主意</b>
+<ul class="quote">
+<li>这些产品流动快，把库存的目标水位降低后，多余出来的库存很快就被消耗掉了，库存就降下来了。</li>
+<li>但这样做的问题呢，则是往往降低了这些速动产品的有货率，影响了业务和客户，激起反弹，不但逼着把原来降下去的加上去，而且把一些本来很充足的库存也给加得更多。</li>
+</ul>
+</li>
+<li><b>库存控制有两个主要目标：降低资金占用；降低呆滞库存</b>
+<ul class="quote">
+<li>对企业来说，资金占用情况很明显，也很受关注，因为现金流紧张，资金周转困难的时候，老总和财务第一眼看到的就是库存。</li>
+<li>但真正对成本影响大却容易被忽视的，是呆滞库存造成的注销成本：那些高值慢动的产品长时间不用，就变成呆滞库存；而呆滞库存注销时，就形成成本，降低企业的利润率和投资回报率，影响企业的股价和市值。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch46"><summary>降库存是推动意志力极限</summary>
+<div class="sec">
+<h4>库存与服务水平的背反关系</h4>
+<ul class="point">
+<li><b>服务水平跟库存水平互相背反，要提高服务水平，就得增加库存；要降低库存，就得牺牲点服务水平</b>
+<ul class="quote">
+<li>库存与服务水平已经优化，多余的库存“水分”已被挤掉，也就是说已经处于图2-23中的B点临界曲线，在库存与服务水平的“效率边界”(efficiency frontier)上。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>高库存下的高服务水平</h4>
+<ul class="point">
+<li><b>高库存、高服务水平的情况也挺普遍，对这些公司来说，库存控制上需要的是风险意识</b>
+<ul class="quote">
+<li>自上而下地承担些风险，自上而下地加压，海绵里挤水，不牺牲服务率的情况下，库存还是有降低的余地。</li>
+<li>高层一定要承担风险，不能光发指令、定政策。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>高库存下的低服务水平</h4>
+<ul class="point">
+<li><b>高库存下的低服务水平的公司特点是库存动辄千百万，但要用的料没有备，备的大都是些没用的</b>
+<ul class="quote">
+<li>缺的是速动产品，多的是慢动产品。有用的是速动产品居多，当然不能动；没用的是慢动产品居多，比如那些“长尾”产品，就成了降库存的重点对象。</li>
+<li>在用不着的库里拿掉计划水位，把库存搬到有用的地方，过段时间就用掉了，这样库存就下来了。周期长点，但稳妥。</li>
+<li>需要的是决心，即承担心理上的压力，敢作敢为。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>降库存的决心故事</h4>
+<ul class="point">
+<li><b>新的计划经理上任伊始，面临的最大挑战就是降库存，他深知，降库存得从那些“长尾”慢动的高值产品着手</b>
+<ul class="quote">
+<li>他就分析全球几十个库的用量，把那些单价昂贵、用量奇低的料拎出来，一刀切，安全库存水位统统设为零。</li>
+<li>这下子可捅了马蜂窝，各地的内部客户纷纷跳起来。这位经理说，你们想把这些料的水位设回去，那好，我们一个一个地来重新审批。</li>
+<li>两三年过去了，当时拿掉的料，真正影响客户的微乎其微，而库存却降下来几百万元。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch47"><summary>本篇小结</summary>
+<div class="sec">
+<h4>库存计划的重要性</h4>
+<ul class="point">
+<li><b>库存计划是供应链的第二道防线</b>
+<ul class="quote">
+<li>所有的预测都是错的，错了就需要安全库存来应对。</li>
+</ul>
+</li>
+<li><b>库存计划就如赌博，赌博要学赌场，而不是赌徒</b>
+<ul class="quote">
+<li>安全库存的计算也要“从数据开始，由判断结束”。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>“长尾”需求对库存计划的影响</h4>
+<ul class="point">
+<li><b>“长尾”需求远比我们想象的常见</b>
+<ul class="quote">
+<li>只要足够细分，所有的需求最终都会落入“长尾”的范畴。</li>
+</ul>
+</li>
+<li><b>“长尾”产品还要考虑简单法则，比如产品成本、需求频率、生命周期等</b>
+<ul class="quote">
+<li>在工业品领域，“长尾”需求对有货率要求往往很高，导致库存周转率很低。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>库存的合理性</h4>
+<ul class="point">
+<li><b>库存是能力的结果，我们得优化能力来优化库存</b>
+<ul class="quote">
+<li>所有的库存都是合理的——不合理的是能力。</li>
+</ul>
+</li>
+<li><b>探究库存绝对值的合理性是个伪命题；探究库存的相对变化更具现实意义</b>
+<ul class="quote">
+<li>为此，我们还专门介绍了库存的边际周转率概念。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>库存控制的方法</h4>
+<ul class="point">
+<li><b>要三管齐下，缩短周转周期来降低周转库存、降低不确定性来降低安全库存、改变组织行为来控制多余库存</b>
+<ul class="quote">
+<li>降库存要从解决内外客户的问题入手，切忌陷入供应链与销售、总部与分部之间互扣人质的死循环。</li>
+</ul>
+</li>
+<li><b>所有的短缺，最终总是以过剩结束，所以在短缺时，我们要切忌过激反应，造成后续的过剩问题。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>VMI和寄售的库存管理方式</h4>
+<ul class="point">
+<li><b>VMI是个好东西，对供应商也是，它简化了供应链的产品流、信息流和资金流，提高了供应商的生产、配送效率，降低了运营成本</b>
+<ul class="quote">
+<li>VMI也是对供应链三道防线的终极挑战，对采购方的需求预测、库存计划和供应商管理提出更高的挑战，也对供应商的管理能力提出更高的要求。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch48"><summary>第三篇 供应链的第三道防线：供应链执行</summary>
+<div class="sec">
+<h4>供应链执行的定义和重要性</h4>
+<ul class="point">
+<li><b>供应链执行是供应链的第三道防线，用于弥补预测和库存计划的不足。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>供应链执行的两个层面</h4>
+<ul class="point">
+<li><b>弥补需求预测和库存计划的不足</b>
+<ul class="quote">
+<li>企业在执行层面面临催货流程不清和供应商管理不足的问题。</li>
+</ul>
+</li>
+<li><b>执行需求预测和库存计划的决策</b>
+<ul class="quote">
+<li>信息系统在执行层面可以提高效率，固化流程和规范行为。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>信息系统在执行层面的作用</h4>
+<ul class="point">
+<li><b>提高效率，固化流程和规范行为</b>
+<ul class="quote">
+<li>由于信息化水平低，许多企业依赖手工落实需求预测和库存计划，导致运营成本高、时效性差。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>企业在执行层面的挑战</h4>
+<ul class="point">
+<li><b>催货流程不清和供应商管理不足</b>
+<ul class="quote">
+<li>企业在执行层面面临催货流程不清和供应商管理不足的问题，需要提高效率和规范行为。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch49"><summary>催货是有学问的</summary>
+<div class="sec">
+<h4>催货的必要性和挑战</h4>
+<ul class="point">
+<li><b>催货是供应链执行不可避免的一部分</b>
+<ul class="quote">
+<li>计划的先天不足，需要执行来弥补。赶工加急就是常见的弥补措施。</li>
+</ul>
+</li>
+<li><b>催货流程可以帮助避免混乱，提高效率</b>
+<ul class="quote">
+<li>自上而下、从前到后，那么多的员工花了那么多的资源来催货，你当然得有催货流程。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>催货流程的设计</h4>
+<ul class="point">
+<li><b>按照不同的紧急程度，设立相应的流程</b>
+<ul class="quote">
+<li>第一优先级：停机待料十万火急。这是优先级最高的催货。</li>
+<li>第二优先级：客户订单不能满足。适用于客户的订单已经接到，录入ERP系统了，现有交期没法满足客户需求，不过客户还没有到停机待料阶段。</li>
+<li>第三优先级：计划参数不能满足。适用于供应没法满足需求预测、安全库存等计划参数，但还没有影响到实际的客户订单，由计划员来主导催货，是计划员日常工作的一部分。</li>
+</ul>
+</li>
+<li><b>定义清晰的优先级，单一责任人，清晰的申诉路线</b>
+<ul class="quote">
+<li>一旦陷入短缺状态，每个人都认为自己的需求最紧急。定义了清晰的优先级，有利于降低执行过程中的沟通成本和减少由此产生的混乱。</li>
+<li>从客服到计划到采购，每个产品在每个环节都有唯一的责任人负责。</li>
+<li>催货是打破正常的流程，通过获取更高的关注来解决问题。一旦得不到需要的关注，就得通过组织措施——申诉来应对。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>催货的深层含义</h4>
+<ul class="point">
+<li><b>催货其实是两个承诺的管理：得到承诺，兑现承诺</b>
+<ul class="quote">
+<li>在供应链上，绝大多数增值活动发生在供应商处，我们就以供应商的执行为例。</li>
+<li>如果你问，得到供应商的承诺容易，还是让供应商兑现承诺容易？答复往往是都不容易，但兑现承诺更困难。</li>
+</ul>
+</li>
+<li><b>把自己做成个大客户，提高自己的议价能力，驱动供应商快速响应。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch50"><summary>把自己做成大客户，驱动供应商快速响应</summary>
+<div class="sec">
+<h4>把自己做成大客户的意义和方法</h4>
+<ul class="point">
+<li><b>把自己做成大客户，增加自己的话语权</b>
+<ul class="quote">
+<li>你永远也不会大到足够大，你要做你能控制的，那就是集中采购额，整合供应商，把有限的钱花在有限的供应商，即增长型伙伴上，把自己逐渐做成一个相对的大客户。</li>
+</ul>
+</li>
+<li><b>供应商的选择和管理能力不够，导致采购额分散，企业对供应商的管控力度越来越差</b>
+<ul class="quote">
+<li>现有供应商解决不了问题，不管是质量、交期还是成本，最后就不得不导入更多的供应商。</li>
+<li>每个新供应商，之所以能够成为我们的供应商，都是因为其在价格、交付和质量等方面，承诺给我们老供应商做不到的。</li>
+<li>新供应商一旦成了老供应商，就又做不到了，双方很快就成了敌人，采购方又在找新供应商的路上。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>提高供应商选择和管理能力的解决方案</h4>
+<ul class="point">
+<li><b>从组织、流程和系统出发，全面提高供应商的选择和管理能力</b>
+<ul class="quote">
+<li>在组织层面，增强关键岗位，比如战略寻源，建立以“大采购”为核心的供应商管理组织，协调技术与质量，形成跨职能合力来选择和管理供应商。</li>
+<li>在流程层面，推动品类管理，评估供应商的整体能力，选择合适的供应商，只跟数量有限的优质供应商做生意，把供应商的“口子”收起来；接下来要管好供应商绩效，让供应商能够满足内部客户的正当诉求，并把关键供应商跟公司集成起来，早期纳入新产品开发，把成本设计下来，这样内部客户就没有必要把供应商的“口子”打开，找更多的供应商进来。</li>
+<li>在系统层面，构建公司范围的ERP系统和电子商务，以固化流程、支持组织的决策，并提供反馈数据，监控组织和流程的正常运作。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>供应商管理的组织和流程</h4>
+<ul class="point">
+<li><b>组织措施：协调研发、质量和采购三大职能，形成合力</b>
+<ul class="quote">
+<li>采购是协调三大职能的关键，因为供应商是采购的供应商。</li>
+<li>供应商关系就如客户关系，非常复杂，要求有资质的人员来管理。</li>
+</ul>
+</li>
+<li><b>流程措施：供应商分类、评估、选择、绩效管理和集成</b>
+<ul class="quote">
+<li>供应商分类是选择、管理流程的第一步，分类、分级两个概念。</li>
+<li>供应商评估，比如评估供应商的财务状况、质量体系、生产管理体系等，以及历史绩效。</li>
+<li>供应商选择，即针对特定的门类，选择合适的供应商做生意。</li>
+<li>供应商绩效管理，比如成本、交付、质量、服务、技术等一系列绩效指标。</li>
+<li>供应商集成，即把关键的供应商跟我们集成起来，在研发阶段合作设计，通过优化设计来增加可制造性、降低成本；在量产阶段建立供应商管理的库存(VMI)，降低供应链的整体库存，并且提高交付绩效；在交易流程上采用电子商务，降低双方的交易成本。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>供应商管理的系统支持</h4>
+<ul class="point">
+<li><b>信息系统是供应商管理的基础，没有信息系统，我们连供应商的按时交货率都没法统计</b>
+<ul class="quote">
+<li>供应商相关的每一件事，都离不开信息系统的支持。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch51"><summary>要不要给供应商预测</summary>
+<div class="sec">
+<h4>供应商需求预测的重要性</h4>
+<ul class="point">
+<li><b>供应商的供应链也需要预测来驱动</b>
+<ul class="quote">
+<li>供应商执行是否到位，很大程度上取决于需求预测的及时性和准确度。</li>
+</ul>
+</li>
+<li><b>预测从哪里来？从采购方来</b>
+<ul class="quote">
+<li>有些采购担心预测准确度，不愿意给供应商提供需求预测。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>供应商需求预测的挑战</h4>
+<ul class="point">
+<li><b>不见兔子不撒鹰，自然是害了需求方</b>
+<ul class="quote">
+<li>需求落地时，供应商已经来不及响应了。</li>
+</ul>
+</li>
+<li><b>供应商自己做预测，因为比采购方更加远离需求，预测准确度只能更低</b>
+<ul class="quote">
+<li>不管是短缺还是过剩，不管影响到的是客户还是供应商，从供应链的角度来看都不是好事。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>供应商需求预测的最佳实践</h4>
+<ul class="point">
+<li><b>在管理良好的公司，企业一般有滚动预测，定期发送给供应商</b>
+<ul class="quote">
+<li>比如13周预测准确度较高，指导未来3个月的交货；14～26周的预测准确度较低，指导供应商做中长期产能规划。</li>
+</ul>
+</li>
+<li><b>对于定制化程度高的产品，或者采购方需求很大、占供应商的产能比例较高时，没有一个供应商会有那么多的富裕产能</b>
+<ul class="quote">
+<li>所以，在供应商的产能准备上，我们必须正视预测，督促、帮助供应商及早准备。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>供应商需求预测的案例分析</h4>
+<ul class="point">
+<li><b>日本供应商供不了货的案例</b>
+<ul class="quote">
+<li>日本供应商一般比较保守，不见兔子不撒鹰——没有业务承诺就不建产能、不备库存。</li>
+<li>该电商认为问题是单一供应商，没法形成“充分竞争”，所以日本供应商“有恃无恐”。</li>
+<li>对这个电商来说，问题的实质是拿竞争代替管理，没有采取必要的管理措施，比如分享预测，而是想借助“市场竞争”做空手套白狼的生意。</li>
+</ul>
+</li>
+<li><b>中国钢厂铁矿石采购的案例</b>
+<ul class="quote">
+<li>中国钢厂的供应商管理普遍粗放，习惯性地拿竞争代替管理。</li>
+<li>日本钢厂为了有效管控战略供应商，与供应商签订长期供货合同，甚至参与控股主要的供应商，这些都是管理行为。</li>
+<li>吃一堑，长一智，中国钢厂学聪明了，也采取类似的措施，纷纷入股海外矿山，从“钓鱼”到“养鱼”，加强对上游资源的管控。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>供应商需求预测的调整</h4>
+<ul class="point">
+<li><b>调整预测的最正当理由，就是预测不准确</b>
+<ul class="quote">
+<li>采购调整预测，更多的是基于对供应商的不信任，比如担心产能不足，那好，就拔高预测。</li>
+</ul>
+</li>
+<li><b>采购与供应商这么博弈，计划与采购、销售与计划、客户与销售也是这么博弈，你会发现，供应链上有四重博弈</b>
+<ul class="quote">
+<li>博弈的结果呢，就是四个需求预测，而正确的需求预测只有一个，那就注定至少3个预测都是错的。</li>
+<li>错误的结果呢，就是库存过剩或者短缺。</li>
+<li>更糟糕的是，这种博弈导致需求变化沿着供应链层层放大，形成“牛鞭效应”。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>供应商需求预测的透明度和信息系统</h4>
+<ul class="point">
+<li><b>“牛鞭效应”的根本原因是信息不对称</b>
+<ul class="quote">
+<li>销售知道的计划不知道，计划知道的采购不知道，采购知道的供应商不知道。</li>
+</ul>
+</li>
+<li><b>电子商务这样的信息系统呢，就是把各职能、供应商、供应商的供应商都纳入同一系统，信息对称了，预测失真就小，库存就少</b>
+<ul class="quote">
+<li>这就是北美过去二三十年来常说的“拿信息换库存”。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch52"><summary>计划能随意变动吗：你得尊重供应链的刚性</summary>
+<div class="sec">
+<h4>供应链的刚性与需求预测的调整</h4>
+<ul class="point">
+<li><b>供应链的柔性不是无限的，需求预测的调整不能随意进行</b>
+<ul class="quote">
+<li>频繁的调整会打乱整体的生产、配送安排，让整体交付更加不可预计。</li>
+<li>越是不可预计，越需要人为干预，这就陷入恶性循环，增加了不确定性，最终会转化为成本和库存。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>计划的调整区间：自由区、半冻结区和冻结区</h4>
+<ul class="point">
+<li><b>自由区：需求变动的代价相对较低，数量、配置、日期都可以改变</b>
+<ul class="quote">
+<li>自由区一般是供应链的响应周期以外，原材料还没订货，生产还没开始。</li>
+</ul>
+</li>
+<li><b>半冻结区：需求变动的代价较大，数量一般不能再调整，但配置、日期还可以</b>
+<ul class="quote">
+<li>半冻结区一般是进入了供应链的响应周期，这时候长周期的物料已经订货，但企业自己的制造一般还没有开始，或者进展有限。</li>
+</ul>
+</li>
+<li><b>冻结区：需求的数量固定，日期固定，配置也固定</b>
+<ul class="quote">
+<li>冻结区，原材料已经到位，生产组装已经开始，变动的代价就很高。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>供应链职能的弱势与解决方案</h4>
+<ul class="point">
+<li><b>供应链职能处于弱势地位时，合理诉求往往得不到满足</b>
+<ul class="quote">
+<li>有些企业，供应链职能处于弱势地位，其合理诉求往往得不到满足，比如半冻结区基本没有，冻结区越来越短，甚至纯粹拿掉，追求所谓的“无限柔性”。</li>
+</ul>
+</li>
+<li><b>设置合理的半冻结区、冻结区，是综合成本更低的解决方案</b>
+<ul class="quote">
+<li>对于长周期、多配置的产品更是如此。</li>
+<li>这两个区也提供了两个决策点：在自由区转入半冻结区时，要决策是否下订单买材料；在半冻结区转入冻结区时，要决策是否开工生产。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>冻结区、半冻结区与销售、供应链的力量对比</h4>
+<ul class="point">
+<li><b>冻结区、半冻结区取决于销售与供应链的力量对比</b>
+<ul class="quote">
+<li>当销售处于绝对优势时，就像当前的大多本土企业一样，销售就把“以销定产”推到极点，有些企业甚至连第二天的计划都能调整。</li>
+<li>当供应链有一定发言权时，比如在有些跨国企业，就在“以销定产”和“以产定销”之间取得更好的平衡，冻结区、半冻结区就是兼顾销售和供应链的产物。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>供应链执行的两个侧面：执行弥补与信息系统的改进</h4>
+<ul class="point">
+<li><b>执行弥补：驱动供应链快速、有效地响应，弥补计划的不足</b>
+<ul class="quote">
+<li>在执行层面，按照不同的优先级，制定清晰的催货流程。</li>
+<li>在战略层面，选好、管好供应商，集中采购额把自己做成大客户，有效驱动供应商快速响应。</li>
+</ul>
+</li>
+<li><b>信息系统改进：高效落实计划的决策，驱动供应链来及时响应</b>
+<ul class="quote">
+<li>由于信息化水平低，很多企业依赖人工做信息系统的事，投入到需求预测、库存计划上的资源就有限。</li>
+<li>解决方案呢，得从信息系统上找。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch53"><summary>人都在忙什么？在做信息系统的事</summary>
+<div class="sec">
+<h4>本土供应商的需求预测与执行问题</h4>
+<ul class="point">
+<li><b>销售团队用Excel表格做需求预测，工作量大且易出错</b>
+<ul class="quote">
+<li>销售团队用Excel表格在每个工厂、每个料号层面做3个月预测，然后把这些数字整合到料号层面。</li>
+<li>逾期需求的处理麻烦，销售从ERP系统里拉出逾期需求，把那成千行逐行看过去，全部都是手工。</li>
+</ul>
+</li>
+<li><b>ERP系统可以自动处理需求预测过高、过低的问题</b>
+<ul class="quote">
+<li>假定6月份的预测是100个，实际需求是80个，这20个的过剩预测ERP可以替你保留。</li>
+<li>如果预测过低，比如预测100，实际需求是130，这多出的30个又该怎么办？功能健全的ERP也可自动处理。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>ERP系统中的需求预测与执行逻辑</h4>
+<ul class="point">
+<li><b>ERP系统通过向后消耗、向前消耗动态匹配实际需求与需求预测</b>
+<ul class="quote">
+<li>预测一般是经过平均后传递给供应链，好帮助供应链平滑产能。</li>
+<li>但实际需求时高时低，与预测不会一一匹配，部分原因是需求端的正常变动，部分原因是预测失败。</li>
+</ul>
+</li>
+<li><b>信息化程度高的企业，ERP可以每天监控库存变化，及时提出补货申请</b>
+<ul class="quote">
+<li>在信息化程度低的企业，比如这里的案例企业，人工补货，每个月订一次安全库存的料。</li>
+<li>这意味着虽说是1个月的安全库存，但其实功效只相当于2周的。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>本土供应商的安全库存问题</h4>
+<ul class="point">
+<li><b>销售人员设置安全库存，且同样是设置在Excel表格中</b>
+<ul class="quote">
+<li>销售每个月在做计划时，就花很多时间在算，上个月的安全库存是否用完了，这个月预测下降了，安全库存也调低，给供应商的订单得调整多少。</li>
+<li>为了安全，那就宁多勿缺，多放库存得了。</li>
+</ul>
+</li>
+<li><b>安全库存和需求预测的调整放在一起，来回折腾，案例公司的销售就花了无穷无尽的时间来应对</b>
+<ul class="quote">
+<li>培训结束后的讨论中，就出现了“可怜夜半虚前席，不问苍生问鬼神”的事儿来。</li>
+<li>不是“苍生”不重要，而是“鬼神”制造的麻烦更多：销售的大多时间都花在做ERP的活儿上了，折腾最多的也是那一张张的Excel表格。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>信息化水平低对企业运营的影响</h4>
+<ul class="point">
+<li><b>信息化水平低，手工做计划、手工补货的企业，从需求产生，到需求信号传递给供应链，动辄就是1周到1个月的延迟</b>
+<ul class="quote">
+<li>这意味着补货周期增加了相应的时间，也增加了相应周数的周转库存。</li>
+<li>多放1周的库存意味着每年460万元的成本。</li>
+</ul>
+</li>
+<li><b>信息化水平低，没法在订单层面有效集成供应链的各个环节</b>
+<ul class="quote">
+<li>在我们的公司调研中，销售对供应链的一大期望是透明度、可视化，以增加交付的可预见性。</li>
+<li>一个根本原因呢，就是信息化水平低，没法在订单层面有效集成供应链的各个环节。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch54"><summary>ERP：信息系统的核心应用</summary>
+<div class="sec">
+<h4>ERP在供应链管理中的重要性</h4>
+<ul class="point">
+<li><b>信息系统在供应链管理上扮演关键角色，是供应链能力的关键一环</b>
+<ul class="quote">
+<li>组织是找到合适的人，并且给他们合适的激励机制。</li>
+<li>流程是告诉这些人事儿怎么做，谁先做，谁后做。</li>
+<li>系统就是信息系统，常见的就是ERP和电子商务系统，其一给组织提供了工具，其二固化流程，其三提供反馈信息，以判断组织和流程是否执行到位。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>物料需求计划MRP</h4>
+<ul class="point">
+<li><b>MRP是ERP的一个基本功能，它把需求预测、库存计划转化成需求，产生供应订单</b>
+<ul class="quote">
+<li>例如，假定供应商的提前期是6周，MRP运行后，进入提前期(6周)的需求预测都转化成请购单。</li>
+<li>对于超出6周的预测，MRP会自动生成成请购单，但在进入提前期前，不会转换成采购订单，只是作为给供应商的预测，指导供应商的产能准备。</li>
+<li>安全库存也类似：一旦库存低于安全库存水位，ERP会自动生成请购单，转换成采购订单，驱动供应链来执行。</li>
+</ul>
+</li>
+<li><b>MRP跑不起来，员工就继续干信息系统应该做的事</b>
+<ul class="quote">
+<li>很多企业的ERP里，物料需求计划(MRP)没法运行，这些工作都得手工来执行，导致大量的人力资源花费在这类低附加值任务上，而且准确度低，造成诸多库存问题。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>可承诺逻辑ATP</h4>
+<ul class="point">
+<li><b>ATP是针对具体的需求，由ERP通过计算，来承诺供应的数量和日期</b>
+<ul class="quote">
+<li>比如需求产生了，不管是来自需求预测、库存计划还是客户的订单，如果手头有库存，那ATP的承诺是现在就有货，明天就可以发送。</li>
+<li>如果没有，那就需要造一个，要3周时间，因为其中一个零件没库存，需要2周来买该零件，生产线上再花1周来组装，3周后，我们的产品会准备好，发送给客户。</li>
+</ul>
+</li>
+<li><b>可承诺逻辑ATP是一个企业ERP系统里最为复杂的逻辑之一</b>
+<ul class="quote">
+<li>在主数据和订单层面有很多维护工作，比如一个新的客户添加到ERP里了，我们就得在ATP逻辑里定义默认的发货点(仓库)，以及第一备份、第二备份发货点等。</li>
+<li>一个新的仓储或生产设施产生了，我们也要定义它们与现有设施的支持关系，从一个设施到另一个设施需要多长时间等。</li>
+<li>一个新的料号产生了，我们要定义在哪些仓库采购，主要供应商、次要供应商是谁等。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>信息共享的平台</h4>
+<ul class="point">
+<li><b>ERP系统是信息流的最大载体</b>
+<ul class="quote">
+<li>关键的信息，比如需求历史、需求预测、采购和销售订单，ERP系统应该是它们最好的家园，而不是一张张的Excel表格和一堆堆的Email。</li>
+</ul>
+</li>
+<li><b>信息系统能力强的企业，订单的交期、数量在ERP系统里，你想知道什么时候到货，有多少会到货，到ERP系统里去查就是了</b>
+<ul class="quote">
+<li>在信息系统薄弱的企业，这些则意味着一个又一个的Email、电话和微信，从前端的销售到后端的计划、生产和采购，再到供应商，花费了太多的人力资源，机会成本高昂。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch55"><summary>电子商务：供应商的电子连接</summary>
+<div class="sec">
+<h4>电子商务在供应链执行中的重要性</h4>
+<ul class="point">
+<li><b>电子商务是供应链执行的关键一环，离开电子商务的支持，手工很难把需求预测、库存计划和采购订单执行到位</b>
+<ul class="quote">
+<li>电子商务推动订单层面的自动化，提供自动化程度高的工具，简化手工操作。</li>
+<li>电子商务传递需求预测和VMI信息，降低“牛鞭效应”的风险。</li>
+<li>电子商务与供应商信息共享的平台，凡是供应商需要的信息，都可以考虑通过电子商务平台来共享。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>电子商务推动订单层面的自动化</h4>
+<ul class="point">
+<li><b>电子商务提供自动化程度高的工具，简化手工操作，固化、标准化订单层面的操作流程</b>
+<ul class="quote">
+<li>采购订单自动或手动生成，通过ERP放到电子商务平台。</li>
+<li>供应商通过电子商务平台承诺交期、数量和单价，自动写入ERP系统。</li>
+<li>需求的日期、数量变了，ERP里的催货、推后或取消信号自动通过电子商务传递给供应商，提醒供应商重新承诺。</li>
+</ul>
+</li>
+<li><b>电子商务大大节省了要约—承诺—再要约—再承诺的工作量，让采购人员聚焦例外</b>
+<ul class="quote">
+<li>凡是与供应匹配的，采购人员根本不用介入；只有供应没法满足需求的，采购人员才会介入。</li>
+<li>有了电子商务，客观的供应商的交付绩效管理也才能成为可能，比如说按时交货率。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>电子商务传递需求预测和VMI信息</h4>
+<ul class="point">
+<li><b>电子商务的另一个功能就是传递需求预测，指导供应商管理产能和计划库存</b>
+<ul class="quote">
+<li>企业是否有能力提供预测，以及预测的时间跨度，是其供应链管理能力的一大标志。</li>
+<li>电子商务平台降低了“牛鞭效应”的风险。</li>
+</ul>
+</li>
+<li><b>VMI的成功实施也离不开电子商务平台，最低/最高库存水位、需求预测、在库/在途库存，都是通过电子商务平台共享</b>
+<ul class="quote">
+<li>针对每一个产品，制造商把上述计划参数放到电子商务平台上，供应商到电子商务平台拿到这些参数以及采购方的实际库存，指导自己的生产、配送计划。</li>
+<li>借助电子商务系统的帮助，该制造商可以统计VMI的绩效，比如在特定时间点，有多少个料号的库存为零、低于最低线或者高于最高线，围绕这些，驱动供应商采取改进措施。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>与供应商信息共享的平台</h4>
+<ul class="point">
+<li><b>电子商务是跟供应商共享信息的平台，凡是供应商需要的信息，都可以考虑通过电子商务平台来共享</b>
+<ul class="quote">
+<li>除了订单、预测和VMI信息外，还包括图纸、设计变更、质量、绩效考核等各项数据。</li>
+<li>电子商务平台是供应商与采购方的互动中心，从设计到生产再到售后，围绕图纸、预测、订单的正常与异常活动，都可以在这里来对接。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>采购自动化带来的更快、更多、更便宜</h4>
+<ul class="point">
+<li><b>采购自动化让员工把宝贵的时间节省下来，投入高附加值的活动</b>
+<ul class="quote">
+<li>就订单下达周期而言，优异的企业组平均只需要5个小时，意味着大多情况下，一个工作日即可；滞后的企业组平均需要15个小时，意味着两个工作日。</li>
+</ul>
+</li>
+<li><b>采购自动化提高了处理订单的数量，提升了采购职能的效率</b>
+<ul class="quote">
+<li>在优异的企业组，一个全职员工(每年)可处理2160张订单；在滞后的企业组，这一数据是362张，只及前者的六分之一。</li>
+</ul>
+</li>
+<li><b>采购自动化显著降低了采购成本</b>
+<ul class="quote">
+<li>在优异的企业组，每千元的平均采购成本是5.31美元，而在滞后的企业组，这一数据高达28.09(2.8%)，是前者的5倍还不止。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch56"><summary>本篇小结</summary>
+<div class="sec">
+<h4>供应链的三道防线</h4>
+<ul class="point">
+<li><b>需求预测、库存计划、供应链执行是供应链的三道防线</b>
+<ul class="quote">
+<li>所有的预测都是错的，但错多错少可不一样。</li>
+<li>如何有效对接销售和供应链，制定准确度最高的错误的预测，这是第一道防线要解决的核心问题。</li>
+<li>需求预测错了怎么办？安全库存、安全产能来应对。这是供应链的第二道防线。</li>
+<li>安全库存、安全产能不够怎么办？这时候所有的石头都落在供应链的头上，计划的先天不足，需要执行来弥补。这就是供应链的第三道防线。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>催货加急和供应商管理</h4>
+<ul class="point">
+<li><b>催货加急是供应链第三道防线的直接体现，需要优化催货流程</b>
+<ul class="quote">
+<li>正因为大量的资源花在催货上，所以我们要正视催货，优化催货流程，按照不同的紧急程度，制定差异化的催货流程。</li>
+</ul>
+</li>
+<li><b>供应商的快速响应是催货加急的关键，需要提高供应商的选择和管理能力</b>
+<ul class="quote">
+<li>供应链的增值活动中，大约70%由供应商负责。</li>
+<li>这里的关键是集中采购额，把自己做成供应商的大客户。</li>
+<li>这也意味着把供应商的“口子”收起来，只跟数量有限的优质供应商做生意。</li>
+<li>这要求提高供应商的选择和管理能力，选好、管好供应商。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>信息系统的重要性</h4>
+<ul class="point">
+<li><b>信息系统力量不足时，企业会深陷手工执行的泥淖，效率低下，准确度不高</b>
+<ul class="quote">
+<li>大量资源花在手工执行上，就没有足够的资源投入到前两道防线。</li>
+<li>资源投入不够，需求预测、库存计划就做不好，企业就习惯性地陷入救火怪圈。</li>
+</ul>
+</li>
+<li><b>通过信息系统来做，可以提高效率，保证准确度</b>
+<ul class="quote">
+<li>但凡人能够做两次的事，理论上都能自动化，通过信息系统来做。</li>
+<li>如果你是几亿元的中小企业，ERP和电子商务不健全尚可原谅；对于几十亿元、百亿元级别的企业，如果你的员工还整天在手工处理订单，做ERP和电子商务的活儿，那就不可原谅——这是管理层的大问题。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+  <p class="site-footer">由 weread-auto 导出 · 供全书视角与后续精读对照　<span class="gcstat" id="gc_page_pv" style="display:none">本页阅读 <b id="gc_page_pv_num">–</b> 次</span></p>
+</main>
+<script>(function(){
+  function openId(id){
+    if(!id) return null;
+    var el = document.getElementById(id);
+    if(!el) return null;
+    var d = (el.tagName === 'DETAILS') ? el : (el.closest ? el.closest('details') : null);
+    if(d && !d.open) d.open = true;      // 关键：目录跳过来时把这一章展开
+    return el;
+  }
+  function go(id){
+    var el = openId(id);
+    if(!el) return;
+    // 展开会改变文档高度，等一帧再滚，免得停在错误位置
+    setTimeout(function(){ el.scrollIntoView({block:'start'}); }, 10);
+  }
+  function fromHash(){
+    var h = (location.hash || '').replace(/^#/, '');
+    if(h) go(decodeURIComponent(h));
+  }
+  document.addEventListener('click', function(e){
+    var a = (e.target && e.target.closest) ? e.target.closest('a[href^="#"]') : null;
+    if(!a) return;
+    var id = (a.getAttribute('href') || '').slice(1);
+    if(id) go(id);
+  }, false);
+  window.addEventListener('hashchange', fromHash, false);
+  // 手动展开某章时把锚点写回地址栏：刷新或分享链接能直接落回这一章
+  document.addEventListener('toggle', function(e){
+    var t = e.target;
+    if(t && t.tagName === 'DETAILS' && t.open && t.id && location.hash !== '#' + t.id){
+      try { history.replaceState(null, '', '#' + t.id); } catch(err) {}
+    }
+  }, true);
+  fromHash();
+})();
+</script>
+<script data-goatcounter="https://ae6623.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<!-- gc-fill:begin -->
+<script>
+(function(){
+  /* GoatCounter 计数端点只吃 .json（.txt 会 400 unknown extension），
+     没数据的路径也返回 404 + {"count":0,"count_unique":0}，所以按文本解析。 */
+  var C="ae6623", base="https://"+C+".goatcounter.com/counter";
+  function stat(p){
+    return fetch(base+p+".json",{credentials:"omit",cache:"no-store"})
+      .then(function(r){return r.text();})
+      .then(function(t){
+        try{
+          var d=JSON.parse(t), c=parseInt(d.count,10);
+          if(!isFinite(c))return null;
+          var u=parseInt(d.count_unique,10);
+          return {pv:String(c), uv:isFinite(u)?String(u):null};
+        }catch(e){return null}
+      })
+      .catch(function(){return null});
+  }
+  function put(id,v){var e=document.getElementById(id);if(e&&v!=null)e.textContent=v;}
+  stat("/*").then(function(d){
+    if(!d)return;
+    put("gc_site_pv_num",d.pv);
+    if(d.uv!=null){put("gc_site_uv_num",d.uv);}
+    else{var x=document.querySelectorAll(".visit-badge-uv");
+         for(var i=0;i<x.length;i++)x[i].style.display="none";}
+  });
+  var pp=document.getElementById("gc_page_pv");
+  if(pp&&location.pathname){
+    var path=location.pathname;
+    if(path.length>1&&path.charAt(path.length-1)==="/")path=path.slice(0,-1);
+    stat(path).then(function(d){
+      if(d){put("gc_page_pv_num",d.pv);pp.style.display="";}
+    });
+  }
+})();
+</script>
+<!-- gc-fill:end -->
+</body>
+</html>

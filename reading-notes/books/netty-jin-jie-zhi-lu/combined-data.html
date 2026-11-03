@@ -107,8 +107,9 @@
 <path class="ln" d="M692 867 L700 867"/>
 </svg></section>
 <section class="mmx-mod" aria-labelledby="oneline" data-key="oneline"><h2 id="oneline">一句话主旨</h2><p class="mmx-mod-note">本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。</p><p class="mmx-oneline">Netty将JavaNIO接口封装，提供了全异步编程方式，是各大Java项目的网络应用开发必备神器</p></section>
-<section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" data-key="merged_guide"><h2 id="merged-guide-title">AI领读</h2><style>
-/* merged_guide 章内：mmx 组件样式（与完整版一致） */
+<section class="card merged-guide ai-lead" aria-labelledby="merged-guide-title" data-key="merged_guide"><h2 id="merged-guide-title">AI领读</h2>
+<style>
+/* merged_guide 章内：AI 大纲原生深层样式 */
 .merged-guide .sec{margin:10px 0 14px;padding-left:6px;border-left:2px solid #e5e0d6}
 .merged-guide .sec h4{font:600 .98rem/1.6 "Noto Serif SC","Songti SC",Georgia,serif;color:#315e50;margin:.6em 0 .3em}
 .merged-guide ul.point{margin:.3em 0;padding-left:20px}
@@ -116,10 +117,3418 @@
 .merged-guide ul.quote{margin:.25em 0 .25em 20px;padding-left:18px;list-style:none}
 .merged-guide ul.quote::before{content:"原句";display:block;font-size:.72rem;color:#bf8247;
   letter-spacing:.1em;margin:.15em 0 .1em;font-weight:600}
+/* 小节层级追加的汇总原句节点，标签与要点下的原句区分开 */
 .merged-guide ul.quote.quote-node{margin-top:.5em;padding-top:.4em;border-top:1px dashed #eadfc9}
-.merged-guide ul.quote.quote-node::before{content:"热门划线 · 本章原文摘录"}
+.merged-guide ul.quote.quote-node::before{content:"原句 · 本小节汇总"}
 .merged-guide ul.quote>li{color:#4a4436;font-size:.93rem;margin:.2em 0;padding-left:10px;border-left:2px solid #bf8247}
-</style><p class="small">章节目录取自微信读书官方目录；展开各章即该章与各小节的热门划线原文（按划线人数排序），原句均为读者划线，非 AI 生成。</p><div class="toc-part"><span class="part-label">全书篇目（共 23 章 · 7 句热门划线）</span><details class="mmx-cn"><summary><span class="mmx-no">1</span><span class="mmx-name">序1</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">暂无热门划线</p></div></details><details class="mmx-cn"><summary><span class="mmx-no">2</span><span class="mmx-name">序2</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">暂无热门划线</p></div></details><details class="mmx-cn"><summary><span class="mmx-no">3</span><span class="mmx-name">前言</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">暂无热门划线</p></div></details><details class="mmx-cn"><summary><span class="mmx-no">4</span><span class="mmx-name">第1章 Netty服务端意外退出案例</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">2 个小节 · 2 句热门划线</p><div class="sec"><h4>1.1 Netty服务端意外退出问题</h4><ul class="quote"><li>守护线程（Daemon）就是运行在程序后台的线程，通常守护线程是由JVM 创建的，用于辅助用户线程或者 JVM工作，比较典型的如 GC线程</li></ul></div><div class="sec"><h4>1.2 Netty优雅退出机制</h4><ul class="quote"><li>Java的优雅停机通常通过注册JDK的ShutdownHook来实现</li></ul></div></div></details><details class="mmx-cn"><summary><span class="mmx-no">5</span><span class="mmx-name">第2章 Netty客户端连接池资源泄漏案例</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">暂无热门划线</p></div></details><details class="mmx-cn"><summary><span class="mmx-no">6</span><span class="mmx-name">第3章 Netty内存池泄漏疑云案例</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">1 个小节 · 1 句热门划线</p><div class="sec"><h4>3.2 Netty内存池工作机制</h4><ul class="quote"><li>其中 memoryMap 存放的是PoolSubpage的分配信息，depthMap存放的是二叉树的深度</li></ul></div></div></details><details class="mmx-cn"><summary><span class="mmx-no">7</span><span class="mmx-name">第4章 ByteBuf故障排查案例</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">暂无热门划线</p></div></details><details class="mmx-cn"><summary><span class="mmx-no">8</span><span class="mmx-name">第5章 Netty发送队列积压导致内存泄漏案例</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">暂无热门划线</p></div></details><details class="mmx-cn"><summary><span class="mmx-no">9</span><span class="mmx-name">第6章 API网关高并发压测性能波动案例</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">暂无热门划线</p></div></details><details class="mmx-cn"><summary><span class="mmx-no">10</span><span class="mmx-name">第7章 Netty ChannelHandler并发安全案例</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">暂无热门划线</p></div></details><details class="mmx-cn"><summary><span class="mmx-no">11</span><span class="mmx-name">第8章 车联网服务端接收不到车载终端消息案例</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">1 个小节 · 1 句热门划线</p><div class="sec"><h4>8.1 车联网服务端接收不到车载终端消息问题</h4><ul class="quote"><li>推荐业务处理线程和Netty网络I/O线程分离策略</li></ul></div></div></details><details class="mmx-cn"><summary><span class="mmx-no">12</span><span class="mmx-name">第9章 Netty 3.X版本升级案例</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">暂无热门划线</p></div></details><details class="mmx-cn"><summary><span class="mmx-no">13</span><span class="mmx-name">第10章 Netty并发失效导致性能下降案例</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">暂无热门划线</p></div></details><details class="mmx-cn"><summary><span class="mmx-no">14</span><span class="mmx-name">第11章 IoT百万长连接性能调优案例</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">暂无热门划线</p></div></details><details class="mmx-cn"><summary><span class="mmx-no">15</span><span class="mmx-name">第12章 静态检查修改不当引起性能下降案例</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">暂无热门划线</p></div></details><details class="mmx-cn"><summary><span class="mmx-no">16</span><span class="mmx-name">第13章 Netty性能统计误区案例</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">暂无热门划线</p></div></details><details class="mmx-cn"><summary><span class="mmx-no">17</span><span class="mmx-name">第14章 gRPC的Netty HTTP/2实践案例</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">1 个小节 · 1 句热门划线</p><div class="sec"><h4>14.1 gRPC基础入门</h4><ul class="quote"><li>在某个时刻，一个HTTP连接上只能单向地处理一个消息，就像单行道，一个消息处理得慢，很容易导致后续消息阻塞</li></ul></div></div></details><details class="mmx-cn"><summary><span class="mmx-no">18</span><span class="mmx-name">第15章 Netty事件触发策略使用不当案例</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">1 个小节 · 1 句热门划线</p><div class="sec"><h4>15.1 channelReadComplete方法被调用多次问题</h4><ul class="quote"><li>channelReadComplete方法中的业务逻辑移到channelRead方法中执行，生产环境升级之后问题得到解决</li></ul></div></div></details><details class="mmx-cn"><summary><span class="mmx-no">19</span><span class="mmx-name">第16章 Netty流量整形应用案例</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">1 个小节 · 1 句热门划线</p><div class="sec"><h4>16.1 Netty流量整形功能</h4><ul class="quote"><li>整形可能会增加延迟，而流控几乎不引入额外的延迟</li></ul></div></div></details><details class="mmx-cn"><summary><span class="mmx-no">20</span><span class="mmx-name">第17章 Netty SSL应用案例</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">暂无热门划线</p></div></details><details class="mmx-cn"><summary><span class="mmx-no">21</span><span class="mmx-name">第18章 Netty HTTPS服务端高并发宕机案例</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">暂无热门划线</p></div></details><details class="mmx-cn"><summary><span class="mmx-no">22</span><span class="mmx-name">第19章 MQTT服务接入超时案例</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">暂无热门划线</p></div></details><details class="mmx-cn"><summary><span class="mmx-no">23</span><span class="mmx-name">第20章 Netty实践总结</span><span class="mmx-caret">›</span></summary><div class="mmx-body"><p class="mmx-stat">暂无热门划线</p></div></details></div></section>
+</style>
+<p class="small">章节目录与 AI 大纲融合为一棵树：篇章分组即目录，展开各章即骨架与逐节 AI 大纲（要点 · 原句摘录）。</p>
+  <div class="toc-part"><span class="part-label">全书篇目（AI 大纲顺序）</span>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">1</span><span class="mmx-name">序1</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 6 条要点 · 10 句原句摘录</p>
+<div class="sec">
+<h4>移动互联网系统的复杂度与微服务架构</h4>
+<ul class="point">
+<li><b>随着移动互联网系统的快速发展，系统复杂度快速上升</b>
+<ul class="quote"><li>以华为应用市场为例，后台微服务数量达上百个，服务器多达数千台。</li></ul>
+</li>
+<li><b>微服务化后，一个请求可能涉及数个微服务的配合</b>
+<ul class="quote"><li>传统的后台服务通常采用同步阻塞调用方式，一个请求独占一个线程。</li><li>如果一个请求涉及多个微服务之间的调用，那么每个微服务都需要一个专门的连接和线程来处理这个请求。</li><li>当系统调用关系越来越复杂，一个很小的问题，都可能导致线程阻塞，引发雪崩，导致整个系统不可用。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>以华为应用市场为例，后台微服务数量达上百个，服务器多达数千台。</li><li>传统的后台服务通常采用同步阻塞调用方式，一个请求独占一个线程。</li><li>如果一个请求涉及多个微服务之间的调用，那么每个微服务都需要一个专门的连接和线程来处理这个请求。</li><li>当系统调用关系越来越复杂，一个很小的问题，都可能导致线程阻塞，引发雪崩，导致整个系统不可用。</li></ul>
+</div>
+<div class="sec">
+<h4>异步I/O与Netty框架</h4>
+<ul class="point">
+<li><b>同步阻塞的方式很容易导致系统的资源利用率降低</b>
+<ul class="quote"><li>业界领先的互联网公司，都已经或者正在切换到全栈异步方式。</li></ul>
+</li>
+<li><b>Netty是当前业界应用最广泛的Java开源异步框架</b>
+<ul class="quote"><li>Netty框架能显著降低异步开发的门槛，使开发人员聚焦业务逻辑。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>业界领先的互联网公司，都已经或者正在切换到全栈异步方式。</li><li>Netty框架能显著降低异步开发的门槛，使开发人员聚焦业务逻辑。</li></ul>
+</div>
+<div class="sec">
+<h4>《Netty进阶之路：跟着案例学Netty》书籍介绍</h4>
+<ul class="point">
+<li><b>该书从一个个典型的问题出发，让读者能够带着问题来展开学习</b>
+<ul class="quote"><li>通过代码解读、原理分析和问题总结，对每个问题抽丝剥茧地深入解析。</li><li>能够通过一个问题，将相关领域的知识理解透彻，达到举一反三的效果。</li></ul>
+</li>
+<li><b>李林锋在电信软件行业有着近十年的异步和服务化方面的开发和架构设计经验</b>
+<ul class="quote"><li>他从2017年开始负责华为应用市场在异步和微服务化方面的工作。</li><li>本书凝结了作者多年来在异步化工作方面的经验。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>通过代码解读、原理分析和问题总结，对每个问题抽丝剥茧地深入解析。</li><li>能够通过一个问题，将相关领域的知识理解透彻，达到举一反三的效果。</li><li>他从2017年开始负责华为应用市场在异步和微服务化方面的工作。</li><li>本书凝结了作者多年来在异步化工作方面的经验。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">2</span><span class="mmx-name">序2</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 6 条要点 · 1 句原句摘录</p>
+<div class="sec">
+<h4>互联网对连接的重要性</h4>
+<ul class="point">
+<li><b>“连接”成了我们看到的所有美好应用背后的基石</b>
+<ul class="quote"><li>人、系统、物三者之间无所不在的连接让我们甚至感觉这世界已经成为了一个整体。</li></ul>
+</li>
+<li><b>计算机领域的热门技术，例如云计算、微服务、物联网等，其背后的核心还是连接。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>人、系统、物三者之间无所不在的连接让我们甚至感觉这世界已经成为了一个整体。</li></ul>
+</div>
+<div class="sec">
+<h4>掌握Netty的重要性</h4>
+<ul class="point">
+<li><b>掌握Netty可以算得上是一个开发人员最重要的技能。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>李林锋的技术背景</h4>
+<ul class="point">
+<li><b>李林锋长期工作在技术一线，构建的是压力最大的系统，保证的是要求最高的服务，解决的是诡异难解的问题。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>《Netty进阶之路：跟着案例学Netty》的价值</h4>
+<ul class="point">
+<li><b>李林锋把他自己填过的那些坑都详尽地记录了下来，不仅提供思路，还分析原理，让所有问题都无所遁形。</b>
+</li>
+<li><b>通过这本书也可以让你由“解”入“行”，他趟过那些大坑的经验也一定会助你早日在Netty学习的路上实现“自证”。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">3</span><span class="mmx-name">第1章 Netty服务端意外退出案例</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 1 条要点 · 1 句原句摘录</p>
+<div class="sec">
+<h4>Netty服务端意外退出案例</h4>
+<ul class="point">
+<li><b>初学者对服务端相关类库的工作原理和用法不熟悉，会导致程序启动或者退出发生问题</b>
+<ul class="quote"><li>主要涉及端口监听、EventLoop 线程池创建、NioServerSocketChannel 和 ChannelPipeline 初始化等。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>主要涉及端口监听、EventLoop 线程池创建、NioServerSocketChannel 和 ChannelPipeline 初始化等。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">4</span><span class="mmx-name">1.1 Netty服务端意外退出问题</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 5 条要点 · 8 句原句摘录</p>
+<div class="sec">
+<h4>Java Daemon线程简介</h4>
+<ul class="point">
+<li><b>Daemon线程是运行在程序后台的线程，用于辅助用户线程或者 JVM工作</b>
+<ul class="quote"><li>虚拟机中可能同时有多个线程运行，只有当所有的非守护线程(通常都是用户线程)都结束的时候，虚拟机的进程才会结束。</li><li>main 线程运行结束，如果此时运行的其他线程全部是 Daemon 线程，JVM 会使这些线程停止，同时退出。但是如果此时正在运行的其他线程有非守护线程，那么必须等所有的非守护线程结束，JVM才会退出。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>虚拟机中可能同时有多个线程运行，只有当所有的非守护线程(通常都是用户线程)都结束的时候，虚拟机的进程才会结束。</li><li>main 线程运行结束，如果此时运行的其他线程全部是 Daemon 线程，JVM 会使这些线程停止，同时退出。但是如果此时正在运行的其他线程有非守护线程，那么必须等所有的非守护线程结束，JVM才会退出。</li></ul>
+</div>
+<div class="sec">
+<h4>Netty服务端启动原理</h4>
+<ul class="point">
+<li><b>Netty中，通过bootstrap.bind(PORT).sync().channel()方法绑定服务端端口，并不是在调用方的线程(示例为main线程)中执行，而是通过NioEventLoop线程执行</b>
+<ul class="quote"><li>端口绑定操作执行完成之后，main 函数就不会阻塞，如果后续没有同步代码，main线程就会退出。</li><li>main线程退出是否意味着 JVM进程一定退出？并非如此，只有所有非守护线程全部执行完成，进程才会退出。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>端口绑定操作执行完成之后，main 函数就不会阻塞，如果后续没有同步代码，main线程就会退出。</li><li>main线程退出是否意味着 JVM进程一定退出？并非如此，只有所有非守护线程全部执行完成，进程才会退出。</li></ul>
+</div>
+<div class="sec">
+<h4>如何防止Netty服务端意外退出</h4>
+<ul class="point">
+<li><b>程序监听NioServerSocketChannel的关闭事件并同步阻塞main函数</b>
+<ul class="quote"><li>我们对服务端代码进行一些改造，代码示例如下：程序执行结果如图 1-6 所示，可以看出 main 函数处于阻塞状态，这样后续的shutdownGracefully方法就不会被执行，程序也不再退出。</li></ul>
+</li>
+<li><b>注释掉 bossGroup.shutdownGracefully()和 workerGroup.shutdownGracefully()，改为在链路关闭时再释放线程池和连接句柄</b>
+<ul class="quote"><li>代码示例如下。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>我们对服务端代码进行一些改造，代码示例如下：程序执行结果如图 1-6 所示，可以看出 main 函数处于阻塞状态，这样后续的shutdownGracefully方法就不会被执行，程序也不再退出。</li><li>代码示例如下。</li></ul>
+</div>
+<div class="sec">
+<h4>实际项目中的优化策略</h4>
+<ul class="point">
+<li><b>初始化Netty服务端之后注册监听器监听服务端句柄关闭事件，待服务端关闭之后异步调用shutdownGracefull释放资源</b>
+<ul class="quote"><li>错误用法：这种用法会导致调用方的线程一直被阻塞，直到服务端监听句柄关闭。</li><li>正确用法：服务端启动之后注册监听器监听服务端句柄关闭事件，待服务端关闭之后异步调用shutdownGracefull释放资源，这样调用方线程就可以快速返回，不会被阻塞。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>错误用法：这种用法会导致调用方的线程一直被阻塞，直到服务端监听句柄关闭。</li><li>正确用法：服务端启动之后注册监听器监听服务端句柄关闭事件，待服务端关闭之后异步调用shutdownGracefull释放资源，这样调用方线程就可以快速返回，不会被阻塞。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">5</span><span class="mmx-name">1.2 Netty优雅退出机制</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 5 个小节 · 10 条要点 · 13 句原句摘录</p>
+<div class="sec">
+<h4>Java优雅退出机制</h4>
+<ul class="point">
+<li><b>Java的优雅停机通常通过注册JDK的ShutdownHook来实现</b>
+<ul class="quote"><li>当系统接收到退出指令时，首先标记系统处于退出状态，不再接收新的消息，然后将积压的消息处理完，最后调用资源回收接口将资源销毁，各线程退出执行。</li></ul>
+</li>
+<li><b>还可以通过监听信号量并注册SignalHandler的方式实现优雅退出</b>
+<ul class="quote"><li>启动应用进程的时候，初始化Signal实例，根据操作系统的名称来获取对应的信号名称，将实例化之后的SignalHandler注册到JDK的Signal，一旦Java进程接收到kill pid或Ctrl+C，则回调handle接口。</li><li>在接收到信号回调的handle接口中，判断信号量的类型，如果是SIGTERM，则执行应用的优雅退出操作，对于 Netty，需要调用 EventLoopGroup 的 shutdownGracefully方法，释放通信层资源。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>当系统接收到退出指令时，首先标记系统处于退出状态，不再接收新的消息，然后将积压的消息处理完，最后调用资源回收接口将资源销毁，各线程退出执行。</li><li>启动应用进程的时候，初始化Signal实例，根据操作系统的名称来获取对应的信号名称，将实例化之后的SignalHandler注册到JDK的Signal，一旦Java进程接收到kill pid或Ctrl+C，则回调handle接口。</li><li>在接收到信号回调的handle接口中，判断信号量的类型，如果是SIGTERM，则执行应用的优雅退出操作，对于 Netty，需要调用 EventLoopGroup 的 shutdownGracefully方法，释放通信层资源。</li></ul>
+</div>
+<div class="sec">
+<h4>Java优雅退出的注意点</h4>
+<ul class="point">
+<li><b>ShutdownHook在某些情况下并不会被执行，例如JVM崩溃、无法接收信号量和kill-9 pid等。</b>
+</li>
+<li><b>当存在多个ShutdownHook时，JVM无法保证它们的执行先后顺序。</b>
+</li>
+<li><b>在JVM关闭期间不能动态添加或者去除ShutdownHook。</b>
+</li>
+<li><b>不能在ShutdownHook中调用System.exit()，它会卡住JVM，导致进程无法退出。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>Netty优雅退出机制</h4>
+<ul class="point">
+<li><b>Netty优雅退出涉及的主要操作和资源对象包括把 NIO线程的状态位设置成 ST_SHUTTING_DOWN，退出前的预处理操作，资源的释放操作</b>
+<ul class="quote"><li>把 NIO线程的状态位设置成 ST_SHUTTING_DOWN，不再处理新的消息(不允许再对外发送消息)。</li><li>退出前的预处理操作：把发送队列中尚未发送或者正在发送的消息发送完、把已经到期或在退出超时之前到期的定时任务执行完成、把用户注册到NIO线程的退出Hook任务执行完成。</li><li>资源的释放操作：所有Channel的释放、多路复用器的去注册和关闭、所有队列和定时任务的清空取消，最后是EventLoop线程的退出。</li></ul>
+</li>
+<li><b>Netty 优雅退出的接口和总入口是 EventLoopGroup，调用它的 shutdownGracefully 方法即可</b>
+<ul class="quote"><li>除了无参的 shutdownGracefully方法，还可以指定退出的超时时间和周期。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>把 NIO线程的状态位设置成 ST_SHUTTING_DOWN，不再处理新的消息(不允许再对外发送消息)。</li><li>退出前的预处理操作：把发送队列中尚未发送或者正在发送的消息发送完、把已经到期或在退出超时之前到期的定时任务执行完成、把用户注册到NIO线程的退出Hook任务执行完成。</li><li>资源的释放操作：所有Channel的释放、多路复用器的去注册和关闭、所有队列和定时任务的清空取消，最后是EventLoop线程的退出。</li><li>除了无参的 shutdownGracefully方法，还可以指定退出的超时时间和周期。</li></ul>
+</div>
+<div class="sec">
+<h4>Netty优雅退出原理和源码分析</h4>
+<ul class="point">
+<li><b>Netty优雅退出涉及线程组、NIO线程、Channel和定时任务等，底层实现细节比较复杂</b>
+<ul class="quote"><li>NioEventLoopGroup 实际上是 NioEventLoop 线程组，它的优雅退出比较简单，可直接遍历EventLoop数组，循环调用它们的shutdownGracefully方法。</li><li>调用NioEventLoop的shutdownGracefully方法，首先要修改线程状态为正在关闭状态。</li><li>AbstractUnsafe的close方法主要完成判断当前链路是否有消息正在发送，将发送队列清空，调用NioSocketChannel的doClose方法，关闭链路，调用pipeline的fireChannelInactive，触发链路关闭通知事件，调用AbstractNioChannel的Deregister，从多路复用器上取消selectionKey，调用ChannelOutboundBuffer的close方法，释放发送队列中所有尚未完成发送的ByteBuf。</li><li>NioEventLoop执行完closeAll()操作，需要调用confirmShutdown看是否真的可以退出。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>NioEventLoopGroup 实际上是 NioEventLoop 线程组，它的优雅退出比较简单，可直接遍历EventLoop数组，循环调用它们的shutdownGracefully方法。</li><li>调用NioEventLoop的shutdownGracefully方法，首先要修改线程状态为正在关闭状态。</li><li>AbstractUnsafe的close方法主要完成判断当前链路是否有消息正在发送，将发送队列清空，调用NioSocketChannel的doClose方法，关闭链路，调用pipeline的fireChannelInactive，触发链路关闭通知事件，调用AbstractNioChannel的Deregister，从多路复用器上取消selectionKey，调用ChannelOutboundBuffer的close方法，释放发送队列中所有尚未完成发送的ByteBuf。</li><li>NioEventLoop执行完closeAll()操作，需要调用confirmShutdown看是否真的可以退出。</li></ul>
+</div>
+<div class="sec">
+<h4>Netty优雅退出的一些误区</h4>
+<ul class="point">
+<li><b>不同版本Netty优雅退出的实现策略不同，特别是大版本之间(Netty 3.X/4.X/5.X)的差异还是比较大的</b>
+<ul class="quote"><li>待发送的消息：调用优雅退出方法之后，不会立即关闭链路。ChannelOutboundBuffer中的消息可以继续发送，本轮发送操作执行完成之后，无论是否还有消息尚未发送出去，在下一轮的 Selector轮询中，链路都将被关闭，没有发送完成的消息将会被释放和丢弃。</li><li>需要发送的新消息：由于应用线程可以随时通过调用 Channel 的 write 系列接口发送消息，即便ShutdownHook触发了Netty的优雅退出方法，在Netty优雅退出方法执行期间，应用线程仍然有可能继续调用Channel发送消息，这些消息将发送失败。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>待发送的消息：调用优雅退出方法之后，不会立即关闭链路。ChannelOutboundBuffer中的消息可以继续发送，本轮发送操作执行完成之后，无论是否还有消息尚未发送出去，在下一轮的 Selector轮询中，链路都将被关闭，没有发送完成的消息将会被释放和丢弃。</li><li>需要发送的新消息：由于应用线程可以随时通过调用 Channel 的 write 系列接口发送消息，即便ShutdownHook触发了Netty的优雅退出方法，在Netty优雅退出方法执行期间，应用线程仍然有可能继续调用Channel发送消息，这些消息将发送失败。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">6</span><span class="mmx-name">1.3 总结</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 8 条要点 · 0 句原句摘录</p>
+<div class="sec">
+<h4>操作系统信号量和Java Deamon线程工作机制</h4>
+<ul class="point">
+<li><b>信号量用于控制多个进程对共享资源的访问数量。</b>
+</li>
+<li><b>Java Deamon线程是一种在后台运行的线程，用于执行一些无需用户干预的任务。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>Netty的NioEventLoop线程工作原理</h4>
+<ul class="point">
+<li><b>NioEventLoop线程是Netty中的主要线程，负责处理I/O操作，包括接收和发送数据。</b>
+</li>
+<li><b>NioEventLoop线程通过Selector选择器来监听I/O事件，包括可读、可写和异常事件。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>Netty优雅退出相关的几个核心类库</h4>
+<ul class="point">
+<li><b>ChannelGroup用于管理一组Channel，可以方便地添加、移除和查询Channel。</b>
+</li>
+<li><b>ChannelFuture用于表示I/O操作的结果，可以监听操作成功、失败和取消事件。</b>
+</li>
+<li><b>ChannelHandler用于处理I/O事件，包括编码、解码、异常处理等。</b>
+</li>
+<li><b>ServerBootstrap用于启动Netty服务端，可以配置服务端的相关参数。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">7</span><span class="mmx-name">第2章 Netty客户端连接池资源泄漏案例</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 2 条要点 · 1 句原句摘录</p>
+<div class="sec">
+<h4>Netty客户端连接池资源泄漏案例概述</h4>
+<ul class="point">
+<li><b>客户端和服务端之间可以创建多个 TCP 连接，提升消息的收发能力</b>
+<ul class="quote"><li>利用池化技术，可以重用连接，防止反复申请和释放连接，提高连接的使用率。</li></ul>
+</li>
+<li><b>当使用 Netty客户端创建连接池时，如果对Netty的客户端连接创建机制不熟悉，很可能导致线程膨胀、内存溢出等问题。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>利用池化技术，可以重用连接，防止反复申请和释放连接，提高连接的使用率。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">8</span><span class="mmx-name">2.1 Netty连接池资源泄漏问题</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 8 条要点 · 13 句原句摘录</p>
+<div class="sec">
+<h4>Netty连接池资源泄漏问题</h4>
+<ul class="point">
+<li><b>生产环境使用 Netty作为客户端通信框架，在业务高峰期总会出现OOM问题</b>
+<ul class="quote"><li>客户端与服务端之间创建了多条链路，同时客户端创建了一个 TCP 连接池。</li><li>连接池的连接数上限配置为 100，业务高峰期发生了 OOM 异常。</li></ul>
+</li>
+<li><b>导致内存泄漏的原因是应用创建了大量的EventLoopGroup线程池</b>
+<ul class="quote"><li>每个EventLoopGroup线程池里面的NioEventLoop线程对应一个 TCP 连接。</li><li>当系统压力大、连接数比较多时，就会导致 NioEventLoop 线程膨胀。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>客户端与服务端之间创建了多条链路，同时客户端创建了一个 TCP 连接池。</li><li>连接池的连接数上限配置为 100，业务高峰期发生了 OOM 异常。</li><li>每个EventLoopGroup线程池里面的NioEventLoop线程对应一个 TCP 连接。</li><li>当系统压力大、连接数比较多时，就会导致 NioEventLoop 线程膨胀。</li></ul>
+</div>
+<div class="sec">
+<h4>错用NIO编程模式</h4>
+<ul class="point">
+<li><b>错误地把Netty当作传统的BIO框架来使用，为每个连接都分配一个线程池</b>
+<ul class="quote"><li>在BIO模型中，由于网络的读写操作都是同步阻塞的，往往采用一个线程对应一个连接的方式。</li><li>对于客户端，每个连接都会对应一个线程，对于服务端，则会为每个客户端连接分配一个业务线程处理，形成 1：1 的对应关系。</li></ul>
+</li>
+<li><b>Netty解决了传统BIO模型遇到的问题，一个多路复用器 Selector 可以同时轮询多个 Channel</b>
+<ul class="quote"><li>由于一个多路复用器 Selector 可以同时轮询多个 Channel，这也就意味着只需要一个线程负责Selector的轮询，就可以接入成千上万的客户端。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在BIO模型中，由于网络的读写操作都是同步阻塞的，往往采用一个线程对应一个连接的方式。</li><li>对于客户端，每个连接都会对应一个线程，对于服务端，则会为每个客户端连接分配一个业务线程处理，形成 1：1 的对应关系。</li><li>由于一个多路复用器 Selector 可以同时轮询多个 Channel，这也就意味着只需要一个线程负责Selector的轮询，就可以接入成千上万的客户端。</li></ul>
+</div>
+<div class="sec">
+<h4>正确的连接池创建方式</h4>
+<ul class="point">
+<li><b>创建多个连接时，EventLoopGroup可以重用</b>
+<ul class="quote"><li>修改之后，发现业务高峰期运行正常，没有再发生 OOM 问题。</li><li>查看系统线程资源占用，为 CPU内核数的2倍，与TCP连接数无关，解决了线程膨胀问题。</li></ul>
+</li>
+<li><b>Bootstrap 自身不是线程安全的，但是执行 Bootstrap 的连接操作是串行执行的</b>
+<ul class="quote"><li>通过一个Bootstrap连续发起多个连接操作是安全的。</li><li>工作原理是，Bootstrap会创建一个新的NioSocketChannel，并从初始构造的 EventLoopGroup 中选择一个 NioEventLoop 线程执行真正的Channel连接操作。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>修改之后，发现业务高峰期运行正常，没有再发生 OOM 问题。</li><li>查看系统线程资源占用，为 CPU内核数的2倍，与TCP连接数无关，解决了线程膨胀问题。</li><li>通过一个Bootstrap连续发起多个连接操作是安全的。</li><li>工作原理是，Bootstrap会创建一个新的NioSocketChannel，并从初始构造的 EventLoopGroup 中选择一个 NioEventLoop 线程执行真正的Channel连接操作。</li></ul>
+</div>
+<div class="sec">
+<h4>并发安全和资源释放</h4>
+<ul class="point">
+<li><b>当某个链路发生异常或者关闭时，只需要关闭并释放 Channel 本身即可</b>
+<ul class="quote"><li>不能同时销毁 Channel 所使用的NioEventLoop和所在的线程组EventLoopGroup。</li></ul>
+</li>
+<li><b>Bootstrap 不是线程安全的，因此在多个线程中并发操作 Bootstrap 是一件比较危险的事情</b>
+<ul class="quote"><li>Bootstrap是I/O操作工具类，它自身的逻辑处理非常简单，真正的I/O操作都是由EventLoop线程负责的。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>不能同时销毁 Channel 所使用的NioEventLoop和所在的线程组EventLoopGroup。</li><li>Bootstrap是I/O操作工具类，它自身的逻辑处理非常简单，真正的I/O操作都是由EventLoop线程负责的。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">9</span><span class="mmx-name">2.2 Netty客户端创建机制</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 22 条要点 · 22 句原句摘录</p>
+<div class="sec">
+<h4>Java NIO客户端创建原理分析</h4>
+<ul class="point">
+<li><b>打开 SocketChannel，绑定客户端本地地址，设置SocketChannel为非阻塞模式，同时设置客户端连接的TCP参数，异步连接服务端</b>
+<ul class="quote"><li>示例代码如下。</li></ul>
+</li>
+<li><b>判断是否连接成功，如果连接成功，则直接注册读状态位到多路复用器中</b>
+<ul class="quote"><li>如果当前没有连接成功(异步连接返回false)，说明客户端已经发送sync包，服务端没有返回ack包，物理链路还没有建立。</li></ul>
+</li>
+<li><b>向Reactor线程的多路复用器注册OP_CONNECT事件，监听服务端的TCP ACK应答</b>
+<ul class="quote"><li>示例代码如下。</li></ul>
+</li>
+<li><b>创建Reactor线程，创建多路复用器并启动线程</b>
+<ul class="quote"><li>示例代码如下。</li></ul>
+</li>
+<li><b>多路复用器在线程run方法的无限循环体内轮询准备就绪的Key</b>
+<ul class="quote"><li>示例代码如下。</li></ul>
+</li>
+<li><b>接收Connect事件进行处理，判断连接结果，如果连接成功，注册读事件到多路复用器</b>
+<ul class="quote"><li>示例代码如下。</li></ul>
+</li>
+<li><b>注册读事件到多路复用器，异步读客户端请求消息到缓冲区</b>
+<ul class="quote"><li>示例代码如下。</li></ul>
+</li>
+<li><b>对ByteBuffer进行编解码，如果有半包消息接收缓冲区Reset，继续读取后续的报文，将解码成功的消息封装成Task，投递到业务线程池中，进行业务逻辑编排</b>
+<ul class="quote"><li>示例代码如下。</li></ul>
+</li>
+<li><b>将 POJO对象encode成ByteBuffer，调用 SocketChannel的异步 write接口，将消息异步发送给客户端</b>
+<ul class="quote"><li>示例代码如下。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>示例代码如下。</li><li>如果当前没有连接成功(异步连接返回false)，说明客户端已经发送sync包，服务端没有返回ack包，物理链路还没有建立。</li><li>示例代码如下。</li><li>示例代码如下。</li><li>示例代码如下。</li><li>示例代码如下。</li><li>示例代码如下。</li><li>示例代码如下。</li><li>示例代码如下。</li></ul>
+</div>
+<div class="sec">
+<h4>Netty客户端创建原理分析</h4>
+<ul class="point">
+<li><b>用户线程创建 Bootstrap 实例，通过 API 设置创建客户端相关的参数，异步发起客户端连接</b>
+<ul class="quote"><li>示例代码如下。</li></ul>
+</li>
+<li><b>创建处理客户端连接、I/O读写的Reactor线程组NioEventLoopGroup</b>
+<ul class="quote"><li>可以通过构造函数指定I/O线程的个数，默认为CPU内核数的2倍。</li></ul>
+</li>
+<li><b>通过Bootstrap的ChannelFactory和用户指定的Channel类型创建用于客户端连接的NioSocketChannel</b>
+<ul class="quote"><li>它的功能类似于JDK NIO类库提供的SocketChannel。</li></ul>
+</li>
+<li><b>创建默认的ChannelPipeline，用于调度和执行网络事件</b>
+<ul class="quote"><li>示例代码如下。</li></ul>
+</li>
+<li><b>异步发起TCP客户端连接，判断连接是否成功，如果成功，则直接将NioSocketChannel注册到多路复用器上，监听读操作位，用于数据报读取和消息发送</b>
+<ul class="quote"><li>如果没有立即连接成功，则注册连接监听位到多路复用器，等待连接结果。</li></ul>
+</li>
+<li><b>注册对应的网络监听状态位到多路复用器</b>
+<ul class="quote"><li>示例代码如下。</li></ul>
+</li>
+<li><b>由多路复用器在I/O现场轮询各Channel，处理连接结果</b>
+<ul class="quote"><li>示例代码如下。</li></ul>
+</li>
+<li><b>如果连接成功，设置 Future 结果，发送连接成功事件，触发 ChannelPipeline 执行</b>
+<ul class="quote"><li>示例代码如下。</li></ul>
+</li>
+<li><b>由ChannelPipeline调度执行系统和用户的ChannelHandler执行业务逻辑</b>
+<ul class="quote"><li>示例代码如下。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>示例代码如下。</li><li>可以通过构造函数指定I/O线程的个数，默认为CPU内核数的2倍。</li><li>它的功能类似于JDK NIO类库提供的SocketChannel。</li><li>示例代码如下。</li><li>如果没有立即连接成功，则注册连接监听位到多路复用器，等待连接结果。</li><li>示例代码如下。</li><li>示例代码如下。</li><li>示例代码如下。</li><li>示例代码如下。</li></ul>
+</div>
+<div class="sec">
+<h4>Bootstrap工具类源码分析</h4>
+<ul class="point">
+<li><b>设置EventLoopGroup线程池</b>
+<ul class="quote"><li>通常多个连接会共享同一个EventLoopGroup，EventLoopGroup的大小默认为 CPU 内核数的 2 倍，也可以根据业务实际情况进行调整。</li></ul>
+</li>
+<li><b>TCP参数设置接口</b>
+<ul class="quote"><li>无论是异步NIO，还是同步BIO，创建客户端套接字的时候通常都会设置连接参数，例如接收和发送缓冲区大小、连接超时时间等。</li></ul>
+</li>
+<li><b>Channel接口</b>
+<ul class="quote"><li>用于指定客户端使用的 Channel接口，对于TCP客户端连接，默认使用NioSocketChannel。</li></ul>
+</li>
+<li><b>添加和设置应用 ChannelHandler 接口</b>
+<ul class="quote"><li>Bootstrap 为了简化 ChannelHandler 的编排，提供了 ChannelInitializer，它继承了 ChannelHandlerAdapter，TCP链路注册成功后，调用initChannel接口，用于设置用户ChannelHandler。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>通常多个连接会共享同一个EventLoopGroup，EventLoopGroup的大小默认为 CPU 内核数的 2 倍，也可以根据业务实际情况进行调整。</li><li>无论是异步NIO，还是同步BIO，创建客户端套接字的时候通常都会设置连接参数，例如接收和发送缓冲区大小、连接超时时间等。</li><li>用于指定客户端使用的 Channel接口，对于TCP客户端连接，默认使用NioSocketChannel。</li><li>Bootstrap 为了简化 ChannelHandler 的编排，提供了 ChannelInitializer，它继承了 ChannelHandlerAdapter，TCP链路注册成功后，调用initChannel接口，用于设置用户ChannelHandler。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">10</span><span class="mmx-name">2.3 总结</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 1 条要点 · 2 句原句摘录</p>
+<div class="sec">
+<h4>Netty客户端连接池资源泄漏案例</h4>
+<ul class="point">
+<li><b>分析一个生产环境Netty客户端连接池资源泄漏案例</b>
+<ul class="quote"><li>讲解了Netty客户端创建的流程和工作原理。</li><li>在实际项目中如何正确地实现连接池，避免发生并发安全和资源不当释放等问题。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>讲解了Netty客户端创建的流程和工作原理。</li><li>在实际项目中如何正确地实现连接池，避免发生并发安全和资源不当释放等问题。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">11</span><span class="mmx-name">第3章 Netty内存池泄漏疑云案例</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 4 条要点 · 4 句原句摘录</p>
+<div class="sec">
+<h4>Netty内存池泄漏案例概述</h4>
+<ul class="point">
+<li><b>Netty针对ByteBuf的申请和释放采用池化技术</b>
+<ul class="quote"><li>PooledByteBufAllocator可以创建基于内存池分配的ByteBuf对象。</li></ul>
+</li>
+<li><b>内存池使用不当可能带来内存泄漏和内存非法引用等问题</b>
+<ul class="quote"><li>除了内存池，Netty同时也支持非池化的ByteBuf。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>PooledByteBufAllocator可以创建基于内存池分配的ByteBuf对象。</li><li>除了内存池，Netty同时也支持非池化的ByteBuf。</li></ul>
+</div>
+<div class="sec">
+<h4>ByteBuf的申请和释放策略</h4>
+<ul class="point">
+<li><b>ByteBuf的申请和释放需要遵循一定的策略</b>
+<ul class="quote"><li>不正确的申请和释放策略可能导致内存泄漏和内存非法引用等问题。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>不正确的申请和释放策略可能导致内存泄漏和内存非法引用等问题。</li></ul>
+</div>
+<div class="sec">
+<h4>Netty内存池的工作原理</h4>
+<ul class="point">
+<li><b>Netty内存池的工作原理涉及ByteBuf的创建和销毁</b>
+<ul class="quote"><li>对于性能要求苛刻的系统而言，重用ByteBuf带来的性能收益是非常可观的。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>对于性能要求苛刻的系统而言，重用ByteBuf带来的性能收益是非常可观的。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">12</span><span class="mmx-name">3.1 Netty内存池泄漏问题</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 6 条要点 · 11 句原句摘录</p>
+<div class="sec">
+<h4>Netty内存池泄漏问题</h4>
+<ul class="point">
+<li><b>业务路由分发模块使用 Netty作为通信框架，负责协议消息的接入和路由转发，在功能测试时没有发现问题，转性能测试之后，运行一段时间就发现内存分配异常，服务端无法接收请求消息，系统吞吐量降为0。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>响应消息内存释放玄机</h4>
+<ul class="point">
+<li><b>响应消息由业务线程创建，但是却没有主动释放，因此怀疑是响应消息没有释放导致的内存泄漏</b>
+<ul class="quote"><li>因为响应消息使用的是PooledHeapByteBuf，如果发生内存泄漏，利用堆内存监控就可以找到泄漏点，通过 Java VisualVM工具观察堆内存占用趋势，并没有发现堆内存发生泄漏。</li><li>对内存做快照，查看在性能压测过程中响应消息 PooledUnsafeHeapByteBuf 的实例个数，响应消息对象个数和内存占用都很少，排除内存泄漏嫌疑。</li></ul>
+</li>
+<li><b>调用ctx.writeAndFlush(respMsg)方法时，当消息发送完成，Netty框架会主动帮助应用释放内存</b>
+<ul class="quote"><li>如果是堆内存(PooledHeapByteBuf)，则将HeapByteBuffer转换成DirectByteBuffer，并释放PooledHeapByteBuf到内存池。</li><li>如果是DirectByteBuffer，则不需要转换，在消息发送完成后，由ChannelOutboundBuffer的remove()负责释放。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>因为响应消息使用的是PooledHeapByteBuf，如果发生内存泄漏，利用堆内存监控就可以找到泄漏点，通过 Java VisualVM工具观察堆内存占用趋势，并没有发现堆内存发生泄漏。</li><li>对内存做快照，查看在性能压测过程中响应消息 PooledUnsafeHeapByteBuf 的实例个数，响应消息对象个数和内存占用都很少，排除内存泄漏嫌疑。</li><li>如果是堆内存(PooledHeapByteBuf)，则将HeapByteBuffer转换成DirectByteBuffer，并释放PooledHeapByteBuf到内存池。</li><li>如果是DirectByteBuffer，则不需要转换，在消息发送完成后，由ChannelOutboundBuffer的remove()负责释放。</li></ul>
+</div>
+<div class="sec">
+<h4>采集堆内存快照分析</h4>
+<ul class="point">
+<li><b>执行jmap命令，Dump应用内存堆栈，通过MemoryAnalyzer工具对内存堆栈进行分析，寻找内存泄漏点</b>
+<ul class="quote"><li>从图 3-9 可以看出，内存泄漏点是 Netty 内存池对象 PoolChunk，由于请求和响应消息内存分配都来自 PoolChunk，暂时还不确认是请求还是响应消息导致的问题。</li><li>进一步对代码进行分析，发现响应消息使用的是堆内存 HeapByteBuffer，请求消息使用的是DirectByteBuffer，由于 Dump出来的是堆内存，如果是堆内存泄漏，Dump出来的内存文件应该包含大量的 PooledHeapByteBuf，实际上并没有，因此可以确认系统发生了堆外内存泄漏，即请求消息没有被释放或者没有被及时释放导致的内存泄漏。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>从图 3-9 可以看出，内存泄漏点是 Netty 内存池对象 PoolChunk，由于请求和响应消息内存分配都来自 PoolChunk，暂时还不确认是请求还是响应消息导致的问题。</li><li>进一步对代码进行分析，发现响应消息使用的是堆内存 HeapByteBuffer，请求消息使用的是DirectByteBuffer，由于 Dump出来的是堆内存，如果是堆内存泄漏，Dump出来的内存文件应该包含大量的 PooledHeapByteBuf，实际上并没有，因此可以确认系统发生了堆外内存泄漏，即请求消息没有被释放或者没有被及时释放导致的内存泄漏。</li></ul>
+</div>
+<div class="sec">
+<h4>ByteBuf申请和释放的理解误区</h4>
+<ul class="point">
+<li><b>有一种说法认为 Netty框架分配的 ByteBuf框架会自动释放，业务不需要释放；业务创建的ByteBuf则需要自己释放，Netty框架不会释放</b>
+<ul class="quote"><li>通过前面的案例分析和验证，我们可以看出这个观点是错误的。</li></ul>
+</li>
+<li><b>为了在实际项目中更好地管理ByteBuf，需要分4种场景进行说明</b>
+<ul class="quote"><li>基于内存池的请求ByteBuf，需要在业务 ChannelInboundHandler处理完请求消息之后释放。</li><li>基于非内存池的请求ByteBuf，也需要按照内存池的方式释放内存。</li><li>基于内存池的响应ByteBuf，只要调用了writeAndFlush或者flush方法，在消息发送完成后都会由Netty框架进行内存释放，业务不需要主动释放内存。</li><li>基于非内存池的响应ByteBuf，无论是基于内存池还是非内存池分配的 ByteBuf，如果是堆内存，则将堆内存转换成堆外内存，然后释放 HeapByteBuffer，待消息发送完成，再释放转换后的 DirectByteBuf；如果是 DirectByteBuffer，则不需要转换，待消息发送完成之后释放。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>通过前面的案例分析和验证，我们可以看出这个观点是错误的。</li><li>基于内存池的请求ByteBuf，需要在业务 ChannelInboundHandler处理完请求消息之后释放。</li><li>基于非内存池的请求ByteBuf，也需要按照内存池的方式释放内存。</li><li>基于内存池的响应ByteBuf，只要调用了writeAndFlush或者flush方法，在消息发送完成后都会由Netty框架进行内存释放，业务不需要主动释放内存。</li><li>基于非内存池的响应ByteBuf，无论是基于内存池还是非内存池分配的 ByteBuf，如果是堆内存，则将堆内存转换成堆外内存，然后释放 HeapByteBuffer，待消息发送完成，再释放转换后的 DirectByteBuf；如果是 DirectByteBuffer，则不需要转换，待消息发送完成之后释放。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">13</span><span class="mmx-name">3.2 Netty内存池工作机制</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 5 条要点 · 12 句原句摘录</p>
+<div class="sec">
+<h4>Netty内存池的性能优势</h4>
+<ul class="point">
+<li><b>内存池模式创建的ByteBuf性能比传统非池化方式高8倍多</b>
+<ul class="quote"><li>通过 Pooled 和 Unpooled 方式创建 ByteBuf，模拟请求消息的创建和释放。</li><li>执行1亿次耗时，非内存池方式耗时126s，GC 3038次，耗时2.34s。</li><li>内存池模式耗时37.6ms，GC 32次。</li></ul>
+</li>
+<li><b>内存池技术可以降低GC频次和减少耗时，同时提升系统的吞吐量</b>
+<ul class="quote"><li>在 API Gateway、RPC 和流式处理框架中，请求和响应消息往往是“朝生熄灭”的。</li><li>频繁地申请和释放大块 byte数组，会加重 GC的负担及加大 CPU 资源占用率。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>通过 Pooled 和 Unpooled 方式创建 ByteBuf，模拟请求消息的创建和释放。</li><li>执行1亿次耗时，非内存池方式耗时126s，GC 3038次，耗时2.34s。</li><li>内存池模式耗时37.6ms，GC 32次。</li><li>在 API Gateway、RPC 和流式处理框架中，请求和响应消息往往是“朝生熄灭”的。</li><li>频繁地申请和释放大块 byte数组，会加重 GC的负担及加大 CPU 资源占用率。</li></ul>
+</div>
+<div class="sec">
+<h4>内存池工作原理分析</h4>
+<ul class="point">
+<li><b>Netty的内存池整体上参照jemalloc实现，主要数据结构包括PooledArena、PoolChunk和PoolSubpage</b>
+<ul class="quote"><li>PooledArena代表内存中一大块连续的区域，由多个Chunk组成，每个Chunk由多个Page组成。</li><li>PoolChunk用来组织和管理多个Page的内存分配和释放，默认为16MB。</li><li>PoolSubpage对于小于一个Page的内存，Netty在Page中完成分配。</li></ul>
+</li>
+<li><b>内存分配策略：通过PooledByteBufAllocator申请内存时，首先从PoolThreadLocalCache中获取与线程绑定的缓存池 PoolThreadCache，如果不存在线程私有缓存池，则轮询分配一个Arean数组中的PooledArena，创建一个新的PoolThreadCache作为缓存池使用</b>
+<ul class="quote"><li>PooledArena在进行内存分配时对预分配的内存容量做判断，分为如下几种场景：需要分配的内存小于PageSize时，分配tiny或者small内存；需要分配的内存介于PageSize和ChunkSize之间时，则分配normal内存；需要分配的内存大于ChunkSize时，则分配huge内存(非池化内存)。</li><li>Netty内存池将内存分为几类：tiny(小于512B)、small(大于等于512B，小于8KB)、normal(大于等于8KB，小于等于16MB)和huge(大于16MB)，系统根据需要申请的内存大小选择合适的MemoryRegionCache。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>PooledArena代表内存中一大块连续的区域，由多个Chunk组成，每个Chunk由多个Page组成。</li><li>PoolChunk用来组织和管理多个Page的内存分配和释放，默认为16MB。</li><li>PoolSubpage对于小于一个Page的内存，Netty在Page中完成分配。</li><li>PooledArena在进行内存分配时对预分配的内存容量做判断，分为如下几种场景：需要分配的内存小于PageSize时，分配tiny或者small内存；需要分配的内存介于PageSize和ChunkSize之间时，则分配normal内存；需要分配的内存大于ChunkSize时，则分配huge内存(非池化内存)。</li><li>Netty内存池将内存分为几类：tiny(小于512B)、small(大于等于512B，小于8KB)、normal(大于等于8KB，小于等于16MB)和huge(大于16MB)，系统根据需要申请的内存大小选择合适的MemoryRegionCache。</li></ul>
+</div>
+<div class="sec">
+<h4>内存池核心代码分析</h4>
+<ul class="point">
+<li><b>PooledByteBufAllocator的 newDirectBuffer 方法，首先从线程缓存中获取 PoolArena，调用PoolArena的allocate方法分配内存</b>
+<ul class="quote"><li>根据申请的内存容量选择合适的MemoryRegionCache，然后调用PoolChunk的allocate方法分配内存。</li><li>PoolChunk的内存分配策略如下：查找 PoolChunk所在 PoolArena的 PoolSubpage头节点，因为在内存分配过程中会修改PoolSubpage链表，考虑到并发安全需要加锁；从二叉树中查找适合分配的节点，获取节点ID；标记已分配的节点ID为不可用，并层层向上更新父节点的分配信息；根据nodeID获取对应的PoolSubpage；判断PoolSubpage是新创建的还是被释放重用的，如果是新建的，创建完成之后加入PoolSubpage＜T＞[] subpages中；如果是重用的，则重新初始化PoolSubpage，更新Page的元数据信息，并将更新之后的PoolSubpage加入内存池的双向链表中；调用PoolSubpage的allocate方法，返回PoolSubpage分配情况的位图索引；最后根据位图索引、需申请的内存容量等参数完成内存分配。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>根据申请的内存容量选择合适的MemoryRegionCache，然后调用PoolChunk的allocate方法分配内存。</li><li>PoolChunk的内存分配策略如下：查找 PoolChunk所在 PoolArena的 PoolSubpage头节点，因为在内存分配过程中会修改PoolSubpage链表，考虑到并发安全需要加锁；从二叉树中查找适合分配的节点，获取节点ID；标记已分配的节点ID为不可用，并层层向上更新父节点的分配信息；根据nodeID获取对应的PoolSubpage；判断PoolSubpage是新创建的还是被释放重用的，如果是新建的，创建完成之后加入PoolSubpage＜T＞[] subpages中；如果是重用的，则重新初始化PoolSubpage，更新Page的元数据信息，并将更新之后的PoolSubpage加入内存池的双向链表中；调用PoolSubpage的allocate方法，返回PoolSubpage分配情况的位图索引；最后根据位图索引、需申请的内存容量等参数完成内存分配。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">14</span><span class="mmx-name">3.3 总结</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 3 条要点 · 4 句原句摘录</p>
+<div class="sec">
+<h4>Netty内存池的双刃剑特性</h4>
+<ul class="point">
+<li><b>使用得当可以提升系统性能，误用则会导致内存泄漏问题</b>
+<ul class="quote"><li>内存申请和释放可能由Netty框架隐性完成，增加了内存管理的复杂性。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>内存申请和释放可能由Netty框架隐性完成，增加了内存管理的复杂性。</li></ul>
+</div>
+<div class="sec">
+<h4>Netty收发消息的ByteBuf申请和释放机制</h4>
+<ul class="point">
+<li><b>避免在项目中因误用ByteBuf而发生内存泄漏</b>
+<ul class="quote"><li>熟悉ByteBuf的申请和释放机制。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>熟悉ByteBuf的申请和释放机制。</li></ul>
+</div>
+<div class="sec">
+<h4>Netty内存池的工作原理和关键源码分析</h4>
+<ul class="point">
+<li><b>通过分析，可以更好地掌握Netty内存池的使用方法</b>
+<ul class="quote"><li>分析Netty内存池的工作原理。</li><li>分析Netty内存池的关键源码。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>分析Netty内存池的工作原理。</li><li>分析Netty内存池的关键源码。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">15</span><span class="mmx-name">第4章 ByteBuf故障排查案例</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 6 条要点 · 11 句原句摘录</p>
+<div class="sec">
+<h4>ByteBuf故障排查案例概述</h4>
+<ul class="point">
+<li><b>ByteBuf是Netty中用于数据传输的缓冲区</b>
+<ul class="quote"><li>JDK NIO类库提供了java.nio.Buffer作为缓冲区。</li><li>Netty提供了自己的ByteBuffer实现(ByteBuf类)。</li></ul>
+</li>
+<li><b>ByteBuf种类繁多，支持的功能特性存在一些差异</b>
+<ul class="quote"><li>如果使用不当，往往会出现功能异常或者性能问题。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>JDK NIO类库提供了java.nio.Buffer作为缓冲区。</li><li>Netty提供了自己的ByteBuffer实现(ByteBuf类)。</li><li>如果使用不当，往往会出现功能异常或者性能问题。</li></ul>
+</div>
+<div class="sec">
+<h4>ByteBuf的工作原理</h4>
+<ul class="point">
+<li><b>ByteBuf是一个可扩展的缓冲区，可以表示一个字节序列</b>
+<ul class="quote"><li>ByteBuf可以表示一个固定大小的缓冲区，也可以表示一个可扩展的缓冲区。</li><li>ByteBuf可以表示一个字节数组，也可以表示一个其他类型的缓冲区。</li></ul>
+</li>
+<li><b>ByteBuf提供了丰富的操作方法，可以方便地对字节序列进行操作</b>
+<ul class="quote"><li>ByteBuf提供了读写操作方法，可以方便地对字节序列进行读写操作。</li><li>ByteBuf提供了复制、翻转、切片等操作方法，可以方便地对字节序列进行操作。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>ByteBuf可以表示一个固定大小的缓冲区，也可以表示一个可扩展的缓冲区。</li><li>ByteBuf可以表示一个字节数组，也可以表示一个其他类型的缓冲区。</li><li>ByteBuf提供了读写操作方法，可以方便地对字节序列进行读写操作。</li><li>ByteBuf提供了复制、翻转、切片等操作方法，可以方便地对字节序列进行操作。</li></ul>
+</div>
+<div class="sec">
+<h4>ByteBuf在Netty HTTP协议栈中的应用</h4>
+<ul class="point">
+<li><b>在Netty HTTP协议栈中，ByteBuf被用于数据的传输</b>
+<ul class="quote"><li>在HTTP请求和响应中，ByteBuf被用于数据的传输。</li><li>在HTTP流式传输中，ByteBuf被用于数据的传输。</li></ul>
+</li>
+<li><b>在Netty HTTP协议栈中，需要正确使用ByteBuf</b>
+<ul class="quote"><li>需要根据业务需求选择合适的ByteBuf类型。</li><li>需要注意ByteBuf的内存管理和性能优化。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在HTTP请求和响应中，ByteBuf被用于数据的传输。</li><li>在HTTP流式传输中，ByteBuf被用于数据的传输。</li><li>需要根据业务需求选择合适的ByteBuf类型。</li><li>需要注意ByteBuf的内存管理和性能优化。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">16</span><span class="mmx-name">4.1 HTTP协议栈ByteBuf使用问题</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 6 条要点 · 8 句原句摘录</p>
+<div class="sec">
+<h4>HTTP响应Body获取异常</h4>
+<ul class="point">
+<li><b>Netty FullHttpResponse的content字段底层调用的是 PooledUnsafeDirectByteBuf，它并不支持array()方法</b>
+<ul class="quote"><li>PooledUnsafeDirectByteBuf是直接内存，无法直接转换成堆内存，因此它并不支持array()方法。</li></ul>
+</li>
+<li><b>对body()方法进行修改，采用字节拷贝的方式将HTTP Body拷贝到byte[]数组中</b>
+<ul class="quote"><li>修改完成之后做验证，发现客户端再次发生异常。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>PooledUnsafeDirectByteBuf是直接内存，无法直接转换成堆内存，因此它并不支持array()方法。</li><li>修改完成之后做验证，发现客户端再次发生异常。</li></ul>
+</div>
+<div class="sec">
+<h4>ByteBuf非法引用问题</h4>
+<ul class="point">
+<li><b>在收到一个完整的 HTTP 响应消息之后，调用 respPromise 的setSuccess方法，唤醒业务线程继续执行，Netty会自动释放FullHttpResponse</b>
+<ul class="quote"><li>客户端调用方的代码如下：获取 HTTP 响应时抛出非法引用异常，说明 HTTP Body已经被释放。</li><li>查看 HttpClientHandler 的实现，发现它继承自 SimpleChannelInboundHandler，channelRead0(ChannelHandlerContext ctx，FullHttpResponse msg)方法调用完成之后，Netty会自动释放FullHttpResponse。</li></ul>
+</li>
+<li><b>在 channelRead0 中初始化 HTTP Body，此时 FullHttpResponse 的 content 并没有被释放，可以被访问</b>
+<ul class="quote"><li>获取HTTP响应时，直接返回body。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>客户端调用方的代码如下：获取 HTTP 响应时抛出非法引用异常，说明 HTTP Body已经被释放。</li><li>查看 HttpClientHandler 的实现，发现它继承自 SimpleChannelInboundHandler，channelRead0(ChannelHandlerContext ctx，FullHttpResponse msg)方法调用完成之后，Netty会自动释放FullHttpResponse。</li><li>获取HTTP响应时，直接返回body。</li></ul>
+</div>
+<div class="sec">
+<h4>ByteBuf使用注意事项</h4>
+<ul class="point">
+<li><b>跨线程操作ByteBuf，需要重点关注ByteBuf的线程并发安全问题和ByteBuf的申请和释放</b>
+<ul class="quote"><li>特别要防止Netty NioEventLoop线程与应用线程并发操作ByteBuf。</li><li>避免忘记释放、重复释放，以及释放之后继续访问。</li></ul>
+</li>
+<li><b>注意性能问题，避免在get和set方法中做复杂的操作</b>
+<ul class="quote"><li>如果在此类方法中做复杂的操作，像下面示例中的内存拷贝，就会带来严重的性能问题。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>特别要防止Netty NioEventLoop线程与应用线程并发操作ByteBuf。</li><li>避免忘记释放、重复释放，以及释放之后继续访问。</li><li>如果在此类方法中做复杂的操作，像下面示例中的内存拷贝，就会带来严重的性能问题。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">17</span><span class="mmx-name">4.2 Netty ByteBuf实现机制</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 9 条要点 · 23 句原句摘录</p>
+<div class="sec">
+<h4>Java原生ByteBuffer的局限性</h4>
+<ul class="point">
+<li><b>ByteBuffer只有一个标识位置的指针position，读写的时候需要手工调用flip()和rewind()等</b>
+<ul class="quote"><li>使用者必须小心谨慎地处理这些API，否则很容易导致程序处理失败。</li></ul>
+</li>
+<li><b>ByteBuffer长度固定，一旦分配完成，它的容量不能动态扩展和收缩</b>
+<ul class="quote"><li>当需要编码的POJO对象大于ByteBuffer的容量时，会出现索引越界异常。</li></ul>
+</li>
+<li><b>ByteBuffer提供的功能比较少，很多高级功能需要用户自己实现，例如skipBytes。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>使用者必须小心谨慎地处理这些API，否则很容易导致程序处理失败。</li><li>当需要编码的POJO对象大于ByteBuffer的容量时，会出现索引越界异常。</li></ul>
+</div>
+<div class="sec">
+<h4>Netty ByteBuf工作原理分析</h4>
+<ul class="point">
+<li><b>ByteBuf依然是个Byte数组的缓冲区，提供7种Java基础类型、byte数组、ByteBuffer(ByteBuf)等的读写</b>
+<ul class="quote"><li>缓冲区自身的copy和slice等。</li><li>操作位置指针等方法。</li><li>容量自动扩展。</li><li>从ByteBuf到其他数据结构的灵活转换(例如JDK ByteBuffer)。</li></ul>
+</li>
+<li><b>ByteBuf通过readerIndex和writerIndex两个位置指针来协助缓冲区的读写操作</b>
+<ul class="quote"><li>readerIndex和writerIndex的取值开始都是0，随着数据的写入writerIndex会增加，读取数据会使readerIndex增加，但是它不会超过writerIndex。</li><li>在读取之后，0～readerIndex的数据就被视为被丢弃的(discard)，调用discardReadBytes方法，可以释放这部分空间。</li><li>ReaderIndex和writerIndex之间的数据是可读取的，等价于ByteBuffer position和limit之间的数据。</li><li>WriterIndex和capacity之间的空间是可写的，等价于ByteBuffer limit和capacity之间的可用空间。</li></ul>
+</li>
+<li><b>Netty提供了两个指针变量用于支持顺序读取和写入操作：readerIndex用于标识读取索引，writerIndex用于标识写入索引</b>
+<ul class="quote"><li>刚创建的ByteBuf位置指针如图4-4所示。</li><li>写入N个字节之后ByteBuf的位置指针如图4-5所示。</li><li>读取M(＜N)个字节后ByteBuf的指针如图4-6所示。</li><li>调用discard操作后ByteBuf的指针如图4-7所示。</li><li>调用clear操作后，readerIndex和writerIndex被重置为0，如图4-8所示。</li></ul>
+</li>
+<li><b>ByteBuf支持顺序和随机读写</b>
+<ul class="quote"><li>read对应于JDK ByteBuffer的get操作，write对应于put操作。</li><li>除了顺序读写，Netty还支持随机读写，它与顺序读写的最大差别在于，可以随机指定读写的索引位置。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>缓冲区自身的copy和slice等。</li><li>操作位置指针等方法。</li><li>容量自动扩展。</li><li>从ByteBuf到其他数据结构的灵活转换(例如JDK ByteBuffer)。</li><li>readerIndex和writerIndex的取值开始都是0，随着数据的写入writerIndex会增加，读取数据会使readerIndex增加，但是它不会超过writerIndex。</li><li>在读取之后，0～readerIndex的数据就被视为被丢弃的(discard)，调用discardReadBytes方法，可以释放这部分空间。</li><li>ReaderIndex和writerIndex之间的数据是可读取的，等价于ByteBuffer position和limit之间的数据。</li><li>WriterIndex和capacity之间的空间是可写的，等价于ByteBuffer limit和capacity之间的可用空间。</li><li>刚创建的ByteBuf位置指针如图4-4所示。</li><li>写入N个字节之后ByteBuf的位置指针如图4-5所示。</li><li>读取M(＜N)个字节后ByteBuf的指针如图4-6所示。</li><li>调用discard操作后ByteBuf的指针如图4-7所示。</li><li>调用clear操作后，readerIndex和writerIndex被重置为0，如图4-8所示。</li><li>read对应于JDK ByteBuffer的get操作，write对应于put操作。</li><li>除了顺序读写，Netty还支持随机读写，它与顺序读写的最大差别在于，可以随机指定读写的索引位置。</li></ul>
+</div>
+<div class="sec">
+<h4>ByteBuf引用计数器工作原理和源码分析</h4>
+<ul class="point">
+<li><b>AbstractReferenceCountedByteBuf实现了对ByteBuf的内存管理，通过引用计数器对ByteBuf的引用情况进行管理</b>
+<ul class="quote"><li>refCnt是引用计数器，用于对ByteBuf的申请和释放做引用计数。</li><li>refCnt使用volatile修饰解决多线程并发访问时的线程可见性问题。</li><li>每调用一次retain方法，引用计数器就会累加一次，通过自旋对引用计数器进行累加操作。</li><li>通过调用release方法释放引用，如果oldRef与decrement相等，说明对象申请和释放次数相同，refCnt为0，ByteBuf已经不再被引用，需要执行释放操作。</li></ul>
+</li>
+<li><b>不同的ByteBuf实现，释放策略不同</b>
+<ul class="quote"><li>如果是内存池模式，则需要将ByteBuf返回到内存池中以便重用。</li><li>对于使用非池模式创建的ByteBuf，则释放ByteBuf相关资源(设置为null)，等待GC回收。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>refCnt是引用计数器，用于对ByteBuf的申请和释放做引用计数。</li><li>refCnt使用volatile修饰解决多线程并发访问时的线程可见性问题。</li><li>每调用一次retain方法，引用计数器就会累加一次，通过自旋对引用计数器进行累加操作。</li><li>通过调用release方法释放引用，如果oldRef与decrement相等，说明对象申请和释放次数相同，refCnt为0，ByteBuf已经不再被引用，需要执行释放操作。</li><li>如果是内存池模式，则需要将ByteBuf返回到内存池中以便重用。</li><li>对于使用非池模式创建的ByteBuf，则释放ByteBuf相关资源(设置为null)，等待GC回收。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">18</span><span class="mmx-name">4.3 总结</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 2 条要点 · 2 句原句摘录</p>
+<div class="sec">
+<h4>ByteBuf 的申请和释放注意事项</h4>
+<ul class="point">
+<li><b>ByteBuf 的申请和释放可能会跨 Netty 的 NioEventLoop 和业务线程</b>
+<ul class="quote"><li>跨线程操作ByteBuf时一定要谨慎，防止发生并发安全和非法引用问题。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>跨线程操作ByteBuf时一定要谨慎，防止发生并发安全和非法引用问题。</li></ul>
+</div>
+<div class="sec">
+<h4>ByteBuf 的使用注意事项</h4>
+<ul class="point">
+<li><b>由于 ByteBuf 的实现类非常多，不同的实现功能特性存在差异</b>
+<ul class="quote"><li>用户在使用时一定要认真阅读 API Doc说明，必要时要看源码，防止误用导致出现功能和性能问题。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>用户在使用时一定要认真阅读 API Doc说明，必要时要看源码，防止误用导致出现功能和性能问题。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">19</span><span class="mmx-name">第5章 Netty发送队列积压导致内存泄漏案例</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 2 条要点 · 2 句原句摘录</p>
+<div class="sec">
+<h4>Netty内存泄漏的原因</h4>
+<ul class="point">
+<li><b>使用内存池方式创建的对象忘记释放</b>
+<ul class="quote"><li>忘记释放会导致内存泄漏。</li></ul>
+</li>
+<li><b>系统处理压力过大导致发送队列积压</b>
+<ul class="quote"><li>客户端并发压力过大，超过了服务端的处理能力，又没有流控保护，则很容易发生内存泄漏。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>忘记释放会导致内存泄漏。</li><li>客户端并发压力过大，超过了服务端的处理能力，又没有流控保护，则很容易发生内存泄漏。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">20</span><span class="mmx-name">5.1 Netty发送队列积压案例</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 4 条要点 · 10 句原句摘录</p>
+<div class="sec">
+<h4>Netty发送队列积压案例概述</h4>
+<ul class="point">
+<li><b>高并发故障场景：客户端内存占用率飙升，老年代已满，发生多次 Full GC，耗时 3分钟多，系统已经无法正常运行</b>
+<ul class="quote"><li>客户端启动一个线程向服务端循环发送请求消息，模拟客户端压测场景。</li><li>系统运行一段时间之后，发现内存占用率飙升，内存数据监控如图5-1所示。</li><li>统计 GC数据，发现老年代已满，发生多次 Full GC，耗时 3分钟多，系统已经无法正常运行，如图5-2所示。</li><li>查看CPU的使用情况，发现GC线程占用了大量的CPU资源，如图5-3所示。</li></ul>
+</li>
+<li><b>内存泄漏原因分析：Netty的NioEventLoop占用了 99.7%内存，可以确认NioEventLoop发生了内存泄漏</b>
+<ul class="quote"><li>Dump客户端内存文件进行分析，发现 Netty的NioEventLoop占用了 99.7%内存。</li><li>继续对引用关系进行分析，发现真正泄漏的对象是 WriteAndFlushTask，它包含了待发送的客户端请求消息msg及promise对象。</li></ul>
+</li>
+<li><b>如何防止发送队列积压：利用Netty提供的高低水位机制，可以实现客户端更精准的流控</b>
+<ul class="quote"><li>当发送队列待发送的字节数组达到高水位时，对应的Channel就变为不可写状态。</li><li>由于高水位并不影响业务线程调用 write 方法并把消息加入待发送队列，因此，必须在消息发送时对 Channel 的状态进行判断：当到达高水位时，Channel 的状态被设置为不可写，通过对Channel的可写状态进行判断来决定是否发送消息。</li></ul>
+</li>
+<li><b>其他可能导致发送队列积压的因素：网络瓶颈，当发送速度超过网络链接处理能力，会导致发送队列积压</b>
+<ul class="quote"><li>当对端读取速度小于己方发送速度，导致自身TCP发送缓冲区满，频繁发生write 0字节时，待发送消息会在Netty发送队列中排队。</li><li>利用netstat-ano等命令可以监控某个端口的TCP接收(recv-q)和发送(send-q)队列的积压情况，一旦发现已方的发送队列有大量积压，说明消息的收发存在瓶颈，需要及时解决，防止因 Netty 发送队列积压而导致内存泄漏。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>客户端启动一个线程向服务端循环发送请求消息，模拟客户端压测场景。</li><li>系统运行一段时间之后，发现内存占用率飙升，内存数据监控如图5-1所示。</li><li>统计 GC数据，发现老年代已满，发生多次 Full GC，耗时 3分钟多，系统已经无法正常运行，如图5-2所示。</li><li>查看CPU的使用情况，发现GC线程占用了大量的CPU资源，如图5-3所示。</li><li>Dump客户端内存文件进行分析，发现 Netty的NioEventLoop占用了 99.7%内存。</li><li>继续对引用关系进行分析，发现真正泄漏的对象是 WriteAndFlushTask，它包含了待发送的客户端请求消息msg及promise对象。</li><li>当发送队列待发送的字节数组达到高水位时，对应的Channel就变为不可写状态。</li><li>由于高水位并不影响业务线程调用 write 方法并把消息加入待发送队列，因此，必须在消息发送时对 Channel 的状态进行判断：当到达高水位时，Channel 的状态被设置为不可写，通过对Channel的可写状态进行判断来决定是否发送消息。</li><li>当对端读取速度小于己方发送速度，导致自身TCP发送缓冲区满，频繁发生write 0字节时，待发送消息会在Netty发送队列中排队。</li><li>利用netstat-ano等命令可以监控某个端口的TCP接收(recv-q)和发送(send-q)队列的积压情况，一旦发现已方的发送队列有大量积压，说明消息的收发存在瓶颈，需要及时解决，防止因 Netty 发送队列积压而导致内存泄漏。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">21</span><span class="mmx-name">5.2 Netty消息发送工作机制</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 5 个小节 · 9 条要点 · 18 句原句摘录</p>
+<div class="sec">
+<h4>Netty消息发送工作机制</h4>
+<ul class="point">
+<li><b>Netty的消息发送涉及线程切换、消息队列、高低水位和写半包消息，实现比较复杂。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>WriteAndFlushTask原理和源码分析</h4>
+<ul class="point">
+<li><b>Netty采用了串行无锁化设计，在 I/O 线程内部进行串行操作</b>
+<ul class="quote"><li>当用户线程发起 write操作时，Netty会进行判断，如果发现不是 NioEventLoop(I/O线程)，则将发送消息封装成 WriteTask，放入 NioEventLoop 的任务队列由 NioEventLoop线程执行。</li><li>NioEventLoop遍历taskQueue，执行消息发送任务。</li></ul>
+</li>
+<li><b>多个业务线程并发调用write相关方法是线程安全的，Netty会将发送消息封装成Task，由I/O线程异步执行</b>
+<ul class="quote"><li>由于单个 Channel 由其对应的 NioEventLoop 线程(单个 NioEventLoop)执行，如果并行调用某个Channel的write操作超过对应的NioEventLoop线程的执行能力，则会导致WriteTask积压。</li><li>NioEventLoop 线程需要处理网络读写操作，以及注册到 NioEventLoop上的各种Task，两者相互影响，如果网络读写任务较重，或者注册的Task过多，都会导致对方延迟执行，引发性能问题。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>当用户线程发起 write操作时，Netty会进行判断，如果发现不是 NioEventLoop(I/O线程)，则将发送消息封装成 WriteTask，放入 NioEventLoop 的任务队列由 NioEventLoop线程执行。</li><li>NioEventLoop遍历taskQueue，执行消息发送任务。</li><li>由于单个 Channel 由其对应的 NioEventLoop 线程(单个 NioEventLoop)执行，如果并行调用某个Channel的write操作超过对应的NioEventLoop线程的执行能力，则会导致WriteTask积压。</li><li>NioEventLoop 线程需要处理网络读写操作，以及注册到 NioEventLoop上的各种Task，两者相互影响，如果网络读写任务较重，或者注册的Task过多，都会导致对方延迟执行，引发性能问题。</li></ul>
+</div>
+<div class="sec">
+<h4>ChannelOutboundBuffer原理和源码分析</h4>
+<ul class="point">
+<li><b>ChannelOutboundBuffer 是 Netty 的发送缓冲队列，它基于链表来管理待发送的消息</b>
+<ul class="quote"><li>在消息发送时会调用ChannelOutboundBuffer的addMessage方法，修改链表指针，将新加入的消息放到尾部，同时更新上一个尾部消息的next指针，指向新加入的消息。</li><li>在消息发送时，调用current方法，获取待发送的原始消息(flushedEntry)。</li><li>如果消息发送成功，则调用ChannelOutboundBuffer的remove方法，将已发送消息从链表中删除，同时更新待发送的消息。</li><li>如果队列中已无剩余待发送消息，则把flushedEntry设置为null，否则将flushedEntry设置为链表中下一个待发送的消息。</li><li>将已发送的消息从链表中删除后，释放 ByteBuf 资源，如果是基于内存池分配的ByteBuf，则重新返回池中重用；如果是非池模式，则清空相关资源，等待GC回收。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在消息发送时会调用ChannelOutboundBuffer的addMessage方法，修改链表指针，将新加入的消息放到尾部，同时更新上一个尾部消息的next指针，指向新加入的消息。</li><li>在消息发送时，调用current方法，获取待发送的原始消息(flushedEntry)。</li><li>如果消息发送成功，则调用ChannelOutboundBuffer的remove方法，将已发送消息从链表中删除，同时更新待发送的消息。</li><li>如果队列中已无剩余待发送消息，则把flushedEntry设置为null，否则将flushedEntry设置为链表中下一个待发送的消息。</li><li>将已发送的消息从链表中删除后，释放 ByteBuf 资源，如果是基于内存池分配的ByteBuf，则重新返回池中重用；如果是非池模式，则清空相关资源，等待GC回收。</li></ul>
+</div>
+<div class="sec">
+<h4>消息发送源码分析</h4>
+<ul class="point">
+<li><b>发送次数限制：如果本次发送的字节数大于 0，但是消息尚未发送完，则循环发送，一旦发现 write字节数为 0，说明 TCP缓冲区已满，此时继续发送没有意义，注册SelectionKey.OP_WRITE并退出循环，在下一个SelectionKey轮询周期继续发送</b>
+<ul class="quote"><li>如果频繁地注册 SelectionKey.OP_WRITE 并 wakeup Selector 会影响性能；但是如果TCP 的发送缓冲区已满，TCP 处于 KEEP-ALIVE 状态，消息无法发送出去，如果不对循环发送次数进行控制，就会长时间处于发送状态，Reactor 线程无法及时读取其他消息和执行排队的 Task。</li></ul>
+</li>
+<li><b>不同的消息发送策略：消息发送有三种策略，包括直接发送ByteBuffer、批量发送ByteBuffer和发送ByteBuf</b>
+<ul class="quote"><li>如果待发送消息(ChannelOutboundBuffer)的 ByteBuffer数等于 1，则直接通过nioBuffers[0]获取待发送消息的ByteBuffer，通过调用JDK的SocketChannel直接完成消息发送。</li><li>如果待发送消息的ByteBuffer数大于1，则调用SocketChannel的批量发送接口，将nioBuffers数组写入TCP发送缓冲区。</li><li>如果待发送的消息包含的JDK原生ByteBuffer数为0，则调用父类AbstractNioByteChannel的doWrite0方法，将Netty的ByteBuf发到TCP缓冲区。</li></ul>
+</li>
+<li><b>已发送消息内存释放：如果消息被发送成功，Netty 会释放已发送消息的内存，发送的对象不同，释放策略也不同</b>
+<ul class="quote"><li>如果发送对象是JDK的ByteBuffer，则根据发送的字节数计算需要被释放的发送对象个数。</li><li>如果发送对象是Netty的ByteBuf，则通过判断当前ByteBuf的isReadable来获取消息发送结果，如果发送完成，则调用ChannelOutboundBuffer的remove方法删除并释放ByteBuf。</li></ul>
+</li>
+<li><b>写半包：如果一次无法将待发送的消息全部写入TCP缓冲区，循环writeSpinCount次仍然未发送完，或者在发送过程中出现了 TCP 零滑窗(写入的字节数为 0)，则进入“写半包”模式</b>
+<ul class="quote"><li>注册SelectionKey.OP_WRITE到对应的Selector，退出循环，在下一次Selector轮询过程中继续执行write操作。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如果频繁地注册 SelectionKey.OP_WRITE 并 wakeup Selector 会影响性能；但是如果TCP 的发送缓冲区已满，TCP 处于 KEEP-ALIVE 状态，消息无法发送出去，如果不对循环发送次数进行控制，就会长时间处于发送状态，Reactor 线程无法及时读取其他消息和执行排队的 Task。</li><li>如果待发送消息(ChannelOutboundBuffer)的 ByteBuffer数等于 1，则直接通过nioBuffers[0]获取待发送消息的ByteBuffer，通过调用JDK的SocketChannel直接完成消息发送。</li><li>如果待发送消息的ByteBuffer数大于1，则调用SocketChannel的批量发送接口，将nioBuffers数组写入TCP发送缓冲区。</li><li>如果待发送的消息包含的JDK原生ByteBuffer数为0，则调用父类AbstractNioByteChannel的doWrite0方法，将Netty的ByteBuf发到TCP缓冲区。</li><li>如果发送对象是JDK的ByteBuffer，则根据发送的字节数计算需要被释放的发送对象个数。</li><li>如果发送对象是Netty的ByteBuf，则通过判断当前ByteBuf的isReadable来获取消息发送结果，如果发送完成，则调用ChannelOutboundBuffer的remove方法删除并释放ByteBuf。</li><li>注册SelectionKey.OP_WRITE到对应的Selector，退出循环，在下一次Selector轮询过程中继续执行write操作。</li></ul>
+</div>
+<div class="sec">
+<h4>消息发送高低水位控制</h4>
+<ul class="point">
+<li><b>为了对发送速度和消息积压数进行控制，Netty 提供了高低水位机制</b>
+<ul class="quote"><li>当消息队列中积压的待发送消息总字节数到达高水位时，修改 Channel 的状态为不可写。</li><li>当消息发送完成后，对低水位进行判断，如果当前积压的待发送字节数到达或者低于低水位，则修改Channel状态为可写。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>当消息队列中积压的待发送消息总字节数到达高水位时，修改 Channel 的状态为不可写。</li><li>当消息发送完成后，对低水位进行判断，如果当前积压的待发送字节数到达或者低于低水位，则修改Channel状态为可写。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">22</span><span class="mmx-name">5.3 总结</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 1 条要点 · 1 句原句摘录</p>
+<div class="sec">
+<h4>Netty的消息发送原理和源码深入讲解</h4>
+<ul class="point">
+<li><b>熟悉Netty的发送队列工作机制、高低水位机制等</b>
+<ul class="quote"><li>发送队列积压案例。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>发送队列积压案例。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">23</span><span class="mmx-name">第6章 API网关高并发压测性能波动案例</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 2 条要点 · 1 句原句摘录</p>
+<div class="sec">
+<h4>API网关高并发压测性能波动案例</h4>
+<ul class="point">
+<li><b>API网关负责统一的流量接入、安全控制、鉴权、流控和消息路由转发等，对性能要求非常苛刻</b>
+<ul class="quote"><li>在高并发场景下，如果处理不当，很有可能导致内存泄漏、性能波动等问题。</li></ul>
+</li>
+<li><b>通过一个 API 网关的性能波动案例，让大家学习如何基于 Netty 构建高性能的API网关，以及如何处理好性能相关的编程细节。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在高并发场景下，如果处理不当，很有可能导致内存泄漏、性能波动等问题。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">24</span><span class="mmx-name">6.1 高并发压测性能波动问题</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 5 个小节 · 5 条要点 · 10 句原句摘录</p>
+<div class="sec">
+<h4>高并发压测性能波动问题</h4>
+<ul class="point">
+<li><b>性能压测到4000 QPS一段时间后，发现性能急剧下降，最低时到 0，停止压测一段时间，系统恢复，再压测一段时间，用户并发量大了之后，性能又急剧下降，形成周期性波动，吞吐量非常不稳定。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>故障场景模拟</h4>
+<ul class="point">
+<li><b>压测一段时间之后，发现内存和CPU占用飙升，同时QPS下降</b>
+<ul class="quote"><li>客户端停止压测一段时间，CPU占用降低，内存占用恢复正常。</li><li>在压测过程中，当吞吐量下降、CPU占用飙升时，采集线程堆栈，发现GC线程占用大量CPU资源。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>客户端停止压测一段时间，CPU占用降低，内存占用恢复正常。</li><li>在压测过程中，当吞吐量下降、CPU占用飙升时，采集线程堆栈，发现GC线程占用大量CPU资源。</li></ul>
+</div>
+<div class="sec">
+<h4>性能波动原因定位</h4>
+<ul class="point">
+<li><b>性能波动与内存占用情况强相关，当内存占用比较高时，GC线程忙于内存回收，抢占大量 CPU 资源，而且在 GC 过程中也会导致应用线程暂停，最终造成吞吐量急剧下降</b>
+<ul class="quote"><li>但是当停止压测或者并发请求量降低之后，服务端还可以恢复，说明并不存在真正的内存忘记释放导致的泄漏问题。</li><li>JDK的线程池是内存占用大户，char数组共13417个实例，占用 157MB内存，通过 Dominator Tree查看引用关系，发现 char数组被 JDK线程池的 LinkedBlockingQueue引用。</li><li>API网关每次收到请求消息，无论请求消息大还是小，哪怕只有100字节，都会构造一个默认为64KB的char数组，用于处理和转发请求消息。</li><li>优化之后，API网关运行平稳，CPU和内存使用情况恢复正常。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>但是当停止压测或者并发请求量降低之后，服务端还可以恢复，说明并不存在真正的内存忘记释放导致的泄漏问题。</li><li>JDK的线程池是内存占用大户，char数组共13417个实例，占用 157MB内存，通过 Dominator Tree查看引用关系，发现 char数组被 JDK线程池的 LinkedBlockingQueue引用。</li><li>API网关每次收到请求消息，无论请求消息大还是小，哪怕只有100字节，都会构造一个默认为64KB的char数组，用于处理和转发请求消息。</li><li>优化之后，API网关运行平稳，CPU和内存使用情况恢复正常。</li></ul>
+</div>
+<div class="sec">
+<h4>主动内存泄漏定位法</h4>
+<ul class="point">
+<li><b>采用主动OOM法，具体策略为：将最大堆内存尽量调小，让系统在更短的时间内发生 OOM 异常，多采集几次 OOM 异常时的内存堆栈信息进行对比，同时通过OOM日志，结合Dump堆栈，就更容易找到对象引用关系</b>
+<ul class="quote"><li>在实际业务中进行性能压测时，案例中的 API Gateway每 6小时才会发生一次问题，采用主动OOM定位法后，每10分钟就发生一次OOM，通过多次采集内存堆栈信息进行对比分析，很快就确定了问题的根源。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在实际业务中进行性能压测时，案例中的 API Gateway每 6小时才会发生一次问题，采用主动OOM定位法后，每10分钟就发生一次OOM，通过多次采集内存堆栈信息进行对比分析，很快就确定了问题的根源。</li></ul>
+</div>
+<div class="sec">
+<h4>网关类产品的优化建议</h4>
+<ul class="point">
+<li><b>内存按需分配，不要一次性申请较大的内存来保存较小的消息，造成内存空间浪费，引发频繁GC问题</b>
+<ul class="quote"><li>不要频繁地创建和释放对象，这会增加GC的负担，降低系统的吞吐量，可以采用内存池等机制优化内存的申请和释放。</li><li>减少对象拷贝，对于透传类的消息，尽量把涉及业务逻辑处理的字段放入Header，不要对 Body 做解码，直接透传到后端服务即可。</li><li>流控机制必不可少，除了客户端并发连接数流控、QPS流控，还需要针对内存占用等指标做流控，防止业务高峰期的OOM。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>不要频繁地创建和释放对象，这会增加GC的负担，降低系统的吞吐量，可以采用内存池等机制优化内存的申请和释放。</li><li>减少对象拷贝，对于透传类的消息，尽量把涉及业务逻辑处理的字段放入Header，不要对 Body 做解码，直接透传到后端服务即可。</li><li>流控机制必不可少，除了客户端并发连接数流控、QPS流控，还需要针对内存占用等指标做流控，防止业务高峰期的OOM。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">25</span><span class="mmx-name">6.2 Netty消息接入内存申请机制</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 4 条要点 · 6 句原句摘录</p>
+<div class="sec">
+<h4>Netty消息接入的内存分配原理和源码分析</h4>
+<ul class="point">
+<li><b>Netty使用AdaptiveRecvByteBufAllocator进行内存分配</b>
+<ul class="quote"><li>AdaptiveRecvByteBufAllocator定义了最小缓冲区长度、初始容量、最大容量以及动态调整容量的步进参数。</li><li>AdaptiveRecvByteBufAllocator根据本次读取的实际字节数对下次接收缓冲区的容量进行动态调整。</li></ul>
+</li>
+<li><b>AdaptiveRecvByteBufAllocator的优点</b>
+<ul class="quote"><li>能够最大限度地满足不同行业的应用场景的需要。</li><li>综合性能更高，更节约内存。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>AdaptiveRecvByteBufAllocator定义了最小缓冲区长度、初始容量、最大容量以及动态调整容量的步进参数。</li><li>AdaptiveRecvByteBufAllocator根据本次读取的实际字节数对下次接收缓冲区的容量进行动态调整。</li><li>能够最大限度地满足不同行业的应用场景的需要。</li><li>综合性能更高，更节约内存。</li></ul>
+</div>
+<div class="sec">
+<h4>Netty ByteBuf的动态扩容原理和源码分析</h4>
+<ul class="point">
+<li><b>UnpooledHeapByteBuf的capacity方法用于动态扩容</b>
+<ul class="quote"><li>如果新的容量大于当前的缓冲区容量，需要进行动态扩展。</li><li>如果新的容量小于当前的缓冲区容量，不需要动态扩展，但是需要截取当前缓冲区创建一个新的子缓冲区。</li></ul>
+</li>
+<li><b>动态扩容后需要将原来的视图tmpNioBuf设置为空，并释放原来的byte数组oldArray。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如果新的容量大于当前的缓冲区容量，需要进行动态扩展。</li><li>如果新的容量小于当前的缓冲区容量，不需要动态扩展，但是需要截取当前缓冲区创建一个新的子缓冲区。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">26</span><span class="mmx-name">6.3 总结</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 3 条要点 · 2 句原句摘录</p>
+<div class="sec">
+<h4>高并发接入的API网关类产品内存管理</h4>
+<ul class="point">
+<li><b>谨慎处理消息的内存申请和释放，减少不必要的申请</b>
+<ul class="quote"><li>例如透传类场景，可以减少内存的申请。</li></ul>
+</li>
+<li><b>防止内存空间的浪费。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>例如透传类场景，可以减少内存的申请。</li></ul>
+</div>
+<div class="sec">
+<h4>Netty请求消息读取的内存申请策略和动态扩容机制</h4>
+<ul class="point">
+<li><b>借鉴Netty请求消息读取的内存申请策略和动态扩容机制</b>
+<ul class="quote"><li>可以用在实际项目中，得到较大的性能提升。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>可以用在实际项目中，得到较大的性能提升。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">27</span><span class="mmx-name">第7章 Netty ChannelHandler并发安全案例</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 3 条要点 · 0 句原句摘录</p>
+<div class="sec">
+<h4>Netty ChannelHandler并发安全案例</h4>
+<ul class="point">
+<li><b>ChannelHandler是Netty中使用最广的接口，Netty提供了大量内置的ChannelHandler实现类，包括编解码、SSL、日志打印和流量整形等。</b>
+</li>
+<li><b>用户通过实现ChannelHandler接口，来接收和发送业务消息，并进行业务逻辑处理。</b>
+</li>
+<li><b>在多线程并发场景下理解ChannelHandler的并发安全性很重要，如果使用不当，会产生性能和并发安全问题。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">28</span><span class="mmx-name">7.1 Netty ChannelHandler并发安全问题</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 6 条要点 · 8 句原句摘录</p>
+<div class="sec">
+<h4>串行执行的ChannelHandler</h4>
+<ul class="point">
+<li><b>非共享的ChannelHandler是线程安全的</b>
+<ul class="quote"><li>当链路完成初始化时会创建 ChannelPipeline，每个 Channel 对应一个 ChannelPipeline 实例，业务的ChannelHandler会被实例化并加入ChannelPipeline执行。</li><li>由于某个Channel只能被特定的NioEventLoop线程执行，因此ChannelHandler不会被并发调用，不用考虑线程安全问题。</li></ul>
+</li>
+<li><b>共享的ChannelHandler不能被重复加入多个ChannelPipeline或者被多次加入某一个ChannelPipeline</b>
+<ul class="quote"><li>如果 ChannelHandler 不是共享的，重复向 ChannelPipeline 添加时就会抛出ChannelPipelineException异常，添加失败。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>当链路完成初始化时会创建 ChannelPipeline，每个 Channel 对应一个 ChannelPipeline 实例，业务的ChannelHandler会被实例化并加入ChannelPipeline执行。</li><li>由于某个Channel只能被特定的NioEventLoop线程执行，因此ChannelHandler不会被并发调用，不用考虑线程安全问题。</li><li>如果 ChannelHandler 不是共享的，重复向 ChannelPipeline 添加时就会抛出ChannelPipelineException异常，添加失败。</li></ul>
+</div>
+<div class="sec">
+<h4>跨链路共享的ChannelHandler</h4>
+<ul class="point">
+<li><b>通过 Sharable 注解就可以被添加到多个ChannelPipeline</b>
+<ul class="quote"><li>对上一节中的代码做修改，代码如下：运行结果如图7-2所示，共享的ChannelHandler可以被加入多个ChannelPipeline。</li></ul>
+</li>
+<li><b>共享的ChannelHandler要慎用，需要保证自身的线程安全</b>
+<ul class="quote"><li>例如，ChannelHandler是共享的，但它自身也不是线程安全的，这就会导致并发问题。</li><li>对SharableClientHandler类进行修改，将其实现改为线程安全的，代码如下：由于将 SharableClientHandler修改成了线程安全类，所以在并发访问时依然能够保证逻辑的正确性。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>对上一节中的代码做修改，代码如下：运行结果如图7-2所示，共享的ChannelHandler可以被加入多个ChannelPipeline。</li><li>例如，ChannelHandler是共享的，但它自身也不是线程安全的，这就会导致并发问题。</li><li>对SharableClientHandler类进行修改，将其实现改为线程安全的，代码如下：由于将 SharableClientHandler修改成了线程安全类，所以在并发访问时依然能够保证逻辑的正确性。</li></ul>
+</div>
+<div class="sec">
+<h4>ChannelHandler的并发陷阱</h4>
+<ul class="point">
+<li><b>通过 Sharable注解，多个 ChannelPipeline共享的 ChannelHandler，它将被多个NioEventLoop线程并发访问</b>
+<ul class="quote"><li>在这种场景下，用户需要保证ChannelHandler共享的合理性，同时需要自己保证它的并发安全性，尽量通过原子类等方式降低锁的开销，防止阻塞NioEventLoop线程。</li></ul>
+</li>
+<li><b>ChannelHandler没有共享，但是在用户的ChannelPipeline中的一些ChannelHandler绑定了新的线程池，这样ChannelPipeline的ChannelHandler就会被异步执行</b>
+<ul class="quote"><li>在多线程异步执行过程中，如果某ChannelHandler的成员变量共享给其他ChannelHandler，那么被多个线程并发访问和修改就存在并发安全问题。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在这种场景下，用户需要保证ChannelHandler共享的合理性，同时需要自己保证它的并发安全性，尽量通过原子类等方式降低锁的开销，防止阻塞NioEventLoop线程。</li><li>在多线程异步执行过程中，如果某ChannelHandler的成员变量共享给其他ChannelHandler，那么被多个线程并发访问和修改就存在并发安全问题。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">29</span><span class="mmx-name">7.2 Netty ChannelHandler工作机制</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 7 条要点 · 10 句原句摘录</p>
+<div class="sec">
+<h4>Netty ChannelHandler工作机制</h4>
+<ul class="point">
+<li><b>Netty的ChannelHandler工作原理与Servlet Filter机制一致</b>
+<ul class="quote"><li>ChannelHandler对I/O事件进行拦截和处理。</li></ul>
+</li>
+<li><b>ChannelPipeline是ChannelHandler的编排管理容器。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>ChannelHandler对I/O事件进行拦截和处理。</li></ul>
+</div>
+<div class="sec">
+<h4>职责链ChannelPipeline原理和源码分析</h4>
+<ul class="point">
+<li><b>消息经过ChannelPipeline在ChannelHandler中的处理流程</b>
+<ul class="quote"><li>底层的 SocketChannel read()方法读取 ByteBuf，触发 ChannelRead 事件。</li><li>消息依次被 HeadContext、ChannelHandler1、ChannelHandler2……TailHandler拦截和处理。</li><li>调用 ChannelHandlerContext 的 write()方法发送消息。</li></ul>
+</li>
+<li><b>Netty中的事件分为inbound事件和outbound事件</b>
+<ul class="quote"><li>inbound事件通常由I/O线程触发，例如 TCP 链路建立事件、链路关闭事件、读事件、异常通知事件。</li><li>outbound事件通常是由用户主动发起的网络I/O操作，例如用户发起的连接操作、绑定操作、消息发送操作等。</li></ul>
+</li>
+<li><b>ChannelPipeline是线程安全的，它可以被多个 NioEventLoop 线程并发调用</b>
+<ul class="quote"><li>在添加或者删除 ChannelHandler 时，可能不同 ChannelHandler 对应不同的 NioEventLoop执行，此时需要通过加锁的方式保障ChannelPipeline的并发安全。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>底层的 SocketChannel read()方法读取 ByteBuf，触发 ChannelRead 事件。</li><li>消息依次被 HeadContext、ChannelHandler1、ChannelHandler2……TailHandler拦截和处理。</li><li>调用 ChannelHandlerContext 的 write()方法发送消息。</li><li>inbound事件通常由I/O线程触发，例如 TCP 链路建立事件、链路关闭事件、读事件、异常通知事件。</li><li>outbound事件通常是由用户主动发起的网络I/O操作，例如用户发起的连接操作、绑定操作、消息发送操作等。</li><li>在添加或者删除 ChannelHandler 时，可能不同 ChannelHandler 对应不同的 NioEventLoop执行，此时需要通过加锁的方式保障ChannelPipeline的并发安全。</li></ul>
+</div>
+<div class="sec">
+<h4>用户自定义Event原理和源码分析</h4>
+<ul class="point">
+<li><b>除了一些标准的网络I/O操作，还有一些非通用事件，通过 UserEvent 的方式触发和发送</b>
+<ul class="quote"><li>比较典型的如 SSL/TSL 握手结果，当握手成功之后，触发SslHandshakeCompletionEvent.SUCCESS事件。</li></ul>
+</li>
+<li><b>熟悉这些系统的 UserEvent，可以在业务代码中监听并处理这些事件，实现业务功能的扩展和定制</b>
+<ul class="quote"><li>例如，通过监听 SSL/TLS 握手成功事件可以对并发连接数做流控。</li><li>除了Netty 默认提供的 UserEvent，用户也可以根据业务需要定义并发送 UserEvent。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>比较典型的如 SSL/TSL 握手结果，当握手成功之后，触发SslHandshakeCompletionEvent.SUCCESS事件。</li><li>例如，通过监听 SSL/TLS 握手成功事件可以对并发连接数做流控。</li><li>除了Netty 默认提供的 UserEvent，用户也可以根据业务需要定义并发送 UserEvent。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">30</span><span class="mmx-name">7.3 总结</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 2 条要点 · 0 句原句摘录</p>
+<div class="sec">
+<h4>ChannelHandler和ChannelPipeline的工作原理</h4>
+<ul class="point">
+<li><b>ChannelHandler是用户最常用的接口，掌握了ChannelHandler及ChannelPipeline工作原理，就清楚了什么时候该使用共享的ChannelHandler，什么时候该对ChannelHandler做并发保护。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>ChannelHandler的并发安全性</h4>
+<ul class="point">
+<li><b>无论缺少保护还是过度保护，都会给业务带来副作用，甚至严重的功能或性能问题，因此ChannelHandler的并发安全性是非常重要的。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">31</span><span class="mmx-name">第8章 车联网服务端接收不到车载终端消息案例</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 2 条要点 · 1 句原句摘录</p>
+<div class="sec">
+<h4>车联网服务端接收不到车载终端消息案例</h4>
+<ul class="point">
+<li><b>Netty被广泛应用于物联网领域，用于海量终端设备的协议接入、消息收发和数据处理</b>
+<ul class="quote"><li>当服务端出现性能瓶颈或者阻塞时，就会导致终端设备连接超时和掉线，引发各种问题。</li></ul>
+</li>
+<li><b>在物联网场景下，一定要防止服务端因为编码不当导致的意外阻塞，进而无法处理终端请求消息。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>当服务端出现性能瓶颈或者阻塞时，就会导致终端设备连接超时和掉线，引发各种问题。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">32</span><span class="mmx-name">8.1 车联网服务端接收不到车载终端消息问题</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 6 条要点 · 9 句原句摘录</p>
+<div class="sec">
+<h4>车联网服务端接收不到车载终端消息问题</h4>
+<ul class="point">
+<li><b>服务端运行一段时间之后，发现无法接收到车载终端的消息</b>
+<ul class="quote"><li>服务端每隔一段时间(示例中是 15s，实际业务时间是随机的)就会接收不到消息，隔一段时间之后恢复，然后又没消息，周而复始。</li></ul>
+</li>
+<li><b>排除 GC、网络等问题之后，很有可能是 Netty的NioEventLoop线程阻塞</b>
+<ul class="quote"><li>Netty的NioEventLoop读取到消息后，调用业务线程池执行业务逻辑时，RejectedExecutionException出现异常。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>服务端每隔一段时间(示例中是 15s，实际业务时间是随机的)就会接收不到消息，隔一段时间之后恢复，然后又没消息，周而复始。</li><li>Netty的NioEventLoop读取到消息后，调用业务线程池执行业务逻辑时，RejectedExecutionException出现异常。</li></ul>
+</div>
+<div class="sec">
+<h4>故障期线程堆栈快照分析</h4>
+<ul class="point">
+<li><b>业务使用了 CallerRunsPolicy 策略，即在业务线程池消息队列满之后，由调用方的线程来执行当前的 Runnable</b>
+<ul class="quote"><li>NioEventLoop 在执行业务任务时发生了阻塞，导致NioEventLoop线程无法处理网络读写消息，因此会看到服务端没有消息接入。</li></ul>
+</li>
+<li><b>当转发到下游系统发生某些故障时，会导致业务定义的阻塞队列无法弹出消息进行处理，当队列积压满时，就会阻塞Netty的NIO线程</b>
+<ul class="quote"><li>对上述案例代码做修改，当队列满时采用丢弃策略，防止阻塞 Netty 的 NioEventLoop 线程。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>NioEventLoop 在执行业务任务时发生了阻塞，导致NioEventLoop线程无法处理网络读写消息，因此会看到服务端没有消息接入。</li><li>对上述案例代码做修改，当队列满时采用丢弃策略，防止阻塞 Netty 的 NioEventLoop 线程。</li></ul>
+</div>
+<div class="sec">
+<h4>NioEventLoop线程防挂死策略</h4>
+<ul class="point">
+<li><b>防止业务代码阻塞NioEventLoop线程非常重要</b>
+<ul class="quote"><li>直接在ChannelHandler中写可能导致程序阻塞的代码，包括但不限于数据库操作、第三方服务调用、中间件服务调用、同步获取锁、Sleep等。</li><li>切换到业务线程池或者业务消息队列做异步处理时发生了阻塞，最典型的有阻塞队列、同步获取锁等。</li></ul>
+</li>
+<li><b>推荐业务处理线程和Netty网络I/O线程分离策略</b>
+<ul class="quote"><li>充分利用多核的并行处理能力：I/O 线程和业务线程分离，双方可以并行处理网络I/O和业务逻辑，充分利用多核的并行计算能力，提升性能。</li><li>故障隔离：后端的业务线程池处理各种类型的业务消息，有些是 I/O 密集型的、有些是 CPU 密集型的、有些是纯内存计算型的，不同的业务处理时延，以及发生故障的概率都是不同的。如果把业务线程和I/O线程合并，就会存在如下问题。</li><li>可维护性：I/O 线程和业务线程分离之后，双方职责单一，有利于代码维护和问题定位。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>直接在ChannelHandler中写可能导致程序阻塞的代码，包括但不限于数据库操作、第三方服务调用、中间件服务调用、同步获取锁、Sleep等。</li><li>切换到业务线程池或者业务消息队列做异步处理时发生了阻塞，最典型的有阻塞队列、同步获取锁等。</li><li>充分利用多核的并行处理能力：I/O 线程和业务线程分离，双方可以并行处理网络I/O和业务逻辑，充分利用多核的并行计算能力，提升性能。</li><li>故障隔离：后端的业务线程池处理各种类型的业务消息，有些是 I/O 密集型的、有些是 CPU 密集型的、有些是纯内存计算型的，不同的业务处理时延，以及发生故障的概率都是不同的。如果把业务线程和I/O线程合并，就会存在如下问题。</li><li>可维护性：I/O 线程和业务线程分离之后，双方职责单一，有利于代码维护和问题定位。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">33</span><span class="mmx-name">8.2 NioEventLoop线程工作机制</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 5 个小节 · 10 条要点 · 15 句原句摘录</p>
+<div class="sec">
+<h4>NioEventLoop线程工作机制</h4>
+<ul class="point">
+<li><b>NioEventLoop并非纯粹的I/O线程，它负责I/O读写操作，还兼顾系统任务和定时任务</b>
+<ul class="quote"><li>系统任务：通过调用NioEventLoop的execute(Runnable task)方法执行。</li><li>定时任务：通过调用 NioEventLoop 的 schedule(Runnable command，long delay，TimeUnit unit)系列方法实现。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>系统任务：通过调用NioEventLoop的execute(Runnable task)方法执行。</li><li>定时任务：通过调用 NioEventLoop 的 schedule(Runnable command，long delay，TimeUnit unit)系列方法实现。</li></ul>
+</div>
+<div class="sec">
+<h4>I/O读写操作原理和源码分析</h4>
+<ul class="point">
+<li><b>Reactor线程负责TCP连接的创建和接入，以及TCP消息的读写</b>
+<ul class="quote"><li>Reactor线程的职责包括：接收客户端的TCP连接，向服务端发起TCP连接，读取通信对端的请求或者应答消息，向通信对端发送消息请求或者应答消息。</li></ul>
+</li>
+<li><b>NioEventLoop线程处理网络读写等操作的关键是聚合了一个Selector</b>
+<ul class="quote"><li>通过轮询 Selector 的SelectedSelectionKeySet实现网络消息的处理。</li><li>通过对SelectionKey的取值进行判断，完成对应的I/O操作。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Reactor线程的职责包括：接收客户端的TCP连接，向服务端发起TCP连接，读取通信对端的请求或者应答消息，向通信对端发送消息请求或者应答消息。</li><li>通过轮询 Selector 的SelectedSelectionKeySet实现网络消息的处理。</li><li>通过对SelectionKey的取值进行判断，完成对应的I/O操作。</li></ul>
+</div>
+<div class="sec">
+<h4>异步任务执行原理和源码分析</h4>
+<ul class="point">
+<li><b>NioEventLoop支持各种 Runnable 类型的任务的执行</b>
+<ul class="quote"><li>任务的使用场景包括：Netty 系统任务，主要用于任务的异步执行，或者用于从用户线程切换到 Netty的NioEventLoop线程；用户自定义用来辅助I/O操作的业务任务。</li></ul>
+</li>
+<li><b>Netty提供了I/O比例供用户定制，以保证I/O操作和非I/O任务都能得到足够的CPU时间</b>
+<ul class="quote"><li>如果I/O操作多于定时任务和其他任务，则可以将I/O比例调大，反之则调小，默认值为50%。</li><li>当限制的执行时间到期时，无论当前积压的任务是否执行完，都需要退出循环，防止长时间执行任务而阻塞网络I/O操作。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>任务的使用场景包括：Netty 系统任务，主要用于任务的异步执行，或者用于从用户线程切换到 Netty的NioEventLoop线程；用户自定义用来辅助I/O操作的业务任务。</li><li>如果I/O操作多于定时任务和其他任务，则可以将I/O比例调大，反之则调小，默认值为50%。</li><li>当限制的执行时间到期时，无论当前积压的任务是否执行完，都需要退出循环，防止长时间执行任务而阻塞网络I/O操作。</li></ul>
+</div>
+<div class="sec">
+<h4>定时任务执行原理和源码分析</h4>
+<ul class="point">
+<li><b>NioEventLoop支持执行定时任务，通过调用schedule接口，可以实现定时任务的执行</b>
+<ul class="quote"><li>通过调用fetchFromScheduledTaskQueue，将到期的定时任务加入taskQueue并随taskQueue执行。</li></ul>
+</li>
+<li><b>定时任务最经典的使用场景就是链路空闲状态检测</b>
+<ul class="quote"><li>在初始化IdleStateHandler时，同步创建ReaderIdleTimeoutTask、WriterIdleTimeoutTask和AllIdleTimeoutTask三个定时任务，负责链路空闲状态检测。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>通过调用fetchFromScheduledTaskQueue，将到期的定时任务加入taskQueue并随taskQueue执行。</li><li>在初始化IdleStateHandler时，同步创建ReaderIdleTimeoutTask、WriterIdleTimeoutTask和AllIdleTimeoutTask三个定时任务，负责链路空闲状态检测。</li></ul>
+</div>
+<div class="sec">
+<h4>Netty多线程最佳实践</h4>
+<ul class="point">
+<li><b>创建两个NioEventLoopGroup，用于逻辑隔离NIO Acceptor和NIO I/O线程。</b>
+</li>
+<li><b>尽量不要在ChannelHandler中启动用户线程</b>
+<ul class="quote"><li>解码要放在NIO线程调用的解码Handler中进行，不要切换到用户线程完成消息的解码。</li><li>如果业务逻辑操作非常简单，可以直接在NIO线程上完成业务逻辑编排，不需要切换到用户线程。</li><li>如果业务逻辑复杂，不要在NIO线程上完成，建议将解码后的POJO消息封装成任务，派发到业务线程池中由业务线程执行。</li></ul>
+</li>
+<li><b>推荐的线程数量计算公式</b>
+<ul class="quote"><li>公式1：线程数量=(线程总时间/瓶颈资源时间)×瓶颈资源的线程并行数。</li><li>公式2：QPS=1000/线程总时间×线程数。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>解码要放在NIO线程调用的解码Handler中进行，不要切换到用户线程完成消息的解码。</li><li>如果业务逻辑操作非常简单，可以直接在NIO线程上完成业务逻辑编排，不需要切换到用户线程。</li><li>如果业务逻辑复杂，不要在NIO线程上完成，建议将解码后的POJO消息封装成任务，派发到业务线程池中由业务线程执行。</li><li>公式1：线程数量=(线程总时间/瓶颈资源时间)×瓶颈资源的线程并行数。</li><li>公式2：QPS=1000/线程总时间×线程数。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">34</span><span class="mmx-name">8.3 总结</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 4 条要点 · 2 句原句摘录</p>
+<div class="sec">
+<h4>服务端无法读取消息的原因</h4>
+<ul class="point">
+<li><b>GC导致的应用线程暂停</b>
+<ul class="quote"><li>服务端可能因为垃圾回收导致应用线程暂停，从而无法读取消息。</li></ul>
+</li>
+<li><b>服务端的 NioEventLoop 线程被意外阻塞。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>服务端可能因为垃圾回收导致应用线程暂停，从而无法读取消息。</li></ul>
+</div>
+<div class="sec">
+<h4>网络 I/O 线程和业务逻辑线程分离</h4>
+<ul class="point">
+<li><b>通过网络 I/O 线程和业务逻辑线程分离，可以实现双方的并行处理，提升系统的可靠性。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>消除业务代码对 NioEventLoop 线程的阻塞</h4>
+<ul class="point">
+<li><b>在编写代码时，始终需要考虑 NioEventLoop 线程是否会被业务代码阻塞</b>
+<ul class="quote"><li>只有消除所有可能导致的阻塞点，才能保证程序稳定运行。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>只有消除所有可能导致的阻塞点，才能保证程序稳定运行。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">35</span><span class="mmx-name">第9章 Netty 3.X版本升级案例</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 5 条要点 · 10 句原句摘录</p>
+<div class="sec">
+<h4>Netty 3.X版本升级案例概述</h4>
+<ul class="point">
+<li><b>Netty的主流版本有 3 个，分别是 3.X、4.0.X和 4.1.X</b>
+<ul class="quote"><li>绝大多数新业务都会采用4.1.X或者4.0.X进行开发。</li><li>对于已经使用3.X开发的遗留系统而言，是否主动升级Netty版本是一个两难选择。</li></ul>
+</li>
+<li><b>升级Netty版本需要面对包路径、API接口类库重构等问题</b>
+<ul class="quote"><li>包路径、API的修改是显式修改，升级之后代码编译就会报错。</li><li>底层的内存分配策略、线程模型的修改却是隐式的，如果对两个版本的架构差异理解不透彻，就会遭遇性能下降、内存泄漏等诸多问题。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>绝大多数新业务都会采用4.1.X或者4.0.X进行开发。</li><li>对于已经使用3.X开发的遗留系统而言，是否主动升级Netty版本是一个两难选择。</li><li>包路径、API的修改是显式修改，升级之后代码编译就会报错。</li><li>底层的内存分配策略、线程模型的修改却是隐式的，如果对两个版本的架构差异理解不透彻，就会遭遇性能下降、内存泄漏等诸多问题。</li></ul>
+</div>
+<div class="sec">
+<h4>Netty 3.X到Netty 4.X版本升级的典型案例分析</h4>
+<ul class="point">
+<li><b>案例一：内存分配策略的修改导致内存泄漏</b>
+<ul class="quote"><li>Netty 3.X中，内存分配策略是每创建一个Channel，就会创建一个ByteBuffer的pool。</li><li>Netty 4.X中，内存分配策略改为PooledByteBufAllocator，可以复用ByteBuffer，减少了内存分配和释放的操作，从而降低了内存泄漏的风险。</li></ul>
+</li>
+<li><b>案例二：线程模型的修改导致性能下降</b>
+<ul class="quote"><li>Netty 3.X中，线程模型是每个ChannelHandler都在自己的线程中处理请求。</li><li>Netty 4.X中，线程模型改为EventLoopGroup，可以更好地管理线程，提高性能。</li></ul>
+</li>
+<li><b>案例三：API接口类库的重构导致编译错误</b>
+<ul class="quote"><li>Netty 3.X中，API接口类库与Netty 4.X不兼容，需要进行重构。</li><li>重构后，需要修改代码中的包路径和类名，以适应新的API接口类库。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Netty 3.X中，内存分配策略是每创建一个Channel，就会创建一个ByteBuffer的pool。</li><li>Netty 4.X中，内存分配策略改为PooledByteBufAllocator，可以复用ByteBuffer，减少了内存分配和释放的操作，从而降低了内存泄漏的风险。</li><li>Netty 3.X中，线程模型是每个ChannelHandler都在自己的线程中处理请求。</li><li>Netty 4.X中，线程模型改为EventLoopGroup，可以更好地管理线程，提高性能。</li><li>Netty 3.X中，API接口类库与Netty 4.X不兼容，需要进行重构。</li><li>重构后，需要修改代码中的包路径和类名，以适应新的API接口类库。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">36</span><span class="mmx-name">9.1 Netty 3.X的版本升级背景</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 2 条要点 · 3 句原句摘录</p>
+<div class="sec">
+<h4>Netty 3.X版本升级背景</h4>
+<ul class="point">
+<li><b>Netty 4.X对3.X不兼容，导致用户升级困难</b>
+<ul class="quote"><li>坚守老版本的理由包括系统稳定性、对新版本熟悉度等。</li></ul>
+</li>
+<li><b>有时因公司策略、维护成本、新特性需求、性能优化等原因被迫升级</b>
+<ul class="quote"><li>升级可能遭遇问题，如类库包路径修改、API重构等。</li><li>更应关注底层事件调度机制和线程模型。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>坚守老版本的理由包括系统稳定性、对新版本熟悉度等。</li><li>升级可能遭遇问题，如类库包路径修改、API重构等。</li><li>更应关注底层事件调度机制和线程模型。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">37</span><span class="mmx-name">9.2 版本升级后数据被篡改问题</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 4 条要点 · 4 句原句摘录</p>
+<div class="sec">
+<h4>数据篡改问题描述</h4>
+<ul class="point">
+<li><b>业务服务端发送给客户端的应答数据被莫名“篡改”</b>
+<ul class="quote"><li>业务服务端的处理流程包括将解码后的业务消息封装成任务，投递到后端的业务线程池执行，业务线程处理业务逻辑，完成后构造应答消息发送给客户端，业务应答消息的编码通过继承 Netty 的 CodeC 框架实现，即 Encoder ChannelHandler，调用 Netty的消息发送接口后，流程继续，根据业务场景，可能会继续操作原来发送的业务对象。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>业务服务端的处理流程包括将解码后的业务消息封装成任务，投递到后端的业务线程池执行，业务线程处理业务逻辑，完成后构造应答消息发送给客户端，业务应答消息的编码通过继承 Netty 的 CodeC 框架实现，即 Encoder ChannelHandler，调用 Netty的消息发送接口后，流程继续，根据业务场景，可能会继续操作原来发送的业务对象。</li></ul>
+</div>
+<div class="sec">
+<h4>数据篡改原因分析</h4>
+<ul class="point">
+<li><b>被篡改的内容是调用writeAndFlush 接口后，由后续业务分支代码修改应答消息导致的</b>
+<ul class="quote"><li>在Netty3.X中，downstream是在业务线程里执行的，也就是说对SubInfoResp的编码操作是在业务线程中执行的，当编码后的ByteBuf对象被投递到消息发送队列时，业务线程才会返回并继续执行后续的业务逻辑，此时修改应答消息是不会改变已完成编码的ByteBuf对象的，所以肯定不会出现应答消息被篡改的问题。</li></ul>
+</li>
+<li><b>线程模型发生变更导致的问题</b>
+<ul class="quote"><li>当调用write方法向外发送消息的时候，Netty会将发送事件封装成任务，投递到 NioEventLoop 的任务队列异步执行，然后返回业务调用线程，业务线程继续执行，如果在响应对象编码之前业务线程和Netty的NioEventLoop线程同时修改了infoResp对象，就会发生并发问题。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在Netty3.X中，downstream是在业务线程里执行的，也就是说对SubInfoResp的编码操作是在业务线程中执行的，当编码后的ByteBuf对象被投递到消息发送队列时，业务线程才会返回并继续执行后续的业务逻辑，此时修改应答消息是不会改变已完成编码的ByteBuf对象的，所以肯定不会出现应答消息被篡改的问题。</li><li>当调用write方法向外发送消息的时候，Netty会将发送事件封装成任务，投递到 NioEventLoop 的任务队列异步执行，然后返回业务调用线程，业务线程继续执行，如果在响应对象编码之前业务线程和Netty的NioEventLoop线程同时修改了infoResp对象，就会发生并发问题。</li></ul>
+</div>
+<div class="sec">
+<h4>问题总结</h4>
+<ul class="point">
+<li><b>用户在进行Netty 版本升级的时候，只关注包路径、类库和API的变更，并没有注意到隐藏在背后的“暗箭”—线程模型变更</b>
+<ul class="quote"><li>升级到 Netty 4.X的用户需要根据新的线程模型对已有的系统进行评估，重点需要关注outbound的ChannelHandler，如果它的正确性依赖于Netty 3.X的线程模型，则很可能在新的线程模型中出现问题，也许是功能问题，也许是性能等其他问题。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>升级到 Netty 4.X的用户需要根据新的线程模型对已有的系统进行评估，重点需要关注outbound的ChannelHandler，如果它的正确性依赖于Netty 3.X的线程模型，则很可能在新的线程模型中出现问题，也许是功能问题，也许是性能等其他问题。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">38</span><span class="mmx-name">9.3 升级后上下文丢失问题</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 5 条要点 · 7 句原句摘录</p>
+<div class="sec">
+<h4>升级后上下文丢失问题</h4>
+<ul class="point">
+<li><b>业务使用线程变量进行消息上下文的传递，升级到 Netty 4.X后出现空指针异常</b>
+<ul class="quote"><li>业务自定义的线程上下文，还是第三方容器的线程上下文，都取不到传递的变量值。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>业务自定义的线程上下文，还是第三方容器的线程上下文，都取不到传递的变量值。</li></ul>
+</div>
+<div class="sec">
+<h4>上下文丢失原因分析</h4>
+<ul class="point">
+<li><b>业务ChannelHandler获取的线程上下文对象和之前业务传递的上下文对象不是同一个</b>
+<ul class="quote"><li>执行ChannelHandler的线程跟处理业务的线程不是同一个线程。</li></ul>
+</li>
+<li><b>Netty修改了outbound的线程模型，影响了业务消息发送时的线程上下文传递。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>执行ChannelHandler的线程跟处理业务的线程不是同一个线程。</li></ul>
+</div>
+<div class="sec">
+<h4>依赖第三方线程模型的思考</h4>
+<ul class="point">
+<li><b>很多业务使用了第三方框架，但是只熟悉API和功能，对线程模型并不清楚</b>
+<ul class="quote"><li>某个类库由哪个线程调用，糊里糊涂。</li><li>为了方便变量传递，又随意地使用线程变量，实际对背后第三方类库的线程模型产生了强依赖。</li></ul>
+</li>
+<li><b>在容器或者第三方类库升级之后，如果线程模型发生了变更，则原有功能就会出现问题</b>
+<ul class="quote"><li>鉴于此，在实际工作中，尽量不要强依赖第三方类库的线程模型。</li><li>如果确实无法避免，则必须对它的线程模型有深入和清晰的了解。</li><li>在第三方类库升级之后，需要检查线程模型是否发生了变更，如果发生了变更，相关的代码也需要同步升级。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>某个类库由哪个线程调用，糊里糊涂。</li><li>为了方便变量传递，又随意地使用线程变量，实际对背后第三方类库的线程模型产生了强依赖。</li><li>鉴于此，在实际工作中，尽量不要强依赖第三方类库的线程模型。</li><li>如果确实无法避免，则必须对它的线程模型有深入和清晰的了解。</li><li>在第三方类库升级之后，需要检查线程模型是否发生了变更，如果发生了变更，相关的代码也需要同步升级。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">39</span><span class="mmx-name">9.4 升级后应用遭遇性能下降问题</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 2 条要点 · 6 句原句摘录</p>
+<div class="sec">
+<h4>Netty 4.X 性能下降问题</h4>
+<ul class="point">
+<li><b>Netty 4.X 相比 Netty 3.X，GC中断频率降低了80%，垃圾生成速度则为原来的20%左右，但在某些场景下，Netty 4.X 并没有带来预期的性能提升，甚至出现了严重的性能下降</b>
+<ul class="quote"><li>通过对热点方法的分析，发现在消息发送过程中，有两处热点：消息发送性能统计相关 ChannelHandler 和返回响应时的编码 ChannelHandler(业务消息反序列化)。</li><li>在 Netty 3.X中，上述两个热点方法都是由业务线程负责执行的；而在Netty 4.X中，则是由NioEventLoop(I/O)线程执行的。</li><li>对于某个链路的write操作，业务侧拥有多个线程的线程池，而NioEventLoop线程只有一个，所以执行效率更低，返回客户端的应答时延就大。</li><li>随着时延增大，会导致系统并发量降低，性能下降。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>通过对热点方法的分析，发现在消息发送过程中，有两处热点：消息发送性能统计相关 ChannelHandler 和返回响应时的编码 ChannelHandler(业务消息反序列化)。</li><li>在 Netty 3.X中，上述两个热点方法都是由业务线程负责执行的；而在Netty 4.X中，则是由NioEventLoop(I/O)线程执行的。</li><li>对于某个链路的write操作，业务侧拥有多个线程的线程池，而NioEventLoop线程只有一个，所以执行效率更低，返回客户端的应答时延就大。</li><li>随着时延增大，会导致系统并发量降低，性能下降。</li></ul>
+</div>
+<div class="sec">
+<h4>性能优化建议</h4>
+<ul class="point">
+<li><b>适当地调大work线程组的线程数(NioEventLoopGroup)，分担每个NioEventLoop线程的负载，提升ChannelHandler执行的并发度</b>
+<ul class="quote"><li>将业务上耗时的操作从ChannelHandler中移除，放入业务线程池处理，提升对热点代码的执行效率。</li><li>对于不适合转移到业务线程处理的一些耗时逻辑，也可以通过为 ChannelHandler 绑定线程池的方式提升性能。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>将业务上耗时的操作从ChannelHandler中移除，放入业务线程池处理，提升对热点代码的执行效率。</li><li>对于不适合转移到业务线程处理的一些耗时逻辑，也可以通过为 ChannelHandler 绑定线程池的方式提升性能。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">40</span><span class="mmx-name">9.5 Netty线程模型变更分析</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 9 条要点 · 22 句原句摘录</p>
+<div class="sec">
+<h4>Netty 3.X版本线程模型</h4>
+<ul class="point">
+<li><b>Upstream ChannelEvent的主要处理流程是由I/O线程负责执行的</b>
+<ul class="quote"><li>I/O线程将消息从TCP缓冲区读取到SocketChannel的接收缓冲区。</li><li>I/O线程负责生成相应的事件，触发事件向上执行，调度到ChannelPipeline中。</li><li>I/O线程调度执行 ChannelPipeline 中 Handler 链的对应方法，直到业务实现的最后一个Handler。</li><li>最后一个Handler将消息封装成Runnable，放入业务线程池执行，I/O线程返回，继续执行读、写等I/O操作。</li><li>业务线程池从任务队列中获取消息，并发执行业务逻辑。</li></ul>
+</li>
+<li><b>Downstream ChannelEvent的主要处理流程是由业务线程执行的</b>
+<ul class="quote"><li>业务线程发起Channel的写操作，发送消息。</li><li>Netty将写操作封装成Downstream ChannelEvent，触发事件向下传播。</li><li>写事件被调度到ChannelPipeline中，由业务线程按照Handler链串行调用支持Downstream事件的ChannelHandler。</li><li>执行到最后一个Handler，将编码后的消息提供给发送队列，业务线程返回。</li><li>Netty的 I/O线程从发送消息队列中取出消息，调用 SocketChannel的 write方法进行消息发送。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>I/O线程将消息从TCP缓冲区读取到SocketChannel的接收缓冲区。</li><li>I/O线程负责生成相应的事件，触发事件向上执行，调度到ChannelPipeline中。</li><li>I/O线程调度执行 ChannelPipeline 中 Handler 链的对应方法，直到业务实现的最后一个Handler。</li><li>最后一个Handler将消息封装成Runnable，放入业务线程池执行，I/O线程返回，继续执行读、写等I/O操作。</li><li>业务线程池从任务队列中获取消息，并发执行业务逻辑。</li><li>业务线程发起Channel的写操作，发送消息。</li><li>Netty将写操作封装成Downstream ChannelEvent，触发事件向下传播。</li><li>写事件被调度到ChannelPipeline中，由业务线程按照Handler链串行调用支持Downstream事件的ChannelHandler。</li><li>执行到最后一个Handler，将编码后的消息提供给发送队列，业务线程返回。</li><li>Netty的 I/O线程从发送消息队列中取出消息，调用 SocketChannel的 write方法进行消息发送。</li></ul>
+</div>
+<div class="sec">
+<h4>Netty 4.X版本线程模型</h4>
+<ul class="point">
+<li><b>Netty 4.X的线程模型相比3.X更简单，所有的I/O操作，无论是Netty I/O线程发起的，还是业务线程发起的，都统一由Netty的NioEventLoop线程执行</b>
+<ul class="quote"><li>I/O 线程 NioEventLoop 从 SocketChannel 中读取数据报，将 ByteBuf 投递到ChannelPipeline，触发ChannelRead事件。</li><li>I/O线程NioEventLoop调用ChannelHandler职责链，直到将消息投递到业务线程，然后I/O线程返回，继续后续的读写操作。</li><li>业务线程调用ChannelHandlerContext.write(Object msg)方法进行消息发送。</li><li>如果是由业务线程发起的写操作，ChannelHandlerInvoker将发送消息封装成任务，放入 I/O线程 NioEventLoop的任务队列，由 NioEventLoop在 Selector轮询中统一调度和执行。放入任务队列后，业务线程返回。</li><li>I/O线程NioEventLoop调用ChannelHandler职责链，进行消息发送，处理Outbound事件，直到将消息放入发送队列，然后唤醒Selector执行写操作。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>I/O 线程 NioEventLoop 从 SocketChannel 中读取数据报，将 ByteBuf 投递到ChannelPipeline，触发ChannelRead事件。</li><li>I/O线程NioEventLoop调用ChannelHandler职责链，直到将消息投递到业务线程，然后I/O线程返回，继续后续的读写操作。</li><li>业务线程调用ChannelHandlerContext.write(Object msg)方法进行消息发送。</li><li>如果是由业务线程发起的写操作，ChannelHandlerInvoker将发送消息封装成任务，放入 I/O线程 NioEventLoop的任务队列，由 NioEventLoop在 Selector轮询中统一调度和执行。放入任务队列后，业务线程返回。</li><li>I/O线程NioEventLoop调用ChannelHandler职责链，进行消息发送，处理Outbound事件，直到将消息放入发送队列，然后唤醒Selector执行写操作。</li></ul>
+</div>
+<div class="sec">
+<h4>线程模型变化点源码分析</h4>
+<ul class="point">
+<li><b>Netty 3.X消息发送线程模型是通过Channels类的write方法，将需要发送的消息封装成 DownstreamMessageEvent，然后调用 ChannelPipeline 的sendDownstream方法</b>
+<ul class="quote"><li>判断当前是否已经没有需要执行的 Downstream ChannelHandler，如果没有则执行ChannelSink的eventSunk方法，判断事件类型，如果是MessageEvent，插入发送队列，由Netty I/O线程异步执行，业务调用线程返回。</li><li>如果有可以执行的Downstream ChannelHandler，则遍历ChannelPipeline，由业务调用方线程(备注：Netty的I/O线程也可以发起write操作，在实际项目中通常由业务线程发起)执行对应的ChannelHandler。</li></ul>
+</li>
+<li><b>Netty 4.X在调用ChannelHandlerContext或者Channel的write操作时，会对当前的执行线程做判断，由下一个将要执行的 ChannelHandler 绑定的 EventExecutor 线程来执行</b>
+<ul class="quote"><li>由于业务通常不需要额外为 ChannelHandler 绑定 EventExecutor，所以默认的就是当前Channel注册的NioEventLoop线程(与read操作是同一个线程)。</li><li>将发送消息封装成WriteTask，加入 NioEventLoop 线程的任务队列异步执行，当前调用方业务线程返回。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>判断当前是否已经没有需要执行的 Downstream ChannelHandler，如果没有则执行ChannelSink的eventSunk方法，判断事件类型，如果是MessageEvent，插入发送队列，由Netty I/O线程异步执行，业务调用线程返回。</li><li>如果有可以执行的Downstream ChannelHandler，则遍历ChannelPipeline，由业务调用方线程(备注：Netty的I/O线程也可以发起write操作，在实际项目中通常由业务线程发起)执行对应的ChannelHandler。</li><li>由于业务通常不需要额外为 ChannelHandler 绑定 EventExecutor，所以默认的就是当前Channel注册的NioEventLoop线程(与read操作是同一个线程)。</li><li>将发送消息封装成WriteTask，加入 NioEventLoop 线程的任务队列异步执行，当前调用方业务线程返回。</li></ul>
+</div>
+<div class="sec">
+<h4>线程模型变化总结</h4>
+<ul class="point">
+<li><b>Netty 4.X采用了串行化设计理念，从消息的读取、编码到后续Handler的执行，始终都由I/O线程NioEventLoop负责</b>
+<ul class="quote"><li>整个流程不会进行线程上下文的切换，数据也不会面临被并发修改的风险。</li><li>一个NioEventLoop聚合了一个多路复用器Selector，因此可以处理成百上千的客户端连接。</li><li>利用线程组实现了多个串行化线程并行执行，线程之间并没有交集，这样既可以充分利用多核提升并行处理能力，又避免了线程上下文的切换和并发保护带来的额外性能损耗。</li></ul>
+</li>
+<li><b>Netty 3.X线程模型存在的问题包括Upstream和 Downstream都是 I/O相关的操作，它们的线程模型却不统一，这给用户带来了额外的学习和使用成本。</b>
+</li>
+<li><b>Netty 3.X线程模型存在的问题还包括Downstream 事件由业务线程执行，通常业务会使用线程池并行处理业务消息，这就意味着在某一个时刻会有多个业务线程同时操作 ChannelHandler，用户需要对ChannelHandler 进行并发保护(线程安全设计)。</b>
+</li>
+<li><b>Netty 3.X线程模型存在的问题还包括在Downstream事件操作过程中，例如消息编码异常，会产生Exception，它会被转换成Upstream的Exception并通知ChannelPipeline，这就意味着业务线程发起了Upstream操作。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>整个流程不会进行线程上下文的切换，数据也不会面临被并发修改的风险。</li><li>一个NioEventLoop聚合了一个多路复用器Selector，因此可以处理成百上千的客户端连接。</li><li>利用线程组实现了多个串行化线程并行执行，线程之间并没有交集，这样既可以充分利用多核提升并行处理能力，又避免了线程上下文的切换和并发保护带来的额外性能损耗。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">41</span><span class="mmx-name">9.6 总结</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 2 条要点 · 3 句原句摘录</p>
+<div class="sec">
+<h4>Netty线程模型的重要性</h4>
+<ul class="point">
+<li><b>掌握线程模型的重要性不亚于熟练使用Netty的API和功能</b>
+<ul class="quote"><li>很多业务遇到的功能、性能等问题，都是由于缺乏对Netty线程模型和原理的理解导致的。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>很多业务遇到的功能、性能等问题，都是由于缺乏对Netty线程模型和原理的理解导致的。</li></ul>
+</div>
+<div class="sec">
+<h4>Netty版本升级的考虑因素</h4>
+<ul class="point">
+<li><b>版本升级需要从功能、兼容性和性能等多个角度进行综合考虑</b>
+<ul class="quote"><li>API的变更会导致编译错误，但是性能下降却隐藏于无形之中，稍不留意就会中招。</li><li>对于强调快速交付和敏捷开发的互联网类应用，升级的时候尤其要小心，不能功能调通后简单验证就匆忙上线。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>API的变更会导致编译错误，但是性能下降却隐藏于无形之中，稍不留意就会中招。</li><li>对于强调快速交付和敏捷开发的互联网类应用，升级的时候尤其要小心，不能功能调通后简单验证就匆忙上线。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">42</span><span class="mmx-name">第10章 Netty并发失效导致性能下降案例</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 1 条要点 · 1 句原句摘录</p>
+<div class="sec">
+<h4>Netty并发失效导致性能下降案例</h4>
+<ul class="point">
+<li><b>用户自定义线程池执行业务ChannelHandler，以及通过Netty的EventExecutorGroup机制来并行执行ChannelHandler</b>
+<ul class="quote"><li>由于 Netty 线程池的实现比较复杂，种类也较多，如果不能深入掌握 Netty 的线程池运行原理，往往容易理解错误，进而引发各种问题。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>由于 Netty 线程池的实现比较复杂，种类也较多，如果不能深入掌握 Netty 的线程池运行原理，往往容易理解错误，进而引发各种问题。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">43</span><span class="mmx-name">10.1 业务ChannelHandler无法并发执行问题</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 5 条要点 · 11 句原句摘录</p>
+<div class="sec">
+<h4>业务ChannelHandler无法并发执行问题</h4>
+<ul class="point">
+<li><b>服务端使用Netty内置的DefaultEventExecutorGroup并行调用业务的LogicServerHandler，但性能测试时发现服务端的处理能力非常差</b>
+<ul class="quote"><li>服务端没有采用传统的业务线程池执行 LogicServerHandler，而是使用 Netty 内置的DefaultEventExecutorGroup来并行调用业务的LogicServerHandler。</li><li>在业务的ConcurrentPerformanceServerHandler中，通过随机的休眠来模拟复杂的业务逻辑操作耗时，同时利用定时任务线程池周期性地统计服务端的处理性能。</li><li>测试结果如图10-1所示，吞吐量是个位数，考虑到业务处理逻辑耗时在100ms～1000ms，因此怀疑业务ChannelHandler并没有被并发执行，而是被单线程执行。</li></ul>
+</li>
+<li><b>对于某个具体的TCP连接，绑定到业务ChannelHandler实例上的线程池为 DefaultEventExecutor，无法实现并行调用</b>
+<ul class="quote"><li>业务ChannelHandler绑定的EventExecutor为DefaultEventExecutor，因此调用的就是DefaultEventExecutor 的 execute 方 法，由 于 DefaultEventExecutor 继 承 自SingleThreadEventExecutor，所以执行 execute 方法就是把 Runnable 放入任务队列由单线程执行。</li><li>通过以上分析得知，对于某个Channel对应的业务ChannelHandler实例，无论消费端有多少个线程来并发压测某条链路，对于服务端都只有一个DefaultEventExecutor线程来运行业务 ChannelHandler。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>服务端没有采用传统的业务线程池执行 LogicServerHandler，而是使用 Netty 内置的DefaultEventExecutorGroup来并行调用业务的LogicServerHandler。</li><li>在业务的ConcurrentPerformanceServerHandler中，通过随机的休眠来模拟复杂的业务逻辑操作耗时，同时利用定时任务线程池周期性地统计服务端的处理性能。</li><li>测试结果如图10-1所示，吞吐量是个位数，考虑到业务处理逻辑耗时在100ms～1000ms，因此怀疑业务ChannelHandler并没有被并发执行，而是被单线程执行。</li><li>业务ChannelHandler绑定的EventExecutor为DefaultEventExecutor，因此调用的就是DefaultEventExecutor 的 execute 方 法，由 于 DefaultEventExecutor 继 承 自SingleThreadEventExecutor，所以执行 execute 方法就是把 Runnable 放入任务队列由单线程执行。</li><li>通过以上分析得知，对于某个Channel对应的业务ChannelHandler实例，无论消费端有多少个线程来并发压测某条链路，对于服务端都只有一个DefaultEventExecutor线程来运行业务 ChannelHandler。</li></ul>
+</div>
+<div class="sec">
+<h4>无法并行执行的EventExecutorGroup的原因分析</h4>
+<ul class="point">
+<li><b>DefaultEventExecutorGroup选择EventExecutor的具体实现是调用GenericEventExecutorChooser的next()方法，这个方法会返回单线程EventExecutor</b>
+<ul class="quote"><li>通过group.next()方法，从EventExecutorGroup中选择一个EventExecutor，存放到EventExecutor Map中，选择EventExecutor的具体实现是调用GenericEventExecutorChooser的next()方法。</li><li>由于DefaultEventExecutor继承自SingleThreadEventExecutor，所以执行execute方法就是把Runnable放入任务队列由单线程执行。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>通过group.next()方法，从EventExecutorGroup中选择一个EventExecutor，存放到EventExecutor Map中，选择EventExecutor的具体实现是调用GenericEventExecutorChooser的next()方法。</li><li>由于DefaultEventExecutor继承自SingleThreadEventExecutor，所以执行execute方法就是把Runnable放入任务队列由单线程执行。</li></ul>
+</div>
+<div class="sec">
+<h4>并行执行优化策略和结果</h4>
+<ul class="point">
+<li><b>如果所有客户端的并发连接数(TCP/HTTP链路数)小于业务需要配置的线程数，则建议将请求消息封装成任务，投递到后端业务线程池执行</b>
+<ul class="quote"><li>优化策略(1)的示例代码如下，客户端仍然是通过单TCP链路、以100 QPS的速度压测服务端，在服务端后台启动业务线程池，并发执行复杂的业务逻辑操作(Concurrent-PerformanceServerHandlerV2类)。</li><li>优化策略(1)运行结果如图10-5所示，服务端的处理性能基本维持在100 QPS，与客户端的发送速度相等，说明尽管服务端有复杂的业务逻辑操作，但是由于并发100个线程执行，服务端的处理性能仍然能够满足客户端的压测速度需要。</li></ul>
+</li>
+<li><b>如果所有客户端的并发连接数(TCP/HTTP链路数)大于或者等于业务需要配置的线程数，则可以为业务 ChannelHandler 绑定 EventExecutorGroup，并在业务ChannelHandler中执行各种业务逻辑</b>
+<ul class="quote"><li>优化策略(2)为：客户端创建 100 个 TCP 连接，每个连接每秒发送 1 条请求消息，则整体QPS也为100，此时服务端采用业务ChannelHandler绑定EventExecutorGroup的方案进行测试，相关代码如下(MulChannelPerformanceClient类)。</li><li>优化策略(2)运行结果如图 10-6 所示，服务端的 QPS 维持在 100 左右，说明业务ChannelHandler被并行调用，性能达到了预期目标。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>优化策略(1)的示例代码如下，客户端仍然是通过单TCP链路、以100 QPS的速度压测服务端，在服务端后台启动业务线程池，并发执行复杂的业务逻辑操作(Concurrent-PerformanceServerHandlerV2类)。</li><li>优化策略(1)运行结果如图10-5所示，服务端的处理性能基本维持在100 QPS，与客户端的发送速度相等，说明尽管服务端有复杂的业务逻辑操作，但是由于并发100个线程执行，服务端的处理性能仍然能够满足客户端的压测速度需要。</li><li>优化策略(2)为：客户端创建 100 个 TCP 连接，每个连接每秒发送 1 条请求消息，则整体QPS也为100，此时服务端采用业务ChannelHandler绑定EventExecutorGroup的方案进行测试，相关代码如下(MulChannelPerformanceClient类)。</li><li>优化策略(2)运行结果如图 10-6 所示，服务端的 QPS 维持在 100 左右，说明业务ChannelHandler被并行调用，性能达到了预期目标。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">44</span><span class="mmx-name">10.2 Netty DefaultEventExecutor工作机制</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 6 条要点 · 10 句原句摘录</p>
+<div class="sec">
+<h4>DefaultEventExecutor的工作原理和源码分析</h4>
+<ul class="point">
+<li><b>DefaultEventExecutor是JDK线程池ExecutorService的一种优化实现，可以同时处理普通的Runnable和定时任务</b>
+<ul class="quote"><li>DefaultEventExecutor的run方法实现更加简单，从任务队列中循环获取 Runnable 并执行。</li></ul>
+</li>
+<li><b>DefaultEventExecutor与NioEventLoop的主要差别是，一个侧重于处理网络I/O相关的各种事件，另一个侧重于处理业务相关的逻辑操作</b>
+<ul class="quote"><li>NioEventLoop需要同时轮询Selector，处理网络I/O相关操作，并对双方的执行时间进行控制，防止一方执行时间过长影响另一方的运行。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>DefaultEventExecutor的run方法实现更加简单，从任务队列中循环获取 Runnable 并执行。</li><li>NioEventLoop需要同时轮询Selector，处理网络I/O相关操作，并对双方的执行时间进行控制，防止一方执行时间过长影响另一方的运行。</li></ul>
+</div>
+<div class="sec">
+<h4>业务线程池优化策略</h4>
+<ul class="point">
+<li><b>当 Netty 服务端接入的客户端连接数比较多时，使用 EventExecutorGroup 绑定业务ChannelHandler或者在后台创建一个JDK线程池专门处理业务逻辑操作都是可行的</b>
+<ul class="quote"><li>业务绑定EventExecutorGroup模式的线程模型，对于某个客户端连接Channel，只会注册到一个NioEventLoop线程中，业务的 ChannelHandler 指定了运行线程池 EventExecutorGroup 之后，创建ChannelHandlerContext 上下文时会从 EventExecutorGroup 中选择一个 EventExecutor 绑定到该 Channel 对应的 ChannelHandler 实例。</li><li>采用后端创建一个统一的JDK线程池做业务逻辑处理方案时，网络I/O处理线程 NioEventLoop(多个)与业务线程池就会形成 M 对 N 的映射关系，由于 JDK 的ThreadPoolExecutor采用的是“一个阻塞队列+N个工作线程”的模型，如果业务线程数比较多，就会形成激烈的锁竞争。</li></ul>
+</li>
+<li><b>当客户端并发接入数比较多时，可以利用 Netty提供的网络 I/O 线程和ChannelHandler执行线程绑定机制来降低锁竞争，提升系统性能</b>
+<ul class="quote"><li>利用Netty的ChannelId绑定业务线程池的某个业务线程，后续该Channel的所有消息读取和发送都由绑定的Netty NioEventLoop和业务线程来执行，把锁竞争降到最低。</li><li>业务线程池采用一个线程对应一个消息队列的方式，降低队列的锁竞争。可以继承JDK的ExecutorService自己实现，或者利用Executors的newSingleThreadExecutor()方法创建多个SingleThreadExecutor，这样就实现了工作线程和消息队列的一对一关系。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>业务绑定EventExecutorGroup模式的线程模型，对于某个客户端连接Channel，只会注册到一个NioEventLoop线程中，业务的 ChannelHandler 指定了运行线程池 EventExecutorGroup 之后，创建ChannelHandlerContext 上下文时会从 EventExecutorGroup 中选择一个 EventExecutor 绑定到该 Channel 对应的 ChannelHandler 实例。</li><li>采用后端创建一个统一的JDK线程池做业务逻辑处理方案时，网络I/O处理线程 NioEventLoop(多个)与业务线程池就会形成 M 对 N 的映射关系，由于 JDK 的ThreadPoolExecutor采用的是“一个阻塞队列+N个工作线程”的模型，如果业务线程数比较多，就会形成激烈的锁竞争。</li><li>利用Netty的ChannelId绑定业务线程池的某个业务线程，后续该Channel的所有消息读取和发送都由绑定的Netty NioEventLoop和业务线程来执行，把锁竞争降到最低。</li><li>业务线程池采用一个线程对应一个消息队列的方式，降低队列的锁竞争。可以继承JDK的ExecutorService自己实现，或者利用Executors的newSingleThreadExecutor()方法创建多个SingleThreadExecutor，这样就实现了工作线程和消息队列的一对一关系。</li></ul>
+</div>
+<div class="sec">
+<h4>Netty线程绑定机制原理和源码分析</h4>
+<ul class="point">
+<li><b>NioEventLoop 线程与 SocketChannel 绑定关系的创建，由ServerBootstrapAcceptor负责将新接入的 SocketChannel 注册到 NioEventLoop 的 Selector，同时建立SocketChannel和NioEventLoop的绑定关系</b>
+<ul class="quote"><li>当Netty服务端接收客户端TCP连接时，触发channelRead方法，由ServerBootstrap-Acceptor 负责将新接入的 SocketChannel 注册到 NioEventLoop 的 Selector。</li><li>next方法负责从NioEventLoopGroup中选择一个NioEventLoop线程做SocketChannel的注册。</li></ul>
+</li>
+<li><b>业务ChannelHandler异步执行的线程切换点发生在AbstractChannelHandlerContext的invokeChannelRead(final AbstractChannelHandlerContext next，Object msg)方法中，由Netty的NioEventLoop线程切换到业务ChannelHandler绑定的DefaultEventExecutor中</b>
+<ul class="quote"><li>切换之前，由Netty的I/O线程NioEventLoop执行ChannelHandler。</li><li>由于业务 ChannelHandler 绑定了 DefaultEventExecutor，因此业务 ChannelHandler 的执行被切换到与Channel绑定的DefaultEventExecutor线程中。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>当Netty服务端接收客户端TCP连接时，触发channelRead方法，由ServerBootstrap-Acceptor 负责将新接入的 SocketChannel 注册到 NioEventLoop 的 Selector。</li><li>next方法负责从NioEventLoopGroup中选择一个NioEventLoop线程做SocketChannel的注册。</li><li>切换之前，由Netty的I/O线程NioEventLoop执行ChannelHandler。</li><li>由于业务 ChannelHandler 绑定了 DefaultEventExecutor，因此业务 ChannelHandler 的执行被切换到与Channel绑定的DefaultEventExecutor线程中。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">45</span><span class="mmx-name">10.3 总结</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 2 条要点 · 3 句原句摘录</p>
+<div class="sec">
+<h4>Netty框架的性能优化</h4>
+<ul class="point">
+<li><b>Netty框架本身实现了高性能的网络读写操作，但是后端业务逻辑执行却是影响性能的关键要素</b>
+<ul class="quote"><li>如果直接将复杂的业务逻辑操作放在I/O线程中完成，一些同步阻塞操作可能会导致I/O线程被阻塞。</li></ul>
+</li>
+<li><b>当把业务逻辑单独拆分到业务线程池中进行处理，与I/O线程隔离时，不同的业务线程模型对性能的影响也非常大</b>
+<ul class="quote"><li>Netty 提供了默认的并行调度ChannelHandler的能力，但是如果使用不当，也会带来性能问题。</li><li>对于业务自定义实现的线程池，如果追求更高的性能，就需要在消除或者减轻锁竞争上下工夫，线程绑定技术是一个不错的选择，但是也需要根据业务实际场景来实现。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如果直接将复杂的业务逻辑操作放在I/O线程中完成，一些同步阻塞操作可能会导致I/O线程被阻塞。</li><li>Netty 提供了默认的并行调度ChannelHandler的能力，但是如果使用不当，也会带来性能问题。</li><li>对于业务自定义实现的线程池，如果追求更高的性能，就需要在消除或者减轻锁竞争上下工夫，线程绑定技术是一个不错的选择，但是也需要根据业务实际场景来实现。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">46</span><span class="mmx-name">第11章 IoT百万长连接性能调优案例</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 3 条要点 · 4 句原句摘录</p>
+<div class="sec">
+<h4>IoT百万长连接性能调优案例概述</h4>
+<ul class="point">
+<li><b>IoT领域对服务端的协议接入和处理能力要求极高</b>
+<ul class="quote"><li>要接入海量的硬件设备和传感器，且协议多样化。</li><li>在极短的时间内处理大量的数据。</li></ul>
+</li>
+<li><b>Netty在IoT领域得到了较广泛的应用</b>
+<ul class="quote"><li>Netty内置了多种协议栈(TCP、HTTP、MQTT等)。</li><li>利用它提供的编解码框架可以快速地完成私有协议的接入。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>要接入海量的硬件设备和传感器，且协议多样化。</li><li>在极短的时间内处理大量的数据。</li><li>Netty内置了多种协议栈(TCP、HTTP、MQTT等)。</li><li>利用它提供的编解码框架可以快速地完成私有协议的接入。</li></ul>
+</div>
+<div class="sec">
+<h4>基于Netty构建的物联网服务端性能挑战</h4>
+<ul class="point">
+<li><b>实现更多设备的接入和数据收发，提升性能，是一个巨大的挑战。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">47</span><span class="mmx-name">11.1 海量长连接接入面临的挑战</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 11 条要点 · 3 句原句摘录</p>
+<div class="sec">
+<h4>海量长连接接入面临的挑战</h4>
+<ul class="point">
+<li><b>客户端并发连接数达到数十万或者数百万时，系统一个较小的抖动就会导致很严重的后果</b>
+<ul class="quote"><li>服务端的 GC，导致应用暂停(STW)的 GC 持续几秒，就会导致海量的客户端设备掉线或者消息积压。</li><li>一旦系统恢复，会有海量的设备接入或者海量的数据发送，很可能瞬间就把服务端冲垮。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>服务端的 GC，导致应用暂停(STW)的 GC 持续几秒，就会导致海量的客户端设备掉线或者消息积压。</li><li>一旦系统恢复，会有海量的设备接入或者海量的数据发送，很可能瞬间就把服务端冲垮。</li></ul>
+</div>
+<div class="sec">
+<h4>IoT设备接入特点</h4>
+<ul class="point">
+<li><b>使用的网络主要是运营商的无线移动网络，网络质量不稳定</b>
+<ul class="quote"><li>在一些偏远地区、丘陵地带等信号很差，网络容易闪断。</li></ul>
+</li>
+<li><b>海量的端侧设备接入，而且通常使用长连接，服务端的压力很大。</b>
+</li>
+<li><b>不稳定，消息丢失、重复发送、延迟送达、过期发送时有发生。</b>
+</li>
+<li><b>协议不统一，有各种私有协议，开发和测试成本较高。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在一些偏远地区、丘陵地带等信号很差，网络容易闪断。</li></ul>
+</div>
+<div class="sec">
+<h4>IoT服务端性能优化场景</h4>
+<ul class="point">
+<li><b>降成本：对于很多初创型公司，资金和资源相对比较紧张，希望服务端的单节点性能足够高，以降低硬件和运维成本。</b>
+</li>
+<li><b>云服务提供商：对于提供IoT解决方案的云服务提供商，由于部署规模比较大(假如有上千个服务节点)，单节点的性能提升效益会被放大，带来的经济收益很高。</b>
+</li>
+<li><b>技术竞争力：在很多场景下，单个服务节点的处理性能仍然是最重要的技术指标之一，高性能对提升产品竞争力非常重要。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>服务端面临的性能挑战</h4>
+<ul class="point">
+<li><b>对协议接入相关的操作系统参数没有进行针对性的调优。</b>
+</li>
+<li><b>对Netty海量TCP接入的性能参数不熟悉，没有做优化。</b>
+</li>
+<li><b>对JVM的垃圾收集器没有做调优，不合理的内存设置或者GC参数导致GC频率和应用中断频发，影响系统的稳定性。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">48</span><span class="mmx-name">11.2 智能家居内存泄漏问题</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 5 条要点 · 9 句原句摘录</p>
+<div class="sec">
+<h4>智能家居内存泄漏问题</h4>
+<ul class="point">
+<li><b>MQTT消息服务中间件保持10万用户在线长连接，2万用户并发消息请求，运行一段时间后出现内存泄漏</b>
+<ul class="quote"><li>硬件资源：MQTT消息服务中间件服务器内存16GB，CPU 8核。</li><li>Netty 中 boss 线程池大小为 1，worker 线程池大小为 8，其余线程分配给业务使用。</li><li>该分配方式后来调整为worker线程池大小为16，问题依旧。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>硬件资源：MQTT消息服务中间件服务器内存16GB，CPU 8核。</li><li>Netty 中 boss 线程池大小为 1，worker 线程池大小为 8，其余线程分配给业务使用。</li><li>该分配方式后来调整为worker线程池大小为16，问题依旧。</li></ul>
+</div>
+<div class="sec">
+<h4>服务端内存泄漏原因定位</h4>
+<ul class="point">
+<li><b>Netty的ScheduledFutureTask增加了9076%，达到110万个实例，导致内存泄漏</b>
+<ul class="quote"><li>用户使用 IdleStateHandler 在链路空闲时进行业务逻辑处理，但是空闲时间设置得比较长，为 15 分钟。</li><li>Netty 的 IdleStateHandler 会根据用户的使用场景，启动 三 类 定 时 任 务，分 别 是 ReaderIdleTimeoutTask、WriterIdleTimeoutTask 和AllIdleTimeoutTask，它们都会被加入NioEventLoop的任务队列调度和执行。</li><li>由于超时时间过长，10万个长连接会创建10万个ScheduledFutureTask对象，每个对象还保存了业务的成员变量，非常消耗内存。</li><li>用户的老年代设置得比较大，一些定时任务被晋升到老年代，没有被新生代GC回收，导致内存一直增长，用户误认为存在内存泄漏。</li></ul>
+</li>
+<li><b>将超时时间设置为 45 秒后，内存可以正常回收，问题解决。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>用户使用 IdleStateHandler 在链路空闲时进行业务逻辑处理，但是空闲时间设置得比较长，为 15 分钟。</li><li>Netty 的 IdleStateHandler 会根据用户的使用场景，启动 三 类 定 时 任 务，分 别 是 ReaderIdleTimeoutTask、WriterIdleTimeoutTask 和AllIdleTimeoutTask，它们都会被加入NioEventLoop的任务队列调度和执行。</li><li>由于超时时间过长，10万个长连接会创建10万个ScheduledFutureTask对象，每个对象还保存了业务的成员变量，非常消耗内存。</li><li>用户的老年代设置得比较大，一些定时任务被晋升到老年代，没有被新生代GC回收，导致内存一直增长，用户误认为存在内存泄漏。</li></ul>
+</div>
+<div class="sec">
+<h4>问题背后的一些思考</h4>
+<ul class="point">
+<li><b>10万数量级的长连接，导致小问题被放大，引发了后续的各种问题</b>
+<ul class="quote"><li>如果是100个长连接，即便是长周期的定时任务，也不存在内存泄漏问题，在新生代中通过minor GC就可以实现内存回收。</li></ul>
+</li>
+<li><b>对于海量长连接的接入场景，代码处理稍有不慎，就满盘皆输</b>
+<ul class="quote"><li>下一节我们针对 Netty的架构特点，讲解如何对海量设备接入做性能调优。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如果是100个长连接，即便是长周期的定时任务，也不存在内存泄漏问题，在新生代中通过minor GC就可以实现内存回收。</li><li>下一节我们针对 Netty的架构特点，讲解如何对海量设备接入做性能调优。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">49</span><span class="mmx-name">11.3 操作系统参数调优</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 6 条要点 · 16 句原句摘录</p>
+<div class="sec">
+<h4>文件描述符的调优</h4>
+<ul class="point">
+<li><b>查看系统最大文件句柄数，如果不满足，通过/etc/sysctl.conf命令插入配置</b>
+<ul class="quote"><li>配置完成后，执行sysctl-p命令，让配置修改立即生效。</li></ul>
+</li>
+<li><b>对单进程打开的最大句柄数进行设置</b>
+<ul class="quote"><li>当并发接入的TCP连接数超过上限时，就会提示“too many open files”，所有新的客户端接入将失败。</li><li>通过/etc/security/limits.conf命令添加配置参数。</li><li>修改之后保存，注销当前用户，重新登录，通过ulimit-a命令查看修改是否生效。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>配置完成后，执行sysctl-p命令，让配置修改立即生效。</li><li>当并发接入的TCP连接数超过上限时，就会提示“too many open files”，所有新的客户端接入将失败。</li><li>通过/etc/security/limits.conf命令添加配置参数。</li><li>修改之后保存，注销当前用户，重新登录，通过ulimit-a命令查看修改是否生效。</li></ul>
+</div>
+<div class="sec">
+<h4>TCP/IP相关参数的调优</h4>
+<ul class="point">
+<li><b>调整net.ipv4.tcp_rmem、net.ipv4.tcp_wmem、net.ipv4.tcp_mem参数</b>
+<ul class="quote"><li>net.ipv4.tcp_rmem：为每个TCP连接分配的读缓冲区内存大小。</li><li>net.ipv4.tcp_wmem：为每个TCP连接分配的写缓冲区内存大小。</li><li>net.ipv4.tcp_mem：内核分配给TCP连接的内存，单位是page。</li></ul>
+</li>
+<li><b>调整net.ipv4.tcp_keepalive_time、tcp_keepalive_intvl、tcp_keepalive_probes参数</b>
+<ul class="quote"><li>net.ipv4.tcp_keepalive_time：最近一次数据包发送与第一次keep alive探测消息发送的时间间隔。</li><li>tcp_keepalive_intvl：在未获得探测消息响应时，发送探测消息的时间间隔。</li><li>tcp_keepalive_probes：判断TCP连接失效连续发送的探测消息个数。</li></ul>
+</li>
+<li><b>开启net.ipv4.tcp_tw_reuse、net.ipv4.tcp_tw_recycle、net.ipv4.tcp_fin_timeout参数</b>
+<ul class="quote"><li>net.ipv4.tcp_tw_reuse：是否允许将TIME_WAIT Socket重新用于新的TCP连接。</li><li>net.ipv4.tcp_tw_recycle：是否开启TCP连接中TIME_WAIT Socket的快速回收功能。</li><li>net.ipv4.tcp_fin_timeout：套接字自身关闭时保持在FIN_WAIT_2状态的时间。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>net.ipv4.tcp_rmem：为每个TCP连接分配的读缓冲区内存大小。</li><li>net.ipv4.tcp_wmem：为每个TCP连接分配的写缓冲区内存大小。</li><li>net.ipv4.tcp_mem：内核分配给TCP连接的内存，单位是page。</li><li>net.ipv4.tcp_keepalive_time：最近一次数据包发送与第一次keep alive探测消息发送的时间间隔。</li><li>tcp_keepalive_intvl：在未获得探测消息响应时，发送探测消息的时间间隔。</li><li>tcp_keepalive_probes：判断TCP连接失效连续发送的探测消息个数。</li><li>net.ipv4.tcp_tw_reuse：是否允许将TIME_WAIT Socket重新用于新的TCP连接。</li><li>net.ipv4.tcp_tw_recycle：是否开启TCP连接中TIME_WAIT Socket的快速回收功能。</li><li>net.ipv4.tcp_fin_timeout：套接字自身关闭时保持在FIN_WAIT_2状态的时间。</li></ul>
+</div>
+<div class="sec">
+<h4>多网卡队列和软中断的调优</h4>
+<ul class="point">
+<li><b>判断当前系统是否支持多队列网卡，如果不支持，如果内核版本支持RPS，开启RPS后可以实现软中断</b>
+<ul class="quote"><li>通过命令“lspci-vvv”或者“ethtool-l 网卡interface名”查看网卡驱动型号。</li><li>有些网卡驱动默认开启了多队列网卡，有些则没有，由于不同的网卡驱动、云服务商提供的开启命令不同，因此需要根据实际情况处理。</li><li>RPS根据数据包的源地址、目的地址及目的和源端口，算出一个hash值，然后根据这个hash值选择软中断运行的CPU。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>通过命令“lspci-vvv”或者“ethtool-l 网卡interface名”查看网卡驱动型号。</li><li>有些网卡驱动默认开启了多队列网卡，有些则没有，由于不同的网卡驱动、云服务商提供的开启命令不同，因此需要根据实际情况处理。</li><li>RPS根据数据包的源地址、目的地址及目的和源端口，算出一个hash值，然后根据这个hash值选择软中断运行的CPU。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">50</span><span class="mmx-name">11.4 Netty性能调优</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 7 个小节 · 13 条要点 · 21 句原句摘录</p>
+<div class="sec">
+<h4>设置合理的线程数</h4>
+<ul class="point">
+<li><b>对于线程池的调优，主要集中在Acceptor线程池和I/O工作线程池上</b>
+<ul class="quote"><li>Acceptor线程池用于接收海量设备 TCP 连接、TLS 握手的。</li><li>I/O工作线程池用于处理网络数据读写、心跳发送的。</li></ul>
+</li>
+<li><b>服务端可以监听多个端口，利用主从Reactor线程模型做接入优化</b>
+<ul class="quote"><li>服务端用于接收客户端连接的不再是一个单独的NIO线程，而是一个独立的NIO线程池。</li><li>Acceptor接收到客户端TCP连接请求并处理后，将新创建的SocketChannel注册到I/O线程池的某个I/O线程，由它负责SocketChannel的读写和编解码工作。</li></ul>
+</li>
+<li><b>对于I/O工作线程池的优化，可以先采用系统默认值进行性能测试，然后通过适当调大NioEventLoop线程的个数来提升网络的读写性能</b>
+<ul class="quote"><li>如果发现I/O线程的热点停留在读或者写操作，或者停留在ChannelHandler的执行处，则可以通过适当调大NioEventLoop线程的个数来提升网络的读写性能。</li><li>调整方式有两种：接口API指定：在创建NioEventLoopGroup实例时指定线程数；系统参数指定：通过-Dio.netty.eventLoopThreads来指定NioEventLoopGroup线程池的线程数。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Acceptor线程池用于接收海量设备 TCP 连接、TLS 握手的。</li><li>I/O工作线程池用于处理网络数据读写、心跳发送的。</li><li>服务端用于接收客户端连接的不再是一个单独的NIO线程，而是一个独立的NIO线程池。</li><li>Acceptor接收到客户端TCP连接请求并处理后，将新创建的SocketChannel注册到I/O线程池的某个I/O线程，由它负责SocketChannel的读写和编解码工作。</li><li>如果发现I/O线程的热点停留在读或者写操作，或者停留在ChannelHandler的执行处，则可以通过适当调大NioEventLoop线程的个数来提升网络的读写性能。</li><li>调整方式有两种：接口API指定：在创建NioEventLoopGroup实例时指定线程数；系统参数指定：通过-Dio.netty.eventLoopThreads来指定NioEventLoopGroup线程池的线程数。</li></ul>
+</div>
+<div class="sec">
+<h4>心跳优化</h4>
+<ul class="point">
+<li><b>要能够及时检测失效的连接，并将其剔除，防止无效的连接句柄积压，导致OOM等问题</b>
+<ul class="quote"><li>设置合理的心跳周期，防止心跳定时任务积压，造成频繁的老年代 GC。</li><li>使用 Netty提供的链路空闲检测机制，不要自己创建定时任务线程池，加重系统的负担，以及增加潜在的并发安全问题。</li></ul>
+</li>
+<li><b>不同协议的心跳检测机制存在差异，归纳起来主要分为两类：Ping-Pong型心跳和Ping-Ping型心跳</b>
+<ul class="quote"><li>Ping-Pong型心跳：由通信一方定时发送Ping消息，对方接到Ping消息立即返回Pong应答消息给对方，属于“请求-响应型”心跳。</li><li>Ping-Ping型心跳：不区分心跳请求和应答，由通信双方按照约定定时向对方发送心跳Ping消息，它属于双向心跳。</li></ul>
+</li>
+<li><b>利用Netty提供的链路空闲检测机制，可以非常灵活地实现协议层的心跳检测</b>
+<ul class="quote"><li>如果选择双向心跳，在初始化Channel时将Netty的IdleStateHandler实例添加到ChannelPipeline中，然后监听 READER_IDLE 事件，一旦 READER_IDLE 事件发生，说明周期 T 内没有读取到设备的消息，触发服务端主动发送心跳，检测链路是否存活，如果发生I/O异常说明链路已经失效，则主动关闭链路；如果发送成功，则等待最终的心跳超时，即在连续N个周期T内都没有接收到端侧设备发送的业务数据或者心跳消息，则说明端侧设备已经发生故障，服务端主动关闭连接，释放资源。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>设置合理的心跳周期，防止心跳定时任务积压，造成频繁的老年代 GC。</li><li>使用 Netty提供的链路空闲检测机制，不要自己创建定时任务线程池，加重系统的负担，以及增加潜在的并发安全问题。</li><li>Ping-Pong型心跳：由通信一方定时发送Ping消息，对方接到Ping消息立即返回Pong应答消息给对方，属于“请求-响应型”心跳。</li><li>Ping-Ping型心跳：不区分心跳请求和应答，由通信双方按照约定定时向对方发送心跳Ping消息，它属于双向心跳。</li><li>如果选择双向心跳，在初始化Channel时将Netty的IdleStateHandler实例添加到ChannelPipeline中，然后监听 READER_IDLE 事件，一旦 READER_IDLE 事件发生，说明周期 T 内没有读取到设备的消息，触发服务端主动发送心跳，检测链路是否存活，如果发生I/O异常说明链路已经失效，则主动关闭链路；如果发送成功，则等待最终的心跳超时，即在连续N个周期T内都没有接收到端侧设备发送的业务数据或者心跳消息，则说明端侧设备已经发生故障，服务端主动关闭连接，释放资源。</li></ul>
+</div>
+<div class="sec">
+<h4>接收和发送缓冲区调优</h4>
+<ul class="point">
+<li><b>在一些场景下，端侧设备会周期性地上报数据和发送心跳，单个链路的消息收发量并不大，针对此类场景，可以通过调小 TCP的接收和发送缓冲区来降低单个 TCP 连接的资源占用率</b>
+<ul class="quote"><li>需要指出的是，对于不同的应用场景，收发缓冲区的最优值可能不同，用户需要根据实际场景，结合性能测试数据进行针对性的调优。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>需要指出的是，对于不同的应用场景，收发缓冲区的最优值可能不同，用户需要根据实际场景，结合性能测试数据进行针对性的调优。</li></ul>
+</div>
+<div class="sec">
+<h4>合理使用内存池</h4>
+<ul class="point">
+<li><b>为了尽量重用缓冲区，Netty提供了基于内存池的缓冲区重用机制</b>
+<ul class="quote"><li>在物联网场景下，需要为每个接入的端侧设备至少分配一个接收和发送缓冲区对象，采用传统的非池模式，每次消息读写都需要创建和释放ByteBuf对象，如果有100万个连接，每秒上报一次数据或者心跳，就会有100万次/秒的ByteBuf对象申请和释放，即便服务端的内存可以满足要求，GC的压力也会非常大。</li><li>如果使用内存池，则当A链路接收到新的数据报时，从NioEventLoop的内存池中申请空闲的ByteBuf，解码后调用release将ByteBuf释放到内存池中，供后续的B链路使用。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在物联网场景下，需要为每个接入的端侧设备至少分配一个接收和发送缓冲区对象，采用传统的非池模式，每次消息读写都需要创建和释放ByteBuf对象，如果有100万个连接，每秒上报一次数据或者心跳，就会有100万次/秒的ByteBuf对象申请和释放，即便服务端的内存可以满足要求，GC的压力也会非常大。</li><li>如果使用内存池，则当A链路接收到新的数据报时，从NioEventLoop的内存池中申请空闲的ByteBuf，解码后调用release将ByteBuf释放到内存池中，供后续的B链路使用。</li></ul>
+</div>
+<div class="sec">
+<h4>防止I/O线程被意外阻塞</h4>
+<ul class="point">
+<li><b>通常情况下，大家都知道不能在Netty的I/O线程上做执行时间不可控的操作，例如访问数据库、调用第三方服务等</b>
+<ul class="quote"><li>但是有些隐形的阻塞操作却容易被忽略，例如打印日志。</li><li>在生产环境中，通常需要实时打印接口日志，其他日志处于ERROR级别，当服务发生 I/O 异常时，会记录异常日志。如果当前磁盘的 WIO 比较高，写日志文件操作可能会被同步阻塞(阻塞时间无法预测)。这就会导致Netty的NioEventLoop线程被阻塞，Socket链路无法被及时关闭，其他的链路也无法进行读写操作。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>但是有些隐形的阻塞操作却容易被忽略，例如打印日志。</li><li>在生产环境中，通常需要实时打印接口日志，其他日志处于ERROR级别，当服务发生 I/O 异常时，会记录异常日志。如果当前磁盘的 WIO 比较高，写日志文件操作可能会被同步阻塞(阻塞时间无法预测)。这就会导致Netty的NioEventLoop线程被阻塞，Socket链路无法被及时关闭，其他的链路也无法进行读写操作。</li></ul>
+</div>
+<div class="sec">
+<h4>I/O线程和业务线程分离</h4>
+<ul class="point">
+<li><b>如果服务端不做复杂的业务逻辑操作，仅是简单的内存操作和消息转发，则可以通过调大NioEventLoop工作线程池的方式，直接在I/O线程中执行业务ChannelHandler</b>
+<ul class="quote"><li>这样便减少了一次线程上下文切换，性能反而更高。</li></ul>
+</li>
+<li><b>如果有复杂的业务逻辑操作，则建议I/O线程和业务线程分离</b>
+<ul class="quote"><li>对于I/O线程，由于互相之间不存在锁竞争，可以创建一个大的 NioEventLoopGroup 线程组，所有 Channel 都共享同一个线程池。</li><li>对于后端的业务线程池，则建议创建多个小的业务线程池，线程池可以与 I/O线程绑定，这样既减少了锁竞争，又提升了后端的处理性能。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>这样便减少了一次线程上下文切换，性能反而更高。</li><li>对于I/O线程，由于互相之间不存在锁竞争，可以创建一个大的 NioEventLoopGroup 线程组，所有 Channel 都共享同一个线程池。</li><li>对于后端的业务线程池，则建议创建多个小的业务线程池，线程池可以与 I/O线程绑定，这样既减少了锁竞争，又提升了后端的处理性能。</li></ul>
+</div>
+<div class="sec">
+<h4>针对端侧并发连接数的流控</h4>
+<ul class="point">
+<li><b>无论服务端的性能优化到多少，都需要考虑流控功能</b>
+<ul class="quote"><li>当资源成为瓶颈，或者遇到端侧设备的大量接入，需要通过流控对系统做保护。</li></ul>
+</li>
+<li><b>在 Netty中，可以非常方便地实现流控功能：新增一个 FlowControlChannelHandler，添加到ChannelPipeline靠前的位置，继承channelActive()方法，创建TCP链路后，执行流控逻辑，如果达到流控阈值，则拒绝该连接，调用ChannelHandlerContext的close()方法关闭连接</b>
+<ul class="quote"><li>TLS/SSL的连接数的流控相对复杂一些，可以在TLS/SSL握手成功后，监听握手成功的事件，执行流控逻辑。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>当资源成为瓶颈，或者遇到端侧设备的大量接入，需要通过流控对系统做保护。</li><li>TLS/SSL的连接数的流控相对复杂一些，可以在TLS/SSL握手成功后，监听握手成功的事件，执行流控逻辑。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">51</span><span class="mmx-name">11.5 JVM相关性能优化</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 8 条要点 · 19 句原句摘录</p>
+<div class="sec">
+<h4>GC调优</h4>
+<ul class="point">
+<li><b>确定GC优化目标：吞吐量、延迟和内存占用</b>
+<ul class="quote"><li>吞吐量：是评价 GC能力的重要指标，在不考虑 GC引起的停顿时间或内存消耗时，吞吐量是GC能支撑应用程序达到的最高性能指标。</li><li>延迟：GC 能力的最重要指标之一，是由于 GC 引起的停顿时间，优化目标是缩短延迟时间或完全消除停顿(STW)，避免应用程序在运行过程中发生抖动。</li><li>内存占用：GC正常时占用的内存量。</li></ul>
+</li>
+<li><b>确定服务端内存占用：活跃数据的计算方式</b>
+<ul class="quote"><li>通过GC日志采集GC数据，获取应用程序稳定时老年代占用的 Java 堆大小，以及永久代(元数据区)占用的 Java 堆大小，两者之和就是活跃数据的内存占用大小。</li></ul>
+</li>
+<li><b>GC数据的采集：通过-XX：+PrintGC、-XX：+PrintGCDetails 和-XX：+PrintGCDateStamps 等参数打印GC日志，或者通过Visual GC工具监控GC数据</b>
+<ul class="quote"><li>如果应用程序没有或者很少发生Full GC，则可以通过jvisualvm等工具人工触发Full GC。</li></ul>
+</li>
+<li><b>GC数据解读：新生代GC数据解读</b>
+<ul class="quote"><li>通过打印GC日志方式来采集垃圾回收数据，需要人工解读GC相关信息。</li></ul>
+</li>
+<li><b>Java堆大小设置原则</b>
+<ul class="quote"><li>上述经验数据已经可以满足大多数应用场景的需要，如果业务场景比较特殊，可以根据GC统计数据和应用性能测试结果进行相应的优化。</li></ul>
+</li>
+<li><b>垃圾收集器的选择：如果是 JDK8及以上版本，建议选择 G1收集器，如果是较低版本的 JDK，或者业务已经积累了一些优化的GC参数，则可以继续使用“ParNew收集器+CMS收集器”组合</b>
+<ul class="quote"><li>CMS吞吐量调优的主要策略：增加新生代空间，降低新生代GC频率，减少固定时间内新生代GC的次数；增加老年代空间，降低 CMS 的频率并减少内存碎片，最终减小并发模式失效引起Full GC发生的概率；调整新生代 Eden和 Survivor 空间的大小比例，减少由新生代晋升到老年代的对象数目，降低CMS GC频率。</li><li>G1调优的策略：不要使用-Xmn 选型或者-XX：NewRatio 等其他相关选型显式设置年轻代的大小，这样会覆盖暂停时间指标；暂停时间不要设置得太小，否则为了达到暂停时间目标会增加垃圾回收的开销，影响吞吐量指标；防止触发Full GC。</li></ul>
+</li>
+<li><b>一些GC调优误区</b>
+<ul class="quote"><li>在生产环境中不配置GC日志打印参数，担心影响业务性能。</li><li>GC 日志格式选择-XX：+PrintGCTimeStamps，导致 GC 日志很难跟其他业务日志对应起来。</li><li>GC日志文件路径设置为静态路径，例如gc.log，没有配置绕接、切换策略，导致重启之后日志被覆盖。</li><li>GC日志文件没有配置单个文件大小、绕接和备份机制，导致单个GC文件过大。</li><li>只有Full GC才会导致应用暂停，分析STW问题时直接使用Full GC关键字搜索，其他的不看。</li><li>给出最优的GC参数或者明确GC优化方向之后，通过一次调整就能解决问题。</li><li>业务内存使用不当导致的性能问题，希望通过GC参数优化解决问题，业务不用改代码。</li><li>只有GC才会导致应用暂停。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>吞吐量：是评价 GC能力的重要指标，在不考虑 GC引起的停顿时间或内存消耗时，吞吐量是GC能支撑应用程序达到的最高性能指标。</li><li>延迟：GC 能力的最重要指标之一，是由于 GC 引起的停顿时间，优化目标是缩短延迟时间或完全消除停顿(STW)，避免应用程序在运行过程中发生抖动。</li><li>内存占用：GC正常时占用的内存量。</li><li>通过GC日志采集GC数据，获取应用程序稳定时老年代占用的 Java 堆大小，以及永久代(元数据区)占用的 Java 堆大小，两者之和就是活跃数据的内存占用大小。</li><li>如果应用程序没有或者很少发生Full GC，则可以通过jvisualvm等工具人工触发Full GC。</li><li>通过打印GC日志方式来采集垃圾回收数据，需要人工解读GC相关信息。</li><li>上述经验数据已经可以满足大多数应用场景的需要，如果业务场景比较特殊，可以根据GC统计数据和应用性能测试结果进行相应的优化。</li><li>CMS吞吐量调优的主要策略：增加新生代空间，降低新生代GC频率，减少固定时间内新生代GC的次数；增加老年代空间，降低 CMS 的频率并减少内存碎片，最终减小并发模式失效引起Full GC发生的概率；调整新生代 Eden和 Survivor 空间的大小比例，减少由新生代晋升到老年代的对象数目，降低CMS GC频率。</li><li>G1调优的策略：不要使用-Xmn 选型或者-XX：NewRatio 等其他相关选型显式设置年轻代的大小，这样会覆盖暂停时间指标；暂停时间不要设置得太小，否则为了达到暂停时间目标会增加垃圾回收的开销，影响吞吐量指标；防止触发Full GC。</li><li>在生产环境中不配置GC日志打印参数，担心影响业务性能。</li><li>GC 日志格式选择-XX：+PrintGCTimeStamps，导致 GC 日志很难跟其他业务日志对应起来。</li><li>GC日志文件路径设置为静态路径，例如gc.log，没有配置绕接、切换策略，导致重启之后日志被覆盖。</li><li>GC日志文件没有配置单个文件大小、绕接和备份机制，导致单个GC文件过大。</li><li>只有Full GC才会导致应用暂停，分析STW问题时直接使用Full GC关键字搜索，其他的不看。</li><li>给出最优的GC参数或者明确GC优化方向之后，通过一次调整就能解决问题。</li><li>业务内存使用不当导致的性能问题，希望通过GC参数优化解决问题，业务不用改代码。</li><li>只有GC才会导致应用暂停。</li></ul>
+</div>
+<div class="sec">
+<h4>其他优化手段</h4>
+<ul class="point">
+<li><b>客户端配置虚拟IP以解决连接数限制问题</b>
+<ul class="quote"><li>配置完成后通过 ifconfig eth0：1 查看 IP 与子网掩码是否正确，如果没有问题，通过ifconfig eth0：1 up启动新增的虚拟IP进行测试。</li><li>操作系统对单个IP是有连接数限制的，每个IP对应的端口范围为0～65535，其中0～1023被系统占用，所以连接能够分配的端口从1024开始，考虑到其他进程的端口占用，单个 IP 能够接入的连接数约为 6万个。如果系统支持多网卡，则可以采用多网卡、多 IP的方式解决，否则需要使用虚拟IP的方式解决连接数限制问题。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>配置完成后通过 ifconfig eth0：1 查看 IP 与子网掩码是否正确，如果没有问题，通过ifconfig eth0：1 up启动新增的虚拟IP进行测试。</li><li>操作系统对单个IP是有连接数限制的，每个IP对应的端口范围为0～65535，其中0～1023被系统占用，所以连接能够分配的端口从1024开始，考虑到其他进程的端口占用，单个 IP 能够接入的连接数约为 6万个。如果系统支持多网卡，则可以采用多网卡、多 IP的方式解决，否则需要使用虚拟IP的方式解决连接数限制问题。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">52</span><span class="mmx-name">11.6 总结</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 1 条要点 · 2 句原句摘录</p>
+<div class="sec">
+<h4>分布式集群提升服务端处理能力</h4>
+<ul class="point">
+<li><b>分布式集群可以降低单个节点的风险，利用云平台的弹性伸缩实现服务端的快速扩容</b>
+<ul class="quote"><li>如果每个节点负担过重，一旦某个节点宕机，流量会瞬间转移到其他节点，导致其他节点超负荷运行，系统的可靠性降低。</li><li>通过“分布式+弹性伸缩”构建可平滑扩容的IoT服务端，是未来的一种主流模式。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如果每个节点负担过重，一旦某个节点宕机，流量会瞬间转移到其他节点，导致其他节点超负荷运行，系统的可靠性降低。</li><li>通过“分布式+弹性伸缩”构建可平滑扩容的IoT服务端，是未来的一种主流模式。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">53</span><span class="mmx-name">第12章 静态检查修改不当引起性能下降案例</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 1 条要点 · 1 句原句摘录</p>
+<div class="sec">
+<h4>静态检查修改不当可能引起性能下降</h4>
+<ul class="point">
+<li><b>静态检查问题按照建议修改也许能够消除错误，但是放到整个业务上下文中就有问题</b>
+<ul class="quote"><li>开发人员不能机械地以消除静态告警或错误为目标，而是要结合代码上下文和业务场景进行修改。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>开发人员不能机械地以消除静态告警或错误为目标，而是要结合代码上下文和业务场景进行修改。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">54</span><span class="mmx-name">12.1 Edge Ser vice性能严重下降问题</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 9 条要点 · 11 句原句摘录</p>
+<div class="sec">
+<h4>Edge Service性能下降问题</h4>
+<ul class="point">
+<li><b>新版本性能测试时，Restful透传场景，性能相比上一个版本下降超过了50%</b>
+<ul class="quote"><li>需要定位问题原因并优化平台性能。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>需要定位问题原因并优化平台性能。</li></ul>
+</div>
+<div class="sec">
+<h4>Edge Service热点代码分析</h4>
+<ul class="point">
+<li><b>获取 Restful 请求消息体时，调用了字节数组拷贝方法，成为性能热点和瓶颈点</b>
+<ul class="quote"><li>在上一个版本中，获取请求消息体时直接返回的就是 body 对象，没有额外做内存拷贝。</li><li>新版本为什么要修改原有的实现方式呢？查看 Git 提交记录，与修改人员进行交流后得知，这段代码的修改原因竟然是 CI 静态检查(FindBugs/PMD 等)报错。</li><li>静态检查报错的原因：如果直接返回 body 对象，这个对象可能会被引用者修改，为了防止被非法或者意外修改，所以需要每次获取时拷贝一个新的字节数组。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在上一个版本中，获取请求消息体时直接返回的就是 body 对象，没有额外做内存拷贝。</li><li>新版本为什么要修改原有的实现方式呢？查看 Git 提交记录，与修改人员进行交流后得知，这段代码的修改原因竟然是 CI 静态检查(FindBugs/PMD 等)报错。</li><li>静态检查报错的原因：如果直接返回 body 对象，这个对象可能会被引用者修改，为了防止被非法或者意外修改，所以需要每次获取时拷贝一个新的字节数组。</li></ul>
+</div>
+<div class="sec">
+<h4>静态检查问题不是简单的一改了之</h4>
+<ul class="point">
+<li><b>这个修改在功能上没有任何问题，功能测试用例也能通过，但是却存在如下几个隐患</b>
+<ul class="quote"><li>这是Edge Service平台的Restful协议栈，每次API调用都需要获取body并在应用层做反序列化。如果每次调用都额外拷贝一次，对性能的影响比较大。</li><li>字节数组的申请和释放相对比较耗时，需要避免频繁新建和销毁，但是上述修改却反其道而行之。</li><li>对于调用方而言，通过属性的 get方法获取对象通常获得的都是引用，而非对象克隆或者拷贝。这个是编程惯例，但是上述修改打破了这个惯例，在底层做了隐性拷贝，对调用方不可见，这是非常糟糕的做法。</li></ul>
+</li>
+<li><b>为了验证该问题，开发一个简单的测试用例，发现发生了7万多次新生代GC，GC共耗时49s</b>
+<ul class="quote"><li>采集CPU监控数据，发现GC占用6%左右的CPU资源(应用整体占用30%)，即当前业务20%左右的CPU资源被用于GC。</li></ul>
+</li>
+<li><b>将字节数组拷贝方式修改成直接获取请求 body 对象，系统只发生了3次新生代GC，共耗时12ms左右</b>
+<ul class="quote"><li>查看CPU监控数据，发现GC使用的CPU为0，说明系统当前GC工作正常。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>这是Edge Service平台的Restful协议栈，每次API调用都需要获取body并在应用层做反序列化。如果每次调用都额外拷贝一次，对性能的影响比较大。</li><li>字节数组的申请和释放相对比较耗时，需要避免频繁新建和销毁，但是上述修改却反其道而行之。</li><li>对于调用方而言，通过属性的 get方法获取对象通常获得的都是引用，而非对象克隆或者拷贝。这个是编程惯例，但是上述修改打破了这个惯例，在底层做了隐性拷贝，对调用方不可见，这是非常糟糕的做法。</li><li>采集CPU监控数据，发现GC占用6%左右的CPU资源(应用整体占用30%)，即当前业务20%左右的CPU资源被用于GC。</li><li>查看CPU监控数据，发现GC使用的CPU为0，说明系统当前GC工作正常。</li></ul>
+</div>
+<div class="sec">
+<h4>问题反思和改进</h4>
+<ul class="point">
+<li><b>静态检查本来是用于解决问题的，却因为修改不当引入了新的问题</b>
+<ul class="quote"><li>对于工具和规则不要盲从，需要结合业务场景辩证地看待，而不是为了完成任务和指标而盲目修改。</li></ul>
+</li>
+<li><b>对于 Java 的克隆、对象拷贝等不太熟悉，也侧面反映出对 Java 基础知识掌握得不太扎实，需要加强基本功。</b>
+</li>
+<li><b>静态检查问题的修改往往按照分类、分人的方式进行，由于修改者对代码上下文并不理解，通常会按照工具提示和建议进行修改，这样就可能引入新的问题。</b>
+</li>
+<li><b>对于关键路径代码的修改，除了做功能测试，还需要增加性能测试用例</b>
+<ul class="quote"><li>例如每天CI/CD构建的时候跑一下基础性能用例，这样可以更早地发现性能问题。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>对于工具和规则不要盲从，需要结合业务场景辩证地看待，而不是为了完成任务和指标而盲目修改。</li><li>例如每天CI/CD构建的时候跑一下基础性能用例，这样可以更早地发现性能问题。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">55</span><span class="mmx-name">12.2 克隆和浅拷贝</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 4 条要点 · 4 句原句摘录</p>
+<div class="sec">
+<h4>浅拷贝存在的问题</h4>
+<ul class="point">
+<li><b>浅拷贝只拷贝对象本身及它包含的基本变量，而不拷贝对象聚合的其他引用对象</b>
+<ul class="quote"><li>克隆之后对新对象进行修改，分别修改基本类型的age和引用类型的address，发现原始对象的address被修改，但是age没有被修改。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>克隆之后对新对象进行修改，分别修改基本类型的age和引用类型的address，发现原始对象的address被修改，但是age没有被修改。</li></ul>
+</div>
+<div class="sec">
+<h4>深拷贝的实现</h4>
+<ul class="point">
+<li><b>对自身包含的引用对象进行克隆，然后将克隆后的引用对象设置到自身的克隆对象中</b>
+<ul class="quote"><li>对修改进行测试，发现尽管克隆之后的对象修改了引用对象的address，但是并不影响原始对象的address。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>对修改进行测试，发现尽管克隆之后的对象修改了引用对象的address，但是并不影响原始对象的address。</li></ul>
+</div>
+<div class="sec">
+<h4>Netty的对象拷贝实现策略</h4>
+<ul class="point">
+<li><b>duplicate：返回当前ByteBuf的拷贝对象，拷贝后返回的ByteBuf与操作的ByteBuf共享缓冲区内容，但是维护自己独立的读写索引</b>
+<ul class="quote"><li>当修改拷贝后的ByteBuf内容时，之前原ByteBuf的内容也随之改变，双方持有的是同一个内容指针引用。</li></ul>
+</li>
+<li><b>copy：拷贝一个新的ByteBuf对象，它的内容和索引都是独立的，拷贝操作本身并不修改原ByteBuf的读写索引</b>
+<ul class="quote"><li>以 UnpooledHeapByteBuf 为例，调用它的 copy 方法，会新建一个基于堆内存的 byte数组，通过System.arraycopy将原始的ByteBuf内容拷贝到新创建的UnpooledHeapByteBuf中，新创建 UnpooledHeapByteBuf 的 readerIndex和 writerIndex及内容都是独立的，与原始对象无关。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>当修改拷贝后的ByteBuf内容时，之前原ByteBuf的内容也随之改变，双方持有的是同一个内容指针引用。</li><li>以 UnpooledHeapByteBuf 为例，调用它的 copy 方法，会新建一个基于堆内存的 byte数组，通过System.arraycopy将原始的ByteBuf内容拷贝到新创建的UnpooledHeapByteBuf中，新创建 UnpooledHeapByteBuf 的 readerIndex和 writerIndex及内容都是独立的，与原始对象无关。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">56</span><span class="mmx-name">12.3 总结</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 3 条要点 · 0 句原句摘录</p>
+<div class="sec">
+<h4>静态检查的问题</h4>
+<ul class="point">
+<li><b>静态检查本是为了提升代码质量，但由于盲目按照工具的建议做修改，对业务运行态的关键代码路径及上下文场景都不清楚，最终导致了严重的性能问题。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>Netty的性能修改需谨慎</h4>
+<ul class="point">
+<li><b>Netty通常被用于高性能的通信框架，所以任何涉及性能的修改一定要谨慎。</b>
+</li>
+<li><b>修改之后需要结合业务场景做相应的性能测试，以验证修改是否合理。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">57</span><span class="mmx-name">第13章 Netty性能统计误区案例</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 1 条要点 · 2 句原句摘录</p>
+<div class="sec">
+<h4>Netty性能统计误区案例</h4>
+<ul class="point">
+<li><b>在高并发场景下，需要统计系统的关键性能KPI数据，结合日志、告警等对故障进行定位分析</b>
+<ul class="quote"><li>如果对 Netty的底层实现细节不了解，获取哪些关键性能数据及数据正确的获取方式都将成为难点。</li><li>错误或者不准确的数据可能影响问题定位的思路和方向，导致问题迟迟得不到正确的解决。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如果对 Netty的底层实现细节不了解，获取哪些关键性能数据及数据正确的获取方式都将成为难点。</li><li>错误或者不准确的数据可能影响问题定位的思路和方向，导致问题迟迟得不到正确的解决。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">58</span><span class="mmx-name">13.1 时延毛刺排查相关问题</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 5 个小节 · 8 条要点 · 13 句原句摘录</p>
+<div class="sec">
+<h4>时延毛刺问题初步分析</h4>
+<ul class="point">
+<li><b>服务调用时延增大，但并不是异常，因此运行日志并不会打印错误(ERROR)日志，单靠传统的日志无法进行有效的问题定位</b>
+<ul class="quote"><li>利用分布式消息跟踪系统，进行分布式环境的问题定位。</li></ul>
+</li>
+<li><b>服务端打印的时延是业务服务接口调用的耗时，并不包含服务框架的处理时间</b>
+<ul class="quote"><li>请求消息的解码(反序列化)时间。</li><li>请求消息在业务线程池中排队等待执行时间。</li><li>响应消息编码(序列化)时间。</li><li>响应消息ByteBuf在发送队列中的排队时间。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>利用分布式消息跟踪系统，进行分布式环境的问题定位。</li><li>请求消息的解码(反序列化)时间。</li><li>请求消息在业务线程池中排队等待执行时间。</li><li>响应消息编码(序列化)时间。</li><li>响应消息ByteBuf在发送队列中的排队时间。</li></ul>
+</div>
+<div class="sec">
+<h4>服务调用链改进</h4>
+<ul class="point">
+<li><b>对服务调用链埋点进行优化，包含客户端和服务端消息编码和解码的耗时，请求和应答消息在队列中的排队时间，应答消息在通信线程发送队列(数组)中的排队时间</b>
+<ul class="quote"><li>同时，为了方便定位问题，增加打印输出Netty的性能统计日志。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>同时，为了方便定位问题，增加打印输出Netty的性能统计日志。</li></ul>
+</div>
+<div class="sec">
+<h4>都是同步思维惹的祸</h4>
+<ul class="point">
+<li><b>传统的同步服务调用，发起服务调用之后，业务线程阻塞，等待响应，接收响应之后，业务线程继续执行，对发送的消息进行累加，获取性能KPI数据</b>
+<ul class="quote"><li>使用Netty，所有的网络I/O操作都是异步执行的，即调用Channel的write方法，并不代表消息真正发送到TCP缓冲区中。</li></ul>
+</li>
+<li><b>性能统计代码忽略了业务ChannelHandler的执行时间，被异步封装的 WriteTask/WriteAndFlushTask 在 NioEventLoop 任务队列中的排队时间，ByteBuf在ChannelOutboundBuffer队列中的排队时间，JDK NIO类库将ByteBuffer写入网络的时间</b>
+<ul class="quote"><li>由于性能统计遗漏了上述4个关键步骤的执行时间，因此统计出来的发送速度比实际值会高一些。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>使用Netty，所有的网络I/O操作都是异步执行的，即调用Channel的write方法，并不代表消息真正发送到TCP缓冲区中。</li><li>由于性能统计遗漏了上述4个关键步骤的执行时间，因此统计出来的发送速度比实际值会高一些。</li></ul>
+</div>
+<div class="sec">
+<h4>正确的消息发送速度性能统计策略</h4>
+<ul class="point">
+<li><b>调用writeAndFlush方法之后获取ChannelFuture，新增消息发送ChannelFutureListener并注册到ChannelFuture，监听消息发送结果，如果消息写入SocketChannel成功，则Netty会回调ChannelFutureListener的operationComplete方法，在消息发送ChannelFutureListener的operationComplete方法中进行性能统计</b>
+<ul class="quote"><li>对 Netty消息发送相关源码进行分析，当发送的字节数大于 0时，进行ByteBuf的清理工作。</li><li>接着分析ChannelOutboundBuffer的removeBytes(long writtenBytes)方法，将发送的字节数与当前ByteBuf可读的字节数进行对比，判断当前的ByteBuf是否完成发送，如果完成则调用remove方法清理它，否则只更新发送进度。</li><li>当调用 remove 方法时，最终会调用消息发送 ChannelPromise 的 trySuccess 方法，通知监听消息已经完成发送。</li><li>经过分析可以看出，调用 write/writeAndFlush 方法本身并不代表消息已经发送完成，只有监听write/writeAndFlush的操作结果，在异步回调监听中计数，结果才更精确。</li><li>如果消息报文比较大，或者一次批量发送的消息比较多，可能会出现“写半包”问题，即一个消息无法在一次 write 操作中全部完成发送，可能只发送了一半，针对此类场景，可以创建GenericProgressiveFutureListener用于实时监听消息发送进度，做更精准的统计。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>对 Netty消息发送相关源码进行分析，当发送的字节数大于 0时，进行ByteBuf的清理工作。</li><li>接着分析ChannelOutboundBuffer的removeBytes(long writtenBytes)方法，将发送的字节数与当前ByteBuf可读的字节数进行对比，判断当前的ByteBuf是否完成发送，如果完成则调用remove方法清理它，否则只更新发送进度。</li><li>当调用 remove 方法时，最终会调用消息发送 ChannelPromise 的 trySuccess 方法，通知监听消息已经完成发送。</li><li>经过分析可以看出，调用 write/writeAndFlush 方法本身并不代表消息已经发送完成，只有监听write/writeAndFlush的操作结果，在异步回调监听中计数，结果才更精确。</li><li>如果消息报文比较大，或者一次批量发送的消息比较多，可能会出现“写半包”问题，即一个消息无法在一次 write 操作中全部完成发送，可能只发送了一半，针对此类场景，可以创建GenericProgressiveFutureListener用于实时监听消息发送进度，做更精准的统计。</li></ul>
+</div>
+<div class="sec">
+<h4>常见的消息发送性能统计误区</h4>
+<ul class="point">
+<li><b>调用write/writeAndFlush方法就开始统计发送速度。</b>
+</li>
+<li><b>消息编码时进行性能统计：编码之后，获取out可读的字节数，然后累加。编码完成并不代表消息被写入SocketChannel，因此性能统计也不准确。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">59</span><span class="mmx-name">13.2 Netty关键性能指标采集策略</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 3 条要点 · 3 句原句摘录</p>
+<div class="sec">
+<h4>Netty I/O线程池性能指标</h4>
+<ul class="point">
+<li><b>消息队列积压的任务个数是衡量 Netty I/O 线程池工作负载的重要指标</b>
+<ul class="quote"><li>Netty NIO 线程池采用的是一个线程池/组包含多个单线程线程池的机制。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Netty NIO 线程池采用的是一个线程池/组包含多个单线程线程池的机制。</li></ul>
+</div>
+<div class="sec">
+<h4>Netty发送队列积压消息数</h4>
+<ul class="point">
+<li><b>Netty 发送队列积压消息数可以反映网络速度、通信对端的读取速度及自身的发送速度等</b>
+<ul class="quote"><li>由于 totalPendingSize是 volatile类型的，因此统计线程即便不是 Netty的 I/O线程，也能够正确地读取其最新值。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>由于 totalPendingSize是 volatile类型的，因此统计线程即便不是 Netty的 I/O线程，也能够正确地读取其最新值。</li></ul>
+</div>
+<div class="sec">
+<h4>Netty消息读取速度性能统计</h4>
+<ul class="point">
+<li><b>在解码ChannelHandler之前添加一个性能统计ChannelHandler，用来对读取速度进行计数</b>
+<ul class="quote"><li>Netty消息读取速度性能统计代码运行结果如图13-7所示。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Netty消息读取速度性能统计代码运行结果如图13-7所示。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">60</span><span class="mmx-name">13.3 总结</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 2 条要点 · 2 句原句摘录</p>
+<div class="sec">
+<h4>Netty通信框架性能数据统计的特殊性</h4>
+<ul class="point">
+<li><b>Netty的I/O操作都是异步的，不能像传统同步调用那样做性能数据统计</b>
+<ul class="quote"><li>需要注册性能统计监听器，在异步回调中完成计数。</li></ul>
+</li>
+<li><b>Netty的I/O线程池、消息发送队列等实现比较特殊，与传统的Tomcat等框架实现策略不同</b>
+<ul class="quote"><li>Netty的关键性能数据采集不能照搬JDK和Tomcat的做法。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>需要注册性能统计监听器，在异步回调中完成计数。</li><li>Netty的关键性能数据采集不能照搬JDK和Tomcat的做法。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">61</span><span class="mmx-name">第14章 gRPC的Netty HTTP/2实践案例</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 3 条要点 · 3 句原句摘录</p>
+<div class="sec">
+<h4>gRPC概述</h4>
+<ul class="point">
+<li><b>gRPC是由Google开发并开源的一种语言中立的RPC框架</b>
+<ul class="quote"><li>gRPC当前支持C、Java和Go语言等。</li></ul>
+</li>
+<li><b>gRPC是一个高性能的RPC框架，面向服务端和移动端，基于HTTP/2设计</b>
+<ul class="quote"><li>gRPC Java版底层的通信框架基于Netty 4.1构建。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>gRPC当前支持C、Java和Go语言等。</li><li>gRPC Java版底层的通信框架基于Netty 4.1构建。</li></ul>
+</div>
+<div class="sec">
+<h4>gRPC Java版的Netty HTTP/2特性</h4>
+<ul class="point">
+<li><b>gRPC Java版通过集成Netty的HTTP/2协议栈，支持双向流、消息头压缩、单TCP的多路复用、服务端推送等特性</b>
+<ul class="quote"><li>这些特性使得gRPC在移动设备上更加省电和节省网络流量。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>这些特性使得gRPC在移动设备上更加省电和节省网络流量。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">62</span><span class="mmx-name">14.1 gRPC基础入门</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 6 条要点 · 10 句原句摘录</p>
+<div class="sec">
+<h4>RPC框架简介</h4>
+<ul class="point">
+<li><b>RPC框架的目标是让远程服务调用更加简单、透明</b>
+<ul class="quote"><li>RPC框架负责屏蔽底层的传输方式(TCP或者UDP)、序列化方式(XML/JSON/二进制)和通信细节。</li></ul>
+</li>
+<li><b>RPC框架的调用原理包括服务调用者、远程代理对象、通信和序列化</b>
+<ul class="quote"><li>服务调用者调用的服务实际是远程服务的本地代理。</li><li>RPC框架与具体的协议无关，例如Spring的远程调用支持HTTP Invoke、RMI Invoke，MessagePack使用的是私有的二进制压缩协议。</li><li>远程通信需要将对象转换成二进制码流进行网络传输，不同的序列化框架支持的数据类型、数据包大小、异常类型及性能等都不同。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>RPC框架负责屏蔽底层的传输方式(TCP或者UDP)、序列化方式(XML/JSON/二进制)和通信细节。</li><li>服务调用者调用的服务实际是远程服务的本地代理。</li><li>RPC框架与具体的协议无关，例如Spring的远程调用支持HTTP Invoke、RMI Invoke，MessagePack使用的是私有的二进制压缩协议。</li><li>远程通信需要将对象转换成二进制码流进行网络传输，不同的序列化框架支持的数据类型、数据包大小、异常类型及性能等都不同。</li></ul>
+</div>
+<div class="sec">
+<h4>当前主流的RPC框架</h4>
+<ul class="point">
+<li><b>当前主流的RPC框架整体上分为三类：支持多语言的 RPC 框架、只支持特定语言的RPC框架、支持服务治理等服务化特性的分布式服务框架</b>
+<ul class="quote"><li>比较成熟的有 Google 的 gRPC、Apache(Facebook)的Thrift。</li><li>只支持特定语言的RPC框架。</li><li>支持服务治理等服务化特性的分布式服务框架，其底层内核仍然是 RPC 框架，例如华为开源的支持多语言的微服务框架ServiceComb。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>比较成熟的有 Google 的 gRPC、Apache(Facebook)的Thrift。</li><li>只支持特定语言的RPC框架。</li><li>支持服务治理等服务化特性的分布式服务框架，其底层内核仍然是 RPC 框架，例如华为开源的支持多语言的微服务框架ServiceComb。</li></ul>
+</div>
+<div class="sec">
+<h4>gRPC框架特点</h4>
+<ul class="point">
+<li><b>gRPC有语言中立，支持多种语言，基于 IDL 文件定义服务，通过 proto3 工具生成指定语言的数据结构、服务端接口及客户端Stub，通信协议基于标准的HTTP/2设计，支持双向流、消息头压缩、单TCP的多路复用、服务端推送等特性，序列化支持Protocol buffer和JSON</b>
+<ul class="quote"><li>“HTTP/2+Protocol buffer”，保障了RPC调用的高性能。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>“HTTP/2+Protocol buffer”，保障了RPC调用的高性能。</li></ul>
+</div>
+<div class="sec">
+<h4>为什么选择HTTP/2</h4>
+<ul class="point">
+<li><b>HTTP/2可以实现多路复用，客户端可以连续发送多个请求，服务端也可以返回一个或者多个响应，而且还可以主动推送数据到服务端，实现双向通信</b>
+<ul class="quote"><li>相比传统的HTTP/1.1，整体性能提升了很多。</li></ul>
+</li>
+<li><b>越来越多的安卓App支持 HTTP/2，对于同时支持服务端和安卓移动端的 RPC框架而言，采用 HTTP/2是最佳选择</b>
+<ul class="quote"><li>采用HTTP/2之后，可以实现多路复用，客户端可以连续发送多个请求，服务端也可以返回一个或者多个响应，而且还可以主动推送数据到服务端，实现双向通信，达到TCP私有协议的通信效果。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>相比传统的HTTP/1.1，整体性能提升了很多。</li><li>采用HTTP/2之后，可以实现多路复用，客户端可以连续发送多个请求，服务端也可以返回一个或者多个响应，而且还可以主动推送数据到服务端，实现双向通信，达到TCP私有协议的通信效果。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">63</span><span class="mmx-name">14.2 gRPC Netty HTTP/2服务端工作机制</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 11 条要点 · 20 句原句摘录</p>
+<div class="sec">
+<h4>Netty HTTP/2服务端创建原理和源码分析</h4>
+<ul class="point">
+<li><b>创建 NettyServerBuilder，通过 Build 模式创建 NettyServer</b>
+<ul class="quote"><li>NettyServer 相关接口定义。</li></ul>
+</li>
+<li><b>NettyServer 的 start 方法会创建 NettyServerTransport</b>
+<ul class="quote"><li>通过 NettyServerTransport来创建gRPC的Netty HTTP/2 ChannelHandler实例，并加入ChannelPipeline。</li></ul>
+</li>
+<li><b>创建 ProtocolNegotiator实例，用于 HTTP/2连接创建的协商</b>
+<ul class="quote"><li>gRPC支持三种协商策略，分别是 PlaintextNegotiator、PlaintextUpgradeNegotiator和 TlsNegotiator。</li></ul>
+</li>
+<li><b>创建ServerBootstrap、bossGroup和workerGroup，启动HTTP/2服务端</b>
+<ul class="quote"><li>启动HTTP/2服务端代码。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>NettyServer 相关接口定义。</li><li>通过 NettyServerTransport来创建gRPC的Netty HTTP/2 ChannelHandler实例，并加入ChannelPipeline。</li><li>gRPC支持三种协商策略，分别是 PlaintextNegotiator、PlaintextUpgradeNegotiator和 TlsNegotiator。</li><li>启动HTTP/2服务端代码。</li></ul>
+</div>
+<div class="sec">
+<h4>服务端接收HTTP/2请求消息原理和源码分析</h4>
+<ul class="point">
+<li><b>gRPC服务端的请求消息由Netty HTTP/2协议栈负责接入</b>
+<ul class="quote"><li>gRPC通过继承Http2FrameAdapter，将自定义的FrameListener添加到Netty的Http2ConnectionDecoder中。</li></ul>
+</li>
+<li><b>gRPC注册FrameListener相关源码</b>
+<ul class="quote"><li>当Netty HTTP/2协议栈成功读取到请求消息时，会调用FrameListener的onDataRead和onHeadersRead方法。</li></ul>
+</li>
+<li><b>HTTP/2消息头的读取和处理</b>
+<ul class="quote"><li>Netty HTTP/2协议栈完成消息头的解码之后，触发 gRPC注册的 FrameListener，最终调用NettyServerHandler的onHeadersRead方法，处理消息头。</li><li>对HTTP/2消息头的Content-Type字段做合法性校验，如果不是“application/grpc”则非法，抛出Http2Exception异常。</li><li>从HTTP消息头的URL中提取目标接口和方法名。</li><li>根据streamId获取缓存的Netty Http2Stream对象，如果获取结果为空，说明streamId非法，抛出异常。</li><li>将 Netty的 HTTP/2 消息头转换成 gRPC 内部的 Metadata。</li><li>创建 NettyServerStream，它聚合 Sink、TransportState 等类，通过 transportListener的streamCreated方法对消息头进行处理。</li></ul>
+</li>
+<li><b>HTTP/2消息体的处理</b>
+<ul class="quote"><li>消息体的处理入口仍然是 gRPC 注册的 FrameListener，通过调用 NettyServerHandler的onDataRead方法完成消息体的读取。</li><li>对HTTP/2的flow control pinging和flow control window updates消息进行处理。</li><li>根据 streamId 获取 Http2Stream，然后根据 Http2Stream 的 Http2Connection.PropertyKey，获取 NettyServerStream的 TransportState类，触发 gRPC的消息读取流程。</li><li>将 Netty的请求消息体 ByteBuf转换成 gRPC内部的 NettyReadableBuffer对象。</li><li>调用deframe方法，完成请求消息体的解码。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>gRPC通过继承Http2FrameAdapter，将自定义的FrameListener添加到Netty的Http2ConnectionDecoder中。</li><li>当Netty HTTP/2协议栈成功读取到请求消息时，会调用FrameListener的onDataRead和onHeadersRead方法。</li><li>Netty HTTP/2协议栈完成消息头的解码之后，触发 gRPC注册的 FrameListener，最终调用NettyServerHandler的onHeadersRead方法，处理消息头。</li><li>对HTTP/2消息头的Content-Type字段做合法性校验，如果不是“application/grpc”则非法，抛出Http2Exception异常。</li><li>从HTTP消息头的URL中提取目标接口和方法名。</li><li>根据streamId获取缓存的Netty Http2Stream对象，如果获取结果为空，说明streamId非法，抛出异常。</li><li>将 Netty的 HTTP/2 消息头转换成 gRPC 内部的 Metadata。</li><li>创建 NettyServerStream，它聚合 Sink、TransportState 等类，通过 transportListener的streamCreated方法对消息头进行处理。</li><li>消息体的处理入口仍然是 gRPC 注册的 FrameListener，通过调用 NettyServerHandler的onDataRead方法完成消息体的读取。</li><li>对HTTP/2的flow control pinging和flow control window updates消息进行处理。</li><li>根据 streamId 获取 Http2Stream，然后根据 Http2Stream 的 Http2Connection.PropertyKey，获取 NettyServerStream的 TransportState类，触发 gRPC的消息读取流程。</li><li>将 Netty的请求消息体 ByteBuf转换成 gRPC内部的 NettyReadableBuffer对象。</li><li>调用deframe方法，完成请求消息体的解码。</li></ul>
+</div>
+<div class="sec">
+<h4>服务端发送HTTP/2 响应消息原理和源码分析</h4>
+<ul class="point">
+<li><b>gRPC 服务端通过将响应消息封装成 WriteQueue.AbstractQueuedCommand，异步写入WriteQueue</b>
+<ul class="quote"><li>WriteQueue 将任务投递到对应 Channel 的 NioEventLoop 线程异步执行消息发送操作。</li></ul>
+</li>
+<li><b>NioEventLoop线程循环处理待发送的响应消息，调用 Channel的 write方法，将消息发送到ChannelPipeline</b>
+<ul class="quote"><li>gRPC的NettyServerHandler拦截write方法，按照命令的类型进行分类处理。</li></ul>
+</li>
+<li><b>gRPC的NettyServerHandler拦截write方法，按照命令的类型进行分类处理</b>
+<ul class="quote"><li>如果是 SendGrpcFrameCommand 和 SendResponseHeadersCommand，则调用 Netty 的Http2ConnectionEncoder完成HTTP/2消息的发送。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>WriteQueue 将任务投递到对应 Channel 的 NioEventLoop 线程异步执行消息发送操作。</li><li>gRPC的NettyServerHandler拦截write方法，按照命令的类型进行分类处理。</li><li>如果是 SendGrpcFrameCommand 和 SendResponseHeadersCommand，则调用 Netty 的Http2ConnectionEncoder完成HTTP/2消息的发送。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">64</span><span class="mmx-name">14.3 gRPC Netty HTTP/2客户端工作机制</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 10 条要点 · 8 句原句摘录</p>
+<div class="sec">
+<h4>gRPC Netty HTTP/2客户端创建原理和源码分析</h4>
+<ul class="point">
+<li><b>gRPC客户端底层基于Netty 4.1.X的HTTP/2协议栈构建</b>
+<ul class="quote"><li>gRPC的Netty HTTP/2客户端创建流程包括创建NettyClientHandler，创建HTTP/2协商类 negotiationHandler，创建客户端Bootstrap，发起HTTP/2连接。</li></ul>
+</li>
+<li><b>创建NettyClientHandler之后，不是由传统的 ChannelInitializer 在初始化 Channel 时将NettyClientHandler 加入 Pipeline，而是直接通过 Bootstrap 的 Handler 方法加入Pipeline</b>
+<ul class="quote"><li>客户端使用的work线程组并非通常意义的EventLoopGroup，而是一个EventLoop，即 HTTP/2 客户端使用的 work 线程并非一组线程(默认线程数为“CPU 内核数×2”)，而是一个EventLoop线程。</li></ul>
+</li>
+<li><b>Netty的NioSocketChannel初始化并向Selector注册之后(发起HTTP连接之前)，立即由 NettyClientHandler 创建 WriteQueue</b>
+<ul class="quote"><li>WriteQueue用于接收并处理 gRPC 内部的各种指令，例如链路关闭指令、发送Frame指令、发送Ping指令等。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>gRPC的Netty HTTP/2客户端创建流程包括创建NettyClientHandler，创建HTTP/2协商类 negotiationHandler，创建客户端Bootstrap，发起HTTP/2连接。</li><li>客户端使用的work线程组并非通常意义的EventLoopGroup，而是一个EventLoop，即 HTTP/2 客户端使用的 work 线程并非一组线程(默认线程数为“CPU 内核数×2”)，而是一个EventLoop线程。</li><li>WriteQueue用于接收并处理 gRPC 内部的各种指令，例如链路关闭指令、发送Frame指令、发送Ping指令等。</li></ul>
+</div>
+<div class="sec">
+<h4>客户端发送HTTP/2请求消息原理和源码分析</h4>
+<ul class="point">
+<li><b>在客户端发送HTTP/2请求消息头时，将gRPC内部Metadata格式的消息头转换成 Netty 的 Http2Headers</b>
+<ul class="quote"><li>转换后将请求消息头封装成 CreateStreamCommand，发送到WriteQueue。</li></ul>
+</li>
+<li><b>将请求消息封装成 SendGrpcFrameCommand 发送到 WriteQueue</b>
+<ul class="quote"><li>NettyClientHandler拦截write方法，分别处理CreateStreamCommand和SendGrpcFrameCommand。</li></ul>
+</li>
+<li><b>发送客户端请求消息头时，需要创建 NettyClientStream，通过自增的方式生成streamId</b>
+<ul class="quote"><li>然后创建NettyClientStream的TransportState对象。</li></ul>
+</li>
+<li><b>创建stream后，调用Netty Http2ConnectionEncoder的writeHeaders和writeData方法，完成请求消息头和消息体的发送。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>转换后将请求消息头封装成 CreateStreamCommand，发送到WriteQueue。</li><li>NettyClientHandler拦截write方法，分别处理CreateStreamCommand和SendGrpcFrameCommand。</li><li>然后创建NettyClientStream的TransportState对象。</li></ul>
+</div>
+<div class="sec">
+<h4>客户端接收HTTP/2响应消息原理和源码分析</h4>
+<ul class="point">
+<li><b>NettyClientHandler的onHeadersRead(int streamId，Http2Headers headers，boolean endStream)方法会被调用两次</b>
+<ul class="quote"><li>根据endStream判断是否是Stream的结尾。</li></ul>
+</li>
+<li><b>请求和响应的映射关系：根据 streamId 可以关联同一个 HTTP/2 Stream</b>
+<ul class="quote"><li>将NettyClientStream 缓存到 Stream，客户端就可以在接收到响应消息头或消息体时还原NettyClientStream，进行后续处理。</li></ul>
+</li>
+<li><b>客户端和服务端的HTTP/2 Header和Data Frame解析共用同一个方法，即MessageDeframer的deliver方法。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>根据endStream判断是否是Stream的结尾。</li><li>将NettyClientStream 缓存到 Stream，客户端就可以在接收到响应消息头或消息体时还原NettyClientStream，进行后续处理。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">65</span><span class="mmx-name">14.4 gRPC消息序列化机制</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 4 条要点 · 12 句原句摘录</p>
+<div class="sec">
+<h4>gRPC消息序列化机制</h4>
+<ul class="point">
+<li><b>gRPC默认支持Protocol buffer和JSON两种序列化机制</b>
+<ul class="quote"><li>gRPC的消息序列化和反序列化并没有使用 Netty 提供的 CodeC 框架，而是由 gRPC业务线程接收 Netty 传递的 HTTP/2消息后自己做序列化和反序列化。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>gRPC的消息序列化和反序列化并没有使用 Netty 提供的 CodeC 框架，而是由 gRPC业务线程接收 Netty 传递的 HTTP/2消息后自己做序列化和反序列化。</li></ul>
+</div>
+<div class="sec">
+<h4>Google Protobuf简介</h4>
+<ul class="point">
+<li><b>Protobuf是Google的序列化框架，具有多个优点</b>
+<ul class="quote"><li>Google内部长期使用，产品成熟度和可靠性高。</li><li>支持多种语言，包括C++、Java、Python和PHP等。</li><li>编码后的消息更小，有利于存储和网络传输。</li><li>序列化和反序列化的性能非常高。</li><li>支持不同消息版本的前向兼容。</li><li>支持自定义可选和必选字段。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Google内部长期使用，产品成熟度和可靠性高。</li><li>支持多种语言，包括C++、Java、Python和PHP等。</li><li>编码后的消息更小，有利于存储和网络传输。</li><li>序列化和反序列化的性能非常高。</li><li>支持不同消息版本的前向兼容。</li><li>支持自定义可选和必选字段。</li></ul>
+</div>
+<div class="sec">
+<h4>消息的序列化原理和源码分析</h4>
+<ul class="point">
+<li><b>gRPC在将消息发送到 WriteQueue 之前，会调用 requestMarshaller 将消息序列化成InputStream</b>
+<ul class="quote"><li>以客户端发送请求消息为例，调用 ClientCallImpl 的 sendMessage，发送请求消息，实际上并未真正发送消息，而是使用Protocol buffer对消息做序列化。</li><li>序列化的具体实现如下(ProtoLiteUtils类)。</li><li>完成序列化后，调用stream的writeMessage方法，继续进行消息的发送。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>以客户端发送请求消息为例，调用 ClientCallImpl 的 sendMessage，发送请求消息，实际上并未真正发送消息，而是使用Protocol buffer对消息做序列化。</li><li>序列化的具体实现如下(ProtoLiteUtils类)。</li><li>完成序列化后，调用stream的writeMessage方法，继续进行消息的发送。</li></ul>
+</div>
+<div class="sec">
+<h4>消息的反序列化原理和源码分析</h4>
+<ul class="point">
+<li><b>Netty通过gRPC注册的FrameListener回调NettyClientHandler和NettyServerHandler，对消息进行处理</b>
+<ul class="quote"><li>以服务端请求消息反序列化为例，由gRPC的SerializingExecutor负责消息体的解析。</li><li>最终调用 ProtoLiteUtils 的 Marshaller 方法，通过 parse(InputStream stream)方法将NettyReadableBuffer反序列化为原始的请求对象。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>以服务端请求消息反序列化为例，由gRPC的SerializingExecutor负责消息体的解析。</li><li>最终调用 ProtoLiteUtils 的 Marshaller 方法，通过 parse(InputStream stream)方法将NettyReadableBuffer反序列化为原始的请求对象。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">66</span><span class="mmx-name">14.5 gRPC线程模型</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 4 条要点 · 11 句原句摘录</p>
+<div class="sec">
+<h4>gRPC线程模型对性能的影响</h4>
+<ul class="point">
+<li><b>线程模型对性能的影响非常大，可以充分利用多核CPU的处理能力，提升系统的处理效率和并发性能</b>
+<ul class="quote"><li>随着硬件性能的提升，CPU的核数越来越多，很多服务器标配已经达到 64 核。</li><li>如果线程创建或者管理不当，频繁发生线程上下文切换或者锁竞争，反而会影响系统的性能。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>随着硬件性能的提升，CPU的核数越来越多，很多服务器标配已经达到 64 核。</li><li>如果线程创建或者管理不当，频繁发生线程上下文切换或者锁竞争，反而会影响系统的性能。</li></ul>
+</div>
+<div class="sec">
+<h4>gRPC服务端线程模型</h4>
+<ul class="point">
+<li><b>HTTP/2服务端创建、HTTP/2请求消息的接入和响应发送都由Netty NioEventLoop线程负责</b>
+<ul class="quote"><li>gRPC消息的序列化和反序列化业务服务接口的调用由 gRPC的SerializingExecutor线程池负责。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>gRPC消息的序列化和反序列化业务服务接口的调用由 gRPC的SerializingExecutor线程池负责。</li></ul>
+</div>
+<div class="sec">
+<h4>gRPC客户端线程模型</h4>
+<ul class="point">
+<li><b>客户端调用主要涉及的线程包括业务线程、客户端负载均衡策略及Netty 客户端的创建线程池、HTTP/2客户端连接的创建、网络I/O数据的收发线程池、HTTP/2 响应消息的反序列化线程池和SerializingExecutor</b>
+<ul class="quote"><li>业务线程，负责调用gRPC服务端并获取响应，请求消息的序列化由该线程负责。</li><li>客户端负载均衡策略及Netty 客户端的创建由grpc-default-executor线程池负责。</li><li>HTTP/2客户端连接的创建、网络I/O数据的收发由Netty NioEventLoop线程负责。</li><li>HTTP/2 响应消息的反序列化由 SerializingExecutor 负责，它的具体实现是ThreadlessExecutor，并非真正的线程池。</li><li>SerializingExecutor通过调用responseFuture的set(result)，唤醒阻塞的业务线程继续执行，完成同步阻塞方式的RPC调用。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>业务线程，负责调用gRPC服务端并获取响应，请求消息的序列化由该线程负责。</li><li>客户端负载均衡策略及Netty 客户端的创建由grpc-default-executor线程池负责。</li><li>HTTP/2客户端连接的创建、网络I/O数据的收发由Netty NioEventLoop线程负责。</li><li>HTTP/2 响应消息的反序列化由 SerializingExecutor 负责，它的具体实现是ThreadlessExecutor，并非真正的线程池。</li><li>SerializingExecutor通过调用responseFuture的set(result)，唤醒阻塞的业务线程继续执行，完成同步阻塞方式的RPC调用。</li></ul>
+</div>
+<div class="sec">
+<h4>线程模型总结</h4>
+<ul class="point">
+<li><b>消息的序列化和反序列化均由gRPC线程负责，而没有在Netty的Handler中做CodeC，这样可以降低Netty I/O线程的工作负载，提升系统的吞吐量</b>
+<ul class="quote"><li>gRPC 采用的是网络 I/O 线程和业务调用线程分离的策略，在大部分场景下该策略是最优的。</li><li>但是，对于那些接口逻辑非常简单，执行时间很短，不需要与外部网元交互、访问数据库或本地存储，也不需要等待其他同步操作的场景，则建议直接在 Netty I/O 线程中调用接口，不需要再发送到后端的业务线程池，避免了线程上下文切换，同时也消除了线程并发问题。</li><li>当前Netty NIO线程和gRPC的SerializingExecutor之间没有映射关系，当线程数量比较多时，锁竞争会非常激烈，可以采用 I/O线程和 gRPC服务调用线程绑定的方式，降低出现锁竞争的概率，提升并发性能。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>gRPC 采用的是网络 I/O 线程和业务调用线程分离的策略，在大部分场景下该策略是最优的。</li><li>但是，对于那些接口逻辑非常简单，执行时间很短，不需要与外部网元交互、访问数据库或本地存储，也不需要等待其他同步操作的场景，则建议直接在 Netty I/O 线程中调用接口，不需要再发送到后端的业务线程池，避免了线程上下文切换，同时也消除了线程并发问题。</li><li>当前Netty NIO线程和gRPC的SerializingExecutor之间没有映射关系，当线程数量比较多时，锁竞争会非常激烈，可以采用 I/O线程和 gRPC服务调用线程绑定的方式，降低出现锁竞争的概率，提升并发性能。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">67</span><span class="mmx-name">14.6 总结</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 2 条要点 · 2 句原句摘录</p>
+<div class="sec">
+<h4>Netty 4.1 提供的HTTP/2协议栈</h4>
+<ul class="point">
+<li><b>Netty 4.1 提供了完整的 HTTP/2 协议栈</b>
+<ul class="quote"><li>用户可以基于 Netty 4.1 框架快速开发支持HTTP/2的服务端应用。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>用户可以基于 Netty 4.1 框架快速开发支持HTTP/2的服务端应用。</li></ul>
+</div>
+<div class="sec">
+<h4>gRPC中的HTTP/2应用</h4>
+<ul class="point">
+<li><b>通过学习Netty HTTP/2协议栈在gRPC中的应用，可以掌握HTTP/2客户端和服务端的创建、HTTP/2 消息的收发及序列化和反序列化等功能</b>
+<ul class="quote"><li>学习和借鉴gRPC HTTP/2处理的优点，可以在实际项目中少走很多弯路。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>学习和借鉴gRPC HTTP/2处理的优点，可以在实际项目中少走很多弯路。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">68</span><span class="mmx-name">第15章 Netty事件触发策略使用不当案例</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 2 条要点 · 4 句原句摘录</p>
+<div class="sec">
+<h4>Netty事件触发策略使用不当案例概述</h4>
+<ul class="point">
+<li><b>Netty将网络操作封装成事件，触发 ChannelPipeline 调用 ChannelHandler链</b>
+<ul class="quote"><li>针对Channel上发生的各种网络操作，例如链路创建、链路关闭、消息读写、链路注册和去注册等，Netty 将这些消息封装成事件。</li><li>由系统或者用户实现的ChannelHandler对网络事件做处理。</li></ul>
+</li>
+<li><b>网络事件种类多，触发和执行机制存在差异，可能遇到莫名其妙的问题</b>
+<ul class="quote"><li>有些问题只有在高并发时或者在生产环境中才会出现，在测试环境中不容易复现。</li><li>这类问题定位难度很大。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>针对Channel上发生的各种网络操作，例如链路创建、链路关闭、消息读写、链路注册和去注册等，Netty 将这些消息封装成事件。</li><li>由系统或者用户实现的ChannelHandler对网络事件做处理。</li><li>有些问题只有在高并发时或者在生产环境中才会出现，在测试环境中不容易复现。</li><li>这类问题定位难度很大。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">69</span><span class="mmx-name">15.1 channelReadComplete方法被调用多次问题</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 5 条要点 · 12 句原句摘录</p>
+<div class="sec">
+<h4>ChannelHandler调用问题</h4>
+<ul class="point">
+<li><b>TCP底层并不了解上层业务数据的具体含义，它会根据 TCP 缓冲区的实际情况进行包的拆分</b>
+<ul class="quote"><li>应用程序写入的字节大小大于套接口发送缓冲区大小。</li><li>进行MSS大小的TCP分段。</li><li>以太网帧的有效载荷(payload)大于MTU的IP分片。</li><li>开启了TCP Nagle算法。</li></ul>
+</li>
+<li><b>消息定长，在包尾增加换行符(或者其他分隔符)进行分隔，将消息分为消息头和消息体</b>
+<ul class="quote"><li>例如每个报文的大小固定为200字节，如果不够，空位补空格。</li><li>FTP协议在包尾增加换行符进行分隔。</li><li>消息头包含表示消息总长度(或者消息体长度)的字段。</li></ul>
+</li>
+<li><b>Netty 提供了HttpObjectAggregator，保证后端业务ChannelHandler接收的是一个完整的HTTP报文</b>
+<ul class="quote"><li>HttpObjectAggregator 可以保证 Netty 读到完整的 HTTP 请求报文后才调用一次业务ChannelHandler的channelRead方法。</li><li>channelReadComplete 方法并不是在业务语义上的读取消息完成后被触发的，而是在每次从 SocketChannel 成功读到消息后，由系统触发。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>应用程序写入的字节大小大于套接口发送缓冲区大小。</li><li>进行MSS大小的TCP分段。</li><li>以太网帧的有效载荷(payload)大于MTU的IP分片。</li><li>开启了TCP Nagle算法。</li><li>例如每个报文的大小固定为200字节，如果不够，空位补空格。</li><li>FTP协议在包尾增加换行符进行分隔。</li><li>消息头包含表示消息总长度(或者消息体长度)的字段。</li><li>HttpObjectAggregator 可以保证 Netty 读到完整的 HTTP 请求报文后才调用一次业务ChannelHandler的channelRead方法。</li><li>channelReadComplete 方法并不是在业务语义上的读取消息完成后被触发的，而是在每次从 SocketChannel 成功读到消息后，由系统触发。</li></ul>
+</div>
+<div class="sec">
+<h4>生产环境问题模拟重现</h4>
+<ul class="point">
+<li><b>采用分隔符“$_”来区分消息，客户端每秒向服务端发送一个不完整的请求消息，到了 10s 的倍数时间时，发送分隔符“$_”，模拟每 10s 发送一个完整的业务请求消息</b>
+<ul class="quote"><li>对于服务端，分别在channelRead和channelReadComplete方法中打印日志，查看调用情况。</li></ul>
+</li>
+<li><b>找到出现问题的原因之后，将channelReadComplete方法中的业务逻辑移到channelRead方法中执行，生产环境升级之后问题得到解决</b>
+<ul class="quote"><li>对于 channelRead 方法，如果前面添加了对应协议的解码器，则只有在消息被解码成功后才会调用channelRead方法。</li><li>channelReadComplete方法的调用机制则不同，只要底层的SocketChannel读到了ByteBuf，就会触发一次调用，对于一个完整的业务消息，可能会多次触发调用。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>对于服务端，分别在channelRead和channelReadComplete方法中打印日志，查看调用情况。</li><li>对于 channelRead 方法，如果前面添加了对应协议的解码器，则只有在消息被解码成功后才会调用channelRead方法。</li><li>channelReadComplete方法的调用机制则不同，只要底层的SocketChannel读到了ByteBuf，就会触发一次调用，对于一个完整的业务消息，可能会多次触发调用。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">70</span><span class="mmx-name">15.2 ChannelHandler使用的一些误区总结</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 4 条要点 · 4 句原句摘录</p>
+<div class="sec">
+<h4>channelReadComplete方法调用误区</h4>
+<ul class="point">
+<li><b>channelReadComplete方法的调用与用户是否添加协议解码器无关</b>
+<ul class="quote"><li>只要对应的SocketChannel成功读到了ByteBuf，它就会被触发。</li></ul>
+</li>
+<li><b>channelReadComplete方法属于透传调用，即无论是否有完整的消息被解码成功，只要读到消息，都会触发后续 ChannelHandler的 channelReadComplete方法调用</b>
+<ul class="quote"><li>对于大部分协议解码器，例如Netty内置的ByteToMessageDecoder，它会调用具体的协议解码器对ByteBuf解码，只有解码成功，才会调用后续ChannelHandler的channelRead方法。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>只要对应的SocketChannel成功读到了ByteBuf，它就会被触发。</li><li>对于大部分协议解码器，例如Netty内置的ByteToMessageDecoder，它会调用具体的协议解码器对ByteBuf解码，只有解码成功，才会调用后续ChannelHandler的channelRead方法。</li></ul>
+</div>
+<div class="sec">
+<h4>ChannelHandler职责链调用误区</h4>
+<ul class="point">
+<li><b>下一个ChannelHandler的触发需要在当前ChannelHandler中显式调用，而不是自动触发式调用</b>
+<ul class="quote"><li>如果遗忘了调用 ctx.fireChannelActive 方法，则 SslHandler 后续的 ChannelHandler的channelActive方法将不会被执行，职责链执行到SslHandler就会中断。</li></ul>
+</li>
+<li><b>当执行完业务的最后一个ChannelHandler时，要判断是否需要调用系统的TailContext，如果需要，则通过ctx.firexxx方法调用</b>
+<ul class="quote"><li>Netty 内置的 TailContext 有时候会执行一些系统性的清理操作，例如当 channelRead方法执行完成，将请求消息(例如 ByteBuf)释放，防止因为业务遗漏释放而导致内存泄漏(在内存池模式下会导致内存泄漏)。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如果遗忘了调用 ctx.fireChannelActive 方法，则 SslHandler 后续的 ChannelHandler的channelActive方法将不会被执行，职责链执行到SslHandler就会中断。</li><li>Netty 内置的 TailContext 有时候会执行一些系统性的清理操作，例如当 channelRead方法执行完成，将请求消息(例如 ByteBuf)释放，防止因为业务遗漏释放而导致内存泄漏(在内存池模式下会导致内存泄漏)。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">71</span><span class="mmx-name">15.3 总结</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 2 条要点 · 1 句原句摘录</p>
+<div class="sec">
+<h4>Netty 的事件触发机制及ChannelHandler的调用策略</h4>
+<ul class="point">
+<li><b>在通常情况下，HTTP 请求消息可以一次性接收完成，此时 ChannelHandler的 channelReadComplete方法会被调用一次</b>
+<ul class="quote"><li>如果业务的功能正确性依赖 channelReadComplete 方法的调用次数，当客户端并发压力大或者采用 chunked 编码时，功能就会出错。</li></ul>
+</li>
+<li><b>当一个整包消息经过多次读取才能完成解码时，channelReadComplete 方法就会被调用多次。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>如果业务的功能正确性依赖 channelReadComplete 方法的调用次数，当客户端并发压力大或者采用 chunked 编码时，功能就会出错。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">72</span><span class="mmx-name">第16章 Netty流量整形应用案例</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 2 条要点 · 1 句原句摘录</p>
+<div class="sec">
+<h4>Netty流量整形的应用场景</h4>
+<ul class="point">
+<li><b>当系统负载压力比较大时，通过动态流控，拒绝一定比例新接入的请求消息，可以保障系统不被压垮。</b>
+</li>
+<li><b>有时候还需要对消息的读取和发送速度做控制，以便消息能以较恒定的速度发送到下游网元，保护下游各系统不受突发的流量冲击</b>
+<ul class="quote"><li>通过 Netty提供的流量整形功能，就可以达到控制消息读取和发送速度的目标。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>通过 Netty提供的流量整形功能，就可以达到控制消息读取和发送速度的目标。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">73</span><span class="mmx-name">16.1 Netty流量整形功能</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 3 条要点 · 5 句原句摘录</p>
+<div class="sec">
+<h4>通用的流量整形功能简介</h4>
+<ul class="point">
+<li><b>流量整形是一种主动调整流量输出速度的措施</b>
+<ul class="quote"><li>流量整形与流量控制的主要区别在于，流量整形是对流量控制中需要丢弃的报文进行缓存。</li><li>流量整形与流量控制的另一区别是，整形可能会增加延迟，而流控几乎不引入额外的延迟。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>流量整形与流量控制的主要区别在于，流量整形是对流量控制中需要丢弃的报文进行缓存。</li><li>流量整形与流量控制的另一区别是，整形可能会增加延迟，而流控几乎不引入额外的延迟。</li></ul>
+</div>
+<div class="sec">
+<h4>Netty流量整形功能简介</h4>
+<ul class="point">
+<li><b>Netty内置了三种流量整形功能：单个链路的流量整形、全局流量整形、全局和单个链路综合型流量整形</b>
+<ul class="quote"><li>单个链路的流量整形：ChannelTrafficShapingHandler，可以对某个链路的消息发送和读取速度进行控制。</li><li>全局流量整形：GlobalTrafficShapingHandler，针对某个进程所有链路的消息发送和读取速度的总和进行控制。</li><li>全局和单个链路综合型流量整形：GlobalChannelTrafficShapingHandler，同时对全局和单个链路的消息发送和读取速度进行控制。</li></ul>
+</li>
+<li><b>Netty流量整形的主要作用有两个：防止由于上、下游网元性能不均衡导致下游网元被压垮，业务流程中断；防止由于通信模块接收消息过快，后端业务线程处理不及时，导致出现“撑死”问题。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>单个链路的流量整形：ChannelTrafficShapingHandler，可以对某个链路的消息发送和读取速度进行控制。</li><li>全局流量整形：GlobalTrafficShapingHandler，针对某个进程所有链路的消息发送和读取速度的总和进行控制。</li><li>全局和单个链路综合型流量整形：GlobalChannelTrafficShapingHandler，同时对全局和单个链路的消息发送和读取速度进行控制。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">74</span><span class="mmx-name">16.2 Netty流量整形应用</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 6 条要点 · 5 句原句摘录</p>
+<div class="sec">
+<h4>Netty流量整形应用简介</h4>
+<ul class="point">
+<li><b>流量整形应用相对比较简单，只需要将流量整形ChannelHandler添加到业务解码器之前，即可对消息的读取和发送速度进行均匀控制，而且不会丢弃消息。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>流量整形示例代码</h4>
+<ul class="point">
+<li><b>创建客户端TCP连接之后，启动定时任务，以10MB/s的速度向服务端发送请求消息</b>
+<ul class="quote"><li>示例代码如下(TrafficShappingClientHandler类)。</li></ul>
+</li>
+<li><b>在服务端添加ChannelTrafficShapingHandler对消息读取速度进行整形</b>
+<ul class="quote"><li>代码示例如下(TrafficShapingServer)。</li></ul>
+</li>
+<li><b>在服务端的ChannelHandler中，启动定时任务对消息的读取速度进行打印</b>
+<ul class="quote"><li>代码如下(TrafficShapingServerHandler类)。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>示例代码如下(TrafficShappingClientHandler类)。</li><li>代码示例如下(TrafficShapingServer)。</li><li>代码如下(TrafficShapingServerHandler类)。</li></ul>
+</div>
+<div class="sec">
+<h4>流量整形功能测试</h4>
+<ul class="point">
+<li><b>客户端以约10MB/s的速度发送请求消息</b>
+<ul class="quote"><li>客户端运行结果如图16-2所示。</li></ul>
+</li>
+<li><b>服务端以 1MB/s的速度读取请求消息</b>
+<ul class="quote"><li>服务端测试结果，如图 16-3 所示。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>客户端运行结果如图16-2所示。</li><li>服务端测试结果，如图 16-3 所示。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">75</span><span class="mmx-name">16.3 Netty流量整形工作机制</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 10 条要点 · 17 句原句摘录</p>
+<div class="sec">
+<h4>Netty流量整形工作原理和源码分析</h4>
+<ul class="point">
+<li><b>消息读取的流量整形流程</b>
+<ul class="quote"><li>在解码之前拦截 channelRead 方法，计算读取的 ByteBuf 大小。</li><li>计算需要暂停读取消息的等待时间。</li><li>满足整形条件，则修改Channel的状态为非自动读取，并将READ_SUSPENDED的属性修改为True，Channel进入整形状态，不再从TCP缓冲区读取请求消息。</li><li>创建恢复Channel为可读的定时任务，由Channel对应的NioEventLoop执行。</li><li>到达暂停读取时间之后，触发定时任务，重新修改Channel的READ_SUSPENDED属性为False，同时将autoRead设置为True。</li></ul>
+</li>
+<li><b>消息发送的流量整形流程</b>
+<ul class="quote"><li>计算需要暂停发送的等待时间。</li><li>如果需要暂停发送时间大于 10ms，则通过定时任务进行消息发送，否则直接封装成ToSend任务，添加到NioEventLoop的Task队列立即执行。</li><li>由 Channel 对应的 NioEventLoop从 messagesQueue 中循环获取待发送的 ToSend任务，执行消息发送操作。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在解码之前拦截 channelRead 方法，计算读取的 ByteBuf 大小。</li><li>计算需要暂停读取消息的等待时间。</li><li>满足整形条件，则修改Channel的状态为非自动读取，并将READ_SUSPENDED的属性修改为True，Channel进入整形状态，不再从TCP缓冲区读取请求消息。</li><li>创建恢复Channel为可读的定时任务，由Channel对应的NioEventLoop执行。</li><li>到达暂停读取时间之后，触发定时任务，重新修改Channel的READ_SUSPENDED属性为False，同时将autoRead设置为True。</li><li>计算需要暂停发送的等待时间。</li><li>如果需要暂停发送时间大于 10ms，则通过定时任务进行消息发送，否则直接封装成ToSend任务，添加到NioEventLoop的Task队列立即执行。</li><li>由 Channel 对应的 NioEventLoop从 messagesQueue 中循环获取待发送的 ToSend任务，执行消息发送操作。</li></ul>
+</div>
+<div class="sec">
+<h4>并发编程在流量整形中的应用</h4>
+<ul class="point">
+<li><b>volatile的使用</b>
+<ul class="quote"><li>关键字 volatile 是 Java提供的最轻量级的同步机制，一个线程修改了被 volatile 修饰的变量后，无论是否加锁，其他线程都可以立即看到最新的修改。</li><li>禁止指令重排序优化：普通的变量仅保证在方法的执行过程中所有依赖赋值结果的地方都能获取正确的结果，而不能保证变量赋值操作的顺序与程序代码的执行顺序一致。</li></ul>
+</li>
+<li><b>减小锁的范围</b>
+<ul class="quote"><li>由于涉及多线程调用，需要对消息发送队列 ArrayDeque＜ToSend＞加锁，但是不需要对后续的其他操作加锁。</li></ul>
+</li>
+<li><b>原子类</b>
+<ul class="quote"><li>在流量整形中大量使用了原子类提升并发操作的安全性和性能。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>关键字 volatile 是 Java提供的最轻量级的同步机制，一个线程修改了被 volatile 修饰的变量后，无论是否加锁，其他线程都可以立即看到最新的修改。</li><li>禁止指令重排序优化：普通的变量仅保证在方法的执行过程中所有依赖赋值结果的地方都能获取正确的结果，而不能保证变量赋值操作的顺序与程序代码的执行顺序一致。</li><li>由于涉及多线程调用，需要对消息发送队列 ArrayDeque＜ToSend＞加锁，但是不需要对后续的其他操作加锁。</li><li>在流量整形中大量使用了原子类提升并发操作的安全性和性能。</li></ul>
+</div>
+<div class="sec">
+<h4>使用流量整形的一些注意事项总结</h4>
+<ul class="point">
+<li><b>流量整形ChannelHandler添加位置</b>
+<ul class="quote"><li>因为需要计算请求和发送消息的大小，消息类型必须是ByteBuf或者ByteBufHolder，所以流量整形 ChannelHandler 需要添加到业务编码之后、解码之前。</li></ul>
+</li>
+<li><b>全局流量整形实例只需要创建一次</b>
+<ul class="quote"><li>全局流量整形 GlobalChannelTrafficShapingHandler 和 GlobalTrafficShapingHandler 是全局共享的，因此实例只需要创建一次，添加到不同的ChannelPipeline即可，不要创建多个实例，否则流量整形将失效。</li></ul>
+</li>
+<li><b>流量整形参数调整不要过于频繁</b>
+<ul class="quote"><li>虽然通过 AbstractTrafficShapingHandler 的 configure接口可以动态调整流量整形的读写速度和检测周期，但是由于调整之后需要对一些统计数据进行重新设置和重新计算，而且在下一个周期才能生效，过于频繁的参数调整会导致流量整形不精确，甚至失效。</li></ul>
+</li>
+<li><b>资源释放问题</b>
+<ul class="quote"><li>在Channel关闭或者流量整形ChannelHandler被移除时，由于ChannelTrafficShapingHandler持有消息发送队列，如果不对消息队列进行清空处理，则会导致待发送消息丢失，或者消息队列积压，引起内存泄漏。</li></ul>
+</li>
+<li><b>消息发送保护机制</b>
+<ul class="quote"><li>通过流量整形可以控制发送速度，但是它的控制原理是将待发送的消息封装成 Task放入消息队列，等待执行时间到达后继续发送，所以如果业务发送线程不判断Channel的可写状态，就可能会导致 OOM 等问题。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>因为需要计算请求和发送消息的大小，消息类型必须是ByteBuf或者ByteBufHolder，所以流量整形 ChannelHandler 需要添加到业务编码之后、解码之前。</li><li>全局流量整形 GlobalChannelTrafficShapingHandler 和 GlobalTrafficShapingHandler 是全局共享的，因此实例只需要创建一次，添加到不同的ChannelPipeline即可，不要创建多个实例，否则流量整形将失效。</li><li>虽然通过 AbstractTrafficShapingHandler 的 configure接口可以动态调整流量整形的读写速度和检测周期，但是由于调整之后需要对一些统计数据进行重新设置和重新计算，而且在下一个周期才能生效，过于频繁的参数调整会导致流量整形不精确，甚至失效。</li><li>在Channel关闭或者流量整形ChannelHandler被移除时，由于ChannelTrafficShapingHandler持有消息发送队列，如果不对消息队列进行清空处理，则会导致待发送消息丢失，或者消息队列积压，引起内存泄漏。</li><li>通过流量整形可以控制发送速度，但是它的控制原理是将待发送的消息封装成 Task放入消息队列，等待执行时间到达后继续发送，所以如果业务发送线程不判断Channel的可写状态，就可能会导致 OOM 等问题。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">76</span><span class="mmx-name">第17章 Netty SSL应用案例</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 6 条要点 · 6 句原句摘录</p>
+<div class="sec">
+<h4>Netty SSL应用案例概述</h4>
+<ul class="point">
+<li><b>Netty通过JDK的SSLEngine，以SslHandler的方式提供对SSL/TLS安全传输的支持</b>
+<ul class="quote"><li>Netty还提供了对 OpenSSL的支持。</li></ul>
+</li>
+<li><b>使用 Netty开发 SSL/TLS 程序相对比较简单，但在实际应用中很容易犯错</b>
+<ul class="quote"><li>本章对一些常见的错误用法进行归纳总结，避免大家犯同样的错。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Netty还提供了对 OpenSSL的支持。</li><li>本章对一些常见的错误用法进行归纳总结，避免大家犯同样的错。</li></ul>
+</div>
+<div class="sec">
+<h4>Netty SSL应用案例常见错误</h4>
+<ul class="point">
+<li><b>未正确配置SSL/TLS参数</b>
+<ul class="quote"><li>例如，未设置合适的密钥库、信任库路径，或证书密钥不匹配等。</li></ul>
+</li>
+<li><b>未正确处理证书链</b>
+<ul class="quote"><li>在使用自签名证书时，需要正确配置证书链，以确保客户端能够验证服务器身份。</li></ul>
+</li>
+<li><b>未正确处理异步操作</b>
+<ul class="quote"><li>在使用Netty的SSL功能时，需要注意异步操作的处理方式，避免出现阻塞或死锁等问题。</li></ul>
+</li>
+<li><b>未正确处理并发连接</b>
+<ul class="quote"><li>在高并发场景下，需要正确配置线程池和连接数限制等参数，以确保系统稳定运行。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>例如，未设置合适的密钥库、信任库路径，或证书密钥不匹配等。</li><li>在使用自签名证书时，需要正确配置证书链，以确保客户端能够验证服务器身份。</li><li>在使用Netty的SSL功能时，需要注意异步操作的处理方式，避免出现阻塞或死锁等问题。</li><li>在高并发场景下，需要正确配置线程池和连接数限制等参数，以确保系统稳定运行。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">77</span><span class="mmx-name">17.1 Netty SSL功能简介</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 7 条要点 · 11 句原句摘录</p>
+<div class="sec">
+<h4>Netty SSL功能简介</h4>
+<ul class="point">
+<li><b>Netty通过SslHandler提供了对SSL的支持，它支持的SSL协议类型包括SSL v2、SSL v3、TLS v1、TLS v1.1和TLS v1.2。</b>
+</li>
+<li><b>如果使用Netty做RPC框架或者私有协议栈，RPC框架面向非授信的第三方开放，例如将内部的一些能力通过服务对外开放，就需要进行安全认证。如果开放的是公网IP，对于一些安全性要求非常高的服务，例如在线支付、订购等，需要通过 SSL/TLS进行通信。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>SSL安全特性</h4>
+<ul class="point">
+<li><b>单向认证：客户端验证服务端的合法性，服务端不验证客户端</b>
+<ul class="quote"><li>SSL客户端向服务端传送客户端SSL协议的版本号、支持的加密算法种类、产生的随机数及其他可选信息。</li><li>服务端返回握手应答，向客户端传送确认 SSL协议的版本号、加密算法的种类、随机数及其他相关信息。</li><li>服务端向客户端发送自己的公钥。</li><li>客户端对服务端的证书进行认证。</li><li>客户端随机产生一个用于后面通信的“对称密码”，然后用服务端的公钥对其加密，将加密后的“预备主密码”传给服务端。</li><li>服务端将用自己的私钥解开加密的“预备主密码”，然后通过一系列步骤来产生主密码。</li><li>客户端向服务端发出信息，指明后面的数据通信将使用主密码作为对称密钥，同时通知服务器客户端的握手过程结束。</li><li>服务端向客户端发出信息，指明后面的数据通信将使用主密码作为对称密钥，同时通知客户端服务器端的握手过程结束。</li></ul>
+</li>
+<li><b>双向认证：服务端发送认证请求消息给客户端，客户端发送自签名证书给服务端进行安全认证。</b>
+</li>
+<li><b>CA认证：使用第三方 CA 证书颁发机构进行签名和验证</b>
+<ul class="quote"><li>对于一个大型网站或者应用服务器来说，使用自签名的SSL双向认证，只要客户端或者服务端修改了密钥和证书，就需要重新进行签名和证书交换，这种调试和维护工作量是非常大的。</li><li>在实际的商用系统中往往会通过第三方 CA 证书颁发机构进行签名和验证。例如浏览器就保存了几个常用的CA_ROOT，每次连接到网站时只要这个网站的证书是经过这些 CA_ROOT 签名的就可以通过验证。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>SSL客户端向服务端传送客户端SSL协议的版本号、支持的加密算法种类、产生的随机数及其他可选信息。</li><li>服务端返回握手应答，向客户端传送确认 SSL协议的版本号、加密算法的种类、随机数及其他相关信息。</li><li>服务端向客户端发送自己的公钥。</li><li>客户端对服务端的证书进行认证。</li><li>客户端随机产生一个用于后面通信的“对称密码”，然后用服务端的公钥对其加密，将加密后的“预备主密码”传给服务端。</li><li>服务端将用自己的私钥解开加密的“预备主密码”，然后通过一系列步骤来产生主密码。</li><li>客户端向服务端发出信息，指明后面的数据通信将使用主密码作为对称密钥，同时通知服务器客户端的握手过程结束。</li><li>服务端向客户端发出信息，指明后面的数据通信将使用主密码作为对称密钥，同时通知客户端服务器端的握手过程结束。</li><li>对于一个大型网站或者应用服务器来说，使用自签名的SSL双向认证，只要客户端或者服务端修改了密钥和证书，就需要重新进行签名和证书交换，这种调试和维护工作量是非常大的。</li><li>在实际的商用系统中往往会通过第三方 CA 证书颁发机构进行签名和验证。例如浏览器就保存了几个常用的CA_ROOT，每次连接到网站时只要这个网站的证书是经过这些 CA_ROOT 签名的就可以通过验证。</li></ul>
+</div>
+<div class="sec">
+<h4>Netty SSL实现机制</h4>
+<ul class="point">
+<li><b>JDK SSL：JdkSslEngine，继承自JDK SSLEngine，对JDK原生的SSL功能做了包装和增强。</b>
+</li>
+<li><b>OpenSSL：OpenSslEngine，通过原生的方式调用OpenSsl，提升性能</b>
+<ul class="quote"><li>通过-Dio.netty.handler.ssl.noOpenSsl可以显式开启或者禁用OpenSsl，对于性能要求比较高的应用，建议使用OpenSsl替换JDK的SslEngine。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>通过-Dio.netty.handler.ssl.noOpenSsl可以显式开启或者禁用OpenSsl，对于性能要求比较高的应用，建议使用OpenSsl替换JDK的SslEngine。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">78</span><span class="mmx-name">17.2 Netty客户端SSL握手超时问题</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 5 条要点 · 4 句原句摘录</p>
+<div class="sec">
+<h4>Netty客户端SSL握手超时问题原因定位</h4>
+<ul class="point">
+<li><b>通过抓包或者打印 SSL 调测日志的方式查看双方的 SSL 握手过程</b>
+<ul class="quote"><li>在客户端开启SSL调测相关参数。</li></ul>
+</li>
+<li><b>服务端添加SslHandler的位置有问题，导致握手失败</b>
+<ul class="quote"><li>服务端添加SslHandler的位置在业务解码器后面，不满足业务解码器的解析条件，握手消息不会调用后面的 SslHandler。</li></ul>
+</li>
+<li><b>将 SslHandler 放到 ChannelPipeline 的首位，重新验证，发现SSL握手成功</b>
+<ul class="quote"><li>修正后的代码示例：将 SslHandler 放到 ChannelPipeline 的首位(示例代码中DelimiterBasedFrameDecoder之前)。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在客户端开启SSL调测相关参数。</li><li>服务端添加SslHandler的位置在业务解码器后面，不满足业务解码器的解析条件，握手消息不会调用后面的 SslHandler。</li><li>修正后的代码示例：将 SslHandler 放到 ChannelPipeline 的首位(示例代码中DelimiterBasedFrameDecoder之前)。</li></ul>
+</div>
+<div class="sec">
+<h4>Netty SSL握手问题定位技巧</h4>
+<ul class="point">
+<li><b>如果使用JDK的SSL引擎，则可以通过在VM启动参数中添加“-Djavax.net.debug=ssl，handshake，data，trustmanager”的方式来打印 SSL 握手日志。</b>
+</li>
+<li><b>如果使用 OpenSSL 引擎，则可以通过抓包的方式定位问题</b>
+<ul class="quote"><li>常见的SSL握手失败原因包括：证书不匹配，证书校验失败；证书过期；双方 SSL 引擎支持的 TSL/SSL 版本不一致；域名校验失败；双方支持的加密算法不一致，导致算法套件匹配失败。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>常见的SSL握手失败原因包括：证书不匹配，证书校验失败；证书过期；双方 SSL 引擎支持的 TSL/SSL 版本不一致；域名校验失败；双方支持的加密算法不一致，导致算法套件匹配失败。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">79</span><span class="mmx-name">17.3 SSL握手性能问题</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 3 条要点 · 3 句原句摘录</p>
+<div class="sec">
+<h4>SSL握手性能问题</h4>
+<ul class="point">
+<li><b>服务端采用Netty构建，在业务高峰期会出现客户端批量超时问题，超时之后有大量客户端使用SSL接入，导致服务端CPU使用率较高，部分客户端接入超时。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>SSL握手性能热点分析</h4>
+<ul class="point">
+<li><b>对Netty SSL服务端CPU热点方法进行采集，发现存在证书加载的优化点</b>
+<ul class="quote"><li>因为keystore证书通常不会变更，每当有新的SSL客户端接入就要重新加载证书，并发量高时会影响性能。</li><li>可以把证书加载的文件流做成缓存来提高加载速度。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>因为keystore证书通常不会变更，每当有新的SSL客户端接入就要重新加载证书，并发量高时会影响性能。</li><li>可以把证书加载的文件流做成缓存来提高加载速度。</li></ul>
+</div>
+<div class="sec">
+<h4>缓存和对象池</h4>
+<ul class="point">
+<li><b>对于创建和销毁成本较高的对象或者经常使用的配置数据，将其保存到缓存或者对象池中，防止每次业务调用都实时创建和加载，可以极大地提升系统的性能</b>
+<ul class="quote"><li>考虑到配置或者对象变更，本地缓存一般都要有变更通知和缓存失效机制，以保证数据的准确性。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>考虑到配置或者对象变更，本地缓存一般都要有变更通知和缓存失效机制，以保证数据的准确性。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">80</span><span class="mmx-name">17.4 SSL事件监听机制</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 2 条要点 · 3 句原句摘录</p>
+<div class="sec">
+<h4>SSL握手成功事件</h4>
+<ul class="point">
+<li><b>通过监听 SslHandshakeCompletionEvent 事件，可以在 SSL 握手成功后做业务逻辑处理</b>
+<ul class="quote"><li>Netty在握手成功时会触发该事件的调用。</li><li>业务 ChannelHandler 通过自定义 userEventTriggered 方法拦截并处理 SslHandshakeCompletionEvent事件，即可实现握手成功之后的业务逻辑。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>Netty在握手成功时会触发该事件的调用。</li><li>业务 ChannelHandler 通过自定义 userEventTriggered 方法拦截并处理 SslHandshakeCompletionEvent事件，即可实现握手成功之后的业务逻辑。</li></ul>
+</div>
+<div class="sec">
+<h4>SSL连接关闭事件</h4>
+<ul class="point">
+<li><b>当SSL连接关闭时，会触发SslCloseCompletionEvent事件</b>
+<ul class="quote"><li>用户通过 userEventTriggered 方法拦截并处理 SslCloseCompletionEvent 事件，实现定制业务逻辑的处理。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>用户通过 userEventTriggered 方法拦截并处理 SslCloseCompletionEvent 事件，实现定制业务逻辑的处理。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">81</span><span class="mmx-name">17.5 总结</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 2 条要点 · 1 句原句摘录</p>
+<div class="sec">
+<h4>跨网络边界的 RPC调用加密</h4>
+<ul class="point">
+<li><b>通过 TLS/SSL对传输通道进行加密，防止敏感数据泄露。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>Netty提供的 SslHandler</h4>
+<ul class="point">
+<li><b>SslHandler可以方便地实现单向和双向认证</b>
+<ul class="quote"><li>对于有较高性能诉求的场景，可以使用 OpenSSL引擎来提升 SSL/TLS的通信性能。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>对于有较高性能诉求的场景，可以使用 OpenSSL引擎来提升 SSL/TLS的通信性能。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">82</span><span class="mmx-name">第18章 Netty HTTPS服务端高并发宕机案例</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 2 条要点 · 2 句原句摘录</p>
+<div class="sec">
+<h4>Netty HTTPS服务端高并发宕机案例</h4>
+<ul class="point">
+<li><b>Netty提供了原生的 HTTPS 协议栈，用户可以基于该协议栈开发各种 HTTPS 应用</b>
+<ul class="quote"><li>在互联网的高并发场景下，如果客户端并发量过大，而服务端又没有针对并发连接数进行流控，或者没有弹性伸缩能力，则很有可能宕机。</li></ul>
+</li>
+<li><b>HTTPS服务端的性能优化，既有功能层面的小优化，又有架构层面的大优化</b>
+<ul class="quote"><li>本章针对高并发场景下HTTPS服务端的可靠性保护和性能优化进行详细讲解。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在互联网的高并发场景下，如果客户端并发量过大，而服务端又没有针对并发连接数进行流控，或者没有弹性伸缩能力，则很有可能宕机。</li><li>本章针对高并发场景下HTTPS服务端的可靠性保护和性能优化进行详细讲解。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">83</span><span class="mmx-name">18.1 Netty HTTPS服务端宕机问题</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 6 条要点 · 13 句原句摘录</p>
+<div class="sec">
+<h4>客户端大量超时</h4>
+<ul class="point">
+<li><b>客户端最初发生超时时，并没有明显的流量变化，排除突发流量高峰导致系统过载</b>
+<ul class="quote"><li>分析服务端日志发现，在客户端超时时间段，后端的缓存服务出现了问题，缓存查询耗时比客户端的超时时间还长，因此导致了客户端超时。</li></ul>
+</li>
+<li><b>由于采用的是HTTP/1.1，客户端超时之后，需要关闭当前链路，重新发起HTTPS连接</b>
+<ul class="quote"><li>日志中会大量打印读取响应超时和客户端关闭连接的异常。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>分析服务端日志发现，在客户端超时时间段，后端的缓存服务出现了问题，缓存查询耗时比客户端的超时时间还长，因此导致了客户端超时。</li><li>日志中会大量打印读取响应超时和客户端关闭连接的异常。</li></ul>
+</div>
+<div class="sec">
+<h4>服务端内存泄漏原因分析</h4>
+<ul class="point">
+<li><b>通过Dump查看服务端内存文件，分析泄漏点，发现Netty的NioSocketChannel内存占用排名第一</b>
+<ul class="quote"><li>共有5729个NioSocketChannel对象，占用131MB左右的内存。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>共有5729个NioSocketChannel对象，占用131MB左右的内存。</li></ul>
+</div>
+<div class="sec">
+<h4>NioSocketChannel泄漏原因探究</h4>
+<ul class="point">
+<li><b>导致NioSocketChannel泄漏的可能原因有两个：代码有缺陷，HTTPS客户端关闭连接之后，服务端没有正确关闭连接；服务端负载比较重，客户端超时之后的断连和重连速度超过服务端关闭连接速度</b>
+<ul class="quote"><li>明确方向之后，具体的定位策略有3点：通过netstat命令查看服务端的端口连接状态；查看NioSocketChannel的状态；停止压测一段时间，观察连接数，以及服务端的内存占用情况，看服务端是否可以自动恢复。</li><li>在压测过程中，动态采集HTTPS的连接状态，发现超时的连接被服务端关闭。</li><li>接着通过 OQL在内存堆栈中查询 NioSocketChannel 的连接状态，其中处于关闭状态的连接数为25，服务端尚未主动关闭的NioSocketChannel实例个数为5806。</li><li>从 OQL 查询可以看出，内存中尚有被服务端关闭但是还没来得及被 GC 回收的NioSocketChannel对象，证明客户端超时关闭连接后，服务端感知了连接关闭事件并主动关闭了连接。</li><li>当客户端发生大量超时、服务端占用内存飙升时，停止压测，观察服务端是否可以自动恢复。停止压测观察服务端内存使用情况，可以看出，停止压测一段时间之后，服务端的堆内存正常回收，说明并不存在由于忘记释放NioSocketChannel导致的内存泄漏问题。</li><li>同步观察 HTTPS 的连接数，发现停止压测一段时间之后，连接数逐步下降，最终降为0。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>明确方向之后，具体的定位策略有3点：通过netstat命令查看服务端的端口连接状态；查看NioSocketChannel的状态；停止压测一段时间，观察连接数，以及服务端的内存占用情况，看服务端是否可以自动恢复。</li><li>在压测过程中，动态采集HTTPS的连接状态，发现超时的连接被服务端关闭。</li><li>接着通过 OQL在内存堆栈中查询 NioSocketChannel 的连接状态，其中处于关闭状态的连接数为25，服务端尚未主动关闭的NioSocketChannel实例个数为5806。</li><li>从 OQL 查询可以看出，内存中尚有被服务端关闭但是还没来得及被 GC 回收的NioSocketChannel对象，证明客户端超时关闭连接后，服务端感知了连接关闭事件并主动关闭了连接。</li><li>当客户端发生大量超时、服务端占用内存飙升时，停止压测，观察服务端是否可以自动恢复。停止压测观察服务端内存使用情况，可以看出，停止压测一段时间之后，服务端的堆内存正常回收，说明并不存在由于忘记释放NioSocketChannel导致的内存泄漏问题。</li><li>同步观察 HTTPS 的连接数，发现停止压测一段时间之后，连接数逐步下降，最终降为0。</li></ul>
+</div>
+<div class="sec">
+<h4>高并发场景下缺失的可靠性保护</h4>
+<ul class="point">
+<li><b>客户端采用 HTTP 连接池的方式与服务端进行 RPC 调用，单个客户端连接池上限为200，客户端部署了30个实例，而服务端只部署了3个实例</b>
+<ul class="quote"><li>在业务高峰期，每个服务端需要处理 6000 个 HTTP 连接，服务端时延增大之后，导致客户端批量超时。</li><li>超时之后客户端会关闭连接重新发起 connect 操作，在某个瞬间，几千个 HTTPS 连接同时发起 SSL握手操作，由于服务端此时也处于高负荷运行状态，导致部分连接SSL握手失败或者超时。</li><li>超时之后客户端继续重连，进一步加重服务端的处理压力，最终导致服务端来不及释放客户端关闭的连接，引起NioSocketChannel大量积压，最终导致OOM异常。</li></ul>
+</li>
+<li><b>客户端并没有流控机制，只要连接数不够用，就会一直创建连接，达到连接池配置的最大连接数</b>
+<ul class="quote"><li>正是由于客户端和服务端都没有对高并发时大量的 HTTPS 链路断连和重连进行保护，导致了服务端OOM异常，业务中断。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在业务高峰期，每个服务端需要处理 6000 个 HTTP 连接，服务端时延增大之后，导致客户端批量超时。</li><li>超时之后客户端会关闭连接重新发起 connect 操作，在某个瞬间，几千个 HTTPS 连接同时发起 SSL握手操作，由于服务端此时也处于高负荷运行状态，导致部分连接SSL握手失败或者超时。</li><li>超时之后客户端继续重连，进一步加重服务端的处理压力，最终导致服务端来不及释放客户端关闭的连接，引起NioSocketChannel大量积压，最终导致OOM异常。</li><li>正是由于客户端和服务端都没有对高并发时大量的 HTTPS 链路断连和重连进行保护，导致了服务端OOM异常，业务中断。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">84</span><span class="mmx-name">18.2 功能层面的可靠性优化</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 5 条要点 · 6 句原句摘录</p>
+<div class="sec">
+<h4>Netty HTTPS服务端可靠性优化</h4>
+<ul class="point">
+<li><b>增加对客户端并发连接数的控制</b>
+<ul class="quote"><li>基于Netty的Pipeline机制，对SSL握手成功、SSL连接关闭做切面拦截。</li><li>通过流控切面接口，对HTTPS连接进行计数，根据计数器进行流控。</li></ul>
+</li>
+<li><b>切换JDK SSL引擎到OpenSSL</b>
+<ul class="quote"><li>将系统默认的JDK SSL引擎切换到 OpenSSL引擎，可提升 SSL的握手和通信性能。</li></ul>
+</li>
+<li><b>HTTPS服务端弹性伸缩</b>
+<ul class="quote"><li>由于 HTTPS 服务端是无状态的，因此可以使用公有云的弹性伸缩服务，针对服务端的 CPU 和内存资源占用，配置弹性伸缩策略，在业务高峰期通过动态扩容的方式，保障业务的平稳运行。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>基于Netty的Pipeline机制，对SSL握手成功、SSL连接关闭做切面拦截。</li><li>通过流控切面接口，对HTTPS连接进行计数，根据计数器进行流控。</li><li>将系统默认的JDK SSL引擎切换到 OpenSSL引擎，可提升 SSL的握手和通信性能。</li><li>由于 HTTPS 服务端是无状态的，因此可以使用公有云的弹性伸缩服务，针对服务端的 CPU 和内存资源占用，配置弹性伸缩策略，在业务高峰期通过动态扩容的方式，保障业务的平稳运行。</li></ul>
+</div>
+<div class="sec">
+<h4>HTTPS客户端优化</h4>
+<ul class="point">
+<li><b>HTTPS连接池调整</b>
+<ul class="quote"><li>将客户端的连接池上限从 200 调整为 50，降低业务大批量超时重建 HTTPS连接对服务端的冲击。</li></ul>
+</li>
+<li><b>超时时间调整</b>
+<ul class="quote"><li>根据性能KPI数据分析，适当地调长了客户端超时时间，由于调长超时时间之后可能导致客户端线程同步阻塞时间变长，因此也同步调大了 Tomcat 工作线程的大小，以减小客户端发生同步阻塞时对系统吞吐量的影响。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>将客户端的连接池上限从 200 调整为 50，降低业务大批量超时重建 HTTPS连接对服务端的冲击。</li><li>根据性能KPI数据分析，适当地调长了客户端超时时间，由于调长超时时间之后可能导致客户端线程同步阻塞时间变长，因此也同步调大了 Tomcat 工作线程的大小，以减小客户端发生同步阻塞时对系统吞吐量的影响。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">85</span><span class="mmx-name">18.3 架构层面的可靠性优化</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 6 条要点 · 15 句原句摘录</p>
+<div class="sec">
+<h4>端到端架构问题剖析</h4>
+<ul class="point">
+<li><b>客户端采用同步阻塞式HTTP调用，I/O效率不高，调用线程容易被阻塞</b>
+<ul class="quote"><li>客户端采用同步阻塞的方式进行 RPC 调用，如果服务端响应慢，容易阻塞调用方的线程。</li><li>客户端和服务端采用HTTP/1.1，由于HTTP/1.1是无状态的“一请求一应答”工作模式，所以单个链路通信效率低，需要创建大量链路来提升I/O性能。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>客户端采用同步阻塞的方式进行 RPC 调用，如果服务端响应慢，容易阻塞调用方的线程。</li><li>客户端和服务端采用HTTP/1.1，由于HTTP/1.1是无状态的“一请求一应答”工作模式，所以单个链路通信效率低，需要创建大量链路来提升I/O性能。</li></ul>
+</div>
+<div class="sec">
+<h4>HTTP Client切换到NIO</h4>
+<ul class="point">
+<li><b>切换到Netty的异步HTTP Client后，利用I/O多路复用技术，把多个I/O的阻塞复用到同一个select方法的阻塞上</b>
+<ul class="quote"><li>与传统的多线程/多进程模型相比，I/O多路复用的最大优势是系统开销小，系统不需要创建新的进程或者线程，也不需要维护这些进程和线程的运行，减少了系统的维护工作量，节省了系统资源。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>与传统的多线程/多进程模型相比，I/O多路复用的最大优势是系统开销小，系统不需要创建新的进程或者线程，也不需要维护这些进程和线程的运行，减少了系统的维护工作量，节省了系统资源。</li></ul>
+</div>
+<div class="sec">
+<h4>同步RPC调用切换到异步调用</h4>
+<ul class="point">
+<li><b>同步服务调用最大的缺点就是，一旦服务端响应慢，RPC客户端线程就会同步阻塞等待响应</b>
+<ul class="quote"><li>用户发起远程服务调用之后，经历层层业务逻辑处理、消息编码，最终序列化的消息会被放入通信框架的消息队列。</li><li>业务线程可以选择同步等待，也可以选择直接返回，通过消息队列的方式实现业务层和通信层的分离是比较成熟、典型的做法，现代的 RPC 框架或者We b服务器很少直接使用业务线程进行网络读写。</li></ul>
+</li>
+<li><b>利用JDK的CompletableFuture与Netty的NIO，可以非常方便地实现异步RPC调用</b>
+<ul class="quote"><li>异步服务调用的工作流程如下：消费者通过RPC框架调用服务端；Netty异步发送HTTP请求消息，如果没有发生I/O异常就正常返回；HTTP请求消息发送成功后，I/O线程构造 CompletableFuture对象，设置到 RPC上下文中；用户线程通过RPC上下文获取CompletableFuture对象；不阻塞用户线程，立即返回CompletableFuture对象；通过CompletableFuture编写Function函数，在Lambda函数中实现异步回调逻辑；服务端返回HTTP响应，Netty负责反序列化工作；Netty I/O 线程通过调用 CompletableFuture 的 complete 方法将应答设置到CompletableFuture对象的操作结果中；CompletableFuture通过whenCompleteAsync等方法异步执行业务回调逻辑，实现RPC调用的异步化。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>用户发起远程服务调用之后，经历层层业务逻辑处理、消息编码，最终序列化的消息会被放入通信框架的消息队列。</li><li>业务线程可以选择同步等待，也可以选择直接返回，通过消息队列的方式实现业务层和通信层的分离是比较成熟、典型的做法，现代的 RPC 框架或者We b服务器很少直接使用业务线程进行网络读写。</li><li>异步服务调用的工作流程如下：消费者通过RPC框架调用服务端；Netty异步发送HTTP请求消息，如果没有发生I/O异常就正常返回；HTTP请求消息发送成功后，I/O线程构造 CompletableFuture对象，设置到 RPC上下文中；用户线程通过RPC上下文获取CompletableFuture对象；不阻塞用户线程，立即返回CompletableFuture对象；通过CompletableFuture编写Function函数，在Lambda函数中实现异步回调逻辑；服务端返回HTTP响应，Netty负责反序列化工作；Netty I/O 线程通过调用 CompletableFuture 的 complete 方法将应答设置到CompletableFuture对象的操作结果中；CompletableFuture通过whenCompleteAsync等方法异步执行业务回调逻辑，实现RPC调用的异步化。</li></ul>
+</div>
+<div class="sec">
+<h4>协议升级到HTTP/2</h4>
+<ul class="point">
+<li><b>HTTP/1.1存在的问题：无状态导致的链路传输性能差、超时关闭连接问题、HTTP本身包含文本类型的协议消息头，占用一些字节、服务端无法主动推送响应</b>
+<ul class="quote"><li>由于HTTP是无状态的，客户端发送请求之后，必须等到接收服务端响应之后，才能继续发送下一个请求消息。在某一个时刻，链路上只存在单向的消息流，实际上把 TCP的全双工模式变成了单工模式。</li><li>如果服务端响应耗时较大，则单个HTTP连接的通信性能严重下降，只能通过不断地新建连接来提升 I/O 性能。但这也会带来很多副作用，例如句柄数的增加、I/O 线程的负担加重等。</li><li>HTTP 客户端超时之后，由于协议是无状态的，客户端无法对请求和响应进行关联，只能关闭连接进行重连，反复地断连和重连会增加成本和时延。</li><li>HTTP 本身包含文本类型的协议消息头，占用一些字节。另外，采用 JSON 等文本类序列化方式，报文相比传统的私有RPC协议也大很多，增加了网络传输开销。</li><li>服务端无法主动推送响应。</li></ul>
+</li>
+<li><b>HTTP/2 streaming调用：支持双向流、消息头压缩、单 TCP 的多路复用、服务端推送</b>
+<ul class="quote"><li>基于HTTP/2的RPC调用，可以参考和借鉴gRPC Java版的实现策略。基于HTTP/2，gRPC提供了三种streaming模式：服务端streaming、客户端streaming、服务端和客户端双向streaming。</li><li>服务端streaming模式指客户端发送1个RPC请求，服务端返回N个响应，响应可以单独返回，也可以一起返回。</li><li>客户端 streaming 指的是客户端发送多个请求，服务端返回一个响应，多用于数据汇聚和汇总计算场景。</li><li>双向streaming指客户端发送N个请求，服务端返回N个或者M个响应，通过该特性可以充分利用HTTP/2的多路复用功能，在某个时刻，HTTP/2连接上既有请求也有响应，实现了全双工通信。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>由于HTTP是无状态的，客户端发送请求之后，必须等到接收服务端响应之后，才能继续发送下一个请求消息。在某一个时刻，链路上只存在单向的消息流，实际上把 TCP的全双工模式变成了单工模式。</li><li>如果服务端响应耗时较大，则单个HTTP连接的通信性能严重下降，只能通过不断地新建连接来提升 I/O 性能。但这也会带来很多副作用，例如句柄数的增加、I/O 线程的负担加重等。</li><li>HTTP 客户端超时之后，由于协议是无状态的，客户端无法对请求和响应进行关联，只能关闭连接进行重连，反复地断连和重连会增加成本和时延。</li><li>HTTP 本身包含文本类型的协议消息头，占用一些字节。另外，采用 JSON 等文本类序列化方式，报文相比传统的私有RPC协议也大很多，增加了网络传输开销。</li><li>服务端无法主动推送响应。</li><li>基于HTTP/2的RPC调用，可以参考和借鉴gRPC Java版的实现策略。基于HTTP/2，gRPC提供了三种streaming模式：服务端streaming、客户端streaming、服务端和客户端双向streaming。</li><li>服务端streaming模式指客户端发送1个RPC请求，服务端返回N个响应，响应可以单独返回，也可以一起返回。</li><li>客户端 streaming 指的是客户端发送多个请求，服务端返回一个响应，多用于数据汇聚和汇总计算场景。</li><li>双向streaming指客户端发送N个请求，服务端返回N个或者M个响应，通过该特性可以充分利用HTTP/2的多路复用功能，在某个时刻，HTTP/2连接上既有请求也有响应，实现了全双工通信。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">86</span><span class="mmx-name">18.4 总结</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 4 条要点 · 4 句原句摘录</p>
+<div class="sec">
+<h4>RPC框架支持SSL/TLS传输通道加密的影响</h4>
+<ul class="point">
+<li><b>SSL/TLS传输通道加密增加数据加解密功能，对系统性能有影响</b>
+<ul class="quote"><li>高并发、低时延类的业务，一旦发生批量服务调用超时，就会导致大量的SSL链路重建。</li></ul>
+</li>
+<li><b>系统可靠性面临挑战，可能导致业务中断</b>
+<ul class="quote"><li>在业务高峰期，如果服务端可靠性设计欠缺，很有可能宕机。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>高并发、低时延类的业务，一旦发生批量服务调用超时，就会导致大量的SSL链路重建。</li><li>在业务高峰期，如果服务端可靠性设计欠缺，很有可能宕机。</li></ul>
+</div>
+<div class="sec">
+<h4>HTTPS服务的优化策略</h4>
+<ul class="point">
+<li><b>加强可靠性设计</b>
+<ul class="quote"><li>从架构层面做系统性的优化。</li></ul>
+</li>
+<li><b>基于HTTP/2构建异步流式RPC调用</b>
+<ul class="quote"><li>借鉴gRPC的设计理念。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>从架构层面做系统性的优化。</li><li>借鉴gRPC的设计理念。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">87</span><span class="mmx-name">第19章 MQTT服务接入超时案例</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 2 条要点 · 1 句原句摘录</p>
+<div class="sec">
+<h4>MQTT服务接入超时案例概述</h4>
+<ul class="point">
+<li><b>Netty 4.1提供了MQTT协议栈，但在实际环境中会面临各种挑战</b>
+<ul class="quote"><li>服务端如果没有考虑到各种异常场景，很难稳定运行。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>服务端如果没有考虑到各种异常场景，很难稳定运行。</li></ul>
+</div>
+<div class="sec">
+<h4>MQTT服务和Netty在异常场景下的保护机制</h4>
+<ul class="point">
+<li><b>以生产环境MQTT服务无法提供接入服务为例，详细介绍保护机制。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">88</span><span class="mmx-name">19.1 MQTT服务接入超时问题</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 6 条要点 · 8 句原句摘录</p>
+<div class="sec">
+<h4>生产环境MQTT服务接入超时问题</h4>
+<ul class="point">
+<li><b>生产环境的MQTT服务运行一段时间之后，发现新的端侧设备无法接入，连接超时</b>
+<ul class="quote"><li>分析 MQTT 服务端日志，没有明显的异常，但是内存占用较高，查看连接数，发现有数十万个TCP连接处于ESTABLISHED状态，实际的MQTT连接数应该在1万个左右。</li></ul>
+</li>
+<li><b>由于 MQTT 服务端的内存是按照 2万个左右连接数规模配置的，因此当连接数达到数十万个的规模之后，导致了服务端大量SocketChannel积压、内存暴涨、高频率GC和较长的STW时间，对端侧设备的接入造成了很大影响，部分设备MQTT握手超时，无法接入。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>分析 MQTT 服务端日志，没有明显的异常，但是内存占用较高，查看连接数，发现有数十万个TCP连接处于ESTABLISHED状态，实际的MQTT连接数应该在1万个左右。</li></ul>
+</div>
+<div class="sec">
+<h4>连接数膨胀原因分析</h4>
+<ul class="point">
+<li><b>一些端侧设备并没有按照MQTT协议规范进行处理，包括：客户端发起CONNECT连接，SSL握手成功之后没有按照协议规范继续处理，例如发送PING命令；客户端发起TCP连接，不做SSL握手，也不做后续处理，导致TCP连接被挂起</b>
+<ul class="quote"><li>由于服务端是严格按照 MQTT 规范实现的，上述端侧设备不按规范接入，实际上消息调度不到 MQTT应用协议层。</li><li>MQTT服务端依赖 Keep Alive机制进行超时检测，当一段时间接收不到客户端的心跳和业务消息时，就会触发心跳超时，关闭连接。</li><li>针对上述两种接入场景，由于MQTT的连接流程没有完成，MQTT协议栈不认为这个是合法的MQTT连接，因此心跳保护机制无法对上述 TCP 连接进行检测。</li><li>客户端和服务端都没有主动关闭这个连接，导致TCP连接一直保持。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>由于服务端是严格按照 MQTT 规范实现的，上述端侧设备不按规范接入，实际上消息调度不到 MQTT应用协议层。</li><li>MQTT服务端依赖 Keep Alive机制进行超时检测，当一段时间接收不到客户端的心跳和业务消息时，就会触发心跳超时，关闭连接。</li><li>针对上述两种接入场景，由于MQTT的连接流程没有完成，MQTT协议栈不认为这个是合法的MQTT连接，因此心跳保护机制无法对上述 TCP 连接进行检测。</li><li>客户端和服务端都没有主动关闭这个连接，导致TCP连接一直保持。</li></ul>
+</div>
+<div class="sec">
+<h4>无效连接的关闭策略</h4>
+<ul class="point">
+<li><b>端侧设备的 TCP 连接接入后，启动一个链路检测定时器加入 Channel 对应的NioEventLoop</b>
+<ul class="quote"><li>链路检测定时器一旦触发，就主动关闭TCP连接。</li></ul>
+</li>
+<li><b>TCP 连接完成 MQTT 协议层的 CONNECT 之后，删除之前创建的链路检测定时器</b>
+<ul class="quote"><li>对于这种不遵循 MQTT 规范的端侧设备，除了要求对方按照规范修改，服务端还需要做可靠性保护。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>链路检测定时器一旦触发，就主动关闭TCP连接。</li><li>对于这种不遵循 MQTT 规范的端侧设备，除了要求对方按照规范修改，服务端还需要做可靠性保护。</li></ul>
+</div>
+<div class="sec">
+<h4>问题总结</h4>
+<ul class="point">
+<li><b>生产环境升级版本之后，平稳运行，查看 MQTT 连接数，稳定在 1 万个左右，与预期一致，问题得到解决</b>
+<ul class="quote"><li>对于 MQTT 服务端，除了要遵循协议规范，还需要对那些不遵循规范的客户端接入进行保护，不能因为一些客户端没按照规范实现，导致服务端无法正常工作。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>对于 MQTT 服务端，除了要遵循协议规范，还需要对那些不遵循规范的客户端接入进行保护，不能因为一些客户端没按照规范实现，导致服务端无法正常工作。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">89</span><span class="mmx-name">19.2 基于Netty的可靠性设计</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 4 个小节 · 8 条要点 · 12 句原句摘录</p>
+<div class="sec">
+<h4>Netty的可靠性重要性</h4>
+<ul class="point">
+<li><b>Netty是基础的通信框架，其可靠性会影响整个业务集群的数据通信和交换</b>
+<ul class="quote"><li>在以分布式为主的软件架构体系中，通信中断就意味着整个业务中断。</li></ul>
+</li>
+<li><b>Netty会面临恶劣的网络环境，需要自身解决可靠性问题</b>
+<ul class="quote"><li>平台能够解决的可靠性问题需要由 Netty自身来解决，否则会导致上层用户关注过多的底层故障。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在以分布式为主的软件架构体系中，通信中断就意味着整个业务中断。</li><li>平台能够解决的可靠性问题需要由 Netty自身来解决，否则会导致上层用户关注过多的底层故障。</li></ul>
+</div>
+<div class="sec">
+<h4>业务定制I/O异常</h4>
+<ul class="point">
+<li><b>发生 I/O 异常时，底层的资源由它负责释放，同时将异常堆栈信息以事件的形式通知给上层用户</b>
+<ul class="quote"><li>这种处理机制既保证了异常处理的安全性，也向上层提供了灵活的定制能力。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>这种处理机制既保证了异常处理的安全性，也向上层提供了灵活的定制能力。</li></ul>
+</div>
+<div class="sec">
+<h4>链路的有效性检测</h4>
+<ul class="point">
+<li><b>周期性地对链路进行有效性检测，目前最流行和通用的做法就是心跳检测</b>
+<ul class="quote"><li>TCP层面的心跳检测，即TCP的Keep-Alive机制。</li><li>协议层的心跳检测，主要存在于长连接协议中，例如MQTT。</li><li>应用层的心跳检测，它主要由各业务产品通过约定方式定时给对方发送心跳消息实现。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>TCP层面的心跳检测，即TCP的Keep-Alive机制。</li><li>协议层的心跳检测，主要存在于长连接协议中，例如MQTT。</li><li>应用层的心跳检测，它主要由各业务产品通过约定方式定时给对方发送心跳消息实现。</li></ul>
+</div>
+<div class="sec">
+<h4>内存保护</h4>
+<ul class="point">
+<li><b>链路总数的控制，防止内存溢出</b>
+<ul class="quote"><li>每条链路都包含接收和发送缓冲区，链路个数太多容易导致内存溢出。</li></ul>
+</li>
+<li><b>单个缓冲区的上限控制，防止非法长度或者消息过大导致内存溢出</b>
+<ul class="quote"><li>创建ByteBuf时对它的容量上限进行保护性设置。</li><li>在消息解码的时候，对消息长度进行判断，如果超过最大容量，则抛出解码异常，拒绝分配内存。</li></ul>
+</li>
+<li><b>缓冲区内存释放，防止因为缓冲区使用不当导致的内存泄漏</b>
+<ul class="quote"><li>对于从内存池申请的对象，使用完毕一定要及时释放，防止内存泄漏。</li></ul>
+</li>
+<li><b>NIO消息发送队列的长度上限控制，防止消息发送队列积压，出现OOM异常</b>
+<ul class="quote"><li>建议业务配置合适的高水位(writeBufferWaterMark)对消息发送速度进行控制。</li><li>在发送业务消息时，调用 Channel 的 isWritable 方法判断 Channel 是否可写，如果不可写则不要继续发送。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>每条链路都包含接收和发送缓冲区，链路个数太多容易导致内存溢出。</li><li>创建ByteBuf时对它的容量上限进行保护性设置。</li><li>在消息解码的时候，对消息长度进行判断，如果超过最大容量，则抛出解码异常，拒绝分配内存。</li><li>对于从内存池申请的对象，使用完毕一定要及时释放，防止内存泄漏。</li><li>建议业务配置合适的高水位(writeBufferWaterMark)对消息发送速度进行控制。</li><li>在发送业务消息时，调用 Channel 的 isWritable 方法判断 Channel 是否可写，如果不可写则不要继续发送。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">90</span><span class="mmx-name">19.3 总结</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 2 条要点 · 0 句原句摘录</p>
+<div class="sec">
+<h4>物联网应用中服务端应对异常的重要性</h4>
+<ul class="point">
+<li><b>物联网应用中，面对各种厂家的不同终端设备接入，服务端需要应对各种异常。</b>
+</li>
+<li><b>只有可靠性做得足够好，MQTT服务才能更从容地应对海量设备的接入。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">91</span><span class="mmx-name">第20章 Netty实践总结</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 1 个小节 · 2 条要点 · 0 句原句摘录</p>
+<div class="sec">
+<h4>Netty实践总结</h4>
+<ul class="point">
+<li><b>Netty入门相对简单，但在实际项目中用好它，出了问题能够快速定位和解决却并非易事。</b>
+</li>
+<li><b>本章对Netty的学习方式及问题定位技巧进行总结，以帮助大家更快地掌握Netty，更好地为自己的业务服务。</b>
+</li>
+</ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">92</span><span class="mmx-name">20.1 Netty学习策略</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 5 个小节 · 8 条要点 · 12 句原句摘录</p>
+<div class="sec">
+<h4>Java NIO类库</h4>
+<ul class="point">
+<li><b>缓冲区Buffer是NIO编程的基础</b>
+<ul class="quote"><li>缓冲区实质上是一个数组，通常它是一个字节数组(ByteBuffer)，也可以使用其他种类的数组。</li><li>缓冲区提供了对数据的结构化访问及维护读写位置(limit)等信息。</li></ul>
+</li>
+<li><b>Channel是Java NIO编程的基础</b>
+<ul class="quote"><li>通道是一个通道，可以通过它读取和写入数据，它就像自来水管一样，网络数据通过Channel读取和写入。</li><li>通道与流的不同之处在于，通道是双向的，流只是在一个方向上移动(流必须是InputStream或者OutputStream的子类)，而且通道可以用于读或写，或者同时用于读和写。</li></ul>
+</li>
+<li><b>Selector是Java NIO编程的基础</b>
+<ul class="quote"><li>多路复用器提供选择已经就绪的任务的能力。</li><li>简单来讲，Selector 会不断地轮询注册在其上的 Channel，如果某个 Channel 上面有新的 TCP 连接接入、读和写事件，这个 Channel就处于就绪状态，会被 Selector轮询出来，然后通过 SelectionKey获取就绪 Channel的集合，进行后续的I/O操作。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>缓冲区实质上是一个数组，通常它是一个字节数组(ByteBuffer)，也可以使用其他种类的数组。</li><li>缓冲区提供了对数据的结构化访问及维护读写位置(limit)等信息。</li><li>通道是一个通道，可以通过它读取和写入数据，它就像自来水管一样，网络数据通过Channel读取和写入。</li><li>通道与流的不同之处在于，通道是双向的，流只是在一个方向上移动(流必须是InputStream或者OutputStream的子类)，而且通道可以用于读或写，或者同时用于读和写。</li><li>多路复用器提供选择已经就绪的任务的能力。</li><li>简单来讲，Selector 会不断地轮询注册在其上的 Channel，如果某个 Channel 上面有新的 TCP 连接接入、读和写事件，这个 Channel就处于就绪状态，会被 Selector轮询出来，然后通过 SelectionKey获取就绪 Channel的集合，进行后续的I/O操作。</li></ul>
+</div>
+<div class="sec">
+<h4>Java多线程编程</h4>
+<ul class="point">
+<li><b>熟练掌握多线程编程知识是掌握Netty的必备条件</b>
+<ul class="quote"><li>需要掌握的多线程编程相关知识包括：Java内存模型，关键字synchronized，读写锁，volatile的正确使用，CAS指令和原子类，JDK线程池及各种默认实现。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>需要掌握的多线程编程相关知识包括：Java内存模型，关键字synchronized，读写锁，volatile的正确使用，CAS指令和原子类，JDK线程池及各种默认实现。</li></ul>
+</div>
+<div class="sec">
+<h4>Netty入门学习</h4>
+<ul class="point">
+<li><b>通过Netty官方文档，以及Netty自带的例子(example)来进行学习</b>
+<ul class="quote"><li>先看自带的例子，然后动手编写和调试代码。</li><li>把 echo 客户端连接创建、服务端连接接入、客户端消息发送和读取、服务端消息发送和读取流程及机制搞清楚，再学习其他的协议栈，例如HTTP、MQTT等。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>先看自带的例子，然后动手编写和调试代码。</li><li>把 echo 客户端连接创建、服务端连接接入、客户端消息发送和读取、服务端消息发送和读取流程及机制搞清楚，再学习其他的协议栈，例如HTTP、MQTT等。</li></ul>
+</div>
+<div class="sec">
+<h4>项目实践</h4>
+<ul class="point">
+<li><b>在项目中使用 Netty，通过“源码阅读+调试”的方式来学习</b>
+<ul class="quote"><li>因为 Netty 的很多处理都是异步的，单纯地靠阅读代码很难真正掌握消息的处理流程。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>因为 Netty 的很多处理都是异步的，单纯地靠阅读代码很难真正掌握消息的处理流程。</li></ul>
+</div>
+<div class="sec">
+<h4>Netty源码阅读策略</h4>
+<ul class="point">
+<li><b>首先需要掌握 Netty的内核工作流程</b>
+<ul class="quote"><li>主要包括客户端连接创建、客户端消息读写、服务端监听和客户端接入、服务端消息读写。</li><li>涉及的核心类库包括：ByteBuf和各种子类，Channel、Unsafe及各种子类，ChannelPipeline和ChannelHandler，EventLoop和EventLoopGroup及各种子类实现，Future和Promise及各种子类实现。</li></ul>
+</li>
+<li><b>掌握了 Netty内核工作原理之后，再结合业务的实际需求选择性地学习其他协议栈，例如HTTP。</b>
+</li>
+</ul>
+<ul class="quote quote-node"><li>主要包括客户端连接创建、客户端消息读写、服务端监听和客户端接入、服务端消息读写。</li><li>涉及的核心类库包括：ByteBuf和各种子类，Channel、Unsafe及各种子类，ChannelPipeline和ChannelHandler，EventLoop和EventLoopGroup及各种子类实现，Future和Promise及各种子类实现。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">93</span><span class="mmx-name">20.2 Netty故障定位技巧</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 3 个小节 · 8 条要点 · 11 句原句摘录</p>
+<div class="sec">
+<h4>接收不到消息的原因及定位策略</h4>
+<ul class="point">
+<li><b>业务的解码ChannelHandler存在缺陷，导致消息解码失败</b>
+<ul class="quote"><li>在业务的首个 ChannelHandler的channelRead方法中设置断点进行调试，看是否能读取到消息。</li><li>在ChannelHandler中添加LoggingHandler，打印接口日志。</li></ul>
+</li>
+<li><b>业务发送的是畸形或者错误码流，导致业务解码ChannelHandler无法正确解码业务消息</b>
+<ul class="quote"><li>通过tcpdump抓包查看消息是否发送成功。</li></ul>
+</li>
+<li><b>业务ChannelHandler执行了一些耗时或者阻塞操作，导致Netty的NioEventLoop被挂住</b>
+<ul class="quote"><li>查看NioEventLoop线程的状态，看是否发生了阻塞。</li></ul>
+</li>
+<li><b>执行业务ChannelHandler的线程池队列积压，导致新接收的消息排队，没有得到及时处理</b>
+<ul class="quote"><li>确认执行业务ChannelHandler的线程池队列是否积压。</li></ul>
+</li>
+<li><b>对方确实没有发送消息</b>
+<ul class="quote"><li>确认对方是否发送消息。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>在业务的首个 ChannelHandler的channelRead方法中设置断点进行调试，看是否能读取到消息。</li><li>在ChannelHandler中添加LoggingHandler，打印接口日志。</li><li>通过tcpdump抓包查看消息是否发送成功。</li><li>查看NioEventLoop线程的状态，看是否发生了阻塞。</li><li>确认执行业务ChannelHandler的线程池队列是否积压。</li><li>确认对方是否发送消息。</li></ul>
+</div>
+<div class="sec">
+<h4>内存泄漏的排查方法</h4>
+<ul class="point">
+<li><b>使用“jmap-dump：format=b，file=xx pid”命令打印内存堆栈</b>
+<ul class="quote"><li>使用MemoryAnalyzer工具对内存占用情况进行分析，查找内存泄漏点。</li><li>再结合代码进行分析，定位内存泄漏的具体原因。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>使用MemoryAnalyzer工具对内存占用情况进行分析，查找内存泄漏点。</li><li>再结合代码进行分析，定位内存泄漏的具体原因。</li></ul>
+</div>
+<div class="sec">
+<h4>性能问题的排查方法</h4>
+<ul class="point">
+<li><b>确认是 Netty的问题还是业务的问题</b>
+<ul class="quote"><li>通过 jstack命令或者jvisualvm工具打印线程堆栈，按照线程CPU使用情况进行排序。</li><li>如果采集几次都发现 Netty 的 NIO 线程堆栈停留在 select 操作上，说明I/O比较空闲，性能瓶颈不是Netty。</li></ul>
+</li>
+<li><b>如果发现性能瓶颈在网络I/O读写上，可以适当调大NioEventLoopGroup中的work I/O线程数</b>
+<ul class="quote"><li>直到I/O处理性能能够满足业务需求。</li></ul>
+</li>
+</ul>
+<ul class="quote quote-node"><li>通过 jstack命令或者jvisualvm工具打印线程堆栈，按照线程CPU使用情况进行排序。</li><li>如果采集几次都发现 Netty 的 NIO 线程堆栈停留在 select 操作上，说明I/O比较空闲，性能瓶颈不是Netty。</li><li>直到I/O处理性能能够满足业务需求。</li></ul>
+</div>
+</div></details>
+    <details class="mmx-cn"><summary>
+        <span class="mmx-no">94</span><span class="mmx-name">20.3 总结</span>
+        <span class="mmx-caret">›</span>
+      </summary>
+      <div class="mmx-body">
+<p class="mmx-stat">共 2 个小节 · 2 条要点 · 0 句原句摘录</p>
+<div class="sec">
+<h4>Netty在实际项目中的重要性和挑战</h4>
+<ul class="point">
+<li><b>Netty承担了RPC调用工作，一旦发生问题会导致RPC或者微服务调用失败，由此引起的业务中断后果很严重。</b>
+</li>
+</ul>
+</div>
+<div class="sec">
+<h4>熟练掌握Netty的核心类库和关键调度流程的重要性</h4>
+<ul class="point">
+<li><b>除了实践，需要熟练掌握Netty的核心类库和关键调度流程，这样才能得心应手地解决各种问题。</b>
+</li>
+</ul>
+</div>
+</div></details>
+  </div>
+</section>
 <section class="mmx-mod" aria-labelledby="views" data-key="views"><h2 id="views">核心观点初判</h2><p class="mmx-mod-note">按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。</p><ul class="mmx-views"><li><b>第 1–7 章</b>——含「序1」至「1.3 总结」</li><li><b>第 8–14 章</b>——含「第2章 Netty客户端」至「3.2 Netty内存池」</li><li><b>第 15–21 章</b>——含「3.3 总结」至「5.1 Netty发送队」</li><li><b>第 22–28 章</b>——含「5.2 Netty消息发」至「第7章 Netty Ch」</li><li><b>第 29–35 章</b>——含「7.1 Netty Ch」至「8.3 总结」</li><li><b>第 36–42 章</b>——含「第9章 Netty 3.」至「9.6 总结」</li><li><b>第 43–49 章</b>——含「第10章 Netty并发」至「11.2 智能家居内存泄」</li><li><b>第 50–56 章</b>——含「11.3 操作系统参数调」至「12.2 克隆和浅拷贝」</li><li><b>第 57–63 章</b>——含「12.3 总结」至「14.1 gRPC基础入」</li><li><b>第 64–70 章</b>——含「14.2 gRPC Ne」至「15.1 channel」</li><li><b>第 71–77 章</b>——含「15.2 Channel」至「16.4 总结」</li><li><b>第 78–84 章</b>——含「第17章 Netty S」至「第18章 Netty H」</li><li><b>第 85–91 章</b>——含「18.1 Netty H」至「19.2 基于Netty」</li><li><b>第 92–96 章</b>——含「19.3 总结」至「20.3 总结」</li></ul></section>
 <section class="mmx-mod" aria-labelledby="top10" data-key="top10"><h2 id="top10">原文金句 · 持续积累</h2><p class="mmx-mod-note">以下原句取自本书 AI 大纲落库的原文摘录（book_outline.quote），按大纲顺序节选，非 AI 生成；更多见逐章深读页。</p><ol class="mmx-qlist"><li><blockquote>「推荐业务处理线程和Netty网络I/O线程分离策略」</blockquote><cite>本书正文</cite></li><li><blockquote>「channelReadComplete方法中的业务逻辑移到channelRead方法中执行，生产环境升级之后问题得到解决」</blockquote><cite>本书正文</cite></li><li><blockquote>「守护线程（Daemon）就是运行在程序后台的线程，通常守护线程是由JVM 创建的，用于辅助用户线程或者 JVM工作，比较典型的如 GC线程」</blockquote><cite>本书正文</cite></li><li><blockquote>「其中 memoryMap 存放的是PoolSubpage的分配信息，depthMap存放的是二叉树的深度」</blockquote><cite>本书正文</cite></li><li><blockquote>「在某个时刻，一个HTTP连接上只能单向地处理一个消息，就像单行道，一个消息处理得慢，很容易导致后续消息阻塞」</blockquote><cite>本书正文</cite></li><li><blockquote>「Java的优雅停机通常通过注册JDK的ShutdownHook来实现」</blockquote><cite>本书正文</cite></li><li><blockquote>「整形可能会增加延迟，而流控几乎不引入额外的延迟」</blockquote><cite>本书正文</cite></li></ol></section>
 <section class="mmx-mod" aria-labelledby="coreask" data-key="coreask"><h2 id="coreask">核心追问（来自深读）</h2><div class="mmx-qa"><p class="mmx-q">这本书和作者的《Netty 权威指南》是什么关系，为什么要「进阶」？</p><p class="mmx-a">提要明说它是作者「继《Netty权威指南》之后的又一力作」，定位从「系统讲透 API 与原理」转向「排障实战」。区别在于：《权威指南》是教科书式全覆盖，本书则以「过去几年实践中遇到的问题 + 学习者咨询的高频问题」为牵引，用真实案例（启动停止、内存泄漏、并发多线程、性能、可靠性、安全）串起原理。简言之，一本教你「怎么用 Netty」，这本教你「Netty 在真实生产里怎么出错、怎么定位、怎么改」。它以问题案例做引子，剖析背后原理并结合源码——这是典型的「第二本书」写法。</p></div><div class="mmx-qa"><p class="mmx-q">书里反复强调「业务线程与 Netty I/O 线程分离」，这条经验为什么关键？</p><p class="mmx-a">第33章「8.1 车联网服务端接收不到车载终端消息问题」一条高划线（34人）给出推荐策略：业务处理线程和 Netty 网络 I/O 线程要分离。原因在 Netty 的线程模型——I/O 线程（EventLoop）负责收发与编解码，一旦被你的业务耗时逻辑阻塞，整个 Channel 甚至整个 EventLoop 上的连接都会卡住，表现为「收不到消息」「吞吐骤降」。把重业务逻辑丢到独立业务线程池，I/O 线程才能保住高吞吐。同书第70章（34人）那条「把 channelReadComplete 里的业务逻辑移到 channelRead」也是同一思路：别在 Netty 回调里做重活。</p></div><div class="mmx-qa"><p class="mmx-q">「Netty 优雅退出」到底优雅在哪，为什么值得专门写一章？</p><p class="mmx-a">第6章「1.2 Netty 优雅退出机制」一条高划线（22人）点出实现方式：Java 的优雅停机通常通过注册 JDK 的 ShutdownHook 实现。它「优雅」在不是暴力 kill 进程，而是先发信号、停止接收新请求、把在途请求处理完、释放连接与资源后再退出——否则会丢消息、断连接、数据不一致。Netty 作为长连接框架（推送、IM、游戏、车联网），进程常被频繁发布重启，若退出不优雅，线上会瞬间出现大量连接闪断。所以作者专章讲它，是因为「启停」是生产稳定性的第一道关。</p></div></section>

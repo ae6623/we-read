@@ -1,21 +1,6084 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Elasticsearch源码解析与优化实战 · AI 大纲</title><style>
-:root{--fg:#1f2328;--muted:#6b7280;--line:#e6e2da;--accent:#b45309;--bg:#fbfaf7}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.78 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
-.wrap{max-width:840px;margin:0 auto;padding:38px 22px 90px}
-h1{font-size:26px;line-height:1.35;margin:0 0 6px}
-.meta{color:var(--muted);font-size:14px;margin-bottom:20px}
-h2{font-size:19px;margin:34px 0 12px;padding-left:10px;border-left:4px solid var(--accent)}
-h3{font-size:16px;margin:18px 0 8px}
-p{margin:8px 0}
-.tag{display:inline-block;background:#f2ede2;color:#8a6d3b;font-size:12px;padding:1px 9px;border-radius:10px;margin-right:6px}
-ul,ol{padding-left:22px}li{margin:4px 0}
-.quote{border-left:3px solid #d8cfbd;padding:6px 12px;color:#4b4639;background:#f7f4ee;margin:8px 0;font-size:15px;border-radius:0 6px 6px 0}
-.src{color:var(--muted);font-size:12px}
-.ch{display:flex;gap:10px;padding:7px 0;border-bottom:1px dashed var(--line)}
-.ch .no{color:var(--accent);font-weight:600;min-width:34px;text-align:right}
-.card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:12px 0}
-.foot{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
-a{color:#8a5a00;text-decoration:none}a:hover{text-decoration:underline}
-.badge{font-size:12px;color:#8a6d3b;background:#f6f1e6;border:1px solid #eadfc6;border-radius:6px;padding:1px 7px}
-</style></head><body><div class="wrap"><h1>Elasticsearch源码解析与优化实战</h1><div class="meta"><span class="tag">AI 大纲</span>张超　·　共 169 章</div><h2>全书提要</h2><p>本书介绍了Elasticsearch的系统原理，旨在帮助读者了解其内部原理、设计思想，以及在生产环境中如何正确地部署、优化系统。系统原理分两方面介绍，一方面详细介绍主要流程，例如启动流程、选主流程、恢复流程；另一方面介绍各重要模块的实现，以及模块之间的关系，例如gateway模块、allocation模块等。本书的最后一部分介绍如何优化写入速度、搜索速度等大家关心的实际问题，并提供了一些诊断问题的方法和工具供读者参考。</p><h2>章节大纲（含各章热门划线原文）</h2><div class="ch"><span class="no">1</span><div><b>作者简介</b><span class="src"> · 111 字</span></div></div><div class="ch"><span class="no">2</span><div><b>前言</b><span class="src"> · 1822 字</span><div class="quote">但是互联网产品迭代快，技术文档不全，想要搞清楚原理，只能阅读代码，相当于从代码中逆向理解设计思想。 <span class="src">[56人划线]</span></div></div></div><div class="ch"><span class="no">3</span><div><b>第1章 走进Elasticsearch</b><span class="src"> · 84 字</span></div></div><div class="ch"><span class="no">4</span><div><b>1.1 基本概念和原理</b><span class="src"> · 4319 字</span><div class="quote">ES正是利用这种特性实现了近实时搜索。每秒产生一个新分段，新段先写入文件系统缓存，但稍后再执行flush刷盘操作，写操作很快会执行完，一旦写成功，就可以像其他文件一样被打开和读取了。 <span class="src">[128人划线]</span></div><div class="quote">当集群规模扩大或缩小时，ES 会自动在各节点中迁移分片，使数据仍然均匀分布在集群里。 <span class="src">[80人划线]</span></div></div></div><div class="ch"><span class="no">5</span><div><b>1.2 集群内部原理</b><span class="src"> · 2532 字</span><div class="quote">当主节点异常时，集群会重新选举主节点。当某个主分片异常时，会将副分片提升为主分片。 <span class="src">[72人划线]</span></div></div></div><div class="ch"><span class="no">6</span><div><b>1.3 客户端API</b><span class="src"> · 441 字</span></div></div><div class="ch"><span class="no">7</span><div><b>1.4 主要内部模块简介</b><span class="src"> · 1857 字</span><div class="quote">传输模块使用 TCP 通信，每个节点都与其他节点维持若干 TCP 长连接。内部节点间的所有通信都是本模块承载的。 <span class="src">[51人划线]</span></div></div></div><div class="ch"><span class="no">8</span><div><b>第2章 准备编译和调试环境</b><span class="src"> · 26 字</span></div></div><div class="ch"><span class="no">9</span><div><b>2.1 编译源码</b><span class="src"> · 1641 字</span></div></div><div class="ch"><span class="no">10</span><div><b>2.2 调试Elasticsearch</b><span class="src"> · 1880 字</span></div></div><div class="ch"><span class="no">11</span><div><b>2.3 代码书签和断点组</b><span class="src"> · 676 字</span></div></div><div class="ch"><span class="no">12</span><div><b>第3章 集群启动流程</b><span class="src"> · 207 字</span></div></div><div class="ch"><span class="no">13</span><div><b>3.1 选举主节点</b><span class="src"> · 759 字</span><div class="quote">ES的选主算法是基于Bully算法的改进，主要思路是对节点ID排序，取ID值最大的节点作为Master，每个节点都运行这个流程。 <span class="src">[72人划线]</span></div></div></div><div class="ch"><span class="no">14</span><div><b>3.2 选举集群元信息</b><span class="src"> · 397 字</span></div></div><div class="ch"><span class="no">15</span><div><b>3.3 allocation过程</b><span class="src"> · 1074 字</span></div></div><div class="ch"><span class="no">16</span><div><b>3.4 index recovery</b><span class="src"> · 1721 字</span><div class="quote">为什么需要recovery？对于主分片来说，可能有一些数据没来得及刷盘；对于副分片来说，一是没刷盘，二是主分片写完了，副分片还没来得及写，主副分片数据不一致。 <span class="src">[54人划线]</span></div></div></div><div class="ch"><span class="no">17</span><div><b>3.5 集群启动日志</b><span class="src"> · 156 字</span></div></div><div class="ch"><span class="no">18</span><div><b>3.6 小结</b><span class="src"> · 289 字</span></div></div><div class="ch"><span class="no">19</span><div><b>第4章 节点的启动和关闭</b><span class="src"> · 91 字</span></div></div><div class="ch"><span class="no">20</span><div><b>4.1 启动流程做了什么</b><span class="src"> · 152 字</span></div></div><div class="ch"><span class="no">21</span><div><b>4.2 启动流程分析</b><span class="src"> · 3981 字</span></div></div><div class="ch"><span class="no">22</span><div><b>4.3 节点关闭流程</b><span class="src"> · 637 字</span></div></div><div class="ch"><span class="no">23</span><div><b>4.4 关闭流程分析</b><span class="src"> · 477 字</span></div></div><div class="ch"><span class="no">24</span><div><b>4.5 分片读写过程中执行关闭</b><span class="src"> · 499 字</span></div></div><div class="ch"><span class="no">25</span><div><b>4.6 主节点被关闭</b><span class="src"> · 114 字</span></div></div><div class="ch"><span class="no">26</span><div><b>4.7 小结</b><span class="src"> · 240 字</span></div></div><div class="ch"><span class="no">27</span><div><b>第5章 选主流程</b><span class="src"> · 208 字</span></div></div><div class="ch"><span class="no">28</span><div><b>5.1 设计思想</b><span class="src"> · 129 字</span></div></div><div class="ch"><span class="no">29</span><div><b>5.2 为什么使用主从模式</b><span class="src"> · 259 字</span></div></div><div class="ch"><span class="no">30</span><div><b>5.3 选举算法</b><span class="src"> · 477 字</span></div></div><div class="ch"><span class="no">31</span><div><b>5.4 相关配置</b><span class="src"> · 1374 字</span><div class="quote">discovery.zen.minimum_master_nodes：最小主节点数，这是防止脑裂、防止数据丢失的极其重要的参数。 <span class="src">[48人划线]</span></div></div></div><div class="ch"><span class="no">32</span><div><b>5.5 流程概述</b><span class="src"> · 313 字</span><div class="quote">所有节点都会参与选举，并参与投票，但是，只有有资格成为Master的节点（node.master为true）的投票才有效． <span class="src">[78人划线]</span></div></div></div><div class="ch"><span class="no">33</span><div><b>5.6 流程分析</b><span class="src"> · 2523 字</span></div></div><div class="ch"><span class="no">34</span><div><b>5.7 节点失效检测</b><span class="src"> · 914 字</span></div></div><div class="ch"><span class="no">35</span><div><b>5.8 小结</b><span class="src"> · 94 字</span></div></div><div class="ch"><span class="no">36</span><div><b>第6章 数据模型</b><span class="src"> · 16 字</span></div></div><div class="ch"><span class="no">37</span><div><b>6.1 PacificA算法</b><span class="src"> · 2599 字</span></div></div><div class="ch"><span class="no">38</span><div><b>6.2 ES的数据副本模型</b><span class="src"> · 2875 字</span></div></div><div class="ch"><span class="no">39</span><div><b>6.3 Allocation IDs</b><span class="src"> · 3785 字</span></div></div><div class="ch"><span class="no">40</span><div><b>6.4 Sequence IDs</b><span class="src"> · 2668 字</span></div></div><div class="ch"><span class="no">41</span><div><b>6.5 _version</b><span class="src"> · 380 字</span><div class="quote">每个文档都有一个版本号（_version），当文档被修改时版本号递增。ES 使用这个_version来确保变更以正确顺序执行。 <span class="src">[42人划线]</span></div></div></div><div class="ch"><span class="no">42</span><div><b>第7章 写流程</b><span class="src"> · 187 字</span></div></div><div class="ch"><span class="no">43</span><div><b>7.1 文档操作的定义</b><span class="src"> · 297 字</span></div></div><div class="ch"><span class="no">44</span><div><b>7.2 可选参数</b><span class="src"> · 171 字</span></div></div><div class="ch"><span class="no">45</span><div><b>7.3 Index/Bulk基本流程</b><span class="src"> · 490 字</span></div></div><div class="ch"><span class="no">46</span><div><b>7.4 Index/Bulk详细流程</b><span class="src"> · 4591 字</span></div></div><div class="ch"><span class="no">47</span><div><b>7.5 I/O异常处理</b><span class="src"> · 771 字</span></div></div><div class="ch"><span class="no">48</span><div><b>7.6 系统特性</b><span class="src"> · 282 字</span></div></div><div class="ch"><span class="no">49</span><div><b>7.7 思考</b><span class="src"> · 145 字</span></div></div><div class="ch"><span class="no">50</span><div><b>第8章 GET流程</b><span class="src"> · 477 字</span></div></div><div class="ch"><span class="no">51</span><div><b>8.1 可选参数</b><span class="src"> · 55 字</span></div></div><div class="ch"><span class="no">52</span><div><b>8.2 GET基本流程</b><span class="src"> · 424 字</span></div></div><div class="ch"><span class="no">53</span><div><b>8.3 GET详细分析</b><span class="src"> · 1941 字</span></div></div><div class="ch"><span class="no">54</span><div><b>8.4 MGET流程分析</b><span class="src"> · 423 字</span></div></div><div class="ch"><span class="no">55</span><div><b>8.5 思考</b><span class="src"> · 339 字</span><div class="quote">GET API默认是实时的，实时的意思是写完了可以立刻读取，但仅限于GET、MGET操作，不包括搜索 <span class="src">[45人划线]</span></div></div></div><div class="ch"><span class="no">56</span><div><b>第9章 Search流程</b><span class="src"> · 562 字</span></div></div><div class="ch"><span class="no">57</span><div><b>9.1 索引和搜索</b><span class="src"> · 750 字</span></div></div><div class="ch"><span class="no">58</span><div><b>9.2 search type</b><span class="src"> · 199 字</span></div></div><div class="ch"><span class="no">59</span><div><b>9.3 分布式搜索过程</b><span class="src"> · 4027 字</span><div class="quote">优先队列是一个存有topN匹配文档的有序列表。优先队列大小为分页参数from + size。 <span class="src">[80人划线]</span></div></div></div><div class="ch"><span class="no">60</span><div><b>9.4 小结</b><span class="src"> · 303 字</span></div></div><div class="ch"><span class="no">61</span><div><b>第10章 索引恢复流程分析</b><span class="src"> · 565 字</span></div></div><div class="ch"><span class="no">62</span><div><b>10.1 相关配置</b><span class="src"> · 52 字</span></div></div><div class="ch"><span class="no">63</span><div><b>10.2 流程概述</b><span class="src"> · 431 字</span></div></div><div class="ch"><span class="no">64</span><div><b>10.3 主分片恢复流程</b><span class="src"> · 2377 字</span></div></div><div class="ch"><span class="no">65</span><div><b>10.4 副分片恢复流程</b><span class="src"> · 7105 字</span></div></div><div class="ch"><span class="no">66</span><div><b>10.5 recovery速度优化</b><span class="src"> · 813 字</span></div></div><div class="ch"><span class="no">67</span><div><b>10.6 如何保证副分片和主分片一致</b><span class="src"> · 2177 字</span></div></div><div class="ch"><span class="no">68</span><div><b>10.7 recovery相关监控命令</b><span class="src"> · 823 字</span></div></div><div class="ch"><span class="no">69</span><div><b>10.8 小结</b><span class="src"> · 145 字</span></div></div><div class="ch"><span class="no">70</span><div><b>第11章 gateway模块分析</b><span class="src"> · 63 字</span></div></div><div class="ch"><span class="no">71</span><div><b>11.1 元数据</b><span class="src"> · 574 字</span></div></div><div class="ch"><span class="no">72</span><div><b>11.2 元数据的持久化</b><span class="src"> · 409 字</span></div></div><div class="ch"><span class="no">73</span><div><b>11.3 元数据的恢复</b><span class="src"> · 1262 字</span></div></div><div class="ch"><span class="no">74</span><div><b>11.4 元数据恢复流程分析</b><span class="src"> · 1379 字</span></div></div><div class="ch"><span class="no">75</span><div><b>11.5 思考</b><span class="src"> · 152 字</span></div></div><div class="ch"><span class="no">76</span><div><b>第12章 allocation模块分析</b><span class="src"> · 96 字</span></div></div><div class="ch"><span class="no">77</span><div><b>12.1 什么是allocation</b><span class="src"> · 816 字</span></div></div><div class="ch"><span class="no">78</span><div><b>12.2 触发时机</b><span class="src"> · 101 字</span></div></div><div class="ch"><span class="no">79</span><div><b>12.3 allocation模块结构概述</b><span class="src"> · 314 字</span></div></div><div class="ch"><span class="no">80</span><div><b>12.4 allocators</b><span class="src"> · 449 字</span></div></div><div class="ch"><span class="no">81</span><div><b>12.5 deciders</b><span class="src"> · 1394 字</span></div></div><div class="ch"><span class="no">82</span><div><b>12.6 核心reroute实现</b><span class="src"> · 4479 字</span></div></div><div class="ch"><span class="no">83</span><div><b>12.7 从gateway到allocation流程的转换</b><span class="src"> · 216 字</span></div></div><div class="ch"><span class="no">84</span><div><b>12.8 从allocation流程到recovery流程的转换</b><span class="src"> · 393 字</span></div></div><div class="ch"><span class="no">85</span><div><b>12.9 思考</b><span class="src"> · 188 字</span></div></div><div class="ch"><span class="no">86</span><div><b>第13章 Snapshot模块分析</b><span class="src"> · 516 字</span></div></div><div class="ch"><span class="no">87</span><div><b>13.1 仓库</b><span class="src"> · 1338 字</span></div></div><div class="ch"><span class="no">88</span><div><b>13.2 快照</b><span class="src"> · 2276 字</span></div></div><div class="ch"><span class="no">89</span><div><b>13.3 从快照恢复</b><span class="src"> · 858 字</span></div></div><div class="ch"><span class="no">90</span><div><b>13.4 创建快照的实现原理</b><span class="src"> · 6698 字</span></div></div><div class="ch"><span class="no">91</span><div><b>13.5 删除快照实现原理</b><span class="src"> · 2816 字</span></div></div><div class="ch"><span class="no">92</span><div><b>13.6 思考与总结</b><span class="src"> · 507 字</span></div></div><div class="ch"><span class="no">93</span><div><b>第14章 Cluster模块分析</b><span class="src"> · 552 字</span></div></div><div class="ch"><span class="no">94</span><div><b>14.1 集群状态</b><span class="src"> · 413 字</span></div></div><div class="ch"><span class="no">95</span><div><b>14.2 内部封装和实现</b><span class="src"> · 2041 字</span></div></div><div class="ch"><span class="no">96</span><div><b>14.3 提交集群任务</b><span class="src"> · 3176 字</span></div></div><div class="ch"><span class="no">97</span><div><b>14.4 集群任务的执行过程</b><span class="src"> · 634 字</span></div></div><div class="ch"><span class="no">98</span><div><b>14.5 集群状态的发布过程</b><span class="src"> · 2473 字</span></div></div><div class="ch"><span class="no">99</span><div><b>14.6 应用集群状态</b><span class="src"> · 759 字</span></div></div><div class="ch"><span class="no">100</span><div><b>14.7 查看等待执行的集群任务</b><span class="src"> · 306 字</span></div></div><div class="ch"><span class="no">101</span><div><b>14.8 任务管理API</b><span class="src"> · 999 字</span></div></div><div class="ch"><span class="no">102</span><div><b>14.9 思考与总结</b><span class="src"> · 173 字</span></div></div><div class="ch"><span class="no">103</span><div><b>第15章 Transport模块分析</b><span class="src"> · 236 字</span></div></div><div class="ch"><span class="no">104</span><div><b>15.1 配置信息</b><span class="src"> · 1862 字</span></div></div><div class="ch"><span class="no">105</span><div><b>15.2 Transport总体架构</b><span class="src"> · 2828 字</span></div></div><div class="ch"><span class="no">106</span><div><b>15.3 REST解析和处理</b><span class="src"> · 564 字</span></div></div><div class="ch"><span class="no">107</span><div><b>15.4 RPC实现</b><span class="src"> · 3104 字</span></div></div><div class="ch"><span class="no">108</span><div><b>15.5 思考与总结</b><span class="src"> · 196 字</span></div></div><div class="ch"><span class="no">109</span><div><b>第16章 ThreadPool模块分析</b><span class="src"> · 1071 字</span></div></div><div class="ch"><span class="no">110</span><div><b>16.1 线程池类型</b><span class="src"> · 1552 字</span></div></div><div class="ch"><span class="no">111</span><div><b>16.2 处理器设置</b><span class="src"> · 414 字</span></div></div><div class="ch"><span class="no">112</span><div><b>16.3 查看线程池</b><span class="src"> · 3992 字</span></div></div><div class="ch"><span class="no">113</span><div><b>16.4 ES的线程池实现</b><span class="src"> · 3108 字</span></div></div><div class="ch"><span class="no">114</span><div><b>16.5 其他线程池</b><span class="src"> · 476 字</span></div></div><div class="ch"><span class="no">115</span><div><b>16.6 思考与总结</b><span class="src"> · 291 字</span></div></div><div class="ch"><span class="no">116</span><div><b>第17章 Shrink原理分析</b><span class="src"> · 431 字</span></div></div><div class="ch"><span class="no">117</span><div><b>17.1 准备源索引</b><span class="src"> · 238 字</span></div></div><div class="ch"><span class="no">118</span><div><b>17.2 缩小索引</b><span class="src"> · 97 字</span></div></div><div class="ch"><span class="no">119</span><div><b>17.3 Shrink的工作原理</b><span class="src"> · 2468 字</span></div></div><div class="ch"><span class="no">120</span><div><b>第18章 写入速度优化</b><span class="src"> · 479 字</span></div></div><div class="ch"><span class="no">121</span><div><b>18.1 translog flush间隔调整</b><span class="src"> · 542 字</span></div></div><div class="ch"><span class="no">122</span><div><b>18.2 索引刷新间隔refresh_interval</b><span class="src"> · 198 字</span></div></div><div class="ch"><span class="no">123</span><div><b>18.3 段合并优化</b><span class="src"> · 999 字</span></div></div><div class="ch"><span class="no">124</span><div><b>18.4 indexing buffer</b><span class="src"> · 422 字</span></div></div><div class="ch"><span class="no">125</span><div><b>18.5 使用bulk请求</b><span class="src"> · 643 字</span></div></div><div class="ch"><span class="no">126</span><div><b>18.6 磁盘间的任务均衡</b><span class="src"> · 576 字</span></div></div><div class="ch"><span class="no">127</span><div><b>18.7 节点间的任务均衡</b><span class="src"> · 507 字</span></div></div><div class="ch"><span class="no">128</span><div><b>18.8 索引过程调整和优化</b><span class="src"> · 1520 字</span></div></div><div class="ch"><span class="no">129</span><div><b>18.9 参考配置</b><span class="src"> · 716 字</span></div></div><div class="ch"><span class="no">130</span><div><b>18.10 思考与总结</b><span class="src"> · 334 字</span></div></div><div class="ch"><span class="no">131</span><div><b>第19章 搜索速度的优化</b><span class="src"> · 82 字</span></div></div><div class="ch"><span class="no">132</span><div><b>19.1 为文件系统cache预留足够的内存</b><span class="src"> · 216 字</span></div></div><div class="ch"><span class="no">133</span><div><b>19.2 使用更快的硬件</b><span class="src"> · 183 字</span></div></div><div class="ch"><span class="no">134</span><div><b>19.3 文档模型</b><span class="src"> · 156 字</span></div></div><div class="ch"><span class="no">135</span><div><b>19.4 预索引数据</b><span class="src"> · 328 字</span></div></div><div class="ch"><span class="no">136</span><div><b>19.5 字段映射</b><span class="src"> · 95 字</span></div></div><div class="ch"><span class="no">137</span><div><b>19.6 避免使用脚本</b><span class="src"> · 74 字</span></div></div><div class="ch"><span class="no">138</span><div><b>19.7 优化日期搜索</b><span class="src"> · 410 字</span></div></div><div class="ch"><span class="no">139</span><div><b>19.8 为只读索引执行force-merge</b><span class="src"> · 310 字</span></div></div><div class="ch"><span class="no">140</span><div><b>19.9 预热全局序号（global ordinals）</b><span class="src"> · 223 字</span></div></div><div class="ch"><span class="no">141</span><div><b>19.10 execution hint</b><span class="src"> · 281 字</span></div></div><div class="ch"><span class="no">142</span><div><b>19.11 预热文件系统cache</b><span class="src"> · 329 字</span></div></div><div class="ch"><span class="no">143</span><div><b>19.12 转换查询表达式</b><span class="src"> · 131 字</span></div></div><div class="ch"><span class="no">144</span><div><b>19.13 调节搜索请求中的batched_reduce_size</b><span class="src"> · 233 字</span></div></div><div class="ch"><span class="no">145</span><div><b>19.14 使用近似聚合</b><span class="src"> · 374 字</span></div></div><div class="ch"><span class="no">146</span><div><b>19.15 深度优先还是广度优先</b><span class="src"> · 253 字</span></div></div><div class="ch"><span class="no">147</span><div><b>19.16 限制搜索请求的分片数</b><span class="src"> · 283 字</span></div></div><div class="ch"><span class="no">148</span><div><b>19.17 利用自适应副本选择（ARS）提升ES响应速度</b><span class="src"> · 1473 字</span></div></div><div class="ch"><span class="no">149</span><div><b>第20章 磁盘使用量优化</b><span class="src"> · 85 字</span></div></div><div class="ch"><span class="no">150</span><div><b>20.1 预备知识</b><span class="src"> · 1778 字</span></div></div><div class="ch"><span class="no">151</span><div><b>20.2 优化措施</b><span class="src"> · 2394 字</span></div></div><div class="ch"><span class="no">152</span><div><b>20.3 测试数据</b><span class="src"> · 264 字</span></div></div><div class="ch"><span class="no">153</span><div><b>第21章 综合应用实践</b><span class="src"> · 130 字</span></div></div><div class="ch"><span class="no">154</span><div><b>21.1 集群层</b><span class="src"> · 1785 字</span></div></div><div class="ch"><span class="no">155</span><div><b>21.2 节点层</b><span class="src"> · 280 字</span></div></div><div class="ch"><span class="no">156</span><div><b>21.3 系统层</b><span class="src"> · 6499 字</span></div></div><div class="ch"><span class="no">157</span><div><b>21.4 索引层</b><span class="src"> · 3026 字</span></div></div><div class="ch"><span class="no">158</span><div><b>21.5 客户端</b><span class="src"> · 1161 字</span></div></div><div class="ch"><span class="no">159</span><div><b>21.6 读写</b><span class="src"> · 1249 字</span></div></div><div class="ch"><span class="no">160</span><div><b>21.7 控制相关度</b><span class="src"> · 1634 字</span></div></div><div class="ch"><span class="no">161</span><div><b>第22章 故障诊断</b><span class="src"> · 553 字</span></div></div><div class="ch"><span class="no">162</span><div><b>22.1 使用Profile API定位慢查询</b><span class="src"> · 1578 字</span></div></div><div class="ch"><span class="no">163</span><div><b>22.2 使用Explain API分析未分配的分片（Unassigned Shards）</b><span class="src"> · 3825 字</span></div></div><div class="ch"><span class="no">164</span><div><b>22.3 节点CPU使用率高</b><span class="src"> · 314 字</span></div></div><div class="ch"><span class="no">165</span><div><b>22.4 节点内存使用率高</b><span class="src"> · 2956 字</span></div></div><div class="ch"><span class="no">166</span><div><b>22.5 Slow Logs</b><span class="src"> · 1449 字</span></div></div><div class="ch"><span class="no">167</span><div><b>22.6 分析工具</b><span class="src"> · 3637 字</span></div></div><div class="ch"><span class="no">168</span><div><b>22.7 小结</b><span class="src"> · 167 字</span></div></div><div class="ch"><span class="no">169</span><div><b>附录A 重大版本变化</b><span class="src"> · 1006 字</span></div></div><div class="foot">来源：微信读书官方章节接口 + 热门划线接口，逐字原文　·　生成于 2026-11-01 13:15　·　开读即产（不等完读）</div></div></body></html>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Elasticsearch源码解析与优化实战 AI 大纲">
+<title>《Elasticsearch源码解析与优化实战》｜AI 大纲</title>
+<link rel="stylesheet" href="../../../assets/css/site.css">
+<link rel="stylesheet" href="../../../assets/css/reading-outline.css">
+
+</head>
+<body>
+<main class="page">
+  <header class="note-head">
+    <p class="eyebrow">AI OUTLINE · BEFORE READING</p>
+    <h1>《Elasticsearch源码解析与优化实战》AI 大纲</h1>
+    <p class="meta">作者：—　·　共 151 章 / 1754 条　·　AI 读书 · 全书大纲</p>
+    <p><a href="../../../index.html">← 返回首页</a>　<a href="../../index.html">阅读归档索引</a>　<a href="outline.epub" download>下载 EPUB ↓</a></p>
+    <div class="chips"><span class="chip">全书视角</span><span class="chip">AI 生成</span><span class="chip">含原文摘录</span></div>
+    <p class="small">本大纲由 AI 读书（阅读端智能大纲）生成，是全书结构与要点的机器梳理，
+    <b>不等同于已亲读</b>；其中第 4 层条目为书中原句摘录。章节可展开查看。</p>
+  </header>
+  <div class="toc"><b>章节目录</b><ul>
+<li><a href="#ch0">作者简介</a></li>
+<li><a href="#ch1">1.1 基本概念和原理</a></li>
+<li><a href="#ch2">1.2 集群内部原理</a></li>
+<li><a href="#ch3">1.3 客户端API</a></li>
+<li><a href="#ch4">1.4 主要内部模块简介</a></li>
+<li><a href="#ch5">2.1 编译源码</a></li>
+<li><a href="#ch6">2.2 调试Elasticsearch</a></li>
+<li><a href="#ch7">2.3 代码书签和断点组</a></li>
+<li><a href="#ch8">第3章 集群启动流程</a></li>
+<li><a href="#ch9">3.1 选举主节点</a></li>
+<li><a href="#ch10">3.2 选举集群元信息</a></li>
+<li><a href="#ch11">3.3 allocation过程</a></li>
+<li><a href="#ch12">3.4 index recovery</a></li>
+<li><a href="#ch13">3.5 集群启动日志</a></li>
+<li><a href="#ch14">3.6 小结</a></li>
+<li><a href="#ch15">4.1 启动流程做了什么</a></li>
+<li><a href="#ch16">4.2 启动流程分析</a></li>
+<li><a href="#ch17">4.3 节点关闭流程</a></li>
+<li><a href="#ch18">4.4 关闭流程分析</a></li>
+<li><a href="#ch19">4.5 分片读写过程中执行关闭</a></li>
+<li><a href="#ch20">4.6 主节点被关闭</a></li>
+<li><a href="#ch21">4.7 小结</a></li>
+<li><a href="#ch22">第5章 选主流程</a></li>
+<li><a href="#ch23">5.1 设计思想</a></li>
+<li><a href="#ch24">5.2 为什么使用主从模式</a></li>
+<li><a href="#ch25">5.3 选举算法</a></li>
+<li><a href="#ch26">5.4 相关配置</a></li>
+<li><a href="#ch27">5.5 流程概述</a></li>
+<li><a href="#ch28">5.6 流程分析</a></li>
+<li><a href="#ch29">5.7 节点失效检测</a></li>
+<li><a href="#ch30">6.1 PacificA算法</a></li>
+<li><a href="#ch31">6.2 ES的数据副本模型</a></li>
+<li><a href="#ch32">6.3 Allocation IDs</a></li>
+<li><a href="#ch33">6.4 Sequence IDs</a></li>
+<li><a href="#ch34">6.5 _version</a></li>
+<li><a href="#ch35">第7章 写流程</a></li>
+<li><a href="#ch36">7.1 文档操作的定义</a></li>
+<li><a href="#ch37">7.2 可选参数</a></li>
+<li><a href="#ch38">7.3 Index/Bulk基本流程</a></li>
+<li><a href="#ch39">7.4 Index/Bulk详细流程</a></li>
+<li><a href="#ch40">7.5 I/O异常处理</a></li>
+<li><a href="#ch41">7.6 系统特性</a></li>
+<li><a href="#ch42">7.7 思考</a></li>
+<li><a href="#ch43">第8章 GET流程</a></li>
+<li><a href="#ch44">8.2 GET基本流程</a></li>
+<li><a href="#ch45">8.3 GET详细分析</a></li>
+<li><a href="#ch46">8.4 MGET流程分析</a></li>
+<li><a href="#ch47">8.5 思考</a></li>
+<li><a href="#ch48">第9章 Search流程</a></li>
+<li><a href="#ch49">9.1 索引和搜索</a></li>
+<li><a href="#ch50">9.2 search type</a></li>
+<li><a href="#ch51">9.3 分布式搜索过程</a></li>
+<li><a href="#ch52">9.4 小结</a></li>
+<li><a href="#ch53">第10章 索引恢复流程分析</a></li>
+<li><a href="#ch54">10.2 流程概述</a></li>
+<li><a href="#ch55">10.3 主分片恢复流程</a></li>
+<li><a href="#ch56">10.4 副分片恢复流程</a></li>
+<li><a href="#ch57">10.5 recovery速度优化</a></li>
+<li><a href="#ch58">10.6 如何保证副分片和主分片一致</a></li>
+<li><a href="#ch59">10.7 recovery相关监控命令</a></li>
+<li><a href="#ch60">10.8 小结</a></li>
+<li><a href="#ch61">11.1 元数据</a></li>
+<li><a href="#ch62">11.2 元数据的持久化</a></li>
+<li><a href="#ch63">11.3 元数据的恢复</a></li>
+<li><a href="#ch64">11.4 元数据恢复流程分析</a></li>
+<li><a href="#ch65">11.5 思考</a></li>
+<li><a href="#ch66">12.1 什么是allocation</a></li>
+<li><a href="#ch67">12.2 触发时机</a></li>
+<li><a href="#ch68">12.3 allocation模块结构概述</a></li>
+<li><a href="#ch69">12.4 allocators</a></li>
+<li><a href="#ch70">12.5 deciders</a></li>
+<li><a href="#ch71">12.6 核心reroute实现</a></li>
+<li><a href="#ch72">12.7 从gateway到allocation流程的转换</a></li>
+<li><a href="#ch73">12.8 从allocation流程到recovery流程的转换</a></li>
+<li><a href="#ch74">第13章 Snapshot模块分析</a></li>
+<li><a href="#ch75">13.1 仓库</a></li>
+<li><a href="#ch76">13.2 快照</a></li>
+<li><a href="#ch77">13.3 从快照恢复</a></li>
+<li><a href="#ch78">13.4 创建快照的实现原理</a></li>
+<li><a href="#ch79">13.5 删除快照实现原理</a></li>
+<li><a href="#ch80">13.6 思考与总结</a></li>
+<li><a href="#ch81">第14章 Cluster模块分析</a></li>
+<li><a href="#ch82">14.1 集群状态</a></li>
+<li><a href="#ch83">14.2 内部封装和实现</a></li>
+<li><a href="#ch84">14.3 提交集群任务</a></li>
+<li><a href="#ch85">14.4 集群任务的执行过程</a></li>
+<li><a href="#ch86">14.5 集群状态的发布过程</a></li>
+<li><a href="#ch87">14.6 应用集群状态</a></li>
+<li><a href="#ch88">14.7 查看等待执行的集群任务</a></li>
+<li><a href="#ch89">14.8 任务管理API</a></li>
+<li><a href="#ch90">第15章 Transport模块分析</a></li>
+<li><a href="#ch91">15.1 配置信息</a></li>
+<li><a href="#ch92">15.2 Transport总体架构</a></li>
+<li><a href="#ch93">15.3 REST解析和处理</a></li>
+<li><a href="#ch94">15.4 RPC实现</a></li>
+<li><a href="#ch95">15.5 思考与总结</a></li>
+<li><a href="#ch96">第16章 ThreadPool模块分析</a></li>
+<li><a href="#ch97">16.1 线程池类型</a></li>
+<li><a href="#ch98">16.2 处理器设置</a></li>
+<li><a href="#ch99">16.3 查看线程池</a></li>
+<li><a href="#ch100">16.4 ES的线程池实现</a></li>
+<li><a href="#ch101">16.5 其他线程池</a></li>
+<li><a href="#ch102">16.6 思考与总结</a></li>
+<li><a href="#ch103">第17章 Shrink原理分析</a></li>
+<li><a href="#ch104">17.1 准备源索引</a></li>
+<li><a href="#ch105">17.3 Shrink的工作原理</a></li>
+<li><a href="#ch106">第18章 写入速度优化</a></li>
+<li><a href="#ch107">18.1 translog flush间隔调整</a></li>
+<li><a href="#ch108">18.2 索引刷新间隔refresh_interval</a></li>
+<li><a href="#ch109">18.3 段合并优化</a></li>
+<li><a href="#ch110">18.4 indexing buffer</a></li>
+<li><a href="#ch111">18.5 使用bulk请求</a></li>
+<li><a href="#ch112">18.6 磁盘间的任务均衡</a></li>
+<li><a href="#ch113">18.7 节点间的任务均衡</a></li>
+<li><a href="#ch114">18.8 索引过程调整和优化</a></li>
+<li><a href="#ch115">18.9 参考配置</a></li>
+<li><a href="#ch116">18.10 思考与总结</a></li>
+<li><a href="#ch117">19.1 为文件系统cache预留足够的内存</a></li>
+<li><a href="#ch118">19.2 使用更快的硬件</a></li>
+<li><a href="#ch119">19.3 文档模型</a></li>
+<li><a href="#ch120">19.4 预索引数据</a></li>
+<li><a href="#ch121">19.7 优化日期搜索</a></li>
+<li><a href="#ch122">19.8 为只读索引执行force-merge</a></li>
+<li><a href="#ch123">19.9 预热全局序号（global ordinals）</a></li>
+<li><a href="#ch124">19.10 execution hint</a></li>
+<li><a href="#ch125">19.11 预热文件系统cache</a></li>
+<li><a href="#ch126">19.12 转换查询表达式</a></li>
+<li><a href="#ch127">19.13 调节搜索请求中的batched_reduce_size</a></li>
+<li><a href="#ch128">19.14 使用近似聚合</a></li>
+<li><a href="#ch129">19.15 深度优先还是广度优先</a></li>
+<li><a href="#ch130">19.16 限制搜索请求的分片数</a></li>
+<li><a href="#ch131">19.17 利用自适应副本选择（ARS）提升ES响应速度</a></li>
+<li><a href="#ch132">20.1 预备知识</a></li>
+<li><a href="#ch133">20.2 优化措施</a></li>
+<li><a href="#ch134">20.3 测试数据</a></li>
+<li><a href="#ch135">第21章 综合应用实践</a></li>
+<li><a href="#ch136">21.1 集群层</a></li>
+<li><a href="#ch137">21.2 节点层</a></li>
+<li><a href="#ch138">21.3 系统层</a></li>
+<li><a href="#ch139">21.4 索引层</a></li>
+<li><a href="#ch140">21.5 客户端</a></li>
+<li><a href="#ch141">21.6 读写</a></li>
+<li><a href="#ch142">21.7 控制相关度</a></li>
+<li><a href="#ch143">第22章 故障诊断</a></li>
+<li><a href="#ch144">22.1 使用Profile API定位慢查询</a></li>
+<li><a href="#ch145">22.2 使用Explain API分析未分配的分片（Unassigned Shards）</a></li>
+<li><a href="#ch146">22.3 节点CPU使用率高</a></li>
+<li><a href="#ch147">22.4 节点内存使用率高</a></li>
+<li><a href="#ch148">22.5 Slow Logs</a></li>
+<li><a href="#ch149">22.6 分析工具</a></li>
+<li><a href="#ch150">22.7 小结</a></li>
+</ul></div>
+<details class="ch" id="ch0"><summary>作者简介</summary>
+<div class="sec">
+<h4>张超的个人简介</h4>
+<ul class="point">
+<li><b>长期从事服务端和基础架构等研发工作</b>
+<ul class="quote">
+<li>对搜索、分布式系统、高性能网络服务有浓厚的兴趣。</li>
+</ul>
+</li>
+<li><b>喜欢探究技术本质，喜欢分析有深度的问题。</b>
+</li>
+<li><b>目前就职于360企业安全集团基础大数据团队，负责平台内核研发工作。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch1"><summary>1.1 基本概念和原理</summary>
+<div class="sec">
+<h4>Elasticsearch的基本概念和原理</h4>
+<ul class="point">
+<li><b>Elasticsearch是实时的分布式搜索分析引擎，内部使用Lucene做索引与搜索</b>
+<ul class="quote">
+<li>新增到 ES 中的数据在1秒后就可以被检索到，这种新增数据对搜索的可见性称为“准实时搜索”。</li>
+<li>分布式意味着可以动态调整集群规模，弹性扩容。</li>
+</ul>
+</li>
+<li><b>Lucene是Java语言编写的全文搜索框架，用于处理纯文本的数据</b>
+<ul class="quote">
+<li>Lucene只是一个库，提供建立索引、执行搜索等接口，但不包含分布式服务，这些正是 ES 做的。</li>
+<li>对全部的文本内容进行分析，建立索引，使之可以被搜索，因此称为全文。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>索引结构</h4>
+<ul class="point">
+<li><b>ES是面向文档的，各种文本内容以文档的形式存储到ES中</b>
+<ul class="quote">
+<li>一般使用 JSON 作为文档的序列化格式，文档可以有很多字段。</li>
+<li>在创建索引的时候，我们需要描述文档中每个字段的数据类型，并且可能需要指定不同的分析器。</li>
+</ul>
+</li>
+<li><b>_index指向一个或多个物理分片的逻辑命名空间，_type类型用于区分同一个集合中的不同细分</b>
+<ul class="quote">
+<li>多个_type可以在相同的索引中存在，只要它们的字段不冲突即可。</li>
+<li>删除整个_type也不会释放空间。</li>
+<li>在ES 6.x版本中，一个索引只允许存在一个_type，未来的7.x版本将完全删除_type的概念。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>分片(shard)</h4>
+<ul class="point">
+<li><b>ES将数据副本分为主从两部分，即主分片(primary shard)和副分片(replica shard)</b>
+<ul class="quote">
+<li>主数据作为权威数据，写过程中先写主分片，成功后再写副分片，恢复阶段以主分片为准。</li>
+<li>数据分片和数据副本的关系如下图所示。</li>
+</ul>
+</li>
+<li><b>分片(shard)是底层的基本读写单元，分片的目的是分割巨大索引，让读写可以并行操作</b>
+<ul class="quote">
+<li>读写请求最终落到某个分片上，分片可以独立执行读写工作。</li>
+<li>ES利用分片将数据分发到集群内各处。</li>
+<li>分片是数据的容器，文档保存在分片内，不会跨分片存储。</li>
+<li>分片又被分配到集群内的各个节点里。</li>
+<li>当集群规模扩大或缩小时，ES 会自动在各节点中迁移分片，使数据仍然均匀分布在集群里。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>动态更新索引</h4>
+<ul class="point">
+<li><b>更新、删除等操作实际上是将数据标记为删除，记录到单独的位置，这种方式称为标记删除</b>
+<ul class="quote">
+<li>倒排索引一旦被写入文件后就具有不变性。</li>
+<li>每次内存缓冲的数据被写入文件时，会产生一个新的Lucene段。</li>
+<li>由于分段的不变性，更新、删除等操作实际上是将数据标记为删除，记录到单独的位置。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>近实时搜索</h4>
+<ul class="point">
+<li><b>ES正是利用write函数返回成功开始，无论数据有没有被刷到磁盘，该数据已经对读取可见的特性实现了近实时搜索</b>
+<ul class="quote">
+<li>每秒产生一个新分段，新段先写入文件系统缓存，但稍后再执行flush刷盘操作。</li>
+<li>由于系统先缓冲一段数据才写，且新段不会立即刷入磁盘，这两个过程中如果出现某些意外情况(如主机断电)，则会存在丢失数据的风险。</li>
+<li>通用的做法是记录事务日志，每次对ES进行操作时均记录事务日志，当ES启动的时候，重放translog中所有在最后一次提交后发生的变更操作。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>段合并</h4>
+<ul class="point">
+<li><b>通过一定的策略将这些较小的段合并为大的段，常用的方案是选择大小相似的分段进行合并</b>
+<ul class="quote">
+<li>在合并过程中，标记为删除的数据不会写入新分段，当合并过程结束，旧的分段数据被删除，标记删除的数据才从磁盘删除。</li>
+<li>HBase、Cassandra等系统都有类似的分段机制，写过程中先在内存缓冲一批数据，不时地将这些数据写入文件作为一个分段，分段具有不变性，再通过一些策略合并分段。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch2"><summary>1.2 集群内部原理</summary>
+<div class="sec">
+<h4>集群内部原理</h4>
+<ul class="point">
+<li><b>分布式系统的集群方式大致可以分为主从(Master-Slave)模式和无主模式</b>
+<ul class="quote">
+<li>ES、HDFS、HBase使用主从模式，Cassandra使用无主模式。</li>
+</ul>
+</li>
+<li><b>主从模式可以简化系统设计，Master作为权威节点，部分操作仅由Master执行，并负责维护集群元信息</b>
+<ul class="quote">
+<li>缺点是Master节点存在单点故障，需要解决灾备问题，并且集群规模会受限于Master节点的管理能力。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>集群节点角色</h4>
+<ul class="point">
+<li><b>主节点(Master node)负责集群层面的相关操作，管理集群变更</b>
+<ul class="quote">
+<li>通过配置 node.master: true(默认)使节点具有被选举为 Master 的资格。</li>
+<li>每个主节点应该知道有资格成为主节点的数量，默认为1，为避免网络分区时出现多主的情况，配置 discovery.zen.minimum_master_nodes原则上最小值应该是：(master_eligible_nodes / 2)+ 1。</li>
+</ul>
+</li>
+<li><b>数据节点(Data node)负责保存数据、执行数据相关操作：CRUD、搜索、聚合等</b>
+<ul class="quote">
+<li>数据节点对CPU、内存、I/O要求较高。</li>
+<li>数据读写流程只和数据节点交互，不会和主节点打交道(异常情况除外)。</li>
+</ul>
+</li>
+<li><b>预处理节点(Ingest node)允许在索引文档之前，即写入数据之前，通过事先定义好的一系列的processors(处理器)和pipeline(管道)，对数据进行某种转换、富化</b>
+<ul class="quote">
+<li>默认情况下，在所有的节点上启用ingest，如果想在某个节点上禁用ingest，则可以添加配置node.ingest: false。</li>
+</ul>
+</li>
+<li><b>协调节点(Coordinating node)处理客户端请求的节点称为协调节点</b>
+<ul class="quote">
+<li>客户端请求可以发送到集群的任何节点，每个节点都知道任意文档所处的位置，然后转发这些请求，收集数据并返回给客户端。</li>
+<li>协调节点将请求转发给保存数据的数据节点。每个数据节点在本地执行请求，并将结果返回协调节点。协调节点收集完数据后，将每个数据节点的结果合并为单个全局结果。</li>
+</ul>
+</li>
+<li><b>部落节点(Tribe node)允许部落节点在多个集群之间充当联合客户端</b>
+<ul class="quote">
+<li>在ES 5.0之前还有一个客户端节点(Node Client)的角色，客户端节点有以下属性：node.master: false node.data: false。</li>
+<li>从5.0版本开始，这个角色被协调节点(Coordinating only node)取代。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>集群健康状态</h4>
+<ul class="point">
+<li><b>从数据完整性的角度划分，集群健康状态分为三种：Green，Yellow，Red</b>
+<ul class="quote">
+<li>Green，所有的主分片和副分片都正常运行。</li>
+<li>Yellow，所有的主分片都正常运行，但不是所有的副分片都正常运行。这意味着存在单点故障风险。</li>
+<li>Red，有主分片没能正常运行。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>集群状态</h4>
+<ul class="point">
+<li><b>集群状态元数据是全局信息，元数据包括内容路由信息、配置信息等</b>
+<ul class="quote">
+<li>其中最重要的是内容路由信息，它描述了“哪个分片位于哪个节点”这种信息。</li>
+</ul>
+</li>
+<li><b>集群状态由主节点负责维护，如果主节点从数据节点接收更新，则将这些更新广播到集群的其他节点</b>
+<ul class="quote">
+<li>ES 2.0版本之后，更新的集群状态信息只发增量内容，并且是被压缩的。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>集群扩容</h4>
+<ul class="point">
+<li><b>当扩容集群、添加节点时，分片会均衡地分配到集群的各个节点</b>
+<ul class="quote">
+<li>分片副本实现了数据冗余，从而防止硬件故障导致的数据丢失。</li>
+</ul>
+</li>
+<li><b>当节点异常时，ES会自动处理节点异常</b>
+<ul class="quote">
+<li>当主节点异常时，集群会重新选举主节点。</li>
+<li>当某个主分片异常时，会将副分片提升为主分片。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch3"><summary>1.3 客户端API</summary>
+<div class="sec">
+<h4>客户端API的选择</h4>
+<ul class="point">
+<li><b>可以选择REST接口、Java REST API，或者Java API进行读写操作</b>
+<ul class="quote">
+<li>Java REST API是对原生REST接口的封装。</li>
+<li>REST接口、Java REST API使用9200端口通信，采用JSON over HTTP方式。</li>
+<li>Java API使用9300端口通信，数据序列化为二进制。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Java API与Java REST API的对比</h4>
+<ul class="point">
+<li><b>使用Java API理论上来说效率更高一些，但实际上相差无几</b>
+<ul class="quote">
+<li>ES不是高QPS的应用，写操作非常消耗CPU资源，因此写操作属于比较长的操作，聚合由于涉及数据量比较大，延迟也经常到秒级，查询一般也不密集。</li>
+<li>RPC框架的效率没有那么高的要求。</li>
+</ul>
+</li>
+<li><b>Java API将逐渐被Java REST API取代</b>
+<ul class="quote">
+<li>官方计划从ES 7.0开始不建议使用Java API。</li>
+<li>并且从8.0版本开始完全移除。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch4"><summary>1.4 主要内部模块简介</summary>
+<div class="sec">
+<h4>ES主要内部模块简介</h4>
+<ul class="point">
+<li><b>Cluster模块是主节点执行集群管理的封装实现，管理集群状态，维护集群层面的配置信息。</b>
+</li>
+<li><b>allocation模块封装了分片分配相关的功能和策略，包括主分片的分配和副分片的分配</b>
+<ul class="quote">
+<li>创建新索引、集群完全重启都需要分片分配的过程。</li>
+</ul>
+</li>
+<li><b>Discovery模块负责发现集群中的节点，以及选举主节点</b>
+<ul class="quote">
+<li>当节点加入或退出集群时，主节点会采取相应的行动。</li>
+</ul>
+</li>
+<li><b>gateway模块负责对收到Master广播下来的集群状态(cluster state)数据的持久化存储，并在集群完全重启时恢复它们。</b>
+</li>
+<li><b>Indices模块管理全局级的索引设置，不包括索引级的(索引设置分为全局级和每个索引级)</b>
+<ul class="quote">
+<li>集群启动阶段需要的主分片恢复和副分片恢复就是在这个模块实现的。</li>
+</ul>
+</li>
+<li><b>HTTP模块允许通过JSON over HTTP的方式访问ES的API</b>
+<ul class="quote">
+<li>HTTP模块本质上是完全异步的，这意味着没有阻塞线程等待响应。</li>
+</ul>
+</li>
+<li><b>Transport模块用于集群内节点之间的内部通信</b>
+<ul class="quote">
+<li>传输模块使用 TCP 通信，每个节点都与其他节点维持若干 TCP 长连接。</li>
+</ul>
+</li>
+<li><b>Engine模块封装了对Lucene的操作及translog的调用，它是对一个分片读写操作的最终提供者。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>模块结构</h4>
+<ul class="point">
+<li><b>在Guice框架下，一个典型的模块由Service和Module类(类名可以自由定义)组成</b>
+<ul class="quote">
+<li>Service用于实现业务功能，Module类中配置绑定信息。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>模块管理</h4>
+<ul class="point">
+<li><b>定义好的模块由ModulesBuilder类统一管理</b>
+<ul class="quote">
+<li>ModulesBuilder是ES对Guice的封装，内部调用Guice接口，主要对外提供两个方法：add方法和createInjector方法。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch5"><summary>2.1 编译源码</summary>
+<div class="sec">
+<h4>准备JDK和Gradle</h4>
+<ul class="point">
+<li><b>Elasticsearch是Java语言编写的，推荐使用Oracle的JDK版本</b>
+<ul class="quote">
+<li>本书使用的JDK版本为1.8.0_121。</li>
+</ul>
+</li>
+<li><b>从Elasticsearch 5.0开始，构建工具由Maven更改为Gradle</b>
+<ul class="quote">
+<li>本书使用的Gradle版本为4.6。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>下载源代码</h4>
+<ul class="point">
+<li><b>Elasticsearch的代码托管于GitHub，可以“git clone”最新的Master分支或某个tag</b>
+<ul class="quote">
+<li>也可以到Releases或Tags下载各个版本的代码包。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>编译项目，打包</h4>
+<ul class="point">
+<li><b>以Linux平台编译为例，切换到解压后的源码目录，执行编译：./gradlew assemble</b>
+<ul class="quote">
+<li>编译完成后，系统打印“BUILD SUCCESSFUL”代表编译成功。</li>
+</ul>
+</li>
+<li><b>完整的打包文件位于．/distribution目录，包含tar、zip等多种格式的包</b>
+<ul class="quote">
+<li>以tar为例，包路径为．/distribution/tar/build/distributions/ elasticsearch-6.1.2-SNAPSHOT.tar.gz。</li>
+<li>默认带有“SNAPSHOT”后缀，如果想去掉“SNAPSHOT”，则可以在编译时添加-Dbuild.snapshot=false。</li>
+<li>Elasticsearch的版本号由四位组成，格式为主版本．次版本．修正版本．构建版本，但是最后一位“构建版本”不出现在构建后的包名称中。</li>
+<li>默认情况下每个号码均不会大于100。当完成对代码的修改，编译、发布时要修改版本号，添加自己的版本号，可以在原修正版本或构建版本的基础上增加。</li>
+<li>与修改版本号相关的两个文件：buildSrc/version.properties和．/core/src/main/java/org/elasticsearch/Version.java。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>将工程导入IntelliJ IDEA</h4>
+<ul class="point">
+<li><b>进入Elasticsearch源码根目录，执行：gradle idea</b>
+<ul class="quote">
+<li>生成IntelliJ的项目文件，正常完成会显示“BUILD SUCCESSFUL”。</li>
+</ul>
+</li>
+<li><b>配置SDK</b>
+<ul class="quote">
+<li>打开IntelliJ IDEA，在欢迎界面右下角选择“Configure→Project Defaults→Project Structure”。</li>
+<li>在Project SDK下拉列表中确认JDK的版本，必要时选择“New→JDK”，选择JDK Home目录，添加正确的JDK。</li>
+</ul>
+</li>
+<li><b>导入Project</b>
+<ul class="quote">
+<li>回到IntelliJ IDEA欢迎界面，选择“Import Project”，选择Elasticsearch-6.1.2目录，单击“Open”。</li>
+<li>在Import Project界面选择“Gradle”，单击“Next”，设置工程名称，并确认Grande home和Grande JVM配置正确，单击完成按钮，待后台任务运行完，工程导入完毕。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch6"><summary>2.2 调试Elasticsearch</summary>
+<div class="sec">
+<h4>本地运行、调试项目</h4>
+<ul class="point">
+<li><b>在 IntelliJ IDEA 菜单中选择“Run→Edit Configurations”，单击左侧的加号“+”，选择“Application”</b>
+<ul class="quote">
+<li>在弹出的配置界面中填写相关配置，如 Name、Main class、Use classpath of module、VM options。</li>
+</ul>
+</li>
+<li><b>为调试环境准备运行时要用的eshome目录，Elasticsearch需要从其中加载模块、读取配置，写入数据和日志</b>
+<ul class="quote">
+<li>在你的环境上选择一个位置建立 eshome目录，名称可以任意。</li>
+<li>复制必要的模块和配置文件到该目录中，可以选择从对应版本的官方二进制包中复制，也可以将上一步编译打包的软件包解压。</li>
+</ul>
+</li>
+<li><b>单击“运行”或“调试”按钮让程序在IDE中运行起来</b>
+<ul class="quote">
+<li>ES可以单节点运行，暂时不用调节任何配置。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>远程调试</h4>
+<ul class="point">
+<li><b>在 IDEA 菜单中重新单击“Run→Edit Configurations”，单击左侧的加号“+”，选择“Remote”</b>
+<ul class="quote">
+<li>配置名称此处命名为remote，复制“Command line arguments for running remote JVM”下的JVM参数到远程节点的jvm.options文件中。</li>
+<li>重启远程节点，成功后日志信息中会有“Listening for transport dt_socket at address: 5005”信息。</li>
+<li>在Host中填写远程调试对象的IP地址，单击“OK”按钮。</li>
+</ul>
+</li>
+<li><b>单击Debug启动调试，控制台输出：Connected to the target VM, address: &#x27;10.132.0.20:5005&#x27;, transport: &#x27;socket&#x27;</b>
+<ul class="quote">
+<li>表示连接成功，接下来在本地代码上设置断点，远程节点运行到相应的逻辑就会停住，接下来就和本地调试一样。</li>
+<li>如果需要调试启动过程，则可以设置suspendcy，让程序等待调试器连接后再开始执行。</li>
+</ul>
+</li>
+<li><b>远程调试节点时，停止调试不会终止远程节点进程。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch7"><summary>2.3 代码书签和断点组</summary>
+<div class="sec">
+<h4>代码书签的使用</h4>
+<ul class="point">
+<li><b>光标选中代码行，按F3键为当前行添加书签</b>
+<ul class="quote">
+<li>添加后在行号右侧会多一个对号。</li>
+</ul>
+</li>
+<li><b>按command+F3组合键弹出书签列表对话框，单击左侧的“Edit”按钮为当前书签命名</b>
+<ul class="quote">
+<li>可以为书签命名以便于识别和查找。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>断点组的使用</h4>
+<ul class="point">
+<li><b>单击菜单栏“Run→View Breakpoints”，弹出断点对话框，右键单击断点，选择“Move to group”</b>
+<ul class="quote">
+<li>将断点“move”到对应的分组，或者创建新组。</li>
+</ul>
+</li>
+<li><b>在断点组复选框中可以批量启用/禁用整组断点</b>
+<ul class="quote">
+<li>可以方便地对断点组进行操作，提高调试效率。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>断点暂停策略的设置</h4>
+<ul class="point">
+<li><b>默认策略为All，在这种策略下，在类的不同方法上设置两个断点，当其中一个断点被命中而暂停时，另一个线程进入第二个断点，IDEA将不会暂停</b>
+<ul class="quote">
+<li>通常在调试多线程池程序时，我们希望设置的断点，不管任何线程进入都应暂停。</li>
+</ul>
+</li>
+<li><b>将策略修改为Thread，在断点上单击右键，弹出如下图所示的对话框，将单选按钮选中“Thread”，然后单击“Make Default”按钮，单击“Done”按钮，将其作为默认策略</b>
+<ul class="quote">
+<li>修改后，所有线程进入断点都会暂停，方便调试。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch8"><summary>第3章 集群启动流程</summary>
+<div class="sec">
+<h4>集群启动的整体流程</h4>
+<ul class="point">
+<li><b>集群启动过程指集群完全重启时的启动过程，期间要经历选举主节点、主分片、数据恢复等重要阶段</b>
+<ul class="quote">
+<li>理解其中原理和细节，对于解决或避免集群维护过程中可能遇到的脑裂、无主、恢复慢、丢数据等问题有重要作用。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch9"><summary>3.1 选举主节点</summary>
+<div class="sec">
+<h4>ES的选主算法</h4>
+<ul class="point">
+<li><b>ES的选主算法是基于Bully算法的改进，主要思路是对节点ID排序，取ID值最大的节点作为Master</b>
+<ul class="quote">
+<li>每个节点都运行这个流程。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>选主的附加约定条件</h4>
+<ul class="point">
+<li><b>参选人数需要过半，达到 quorum(多数)后就选出了临时的主</b>
+<ul class="quote">
+<li>每个节点运行排序取最大值的算法，结果不一定相同。</li>
+</ul>
+</li>
+<li><b>得票数需过半，某节点被选为主节点，必须判断加入它的节点数过半，才确认Master身份</b>
+<ul class="quote">
+<li>解决第一个问题。</li>
+</ul>
+</li>
+<li><b>当探测到节点离开事件时，必须判断当前节点数是否过半。如果达不到 quorum，则放弃Master身份，重新加入集群</b>
+<ul class="quote">
+<li>如果不这么做，则设想以下情况：假设5台机器组成的集群产生网络分区，2台一组，3台一组，产生分区前，Master位于2台中的一个，此时3台一组的节点会重新并成功选取Master，产生双主，俗称脑裂。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>quorum值的设置</h4>
+<ul class="point">
+<li><b>集群并不知道自己共有多少个节点，quorum值从配置中读取</b>
+<ul class="quote">
+<li>我们需要设置配置项：discovery.zen.minimum_master_nodes。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch10"><summary>3.2 选举集群元信息</summary>
+<div class="sec">
+<h4>选举集群元信息</h4>
+<ul class="point">
+<li><b>被选出的 Master 和集群元信息的新旧程度没有关系</b>
+<ul class="quote">
+<li>它的第一个任务是选举元信息，让各节点把各自存储的元信息发过来，根据版本号确定最新的元信息，然后把这个信息广播下去，这样集群的所有节点都有了最新的元信息。</li>
+</ul>
+</li>
+<li><b>集群元信息的选举包括两个级别：集群级和索引级</b>
+<ul class="quote">
+<li>不包含哪个shard存于哪个节点这种信息。</li>
+<li>这种信息以节点磁盘存储的为准，需要上报。</li>
+</ul>
+</li>
+<li><b>为了集群一致性，参与选举的元信息数量需要过半</b>
+<ul class="quote">
+<li>Master发布集群状态成功的规则也是等待发布成功的节点数过半。</li>
+</ul>
+</li>
+<li><b>在选举过程中，不接受新节点的加入请求。</b>
+</li>
+<li><b>集群元信息选举完毕后，Master发布首次集群状态，然后开始选举shard级元信息。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch11"><summary>3.3 allocation过程</summary>
+<div class="sec">
+<h4>分配过程概述</h4>
+<ul class="point">
+<li><b>选举shard级元信息，构建内容路由表</b>
+<ul class="quote">
+<li>在初始阶段，所有的shard都处于UNASSIGNED(未分配)状态。</li>
+<li>ES中通过分配过程决定哪个分片位于哪个节点，重构内容路由表。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>选主分片</h4>
+<ul class="point">
+<li><b>Master向集群的所有节点询问：大家把[website][0]分片的元信息发给我</b>
+<ul class="quote">
+<li>Master等待所有的请求返回，正常情况下它就有了这个 shard 的信息。</li>
+</ul>
+</li>
+<li><b>ES 5.x以下的版本，通过对比shard级元信息的版本号来决定</b>
+<ul class="quote">
+<li>在多副本的情况下，考虑到如果只有一个 shard 信息汇报上来，则它一定会被选为主分片，但也许数据不是最新的，版本号比它大的那个shard所在节点还没启动。</li>
+</ul>
+</li>
+<li><b>ES 5.x开始实施一种新的策略：给每个 shard 都设置一个 UUID，然后在集群级的元信息中记录哪个shard是最新的</b>
+<ul class="quote">
+<li>主分片选举过程是通过集群级元信息中记录的“最新主分片的列表”来确定主分片的：汇报信息中存在，并且这个列表中也存在。</li>
+</ul>
+</li>
+<li><b>如果集群设置了：＂cluster.routing.allocation.enable＂: ＂none＂，禁止分配分片，集群仍会强制分配主分片</b>
+<ul class="quote">
+<li>因此，在设置了上述选项的情况下，集群重启后的状态为Yellow，而非Red。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>选副分片</h4>
+<ul class="point">
+<li><b>主分片选举完成后，从上一个过程汇总的 shard 信息中选择一个副本作为副分片</b>
+<ul class="quote">
+<li>如果汇总信息中不存在，则分配一个全新副本的操作依赖于延迟配置项：index.unassigned.node_left.delayed_timeout。</li>
+<li>我们线上环境中最大的集群有100+节点，掉节点的情况并不罕见，很多时候不能第一时间处理，这个延迟我们一般配置为以天为单位。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>新启动的节点加入集群</h4>
+<ul class="point">
+<li><b>allocation过程中允许新启动的节点加入集群。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch12"><summary>3.4 index recovery</summary>
+<div class="sec">
+<h4>索引恢复的原因</h4>
+<ul class="point">
+<li><b>主分片可能有一些数据没来得及刷盘。</b>
+</li>
+<li><b>副分片可能没刷盘，或者主分片写完了，副分片还没来得及写，主副分片数据不一致。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>主分片recovery</h4>
+<ul class="point">
+<li><b>将最后一次提交之后的 translog中进行重放，建立Lucene索引</b>
+<ul class="quote">
+<li>每次写操作都会记录事务日志(translog)，事务日志中记录了哪种操作，以及相关的数据。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>副分片recovery</h4>
+<ul class="point">
+<li><b>副分片的恢复分成两阶段执行：phase1和phase2</b>
+<ul class="quote">
+<li>phase1：在主分片所在节点，获取translog保留锁，从获取保留锁开始，会保留translog不受其刷盘清空的影响。然后调用Lucene接口把shard做快照，这是已经刷磁盘中的分片数据。把这些shard数据复制到副本节点。</li>
+<li>phase2：对translog做快照，这个快照里包含从phase1开始，到执行translog快照期间的新增索引。将这些translog发送到副分片所在节点进行重放。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>副分片恢复的问题及解决方案</h4>
+<ul class="point">
+<li><b>分片数据完整性：如何做到副分片不丢数据？</b>
+<ul class="quote">
+<li>第一阶段的 translog 快照包括第一阶段所有的新增操作。那么第一阶段执行期间如果发生“Lucene commit”(将文件系统写缓冲中的数据刷盘，并清空translog)，清除translog怎么办？</li>
+<li>从ES 2.0版本开始，为了避免这种做法产生过大的translog，引入了translog.view的概念，创建 view 可以获取后续的所有操作。从6.0版本开始，translog.view 被移除。引入TranslogDeletionPolicy的概念，它将translog做一个快照来保持translog不被清理。</li>
+</ul>
+</li>
+<li><b>数据一致性：在ES 2.0之前，副分片恢复过程有三个阶段，第三阶段会阻塞新的索引操作，传输第二阶段执行期间新增的translog，这个时间很短。自2.0版本之后，第三阶段被删除，恢复期间没有任何写阻塞过程</b>
+<ul class="quote">
+<li>在副分片节点，重放translog时，phase1和phase2之间的写操作与phase2重放操作之间的时序错误和冲突，通过写流程中进行异常处理，对比版本号来过滤掉过期操作。</li>
+<li>这样，时序上存在错误的操作被忽略，对于特定的 doc，只有最新一次操作生效，保证了主副分片一致。</li>
+</ul>
+</li>
+<li><b>第一阶段尤其漫长，因为它需要从主分片拉取全量的数据。在ES 6.x中，对第一阶段再次优化：标记每个操作</b>
+<ul class="quote">
+<li>在正常的写操作中，每次写入成功的操作都分配一个序号，通过对比序号就可以计算出差异范围。</li>
+<li>主分片负责维护global checkpoint，代表所有分片都已写入这个序号的位置，local checkpoint代表当前分片已写入成功的最新位置，恢复时通过对比两个序列号，计算出缺失的数据范围，然后通过translog重放这部分数据，同时translog会为此保留更长的时间。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch13"><summary>3.5 集群启动日志</summary>
+<div class="sec">
+<h4>集群启动日志的重要性</h4>
+<ul class="point">
+<li><b>日志是分布式系统中排查问题的重要手段</b>
+<ul class="quote">
+<li>虽然 ES 提供了很多便于排查问题的接口，但重要日志仍然是不可或缺的。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>ES集群启动过程相关的重要日志</h4>
+<ul class="point">
+<li><b>默认情况下，ES输出的INFO级别日志较少，许多重要模块的关键环节是DEBUG 或TRACE 级别的</b>
+<ul class="quote">
+<li>下图列出了集群启动过程相关的重要日志，部分调整到了INFO级别。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch14"><summary>3.6 小结</summary>
+<div class="sec">
+<h4>索引状态转换</h4>
+<ul class="point">
+<li><b>当一个索引的主分片分配成功后，该索引变为Yellow。</b>
+</li>
+<li><b>当全部索引的主分片都分配成功后，整个集群变为Yellow。</b>
+</li>
+<li><b>当一个索引全部分片分配成功后，该索引变为 Green。</b>
+</li>
+<li><b>当全部索引的索引分片分配成功后，整个集群变为Green。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>索引数据恢复</h4>
+<ul class="point">
+<li><b>索引数据恢复是最漫长的过程，6.x之前的版本集群从Red变为Green的时间可能需要小时级。</b>
+</li>
+<li><b>ES 6.x中的副本允许从本地translog恢复是一次重大的改进，避免了从主分片所在节点拉取全量数据，为恢复过程节约了大量时间。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch15"><summary>4.1 启动流程做了什么</summary>
+<div class="sec">
+<h4>解析配置</h4>
+<ul class="point">
+<li><b>解析配置文件</b>
+<ul class="quote">
+<li>解析 elasticsearch.yml 文件。</li>
+</ul>
+</li>
+<li><b>解析命令行参数</b>
+<ul class="quote">
+<li>解析 -E 参数。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>检查外部环境和内部环境</h4>
+<ul class="point">
+<li><b>检查 JVM 版本</b>
+<ul class="quote">
+<li>确保 JVM 版本满足要求。</li>
+</ul>
+</li>
+<li><b>检查操作系统内核参数。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>初始化内部资源</h4>
+<ul class="point">
+<li><b>创建内部模块</b>
+<ul class="quote">
+<li>创建 node 模块。</li>
+</ul>
+</li>
+<li><b>初始化探测器</b>
+<ul class="quote">
+<li>初始化 NodeStats探测器。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>启动各个子模块和keepalive线程</h4>
+<ul class="point">
+<li><b>启动各个子模块</b>
+<ul class="quote">
+<li>启动 transport 模块。</li>
+<li>启动 http 模块。</li>
+<li>启动 script 模块。</li>
+<li>启动 discovery 模块。</li>
+<li>启动 cluster 模块。</li>
+<li>启动 index 模块。</li>
+<li>启动 search 模块。</li>
+<li>启动 merge 模块。</li>
+<li>启动 snapshot 模块。</li>
+<li>启动 transport http 模块。</li>
+<li>启动 transport netty4 模块。</li>
+</ul>
+</li>
+<li><b>启动keepalive线程</b>
+<ul class="quote">
+<li>启动 master 节点 keepalive 线程。</li>
+<li>启动 data 节点 keepalive 线程。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch16"><summary>4.2 启动流程分析</summary>
+<div class="sec">
+<h4>启动脚本</h4>
+<ul class="point">
+<li><b>启动脚本通过exec加载Java程序</b>
+<ul class="quote">
+<li>ES_JAVA_OPTS变量保存了JVM参数，其内容来自对config/jvm.options配置文件的解析。</li>
+</ul>
+</li>
+<li><b>如果执行启动脚本时添加了-d参数，启动脚本会在exec中添加&lt;&amp;- &amp;</b>
+<ul class="quote">
+<li>&lt;&amp;-的作用是关闭标准输入，即进程中的0号fd。&amp;的作用是让进程在后台运行。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>解析命令行参数和配置文件</h4>
+<ul class="point">
+<li><b>目前支持的命令行参数有下面几种，默认启动时都不使用</b>
+<ul class="quote">
+<li>实际工程应用中建议在启动参数中添加-d和-p。</li>
+</ul>
+</li>
+<li><b>解析的配置文件有下面两个，jvm.options是在启动脚本中解析的</b>
+<ul class="quote">
+<li>elasticsearch.yml #主要配置文件。</li>
+<li>log4j2.properties #日志配置文件。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>加载安全配置</h4>
+<ul class="point">
+<li><b>ES把敏感配置信息加密，单独放到一个文件中：config/elasticsearch.keystore</b>
+<ul class="quote">
+<li>例如，X-Pack中的security相关配置，LDAP的base_dn等信息(相当于登录服务器的用户名和密码)。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>检查内部环境</h4>
+<ul class="point">
+<li><b>检查 Lucene 版本，ES 各版本对使用的 Lucene 版本是有要求的</b>
+<ul class="quote">
+<li>在这里检查 Lucene版本以防止有人替换不兼容的jar包。</li>
+</ul>
+</li>
+<li><b>检测jar冲突(JarHell)，发现冲突则退出进程。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>检测外部环境</h4>
+<ul class="point">
+<li><b>ES中的“节点”在实现时被封装为Node模块，在Node.start()中对外部环境进行检测</b>
+<ul class="quote">
+<li>外部环境指运行时的JVM、操作系统相关参数，这些在ES中称为“Bootstrap Check”。</li>
+</ul>
+</li>
+<li><b>BootstrapChecks类中包含多个检测项，包括堆大小检查、文件描述符检查、内存锁定检查、最大线程数检查、最大虚拟内存检查、最大文件大小检查、虚拟内存区域最大数量检查、JVM Client模式检查、串行收集检查、系统调用过滤器检查、OnError与OnOutOfMemoryError检查、Early-access检查、G1GC检查</b>
+<ul class="quote">
+<li>堆大小检查：如果JVM初始堆大小(Xms)与最大堆大小(Xmx)的值不同，则使用期间JVM堆大小调整时可能会出现停顿。因此应该设置为相同值。</li>
+<li>文件描述符检查：UNIX架构的系统中，“文件”可以是普通的物理文件，也可以是虚拟文件，网络套接字也是文件描述符。ES进程需要非常多的文件描述符。</li>
+<li>内存锁定检查：ES允许进程只使用物理内存，避免使用交换分区。实际上，我们建议生产环境中直接禁用操作系统的交换分区。</li>
+<li>最大线程数检查：ES将请求分解为多个阶段执行，每个阶段使用不同的线程池来执行。因此ES进程需要创建很多线程，本项检查就是确保ES进程有创建足够多线程的权限。</li>
+<li>最大虚拟内存检查：Lucene使用mmap来映射部分索引到进程地址空间，最大虚拟内存检查确保ES进程拥有足够多的地址空间。</li>
+<li>最大文件大小检查：段文件和事务日志文件存储在本地磁盘中，它们可能会非常大，在有最大文件大小限制的操作系统中，可能会导致写入失败。建议将最大文件的大小设置为无限。</li>
+<li>虚拟内存区域最大数量检查：ES进程需要创建很多内存映射区，本项检查是要确保内核允许创建至少262144个内存映射区。</li>
+<li>JVM Client模式检查：OpenJDK提供了两种JVM的运行模式：client JVM模式与server JVM模式。client JVM调优了启动时间和内存消耗，server JVM提供了更高的性能。要想通过此检查，需要以server的方式来启动ES，这也是默认的。</li>
+<li>串行收集检查：串行收集器(serial collector)适合单逻辑CPU的机器或非常小的堆，不适合ES。使用串行收集器对ES有非常大的负面影响。本项检查就是确保没有使用串行收集器。ES默认使用CMS收集器。</li>
+<li>系统调用过滤器检查：根据不同的操作系统，ES安装各种不同的系统调用过滤器(在Linux下使用seccomp)。这些过滤器可以阻止一些攻击行为。</li>
+<li>OnError与OnOutOfMemoryError检查：如果JVM遇到致命错误(OnError)或OutOfMemoryError(OnOutOfMemoryError)，那么JVM选项OnError和OnOutOfMemoryError可以执行任意命令。</li>
+<li>Early-access检查：OpenJDK 为即将发布的版本提供了 early-access 快照，这些发行版不适合生产环境。若要通过此项检查，则需要让ES运行在JVM的稳定版。</li>
+<li>G1GC检查：JDK 8的早期版本有些问题，会导致索引损坏，JDK 8u40之前的版本都会受影响。本项检查验证是否是早期的HotSpot JVM版本。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>启动内部模块</h4>
+<ul class="point">
+<li><b>环境检查完毕，开始启动各子模块</b>
+<ul class="quote">
+<li>子模块在Node类中创建，启动它们时调用各自的start()方法。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>启动keepalive线程</h4>
+<ul class="point">
+<li><b>调用keepAliveThread.start()方法启动keepalive线程</b>
+<ul class="quote">
+<li>主线程执行完启动流程后会退出，keepalive线程是唯一的用户线程，作用是保持进程运行。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch17"><summary>4.3 节点关闭流程</summary>
+<div class="sec">
+<h4>ES节点关闭流程</h4>
+<ul class="point">
+<li><b>ES进程会捕获SIGTERM信号进行处理，调用各模块的stop方法，让它们有机会停止服务，安全退出。</b>
+</li>
+<li><b>进程重启期间，如果主节点被关闭，则集群会重新选主，在这期间，集群有一个短暂的无主状态</b>
+<ul class="quote">
+<li>如果集群中的主节点是单独部署的，则新主当选后，可以跳过gateway和recovery流程，否则新主需要重新分配旧主所持有的分片：提升其他副本为主分片，以及分配新的副分片。</li>
+</ul>
+</li>
+<li><b>如果数据节点被关闭，则读写请求的TCP连接也会因此关闭，对客户端来说写操作执行失败</b>
+<ul class="quote">
+<li>但写流程已经到达Engine环节的会正常写完，只是客户端无法感知结果。</li>
+<li>此时客户端重试，如果使用自动生成ID，则数据内容会重复。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>节点关闭的风险</h4>
+<ul class="point">
+<li><b>滚动升级产生的影响是中断当前写请求，以及主节点重启可能引起的分片分配过程</b>
+<ul class="quote">
+<li>提升新的主分片一般都比较快，因此对集群的写入可用性影响不大。</li>
+</ul>
+</li>
+<li><b>当索引部分主分片未分配时，使用自动生成ID的情况下，如果持续写入，则客户端对失败重试可能会成功(请求到达已分配成功的主分片)，但是会在不同的分片之间产生数据倾斜，倾斜程度视期间数量而定。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch18"><summary>4.4 关闭流程分析</summary>
+<div class="sec">
+<h4>节点关闭流程</h4>
+<ul class="point">
+<li><b>收到系统SIGTERM或SIGINT信号时，调用Node#close方法，执行节点关闭流程</b>
+<ul class="quote">
+<li>Bootstrap#setup方法中添加了 shutdown hook。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>模块关闭顺序</h4>
+<ul class="point">
+<li><b>先调用一遍各个模块的doStop，然后再次遍历各个模块执行doClose</b>
+<ul class="quote">
+<li>关闭快照和HTTPServer，不再响应用户REST请求。</li>
+<li>关闭集群拓扑管理，不再响应ping请求。</li>
+<li>关闭网络模块，让节点离线。</li>
+<li>执行各个插件的关闭流程。</li>
+<li>关闭IndicesService。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>IndicesService关闭的时机</h4>
+<ul class="point">
+<li><b>最后才关闭IndicesService，是因为这期间需要等待释放的资源最多，时间最长。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch19"><summary>4.5 分片读写过程中执行关闭</summary>
+<div class="sec">
+<h4>写入过程中关闭</h4>
+<ul class="point">
+<li><b>线程在写入数据时，会对Engine加写锁。</b>
+</li>
+<li><b>IndicesService的doStop方法对本节点上全部索引并行执行removeIndex。</b>
+</li>
+<li><b>执行到Engine的flushAndClose(先flush然后关闭Engine)，也会对Engine加写锁。</b>
+</li>
+<li><b>由于写入操作已经加了写锁，此时写锁会等待，直到写入执行完毕。</b>
+</li>
+<li><b>由于网络模块被关闭，客户端的连接会被断开。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>读取过程中关闭</h4>
+<ul class="point">
+<li><b>线程在读取数据时，会对Engine加读锁。</b>
+</li>
+<li><b>flushAndClose时的写锁会等待读取过程执行完毕。</b>
+</li>
+<li><b>由于连接被关闭，无法发送给客户端，导致客户端读失败。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Engine的flushAndClose过程</h4>
+<ul class="point">
+<li><b>节点关闭过程中，IndicesService的doStop对Engine设置了超时。</b>
+</li>
+<li><b>如果flushAndClose一直等待，则CountDownLatch.await默认1天才会继续后面的流程。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch20"><summary>4.6 主节点被关闭</summary>
+<div class="sec">
+<h4>主节点被关闭时的处理</h4>
+<ul class="point">
+<li><b>主节点正常执行关闭流程。</b>
+</li>
+<li><b>集群重新选举新Master</b>
+<ul class="quote">
+<li>当TransportService模块被关闭后，集群重新选举新Master。</li>
+</ul>
+</li>
+<li><b>滚动重启期间会有一段时间处于无主状态。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch21"><summary>4.7 小结</summary>
+<div class="sec">
+<h4>节点启动流程</h4>
+<ul class="point">
+<li><b>节点启动流程做的就是初始化和检查工作</b>
+<ul class="quote">
+<li>各个子模块启动后异步地工作，加载本地数据，或者选主、加入集群等。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>节点关闭时的数据处理</h4>
+<ul class="point">
+<li><b>节点在关闭时有机会处理未写完的数据</b>
+<ul class="quote">
+<li>包括线程池中尚未执行的任务，在一定的超时时间内都有机会执行完。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>集群健康状态转换</h4>
+<ul class="point">
+<li><b>集群健康从Red变为Green的时间主要消耗在维护主副分片的一致性上</b>
+<ul class="quote">
+<li>我们也可以选择在集群健康为Yellow时就允许客户端写入，但是会牺牲一些数据安全性。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch22"><summary>第5章 选主流程</summary>
+<div class="sec">
+<h4>Discovery模块简介</h4>
+<ul class="point">
+<li><b>Discovery模块负责发现集群中的节点，以及选择主节点。</b>
+</li>
+<li><b>ES支持多种不同Discovery类型选择，内置的实现称为Zen Discovery。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Zen Discovery选主流程</h4>
+<ul class="point">
+<li><b>Zen Discovery封装了节点发现(Ping)、选主等实现过程。</b>
+</li>
+<li><b>本章先讨论选主流程，后面的章节中整体性介绍Discovery模块。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch23"><summary>5.1 设计思想</summary>
+<div class="sec">
+<h4>分布式系统的一致性问题</h4>
+<ul class="point">
+<li><b>分布式系统需要处理一致性问题</b>
+<ul class="quote">
+<li>分布式系统中的节点可能发生故障，导致数据不一致。</li>
+</ul>
+</li>
+<li><b>解决一致性问题通常有两种策略：避免不一致和定义不一致后的协调方式</b>
+<ul class="quote">
+<li>避免不一致的策略对数据模型有严格的限制。</li>
+<li>定义不一致后的协调方式在适用场景下非常强大。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>网络故障的处理</h4>
+<ul class="point">
+<li><b>网络故障是分布式系统中常见的问题</b>
+<ul class="quote">
+<li>网络故障可能导致节点之间的通信失败，从而引发一致性问题。</li>
+</ul>
+</li>
+<li><b>在网络故障时，需要确保系统仍然能够正常工作</b>
+<ul class="quote">
+<li>通过故障检测机制，及时发现网络故障。</li>
+<li>在网络故障时，采用一定的策略来保证系统的一致性。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch24"><summary>5.2 为什么使用主从模式</summary>
+<div class="sec">
+<h4>主从模式在相对稳定的对等网络中的优势</h4>
+<ul class="point">
+<li><b>主从模式更适合ES的典型场景</b>
+<ul class="quote">
+<li>ES的典型场景中的另一个简化是集群中没有那么多节点。</li>
+<li>通常，节点的数量远远小于单个节点能够维护的连接数，并且网络环境不必经常处理节点的加入和离开。</li>
+</ul>
+</li>
+<li><b>主从模式在查询响应时间上优于分布式哈希表</b>
+<ul class="quote">
+<li>分布式哈希表可以在不了解底层网络拓扑的异构网络中工作，查询响应时间大约为4到10跳(中转次数)。</li>
+<li>在相对稳定的对等网络中，主从模式的查询响应时间更短。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch25"><summary>5.3 选举算法</summary>
+<div class="sec">
+<h4>选举算法的基本原则</h4>
+<ul class="point">
+<li><b>不重复造轮子，实现一个众所周知的算法</b>
+<ul class="quote">
+<li>这样的好处是其中的优点和缺陷是已知的。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Bully算法</h4>
+<ul class="point">
+<li><b>Bully算法假定所有节点都有一个唯一的ID，使用该ID对节点进行排序</b>
+<ul class="quote">
+<li>任何时候的当前Leader都是参与集群的最高ID节点。</li>
+</ul>
+</li>
+<li><b>Bully算法在拥有最大ID的节点处于不稳定状态的场景下会有问题</b>
+<ul class="quote">
+<li>例如，Master负载过重而假死，集群拥有第二大ID的节点被选为新主，这时原来的Master恢复，再次被选为新主，然后又假死……。</li>
+</ul>
+</li>
+<li><b>ES通过推迟选举，直到当前的 Master 失效来解决上述问题</b>
+<ul class="quote">
+<li>只要当前主节点不挂掉，就不重新选主。</li>
+</ul>
+</li>
+<li><b>通过“法定得票人数过半”解决脑裂问题。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Paxos算法</h4>
+<ul class="point">
+<li><b>Paxos非常强大，尤其在什么时机，以及如何进行选举方面的灵活性比简单的Bully算法有很大的优势</b>
+<ul class="quote">
+<li>因为在现实生活中，存在比网络连接异常更多的故障模式。</li>
+</ul>
+</li>
+<li><b>Paxos实现起来非常复杂。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch26"><summary>5.4 相关配置</summary>
+<div class="sec">
+<h4>discovery.zen.minimum_master_nodes参数</h4>
+<ul class="point">
+<li><b>最小主节点数是防止脑裂、防止数据丢失的重要参数</b>
+<ul class="quote">
+<li>这个参数的实际作用早已超越了其表面的含义，除了在选主时用于决定“多数”，还用于多处重要的判断。</li>
+</ul>
+</li>
+<li><b>为了避免脑裂，它的值应该是半数以上(quorum)</b>
+<ul class="quote">
+<li>例如，如果有3个具备Master资格的节点，则这个值至少应该设置为(3/2)+ 1 = 2。</li>
+</ul>
+</li>
+<li><b>该参数可以动态设置</b>
+<ul class="quote">
+<li>PUT /_cluster/settings { &quot;persistent&quot; : { &quot;discovery.zen.minimum_master_nodes&quot; : 2 } }。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>discovery.zen.ping.unicast.hosts参数</h4>
+<ul class="point">
+<li><b>集群的种子节点列表，构建集群时本节点会尝试连接这个节点列表</b>
+<ul class="quote">
+<li>可以配置为部分或全部集群节点。</li>
+<li>可以像下面这样指定：discovery.zen.ping.unicast.hosts: - 192.168.1.10:9300 - 192.168.1.11 - seeds.mydomain.com。</li>
+<li>默认使用9300端口，如果需要更改端口号，则可以在IP后手工指定端口。也可以设置一个域名，让该域名解析到多个IP地址，ES会尝试连接这个IP列表中的全部地址。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>discovery.zen.ping.unicast.hosts.resolve_timeout参数</h4>
+<ul class="point">
+<li><b>DNS 解析超时时间，默认为5秒。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>discovery.zen.join_timeout参数</h4>
+<ul class="point">
+<li><b>节点加入现有集群时的超时时间，默认为 ping_timeout的20倍。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>discovery.zen.join_retry_attempts join_timeout参数</h4>
+<ul class="point">
+<li><b>超时之后的重试次数，默认为3次。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>discovery.zen.join_retry_delay join_timeout参数</h4>
+<ul class="point">
+<li><b>超时之后，重试前的延迟时间，默认为100毫秒。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>discovery.zen.master_election.ignore_non_master_pings参数</h4>
+<ul class="point">
+<li><b>选主阶段将忽略来自不具备Master资格节点(node.master: false)的ping请求，默认为false。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>discovery.zen.fd.ping_interval参数</h4>
+<ul class="point">
+<li><b>故障检测间隔周期，默认为1秒。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>discovery.zen.fd.ping_timeout参数</h4>
+<ul class="point">
+<li><b>故障检测请求超时时间，默认为30秒。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>discovery.zen.fd.ping_retries参数</h4>
+<ul class="point">
+<li><b>故障检测超时后的重试次数，默认为3次。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch27"><summary>5.5 流程概述</summary>
+<div class="sec">
+<h4>ZenDiscovery的选主过程</h4>
+<ul class="point">
+<li><b>每个节点计算最小的已知节点ID，该节点为临时Master。向该节点发送领导投票。</b>
+</li>
+<li><b>如果一个节点收到足够多的票数，并且该节点也为自己投票，那么它将扮演领导者的角色，开始发布集群状态</b>
+<ul class="quote">
+<li>所有节点都会参与选举，并参与投票，但是，只有有资格成为Master的节点(node.master为true)的投票才有效。</li>
+<li>获得多少选票可以赢得选举胜利，就是所谓的法定人数。在 ES 中，法定大小是一个可配置的参数。配置项：discovery.zen.minimum_master_nodes。为了避免脑裂，最小值应该是有Master资格的节点数n/2+1。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch28"><summary>5.6 流程分析</summary>
+<div class="sec">
+<h4>选举临时Master</h4>
+<ul class="point">
+<li><b>“ping”所有节点，获取节点列表fullPingResponses。</b>
+</li>
+<li><b>构建activeMasters和masterCandidates列表</b>
+<ul class="quote">
+<li>activeMasters列表：存储集群当前活跃Master列表。</li>
+<li>masterCandidates列表：存储master候选者列表。</li>
+</ul>
+</li>
+<li><b>从masterCandidates中选主，如果activeMasters不为空，则从activeMasters中选择最合适的作为Master</b>
+<ul class="quote">
+<li>判断候选者是否足够，选择具体的节点作为Master。</li>
+<li>使用自定义的比较函数 MasterCandidate::compare，优先把集群状态版本号高的节点放在前面。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>投票与得票的实现</h4>
+<ul class="point">
+<li><b>发送投票就是发送加入集群(JoinRequest)请求，得票就是申请加入该节点的请求的数量</b>
+<ul class="quote">
+<li>收集投票，进行统计的实现在ZenDiscovery#handleJoinRequest方法中。</li>
+<li>当节点检查收到的投票是否足够时，就是检查加入它的连接数是否足够，其中会去掉没有Master资格节点的投票。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>确立Master或加入集群</h4>
+<ul class="point">
+<li><b>如果临时Master是本节点，等待足够多的具备Master资格的节点加入本节点，以完成选举</b>
+<ul class="quote">
+<li>超时(默认为30秒，可配置)后还没有满足数量的join请求，则选举失败，需要进行新一轮选举。</li>
+<li>成功后发布新的clusterState。</li>
+</ul>
+</li>
+<li><b>如果其他节点被选为Master，不再接受其他节点的join请求，向Master发送加入请求，并等待回复</b>
+<ul class="quote">
+<li>超时时间默认为1分钟(可配置)，如果遇到异常，则默认重试3次(可配置)。</li>
+<li>最终当选的Master会先发布集群状态，才确认客户的join请求，因此，joinElectedMaster返回代表收到了join请求的确认，并且已经收到了集群状态。</li>
+<li>本步骤检查收到的集群状态中的Master节点如果为空，或者当选的Master不是之前选择的节点，则重新选举。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch29"><summary>5.7 节点失效检测</summary>
+<div class="sec">
+<h4>节点失效检测概述</h4>
+<ul class="point">
+<li><b>节点失效检测会监控节点是否离线，然后处理其中的异常。</b>
+</li>
+<li><b>失效检测是选主流程之后不可或缺的步骤，不执行失效检测可能会产生脑裂(双主或多主)。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>NodesFaultDetection事件处理</h4>
+<ul class="point">
+<li><b>检查当前集群总节点数是否达到法定节点数(过半)，如果不足，则会放弃 Master 身份，重新加入集群</b>
+<ul class="quote">
+<li>设想下面的场景，假设有5台机器组成的集群产生网络分区，2台组成一组，另外3台组成一组，产生分区前，原Master为Node1。此时3台一组的节点会重新选举并成功选取Noded3作为Master，会不会产生双主？</li>
+<li>NodesFaultDetection就是为了避免上述场景下产生双主。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>MasterFaultDetection事件处理</h4>
+<ul class="point">
+<li><b>探测Master离线的处理很简单，重新加入集群</b>
+<ul class="quote">
+<li>本质上就是该节点重新执行一遍选主的流程。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch30"><summary>6.1 PacificA算法</summary>
+<div class="sec">
+<h4>PacificA算法概述</h4>
+<ul class="point">
+<li><b>PacificA算法是一个通用的、抽象的框架，而不是具体的、特定的算法。</b>
+</li>
+<li><b>PacificA算法的设计前提与假设包括节点可以失效，消息可以丢失、乱序，但不能被篡改，网络分区可以发生，系统时钟可以不同步，但漂移是有限度的。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>数据副本策略</h4>
+<ul class="point">
+<li><b>数据副本使用主从模式，主副本负责处理所有的写操作</b>
+<ul class="quote">
+<li>所有的数据写入操作都进入主副本，当主副本出现故障无法访问时，系统从其他从副本中选择合适的副本作为新的主副本。</li>
+</ul>
+</li>
+<li><b>主副本只有在所有从副本将请求添加进 prepared list 之后才可以通过移动 committed point的方式将该请求插入committed list中</b>
+<ul class="quote">
+<li>主副本的committed list是任何一个从副本的prepared list的前缀(或者称为子集)。</li>
+<li>一个从副本只有在主副本将一个请求添加进committed list后才会把同样的请求添加进committed list中，因此一个从副本上的committed list是主副本上committed list的前缀，此不变式称为Commit Invariant。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>配置管理</h4>
+<ul class="point">
+<li><b>全局的配置管理器负责管理所有副本组的配置</b>
+<ul class="quote">
+<li>节点可以向管理器提出添加/移除副本的请求，每次请求都需要附带当前配置版本号，只有这个版本号和管理器记录的版本号一致才会被执行。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>错误检测</h4>
+<ul class="point">
+<li><b>PacificA使用了租约(lease)机制来处理旧的主副本和新的主副本同时存在的情况</b>
+<ul class="quote">
+<li>主副本定期向其他从副本获取租约，如果主副本节点在一定时间内(lease period)未收到从副本节点的租约回复，则主副本节点认为从副本节点异常，向配置管理器汇报，将该异常从副本从副本组中移除，同时，它也将自己降级，不再作为主副本节点。</li>
+<li>如果从副本节点在一定时间内(grace period)未收到主副本节点的租约请求，则认为主副本异常，向配置管理器汇报，将主副本从副本组中移除，同时将自己提升为新的主。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch31"><summary>6.2 ES的数据副本模型</summary>
+<div class="sec">
+<h4>ES的数据副本模型概述</h4>
+<ul class="point">
+<li><b>ES中的每个索引都会被拆分为多个分片，并且每个分片都有多个副本。</b>
+</li>
+<li><b>数据副本模型基于主备模式，主分片是所有索引操作的入口</b>
+<ul class="quote">
+<li>一旦主分片接受一个索引操作，主分片的副分片也会接受该操作。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>基本写入模型</h4>
+<ul class="point">
+<li><b>请求到达协调节点，协调节点先验证操作，如果有错就拒绝该操作。然后根据当前集群状态，请求被路由到主分片所在节点</b>
+<ul class="quote">
+<li>该操作在主分片上本地执行，例如，索引、更新或删除文档。这也会验证字段的内容，如果未通过就拒绝操作(例如，字段串的长度超出Lucene定义的长度)。</li>
+</ul>
+</li>
+<li><b>操作成功执行后，转发该操作到当前in-sync 副本组的所有副分片</b>
+<ul class="quote">
+<li>一旦所有的副分片成功执行操作并回复主分片，主分片会把请求执行成功的信息返回给协调节点，协调节点返回给客户端。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>写故障处理</h4>
+<ul class="point">
+<li><b>对于主分片自身错误的情况，它所在的节点会发送一个消息到Master节点。这个索引操作会等待(默认为最多一分钟)Master节点提升一个副分片为主分片</b>
+<ul class="quote">
+<li>Master同样会监控节点的健康，并且可能会主动降级主分片。这通常发生在主分片所在的节点离线的时候。</li>
+</ul>
+</li>
+<li><b>在主分片上执行的操作成功后，该主分片必须处理在副分片上潜在发生的错误</b>
+<ul class="quote">
+<li>错误发生的原因可能是在副分片上执行操作时发生的错误，也可能是因为网络阻塞，导致主分片无法转发操作到副分片，或者副分片无法返回结果给主分片。</li>
+<li>为了避免出现不一致，主分片会发送一条消息到Master节点，要求它把有问题的分片从in-sync replica set中移除。一旦Master确认移除了该分片，主分片就会确认这次操作。</li>
+<li>Master也会指导另一个节点建立一个新的分片副本，以便把系统恢复成健康状态。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>基本读取模型</h4>
+<ul class="point">
+<li><b>通过 ID 读取是非常轻量级的操作，而一个巨大的复杂的聚合查询请求需要消耗大量 CPU和内存资源</b>
+<ul class="quote">
+<li>主从模式的一个好处是保证所有的分片副本都是一致的(正在执行的操作例外)。</li>
+</ul>
+</li>
+<li><b>当一个读请求被协调节点接收，这个节点负责转发它到其他涉及相关分片的节点，并整理响应结果发送给客户端</b>
+<ul class="quote">
+<li>接收用户请求的这个节点称为协调节点。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>读故障处理</h4>
+<ul class="point">
+<li><b>当分片不能响应一个读请求时，协调节点会从副本组中选择另一个副本，将请求转发给它</b>
+<ul class="quote">
+<li>没有可用的分片副本会导致重复的错误。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>引申的含义</h4>
+<ul class="point">
+<li><b>高效读取：在正常操作下，读操作在相关副本组中只执行一次</b>
+<ul class="quote">
+<li>只有在出错的时候，才会在同一个分片的不同副本中执行多次。</li>
+</ul>
+</li>
+<li><b>在写操作返回应答之前读取：主分片首先在本地进行索引，然后转发请求</b>
+<ul class="quote">
+<li>由于主分片已经写成功，因此在并行的读请求中，有可能在写请求返回成功之前就可以读取更新的内容。</li>
+</ul>
+</li>
+<li><b>默认两副本：在只有2个副本的情况下，该模型也是可以容错的</b>
+<ul class="quote">
+<li>这与quorum-based的系统相反，其容错的最小副本为3。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>系统异常</h4>
+<ul class="point">
+<li><b>只有单个分片可能降低索引速度</b>
+<ul class="quote">
+<li>因为每次操作时主分片会等待所有在in-sycn列表中的副本，所以单个缓慢的副本可能降低整个副本组的写速度。</li>
+</ul>
+</li>
+<li><b>脏读：从一个被隔离的主分片进行读取，可能读取没有经过确认的写操作</b>
+<ul class="quote">
+<li>这是因为只有主分片向副分片转发请求，或者向主节点发送请求的时候才会被隔离，此时数据已经在主分片写成功，可以被读取到。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch32"><summary>6.3 Allocation IDs</summary>
+<div class="sec">
+<h4>Allocation IDs的概念和作用</h4>
+<ul class="point">
+<li><b>Allocation IDs是区分不同分片的唯一标识</b>
+<ul class="quote">
+<li>Allocation IDs由主节点在分片分配时指定，并由数据节点存储在磁盘中。</li>
+</ul>
+</li>
+<li><b>Allocation IDs用于主分片选举策略</b>
+<ul class="quote">
+<li>主节点负责追踪包含最新数据副本的子集，这些副本集合称为同步分片标识(in-sync allocation IDs)。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>安全地分配主分片</h4>
+<ul class="point">
+<li><b>主节点在选择哪个节点作为主分片方面有很大的灵活性</b>
+<ul class="quote">
+<li>分配已存在的分片副本为主分片是比较少见的情况。</li>
+</ul>
+</li>
+<li><b>主节点必须确保被选为主分片的副本含有最新数据</b>
+<ul class="quote">
+<li>当分配主分片时，主节点检查磁盘中存储的 Allocation ID 是否会在集群状态的 in-sync allocations IDs集合中出现。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>将分配标记为陈旧</h4>
+<ul class="point">
+<li><b>当网络产生分区、节点故障，或者部分节点未启动时，主分片本地执行完写操作，转发到副分片时，转发操作可能在一个或多个副分片上没能执行成功</b>
+<ul class="quote">
+<li>这意味着主分片中含有一些没有传播到所有分片的数据。</li>
+</ul>
+</li>
+<li><b>ES在这种情况下选择了写入可用性：主分片所在节点命令主节点将差异分片的 Allocation IDs从同步集合(in-sync set)中删除</b>
+<ul class="quote">
+<li>然后，主分片所在节点等待主节点删除成功的确认消息，这个确认消息意味着集群一致层(consensus layer)已成功更新，之后才向客户端确认写请求。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>一个例子</h4>
+<ul class="point">
+<li><b>当关闭主分片所在节点时会发生什么</b>
+<ul class="quote">
+<li>由于这并不改变分片上的数据，所以两个分片副本应该保持同步。</li>
+</ul>
+</li>
+<li><b>如果该副本变为不可用，那么系统将如何处理</b>
+<ul class="quote">
+<li>为此，我们关闭当前唯一的数据节点，然后启动前一个拥有陈旧分片副本的数据节点，之后cluster health API显示cluser health为Red，集群状态显示主分片尚未分配。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>不会丢失全部</h4>
+<ul class="point">
+<li><b>发生严重灾难时，集群中可能会出现只有陈旧副本可用的情况</b>
+<ul class="quote">
+<li>ES不会把这些分片自动分配为主分片，集群将持续保持Red状态。</li>
+</ul>
+</li>
+<li><b>如果所有in-sync副本都消失了，则集群仍有可能使用陈旧副本进行恢复，但这需要管理员手工干预</b>
+<ul class="quote">
+<li>使用 cluster allocation explain API可以查看节点是否具有分片的副本，以及相应的副本是否处于同步集合中。</li>
+<li>reroute API提供了一个子命令allocate_stale_primary，用于将一个陈旧的分片分配为主分片。</li>
+<li>还可以强制 ES 使用空分片副本分配主分片，这意味着丢失与该分片相关联的所有先前数据。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch33"><summary>6.4 Sequence IDs</summary>
+<div class="sec">
+<h4>Sequence IDs的概念和作用</h4>
+<ul class="point">
+<li><b>Sequence IDs是ES从6.0版本开始引入的，使用唯一的ID来标记每个写操作</b>
+<ul class="quote">
+<li>通过这个ID我们有了索引操作的总排序。</li>
+</ul>
+</li>
+<li><b>Primary Terms和Sequence Numbers是Sequence IDs的两个关键概念</b>
+<ul class="quote">
+<li>Primary Terms由主节点分配给每个主分片，每次主分片发生变化时递增。</li>
+<li>Sequence Numbers标记发生在某个分片上的写操作，由主分片分配，只对写操作分配。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Primary Terms和Sequence Numbers的使用</h4>
+<ul class="point">
+<li><b>Primary Terms用于区分新旧两种主分片，确保操作历史中的任何冲突都可以通过查看操作的Primary Terms来解决</b>
+<ul class="quote">
+<li>新的Terms优先于旧Terms，拒绝过时的操作，避免混乱的情况。</li>
+</ul>
+</li>
+<li><b>Sequence Numbers使我们能够理解发生在主分片节点上的索引操作的特定顺序</b>
+<ul class="quote">
+<li>当比较两个操作o1和o2时，如果o1 ＜ o2，那么意味着：s1.seq# &lt; s2.seq#，或者(s1.seq# == s2.seq# and s1.term &lt; s2.term)。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>本地及全局检查点的概念和作用</h4>
+<ul class="point">
+<li><b>全局检查点是所有活跃分片历史都已对齐的序列号</b>
+<ul class="quote">
+<li>所有低于全局检查点的操作都保证已被所有活跃的分片处理完毕。</li>
+</ul>
+</li>
+<li><b>本地检查点是一个序列号，所有序列号低于它的操作都已在该分片上处理完毕</b>
+<ul class="quote">
+<li>当副分片确认(ACK)一个写操作到主分片节点时，它们也会更新本地检查点。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>本地及全局检查点的更新和维护</h4>
+<ul class="point">
+<li><b>主分片负责推进全局检查点，它通过跟踪在副分片上完成的操作来实现</b>
+<ul class="quote">
+<li>一旦它检测到所有副分片已经超出给定序列号，它将相应地更新全局检查点。</li>
+</ul>
+</li>
+<li><b>副分片不会跟踪所有操作，而是维护一个类似全局检查点局部变量，称为本地检查点</b>
+<ul class="quote">
+<li>使用本地检查点，主分片节点能够更新全局检查点，然后在下一次索引操作时将其发送到所有分片副本。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>全局检查点的优势和应用</h4>
+<ul class="point">
+<li><b>全局检查点代表了已经保证存盘的操作边界，对于未来的更改API或跨数据中心复制功能来说至关重要</b>
+<ul class="quote">
+<li>如果主分片故障，则数据没有来得及复制到副分片，该区域(大于全局检测点的)可以包含可能需要回滚的操作。</li>
+</ul>
+</li>
+<li><b>使用副本所知道的最后一个全局检查点，重放来自主分片事务日志(translog)中的相关更改，避免复制整个分片</b>
+<ul class="quote">
+<li>同时，我们多保留一些事务日志(默认为512MB,12小时)，直到“太大”或“太老”。</li>
+<li>如果不能从事务日志恢复，则使用旧的恢复模式。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch34"><summary>6.5 _version</summary>
+<div class="sec">
+<h4>_version的作用</h4>
+<ul class="point">
+<li><b>_version用于确保变更以正确顺序执行</b>
+<ul class="quote">
+<li>如果旧版本的文档在新版本之后到达，则它可以被简单地忽略。</li>
+</ul>
+</li>
+<li><b>版本号由主分片生成，在将请求转发给副本片时将携带此版本号。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>版本号的另一个作用是实现乐观锁</h4>
+<ul class="point">
+<li><b>在写请求中指定文档的版本号，如果文档的当前版本与请求中指定的版本号不同，则请求会失败</b>
+<ul class="quote">
+<li>例如，先写入一条文档，版本号为1。现在假设我们想编辑这个文档，当再次更新这个文档时，指定一个版本号：只有版本号设置为1，本次更新才能成功。否则ES会返回409 Conflict状态码。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch35"><summary>第7章 写流程</summary>
+<div class="sec">
+<h4>ES写入单个和批量文档写请求的处理流程</h4>
+<ul class="point">
+<li><b>ES中，写入单个文档的请求称为Index请求，批量写入的请求称为Bulk请求</b>
+<ul class="quote">
+<li>写单个和多个文档使用相同的处理逻辑，请求被统一封装为BulkRequest。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>写请求的处理流程划分</h4>
+<ul class="point">
+<li><b>把流程按不同节点执行的操作进行划分。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch36"><summary>7.1 文档操作的定义</summary>
+<div class="sec">
+<h4>文档操作的定义</h4>
+<ul class="point">
+<li><b>ES中文档操作有四种类型：INDEX、CREATE、UPDATE、DELETE</b>
+<ul class="quote">
+<li>INDEX：向索引中“put”一个文档的操作称为“索引”一个文档。</li>
+<li>CREATE:put 请求可以通过 op_type 参数设置操作类型为 create，在这种操作下，如果文档已存在，则请求将失败。</li>
+<li>UPDATE：默认情况下，“put”一个文档时，如果文档已存在，则更新它。</li>
+<li>DELETE：删除文档。</li>
+</ul>
+</li>
+<li><b>在put API中，通过op_type参数来指定操作类型。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch37"><summary>7.2 可选参数</summary>
+<div class="sec">
+<h4>可选参数</h4>
+<ul class="point">
+<li><b>Index API和Bulk API有一些可选参数，这些参数在请求的URI中指定</b>
+<ul class="quote">
+<li>例如：PUT my-index/my-type/my-id?pipeline=my_pipeline_id。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch38"><summary>7.3 Index/Bulk基本流程</summary>
+<div class="sec">
+<h4>写单个文档的流程</h4>
+<ul class="point">
+<li><b>客户端向NODE1发送写请求</b>
+<ul class="quote">
+<li>NODE1使用文档ID来确定文档属于分片0。</li>
+</ul>
+</li>
+<li><b>NODE1将请求转发到NODE3上</b>
+<ul class="quote">
+<li>通过集群状态中的内容路由表信息获知分片0的主分片位于NODE3。</li>
+</ul>
+</li>
+<li><b>NODE3上的主分片执行写操作</b>
+<ul class="quote">
+<li>如果写入成功，则它将请求并行转发到 NODE1和NODE2的副分片上，等待返回结果。</li>
+</ul>
+</li>
+<li><b>协调节点向客户端报告成功</b>
+<ul class="quote">
+<li>当所有的副分片都报告成功，NODE3将向协调节点报告成功，协调节点再向客户端报告成功。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>写一致性的默认策略</h4>
+<ul class="point">
+<li><b>quorum，即多数的分片在写入操作时处于可用状态</b>
+<ul class="quote">
+<li>quorum = int( (primary + number_of_replicas) / 2 ) + 1。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch39"><summary>7.4 Index/Bulk详细流程</summary>
+<div class="sec">
+<h4>协调节点流程</h4>
+<ul class="point">
+<li><b>参数检查</b>
+<ul class="quote">
+<li>收到用户请求后首先检测请求的合法性。</li>
+<li>检查请求的参数，每项检查遇到异常都会拒绝当前请求。</li>
+</ul>
+</li>
+<li><b>处理pipeline请求</b>
+<ul class="quote">
+<li>如果Index或Bulk请求中指定了pipeline参数，则先使用相应的pipeline进行处理。</li>
+<li>如果本节点不具备预处理资格，则将请求随机转发到其他具备预处理资格的节点。</li>
+</ul>
+</li>
+<li><b>自动创建索引</b>
+<ul class="quote">
+<li>如果配置为允许自动创建索引(默认允许)，则计算请求中涉及的索引，可能有多个，其中有哪些索引是不存在的，然后创建它。</li>
+<li>创建索引请求被发送到Master节点，待收到全部创建请求的Response(无论成功还是失败的)之后，才进入下一个流程。</li>
+</ul>
+</li>
+<li><b>对请求的预先处理</b>
+<ul class="quote">
+<li>由于上一步可能有创建索引操作，所以在此先获取最新集群状态信息。</li>
+<li>然后遍历所有请求，从集群状态中获取对应索引的元信息，检查mapping、routing、id等信息。</li>
+</ul>
+</li>
+<li><b>检测集群状态</b>
+<ul class="quote">
+<li>协调节点在开始处理时会先检测集群状态，若集群异常则取消写入。</li>
+</ul>
+</li>
+<li><b>内容路由，构建基于shard的请求</b>
+<ul class="quote">
+<li>将用户的 bulkRequest 重新组织为基于 shard 的请求列表。</li>
+</ul>
+</li>
+<li><b>路由算法</b>
+<ul class="quote">
+<li>路由算法就是根据routing和文档id计算目标shardid的过程。</li>
+</ul>
+</li>
+<li><b>转发请求并等待响应</b>
+<ul class="quote">
+<li>主要是根据集群状态中的内容路由表确定主分片所在节点，转发请求并等待响应。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>主分片节点流程</h4>
+<ul class="point">
+<li><b>检查请求</b>
+<ul class="quote">
+<li>主分片所在节点收到协调节点发来的请求后也是先做了校验工作，主要检测要写的是否是主分片，AllocationId(后续章节会介绍)是否符合预期，索引是否处于关闭状态等。</li>
+</ul>
+</li>
+<li><b>是否延迟执行</b>
+<ul class="quote">
+<li>判断请求是否需要延迟执行，如果需要延迟则放入队列，否则继续下面的流程。</li>
+</ul>
+</li>
+<li><b>判断主分片是否已经发生迁移</b>
+<ul class="quote">
+<li>如果已经发生迁移，则转发请求到迁移的节点。</li>
+</ul>
+</li>
+<li><b>检测写一致性</b>
+<ul class="quote">
+<li>在开始写之前，检测本次写操作涉及的shard，活跃shard数量是否足够，不足则不执行写入。</li>
+</ul>
+</li>
+<li><b>写Lucene和事务日志</b>
+<ul class="quote">
+<li>遍历请求，处理动态更新字段映射，然后调用InternalEngine#index逐条对doc进行索引。</li>
+</ul>
+</li>
+<li><b>flush translog</b>
+<ul class="quote">
+<li>根据配置的translog flush策略进行刷盘控制，定时或立即刷盘。</li>
+</ul>
+</li>
+<li><b>写副分片</b>
+<ul class="quote">
+<li>现在已经为要写的副本shard准备了一个列表，循环处理每个shard，跳过unassigned状态的shard，向目标节点发送请求，等待响应。</li>
+</ul>
+</li>
+<li><b>处理副分片写失败情况</b>
+<ul class="quote">
+<li>主分片所在节点将发送一个shardFailed请求给Master。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>副分片节点流程</h4>
+<ul class="point">
+<li><b>执行与主分片基本相同的写doc过程，写完毕后回复主分片节点。</b>
+</li>
+<li><b>在副分片的写入过程中，参数检查的实现与主分片略有不同，最终都调用 IndexShardOperationPermits#acquire判断是否需要delay，继续后面的写流程。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch40"><summary>7.5 I/O异常处理</summary>
+<div class="sec">
+<h4>I/O异常处理</h4>
+<ul class="point">
+<li><b>Engine异常的捕获主要通过IOException实现</b>
+<ul class="quote">
+<li>Engine类中的maybeFailEngine()负责检查是否应当关闭引擎failEngine()。</li>
+</ul>
+</li>
+<li><b>读取doc失败不会触发shard迁移。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Engine关闭过程</h4>
+<ul class="point">
+<li><b>将Lucene标记为异常，关闭shard，然后汇报给Master</b>
+<ul class="quote">
+<li>关闭shard，然后汇报给Master的过程是简化的实现。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Master的对应处理</h4>
+<ul class="point">
+<li><b>收到节点的SHARD_FAILED_ACTION_NAME消息后，Master通过reroute将失败的shard通过reroute迁移到新的节点，并更新集群状态。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>异常流程总结</h4>
+<ul class="point">
+<li><b>请求在协调节点的路由阶段失败，会等待集群状态更新，拿到更新后，进行重试，如果再次失败，则仍旧等集群状态更新，直到超时1分钟为止。超时后仍失败则进行整体请求失败处理。</b>
+</li>
+<li><b>在主分片写入过程中，写入是阻塞的。只有写入成功，才会发起写副本请求。如果主shard写失败，则整个请求被认为处理失败。如果有部分副本写失败，则整个请求被认为处理成功。</b>
+</li>
+<li><b>无论主分片还是副分片，当写一个doc失败时，集群不会重试，而是关闭本地shard，然后向Master汇报，删除是以shard为单位的。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch41"><summary>7.6 系统特性</summary>
+<div class="sec">
+<h4>数据可靠性</h4>
+<ul class="point">
+<li><b>通过分片副本和事务日志机制保障数据安全。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>服务可用性</h4>
+<ul class="point">
+<li><b>默认情况下 ES 更倾向于可用性，只要主分片可用即可执行写入操作。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>一致性</h4>
+<ul class="point">
+<li><b>笔者认为是弱一致性，只要主分片写成功，数据就可能被读取</b>
+<ul class="quote">
+<li>读取操作在主分片和副分片上可能会得到不同结果。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>原子性</h4>
+<ul class="point">
+<li><b>索引的读写、别名更新是原子操作，不会出现中间状态</b>
+<ul class="quote">
+<li>bulk不是原子操作，不能用来实现事务。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>扩展性</h4>
+<ul class="point">
+<li><b>主副分片都可以承担读请求，分担系统负载。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch42"><summary>7.7 思考</summary>
+<div class="sec">
+<h4>副分片写入过程的问题</h4>
+<ul class="point">
+<li><b>副分片写入过程需要重新生成索引，不能单纯复制数据，浪费计算能力，影响入库速度。</b>
+</li>
+<li><b>磁盘管理能力较差，对坏盘检查和容忍性比HDFS差不少</b>
+<ul class="quote">
+<li>在配置多磁盘路径的情况下，有一块坏盘就无法启动节点。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch43"><summary>第8章 GET流程</summary>
+<div class="sec">
+<h4>GET请求的简单例子</h4>
+<ul class="point">
+<li><b>GET请求必须指定三元组：_index、_type、_id</b>
+<ul class="quote">
+<li>根据文档id从正排索引中获取内容。</li>
+</ul>
+</li>
+<li><b>Search不指定_id，根据关键词从倒排索引中获取内容。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch44"><summary>8.2 GET基本流程</summary>
+<div class="sec">
+<h4>GET基本流程</h4>
+<ul class="point">
+<li><b>客户端向NODE1发送读请求</b>
+<ul class="quote">
+<li>NODE1使用文档ID来确定文档属于分片0。</li>
+</ul>
+</li>
+<li><b>NODE1通过集群状态中的内容路由表信息获知分片0有三个副本数据，位于所有的三个节点中，此时它可以将请求发送到任意节点，这里它将请求转发到NODE2</b>
+<ul class="quote">
+<li>NODE2将文档返回给 NODE1。</li>
+<li>NODE1将文档返回给客户端。</li>
+</ul>
+</li>
+<li><b>NODE1作为协调节点，会将客户端请求轮询发送到集群的所有副本来实现负载均衡</b>
+<ul class="quote">
+<li>在读取时，文档可能已经存在于主分片上，但还没有复制到副分片。</li>
+<li>在这种情况下，读请求命中副分片时可能会报告文档不存在，但是命中主分片可能成功返回文档。</li>
+<li>一旦写请求成功返回给客户端，则意味着文档在主分片和副分片都是可用的。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch45"><summary>8.3 GET详细分析</summary>
+<div class="sec">
+<h4>GET/MGET流程概述</h4>
+<ul class="point">
+<li><b>GET/MGET流程涉及两个节点：协调节点和数据节点</b>
+<ul class="quote">
+<li>协调节点负责处理存在于一个单个(主或副)分片上的读请求。</li>
+<li>数据节点负责接收协调节点请求，读取数据并组织成Response，给客户端channel返回。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>协调节点处理流程</h4>
+<ul class="point">
+<li><b>在TransportSingleShardAction.AsyncSingleAction构造函数中，准备集群状态、节点列表等信息</b>
+<ul class="quote">
+<li>根据内容路由算法计算目标shardid。</li>
+<li>计算出目标shardid后，结合请求参数中指定的优先级和集群状态确定目标节点。</li>
+</ul>
+</li>
+<li><b>向目标节点转发请求，或者目标是本地节点，直接读取数据</b>
+<ul class="quote">
+<li>在TransportService::sendRequest中检查目标是否是本地node。</li>
+<li>如果是本地node，则进入TransportService#sendLocalRequest流程，sendLocalRequest不发送到网络，直接根据action获取注册的reg，执行processMessageReceived。</li>
+<li>如果发送到网络，则请求被异步发送，“sendRequest”的时候注册 handle，等待处理Response，直到超时。</li>
+<li>等待数据节点的回复，如果数据节点处理成功，则返回给客户端；如果数据节点处理失败，则进行重试。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>数据节点处理流程</h4>
+<ul class="point">
+<li><b>数据节点接收协调节点请求的入口为：TransportSingleShardAction.ShardTransportHandler# messageReceived</b>
+<ul class="quote">
+<li>读取数据并组织成Response，给客户端channel返回。</li>
+</ul>
+</li>
+<li><b>在ShardGetService#get()函数中，调用：GetResult getResult = innerGet()</b>
+<ul class="quote">
+<li>获取结果。GetResult 类用于存储读取的真实数据内容。</li>
+<li>核心的数据读取实现在ShardGetService#innerGet()函数中。</li>
+<li>通过 indexShard.get()获取 Engine.GetResult。</li>
+<li>调用ShardGetService#innerGetLoadFromStoredFields()，根据type、id、DocumentMapper等信息从刚刚获取的信息中获取数据，对指定的 field、source 进行过滤(source 过滤只支持对字段)，把结果存于GetResult对象中。</li>
+<li>InternalEngine的读取过程会加读锁。处理realtime选项，如果为true，则先判断是否有数据可以刷盘，然后调用Searcher进行读取。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch46"><summary>8.4 MGET流程分析</summary>
+<div class="sec">
+<h4>MGET流程分析</h4>
+<ul class="point">
+<li><b>MGET的主要处理类是TransportMultiGetAction，通过封装单个 GET 请求实现</b>
+<ul class="quote">
+<li>主要流程包括遍历请求，计算出每个doc的路由信息，得到由shardid为key组成的request map。</li>
+<li>循环处理组织好的每个 shard 级请求，调用处理 GET 请求时使用 TransportSingleShardAction#AsyncSingleAction处理单个doc的流程。</li>
+<li>收集Response，全部Response返回后执行finishHim()，给客户端返回结果。</li>
+</ul>
+</li>
+<li><b>回复的消息中文档顺序与请求的顺序一致，如果部分文档读取失败，则不影响其他结果，检索失败的doc会在回复信息中标出。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch47"><summary>8.5 思考</summary>
+<div class="sec">
+<h4>实时读取特性对写入速度的影响</h4>
+<ul class="point">
+<li><b>GET API默认是实时的，实时的意思是写完了可以立刻读取，但仅限于GET、MGET操作，不包括搜索。</b>
+</li>
+<li><b>5.x版本之后的版本改为refresh，系统对实时读取的支持会对写入速度有负面影响。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>update操作的一致性保证</h4>
+<ul class="point">
+<li><b>update操作需要先GET再写，为了保证一致性，update调用GET时将realtime选项设置为true，并且不可配置。</b>
+</li>
+<li><b>update操作可能会导致refresh生成新的Lucene分段。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>读失败的处理方式</h4>
+<ul class="point">
+<li><b>读失败时，尝试从别的分片副本读取。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>优先级策略</h4>
+<ul class="point">
+<li><b>优先级策略只是将匹配到优先级的节点放到了目标节点列表的前面。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch48"><summary>第9章 Search流程</summary>
+<div class="sec">
+<h4>Search流程概述</h4>
+<ul class="point">
+<li><b>搜索需要一种更复杂的模型，因为不知道查询会命中哪些文档。</b>
+</li>
+<li><b>找到匹配文档仅仅完成了搜索流程的一半，因为多分片中的结果必须组合成单个排序列表</b>
+<ul class="quote">
+<li>集群的任意节点都可以接收搜索请求，接收客户端请求的节点称为协调节点。</li>
+<li>在协调节点，搜索任务被执行成一个两阶段过程，即query then fetch。</li>
+<li>真正执行搜索任务的节点称为数据节点。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Search流程详解</h4>
+<ul class="point">
+<li><b>在查询的时候不知道文档位于哪个分片，因此索引的所有分片(某个副本)都要参与搜索</b>
+<ul class="quote">
+<li>然后协调节点将结果合并，再根据文档ID获取文档内容。</li>
+</ul>
+</li>
+<li><b>例如，有5个分片，查询返回前10个匹配度最高的文档，那么每个分片都查询出当前分片的TOP 10，协调节点将5×10 = 50的结果再次排序，返回最终TOP 10的结果给客户端。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>搜索请求示例</h4>
+<ul class="point">
+<li><b>我们从所有字段搜索“first”关键词，返回信息中几个基本字段的含义如下：</b>
+<ul class="quote">
+<li>took代表搜索执行时间(单位：毫秒)。</li>
+<li>total代表本次搜索命中的文档数量。</li>
+<li>max_score为最大得分，代表文档匹配度。</li>
+<li>hits为搜索命中的结果列表，默认为10条。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch49"><summary>9.1 索引和搜索</summary>
+<div class="sec">
+<h4>ES中的数据类型</h4>
+<ul class="point">
+<li><b>ES中的数据可以分为精确值和全文两类</b>
+<ul class="quote">
+<li>精确值，比如日期和用户id、IP地址等。</li>
+<li>全文，指文本内容，比如一条日志，或者邮件的内容。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>建立索引</h4>
+<ul class="point">
+<li><b>对全文数据进行分析，生成倒排和正排索引</b>
+<ul class="quote">
+<li>分析器实现字符过滤器、分词器、Token过滤器、语言处理等功能。</li>
+<li>分析完毕后，将分析器输出的词(Term)传递给索引组件，生成倒排和正排索引，再存储到文件系统中。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>执行搜索</h4>
+<ul class="point">
+<li><b>对检索字段使用建立索引时相同的分析器进行分析，产生Token列表</b>
+<ul class="quote">
+<li>根据查询语句的语法规则转换成一棵语法树。</li>
+<li>查找符合语法树的文档。</li>
+</ul>
+</li>
+<li><b>对匹配到的文档列表进行相关性评分，评分策略一般使用TF/IDF</b>
+<ul class="quote">
+<li>根据评分结果进行排序。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch50"><summary>9.2 search type</summary>
+<div class="sec">
+<h4>ES搜索类型</h4>
+<ul class="point">
+<li><b>ES目前有两种搜索类型：DFS_QUERY_THEN_FETCH和QUERY_THEN_FETCH(默认)。</b>
+</li>
+<li><b>两种不同的搜索类型的区别在于查询阶段，DFS查询阶段的流程要多一些，它使用全局信息来获取更准确的评分。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch51"><summary>9.3 分布式搜索过程</summary>
+<div class="sec">
+<h4>分布式搜索过程概述</h4>
+<ul class="point">
+<li><b>一次搜索请求会由5个分片来共同完成，它们可能是主分片，也可能是副分片。</b>
+</li>
+<li><b>搜索任务执行在分布式系统上时，整体流程包括Query阶段和Fetch阶段</b>
+<ul class="quote">
+<li>Query阶段：查询会广播到索引中每一个分片副本(主分片或副分片)。每个分片在本地执行搜索并构建一个匹配文档的优先队列。</li>
+<li>Fetch阶段：Query阶段知道了要取哪些数据，但是并没有取具体的数据，这就是Fetch阶段要做的。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>协调节点流程</h4>
+<ul class="point">
+<li><b>Query阶段：查询会广播到索引中每一个分片副本，每个分片在本地执行搜索并构建一个匹配文档的优先队列</b>
+<ul class="quote">
+<li>客户端发送search请求到NODE 3。</li>
+<li>Node 3将查询请求转发到索引的每个主分片或副分片中。</li>
+<li>每个分片在本地执行查询，并使用本地的Term/Document Frequency信息进行打分，添加结果到大小为from + size的本地有序优先队列中。</li>
+<li>每个分片返回各自优先队列中所有文档的ID和排序值给协调节点，协调节点合并这些值到自己的优先队列中，产生一个全局排序后的列表。</li>
+</ul>
+</li>
+<li><b>Fetch阶段：协调节点向相关NODE发送GET请求，分片所在节点向协调节点返回数据，协调节点等待所有文档被取得，然后返回给客户端</b>
+<ul class="quote">
+<li>协调节点首先决定哪些文档“确实”需要被取回。</li>
+<li>分片所在节点在返回文档数据时，处理有可能出现的_source字段和高亮参数。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>执行搜索的数据节点流程</h4>
+<ul class="point">
+<li><b>对各种Query、Fetch请求的处理入口注册于SearchTransportService#registerRequestHandler</b>
+<ul class="quote">
+<li>以常见的Query请求为例，其action为：indices:data/read/search[phase/query]。</li>
+<li>主要过程就是执行查询，然后发送Response。</li>
+<li>查询实现入口在 searchService.executeQueryPhase 中。</li>
+<li>查询时，先看是否允许cache，由以下配置决定：index.requests.cache.enable。</li>
+<li>核心的查询封装在queryPhase.execute(context)中，其中调用Lucene实现检索，同时实现聚合。</li>
+</ul>
+</li>
+<li><b>以常见的基于id进行Fetch请求为例，其action为：indices:data/read/search[phase/fetch/id]</b>
+<ul class="quote">
+<li>主要过程是执行Fetch，然后发送Response。</li>
+<li>对Fetch响应的实现封装在searchService.executeFetchPhase中。</li>
+<li>核心是调用fetchPhase. execute(context)。</li>
+<li>按照命中的doc取得相关数据，填充到SearchHits中，最终封装到FetchSearchResult中。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch52"><summary>9.4 小结</summary>
+<div class="sec">
+<h4>聚合在ES中的实现</h4>
+<ul class="point">
+<li><b>聚合是在ES中实现的，而非Lucene。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Query和Fetch请求之间的状态。</h4>
+<ul class="point">
+</ul></div>
+<div class="sec">
+<h4>分页搜索的缓存机制</h4>
+<ul class="point">
+<li><b>分页搜索不会单独“cache”,cache和分页没有关系。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>分页搜索的过程</h4>
+<ul class="point">
+<li><b>每次分页的请求都是一次重新搜索的过程，而不是从第一次搜索的结果中获取</b>
+<ul class="quote">
+<li>重新执行一次搜索很快。</li>
+<li>如果缓存第一次搜索结果等待翻页命中，则这种缓存的代价较大，意义却不大，因此不如重新执行一次搜索。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>搜索性能优化</h4>
+<ul class="point">
+<li><b>搜索需要遍历分片所有的Lucene分段，因此合并Lucene分段对搜索性能有好处。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch53"><summary>第10章 索引恢复流程分析</summary>
+<div class="sec">
+<h4>索引恢复流程分析</h4>
+<ul class="point">
+<li><b>索引恢复是ES数据恢复过程，待恢复的数据是客户端写入成功，但未执行刷盘的Lucene分段</b>
+<ul class="quote">
+<li>当节点异常重启时，写入磁盘的数据先到文件系统的缓冲，未必来得及刷盘，如果不通过某种方式将未刷盘的数据找回来，则会丢失一些数据。</li>
+<li>由于写入操作在多个分片副本上没有来得及全部执行，副分片需要同步成和主分片完全一致。</li>
+</ul>
+</li>
+<li><b>索引恢复过程可分为主分片恢复流程和副分片恢复流程</b>
+<ul class="quote">
+<li>主分片从translog中自我恢复，尚未执行flush到磁盘的Lucene分段可以从translog中重建。</li>
+<li>副分片需要从主分片中拉取Lucene分段和translog进行恢复，但是有机会跳过拉取Lucene分段的过程。</li>
+</ul>
+</li>
+<li><b>索引恢复的触发条件包括从快照备份恢复、节点加入和离开、索引的_open操作等。</b>
+</li>
+<li><b>恢复工作一般经历以下几个阶段：INITIALIZE、TRANSLOG、INDEX、FINALIZE</b>
+<ul class="quote">
+<li>主分片和副分片恢复都会经历这些阶段，但有时候会跳过具体执行过程，只是在流程上体现出经历了这个短暂阶段。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch54"><summary>10.2 流程概述</summary>
+<div class="sec">
+<h4>recovery流程概述</h4>
+<ul class="point">
+<li><b>recovery由clusterChanged触发，从触发到开始执行恢复的调用关系如下：indicesClusterStateService#applyClusterState-&gt;createOrUpdateShards()-&gt;createShard()-&gt;indicesService.createShard()-&gt;indexShard.startRecovery()</b>
+<ul class="quote">
+<li>IndexShard#startRecovery执行对一个特定分片的恢复流程，根据此分片不同的恢复类型执行相应的恢复过程。</li>
+<li>此时执行线程池为clusterApplierService#updateTask，执行具体的恢复工作时，会到另一个线程池中执行。无论哪种恢复类型，都在generic线程池中。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>主分片和副分片的恢复流程</h4>
+<ul class="point">
+<li><b>本章我们介绍主分片和副分片的恢复流程。Snapshot和shrink属于比较独立的功能，在后续的章节中单独分析。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch55"><summary>10.3 主分片恢复流程</summary>
+<div class="sec">
+<h4>主分片恢复流程的INIT阶段</h4>
+<ul class="point">
+<li><b>被标记为INIT阶段，INIT标记在IndexShard#startRecovery函数的参数中传入</b>
+<ul class="quote">
+<li>在判断此分片属于哪种恢复类型之前就被设置为INIT阶段。</li>
+</ul>
+</li>
+<li><b>在新的线程池中执行主分片恢复流程</b>
+<ul class="quote">
+<li>恢复流程在新的线程池中开始执行，开始阶段主要是一些验证工作，例如，校验当前分片是否为主分片，分片状态是否异常等。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>主分片恢复流程的INDEX阶段</h4>
+<ul class="point">
+<li><b>从Lucene读取最后一次提交的分段信息，获取其中的版本号，更新当前索引版本</b>
+<ul class="quote">
+<li>final Store store = indexShard.store()；</li>
+<li>si = store.readLastCommittedSegmentsInfo()；</li>
+<li>version = si.getVersion()；</li>
+<li>recoveryState.getIndex().updateVersion(version)；</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>主分片恢复流程的VERIFY_INDEX阶段</h4>
+<ul class="point">
+<li><b>验证当前分片是否损坏，是否进行本项检查取决于配置项：index.shard.check_on_startup</b>
+<ul class="quote">
+<li>在索引的数据量较大时，分片检查会消耗更多的时间。</li>
+<li>验证工作在 IndexShard#checkIndex 函数中完成。验证过程通过对比元信息中记录的checksum与Lucene文件的实际值，或者调用Lucene CheckIndex类中的checkIndex、exorciseIndex方法完成。</li>
+<li>默认配置为不执行验证索引，进入最重要的TRANSLOG阶段。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>主分片恢复流程的TRANSLOG阶段</h4>
+<ul class="point">
+<li><b>重放事务日志中尚未刷入磁盘的信息，因此，根据最后一次提交的信息做快照，来确定事务日志中哪些数据需要重放</b>
+<ul class="quote">
+<li>重放完毕后将新生成的Lucene数据刷入磁盘。</li>
+<li>遍历所有需要重放的事务日志，执行具体的写操作，如同写入过程一样。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>主分片恢复流程的FINALIZE阶段</h4>
+<ul class="point">
+<li><b>执行刷新(refresh)操作，将缓冲的数据写入文件，但不刷盘，数据在操作系统的cache中</b>
+<ul class="quote">
+<li>public void finalizeRecovery() {。</li>
+<li>recoveryState().setStage(RecoveryState.Stage.FINALIZE)；</li>
+<li>Engine engine = getEngine()；</li>
+<li>engine.refresh(＂recovery_finalization＂)；</li>
+<li>engine.config().setEnableGcDeletes(true)；</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>主分片恢复流程的DONE阶段</h4>
+<ul class="point">
+<li><b>进入DONE阶段之前再次执行refresh，然后更新分片状态</b>
+<ul class="quote">
+<li>至此，主分片恢复完毕，对恢复结果进行处理。</li>
+<li>如果恢复成功，则执行IndicesClusterStateService.RecoveryListener#onRecoveryDone。</li>
+<li>如果恢复失败，则执行IndicesClusterStateService#handleRecoveryFailure。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch56"><summary>10.4 副分片恢复流程</summary>
+<div class="sec">
+<h4>副分片恢复流程概述</h4>
+<ul class="point">
+<li><b>副分片恢复的核心思想是从主分片拉取Lucene分段和translog进行恢复</b>
+<ul class="quote">
+<li>主分片节点称为Source，副分片节点称为Target。</li>
+</ul>
+</li>
+<li><b>副分片恢复期间允许新的写操作，因此需要拉取主分片的translog进行重放</b>
+<ul class="quote">
+<li>为了防止主分片节点的translog被清理，引入了translog.view的概念。</li>
+<li>从6.0版本开始，translog.view被移除，引入TranslogDeletionPolicy的概念，负责维护活跃的translog文件。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>synced flush机制</h4>
+<ul class="point">
+<li><b>synced flush是为了解决副分片恢复过程第一阶段时间太漫长而引入的</b>
+<ul class="quote">
+<li>默认情况下5分钟没有写入操作的索引被标记为inactive，执行synced flush，生成一个唯一的syncid，写入分片的所有副本中。</li>
+</ul>
+</li>
+<li><b>synced flush本质上是一次普通的flush操作，只是在Lucene的commit过程中多写了一个syncid</b>
+<ul class="quote">
+<li>在某个分片上执行普通flush操作会删除已有syncid。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>副分片节点处理过程</h4>
+<ul class="point">
+<li><b>副分片恢复的 VERIFY_INDEX、TRANSLOG、FINALIZE 三个阶段由主分片节点发送的RPC调用触发</b>
+<ul class="quote">
+<li>在副分片恢复过程中，副分片节点会向主分片节点发送start_recovery的RPC请求。</li>
+<li>主分片节点也会向副分片节点发送一些RPC请求，副分片节点对这些请求的处理以XXXRequestHandler的方式注册在PeerRecoveryTargetService类中。</li>
+</ul>
+</li>
+<li><b>副分片节点在INIT阶段构建准备发往主分片的StartRecoveryRequest请求</b>
+<ul class="quote">
+<li>请求中包括将本次要恢复的shard相关信息，如shardid、metadataSnapshot等。</li>
+</ul>
+</li>
+<li><b>INDEX阶段负责将主分片的Lucene数据复制到副分片节点</b>
+<ul class="quote">
+<li>向主分片节点发送action为internal:index/shard/recovery/start_recovery的PRC请求，并阻塞当前线程，等待响应，直到对方处理完成。</li>
+</ul>
+</li>
+<li><b>VERIFY_INDEX阶段负责将主分片的translog数据复制到副分片节点进行重放</b>
+<ul class="quote">
+<li>先创建新的Engine，跳过Engine自身的translog恢复。</li>
+</ul>
+</li>
+<li><b>FINALIZE阶段负责将主分片的translog数据复制到副分片节点进行重放</b>
+<ul class="quote">
+<li>主分片节点执行完 phase2，调用 finalizeRecovery，向副分片节点发送 action 为internal:index/shard/recovery/finalize 的RPC请求。</li>
+</ul>
+</li>
+<li><b>DONE阶段副分片节点等待 INDEX 阶段执行完成后，调用 onGoingRecoveries.markRecoveryAsDone(recoveryId)进入 DONE 阶段</b>
+<ul class="quote">
+<li>主要处理是调用 indexShard#postRecovery，与主分片的postRecovery处理过程相同。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>主分片节点处理过程</h4>
+<ul class="point">
+<li><b>主分片节点收到副分片节点发送的恢复请求，执行恢复，然后返回结果</b>
+<ul class="quote">
+<li>这里也是阻塞处理的过程，下面的消息处理在generic线程池中执行。</li>
+</ul>
+</li>
+<li><b>phase1检查目标节点上的段文件，并对缺失的部分进行复制</b>
+<ul class="quote">
+<li>只有具有相同大小和校验和的段才能被重用。</li>
+<li>如果主副两分片是否都有syncid，如果syncid相同，且doc数相同，则跳过phase1。</li>
+</ul>
+</li>
+<li><b>phase2将translog批量发送到副分片节点</b>
+<ul class="quote">
+<li>发送时将待发送的translog组合成一批来提高发送效率，默认的批量大小为512KB，不支持配置。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch57"><summary>10.5 recovery速度优化</summary>
+<div class="sec">
+<h4>索引恢复速度优化方法</h4>
+<ul class="point">
+<li><b>配置项 cluster.routing.allocation.node_concurrent_recoveries 决定单个节点执行副分片recovery时的最大并发数</b>
+<ul class="quote">
+<li>适当提高此值可以增加recovery并发数。</li>
+</ul>
+</li>
+<li><b>配置项indices.recovery.max_bytes_per_sec决定节点间复制数据时的限速</b>
+<ul class="quote">
+<li>可以适当提高此值或取消限速。</li>
+</ul>
+</li>
+<li><b>配置项cluster.routing.allocation.node_initial_primaries_recoveries决定了单个节点执行主分片recovery时的最大并发数</b>
+<ul class="quote">
+<li>由于主分片的恢复不涉及在网络上复制数据，仅在本地磁盘读写，所以在节点配置了多个数据磁盘的情况下，可以适当提高此值。</li>
+</ul>
+</li>
+<li><b>在重启集群之前，先停止写入端，执行sync flush，让恢复过程有机会跳过phase1</b>
+<ul class="quote">
+<li>通过sync flush，确保数据一致性。</li>
+</ul>
+</li>
+<li><b>适当地多保留些 translog，配置项 index.translog.retention.size 默认最大保留512MB, index.translog.retention.age默认为不超过12小时</b>
+<ul class="quote">
+<li>调整这两个配置可让恢复过程有机会跳过phase1。</li>
+</ul>
+</li>
+<li><b>合并 Lucene 分段，对于冷索引甚至不再更新的索引执行_forcemerge</b>
+<ul class="quote">
+<li>较少的 Lucene分段可以提升恢复效率。</li>
+</ul>
+</li>
+<li><b>允许主副分片存在一定程度的不一致，修改 ES 恢复流程，少量的不一致则跳过phase1</b>
+<ul class="quote">
+<li>少量的不一致对业务影响较小，可以跳过phase1，提高恢复速度。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch58"><summary>10.6 如何保证副分片和主分片一致</summary>
+<div class="sec">
+<h4>副分片恢复的一致性问题</h4>
+<ul class="point">
+<li><b>副分片恢复要经历三个阶段，但在2.0版本之后，phase3被删除</b>
+<ul class="quote">
+<li>phase1：将主分片的 Lucene 做快照，发送到 target。期间不阻塞索引操作，新增数据写到主分片的translog。</li>
+<li>phase2：将主分片translog做快照，发送到target重放，期间不阻塞索引操作。</li>
+<li>phase3：为主分片加写锁，将剩余的translog发送到target。此时数据量很小，写入过程的阻塞很短。</li>
+</ul>
+</li>
+<li><b>删除phase3后，需要处理phase1和phase2之间的写操作与phase2重放操作之间的时序和冲突问题</b>
+<ul class="quote">
+<li>在副分片节点，phase1结束后，假如新增索引操作和 translog 重放操作并发执行，因为时序的关系会出现新老数据交替。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>保证主副分片一致性的方法</h4>
+<ul class="point">
+<li><b>在写流程中做异常处理，通过版本号来过滤掉过期操作</b>
+<ul class="quote">
+<li>每个操作都有一个版本号，这个版本号就是预期doc版本，它必须大于当前Lucene中的doc版本号，否则就放弃本次操作。</li>
+<li>对于更新操作来说，预期版本号是Lucene doc版本号+1。主分片节点写成功后新数据的版本号会放到写副本的请求中，这个请求中的版本号就是预期版本号。</li>
+</ul>
+</li>
+<li><b>索引新文档不存在冲突问题，不需要处理。</b>
+</li>
+<li><b>更新操作采用相同的处理机制，通过主分片将原doc版本号+1后转发到副分片</b>
+<ul class="quote">
+<li>判断本次操作的版本号是否小于Lucene中doc的版本号，如果小于，则放弃本次操作。</li>
+<li>如果translog重放的操作在写一条“老”数据，则compareOpToLuceneDocBasedOnVersions会返回OpVsLuceneDocStatus.OP_STALE_OR_EQUAL。</li>
+</ul>
+</li>
+<li><b>删除操作采用相同的处理机制，通过主分片将原doc版本号+1后转发到副分片</b>
+<ul class="quote">
+<li>判断本次操作中的版本号是否小于Lucene中doc的版本号，如果小于，则放弃本次操作。</li>
+<li>如果translog重放的是一个“老”的删除操作，则compareOpToLuceneDocBasedOnVersions会返回OpVsLuceneDocStatus.OP_STALE_OR_EQUAL。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch59"><summary>10.7 recovery相关监控命令</summary>
+<div class="sec">
+<h4>_cat/recovery命令</h4>
+<ul class="point">
+<li><b>_cat/recovery命令用于列出活跃的和已完成的recovery信息</b>
+<ul class="quote">
+<li>使用？v参数可以显示列名。</li>
+</ul>
+</li>
+<li><b>_cat/recovery命令提供的信息包括recovery类型，existing_store，peer，数据传输的源节点和目的节点信息，数据传输进度，总体文件大小和已传输字节数等。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>{index}/_recovery命令</h4>
+<ul class="point">
+<li><b>{index}/_recovery命令展示特定索引的recovery所处阶段，以及每个分片、每个阶段的详细信息</b>
+<ul class="quote">
+<li>除了基础信息，此API还给出了index、translog、verify_index三个耗时最长的重要阶段的详细信息。</li>
+<li>如果更关注进度信息，则可以过滤stage和percent字段。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>_stats命令</h4>
+<ul class="point">
+<li><b>_stats API可以给出分片级信息，包括分片的sync_id、local_checkpoint、global_checkpoint等</b>
+<ul class="quote">
+<li>可以通过指定索引名称实现，或者使用_all输出全部索引的信息。</li>
+<li>curl -s &quot;127.0.0.1:9200/_all/_stats?level=shards&amp;pretty&quot; |grep sync_id|wc –l 这个示例统计集群所有分片中有多少个分片拥有sync_id。这意味着sync flush成功。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch60"><summary>10.8 小结</summary>
+<div class="sec">
+<h4>主分片恢复的主要阶段是TRANSLOG阶段。</h4>
+<ul class="point">
+</ul></div>
+<div class="sec">
+<h4>副分片恢复的主要阶段是INDEX和TRANSLOG阶段。</h4>
+<ul class="point">
+</ul></div>
+<div class="sec">
+<h4>有限速配置的阶段</h4>
+<ul class="point">
+<li><b>只有phase1有限速配置，phase2不限速。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Lucene的“提交”概念就是从操作系统内存cache fsync到磁盘的过程。</h4>
+<ul class="point">
+</ul></div>
+</details>
+<details class="ch" id="ch61"><summary>11.1 元数据</summary>
+<div class="sec">
+<h4>ES中存储的数据类型</h4>
+<ul class="point">
+<li><b>ES中存储的数据有state元数据信息、index Lucene生成的索引文件和translog事务日志。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>元数据信息的种类</h4>
+<ul class="point">
+<li><b>元数据信息有nodes/0/_state/*.st，集群层面元信息；nodes/0/indices/{index_uuid}/_state/*.st，索引层面元信息；nodes/0/indices/{index_uuid}/0/_state/*.st，分片层面元信息</b>
+<ul class="quote">
+<li>集群层面元信息主要是clusterUUID、settings、templates等。</li>
+<li>索引层面元信息主要是numberOfShards、mappings等。</li>
+<li>分片层面元信息主要是version、indexUUID、primary等。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>元数据信息的持久化</h4>
+<ul class="point">
+<li><b>持久化的state不包括某个分片存在于哪个节点这种内容路由信息</b>
+<ul class="quote">
+<li>集群完全重启时，依靠gateway的recovery过程重建RoutingTable。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>读取文档时的路由过程</h4>
+<ul class="point">
+<li><b>当读取某个文档时，根据路由算法确定目的分片后，从RoutingTable中查找分片位于哪个节点，然后将请求转发到目的节点。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch62"><summary>11.2 元数据的持久化</summary>
+<div class="sec">
+<h4>元数据的持久化概述</h4>
+<ul class="point">
+<li><b>只有具备Master资格的节点和数据节点可以持久化集群状态</b>
+<ul class="quote">
+<li>当收到主节点发布的集群状态时，节点判断元信息是否发生变化，如果发生变化，则将其持久化到磁盘中。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>GatewayMetaState类</h4>
+<ul class="point">
+<li><b>GatewayMetaState类负责接收集群状态，并实现applyClusterState方法</b>
+<ul class="quote">
+<li>当收到新的集群状态时，ClusterApplierService通知全部applier应用该集群状态。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>节点校验与元信息持久化</h4>
+<ul class="point">
+<li><b>节点校验本身的资格，判断元信息是否发生变化，并将其持久化到磁盘中</b>
+<ul class="quote">
+<li>全局元信息和索引级元信息都来自集群状态。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>执行文件写入的过程</h4>
+<ul class="point">
+<li><b>执行文件写入的过程封装在MetaDataStateFormat类中，包括写临时文件、刷盘、“move”成目标文件三个流程</b>
+<ul class="quote">
+<li>全局元信息和索引级元信息的写入都执行三个流程。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch63"><summary>11.3 元数据的恢复</summary>
+<div class="sec">
+<h4>元数据恢复的条件</h4>
+<ul class="point">
+<li><b>gateway.expected_nodes，预期的节点数。加入集群的节点数(数据节点或具备Master资格的节点)达到这个数量后立即开始gateway的恢复。默认为0。</b>
+</li>
+<li><b>gateway.recover_after_time，如果没有达到预期的节点数量，则恢复过程将等待配置的时间，再尝试恢复。默认为5min。</b>
+</li>
+<li><b>gateway.recover_after_nodes，只要配置数量的节点(数据节点或具备Master资格的节点)加入集群就可以开始恢复。</b>
+</li>
+<li><b>gateway.expected_master_nodes，预期的具备 Master 资格的节点数，加入集群的具备Master资格的节点数达到这个数量后立即开始gateway的恢复。默认为0。</b>
+</li>
+<li><b>gateway.expected_data_nodes，预期的具备数据节点资格的节点数，加入集群的具备数据节点资格的节点数量达到这个数量后立即开始gateway的恢复。默认为0。</b>
+</li>
+<li><b>gateway.recover_after_master_nodes，指定数量的具备Master资格的节点加入集群后就可以开始恢复。</b>
+</li>
+<li><b>gateway.recover_after_data_nodes，指定数量的数据节点加入集群后就可以开始恢复。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>元数据恢复的流程</h4>
+<ul class="point">
+<li><b>集群完全启动时，gateway模块负责集群层和索引层的元数据恢复，分片层的元数据恢复在allocation模块实现。</b>
+</li>
+<li><b>当集群级、索引级元数据选举完毕后，执行 submitStateUpdateTask 提交一个 source 为local-gateway-elected-state的任务，触发获取shard级元数据的操作。</b>
+</li>
+<li><b>Fetch过程是异步的，根据集群分片数量规模，Fetch过程可能比较长，然后submit任务就结束，gateway流程结束。</b>
+</li>
+<li><b>三个层次的元数据恢复是由gateway模块和allocation模块共同完成的，在Gateway将集群级、索引级元数据选举完毕后，在submitStateUpdateTask提交的任务中会执行allocation模块的reroute继续后面的流程。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch64"><summary>11.4 元数据恢复流程分析</summary>
+<div class="sec">
+<h4>元数据恢复流程分析</h4>
+<ul class="point">
+<li><b>Master选举成功之后，判断其持有的集群状态中是否存在STATE_NOT_RECOVERED_BLOCK，如果不存在，则说明元数据已经恢复，跳过gateway恢复过程，否则等待。</b>
+</li>
+<li><b>Master从各个节点主动获取元数据信息</b>
+<ul class="quote">
+<li>从获取的元数据信息中选择版本号最大的作为最新元数据，包括集群级、索引级。</li>
+</ul>
+</li>
+<li><b>调用allocation模块的reroute，对未分配的分片执行分配</b>
+<ul class="quote">
+<li>主分片分配过程中会异步获取各个shard级别元数据，默认超时为13s。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>选举集群级和索引级别的元数据</h4>
+<ul class="point">
+<li><b>向有Master资格的节点发起请求，获取它们存储的元数据</b>
+<ul class="quote">
+<li>等待回复时，必须收到所有节点的回复，无论回复成功还是失败。</li>
+<li>在收齐的这些回复中，有效元信息的总数必须达到指定数量。</li>
+</ul>
+</li>
+<li><b>通过版本号选取集群级和索引级元数据</b>
+<ul class="quote">
+<li>选举集群级元数据。</li>
+<li>选举索引级元数据。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>触发allocation</h4>
+<ul class="point">
+<li><b>提交一个集群任务，该任务在masterService#updateTask线程池中执行</b>
+<ul class="quote">
+<li>主要工作是构建集群状态(ClusterState)，其中的内容路由表依赖allocation模块协助完成。</li>
+<li>调用 allocationService.reroute 进入下一阶段：异步执行分片层元数据的恢复，以及分片分配。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch65"><summary>11.5 思考</summary>
+<div class="sec">
+<h4>元数据信息选举和写入的一致性保证</h4>
+<ul class="point">
+<li><b>元数据信息是根据版本号选举出来的，元数据写入成功的条件是“多数”</b>
+<ul class="quote">
+<li>保证进入recovery的条件为节点数量为“多数”，可以保证集群级和索引级的一致性。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>获取各节点存储的元数据的方法</h4>
+<ul class="point">
+<li><b>获取各节点存储的元数据，然后根据版本号选举时，仅向具有Master资格的节点获取元数据。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch66"><summary>12.1 什么是allocation</summary>
+<div class="sec">
+<h4>分片分配的概念和过程</h4>
+<ul class="point">
+<li><b>分片分配是把一个分片指派到集群中某个节点的过程</b>
+<ul class="quote">
+<li>分配决策由主节点完成，分配决策包含两方面：哪些分片应该分配给哪些节点；哪个分片作为主分片，哪些作为副分片。</li>
+</ul>
+</li>
+<li><b>ES通过allocators和deciders两个基础组件完成分片分配工作</b>
+<ul class="quote">
+<li>allocators尝试寻找最优的节点来分配分片，deciders则负责判断并决定是否要进行这次分配。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>新建索引的分片分配</h4>
+<ul class="point">
+<li><b>allocators负责找出拥有分片数最少的节点列表，并按分片数量升序排序</b>
+<ul class="quote">
+<li>对于新建索引，allocators的目标就是以更均衡的方式把新索引的分片分配到集群的节点中。</li>
+</ul>
+</li>
+<li><b>deciders依次遍历allocators给出的节点，并判断是否把分片分配到该节点</b>
+<ul class="quote">
+<li>如果分配过滤规则中禁止节点A持有索引idx中的任一分片，那么过滤器也阻止把索引idx分配到节点A中，即便A节点是allocators从集群负载均衡角度选出的最优节点。</li>
+<li>allocators只关心每个节点上的分片数，而不管每个分片的具体大小。这恰好是 deciders 工作的一部分，即阻止把分片分配到将超出节点磁盘容量阈值的节点上。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>已有索引的分片分配</h4>
+<ul class="point">
+<li><b>对于主分片，allocators只允许把主分片指定在已经拥有该分片完整数据的节点上</b>
+<ul class="quote">
+<li>对于副分片，allocators则是先判断其他节点上是否已有该分片的数据的副本(即便数据不是最新的)。</li>
+<li>如果有这样的节点，则allocators优先把分片分配到其中一个节点。因为副分片一旦分配，就需要从主分片中进行数据同步，所以当一个节点只拥分片中的部分数据时，也就意味着那些未拥有的数据必须从主节点中复制得到。这样可以明显地提高副分片的数据恢复速度。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch67"><summary>12.2 触发时机</summary>
+<div class="sec">
+<h4>触发分片分配的几种情况</h4>
+<ul class="point">
+<li><b>index增删</b>
+<ul class="quote">
+<li>index创建时，会触发分片分配。</li>
+<li>index删除时，会触发分片分配。</li>
+</ul>
+</li>
+<li><b>node增删</b>
+<ul class="quote">
+<li>node添加时，会触发分片分配。</li>
+<li>node删除时，会触发分片分配。</li>
+</ul>
+</li>
+<li><b>手工reroute</b>
+<ul class="quote">
+<li>通过执行_cluster/reroute API，可以触发分片分配。</li>
+</ul>
+</li>
+<li><b>replica数量改变</b>
+<ul class="quote">
+<li>调整分片数量时，会触发分片分配。</li>
+</ul>
+</li>
+<li><b>集群重启后，会触发分片分配。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch68"><summary>12.3 allocation模块结构概述</summary>
+<div class="sec">
+<h4>AllocationService.reroute函数概述</h4>
+<ul class="point">
+<li><b>AllocationService.reroute对一个或多个主分片或副分片执行分配，分配以后产生新的集群状态。</b>
+</li>
+<li><b>Master节点将新的集群状态广播下去，触发后续的流程。</b>
+</li>
+<li><b>对于内部模块调用，返回值为新产生的集群状态，对于手工执行的reroute命令，返回命令执行结果。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch69"><summary>12.4 allocators</summary>
+<div class="sec">
+<h4>allocators的类型和作用</h4>
+<ul class="point">
+<li><b>allocators负责为某个特定的分片分配目的节点</b>
+<ul class="quote">
+<li>每个allocator的主要工作是根据某种逻辑得到一个节点列表，然后调用deciders去决策，根据决策结果选择一个目的node。</li>
+</ul>
+</li>
+<li><b>allocators分为gatewayAllocator和shardsAllocator两种</b>
+<ul class="quote">
+<li>gatewayAllocator是为了找到现有分片，shardsAllocator是根据权重策略在集群的各节点间均衡分片分布。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>gatewayAllocator的作用</h4>
+<ul class="point">
+<li><b>primaryShardAllocator：找到那些拥有某分片最新数据的节点。</b>
+</li>
+<li><b>replicaShardAllocator：找到磁盘上拥有这个分片数据的节点。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>shardsAllocator的作用</h4>
+<ul class="point">
+<li><b>BalancedShardsAllocator：找到拥有最少分片个数的节点。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch70"><summary>12.5 deciders</summary>
+<div class="sec">
+<h4>负载均衡类决策器</h4>
+<ul class="point">
+<li><b>SameShardAllocationDecider：避免主副分片分配到同一个节点</b>
+<ul class="quote">
+<li>cluster.routing.allocation.awareness.attributes: rack_id。</li>
+<li>cluster.routing.allocation.awareness.attributes: zone。</li>
+</ul>
+</li>
+<li><b>AwarenessAllocationDecider：感知分配器，感知服务器、机架等，尽量分散存储shard</b>
+<ul class="quote">
+<li>cluster.routing.allocation.awareness.attributes: rack_id。</li>
+<li>cluster.routing.allocation.awareness.attributes: zone。</li>
+</ul>
+</li>
+<li><b>ShardsLimitAllocationDecider：同一个节点上允许存在的同一个index的shard数目</b>
+<ul class="quote">
+<li>参数配置：cluster.routing.allocation.total_shards_per_node。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>并发控制类决策器</h4>
+<ul class="point">
+<li><b>ThrottlingAllocationDecider：recovery阶段的限速配置</b>
+<ul class="quote">
+<li>cluster.routing.allocation.node_concurrent_recoveries。</li>
+<li>cluster.routing.allocation.node_initial_primaries_recoveries。</li>
+<li>cluster.routing.allocation.node_concurrent_incoming_recoveries。</li>
+<li>cluster.routing.allocation.node_concurrent_outgoing_recoveries。</li>
+</ul>
+</li>
+<li><b>ConcurrentRebalanceAllocationDecider：rebalance并发控制</b>
+<ul class="quote">
+<li>参数配置：cluster.routing.allocation.cluster_concurrent_rebalance。</li>
+</ul>
+</li>
+<li><b>DiskThresholdDecider：根据磁盘空间进行决策的分配器</b>
+<ul class="quote">
+<li>参数配置：cluster.routing.allocation.disk.threshold_enabled。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>条件限制类决策器</h4>
+<ul class="point">
+<li><b>RebalanceOnlyWhenActiveAllocationDecider：所有shard都处在active状态下，才可以执行rebalance操作</b>
+<ul class="quote">
+<li>参数配置：cluster.routing.allocation.require.replica_to_primary_ratio。</li>
+</ul>
+</li>
+<li><b>FilterAllocationDecider：可以调整的参数如下，可以通过接口动态设置</b>
+<ul class="quote">
+<li>配置的目标为节点IP或节点名等。cluster级别设置会覆盖index级别设置。</li>
+</ul>
+</li>
+<li><b>ReplicaAfterPrimaryActiveAllocationDecider：保证只在主分片分配完毕才开始分配分片副本</b>
+<ul class="quote">
+<li>参数配置：cluster.routing.allocation.require.primary。</li>
+</ul>
+</li>
+<li><b>ClusterRebalanceAllocationDecider：通过集群中active的shard状态来决定是否可以执行rebalance</b>
+<ul class="quote">
+<li>参数配置：cluster.routing.allocation.allow_rebalance。</li>
+<li>可配置的值如下表所示。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch71"><summary>12.6 核心reroute实现</summary>
+<div class="sec">
+<h4>核心reroute实现</h4>
+<ul class="point">
+<li><b>reroute中主要实现两种allocator：gatewayAllocator和shardsAllocator</b>
+<ul class="quote">
+<li>gatewayAllocator用于分配现实已存在的分片，从磁盘中找到它们。</li>
+<li>shardsAllocator用于平衡分片在节点间的分布。</li>
+</ul>
+</li>
+<li><b>reroute流程全部运行于masterService#updateTask线程。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>集群启动时reroute的触发时机</h4>
+<ul class="point">
+<li><b>gateway结束前调用submitStateUpdateTask提交任务</b>
+<ul class="quote">
+<li>任务被clusterService放入队列，在Master节点顺序执行。</li>
+</ul>
+</li>
+<li><b>执行到任务中的allocationService.reroute时，收集各个节点的shard元数据</b>
+<ul class="quote">
+<li>待某个shard的Response从所有节点全部返回后，执行finishHim()，然后对收集到的数据进行处理。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>流程分析</h4>
+<ul class="point">
+<li><b>集群完全重启的初始状态，所有分片都被标记为未分配状态</b>
+<ul class="quote">
+<li>分片分配的概念不仅仅是分配一个全新分片。</li>
+</ul>
+</li>
+<li><b>对于索引某个特定分片的分配过程中，先分配其主分片，后分配其副分片</b>
+<ul class="quote">
+<li>主分片分配器与副分片分配器都继承自 BaseGatewayShardAllocator，执行相同的allocateUnassigned函数。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>gatewayAllocator</h4>
+<ul class="point">
+<li><b>primaryShardAllocator.allocateUnassigned函数实现整个分配过程</b>
+<ul class="quote">
+<li>主分片分配器与副分片分配器都继承自 BaseGatewayShardAllocator，执行相同的allocateUnassigned函数，只是执行makeAllocationDecision时，主副分片分配器各自执行自己的策略。</li>
+</ul>
+</li>
+<li><b>主分片分配器的makeAllocationDecision过程返回指定的分片是否可以被分配</b>
+<ul class="quote">
+<li>首次进入函数时，还没有任何分片的元信息，发起向集群所有数据节点获取某个 shard 元信息的fetchData请求。</li>
+<li>向各节点发起fetchData请求，从所有数据节点异步获取某个特定分片的信息，没有超时设置。</li>
+<li>数据节点的响应，对端对此响应的模块为gateway.TransportNodesListGatewayStartedShards#nodeOperation，其中读取本地shard元数据返回请求方。</li>
+<li>收集返回结果并处理，对于一个特定shard，当Response达到期望数量(发出请求时的节点数)时执行finishHim，调用处理模块AsyncShardFetch#processAsyncFetch。</li>
+<li>主分片选举实现，ES 5之后的主分片选举与之前的版本机制是不一样的，依据allocation id从inSyncAllocationIds列表中选择一个作为主分片。</li>
+<li>cluster.routing.allocation.enable对主分片分配的影响，在集群完全重启的操作流程中，要求把这个选项先设置为none，然后重启集群。</li>
+</ul>
+</li>
+<li><b>replicaShardAllocator.allocateUnassigned函数实现了副分片的分配过程</b>
+<ul class="quote">
+<li>其allocateUnassigned过程与primaryShardAllocator.allocateUnassigned执行的是基类的同一个函数。</li>
+<li>ReplicaShardAllocator#makeAllocationDecision，副分片决策过程中也需要“fetchData”，只不过主分片分配节点已经“fetch”过，可以直接从结果中获取。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>shardsAllocator</h4>
+<ul class="point">
+<li><b>BalancedShardsAllocator类完成shardsAllocator，其中有三个配置项用于控制权重</b>
+<ul class="quote">
+<li>cluster.routing.allocation.balance.index，cluster.routing.allocation.balance.shard，cluster.routing.allocation.balance.threshold。</li>
+</ul>
+</li>
+<li><b>allocateUnassigned根据权重算法和decider决定把shard分配到哪个节点</b>
+<ul class="quote">
+<li>同样将决策后的分配信息更新到集群状态，由Master广播下去。</li>
+</ul>
+</li>
+<li><b>moveShards对状态为started的分片根据decider来判断是否需要“move”</b>
+<ul class="quote">
+<li>move过程中此shard的状态被设置为RELOCATING，在目标上创建这个shard时状态为INITIALIZING，同时版本号会加1。</li>
+</ul>
+</li>
+<li><b>balance根据权重函数平衡集群模型上的节点。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch72"><summary>12.7 从gateway到allocation流程的转换</summary>
+<div class="sec">
+<h4>gateway流程的结束与allocation流程的开始</h4>
+<ul class="point">
+<li><b>gateway流程的结束只是集群级和索引级的元数据已选举完毕，主分片的选举正在进行中。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch73"><summary>12.8 从allocation流程到recovery流程的转换</summary>
+<div class="sec">
+<h4>makeAllocationDecision成功后，unassignedIterator.initialize初始化这个shard</h4>
+<ul class="point">
+<li><b>创建一个新的ShardRouting对象，把相关信息添加到集群状态</b>
+<ul class="quote">
+<li>设置routingChangesObserver为已经发生变化。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>节点收到广播下来的集群状态，进入 IndicesClusterStateService#applyClusterState 处理所有相关操作</h4>
+<ul class="point">
+<li><b>createOrUpdateShards执行到createShard时，准备recovery相关信息。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>IndicesService.createShard开始执行recovery</h4>
+<ul class="point">
+<li><b>执行recovery的具体流程。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch74"><summary>第13章 Snapshot模块分析</summary>
+<div class="sec">
+<h4>快照模块概述</h4>
+<ul class="point">
+<li><b>快照模块是ES备份、迁移数据的重要手段</b>
+<ul class="quote">
+<li>快照支持增量备份，支持多种类型的仓库存储。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>快照仓库存储</h4>
+<ul class="point">
+<li><b>仓库用于存储快照，支持共享文件系统(例如，NFS)，以及通过插件支持的HDFS、AmazonS3、Microsoft Azure、Google GCS。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>跨版本支持</h4>
+<ul class="point">
+<li><b>可以支持不跨大版本的快照和恢复</b>
+<ul class="quote">
+<li>在6.x版本中创建的快照可以恢复到6.x版本；</li>
+<li>在2.x版本中创建的快照可以恢复到5.x版本；</li>
+<li>在1.x版本中创建的快照可以恢复到2.x版本。</li>
+<li>1.x版本创建的快照不可以恢复到5.x版本和6.0版本，2.x版本创建的快照不可以恢复到6.x版本。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>快照备份与恢复</h4>
+<ul class="point">
+<li><b>升级集群前建议先通过快照备份数据</b>
+<ul class="quote">
+<li>跨越大版本的数据迁移可以考虑使用reindex API。</li>
+</ul>
+</li>
+<li><b>当需要迁移数据时，可以将快照恢复到另一个集群</b>
+<ul class="quote">
+<li>快照不仅可以对索引备份，还可以将模板一起保存。</li>
+<li>恢复到的目标集群不需要相同的节点规模，只要它的存储空间足够容纳这些数据即可。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>快照注册与使用</h4>
+<ul class="point">
+<li><b>要使用快照，首先应该注册仓库</b>
+<ul class="quote">
+<li>快照存储于仓库中。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch75"><summary>13.1 仓库</summary>
+<div class="sec">
+<h4>仓库的创建和使用</h4>
+<ul class="point">
+<li><b>为每个大版本创建单独的快照存储库</b>
+<ul class="quote">
+<li>如果使用多个集群注册相同的快照存储库，最好只有一个集群对存储库进行写操作。</li>
+</ul>
+</li>
+<li><b>使用仓库API注册仓库，执行快照</b>
+<ul class="quote">
+<li>注册仓库的命令格式为：curl -X PUT &quot;localhost:9200/_snapshot/my_backup&quot; -H &#x27;Content-Type: application/json&#x27; -d &#x27;{&quot;type&quot;:&quot;fs&quot;,&quot;settings&quot;:{&quot;location&quot;:&quot;/mnt/my_backup&quot;}}&#x27;。</li>
+<li>获取某个仓库配置信息的命令格式为：curl -X GET &quot;localhost:9200/_snapshot/my_backup&quot;。</li>
+<li>获取多个存储库的信息的命令格式为：curl -X GET &quot;localhost:9200/_snapshot/repo*,*backup*&quot;。</li>
+<li>获取当前全部仓库的信息的命令格式为：curl -X GET &quot;localhost:9200/_snapshot&quot; 或 curl -X GET &quot;localhost:9200/_snapshot/_all&quot;。</li>
+<li>从仓库中删除快照的命令格式为：curl -X DELETE &quot;localhost:9200/_snapshot/my_backup/snapshot_1&quot;。</li>
+<li>删除整个仓库的命令格式为：curl -X DELETE &quot;localhost:9200/_snapshot/my_backup&quot;。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>共享文件系统的使用</h4>
+<ul class="point">
+<li><b>将同一个共享存储挂载到集群每个节点的同一个挂载点</b>
+<ul class="quote">
+<li>包括所有数据节点和主节点。</li>
+</ul>
+</li>
+<li><b>将挂载点配置到elasticsearch.yml的path.repo字段</b>
+<ul class="quote">
+<li>例如，挂载点为/mnt/my_backup，那么在elasticsearch.yml中应该添加如下配置：path.repo: [&quot;/mnt/my_backups&quot;]。</li>
+</ul>
+</li>
+<li><b>path.repo支持微软的UNC路径</b>
+<ul class="quote">
+<li>配置格式为：path.repo: [&quot;\\\\MY_SERVER\\Snapshots&quot;]。</li>
+</ul>
+</li>
+<li><b>配置完毕，需要重启所有节点使之生效</b>
+<ul class="quote">
+<li>然后就可以通过仓库API注册仓库，执行快照了。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>共享存储的优缺点</h4>
+<ul class="point">
+<li><b>优点是跨版本兼容性好，适合迁移数据</b>
+<ul class="quote">
+<li>缺点是存储空间较小。</li>
+<li>如果使用HDFS，则受限于插件使用的HDFS版本。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch76"><summary>13.2 快照</summary>
+<div class="sec">
+<h4>创建快照</h4>
+<ul class="point">
+<li><b>使用curl命令创建快照，wait_for_completion参数可选项，默认情况下，快照命令会立即返回，任务在后台执行。</b>
+</li>
+<li><b>可以为部分索引执行快照，通过indices参数指定</b>
+<ul class="quote">
+<li>indices字段支持多索引语法，index_*完整的语法参考：https://www.elastic.co/guide/en/elasticsearch/reference/current/multi-index.html。</li>
+</ul>
+</li>
+<li><b>快照操作在主分片上执行，不影响集群正常的读写操作</b>
+<ul class="quote">
+<li>在快照开始前，会执行一次flush，将操作系统内存“cache”的数据刷盘。</li>
+</ul>
+</li>
+<li><b>可以在任何时候为集群创建一个快照过程，无论集群健康是Green、Yellow，还是Red</b>
+<ul class="quote">
+<li>执行快照期间，被快照的分片不能移动到另一个节点，这可能会干扰重新平衡过程和分配过滤(allocation filtering)。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>获取快照信息</h4>
+<ul class="point">
+<li><b>使用curl命令获取快照的信息</b>
+<ul class="quote">
+<li>返回信息摘要包括开始结束时间、集群版本、当前阶段、成功及失败情况等基本信息。</li>
+</ul>
+</li>
+<li><b>可以获取多个快照信息，也可以获取指定仓库下的全部快照信息</b>
+<ul class="quote">
+<li>使用下面的命令可以获取多个快照信息：curl -X GET ＂localhost:9200/_snapshot/my_backup/snapshot_*,other_snapshot＂。</li>
+<li>以及获取指定仓库下的全部快照信息：curl -X GET ＂localhost:9200/_snapshot/my_backup/_all＂。</li>
+</ul>
+</li>
+<li><b>可以查询正在运行中的快照</b>
+<ul class="quote">
+<li>使用下面的命令来查询正在运行中的快照：curl -X GET ＂localhost:9200/_snapshot/my_backup/_current＂。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>快照status</h4>
+<ul class="point">
+<li><b>_status API用于返回快照的详细信息</b>
+<ul class="quote">
+<li>返回的信息摘要包括已处理的文件数和字节数等进度信息，但没有计算成百分比的形式。</li>
+</ul>
+</li>
+<li><b>可以返回特定仓库中正在运行的所有快照的信息，也可以返回指定快照的状态信息，即使它已经执行完成</b>
+<ul class="quote">
+<li>使用下面的命令可以返回特定仓库中正在运行的所有快照的信息：curl -X GET ＂localhost:9200/_snapshot/my_backup/_status＂。</li>
+<li>如果同时指定仓库名称和快照ID，则此命令将返回指定快照的状态信息，即使它已经执行完成：curl -X GET ＂localhost:9200/_snapshot/my_backup/snapshot_1,snapshot_2/_status＂。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>取消、删除快照和恢复操作</h4>
+<ul class="point">
+<li><b>在设计上，快照和恢复在同一个时间点只允许运行一个快照或一个恢复操作</b>
+<ul class="quote">
+<li>如果想终止正在进行的快照操作，则可以使用删除快照命令来终止它。</li>
+<li>删除快照操作将检查当前快照是否正在运行，如果正在运行，则删除操作会先停止快照，然后从仓库中删除数据。如果是已完成的快照，则直接从仓库中删除快照数据。</li>
+</ul>
+</li>
+<li><b>恢复操作使用标准分片恢复机制，如果要取消正在运行的恢复，则可以通过删除正在恢复的索引来实现</b>
+<ul class="quote">
+<li>注意，索引数据将全部删除。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch77"><summary>13.3 从快照恢复</summary>
+<div class="sec">
+<h4>从快照恢复</h4>
+<ul class="point">
+<li><b>恢复一个快照，目标索引必须处于关闭状态。</b>
+</li>
+<li><b>默认情况下，快照中的所有索引都被恢复，但不恢复集群状态</b>
+<ul class="quote">
+<li>通过调节参数，可以有选择地恢复部分索引和全局集群状态。</li>
+</ul>
+</li>
+<li><b>恢复完成后，当前集群与快照同名的索引、模板会被覆盖</b>
+<ul class="quote">
+<li>在集群中存在，但快照中不存在的索引、索引别名、模板不会被删除。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>部分恢复</h4>
+<ul class="point">
+<li><b>默认情况下，如果参与恢复的一个或多个索引在快照中没有可用分片，则整个恢复操作失败</b>
+<ul class="quote">
+<li>可以通过设置 partial参数为true来尽可能恢复。</li>
+<li>只有备份成功的分片才会成功恢复，丢失的分片将被创建一个空的分片。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>恢复过程中更改索引设置</h4>
+<ul class="point">
+<li><b>大多数的索引设置可以在恢复过程中被重写</b>
+<ul class="quote">
+<li>例如，下面的指令将在恢复索引 index_1时不创建任何副本，以及采用默认的索引刷新间隔。</li>
+</ul>
+</li>
+<li><b>有一些设置不能在恢复时修改，比如index.number_of_shards。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>监控恢复进度</h4>
+<ul class="point">
+<li><b>恢复过程是基于ES标准恢复机制的，因此标准的恢复监控服务可以用来监视恢复的状态</b>
+<ul class="quote">
+<li>当执行集群恢复操作时通常会进入Red状态，这是因为恢复操作是从索引的主分片开始的，在此期间主分片状态变为不可用，因此集群状态表现为Red。</li>
+<li>一旦ES主分片恢复完成，整个集群的状态将被转换成Yellow，并且开始创建所需数量的副分片。</li>
+<li>一旦创建了所有必需的副分片，集群转换到Green状态。</li>
+</ul>
+</li>
+<li><b>查看集群的健康情况只是在恢复过程中比较高级别的状态，还可以通过使用 indices recovery与cat recovery的API来获得更详细的恢复过程信息与索引的当前状态信息。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch78"><summary>13.4 创建快照的实现原理</summary>
+<div class="sec">
+<h4>ES快照创建基于Lucene快照实现</h4>
+<ul class="point">
+<li><b>Lucene快照是对最后一个提交点的快照，一次快照包含最后一次提交点的信息，以及全部分段文件</b>
+<ul class="quote">
+<li>Lucene中没有增量快照的概念，每一次都是对整个Lucene索引完整快照。</li>
+</ul>
+</li>
+<li><b>ES负责数据复制、仓库管理、增量备份，以及快照删除</b>
+<ul class="quote">
+<li>ES创建快照的过程涉及3种类型的节点：协调节点，主节点，数据节点。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>协调节点流程</h4>
+<ul class="point">
+<li><b>协调节点负责解析请求，将请求转发给主节点</b>
+<ul class="quote">
+<li>协调节点注册的 REST action为create_snapshot_action，相应的 Handler为 RestCreateSnapshotAction类。</li>
+<li>当协调节点收到客户端请求后，在BaseRestHandler#handleRequest中处理请求，调用 RestCreateSnapshotAction#prepareRequest 解析 REST 请求，将请求封装为CreateSnapshotRequest结构，然后将该请求发送到Master节点。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>主节点流程</h4>
+<ul class="point">
+<li><b>主节点的主要处理过程是将请求转换成内部需要的数据结构，提交一个集群任务进行处理</b>
+<ul class="quote">
+<li>主节点收到协调节点发来的请求也是在 TransportMasterNodeAction. AsyncSingleAction#doStart 方法中处理的，在 snapshot 线程池中执行 TransportCreateSnapshotAction#masterOperation 方法。</li>
+<li>将收到的 CreateSnapshotRequest 请求转换成 SnapshotsService. SnapshotRequest 结构，调用snapshotsService.createSnapshot方法提交一个集群任务。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>数据节点流程</h4>
+<ul class="point">
+<li><b>数据节点负责实际的快照实现，从全部将要快照的分片列表中找出存储于本节点的分片，对这些分片创建Lucene快照，复制文件</b>
+<ul class="quote">
+<li>数据节点对主节点发布的集群状态(ClusterState)的统一处理在 ClusterApplierService#callClusterStateListeners 方法中，clusterStateListeners 中存储了所有需要对集群状态进行处理的模块。</li>
+<li>数据节点在snapshot线程池中执行SnapshotShardsService#snapshot方法，对特定分片创建快照。</li>
+<li>在做完了验证工作后，调用 Lucene 接口创建快照，返回 Engine.IndexCommitRef，其中含有最重要的提交点。然后根据Lucene提交点创建ES快照。</li>
+<li>根据Lucene提交点计算两个列表：新增文件列表，代表将要复制到仓库的文件；当前快照使用的全部文件列表，未来通过它找到某个快照相关的全部相关文件。</li>
+<li>复制Lucene物理文件，遍历新增文件列表，将这些文件复制到仓库。</li>
+<li>生成快照文件，这个文件是快照的描述信息，包含本次快照的相关描述，以及与其相关的Lucene文件。</li>
+<li>删除快照无关文件，遍历仓库中的全部快照，包括刚刚执行完的快照，删除仓库中不被任何快照关联的文件。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch79"><summary>13.5 删除快照实现原理</summary>
+<div class="sec">
+<h4>ES删除快照的核心思想</h4>
+<ul class="point">
+<li><b>在要删除的快照所引用的物理文件中，对不被任何其他快照使用的文件执行删除</b>
+<ul class="quote">
+<li>每个快照都在自己的元信息文件(snap-*)中描述了本快照使用的文件列表。</li>
+<li>想要删除一些文件时，也不需要引用计数，只要待删除文件不被其他快照使用就可以安全删除。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>协调节点流程</h4>
+<ul class="point">
+<li><b>协调节点负责解析请求，将请求转发给主节点</b>
+<ul class="quote">
+<li>处理线程：http_server_worker。</li>
+<li>删除快照的相应的 REST action 为 delete_snapshot_action。</li>
+<li>收到删除快照的REST请求后，同样在BaseRestHandler#handleRequest中进行处理，然后调用 RestDeleteSnapshotAction#prepareRequest 解析 REST 请求，将请求封装为DeleteSnapshotRequest结构，然后将该请求发送到Master节点。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>主节点流程</h4>
+<ul class="point">
+<li><b>主节点收到协调节点的请求后提交集群任务，将请求信息放到新的集群状态中广播下去</b>
+<ul class="quote">
+<li>执行本流程的线程池：http_server_worker-＞generic-＞masterService#updateTask-＞snapshot。</li>
+<li>主节点收到协调节点发来的请求也是在 TransportMasterNodeAction.AsyncSingleAction#doStart方法中处理的，在 generic 线程池中执行 TransportDeleteSnapshotAction#masterOperation，接着调用SnapshotsService#deleteSnapshot提交集群任务。</li>
+</ul>
+</li>
+<li><b>主节点发布成功后的处理逻辑，执行快照删除操作</b>
+<ul class="quote">
+<li>需要删除的内容包括元信息文件、索引分片，以及有可能要删除的整个索引目录，并且更新快照列表的index文件(index-*)。</li>
+<li>快照是对每个分片创建的，如何删除分片快照是核心过程。</li>
+<li>调用创建快照时相同的finalize方法，调用该方法时传入一个快照列表，内部执行时遍历仓库中的文件，删除不被快照列表引用的文件。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>数据节点的取消过程</h4>
+<ul class="point">
+<li><b>数据节点对此的处理在SnapshotShardsService#processIndexShardSnapshots方法中</b>
+<ul class="quote">
+<li>创建快照的主要过程也在这个方法中，根据State状态判断需要启动或取消运行中的快照。</li>
+<li>取消快照的abort实现只是设置了中止标识，运行中的快照会检查这个标识。</li>
+<li>快照运行过程中有多处会检查中止标识，由于运行中的快照大部分时间在执行数据复制，因此取消操作大部分在读取数据时中断。</li>
+<li>运行中的快照被取消后，复制到一半的快照数据文件由主节点负责清理。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch80"><summary>13.6 思考与总结</summary>
+<div class="sec">
+<h4>主节点与数据节点的通信机制</h4>
+<ul class="point">
+<li><b>主节点将快照命令放到集群状态中广播下去，以此控制数据节点执行任务。</b>
+</li>
+<li><b>数据节点执行完毕向主节点主动汇报状态。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>ES配置文件的更新问题</h4>
+<ul class="point">
+<li><b>ES的配置文件更新后不能动态生效，但是提供了REST接口来调整需要动态更新的参数。</b>
+</li>
+<li><b>path.repo 字段需要写到配置文件中，当需要迁移数据时就要先改配置重启集群。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>集群状态的相关信息</h4>
+<ul class="point">
+<li><b>集群永久设置、模板都保存在集群状态中，默认为不进行快照和恢复。</b>
+</li>
+<li><b>注意索引别名不在集群状态中，快照默认会保存别名信息。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Lucene段合并对快照的影响</h4>
+<ul class="point">
+<li><b>Lucene段合并会导致增量快照时产生新增内容，手工合并分段有利于减少HDFS上的小文件。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>快照的元数据信息</h4>
+<ul class="point">
+<li><b>快照写入了两个层面的元数据信息：集群层和索引层。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>快照与集群健康状态的关系</h4>
+<ul class="point">
+<li><b>快照与集群是否健康无关，集群Red时也可以对部分索引执行快照。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>数据复制过程中的校验和计算</h4>
+<ul class="point">
+<li><b>数据复制过程中会计算校验和，确保复制后数据的正确性。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>数据节点并发复制数据的限制</h4>
+<ul class="point">
+<li><b>数据节点并发复制数据时取决于线程池的线程数的最大值，该值为 min(5,(处理器数量)/2)。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>快照执行的对象</h4>
+<ul class="point">
+<li><b>快照只对主分片执行。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch81"><summary>第14章 Cluster模块分析</summary>
+<div class="sec">
+<h4>Cluster模块概述</h4>
+<ul class="point">
+<li><b>Cluster模块封装了在集群层面要执行的任务</b>
+<ul class="quote">
+<li>例如，把分片分配给节点属于集群层面的工作，在节点间迁移分片以保持数据均衡，集群健康、集群级元信息管理，以及节点管理都属于集群层面工作。</li>
+</ul>
+</li>
+<li><b>集群任务执行完毕，可能会产生新的集群状态</b>
+<ul class="quote">
+<li>如果产生新的集群状态，则主节点会把它广播到其他节点。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>集群任务的执行</h4>
+<ul class="point">
+<li><b>主节点都会执行哪些任务</b>
+<ul class="quote">
+<li>通过_cat/pending_tasks API可以列出具体的任务列表。</li>
+</ul>
+</li>
+<li><b>其他节点产生某些事件涉及集群层面的变更，需要向主节点发送一个 RPC 请求，然后由主节点执行集群任务</b>
+<ul class="quote">
+<li>例如，在数据写入过程中，主分片写副分片失败，它会向主节点发送一个RPC请求，将副分片从同步分片列表中移除。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>集群状态的下发过程</h4>
+<ul class="point">
+<li><b>主节点和其他节点的通信使用最广泛的方式，就是通过下发集群状态让从节点执行相应的处理</b>
+<ul class="quote">
+<li>控制信息、变更信息都存储在集群状态中。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch82"><summary>14.1 集群状态</summary>
+<div class="sec">
+<h4>集群状态的获取</h4>
+<ul class="point">
+<li><b>通过_cluster/state API来获取集群状态</b>
+<ul class="quote">
+<li>响应信息中提供了集群名称、集群状态的总压缩大小和集群状态本身。</li>
+</ul>
+</li>
+<li><b>默认情况下，协调节点在收到请求后会把请求路由到主节点执行</b>
+<ul class="quote">
+<li>确保获取最新的集群状态。</li>
+</ul>
+</li>
+<li><b>可以通过在请求中添加local=true参数，让接收请求的节点返回本地的集群状态</b>
+<ul class="quote">
+<li>在排查问题时如果怀疑节点的集群状态是否最新，则可以用这种方式来验证。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>集群状态的更新</h4>
+<ul class="point">
+<li><b>从ES 2.0版本开始，主节点发布集群信息时支持在相邻的两个版本号之间只发送增量内容。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch83"><summary>14.2 内部封装和实现</summary>
+<div class="sec">
+<h4>MasterService类</h4>
+<ul class="point">
+<li><b>MasterService类负责集群任务管理、运行等工作</b>
+<ul class="quote">
+<li>MasterService类对外提供提交任务的接口。</li>
+<li>MasterService类内部维护一个线程池运行这些任务。</li>
+</ul>
+</li>
+<li><b>只有主节点会执行MasterService类中的方法</b>
+<ul class="quote">
+<li>只有主节点会提交集群任务到内部的队列，并运行队列中的任务。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>ClusterApplierService类</h4>
+<ul class="point">
+<li><b>ClusterApplierService类负责管理需要对集群任务进行处理的模块(Applier)和监听器(Listener)，以及通知各个Applier应用集群状态</b>
+<ul class="quote">
+<li>ClusterApplierService类对外提供接收集群状态的接口。</li>
+<li>ClusterApplierService类内部维护一个线程池用于应用集群状态。</li>
+</ul>
+</li>
+<li><b>主节点和从节点都会应用集群状态，因此都会执行ClusterApplierService类中的方法</b>
+<ul class="quote">
+<li>如果某个模块需要处理集群状态，则调用addStateApplier方法添加一个处理器。</li>
+<li>如果想监听集群状态的变化，则通过addListener添加一个监听器。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>线程池</h4>
+<ul class="point">
+<li><b>运行集群任务、应用集群任务都在各自的线程池执行，它们的线程池的大小都是1</b>
+<ul class="quote">
+<li>执行集群任务的线程池为单个线程的线程池，线程池类型为PrioritizedEsThreadPoolExecutor，支持优先级。</li>
+<li>应用集群任务的线程池也是单个线程的线程池，集群任务被串行地应用，线程池类型为PrioritizedEsThreadPoolExecutor。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch84"><summary>14.3 提交集群任务</summary>
+<div class="sec">
+<h4>提交集群任务的时机</h4>
+<ul class="point">
+<li><b>集群拓扑变化、模板、索引map、别名的变化、索引操作、pipeline的增删、脚本的增删、gateway模块发布选举出的集群状态、分片分配、快照、reroute api等触发。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>内部模块如何提交任务</h4>
+<ul class="point">
+<li><b>内部模块通过clusterService.submitStateUpdateTask来提交一个集群任务</b>
+<ul class="quote">
+<li>该方法有3种重载，参数大同小异，我们以最常见的方式为例来说明情况。</li>
+<li>函数原型如下：第一个参数是事件源，第二个参数是要提交的具体的任务。</li>
+</ul>
+</li>
+<li><b>任务类ClusterStateUpdateTask实现了ClusterStateTaskListener、ClusterStateTaskExecutor、ClusterStateTaskConfig这三个接口</b>
+<ul class="quote">
+<li>ClusterStateTaskListener：提交任务时实现一些回调函数，例如，对任务处理失败、集群状态处理完毕时的处理。</li>
+<li>ClusterStateTaskExecutor：主要是定义要执行的任务。每个任务在执行时会传入当前集群状态，任务执行完毕返回新产生的集群状态。如果没有产生新的集群状态，则返回原集群状态的实例。</li>
+<li>ClusterStateTaskConfig：任务的配置信息，包括超时和优先级。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>任务提交过程实现</h4>
+<ul class="point">
+<li><b>submitStateUpdateTask最终通过TaskBatcher# submitTasks来提交任务</b>
+<ul class="quote">
+<li>该方法的实现有些难以理解。其核心工作就是将提交的任务交给线程池执行。但是在此基础上实现了部分场景下的任务去重。</li>
+</ul>
+</li>
+<li><b>去重的原理是：拥有相同ClusterStateTaskExecutor对象实例的任务只执行一个</b>
+<ul class="quote">
+<li>去重在实现时并没有在线程池队列的列表上操作，而是将任务列表添加到一个独立于线程池任务队列之外的HashMap中：tasksPerBatchingKey。</li>
+<li>区分重复任务的方式是通过定义的任务本身实现的，即定义具有相同的ClusterStateTaskExecutor 对象。去重的方式并非将重复的任务从列表中删除，而是在执行完任务后赋予重复任务相同的执行结果。</li>
+</ul>
+</li>
+<li><b>提交的任务列表本身任务数量大于1个的情况如上一小节所述，只在选主的流程中</b>
+<ul class="quote">
+<li>只有模块在提交任务时明确使用了相同的 ClusterStateTaskExecutor 对象，才可能会在执行时去重。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch85"><summary>14.4 集群任务的执行过程</summary>
+<div class="sec">
+<h4>集群任务的执行过程</h4>
+<ul class="point">
+<li><b>构建任务列表</b>
+<ul class="quote">
+<li>先根据任务的batchingKey从提交任务时记录的HashMap(tasksPerBatchingKey)中提取要执行的任务列表。</li>
+<li>用这个任务列表中尚未执行的任务构建新的列表，这个新列表就是真实要执行的任务列表。</li>
+</ul>
+</li>
+<li><b>执行任务</b>
+<ul class="quote">
+<li>执行任务并发布集群状态的总体过程在 MasterService#runTasks 方法中实现。</li>
+<li>如果任务执行失败，则回调onFailure方法通知Listener。</li>
+<li>如果执行成功并产生新的集群状态，则进入集群状态发布过程。</li>
+</ul>
+</li>
+<li><b>发布集群状态</b>
+<ul class="quote">
+<li>通过clusterStatePublisher发布集群状态，并在成功或失败后通知相关回调函数。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch86"><summary>14.5 集群状态的发布过程</summary>
+<div class="sec">
+<h4>集群状态的发布过程</h4>
+<ul class="point">
+<li><b>ES使用二段提交来实现分布式事务</b>
+<ul class="quote">
+<li>二段提交可以避免失败回滚，其基本过程是：把信息发下去，但不应用，如果得到多数节点的确认，则再发一个请求出去要求节点应用。</li>
+</ul>
+</li>
+<li><b>发布集群状态到参与者的数量并非定义为全部，而是多数节点成功就算成功</b>
+<ul class="quote">
+<li>多数的定义取决于配置项：discovery.zen.minimum_master_nodes。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>增量发布的实现原理</h4>
+<ul class="point">
+<li><b>ES在发布集群状态时允许在相邻版本号之间只发送增量内容</b>
+<ul class="quote">
+<li>在发布之前的准备工作中，先准备发布集群状态的目的节点列表，这个列表只是在已知集群列表中移除了本地节点。</li>
+<li>遍历这个节点列表，如果上次发布时这个节点成功了，则给它准备增量的信息，否则准备全量的信息。</li>
+<li>增量和全量的集群状态都会被序列化并压缩，全量的信息保存在 serializedStates 中，增量的信息保存在serializedDiffs中。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>二段提交总流程</h4>
+<ul class="point">
+<li><b>二段提交发送的第一个请求是发布的集群状态数据</b>
+<ul class="quote">
+<li>在发送第一个请求的响应处理中检查是否达到发送第二个请求的条件，触发提交阶段。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>发布过程</h4>
+<ul class="point">
+<li><b>无论发送全量还是增量内容，最终都通过PublishClusterStateAction#sendClusterStateToNode实现发送</b>
+<ul class="quote">
+<li>该方法调用transportService异步发送数据，并在请求的响应中判断是否可以进入提交阶段。</li>
+<li>在发布请求的响应处理中，当收到足够数量的(discovery.zen.minimum_master_nodes -1)节点正常返回的响应数量，主节点发送提交请求。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>提交过程</h4>
+<ul class="point">
+<li><b>当条件满足后，正式发送提交请求，发送过程仍然通过transportService异步发送</b>
+<ul class="quote">
+<li>在对请求的响应处理上，handleResponse与 handleException本质上执行相同的处理， onResponse和onFailure只是将计数器latch减一。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>异常处理</h4>
+<ul class="point">
+<li><b>二段提交过程只有一次中止分布式事务的机会，就是在提交阶段，没有收到足够节点ACK</b>
+<ul class="quote">
+<li>在这种情况下，主节点会重新加入集群。</li>
+</ul>
+</li>
+<li><b>一旦进入提交阶段，发布过程就进入不可逆状态，如果有节点应用失败了，则整个发布过程不会被认为失败</b>
+<ul class="quote">
+<li>即使只有少数节点正常应用集群状态，最终也只能接受这种结果。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch87"><summary>14.6 应用集群状态</summary>
+<div class="sec">
+<h4>集群状态的生成与应用</h4>
+<ul class="point">
+<li><b>主节点在发布集群状态时在目的节点列表中排除了自己，发布成功之后会应用这个集群状态</b>
+<ul class="quote">
+<li>主节点应用集群状态在 ZenDiscovery#publish 方法中，发布成功之后执行。</li>
+</ul>
+</li>
+<li><b>从节点在对集群状态的响应处理在PublishClusterStateAction#handleCommitRequest 方法中，主从节点最终都调用 ZenDiscovery# processNextCommittedClusterState应用集群状态</b>
+<ul class="quote">
+<li>从节点在对集群状态的响应处理在PublishClusterStateAction#handleCommitRequest 方法中。</li>
+<li>主从节点最终都调用 ZenDiscovery# processNextCommittedClusterState应用集群状态。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>应用集群状态的过程</h4>
+<ul class="point">
+<li><b>应用集群状态，通知要对集群状态处理的模块，封装在ClusterApplierService类中</b>
+<ul class="quote">
+<li>当准备应用一个集群状态，在做完一些异常处理后，调用该类的onNewClusterState方法进入应用过程。</li>
+<li>并在submitStateUpdateTask方法中将集群状态应用任务交给线程池执行。</li>
+</ul>
+</li>
+<li><b>UpdateTask类本质上是一个线程任务(Runnable)，其类结构如下图所示</b>
+<ul class="quote">
+<li>线程池clusterApplierService#updateTask运行任务时执行ClusterApplierService#runTask方法。</li>
+<li>同样先进行异常检查，例如，检查应用的集群状态是否与上一个相同，如果相同则不应用。</li>
+<li>在正常情况下，进入applyChanges应用集群状态，该方法中正式调用各个模块的Applier和Listener，并更新本节点存储的集群状态。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>集群状态处理的具体方式</h4>
+<ul class="point">
+<li><b>调用各模块对集群状态进行处理时，具体方式就是遍历Applier，依次调用各模块的处理函数，没有先后顺序关系。</b>
+</li>
+<li><b>当执行完各模块的applyClusterState后，遍历通知所有的Listener。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch88"><summary>14.7 查看等待执行的集群任务</summary>
+<div class="sec">
+<h4>查看等待执行的集群任务</h4>
+<ul class="point">
+<li><b>通过/_cluster/health API可以查看等待任务的总数</b>
+<ul class="quote">
+<li>等待任务数为返回信息的number_of_pending_tasks字段。</li>
+</ul>
+</li>
+<li><b>使用/_cluster/pending_tasks或/_cat/pending_tasks API查看等待执行的具体任务</b>
+<ul class="quote">
+<li>返回信息中包含了任务插入顺序、优先级，以及具体的任务名称。</li>
+<li>source 字段是提交任务时第一个参数指定的，表示提交任务的源。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch89"><summary>14.8 任务管理API</summary>
+<div class="sec">
+<h4>任务管理API概述</h4>
+<ul class="point">
+<li><b>任务管理API中的“任务”不一定是集群层面的任务，一般指周期性执行的任务，或者用户发起的任务</b>
+<ul class="quote">
+<li>例如，node stats、search queries、create index等。</li>
+<li>如果一个用户发起的任务引起了集群状态的变化，则这个任务可能会同时被task API和上一节的pending cluster tasks API列出。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>列出运行中的任务</h4>
+<ul class="point">
+<li><b>可以检索当前在集群中的一个或多个节点上执行的任务的信息</b>
+<ul class="quote">
+<li>curl -X GET ＂localhost:9200/_tasks＂。</li>
+<li>也可以查看特定节点上运行的任务，下面的命令返回在节点nodeId1和nodeId2上运行的所有任务：curl -X GET ＂localhost:9200/_tasks?nodes=nodeId1,nodeId2＂。</li>
+<li>还可以过滤出与集群相关的任务，下面的命令返回节点nodeId1和nodeId2上运行的所有与集群相关的任务：curl -X GET ＂localhost:9200/_tasks?nodes=nodeId1,nodeId2&amp;actions=cluster:*＂。</li>
+<li>还可以使用actions=*search&amp;detailed返回正在执行的搜索任务，detailed参数表示返回详细信息。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>取消任务</h4>
+<ul class="point">
+<li><b>如果任务支持被取消，则可以使用下面的方式取消一个长时间运行的任务</b>
+<ul class="quote">
+<li>curl -X POST ＂localhost:9200/_tasks/node_id:task_id/_cancel＂。</li>
+<li>任务取消命令支持与列出任务相同的任务选择参数，因此可以同时取消多个任务。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch90"><summary>第15章 Transport模块分析</summary>
+<div class="sec">
+<h4>传输模块的作用</h4>
+<ul class="point">
+<li><b>传输模块用于集群内节点之间的内部通信</b>
+<ul class="quote">
+<li>从一个节点到另一个节点的每个调用都使用传输模块。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>传输机制的特点</h4>
+<ul class="point">
+<li><b>传输机制是完全异步的，没有阻塞线程等待响应</b>
+<ul class="quote">
+<li>使用异步通信的好处是解决了C10k问题，也是广播请求/收集结果(例如，ES中的搜索)的理想解决方案。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch91"><summary>15.1 配置信息</summary>
+<div class="sec">
+<h4>传输模块配置</h4>
+<ul class="point">
+<li><b>传输模块基于TCP的实现，默认使用9300端口通信</b>
+<ul class="quote">
+<li>该端口承载了三种不同的业务：客户端的Java API通信，节点间的内部通信，以及自动发现的通信。</li>
+</ul>
+</li>
+<li><b>使用transport profiles，可以将三者配置到不同的地址和端口</b>
+<ul class="quote">
+<li>例如：transport.profiles.default.port: 9300-9400，transport.profiles.default.bind_host: 10.0.0.1。</li>
+</ul>
+</li>
+<li><b>传输模块有一个专用的 tracer 日志，可以通过动态设置org.elasticsearch.transport.TransportService.tracer为TRACE级别来开启</b>
+<ul class="quote">
+<li>还可以使用一组include和exclude通配符模式来控制tracer的内容。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>通用网络配置</h4>
+<ul class="point">
+<li><b>network.host节点将绑定到此主机名或IP地址，并将此主机公布到集群中的其他节点</b>
+<ul class="quote">
+<li>接受一个IP地址、主机名、一个特殊值，或者是这些内容任意组合的数组。默认为_local_。</li>
+</ul>
+</li>
+<li><b>discovery.zen.ping.unicast.hosts为了加入集群，节点需要知道集群中一些其他节点的主机名或IP地址</b>
+<ul class="quote">
+<li>此设置提供节点将尝试联系其他节点的初始列表，接受IP地址或主机名。</li>
+</ul>
+</li>
+<li><b>http.port用于接受HTTP请求的绑定端口</b>
+<ul class="quote">
+<li>接受单个值或范围。如果指定了一个范围，则该节点将绑定到该范围内的第一个可用端口。默认为9200～9300。</li>
+</ul>
+</li>
+<li><b>transport.tcp.port为节点之间的通信绑定端口</b>
+<ul class="quote">
+<li>接受单个值或范围。如果指定了一个范围，则该节点将绑定到该范围内的第一个可用端口。默认为9300～9400。</li>
+</ul>
+</li>
+<li><b>network.bind_host指定节点应该绑定到哪个网络接口，以便监听传入的请求</b>
+<ul class="quote">
+<li>一个节点可以绑定到多个接口，例如，两个网卡，或者一个站点本地地址和一个回环地址。默认为network.host。</li>
+</ul>
+</li>
+<li><b>network.publish_host发布主机是节点向集群中发布的单个网口，以便其他节点可以连接它</b>
+<ul class="quote">
+<li>目前，ES可以绑定到多个地址，但只发布一个地址。如果没有指定，则默认为来自 network.host的“最佳”地址。按IPv4/IPv6栈优先排序，然后是可达性。如果为network.host设置多个地址，但在节点到节点的通信中依赖于特定的地址，那么应该显式地设置network.publish_host。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch92"><summary>15.2 Transport总体架构</summary>
+<div class="sec">
+<h4>Transport总体架构</h4>
+<ul class="point">
+<li><b>ES的传输模块和HTTP传输模块都是基于Netty实现的</b>
+<ul class="quote">
+<li>Netty是一个Java实现的高性能异步网络通信库，基于epoll/kqueue实现事件处理。</li>
+</ul>
+</li>
+<li><b>传输模块目前只有一种实现，就是TCP传输模块</b>
+<ul class="quote">
+<li>TCP传输模块有三类用处：内部节点间通信(我们称为RPC)、Java API客户端，以及节点发现。</li>
+<li>HTTP模块负责服务用户的REST请求。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>网络层</h4>
+<ul class="point">
+<li><b>网络层是对内部各种传输模块的抽象</b>
+<ul class="quote">
+<li>在内部实现中，传输模块和 HTTP 模块统一封装到NetworkModule类中。</li>
+</ul>
+</li>
+<li><b>NetworkModule内部组件的初始化是通过插件方式加载的</b>
+<ul class="quote">
+<li>在其构造函数中传入NetworkPlugin列表，NetworkPlugin是一个接口类，Netty4Plugin从这个接口实现。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>服务层</h4>
+<ul class="point">
+<li><b>服务层指网络模块的上层应用层，基于网络模块提供的 Transport 来收/发数据</b>
+<ul class="quote">
+<li>本节重点分析节点间通信，该通信使用TransportService 类实现。</li>
+</ul>
+</li>
+<li><b>在节点内部任何通信前，首先需要连接到集群的其他节点</b>
+<ul class="quote">
+<li>在默认配置下，ES的每个节点与其他节点都会保持13个长连接。</li>
+</ul>
+</li>
+<li><b>发送请求</b>
+<ul class="quote">
+<li>内部的RPC请求通过TransportService#sendRequest发送。</li>
+</ul>
+</li>
+<li><b>定义对Response的处理</b>
+<ul class="quote">
+<li>当通过TransportService#sendRequest发送一个RPC请求时，本节点作为RPC客户端，需要同时定义当服务器执行完 RPC，返回 Response 后，对这个 Response 如何处理。</li>
+</ul>
+</li>
+<li><b>定义对请求的处理</b>
+<ul class="quote">
+<li>本节点也需要处理来自其他节点的RPC请求，因此需要定义对每个RPC使用哪个模块进行处理。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch93"><summary>15.3 REST解析和处理</summary>
+<div class="sec">
+<h4>REST请求的处理</h4>
+<ul class="point">
+<li><b>REST请求和RPC请求都称为Action，对REST请求执行处理的类命名规则为Rest*Action</b>
+<ul class="quote">
+<li>ActionModule类中注册了某个类对某个REST请求的处理，并对外提供这种映射关系，每个REST处理类继承自RestNodesInfoAction。</li>
+</ul>
+</li>
+<li><b>每个 REST 请求处理类需要实现一个 prepareRequest 函数，用于在收到请求时，对请求执行验证工作等</b>
+<ul class="quote">
+<li>当一个请求到来时，网络层调用BaseRestHandler#handleRequest。在这个函数中，会调用子类的prepareRequest，然后执行这个Action。</li>
+<li>对Action的具体处理定义在处理类的prepareRequest的Lambda表达式中。</li>
+</ul>
+</li>
+<li><b>当Netty收到HTTP请求后，调用Netty4HttpServerTransport#dispatchRequest，该方法根据定义好的Action调用对应的Rest*Action处理类。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch94"><summary>15.4 RPC实现</summary>
+<div class="sec">
+<h4>RPC实现概述</h4>
+<ul class="point">
+<li><b>RPC是远程过程调用的简称，ES的RPC基于TCP实现，底层是Netty的Netty4Transport。</b>
+</li>
+<li><b>每个RPC在内部称为Action，有唯一的名称</b>
+<ul class="quote">
+<li>当传输模块收到一个RPC请求时，会根据这个Action名称获取对应的处理类。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>RPC的注册和映射</h4>
+<ul class="point">
+<li><b>ActionModule类中注册Action与处理类的映射</b>
+<ul class="quote">
+<li>与REST Action的注册类似，内部RPC也注册在ActionModule类中。</li>
+<li>一个Action可以理解为RPC调用的名称。</li>
+</ul>
+</li>
+<li><b>TransportService#registerRequestHandler方法注册Action名称与对应处理器的映射</b>
+<ul class="quote">
+<li>在TransportService中注册RPC信息是为了在收到传输层的请求后，通过Action字符串找到对应的处理类。</li>
+<li>注册过程需要提供两个关键信息：Action 名称与请求处理类(TransportRequestHandler对象)。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>根据Action获取处理类</h4>
+<ul class="point">
+<li><b>REST请求触发时，通过Action获取TransportAction</b>
+<ul class="quote">
+<li>在NodeClient#executeLocally方法中通过Action获取TransportAction。</li>
+<li>获取 TransportAction 后，调用 execute 执行处理。</li>
+</ul>
+</li>
+<li><b>TcpTransport收到RPC请求时，通过TransportService通过Action获取处理类</b>
+<ul class="quote">
+<li>当收到一个请求时，首先在TcpTransport#messageReceived中进行基本的处理，然后到handleRequest方法中处理请求。</li>
+<li>在这个方法中，调用TransportService通过Action获取处理类。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch95"><summary>15.5 思考与总结</summary>
+<div class="sec">
+<h4>REST API和内部RPC的解析与调用。</h4>
+<ul class="point">
+</ul></div>
+<div class="sec">
+<h4>ES节点间的连接数问题</h4>
+<ul class="point">
+<li><b>默认情况下，ES的每个节点与其他节点都保持13个长连接</b>
+<ul class="quote">
+<li>这在集群规模较大时，例如，达到1000节点时，会维护非常多的连接。</li>
+</ul>
+</li>
+<li><b>如果重新启动集群，新建连接的请求有可能被操作系统认为是SYN攻击</b>
+<ul class="quote">
+<li>由于需要在短时间内建立大量连接。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch96"><summary>第16章 ThreadPool模块分析</summary>
+<div class="sec">
+<h4>ThreadPool模块概述</h4>
+<ul class="point">
+<li><b>ThreadPool模块用于执行各种任务</b>
+<ul class="quote">
+<li>每个节点都会创建一系列的线程池来执行任务。</li>
+<li>许多线程池都有与其相关任务队列，用来允许挂起请求，而不是丢弃它。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>ThreadPool类型</h4>
+<ul class="point">
+<li><b>ThreadPool类型包括generic、index、search、get、bulk、snapshot、warmer、refresh、listener、same、management、flush、force_merge、fetch_shard_started、fetch_shard_store</b>
+<ul class="quote">
+<li>generic用于通用的操作(例如，节点发现)，线程池类型为scaling。</li>
+<li>index用于index/delete操作，线程池类型为fixed，大小为处理器的数量，队列大小为200，允许设置的最大线程数为1+处理器数量。</li>
+<li>search用于count/search/suggest操作。线程池类型为fixed，大小为int((处理器数量3)/2)+1，队列大小为1000。</li>
+<li>get用于get操作。线程池类型为fixed，大小为处理器的数量，队列大小为1000。</li>
+<li>bulk用于bulk操作，线程池类型为fixed，大小为处理器的数量，队列大小为200，该线程池允许设置的最大线程数为1+处理器数量。</li>
+<li>snapshot用于snaphost/restore操作。线程池类型为scaling，线程保持存活时间为5min，最大线程数为min(5, (处理器数量)/2)。</li>
+<li>warmer用于segment warm-up操作。线程池类型为scaling，线程保持存活时间为5min，最大线程数为min(5, (处理器数量)/2)。</li>
+<li>refresh用于 refresh 操作。线程池类型为 scaling，线程空闲保持存活时间为5min，最大线程数为min(10, (处理器数量)/2)。</li>
+<li>listener主要用于Java客户端线程监听器被设置为true时执行动作。线程池类型为scaling，最大线程数为min(10, (处理器数量)/2)。</li>
+<li>same在调用者线程执行，不转移到新的线程池。</li>
+<li>management管理工作的线程池，例如，Node info、Node tats、List tasks等。</li>
+<li>flush用于索引数据的flush操作。</li>
+<li>force_merge用于Lucene分段的force merge。</li>
+<li>fetch_shard_started用于TransportNodesAction。</li>
+<li>fetch_shard_store用于TransportNodesListShardStoreMetaData。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>ThreadPool大小调整</h4>
+<ul class="point">
+<li><b>线程池和队列的大小可以通过配置文件进行调整</b>
+<ul class="quote">
+<li>例如，为search增加线程数和队列大小：thread_pool.search.size: 30。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch97"><summary>16.1 线程池类型</summary>
+<div class="sec">
+<h4>线程池类型</h4>
+<ul class="point">
+<li><b>线程池要处理的任务类型大致可以分为两类：CPU计算密集型和I/O密集型</b>
+<ul class="quote">
+<li>对于CPU密集型任务，线程池大小设置为N+1。</li>
+<li>对于I/O密集型任务，线程池大小设置为2N+1。</li>
+</ul>
+</li>
+<li><b>线程池的大小可以参考如下设置，其中N为CPU的个数</b>
+<ul class="quote">
+<li>对于CPU密集型任务，线程池的线程数量一般不应该超过N+1。</li>
+<li>I/O密集型任务的线程数可以稍大一些，具体需要看I/O等待时间有多长。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>fixed线程池</h4>
+<ul class="point">
+<li><b>线程池拥有固定数量的线程来处理请求，当线程空闲时不会销毁，当所有线程都繁忙时，请求被添加到队列中</b>
+<ul class="quote">
+<li>size参数用来控制线程的数量。</li>
+<li>queue_size参数用来控制线程池相关的任务队列大小。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>scaling线程池</h4>
+<ul class="point">
+<li><b>scaling线程池的线程数量是动态的，介于core和max参数之间变化</b>
+<ul class="quote">
+<li>线程池的最小线程数为配置的core大小，随着请求的增加，当core数量的线程全都繁忙时，线程数逐渐增大到max数量。</li>
+<li>max是线程池可拥有的线程数上限。当线程空闲时，线程数从max大小逐渐降低到core大小。</li>
+<li>keep_alive参数用来控制线程在线程池中的最长空闲时间。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>direct线程池</h4>
+<ul class="point">
+<li><b>这种线程池对用户并不可见，当某个任务不需要在独立的线程执行，又想被线程池管理时，于是诞生了这种特殊类型的线程池：在调用者线程中执行任务。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>fixed_auto_queue_size线程池</h4>
+<ul class="point">
+<li><b>与fixed类型的线程池相似，该线程池的线程数量为固定值，但是队列类型不一样。其队列大小根据利特尔法则(Little＇s Law)自动调整大小</b>
+<ul class="quote">
+<li>size，用于指定线程数量。</li>
+<li>queue_size，指定初始队列大小。</li>
+<li>min_queue_size，最小队列大小。</li>
+<li>max_queue_size，最大队列大小。</li>
+<li>auto_queue_frame_size，调整队列之前进行测量的操作数。</li>
+<li>target_response_time，一个时间值设置，用来指示任务的平均响应时间，如果任务经常高于这个时间，则线程池队列将被调小，以便拒绝任务。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch98"><summary>16.2 处理器设置</summary>
+<div class="sec">
+<h4>处理器设置的默认值</h4>
+<ul class="point">
+<li><b>ES自动探测处理器数量，线程池的大小基于这个数量进行初始化。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>处理器设置的必要性</h4>
+<ul class="point">
+<li><b>在同一台主机上运行多个 ES 实例，希望每个实例的线程池只根据一部分 CPU 来设置</b>
+<ul class="quote">
+<li>在16核的服务器上运行2个实例，可以将processors设置为8。</li>
+</ul>
+</li>
+<li><b>自动探测出的处理器数量是错误的，需要明确设置处理器数量。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>如何检查自动探测的处理器数量</h4>
+<ul class="point">
+<li><b>使用节点信息API中的os字段来查看。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch99"><summary>16.3 查看线程池</summary>
+<div class="sec">
+<h4>cat thread pool</h4>
+<ul class="point">
+<li><b>显示每个节点的线程池统计信息</b>
+<ul class="quote">
+<li>active表示当前正在执行任务的线程数量，queue表示队列中等待处理的请求数量，rejected表示由于队列已满，请求被拒绝的次数。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>nodes info</h4>
+<ul class="point">
+<li><b>返回每个线程池的类型和配置信息</b>
+<ul class="quote">
+<li>线程数量、队列大小等。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>nodes stats</h4>
+<ul class="point">
+<li><b>返回集群中一个或全部节点的统计数据</b>
+<ul class="quote">
+<li>默认情况下，该 API 返回全部indices、os、process、jvm、transport、http、fs、breaker 和thread_pool方面的统计数据。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>nodes hot threads</h4>
+<ul class="point">
+<li><b>返回集群中一个或全部节点的热点线程</b>
+<ul class="quote">
+<li>支持以下参数：threads，返回的热点线程数，默认为3；interval,ES对线程做两次检查，来计算某个操作上花费时间的百分比，此参数定义这个间隔时间。默认为500 ms；type，定义要检查的线程状态类型，默认为CPU；ignore_idle_threads，如果设置为 true，则空闲线程(例如，在套接字中等待，或者从空队列中获取任务)将被过滤。默认值为true。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Java的线程池结构</h4>
+<ul class="point">
+<li><b>Java内部的线程池称为Executor框架，包括Runable、Executor、ExecutorService、ThreadPoolExecutor和EsThreadPoolExecutor等类</b>
+<ul class="quote">
+<li>Runable定义一个要执行的任务。</li>
+<li>Executor提供了execute方法，接受一个Runable实例，用来执行一个任务。</li>
+<li>ExecutorService是线程池的虚基类，继承自Executor，提供了shutdown、shutdownNow等关闭线程池接口。</li>
+<li>ThreadPoolExecutor线程池的具体实现。继承自ExecutorService，维护线程创建、线程生命周期、任务队列等。</li>
+<li>EsThreadPoolExecutor是ES对ThreadPoolExecutor的扩展实现。</li>
+</ul>
+</li>
+<li><b>ThreadPoolExecutor的构造函数包括corePoolSize、maximumPoolSize、keepAliveTime、BlockingQueue、threadFactory和handler等参数</b>
+<ul class="quote">
+<li>corePoolSize，线程池大小。</li>
+<li>maximumPoolSize，最大线程数量。</li>
+<li>keepAliveTime，线程空闲回收时间。</li>
+<li>BlockingQueue，任务队列。</li>
+<li>handler，队列满，拒绝请求时的回调函数。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch100"><summary>16.4 ES的线程池实现</summary>
+<div class="sec">
+<h4>ThreadPool类结构与初始化</h4>
+<ul class="point">
+<li><b>ThreadPool类在节点启动时初始化</b>
+<ul class="quote">
+<li>ThreadPool类对象在Node类的构造函数中初始化。</li>
+</ul>
+</li>
+<li><b>线程池的名称在内部类Names中</b>
+<ul class="quote">
+<li>最好记住它们的名字，有时需要通过jstack查看堆栈， ES的堆栈非常长，这就需要通过线程池的名称去查找关注的内容。</li>
+</ul>
+</li>
+<li><b>线程池类型由枚举类型ThreadPoolType定义</b>
+<ul class="quote">
+<li>ThreadPoolType有四种类型：DIRECT、FIXED、SCALING、FIXED_AUTO_QUEUE_SIZE。</li>
+</ul>
+</li>
+<li><b>在ThreadPool类构造函数中，全部的线程池被初始化</b>
+<ul class="quote">
+<li>这些线程池构建成功后，最终保存到一个map结构中，map列表根据builders信息构建，将SAME线程池单独添加进去。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>fixed类型线程池构建过程</h4>
+<ul class="point">
+<li><b>FixedExecutorBuilder 类用于 fixed 类型的线程池构建</b>
+<ul class="quote">
+<li>主要实现是通过 EsExecutors. newFixed方法创建一个ExecutorService。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>scaling类型线程池构建过程</h4>
+<ul class="point">
+<li><b>ScalingExecutorBuilder用于scaling类型线程池的构建</b>
+<ul class="quote">
+<li>主要实现是通过EsExecutors.newScaling方法创建一个ExecutorService,min和max分别对应corePoolSize和maximumPoolSize。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>direct类型线程池构建过程</h4>
+<ul class="point">
+<li><b>direct类型的线程池没有通过*ExecutorBuilder类创建，而是通过EsExecutors.newDirectExecutorService方法直接创建的</b>
+<ul class="quote">
+<li>该方法中直接返回一个定义好的简单的线程池 DIRECT_EXECUTOR_SERVICE。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>fixed_auto_queue_size类型线程池构建过程</h4>
+<ul class="point">
+<li><b>该类型的线程池通过 AutoQueueAdjustingExecutorBuilder 类构建</b>
+<ul class="quote">
+<li>构建过程的主要实现是通过EsExecutors.newAutoQueueFixed方法创建一个ExecutorService。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch101"><summary>16.5 其他线程池</summary>
+<div class="sec">
+<h4>PrioritizedEsThreadPoolExecutor简介</h4>
+<ul class="point">
+<li><b>PrioritizedEsThreadPoolExecutor是ES中支持优先级的线程池</b>
+<ul class="quote">
+<li>目前，只有主节点执行集群任务，以及从节点应用集群状态时使用该类型的线程池。</li>
+</ul>
+</li>
+<li><b>PrioritizedEsThreadPoolExecutor通过EsExecutors.newSinglePrioritizing方法构建</b>
+<ul class="quote">
+<li>线程池有固定大小，线程数为1。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>PrioritizedEsThreadPoolExecutor的线程池队列</h4>
+<ul class="point">
+<li><b>PrioritizedEsThreadPoolExecutor使用PriorityBlockingQueue作为线程池队列</b>
+<ul class="quote">
+<li>PriorityBlockingQueue是JDK中的实现，初始大小为11，最大为Integer.MAX_VALUE - 8，基本是无限的。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch102"><summary>16.6 思考与总结</summary>
+<div class="sec">
+<h4>不同类型的线程池及其特点</h4>
+<ul class="point">
+<li><b>scaling类型的线程池动态维护线程池数量。</b>
+</li>
+<li><b>fixed_auto_queue_size与fix类型的线程池都有固定的线程数</b>
+<ul class="quote">
+<li>fixed_auto_queue_size类型的线程池有固定的线程数和队列大小。</li>
+<li>fix类型的线程池有固定的线程数和队列大小，且线程池数量不能动态调整。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>ThreadPool类的使用</h4>
+<ul class="point">
+<li><b>ThreadPool类在节点启动时初始化，然后将类的引用传递给其他模块</b>
+<ul class="quote">
+<li>其他模块通过明确指定线程名称从ThreadPool类中获取对应的线程池。</li>
+</ul>
+</li>
+<li><b>其他模块通过线程池执行自定义的任务。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>节点关闭时线程池的处理</h4>
+<ul class="point">
+<li><b>节点关闭时，对线程池模块先调用shutdown，等待10秒后，执行shutdownNow</b>
+<ul class="quote">
+<li>这样可以确保线程池中的任务有机会执行完毕，但在超时后会尝试终止线程池中的任务。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch103"><summary>第17章 Shrink原理分析</summary>
+<div class="sec">
+<h4>Shrink原理分析</h4>
+<ul class="point">
+<li><b>Shrink API可以缩小主分片数量，但不对源索引直接进行缩小操作</b>
+<ul class="quote">
+<li>Shrink API使用与源索引相同的配置创建一个新索引，仅降低分片数。</li>
+</ul>
+</li>
+<li><b>新索引的主分片数必须是源索引主分片数的因数</b>
+<ul class="quote">
+<li>例如，8个分片可以缩小到4、2、1个分片。如果源索引的分片数为素数，则目标索引的分片数只能为1。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch104"><summary>17.1 准备源索引</summary>
+<div class="sec">
+<h4>创建源索引</h4>
+<ul class="point">
+<li><b>创建索引：my_source_index，包括5个主分片和1个副分片，并写入几条测试数据。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>标记索引为只读</h4>
+<ul class="point">
+<li><b>通过下面的命令，将索引标记为只读</b>
+<ul class="quote">
+<li>注意，“所有分片副本”不指索引的全部分片，无论主分片还是副分片，任意一个就可以。分配器也不允许将主副分片分配到同一节点。</li>
+<li>选项index.blocks.write设置为true来禁止对索引的写操作。但索引的metadata可以正常写。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch105"><summary>17.3 Shrink的工作原理</summary>
+<div class="sec">
+<h4>Shrink的工作原理</h4>
+<ul class="point">
+<li><b>Shrink通过创建新索引、创建硬链接和恢复操作三个步骤来完成</b>
+<ul class="quote">
+<li>创建新索引：使用旧索引的配置创建新索引，只是减少主分片的数量，所有副本都迁移到同一个节点。</li>
+<li>创建硬链接：从源索引到目的索引创建硬链接。如果操作系统不支持硬链接，则复制Lucene分段。</li>
+<li>对目标索引执行恢复操作，就像一个关闭的索引重新打开时一样。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>创建新索引</h4>
+<ul class="point">
+<li><b>使用旧索引的配置创建新索引，只是减少主分片的数量，所有副本都迁移到同一个节点</b>
+<ul class="quote">
+<li>创建硬链接时，源文件和目标文件必须在同一台主机。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>创建硬链接</h4>
+<ul class="point">
+<li><b>从源索引到目的索引创建硬链接，如果操作系统不支持硬链接，则复制Lucene分段</b>
+<ul class="quote">
+<li>链接过程：从源索引的shard[0]开始，遍历所有shard，将所有segment链接到目的索引，目的索引的segment从0开始命名，依次递增。</li>
+<li>为什么一定要硬链接，不使用软链接？硬链接可以保证Shrink之后，源索引和目的索引是完全独立的，读写和删除都不应该互相影响。</li>
+<li>由于使用了硬链接，也因为硬链接的特性带来一些限制：不能交叉文件系统或分区进行硬链接的创建，因为不同分区和文件系统有自己的inode。</li>
+<li>Shrink 完成后，修改源索引，目的索引会变吗？答案是不会。虽然链接到了源分段，Shrink 期间索引只读，目标索引能看到的只有源索引的当前数据，Shrink 完成后，由于Lucene中分段的不变性，“write once”机制保证每个文件都不会被更新。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>硬链接过程源码分析</h4>
+<ul class="point">
+<li><b>shrink index时的恢复类型为LOCAL_SHARDS，执行storeRecovery.recoverFromLocalShards</b>
+<ul class="quote">
+<li>在addIndices中，调用Lucene中的org.apache.lucene.store.HardlinkCopyDirectoryWrapper实现硬链接。</li>
+<li>addIndices将整个源索引的全部shard链接到目标路径。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch106"><summary>第18章 写入速度优化</summary>
+<div class="sec">
+<h4>写入速度优化的策略</h4>
+<ul class="point">
+<li><b>调整副本数，集群首次批量导入数据时，可以将副本数设置为0，导入完毕再将副本数调整回去</b>
+<ul class="quote">
+<li>副分片只需要复制，节省了构建索引过程。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>加大translog flush间隔</h4>
+<ul class="point">
+<li><b>降低iops、writeblock。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>加大index refresh间隔</h4>
+<ul class="point">
+<li><b>降低I/O，降低segment merge频率。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>调整bulk请求的大小和频率。</h4>
+<ul class="point">
+</ul></div>
+<div class="sec">
+<h4>优化磁盘间的任务均匀情况</h4>
+<ul class="point">
+<li><b>将shard尽量均匀分布到物理主机的各个磁盘。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>优化节点间的任务分布</h4>
+<ul class="point">
+<li><b>将任务尽量均匀地发到各节点。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>优化Lucene层建立索引的过程</h4>
+<ul class="point">
+<li><b>降低CPU占用率及I/O，例如，禁用_all字段。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch107"><summary>18.1 translog flush间隔调整</summary>
+<div class="sec">
+<h4>translog的持久化策略调整</h4>
+<ul class="point">
+<li><b>默认设置下，translog的持久化策略为：每个请求都“flush”</b>
+<ul class="quote">
+<li>这是影响 ES 写入速度的最大因素。</li>
+</ul>
+</li>
+<li><b>如果系统可以接受一定概率的数据丢失，则调整translog持久化策略为周期性和一定大小的时候“flush”</b>
+<ul class="quote">
+<li>设置为async表示translog的刷盘策略按sync_interval配置指定的时间周期进行。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>translog刷盘间隔时间调整</h4>
+<ul class="point">
+<li><b>加大translog刷盘间隔时间，默认为5s，不可低于100ms</b>
+<ul class="quote">
+<li>index.translog.sync_interval: 120s。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>translog刷新阈值大小调整</h4>
+<ul class="point">
+<li><b>超过这个大小会导致refresh操作，产生新的Lucene分段，默认值为512MB</b>
+<ul class="quote">
+<li>index.translog.flush_threshold_size: 1024mb。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch108"><summary>18.2 索引刷新间隔refresh_interval</summary>
+<div class="sec">
+<h4>索引刷新间隔refresh_interval默认值及其影响</h4>
+<ul class="point">
+<li><b>默认情况下索引的refresh_interval为1秒，这意味着数据写1秒后就可以被搜索到</b>
+<ul class="quote">
+<li>每次索引的refresh会产生一个新的Lucene段，这会导致频繁的segment merge行为。</li>
+</ul>
+</li>
+<li><b>如果不需要这么高的搜索实时性，应该降低索引refresh周期</b>
+<ul class="quote">
+<li>例如：index.refresh_interval: 120s。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch109"><summary>18.3 段合并优化</summary>
+<div class="sec">
+<h4>段合并优化概述</h4>
+<ul class="point">
+<li><b>从ES 2.0开始，merge行为不再由ES控制，而是由Lucene控制</b>
+<ul class="quote">
+<li>删除了indices.store.throttle.type和indices.store.throttle.max_bytes_per_sec配置。</li>
+<li>改为index.merge.scheduler.max_thread_count和index.merge.policy.*调整开关。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>index.merge.scheduler.max_thread_count调整</h4>
+<ul class="point">
+<li><b>默认值为Math.max(1, Math.min(4, Runtime.getRuntime().availableProcessors() / 2))</b>
+<ul class="quote">
+<li>如果只有一块硬盘并且非 SSD，则应该把它设置为1。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>index.merge.policy.segments_per_tier调整</h4>
+<ul class="point">
+<li><b>指定了每层分段的数量，取值越小则最终segment越少，因此需要merge的操作更多，可以考虑适当增加此值</b>
+<ul class="quote">
+<li>默认为10，其应该大于等于index.merge.policy.max_merge_at_once。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>index.merge.policy.max_merged_segment调整</h4>
+<ul class="point">
+<li><b>指定了单个segment的最大容量，默认为5GB，可以考虑适当降低此值。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch110"><summary>18.4 indexing buffer</summary>
+<div class="sec">
+<h4>indexing buffer的作用和配置</h4>
+<ul class="point">
+<li><b>indexing buffer在为doc建立索引时使用，当缓冲满时会刷入磁盘，生成一个新的segment</b>
+<ul class="quote">
+<li>每个shard有自己的indexing buffer。</li>
+</ul>
+</li>
+<li><b>indices.memory.index_buffer_size的默认设置可能不够，这和可用堆内存、单节点上的shard数量相关，可以考虑适当增大该值</b>
+<ul class="quote">
+<li>indices.memory.index_buffer_size默认为整个堆空间的10%。</li>
+<li>indices.memory.min_index_buffer_size默认为48MB。</li>
+<li>indices.memory.max_index_buffer_size默认为无限制。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch111"><summary>18.5 使用bulk请求</summary>
+<div class="sec">
+<h4>使用bulk请求的优势和注意事项</h4>
+<ul class="point">
+<li><b>批量写比一个索引请求只写单个文档的效率高得多</b>
+<ul class="quote">
+<li>注意bulk请求的整体字节数不要太大，太大的请求可能会给集群带来内存压力。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>bulk线程池和队列的设置</h4>
+<ul class="point">
+<li><b>建立索引的过程属于计算密集型任务，应该使用固定大小的线程池配置</b>
+<ul class="quote">
+<li>线程池最大线程数量应配置为CPU核心数+1。</li>
+</ul>
+</li>
+<li><b>队列大小可以适当增加，但一定要严格控制大小</b>
+<ul class="quote">
+<li>过大的队列导致较高的GC压力，并可能导致FGC频繁发生。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>并发执行bulk请求的策略</h4>
+<ul class="point">
+<li><b>为了给系统增加足够的写入压力，写入过程应该多个客户端、多线程地并行执行</b>
+<ul class="quote">
+<li>如果 CPU 没有压满，则应该提高写入端的并发数量。</li>
+</ul>
+</li>
+<li><b>注意 bulk线程池队列的reject情况，出现reject代表ES的bulk队列已满</b>
+<ul class="quote">
+<li>客户端请求被拒绝，此时客户端会收到429错误(TOO_MANY_REQUESTS)。</li>
+<li>客户端对此的处理策略应该是延迟重试。</li>
+<li>即使客户端正确处理了429错误，我们仍然应该尽量避免产生reject。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch112"><summary>18.6 磁盘间的任务均衡</summary>
+<div class="sec">
+<h4>ES磁盘间任务均衡的问题</h4>
+<ul class="point">
+<li><b>ES在分配shard时，落到各磁盘上的 shard 可能并不均匀</b>
+<ul class="quote">
+<li>这种不均匀可能会导致某些磁盘繁忙，利用率在较长时间内持续达到100%。</li>
+</ul>
+</li>
+<li><b>ES在处理多路径时，优先将shard分配到可用空间百分比最多的磁盘上</b>
+<ul class="quote">
+<li>短时间内创建的shard可能被集中分配到这个磁盘上，即使可用空间是99%和98%的差别。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>ES解决磁盘间任务均衡问题的策略</h4>
+<ul class="point">
+<li><b>从可用空间减去预估大小</b>
+<ul class="quote">
+<li>这种机制只存在于一次索引创建的过程中，下一次的索引创建，磁盘可用空间并不是上次做完减法以后的结果。</li>
+</ul>
+</li>
+<li><b>增加两种策略：简单轮询和基于可用空间的动态加权轮询</b>
+<ul class="quote">
+<li>简单轮询：在系统初始阶段，简单轮询的效果是最均匀的。</li>
+<li>基于可用空间的动态加权轮询：以可用空间作为权重，在磁盘之间加权轮询。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch113"><summary>18.7 节点间的任务均衡</summary>
+<div class="sec">
+<h4>数据写入客户端的任务均衡</h4>
+<ul class="point">
+<li><b>数据写入客户端应该把bulk请求轮询发送到各个节点</b>
+<ul class="quote">
+<li>使用Java API时，当设置client.transport.sniff为true(默认为false)时，列表为所有数据节点，否则节点列表为构建客户端对象时传入的节点列表。</li>
+<li>使用REST API时，列表为构建对象时添加进去的节点。</li>
+</ul>
+</li>
+<li><b>Java API的TransportClient和REST API的RestClient都是线程安全的，建议使用REST API</b>
+<ul class="quote">
+<li>如果写入程序自己创建线程池控制并发，则应该使用同一个Client对象。</li>
+<li>Java API在序列化上有性能优势，但是只有在吞吐量非常大时才值得考虑序列化的开销带来的影响，通常搜索并不是高吞吐量的业务。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>观察bulk请求在不同节点间的均衡性</h4>
+<ul class="point">
+<li><b>通过cat接口观察bulk线程池和队列情况</b>
+<ul class="quote">
+<li>_cat/thread_pool可以查看bulk线程池和队列情况。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch114"><summary>18.8 索引过程调整和优化</summary>
+<div class="sec">
+<h4>自动生成doc ID</h4>
+<ul class="point">
+<li><b>自动生成doc ID可以避免读取磁盘的操作</b>
+<ul class="quote">
+<li>通过ES写入流程可以看出，写入doc时如果外部指定了id，则ES会先尝试读取原来doc的版本号，以判断是否需要更新。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>调整字段Mappings</h4>
+<ul class="point">
+<li><b>减少字段数量，对于不需要建立索引的字段，不写入ES</b>
+<ul class="quote">
+<li>将不需要建立索引的字段index属性设置为not_analyzed或no。</li>
+<li>减少字段内容长度，如果原始数据的大段内容无须全部建立索引，则可以尽量减少不必要的内容。</li>
+<li>使用不同的分析器(analyzer)，不同的分析器在索引过程中运算复杂度也有较大的差异。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>调整_source字段</h4>
+<ul class="point">
+<li><b>_source 字段用于存储 doc 原始数据，对于部分不需要存储的字段，可以通过 includes excludes过滤，或者将_source禁用</b>
+<ul class="quote">
+<li>禁用_source字段可以明显降低对CPU和I/O的压力。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>禁用_all字段</h4>
+<ul class="point">
+<li><b>从ES 6.0开始，_all字段默认为不启用</b>
+<ul class="quote">
+<li>_all字段中包含所有字段分词后的关键词，作用是可以在搜索的时候不指定特定字段，从所有字段中检索。</li>
+<li>禁用_all字段可以明显降低对CPU和I/O的压力。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>对Analyzed的字段禁用Norms</h4>
+<ul class="point">
+<li><b>Norms用于在搜索时计算doc的评分，如果不需要评分，则可以将其禁用</b>
+<ul class="quote">
+<li>例如：＂title＂: {＂type＂: ＂string＂,＂norms＂: {＂enabled＂: false}}。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>index_options 设置</h4>
+<ul class="point">
+<li><b>index_options用于控制在建立倒排索引过程中，哪些内容会被添加到倒排索引</b>
+<ul class="quote">
+<li>优化这些设置可以一定程度降低索引过程中的运算任务，节省CPU占用率。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch115"><summary>18.9 参考配置</summary>
+<div class="sec">
+<h4>索引级设置的模板和配置文件</h4>
+<ul class="point">
+<li><b>从ES 5.x开始，索引级设置需要写在模板中，或者在创建索引时指定</b>
+<ul class="quote">
+<li>我们把各个索引通用的配置写到了模板中，这个模板匹配全部的索引，并且具有最低的优先级。</li>
+<li>让用户定义的模板有更高的优先级，以覆盖这个模板中的配置。</li>
+</ul>
+</li>
+<li><b>模板中的配置包括index.merge.policy.max_merged_segment、index.merge.policy.segments_per_tier、index.number_of_replicas、index.number_of_shards、index.optimize_auto_generated_id、index.refresh_interval、index.translog.durability、index.translog.flush_threshold_size、index.translog.sync_interval、index.unassigned.node_left.delayed_timeout等。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>elasticsearch.yml中的配置</h4>
+<ul class="point">
+<li><b>indices.memory.index_buffer_size: 30%</b>
+<ul class="quote">
+<li>这个配置用于设置索引的内存缓冲区大小。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch116"><summary>18.10 思考与总结</summary>
+<div class="sec">
+<h4>方法比结论重要</h4>
+<ul class="point">
+<li><b>先将问题分解，在单台上进行压测，观察哪种系统资源达到极限</b>
+<ul class="quote">
+<li>分析并调整参数，优化单台上的能力，先解决局部问题，在此基础上解决整体问题会容易得多。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用更好的 CPU 或者使用 SSD，对写入性能提升明显</h4>
+<ul class="point">
+<li><b>在相同条件下，E5 2650V4比E5 2430 v2的写入速度高60%左右。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>写入速度稳定在平均单机每秒3万条以上</h4>
+<ul class="point">
+<li><b>每个文档的字段数量为10个左右，文档大小约100字节，CPU使用E5 2430 v2。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch117"><summary>19.1 为文件系统cache预留足够的内存</summary>
+<div class="sec">
+<h4>为文件系统cache预留足够的内存</h4>
+<ul class="point">
+<li><b>应用程序的读写都会被操作系统“cache”</b>
+<ul class="quote">
+<li>cache保存在系统物理内存中。</li>
+<li>命中cache可以降低对磁盘的直接访问频率。</li>
+</ul>
+</li>
+<li><b>搜索很依赖对系统 cache 的命中</b>
+<ul class="quote">
+<li>如果某个请求需要从磁盘读取数据，则一定会产生相对较高的延迟。</li>
+</ul>
+</li>
+<li><b>应该至少为系统cache预留一半的可用物理内存</b>
+<ul class="quote">
+<li>更大的内存有更高的cache命中率。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch118"><summary>19.2 使用更快的硬件</summary>
+<div class="sec">
+<h4>使用更快的硬件提高写入性能</h4>
+<ul class="point">
+<li><b>写入性能对CPU的性能更敏感，使用SSD会比旋转类存储介质好得多</b>
+<ul class="quote">
+<li>避免使用 NFS 等远程文件系统，如果 NFS 比本地存储慢3倍，则在搜索场景下响应速度可能会慢10倍左右。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用更快的硬件提高搜索性能</h4>
+<ul class="point">
+<li><b>搜索性能在一般情况下更多的是在于I/O能力，使用SSD会比旋转类存储介质好得多</b>
+<ul class="quote">
+<li>如果搜索类型属于计算比较多，则可以考虑使用更快的CPU。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch119"><summary>19.3 文档模型</summary>
+<div class="sec">
+<h4>文档模型优化的重要性</h4>
+<ul class="point">
+<li><b>避免join操作，嵌套会使查询慢几倍，父子关系可能使查询慢数百倍</b>
+<ul class="quote">
+<li>如果可以通过非规范化文档来回答相同的问题，则可以显著地提高搜索速度。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch120"><summary>19.4 预索引数据</summary>
+<div class="sec">
+<h4>预索引数据的概念和优化方法</h4>
+<ul class="point">
+<li><b>预索引数据是针对某些查询的模式来优化数据的索引方式</b>
+<ul class="quote">
+<li>如果所有文档都有一个 price字段，并且大多数查询在一个固定的范围上运行range聚合，那么可以通过将范围“pre-indexing”到索引中并使用terms聚合来加快聚合速度。</li>
+</ul>
+</li>
+<li><b>在建立索引时对文档进行富化，增加 price_range 字段，mapping 为keyword类型</b>
+<ul class="quote">
+<li>接下来，搜索请求可以聚合这个新字段，而不是在price字段上运行range聚合。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch121"><summary>19.7 优化日期搜索</summary>
+<div class="sec">
+<h4>优化日期搜索的方法</h4>
+<ul class="point">
+<li><b>使用now的查询通常不能缓存，因为匹配到的范围一直在变化</b>
+<ul class="quote">
+<li>从用户体验的角度来看，切换到一个完整的日期通常是可以接受的。</li>
+</ul>
+</li>
+<li><b>将日期四舍五入到分钟，以便利用查询缓存</b>
+<ul class="quote">
+<li>如果当前时间是16:31:29，那么 range查询将匹配my_date字段的值在15:31～16:31之间的所有内容。</li>
+</ul>
+</li>
+<li><b>为了能够利用查询缓存，可以很容易将范围分割成一个大的可缓存部分和一个小的不可缓存部分</b>
+<ul class="quote">
+<li>这种做法可能会使查询在某些情况下运行得更慢，因为bool查询引入的开销可能会抵销利用查询缓存所节省的开销。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch122"><summary>19.8 为只读索引执行force-merge</summary>
+<div class="sec">
+<h4>为只读索引执行force-merge的原因和好处</h4>
+<ul class="point">
+<li><b>为不再更新的只读索引执行force merge，将Lucene索引合并为单个分段，可以提升查询速度</b>
+<ul class="quote">
+<li>当一个Lucene索引存在多个分段时，每个分段会单独执行搜索再将结果合并。</li>
+</ul>
+</li>
+<li><b>将只读索引强制合并为一个Lucene分段不仅可以优化搜索过程，对索引恢复速度也有好处。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>基于日期进行轮询的索引的旧数据更新策略</h4>
+<ul class="point">
+<li><b>应该避免持续地写一个固定的索引，直到它巨大无比，而应该按一定的策略，例如，每天生成一个新的索引，然后用别名关联，或者使用索引通配符。</b>
+</li>
+<li><b>每天选一个时间点对昨天的索引执行force-merge、Shrink等操作。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch123"><summary>19.9 预热全局序号（global ordinals）</summary>
+<div class="sec">
+<h4>预热全局序号(global ordinals)</h4>
+<ul class="point">
+<li><b>全局序号是一种数据结构，用于在keyword字段上运行terms聚合</b>
+<ul class="quote">
+<li>它用一个数值来代表字段中的字符串值，然后为每一数值分配一个 bucket。</li>
+</ul>
+</li>
+<li><b>默认情况下，全局序数和 bucket 被延迟构建</b>
+<ul class="quote">
+<li>ES 不知道哪些字段将用于 terms 聚合，哪些字段不会。</li>
+</ul>
+</li>
+<li><b>可以通过配置映射在刷新(refresh)时告诉ES预先加载全局序数。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch124"><summary>19.10 execution hint</summary>
+<div class="sec">
+<h4>terms聚合的两种机制</h4>
+<ul class="point">
+<li><b>通过直接使用字段值来聚合每个桶的数据(map)。</b>
+</li>
+<li><b>通过使用字段的全局序号并为每个全局序号分配一个bucket(global_ordinals)。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>ES使用global_ordinals作为keyword字段的默认选项</h4>
+<ul class="point">
+<li><b>global_ordinals使用全局序号动态地分配bucket，内存使用与聚合结果中的字段数量是线性关系。</b>
+</li>
+<li><b>在大部分情况下，global_ordinals方式的速度很快。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>map的使用场景</h4>
+<ul class="point">
+<li><b>当查询只会匹配少量文档时，可以考虑使用map。</b>
+</li>
+<li><b>默认情况下，map只在脚本上运行聚合时使用，因为它们没有序数。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch125"><summary>19.11 预热文件系统cache</summary>
+<div class="sec">
+<h4>预热文件系统cache</h4>
+<ul class="point">
+<li><b>通过指定文件扩展名，显式地告诉操作系统应该将哪些文件加载到内存中</b>
+<ul class="quote">
+<li>配置到elasticsearch.yml文件中：index.store.preload: [＂nvd＂, ＂dvd＂]。</li>
+<li>或者在索引创建时设置：PUT /my_index { &quot;settings&quot;: { &quot;index.store.preload&quot;: [＂nvd＂, ＂dvd＂] } }。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch126"><summary>19.12 转换查询表达式</summary>
+<div class="sec">
+<h4>转换查询表达式的规则</h4>
+<ul class="point">
+<li><b>(A|B) &amp; (C|D) 可以转换为 (A&amp;C) | (A&amp;D) | (B&amp;C) | (B&amp;D )。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch127"><summary>19.13 调节搜索请求中的batched_reduce_size</summary>
+<div class="sec">
+<h4>batched_reduce_size参数的作用</h4>
+<ul class="point">
+<li><b>batched_reduce_size参数可以不等待全部分片返回结果，而是在指定数量的分片返回结果之后就可以先处理一部分(reduce)。</b>
+</li>
+<li><b>使用batched_reduce_size参数可以避免协调节点在等待全部结果的过程中占用大量内存，避免极端情况下可能导致的OOM。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>batched_reduce_size参数的默认值为512。</h4>
+<ul class="point">
+</ul></div>
+<div class="sec">
+<h4>batched_reduce_size参数的支持版本。</h4>
+<ul class="point">
+</ul></div>
+</details>
+<details class="ch" id="ch128"><summary>19.14 使用近似聚合</summary>
+<div class="sec">
+<h4>近似聚合的使用方式</h4>
+<ul class="point">
+<li><b>Percentiles Aggregation(https://www.elastic.co/guide/en/elasticsearch/ reference/current/search-aggregations-metrics-percentile-aggregation.html)。</b>
+</li>
+<li><b>Cardinality Aggregation(https://www.elastic.co/guide/en/elasticsearch/reference/current/search- aggregations-metrics-cardinality-aggregation.html)。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch129"><summary>19.15 深度优先还是广度优先</summary>
+<div class="sec">
+<h4>深度优先和广度优先的概念和特点</h4>
+<ul class="point">
+<li><b>深度优先是默认设置，先构建完整的树，然后修剪无用节点。</b>
+</li>
+<li><b>广度优先先执行第一层聚合，再继续下一层聚合之前会先做修剪。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>深度优先和广度优先的应用场景</h4>
+<ul class="point">
+<li><b>深度优先在大多数情况下都能正常工作。</b>
+</li>
+<li><b>有些特殊的场景更适合广度优先，如防止组合爆炸。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch130"><summary>19.16 限制搜索请求的分片数</summary>
+<div class="sec">
+<h4>限制搜索请求的分片数的原因</h4>
+<ul class="point">
+<li><b>搜索请求涉及的分片数量越多，协调节点的CPU和内存压力就越大</b>
+<ul class="quote">
+<li>默认情况下，ES会拒绝超过1000个分片的搜索请求。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>如何调节搜索请求的分片数</h4>
+<ul class="point">
+<li><b>通过action.search.shard_count配置项进行修改</b>
+<ul class="quote">
+<li>虽然限制搜索的分片数并不能直接提升单个搜索请求的速度，但协调节点的压力会间接影响搜索速度。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch131"><summary>19.17 利用自适应副本选择（ARS）提升ES响应速度</summary>
+<div class="sec">
+<h4>自适应副本选择(ARS)的概念和原理</h4>
+<ul class="point">
+<li><b>ARS是ES中的一种负载均衡策略，用于将搜索请求路由到其他数据副本</b>
+<ul class="quote">
+<li>ARS参考一篇名为C3的论文，基于这篇论文的思想做了调整以适合自己的场景。</li>
+</ul>
+</li>
+<li><b>ARS通过评估分片副本所在节点的压力和健康程度，选出一个能够更快返回搜索请求的节点</b>
+<ul class="quote">
+<li>ARS公式为：os(s)，节点未完成的搜索请求数；n，系统中数据节点的数量；R(s)，响应时间的EWMA，单位为毫秒；q(s)，搜索线程池队列中等待任务数量的EWMA；µ(s)，数据节点上的搜索服务时间的EWMA，单位为毫秒。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>ARS的实现和开启</h4>
+<ul class="point">
+<li><b>ARS从6.1版本开始支持，但是默认关闭，可以通过命令动态开启</b>
+<ul class="quote">
+<li>PUT /_cluster/settings { &quot;transient&quot; : { &quot;cluster.routing.use_adaptive_replica_selection&quot; : true } }。</li>
+</ul>
+</li>
+<li><b>从ES 7.0开始，ARS将默认开启</b>
+<ul class="quote">
+<li>官方进行了多种场景的基准测试，包括某个数据节点处于高负载状态和非负载状态，测试使用5节点的集群，单个索引，5个主分片，每个主分片有一个副分片。将搜索请求发送到单个协调节点。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>ARS的效果评估</h4>
+<ul class="point">
+<li><b>即使集群的负载是均匀的，ARS仍然可以改善吞吐量和响应延迟</b>
+<ul class="quote">
+<li>没有模拟某个节点高负载的情况下(测试前节点都处于空闲)，指标如下表所示。</li>
+</ul>
+</li>
+<li><b>在某个数据节点处于高负载的情况下，使用ARS，吞吐量有了很大的提高，延迟中位数有所增加</b>
+<ul class="quote">
+<li>模拟单个节点处于高负载下的情况，指标如下表所示。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch132"><summary>20.1 预备知识</summary>
+<div class="sec">
+<h4>元数据字段</h4>
+<ul class="point">
+<li><b>_source：原始的JSON文档数据。</b>
+</li>
+<li><b>_all：索引所有其他字段值的一种通用字段</b>
+<ul class="quote">
+<li>_all字段是一个全文字段，有自己的分析器。</li>
+<li>从ES 6.0开始该字段被禁用。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>索引映射参数</h4>
+<ul class="point">
+<li><b>index：控制字段值是否被索引</b>
+<ul class="quote">
+<li>未被索引的字段不会被查询到，但是可以聚合。</li>
+</ul>
+</li>
+<li><b>doc values：默认情况下，大多数字段都被索引</b>
+<ul class="quote">
+<li>倒排索引根据term找到文档列表，然后获取文档原始内容。</li>
+<li>排序和聚合，以及从脚本中访问某个字段值，需要不同的数据访问模式，它们不仅需要根据term找到文档，还要获取文档中字段的值。</li>
+<li>doc_values 就是用来存储这些字段值的。</li>
+</ul>
+</li>
+<li><b>store：默认情况下，字段值会被索引使它们能搜索，但它们不会被存储</b>
+<ul class="quote">
+<li>字段值已经是_source字段的一部分，它是被默认存储的。</li>
+<li>如果只想取回一个字段或少部分字段的值，而不是整个_source，则可以通过source filtering达到目的。</li>
+<li>在某些情况下，存储字段是有意义的。例如，如果有一个包含标题、日期和非常多的内容字段的文档，则可能希望只检索标题和日期，而不需要从大型_source字段中提取这些字段。</li>
+<li>还有一种情况可能用到存储字段，就是不在_source中出现的字段(例如，copy_to字段)。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch133"><summary>20.2 优化措施</summary>
+<div class="sec">
+<h4>禁用对你来说不需要的特性</h4>
+<ul class="point">
+<li><b>对于不需要过滤的字段，可以不索引这个字段</b>
+<ul class="quote">
+<li>例如，有一个名为 foo 的数值类型字段，需要运行直方图，但不需要在这个字段上过滤，那么可以不索引这个字段。</li>
+</ul>
+</li>
+<li><b>如果只需要在文本字段上进行匹配，而不关心生成的得分，则可以配置 ES 不将 norms 写入索引</b>
+<ul class="quote">
+<li>text 类型的字段会在索引中存储归一因子(normalization factors)，以便对文档进行评分。</li>
+</ul>
+</li>
+<li><b>如果不需要运行短语查询，则可以告诉ES不索引位置</b>
+<ul class="quote">
+<li>位置被用于邻近查询(proximity queries)和短语查询(phrase queries)。</li>
+</ul>
+</li>
+<li><b>如果也不关心评分，则可以将ES配置为只为每个term索引匹配的文档</b>
+<ul class="quote">
+<li>仍然可以在这个字段上搜索，但是短语查询会出现错误，评分将假定在每个文档中只出现一次词汇。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>禁用doc values</h4>
+<ul class="point">
+<li><b>如果确定不需要对字段进行排序或聚合，或者从脚本访问字段值，则可以禁用doc value以节省磁盘空间</b>
+<ul class="quote">
+<li>所有支持doc value的字段都默认启用了doc value。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>不要使用默认的动态字符串映射</h4>
+<ul class="point">
+<li><b>默认的动态字符串映射会把字符串类型的字段同时索引为 text 和 keyword</b>
+<ul class="quote">
+<li>如果只需要其中之一，则显然是一种浪费。</li>
+</ul>
+</li>
+<li><b>要禁用默认的动态字符串映射，则可以显式地指定字段类型，或者在动态模板中指定将字符串映射为text或keyword</b>
+<ul class="quote">
+<li>下例将字符串字段映射为keyword：PUT index { &quot;settings&quot;: { &quot;index&quot;: { &quot;dynamic_templates&quot;: [ { &quot;string_template&quot;: { &quot;match&quot;: &quot;*&quot;, &quot;mapping&quot;: { &quot;type&quot;: &quot;keyword&quot; } } } ] } } }。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>观察分片大小</h4>
+<ul class="point">
+<li><b>较大的分片可以更有效地存储数据，但是较大的分片也有缺点，例如，较长的索引恢复时间</b>
+<ul class="quote">
+<li>为了增加分片大小，可以在创建索引的时候设置较少的主分片数量，或者使用shrink API来修改现有索引的主分片数量。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>禁用_source</h4>
+<ul class="point">
+<li><b>如果不需要访问_source，则可以将其禁用</b>
+<ul class="quote">
+<li>需要访问_source的API将无法使用，至少包括下列情况：update、update_by_query、reindex；高亮搜索；重建索引(包括更新mapping、分词器，或者集群跨大版本升级可能会用到)；调试聚合查询功能，需要对比原始数据。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用best_compression</h4>
+<ul class="point">
+<li><b>默认的压缩算法为LZ4，可以通过使用best_compression来执行压缩比更高的算法：DEFLATE</b>
+<ul class="quote">
+<li>这会占用更多的CPU资源。</li>
+<li>PUT index { &quot;settings&quot;: { &quot;index&quot;: { &quot;codec&quot;: &quot;best_compression&quot; } } }。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Fource Merge</h4>
+<ul class="point">
+<li><b>使用_forcemerge API来对分段执行合并操作，通常，我们将分段合并为一个单个的分段：max_num_segments=1</b>
+<ul class="quote">
+<li>较大的Lucene分段可以更有效地存储数据。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Shrink Index</h4>
+<ul class="point">
+<li><b>Shrink API允许减少索引的分片数量，结合上面的Force Merge API，可以显著减少索引的分片和Lucene分段数量</b>
+<ul class="quote">
+<li>较小的分片可以加快恢复速度，并减少磁盘空间的使用。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>数值类型长度够用就好</h4>
+<ul class="point">
+<li><b>为数值类型选择的字段类型也可能会对磁盘使用空间产生较大影响，整型可以选择 byte、short、integer或 long，浮点型可以选择 scaled_float、float、double、half_float，每个数据类型的字节长度是不同的，为业务选择够用的最小数据类型，可以节省磁盘空间</b>
+<ul class="quote">
+<li>例如，如果一个整型字段只存储1-100之间的数字，则使用byte类型就足够了，而不需要使用integer类型。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>使用索引排序来排列类似的文档</h4>
+<ul class="point">
+<li><b>如果启用了索引排序，那么它们将按排序顺序压缩。对具有相似结构、字段和值的文档进行排序可以提高压缩比</b>
+<ul class="quote">
+<li>当 ES 存储_source 时，它同时压缩多个文档以提高整体压缩比。例如，文档共享相同的字段名，或者它们共享一些字段值，特别是在具有低基数或 zipfian 分布的字段上。</li>
+<li>默认情况下，文档按照添加到索引中的顺序压缩在一起。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>在文档中以相同的顺序放置字段</h4>
+<ul class="point">
+<li><b>由于多个文档被压缩成块，如果字段总是以相同的顺序出现，那么在这些_source文档中可以找到更长的重复字符串的可能性更大</b>
+<ul class="quote">
+<li>重复字符串越长，压缩比就越高。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch134"><summary>20.3 测试数据</summary>
+<div class="sec">
+<h4>测试数据环境及样本</h4>
+<ul class="point">
+<li><b>测试数据为单个文档十几个字段，大小为800字节左右。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>禁用_source对空间占用量的影响。</h4>
+<ul class="point">
+</ul></div>
+<div class="sec">
+<h4>禁用doc values对空间占用量的影响。</h4>
+<ul class="point">
+</ul></div>
+<div class="sec">
+<h4>压缩算法对空间占用量的影响</h4>
+<ul class="point">
+<li><b>压缩算法将LZ4改为Deflate，空间占用量可以下降15%～25%。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>实际业务中的压力测试</h4>
+<ul class="point">
+<li><b>实际业务最好使用自己的样本数据进行压力测试以获取准确的结果。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch135"><summary>第21章 综合应用实践</summary>
+<div class="sec">
+<h4>ES的使用和部署建议</h4>
+<ul class="point">
+<li><b>ES被设计得简单易用，容易上手，但需要了解内部原理和基础知识</b>
+<ul class="quote">
+<li>如果只是把它当作黑盒来用，不了解内部原理，甚至没有一定的基础知识，当数据和节点规模达到一定程度的时候会面临许多问题。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch136"><summary>21.1 集群层</summary>
+<div class="sec">
+<h4>规划集群规模</h4>
+<ul class="point">
+<li><b>根据业务情况评估初始集群大小</b>
+<ul class="quote">
+<li>数据总量，每天的增量。</li>
+<li>查询类型和搜索并发，QPS。</li>
+<li>SLA级别。</li>
+</ul>
+</li>
+<li><b>控制最大集群规模和数据总量</b>
+<ul class="quote">
+<li>节点总数不应该太多，最大集群规模最好控制在100个节点左右。</li>
+<li>单个分片不要超过50GB，最大集群分片总数控制在几十万的级别。</li>
+</ul>
+</li>
+<li><b>为集群配置较好的硬件</b>
+<ul class="quote">
+<li>搜索对 CPU、内存、磁盘的性能要求都很高，要达到比较低的延迟就需要较好的硬件资源。</li>
+<li>如果使用不同配置的服务器混合部署，则搜索速度可能会取决于最慢的那个节点，产生长尾效应。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>单节点还是多节点部署</h4>
+<ul class="point">
+<li><b>ES不建议为JVM配置超过32GB的内存</b>
+<ul class="quote">
+<li>超过32GB时，Java内存指针压缩失效，浪费一些内存，降低了CPU性能，GC压力也较大。</li>
+</ul>
+</li>
+<li><b>当物理主机内存在64GB以上，并且拥有多个数据盘，不做raid的情况下，部署ES节点时有多种选择</b>
+<ul class="quote">
+<li>部署单个节点，JVM内存配置不超过32GB，配置全部数据盘。</li>
+<li>部署单个节点，JVM内存配置超过32GB，配置全部数据盘。</li>
+<li>有多少个数据盘就部署多少个节点，每个节点配置单个数据路径。</li>
+<li>使用内存大小除以64GB来确定要部署的节点数，每个节点配置一部分数据盘。</li>
+</ul>
+</li>
+<li><b>官方的建议是方案4，但是为了管理和维护的简便，也可以使用方案1和3</b>
+<ul class="quote">
+<li>集群规模较小时可以考虑使用多节点方式部署，例如，只有3台物理机。</li>
+<li>当集群规模较大时，建议单节点方式部署，例如，物理机达到100台以上。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>移除节点</h4>
+<ul class="point">
+<li><b>当由于坏盘、维护等故障需要下线一个节点时，我们需要先将该节点的数据迁移</b>
+<ul class="quote">
+<li>PUT _cluster/settings { &quot;transient&quot; : { &quot;cluster.routing.allocation.exclude._name&quot; : &quot;node-1&quot; } }。</li>
+</ul>
+</li>
+<li><b>当节点维护完毕，重新上线之后，需要取消排除设置</b>
+<ul class="quote">
+<li>PUT _cluster/settings { &quot;transient&quot; : { &quot;cluster.routing.allocation.exclude._name&quot; : &quot;&quot; } }。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>独立部署主节点</h4>
+<ul class="point">
+<li><b>将主节点和数据节点分离部署最大的好处是 Master 切换过程可以迅速完成</b>
+<ul class="quote">
+<li>例如，有3台具备Master资格的节点独立部署，然后关闭当前活跃的主节点，新主当选后由于内存中持有最新的集群状态，因此可以跳过 gateway 的恢复过程，并且由于主节点没有存储数据，所以旧的Master离线不会产生未分配状态的分片。新主当选后集群状态可以迅速变为Green。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch137"><summary>21.2 节点层</summary>
+<div class="sec">
+<h4>控制线程池的队列大小</h4>
+<ul class="point">
+<li><b>队列并非越大越好，队列缓存的数据越多，GC压力越大</b>
+<ul class="quote">
+<li>默认的队列大小基本够用了，即使在压力测试的场景中，默认队列大小也足以支持。</li>
+</ul>
+</li>
+<li><b>在特殊情况下，例如每个请求的数据量都非常小，可能需要增加队列大小</b>
+<ul class="quote">
+<li>我们推荐写数据时组合较大的bulk请求。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>为系统cache保留一半物理内存</h4>
+<ul class="point">
+<li><b>搜索操作很依赖对系统cache的命中，标准的建议是把50%的可用内存作为ES的堆内存，为Lucene保留剩下的50%，用作系统cache。</b>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch138"><summary>21.3 系统层</summary>
+<div class="sec">
+<h4>关闭swap</h4>
+<ul class="point">
+<li><b>在服务器系统上，无论物理内存多么小，都应该关闭交换分区</b>
+<ul class="quote">
+<li>当服务程序在交换分区上缓慢运行时，往往会产生更多不可预期的错误。</li>
+<li>一般在安装操作系统的时候直接关闭交换分区，或者通过swapoff命令来关闭。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>配置Linux OOM Killer</h4>
+<ul class="point">
+<li><b>通过一些策略给每个进程打分，根据分值高低决定“杀掉”哪些进程</b>
+<ul class="quote">
+<li>默认情况下，占用内存最多的进程被“杀掉”。</li>
+<li>如果ES与其他服务混合部署，当系统产生OOM的时候，ES有可能会无辜被“杀”。</li>
+<li>我们可以在用户态调节一些进程参数来让某些进程不容易被OOM Killer“杀掉”。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>优化内核参数</h4>
+<ul class="point">
+<li><b>根据自己的场景调节内核参数，让搜索服务更有效率地运行</b>
+<ul class="quote">
+<li>例如，ES集群中的节点一般处于同一个子网，也就是在同一个局域网，Linux默认的TCP选项不一定完全合适，因为它需要考虑在互联网上传输时可能出现的更大的延迟和丢包率。</li>
+<li>因此我们可以调节一些TCP选项，让TCP协议在局域网上更高效。</li>
+<li>调节内核参数可以通过两种方式：临时设置，系统重启后失效。通过 sysctl -w 来设置；永久设置，将参数写入配置文件/etc/sysctl.conf，然后执行sysctl -p使其生效。</li>
+<li>下面给出一些比较通用的内核参数设置建议，这些参数的默认值以 CentOS7.2为参考，在其他系统上可能会有些差异。</li>
+<li>TCP相关参数、TCP的接收窗口(RWND)、TCP的拥塞窗口(CWND)、vm相关参数、禁用透明大页(Transparent Hugepages)。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch139"><summary>21.4 索引层</summary>
+<div class="sec">
+<h4>使用全局模板</h4>
+<ul class="point">
+<li><b>全局模板用于设置索引级别的全局设置信息</b>
+<ul class="quote">
+<li>例如，translog的刷盘方式等。</li>
+</ul>
+</li>
+<li><b>模板优先级order为0代表该模板有最小的优先级</b>
+<ul class="quote">
+<li>当索引创建时，ES判断都匹配到哪些模板，如果匹配到多个模板，则将模板中的参数进行合并。</li>
+<li>当遇到冲突的设置项时，根据模板优先级order来决定谁的配置会生效。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>索引轮转</h4>
+<ul class="point">
+<li><b>使用日期等规则按一定频率生成索引</b>
+<ul class="quote">
+<li>例如，要新增一个名为dns_log的索引，我们先创建模板，在模板中描述该索引的设置和mapping信息。</li>
+</ul>
+</li>
+<li><b>为索引生成一个别名关联部分索引</b>
+<ul class="quote">
+<li>在搜索时，可以使用索引前缀dns_log-*进行搜索。</li>
+<li>当需要删除旧数据时，可以按日期删除索引的旧数据，删除索引会立即删除磁盘文件，释放存储空间。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>避免热索引分片不均</h4>
+<ul class="point">
+<li><b>控制单个节点上存储的该索引的分片总数，使索引分片在节点上分布得更均匀一些</b>
+<ul class="quote">
+<li>例如，10个节点的集群，索引主分片数为5，副本数量为1，那么平均下来每个节点应该有(5×2)/10=1个分片，考虑到节点故障、分片迁移的情况，可以设置节点分片总数为2。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>副本数选择</h4>
+<ul class="point">
+<li><b>在大部分场景下，将副本数number_of_replicas设置为1即可</b>
+<ul class="quote">
+<li>这样每个分片存在两个副本。</li>
+<li>如果对搜索请求的吞吐量要求较高，则可以适当增加副本数量，让搜索操作可以利用更多的节点。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Force Merge</h4>
+<ul class="point">
+<li><b>对冷索引执行Force Merge会有许多好处</b>
+<ul class="quote">
+<li>单一的分段比众多分段占用的磁盘空间更小一些。</li>
+<li>可以大幅减少进程需要打开的文件fd。</li>
+<li>可以加快搜索过程，因为搜索需要检索全部分段。</li>
+<li>单个分段加载到内存时也比多个分段更节省内存占用。</li>
+<li>可以加快索引恢复速度。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Shrink Index</h4>
+<ul class="point">
+<li><b>对这种索引可以执行 Shrink 操作来降低索引分片数量</b>
+<ul class="quote">
+<li>Shrink 的例子可以参考Shrink分析一章。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>close索引</h4>
+<ul class="point">
+<li><b>如果有些索引暂时不使用，则不会再有新增数据，也不会有对它的查询操作，但是可能以后会用而不能删除，那么可以把这些索引关闭，在需要时再打开</b>
+<ul class="quote">
+<li>关闭的索引除存储空间外不占用其他资源。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>延迟分配分片</h4>
+<ul class="point">
+<li><b>调整节点离线后分片重新分配的延迟时间</b>
+<ul class="quote">
+<li>这个索引级的设置写到模板的全局设置信息中，节点离线一般是暂时的，如果因为硬件故障，则修复时间一般是可以预期的，根据实际情况来调节这个延迟时间。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>小心地使用fielddata</h4>
+<ul class="point">
+<li><b>fielddata默认关闭，因为它会消耗很多堆空间</b>
+<ul class="quote">
+<li>fielddata所占用的大小默认没有上限，可以通过indices.fielddata.cache.size来控制，该选项设置一个堆内存的百分比，超过这个百分后，使用LRU算法将老数据淘汰。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch140"><summary>21.5 客户端</summary>
+<div class="sec">
+<h4>使用REST API而非Java API</h4>
+<ul class="point">
+<li><b>Java API引起版本兼容性问题，性能提升微弱</b>
+<ul class="quote">
+<li>Java API将在未来的版本中废弃。</li>
+</ul>
+</li>
+<li><b>客户端最好选择REST API作为客户端。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>注意429状态码</h4>
+<ul class="point">
+<li><b>bulk请求被放入ES的队列，当队列满时，新请求被拒绝，并给客户端返回429的状态码</b>
+<ul class="quote">
+<li>客户端需要处理这个状态码，并在稍后重发请求。</li>
+</ul>
+</li>
+<li><b>客户端需要处理 bulk 请求中部分成功、部分失败的情况</b>
+<ul class="quote">
+<li>产生429错误是因为 ES 来不及处理，一般是由于写入端的并发过大导致的，建议适当降低写入并发。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>curl的HEAD请求</h4>
+<ul class="point">
+<li><b>curl发送HEAD请求的方式并非我们预想的那样</b>
+<ul class="quote">
+<li>curl -X HEAD 只是将HTTP头部的方法设置为HEAD，还会等待服务器返回body。</li>
+</ul>
+</li>
+<li><b>正确的方式应该是使用-I参数</b>
+<ul class="quote">
+<li>使用-I参数curl会将HTTP方法设置为HEAD，并在收到服务器返回的HTTP头部信息后关闭TCP连接。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>了解你的搜索计划</h4>
+<ul class="point">
+<li><b>需要知道一个搜索操作可能会命中多少分片，它执行的任务复杂性有多大，聚合范围有多大等情况</b>
+<ul class="quote">
+<li>只有了解了搜索指令的执行代价，才能更好地使用 ES 进行搜索。</li>
+</ul>
+</li>
+<li><b>可以使用Profile API分析会命中哪些分片，每个分片执行的查询时间等细节。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>为读写请求设置比较长的超时时间</h4>
+<ul class="point">
+<li><b>读写操作都有可能是比较长的操作，此时客户端为请求设置的超时时间应该尽量长</b>
+<ul class="quote">
+<li>即使客户端断开连接，ES仍然会在后台将请求处理完。</li>
+<li>如果超时设置比较短，则在密集的请求时会对ES造成非常大的压力。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch141"><summary>21.6 读写</summary>
+<div class="sec">
+<h4>避免搜索操作返回巨大的结果集</h4>
+<ul class="point">
+<li><b>使用Scroll API获取大结果集</b>
+<ul class="quote">
+<li>由于协调节点的合并压力，所有的搜索系统都会限制返回的结果集大小。</li>
+<li>如果确实需要很大的结果集，则应该使用Scroll API。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>避免索引巨大的文档</h4>
+<ul class="point">
+<li><b>ES会拒绝索引超过http.max_context_length的文档</b>
+<ul class="quote">
+<li>http.max_context_length的默认值为100MB。</li>
+<li>即使不考虑这些限制，大型文档通常也不实用。</li>
+</ul>
+</li>
+<li><b>大型文档给网络、内存和磁盘造成了更大的压力</b>
+<ul class="quote">
+<li>索引一个文档需要一些内存，所需内存大小是原始文档大小的几倍。</li>
+<li>邻近(Proximity)搜索(例如，短语查询)和高亮也会变得更加昂贵，因为它们的成本直接取决于原始文档大小。</li>
+</ul>
+</li>
+<li><b>使用章节或段落作为文档，然后在文档中加一个属性标识它们属于哪本书</b>
+<ul class="quote">
+<li>这样不仅避免了大文档的问题，还使搜索的体验更好。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>避免使用多个_type</h4>
+<ul class="point">
+<li><b>_type 本来是用于区分存储到同一个索引中的不同格式的数据，但是实际上面对这种情况应该用不同的索引解决，而不是在同一个索引中使用不同的_type</b>
+<ul class="quote">
+<li>因为不能通过_type 来删除数据，这和通过_id删除数据没什么区别。</li>
+<li>还容易给初学者造成“index就像数据库，_type就像表”的误解。</li>
+</ul>
+</li>
+<li><b>从ES 6.0开始，索引只允许存在一个_type,7.0版本之后将完全废弃了_type的概念。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>避免使用_all字段</h4>
+<ul class="point">
+<li><b>从ES 6.0开始，_all字段默认被禁用，并且不建议使用</b>
+<ul class="quote">
+<li>此类需求可以通过 mapping中的copy_to参数创建自定义的_all字段。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>避免将请求发送到同一个协调节点</h4>
+<ul class="point">
+<li><b>客户端应该避免将请求发送到固定的某个或少数几个节点</b>
+<ul class="quote">
+<li>少数几个协调节点作为整个集群对外的读写节点的情况下，它们很有可能承受不了那么多的客户端请求。</li>
+<li>尤其是搜索请求，协调节点的合并及排序会占用比较高的内存和 CPU，聚合会占用更多内存。</li>
+</ul>
+</li>
+<li><b>将请求轮询发送到集群所有节点</b>
+<ul class="quote">
+<li>如果使用REST API，则可以在构建客户端的客户端对象时传入全部节点列表。</li>
+<li>如果在前端或脚本中访问 ES 集群，则可以部署 LVS，客户端使用虚IP，或者部署Nginx使用反向代理。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch142"><summary>21.7 控制相关度</summary>
+<div class="sec">
+<h4>通过Painless脚本控制搜索评分</h4>
+<ul class="point">
+<li><b>ES支持多种脚本语言，从5.0版本开始实现了自己专用的语言：Painless</b>
+<ul class="quote">
+<li>Groovy 脚本已弃用，Painless是内置支持的。</li>
+</ul>
+</li>
+<li><b>通过脚本控制评分的原理是编写一个自定义脚本，该脚本返回评分值，该分值与原分值进行加法等运算，从而完全控制了评分算法</b>
+<ul class="quote">
+<li>例如，我们有一个通讯录的名单索引 user_info，为了简便说明问题，索引只有一个 name字段。</li>
+<li>我们期望的返回顺序与两个原则有关：关键词出现的位置越靠前，排序应该越靠前；字段值约短，说明匹配度越高，排序应该越靠前。</li>
+<li>我们编写一个简单的脚本，通过doc[＇name＇].value获取文档值，然后根据位置和相似度分别计算评分，将结果乘以不同权重再相加。</li>
+</ul>
+</li>
+<li><b>function_score查询是用来控制评分的终极武器，它允许为每个与主查询匹配的文档应用一个内置或自定义函数，以达到改变原始查询评分_score的目的</b>
+<ul class="quote">
+<li>script_score用于指定自定义脚本，params指定作为变量传递到脚本中的参数。</li>
+<li>boost_mode 字段用来指定新计算的分数与_score 的结合方式，取值可以是：multiply 相乘(默认)、replace替换、_score sum相加、avg取平均值、max取最大值、min取最小值。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch143"><summary>第22章 故障诊断</summary>
+<div class="sec">
+<h4>故障诊断的思路</h4>
+<ul class="point">
+<li><b>从故障的具体现象和具体信息出发，逻辑性地向上推理可能的因素，并逐步排除，渐渐缩小问题范围，直到定位问题</b>
+<ul class="quote">
+<li>这是系统化调试的思想，推荐阅读Andreas Zeller所著的《系统化调试指南》。</li>
+</ul>
+</li>
+<li><b>根据故障信息和经验直接猜测故障原因</b>
+<ul class="quote">
+<li>这种凭空设想在面对简单问题时能比较快速定位，但在面对错综复杂、多种因素混合的问题时更多地需要理性推导。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>验证方法的选择</h4>
+<ul class="point">
+<li><b>最好选能证明问题，同时是最简单的方式</b>
+<ul class="quote">
+<li>有些方法不一定能很严谨地验证问题，那这种验证方式的参考性和可信度就不大。</li>
+<li>同时有些方法可能操作复杂，有些可能耗时比较长，这就需要我们做出选择。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch144"><summary>22.1 使用Profile API定位慢查询</summary>
+<div class="sec">
+<h4>Profile API介绍</h4>
+<ul class="point">
+<li><b>Profile API从ES 2.2版本开始提供，用于检查查询执行时间和其他详细信息。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Profile API的使用</h4>
+<ul class="point">
+<li><b>在query部分上方提供＂profile＂: true来启用Profile API</b>
+<ul class="quote">
+<li>Profile API的结果是基于每个分片计算的。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>Profile API的结果解析</h4>
+<ul class="point">
+<li><b>Query段由构成Query的元素及它们的时间信息组成</b>
+<ul class="quote">
+<li>query_type，它向我们显示了哪种类型的查询被触发。</li>
+<li>lucene，该字段显示启动查询的Lucene方法。</li>
+<li>time,Lucene执行此查询所用的时间。</li>
+<li>breakdown，有关查询的更详细的细节，主要与Lucene参数有关。</li>
+<li>children，具有多个关键字的查询被拆分成相应术语的布尔查询，每个查询都作为单独的查询来执行。</li>
+</ul>
+</li>
+<li><b>Rewrite Time是将查询重写一个或多个组合查询的时间</b>
+<ul class="quote">
+<li>由于多个关键字会分解以创建个别查询，所以在这个过程中肯定会花费一些时间。</li>
+</ul>
+</li>
+<li><b>Collectors负责收集原始结果，并对它们进行组合、过滤、排序等处理</b>
+<ul class="quote">
+<li>在上面的执行的查询中，当查询语句中给出size:0时，使用的收集器是“totalHitCountCollector”。这只返回搜索结果的数量(search_count)，不返回文档。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch145"><summary>22.2 使用Explain API分析未分配的分片（Unassigned Shards）</summary>
+<div class="sec">
+<h4>使用Explain API分析未分配的分片</h4>
+<ul class="point">
+<li><b>Explain API可以分析当前的分片分配情况，对于未分配的分片，给出为什么没有分配的具体原因；对于已分配的分片，给出为什么将分片分配给特定节点的理由。</b>
+</li>
+</ul></div>
+<div class="sec">
+<h4>诊断未分配的主分片</h4>
+<ul class="point">
+<li><b>索引创建时设置分配过滤器，使其不能被分配到节点A和B上，导致分片无法分配到集群仅有的A和B两个节点</b>
+<ul class="quote">
+<li>集群处于Red状态，通过Explain API来获取第一个未分配分片的原因解释。</li>
+<li>分配操作被decider拦截，decider给出了具体的decider名称，接下来是决策结果及具体的原因。</li>
+</ul>
+</li>
+<li><b>更新分配过滤器设置，然后重新运行Explain API，将收到没有未分配的分片的结果</b>
+<ul class="quote">
+<li>我们还可以在主分片上运行Explain API，可以看出分片被成功分配到节点A。</li>
+</ul>
+</li>
+<li><b>向索引 test_idx 中写入一些数据，然后停掉节点 A，由于该索引没有副分片，所以集群变为Red状态</b>
+<ul class="quote">
+<li>在主分片上重新运行Explain API，返回信息告诉我们主分片处于未分配状态，原因是持有此分片的节点离线。</li>
+<li>Explain API 告诉我们主分片不再有有效的分片副本，我们知道持有该分片的节点离线了，此时唯一的办法就是等待节点重新加入集群。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>诊断未分配的副分片</h4>
+<ul class="point">
+<li><b>副分片将被分配到节点B，以达到集群均衡的目的</b>
+<ul class="quote">
+<li>现在在副分片上运行Explain API，返回信息摘要如下：{ &quot;index&quot; : &quot;test_idx&quot;, &quot;shard&quot; : 0, &quot;primary&quot; : false, &quot;current_state&quot; : &quot;started&quot;, &quot;current_node&quot; : { &quot;id&quot; : &quot;qNgMCvaCSPi3th0mTcyvKQ&quot;, &quot;name&quot; : &quot;B&quot;, &quot;weight_ranking&quot; : 1 } }。</li>
+</ul>
+</li>
+<li><b>再次设置索引的分配过滤器，但是这次阻止分配分片的节点B</b>
+<ul class="quote">
+<li>现在重启节点B，在副分片上重新运行Explain API，返回信息摘要如下：结果显示副分片当前处于未分配状态，因为分配过滤设置了禁止把分片分配到节点B上。</li>
+<li>因为节点A上已经指派了主分片，所以不允许再把该分片的其他副本分配到 A 节点。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>诊断已分配的分片</h4>
+<ul class="point">
+<li><b>如果分片可以正常分配，为什么还要关注explain信息呢？一个常见的原因是想将分片手工迁移到某个节点，但是出于某些原因分片没有迁移，这时Explain API帮助我们展示其中原因</b>
+<ul class="quote">
+<li>我们清除test_idx索引的过滤器设置，使主副分片都可以正常分配。</li>
+<li>然后重新设置分配过滤器，使主分片从当前节点迁移走。</li>
+<li>我们期望的结果是主分片从节点 A 移动到另一个节点，然而事与愿违，在主分片上运行Explain API，看看具体原因。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch146"><summary>22.3 节点CPU使用率高</summary>
+<div class="sec">
+<h4>查看线程堆栈以确定CPU占用率高的任务</h4>
+<ul class="point">
+<li><b>使用hot_threads API查看繁忙线程的堆栈</b>
+<ul class="quote">
+<li>hot_threads API是Elasticsearch提供的一个API，可以获取繁忙线程的堆栈。</li>
+</ul>
+</li>
+<li><b>使用top+jstack查看线程级CPU占用率，再配合jstack定位CPU占用率在特定比例之上的线程堆栈</b>
+<ul class="quote">
+<li>top命令获取线程级CPU占用率。</li>
+<li>jstack命令根据线程ID，定位CPU占用率在特定比例之上的线程堆栈。</li>
+<li>为了降低top和jstack命令执行时间上的误差，可以在脚本中让两个命令同时执行。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch147"><summary>22.4 节点内存使用率高</summary>
+<div class="sec">
+<h4>节点内存使用高的原因及解决方法</h4>
+<ul class="point">
+<li><b>使用jmap导出的堆进行分析，可以精确定位数据结构占用内存的大小</b>
+<ul class="quote">
+<li>jmap导出的堆可能非常大，操作比较花时间。</li>
+</ul>
+</li>
+<li><b>bulk队列可以通过_cat API查看bulk队列中当前的使用量</b>
+<ul class="quote">
+<li>如果队列设置很大，则在写入压力大的时候就会导致比较高的内存占用。</li>
+</ul>
+</li>
+<li><b>Netty缓冲在一些特别的情况下，Netty的内存池也可能会占用比较高的内存</b>
+<ul class="quote">
+<li>当 ES 收到客户端请求时，如果在处理完毕之前客户端关闭连接，则 ES 依然会把这个请求处理完，只是最后才出现回复客户端失败。</li>
+</ul>
+</li>
+<li><b>indexing buffer索引写入缓冲用于存储索引好的文档数据</b>
+<ul class="quote">
+<li>该缓冲默认大小为堆内存的10%，加大该缓冲需要考虑到对GC的压力。</li>
+</ul>
+</li>
+<li><b>超大数据集的聚合协调节点对检索结果进行汇总和聚合，当聚合涉及的数据量很大时，协调节点需要拉取非常多的内容</b>
+<ul class="quote">
+<li>大范围的聚合是导致节点OOM的常见原因之一。</li>
+</ul>
+</li>
+<li><b>分段内存一个Lucene分段就是一个完整的倒排索引，倒排索引由单词词典和倒排列表组成</b>
+<ul class="quote">
+<li>在 Lucene 中，单词词典中的 FST 结构会被加载到内存。</li>
+</ul>
+</li>
+<li><b>Fielddata cache在text类型字段上进行聚合和排序时会用到Fielddata</b>
+<ul class="quote">
+<li>默认是关闭的，如果开启了Fielddata，则其大小默认没有上限。</li>
+</ul>
+</li>
+<li><b>Shard request cache分片级别的请求缓存</b>
+<ul class="quote">
+<li>每个分片独立地缓存查询结果。</li>
+</ul>
+</li>
+<li><b>Node Query Cache节点查询缓存由节点上的所有分片共享</b>
+<ul class="quote">
+<li>用于缓存查询结果，只缓存在过滤器上下文中使用的查询。</li>
+</ul>
+</li>
+<li><b>ES进程的内存使用量还与Lucene以mmap方式加载段文件相关</b>
+<ul class="quote">
+<li>mmap加载的文件会被分配进程地址空间，因此它们同样算作 ES 占用的内存。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch148"><summary>22.5 Slow Logs</summary>
+<div class="sec">
+<h4>慢日志的概念和用途</h4>
+<ul class="point">
+<li><b>慢日志用来记录执行慢的请求，帮助诊断问题</b>
+<ul class="quote">
+<li>写入慢或查询慢的原因可能会有多种因素，慢日志对于我们诊断这些问题非常有用。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>慢搜索日志</h4>
+<ul class="point">
+<li><b>慢搜索日志用来记录哪些查询比较慢，每个节点可以设置不同的阈值</b>
+<ul class="quote">
+<li>ES的搜索由两个阶段组成：查询和取回。慢搜索日志给出了每个阶段所花费的时间，以及整个查询内容本身。</li>
+</ul>
+</li>
+<li><b>慢搜索日志可以为查询和取回阶段单独设置以时间为单位的阈值</b>
+<ul class="quote">
+<li>如果设置为0，则输出全部搜索日志。</li>
+<li>在定义好每个级别的时间后，通过level决定输出哪个级别的日志。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>慢索引日志</h4>
+<ul class="point">
+<li><b>慢索引日志用来记录哪些索引操作比较慢，其记录了哪些索引操作耗时比较长，阈值同样可以设置</b>
+<ul class="quote">
+<li>与慢搜索不同，索引内容可能非常大，因此默认记录源文档内容的前1000行。</li>
+<li>可以设置为捕获整个文档，或者不记录原始文档本身。</li>
+</ul>
+</li>
+<li><b>慢索引日志有以下索引级配置项：index.indexing.slowlog.threshold.index.warn、index.indexing.slowlog.threshold.index.info、index.indexing.slowlog.threshold.index.debug、index.indexing.slowlog.threshold.index.trace、index.indexing.slowlog.level、index.indexing.slowlog.source</b>
+<ul class="quote">
+<li>与慢搜索日志的配置类似，同样可以定义4种不同的慢日志级别，为每个级别设置不同的时间，然后通过level来决定输出哪个级别的日志。</li>
+<li>如果阈值设置为0，则将输出全部索引日志。source参数设置了日志中捕获源文档的行数。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch149"><summary>22.6 分析工具</summary>
+<div class="sec">
+<h4>I/O信息分析工具</h4>
+<ul class="point">
+<li><b>iostat用来分析 I/O 状态，包括iops，await，%util等指标</b>
+<ul class="quote">
+<li>iops由r/s(每秒读次数)和w/s(每秒写次数)组成。</li>
+<li>await，平均I/O等待时间，包括硬件处理I/O的时间和在队列中的等待时间。</li>
+<li>%util，设备的繁忙比，是设备执行的I/O时间与所经过的时间百分比。</li>
+</ul>
+</li>
+<li><b>pidstat或iotop可以动态给出每个进程的读写速度</b>
+<ul class="quote">
+<li>iotop的输出结果中，在统计信息中给出了全部磁盘的读写速度，以及每个进程的读写速度。</li>
+</ul>
+</li>
+<li><b>blktrace可以分析I/O请求的各个环节</b>
+<ul class="quote">
+<li>该工具的原理和使用方式可以参考http://bean-li.github.io/blktrace-to-report/。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>内存信息分析工具</h4>
+<ul class="point">
+<li><b>top、free、vmstat等工具可以帮助我们看到基础的内存信息</b>
+<ul class="quote">
+<li>我们感兴趣的是，当系统物理内存不足时，系统回收内存的效率如何。</li>
+</ul>
+</li>
+<li><b>sar -B可以观察内存分页的统计信息</b>
+<ul class="quote">
+<li>pgfree/s：每秒被放入空闲列表中的页数。</li>
+<li>pgscank/s：每秒被kswapd守护进程扫描的页数。</li>
+<li>pgscand/s：每秒被直接扫描的页数。</li>
+<li>pgsteal/s：为了满足内存需求，系统每秒从缓存(pagecache和swapcache)回收的页面数。</li>
+<li>%vmeff：代表页面回收效率。</li>
+</ul>
+</li>
+<li><b>sar -W可以查看页面交换情况</b>
+<ul class="quote">
+<li>pswpin/s：每秒系统换入交换页面(swap page)数量。</li>
+<li>pswpout/s：每秒系统换出交换页面(swap page)数量。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>CPU信息分析工具</h4>
+<ul class="point">
+<li><b>vmstat输出用户级(us)和内核级(sy)的 CPU 占用百分比</b>
+<ul class="quote">
+<li>采样周期内的上下文切换次数，block in、block out次数等信息。</li>
+</ul>
+</li>
+<li><b>mpstat可以输出采样周期内的软中断(soft)、硬中断(irq)占用时间的百分比</b>
+<ul class="quote">
+<li>除了获取用户级(usr)和内核级(sys)的CPU占用百分比。</li>
+</ul>
+</li>
+<li><b>strace可以统计系统调用次数和执行时间。</b>
+</li>
+<li><b>perf可以分析CPU</b>
+<ul class="quote">
+<li>perf top用来实时显示系统最耗时的内核函数及进程。</li>
+<li>perf record来记录函数级别的统计信息。</li>
+<li>perf report根据采样数据生成报告。</li>
+</ul>
+</li>
+</ul></div>
+<div class="sec">
+<h4>网络连接和流量分析工具</h4>
+<ul class="point">
+<li><b>sar用来查看网卡流量</b>
+<ul class="quote">
+<li>它以字节为单位输出网络传入和传出流量。</li>
+</ul>
+</li>
+<li><b>netstat可以列出连接的详细信息</b>
+<ul class="quote">
+<li>netstat -anp可以列出连接的详细信息，并且可以将连接、监听的端口对应到进程。</li>
+</ul>
+</li>
+<li><b>ss适合处理海量连接</b>
+<ul class="quote">
+<li>ss与netstat功能类似，但适合处理海量连接。</li>
+</ul>
+</li>
+<li><b>ifconfig可以查看IP地址，还需要留意其中的RX/TX errors、dropped、overruns信息</b>
+<ul class="quote">
+<li>大部分情况下它们没什么问题，但是当网卡流量跑满的时候可能会出现意外。</li>
+</ul>
+</li>
+<li><b>sysdig可以捕获某个进程到某个IP的网络流量</b>
+<ul class="quote">
+<li>通过proc.pid指定要捕获的进程，fd.cip过滤特定IP地址，evt.buffer contains指定要过滤的文本内容。</li>
+</ul>
+</li>
+</ul></div>
+</details>
+<details class="ch" id="ch150"><summary>22.7 小结</summary>
+<div class="sec">
+<h4>系统化地分析问题的方法</h4>
+<ul class="point">
+<li><b>故障能够重现是系统化分析问题的前提</b>
+<ul class="quote">
+<li>有些故障只经历了短暂的时间，或者在故障之后无法确认之前都做了哪些操作，或者故障永远都无法在测试环境中重现。</li>
+</ul>
+</li>
+<li><b>在关键的地方添加日志，或者开发特定的接口来了解到底发生了什么。</b>
+</li>
+</ul></div>
+</details>
+  <p class="site-footer">由 weread-auto 导出 · 供全书视角与后续精读对照　<span class="gcstat" id="gc_page_pv" style="display:none">本页阅读 <b id="gc_page_pv_num">–</b> 次</span></p>
+</main>
+<script>(function(){
+  function openId(id){
+    if(!id) return null;
+    var el = document.getElementById(id);
+    if(!el) return null;
+    var d = (el.tagName === 'DETAILS') ? el : (el.closest ? el.closest('details') : null);
+    if(d && !d.open) d.open = true;      // 关键：目录跳过来时把这一章展开
+    return el;
+  }
+  function go(id){
+    var el = openId(id);
+    if(!el) return;
+    // 展开会改变文档高度，等一帧再滚，免得停在错误位置
+    setTimeout(function(){ el.scrollIntoView({block:'start'}); }, 10);
+  }
+  function fromHash(){
+    var h = (location.hash || '').replace(/^#/, '');
+    if(h) go(decodeURIComponent(h));
+  }
+  document.addEventListener('click', function(e){
+    var a = (e.target && e.target.closest) ? e.target.closest('a[href^="#"]') : null;
+    if(!a) return;
+    var id = (a.getAttribute('href') || '').slice(1);
+    if(id) go(id);
+  }, false);
+  window.addEventListener('hashchange', fromHash, false);
+  // 手动展开某章时把锚点写回地址栏：刷新或分享链接能直接落回这一章
+  document.addEventListener('toggle', function(e){
+    var t = e.target;
+    if(t && t.tagName === 'DETAILS' && t.open && t.id && location.hash !== '#' + t.id){
+      try { history.replaceState(null, '', '#' + t.id); } catch(err) {}
+    }
+  }, true);
+  fromHash();
+})();
+</script>
+<script data-goatcounter="https://ae6623.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<!-- gc-fill:begin -->
+<script>
+(function(){
+  /* GoatCounter 计数端点只吃 .json（.txt 会 400 unknown extension），
+     没数据的路径也返回 404 + {"count":0,"count_unique":0}，所以按文本解析。 */
+  var C="ae6623", base="https://"+C+".goatcounter.com/counter";
+  function stat(p){
+    return fetch(base+p+".json",{credentials:"omit",cache:"no-store"})
+      .then(function(r){return r.text();})
+      .then(function(t){
+        try{
+          var d=JSON.parse(t), c=parseInt(d.count,10);
+          if(!isFinite(c))return null;
+          var u=parseInt(d.count_unique,10);
+          return {pv:String(c), uv:isFinite(u)?String(u):null};
+        }catch(e){return null}
+      })
+      .catch(function(){return null});
+  }
+  function put(id,v){var e=document.getElementById(id);if(e&&v!=null)e.textContent=v;}
+  stat("/*").then(function(d){
+    if(!d)return;
+    put("gc_site_pv_num",d.pv);
+    if(d.uv!=null){put("gc_site_uv_num",d.uv);}
+    else{var x=document.querySelectorAll(".visit-badge-uv");
+         for(var i=0;i<x.length;i++)x[i].style.display="none";}
+  });
+  var pp=document.getElementById("gc_page_pv");
+  if(pp&&location.pathname){
+    var path=location.pathname;
+    if(path.length>1&&path.charAt(path.length-1)==="/")path=path.slice(0,-1);
+    stat(path).then(function(d){
+      if(d){put("gc_page_pv_num",d.pv);pp.style.display="";}
+    });
+  }
+})();
+</script>
+<!-- gc-fill:end -->
+</body>
+</html>
