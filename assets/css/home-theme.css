@@ -450,3 +450,17 @@ details.reading-bar{margin:8px auto 4px;}
   .set-group{padding:0 12px 12px;}
   .set-units-head h2{font-size:1.15rem;}
 }
+
+/* ── 老内核兜底：不支持 aspect-ratio（Chrome < 88 / 旧 Android WebView）──
+   这些浏览器忽略 aspect-ratio，封面高度算成 0；「一排二」的海报卡里
+   封面和文字全是绝对定位，整张卡高度也是 0 —— 一屏下去全是空白，
+   只剩底部的「下滑继续」。这里用 padding-top 撑高（百分比按容器宽度算）。 */
+@supports not (aspect-ratio: 1 / 1){
+  .card-cover{padding-top:60%;}                                  /* 5:3 横版 */
+  html[data-cols="2"] #panel-whole .card-cover{padding-top:0;}   /* 海报卡里绝对定位铺满，不能再吃 padding */
+  html[data-cols="1"] #panel-whole .card-cover{padding-top:0;height:138px;} /* 固定 96px 宽 → 96×43/30 */
+  html[data-cols="3"] #panel-whole .card-cover{padding-top:143.33%;}        /* 30:43 竖版 */
+  .set-units-grid .unit-card .card-cover{padding-top:143.33%;}
+  /* 海报卡本体：用伪元素撑出 30:43 的高度 */
+  html[data-cols="2"] #panel-whole .archive-card::before{content:"";display:block;padding-top:143.33%;}
+}

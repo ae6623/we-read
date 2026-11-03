@@ -11,7 +11,7 @@
   --sub:#8a919a;--head:#93c8a8;--qgreen:#9ed0af;--gold:#bf8247;
   --nav-bg:rgba(21,23,26,.96);--navlink-bg:#262a2f;--navlink-bd:#3a3f46;
   --inner-bg:#272b30;--inner-bd:#3a3f46;--oneline-bg:#272b30;
-  --act-bg:#244b40;--act-bd:#2f5b49;
+  --act-bg:#244b40;--act-bd:#2f5b49;--act-fg:#dff0e4;
   /* 共享 CSS 的变量一并接管：卡片/正文/链接/分隔线都跟主题走 */
   --paper:#15171a;--card:#1f2226;--muted:#8a919a;--green:#93c8a8;--green2:#a8d8bb;
   --line:#3a3f46;--sage:#274234;--accent:#9ed0af;--e5e0d6:#34383f;
@@ -21,7 +21,7 @@ html[data-theme=cream]{
   --sub:#8d8878;--head:#244b40;--qgreen:#2f5b49;
   --nav-bg:rgba(247,248,243,.96);--navlink-bg:#fdfbf3;--navlink-bd:#e8e2d2;
   --inner-bg:#fbfaf2;--inner-bd:#eee9d8;--oneline-bg:#fbfaf4;
-  --act-bg:#e5efe4;--act-bd:#bcd4bc;
+  --act-bg:#e5efe4;--act-bd:#bcd4bc;--act-fg:#1b4235;
   --paper:#f6f7f2;--card:#fffdf6;--muted:#697870;--green:#244b40;--green2:#315e50;
   --line:#dfe6df;--sage:#dce8df;--accent:#286b52;--e5e0d6:#e5e0d6;}
 html[data-theme=light]{
@@ -29,6 +29,7 @@ html[data-theme=light]{
   --sub:#8d8878;--head:#244b40;--qgreen:#2f5b49;
   --nav-bg:rgba(255,255,255,.96);--navlink-bg:#fafaf7;--navlink-bd:#e7e7e0;
   --inner-bg:#fafaf7;--inner-bd:#ecebe4;--oneline-bg:#fafaf7;
+  --act-bg:#e6efe7;--act-bd:#c3dcc9;--act-fg:#1e4d37;
   --paper:#fff;--card:#fff;--muted:#697870;--green:#244b40;--green2:#315e50;
   --line:#e7e7e2;--sage:#e6efe7;--accent:#286b52;}
 html[data-theme=green]{
@@ -36,7 +37,7 @@ html[data-theme=green]{
   --sub:#5d7c67;--head:#1e4d37;--qgreen:#1e5c41;
   --nav-bg:rgba(207,232,210,.96);--navlink-bg:#f4fbf5;--navlink-bd:#b4d8bd;
   --inner-bg:#f6fbf7;--inner-bd:#cde5d3;--oneline-bg:#f6fbf7;
-  --act-bg:#bfe3c6;--act-bd:#95c8a1;
+  --act-bg:#bfe3c6;--act-bd:#95c8a1;--act-fg:#17422f;
   --paper:#cfe8d2;--card:#eef7ef;--muted:#5d7c67;--green:#1e4d37;--green2:#2c6b4e;
   --line:#b9dcc0;--sage:#b7dfc0;--accent:#1e5c41;}
 html[data-theme=dark]{
@@ -44,7 +45,7 @@ html[data-theme=dark]{
   --sub:#8a919a;--head:#93c8a8;--qgreen:#9ed0af;
   --nav-bg:rgba(21,23,26,.96);--navlink-bg:#262a2f;--navlink-bd:#3a3f46;
   --inner-bg:#272b30;--inner-bd:#3a3f46;--oneline-bg:#272b30;
-  --act-bg:#244b40;--act-bd:#2f5b49;
+  --act-bg:#244b40;--act-bd:#2f5b49;--act-fg:#dff0e4;
   --paper:#15171a;--card:#1f2226;--muted:#8a919a;--green:#93c8a8;--green2:#a8d8bb;
   --line:#3a3f46;--sage:#274234;--accent:#9ed0af;--e5e0d6:#34383f;}
 
@@ -146,7 +147,7 @@ body{max-width:880px;margin:0 auto;padding:0 18px 80px;font-size:.9375rem;line-h
   border:1px solid var(--navlink-bd);border-radius:8px;padding:6px 4px;text-align:center;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:all .15s;}
 .navlink:hover{color:var(--head);border-color:var(--head);}
-.navlink.active{color:var(--head);background:var(--act-bg);border-color:var(--act-bd);font-weight:700;}
+.navlink.active{color:var(--act-fg,var(--head));background:var(--act-bg);border-color:var(--act-bd);font-weight:700;}
 section{scroll-margin-top:62px;}
 
 /* ── 统一卡片：所有顶层模块（AI领读 / AI 问答 / 其余）一视同仁 ── */
@@ -386,7 +387,7 @@ html[data-theme=green]{--skel-a:#d6e9da;--skel-b:#aed3ba;}
 .rd-retry{margin-top:10px;font:600 13px/1.4 var(--sans);color:var(--head);
   background:var(--navlink-bg);border:1px solid var(--head);border-radius:8px;
   padding:7px 14px;cursor:pointer;}
-.rd-retry:hover{background:var(--act-bg);}
+.rd-retry:hover{background:var(--act-bg);color:var(--act-fg,var(--head));}
 @media(max-width:720px){
   .rd-skel-card{padding:14px 16px 18px;border-radius:14px;}
   .rd-skel .sk-fig{height:132px;}
@@ -421,6 +422,7 @@ html[data-theme=green]{--skel-a:#d6e9da;--skel-b:#aed3ba;}
   background:var(--navlink-bg);text-decoration:none;color:var(--txt);
   transition:border-color .15s ease,background .15s ease;}
 .rd-pn:hover{border-color:var(--head);background:var(--act-bg);}
+.rd-pn:hover .rd-pn-t{color:var(--act-fg,var(--head));}
 .rd-pn.is-off{opacity:.45;pointer-events:none;}
 .rd-pn-next{text-align:right;align-items:flex-end;}
 .rd-pn-k{font:600 .7rem/1.2 var(--sans);letter-spacing:.08em;color:var(--sub);}
