@@ -133,7 +133,23 @@
     if (colW <= 1) return;
 
     var cards = s.cards, vis = [], i, k;
-    for (i = 0; i < cards.length; i++) if (shownOf(cards[i])) vis.push(cards[i]);
+    /* 系列组会把书架卡「搬家」到 .set-units-grid（CSS grid）。
+       搬走的卡还留在本网格的 s.cards 快照里，若这里再给它写 position:absolute /
+       left / top，它就会脱离新父容器的网格流，浮在页面某处 —— 看起来像「卡片丢了位置」。
+       所以只排还在本网格里的卡，顺手把搬走的卡上的绝对定位清干净。 */
+    for (i = 0; i < cards.length; i++) {
+      if (cards[i].parentElement !== grid) {
+        if (cards[i].style.position === 'absolute') {
+          cards[i].style.position = '';
+          cards[i].style.left = '';
+          cards[i].style.top = '';
+          cards[i].style.width = '';
+          cards[i].style.margin = '';
+        }
+        continue;
+      }
+      if (shownOf(cards[i])) vis.push(cards[i]);
+    }
 
     /* 第 15 批：取消首卡铺满横幅，所有卡统一等宽。
        （之前第一张跨整行，用户觉得不要了。） */
@@ -174,6 +190,7 @@
   /* ── 分页写回 DOM ──────────────────────────────────────────────── */
   function applyPg(s) {
     for (var i = 0; i < s.cards.length; i++) {
+      if (s.cards[i].parentElement !== s.grid) continue;   // 已被搬到系列组的卡，分页不再管
       if (i < s.shown) s.cards[i].removeAttribute('data-pg');
       else s.cards[i].setAttribute('data-pg', 'off');
     }
@@ -285,7 +302,17 @@
   function syncOne(grid, idx, boot) {
     var s = ensure(grid, idx);
     var now = kids(grid);
-    if (now.length === s.cards.length && !boot) return s;
+    // 成员没变就别重算：s.cards 会被 scatter 打散顺序，所以按「集合」比对，
+    // 不做顺序比较，否则每次重排都会重新打散一次，卡片位置来回跳。
+    if (!boot && now.length === s.cards.length) {
+      var same = true;
+      for (var q = 0; q < now.length; q++) {
+        var hit = false;
+        for (var q2 = 0; q2 < s.cards.length; q2++) if (s.cards[q2] === now[q]) { hit = true; break; }
+        if (!hit) { same = false; break; }
+      }
+      if (same) return s;
+    }
 
     /* 只有「整格都是卡片」才做瀑布流 + 分页。
        系列页的网格里混着 .series-preview 导览块，绝对定位会把它们压叠在一起，

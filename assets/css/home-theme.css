@@ -439,6 +439,10 @@ details.reading-bar{margin:8px auto 4px;}
   font:600 1rem/1.5 var(--serif);color:var(--green);}
 .set-group-count{font:600 .72rem/1 var(--sans);color:#7a6a52;background:#f3e9da;border-radius:99px;padding:4px 9px;}
 .set-units-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;padding:0;}
+/* 系列组里的卡是从书架瀑布流「搬家」过来的（homepage-reading.js），
+   搬之前带 position:absolute + left/top/width。如果清理时序输给 home-feed 的重排，
+   这些卡会脱离网格流浮在页面上、互相叠住。这里强制交回 CSS 网格兜底。 */
+.set-units-grid > .archive-card{position:static!important;left:auto!important;top:auto!important;width:auto!important;}
 /* ── 宽屏：单册区跟随右上角列数按钮 ────────────────────────────────
    之前这里写死 auto-fill 240px，平板/PC 上点「一排一」毫无反应
    （书架变一排一，系列卡仍然三列）。680px 以下仍固定两列，

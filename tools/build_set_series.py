@@ -87,7 +87,7 @@ PAGE_TPL = """<!doctype html>
 ENTRY_OK = """<article class="book-entry" id="{i}">
 <h3><a href="{deep}" data-weread-id="{bid}">{title}</a></h3>
 <p>{author}{stat}</p>
-<p class="entry-links"><a href="../../books/{slug}/outline.html">AI 大纲 →</a></p>
+
 </article>"""
 
 ENTRY_NO = """<article class="book-entry" id="{i}">
