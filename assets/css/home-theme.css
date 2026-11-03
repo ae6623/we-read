@@ -434,21 +434,19 @@ details.reading-bar{margin:8px auto 4px;}
 .set-group-head{display:flex;align-items:center;gap:10px;padding:14px 0 10px;list-style:none;
   font:600 1rem/1.5 var(--serif);color:var(--green);}
 .set-group-count{font:600 .72rem/1 var(--sans);color:#7a6a52;background:#f3e9da;border-radius:99px;padding:4px 9px;}
-.set-units-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:0;}
-.unit-card{border:1px solid var(--line);border-radius:12px;background:#fbfcf8;padding:15px 16px;
-  display:flex;flex-direction:column;gap:6px;min-width:0;}
-.unit-card h3{margin:0;font:600 1rem/1.55 var(--serif);color:var(--green);overflow-wrap:anywhere;}
-.unit-card h3 a{text-decoration:none;color:inherit;}
-.unit-card h3 a:hover{text-decoration:underline;}
-.unit-meta{margin:0;font-size:.78rem;color:var(--muted);overflow-wrap:anywhere;}
-.unit-link{margin-top:auto;padding-top:4px;font-size:.8rem;font-weight:700;color:var(--green2,#315e50);text-decoration:none;}
-.unit-link:hover{text-decoration:underline;}
+.set-units-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;padding:0;}
+/* 单册卡直接复用 archive-card：封面由 home-card.js 按 data-slug 注入，
+   作者/章数走 card-foot，和轻游记的卡是同一套版式。这里只收紧内边距。 */
+.set-units-grid .unit-card{min-height:0;padding:14px 14px 12px;}
+/* 这里是竖版书封（30/43），不能用首页 5/3 的横版裁切，否则书名被切掉 */
+.set-units-grid .unit-card .card-cover{aspect-ratio:30/43;margin-bottom:9px;}
+.set-units-grid .unit-card h3{font-size:1.02rem;line-height:1.5;margin:8px 0 0;}
 @media(max-width:680px){
   .set-units-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;}
-  .unit-card{padding:11px 11px 10px;gap:4px;}
-  .unit-card h3{font-size:.86rem;line-height:1.45;}
-  .unit-meta{font-size:.68rem;}
-  .unit-link{font-size:.72rem;}
+  .set-units-grid .unit-card{padding:9px 9px 8px;}
+  .set-units-grid .unit-card h3{font-size:.84rem;line-height:1.42;margin:5px 0 0;}
+  .set-units-grid .unit-card .card-author{font-size:.66rem;}
+  .set-units-grid .unit-card .card-meta{font-size:.6rem;}
   .set-group{padding:0 12px 12px;}
   .set-units-head h2{font-size:1.15rem;}
 }

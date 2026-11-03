@@ -140,20 +140,33 @@
     Array.prototype.forEach.call(mask.querySelectorAll('[data-act="wechat"],[data-act="moments"]'), function (el) {
       el.addEventListener('click', function () {
         var act = el.getAttribute('data-act');
+        // 微信 / 朋友圈没有网页分享协议，点了也跳不过去：
+        // 直接把当前页链接写进剪贴板，用户切到微信粘贴即可
         tip.textContent = TIPS[act] || '';
+        copyLink(function (ok) {
+          if (!ok) return;
+          tip.textContent = act === 'moments'
+            ? '链接已复制，去朋友圈粘贴即可'
+            : '链接已复制，去微信粘贴给好友';
+        });
         qrBox.classList.remove('is-pulse');
         void qrBox.offsetWidth;
         qrBox.classList.add('is-pulse');
       });
     });
 
-    mask.querySelector('.share-copy').addEventListener('click', function () {
-      var done = function () { tip.textContent = TIPS.copy; };
+    function copyLink(done) {
       if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(PAGE_URL).then(done, function () { window.prompt('复制链接', PAGE_URL); });
-      } else {
-        window.prompt('复制链接', PAGE_URL);
+        navigator.clipboard.writeText(PAGE_URL).then(function () { done && done(true); },
+          function () { window.prompt('复制链接', PAGE_URL); done && done(false); });
+        return;
       }
+      window.prompt('复制链接', PAGE_URL);
+      done && done(false);
+    }
+
+    mask.querySelector('.share-copy').addEventListener('click', function () {
+      copyLink(function () { tip.textContent = TIPS.copy; });
     });
   }
 

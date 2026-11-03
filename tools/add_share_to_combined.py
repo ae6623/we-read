@@ -15,9 +15,9 @@ import argparse
 import glob
 import sys
 
-CSS = '<link rel="stylesheet" href="../../../assets/css/share.css?v=20261103">'
+CSS = '<link rel="stylesheet" href="../../../assets/css/share.css?v=20261103b">'
 QR = '<script src="../../../assets/js/vendor/qrcode.min.js" defer></script>'
-JS = '<script src="../../../assets/js/share.js?v=20261103" defer></script>'
+JS = '<script src="../../../assets/js/share.js?v=20261103b" defer></script>'
 NEEDLE = 'assets/js/share.js'
 
 
