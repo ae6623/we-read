@@ -452,6 +452,9 @@ details.reading-bar{margin:8px auto 4px;}
   html[data-cols="1"] .set-units-grid .archive-card{
     display:grid;grid-template-columns:112px minmax(0,1fr);
     column-gap:18px;row-gap:4px;align-items:start;
+    /* 封面把行撑到 161px，文字只占顶部两行会显得上半重下空；
+       整组行内容垂直居中，读起来是「一条书」而不是「一栏表头」 */
+    align-content:center;
   }
   html[data-cols="1"] .set-units-grid .unit-card .card-cover{
     grid-column:1;grid-row:1 / span 4;width:112px;margin:0;
