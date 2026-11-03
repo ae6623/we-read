@@ -23,22 +23,42 @@
 
   function enc(s) { return encodeURIComponent(s || ''); }
 
+  /* 四个渠道的线性图标：跟面板同一套 1.6px 描边，不引外部图标库 */
+  var ICON = {
+    wechat:
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.4 4.2c-3.5 0-6.4 2.3-6.4 5.2 0 1.7.9 3.1 2.4 4.1l-.6 2 2.2-1.1c.6.2 1.3.3 2 .4"/>' +
+      '<path d="M21 14.1c0-2.6-2.4-4.7-5.4-4.7S10.2 11.5 10.2 14c0 2.6 2.4 4.7 5.4 4.7.7 0 1.4-.1 2-.3l1.9 1-.4-1.8c1.2-.8 1.9-2.1 1.9-3.5z"/>' +
+      '<circle cx="7.1" cy="8.5" r=".85" fill="currentColor" stroke="none"/><circle cx="11.2" cy="8.5" r=".85" fill="currentColor" stroke="none"/>' +
+      '<circle cx="13.7" cy="13.2" r=".75" fill="currentColor" stroke="none"/><circle cx="17.1" cy="13.2" r=".75" fill="currentColor" stroke="none"/></svg>',
+    moments:
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.4"/>' +
+      '<circle cx="12" cy="12" r="2.1" fill="currentColor" stroke="none"/>' +
+      '<circle cx="12" cy="5.3" r="1" fill="currentColor" stroke="none"/><circle cx="12" cy="18.7" r="1" fill="currentColor" stroke="none"/>' +
+      '<circle cx="5.3" cy="12" r="1" fill="currentColor" stroke="none"/><circle cx="18.7" cy="12" r="1" fill="currentColor" stroke="none"/></svg>',
+    weibo:
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="10.6" cy="13.8" rx="7.4" ry="5.1"/>' +
+      '<circle cx="10.6" cy="13.8" r="2.1" fill="currentColor" stroke="none"/>' +
+      '<path d="M17.3 8.6c1.6-.4 2.8.6 2.6 2.1"/><path d="M16.6 5.6c3.1-.7 5.3 1.3 4.7 4"/></svg>',
+    qzone:
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.7l2.5 5.1 5.6.8-4.1 3.9 1 5.6-5-2.7-5 2.7 1-5.6-4.1-3.9 5.6-.8z"/></svg>'
+  };
+
   function buildPanel() {
     var mask = document.createElement('div');
     mask.className = 'share-mask';
     mask.hidden = true;
     mask.innerHTML =
-      '<div class="share-box" role="dialog" aria-modal="true" aria-label="分享这一页">' +
+      '<div class="share-box" role="dialog" aria-modal="true" aria-label="分享本篇笔记">' +
         '<button type="button" class="share-x" aria-label="关闭">×</button>' +
         '<p class="share-eyebrow">SHARE · 分享</p>' +
-        '<h2 class="share-h">分享这一页</h2>' +
+        '<h2 class="share-h">分享本篇笔记</h2>' +
         '<div class="share-qr" aria-label="当前页二维码"></div>' +
         '<p class="share-tip">用微信扫一扫，或长按识别二维码</p>' +
         '<div class="share-acts">' +
-          '<button type="button" data-act="wechat">微信</button>' +
-          '<button type="button" data-act="moments">朋友圈</button>' +
-          '<a data-act="weibo" href="#" target="_blank" rel="noopener">微博</a>' +
-          '<a data-act="qzone" href="#" target="_blank" rel="noopener">QQ空间</a>' +
+          '<button type="button" data-act="wechat">' + ICON.wechat + '<span>微信</span></button>' +
+          '<button type="button" data-act="moments">' + ICON.moments + '<span>朋友圈</span></button>' +
+          '<a data-act="weibo" href="#" target="_blank" rel="noopener">' + ICON.weibo + '<span>微博</span></a>' +
+          '<a data-act="qzone" href="#" target="_blank" rel="noopener">' + ICON.qzone + '<span>QQ空间</span></a>' +
         '</div>' +
         '<button type="button" class="share-copy">复制链接</button>' +
       '</div>';
@@ -53,8 +73,8 @@
 
     var btn = document.createElement('button');
     btn.type = 'button';
-    btn.setAttribute('aria-label', '分享这一页');
-    btn.title = '分享这一页';
+    btn.setAttribute('aria-label', '分享本篇笔记');
+    btn.title = '分享本篇笔记';
     btn.innerHTML =
       '<svg viewBox="0 0 24 24" aria-hidden="true" width="16" height="16">' +
       '<circle cx="18" cy="5" r="2.6" fill="none" stroke="currentColor" stroke-width="1.8"/>' +

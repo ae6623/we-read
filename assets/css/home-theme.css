@@ -313,12 +313,9 @@ html[data-cols="3"] .overview-entries{grid-template-columns:repeat(3,minmax(0,1f
 html[data-cols="3"] #reading-panel-archive .archive-grid,
 html[data-cols="3"] #panel-soon .archive-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
 
-/* 「系列」面板固定一排二：系列卡是大段说明文案，三列会把标题与正文挤成竖排 */
-#reading-panel-series .archive-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+/* 「系列」面板跟随右上角列数按钮；没选过时由 JS 初始化成一排二。
+   这里只保留系列卡自身的间距，不再写死列数，否则按钮点了没反应 */
 #reading-panel-series .series-preview .card-top{margin:8px 0 12px;}
-@media(max-width:680px){
-  #reading-panel-series .archive-grid{grid-template-columns:minmax(0,1fr)!important;}
-}
 
 /* ── 一排三：112px 窄卡 → 不显示封面/作者，但把间距、字号放宽防拥挤 ── */
 html[data-cols="3"] .archive-grid{gap:16px 12px!important;}
@@ -427,22 +424,17 @@ details.reading-bar{margin:8px auto 4px;}
 .feed-note{margin:0;color:var(--muted);font-size:.72rem;letter-spacing:.02em;}
 .feed-note span{color:var(--line);margin-left:4px;font-variant-numeric:tabular-nums;}
 
-/* ── 系列 Tab：套装拆册的单册卡片（展开时按需加载） ── */
+/* ── 系列 Tab：套装拆册的单册卡片（平铺，不做折叠） ── */
 .set-units{margin-top:30px;padding-top:22px;border-top:1px solid var(--line);}
 .set-units-head{display:flex;align-items:baseline;gap:6px 14px;flex-wrap:wrap;margin:0 0 14px;}
 .set-units-head h2{margin:0;font-size:1.3rem;}
 .set-units-intro{margin:0;color:var(--muted);font-size:.84rem;line-height:1.7;}
-.set-groups{display:grid;grid-template-columns:1fr;gap:10px;}
-.set-group{border:1px solid var(--line);border-radius:14px;background:var(--card);padding:0 18px;}
-.set-group summary{display:flex;align-items:center;gap:10px;padding:14px 0;cursor:pointer;list-style:none;
+.set-groups{display:grid;grid-template-columns:1fr;gap:14px;}
+.set-group{border:1px solid var(--line);border-radius:14px;background:var(--card);padding:0 18px 16px;}
+.set-group-head{display:flex;align-items:center;gap:10px;padding:14px 0 10px;list-style:none;
   font:600 1rem/1.5 var(--serif);color:var(--green);}
-.set-group summary::-webkit-details-marker{display:none;}
-.set-group summary::after{content:"";margin-left:auto;width:8px;height:8px;flex:none;
-  border-right:1.6px solid var(--muted);border-bottom:1.6px solid var(--muted);
-  transform:rotate(45deg) translateY(-2px);transition:transform .2s ease;}
-.set-group[open] summary::after{transform:rotate(-135deg) translateY(-2px);}
 .set-group-count{font:600 .72rem/1 var(--sans);color:#7a6a52;background:#f3e9da;border-radius:99px;padding:4px 9px;}
-.set-units-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:2px 0 18px;}
+.set-units-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:0;}
 .unit-card{border:1px solid var(--line);border-radius:12px;background:#fbfcf8;padding:15px 16px;
   display:flex;flex-direction:column;gap:6px;min-width:0;}
 .unit-card h3{margin:0;font:600 1rem/1.55 var(--serif);color:var(--green);overflow-wrap:anywhere;}
@@ -451,9 +443,12 @@ details.reading-bar{margin:8px auto 4px;}
 .unit-meta{margin:0;font-size:.78rem;color:var(--muted);overflow-wrap:anywhere;}
 .unit-link{margin-top:auto;padding-top:4px;font-size:.8rem;font-weight:700;color:var(--green2,#315e50);text-decoration:none;}
 .unit-link:hover{text-decoration:underline;}
-.unit-loading{margin:0;padding:6px 0 16px;color:var(--muted);font-size:.85rem;}
 @media(max-width:680px){
-  .set-units-grid{grid-template-columns:1fr;gap:10px;}
-  .set-group{padding:0 14px;}
+  .set-units-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;}
+  .unit-card{padding:11px 11px 10px;gap:4px;}
+  .unit-card h3{font-size:.86rem;line-height:1.45;}
+  .unit-meta{font-size:.68rem;}
+  .unit-link{font-size:.72rem;}
+  .set-group{padding:0 12px 12px;}
   .set-units-head h2{font-size:1.15rem;}
 }

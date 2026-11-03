@@ -107,19 +107,34 @@
 }
 .share-acts > *{
   display:flex;
+  flex-direction:column;
   align-items:center;
   justify-content:center;
-  padding:9px 4px;
+  gap:5px;
+  padding:9px 2px 8px;
   border:1px solid var(--line,#d9dfd4);
   border-radius:10px;
   background:#f7f9f4;
   color:var(--green,#183c34);
-  font-size:.82rem;
+  font-size:.74rem;
   font-weight:700;
   text-decoration:none;
   cursor:pointer;
   transition:background .16s ease,border-color .16s ease;
 }
+.share-acts svg{
+  width:20px;
+  height:20px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.6;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.share-acts [data-act="wechat"] svg{color:#2f9e44}
+.share-acts [data-act="moments"] svg{color:#4c8bf5}
+.share-acts [data-act="weibo"] svg{color:#e05a3a}
+.share-acts [data-act="qzone"] svg{color:#e0a52b}
 .share-acts > *:hover{background:#eaf1e6;border-color:#b9cbb8}
 .share-copy{
   width:100%;

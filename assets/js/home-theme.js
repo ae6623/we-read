@@ -93,12 +93,16 @@
       });
     }
 
-    // ── 列数：一排三（默认）→ 一排二 → 一排一，点一下循环 ──────────
+    // ── 列数：右上角按钮循环切换，系列 Tab 有自己的默认值（一排二）──
     (function () {
       var btn = q('#rdCols');
       if (!btn) return;
-      var ORDER = ['3', '2', '1'];
+      var ORDER = ['1', '2', '3'];
       var CN = { 1: '一', 2: '二', 3: '三' };
+      var seriesPanel = document.getElementById('reading-panel-series');
+      function onSeries() {
+        return !!(seriesPanel && !seriesPanel.hidden);
+      }
       function current() {
         var v = d.getAttribute('data-cols');
         return ORDER.indexOf(v) >= 0 ? v : '3';
@@ -109,18 +113,35 @@
         btn.setAttribute('aria-pressed', cur === '1' ? 'true' : 'false');
         btn.title = '当前一排' + CN[cur] + ' · 点按切一排' + CN[next];
       }
+      function valid(v) { return v === 1 || v === 2 || v === 3 ? String(v) : ''; }
+      /* 两个页签各记各的：书架沿用一排三，系列没选过就是一排二。
+         以前系列被 CSS 写死两列，按钮点了也被覆盖，才有「切了没用」 */
+      function savedFor(series) {
+        return series ? valid(c.colsSeries) : valid(c.cols);
+      }
       function set(v, touch) {
         d.setAttribute('data-cols', v);
-        if (touch) { c.cols = parseInt(v, 10); save(c); }
+        if (touch) {
+          if (onSeries()) c.colsSeries = parseInt(v, 10);
+          else c.cols = parseInt(v, 10);
+          save(c);
+        }
         paint();
       }
+      function syncTab() {
+        var series = onSeries();
+        set(savedFor(series) || (series ? '2' : '3'), false);
+      }
 
-      if (c.cols === 1 || c.cols === 2 || c.cols === 3) set(String(c.cols), false);
-      else set('3', false);
-
+      syncTab();
       btn.addEventListener('click', function () {
         set(ORDER[(ORDER.indexOf(current()) + 1) % ORDER.length], true);
       });
+      // Tab 切换/回退后重新套用该页签自己的列数
+      Array.prototype.forEach.call(document.querySelectorAll('[data-panel]'), function (tab) {
+        tab.addEventListener('click', function () { setTimeout(syncTab, 0); });
+      });
+      window.addEventListener('hashchange', syncTab);
     })();
 
     // 首次进入只应用、不写盘：用户没选过就保持默认，别把「默认」变成「用户偏好」
