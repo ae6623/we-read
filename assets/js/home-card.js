@@ -180,7 +180,9 @@
            那一刻 img 还不在文档里，closest('.card-cover') 拿到 null → has-img 永远加不上，
            卡片就一直停在绿色题字占位（线上很多卡就是这么空着的）。 */
         cover.appendChild(img);
-        if (img.complete && img.naturalWidth > 0) cover.classList.add('has-img');
+        // naturalWidth>0 就够：渐进式 JPEG 会在 complete=false 时已解出尺寸，
+        // 这时图已经在画了，兜底文字应该立刻退场，不用等整张下完
+        if (img.naturalWidth > 0) cover.classList.add('has-img');
       }      // 把除封面外的所有子节点（含隐藏的 ⋯ 菜单）包进 card-body，
       // 方便「封面置顶（一排二）/ 封面置左（一排一）」两种版式切换
       var body = document.createElement('div');
@@ -203,7 +205,7 @@
       for (var i = 0; i < covers.length; i++) {
         var im = covers[i].querySelector('img');
         if (!im) continue;
-        if (im.complete && im.naturalWidth > 0) covers[i].classList.add('has-img');
+        if (im.naturalWidth > 0) covers[i].classList.add('has-img');
         else pending++;
       }
       return pending;
