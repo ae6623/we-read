@@ -30,6 +30,7 @@ git clone --depth 1 --single-branch --branch main <本仓库地址>
 |---|---|---|
 | 拆书成系列 / 系列页维护 | `note-spec/set-series.md` | `python3 tools/series.py --set <slug>` |
 | 全量系列体检 | 同上 | `python3 tools/series.py --audit` |
+| AI 问书 / 自测内容 | 本文 §AI 内容生产 | `python3 tools/ai_draft.py --dump <slug>` → `--fill <slug> --answers <json>` |
 
 **拆书/系列任务的硬规则**
 
@@ -38,6 +39,27 @@ git clone --depth 1 --single-branch --branch main <本仓库地址>
 3. 交付前跑 `python3 tools/series.py --set <slug> --check`，**必须「体检：全部通过」才算完成**；有 FAIL 不能说做完。
 4. 系列页作者行写成 `作者：XXX　·　NN 章 / NN 条`，脚本才抓得到作者与章数。
 5. **不要手改** `index.html` 里的系列卡片——那是脚本产物，下次同步会被覆盖。
+
+### AI 内容生产（AI 问书 / 自测）
+
+**不要假设有外部模型可用。** 云端沙箱到 Google 不通、也没有国内模型 key，`gen_quiz_answer.py` / `gen_mindmap.py` 那种「脚本直连 LLM」的路会整条断掉。
+
+正确分工是**三段式**，Agent 自己就是那个 LLM：
+
+```bash
+python3 tools/ai_draft.py --dump <slug>          # 1. 脚本从 outline.html 出素材 → drafts/<slug>.md + .json
+# 2. Agent 读素材，填 .json 里的 items[].a 与 cite（cite 必须命中大纲原文，脚本会校验，编造会被打回）
+python3 tools/ai_draft.py --fill <slug> --answers drafts/<slug>.json --create --write
+python3 tools/ai_draft.py --skeleton <slug> --write   # 只有 outline、没有 combined.html 时补骨架
+```
+
+硬规则：
+
+1. 答案只许用 `outline.html` 里的条目与原句，**cite 指向具体章节/要点**，编造会被 `validate()` 拒绝。
+2. 必须打标 `AI 自主整理 · 非AI读书返回`——不是微信读书「AI 问书」的原文，不能冒充。
+3. 单条 ≤220 字（超了页面排版会断），每条至少 20 字。
+4. **不需要登录态**：bookId 搜索、章节目录、`/web/book/outline` 全免登录（实测）。
+5. 真要微信自家「AI 问书」原文时才需要登录态，且必须**在当前实例**扫码（`wr_skey` 单会话，扫在别处会顶掉）。
 
 ## 内容结构
 
