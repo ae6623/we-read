@@ -181,8 +181,7 @@
            卡片就一直停在绿色题字占位（线上很多卡就是这么空着的）。 */
         cover.appendChild(img);
         if (img.complete && img.naturalWidth > 0) cover.classList.add('has-img');
-      }
-      // 把除封面外的所有子节点（含隐藏的 ⋯ 菜单）包进 card-body，
+      }      // 把除封面外的所有子节点（含隐藏的 ⋯ 菜单）包进 card-body，
       // 方便「封面置顶（一排二）/ 封面置左（一排一）」两种版式切换
       var body = document.createElement('div');
       body.className = 'card-body';
@@ -192,9 +191,47 @@
     }
   }
 
+  /* ── 封面补挂 has-img ────────────────────────────────────────────
+     lazy 图在切 Tab、滚到视口、CDN 回源慢这几种情况下，load 事件的时机
+     和 addCovers 的执行顺序对不上：图已经 complete & naturalWidth>0 了，
+     has-img 却没挂上，卡片就一直停在兜底素封上（线上出现的「贝加尔湖变纯色块」
+     就是这个）。这里做两级兜底：轮询扫 + 滚动后再扫，谁加载完给谁补上。 */
+  function watchCovers() {
+    function sweep() {
+      var covers = document.querySelectorAll('.card-cover:not(.has-img)');
+      var pending = 0;
+      for (var i = 0; i < covers.length; i++) {
+        var im = covers[i].querySelector('img');
+        if (!im) continue;
+        if (im.complete && im.naturalWidth > 0) covers[i].classList.add('has-img');
+        else pending++;
+      }
+      return pending;
+    }
+
+    var tries = 0;
+    var timer = setInterval(function () {
+      tries++;
+      if (sweep() === 0 || tries > 40) clearInterval(timer);
+    }, 400);
+
+    // 滚到新的一屏、切页签之后都补一次（rAF 节流，跟随滚动不额外开销）
+    var ticking = false;
+    function later() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () { ticking = false; sweep(); });
+    }
+    window.addEventListener('scroll', later, { passive: true });
+    Array.prototype.forEach.call(document.querySelectorAll('[data-panel]'), function (tab) {
+      tab.addEventListener('click', function () { setTimeout(sweep, 60); setTimeout(sweep, 600); });
+    });
+  }
+
   function boot() {
     moveMeta();
     addCovers();
+    watchCovers();
     var favs = load();
 
     items = Array.prototype.slice.call(document.querySelectorAll('.archive-card'))
