@@ -154,9 +154,11 @@
           // 详情页直接复用同一个 URL → 浏览器缓存命中，秒出图，不用重新下载
           try { localStorage.setItem('rdCover:' + slug, this.currentSrc || this.src); } catch (e) {}
         });
-        // 兜底：缓存/极快加载时 load 事件可能已错过，挂完监听补查一次
-        if (img.complete && img.naturalWidth > 0) cover.classList.add('has-img');
+        /* 先入 DOM 再补查：命中缓存的图会在 appendChild 之前就把 load 事件排队，
+           那一刻 img 还不在文档里，closest('.card-cover') 拿到 null → has-img 永远加不上，
+           卡片就一直停在绿色题字占位（线上很多卡就是这么空着的）。 */
         cover.appendChild(img);
+        if (img.complete && img.naturalWidth > 0) cover.classList.add('has-img');
       }
       // 把除封面外的所有子节点（含隐藏的 ⋯ 菜单）包进 card-body，
       // 方便「封面置顶（一排二）/ 封面置左（一排一）」两种版式切换
