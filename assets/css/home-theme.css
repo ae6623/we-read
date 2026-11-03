@@ -313,6 +313,13 @@ html[data-cols="3"] .overview-entries{grid-template-columns:repeat(3,minmax(0,1f
 html[data-cols="3"] #reading-panel-archive .archive-grid,
 html[data-cols="3"] #panel-soon .archive-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
 
+/* 「系列」面板固定一排二：系列卡是大段说明文案，三列会把标题与正文挤成竖排 */
+#reading-panel-series .archive-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+#reading-panel-series .series-preview .card-top{margin:0 0 10px;}
+@media(max-width:680px){
+  #reading-panel-series .archive-grid{grid-template-columns:minmax(0,1fr)!important;}
+}
+
 /* ── 一排三：112px 窄卡 → 不显示封面/作者，但把间距、字号放宽防拥挤 ── */
 html[data-cols="3"] .archive-grid{gap:16px 12px!important;}
 html[data-cols="3"] .archive-card{padding:12px 12px 10px;}

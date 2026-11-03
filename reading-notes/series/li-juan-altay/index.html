@@ -25,46 +25,28 @@
 <section class="topic-group" aria-labelledby="units-title">
 <h2 id="units-title">分册清单</h2>
 <article class="book-entry" id="unit-1">
-<h3><a href="https://weread.qq.com/book-detail?type=1&amp;v=e4b32820717ffac9e4b705e" data-bid="25164489">九篇雪</a></h3>
+<h3><a href="https://weread.qq.com/book-detail?type=1&amp;v=e4b32820717ffac9e4b705e" data-weread-id="25164489">九篇雪</a></h3>
 <p>作者：李娟　·　43 章 / 938 条</p>
 <p class="entry-links"><a href="../../books/jiu-pian-xue/outline.html">章节大纲 →</a></p>
 </article>
 <article class="book-entry" id="unit-2">
-<h3><a href="https://weread.qq.com/book-detail?type=1&amp;v=d1d32fa053b924d1d0ac0a5" data-bid="244004">冬牧场</a></h3>
+<h3><a href="https://weread.qq.com/book-detail?type=1&amp;v=d1d32fa053b924d1d0ac0a5" data-weread-id="244004">冬牧场</a></h3>
 <p>作者：李娟　·　38 章 / 920 条</p>
 <p class="entry-links"><a href="../../books/dong-mu-chang/outline.html">章节大纲 →</a></p>
 </article>
 <article class="book-entry" id="unit-3">
-<h3><a href="https://weread.qq.com/book-detail?type=1&amp;v=57a32a205c75ec57a476e6b" data-bid="816620">走夜路请放声歌唱</a></h3>
+<h3><a href="https://weread.qq.com/book-detail?type=1&amp;v=57a32a205c75ec57a476e6b" data-weread-id="816620">走夜路请放声歌唱</a></h3>
 <p>作者：李娟　·　40 章 / 738 条</p>
 <p class="entry-links"><a href="../../books/zou-ye-lu-qing-fang-sheng-ge-chang/outline.html">章节大纲 →</a></p>
 </article>
 <article class="book-entry" id="unit-4">
-<h3><a href="https://weread.qq.com/book-detail?type=1&amp;v=ee0320b053b925ee0519857" data-bid="244005">阿勒泰的角落</a></h3>
+<h3><a href="https://weread.qq.com/book-detail?type=1&amp;v=ee0320b053b925ee0519857" data-weread-id="244005">阿勒泰的角落</a></h3>
 <p>作者：李娟　·　37 章 / 942 条</p>
 <p class="entry-links"><a href="../../books/a-lei-tai-de-jiao-luo/outline.html">章节大纲 →</a></p>
 </article>
 </section>
 <footer>共 4 册。<a href="../index.html">返回系列总览</a></footer>
 </main>
-<script>
-(function () {
-  var mobile = /Mobi|Android|iPhone|iPad|iPod|MicroMessenger/i.test(navigator.userAgent);
-  if (!mobile) return;
-  document.querySelectorAll('.book-entry h3 a[data-bid]').forEach(function (a) {
-    a.addEventListener('click', function (ev) {
-      var bid = a.getAttribute('data-bid');
-      var deep = a.getAttribute('href');
-      if (!bid) return;
-      ev.preventDefault();
-      var t0 = Date.now();
-      try { location.href = 'weread://reading?bId=' + encodeURIComponent(bid); } catch (e) {}
-      setTimeout(function () {
-        if (Date.now() - t0 < 1500) location.href = deep;
-      }, 600);
-    });
-  });
-})();
-</script>
+<script src="../../../assets/js/weread-link.js" defer></script>
 </body>
 </html>

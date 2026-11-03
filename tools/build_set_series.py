@@ -76,37 +76,19 @@ PAGE_TPL = """<!doctype html>
 </section>
 <footer>共 {total} 种。<a href="../index.html">返回系列总览</a></footer>
 </main>
-<script>
-(function () {{
-  var mobile = /Mobi|Android|iPhone|iPad|iPod|MicroMessenger/i.test(navigator.userAgent);
-  if (!mobile) return;
-  document.querySelectorAll('.book-entry h3 a[data-bid]').forEach(function (a) {{
-    a.addEventListener('click', function (ev) {{
-      var bid = a.getAttribute('data-bid');
-      var deep = a.getAttribute('href');
-      if (!bid) return;
-      ev.preventDefault();
-      var t0 = Date.now();
-      try {{ location.href = 'weread://reading?bId=' + encodeURIComponent(bid); }} catch (e) {{}}
-      setTimeout(function () {{
-        if (Date.now() - t0 < 1500) location.href = deep;
-      }}, 600);
-    }});
-  }});
-}})();
-</script>
+<script src="../../../assets/js/weread-link.js" defer></script>
 </body>
 </html>
 """
 
 ENTRY_OK = """<article class="book-entry" id="{i}">
-<h3><a href="{deep}" data-bid="{bid}">{title}</a></h3>
+<h3><a href="{deep}" data-weread-id="{bid}">{title}</a></h3>
 <p>{author}{stat}</p>
 <p class="entry-links"><a href="../../books/{slug}/outline.html">章节大纲 →</a></p>
 </article>"""
 
 ENTRY_NO = """<article class="book-entry" id="{i}">
-<h3><a href="{deep}" data-bid="{bid}">{title}</a></h3>
+<h3><a href="{deep}" data-weread-id="{bid}">{title}</a></h3>
 <p>{author}</p>
 </article>"""
 

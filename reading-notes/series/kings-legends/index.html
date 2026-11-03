@@ -25,36 +25,18 @@
 <section class="topic-group" aria-labelledby="units-title">
 <h2 id="units-title">分册清单</h2>
 <article class="book-entry" id="unit-1">
-<h3><a href="https://weread.qq.com/book-detail?type=1&amp;v=1363261071db4f841368bf7" data-bid="31149956">雍正帝：中国的独裁君主</a></h3>
+<h3><a href="https://weread.qq.com/book-detail?type=1&amp;v=1363261071db4f841368bf7" data-weread-id="31149956">雍正帝：中国的独裁君主</a></h3>
 <p>作者：宫崎市定　·　13 章 / 308 条</p>
 <p class="entry-links"><a href="../../books/yong-zheng-di-zhong-guo-de-du-cai-jun-zhu/outline.html">章节大纲 →</a></p>
 </article>
 <article class="book-entry" id="unit-2">
-<h3><a href="https://weread.qq.com/book-detail?type=1&amp;v=17432700813ab73f6g014bb1" data-bid="3300034464">奥古斯都：从革命者到皇帝</a></h3>
+<h3><a href="https://weread.qq.com/book-detail?type=1&amp;v=17432700813ab73f6g014bb1" data-weread-id="3300034464">奥古斯都：从革命者到皇帝</a></h3>
 <p>作者：阿德里安·戈兹沃西 著 陆大鹏 译　·　33 章 / 1099 条</p>
 <p class="entry-links"><a href="../../books/ao-gu-si-dou-cong-ge-ming-zhe-dao-huang-di/outline.html">章节大纲 →</a></p>
 </article>
 </section>
 <footer>共 2 册。<a href="../index.html">返回系列总览</a></footer>
 </main>
-<script>
-(function () {
-  var mobile = /Mobi|Android|iPhone|iPad|iPod|MicroMessenger/i.test(navigator.userAgent);
-  if (!mobile) return;
-  document.querySelectorAll('.book-entry h3 a[data-bid]').forEach(function (a) {
-    a.addEventListener('click', function (ev) {
-      var bid = a.getAttribute('data-bid');
-      var deep = a.getAttribute('href');
-      if (!bid) return;
-      ev.preventDefault();
-      var t0 = Date.now();
-      try { location.href = 'weread://reading?bId=' + encodeURIComponent(bid); } catch (e) {}
-      setTimeout(function () {
-        if (Date.now() - t0 < 1500) location.href = deep;
-      }, 600);
-    });
-  });
-})();
-</script>
+<script src="../../../assets/js/weread-link.js" defer></script>
 </body>
 </html>
