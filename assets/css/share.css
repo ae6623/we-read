@@ -1,0 +1,138 @@
+/* share.css — 分享按钮与分享面板（配合 assets/js/share.js） */
+
+.series-nav .share-btn{
+  margin-left:auto;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:32px;
+  height:32px;
+  padding:0;
+  border:1px solid var(--line,#d9dfd4);
+  border-radius:50%;
+  background:var(--card,#fffefa);
+  color:var(--green,#183c34);
+  cursor:pointer;
+  transition:background .18s ease,border-color .18s ease,transform .18s ease;
+}
+.series-nav .share-btn:hover{background:#eef2ea;border-color:#b9cbb8;transform:translateY(-1px)}
+.series-nav .share-btn:active{transform:translateY(0)}
+
+.share-mask{
+  position:fixed;
+  inset:0;
+  z-index:200;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:22px;
+  background:rgba(20,36,31,.5);
+  backdrop-filter:blur(2px);
+  -webkit-backdrop-filter:blur(2px);
+}
+.share-mask[hidden]{display:none}
+
+.share-box{
+  position:relative;
+  width:100%;
+  max-width:330px;
+  padding:24px 24px 20px;
+  border-radius:18px;
+  background:var(--card,#fffefa);
+  box-shadow:0 24px 60px rgba(16,32,27,.28);
+  text-align:center;
+}
+.share-eyebrow{
+  margin:0;
+  font-size:.68rem;
+  letter-spacing:.2em;
+  font-weight:700;
+  color:var(--gold,#c28b54);
+}
+.share-h{
+  margin:6px 0 16px;
+  font:600 1.25rem/1.4 var(--serif,Georgia,serif);
+  color:var(--green,#183c34);
+}
+.share-qr{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:196px;
+  height:196px;
+  margin:0 auto;
+  padding:10px;
+  border:1px solid var(--line,#d9dfd4);
+  border-radius:12px;
+  background:#fffefa;
+}
+.share-qr img,.share-qr canvas{display:block;width:176px!important;height:176px!important}
+.share-qr.is-pulse{animation:share-pulse .5s ease}
+@keyframes share-pulse{
+  0%{transform:scale(1)}
+  40%{transform:scale(1.035)}
+  100%{transform:scale(1)}
+}
+.share-tip{
+  margin:12px 0 16px;
+  font-size:.8rem;
+  line-height:1.6;
+  color:var(--muted,#6b7a72);
+  min-height:2.6em;
+}
+.share-acts{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+}
+.share-acts > *{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:9px 4px;
+  border:1px solid var(--line,#d9dfd4);
+  border-radius:10px;
+  background:#f7f9f4;
+  color:var(--green,#183c34);
+  font-size:.82rem;
+  font-weight:700;
+  text-decoration:none;
+  cursor:pointer;
+  transition:background .16s ease,border-color .16s ease;
+}
+.share-acts > *:hover{background:#eaf1e6;border-color:#b9cbb8}
+.share-copy{
+  width:100%;
+  margin-top:10px;
+  padding:10px;
+  border:0;
+  border-radius:10px;
+  background:var(--green,#183c34);
+  color:#f6f4ec;
+  font-size:.84rem;
+  font-weight:700;
+  cursor:pointer;
+}
+.share-copy:hover{background:#245247}
+.share-x{
+  position:absolute;
+  top:8px;
+  right:10px;
+  width:32px;
+  height:32px;
+  border:0;
+  background:transparent;
+  color:var(--muted,#6b7a72);
+  font-size:1.4rem;
+  line-height:1;
+  cursor:pointer;
+}
+.share-x:hover{color:var(--green,#183c34)}
+
+@media(max-width:420px){
+  .share-box{padding:20px 18px 16px}
+  .share-qr{width:176px;height:176px;padding:8px}
+  .share-qr img,.share-qr canvas{width:158px!important;height:158px!important}
+  .share-acts{gap:6px}
+  .share-acts > *{font-size:.76rem;padding:8px 2px}
+}

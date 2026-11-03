@@ -55,6 +55,7 @@ PAGE_TPL = """<!doctype html>
 <title>{name}（套装 {total} 种）｜系列</title>
 <link rel="stylesheet" href="../../../assets/css/site.css">
 <link rel="stylesheet" href="../series.css">
+<link rel="stylesheet" href="../../../assets/css/share.css">
 </head>
 <body>
 <main class="series-page" id="main">
@@ -76,6 +77,8 @@ PAGE_TPL = """<!doctype html>
 </section>
 <footer>共 {total} 种。<a href="../index.html">返回系列总览</a></footer>
 </main>
+<script src="../../../assets/js/vendor/qrcode.min.js" defer></script>
+<script src="../../../assets/js/share.js" defer></script>
 <script src="../../../assets/js/weread-link.js" defer></script>
 </body>
 </html>
