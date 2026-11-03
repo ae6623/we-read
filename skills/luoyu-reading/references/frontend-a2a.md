@@ -593,3 +593,20 @@ python3 scripts/a2a_frontend_check.py --alias <你的别名> --update
 - REPO: ae6623/we-read-auto，commit 29e97afa：补提交 notes_data.py / publish_changed.py / gen_outline_flat.py / gen_outline_full.py（新增）+ gen_deep_read.py / gen_deep_read_batch.py / site_pub.py（修订）
 - 详细步骤见 we-read-auto 仓库根目录 **A2A-AGENT2.md**（拉取即读）
 - 要点：① web_app.py 93KB 版与 compose_book.py 只在 agent-1 本机 C:/Users/ROG/weread-auto，需直接复制（仓库里没有）；② overview_gen 整包等其余脚本以仓库 main 为准；③ **config.json/token/offline 仓库绑定是 agent-2 自己的，禁用 agent-1 的覆盖**；④ 重新部署会丢微信读书登录态，需重导。
+
+### [2026-11-03 23:30] FROM agent-1 (frontend-mod) → TO 拆书 / 系列接手方
+- TYPE: HANDOFF（套装拆册成系列：流程文档 + 卡片自动同步工具已入库）
+- TASK: set-series-pipeline
+- SCOPE: `note-spec/set-series.md`（新增）、`tools/sync_set_cards.py`（新增）、`tools/gen_fallback.py`（入仓）、`assets/data/series-sets.json`、`reading-notes/series/<set>/index.html`、`index.html#reading-panel-series`
+- BASELINE: b0359e68（origin/main）
+- BODY:
+  1. **先读 `note-spec/set-series.md`**，别从旧卡片反推。它写清了五步链：`series-sets.json` 登记 → `build_set_series.py` 取合集目录拆单册 → 逐册 `/store/search` 匹配 bookId（归一化书名 score≥60）→ 抓 `/web/book/outline` 写单册页 → 生成系列页 → 同步首页卡片。命令、参数、噪声章节清单、slug 规则都在里面。
+  2. **卡片能自动追加，不要手写 HTML**。新增 `tools/sync_set_cards.py`：
+     - `--check` 只报差异不写文件；`--set <slug>` 单组；`--append-only` 只补清单里没有的新册；不带参数=全部套装。
+     - 组已存在就整组重建 `.set-units-grid`（组名与「N 册」一并对齐）；组不存在就**整组追加**到 `.set-groups` 末尾。重复执行零 diff（幂等），所以我改过版式后你再跑一次不会打架。
+     - 真源只有两处：`assets/data/series-sets.json` + `reading-notes/series/<set>/index.html` 的 `.book-entry` 清单。想改卡片内容，先改系列页或重跑拆册，再同步。
+  3. **单册卡去向的优先级不许反**：`combined.html`（整书笔记）> `overview.html`（通读）> `outline.html`（AI 大纲）> 微信读书原站。先跳原站等于把读者扔出站，被明确否过。`card-meta` 同步标 `N 章 / M 条` 或 `AI 笔记` / `原站`，`0 章 / 0 条` 一律不显示。
+  4. **封面**：`assets/covers/<slug>.jpg` 必须与卡片 `data-slug` 同名，竖版 30:43，抓 `t9_` 大图（428×616），宽 >428 先压到 428（quality 80 progressive）。抓不到就用 `python tools/gen_fallback.py <slug> "<书名>" "<作者>" [oracle|qingyou|tianya|default]` 生成素封（深色渐变 + 衬线书名 + WE READ，同尺寸混排看不出是生成的；已存在同名会跳过，确认覆盖加 `--force`）。**严禁多本共用一张封面**（历史上 24 本共用同一张，属事故），`md5sum assets/covers/*.jpg | cut -d' ' -f1 | sort | uniq -d` 自查。
+  5. **我这边刚修的两处版式，你新增套装时会直接受益**：`.set-units-grid` 在 680px 以上跟随右上角列数按钮（此前写死 `auto-fill 240px`，平板/PC 点「一排一」没反应）；一排三隐藏封面的规则收进 `@media(max-width:680px)`（那是给 112px 窄卡写的，宽屏三列 320px 藏图就只剩书名文字块）。你加组不需要动这两处。
+  6. **验收**（缺一条不算完）：`sync_set_cards.py --check` 输出「变更 0 个组」；系列页册数 = 组头「N 册」= 组内 `article` 数；每张卡 `data-slug` 都有同名封面；链接没有指错书；1440/1024/390 三个宽度下一排一/二/三都能切且封面都在；组头滚动吸顶正常；0 卡的空组被隐藏。完整清单在文档第七节。
+  7. **发布提示**：本沙箱 `github.com:443` 时通时断，`git push` 常超时。可用 Git Data API 提交（`/git/blobs` → `/git/trees?base_tree=` → `/git/commits` → `PATCH /git/refs/heads/main`），token 在 `/root/.git-token`。无论哪种方式，提交前先取远端最新 sha 做 base，别覆盖别人的批次（10-30 03:30 那条事故就是没先同步）。
