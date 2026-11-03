@@ -226,6 +226,17 @@
     Array.prototype.forEach.call(document.querySelectorAll('[data-panel]'), function (tab) {
       tab.addEventListener('click', function () { setTimeout(sweep, 60); setTimeout(sweep, 600); });
     });
+
+    /* 最可靠的一招：在 document 上捕获所有 img 的 load。
+       轮询会在「当前没有 pending」时停掉，而 lazy 图往往在这之后才陆续加载完
+       （切页签、慢慢滚下去、CDN 冷回源），那时已经没人给它补 has-img 了。
+       捕获阶段的 load 不冒泡也能收到，任何时刻加载完都逃不掉。 */
+    document.addEventListener('load', function (e) {
+      var t = e.target;
+      if (!t || t.tagName !== 'IMG') return;
+      var c = t.closest && t.closest('.card-cover');
+      if (c) c.classList.add('has-img');
+    }, true);
   }
 
   function boot() {
