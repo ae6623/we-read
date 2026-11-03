@@ -529,3 +529,23 @@ html[data-cols="3"] #panel-whole .card-cover-title{display:none;}
   margin:6px 0 0;font-size:.8rem;line-height:1.55;color:var(--muted);
 }
 .set-units-grid .archive-card .reader-meta{margin:4px 0 0;font-size:.72rem;}
+
+/* ── 封面加载中的反光扫过 ────────────────────────────────────────
+   封面是 lazy 图，滚动到才下载；冷缓存时要等 1–2 秒。
+   这段时间卡片本来就显示素封（书名 + WE READ），加一道扫光，
+   让它看起来是「正在加载」而不是「这张图没了」。 */
+.card-cover:not(.has-img)::before{
+  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:linear-gradient(100deg,transparent 18%,rgba(255,255,255,.055) 38%,
+    rgba(255,255,255,.11) 50%,rgba(255,255,255,.055) 62%,transparent 82%);
+  background-size:240% 100%;background-repeat:no-repeat;
+  animation:cv-sheen 1.7s linear infinite;
+}
+.card-cover.has-img::before{display:none;}
+@keyframes cv-sheen{
+  0%{background-position:130% 0;}
+  100%{background-position:-130% 0;}
+}
+@media(prefers-reduced-motion:reduce){
+  .card-cover:not(.has-img)::before{animation:none;}
+}
