@@ -323,8 +323,12 @@ html[data-cols="3"] .archive-card{padding:12px 12px 10px;}
 html[data-cols="3"] .archive-card h3{font-size:.92rem;line-height:1.5;margin:6px 0 0;}
 html[data-cols="3"] .archive-card .card-top{margin-bottom:2px;}
 html[data-cols="3"] .archive-card .card-top time{font-size:.68rem;letter-spacing:.01em;}
-html[data-cols="3"] .card-cover{display:none;}
-html[data-cols="3"] .card-author{display:none;}
+/* 只在小屏隐藏：那条规则是为一排三 ≈112px 的窄卡写的，平板/PC 三列
+   卡宽 300px+，再藏封面就只剩一堆书名，整块像目录不像书卡 */
+@media(max-width:680px){
+  html[data-cols="3"] .card-cover{display:none;}
+  html[data-cols="3"] .card-author{display:none;}
+}
 html[data-cols="3"] .card-foot{flex-wrap:wrap;gap:3px 5px;padding-top:5px;}
 /* 章节数回到右下 */
 html[data-cols="3"] .card-foot .card-meta{order:1;margin-left:auto;max-width:100%;font-size:.64rem;}
@@ -435,6 +439,33 @@ details.reading-bar{margin:8px auto 4px;}
   font:600 1rem/1.5 var(--serif);color:var(--green);}
 .set-group-count{font:600 .72rem/1 var(--sans);color:#7a6a52;background:#f3e9da;border-radius:99px;padding:4px 9px;}
 .set-units-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;padding:0;}
+/* ── 宽屏：单册区跟随右上角列数按钮 ────────────────────────────────
+   之前这里写死 auto-fill 240px，平板/PC 上点「一排一」毫无反应
+   （书架变一排一，系列卡仍然三列）。680px 以下仍固定两列，
+   因为手机点一排一等于一张卡占满屏，翻十张就到底了。 */
+@media(min-width:681px){
+  html[data-cols="1"] .set-units-grid{grid-template-columns:minmax(0,1fr);}
+  html[data-cols="2"] .set-units-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+  html[data-cols="3"] .set-units-grid{grid-template-columns:repeat(3,minmax(0,1fr));}
+  /* 一排一：1000px 宽的卡配 30:43 竖版封面会有 1400px 高，一屏只放得下一张。
+     改成左封面 + 右信息的横条，一行能扫五六本。 */
+  html[data-cols="1"] .set-units-grid .archive-card{
+    display:grid;grid-template-columns:112px minmax(0,1fr);
+    column-gap:18px;row-gap:4px;align-items:start;
+  }
+  html[data-cols="1"] .set-units-grid .unit-card .card-cover{
+    grid-column:1;grid-row:1 / span 4;width:112px;margin:0;
+  }
+  html[data-cols="1"] .set-units-grid .archive-card>*:not(.card-cover){grid-column:2;}
+  /* 横条里 .card-top / .card-foot 原本 space-between，会把日期和「AI 笔记」
+     推到卡片最右缘，和左边书名隔着一大片空白；这里改成左对齐成一组 */
+  html[data-cols="1"] .set-units-grid .archive-card .card-top,
+  html[data-cols="1"] .set-units-grid .archive-card .card-foot{justify-content:flex-start;gap:12px;}
+  html[data-cols="1"] .set-units-grid .archive-card .card-foot .card-meta{margin-left:0;}
+  /* .card-author 默认 flex:1 1 auto，在 800px 宽的横条里会撑满整行，
+     把「AI 笔记」顶到最右缘。这里收成内容宽 */
+  html[data-cols="1"] .set-units-grid .archive-card .card-foot .card-author{flex:0 0 auto;}
+}
 /* 单册卡直接复用 archive-card：封面由 home-card.js 按 data-slug 注入，
    作者/章数走 card-foot，和轻游记的卡是同一套版式。这里只收紧内边距。 */
 .set-units-grid .unit-card{min-height:0;padding:14px 14px 12px;}

@@ -3,6 +3,9 @@
 > 目的：不同的实现者（本机引擎、云端沙箱、任何 agent）产出的笔记页**结构、题面、
 > 答案口径、发布方式完全一致**，出问题时有据可查。改规则先改这里 + 对应真源文件，
 > 不许在生成器里内联私货。
+>
+> **套装拆册成系列**（合集 → 单册页 → 系列页 → 首页书卡）走单独一份：
+> [`set-series.md`](set-series.md)。卡片追加不用手写 HTML，跑 `tools/sync_set_cards.py`。
 
 ## 一、一本书的产物模块（compose 步骤序）
 
@@ -293,3 +296,19 @@ engine_commit）、什么时候。台账 `compose.json` 每书同记 `produced_b
 - 架构口径：站点是纯静态（GitHub Pages 无后端），「模板壳」就是共享的 `reader.js/css`
   （341 本书共用一份），各书正文数据在各自 `combined-data.html`；只有壳内写死的静态文本
   （如 eyebrow、旧 chip 文案）变更才需要批量改壳文件，模板逻辑变更只动 reader.* 一份。
+
+### 第 20 批（2026-11-03 23:20）：套装拆册成系列 · 卡片自动追加
+
+- **新增 [`set-series.md`](set-series.md)**：合集拆单册的完整流程、slug / 噪声章节 /
+  匹配阈值 / 封面 / 链接优先级规则、验收清单与常见坑。接手方先读这份再动手。
+- **新增 `tools/sync_set_cards.py`**：首页系列 Tab 的书卡不再手写。从
+  `series-sets.json` + `reading-notes/series/<set>/index.html` 的分册清单重建
+  `section.set-group[data-units]`；组不存在则整组追加，`--append-only` 只补新册，
+  `--check` 只报差异。重复执行零 diff（幂等）。
+- **`tools/gen_fallback.py` 入仓**：缺封面的册用它生成 428×616 素封（渐变 + 衬线书名
+  + 作者 + WE READ），输出路径改为相对仓库根，已存在则跳过、`--force` 才覆盖。
+- **宽屏列数修复**：`.set-units-grid` 原先写死 `auto-fill 240px`，平板/PC 点「一排一」
+  无效；现按 `html[data-cols]` 走（680px 以下仍固定两列）。一排三隐藏封面的规则
+  收进 `@media(max-width:680px)`——那是为 112px 窄卡写的，宽屏三列 320px 藏图只剩文字。
+- **一排一横条**：宽屏一排一时单册卡改「左封面 112px + 右信息」，避免 1000px 卡配
+  30:43 竖版封面撑到 1400px；`card-top`/`card-foot` 左对齐，`card-author` 收成内容宽。
