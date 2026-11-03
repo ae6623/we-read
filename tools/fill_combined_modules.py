@@ -136,7 +136,16 @@ def gen_reader_page(slug: str) -> bool:
     if page.exists():
         return False
     meta = meta_of(slug)
-    outline_link = '<a class="ai-outline-link" href="outline.html">AI 大纲</a>' \
+    outline_link = ('<a class="ai-outline-link" href="outline.html" title="AI 大纲" '
+                    'aria-label="AI 大纲">'
+                    '<svg viewBox="0 0 24 24" aria-hidden="true" width="18" height="18" '
+                    'fill="none" stroke="currentColor" stroke-width="1.8" '
+                    'stroke-linecap="round" stroke-linejoin="round">'
+                    '<path d="M8 6h12M8 12h12M8 18h12"/>'
+                    '<circle cx="4" cy="6" r="1.1" fill="currentColor" stroke="none"/>'
+                    '<circle cx="4" cy="12" r="1.1" fill="currentColor" stroke="none"/>'
+                    '<circle cx="4" cy="18" r="1.1" fill="currentColor" stroke="none"/>'
+                    '</svg></a>') \
         if (BOOKS / slug / "outline.html").exists() else ""
     page.write_text(
         READER_TPL.format(slug=slug, title=H.escape(meta["title"]), outline_link=outline_link),
