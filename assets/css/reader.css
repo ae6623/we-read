@@ -105,7 +105,9 @@ body{max-width:880px;margin:0 auto;padding:0 18px 80px;font-size:.9375rem;line-h
 .rd-stick{position:sticky;top:0;z-index:8;background:var(--pg-bg);
   padding:16px 0 12px;margin:0 0 12px;border-bottom:1px solid var(--card-bd);
   transition:padding .18s ease;}
-.rd-stick-row{display:flex;align-items:baseline;gap:12px;margin:0 0 8px;}
+.rd-stick-row{display:flex;align-items:baseline;gap:12px;margin:0 0 8px;
+  /* 右上角「分享 / Aa」是 fixed 的，吸顶后正压在作者名上，留出这段 */
+  padding-right:88px;}
 .rd-stick h1{margin:0;flex:0 1 auto;min-width:0;font:700 1.18rem/1.6 var(--serif);color:var(--head);
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .rd-stick .rd-hero-author{flex:none;margin:0 0 0 auto;max-width:36%;font-size:.78rem;line-height:1.6;
@@ -312,6 +314,8 @@ html[data-theme=green] .toc-part,html[data-theme=green] .card{
   .rd-title::after{display:none;}   /* 窄屏不显示外链小箭头，标题两行已足够挤 */
   /* 吸顶后左上「←」、右上「Aa」会压在书名/作者上 → 标题条两侧让位 */
   body.rd-scrolled .rd-stick{padding-left:46px;padding-right:46px;}
+  /* 右上角还钉着「分享 / Aa」两个按钮，作者名要让出这段（否则被图标压住） */
+  body.rd-scrolled .rd-stick-row{padding-right:52px;}
   #rdBody>section.mmx-mod,#rdBody>section.card,#rdBody>section.mmx-svgwrap{padding:15px 16px;border-radius:14px;}
 }
 
