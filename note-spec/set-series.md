@@ -5,7 +5,21 @@
 > 且新套装接进来时**不用手改 HTML**。
 > 改规则先改这里，再改对应脚本；不要只改一处、留下一处私货。
 
-版本：1.6.0（2026-11-03）　对应脚本：`tools/build_set_series.py`、`tools/sync_set_cards.py`
+版本：1.7.0（2026-11-04）　对应脚本：`tools/series.py`（统一入口）、`tools/build_set_series.py`、`tools/sync_set_cards.py`
+
+---
+
+## 零、一键收尾（先看这条）
+
+拆完册或改完系列页后，**收尾只跑这一条**，不要各写各的临时脚本：
+
+```bash
+python3 tools/series.py --set <set-slug>        # 标题本地化 + 同步首页卡 + 体检
+python3 tools/series.py --set <set-slug> --check # 只体检（交付前必须全通过）
+python3 tools/series.py --audit                  # 全量体检所有套装
+```
+
+`tools/series.py` 依次做：①把每个 `.book-entry` 标题改成指向本地页（combined > overview > outline），微信读书降级为次级「原站 ↗」；②调 `sync_set_cards.py` 把分册写进首页系列面板；③体检（是否进首页 / 卡片数是否对齐 / 封面是否齐 / 标题是否本地化）。幂等，可反复跑。**「体检：全部通过」才算完成。**
 
 ---
 

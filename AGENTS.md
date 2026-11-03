@@ -22,6 +22,23 @@ git clone --depth 1 --single-branch --branch main <本仓库地址>
 
 需要这类内容时，放到私有仓库或本机，不要提交到这里。
 
+## 可重复流程（开工前必读）
+
+**不要临时写脚本。** 所有可重复流程都有固定入口；尤其「拆书成系列」，收尾漏跑统一脚本，首页系列 Tab 就会看不到、标题会跳微信读书搜索页。
+
+| 流程 | 说明文档 | 统一命令 |
+|---|---|---|
+| 拆书成系列 / 系列页维护 | `note-spec/set-series.md` | `python3 tools/series.py --set <slug>` |
+| 全量系列体检 | 同上 | `python3 tools/series.py --audit` |
+
+**拆书/系列任务的硬规则**
+
+1. 新套装先在 `assets/data/series-sets.json` 登记（`slug / name / page / units`），再跑脚本。
+2. 收尾跑 `python3 tools/series.py --set <slug>`：一次完成「标题本地化 + 同步首页系列卡 + 体检」。
+3. 交付前跑 `python3 tools/series.py --set <slug> --check`，**必须「体检：全部通过」才算完成**；有 FAIL 不能说做完。
+4. 系列页作者行写成 `作者：XXX　·　NN 章 / NN 条`，脚本才抓得到作者与章数。
+5. **不要手改** `index.html` 里的系列卡片——那是脚本产物，下次同步会被覆盖。
+
 ## 内容结构
 
 | 路径 | 放什么 |
