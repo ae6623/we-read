@@ -64,32 +64,60 @@ PAGE_TPL = """<!doctype html>
   <h1>{name}</h1>
   <p>{sub}</p>
   <p>{desc}</p>
-  <p><span class="type-tag">{total} 种</span><span class="type-tag type-tag-gold">{with_outline} 种有 AI 大纲</span><span class="type-tag">来源合集《{src_title}》</span></p>
+  <p><span class="type-tag">{total} 种</span><span class="type-tag">来源合集《{src_title}》</span></p>
 </header>
 <section class="series-boundary">
-  <p><strong>为什么拆成单册：</strong>微信读书对套装合集本身不提供 AI 大纲；拆成单册后，每一册都能拿到官方大纲（章 / 小节 / 要点 / 原句）。</p>
-  <p>单册页只放大纲，不复制读书笔记；没有大纲的册次如实标注，不编造。</p>{note}
+  <p><strong>为什么拆成单册：</strong>套装在阅读器里是一整本，目录按册分组。这里按册拆开，逐册整理章节结构（章 / 小节 / 要点 / 原句），方便单册翻阅。</p>
+  <p>单册页只放章节大纲，不复制读书笔记。点书名在阅读器里打开该册。</p>{note}
 </section>
 <section class="topic-group" aria-labelledby="units-title">
 <h2 id="units-title">分册清单</h2>
 {entries}
 </section>
-<footer>共 {total} 种，{with_outline} 种有大纲。<a href="../index.html">返回系列总览</a></footer>
+<footer>共 {total} 种。<a href="../index.html">返回系列总览</a></footer>
 </main>
+<script>
+(function () {{
+  var mobile = /Mobi|Android|iPhone|iPad|iPod|MicroMessenger/i.test(navigator.userAgent);
+  if (!mobile) return;
+  document.querySelectorAll('.book-entry h3 a[data-bid]').forEach(function (a) {{
+    a.addEventListener('click', function (ev) {{
+      var bid = a.getAttribute('data-bid');
+      var deep = a.getAttribute('href');
+      if (!bid) return;
+      ev.preventDefault();
+      var t0 = Date.now();
+      try {{ location.href = 'weread://reading?bId=' + encodeURIComponent(bid); }} catch (e) {{}}
+      setTimeout(function () {{
+        if (Date.now() - t0 < 1500) location.href = deep;
+      }}, 600);
+    }});
+  }});
+}})();
+</script>
 </body>
 </html>
 """
 
 ENTRY_OK = """<article class="book-entry" id="{i}">
-<h3><a href="../../books/{slug}/outline.html">{title}</a></h3>
+<h3><a href="{deep}" data-bid="{bid}">{title}</a></h3>
 <p>{author}{stat}</p>
-<p class="entry-links"><a href="../../books/{slug}/outline.html">AI 大纲 →</a>　<a href="https://weread.qq.com/web/bookDetail/{bid}">微信读书原书 ↗</a></p>
+<p class="entry-links"><a href="../../books/{slug}/outline.html">章节大纲 →</a></p>
 </article>"""
 
 ENTRY_NO = """<article class="book-entry" id="{i}">
-<h3>{title}</h3>
-<p>{author}微信读书未提供该册的 AI 大纲，这里如实标注、不编造。</p>
+<h3><a href="{deep}" data-bid="{bid}">{title}</a></h3>
+<p>{author}</p>
 </article>"""
+
+
+def deep_of(book_id: str) -> str:
+    """书籍详情里的官方深链：移动端唤起 App，PC 端打开网页版。"""
+    try:
+        d = fo.gw("/book/info", bookId=book_id)
+        return d.get("deepLink") or ""
+    except Exception:
+        return ""
 
 
 def slugify(t: str) -> str:
@@ -173,13 +201,18 @@ def build_one(title: str, bid: str, dry: bool) -> dict:
 def render_page(st: dict, units: list[dict]) -> str:
     entries, wo = [], 0
     for i, u in enumerate(units, 1):
+        bid = u.get("bookId", "")
+        deep = deep_of(bid) if bid else ""
+        if not deep:
+            deep = "../../books/%s/outline.html" % u["slug"]
         if u.get("has_outline"):
             wo += 1
             entries.append(ENTRY_OK.format(i="unit-%d" % i, slug=u["slug"], title=H.escape(u["title"]),
-                                           author="", bid=u.get("bookId", ""),
-                                           stat="%d 章 / %d 条 · 官方 AI 大纲" % (u.get("chapters", 0), u.get("points", 0))))
+                                           author="", bid=H.escape(bid), deep=H.escape(deep),
+                                           stat="%d 章 / %d 条" % (u.get("chapters", 0), u.get("points", 0))))
         else:
-            entries.append(ENTRY_NO.format(i="unit-%d" % i, title=H.escape(u["title"]), author=""))
+            entries.append(ENTRY_NO.format(i="unit-%d" % i, title=H.escape(u["title"]),
+                                           author="", bid=H.escape(bid), deep=H.escape(deep)))
     note = "  <p>《伟大的海》为全二册，此处按书名计 1 个条目。</p>" if st["slug"] == "oracle-world-history-set" else ""
     return PAGE_TPL.format(name=H.escape(st["name"]), sub=H.escape(st.get("sub", "")),
                            desc=H.escape(st.get("desc", "")), total=len(units), with_outline=wo,
