@@ -377,25 +377,39 @@
         const defs = ((data && data.series) || []).filter((d) => d && d.slug && (d.title_has || []).length);
         if (!defs.length) return;
         const route = seriesPanel.querySelector('.panel-route');
+        // 系列组和「套装拆册」的单册区共用一套卡片与吸顶头（.set-group），
+        // 统一排在轻游记（静态 23 册）之后、9 个拆册组之前，
+        // 这样「自家系列」在上、「拆出来的书」在下，滚动时组名都能钉住。
+        const groupsWrap = seriesPanel.querySelector('.set-groups');
+        let afterNode = groupsWrap && groupsWrap.querySelector('.set-group[data-units="qingyouji"]');
         const groups = new Map();
         defs.forEach((def) => {
           const sec = document.createElement('section');
-          sec.className = 'reading-group series-group';
+          sec.className = 'set-group series-group';
           sec.dataset.series = def.slug;
-          const head = document.createElement('h3');
-          head.className = 'reading-group-title';
+          const head = document.createElement('div');
+          head.className = 'set-group-head';
           const name = document.createElement('a');
+          name.className = 'set-group-name';
           name.href = def.page || '#';
           name.textContent = def.name;
           const meta = document.createElement('span');
+          meta.className = 'set-group-count';
           meta.textContent = def.sub || '';
           head.appendChild(name);
           head.appendChild(meta);
           const grid = document.createElement('div');
-          grid.className = 'archive-grid';
+          // 用 set-units-grid（CSS grid）而不是 archive-grid：
+          // 后者会被 home-feed.js 拿去做绝对定位瀑布流，和单册区的竖版卡排版打架
+          grid.className = 'set-units-grid';
           sec.appendChild(head);
           sec.appendChild(grid);
-          seriesPanel.insertBefore(sec, route || null);
+          if (groupsWrap) {
+            groupsWrap.insertBefore(sec, afterNode ? afterNode.nextSibling : groupsWrap.firstChild);
+            afterNode = sec;
+          } else {
+            seriesPanel.insertBefore(sec, route || null);
+          }
           groups.set(def.slug, { sec, grid, meta, def, n: 0 });
         });
 
@@ -420,6 +434,17 @@
             if (seen.has(key)) { card.remove(); return; }  // 第二个视角的重复卡，收掉
             seen.add(key);
             card.dataset.series = def.slug;
+            // 搬家前把瀑布流写的绝对定位清掉：目标网格是 CSS grid，
+            // 残留的 position:absolute + left/top/width 会让所有卡叠在 (0,0)，
+            // 看起来像「这一组只有一张卡」。
+            card.style.position = '';
+            card.style.left = '';
+            card.style.top = '';
+            card.style.width = '';
+            card.style.height = '';
+            // 书架分页会给出 data-pg="off"（CSS 强制 display:none），
+            // 搬进系列组后分页不再管这些卡，标记必须清掉，否则整组只剩第一张
+            if (card.dataset.pg) delete card.dataset.pg;
             node.grid.appendChild(card);   // 搬家，不是复制
             node.n += 1;
             moved += 1;

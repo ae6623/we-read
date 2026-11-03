@@ -118,6 +118,16 @@
      库里目前没有书籍封面图（只有 epub），所以默认渲染「按 slug 哈希上色的占位封面 +
      书名」，让用户先看到带封面的版式效果。若日后把真封面放到 assets/covers/<slug>.jpg，
      <img> 会自动盖上去、占位层透明退场（onerror 移除）。 */
+  /* 兜底色相：真封面 404 时用这套颜色铺渐变，按 slug 哈希分散，
+     不让整页兜底封面挤在同一个绿上（一眼看出是「没图」）。 */
+  var COVER_HUES = [162, 186, 205, 28, 36, 12, 258, 340];
+
+  function coverHue(s) {
+    var n = 0;
+    for (var i = 0; i < s.length; i++) n = (n * 31 + s.charCodeAt(i)) % 9973;
+    return COVER_HUES[n % COVER_HUES.length];
+  }
+
   function addCovers() {
     var cards = document.querySelectorAll('.archive-card');
     for (var i = 0; i < cards.length; i++) {
@@ -128,12 +138,24 @@
       var title = ((h3 ? h3.textContent : '') || '').trim();
       var cover = document.createElement('div');
       cover.className = 'card-cover';
+      if (slug) cover.style.setProperty('--cv-h', coverHue(slug));
       if (title) {
         var t = document.createElement('span');
         t.className = 'card-cover-title';
         // 只当「书封题字」用：去掉书名号等前导标点后取前两个字，完整书名在下方 h3
         t.textContent = title.replace(/^[\s《〈“"'「【·—-]+/, '').slice(0, 2);
         cover.appendChild(t);
+
+        // 竖版卡空间够，兜底时直接写完整书名（海报卡仍用两字题字）
+        var full = document.createElement('span');
+        full.className = 'card-cover-full';
+        var fb = document.createElement('b');
+        fb.textContent = title.replace(/^[\s《〈“"'「【]+/, '').replace(/[》〉”"'」】\s]+$/, '');
+        var fi = document.createElement('i');
+        fi.textContent = 'WE READ';
+        full.appendChild(fb);
+        full.appendChild(fi);
+        cover.appendChild(full);
       }
       if (slug) {
         var img = document.createElement('img');

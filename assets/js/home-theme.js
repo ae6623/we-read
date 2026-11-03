@@ -32,6 +32,38 @@
     return best;
   }
 
+  /* ── 系列分组标题吸顶：钉住时加投影和半透明底 ────────────────────
+     CSS 只能做到 position:sticky，做不了「正在吸顶」这个状态；
+     滚到组头贴住顶部时补 .is-stuck，和下面的卡片拉开层次。
+     用 scroll + rAF 节流，15 个组头的 getBoundingClientRect 开销可以忽略。 */
+  function stickGroupHeads() {
+    var heads = qa('.set-group-head');
+    if (!heads.length) return;
+    var ticking = false;
+
+    function paint() {
+      ticking = false;
+      for (var i = 0; i < heads.length; i++) {
+        var h = heads[i];
+        var stuck = h.getBoundingClientRect().top <= 1;
+        // 只在「本组还有内容在视口里」时才算吸顶，滚出组后要还原
+        var group = h.parentNode;
+        var stillIn = group && group.getBoundingClientRect().bottom > h.offsetHeight;
+        h.classList.toggle('is-stuck', stuck && stillIn);
+      }
+    }
+
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(paint);
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    paint();
+  }
+
   function boot() {
     var c = load();
     /* 老配置迁移：字号默认 .80 → .76；列数 3→2（第 15 批）→ 3（第 18 批默认回一排三）。
@@ -146,6 +178,7 @@
 
     // 首次进入只应用、不写盘：用户没选过就保持默认，别把「默认」变成「用户偏好」
     apply(null);
+    stickGroupHeads();
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);

@@ -464,3 +464,68 @@ details.reading-bar{margin:8px auto 4px;}
   /* 海报卡本体：用伪元素撑出 30:43 的高度 */
   html[data-cols="2"] #panel-whole .archive-card::before{content:"";display:block;padding-top:143.33%;}
 }
+
+/* ── 系列 Tab：分组标题吸顶 ────────────────────────────────────────
+   轻游记 23 册、甲骨文 30 册这种长组，滚下去就不知道在看哪个系列了。
+   标题用 sticky 钉在顶部（top:0 因为没有别的常驻吸顶栏），
+   滚动时加 .is-stuck 补一层投影 + 半透明底，避免和卡片糊在一起。 */
+.set-group-head{
+  position:sticky;top:0;z-index:12;
+  margin:0 -18px;padding:13px 18px 11px;
+  background:var(--card,#fff);
+  border-radius:14px 14px 0 0;
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  transition:box-shadow .18s ease,background .18s ease;
+}
+.set-group-head.is-stuck{
+  box-shadow:0 10px 20px -14px rgba(23,40,33,.55);
+  background:color-mix(in srgb,var(--card,#fff) 86%,transparent);
+}
+.set-group-head .set-group-name{letter-spacing:.01em;}
+@media(max-width:680px){
+  .set-group-head{margin:0 -12px;padding:11px 12px 9px;font-size:.95rem;}
+}
+
+/* ── 无封面兜底：按 slug 取色相的深色渐变 + 斜细纹 ────────────────
+   真封面 404 时不再只剩一块纯绿板，而是像样的一张「素封」：
+   完整书名居中、下方 WE READ 小字，色相按书哈希铺开，避免整页同色。 */
+.card-cover{
+  background:linear-gradient(158deg,
+    hsl(var(--cv-h,166) 27% 24%) 0%,
+    hsl(calc(var(--cv-h,166) + 16) 33% 11%) 100%);
+}
+.card-cover::after{
+  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  background-image:repeating-linear-gradient(114deg,rgba(255,255,255,.05) 0 1px,transparent 1px 6px);
+  opacity:.6;transition:opacity .3s ease;
+}
+.card-cover.has-img::after{opacity:0;}
+.card-cover-full{position:absolute;inset:0;z-index:1;display:none;flex-direction:column;
+  align-items:center;justify-content:center;gap:10px;padding:18px 15px;text-align:center;
+  color:rgba(255,255,255,.95);pointer-events:none;}
+.card-cover-full b{font:600 1rem/1.55 var(--serif);letter-spacing:.04em;max-width:100%;
+  display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden;}
+.card-cover-full i{font:400 .58rem/1 var(--sans);letter-spacing:.3em;font-style:normal;
+  color:rgba(255,255,255,.5);}
+.card-cover.has-img .card-cover-full{display:none!important;}
+/* 竖版卡（套装单册 / 一排三）字号和位置都容得下完整书名 */
+.set-units-grid .unit-card .card-cover-full,
+html[data-cols="3"] #panel-whole .card-cover-full{display:flex;}
+.set-units-grid .unit-card .card-cover-title,
+html[data-cols="3"] #panel-whole .card-cover-title{display:none;}
+
+/* 系列组（JS 由 series.json 生成）复用单册区的框与吸顶头：
+   .reading-group 的上下 margin 会把网格撑开，这里抹平 */
+.set-group.series-group{margin:0;}
+.set-group.series-group .set-group-name{color:var(--green);text-decoration:none;font:600 1rem/1.5 var(--serif);}
+.set-group.series-group .set-group-name:hover{text-decoration:underline;}
+
+/* 从书架/精读搬进来的卡也走竖版书封：不限定 .unit-card，
+   否则这些卡保留 5:3 横版封面，和同组单册卡高度对不齐 */
+.set-units-grid .archive-card .card-cover{aspect-ratio:30/43;margin-bottom:9px;}
+/* 这类卡带着类型标签 + 导语段，比单册卡高一大截；正文限两行，整行对齐 */
+.set-units-grid .archive-card .card-body>p:not(.card-meta):not(.reader-meta){
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+  margin:6px 0 0;font-size:.8rem;line-height:1.55;color:var(--muted);
+}
+.set-units-grid .archive-card .reader-meta{margin:4px 0 0;font-size:.72rem;}
