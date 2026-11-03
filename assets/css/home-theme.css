@@ -449,23 +449,28 @@ details.reading-bar{margin:8px auto 4px;}
   html[data-cols="3"] .set-units-grid{grid-template-columns:repeat(3,minmax(0,1fr));}
   /* 一排一：1000px 宽的卡配 30:43 竖版封面会有 1400px 高，一屏只放得下一张。
      改成左封面 + 右信息的横条，一行能扫五六本。 */
+  /* 一排一：左封面 + 右信息横条。home-card.js 运行时会把除封面外的子节点
+     包进 .card-body，所以文本是一个整体，可直接垂直居中（align-content 对
+     多行轨道无效，必须用 .card-body 这个单一 flex 容器来居中）。卡片限宽
+     居中，避免 1440px 屏上变成 1300px 长条、右侧大片空白。 */
   html[data-cols="1"] .set-units-grid .archive-card{
-    display:grid;grid-template-columns:112px minmax(0,1fr);
-    column-gap:18px;row-gap:4px;align-items:start;
-    /* 封面把行撑到 161px，文字只占顶部两行会显得上半重下空；
-       整组行内容垂直居中，读起来是「一条书」而不是「一栏表头」 */
-    align-content:center;
+    display:grid;grid-template-columns:120px minmax(0,1fr);
+    column-gap:20px;align-items:center;
+    max-width:880px;margin-inline:auto;
   }
-  html[data-cols="1"] .set-units-grid .unit-card .card-cover{
-    grid-column:1;grid-row:1 / span 4;width:112px;margin:0;
+  html[data-cols="1"] .set-units-grid .archive-card .card-cover{
+    grid-column:1;grid-row:1;width:120px;margin:0;align-self:center;
   }
-  html[data-cols="1"] .set-units-grid .archive-card>*:not(.card-cover){grid-column:2;}
+  html[data-cols="1"] .set-units-grid .archive-card .card-body{
+    grid-column:2;grid-row:1;min-width:0;
+    display:flex;flex-direction:column;justify-content:center;
+  }
   /* 横条里 .card-top / .card-foot 原本 space-between，会把日期和「AI 笔记」
      推到卡片最右缘，和左边书名隔着一大片空白；这里改成左对齐成一组 */
   html[data-cols="1"] .set-units-grid .archive-card .card-top,
   html[data-cols="1"] .set-units-grid .archive-card .card-foot{justify-content:flex-start;gap:12px;}
   html[data-cols="1"] .set-units-grid .archive-card .card-foot .card-meta{margin-left:0;}
-  /* .card-author 默认 flex:1 1 auto，在 800px 宽的横条里会撑满整行，
+  /* .card-author 默认 flex:1 1 auto，在宽横条里会撑满整行，
      把「AI 笔记」顶到最右缘。这里收成内容宽 */
   html[data-cols="1"] .set-units-grid .archive-card .card-foot .card-author{flex:0 0 auto;}
 }
