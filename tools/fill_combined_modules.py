@@ -82,7 +82,7 @@ if(c.pm)d.style.setProperty('--pm',c.pm);}}catch(e){{}}}})();
 </head>
 <body data-slug="{slug}" data-title="{title}">
 <div id="rdBar" aria-hidden="true"></div>
-<header class="combined-head">
+{outline_link}<header class="combined-head">
     <h1>《{title}》</h1>
   <div class="chips" id="rdChips"><span class="chip">通读 + 精读</span><span class="chip">AI 自主整理</span><span class="chip">AI 生产</span></div>
 </header>
@@ -128,12 +128,19 @@ if(c.pm)d.style.setProperty('--pm',c.pm);}}catch(e){{}}}})();
 
 
 def gen_reader_page(slug: str) -> bool:
-    """为缺 combined.html 的书生成 reader 页（reader.js 按 data-slug 同目录 fetch combined-data.html）。"""
+    """为缺 combined.html 的书生成 reader 页（reader.js 按 data-slug 同目录 fetch combined-data.html）。
+
+    若同目录存在 outline.html，则在右上角操作区（分享按钮左侧）注入「AI 大纲」入口。
+    """
     page = BOOKS / slug / "combined.html"
     if page.exists():
         return False
     meta = meta_of(slug)
-    page.write_text(READER_TPL.format(slug=slug, title=H.escape(meta["title"])), encoding="utf-8")
+    outline_link = '<a class="ai-outline-link" href="outline.html">AI 大纲</a>' \
+        if (BOOKS / slug / "outline.html").exists() else ""
+    page.write_text(
+        READER_TPL.format(slug=slug, title=H.escape(meta["title"]), outline_link=outline_link),
+        encoding="utf-8")
     return True
 
 
