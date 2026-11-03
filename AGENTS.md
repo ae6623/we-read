@@ -22,6 +22,23 @@ git clone --depth 1 --single-branch --branch main <本仓库地址>
 
 需要这类内容时，放到私有仓库或本机，不要提交到这里。
 
+## 开工与提交纪律（硬性，每次会话必守）
+
+**开工第一步：更新最新代码（两个仓库都要）**
+
+```bash
+cd /tmp/we-read      && git pull --rebase origin main   # 产物站（SSH，可达）
+cd /tmp/we-read-auto && git pull --rebase origin main   # 生成程序（远程用 SSH：git@github.com:ae6623/we-read-auto.git；HTTPS 缺凭据需先改 SSH）
+```
+
+只拉 `main`，不要 `git fetch --all`。确认主流程脚本（`tools/fill_combined_modules.py`、`tools/ai_draft.py`、`tools/series.py`）在位；缺失先从 auto 仓库同步逻辑。
+
+**提交纪律：跑完且未出错，必须合并代码并提交**
+
+- 一次"逻辑完整、未报错"的操作 = 一次 commit + push；不跨多轮堆积未提交改动，也不要整目录扫 diff（只 `git add` 本次真实写入的文件，文本统一 LF）。
+- 提交后直接 `git push origin main` 触发 GitHub Pages 发布——**发布不需要另行拍板**，自动发布即可。
+- 推送若遇 `github.com:443` 超时，改用 `tools/api_push_files.py`（Git Data API）绕过，不要当成缓存问题。
+
 ## 可重复流程（开工前必读）
 
 **不要临时写脚本。** 所有可重复流程都有固定入口；尤其「拆书成系列」，收尾漏跑统一脚本，首页系列 Tab 就会看不到、标题会跳微信读书搜索页。
