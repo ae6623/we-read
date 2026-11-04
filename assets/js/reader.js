@@ -496,41 +496,128 @@
   }
 
 
+  /* ── 窄屏导航折叠：一行塞得下几个就塞几个 ───────────────────────
+     不是「只留当前 ±1」：按容器实际宽度，从当前项向两侧交替扩展，
+     塞到放不下为止，两端剩下的才用省略号表示。宽屏不折叠，全部显示。 */
+  var NAV_GAP = 6, NAV_MORE = 18, navW = [], navKey = '';
+
+  function navMore() {
+    var box = document.getElementById('rdNav');
+    if (!box) return null;
+    var l = box.querySelector('.nav-more-l'), r = box.querySelector('.nav-more-r');
+    if (!l) {
+      l = document.createElement('span');
+      l.className = 'nav-more nav-more-l';
+      l.textContent = '…';
+      box.insertBefore(l, box.firstChild);
+    }
+    if (!r) {
+      r = document.createElement('span');
+      r.className = 'nav-more nav-more-r';
+      r.textContent = '…';
+      box.appendChild(r);
+    }
+    return { l: l, r: r, box: box };
+  }
+
+  /* 量一次自然宽度并缓存：容器宽度或标签数变了才重量（隐藏元素先临时显示再量） */
+  function navMeasure(box, as) {
+    var key = box.clientWidth + '|' + as.length;
+    if (key === navKey && navW.length === as.length) return navW;
+    var hid = [];
+    as.forEach(function (a) {
+      if (a.classList.contains('nav-hide')) { hid.push(a); a.classList.remove('nav-hide'); }
+    });
+    navW = as.map(function (a) { return Math.round(a.getBoundingClientRect().width); });
+    hid.forEach(function (a) { a.classList.add('nav-hide'); });
+    navKey = key;
+    return navW;
+  }
+
+  function fitNav(active) {
+    var m = navMore();
+    if (!m) return;
+    var as = qa('.navlink'), n = as.length;
+    if (!n) return;
+    navLastW = m.box.clientWidth;
+    watchNavSize(m.box);
+    if (!window.matchMedia('(max-width:720px)').matches) {
+      as.forEach(function (a) { a.classList.remove('nav-hide'); });
+      m.l.classList.remove('on');
+      m.r.classList.remove('on');
+      return;
+    }
+    var w = navMeasure(m.box, as);
+    /* clientWidth 含左右 padding（吸顶时 nav 会加 12px 内边距），要减掉才是真可用宽度 */
+    var cs = window.getComputedStyle(m.box);
+    var avail = m.box.clientWidth
+      - (parseFloat(cs.paddingLeft) || 0)
+      - (parseFloat(cs.paddingRight) || 0) - 2;   /* 2px 余量防亚像素溢出 */
+    var idx = Math.max(0, as.indexOf(active || as[0]));
+    function spanW(lo, hi) {
+      var s = NAV_GAP * (hi - lo);
+      for (var i = lo; i <= hi; i++) s += w[i];
+      if (lo > 0) s += NAV_GAP + NAV_MORE;
+      if (hi < n - 1) s += NAV_GAP + NAV_MORE;
+      return s;
+    }
+    var lo = idx, hi = idx;
+    for (var guard = 0; guard < n * 2; guard++) {
+      var canR = hi < n - 1, canL = lo > 0;
+      if (!canR && !canL) break;
+      var goR = (guard % 2 === 0) ? canR : !canL;  /* 左右交替，当前项尽量居中 */
+      var nlo = goR ? lo : lo - 1, nhi = goR ? hi + 1 : hi;
+      if (spanW(nlo, nhi) <= avail) { lo = nlo; hi = nhi; continue; }
+      var alo = goR ? lo - 1 : lo, ahi = goR ? hi : hi + 1;  /* 这侧满了就试另一侧 */
+      if (alo < 0 || ahi > n - 1 || spanW(alo, ahi) > avail) break;
+      lo = alo; hi = ahi;
+    }
+    as.forEach(function (a, i) { a.classList.toggle('nav-hide', i < lo || i > hi); });
+    m.l.classList.toggle('on', lo > 0);
+    m.r.classList.toggle('on', hi < n - 1);
+  }
+
+  var navFitBound = false, navRO = null, navROEl = null, navLastW = 0;
+  /* 吸顶后 rd-stick 两侧让位给按钮，nav 会突然变窄；只监听 window.resize
+     接不住这种情况，得盯容器自身尺寸 */
+  function watchNavSize(box) {
+    if (!window.ResizeObserver || !box) return;
+    if (!navRO) {
+      navRO = new ResizeObserver(function () {
+        var b = document.getElementById('rdNav');
+        if (!b) return;
+        var w = b.clientWidth;
+        if (!w || Math.abs(w - navLastW) < 1) return;
+        navLastW = w;
+        navKey = '';
+        fitNav(q('#rdNav .navlink.active'));
+      });
+    }
+    if (navROEl !== box) { navROEl = box; navRO.observe(box); }
+  }
+
+  function bindNavFit() {
+    if (navFitBound) return;
+    navFitBound = true;
+    var t;
+    window.addEventListener('resize', function () {
+      clearTimeout(t);
+      t = setTimeout(function () { navKey = ''; fitNav(q('#rdNav .navlink.active')); }, 120);
+    });
+    if (document.fonts && document.fonts.ready) {
+      /* 字体没加载完量出来的宽度是 fallback 的，晚一步重算 */
+      document.fonts.ready.then(function () { navKey = ''; fitNav(q('#rdNav .navlink.active')); });
+    }
+  }
+
   function spy(links) {
     var as = qa('.navlink'), map = {};
     as.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
     var navBox = document.getElementById('rdNav');
-    /* 窄屏导航只显示「当前 + 前后各一」，两端补省略号表示还有别的；
-       宽屏这三个 class 不生效，仍是完整标签。 */
-    function ensureMore() {
-      if (!navBox) return null;
-      var l = navBox.querySelector('.nav-more-l'), r = navBox.querySelector('.nav-more-r');
-      if (!l) {
-        l = document.createElement('span');
-        l.className = 'nav-more nav-more-l';
-        l.textContent = '…';
-        navBox.insertBefore(l, navBox.firstChild);
-      }
-      if (!r) {
-        r = document.createElement('span');
-        r.className = 'nav-more nav-more-r';
-        r.textContent = '…';
-        navBox.appendChild(r);
-      }
-      return { l: l, r: r };
-    }
+    bindNavFit();
     function mark(a) {
-      var i = as.indexOf(a);
-      as.forEach(function (x, j) {
-        x.classList.toggle('active', x === a);
-        x.classList.toggle('nav-near-prev', i > 0 && j === i - 1);
-        x.classList.toggle('nav-near-next', i >= 0 && j === i + 1);
-      });
-      var m = ensureMore();
-      if (m) {
-        m.l.classList.toggle('on', i > 0);
-        m.r.classList.toggle('on', i >= 0 && i < as.length - 1);
-      }
+      as.forEach(function (x) { x.classList.toggle('active', x === a); });
+      fitNav(a);
     }
     if ('IntersectionObserver' in window) {
       var cur = null;
@@ -550,7 +637,7 @@
     as.forEach(function (a) {
       a.addEventListener('click', function () { mark(a); });
     });
-    /* 初始先亮第一项：窄屏三点式导航只显示 当前±1，不点亮会整条空白 */
+    /* 初始先点亮第一项：避免未滚动时整条无高亮 */
     if (as.length) mark(as[0]);
   }
 

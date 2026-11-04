@@ -154,6 +154,8 @@ body{max-width:880px;margin:0 auto;padding:0 18px 80px;font-size:.9375rem;line-h
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:all .15s;}
 .navlink:hover{color:var(--head);border-color:var(--head);}
 .navlink.active{color:var(--act-fg,var(--head));background:var(--act-bg);border-color:var(--act-bd);font-weight:700;}
+/* 窄屏折叠用的省略号，默认不出现（只有 fitNav 在小屏打开） */
+.nav-more{display:none;}
 section{scroll-margin-top:62px;}
 
 /* ── 统一卡片：所有顶层模块（AI领读 / AI 问答 / 其余）一视同仁 ── */
@@ -334,20 +336,24 @@ html[data-theme=dark] a.ai-outline-link:hover{border-color:var(--head);color:var
   .rd-title::after{display:none;}   /* 窄屏不显示外链小箭头，标题两行已足够挤 */
   /* 吸顶后左上「←」、右上「Aa」会压在书名/作者上 → 标题条两侧让位 */
   body.rd-scrolled .rd-stick{padding-left:46px;padding-right:46px;}
+  /* 吸顶时让位的是标题那一行（左上「←」/ 右上三按钮），导航在下一行，
+     左右那段空白可以直接吃掉 → 同一行能多放一个 chip */
+  body.rd-scrolled .rd-stick .nav{margin-left:-46px;margin-right:-46px;
+    padding-left:12px;padding-right:12px;}
   /* 右上角钉着「AI 大纲 / 分享 / Aa」三个 34px 按钮（12 + 34*3 + 8*2 = 130），
      作者名要让出这段，否则被图标压住 */
   body.rd-scrolled .rd-stick-row{padding-right:84px;}
-  /* 导航只留一行：当前模块 + 前后各一个，两端用省略号表示还有；
-     10 个 chip 排三行会把正文挤没，滚动时尤其难受 */
+  /* 导航只留一行：按容器宽度能塞几个塞几个，塞不下的用两端省略号收掉
+     （具体显示几项由 reader.js 的 fitNav 算），10 个 chip 排三行会把正文挤没 */
   .nav{display:flex;flex-wrap:nowrap;align-items:center;gap:6px;overflow:hidden;
     padding:8px 0;margin:10px 0 14px;}
-  .nav .navlink{display:none;flex:0 1 auto;min-width:0;}
-  .nav .navlink.active,
-  .nav .navlink.nav-near-prev,
-  .nav .navlink.nav-near-next{display:inline-block;}
+  .nav .navlink{display:inline-block;flex:none;max-width:48%;}
+  .nav .navlink.nav-hide{display:none;}
   .nav .nav-more{display:none;flex:none;color:var(--muted);font-size:12px;
     line-height:1;letter-spacing:.12em;padding:0 1px;}
   .nav .nav-more.on{display:inline-block;}
+  .nav .nav-more-l{order:-1;}
+  .nav .nav-more-r{order:1;}
   #rdBody>section.mmx-mod,#rdBody>section.card,#rdBody>section.mmx-svgwrap{padding:15px 16px;border-radius:14px;}
 }
 
