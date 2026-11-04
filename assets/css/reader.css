@@ -109,10 +109,12 @@ body{max-width:880px;margin:0 auto;padding:0 18px 80px;font-size:.9375rem;line-h
 .rd-stick{position:sticky;top:0;z-index:8;background:var(--pg-bg);
   padding:16px 0 12px;margin:0 0 12px;border-bottom:1px solid var(--card-bd);
   transition:padding .18s ease;}
-.rd-stick-row{display:flex;align-items:baseline;gap:12px;margin:0 0 8px;
+.rd-stick-row{display:flex;align-items:baseline;gap:12px;margin:0 0 20px;
+  /* 标题行加高：标题 / 作者与下方导航之间留出呼吸空间 */
+  min-height:34px;
   /* 右上角「分享 / Aa」是 fixed 的，吸顶后正压在作者名上，留出这段 */
   padding-right:88px;}
-.rd-stick h1{margin:0;flex:0 1 auto;min-width:0;font:700 1.18rem/1.6 var(--serif);color:var(--head);
+.rd-stick h1{margin:0;flex:0 1 auto;min-width:0;font:700 1.18rem/1.85 var(--serif);color:var(--head);
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .rd-stick .rd-hero-author{flex:none;margin:0 0 0 auto;max-width:36%;font-size:.78rem;line-height:1.6;
   color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:right;}
@@ -126,8 +128,11 @@ body{max-width:880px;margin:0 auto;padding:0 18px 80px;font-size:.9375rem;line-h
 .rd-title-on:hover::after{opacity:1;}
 .rd-title-on:focus-visible{outline:2px solid var(--head);outline-offset:3px;border-radius:4px;}
 .rd-stick .nav{position:relative;top:auto;margin:0;background:transparent;border:none;
-  box-shadow:none;backdrop-filter:none;padding:0;}
+  box-shadow:none;backdrop-filter:none;padding:8px 0 0;}
 .rd-stick .navlink{font-size:11.5px;padding:5px 4px;}
+/* 吸顶后纵向空间紧，间距收一半，但不再贴合标题 */
+body.rd-scrolled .rd-stick-row{margin-bottom:12px;}
+body.rd-scrolled .rd-stick .nav{padding-top:4px;}
 
 /* 正文圆角卡片：上滑盖住墙面（背景必须给 --pg-bg 兜底：旧写法 var(--bg) 未定义=透明，
    全宽后会让两侧露出底下的背景墙） */
@@ -491,6 +496,19 @@ html[data-theme=dark] .mmx-svg .t2{fill:#b8cec0 !important;}
 html[data-theme=dark] .mmx-svg .t3{fill:#93a89a !important;}
 html[data-theme=dark] .mmx-svg text[style*="c9c0ae"]{fill:#93a89a !important;}
 html[data-theme=dark] .mmx-svg .ln{stroke:#2f5b49;}
+
+/* 新思维导图（LLM 归纳型）：固定 364 宽，手机 1:1 不缩字，桌面限制最大宽度 */
+.mmx-svgwrap>svg.mmx-mind{max-width:560px;}
+html[data-theme=dark] .mmx-mind .m-root{fill:#1c3a2b;}
+html[data-theme=dark] .mmx-mind .m-br{fill:#1d3830;stroke:#2f5b49;}
+html[data-theme=dark] .mmx-mind .m-chip{fill:#244b40;stroke:#3f7a5c;}
+html[data-theme=dark] .mmx-mind .m-ln{stroke:#2f5b49;}
+html[data-theme=dark] .mmx-mind .m-t{fill:#eaf4ec;}
+html[data-theme=dark] .mmx-mind .m-th{fill:#b8cec0;}
+html[data-theme=dark] .mmx-mind .m-lb{fill:#dcefe2;}
+html[data-theme=dark] .mmx-mind .m-note{fill:#a9c2b2;}
+html[data-theme=dark] .mmx-mind .m-cp{fill:#dcefe2;}
+html[data-theme=dark] .mmx-mind .m-rel{fill:#93a89a;}
 
 /* ── 书名吸顶条（FULL_HERO 书）：书名滚出视口后固定顶部淡入 ──
    背景墙 fixed 钉死不动；hero 本体普通流滚走；此条只兜书名 */

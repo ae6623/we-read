@@ -36,11 +36,8 @@ def main() -> int:
         page = books / slug / "combined-data.html"
         if not page.exists():
             continue
-        chs = F.chapters_of(slug)
-        if not chs:
-            skip += 1
-            continue
-        new = F.render_svg(chs, F.meta_of(slug)["title"])
+        # 新版导图不依赖 outline 章节：有归纳数据就画，没有就留占位
+        new = F.render_svg(F.chapters_of(slug), F.meta_of(slug)["title"], slug)
         if not new:
             skip += 1
             continue

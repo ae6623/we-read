@@ -1,0 +1,62 @@
+{
+ "title": "Elasticsearch源码解析与优化实战",
+ "thesis": "读源码才能懂分布式原理，把共识分片恢复落到ES实现",
+ "branches": [
+  {
+   "id": "A",
+   "label": "分布式骨架",
+   "rel": "包含",
+   "points": [
+    "Lucene做索引",
+    "主从与无主模式",
+    "Cluster管状态"
+   ],
+   "note": "实时分布式引擎，模块与集群原理开篇铺开"
+  },
+  {
+   "id": "B",
+   "label": "启动与恢复",
+   "rel": "递进",
+   "points": [
+    "选举主节点",
+    "选shard级元信息",
+    "主分片变Yellow"
+   ],
+   "note": "重启依次选主、分配分片、恢复未刷盘数据"
+  },
+  {
+   "id": "C",
+   "label": "选主与防脑裂",
+   "rel": "因果",
+   "points": [
+    "Bully算法改进",
+    "取最大节点ID",
+    "最小主节点数"
+   ],
+   "note": "minimum_master_nodes防脑裂、防数据丢失"
+  },
+  {
+   "id": "D",
+   "label": "副本一致性",
+   "rel": "包含",
+   "points": [
+    "PacificA框架",
+    "分片与副本",
+    "序号标写操作"
+   ],
+   "note": "以副本模型与序号ID保证写操作按序执行"
+  },
+  {
+   "id": "E",
+   "label": "读写与版本",
+   "rel": "并列",
+   "points": [
+    "Index与Bulk",
+    "四类文档操作",
+    "_version保顺序"
+   ],
+   "note": "写流程定义增删改查，版本确保变更有序"
+  }
+ ],
+ "source": "llm"
+}

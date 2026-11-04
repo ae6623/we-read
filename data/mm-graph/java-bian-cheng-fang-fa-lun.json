@@ -1,0 +1,62 @@
+{
+ "title": "Java编程方法论：响应式Spring Reactor 3设计与实现",
+ "thesis": "从源码拆解Reactor 3的响应式设计与实现",
+ "branches": [
+  {
+   "id": "A",
+   "label": "响应式基础",
+   "rel": "包含",
+   "points": [
+    "事件驱动范式",
+    "并发不等于并行",
+    "背压平衡产销速"
+   ],
+   "note": "先立异步流与背压概念"
+  },
+  {
+   "id": "B",
+   "label": "发布订阅规范",
+   "rel": "因果",
+   "points": [
+    "Flow含四接口",
+    "发布者与订阅者",
+    "对比RxJava"
+   ],
+   "note": "规范为异步流定跨库标准"
+  },
+  {
+   "id": "C",
+   "label": "Flux与Mono",
+   "rel": "并列",
+   "points": [
+    "Flux发0到N个",
+    "Mono仅0或1个",
+    "create与push创建"
+   ],
+   "note": "两类生产者撑起源序列"
+  },
+  {
+   "id": "D",
+   "label": "调度与操作",
+   "rel": "并列",
+   "points": [
+    "调度器定线程",
+    "elastic弹性调度",
+    "批处理与过滤"
+   ],
+   "note": "操作链由调度器分配线程"
+  },
+  {
+   "id": "E",
+   "label": "源码式读法",
+   "rel": "递进",
+   "points": [
+    "Processor双重身份",
+    "Unicast背压队列",
+    "读书不尽信存疑"
+   ],
+   "note": "读代码要有自己的怀疑"
+  }
+ ],
+ "source": "llm"
+}
