@@ -632,11 +632,13 @@ html[data-theme=dark] .mmx-tool{border-color:#3a3f46;}
   border-radius:9px;padding:8px 11px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.1);}
 #rdSpeakBtn:hover{border-color:var(--head);color:var(--head);}
 #rdSpeakBtn.on{border-color:var(--head);color:var(--head);background:rgba(7,193,96,.10);}
-/* 正文块默认可点朗读，悬停给轻微提示 */
-#rdBody section{cursor:pointer;}
-#rdBody section:hover{box-shadow:inset 0 0 0 2px rgba(7,193,96,.22);}
-/* 正在朗读的块：绿色描边 + 淡底，明确当前进度 */
-#rdBody section.speaking{box-shadow:inset 0 0 0 2px #07c160;background:rgba(7,193,96,.06);}
+/* 正文可朗读单元：块级容器悬停描边，细粒度单元悬停淡底 */
+#rdBody section,#rdBody div.sec{cursor:pointer;}
+#rdBody section:hover,#rdBody div.sec:hover{box-shadow:inset 0 0 0 2px rgba(7,193,96,.22);}
+#rdBody :is(ul.quote>li,ul.point>li,.mmx-views>li,.mmx-qlist>li,p:not(.mmx-mod-note),blockquote){cursor:pointer;}
+#rdBody :is(ul.quote>li,ul.point>li,.mmx-views>li,.mmx-qlist>li,p:not(.mmx-mod-note),blockquote):hover{background:rgba(7,193,96,.06);border-radius:4px;}
+/* 正在朗读的单元可能是 section / div.sec / li / p，统一绿色描边 + 淡底 */
+#rdBody .speaking{box-shadow:inset 0 0 0 2px #07c160;background:rgba(7,193,96,.07);border-radius:4px;}
 @media(max-width:720px){
   #rdSpeakBtn{right:70px;padding:7px 10px;}
 }

@@ -1077,7 +1077,10 @@
   /* ── 听书（女声 TTS，详情页点块朗读）──────────────────────
    * 改动只在本文件，所有书的 combined.html 自动生效（壳页不含渲染逻辑）。
    * - 右上角听书按钮 #rdSpeakBtn：默认静音（🔇），点击切换有声（🔊）
-   * - 点击正文任意块（section）：朗读该块文本（点哪读哪）；再次点击同一块则暂停
+   * - 点哪读哪：朗读「点击位置所属的最小语义块」，再点同一块暂停
+   *   粒度：原句 li > 要点 li > 小节 div.sec > 段落/标题 > 整个 section（兜底）。
+   *   AI 领读的小节是 div.sec 而非 section 标签，整章才是一个 section；
+   *   早期版本用 closest('section') 会把整章（含内嵌 <style>）全部念出来。
    * - 女声优先：zh-CN / cmn 语音里挑 Female / 女 / Ting / Xiaoxiao 等
    * - 默认静音：打开详情页不出声；点击块朗读时自动开声，也可手动静音
    */
@@ -1088,9 +1091,46 @@
     if (!main) return;
 
     var muted = true;        // 默认静音
-    var curSec = null;       // 当前正在朗读的块
+    var curUnit = null;      // 当前正在朗读的单元
     var utter = null;
     var speaking = false;
+
+    /* 朗读单元从细到粗列出，closest 取 DOM 上最近的一个。
+       section 只作兜底：点 AI 领读里的内容时绝不能往上命中整章。 */
+    var UNIT_SEL = [
+      'ul.quote > li', 'ul.point > li',   // 原句 / 要点
+      'div.sec',                          // AI 领读小节
+      '.mmx-detail', '.mmx-node',         // 结构导图树节点
+      'li', 'blockquote', 'p',            // 其它模块：列表项 / 引文 / 段落
+      'h2', 'h3', 'h4', 'h5',
+      'section'                           // 兜底：整模块
+    ].join(', ');
+    /* 交互元素 / 折叠控件 / 统计行：只做原本的动作，不触发朗读 */
+    var SKIP_SEL = 'a, button, summary, [data-no-speak], .mmx-head, .mmx-caret, ' +
+                   '.mmx-stat, input, select, textarea, label, .rd-speak-skip';
+
+    function resolveUnit(t) {
+      if (!t || !t.closest) return null;
+      if (t.closest(SKIP_SEL)) return null;
+      var unit = t.closest(UNIT_SEL);
+      if (!unit || !main.contains(unit)) return null;
+      // 点小标题 → 读它所属的整个小节，而不是只念标题那几个字
+      if (/^H[2-5]$/.test(unit.tagName) && unit.parentNode &&
+          unit.parentNode.classList && unit.parentNode.classList.contains('sec')) {
+        unit = unit.parentNode;
+      }
+      return unit;
+    }
+
+    /* 取朗读文本：剔除样式/脚本、装饰符号、以及与要点重复的「本小节汇总」 */
+    function collectText(unit) {
+      if (unit.matches && unit.matches('.mmx-mod-note, .mmx-stat')) return '';
+      var c = unit.cloneNode(true);
+      qa('script, style, noscript, [aria-hidden="true"], [data-no-speak], ' +
+         'ul.quote.quote-node, .mmx-stat, .mmx-caret, .mmx-mod-note', c)
+        .forEach(function (n) { if (n.parentNode) n.parentNode.removeChild(n); });
+      return (c.textContent || '').replace(/\s+/g, ' ').trim();
+    }
 
     function pickVoice() {
       var vs = synth.getVoices() || [];
@@ -1126,13 +1166,14 @@
     document.body.appendChild(btn);
 
     function stopAll() {
-      try { if (synth.speaking || synth.pending) synth.cancel(); } catch (e) {}
-      speaking = false; curSec = null; utter = null;
-      qa('#rdBody section.speaking').forEach(function (s) { s.classList.remove('speaking'); });
+      // 无条件 cancel：speak() 刚调用时 speaking 可能仍是 false，但已有排队语音
+      try { synth.cancel(); } catch (e) {}
+      speaking = false; curUnit = null; utter = null;
+      qa('#rdBody .speaking').forEach(function (s) { s.classList.remove('speaking'); });
     }
 
-    function speak(sec) {
-      var txt = (sec.textContent || '').replace(/\s+/g, ' ').trim();
+    function speak(unit) {
+      var txt = collectText(unit);
       if (!txt) return;
       stopAll();
       utter = new SpeechSynthesisUtterance(txt);
@@ -1140,21 +1181,19 @@
       if (!voice) voice = pickVoice();   // 语音列表可能异步加载，点击时再补选一次
       if (voice) utter.voice = voice;
       utter.rate = 1; utter.pitch = 1; utter.volume = muted ? 0 : 1;
-      utter.onend = function () { if (sec) sec.classList.remove('speaking'); speaking = false; curSec = null; utter = null; };
+      utter.onend = function () { unit.classList.remove('speaking'); speaking = false; curUnit = null; utter = null; };
       utter.onerror = utter.onend;
-      sec.classList.add('speaking');
-      curSec = sec; speaking = true;
+      unit.classList.add('speaking');
+      curUnit = unit; speaking = true;
       synth.speak(utter);
     }
 
     main.addEventListener('click', function (e) {
-      var sec = e.target.closest ? e.target.closest('section') : null;
-      if (!sec || !main.contains(sec)) return;
-      // 块内交互元素（链接/按钮/导图等）不触发朗读
-      if (e.target.closest('a, button, [data-no-speak]')) return;
-      if (curSec === sec && speaking) { stopAll(); return; }   // 再点同一块 → 暂停
-      if (muted) { muted = false; refresh(); }                 // 首次点块自动开声
-      speak(sec);
+      var unit = resolveUnit(e.target);
+      if (!unit) return;
+      if (curUnit === unit && speaking) { stopAll(); return; }  // 再点同一块 → 暂停
+      if (muted) { muted = false; refresh(); }                  // 首次点块自动开声
+      speak(unit);
     });
 
     // 切书/翻页/离开时停掉，避免后台继续朗读
