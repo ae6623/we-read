@@ -415,7 +415,12 @@
         tlink.id = 'rdTitleLink';
         tlink.setAttribute('data-slug', slug);
         tlink.appendChild(h1);
-        row.appendChild(tlink);
+        /* 书名上移到顶部标题栏（与 ← / ☰ / 分享 / Aa 同处一行），
+           吸顶条里不再重复显示，避免独占一行、中间留白 */
+        var tt = document.getElementById('rdTopTitle');
+        if (!tt) { tt = document.createElement('div'); tt.id = 'rdTopTitle'; tt.className = 'rd-toptitle'; document.body.appendChild(tt); }
+        tt.innerHTML = '';
+        tt.appendChild(tlink);
       }
       row.appendChild(au);
       stick.appendChild(row);
@@ -433,8 +438,9 @@
         main.insertBefore(stick, sec.nextSibling);
       }
       /* 标题入口要等节点真正挂进 DOM 之后才上链接：hero.json 若已在内存里，
-         armTitleLink 是同步回调，提前调用会因 a.isConnected=false 直接跳过 */
-      var tlink2 = stick.querySelector('#rdTitleLink');
+         armTitleLink 是同步回调，提前调用会因 a.isConnected=false 直接跳过。
+         书名已移到顶部标题栏 #rdTopTitle（tt），从这里取链接节点 */
+      var tlink2 = (tt || stick).querySelector('#rdTitleLink');
       if (tlink2) armTitleLink(tlink2, slug);
       return;
     }
@@ -1298,7 +1304,7 @@
 
     function refresh() {
       var st = q('#rdSpState', box);
-      if (st) st.textContent = !hasTTS ? '当前浏览器不支持'
+      if (st) st.textContent = (!hasTTS || allVoices().length === 0) ? '当前浏览器不支持语音朗读'
                             : speaking ? '正在朗读…'
                             : (muted ? '默认静音' : '点正文开始');
       var mb = q('#rdSpMute', box);
@@ -1452,12 +1458,23 @@
       showBar(txt.length > 42 ? txt.slice(0, 42) + '…' : txt, false);
     }
 
+    /* 点块的柔和反馈：亮一下再渐隐回常态（不依赖 TTS，移动端无声也能看到） */
+    function pulse(unit) {
+      if (!unit) return;
+      unit.classList.remove('rd-speak-pulse');
+      void unit.offsetWidth;   // 强制回流，重启动画
+      unit.classList.add('rd-speak-pulse');
+      setTimeout(function () { unit.classList.remove('rd-speak-pulse'); }, 620);
+    }
     main.addEventListener('click', function (e) {
       var unit = resolveUnit(e.target);
       if (!unit) return;
-      /* 没有 TTS 引擎时，点正文块不做任何视觉反馈（不弹底部条、不闪页面）。
-         可用性说明已在「Aa」面板内的音色下拉与提示里给出，这里保持静默即可。 */
-      if (!hasTTS) return;
+      /* 任何设备点块都给柔和高亮反馈，代替原先「弹底部条」的硬闪 */
+      pulse(unit);
+      /* 真能朗读才往下走：浏览器必须有可用的语音包。移动端 webview 常只有
+         speechSynthesis 壳、没有 voice，点下去既没声又闪一下，体验最差；
+         无可用语音时只保留高亮，不弹条、不发声 */
+      if (!hasTTS || allVoices().length === 0) return;
       if (curUnit === unit && speaking) { stopAll(); hideBar(); return; }  // 再点同一块 → 暂停
       if (muted) muted = false;                                          // 首次点块自动开声
       speak(unit);

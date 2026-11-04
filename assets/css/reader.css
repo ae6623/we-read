@@ -310,6 +310,26 @@ a.ai-outline-link{position:fixed;top:10px;right:96px;z-index:60;
   cursor:pointer;text-decoration:none;box-shadow:0 2px 8px rgba(0,0,0,.1);
   display:flex;align-items:center;justify-content:center;line-height:0;}
 .ai-outline-link svg{display:block;width:18px;height:18px;flex:none;}
+
+/* 顶部标题栏：窄屏把书名提到与操作区（← / ☰ / 分享 / Aa）同一行，
+   桌面仍由 .rd-stick 吸顶条承载（见下方媒体查询，默认隐藏） */
+.rd-toptitle{position:fixed;top:10px;left:54px;right:140px;z-index:61;height:34px;
+  display:none;align-items:center;min-width:0;pointer-events:none;
+  font:600 1.02rem/1.2 var(--serif);color:var(--head);
+  text-shadow:0 1px 3px rgba(0,0,0,.45);}
+.rd-toptitle .rd-title{pointer-events:auto;display:flex;align-items:center;gap:4px;min-width:0;
+  color:inherit;text-decoration:none;cursor:default;}
+.rd-toptitle .rd-title h1{margin:0;font:inherit;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.rd-toptitle .rd-title-on{cursor:pointer;}
+.rd-toptitle .rd-title-on::after{content:"↗";flex:none;font:400 .82em/1 var(--sans);color:var(--muted);opacity:.65;}
+/* 点正文块的柔和反馈：亮一下再渐隐回常态（不弹底部条、不闪页面），
+   移动端无语音也能看到，代替原先「弹条」的硬闪 */
+@keyframes rdSpeakPulse{
+  0%{background:rgba(49,94,80,.20);box-shadow:0 0 0 2px rgba(49,94,80,.45) inset;border-radius:6px;}
+  45%{background:rgba(49,94,80,.06);}
+  100%{background:transparent;box-shadow:none;}
+}
+.rd-speak-pulse{animation:rdSpeakPulse .6s ease-out;border-radius:6px;}
 /* 暗色主题有 `html[data-theme=dark] a{color:#9ed0af}`（特异性 0,1,2），
    会把目录图标染绿、和旁边两个灰白按钮不齐。这里同特异性后置覆盖回 --txt。 */
 html[data-theme=dark] a.ai-outline-link{color:var(--txt);}
@@ -345,15 +365,19 @@ html[data-theme=dark] a.ai-outline-link:hover{border-color:var(--head);color:var
      左右那段空白可以直接吃掉 → 同一行能多放一个 chip */
   body.rd-scrolled .rd-stick .nav{margin-left:-46px;margin-right:-46px;
     padding-left:12px;padding-right:12px;}
-  /* 右上角钉着「AI 大纲 / 分享 / Aa」三个 34px 按钮（12 + 34*3 + 8*2 = 130），
-     作者名要让出这段，否则被图标压住 */
+  /* 右上角钉着「AI 大纲 / 分享 / Aa」三个 34px 按钮，作者名原本要让出这段；
+     现在书名已上移到顶部标题栏（与操作区同处一行），吸顶条里不再显示标题行 */
   body.rd-scrolled .rd-stick-row{padding-right:84px;}
+  /* 窄屏：把书名提到与「← / ☰ / 分享 / Aa」同一行的顶部标题栏，
+     吸顶条里只留章节导航，避免书名独占一行、中间留白 */
+  .rd-toptitle{display:flex;}
+  .rd-stick-row{display:none;}
   /* 导航只留一行：按容器宽度能塞几个塞几个，塞不下的用两端省略号收掉
      （具体显示几项由 reader.js 的 fitNav 算），10 个 chip 排三行会把正文挤没 */
   .nav{display:flex;flex-wrap:nowrap;align-items:center;gap:6px;overflow:hidden;
-    padding:8px 0;margin:10px 0 14px;}
-  .nav .navlink{display:inline-block;flex:1 1 0;min-width:0;}
-  .nav .navlink span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+    justify-content:space-between;padding:8px 0;margin:10px 0 14px;}
+  .nav .navlink{display:inline-block;flex:none;}
+  .nav .navlink span{display:block;white-space:nowrap;overflow:visible;}
   .nav .navlink.nav-hide{display:none;}
   .nav .nav-more{display:none;flex:none;color:var(--muted);font-size:12px;
     line-height:1;letter-spacing:.12em;padding:0 1px;}
