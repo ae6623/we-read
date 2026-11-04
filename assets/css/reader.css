@@ -284,16 +284,21 @@ html[data-theme=green] .toc-part,html[data-theme=green] .card{
   background:var(--card-bg) !important;border-color:var(--card-bd) !important;}
 
 /* ── 右上角设置面板 ── */
+/* 右上角三个按钮统一 34×34、间距 8px：Aa(12) → 分享(54) → AI 大纲(96) */
 #rdFab{position:fixed;top:10px;right:12px;z-index:60;font:600 13px/1 var(--sans);color:var(--txt);
-  background:var(--card-bg);border:1px solid var(--card-bd);border-radius:9px;padding:8px 12px;
-  cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.1);}
+  width:34px;height:34px;box-sizing:border-box;padding:0;
+  background:var(--card-bg);border:1px solid var(--card-bd);border-radius:9px;
+  cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.1);
+  display:flex;align-items:center;justify-content:center;}
 #rdFab:hover{border-color:var(--head);color:var(--head);}
-/* 右上角操作区：AI 大纲入口，紧挨分享按钮（分享在 right:64px）左侧 */
-.ai-outline-link{position:fixed;top:10px;right:106px;z-index:60;
+/* 右上角操作区：AI 大纲入口，紧挨分享按钮（分享在 right:64px）左侧。
+   尺寸必须和分享按钮严格一致（34×34 正方形），否则三个按钮高矮不齐。 */
+.ai-outline-link{position:fixed;top:10px;right:96px;z-index:60;
+  width:34px;height:34px;box-sizing:border-box;padding:0;
   color:var(--txt);background:var(--card-bg);border:1px solid var(--card-bd);border-radius:9px;
-  padding:8px;cursor:pointer;text-decoration:none;box-shadow:0 2px 8px rgba(0,0,0,.1);
-  display:inline-flex;align-items:center;justify-content:center;line-height:0;}
-.ai-outline-link svg{display:block;width:18px;height:18px;}
+  cursor:pointer;text-decoration:none;box-shadow:0 2px 8px rgba(0,0,0,.1);
+  display:flex;align-items:center;justify-content:center;line-height:0;}
+.ai-outline-link svg{display:block;width:18px;height:18px;flex:none;}
 .ai-outline-link:hover{border-color:var(--head);color:var(--head);}
 #rdPanel{position:fixed;top:48px;right:12px;z-index:60;background:var(--card-bg);
   border:1px solid var(--card-bd);border-radius:12px;padding:12px 14px;
@@ -321,8 +326,9 @@ html[data-theme=green] .toc-part,html[data-theme=green] .card{
   .rd-title::after{display:none;}   /* 窄屏不显示外链小箭头，标题两行已足够挤 */
   /* 吸顶后左上「←」、右上「Aa」会压在书名/作者上 → 标题条两侧让位 */
   body.rd-scrolled .rd-stick{padding-left:46px;padding-right:46px;}
-  /* 右上角还钉着「分享 / Aa」两个按钮，作者名要让出这段（否则被图标压住） */
-  body.rd-scrolled .rd-stick-row{padding-right:52px;}
+  /* 右上角钉着「AI 大纲 / 分享 / Aa」三个 34px 按钮（12 + 34*3 + 8*2 = 130），
+     作者名要让出这段，否则被图标压住 */
+  body.rd-scrolled .rd-stick-row{padding-right:84px;}
   #rdBody>section.mmx-mod,#rdBody>section.card,#rdBody>section.mmx-svgwrap{padding:15px 16px;border-radius:14px;}
 }
 
