@@ -32,7 +32,7 @@ ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data" / "mm-graph"
 
 E = html.escape
-W = 364
+W = 364                       # 默认窄版；分支多时 render 内切宽版
 PAD = 14
 BX = 46                       # 分支框左边界
 BW = W - PAD - BX             # 分支框宽
@@ -53,10 +53,10 @@ def _lines(text: str, per: int, max_lines: int = 2) -> list[str]:
     return out
 
 
-def _chip_w(text: str) -> int:
+def _chip_w(text: str, bw: int = BW) -> int:
     """叶子 chip 宽度：中文按 11px/字，ASCII 按 6px/字，两侧各留 8px"""
     w = sum(11 if ord(c) > 127 else 6 for c in text)
-    return min(BW - 24, max(46, w + 16))
+    return min(bw - 24, max(46, w + 16))
 
 
 def load(slug: str) -> dict | None:
@@ -70,7 +70,7 @@ def load(slug: str) -> dict | None:
     brs = [b for b in (d.get("branches") or []) if (b.get("label") or "").strip()]
     if not brs or not (d.get("thesis") or "").strip():
         return None
-    d["branches"] = brs[:7]
+    d["branches"] = brs[:12]
     return d
 
 
@@ -84,6 +84,9 @@ def render(slug: str, title: str) -> str:
         return ""
     thesis = d["thesis"].strip()
     brs = d["branches"]
+    # 分支多（>7）切宽版画布，否则保持窄版，避免 5 分支的书右侧大片留白
+    w = 520 if len(brs) > 7 else W
+    bw = w - PAD - BX
 
     # ── 先算每块高度，再定 viewBox ────────────────────────────────
     t_lines = _lines(title, 16, 2)
@@ -95,13 +98,14 @@ def render(slug: str, title: str) -> str:
         lab = b["label"].strip()
         rel = (b.get("rel") or "").strip()
         rel = rel if rel in RELS else ""
-        note_lines = _lines(b.get("note") or "", 22, 3)
-        pts = [str(x).strip()[:12] for x in (b.get("points") or []) if str(x).strip()][:3]
+        note_lines = _lines(b.get("note") or "", 32, 3)
+        # 最多 6 个概念（此前写死 3 个，导致 json 有 5 个也只画 3 个）
+        pts = [str(x).strip()[:14] for x in (b.get("points") or []) if str(x).strip()][:6]
         # chip 排版：按累计宽度折行
         rows, row, used = [], [], 0
         for t in pts:
-            cw = _chip_w(t)
-            if row and used + 6 + cw > BW - 20:
+            cw = _chip_w(t, bw)
+            if row and used + 6 + cw > bw - 20:
                 rows.append((row, used))
                 row, used = [], 0
             row.append((t, cw))
@@ -115,7 +119,7 @@ def render(slug: str, title: str) -> str:
     H = PAD + root_h + 16 + sum(b["h"] + 12 for b in blocks) + 12
     parts = ['<svg class="mmx-svg mmx-mind" viewBox="0 0 %d %d"'
              ' xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMin meet"'
-             ' role="img" aria-label="%s 思维导图">' % (W, H, E(title))]
+             ' role="img" aria-label="%s 思维导图">' % (w, H, E(title))]
     parts.append('<style>'
                  '.mmx-mind text{font-family:"Noto Serif SC",Georgia,serif}'
                  '.mmx-mind .m-root{fill:#2f4a3d}'
@@ -133,7 +137,7 @@ def render(slug: str, title: str) -> str:
 
     # ── 中心：书名 + 全书命题 ─────────────────────────────────────
     parts.append('<rect class="m-root" x="%d" y="%d" width="%d" height="%d" rx="12"/>'
-                 % (PAD, PAD, W - 2 * PAD, root_h))
+                 % (PAD, PAD, w - 2 * PAD, root_h))
     ty = PAD + 22
     for ln in t_lines:
         parts.append('<text class="m-t" x="%d" y="%d">%s</text>' % (PAD + 14, ty, E(ln)))
@@ -161,7 +165,7 @@ def render(slug: str, title: str) -> str:
         parts.append('<circle cx="%d" cy="%d" r="3.5" fill="%s"/>'
                      % (spine_x, mid, color))
         parts.append('<rect class="m-br" x="%d" y="%d" width="%d" height="%d" rx="9"/>'
-                     % (BX, y, BW, h))
+                     % (BX, y, bw, h))
         parts.append('<rect x="%d" y="%d" width="5" height="%d" rx="2.5" fill="%s"/>'
                      % (BX, y, h, color))
         # 编号 + 议题
@@ -173,7 +177,7 @@ def render(slug: str, title: str) -> str:
                      % (BX + 36, y + 23, E(b["label"])))
         if b["rel"]:
             parts.append('<text class="m-rel" x="%d" y="%d" text-anchor="end">【%s】</text>'
-                         % (BX + BW - 10, y + 23, E(b["rel"])))
+                         % (BX + bw - 10, y + 23, E(b["rel"])))
         cy = y + 30
         for ln in b["note"]:
             cy += 14

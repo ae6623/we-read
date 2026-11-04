@@ -1,123 +1,183 @@
 {
   "title": "Spring Data JPA从入门到精通",
-  "thesis": "以仓库抽象和动态代理消除数据访问样板",
+  "thesis": "仓库抽象加动态代理，把数据访问的样板代码收敛成接口声明。",
   "branches": [
     {
       "id": "A",
-      "label": "ORM与定位",
-      "rel": "因果",
+      "label": "仓库抽象分层",
+      "rel": "包含",
+      "note": "七个接口两个实现，把增删改查收敛成一套可继承的抽象。",
       "points": [
-        "Boot为技术基础",
-        "封装Hibernate",
-        "MyBatis对照"
-      ],
-      "note": "先比对ORM框架再交代JPA身世"
+        "最底层抽象接口",
+        "七接口两实现",
+        "通用增删改查",
+        "单一实现类兜底"
+      ]
     },
     {
       "id": "B",
-      "label": "仓库抽象",
-      "rel": "包含",
+      "label": "方法名即查询",
+      "rel": "因果",
+      "note": "方法名拆成策略、字段和限制条件，由代理在运行时解析成查询。",
       "points": [
-        "仓库最底层抽象",
-        "Crud通用增删改查",
-        "七个接口两类实现"
-      ],
-      "note": "以仓库接口层次搭起数据访问"
+        "动态代理机制",
+        "方法名三段构成",
+        "属性表达式解析",
+        "方法拦截扩展"
+      ]
     },
     {
       "id": "C",
-      "label": "查询方法",
-      "rel": "递进",
+      "label": "注解定制查询",
+      "rel": "并列",
+      "note": "方法名不够用时改用注解声明查询，参数与表达式另行绑定。",
       "points": [
-        "动态代理实现原理",
-        "方法名即查询策略",
-        "分页排序处理"
-      ],
-      "note": "由方法名解析出查询，无需手写SQL"
+        "注解声明查询",
+        "参数名绑定",
+        "SpEL变量取值",
+        "更新需加注解"
+      ]
     },
     {
       "id": "D",
-      "label": "注解式查询",
-      "rel": "并列",
+      "label": "分页排序处理",
+      "rel": "包含",
+      "note": "分页与排序对象作为参数传入，动态拼进查询而非写死。",
       "points": [
-        "@Query注解",
-        "SpEL与@Param",
-        "存储过程调用"
-      ],
-      "note": "以注解覆盖定制查询与修改场景"
+        "分页排序参数",
+        "动态分页应用",
+        "排序条件注入"
+      ]
     },
     {
       "id": "E",
-      "label": "实体与进阶",
-      "rel": "对比",
+      "label": "实体映射注解",
+      "rel": "包含",
+      "note": "实体注解把对象钉到数据库表，关联注解负责外键与连接列。",
       "points": [
-        "@Entity映射表",
-        "关联注解不混用",
-        "约定优于配置"
-      ],
-      "note": "实体注解之坑与仓库扩展收尾"
+        "实体映射到表",
+        "关联列注解",
+        "注解位置统一"
+      ]
+    },
+    {
+      "id": "F",
+      "label": "关联查询写法",
+      "rel": "对比",
+      "note": "JPQL 与 Criteria 两条路都能做连接，真正的坑在配置一致性。",
+      "points": [
+        "JPQL左连接",
+        "Criteria条件查询",
+        "关系查询的坑"
+      ]
+    },
+    {
+      "id": "G",
+      "label": "动态条件组合",
+      "rel": "递进",
+      "note": "从示例对象到规格拼装，条件按需组合，仓库能力随之扩展。",
+      "points": [
+        "示例对象查询",
+        "规格条件拼装",
+        "仓库能力扩展"
+      ]
+    },
+    {
+      "id": "H",
+      "label": "定位与选型",
+      "rel": "对比",
+      "note": "底层封装 Hibernate，与手写 SQL 的 MyBatis 形成路线对照。",
+      "points": [
+        "封装Hibernate",
+        "手写SQL对照",
+        "统一数据访问"
+      ]
     }
   ],
   "source": "llm",
   "evidence": {
-    "Boot为技术基础": [
-      "本书以Spring Boot为技术基础由浅入深讲解",
-      "以Boot为线索，大量用UML图释义"
+    "最底层抽象接口": [
+      "做数据库操作的最底层的抽象接口"
+    ],
+    "七接口两实现": [
+      "需要掌握和使用的类包括七个Repository接口和两个实现类"
+    ],
+    "通用增删改查": [
+      "CrudRepository提供了公共的通用的CRUD方法"
+    ],
+    "单一实现类兜底": [
+      "SimpleJpaRepository是JPA整个关联数据库的所有"
+    ],
+    "动态代理机制": [
+      "Spring JPA Repository的实现原理是采用动态代理的机制"
+    ],
+    "方法名三段构成": [
+      "查询方法名由查询策略(关键字)、查询字段和一些限制性条件组成"
+    ],
+    "属性表达式解析": [
+      "解析算法首先将整个part(AddressZipCode)解释为属性"
+    ],
+    "方法拦截扩展": [
+      "QueryExecutorMethodInterceptor",
+      "是一个方法调用的拦截器"
+    ],
+    "注解声明查询": [
+      "@Query语法及源码"
+    ],
+    "参数名绑定": [
+      "使用@Param注解指定方法参数的具体名称"
+    ],
+    "SpEL变量取值": [
+      "SpEL支持的变量如表4-1所示"
+    ],
+    "更新需加注解": [
+      "可以通过在@Modifying注解实现只需要参数绑定的update查询的执行"
+    ],
+    "分页排序参数": [
+      "Pageable、Slice和Sort用于动态地将分页和排序应用于查询"
+    ],
+    "动态分页应用": [
+      "动态地将分页和排序应用于查询"
+    ],
+    "排序条件注入": [
+      "Pageable、Slice和Sort"
+    ],
+    "实体映射到表": [
+      "@Entity定义对象将会成为被JPA管理的实体",
+      "将映射到指定的数据库表"
+    ],
+    "关联列注解": [
+      "@JoinColumn主要配合@OneToOne、@ManyToOne"
+    ],
+    "注解位置统一": [
+      "所有的注解要么全配置在字段上，要么全配置在get方法上，不能混用"
+    ],
+    "JPQL左连接": [
+      "使用@Query的JQPL语法或Criteria API"
+    ],
+    "Criteria条件查询": [
+      "JpaSpecificationExecutor是JPA 2.0提供"
+    ],
+    "关系查询的坑": [
+      "关于关系查询的一些坑"
+    ],
+    "示例对象查询": [
+      "QueryByExampleExecutor是Spring Data JPA"
+    ],
+    "规格条件拼装": [
+      "JpaSpecificationExecutor是JPA 2.0"
+    ],
+    "仓库能力扩展": [
+      "JpaRepository是Spring Data项目对JPA实现的封装与扩展"
     ],
     "封装Hibernate": [
-      "Spring Data JPA底层封装Hibernate",
-      "它是Hibernate的JPA的一次包装和升级"
+      "Spring Data JPA底层以Hibernate为封装"
     ],
-    "MyBatis对照": [
-      "MyBatis着力POJO与SQL映射，灵活易上手",
-      "手写SQL控制派与自动派长期对照"
+    "手写SQL对照": [
+      "MyBatis着力于POJO与SQL之间的映射关系"
     ],
-    "仓库最底层抽象": [
-      "Repository是数据库操作最底层的抽象接口",
-      "Spring Data自2010年提供一致数据访问"
-    ],
-    "Crud通用增删改查": [
-      "CrudRepository提供通用CRUD方法",
-      "PagingAndSortingRepository继承它"
-    ],
-    "七个接口两类实现": [
-      "需掌握七个Repository接口和两个实现类",
-      "SimpleJpaRepository是所有Repository实现类"
-    ],
-    "动态代理实现原理": [
-      "Repository实现原理采用动态代理机制",
-      "QueryExecutorMethodInterceptor拦截方法调用"
-    ],
-    "方法名即查询策略": [
-      "查询方法名由策略关键字、字段和条件组成",
-      "可用@EnableJpaRepositories设置查询策略"
-    ],
-    "分页排序处理": [
-      "Pageable、Slice、Sort动态实现分页排序",
-      "PagingAndSortingRepository专管分页排序"
-    ],
-    "@Query注解": [
-      "@Query注解用于自定义查询语句",
-      "@Modifying配合实现只绑参数的update"
-    ],
-    "SpEL与@Param": [
-      "@Param指定参数名，按名字绑定查询条件",
-      "SpEL表达式在查询中支持一组变量"
-    ],
-    "存储过程调用": [
-      "@NamedStoredProcedureQueries用来调用存储过程"
-    ],
-    "@Entity映射表": [
-      "@Entity把对象映射为JPA管理的数据库表",
-      "javax.persistence位于hibernate-jpa的jar包"
-    ],
-    "关联注解不混用": [
-      "注解要么全在字段、要么全在get方法",
-      "@JoinColumn配合@OneToOne、@ManyToOne"
-    ],
-    "约定优于配置": [
-      "Spring Data哲学是约定优于配置",
-      "用代理消除样板，方法名即生成查询"
+    "统一数据访问": [
+      "Spring Data项目从2010年发展起来"
     ]
   }
 }
