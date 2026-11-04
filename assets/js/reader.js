@@ -681,7 +681,19 @@
     var holder = q('.rd-svg-holder', m);
     holder.innerHTML = '';
     var clone = src.cloneNode(true);
-    clone.removeAttribute('style');          // 内联尺寸交给弹层 CSS 管
+    clone.removeAttribute('style');
+    // 按视口等比缩放：不再被 min-width 撑大、也不裁切；桌面/手机/横屏都完整可见
+    var vb = (clone.getAttribute('viewBox') || '').trim().split(/[\s,]+/);
+    if (vb.length === 4) {
+      var W = parseFloat(vb[2]), H = parseFloat(vb[3]);
+      if (W > 0 && H > 0) {
+        var availW = Math.min(window.innerWidth - 32, 900);
+        var availH = window.innerHeight - 72;
+        var s = Math.min(availW / W, availH / H);
+        clone.style.width = Math.max(1, Math.round(W * s)) + 'px';
+        clone.style.height = Math.max(1, Math.round(H * s)) + 'px';
+      }
+    }
     holder.appendChild(clone);
     m.hidden = false;
   }
@@ -771,7 +783,7 @@
     var tools = mindEl('div', 'mmx-tree-tools');
     var bAll = mindEl('button', 'mmx-tool', '全部展开');
     var bNone = mindEl('button', 'mmx-tool', '全部收起');
-    var bPic = mindEl('button', 'mmx-tool', '看全图总览');
+    var bPic = mindEl('button', 'mmx-tool', '全屏看图');
     bAll.type = bNone.type = bPic.type = 'button';
     tools.appendChild(bAll); tools.appendChild(bNone); tools.appendChild(bPic);
     tools.appendChild(mindEl('span', 'mmx-tree-tip', '点节点逐级展开'));
@@ -847,7 +859,7 @@
     // 静态全景图收进折叠区，主视图换成可逐级下钻的树
     var ov = document.createElement('details');
     ov.className = 'mmx-overview';
-    ov.appendChild(mindEl('summary', '', '查看全图总览（静态 SVG）'));
+    ov.appendChild(mindEl('summary', '', '在页内展开静态全图'));
     svg.parentNode.insertBefore(ov, svg);
     ov.appendChild(svg);
     sec.insertBefore(buildMindTree(d), ov);

@@ -447,9 +447,11 @@ html[data-theme=green]{--skel-a:#d6e9da;--skel-b:#aed3ba;}
 .rd-svg-mask{position:absolute;inset:0;background:rgba(10,12,14,.86);backdrop-filter:blur(3px);}
 .rd-svg-stage{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
   margin:0;padding:20px;overflow:auto;-webkit-overflow-scrolling:touch;}
-.rd-svg-holder{max-width:min(96vw,1280px);max-height:88vh;display:flex;align-items:center;justify-content:center;}
-.rd-svg-holder svg{width:100%;min-width:600px;height:auto;max-height:88vh;display:block;border-radius:10px;
-  background:var(--card-bg);box-shadow:0 18px 60px rgba(0,0,0,.5);cursor:zoom-out;}
+.rd-svg-holder{display:flex;align-items:center;justify-content:center;}
+/* 尺寸由 openSvgModal() 按 viewBox 等比算好内联写入，这里不再设 min-width / max-height，
+   否则窄屏会被撑到 600px 左右裁切（旧 bug） */
+.rd-svg-holder svg{display:block;max-width:none;border-radius:10px;
+  background:var(--card-bg);box-shadow:0 18px 60px rgba(0,0,0,.5);cursor:default;}
 .rd-svg-close{position:absolute;top:14px;right:16px;z-index:2;width:40px;height:40px;
   display:flex;align-items:center;justify-content:center;border-radius:50%;
   border:1px solid rgba(255,255,255,.35);background:rgba(20,22,26,.72);color:#fff;
@@ -610,7 +612,8 @@ html[data-theme=dark] .mmx-mind .m-rel{fill:#93a89a;}
 .mmx-overview>summary::-webkit-details-marker{display:none;}
 .mmx-overview>summary::before{content:"▸ ";display:inline-block;}
 .mmx-overview[open]>summary::before{content:"▾ ";}
-.mmx-overview>svg.mmx-svg{display:block;width:100%;height:auto;margin:10px auto 0;}
+/* 原图是 364 宽的纵向长图，按近 1:1 显示；桌面宽栏里不让它被 width:100% 撑到上千 px */
+.mmx-overview>svg.mmx-svg{display:block;width:100%;max-width:420px;height:auto;margin:10px auto 0;}
 html[data-theme=dark] .mmx-head{color:var(--ink);}
 html[data-theme=dark] .mmx-lv1>.mmx-head{background:rgba(158,208,175,.10);}
 html[data-theme=dark] .mmx-detail{background:var(--inner-bg);border-color:#3a3f46;}
