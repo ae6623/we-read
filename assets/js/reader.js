@@ -812,8 +812,9 @@
             '出自议题：' + (br.id ? br.id + ' ' : '') + br.label +
             (br.rel ? '　·　' + br.rel : '')));
         } else {
-          // 没补到内容就如实说没补，不再拿元信息伪装成一层
-          detail.appendChild(mindEl('p', 'mmx-detail-txt', '这一层尚未补充书内依据'));
+          // ev === null 是数据还在路上；确认无依据才如实说没补，不拿元信息伪装
+          detail.appendChild(mindEl('p', 'mmx-detail-txt', ev === null
+            ? '正在载入书内依据…' : '这一层尚未补充书内依据'));
           detail.appendChild(mindEl('p', 'mmx-detail-meta',
             '出自议题：' + (br.id ? br.id + ' ' : '') + br.label));
         }
@@ -880,23 +881,24 @@
        有依据 → 概念展开显示实质内容；没补到 → 如实标注，不再空转。 */
     var slug = (document.body && document.body.getAttribute('data-slug')) || '';
     if (!slug || !window.fetch) return;
+    function applyEvidence(ev) {
+      if (!tree.parentNode) return;
+      var fresh = buildMindTree(d, ev);
+      // 保住用户已经点开的层级，别因为异步刷新把展开状态清掉
+      var a = qa('.mmx-head', tree), b2 = qa('.mmx-head', fresh);
+      for (var i = 0; i < Math.min(a.length, b2.length); i++) {
+        var open = a[i].getAttribute('aria-expanded') === 'true';
+        b2[i].setAttribute('aria-expanded', open ? 'true' : 'false');
+        var k = b2[i].nextElementSibling;
+        if (k) k.hidden = !open;
+      }
+      tree.parentNode.replaceChild(fresh, tree);
+      tree = fresh;
+    }
     fetch('../../../data/mm-graph/' + encodeURIComponent(slug) + '.json')
       .then(function (r) { return r.ok ? r.json() : null; })
-      .then(function (j) {
-        var ev = j && j.evidence;
-        if (!ev || !Object.keys(ev).length || !tree.parentNode) return;
-        var fresh = buildMindTree(d, ev);
-        // 保住用户已经点开的层级，别因为异步刷新把展开状态清掉
-        var a = qa('.mmx-head', tree), b2 = qa('.mmx-head', fresh);
-        for (var i = 0; i < Math.min(a.length, b2.length); i++) {
-          var open = a[i].getAttribute('aria-expanded') === 'true';
-          b2[i].setAttribute('aria-expanded', open ? 'true' : 'false');
-          var k = b2[i].nextElementSibling;
-          if (k) k.hidden = !open;
-        }
-        tree.parentNode.replaceChild(fresh, tree);
-      })
-      .catch(function () {});
+      .then(function (j) { applyEvidence((j && j.evidence) || {}); })
+      .catch(function () { applyEvidence({}); });
   }
 
   /* ── 上一篇 / 下一篇 ─────────────────────────────────────────────
