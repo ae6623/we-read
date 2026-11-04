@@ -156,6 +156,7 @@ curl -s "https://ae6623.github.io/we-read/reading-notes/books/1984/combined-data
 10. **push 前必 `git pull --rebase`**。云端调度器和别的 agent 会往 main 推，直接 push 会被拒；变基冲突时保留双方内容，不要 `--force`。
 11. **宽版 520 是自动的**，由分支数决定，不用手调 viewBox 或 CSS。
 12. **别删旧 json**。没做完的书保留原数据，页面照常显示旧图，不要留空占位。
+13. **§5.1 的全量 clone 在带宽受限的沙箱里拉不动**（站点仓 `.git` 约 248 MB）。改用 `git clone --filter=blob:none --no-checkout --depth 1 --single-branch --branch main` 再 `git sparse-checkout set '/tools/' '/data/mm-graph/' '/data/mindmap-material/' '/reading-notes/books/*/combined-data.html' '/需求/'`，实测 17 秒拿到可提交的工作区；sparse checkout 下 `git add` / `commit` / `push` 都正常，未检出的文件带 skip-worktree 标记不会被误提交。另外新仓库要先配 `git config user.name/user.email`，否则第一次 commit 直接失败。
 
 ## 8. 验收标准
 
@@ -172,7 +173,7 @@ curl -s "https://ae6623.github.io/we-read/reading-notes/books/1984/combined-data
 | 日期 | 本批 | 累计 | 校验不合格 | 提交 | 备注 |
 |---|---|---|---|---|---|
 | 2026-11-05 | 30（试点） | 30/409 | 379 | `8c56c930` | 覆盖技术/历史/经济/文学/传记/通识/游记，均 8-10 支 |
-| — | — | — | — | — | 待执行 |
+| 2026-11-05 | 4（第 1 批） | 34/409 | 375 | `f8bf317` | 短素材轻游记先跑通全链路：单本校验 0 问题、渲染 0 skip、diff 只含两类文件、viewBox 364（窄版） |
 
 **遗留**
 
