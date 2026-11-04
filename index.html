@@ -6965,7 +6965,7 @@
     </div>
   </footer>
   <!-- visit-badge:begin -->
-  <div class="visit-badge-row"><div class="visit-badge" role="group" aria-label="站点访问统计"><span class="visit-badge-item"><b class="visit-badge-num" id="gc_site_pv_num">–</b><span class="visit-badge-unit">位访客</span></span><span class="visit-badge-div visit-badge-uv" aria-hidden="true"></span><span class="visit-badge-item visit-badge-uv"><b class="visit-badge-num" id="gc_site_uv_num">–</b><span class="visit-badge-unit">位访客</span></span></div></div>
+  <div class="visit-badge-row"><div class="visit-badge" role="group" aria-label="站点访问统计"><span class="visit-badge-item"><b class="visit-badge-num" id="gc_site_pv_num">–</b><span class="visit-badge-unit">次访问</span></span><span class="visit-badge-div visit-badge-uv" aria-hidden="true"></span><span class="visit-badge-item visit-badge-uv"><b class="visit-badge-num" id="gc_site_uv_num">–</b><span class="visit-badge-unit">位访客</span></span></div></div>
   <!-- visit-badge:end -->
   <script src="assets/js/home-track.js?v=20261102c"></script>
   <script src="assets/js/home-theme.js?v=20261105b"></script>
@@ -7023,8 +7023,21 @@
     else{var x=document.querySelectorAll(".visit-badge-uv");
          for(var i=0;i<x.length;i++)x[i].style.display="none";}
   }
+  /* 访问次数：Abacus 实时计数（每次打开 +1）；历史用当前访客数当下界补齐 */
+  var AB="https://abacus.jasoncameron.dev/hit/ae6623-we-read/site";
+  function pvHit(base){
+    try{
+      var o={credentials:"omit",cache:"no-store"};
+      if(window.AbortController){var c=new AbortController();o.signal=c.signal;setTimeout(function(){try{c.abort()}catch(e){}},4000);}
+      fetch(AB,o).then(function(r){return r.json()}).then(function(x){
+        var n=parseInt(x&&x.value,10);
+        if(isFinite(n))put("gc_site_pv_num",String(n+base));
+      }).catch(function(){});
+    }catch(e){}
+  }
   stat("/TOTAL").then(function(d){
-    if(d && parseInt(d.pv,10)>0){ fillSite({pv:d.pv,uv:null}); }   /* 有真数据就用真的 */
+    var uv=(d&&parseInt(d.pv,10)>0)?parseInt(d.pv,10):0;
+    if(uv>0){ fillSite({pv:String(uv),uv:String(uv)}); pvHit(uv); }
     else{ fillSite(null); }
   });
 
