@@ -75,7 +75,7 @@ if(c.fs)d.style.setProperty('--fs',c.fs);
 if(c.pm)d.style.setProperty('--pm',c.pm);}}catch(e){{}}}})();
 </script>
 <link rel="stylesheet" href="../../../assets/css/reading-overview.css"><link rel="stylesheet" href="../../../assets/css/mmx-guide.css"><link rel="stylesheet" href="../../../assets/css/reading-outline.css">
-<link rel="stylesheet" href="../../../assets/css/reader.css?v=20261106a">
+<link rel="stylesheet" href="../../../assets/css/reader.css?v=20261106b">
 <link rel="stylesheet" href="../../../assets/css/share.css?v=20261104b">
 <script src="../../../assets/js/vendor/qrcode.min.js" defer></script>
 <script src="../../../assets/js/share.js?v=20261103b" defer></script>
@@ -121,7 +121,7 @@ if(c.pm)d.style.setProperty('--pm',c.pm);}}catch(e){{}}}})();
 <script>window.goatcounter={{no_onload:true}};</script>
 <script data-goatcounter="https://ae6623.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <script src="../../../assets/js/home-track.js?v=20261102h"></script>
-<script src="../../../assets/js/reader.js?v=20261103d"></script>
+<script src="../../../assets/js/reader.js?v=20261106a"></script>
 </body>
 </html>
 """
@@ -192,7 +192,8 @@ def build_spine(chs: list, group: int = GROUP) -> list:
         first, last = g[0], g[-1]
         label = ("第 %d–%d 章" % (first["no"], last["no"])
                  if first["no"] != last["no"] else "第 %d 章" % first["no"])
-        why = "含「%s」至「%s」" % (first["title"][:12], last["title"][:12])
+        # 控制在 2 行内（13 字/行）：首尾章名各留 8 字，节点里不再被切
+        why = "「%s」→「%s」" % (first["title"][:10], last["title"][:10])
         spine.append({"id": sid, "label": label,
                       "why": why, "chapters": [c["no"] for c in g]})
     return spine
@@ -229,13 +230,24 @@ def render_views(chs: list) -> str:
             '<ul class="mmx-views">%s</ul></section>' % (H.escape(note), "".join(items)))
 
 
+def _wrap_cjk(text: str, per: int = 12, max_lines: int = 2) -> list[str]:
+    """按字数硬折行（SVG 的 <text> 不会自动换行，超宽就被节点边框切掉）"""
+    text = text or ""
+    lines = [text[i:i + per] for i in range(0, len(text), per)][:max_lines]
+    if len(text) > per * max_lines:
+        lines[-1] = lines[-1][:-1] + "…"
+    return lines or [""]
+
+
 def render_svg(chs: list, title: str) -> str:
     spine = build_spine(chs)
     if not spine:
         return ""
     n = len(spine)
-    W = max(760, n * 180 + 40)
-    HGT = 150
+    # 宽度按节点数走，不再一律 760：手机端 390 宽时 760 的 viewBox 会缩到 0.5，
+    # 节点里的字小到看不清；480 起跳 + 每节点 180 是折中值。
+    W = max(480, n * 180)
+    HGT = 168
     gap = W / n
     parts = ['<svg class="mmx-svg" viewBox="0 0 %d %d" xmlns="http://www.w3.org/2000/svg"'
              ' preserveAspectRatio="xMinYMin meet" role="img" aria-label="%s 结构导图">'
@@ -244,9 +256,9 @@ def render_svg(chs: list, title: str) -> str:
                 '.mmx-svg .rt{font-size:13px;font-weight:600}'
                 '.mmx-svg .rc{fill:#fbf7ee;stroke:#d8cdb4;stroke-width:1.4}'
                 '.mmx-svg .ln{stroke:#cfc6b4;stroke-width:1.6;fill:none}'
-                '.mmx-svg .sm{font-size:10.5px;fill:#8a8272}</style>')
+                '.mmx-svg .sm{font-size:10px;fill:#8a8272}</style>')
     cy = HGT / 2
-    bw, bh = 150, 64
+    bw, bh = 156, 86
     xs = [gap * (i + 0.5) for i in range(n)]
     for i, s in enumerate(spine):
         cx = xs[i]
@@ -255,12 +267,17 @@ def render_svg(chs: list, title: str) -> str:
         parts.append('<rect class="rc" x="%.1f" y="%.1f" width="%d" height="%d" rx="9"/>'
                      % (x0, y0, bw, bh))
         parts.append('<text class="rt" x="%.1f" y="%.1f" text-anchor="middle">%s</text>'
-                     % (cx, cy - 6, H.escape(s["label"])))
-        parts.append('<text class="sm" x="%.1f" y="%.1f" text-anchor="middle">%s</text>'
-                     % (cx, cy + 14, H.escape(s["why"][:18])))
+                     % (cx, cy - 14, H.escape(s["label"])))
+        # 「首章」/「→末章」拆成两行，按箭头断句，不硬切字
+        segs = s["why"].split("→")
+        wlines = ([segs[0], "→" + segs[1]] if len(segs) == 2
+                  else _wrap_cjk(s["why"], 13, 2))
+        for li, line in enumerate(wlines):
+            parts.append('<text class="sm" x="%.1f" y="%.1f" text-anchor="middle">%s</text>'
+                         % (cx, cy + 6 + li * 15, H.escape(line)))
         if i < n - 1:
             parts.append('<path class="ln" d="M%.1f %.1f L%.1f %.1f"/>'
-                         % (x0 + bw, cy, xs[i + 1] - 75, cy))
+                         % (x0 + bw, cy, xs[i + 1] - bw / 2, cy))
     parts.append('</svg>')
     return ('<section class="mmx-svgwrap" data-key="svg">'
             '<h2 id="mod-svg" class="sr-only">结构导图</h2>'
@@ -496,6 +513,7 @@ def main():
     ap.add_argument("--all", action="store_true", help="批量补齐系列里仅有 AI 大纲的书")
     ap.add_argument("--llm", help="Agent 兜底的 LLM 模块 JSON（coreask/higher/verify/thennow/quiz）")
     ap.add_argument("--auto-llm", action="store_true", help="用大纲自动合成 LLM 模块（本 Agent 即 LLM）")
+    ap.add_argument("--only", help="只补这些模块（逗号分隔，如 quiz），用大纲自动合成，不动其它模块")
     ap.add_argument("--dry", action="store_true", help="只打印目标，不执行")
     a = ap.parse_args()
 
@@ -513,16 +531,25 @@ def main():
             print("  ", t)
         return 0
 
-    auto = bool(a.all or a.auto_llm)
+    only = {x.strip() for x in (a.only or "").split(",") if x.strip()}
+    auto = bool(a.all or a.auto_llm or only)
     if a.llm:
         llm_data = json.loads(Path(a.llm).read_text(encoding="utf-8"))
         struct = False  # 手动 --llm 只注入 LLM 模块
+    elif only:
+        llm_data = None            # 逐本现算，见下
+        struct = False
     else:
         llm_data = None
         struct = True
     ok = 0
     for slug in targets:
-        rc = assemble(slug, struct=struct, llm_data=llm_data, auto_llm=auto)
+        ld = llm_data
+        if only:
+            chs = chapters_of(slug)
+            full = gen_auto_llm(slug, chs, meta_of(slug)) if chs else {}
+            ld = {k: v for k, v in full.items() if k in only}
+        rc = assemble(slug, struct=struct, llm_data=ld, auto_llm=False)
         if rc == 0:
             gen_reader_page(slug)
             inject_outline_link(slug)

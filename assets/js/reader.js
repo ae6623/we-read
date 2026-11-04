@@ -499,7 +499,39 @@
   function spy(links) {
     var as = qa('.navlink'), map = {};
     as.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
-    function mark(a) { as.forEach(function (x) { x.classList.toggle('active', x === a); }); }
+    var navBox = document.getElementById('rdNav');
+    /* 窄屏导航只显示「当前 + 前后各一」，两端补省略号表示还有别的；
+       宽屏这三个 class 不生效，仍是完整标签。 */
+    function ensureMore() {
+      if (!navBox) return null;
+      var l = navBox.querySelector('.nav-more-l'), r = navBox.querySelector('.nav-more-r');
+      if (!l) {
+        l = document.createElement('span');
+        l.className = 'nav-more nav-more-l';
+        l.textContent = '…';
+        navBox.insertBefore(l, navBox.firstChild);
+      }
+      if (!r) {
+        r = document.createElement('span');
+        r.className = 'nav-more nav-more-r';
+        r.textContent = '…';
+        navBox.appendChild(r);
+      }
+      return { l: l, r: r };
+    }
+    function mark(a) {
+      var i = as.indexOf(a);
+      as.forEach(function (x, j) {
+        x.classList.toggle('active', x === a);
+        x.classList.toggle('nav-near-prev', i > 0 && j === i - 1);
+        x.classList.toggle('nav-near-next', i >= 0 && j === i + 1);
+      });
+      var m = ensureMore();
+      if (m) {
+        m.l.classList.toggle('on', i > 0);
+        m.r.classList.toggle('on', i >= 0 && i < as.length - 1);
+      }
+    }
     if ('IntersectionObserver' in window) {
       var cur = null;
       var io = new IntersectionObserver(function (es) {
@@ -518,6 +550,8 @@
     as.forEach(function (a) {
       a.addEventListener('click', function () { mark(a); });
     });
+    /* 初始先亮第一项：窄屏三点式导航只显示 当前±1，不点亮会整条空白 */
+    if (as.length) mark(as[0]);
   }
 
   /* ── 结构导图全屏弹层 ────────────────────────────────────────────

@@ -337,6 +337,17 @@ html[data-theme=dark] a.ai-outline-link:hover{border-color:var(--head);color:var
   /* 右上角钉着「AI 大纲 / 分享 / Aa」三个 34px 按钮（12 + 34*3 + 8*2 = 130），
      作者名要让出这段，否则被图标压住 */
   body.rd-scrolled .rd-stick-row{padding-right:84px;}
+  /* 导航只留一行：当前模块 + 前后各一个，两端用省略号表示还有；
+     10 个 chip 排三行会把正文挤没，滚动时尤其难受 */
+  .nav{display:flex;flex-wrap:nowrap;align-items:center;gap:6px;overflow:hidden;
+    padding:8px 0;margin:10px 0 14px;}
+  .nav .navlink{display:none;flex:0 1 auto;min-width:0;}
+  .nav .navlink.active,
+  .nav .navlink.nav-near-prev,
+  .nav .navlink.nav-near-next{display:inline-block;}
+  .nav .nav-more{display:none;flex:none;color:var(--muted);font-size:12px;
+    line-height:1;letter-spacing:.12em;padding:0 1px;}
+  .nav .nav-more.on{display:inline-block;}
   #rdBody>section.mmx-mod,#rdBody>section.card,#rdBody>section.mmx-svgwrap{padding:15px 16px;border-radius:14px;}
 }
 
