@@ -111,9 +111,9 @@ body{max-width:880px;margin:0 auto;padding:0 18px 80px;font-size:.9375rem;line-h
   transition:padding .18s ease;}
 .rd-stick-row{display:flex;align-items:baseline;gap:12px;margin:0 0 20px;
   /* 标题行加高：标题 / 作者与下方导航之间留出呼吸空间 */
-  min-height:34px;
-  /* 右上角「分享 / Aa」是 fixed 的，吸顶后正压在作者名上，留出这段 */
-  padding-right:88px;}
+  min-height:34px;}
+  /* 右上角「分享 / Aa」是 fixed 的，只有吸顶贴在视口顶时才会压到作者名，
+     所以右内边距只放在 .rd-scrolled 态；常态下作者应直接顶到内容列右边缘 */
 .rd-stick h1{margin:0;flex:0 1 auto;min-width:0;font:700 1.18rem/1.85 var(--serif);color:var(--head);
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .rd-stick .rd-hero-author{flex:none;margin:0 0 0 auto;max-width:36%;font-size:.78rem;line-height:1.6;
@@ -352,7 +352,8 @@ html[data-theme=dark] a.ai-outline-link:hover{border-color:var(--head);color:var
      （具体显示几项由 reader.js 的 fitNav 算），10 个 chip 排三行会把正文挤没 */
   .nav{display:flex;flex-wrap:nowrap;align-items:center;gap:6px;overflow:hidden;
     padding:8px 0;margin:10px 0 14px;}
-  .nav .navlink{display:inline-block;flex:none;max-width:48%;}
+  .nav .navlink{display:inline-block;flex:1 1 0;min-width:0;}
+  .nav .navlink span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
   .nav .navlink.nav-hide{display:none;}
   .nav .nav-more{display:none;flex:none;color:var(--muted);font-size:12px;
     line-height:1;letter-spacing:.12em;padding:0 1px;}
@@ -691,5 +692,26 @@ html[data-theme=dark] .mmx-tool{border-color:#3a3f46;}
     text-overflow:ellipsis;-webkit-line-clamp:none;flex:1 1 auto;min-width:0;}
 }
 /* ── /听书 v4 段尾 ── */
+
+/* ── v5：音色可用性反馈 + Aa 面板字体选择 ──────────────────────
+   灰显 = 本机没装这类系统语音；提示写在面板内，不再静默回落到「自动」。 */
+.rd-sp-chips button.na{opacity:.42;border-style:dashed;}
+.rd-sp-chips button.na:hover{border-color:var(--navlink-bd);color:var(--txt);}
+.rd-sp-hint{margin:0;font-size:.66rem;line-height:1.5;color:var(--sub);}
+.rd-sp-hint[hidden]{display:none;}
+.rd-sp-hint.warn{color:#d98b4a;}
+.rd-sp-help{font-size:.66rem;line-height:1.55;color:var(--sub);}
+.rd-sp-help summary{cursor:pointer;color:var(--head);font-weight:600;list-style:none;}
+.rd-sp-help summary::-webkit-details-marker{display:none;}
+.rd-sp-help summary::before{content:'▸ ';}
+.rd-sp-help[open] summary::before{content:'▾ ';}
+.rd-sp-help p{margin:5px 0 0;}
+#rdPanel .rd-font-row{gap:8px;}
+#rdPanel .rd-font-sel{flex:1 1 auto;min-width:0;max-width:150px;cursor:pointer;
+  font:600 12px/1.4 var(--sans);padding:4px 7px;border-radius:7px;
+  border:1px solid var(--navlink-bd);background:var(--navlink-bg);color:var(--txt);}
+#rdPanel .rd-font-sel:disabled{opacity:.6;}
+#rdPanel .rd-font-note{margin:-4px 0 0;font-size:.66rem;line-height:1.45;color:var(--sub);}
+/* ── /v5 段尾 ── */
 
 

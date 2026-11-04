@@ -86,6 +86,11 @@
       .replace(/<p class="mmx-mod-note">([\s\S]*?)<\/p>\s*/g, function (m, inner) {
         return inner.indexOf('暂不展示') >= 0 ? m : '';
       })
+      /* AI 领读标题下的流水线说明句（「章节目录与 AI 大纲融合为一棵树…」）：
+         全站 339 本都有，改这里一处即可，不动任何 combined-data.html。 */
+      .replace(/<p class="small">([\s\S]*?)<\/p>\s*/g, function (m, inner) {
+        return /章节目录|AI\s*大纲融合|融合为一棵树/.test(inner) ? '' : m;
+      })
       .replace(/<p class="eyebrow">[^<]*带书内引源[^<]*<\/p>\s*/g, '');
   }
 
@@ -1164,12 +1169,21 @@
     function allVoices() { return (synth && synth.getVoices()) || []; }
     function isZh(v) { return /^zh|cmn|chinese/i.test(v.lang || ''); }
     function isFemale(v) {
-      return /female|女|ting|xiao|yao|hui|mei|hanhan|yating|tracy|sinji|vivi|google.*(國語|普通话)/i.test(v.name || '');
+      return /female|女|ting|xiao|yao|hui|mei|hanhan|yating|tracy|sinji|vivi|hsiao|meijia|曉|晓|慧|婷|雅|臻|google.*(國語|普通话)/i.test(v.name || '');
     }
     function isMale(v) {
-      return /male|男|daniel|kangkang|yunxi|zhiwei|jasper|liang|yunyang|yunqi/i.test(v.name || '');
+      /* Azure / Windows / macOS 常见中文男声名；名字不含性别词的系统语音
+         无法自动判定，用户可直接在「音色」下拉里按标签 [地区♂] 手选。 */
+      return /male|男|daniel|kangkang|yunxi|yunyang|yunqi|yunye|yunxia|yunjian|yunfeng|yunhao|yunze|zhiwei|zhiming|zhigang|zhiqiang|jasper|liang|云希|云扬|云健|康康|志伟|志强/i.test(v.name || '');
     }
-    function isTw(v) { return /tw|hant|taiwan|台灣|國語/i.test((v.lang || '') + ' ' + (v.name || '')); }
+    function isTw(v) {
+      var s = (v.lang || '') + ' ' + (v.name || '');
+      return /zh[-_]?tw|zh[-_]?hant|cmn[-_]?hant|taiwan|台灣|台湾|國語|国语|hsiao|yunjhe|meijia/i.test(s);
+    }
+    /* 某个快捷音色在本机是否真的存在（决定按钮是否置灰、点击是否生效） */
+    function hasKind(kind) {
+      return kind === 'auto' || firstBy(kind) !== '__auto__';
+    }
     function voiceKey(v) { return v.voiceURI || v.name || ''; }
     function voiceLabel(v) {
       var s = (v.lang || '') + ' ' + (v.name || '');
@@ -1224,6 +1238,8 @@
       sel.value = voiceURI;
       if (!sel.value) { sel.value = '__auto__'; voiceURI = '__auto__'; }
       sel.disabled = !hasTTS;
+      setHint(voiceSummary());
+      refreshChips();
     }
 
     /* ── 配置区：注入已有的「Aa」阅读设置面板 ─────────────────── */
@@ -1251,7 +1267,15 @@
           '<button type="button" id="rdSpMute">🔇 已静音</button>' +
           '<button type="button" id="rdSpStop">⏹ 停止</button>' +
         '</div>' +
-        '<p class="rd-sp-tip">点正文任意段落朗读，再点同一处暂停 · 设置自动保存</p>';
+        '<p class="rd-sp-hint" id="rdSpHint" hidden></p>' +
+        '<p class="rd-sp-tip">点正文任意段落朗读，再点同一处暂停 · 设置自动保存</p>' +
+        '<details class="rd-sp-help"><summary>没有男声 / 台湾腔？</summary>' +
+          '<p>音色由设备系统提供，网页无法下发语音包；灰显的按钮表示本机没装这类语音。' +
+          'Windows：设置 → 时间和语言 → 语音 → 添加语音（选中文(台湾)等）；' +
+          'macOS：系统设置 → 辅助功能 → 朗读内容 → 系统声音 → 管理声音；' +
+          '手机：在系统设置里添加中文语音包后刷新本页。也可直接在上方「音色」下拉里' +
+          '按 [地区♀/♂] 标签挑一个本机已有的。</p>' +
+        '</details>';
       rdPanel.appendChild(box);
       rdPanel.classList.add('rd-has-speak');
     }
@@ -1283,10 +1307,29 @@
       if (bm) { bm.textContent = muted ? '🔇' : '🔊'; bm.setAttribute('aria-label', muted ? '取消静音' : '静音'); }
       var bp = q('#rdSbPause', bar);
       if (bp) { bp.textContent = speaking ? '⏸' : '▶'; bp.setAttribute('aria-label', speaking ? '暂停' : '继续'); }
-      var chips = qa('.rd-sp-chips button', box);
-      if (chips.length) {
-        chips.forEach(function (x) { x.classList.toggle('on', x.getAttribute('data-voice') === activeChip); });
-      }
+      refreshChips();
+    }
+    /* 配置面板内的反馈：本机语音数量 + 音色不可用的明确原因。
+       之前 chunk 无匹配时静默回落到「自动」却照样高亮，用户会以为点了没生效。 */
+    function setHint(msg, warn) {
+      var h = q('#rdSpHint', box);
+      if (!h) return;
+      h.textContent = msg || '';
+      h.hidden = !msg;
+      h.classList.toggle('warn', !!warn);
+    }
+    function refreshChips() {
+      qa('.rd-sp-chips button', box).forEach(function (x) {
+        var kind = x.getAttribute('data-voice'), ok = hasKind(kind);
+        x.classList.toggle('on', kind === activeChip);
+        x.classList.toggle('na', !ok);
+        x.title = ok ? '' : '本机未安装该音色（点此查看添加方法）';
+      });
+    }
+    function voiceSummary() {
+      if (!hasTTS) return '当前浏览器不支持语音朗读，建议用 Chrome / Edge / Safari 打开';
+      var vs = allVoices(), zh = vs.filter(isZh).length;
+      return '本机可用语音 ' + vs.length + ' 个（中文 ' + zh + ' 个）· 音色由系统提供，网页无法下发';
     }
     function showBar(txt, warn) {
       var t = q('#rdSbTxt', bar);
@@ -1308,14 +1351,23 @@
       sel.addEventListener('change', function () {
         voiceURI = sel.value || '__auto__';
         activeChip = voiceURI === '__auto__' ? 'auto' : null;
+        setHint(voiceSummary() + ' · 已选下拉音色');
         savePrefs(); relive();
       });
       qa('.rd-sp-chips button', box).forEach(function (b) {
         b.addEventListener('click', function () {
-          activeChip = b.getAttribute('data-voice');
-          voiceURI = firstBy(activeChip);
+          var kind = b.getAttribute('data-voice');
+          /* 本机没这个音色就直说，绝不静默回落到「自动」还把按钮点亮 */
+          if (!hasKind(kind)) {
+            setHint('本机没有「' + b.textContent + '」语音，已保持原设置。展开下方「没有男声 / 台湾腔？」' +
+                    '看添加方法，或在「音色」下拉里挑一个可用项。', true);
+            return;
+          }
+          activeChip = kind;
+          voiceURI = firstBy(kind);
           sel.value = voiceURI;
           if (!sel.value) { sel.value = '__auto__'; voiceURI = '__auto__'; }
+          setHint(voiceSummary() + ' · 已选「' + b.textContent + '」');
           savePrefs(); relive();
         });
       });
@@ -1383,8 +1435,10 @@
       if (!txt) return;
       stopAll();
       utter = new window.SpeechSynthesisUtterance(txt);
-      utter.lang = 'zh-CN';
       var v = currentVoice();
+      /* lang 必须跟随所选音色：选了 zh-TW 却写死 zh-CN，Safari 等浏览器会
+         按 lang 覆盖 voice，台湾腔就永远不生效。 */
+      utter.lang = (v && v.lang) || 'zh-CN';
       if (v) utter.voice = v;
       utter.rate = rate; utter.pitch = pitch; utter.volume = muted ? 0 : volume;
       utter.onend = function () {
@@ -1401,6 +1455,9 @@
     main.addEventListener('click', function (e) {
       var unit = resolveUnit(e.target);
       if (!unit) return;
+      /* 没有 TTS 引擎时，点正文块不做任何视觉反馈（不弹底部条、不闪页面）。
+         可用性说明已在「Aa」面板内的音色下拉与提示里给出，这里保持静默即可。 */
+      if (!hasTTS) return;
       if (curUnit === unit && speaking) { stopAll(); hideBar(); return; }  // 再点同一块 → 暂停
       if (muted) muted = false;                                          // 首次点块自动开声
       speak(unit);
@@ -1424,9 +1481,156 @@
     window.addEventListener('beforeunload', stopAll);
   }
 
+  /* ── Aa 面板 · 正文字体（按需加载；不改任何一本书的 HTML）──────
+     静态站不能运行时遍历目录：优先读 assets/fonts/fonts.json 清单，
+     清单缺失时回退 GitHub Contents API 真遍历目录（结果缓存 1 小时）。
+     字体只在用户主动选中时才下载，font-display:swap 不挡首屏。 */
+  function initFonts() {
+    var panel = q('#rdPanel');
+    if (!panel) return;
+    var FONT_DIR = '../../../assets/fonts/';
+    var API = 'https://api.github.com/repos/ae6623/we-read/contents/assets/fonts';
+    var CFG = 'rd-font-cfg', CACHE = 'rd-font-list', FACE_ID = 'rdFontFace';
+    var FAM = 'RD-UserFont';
+    var saved = '';
+    try { saved = localStorage.getItem(CFG) || ''; } catch (e) {}
+    var ORIG = null;
+    function orig() {
+      if (ORIG) return ORIG;
+      var cs = window.getComputedStyle(document.documentElement);
+      ORIG = {
+        serif: (cs.getPropertyValue('--serif') || '').trim() || '"Noto Serif SC","Songti SC",Georgia,serif',
+        sans: (cs.getPropertyValue('--sans') || '').trim() ||
+              '-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif'
+      };
+      return ORIG;
+    }
+
+    var row = document.createElement('div');
+    row.className = 'rd-row rd-font-row';
+    row.innerHTML = '<span>字体</span><select id="rdFontSel" class="rd-font-sel" ' +
+                    'aria-label="正文字体"><option value="">系统默认</option></select>';
+    var note = document.createElement('p');
+    note.className = 'rd-font-note';
+    note.id = 'rdFontNote';
+    note.textContent = '首次选中才下载字体文件';
+    var speakBox = q('.rd-speak-box', panel);
+    if (speakBox) { panel.insertBefore(row, speakBox); panel.insertBefore(note, speakBox); }
+    else { panel.appendChild(row); panel.appendChild(note); }
+    var sel = q('#rdFontSel', panel);
+    var list = [];
+
+    function fmt(n) {
+      n = n || 0;
+      return n >= 1048576 ? (n / 1048576).toFixed(1) + ' MB'
+           : n >= 1024 ? Math.round(n / 1024) + ' KB' : n + ' B';
+    }
+    function status(t) { note.textContent = t; }
+    function byName(n) {
+      for (var i = 0; i < list.length; i++) if (list[i].file === n) return list[i];
+      return null;
+    }
+    function apply(f, store) {
+      var d = document.documentElement;
+      var st = q('#' + FACE_ID);
+      if (!f) {
+        if (st && st.parentNode) st.parentNode.removeChild(st);
+        d.style.removeProperty('--serif');
+        d.style.removeProperty('--sans');
+        if (store !== false) { saved = ''; try { localStorage.removeItem(CFG); } catch (e) {} }
+        status('已恢复系统默认（不加载字体文件）');
+        return;
+      }
+      var o = orig();
+      if (!st) { st = document.createElement('style'); st.id = FACE_ID; document.head.appendChild(st); }
+      var ext = (f.file.split('.').pop() || '').toLowerCase();
+      var ftype = ext === 'woff2' ? 'woff2' : ext === 'woff' ? 'woff'
+                : ext === 'otf' ? 'opentype' : 'truetype';
+      st.textContent = '@font-face{font-family:"' + FAM + '";src:url("' + FONT_DIR + f.file +
+        '") format("' + ftype + '");font-display:swap;font-weight:100 900;font-style:normal;}';
+      d.style.setProperty('--serif', '"' + FAM + '", ' + o.serif);
+      d.style.setProperty('--sans', '"' + FAM + '", ' + o.sans);
+      if (store !== false) { saved = f.file; try { localStorage.setItem(CFG, saved); } catch (e) {} }
+      status('加载中 ' + f.name + '（' + fmt(f.bytes) + '）…');
+      if (document.fonts && document.fonts.load) {
+        document.fonts.load('16px "' + FAM + '"').then(function (faces) {
+          status(faces && faces.length ? '已加载 ' + f.name + ' · 仅首次下载，之后走浏览器缓存'
+                                      : '加载失败，已回退系统字体');
+        }, function () { status('加载失败，已回退系统字体'); });
+      }
+    }
+    function fill(items) {
+      list = items || [];
+      var html = '<option value="">系统默认（不下载）</option>';
+      list.forEach(function (f) {
+        html += '<option value="' + f.file + '">' + f.name +
+                (f.bytes ? '（' + fmt(f.bytes) + '）' : '') + '</option>';
+      });
+      sel.innerHTML = html;
+      sel.value = saved;
+      if (saved) apply(byName(saved), false);
+    }
+    sel.addEventListener('change', function () { apply(byName(sel.value), true); });
+
+    function cached() { try { return JSON.parse(localStorage.getItem(CACHE) || 'null'); } catch (e) { return null; } }
+    function saveCache(v) { try { localStorage.setItem(CACHE, JSON.stringify({ t: Date.now(), v: v })); } catch (e) {} }
+    function fromApi() {
+      return fetch(API, { headers: { Accept: 'application/vnd.github+json' } })
+        .then(function (r) { if (!r.ok) throw 0; return r.json(); })
+        .then(function (arr) {
+          var all = (arr || []).filter(function (x) {
+            return /\.(woff2?|ttf|otf)$/i.test(x.name || '');
+          }).map(function (x) {
+            return { file: x.name, name: x.name.replace(/\.(woff2?|ttf|otf)$/i, ''), bytes: x.size || 0 };
+          });
+          /* 有 woff2 就不列同名的原始 TTF/OTF，避免误点 18MB 的文件 */
+          var w2 = {};
+          all.forEach(function (x) { if (/\.woff2$/i.test(x.file)) w2[x.name] = 1; });
+          return all.filter(function (x) { return /\.woff2$/i.test(x.file) || !w2[x.name]; });
+        });
+    }
+    /* 直接往 assets/fonts/ 传新字体、没跑 scan_fonts.py 也能认出来：
+       首次展开 Aa 面板时向 GitHub API 查一次目录（结果缓存 1 小时），
+       只把清单里没有的文件追加进下拉，不覆盖已有中文名和体积。 */
+    var apiChecked = false;
+    function syncFromApi() {
+      var c = cached();
+      if (apiChecked || (c && c.t && Date.now() - c.t < 3600000)) return;
+      apiChecked = true;
+      fromApi().then(function (v) {
+        saveCache(v);
+        var have = {};
+        list.forEach(function (x) { have[x.file] = 1; });
+        var extra = v.filter(function (x) { return !have[x.file]; });
+        extra.forEach(function (x) {
+          var o = document.createElement('option');
+          o.value = x.file;
+          o.textContent = x.name + '（' + fmt(x.bytes) +
+            (/\.(ttf|otf)$/i.test(x.file) ? ' · 原始文件' : '') + '）';
+          sel.appendChild(o);
+        });
+        list = list.concat(extra);
+      }, function () {});
+    }
+    var fab = q('#rdFab');
+    if (fab) fab.addEventListener('click', function () { if (!panel.hidden) syncFromApi(); });
+
+    fetch(FONT_DIR + 'fonts.json', { credentials: 'same-origin' })
+      .then(function (r) { if (!r.ok) throw 0; return r.json(); })
+      .then(function (j) { var v = j && j.fonts; if (!v || !v.length) throw 0; return v; })
+      .catch(function () {
+        var c = cached();
+        if (c && c.v && Date.now() - c.t < 3600000) return c.v;
+        return fromApi().then(function (v) { saveCache(v); return v; });
+      })
+      .then(function (items) { fill(items); })
+      .catch(function () { status('字体清单读取失败，暂用系统默认'); sel.disabled = true; });
+  }
+
   function boot() {
     initSettings();
     initSpeak();
+    initFonts();
     addHomeLink();
     /* 先立海报墙：封面立刻开始下载，不等正文数据。
        但要先知道这本有没有封面（没封面的书不开墙）——3KB 的 hero.json 一般
