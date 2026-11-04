@@ -122,9 +122,13 @@ python3 tools/ai_draft.py --skeleton <slug> --write   # 只有 outline、没有 
 
 ## 数据保管：json 必须进 git，资料库每日备份
 
-本仓库是**数据落盘处**（不是生成处）：导图归纳 `data/mm-graph/`、SVG 源 `data/mindmap/` 都已进 git 跟踪。
+本仓库是**数据落盘处**（不是生成处）：导图归纳 `data/mm-graph/`、SVG 源 `data/mindmap/`、`data/mindmap-material/`（全书素材 / 证据来源，已补录）都已进 git 跟踪。
 
-- **数据生成在引擎仓 `we-read-auto`**；那里的 `AGENTS.md` §6 是数据保管铁律的唯一规范（落库 + 进 git + 资料库每日备份），本仓只负责**接收并已跟踪的数据要及时 push**。
+- **数据生成在引擎仓 `we-read-auto`**；那里的 `AGENTS.md` §6 是数据保管铁律的唯一规范（落库 + 进 git + 资料库备份），本仓只负责**接收并已跟踪的数据要及时 push**。
 - 任何一批内容生成 / 修正完，必须 `git add` 本次真实写入的 json + `commit` + `push origin main`，触发 Pages 发布；**不要只留在本地不提交**。
-- **资料库**（`workbuddy.cn/space/d/VEW8rrC632XfmnVguxK7Ka`）是离云备份库，每日备份数据；本仓 `AGENTS.md` 的改动也要同步到资料库（见引擎仓 §6.②）。
-- **缺口**：`data/mindmap-material/`（全书素材 / 证据来源）与 `data/outline/` 当前被 `.gitignore` 排除、未进 git，待引擎仓统一决定后补录。
+- **资料库备份**由引擎仓统一编排：每日 `cloud_scheduler.start_backup_scheduler()` 定点跑 `backup.run_backup("all")`
+  （SQLite 热备，本地仅保留最近 3 天 → 进 git 提交推送 → 生成导出包），并在网页控制台「运维」面板提供
+  「🗄 数据备份」卡片（查看 / 手动触发 / 下载）。资料库台账（AGENTS 子页「数据备份快照」，节点 `hp2tQ3sSpbuqH6yo9bsEdw`）
+  由 agent 接到请求时覆盖更新（见引擎仓 §6.④）。
+- **资料库**（`workbuddy.cn/space/d/VEW8rrC632XfmnVguxK7Ka`）是离云备份库；本仓 `AGENTS.md` 的改动也要同步到资料库（见引擎仓 §6.②）。
+- **缺口（待定）**：`data/outline/`（54 MB，可由 outline.html 重算）仍被 `.gitignore` 排除、未进 git，是否纳入备份待统一决定。
