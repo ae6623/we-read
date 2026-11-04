@@ -124,7 +124,7 @@ python3 tools/ai_draft.py --skeleton <slug> --write   # 只有 outline、没有 
 
 本仓库是**数据落盘处**（不是生成处）：导图归纳 `data/mm-graph/`、SVG 源 `data/mindmap/` 都已进 git 跟踪。
 
-- **数据生成在引擎仓 `we-read-auto`**；那里的 `AGENTS.md` §5 是数据保管铁律的唯一规范（落库 + 进 git + 资料库每日备份），本仓只负责**接收并已跟踪的数据要及时 push**。
+- **数据生成在引擎仓 `we-read-auto`**；那里的 `AGENTS.md` §6 是数据保管铁律的唯一规范（落库 + 进 git + 资料库每日备份），本仓只负责**接收并已跟踪的数据要及时 push**。
 - 任何一批内容生成 / 修正完，必须 `git add` 本次真实写入的 json + `commit` + `push origin main`，触发 Pages 发布；**不要只留在本地不提交**。
-- **资料库**（`workbuddy.cn/space/d/VEW8rrC632XfmnVguxK7Ka`）是离云备份库，每日备份数据；本仓 `AGENTS.md` 的改动也要同步到资料库（见引擎仓 §5.②）。
+- **资料库**（`workbuddy.cn/space/d/VEW8rrC632XfmnVguxK7Ka`）是离云备份库，每日备份数据；本仓 `AGENTS.md` 的改动也要同步到资料库（见引擎仓 §6.②）。
 - **缺口**：`data/mindmap-material/`（全书素材 / 证据来源）与 `data/outline/` 当前被 `.gitignore` 排除、未进 git，待引擎仓统一决定后补录。
