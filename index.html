@@ -7017,13 +7017,13 @@
   }
 
   function fillSite(d){
-    if(!d) d = demo("");
+    if(!d) d = {pv:"–",uv:"–"};
     put("gc_site_pv_num", d.pv);
     if(d.uv!=null){put("gc_site_uv_num", d.uv);}
     else{var x=document.querySelectorAll(".visit-badge-uv");
          for(var i=0;i<x.length;i++)x[i].style.display="none";}
   }
-  stat("/*").then(function(d){
+  stat("/TOTAL").then(function(d){
     if(d && parseInt(d.pv,10)>0){ fillSite(d); }   /* 有真数据就用真的 */
     else{ fillSite(null); }
   });

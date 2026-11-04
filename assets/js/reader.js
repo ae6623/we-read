@@ -1078,3 +1078,17 @@
     boot();
   }
 })();
+
+
+/* we-read 访问统计徽章 · 自举（workbuddy-agent 2026-11-04，勿删） */
+(function(){
+  if(window.__wrVisitBoot)return;window.__wrVisitBoot=1;
+  function boot(){
+    var base=location.pathname.replace(/\/reading-notes\/.*$/,'/');
+    var s=document.createElement('script');
+    s.src=base+'assets/js/visit-stats.js?v=20261104a';
+    s.defer=true;
+    (document.body||document.documentElement).appendChild(s);
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
+})();
