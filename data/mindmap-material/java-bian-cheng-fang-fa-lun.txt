@@ -1,0 +1,56 @@
+# 《Java编程方法论：响应式Spring Reactor 3设计与实现》（java-bian-cheng-fang-fa-lun）
+共 75 章
+
+## 章节与要点
+1. 内容简介 | 本书主要专注于解读Spring Reactor 3的代码设计与实现。
+2. 第1章 响应式编程概述 | 响应式编程是基于事件驱动模式来进行编程的
+3. 1.1 并发与并行的关系 | 并发并不意味着并行，并行是在多核CPU上同一时间运行多个任务或者一个任务分为多块同时
+4. 1.2 如何理解响应式编程中的背压 | 背压是数据流从上游源生产者向下游消费者传输过程中，若上游源生产速度大于下游消费者消费
+5. 1.3 源码接口设计启示 | Flow类中包含了4个接口定义：Publisher、Subscriber、Subsc
+6. 1.4 如何看待众多函数表达式 | 函数式接口遵循一个标准动作的设计定义思路
+7. 1.5 Reactor与RxJava的对比 | Reactor 3推荐用于Java 8+，RxJava 2推荐用于Java 6+或函
+8. 1.6 小结 | 响应式编程是一种编程范式，用于处理异步事件和数据流。
+9. 第2章 对Flux的探索 | Flux是可以发出0到N个元素的生产者，实现了Publisher&lt;T&gt;接
+10. 2.1 对Flux.subscribe订阅逻辑的解读 | LambdaSubscriber实现了CoreSubscriber接口，Flux留了
+11. 2.2 用Flux.create创建源 | Flux.create需要传入的参数emitter和背压策略
+12. 2.3 蛇行走位的QueueSubscription | QueueSubscription接口主要用于对那些内部有队列支持的subscrip
+13. 2.4 Mono的二三事 | Mono用于处理只有0个或1个元素的源序列
+14. 2.5 通过BaseSubscriber自定义订阅者 | 继承BaseSubscriber实现自定义的Subscriber
+15. 2.6 将常见的监听器改造成响应式结构 | 监听器的注册过程其实就是将这个bean添加进一个容器的过程
+16. 2.7 Flux.push的特殊使用场景及细节探索 | Flux.push是Flux.create的一个变种，其只适用于处理单个线程下生产者
+17. 2.8 对Flux.handle的解读 | Flux.handle是一个中间操作，类似于源产生者
+18. 2.9 小结 | 介绍了很多实用的代码使用技巧，需要读者反复“消化”并应用到自己的项目实战中。
+19. 第3章 调度器 | 调度器可以指定操作执行的方式和所在的线程。
+20. 3.1 深入理解Schedulers.elastic | elastic方法调用了cache方法，然后传入了相应的策略
+21. 3.2 深入解读publishOn | publishOn操作处于整个订阅操作链中，从上游源获取元素，然后从所关联的Sche
+22. 3.3 深入解读subscribeOn | subscribeOn操作主要针对的是发生订阅的线程，也就是对生产初始元素的线程的设
+23. 3.4 Flux.parallel&amp;Flowable.p | Flux.parallel将数据元素根据指定的参数parallelism分割成多个与
+24. 3.5 ParallelFlux.runOn&amp;Paral | 为每一个订阅者都分配一个FluxPublishOn.PublishOnSubscri
+25. 3.6 小结 | 本章讲解了很多调度器源码级的实现，以及其各种各样的内在问题
+26. 第4章 对Reactor操作的解读 | 代码可重用，代码干净整洁，更加专注于业务实现等。
+27. 4.1 filter操作 | 对源中下发的元素进行过滤，只留下满足Predicate指定条件的元素
+28. 4.2 transform操作 | transform操作用于将上游Flux通过一定的自定义逻辑转换并生成想要得到的目标
+29. 4.3 compose与transformDeferred操作 | compose操作是在产生订阅时再执行代码逻辑，使用Supplier实现
+30. 4.4 批处理操作 | buffer操作代表了一系列关于FluxBufferXXX封装的操作，用于把当前源中
+31. 4.5 merge和mergeSequential操作 | merge操作按照所有源中元素的实际产生顺序进行合并。
+32. 4.6 flatMap和flatMapSequential操作 | flatMap和flatMapSequential操作用于从源中的每个元素所指向的子
+33. 4.7 concatMap操作 | concatMap操作是根据源中的每个元素来获取一个子源，再把所有子源进行合并的。
+34. 4.8 combineLatest操作 | combineLatest操作会把所有源中最新产生的元素合并成一个新的元素下发
+35. 4.9 ConnectableFlux的二三事及对reactor | ConnectableFlux用于在订阅者和源产生订阅后推迟订阅逻辑的执行时间
+36. 4.10 小结 | 读书、读代码时不要尽信，要有自己的思考和保持怀疑精神
+37. 第5章 对Processor的探索 | Processor既是一个Publisher，同时也是一个Subscriber
+38. 5.1 UnicastProcessor详解 | UnicastProcessor通过一个自定义的queue来实现背压，而且需要注意的
+
+## 已有主旨
+一句话主旨 本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。 本书主要专注于解读Spring Reactor 3的代码设计与实现
+
+## 已有追问 / 自测问句
+- 这本书整体在讲什么，和对“怎么写响应式代码”的教程有何不同？
+- 调度器（Scheduler）在 Reactor 里扮演什么角色？
+- 为什么书里专门讲 Reactor 的“测试”和“调试”？
+
+## 已有更高维度解读
+用更高维度的知识看这本书 把 Reactor 放回响应式演进史：它源于 Netflix 的 RxJava（受 Microsoft 的 Reactive Extensions 启发），后由 Spring 团队推出专为 JVM 设计的 Reactor，并成为 Spring WebFlux 的底座；其遵循的 Reactive Streams 规范（Publisher/Subscriber/Subscription/Processor）在 2013 年前后由多家（Pivotal、Netflix、Lightbend 等）共同制定，目标是给异步流背压一个跨库标准。本书正是这个标准在 Reactor 上的源
+
+## 已有观点
+核心观点初判 按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。 第 1–7 章 ——含「内容简介」至「推荐序六」 第 8–14 章 ——含「推荐序七」至「1.4 如何看待众多函数」 第 15–21 章 ——含「1.5 Reactor与」至「2.4 Mono的二三事」 第 22–28 章 ——含「2.5 通过BaseSu」至「3

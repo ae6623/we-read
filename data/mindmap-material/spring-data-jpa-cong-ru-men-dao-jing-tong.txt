@@ -1,0 +1,56 @@
+# 《Spring Data JPA从入门到精通》（spring-data-jpa-cong-ru-men-dao-jing-tong）
+共 69 章
+
+## 章节与要点
+1. 内容简介 | 本书以Spring Boot为技术基础，从入门到精通，由浅入深地介绍Spring D
+2. “未来已经来临，只是尚未流行” | Spring Data JPA底层以Hibernate为封装，对外提供了超级灵活的使
+3. 追本溯源 | 架构师在架构设计系统之前都要先设计各种业务模型、数据模型。
+4. 本书特色 | 本书是Spring Data JPA开发必备书籍，针对Java开发者、Spring的
+5. 阅读指南 | 本书以Spring Boot为开发基础和线索，大量采用了UML释义的讲解方式。
+6. 技术支持 | 如果下载有问题，请联系电子邮箱booksaga@163.com，邮件主题为“Spri
+7. 1.1 市场上ORM框架比对 | MyBatis着力于POJO与SQL之间的映射关系，使用起来十分灵活，上手简单，容易
+8. 1.2 JPA的介绍以及开源实现 | JPA是Java Persistence API的简称，是JDK 5.0注解或XML
+9. 1.3 了解Spring Data | Spring Data项目从2010年发展起来，提供一致的、基于Spring的数据访
+10. 1.4 Spring Data JPA的主要类及结构图 | 需要掌握和使用的类包括七个Repository接口和两个实现类
+11. 2.1 Spring Data Common的Repositor | Repository是Spring Data里面做数据库操作的最底层的抽象接口、最顶
+12. 2.2 Repository的类层次关系 (diagms/hie | 通过IntelliJ IDEA打开类Repository.class，单击Navig
+13. 2.3 CrudRepository方法详解 | CrudRepository提供了公共的通用的CRUD方法
+14. 2.4 PagingAndSortingRepository方法 | PagingAndSortingRepository继承CrudRepository
+15. 2.5 JpaRepository方法详解 | JpaRepository继承和拥有了QueryByExampleExecutor的
+16. 2.6 Repository的实现类SimpleJpaRepos | SimpleJpaRepository是JPA整个关联数据库的所有Repositor
+17. 3.1 定义查询方法的配置方法 | Spring JPA Repository的实现原理是采用动态代理的机制
+18. 3.2 方法的查询策略设置 | 通过@EnableJpaRepositories(queryLookupStrate
+19. 3.3 查询方法的创建 | 查询方法名由查询策略(关键字)、查询字段和一些限制性条件组成
+20. 3.5 方法的查询策略的属性表达式 | 解析算法首先将整个part(AddressZipCode)解释为属性，并使用该名称(
+21. 3.6 查询结果的处理 | Pageable、Slice和Sort用于动态地将分页和排序应用于查询
+22. 3.7 实现机制介绍 | QueryExecutorMethodInterceptor是一个方法调用的拦截器
+23. 4.1 @Query详解 | @Query语法及源码
+24. 4.2 @Param用法 | 使用@Param注解指定方法参数的具体名称，通过绑定的参数名字做查询条件
+25. 4.3 SpEL表达式的支持 | SpEL支持的变量如表4-1所示
+26. 4.4 @Modifying修改查询 | 可以通过在@Modifying注解实现只需要参数绑定的update查询的执行
+27. 4.5 @QueryHints | @QueryHints是Spring Data JPA对数据库Hint Query语
+28. 4.6 @Procedure储存过程的查询方法 | 使用@NamedStoredProcedureQueries注释来调用存储过程
+29. 5.1 javax.persistence概况介绍 | javax.persistence位于hibernate-jpa-**.jar包里面
+30. 5.2 基本注解 | @Entity定义对象将会成为被JPA管理的实体，将映射到指定的数据库表。
+31. 5.3 关联关系注解 | @JoinColumn主要配合@OneToOne、@ManyToOne、@OneTo
+32. 5.4 Left join、Inner join与@Entity | 使用@Query的JQPL语法或Criteria API实现Left Join或者I
+33. 5.5 关于关系查询的一些坑 | 所有的注解要么全配置在字段上，要么全配置在get方法上，不能混用
+34. 第二部分 晋级之高级部分 | Spring Data JPA是Hibernate的JPA的一次包装和升级
+35. 第6章 JpaRepository扩展详解 | JpaRepository提供了基本的增删查改方法。
+36. 6.1 JpaRepository介绍 | JpaRepository是Spring Data项目对JPA实现的封装与扩展
+37. 6.2 QueryByExampleExecutor的使用 | QueryByExampleExecutor是Spring Data JPA的基本功
+38. 6.3 JpaSpecificationExecutor的详细使 | JpaSpecificationExecutor是JPA 2.0提供的Criteri
+
+## 已有主旨
+一句话主旨 本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。 《Spring Data JPA从入门到精通》以Spring Boot为技术基础，从入门到精通，由浅入深地介绍Spring Data JPA
+
+## 已有追问 / 自测问句
+- 这本书适合什么人、能带到什么程度？
+- “定义查询方法”和“注解式查询”分别怎么用？
+- 微服务时代，书里提到的“多数据源”还重要吗？
+
+## 已有更高维度解读
+用更高维度的知识看这本书 把 Spring Data JPA 放回 Java 持久化演进史：它上承 EJB 2.x 笨重的实体 Bean，经 Hibernate 把 ORM 平民化，再到 JPA standardized 规范，最后由 Spring Data 把“仓库抽象”推到极致。它的哲学与 Spring 家族一致——约定优于配置、用代理消除样板。同一时期，MyBatis 以“手写 SQL、可控性强”在国产项目里仍占半壁江山，形成“自动派 vs 控制派”的长期对照。 需要补的外部视角是：JPA 的“万能抽象”在超高频、超复杂 SQL 或强一致分库分表场景会遇到天花板，于是出现 jOOQ（类型
+
+## 已有观点
+核心观点初判 按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。 第 1–7 章 ——含「内容简介」至「阅读指南」 第 8–14 章 ——含「技术支持」至「1.3 了解Spring」 第 15–21 章 ——含「1.4 Spring D」至「2.5 JpaRepos」 第 22–28 章 ——含「2.6 Reposito」至「3

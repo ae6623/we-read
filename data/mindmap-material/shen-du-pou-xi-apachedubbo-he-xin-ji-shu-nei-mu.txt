@@ -1,0 +1,56 @@
+# 《深度剖析ApacheDubbo核心技术内幕》（shen-du-pou-xi-apachedubbo-he-xin-ji-shu-nei-mu）
+共 87 章
+
+## 章节与要点
+1. 第1章 Dubbo基础 | Dubbo是阿里巴巴开发的一个开源的高性能的RPC调用框架
+2. 1.2 本书Demo详解 | Demo使用Maven聚合功能构建，包含Consumer、Provider和SDK三
+3. 1.3 小结 | Dubbo由服务提供方、服务消费方、服务注册中心、服务监控中心组成
+4. 高级篇 | 适配器类为Dubbo框架提供统一的接口，屏蔽底层实现差异
+5. 第2章 Dubbo框架内核原理剖析 | Dubbo分层架构设计，每层执行固定的功能，上层依赖下层提供的功能，下层的改变对上层
+6. 2.2 Dubbo远程调用细节 | 服务提供者暴露一个服务的概要过程
+7. 2.3 Dubbo的适配器原理 | Dubbo使用适配器模式来选择使用哪一个扩展接口的实现类
+8. 2.4 Dubbo的动态编译原理 | Dubbo框架会为每个扩展接口生成其对应的适配器类的源码
+9. 2.5 Dubbo增强SPI | JDK中的SPI是面向接口编程的，服务规则提供者会在JRE的核心API里提供服务访问
+10. 2.6 Dubbo使用JavaAssist减少反射调用开销 | Dubbo会给每个服务提供者的实现类生产一个Wrapper类，以减少反射的调用
+11. 2.7 小结 | Dubbo框架分为服务提供方、服务注册与发现、服务消费者三层
+12. 第3章 远程服务发布与引用流程剖析 | ServiceConfig API用于发布服务，通过export()方法激活发布服务
+13. 3.2 Dubbo服务提供方如何处理请求 | 消费端发起TCP链接并完成后，服务提供方的NettyServer的connected
+14. 3.3 Dubbo服务消费方启动流程剖析 | 服务消费方使用ReferenceConfig API来消费服务，执行get()方法生
+15. 3.4 Dubbo服务消费端一次远程调用过程 | 服务消费端通过ReferenceConfig的get()方法返回的是一个代理类，并且
+16. 3.5 小结 | Dubbo服务提供方启动流程包括加载配置、创建应用、创建Provider实例、注册服
+17. 第4章 Directory目录与Router路由服务 | Directory代表了多个invoker，其内部维护着一个List，并且这个Lis
+18. 4.2 RegistryDirectory的创建 | RegistryDirectory是在服务消费端启动时创建的。
+19. 4.3 RegistryDirectory中invoker列表的 | 创建完RegistryDirectory后，调用了其subscribe()方法，去Z
+20. 4.4 小结 | RegistryDirectory在消费服务方创建，并根据服务注册中心推送的服务元数
+21. 第5章 Dubbo消费端服务mock与服务降级策略原理 | 降级策略注册
+22. 5.2 本地服务mock原理 | 在ReferenceConfig的init()方法内调用checkMock来检查设置
+23. 5.3 小结 | 如何对一个指定的服务进行服务降级
+24. 第6章 Dubbo集群容错与负载均衡策略 | Dubbo提供了多种容错方案，默认模式为Failover Cluster，也就是失败
+25. 6.2 Failfast Cluster策略源码分析 | 根据具体的负载均衡策略选择一个服务提供者对应的invoker对象。
+26. 6.3 Failsafe Cluster策略源码分析 | 根据具体的负载均衡策略选择一个服务提供者对应的invoker对象。
+27. 6.4 Failover Cluster策略源码分析 | 从URL参数里获取设置的重试次数，如果用户没有设置重试次数，则取默认值，默认值是重试
+28. 6.5 Failback Cluster策略源码分析 | 检查invokers是否合法，如果为空或元素为0个，则抛出异常。
+29. 6.6 Forking Cluster策略源码分析 | 获取并行执行的参数，包括forks和timeout
+30. 6.7 Broadcast Cluster策略源码分析 | BroadcastClusterInvoker是Dubbo中实现广播调用的类
+31. 6.8 如何基于扩展接口自定义集群容错策略 | 实现Cluster接口
+32. 6.9 Dubbo负载均衡策略概述 | Dubbo提供了多种均衡策略，默认为random，也就是每次随机调用一台服务提供者的
+33. 6.10 Random LoadBalance策略源码分析 | RandomLoadBalance类实现随机选择策略
+34. 6.11 RoundRobin LoadBalance策略源码分 | RECYCLE_PERIOD是清理周期，如果服务提供者耗时RECYCLE_PERIO
+35. 6.12 LeastActive LoadBalance策略源码 | LeastActiveLoadBalance类实现了最少活跃调用策略
+36. 6.13 ConsistentHash LoadBalance策 | 一致性Hash利用Hash环对其进行了改进，解决了普通余数Hash伸缩性很差的问题
+37. 6.14 如何基于扩展接口自定义负载均衡策略 | 实现LoadBalance接口，继承AbstractLoadBalance类
+38. 6.15 小结 | Dubbo框架提供了Failover、Failfast、Failsafe、Failb
+
+## 已有主旨
+一句话主旨 本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。 Dubbo是阿里巴巴开发的一个开源的高性能、高可用、可扩展的分布式RPC调用框架，致力于提供高性能和透明化的 RPC 远程调用服务解决方案
+
+## 已有追问 / 自测问句
+- 这本书的整体结构是怎样的，读者能收获什么？
+- “泛化调用”和“异步调用”分别解决什么场景？
+- 为什么作者要专门讲如何用 Arthas 来做实践？
+
+## 已有更高维度解读
+用更高维度的知识看这本书 把 Dubbo 放回服务化演进史看：它脱胎于阿里内部 SOA 治理实践，与同期当当的 Dubbox、后来 Spring Cloud 的 REST 体系、以及 gRPC/Thrift 等跨语言 RPC 形成对照。Dubbo 强在 Java 生态内的服务治理闭环（注册中心、配置、路由、限流），而 gRPC 强在跨语言与 HTTP/2 底座。2018 年 Dubbo 重启维护并进入 Apache 孵化器，标志着它从“阿里内部框架”转为社区项目，抉择了后续生态走向。 值得补充的外部视角是：RPC 框架的护城河正在从“调用性能”转向“治理完整度”与“云原生适配”。随着 Kube
+
+## 已有观点
+核心观点初判 按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。 第 1–7 章 ——含「序」至「高级篇」 第 8–14 章 ——含「第2章 Dubbo框架内」至「2.7 小结」 第 15–21 章 ——含「第3章 远程服务发布与引」至「4.2 Registry」 第 22–28 章 ——含「4.3 Registry」至「6.2

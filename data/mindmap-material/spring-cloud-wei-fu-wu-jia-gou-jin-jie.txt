@@ -1,0 +1,56 @@
+# 《Spring Cloud微服务架构进阶》（spring-cloud-wei-fu-wu-jia-gou-jin-jie）
+共 69 章
+
+## 章节与要点
+1. 1.1 微服务架构的出现 | 单体应用架构是将所有功能模块打包到一起部署和运行的应用架构
+2. 1.2 微服务架构的流派 | IceGrid是基于RPC框架Ice发展而来的一种微服务架构
+3. 1.3 云原生与微服务 | 云原生应用的三大特征：容器化封装、动态管理、面向微服务
+4. 1.4 本章小结 | 微服务架构将单体应用从数据存储开始垂直拆分成多个不同的服务，每个服务都能独立部署，独
+5. 第2章 Spring Cloud总览 | Spring Cloud是一系列框架的有机集合，基于Spring Boot实现的云应
+6. 2.1 Spring Cloud架构 | Spring Cloud是Spring社区推出的用于改善以前开发模式并适应微服务开发
+7. 2.2 Spring Cloud特性 | Bootstrap上下文提供额外的应用属性，支持从外部资源中加载配置文件
+8. 2.3 本章小结 | Spring Cloud不能与微服务或者微服务架构划上等号
+9. 第3章 Spring Cloud的基础：Spring Boot | Spring Boot是Spring一套快速配置开发的脚手架
+10. 3.1 Spring Boot简介 | Spring Boot是Pivotal团队于2013年推出的全新项目，主要用来简化S
+11. 3.2 构建一个微服务 | Spring Initializer创建项目。
+12. 3.3 Spring Boot配置文件 | Spring Boot会在resource文件夹下创建application.pro
+13. 3.4 本章小结 | Spring Boot是伴随着Spring4.0诞生的，用于快速搭建Spring框架
+14. 第4章 服务注册与发现：Eureka | 微服务架构中，服务地址的动态变化和数量变动，迫切需要系统建立一个中心化的组件对各个微
+15. 4.1 基础应用 | Eureka是Netflix中一个RESTful风格的服务注册与发现的基础服务组件
+16. 4.2 服务发现原理 | 区域：AWS根据地理位置把某个地区的基础设施服务集合称为一个区域，区域之间相对独立
+17. 4.3 Eureka Client源码解析 | Eureka Client通过Starter的方式引入依赖，Spring Boot将
+18. 4.4 Eureka Server源码解析 | InstanceRegistry是Eureka Server中注册表管理的核心接口
+19. 4.5 进阶应用 | Eureka中的标准元数据有主机名、IP地址、端口号、状态页url和健康检查url等
+20. 4.6 本章小结 | Eureka为Spring Cloud提供了高可用的服务发现与注册组件
+21. 第5章 声明式RESTful客户端：Spring Cloud O | OpenFeign是一个声明式RESTful网络请求客户端
+22. 5.1 基础应用 | 微服务提倡将一个原本独立的系统分成众多小型服务系统
+23. 5.2 源码分析 | FeignClientFactoryBean是创建@FeignClient修饰的接口
+24. 5.3 进阶应用 | OpenFeign提供了默认的Decoder和Encoder实现，但使用者可以根据自
+25. 5.4 本章小结 | OpenFeign是一种声明式、模板化的HTTP客户端
+26. 第6章 断路器：Hystrix | Hystrix是Netflix的一个开源项目，能够在依赖服务失效的情况下，通过隔离系
+27. 6.1 基础应用 | Hystrix为微服务间的调用提供强有力的容错机制
+28. 6.2 Hystrix原理 | 服务雪崩效应是一种因服务提供者的不可用导致服务调用者的不可用，并将不可用逐渐放大的过
+29. 6.3 源码解析 | 使用@HystrixCommand注解来包装需要保护的远程调用方法
+30. 6.4 进阶应用 | 异步执行命令需要定义函数的返回方式为Future
+31. 6.5 本章小结 | 微服务架构下，业务之间的耦合使微服务间不可避免地会发生相互调用。
+32. 第7章 客户端负载均衡器：Spring Cloud Netfli | 负载均衡器是管理HTTP和TCP服务客户端的工具
+33. 7.1 负载均衡 | 负载均衡是将请求分发到多个服务器，避免服务器负载不均衡
+34. 7.2 基础应用 | 使用@LoadBalanced修饰RestTemplate实例，使其使用Ribbon
+35. 7.3 源码分析 | @RibbonClient注解可以声明Ribbon客户端，设置Ribbon客户端的名
+36. 7.4 进阶应用 | 使用LoadBalancerBuilder的buildFixedServerList
+37. 7.5 本章小结 | 负载均衡器可以将多台普通服务器组成一个服务集群，完成高并发的请求处理任务
+38. 第8章 API网关：Spring Cloud Gateway | API网关是后端服务的唯一入口，封装了系统内部架构
+
+## 已有主旨
+一句话主旨 本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。 本书详细介绍Spring Cloud 相关组件及其在微服务架构中的应用
+
+## 已有追问 / 自测问句
+- 这本书到底在讲什么？
+- Spring Boot与Spring Cloud是什么关系？
+- Hystrix、Ribbon这些组件现在还主流吗？
+
+## 已有更高维度解读
+用更高维度的知识看这本书 本书属Spring技术生态的实战进阶书，与《Spring Boot实战》《Spring微服务实战》互补，特色在“深入组件实现内幕”。它把Netflix OSS一代组件（Eureka、Hystrix、Ribbon）系统化的贡献显著，曾是中文圈微服务入门标配。 需指出技术时效风险：微服务治理正从“SDK嵌入（Spring Cloud）”转向“服务网格（Service Mesh，如Istio）”与云厂商托管（如Kubernetes原生服务）。控制逻辑下沉到Sidecar后，部分Spring Cloud组件被边缘化。读它应重“为什么需要这些能力”，而非死记具体库。
+
+## 已有观点
+核心观点初判 按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。 第 1–7 章 ——含「前言」至「第2章 Spring C」 第 8–14 章 ——含「2.1 Spring C」至「3.3 Spring B」 第 15–21 章 ——含「3.4 本章小结」至「4.5 进阶应用」 第 22–28 章 ——含「4.6 本章小结」至

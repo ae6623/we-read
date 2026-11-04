@@ -1,0 +1,56 @@
+# 《Kubernetes权威指南：从Docker到Kubernetes实践全接触（第4版）》（kubernetes-quan-wei-zhi-nan）
+共 94 章
+
+## 章节与要点
+1. 作者介绍 | HPE高级顾问，拥有近20年IT从业经历
+2. 自序 | Kubernetes已从一个新生事物发展为一个影响全球IT技术的基础设施平台
+3. 第1章 Kubernetes入门 | Kubernetes是谷歌十几年以来大规模应用容器技术的经验积累和升华的重要成果
+4. 1.2 为什么要用Kubernetes | Kubernetes作为当前被业界广泛认可和看好的基于Docker的大规模容器化分布
+5. 1.3 从一个简单的例子开始 | 安装Kubernetes和下载相关镜像
+6. 1.4 Kubernetes的基本概念和术语 | Kubernetes是一个高度自动化的资源控制系统
+7. 第2章 Kubernetes安装配置指南 | Kubernetes需要容器运行时(Container Runtime Interf
+8. 2.2 使用kubeadm工具快速安装Kubernetes集群 | 配置yum源，安装kubeadm和相关工具
+9. 2.3 以二进制文件方式安装Kubernetes集群 | 从Kubernetes发布官网找到对应的版本号，下载已编译好的二进制文件
+10. 2.4 Kubernetes集群的安全设置 | 为kube-apiserver生成数字证书，并用CA证书签名
+11. 2.5 Kubernetes集群的网络配置 | Kubernetes本身并不会对跨主机的容器网络进行设置，这需要额外的工具来实现
+12. 2.6 内网中的Kubernetes相关配置 | 创建一个内部的私有Docker Registry
+13. 2.7 Kubernetes的版本升级 | 二进制升级需要逐个隔离Node，等待在其上运行的全部容器工作完成后，更新kubele
+14. 2.8 Kubernetes核心服务配置详解 | 全面理解和掌握Kubernetes各服务的可配置参数，对生产部署及日常运维有很大帮助
+15. 2.9 CRI（容器运行时接口）详解 | Kubernetes从1.5版本开始引入了CRI接口规范
+16. 2.10 kubectl命令行工具用法详解 | kubectl命令行的语法为：$ kubectl [command] [TYPE] 
+17. 第3章 深入掌握Pod | Pod是Kubernetes的基本部署单元，包含一个或多个容器。
+18. 3.1 Pod定义详解 | YAML格式的Pod定义文件包含多个属性
+19. 3.2 Pod的基本用法 | Kubernetes要求容器主程序一直在前台执行
+20. 3.3 静态Pod | 静态Pod是由kubelet进行管理的仅存在于特定Node上的Pod。
+21. 3.4 Pod容器共享Volume | Pod中的多个容器能够共享Pod级别的存储卷Volume
+22. 3.5 Pod的配置管理 | ConfigMap供容器使用的典型用法包括生成为容器内的环境变量，设置容器启动命令的
+23. 3.6 在容器内获取Pod信息（Downward API） | Downward API可以通过环境变量或Volume挂载方式将Pod信息注入容器内
+24. 3.7 Pod生命周期和重启策略 | Pod在整个生命周期中被系统定义为各种状态
+25. 3.8 Pod健康检查和服务可用性检查 | LivenessProbe探针用于判断容器是否存活
+26. 3.9 玩转Pod调度 | Kubernetes通过RC、Deployment、DaemonSet、Job等控制
+27. 3.10 Init Container（初始化容器） | 初始化容器(Init Container)是在应用容器启动之前启动的，用于完成应用容
+28. 3.11 Pod的升级和回滚 | Kubernetes提供了滚动升级功能来解决Pod的升级问题
+29. 3.12 Pod的扩缩容 | 通过kubectl scale命令可以一键完成Pod副本数量的设置
+30. 3.13 使用StatefulSet搭建MongoDB集群 | 在创建StatefulSet之前，需要确保在Kubernetes集群中管理员已经创建
+31. 第4章 深入掌握Service | Service是Kubernetes的核心概念，通过创建Service，可以为一组具
+32. 4.1 Service定义详解 | YAML格式的Service定义文件包含以下属性：apiVersion、kind、m
+33. 4.2 Service的基本用法 | Service是Kubernetes中用于解决分布式应用统一入口定义和负载均衡问题的
+34. 4.3 Headless Service | Headless Service不为Service设置ClusterIP，仅通过La
+35. 4.4 从集群外部访问Pod或Service | 通过设置容器级别的hostPort，将容器应用的端口号映射到物理机上
+36. 4.5 DNS服务搭建和配置指南 | Kubernetes 1.2版本时，DNS服务由SkyDNS提供
+37. 4.6 Ingress：HTTP 7层路由机制 | Ingress是Kubernetes中用于实现HTTP层业务路由的机制
+38. 第5章 核心组件运行机制 | Kubernetes API Server是集群内各个功能模块之间数据交互和通信的中
+
+## 已有主旨
+一句话主旨 本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。 Kubernetes是由谷歌开源的Docker容器集群管理系统，为容器化的应用提供了资源调度、部署运行、服务发现、扩容及缩容等一整套功能
+
+## 已有追问 / 自测问句
+- 这本书整体在讲什么，适合谁读？
+- Service 是怎么把服务暴露出去的，划线里提到的 NodePort 是什么？
+- 按书里说法，哪些调度“坑”最容易被忽视？
+
+## 已有更高维度解读
+用更高维度的知识看这本书 把这本书放回技术史看，它诞生于 Kubernetes 从 1.0 走向 1.14 的窗口期，正值容器编排“三国杀”（Docker Swarm、Apache Mesos、Kubernetes）落幕、K8s 胜出的拐点。它的前身是 Google 内部的 Borg/Omega 系统，核心理念（声明式 API、控制循环、不可变基础设施）可追溯到谷歌十余年的大规模集群管理经验。作为国内最早、也最系统的中文权威指南，它把“云原生”从概念落地为可操作的工程手册。 对比同类著作：英文世界里 O’Reilly 的《Kubernetes: Up and Running》偏快速上手，而本书
+
+## 已有观点
+核心观点初判 按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。 第 1–7 章 ——含「作者介绍」至「1.4 Kubernet」 第 8–14 章 ——含「第2章 Kubernet」至「2.7 Kubernet」 第 15–21 章 ——含「2.8 Kubernet」至「3.3 静态Pod」 第 22–28 章 ——含「3.4

@@ -1,0 +1,56 @@
+# 《Java异步编程实战》（java-yi-bu-bian-cheng-shi-zhan）
+共 51 章
+
+## 章节与要点
+1. 1.1 异步编程概念与作用 | 同步编程方式下，每个线程同时只能发起一个请求并同步等待返回，导致系统性能瓶颈
+2. 1.2 异步编程场景 | 异步编程用于处理一些事情，而不需要知道异步任务的结果
+3. 1.3 总结 | 异步编程是一种编程模式，允许程序在等待某个长时间运行的任务(如网络请求)完成时，不阻
+4. 第2章 显式使用线程和线程池实现异步编程 | 线程实现异步编程的基本原理
+5. 2.1 显式使用线程实现异步编程 | 同步编程模型下，一个线程中要做两件事情，按顺序执行
+6. 2.2 显式使用线程池实现异步编程 | 使用线程池执行异步任务，可以避免线程的频繁创建与销毁，对线程个数也起到了限制作用
+7. 2.3 总结 | 显式创建线程方式实现异步编程
+8. 第3章 基于JDK中的Future实现异步编程 | FutureTask用于实现异步编程，通过FutureTask可以获取异步任务的结果
+9. 3.1 JDK中的Future | Future类共有5个接口方法
+10. 3.2 JDK中的FutureTask | FutureTask代表了一个可被取消的异步计算任务，实现了Future接口
+11. 3.3 JDK中的CompletableFuture | CompletableFuture是一个可以通过编程方式显式地设置计算结果和状态以便
+12. 3.4 JDK8 Stream &amp; Completabl | JDK8中提供了流式对数据进行处理的功能
+13. 3.5 总结 | FutureTask实现异步编程属于命令式编程，需要显式创建线程池并提交任务到线程池
+14. 第4章 Spring框架中的异步执行 | Spring Framework使用TaskExecutor和TaskSchedul
+15. 4.1 Spring中对TaskExecutor的抽象 | TaskExecutor接口与java.util.concurrent.Execut
+16. 4.2 如何在Spring中使用异步执行 | 通过xml方式向Spring容器中注入TaskExecutor的实现者ThreadP
+17. 4.3 @Async注解异步执行原理 | Spring对标注@Async注解的类进行代理
+18. 4.4 总结 | 使用@Async实现异步编程属于声明式编程，减轻编程者的负担
+19. 第5章 基于反应式编程实现异步编程 | 反应式编程是一种编程范式，用于处理并发和异步操作
+20. 5.1 反应式编程概述 | 反应式编程是一种涉及数据流和变化传播的异步编程范式
+21. 5.2 Reactive Streams规范 | Reactive Streams的目的是提供一个使用非阻塞回压功能对异步流进行处理的
+22. 5.3 基于RxJava实现异步编程 | RxJava是Reactive Extensions的Java VM实现，用于通过使
+23. 5.4 基于Reactor实现异步编程 | Reactor反应式库是反应式编程规范的一个实现，与RxJava基本等同
+24. 5.5 总结 | 基于CallBack的异步编程，回调地狱问题严重
+25. 第6章 Web Ser vlet的异步非阻塞处理 | Servlet3.0规范前的同步处理模型导致性能瓶颈
+26. 6.1 Servlet概述 | Servlet是一个基于Java技术的Web组件，由容器管理，生成动态内容
+27. 6.2 Servlet 3.0 提供的异步处理能力 | Servlet 3.0 规范中引入了异步处理请求的能力
+28. 6.3 Servlet 3.1 提供的非阻塞IO能力 | Servlet 3.0规范让Servlet的执行变为了异步，但是其IO还是阻塞式的
+29. 6.4 Spring Web MVC的异步处理能力 | Spring Web MVC是基于Servlet API构建的Web框架
+30. 6.5 总结 | Servlet 3.0前的Servlet同步处理模型在处理高并发请求时，性能较差
+31. 第7章 Spring WebFlux的异步非阻塞处理 | Spring框架5.0中引入的新的WebFlux技术栈
+32. 7.1 Spring WebFlux概述 | Spring WebFlux是Spring 5.0版中添加的，它是完全无阻塞的，支持
+33. 7.2 Reactive编程 &amp; Reactor库 | Reactive编程是指围绕变化做出反应的编程模型
+34. 7.3 WebFlux服务器 | Spring WebFlux可以在多种容器上运行，包括Tomcat、Jetty、Se
+35. 7.4 WebFlux的并发模型 | Spring MVC假设应用程序可以阻塞当前线程，使用大型线程池来化解请求期间的潜在
+36. 7.5 WebFlux对性能的影响 | 反应式和非阻塞编程通常不会使应用程序运行得更快
+37. 7.6 WebFlux的编程模型 | Spring WebFlux提供了两种编程模型以供选择：带注解的controller
+38. 7.7 WebFlux原理浅尝 | Reactor Netty提供基于Netty框架的无阻塞和回压的TCP / HTTP
+
+## 已有主旨
+一句话主旨 本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。 本书涵盖了Java中常见的异步编程场景，包括单JVM内的异步编程、跨主机通过网络通信的远程过程调用的异步调用与异步处理，以及Web请求的异步
+
+## 已有追问 / 自测问句
+- 这本书的“异步光谱”是怎么铺开的？
+- 为什么最后一章要讲 Go？
+- 反应式编程的代价是什么？
+
+## 已有更高维度解读
+用更高维度的知识看这本书 与《Java并发编程实战》（JCIP）对照，两本书回答不同。JCIP关心正确性：可见性、原子性、happens-before、锁的内存语义，它假设并发危险，先保证不出错。本书关心编排：怎么把任务拆开、扔出、收回，它假设单个任务安全，问题在调度。这决定阅读顺序——先有JCIP的底子，才知道CompletableFuture的回调在哪个线程执行、为什么thenApply不保证线程、为什么共享可变状态在异步链里更危险。跳过并发基础直接学异步编排，写出来的代码能跑但会偶发错（推断：此为学习路径建议）。 最有价值的外部参照是JDK21的虚拟线程。它把“一请求一线程”的阻塞式写法
+
+## 已有观点
+核心观点初判 按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。 第 1–7 章 ——含「前言」至「2.1 显式使用线程实现」 第 8–14 章 ——含「2.2 显式使用线程池实」至「3.4 JDK8 Str」 第 15–21 章 ——含「3.5 总结」至「第5章 基于反应式编程实」 第 22–28 章 ——含「5.1 反应式编

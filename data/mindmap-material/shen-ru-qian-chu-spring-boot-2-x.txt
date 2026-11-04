@@ -1,0 +1,56 @@
+# 《深入浅出Spring Boot 2.x》（shen-ru-qian-chu-spring-boot-2-x）
+共 111 章
+
+## 章节与要点
+1. 版权 | 本书由杨开振著，责任编辑为杨海玲
+2. 内容提要 | Spring Boot采用“约定优于配置”的原则简化了Spring的开发
+3. 本书的安排 | Spring Boot使Spring项目可以更加快速地开发、部署和测试
+4. 阅读本书的要求和目标读者 | 读者需要具备Java编程语言基础、Java EE(Servlet和JSP)基础、前端
+5. 本书使用的Spring Boot版本 | 本书采用版本2.0.0.RELEASE进行讲解
+6. 纠错、源码和课程 | 欢迎读者对本书提出意见或建议
+7. 配套资源 | 本书源代码
+8. 提交勘误 | 登录异步社区，按书名搜索，进入本书页面。
+9. 与我们联系 | 我们的联系邮箱是contact@epubit.com.cn。
+10. 关于异步社区和异步图书 | 异步社区是人民邮电出版社旗下IT专业图书社区，创办于2015年8月
+11. 第1章 Spring Boot来临 | Spring Boot是当今Java EE开发的事实标准
+12. 1.1 Spring的历史 | EJB的繁琐和低效
+13. 1.2 注解还是XML | Spring早期版本主要使用XML配置
+14. 1.3 Spring Boot的优点 | Spring Boot是一个基于Spring框架搭建起来的应用，可以嵌入Tomcat
+15. 1.4 传统Spring MVC和Spring Boot的对比 | 传统Spring MVC开发需要配置DispatcherServlet和Spring
+16. 第2章 聊聊开发环境搭建和基本开发 | 需要先来搭建Spring Boot的工程。
+17. 2.1 搭建Spring Boot开发环境 | 安装STS插件
+18. 2.2 Spring Boot的依赖和自动配置 | Spring Boot通过Maven依赖找到对应的jar包和嵌入的服务器
+19. 2.3 使用自定义配置 | Spring Boot提供了默认的约定配置项，但开发者并不需要全部去配置，只是根据自
+20. 2.4 开发自己的Spring Boot项目 | 修改application.properties文件中的server.port属性
+21. 第3章 全注解下的Spring IoC | IoC是一种通过描述来生成或者获取对象的技术
+22. 3.1 IoC容器简介 | Spring IoC容器是一个管理Bean的容器，所有IoC容器都需要实现接口Bea
+23. 3.2 装配你的Bean | 使用@Component和@ComponentScan注解进行Bean的扫描装配
+24. 3.3 依赖注入 | 依赖注入是Spring IoC的两个作用之一，用于Bean之间的依赖
+25. 3.4 生命周期 | Spring通过配置，如@ComponentScan定义的扫描路径去找到带有@Com
+26. 3.5 使用属性文件 | Spring Boot默认使用application.properties文件
+27. 3.6 条件装配Bean | 条件装配Bean是Spring提供的一种机制，用于在特定条件下装配Bean
+28. 3.7 Bean的作用域 | Spring Bean存在单例(Singleton)和原型(Prototype)两种
+29. 3.8 使用@Profile | Spring提供了Profile机制，可以方便地实现各个环境之间的切换
+30. 3.9 引入XML配置Bean | 使用注解@ImportResource引入对应的XML文件。
+31. 3.10 使用Spring EL | Spring EL是Spring提供的一种表达式语言，可以拥有更为强大的运算规则来更
+32. 第4章 开始约定编程——Spring AOP | 约定编程的流程
+33. 4.1 约定编程 | 定义一个简单的接口HelloService
+34. 4.2 AOP的概念 | AOP最为典型的应用实际就是数据库事务的管控
+35. 4.3 AOP开发详解 | 确定在什么地方需要AOP，也就是需要确定连接点(在Spring中就是什么类的什么方法
+36. 4.4 多个切面 | Spring支持多个切面的运行，需要知道其运行的顺序
+37. 第5章 访问数据库 | JDBC规范因冗余代码多、流程和资源难以控制而逐渐被淘汰
+38. 5.1 配置数据源 | Spring Boot默认使用内嵌式数据库h2
+
+## 已有主旨
+一句话主旨 本页「精读」由 AI 大纲条目结构化重算，主旨句取自全书命题，非读后感。 Spring框架是JavaEE开发的强有力的工具和事实标准，而SpringBoot采用“约定优于配置”的原则简化了Spring的开发，从而成
+
+## 已有追问 / 自测问句
+- 这本书和《Spring 实战》《Spring 5 企业级开发实战》怎么分工？
+- 学完这本书，能独立做微服务吗？
+- 书里为什么专门讲「互联网抢购业务」？
+
+## 已有更高维度解读
+用更高维度的知识看这本书 本书出版于 2018 年 3 月 Boot 2.x 发布之际，是国内第一批系统讲解 Boot 2.x 的中文著作之一。它承接「Spring Boot 让 Spring 落地变简单」的浪潮，把关注点从「如何用」推进到「原理与陷阱」——大量篇幅给 IoC 生命周期、事务隔离、传播行为这些「看不见但会出事」的地带，定位接近「进阶实战手册」。 参照上，它与国外《Spring Boot in Action》同源但更贴国内栈（Redis/MyBatis/Dubbo 味重）；局限是 2.x 时代的 API 在 3.x（Java 17、Jakarta）下已有迁移成本，部分示例会过时。
+
+## 已有观点
+核心观点初判 按全书主干分组，归纳各段在论证中的位置（取自 spine，结构重算，非读后感）。 第 1–7 章 ——含「版权」至「致谢」 第 8–14 章 ——含「纠错、源码和课程」至「第1章 Spring B」 第 15–21 章 ——含「1.1 Spring的历」至「2.2 Spring B」 第 22–28 章 ——含「2.3 使用自定义配置」至「3.
