@@ -58,7 +58,7 @@ body{max-width:880px;margin:0 auto;padding:0 18px 80px;font-size:.9375rem;line-h
 /* 顶部大封面模块（参考微信读书书籍介绍页）：
    封面自身模糊放大铺底做氛围光 + 主题绿径向光晕，两层叠加 */
 /* 第 18 批：贴顶全出血（负 margin 抵消 body padding），主题色打底 + 封面模糊铺底 */
-#rdHero{position:relative;overflow:hidden;margin:0 -18px 10px;padding:44px 16px 30px;
+#rdHero{position:relative;overflow:hidden;margin:0 -18px 10px;padding:58px 16px 30px;
   text-align:center;border:none;border-bottom:1px solid var(--card-bd);
   background:linear-gradient(180deg,var(--green2,#315e50),var(--green,#244b40));}
 .rd-hero-bg{position:absolute;left:-18%;top:-18%;width:136%;height:136%;z-index:0;
@@ -87,8 +87,12 @@ body{max-width:880px;margin:0 auto;padding:0 18px 80px;font-size:.9375rem;line-h
    只钉「模糊背景 + 封面本体」，上下各留一段紧贴的背景；
    标题 / 作者 / 章节导航移到墙下方的 .rd-stick 吸顶条 → 自然吸顶。
    墙靠 sticky top:0 钉住（不用 fixed/svh，手机内核全兼容） */
+/* 墙高至少半屏（54vh）：封面在墙内垂直居中，顶部 44px 的浮动操作区
+   （目录 / 分享 / Aa，top:10 + 34）就落在墙面上，不再压住封面书脊。
+   padding-top 也给到 58px，保证封面顶端永远低于按钮底边 */
 #rdHero.rd-hero-full{position:sticky;top:0;
-  width:100vw;margin-left:calc(50% - 50vw);padding:44px 0;
+  width:100vw;margin-left:calc(50% - 50vw);padding:58px 0 30px;
+  box-sizing:border-box;min-height:54vh;
   display:flex;align-items:center;justify-content:center;
   border-bottom:none;background:#20302a;}
 .rd-hero-full .rd-hero-bg{position:absolute;inset:0;width:100%;height:100%;
@@ -318,7 +322,7 @@ html[data-theme=dark] a.ai-outline-link:hover{border-color:var(--head);color:var
 @media(max-width:720px){
   body{padding:0 12px 60px;}
   #rdHero{margin:0 -12px 8px;}
-  #rdHero.rd-hero-full{margin:0;width:100vw;margin-left:calc(50% - 50vw);padding:32px 0;}
+  #rdHero.rd-hero-full{margin:0;width:100vw;margin-left:calc(50% - 50vw);padding:60px 0 26px;}
   .rd-hero-full .rd-hero-cover{width:min(58vw,260px);}
   .rd-stick{padding:8px 0 6px;}
   .rd-stick{padding:12px 0 10px;}
@@ -489,9 +493,9 @@ html[data-theme=dark] .mmx-svg .ln{stroke:#2f5b49;}
   body{max-width:1120px;padding:0 28px 96px;font-size:1rem;}
   body.rd-has-full{max-width:none;padding:0 0 96px;}
   #rdHero.rd-hero-full{width:100%;margin-left:0;margin-top:14px;padding:56px 0;
-    border-radius:18px 18px 0 0;overflow:hidden;}
+    min-height:0;border-radius:18px 18px 0 0;overflow:hidden;}
   body.rd-has-full #rdHero.rd-hero-full{width:100%;margin:0;padding:68px 0;
-    border-radius:0;}
+    min-height:0;border-radius:0;}
   .rd-hero-full .rd-hero-cover{width:min(26vw,320px);}
   body.rd-has-full .rd-hero-full .rd-hero-cover{width:min(22vw,340px);}
   /* 标题条/正文：背景 100% 全宽，内容靠计算内边距对齐到中央内容列 */
