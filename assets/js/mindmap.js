@@ -57,7 +57,7 @@
   function boot(){
     var base=location.pathname.replace(/\/reading-notes\/.*$/,'/');
     var s=document.createElement('script');
-    s.src=base+'assets/js/visit-stats.js?v=20261104a';
+    s.src=base+'assets/js/visit-stats.js?v=20261104b';
     s.defer=true;
     (document.body||document.documentElement).appendChild(s);
   }

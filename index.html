@@ -6965,7 +6965,7 @@
     </div>
   </footer>
   <!-- visit-badge:begin -->
-  <div class="visit-badge-row"><div class="visit-badge" role="group" aria-label="站点访问统计"><span class="visit-badge-item"><b class="visit-badge-num" id="gc_site_pv_num">–</b><span class="visit-badge-unit">次访问</span></span><span class="visit-badge-div visit-badge-uv" aria-hidden="true"></span><span class="visit-badge-item visit-badge-uv"><b class="visit-badge-num" id="gc_site_uv_num">–</b><span class="visit-badge-unit">位访客</span></span></div></div>
+  <div class="visit-badge-row"><div class="visit-badge" role="group" aria-label="站点访问统计"><span class="visit-badge-item"><b class="visit-badge-num" id="gc_site_pv_num">–</b><span class="visit-badge-unit">位访客</span></span><span class="visit-badge-div visit-badge-uv" aria-hidden="true"></span><span class="visit-badge-item visit-badge-uv"><b class="visit-badge-num" id="gc_site_uv_num">–</b><span class="visit-badge-unit">位访客</span></span></div></div>
   <!-- visit-badge:end -->
   <script src="assets/js/home-track.js?v=20261102c"></script>
   <script src="assets/js/home-theme.js?v=20261105b"></script>
@@ -7024,7 +7024,7 @@
          for(var i=0;i<x.length;i++)x[i].style.display="none";}
   }
   stat("/TOTAL").then(function(d){
-    if(d && parseInt(d.pv,10)>0){ fillSite(d); }   /* 有真数据就用真的 */
+    if(d && parseInt(d.pv,10)>0){ fillSite({pv:d.pv,uv:null}); }   /* 有真数据就用真的 */
     else{ fillSite(null); }
   });
 
