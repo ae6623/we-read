@@ -80,9 +80,12 @@
   }
 
   function stripFiller(seg) {
-    // 流水线说明句整类清除（读者不需要知道数据来自哪条管道）
+    // 流水线说明句整类清除（读者不需要知道数据来自哪条管道）；
+    // 但「尚未完成归纳」是占位书对读者的诚实交代，必须保留。
     return seg
-      .replace(/<p class="mmx-mod-note">[\s\S]*?<\/p>\s*/g, '')
+      .replace(/<p class="mmx-mod-note">([\s\S]*?)<\/p>\s*/g, function (m, inner) {
+        return inner.indexOf('暂不展示') >= 0 ? m : '';
+      })
       .replace(/<p class="eyebrow">[^<]*带书内引源[^<]*<\/p>\s*/g, '');
   }
 
@@ -171,6 +174,7 @@
     addHero();
     spy(links);
     hookSvgModal();
+    initMindTree();
     pnRender();
   }
 
@@ -693,6 +697,160 @@
       svg.style.cursor = 'zoom-in';
       svg.addEventListener('click', openSvgModal);   // 每次渲染都是新节点，不会重复挂
     }
+  }
+
+  /* ── 交互式结构导图：逐级下钻 ──────────────────────────────────
+     静态 SVG 是一次性摊平的全景图，节点只是图元、点不动。这里在运行时
+     从 SVG 里把「全书命题 / 议题 / 关键概念 / 论证说明」读回来，装配成一棵
+     可折叠树：点议题 → 出概念；点概念 → 出这条线在论证什么。
+     内容全部来自已归纳好的 SVG 文本，不新增、不编造；421 个数据页零改动。 */
+  var MIND_COLORS = ['#8a9b6e', '#c58b5a', '#6f8fa8', '#a482a0',
+                     '#b0a06a', '#7d9a9b', '#b5837f'];
+
+  function parseMindSvg(svg) {
+    var d = { title: '', thesis: '', branches: [] }, cur = null;
+    var kids = svg.childNodes;
+    for (var i = 0; i < kids.length; i++) {
+      var el = kids[i];
+      if (el.nodeType !== 1) continue;
+      var cls = ' ' + (el.getAttribute('class') || '') + ' ';
+      var tag = el.tagName.toLowerCase();
+      if (tag === 'rect' && cls.indexOf(' m-br ') >= 0) {
+        cur = { id: '', label: '', rel: '', note: '', points: [] };
+        d.branches.push(cur);
+        continue;
+      }
+      if (tag !== 'text') continue;
+      var t = (el.textContent || '').trim();
+      if (cls.indexOf(' m-t ') >= 0) d.title += t;
+      else if (cls.indexOf(' m-th ') >= 0)
+        d.thesis += t.replace(/^命题\s*·\s*/, '').replace(/^[　\s]+/, '');
+      else if (!cur) continue;
+      else if (cls.indexOf(' m-id ') >= 0) cur.id = t;
+      else if (cls.indexOf(' m-lb ') >= 0) cur.label = t;
+      else if (cls.indexOf(' m-rel ') >= 0) cur.rel = t.replace(/[【】]/g, '');
+      else if (cls.indexOf(' m-note ') >= 0) cur.note += t;
+      else if (cls.indexOf(' m-cp ') >= 0) cur.points.push(t);
+    }
+    return d;
+  }
+
+  function mindEl(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+
+  function mindHead(lv, o) {
+    var b = mindEl('button', 'mmx-head mmx-head-lv' + lv);
+    b.type = 'button';
+    b.setAttribute('aria-expanded', o.open ? 'true' : 'false');
+    b.appendChild(mindEl('span', 'mmx-caret', '▸'));
+    if (o.badge) {
+      var bd = mindEl('span', 'mmx-badge', o.badge);
+      bd.style.background = o.color || MIND_COLORS[0];
+      b.appendChild(bd);
+    }
+    if (o.kicker) b.appendChild(mindEl('span', 'mmx-kicker', o.kicker));
+    b.appendChild(mindEl('span', 'mmx-name', o.name || ''));
+    if (o.rel) b.appendChild(mindEl('span', 'mmx-reltag', o.rel));
+    if (o.count) b.appendChild(mindEl('span', 'mmx-count', o.count + ' 概念'));
+    return b;
+  }
+
+  function mindNode(lv, head, kids, open) {
+    var n = mindEl('div', 'mmx-node mmx-lv' + lv);
+    n.appendChild(head);
+    if (kids) { kids.hidden = !open; n.appendChild(kids); }
+    return n;
+  }
+
+  function buildMindTree(d) {
+    var tree = mindEl('div', 'mmx-tree');
+    var tools = mindEl('div', 'mmx-tree-tools');
+    var bAll = mindEl('button', 'mmx-tool', '全部展开');
+    var bNone = mindEl('button', 'mmx-tool', '全部收起');
+    var bPic = mindEl('button', 'mmx-tool', '看全图总览');
+    bAll.type = bNone.type = bPic.type = 'button';
+    tools.appendChild(bAll); tools.appendChild(bNone); tools.appendChild(bPic);
+    tools.appendChild(mindEl('span', 'mmx-tree-tip', '点节点逐级展开'));
+    tree.appendChild(tools);
+
+    var l1kids = mindEl('div', 'mmx-kids');
+    d.branches.forEach(function (br, i) {
+      var l2kids = mindEl('div', 'mmx-kids');
+      // 分支级「论证说明」只出现一次，不往每个概念里复制
+      if (br.note) {
+        var bn = mindEl('div', 'mmx-branch-note');
+        bn.appendChild(mindEl('span', 'mmx-bn-kicker', '这条线在论证什么'));
+        bn.appendChild(mindEl('p', 'mmx-bn-txt', br.note));
+        l2kids.appendChild(bn);
+      }
+      var pts = br.points.length ? br.points : ['（暂无关键概念）'];
+      pts.forEach(function (p) {
+        var detail = mindEl('div', 'mmx-detail');
+        detail.appendChild(mindEl('p', 'mmx-detail-txt',
+          '出自议题：' + (br.id ? br.id + ' ' : '') + br.label));
+        detail.appendChild(mindEl('p', 'mmx-detail-meta',
+          '逻辑关系：' + (br.rel || '未标注') + '　·　层级：关键概念'));
+        l2kids.appendChild(mindNode(3, mindHead(3, { name: p }), detail, false));
+      });
+      var h2 = mindHead(2, {
+        badge: br.id || String.fromCharCode(65 + i), name: br.label,
+        rel: br.rel, count: br.points.length,
+        color: MIND_COLORS[i % MIND_COLORS.length]
+      });
+      l1kids.appendChild(mindNode(2, h2, l2kids, false));
+    });
+
+    var h1 = mindHead(1, { kicker: '全书命题', name: d.thesis || d.title, open: true });
+    tree.appendChild(mindNode(1, h1, l1kids, true));
+
+    tree.addEventListener('click', function (e) {
+      if (e.target === bAll || e.target === bNone || e.target === bPic) {
+        if (e.target === bPic) { openSvgModal(); return; }
+        var all = e.target === bAll;
+        qa('.mmx-head', tree).forEach(function (h) {
+          var k = h.nextElementSibling;
+          if (!k) return;
+          // 收起时也保留根节点展开，否则整张图空掉
+          var show = all || h.className.indexOf('mmx-head-lv1') >= 0;
+          h.setAttribute('aria-expanded', show ? 'true' : 'false');
+          k.hidden = !show;
+        });
+        return;
+      }
+      var h = e.target.closest ? e.target.closest('.mmx-head') : null;
+      if (!h || !tree.contains(h)) return;
+      var k = h.nextElementSibling;
+      if (!k) return;
+      var open = h.getAttribute('aria-expanded') === 'true';
+      h.setAttribute('aria-expanded', open ? 'false' : 'true');
+      k.hidden = open;
+    });
+    return tree;
+  }
+
+  function initMindTree() {
+    var sec = q('section#mod-svg') || q('section[data-key="svg"]');
+    // 段内 sr-only 的 h2 与 section 同 id，清掉重复（导航锚点仍指 section）
+    if (sec) qa('[id="mod-svg"]', sec).forEach(function (x) {
+      if (x !== sec) x.removeAttribute('id');
+    });
+    var svg = q('svg.mmx-mind');
+    if (!svg || !sec) return;                          // 占位书无图
+    if (sec.querySelector('.mmx-tree')) return;        // 已初始化
+    var d = parseMindSvg(svg);
+    if (!d.branches.length) return;
+
+    // 静态全景图收进折叠区，主视图换成可逐级下钻的树
+    var ov = document.createElement('details');
+    ov.className = 'mmx-overview';
+    ov.appendChild(mindEl('summary', '', '查看全图总览（静态 SVG）'));
+    svg.parentNode.insertBefore(ov, svg);
+    ov.appendChild(svg);
+    sec.insertBefore(buildMindTree(d), ov);
   }
 
   /* ── 上一篇 / 下一篇 ─────────────────────────────────────────────

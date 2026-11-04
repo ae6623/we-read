@@ -554,3 +554,65 @@ html[data-theme=dark] .mmx-mind .m-rel{fill:#93a89a;}
   body.rd-has-full #rdBody{padding-left:max(28px,calc((100% - 1400px)/2 + 28px));
     padding-right:max(28px,calc((100% - 1400px)/2 + 28px));}
 }
+
+/* ── 交互式结构导图：逐级下钻的折叠树 ─────────────────────────
+   静态 SVG 保留为「全图总览」，默认收起；主视图是这棵树。
+   三级展开：全书命题 → 论证议题 → 关键概念 → 该线在论证什么 */
+.mmx-tree{margin:2px 0 0;font-size:.86rem;}
+.mmx-tree-tools{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 12px;}
+.mmx-tool{appearance:none;border:1px solid var(--inner-bd);background:transparent;
+  color:var(--sub);border-radius:999px;padding:5px 11px;font-size:.72rem;
+  line-height:1.4;cursor:pointer;}
+.mmx-tool:hover{color:var(--qgreen);border-color:var(--qgreen);}
+.mmx-tree-tip{font-size:.7rem;color:var(--sub);opacity:.8;}
+.mmx-tool:focus-visible,.mmx-head:focus-visible,.mmx-overview>summary:focus-visible{
+  outline:2px solid var(--qgreen);outline-offset:2px;}
+.mmx-node{position:relative;}
+.mmx-head{display:flex;align-items:center;gap:8px;width:100%;box-sizing:border-box;
+  background:transparent;border:0;border-radius:10px;padding:8px 10px;margin:0;
+  text-align:left;color:var(--ink);font:inherit;cursor:pointer;line-height:1.55;}
+.mmx-head:hover{background:rgba(138,155,110,.10);}
+.mmx-caret{flex:0 0 auto;width:12px;font-size:.7rem;color:var(--sub);
+  display:inline-block;transition:transform .18s ease;}
+.mmx-head[aria-expanded="true"]>.mmx-caret{transform:rotate(90deg);}
+.mmx-kicker{flex:0 0 auto;font-size:.68rem;color:var(--sub);letter-spacing:.06em;}
+.mmx-name{flex:1 1 auto;min-width:0;}
+.mmx-badge{flex:0 0 auto;width:20px;height:20px;border-radius:50%;color:#fff;
+  font-size:.68rem;font-weight:700;display:inline-flex;align-items:center;justify-content:center;}
+.mmx-reltag{flex:0 0 auto;font-size:.66rem;color:var(--sub);
+  border:1px solid var(--inner-bd);border-radius:5px;padding:1px 5px;}
+.mmx-count{flex:0 0 auto;font-size:.66rem;color:var(--sub);}
+.mmx-lv1>.mmx-head{background:rgba(47,74,61,.07);font-weight:700;}
+.mmx-lv1>.mmx-head .mmx-name{font-size:.9rem;}
+.mmx-lv2>.mmx-head{font-weight:700;}
+.mmx-lv3>.mmx-head{padding:6px 10px;font-size:.8rem;}
+.mmx-kids[hidden],.mmx-detail[hidden]{display:none;}
+.mmx-lv1>.mmx-kids{margin:6px 0 0 15px;padding-left:14px;
+  border-left:1px solid var(--inner-bd);}
+.mmx-lv2>.mmx-kids{margin:2px 0 8px 26px;padding-left:14px;
+  border-left:1px dashed var(--inner-bd);}
+.mmx-node>.mmx-kids>.mmx-node::before{content:"";position:absolute;left:-14px;top:18px;
+  width:12px;height:1px;background:var(--inner-bd);}
+.mmx-branch-note{margin:2px 0 8px 26px;padding:6px 11px;
+  background:transparent;border-left:2px solid var(--qgreen);}
+.mmx-bn-kicker{display:block;font-size:.66rem;color:var(--sub);
+  letter-spacing:.06em;margin-bottom:2px;}
+.mmx-bn-txt{margin:0 !important;padding-left:0 !important;
+  font-size:.78rem !important;line-height:1.8 !important;color:var(--txt);}
+.mmx-detail{margin:2px 0 8px 26px;padding:9px 11px;
+  background:var(--inner-bg);border:1px solid var(--inner-bd);border-radius:8px;}
+.mmx-detail-txt{margin:0 0 5px !important;font-size:.78rem !important;
+  line-height:1.8 !important;color:var(--txt);padding-left:0 !important;}
+.mmx-detail-meta{margin:0 !important;font-size:.7rem !important;
+  color:var(--sub);padding-left:0 !important;}
+.mmx-overview{margin:14px 0 0;border-top:1px solid var(--inner-bd);padding-top:10px;}
+.mmx-overview>summary{cursor:pointer;font-size:.76rem;color:var(--sub);list-style:none;}
+.mmx-overview>summary::-webkit-details-marker{display:none;}
+.mmx-overview>summary::before{content:"▸ ";display:inline-block;}
+.mmx-overview[open]>summary::before{content:"▾ ";}
+.mmx-overview>svg.mmx-svg{display:block;width:100%;height:auto;margin:10px auto 0;}
+html[data-theme=dark] .mmx-head{color:var(--ink);}
+html[data-theme=dark] .mmx-lv1>.mmx-head{background:rgba(158,208,175,.10);}
+html[data-theme=dark] .mmx-detail{background:var(--inner-bg);border-color:#3a3f46;}
+html[data-theme=dark] .mmx-detail-txt{color:var(--txt);}
+html[data-theme=dark] .mmx-tool{border-color:#3a3f46;}
