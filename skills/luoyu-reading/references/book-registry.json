@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": 217,
+  "revision": 218,
   "timezone": "Asia/Shanghai",
   "authority": "latest origin/main; claims become effective only after serialized acceptance there",
   "migration": {
@@ -952,12 +952,14 @@
       "platform": "local_pdf",
       "platform_book_id": null,
       "priority": "user_authorized_selective_choice",
-      "status": "in_progress",
-      "owner_agent_id": "local-pdf-reader",
+      "status": "completed",
+      "owner_agent_id": null,
       "claim": {
-        "state": "held",
+        "state": "released",
         "source": "用户 2026-11-04 持续授权继续处理下一本合格天涯本地 PDF；本次仅按 PDF 实际题名认领此新书目，不恢复或改动其他暂停书。",
-        "claimed_at": "2026-11-04T22:08:25+0800"
+        "claimed_at": "2026-11-04T22:08:25+0800",
+        "released_at": "2026-11-04T22:42:09+08:00",
+        "release_reason": "用户授权的本地 PDF AI 分批整书分析完成并通过线上核验；AI阅读完读，不等于用户亲读；亲读范围、时长、日期笔记、resume_point 与 next_question_status 均保持原样。"
       },
       "last_confirmed_progress": null,
       "resume_point": {
@@ -969,7 +971,15 @@
         "confirmed_at": null
       },
       "next_question_status": "needs-confirmation",
-      "completion": null,
+      "completion": {
+        "event_id": "completed-local-tianya-76-chiang-kai-shek-mainland-ai-2026-11-04",
+        "sequence": 9,
+        "confirmed_by": "local-pdf-reader",
+        "completed_at": "2026-11-04",
+        "evidence": "用户持续授权处理天涯系列下一本合格本地 PDF。本场使用允许打印的页面渲染分批分析内部页1–437，28个连续批次；私有覆盖核验为437/437页，无漏页或重复。已完成按实际目录组织的章节导览、关键论点判断、外部资料边界、AI问书四项与读后思考，并生成规范HTML和EPUB。HTML与两个索引已发布到 ae6623/we-read；线上页面及索引HTTP 200，EPUB下载HTTP 200且SHA-256与本地构建一致。此为AI阅读完读，不等于用户亲读，不证明PDF外原帖合集完整，也不表示所有史实逐条独立核实；用户亲读范围、阅读时长、日期笔记、个人续读点和下一场问题状态均未修改。",
+        "mode": "AI阅读",
+        "output": "reading-notes/books/local-tianya-76-chiang-kai-shek-mainland/final.html；reading-notes/books/local-tianya-76-chiang-kai-shek-mainland/final.epub"
+      },
       "pdf_source_note": "用户授权的本地 PDF；不公开源文件或路径；公开笔记仅含分析与必要短引。"
     }
   ],
@@ -989,7 +999,7 @@
   "synthesis": {
     "visibility": "private",
     "batch_size": 3,
-    "unique_completed_count": 8,
+    "unique_completed_count": 9,
     "batches": [
       {
         "batch_id": "batch-001",
@@ -1012,22 +1022,20 @@
         "status": "completed",
         "owner_agent_id": "cue-qingyouji-reader",
         "visibility": "private"
+      },
+      {
+        "batch_id": "batch-003",
+        "book_ids": [
+          "local-jingji-moshi-shehui-genyuan-suixiang",
+          "local-modern-finance-housing-curgdbd",
+          "local-tianya-76-chiang-kai-shek-mainland"
+        ],
+        "status": "completed",
+        "owner_agent_id": "local-pdf-reader",
+        "visibility": "private"
       }
     ]
   },
-  "updated_at": "2026-11-04T20:01:05+08:00",
-  "active_sessions": [
-    {
-      "run_id": "local-pdf-20261104-2208-tianya76-batched",
-      "agent_id": "local-pdf-reader",
-      "book_id": "local-tianya-76-chiang-kai-shek-mainland",
-      "slot": "user-authorized-batched-ai-analysis",
-      "started_at": "2026-11-04T22:08:25+0800",
-      "environment_id": "local-pdf-reader-cloud",
-      "reading_mode": "local_pdf",
-      "resource_ids": [
-        "local-pdf:cloud-workspace"
-      ]
-    }
-  ]
+  "updated_at": "2026-11-04T22:42:09+08:00",
+  "active_sessions": []
 }
