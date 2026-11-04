@@ -1076,15 +1076,17 @@
     loaded();
   }
 
-  /* ── 听书（女声 TTS，详情页点块朗读）──────────────────────
+  /* ── 听书（TTS 点块朗读 + 右上角配置）──────────────────────
    * 改动只在本文件，所有书的 combined.html 自动生效（壳页不含渲染逻辑）。
-   * - 右上角听书按钮 #rdSpeakBtn：默认静音（🔇），点击切换有声（🔊）
-   * - 点哪读哪：朗读「点击位置所属的最小语义块」，再点同一块暂停
-   *   粒度：原句 li > 要点 li > 小节 div.sec > 段落/标题 > 整个 section（兜底）。
-   *   AI 领读的小节是 div.sec 而非 section 标签，整章才是一个 section；
-   *   早期版本用 closest('section') 会把整章（含内嵌 <style>）全部念出来。
-   * - 女声优先：zh-CN / cmn 语音里挑 Female / 女 / Ting / Xiaoxiao 等
-   * - 默认静音：打开详情页不出声；点击块朗读时自动开声，也可手动静音
+   * - 右上角 #rdSpeakBtn 是唯一入口，点击展开 #rdSpeakPanel 配置面板：
+   *   音色（女声/男声/台湾腔快捷 + 全部系统语音下拉）、语速、音调、音量、
+   *   静音、停止。配置存 localStorage，改参数即时重读当前块。
+   *   按钮位置由 placeBtn() 动态测量右上角已有 fixed 按钮向左避让，
+   *   避免与 Aa(12) / 分享(54) / AI 大纲(96) 挤在一起。
+   * - 点哪读哪：朗读「点击位置所属的最小语义块」，再点同一块暂停。
+   *   粒度：原句 li > 要点 li > 小节 div.sec > 段落/标题 > section（兜底）。
+   *   AI 领读的小节是 div.sec 而非 section 标签，整章才是一个 section。
+   * - 默认静音：打开详情页不出声；首次点块自动开声（静音状态不持久化）。
    */
   function initSpeak() {
     if (!('speechSynthesis' in window) || typeof SpeechSynthesisUtterance === 'undefined') return;
@@ -1092,13 +1094,35 @@
     var main = q('#rdBody');
     if (!main) return;
 
+    /* ── 用户配置（音色/语速/音调/音量持久化，静音每次打开都恢复默认）── */
+    var CFG_KEY = 'rd-speak-cfg';
+    function loadPrefs() {
+      try { return JSON.parse(localStorage.getItem(CFG_KEY) || '{}') || {}; } catch (e) { return {}; }
+    }
+    function num(v, lo, hi, d) {
+      var n = parseFloat(v);
+      return isFinite(n) ? Math.min(hi, Math.max(lo, n)) : d;
+    }
+    var prefs = loadPrefs();
+    var rate = num(prefs.rate, 0.5, 2, 1);
+    var pitch = num(prefs.pitch, 0.5, 1.5, 1);
+    var volume = num(prefs.volume, 0, 1, 1);
+    var voiceURI = prefs.voiceURI || '__auto__';
+    function savePrefs() {
+      try {
+        localStorage.setItem(CFG_KEY, JSON.stringify({
+          rate: rate, pitch: pitch, volume: volume, voiceURI: voiceURI
+        }));
+      } catch (e) {}
+    }
+
     var muted = true;        // 默认静音
     var curUnit = null;      // 当前正在朗读的单元
     var utter = null;
     var speaking = false;
 
-    /* 朗读单元从细到粗列出，closest 取 DOM 上最近的一个。
-       section 只作兜底：点 AI 领读里的内容时绝不能往上命中整章。 */
+    /* ── 朗读单元：从细到粗，closest 取 DOM 上最近的一个 ────────
+       section 只作兜底，点 AI 领读里的内容时绝不能往上命中整章。 */
     var UNIT_SEL = [
       'ul.quote > li', 'ul.point > li',   // 原句 / 要点
       'div.sec',                          // AI 领读小节
@@ -1107,9 +1131,10 @@
       'h2', 'h3', 'h4', 'h5',
       'section'                           // 兜底：整模块
     ].join(', ');
-    /* 交互元素 / 折叠控件 / 统计行：只做原本的动作，不触发朗读 */
+    /* 交互元素 / 折叠控件 / 统计行 / 设置面板：只做原本的动作 */
     var SKIP_SEL = 'a, button, summary, [data-no-speak], .mmx-head, .mmx-caret, ' +
-                   '.mmx-stat, input, select, textarea, label, .rd-speak-skip';
+                   '.mmx-stat, input, select, textarea, label, .rd-speak-skip, ' +
+                   '#rdSpeakPanel, #rdSpeakPanel *';
 
     function resolveUnit(t) {
       if (!t || !t.closest) return null;
@@ -1134,38 +1159,205 @@
       return (c.textContent || '').replace(/\s+/g, ' ').trim();
     }
 
-    function pickVoice() {
-      var vs = synth.getVoices() || [];
+    /* ── 语音：分类 + 选中 + 下拉 ───────────────────────────── */
+    function allVoices() { return synth.getVoices() || []; }
+    function isZh(v) { return /^zh|cmn|chinese/i.test(v.lang || ''); }
+    function isFemale(v) {
+      return /female|女|ting|xiao|yao|hui|mei|hanhan|yating|tracy|sinji|vivi|google.*(國語|普通话)/i.test(v.name || '');
+    }
+    function isMale(v) {
+      return /male|男|daniel|kangkang|yunxi|zhiwei|jasper|liang|yunyang|yunqi/i.test(v.name || '');
+    }
+    function isTw(v) { return /tw|hant|taiwan|台灣|國語/i.test((v.lang || '') + ' ' + (v.name || '')); }
+    function voiceKey(v) { return v.voiceURI || v.name || ''; }
+    function voiceLabel(v) {
+      var s = (v.lang || '') + ' ' + (v.name || '');
+      var region = isTw(v) ? '台湾' : /hk|yue|粵|粤/i.test(s) ? '粤语'
+                 : isZh(v) ? '普通话' : (v.lang || '其他');
+      var sex = isFemale(v) ? '♀' : isMale(v) ? '♂' : '·';
+      return '[' + region + sex + '] ' + (v.name || '') + ' · ' + (v.lang || '');
+    }
+    function autoVoice() {
+      var vs = allVoices();
       if (!vs.length) return null;
-      var zh = vs.filter(function (v) { return /^zh|cmn|chinese/i.test(v.lang || ''); });
-      var pool = zh.length ? zh : vs;
-      var fem = pool.filter(function (v) {
-        return /female|女|ting|xiao|yao|hui|mei|google|zh[-_]?cn/i.test(v.name || '');
-      });
+      var zh = vs.filter(isZh), pool = zh.length ? zh : vs;
+      var fem = pool.filter(isFemale);
       return fem[0] || pool[0] || null;
     }
-    var voice = pickVoice();
-    if (typeof synth.onvoiceschanged !== 'undefined') {
-      synth.onvoiceschanged = function () { voice = pickVoice(); };
+    function currentVoice() {
+      if (voiceURI !== '__auto__') {
+        var vs = allVoices();
+        for (var i = 0; i < vs.length; i++) if (voiceKey(vs[i]) === voiceURI) return vs[i];
+      }
+      return autoVoice();   // 语音列表可能异步加载，每次朗读现取
+    }
+    function firstBy(kind) {
+      var vs = allVoices();
+      var zh = vs.filter(isZh), pool = zh.length ? zh : vs, hit = [];
+      if (kind === 'female') hit = pool.filter(isFemale);
+      else if (kind === 'male') hit = pool.filter(isMale);
+      else if (kind === 'tw') {
+        hit = pool.filter(function (v) { return isTw(v) && isFemale(v); });
+        if (!hit.length) hit = pool.filter(isTw);
+      } else return '__auto__';
+      return hit.length ? voiceKey(hit[0]) : '__auto__';
+    }
+    function fillVoices() {
+      var sel = q('#rdSpVoice', panel);
+      if (!sel) return;
+      var vs = allVoices();
+      sel.innerHTML = '';
+      var o0 = document.createElement('option');
+      o0.value = '__auto__'; o0.textContent = '自动（中文女声优先）';
+      sel.appendChild(o0);
+      vs.slice().sort(function (a, b) {
+        var za = isZh(a) ? 1 : 0, zb = isZh(b) ? 1 : 0;
+        if (za !== zb) return zb - za;
+        return (a.name || '').localeCompare(b.name || '');
+      }).forEach(function (v) {
+        var o = document.createElement('option');
+        o.value = voiceKey(v); o.textContent = voiceLabel(v);
+        sel.appendChild(o);
+      });
+      sel.value = voiceURI;
+      if (!sel.value) { sel.value = '__auto__'; voiceURI = '__auto__'; }
     }
 
+    /* ── 唯一入口按钮 + 配置面板 ────────────────────────────── */
     var btn = document.createElement('button');
     btn.id = 'rdSpeakBtn';
     btn.type = 'button';
-    btn.setAttribute('aria-label', '听书');
+    btn.setAttribute('aria-label', '听书设置');
+
+    var panel = document.createElement('div');
+    panel.id = 'rdSpeakPanel';
+    panel.hidden = true;
+    panel.innerHTML =
+      '<div class="rd-sp-head"><b>🎧 听书设置</b>' +
+        '<button type="button" class="rd-sp-x" aria-label="关闭">×</button></div>' +
+      '<div class="rd-sp-state" id="rdSpState">未朗读 · 默认静音</div>' +
+      '<label class="rd-sp-lab">音色<select id="rdSpVoice"></select></label>' +
+      '<div class="rd-sp-chips">' +
+        '<button type="button" data-voice="female">女声</button>' +
+        '<button type="button" data-voice="male">男声</button>' +
+        '<button type="button" data-voice="tw">台湾腔</button>' +
+        '<button type="button" data-voice="auto">自动</button>' +
+      '</div>' +
+      '<label class="rd-sp-lab">语速 <span id="rdSpRateVal">1.0×</span>' +
+        '<input type="range" id="rdSpRate" min="0.5" max="2" step="0.1"></label>' +
+      '<label class="rd-sp-lab">音调 <span id="rdSpPitchVal">1.0</span>' +
+        '<input type="range" id="rdSpPitch" min="0.5" max="1.5" step="0.1"></label>' +
+      '<label class="rd-sp-lab">音量 <span id="rdSpVolVal">100%</span>' +
+        '<input type="range" id="rdSpVol" min="0" max="1" step="0.05"></label>' +
+      '<div class="rd-sp-foot">' +
+        '<button type="button" id="rdSpMute">🔇 已静音</button>' +
+        '<button type="button" id="rdSpStop">⏹ 停止</button>' +
+      '</div>' +
+      '<p class="rd-sp-tip">点正文任意段落朗读，再点同一处暂停 · 设置自动保存</p>';
+
+    document.body.appendChild(btn);
+    document.body.appendChild(panel);
+
     function refresh() {
       btn.textContent = muted ? '🔇' : '🔊';
-      btn.title = muted ? '听书：静音（点此开声，或点正文块开始朗读）' : '听书：朗读中（点此静音）';
+      btn.title = muted ? '听书设置（当前静音）· 点此配置音色 / 语速' : '听书设置（当前有声）· 点此配置音色 / 语速';
       btn.classList.toggle('on', !muted);
+      var mb = q('#rdSpMute', panel);
+      if (mb) mb.textContent = muted ? '🔇 已静音' : '🔊 有声';
+      var st = q('#rdSpState', panel);
+      if (st) st.textContent = speaking ? '正在朗读…' : (muted ? '未朗读 · 默认静音' : '未朗读 · 点正文开始');
     }
-    refresh();
+
+    /* 动态避让：测右上角已有 fixed 按钮，把入口放到它们最左侧再往左 8px。
+       share.js / visit-stats.js 是延迟注入的，所以多跑几次 + 跟随 resize。 */
+    function placeBtn() {
+      var W = document.documentElement.clientWidth || window.innerWidth;
+      var minLeft = W;
+      qa('button, a').forEach(function (el) {
+        if (el === btn || panel.contains(el)) return;
+        var s = getComputedStyle(el);
+        if (s.position !== 'fixed') return;
+        var r = el.getBoundingClientRect();
+        if (r.width < 12 || r.height < 12 || r.top > 60 || r.left < W * 0.5) return;
+        if (r.left < minLeft) minLeft = r.left;
+      });
+      btn.style.right = Math.round(minLeft >= W ? 12 : W - minLeft + 8) + 'px';
+    }
+
     btn.addEventListener('click', function (e) {
       e.stopPropagation();
-      muted = !muted;
-      if (utter) utter.volume = muted ? 0 : 1;
+      var show = panel.hidden;
+      if (show) {
+        var rp = q('#rdPanel');           // 与「Aa」阅读设置面板互斥
+        if (rp) rp.hidden = true;
+        fillVoices();
+      }
+      panel.hidden = !show;
       refresh();
     });
-    document.body.appendChild(btn);
+    panel.addEventListener('click', function (e) { e.stopPropagation(); });
+    document.addEventListener('click', function (e) {
+      if (!panel.hidden && !panel.contains(e.target) && e.target !== btn) panel.hidden = true;
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') panel.hidden = true;
+    });
+    q('.rd-sp-x', panel).addEventListener('click', function () { panel.hidden = true; });
+
+    /* 改配置后若正在朗读，重读当前块以立即生效（滑块拖动中不重读） */
+    function relive() {
+      var u = curUnit;
+      if (u && speaking) speak(u); else refresh();
+    }
+
+    var sel = q('#rdSpVoice', panel);
+    sel.addEventListener('change', function () {
+      voiceURI = sel.value || '__auto__';
+      qa('.rd-sp-chips button', panel).forEach(function (x) { x.classList.remove('on'); });
+      savePrefs(); relive();
+    });
+    qa('.rd-sp-chips button', panel).forEach(function (b) {
+      b.addEventListener('click', function () {
+        voiceURI = firstBy(b.getAttribute('data-voice'));
+        sel.value = voiceURI;
+        if (!sel.value) { sel.value = '__auto__'; voiceURI = '__auto__'; }
+        qa('.rd-sp-chips button', panel).forEach(function (x) { x.classList.toggle('on', x === b); });
+        savePrefs(); relive();
+      });
+    });
+
+    var rEl = q('#rdSpRate', panel), pEl = q('#rdSpPitch', panel), vEl = q('#rdSpVol', panel);
+    function setLabel(el, txt) { el.textContent = txt; }
+    rEl.value = rate; pEl.value = pitch; vEl.value = volume;
+    setLabel(q('#rdSpRateVal', panel), rate.toFixed(1) + '×');
+    setLabel(q('#rdSpPitchVal', panel), pitch.toFixed(1));
+    setLabel(q('#rdSpVolVal', panel), Math.round(volume * 100) + '%');
+    rEl.addEventListener('input', function () {
+      rate = parseFloat(rEl.value);
+      setLabel(q('#rdSpRateVal', panel), rate.toFixed(1) + '×');
+      savePrefs();
+    });
+    pEl.addEventListener('input', function () {
+      pitch = parseFloat(pEl.value);
+      setLabel(q('#rdSpPitchVal', panel), pitch.toFixed(1));
+      savePrefs();
+    });
+    vEl.addEventListener('input', function () {
+      volume = parseFloat(vEl.value);
+      setLabel(q('#rdSpVolVal', panel), Math.round(volume * 100) + '%');
+      if (utter) utter.volume = muted ? 0 : volume;
+      savePrefs();
+    });
+    rEl.addEventListener('change', relive);
+    pEl.addEventListener('change', relive);
+    vEl.addEventListener('change', relive);
+
+    q('#rdSpMute', panel).addEventListener('click', function () {
+      muted = !muted;
+      if (utter) utter.volume = muted ? 0 : volume;
+      refresh();
+    });
+    q('#rdSpStop', panel).addEventListener('click', function () { stopAll(); refresh(); });
 
     function stopAll() {
       // 无条件 cancel：speak() 刚调用时 speaking 可能仍是 false，但已有排队语音
@@ -1180,23 +1372,37 @@
       stopAll();
       utter = new SpeechSynthesisUtterance(txt);
       utter.lang = 'zh-CN';
-      if (!voice) voice = pickVoice();   // 语音列表可能异步加载，点击时再补选一次
-      if (voice) utter.voice = voice;
-      utter.rate = 1; utter.pitch = 1; utter.volume = muted ? 0 : 1;
-      utter.onend = function () { unit.classList.remove('speaking'); speaking = false; curUnit = null; utter = null; };
+      var v = currentVoice();
+      if (v) utter.voice = v;
+      utter.rate = rate; utter.pitch = pitch; utter.volume = muted ? 0 : volume;
+      utter.onend = function () {
+        unit.classList.remove('speaking');
+        speaking = false; curUnit = null; utter = null; refresh();
+      };
       utter.onerror = utter.onend;
       unit.classList.add('speaking');
       curUnit = unit; speaking = true;
       synth.speak(utter);
+      refresh();
     }
 
     main.addEventListener('click', function (e) {
       var unit = resolveUnit(e.target);
       if (!unit) return;
-      if (curUnit === unit && speaking) { stopAll(); return; }  // 再点同一块 → 暂停
-      if (muted) { muted = false; refresh(); }                  // 首次点块自动开声
+      if (curUnit === unit && speaking) { stopAll(); refresh(); return; }  // 再点同一块 → 暂停
+      if (muted) { muted = false; refresh(); }                            // 首次点块自动开声
       speak(unit);
     });
+
+    if (typeof synth.onvoiceschanged !== 'undefined') {
+      synth.onvoiceschanged = function () { fillVoices(); };
+    }
+    fillVoices();
+    refresh();
+    placeBtn();
+    setTimeout(placeBtn, 300);
+    setTimeout(placeBtn, 1200);
+    window.addEventListener('resize', placeBtn);
 
     // 切书/翻页/离开时停掉，避免后台继续朗读
     window.addEventListener('beforeunload', stopAll);

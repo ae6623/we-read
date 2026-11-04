@@ -625,9 +625,8 @@ html[data-theme=dark] .mmx-detail{background:var(--inner-bg);border-color:#3a3f4
 html[data-theme=dark] .mmx-detail-txt{color:var(--txt);}
 html[data-theme=dark] .mmx-tool{border-color:#3a3f46;}
 
-/* ── 听书（女声 TTS）：右上角按钮 + 可朗读块提示 ────────────── */
-/* 右上角听书按钮：紧挨 Aa 左侧（Aa 在 right:12px，本按钮右移让位） */
-#rdSpeakBtn{position:fixed;top:10px;right:74px;z-index:61;font:600 14px/1 var(--sans);
+/* ── 听书（TTS）：右上角唯一入口 + 配置面板 + 可朗读单元提示 ────── */
+#rdSpeakBtn{position:fixed;top:10px;right:138px;z-index:61;font:600 14px/1 var(--sans);
   color:var(--txt);background:var(--card-bg);border:1px solid var(--card-bd);
   border-radius:9px;padding:8px 11px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.1);}
 #rdSpeakBtn:hover{border-color:var(--head);color:var(--head);}
@@ -637,8 +636,41 @@ html[data-theme=dark] .mmx-tool{border-color:#3a3f46;}
 #rdBody section:hover,#rdBody div.sec:hover{box-shadow:inset 0 0 0 2px rgba(7,193,96,.22);}
 #rdBody :is(ul.quote>li,ul.point>li,.mmx-views>li,.mmx-qlist>li,p:not(.mmx-mod-note),blockquote){cursor:pointer;}
 #rdBody :is(ul.quote>li,ul.point>li,.mmx-views>li,.mmx-qlist>li,p:not(.mmx-mod-note),blockquote):hover{background:rgba(7,193,96,.06);border-radius:4px;}
-/* 正在朗读的单元可能是 section / div.sec / li / p，统一绿色描边 + 淡底 */
+/* 正在朗读的单元可能是 section / div.sec / li / p */
 #rdBody .speaking{box-shadow:inset 0 0 0 2px #07c160;background:rgba(7,193,96,.07);border-radius:4px;}
+
+/* 配置面板：z-index 62 高于 Aa 面板(60) */
+#rdSpeakPanel{position:fixed;top:52px;right:12px;z-index:62;
+  width:290px;max-width:calc(100vw - 24px);box-sizing:border-box;
+  background:var(--card-bg,#fffefa);border:1px solid var(--card-bd,#e3dfd4);
+  border-radius:12px;padding:12px 14px 10px;box-shadow:0 12px 34px rgba(0,0,0,.20);
+  font:13px/1.5 var(--sans,system-ui);color:var(--txt,#333);}
+#rdSpeakPanel[hidden]{display:none;}
+.rd-sp-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
+.rd-sp-head b{font-size:.94rem;}
+.rd-sp-x{border:0;background:transparent;color:inherit;font-size:20px;line-height:1;
+  cursor:pointer;padding:0 2px;opacity:.65;}
+.rd-sp-x:hover{opacity:1;}
+.rd-sp-state{font-size:.76rem;color:var(--sub,#888);margin-bottom:9px;}
+.rd-sp-lab{display:block;font-size:.78rem;color:var(--sub,#888);margin:9px 0 0;}
+.rd-sp-lab>span{float:right;color:var(--txt,#333);font-variant-numeric:tabular-nums;}
+#rdSpVoice{display:block;width:100%;margin-top:4px;box-sizing:border-box;
+  font:12px/1.4 var(--sans,system-ui);padding:6px 8px;border-radius:7px;
+  border:1px solid var(--card-bd,#e3dfd4);background:var(--navlink-bg,#faf8f2);color:inherit;}
+.rd-sp-chips{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px;}
+.rd-sp-chips button{flex:1 1 auto;min-width:56px;font:600 11px/1.5 var(--sans,system-ui);
+  padding:5px 6px;border-radius:6px;cursor:pointer;color:inherit;
+  background:var(--navlink-bg,#faf8f2);border:1px solid var(--card-bd,#e3dfd4);}
+.rd-sp-chips button:hover,.rd-sp-chips button.on{border-color:#07c160;color:#07c160;}
+#rdSpeakPanel input[type=range]{display:block;width:100%;margin:5px 0 0;accent-color:#07c160;}
+.rd-sp-foot{display:flex;gap:6px;margin-top:12px;}
+.rd-sp-foot button{flex:1;font:600 12px/1.5 var(--sans,system-ui);padding:6px 4px;
+  border-radius:7px;cursor:pointer;color:inherit;
+  background:var(--navlink-bg,#faf8f2);border:1px solid var(--card-bd,#e3dfd4);}
+.rd-sp-foot button:hover{border-color:var(--head,#315e50);color:var(--head,#315e50);}
+.rd-sp-tip{margin:9px 0 0;font-size:.7rem;line-height:1.5;color:var(--sub,#888);}
 @media(max-width:720px){
-  #rdSpeakBtn{right:70px;padding:7px 10px;}
+  #rdSpeakBtn{right:138px;padding:7px 10px;}
+  #rdSpeakPanel{top:50px;}
 }
+
