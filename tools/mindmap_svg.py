@@ -87,7 +87,7 @@ def render(slug: str, title: str) -> str:
 
     # ── 先算每块高度，再定 viewBox ────────────────────────────────
     t_lines = _lines(title, 16, 2)
-    th_lines = _lines(thesis, 19, 2)
+    th_lines = _lines(thesis, 19, 3)
     root_h = 20 + 20 * len(t_lines) + 8 + 15 * len(th_lines) + 12
 
     blocks = []
@@ -95,7 +95,7 @@ def render(slug: str, title: str) -> str:
         lab = b["label"].strip()
         rel = (b.get("rel") or "").strip()
         rel = rel if rel in RELS else ""
-        note_lines = _lines(b.get("note") or "", 24, 1)
+        note_lines = _lines(b.get("note") or "", 22, 3)
         pts = [str(x).strip()[:12] for x in (b.get("points") or []) if str(x).strip()][:3]
         # chip 排版：按累计宽度折行
         rows, row, used = [], [], 0
