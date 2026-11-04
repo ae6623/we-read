@@ -778,7 +778,7 @@
     return n;
   }
 
-  function buildMindTree(d) {
+  function buildMindTree(d, ev) {
     var tree = mindEl('div', 'mmx-tree');
     var tools = mindEl('div', 'mmx-tree-tools');
     var bAll = mindEl('button', 'mmx-tool', '全部展开');
@@ -802,10 +802,21 @@
       var pts = br.points.length ? br.points : ['（暂无关键概念）'];
       pts.forEach(function (p) {
         var detail = mindEl('div', 'mmx-detail');
-        detail.appendChild(mindEl('p', 'mmx-detail-txt',
-          '出自议题：' + (br.id ? br.id + ' ' : '') + br.label));
-        detail.appendChild(mindEl('p', 'mmx-detail-meta',
-          '逻辑关系：' + (br.rel || '未标注') + '　·　层级：关键概念'));
+        var e = ev && (ev[p] || ev[String(p).trim()]);
+        if (e && e.length) {
+          // 真展开：书里支撑这个概念的具体事实 / 判断（由 LLM 从全书素材归纳）
+          e.forEach(function (line) {
+            detail.appendChild(mindEl('p', 'mmx-ev-txt', String(line)));
+          });
+          detail.appendChild(mindEl('p', 'mmx-detail-meta',
+            '出自议题：' + (br.id ? br.id + ' ' : '') + br.label +
+            (br.rel ? '　·　' + br.rel : '')));
+        } else {
+          // 没补到内容就如实说没补，不再拿元信息伪装成一层
+          detail.appendChild(mindEl('p', 'mmx-detail-txt', '这一层尚未补充书内依据'));
+          detail.appendChild(mindEl('p', 'mmx-detail-meta',
+            '出自议题：' + (br.id ? br.id + ' ' : '') + br.label));
+        }
         l2kids.appendChild(mindNode(3, mindHead(3, { name: p }), detail, false));
       });
       var h2 = mindHead(2, {
@@ -862,7 +873,30 @@
     ov.appendChild(mindEl('summary', '', '在页内展开静态全图'));
     svg.parentNode.insertBefore(ov, svg);
     ov.appendChild(svg);
-    sec.insertBefore(buildMindTree(d), ov);
+    var tree = buildMindTree(d, null);
+    sec.insertBefore(tree, ov);
+
+    /* 第四层「书内依据」从归纳数据异步取，数据页 421 个一个都不用重刷。
+       有依据 → 概念展开显示实质内容；没补到 → 如实标注，不再空转。 */
+    var slug = (document.body && document.body.getAttribute('data-slug')) || '';
+    if (!slug || !window.fetch) return;
+    fetch('../../../data/mm-graph/' + encodeURIComponent(slug) + '.json')
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (j) {
+        var ev = j && j.evidence;
+        if (!ev || !Object.keys(ev).length || !tree.parentNode) return;
+        var fresh = buildMindTree(d, ev);
+        // 保住用户已经点开的层级，别因为异步刷新把展开状态清掉
+        var a = qa('.mmx-head', tree), b2 = qa('.mmx-head', fresh);
+        for (var i = 0; i < Math.min(a.length, b2.length); i++) {
+          var open = a[i].getAttribute('aria-expanded') === 'true';
+          b2[i].setAttribute('aria-expanded', open ? 'true' : 'false');
+          var k = b2[i].nextElementSibling;
+          if (k) k.hidden = !open;
+        }
+        tree.parentNode.replaceChild(fresh, tree);
+      })
+      .catch(function () {});
   }
 
   /* ── 上一篇 / 下一篇 ─────────────────────────────────────────────
