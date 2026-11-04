@@ -1074,8 +1074,96 @@
     loaded();
   }
 
+  /* ── 听书（女声 TTS，详情页点块朗读）──────────────────────
+   * 改动只在本文件，所有书的 combined.html 自动生效（壳页不含渲染逻辑）。
+   * - 右上角听书按钮 #rdSpeakBtn：默认静音（🔇），点击切换有声（🔊）
+   * - 点击正文任意块（section）：朗读该块文本（点哪读哪）；再次点击同一块则暂停
+   * - 女声优先：zh-CN / cmn 语音里挑 Female / 女 / Ting / Xiaoxiao 等
+   * - 默认静音：打开详情页不出声；点击块朗读时自动开声，也可手动静音
+   */
+  function initSpeak() {
+    if (!('speechSynthesis' in window) || typeof SpeechSynthesisUtterance === 'undefined') return;
+    var synth = window.speechSynthesis;
+    var main = q('#rdBody');
+    if (!main) return;
+
+    var muted = true;        // 默认静音
+    var curSec = null;       // 当前正在朗读的块
+    var utter = null;
+    var speaking = false;
+
+    function pickVoice() {
+      var vs = synth.getVoices() || [];
+      if (!vs.length) return null;
+      var zh = vs.filter(function (v) { return /^zh|cmn|chinese/i.test(v.lang || ''); });
+      var pool = zh.length ? zh : vs;
+      var fem = pool.filter(function (v) {
+        return /female|女|ting|xiao|yao|hui|mei|google|zh[-_]?cn/i.test(v.name || '');
+      });
+      return fem[0] || pool[0] || null;
+    }
+    var voice = pickVoice();
+    if (typeof synth.onvoiceschanged !== 'undefined') {
+      synth.onvoiceschanged = function () { voice = pickVoice(); };
+    }
+
+    var btn = document.createElement('button');
+    btn.id = 'rdSpeakBtn';
+    btn.type = 'button';
+    btn.setAttribute('aria-label', '听书');
+    function refresh() {
+      btn.textContent = muted ? '🔇' : '🔊';
+      btn.title = muted ? '听书：静音（点此开声，或点正文块开始朗读）' : '听书：朗读中（点此静音）';
+      btn.classList.toggle('on', !muted);
+    }
+    refresh();
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      muted = !muted;
+      if (utter) utter.volume = muted ? 0 : 1;
+      refresh();
+    });
+    document.body.appendChild(btn);
+
+    function stopAll() {
+      try { if (synth.speaking || synth.pending) synth.cancel(); } catch (e) {}
+      speaking = false; curSec = null; utter = null;
+      qa('#rdBody section.speaking').forEach(function (s) { s.classList.remove('speaking'); });
+    }
+
+    function speak(sec) {
+      var txt = (sec.textContent || '').replace(/\s+/g, ' ').trim();
+      if (!txt) return;
+      stopAll();
+      utter = new SpeechSynthesisUtterance(txt);
+      utter.lang = 'zh-CN';
+      if (!voice) voice = pickVoice();   // 语音列表可能异步加载，点击时再补选一次
+      if (voice) utter.voice = voice;
+      utter.rate = 1; utter.pitch = 1; utter.volume = muted ? 0 : 1;
+      utter.onend = function () { if (sec) sec.classList.remove('speaking'); speaking = false; curSec = null; utter = null; };
+      utter.onerror = utter.onend;
+      sec.classList.add('speaking');
+      curSec = sec; speaking = true;
+      synth.speak(utter);
+    }
+
+    main.addEventListener('click', function (e) {
+      var sec = e.target.closest ? e.target.closest('section') : null;
+      if (!sec || !main.contains(sec)) return;
+      // 块内交互元素（链接/按钮/导图等）不触发朗读
+      if (e.target.closest('a, button, [data-no-speak]')) return;
+      if (curSec === sec && speaking) { stopAll(); return; }   // 再点同一块 → 暂停
+      if (muted) { muted = false; refresh(); }                 // 首次点块自动开声
+      speak(sec);
+    });
+
+    // 切书/翻页/离开时停掉，避免后台继续朗读
+    window.addEventListener('beforeunload', stopAll);
+  }
+
   function boot() {
     initSettings();
+    initSpeak();
     addHomeLink();
     /* 先立海报墙：封面立刻开始下载，不等正文数据。
        但要先知道这本有没有封面（没封面的书不开墙）——3KB 的 hero.json 一般

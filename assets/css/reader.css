@@ -624,3 +624,19 @@ html[data-theme=dark] .mmx-lv1>.mmx-head{background:rgba(158,208,175,.10);}
 html[data-theme=dark] .mmx-detail{background:var(--inner-bg);border-color:#3a3f46;}
 html[data-theme=dark] .mmx-detail-txt{color:var(--txt);}
 html[data-theme=dark] .mmx-tool{border-color:#3a3f46;}
+
+/* ── 听书（女声 TTS）：右上角按钮 + 可朗读块提示 ────────────── */
+/* 右上角听书按钮：紧挨 Aa 左侧（Aa 在 right:12px，本按钮右移让位） */
+#rdSpeakBtn{position:fixed;top:10px;right:74px;z-index:61;font:600 14px/1 var(--sans);
+  color:var(--txt);background:var(--card-bg);border:1px solid var(--card-bd);
+  border-radius:9px;padding:8px 11px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.1);}
+#rdSpeakBtn:hover{border-color:var(--head);color:var(--head);}
+#rdSpeakBtn.on{border-color:var(--head);color:var(--head);background:rgba(7,193,96,.10);}
+/* 正文块默认可点朗读，悬停给轻微提示 */
+#rdBody section{cursor:pointer;}
+#rdBody section:hover{box-shadow:inset 0 0 0 2px rgba(7,193,96,.22);}
+/* 正在朗读的块：绿色描边 + 淡底，明确当前进度 */
+#rdBody section.speaking{box-shadow:inset 0 0 0 2px #07c160;background:rgba(7,193,96,.06);}
+@media(max-width:720px){
+  #rdSpeakBtn{right:70px;padding:7px 10px;}
+}
