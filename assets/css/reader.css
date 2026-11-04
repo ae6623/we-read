@@ -625,12 +625,8 @@ html[data-theme=dark] .mmx-detail{background:var(--inner-bg);border-color:#3a3f4
 html[data-theme=dark] .mmx-detail-txt{color:var(--txt);}
 html[data-theme=dark] .mmx-tool{border-color:#3a3f46;}
 
-/* ── 听书（TTS）：右上角唯一入口 + 配置面板 + 可朗读单元提示 ────── */
-#rdSpeakBtn{position:fixed;top:10px;right:138px;z-index:61;font:600 14px/1 var(--sans);
-  color:var(--txt);background:var(--card-bg);border:1px solid var(--card-bd);
-  border-radius:9px;padding:8px 11px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.1);}
-#rdSpeakBtn:hover{border-color:var(--head);color:var(--head);}
-#rdSpeakBtn.on{border-color:var(--head);color:var(--head);background:rgba(7,193,96,.10);}
+/* ── 听书（TTS）v4：配置并入「Aa」设置面板 + 底部朗读控制条 ──────
+   右上角不再新增按钮；朗读时底部浮出控制条，移动端拇指可达。 */
 /* 正文可朗读单元：块级容器悬停描边，细粒度单元悬停淡底 */
 #rdBody section,#rdBody div.sec{cursor:pointer;}
 #rdBody section:hover,#rdBody div.sec:hover{box-shadow:inset 0 0 0 2px rgba(7,193,96,.22);}
@@ -639,38 +635,61 @@ html[data-theme=dark] .mmx-tool{border-color:#3a3f46;}
 /* 正在朗读的单元可能是 section / div.sec / li / p */
 #rdBody .speaking{box-shadow:inset 0 0 0 2px #07c160;background:rgba(7,193,96,.07);border-radius:4px;}
 
-/* 配置面板：z-index 62 高于 Aa 面板(60) */
-#rdSpeakPanel{position:fixed;top:52px;right:12px;z-index:62;
-  width:290px;max-width:calc(100vw - 24px);box-sizing:border-box;
-  background:var(--card-bg,#fffefa);border:1px solid var(--card-bd,#e3dfd4);
-  border-radius:12px;padding:12px 14px 10px;box-shadow:0 12px 34px rgba(0,0,0,.20);
-  font:13px/1.5 var(--sans,system-ui);color:var(--txt,#333);}
-#rdSpeakPanel[hidden]{display:none;}
-.rd-sp-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
-.rd-sp-head b{font-size:.94rem;}
-.rd-sp-x{border:0;background:transparent;color:inherit;font-size:20px;line-height:1;
-  cursor:pointer;padding:0 2px;opacity:.65;}
-.rd-sp-x:hover{opacity:1;}
-.rd-sp-state{font-size:.76rem;color:var(--sub,#888);margin-bottom:9px;}
-.rd-sp-lab{display:block;font-size:.78rem;color:var(--sub,#888);margin:9px 0 0;}
-.rd-sp-lab>span{float:right;color:var(--txt,#333);font-variant-numeric:tabular-nums;}
-#rdSpVoice{display:block;width:100%;margin-top:4px;box-sizing:border-box;
-  font:12px/1.4 var(--sans,system-ui);padding:6px 8px;border-radius:7px;
-  border:1px solid var(--card-bd,#e3dfd4);background:var(--navlink-bg,#faf8f2);color:inherit;}
-.rd-sp-chips{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px;}
-.rd-sp-chips button{flex:1 1 auto;min-width:56px;font:600 11px/1.5 var(--sans,system-ui);
-  padding:5px 6px;border-radius:6px;cursor:pointer;color:inherit;
-  background:var(--navlink-bg,#faf8f2);border:1px solid var(--card-bd,#e3dfd4);}
+/* 「Aa」面板内的听书分区：沿用面板自身的卡片/按钮变量，跟随主题 */
+#rdPanel.rd-has-speak{max-height:calc(100vh - 64px);overflow-y:auto;}
+.rd-speak-box{width:238px;max-width:calc(100vw - 52px);border-top:1px solid var(--card-bd);
+  padding-top:10px;margin-top:2px;display:grid;gap:7px;box-sizing:border-box;}
+.rd-sp-hd{font:700 .84rem/1.4 var(--sans);color:var(--head);display:flex;
+  align-items:baseline;justify-content:space-between;gap:8px;}
+.rd-sp-hd span{font:400 .68rem/1.4 var(--sans);color:var(--sub);}
+.rd-sp-lab{display:block;font-size:.72rem;color:var(--sub);margin:2px 0 0;}
+.rd-sp-lab>span{float:right;color:var(--txt);font-variant-numeric:tabular-nums;}
+.rd-speak-box select{display:block;width:100%;margin-top:4px;box-sizing:border-box;
+  font:12px/1.4 var(--sans);padding:5px 7px;border-radius:7px;
+  border:1px solid var(--navlink-bd);background:var(--navlink-bg);color:var(--txt);}
+.rd-speak-box select:disabled{opacity:.6;}
+.rd-sp-chips{display:flex;gap:4px;flex-wrap:wrap;margin-top:2px;}
+.rd-sp-chips button{flex:1 1 auto;min-width:50px;font:600 11px/1.5 var(--sans);
+  padding:4px 5px;border-radius:6px;cursor:pointer;color:var(--txt);
+  background:var(--navlink-bg);border:1px solid var(--navlink-bd);}
 .rd-sp-chips button:hover,.rd-sp-chips button.on{border-color:#07c160;color:#07c160;}
-#rdSpeakPanel input[type=range]{display:block;width:100%;margin:5px 0 0;accent-color:#07c160;}
-.rd-sp-foot{display:flex;gap:6px;margin-top:12px;}
-.rd-sp-foot button{flex:1;font:600 12px/1.5 var(--sans,system-ui);padding:6px 4px;
-  border-radius:7px;cursor:pointer;color:inherit;
-  background:var(--navlink-bg,#faf8f2);border:1px solid var(--card-bd,#e3dfd4);}
-.rd-sp-foot button:hover{border-color:var(--head,#315e50);color:var(--head,#315e50);}
-.rd-sp-tip{margin:9px 0 0;font-size:.7rem;line-height:1.5;color:var(--sub,#888);}
+.rd-speak-box input[type=range]{display:block;width:100%;margin:5px 0 0;accent-color:#07c160;}
+.rd-sp-foot{display:flex;gap:6px;margin-top:2px;}
+.rd-sp-foot button{flex:1;font:600 11px/1.5 var(--sans);padding:5px 4px;
+  border-radius:7px;cursor:pointer;color:var(--txt);
+  background:var(--navlink-bg);border:1px solid var(--navlink-bd);}
+.rd-sp-foot button:hover{border-color:var(--head);color:var(--head);}
+.rd-sp-tip{margin:0;font-size:.68rem;line-height:1.5;color:var(--sub);}
+
+/* 底部朗读控制条：不占右上角，移动端拇指可达；避开系统底部安全区 */
+#rdSpeakBar{position:fixed;left:50%;transform:translateX(-50%);z-index:65;
+  bottom:calc(12px + env(safe-area-inset-bottom,0px));
+  width:min(420px,calc(100vw - 24px));box-sizing:border-box;
+  display:flex;align-items:center;gap:6px;padding:7px 9px;
+  background:var(--card-bg);border:1px solid var(--card-bd);border-radius:12px;
+  box-shadow:0 10px 30px rgba(0,0,0,.28);font:12px/1.4 var(--sans);color:var(--txt);}
+#rdSpeakBar[hidden]{display:none;}
+.rd-sb-txt{flex:1 1 auto;min-width:0;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;color:var(--sub);}
+#rdSpeakBar.rd-sb-warn .rd-sb-txt{white-space:normal;color:#d98b4a;}
+#rdSpeakBar button{flex:none;width:32px;height:30px;box-sizing:border-box;padding:0;
+  font:600 13px/1 var(--sans);color:var(--txt);background:var(--navlink-bg);
+  border:1px solid var(--navlink-bd);border-radius:7px;cursor:pointer;}
+#rdSpeakBar button:hover{border-color:var(--head);color:var(--head);}
+
+/* ── 吸顶标题折行修复（窄屏）────────────────────────────────────
+   原布局：吸顶后 .rd-stick 左右各让 46px、标题行再叠 padding-right:84px
+   给右上角 3 个 fixed 图标让位，作者名又占 30%，标题只剩 ~123px，
+   而《以交易为生（原书第2版）》单行需 208px → 被挤成两行、作者被压没。
+   修法：标题行整体下移到图标带（top:10+34=44px）下方，右侧让位即可归零，
+   标题独占整行宽度单行显示；作者名仅在吸顶态隐藏（首屏仍正常显示）。 */
 @media(max-width:720px){
-  #rdSpeakBtn{right:138px;padding:7px 10px;}
-  #rdSpeakPanel{top:50px;}
+  body.rd-scrolled .rd-stick{padding-top:48px;}
+  body.rd-scrolled .rd-stick-row{padding-right:0;}
+  body.rd-scrolled .rd-stick .rd-hero-author{display:none;}
+  body.rd-scrolled .rd-stick h1{display:block;white-space:nowrap;overflow:hidden;
+    text-overflow:ellipsis;-webkit-line-clamp:none;flex:1 1 auto;min-width:0;}
 }
+/* ── /听书 v4 段尾 ── */
+
 

@@ -1076,25 +1076,24 @@
     loaded();
   }
 
-  /* ── 听书（TTS 点块朗读 + 右上角配置）──────────────────────
-   * 改动只在本文件，所有书的 combined.html 自动生效（壳页不含渲染逻辑）。
-   * - 右上角 #rdSpeakBtn 是唯一入口，点击展开 #rdSpeakPanel 配置面板：
-   *   音色（女声/男声/台湾腔快捷 + 全部系统语音下拉）、语速、音调、音量、
-   *   静音、停止。配置存 localStorage，改参数即时重读当前块。
-   *   按钮位置由 placeBtn() 动态测量右上角已有 fixed 按钮向左避让，
-   *   避免与 Aa(12) / 分享(54) / AI 大纲(96) 挤在一起。
-   * - 点哪读哪：朗读「点击位置所属的最小语义块」，再点同一块暂停。
-   *   粒度：原句 li > 要点 li > 小节 div.sec > 段落/标题 > section（兜底）。
-   *   AI 领读的小节是 div.sec 而非 section 标签，整章才是一个 section。
-   * - 默认静音：打开详情页不出声；首次点块自动开声（静音状态不持久化）。
+  /* ── 听书（TTS 点块朗读）v4 ───────────────────────────────────
+   * - 入口并入壳页已有的「Aa」阅读设置面板 #rdPanel（和字号/段距/主题放一起），
+   *   右上角不再新增任何按钮；点 Aa 才展开配置、才枚举系统语音（按需调用）。
+   * - 朗读时底部浮出控制条 #rdSpeakBar（暂停/继续、停止、静音、设置），
+   *   移动端拇指可达，不必去右上角找按钮。
+   * - 点正文任意语义块朗读该块（细粒度），再点同一块暂停；默认静音，
+   *   首次点块自动开声（静音状态不持久化）。
+   * - 设备/浏览器缺 Web Speech API 时 UI 照常创建，朗读时给明确提示，
+   *   不再整体 return（否则移动端会出现「点文字没反应、也找不到按钮」）。
    */
   function initSpeak() {
-    if (!('speechSynthesis' in window) || typeof SpeechSynthesisUtterance === 'undefined') return;
-    var synth = window.speechSynthesis;
     var main = q('#rdBody');
     if (!main) return;
+    var hasTTS = ('speechSynthesis' in window) &&
+                 typeof window.SpeechSynthesisUtterance !== 'undefined';
+    var synth = hasTTS ? window.speechSynthesis : null;
 
-    /* ── 用户配置（音色/语速/音调/音量持久化，静音每次打开都恢复默认）── */
+    /* ── 用户配置（音色/语速/音调/音量持久化，静音每次打开恢复默认）── */
     var CFG_KEY = 'rd-speak-cfg';
     function loadPrefs() {
       try { return JSON.parse(localStorage.getItem(CFG_KEY) || '{}') || {}; } catch (e) { return {}; }
@@ -1118,8 +1117,10 @@
 
     var muted = true;        // 默认静音
     var curUnit = null;      // 当前正在朗读的单元
+    var lastUnit = null;     // 暂停后用于「继续」
     var utter = null;
     var speaking = false;
+    var activeChip = voiceURI === '__auto__' ? 'auto' : null;  // 当前音色快捷项
 
     /* ── 朗读单元：从细到粗，closest 取 DOM 上最近的一个 ────────
        section 只作兜底，点 AI 领读里的内容时绝不能往上命中整章。 */
@@ -1131,10 +1132,10 @@
       'h2', 'h3', 'h4', 'h5',
       'section'                           // 兜底：整模块
     ].join(', ');
-    /* 交互元素 / 折叠控件 / 统计行 / 设置面板：只做原本的动作 */
+    /* 交互元素 / 折叠控件 / 统计行 / 两个听书 UI：只做原本的动作 */
     var SKIP_SEL = 'a, button, summary, [data-no-speak], .mmx-head, .mmx-caret, ' +
                    '.mmx-stat, input, select, textarea, label, .rd-speak-skip, ' +
-                   '#rdSpeakPanel, #rdSpeakPanel *';
+                   '#rdSpeakBar, #rdSpeakBar *, #rdPanel, #rdPanel *';
 
     function resolveUnit(t) {
       if (!t || !t.closest) return null;
@@ -1159,8 +1160,8 @@
       return (c.textContent || '').replace(/\s+/g, ' ').trim();
     }
 
-    /* ── 语音：分类 + 选中 + 下拉 ───────────────────────────── */
-    function allVoices() { return synth.getVoices() || []; }
+    /* ── 语音：分类 + 选中 + 下拉（缺 TTS 时 allVoices 恒为空数组）── */
+    function allVoices() { return (synth && synth.getVoices()) || []; }
     function isZh(v) { return /^zh|cmn|chinese/i.test(v.lang || ''); }
     function isFemale(v) {
       return /female|女|ting|xiao|yao|hui|mei|hanhan|yating|tracy|sinji|vivi|google.*(國語|普通话)/i.test(v.name || '');
@@ -1203,12 +1204,13 @@
       return hit.length ? voiceKey(hit[0]) : '__auto__';
     }
     function fillVoices() {
-      var sel = q('#rdSpVoice', panel);
+      var sel = q('#rdSpVoice', box);
       if (!sel) return;
       var vs = allVoices();
       sel.innerHTML = '';
       var o0 = document.createElement('option');
-      o0.value = '__auto__'; o0.textContent = '自动（中文女声优先）';
+      o0.value = '__auto__';
+      o0.textContent = hasTTS ? '自动（中文女声优先）' : '当前浏览器不支持语音';
       sel.appendChild(o0);
       vs.slice().sort(function (a, b) {
         var za = isZh(a) ? 1 : 0, zb = isZh(b) ? 1 : 0;
@@ -1221,92 +1223,79 @@
       });
       sel.value = voiceURI;
       if (!sel.value) { sel.value = '__auto__'; voiceURI = '__auto__'; }
+      sel.disabled = !hasTTS;
     }
 
-    /* ── 唯一入口按钮 + 配置面板 ────────────────────────────── */
-    var btn = document.createElement('button');
-    btn.id = 'rdSpeakBtn';
-    btn.type = 'button';
-    btn.setAttribute('aria-label', '听书设置');
+    /* ── 配置区：注入已有的「Aa」阅读设置面板 ─────────────────── */
+    var rdPanel = q('#rdPanel');
+    var box = null;
+    if (rdPanel) {
+      box = document.createElement('div');
+      box.className = 'rd-speak-box rd-speak-skip';
+      box.innerHTML =
+        '<div class="rd-sp-hd">🎧 听书 <span id="rdSpState">默认静音</span></div>' +
+        '<label class="rd-sp-lab">音色<select id="rdSpVoice"></select></label>' +
+        '<div class="rd-sp-chips">' +
+          '<button type="button" data-voice="female">女声</button>' +
+          '<button type="button" data-voice="male">男声</button>' +
+          '<button type="button" data-voice="tw">台湾腔</button>' +
+          '<button type="button" data-voice="auto">自动</button>' +
+        '</div>' +
+        '<label class="rd-sp-lab">语速 <span id="rdSpRateVal">1.0×</span>' +
+          '<input type="range" id="rdSpRate" min="0.5" max="2" step="0.1"></label>' +
+        '<label class="rd-sp-lab">音调 <span id="rdSpPitchVal">1.0</span>' +
+          '<input type="range" id="rdSpPitch" min="0.5" max="1.5" step="0.1"></label>' +
+        '<label class="rd-sp-lab">音量 <span id="rdSpVolVal">100%</span>' +
+          '<input type="range" id="rdSpVol" min="0" max="1" step="0.05"></label>' +
+        '<div class="rd-sp-foot">' +
+          '<button type="button" id="rdSpMute">🔇 已静音</button>' +
+          '<button type="button" id="rdSpStop">⏹ 停止</button>' +
+        '</div>' +
+        '<p class="rd-sp-tip">点正文任意段落朗读，再点同一处暂停 · 设置自动保存</p>';
+      rdPanel.appendChild(box);
+      rdPanel.classList.add('rd-has-speak');
+    }
 
-    var panel = document.createElement('div');
-    panel.id = 'rdSpeakPanel';
-    panel.hidden = true;
-    panel.innerHTML =
-      '<div class="rd-sp-head"><b>🎧 听书设置</b>' +
-        '<button type="button" class="rd-sp-x" aria-label="关闭">×</button></div>' +
-      '<div class="rd-sp-state" id="rdSpState">未朗读 · 默认静音</div>' +
-      '<label class="rd-sp-lab">音色<select id="rdSpVoice"></select></label>' +
-      '<div class="rd-sp-chips">' +
-        '<button type="button" data-voice="female">女声</button>' +
-        '<button type="button" data-voice="male">男声</button>' +
-        '<button type="button" data-voice="tw">台湾腔</button>' +
-        '<button type="button" data-voice="auto">自动</button>' +
-      '</div>' +
-      '<label class="rd-sp-lab">语速 <span id="rdSpRateVal">1.0×</span>' +
-        '<input type="range" id="rdSpRate" min="0.5" max="2" step="0.1"></label>' +
-      '<label class="rd-sp-lab">音调 <span id="rdSpPitchVal">1.0</span>' +
-        '<input type="range" id="rdSpPitch" min="0.5" max="1.5" step="0.1"></label>' +
-      '<label class="rd-sp-lab">音量 <span id="rdSpVolVal">100%</span>' +
-        '<input type="range" id="rdSpVol" min="0" max="1" step="0.05"></label>' +
-      '<div class="rd-sp-foot">' +
-        '<button type="button" id="rdSpMute">🔇 已静音</button>' +
-        '<button type="button" id="rdSpStop">⏹ 停止</button>' +
-      '</div>' +
-      '<p class="rd-sp-tip">点正文任意段落朗读，再点同一处暂停 · 设置自动保存</p>';
-
-    document.body.appendChild(btn);
-    document.body.appendChild(panel);
+    /* ── 底部朗读控制条：移动端拇指可达 ───────────────────────── */
+    var bar = document.createElement('div');
+    bar.id = 'rdSpeakBar';
+    bar.hidden = true;
+    bar.setAttribute('role', 'group');
+    bar.setAttribute('aria-label', '听书控制');
+    bar.innerHTML =
+      '<span class="rd-sb-txt" id="rdSbTxt"></span>' +
+      '<button type="button" id="rdSbPause" aria-label="暂停">⏸</button>' +
+      '<button type="button" id="rdSbStop" aria-label="停止">⏹</button>' +
+      '<button type="button" id="rdSbMute" aria-label="静音">🔇</button>' +
+      '<button type="button" id="rdSbSet" aria-label="听书设置">⚙</button>';
+    document.body.appendChild(bar);
+    /* 控制条上的点击不要冒泡：否则会触发 Aa 面板的「点外部关闭」监听 */
+    bar.addEventListener('click', function (e) { e.stopPropagation(); });
 
     function refresh() {
-      btn.textContent = muted ? '🔇' : '🔊';
-      btn.title = muted ? '听书设置（当前静音）· 点此配置音色 / 语速' : '听书设置（当前有声）· 点此配置音色 / 语速';
-      btn.classList.toggle('on', !muted);
-      var mb = q('#rdSpMute', panel);
+      var st = q('#rdSpState', box);
+      if (st) st.textContent = !hasTTS ? '当前浏览器不支持'
+                            : speaking ? '正在朗读…'
+                            : (muted ? '默认静音' : '点正文开始');
+      var mb = q('#rdSpMute', box);
       if (mb) mb.textContent = muted ? '🔇 已静音' : '🔊 有声';
-      var st = q('#rdSpState', panel);
-      if (st) st.textContent = speaking ? '正在朗读…' : (muted ? '未朗读 · 默认静音' : '未朗读 · 点正文开始');
-    }
-
-    /* 动态避让：测右上角已有 fixed 按钮，把入口放到它们最左侧再往左 8px。
-       share.js / visit-stats.js 是延迟注入的，所以多跑几次 + 跟随 resize。 */
-    function placeBtn() {
-      var W = document.documentElement.clientWidth || window.innerWidth;
-      var minLeft = W;
-      qa('button, a').forEach(function (el) {
-        if (el === btn || panel.contains(el)) return;
-        var s = getComputedStyle(el);
-        if (s.position !== 'fixed') return;
-        var r = el.getBoundingClientRect();
-        if (r.width < 12 || r.height < 12 || r.top > 60 || r.left < W * 0.5) return;
-        if (r.left < minLeft) minLeft = r.left;
-      });
-      btn.style.right = Math.round(minLeft >= W ? 12 : W - minLeft + 8) + 'px';
-    }
-
-    btn.addEventListener('click', function (e) {
-      e.stopPropagation();
-      var show = panel.hidden;
-      if (show) {
-        var rp = q('#rdPanel');           // 与「Aa」阅读设置面板互斥
-        if (rp) rp.hidden = true;
-        fillVoices();
+      var bm = q('#rdSbMute', bar);
+      if (bm) { bm.textContent = muted ? '🔇' : '🔊'; bm.setAttribute('aria-label', muted ? '取消静音' : '静音'); }
+      var bp = q('#rdSbPause', bar);
+      if (bp) { bp.textContent = speaking ? '⏸' : '▶'; bp.setAttribute('aria-label', speaking ? '暂停' : '继续'); }
+      var chips = qa('.rd-sp-chips button', box);
+      if (chips.length) {
+        chips.forEach(function (x) { x.classList.toggle('on', x.getAttribute('data-voice') === activeChip); });
       }
-      panel.hidden = !show;
+    }
+    function showBar(txt, warn) {
+      var t = q('#rdSbTxt', bar);
+      if (t) t.textContent = txt || '';
+      bar.classList.toggle('rd-sb-warn', !!warn);
+      bar.hidden = false;
       refresh();
-    });
-    panel.addEventListener('click', function (e) { e.stopPropagation(); });
-    document.addEventListener('click', function (e) {
-      if (!panel.hidden && !panel.contains(e.target) && e.target !== btn) panel.hidden = true;
-    });
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') panel.hidden = true;
-    });
-    q('.rd-sp-x', panel).addEventListener('click', function () { panel.hidden = true; });
-    /* 「Aa」阅读设置的 onclick 带 stopPropagation，document 上的关闭监听收不到；
-       直接在同一元素补一个监听，保证两个面板互斥、不会叠在右上角。 */
-    var fab = q('#rdFab');
-    if (fab) fab.addEventListener('click', function () { panel.hidden = true; });
+    }
+    function hideBar() { bar.hidden = true; refresh(); }
 
     /* 改配置后若正在朗读，重读当前块以立即生效（滑块拖动中不重读） */
     function relive() {
@@ -1314,99 +1303,122 @@
       if (u && speaking) speak(u); else refresh();
     }
 
-    var sel = q('#rdSpVoice', panel);
-    sel.addEventListener('change', function () {
-      voiceURI = sel.value || '__auto__';
-      qa('.rd-sp-chips button', panel).forEach(function (x) { x.classList.remove('on'); });
-      savePrefs(); relive();
-    });
-    qa('.rd-sp-chips button', panel).forEach(function (b) {
-      b.addEventListener('click', function () {
-        voiceURI = firstBy(b.getAttribute('data-voice'));
-        sel.value = voiceURI;
-        if (!sel.value) { sel.value = '__auto__'; voiceURI = '__auto__'; }
-        qa('.rd-sp-chips button', panel).forEach(function (x) { x.classList.toggle('on', x === b); });
+    if (box) {
+      var sel = q('#rdSpVoice', box);
+      sel.addEventListener('change', function () {
+        voiceURI = sel.value || '__auto__';
+        activeChip = voiceURI === '__auto__' ? 'auto' : null;
         savePrefs(); relive();
       });
-    });
+      qa('.rd-sp-chips button', box).forEach(function (b) {
+        b.addEventListener('click', function () {
+          activeChip = b.getAttribute('data-voice');
+          voiceURI = firstBy(activeChip);
+          sel.value = voiceURI;
+          if (!sel.value) { sel.value = '__auto__'; voiceURI = '__auto__'; }
+          savePrefs(); relive();
+        });
+      });
 
-    var rEl = q('#rdSpRate', panel), pEl = q('#rdSpPitch', panel), vEl = q('#rdSpVol', panel);
-    function setLabel(el, txt) { el.textContent = txt; }
-    rEl.value = rate; pEl.value = pitch; vEl.value = volume;
-    setLabel(q('#rdSpRateVal', panel), rate.toFixed(1) + '×');
-    setLabel(q('#rdSpPitchVal', panel), pitch.toFixed(1));
-    setLabel(q('#rdSpVolVal', panel), Math.round(volume * 100) + '%');
-    rEl.addEventListener('input', function () {
-      rate = parseFloat(rEl.value);
-      setLabel(q('#rdSpRateVal', panel), rate.toFixed(1) + '×');
-      savePrefs();
-    });
-    pEl.addEventListener('input', function () {
-      pitch = parseFloat(pEl.value);
-      setLabel(q('#rdSpPitchVal', panel), pitch.toFixed(1));
-      savePrefs();
-    });
-    vEl.addEventListener('input', function () {
-      volume = parseFloat(vEl.value);
-      setLabel(q('#rdSpVolVal', panel), Math.round(volume * 100) + '%');
-      if (utter) utter.volume = muted ? 0 : volume;
-      savePrefs();
-    });
-    rEl.addEventListener('change', relive);
-    pEl.addEventListener('change', relive);
-    vEl.addEventListener('change', relive);
+      var rEl = q('#rdSpRate', box), pEl = q('#rdSpPitch', box), vEl = q('#rdSpVol', box);
+      function setLabel(el, txt) { el.textContent = txt; }
+      rEl.value = rate; pEl.value = pitch; vEl.value = volume;
+      setLabel(q('#rdSpRateVal', box), rate.toFixed(1) + '×');
+      setLabel(q('#rdSpPitchVal', box), pitch.toFixed(1));
+      setLabel(q('#rdSpVolVal', box), Math.round(volume * 100) + '%');
+      rEl.addEventListener('input', function () {
+        rate = parseFloat(rEl.value);
+        setLabel(q('#rdSpRateVal', box), rate.toFixed(1) + '×'); savePrefs();
+      });
+      pEl.addEventListener('input', function () {
+        pitch = parseFloat(pEl.value);
+        setLabel(q('#rdSpPitchVal', box), pitch.toFixed(1)); savePrefs();
+      });
+      vEl.addEventListener('input', function () {
+        volume = parseFloat(vEl.value);
+        setLabel(q('#rdSpVolVal', box), Math.round(volume * 100) + '%');
+        if (utter) utter.volume = muted ? 0 : volume;
+        savePrefs();
+      });
+      rEl.addEventListener('change', relive);
+      pEl.addEventListener('change', relive);
+      vEl.addEventListener('change', relive);
 
-    q('#rdSpMute', panel).addEventListener('click', function () {
+      q('#rdSpMute', box).addEventListener('click', function () {
+        muted = !muted;
+        if (utter) utter.volume = muted ? 0 : volume;
+        refresh();
+      });
+      q('#rdSpStop', box).addEventListener('click', function () { stopAll(); hideBar(); });
+    }
+
+    /* 底部控制条按钮 */
+    q('#rdSbPause', bar).addEventListener('click', function () {
+      if (speaking) { stopAll(); refresh(); }
+      else if (lastUnit) speak(lastUnit);
+      else showBar('点正文任意段落开始朗读', true);
+    });
+    q('#rdSbStop', bar).addEventListener('click', function () { stopAll(); hideBar(); });
+    q('#rdSbMute', bar).addEventListener('click', function () {
       muted = !muted;
       if (utter) utter.volume = muted ? 0 : volume;
       refresh();
     });
-    q('#rdSpStop', panel).addEventListener('click', function () { stopAll(); refresh(); });
+    q('#rdSbSet', bar).addEventListener('click', function () {
+      if (rdPanel) { rdPanel.hidden = false; fillVoices(); refresh(); }
+    });
 
     function stopAll() {
-      // 无条件 cancel：speak() 刚调用时 speaking 可能仍是 false，但已有排队语音
-      try { synth.cancel(); } catch (e) {}
+      if (synth) { try { synth.cancel(); } catch (e) {} }   // 无条件 cancel
       speaking = false; curUnit = null; utter = null;
       qa('#rdBody .speaking').forEach(function (s) { s.classList.remove('speaking'); });
     }
 
     function speak(unit) {
+      if (!hasTTS || !synth) {
+        showBar('当前浏览器不支持语音朗读，建议用 Chrome / Edge / Safari 打开', true);
+        return;
+      }
       var txt = collectText(unit);
       if (!txt) return;
       stopAll();
-      utter = new SpeechSynthesisUtterance(txt);
+      utter = new window.SpeechSynthesisUtterance(txt);
       utter.lang = 'zh-CN';
       var v = currentVoice();
       if (v) utter.voice = v;
       utter.rate = rate; utter.pitch = pitch; utter.volume = muted ? 0 : volume;
       utter.onend = function () {
         unit.classList.remove('speaking');
-        speaking = false; curUnit = null; utter = null; refresh();
+        speaking = false; curUnit = null; utter = null; hideBar();
       };
       utter.onerror = utter.onend;
       unit.classList.add('speaking');
-      curUnit = unit; speaking = true;
+      curUnit = unit; lastUnit = unit; speaking = true;
       synth.speak(utter);
-      refresh();
+      showBar(txt.length > 42 ? txt.slice(0, 42) + '…' : txt, false);
     }
 
     main.addEventListener('click', function (e) {
       var unit = resolveUnit(e.target);
       if (!unit) return;
-      if (curUnit === unit && speaking) { stopAll(); refresh(); return; }  // 再点同一块 → 暂停
-      if (muted) { muted = false; refresh(); }                            // 首次点块自动开声
+      if (curUnit === unit && speaking) { stopAll(); hideBar(); return; }  // 再点同一块 → 暂停
+      if (muted) muted = false;                                          // 首次点块自动开声
       speak(unit);
     });
 
-    if (typeof synth.onvoiceschanged !== 'undefined') {
-      synth.onvoiceschanged = function () { fillVoices(); };
+    /* 点「Aa」打开设置面板时才枚举系统语音（按需调用，不进页面就扫一遍） */
+    var fab = q('#rdFab');
+    if (fab) fab.addEventListener('click', function () {
+      if (rdPanel && !rdPanel.hidden) { fillVoices(); refresh(); }
+    });
+    if (hasTTS && synth && typeof synth.onvoiceschanged !== 'undefined') {
+      synth.onvoiceschanged = function () { if (rdPanel && !rdPanel.hidden) fillVoices(); };
     }
+    /* 初始化时填一次下拉：无 TTS 时才能立刻置灰并显示「不支持」；
+       点 Aa 打开面板时再刷新一次，捕获异步加载完成的系统语音。
+       这里只枚举本地语音列表，不会发声——真正调用 TTS 引擎在点正文之后。 */
     fillVoices();
     refresh();
-    placeBtn();
-    setTimeout(placeBtn, 300);
-    setTimeout(placeBtn, 1200);
-    window.addEventListener('resize', placeBtn);
 
     // 切书/翻页/离开时停掉，避免后台继续朗读
     window.addEventListener('beforeunload', stopAll);
