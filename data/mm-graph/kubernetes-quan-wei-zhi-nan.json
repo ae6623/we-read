@@ -1,62 +1,124 @@
 {
- "title": "Kubernetes权威指南",
- "thesis": "以声明式控制把容器编排落为可操作的工程手册",
- "branches": [
-  {
-   "id": "A",
-   "label": "为何用K8s",
-   "rel": "因果",
-   "points": [
-    "谷歌Borg经验",
-    "大规模容器化",
-    "资源自动控制"
-   ],
-   "note": "从十余年集群管理经验升华而来"
-  },
-  {
-   "id": "B",
-   "label": "集群搭建",
-   "rel": "递进",
-   "points": [
-    "kubeadm快装",
-    "二进制安装",
-    "证书与网络"
-   ],
-   "note": "安装、安全、网络、升级成体系"
-  },
-  {
-   "id": "C",
-   "label": "Pod核心",
-   "rel": "包含",
-   "points": [
-    "基本部署单元",
-    "YAML定义",
-    "生命周期探针"
-   ],
-   "note": "Pod是调度与配置管理的落点"
-  },
-  {
-   "id": "D",
-   "label": "Service暴露",
-   "rel": "并列",
-   "points": [
-    "统一入口负载",
-    "Headless服务",
-    "Ingress七层"
-   ],
-   "note": "服务发现、负载与七层路由"
-  },
-  {
-   "id": "E",
-   "label": "控制与运维",
-   "rel": "递进",
-   "points": [
-    "CRI运行时",
-    "kubectl命令",
-    "APIServer中枢"
-   ],
-   "note": "组件机制与命令行支撑日常运维"
+  "title": "Kubernetes权威指南",
+  "thesis": "以声明式控制把容器编排落为可操作的工程手册",
+  "branches": [
+    {
+      "id": "A",
+      "label": "为何用K8s",
+      "rel": "因果",
+      "points": [
+        "谷歌Borg经验",
+        "大规模容器化",
+        "资源自动控制"
+      ],
+      "note": "从十余年集群管理经验升华而来"
+    },
+    {
+      "id": "B",
+      "label": "集群搭建",
+      "rel": "递进",
+      "points": [
+        "kubeadm快装",
+        "二进制安装",
+        "证书与网络"
+      ],
+      "note": "安装、安全、网络、升级成体系"
+    },
+    {
+      "id": "C",
+      "label": "Pod核心",
+      "rel": "包含",
+      "points": [
+        "基本部署单元",
+        "YAML定义",
+        "生命周期探针"
+      ],
+      "note": "Pod是调度与配置管理的落点"
+    },
+    {
+      "id": "D",
+      "label": "Service暴露",
+      "rel": "并列",
+      "points": [
+        "统一入口负载",
+        "Headless服务",
+        "Ingress七层"
+      ],
+      "note": "服务发现、负载与七层路由"
+    },
+    {
+      "id": "E",
+      "label": "控制与运维",
+      "rel": "递进",
+      "points": [
+        "CRI运行时",
+        "kubectl命令",
+        "APIServer中枢"
+      ],
+      "note": "组件机制与命令行支撑日常运维"
+    }
+  ],
+  "source": "llm",
+  "evidence": {
+    "谷歌Borg经验": [
+      "前身是Google内部Borg/Omega系统",
+      "理念可追溯谷歌十余年集群管理经验"
+    ],
+    "大规模容器化": [
+      "是谷歌十几年大规模容器技术经验的升华",
+      "被认可为基于Docker的大规模容器化方案"
+    ],
+    "资源自动控制": [
+      "Kubernetes是高度自动化的资源控制系统",
+      "提供资源调度、扩容及缩容整套功能"
+    ],
+    "kubeadm快装": [
+      "用kubeadm需先配置yum源并安装工具",
+      "另有从官网下载编译好二进制文件安装法"
+    ],
+    "二进制安装": [
+      "从发布官网找对应版本号下载二进制文件",
+      "二进制升级需逐个隔离Node再更新kubelet"
+    ],
+    "证书与网络": [
+      "为kube-apiserver生成数字证书并用CA签名",
+      "跨主机容器网络需额外工具自行设置"
+    ],
+    "基本部署单元": [
+      "Pod是Kubernetes的基本部署单元",
+      "一个Pod包含一个或多个容器"
+    ],
+    "YAML定义": [
+      "YAML格式的Pod定义文件含多个属性",
+      "Service定义也含apiVersion、kind等属性"
+    ],
+    "生命周期探针": [
+      "Pod在生命周期中被定义为各种状态",
+      "LivenessProbe探针用于判断容器是否存活"
+    ],
+    "统一入口负载": [
+      "Service解决分布式应用统一入口定义",
+      "同时承担负载均衡问题"
+    ],
+    "Headless服务": [
+      "Headless Service不设ClusterIP",
+      "Kubernetes 1.2时DNS由SkyDNS提供"
+    ],
+    "Ingress七层": [
+      "Ingress是实现HTTP层业务路由的机制",
+      "容器级hostPort可把端口映射到物理机"
+    ],
+    "CRI运行时": [
+      "Kubernetes从1.5版本引入CRI接口规范",
+      "集群运行需要容器运行时CRI"
+    ],
+    "kubectl命令": [
+      "kubectl语法为 $ kubectl [command] [TYPE]",
+      "kubectl scale可一键设置Pod副本数量"
+    ],
+    "APIServer中枢": [
+      "API Server是各模块数据交互通信中枢",
+      "掌握各服务可配参数利于生产部署运维"
+    ]
   }
- ],
- "source": "llm"
 }

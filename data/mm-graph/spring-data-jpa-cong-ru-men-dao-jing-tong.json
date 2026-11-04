@@ -1,62 +1,123 @@
 {
- "title": "Spring Data JPA从入门到精通",
- "thesis": "以仓库抽象和动态代理消除数据访问样板",
- "branches": [
-  {
-   "id": "A",
-   "label": "ORM与定位",
-   "rel": "因果",
-   "points": [
-    "Boot为技术基础",
-    "封装Hibernate",
-    "MyBatis对照"
-   ],
-   "note": "先比对ORM框架再交代JPA身世"
-  },
-  {
-   "id": "B",
-   "label": "仓库抽象",
-   "rel": "包含",
-   "points": [
-    "仓库最底层抽象",
-    "Crud通用增删改查",
-    "七个接口两类实现"
-   ],
-   "note": "以仓库接口层次搭起数据访问"
-  },
-  {
-   "id": "C",
-   "label": "查询方法",
-   "rel": "递进",
-   "points": [
-    "动态代理实现原理",
-    "方法名即查询策略",
-    "分页排序处理"
-   ],
-   "note": "由方法名解析出查询，无需手写SQL"
-  },
-  {
-   "id": "D",
-   "label": "注解式查询",
-   "rel": "并列",
-   "points": [
-    "@Query注解",
-    "SpEL与@Param",
-    "存储过程调用"
-   ],
-   "note": "以注解覆盖定制查询与修改场景"
-  },
-  {
-   "id": "E",
-   "label": "实体与进阶",
-   "rel": "对比",
-   "points": [
-    "@Entity映射表",
-    "关联注解不混用",
-    "约定优于配置"
-   ],
-   "note": "实体注解之坑与仓库扩展收尾"
+  "title": "Spring Data JPA从入门到精通",
+  "thesis": "以仓库抽象和动态代理消除数据访问样板",
+  "branches": [
+    {
+      "id": "A",
+      "label": "ORM与定位",
+      "rel": "因果",
+      "points": [
+        "Boot为技术基础",
+        "封装Hibernate",
+        "MyBatis对照"
+      ],
+      "note": "先比对ORM框架再交代JPA身世"
+    },
+    {
+      "id": "B",
+      "label": "仓库抽象",
+      "rel": "包含",
+      "points": [
+        "仓库最底层抽象",
+        "Crud通用增删改查",
+        "七个接口两类实现"
+      ],
+      "note": "以仓库接口层次搭起数据访问"
+    },
+    {
+      "id": "C",
+      "label": "查询方法",
+      "rel": "递进",
+      "points": [
+        "动态代理实现原理",
+        "方法名即查询策略",
+        "分页排序处理"
+      ],
+      "note": "由方法名解析出查询，无需手写SQL"
+    },
+    {
+      "id": "D",
+      "label": "注解式查询",
+      "rel": "并列",
+      "points": [
+        "@Query注解",
+        "SpEL与@Param",
+        "存储过程调用"
+      ],
+      "note": "以注解覆盖定制查询与修改场景"
+    },
+    {
+      "id": "E",
+      "label": "实体与进阶",
+      "rel": "对比",
+      "points": [
+        "@Entity映射表",
+        "关联注解不混用",
+        "约定优于配置"
+      ],
+      "note": "实体注解之坑与仓库扩展收尾"
+    }
+  ],
+  "source": "llm",
+  "evidence": {
+    "Boot为技术基础": [
+      "本书以Spring Boot为技术基础由浅入深讲解",
+      "以Boot为线索，大量用UML图释义"
+    ],
+    "封装Hibernate": [
+      "Spring Data JPA底层封装Hibernate",
+      "它是Hibernate的JPA的一次包装和升级"
+    ],
+    "MyBatis对照": [
+      "MyBatis着力POJO与SQL映射，灵活易上手",
+      "手写SQL控制派与自动派长期对照"
+    ],
+    "仓库最底层抽象": [
+      "Repository是数据库操作最底层的抽象接口",
+      "Spring Data自2010年提供一致数据访问"
+    ],
+    "Crud通用增删改查": [
+      "CrudRepository提供通用CRUD方法",
+      "PagingAndSortingRepository继承它"
+    ],
+    "七个接口两类实现": [
+      "需掌握七个Repository接口和两个实现类",
+      "SimpleJpaRepository是所有Repository实现类"
+    ],
+    "动态代理实现原理": [
+      "Repository实现原理采用动态代理机制",
+      "QueryExecutorMethodInterceptor拦截方法调用"
+    ],
+    "方法名即查询策略": [
+      "查询方法名由策略关键字、字段和条件组成",
+      "可用@EnableJpaRepositories设置查询策略"
+    ],
+    "分页排序处理": [
+      "Pageable、Slice、Sort动态实现分页排序",
+      "PagingAndSortingRepository专管分页排序"
+    ],
+    "@Query注解": [
+      "@Query注解用于自定义查询语句",
+      "@Modifying配合实现只绑参数的update"
+    ],
+    "SpEL与@Param": [
+      "@Param指定参数名，按名字绑定查询条件",
+      "SpEL表达式在查询中支持一组变量"
+    ],
+    "存储过程调用": [
+      "@NamedStoredProcedureQueries用来调用存储过程"
+    ],
+    "@Entity映射表": [
+      "@Entity把对象映射为JPA管理的数据库表",
+      "javax.persistence位于hibernate-jpa的jar包"
+    ],
+    "关联注解不混用": [
+      "注解要么全在字段、要么全在get方法",
+      "@JoinColumn配合@OneToOne、@ManyToOne"
+    ],
+    "约定优于配置": [
+      "Spring Data哲学是约定优于配置",
+      "用代理消除样板，方法名即生成查询"
+    ]
   }
- ],
- "source": "llm"
 }

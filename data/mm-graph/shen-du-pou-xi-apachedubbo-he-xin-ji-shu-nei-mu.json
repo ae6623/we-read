@@ -1,62 +1,124 @@
 {
- "title": "深度剖析ApacheDubbo核心技术内幕",
- "thesis": "拆源码讲透Dubbo服务治理的实现原理",
- "branches": [
-  {
-   "id": "A",
-   "label": "框架与分层",
-   "rel": "因果",
-   "points": [
-    "高性能RPC框架",
-    "四角色组成",
-    "分层上层依赖下层"
-   ],
-   "note": "先交代Dubbo定位与整体架构"
-  },
-  {
-   "id": "B",
-   "label": "内核与SPI",
-   "rel": "包含",
-   "points": [
-    "适配器屏蔽差异",
-    "动态编译生成源码",
-    "增强SPI机制"
-   ],
-   "note": "适配器和增强SPI撑起扩展机制"
-  },
-  {
-   "id": "C",
-   "label": "发布与引用",
-   "rel": "递进",
-   "points": [
-    "export激活发布",
-    "服务端处理请求",
-    "get返回代理类"
-   ],
-   "note": "追踪远程调用从发布到消费流程"
-  },
-  {
-   "id": "D",
-   "label": "目录与降级",
-   "rel": "并列",
-   "points": [
-    "invoker列表",
-    "订阅注册中心",
-    "本地mock降级"
-   ],
-   "note": "目录路由与降级保障调用可控"
-  },
-  {
-   "id": "E",
-   "label": "容错与负载",
-   "rel": "对比",
-   "points": [
-    "Failover默认重试",
-    "多种集群容错",
-    "多种均衡策略"
-   ],
-   "note": "集群容错与负载均衡策略对照"
+  "title": "深度剖析ApacheDubbo核心技术内幕",
+  "thesis": "拆源码讲透Dubbo服务治理的实现原理",
+  "branches": [
+    {
+      "id": "A",
+      "label": "框架与分层",
+      "rel": "因果",
+      "points": [
+        "高性能RPC框架",
+        "四角色组成",
+        "分层上层依赖下层"
+      ],
+      "note": "先交代Dubbo定位与整体架构"
+    },
+    {
+      "id": "B",
+      "label": "内核与SPI",
+      "rel": "包含",
+      "points": [
+        "适配器屏蔽差异",
+        "动态编译生成源码",
+        "增强SPI机制"
+      ],
+      "note": "适配器和增强SPI撑起扩展机制"
+    },
+    {
+      "id": "C",
+      "label": "发布与引用",
+      "rel": "递进",
+      "points": [
+        "export激活发布",
+        "服务端处理请求",
+        "get返回代理类"
+      ],
+      "note": "追踪远程调用从发布到消费流程"
+    },
+    {
+      "id": "D",
+      "label": "目录与降级",
+      "rel": "并列",
+      "points": [
+        "invoker列表",
+        "订阅注册中心",
+        "本地mock降级"
+      ],
+      "note": "目录路由与降级保障调用可控"
+    },
+    {
+      "id": "E",
+      "label": "容错与负载",
+      "rel": "对比",
+      "points": [
+        "Failover默认重试",
+        "多种集群容错",
+        "多种均衡策略"
+      ],
+      "note": "集群容错与负载均衡策略对照"
+    }
+  ],
+  "source": "llm",
+  "evidence": {
+    "高性能RPC框架": [
+      "Dubbo是阿里巴巴开源的高性能RPC调用框架",
+      "致力于提供高性能和透明化的RPC远程调用服务"
+    ],
+    "四角色组成": [
+      "Dubbo由服务提供方、消费方、注册中心、监控中心组成",
+      "框架分为服务提供方、服务注册与发现、消费者三层"
+    ],
+    "分层上层依赖下层": [
+      "Dubbo分层架构每层执行固定功能",
+      "上层依赖下层提供的功能，下层改变对上层透明"
+    ],
+    "适配器屏蔽差异": [
+      "适配器类为Dubbo框架提供统一的接口",
+      "屏蔽底层实现差异"
+    ],
+    "动态编译生成源码": [
+      "Dubbo为每个扩展接口生成对应适配器类的源码",
+      "使用适配器模式选择扩展接口的实现类"
+    ],
+    "增强SPI机制": [
+      "JDK中的SPI是面向接口编程的",
+      "Dubbo为每个扩展接口生成适配器类源码"
+    ],
+    "export激活发布": [
+      "ServiceConfig API用于发布服务",
+      "通过export()方法激活发布服务"
+    ],
+    "服务端处理请求": [
+      "消费端发起TCP链接后，服务提供方NettyServer响应",
+      "服务提供方启动含加载配置、创建Provider实例"
+    ],
+    "get返回代理类": [
+      "ReferenceConfig的get()方法返回的是一个代理类",
+      "服务消费方使用ReferenceConfig API消费服务"
+    ],
+    "invoker列表": [
+      "Directory代表多个invoker，内部维护一个List",
+      "RegistryDirectory在服务消费端启动时创建"
+    ],
+    "订阅注册中心": [
+      "创建完RegistryDirectory后调用subscribe()方法",
+      "根据注册中心推送的服务元数据更新"
+    ],
+    "本地mock降级": [
+      "ReferenceConfig的init()内调用checkMock检查设置",
+      "Dubbo讲如何对指定服务进行服务降级"
+    ],
+    "Failover默认重试": [
+      "Dubbo默认容错模式为Failover Cluster",
+      "从URL参数获取重试次数，未设置取默认值"
+    ],
+    "多种集群容错": [
+      "Dubbo提供Failover、Failfast、Failsafe等多种容错",
+      "BroadcastClusterInvoker实现广播调用"
+    ],
+    "多种均衡策略": [
+      "Dubbo提供多种均衡策略，默认为random",
+      "一致性Hash用Hash环改进余数Hash伸缩性差"
+    ]
   }
- ],
- "source": "llm"
 }

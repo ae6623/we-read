@@ -1,62 +1,122 @@
 {
- "title": "Spring Cloud微服务架构进阶",
- "thesis": "Spring Cloud进阶逐个拆解微服务治理组件",
- "branches": [
-  {
-   "id": "A",
-   "label": "架构缘起",
-   "rel": "因果",
-   "points": [
-    "单体打包部署",
-    "垂直拆分服务",
-    "云原生三特征"
-   ],
-   "note": "从单体困境引出微服务的拆分逻辑"
-  },
-  {
-   "id": "B",
-   "label": "基础底座",
-   "rel": "包含",
-   "points": [
-    "框架有机集合",
-    "Boot快速配置",
-    "Bootstrap上下文"
-   ],
-   "note": "明确框架集合与Boot的分工"
-  },
-  {
-   "id": "C",
-   "label": "注册与调用",
-   "rel": "并列",
-   "points": [
-    "Eureka注册发现",
-    "OpenFeign声明式",
-    "Ribbon负载均衡"
-   ],
-   "note": "解决服务地址变动与调用解耦"
-  },
-  {
-   "id": "D",
-   "label": "容错与网关",
-   "rel": "递进",
-   "points": [
-    "Hystrix防雪崩",
-    "隔离与降级",
-    "Gateway唯一入口"
-   ],
-   "note": "在调用链上叠加容错与统一入口"
-  },
-  {
-   "id": "E",
-   "label": "源码与时效",
-   "rel": "对比",
-   "points": [
-    "深入实现内幕",
-    "Netflix一代组件",
-    "转向服务网格"
-   ],
-   "note": "读法应重能力而非死记具体库"
+  "title": "Spring Cloud微服务架构进阶",
+  "thesis": "Spring Cloud进阶逐个拆解微服务治理组件",
+  "branches": [
+    {
+      "id": "A",
+      "label": "架构缘起",
+      "rel": "因果",
+      "points": [
+        "单体打包部署",
+        "垂直拆分服务",
+        "云原生三特征"
+      ],
+      "note": "从单体困境引出微服务的拆分逻辑"
+    },
+    {
+      "id": "B",
+      "label": "基础底座",
+      "rel": "包含",
+      "points": [
+        "框架有机集合",
+        "Boot快速配置",
+        "Bootstrap上下文"
+      ],
+      "note": "明确框架集合与Boot的分工"
+    },
+    {
+      "id": "C",
+      "label": "注册与调用",
+      "rel": "并列",
+      "points": [
+        "Eureka注册发现",
+        "OpenFeign声明式",
+        "Ribbon负载均衡"
+      ],
+      "note": "解决服务地址变动与调用解耦"
+    },
+    {
+      "id": "D",
+      "label": "容错与网关",
+      "rel": "递进",
+      "points": [
+        "Hystrix防雪崩",
+        "隔离与降级",
+        "Gateway唯一入口"
+      ],
+      "note": "在调用链上叠加容错与统一入口"
+    },
+    {
+      "id": "E",
+      "label": "源码与时效",
+      "rel": "对比",
+      "points": [
+        "深入实现内幕",
+        "Netflix一代组件",
+        "转向服务网格"
+      ],
+      "note": "读法应重能力而非死记具体库"
+    }
+  ],
+  "source": "llm",
+  "evidence": {
+    "单体打包部署": [
+      "单体架构将所有功能模块打包一起部署运行"
+    ],
+    "垂直拆分服务": [
+      "微服务从数据存储起把单体垂直拆成多个服务",
+      "每个服务都能独立部署、独立运行"
+    ],
+    "云原生三特征": [
+      "云原生应用须容器化封装与动态管理",
+      "云原生以面向微服务为特征"
+    ],
+    "框架有机集合": [
+      "Spring Cloud是一系列框架的有机集合",
+      "Spring Cloud不能与微服务架构划等号"
+    ],
+    "Boot快速配置": [
+      "Spring Boot是快速配置开发的脚手架",
+      "Boot由Pivotal团队2013年推出"
+    ],
+    "Bootstrap上下文": [
+      "Bootstrap上下文提供额外属性，可外部加载配置",
+      "Boot在resource下创建application配置文件"
+    ],
+    "Eureka注册发现": [
+      "Eureka是Netflix的RESTful服务注册发现组件",
+      "InstanceRegistry是Server注册表核心接口"
+    ],
+    "OpenFeign声明式": [
+      "OpenFeign是声明式RESTful网络请求客户端",
+      "FeignClientFactoryBean创建@FeignClient接口"
+    ],
+    "Ribbon负载均衡": [
+      "负载均衡把请求分发到多服务器避免不均",
+      "@LoadBalanced修饰RestTemplate即启用Ribbon"
+    ],
+    "Hystrix防雪崩": [
+      "Hystrix是Netflix开源项目，隔离失效依赖",
+      "雪崩效应：提供者不可用逐级放大到调用者"
+    ],
+    "隔离与降级": [
+      "Hystrix靠隔离依赖服务防止失效扩散",
+      "@HystrixCommand包装需保护的远程调用"
+    ],
+    "Gateway唯一入口": [
+      "API网关是后端服务唯一入口，封装内部架构"
+    ],
+    "深入实现内幕": [
+      "本书特色在深入组件实现内幕",
+      "含Eureka Client源码解析等章节"
+    ],
+    "Netflix一代组件": [
+      "系统化梳理Netflix的Eureka、Hystrix、Ribbon",
+      "曾是中文圈微服务入门标配"
+    ],
+    "转向服务网格": [
+      "治理正从SDK嵌入转向Istio等服务网格",
+      "控制逻辑下沉Sidecar后部分组件被边缘化"
+    ]
   }
- ],
- "source": "llm"
 }

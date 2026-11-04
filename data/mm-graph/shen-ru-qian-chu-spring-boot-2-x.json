@@ -1,62 +1,124 @@
 {
- "title": "深入浅出Spring Boot 2.x",
- "thesis": "约定优于配置，把Spring落到原理与陷阱",
- "branches": [
-  {
-   "id": "A",
-   "label": "来临与简化",
-   "rel": "因果",
-   "points": [
-    "EJB繁琐低效",
-    "约定优于配置",
-    "可嵌入Tomcat"
-   ],
-   "note": "从Spring的历史包袱解释Boot出现"
-  },
-  {
-   "id": "B",
-   "label": "环境与配置",
-   "rel": "并列",
-   "points": [
-    "安装STS插件",
-    "Maven找依赖",
-    "改server.port"
-   ],
-   "note": "以最少配置跑起第一个工程"
-  },
-  {
-   "id": "C",
-   "label": "IoC容器",
-   "rel": "包含",
-   "points": [
-    "扫描装配Bean",
-    "依赖注入",
-    "条件装配"
-   ],
-   "note": "全注解下把对象交给容器管理"
-  },
-  {
-   "id": "D",
-   "label": "生命周期",
-   "rel": "递进",
-   "points": [
-    "单例与原型",
-    "@Profile切换",
-    "引入XML与EL"
-   ],
-   "note": "从装配推进到作用域与环境细节"
-  },
-  {
-   "id": "E",
-   "label": "AOP与数据",
-   "rel": "并列",
-   "points": [
-    "事务管控典型",
-    "多个切面顺序",
-    "默认h2数据源"
-   ],
-   "note": "约定编程落到切面与数据库访问"
+  "title": "深入浅出Spring Boot 2.x",
+  "thesis": "约定优于配置，把Spring落到原理与陷阱",
+  "branches": [
+    {
+      "id": "A",
+      "label": "来临与简化",
+      "rel": "因果",
+      "points": [
+        "EJB繁琐低效",
+        "约定优于配置",
+        "可嵌入Tomcat"
+      ],
+      "note": "从Spring的历史包袱解释Boot出现"
+    },
+    {
+      "id": "B",
+      "label": "环境与配置",
+      "rel": "并列",
+      "points": [
+        "安装STS插件",
+        "Maven找依赖",
+        "改server.port"
+      ],
+      "note": "以最少配置跑起第一个工程"
+    },
+    {
+      "id": "C",
+      "label": "IoC容器",
+      "rel": "包含",
+      "points": [
+        "扫描装配Bean",
+        "依赖注入",
+        "条件装配"
+      ],
+      "note": "全注解下把对象交给容器管理"
+    },
+    {
+      "id": "D",
+      "label": "生命周期",
+      "rel": "递进",
+      "points": [
+        "单例与原型",
+        "@Profile切换",
+        "引入XML与EL"
+      ],
+      "note": "从装配推进到作用域与环境细节"
+    },
+    {
+      "id": "E",
+      "label": "AOP与数据",
+      "rel": "并列",
+      "points": [
+        "事务管控典型",
+        "多个切面顺序",
+        "默认h2数据源"
+      ],
+      "note": "约定编程落到切面与数据库访问"
+    }
+  ],
+  "source": "llm",
+  "evidence": {
+    "EJB繁琐低效": [
+      "EJB的繁琐和低效",
+      "Spring早期版本主要使用XML配置"
+    ],
+    "约定优于配置": [
+      "Spring Boot采用「约定优于配置」简化Spring开发",
+      "它提供默认约定配置项，开发者不需全部配置"
+    ],
+    "可嵌入Tomcat": [
+      "Spring Boot是基于Spring搭建的应用，可嵌入Tomcat",
+      "通过Maven依赖找到对应jar包和嵌入的服务器"
+    ],
+    "安装STS插件": [
+      "搭建Spring Boot开发环境需安装STS插件",
+      "本书采用2.0.0.RELEASE版本进行讲解"
+    ],
+    "Maven找依赖": [
+      "Spring Boot通过Maven依赖找到对应jar包",
+      "还能找到嵌入的服务器"
+    ],
+    "改server.port": [
+      "修改application.properties中的server.port属性",
+      "Spring Boot默认使用application.properties文件"
+    ],
+    "扫描装配Bean": [
+      "使用@Component和@ComponentScan注解扫描装配Bean",
+      "Spring IoC容器是一个管理Bean的容器"
+    ],
+    "依赖注入": [
+      "依赖注入是Spring IoC的两个作用之一",
+      "用于Bean之间的依赖"
+    ],
+    "条件装配": [
+      "条件装配Bean用于在特定条件下装配Bean",
+      "通过@ComponentScan定义的扫描路径找到Bean"
+    ],
+    "单例与原型": [
+      "Spring Bean存在单例和原型两种作用域",
+      "IoC是一种通过描述生成或获取对象的技术"
+    ],
+    "@Profile切换": [
+      "Spring提供Profile机制实现各环境切换",
+      "条件装配Bean在特定条件下装配"
+    ],
+    "引入XML与EL": [
+      "使用@ImportResource注解引入对应的XML文件",
+      "Spring EL是表达式语言，有更强大运算规则"
+    ],
+    "事务管控典型": [
+      "AOP最典型的应用就是数据库事务的管控",
+      "大量篇幅给事务隔离、传播行为等看不见的地带"
+    ],
+    "多个切面顺序": [
+      "Spring支持多个切面的运行，需知道其运行顺序",
+      "AOP开发需确定连接点，即什么类的什么方法"
+    ],
+    "默认h2数据源": [
+      "Spring Boot默认使用内嵌式数据库h2",
+      "JDBC规范因冗余代码多、流程难控制逐渐被淘汰"
+    ]
   }
- ],
- "source": "llm"
 }

@@ -1,62 +1,124 @@
 {
- "title": "Java编程方法论：响应式Spring Reactor 3设计与实现",
- "thesis": "从源码拆解Reactor 3的响应式设计与实现",
- "branches": [
-  {
-   "id": "A",
-   "label": "响应式基础",
-   "rel": "包含",
-   "points": [
-    "事件驱动范式",
-    "并发不等于并行",
-    "背压平衡产销速"
-   ],
-   "note": "先立异步流与背压概念"
-  },
-  {
-   "id": "B",
-   "label": "发布订阅规范",
-   "rel": "因果",
-   "points": [
-    "Flow含四接口",
-    "发布者与订阅者",
-    "对比RxJava"
-   ],
-   "note": "规范为异步流定跨库标准"
-  },
-  {
-   "id": "C",
-   "label": "Flux与Mono",
-   "rel": "并列",
-   "points": [
-    "Flux发0到N个",
-    "Mono仅0或1个",
-    "create与push创建"
-   ],
-   "note": "两类生产者撑起源序列"
-  },
-  {
-   "id": "D",
-   "label": "调度与操作",
-   "rel": "并列",
-   "points": [
-    "调度器定线程",
-    "elastic弹性调度",
-    "批处理与过滤"
-   ],
-   "note": "操作链由调度器分配线程"
-  },
-  {
-   "id": "E",
-   "label": "源码式读法",
-   "rel": "递进",
-   "points": [
-    "Processor双重身份",
-    "Unicast背压队列",
-    "读书不尽信存疑"
-   ],
-   "note": "读代码要有自己的怀疑"
+  "title": "Java编程方法论：响应式Spring Reactor 3设计与实现",
+  "thesis": "从源码拆解Reactor 3的响应式设计与实现",
+  "branches": [
+    {
+      "id": "A",
+      "label": "响应式基础",
+      "rel": "包含",
+      "points": [
+        "事件驱动范式",
+        "并发不等于并行",
+        "背压平衡产销速"
+      ],
+      "note": "先立异步流与背压概念"
+    },
+    {
+      "id": "B",
+      "label": "发布订阅规范",
+      "rel": "因果",
+      "points": [
+        "Flow含四接口",
+        "发布者与订阅者",
+        "对比RxJava"
+      ],
+      "note": "规范为异步流定跨库标准"
+    },
+    {
+      "id": "C",
+      "label": "Flux与Mono",
+      "rel": "并列",
+      "points": [
+        "Flux发0到N个",
+        "Mono仅0或1个",
+        "create与push创建"
+      ],
+      "note": "两类生产者撑起源序列"
+    },
+    {
+      "id": "D",
+      "label": "调度与操作",
+      "rel": "并列",
+      "points": [
+        "调度器定线程",
+        "elastic弹性调度",
+        "批处理与过滤"
+      ],
+      "note": "操作链由调度器分配线程"
+    },
+    {
+      "id": "E",
+      "label": "源码式读法",
+      "rel": "递进",
+      "points": [
+        "Processor双重身份",
+        "Unicast背压队列",
+        "读书不尽信存疑"
+      ],
+      "note": "读代码要有自己的怀疑"
+    }
+  ],
+  "source": "llm",
+  "evidence": {
+    "事件驱动范式": [
+      "响应式编程基于事件驱动模式进行编程",
+      "本书专注解读Spring Reactor 3的代码设计"
+    ],
+    "并发不等于并行": [
+      "并发并不意味着并行",
+      "并行是多核CPU同一时间运行多个任务"
+    ],
+    "背压平衡产销速": [
+      "背压发生在上游生产快于下游消费时",
+      "Reactive Streams规范给异步流背压定跨库标准"
+    ],
+    "Flow含四接口": [
+      "Flow类含4个接口定义:Publisher、Subscriber等",
+      "四接口还含Subscription与Processor"
+    ],
+    "发布者与订阅者": [
+      "四接口中有Publisher与Subscriber",
+      "LambdaSubscriber实现了CoreSubscriber接口"
+    ],
+    "对比RxJava": [
+      "Reactor 3推荐Java 8+,RxJava 2推荐Java 6+",
+      "Reactor源于Netflix的RxJava,后成WebFlux底座"
+    ],
+    "Flux发0到N个": [
+      "Flux是能发出0到N个元素的生产者",
+      "它实现了Publisher<T>接口"
+    ],
+    "Mono仅0或1个": [
+      "Mono用于处理只有0个或1个元素的源序列",
+      "QueueSubscription服务于内部带队列的订阅"
+    ],
+    "create与push创建": [
+      "Flux.create需传入emitter和背压策略",
+      "Flux.push是其变种,只适用单线程生产者"
+    ],
+    "调度器定线程": [
+      "调度器可指定操作执行的方式和所在线程",
+      "publishOn从上游取元素再关联调度器"
+    ],
+    "elastic弹性调度": [
+      "elastic方法先调cache、再传入相应策略",
+      "为每个订阅者分配PublishOnSubscriber"
+    ],
+    "批处理与过滤": [
+      "filter只留满足Predicate条件的元素",
+      "buffer系列操作把源中元素分批成组"
+    ],
+    "Processor双重身份": [
+      "Processor既是Publisher也是Subscriber",
+      "Reactive Streams把Processor列为四接口之一"
+    ],
+    "Unicast背压队列": [
+      "UnicastProcessor通过自定义queue实现背压",
+      "背压规范由Pivotal、Netflix、Lightbend等共同制定"
+    ],
+    "读书不尽信存疑": [
+      "小结提醒读书、读代码不要尽信",
+      "要有自己的思考并保持怀疑精神"
+    ]
   }
- ],
- "source": "llm"
 }
