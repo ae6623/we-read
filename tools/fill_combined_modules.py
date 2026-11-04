@@ -75,8 +75,8 @@ if(c.fs)d.style.setProperty('--fs',c.fs);
 if(c.pm)d.style.setProperty('--pm',c.pm);}}catch(e){{}}}})();
 </script>
 <link rel="stylesheet" href="../../../assets/css/reading-overview.css"><link rel="stylesheet" href="../../../assets/css/mmx-guide.css"><link rel="stylesheet" href="../../../assets/css/reading-outline.css">
-<link rel="stylesheet" href="../../../assets/css/reader.css?v=20261105b">
-<link rel="stylesheet" href="../../../assets/css/share.css?v=20261103b">
+<link rel="stylesheet" href="../../../assets/css/reader.css?v=20261106a">
+<link rel="stylesheet" href="../../../assets/css/share.css?v=20261104b">
 <script src="../../../assets/js/vendor/qrcode.min.js" defer></script>
 <script src="../../../assets/js/share.js?v=20261103b" defer></script>
 </head>
