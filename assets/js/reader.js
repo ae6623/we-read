@@ -1303,6 +1303,10 @@
       if (e.key === 'Escape') panel.hidden = true;
     });
     q('.rd-sp-x', panel).addEventListener('click', function () { panel.hidden = true; });
+    /* 「Aa」阅读设置的 onclick 带 stopPropagation，document 上的关闭监听收不到；
+       直接在同一元素补一个监听，保证两个面板互斥、不会叠在右上角。 */
+    var fab = q('#rdFab');
+    if (fab) fab.addEventListener('click', function () { panel.hidden = true; });
 
     /* 改配置后若正在朗读，重读当前块以立即生效（滑块拖动中不重读） */
     function relive() {
