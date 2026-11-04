@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": 214,
+  "revision": 215,
   "timezone": "Asia/Shanghai",
   "authority": "latest origin/main; claims become effective only after serialized acceptance there",
   "migration": {
@@ -739,16 +739,18 @@
     {
       "book_id": "local-modern-finance-housing-curgdbd",
       "title": "现代金融的本质以及房价",
-      "author": "待确认（文件名标注 curgdbd，作者未核实）",
+      "author": "待确认（PDF页面可见署名 curgdbdy，真实身份未核实）",
       "platform": "local_pdf",
       "platform_book_id": null,
       "priority": "user_requested",
-      "status": "in_progress",
-      "owner_agent_id": "local-pdf-reader",
+      "status": "completed",
+      "owner_agent_id": null,
       "claim": {
-        "state": "held",
-        "source": "用户2026-10-23确认继续本书；管理员确认仅亲读精读，笔记按实际读到的部分标注，不写通读或完读",
-        "claimed_at": "2026-10-23T10:13:00+08:00"
+        "state": "released",
+        "source": "用户2026-10-23确认继续本书；管理员确认仅亲读精读，笔记按实际读到的部分标注，不写通读或完读；2026-11-04 19:11 用户明确授权按批次由当前对话模型完成整本AI分析；本场以46个连续页段覆盖所给PDF内部页1–433。",
+        "claimed_at": "2026-10-23T10:13:00+08:00",
+        "released_at": "2026-11-04T20:01:05+08:00",
+        "release_reason": "用户授权的本地PDF AI分批整书分析完成；此为AI阅读完读，不等于亲读，用户的亲读范围、时长、日期笔记与个人续读点保持原样。"
       },
       "last_confirmed_progress": null,
       "resume_point": {
@@ -760,7 +762,15 @@
         "confirmed_at": null
       },
       "next_question_status": "needs-confirmation",
-      "completion": null,
+      "completion": {
+        "event_id": "completed-local-modern-finance-housing-curgdbd-ai-2026-11-04",
+        "sequence": 8,
+        "confirmed_by": "local-pdf-reader",
+        "completed_at": "2026-11-04",
+        "evidence": "用户明确授权当前对话模型逐页分析所给本地PDF；按打印渲染图像分46个连续页段批次处理PDF内部页1–433，按操作记录覆盖433个不同页码，第371–380页重复读取一次。已完成全书主题综合、关键论点判断、外部资料核对、AI问书四项和读后思考；逐字短引仅限此前真实亲读记录中的5条，不从本场AI覆盖范围新增亲读金句。此为AI阅读完读，不等于亲读；原有亲读范围、平台阅读时长、日期笔记、resume_point及next_question_status均未修改。分析不证明PDF外的天涯原帖完整，书中数字与预测亦非逐条独立回测。",
+        "mode": "AI阅读",
+        "output": "reading-notes/books/local-modern-finance-housing-curgdbd/final.html；reading-notes/books/local-modern-finance-housing-curgdbd/final.epub"
+      },
       "pdf_source_note": "本地私有文件，不含路径；仅提炼本人摘要，不复制原文",
       "incident_notes": [
         "2026-10-23 11:44–11:53 未先登记读取；11:53 整本经 Gemini 超授权，草稿未发布；12:04 已删本地与 Gemini 上传副本；之后仅人工内部提炼，不用 Gemini，待雨确认。"
@@ -952,7 +962,7 @@
   "synthesis": {
     "visibility": "private",
     "batch_size": 3,
-    "unique_completed_count": 7,
+    "unique_completed_count": 8,
     "batches": [
       {
         "batch_id": "batch-001",
@@ -978,19 +988,6 @@
       }
     ]
   },
-  "updated_at": "2026-11-04T18:44:19+08:00",
-  "active_sessions": [
-    {
-      "run_id": "local-pdf-20261104-1912-123-batched",
-      "agent_id": "local-pdf-reader",
-      "book_id": "local-modern-finance-housing-curgdbd",
-      "slot": "owner_directed_whole_book_batched",
-      "started_at": "2026-11-04T19:12:16+08:00",
-      "environment_id": "local-pdf-reader-cloud",
-      "reading_mode": "local_pdf",
-      "resource_ids": [
-        "local-pdf:cloud-workspace"
-      ]
-    }
-  ]
+  "updated_at": "2026-11-04T20:01:05+08:00",
+  "active_sessions": []
 }
