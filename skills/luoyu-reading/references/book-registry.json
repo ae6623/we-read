@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": 216,
+  "revision": 217,
   "timezone": "Asia/Shanghai",
   "authority": "latest origin/main; claims become effective only after serialized acceptance there",
   "migration": {
@@ -952,11 +952,12 @@
       "platform": "local_pdf",
       "platform_book_id": null,
       "priority": "user_authorized_selective_choice",
-      "status": "queued",
-      "owner_agent_id": null,
+      "status": "in_progress",
+      "owner_agent_id": "local-pdf-reader",
       "claim": {
-        "state": "unclaimed",
-        "source": "用户 2026-11-04 持续授权从天涯系列本地 PDF 中选择下一本合格作品；按最新 main 的系列索引及 PDF 首页实际题名建立独立书目，不恢复其他暂停书目。"
+        "state": "held",
+        "source": "用户 2026-11-04 持续授权继续处理下一本合格天涯本地 PDF；本次仅按 PDF 实际题名认领此新书目，不恢复或改动其他暂停书。",
+        "claimed_at": "2026-11-04T22:08:25+0800"
       },
       "last_confirmed_progress": null,
       "resume_point": {
@@ -1015,5 +1016,18 @@
     ]
   },
   "updated_at": "2026-11-04T20:01:05+08:00",
-  "active_sessions": []
+  "active_sessions": [
+    {
+      "run_id": "local-pdf-20261104-2208-tianya76-batched",
+      "agent_id": "local-pdf-reader",
+      "book_id": "local-tianya-76-chiang-kai-shek-mainland",
+      "slot": "user-authorized-batched-ai-analysis",
+      "started_at": "2026-11-04T22:08:25+0800",
+      "environment_id": "local-pdf-reader-cloud",
+      "reading_mode": "local_pdf",
+      "resource_ids": [
+        "local-pdf:cloud-workspace"
+      ]
+    }
+  ]
 }
