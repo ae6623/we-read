@@ -41,16 +41,12 @@ os.makedirs(CACHE_DIR, exist_ok=True)
 MAX_CHARS = int(os.environ.get("TTS_MAX_CHARS", "1600"))
 DEFAULT_VOICE = os.environ.get("TTS_DEFAULT_VOICE", "zh-CN-XiaoxiaoNeural")
 
-# 允许的音色（女声/男声/台湾腔/粤语）——必须与前端 reader.js 的 CLOUD_VOICES 一致。
-# 白名单外的 voice 会被静默替换成默认女声（曾经因为漏了粤语，前端点粤语听起来
-# 还是晓晓），所以两边加音色要同时改。
+# 允许的音色（女声/男声/台湾腔）——与前端 Aa 面板的音色快捷项对应
 VOICES = {
     "zh-CN-XiaoxiaoNeural", "zh-CN-XiaoyiNeural",          # 普通话女声
     "zh-CN-YunxiNeural", "zh-CN-YunjianNeural",            # 普通话男声
     "zh-TW-HsiaoChenNeural", "zh-TW-HsiaoYuNeural",        # 台湾腔女声
     "zh-TW-YunJheNeural",                                  # 台湾腔男声
-    "zh-HK-HiuMaanNeural", "zh-HK-HiuGaaiNeural",          # 粤语女声
-    "zh-HK-WanLungNeural",                                 # 粤语男声
 }
 
 
