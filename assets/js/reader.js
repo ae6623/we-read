@@ -1230,17 +1230,29 @@
       } else return '__auto__';
       return hit.length ? voiceKey(hit[0]) : '__auto__';
     }
+    /* 下拉里只列中文 / 英文 / 德文：系统语音动辄几十种，[it-IT] [fr-FR] 这种
+       占满一屏还找不到想要的。朗读本身不受影响（自动 / 快捷键照旧按中文挑）。 */
+    var LANG_OK = /^(zh|cmn|yue|en|de)([-_]|$)/i;
+    function isListed(v) {
+      if (!v.lang) return true;        // 系统没给 lang，别误删唯一可用音色
+      if (LANG_OK.test(v.lang)) return true;
+      return /chinese|english|german|中文|普通话|粤语|粵語/i.test((v.name || '') + ' ' + v.lang);
+    }
     function fillVoices() {
       var sel = q('#rdSpVoice', box);
       if (!sel) return;
-      var vs = allVoices();
+      var vs = allVoices().filter(isListed);
       sel.innerHTML = '';
       var o0 = document.createElement('option');
       o0.value = '__auto__';
       o0.textContent = hasTTS ? '自动（中文女声优先）' : '当前浏览器不支持语音';
       sel.appendChild(o0);
+      var rank = function (v) {
+        var s = (v.lang || '') + (v.name || '');
+        return isZh(v) ? 2 : /yue|粵|粤/i.test(s) ? 1 : 0;   // 普通话 → 粤语 → 英/德
+      };
       vs.slice().sort(function (a, b) {
-        var za = isZh(a) ? 1 : 0, zb = isZh(b) ? 1 : 0;
+        var za = rank(a), zb = rank(b);
         if (za !== zb) return zb - za;
         return (a.name || '').localeCompare(b.name || '');
       }).forEach(function (v) {
@@ -1346,8 +1358,11 @@
     }
     function voiceSummary() {
       if (!hasTTS) return '当前浏览器不支持语音朗读，建议用 Chrome / Edge / Safari 打开';
-      var vs = allVoices(), zh = vs.filter(isZh).length;
-      return '本机可用语音 ' + vs.length + ' 个（中文 ' + zh + ' 个）· 音色由系统提供，网页无法下发';
+      var all = allVoices(), vs = all.filter(isListed), zh = vs.filter(isZh).length;
+      var hid = all.length - vs.length;
+      return '本机可用语音 ' + vs.length + ' 个（中文 ' + zh + ' 个）' +
+             (hid > 0 ? '，已隐藏非中/英/德 ' + hid + ' 个' : '') +
+             ' · 音色由系统提供，网页无法下发';
     }
     function showBar(txt, warn) {
       var t = q('#rdSbTxt', bar);
@@ -1401,8 +1416,10 @@
       if (!u) return;
       u.classList.add('speaking');
       /* 读到的单元跑到屏幕外时轻轻拉回视口，让高亮始终看得见；
-         已在视野内就不动，避免打断用户自己翻看 */
-      if (playing && !paused) {
+         已在视野内就不动，避免打断用户自己翻看。
+         qi === 0 是刚被点的那一块（用户手指就在那儿），绝不滚 —— 安卓上
+         平滑滚动本身就是一次整屏重绘，看起来像「闪一下」。 */
+      if (playing && !paused && qi > 0) {
         var r = u.getBoundingClientRect(), vh = window.innerHeight;
         if (r.bottom < 96 || r.top > vh - 40) {
           try { u.scrollIntoView({ block: 'center', behavior: 'smooth' }); }
