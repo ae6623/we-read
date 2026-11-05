@@ -49,11 +49,13 @@
   background:rgba(20,36,31,.5);
   backdrop-filter:blur(2px);
   -webkit-backdrop-filter:blur(2px);
+  overflow:auto;
 }
 .share-mask[hidden]{display:none}
 
 .share-box{
   position:relative;
+  box-sizing:border-box;
   width:100%;
   max-width:330px;
   padding:24px 24px 20px;
@@ -62,6 +64,8 @@
   box-shadow:0 24px 60px rgba(16,32,27,.28);
   text-align:center;
 }
+/* 横版：封面在左、二维码在右，面板加宽 */
+.share-box[data-layout="h"]:not(.is-nocover){max-width:424px}
 .share-eyebrow{
   margin:0;
   font-size:.68rem;
@@ -74,6 +78,63 @@
   font:600 1.25rem/1.4 var(--serif,Georgia,serif);
   color:var(--green,#183c34);
 }
+
+/* ---------- 海报区：封面 + 二维码 ---------- */
+.share-poster{margin:0 0 16px}
+.share-box[data-layout="h"] .share-poster{
+  display:grid;
+  grid-template-columns:148px minmax(0,1fr);
+  gap:18px;
+  align-items:center;
+  text-align:left;
+}
+.share-box[data-layout="v"] .share-poster{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:12px;
+  text-align:center;
+}
+/* 这本没有封面文件 → 收起封面列，版面退回单列 */
+.share-box.is-nocover[data-layout="h"] .share-poster{grid-template-columns:minmax(0,1fr)}
+.share-box.is-nocover .share-book{display:none}
+
+.share-book{margin:0;min-width:0}
+.share-cover{
+  width:148px;
+  aspect-ratio:3/4;
+  overflow:hidden;
+  border-radius:8px;
+  border:1px solid rgba(24,60,52,.12);
+  background:#eef0ea;
+  box-shadow:0 8px 20px rgba(16,32,27,.18);
+}
+.share-box[data-layout="v"] .share-cover{
+  width:124px;
+  margin:0 auto;
+  box-shadow:0 6px 16px rgba(16,32,27,.16);
+}
+.share-cover img{display:block;width:100%;height:100%;object-fit:cover}
+.share-bt{
+  margin:8px 0 0;
+  font:600 .84rem/1.45 var(--serif,Georgia,serif);
+  color:var(--green,#183c34);
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+}
+.share-box[data-layout="v"] .share-book{width:100%;max-width:280px}
+.share-box[data-layout="v"] .share-bt{font-size:.92rem;margin-top:6px}
+.share-bs{
+  margin:3px 0 0;
+  font-size:.68rem;
+  letter-spacing:.04em;
+  color:var(--muted,#6b7a72);
+}
+
+.share-qrcol{min-width:0}
+.share-qrcol .share-tip{margin:10px 0 0;min-height:0}
 .share-qr{
   display:flex;
   align-items:center;
@@ -100,6 +161,28 @@
   color:var(--muted,#6b7a72);
   min-height:2.6em;
 }
+
+/* 版式切换：小屏不显示（默认就是竖版，横版也放不下） */
+.share-layout{
+  position:absolute;
+  top:8px;
+  right:42px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:32px;
+  height:32px;
+  padding:0;
+  border:0;
+  border-radius:8px;
+  background:transparent;
+  color:var(--muted,#6b7a72);
+  cursor:pointer;
+}
+.share-layout:hover{color:var(--green,#183c34);background:rgba(24,60,52,.07)}
+.share-box.is-nocover .share-layout{display:none}
+.share-layout svg{display:block}
+
 .share-acts{
   display:grid;
   grid-template-columns:repeat(4,1fr);
@@ -164,6 +247,18 @@
 }
 .share-x:hover{color:var(--green,#183c34)}
 
+@media(max-width:560px){
+  .share-layout{display:none}
+  .share-box[data-layout="h"]{max-width:330px}
+  .share-box[data-layout="h"] .share-poster{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:12px;
+    text-align:center;
+  }
+  .share-box[data-layout="h"] .share-cover{width:124px;margin:0 auto}
+}
 @media(max-width:420px){
   .share-box{padding:20px 18px 16px}
   .share-qr{width:176px;height:176px;padding:8px}

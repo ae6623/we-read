@@ -1,5 +1,5 @@
 /*!
- * share.js — 页面分享组件（二维码 + 微博 / QQ空间 / 复制链接）
+ * share.js — 页面分享组件（封面 + 二维码 + 微博 / QQ空间 / 复制链接）
  *
  * 用法：引入本文件即可。脚本会自动找挂载点放一个分享图标：
  *   - 系列页：.series-nav 右侧
@@ -8,12 +8,17 @@
  *
  * 微信、朋友圈没有可用的网页分享协议（需 JS-SDK 与公众号授权），
  * 统一用「当前页二维码」实现：扫一扫或截图发出去。
+ *
+ * 详情页会在二维码旁边带上本书封面，可一键切换「横版（书左码右）/
+ * 竖版（书上码下）」，选择记在 localStorage，小屏默认竖版。
  */
 (function () {
   'use strict';
 
   var PAGE_URL = location.href.split('#')[0];
   var PAGE_TITLE = (document.title || document.querySelector('h1') && document.querySelector('h1').textContent || '').replace(/｜.*$/, '').trim();
+  var SELF_SRC = (document.currentScript && document.currentScript.src) || '';
+  var LAYOUT_KEY = 'wrShareLayout';
 
   var TIPS = {
     wechat: '用微信扫一扫，或长按识别二维码',
@@ -22,6 +27,22 @@
   };
 
   function enc(s) { return encodeURIComponent(s || ''); }
+  function esc(s) {
+    return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+  function safeDecode(s) {
+    if (!/%[0-9a-fA-F]{2}/.test(s)) return s;
+    try { return decodeURIComponent(s); } catch (e) { return s; }
+  }
+  /* share.js 在 assets/js/ 下，按脚本自身地址反推站点根，兼容任意层级页面 */
+  function siteRoot() {
+    if (SELF_SRC) {
+      var m = SELF_SRC.match(/^(.*?)\/assets\/js\/share\.js/);
+      if (m) return m[1] + '/';
+    }
+    return '../../../';
+  }
 
   /* 四个渠道的线性图标：跟面板同一套 1.6px 描边，不引外部图标库 */
   var ICON = {
@@ -40,20 +61,60 @@
       '<circle cx="10.6" cy="13.8" r="2.1" fill="currentColor" stroke="none"/>' +
       '<path d="M17.3 8.6c1.6-.4 2.8.6 2.6 2.1"/><path d="M16.6 5.6c3.1-.7 5.3 1.3 4.7 4"/></svg>',
     qzone:
-      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.7l2.5 5.1 5.6.8-4.1 3.9 1 5.6-5-2.7-5 2.7 1-5.6-4.1-3.9 5.6-.8z"/></svg>'
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.7l2.5 5.1 5.6.8-4.1 3.9 1 5.6-5-2.7-5 2.7 1-5.6-4.1-3.9 5.6-.8z"/></svg>',
+    /* 切换图标画的是「点了会变成的版式」：横版时显示竖排块，反之亦然 */
+    toV:
+      '<svg viewBox="0 0 24 24" aria-hidden="true" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round">' +
+      '<rect x="6.5" y="3.5" width="11" height="7" rx="1.4"/><rect x="6.5" y="13.5" width="11" height="7" rx="1.4"/></svg>',
+    toH:
+      '<svg viewBox="0 0 24 24" aria-hidden="true" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round">' +
+      '<rect x="3.5" y="6.5" width="7" height="11" rx="1.4"/><rect x="13.5" y="6.5" width="7" height="11" rx="1.4"/></svg>'
   };
 
-  function buildPanel() {
+  function pageSlug() {
+    var s = (document.body.getAttribute('data-slug') || '').trim();
+    if (s) return s;
+    var m = location.pathname.match(/\/books\/([^\/]+)\//);
+    return m ? safeDecode(m[1]) : '';
+  }
+
+  function bookTitle() {
+    var t = safeDecode((document.body.getAttribute('data-title') || '').trim());
+    if (!t) {
+      var h1 = document.querySelector('header.combined-head h1') || document.querySelector('h1');
+      if (h1) t = h1.textContent || '';
+    }
+    if (!t) t = PAGE_TITLE;
+    t = t.replace(/[｜|][^｜|]*$/, '').replace(/\s+/g, ' ').trim();
+    return t.replace(/^《/, '').replace(/》$/, '');
+  }
+
+  function buildPanel(info) {
+    var poster = info.hasBook
+      ? '<div class="share-poster">' +
+          '<div class="share-book">' +
+            '<div class="share-cover"><img alt="' + esc(info.title) + ' 封面" loading="eager" decoding="async"></div>' +
+            '<p class="share-bt">《' + esc(info.title) + '》</p>' +
+            '<p class="share-bs">阅读笔记 · 全书领读</p>' +
+          '</div>' +
+          '<div class="share-qrcol">' +
+            '<div class="share-qr" aria-label="当前页二维码"></div>' +
+            '<p class="share-tip">用微信扫一扫，或长按识别二维码</p>' +
+          '</div>' +
+        '</div>'
+      : '<div class="share-qr" aria-label="当前页二维码"></div>' +
+        '<p class="share-tip">用微信扫一扫，或长按识别二维码</p>';
+
     var mask = document.createElement('div');
     mask.className = 'share-mask';
     mask.hidden = true;
     mask.innerHTML =
       '<div class="share-box" role="dialog" aria-modal="true" aria-label="分享本篇笔记">' +
+        (info.hasBook ? '<button type="button" class="share-layout" aria-label="切换竖版"></button>' : '') +
         '<button type="button" class="share-x" aria-label="关闭">×</button>' +
         '<p class="share-eyebrow">SHARE · 分享</p>' +
         '<h2 class="share-h">分享本篇笔记</h2>' +
-        '<div class="share-qr" aria-label="当前页二维码"></div>' +
-        '<p class="share-tip">用微信扫一扫，或长按识别二维码</p>' +
+        poster +
         '<div class="share-acts">' +
           '<button type="button" data-act="wechat">' + ICON.wechat + '<span>微信</span></button>' +
           '<button type="button" data-act="moments">' + ICON.moments + '<span>朋友圈</span></button>' +
@@ -94,10 +155,46 @@
       document.body.appendChild(btn);
     }
 
-    var mask = buildPanel();
+    var slug = pageSlug();
+    var title = bookTitle();
+    var mask = buildPanel({ hasBook: !!slug, title: title });
+    var box = mask.querySelector('.share-box');
     var qrBox = mask.querySelector('.share-qr');
     var tip = mask.querySelector('.share-tip');
+    var layoutBtn = mask.querySelector('.share-layout');
     var qrDone = false;
+
+    /* 封面：本地文件，取不到就把封面列收起，版式退回单列 */
+    var coverImg = mask.querySelector('.share-cover img');
+    if (coverImg && slug) {
+      coverImg.addEventListener('error', function () {
+        box.classList.add('is-nocover');
+      });
+      coverImg.src = siteRoot() + 'assets/covers/' + encodeURIComponent(slug) + '.jpg';
+    }
+
+    /* 横版 = 书左码右；竖版 = 书上码下。小屏默认竖版 */
+    function applyLayout(v, save) {
+      box.setAttribute('data-layout', v);
+      if (layoutBtn) {
+        layoutBtn.innerHTML = v === 'h' ? ICON.toV : ICON.toH;
+        layoutBtn.setAttribute('aria-label', v === 'h' ? '切换为竖版' : '切换为横版');
+        layoutBtn.title = v === 'h' ? '竖版排版' : '横版排版';
+      }
+      if (save) { try { localStorage.setItem(LAYOUT_KEY, v); } catch (e) { /* 无痕模式忽略 */ } }
+    }
+    if (slug) {
+      var saved = null;
+      try { saved = localStorage.getItem(LAYOUT_KEY); } catch (e) { /* 忽略 */ }
+      var small = window.matchMedia && window.matchMedia('(max-width:560px)').matches;
+      applyLayout(saved === 'h' || saved === 'v' ? saved : (small ? 'v' : 'h'), false);
+    }
+
+    if (layoutBtn) {
+      layoutBtn.addEventListener('click', function () {
+        applyLayout(box.getAttribute('data-layout') === 'h' ? 'v' : 'h', true);
+      });
+    }
 
     mask.querySelector('[data-act="weibo"]').href =
       'https://service.weibo.com/share/share.php?url=' + enc(PAGE_URL) + '&title=' + enc(PAGE_TITLE);
