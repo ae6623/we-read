@@ -1,124 +1,217 @@
 {
   "title": "Spring 5企业级开发实战",
-  "thesis": "Spring5实战以IoC、AOP与响应式为三大主干",
+  "thesis": "Spring5以IoC容器、AOP切面与响应式编程为主干，支撑企业级开发。",
   "branches": [
     {
       "id": "A",
-      "label": "环境入门",
-      "rel": "因果",
+      "label": "开发准备基线",
+      "rel": "递进",
+      "note": "从JDK安装与Java基础到引入依赖，铺好入门前的开发环境。",
       "points": [
         "JDK1.8基线",
-        "pom引依赖",
-        "Core与MVC"
-      ],
-      "note": "从环境准备搭起Spring技术体系"
+        "Java SE基础",
+        "pom引入依赖"
+      ]
     },
     {
       "id": "B",
-      "label": "IoC容器",
+      "label": "框架定位与体系",
       "rel": "包含",
+      "note": "Spring以轻量级开源为定位，靠多个子项目分担企业应用复杂度。",
       "points": [
-        "控制反转",
-        "XML实现方式",
-        "Bean生命周期单例"
-      ],
-      "note": "容器启动分建工厂与实例化两步"
+        "轻量级开源框架",
+        "降低企业复杂性",
+        "多子项目体系",
+        "IoC为核心概念"
+      ]
     },
     {
       "id": "C",
-      "label": "AOP切面",
-      "rel": "并列",
+      "label": "IoC容器机制",
+      "rel": "因果",
+      "note": "从控制反转释义到容器启动两步与Bean单例，讲清IoC如何托管对象。",
       "points": [
-        "JDK动态代理",
-        "CGLIB实现",
-        "五种增强"
-      ],
-      "note": "以代理拦截补上OOP的横向逻辑"
+        "控制反转释义",
+        "XML实现方式",
+        "启动分两步",
+        "Bean默认单例"
+      ]
     },
     {
       "id": "D",
-      "label": "Java8响应式",
-      "rel": "递进",
+      "label": "AOP切面逻辑",
+      "rel": "并列",
+      "note": "AOP提供横向切面逻辑，以JDK或CGLIB动态代理拦截目标对象。",
       "points": [
-        "Lambda表达式",
-        "Reactor库",
-        "WebFlux非阻塞"
-      ],
-      "note": "Spring5借Java8转向响应式"
+        "面向切面编程",
+        "横向补充OOP",
+        "两种代理实现",
+        "接口代理前提",
+        "代理拦截实现"
+      ]
     },
     {
       "id": "E",
-      "label": "集成与实战",
+      "label": "增强类型集成",
       "rel": "包含",
+      "note": "五种增强覆盖前后环绕，并借AspectJ关系说明Spring的实现取向。",
       "points": [
-        "WebClient调试",
-        "中间件集成",
-        "本土排障清单"
-      ],
-      "note": "偏工程集成清单而非官方指南"
+        "五种增强类型",
+        "前置后置环绕",
+        "集成AspectJ",
+        "统一维护功能"
+      ]
+    },
+    {
+      "id": "F",
+      "label": "版本与语言基线",
+      "rel": "递进",
+      "note": "Spring5.0需JDK8、5.1支持JDK11，整体基于Java8开发。",
+      "points": [
+        "JDK8运行基线",
+        "JDK11无警告支持",
+        "基于Java8开发"
+      ]
+    },
+    {
+      "id": "G",
+      "label": "响应式编程模型",
+      "rel": "对比",
+      "note": "传统指令依次执行，响应式转向异步数据流，Reactor为其底层库。",
+      "points": [
+        "指令依次执行",
+        "异步数据流交互",
+        "响应式编程范式",
+        "第四代响应式库"
+      ]
+    },
+    {
+      "id": "H",
+      "label": "WebFlux框架",
+      "rel": "递进",
+      "note": "WebFlux以注解式Web开发异步非阻塞实现，可替代Spring MVC。",
+      "points": [
+        "注解式Web开发",
+        "异步非阻塞",
+        "替代MVC方案"
+      ]
+    },
+    {
+      "id": "I",
+      "label": "响应式客户端",
+      "rel": "包含",
+      "note": "WebClient作为WebFlux配套客户端，以非阻塞方式便于响应式调试。",
+      "points": [
+        "配套客户端",
+        "非阻塞客户端",
+        "便于响应式调试"
+      ]
     }
   ],
   "source": "llm",
   "evidence": {
     "JDK1.8基线": [
-      "环境准备建议用JDK 1.8及以上版本",
-      "Spring 5.0正常运行需JDK 8以上"
+      "JDK建议使用JDK 1.8及以上的版本",
+      "Spring 5.0正常运行需要JDK 8及以上版本"
     ],
-    "pom引依赖": [
-      "快速搭建Spring 5项目要在pom引入依赖",
-      "环境准备包含JDK安装与开发环境搭建"
+    "Java SE基础": [
+      "需要读者掌握Java SE基础知识。",
+      "学习Spring 5之前的环境准备"
     ],
-    "Core与MVC": [
-      "Spring技术体系含Core、MVC等子项目",
-      "Spring是轻量开源框架，降低开发复杂度"
+    "pom引入依赖": [
+      "在pom中引入Spring相关依赖",
+      "搭建Spring开发环境"
     ],
-    "控制反转": [
+    "轻量级开源框架": [
+      "Spring是一个轻量级的Java开源开发框架，旨在降低企业应用开发的复杂性"
+    ],
+    "降低企业复杂性": [
+      "Spring是一个轻量级的Java开源开发框架，旨在降低企业应用开发的复杂性"
+    ],
+    "多子项目体系": [
+      "Spring技术体系由多个子项目组成，包括Spring Core"
+    ],
+    "IoC为核心概念": [
       "IoC是Spring框架的核心概念",
-      "IoC即Inversion of Control，译作控制反转"
+      "IoC是Spring框架最核心的概念之一"
+    ],
+    "控制反转释义": [
+      "IoC是Inversion of Control的简写"
     ],
     "XML实现方式": [
-      "Spring IoC可用XML方式实现",
-      "容器启动分创建BeanFactory与实例化Bean两步"
+      "XML方式实现"
     ],
-    "Bean生命周期单例": [
-      "IoC容器管理的Bean默认是单例",
-      "容器启动须创建BeanFactory并实例化Bean"
+    "启动分两步": [
+      "Spring IoC容器启动分为两步——创建BeanFactory和实例化Bea"
     ],
-    "JDK动态代理": [
-      "JDK动态代理对象动态生成，被代理者须实现接口",
-      "Spring AOP靠创建代理类拦截目标对象实现"
+    "Bean默认单例": [
+      "Spring IoC容器管理的Bean默认都是单利设计模式的。"
     ],
-    "CGLIB实现": [
-      "Spring AOP两种实现：JDK动态代理与CGLIB",
-      "AOP是OOP的补充，提供横向切面逻辑"
+    "面向切面编程": [
+      "AOP是面向切面编程，通过预编译方式和运行期动态代理实现程序功能的统一维护的一种"
     ],
-    "五种增强": [
-      "Spring支持前置、后置、环绕等五种增强",
-      "五种增强含异常抛出增强与引介增强"
+    "横向补充OOP": [
+      "AOP是OOP的补充和完善，提供“横向”的切面逻辑"
     ],
-    "Lambda表达式": [
-      "Lambda是Java 8重要新特性，可把函数当参数",
-      "Spring 5基于Java 8，用了大量新特性"
+    "两种代理实现": [
+      "Spring AOP的实现方式有两种"
     ],
-    "Reactor库": [
-      "Reactor是第四代Reactive库，基于Reactive Streams",
-      "Spring 5响应式以Reactor为底层"
+    "接口代理前提": [
+      "JDK动态代理的对象是动态生成的，被代理对象必须实现接口"
     ],
-    "WebFlux非阻塞": [
-      "WebFlux可作Spring MVC替代，异步非阻塞",
-      "WebFlux是基于注解的Web开发方式"
+    "代理拦截实现": [
+      "Spring AOP是通过创建目标对象的代理类，并对目标对象进行拦截来实现的"
     ],
-    "WebClient调试": [
-      "WebClient使响应式更便于调试",
-      "WebClient自WebFlux 5.0起提供，非阻塞"
+    "五种增强类型": [
+      "Spring支持5种类型的增强：前置增强、后置增强、环绕增强"
     ],
-    "中间件集成": [
-      "本书集成演示Redis、Kafka、Dubbo等中间件",
-      "含ZooKeeper、Mycat/Sharding-JDBC的集成"
+    "前置后置环绕": [
+      "Spring支持5种类型的增强：前置增强、后置增强、环绕增强"
     ],
-    "本土排障清单": [
-      "本书偏集成清单与实战排障，属本土工程化",
-      "与偏官方指南的《Spring实战》互补"
+    "集成AspectJ": [
+      "Spring AOP和AspectJ之间的关系"
+    ],
+    "统一维护功能": [
+      "AOP是面向切面编程，通过预编译方式和运行期动态代理实现程序功能的统一维护的一种"
+    ],
+    "JDK8运行基线": [
+      "Spring 5.0正常运行需要JDK 8及以上版本"
+    ],
+    "JDK11无警告支持": [
+      "在类路径和模块路径上对JDK 11的无警告支持"
+    ],
+    "基于Java8开发": [
+      "Spring 5是基于Java 8开发的，使用了很多Java 8新特性。"
+    ],
+    "指令依次执行": [
+      "传统的编程模型采用的是每条指令依次执行的方式"
+    ],
+    "异步数据流交互": [
+      "响应式编程是与异步数据流交互的一种编程范式"
+    ],
+    "响应式编程范式": [
+      "响应式编程是与异步数据流交互的一种编程范式"
+    ],
+    "第四代响应式库": [
+      "Reactor是第四代Reactive库"
+    ],
+    "注解式Web开发": [
+      "Spring WebFlux是一种基于注解的Web开发方式。"
+    ],
+    "异步非阻塞": [
+      "WebFlux可以作为Spring MVC的替代方案"
+    ],
+    "替代MVC方案": [
+      "WebFlux可以作为Spring MVC的替代方案"
+    ],
+    "配套客户端": [
+      "WebClient是Spring WebFlux配套使用的客户端工具"
+    ],
+    "非阻塞客户端": [
+      "WebClient是从Spring WebFlux 5.0版本开始提供的一个非阻"
+    ],
+    "便于响应式调试": [
+      "WebClient使响应式更加便于调试。"
     ]
   }
 }
