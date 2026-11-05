@@ -16,6 +16,7 @@
 - 段合并结果按 (服务端 blob sha, 路径) 缓存，tip 变化但页面未变时直接复用。
 """
 import argparse
+import hashlib
 import os
 import re
 import subprocess
@@ -109,6 +110,24 @@ def main():
             sha_map[p] = g("hash-object", "-w", str(f))
     print(f"预计算 {len(sha_map)} 个 blob", flush=True)
 
+    # 段合并缓存跨进程复用：key = (服务端 blob sha, path)。
+    # 页面 blob 未变时直接复用上次合并结果，避免每批重抓 160+ 个大 HTML。
+    cache_dir = Path("/tmp/snapshot-seg-cache")
+    cache_dir.mkdir(exist_ok=True)
+
+    def cache_path(sha, path, svg):
+        # 合并结果依赖「服务端页面 blob」与「我本地 svg 段」两者，任一变化都要重算
+        h = hashlib.md5((sha + "\0" + path + "\0" + svg).encode()).hexdigest()[:16]
+        return cache_dir / h
+
+    def local_svg(path):
+        m = SEC.search((ROOT / path).read_text(encoding="utf-8"))
+        return m.group(0) if m else ""
+
+    def cached(sha, path, svg):
+        f = cache_path(sha, path, svg)
+        return f.read_text().strip() if f.exists() else None
+
     cache = {}          # (服务端 blob sha, path) -> 段合并后的 blob sha
     last = None
     tmap = {}
@@ -126,8 +145,33 @@ def main():
                 time.sleep(0.5)
                 continue
             tmap = tree_map(tip)
-            need = [(p, tmap.get(p)) for p in htmls
-                    if tmap.get(p) and (tmap[p], p) not in cache]
+            svgs = {p: local_svg(p) for p in htmls}
+            need = []
+            reused = 0
+            for p in htmls:
+                s = tmap.get(p)
+                if not s:
+                    continue
+                key = (s, p)
+                if key in cache:
+                    continue
+                hit = cached(s, p, svgs[p])
+                if hit:
+                    cache[key] = hit      # 跨进程复用，无需重新抓 blob
+                    reused += 1
+                else:
+                    need.append((p, s))
+            # 缓存命中也要确认 blob 仍在本库（gc 可能清掉悬空对象）
+            if reused:
+                chk = subprocess.run(["git", "cat-file", "--batch-check"], cwd=REPO,
+                                     env=E, input="\n".join(cache[k] for k in cache) + "\n",
+                                     capture_output=True, text=True, timeout=60)
+                alive = {ln.split()[0] for ln in chk.stdout.splitlines()
+                         if ln and "missing" not in ln}
+                for k, sha in list(cache.items()):
+                    if sha not in alive:
+                        need.append((k[1], k[0]))
+                        del cache[k]
             if need:
                 got = batch_blobs([s for _, s in need])
                 bad = 0
@@ -137,18 +181,21 @@ def main():
                         bad += 1
                         continue
                     remote = txt.decode("utf-8")
-                    mine = (ROOT / p).read_text(encoding="utf-8")
-                    m1, m2 = SEC.search(mine), SEC.search(remote)
-                    if not m1 or not m2:
+                    svg = svgs[p]
+                    m2 = SEC.search(remote)
+                    if not svg or not m2:
                         bad += 1
                         continue
-                    merged = remote[:m2.start()] + m1.group(0) + remote[m2.end():]
+                    merged = remote[:m2.start()] + svg + remote[m2.end():]
                     fp = seg / p
                     fp.parent.mkdir(parents=True, exist_ok=True)
                     fp.write_text(merged, encoding="utf-8")
-                    cache[(s, p)] = g("hash-object", "-w", str(fp))
+                    new_sha = g("hash-object", "-w", str(fp))
+                    cache[(s, p)] = new_sha
+                    cache_path(s, p, svg).write_text(new_sha)
                 if bad:
                     print(f"[{attempt:02}] 段合并异常 {bad} 本", flush=True)
+            print(f"  段合并：复用 {reused} / 新抓 {len(need)}", flush=True)
             last = tip
 
         # 构造 index：一次批量写入
