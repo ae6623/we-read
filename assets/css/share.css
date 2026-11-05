@@ -54,19 +54,22 @@
 .share-mask[hidden]{display:none}
 
 .share-box{
+  --pad-x:24px;
+  --pad-t:24px;
   position:relative;
   box-sizing:border-box;
   width:100%;
   max-width:330px;
   margin:auto;
-  padding:24px 24px 20px;
+  padding:var(--pad-t) var(--pad-x) 20px;
   border-radius:18px;
   background:var(--card,#fffefa);
   box-shadow:0 24px 60px rgba(16,32,27,.28);
   text-align:center;
+  overflow:hidden;       /* 海报区铺到卡片边缘，靠这里收圆角 */
 }
-/* 横版：封面在左、二维码在右，面板加宽 */
-.share-box[data-layout="h"]:not(.is-nocover){max-width:416px}
+/* 横版：封面在左、书名与二维码在右 */
+.share-box[data-layout="h"]:not(.is-nocover){max-width:408px}
 .share-eyebrow{
   margin:0;
   font-size:.68rem;
@@ -80,45 +83,105 @@
   color:var(--green,#183c34);
 }
 
-/* ---------- 海报区：封面 + 二维码 ---------- */
-.share-poster{margin:0 0 16px}
-.share-box[data-layout="h"] .share-poster{
-  display:grid;
-  grid-template-columns:168px minmax(0,1fr);
-  gap:18px;
-  align-items:center;
-  text-align:left;
-}
+/* ---------- 海报区：模糊背景 + 封面 + 书名 + 二维码 ---------- */
+.share-poster{margin:0 0 14px}
+
+/* 竖版：通栏 hero 在卡片顶部，书名与二维码依次往下 */
 .share-box[data-layout="v"] .share-poster{
   display:flex;
   flex-direction:column;
   align-items:center;
-  gap:12px;
   text-align:center;
 }
-/* 这本没有封面文件 → 收起封面列，版面退回单列 */
-.share-box.is-nocover[data-layout="h"] .share-poster{grid-template-columns:minmax(0,1fr)}
+.share-box[data-layout="v"] .share-hero{
+  align-self:stretch;
+  height:240px;
+  margin:calc(var(--pad-t) * -1) calc(var(--pad-x) * -1) 14px;
+  border-radius:18px 18px 0 0;
+}
+
+/* 横版：hero 在左列，书名和二维码靠右排 */
+.share-box[data-layout="h"] .share-poster{
+  display:grid;
+  grid-template-columns:172px minmax(0,1fr);
+  grid-template-areas:
+    "hero book"
+    "hero qr";
+  gap:10px 16px;
+  align-items:center;
+  text-align:left;
+}
+.share-box[data-layout="h"] .share-hero-cover{width:132px}
+.share-box[data-layout="h"] .share-hero{
+  grid-area:hero;
+  width:172px;
+  height:240px;
+  border-radius:12px;
+}
+
+/* 封面「墙上」：同一张图放大、模糊、压暗当背景，清晰封面浮在中间 */
+.share-hero{
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  background:#11171a;
+  isolation:isolate;
+}
+.share-hero-bg{
+  position:absolute;
+  inset:-16%;
+  z-index:0;
+  width:auto;
+  height:auto;
+  object-fit:cover;
+  filter:blur(18px) saturate(1.2) brightness(.62);
+  transform:scale(1.06);
+}
+.share-hero-cover{
+  position:relative;
+  z-index:1;
+  display:block;
+  width:136px;
+  aspect-ratio:3/4;
+  object-fit:cover;
+  border-radius:6px;
+  background:#eef0ea;
+  box-shadow:0 14px 32px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.07);
+}
+/* 顶部压一层暗渐变，保证角上的关闭 / 切换按钮始终看得见 */
+.share-hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:0;
+  background:linear-gradient(180deg,rgba(8,12,14,.3) 0%,rgba(8,12,14,0) 15%);
+  pointer-events:none;
+}
+
+.share-box.is-nocover .share-hero{display:none}
 .share-box.is-nocover .share-book{display:none}
+/* 没封面就没海报，标题回到正常位置，别留一张空白面板（写在 has-hero 之后仍要压过它） */
+.share-box.has-hero.is-nocover .share-eyebrow,
+.share-box.has-hero.is-nocover .share-h{
+  position:static;
+  width:auto;
+  height:auto;
+  overflow:visible;
+  clip-path:none;
+  white-space:normal;
+}
+.share-box.has-hero.is-nocover .share-eyebrow{margin:0}
+.share-box.has-hero.is-nocover .share-h{margin:6px 0 14px}
+.share-box.is-nocover[data-layout="h"] .share-poster{grid-template-columns:minmax(0,1fr);grid-template-areas:"book" "qr"}
 
 .share-book{margin:0;min-width:0}
-.share-cover{
-  width:168px;
-  aspect-ratio:3/4;
-  overflow:hidden;
-  border-radius:8px;
-  border:1px solid rgba(24,60,52,.12);
-  background:#eef0ea;
-  box-shadow:0 8px 20px rgba(16,32,27,.18);
-}
-.share-box[data-layout="v"] .share-cover{
-  width:160px;
-  margin:0 auto;
-  box-shadow:0 6px 16px rgba(16,32,27,.16);
-}
-.share-cover img{display:block;width:100%;height:100%;object-fit:cover}
+.share-box[data-layout="v"] .share-book{width:100%;max-width:280px;margin-top:10px}
+.share-box[data-layout="h"] .share-book{grid-area:book}
 .share-bt{
-  margin:8px 0 0;
-  font:600 .84rem/1.45 var(--serif,Georgia,serif);
+  margin:0;
+  font:600 .92rem/1.45 var(--serif,Georgia,serif);
   color:var(--green,#183c34);
   text-wrap:balance;
   display:-webkit-box;
@@ -126,17 +189,18 @@
   -webkit-box-orient:vertical;
   overflow:hidden;
 }
-.share-box[data-layout="v"] .share-book{width:100%;max-width:280px}
-.share-box[data-layout="v"] .share-bt{font-size:.92rem;margin-top:6px}
 .share-bs{
-  margin:3px 0 0;
+  margin:4px 0 0;
   font-size:.68rem;
   letter-spacing:.04em;
   color:var(--muted,#6b7a72);
 }
 
-.share-qrcol{min-width:0}
-.share-qrcol .share-tip{margin:10px 0 0;min-height:0;font-size:.76rem;text-wrap:balance}
+.share-qrcol{min-width:0;justify-self:center}
+.share-box[data-layout="h"] .share-qrcol{grid-area:qr}
+.share-box[data-layout="h"] .share-qrcol .share-tip{font-size:.7rem;line-height:1.5}
+.share-box[data-layout="v"] .share-qrcol{margin-top:14px}
+.share-qrcol .share-tip{margin:9px 0 0;min-height:0;font-size:.74rem;text-wrap:balance}
 .share-qr{
   display:flex;
   align-items:center;
@@ -150,13 +214,16 @@
   background:#fffefa;
 }
 .share-qr img,.share-qr canvas{display:block;width:176px!important;height:176px!important}
-/* 带封面的分享卡：封面是主角，二维码退到配角 */
-.share-box[data-layout="h"] .share-qr{width:172px;height:172px;padding:10px}
-.share-box[data-layout="h"] .share-qr img,
-.share-box[data-layout="h"] .share-qr canvas{width:152px!important;height:152px!important}
-.share-box[data-layout="v"] .share-qr{width:148px;height:148px;padding:8px}
+/* 带封面的分享卡：封面是主角，二维码只当配角 */
+.share-box[data-layout="v"] .share-qr{width:128px;height:128px;padding:8px}
 .share-box[data-layout="v"] .share-qr img,
-.share-box[data-layout="v"] .share-qr canvas{width:132px!important;height:132px!important}
+.share-box[data-layout="v"] .share-qr canvas{width:112px!important;height:112px!important}
+.share-box[data-layout="h"] .share-qr{width:124px;height:124px;padding:8px}
+.share-box[data-layout="h"] .share-qr img,
+.share-box[data-layout="h"] .share-qr canvas{width:108px!important;height:108px!important}
+.share-box.is-nocover .share-qr{width:128px;height:128px;padding:8px}
+.share-box.is-nocover .share-qr img,
+.share-box.is-nocover .share-qr canvas{width:112px!important;height:112px!important}
 .share-qr.is-pulse{animation:share-pulse .5s ease}
 @keyframes share-pulse{
   0%{transform:scale(1)}
@@ -171,11 +238,25 @@
   min-height:2.6em;
 }
 
+/* ---------- 有封面时：标题让位给书名，卡片直接从海报开始 ---------- */
+.share-box.has-hero .share-eyebrow,
+.share-box.has-hero .share-h{
+  position:absolute;
+  width:1px;
+  height:1px;
+  margin:0;
+  padding:0;
+  overflow:hidden;
+  clip-path:inset(50%);
+  white-space:nowrap;
+}
+
 /* 版式切换：小屏不显示（默认就是竖版，横版也放不下） */
 .share-layout{
   position:absolute;
   top:8px;
   right:42px;
+  z-index:3;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -245,6 +326,7 @@
   position:absolute;
   top:8px;
   right:10px;
+  z-index:3;
   width:32px;
   height:32px;
   border:0;
@@ -255,6 +337,11 @@
   cursor:pointer;
 }
 .share-x:hover{color:var(--green,#183c34)}
+/* 压在海报上时换成白字，配一层深色描边 */
+.share-box.has-hero .share-x{color:rgba(255,255,255,.9);text-shadow:0 1px 6px rgba(0,0,0,.6)}
+.share-box.has-hero .share-x:hover{color:#fff}
+.share-box.has-hero .share-layout{color:rgba(255,255,255,.75)}
+.share-box.has-hero .share-layout:hover{color:#fff;background:rgba(255,255,255,.16)}
 
 @media(max-width:560px){
   .share-layout{display:none}
@@ -263,22 +350,31 @@
     display:flex;
     flex-direction:column;
     align-items:center;
-    gap:12px;
     text-align:center;
   }
-  .share-box[data-layout="h"] .share-cover{width:124px;margin:0 auto}
+  .share-box[data-layout="h"] .share-hero{
+    align-self:stretch;
+    width:auto;
+    height:212px;
+    margin:calc(var(--pad-t) * -1) calc(var(--pad-x) * -1) 12px;
+    border-radius:18px 18px 0 0;
+  }
+  .share-box[data-layout="h"] .share-book{margin-top:0}
+  .share-box[data-layout="h"] .share-qrcol{margin-top:14px}
 }
 @media(max-width:420px){
-  .share-box{padding:20px 18px 16px}
-  .share-box[data-layout="v"] .share-cover,
-  .share-box[data-layout="h"] .share-cover{width:128px}
-  .share-box[data-layout="v"] .share-qr{width:128px;height:128px;padding:8px}
+  .share-box{--pad-x:18px;--pad-t:20px;padding:var(--pad-t) var(--pad-x) 16px}
+  .share-box[data-layout="v"] .share-hero,
+  .share-box[data-layout="h"] .share-hero{height:208px}
+  .share-hero-cover,
+  .share-box[data-layout="h"] .share-hero-cover{width:116px}
+  .share-box[data-layout="v"] .share-qr,
+  .share-box[data-layout="h"] .share-qr{width:116px;height:116px;padding:8px}
   .share-box[data-layout="v"] .share-qr img,
-  .share-box[data-layout="v"] .share-qr canvas{width:112px!important;height:112px!important}
-  .share-h{font-size:1.12rem;margin:4px 0 12px}
-  .share-poster{gap:10px;margin-bottom:12px}
-  .share-qr{width:176px;height:176px;padding:8px}
-  .share-qr img,.share-qr canvas{width:158px!important;height:158px!important}
+  .share-box[data-layout="v"] .share-qr canvas,
+  .share-box[data-layout="h"] .share-qr img,
+  .share-box[data-layout="h"] .share-qr canvas{width:100px!important;height:100px!important}
+  .share-bt{font-size:.88rem}
   .share-acts{gap:6px}
   .share-acts > *{font-size:.76rem;padding:8px 2px}
 }

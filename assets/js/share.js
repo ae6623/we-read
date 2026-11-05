@@ -90,10 +90,14 @@
   }
 
   function buildPanel(info) {
+    /* 有书：照详情页页头的做法，同一张封面放大模糊当背景，清晰封面浮在中间 */
     var poster = info.hasBook
       ? '<div class="share-poster">' +
+          '<div class="share-hero">' +
+            '<img class="share-hero-bg" alt="" aria-hidden="true" decoding="async">' +
+            '<img class="share-hero-cover" alt="' + esc(info.title) + ' 封面" loading="eager" decoding="async">' +
+          '</div>' +
           '<div class="share-book">' +
-            '<div class="share-cover"><img alt="' + esc(info.title) + ' 封面" loading="eager" decoding="async"></div>' +
             '<p class="share-bt">《' + esc(info.title) + '》</p>' +
             '<p class="share-bs">阅读笔记 · 全书领读</p>' +
           '</div>' +
@@ -109,7 +113,7 @@
     mask.className = 'share-mask';
     mask.hidden = true;
     mask.innerHTML =
-      '<div class="share-box" role="dialog" aria-modal="true" aria-label="分享本篇笔记">' +
+      '<div class="share-box' + (info.hasBook ? ' has-hero' : '') + '" role="dialog" aria-modal="true" aria-label="分享本篇笔记">' +
         (info.hasBook ? '<button type="button" class="share-layout" aria-label="切换竖版"></button>' : '') +
         '<button type="button" class="share-x" aria-label="关闭">×</button>' +
         '<p class="share-eyebrow">SHARE · 分享</p>' +
@@ -164,13 +168,16 @@
     var layoutBtn = mask.querySelector('.share-layout');
     var qrDone = false;
 
-    /* 封面：本地文件，取不到就把封面列收起，版式退回单列 */
-    var coverImg = mask.querySelector('.share-cover img');
+    /* 封面：本地文件，取不到就整块收起，版式退回单列 */
+    var coverImg = mask.querySelector('.share-hero-cover');
     if (coverImg && slug) {
+      var coverSrc = siteRoot() + 'assets/covers/' + encodeURIComponent(slug) + '.jpg';
       coverImg.addEventListener('error', function () {
         box.classList.add('is-nocover');
       });
-      coverImg.src = siteRoot() + 'assets/covers/' + encodeURIComponent(slug) + '.jpg';
+      coverImg.src = coverSrc;
+      var coverBg = mask.querySelector('.share-hero-bg');
+      if (coverBg) coverBg.src = coverSrc;
     }
 
     /* 横版 = 书左码右；竖版 = 书上码下。小屏默认竖版 */
