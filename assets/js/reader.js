@@ -1482,6 +1482,10 @@
       qa('#rdBody .speaking').forEach(function (s) { if (s !== u) s.classList.remove('speaking'); });
       if (!u) return;
       u.classList.add('speaking');
+      /* 核心追问的朗读单元是里层的问句 / 答句，序号圆点画在外层 .mmx-qa 上，
+         同步一份 class，序号才会跟着转绿 */
+      var wrap = u.closest && u.closest('.mmx-qa');
+      if (wrap && wrap !== u && !wrap.classList.contains('speaking')) wrap.classList.add('speaking');
       /* 读到的单元跑到屏幕外时轻轻拉回视口，让高亮始终看得见；
          已在视野内就不动，避免打断用户自己翻看。
          qi === 0 是刚被点的那一块（用户手指就在那儿），绝不滚 —— 安卓上

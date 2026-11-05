@@ -7,7 +7,7 @@
 /* ── 主题变量：默认＝夜间主题 + 段距松 + 整页字号 .94；其余主题由 html[data-theme] 覆盖 ── */
 :root{
   --fs:.94;--pm:1.5;
-  --rd-line:rgba(198,208,218,.20);
+  --rd-line:rgba(198,208,218,.34);
   --pg-bg:#15171a;--card-bg:#1f2226;--card-bd:#34383f;--ink:#c9ced4;--txt:#b4bac1;
   --sub:#8a919a;--head:#93c8a8;--qgreen:#9ed0af;--gold:#bf8247;
   --nav-bg:rgba(21,23,26,.96);--navlink-bg:#262a2f;--navlink-bd:#3a3f46;
@@ -220,36 +220,46 @@ section{scroll-margin-top:62px;}
   border-radius:0 12px 12px 0;}
 
 /* ── 模块内条目：每段 = 一条子节点（左竖线 + 序号圆点）─────────────
-   「更高维度 / 往日今时 / 核心追问」这类模块只有 <p>，段间全靠留白，
-   一段三四百字时整块糊成一片、找不到断点。这里统一成与章节导读同层的
-   子节点：细竖线贯穿 + 序号圆点，段落之间立刻有分界，长文也不再是墙。
-   AI 问书自带问答卡、AI领读自带 .sec 结构，都不参与。 */
-#rdBody>section.mmx-mod:not(#mod-aiask){counter-reset:rd-item;}
+   「更高维度 / 往日今时 / 核心追问 / 核心观点 / 阅读验证 / 原文金句」
+   这些模块里的一级条目此前各写各的：直接 <p> 有序号，核心追问的 .mmx-qa
+   和核心观点的 ul.mmx-views 只有留白或小圆点，同一屏里有的带数字有的不带，
+   看着像两套版式。这里把它们全部收进同一套「子节点」：细竖线贯穿 +
+   数字圆点，与章节导读同层。核心追问与 AI 问书里的问答条目结构相同
+   （都是 .mmx-qa），一并纳入，两处不再一有一无。 */
+#rdBody>section.mmx-mod{counter-reset:rd-item;}
+/* 列表容器本身不参与计数，也不留额外缩进，条目自己撑开 */
+#rdBody>section.mmx-mod>ul.mmx-views,
+#rdBody>section.mmx-mod>ol.mmx-qlist{
+  margin:.4em 0 0;padding-left:0;list-style:none;}
 /* 段间不留 margin：靠 padding 撑开，左侧竖线才能首尾相接成一条连续的
    「时间轴」，而不是每段一根断头的短杠 */
-#rdBody>section.mmx-mod:not(#mod-aiask)>p:not(.mmx-mod-note):not(.mmx-oneline){
+#rdBody>section.mmx-mod>p:not(.mmx-mod-note):not(.mmx-oneline),
+#rdBody>section.mmx-mod>.mmx-qa,
+#rdBody>section.mmx-mod>ul.mmx-views>li,
+#rdBody>section.mmx-mod>ol.mmx-qlist>li{
   position:relative;margin:0;
   padding:calc(.55em*var(--pm)) 0 calc(.55em*var(--pm)) 30px;
-  border-left:2px solid var(--rd-line);}
-#rdBody>section.mmx-mod:not(#mod-aiask)>p:not(.mmx-mod-note):not(.mmx-oneline)::before{
-  counter-increment:rd-item;content:counter(rd-item);
-  position:absolute;left:-7.5px;top:calc(.55em*var(--pm) + .1em);
-  width:17px;height:17px;border-radius:50%;box-sizing:border-box;
+  border-left:2px solid var(--rd-line);border-top:0 !important;}
+#rdBody>section.mmx-mod>p:not(.mmx-mod-note):not(.mmx-oneline)::before,
+#rdBody>section.mmx-mod>.mmx-qa::before,
+#rdBody>section.mmx-mod>ul.mmx-views>li::before,
+#rdBody>section.mmx-mod>ol.mmx-qlist>li::before{
+  counter-increment:rd-item;content:counter(rd-item) !important;
+  display:block !important;
+  /* top 用 px 而不是 em：伪元素一旦设了 font-size，em 就按它自己的字号算，
+     序号会整体上浮一行。这里按条目字号（.84rem）+ 段距系数换算出固定值。 */
+  position:absolute;left:-8px;top:calc(10px * var(--pm));
+  width:18px;height:18px;border-radius:50%;box-sizing:border-box;
   background:var(--card-bg);border:1px solid var(--rd-line);
-  color:var(--gold);font:600 .58rem/15px var(--sans);font-style:normal;text-align:center;}
-/* 核心观点 / 验证清单：同样走竖线；条目已有加粗小标题，用圆点不再叠序号 */
-#rdBody>section.mmx-mod>ul.mmx-views{margin:.4em 0 0;padding-left:0;list-style:none;}
-#rdBody>section.mmx-mod>ul.mmx-views>li{
-  position:relative;margin:0;padding:.6em 0 .6em 24px !important;
-  border-left:2px solid var(--rd-line);border-top:0 !important;
-  font-size:.84rem;line-height:1.9;}
-#rdBody>section.mmx-mod>ul.mmx-views>li::before{
-  content:"" !important;display:block !important;counter-increment:none !important;
-  position:absolute;left:-2.5px;top:1.25em;width:7px;height:7px;
-  border-radius:50%;background:var(--gold);}
-/* 朗读到的那一条：序号 / 圆点转绿，与「读到哪高亮哪」保持一致 */
+  color:var(--gold);font-weight:600;font-size:.56rem;line-height:16px;
+  font-family:var(--sans);font-style:normal;
+  text-align:center;letter-spacing:-.02em;}
+/* 朗读到的那一条：序号圆点转绿，与「读到哪高亮哪」保持一致
+   （核心追问点的是里层 .mmx-q/.mmx-a，由 JS 同步给外层 .mmx-qa） */
 #rdBody>section.mmx-mod>p.speaking::before,
-#rdBody>section.mmx-mod>ul.mmx-views>li.speaking::before{
+#rdBody>section.mmx-mod>.mmx-qa.speaking::before,
+#rdBody>section.mmx-mod>ul.mmx-views>li.speaking::before,
+#rdBody>section.mmx-mod>ol.mmx-qlist>li.speaking::before{
   background:#07c160 !important;border-color:#07c160 !important;color:#fff !important;}
 /* 模型在长文里自带的【书中主张】【外部证据】标签：提成小徽章，
    一眼看出这是「主张 / 证据 / 综合」的哪一段，而不是混在正文里 */
@@ -261,10 +271,14 @@ section{scroll-margin-top:62px;}
 .mmx-qlist li{padding:.6em 0 .6em 2.2em;}
 .mmx-qlist blockquote{font-size:.82rem;line-height:1.9;color:var(--txt);}
 .mmx-qlist cite{font-size:.72rem;color:var(--sub);}
-/* 核心追问：问句加重、答句放松 */
+/* 核心追问：问答条目走统一序号，这里只管问句 / 答句的层级。
+   内层 p 的 margin 必须用 #rdBody 提权，否则会被上面「模块正文段落」的
+   段距规则（#rdBody>section.mmx-mod p）加回 margin-top，问句整体下沉，
+   左侧序号就对不上首行了。 */
+/* 兜底：被 .mmx-ask 等容器包住的问答（非 section 直接子级）保留浅色边线 */
 .mmx-qa{margin:calc(.7em*var(--pm)) 0;padding-left:12px;border-left:3px solid var(--inner-bd);}
-.mmx-qa .mmx-q{font-size:.84rem;font-weight:700;color:var(--ink);line-height:1.8;margin:0 0 .25em;}
-.mmx-qa .mmx-a{font-size:.82rem;line-height:1.95;color:var(--txt);margin:0;}
+#rdBody .mmx-qa .mmx-q{font-size:.86rem;font-weight:700;color:var(--ink);line-height:1.78;margin:0 0 .45em;}
+#rdBody .mmx-qa .mmx-a{font-size:.82rem;line-height:1.95;color:var(--txt);margin:0;}
 
 /* ── AI 问书专项：外层容器透明，问答条目才是阅读单元 ── */
 #mod-aiask .mmx-ask{background:transparent;border:0;border-radius:0;padding:0;margin:0;}
@@ -302,11 +316,11 @@ section{scroll-margin-top:62px;}
 .merged-guide ul.quote>li{color:var(--txt);font-size:.8rem !important;line-height:1.85;margin:.18em 0;padding-left:10px;border-left:2px solid var(--gold)}
 .merged-guide .mmx-qt{font-size:.77rem !important;}
 
-/* 核心观点初判：外链 mmx-guide.css 的「观点N」前缀是绝对定位，在本页版式里和标题叠字，
-   且此前要求去掉「观点1/2/3」前缀 —— 这里整条关掉（外链 CSS 不在页面内，只能内联覆盖）。 */
-.mmx-views li{padding-left:0 !important;}
-.mmx-views li:before,.mmx-views li::before{
-  content:none !important;display:none !important;counter-increment:none !important;}
+/* 核心观点初判：外链 mmx-guide.css 会给每条加「观点N」文字前缀（绝对定位，
+   在本页版式里和标题叠字）。直接子级的条目已由上面统一序号接管；这里只兜底
+   极少数把 .mmx-views 套进 div 的页面，避免「观点1」和序号叠在一起。
+   优先级低于上面的模块条目规则，不会影响正常序号。 */
+#rdBody .mmx-views li::before{content:none !important;display:none !important;}
 
 /* ── 夜间主题：覆盖共享 CSS 里的硬编码浅色 ── */
 html[data-theme=dark] h1,html[data-theme=dark] h2,html[data-theme=dark] h3,
