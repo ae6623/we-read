@@ -37,7 +37,7 @@
 - [ ] 下个正常时段按上方步骤登记，等管理员转达后再开读。
 - [ ] Gemini 使用顺序：gemini-3.8-flash → gemini-3-flash-preview → 跳过（额度与报错规则见 `memory/qingyouji-reader/memory.md`）。
 - [ ] 每场收尾只移除本人活动项，推送后回读 main，报 commit。
-- [ ] 本场 `local-pdf-20261106-035000-yichang146`：仅分析《包子铺》，增量追加 2026-11-06 日期笔记，不重复旧篇。
+- [x] 本场 `local-pdf-20261106-035000-yichang146`：仅分析《包子铺》，增量追加 2026-11-06 日期笔记，不重复旧篇；笔记已进入 main（`5ef6c3a5`）。
 - [ ] 本场收尾：仓库外保存私有档案；只移除本人活动项、更新本人 roster 并追加 11/6 日志；保留 #146 owner/held/in_progress、用户亲读续读点、next_question_status 与 completion。
 
 ## 已决定（雨）
