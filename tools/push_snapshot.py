@@ -172,31 +172,51 @@ def main():
                     if sha not in alive:
                         need.append((k[1], k[0]))
                         del cache[k]
+            bad = 0
             if need:
-                got = batch_blobs([s for _, s in need])
-                bad = 0
-                for p, s in need:
-                    txt = got.get(s)
-                    if not txt:
-                        bad += 1
-                        continue
-                    remote = txt.decode("utf-8")
-                    svg = svgs[p]
-                    m2 = SEC.search(remote)
-                    if not svg or not m2:
-                        bad += 1
-                        continue
-                    merged = remote[:m2.start()] + svg + remote[m2.end():]
-                    fp = seg / p
-                    fp.parent.mkdir(parents=True, exist_ok=True)
-                    fp.write_text(merged, encoding="utf-8")
-                    new_sha = g("hash-object", "-w", str(fp))
-                    cache[(s, p)] = new_sha
-                    cache_path(s, p, svg).write_text(new_sha)
-                if bad:
-                    print(f"[{attempt:02}] 段合并异常 {bad} 本", flush=True)
-            print(f"  段合并：复用 {reused} / 新抓 {len(need)}", flush=True)
+                # 抓取偶发超时（GitHub 限流/连接抖动），最多重试 3 次
+                for retry in range(3):
+                    got = batch_blobs([s for _, s in need])
+                    bad = 0
+                    for p, s in need:
+                        txt = got.get(s)
+                        if not txt:
+                            bad += 1
+                            continue
+                        remote = txt.decode("utf-8")
+                        svg = svgs[p]
+                        m2 = SEC.search(remote)
+                        if not svg or not m2:
+                            bad += 1
+                            continue
+                        merged = remote[:m2.start()] + svg + remote[m2.end():]
+                        fp = seg / p
+                        fp.parent.mkdir(parents=True, exist_ok=True)
+                        fp.write_text(merged, encoding="utf-8")
+                        new_sha = g("hash-object", "-w", str(fp))
+                        cache[(s, p)] = new_sha
+                        cache_path(s, p, svg).write_text(new_sha)
+                    if bad == 0:
+                        break
+                    print(f"  段合并重试 {retry + 1}/3，仍有 {bad} 本失败", flush=True)
+                    time.sleep(2)
+            print(f"  段合并：复用 {reused} / 新抓 {len(need)} / 失败 {bad}", flush=True)
+            if bad:
+                # 严禁带残缺页面推送：丢掉本轮 tip 缓存，整轮重来
+                print(f"[{attempt:02}] 段合并残缺，本轮不推送", flush=True)
+                last = None
+                time.sleep(3)
+                continue
             last = tip
+
+        # 完整性闸门：服务端存在的每个页面都必须有合并结果
+        missing = [p for p in htmls if tmap.get(p) and (tmap[p], p) not in cache]
+        if missing:
+            print(f"[{attempt:02}] 页面合并缺失 {len(missing)} 本（如 {missing[0]}），本轮不推送",
+                  flush=True)
+            last = None
+            time.sleep(2)
+            continue
 
         # 构造 index：一次批量写入
         g("read-tree", tip)
