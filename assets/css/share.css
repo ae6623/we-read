@@ -66,7 +66,7 @@
   text-align:center;
 }
 /* 横版：封面在左、二维码在右，面板加宽 */
-.share-box[data-layout="h"]:not(.is-nocover){max-width:424px}
+.share-box[data-layout="h"]:not(.is-nocover){max-width:416px}
 .share-eyebrow{
   margin:0;
   font-size:.68rem;
@@ -84,7 +84,7 @@
 .share-poster{margin:0 0 16px}
 .share-box[data-layout="h"] .share-poster{
   display:grid;
-  grid-template-columns:148px minmax(0,1fr);
+  grid-template-columns:168px minmax(0,1fr);
   gap:18px;
   align-items:center;
   text-align:left;
@@ -102,7 +102,7 @@
 
 .share-book{margin:0;min-width:0}
 .share-cover{
-  width:148px;
+  width:168px;
   aspect-ratio:3/4;
   overflow:hidden;
   border-radius:8px;
@@ -111,7 +111,7 @@
   box-shadow:0 8px 20px rgba(16,32,27,.18);
 }
 .share-box[data-layout="v"] .share-cover{
-  width:124px;
+  width:160px;
   margin:0 auto;
   box-shadow:0 6px 16px rgba(16,32,27,.16);
 }
@@ -136,7 +136,7 @@
 }
 
 .share-qrcol{min-width:0}
-.share-qrcol .share-tip{margin:10px 0 0;min-height:0}
+.share-qrcol .share-tip{margin:10px 0 0;min-height:0;font-size:.76rem;text-wrap:balance}
 .share-qr{
   display:flex;
   align-items:center;
@@ -150,6 +150,13 @@
   background:#fffefa;
 }
 .share-qr img,.share-qr canvas{display:block;width:176px!important;height:176px!important}
+/* 带封面的分享卡：封面是主角，二维码退到配角 */
+.share-box[data-layout="h"] .share-qr{width:172px;height:172px;padding:10px}
+.share-box[data-layout="h"] .share-qr img,
+.share-box[data-layout="h"] .share-qr canvas{width:152px!important;height:152px!important}
+.share-box[data-layout="v"] .share-qr{width:148px;height:148px;padding:8px}
+.share-box[data-layout="v"] .share-qr img,
+.share-box[data-layout="v"] .share-qr canvas{width:132px!important;height:132px!important}
 .share-qr.is-pulse{animation:share-pulse .5s ease}
 @keyframes share-pulse{
   0%{transform:scale(1)}
@@ -264,7 +271,10 @@
 @media(max-width:420px){
   .share-box{padding:20px 18px 16px}
   .share-box[data-layout="v"] .share-cover,
-  .share-box[data-layout="h"] .share-cover{width:104px}
+  .share-box[data-layout="h"] .share-cover{width:128px}
+  .share-box[data-layout="v"] .share-qr{width:128px;height:128px;padding:8px}
+  .share-box[data-layout="v"] .share-qr img,
+  .share-box[data-layout="v"] .share-qr canvas{width:112px!important;height:112px!important}
   .share-h{font-size:1.12rem;margin:4px 0 12px}
   .share-poster{gap:10px;margin-bottom:12px}
   .share-qr{width:176px;height:176px;padding:8px}

@@ -208,8 +208,9 @@
         qrDone = true;
         new window.QRCode(qrBox, {
           text: PAGE_URL,
-          width: 176,
-          height: 176,
+          /* 生成 264px，再按布局用 CSS 缩到 112~176 —— 缩小不糊，放大也不虚 */
+          width: 264,
+          height: 264,
           colorDark: '#183c34',
           colorLight: '#fffefa',
           correctLevel: window.QRCode.CorrectLevel.M
