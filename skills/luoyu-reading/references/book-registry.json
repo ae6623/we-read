@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": 248,
+  "revision": 249,
   "timezone": "Asia/Shanghai",
   "authority": "latest origin/main; claims become effective only after serialized acceptance there",
   "migration": {
@@ -1227,16 +1227,18 @@
     {
       "book_id": "local-tianya-008-four-principles-lower-housing-prices",
       "title": "全面阐述降低房价的四项基本原则（楼主版）",
-      "author": "待核对（文件名未署名；正文待登记后核查）",
+      "author": "孤独的思想（原帖楼主署名；现实身份未核实）",
       "platform": "local_pdf",
       "platform_book_id": null,
       "priority": "user_authorized_selective_choice",
-      "status": "in_progress",
-      "owner_agent_id": "local-pdf-reader",
+      "status": "completed",
+      "owner_agent_id": null,
       "claim": {
-        "state": "held",
+        "state": "released",
         "source": "用户明确已有实质笔记就跳过并继续选下一本；本书按题名/别名/版本检索未见登记或产物，题名属于住房政策分析，通过职业主题黑名单筛查；公开云端同批天涯合集PDF元数据可用，正文尚未读取。",
-        "claimed_at": "2026-11-06T01:34:19+08:00"
+        "claimed_at": "2026-11-06T01:34:19+08:00",
+        "released_at": "2026-11-06T01:45:59+08:00",
+        "release_reason": "本副本全文AI分析、四项AI问书与读后思考完成，原创HTML与EPUB已在正确Pages上线且内容哈希核验一致。此为AI阅读完读，不增加用户亲读范围、时长或个人续读点。"
       },
       "last_confirmed_progress": null,
       "resume_point": {
@@ -1248,7 +1250,15 @@
         "confirmed_at": null
       },
       "next_question_status": "needs-confirmation",
-      "completion": null,
+      "completion": {
+        "event_id": "completed-local-tianya-008-four-principles-lower-housing-prices-ai-2026-11-06",
+        "sequence": 12,
+        "confirmed_by": "local-pdf-reader",
+        "completed_at": "2026-11-06",
+        "evidence": "用户授权的按需云端PDF AI阅读路径。开读认领提交84657f51进入main后，已覆盖本副本0楼主帖的增加供给、破除垄断、降低成本、鼓励竞争四个原有小节，以及4、7、9、41、43、47、56、62、63楼全部可提取文字；止于63楼末段，没有跳过正文段落。完成原结构AI导览、主要主张判断、背景核验、四项AI问书自主整理与读后思考，非平台AI问答返回。五条必要短引逐字核对。原创overview、final、日期笔记与EPUB经提交91a9caed进入main；七个公开URL均HTTP200，三份HTML与EPUB线上SHA256与本地一致，三个索引存在本书入口；320/390/1280px折叠与展开无横向溢出。本次AI完读仅针对该PDF副本，不保证原帖完整版完整，不代表全部史实逐条核实，不等于用户亲读；用户既有亲读范围、实际时长、日期笔记、个人resume_point和next_question_status保持原样。",
+        "mode": "AI阅读",
+        "output": "reading-notes/books/local-tianya-008-four-principles-lower-housing-prices/overview.html；reading-notes/books/local-tianya-008-four-principles-lower-housing-prices/final.html；reading-notes/books/local-tianya-008-four-principles-lower-housing-prices/final.epub；reading-notes/books/local-tianya-008-four-principles-lower-housing-prices/notes/2026-11-06.html"
+      },
       "pdf_source_note": "用户授权的天涯选读；来源为同批合集的公开云端PDF镜像。本次只发布原创分析，不提交PDF或长段正文，覆盖以实际副本为限。"
     }
   ],
@@ -1268,7 +1278,7 @@
   "synthesis": {
     "visibility": "private",
     "batch_size": 3,
-    "unique_completed_count": 11,
+    "unique_completed_count": 12,
     "batches": [
       {
         "batch_id": "batch-001",
@@ -1302,22 +1312,20 @@
         "status": "completed",
         "owner_agent_id": "local-pdf-reader",
         "visibility": "private"
+      },
+      {
+        "batch_id": "batch-004",
+        "book_ids": [
+          "local-tianya-129-inner-strife-rigid-china",
+          "local-tianya-006-china-housing-outlook-2005-2006",
+          "local-tianya-008-four-principles-lower-housing-prices"
+        ],
+        "status": "completed",
+        "owner_agent_id": "local-pdf-reader",
+        "visibility": "private"
       }
     ]
   },
-  "updated_at": "2026-11-06T01:34:19+08:00",
-  "active_sessions": [
-    {
-      "run_id": "local-pdf-20261106-0134-tianya008",
-      "agent_id": "local-pdf-reader",
-      "book_id": "local-tianya-008-four-principles-lower-housing-prices",
-      "slot": "owner-requested-cloud-pdf-selection-20261106",
-      "started_at": "2026-11-06T01:34:19+08:00",
-      "environment_id": "local-pdf-sandbox",
-      "reading_mode": "local_pdf",
-      "resource_ids": [
-        "local-pdf:sandbox-workspace"
-      ]
-    }
-  ]
+  "updated_at": "2026-11-06T01:45:59+08:00",
+  "active_sessions": []
 }
