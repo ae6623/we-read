@@ -1360,6 +1360,7 @@
      * - 没配：退回 Web Speech 整段朗读；本机也无语音时仅脉冲 + 提示。
      */
     var ttsAudio = null, modSec = null, modChunks = [], modIdx = 0, modPaused = false, modFallback = false;
+    var ttsSeq = 0, ttsObjUrl = null;
     function ensureAudio() {
       if (ttsAudio) return ttsAudio;
       ttsAudio = new Audio();
@@ -1393,21 +1394,49 @@
       if (cur) out.push(cur);
       return out;
     }
-    function ttsUrl(txt) {
-      var sep = TTS_BASE.indexOf('?') >= 0 ? '&' : '?';
+    function rateStr() {
       var pct = Math.round((rate - 1) * 100);
-      var rateStr = (pct >= 0 ? '+' : '') + pct + '%';
-      return TTS_BASE + sep + 'text=' + encodeURIComponent(txt) +
-             '&voice=' + encodeURIComponent(pickTtsVoice()) +
-             '&rate=' + encodeURIComponent(rateStr);
+      return (pct >= 0 ? '+' : '') + pct + '%';
+    }
+    /* 文本走 POST body：GET 的 query 在网关/nginx 上会被长度上限截断，
+       长段落会被静默砍掉一半（读着读着就断）。 */
+    function ttsFetch(txt) {
+      var clean = TTS_BASE.replace(/[?&]$/, '');
+      return fetch(clean, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: txt, voice: pickTtsVoice(), rate: rateStr() })
+      }).then(function (r) {
+        if (!r.ok) throw new Error('tts ' + r.status);
+        return r.blob();
+      });
+    }
+    function setAudioSrc(blob) {
+      var a = ensureAudio();
+      if (ttsObjUrl) { try { URL.revokeObjectURL(ttsObjUrl); } catch (e) {} }
+      ttsObjUrl = URL.createObjectURL(blob);
+      a.src = ttsObjUrl;
     }
     function ttsPlayChunk() {
       if (!modSec) return;
       if (modIdx >= modChunks.length) { finishMod(); return; }
-      var a = ensureAudio();
-      a.src = ttsUrl(modChunks[modIdx]);
-      var p = a.play();
-      if (p && p.catch) p.catch(function () {});
+      var my = ++ttsSeq;
+      showBar(modLabel(modSec) + ' · 合成中…', false);
+      ttsFetch(modChunks[modIdx]).then(function (blob) {
+        if (my !== ttsSeq || !modSec) return;      // 期间被停止/切模块
+        setAudioSrc(blob);
+        if (modSec) showBar(modLabel(modSec) + ' · 朗读中', false);
+        var p = ensureAudio().play();
+        if (p && p.catch) p.catch(function () {});
+      }).catch(function () {
+        if (my !== ttsSeq || !modSec) return;
+        /* 替换兜底：失败时退回逐块重试一次，再不行就跳过该块 */
+        if (modIdx === 0 && !modFallback && hasTTS && allVoices().length > 0) {
+          modFallback = true;
+          var s = modSec; stopAll(); if (muted) muted = false; speak(s); return;
+        }
+        ttsNext();
+      });
     }
     function ttsNext() {
       if (!modSec) return;
@@ -1565,7 +1594,9 @@
 
     function stopAll() {
       if (synth) { try { synth.cancel(); } catch (e) {} }   // 无条件 cancel
+      ttsSeq++;                                             // 作废还在路上的合成请求
       if (ttsAudio) { try { ttsAudio.pause(); ttsAudio.removeAttribute('src'); } catch (e) {} }
+      if (ttsObjUrl) { try { URL.revokeObjectURL(ttsObjUrl); } catch (e) {} ttsObjUrl = null; }
       modSec = null; modChunks = []; modIdx = 0; modPaused = false; modFallback = false;
       speaking = false; curUnit = null; utter = null;
       qa('#rdBody .speaking').forEach(function (s) { s.classList.remove('speaking'); });
