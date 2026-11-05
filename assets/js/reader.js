@@ -1111,6 +1111,32 @@
     var TTS_BASE = (typeof window.RD_TTS_BASE === 'string' && window.RD_TTS_BASE.trim())
       ? window.RD_TTS_BASE.trim() : TTS_DEFAULT;
 
+    /* ── 云端音色清单（必须与服务端 tools/tts-proxy 的白名单一致）─────
+       微信 / QQ / 部分安卓内核里 window.speechSynthesis 整个是 undefined，
+       以前音色下拉在这种浏览器里只剩「当前浏览器不支持语音」，可它明明在用
+       云端女声朗读。现在本机没有系统语音就把这些列进下拉：服务端 edge-tts
+       合成，任何浏览器都能出声。
+       注意：服务端对白名单外的音色会静默回落默认女声，所以这里只列
+       已经确认能出声、且音色真的不同的那 7 个。 */
+    var CLOUD_VOICES = [
+      { uri: 'zh-CN-XiaoxiaoNeural',  kind: 'female', label: '[普通话♀] 晓晓 · 云端' },
+      { uri: 'zh-CN-XiaoyiNeural',    kind: 'female', label: '[普通话♀] 晓伊 · 云端' },
+      { uri: 'zh-CN-YunxiNeural',     kind: 'male',   label: '[普通话♂] 云希 · 云端' },
+      { uri: 'zh-CN-YunjianNeural',   kind: 'male',   label: '[普通话♂] 云健 · 云端' },
+      { uri: 'zh-TW-HsiaoChenNeural', kind: 'tw',     label: '[台湾♀] 曉臻 · 云端' },
+      { uri: 'zh-TW-HsiaoYuNeural',   kind: 'tw',     label: '[台湾♀] 曉雨 · 云端' },
+      { uri: 'zh-TW-YunJheNeural',    kind: 'tw',     label: '[台湾♂] 雲哲 · 云端' }
+    ];
+    function isCloud(uri) { return /Neural$/.test(uri || ''); }
+    /* 这类音色的云端替代品；没有对应云端音色（如粤语）就返回 null */
+    function cloudByKind(kind) {
+      if (kind === 'auto' || kind === 'female') return 'zh-CN-XiaoxiaoNeural';
+      for (var i = 0; i < CLOUD_VOICES.length; i++) {
+        if (CLOUD_VOICES[i].kind === kind) return CLOUD_VOICES[i].uri;
+      }
+      return null;
+    }
+
     /* ── 用户配置（音色/语速/音调/音量持久化，静音每次打开恢复默认）── */
     var CFG_KEY = 'rd-speak-cfg';
     function loadPrefs() {
@@ -1138,7 +1164,19 @@
     var lastUnit = null;     // 暂停后用于「继续」
     var utter = null;
     var speaking = false;
-    var activeChip = voiceURI === '__auto__' ? 'auto' : null;  // 当前音色快捷项
+    /* 下拉里选中的音色 → 对应哪个快捷项（本机语音名 + 云端 uri 都能反查） */
+    function chipOf(uri) {
+      if (!uri || uri === '__auto__') return 'auto';
+      var lang = '', vs = allVoices();
+      for (var i = 0; i < vs.length; i++) if (voiceKey(vs[i]) === uri) lang = vs[i].lang || '';
+      var s = uri + ' ' + lang;
+      if (/zh-TW|Hant|Yunjhe|HsiaoChen|Meijia|Yating|Tracy/i.test(s)) return 'tw';
+      if (/zh-HK|yue|WanLung|HiuMaan|Sinji/i.test(s)) return 'yue';
+      if (/Yunxi|Yunyang|Yunqi|male|Kangkang|Daniel/i.test(s)) return 'male';
+      if (/Xiaoxiao|Xiaoyi|Ting-Ting|Huihui|Yaoyao|female/i.test(s)) return 'female';
+      return null;
+    }
+    var activeChip = chipOf(voiceURI);  // 当前音色快捷项
 
     /* ── 朗读单元：从细到粗，closest 取 DOM 上最近的一个 ────────
        section 只作兜底，点 AI 领读里的内容时绝不能往上命中整章。 */
@@ -1193,9 +1231,11 @@
       var s = (v.lang || '') + ' ' + (v.name || '');
       return /zh[-_]?tw|zh[-_]?hant|cmn[-_]?hant|taiwan|台灣|台湾|國語|国语|hsiao|yunjhe|meijia/i.test(s);
     }
-    /* 某个快捷音色在本机是否真的存在（决定按钮是否置灰、点击是否生效） */
+    /* 某个快捷音色能不能用：本机有就用本机的，没有但有云端同名音色就落到云端 */
     function hasKind(kind) {
-      return kind === 'auto' || firstBy(kind) !== '__auto__';
+      if (kind === 'auto') return true;
+      if (firstBy(kind) !== '__auto__') return true;
+      return !!TTS_BASE && !!cloudByKind(kind);
     }
     function voiceKey(v) { return v.voiceURI || v.name || ''; }
     function voiceLabel(v) {
@@ -1227,6 +1267,9 @@
       else if (kind === 'tw') {
         hit = pool.filter(function (v) { return isTw(v) && isFemale(v); });
         if (!hit.length) hit = pool.filter(isTw);
+      } else if (kind === 'yue') {
+        /* 粤语在 zh 池里找不到（yue-HK 的 lang 不是 zh*），全量里找 */
+        hit = vs.filter(function (v) { return /yue|hk|粵|粤/i.test((v.lang || '') + (v.name || '')); });
       } else return '__auto__';
       return hit.length ? voiceKey(hit[0]) : '__auto__';
     }
@@ -1245,7 +1288,9 @@
       sel.innerHTML = '';
       var o0 = document.createElement('option');
       o0.value = '__auto__';
-      o0.textContent = hasTTS ? '自动（中文女声优先）' : '当前浏览器不支持语音';
+      o0.textContent = vs.length ? '自动（中文女声优先）'
+                     : TTS_BASE ? '自动（云端女声 晓晓）'
+                     : '当前设备没有可用语音';
       sel.appendChild(o0);
       var rank = function (v) {
         var s = (v.lang || '') + (v.name || '');
@@ -1260,9 +1305,21 @@
         o.value = voiceKey(v); o.textContent = voiceLabel(v);
         sel.appendChild(o);
       });
+      /* 云端音色：本机没有系统语音时就是主列表；有系统语音时单独一组挂在后面
+         （本机缺男声/台湾腔/粤语也能直接选云端那几个） */
+      if (TTS_BASE) {
+        var grp = document.createElement('optgroup');
+        grp.label = vs.length ? '云端音色（需联网）' : '云端音色';
+        CLOUD_VOICES.forEach(function (c) {
+          var o = document.createElement('option');
+          o.value = c.uri; o.textContent = c.label;
+          grp.appendChild(o);
+        });
+        sel.appendChild(grp);
+      }
       sel.value = voiceURI;
-      if (!sel.value) { sel.value = '__auto__'; voiceURI = '__auto__'; }
-      sel.disabled = !hasTTS;
+      if (!sel.value) { sel.value = '__auto__'; if (!isCloud(voiceURI)) voiceURI = '__auto__'; }
+      sel.disabled = !vs.length && !TTS_BASE;
       setHint(voiceSummary());
       refreshChips();
     }
@@ -1280,6 +1337,7 @@
           '<button type="button" data-voice="female">女声</button>' +
           '<button type="button" data-voice="male">男声</button>' +
           '<button type="button" data-voice="tw">台湾腔</button>' +
+          '<button type="button" data-voice="yue">粤语</button>' +
           '<button type="button" data-voice="auto">自动</button>' +
         '</div>' +
         '<label class="rd-sp-lab">语速 <span id="rdSpRateVal">1.0×</span>' +
@@ -1295,11 +1353,12 @@
         '<p class="rd-sp-hint" id="rdSpHint" hidden></p>' +
         '<p class="rd-sp-tip">点正文任意段落朗读，再点同一处暂停 · 设置自动保存</p>' +
         '<details class="rd-sp-help"><summary>没有男声 / 台湾腔？</summary>' +
-          '<p>音色由设备系统提供，网页无法下发语音包；灰显的按钮表示本机没装这类语音。' +
-          'Windows：设置 → 时间和语言 → 语音 → 添加语音（选中文(台湾)等）；' +
-          'macOS：系统设置 → 辅助功能 → 朗读内容 → 系统声音 → 管理声音；' +
-          '手机：在系统设置里添加中文语音包后刷新本页。也可直接在上方「音色」下拉里' +
-          '按 [地区♀/♂] 标签挑一个本机已有的。</p>' +
+          '<p>音色分两种：<b>本机</b>（系统自带，网页无法下发语音包）和<b>云端</b>' +
+          '（页面自带的合成服务，普通话 / 台湾腔男女都有；粤语靠本机语音包）。' +
+          '本机没装某类语音时，点快捷按钮会自动改用云端同一个，照常出声。' +
+          '想把本机音色补齐：Windows 设置 → 时间和语言 → 语音 → 添加语音（如中文(台湾)）；' +
+          'macOS 系统设置 → 辅助功能 → 朗读内容 → 系统声音 → 管理声音；' +
+          '手机在系统设置里添加中文语音包后刷新本页。</p>' +
         '</details>';
       rdPanel.appendChild(box);
       rdPanel.classList.add('rd-has-speak');
@@ -1356,13 +1415,28 @@
         x.title = ok ? '' : '本机未安装该音色（点此查看添加方法）';
       });
     }
+    /* 云端可选地区，跟着 CLOUD_VOICES 自动变（加粤语不用改文案） */
+    function cloudZoneNames() {
+      var has = {};
+      CLOUD_VOICES.forEach(function (c) { has[c.kind] = 1; });
+      var out = [];
+      if (has.female || has.male) out.push('普通话');
+      if (has.tw) out.push('台湾腔');
+      if (has.yue) out.push('粤语');
+      return out.join(' / ');
+    }
     function voiceSummary() {
-      if (!hasTTS) return '当前浏览器不支持语音朗读，建议用 Chrome / Edge / Safari 打开';
       var all = allVoices(), vs = all.filter(isListed), zh = vs.filter(isZh).length;
+      /* 本机一个都没有：能上云端就说清在走云端，不再误报「浏览器不支持」 */
+      if (!vs.length) {
+        if (!TTS_BASE) return '当前设备没有可用语音，建议用 Chrome / Edge / Safari 打开';
+        return '本机没有系统语音，已用云端语音（' + CLOUD_VOICES.length + ' 个可选：' +
+               cloudZoneNames() + '）· 需联网，首次合成约 1 秒';
+      }
       var hid = all.length - vs.length;
       return '本机可用语音 ' + vs.length + ' 个（中文 ' + zh + ' 个）' +
              (hid > 0 ? '，已隐藏非中/英/德 ' + hid + ' 个' : '') +
-             ' · 音色由系统提供，网页无法下发';
+             (TTS_BASE ? ' · 另有云端音色可选' : ' · 音色由系统提供，网页无法下发');
     }
     function showBar(txt, warn) {
       var t = q('#rdSbTxt', bar);
@@ -1393,7 +1467,8 @@
     var LEAF_SEL = 'ul.quote > li, ul.point > li, div.sec, .mmx-detail, .mmx-node, ' +
                    'li, blockquote, p, h2, h3, h4, h5';
 
-    function usingLocal() { return hasTTS && allVoices().length > 0; }
+    /* 本机有系统语音就本地读；用户在下拉里显式选了「云端」音色，就走云端 */
+    function usingLocal() { return hasTTS && allVoices().length > 0 && !isCloud(voiceURI); }
 
     /* 收集容器内所有「最小语义单元」，按文档顺序 */
     function unitsIn(root) {
@@ -1452,10 +1527,10 @@
       });
       return ttsAudio;
     }
+    /* 云端用哪个音色：下拉里显式选的优先，其次看快捷项 */
     function pickTtsVoice() {
-      if (activeChip === 'male') return 'zh-CN-YunxiNeural';
-      if (activeChip === 'tw') return 'zh-TW-HsiaoChenNeural';
-      return 'zh-CN-XiaoxiaoNeural';   // 女声 / 自动
+      if (isCloud(voiceURI)) return voiceURI;
+      return cloudByKind(activeChip) || 'zh-CN-XiaoxiaoNeural';
     }
     function rateStr() {
       var pct = Math.round((rate - 1) * 100);
@@ -1655,24 +1730,29 @@
       var sel = q('#rdSpVoice', box);
       sel.addEventListener('change', function () {
         voiceURI = sel.value || '__auto__';
-        activeChip = voiceURI === '__auto__' ? 'auto' : null;
+        activeChip = chipOf(voiceURI);
         setHint(voiceSummary() + ' · 已选下拉音色');
         savePrefs(); relive();
       });
       qa('.rd-sp-chips button', box).forEach(function (b) {
         b.addEventListener('click', function () {
           var kind = b.getAttribute('data-voice');
-          /* 本机没这个音色就直说，绝不静默回落到「自动」还把按钮点亮 */
+          /* 本机没这个音色就直说，绝不静默回落到「自动」还把按钮点亮；
+             但云端有的话就落到云端，别让手机用户以为点了没用 */
           if (!hasKind(kind)) {
             setHint('本机没有「' + b.textContent + '」语音，已保持原设置。展开下方「没有男声 / 台湾腔？」' +
                     '看添加方法，或在「音色」下拉里挑一个可用项。', true);
             return;
           }
           activeChip = kind;
-          voiceURI = firstBy(kind);
+          var lv = firstBy(kind);
+          if (kind === 'auto') voiceURI = '__auto__';
+          else if (lv !== '__auto__') voiceURI = lv;
+          else voiceURI = cloudByKind(kind) || '__auto__';   // 本机没有 → 云端同名音色
           sel.value = voiceURI;
           if (!sel.value) { sel.value = '__auto__'; voiceURI = '__auto__'; }
-          setHint(voiceSummary() + ' · 已选「' + b.textContent + '」');
+          setHint(voiceSummary() + ' · 已选「' + b.textContent + '」' +
+                  (isCloud(voiceURI) ? '（云端）' : ''));
           savePrefs(); relive();
         });
       });
@@ -1766,7 +1846,9 @@
       if (rdPanel && !rdPanel.hidden) { fillVoices(); refresh(); }
     });
     if (hasTTS && synth && typeof synth.onvoiceschanged !== 'undefined') {
-      synth.onvoiceschanged = function () { if (rdPanel && !rdPanel.hidden) fillVoices(); };
+      /* 安卓 Chrome 的系统语音是异步加载的，第一次 getVoices() 常是空数组：
+         一旦就绪就重填，把「云端清单」换成真正的本机音色 */
+      synth.onvoiceschanged = function () { fillVoices(); };
     }
     /* 初始化时填一次下拉：无 TTS 时才能立刻置灰并显示「不支持」；
        点 Aa 打开面板时再刷新一次，捕获异步加载完成的系统语音。

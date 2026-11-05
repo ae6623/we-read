@@ -104,5 +104,10 @@ curl -s -o /dev/null -w "%{http_code}\n" \
 | `TTS_MAX_CHARS` | 1600 | 单次请求文本上限（前端按 ~360 字切块） |
 | `TTS_DEFAULT_VOICE` | `zh-CN-XiaoxiaoNeural` | 默认音色 |
 
-音色：`zh-CN-XiaoxiaoNeural`（女）/ `zh-CN-YunxiNeural`（男）/
-`zh-TW-HsiaoChenNeural`（台湾腔女）/ `zh-TW-YunJheNeural`（台湾腔男）。
+音色白名单（必须与前端 `reader.js` 的 `CLOUD_VOICES` 一致，否则会被静默换成默认女声）：
+
+| 地区 | 女声 | 男声 |
+|---|---|---|
+| 普通话 | `zh-CN-XiaoxiaoNeural`、`zh-CN-XiaoyiNeural` | `zh-CN-YunxiNeural`、`zh-CN-YunjianNeural` |
+| 台湾 | `zh-TW-HsiaoChenNeural`、`zh-TW-HsiaoYuNeural` | `zh-TW-YunJheNeural` |
+| 粤语 | `zh-HK-HiuMaanNeural`、`zh-HK-HiuGaaiNeural` | `zh-HK-WanLungNeural` |
