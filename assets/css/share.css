@@ -43,7 +43,7 @@
   inset:0;
   z-index:200;
   display:flex;
-  align-items:center;
+  align-items:flex-start;   /* 内容高于视口时从顶部开始，配合 .share-box 的 margin:auto 才不会被裁掉顶边 */
   justify-content:center;
   padding:22px;
   background:rgba(20,36,31,.5);
@@ -58,6 +58,7 @@
   box-sizing:border-box;
   width:100%;
   max-width:330px;
+  margin:auto;
   padding:24px 24px 20px;
   border-radius:18px;
   background:var(--card,#fffefa);
@@ -262,6 +263,10 @@
 }
 @media(max-width:420px){
   .share-box{padding:20px 18px 16px}
+  .share-box[data-layout="v"] .share-cover,
+  .share-box[data-layout="h"] .share-cover{width:104px}
+  .share-h{font-size:1.12rem;margin:4px 0 12px}
+  .share-poster{gap:10px;margin-bottom:12px}
   .share-qr{width:176px;height:176px;padding:8px}
   .share-qr img,.share-qr canvas{width:158px!important;height:158px!important}
   .share-acts{gap:6px}
