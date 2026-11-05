@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": 232,
+  "revision": 233,
   "timezone": "Asia/Shanghai",
   "authority": "latest origin/main; claims become effective only after serialized acceptance there",
   "migration": {
@@ -503,7 +503,7 @@
       "platform": "weread",
       "platform_book_id": "61632870813ab9cd1g016717",
       "priority": "user_requested",
-      "status": "in_progress",
+      "status": "paused",
       "owner_agent_id": "cue-qingyouji-reader",
       "claim": {
         "state": "held",
@@ -547,7 +547,8 @@
         "ai_notes_status": "incomplete_missing_chapter_and_mismatch"
       },
       "preflight_note": "官方简介为Vicky在巴塔哥尼亚选择不稳定生活的旅行人物随笔；79.0%/1171人点评仅作平台评价元数据。已打开网易号吴言坊2025-05-01《闲暇假期的废物文学》，其中明确讨论本册与价值观吸引力，是公开读者二手观点，非专业评论或原文证据。叙事性与自主选择主题适合短试；不把单人故事、评论转引或热门划线当普遍行动建议、亲读或已核金句；独立专业本册书评未取得。",
-      "blocked_reason": "13:30 场已收尾（main b84ebe6）：全貌、放马人补问、读后感均为AI问答取得，标为AI问答非亲读；放马人AI答复前后矛盾、骑行与末章人物归属不一致，待原文核对。未开正文，未完读，无活动场次。续读范围仍以管理员确认为准，不擅自重复补问。"
+      "blocked_reason": "13:30 场已收尾（main b84ebe6）：全貌、放马人补问、读后感均为AI问答取得，标为AI问答非亲读；放马人AI答复前后矛盾、骑行与末章人物归属不一致，待原文核对。未开正文，未完读，无活动场次。续读范围仍以管理员确认为准，不擅自重复补问。",
+      "pause_reason": "切换至管理员本次指定的本地 PDF AI 分析；保留原 held 归属和续读点，不代表完成或释放。"
     },
     {
       "book_id": "serbia-qingyouji",
@@ -1142,6 +1143,32 @@
       "next_question_status": "needs-confirmation",
       "completion": null,
       "pdf_source_note": "用户授权的本地PDF；公开页面仅发布提炼后的分析，不公开源文件、全文或分块文本。"
+    },
+    {
+      "book_id": "local-tianya-146-yichang-ghost-stories",
+      "title": "宜昌鬼事（三峡地区巫鬼轶事记录整理）",
+      "author": "待核实（文件名未标注；PDF首页待核）",
+      "platform": "local_pdf",
+      "platform_book_id": null,
+      "priority": "user_requested",
+      "status": "in_progress",
+      "owner_agent_id": "cue-qingyouji-reader",
+      "claim": {
+        "state": "held",
+        "source": "管理员分配的天涯第5类 #146；本地 PDF AI 分析不构成用户亲读进度。",
+        "claimed_at": "2026-11-05T16:43:41+08:00"
+      },
+      "last_confirmed_progress": null,
+      "resume_point": {
+        "status": "needs-confirmation",
+        "chapter": null,
+        "page": null,
+        "position": "无已确认用户亲读位置；本场 AI 分析不建立亲读续读点。",
+        "source": "新书目登记；AI 分析不构成亲读进度。",
+        "confirmed_at": null
+      },
+      "next_question_status": "needs-confirmation",
+      "completion": null
     }
   ],
   "active_session": null,
@@ -1209,6 +1236,18 @@
       "reading_mode": "local_pdf",
       "resource_ids": [
         "local-pdf:sandbox-workspace"
+      ]
+    },
+    {
+      "run_id": "local-pdf-20261105-164341-yichang146",
+      "agent_id": "cue-qingyouji-reader",
+      "book_id": "local-tianya-146-yichang-ghost-stories",
+      "slot": "user-assigned-local-pdf-analysis-2026-11-05",
+      "started_at": "2026-11-05T16:43:41+08:00",
+      "environment_id": "local-pdf-reader-cloud",
+      "reading_mode": "local_pdf",
+      "resource_ids": [
+        "local-pdf:cloud-workspace"
       ]
     }
   ]
