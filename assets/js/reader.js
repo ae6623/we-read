@@ -1430,10 +1430,19 @@
         if (p && p.catch) p.catch(function () {});
       }).catch(function () {
         if (my !== ttsSeq || !modSec) return;
-        /* 替换兜底：失败时退回逐块重试一次，再不行就跳过该块 */
-        if (modIdx === 0 && !modFallback && hasTTS && allVoices().length > 0) {
-          modFallback = true;
-          var s = modSec; stopAll(); if (muted) muted = false; speak(s); return;
+        /* 首块就失败：桌面有系统语音就回退 Web Speech；
+           手机没有系统语音时不能静默跳过（用户只会觉得「点了没反应」），
+           明确提示并收摊。中途某块失败才跳过，避免整段中断。 */
+        if (modIdx === 0) {
+          if (!modFallback && hasTTS && allVoices().length > 0) {
+            modFallback = true;
+            var s = modSec; stopAll(); if (muted) muted = false; speak(s); return;
+          }
+          var nm = modLabel(modSec);
+          stopAll();
+          showBar(nm + ' · 语音服务暂时不可用，请稍后再试', true);
+          setTimeout(hideBar, 3200);
+          return;
         }
         ttsNext();
       });
