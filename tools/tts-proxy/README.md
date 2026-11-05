@@ -9,6 +9,18 @@
 `edge-tts` 是微软 Edge 的神经语音，**免费、无需 API Key**，在服务器上把文本合成
 mp3，前端用 `<audio>` 播放 —— 任何浏览器（含微信）都能出声，而且音质比系统 TTS 好。
 
+## 当前状态（默认已接入）
+
+线上 `reader.js` 已把默认地址写死在 `TTS_DEFAULT`，指向 WorkBuddy 托管的同一份服务，
+**开箱即用，不需要你自己部署**。想换成自己的服务器时，只要在 `reader.js` 之前执行：
+
+```js
+window.RD_TTS_BASE = 'https://oauth.js-dev.cn/tts';   // 会覆盖默认值
+```
+
+> 托管实例随沙箱休眠可能冷启动（首次请求慢几秒）；要高可用/自定义域名，
+> 按下面步骤部署到你自己的机器，再覆盖 `RD_TTS_BASE` 即可。
+
 ## 部署（在你的 Ubuntu 服务器上）
 
 ```bash
@@ -75,18 +87,11 @@ curl -s -o /dev/null -w "%{http_code}\n" \
 
 ## 前端启用（一行）
 
-`assets/js/reader.js` 里 `TTS_BASE` 读取的是 `window.RD_TTS_BASE`。部署好后，把
-这两处任一改一下即可全站生效：
+`assets/js/reader.js` 里的 `TTS_DEFAULT` 就是默认服务地址，`window.RD_TTS_BASE`
+可覆盖它。所以：
 
-- 在 `reader.js` 顶部把
-  ```js
-  var TTS_BASE = (typeof window.RD_TTS_BASE === 'string') ? window.RD_TTS_BASE.trim() : '';
-  ```
-  改成直接常量：
-  ```js
-  var TTS_BASE = window.RD_TTS_BASE || 'https://oauth.js-dev.cn/tts';
-  ```
-- 或者任意在 `reader.js` 之前执行的脚本里写：`window.RD_TTS_BASE = 'https://oauth.js-dev.cn/tts';`
+- 换服务器：在 `reader.js` 之前执行 `window.RD_TTS_BASE = 'https://你的域名/tts';`
+- 彻底关闭服务端朗读：`window.RD_TTS_BASE = ' '`（回到纯 Web Speech）
 
 启用后：一级模块右上角的 ▶ 会用服务器音频朗读；代理不可用时自动回退到 Web Speech。
 
@@ -94,7 +99,7 @@ curl -s -o /dev/null -w "%{http_code}\n" \
 
 | 变量 | 默认 | 说明 |
 |---|---|---|
-| `PORT` | 8765 | 监听端口 |
+| `PORT` | 3000 | 监听端口（托管平台会注入） |
 | `TTS_CACHE` | `./cache` | mp3 磁盘缓存目录（命中零成本） |
 | `TTS_MAX_CHARS` | 1600 | 单次请求文本上限（前端按 ~360 字切块） |
 | `TTS_DEFAULT_VOICE` | `zh-CN-XiaoxiaoNeural` | 默认音色 |
