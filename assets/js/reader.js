@@ -1124,7 +1124,30 @@
     var rate = num(prefs.rate, 0.5, 2, 1);
     var pitch = num(prefs.pitch, 0.5, 1.5, 1);
     var volume = num(prefs.volume, 0, 1, 1);
+
+    /* ── 云端音色（只收「念书不刺耳」的四个）────────────────────
+       本机没有系统语音时（微信 / QQ / 部分安卓内核），朗读靠服务端
+       edge-tts 合成。默认固定晓晓——就是最早那个自然女声，不跟着
+       历史配置乱变。其余三个是给人挑的备选，选完会记住。
+       必须与服务端 tools/tts-proxy 白名单一致，否则会被静默换成晓晓。 */
+    var CLOUD_VOICES = [
+      { uri: 'zh-CN-XiaoxiaoNeural',  label: '晓晓 · 默认女声' },
+      { uri: 'zh-CN-XiaoyiNeural',    label: '晓伊 · 年轻女声' },
+      { uri: 'zh-CN-YunxiNeural',     label: '云希 · 少年男声' },
+      { uri: 'zh-TW-HsiaoChenNeural', label: '曉臻 · 台湾女声' }
+    ];
+    var CLOUD_DEFAULT = CLOUD_VOICES[0].uri;
+    function isCloudVoice(u) { return /Neural$/.test(u || ''); }
+    function cloudLabel(u) {
+      for (var i = 0; i < CLOUD_VOICES.length; i++) {
+        if (CLOUD_VOICES[i].uri === u) return CLOUD_VOICES[i].label;
+      }
+      return '';
+    }
     var voiceURI = prefs.voiceURI || '__auto__';
+    /* 历史配置里可能残留上一版列过的云端音色（曉雨 / 雲哲 …），
+       现在不在清单里就回默认，免得又被带成别的腔调。 */
+    if (isCloudVoice(voiceURI) && !cloudLabel(voiceURI)) voiceURI = '__auto__';
     function savePrefs() {
       try {
         localStorage.setItem(CFG_KEY, JSON.stringify({
@@ -1193,9 +1216,18 @@
       var s = (v.lang || '') + ' ' + (v.name || '');
       return /zh[-_]?tw|zh[-_]?hant|cmn[-_]?hant|taiwan|台灣|台湾|國語|国语|hsiao|yunjhe|meijia/i.test(s);
     }
-    /* 某个快捷音色在本机是否真的存在（决定按钮是否置灰、点击是否生效） */
+    /* 快捷项对应的云端音色（本机没这个音色时兜底）；粤语服务端还没发布，先不给 */
+    function cloudKind(kind) {
+      if (kind === 'auto' || kind === 'female') return CLOUD_DEFAULT;
+      if (kind === 'male') return 'zh-CN-YunxiNeural';
+      if (kind === 'tw') return 'zh-TW-HsiaoChenNeural';
+      return null;
+    }
+    /* 某个快捷音色能不能用：本机有就用本机，没有但有云端同名音色也算可用 */
     function hasKind(kind) {
-      return kind === 'auto' || firstBy(kind) !== '__auto__';
+      if (kind === 'auto') return true;
+      if (firstBy(kind) !== '__auto__') return true;
+      return !!TTS_BASE && !!cloudKind(kind);   // 本机没有就用云端同名音色
     }
     function voiceKey(v) { return v.voiceURI || v.name || ''; }
     function voiceLabel(v) {
@@ -1245,7 +1277,9 @@
       sel.innerHTML = '';
       var o0 = document.createElement('option');
       o0.value = '__auto__';
-      o0.textContent = hasTTS ? '自动（中文女声优先）' : '当前浏览器不支持语音';
+      o0.textContent = vs.length ? '默认（本机中文女声）'
+                     : TTS_BASE ? '默认 · 晓晓（云端）'
+                     : '当前设备没有可用语音';
       sel.appendChild(o0);
       var rank = function (v) {
         var s = (v.lang || '') + (v.name || '');
@@ -1260,9 +1294,21 @@
         o.value = voiceKey(v); o.textContent = voiceLabel(v);
         sel.appendChild(o);
       });
+      /* 云端备选：默认项已经代表晓晓，这里只挂另外三个，避免下拉里
+         出现两个「晓晓」。有本机语音时也能选，用来对比。 */
+      if (TTS_BASE) {
+        var grp = document.createElement('optgroup');
+        grp.label = vs.length ? '云端音色（需联网）' : '云端音色';
+        CLOUD_VOICES.slice(1).forEach(function (c) {
+          var o = document.createElement('option');
+          o.value = c.uri; o.textContent = c.label;
+          grp.appendChild(o);
+        });
+        sel.appendChild(grp);
+      }
       sel.value = voiceURI;
       if (!sel.value) { sel.value = '__auto__'; voiceURI = '__auto__'; }
-      sel.disabled = !hasTTS;
+      sel.disabled = !vs.length && !TTS_BASE;
       setHint(voiceSummary());
       refreshChips();
     }
@@ -1275,7 +1321,10 @@
       box.className = 'rd-speak-box rd-speak-skip';
       box.innerHTML =
         '<div class="rd-sp-hd">🎧 听书 <span id="rdSpState">默认静音</span></div>' +
-        '<label class="rd-sp-lab">音色<select id="rdSpVoice"></select></label>' +
+        '<div class="rd-sp-voice">' +
+          '<label class="rd-sp-lab">音色<select id="rdSpVoice"></select></label>' +
+          '<button type="button" id="rdSpTry" class="rd-sp-try">试听</button>' +
+        '</div>' +
         '<div class="rd-sp-chips">' +
           '<button type="button" data-voice="female">女声</button>' +
           '<button type="button" data-voice="male">男声</button>' +
@@ -1357,12 +1406,16 @@
       });
     }
     function voiceSummary() {
-      if (!hasTTS) return '当前浏览器不支持语音朗读，建议用 Chrome / Edge / Safari 打开';
       var all = allVoices(), vs = all.filter(isListed), zh = vs.filter(isZh).length;
+      if (!vs.length) {
+        return TTS_BASE
+          ? '本机没有系统语音，朗读走云端（' + CLOUD_VOICES.length + ' 个音色可选）· 需联网，首次约 1 秒'
+          : '当前设备没有可用语音，建议换 Chrome / Edge / Safari 打开';
+      }
       var hid = all.length - vs.length;
       return '本机可用语音 ' + vs.length + ' 个（中文 ' + zh + ' 个）' +
              (hid > 0 ? '，已隐藏非中/英/德 ' + hid + ' 个' : '') +
-             ' · 音色由系统提供，网页无法下发';
+             (TTS_BASE ? ' · 云端备选 ' + (CLOUD_VOICES.length - 1) + ' 个' : '');
     }
     function showBar(txt, warn) {
       var t = q('#rdSbTxt', bar);
@@ -1393,7 +1446,9 @@
     var LEAF_SEL = 'ul.quote > li, ul.point > li, div.sec, .mmx-detail, .mmx-node, ' +
                    'li, blockquote, p, h2, h3, h4, h5';
 
-    function usingLocal() { return hasTTS && allVoices().length > 0; }
+    function usingLocal() {
+      return hasTTS && allVoices().length > 0 && !isCloudVoice(voiceURI);
+    }
 
     /* 收集容器内所有「最小语义单元」，按文档顺序 */
     function unitsIn(root) {
@@ -1453,9 +1508,10 @@
       return ttsAudio;
     }
     function pickTtsVoice() {
+      if (isCloudVoice(voiceURI)) return voiceURI;   // 下拉里明确选了云端备选
       if (activeChip === 'male') return 'zh-CN-YunxiNeural';
       if (activeChip === 'tw') return 'zh-TW-HsiaoChenNeural';
-      return 'zh-CN-XiaoxiaoNeural';   // 女声 / 自动
+      return CLOUD_DEFAULT;   // 自动 / 女声 / 默认
     }
     function rateStr() {
       var pct = Math.round((rate - 1) * 100);
@@ -1463,15 +1519,64 @@
     }
     /* 文本走 POST body：GET 的 query 在网关/nginx 上会被长度上限截断，
        长段落会被静默砍掉一半（读着读着就断）。 */
-    function ttsFetch(txt) {
+    function ttsFetch(txt, voice) {
       var clean = TTS_BASE.replace(/[?&]$/, '');
       return fetch(clean, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text: txt, voice: pickTtsVoice(), rate: rateStr() })
+        body: JSON.stringify({ text: txt, voice: voice || pickTtsVoice(), rate: rateStr() })
       }).then(function (r) {
         if (!r.ok) throw new Error('tts ' + r.status);
         return r.blob();
+      });
+    }
+    /* 试听：用当前下拉里的音色念一句样句，方便几个音色来回比。
+       会先停掉正在进行的朗读（不然两路声音叠在一起）。 */
+    var TRY_TXT = '这是当前音色的试听，听着顺耳就用它。';
+    function previewVoice() {
+      var sel = q('#rdSpVoice', box);
+      var uri = sel ? (sel.value || '__auto__') : '__auto__';
+      stopAll();
+      var lv = null;
+      if (!isCloudVoice(uri) && hasTTS) {
+        if (uri === '__auto__') {
+          lv = currentVoice();          // 自动：就听实际朗读会用的那个本机音色
+        } else {
+          var vs = allVoices();
+          for (var i = 0; i < vs.length; i++) {
+            if (voiceKey(vs[i]) === uri) { lv = vs[i]; break; }
+          }
+        }
+      }
+      if (lv && synth) {                       // 本机音色：直接念
+        try {
+          var u = new window.SpeechSynthesisUtterance(TRY_TXT);
+          u.lang = lv.lang || 'zh-CN';
+          /* 个别内核的 voice 对象不合法，赋值会抛错并让整句静音 → 单独兜住，
+             失败时退回只设 lang，仍能出声 */
+          try { u.voice = lv; } catch (e2) {}
+          u.rate = rate; u.pitch = pitch; u.volume = volume;
+          try { synth.cancel(); } catch (e3) {}
+          synth.speak(u);
+          setHint('试听：本机 ' + (lv.name || lv.lang), false);
+        } catch (e) {
+          setHint('这台设备放不出这个音色，换一个试试', true);
+        }
+        return;
+      }
+      if (!TTS_BASE) {
+        setHint('这台设备没有可用语音，换浏览器或联网后再试', true);
+        return;
+      }
+      var v = isCloudVoice(uri) ? uri : pickTtsVoice();
+      setHint('合成中…', false);
+      ttsFetch(TRY_TXT, v).then(function (b) {
+        setAudioSrc(b);
+        var p = ensureAudio().play();
+        if (p && p.catch) p.catch(function () {});
+        setHint('试听：' + (cloudLabel(v) || v), false);
+      }).catch(function () {
+        setHint('试听失败，检查网络后重试', true);
       });
     }
     function setAudioSrc(blob) {
@@ -1656,8 +1761,15 @@
       sel.addEventListener('change', function () {
         voiceURI = sel.value || '__auto__';
         activeChip = voiceURI === '__auto__' ? 'auto' : null;
-        setHint(voiceSummary() + ' · 已选下拉音色');
+        var nm = isCloudVoice(voiceURI) ? cloudLabel(voiceURI) : '';
+        setHint(nm ? '已选「' + nm + '」· 点试听先听一句'
+                   : voiceSummary() + ' · 已选下拉音色');
         savePrefs(); relive();
+      });
+      var tryBtn = q('#rdSpTry', box);
+      if (tryBtn) tryBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        previewVoice();
       });
       qa('.rd-sp-chips button', box).forEach(function (b) {
         b.addEventListener('click', function () {
@@ -1670,6 +1782,7 @@
           }
           activeChip = kind;
           voiceURI = firstBy(kind);
+          if (voiceURI === '__auto__') voiceURI = cloudKind(kind) || '__auto__';
           sel.value = voiceURI;
           if (!sel.value) { sel.value = '__auto__'; voiceURI = '__auto__'; }
           setHint(voiceSummary() + ' · 已选「' + b.textContent + '」');
