@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": 226,
+  "revision": 227,
   "timezone": "Asia/Shanghai",
   "authority": "latest origin/main; claims become effective only after serialized acceptance there",
   "migration": {
@@ -1051,6 +1051,33 @@
       "next_question_status": "needs-confirmation",
       "completion": null,
       "pdf_source_note": "用户授权的天涯本地PDF；公开页面仅发布分析，不公开源文件路径或长段原文。"
+    },
+    {
+      "book_id": "local-tianya-151-nightly-ghost-stories",
+      "title": "每夜一个鬼故事（连续更新）不好看你砸我",
+      "author": "待核对（本地文件名未标注）",
+      "platform": "local_pdf",
+      "platform_book_id": null,
+      "priority": "user_authorized_selective_choice",
+      "status": "in_progress",
+      "owner_agent_id": "local-pdf-reader",
+      "claim": {
+        "state": "held",
+        "source": "雨于2026-11-05授权从天涯本地PDF候选中自主选择第5类；本条目按文件名登记，最新 main 未发现同名/同 book_id 条目、认领或活动冲突。",
+        "claimed_at": "2026-11-05T12:31:48+08:00"
+      },
+      "last_confirmed_progress": null,
+      "resume_point": {
+        "status": "needs-confirmation",
+        "chapter": null,
+        "page": null,
+        "position": "无已确认亲读位置；本次仅作AI分析，不建立用户个人续读点。",
+        "source": "本地PDF新书目登记；AI分析不建立亲读进度。",
+        "confirmed_at": null
+      },
+      "next_question_status": "needs-confirmation",
+      "completion": null,
+      "pdf_source_note": "用户授权的天涯本地PDF；公开页面仅发布分析，不公开源文件路径或长段原文。"
     }
   ],
   "active_session": null,
@@ -1106,6 +1133,19 @@
       }
     ]
   },
-  "updated_at": "2026-11-05T12:27:39+08:00",
-  "active_sessions": []
+  "updated_at": "2026-11-05T12:31:48+08:00",
+  "active_sessions": [
+    {
+      "run_id": "local-pdf-20261105-1231-tianya151",
+      "agent_id": "local-pdf-reader",
+      "book_id": "local-tianya-151-nightly-ghost-stories",
+      "slot": "user-authorized-batched-ai-analysis",
+      "started_at": "2026-11-05T12:31:48+08:00",
+      "environment_id": "local-pdf-reader-cloud",
+      "reading_mode": "local_pdf",
+      "resource_ids": [
+        "local-pdf:cloud-workspace"
+      ]
+    }
+  ]
 }
