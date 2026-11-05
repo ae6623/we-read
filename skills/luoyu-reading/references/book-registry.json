@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": 247,
+  "revision": 248,
   "timezone": "Asia/Shanghai",
   "authority": "latest origin/main; claims become effective only after serialized acceptance there",
   "migration": {
@@ -1223,6 +1223,33 @@
       "next_question_status": "needs-confirmation",
       "completion": null,
       "pdf_source_note": "用户授权的天涯本地 PDF；公开页面仅发布分析，不公开源文件或私密路径。"
+    },
+    {
+      "book_id": "local-tianya-008-four-principles-lower-housing-prices",
+      "title": "全面阐述降低房价的四项基本原则（楼主版）",
+      "author": "待核对（文件名未署名；正文待登记后核查）",
+      "platform": "local_pdf",
+      "platform_book_id": null,
+      "priority": "user_authorized_selective_choice",
+      "status": "in_progress",
+      "owner_agent_id": "local-pdf-reader",
+      "claim": {
+        "state": "held",
+        "source": "用户明确已有实质笔记就跳过并继续选下一本；本书按题名/别名/版本检索未见登记或产物，题名属于住房政策分析，通过职业主题黑名单筛查；公开云端同批天涯合集PDF元数据可用，正文尚未读取。",
+        "claimed_at": "2026-11-06T01:34:19+08:00"
+      },
+      "last_confirmed_progress": null,
+      "resume_point": {
+        "status": "needs-confirmation",
+        "chapter": null,
+        "page": null,
+        "position": "无已确认用户亲读位置；本次AI分析不建立个人亲读续读点。",
+        "source": "云端PDF新书目登记；AI分析不建立用户亲读进度。",
+        "confirmed_at": null
+      },
+      "next_question_status": "needs-confirmation",
+      "completion": null,
+      "pdf_source_note": "用户授权的天涯选读；来源为同批合集的公开云端PDF镜像。本次只发布原创分析，不提交PDF或长段正文，覆盖以实际副本为限。"
     }
   ],
   "active_session": null,
@@ -1278,6 +1305,19 @@
       }
     ]
   },
-  "updated_at": "2026-11-06T01:29:07+08:00",
-  "active_sessions": []
+  "updated_at": "2026-11-06T01:34:19+08:00",
+  "active_sessions": [
+    {
+      "run_id": "local-pdf-20261106-0134-tianya008",
+      "agent_id": "local-pdf-reader",
+      "book_id": "local-tianya-008-four-principles-lower-housing-prices",
+      "slot": "owner-requested-cloud-pdf-selection-20261106",
+      "started_at": "2026-11-06T01:34:19+08:00",
+      "environment_id": "local-pdf-sandbox",
+      "reading_mode": "local_pdf",
+      "resource_ids": [
+        "local-pdf:sandbox-workspace"
+      ]
+    }
+  ]
 }
