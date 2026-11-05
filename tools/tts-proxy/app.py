@@ -136,5 +136,6 @@ def health():
 
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", "8765"))
+    # 平台（如应用托管）会注入 PORT；未注入时用 3000，与反代默认端口一致
+    port = int(os.environ.get("PORT", "3000"))
     app.run(host="0.0.0.0", port=port, threaded=True)

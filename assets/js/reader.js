@@ -1103,11 +1103,13 @@
     var hasTTS = ('speechSynthesis' in window) &&
                  typeof window.SpeechSynthesisUtterance !== 'undefined';
     var synth = hasTTS ? window.speechSynthesis : null;
-    /* 服务端 TTS 代理地址（可选）。设置后一级模块播放键用 <audio> 播放合成音频，
+    /* 服务端 TTS 代理地址。设置后一级模块播放键用 <audio> 播放合成音频，
        任何浏览器（含微信 webview）都能出声；留空则退回 Web Speech。
-       部署见 tools/tts-proxy/，然后把 window.RD_TTS_BASE 指到你的地址，例如：
-         window.RD_TTS_BASE = 'https://oauth.js-dev.cn/tts';  */
-    var TTS_BASE = (typeof window.RD_TTS_BASE === 'string') ? window.RD_TTS_BASE.trim() : '';
+       默认走 WorkBuddy 云端托管（tools/tts-proxy/ 同一份代码）；
+       想换成自己的服务器，只要在页面里前置 window.RD_TTS_BASE = 'https://your.host/tts'。 */
+    var TTS_DEFAULT = 'https://a32eb29ccf0373711.app.workbuddy.host/tts?sharecode=N3AWQXFAIQ';
+    var TTS_BASE = (typeof window.RD_TTS_BASE === 'string' && window.RD_TTS_BASE.trim())
+      ? window.RD_TTS_BASE.trim() : TTS_DEFAULT;
 
     /* ── 用户配置（音色/语速/音调/音量持久化，静音每次打开恢复默认）── */
     var CFG_KEY = 'rd-speak-cfg';
