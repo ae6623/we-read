@@ -150,6 +150,7 @@
     main.removeAttribute('aria-busy');
     main.classList.add('rd-in');   // 内容淡入，替代骨架的突兀切换
     dedupQuoteNodes(main);
+    markModelTags(main);
     loaded();
 
     // 导航：壳页已直出全套标签 → 就地删掉本书没有的、补上缺的（不重建，避免宽度闪动）
@@ -461,6 +462,17 @@
   /* 「原句 · 本小节汇总」去重：小节里如果所有 ul.quote 的原句加起来
      和汇总节点一字不差（只有一个来源时必然如此），汇总就是纯重复 → 整块删掉。
      汇总里有任何一条新增内容则保留不动。 */
+  /* 模型在「更高维度 / 往日今时」里自带的【书中主张】【外部证据】标签，
+     纯文本时埋在长段落中间谁也看不见。提成小徽章后，读者一眼看出这段是
+     主张、证据还是综合判断。只动这两块的直接子段落，别的模块不碰。 */
+  function markModelTags(root) {
+    var ps = qa('section[data-key="higher"]>p, section[data-key="thennow"]>p', root);
+    ps.forEach(function (p) {
+      if (!/【[^】]{2,10}】/.test(p.innerHTML)) return;
+      p.innerHTML = p.innerHTML.replace(/【([^】]{2,10})】/g, '<b class="rd-tag">$1</b>');
+    });
+  }
+
   function dedupQuoteNodes(root) {
     var nodes;
     try { nodes = root.querySelectorAll('ul.quote.quote-node'); } catch (e) { return; }

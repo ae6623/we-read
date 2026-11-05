@@ -7,6 +7,7 @@
 /* ── 主题变量：默认＝夜间主题 + 段距松 + 整页字号 .94；其余主题由 html[data-theme] 覆盖 ── */
 :root{
   --fs:.94;--pm:1.5;
+  --rd-line:rgba(198,208,218,.20);
   --pg-bg:#15171a;--card-bg:#1f2226;--card-bd:#34383f;--ink:#c9ced4;--txt:#b4bac1;
   --sub:#8a919a;--head:#93c8a8;--qgreen:#9ed0af;--gold:#bf8247;
   --nav-bg:rgba(21,23,26,.96);--navlink-bg:#262a2f;--navlink-bd:#3a3f46;
@@ -23,7 +24,7 @@ html[data-theme=cream]{
   --inner-bg:#fbfaf2;--inner-bd:#eee9d8;--oneline-bg:#fbfaf4;
   --act-bg:#e5efe4;--act-bd:#bcd4bc;--act-fg:#1b4235;
   --paper:#f6f7f2;--card:#fffdf6;--muted:#697870;--green:#244b40;--green2:#315e50;
-  --line:#dfe6df;--sage:#dce8df;--accent:#286b52;--e5e0d6:#e5e0d6;}
+  --line:#dfe6df;--sage:#dce8df;--accent:#286b52;--e5e0d6:#e5e0d6;--rd-line:rgba(110,95,60,.34);}
 html[data-theme=light]{
   --pg-bg:#ffffff;--card-bg:#ffffff;--card-bd:#e7e7e2;--ink:#33373a;--txt:#4a4436;
   --sub:#8d8878;--head:#244b40;--qgreen:#2f5b49;
@@ -31,7 +32,7 @@ html[data-theme=light]{
   --inner-bg:#fafaf7;--inner-bd:#ecebe4;--oneline-bg:#fafaf7;
   --act-bg:#e6efe7;--act-bd:#c3dcc9;--act-fg:#1e4d37;
   --paper:#fff;--card:#fff;--muted:#697870;--green:#244b40;--green2:#315e50;
-  --line:#e7e7e2;--sage:#e6efe7;--accent:#286b52;}
+  --line:#e7e7e2;--sage:#e6efe7;--accent:#286b52;--rd-line:rgba(80,72,58,.34);}
 html[data-theme=green]{
   --pg-bg:#cfe8d2;--card-bg:#eef7ef;--card-bd:#b9dcc0;--ink:#2f4237;--txt:#3b5446;
   --sub:#5d7c67;--head:#1e4d37;--qgreen:#1e5c41;
@@ -39,7 +40,7 @@ html[data-theme=green]{
   --inner-bg:#f6fbf7;--inner-bd:#cde5d3;--oneline-bg:#f6fbf7;
   --act-bg:#bfe3c6;--act-bd:#95c8a1;--act-fg:#17422f;
   --paper:#cfe8d2;--card:#eef7ef;--muted:#5d7c67;--green:#1e4d37;--green2:#2c6b4e;
-  --line:#b9dcc0;--sage:#b7dfc0;--accent:#1e5c41;}
+  --line:#b9dcc0;--sage:#b7dfc0;--accent:#1e5c41;--rd-line:rgba(35,80,50,.34);}
 html[data-theme=dark]{
   --pg-bg:#15171a;--card-bg:#1f2226;--card-bd:#34383f;--ink:#c9ced4;--txt:#b4bac1;
   --sub:#8a919a;--head:#93c8a8;--qgreen:#9ed0af;
@@ -213,11 +214,49 @@ section{scroll-margin-top:62px;}
   background:var(--inner-bg);border:1px solid var(--inner-bd);border-radius:12px;
   padding:13px 16px;margin:calc(.65em*var(--pm)) 0;}
 #rdBody>section .mmx-evib ul{padding-left:1.15em;}
-/* 一句话主旨：去左侧竖线 + 收敛字号 */
+/* 一句话主旨：浅底卡片 + 左侧主题色细条，作为全页的「结论句」 */
 .mmx-oneline{font-size:.9rem;line-height:1.85;color:var(--txt);margin:.2em 0 0;
-  padding:12px 16px;background:var(--oneline-bg);border-left:none;border-radius:12px;}
-/* 核心观点 / 验证清单：虚线分隔 + 收紧行距 */
-.mmx-views li{padding:.5em 0 .5em 0;font-size:.84rem;line-height:1.88;}
+  padding:12px 16px;background:var(--oneline-bg);border-left:3px solid var(--head);
+  border-radius:0 12px 12px 0;}
+
+/* ── 模块内条目：每段 = 一条子节点（左竖线 + 序号圆点）─────────────
+   「更高维度 / 往日今时 / 核心追问」这类模块只有 <p>，段间全靠留白，
+   一段三四百字时整块糊成一片、找不到断点。这里统一成与章节导读同层的
+   子节点：细竖线贯穿 + 序号圆点，段落之间立刻有分界，长文也不再是墙。
+   AI 问书自带问答卡、AI领读自带 .sec 结构，都不参与。 */
+#rdBody>section.mmx-mod:not(#mod-aiask){counter-reset:rd-item;}
+/* 段间不留 margin：靠 padding 撑开，左侧竖线才能首尾相接成一条连续的
+   「时间轴」，而不是每段一根断头的短杠 */
+#rdBody>section.mmx-mod:not(#mod-aiask)>p:not(.mmx-mod-note):not(.mmx-oneline){
+  position:relative;margin:0;
+  padding:calc(.55em*var(--pm)) 0 calc(.55em*var(--pm)) 30px;
+  border-left:2px solid var(--rd-line);}
+#rdBody>section.mmx-mod:not(#mod-aiask)>p:not(.mmx-mod-note):not(.mmx-oneline)::before{
+  counter-increment:rd-item;content:counter(rd-item);
+  position:absolute;left:-7.5px;top:calc(.55em*var(--pm) + .1em);
+  width:17px;height:17px;border-radius:50%;box-sizing:border-box;
+  background:var(--card-bg);border:1px solid var(--rd-line);
+  color:var(--gold);font:600 .58rem/15px var(--sans);font-style:normal;text-align:center;}
+/* 核心观点 / 验证清单：同样走竖线；条目已有加粗小标题，用圆点不再叠序号 */
+#rdBody>section.mmx-mod>ul.mmx-views{margin:.4em 0 0;padding-left:0;list-style:none;}
+#rdBody>section.mmx-mod>ul.mmx-views>li{
+  position:relative;margin:0;padding:.6em 0 .6em 24px !important;
+  border-left:2px solid var(--rd-line);border-top:0 !important;
+  font-size:.84rem;line-height:1.9;}
+#rdBody>section.mmx-mod>ul.mmx-views>li::before{
+  content:"" !important;display:block !important;counter-increment:none !important;
+  position:absolute;left:-2.5px;top:1.25em;width:7px;height:7px;
+  border-radius:50%;background:var(--gold);}
+/* 朗读到的那一条：序号 / 圆点转绿，与「读到哪高亮哪」保持一致 */
+#rdBody>section.mmx-mod>p.speaking::before,
+#rdBody>section.mmx-mod>ul.mmx-views>li.speaking::before{
+  background:#07c160 !important;border-color:#07c160 !important;color:#fff !important;}
+/* 模型在长文里自带的【书中主张】【外部证据】标签：提成小徽章，
+   一眼看出这是「主张 / 证据 / 综合」的哪一段，而不是混在正文里 */
+#rdBody .rd-tag{display:inline-block;margin-right:.35em;padding:0 .3em;
+  font:600 .76em/1.45 var(--sans);color:var(--head);font-style:normal;
+  background:var(--inner-bg);border:1px solid var(--inner-bd);border-radius:4px;
+  vertical-align:.06em;white-space:nowrap;}
 /* 原文金句 */
 .mmx-qlist li{padding:.6em 0 .6em 2.2em;}
 .mmx-qlist blockquote{font-size:.82rem;line-height:1.9;color:var(--txt);}
