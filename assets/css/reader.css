@@ -341,14 +341,7 @@ a.ai-outline-link{position:fixed;top:10px;right:96px;z-index:60;
 .rd-toptitle .rd-title h1{margin:0;font:inherit;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .rd-toptitle .rd-title-on{cursor:pointer;}
 .rd-toptitle .rd-title-on::after{content:"↗";flex:none;font:400 .82em/1 var(--sans);color:var(--muted);opacity:.65;}
-/* 点正文块的柔和反馈：亮一下再渐隐回常态（不弹底部条、不闪页面），
-   移动端无语音也能看到，代替原先「弹条」的硬闪 */
-@keyframes rdSpeakPulse{
-  0%{background:rgba(49,94,80,.20);box-shadow:0 0 0 2px rgba(49,94,80,.45) inset;border-radius:6px;}
-  45%{background:rgba(49,94,80,.06);}
-  100%{background:transparent;box-shadow:none;}
-}
-.rd-speak-pulse{animation:rdSpeakPulse .6s ease-out;border-radius:6px;}
+/* 点击不再做任何闪光/脉冲：朗读时的 .speaking 常驻高亮就是「读到哪」的指示 */
 /* 暗色主题有 `html[data-theme=dark] a{color:#9ed0af}`（特异性 0,1,2），
    会把目录图标染绿、和旁边两个灰白按钮不齐。这里同特异性后置覆盖回 --txt。 */
 html[data-theme=dark] a.ai-outline-link{color:var(--txt);}
@@ -676,8 +669,11 @@ html[data-theme=dark] .mmx-tool{border-color:#3a3f46;}
 #rdBody section:hover,#rdBody div.sec:hover{box-shadow:inset 0 0 0 2px rgba(7,193,96,.22);}
 #rdBody :is(ul.quote>li,ul.point>li,.mmx-views>li,.mmx-qlist>li,p:not(.mmx-mod-note),blockquote){cursor:pointer;}
 #rdBody :is(ul.quote>li,ul.point>li,.mmx-views>li,.mmx-qlist>li,p:not(.mmx-mod-note),blockquote):hover{background:rgba(7,193,96,.06);border-radius:4px;}
-/* 正在朗读的单元可能是 section / div.sec / li / p */
-#rdBody .speaking{box-shadow:inset 0 0 0 2px #07c160;background:rgba(7,193,96,.07);border-radius:4px;}
+/* 正在朗读的单元：常驻高亮（读到哪亮到哪），无动画、不闪。
+   左侧竖条 + 淡底，切换单元时用过渡淡入，而不是整块背景闪一下。 */
+#rdBody .speaking{background:rgba(7,193,96,.10);box-shadow:inset 3px 0 0 #07c160;
+  border-radius:4px;transition:background-color .25s ease,box-shadow .25s ease;
+  scroll-margin-top:110px;scroll-margin-bottom:120px;}
 
 /* 「Aa」面板内的听书分区：沿用面板自身的卡片/按钮变量，跟随主题 */
 #rdPanel.rd-has-speak{max-height:calc(100vh - 64px);overflow-y:auto;}

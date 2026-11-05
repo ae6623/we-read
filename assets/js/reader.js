@@ -1311,15 +1311,20 @@
 
     function refresh() {
       var st = q('#rdSpState', box);
-      if (st) st.textContent = (!hasTTS || allVoices().length === 0) ? '当前浏览器不支持语音朗读'
-                            : speaking ? '正在朗读…'
-                            : (muted ? '默认静音' : '点正文开始');
+      var can = usingLocal() || !!TTS_BASE;
+      if (st) st.textContent = !can ? '当前设备没有可用语音'
+                            : speaking ? (usingLocal() ? '本机语音朗读中…' : '云端语音朗读中…')
+                            : (muted ? '默认静音' : '点正文或模块 ▶ 开始');
       var mb = q('#rdSpMute', box);
       if (mb) mb.textContent = muted ? '🔇 已静音' : '🔊 有声';
       var bm = q('#rdSbMute', bar);
       if (bm) { bm.textContent = muted ? '🔇' : '🔊'; bm.setAttribute('aria-label', muted ? '取消静音' : '静音'); }
       var bp = q('#rdSbPause', bar);
-      if (bp) { bp.textContent = speaking ? '⏸' : '▶'; bp.setAttribute('aria-label', speaking ? '暂停' : '继续'); }
+      if (bp) {
+        var on = playing && !paused;
+        bp.textContent = on ? '⏸' : '▶';
+        bp.setAttribute('aria-label', on ? '暂停' : '继续');
+      }
       refreshChips();
     }
     /* 配置面板内的反馈：本机语音数量 + 音色不可用的明确原因。
@@ -1359,21 +1364,74 @@
      *   顺序播放（任何浏览器含微信都能出声），支持暂停/继续/停止。
      * - 没配：退回 Web Speech 整段朗读；本机也无语音时仅脉冲 + 提示。
      */
-    var ttsAudio = null, modSec = null, modChunks = [], modIdx = 0, modPaused = false, modFallback = false;
+    var ttsAudio = null, modSec = null, modFallback = false;
     var ttsSeq = 0, ttsObjUrl = null;
+    /* ── 统一朗读引擎：按 DOM 单元排队 ──────────────────────────
+       之前一套「整模块切块喂服务端」、一套「单个单元喂 Web Speech」，
+       结果是：点块不切换、暂停键管不到音频、高亮对不上、还闪一下。
+       现在只有一条路：queue 里放 DOM 单元，读完一个高亮一个。
+       - 本机有中文语音包就优先本地（零延迟，不请求服务端）
+       - 没有（手机/微信 webview 常见）才走服务端合成
+    */
+    var queue = [], qi = -1, playing = false, paused = false, seqLocal = 0;
+    var preIdx = -1, preBlob = null;          // 服务端下一块预取
+    var LEAF_SEL = 'ul.quote > li, ul.point > li, div.sec, .mmx-detail, .mmx-node, ' +
+                   'li, blockquote, p, h2, h3, h4, h5';
+
+    function usingLocal() { return hasTTS && allVoices().length > 0; }
+
+    /* 收集容器内所有「最小语义单元」，按文档顺序 */
+    function unitsIn(root) {
+      var out = [];
+      qa(LEAF_SEL, root).forEach(function (e) {
+        if (e.closest(SKIP_SEL)) return;
+        var p = e.parentNode;
+        while (p && p !== root) {              // li / div.sec 里的 p 归外层单元
+          if (p.matches && p.matches('div.sec, li, blockquote')) return;
+          p = p.parentNode;
+        }
+        if (collectText(e)) out.push(e);
+      });
+      if (!out.length && collectText(root)) out.push(root);
+      return out;
+    }
+
+    function markNow(u) {
+      qa('#rdBody .speaking').forEach(function (s) { if (s !== u) s.classList.remove('speaking'); });
+      if (!u) return;
+      u.classList.add('speaking');
+      /* 读到的单元跑到屏幕外时轻轻拉回视口，让高亮始终看得见；
+         已在视野内就不动，避免打断用户自己翻看 */
+      if (playing && !paused) {
+        var r = u.getBoundingClientRect(), vh = window.innerHeight;
+        if (r.bottom < 96 || r.top > vh - 40) {
+          try { u.scrollIntoView({ block: 'center', behavior: 'smooth' }); }
+          catch (e) { try { u.scrollIntoView(); } catch (e2) {} }
+        }
+      }
+    }
+    function textOf(u) {
+      var t = u ? collectText(u) : '';
+      return t.length > 26 ? t.slice(0, 26) + '…' : t;
+    }
+    function barLabel() {
+      var name = modSec ? modLabel(modSec) : '';
+      return (name ? name + ' · ' : '') + (paused ? '已暂停' : '朗读中');
+    }
     function ensureAudio() {
       if (ttsAudio) return ttsAudio;
       ttsAudio = new Audio();
       ttsAudio.preload = 'auto';
-      ttsAudio.addEventListener('ended', ttsNext);
+      ttsAudio.addEventListener('ended', function () { if (playing) nextUnit(); });
       ttsAudio.addEventListener('error', function () {
-        if (!modSec) return;
-        /* 首块就失败（代理没部署 / 网络断）→ 退回流式语音，桌面不至于因此失声 */
-        if (modIdx === 0 && !modFallback && hasTTS && allVoices().length > 0) {
+        if (!playing || !curUnit) return;
+        /* 单块音频解码失败：本地有语音就改本地，否则跳过这块 */
+        if (!modFallback && hasTTS && allVoices().length > 0) {
           modFallback = true;
-          var s = modSec; stopAll(); if (muted) muted = false; speak(s); return;
+          playLocal(collectText(curUnit));
+          return;
         }
-        ttsNext();
+        nextUnit();
       });
       return ttsAudio;
     }
@@ -1381,18 +1439,6 @@
       if (activeChip === 'male') return 'zh-CN-YunxiNeural';
       if (activeChip === 'tw') return 'zh-TW-HsiaoChenNeural';
       return 'zh-CN-XiaoxiaoNeural';   // 女声 / 自动
-    }
-    function splitText(t, maxLen) {
-      t = (t || '').replace(/\s+/g, ' ').trim();
-      if (!t) return [];
-      var sents = t.match(/[^。！？!?；;\n]+[。！？!?；;]?/g) || [t];
-      var out = [], cur = '';
-      sents.forEach(function (s) {
-        if (cur && (cur.length + s.length) > maxLen) { out.push(cur); cur = s; }
-        else cur += s;
-      });
-      if (cur) out.push(cur);
-      return out;
     }
     function rateStr() {
       var pct = Math.round((rate - 1) * 100);
@@ -1417,46 +1463,127 @@
       ttsObjUrl = URL.createObjectURL(blob);
       a.src = ttsObjUrl;
     }
-    function ttsPlayChunk() {
-      if (!modSec) return;
-      if (modIdx >= modChunks.length) { finishMod(); return; }
+    /* 开始一个朗读会话：units 为单元数组，sec 为所属模块（没有就 null） */
+    function playQueue(units, sec) {
+      stopAll();
+      if (!units || !units.length) return;
+      queue = units; qi = 0; playing = true; paused = false; speaking = true;
+      modSec = sec || null;
+      if (muted) muted = false;
+      runUnit();
+    }
+
+    function runUnit() {
+      if (!playing) return;
+      if (qi < 0 || qi >= queue.length) { finishAll(); return; }
+      var u = queue[qi];
+      curUnit = u; lastUnit = u;
+      markNow(u);
+      var txt = collectText(u);
+      if (!txt) { nextUnit(); return; }
+      if (usingLocal()) playLocal(txt);
+      else if (TTS_BASE) playServer(txt);
+      else { finishAll(); }
+      refreshModBtns(); refresh();
+    }
+
+    function playLocal(txt) {
+      if (!synth) { nextUnit(); return; }
+      var my = ++seqLocal;
+      utter = new window.SpeechSynthesisUtterance(txt);
+      var v = currentVoice();
+      /* lang 跟随所选音色：写死 zh-CN 会让 Safari 按 lang 覆盖 voice，台湾腔失效。
+         个别 webview 的 voice 对象不合法，赋值会抛错并让整段静音 → 单独兜住。 */
+      try {
+        utter.lang = (v && v.lang) || 'zh-CN';
+        if (v) utter.voice = v;
+      } catch (e) { utter.lang = 'zh-CN'; }
+      utter.rate = rate; utter.pitch = pitch; utter.volume = muted ? 0 : volume;
+      utter.onend = function () { if (my === seqLocal) nextUnit(); };
+      utter.onerror = function () { if (my === seqLocal) nextUnit(); };
+      try { synth.speak(utter); } catch (e) { nextUnit(); }
+      showBar(barLabel(), false);
+    }
+
+    function playServer(txt) {
       var my = ++ttsSeq;
-      showBar(modLabel(modSec) + ' · 合成中…', false);
-      ttsFetch(modChunks[modIdx]).then(function (blob) {
-        if (my !== ttsSeq || !modSec) return;      // 期间被停止/切模块
-        setAudioSrc(blob);
-        if (modSec) showBar(modLabel(modSec) + ' · 朗读中', false);
-        var p = ensureAudio().play();
-        if (p && p.catch) p.catch(function () {});
+      var blob = null;
+      if (preIdx === qi && preBlob) { blob = preBlob; preIdx = -1; preBlob = null; }
+      if (blob) { startServerAudio(blob, my); return; }
+      showBar((modSec ? modLabel(modSec) : textOf(curUnit)) + ' · 合成中…', false);
+      ttsFetch(txt).then(function (b) {
+        if (my !== ttsSeq || !playing) return;
+        startServerAudio(b, my);
       }).catch(function () {
-        if (my !== ttsSeq || !modSec) return;
-        /* 首块就失败：桌面有系统语音就回退 Web Speech；
-           手机没有系统语音时不能静默跳过（用户只会觉得「点了没反应」），
-           明确提示并收摊。中途某块失败才跳过，避免整段中断。 */
-        if (modIdx === 0) {
-          if (!modFallback && hasTTS && allVoices().length > 0) {
-            modFallback = true;
-            var s = modSec; stopAll(); if (muted) muted = false; speak(s); return;
-          }
-          var nm = modLabel(modSec);
+        if (my !== ttsSeq || !playing) return;
+        if (!modFallback && hasTTS && allVoices().length > 0) {   // 服务端挂了，本地能读就本地
+          modFallback = true;
+          playLocal(collectText(curUnit));
+          return;
+        }
+        if (qi === 0) {
+          var nm = modSec ? modLabel(modSec) : '语音';
           stopAll();
           showBar(nm + ' · 语音服务暂时不可用，请稍后再试', true);
           setTimeout(hideBar, 3200);
           return;
         }
-        ttsNext();
+        nextUnit();     // 中途某块失败就跳过，别整段中断
       });
     }
-    function ttsNext() {
-      if (!modSec) return;
-      modIdx++;
-      if (modIdx < modChunks.length) ttsPlayChunk(); else finishMod();
+
+    function startServerAudio(blob, my) {
+      setAudioSrc(blob);
+      if (my !== ttsSeq) return;
+      showBar(barLabel(), false);
+      if (!paused) {
+        var p = ensureAudio().play();
+        if (p && p.catch) p.catch(function () {});
+      }
+      prefetchNext();
     }
-    function finishMod() {
-      if (modSec) modSec.classList.remove('speaking');
-      modSec = null; modChunks = []; modIdx = 0; modPaused = false;
-      refreshModBtns(); hideBar();
+
+    /* 预取下一块：块与块之间的合成间隙从 1~2 秒压到接近 0 */
+    function prefetchNext() {
+      if (!TTS_BASE || usingLocal()) return;
+      var j = qi + 1;
+      if (j >= queue.length || preIdx === j) return;
+      var t = collectText(queue[j]);
+      if (!t) return;
+      var my = ttsSeq;
+      preIdx = j;
+      ttsFetch(t).then(function (b) { if (my === ttsSeq && preIdx === j) preBlob = b; })
+                  .catch(function () { if (preIdx === j) { preIdx = -1; preBlob = null; } });
     }
+
+    function nextUnit() {
+      if (!playing) return;
+      qi++;
+      if (qi >= queue.length) { finishAll(); return; }
+      runUnit();
+    }
+
+    function finishAll() {
+      playing = false; paused = false; speaking = false;
+      markNow(null);
+      queue = []; qi = -1; curUnit = null; utter = null;
+      modSec = null; preIdx = -1; preBlob = null;
+      refreshModBtns(); hideBar(); refresh();
+    }
+
+    function togglePause() {
+      if (!playing) return;
+      paused = !paused; speaking = !paused;
+      if (usingLocal() && synth) {
+        try { paused ? synth.pause() : synth.resume(); } catch (e) {}
+      }
+      if (ttsAudio) {
+        try { paused ? ttsAudio.pause() : ttsAudio.play(); } catch (e) {}
+      }
+      showBar(barLabel(), false);
+      refreshModBtns(); refresh();
+    }
+
     function modLabel(sec) {
       var h = sec.querySelector('h2, h3');
       return h ? (h.textContent || '').trim().slice(0, 16) : '本模块';
@@ -1464,43 +1591,23 @@
     function refreshModBtns() {
       qa('#rdBody > section > .rd-mod-play').forEach(function (b) {
         var sec = b.parentNode;
-        var on = (sec === modSec) || (sec === curUnit && speaking);
+        var on = (sec === modSec && playing) || (sec === curUnit && playing);
         b.classList.toggle('on', !!on);
         var ic = b.querySelector('.rd-mp-ico');
-        if (ic) ic.textContent = on ? '⏸' : '▶';
+        if (ic) ic.textContent = on ? (paused ? '▶' : '⏸') : '▶';
       });
     }
     function toggleModule(sec) {
-      /* 同一模块：正在播→暂停；已暂停→继续 */
-      if (sec === modSec) {
-        if (ttsAudio && !ttsAudio.paused) {
-          ttsAudio.pause(); modPaused = true; refreshModBtns(); hideBar(); return;
-        }
-        if (ttsAudio && modPaused && ttsAudio.getAttribute('src')) {
-          var pr = ttsAudio.play(); if (pr && pr.catch) pr.catch(function () {});
-          modPaused = false; showBar(modLabel(sec) + ' · 继续', false); refreshModBtns(); return;
-        }
-      }
-      if (sec === curUnit && speaking) { stopAll(); hideBar(); return; }
-      stopAll();
-      pulse(sec);
-      var text = collectText(sec);
-      if (!text) return;
-      if (TTS_BASE) {
-        modSec = sec; modChunks = splitText(text, 360); modIdx = 0; modPaused = false; modFallback = false;
-        sec.classList.add('speaking');
-        showBar(modLabel(sec) + ' · 朗读中', false);
-        ttsPlayChunk(); refreshModBtns(); return;
-      }
-      if (!hasTTS || allVoices().length === 0) {
-        setHint('本机没有可用的语音朗读（移动端 webview 常见）。可换 Chrome/Edge/Safari，或接入服务端语音', true);
-        showBar('本机暂无语音，稍后接入服务端朗读', true);
-        setTimeout(hideBar, 2400);
+      /* 同一模块在播 → 暂停/继续；换模块 → 从该模块第一个单元读起 */
+      if (sec === modSec && playing) { togglePause(); return; }
+      var units = unitsIn(sec);
+      if (!units.length) return;
+      if (!usingLocal() && !TTS_BASE) {
+        showBar('当前设备没有可用语音，请用 Chrome / Edge / Safari 打开', true);
+        setTimeout(hideBar, 2600);
         return;
       }
-      if (muted) muted = false;
-      speak(sec);
-      refreshModBtns();
+      playQueue(units, sec);
     }
     function addModulePlays() {
       qa('#rdBody > section').forEach(function (sec) {
@@ -1523,8 +1630,8 @@
 
     /* 改配置后若正在朗读，重读当前块以立即生效（滑块拖动中不重读） */
     function relive() {
-      var u = curUnit;
-      if (u && speaking) speak(u); else refresh();
+      var u = curUnit, m = modSec;
+      if (u && playing) playQueue([u], m); else refresh();
     }
 
     if (box) {
@@ -1587,8 +1694,8 @@
 
     /* 底部控制条按钮 */
     q('#rdSbPause', bar).addEventListener('click', function () {
-      if (speaking) { stopAll(); refresh(); }
-      else if (lastUnit) speak(lastUnit);
+      if (playing) { togglePause(); return; }       // 本地/云端都能暂停
+      if (lastUnit) speak(lastUnit);
       else showBar('点正文任意段落开始朗读', true);
     });
     q('#rdSbStop', bar).addEventListener('click', function () { stopAll(); hideBar(); });
@@ -1603,60 +1710,36 @@
 
     function stopAll() {
       if (synth) { try { synth.cancel(); } catch (e) {} }   // 无条件 cancel
-      ttsSeq++;                                             // 作废还在路上的合成请求
+      seqLocal++;                                           // 作废本地回调
+      ttsSeq++;                                             // 作废在途的合成请求
       if (ttsAudio) { try { ttsAudio.pause(); ttsAudio.removeAttribute('src'); } catch (e) {} }
       if (ttsObjUrl) { try { URL.revokeObjectURL(ttsObjUrl); } catch (e) {} ttsObjUrl = null; }
-      modSec = null; modChunks = []; modIdx = 0; modPaused = false; modFallback = false;
-      speaking = false; curUnit = null; utter = null;
+      playing = false; paused = false;
+      queue = []; qi = -1; speaking = false;
+      curUnit = null; utter = null; modSec = null; modFallback = false;
+      preIdx = -1; preBlob = null;
       qa('#rdBody .speaking').forEach(function (s) { s.classList.remove('speaking'); });
       refreshModBtns();
     }
 
+    /* 单个单元朗读（点正文触发）：只在没有播会话时开新会话 */
     function speak(unit) {
-      if (!hasTTS || !synth) {
+      if (!unit) return;
+      if (!usingLocal() && !TTS_BASE) {
         showBar('当前浏览器不支持语音朗读，建议用 Chrome / Edge / Safari 打开', true);
         return;
       }
-      var txt = collectText(unit);
-      if (!txt) return;
-      stopAll();
-      utter = new window.SpeechSynthesisUtterance(txt);
-      var v = currentVoice();
-      /* lang 必须跟随所选音色：选了 zh-TW 却写死 zh-CN，Safari 等浏览器会
-         按 lang 覆盖 voice，台湾腔就永远不生效。 */
-      utter.lang = (v && v.lang) || 'zh-CN';
-      if (v) utter.voice = v;
-      utter.rate = rate; utter.pitch = pitch; utter.volume = muted ? 0 : volume;
-      utter.onend = function () {
-        unit.classList.remove('speaking');
-        speaking = false; curUnit = null; utter = null; hideBar(); refreshModBtns();
-      };
-      utter.onerror = utter.onend;
-      unit.classList.add('speaking');
-      curUnit = unit; lastUnit = unit; speaking = true;
-      synth.speak(utter);
-      showBar(txt.length > 42 ? txt.slice(0, 42) + '…' : txt, false);
+      playQueue([unit], null);
     }
 
-    /* 点块的柔和反馈：亮一下再渐隐回常态（不依赖 TTS，移动端无声也能看到） */
-    function pulse(unit) {
-      if (!unit) return;
-      unit.classList.remove('rd-speak-pulse');
-      void unit.offsetWidth;   // 强制回流，重启动画
-      unit.classList.add('rd-speak-pulse');
-      setTimeout(function () { unit.classList.remove('rd-speak-pulse'); }, 620);
-    }
     main.addEventListener('click', function (e) {
       var unit = resolveUnit(e.target);
       if (!unit) return;
-      /* 任何设备点块都给柔和高亮反馈，代替原先「弹底部条」的硬闪 */
-      pulse(unit);
-      /* 真能朗读才往下走：浏览器必须有可用的语音包。移动端 webview 常只有
-         speechSynthesis 壳、没有 voice，点下去既没声又闪一下，体验最差；
-         无可用语音时只保留高亮，不弹条、不发声 */
-      if (!hasTTS || allVoices().length === 0) return;
-      if (curUnit === unit && speaking) { stopAll(); hideBar(); return; }  // 再点同一块 → 暂停
-      if (muted) muted = false;                                          // 首次点块自动开声
+      /* 不再做点击闪光：朗读时由 .speaking 常驻高亮「读到哪」，点的时候不闪 */
+      if (unit === curUnit && playing) { togglePause(); return; }   // 再点同一块 → 暂停/继续
+      /* 播放中点了别的块：直接切到该块（之前会继续播旧内容） */
+      if (!usingLocal() && !TTS_BASE) return;
+      if (muted) muted = false;
       speak(unit);
     });
 
