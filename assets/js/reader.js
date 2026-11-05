@@ -1103,6 +1103,11 @@
     var hasTTS = ('speechSynthesis' in window) &&
                  typeof window.SpeechSynthesisUtterance !== 'undefined';
     var synth = hasTTS ? window.speechSynthesis : null;
+    /* 服务端 TTS 代理地址（可选）。设置后一级模块播放键用 <audio> 播放合成音频，
+       任何浏览器（含微信 webview）都能出声；留空则退回 Web Speech。
+       部署见 tools/tts-proxy/，然后把 window.RD_TTS_BASE 指到你的地址，例如：
+         window.RD_TTS_BASE = 'https://oauth.js-dev.cn/tts';  */
+    var TTS_BASE = (typeof window.RD_TTS_BASE === 'string') ? window.RD_TTS_BASE.trim() : '';
 
     /* ── 用户配置（音色/语速/音调/音量持久化，静音每次打开恢复默认）── */
     var CFG_KEY = 'rd-speak-cfg';
@@ -1346,6 +1351,136 @@
     }
     function hideBar() { bar.hidden = true; refresh(); }
 
+    /* ── 一级模块播放键 + 服务端 TTS 音频播放 ─────────────────────
+     * 移动端整块不好点，为每个一级模块（#rdBody 直接子 section）加一个显式播放键。
+     * - 配了 TTS_BASE：把模块文本按句切成小块，逐块向服务端取 MP3，用 <audio>
+     *   顺序播放（任何浏览器含微信都能出声），支持暂停/继续/停止。
+     * - 没配：退回 Web Speech 整段朗读；本机也无语音时仅脉冲 + 提示。
+     */
+    var ttsAudio = null, modSec = null, modChunks = [], modIdx = 0, modPaused = false, modFallback = false;
+    function ensureAudio() {
+      if (ttsAudio) return ttsAudio;
+      ttsAudio = new Audio();
+      ttsAudio.preload = 'auto';
+      ttsAudio.addEventListener('ended', ttsNext);
+      ttsAudio.addEventListener('error', function () {
+        if (!modSec) return;
+        /* 首块就失败（代理没部署 / 网络断）→ 退回流式语音，桌面不至于因此失声 */
+        if (modIdx === 0 && !modFallback && hasTTS && allVoices().length > 0) {
+          modFallback = true;
+          var s = modSec; stopAll(); if (muted) muted = false; speak(s); return;
+        }
+        ttsNext();
+      });
+      return ttsAudio;
+    }
+    function pickTtsVoice() {
+      if (activeChip === 'male') return 'zh-CN-YunxiNeural';
+      if (activeChip === 'tw') return 'zh-TW-HsiaoChenNeural';
+      return 'zh-CN-XiaoxiaoNeural';   // 女声 / 自动
+    }
+    function splitText(t, maxLen) {
+      t = (t || '').replace(/\s+/g, ' ').trim();
+      if (!t) return [];
+      var sents = t.match(/[^。！？!?；;\n]+[。！？!?；;]?/g) || [t];
+      var out = [], cur = '';
+      sents.forEach(function (s) {
+        if (cur && (cur.length + s.length) > maxLen) { out.push(cur); cur = s; }
+        else cur += s;
+      });
+      if (cur) out.push(cur);
+      return out;
+    }
+    function ttsUrl(txt) {
+      var sep = TTS_BASE.indexOf('?') >= 0 ? '&' : '?';
+      var pct = Math.round((rate - 1) * 100);
+      var rateStr = (pct >= 0 ? '+' : '') + pct + '%';
+      return TTS_BASE + sep + 'text=' + encodeURIComponent(txt) +
+             '&voice=' + encodeURIComponent(pickTtsVoice()) +
+             '&rate=' + encodeURIComponent(rateStr);
+    }
+    function ttsPlayChunk() {
+      if (!modSec) return;
+      if (modIdx >= modChunks.length) { finishMod(); return; }
+      var a = ensureAudio();
+      a.src = ttsUrl(modChunks[modIdx]);
+      var p = a.play();
+      if (p && p.catch) p.catch(function () {});
+    }
+    function ttsNext() {
+      if (!modSec) return;
+      modIdx++;
+      if (modIdx < modChunks.length) ttsPlayChunk(); else finishMod();
+    }
+    function finishMod() {
+      if (modSec) modSec.classList.remove('speaking');
+      modSec = null; modChunks = []; modIdx = 0; modPaused = false;
+      refreshModBtns(); hideBar();
+    }
+    function modLabel(sec) {
+      var h = sec.querySelector('h2, h3');
+      return h ? (h.textContent || '').trim().slice(0, 16) : '本模块';
+    }
+    function refreshModBtns() {
+      qa('#rdBody > section > .rd-mod-play').forEach(function (b) {
+        var sec = b.parentNode;
+        var on = (sec === modSec) || (sec === curUnit && speaking);
+        b.classList.toggle('on', !!on);
+        var ic = b.querySelector('.rd-mp-ico');
+        if (ic) ic.textContent = on ? '⏸' : '▶';
+      });
+    }
+    function toggleModule(sec) {
+      /* 同一模块：正在播→暂停；已暂停→继续 */
+      if (sec === modSec) {
+        if (ttsAudio && !ttsAudio.paused) {
+          ttsAudio.pause(); modPaused = true; refreshModBtns(); hideBar(); return;
+        }
+        if (ttsAudio && modPaused && ttsAudio.getAttribute('src')) {
+          var pr = ttsAudio.play(); if (pr && pr.catch) pr.catch(function () {});
+          modPaused = false; showBar(modLabel(sec) + ' · 继续', false); refreshModBtns(); return;
+        }
+      }
+      if (sec === curUnit && speaking) { stopAll(); hideBar(); return; }
+      stopAll();
+      pulse(sec);
+      var text = collectText(sec);
+      if (!text) return;
+      if (TTS_BASE) {
+        modSec = sec; modChunks = splitText(text, 360); modIdx = 0; modPaused = false; modFallback = false;
+        sec.classList.add('speaking');
+        showBar(modLabel(sec) + ' · 朗读中', false);
+        ttsPlayChunk(); refreshModBtns(); return;
+      }
+      if (!hasTTS || allVoices().length === 0) {
+        setHint('本机没有可用的语音朗读（移动端 webview 常见）。可换 Chrome/Edge/Safari，或接入服务端语音', true);
+        showBar('本机暂无语音，稍后接入服务端朗读', true);
+        setTimeout(hideBar, 2400);
+        return;
+      }
+      if (muted) muted = false;
+      speak(sec);
+      refreshModBtns();
+    }
+    function addModulePlays() {
+      qa('#rdBody > section').forEach(function (sec) {
+        if (sec.getAttribute('data-rd-play') === '1') return;
+        if (sec.hasAttribute('data-no-speak')) return;
+        sec.setAttribute('data-rd-play', '1');
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'rd-mod-play';
+        btn.setAttribute('data-no-speak', '');
+        btn.setAttribute('aria-label', '朗读本模块');
+        btn.title = '朗读本模块';
+        btn.innerHTML = '<span class="rd-mp-ico" aria-hidden="true">▶</span>';
+        btn.addEventListener('click', function (e) {
+          e.preventDefault(); e.stopPropagation(); toggleModule(sec);
+        });
+        sec.appendChild(btn);
+      });
+    }
+
     /* 改配置后若正在朗读，重读当前块以立即生效（滑块拖动中不重读） */
     function relive() {
       var u = curUnit;
@@ -1428,8 +1563,11 @@
 
     function stopAll() {
       if (synth) { try { synth.cancel(); } catch (e) {} }   // 无条件 cancel
+      if (ttsAudio) { try { ttsAudio.pause(); ttsAudio.removeAttribute('src'); } catch (e) {} }
+      modSec = null; modChunks = []; modIdx = 0; modPaused = false; modFallback = false;
       speaking = false; curUnit = null; utter = null;
       qa('#rdBody .speaking').forEach(function (s) { s.classList.remove('speaking'); });
+      refreshModBtns();
     }
 
     function speak(unit) {
@@ -1449,7 +1587,7 @@
       utter.rate = rate; utter.pitch = pitch; utter.volume = muted ? 0 : volume;
       utter.onend = function () {
         unit.classList.remove('speaking');
-        speaking = false; curUnit = null; utter = null; hideBar();
+        speaking = false; curUnit = null; utter = null; hideBar(); refreshModBtns();
       };
       utter.onerror = utter.onend;
       unit.classList.add('speaking');
@@ -1493,6 +1631,14 @@
        这里只枚举本地语音列表，不会发声——真正调用 TTS 引擎在点正文之后。 */
     fillVoices();
     refresh();
+
+    /* 一级模块播放键：数据异步注入，先补一次，再监听 #rdBody 子节点变化补挂 */
+    addModulePlays();
+    if (window.MutationObserver) {
+      try {
+        new MutationObserver(function () { addModulePlays(); }).observe(main, { childList: true });
+      } catch (e) { /* 忽略 */ }
+    }
 
     // 切书/翻页/离开时停掉，避免后台继续朗读
     window.addEventListener('beforeunload', stopAll);
