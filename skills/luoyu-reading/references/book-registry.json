@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": 230,
+  "revision": 231,
   "timezone": "Asia/Shanghai",
   "authority": "latest origin/main; claims become effective only after serialized acceptance there",
   "migration": {
@@ -1086,12 +1086,14 @@
       "platform": "local_pdf",
       "platform_book_id": null,
       "priority": "user_authorized_selective_choice",
-      "status": "in_progress",
-      "owner_agent_id": "local-pdf-reader",
+      "status": "completed",
+      "owner_agent_id": null,
       "claim": {
-        "state": "held",
+        "state": "released",
         "source": "用户授权从本地天涯PDF中自主选篇；按加速要求优先7页候选；题名与公开书目简介显示为房地产市场分析，黑名单主题筛查通过；尚未打开正文。",
-        "claimed_at": "2026-11-05T12:41:35+08:00"
+        "claimed_at": "2026-11-05T12:41:35+08:00",
+        "released_at": "2026-11-05T13:11:59+08:00",
+        "release_reason": "用户授权的天涯本地PDF AI整书分析及最终HTML/EPUB已完成发布并通过线上核验；AI阅读完读不等于用户亲读，也不证明PDF外原帖合集完整或所有史实逐条独立核实。用户亲读范围、阅读时长、日期笔记、resume_point与next_question_status均保持原样。"
       },
       "last_confirmed_progress": null,
       "resume_point": {
@@ -1103,7 +1105,15 @@
         "confirmed_at": null
       },
       "next_question_status": "needs-confirmation",
-      "completion": null,
+      "completion": {
+        "event_id": "completed-local-tianya-006-china-housing-outlook-2005-2006-ai-2026-11-05",
+        "sequence": 11,
+        "confirmed_by": "local-pdf-reader",
+        "completed_at": "2026-11-05",
+        "evidence": "用户授权的本地PDF AI阅读路径。已覆盖当前PDF可提取的全部帖子正文至348楼；完成短篇帖子结构梳理、按实际发帖内容分析、AI自主整理四项AI问书及读后思考；这不是AI读书平台返回的章节问答。已核对国家统计局官方年报中的2006年全国走势及上海局部例外，区分价格方向预测与政策因果解释，并明确作者署名身份未核实。已生成overview.html、final.html与final.epub；Pages上的首页、归档、系列、overview、final五个HTML页面及EPUB下载均HTTP 200；overview/final/EPUB的线上SHA-256与本地一致，线上EPUB结构完整。此为AI阅读完读，不等于用户亲读，不证明PDF外原帖合集完整或所有史实逐条独立核实；用户亲读范围、平台有效阅读时长、日期笔记、个人resume_point与next_question_status均未修改。",
+        "mode": "AI阅读",
+        "output": "reading-notes/books/local-tianya-006-china-housing-outlook-2005-2006/overview.html；reading-notes/books/local-tianya-006-china-housing-outlook-2005-2006/final.html；reading-notes/books/local-tianya-006-china-housing-outlook-2005-2006/final.epub"
+      },
       "pdf_source_note": "用户授权的天涯本地PDF；公开页面仅发布分析，不公开源文件路径或长段原文。"
     }
   ],
@@ -1123,7 +1133,7 @@
   "synthesis": {
     "visibility": "private",
     "batch_size": 3,
-    "unique_completed_count": 10,
+    "unique_completed_count": 11,
     "batches": [
       {
         "batch_id": "batch-001",
@@ -1160,19 +1170,6 @@
       }
     ]
   },
-  "updated_at": "2026-11-05T12:45:12+08:00",
-  "active_sessions": [
-    {
-      "run_id": "local-pdf-20261105-1245-tianya006",
-      "agent_id": "local-pdf-reader",
-      "book_id": "local-tianya-006-china-housing-outlook-2005-2006",
-      "slot": "user-authorized-batched-ai-analysis",
-      "started_at": "2026-11-05T12:45:12+08:00",
-      "environment_id": "local-pdf-reader-cloud",
-      "reading_mode": "local_pdf",
-      "resource_ids": [
-        "local-pdf:cloud-workspace"
-      ]
-    }
-  ]
+  "updated_at": "2026-11-05T13:11:59+08:00",
+  "active_sessions": []
 }
