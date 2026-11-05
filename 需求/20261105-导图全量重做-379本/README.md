@@ -211,7 +211,23 @@ curl -s "https://ae6623.github.io/we-read/reading-notes/books/1984/combined-data
 | 2026-11-05 | 30（第 2 批） | 64/409 | 345 | `8f8d785` | 5 路并发逐本手写：校验 0 问题、653 条 evidence 100% 命中素材原文、渲染 0 skip、diff 只含两类文件 |
 | 2026-11-05 | 30（第 3 批） | 94/409 | 315 | `f0cb2a9` | 5 路并发逐本手写：校验 0 问题、551 条 evidence 100% 命中、渲染 0 skip |
 | 2026-11-05 | 16（第 4 批） | 110/409 | 299 | `9cfeae46` | v2 提速首跑：素材卡合读 + 条目号写依据 + 4 路并发（4 本/路），生成段约 12 分钟；448 条依据命中率中位 100%、最低 93%，渲染 0 skip |
-| 2026-11-05 | 16（第 5 批） | 126/409 | 283 | `PENDING` | 复用执行卡（规则抽成文件，4 个短 prompt 即可派工）；454 条依据命中率 100%，校验 0 问题，渲染 0 skip |
+| 2026-11-05 | 16（第 5 批） | 126/409 | 283 | `219a04a3` | 复用执行卡（规则抽成文件，4 个短 prompt 即可派工）；454 条依据命中率 100%，校验 0 问题，渲染 0 skip |
+
+### ⚠️ 交付分支（2026-11-05 起）
+
+`main` 正被另一条阅读流水线高频推送（半天 81+ 提交：高维模块回填 / TTS / 分享面板），
+大对象同步反复超时，强追 `main` 会不断撞车。**导图重做改走独立分支 `p5-rescue`**：
+
+- 分支：`https://github.com/ae6623/we-read/tree/p5-rescue`
+- 一键开 PR：`https://github.com/ae6623/we-read/pull/new/p5-rescue`
+- 命令行合并（零冲突：本需求改的是 `data/mm-graph/*` + 对应 `combined-data.html` + `需求/*`，与 main 那 300 个改动文件**无交集**）：
+
+```bash
+git fetch origin && git merge origin/p5-rescue --no-ff -m "merge: 导图重做批次（p5-rescue）"
+python3 tools/verify_mm_graph.py --all   # 合并后应为 不合格 283 本
+```
+
+后续批次继续往 `p5-rescue` 追加 commit，最后一次性合并，不再追 main。
 
 **遗留**
 
