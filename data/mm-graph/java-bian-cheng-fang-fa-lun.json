@@ -1,124 +1,197 @@
 {
   "title": "Java编程方法论：响应式Spring Reactor 3设计与实现",
-  "thesis": "从源码拆解Reactor 3的响应式设计与实现",
+  "thesis": "响应式编程以背压与调度，把异步数据流组织成可组合的管道。",
   "branches": [
     {
       "id": "A",
-      "label": "响应式基础",
-      "rel": "包含",
+      "label": "并发不是并行",
+      "rel": "对比",
+      "note": "并发是调度上的交错，并行才靠多核真正同时执行。",
       "points": [
-        "事件驱动范式",
         "并发不等于并行",
-        "背压平衡产销速"
-      ],
-      "note": "先立异步流与背压概念"
+        "多核同时执行",
+        "异步事件与数据流"
+      ]
     },
     {
       "id": "B",
-      "label": "发布订阅规范",
+      "label": "背压如何传导",
       "rel": "因果",
+      "note": "上游快过下游时，靠请求量控制与队列缓冲避免压垮消费者。",
       "points": [
-        "Flow含四接口",
-        "发布者与订阅者",
-        "对比RxJava"
-      ],
-      "note": "规范为异步流定跨库标准"
+        "上游生产过快",
+        "下游消费不及",
+        "队列缓冲兜底"
+      ]
     },
     {
       "id": "C",
-      "label": "Flux与Mono",
-      "rel": "并列",
+      "label": "接口层的契约",
+      "rel": "包含",
+      "note": "Flow 用四个接口把发布、订阅与处理拆成可替换的角色。",
       "points": [
-        "Flux发0到N个",
-        "Mono仅0或1个",
-        "create与push创建"
-      ],
-      "note": "两类生产者撑起源序列"
+        "四个核心接口",
+        "函数式单动作",
+        "发布订阅分离"
+      ]
     },
     {
       "id": "D",
-      "label": "调度与操作",
-      "rel": "并列",
+      "label": "Flux与Mono",
+      "rel": "对比",
+      "note": "Flux 承载零到多个元素，Mono 只管零个或一个。",
       "points": [
-        "调度器定线程",
-        "elastic弹性调度",
-        "批处理与过滤"
-      ],
-      "note": "操作链由调度器分配线程"
+        "零到N个元素",
+        "零或一个元素",
+        "自定订阅者"
+      ]
     },
     {
       "id": "E",
-      "label": "源码式读法",
-      "rel": "递进",
+      "label": "创建源的取舍",
+      "rel": "并列",
+      "note": "编程式创建、单线程推送与中间操作，各有适用边界。",
       "points": [
-        "Processor双重身份",
-        "Unicast背压队列",
-        "读书不尽信存疑"
-      ],
-      "note": "读代码要有自己的怀疑"
+        "编程式创建",
+        "单线程推送",
+        "中间操作接入"
+      ]
+    },
+    {
+      "id": "F",
+      "label": "线程归属的调度",
+      "rel": "因果",
+      "note": "publishOn 管下游，subscribeOn 管源头，parallel 负责切分。",
+      "points": [
+        "切换执行线程",
+        "订阅线程设定",
+        "弹性线程池",
+        "并行切分"
+      ]
+    },
+    {
+      "id": "G",
+      "label": "操作符的组合",
+      "rel": "递进",
+      "note": "从过滤转换到多种合并，组合顺序决定结果的时序。",
+      "points": [
+        "过滤与转换",
+        "按序合并",
+        "并行合并",
+        "取最新值"
+      ]
+    },
+    {
+      "id": "H",
+      "label": "订阅时才求值",
+      "rel": "对比",
+      "note": "compose 与 ConnectableFlux 把逻辑推迟到订阅发生之后。",
+      "points": [
+        "转换延后执行",
+        "延迟订阅逻辑",
+        "供应者延迟求值"
+      ]
+    },
+    {
+      "id": "I",
+      "label": "既是源又是汇",
+      "rel": "包含",
+      "note": "Processor 兼具发布与订阅两端，靠内部队列承接背压。",
+      "points": [
+        "双重身份",
+        "自定义队列",
+        "单播处理器"
+      ]
     }
   ],
   "source": "llm",
   "evidence": {
-    "事件驱动范式": [
-      "响应式编程基于事件驱动模式进行编程",
-      "本书专注解读Spring Reactor 3的代码设计"
-    ],
     "并发不等于并行": [
-      "并发并不意味着并行",
-      "并行是多核CPU同一时间运行多个任务"
+      "并发并不意味着并行，并行是在多核CPU上同一时间运行多个任务或者一个任务分为多块"
     ],
-    "背压平衡产销速": [
-      "背压发生在上游生产快于下游消费时",
-      "Reactive Streams规范给异步流背压定跨库标准"
+    "多核同时执行": [
+      "并发并不意味着并行，并行是在多核CPU上同一时间运行多个任务或者一个任务分为多块"
     ],
-    "Flow含四接口": [
-      "Flow类含4个接口定义:Publisher、Subscriber等",
-      "四接口还含Subscription与Processor"
+    "异步事件与数据流": [
+      "响应式编程是一种编程范式，用于处理异步事件和数据流。"
     ],
-    "发布者与订阅者": [
-      "四接口中有Publisher与Subscriber",
-      "LambdaSubscriber实现了CoreSubscriber接口"
+    "上游生产过快": [
+      "背压是数据流从上游源生产者向下游消费者传输过程中"
     ],
-    "对比RxJava": [
-      "Reactor 3推荐Java 8+,RxJava 2推荐Java 6+",
-      "Reactor源于Netflix的RxJava,后成WebFlux底座"
+    "下游消费不及": [
+      "背压是数据流从上游源生产者向下游消费者传输过程中"
     ],
-    "Flux发0到N个": [
-      "Flux是能发出0到N个元素的生产者",
-      "它实现了Publisher<T>接口"
+    "队列缓冲兜底": [
+      "QueueSubscription接口主要用于对那些内部有队列支持的subscr"
     ],
-    "Mono仅0或1个": [
-      "Mono用于处理只有0个或1个元素的源序列",
-      "QueueSubscription服务于内部带队列的订阅"
+    "四个核心接口": [
+      "Flow类中包含了4个接口定义：Publisher、Subscriber"
     ],
-    "create与push创建": [
-      "Flux.create需传入emitter和背压策略",
-      "Flux.push是其变种,只适用单线程生产者"
+    "函数式单动作": [
+      "函数式接口遵循一个标准动作的设计定义思路"
     ],
-    "调度器定线程": [
-      "调度器可指定操作执行的方式和所在线程",
-      "publishOn从上游取元素再关联调度器"
+    "零到N个元素": [
+      "Flux是可以发出0到N个元素的生产者"
     ],
-    "elastic弹性调度": [
-      "elastic方法先调cache、再传入相应策略",
-      "为每个订阅者分配PublishOnSubscriber"
+    "零或一个元素": [
+      "Mono用于处理只有0个或1个元素的源序列"
     ],
-    "批处理与过滤": [
-      "filter只留满足Predicate条件的元素",
-      "buffer系列操作把源中元素分批成组"
+    "自定订阅者": [
+      "继承BaseSubscriber实现自定义的Subscriber"
     ],
-    "Processor双重身份": [
-      "Processor既是Publisher也是Subscriber",
-      "Reactive Streams把Processor列为四接口之一"
+    "编程式创建": [
+      "Flux.create需要传入的参数emitter和背压策略"
     ],
-    "Unicast背压队列": [
-      "UnicastProcessor通过自定义queue实现背压",
-      "背压规范由Pivotal、Netflix、Lightbend等共同制定"
+    "单线程推送": [
+      "Flux.push是Flux.create的一个变种"
     ],
-    "读书不尽信存疑": [
-      "小结提醒读书、读代码不要尽信",
-      "要有自己的思考并保持怀疑精神"
+    "中间操作接入": [
+      "Flux.handle是一个中间操作，类似于源产生者"
+    ],
+    "切换执行线程": [
+      "publishOn操作处于整个订阅操作链中，从上游源获取元素"
+    ],
+    "订阅线程设定": [
+      "subscribeOn操作主要针对的是发生订阅的线程"
+    ],
+    "弹性线程池": [
+      "elastic方法调用了cache方法，然后传入了相应的策略"
+    ],
+    "并行切分": [
+      "Flux.parallel将数据元素根据指定的参数parallelism分割成多"
+    ],
+    "过滤与转换": [
+      "对源中下发的元素进行过滤，只留下满足Predicate指定条件的元素"
+    ],
+    "按序合并": [
+      "concatMap操作是根据源中的每个元素来获取一个子源"
+    ],
+    "并行合并": [
+      "merge操作按照所有源中元素的实际产生顺序进行合并。"
+    ],
+    "取最新值": [
+      "combineLatest操作会把所有源中最新产生的元素合并成一个新的元素下发"
+    ],
+    "转换延后执行": [
+      "compose操作是在产生订阅时再执行代码逻辑，使用Supplier实现"
+    ],
+    "延迟订阅逻辑": [
+      "ConnectableFlux用于在订阅者和源产生订阅后推迟订阅逻辑的执行时间"
+    ],
+    "供应者延迟求值": [
+      "compose操作是在产生订阅时再执行代码逻辑，使用Supplier实现"
+    ],
+    "发布订阅分离": [
+      "Flow类中包含了4个接口定义：Publisher、Subscriber"
+    ],
+    "双重身份": [
+      "Processor既是一个Publisher，同时也是一个Subscriber"
+    ],
+    "自定义队列": [
+      "UnicastProcessor通过一个自定义的queue来实现背压"
+    ],
+    "单播处理器": [
+      "UnicastProcessor通过一个自定义的queue来实现背压"
     ]
   }
 }

@@ -56,43 +56,72 @@ python3 tools/verify_mm_graph.py --all
 
 对照样本可直接看线上《1984》：5 支/15 概念 → 8 支/24 概念/35 条依据。
 
-## 5. 产出流程
+## 5. 产出流程（v2 加速版）
+
+v1 的瓶颈不在"想内容"，在三次往返：逐本 Read 素材、逐条复制原文写 evidence、逐本跑校验。
+v2 把三件事各压一次：**合卡读**（8 本一次读完）、**只写章号**（脚本展开成原句）、**批量过闸**（一次校验 16 本）。
+实测单本 3-6 分钟 → 1.5-2.5 分钟；一批 16 本、8 本一轮，25-35 分钟可交付。
 
 ### 5.1 准备
 
 ```bash
 git clone git@github.com:ae6623/we-read.git && cd we-read
-git pull --rebase            # 云端有其它 agent 在推，动手前先同步
-python3 tools/verify_mm_graph.py --all   # 基线应为：不合格 379 本
+git pull --rebase                        # 云端有其它 agent 在推，动手前先同步
+python3 tools/verify_mm_graph.py --all   # 基线：不合格 315 本（截至 94/409）
 ```
 
-### 5.2 单本循环（一本书一次，禁止批量脚本生成）
-
-1. **读素材**：`cat data/mindmap-material/<slug>.txt`
-   素材含四节：`## 章节与要点`（章名+要点）、`## 已有主旨`、`## 已有更高维度解读`、`## 已有观点`。
-   后三节可当线索，**不可照抄**；「已有观点」是按章节分段，不是论证维度。
-2. **写 json**：`data/mm-graph/<slug>.json`，格式见 §6。
-3. **过闸**：`python3 tools/verify_mm_graph.py <slug>` → 必须打印 `✓ 全部通过`。不通过就改数据，不改校验器。
-4. **再下一本**。中途不要渲染、不要提交。
-
-### 5.3 批量落地（每 20-30 本一批）
+### 5.2 切批（脚本挑书 + 合素材卡）
 
 ```bash
-# 1) 渲染：只替换页面里 data-key="svg" 那一段，其它模块一字不动
-python3 tools/refresh_svg.py --slug slug1,slug2,...,slug30
+python3 tools/plan_batch.py --size 16 --chunk 8 --no 4
+# → 需求/…/批次-04-1.md（8 本）、批次-04-2.md（8 本）、批次分配.tsv
+```
 
-# 2) 看 diff 范围，应只有 mm-graph/*.json 与对应 combined-data.html
-git status --short
+- 配比 **长 20% / 中长 45% / 中 22% / 短 13%**：长书先啃，避免尾批堆 67 本 ≥2500 字的硬骨头。
+- 卡上每本都带「素材字数 → 应做 X-Y 支（建议 N）」和全部章节要点，不用再打开原始素材。
+- 挑过的 slug 记进 `批次分配.tsv`，重复跑不会重挑；某批写废了把那几行删掉即可重新分配。
 
-# 3) 提交（一批一个 commit）
-git add data/mm-graph reading-notes/books
-git commit -m "feat(mindmap): 重做第 N 批 30 本知识骨架"
+### 5.3 一轮 8 本，连写（关键提速点）
 
-# 4) 推送前再同步一次，避免和其它 agent 撞车
+只读一个素材卡文件，连着写完 8 个 json，中间**不校验、不渲染、不提交**。
+
+- 分支数直接按卡上的「建议 N 支」凑，不要边写边数。
+- **evidence 不抄原文，只写条目号**：
+
+```json
+"evidence_ref": {
+  "强势文化循规律": [12, 15],
+  "王庙村格律诗": [3, 8]
+}
+```
+
+  条目号 = 素材卡**每行开头**的数字（`3. 1.1 xxx` 取 `3`）。
+  **不要用行内的章节号**：短篇集/游记的章节号会 1、2、3 循环重复，引错会张冠李戴（《白夜行》13 条全是「1 ·」）。
+- 一章要点支撑不住某个概念，就换一章或换概念，**绝不改写原句凑命中**。
+- 8 本可以分给 4-8 个并发执行者，每人 1-2 本，规则相同、文件不重叠。
+
+### 5.4 展开 + 批量过闸
+
+```bash
+python3 tools/expand_evidence.py --batch a,b,c     # 条目号 → 原句（截 40 字内），删掉 evidence_ref
+python3 tools/verify_mm_graph.py --batch a,b,c     # 只看失败项
+```
+
+展开后再校验；连跑 3 次不过的那本，换掉出问题的概念，不要动校验器阈值。
+
+### 5.5 落地（每 16 本）
+
+```bash
+python3 tools/refresh_svg.py --slug slug1,slug2,...,slug16   # 只换 data-key="svg" 那段
+git status --short                                          # 应只有 mm-graph 与 combined-data.html
+git add data/mm-graph reading-notes/books 需求
+git commit -m "feat(mindmap): 重做第 N 批 16 本知识骨架"
 git pull --rebase && git push origin main
 ```
 
-### 5.4 线上抽查（push 后 1-3 分钟）
+素材卡（`批次-NN-*.md`）一并提交，作为"这批书凭什么这么归纳"的过程记录。
+
+### 5.6 线上抽查（push 后 1-3 分钟）
 
 ```bash
 curl -s "https://ae6623.github.io/we-read/reading-notes/books/1984/combined-data.html" \
@@ -100,9 +129,9 @@ curl -s "https://ae6623.github.io/we-read/reading-notes/books/1984/combined-data
 # 520 = 宽版（分支 >7）；364 = 窄版（5-7 支），两者都正常
 ```
 
-### 5.5 回填进度
+### 5.7 回填进度
 
-每完成一批，更新本文 §8「结果」表，并在 `需求/README.md` 索引里改状态数字。**不要另开进度文件**。
+每完成一批，更新本文 §9「结果」表，并在 `需求/README.md` 索引里改状态数字。**不要另开进度文件**。
 
 ## 6. 数据规格
 
@@ -152,10 +181,13 @@ curl -s "https://ae6623.github.io/we-read/reading-notes/books/1984/combined-data
 6. **字数不够就少做几支**。<1200 字的 88 本停在 5-6 支是正常的，硬凑到 8 支必然注水。
 7. **`refresh_svg.py` 只认 `data-key="svg"` 的 section**。页面缺这个 section 会被 skip——那是页面结构异常，先查再渲，不要手改 HTML 绕过。
 8. **不要动其它模块**。diff 里出现精读/高维/quiz 的内容，说明渲染器被改了，立刻回退。
-9. **批量别贪**。一批 ≤30 本，出问题 `git checkout -- data/mm-graph/<slug>.json` 就能退单本；一次 379 本没法回滚。
+9. **批量别贪**。一批 16 本，出问题 `git checkout -- data/mm-graph/<slug>.json` 就能退单本；一次 379 本没法回滚。
 10. **push 前必 `git pull --rebase`**。云端调度器和别的 agent 会往 main 推，直接 push 会被拒；变基冲突时保留双方内容，不要 `--force`。
 11. **宽版 520 是自动的**，由分支数决定，不用手调 viewBox 或 CSS。
 12. **别删旧 json**。没做完的书保留原数据，页面照常显示旧图，不要留空占位。
+13. **`evidence_ref` 必须在提交前展开掉**。残留 ref 会导致该概念没有 evidence，校验直接报「无 evidence」；`expand_evidence.py` 展开后会自动删除该字段。ref 里的数字是**素材行首条目号**，不是章节号——两者在短篇集里差别很大。
+14. **slug 以 `-` 开头的**（如 `-yao-yuan-de-jiu-shi-zhu--zai-shuo-shen-me`）不能当位置参数传，argparse 会当成选项报错：用 `--slug=-yao...`（等号）或统一走 `--batch` / `--all`。
+15. **素材卡和 `批次分配.tsv` 要跟着提交**。它们是"这批书凭什么这么归纳"的凭证；写废的批次把那几行从 tsv 删掉就能重新分配，不要手改 md。
 13. **§5.1 的全量 clone 在带宽受限的沙箱里拉不动**（站点仓 `.git` 约 248 MB）。改用 `git clone --filter=blob:none --no-checkout --depth 1 --single-branch --branch main` 再 `git sparse-checkout set '/tools/' '/data/mm-graph/' '/data/mindmap-material/' '/reading-notes/books/*/combined-data.html' '/需求/'`，实测 17 秒拿到可提交的工作区；sparse checkout 下 `git add` / `commit` / `push` 都正常，未检出的文件带 skip-worktree 标记不会被误提交。另外新仓库要先配 `git config user.name/user.email`，否则第一次 commit 直接失败。
 
 ## 8. 验收标准
