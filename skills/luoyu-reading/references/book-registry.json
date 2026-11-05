@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": 241,
+  "revision": 242,
   "timezone": "Asia/Shanghai",
   "authority": "latest origin/main; claims become effective only after serialized acceptance there",
   "migration": {
@@ -704,7 +704,7 @@
       "platform_book_id": "3300144840",
       "container_platform_book_id": null,
       "priority": "none",
-      "status": "in_progress",
+      "status": "paused",
       "owner_agent_id": "kDMz83g4XxhGbSEJQZeWUJ",
       "claim": {
         "state": "held",
@@ -1196,6 +1196,33 @@
       "next_question_status": "confirmed",
       "completion": null,
       "pdf_source_note": "用户授权的本地PDF；公开页面仅发布提炼后的分析，不公开源文件、全文或分块文本。"
+    },
+    {
+      "book_id": "local-tianya-204-fuxi-cipher",
+      "title": "伏羲密码",
+      "author": "待核对（PDF首页署名与版本待核）",
+      "platform": "local_pdf",
+      "platform_book_id": null,
+      "priority": "user_authorized_selective_choice",
+      "status": "in_progress",
+      "owner_agent_id": "kDMz83g4XxhGbSEJQZeWUJ",
+      "claim": {
+        "state": "held",
+        "source": "管理员分配的天涯第6类 #204；AI分析不构成用户亲读进度。",
+        "claimed_at": "2026-11-05T18:23:32+08:00"
+      },
+      "last_confirmed_progress": null,
+      "resume_point": {
+        "status": "needs-confirmation",
+        "chapter": null,
+        "page": null,
+        "position": "无已确认用户亲读位置；本场 AI 分析不建立亲读续读点。",
+        "source": "新书目登记；AI 分析不构成亲读进度。",
+        "confirmed_at": null
+      },
+      "next_question_status": "needs-confirmation",
+      "completion": null,
+      "pdf_source_note": "用户授权的天涯本地 PDF；公开页面仅发布分析，不公开源文件或私密路径。"
     }
   ],
   "active_session": null,
@@ -1251,6 +1278,19 @@
       }
     ]
   },
-  "updated_at": "2026-11-05T18:09:11+08:00",
-  "active_sessions": []
+  "updated_at": "2026-11-05T18:23:32+08:00",
+  "active_sessions": [
+    {
+      "run_id": "local-pdf-20261105-182332-fuxi204",
+      "agent_id": "kDMz83g4XxhGbSEJQZeWUJ",
+      "book_id": "local-tianya-204-fuxi-cipher",
+      "slot": "user-assigned-local-pdf-analysis-2026-11-05",
+      "started_at": "2026-11-05T18:23:32+08:00",
+      "environment_id": "local-pdf-sandbox",
+      "reading_mode": "local_pdf",
+      "resource_ids": [
+        "local-pdf:sandbox-workspace"
+      ]
+    }
+  ]
 }
