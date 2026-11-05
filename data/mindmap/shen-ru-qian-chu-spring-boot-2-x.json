@@ -1,11 +1,46 @@
 {
-  "slug": "shen-ru-qian-chu-spring-boot-2-x",
-  "bookId": "25916621",
-  "title": "深入浅出Spring Boot 2.x",
-  "author": "杨开振",
-  "chapters": 115,
-  "bookmarks": 20,
-  "progress": 0,
-  "reading_time": 4,
-  "generated_at": "2026-11-01T13:21:29"
+ "slug": "shen-ru-qian-chu-spring-boot-2-x",
+ "bookId": "25916621",
+ "title": "深入浅出Spring Boot 2.x",
+ "author": "杨开振",
+ "chapters": 115,
+ "bookmarks": 20,
+ "progress": 0,
+ "reading_time": 4,
+ "generated_at": "2026-11-01T13:21:29",
+ "modules": {
+  "coreask": {
+   "pairs": [
+    {
+     "q": "自动配置到底是怎么「自动」的？",
+     "a": "它靠条件装配。启动时扫描 META-INF 下的自动配置类清单，每个类上都标着条件：类路径有某个依赖、容器里没有某个 Bean、配置项满足某个值。条件成立才注册。所以你引入 spring-boot-starter-web，才会出现内嵌 Tomcat 与 DispatcherServlet；不引入，那些配置类直接不生效。理解这一点，就不会把「加个依赖就好了」当成巧合。"
+    },
+    {
+     "q": "配置不生效，为什么先查优先级链？",
+     "a": "因为 Spring Boot 的配置来源有多层：命令行参数、环境变量、application-{profile}.yml、application.yml、默认值。后者被前者覆盖，顺序错了就会「写了但没用」。更隐蔽的是 profile 的激活顺序与 @PropertySource 的加载时机。查配置问题的正确姿势是先确定这个 key 最终从哪个源来的（用 actuator 的 env 端点），而不是反复改文件。"
+    }
+   ]
+  },
+  "higher": {
+   "paras": [
+    "Spring 的历史可以看作一部「抽象演进史」：从 XML 配置到注解，从注解到自动配置，从自动配置到条件装配。每一步都在解决同一个问题——如何让框架适应未知的使用场景，而不要求使用者写样板。条件装配是这个演进的高点：它把「框架的选择」变成了「运行时的判断」。代价是行为不再完全可由代码静态推断，出问题时要靠运行时的条件评估报告来定位。",
+    "另一条可以对照的是「约定优于配置」的边界。约定降低了起步成本，但也制造了隐式知识：新人不知道哪些约定在起作用，就难以排查。这也是为什么 Spring Boot 生态里 actuator 如此重要——它把隐式的约定变成了可观测的状态。一个成熟的框架，必须同时提供约定与「约定的可见性」。"
+   ]
+  },
+  "thennow": {
+   "paras": [
+    "这本书针对 Spring Boot 2.x，那时 WebFlux 刚出现，响应式还不是主流，所以示例以 MVC + JPA 为主。",
+    "后来显现的，是 Spring Boot 3 迁移到 Jakarta EE 命名空间、原生镜像支持、以及配置绑定的改进。书里的原理（条件装配、外部化配置）没变，但注解包名与部分机制需要按新版本核对。"
+   ]
+  },
+  "oneline": "Spring Boot 的核心不是「少写配置」，而是「用条件装配把选择权交给环境」：同一份代码，在不同依赖下呈现不同行为。",
+  "views": {
+   "items": [
+    "自动配置的本质是一堆 @Conditional 的组合，不是魔法。",
+    "起步依赖（starter）解决的是版本对齐，不是功能提供。",
+    "外部化配置的优先级链，是排查「配置不生效」的第一站。",
+    "内嵌容器让部署变简单，也让「应用」与「环境」的边界变模糊。"
+   ]
+  }
+ }
 }

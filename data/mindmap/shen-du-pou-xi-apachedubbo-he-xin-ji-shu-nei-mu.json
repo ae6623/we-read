@@ -1,11 +1,46 @@
 {
-  "slug": "shen-du-pou-xi-apachedubbo-he-xin-ji-shu-nei-mu",
-  "bookId": "29126296",
-  "title": "深度剖析ApacheDubbo核心技术内幕",
-  "author": "翟陆续",
-  "chapters": 93,
-  "bookmarks": 0,
-  "progress": 0,
-  "reading_time": 102,
-  "generated_at": "2026-11-01T11:13:35"
+ "slug": "shen-du-pou-xi-apachedubbo-he-xin-ji-shu-nei-mu",
+ "bookId": "29126296",
+ "title": "深度剖析ApacheDubbo核心技术内幕",
+ "author": "翟陆续",
+ "chapters": 93,
+ "bookmarks": 0,
+ "progress": 0,
+ "reading_time": 102,
+ "generated_at": "2026-11-01T11:13:35",
+ "modules": {
+  "coreask": {
+   "pairs": [
+    {
+     "q": "Dubbo 的 SPI 与 JDK 的 SPI 差在哪？为什么要自己实现？",
+     "a": "JDK 的 SPI 会一次性加载所有实现，无法按需选择，也不能给实现命名。Dubbo 的 SPI 支持「按 key 获取指定实现」与「Wrapper 自动包装」（AOP），并且是懒加载。这让扩展点既能被配置选择（如指定负载均衡策略），又能被增强（如自动加监控）。代价是学习成本：不熟悉这套机制，读源码时会不断被「这个方法哪来的」打断。"
+    },
+    {
+     "q": "为什么说 Invoker 是理解 Dubbo 的关键？",
+     "a": "因为它统一了调用形态。无论是本地 injvm 调用、远程网络调用、还是一个 Mock 实现，在 Invoker 这层都变成「传入 Invocation，返回 Result」。这个统一让集群容错、负载均衡、过滤器链可以写在调用之前，与具体协议无关。理解了这层，就明白为什么 Dubbo 能在不改业务代码的前提下换协议、加限流、做灰度。"
+    }
+   ]
+  },
+  "higher": {
+   "paras": [
+    "Dubbo 的架构选择反映了 2010 年代中国互联网的一个现实：服务数量快速增长，而团队缺少统一的服务治理标准。它用「框架内治理」的方式解决了这个问题——把注册中心、路由、容错都放进 SDK，业务方只需引入依赖。这个方案的效率极高，代价是与语言和框架深度绑定。后来的 Service Mesh 正是对这个代价的回应。",
+    "另一条可以对照的是「分层架构」的一般原理。Dubbo 的分层（service、config、proxy、registry、cluster、monitor、protocol、exchange、transport、serialize）看起来繁琐，但每一层只解决一个问题，且都有扩展点。这种「分层 + 扩展点」的组合，是复杂中间件的通用解法：它把变化隔离在层内，让升级可以局部进行。"
+   ]
+  },
+  "thennow": {
+   "paras": [
+    "这本书写于 Dubbo 2.5/2.6 时期，当时它刚从阿里内部开源不久，是国内 RPC 框架的事实标准。书里的源码分析针对那个版本，包结构后来有调整。",
+    "后来显现的，是 Dubbo 捐给 Apache 后重启维护、推出 Dubbo 3（应用级服务发现、Triple 协议），同时 Spring Cloud 与 Mesh 分流了大量场景。今天读这本书的源码分析仍有价值——它讲的分层与扩展点思想没有变，但具体类名与配置需要按新版本核对。"
+   ]
+  },
+  "oneline": "Dubbo 的价值不在「能远程调用」，而在它把「服务发现、负载均衡、容错、协议」拆成了可替换的扩展点。",
+  "views": {
+   "items": [
+    "SPI 机制是 Dubbo 的骨架：几乎所有核心能力都可被替换。",
+    "服务暴露与引用是两条对称的链路，理解一条就理解了另一条。",
+    "Invoker 是统一 abstraction：本地调用与远程调用在它之后没有区别。",
+    "集群容错策略的选择取决于业务能否容忍重试与延迟。"
+   ]
+  }
+ }
 }

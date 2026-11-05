@@ -1,11 +1,46 @@
 {
-  "slug": "netty-jin-jie-zhi-lu",
-  "bookId": "25462642",
-  "title": "Netty进阶之路：跟着案例学Netty",
-  "author": "李林锋",
-  "chapters": 96,
-  "bookmarks": 7,
-  "progress": 52,
-  "reading_time": 170,
-  "generated_at": "2026-11-01T13:18:44"
+ "slug": "netty-jin-jie-zhi-lu",
+ "bookId": "25462642",
+ "title": "Netty进阶之路：跟着案例学Netty",
+ "author": "李林锋",
+ "chapters": 96,
+ "bookmarks": 7,
+ "progress": 52,
+ "reading_time": 170,
+ "generated_at": "2026-11-01T13:18:44",
+ "modules": {
+  "coreask": {
+   "pairs": [
+    {
+     "q": "为什么 Netty 要用引用计数，而不是交给 GC？",
+     "a": "为了控制内存的生命周期与分配成本。Netty 使用池化的直接内存（DirectByteBuf），这类内存不在堆上，GC 无法有效管理；同时池化要求显式归还，否则池会耗尽。引用计数提供了确定性的释放时机，也让零拷贝成为可能——多个 handler 可以共享同一块缓冲区而不复制。代价是每处 retain/release 都必须配对，漏一次就是泄漏。"
+    },
+    {
+     "q": "「不要在 EventLoop 上跑阻塞任务」这条规则，背后的机制是什么？",
+     "a": "一个 EventLoop 线程负责一批 Channel 的 IO 事件，它是单线程串行处理的。如果某个 handler 里做了阻塞操作（数据库查询、同步 HTTP），该线程就被占住，它负责的所有连接都停止响应。表现出来不是「慢」，而是「一批连接同时卡住」。正确做法是把阻塞任务提交到独立的业务线程池，处理完再切回 EventLoop 写回。"
+    }
+   ]
+  },
+  "higher": {
+   "paras": [
+    "Netty 的设计是 Reactor 模式的工业实现：一个 boss 组接受连接，多个 worker 组处理读写，每个 Channel 绑定一个 EventLoop 线程，从而保证「同一连接的事件永远在同一线程上处理」——这条保证消除了大量并发问题，因为 handler 内部不需要加锁。理解这个「线程亲和性」，就理解了 Netty 的多数约束：为什么不能阻塞、为什么状态可以放在 Channel 上、为什么写操作要经过 ChannelHandlerContext。",
+    "另一条可以对照的是「零拷贝」的层次。Netty 提供三种：堆外内存避免一次复制、CompositeByteBuf 合并逻辑视图、以及 FileRegion 走 sendfile 绕过用户态。三者解决的层次不同，混为一谈就会误判优化空间。多数应用的瓶颈其实在协议解析与业务逻辑，而不是拷贝次数。"
+   ]
+  },
+  "thennow": {
+   "paras": [
+    "这本书的案例来自 Netty 4.x 的生产实践，那时国内互联网正大规模自研 RPC 与网关，Netty 是最常被选中的底座，所以书里的问题（连接泄漏、优雅退出）都是那个场景的典型痛点。",
+    "后来显现的，是 gRPC、RSocket、以及云原生网关把很多底层细节封装掉了，直接写 Netty 的团队变少。但只要涉及自定义协议或高性能网关，引用计数与线程模型这两课仍然绕不过去。"
+   ]
+  },
+  "oneline": "Netty 的难点不在 API，而在「谁负责释放」：ByteBuf 的引用计数与事件循环的线程模型，决定了你会不会泄漏与卡死。",
+  "views": {
+   "items": [
+    "服务端意外退出，多数是优雅关闭缺失导致连接被硬断。",
+    "连接池泄漏的根因是异常路径上没有归还，而不是池子太小。",
+    "ByteBuf 的引用计数是手动内存管理的代价，也是性能的来源。",
+    "EventLoop 上不能跑阻塞任务，否则整条连接被拖住。"
+   ]
+  }
+ }
 }

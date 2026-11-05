@@ -1,11 +1,46 @@
 {
-  "slug": "shi-zhan-java-gao-bing-fa-cheng-xu-she-ji",
-  "bookId": "25462610",
-  "title": "实战Java高并发程序设计（第2版）",
-  "author": "葛一鸣",
-  "chapters": 74,
-  "bookmarks": 20,
-  "progress": 65,
-  "reading_time": 100,
-  "generated_at": "2026-11-01T13:15:45"
+ "slug": "shi-zhan-java-gao-bing-fa-cheng-xu-she-ji",
+ "bookId": "25462610",
+ "title": "实战Java高并发程序设计（第2版）",
+ "author": "葛一鸣",
+ "chapters": 74,
+ "bookmarks": 20,
+ "progress": 65,
+ "reading_time": 100,
+ "generated_at": "2026-11-01T13:15:45",
+ "modules": {
+  "coreask": {
+   "pairs": [
+    {
+     "q": "为什么「加线程」经常没有提升吞吐？",
+     "a": "因为瓶颈不在 CPU。如果请求主要在等 IO 或等锁，加线程只会让更多线程一起等，上下文切换反而增加开销。判断方法是看 CPU 使用率与线程状态分布：CPU 低而线程多在 WAITING，说明瓶颈在下游或锁；CPU 打满才是计算瓶颈，此时加线程无效，需要优化算法或换并行策略。"
+    },
+    {
+     "q": "volatile 和 synchronized 到底各解决什么问题？",
+     "a": "volatile 解决可见性与有序性：写操作立即对其他线程可见，且禁止指令重排，但它不保证原子性，所以 count++ 仍然不安全。synchronized 提供原子性、可见性、有序性三者，代价是阻塞与上下文切换。选择标准是操作是否需要「读-改-写」的原子性：需要就用锁或原子类，只是发布状态就用 volatile。"
+    }
+   ]
+  },
+  "higher": {
+   "paras": [
+    "Java 并发的发展史可以看作「抽象层不断上移」：从 Thread 与 synchronized，到 Executor 框架，到 ForkJoin，再到 CompletableFuture 与虚拟线程。每一层都在解决上一层的痛点——Thread 太原始、synchronized 太粗、Future 不可组合、平台线程太贵。但这个上移也带来一个副作用：开发者越来越不了解底层的线程调度与内存模型，遇到问题时无从下手。",
+    "另一条可以对照的是「共享 vs 传递」的路线之争。Java 传统走共享内存加锁，Erlang/Actor 走消息传递。前者性能高但易错，后者隔离好但有拷贝与调度成本。虚拟线程的出现让「一请求一线程」重新可行，某种程度上是回到了「用阻塞写法获得并发」的路线，这提示：技术选择的钟摆会随成本结构变化而回摆。"
+   ]
+  },
+  "thennow": {
+   "paras": [
+    "这本书的第 2 版对应 JDK 8 时代，CompletableFuture 与 Stream 并行是当时的重点，虚拟线程尚未出现。",
+    "后来显现的，是虚拟线程把线程成本降到极低，很多「线程池调优」的经验失去意义；同时 GraalVM 与响应式框架改变了并发模型的选择。但 JMM、锁、CAS 这些底层知识没有变，它们仍是判断并发正确性的基础。"
+   ]
+  },
+  "oneline": "高并发的核心不是「让更多线程跑」，而是先算清楚系统的瓶颈在哪一层，再决定加什么。",
+  "views": {
+   "items": [
+    "Amdahl 定律给出并行加速的上限，Little 定律把并发、吞吐、延迟连成可算的关系。",
+    "JMM 定义了可见性与有序性，volatile 与 synchronized 解决的是不同问题。",
+    "锁优化的方向是减小粒度与持有时间，而不是换更快的锁。",
+    "无锁编程（CAS）的代价是 ABA 问题与自旋开销。"
+   ]
+  }
+ }
 }
