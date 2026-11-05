@@ -173,6 +173,40 @@ class ActiveSessionTests(unittest.TestCase):
             s["active_sessions"] = [session("r", "agent-a", "book-1", "env")]
         self.assertTrue(any("held 且 in_progress" in e for e in self.valid(wrong_status)))
 
+    def test_paused_released_claim_accepts_empty_or_valid_owner_without_lock(self):
+        for owner in (None, "agent-a"):
+            with self.subTest(owner_agent_id=owner):
+                def paused_released(s, r):
+                    book = s["books"][0]
+                    book["status"] = "paused"
+                    book["claim"] = {"state": "released"}
+                    book["owner_agent_id"] = owner
+                self.assertEqual([], self.valid(paused_released))
+
+    def test_paused_released_claim_rejects_unknown_owner(self):
+        def paused_released(s, r):
+            book = s["books"][0]
+            book["status"] = "paused"
+            book["claim"] = {"state": "released"}
+            book["owner_agent_id"] = "missing-agent"
+        self.assertTrue(any("owner 必须为空或有效" in e for e in self.valid(paused_released)))
+
+    def test_paused_released_book_cannot_have_active_lock(self):
+        lock_fields = (
+            ("active_session", {"run_id": "legacy", "agent_id": "agent-a", "book_id": "book-1", "slot": "x", "started_at": "now"}),
+            ("active_sessions", [session("scoped", "agent-a", "book-1", "env")]),
+        )
+        for field, value in lock_fields:
+            with self.subTest(lock_field=field):
+                def paused_released(s, r):
+                    book = s["books"][0]
+                    book["status"] = "paused"
+                    book["claim"] = {"state": "released"}
+                    book["owner_agent_id"] = "agent-a"
+                    s[field] = value
+                errors = self.valid(paused_released)
+                self.assertTrue(any("held 且 in_progress" in e for e in errors))
+
     def test_running_requires_exactly_one_valid_scoped_session(self):
         def running_without(s, r):
             r["agents"][0]["run_status"] = "running"

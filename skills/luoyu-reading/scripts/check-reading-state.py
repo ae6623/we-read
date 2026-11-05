@@ -37,6 +37,9 @@ def validate(state, roster):
         if status == "queued":
             if owner is not None or claim_state != "unclaimed":
                 errors.append(f"{label}: queued 必须 owner 为空且 claim 为 unclaimed")
+        elif status == "paused" and claim_state == "released":
+            if owner is not None and owner not in owners:
+                errors.append(f"{label}: paused 且 claim 为 released 时 owner 必须为空或有效")
         elif status in {"in_progress", "paused", "blocked"}:
             if claim_state != "held" or not owner or owner not in owners:
                 errors.append(f"{label}: {status} 必须 held 且 owner 有效")
