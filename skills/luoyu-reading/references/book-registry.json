@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": 286,
+  "revision": 287,
   "timezone": "Asia/Shanghai",
   "authority": "latest origin/main; claims become effective only after serialized acceptance there",
   "migration": {
@@ -1151,7 +1151,7 @@
       "platform": "local_pdf",
       "platform_book_id": null,
       "priority": "user_requested",
-      "status": "in_progress",
+      "status": "blocked",
       "owner_agent_id": "local-pdf-reader",
       "claim": {
         "state": "held",
@@ -1168,7 +1168,12 @@
         "confirmed_at": null
       },
       "next_question_status": "needs-confirmation",
-      "completion": null
+      "completion": null,
+      "blocked_reason": {
+        "run_id": "local-pdf-20261107-005551-yichang146-sparkx26-clean",
+        "recorded_at": "2026-11-07T01:14:50+08:00",
+        "summary": "Spark 第35段返回不完整响应（无 HTTP 状态）；请求仅一次、未重试。前34段成功；第36–37段及合成未执行，没有最终笔记。"
+      }
     },
     {
       "book_id": "local-tianya-158-basic-questions-of-the-era",
@@ -1354,19 +1359,6 @@
       }
     ]
   },
-  "updated_at": "2026-11-07T00:55:51+08:00",
-  "active_sessions": [
-    {
-      "run_id": "local-pdf-20261107-005551-yichang146-sparkx26-clean",
-      "agent_id": "local-pdf-reader",
-      "book_id": "local-tianya-146-yichang-ghost-stories",
-      "slot": "user-directed-local-pdf-146-2026-11-07",
-      "started_at": "2026-11-07T00:55:51+08:00",
-      "environment_id": "local-pdf-sandbox",
-      "reading_mode": "local_pdf",
-      "resource_ids": [
-        "local-pdf:sandbox-workspace"
-      ]
-    }
-  ]
+  "updated_at": "2026-11-07T01:16:36+08:00",
+  "active_sessions": []
 }
