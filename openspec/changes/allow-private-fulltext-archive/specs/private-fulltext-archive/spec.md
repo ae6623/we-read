@@ -89,8 +89,18 @@ R8 SHALL 优先于 R1–R7 及本规范其他所有引用与发布限制，包�
 
 生成三本及以上全文阅读页时，书架目录 SHALL 由扫描 `reading-notes/books/*/fulltext.html` 自动汇总，MUST NOT 依赖逐本手写书目清单。书目元数据 SHALL 写入 `reading-notes/books/bookshelf.json`（书名、页数、字数、署名、相对链接）；每个阅读页 SHALL 内置静态书架作为离线兜底，并在运行时拉取清单重建书架，使新增原书只刷新清单即可同步全部阅读器，MUST NOT 出现只有部分页面书架更新的情况。书架 SHALL 提供书名／作者筛选。
 
-字数上限 SHALL 按来源区分：集合页已有笔记配套的原书按 **200 万字**截断，随机预置批次按用户口径 **20 万字**截断；超限的 MUST NOT 生成网页、MUST NOT 挂入口、MUST NOT 上传，全文转录只保留在本机私有目录。每页平均不足 30 字（疑似扫描件）的同样 MUST NOT 生成。被忽略的书目与原因 SHALL 写入清单文档 `docs/tianya-fulltext-preload-2026-11-07.md`，MUST NOT 静默丢弃。
+单页 HTML 的字数上限 SHALL 按来源区分：集合页已有笔记配套的原书按 **200 万字**截断，随机预置批次按用户 04:18 口径 **30 万字**截断；超限的 MUST NOT 生成网页、MUST NOT 挂入口、MUST NOT 上传，全文转录只保留在本机私有目录。每页平均不足 30 字（疑似扫描件）的同样 MUST NOT 生成。被忽略的书目与原因 SHALL 写入清单文档 `docs/tianya-fulltext-preload-2026-11-07.md`，MUST NOT 静默丢弃。此上限只约束单页 HTML，MUST NOT 用于 EPUB 生成（见 R13）。
 
 天涯系列集合页中每本有全文页的笔记 SHALL 在其「阅读入口」抽屉提供「原书全文阅读」直达项并同步更新抽屉计数；无全文页的 MUST NOT 挂失效链接。集合页 `</main>` 前与每个阅读页底部 SHALL 各提供一个只写「入口」两字的低调链接，指向统一索引页 `reading-notes/fulltext/index.html`；该链接 MUST NOT 进入站点导航或索引，用于在其他入口被清理时兜底。
 
 上述生成与挂入口操作 MUST NOT 改动三处规则文本、白名单登记表、registry / roster、用户亲读状态或既有导读结论。
+
+### R13 EPUB SHALL 按章节分段加载，MUST NOT 按字数设限
+
+对天涯 PDF 库产出的原书 EPUB，生成脚本 SHALL 按 40 页或 3 万字切分 XHTML 章节（取先到者），MUST 输出标准 EPUB 3 结构，`mimetype` MUST 为首个条目且使用 `ZIP_STORED`。在线阅读器 SHALL 使用 `manager: "default"` 一次只挂载一个章节，MUST NOT 调用 `book.locations.generate()`，MUST NOT 一次性渲染全书 DOM。阅读引擎 SHALL 本地化到仓库内，运行时 MUST NOT 依赖任何外部 CDN。
+
+EPUB 生成 MUST NOT 以正文字数作为拒绝条件；唯一的大小判据 SHALL 是生成后 `.epub` 的实际字节数，超过 **15 MB** 的 MUST NOT 上传并 SHALL 记入 `docs/tianya-epub-2026-11-07.md`。每页平均不足 30 字的疑似扫描件同样 MUST NOT 生成。被跳过的书目 MUST 逐本列出编号、页数、字数、大小与原因，MUST NOT 静默丢弃。
+
+阅读器 SHALL 提供章节目录、全部书目书架、字号／主题调节、按书隔离的进度记忆、异步逐章全书搜索与 EPUB 下载；SHALL 在 `file://` 下给出改用 HTTP(S) 的提示。单页 HTML 的 30 万字上限与 EPUB 的文件大小阈值互不替代，两套产物 SHALL 并存。
+
+集合页抽屉、各 `fulltext.html` 与全文索引页 SHALL 提供 EPUB 阅读入口；集合页最底部「入口」链接 SHALL 指向覆盖全部书目的 `reading-notes/epub/index.html`，MUST NOT 挂指向不存在 EPUB 的失效链接。
