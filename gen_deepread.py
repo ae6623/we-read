@@ -3,12 +3,16 @@
 """gen_deepread.py — 生成「全书精读」新模块（可重复入口，幂等）。
 
 模块定位：把一本书已发布的大纲 / 通读 / 精读素材，重组成「要点概述 +
-主题分段 + 每段深读追问」的导读页，对应微信读书 App 的「AI 导读」版式，
-但内容全部来自本站既有模块，不冒充官方原文。
+主题分段 + 每段深读追问」，对应微信读书 App 的「AI 导读」版式，但内容
+全部来自本站既有模块，不冒充官方原文。
+
+**模块落在详情页里**：往 combined-data.html 追加一个 data-key="deepread"
+的 section，reader.js 会把它装配进 #rdBody 并自动生成导航项「全书精读」；
+首页不放任何入口。同时保留一份自包含的 deepread.html 独立页便于直达。
 
 用法：
     python3 gen_deepread.py            # 预演，打印将写入的文件
-    python3 gen_deepread.py --write    # 落盘（含导航与首页卡片注入）
+    python3 gen_deepread.py --write    # 落盘
 
 新增书目：往 data/deepread/<slug>.json 放一份同结构 JSON 后重跑即可。
 JSON 字段：title, lead, points[], topics[{title, summary, questions[], anchor}]。
@@ -25,7 +29,8 @@ DATA = HERE / "data" / "deepread"
 INDEX = HERE / "index.html"
 PANEL_BEGIN = "<!--DEEPREAD-PANEL-BEGIN-->"
 PANEL_END = "<!--DEEPREAD-PANEL-END-->"
-NAV_LINK = '<a class="navlink dr-navlink" href="deepread.html">全书精读</a>'
+SEC_BEGIN = "<!--DEEPREAD-SECTION-BEGIN-->"
+SEC_END = "<!--DEEPREAD-SECTION-END-->"
 
 # ---------------------------------------------------------------- 首版 5 本
 # 所有句子均由本站 combined-data.html 的 oneline / views / aiask / coreask
@@ -272,17 +277,110 @@ h1{font-size:clamp(26px,5vw,38px);line-height:1.35;margin:0 0 10px;font-weight:7
 """ % (title, esc(slug), title, title, title, esc(d["lead"]), pts, topics_html)
 
 
-def inject_nav(slug):
+def render_section(slug, d):
+    """详情页里的模块片段：追加到 combined-data.html，由 reader.js 装配。
+
+    样式全部用 reader.css 的主题变量（--card-bg / --ink / --accent …），
+    跟着详情页的米白 / 纯白 / 护眼 / 夜间主题一起变；类名统一 drx- 前缀。
+    """
+    pts = "\n".join('      <li>%s</li>' % esc(p) for p in d["points"])
+    topics = []
+    for i, t in enumerate(d["topics"], 1):
+        qs = "\n".join('        <li>%s</li>' % esc(q) for q in t["questions"])
+        topics.append("""      <div class="drx-topic">
+        <div class="drx-num">%02d</div>
+        <div class="drx-body">
+          <h3>%s</h3>
+          <p class="drx-sum">%s</p>
+          <p class="drx-qt">带着这些问题往回读</p>
+          <ul class="drx-qs">
+%s
+          </ul>
+          <p class="drx-anchor">素材锚点 · %s</p>
+        </div>
+      </div>""" % (i, esc(t["title"]), esc(t["summary"]), qs, esc(t["anchor"])))
+    topics_html = "\n".join(topics)
+    return """%s
+<section class="mmx-mod drx-mod" data-key="deepread">
+<style>
+.drx-mod .drx-note{font-size:12px;letter-spacing:.12em;color:var(--sub,#8a919a);margin:0 0 12px}
+.drx-mod .drx-lead{background:var(--inner-bg,#272b30);border:1px solid var(--inner-bd,#3a3f46);
+  border-radius:12px;padding:16px 18px;margin:0 0 20px;color:var(--txt,#b4bac1);font-size:15px;line-height:1.85}
+.drx-mod h3.drx-h{font-size:15px;letter-spacing:.08em;color:var(--head,#93c8a8);margin:0 0 14px}
+.drx-mod .drx-points{list-style:none;counter-reset:drx;margin:0 0 24px;padding:0}
+.drx-mod .drx-points li{counter-increment:drx;position:relative;padding:9px 0 9px 38px;
+  border-bottom:1px dashed var(--line,#3a3f46);font-size:14.5px;line-height:1.8}
+.drx-mod .drx-points li:before{content:counter(drx,decimal-leading-zero);position:absolute;left:0;top:9px;
+  color:var(--accent,#9ed0af);font-family:system-ui,sans-serif;font-size:12px}
+.drx-mod .drx-topic{display:flex;gap:14px;background:var(--inner-bg,#272b30);
+  border:1px solid var(--inner-bd,#3a3f46);border-radius:12px;padding:16px 18px;margin-bottom:14px}
+.drx-mod .drx-num{flex:0 0 auto;width:26px;height:26px;border-radius:7px;background:var(--act-bg,#244b40);
+  color:var(--act-fg,#dff0e4);font:700 12px/26px system-ui,sans-serif;text-align:center}
+.drx-mod .drx-body{flex:1;min-width:0}
+.drx-mod .drx-body h3{font-size:16.5px;margin:2px 0 8px;color:var(--ink,#c9ced4)}
+.drx-mod .drx-sum{margin:0 0 12px;color:var(--txt,#b4bac1);font-size:14.5px;line-height:1.8}
+.drx-mod .drx-qt{font:600 11.5px/1.5 system-ui,sans-serif;letter-spacing:.14em;
+  color:var(--accent,#9ed0af);margin:0 0 6px}
+.drx-mod .drx-qs{margin:0 0 10px;padding-left:18px}
+.drx-mod .drx-qs li{font-size:14px;color:var(--txt,#b4bac1);margin:4px 0;line-height:1.7}
+.drx-mod .drx-anchor{font:11px/1.6 system-ui,sans-serif;color:var(--sub,#8a919a);margin:0}
+.drx-mod .drx-foot{border-top:1px solid var(--line,#3a3f46);padding-top:14px;margin-top:20px;
+  color:var(--sub,#8a919a);font-size:12.5px;line-height:1.9}
+.drx-mod .drx-foot a{color:var(--accent,#9ed0af);text-decoration:none}
+@media(max-width:520px){.drx-mod .drx-topic{padding:13px;gap:10px}}
+</style>
+<h2>全书精读</h2>
+<p class="drx-note">新模块 · 要点概述 / 主题分段 / 深读追问</p>
+<p class="drx-lead">%s</p>
+<h3 class="drx-h">要点概述</h3>
+<ol class="drx-points">
+%s
+</ol>
+<h3 class="drx-h">主题分段</h3>
+%s
+<p class="drx-foot">本模块由本站已发布的「AI 大纲 / 全书领读 / AI 问书 / 核心追问」模块归纳改写，
+<strong>不是微信读书 App「AI 导读」的原文</strong>，也不构成亲读正文后的结论；「素材锚点」指向对应模块，便于回到原页核对。
+　<a href="deepread.html">打开独立页 →</a></p>
+</section>
+%s""" % (SEC_BEGIN, esc(d["lead"]), pts, topics_html, SEC_END)
+
+
+def inject_combined_data(slug, d):
+    """把模块追加进详情页数据源；幂等：带标记则整体替换。"""
+    p = BOOKS / slug / "combined-data.html"
+    if not p.exists():
+        return None
+    s = p.read_text(encoding="utf-8", errors="ignore")
+    block = render_section(slug, d)
+    if SEC_BEGIN in s:
+        s = re.sub(re.escape(SEC_BEGIN) + r"[\s\S]*?" + re.escape(SEC_END),
+                   lambda m: block, s, count=1)
+    else:
+        s = s.rstrip() + "\n" + block + "\n"
+    return (p, s)
+
+
+def cleanup_index():
+    """首页不放模块：清掉早期版本注入的面板（若有）。"""
+    if not INDEX.exists():
+        return None
+    s = INDEX.read_text(encoding="utf-8", errors="ignore")
+    if PANEL_BEGIN not in s:
+        return None
+    s = re.sub(r"\s*" + re.escape(PANEL_BEGIN) + r"[\s\S]*?" + re.escape(PANEL_END),
+               "", s, count=1)
+    return (INDEX, s)
+
+
+def cleanup_nav(slug):
+    """清掉早期版本写进 combined.html 壳页的静态导航链接（reader.js 会重建导航）。"""
     p = BOOKS / slug / "combined.html"
     if not p.exists():
         return None
     s = p.read_text(encoding="utf-8", errors="ignore")
-    if 'href="deepread.html"' in s:
+    if 'class="navlink dr-navlink"' not in s:
         return None
-    if '<nav class="nav" id="rdNav"' in s:
-        s = s.replace('</nav>', '  ' + NAV_LINK + '\n</nav>', 1)
-    else:
-        return None
+    s = re.sub(r'\s*<a class="navlink dr-navlink"[^>]*>[^<]*</a>', "", s, count=1)
     return (p, s)
 
 
@@ -346,13 +444,16 @@ def main():
 
     writes = []
     for slug, d in entries:
+        # 独立页保留（便于直达），但主入口在详情页里
         out = BOOKS / slug / "deepread.html"
         writes.append((out, render(slug, d)))
-    for slug, d in entries:
-        r = inject_nav(slug)
+        r = inject_combined_data(slug, d)
         if r:
             writes.append(r)
-    r = inject_index(entries)
+        r = cleanup_nav(slug)
+        if r:
+            writes.append(r)
+    r = cleanup_index()
     if r:
         writes.append(r)
 
