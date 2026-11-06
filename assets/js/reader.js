@@ -1138,9 +1138,9 @@
     var volume = num(prefs.volume, 0, 1, 1);
 
     /* ── 云端音色（只收「念书不刺耳」的四个）────────────────────
-       本机没有系统语音时（微信 / QQ / 部分安卓内核），朗读靠服务端
-       edge-tts 合成。默认固定晓晓——就是最早那个自然女声，不跟着
-       历史配置乱变。其余三个是给人挑的备选，选完会记住。
+       所有设备默认都走服务端 edge-tts 的晓晓（最早那个自然女声），
+       不跟着历史配置乱变；本机 SAPI 语音只在下拉里显式选中时才用。
+       其余三个是给人挑的备选，选完会记住。
        必须与服务端 tools/tts-proxy 白名单一致，否则会被静默换成晓晓。 */
     var CLOUD_VOICES = [
       { uri: 'zh-CN-XiaoxiaoNeural',  label: '晓晓 · 默认女声' },
@@ -1160,8 +1160,16 @@
     /* 历史配置里可能残留上一版列过的云端音色（曉雨 / 雲哲 …），
        现在不在清单里就回默认，免得又被带成别的腔调。 */
     if (isCloudVoice(voiceURI) && !cloudLabel(voiceURI)) voiceURI = '__auto__';
+    /* 一次性迁移：老版本在 Windows 上把「默认」写成了本机 SAPI 语音
+       （Huihui / Yaoyao …），刷新后仍停在机械音。旧配置里的本机音色
+       统一回到云端晓晓；之后用户再显式选本机语音会被记住。 */
+    try {
+      if (voiceURI !== '__auto__' && !isCloudVoice(voiceURI) &&
+          localStorage.getItem('rd-speak-v2') !== '1') voiceURI = '__auto__';
+    } catch (e) {}
     function savePrefs() {
       try {
+        localStorage.setItem('rd-speak-v2', '1');
         localStorage.setItem(CFG_KEY, JSON.stringify({
           rate: rate, pitch: pitch, volume: volume, voiceURI: voiceURI
         }));
@@ -1235,11 +1243,11 @@
       if (kind === 'tw') return 'zh-TW-HsiaoChenNeural';
       return null;
     }
-    /* 某个快捷音色能不能用：本机有就用本机，没有但有云端同名音色也算可用 */
+    /* 某个快捷音色能不能用：云端有同名音色就优先云端，否则看本机是否装了 */
     function hasKind(kind) {
       if (kind === 'auto') return true;
-      if (firstBy(kind) !== '__auto__') return true;
-      return !!TTS_BASE && !!cloudKind(kind);   // 本机没有就用云端同名音色
+      if (TTS_BASE && cloudKind(kind)) return true;   // 云端优先：自然音色
+      return firstBy(kind) !== '__auto__';            // 云端没开才退回本机
     }
     function voiceKey(v) { return v.voiceURI || v.name || ''; }
     function voiceLabel(v) {
@@ -1289,8 +1297,8 @@
       sel.innerHTML = '';
       var o0 = document.createElement('option');
       o0.value = '__auto__';
-      o0.textContent = vs.length ? '默认（本机中文女声）'
-                     : TTS_BASE ? '默认 · 晓晓（云端）'
+      o0.textContent = TTS_BASE ? '默认 · 晓晓（云端）'
+                     : vs.length ? '默认（本机中文女声）'
                      : '当前设备没有可用语音';
       sel.appendChild(o0);
       var rank = function (v) {
@@ -1306,11 +1314,11 @@
         o.value = voiceKey(v); o.textContent = voiceLabel(v);
         sel.appendChild(o);
       });
-      /* 云端备选：默认项已经代表晓晓，这里只挂另外三个，避免下拉里
-         出现两个「晓晓」。有本机语音时也能选，用来对比。 */
+      /* 默认项在所有设备上都固定代表晓晓，所以云端组只挂另外三个备选，
+         不重复列一个「晓晓」。手机 / Windows 看到的清单因此完全一致。 */
       if (TTS_BASE) {
         var grp = document.createElement('optgroup');
-        grp.label = vs.length ? '云端音色（需联网）' : '云端音色';
+        grp.label = '云端音色（需联网）';
         CLOUD_VOICES.slice(1).forEach(function (c) {
           var o = document.createElement('option');
           o.value = c.uri; o.textContent = c.label;
@@ -1421,13 +1429,15 @@
       var all = allVoices(), vs = all.filter(isListed), zh = vs.filter(isZh).length;
       if (!vs.length) {
         return TTS_BASE
-          ? '本机没有系统语音，朗读走云端（' + CLOUD_VOICES.length + ' 个音色可选）· 需联网，首次约 1 秒'
+          ? '本机没有系统语音，朗读走云端晓晓（另有 ' + (CLOUD_VOICES.length - 1) + ' 个备选）· 需联网，首次约 1 秒'
           : '当前设备没有可用语音，建议换 Chrome / Edge / Safari 打开';
       }
       var hid = all.length - vs.length;
-      return '本机可用语音 ' + vs.length + ' 个（中文 ' + zh + ' 个）' +
+      /* 已经显式选了别的音色时，别再说「默认走云端晓晓」，免得和下拉选中项矛盾 */
+      var lead = (TTS_BASE && voiceURI === '__auto__') ? '默认走云端晓晓 · ' : '';
+      return lead + '本机可用语音 ' + vs.length + ' 个（中文 ' + zh + ' 个）' +
              (hid > 0 ? '，已隐藏非中/英/德 ' + hid + ' 个' : '') +
-             (TTS_BASE ? ' · 云端备选 ' + (CLOUD_VOICES.length - 1) + ' 个' : '');
+             (TTS_BASE ? ' · 云端备选 ' + (CLOUD_VOICES.length - 1) + ' 个（晓晓在默认项）' : '');
     }
     function showBar(txt, warn) {
       var t = q('#rdSbTxt', bar);
@@ -1458,8 +1468,14 @@
     var LEAF_SEL = 'ul.quote > li, ul.point > li, div.sec, .mmx-detail, .mmx-node, ' +
                    'li, blockquote, p, h2, h3, h4, h5';
 
+    /* 默认项（__auto__）固定走云端晓晓：Windows / macOS 自带的 SAPI 语音
+       （Huihui / Yaoyao / Kangkang …）是老式拼接音，和手机上那个自然女声
+       不是一回事。只有用户在下拉里明确挑了某个本机语音，才用 Web Speech；
+       云端服务不可用时 playServer 会自动回退本机，离线仍能出声。 */
     function usingLocal() {
-      return hasTTS && allVoices().length > 0 && !isCloudVoice(voiceURI);
+      if (isCloudVoice(voiceURI)) return false;
+      if (voiceURI === '__auto__' && TTS_BASE) return false;
+      return hasTTS && allVoices().length > 0;
     }
 
     /* 收集容器内所有「最小语义单元」，按文档顺序 */
@@ -1554,14 +1570,12 @@
       var uri = sel ? (sel.value || '__auto__') : '__auto__';
       stopAll();
       var lv = null;
-      if (!isCloudVoice(uri) && hasTTS) {
-        if (uri === '__auto__') {
-          lv = currentVoice();          // 自动：就听实际朗读会用的那个本机音色
-        } else {
-          var vs = allVoices();
-          for (var i = 0; i < vs.length; i++) {
-            if (voiceKey(vs[i]) === uri) { lv = vs[i]; break; }
-          }
+      /* 默认项走云端晓晓：只有下拉里明确选了某个本机语音时，试听才用
+         Web Speech，保证「试听」和「点正文」听到的是同一个声音。 */
+      if (uri !== '__auto__' && !isCloudVoice(uri) && hasTTS) {
+        var vs = allVoices();
+        for (var i = 0; i < vs.length; i++) {
+          if (voiceKey(vs[i]) === uri) { lv = vs[i]; break; }
         }
       }
       if (lv && synth) {                       // 本机音色：直接念
@@ -1797,8 +1811,10 @@
             return;
           }
           activeChip = kind;
-          voiceURI = firstBy(kind);
-          if (voiceURI === '__auto__') voiceURI = cloudKind(kind) || '__auto__';
+          /* 云端有对应音色就一律用云端，别让 Windows 自带的 Huihui 把
+             「女声」又变回机械音；本机语音仍可在下拉里显式选。 */
+          voiceURI = kind === 'auto' ? '__auto__'
+                   : ((TTS_BASE && cloudKind(kind)) || firstBy(kind));
           sel.value = voiceURI;
           if (!sel.value) { sel.value = '__auto__'; voiceURI = '__auto__'; }
           setHint(voiceSummary() + ' · 已选「' + b.textContent + '」');
