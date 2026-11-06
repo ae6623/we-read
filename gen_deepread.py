@@ -1,21 +1,27 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""gen_deepread.py — 生成「全书精读」新模块（可重复入口，幂等）。
+"""gen_deepread.py — 生成「全书精读」模块（可重复入口，幂等）。
 
-模块定位：把一本书已发布的大纲 / 通读 / 精读素材，重组成「要点概述 +
-主题分段 + 每段深读追问」，对应微信读书 App 的「AI 导读」版式，但内容
-全部来自本站既有模块，不冒充官方原文。
+模块定位：不是把章节切成块的导读，而是对全书核心论证的一次审视——
+「一句话判断 → 论证链重构 → 存疑与取舍 → 证据边界」。内容全部从本站
+已发布的 核心观点 / 核心追问 / 更高维度 / 阅读验证 / 往日今时 / AI 问书
+模块二次提炼，明确标出哪些是书内主张、哪些是整理者的存疑与暂定判断，
+不冒充亲读正文后的结论，也不编造书中事实。
 
-**模块落在详情页里**：往 combined-data.html 追加一个 data-key="deepread"
+**模块落在详情页里**：往 combined-data.html 追加 data-key="deepread"
 的 section，reader.js 会把它装配进 #rdBody 并自动生成导航项「全书精读」；
 首页不放任何入口。同时保留一份自包含的 deepread.html 独立页便于直达。
 
+**样式对齐**：详情页片段只用站点现成的 mmx-* 类与 reader.css 主题变量，
+不注入自定义 <style>，四套主题、时间轴编号、朗读高亮全部跟随既有区块。
+
 用法：
-    python3 gen_deepread.py            # 预演，打印将写入的文件
-    python3 gen_deepread.py --write    # 落盘
+    python3 gen_deepread.py                 # 预演，打印将写入的文件
+    python3 gen_deepread.py --write         # 落盘
+    python3 gen_deepread.py --write --seed # 连 JSON 一起按 SEED 重写
 
 新增书目：往 data/deepread/<slug>.json 放一份同结构 JSON 后重跑即可。
-JSON 字段：title, lead, points[], topics[{title, summary, questions[], anchor}]。
+JSON 字段：title, verdict, chain, units[{title,claim,doubt,call}], boundary。
 """
 import argparse
 import html
@@ -32,149 +38,110 @@ PANEL_END = "<!--DEEPREAD-PANEL-END-->"
 SEC_BEGIN = "<!--DEEPREAD-SECTION-BEGIN-->"
 SEC_END = "<!--DEEPREAD-SECTION-END-->"
 
-# ---------------------------------------------------------------- 首版 5 本
-# 所有句子均由本站 combined-data.html 的 oneline / views / aiask / coreask
-# 模块改写归纳，未亲读正文、不新增书中不存在的事实。
+# ---------------------------------------------------------------- 首批 5 本
+# 全部由本站 combined-data.html 的 coreask / higher / verify / thennow /
+# aiask / views 模块二次提炼；"存疑""取舍"是整理者的判断，不是作者结论。
+# 不新增书中不存在的事实、页码、数据或引语。
 SEED = {
     "1984": {
         "title": "1984",
-        "lead": "奥威尔写的不是「未来会怎样」，而是「当记录、语言、记忆都能被改写，人还能凭什么说什么是真的」。全书顺着温斯顿从私下写日记、到与朱莉娅建立私密空间、再到被捕改造的路线，把极权的着力点从『逼你说假话』一路推进到『由党决定何为真』。",
-        "points": [
-            "极权接管的是「判定何为真」的权力：记忆洞改写外部记录，新话删掉表达思想所需的词，一零一房间折断内在的确定性。",
-            "「二加二等于五」不是算术题——先让记录可被改写，再让「还存在一个我能独自确认的事实」这件事失效。",
-            "无产者占大洋国人口百分之八十五，却从未成为反抗力量：被彩票、啤酒、八卦消耗的多数只是统计数字。",
-            "温斯顿最后被攻破的不是勇气，而是「人民会自动解放自己」的幻想。",
+        "verdict": "全书真正被拆掉的，不是勇气，也不是「敢不敢说真话」，而是「还存在一个我能独自确认的事实」这个前提——所以它最锋利的地方是认识论，不是政治预言。",
+        "chain": "顺序本身就是论证：记忆洞先让外部记录可被改写，新话再删掉表达思想所需的词，一零一房间最后折断内在的确定性。若党只要求人说假话，那仍是谎言，谎言还得拿真话做背景；它要的是「由党决定何为真」，于是真理从符合事实变成服从权威。温斯顿的终点不是被说服，是被换成热爱。",
+        "units": [
+            {"title": "新话若真成立，温斯顿的反抗意识从哪来？",
+             "claim": "奥布赖恩说新话要让思想罪根本不可能再犯，因为没有词可以表达它——前提是党垄断了语言生产。",
+             "doubt": "把语言与思想绑得这么紧，反而给小说自己制造了难题：若词没了经验就不可想，书中的反抗意识、以及「二加二等于四」的执念，靠什么存下来？「希望就在无产者身上」紧接私人生活章节后急转落空，更像作者对理论前提的一次自我保留，而不是严密论证。",
+             "call": "接受它作为「事实如何被制度性取消」的思想实验；在「语言决定思想的边界」上保留存疑，不把设定当结论。"},
+            {"title": "该修正的是结论，还是机制想象？",
+             "claim": "1949 年能设想的监控是电幕与思想警察，稀缺且昂贵，所以必须集中配置；记忆洞之可怖，正因当年改写记录要物理地处理纸张。",
+             "doubt": "后来显现的是另一种形态：记录不被删除而被过剩信息淹没，监控不必集中、常由当事人主动交出，权力更少靠禁止、更多靠排序与推荐。令人放弃判断的未必是恐惧，也可能是便利与娱乐。",
+             "call": "保留「谁有权判定事实」的警觉，修正「靠恐惧」的机制想象——差别不改变结论的分量，却改变了防范的位置。"},
+            {"title": "多数为什么没有自动变成力量",
+             "claim": "无产者占大洋国人口约 85%，温斯顿把希望寄在他们身上。",
+             "doubt": "但他们被彩票、啤酒、八卦消耗，从不组织。奥威尔的冷酷在于：未被唤醒且被日常麻痹的多数只是统计数字；一零一房间击碎的不是温斯顿一个人，而是「人民会自动解放自己」这个幻想。",
+             "call": "把「多数≠力量」当作全书最经得起迁移的一条，同时提醒自己这是小说给出的悲观判断，不是可验证的社会命题。"},
         ],
-        "topics": [
-            {"title": "老大哥之下", "summary": "监控、历史篡改与语言控制共同构成统治的日常；这一层解决的是「外部记录由谁保管」。",
-             "questions": ["新话靠删词消灭思想，今天算法推荐造成的信息收窄与它差在哪？",
-                           "记忆洞与「二加二等于四」分别守的是哪一层真实？"],
-             "anchor": "核心观点初判 · 译序与极权现实 / AI 问书"},
-            {"title": "缝隙里的两个人", "summary": "林中与杂货铺楼上的私密关系，是全书唯一一次把「私人事实」变成可触摸的东西，也让温斯顿相信还存在党进不去的角落。",
-             "questions": ["温斯顿为什么把希望寄托在无产者，而不是身边的人？",
-                           "收到那张神秘纸条之后，反叛意识靠什么维持？"],
-             "anchor": "核心观点初判 · 反抗意识萌发 / 地下禁恋与避难"},
-            {"title": "一零一房间", "summary": "肉体与思想的双重改造，终点不是「服从」，而是把服从替换成「热爱老大哥」。",
-             "questions": ["党要替换的是答案，还是判断答案的能力？",
-                           "奥布赖恩为什么必须同时是引路人和审讯者？"],
-             "anchor": "核心观点初判 · 被捕与思想审讯 / 核心追问"},
-            {"title": "合上书之后", "summary": "今天最该保留的是对「谁有权判定事实」的警觉，最需要修正的是它对监控机制的想象。",
-             "questions": ["记录不再被删除而是被信息淹没时，这本书的机制想象哪里要改写？",
-                           "温斯顿的失败是个人失败，还是机制设计使然？"],
-             "anchor": "全书领读 · 往日今时 / 核心追问"},
-        ],
+        "boundary": "本页基于本站「核心追问 / 更高维度 / 阅读验证 / 往日今时 / AI 问书」模块二次整理，未亲读正文。「新话削词即削思想」应核对附录《新话的原则》原文，确认是书中明示机制还是读者引申；「二加二等于五」需区分小说内部设定与历史宣传的互文，避免张冠李戴；引用金句请注明译本。本页的存疑与取舍是整理者判断，不是作者结论。",
     },
     "yuan-ze": {
         "title": "原则：绘本版(汉英对照)",
-        "lead": "它把「原则」定义为可复用的决策规则：把每次选择背后的判断写下来，下次遇到同类问题就不必重新纠结。绘本版把原版的生活原则压成一条能教给孩子的五步闭环，代价是把一套需要长期博弈验证的系统，简化成一句流程口号。",
-        "points": [
-            "「目标—问题—诊断—方案—执行」构成循环，五步里最难的是「找出问题，并且不容忍问题」。",
-            "「痛苦 + 反思 = 进步」：痛苦是信号，不是失败；反思产生的新原则让人能处理更大的目标。",
-            "极度求真与极度透明，是为了让错误更早暴露；写下来的原则让组织不必依赖某个人的记忆。",
-            "「头脑极度开放」被当作能力而非态度：主动找到「看到而你看不到的东西」的人，并按可信度加权。",
+        "verdict": "它把一套「在市场中用真金白银验证过」的组织决策系统，降维成孩子也记得住的五步闭环——代价是可证伪性下降：越传播越像道理，越不需要被检验。",
+        "chain": "原版的两大支柱是可信度加权的决策机制，与「痛苦 + 反思 = 进步」背后的组织设计；绘本版只取生活原则的一半，把「目标—问题—诊断—方案—执行」串成一条个人可执行的最小闭环，再配人生弧线练习。它的价值在可教，代价是把需要长期博弈验证的系统，简化成一句流程口号。",
+        "units": [
+            {"title": "用结果反推原则，逻辑是不是倒置的？",
+             "claim": "原书以桥水的成功为这套原则背书。",
+             "doubt": "站点已列出两条批评：一是幸存者偏差，桥水的成绩无法排除宏观周期与时代红利；二是循环论证，案例多为回顾性叙述，先有结果后总结原则，原则的因果效力被高估。「痛苦 + 反思 = 进步」作为经验命题成立，作为因果命题缺对照证据。",
+             "call": "把它当「遇到问题有一套拆解顺序」来用，别当「照做就能成功」来信；成功与原则之间的因果，留给读者自己判断。"},
+            {"title": "被抽掉的制度前提，恰恰是它最贵的部分",
+             "claim": "极度求真与极度透明，原本靠信息自由流动、分歧公开暴露、可信度加权收敛来运转。",
+             "doubt": "这套办法在桥水能转，前提是强人背书、可量化的业绩反馈、能承受直白批评的人；放到家庭或学校，三样全缺。绘本版把它改写成「独立思考、头脑极度开放」，等于把求真从制度问题降格为个人修养——若承认错误会被惩罚，透明就变成自我暴露；目标不一致，透明就变成信息战。",
+             "call": "先问「三样前提在我这里成立几条」，再决定照搬多少；理解条件，比照搬做法重要。"},
+            {"title": "当它从手册变成童书，谁来检验它",
+             "claim": "2017 年出版时它被当作对冲基金的操作手册，到绘本版已成通用的自我管理话术。",
+             "doubt": "当一套原则从「在市场中用真金白银验证过」变成「可以讲给孩子听的道理」，没人会拿孩子的成长去和它对照，可证伪性就下降了。传播越广，检验越松——这是所有被成功学化的方法论共同的命运。还有个更前置的问题：目标是谁的？",
+             "call": "当提问清单用，不当答案清单用：目标是不是我自己的、我说的是症状还是病因、诊断有没有第二意见、方案能不能在两周内被证伪、执行时我在回避什么。这五问不需要相信作者的世界观也能用。"},
         ],
-        "topics": [
-            {"title": "五步闭环", "summary": "先明确要去哪，再承认现实与目标的差距，区分症状与病因，设计绕开病因的路径，最后执行。",
-             "questions": ["把原书压成五步，损失了什么？",
-                           "「找出问题，并且不容忍问题」为什么排在诊断之前？"],
-             "anchor": "核心观点初判 / 核心追问"},
-            {"title": "痛苦与反思", "summary": "进化是一个循环：目标带来问题，问题带来痛苦，痛苦逼出反思，反思产生新原则。成功是进化的副产品，不是终点。",
-             "questions": ["为什么作者说「我们所追求的东西只是鱼饵」？",
-                           "如果一次失败没有带来新原则，这个循环断在哪一环？"],
-             "anchor": "AI 问书 / 核心观点初判"},
-            {"title": "求真由谁认定", "summary": "作者的答案是让信息自由流动、让分歧公开暴露，再由可信度加权收敛；这套办法的前提是强人背书、可量化的反馈和能承受直白批评的人。",
-             "questions": ["把求真从制度问题降格为个人修养，是必要的妥协还是偷换？",
-                           "放到家庭或学校，三条前提里最先缺的是哪条？"],
-             "anchor": "核心追问 / AI 问书"},
-            {"title": "把它写下来", "summary": "人的判断在相似情境下会反复摇摆；写下来的原则是「预先承诺」——冷静时定规则，情绪化时执行。",
-             "questions": ["不写下来，同类问题为什么会得出不同结论？",
-                           "一条原则要具备什么条件，团队才能直接拿来对齐？"],
-             "anchor": "核心追问 / 全书领读 · AI问书"},
-        ],
+        "boundary": "本页基于本站「核心追问 / 更高维度 / 阅读验证 / 往日今时 / AI 问书」模块二次整理，未亲读正文，也不代表原版《原则》。绘本版是简写改编，五步流程省略了可信度加权等关键机制，不能据它推断桥水的实际决策方式；「人生弧线」三阶段是作者自传式框架，不是发展阶段理论。本页存疑与取舍为整理者判断。",
     },
     "zhi-shen-shi-nei--zhong-guo-zheng-fu-yu-jing-ji": {
         "title": "置身事内：中国政府与经济发展",
-        "lead": "它把中国经济拆成一台由地方政府驱动的机器：财税决定动机，土地决定资金，竞争决定行为。上篇讲微观机制，下篇把房价、债务、外贸摩擦都接回同一套地方发展模式——读这本书，先得读懂地方官员为何这么做、钱从哪来、债怎么滚。",
-        "points": [
-            "1994 年分税制把收入上收、事权留地方，收支矛盾一变，地方政府的行为方式随之改变。",
-            "土地财政与土地金融是一体两面：卖地是收入，以地抵押借贷是杠杆，共同支撑了快速城市化与工业化。",
-            "京东方、光伏说明地方政府能深度介入产业、实现从无到有的赶超；代价是比拼式招商带来的重复投资与产能过剩。",
-            "「地方政府竞争驱动发展」的解释力很强，但偏重供给与制度侧，不宜当成唯一因果。",
+        "verdict": "这本书给的是一副「制度—激励—行为」的眼镜，不是一份政策判决书；它最强的地方——用一条链串起房价、债务与外贸——恰恰也是最该警惕的地方：解释力太强，就容易把解释当成辩护。",
+        "chain": "作者的推法是从制度倒推行为：1994 年分税制把收入上收、事权留地方，地方收支出现缺口，于是以土地出让和抵押融资补钱，形成土地财政与土地金融的闭环；再叠上以增长为目标的地区竞争，地方政府深度介入招商与产业投资；增长、房价、债务、外贸失衡便被接回同一套地方发展模式。上篇讲机制，下篇把宏观现象逐项挂回这条链。",
+        "units": [
+            {"title": "一条能解释一切的链，可证伪性在哪？",
+             "claim": "书里明说这套「地方政府竞争驱动发展」解释力很强，能串起房价、债务与贸易冲突。",
+             "doubt": "但站点已标出限定：它偏重供给与制度侧，对全球周期、民企活力与个人选择解释不足。一个几乎不漏现象的解释，往往不是因为对，而是因为没给「什么情况下它会失效」划界。",
+             "call": "把它当「读来路的地图」照单收下，不当「唯一因果」；凡遇到它解释不了的变量，先记下来而不是硬塞进链条。"},
+            {"title": "土地财政依赖的那个假设，后来被现实替它验证了",
+             "claim": "「以地生财」的本质是把未来土地收益贴现到现在，可持续性取决于地价持续上涨，而债务是刚性的。",
+             "doubt": "书出版于 2020 年、语气是解释机制而非给方案。后来房地产下行、地方财政压力显性化，恰好撞上这个假设的边界——但这是框架预见了风险，还是事后用现实给框架补证据？要分清。",
+             "call": "接受「依赖地价上涨」这条机制判断；不接受把事后验证倒推成作者的预测能力。"},
+            {"title": "把政府放回分析中心，会不会又变成把政府当唯一变量",
+             "claim": "作者主张脱离政府行为谈市场等于拿错地图，政府既是裁判也是运动员。",
+             "doubt": "站点提醒「理解之同情」容易滑向为现状背书，读者须保留对效率与公平的双重审视。解释政府为何这么做，不等于评估这么做值不值。",
+             "call": "机制层照它的框架走，评价层另找标尺；这本书明确不做的那件事，别替它做。"},
         ],
-        "topics": [
-            {"title": "分税制之后", "summary": "中央定方向，地方定落地；大部分审批、土地供给、基建与招商都由地方完成，而地方动机由财税结构决定。",
-             "questions": ["收入占比下降而支出责任未减，地方政府有哪些可选项？",
-                           "为什么理解中国经济必须先从地方政府入手？"],
-             "anchor": "AI领读 · 上篇 微观机制 / 核心追问"},
-            {"title": "以地生财", "summary": "把未来的土地收益贴现到现在，为基建与城市建设提供资金，这是城市化速度的关键，也是风险的来源。",
-             "questions": ["土地财政为什么既是动力也是风险？",
-                           "它隐含了哪个一旦不成立就会断裂的假设？"],
-             "anchor": "核心追问 / AI 问书"},
-            {"title": "政府当投资人", "summary": "从直接投资到产业基金，地方政府深度介入实业与高新产业；案例讲的是成效，也讲的是补贴退坡后的僵尸产能。",
-             "questions": ["京东方与光伏，成效和风险各是什么？",
-                           "比拼式招商为什么会系统性地导向重复投资？"],
-             "anchor": "核心观点初判 · 工业化产业政策 / 核心追问"},
-            {"title": "增长的另一面", "summary": "房价、债务、内外失衡与内循环转型，被放回同一条解释链上；限定条件同样重要。",
-             "questions": ["这套解释链条你接受到哪一步，哪里需要限定？",
-                           "对全球周期、民企活力与个人选择，它还剩多少解释力？"],
-             "anchor": "核心观点初判 · 宏观风险与失衡 / 核心追问"},
-        ],
+        "boundary": "本页基于本站「核心观点 / 核心追问 / 更高维度 / 阅读验证 / 往日今时」模块二次整理，未亲读正文。涉及分税制、土地财政、城投、京东方与光伏等处均为书内既有论述的转述，具体数据、章节与政策口径请回原文及相关章节核对；本页的「存疑」「取舍」是整理者的判断，不是作者结论。",
     },
     "ren-lei-jian-shi-xin-ban-cong-dong-wu-dao-shang-di": {
         "title": "人类简史（新版）：从动物到上帝",
-        "lead": "智人如何从一个「没什么特别的动物」变成地球的主宰，以及这种统治的代价与尽头。全书用「认知革命—农业革命—人类的融合统一—科学革命」四段式，追问我们为何会相信自己讲的虚构故事，又为何被这些故事反向绑架。",
-        "points": [
-            "胜出的关键不在个体智力，而在能靠「虚构的故事」组织大规模陌生人协作。",
-            "认知革命让语言可以谈论不存在的事物；金钱、帝国与宗教把千百万人纳进同一套秩序。",
-            "农业革命被称作「史上最大的一桩骗局」：粮食总量增加，个体却更辛苦、饮食更差。",
-            "判断任何「进步」都先换尺度：是物种繁衍、总量增长，还是个体体验。",
+        "verdict": "全书最该带走的不是「虚构故事让智人胜出」这个结论，而是它反复示范的那个动作——换尺度：同一件事在物种、总量、个体三个尺度上，结论可以完全相反。",
+        "chain": "作者用四段式铺开：认知革命让语言能谈论不存在之物，金钱、帝国、宗教把千百万人纳进同一套「不是事实」的集体想象秩序，农业革命把粮食总量做上去却让个体更辛苦、更难回头，科学革命再把这套相信虚构的能力推向尽头。支撑「胜出」的不是个体智力，而是大规模陌生人协作。",
+        "units": [
+            {"title": "「史上最大的一桩骗局」，是论证还是隐喻",
+             "claim": "作者不否认粮食总量增加，而是把尺度换成个体：农民比采集者更辛苦、饮食更差，人口爆炸又让退回采集变得不可能，于是「不是人驯化了小麦，而是小麦驯化了人」。",
+             "doubt": "反转靠换尺度成立，也靠隐喻扩散。站点已提示要回第 5 章核对其论证与划线，再判断这个隐喻有没有被推广到它撑不住的地方；对比采集时代寿命、暴力率的数据来源是否单一、个别遗址能否代表全体，都是代表性限度。",
+             "call": "接受「换尺度」这个方法，对「骗局」这个定论保留存疑；把它当提问框架，不当史实。"},
+            {"title": "三大秩序是因果机制，还是叙事框架",
+             "claim": "金钱、帝国、宗教被写成统一人类的三大秩序，都不是事实而是集体想象。",
+             "doubt": "站点明确提醒：这是作者的归纳框架，并非互不重叠的因果机制，警惕把叙事框架直接当作史实清单。同样，「快乐取决于预期而非客观条件」更接近叔本华与佛教的哲学立场，不是可证伪的心理学结论——读时要标清哪些是思想史引述，哪些是他自己的综合判断。",
+             "call": "把它放回「大历史」与「模因」的谱系里读，看它如何解释文化演化能独立于生物演化加速；同时把「主张 / 引述 / 作者综合」分开记。"},
+            {"title": "连「约数」也别当成确定史实",
+             "claim": "全书以「约 7 万年前认知革命」「智人走出非洲」这类年代与考古叙述作为叙事支点。",
+             "doubt": "站点列出需核对处：关键年代与考古证据要核对，避免把作者使用的约数当确定史实；「智人末日」以生化人、智神人为雏形，今天基因编辑与脑机接口让它从科幻更接近政策议题，但这是后来显现的变化，不是书里的预测。",
+             "call": "保留「先算锁死哪些退路、再算带来多少便利」这条可迁移的判断；其余把大历史叙事当一副眼镜，而非一份年表。"},
         ],
-        "topics": [
-            {"title": "认知革命", "summary": "大约七万年前，智人开始创造更复杂的架构「文化」；能谈论不存在之物，是大规模协作的起点。",
-             "questions": ["为什么「虚构」反而比血缘和部落更能聚人？",
-                           "语言谈论不存在的事物，具体改变了哪一种合作规模？"],
-             "anchor": "AI领读 · 第一部分 认知革命 / AI 问书"},
-            {"title": "小麦驯化了人", "summary": "作者不否认粮食总量增加，而是把尺度换成个体：农民比采集者更辛苦，人口爆炸又让退回采集变得不可能。",
-             "questions": ["「不是人驯化了小麦」这个反转靠什么论证支撑？",
-                           "这个隐喻有没有被推广到它撑不住的地方？"],
-             "anchor": "AI 问书 / 核心追问"},
-            {"title": "虚构的秩序", "summary": "金钱是最普遍也最有效的互信系统，帝国与宗教把千百万人纳入同一套秩序——三者都不是事实，而是集体想象。",
-             "questions": ["金钱凭什么能让陌生人互信？",
-                           "一套「不是事实」的秩序，靠什么维持不塌？"],
-             "anchor": "AI 问书 / 核心观点初判"},
-            {"title": "按谁的尺度算", "summary": "一心追求更轻松的生活，可能把自己锁进更辛苦的结构；先算它锁死哪些退路，再算它带来多少便利。",
-             "questions": ["「进步」在物种、总量、个体三个尺度上会得出不同结论吗？",
-                           "回到第 5 章，作者有没有把骗局说得太绝对？"],
-             "anchor": "AI 问书 / 核心追问"},
-        ],
+        "boundary": "本页基于本站「AI 问书 / 核心追问 / 更高维度 / 阅读验证 / 往日今时」模块二次整理，未亲读正文。本站该书的一句话主旨与核心观点仍是按章序机械切分的结构事实，故本页判断主要取自问答与更高维度模块；涉及年代、考古数据、个案代表性处请回原文核对。本页存疑与取舍为整理者判断，不是作者结论。",
     },
     "jiao-yi-xin-li-fen-xi": {
         "title": "交易心理分析",
-        "lead": "市场里最难的不是看懂图表，而是看懂自己；当你能彻底接受「每笔结果都不确定」，纪律与自信才会从心底长出来。它不讲技术指标，讲的是长期赢家与别人的差别不在分析工具，而在思想结构。",
-        "points": [
-            "交易的核心矛盾是「概率思维」与「确定性渴望」的冲突。",
-            "95% 的交易错误源于态度：对犯错、亏损、错过机会、赚不到钱的四种恐惧，让人在关键时刻偏离规则。",
-            "「接受风险」不是心理暗示，是把单笔损失预先算进成本，让不利信息也能完整进入判断。",
-            "稳定的交易者不是没有情绪，是不让情绪参与决策。",
+        "verdict": "它最实在的贡献，是把玄虚的「心态」翻译成「接纳不确定 → 把控制点移回自己 → 在规则中执行」这条可训练阶梯；但它自己也没跨过「经验知识 vs 实证科学」那道坎。",
+        "chain": "作者的推法是：技术分析与基本面解决「看到什么」，执行却由态度决定；对犯错、亏损、错过、赚不到钱的四种恐惧，让人在关键时刻偏离规则；于是把隐含假设从「我知道下一步」换成「我不知道，但我知道优势在哪里」；事先承认任何一笔都可能亏，不利信息才能完整进入判断；长期优势才稳定兑现。",
+        "units": [
+            {"title": "「95% 的错误源于态度」，这个数字能当结论用吗",
+             "claim": "道格拉斯把绝大多数交易错误归到态度而非分析工具。",
+             "doubt": "站点已标出：「95%」是经验估计、不是统计结论，不宜当精确数据引用；结论多来自作者作为交易教练的观察，缺随机对照研究，属经验知识而非实证科学；与卡尼曼的前景理论对照，四大恐惧本质是损失厌恶、后悔厌恶、错失恐惧的临床版本。",
+             "call": "接受它对恐惧机制的描述，把「95%」当修辞而非数据；引用时别替它补上它没做的实验。"},
+            {"title": "心态能改善判断，但能替代系统吗",
+             "claim": "全书重心在「接受风险」「以概率思考」「不因单笔结果否定系统」。",
+             "doubt": "站点提醒方向别搞反：心态不能替代正期望的交易系统，没有优势，心态再好也不赚钱。「接受风险」改变的是信息进入判断的那一步，不是收益的来源。另有适用范围限定——书的对象是高频、主动、带杠杆的交易者，对长期指数投资者很多问题本就不存在。",
+             "call": "把「与不确定性共处」当通用态度收下，把「四大恐惧清单」按自己的交易频率降级使用；先确认自己有没有正期望系统，再谈心态。"},
+            {"title": "框架没过时，只是战场换了",
+             "claim": "当年基于场内、电话下单的散户与交易员辅导经验，心理误区集中在「敢不敢下手」。",
+             "doubt": "算法与量化把执行速度交给机器后，人类角色转向「设规则与扛回撤」，心理议题从「敢不敢下手」变成「能不能不干预系统」；什么时候信任模型、什么时候手动干预，成了新的心理战场。书中「随机报酬」「过度干预」在量化时代反而更典型。",
+             "call": "保留「把盈亏（不可控）与执行（可控）分开」这条，它几乎就是斯多葛「区分可控与不可控」的工程版；其余按新战场重读，不必照搬旧场景。"},
         ],
-        "topics": [
-            {"title": "知道却做不到", "summary": "技术分析解决「看到什么」，执行由态度决定；知识在意识层，信念在更深的层，两者冲突时信念赢。",
-             "questions": ["为什么「知道该止损」和「做得到止损」是两件事？",
-                           "改变信念为什么不是消灭旧信念，而是转移能量？"],
-             "anchor": "AI 问书 / 核心追问"},
-            {"title": "把风险算进成本", "summary": "越觉得必须获利，就越不能容忍显示自己可能失败的信息；排除的信息越多，能看见的机会越少。",
-             "questions": ["「接受风险」具体改变了信息进入判断的哪一步？",
-                           "把单笔损失算进成本之后，止损为什么不再像认输？"],
-             "anchor": "核心追问 / 核心观点初判"},
-            {"title": "概率思维的地基", "summary": "「市场中任何事情都可能发生」把隐含假设从「我知道下一步」换成「我不知道，但我知道优势在哪里」。",
-             "questions": ["为什么「需要知道下一步」的程度等于失败的程度？",
-                           "怎样把每笔交易当成独立样本，而不是对错审判？"],
-             "anchor": "核心追问 / 核心观点初判"},
-            {"title": "把心态变成动作", "summary": "作者不让人「心态好点」，而是给出阶梯：接纳不确定 → 把控制点从市场移回自己 → 在规则中执行而非赌结果。",
-             "questions": ["这个阶梯里，哪一步最容易被跳过？",
-                           "对长期指数投资者，哪些部分需要降级使用？"],
-             "anchor": "核心追问 / AI 问书"},
-        ],
+        "boundary": "本页基于本站「核心追问 / 更高维度 / 阅读验证 / 往日今时 / AI 问书」模块二次整理，未亲读正文。「95%」等数值为书中经验表述，非本站统计；交易心理训练缺少随机对照研究，效果因人而异，需结合自身交易系统验证。本页存疑与取舍为整理者判断，不是作者结论，也不构成投资建议。",
     },
 }
 
@@ -183,36 +150,42 @@ def esc(s):
     return html.escape(str(s or ""), quote=True)
 
 
-def render(slug, d):
-    title = esc(d["title"])
-    pts = "\n".join('      <li>%s</li>' % esc(p) for p in d["points"])
-    topics = []
-    for i, t in enumerate(d["topics"], 1):
-        qs = "\n".join(
-            '        <li>%s</li>' % esc(q) for q in t["questions"])
-        topics.append("""    <article class="dr-topic">
-      <div class="dr-num">%02d</div>
-      <div class="dr-topic-body">
-        <h3>%s</h3>
-        <p class="dr-summary">%s</p>
-        <p class="dr-qtitle">带着这些问题往回读</p>
-        <ul class="dr-qs">
-%s
-        </ul>
-        <p class="dr-anchor">素材锚点 · %s</p>
-      </div>
-    </article>""" % (i, esc(t["title"]), esc(t["summary"]), qs, esc(t["anchor"])))
-    topics_html = "\n".join(topics)
-    return """<!DOCTYPE html>
-<html lang="zh-CN" data-theme="dark">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#15171a">
-<title>《%s》｜全书精读</title>
-<link rel="stylesheet" href="../../../assets/css/site.css">
-<link rel="stylesheet" href="../../../assets/css/mmx-guide.css">
-<style>
+def qa_block(u):
+    """一个思辨单元：复用站点 .mmx-qa（问 / 答），自动进时间轴编号。"""
+    return (
+        '<div class="mmx-qa">'
+        f'<p class="mmx-q">{esc(u["title"])}</p>'
+        f'<p class="mmx-a">{esc(u["claim"])}<br>'
+        f'<b>存疑 · </b>{esc(u["doubt"])}<br>'
+        f'<b>取舍 · </b>{esc(u["call"])}</p>'
+        '</div>'
+    )
+
+
+def render_section(slug, d):
+    """详情页模块片段：只用站点现成 mmx-* 类，不注入任何自定义样式。
+
+    - .mmx-oneline  ：一句话判断（左侧绿线强调块，不参与编号）
+    - <h3>          ：分组小标题（.mmx-mod > h3 统一绿色）
+    - <p> / .mmx-qa ：自动获得 reader.css 的时间轴圆点编号与朗读高亮
+    """
+    units = "\n".join(qa_block(u) for u in d["units"])
+    return f"""{SEC_BEGIN}
+<section class="mmx-mod" data-key="deepread">
+<h2>全书精读</h2>
+<p class="mmx-oneline"><b>一句话判断 · </b>{esc(d["verdict"])}</p>
+<h3>作者是怎么把结论推出来的</h3>
+<p>{esc(d["chain"])}</p>
+<h3>几个得停下来想一想的地方</h3>
+{units}
+<h3>读完之后，哪些先不下结论</h3>
+<p>{esc(d["boundary"])}</p>
+</section>
+{SEC_END}"""
+
+
+# 独立页专用样式（自包含，不依赖 reader.css 变量；详情页不走这里）
+PAGE_CSS = """
 :root{--bg:#15171a;--card:#1c1f23;--line:#33383e;--ink:#f2ede2;--dim:#a8a49a;--accent:#c9a227;--green:#7fae8b}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Serif SC","Songti SC",Georgia,serif;line-height:1.85;-webkit-font-smoothing:antialiased}
@@ -227,122 +200,80 @@ h1{font-size:clamp(26px,5vw,38px);line-height:1.35;margin:0 0 10px;font-weight:7
 .dr-chip{font-size:12px;color:var(--dim);border:1px solid var(--line);border-radius:999px;padding:3px 12px;font-family:system-ui,sans-serif}
 .dr-sec{margin-bottom:46px}
 .dr-sec h2{font-size:21px;margin:0 0 20px;padding-left:14px;border-left:3px solid var(--accent);letter-spacing:.08em}
-.dr-lead{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin:0 0 22px;font-size:16px;color:#e6e0d4}
-.dr-points{list-style:none;counter-reset:p;margin:0;padding:0}
-.dr-points li{counter-increment:p;position:relative;padding:12px 0 12px 44px;border-bottom:1px dashed var(--line);font-size:15.5px}
-.dr-points li:before{content:counter(p,decimal-leading-zero);position:absolute;left:0;top:12px;color:var(--accent);font-family:system-ui,sans-serif;font-size:13px;letter-spacing:.05em}
+.dr-lead{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin:0;font-size:16px;color:#e6e0d4;line-height:1.9}
 .dr-topic{display:flex;gap:18px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;margin-bottom:18px}
 .dr-num{flex:0 0 auto;font-family:system-ui,sans-serif;font-size:13px;color:var(--bg);background:var(--green);width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:700}
 .dr-topic-body{flex:1;min-width:0}
-.dr-topic h3{margin:2px 0 10px;font-size:18px;letter-spacing:.05em}
-.dr-summary{margin:0 0 16px;color:#ddd6c8;font-size:15px}
-.dr-qtitle{font-family:system-ui,sans-serif;font-size:12px;letter-spacing:.16em;color:var(--accent);margin:0 0 8px}
-.dr-qs{margin:0 0 14px;padding-left:18px}
-.dr-qs li{font-size:14.5px;color:#cfc9bc;margin:5px 0;line-height:1.7}
-.dr-anchor{font-family:system-ui,sans-serif;font-size:11.5px;color:#7d8880;margin:0;letter-spacing:.03em}
+.dr-topic h3{margin:2px 0 12px;font-size:18px;letter-spacing:.05em}
+.dr-summary{margin:0 0 14px;color:#ddd6c8;font-size:15px;line-height:1.85}
+.dr-summary:last-child{margin-bottom:0}
+.dr-qtitle{font-family:system-ui,sans-serif;font-size:12px;letter-spacing:.16em;color:var(--accent);margin:0 0 6px}
 .dr-foot{border-top:1px solid var(--line);padding-top:20px;color:var(--dim);font-size:13px;line-height:1.9}
 .dr-foot a{color:var(--green)}
 @media(max-width:520px){.dr-wrap{padding:22px 16px 60px}.dr-topic{padding:16px;gap:12px}.dr-topic h3{font-size:16.5px}}
-</style>
+"""
+
+
+def render(slug, d):
+    """自包含独立页：内容与详情页同源，样式是它自己的深色版式。"""
+    title = esc(d["title"])
+    units = []
+    for i, u in enumerate(d["units"], 1):
+        units.append(f"""    <article class="dr-topic">
+      <div class="dr-num">{i:02d}</div>
+      <div class="dr-topic-body">
+        <h3>{esc(u["title"])}</h3>
+        <p class="dr-summary">{esc(u["claim"])}</p>
+        <p class="dr-qtitle">存疑</p>
+        <p class="dr-summary">{esc(u["doubt"])}</p>
+        <p class="dr-qtitle">暂定取舍</p>
+        <p class="dr-summary">{esc(u["call"])}</p>
+      </div>
+    </article>""")
+    units_html = "\n".join(units)
+    return f"""<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#15171a">
+<title>《{title}》｜全书精读</title>
+<style>{PAGE_CSS}</style>
 </head>
-<body data-slug="%s" data-title="%s">
+<body data-slug="{esc(slug)}" data-title="{title}">
 <div class="dr-wrap">
-  <a class="dr-back" href="combined.html">← 返回《%s》全书领读</a>
+  <a class="dr-back" href="combined.html">← 返回《{title}》全书领读</a>
   <header class="dr-head">
-    <div class="dr-eyebrow">新模块 · 全书精读</div>
-    <h1>《%s》</h1>
-    <p class="dr-sub">要点概述 · 主题分段 · 深读追问</p>
-    <div class="dr-chips"><span class="dr-chip">AI 自主整理</span><span class="dr-chip">基于本站大纲 / 通读 / 精读素材</span><span class="dr-chip">非微信读书 AI 导读原文</span></div>
+    <div class="dr-eyebrow">全书精读</div>
+    <h1>《{title}》</h1>
+    <p class="dr-sub">一句话判断 · 论证链 · 存疑与取舍 · 证据边界</p>
+    <div class="dr-chips"><span class="dr-chip">AI 自主整理</span><span class="dr-chip">基于本站深读模块二次提炼</span><span class="dr-chip">非 App「AI 导读」原文</span></div>
   </header>
   <main>
     <section class="dr-sec">
-      <h2>要点概述</h2>
-      <p class="dr-lead">%s</p>
-      <ol class="dr-points">
-%s
-      </ol>
+      <h2>一句话判断</h2>
+      <p class="dr-lead">{esc(d["verdict"])}</p>
     </section>
     <section class="dr-sec">
-      <h2>主题分段</h2>
-%s
+      <h2>作者是怎么把结论推出来的</h2>
+      <p class="dr-lead">{esc(d["chain"])}</p>
+    </section>
+    <section class="dr-sec">
+      <h2>几个得停下来想一想的地方</h2>
+{units_html}
+    </section>
+    <section class="dr-sec">
+      <h2>读完之后，哪些先不下结论</h2>
+      <p class="dr-lead">{esc(d["boundary"])}</p>
     </section>
   </main>
   <footer class="dr-foot">
-    来源与证据边界：本页内容由本站已发布的「AI 大纲 / 全书领读 / AI 问书 / 核心追问」模块归纳改写，<strong>不是微信读书 App「AI 导读」的原文</strong>，也不构成亲读正文后的结论。标注的「素材锚点」指向对应模块，便于回到原页核对。<br>
     <a href="../../../index.html">← 返回首页</a>　·　<a href="combined.html">全书领读（通读＋精读）</a>　·　<a href="outline.html">AI 大纲</a>
   </footer>
 </div>
 </body>
 </html>
-""" % (title, esc(slug), title, title, title, esc(d["lead"]), pts, topics_html)
-
-
-def render_section(slug, d):
-    """详情页里的模块片段：追加到 combined-data.html，由 reader.js 装配。
-
-    样式全部用 reader.css 的主题变量（--card-bg / --ink / --accent …），
-    跟着详情页的米白 / 纯白 / 护眼 / 夜间主题一起变；类名统一 drx- 前缀。
-    """
-    pts = "\n".join('      <li>%s</li>' % esc(p) for p in d["points"])
-    topics = []
-    for i, t in enumerate(d["topics"], 1):
-        qs = "\n".join('        <li>%s</li>' % esc(q) for q in t["questions"])
-        topics.append("""      <div class="drx-topic">
-        <div class="drx-num">%02d</div>
-        <div class="drx-body">
-          <h3>%s</h3>
-          <p class="drx-sum">%s</p>
-          <p class="drx-qt">带着这些问题往回读</p>
-          <ul class="drx-qs">
-%s
-          </ul>
-          <p class="drx-anchor">素材锚点 · %s</p>
-        </div>
-      </div>""" % (i, esc(t["title"]), esc(t["summary"]), qs, esc(t["anchor"])))
-    topics_html = "\n".join(topics)
-    return """%s
-<section class="mmx-mod drx-mod" data-key="deepread">
-<style>
-.drx-mod .drx-note{font-size:12px;letter-spacing:.12em;color:var(--sub,#8a919a);margin:0 0 12px}
-.drx-mod .drx-lead{background:var(--inner-bg,#272b30);border:1px solid var(--inner-bd,#3a3f46);
-  border-radius:12px;padding:16px 18px;margin:0 0 20px;color:var(--txt,#b4bac1);font-size:15px;line-height:1.85}
-.drx-mod h3.drx-h{font-size:15px;letter-spacing:.08em;color:var(--head,#93c8a8);margin:0 0 14px}
-.drx-mod .drx-points{list-style:none;counter-reset:drx;margin:0 0 24px;padding:0}
-.drx-mod .drx-points li{counter-increment:drx;position:relative;padding:9px 0 9px 38px;
-  border-bottom:1px dashed var(--line,#3a3f46);font-size:14.5px;line-height:1.8}
-.drx-mod .drx-points li:before{content:counter(drx,decimal-leading-zero);position:absolute;left:0;top:9px;
-  color:var(--accent,#9ed0af);font-family:system-ui,sans-serif;font-size:12px}
-.drx-mod .drx-topic{display:flex;gap:14px;background:var(--inner-bg,#272b30);
-  border:1px solid var(--inner-bd,#3a3f46);border-radius:12px;padding:16px 18px;margin-bottom:14px}
-.drx-mod .drx-num{flex:0 0 auto;width:26px;height:26px;border-radius:7px;background:var(--act-bg,#244b40);
-  color:var(--act-fg,#dff0e4);font:700 12px/26px system-ui,sans-serif;text-align:center}
-.drx-mod .drx-body{flex:1;min-width:0}
-.drx-mod .drx-body h3{font-size:16.5px;margin:2px 0 8px;color:var(--ink,#c9ced4)}
-.drx-mod .drx-sum{margin:0 0 12px;color:var(--txt,#b4bac1);font-size:14.5px;line-height:1.8}
-.drx-mod .drx-qt{font:600 11.5px/1.5 system-ui,sans-serif;letter-spacing:.14em;
-  color:var(--accent,#9ed0af);margin:0 0 6px}
-.drx-mod .drx-qs{margin:0 0 10px;padding-left:18px}
-.drx-mod .drx-qs li{font-size:14px;color:var(--txt,#b4bac1);margin:4px 0;line-height:1.7}
-.drx-mod .drx-anchor{font:11px/1.6 system-ui,sans-serif;color:var(--sub,#8a919a);margin:0}
-.drx-mod .drx-foot{border-top:1px solid var(--line,#3a3f46);padding-top:14px;margin-top:20px;
-  color:var(--sub,#8a919a);font-size:12.5px;line-height:1.9}
-.drx-mod .drx-foot a{color:var(--accent,#9ed0af);text-decoration:none}
-@media(max-width:520px){.drx-mod .drx-topic{padding:13px;gap:10px}}
-</style>
-<h2>全书精读</h2>
-<p class="drx-note">新模块 · 要点概述 / 主题分段 / 深读追问</p>
-<p class="drx-lead">%s</p>
-<h3 class="drx-h">要点概述</h3>
-<ol class="drx-points">
-%s
-</ol>
-<h3 class="drx-h">主题分段</h3>
-%s
-<p class="drx-foot">本模块由本站已发布的「AI 大纲 / 全书领读 / AI 问书 / 核心追问」模块归纳改写，
-<strong>不是微信读书 App「AI 导读」的原文</strong>，也不构成亲读正文后的结论；「素材锚点」指向对应模块，便于回到原页核对。
-　<a href="deepread.html">打开独立页 →</a></p>
-</section>
-%s""" % (SEC_BEGIN, esc(d["lead"]), pts, topics_html, SEC_END)
+"""
 
 
 def inject_combined_data(slug, d):
@@ -384,51 +315,10 @@ def cleanup_nav(slug):
     return (p, s)
 
 
-def panel_html(entries):
-    cards = "\n".join(
-        '      <a class="dr-card" href="reading-notes/books/%s/deepread.html"><b>《%s》</b><span>%s</span><em>全书精读 →</em></a>'
-        % (esc(s), esc(d["title"]), esc(d["points"][0])) for s, d in entries)
-    return """%s
-<section class="dr-panel" id="deepread-panel">
-  <style>
-  .dr-panel{max-width:1100px;margin:26px auto 0;padding:22px 20px 26px;border:1px solid #33383e;border-radius:16px;background:#1c1f23;font-family:system-ui,sans-serif}
-  .dr-panel h2{margin:0 0 6px;font-size:19px;color:#f2ede2;letter-spacing:.08em}
-  .dr-panel .dr-note{margin:0 0 18px;font-size:12.5px;color:#a8a49a;line-height:1.7}
-  .dr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
-  .dr-card{display:flex;flex-direction:column;gap:7px;padding:15px 15px 13px;border:1px solid #33383e;border-radius:11px;background:#15171a;text-decoration:none;transition:border-color .2s,transform .2s}
-  .dr-card:hover{border-color:#c9a227;transform:translateY(-2px)}
-  .dr-card b{color:#f2ede2;font-size:14.5px;font-family:"Noto Serif SC",Georgia,serif}
-  .dr-card span{color:#a8a49a;font-size:12px;line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-  .dr-card em{color:#c9a227;font-size:11.5px;font-style:normal;letter-spacing:.06em;margin-top:auto}
-  </style>
-  <h2>全书精读 · 新模块</h2>
-  <p class="dr-note">要点概述 + 主题分段 + 深读追问。基于本站大纲 / 通读 / 精读素材整理，非微信读书 App「AI 导读」原文。</p>
-  <div class="dr-grid">
-%s
-  </div>
-</section>
-%s""" % (PANEL_BEGIN, cards, PANEL_END)
-
-
-def inject_index(entries):
-    if not INDEX.exists():
-        return None
-    s = INDEX.read_text(encoding="utf-8", errors="ignore")
-    block = panel_html(entries)
-    # 面板放在 <main> 之外：首页 main 是网格布局，塞进去会占掉一格。
-    anchor = '<main id="main" class="layout">'
-    if PANEL_BEGIN in s:
-        # 只删面板本身，别把后面 <div> 的缩进一起吃掉
-        s = re.sub(re.escape(PANEL_BEGIN) + r".*?" + re.escape(PANEL_END),
-                   "", s, flags=re.S)
-    s = s.replace(anchor, block + '\n' + anchor, 1)
-    return (INDEX, s)
-
-
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--write", action="store_true")
-    ap.add_argument("--seed", action="store_true", help="重写 data/deepread/*.json")
+    ap.add_argument("--seed", action="store_true", help="按 SEED 重写 data/deepread/*.json")
     args = ap.parse_args()
 
     DATA.mkdir(parents=True, exist_ok=True)
@@ -444,7 +334,6 @@ def main():
 
     writes = []
     for slug, d in entries:
-        # 独立页保留（便于直达），但主入口在详情页里
         out = BOOKS / slug / "deepread.html"
         writes.append((out, render(slug, d)))
         r = inject_combined_data(slug, d)
