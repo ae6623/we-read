@@ -180,13 +180,13 @@ body.dark #warn{background:#3a2f1c;color:#e0c58e;border-color:#5c4a29}
   function applyTheme(){
     document.body.className = dark ? "dark" : "";
     if(!rendition) return;
-    rendition.themes.registerTheme("light",{
+    rendition.themes.registerRules("light",{
       "body":{"background":"#ffffff","color":"#2b2b2b"},
       "h2.chapter":{"color":"#5b5145","border-bottom":"1px solid #d8d3c8"},
       ".pgmark":{"color":"#a49c8e"},
       "section.page":{"border-bottom":"1px dashed #e2ddd3"}
     });
-    rendition.themes.registerTheme("dark",{
+    rendition.themes.registerRules("dark",{
       "body":{"background":"#202126","color":"#d8d5ce"},
       "h2.chapter":{"color":"#d9a96b","border-bottom":"1px solid #33353a"},
       ".pgmark":{"color":"#7f7c75"},
