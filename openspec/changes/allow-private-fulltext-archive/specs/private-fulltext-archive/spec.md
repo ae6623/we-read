@@ -74,3 +74,13 @@ R8 SHALL 优先于 R1–R7 及本规范其他所有引用与发布限制，包�
 - SHALL 设置 `robots noindex,nofollow,noarchive`，页首标注个人存档用途，MUST NOT 加入站点导航／索引，MUST NOT 生成分享外链。
 
 上述措施减少扩散，MUST NOT 被表述为「页面已私有」。既有导读页结论与用户亲读状态 MUST NOT 因全文页而改变。
+
+### R11 多书全文阅读器 SHALL 共用一个左侧书架目录
+
+生成两本及以上书籍的全文阅读页时，每个页面 SHALL 内置同一份书架目录，列出全部已生成全文页的书名、副标题、页数与署名；当前书 MUST 高亮并标 `aria-current="page"`；点击其他书 SHALL 跳转到该书的 `fulltext.html`（相对路径 `../<id>/fulltext.html`）。
+
+书架 SHALL 在窄屏（<900px）收为可开合抽屉，并提供显式开合控件；阅读进度、字号与主题偏好 SHALL 按书 ID 隔离，MUST NOT 互相覆盖。新增书目时 SHALL 重生成全部阅读页以保证每本书架一致，MUST NOT 出现只有部分页面带书架的情况。
+
+各书 `overview.html` SHALL 提供指向本书全文页的入口；入口文案 MUST NOT 改变导读页的分析范围、覆盖标记与结论。
+
+当前已生成全文阅读页的书目：《宜昌鬼事》（`local-tianya-146-yichang-ghost-stories`，3,028 页）、《伏羲密码》（`local-tianya-204-fuxi-cipher`，882 页）、《每夜一个鬼故事》（`local-tianya-151-nightly-ghost-stories`，424 页）。

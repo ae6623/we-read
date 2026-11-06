@@ -5,26 +5,41 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow,noarchive">
 <meta name="description" content="个人本机存档全文阅读页，不对外分发。">
-<title>《宜昌鬼事》全文阅读 · 个人存档</title>
+<title>宜昌鬼事｜全文阅读 · 个人存档</title>
 <style>
 :root{
   --bg:#f7f5f0; --fg:#2c2a27; --muted:#8b8377; --line:#e2ddd2;
-  --panel:rgba(255,255,255,.93); --accent:#8a5a2b; --mark:#f4e3b9;
-  --fs:19px; --w:760px;
+  --panel:rgba(255,255,255,.93); --shelf:rgba(250,248,243,.98);
+  --accent:#8a5a2b; --mark:#f4e3b9; --fs:19px; --w:760px;
 }
 @media (prefers-color-scheme: dark){
   :root{ --bg:#16171a; --fg:#d8d5ce; --muted:#7f7c75; --line:#2c2e33;
-         --panel:rgba(23,24,27,.94); --accent:#d9a96b; --mark:#4b3d20; }
+         --panel:rgba(23,24,27,.94); --shelf:rgba(20,21,24,.98);
+         --accent:#d9a96b; --mark:#4b3d20; }
 }
 html[data-theme="dark"]{ --bg:#16171a; --fg:#d8d5ce; --muted:#7f7c75; --line:#2c2e33;
-  --panel:rgba(23,24,27,.94); --accent:#d9a96b; --mark:#4b3d20; }
+  --panel:rgba(23,24,27,.94); --shelf:rgba(20,21,24,.98); --accent:#d9a96b; --mark:#4b3d20; }
 html[data-theme="light"]{ --bg:#f7f5f0; --fg:#2c2a27; --muted:#8b8377; --line:#e2ddd2;
-  --panel:rgba(255,255,255,.93); --accent:#8a5a2b; --mark:#f4e3b9; }
+  --panel:rgba(255,255,255,.93); --shelf:rgba(250,248,243,.98); --accent:#8a5a2b; --mark:#f4e3b9; }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--fg);
+body{margin:0 0 0 242px;background:var(--bg);color:var(--fg);
   font-family:"PingFang SC","Microsoft YaHei","Noto Serif CJK SC",Georgia,serif;
   font-size:var(--fs);line-height:1.95;-webkit-font-smoothing:antialiased}
+.shelf{position:fixed;left:0;top:0;bottom:0;width:242px;z-index:30;
+  background:var(--shelf);border-right:1px solid var(--line);
+  padding:20px 14px;overflow-y:auto;display:flex;flex-direction:column;gap:14px}
+.shelf-head{font-size:16px;font-weight:700;letter-spacing:.04em;color:var(--fg);padding:0 6px}
+.shelf-head span{display:block;font-size:11px;font-weight:400;color:var(--muted);letter-spacing:.16em;margin-top:2px}
+.shelf-list{display:flex;flex-direction:column;gap:6px}
+.book{display:block;text-decoration:none;color:var(--fg);border:1px solid transparent;
+  border-left:3px solid transparent;border-radius:6px;padding:10px 10px 9px 11px;line-height:1.45}
+.book:hover{background:var(--panel);border-color:var(--line)}
+.book.active{border-left-color:var(--accent);background:var(--panel);border-color:var(--line)}
+.book b{display:block;font-size:15px;font-weight:700}
+.book small{display:block;font-size:12px;color:var(--muted);margin-top:3px;line-height:1.5}
+.book em{display:block;font-style:normal;font-size:11px;color:var(--muted);margin-top:5px;letter-spacing:.02em}
+.shelf-foot{margin-top:auto;font-size:11px;color:var(--muted);line-height:1.8;border-top:1px solid var(--line);padding:12px 6px 0}
 .bar{position:sticky;top:0;z-index:10;background:var(--panel);backdrop-filter:blur(12px);
   border-bottom:1px solid var(--line);padding:8px 14px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .bar .title{font-weight:700;white-space:nowrap;margin-right:4px}
@@ -36,6 +51,7 @@ body{margin:0;background:var(--bg);color:var(--fg);
 .bar input[type=search]{width:160px}
 .bar input[type=number]{width:82px}
 .bar .pos{font-size:13px;color:var(--muted);white-space:nowrap;min-width:88px;text-align:right}
+#shelfBtn{display:none}
 .wrap{max-width:var(--w);margin:0 auto;padding:30px 22px 140px}
 .notice{border:1px solid var(--line);border-left:3px solid var(--accent);padding:12px 16px;
   font-size:14px;line-height:1.75;color:var(--muted);margin-bottom:36px}
@@ -44,13 +60,32 @@ section{scroll-margin-top:66px;margin:0 0 26px;padding:0 0 22px;border-bottom:1p
 .pgmark{font-size:12px;color:var(--muted);letter-spacing:.08em;margin:0 0 14px;user-select:none}
 p{margin:0 0 1.05em;text-align:justify;text-justify:inter-ideograph;overflow-wrap:anywhere}
 section.hit{background:var(--mark);border-radius:6px}
+@media(max-width:900px){
+  body{margin-left:0}
+  .shelf{width:270px;transform:translateX(-102%);transition:transform .22s ease;
+    box-shadow:8px 0 28px rgba(0,0,0,.18)}
+  body.shelf-open .shelf{transform:none}
+  #shelfBtn{display:inline-block}
+}
 @media(max-width:640px){:root{--fs:18px}.wrap{padding:18px 16px 100px}
   .bar input[type=search]{width:120px}.bar .grow{display:none}}
-@media print{.bar,.notice,.pgmark{display:none}section{border:0;page-break-inside:auto}}
+@media print{.bar,.notice,.pgmark,.shelf,#shelfBtn{display:none}
+  body{margin-left:0}section{border:0;page-break-inside:auto}}
 </style>
 </head>
 <body>
+<aside class="shelf" id="shelf">
+  <div class="shelf-head">书架 <span>全文阅读</span></div>
+  <nav class="shelf-list" aria-label="全书目录">
+    <a class="book active" href="fulltext.html" aria-current="page"><b>宜昌鬼事</b><small>三峡地区巫鬼轶事记录整理</small><em>3,028 页 · 蛇从革</em></a>
+    <a class="book" href="../local-tianya-204-fuxi-cipher/fulltext.html"><b>伏羲密码</b><small>解开华夏始祖遗留的上古谜团</small><em>882 页 · 十四001</em></a>
+    <a class="book" href="../local-tianya-151-nightly-ghost-stories/fulltext.html"><b>每夜一个鬼故事</b><small>连续更新 · 不好看你砸我</small><em>424 页 · 浪漫_拖鞋</em></a>
+  </nav>
+  <div class="shelf-foot">共 3 本 · 本人本机存档<br>点击书名进入该书全文<br>请勿外传</div>
+</aside>
+
 <div class="bar">
+  <button id="shelfBtn">书架</button>
   <span class="title">宜昌鬼事 · 全文</span>
   <button id="prev" title="← 键">← 上一页</button>
   <button id="next" title="→ 键">下一页 →</button>
@@ -66,9 +101,9 @@ section.hit{background:var(--mark);border-radius:6px}
 <div class="wrap">
   <div class="notice">
     <strong>个人存档阅读页，请勿外传。</strong>
-    本页是用户本机导出 PDF 的逐页全文转录（3,028 页 / 约 139 万字），仅用于本人本机阅读与私人存档，
+    本页是用户本机导出 PDF 的逐页全文转录（3028 页 / 约 1,406,254 字），仅用于本人本机阅读与私人存档，
     不进站点导航、不生成分享外链、不对搜索引擎开放，也不构成作品权利人的公开转载许可。
-    正文为 OCR/文本层原样转录，含连载回帖、日期与错字，未作内容校订。
+    正文为文本层原样转录，含连载回帖、日期与错字，未作内容校订。左侧书架可切换到其他书的全文。
   </div>
   <article id="content">
 <section id="p1" data-page="1"><div class="pgmark">第 1 / 3028 页</div>
@@ -27958,9 +27993,16 @@ section.hit{background:var(--mark);border-radius:6px}
 (function(){
   var root=document.documentElement, secs=[].slice.call(document.querySelectorAll('section')), N=secs.length;
   var pos=document.getElementById('pos'), jump=document.getElementById('jump'), q=document.getElementById('q');
-  var LS='yichang-fulltext-v1';
+  var LS='weread-reader-v2-local-tianya-146-yichang-ghost-stories';
   function store(k,v){try{localStorage.setItem(LS+'-'+k,v)}catch(e){}}
   function load(k){try{return localStorage.getItem(LS+'-'+k)}catch(e){return null}}
+
+  /* 左侧书架（窄屏抽屉） */
+  var shelfBtn=document.getElementById('shelfBtn');
+  shelfBtn.onclick=function(){document.body.classList.toggle('shelf-open')};
+  document.querySelector('.wrap').addEventListener('click',function(){
+    document.body.classList.remove('shelf-open');
+  });
 
   /* 主题：跟随系统，可手动覆盖 */
   var t=load('theme');
@@ -28020,7 +28062,8 @@ section.hit{background:var(--mark);border-radius:6px}
   document.addEventListener('keydown',function(e){
     var tag=(e.target.tagName||'').toLowerCase();
     if(tag==='input'||tag==='textarea') {if(e.key==='Escape'){q.blur()} return}
-    if(e.key==='ArrowLeft'){go(curPage()-1)}
+    if(e.key==='Escape'){document.body.classList.remove('shelf-open')}
+    else if(e.key==='ArrowLeft'){go(curPage()-1)}
     else if(e.key==='ArrowRight'){go(curPage()+1)}
     else if(e.key==='/'){e.preventDefault();q.focus()}
   });
