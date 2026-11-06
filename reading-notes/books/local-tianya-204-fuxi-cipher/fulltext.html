@@ -28,17 +28,25 @@ body{margin:0 0 0 242px;background:var(--bg);color:var(--fg);
   font-size:var(--fs);line-height:1.95;-webkit-font-smoothing:antialiased}
 .shelf{position:fixed;left:0;top:0;bottom:0;width:242px;z-index:30;
   background:var(--shelf);border-right:1px solid var(--line);
-  padding:20px 14px;overflow-y:auto;display:flex;flex-direction:column;gap:14px}
+  padding:20px 14px;overflow-y:auto;display:flex;flex-direction:column;gap:12px}
 .shelf-head{font-size:16px;font-weight:700;letter-spacing:.04em;color:var(--fg);padding:0 6px}
-.shelf-head span{display:block;font-size:11px;font-weight:400;color:var(--muted);letter-spacing:.16em;margin-top:2px}
-.shelf-list{display:flex;flex-direction:column;gap:6px}
+.shelf-head span{display:block;font-size:11px;font-weight:400;color:var(--muted);letter-spacing:.1em;margin-top:2px}
+#shelfFilter{width:100%;font:inherit;font-size:12px;background:transparent;color:var(--fg);
+  border:1px solid var(--line);border-radius:6px;padding:6px 9px}
+#shelfFilter:focus{border-color:var(--accent);outline:none}
+.shelf-list{display:flex;flex-direction:column;gap:5px}
 .book{display:block;text-decoration:none;color:var(--fg);border:1px solid transparent;
-  border-left:3px solid transparent;border-radius:6px;padding:10px 10px 9px 11px;line-height:1.45}
+  border-left:3px solid transparent;border-radius:6px;padding:9px 10px 8px 11px;line-height:1.45}
 .book:hover{background:var(--panel);border-color:var(--line)}
 .book.active{border-left-color:var(--accent);background:var(--panel);border-color:var(--line)}
-.book b{display:block;font-size:15px;font-weight:700}
-.book small{display:block;font-size:12px;color:var(--muted);margin-top:3px;line-height:1.5}
-.book em{display:block;font-style:normal;font-size:11px;color:var(--muted);margin-top:5px;letter-spacing:.02em}
+.book b{display:block;font-size:14px;font-weight:700}
+.book small{display:block;font-size:11px;color:var(--muted);margin-top:3px;line-height:1.45}
+.book em{display:block;font-style:normal;font-size:11px;color:var(--muted);margin-top:4px;letter-spacing:.02em}
+.book[hidden]{display:none}
+.shelf-empty{font-size:12px;color:var(--muted);padding:8px 6px}
+.quiet-entry{display:block;max-width:var(--w);margin:0 auto 26px;padding:0 22px;
+  font-size:11px;color:var(--muted);text-decoration:none;opacity:.5}
+.quiet-entry:hover{opacity:1;color:var(--accent)}
 .shelf-foot{margin-top:auto;font-size:11px;color:var(--muted);line-height:1.8;border-top:1px solid var(--line);padding:12px 6px 0}
 .bar{position:sticky;top:0;z-index:10;background:var(--panel);backdrop-filter:blur(12px);
   border-bottom:1px solid var(--line);padding:8px 14px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
@@ -75,14 +83,38 @@ section.hit{background:var(--mark);border-radius:6px}
 </head>
 <body>
 <aside class="shelf" id="shelf">
-  <div class="shelf-head">书架 <span>全文阅读</span></div>
+  <div class="shelf-head">书架 <span>原书全文 · 自动目录</span></div>
+  <input type="search" id="shelfFilter" placeholder="筛选书名 / 作者" aria-label="筛选书架">
   <nav class="shelf-list" aria-label="全书目录">
-    <a class="book" href="../local-tianya-146-yichang-ghost-stories/fulltext.html"><b>宜昌鬼事</b><small>三峡地区巫鬼轶事记录整理</small><em>3,028 页 · 蛇从革</em></a>
-    <a class="book active" href="fulltext.html" aria-current="page"><b>伏羲密码</b><small>解开华夏始祖遗留的上古谜团</small><em>882 页 · 十四001</em></a>
-    <a class="book" href="../local-tianya-151-nightly-ghost-stories/fulltext.html"><b>每夜一个鬼故事</b><small>连续更新 · 不好看你砸我</small><em>424 页 · 浪漫_拖鞋</em></a>
+    <a class="book" href="../local-tianya-147-shallow-current-events/fulltext.html" data-id="local-tianya-147-shallow-current-events"><b>浅释时事，偶读新闻</b><small>本地 PDF 全文转录</small><em>261 页 · kinsutopia</em></a>
+    <a class="book" href="../local-yin-wei-jian-dapeng/fulltext.html" data-id="local-yin-wei-jian-dapeng"><b>因为贱，所以生活艰辛</b><small>本地 PDF 全文转录</small><em>65 页 · 大鹏金翅明王</em></a>
+    <a class="book" href="../local-shen-hua-de-po-mie-flp713/fulltext.html" data-id="local-shen-hua-de-po-mie-flp713"><b>神话的破灭</b><small>本地 PDF 全文转录</small><em>20 页 · flp713</em></a>
+    <a class="book" href="../local-lao-gong-jian-chi-fang-jia-hui-die/fulltext.html" data-id="local-lao-gong-jian-chi-fang-jia-hui-die"><b>老公坚持房价会跌</b><small>老公坚持房价会跌，我现在一看房价就满嘴吐血。</small><em>47 页 · 爱死小肥羊</em></a>
+    <a class="book" href="../local-tianya-158-basic-questions-of-the-era/fulltext.html" data-id="local-tianya-158-basic-questions-of-the-era"><b>关于时代发展中的几个基本问题</b><small>本地 PDF 全文转录</small><em>256 页 · 周喜庆</em></a>
+    <a class="book" href="../local-tianya-146-yichang-ghost-stories/fulltext.html" data-id="local-tianya-146-yichang-ghost-stories"><b>宜昌鬼事</b><small>宜昌鬼事（三峡地区巫鬼轶事记录整理）</small><em>3,028 页 · 蛇从革</em></a>
+    <a class="book" href="../local-tianya-151-nightly-ghost-stories/fulltext.html" data-id="local-tianya-151-nightly-ghost-stories"><b>每夜一个鬼故事</b><small>每夜一个鬼故事（连续更新）不好看你砸我</small><em>424 页 · 浪漫_拖鞋</em></a>
+    <a class="book active" href="fulltext.html" data-id="local-tianya-204-fuxi-cipher" aria-current="page"><b>伏羲密码</b><small>《伏羲密码》</small><em>882 页 · 十四001</em></a>
+    <a class="book" href="../local-jingji-moshi-shehui-genyuan-suixiang/fulltext.html" data-id="local-jingji-moshi-shehui-genyuan-suixiang"><b>经济模式和社会根源随想</b><small>本地 PDF 全文转录</small><em>225 页 · 未署名</em></a>
+    <a class="book" href="../local-modern-finance-housing-curgdbd/fulltext.html" data-id="local-modern-finance-housing-curgdbd"><b>现代金融的本质以及房价</b><small>本地 PDF 全文转录</small><em>433 页 · curgdbdy</em></a>
+    <a class="book" href="../local-tianya-76-chiang-kai-shek-mainland/fulltext.html" data-id="local-tianya-76-chiang-kai-shek-mainland"><b>蒋介石为什么失掉大陆</b><small>蒋介石为什么失掉大陆：1945—1949</small><em>437 页 · flp713</em></a>
+    <a class="book" href="../local-tianya-129-inner-strife-rigid-china/fulltext.html" data-id="local-tianya-129-inner-strife-rigid-china"><b>从内斗的华夏到固化的中国</b><small>本地 PDF 全文转录</small><em>2,072 页 · 舍潜就明</em></a>
+    <a class="book" href="../local-tianya-006-china-housing-outlook-2005-2006/fulltext.html" data-id="local-tianya-006-china-housing-outlook-2005-2006"><b>中国楼市2005及2006之展望</b><small>中国楼市2005及2006年楼市之展望</small><em>290 页 · 孤独的思想</em></a>
+    <a class="book" href="../local-tianya-008-four-principles-lower-housing-prices/fulltext.html" data-id="local-tianya-008-four-principles-lower-housing-prices"><b>降低房价的四项基本原则</b><small>全面阐述降低房价的四项基本原则</small><em>46 页 · 孤独的思想</em></a>
+    <a class="book" href="../local-tianya-pdf-165/fulltext.html" data-id="local-tianya-pdf-165"><b>拨开迷雾看未来</b><small>天涯神贴 · 第 165 篇 · 拨开迷雾看未来</small><em>70 页 · 未署名</em></a>
+    <a class="book" href="../local-tianya-pdf-177/fulltext.html" data-id="local-tianya-pdf-177"><b>债务转移到全民的进程已基本完成...多快</b><small>天涯神贴 · 第 177 篇 · 债务转移到全民的进程已基本完成...多快好省的进入收尾阶段</small><em>349 页 · 未署名</em></a>
+    <a class="book" href="../local-tianya-pdf-198/fulltext.html" data-id="local-tianya-pdf-198"><b>把握经济大势和个人财运必须读懂钱</b><small>天涯神贴 · 第 198 篇 · 把握经济大势和个人财运必须读懂钱</small><em>171 页 · 未署名</em></a>
+    <a class="book" href="../local-tianya-pdf-162/fulltext.html" data-id="local-tianya-pdf-162"><b>雨夜谈经</b><small>天涯神贴 · 第 162 篇 · 雨夜谈经</small><em>123 页 · 未署名</em></a>
+    <a class="book" href="../local-tianya-pdf-63/fulltext.html" data-id="local-tianya-pdf-63"><b>2016，2017才是G点，崩溃论者耐心</b><small>天涯神贴 · 第 63 篇 · 2016，2017才是G点，崩溃论者耐心点。-疑议</small><em>67 页 · 疑议</em></a>
+    <a class="book" href="../local-tianya-pdf-114/fulltext.html" data-id="local-tianya-pdf-114"><b>放眼2023~2024，慢慢写我的见闻。</b><small>天涯神贴 · 第 114 篇 · 放眼2023~2024，慢慢写我的见闻。</small><em>360 页 · 未署名</em></a>
+    <a class="book" href="../local-tianya-pdf-53/fulltext.html" data-id="local-tianya-pdf-53"><b>互联网“裁员”大潮将起：离开的不只是马云</b><small>天涯神贴 · 第 53 篇 · 互联网“裁员”大潮将起：离开的不只是马云 可能还有你(</small><em>61 页 · 未署名</em></a>
+    <a class="book" href="../local-tianya-pdf-209/fulltext.html" data-id="local-tianya-pdf-209"><b>把握经济大势和个人财运必须读懂钱</b><small>天涯神贴 · 第 209 篇 · 把握经济大势和个人财运必须读懂钱</small><em>310 页 · 未署名</em></a>
+    <a class="book" href="../local-tianya-pdf-150/fulltext.html" data-id="local-tianya-pdf-150"><b>2019年汇率破7的可能性99.99%</b><small>天涯神贴 · 第 150 篇 · 2019年汇率破7的可能性99.99%</small><em>142 页 · 未署名</em></a>
+    <a class="book" href="../local-tianya-pdf-48/fulltext.html" data-id="local-tianya-pdf-48"><b>中国的房价将在不断上涨中完成腰斩-小恶魔</b><small>天涯神贴 · 第 48 篇 · 中国的房价将在不断上涨中完成腰斩-小恶魔兰尼特斯</small><em>60 页 · 小恶魔兰尼特斯</em></a>
+    <a class="book" href="../local-tianya-pdf-169/fulltext.html" data-id="local-tianya-pdf-169"><b>黄金价格这么个玩法，意味着国际性大通胀时</b><small>天涯神贴 · 第 169 篇 · 黄金价格这么个玩法，意味着国际性大通胀时代的降临</small><em>55 页 · 未署名</em></a>
+    <a class="book" href="../local-tianya-pdf-199/fulltext.html" data-id="local-tianya-pdf-199"><b>面对可能要到来的可怕滞涨，我们该怎么办？</b><small>天涯神贴 · 第 199 篇 · 面对可能要到来的可怕滞涨，我们该怎么办？</small><em>50 页 · 未署名</em></a>
   </nav>
-  <div class="shelf-foot">共 3 本 · 本人本机存档<br>点击书名进入该书全文<br>请勿外传</div>
-</aside>
+  <div class="shelf-foot">共 26 本 · 自动扫描全文页生成<br>点击书名进入该书全文<br>请勿外传<br>另有 2 本超大原书仅本机存档，未上线</div>
+</aside></aside></aside>
 
 <div class="bar">
   <button id="shelfBtn">书架</button>
@@ -103,7 +135,7 @@ section.hit{background:var(--mark);border-radius:6px}
     <strong>个人存档阅读页，请勿外传。</strong>
     本页是用户本机导出 PDF 的逐页全文转录（882 页 / 约 452,041 字），仅用于本人本机阅读与私人存档，
     不进站点导航、不生成分享外链、不对搜索引擎开放，也不构成作品权利人的公开转载许可。
-    正文为文本层原样转录，含连载回帖、日期与错字，未作内容校订。左侧书架可切换到其他书的全文。
+    正文为文本层原样转录，含连载回帖、日期与错字，未作内容校订。左侧书架自动收录已有原书全文，可切换。
   </div>
   <article id="content">
 <section id="p1" data-page="1"><div class="pgmark">第 1 / 882 页</div>
@@ -6469,15 +6501,65 @@ section.hit{background:var(--mark);border-radius:6px}
 </section>
   </article>
 </div>
+<a class="quiet-entry" href="../../fulltext/index.html">入口</a>
 <script>
 (function(){
   var root=document.documentElement, secs=[].slice.call(document.querySelectorAll('section')), N=secs.length;
   var pos=document.getElementById('pos'), jump=document.getElementById('jump'), q=document.getElementById('q');
-  var LS='weread-reader-v2-local-tianya-204-fuxi-cipher';
+  var CUR='local-tianya-204-fuxi-cipher';
+  var LS='weread-reader-v2-'+CUR;
   function store(k,v){try{localStorage.setItem(LS+'-'+k,v)}catch(e){}}
   function load(k){try{return localStorage.getItem(LS+'-'+k)}catch(e){return null}}
 
-  /* 左侧书架（窄屏抽屉） */
+  /* 左侧书架：静态兜底 + 运行时读取 bookshelf.json 自动同步新增原书 */
+  var nav=document.querySelector('.shelf-list'), filter=document.getElementById('shelfFilter'),
+      foot=document.querySelector('.shelf-foot');
+  function applyFilter(){
+    var s=(filter.value||'').trim().toLowerCase(), n=0;
+    [].forEach.call(nav.querySelectorAll('.book'),function(a){
+      var hit=!s || a.textContent.toLowerCase().indexOf(s)>=0;
+      a.hidden=!hit; if(hit)n++;
+    });
+    var old=nav.querySelector('.shelf-empty');
+    if(old) old.remove();
+    if(!n){
+      var e=document.createElement('div'); e.className='shelf-empty';
+      e.textContent='没有匹配的书'; nav.appendChild(e);
+    }
+  }
+  filter.addEventListener('input',applyFilter);
+
+  function rebuild(list,offline){
+    if(!list || !list.length) return;
+    nav.innerHTML='';
+    list.forEach(function(b){
+      var active=b.id===CUR, a=document.createElement('a');
+      a.className='book'+(active?' active':'');
+      a.href=active?'fulltext.html':'../'+b.id+'/fulltext.html';
+      a.setAttribute('data-id',b.id);
+      if(active) a.setAttribute('aria-current','page');
+      var t=document.createElement('b'); t.textContent=b.title||b.id; a.appendChild(t);
+      var s=document.createElement('small'); s.textContent=b.subtitle||''; a.appendChild(s);
+      var e=document.createElement('em');
+      e.textContent=(b.pages?Number(b.pages).toLocaleString()+' 页':'全文')+' · '+(b.author||'未署名');
+      a.appendChild(e);
+      nav.appendChild(a);
+    });
+    if(foot){
+      var txt='共 '+list.length+' 本 · 自动扫描全文页生成<br>点击书名进入该书全文<br>请勿外传';
+      if(offline && offline.length) txt+='<br>另有 '+offline.length+' 本超大原书仅本机存档，未上线';
+      foot.innerHTML=txt;
+    }
+    applyFilter();
+  }
+  try{
+    fetch('../bookshelf.json?_='+Date.now(),{cache:'no-store'})
+      .then(function(r){return r.ok?r.json():null})
+      .then(function(d){if(d && d.books) rebuild(d.books,d.offline)})
+      .catch(function(){});
+  }catch(e){}
+
+  /* 窄屏抽屉 */
   var shelfBtn=document.getElementById('shelfBtn');
   shelfBtn.onclick=function(){document.body.classList.toggle('shelf-open')};
   document.querySelector('.wrap').addEventListener('click',function(){
@@ -6541,7 +6623,7 @@ section.hit{background:var(--mark);border-radius:6px}
   };
   document.addEventListener('keydown',function(e){
     var tag=(e.target.tagName||'').toLowerCase();
-    if(tag==='input'||tag==='textarea') {if(e.key==='Escape'){q.blur()} return}
+    if(tag==='input'||tag==='textarea') {if(e.key==='Escape'){e.target.blur()} return}
     if(e.key==='Escape'){document.body.classList.remove('shelf-open')}
     else if(e.key==='ArrowLeft'){go(curPage()-1)}
     else if(e.key==='ArrowRight'){go(curPage()+1)}

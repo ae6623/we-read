@@ -84,3 +84,13 @@ R8 SHALL 优先于 R1–R7 及本规范其他所有引用与发布限制，包�
 各书 `overview.html` SHALL 提供指向本书全文页的入口；入口文案 MUST NOT 改变导读页的分析范围、覆盖标记与结论。
 
 当前已生成全文阅读页的书目：《宜昌鬼事》（`local-tianya-146-yichang-ghost-stories`，3,028 页）、《伏羲密码》（`local-tianya-204-fuxi-cipher`，882 页）、《每夜一个鬼故事》（`local-tianya-151-nightly-ghost-stories`，424 页）。
+
+### R12 书架 SHALL 自动扫描，超大原书 MUST NOT 上传
+
+生成三本及以上全文阅读页时，书架目录 SHALL 由扫描 `reading-notes/books/*/fulltext.html` 自动汇总，MUST NOT 依赖逐本手写书目清单。书目元数据 SHALL 写入 `reading-notes/books/bookshelf.json`（书名、页数、字数、署名、相对链接）；每个阅读页 SHALL 内置静态书架作为离线兜底，并在运行时拉取清单重建书架，使新增原书只刷新清单即可同步全部阅读器，MUST NOT 出现只有部分页面书架更新的情况。书架 SHALL 提供书名／作者筛选。
+
+字数上限 SHALL 按来源区分：集合页已有笔记配套的原书按 **200 万字**截断，随机预置批次按用户口径 **20 万字**截断；超限的 MUST NOT 生成网页、MUST NOT 挂入口、MUST NOT 上传，全文转录只保留在本机私有目录。每页平均不足 30 字（疑似扫描件）的同样 MUST NOT 生成。被忽略的书目与原因 SHALL 写入清单文档 `docs/tianya-fulltext-preload-2026-11-07.md`，MUST NOT 静默丢弃。
+
+天涯系列集合页中每本有全文页的笔记 SHALL 在其「阅读入口」抽屉提供「原书全文阅读」直达项并同步更新抽屉计数；无全文页的 MUST NOT 挂失效链接。集合页 `</main>` 前与每个阅读页底部 SHALL 各提供一个只写「入口」两字的低调链接，指向统一索引页 `reading-notes/fulltext/index.html`；该链接 MUST NOT 进入站点导航或索引，用于在其他入口被清理时兜底。
+
+上述生成与挂入口操作 MUST NOT 改动三处规则文本、白名单登记表、registry / roster、用户亲读状态或既有导读结论。
