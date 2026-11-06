@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "revision": 280,
+  "revision": 281,
   "timezone": "Asia/Shanghai",
   "authority": "latest origin/main; claims become effective only after serialized acceptance there",
   "migration": {
@@ -1151,12 +1151,12 @@
       "platform": "local_pdf",
       "platform_book_id": null,
       "priority": "user_requested",
-      "status": "paused",
-      "owner_agent_id": null,
+      "status": "in_progress",
+      "owner_agent_id": "local-pdf-reader",
       "claim": {
-        "state": "released",
-        "source": "管理员分配的天涯第5类 #146；本地 PDF AI 分析不构成用户亲读进度。",
-        "claimed_at": "2026-11-05T16:43:41+08:00"
+        "state": "held",
+        "source": "按本次管理员安排由 local-pdf-reader 重新认领；本地 PDF AI 分析不构成用户亲读进度。",
+        "claimed_at": "2026-11-06T21:57:04+08:00"
       },
       "last_confirmed_progress": null,
       "resume_point": {
@@ -1354,6 +1354,19 @@
       }
     ]
   },
-  "updated_at": "2026-11-06T21:49:38+08:00",
-  "active_sessions": []
+  "updated_at": "2026-11-06T21:57:04+08:00",
+  "active_sessions": [
+    {
+      "run_id": "local-pdf-20261106-2157-yichang146-sparkx26-fulltext",
+      "agent_id": "local-pdf-reader",
+      "book_id": "local-tianya-146-yichang-ghost-stories",
+      "slot": "admin-assigned-single-fulltext-sparkx26-2026-11-06",
+      "started_at": "2026-11-06T21:57:04+08:00",
+      "environment_id": "local-pdf-sandbox",
+      "reading_mode": "local_pdf",
+      "resource_ids": [
+        "local-pdf:sandbox-workspace"
+      ]
+    }
+  ]
 }
