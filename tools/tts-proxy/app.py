@@ -54,6 +54,11 @@ def _cors(resp: Response) -> Response:
     resp.headers["Access-Control-Allow-Origin"] = "*"
     resp.headers["Access-Control-Allow-Methods"] = "GET,POST,OPTIONS"
     resp.headers["Access-Control-Allow-Headers"] = "Content-Type"
+    # Chrome / Edge 的 Private Network Access：https 页面（如 GitHub Pages）访问
+    # 本机 http://127.0.0.1 时，预检会带这个请求头；不显式放行会被判为
+    # "Permission was denied ... loopback address space"，本地部署就永远连不上。
+    if request.headers.get("Access-Control-Request-Private-Network") == "true":
+        resp.headers["Access-Control-Allow-Private-Network"] = "true"
     resp.headers["Cache-Control"] = "public, max-age=86400"
     return resp
 
