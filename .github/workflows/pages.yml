@@ -3,6 +3,17 @@ name: Deploy GitHub Pages
 on:
   push:
     branches: [main]
+    # Pages 每次部署都是整包上传（没有增量发布），这些路径不进站点产物，
+    # 改动它们时没有必要重传 360MB。
+    paths-ignore:
+      - 'skills/**'
+      - 'openspec/**'
+      - 'docs/**'
+      - 'memory/**'
+      - 'todo/**'
+      - 'team-handoffs/**'
+      - 'daily-output/**'
+      - '**/*.md'
   workflow_dispatch:
 
 permissions:
