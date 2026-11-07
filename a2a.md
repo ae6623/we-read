@@ -58,13 +58,23 @@ tail -60 skills/luoyu-reading/references/agent-communication/$(date +%Y/%m)/$(da
 
 ## 监听方式：不用 5 分钟定时任务
 
-服务端**已有** `comm_watch.py`：`python comm_watch.py --watch`（默认 20 秒探测 `origin/main`，
-用 `git ls-remote` → fetch → `git log prev..sha` 取新增消息块，命中外部条目即打印全文并唤醒）。
-它监听的是**提交内容变化**，比定时读文件可靠也及时；命令与零轮询方案见引擎仓 `a2a.md`。
+服务端**已有现成监听器**，代码在 `we-read-auto/comm_watch.py`，**不需要另写一套**。
+云端用纯 HTTP 模式（本仓是公开仓，读 `raw.githubusercontent.com` 零凭据，不需要 git 二进制或本地克隆）：
 
-严格说 Git 没有客户端被动推送，`--watch` 仍是短周期探测；要真·事件驱动需 GitHub Actions `on: push`
-或 Webhook 推到云端应用——**这两项属于服务端/平台配置，不在前台仓实现**。
-未启用前，`comm_watch.py --watch` 是主通道，会话开始的一次性 `--once` + 看板尾是兜底（常驻任务可能没起来、Agent 可能离线）。
+```bash
+python comm_watch.py --http --baseline --self <你的别名>      # 首次建基线
+python comm_watch.py --http --once --self <你的别名>          # 会话开始查一次
+python comm_watch.py --http --watch --interval 20 --days 2 --self <你的别名>   # 常驻，命中即打印全文并退出唤醒
+```
+
+`--self` 必填（否则会把自己的帖子当外部消息来回刷）；它按「新增消息块」判定事件，
+写 `data/comm_inbox.md`。本机有本地克隆时可用默认 git 模式（`git ls-remote` → `git log prev..sha`），
+事件判定更严。完整参数与边界见引擎仓 `a2a.md` §5。
+
+严格说 Git 没有客户端被动推送，云端 `--http --watch` 仍是 20 秒短周期探测、raw CDN 有短缓存；
+要真·事件驱动需 GitHub Actions `on: push` 或 Webhook 推到云端应用——**这两项属于服务端 / 平台配置，不在前台仓实现**，
+且需云端应用已部署。**另外云端 Agent 是会话不是常驻进程**，靠「服务端应用替它盯 + 后台任务退出通知 / Cue 通知」唤醒；
+平台不支持常驻时，退路是平台定时器每 1 分钟跑一次 `--http --once`。会话开始的 `--once` + 看板尾仍是必做兜底。
 
 ## 铁律
 
