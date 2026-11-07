@@ -130,13 +130,12 @@ if SANDBOX and not os.path.exists(QUEUE):
                   f, ensure_ascii=False, indent=2)
 
 
-_BOARD_CACHE = {"sha": None, "ts": 0.0}
 _BOARD_HEADERS = {"User-Agent": "we-read-a2a-console",
                   "Cache-Control": "no-cache", "Pragma": "no-cache"}
 
 
 def _fetch_text(url, timeout=12, tries=2):
-    """带一次重试的只读抓取，返回 (text, error)；失败原因不吞掉，供看板显示。"""
+    """带重试的只读抓取，返回 (text, error)；失败原因不吞掉，供看板显示。"""
     last = None
     for _ in range(tries):
         try:
@@ -146,39 +145,36 @@ def _fetch_text(url, timeout=12, tries=2):
                 return r.read().decode("utf-8", "replace"), None
         except Exception as exc:
             last = repr(exc)
-            time.sleep(0.3)
+            time.sleep(1.0)
     return None, last
 
 
-def latest_sha():
-    """用 commits Atom feed 取最新 main sha（不走 REST API，不受 60 次/小时限流）。
-    按 commit sha 拼 raw URL，每次 URL 都不同，可绕开 main 路径的 CDN 缓存。"""
-    stamp = time.time()
-    if _BOARD_CACHE["sha"] and stamp - _BOARD_CACHE["ts"] < 60:
-        return _BOARD_CACHE["sha"]
+def latest_shas():
+    """Atom feed 里最近几个 commit sha（不走 REST API，不受 60 次/小时限流）。
+    刚 push 的 HEAD 在 raw CDN 上可能尚未收录而短暂 404，所以同时给出前两个
+    已稳定的历史 sha 作回退；按 sha 拼 raw URL 也绕开了 main 路径的缓存。"""
     feed, _err = _fetch_text("https://github.com/ae6623/we-read/commits/main.atom")
-    if feed:
-        m = re.search(r"/ae6623/we-read/commit/([0-9a-f]{40})", feed)
-        if m:
-            _BOARD_CACHE["sha"] = m.group(1)
-            _BOARD_CACHE["ts"] = stamp
-    return _BOARD_CACHE["sha"]
+    return re.findall(r"/ae6623/we-read/commit/([0-9a-f]{40})", feed or "")[:3]
 
 
 def board_snapshot(rel):
-    """返回 (sha, text, source)。sha 源实时；失败退回 main raw 并在 source 里注明原因。"""
-    sha = latest_sha()
+    """返回 (sha, text, source)。逐个试最近 3 个 sha；都失败才退回 main raw。"""
+    shas = latest_shas()
     err = ""
-    if sha:
+    for idx, sha in enumerate(shas):
         text, err = _fetch_text(
-            "https://raw.githubusercontent.com/ae6623/we-read/%s/%s" % (sha, rel))
+            "https://raw.githubusercontent.com/ae6623/we-read/%s/%s" % (sha, rel),
+            tries=2 if idx == 0 else 1)
         if text is not None:
-            return sha, text, "commit-sha raw（实时）"
+            label = ("commit-sha raw（实时）" if idx == 0 else
+                     "commit-sha raw（HEAD 暂未收录，用前一提交）")
+            return sha, text, label
     text, err2 = _fetch_text("%s/%s?t=%d" % (BOARD_RAW, rel, int(time.time())))
+    head = shas[0] if shas else None
     if text is not None:
         note = ("（实时源失败：%s）" % (err or err2 or "")[:100]) if (err or err2) else ""
-        return sha, text, "main raw（可能有 CDN 缓存）" + note
-    return sha, None, "unavailable"
+        return head, text, "main raw（可能有 CDN 缓存）" + note
+    return head, None, "unavailable"
 
 
 def now():
