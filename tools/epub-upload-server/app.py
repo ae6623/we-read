@@ -132,46 +132,62 @@ if SANDBOX and not os.path.exists(QUEUE):
 
 _BOARD_HEADERS = {"User-Agent": "we-read-a2a-console",
                   "Cache-Control": "no-cache", "Pragma": "no-cache"}
+BOARD_TIMEOUT = 5      # 单次抓取超时（秒）
+BOARD_BUDGET = 12.0    # /api/a2a-board 实时源总预算（秒），超预算立刻退回 main raw
 
 
-def _fetch_text(url, timeout=12, tries=2):
+def _fetch_text(url, timeout=BOARD_TIMEOUT, tries=1):
     """带重试的只读抓取，返回 (text, error)；失败原因不吞掉，供看板显示。"""
     last = None
-    for _ in range(tries):
+    for i in range(tries):
         try:
             with urllib.request.urlopen(
                     urllib.request.Request(url, headers=_BOARD_HEADERS),
-                    timeout=timeout) as r:
+                    timeout=max(1.0, timeout)) as r:
                 return r.read().decode("utf-8", "replace"), None
         except Exception as exc:
             last = repr(exc)
-            time.sleep(1.0)
+            if i + 1 < tries:
+                time.sleep(1.0)
     return None, last
 
 
-def latest_shas():
+def latest_shas(timeout=BOARD_TIMEOUT):
     """Atom feed 里最近几个 commit sha（不走 REST API，不受 60 次/小时限流）。
     刚 push 的 HEAD 在 raw CDN 上可能尚未收录而短暂 404，所以同时给出前两个
     已稳定的历史 sha 作回退；按 sha 拼 raw URL 也绕开了 main 路径的缓存。"""
-    feed, _err = _fetch_text("https://github.com/ae6623/we-read/commits/main.atom")
+    feed, _err = _fetch_text("https://github.com/ae6623/we-read/commits/main.atom",
+                             timeout=timeout, tries=1)
     return re.findall(r"/ae6623/we-read/commit/([0-9a-f]{40})", feed or "")[:3]
 
 
 def board_snapshot(rel):
     """返回 (sha, text, source)。rel 必须是**仓库根相对完整路径**（含 BOARD_PREFIX），
     否则按 sha 拼出的 raw URL 会 404、静默退回有缓存的 main raw。
-    逐个试最近 3 个 sha；都失败才退回 main raw。"""
-    shas = latest_shas()
+    实时源探测有 BOARD_BUDGET 秒总预算：逐个试最近 3 个 sha，超预算 / 全失败
+    立刻退回 main raw。云端沙箱出网慢时，绝不把 /api/a2a-board 挂住几十秒。"""
+    started = time.time()
+
+    def left():
+        return BOARD_BUDGET - (time.time() - started)
+
+    shas = latest_shas(timeout=min(BOARD_TIMEOUT, max(1.0, left())))
     err = ""
     for idx, sha in enumerate(shas):
+        if left() <= 0:
+            err = "实时源总预算 %gs 用尽" % BOARD_BUDGET
+            break
         text, err = _fetch_text(
             "https://raw.githubusercontent.com/ae6623/we-read/%s/%s" % (sha, rel),
-            tries=2 if idx == 0 else 1)
+            timeout=min(BOARD_TIMEOUT, left()), tries=1)
         if text is not None:
             label = ("commit-sha raw（实时）" if idx == 0 else
                      "commit-sha raw（HEAD 暂未收录，用前一提交）")
             return sha, text, label
-    text, err2 = _fetch_text("%s/%s?t=%d" % (BOARD_RAW, rel, int(time.time())))
+    if left() <= 0 and not err:
+        err = "实时源总预算 %gs 用尽" % BOARD_BUDGET
+    text, err2 = _fetch_text("%s/%s?t=%d" % (BOARD_RAW, rel, int(time.time())),
+                             timeout=min(BOARD_TIMEOUT, max(2.0, left())), tries=1)
     head = shas[0] if shas else None
     if text is not None:
         note = ("（实时源失败：%s）" % (err or err2 or "")[:100]) if (err or err2) else ""

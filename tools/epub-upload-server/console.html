@@ -136,17 +136,27 @@ function shDate(offset){
 function boardRawUrl(date){
   var p=date.split("-");return RAW+"/"+p[0]+"/"+p[1]+"/"+date+".md?t="+Date.now();
 }
+// 云端沙箱出网慢时 /api/a2a-board 可能挂住几十秒；给它硬超时，快速落到直连兜底。
+async function fetchT(url, ms){
+  var ctl=(typeof AbortController!=="undefined")?new AbortController():null;
+  var timer=ctl?setTimeout(function(){ctl.abort();},ms):null;
+  try{
+    var o={cache:"no-store"}; if(ctl)o.signal=ctl.signal;
+    return await fetch(url,o);
+  }finally{ if(timer)clearTimeout(timer); }
+}
 async function fetchBoard(date){
   // 1) 同源代理：Atom feed 取最新 sha → 固定 sha 的 raw URL，绕开 CDN 缓存
   try{
-    var r=await fetch("/api/a2a-board?date="+date+"&t="+Date.now(),{cache:"no-store"});
+    var r=await fetchT("/api/a2a-board?date="+date+"&t="+Date.now(),6000);
     if(r.ok){var j=await r.json();if(j&&typeof j.text==="string")
       return {text:j.text,source:"同源代理 · "+(j.source||"github-raw")+
         (j.sha?" @ "+String(j.sha).slice(0,8):"")};}
-  }catch(e){}
-  // 2) 本地静态预览兜底
+    console.warn("同源代理不可用，转 GitHub raw 直连：HTTP "+r.status);
+  }catch(e){ console.warn("同源代理超时/异常，转 GitHub raw 直连："+e); }
+  // 2) GitHub raw 直连兜底（公开仓带 CORS，最多 5 分钟 CDN 缓存）
   try{
-    var r2=await fetch(boardRawUrl(date),{cache:"no-store"});
+    var r2=await fetchT(boardRawUrl(date),8000);
     if(r2.ok)return {text:await r2.text(),source:"GitHub raw 直连（可能有 CDN 缓存）"};
   }catch(e){}
   return {text:null,source:null};
