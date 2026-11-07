@@ -589,9 +589,10 @@ html[data-theme="dark"] #warn{background:#3a2f1c;color:#e0c58e;border-color:#5c4
           var q = new URLSearchParams(location.search).get("assets");
           if (q) return q.replace(/\/?$/, "/");
         } catch (e) {}
-        return /(^|\.)ae6623\.github\.io$/.test(location.hostname)
-          ? "https://ae6623.github.io/we-read-assets/reading-notes/epub/"
-          : "";
+        /* EPUB 一律由 GitHub Pages 承接（响应带 Access-Control-Allow-Origin: *），
+           所以无论页面部署在 ae6623.github.io 还是 cdn.js-dev.cn 都能跨域取书。
+           本地联调用 ?assets= 覆盖。 */
+        return "https://ae6623.github.io/we-read-assets/reading-notes/epub/";
       })();
       var fileUrl = meta.file;
       if(ASSET_BASE && !/^https?:|^\/\//i.test(fileUrl||""))

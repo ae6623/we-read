@@ -44,12 +44,21 @@ EXCLUDE_NAMES = {"outline.json", "outline.md"}
 # 根目录 README 之外，所有 .md 都是源文件（只有 index.html 链了 README.md）
 KEEP_MD = {"README.md"}
 
+# 思维导图的生成素材（export_mindmap_material.py 的输出），只有 Python 脚本读，
+# 前端 HTML/JS 零引用；发布产物里不该出现。
+EXCLUDE_SUBTREES = {"data/mindmap-material", "data/mindmap"}
+
 # 本地开发/协作留下的隐藏目录
 EXCLUDE_HIDDEN = {".a2a", ".workbuddy", ".codebuddy", ".idea", ".vscode"}
 
 
 def keep(path: Path) -> bool:
     if path.suffix.lower() in EXCLUDE_SUFFIXES:
+        return False
+    posix = path.as_posix()
+    if any(posix == d or posix.startswith(d + "/") for d in EXCLUDE_SUBTREES):
+        return False
+    if path.name == "SHA256SUMS.txt":
         return False
     if path.name in EXCLUDE_NAMES:
         return False
