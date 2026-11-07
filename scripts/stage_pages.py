@@ -4,7 +4,8 @@
 为什么需要这一步：仓库 674MB，但其中一部分从不出现在页面上——
   * `*.ttf` 约 60MB：全站 HTML/CSS/JS 零引用（字体是用 woff2 的）；
   * `*.pdf` 约 41MB：没有任何页面链接到它们；
-  * `tools/ scripts/ _data/ data/ openspec/ skills/ ...`：生成器与工作目录，非站点内容。
+  * `tools/ scripts/ _data/ openspec/ skills/ ...`：生成器与工作目录，非站点内容。
+    （注意：根目录 `data/` 不能排除——`reader.js` 会 fetch `data/mm-graph/*.json`。）
 
 只减不改：链接结构、相对路径、文件名全部保持原样，因此页面无需改动。
 跑完可 `python -m http.server 8000 -d _site` 本地验证。
@@ -26,7 +27,7 @@ OUT = ROOT / "_site"
 
 # 只用于生成/协作的目录，页面里没有指向它们的链接（已用 grep 全站确认）
 EXCLUDE_DIRS = {
-    ".git", ".github", "tools", "scripts", "_data", "data", "openspec",
+    ".git", ".github", "tools", "scripts", "_data", "openspec",
     "templates", "overview_gen", "skills", "memory", "todo", "team-handoffs",
     "daily-output", "docs", "需求", "_site", ".bench",
 }
