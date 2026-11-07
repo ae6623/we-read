@@ -23,6 +23,7 @@ import argparse
 import shutil
 import subprocess
 import sys
+import urllib.parse
 import urllib.request
 from pathlib import Path
 
@@ -91,7 +92,7 @@ def prepare(files: list[Path]) -> None:
 def verify(files: list[Path]) -> bool:
     bad = []
     for rel in files:
-        url = ASSETS_ORIGIN + rel.as_posix()
+        url = ASSETS_ORIGIN + urllib.parse.quote(rel.as_posix())
         try:
             req = urllib.request.Request(url, method="HEAD")
             with urllib.request.urlopen(req, timeout=30) as resp:
