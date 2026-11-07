@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>we-read CDN 迁移 · 前后对比报告</title>
+<style>
+  :root {
+    --ink: #0d1526; --ink2: #5b6b84; --line: #e3ebf7; --bg: #f6f9ff;
+    --card: #fff; --gh: #8b93a5; --cdn: #2f6bff; --ok: #12b886; --warn: #f5a524;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 32px 20px 60px;
+    background: var(--bg); color: var(--ink);
+    font: 14px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1040px; margin: 0 auto; }
+  h1 { margin: 0 0 6px; font-size: 30px; letter-spacing: -0.03em; }
+  .sub { margin: 0 0 28px; color: var(--ink2); font-size: 13px; }
+  h2 { margin: 34px 0 14px; font-size: 17px; letter-spacing: -0.01em; }
+  .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 8px; }
+  .kpi { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px;
+         box-shadow: 0 18px 40px -34px rgba(13,42,92,.5); }
+  .kpi b { display: block; font-size: 26px; font-weight: 700; letter-spacing: -0.03em; margin: 6px 0 2px; }
+  .kpi span { color: var(--ink2); font-size: 12px; }
+  .kpi.blue b { color: var(--cdn); }
+  .kpi.green b { color: var(--ok); }
+  table { width: 100%; border-collapse: collapse; background: var(--card); border: 1px solid var(--line);
+          border-radius: 12px; overflow: hidden; font-size: 13px; }
+  th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--line); }
+  th { background: #f2f7ff; color: var(--ink2); font-weight: 600; font-size: 12px; }
+  tr:last-child td { border-bottom: 0; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .bar-cell { width: 34%; }
+  .bars { display: flex; flex-direction: column; gap: 3px; }
+  .bar { height: 9px; border-radius: 999px; }
+  .bar.gh { background: var(--gh); }
+  .bar.cdn { background: var(--cdn); }
+  .badge { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: 11px; font-weight: 600; }
+  .badge.ok { background: #e6f9f2; color: #0b8a63; }
+  .badge.warn { background: #fff4d6; color: #9a6b00; }
+  .note { color: var(--ink2); font-size: 12.5px; margin: 10px 0 0; }
+  ul { margin: 10px 0 0; padding-left: 20px; }
+  li { margin: 5px 0; }
+  code { background: #eef3fb; padding: 1px 6px; border-radius: 5px; font-size: 12px; }
+  @media (max-width: 760px) {
+    .cards { grid-template-columns: repeat(2, 1fr); }
+    .bar-cell { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>we-read CDN 迁移 · 前后对比</h1>
+  <p class="sub">2026-11-07 · GitHub Pages → 七牛 CDN（cdn.js-dev.cn）· 测量方式：本机对同一资源连续 5 次取中位数</p>
+
+  <div class="cards">
+    <div class="kpi green"><span>单资源提速</span><b>81–88%</b><span>六类资源实测</span></div>
+    <div class="kpi blue"><span>合计耗时</span><b>4424 → 714 ms</b><span>六资源串行加载</span></div>
+    <div class="kpi"><span>迁移文件</span><b>1661 页</b><span>6699 处引用改写</span></div>
+    <div class="kpi"><span>发布产物</span><b>674 → 313 MB</b><span>累计瘦身 54%</span></div>
+  </div>
+
+  <h2>一、单资源对比（同一文件，GitHub Pages vs CDN）</h2>
+  <table>
+    <thead>
+      <tr><th>资源</th><th class="num">GitHub</th><th class="num">CDN</th><th class="num">提速</th><th class="num">大小</th><th class="bar-cell">对比</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>首页 CSS <code>site.css</code></td>
+        <td class="num">438 ms</td><td class="num">75 ms</td>
+        <td class="num"><span class="badge ok">-83%</span></td><td class="num">8 K</td>
+        <td class="bar-cell"><div class="bars"><div class="bar gh" style="width:100%"></div><div class="bar cdn" style="width:17%"></div></div></td>
+      </tr>
+      <tr>
+        <td>首页 JS <code>homepage-reading.js</code></td>
+        <td class="num">531 ms</td><td class="num">87 ms</td>
+        <td class="num"><span class="badge ok">-84%</span></td><td class="num">24 K</td>
+        <td class="bar-cell"><div class="bars"><div class="bar gh" style="width:100%"></div><div class="bar cdn" style="width:16%"></div></div></td>
+      </tr>
+      <tr>
+        <td>数据 <code>book-cats.json</code></td>
+        <td class="num">547 ms</td><td class="num">106 ms</td>
+        <td class="num"><span class="badge ok">-81%</span></td><td class="num">47 K</td>
+        <td class="bar-cell"><div class="bars"><div class="bar gh" style="width:100%"></div><div class="bar cdn" style="width:19%"></div></div></td>
+      </tr>
+      <tr>
+        <td>封面 <code>long-cang.jpg</code></td>
+        <td class="num">557 ms</td><td class="num">91 ms</td>
+        <td class="num"><span class="badge ok">-84%</span></td><td class="num">41 K</td>
+        <td class="bar-cell"><div class="bars"><div class="bar gh" style="width:100%"></div><div class="bar cdn" style="width:16%"></div></div></td>
+      </tr>
+      <tr>
+        <td>字体 <code>yyb.woff2</code></td>
+        <td class="num">954 ms</td><td class="num">181 ms</td>
+        <td class="num"><span class="badge ok">-81%</span></td><td class="num">962 K</td>
+        <td class="bar-cell"><div class="bars"><div class="bar gh" style="width:100%"></div><div class="bar cdn" style="width:19%"></div></div></td>
+      </tr>
+      <tr>
+        <td>字体 <code>CE-W03.woff2</code></td>
+        <td class="num">1398 ms</td><td class="num">174 ms</td>
+        <td class="num"><span class="badge ok">-88%</span></td><td class="num">1921 K</td>
+        <td class="bar-cell"><div class="bars"><div class="bar gh" style="width:100%"></div><div class="bar cdn" style="width:12%"></div></div></td>
+      </tr>
+      <tr>
+        <td><strong>合计</strong></td>
+        <td class="num"><strong>4424 ms</strong></td><td class="num"><strong>714 ms</strong></td>
+        <td class="num"><span class="badge ok">-84%</span></td><td class="num">—</td>
+        <td class="bar-cell"><div class="bars"><div class="bar gh" style="width:100%"></div><div class="bar cdn" style="width:16%"></div></div></td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="note">GitHub Pages 在国内访问单文件长期在 400 ms 以上，且会随文件增大而线性变慢（1.9 MB 字体要 1.4 秒）；CDN 走国内节点，基本稳定在 75–180 ms。</p>
+
+  <h2>二、页面级效果（线上首页渲染后统计）</h2>
+  <table>
+    <thead><tr><th>指标</th><th class="num">迁移前</th><th class="num">迁移后</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr><td>CSS / JS / 图片 请求数</td><td class="num">445（GitHub）</td><td class="num">445（CDN）</td><td>全部静态资源已切到 cdn.js-dev.cn</td></tr>
+      <tr><td>仍走 GitHub 的资源</td><td class="num">445</td><td class="num">1</td><td>只剩首页 HTML 本体</td></tr>
+      <tr><td>封面加载方式</td><td class="num">相对路径 <code>assets/covers/*.jpg</code></td><td class="num"><code>https://cdn.js-dev.cn/assets/covers/*.jpg</code></td><td>431 张封面</td></tr>
+      <tr><td>字体加载方式</td><td class="num">相对路径</td><td class="num">CDN + 本地兜底双源</td><td><code>@font-face</code> src 列表</td></tr>
+      <tr><td>首屏渲染（无头浏览器）</td><td class="num">—</td><td class="num">≈ 4.3 s</td><td>含 455 张卡片的 JS 渲染，非网络耗时</td></tr>
+    </tbody>
+  </table>
+
+  <h2>三、发布产物变化（GitHub Pages 每次部署上传量）</h2>
+  <table>
+    <thead><tr><th>阶段</th><th class="num">产物大小</th><th class="num">相对初始</th><th>做了什么</th></tr></thead>
+    <tbody>
+      <tr><td>初始</td><td class="num">674 MB</td><td class="num">—</td><td>—</td></tr>
+      <tr><td>排除未引用字体 / PDF / 开发目录</td><td class="num">557 MB</td><td class="num">-17%</td><td>ttf 60 MB、pdf 41 MB 不进产物</td></tr>
+      <tr><td>EPUB 迁独立仓库</td><td class="num">360 MB</td><td class="num">-47%</td><td>213 文件 / 302.8 MB → we-read-assets</td></tr>
+      <tr><td>剔除源数据 + 裁掉跳转页旧正文</td><td class="num">313 MB</td><td class="num"><strong>-54%</strong></td><td>outline.json 30 MB、.md 18 MB、死正文 8 MB</td></tr>
+    </tbody>
+  </table>
+
+  <h2>四、这次改了什么</h2>
+  <table>
+    <thead><tr><th>项</th><th>结果</th></tr></thead>
+    <tbody>
+      <tr><td>HTML 资源引用</td><td>1661 个文件 / 6699 处 <code>&lt;link&gt;</code>、<code>&lt;script&gt;</code>、<code>&lt;img&gt;</code> 改为 CDN 绝对地址</td></tr>
+      <tr><td>JS 运行时路径</td><td>5 个文件 / 8 处（<code>assets/data/*.json</code>、<code>visit-stats.js</code>）</td></tr>
+      <tr><td>修复的 bug</td><td><code>visit-stats.js</code> 注入时多拼 <code>base+</code>，会得到双路径；已去掉</td></tr>
+      <tr><td>本地文件</td><td><strong>全部保留</strong>，作为 CDN 故障时的兜底</td></tr>
+      <tr><td>EPUB / PDF</td><td>仍在 GitHub Pages（阅读器需同源 fetch）</td></tr>
+      <tr><td>字体兜底</td><td><code>@font-face</code> 写成 CDN + 本地双 src，CDN 挂了自动回落</td></tr>
+    </tbody>
+  </table>
+
+  <h2>五、风险与回滚</h2>
+  <ul>
+    <li><span class="badge warn">费用</span> 七牛 HTTPS 流量不计入免费额度，按量计费；图片 + 字体量级下约每月几元。</li>
+    <li><span class="badge warn">证书</span> 免费证书 90 天，到期 <strong>2027-02-05</strong>；首页已挂提前 7 天条幅提醒。</li>
+    <li><span class="badge warn">依赖</span> 页面渲染现在依赖 CDN 可用；CDN 故障时 CSS/JS 会加载失败（字体有兜底，CSS/JS 没有）。</li>
+    <li><strong>回滚</strong>：<code>python scripts/cdn_all_assets.py --revert</code>，或 <code>git checkout pre-cdn-2026-11-07</code>。</li>
+  </ul>
+
+  <h2>六、提交记录</h2>
+  <table>
+    <thead><tr><th>提交</th><th>内容</th></tr></thead>
+    <tbody>
+      <tr><td><code>pre-cdn-2026-11-07</code></td><td>tag：CDN 迁移前的最后状态</td></tr>
+      <tr><td><code>6c581c455</code></td><td>封面（431 张 / 15.3 MB）迁 CDN，本地保留</td></tr>
+      <tr><td><code>1d10e1aec</code></td><td>字体（4 个 / 6.6 MB）迁 CDN，双源兜底</td></tr>
+      <tr><td><code>f6ed16791</code></td><td>全部静态资源走 CDN：1661 页 / 6699 处</td></tr>
+      <tr><td><code>0b3f88a6c</code></td><td>修复 visit-stats 的 <code>base+</code> 拼接 bug</td></tr>
+      <tr><td><code>5dcc2a186</code></td><td>A2A 通告：全部静态资源走 CDN</td></tr>
+    </tbody>
+  </table>
+
+</div>
+</body>
+</html>
