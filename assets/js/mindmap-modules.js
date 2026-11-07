@@ -102,7 +102,7 @@ window.SITE_MODULES = window.MINDMAP_MODULES;
   function boot(){
     var base=location.pathname.replace(/\/reading-notes\/.*$/,'/');
     var s=document.createElement('script');
-    s.src=base+'https://cdn.js-dev.cn/assets/js/visit-stats.js?v=20261105a';
+    s.src='https://cdn.js-dev.cn/assets/js/visit-stats.js?v=20261105a';
     s.defer=true;
     (document.body||document.documentElement).appendChild(s);
   }
