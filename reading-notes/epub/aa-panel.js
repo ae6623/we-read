@@ -46,7 +46,9 @@
   ];
   var TTS_BASE = 'https://a32eb29ccf0373711.app.workbuddy.host/tts?sharecode=N3AWQXFAIQ';
   var FONT_JSON = new URL('../../assets/fonts/fonts.json', location.href).href;
-  var FONT_DIR = new URL('../../assets/fonts/', location.href).href;
+  /* 字体优先 CDN，本地同路径作为兜底（见 reader.js 同名字段）。 */
+  var FONT_DIR = 'https://cdn.js-dev.cn/assets/fonts/';
+  var FONT_FALLBACK = new URL('../../assets/fonts/', location.href).href;
 
   var cfg = loadCfg(), H = {};
   var panel, fab, bar, speakFab, box, fonts = [], activeChip = 'auto';
@@ -340,6 +342,7 @@
   function fontFaceRule() {
     if (!cfg.font || cfg.font.indexOf('sys:') === 0) return '';
     return '@font-face{font-family:"RD-UserFont";src:url("' + FONT_DIR + encodeURIComponent(cfg.font) +
+      '") format("woff2"),url("' + FONT_FALLBACK + encodeURIComponent(cfg.font) +
       '") format("woff2");font-display:swap;font-weight:100 900;font-style:normal;}';
   }
   function hint(msg, warn) {

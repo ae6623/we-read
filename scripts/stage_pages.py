@@ -32,7 +32,10 @@ EXCLUDE_DIRS = {
     "daily-output", "docs", "需求", "_site", ".bench",
 }
 
-# 站点上从未被引用的重文件
+# 站点上从未被引用的重文件。
+# 注意：woff2 不在这里——字体优先走 CDN（cdn.js-dev.cn），
+# 但 @font-face 的第二个 src 指向本地 assets/fonts/，作为 CDN 不可用时的兜底，
+# 所以 6.6MB 的 woff2 仍然需要发布。
 EXCLUDE_SUFFIXES = {".ttf", ".pdf", ".bak"}
 
 # 生成用源数据，运行时零引用（grep 全站 JS/HTML 确认）

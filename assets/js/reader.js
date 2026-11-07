@@ -1938,7 +1938,11 @@
   function initFonts() {
     var panel = q('#rdPanel');
     if (!panel) return;
-    var FONT_DIR = '../../../assets/fonts/';
+    /* 字体走 CDN（cdn.js-dev.cn），本地 assets/fonts/ 作为兜底：
+       两者同路径，@font-face 里写成 src 列表，CDN 不可用时浏览器自动回落到本地。
+       跨域加载字体需要 CORS，七牛已配 Access-Control-Allow-Origin: *。 */
+    var FONT_DIR = 'https://cdn.js-dev.cn/assets/fonts/';
+    var FONT_FALLBACK = '../../../assets/fonts/';
     var API = 'https://api.github.com/repos/ae6623/we-read/contents/assets/fonts';
     var CFG = 'rd-font-cfg', CACHE = 'rd-font-list', FACE_ID = 'rdFontFace';
     var FAM = 'RD-UserFont';
@@ -1996,7 +2000,7 @@
       var ext = (f.file.split('.').pop() || '').toLowerCase();
       var ftype = ext === 'woff2' ? 'woff2' : ext === 'woff' ? 'woff'
                 : ext === 'otf' ? 'opentype' : 'truetype';
-      st.textContent = '@font-face{font-family:"' + FAM + '";src:url("' + FONT_DIR + f.file +
+      st.textContent = '@font-face{font-family:"' + FAM + '";src:url("' + FONT_DIR + f.file + '") format("woff2"),url("' + FONT_FALLBACK + f.file +
         '") format("' + ftype + '");font-display:swap;font-weight:100 900;font-style:normal;}';
       d.style.setProperty('--serif', '"' + FAM + '", ' + o.serif);
       d.style.setProperty('--sans', '"' + FAM + '", ' + o.sans);
@@ -2065,8 +2069,9 @@
     var fab = q('#rdFab');
     if (fab) fab.addEventListener('click', function () { if (!panel.hidden) syncFromApi(); });
 
-    fetch(FONT_DIR + 'fonts.json', { credentials: 'same-origin' })
+    fetch(FONT_DIR + 'fonts.json')
       .then(function (r) { if (!r.ok) throw 0; return r.json(); })
+      .catch(function () { return fetch(FONT_FALLBACK + 'fonts.json', { credentials: 'same-origin' }).then(function (r) { if (!r.ok) throw 0; return r.json(); }); })
       .then(function (j) { var v = j && j.fonts; if (!v || !v.length) throw 0; return v; })
       .catch(function () {
         var c = cached();
