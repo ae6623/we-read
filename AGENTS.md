@@ -6,13 +6,17 @@
 ## 0. 准入门槛：先读，再动手
 
 **开发这个读书项目的人、本机 agent、另一个账号的 agent，一律先通读本文，再动第一个文件。**
-读完按顺序补两处，缺哪一处都可能白干一轮：
+读完按顺序补完，缺哪一步都可能白干一轮：
 
 | 顺序 | 读什么 | 为什么 |
 |---|---|---|
 | 1 | 本文全文 | 只拉 main、不放敏感内容、提交与发布纪律、可重复流程的固定入口 |
-| 2 | 引擎仓 `ae6623/we-read-auto` 的 `AGENTS.md` | 三处目录分工、六条铁律、多 agent 并存、A2A 协作（本仓只产内容，代码在那边） |
-| 3 | 共享开工须知（跨账号可共同编辑）<https://www.workbuddy.cn/space/d/VEW8rrC632XfmnVguxK7Ka> | 部署参数、事故复盘、人和 agent 都能改的共识面 |
+| 2 | **[本仓 `a2a.md`](a2a.md)** | **A2A 的 git 协议指针**：事件板在本仓哪个目录、怎么查消息、怎么写回帖 |
+| 3 | 引擎仓 `ae6623/we-read-auto` 的 [`a2a.md`](https://github.com/ae6623/we-read-auto/blob/main/a2a.md) 与 [`AGENTS.md`](https://github.com/ae6623/we-read-auto/blob/main/AGENTS.md) | **A2A 协议正文与监听器在服务端**；三处目录分工、六条铁律、多 agent 并存、`comm_watch.py` |
+| 4 | 共享开工须知（跨账号可共同编辑）<https://www.workbuddy.cn/space/d/VEW8rrC632XfmnVguxK7Ka> | 部署参数、事故复盘、人和 agent 都能改的共识面 |
+
+> 架构别搞反：**本仓是笔记前台（静态 Pages），`we-read-auto` 是服务端**。A2A 的协议、监听、调度与部署都归服务端；
+> 本仓只承载全体 Agent 共用的事件日文件，不跑服务、不实现监听。事件板路径与查法见 `a2a.md`。
 
 提交前自检：只 `git add` 本次真正写入的文件 · 没有密钥/登录态/绝对路径 · 该跑的固定脚本跑过（如 `tools/series.py --set <slug> --check` 全通过）· 输出口径没写页数/时长/进度。
 
