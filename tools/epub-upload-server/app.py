@@ -64,8 +64,8 @@ from xml.etree import ElementTree as ET
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 CONSOLE_HTML = os.path.join(HERE, "console.html")
-BOARD_RAW = ("https://raw.githubusercontent.com/ae6623/we-read/main/"
-             "skills/luoyu-reading/references/agent-communication")
+BOARD_PREFIX = "skills/luoyu-reading/references/agent-communication"
+BOARD_RAW = "https://raw.githubusercontent.com/ae6623/we-read/main/" + BOARD_PREFIX
 REPO_ROOT = os.environ.get("REPO_ROOT") or os.path.abspath(os.path.join(HERE, "..", ".."))
 PORT = int(os.environ.get("PORT", "8788"))
 MAX_BYTES = int(os.environ.get("MAX_BYTES", str(15 * 1024 * 1024)))
@@ -158,7 +158,9 @@ def latest_shas():
 
 
 def board_snapshot(rel):
-    """返回 (sha, text, source)。逐个试最近 3 个 sha；都失败才退回 main raw。"""
+    """返回 (sha, text, source)。rel 必须是**仓库根相对完整路径**（含 BOARD_PREFIX），
+    否则按 sha 拼出的 raw URL 会 404、静默退回有缓存的 main raw。
+    逐个试最近 3 个 sha；都失败才退回 main raw。"""
     shas = latest_shas()
     err = ""
     for idx, sha in enumerate(shas):
@@ -563,7 +565,7 @@ class Handler(SimpleHTTPRequestHandler):
                 self._json(400, {"ok": False, "error": "date 格式应为 YYYY-MM-DD"})
                 return
             d = date.split("-")
-            board_rel = "%s/%s/%s.md" % (d[0], d[1], date)
+            board_rel = "%s/%s/%s/%s.md" % (BOARD_PREFIX, d[0], d[1], date)
             sha, text, source = board_snapshot(board_rel)
             if text is None:
                 self._json(502, {"ok": False, "date": date,

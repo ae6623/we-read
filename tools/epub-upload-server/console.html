@@ -153,16 +153,25 @@ async function fetchBoard(date){
 }
 function parseEntries(text){
   var out=[],cur=null,lines=String(text||"").split(/\r?\n/);
-  var re=/^### \[(\d{4}-\d{2}-\d{2} \d{2}:\d{2})\] (.+?) \/ (.+?) → TO (.+)$/;
+  // 标题容错：时间串偶被写成「[日期 日期 时:分]」；→ TO 可有可无、空格与冒号可宽可严。
+  // 板内阅读场次记录没有 TO，不进对话看板；但云端回帖即使漏写 TO 也必须收，
+  // 否则「已收到」会在看板上凭空消失，链路是否打通就无从判定。
+  var re=/^### \[(?:.*?)(\d{4}-\d{2}-\d{2} \d{2}:\d{2})\] (.+?) \/ (.+?)(?:\s*→\s*TO\s*:?\s*(.+))?\s*$/;
+  function keep(e){
+    return e.hasTo||/workbuddy-cloud-luoyu|cloud-luoyu/i.test(e.who)||
+      /^(?:A2A-)?(?:ACK|DONE|PROGRESS|PONG|FAILURE)[-_]/i.test(e.id);
+  }
+  function close(){if(cur){if(keep(cur))out.push(cur);cur=null;}}
   for(var i=0;i<lines.length;i++){
     var m=re.exec(lines[i]);
-    if(m){if(cur)out.push(cur);cur={time:m[1],who:m[2],id:m[3],to:m[4],body:[]};}
+    if(m){close();cur={time:m[1],who:m[2],id:m[3].trim(),
+      to:(m[4]||"（未标注 TO）").trim(),hasTo:!!m[4],body:[]};}
     else if(cur){
-      if(/^#{1,2} /.test(lines[i])){out.push(cur);cur=null;}
+      if(/^#{1,2} /.test(lines[i]))close();
       else cur.body.push(lines[i]);
     }
   }
-  if(cur)out.push(cur);
+  close();
   out.forEach(function(e){e.body=e.body.join("\n").trim();});
   out.sort(function(a,b){return a.time<b.time?-1:(a.time>b.time?1:0);});
   return out;
@@ -179,6 +188,8 @@ function entryType(e){
   if(/^A2A-PING/.test(id))return "PING";
   if(/^A2A-PROTOCOL-/.test(id))return "PROTOCOL";
   if(/^A2A-REQUEST/.test(id))return "REQUEST";
+  if(/^A2A-DEPLOY|^DEPLOY[-_]/.test(id))return "DEPLOY";
+  if(/^A2A-STATE|^STATE[-_]/.test(id))return "STATE_CHANGE";
   if(/收尾|结束|failed/i.test(id))return "SESSION_CLOSE";
   return "UNCLASSIFIED";
 }
