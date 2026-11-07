@@ -108,3 +108,16 @@ python tools/epub-upload-server/app.py
 ## 七、不改动
 
 `epubs.json` 的 203 本云端清单与 `books/*.epub`、Aa 面板内部功能项（字体/字号/行距/主题/双栏/方向/区域点击/方向键/听书）、侧栏点击遮罩收起逻辑、用户亲读 `resume_point` / `completion` / 完读计数、其他 Agent 的 roster 与活动锁、三处白名单规则文本。
+
+## 八、迭代（2026-11-07 11:35）：在线沙箱上传 API + Aa 微调
+
+用户反馈四项，已落地：
+
+1. Aa 面板「按键」分组（↑↓←→ 四个可改下拉）隐藏；默认值与 `onKey` 逻辑保留，方向键行为不变。「硬件按键」分组保留。
+2. 面板打开时点阅读区（尤其左侧露出的正文）先收起 Aa 面板，本次不翻页；iframe 内点击不冒泡到父文档，故在 `handleTap` 里处理，长按在面板打开时也不触发。
+3. 音量键翻页补齐事件源：`keydown`/`keyup`、`e.key`/`e.code`、`keyCode 24/25/174/175`、阅读器壳自定义 `volumeup`/`volumedown`、MediaSession 蓝牙媒体键；220ms 去重节流，避免 keydown + keyup 双翻。普通 Chrome / 微信浏览器默认不把硬件音量键交给网页，需在浏览器设置里开启「音量键翻页」或换支持该能力的阅读器 App。
+4. 上传服务改双模式：本机仓库模式（原逻辑不变）+ 在线沙箱模式（`data/uploads/`、`data/queue.json`、`data/events/`、`/api/sync`、可选 `PIPELINE_WEBHOOK` 异步回调）。前端从 `reading-notes/epub/upload-api.json` 读线上 base，上传清单优先 `/api/uploads`，其中 `file` 为跨域可读的绝对 URL；`sync_to_git.py` 把沙箱数据同步回仓库，完成「保存进 git」。
+
+部署边界：本机 Agent **不直接部署**云端应用，改由 A2A 板把「更新代码 → 检查在跑的任务并保存暂停 → 部署应用 → 回帖 base URL → 恢复中断任务」发给 `workbuddy-cloud-luoyu`。沙箱磁盘不保证跨重新部署持久，长期保存靠 `sync_to_git.py` 同步回仓库。
+
+验证：服务端隔离环境双模式 **49/49** 通过；Aa 行为无头浏览器 **15/15** 通过。

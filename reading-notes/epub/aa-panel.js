@@ -5,7 +5,7 @@
  * 沿用详情页同款：#rdPanel / .rd-speak-box / #rdSpeakBar（Aa 入口改由宿主顶栏 #aaBtn 提供，不再创建悬浮 #rdFab），
  * 同款云端 edge-tts 晓晓、音色/语速/音调/音量、按需加载字体。
  * 新增图二「控制选项」：屏幕方向、摇动手机、上下/左右区域点击、长按、
- * 方向键与硬件按键、双栏阅读。
+ * 硬件音量键（方向键保持默认、不提供设置项）、双栏阅读。
  *
  * 用法：EpubAA.init(hooks); EpubAA.bindFrame(rendition);
  * hooks: onCfg(cfg), page(dir), chapter(dir), back(), pageText(), highlight(el),
@@ -144,17 +144,14 @@
       selRow('长按屏幕', 'longPress', TAP_ACTIONS) +
       '<p class="rd-note">上下模式按屏幕纵向分上/中/下三区；左右模式按横向分左/中/右三区。链接与选中文字不触发翻页。</p>' +
 
-      '<div class="rd-sec">按键</div>' +
-      selRow('↑ 上方向键', 'keyUp', ACTIONS) +
-      selRow('↓ 下方向键', 'keyDown', ACTIONS) +
-      selRow('← 左方向键', 'keyLeft', ACTIONS) +
-      selRow('→ 右方向键', 'keyRight', ACTIONS) +
+      /* 方向键保持默认（↑← 向上翻页、↓→ 向下翻页），不再提供可改的设置项。
+         cfg.keyUp/keyDown/keyLeft/keyRight 与 onKey 逻辑保留，行为不变。 */
       '<div class="rd-sec">硬件按键</div>' +
       selRow('音量加大键', 'volumeUp', ACTIONS) +
       selRow('音量减小键', 'volumeDown', ACTIONS) +
       selRow('返回键 / Esc', 'keyBack', ACTIONS) +
       selRow('菜单键', 'keyMenu', ACTIONS) +
-      '<p class="rd-note">PageUp / PageDown / 空格固定为上/下翻页；音量键需浏览器把按键事件交给网页。</p>' +
+      '<p class="rd-note">已兼容 keydown/keyup、Android keyCode 24/25、桌面媒体键 175/174、阅读器壳自定义 volumeup 事件与蓝牙翻页键。PageUp / PageDown / 空格固定为上/下翻页。普通 Chrome、微信浏览器默认不把硬件音量键交给网页，需在其设置里开启「音量键翻页」。</p>' +
 
       '<div class="rd-speak-box">' +
         '<div class="rd-sp-hd">🎧 听书 <span id="rdSpState">默认 · 晓晓（云端）</span></div>' +
@@ -266,6 +263,12 @@
     panel.hidden = force === true ? false : !panel.hidden;
     if (fab) fab.classList.toggle('on', !panel.hidden);
     if (!panel.hidden) { fillVoices(); loadFonts(); refresh(); }
+  }
+  function closePanel() {
+    if (!panel || panel.hidden) return false;
+    panel.hidden = true;
+    if (fab) fab.classList.remove('on');
+    return true;
   }
   function updateLabels() {
     var set = function (id, v) { var el = q(id, panel); if (el) el.textContent = v; };
@@ -415,7 +418,7 @@
       case 'copy': copyAt(e); break;
       case 'back': if (H.back) H.back(); break;
       case 'search':
-        if (panel) { panel.hidden = true; if (fab) fab.classList.remove('on'); }
+        closePanel();
         if (H.openSearch) H.openSearch();
         break;
     }
@@ -459,6 +462,10 @@
     return 'center';
   }
   function handleTap(e) {
+    /* Aa 面板打开时，点阅读区（尤其左侧露出的正文）先收起面板，本次不翻页。
+       epub.js 的正文在 iframe 里，点击不会冒泡到父 document 的 click 监听，
+       所以必须在 rendition 转发的 click 回调里处理，否则面板会一直挡着。 */
+    if (panel && !panel.hidden) { closePanel(); return; }
     if (Date.now() < suppressClickUntil) return;
     if (e && e.defaultPrevented) return;
     var t = e.target;
@@ -472,6 +479,7 @@
   }
   function cancelPress() { if (pressTimer) clearTimeout(pressTimer); pressTimer = null; press = null; }
   function startPress(e) {
+    if (panel && !panel.hidden) return;   // 面板打开时不触发长按动作
     if (cfg.longPress === 'none') return;
     cancelPress();
     var p = pt(e); press = { x: p.x, y: p.y };
@@ -487,14 +495,64 @@
     var p = pt(e);
     if (Math.abs(p.x - press.x) > 12 || Math.abs(p.y - press.y) > 12) cancelPress();
   }
+  /* ── 硬件音量键 ────────────────────────────────────────────
+     不同浏览器 / 阅读器壳派发方式差别很大，必须多路兼容：
+       · keydown / keyup，e.key = AudioVolumeUp / VolumeUp / Volume_Up / Unidentified
+       · e.code = AudioVolumeUp / VolumeDown
+       · Android WebView keyCode 24 / 25，桌面 Chrome 媒体键 175 / 174
+       · 壳注入的自定义事件 volumeup / volumedown / volume_up / volume_down
+       · 蓝牙翻页器 / 线控的 MediaSession previoustrack / nexttrack
+     注意：普通 Chrome、微信内置浏览器默认不把硬件音量键派发给网页，
+     这类环境需要在浏览器设置里开启「音量键翻页」或换支持该能力的阅读器 App。 */
+  var lastVolAt = 0;
+  function volumeDir(e) {
+    if (!e) return '';
+    var vals = [e.key, e.code, e.type, e.detail && e.detail.action];
+    for (var i = 0; i < vals.length; i++) {
+      var v = String(vals[i] == null ? '' : vals[i]).toLowerCase().replace(/[\s_\-]/g, '');
+      if (v === 'audiovolumeup' || v === 'volumeup') return 'up';
+      if (v === 'audiovolumedown' || v === 'volumedown') return 'down';
+    }
+    var kc = e.keyCode || e.which || 0;
+    if (kc === 24 || kc === 175) return 'up';
+    if (kc === 25 || kc === 174) return 'down';
+    return '';
+  }
+  function onVolume(e) {
+    var dir = volumeDir(e);
+    if (!dir) return false;
+    var t = Date.now();
+    // 同一次按键会来 keydown + keyup（window/document 也可能各收一次），只翻一页
+    if (t - lastVolAt < 220) { if (e.preventDefault) e.preventDefault(); return true; }
+    lastVolAt = t;
+    act(dir === 'up' ? cfg.volumeUp : cfg.volumeDown, e);
+    if (e.preventDefault) e.preventDefault();
+    return true;
+  }
+  function onVolumeEvent(e) {
+    var t = e.target, tag = t && t.tagName ? t.tagName.toUpperCase() : '';
+    if (/INPUT|TEXTAREA|SELECT/.test(tag) || (t && t.isContentEditable)) return;
+    onVolume(e);
+  }
+  function bindMediaKeys() {
+    try {
+      if (!navigator.mediaSession || !navigator.mediaSession.setActionHandler) return;
+      var ms = navigator.mediaSession;
+      ms.setActionHandler('previoustrack', function () { act(cfg.volumeUp); });
+      ms.setActionHandler('nexttrack', function () { act(cfg.volumeDown); });
+      ms.setActionHandler('seekbackward', function () { act(cfg.volumeUp); });
+      ms.setActionHandler('seekforward', function () { act(cfg.volumeDown); });
+    } catch (e) {}
+  }
   function onKey(e) {
     var t = e.target, tag = t && t.tagName ? t.tagName.toUpperCase() : '';
     if (/INPUT|TEXTAREA|SELECT/.test(tag) || (t && t.isContentEditable)) return;
+    if (onVolume(e)) return;                 // 音量键优先：e.key 常常只是 Unidentified
     var k = e.key;
     if (k === '/') { if (H.focusSearch) { H.focusSearch(); e.preventDefault(); } return; }
     if (k === 'Escape') {
       if (H.escape && H.escape()) { e.preventDefault(); return; }
-      if (panel && !panel.hidden) { panel.hidden = true; if (fab) fab.classList.remove('on'); e.preventDefault(); return; }
+      if (closePanel()) { e.preventDefault(); return; }
       act(cfg.keyBack, e); e.preventDefault(); return;
     }
     var name = null;
@@ -504,8 +562,6 @@
     else if (k === 'ArrowRight') name = cfg.keyRight;
     else if (k === 'PageUp') name = 'prev';
     else if (k === 'PageDown' || k === ' ' || k === 'Spacebar') name = 'next';
-    else if (k === 'AudioVolumeUp' || k === 'VolumeUp') name = cfg.volumeUp;
-    else if (k === 'AudioVolumeDown' || k === 'VolumeDown') name = cfg.volumeDown;
     else if (k === 'Menu' || k === 'ContextMenu') name = cfg.keyMenu;
     if (name && name !== 'none') { act(name, e); e.preventDefault(); }
   }
@@ -516,7 +572,14 @@
        一个非 passive 的 keydown，按键才拦得住。 */
     if (rend.hooks && rend.hooks.content && rend.hooks.content.register) {
       rend.hooks.content.register(function (contents) {
-        try { contents.document.addEventListener('keydown', onKey, false); } catch (e) {}
+        try {
+          var d = contents.document;
+          d.addEventListener('keydown', onKey, false);
+          d.addEventListener('keyup', onVolumeEvent, false);
+          ['volumeup', 'volumedown', 'volume_up', 'volume_down'].forEach(function (type) {
+            d.addEventListener(type, onVolumeEvent, false);
+          });
+        } catch (e) {}
       });
     }
     if (!rend.on) return;
@@ -762,11 +825,18 @@
     cfg.volume = num(cfg.volume, 0, 1, 1);
     buildFab(); buildPanel(); buildBar();
     document.addEventListener('keydown', onKey);
+    document.addEventListener('keyup', onVolumeEvent);
+    window.addEventListener('keyup', onVolumeEvent);
+    ['volumeup', 'volumedown', 'volume_up', 'volume_down'].forEach(function (type) {
+      window.addEventListener(type, onVolumeEvent);
+      document.addEventListener(type, onVolumeEvent);
+    });
+    bindMediaKeys();
     document.addEventListener('click', function (e) {
       if (!panel || panel.hidden) return;
       if (panel.contains(e.target) || e.target === fab || e.target === speakFab ||
           (bar && bar.contains(e.target))) return;
-      panel.hidden = true; if (fab) fab.classList.remove('on');
+      closePanel();
     });
     window.addEventListener('resize', syncRotate);
     window.addEventListener('orientationchange', function () {
@@ -795,7 +865,7 @@
     cycleTheme: cycleTheme,
     toggleFlow: toggleFlow,
     togglePanel: togglePanel,
-    closePanel: function () { if (panel) { panel.hidden = true; if (fab) fab.classList.remove('on'); } },
+    closePanel: closePanel,
     theme: setTheme,
     pageText: function () { return H.pageText ? H.pageText() : []; },
     notify: notify,
