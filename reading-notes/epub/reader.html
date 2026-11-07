@@ -582,7 +582,20 @@ html[data-theme="dark"] #warn{background:#3a2f1c;color:#e0c58e;border-color:#5c4
       $("bookTitle").textContent=meta.title;
       document.title=meta.title+" · 原书阅读器";
       // 上传书：API 清单里的 file 已是绝对 URL；仓库清单回退时拼服务的 /uploads/ 路由
+      // EPUB 大文件托管在独立 Pages 仓库（同为 ae6623.github.io，同源无需 CORS）。
+      // 本地联调可用 ?assets=http://127.0.0.1:8771/ 覆盖。
+      var ASSET_BASE = (function () {
+        try {
+          var q = new URLSearchParams(location.search).get("assets");
+          if (q) return q.replace(/\/?$/, "/");
+        } catch (e) {}
+        return /(^|\.)ae6623\.github\.io$/.test(location.hostname)
+          ? "https://ae6623.github.io/we-read-assets/reading-notes/epub/"
+          : "";
+      })();
       var fileUrl = meta.file;
+      if(ASSET_BASE && !/^https?:|^\/\//i.test(fileUrl||""))
+        fileUrl = ASSET_BASE + String(fileUrl||"").replace(/^\/+/, "");
       if(bookSrc==="upload" && apiBase && apiBase!==location.origin && !/^https?:/i.test(fileUrl||""))
         fileUrl = apiBase + "/uploads/" + String(fileUrl||"").split("/").pop();
       $("dl").href=fileUrl; $("dl").setAttribute("download",meta.title+".epub");
