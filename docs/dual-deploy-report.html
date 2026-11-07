@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>we-read 双入口部署报告 · CDN vs GitHub Pages</title>
+<style>
+  :root {
+    --ink:#0d1526; --ink2:#5b6b84; --line:#e3ebf7; --bg:#f6f9ff; --card:#fff;
+    --gh:#8b93a5; --cdn:#2f6bff; --ok:#12b886; --warn:#f5a524;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;padding:32px 20px 60px;background:var(--bg);color:var(--ink);
+    font:14px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    -webkit-font-smoothing:antialiased}
+  .wrap{max-width:1040px;margin:0 auto}
+  h1{margin:0 0 6px;font-size:30px;letter-spacing:-.03em}
+  .sub{margin:0 0 26px;color:var(--ink2);font-size:13px}
+  h2{margin:34px 0 14px;font-size:17px}
+  .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;
+    box-shadow:0 18px 40px -34px rgba(13,42,92,.5)}
+  .kpi b{display:block;font-size:25px;font-weight:700;letter-spacing:-.03em;margin:6px 0 2px}
+  .kpi span{color:var(--ink2);font-size:12px}
+  .kpi.blue b{color:var(--cdn)} .kpi.green b{color:var(--ok)}
+  table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);
+    border-radius:12px;overflow:hidden;font-size:13px}
+  th,td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--line)}
+  th{background:#f2f7ff;color:var(--ink2);font-weight:600;font-size:12px}
+  tr:last-child td{border-bottom:0}
+  td.num{text-align:right;font-variant-numeric:tabular-nums}
+  .badge{display:inline-block;padding:1px 8px;border-radius:999px;font-size:11px;font-weight:600}
+  .badge.ok{background:#e6f9f2;color:#0b8a63}
+  .badge.warn{background:#fff4d6;color:#9a6b00}
+  .bar{height:10px;border-radius:999px;background:var(--gh)}
+  .bar.cdn{background:var(--cdn)}
+  code{background:#eef3fb;padding:1px 6px;border-radius:5px;font-size:12px}
+  ul{margin:10px 0 0;padding-left:20px} li{margin:5px 0}
+  .note{color:var(--ink2);font-size:12.5px;margin:10px 0 0}
+  .url{font-family:ui-monospace,Consolas,monospace;font-size:13px}
+  @media(max-width:760px){.cards{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body><div class="wrap">
+
+<h1>we-read 双入口部署报告</h1>
+<p class="sub">2026-11-07 · 同一份产物、同一个仓库，两个 URL 并行 · 测量：本机无头浏览器加载线上页面</p>
+
+<div class="cards">
+  <div class="kpi green"><span>首页渲染提速</span><b>2.9×</b><span>11.4s → 3.9s</span></div>
+  <div class="kpi blue"><span>CDN 站点页面</span><b>2,345</b><span>全部上传并验证</span></div>
+  <div class="kpi"><span>抽检通过</span><b>85 / 85</b><span>首页 40 + 书目 45</span></div>
+  <div class="kpi"><span>发布产物</span><b>289 MB</b><span>674 → 289，-57%</span></div>
+</div>
+
+<h2>一、两个入口</h2>
+<table>
+  <thead><tr><th>入口</th><th>URL</th><th>角色</th></tr></thead>
+  <tbody>
+    <tr><td>七牛 CDN</td><td class="url">https://cdn.js-dev.cn/index.html</td><td>主用，国内访问快</td></tr>
+    <tr><td>GitHub Pages</td><td class="url">https://ae6623.github.io/we-read/</td><td>备用 / 回滚 / 源站</td></tr>
+  </tbody>
+</table>
+<p class="note">两者指向同一份 <code>_site/</code> 产物，渲染结果一致（都是 455 张卡片），页面里的静态资源都从 <code>cdn.js-dev.cn</code> 加载。</p>
+
+<h2>二、首页实测对比</h2>
+<table>
+  <thead><tr><th>指标</th><th class="num">GitHub Pages</th><th class="num">七牛 CDN</th><th class="num">差异</th></tr></thead>
+  <tbody>
+    <tr><td>页面渲染完成</td><td class="num">11,384 ms</td><td class="num">3,962 ms</td>
+        <td class="num"><span class="badge ok">-65%</span></td></tr>
+    <tr><td>渲染卡片数</td><td class="num">455</td><td class="num">455</td><td class="num">一致</td></tr>
+    <tr><td>DOM 体积</td><td class="num">732 KB</td><td class="num">732 KB</td><td class="num">一致</td></tr>
+    <tr><td>资源域名</td><td class="num">CDN + 1 个 GitHub</td><td class="num">CDN + 1 个 GitHub</td><td class="num">一致</td></tr>
+  </tbody>
+</table>
+
+<h2>三、单资源对比（同一文件两处取）</h2>
+<table>
+  <thead><tr><th>资源</th><th class="num">GitHub</th><th class="num">CDN</th><th class="num">提速</th><th class="num">大小</th></tr></thead>
+  <tbody>
+    <tr><td>CSS <code>site.css</code></td><td class="num">438 ms</td><td class="num">75 ms</td><td class="num"><span class="badge ok">-83%</span></td><td class="num">8 K</td></tr>
+    <tr><td>JS <code>homepage-reading.js</code></td><td class="num">531 ms</td><td class="num">87 ms</td><td class="num"><span class="badge ok">-84%</span></td><td class="num">24 K</td></tr>
+    <tr><td>数据 <code>book-cats.json</code></td><td class="num">547 ms</td><td class="num">106 ms</td><td class="num"><span class="badge ok">-81%</span></td><td class="num">47 K</td></tr>
+    <tr><td>封面 <code>long-cang.jpg</code></td><td class="num">557 ms</td><td class="num">91 ms</td><td class="num"><span class="badge ok">-84%</span></td><td class="num">41 K</td></tr>
+    <tr><td>字体 <code>yyb.woff2</code></td><td class="num">954 ms</td><td class="num">181 ms</td><td class="num"><span class="badge ok">-81%</span></td><td class="num">962 K</td></tr>
+    <tr><td>字体 <code>CE-W03.woff2</code></td><td class="num">1,398 ms</td><td class="num">174 ms</td><td class="num"><span class="badge ok">-88%</span></td><td class="num">1,921 K</td></tr>
+  </tbody>
+</table>
+
+<h2>四、EPUB 阅读器</h2>
+<table>
+  <thead><tr><th>项</th><th>结果</th></tr></thead>
+  <tbody>
+    <tr><td>阅读器页面</td><td>两套入口都有（<code>/reading-notes/epub/reader.html</code>）</td></tr>
+    <tr><td>电子书来源</td><td>固定 <code>https://ae6623.github.io/we-read-assets/reading-notes/epub/</code></td></tr>
+    <tr><td>跨域验证</td><td><span class="badge ok">通过</span> 从 <code>cdn.js-dev.cn</code> 取书：200 / 71,170 字节 / <code>application/epub+zip</code></td></tr>
+    <tr><td>结论</td><td>阅读器在哪套入口打开都能读书，书始终由 GitHub 承接，不占 CDN 流量</td></tr>
+  </tbody>
+</table>
+
+<h2>五、为双入口做的改造</h2>
+<table>
+  <thead><tr><th>改造</th><th>范围</th><th>原因</th></tr></thead>
+  <tbody>
+    <tr><td>目录链接 → 显式 <code>index.html</code></td><td>16 文件 / 39 处</td><td>七牛对象存储没有目录索引，<code>/a/b/</code> 会 404</td></tr>
+    <tr><td>站内绝对路径 → 相对路径</td><td>6 文件 / 6 处</td><td><code>/we-read/xxx</code> 在 CDN 根路径下不存在</td></tr>
+    <tr><td>静态资源 → CDN 绝对地址</td><td>1,661 文件 / 6,699 处</td><td>两套入口共用同一批资源</td></tr>
+    <tr><td>排除生成素材</td><td><code>data/mindmap</code> 319 个 · <code>data/mindmap-material</code> 421 个</td><td>运行时零引用，3.2 MB + 1.9 MB</td></tr>
+  </tbody>
+</table>
+
+<h2>六、发布流程（必须遵守）</h2>
+<ul>
+  <li><code>python scripts/stage_pages.py</code> 生成 <code>_site/</code>（289 MB / 3,787 文件）</li>
+  <li>把 <code>_site/</code> 全量传到七牛 <code>we-read-assets</code>，保持相对路径</li>
+  <li><strong>传完必须刷新 CDN 缓存</strong>：<code>CdnManager.refresh_dirs(['https://cdn.js-dev.cn/'])</code><br>
+      七牛默认缓存 30 天，不刷新会一直看到旧页面（这一轮就踩过）</li>
+</ul>
+
+<h2>七、风险</h2>
+<ul>
+  <li><span class="badge warn">缓存</span> 每次发布后要手动刷缓存，否则改动不生效。</li>
+  <li><span class="badge warn">计费</span> 七牛 HTTPS 流量不计入免费额度，按量计费。</li>
+  <li><span class="badge warn">证书</span> 免费证书 90 天，<strong>2027-02-05</strong> 到期；首页已挂提前 7 天条幅 + 定时任务提醒。</li>
+  <li><span class="badge warn">一致</span> 两套入口靠「相对路径 + CDN 资源」维持一致，新页面违反约束会导致其中一套 404。</li>
+</ul>
+
+<h2>八、回滚</h2>
+<ul>
+  <li>整站回到 CDN 之前：<code>git checkout pre-cdn-2026-11-07</code></li>
+  <li>仅撤销资源引用：<code>python scripts/cdn_all_assets.py --revert</code></li>
+  <li>CDN 完全不可用时：只用 <code>ae6623.github.io/we-read/</code>，页面仍可打开</li>
+</ul>
+
+</div></body></html>
