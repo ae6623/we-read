@@ -54,6 +54,7 @@ import re
 import subprocess
 import sys
 import tempfile
+import time
 import threading
 import urllib.parse
 import urllib.request
@@ -127,6 +128,57 @@ if SANDBOX and not os.path.exists(QUEUE):
     with open(QUEUE, "w", encoding="utf-8") as f:
         json.dump({"source": "sandbox-upload", "revision": 0, "books": []},
                   f, ensure_ascii=False, indent=2)
+
+
+_BOARD_CACHE = {"sha": None, "ts": 0.0}
+_BOARD_HEADERS = {"User-Agent": "we-read-a2a-console",
+                  "Cache-Control": "no-cache", "Pragma": "no-cache"}
+
+
+def _fetch_text(url, timeout=12, tries=2):
+    """带一次重试的只读抓取，返回 (text, error)；失败原因不吞掉，供看板显示。"""
+    last = None
+    for _ in range(tries):
+        try:
+            with urllib.request.urlopen(
+                    urllib.request.Request(url, headers=_BOARD_HEADERS),
+                    timeout=timeout) as r:
+                return r.read().decode("utf-8", "replace"), None
+        except Exception as exc:
+            last = repr(exc)
+            time.sleep(0.3)
+    return None, last
+
+
+def latest_sha():
+    """用 commits Atom feed 取最新 main sha（不走 REST API，不受 60 次/小时限流）。
+    按 commit sha 拼 raw URL，每次 URL 都不同，可绕开 main 路径的 CDN 缓存。"""
+    stamp = time.time()
+    if _BOARD_CACHE["sha"] and stamp - _BOARD_CACHE["ts"] < 60:
+        return _BOARD_CACHE["sha"]
+    feed, _err = _fetch_text("https://github.com/ae6623/we-read/commits/main.atom")
+    if feed:
+        m = re.search(r"/ae6623/we-read/commit/([0-9a-f]{40})", feed)
+        if m:
+            _BOARD_CACHE["sha"] = m.group(1)
+            _BOARD_CACHE["ts"] = stamp
+    return _BOARD_CACHE["sha"]
+
+
+def board_snapshot(rel):
+    """返回 (sha, text, source)。sha 源实时；失败退回 main raw 并在 source 里注明原因。"""
+    sha = latest_sha()
+    err = ""
+    if sha:
+        text, err = _fetch_text(
+            "https://raw.githubusercontent.com/ae6623/we-read/%s/%s" % (sha, rel))
+        if text is not None:
+            return sha, text, "commit-sha raw（实时）"
+    text, err2 = _fetch_text("%s/%s?t=%d" % (BOARD_RAW, rel, int(time.time())))
+    if text is not None:
+        note = ("（实时源失败：%s）" % (err or err2 or "")[:100]) if (err or err2) else ""
+        return sha, text, "main raw（可能有 CDN 缓存）" + note
+    return sha, None, "unavailable"
 
 
 def now():
@@ -515,19 +567,14 @@ class Handler(SimpleHTTPRequestHandler):
                 self._json(400, {"ok": False, "error": "date 格式应为 YYYY-MM-DD"})
                 return
             d = date.split("-")
-            url = "%s/%s/%s/%s.md?t=%d" % (BOARD_RAW, d[0], d[1], date,
-                                           int(now().timestamp()))
-            try:
-                req = urllib.request.Request(
-                    url, headers={"User-Agent": "we-read-a2a-console",
-                                  "Cache-Control": "no-cache"})
-                with urllib.request.urlopen(req, timeout=8) as r:
-                    text = r.read().decode("utf-8", "replace")
-                self._json(200, {"ok": True, "date": date, "text": text,
-                                 "source": "github-raw"})
-            except Exception as exc:
+            board_rel = "%s/%s/%s.md" % (d[0], d[1], date)
+            sha, text, source = board_snapshot(board_rel)
+            if text is None:
                 self._json(502, {"ok": False, "date": date,
-                                 "error": "事件板拉取失败：%s" % exc})
+                                 "error": "事件板拉取失败（sha 源与 main raw 均不可用）"})
+            else:
+                self._json(200, {"ok": True, "date": date, "text": text,
+                                 "sha": sha, "source": source})
             return
         if path == "/api/health":
             q = read_json(QUEUE if SANDBOX else REGISTRY, {})

@@ -3,20 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>A2A 应用控制台</title>
+<title>A2A 应用控制台 · 对话看板</title>
 <style>
 :root{--bg:#f7f8fa;--card:#fff;--fg:#1b1f24;--mut:#6a7480;--line:#e3e7ec;
---ok:#0a7f4f;--wait:#b26a00;--warn:#1a5fb4;--chip:#eef1f5}
+--ok:#0a7f4f;--wait:#b26a00;--warn:#1a5fb4;--red:#c0392b;--chip:#eef1f5}
 @media (prefers-color-scheme:dark){:root{--bg:#161a1f;--card:#20262e;--fg:#e8edf3;
---mut:#9aa6b3;--line:#333c47;--ok:#4ade80;--wait:#fbbf24;--warn:#7cc0ff;--chip:#2a323c}}
+--mut:#9aa6b3;--line:#333c47;--ok:#4ade80;--wait:#fbbf24;--warn:#7cc0ff;--red:#ff7b72;--chip:#2a323c}}
 *{box-sizing:border-box}body{margin:0;padding:28px;background:var(--bg);color:var(--fg);
 font:14px/1.65 -apple-system,"Segoe UI","Microsoft YaHei",sans-serif}
-.wrap{max-width:900px;margin:0 auto}h1{font-size:20px;margin:0 0 4px}
+.wrap{max-width:940px;margin:0 auto}h1{font-size:20px;margin:0 0 4px}
 .sub{color:var(--mut);font-size:12px;margin-bottom:20px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:12px;
 padding:18px 20px;margin-bottom:14px}
 .verdict{font-size:17px;font-weight:600;margin:0 0 8px}
-.ok{color:var(--ok)}.wait{color:var(--wait)}.warn{color:var(--warn)}
+.ok{color:var(--ok)}.wait{color:var(--wait)}.warn{color:var(--warn)}.red{color:var(--red)}
 .kv{display:grid;grid-template-columns:160px 1fr;gap:6px 12px;font-size:13px}
 .kv span:nth-child(odd){color:var(--mut)}
 code{background:var(--chip);padding:1px 6px;border-radius:5px;font-size:12px}
@@ -35,91 +35,129 @@ background:var(--chip);color:var(--mut)}
 .entry summary::-webkit-details-marker{display:none}
 .entry .excerpt{color:var(--mut);font-size:12px;margin:4px 0 0;display:block}
 .entry pre{margin:8px 0 0;max-height:340px}
-.k-todo{color:var(--warn)}.k-reply{color:var(--ok)}
+.k-todo{color:var(--warn)}.k-reply{color:var(--ok)}.k-other{color:var(--mut)}
 .empty{color:var(--mut);font-size:13px}
 .foot{color:var(--mut);font-size:12px;margin-top:18px}
+/* 对话卡片 */
+.conv{border:1px solid var(--line);border-left:4px solid var(--line);border-radius:10px;
+padding:14px 16px;margin:12px 0;background:var(--card)}
+.conv.s-red{border-left-color:var(--red)}.conv.s-amber{border-left-color:var(--wait)}
+.conv.s-green{border-left-color:var(--ok)}.conv.s-normal{border-left-color:var(--warn)}
+.conv-head{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:8px}
+.badge{font-size:11px;border-radius:5px;padding:2px 8px;background:var(--chip);color:var(--mut)}
+.b-red{background:rgba(192,57,43,.12);color:var(--red);font-weight:600}
+.b-amber{background:rgba(178,106,0,.12);color:var(--wait);font-weight:600}
+.b-green{background:rgba(10,127,79,.12);color:var(--ok);font-weight:600}
+.conv .line{font-size:13px;margin:3px 0}
+.conv .line b{color:var(--mut);font-weight:600;display:inline-block;min-width:74px}
+.timer{font-size:22px;font-weight:700;margin:10px 0 4px}
+.timer small{font-size:12px;font-weight:400;color:var(--mut)}
+.followup{margin-top:10px;padding:10px 12px;border-radius:8px;background:var(--chip);
+font-size:13px;display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+button{cursor:pointer;border:1px solid var(--line);border-radius:7px;padding:5px 12px;
+font-size:12px;background:var(--card);color:var(--fg)}
+button:hover{border-color:var(--warn)}
+.conv details{margin-top:8px;font-size:12px;color:var(--mut)}
+.conv details pre{margin-top:6px;max-height:300px}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <h1>A2A 应用控制台</h1>
-  <div class="sub">云端应用视角 · 每 30 秒自动刷新 · 最后刷新 <span id="stamp">—</span></div>
+  <h1>A2A 对话看板</h1>
+  <div class="sub">唯一看板 · 每 30 秒自动刷新 · 最后刷新 <span id="stamp">—</span></div>
 
   <div class="card">
     <p class="verdict wait" id="verdict">正在读取事件板…</p>
     <div class="kv">
+      <span>在册任务 / 已收条 / 已完工</span><span id="summary">—</span>
+      <span>最久等待</span><span id="longest">—</span>
+      <span>最近一条「已收到」</span><span id="lastAck">—</span>
+      <span>板子最新条目</span><span id="boardLatest">—</span>
       <span>事件板数据源</span><span id="source">—</span>
-      <span>应用模式 / 健康</span><span id="appMode">—</span>
-      <span>服务地址</span><span id="appBase">—</span>
-      <span>队列 / 上传书目</span><span id="appCounts">—</span>
-      <span>云端最后回帖</span><span id="lastReply">—</span>
+      <span>应用状态</span><span id="appState">—</span>
     </div>
   </div>
 
-  <div class="card"><h2>未 ACK 清单</h2><ul id="pending"></ul></div>
+  <div class="card">
+    <h2>进行中的对话 · 谁对谁说要干什么 / 谁回了收到 / 等多久了</h2>
+    <div id="convList"></div>
+  </div>
 
   <div class="card">
-    <h2>A2A 最新 20 条 · 要干什么 / 回复了什么 <span class="count" id="entryCount">—</span></h2>
-    <div class="group">要干什么（指令 / REQUEST / PING / PROTOCOL）</div>
+    <h2>最新 20 条 · 按 TYPE 枚举分组 <span class="count" id="entryCount">—</span></h2>
+    <div class="group">要干什么（USER_INSTRUCTION / REQUEST / PING / PROTOCOL / FOLLOWUP）</div>
     <div id="todoList"></div>
-    <div class="group">回复了什么（ACK / DONE / 云端回帖）</div>
+    <div class="group">回复了什么（ACK_RECEIPT / PROGRESS / DONE / PONG / FAILURE）</div>
     <div id="replyList"></div>
+    <div class="group">其他事件（DEPLOY / SESSION_* / STATE_CHANGE / 未分类）</div>
+    <div id="otherList"></div>
     <div class="count" style="margin-top:10px">点开任一条可看正文全文（含待办步骤、做了什么、还有什么诉求）。</div>
   </div>
 
   <div class="foot">
-    判据：事件板中是否出现来自 workbuddy-cloud-luoyu 的 ACK / DONE 块。Git 记录不等于消息已送达。
-    页面只读：不改仓库、不写队列、不启动任务、不代表笔记已生成或用户亲读 / 完读。
+    类型取自条目正文的 <code>- TYPE: &lt;枚举&gt;</code>；旧条目按 id 前缀回退推断。有新事件类型时在 TYPES 表加一行，未登记会显示「未分类（请补枚举）」。
+    计时按 Asia/Shanghai：无收条从发出算，已收条未完工从收条算；超 10/30 分钟提示催办，超 30/60 分钟标红。
+    Git 记录不等于消息已送达。页面只读：不改仓库、不写队列、不启动任务、不代表笔记已生成或亲读 / 完读。
   </div>
 </div>
 
 <script>
 "use strict";
 var RAW = "https://raw.githubusercontent.com/ae6623/we-read/main/skills/luoyu-reading/references/agent-communication";
-var PENDING = [
-  "A2A-REQUEST-20261107-1138-epub-upload-deploy",
-  "A2A-REQUEST-20261107-1218-cloud-http-listener",
-  "A2A-REQUEST-20261107-1221-keepalive-http-listener",
-  "A2A-PING-20261107-1239-link-probe",
-  "A2A-REQUEST-20261107-1258-console-deploy"
-];
+
+// 条目类型枚举。有新事件就在这里加一行（label / group / needAck / tracked），
+// 不再写「不是阅读场次、不是新任务、不进未 ACK 清单、不代表亲读或完读」这类否定句。
+var TYPES = {
+  USER_INSTRUCTION:{label:"用户指令",      group:"todo",  needAck:true,  tracked:true},
+  REQUEST:         {label:"任务请求",      group:"todo",  needAck:true,  tracked:true},
+  PING:            {label:"链路探测",      group:"todo",  needAck:true,  tracked:false},
+  PROTOCOL:        {label:"协议变更",      group:"todo",  needAck:true,  tracked:false},
+  PROTOCOL_NOTE:   {label:"协议补充",      group:"todo",  needAck:false, tracked:false},
+  FOLLOWUP:        {label:"还在搞吗·催办", group:"todo",  needAck:true,  tracked:false},
+  DEPLOY:          {label:"部署通知",      group:"other", needAck:false, tracked:false},
+  ACK_RECEIPT:     {label:"已收到·收条",   group:"reply", needAck:false, tracked:false},
+  PROGRESS:        {label:"进行中·进度",   group:"reply", needAck:false, tracked:false},
+  DONE:            {label:"搞完了",        group:"reply", needAck:false, tracked:false},
+  PONG:            {label:"探测回执",      group:"reply", needAck:false, tracked:false},
+  FAILURE:         {label:"失败直报",      group:"reply", needAck:false, tracked:false},
+  SESSION_OPEN:    {label:"阅读场次·开始", group:"other", needAck:false, tracked:false},
+  SESSION_CLOSE:   {label:"阅读场次·收尾", group:"other", needAck:false, tracked:false},
+  STATE_CHANGE:    {label:"状态变更",      group:"other", needAck:false, tracked:false},
+  UNCLASSIFIED:    {label:"未分类（请补枚举）",group:"other",needAck:false,tracked:false}
+};
 
 function esc(s){return String(s).replace(/[&<>"']/g,function(c){
   return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
 function $(id){return document.getElementById(id);}
 function shDate(offset){
-  var d=new Date(Date.now()-offset*86400000);
-  return new Intl.DateTimeFormat("sv-SE",{timeZone:"Asia/Shanghai",
-    year:"numeric",month:"2-digit",day:"2-digit"}).format(d);
+  return new Intl.DateTimeFormat("sv-SE",{timeZone:"Asia/Shanghai",year:"numeric",
+    month:"2-digit",day:"2-digit"}).format(new Date(Date.now()-offset*86400000));
 }
 function boardRawUrl(date){
-  var p=date.split("-");
-  return RAW+"/"+p[0]+"/"+p[1]+"/"+date+".md?t="+Date.now();
+  var p=date.split("-");return RAW+"/"+p[0]+"/"+p[1]+"/"+date+".md?t="+Date.now();
 }
 async function fetchBoard(date){
-  // 1) 同源代理（云端应用提供，无 CORS 问题）
+  // 1) 同源代理：Atom feed 取最新 sha → 固定 sha 的 raw URL，绕开 CDN 缓存
   try{
     var r=await fetch("/api/a2a-board?date="+date+"&t="+Date.now(),{cache:"no-store"});
     if(r.ok){var j=await r.json();if(j&&typeof j.text==="string")
-      return {text:j.text,source:"应用同源代理 /api/a2a-board"};}
+      return {text:j.text,source:"同源代理 · "+(j.source||"github-raw")+
+        (j.sha?" @ "+String(j.sha).slice(0,8):"")};}
   }catch(e){}
-  // 2) 直连公开仓 raw（本地静态预览时的兜底，可能有分钟级 CDN 缓存）
+  // 2) 本地静态预览兜底
   try{
     var r2=await fetch(boardRawUrl(date),{cache:"no-store"});
     if(r2.ok)return {text:await r2.text(),source:"GitHub raw 直连（可能有 CDN 缓存）"};
   }catch(e){}
   return {text:null,source:null};
 }
-// 解析标题 + 该条目的完整正文块；按时间升序排列，跨日文件不会串块。
 function parseEntries(text){
   var out=[],cur=null,lines=String(text||"").split(/\r?\n/);
   var re=/^### \[(\d{4}-\d{2}-\d{2} \d{2}:\d{2})\] (.+?) \/ (.+?) → TO (.+)$/;
   for(var i=0;i<lines.length;i++){
     var m=re.exec(lines[i]);
-    if(m){
-      if(cur)out.push(cur);
-      cur={time:m[1],who:m[2],id:m[3],to:m[4],body:[]};
-    }else if(cur){
+    if(m){if(cur)out.push(cur);cur={time:m[1],who:m[2],id:m[3],to:m[4],body:[]};}
+    else if(cur){
       if(/^#{1,2} /.test(lines[i])){out.push(cur);cur=null;}
       else cur.body.push(lines[i]);
     }
@@ -129,81 +167,179 @@ function parseEntries(text){
   out.sort(function(a,b){return a.time<b.time?-1:(a.time>b.time?1:0);});
   return out;
 }
-function isReply(e){
-  // 只认发件人是云端，或 A2A-ACK-/DONE-/PROGRESS-/PONG- 这类消息类型前缀。
-  // 不能用 \b(ACK)\b：three-stage-ack 这类词尾会被误判成「回复了什么」。
-  return /workbuddy-cloud-luoyu|cloud-luoyu/i.test(e.who)||
-         /^(?:A2A-)?(?:ACK|DONE|PROGRESS|PONG)[-_]/i.test(e.id);
+function entryType(e){
+  var m=/^\s*-\s*TYPE:\s*([A-Z_]+)\s*$/m.exec(e.body||"");
+  if(m&&TYPES[m[1]])return m[1];
+  var id=String(e.id||"");
+  if(/^A2A-ACK|^ACK[-_]/.test(id))return "ACK_RECEIPT";
+  if(/^A2A-DONE|^DONE[-_]/.test(id))return "DONE";
+  if(/^A2A-PROGRESS/.test(id))return "PROGRESS";
+  if(/^A2A-PONG/.test(id))return "PONG";
+  if(/^A2A-FOLLOWUP/.test(id))return "FOLLOWUP";
+  if(/^A2A-PING/.test(id))return "PING";
+  if(/^A2A-PROTOCOL-/.test(id))return "PROTOCOL";
+  if(/^A2A-REQUEST/.test(id))return "REQUEST";
+  if(/收尾|结束|failed/i.test(id))return "SESSION_CLOSE";
+  return "UNCLASSIFIED";
 }
+function meta(e){return TYPES[entryType(e)]||TYPES.UNCLASSIFIED;}
+function isReply(e){return meta(e).group==="reply"||
+  /workbuddy-cloud-luoyu|cloud-luoyu/i.test(e.who);}
 function excerpt(body){
-  var line=(String(body||"").split(/\r?\n/).filter(function(s){return s.trim();})[0]||"")
+  var line=(String(body||"").split(/\r?\n/).filter(function(s){
+    return s.trim()&&!/^\s*-\s*TYPE:/.test(s);})[0]||"")
     .replace(/^[-*]\s*/,"").trim();
   return line.length>120?line.slice(0,120)+"…":line||"（无正文）";
 }
+// "YYYY-MM-DD HH:MM" 按 Asia/Shanghai 转 epoch，避免依赖浏览器本地时区
+function toEpoch(s){
+  var m=/^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2})$/.exec(s||"");
+  return m?Date.UTC(+m[1],+m[2]-1,+m[3],+m[4]-8,+m[5]):null;
+}
+function dur(ms){
+  if(ms==null||ms<0)ms=0;
+  var mi=Math.floor(ms/60000),h=Math.floor(mi/60),d=Math.floor(h/24);
+  if(d)return d+" 天 "+(h%24)+" 小时 "+(mi%60)+" 分";
+  if(h)return h+" 小时 "+(mi%60)+" 分";
+  return mi+" 分";
+}
+function related(entries,task){
+  return entries.filter(function(e){
+    return meta(e).group==="reply"&&
+      ((e.body&&e.body.indexOf(task.id)>=0)||(e.id&&e.id.indexOf(task.id)>=0));
+  });
+}
+function taskStates(entries){
+  var now=Date.now(),out=[];
+  entries.forEach(function(task){
+    var m=meta(task);
+    if(!m.tracked)return;
+    var rel=related(entries,task);
+    var ack=rel.filter(function(e){return ["ACK_RECEIPT","PROGRESS"].indexOf(entryType(e))>=0;})[0];
+    var done=rel.filter(function(e){return entryType(e)==="DONE";}).slice(-1)[0];
+    var follows=entries.filter(function(e){return entryType(e)==="FOLLOWUP"&&
+      (e.body||"").indexOf(task.id)>=0;});
+    var since=ack?ack.time:task.time,elapsed=now-toEpoch(since);
+    var level="normal",label="等待收条",hint="";
+    if(done){level="green";label="已完工 (DONE)";hint="";}
+    else if(!ack){
+      if(elapsed>=30*60000){level="red";label="超时未回复 · 必催";hint="还没回收条，建议立刻追加一句「还在搞吗」激活对方。";}
+      else if(elapsed>=10*60000){level="amber";label="还没回收条 · 该催了";hint="超过 10 分钟无收条，建议催一句。";}
+    }else{
+      if(elapsed>=60*60000){level="red";label="收条后久未完工 · 必催";hint="已收到但很久没 DONE，建议问「还在搞吗 / 卡在哪」。";}
+      else if(elapsed>=30*60000){level="amber";label="已收到 · 还在搞吗";hint="超过 30 分钟未完工，建议补催并要 PROGRESS。";}
+      else{level="normal";label="已收到 · 进行中";hint="";}
+    }
+    out.push({task:task,ack:ack,done:done,follows:follows,since:since,
+      elapsed:elapsed,level:level,label:label,hint:hint});
+  });
+  out.sort(function(a,b){return b.elapsed-a.elapsed;});
+  return out;
+}
+function followupText(s){
+  var last=s.follows.length?s.follows[s.follows.length-1].time+" 已催一次":"尚未催过";
+  return "还在搞吗？"+s.task.id+"（"+s.task.time+" 发出，已等待 "+dur(s.elapsed)+"；"+last+"）。\n"+
+    "按 13:17 枚举协议，请先回一条 ACK_RECEIPT 收条：已收到 / 待办 / 状态 received|blocked。\n"+
+    "已在做就补 PROGRESS 写卡在哪；做完回 DONE 贴「结果 / 做了什么+证据 / 还有什么诉求 / 未解决项」。\n"+
+    "回帖前先 git pull --rebase origin main + tail -80 板尾。";
+}
+function renderConv(s){
+  var t=s.task,m=meta(t),txt=followupText(s);
+  var badge=s.level==="red"?"b-red":(s.level==="amber"?"b-amber":
+    (s.level==="green"?"b-green":""));
+  return "<div class='conv s-"+s.level+"'>"+
+    "<div class='conv-head'><span class='badge'>"+esc(m.label)+"</span>"+
+      "<code>"+esc(t.id)+"</code>"+
+      "<span class='badge "+badge+"'>"+esc(s.label)+"</span></div>"+
+    "<div class='line'><b>谁 → 谁</b>"+esc(t.who)+" → "+esc(t.to)+"</div>"+
+    "<div class='line'><b>要干什么</b>"+esc(excerpt(t.body))+"</div>"+
+    "<div class='line'><b>时间线</b>发出 "+esc(t.time)+" · 收到回执 "+
+      (s.ack?esc(s.ack.time)+" 由 "+esc(s.ack.who):"—")+" · 完工 "+
+      (s.done?esc(s.done.time):"—")+"</div>"+
+    "<div class='timer'>"+esc(dur(s.elapsed))+
+      " <small>"+(s.done?"总耗时":(s.ack?"自收到收条起":"自发出起"))+
+      (s.follows.length?" · 已催 "+s.follows.length+" 次":"")+"</small></div>"+
+    (s.hint?"<div class='followup'><span>"+esc(s.hint)+"</span>"+
+      "<button type='button' data-copy=\""+esc(txt)+"\" onclick=\"copyFollowup(this)\">复制催办话术</button>"+
+      "</div>":"")+
+    "<details><summary>展开「要干什么」全文</summary><pre>"+esc((t.body||"（无正文）").slice(0,3000))+"</pre></details>"+
+    "</div>";
+}
+function copyFollowup(btn){
+  var text=btn.getAttribute("data-copy")||"";
+  function fallback(){
+    var ta=document.createElement("textarea");ta.value=text;
+    document.body.appendChild(ta);ta.select();
+    try{document.execCommand("copy");btn.textContent="已复制 ✓";}
+    catch(e){btn.textContent="复制失败，请展开看正文";}
+    document.body.removeChild(ta);
+  }
+  if(navigator.clipboard&&navigator.clipboard.writeText)
+    navigator.clipboard.writeText(text).then(function(){btn.textContent="已复制 ✓";},fallback);
+  else fallback();
+}
 function renderEntry(e){
-  var reply=isReply(e),kind=reply?"回复了什么":"要干什么",cls=reply?"k-reply":"k-todo";
-  var body=e.body||"（该条目无正文）";
+  var t=entryType(e),m=meta(e),cls=m.group==="reply"?"k-reply":
+    (m.group==="todo"?"k-todo":"k-other"),body=e.body||"（该条目无正文）";
   return "<details class='entry'><summary>"+
     "<span class='tag'>"+esc(e.time)+"</span>"+
-    "<span class='tag "+cls+"'>"+kind+"</span>"+esc(e.id)+
-    " <span class='count'>→ TO "+esc(e.to)+" · "+esc(e.who)+"</span>"+
+    "<span class='tag "+cls+"'>"+esc(m.label)+"</span>"+esc(e.id)+
+    " <span class='count'>→ TO "+esc(e.to)+" · "+esc(e.who)+" · TYPE "+esc(t)+"</span>"+
     "<span class='excerpt'>"+esc(excerpt(body))+"</span>"+
     "</summary><pre>"+esc(body.slice(0,2500))+"</pre></details>";
 }
 async function appState(){
-  var out={mode:"未连接应用 API（本地预览或应用未部署）",base:"—",counts:"—"};
+  var out="未连接应用 API（本地预览或应用未部署）";
   try{
     var h=await fetch("/api/health",{cache:"no-store"});
-    if(h.ok){var j=await h.json();
-      out.mode=(j.ok?"ok / ":"unhealthy / ")+(j.mode||"?");
-      out.base=j.service_base||"—";
-      var q=await fetch("/api/queue",{cache:"no-store"});
-      var u=await fetch("/api/uploads",{cache:"no-store"});
-      var qn=q.ok?(await q.json()).books||[]:[];
-      var un=u.ok?(await u.json()).books||[]:[];
-      out.counts=qn.length+" 条队列 / "+un.length+" 本上传";
-    }
+    if(h.ok){var j=await h.json();out=(j.ok?"ok / ":"unhealthy / ")+(j.mode||"?")+
+      " · "+String(j.service_base||"—");}
   }catch(e){}
   return out;
 }
 async function refresh(){
   var parts=[],sources=[];
-  for(var i=1;i>=0;i--){ // 昨天 → 今天，保证时间升序
+  for(var i=1;i>=0;i--){
     var date=shDate(i),b=await fetchBoard(date);
     if(b.text){parts.push(b.text);sources.push(b.source);}
   }
-  var text=parts.join("\n");
-  var entries=parseEntries(text);
-  var latest=entries.slice(-20).slice().reverse(); // 只取最新 20 条，最新在上
-  var replies=entries.filter(isReply);
-  var app=await appState();
+  var text=parts.join("\n"),entries=parseEntries(text);
+  var latest=entries.slice(-20).slice().reverse();
+  var states=taskStates(entries),app=await appState();
+  var noAck=states.filter(function(s){return !s.ack&&!s.done;}).length;
+  var acked=states.filter(function(s){return s.ack&&!s.done;}).length;
+  var doneN=states.filter(function(s){return s.done;}).length;
+  var red=states.filter(function(s){return s.level==="red";}).length;
 
   $("stamp").textContent=new Date().toLocaleString("zh-CN",{timeZone:"Asia/Shanghai",hour12:false});
   $("source").textContent=sources.length?sources[0]:"不可用（两个数据源均未取到）";
-  $("appMode").textContent=app.mode;
-  $("appBase").textContent=app.base;
-  $("appCounts").textContent=app.counts;
-  $("lastReply").textContent=replies.length?
-    replies[replies.length-1].time+" · "+replies[replies.length-1].id:"仍无任何回帖";
+  $("boardLatest").textContent=entries.length?
+    entries[entries.length-1].time+" · "+entries[entries.length-1].id:"—";
+  $("appState").textContent=app;
+  $("summary").textContent=states.length+" 条在册 / "+noAck+" 条无收条 / "+acked+" 条已收条待完工 / "+doneN+" 条已完工";
+  $("longest").textContent=states.length?dur(states[0].elapsed)+"（"+states[0].task.id+"）":"—";
+  var lastAck=entries.filter(function(e){return entryType(e)==="ACK_RECEIPT";}).slice(-1)[0];
+  $("lastAck").textContent=lastAck?lastAck.time+" · "+lastAck.who+" / "+lastAck.id:"仍无任何收条";
 
   var v=$("verdict");
-  if(!text){v.className="verdict warn";v.textContent="事件板数据暂不可用 · 下方显示静态清单";}
-  else if(replies.length){v.className="verdict ok";
-    v.textContent="已检测到云端回帖 · 请核对是否覆盖下列 REQUEST 并回 PONG";}
-  else{v.className="verdict wait";v.textContent="等待云端 ACK · 链路尚未验证";}
+  if(!text){v.className="verdict warn";v.textContent="事件板数据暂不可用 · 下方按静态规则显示";}
+  else if(red){v.className="verdict red";v.textContent="🔴 "+red+" 条超时，建议追加「还在搞吗」激活对方";}
+  else if(noAck){v.className="verdict wait";v.textContent="等待云端回执 · "+noAck+" 条任务还没有收到";}
+  else if(acked){v.className="verdict warn";v.textContent="已收到收条 · "+acked+" 条还在进行中";}
+  else{v.className="verdict ok";v.textContent="所有在册任务已完工";}
 
-  $("pending").innerHTML=PENDING.map(function(id){
-    var state=replies.length?"已有回帖，待逐条核对":"待 ACK";
-    return "<li><code>"+esc(id)+"</code> <span class='pill'>"+state+"</span></li>";
-  }).join("");
+  $("convList").innerHTML=states.length?states.map(renderConv).join(""):
+    "<div class='empty'>（当前没有 tracked=true 的在册任务）</div>";
 
-  var todo=latest.filter(function(e){return !isReply(e);});
-  var replied=latest.filter(isReply);
-  $("todoList").innerHTML=todo.length?todo.map(renderEntry).join(""):
-    "<div class='empty'>（最近 20 条里没有待办类条目）</div>";
-  $("replyList").innerHTML=replied.length?replied.map(renderEntry).join(""):
-    "<div class='empty'>（最近 20 条里没有任何回复 · 云端仍沉默）</div>";
-  $("entryCount").textContent="共 "+latest.length+" 条 / 待办 "+todo.length+" 条 / 回复 "+replied.length+" 条";
+  var buckets={todo:[],reply:[],other:[]};
+  latest.forEach(function(e){buckets[meta(e).group].push(e);});
+  function put(id,arr){$(id).innerHTML=arr.length?arr.map(renderEntry).join(""):
+    "<div class='empty'>（最近 20 条里没有这类条目）</div>";}
+  put("todoList",buckets.todo);put("replyList",buckets.reply);put("otherList",buckets.other);
+  var unknown=latest.filter(function(e){return entryType(e)==="UNCLASSIFIED";}).length;
+  $("entryCount").textContent="共 "+latest.length+" 条 / 待办 "+buckets.todo.length+
+    " / 回复 "+buckets.reply.length+" / 其他 "+buckets.other.length+
+    (unknown?" · ⚠ "+unknown+" 条待补枚举":"");
 }
 refresh();
 setInterval(refresh,30000);

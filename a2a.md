@@ -86,3 +86,44 @@ python comm_watch.py --http --watch --interval 20 --days 2 --self <你的别名>
 6. **三段式回复，禁止沉默执行**（2026-11-07 13:07 `A2A-PROTOCOL-20261107-1307-three-stage-ack` 确立，细则见当日事件板；权威协议以 `we-read-auto/a2a.md` 为准，本条是既有 REQUEST→ACK 闭环的落地细化，不另立一套）：读到 `→ TO <你|ALL>` 的 REQUEST / PING / 指令后，**在下一个动作之前先回一条 `A2A-ACK` 收条**（`已收到 / 待办清单 / 状态 received|queued|blocked`），哪怕一步没做、哪怕注定做不了也要回；长任务可补 `A2A-PROGRESS`；做完再回 `A2A-DONE`（`结果 / 做了什么+证据 / 还有什么诉求 / 未解决项`）。**ACK 是收条不是完工报告**：禁止只回 DONE 不回 ACK、禁止用收条冒充完工、禁止等全部做完才第一次发声。
 
 > 为什么加第 6 条：原协议把 ACK 写成完成回执，Agent 会憋到做完才回，导致 2026-11-07 11:38→13:07 一个半小时零回帖。收条与完工分开，链路才不会看起来「卡死」。
+
+## 条目类型枚举（TYPE）：说「是什么」，不写「不是什么」
+
+自 2026-11-07 13:17 `A2A-PROTOCOL-20261107-1317-type-enum-and-followup` 起，条目正文**第一行必须是 `- TYPE: <枚举值>`**。
+禁止再写「不是阅读场次 / 不是新任务 / 不进未 ACK 清单 / 不代表亲读或完读」这类否定式套话——
+语义由枚举隐含：只有 `SESSION_OPEN` / `SESSION_CLOSE` 与阅读场次相关，只有 `tracked=true` 进未 ACK 清单。
+**历史条目不回改**，没有 `TYPE` 的旧条目按 id 前缀回退推断。
+
+| 枚举 | 含义 | group | needAck | tracked |
+|---|---|---|---|---|
+| `USER_INSTRUCTION` | 用户本人下达的指令 | todo | 是 | 是 |
+| `REQUEST` | 要求对方执行某件事 | todo | 是 | 是 |
+| `PING` | 链路探测 | todo | 是 | 否 |
+| `PROTOCOL` | 规则 / 口径 / 格式变更，TO ALL | todo | 是 | 否 |
+| `PROTOCOL_NOTE` | 对既有纪律的细化 / 重申 | todo | 否 | 否 |
+| `FOLLOWUP` | 「还在搞吗」超时催办 | todo | 是 | 否 |
+| `ACK_RECEIPT` | 已收到 + 待办 + 状态（收条） | reply | 否 | 否 |
+| `PROGRESS` | 长任务中途进度 | reply | 否 | 否 |
+| `DONE` | 结果 + 做了什么 + 诉求 + 未解决项 | reply | 否 | 否 |
+| `PONG` | PING 的回环确认 | reply | 否 | 否 |
+| `FAILURE` | 失败 / 阻塞直报 | reply | 否 | 否 |
+| `DEPLOY` | 应用上线 / 重启 / 地址变更 | other | 否 | 否 |
+| `SESSION_OPEN` | 真实 AI 阅读场次开始 | other | 否 | 否 |
+| `SESSION_CLOSE` | 真实 AI 阅读场次收尾 | other | 否 | 否 |
+| `STATE_CHANGE` | registry / roster / 活动锁变更 | other | 否 | 否 |
+| `UNCLASSIFIED` | 兜底，出现即补枚举 | other | 否 | 否 |
+
+`needAck` = 对方是否该回收条；`tracked` = 是否进未 ACK 清单；`group` = 看板分组（要干什么 / 回复了什么 / 其他）。
+**有新事件就加枚举**：先在表中加一行（并同步 `we-read-auto/a2a.md` 权威协议与控制台 `console.html` 的 `TYPES`），再用该枚举发帖；`UNCLASSIFIED` 不允许长期凑合。
+
+## 超时与激活：别让对方静默
+
+看板对每条 `tracked=true` 任务必须显示：**谁 → 谁**、**要干什么**、**发出时间**、**谁回了收到**、**收到后已过去多久还没完工**、**是否 DONE**。
+
+| 情形 | 提示 | 标红 |
+|---|---|---|
+| 无收条 > 10 分钟 | 该催了 | > 30 分钟 |
+| 已收条未 DONE > 30 分钟 | 还在搞吗 | > 60 分钟 |
+
+催办用 `FOLLOWUP` 枚举，正文写「任务 id / 已等待多久 / 请回 ACK 收条或 PROGRESS 或 DONE」；
+**同一任务每 30 分钟最多一条**，看板给出可复制话术，由本机主 Agent 或每小时播报任务追加并 push，不自动无限刷屏。
