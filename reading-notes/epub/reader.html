@@ -1,8 +1,9 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#17181b">
 <meta name="robots" content="noindex,nofollow,noarchive">
 <title>原书阅读器</title>
 <style>
@@ -10,7 +11,7 @@
   --bg:#fbfaf7;--panel:#ffffff;--fg:#2b2b2b;--muted:#8b8377;--line:#e3ded2;
   --accent:#b07d3c;--soft:#faf6ee;--bar:#f5f2ea;
 }
-body.dark{
+html[data-theme="dark"]{
   --bg:#17181b;--panel:#202126;--fg:#d8d5ce;--muted:#8a877f;--line:#33353a;
   --accent:#d9a96b;--soft:#24252a;--bar:#1d1e22;
 }
@@ -24,7 +25,7 @@ a{color:var(--accent)}
 .bar strong{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;
      text-overflow:ellipsis;max-width:230px;margin-right:auto}
 .bar .brand{font-size:13px;text-decoration:none;white-space:nowrap}
-button,input{font:inherit}
+button,input,select{font:inherit}
 button{background:var(--panel);color:var(--fg);border:1px solid var(--line);
      border-radius:6px;padding:6px 10px;cursor:pointer;font-size:13px;white-space:nowrap}
 button:hover{border-color:var(--accent)}
@@ -35,6 +36,9 @@ button.on{border-color:var(--accent);color:var(--accent)}
       border-right:1px solid var(--line);display:flex;flex-direction:column;z-index:15;
       transition:transform .2s}
 .side.hidden{transform:translateX(-100%)}
+/* 目录展开时，点右侧正文区即收起目录；顶栏与侧栏本身不受影响 */
+#sideMask{position:fixed;top:56px;left:272px;right:0;bottom:0;z-index:14;display:none}
+#sideMask.on{display:block}
 .tabs{display:flex;border-bottom:1px solid var(--line)}
 .tabs button{flex:1;border:0;border-radius:0;background:transparent;padding:10px 0}
 .tabs button.on{color:var(--accent);box-shadow:inset 0 -2px var(--accent)}
@@ -52,7 +56,7 @@ main{position:absolute;top:56px;left:272px;right:0;bottom:0;background:var(--pan
 #viewer{width:100%;height:100%}
 #status{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);
         background:var(--panel);border:1px solid var(--line);border-radius:20px;
-        padding:7px 16px;font-size:12px;color:var(--muted);z-index:30;display:none;
+        padding:7px 16px;font-size:12px;color:var(--muted);z-index:70;display:none;
         box-shadow:0 3px 14px #00000018}
 #results{position:fixed;top:56px;right:0;width:340px;max-height:70vh;overflow:auto;
          background:var(--panel);border:1px solid var(--line);border-left-width:3px;
@@ -64,7 +68,7 @@ main{position:absolute;top:56px;left:272px;right:0;bottom:0;background:var(--pan
 #results .hd{padding:8px;color:var(--muted);font-size:12px}
 #warn{background:#fff4e2;color:#7a5a20;padding:9px 14px;font-size:12px;
       border-bottom:1px solid #e8cf9f;display:none}
-body.dark #warn{background:#3a2f1c;color:#e0c58e;border-color:#5c4a29}
+html[data-theme="dark"] #warn{background:#3a2f1c;color:#e0c58e;border-color:#5c4a29}
 .foot{position:fixed;right:10px;bottom:6px;font-size:11px;z-index:10;opacity:.55}
 .foot a{color:inherit;text-decoration:none}
 @media(max-width:900px){
@@ -77,6 +81,7 @@ body.dark #warn{background:#3a2f1c;color:#e0c58e;border-color:#5c4a29}
   #results{width:100%;max-height:55vh}
 }
 </style>
+<link rel="stylesheet" href="aa-panel.css">
 </head>
 <body>
 <div id="warn">当前是 <code>file://</code> 打开，浏览器会拦截 epub 文件读取。请用线上 Pages 地址，或在本目录起一个静态服务器（例如 <code>python -m http.server</code>）后访问。</div>
@@ -88,7 +93,8 @@ body.dark #warn{background:#3a2f1c;color:#e0c58e;border-color:#5c4a29}
   <button id="next" title="下一页 / 下一章">→</button>
   <button id="fontDown" class="hide-sm" title="缩小字号">A−</button>
   <button id="fontUp" class="hide-sm" title="放大字号">A+</button>
-  <button id="theme" title="深浅主题">◐</button>
+  <button id="aaBtn" title="Aa 阅读设置">Aa</button>
+  <button id="theme" title="切换主题">◐</button>
   <button id="flow" class="hide-sm" title="切换分页/滚动">分页</button>
   <input id="q" type="search" placeholder="全书搜索 /" aria-label="全书搜索">
   <a id="dl" download title="下载 EPUB">↓</a>
@@ -102,6 +108,7 @@ body.dark #warn{background:#3a2f1c;color:#e0c58e;border-color:#5c4a29}
   <input id="filter" type="search" placeholder="筛选书名或章节">
   <nav id="list"></nav>
 </aside>
+<div id="sideMask" aria-hidden="true"></div>
 
 <main><div id="viewer"></div></main>
 <div id="status"></div>
@@ -110,19 +117,27 @@ body.dark #warn{background:#3a2f1c;color:#e0c58e;border-color:#5c4a29}
 
 <script src="vendor/jszip.min.js"></script>
 <script src="vendor/epub.min.js"></script>
+<script src="aa-panel.js"></script>
 <script>
 (function(){
   var $ = function(id){return document.getElementById(id)};
+  var AA = window.EpubAA;
   var params = new URLSearchParams(location.search);
   var bookId = params.get("book");
   var book = null, rendition = null, toc = [], shelf = [], curHref = "";
-  var tab = "toc", fontSize = 108, dark = false, scrolled = false, searching = false;
+  var tab = "toc", searching = false;
+  var relocatedCb = null, lastHi = null, dynCss = "";
+  var c0 = AA ? AA.cfg() : {theme:"dark",fs:108,lh:1.85,spread:"none",flow:"paginated"};
+  var lastSpread = c0.spread, lastFlow = c0.flow;
+
+  var BOOK_THEME = {
+    dark:   {bg:"#202126",fg:"#d8d5ce",head:"#d9a96b",line:"#33353a",mark:"#7f7c75",accent:"#9ed0af"},
+    cream:  {bg:"#fffdf6",fg:"#3b453e",head:"#244b40",line:"#e8e4d5",mark:"#a49c8e",accent:"#8a6a35"},
+    light:  {bg:"#ffffff",fg:"#2b2b2b",head:"#5b5145",line:"#e3ded2",mark:"#a49c8e",accent:"#b07d3c"},
+    green:  {bg:"#eef7ef",fg:"#2f4237",head:"#1e4d37",line:"#b9dcc0",mark:"#6f8f77",accent:"#1e5c41"}
+  };
 
   if(location.protocol === "file:") $("warn").style.display = "block";
-  if(window.matchMedia && matchMedia("(prefers-color-scheme:dark)").matches){dark=true}
-  try{ dark = JSON.parse(localStorage.getItem("epub-theme-dark")); }catch(e){}
-  try{ fontSize = parseInt(localStorage.getItem("epub-font") || "108",10)||108; }catch(e){}
-  document.body.className = dark ? "dark" : "";
 
   function status(msg,ms){
     var el=$("status"); el.textContent=msg; el.style.display="block";
@@ -130,7 +145,91 @@ body.dark #warn{background:#3a2f1c;color:#e0c58e;border-color:#5c4a29}
   }
   function esc(s){return String(s||"").replace(/[&<>"]/g,function(c){
     return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+  function format(n){return (n||0).toString().replace(/\B(?=(\d{3})+(?!\d))/g,",")}
 
+  /* ── Aa 面板适配层：主题 / 字号 / 行距 / 字体 / 双栏 / 滚动 ── */
+  function injectDyn(){
+    if(!rendition || !dynCss) return;
+    (rendition.getContents()||[]).forEach(function(c){
+      try{ c.addStylesheetCss(dynCss, "aa-dyn"); }catch(e){}
+    });
+  }
+  function applyCfg(c){
+    var t = BOOK_THEME[c.theme] || BOOK_THEME.dark;
+    var pm = c.lh <= 1.7 ? .55 : c.lh <= 1.9 ? .8 : 1.15;
+    dynCss = (AA ? AA.fontFaceRule() : "") +
+      "html,body{background:"+t.bg+";color:"+t.fg+";}" +
+      "body{line-height:"+c.lh+";}" +
+      "p{line-height:"+c.lh+";margin-bottom:"+pm+"em;}" +
+      "h2.chapter{color:"+t.head+";border-bottom:1px solid "+t.line+";}" +
+      ".pgmark{color:"+t.mark+";}" +
+      "section.page{border-bottom:1px dashed "+t.line+";}" +
+      "a{color:"+t.accent+";}" +
+      ".epub-speaking{background:rgba(7,193,96,.12);box-shadow:inset 3px 0 0 #07c160;border-radius:4px;}";
+    if(!rendition) return;
+    injectDyn();
+    try{ rendition.themes.fontSize(c.fs+"%"); }catch(e){}
+    try{ rendition.themes.font(AA ? AA.fontFamily() : ""); }catch(e){}
+    if(lastSpread !== c.spread){ lastSpread = c.spread; try{ rendition.spread(c.spread); }catch(e){} }
+    if(lastFlow !== c.flow){ lastFlow = c.flow; try{ rendition.flow(c.flow); }catch(e){} }
+    $("flow").textContent = c.flow === "paginated" ? "分页" : "滚动";
+    $("flow").classList.toggle("on", c.flow !== "paginated");
+    try{ rendition.resize(); }catch(e){}
+  }
+  function visibleParagraphs(){
+    var out = [], seen = {};
+    if(!rendition) return out;
+    (rendition.getContents()||[]).forEach(function(c){
+      var doc = c.document; if(!doc || !doc.body) return;
+      var win = doc.defaultView; if(!win) return;
+      var W = win.innerWidth || 1024, Hh = win.innerHeight || 768;
+      var nodes = doc.body.querySelectorAll("p, li, blockquote, h1, h2, h3, h4, h5, h6, div");
+      for(var i=0;i<nodes.length;i++){
+        var el = nodes[i];
+        if(el.classList && el.classList.contains("pgmark")) continue;
+        if(el.querySelector("p, li, blockquote, div, section")) continue;  // 只取最内层文字块
+        var txt = String(el.innerText || el.textContent || "").replace(/\s+/g," ").trim();
+        if(txt.length < 2 || seen[txt]) continue;
+        var r = el.getBoundingClientRect();
+        if(r.bottom <= 2 || r.top >= Hh - 2 || r.right <= 2 || r.left >= W - 2) continue;
+        seen[txt] = 1; out.push({text:txt, el:el});
+      }
+    });
+    return out;
+  }
+  function highlight(el){
+    if(lastHi && lastHi.classList) lastHi.classList.remove("epub-speaking");
+    lastHi = el || null;
+    if(lastHi && lastHi.classList) lastHi.classList.add("epub-speaking");
+  }
+  function jumpChapter(delta){
+    if(!toc.length||!rendition) return;
+    var i=-1;
+    toc.forEach(function(t,k){ if(curHref && t.href.indexOf(curHref)>=0) i=k });
+    var n=Math.max(0,Math.min(toc.length-1,i+delta));
+    rendition.display(toc[n].href);
+  }
+  function escapeHandled(){
+    var res = $("results");
+    if(res && res.style.display === "block"){ res.style.display="none"; return true; }
+    if(isSideOpen()){ closeSide(); return true; }
+    return false;
+  }
+  if(AA) AA.init({
+    onCfg: applyCfg,
+    page: function(d){ if(rendition) rendition[d<0?"prev":"next"](); },
+    chapter: jumpChapter,
+    back: function(){ location.href = "index.html"; },
+    pageText: visibleParagraphs,
+    highlight: highlight,
+    onRelocated: function(cb){ relocatedCb = cb; },
+    resize: function(){ if(rendition) try{ rendition.resize(); }catch(e){} },
+    notify: status,
+    escape: escapeHandled,
+    focusSearch: function(){ $("q").focus(); }
+  });
+
+  /* ── 侧栏 / 目录 ── */
   function flatten(items,out){
     out = out || [];
     (items||[]).forEach(function(it){
@@ -139,7 +238,6 @@ body.dark #warn{background:#3a2f1c;color:#e0c58e;border-color:#5c4a29}
     });
     return out;
   }
-
   function renderList(){
     var kw = ($("filter").value||"").trim().toLowerCase();
     var el=$("list"), h=[];
@@ -161,13 +259,21 @@ body.dark #warn{background:#3a2f1c;color:#e0c58e;border-color:#5c4a29}
     el.innerHTML = h.join("") || '<div class="grp">无匹配结果</div>';
     el.querySelectorAll("a[data-i]").forEach(function(a){
       a.onclick=function(ev){ev.preventDefault();var i=+a.dataset.i;
-        if(toc[i]) rendition.display(toc[i].href); if(innerWidth<900) closeSide();};
+        if(toc[i]) rendition.display(toc[i].href); closeSide();};
     });
   }
-  function format(n){return (n||0).toString().replace(/\B(?=(\d{3})+(?!\d))/g,",")}
-
-  function closeSide(){ $("side").classList.add("hidden") }
-  $("shelfBtn").onclick=function(){ $("side").classList.toggle("hidden") };
+  function isSideOpen(){ return !$("side").classList.contains("hidden") }
+  function syncMask(){ $("sideMask").classList.toggle("on", isSideOpen()); }
+  function setSide(open){
+    $("side").classList.toggle("hidden", !open);
+    syncMask();
+    // 侧栏宽度变化后让 epub.js 重新分页（等 0.2s 的侧栏动画走完）
+    setTimeout(function(){ if(rendition) try{ rendition.resize(); }catch(e){} }, 230);
+  }
+  function closeSide(){ setSide(false); }
+  $("shelfBtn").onclick=function(){ setSide(!isSideOpen()) };
+  $("sideMask").addEventListener("click", closeSide);
+  syncMask();   // 初始为展开时同步显示点击层
   $("filter").oninput=renderList;
   document.querySelectorAll(".tabs button").forEach(function(b){
     b.onclick=function(){
@@ -177,47 +283,16 @@ body.dark #warn{background:#3a2f1c;color:#e0c58e;border-color:#5c4a29}
     };
   });
 
-  function applyTheme(){
-    document.body.className = dark ? "dark" : "";
-    if(!rendition) return;
-    rendition.themes.registerRules("light",{
-      "body":{"background":"#ffffff","color":"#2b2b2b"},
-      "h2.chapter":{"color":"#5b5145","border-bottom":"1px solid #d8d3c8"},
-      ".pgmark":{"color":"#a49c8e"},
-      "section.page":{"border-bottom":"1px dashed #e2ddd3"}
-    });
-    rendition.themes.registerRules("dark",{
-      "body":{"background":"#202126","color":"#d8d5ce"},
-      "h2.chapter":{"color":"#d9a96b","border-bottom":"1px solid #33353a"},
-      ".pgmark":{"color":"#7f7c75"},
-      "section.page":{"border-bottom":"1px dashed #33353a"}
-    });
-    rendition.themes.select(dark?"dark":"light");
-    rendition.themes.fontSize(fontSize+"%");
-    try{localStorage.setItem("epub-theme-dark",JSON.stringify(dark));
-        localStorage.setItem("epub-font",String(fontSize));}catch(e){}
-  }
-  $("theme").onclick=function(){dark=!dark;applyTheme()};
-  $("fontDown").onclick=function(){fontSize=Math.max(80,fontSize-8);applyTheme()};
-  $("fontUp").onclick=function(){fontSize=Math.min(180,fontSize+8);applyTheme()};
-  $("flow").onclick=function(){
-    scrolled=!scrolled;
-    $("flow").textContent=scrolled?"滚动":"分页";
-    $("flow").classList.toggle("on",scrolled);
-    if(rendition){ rendition.flow(scrolled?"scrolled-doc":"paginated"); }
-  };
+  /* 顶栏快捷按钮统一走 Aa 配置，避免两套状态 */
+  $("fontDown").onclick=function(){ if(AA) AA.stepFont(-1) };
+  $("fontUp").onclick=function(){ if(AA) AA.stepFont(1) };
+  $("theme").onclick=function(){ if(AA) AA.cycleTheme() };
+  $("flow").onclick=function(){ if(AA) AA.toggleFlow() };
+  $("aaBtn").onclick=function(){ if(AA) AA.togglePanel() };
   $("prev").onclick=function(){ if(rendition) rendition.prev() };
   $("next").onclick=function(){ if(rendition) rendition.next() };
-  document.addEventListener("keydown",function(e){
-    if(e.target && /INPUT|TEXTAREA/.test(e.target.tagName)){
-      if(e.key==="Escape"){ $("results").style.display="none"; e.target.blur(); }
-      return;
-    }
-    if(e.key==="ArrowRight"||e.key==="PageDown"){ rendition&&rendition.next(); e.preventDefault() }
-    else if(e.key==="ArrowLeft"||e.key==="PageUp"){ rendition&&rendition.prev(); e.preventDefault() }
-    else if(e.key==="/"){ $("q").focus(); e.preventDefault() }
-    else if(e.key==="Escape"){ closeSide(); $("results").style.display="none" }
-  });
+  $("prev").ondblclick=function(){jumpChapter(-1)};
+  $("next").ondblclick=function(){jumpChapter(1)};
 
   // ---- 全书搜索：逐章按需 load，绝不一次性解出全文
   function search(q){
@@ -256,7 +331,7 @@ body.dark #warn{background:#3a2f1c;color:#e0c58e;border-color:#5c4a29}
       });
       box.innerHTML=h;
       box.querySelectorAll("a[data-href]").forEach(function(a){
-        a.onclick=function(ev){ev.preventDefault();rendition.display(a.dataset.href);box.style.display="none"};
+        a.onclick=function(ev){ev.preventDefault();rendition.display(a.dataset.href);box.style.display="none";closeSide()};
       });
       status("搜索完成："+found.length+" 个章节",2200);
     }
@@ -266,16 +341,6 @@ body.dark #warn{background:#3a2f1c;color:#e0c58e;border-color:#5c4a29}
     if(e.key==="Enter"){ search(this.value.trim()); e.preventDefault() }
   };
   $("q").onchange=function(){ if(this.value.trim()) search(this.value.trim()) };
-
-  function jumpChapter(delta){
-    if(!toc.length||!rendition) return;
-    var i=-1;
-    toc.forEach(function(t,k){ if(curHref && t.href.indexOf(curHref)>=0) i=k });
-    var n=Math.max(0,Math.min(toc.length-1,i+delta));
-    rendition.display(toc[n].href);
-  }
-  $("prev").ondblclick=function(){jumpChapter(-1)};
-  $("next").ondblclick=function(){jumpChapter(1)};
 
   // ---- 启动
   fetch("epubs.json?_="+Date.now(),{cache:"no-store"})
@@ -293,10 +358,17 @@ body.dark #warn{background:#3a2f1c;color:#e0c58e;border-color:#5c4a29}
       rendition=book.renderTo("viewer",{
         width:"100%",height:"100%",
         manager:"default",           // 关键：一次只挂载一个章节，正文再长也不卡
-        flow:"paginated",spread:"none",
+        flow:c0.flow,spread:c0.spread,
         allowScriptedContent:false
       });
-      // 不调用 book.locations.generate()：超大书遍历全书算分页会极慢
+      // 每个新挂载的章节都补上当前版式（主题/行距/字体/朗读高亮）
+      rendition.hooks.content.register(function(contents){
+        try{ contents.addStylesheetCss(dynCss || "", "aa-dyn"); }catch(e){}
+      });
+      // Aa 面板：区域点击、长按、iframe 内方向键
+      if(AA) AA.bindFrame(rendition);
+      applyCfg(c0);
+
       book.loaded.navigation.then(function(nav){
         toc=flatten(nav.toc); renderList();
       }).catch(function(){});
@@ -306,16 +378,12 @@ body.dark #warn{background:#3a2f1c;color:#e0c58e;border-color:#5c4a29}
           try{localStorage.setItem("epub-cfi-"+bookId,loc.start.cfi||"")}catch(e){}
           renderList();
         }
-      });
-      rendition.on("keyup",function(e){
-        if(e.key==="ArrowRight") rendition.next();
-        if(e.key==="ArrowLeft") rendition.prev();
+        if(relocatedCb) try{ relocatedCb(); }catch(e){}
       });
       var saved="";
       try{saved=localStorage.getItem("epub-cfi-"+bookId)||""}catch(e){}
-      rendition.display(saved||undefined).then(function(){applyTheme()})
-        .catch(function(){rendition.display().then(function(){applyTheme()})});
-      applyTheme();
+      rendition.display(saved||undefined).then(function(){ applyCfg(AA?AA.cfg():c0); })
+        .catch(function(){rendition.display().then(function(){ applyCfg(AA?AA.cfg():c0); })});
       status("已载入 · "+meta.chapters+" 章 · 按章节分段加载",3200);
     })
     .catch(function(err){
