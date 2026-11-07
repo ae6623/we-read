@@ -57,6 +57,13 @@ font-size:13px;display:flex;flex-wrap:wrap;align-items:center;gap:10px}
 button{cursor:pointer;border:1px solid var(--line);border-radius:7px;padding:5px 12px;
 font-size:12px;background:var(--card);color:var(--fg)}
 button:hover{border-color:var(--warn)}
+/* 认领（claim） */
+.claim{display:inline-flex;gap:8px;align-items:center;margin-top:8px;flex-wrap:wrap}
+.claim .who{font-weight:600}
+.claim .lease{color:var(--mut);font-size:12px}
+.claim button{padding:3px 9px}
+.claimed{background:rgba(10,127,79,.10);border:1px solid rgba(10,127,79,.4);
+border-radius:7px;padding:4px 9px}
 .conv details{margin-top:8px;font-size:12px;color:var(--mut)}
 .conv details pre{margin-top:6px;max-height:300px}
 </style>
@@ -84,6 +91,17 @@ button:hover{border-color:var(--warn)}
   </div>
 
   <div class="card">
+    <h2>资料库耐久镜像 · a2a-agents.md <span class="count">沙箱丢数据时兜底</span></h2>
+    <div class="kv">
+      <span>镜像数据源</span><span id="libStore">library:a2a-agents.md</span>
+      <span>已认领任务</span><span id="libClaimed">—</span>
+      <span>本机别名</span><span id="libAgent">—</span>
+    </div>
+    <pre id="libJson" style="margin-top:10px"></pre>
+    <div class="count" style="margin-top:8px">认领状态生产环境由服务端 <code>/api/a2a-claim</code> 写入资料库 a2a-agents.md（沙箱本地状态会丢，资料库不丢）；本 POC 仅本地演示并实时渲染该 JSON。</div>
+  </div>
+
+  <div class="card">
     <h2>最新 20 条 · 按 TYPE 枚举分组 <span class="count" id="entryCount">—</span></h2>
     <div class="group">要干什么（USER_INSTRUCTION / REQUEST / PING / PROTOCOL / FOLLOWUP）</div>
     <div id="todoList"></div>
@@ -98,12 +116,51 @@ button:hover{border-color:var(--warn)}
     类型取自条目正文的 <code>- TYPE: &lt;枚举&gt;</code>；旧条目按 id 前缀回退推断。有新事件类型时在 TYPES 表加一行，未登记会显示「未分类（请补枚举）」。
     计时按 Asia/Shanghai：无收条从发出算，已收条未完工从收条算；超 10/30 分钟提示催办，超 30/60 分钟标红。
     Git 记录不等于消息已送达。页面只读：不改仓库、不写队列、不启动任务、不代表笔记已生成或亲读 / 完读。
+    认领（claim）：点「认领此任务」即占坑，带 30 分钟租约，到期自动释放，防止抢任务 / 卡死；认领状态生产落资料库 a2a-agents.md（沙箱丢数据兜底）。
   </div>
 </div>
 
 <script>
 "use strict";
 var RAW = "https://raw.githubusercontent.com/ae6623/we-read/main/skills/luoyu-reading/references/agent-communication";
+
+// === 认领（claim）最小验证 ===
+// 设计：每个 tracked 任务可由某 Agent 认领，带 30 分钟租约（lease_until），到期自动释放，
+// 防止两个 Agent 抢同一任务或任务卡死在某人口袋。
+// 生产环境认领状态应落到资料库 a2a-agents.md（沙箱本地状态会丢），由服务端 /api/a2a-claim 写入；
+// 本 POC 用 localStorage 演示认领 / 租约 / 自动释放逻辑，并实时渲染资料库镜像 JSON。
+var MY_AGENT = "workbuddy-local-main";   // 本机主 Agent 别名，可按需改
+var CLAIM_KEY = "a2a-claims-v1";
+var CLAIM_MS  = 30*60000;
+function loadClaims(){try{return JSON.parse(localStorage.getItem(CLAIM_KEY)||"{}");}catch(e){return {};}}
+function saveClaims(c){localStorage.setItem(CLAIM_KEY,JSON.stringify(c));}
+function getClaim(id){
+  var c=loadClaims(),cl=c[id];if(!cl)return null;
+  if(Date.now()>cl.lease_until){delete c[id];saveClaims(c);return null;}   // 租约过期自动释放
+  return cl;
+}
+function setClaim(id,who){
+  var c=loadClaims();c[id]={claimed_by:who,claimed_at:Date.now(),lease_until:Date.now()+CLAIM_MS};saveClaims(c);
+}
+function releaseClaim(id){var c=loadClaims();delete c[id];saveClaims(c);}
+function claimHtml(id){
+  var cl=getClaim(id);
+  if(cl){
+    var left=Math.max(0,cl.lease_until-Date.now());
+    return "<span class='claimed'>✅ <span class='who'>"+esc(cl.claimed_by)+
+      "</span> 认领中 · 剩 <span class='lease'>"+dur(left)+"</span> 自动释放"+
+      (cl.claimed_by===MY_AGENT?" <button type='button' onclick=\"relClaim('"+esc(id)+"')\">释放</button>":"")+
+      "</span>";
+  }
+  return "<button type='button' onclick=\"doClaim('"+esc(id)+"')\">认领此任务</button>";
+}
+function doClaim(id){setClaim(id,MY_AGENT);paintClaims();}
+function relClaim(id){releaseClaim(id);paintClaims();}
+function paintClaims(){
+  document.querySelectorAll('[data-claim]').forEach(function(el){
+    el.innerHTML=claimHtml(el.getAttribute('data-claim'));
+  });
+}
 
 // 条目类型枚举。有新事件就在这里加一行（label / group / needAck / tracked），
 // 不再写「不是阅读场次、不是新任务、不进未 ACK 清单、不代表亲读或完读」这类否定句。
@@ -280,6 +337,7 @@ function renderConv(s){
     "<div class='timer'>"+esc(dur(s.elapsed))+
       " <small>"+(s.done?"总耗时":(s.ack?"自收到收条起":"自发出起"))+
       (s.follows.length?" · 已催 "+s.follows.length+" 次":"")+"</small></div>"+
+    "<div class='claim' data-claim='"+esc(t.id)+"'>"+claimHtml(t.id)+"</div>"+
     (s.hint?"<div class='followup'><span>"+esc(s.hint)+"</span>"+
       "<button type='button' data-copy=\""+esc(txt)+"\" onclick=\"copyFollowup(this)\">复制催办话术</button>"+
       "</div>":"")+
@@ -298,6 +356,24 @@ function copyFollowup(btn){
   if(navigator.clipboard&&navigator.clipboard.writeText)
     navigator.clipboard.writeText(text).then(function(){btn.textContent="已复制 ✓";},fallback);
   else fallback();
+}
+// 资料库镜像：把当前 tasks + 认领状态渲染成 a2a-agents.md 应存的结构（JSON 便于服务端落库）
+function renderLibMirror(states){
+  var c=loadClaims();
+  var tasks=states.map(function(s){
+    var cl=c[s.task.id]||null;
+    return {id:s.task.id,title:excerpt(s.task.body),
+      status:s.done?"DONE":(s.ack?"IN_PROGRESS":"OPEN"),
+      claimed_by:cl?cl.claimed_by:null,
+      lease_until:cl?new Date(cl.lease_until).toISOString():null};
+  });
+  var claimed=tasks.filter(function(t){return t.claimed_by;}).length;
+  var obj={schemaVersion:1,store:"library:a2a-agents.md",
+    note:"沙箱本地状态会丢，认领以资料库为准",
+    generatedAt:new Date().toISOString(),tasks:tasks};
+  $("libJson").textContent=JSON.stringify(obj,null,2);
+  $("libClaimed").textContent=claimed+" / "+tasks.length+" 条";
+  $("libAgent").textContent=MY_AGENT;
 }
 function renderEntry(e){
   var t=entryType(e),m=meta(e),cls=m.group==="reply"?"k-reply":
@@ -351,6 +427,7 @@ async function refresh(){
 
   $("convList").innerHTML=states.length?states.map(renderConv).join(""):
     "<div class='empty'>（当前没有 tracked=true 的在册任务）</div>";
+  renderLibMirror(states);paintClaims();
 
   var buckets={todo:[],reply:[],other:[]};
   latest.forEach(function(e){buckets[meta(e).group].push(e);});
