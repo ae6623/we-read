@@ -92,3 +92,24 @@ python scripts/upload_to_qiniu.py --bucket we-read-assets --dir assets/img --pre
 
 素材地址都是绝对 URL，换回 GitHub 或换服务商时，只需全局替换域名前缀；
 上传脚本与目录结构不变，可直接重跑到另一家。
+
+## 8. 证书到期与提醒
+
+七牛免费证书有效期 **90 天，不会自动续期**。当前证书：
+
+| 项 | 值 |
+| --- | --- |
+| 域名 | cdn.js-dev.cn |
+| 签发 | TrustAsia LiteSSL（七牛免费证书） |
+| 到期 | **2027-02-05 19:59:59 +08:00** |
+
+首页已挂自动条幅 [`assets/js/cert-banner.js`](../assets/js/cert-banner.js)：
+
+- 到期前 **7 天**开始，每个页面顶部出现提醒条（可点「去续期」跳控制台、可关闭）；
+- 8–30 天只在浏览器控制台打印提示，不打扰读者；
+- 已过期时条幅变红，提示素材可能加载失败。
+
+**续期之后要同步改一处**：`assets/js/cert-banner.js` 顶部的 `EXPIRES` 常量，
+改成新证书的到期时间，否则条幅会按旧日期继续提醒。
+
+续期入口：<https://portal.qiniu.com/cdn/domain> → 选 `cdn.js-dev.cn` → HTTPS 配置 → 更换证书。
