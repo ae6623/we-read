@@ -457,25 +457,51 @@ details.reading-bar{margin:8px auto 4px;}
      包进 .card-body，所以文本是一个整体，可直接垂直居中（align-content 对
      多行轨道无效，必须用 .card-body 这个单一 flex 容器来居中）。卡片限宽
      居中，避免 1440px 屏上变成 1300px 长条、右侧大片空白。 */
+  /* width:100% 必须显式给：grid item 一旦有 margin-inline:auto，
+     浏览器就取消 stretch，宽度退化成 max-content（实测 374px），
+     卡片缩成中间一根窄柱子，右侧留白比卡片还宽。 */
   html[data-cols="1"] .set-units-grid .archive-card{
-    display:grid;grid-template-columns:120px minmax(0,1fr);
-    column-gap:20px;align-items:center;
-    max-width:880px;margin-inline:auto;
+    --unit-cover:clamp(120px,13vw,168px);
+    display:grid;grid-template-columns:var(--unit-cover) minmax(0,1fr);
+    column-gap:24px;align-items:center;
+    width:100%!important;max-width:950px;margin-inline:auto;
+    padding:16px 24px 16px 18px;
   }
   html[data-cols="1"] .set-units-grid .archive-card .card-cover{
-    grid-column:1;grid-row:1;width:120px;margin:0;align-self:center;
+    grid-column:1;grid-row:1;width:var(--unit-cover);margin:0;align-self:center;
   }
+  /* 一排一时卡片有 700px 宽的文字区，却只有「书名 + 作者」两行，
+     全都挤在左边，右边空得像张白纸。这里改成「书名 / 作者」左栏 +
+     日期右栏，日期给整行一个右侧锚点，横条才站得住。 */
   html[data-cols="1"] .set-units-grid .archive-card .card-body{
     grid-column:2;grid-row:1;min-width:0;
-    display:flex;flex-direction:column;justify-content:center;
+    display:grid;grid-template-columns:minmax(0,1fr) auto;
+    grid-template-areas:"title date" "meta meta";
+    column-gap:24px;row-gap:8px;align-content:center;
   }
-  /* 横条里 .card-top / .card-foot 原本 space-between，会把日期和「AI 笔记」
-     推到卡片最右缘，和左边书名隔着一大片空白；这里改成左对齐成一组 */
-  html[data-cols="1"] .set-units-grid .archive-card .card-top,
+  /* 书名和日期之间用点线连起来（目录页的做法）：
+     一排一的书名大多只占半行，右边空着只剩一个孤零零的日期；
+     点线把这段空白变成引导线，横条才像一条完整的目录行。 */
+  html[data-cols="1"] .set-units-grid .archive-card h3{
+    grid-area:title;font-size:1.12rem;line-height:1.6;margin:0;
+    display:flex;align-items:baseline;min-width:0;
+  }
+  html[data-cols="1"] .set-units-grid .archive-card h3 .card-title-link{flex:0 1 auto;min-width:0;}
+  html[data-cols="1"] .set-units-grid .archive-card h3::after{
+    content:"";flex:1 1 auto;min-width:24px;margin:0 0 .34em 14px;
+    border-bottom:1px dashed var(--line,#ded9cb);
+  }
+  html[data-cols="1"] .set-units-grid .archive-card .card-top{
+    grid-area:date;margin:0;justify-content:flex-end;align-self:start;
+  }
+  html[data-cols="1"] .set-units-grid .archive-card .card-top time{font-size:.76rem;}
+  html[data-cols="1"] .set-units-grid .archive-card .card-foot{
+    grid-area:meta;margin:0;
+  }
+  /* 作者行：作者与「AI 笔记」都按内容宽排在一起；
+     .card-author 默认 flex:1 1 auto 会撑满整行，把标签顶到最右缘 */
   html[data-cols="1"] .set-units-grid .archive-card .card-foot{justify-content:flex-start;gap:12px;}
   html[data-cols="1"] .set-units-grid .archive-card .card-foot .card-meta{margin-left:0;}
-  /* .card-author 默认 flex:1 1 auto，在宽横条里会撑满整行，
-     把「AI 笔记」顶到最右缘。这里收成内容宽 */
   html[data-cols="1"] .set-units-grid .archive-card .card-foot .card-author{flex:0 0 auto;}
 }
 /* 单册卡直接复用 archive-card：封面由 home-card.js 按 data-slug 注入，
