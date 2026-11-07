@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f3ed">
+  <title>读书进度 · AI读书</title>
+  <link rel="stylesheet" href="../assets/css/site.css">
+  <link rel="stylesheet" href="../assets/css/book-link-drawer.css">
+  <style>
+    body{background:var(--paper);color:var(--ink)}
+    .progress-nav{max-width:1120px;margin:0 auto;padding:16px 24px 8px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;font-size:.86rem}
+    .progress-nav a{color:var(--green);font-weight:700;text-decoration:none;text-underline-offset:4px}
+    .progress-nav a:hover{text-decoration:underline}
+    .progress-nav [aria-current=page]{color:var(--muted)}
+    .progress-main{max-width:1120px;margin:0 auto;padding:16px 24px 48px}
+    .progress-heading{padding:clamp(22px,4vw,38px);border:1px solid #d8e1d7;border-radius:20px;background:linear-gradient(145deg,#fffefa,#f1f5ee);box-shadow:0 5px 18px #24312e08}
+    .progress-heading .eyebrow{color:var(--gold);font-size:.72rem;font-weight:700;letter-spacing:.16em;margin:0 0 5px}
+    .progress-heading h1{margin:0;color:var(--green);font:600 clamp(1.8rem,5vw,2.65rem)/1.35 var(--serif);overflow-wrap:anywhere}
+    .progress-heading .lead{max-width:760px;margin:10px 0 0;color:var(--ink);font-size:.98rem}
+    .progress-heading .snapshot{margin:14px 0 0;color:var(--muted);font-size:.79rem;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+    .metric-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:22px 0 0}
+    .metric-card{min-width:0;padding:16px 18px;border:1px solid var(--line);border-radius:14px;background:var(--card)}
+    .metric-label{margin:0;color:var(--green);font-size:.84rem;font-weight:700}
+    .metric-value{margin:4px 0 1px;color:var(--green);font:600 clamp(1.65rem,4vw,2.15rem)/1.25 var(--serif);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+    .metric-note{margin:0;color:var(--muted);font-size:.76rem;line-height:1.55}
+    .verification-note{margin:15px 0 0;padding:12px 15px;border-left:3px solid var(--gold);border-radius:0 10px 10px 0;background:#f4f0e9;color:#554d41;font-size:.84rem}
+    .legend-section{margin:30px 0 24px}
+    .progress-main h2{margin:0 0 8px;color:var(--green);font:600 1.4rem/1.45 var(--serif)}
+    .legend-copy{margin:0;color:var(--muted);font-size:.87rem}
+    .progress-legend{display:flex;flex-wrap:wrap;gap:8px;margin:13px 0 0;padding:0;list-style:none}
+    .progress-legend li{padding:6px 10px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--ink);font-size:.76rem}
+    .progress-toolbar{display:flex;align-items:center;gap:12px;margin:24px 0 14px}
+    .progress-toolbar label{color:var(--green);font-size:.84rem;font-weight:700;white-space:nowrap}
+    .progress-toolbar input{width:100%;min-width:0;border:1px solid var(--line);border-radius:10px;background:var(--card);padding:11px 14px;color:var(--ink);font:inherit;font-size:.9rem}
+    .progress-toolbar input:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+    .book-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:start}
+    .book-card{min-width:0;padding:18px 18px 16px;border:1px solid var(--line);border-radius:16px;background:var(--card);box-shadow:0 5px 18px #24312e08}
+    .book-card h3{margin:0;color:var(--green);font:600 1.08rem/1.55 var(--serif);overflow-wrap:anywhere}
+    .book-stages{display:flex;flex-wrap:wrap;gap:7px;margin:11px 0 0}
+    .status-chip{display:inline-flex;align-items:center;min-height:28px;padding:4px 9px;border:1px solid var(--line);border-radius:999px;background:#fffefa;color:var(--ink);font-size:.72rem;line-height:1.35;overflow-wrap:anywhere}
+    .status-chip.plan{background:#f3e9da;border-color:#ead9c1;color:#795633}
+    .status-chip.claim{background:var(--sage);border-color:#cbd9ce;color:var(--green)}
+    .status-chip.running{background:var(--green);border-color:var(--green);color:#fff}
+    .status-chip.published{background:#e7ece6;border-color:#d6dfd5;color:#43564a}
+    .status-chip.paused{background:#f2eee7;color:#655c4f}
+    .status-chip.completed{background:#e7efe8;border-color:#cfdfd1;color:#315d43}
+    .online-state{margin:10px 0 0;color:var(--muted);font-size:.78rem;overflow-wrap:anywhere}
+    .book-empty-note{margin:12px 0 0;color:var(--muted);font-size:.82rem}
+    .book-card .book-link-drawer{margin-top:12px}
+    .empty-search{padding:22px;border:1px dashed var(--line);border-radius:12px;background:var(--card);color:var(--muted);text-align:center}
+    .progress-footer{max-width:1120px;margin:0 auto;padding:18px 24px 26px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;color:var(--muted);font-size:.8rem}
+    .progress-footer a{color:var(--green);font-weight:700;text-underline-offset:3px}
+    .skip-link:focus-visible,.progress-nav a:focus-visible,.progress-footer a:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+    @media(max-width:760px){.metric-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.book-grid{grid-template-columns:minmax(0,1fr)}}
+    @media(max-width:380px){.progress-nav{padding-inline:18px}.progress-main{padding:14px 18px 36px}.metric-card{padding:13px 12px}.book-card{padding:16px 14px}.progress-toolbar{align-items:stretch;flex-direction:column;gap:6px}.progress-footer{padding-inline:18px}}
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">跳到进度内容</a>
+  <nav class="progress-nav" aria-label="站点导航">
+    <a href="../">读书站首页</a>
+    <span aria-current="page">读书进度</span>
+  </nav>
+  <main class="progress-main" id="main-content">
+    <header class="progress-heading">
+      <p class="eyebrow">READING PROGRESS</p>
+      <h1>读书进度</h1>
+      <p class="lead">把计划、责任登记、实际运行、公开笔记、线上可用和完读分开看。责任登记或“在读”状态，不等于此刻正在运行。</p>
+      <p class="snapshot">数据更新：<!--READING_PROGRESS_SNAPSHOT--></p>
+    </header>
+
+    <section class="metric-grid" aria-label="进度汇总">
+      <!--READING_PROGRESS_STATS-->
+    </section>
+    <!--READING_PROGRESS_UNVERIFIED-->
+
+    <section class="legend-section" aria-labelledby="legend-heading">
+      <h2 id="legend-heading">状态说明</h2>
+      <p class="legend-copy">各项是独立事实，可能同时成立。公开笔记按仓库中真实存在的页面计；完读按 registry 的完读登记计。</p>
+      <ul class="progress-legend">
+        <li>计划中：书目在队列中</li>
+        <li>责任登记：已认领，不代表当前运行</li>
+        <li>实际运行：只计相互印证的当前场次</li>
+        <li>笔记已发布：仓库中存在公开笔记页</li>
+        <li>线上可用：本页加载后实时检查链接</li>
+        <li>已完读：按完读登记确认</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="books-heading">
+      <h2 id="books-heading">书目进度</h2>
+      <p class="legend-copy">共 <strong><!--TOTAL_BOOKS--></strong> 本；每本的各阶段分别标记。只展示书名、公开状态和真实笔记链接。</p>
+      <div class="progress-toolbar">
+        <label for="book-search">搜索书名</label>
+        <input id="book-search" type="search" placeholder="输入书名关键词" autocomplete="off">
+      </div>
+      <p class="legend-copy" id="search-result-count" aria-live="polite"></p>
+      <div class="book-grid" id="book-grid">
+        <!--READING_PROGRESS_BOOKS-->
+      </div>
+      <p class="empty-search" id="empty-search" hidden>没有找到匹配的书目。</p>
+    </section>
+
+    <script type="application/json" id="reading-progress-data"><!--READING_PROGRESS_DATA--></script>
+    <script>
+      (() => {
+        const data = JSON.parse(document.getElementById('reading-progress-data').textContent);
+        const cards = [...document.querySelectorAll('.book-card')];
+        const search = document.getElementById('book-search');
+        const resultCount = document.getElementById('search-result-count');
+        const empty = document.getElementById('empty-search');
+        const onlineCount = document.getElementById('online-book-count');
+        const onlineSummary = document.getElementById('online-summary');
+        const timestamp = () => new Intl.DateTimeFormat('zh-CN', {
+          timeZone: 'Asia/Shanghai', hour: '2-digit', minute: '2-digit', second: '2-digit'
+        }).format(new Date());
+
+        function filterBooks() {
+          const query = search.value.trim().toLocaleLowerCase('zh-CN');
+          let visible = 0;
+          cards.forEach(card => {
+            const matches = !query || card.dataset.search.toLocaleLowerCase('zh-CN').includes(query);
+            card.hidden = !matches;
+            if (matches) visible += 1;
+          });
+          resultCount.textContent = query ? `找到 ${visible} 本` : `显示全部 ${visible} 本`;
+          empty.hidden = visible !== 0;
+        }
+        search.addEventListener('input', filterBooks);
+        filterBooks();
+
+        async function checkOne(path) {
+          const url = new URL(`../${path.split('/').map(encodeURIComponent).join('/')}`, location.href);
+          const controller = new AbortController();
+          const timer = setTimeout(() => controller.abort(), 12000);
+          try {
+            const response = await fetch(url, { method: 'HEAD', cache: 'no-store', signal: controller.signal });
+            return response.ok;
+          } catch (_) {
+            return false;
+          } finally {
+            clearTimeout(timer);
+          }
+        }
+        async function runChecks() {
+          const queue = data.books.flatMap((book, bookIndex) => book.links.map((note, noteIndex) => ({bookIndex, noteIndex, path: note.path})));
+          const results = new Map();
+          let cursor = 0;
+          const workers = Array.from({length: Math.min(6, queue.length)}, async () => {
+            while (cursor < queue.length) {
+              const item = queue[cursor++];
+              results.set(`${item.bookIndex}:${item.noteIndex}`, await checkOne(item.path));
+            }
+          });
+          await Promise.all(workers);
+          let booksOnline = 0;
+          data.books.forEach((book, index) => {
+            if (!book.links.length) return;
+            const available = book.links.reduce((count, _, noteIndex) => count + (results.get(`${index}:${noteIndex}`) ? 1 : 0), 0);
+            const card = document.querySelector(`[data-book-index="${index}"]`);
+            const label = card.querySelector('[data-online-state]');
+            const chip = document.createElement('span');
+            chip.className = `status-chip ${available ? 'published' : 'paused'}`;
+            chip.textContent = available ? `线上可用 ${available}/${book.links.length}` : '本次未确认线上可用';
+            card.querySelector('.book-stages').append(chip);
+            label.textContent = available
+              ? `线上检查：${available}/${book.links.length} 个链接可访问（${timestamp()}，Asia/Shanghai）`
+              : `线上检查：本次未确认链接可访问（${timestamp()}，可稍后重试）`;
+            if (available) booksOnline += 1;
+          });
+          onlineCount.textContent = String(booksOnline);
+          onlineSummary.textContent = `至少有一个公开笔记链接可访问；检查于 ${timestamp()}（Asia/Shanghai）`;
+        }
+        if (data.books.some(book => book.links.length)) runChecks();
+        else {
+          onlineCount.textContent = '0';
+          onlineSummary.textContent = '当前没有已发布的笔记链接';
+        }
+      })();
+    </script>
+    <noscript><p class="verification-note">书名、状态和上方真实笔记链接在关闭 JavaScript 时仍可访问；线上可用性检查需要启用 JavaScript。</p></noscript>
+  </main>
+  <footer class="progress-footer">
+    <a href="../">返回读书站首页</a>
+    <a href="../reading-notes/">浏览公开笔记</a>
+  </footer>
+</body>
+</html>
