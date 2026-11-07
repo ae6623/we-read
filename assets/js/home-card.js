@@ -162,7 +162,7 @@
         img.className = 'card-cover-img';
         img.loading = 'lazy';
         img.alt = title;
-        img.src = 'assets/covers/' + slug + '.jpg';
+        img.src = 'https://cdn.js-dev.cn/assets/covers/' + slug + '.jpg';
         // 立即把封面绝对地址写进 localStorage（不依赖是否已滚动加载到）：
         // 详情页直接复用同一个 URL，浏览器缓存命中 → 秒出图
         try { localStorage.setItem('rdCover:' + slug, img.src); } catch (e) {}

@@ -171,7 +171,7 @@
     /* 封面：本地文件，取不到就整块收起，版式退回单列 */
     var coverImg = mask.querySelector('.share-hero-cover');
     if (coverImg && slug) {
-      var coverSrc = siteRoot() + 'assets/covers/' + encodeURIComponent(slug) + '.jpg';
+      var coverSrc = 'https://cdn.js-dev.cn/assets/covers/' + encodeURIComponent(slug) + '.jpg';
       coverImg.addEventListener('error', function () {
         box.classList.add('is-nocover');
       });

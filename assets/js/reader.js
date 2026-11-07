@@ -359,7 +359,7 @@
   /* 封面地址：优先用首页写进 localStorage 的地址（浏览器已有缓存，秒出）；
      没有则回落到同目录相对的本地封面文件（即从 git 拿），都不行再走 404 兜底 */
   function coverSrc(slug) {
-    var local = '../../../assets/covers/' + encodeURIComponent(slug) + '.jpg';
+    var local = 'https://cdn.js-dev.cn/assets/covers/' + encodeURIComponent(slug) + '.jpg';
     try {
       var c = localStorage.getItem('rdCover:' + slug);
       if (c) return c;
@@ -394,7 +394,7 @@
       // 本地也没有 = 这本本来没封面 → 整体降级回普通版式，不留一大片空墙
       var cov = sec.querySelector('.rd-hero-cover');
       cov.addEventListener('error', function () {
-        var local = '../../../assets/covers/' + encodeURIComponent(slug) + '.jpg';
+        var local = 'https://cdn.js-dev.cn/assets/covers/' + encodeURIComponent(slug) + '.jpg';
         if (this.getAttribute('src') !== local) { this.setAttribute('src', local); return; }
         degradeHero(slug, sec);
       });
