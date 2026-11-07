@@ -1137,7 +1137,7 @@
     var pitch = num(prefs.pitch, 0.5, 1.5, 1);
     var volume = num(prefs.volume, 0, 1, 1);
 
-    /* ── 云端音色（只收「念书不刺耳」的四个）────────────────────
+    /* ── 云端音色（普通话 / 台湾腔 / 粤语，只收「念书不刺耳」的几个）──
        所有设备默认都走服务端 edge-tts 的晓晓（最早那个自然女声），
        不跟着历史配置乱变；本机 SAPI 语音只在下拉里显式选中时才用。
        其余三个是给人挑的备选，选完会记住。
@@ -1146,7 +1146,9 @@
       { uri: 'zh-CN-XiaoxiaoNeural',  label: '晓晓 · 默认女声' },
       { uri: 'zh-CN-XiaoyiNeural',    label: '晓伊 · 年轻女声' },
       { uri: 'zh-CN-YunxiNeural',     label: '云希 · 少年男声' },
-      { uri: 'zh-TW-HsiaoChenNeural', label: '曉臻 · 台湾女声' }
+      { uri: 'zh-TW-HsiaoChenNeural', label: '曉臻 · 台湾女声' },
+      { uri: 'zh-HK-HiuMaanNeural',   label: '曉曼 · 粤语女声' },
+      { uri: 'zh-HK-WanLungNeural',   label: '雲龍 · 粤语男声' }
     ];
     var CLOUD_DEFAULT = CLOUD_VOICES[0].uri;
     function isCloudVoice(u) { return /Neural$/.test(u || ''); }
@@ -1236,11 +1238,13 @@
       var s = (v.lang || '') + ' ' + (v.name || '');
       return /zh[-_]?tw|zh[-_]?hant|cmn[-_]?hant|taiwan|台灣|台湾|國語|国语|hsiao|yunjhe|meijia/i.test(s);
     }
-    /* 快捷项对应的云端音色（本机没这个音色时兜底）；粤语服务端还没发布，先不给 */
+    /* 快捷项对应的云端音色（本机没这个音色时兜底）。粤语以前因服务端白名单
+       漏了 zh-HK 被静默回落成晓晓，现在前后端白名单已对齐，可以正式给出。 */
     function cloudKind(kind) {
       if (kind === 'auto' || kind === 'female') return CLOUD_DEFAULT;
       if (kind === 'male') return 'zh-CN-YunxiNeural';
       if (kind === 'tw') return 'zh-TW-HsiaoChenNeural';
+      if (kind === 'yue') return 'zh-HK-HiuMaanNeural';
       return null;
     }
     /* 某个快捷音色能不能用：云端有同名音色就优先云端，否则看本机是否装了 */
@@ -1279,6 +1283,10 @@
       else if (kind === 'tw') {
         hit = pool.filter(function (v) { return isTw(v) && isFemale(v); });
         if (!hit.length) hit = pool.filter(isTw);
+      } else if (kind === 'yue') {
+        hit = pool.filter(function (v) {
+          return /yue|粵|粤|zh[-_]?hk/i.test((v.lang || '') + ' ' + (v.name || ''));
+        });
       } else return '__auto__';
       return hit.length ? voiceKey(hit[0]) : '__auto__';
     }
@@ -1349,6 +1357,7 @@
           '<button type="button" data-voice="female">女声</button>' +
           '<button type="button" data-voice="male">男声</button>' +
           '<button type="button" data-voice="tw">台湾腔</button>' +
+          '<button type="button" data-voice="yue">粤语</button>' +
           '<button type="button" data-voice="auto">自动</button>' +
         '</div>' +
         '<label class="rd-sp-lab">语速 <span id="rdSpRateVal">1.0×</span>' +
@@ -1543,6 +1552,7 @@
       if (isCloudVoice(voiceURI)) return voiceURI;   // 下拉里明确选了云端备选
       if (activeChip === 'male') return 'zh-CN-YunxiNeural';
       if (activeChip === 'tw') return 'zh-TW-HsiaoChenNeural';
+      if (activeChip === 'yue') return 'zh-HK-HiuMaanNeural';
       return CLOUD_DEFAULT;   // 自动 / 女声 / 默认
     }
     function rateStr() {

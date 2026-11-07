@@ -104,5 +104,19 @@ curl -s -o /dev/null -w "%{http_code}\n" \
 | `TTS_MAX_CHARS` | 1600 | 单次请求文本上限（前端按 ~360 字切块） |
 | `TTS_DEFAULT_VOICE` | `zh-CN-XiaoxiaoNeural` | 默认音色 |
 
-音色：`zh-CN-XiaoxiaoNeural`（女）/ `zh-CN-YunxiNeural`（男）/
-`zh-TW-HsiaoChenNeural`（台湾腔女）/ `zh-TW-YunJheNeural`（台湾腔男）。
+音色白名单（与前端 `assets/js/reader.js` 的 `CLOUD_VOICES` 一一对应）：
+
+| 音色 | 说明 |
+|---|---|
+| `zh-CN-XiaoxiaoNeural` | 晓晓 · 普通话女声（默认） |
+| `zh-CN-XiaoyiNeural` | 晓伊 · 普通话女声 |
+| `zh-CN-YunxiNeural` / `zh-CN-YunjianNeural` | 云希 / 云健 · 普通话男声 |
+| `zh-TW-HsiaoChenNeural` / `zh-TW-HsiaoYuNeural` | 曉臻 / 曉雨 · 台湾腔女声 |
+| `zh-TW-YunJheNeural` | 雲哲 · 台湾腔男声 |
+| `zh-HK-HiuMaanNeural` / `zh-HK-HiuGaaiNeural` | 曉曼 / 曉佳 · 粤语女声 |
+| `zh-HK-WanLungNeural` | 雲龍 · 粤语男声 |
+
+> 白名单外的 `voice` 会被**静默替换成默认女声**，不会报错。加音色时前后端要同时改，
+> 改完还必须重新发布托管实例（仓库代码不会自动同步到线上服务）。
+> 自检：`curl -X POST "$BASE" -d '{"text":"你好","voice":"zh-HK-HiuMaanNeural"}' -o hk.mp3`
+> 与默认音色的 md5 必须不同，相同就说明没放行。
