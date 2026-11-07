@@ -25,7 +25,7 @@
  *    只读不报，否则一次阅读会被记成好几次。
  *
  * ── 引入方式（放 </body> 前，相对路径按文件深度调整）─────────
- *   <script src="../../../assets/js/visit-stats.js?v=20261105a" defer></script>
+ *   <script src="https://cdn.js-dev.cn/assets/js/visit-stats.js?v=20261105a" defer></script>
  */
 
 (function () {

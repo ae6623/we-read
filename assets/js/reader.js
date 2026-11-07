@@ -253,7 +253,7 @@
     if (cb) heroQueue.push(cb);
     if (heroLoading) return;
     heroLoading = true;
-    fetch('../../../assets/data/hero.json', { credentials: 'same-origin' })
+    fetch('https://cdn.js-dev.cn/assets/data/hero.json', { credentials: 'same-origin' })
       .then(function (r) { return r.ok ? r.json() : {}; })
       .catch(function () { return {}; })
       .then(function (m) {
@@ -941,7 +941,7 @@
 
   function pnLoad(cb) {
     if (pnOrder) return cb();
-    fetch('../../../assets/data/book-order.json', { credentials: 'same-origin' })
+    fetch('https://cdn.js-dev.cn/assets/data/book-order.json', { credentials: 'same-origin' })
       .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
       .then(function (list) {
         pnOrder = (Array.isArray(list) ? list : []).map(function (x) {
@@ -2130,7 +2130,7 @@
   function boot(){
     var base=location.pathname.replace(/\/reading-notes\/.*$/,'/');
     var s=document.createElement('script');
-    s.src=base+'assets/js/visit-stats.js?v=20261105a';
+    s.src=base+'https://cdn.js-dev.cn/assets/js/visit-stats.js?v=20261105a';
     s.defer=true;
     (document.body||document.documentElement).appendChild(s);
   }

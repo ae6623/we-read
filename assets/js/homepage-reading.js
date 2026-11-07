@@ -347,7 +347,7 @@
         toggle.focus();
       }
     });
-    fetch('assets/data/book-cats.json', { cache: 'no-cache' })
+    fetch('https://cdn.js-dev.cn/assets/data/book-cats.json', { cache: 'no-cache' })
       .then((r) => (r.ok ? r.json() : Promise.reject(new Error('HTTP ' + r.status))))
       .then((data) => {
         catSlug = (data && data.books) || {};
@@ -371,7 +371,7 @@
   (function initSeries() {
     const seriesPanel = document.getElementById('reading-panel-series');
     if (!seriesPanel) return;
-    fetch('assets/data/series.json', { cache: 'no-cache' })
+    fetch('https://cdn.js-dev.cn/assets/data/series.json', { cache: 'no-cache' })
       .then((r) => (r.ok ? r.json() : Promise.reject(new Error('HTTP ' + r.status))))
       .then((data) => {
         const defs = ((data && data.series) || []).filter((d) => d && d.slug && (d.title_has || []).length);
