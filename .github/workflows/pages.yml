@@ -63,3 +63,9 @@ jobs:
           # 默认 10 分钟对 674MB 的站点不够，放宽到 30 分钟。
           timeout: 1800000
           error_count: 30
+      - name: Upload to CDN (qiniu)
+        run: |
+          pip install qiniu
+          export QINIU_AK="${{ secrets.QINIU_AK }}"
+          export QINIU_SK="${{ secrets.QINIU_SK }}"
+          python scripts/upload_to_qiniu.py --bucket we-read-assets --dir _site
