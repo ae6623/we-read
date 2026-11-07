@@ -22,6 +22,9 @@ ROOT = Path(__file__).resolve().parent.parent
 TARGET = ROOT / "index.html"
 
 SVG_RE = re.compile(r"<svg\b([^>]*)>(.*?)</svg>", re.S)
+# 生成过的 sprite 带这个 id；再跑一次时直接跳过，保证幂等。
+SPRITE_MARKER = 'id="icon-sprite"'
+SPRITE_START = '<svg xmlns="http://www.w3.org/2000/svg" id="icon-sprite" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">'
 WS_RE = re.compile(r">\s+<")
 BLANK_RE = re.compile(r"\n\s*\n+")
 
@@ -32,6 +35,16 @@ def normalize(inner: str) -> str:
 
 
 def optimize(html: str) -> tuple[str, dict]:
+    if SPRITE_MARKER in html:
+        # 已经优化过：只做空白压缩，绝不再碰 <use>/<symbol>。
+        collapsed = BLANK_RE.sub("\n", WS_RE.sub("><", html))
+        return collapsed, {
+            "before": len(html),
+            "after": len(collapsed),
+            "svgs": 0,
+            "symbols": 0,
+        }
+
     symbols: dict[str, int] = {}
     order: list[str] = []
     replacements = 0
@@ -65,7 +78,7 @@ def optimize(html: str) -> tuple[str, dict]:
             for index, key in enumerate(order, start=1)
         ]
         sprite = (
-            '<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">'
+            SPRITE_START
             + "".join(sprite_defs)
             + "</svg>"
         )
