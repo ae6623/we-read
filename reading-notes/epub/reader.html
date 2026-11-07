@@ -74,9 +74,11 @@ html[data-theme="dark"] #warn{background:#3a2f1c;color:#e0c58e;border-color:#5c4
 @media(max-width:900px){
   .side{box-shadow:4px 0 20px #00000022}
   main,.side.hidden~main{left:0}
-  .bar{gap:5px;padding:0 8px}
-  .bar strong{max-width:110px}
-  #q{width:110px}
+  /* 窄屏顶栏：按钮组固定宽度，标题用 flex 吸收剩余空间；不用 auto margin，避免整组被推出屏 */
+  .bar{gap:3px;padding:0 6px}
+  .bar button,#dl{flex:0 0 auto;padding:5px 7px;min-width:0}
+  .bar strong{flex:1 1 0;min-width:0;max-width:none;margin-right:0;font-size:13px}
+  #q{flex:0 0 60px;width:60px;min-width:0;padding:5px 6px}
   .bar .hide-sm{display:none}
   #results{width:100%;max-height:55vh}
 }
@@ -273,7 +275,9 @@ html[data-theme="dark"] #warn{background:#3a2f1c;color:#e0c58e;border-color:#5c4
   function closeSide(){ setSide(false); }
   $("shelfBtn").onclick=function(){ setSide(!isSideOpen()) };
   $("sideMask").addEventListener("click", closeSide);
-  syncMask();   // 初始为展开时同步显示点击层
+  // 手机窄屏默认直接看正文（目录展开时正文区只剩百来像素）；点 ☰ 展开，点右侧收起
+  if(innerWidth<=900){ $("side").classList.add("hidden"); $("q").placeholder="搜索"; }
+  syncMask();
   $("filter").oninput=renderList;
   document.querySelectorAll(".tabs button").forEach(function(b){
     b.onclick=function(){

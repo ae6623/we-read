@@ -139,6 +139,8 @@ html.aa-rotate body{position:fixed;top:0;left:100vw;width:100vh;height:100vw;
 
 @media(max-width:900px){
   #rdPanel{top:104px;max-height:calc(100vh - 112px);width:min(292px,calc(100vw - 24px));}
-  #rdFab{top:62px;right:10px;}
+  /* 窄屏下给悬浮 Aa 描个金色边，深底上也一眼能找到 */
+  #rdFab{top:62px;right:10px;border-color:var(--accent);color:var(--accent);
+    box-shadow:0 2px 12px rgba(0,0,0,.45);}
   #rdSpeakFab{right:12px;bottom:calc(58px + env(safe-area-inset-bottom,0px));}
 }
