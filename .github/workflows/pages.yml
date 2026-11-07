@@ -28,6 +28,8 @@ jobs:
         run: python3 scripts/build-agent-dashboard.py
       - name: Generate public reading progress page
         run: python3 scripts/build-reading-progress.py
+      - name: Optimize homepage markup (inline SVG -> sprite)
+        run: python3 scripts/optimize_home.py --no-backup
       - name: Verify progress screen and public snapshot
         run: |
           python3 scripts/check-agent-dashboard.py
