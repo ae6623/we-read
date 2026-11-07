@@ -24,6 +24,8 @@ EPUB 上传服务（双模式，同一份代码）
   GET  /uploads/<book_id>.epub     EPUB 二进制（带 CORS）
   POST /api/upload?name=书名.epub  原始二进制 body（application/octet-stream）；
                                    文件名也可放 X-File-Name 请求头（URL 编码）
+  GET  /console                    A2A 应用控制台（只读状态页，同源取事件板）
+  GET  /api/a2a-board?date=...     纯转发读取公开仓当日 A2A 事件日文件（只读）
 
 环境变量：
   MODE=repo|sandbox        强制模式；默认按目录里是否存在 book-registry.json 自动判定
@@ -60,6 +62,9 @@ from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from xml.etree import ElementTree as ET
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+CONSOLE_HTML = os.path.join(HERE, "console.html")
+BOARD_RAW = ("https://raw.githubusercontent.com/ae6623/we-read/main/"
+             "skills/luoyu-reading/references/agent-communication")
 REPO_ROOT = os.environ.get("REPO_ROOT") or os.path.abspath(os.path.join(HERE, "..", ".."))
 PORT = int(os.environ.get("PORT", "8788"))
 MAX_BYTES = int(os.environ.get("MAX_BYTES", str(15 * 1024 * 1024)))
@@ -490,6 +495,40 @@ class Handler(SimpleHTTPRequestHandler):
         if "/.git/" in path or path.startswith("/.workbuddy/") or "/.env" in path:
             self.send_error(403, "forbidden")
             return
+        if path in ("/console", "/console.html"):
+            try:
+                with open(CONSOLE_HTML, "r", encoding="utf-8") as f:
+                    body = f.read().encode("utf-8")
+                self.send_response(200)
+                self.send_header("Content-Type", "text/html; charset=utf-8")
+                self.send_header("Content-Length", str(len(body)))
+                self.send_header("Cache-Control", "no-store")
+                self.end_headers()
+                self.wfile.write(body)
+            except OSError:
+                self.send_error(404, "console.html missing")
+            return
+        if path == "/api/a2a-board":
+            date = (urllib.parse.parse_qs(u.query).get("date") or
+                    [now().strftime("%Y-%m-%d")])[0]
+            if not re.match(r"^\d{4}-\d{2}-\d{2}$", date or ""):
+                self._json(400, {"ok": False, "error": "date 格式应为 YYYY-MM-DD"})
+                return
+            d = date.split("-")
+            url = "%s/%s/%s/%s.md?t=%d" % (BOARD_RAW, d[0], d[1], date,
+                                           int(now().timestamp()))
+            try:
+                req = urllib.request.Request(
+                    url, headers={"User-Agent": "we-read-a2a-console",
+                                  "Cache-Control": "no-cache"})
+                with urllib.request.urlopen(req, timeout=8) as r:
+                    text = r.read().decode("utf-8", "replace")
+                self._json(200, {"ok": True, "date": date, "text": text,
+                                 "source": "github-raw"})
+            except Exception as exc:
+                self._json(502, {"ok": False, "date": date,
+                                 "error": "事件板拉取失败：%s" % exc})
+            return
         if path == "/api/health":
             q = read_json(QUEUE if SANDBOX else REGISTRY, {})
             self._json(200, {
@@ -597,6 +636,7 @@ def main():
     print("  异步流程 : %s" % (PIPELINE_WEBHOOK or PIPELINE_HOOK or "未配置，仅入队待认领"))
     if SANDBOX:
         print("  API      : /api/health /api/uploads /api/queue /api/events /api/sync /api/upload")
+        print("  控制台   : /console  (/api/a2a-board 只读转发公开仓事件板)")
         print("  说明     : 沙箱文件需 sync_to_git.py 同步回仓库才是永久保存")
     else:
         print("  自动推送 : %s" % ("开启（AUTO_PUSH=1）" if AUTO_PUSH else "关闭，只本地 commit"))

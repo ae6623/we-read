@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A2A 应用控制台</title>
+<style>
+:root{--bg:#f7f8fa;--card:#fff;--fg:#1b1f24;--mut:#6a7480;--line:#e3e7ec;
+--ok:#0a7f4f;--wait:#b26a00;--warn:#1a5fb4;--chip:#eef1f5}
+@media (prefers-color-scheme:dark){:root{--bg:#161a1f;--card:#20262e;--fg:#e8edf3;
+--mut:#9aa6b3;--line:#333c47;--ok:#4ade80;--wait:#fbbf24;--warn:#7cc0ff;--chip:#2a323c}}
+*{box-sizing:border-box}body{margin:0;padding:28px;background:var(--bg);color:var(--fg);
+font:14px/1.65 -apple-system,"Segoe UI","Microsoft YaHei",sans-serif}
+.wrap{max-width:900px;margin:0 auto}h1{font-size:20px;margin:0 0 4px}
+.sub{color:var(--mut);font-size:12px;margin-bottom:20px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;
+padding:18px 20px;margin-bottom:14px}
+.verdict{font-size:17px;font-weight:600;margin:0 0 8px}
+.ok{color:var(--ok)}.wait{color:var(--wait)}.warn{color:var(--warn)}
+.kv{display:grid;grid-template-columns:160px 1fr;gap:6px 12px;font-size:13px}
+.kv span:nth-child(odd){color:var(--mut)}
+code{background:var(--chip);padding:1px 6px;border-radius:5px;font-size:12px}
+h2{font-size:14px;margin:0 0 10px;color:var(--mut);font-weight:600}
+ul{margin:0;padding-left:20px}li{margin:3px 0}
+.tag{display:inline-block;background:var(--chip);border-radius:5px;padding:0 7px;
+font-size:11px;margin-right:6px;color:var(--mut)}
+pre{white-space:pre-wrap;word-break:break-word;background:var(--chip);border-radius:8px;
+padding:12px;font-size:12px;max-height:260px;overflow:auto;margin:0}
+.pill{display:inline-block;border-radius:5px;padding:0 7px;font-size:11px;
+background:var(--chip);color:var(--mut)}
+.foot{color:var(--mut);font-size:12px;margin-top:18px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>A2A 应用控制台</h1>
+  <div class="sub">云端应用视角 · 每 30 秒自动刷新 · 最后刷新 <span id="stamp">—</span></div>
+
+  <div class="card">
+    <p class="verdict wait" id="verdict">正在读取事件板…</p>
+    <div class="kv">
+      <span>事件板数据源</span><span id="source">—</span>
+      <span>应用模式 / 健康</span><span id="appMode">—</span>
+      <span>服务地址</span><span id="appBase">—</span>
+      <span>队列 / 上传书目</span><span id="appCounts">—</span>
+      <span>云端最后回帖</span><span id="lastReply">—</span>
+    </div>
+  </div>
+
+  <div class="card"><h2>未 ACK 清单</h2><ul id="pending"></ul></div>
+  <div class="card"><h2>通信时间线（事件板实际条目）</h2><ul id="timeline"></ul></div>
+  <div class="card"><h2>板尾最近 8 条</h2><pre id="recent">—</pre></div>
+
+  <div class="foot">
+    判据：事件板中是否出现来自 workbuddy-cloud-luoyu 的 ACK / DONE 块。Git 记录不等于消息已送达。
+    页面只读：不改仓库、不写队列、不启动任务、不代表笔记已生成或用户亲读 / 完读。
+  </div>
+</div>
+
+<script>
+"use strict";
+var RAW = "https://raw.githubusercontent.com/ae6623/we-read/main/skills/luoyu-reading/references/agent-communication";
+var PENDING = [
+  "A2A-REQUEST-20261107-1138-epub-upload-deploy",
+  "A2A-REQUEST-20261107-1218-cloud-http-listener",
+  "A2A-REQUEST-20261107-1221-keepalive-http-listener",
+  "A2A-PING-20261107-1239-link-probe",
+  "A2A-REQUEST-20261107-1258-console-deploy"
+];
+
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){
+  return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+function $(id){return document.getElementById(id);}
+function shDate(offset){
+  var d=new Date(Date.now()-offset*86400000);
+  return new Intl.DateTimeFormat("sv-SE",{timeZone:"Asia/Shanghai",
+    year:"numeric",month:"2-digit",day:"2-digit"}).format(d);
+}
+function boardRawUrl(date){
+  var p=date.split("-");
+  return RAW+"/"+p[0]+"/"+p[1]+"/"+date+".md?t="+Date.now();
+}
+async function fetchBoard(date){
+  // 1) 同源代理（云端应用提供，无 CORS 问题）
+  try{
+    var r=await fetch("/api/a2a-board?date="+date+"&t="+Date.now(),{cache:"no-store"});
+    if(r.ok){var j=await r.json();if(j&&typeof j.text==="string")
+      return {text:j.text,source:"应用同源代理 /api/a2a-board"};}
+  }catch(e){}
+  // 2) 直连公开仓 raw（本地静态预览时的兜底，可能有分钟级 CDN 缓存）
+  try{
+    var r2=await fetch(boardRawUrl(date),{cache:"no-store"});
+    if(r2.ok)return {text:await r2.text(),source:"GitHub raw 直连（可能有 CDN 缓存）"};
+  }catch(e){}
+  return {text:null,source:null};
+}
+function parseEntries(text){
+  var out=[],re=/^### \[(\d{4}-\d{2}-\d{2} \d{2}:\d{2})\] (.+?) \/ (.+?) → TO (.+)$/gm,m;
+  while((m=re.exec(text))!==null){
+    out.push({time:m[1],who:m[2],id:m[3],to:m[4]});
+  }
+  return out;
+}
+async function appState(){
+  var out={mode:"未连接应用 API（本地预览或应用未部署）",base:"—",counts:"—"};
+  try{
+    var h=await fetch("/api/health",{cache:"no-store"});
+    if(h.ok){var j=await h.json();
+      out.mode=(j.ok?"ok / ":"unhealthy / ")+(j.mode||"?");
+      out.base=j.service_base||"—";
+      var q=await fetch("/api/queue",{cache:"no-store"});
+      var u=await fetch("/api/uploads",{cache:"no-store"});
+      var qn=q.ok?(await q.json()).books||[]:[];
+      var un=u.ok?(await u.json()).books||[]:[];
+      out.counts=qn.length+" 条队列 / "+un.length+" 本上传";
+    }
+  }catch(e){}
+  return out;
+}
+async function refresh(){
+  var parts=[],sources=[];
+  for(var i=0;i<2;i++){
+    var date=shDate(i),b=await fetchBoard(date);
+    if(b.text){parts.push(b.text);sources.push(b.source);}
+  }
+  var text=parts.join("\n");
+  var entries=parseEntries(text);
+  var cloud=entries.filter(function(e){
+    return /workbuddy-cloud-luoyu|cloud-luoyu/i.test(e.who)||/^A2A-(ACK|DONE)/i.test(e.id);
+  });
+  var app=await appState();
+
+  $("stamp").textContent=new Date().toLocaleString("zh-CN",{timeZone:"Asia/Shanghai",hour12:false});
+  $("source").textContent=sources.length?sources[0]:"不可用（两个数据源均未取到）";
+  $("appMode").textContent=app.mode;
+  $("appBase").textContent=app.base;
+  $("appCounts").textContent=app.counts;
+  $("lastReply").textContent=cloud.length?cloud[cloud.length-1].time+" · "+cloud[cloud.length-1].id:"仍无任何回帖";
+
+  var v=$("verdict");
+  if(!text){v.className="verdict warn";v.textContent="事件板数据暂不可用 · 下方显示静态清单";}
+  else if(cloud.length){v.className="verdict ok";
+    v.textContent="已检测到云端回帖 · 请核对是否覆盖下列 REQUEST 并回 PONG";}
+  else{v.className="verdict wait";v.textContent="等待云端 ACK · 链路尚未验证";}
+
+  $("pending").innerHTML=PENDING.map(function(id){
+    var state=cloud.length?"已有回帖，待逐条核对":"待 ACK";
+    return "<li><code>"+esc(id)+"</code> <span class='pill'>"+state+"</span></li>";
+  }).join("");
+
+  var tl=entries.slice(-20).map(function(e){
+    return "<li><span class='tag'>"+esc(e.time)+"</span><span class='tag'>"+esc(e.who)+
+      "</span>"+esc(e.id)+" → TO "+esc(e.to)+"</li>";
+  }).join("");
+  $("timeline").innerHTML=tl||"<li>（暂无解析到的条目）</li>";
+  $("recent").textContent=entries.slice(-8).map(function(e){
+    return "["+e.time+"] "+e.who+" / "+e.id+" → TO "+e.to;
+  }).join("\n")||"—";
+}
+refresh();
+setInterval(refresh,30000);
+</script>
+</body>
+</html>
