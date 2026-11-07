@@ -35,12 +35,22 @@ EXCLUDE_DIRS = {
 # 站点上从未被引用的重文件
 EXCLUDE_SUFFIXES = {".ttf", ".pdf", ".bak"}
 
+# 生成用源数据，运行时零引用（grep 全站 JS/HTML 确认）
+EXCLUDE_NAMES = {"outline.json", "outline.md"}
+
+# 根目录 README 之外，所有 .md 都是源文件（只有 index.html 链了 README.md）
+KEEP_MD = {"README.md"}
+
 # 本地开发/协作留下的隐藏目录
 EXCLUDE_HIDDEN = {".a2a", ".workbuddy", ".codebuddy", ".idea", ".vscode"}
 
 
 def keep(path: Path) -> bool:
     if path.suffix.lower() in EXCLUDE_SUFFIXES:
+        return False
+    if path.name in EXCLUDE_NAMES:
+        return False
+    if path.suffix.lower() == ".md" and path.as_posix() not in KEEP_MD:
         return False
     if path.parts:
         first = path.parts[0]
@@ -79,15 +89,28 @@ def main() -> int:
 
     if OUT.exists():
         shutil.rmtree(OUT)
+    shaved = 0
     for rel in kept:
         dest = OUT / rel
         dest.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(ROOT / rel, dest)
+        path = ROOT / rel
+        if path.suffix.lower() == ".html":
+            text = path.read_text(encoding="utf-8", errors="replace")
+            cut = text.find("</noscript>")
+            if "epub-redirect" in text and 0 < cut:
+                # 这些页已改成跳转 EPUB 阅读器，旧正文没有用了
+                trimmed = text[: cut + len("</noscript>")] + "</head><body></body></html>\n"
+                shaved += len(text) - len(trimmed)
+                dest.write_text(trimmed, encoding="utf-8", newline="")
+                continue
+        shutil.copy2(path, dest)
 
     for required in ("index.html", "assets/css/site.css", "reading-notes/index.html"):
         if not (OUT / required).exists():
             print(f"missing required file: {required}", file=sys.stderr)
             return 1
+    if shaved:
+        print(f"trimmed {shaved / 1024 / 1024:.1f} MB of dead full-text behind epub redirects")
     print(f"written {OUT}")
     return 0
 
