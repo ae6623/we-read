@@ -32,7 +32,11 @@
 
 ## 3. 上传
 
-脚本：[`scripts/upload_to_qiniu.py`](../scripts/upload_to_qiniu.py)，只用 Python 标准库。
+脚本：[`scripts/upload_to_qiniu.py`](../scripts/upload_to_qiniu.py)，依赖官方 SDK：
+
+```bash
+pip install qiniu
+```
 
 ```bash
 # Windows
@@ -80,7 +84,7 @@ python scripts/upload_to_qiniu.py --bucket we-read-assets --dir assets/img --pre
 
 ## 6. 额度与费用
 
-- 免费：10GB 存储、10GB 流量/月（以七牛当期政策为准）；
+- 免费：10GB 存储、10GB 流量/月（仅 HTTP；**HTTPS 流量不计入免费额度**，按量计费）；
 - 超出后按量计费，流量是大头；
 - 估算：一本 5MB 的 PDF，10GB 流量约等于 2000 次下载。
 

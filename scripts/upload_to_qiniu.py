@@ -23,9 +23,6 @@
 from __future__ import annotations
 
 import argparse
-import base64
-import hashlib
-import hmac
 import json
 import mimetypes
 import os
@@ -40,50 +37,16 @@ ROOT = Path(__file__).resolve().parent.parent
 UC_HOST = "https://uc.qbox.me"
 
 
-def urlsafe_b64(data: bytes) -> str:
-    return base64.urlsafe_b64encode(data).decode().rstrip("=")
+"""七牛上传（官方 SDK）。需要先 `pip install qiniu`。"""
 
 
-def upload_token(ak: str, sk: str, bucket: str, key: str, ttl: int = 3600) -> str:
-    policy = json.dumps({"scope": f"{bucket}:{key}", "deadline": int(time.time()) + ttl}, separators=(",", ":"))
-    encoded = urlsafe_b64(policy.encode())
-    sign = hmac.new(sk.encode(), encoded.encode(), hashlib.sha1).digest()
-    return f"{ak}:{urlsafe_b64(sign)}"
+def upload_one(auth, bucket: str, key: str, path: Path) -> None:
+    from qiniu import put_file_v2
 
-
-def upload_host(ak: str, bucket: str) -> str:
-    url = f"{UC_HOST}/v3/query?ak={urllib.parse.quote(ak)}&bucket={urllib.parse.quote(bucket)}"
-    with urllib.request.urlopen(url, timeout=20) as resp:
-        data = json.loads(resp.read().decode())
-    hosts = data.get("hosts") or {}
-    for region in hosts.values():
-        up = region.get("up") or []
-        if up:
-            return up[0]
-    raise RuntimeError("无法解析上传域名，检查 AK / bucket 是否正确")
-
-
-def post_file(host: str, token: str, key: str, path: Path) -> None:
-    boundary = "----dsh" + hashlib.md5(key.encode()).hexdigest()[:16]
-    ctype = mimetypes.guess_type(path.name)[0] or "application/octet-stream"
-    body = bytearray()
-    for name, value in (("token", token), ("key", key)):
-        body += f"--{boundary}\r\nContent-Disposition: form-data; name=\"{name}\"\r\n\r\n{value}\r\n".encode()
-    body += f"--{boundary}\r\nContent-Disposition: form-data; name=\"file\"; filename=\"{path.name}\"\r\n".encode()
-    body += f"Content-Type: {ctype}\r\n\r\n".encode()
-    body += path.read_bytes() + b"\r\n"
-    body += f"--{boundary}--\r\n".encode()
-
-    req = urllib.request.Request(
-        f"https://{host}/",
-        data=bytes(body),
-        headers={"Content-Type": f"multipart/form-data; boundary={boundary}"},
-        method="POST",
-    )
-    with urllib.request.urlopen(req, timeout=120) as resp:
-        payload = json.loads(resp.read().decode())
-    if "key" not in payload:
-        raise RuntimeError(f"{key}: {payload}")
+    token = auth.upload_token(bucket, key, 3600)
+    ret, info = put_file_v2(token, key, str(path))
+    if info.status_code != 200 or not ret or ret.get("key") != key:
+        raise RuntimeError(f"{key}: HTTP {info.status_code} {getattr(info, 'error', '')}".strip())
 
 
 def collect(directory: Path, includes: list[str]) -> list[tuple[str, Path]]:
@@ -125,14 +88,15 @@ def main() -> int:
         print("缺少 QINIU_AK / QINIU_SK 环境变量", file=sys.stderr)
         return 1
 
-    host = upload_host(ak, args.bucket)
-    print(f"上传域名: {host}")
+    from qiniu import Auth
+
+    auth = Auth(ak, sk)
     failed = []
     with ThreadPoolExecutor(max_workers=args.workers) as pool:
         futures = {}
         for key, path in files:
             object_key = f"{args.prefix}/{key}".replace("//", "/").lstrip("/")
-            futures[pool.submit(post_file, host, upload_token(ak, sk, args.bucket, object_key), object_key, path)] = object_key
+            futures[pool.submit(upload_one, auth, args.bucket, object_key, path)] = object_key
         for future in as_completed(futures):
             key = futures[future]
             try:
