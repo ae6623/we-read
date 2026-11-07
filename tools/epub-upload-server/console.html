@@ -123,6 +123,8 @@ border-radius:7px;padding:4px 9px}
 <script>
 "use strict";
 var RAW = "https://raw.githubusercontent.com/ae6623/we-read/main/skills/luoyu-reading/references/agent-communication";
+// 第三条只读通路：jsDelivr CDN。raw.githubusercontent 在境内常被拦，CDN 一般能过。
+var MIRROR = "https://cdn.jsdelivr.net/gh/ae6623/we-read@main/skills/luoyu-reading/references/agent-communication";
 
 // === 认领（claim）最小验证 ===
 // 设计：每个 tracked 任务可由某 Agent 认领，带 30 分钟租约（lease_until），到期自动释放，
@@ -193,6 +195,9 @@ function shDate(offset){
 function boardRawUrl(date){
   var p=date.split("-");return RAW+"/"+p[0]+"/"+p[1]+"/"+date+".md?t="+Date.now();
 }
+function boardMirrorUrl(date){
+  var p=date.split("-");return MIRROR+"/"+p[0]+"/"+p[1]+"/"+date+".md?t="+Date.now();
+}
 // 云端沙箱出网慢时 /api/a2a-board 可能挂住几十秒；给它硬超时，快速落到直连兜底。
 async function fetchT(url, ms){
   var ctl=(typeof AbortController!=="undefined")?new AbortController():null;
@@ -215,6 +220,11 @@ async function fetchBoard(date){
   try{
     var r2=await fetchT(boardRawUrl(date),8000);
     if(r2.ok)return {text:await r2.text(),source:"GitHub raw 直连（可能有 CDN 缓存）"};
+  }catch(e){}
+  // 3) jsDelivr CDN 兜底（raw 被墙时走这条）
+  try{
+    var r3=await fetchT(boardMirrorUrl(date),8000);
+    if(r3.ok)return {text:await r3.text(),source:"jsDelivr CDN 镜像（可能有缓存）"};
   }catch(e){}
   return {text:null,source:null};
 }

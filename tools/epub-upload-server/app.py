@@ -65,7 +65,11 @@ from xml.etree import ElementTree as ET
 HERE = os.path.dirname(os.path.abspath(__file__))
 CONSOLE_HTML = os.path.join(HERE, "console.html")
 BOARD_PREFIX = "skills/luoyu-reading/references/agent-communication"
-BOARD_RAW = "https://raw.githubusercontent.com/ae6623/we-read/main/" + BOARD_PREFIX
+# 注意：这里只到仓库根（末尾带 /），**不要再拼 BOARD_PREFIX**——调用方传入的 rel
+# 已经是仓库根相对完整路径，重复拼前缀会 404（曾把 main raw / 镜像两条通路一起废掉）。
+BOARD_RAW = "https://raw.githubusercontent.com/ae6623/we-read/main/"
+# 第三条只读通路：jsDelivr 的 GitHub CDN。沙箱/浏览器直连 raw.githubusercontent 不通时用它。
+BOARD_MIRROR = "https://cdn.jsdelivr.net/gh/ae6623/we-read@main/"
 REPO_ROOT = os.environ.get("REPO_ROOT") or os.path.abspath(os.path.join(HERE, "..", ".."))
 PORT = int(os.environ.get("PORT", "8788"))
 MAX_BYTES = int(os.environ.get("MAX_BYTES", str(15 * 1024 * 1024)))
@@ -152,6 +156,33 @@ def _fetch_text(url, timeout=BOARD_TIMEOUT, tries=1):
     return None, last
 
 
+def _board_cache_path(rel):
+    """本地快照路径：云端沙箱出网全断时，看板靠这份最后一次成功抓到的正文兜底。"""
+    base = os.path.join(DATA_ROOT, "board-cache")
+    return os.path.join(base, rel.replace("/", "__"))
+
+
+def _board_cache_read(rel):
+    p = _board_cache_path(rel)
+    try:
+        with open(p, "r", encoding="utf-8") as f:
+            return f.read(), os.path.getmtime(p)
+    except OSError:
+        return None, 0
+
+
+def _board_cache_write(rel, text):
+    p = _board_cache_path(rel)
+    try:
+        os.makedirs(os.path.dirname(p), exist_ok=True)
+        tmp = p + ".tmp"
+        with open(tmp, "w", encoding="utf-8") as f:
+            f.write(text)
+        os.replace(tmp, p)
+    except OSError:
+        pass
+
+
 def latest_shas(timeout=BOARD_TIMEOUT):
     """Atom feed 里最近几个 commit sha（不走 REST API，不受 60 次/小时限流）。
     刚 push 的 HEAD 在 raw CDN 上可能尚未收录而短暂 404，所以同时给出前两个
@@ -161,38 +192,67 @@ def latest_shas(timeout=BOARD_TIMEOUT):
     return re.findall(r"/ae6623/we-read/commit/([0-9a-f]{40})", feed or "")[:3]
 
 
-def board_snapshot(rel):
-    """返回 (sha, text, source)。rel 必须是**仓库根相对完整路径**（含 BOARD_PREFIX），
-    否则按 sha 拼出的 raw URL 会 404、静默退回有缓存的 main raw。
-    实时源探测有 BOARD_BUDGET 秒总预算：逐个试最近 3 个 sha，超预算 / 全失败
-    立刻退回 main raw。云端沙箱出网慢时，绝不把 /api/a2a-board 挂住几十秒。"""
-    started = time.time()
-
-    def left():
-        return BOARD_BUDGET - (time.time() - started)
-
-    shas = latest_shas(timeout=min(BOARD_TIMEOUT, max(1.0, left())))
-    err = ""
-    for idx, sha in enumerate(shas):
-        if left() <= 0:
-            err = "实时源总预算 %gs 用尽" % BOARD_BUDGET
-            break
-        text, err = _fetch_text(
+def _atom_sha_text(rel, timeout):
+    """最新提交 sha → 固定 sha 的 raw。最准但依赖 github.com，容易挂。"""
+    shas = latest_shas(timeout=timeout)
+    head = shas[0] if shas else None
+    for idx, sha in enumerate(shas[:2]):
+        text, _err = _fetch_text(
             "https://raw.githubusercontent.com/ae6623/we-read/%s/%s" % (sha, rel),
-            timeout=min(BOARD_TIMEOUT, left()), tries=1)
+            timeout=max(1.5, timeout), tries=1)
         if text is not None:
             label = ("commit-sha raw（实时）" if idx == 0 else
                      "commit-sha raw（HEAD 暂未收录，用前一提交）")
-            return sha, text, label
-    if left() <= 0 and not err:
-        err = "实时源总预算 %gs 用尽" % BOARD_BUDGET
-    text, err2 = _fetch_text("%s/%s?t=%d" % (BOARD_RAW, rel, int(time.time())),
-                             timeout=min(BOARD_TIMEOUT, max(2.0, left())), tries=1)
-    head = shas[0] if shas else None
-    if text is not None:
-        note = ("（实时源失败：%s）" % (err or err2 or "")[:100]) if (err or err2) else ""
-        return head, text, "main raw（可能有 CDN 缓存）" + note
-    return head, None, "unavailable"
+            return text, sha, label
+    return None, head, ""
+
+
+def board_snapshot(rel):
+    """返回 (sha, text, source)。rel 必须是**仓库根相对完整路径**（含 BOARD_PREFIX）。
+    三个只读源**同时赛跑**，先成功先返回，避免某个源挂住把后面的源一起拖死：
+      1) atom → 固定 sha 的 raw（最新，受 CDN 缓存影响最小）
+      2) main raw
+      3) jsDelivr CDN 镜像（raw 被墙时的替代通路）
+    全部失败才退本地快照（标明已过期）。总预算 BOARD_BUDGET 秒。"""
+    from concurrent.futures import ThreadPoolExecutor, as_completed
+    started = time.time()
+    sources = [
+        ("atom", lambda: _atom_sha_text(rel, 6.0)),
+        ("main raw（可能有 CDN 缓存）",
+         lambda: (_fetch_text("%s%s?t=%d" % (BOARD_RAW, rel, int(time.time())),
+                              timeout=BOARD_TIMEOUT, tries=1)[0], None)),
+        ("jsDelivr CDN 镜像（可能有缓存）",
+         lambda: (_fetch_text("%s%s" % (BOARD_MIRROR, rel),
+                              timeout=BOARD_TIMEOUT, tries=1)[0], None)),
+    ]
+    ex = ThreadPoolExecutor(max_workers=len(sources))
+    futs = {}
+    sha_hint = None
+    try:
+        futs = {ex.submit(fn): name for name, fn in sources}
+        for fu in as_completed(futs, timeout=BOARD_BUDGET):
+            try:
+                got = fu.result()
+            except Exception:
+                continue
+            if got and got[0] is not None:
+                text = got[0]
+                sha = got[1] if len(got) > 1 else None
+                label = got[2] if len(got) > 2 else ""
+                _board_cache_write(rel, text)
+                return (sha or None), text, (label or futs[fu])
+            if got and len(got) > 1 and got[1]:
+                sha_hint = sha_hint or got[1]
+    except Exception:
+        pass
+    finally:
+        ex.shutdown(wait=False)
+    # 本地快照兜底：全部出网失败时至少把「最后一次已知状态」显示出来，标明已过期
+    cached, mtime = _board_cache_read(rel)
+    if cached is not None:
+        when = _dt.datetime.fromtimestamp(mtime, TZ).strftime("%Y-%m-%d %H:%M")
+        return sha_hint, cached, "本地快照（最后成功抓取于 %s，可能已过期）" % when
+    return sha_hint, None, "unavailable"
 
 
 def now():
@@ -585,7 +645,7 @@ class Handler(SimpleHTTPRequestHandler):
             sha, text, source = board_snapshot(board_rel)
             if text is None:
                 self._json(502, {"ok": False, "date": date,
-                                 "error": "事件板拉取失败（sha 源与 main raw 均不可用）"})
+                                 "error": "事件板拉取失败（sha raw / main raw / jsDelivr 镜像均不可用，且本地无快照）"})
             else:
                 self._json(200, {"ok": True, "date": date, "text": text,
                                  "sha": sha, "source": source})
