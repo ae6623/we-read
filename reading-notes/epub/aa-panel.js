@@ -2,14 +2,14 @@
  *
  * 来源：assets/js/reader.js 的 initSettings / initSpeak / initFonts 三段，
  * 去掉合并页数据装配依赖，改成通过 hooks 适配任意阅读器（这里是 epub.js）。
- * 沿用详情页同款：#rdFab / #rdPanel / .rd-speak-box / #rdSpeakBar，
+ * 沿用详情页同款：#rdPanel / .rd-speak-box / #rdSpeakBar（Aa 入口改由宿主顶栏 #aaBtn 提供，不再创建悬浮 #rdFab），
  * 同款云端 edge-tts 晓晓、音色/语速/音调/音量、按需加载字体。
  * 新增图二「控制选项」：屏幕方向、摇动手机、上下/左右区域点击、长按、
  * 方向键与硬件按键、双栏阅读。
  *
  * 用法：EpubAA.init(hooks); EpubAA.bindFrame(rendition);
  * hooks: onCfg(cfg), page(dir), chapter(dir), back(), pageText(), highlight(el),
- *        onRelocated(cb), resize(), notify(msg), escape(), focusSearch()
+ *        onRelocated(cb), resize(), notify(msg), escape(), focusSearch(), openSearch()
  */
 (function () {
   'use strict';
@@ -108,6 +108,13 @@
     panel = document.createElement('div');
     panel.id = 'rdPanel'; panel.hidden = true;
     panel.innerHTML =
+      '<div class="rd-row"><span>翻页</span><span class="rd-btns">' +
+        btn('prev', '← 上一页') + btn('next', '下一页 →') +
+        btn('prevChapter', '上一章') + btn('nextChapter', '下一章') +
+      '</span></div>' +
+      '<div class="rd-row"><span>导航</span><span class="rd-btns">' +
+        btn('back', '返回书架') + btn('search', '全书搜索') +
+      '</span></div>' +
       '<div class="rd-row"><span>主题</span><span class="rd-btns">' +
         btn('th-dark', '夜色') + btn('th-cream', '米白') + btn('th-light', '纯白') + btn('th-green', '护眼') +
       '</span></div>' +
@@ -191,6 +198,7 @@
         else if (k === 'spread') toggleSpread();
         else if (k === 'flow') toggleFlow();
         else if (k.indexOf('th-') === 0) setTheme(k.slice(3));
+        else act(k, e);
         return;
       }
       var sw = e.target.closest ? e.target.closest('#rdTapMode') : null;
@@ -228,11 +236,9 @@
   }
 
   function buildFab() {
-    fab = document.createElement('button');
-    fab.id = 'rdFab'; fab.type = 'button'; fab.textContent = 'Aa';
-    fab.title = '阅读设置'; fab.setAttribute('aria-label', '阅读设置');
-    fab.onclick = function (e) { e.stopPropagation(); togglePanel(); };
-    document.body.appendChild(fab);
+    // Aa 入口由宿主顶栏提供（reader.html 的 #aaBtn，位于下载按钮左侧）。
+    // 不再创建 position:fixed 的悬浮 #rdFab；组件只复用这个元素做高亮/开合。
+    fab = document.getElementById('aaBtn') || null;
     speakFab = document.createElement('button');
     speakFab.id = 'rdSpeakFab'; speakFab.type = 'button'; speakFab.textContent = '🎧';
     speakFab.title = '听书：从当前页开始'; speakFab.setAttribute('aria-label', '听书');
@@ -258,7 +264,7 @@
   }
   function togglePanel(force) {
     panel.hidden = force === true ? false : !panel.hidden;
-    fab.classList.toggle('on', !panel.hidden);
+    if (fab) fab.classList.toggle('on', !panel.hidden);
     if (!panel.hidden) { fillVoices(); loadFonts(); refresh(); }
   }
   function updateLabels() {
@@ -408,6 +414,10 @@
       case 'speak': toggleSpeak(); break;
       case 'copy': copyAt(e); break;
       case 'back': if (H.back) H.back(); break;
+      case 'search':
+        if (panel) { panel.hidden = true; if (fab) fab.classList.remove('on'); }
+        if (H.openSearch) H.openSearch();
+        break;
     }
   }
   function copyAt(e) {
@@ -484,7 +494,7 @@
     if (k === '/') { if (H.focusSearch) { H.focusSearch(); e.preventDefault(); } return; }
     if (k === 'Escape') {
       if (H.escape && H.escape()) { e.preventDefault(); return; }
-      if (panel && !panel.hidden) { panel.hidden = true; fab.classList.remove('on'); e.preventDefault(); return; }
+      if (panel && !panel.hidden) { panel.hidden = true; if (fab) fab.classList.remove('on'); e.preventDefault(); return; }
       act(cfg.keyBack, e); e.preventDefault(); return;
     }
     var name = null;
@@ -756,7 +766,7 @@
       if (!panel || panel.hidden) return;
       if (panel.contains(e.target) || e.target === fab || e.target === speakFab ||
           (bar && bar.contains(e.target))) return;
-      panel.hidden = true; fab.classList.remove('on');
+      panel.hidden = true; if (fab) fab.classList.remove('on');
     });
     window.addEventListener('resize', syncRotate);
     window.addEventListener('orientationchange', function () {
@@ -785,6 +795,7 @@
     cycleTheme: cycleTheme,
     toggleFlow: toggleFlow,
     togglePanel: togglePanel,
+    closePanel: function () { if (panel) { panel.hidden = true; if (fab) fab.classList.remove('on'); } },
     theme: setTheme,
     pageText: function () { return H.pageText ? H.pageText() : []; },
     notify: notify,

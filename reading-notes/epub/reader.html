@@ -22,16 +22,30 @@ body{font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;backgroun
 a{color:var(--accent)}
 .bar{height:56px;display:flex;align-items:center;gap:7px;padding:0 12px;
      background:var(--bar);border-bottom:1px solid var(--line);position:relative;z-index:20}
-.bar strong{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;
-     text-overflow:ellipsis;max-width:230px;margin-right:auto}
-.bar .brand{font-size:13px;text-decoration:none;white-space:nowrap}
+/* 标题吃掉剩余空间，能显示多长就多长 */
+.bar strong{flex:1 1 auto;min-width:0;font-size:14px;font-weight:600;white-space:nowrap;
+     overflow:hidden;text-overflow:ellipsis}
 button,input,select{font:inherit}
 button{background:var(--panel);color:var(--fg);border:1px solid var(--line);
      border-radius:6px;padding:6px 10px;cursor:pointer;font-size:13px;white-space:nowrap}
 button:hover{border-color:var(--accent)}
 button.on{border-color:var(--accent);color:var(--accent)}
-#q{width:170px;padding:6px 9px;border:1px solid var(--line);border-radius:6px;
-   background:var(--panel);color:var(--fg);font-size:13px}
+.bar button{display:inline-flex;align-items:center;justify-content:center;
+     flex:0 0 auto;min-width:34px;height:34px;padding:0 9px}
+.bar svg{display:block}
+#dl{display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;
+     min-width:34px;height:34px;padding:0 9px;background:var(--panel);color:var(--fg);
+     border:1px solid var(--line);border-radius:6px;text-decoration:none;font-size:16px}
+#dl:hover{border-color:var(--accent)}
+/* 放大镜点开的搜索浮层：不占顶栏，标题完整保留 */
+#searchPop{position:absolute;top:calc(100% + 6px);right:8px;z-index:40;
+     display:flex;align-items:center;gap:6px;
+     width:min(360px,calc(100vw - 16px));padding:8px;background:var(--panel);
+     border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 26px #00000038}
+#searchPop[hidden]{display:none}
+#searchPop #q{flex:1 1 auto;min-width:0;width:auto;padding:7px 9px;
+     border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--fg);font-size:13px}
+#searchPop button{flex:0 0 auto;padding:7px 9px;height:auto;min-width:0}
 .side{position:fixed;top:56px;bottom:0;left:0;width:272px;background:var(--panel);
       border-right:1px solid var(--line);display:flex;flex-direction:column;z-index:15;
       transition:transform .2s}
@@ -39,11 +53,35 @@ button.on{border-color:var(--accent);color:var(--accent)}
 /* 目录展开时，点右侧正文区即收起目录；顶栏与侧栏本身不受影响 */
 #sideMask{position:fixed;top:56px;left:272px;right:0;bottom:0;z-index:14;display:none}
 #sideMask.on{display:block}
-.tabs{display:flex;border-bottom:1px solid var(--line)}
-.tabs button{flex:1;border:0;border-radius:0;background:transparent;padding:10px 0}
+.tabs{display:flex;border-bottom:1px solid var(--line);flex:0 0 auto}
+.tabs button{flex:1 1 0;min-width:0;border:0;border-radius:0;background:transparent;
+     padding:10px 2px;font-size:11.5px;white-space:nowrap}
 .tabs button.on{color:var(--accent);box-shadow:inset 0 -2px var(--accent)}
+.tabs #findBtn{flex:0 0 34px;padding:10px 0;font-size:13px;border-left:1px solid var(--line)}
+.tabs #findBtn.on{color:var(--accent);box-shadow:none}
 #filter{margin:9px;border:1px solid var(--line);border-radius:6px;padding:7px 9px;
         background:var(--bg);color:var(--fg);font-size:12px}
+#filter.flash{border-color:var(--accent);box-shadow:0 0 0 2px #d9a96b33}
+/* 上传面板：只在「上传」Tab 显示 */
+#uploadPane{flex:0 0 auto;margin:0 9px 9px;padding:10px;background:var(--soft);
+     border:1px solid var(--line);border-radius:8px;display:grid;gap:7px}
+#uploadPane[hidden]{display:none}
+#uploadPane .up-hd{font-size:12px;font-weight:700;color:var(--fg)}
+#uploadPane label{font-size:11px;color:var(--muted)}
+.up-row{display:flex;gap:5px}
+.up-row input{flex:1 1 auto;min-width:0;padding:6px 7px;font-size:11px;
+     border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--fg)}
+.up-row button{flex:0 0 auto;padding:6px 8px;font-size:11px}
+.up-state{font-size:11px;color:var(--muted);line-height:1.5}
+.up-state.ok{color:#3aa06a}.up-state.bad{color:#d98b4a}
+.up-drop{padding:12px 8px;text-align:center;font-size:11.5px;line-height:1.6;
+     border:1px dashed var(--line);border-radius:8px;cursor:pointer;color:var(--muted)}
+.up-drop:hover,.up-drop.over{border-color:var(--accent);color:var(--accent)}
+.up-bar{height:5px;border-radius:3px;background:var(--line);overflow:hidden;display:none}
+.up-bar.on{display:block}
+.up-bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .15s}
+.up-log{font-size:10.5px;line-height:1.55;color:var(--muted);max-height:120px;overflow:auto}
+.up-note{font-size:10.5px;line-height:1.55;color:var(--muted);margin:0}
 #list{flex:1;overflow:auto;padding:0 6px 14px}
 #list a{display:block;padding:8px 9px;border-radius:5px;text-decoration:none;
         color:var(--fg);font-size:12.5px;line-height:1.45;border-left:2px solid transparent}
@@ -74,12 +112,12 @@ html[data-theme="dark"] #warn{background:#3a2f1c;color:#e0c58e;border-color:#5c4
 @media(max-width:900px){
   .side{box-shadow:4px 0 20px #00000022}
   main,.side.hidden~main{left:0}
-  /* 窄屏顶栏：按钮组固定宽度，标题用 flex 吸收剩余空间；不用 auto margin，避免整组被推出屏 */
-  .bar{gap:3px;padding:0 6px}
-  .bar button,#dl{flex:0 0 auto;padding:5px 7px;min-width:0}
-  .bar strong{flex:1 1 0;min-width:0;max-width:none;margin-right:0;font-size:13px}
-  #q{flex:0 0 60px;width:60px;min-width:0;padding:5px 6px}
-  .bar .hide-sm{display:none}
+  .bar{gap:5px;padding:0 8px}
+  .bar strong{font-size:13px}
+  .bar button,#dl{min-width:32px;height:32px;padding:0 7px}
+  .tabs button{font-size:11px;padding:10px 1px}
+  .tabs #findBtn{flex-basis:30px;font-size:12px}
+  #searchPop{right:6px;width:calc(100vw - 12px)}
   #results{width:100%;max-height:55vh}
 }
 </style>
@@ -88,26 +126,40 @@ html[data-theme="dark"] #warn{background:#3a2f1c;color:#e0c58e;border-color:#5c4
 <body>
 <div id="warn">当前是 <code>file://</code> 打开，浏览器会拦截 epub 文件读取。请用线上 Pages 地址，或在本目录起一个静态服务器（例如 <code>python -m http.server</code>）后访问。</div>
 <header class="bar">
-  <button id="shelfBtn" title="展开/收起侧栏">☰</button>
-  <a class="brand hide-sm" href="index.html">书架</a>
+  <button id="shelfBtn" title="展开/收起目录">☰</button>
   <strong id="bookTitle">载入中…</strong>
-  <button id="prev" title="上一页 / 上一章">←</button>
-  <button id="next" title="下一页 / 下一章">→</button>
-  <button id="fontDown" class="hide-sm" title="缩小字号">A−</button>
-  <button id="fontUp" class="hide-sm" title="放大字号">A+</button>
+  <button id="searchBtn" title="全书搜索" aria-label="全书搜索"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="M15.5 15.5L21 21"></path></svg></button>
   <button id="aaBtn" title="Aa 阅读设置">Aa</button>
-  <button id="theme" title="切换主题">◐</button>
-  <button id="flow" class="hide-sm" title="切换分页/滚动">分页</button>
-  <input id="q" type="search" placeholder="全书搜索 /" aria-label="全书搜索">
   <a id="dl" download title="下载 EPUB">↓</a>
+  <div id="searchPop" hidden>
+    <input id="q" type="search" placeholder="全书搜索，回车执行" aria-label="全书搜索">
+    <button id="searchGo" type="button">搜索</button>
+    <button id="searchClose" type="button" aria-label="关闭搜索">✕</button>
+  </div>
 </header>
 
 <aside class="side" id="side">
   <div class="tabs">
-    <button data-tab="toc" class="on">章节目录</button>
-    <button data-tab="shelf">全部书目</button>
+    <button data-tab="toc" class="on">目录</button>
+    <button data-tab="shelf">云端☁️</button>
+    <button data-tab="upload">上传</button>
+    <button id="findBtn" title="图书搜索：切到云端书目并聚焦筛选" aria-label="图书搜索">🔍</button>
   </div>
   <input id="filter" type="search" placeholder="筛选书名或章节">
+  <div id="uploadPane" hidden>
+    <div class="up-hd">上传 EPUB 图书</div>
+    <label for="apiBase">上传服务地址</label>
+    <div class="up-row">
+      <input id="apiBase" type="text" spellcheck="false" placeholder="http://127.0.0.1:8788">
+      <button id="apiCheck" type="button">检查</button>
+    </div>
+    <div id="apiState" class="up-state">未检测。上传需要本机服务，线上 Pages 只能读云端书目。</div>
+    <div id="drop" class="up-drop">点此选择，或把 .epub 拖到这里<br>单本 ≤ 15 MB · 支持多选</div>
+    <input id="upFile" type="file" accept=".epub,application/epub+zip" multiple hidden>
+    <div class="up-bar" id="upBar"><i id="upBarIn"></i></div>
+    <div id="upLog" class="up-log"></div>
+    <p class="up-note">上传后自动入队补笔记，由读书 Agent 认领，不代表笔记已生成。文件进的是公开仓库，noindex 不等于私有。</p>
+  </div>
   <nav id="list"></nav>
 </aside>
 <div id="sideMask" aria-hidden="true"></div>
@@ -126,8 +178,18 @@ html[data-theme="dark"] #warn{background:#3a2f1c;color:#e0c58e;border-color:#5c4
   var AA = window.EpubAA;
   var params = new URLSearchParams(location.search);
   var bookId = params.get("book");
-  var book = null, rendition = null, toc = [], shelf = [], curHref = "";
+  var book = null, rendition = null, toc = [], shelf = [], uploads = [], curHref = "";
   var tab = "toc", searching = false;
+  var bookSrc = params.get("src") === "upload" ? "upload" : "cloud";
+  var apiBase = (function(){
+    var saved = "";
+    try{ saved = localStorage.getItem("epub-upload-api")||"" }catch(e){}
+    if(saved) return saved.replace(/\/+$/,"");
+    // 由本机上传服务托管时同源即可；线上 Pages 默认指向本机 8788
+    if(location.protocol.indexOf("http")===0 && /^(127\.0\.0\.1|localhost)$/.test(location.hostname))
+      return location.origin;
+    return "http://127.0.0.1:8788";
+  })();
   var relocatedCb = null, lastHi = null, dynCss = "";
   var c0 = AA ? AA.cfg() : {theme:"dark",fs:108,lh:1.85,spread:"none",flow:"paginated"};
   var lastSpread = c0.spread, lastFlow = c0.flow;
@@ -174,8 +236,6 @@ html[data-theme="dark"] #warn{background:#3a2f1c;color:#e0c58e;border-color:#5c4
     try{ rendition.themes.font(AA ? AA.fontFamily() : ""); }catch(e){}
     if(lastSpread !== c.spread){ lastSpread = c.spread; try{ rendition.spread(c.spread); }catch(e){} }
     if(lastFlow !== c.flow){ lastFlow = c.flow; try{ rendition.flow(c.flow); }catch(e){} }
-    $("flow").textContent = c.flow === "paginated" ? "分页" : "滚动";
-    $("flow").classList.toggle("on", c.flow !== "paginated");
     try{ rendition.resize(); }catch(e){}
   }
   function visibleParagraphs(){
@@ -212,6 +272,8 @@ html[data-theme="dark"] #warn{background:#3a2f1c;color:#e0c58e;border-color:#5c4
     rendition.display(toc[n].href);
   }
   function escapeHandled(){
+    var sp = $("searchPop");
+    if(sp && !sp.hidden){ closeSearch(); return true; }
     var res = $("results");
     if(res && res.style.display === "block"){ res.style.display="none"; return true; }
     if(isSideOpen()){ closeSide(); return true; }
@@ -228,7 +290,8 @@ html[data-theme="dark"] #warn{background:#3a2f1c;color:#e0c58e;border-color:#5c4
     resize: function(){ if(rendition) try{ rendition.resize(); }catch(e){} },
     notify: status,
     escape: escapeHandled,
-    focusSearch: function(){ $("q").focus(); }
+    focusSearch: openSearch,
+    openSearch: openSearch
   });
 
   /* ── 侧栏 / 目录 ── */
@@ -243,13 +306,27 @@ html[data-theme="dark"] #warn{background:#3a2f1c;color:#e0c58e;border-color:#5c4
   function renderList(){
     var kw = ($("filter").value||"").trim().toLowerCase();
     var el=$("list"), h=[];
-    if(tab==="shelf"){
-      shelf.forEach(function(b){
-        if(kw && (b.title+b.author).toLowerCase().indexOf(kw)<0) return;
-        h.push('<a href="reader.html?book='+encodeURIComponent(b.id)+'"'+
-          (b.id===bookId?' class="cur"':'')+'>'+esc(b.title)+
-          '<small>'+format(b.pages)+' 页 · '+format(b.chars)+' 字 · '+b.chapters+' 章 · '+
-          (b.bytes/1048576).toFixed(1)+' MB</small></a>');
+    $("uploadPane").hidden = (tab !== "upload");
+    $("filter").placeholder = tab==="upload" ? "筛选已上传书名" :
+                              tab==="shelf" ? "筛选云端书名" : "筛选章节";
+    document.querySelectorAll(".tabs button[data-tab]").forEach(function(b){
+      b.classList.toggle("on", b.dataset.tab===tab);
+    });
+    if(tab==="shelf" || tab==="upload"){
+      var cat = tab==="upload" ? uploads : shelf;
+      var src = tab==="upload" ? "&amp;src=upload" : "";
+      var isUpload = tab==="upload";
+      if(!cat.length) h.push('<div class="grp">'+
+        (isUpload ? "还没有上传的书。启动本机服务后在上方上传。" : "云端书目暂不可用")+'</div>');
+      cat.forEach(function(b){
+        if(kw && ((b.title||"")+(b.author||"")).toLowerCase().indexOf(kw)<0) return;
+        var cur = b.id===bookId && ((bookSrc==="upload")===isUpload);
+        var sub = isUpload
+          ? (b.chapters||0)+' 章 · '+((b.bytes||0)/1048576).toFixed(1)+' MB · '+esc(b.note_status||'待补笔记')
+          : format(b.pages)+' 页 · '+format(b.chars)+' 字 · '+(b.chapters||0)+' 章 · '+
+            ((b.bytes||0)/1048576).toFixed(1)+' MB';
+        h.push('<a href="reader.html?book='+encodeURIComponent(b.id)+src+'"'+
+          (cur?' class="cur"':'')+'>'+esc(b.title)+'<small>'+sub+'</small></a>');
       });
     }else{
       toc.forEach(function(t,i){
@@ -276,27 +353,123 @@ html[data-theme="dark"] #warn{background:#3a2f1c;color:#e0c58e;border-color:#5c4
   $("shelfBtn").onclick=function(){ setSide(!isSideOpen()) };
   $("sideMask").addEventListener("click", closeSide);
   // 手机窄屏默认直接看正文（目录展开时正文区只剩百来像素）；点 ☰ 展开，点右侧收起
-  if(innerWidth<=900){ $("side").classList.add("hidden"); $("q").placeholder="搜索"; }
+  if(innerWidth<=900){ $("side").classList.add("hidden"); }
   syncMask();
   $("filter").oninput=renderList;
-  document.querySelectorAll(".tabs button").forEach(function(b){
+  document.querySelectorAll(".tabs button[data-tab]").forEach(function(b){
     b.onclick=function(){
       tab=b.dataset.tab;
-      document.querySelectorAll(".tabs button").forEach(function(x){x.classList.remove("on")});
-      b.classList.add("on"); renderList();
+      $("findBtn").classList.remove("on");
+      renderList();
+      if(tab==="upload" && !apiChecked) checkApi();
     };
   });
 
-  /* 顶栏快捷按钮统一走 Aa 配置，避免两套状态 */
-  $("fontDown").onclick=function(){ if(AA) AA.stepFont(-1) };
-  $("fontUp").onclick=function(){ if(AA) AA.stepFont(1) };
-  $("theme").onclick=function(){ if(AA) AA.cycleTheme() };
-  $("flow").onclick=function(){ if(AA) AA.toggleFlow() };
+  /* ── 图书搜索🔍：切到云端☁️书目并聚焦筛选框，快速找书 ── */
+  $("findBtn").onclick=function(){
+    tab="shelf";
+    this.classList.add("on");
+    renderList();
+    var f=$("filter");
+    f.focus(); f.select();
+    f.classList.add("flash");
+    setTimeout(function(){ f.classList.remove("flash") },900);
+    if(!f.value.trim()) status("输入书名筛选云端书目",2000);
+  };
+
+  /* ── 上传：本机服务接收，落盘 git 目录 + 入队补笔记 ── */
+  var apiChecked = false;
+  function setApiState(msg, cls){
+    var e=$("apiState"); e.textContent=msg; e.className="up-state"+(cls?" "+cls:"");
+  }
+  function upLog(msg){
+    var e=$("upLog"); e.innerHTML=esc(msg)+"<br>"+e.innerHTML;
+  }
+  function saveApi(){ try{ localStorage.setItem("epub-upload-api",apiBase) }catch(e){} }
+  function checkApi(){
+    apiChecked=true;
+    fetch(apiBase+"/api/health?_="+Date.now(),{cache:"no-store"})
+      .then(function(r){ if(!r.ok) throw new Error("HTTP "+r.status); return r.json() })
+      .then(function(d){
+        setApiState("服务在线 · 上传目录 "+(d.upload_dir||"reading-notes/epub/uploads")+
+          " · registry r"+(d.registry_revision!=null?d.registry_revision:"?"),"ok");
+        return refreshUploads();
+      })
+      .catch(function(err){
+        setApiState("服务离线（"+err.message+"）。在仓库根目录执行 python tools/epub-upload-server/app.py，"+
+          "再从 http://127.0.0.1:8788/reading-notes/epub/index.html 打开。","bad");
+      });
+  }
+  function refreshUploads(){
+    return fetch("uploads.json?_="+Date.now(),{cache:"no-store"})
+      .then(function(r){return r.json()})
+      .then(function(d){ uploads=d.books||[]; if(tab==="upload") renderList(); })
+      .catch(function(){ uploads=[]; if(tab==="upload") renderList(); });
+  }
+  function uploadOne(file){
+    return new Promise(function(resolve){
+      var xhr=new XMLHttpRequest();
+      xhr.open("POST",apiBase+"/api/upload?name="+encodeURIComponent(file.name));
+      xhr.setRequestHeader("Content-Type","application/octet-stream");
+      xhr.setRequestHeader("X-File-Name",encodeURIComponent(file.name));
+      xhr.upload.onprogress=function(ev){
+        if(ev.lengthComputable){
+          $("upBar").classList.add("on");
+          $("upBarIn").style.width=Math.round(ev.loaded/ev.total*100)+"%";
+        }
+      };
+      xhr.onload=function(){
+        $("upBar").classList.remove("on"); $("upBarIn").style.width="0";
+        var d={}; try{ d=JSON.parse(xhr.responseText||"{}") }catch(e){}
+        if(xhr.status>=200 && xhr.status<300 && d.ok){
+          upLog("✓ "+file.name+" → "+d.book_id+
+            (d.queued?" · 已入队补笔记（registry r"+d.registry_revision+"）":" · 已更新，未重复入队"));
+        }else{
+          upLog("✗ "+file.name+"："+(d.error||("HTTP "+xhr.status)));
+        }
+        resolve(d);
+      };
+      xhr.onerror=function(){
+        $("upBar").classList.remove("on");
+        upLog("✗ "+file.name+"：网络错误，检查服务地址与 CORS");
+        resolve({});
+      };
+      $("upBar").classList.add("on");
+      xhr.send(file);
+    });
+  }
+  function uploadFiles(files){
+    var list=Array.prototype.filter.call(files||[],function(f){return /\.epub$/i.test(f.name)});
+    if(!list.length){ upLog("请选择 .epub 文件"); return }
+    setApiState("正在上传 "+list.length+" 本…","");
+    var chain=Promise.resolve();
+    list.forEach(function(f){ chain=chain.then(function(){ return uploadOne(f) }) });
+    chain.then(function(){
+      setApiState("上传结束，结果见下方日志","ok");
+      return refreshUploads();
+    }).then(function(){ if(tab==="upload") renderList(); });
+  }
+  $("apiBase").value=apiBase;
+  $("apiBase").onchange=function(){
+    apiBase=(this.value||"").trim().replace(/\/+$/,"")||apiBase;
+    this.value=apiBase; saveApi(); checkApi();
+  };
+  $("apiCheck").onclick=checkApi;
+  $("drop").onclick=function(){ $("upFile").click() };
+  $("upFile").onchange=function(){ uploadFiles(this.files); this.value="" };
+  ["dragenter","dragover"].forEach(function(t){
+    $("drop").addEventListener(t,function(e){ e.preventDefault(); $("drop").classList.add("over") });
+  });
+  ["dragleave","dragend"].forEach(function(t){
+    $("drop").addEventListener(t,function(e){ e.preventDefault(); $("drop").classList.remove("over") });
+  });
+  $("drop").addEventListener("drop",function(e){
+    e.preventDefault(); $("drop").classList.remove("over");
+    uploadFiles(e.dataTransfer && e.dataTransfer.files);
+  });
+
+  /* 顶栏只留：目录 / 标题 / 放大镜 / Aa / 下载；翻页、主题、字号等全在 Aa 面板 */
   $("aaBtn").onclick=function(){ if(AA) AA.togglePanel() };
-  $("prev").onclick=function(){ if(rendition) rendition.prev() };
-  $("next").onclick=function(){ if(rendition) rendition.next() };
-  $("prev").ondblclick=function(){jumpChapter(-1)};
-  $("next").ondblclick=function(){jumpChapter(1)};
 
   // ---- 全书搜索：逐章按需 load，绝不一次性解出全文
   function search(q){
@@ -341,24 +514,62 @@ html[data-theme="dark"] #warn{background:#3a2f1c;color:#e0c58e;border-color:#5c4
     }
     step();
   }
-  $("q").onkeydown=function(e){
-    if(e.key==="Enter"){ search(this.value.trim()); e.preventDefault() }
+  /* 放大镜 → 顶栏下方浮层；搜索执行后自动收起，结果面板照常显示 */
+  function openSearch(){
+    if(AA && AA.closePanel) AA.closePanel();   // 搜索浮层与 Aa 面板不叠在一起
+    $("searchPop").hidden=false;
+    var qi=$("q");
+    try{ qi.focus(); qi.select(); }catch(e){}   // 用户手势内同步聚焦，手机能直接弹键盘
+    setTimeout(function(){ try{ qi.focus(); qi.select(); }catch(e){} },0);
+  }
+  function closeSearch(){ $("searchPop").hidden=true; }
+  function runSearch(){
+    var v=$("q").value.trim();
+    if(!v){ $("q").focus(); return }
+    search(v); closeSearch();
+  }
+  $("searchBtn").onclick=function(e){
+    e.stopPropagation();
+    if($("searchPop").hidden) openSearch(); else closeSearch();
   };
-  $("q").onchange=function(){ if(this.value.trim()) search(this.value.trim()) };
+  $("searchGo").onclick=runSearch;
+  $("searchClose").onclick=closeSearch;
+  $("q").onkeydown=function(e){
+    if(e.key==="Enter"){ runSearch(); e.preventDefault(); }
+    else if(e.key==="Escape"){ closeSearch(); e.preventDefault(); }
+  };
+  $("q").onchange=function(){ if(!$("searchPop").hidden && this.value.trim()) runSearch(); };
+  document.addEventListener("click",function(e){
+    var p=$("searchPop");
+    if(p.hidden || p.contains(e.target) || e.target===$("searchBtn")) return;
+    closeSearch();
+  });
 
-  // ---- 启动
-  fetch("epubs.json?_="+Date.now(),{cache:"no-store"})
-    .then(function(r){return r.json()})
-    .then(function(d){
-      shelf=d.books||[];
-      if(!bookId){ bookId=(shelf[0]||{}).id; }
-      var meta=shelf.filter(function(b){return b.id===bookId})[0];
-      if(!meta){ status("未找到该书，请从书架选择",6000); tab="shelf"; renderList(); return }
+  // ---- 启动：云端清单与上传清单分开加载，互不污染
+  var catJson = function(name){
+    return fetch(name+"?_="+Date.now(),{cache:"no-store"})
+      .then(function(r){ if(!r.ok) throw new Error("HTTP "+r.status); return r.json() })
+      .catch(function(){ return {books:[]} });
+  };
+  Promise.all([catJson("epubs.json"), catJson("uploads.json")])
+    .then(function(res){
+      shelf=res[0].books||[]; uploads=res[1].books||[];
+      if(bookSrc==="upload") tab="upload";
+      renderList();
+      if(tab==="upload" && !apiChecked) checkApi();
+      var cat = bookSrc==="upload" ? uploads : shelf;
+      if(!bookId){ bookId=(cat[0]||shelf[0]||{}).id; }
+      var meta=cat.filter(function(b){return b.id===bookId})[0];
+      if(!meta){ status("未找到该书，请从书架选择",6000); tab=bookSrc==="upload"?"upload":"shelf"; renderList(); return }
       $("bookTitle").textContent=meta.title;
       document.title=meta.title+" · 原书阅读器";
-      $("dl").href=meta.file; $("dl").setAttribute("download",meta.title+".epub");
+      // 上传书若由另一台机/另一端口的服务托管，拼绝对路径（服务已开 CORS）
+      var fileUrl = meta.file;
+      if(bookSrc==="upload" && apiBase && apiBase!==location.origin && !/^https?:/i.test(fileUrl||""))
+        fileUrl = apiBase + "/reading-notes/epub/" + String(fileUrl||"").replace(/^\//,"");
+      $("dl").href=fileUrl; $("dl").setAttribute("download",meta.title+".epub");
 
-      book=ePub(meta.file);
+      book=ePub(fileUrl);
       rendition=book.renderTo("viewer",{
         width:"100%",height:"100%",
         manager:"default",           // 关键：一次只挂载一个章节，正文再长也不卡

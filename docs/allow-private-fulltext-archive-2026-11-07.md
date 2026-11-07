@@ -152,3 +152,7 @@ Agent 执行的是共享规则，不是在辩论。被禁的是「把整篇原�
 ### 不改动
 
 三处规则文本、白名单登记表、registry / roster、用户亲读 `resume_point` / completion / 完读计数、既有导读正文与结论、集合页 16 本条目的分析文字。
+
+### 阅读器交互与上传补书（10:35 追加）
+
+本轮延续 R13（EPUB 在线阅读器），追加 Aa 入口归位、上传 EPUB、异步补笔记入队、左侧 Tab 与图书搜索。完整需求、架构约束（Pages 静态无服务端，上传必须本机服务）、解决方案、文件清单与验收见 **`docs/epub-reader-upload-2026-11-07.md`**；规范见 `openspec/changes/epub-reader-upload-2026-11-07/`。核心口径：上传服务落盘 `reading-notes/epub/uploads/` 并写 `uploads.json`，按 `reading-state-protocol.md` 以 `queued` / `unclaimed` / `user_requested` 入 `book-registry.json`、追加当日交接事件，由管理员分发给读书 Agent 补笔记；不新造队列、不自动抢 main 推送、不宣称笔记已生成。云端 203 本清单与 `books/*.epub` 保持不变。

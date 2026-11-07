@@ -1,7 +1,8 @@
 /* aa-panel.css — EPUB 阅读器「Aa」配置面板
- * 把详情页 assets/css/reader.css 的 Aa 组件（#rdFab / #rdPanel / .rd-speak-box /
- * #rdSpeakBar）通用到原书阅读器；新增图二风格的控制选项：屏幕方向、区域点击、
- * 双栏阅读、方向键/硬件按键。配色跟随 html[data-theme]，默认夜色。
+ * 把详情页 assets/css/reader.css 的 Aa 组件（#rdPanel / .rd-speak-box /
+ * #rdSpeakBar）通用到原书阅读器；Aa 入口用宿主顶栏 #aaBtn，不再有悬浮 #rdFab。
+ * 新增图二风格的控制选项：屏幕方向、区域点击、双栏阅读、方向键/硬件按键。
+ * 配色跟随 html[data-theme]，默认夜色。
  */
 html[data-theme="dark"]{
   --bg:#17181b;--panel:#202126;--fg:#d8d5ce;--muted:#8a877f;--line:#33353a;
@@ -28,18 +29,11 @@ html[data-theme="green"]{
   --act-bg:#bfe3c6;--act-fg:#17422f;--act-bd:#95c8a1;
 }
 
-/* ── 右上角 Aa 钮（详情同款 34×34 悬浮方块） ── */
-#rdFab{position:fixed;top:66px;right:12px;z-index:60;
-  width:34px;height:34px;box-sizing:border-box;padding:0;
-  font:600 13px/1 -apple-system,"Segoe UI","Microsoft YaHei",sans-serif;
-  color:var(--txt);background:var(--panel);border:1px solid var(--line);border-radius:9px;
-  cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.16);
-  display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;}
-#rdFab:hover,#rdFab.on{border-color:var(--accent);color:var(--accent);}
+/* ── Aa 入口在顶栏（宿主 #aaBtn，位于下载按钮左侧），此处不再有悬浮方块 ── */
 
-/* ── 面板本体 ── */
-#rdPanel{position:fixed;top:106px;right:12px;z-index:60;
-  width:292px;max-width:calc(100vw - 24px);max-height:calc(100vh - 122px);
+/* ── 面板本体：紧贴顶栏下沿、右对齐展开 ── */
+#rdPanel{position:fixed;top:62px;right:8px;z-index:60;
+  width:292px;max-width:calc(100vw - 16px);max-height:calc(100vh - 74px);
   overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;
   background:var(--panel);border:1px solid var(--line);border-radius:12px;
   padding:12px 14px;box-shadow:0 10px 32px rgba(0,0,0,.28);
@@ -138,9 +132,6 @@ html.aa-rotate body{position:fixed;top:0;left:100vw;width:100vh;height:100vw;
   margin:0;transform:rotate(90deg);transform-origin:0 0;}
 
 @media(max-width:900px){
-  #rdPanel{top:104px;max-height:calc(100vh - 112px);width:min(292px,calc(100vw - 24px));}
-  /* 窄屏下给悬浮 Aa 描个金色边，深底上也一眼能找到 */
-  #rdFab{top:62px;right:10px;border-color:var(--accent);color:var(--accent);
-    box-shadow:0 2px 12px rgba(0,0,0,.45);}
+  #rdPanel{top:62px;max-height:calc(100vh - 70px);width:min(292px,calc(100vw - 16px));}
   #rdSpeakFab{right:12px;bottom:calc(58px + env(safe-area-inset-bottom,0px));}
 }
