@@ -12,7 +12,8 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: true
+  # 站点约 674MB，单次部署要十几分钟；新推送不能把快完成的部署取消掉。
+  cancel-in-progress: false
 
 jobs:
   deploy:
@@ -40,3 +41,7 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          # 默认 10 分钟对 674MB 的站点不够，放宽到 30 分钟。
+          timeout: 1800000
+          error_count: 30
