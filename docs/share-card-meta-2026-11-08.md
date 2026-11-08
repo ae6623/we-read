@@ -2,7 +2,7 @@
 
 > 日期：2026-11-08 16:33
 > 提出：用户发微信时链接卡片只有 `reader.js-dev.cn` 一行域名，没有站名、描述、图
-> 状态：代码已改，待微信侧缓存刷新验证
+> 状态：**线上已生效**（2026-11-08 16:50 复核通过），待微信侧换 URL 验证
 
 ## 一、需求（用户原话口径）
 
@@ -80,9 +80,26 @@ CDN 缓存 `max-age=31536000`，**不刷新等于一年不生效**。
 2. `description` = `通过阅读，感知你我本心，快来一起读书吧。`
 3. `https://reader.js-dev.cn/assets/img/share-icon.png` 返回 200、512×512 PNG
 4. `og:image` 指向该 PNG
-5. **微信里验证必须换 URL**：分享 `https://reader.js-dev.cn/?v=2`（或任意新参数），
+5. **微信里验证必须换 URL**：分享 **`https://reader.js-dev.cn/index.html?v=2`**（或任意新参数），
    微信会当新链接重新抓取；直接重发旧链接仍可能是缓存里的旧卡片。
+   ⚠️ **不要写成 `https://reader.js-dev.cn/?v=2`** —— 实测返回 404 / 30 字节：
+   七牛目录索引只在无查询串时生效，带参数必须带文件名。
    若仍不行，等微信缓存自然过期，或用公众号 JS-SDK 定制分享（需 AppID + 签名，静态站做不到）。
+
+### 线上复核结果（2026-11-08 16:50）
+
+| 检查 | 结果 |
+|---|---|
+| `https://reader.js-dev.cn/` | 200，590741 字节，`<title>落雨·阅读札记</title>`，`og:title` 命中 1 |
+| `https://reader.js-dev.cn/index.html` | 200，同上，`X-Cache-Status: HIT` / `Age: 17` |
+| `.../index.html?v=2` | 200，新元数据，可用于破微信缓存 |
+| `.../assets/img/share-icon.png` | 200，512×512 PNG，1834 字节 |
+| description | `通过阅读，感知你我本心，快来一起读书吧。` |
+
+**CDN 刷新过程**：URL 刷新配额当天已用尽（500/500，`code 400034`）。目录刷新提交成功
+但未让根对象失效；最终用**预热 `prefetch_urls`** 把最新内容拉到边缘节点，
+`X-Cache-Status` 由 `HIT / Age 59883` 变为 `MISS → HIT / Age 17`，
+`Last-Modified` 更新为 `Sun, 08 Nov 2026 08:46:50 GMT`，线上生效。
 
 ## 六、不做清单
 

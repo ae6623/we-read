@@ -65,6 +65,8 @@ CSS、JS、书卡数据。线上部署版本落后 `main` 约 375 行内容，�
 
 ### Requirement: 微信缓存 MUST 由换 URL 破除
 
-微信对已分享过的链接有卡片缓存。验证 SHALL 使用新 URL（如
-`https://reader.js-dev.cn/?v=2`），MUST NOT 期待重发旧链接立即生效。
+微信对已分享过的链接有卡片缓存。验证 SHALL 使用带文件名的新 URL
+（如 `https://reader.js-dev.cn/index.html?v=2`），MUST NOT 期待重发旧链接立即生效。
+**`https://reader.js-dev.cn/?v=2` MUST NOT 用作验证地址** —— 实测 404 / 30 字节，
+七牛目录索引只在无查询串时生效。
 静态站无公众号 JS-SDK 签名能力，实现 MUST NOT 声称可用 `updateAppMessageShareData` 兜底。

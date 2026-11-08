@@ -21,14 +21,15 @@
 
 ## 4. 上线与验证
 
-- [ ] 4.1 上传线上部署版 `index.html` 到七牛桶根 key
-- [ ] 4.2 上传 `assets/img/share-icon.png` 到七牛
-- [ ] 4.3 刷新 CDN URL 缓存（根 / index.html / share-icon.png）
-- [ ] 4.4 `curl` 复核线上 title / description / og 生效
-- [ ] 4.5 `share-icon.png` 返回 200 且为 512×512
-- [ ] 4.6 合并提交并 push 到 `origin/main`
+- [x] 4.1 上传线上部署版 `index.html` 到七牛桶根 key（HTTP 200）
+- [x] 4.2 上传 `assets/img/share-icon.png` 到七牛（HTTP 200）
+- [x] 4.3 刷新 CDN：URL 刷新配额用尽（500/500）→ 目录刷新 → **预热 `prefetch_urls` 生效**
+- [x] 4.4 `curl` 复核：`/` 与 `/index.html` 均返回 590741 字节、新 title、新 description、`og:title` 命中
+- [x] 4.5 `share-icon.png` 返回 200、512×512 PNG
+- [x] 4.6 合并提交并 push 到 `origin/main`（`6870286`，后续验收回填另起一条）
 
 ## 5. 微信侧（需用户操作）
 
-- [ ] 5.1 **换 URL 破微信缓存**：分享 `https://reader.js-dev.cn/?v=2`，不要重发旧链接
+- [ ] 5.1 **换 URL 破微信缓存**：分享 `https://reader.js-dev.cn/index.html?v=2`，不要重发旧链接
+      ⚠️ 根路径 `https://reader.js-dev.cn/?v=2` 实测 404（七牛目录索引不认带查询串的根路径）
 - [ ] 5.2 若仍不生效，等微信缓存过期；静态站无法用 JS-SDK 主动改写卡片
