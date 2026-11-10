@@ -15,8 +15,14 @@
 (function () {
   'use strict';
 
-  var PAGE_URL = location.href.split('#')[0];
-  var PAGE_TITLE = (document.title || document.querySelector('h1') && document.querySelector('h1').textContent || '').replace(/｜.*$/, '').trim();
+  /* 详情页的「上一篇 / 下一篇」是无刷新换书（fetch + pushState），
+     本脚本不会重新执行。所以 URL / 标题一律现取，不能在加载时快照，
+     否则换书后分享的还是进来的那一本。 */
+  function pageUrl() { return location.href.split('#')[0]; }
+  function pageTitle() {
+    return (document.title || document.querySelector('h1') && document.querySelector('h1').textContent || '')
+      .replace(/｜.*$/, '').trim();
+  }
   var SELF_SRC = (document.currentScript && document.currentScript.src) || '';
   var LAYOUT_KEY = 'wrShareLayout';
 
@@ -72,19 +78,22 @@
   };
 
   function pageSlug() {
-    var s = (document.body.getAttribute('data-slug') || '').trim();
-    if (s) return s;
+    /* 无刷新换书会 pushState 换 URL，但 body[data-slug] 是壳页写死的旧值；
+       以 URL 为准才拿得到「当前这一本」。 */
     var m = location.pathname.match(/\/books\/([^\/]+)\//);
-    return m ? safeDecode(m[1]) : '';
+    if (m) return safeDecode(m[1]);
+    return (document.body.getAttribute('data-slug') || '').trim();
   }
 
   function bookTitle() {
-    var t = safeDecode((document.body.getAttribute('data-title') || '').trim());
+    /* renderChips() 换书时会更新 document.title 与 h1，优先用它们；
+       body[data-title] 只在两者都缺时兜底（壳页写死，可能已过期）。 */
+    var t = (document.title || '').replace(/[｜|][^｜|]*$/, '').trim();
     if (!t) {
       var h1 = document.querySelector('header.combined-head h1') || document.querySelector('h1');
-      if (h1) t = h1.textContent || '';
+      if (h1) t = (h1.textContent || '').trim();
     }
-    if (!t) t = PAGE_TITLE;
+    if (!t) t = safeDecode((document.body.getAttribute('data-title') || '').trim());
     t = t.replace(/[｜|][^｜|]*$/, '').replace(/\s+/g, ' ').trim();
     return t.replace(/^《/, '').replace(/》$/, '');
   }
@@ -159,25 +168,23 @@
       document.body.appendChild(btn);
     }
 
-    var slug = pageSlug();
-    var title = bookTitle();
-    var mask = buildPanel({ hasBook: !!slug, title: title });
+    var hasBook = !!pageSlug();
+    var mask = buildPanel({ hasBook: hasBook, title: bookTitle() });
     var box = mask.querySelector('.share-box');
     var qrBox = mask.querySelector('.share-qr');
     var tip = mask.querySelector('.share-tip');
     var layoutBtn = mask.querySelector('.share-layout');
-    var qrDone = false;
-
-    /* 封面：本地文件，取不到就整块收起，版式退回单列 */
     var coverImg = mask.querySelector('.share-hero-cover');
-    if (coverImg && slug) {
-      var coverSrc = 'https://cdn.js-dev.cn/assets/covers/' + encodeURIComponent(slug) + '.jpg';
-      coverImg.addEventListener('error', function () {
-        box.classList.add('is-nocover');
-      });
-      coverImg.src = coverSrc;
-      var coverBg = mask.querySelector('.share-hero-bg');
-      if (coverBg) coverBg.src = coverSrc;
+    var coverBg = mask.querySelector('.share-hero-bg');
+    var bt = mask.querySelector('.share-bt');
+    var weiboA = mask.querySelector('[data-act="weibo"]');
+    var qzoneA = mask.querySelector('[data-act="qzone"]');
+    var lastQrText = '';
+
+    /* 封面取不到就整块收起；换书后新封面加载成功要把降级类撤掉 */
+    if (coverImg) {
+      coverImg.addEventListener('error', function () { box.classList.add('is-nocover'); });
+      coverImg.addEventListener('load', function () { box.classList.remove('is-nocover'); });
     }
 
     /* 横版 = 书左码右；竖版 = 书上码下。小屏默认竖版 */
@@ -190,7 +197,7 @@
       }
       if (save) { try { localStorage.setItem(LAYOUT_KEY, v); } catch (e) { /* 无痕模式忽略 */ } }
     }
-    if (slug) {
+    if (hasBook) {
       var saved = null;
       try { saved = localStorage.getItem(LAYOUT_KEY); } catch (e) { /* 忽略 */ }
       var small = window.matchMedia && window.matchMedia('(max-width:560px)').matches;
@@ -203,26 +210,50 @@
       });
     }
 
-    mask.querySelector('[data-act="weibo"]').href =
-      'https://service.weibo.com/share/share.php?url=' + enc(PAGE_URL) + '&title=' + enc(PAGE_TITLE);
-    mask.querySelector('[data-act="qzone"]').href =
-      'https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=' + enc(PAGE_URL) + '&title=' + enc(PAGE_TITLE);
+    /* 每次打开面板（以及换书事件）都按「当前这一本」重算：
+       书名 / 封面 / 二维码 / 外链 / 复制链接，不能留着上一本的快照。 */
+    function syncPanel(force) {
+      var url = pageUrl();
+      var title = bookTitle();
+      var slug = pageSlug();
+      var pt = pageTitle();
+
+      if (bt) bt.textContent = '《' + title + '》';
+      if (coverImg && slug) {
+        var src = 'https://cdn.js-dev.cn/assets/covers/' + encodeURIComponent(slug) + '.jpg';
+        coverImg.alt = title + ' 封面';
+        if (coverImg.getAttribute('src') !== src) {
+          box.classList.remove('is-nocover');
+          coverImg.src = src;
+          if (coverBg) coverBg.src = src;
+        }
+      }
+      if (weiboA) weiboA.href = 'https://service.weibo.com/share/share.php?url=' + enc(url) + '&title=' + enc(pt);
+      if (qzoneA) qzoneA.href = 'https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=' + enc(url) + '&title=' + enc(pt);
+
+      if (force || url !== lastQrText) {
+        lastQrText = url;
+        if (window.QRCode) {
+          qrBox.innerHTML = '';
+          qrBox.classList.remove('is-pulse');
+          new window.QRCode(qrBox, {
+            text: url,
+            /* 生成 264px，再按布局用 CSS 缩到 112~176 —— 缩小不糊，放大也不虚 */
+            width: 264,
+            height: 264,
+            colorDark: '#183c34',
+            colorLight: '#fffefa',
+            correctLevel: window.QRCode.CorrectLevel.M
+          });
+        }
+        tip.textContent = TIPS.wechat;
+      }
+    }
 
     function openPanel() {
+      syncPanel(true);          /* 换书 / 前进后退后，强制按当前页重建二维码 */
       mask.hidden = false;
       document.body.style.overflow = 'hidden';
-      if (!qrDone && window.QRCode) {
-        qrDone = true;
-        new window.QRCode(qrBox, {
-          text: PAGE_URL,
-          /* 生成 264px，再按布局用 CSS 缩到 112~176 —— 缩小不糊，放大也不虚 */
-          width: 264,
-          height: 264,
-          colorDark: '#183c34',
-          colorLight: '#fffefa',
-          correctLevel: window.QRCode.CorrectLevel.M
-        });
-      }
       var close = mask.querySelector('.share-x');
       if (close) close.focus();
     }
@@ -241,6 +272,12 @@
     document.addEventListener('keydown', function (ev) {
       if (ev.key === 'Escape' && !mask.hidden) closePanel();
     });
+
+    /* 无刷新换书：reader.js 渲染完会派发 wr:bookchange；浏览器前进后退走
+       popstate。面板恰好开着时也立即重建二维码，不留上一本的码。 */
+    function refreshIfOpen() { if (!mask.hidden) syncPanel(true); }
+    document.addEventListener('wr:bookchange', refreshIfOpen);
+    window.addEventListener('popstate', function () { setTimeout(refreshIfOpen, 0); });
 
     Array.prototype.forEach.call(mask.querySelectorAll('[data-act="wechat"],[data-act="moments"]'), function (el) {
       el.addEventListener('click', function () {
@@ -261,12 +298,13 @@
     });
 
     function copyLink(done) {
+      var url = pageUrl();      /* 换书后复制的必须是当前这本，不是进来的那本 */
       if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(PAGE_URL).then(function () { done && done(true); },
-          function () { window.prompt('复制链接', PAGE_URL); done && done(false); });
+        navigator.clipboard.writeText(url).then(function () { done && done(true); },
+          function () { window.prompt('复制链接', url); done && done(false); });
         return;
       }
-      window.prompt('复制链接', PAGE_URL);
+      window.prompt('复制链接', url);
       done && done(false);
     }
 

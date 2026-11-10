@@ -992,11 +992,22 @@
       .then(function (html) {
         if (!html || html.indexOf('<section') < 0) throw new Error('空数据');
         curSlug = slug;
-        render(parseData(html));
+        var data = parseData(html);
+        render(data);
+        /* 无刷新换书：壳页写死的 body 元信息也要跟着换，否则分享组件、
+           访问统计、微信读书链接读到的还是上一本。render() 已更新 title / h1。 */
+        var bt = (data.meta && data.meta.title) || '';
+        document.body.setAttribute('data-slug', slug);
+        if (bt) document.body.setAttribute('data-title', bt);
         if (push !== false) {
           try { history.pushState({ rdBook: slug }, '', '../' + slug + '/combined.html'); } catch (e) {}
         }
         window.scrollTo(0, 0);
+        try {
+          document.dispatchEvent(new CustomEvent('wr:bookchange', {
+            detail: { slug: slug, title: bt }
+          }));
+        } catch (e) { /* 老浏览器忽略 */ }
       })
       .catch(function () {
         // 原地渲染失败 → 整页跳过去，别把读者卡死在本页
