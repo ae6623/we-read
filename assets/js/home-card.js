@@ -160,21 +160,42 @@
       if (slug) {
         var img = document.createElement('img');
         img.className = 'card-cover-img';
-        img.loading = 'lazy';
+        // 首屏（DOM 前 30 张，覆盖首两屏）立刻并发加载：弱网下 lazy 会把
+        // 占位封面晾很久，用户看到的就是「好多兜底」。其余仍走 lazy。
+        if (i < 30) {
+          img.loading = 'eager';
+          img.fetchPriority = 'high';
+        } else {
+          img.loading = 'lazy';
+        }
+        img.decoding = 'async';
         img.alt = title;
-        img.src = 'https://cdn.js-dev.cn/assets/covers/' + slug + '.jpg';
-        // 立即把封面绝对地址写进 localStorage（不依赖是否已滚动加载到）：
-        // 详情页直接复用同一个 URL，浏览器缓存命中 → 秒出图
-        try { localStorage.setItem('rdCover:' + slug, img.src); } catch (e) {}
-        img.addEventListener('error', function () { this.remove(); });
+        img.dataset.slug = slug;
+        // 同源优先：reader.js-dev.cn 本身就是 CDN 镜像，同源省掉一次
+        // DNS + TLS 握手（弱网下这一步往往比下载 20KB 的 JPEG 还慢）；
+        // 同源失败再回退独立的 cdn.js-dev.cn，两条都不通才保留文字封面。
+        var backup = 'https://cdn.js-dev.cn/assets/covers/' + slug + '.jpg';
+        img.dataset.backup = backup;
+        img.src = '/assets/covers/' + slug + '.jpg';
+        // 立即把绝对地址写进 localStorage（详情页直接复用，缓存命中秒出图）
+        try { localStorage.setItem('rdCover:' + slug, backup); } catch (e) {}
+        img.addEventListener('error', function () {
+          if (this.dataset.backup && this.src.indexOf('cdn.js-dev.cn') === -1) {
+            this.src = this.dataset.backup;
+            return;
+          }
+          this.remove();
+        });
         // 真封面加载成功 → 隐藏占位题字，只留图。
-        // 注意：循环用 var，闭包里不能引用 cover（会全指到最后一轮），用 this 向上找
+        // 循环用 var，闭包里不能引用 slug/cover（会全指到最后一轮），
+        // 一律从 this / dataset 取。
         img.addEventListener('load', function () {
           var c = this.closest('.card-cover');
           if (c) c.classList.add('has-img');
-          // 把已解析好的封面绝对地址存到 localStorage，
-          // 详情页直接复用同一个 URL → 浏览器缓存命中，秒出图，不用重新下载
-          try { localStorage.setItem('rdCover:' + slug, this.currentSrc || this.src); } catch (e) {}
+          try {
+            localStorage.setItem('rdCover:' + (this.dataset.slug || ''),
+              this.currentSrc || this.src);
+          } catch (e) {}
         });
         /* 先入 DOM 再补查：命中缓存的图会在 appendChild 之前就把 load 事件排队，
            那一刻 img 还不在文档里，closest('.card-cover') 拿到 null → has-img 永远加不上，
@@ -212,9 +233,12 @@
     }
 
     var tries = 0;
+    // 弱网 / CDN 冷回源时，lazy 图可能几十秒后才陆续 complete；原来 40 次
+    // （16 秒）就停，之后只剩 document 捕获兜底。放宽到 2 分钟，覆盖绝大多数
+    // 慢加载场景，代价只是一个轻量空轮询。
     var timer = setInterval(function () {
       tries++;
-      if (sweep() === 0 || tries > 40) clearInterval(timer);
+      if (sweep() === 0 || tries > 300) clearInterval(timer);
     }, 400);
 
     // 滚到新的一屏、切页签之后都补一次（rAF 节流，跟随滚动不额外开销）
