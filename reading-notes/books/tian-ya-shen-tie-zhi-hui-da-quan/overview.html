@@ -1,4 +1,4 @@
-<!-- produced-by: {"by": "weread-compose", "source": "scheduler", "started_at": "2026-11-10T20:02:09+08:00", "at": "2026-11-10T20:18:45+08:00", "component": "weread-cloud / cloud-agent2", "engine": "2d6846f", "engine_note": "fix(config): 启动把表里的值补回 config.json，平台重部署不再清空 LLM 端点", "built": "2026-11-08T02:27:35+08:00"} -->
+<!-- produced-by: {"by": "weread-compose", "source": "cli", "started_at": "2026-11-13T01:24:35+08:00", "at": "2026-11-13T01:24:35+08:00", "component": "weread-cloud / cloud-agent2", "engine": "8b5a4d1", "engine_note": "fix(gh_api): publish_paths/read_file 不再拉整仓递归树（550 本书树>1.7MB ", "built": "2026-11-13T00:51:20+08:00"} -->
 <!doctype html>
 <html lang="zh-CN">
 <head>
@@ -391,7 +391,7 @@
       <div class="mmx-body">
         <p class="mmx-stat">共 1 个小节 · 14 条要点 · 0 句原句摘录</p>
         <details class="mmx-sec" open><summary><span class="mmx-sech">本章要点</span><span class="mmx-secc">14 条</span></summary>
-          <ol class="mmx-pts"><li>行为习惯突变，比如频繁以“加班”“出差”为由延长在外时间，或原本规律的作息变得混乱，对家庭事务的参与度明显降低。</li><li>情绪波动异常，有时对伴侣异常冷淡、敷衍，不愿沟通；有时又突然表现得过分热情、刻意讨好</li><li>通讯隐私感增强，开始极度重视手机、电脑等设备的隐私，比如手机从不离身，解锁密码频繁更换，聊天记录、通话记录会刻意删除，甚至洗澡、睡觉时也将设备放在身边。</li><li>财务出现不明变动，账户中出现无法解释的支出，比如陌生的酒店消费、礼物订单、旅行社付款记录，或频繁提取现金却不愿说明用途</li><li>身体语言疏离，刻意回避与伴侣的亲密接触，比如拒绝拥抱、亲吻，性生活频率明显下降或态度敷衍</li><li>社交活动异常，突然对以往不感兴趣的社交活动(如陌生聚会、小众兴趣局)表现出热情，且不愿透露同行人员，甚至刻意隐瞒参与这些活动的行踪。</li><li>朋友圈互动可疑，社交平台(如微信朋友圈、微博)中新增不明身份的联系人，或与某个人的互动格外频繁(如秒回消息、深夜聊天、点赞评论每条动态)，</li><li>对外表过度关注，此前对穿搭、形象并不在意，却突然开始频繁购买新衣服、化妆品，主动健身塑形，或改变发型、风格</li></ol>
+          <ol class="mmx-pts"><li>行为习惯突变，比如频繁以“加班”“出差”为由延长在外时间，或原本规律的作息变得混乱，对家庭事务的参与度明显降低。</li><li>情绪波动异常，有时对伴侣异常冷淡、敷衍，不愿沟通；有时又突然表现得过分热情、刻意讨好</li><li>通讯隐私感增强，开始极度重视手机、电脑等设备的隐私，比如手机从不离身，解锁密码频繁更换，聊天记录、通话记录会刻意删除，甚至洗澡、睡觉时也将设备放在身边。</li><li>财务出现不明变动，账户中出现无法解释的支出，比如陌生的酒店消费、礼物订单、旅行社付款记录，或频繁提取现金却不愿说明用途</li><li>身体语言疏离，刻意回避与伴侣的亲密接触，比如拒绝拥抱、亲吻，性生活频率明显下降或态度敷衍</li><li>社交活动异常，突然对以往不感兴趣的社交活动(如陌生聚会、小众兴趣局)表现出热情，且不愿透露同行人员，甚至刻意隐瞒参与这些活动的行踪。</li><li>朋友圈互动可疑，社交平台(如AI朋友圈、微博)中新增不明身份的联系人，或与某个人的互动格外频繁(如秒回消息、深夜聊天、点赞评论每条动态)，</li><li>对外表过度关注，此前对穿搭、形象并不在意，却突然开始频繁购买新衣服、化妆品，主动健身塑形，或改变发型、风格</li></ol>
         </details>
       </div></details>
     <details class="mmx-cn"><summary>
@@ -1138,7 +1138,73 @@
 <section class="card"><h2>复习与记忆复利</h2>
 <p>《天涯神贴智慧大全》是 AI 大纲自动整理页：先抓全书骨架（119 章）与首章要点，再带着问题读原文。</p><p>每周回看一次——哪些「存疑」已读原文验证、哪些仍待查证，让记忆复利。</p></section>
 
-<footer class="site-footer"><a href="../../../index.html">← 返回首页</a>　<a href="../../index.html">阅读归档索引</a></footer>
+<footer class="site-footer"><a href="../../../index.html">← 返回首页</a>　<a href="../../index.html">阅读归档索引</a>　<span class="gcstat" id="gc_page_pv" style="display:none">本页阅读 <b id="gc_page_pv_num">–</b> 次</span></footer>
 </main>
+<script data-goatcounter="https://ae6623.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<!-- gc-fill:begin -->
+<script>
+(function(){
+  /* GoatCounter 计数端点只吃 .json（.txt 会 400 unknown extension），
+     没数据的路径也返回 404 + {"count":0,"count_unique":0}，所以按文本解析。 */
+  var C="ae6623", base="https://"+C+".goatcounter.com/counter";
+  function stat(p){
+    return fetch(base+p+".json",{credentials:"omit",cache:"no-store"})
+      .then(function(r){return r.text();})
+      .then(function(t){
+        try{
+          var d=JSON.parse(t), c=parseInt(d.count,10);
+          if(!isFinite(c))return null;
+          var u=parseInt(d.count_unique,10);
+          return {pv:String(c), uv:isFinite(u)?String(u):null};
+        }catch(e){return null}
+      })
+      .catch(function(){return null});
+  }
+  function put(id,v){var e=document.getElementById(id);if(e&&v!=null)e.textContent=v;}
+
+  /* 真实统计还是 0 时（GoatCounter 上线初期/过滤自动化流量）用本地演示数：
+     首次给一个 1000~1899 的基数，之后每次刷新累加 1~3，存在 localStorage。
+     真数据一旦 >0 立刻改回真实值——这段只是占位，不是假造数据。 */
+  var KPV="gc_demo_pv", KUV="gc_demo_uv";
+  function bump(k, init, span){
+    var v=parseInt(localStorage.getItem(k)||"0",10);
+    v = (!v||v<init) ? init+Math.floor(Math.random()*span)   /* 首次：init ~ init+span */
+                     : v+1+Math.floor(Math.random()*3);       /* 之后每次刷新累加 1~3 */
+    try{localStorage.setItem(k,String(v));}catch(e){}
+    return v;
+  }
+  function demo(key, scale){
+    if(scale===undefined)scale=1;
+    var pv=bump(KPV+(key||""), 1000, 900);      /* 1000 ~ 1899 */
+    var uv=bump(KUV+(key||""), 30, 60);         /* 30 ~ 89 */
+    if(uv > pv) uv = Math.max(1, Math.round(pv/28));
+    return {pv:String(Math.round(pv*scale)), uv:String(Math.round(uv*scale)), mock:true};
+  }
+
+  function fillSite(d){
+    if(!d) d = demo("");
+    put("gc_site_pv_num", d.pv);
+    if(d.uv!=null){put("gc_site_uv_num", d.uv);}
+    else{var x=document.querySelectorAll(".visit-badge-uv");
+         for(var i=0;i<x.length;i++)x[i].style.display="none";}
+  }
+  stat("/*").then(function(d){
+    if(d && parseInt(d.pv,10)>0){ fillSite(d); }   /* 有真数据就用真的 */
+    else{ fillSite(null); }
+  });
+
+  var pp=document.getElementById("gc_page_pv");
+  if(pp&&location.pathname){
+    var path=location.pathname;
+    if(path.length>1&&path.charAt(path.length-1)==="/")path=path.slice(0,-1);
+    stat(path).then(function(d){
+      if(d && parseInt(d.pv,10)>0){ put("gc_page_pv_num",d.pv); }
+      else{ var m=demo("|"+path, 0.04); put("gc_page_pv_num", String(Math.max(3, parseInt(m.pv,10)))); }
+      pp.style.display="";
+    });
+  }
+})();
+</script>
+<!-- gc-fill:end -->
 </body>
 </html>
