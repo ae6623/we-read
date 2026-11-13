@@ -32,7 +32,7 @@ ROOT = Path(__file__).resolve().parent.parent
 IMA_DIR = ROOT / "ima"
 MANIFEST = IMA_DIR / "manifest.json"
 KB_NAME = "we-read"
-FOLDER_NAME = "书卡"
+FOLDER_NAME = "书卡笔记"
 MIME = {"md": "text/markdown"}
 
 
@@ -65,6 +65,26 @@ def resolve_folder(kb_id: str) -> str:
     return ""
 
 
+def folder_titles(kb_id: str, folder_id: str) -> set:
+    """拉文件夹里已存在的文件名，用于跳过重复上传（SAVE 会给副本加时间戳后缀）。"""
+    out, cur, pages = set(), "", 0
+    while folder_id and pages < 20:
+        a = {"knowledge_base_id": kb_id, "folder_id": folder_id, "limit": 50}
+        if cur:
+            a["cursor"] = cur
+        d = json.loads(ima.text_of(ima.call("get_knowledge_list", a)))
+        for it in d.get("knowledge_list", []):
+            if it.get("media_type") != 99:
+                out.add(it["title"])
+        pages += 1
+        if d.get("is_end"):
+            break
+        cur = d.get("next_cursor") or ""
+        if not cur:
+            break
+    return out
+
+
 def upload_one(kb_id: str, folder_id: str, path: Path, replace: bool) -> dict:
     raw = path.read_bytes()
     name = path.name
@@ -86,11 +106,14 @@ def upload_one(kb_id: str, folder_id: str, path: Path, replace: bool) -> dict:
         raise RuntimeError("需要 COS SDK 的 upload_mode=2，脚本未实现")
     a = ima.call("add_knowledge", {
         "knowledge_base_id": kb_id, "media_id": mid, "folder_id": folder_id,
-        "duplicate_name_strategy": "DUPLICATE_NAME_STRATEGY_REPLACE" if replace
-        else "DUPLICATE_NAME_STRATEGY_SAVE",
+        # 永远 SAVE：REPLACE 会让服务端把旧条目内容清空、新条目另立，
+        # 列表里留下「当前内容已删除」的空壳（2026-11-14 踩过，512 条里 328 条中招）。
+        # 需要覆盖时请先删掉旧条目再传，不要用 REPLACE。
+        "duplicate_name_strategy": "DUPLICATE_NAME_STRATEGY_SAVE",
     })
-    json.loads(ima.text_of(a) or "{}")
-    return {"media_id": mid, "bytes": len(raw)}
+    obj = json.loads(ima.text_of(a) or "{}")
+    # 台账要记服务端最终确认的 id，否则指向已失效的 create_media id
+    return {"media_id": obj.get("media_id") or mid, "bytes": len(raw)}
 
 
 def main():
@@ -98,9 +121,12 @@ def main():
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--cat", default="")
-    ap.add_argument("--replace", action="store_true")
+    ap.add_argument("--replace", action="store_true",
+                    help="忽略台账全量重传（策略仍是 SAVE，不覆盖同名旧条目）")
     ap.add_argument("--all-missing", action="store_true")
-    ap.add_argument("--workers", type=int, default=3)
+    ap.add_argument("--workers", type=int, default=2)
+    ap.add_argument("--skip-existing", action="store_true",
+                    help="跳过文件夹里已存在的同名文件（避免 SAVE 生成 _时间戳 副本）")
     args = ap.parse_args()
 
     mf = load_manifest()
@@ -136,6 +162,11 @@ def main():
     kb = resolve_kb()
     folder = resolve_folder(kb)
     print(f"知识库 {kb}｜文件夹 {folder or '（根）'}")
+    if args.skip_existing and folder:
+        have = folder_titles(kb, folder)
+        before = len(files)
+        files = [(s, p) for s, p in files if p.name not in have]
+        print(f"跳过已存在 {before - len(files)} 本，待传 {len(files)} 本")
 
     ok = fail = 0
     t0 = time.time()
@@ -147,6 +178,7 @@ def main():
         for attempt in (1, 2, 3):
             try:
                 r = upload_one(kb, folder, p, args.replace)
+                time.sleep(0.25)
                 with lock:
                     e = cards.setdefault(s, {})
                     e["ima_media_id"] = r["media_id"]

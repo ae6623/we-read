@@ -62,43 +62,74 @@ IMA 知识库 we-read（写入即自动解析，parse_progress 100%）
 ## 三、每张书卡长什么样
 
 ```markdown
----
-slug: 1984
-title: 1984
-cat1: 文学
-cat2: 小说
-status: ok
-modules: oneline,views,deepread,top10,coreask,aiask,higher,verify,thennow
-updated: 2026-11-13
-source: https://reader.js-dev.cn/reading-notes/books/1984/combined.html
----
-
 # 《1984》
 
 > 极权不是让你说假话，而是接管「判定何为真」的权力。
 
 | 项 | 值 |
 |---|---|
+| bookId | `3300012345` |
 | 类目 | 文学 / 小说 |
-| 卡片状态 | ok（9 个标准模块） |
+| slug | `1984` |
+| 卡片状态 | ok（9 个标准模块：oneline, views, …） |
+| 最近更新 | 2026-11-13 |
 | 站点原文 | …/1984/combined.html |
 
-## 01 核心观点与结构脉络
-### 译序与极权现实
-——交代作品影响并展示大洋国监控、历史篡改与个体异化的统治日常。
-…
-## 02 精读判断
-## 03 原文金句
-## 04 核心追问
-## 05 AI 问书
-## 06 更高维度
-## 07 阅读时要验证
-## 08 当年与今天
-## 09 章节目录
+## 01 知识导图          ← Mermaid mindmap（Google 配色，矩形根节点，最多 12 章）
+## 02 核心观点与结构脉络
+## 03 精读判断
+## 04 原文金句
+## 05 核心追问
+## 06 AI 问书
+## 07 更高维度
+## 08 阅读时要验证
+## 09 当年与今天
+## 10 章节目录          ← 四层：章 → 小节 → 要点 → 原句
 ```
 
 **固定 10 节**（缺哪节＝这本书没有该模块，多为未读、大纲接口返空）。
 数字前缀是为了让 IMA 的回答能引用「第 07 节」这种锚点。
+
+### 3.1 顶部表格的字段口径
+
+| 字段 | 来源 | 用途 |
+|---|---|---|
+| `bookId` | 微信读书书籍 ID，来自云端 `/api/books`（标题归一 + 拼音兜底匹配） | 与微信读书原书对应；339/543 命中，其余显示 `—` |
+| `类目` | `assets/data/book-cats.json` | 与站点权重同一套分类，检索时可按类目收敛 |
+| `slug` | 站点目录名 | 拼站点链接、定位产物目录 |
+| `卡片状态` | `assets/data/template-audit.json` | `ok/thin/fixable/dump/empty`，thin 以下说明内容不全 |
+
+### 3.2 知识导图（01 节）
+
+IMA 的 MCP 没有「生成导图」接口，所以导图由我们在导出阶段用
+**站点已经编译好的篇章结构**本地生成，两种表达同时存在：
+
+- `mermaid mindmap` 代码块：支持 Mermaid 的阅读器直接出图；
+- 章节树（最后一节）承担同样的信息，纯文本、可检索。
+
+样式约定（2026-11-14 定）：
+
+- 根节点用矩形 `root["《书名》"]`，不用圆形 —— 圆形在小屏上像个气泡，边框还挤压文字；
+- 配色取 Google 四色的浅色版：主蓝 `#4285F4` / 浅蓝 `#E8F0FE` / 浅绿 `#E6F4EA`，
+  深蓝文字 `#174EA6`，连线灰 `#BDC1C6`；
+- 必须把 `cScale0..11` 全部显式设色 —— 只设 `primaryColor` 时 mindmap 仍按分支
+  索引取默认调色板，56 个分支会变成五颜六色的蜘蛛网；
+- 章数超过 12 只画前 12 章，末尾挂「另 N 章见章节目录」，放射状布局放不下更多。
+
+### 3.3 章节目录（最后一节）
+
+四层缩进，递归取自 `merged_guide`（AI领读）的 DOM：
+
+```
+- **1 译者序**（3 小节 · 17 要点 · 11 原句）
+  - 译者对《1984》的初识与翻译动机
+    - 译者对《1984》的初识源于钱锺书先生的评论
+    - 原句：钱锺书先生对奥威尔的评论：“他的政论、文评…久负当代盛名。”
+```
+
+旧版只写「共 N 个小节 · M 条要点」的统计，点进去是空的 —— 用户反馈
+「章节目录缺子节点」就是指这个。现在每章最多展开 4 小节、每小节最多 3 条要点
++ 1 句代表原句，兼顾信息量与体积（中位 19KB）。
 
 ---
 
@@ -126,29 +157,52 @@ source: https://reader.js-dev.cn/reading-notes/books/1984/combined.html
 | 从未上传 | 有 hash 无 `ima_media_id` | 入 pending |
 | 已同步 | hash 相同且有 `ima_media_id` | 跳过 |
 
-日常同步（站点出新书 / 重产某本之后）：
+### 4.1 日常同步：一条命令
 
 ```bash
 cd /root/we-read-site
-python3 tools/ima_export.py            # 约 2 分钟，重算 hash，产出 pending.json
-python3 tools/ima_upload.py            # 只传 pending，约 1.5 分钟/100 本
+python3 tools/ima_sync.py            # 增量：导出 → 补传 → 刷索引
 ```
 
-两条命令都幂等：重复跑不会产生重复知识（同名 `DUPLICATE_NAME_STRATEGY_REPLACE` 覆盖）。
+`ima_sync.py` 依次做三件事，任何一步失败即中止：
 
-单本重传：
+1. `ima_export.py`：按 `combined-data.html` 重算 hash，只把「新书 / 内容变了 /
+   从没上传过」的写进 `pending.json`（约 2 分钟 / 全站）；
+2. `ima_upload.py --replace --skip-existing --workers 2`：只传 pending，
+   并跳过文件夹里已有同名文件（约 1.4s/本）；
+3. 刷 `00-总索引.md` / `00-字段说明.md`（已存在则跳过，避免 REPLACE 空壳）。
+
+### 4.2 新书产出 → 书卡同步（SOP）
+
+站点新增一本书的标准动作，按顺序做，不要跳：
+
+| 步骤 | 动作 | 验收 |
+|---|---|---|
+| 1 | 引擎产出 `combined-data.html` 并推站点仓 | `https://reader.js-dev.cn/reading-notes/books/<slug>/combined-data.html` 200 |
+| 2 | CDN 同步后跑 `python3 tools/ima_sync.py --book <slug>` | 输出「增量：待上传 1 张」并上传成功 |
+| 3 | 等 1~2 分钟，IMA 内搜书名 | `media_state=2`、`parse_progress=100`、摘要位是中文一句话主旨 |
+| 4 | 若第 3 步是「内容已删除」/ 空摘要 | 说明同条目已被 REPLACE 破坏，见 4.3，删掉旧条目重传 |
+
+批量重产（如模板升级）不逐本跑，直接 `python3 tools/ima_sync.py --full`
+（强制全站重生成，再补传缺失）。
+
+### 4.3 三条硬规则（都是踩过的坑）
+
+1. **禁用 `DUPLICATE_NAME_STRATEGY_REPLACE`**。实测：同名 REPLACE 后服务端把旧
+   条目内容清空、新条目另立一条，列表里留下 `media_state=1 / parse_progress=0 /
+   content 空` 的空壳 —— 在 App 里打开就是「当前内容已删除」。2026-11-14 全量
+   重传一次，512 条里 328 条中招。现在上传固定 SAVE，需要覆盖时先在 App 删旧条目。
+2. **上传前必须 `--skip-existing`**。SAVE 遇到同名会新建副本并给文件名加
+   `_<时间戳>` 后缀，列表里会出现「书名」和「书名_26111」两条。
+3. **台账记 `add_knowledge` 返回的 id，不是 `create_media` 的**。两者在服务端
+   不是同一个对象；记错会让 `/api/status` 的核对数字对不上，也无法反查条目。
+
+### 4.4 其它常用组合
 
 ```bash
-python3 tools/ima_export.py --limit 1 --force        # 或直接改完 md 后
-python3 tools/ima_upload.py --limit 1 --replace
-```
-
-分类同步 / 试水：
-
-```bash
-python3 tools/ima_export.py --only-cat 计算机
-python3 tools/ima_upload.py --cat 计算机
-python3 tools/ima_upload.py --dry-run --limit 10     # 只看要传什么
+python3 tools/ima_export.py --only-cat 计算机     # 只重生成某类目
+python3 tools/ima_upload.py --dry-run --limit 10  # 只看要传什么
+python3 tools/ima_sync.py --full                  # 模板升级后全量重建
 ```
 
 ---

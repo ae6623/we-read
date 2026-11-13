@@ -43,9 +43,11 @@ CARDS = IMA_DIR / "cards"
 MANIFEST = IMA_DIR / "manifest.json"
 PENDING = IMA_DIR / "pending.json"
 SITE = "https://reader.js-dev.cn"
-TEMPLATE_VER = "imacard-v1"          # 卡片渲染规则变更时 +1，触发全量重写
+TEMPLATE_VER = "imacard-v2"          # 卡片渲染规则变更时 +1，触发全量重写
 MAX_SECTION = 2600                   # 单模块正文上限（字符）
-MAX_TOC = 80                         # 章节目录最多列多少条
+MAX_TOC = 80                         # 章节目录最多列多少章
+MAX_SEC = 4                          # 每章最多展开多少小节
+MAX_PTS = 3                          # 每小节最多列多少条要点
 
 MOD_TITLES = [
     ("oneline", "一句话主旨"),
@@ -154,24 +156,60 @@ def sections(html: str) -> dict[str, str]:
     return out
 
 
-def toc_from_guide(html: str) -> list[str]:
-    """只取 AI领读的章节目录骨架：编号 + 章名 + 规模，不取正文。"""
+def guide_tree(html: str) -> list[dict]:
+    """把 AI领读的章节树完整读出来：章 → 小节(sec h4) → 要点(ul.point li b) → 原句。
+
+    旧版只取「编号 + 章名 + 规模统计」，书卡里每章只有一行「共 N 个小节 ·
+    M 条要点」，点进去是空的 —— 用户反馈「章节目录缺子节点」。现在把
+    AI 大纲已有的三层结构原样搬进来，不再丢层级。
+    """
     from bs4 import BeautifulSoup
     soup = BeautifulSoup(html, "html.parser")
     mg = soup.find("section", attrs={"data-key": "merged_guide"})
     if not mg:
         return []
-    items = []
+    out = []
     for d in mg.select("details.mmx-cn"):
         s = d.find("summary")
         if not s:
             continue
-        name = s.get_text(" ", strip=True).replace("›", "").strip()
-        stat = d.select_one(".mmx-stat")
-        st = stat.get_text(" ", strip=True) if stat else ""
-        items.append(f"- {name}" + (f"　（{st}）" if st else ""))
-        if len(items) >= MAX_TOC:
+        no_el, nm_el = s.select_one(".mmx-no"), s.select_one(".mmx-name")
+        no = no_el.get_text(strip=True) if no_el else ""
+        nm = nm_el.get_text(" ", strip=True) if nm_el else ""
+        if not nm:
+            nm = s.get_text(" ", strip=True).replace("›", "").strip()
+        st = d.select_one(".mmx-stat")
+        secs = []
+        for sec in d.select("div.sec"):
+            h4 = sec.find("h4")
+            h = h4.get_text(" ", strip=True) if h4 else ""
+            pts, q = [], ""
+            for li in sec.select("ul.point > li"):
+                b = li.find("b")
+                t = (b.get_text(" ", strip=True) if b else li.get_text(" ", strip=True)).strip()
+                if t:
+                    pts.append(t)
+            qn = sec.select_one("ul.quote.quote-node > li")
+            if qn:
+                q = qn.get_text(" ", strip=True)
+            elif sec.select_one("ul.quote > li"):
+                q = sec.select_one("ul.quote > li").get_text(" ", strip=True)
+            if h or pts:
+                secs.append({"h": h, "points": pts[:MAX_PTS], "quote": q})
+        out.append({"no": no, "name": nm,
+                    "stat": st.get_text(" ", strip=True) if st else "",
+                    "secs": secs[:MAX_SEC]})
+        if len(out) >= MAX_TOC:
             break
+    return out
+
+
+def toc_from_guide(html: str) -> list[str]:
+    """扁平版（只给「一句话主旨」兜底用）。"""
+    items = []
+    for t in guide_tree(html):
+        line = f"- {t['no']} {t['name']}".strip()
+        items.append(line + (f"　（{t['stat']}）" if t["stat"] else ""))
     return items
 
 
@@ -233,8 +271,79 @@ def as_markdown(text: str) -> str:
 
 # ---------------------------------------------------------------- 渲染
 
-def render(card: dict, mods: dict[str, str], toc: list[str], cat: list[str],
-           audit: dict, date_str: str) -> tuple[str, str]:
+def _mm(s, limit=26):
+    """Mermaid mindmap 节点清洗：方/圆/花括号会被当语法，必须去掉。"""
+    t = re.sub(r"[\[\]{}()（）<>\"'`#;|]", "", str(s or "")).strip()
+    t = re.sub(r"\s+", " ", t)
+    return t[:limit]
+
+
+def _mindmap(title: str, tree: list[dict]) -> list[str]:
+    """篇→章 两级 Mermaid mindmap，Google 配色。
+
+    上一版踩的坑：只设 primaryColor 时，mindmap 仍会按分支索引从默认
+    cScale 调色板取色 → 56 个分支五颜六色像蜘蛛网。现在把 cScale0-11
+    全部压成「浅蓝/浅绿」两色交替，根节点用 Google 蓝深底白字；
+    章数超过 12 时只画前 12 章（放射状布局放不下更多），其余在章节目录里。
+    """
+    blue, blue_t, green, ink = "#E8F0FE", "#D2E3FC", "#E6F4EA", "#174EA6"
+    tv = [
+        f"'primaryColor':'{blue}'", f"'primaryTextColor':'{ink}'",
+        "'primaryBorderColor':'#4285F4'", "'lineColor':'#BDC1C6'",
+        "'fontFamily':'Noto Sans SC,PingFang SC,Microsoft YaHei,sans-serif'",
+        "'fontSize':'14px'",
+    ]
+    for i in range(12):
+        tv.append(f"'cScale{i}':'{blue if i % 2 == 0 else green}'")
+        tv.append(f"'cScaleLabel{i}':'{ink}'")
+        tv.append(f"'cScaleInv{i}':'{blue_t if i % 2 == 0 else green}'")
+    init = "%%{init: {'theme':'base','themeVariables':{" + ",".join(tv) + "}}}%%"
+
+    shown = tree[:12]
+    lines = ["```mermaid", init, "mindmap", f'  root["《{_mm(title, 18)}》"]']
+    for t in shown:
+        nm = _mm((t["no"] + " " + t["name"]).strip(), 24)
+        if not nm:
+            continue
+        lines.append(f"    {nm}")
+        if t["secs"]:
+            h = _mm(t["secs"][0]["h"], 22)
+            if h:
+                lines.append(f"      {h}")
+    if len(tree) > len(shown):
+        lines.append(f"    【另 {len(tree) - len(shown)} 章见章节目录】")
+    lines.append("```")
+    return lines
+
+
+def _toc_tree(tree: list[dict]) -> list[str]:
+    """章 → 小节 → 要点 → 代表原句，四层缩进列表（IMA 会按层级解析）。"""
+    out = []
+    for t in tree:
+        head = f"- **{t['no']} {t['name']}**".replace("** ", "**").strip()
+        if head.endswith("- **"):
+            head = f"- **{t['name']}**"
+        if t["stat"]:
+            head += f"　（{t['stat']}）"
+        out.append(head)
+        for sec in t["secs"]:
+            if sec["h"]:
+                out.append(f"  - {sec['h']}")
+                pad = "    "
+            else:
+                pad = "  "
+            for pt in sec["points"]:
+                out.append(f"{pad}- {pt}")
+            if sec["quote"]:
+                q = sec["quote"]
+                if len(q) > 90:
+                    q = q[:90].rstrip() + "…"
+                out.append(f"{pad}- 原句：{q}")
+    return out
+
+
+def render(card: dict, mods: dict[str, str], tree: list[dict], cat: list[str],
+           audit: dict, date_str: str, bookid: str = "") -> tuple[str, str]:
     title = card["title"]
     slug = card["slug"]
     url = f"{SITE}/reading-notes/books/{slug}/combined.html"
@@ -252,9 +361,8 @@ def render(card: dict, mods: dict[str, str], toc: list[str], cat: list[str],
               and len(x.strip()) <= 20]
         if vs:
             one = "全书主线：" + "、".join(vs[:3])
-        elif toc:
-            names = [re.sub(r"^-\s*\d+\s*", "", t).split("　")[0] for t in toc[:3]]
-            one = f"全书 {len(toc)} 章：" + "、".join(names)
+        elif tree:
+            one = f"全书 {len(tree)} 章：" + "、".join(t["name"] for t in tree[:3])
         else:
             one = "站点未生成一句话主旨，见下方结构脉络"
     head = [
@@ -264,6 +372,7 @@ def render(card: dict, mods: dict[str, str], toc: list[str], cat: list[str],
         "",
         "| 项 | 值 |",
         "|---|---|",
+        f"| bookId | {('`' + bookid + '`') if bookid else '—'} |",
         f"| 类目 | {' / '.join(x for x in cat if x) or '未分类'} |",
         f"| slug | `{slug}` |",
         f"| 卡片状态 | {audit.get('status', '?')}（{len(present)} 个标准模块：{', '.join(present)}） |",
@@ -273,6 +382,17 @@ def render(card: dict, mods: dict[str, str], toc: list[str], cat: list[str],
     ]
     body = []
     idx = 1
+
+    # 01 知识导图：IMA 没有生成导图的接口，这里用站点已编译的篇章结构本地生成，
+    # 既能在支持 Mermaid 的阅读器里出图，也能被检索命中「章名-小节名」。
+    if tree:
+        n_sec = sum(len(t["secs"]) for t in tree)
+        body += [f"## {idx:02d} 知识导图", ""]
+        body += _mindmap(title, tree)
+        body += ["", f"> {len(tree)} 章 · {n_sec} 个小节。导图取「篇→章」两级；"
+                     "逐章的小节/要点/原句在最后一节「章节目录」里。", ""]
+        idx += 1
+
     for key, label in MOD_TITLES:
         if key == "oneline":
             continue
@@ -285,8 +405,13 @@ def render(card: dict, mods: dict[str, str], toc: list[str], cat: list[str],
             continue
         body += [f"## {idx:02d} {label}", "", clip(as_markdown(txt)), ""]
         idx += 1
-    if toc:
-        body += [f"## {idx:02d} 章节目录", "", "\n".join(toc), ""]
+
+    if tree:
+        body += [f"## {idx:02d} 章节目录", "",
+                 "> 层级：章 → 小节 → 要点 → 原句摘录。点站点原文可看每小节完整 AI 大纲。", ""]
+        body += _toc_tree(tree)
+        body += [""]
+
     # 不写 YAML front matter：IMA 会把文件开头当 introduction 展示，
     # front matter 会占满摘要位。元信息改放正文表格，检索同样能读到。
     md = "\n".join(head + body).rstrip() + "\n"
@@ -304,6 +429,7 @@ def main():
     ap.add_argument("--force", action="store_true")
     ap.add_argument("--workers", type=int, default=6)
     ap.add_argument("--mark", default="", help="JSON: {\"slug\": \"media_id\"} 回写上传结果")
+    ap.add_argument("--only-slug", default="", help="只处理指定 slug（新书产出后单本同步）")
     args = ap.parse_args()
 
     IMA_DIR.mkdir(exist_ok=True)
@@ -322,15 +448,19 @@ def main():
         return
 
     index = load_index_cards()
-    cats = load_json("assets/data/book-cats.json", {}).get("books", {})
+    _catf = load_json("assets/data/book-cats.json", {})
+    cats = _catf.get("books", {})
+    bookids = _catf.get("ids", {})
     audit = load_json("assets/data/template-audit.json", {}).get("books", {})
-    print(f"首页书卡 {len(index)} 本｜类目表 {len(cats)} 条｜审计 {len(audit)} 条")
+    print(f"首页书卡 {len(index)} 本｜类目表 {len(cats)} 条｜bookId {len(bookids)} 条｜审计 {len(audit)} 条")
 
     todo = index
     if args.only_cat:
         todo = [c for c in todo if (cats.get(c["slug"]) or ["其他"])[0] == args.only_cat]
     if args.local_only:
         todo = [c for c in todo if (BOOKS / c["slug"] / "combined-data.html").exists()]
+    if args.only_slug:
+        todo = [c for c in todo if c["slug"] == args.only_slug]
     if args.limit:
         todo = todo[: args.limit]
     print(f"本次待处理 {len(todo)} 本")
@@ -350,11 +480,12 @@ def main():
             return {"slug": slug, "error": "no-data"}
         try:
             mods = sections(html)
-            toc = toc_from_guide(html)
+            tree = guide_tree(html)
         except Exception as e:
             return {"slug": slug, "error": f"parse:{e}"}
         cat = cats.get(slug) or ["其他", "未分类"]
-        md, h = render(card, mods, toc, cat, audit.get(slug, {}) or {}, card.get("date", ""))
+        md, h = render(card, mods, tree, cat, audit.get(slug, {}) or {},
+                       card.get("date", ""), bookids.get(slug, ""))
         return {"slug": slug, "md": md, "hash": h, "cat": cat, "src": src,
                 "mods": len([k for k, _ in MOD_TITLES if mods.get(k)]), "size": len(md)}
 

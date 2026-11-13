@@ -147,19 +147,23 @@ def main():
     cloud = load_books(args.offline)
     cards = index_cards()
 
-    by_norm, by_title_list = {}, []
+    by_norm, by_title_list, by_id = {}, [], {}
     for b in cloud:
         k = norm(b.get("title"))
         if not k:
             continue
         cat = [b.get("cat_l1") or "", b.get("cat_l2") or ""]
-        # 云端自己也有一批「未分类」，别让它挡住后面的关键词兜底
+        bid = str(b.get("bookId") or "")
+        # 云端自己也有一批「未分类」，别让它挡住后面的关键词兜底；
+        # 但 bookId 与类目无关，未分类的书也要留 id（书卡顶部表格要用）。
+        if bid:
+            by_id.setdefault(k, bid)
         if not cat[0] or cat[0] in ("未分类", "其他"):
             continue
         by_norm.setdefault(k, cat)
         by_title_list.append((k, cat))
 
-    books, titles = {}, {}
+    books, titles, ids = {}, {}, {}
     stat = Counter()
     unresolved = []
 
@@ -172,9 +176,17 @@ def main():
                 if len(ck) >= 3 and (ck in k or k in ck):
                     cat, src = ccat, "cloud~"
                     break
+        bid = by_id.get(k) if k else ""
+        if not bid and k:
+            for ck, cbid in by_id.items():
+                if len(ck) >= 3 and (ck in k or k in ck):
+                    bid = cbid
+                    break
         if not cat:
             cat, word = guess_from_text(slug, title)
             src = "rule:" + str(word) if cat else "none"
+        if bid:
+            ids[slug] = bid
         if cat and cat[0] and cat[0] not in ("未分类", "其他"):
             books[slug] = cat
             stat[cat[0]] += 1
@@ -193,11 +205,13 @@ def main():
         "stats": dict(stat.most_common()),
         "books": dict(sorted(books.items())),
         "titles": dict(sorted(titles.items())),
+        "ids": dict(sorted(ids.items())),
     }
 
     print("卡片 slug 总数:", len(cards))
     print("类目分布:", dict(stat.most_common()))
     print("未分类:", len(unresolved))
+    print("bookId 命中:", len(ids))
     for s, t in unresolved[:20]:
         print("   -", s, "|", t)
 
