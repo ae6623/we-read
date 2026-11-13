@@ -379,17 +379,37 @@
 
   /* 权重配置异步到达后，对已建立的网格重排 s.cards 快照（不动 DOM 顺序，
      只改数组 → applyPg 重算分页 → relayout 重排瀑布流位置）。
-     中间池保持上一次 scatter 的随机序，用户不会看到「刷新一次跳一次」。 */
+     中间池保持上一次 scatter 的随机序，用户不会看到「刷新一次跳一次」。
+
+     2026-11-13 线上实测：onReady 回调在某些加载时序下没被登记（脚本顺序 /
+     CDN 快慢 / 首屏解析耗时都会影响），权重就彻底不生效、首屏还是随机。
+     所以这里每一步都自己兜住异常，外面再补一层轮询兜底。 */
   function reweight() {
     if (!window.WeReadWeights || !window.WeReadWeights.ready) return;
+    var moved = 0;
     for (var i = 0; i < states.length; i++) {
       var s = states[i];
       if (!s.pure) continue;
-      s.cards = window.WeReadWeights.sort(s.cards, 'home');
-      applyPg(s);
-      paintFoot(s);
+      try {
+        var next = window.WeReadWeights.sort(s.cards, 'home');
+        if (!next || next.length !== s.cards.length) continue;
+        s.cards = next;
+        applyPg(s);
+        if (s.foot) paintFoot(s);
+        moved++;
+      } catch (e) { /* 单个网格出错不影响其它网格 */ }
     }
-    relayout();
+    if (moved) relayout();
+  }
+
+  /* 权重就绪检测：除了 onReady，boot 后主动补一次 + 短轮询兜底（10 秒）。
+     宁可多试几次（幂等：顺序没变时 bucket 结果与入参相同），也不要让
+     「文化置顶」因为一次回调丢失而整体失效。 */
+  function kickWeights() {
+    if (!window.WeReadWeights || !window.WeReadWeights.ready) return false;
+    if (!states.length) return false;     // 网格还没建立（boot 未跑），下一轮再来
+    reweight();
+    return true;
   }
   function schedule() {
     if (raf) return;
@@ -452,12 +472,20 @@
     }, { passive: true });
 
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(relayout);
+    kickWeights();          // 权重已就绪就直接排一次，不等回调
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
   else boot();
 
   // 权重 JSON 到达后（可能晚于首屏）自动重排一次；配置改了也无需改这里。
-  if (window.WeReadWeights) window.WeReadWeights.onReady(reweight);
+  if (window.WeReadWeights && window.WeReadWeights.onReady) {
+    window.WeReadWeights.onReady(reweight);
+  }
+  // 兜底：boot 之后主动补排一次，再用短轮询盯 10 秒（幂等，重复调用无害）
+  var wTries = 0;
+  var wTimer = setInterval(function () {
+    if (kickWeights() || ++wTries > 40) clearInterval(wTimer);
+  }, 250);
   // 系列/任意元素权重的 DOM 重排同样等配置就绪；weights.js 已自行触发。
 })();
