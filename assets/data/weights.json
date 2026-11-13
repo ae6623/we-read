@@ -1,0 +1,123 @@
+{
+  "version": "2026-11-13.2",
+  "note": "通用权重配置。改本文件即可调整排序，不需要改 JS。weight>0 进置顶池，weight<0 进沉底池，weight=0 留在中间池保持随机。命中多条规则时 priority 高者胜，同优先级取绝对值大者。",
+  "engine": {
+    "bucket": true,
+    "desc": "置顶池按 weight 降序；中间池保持传入顺序（首页已由 home-feed 随机打散）；沉底池按 weight 升序（越负越靠后）"
+  },
+  "scopes": {
+    "home": {
+      "enabled": true,
+      "desc": "首页书架卡片。按类目加权：文化/人文类置顶、计算机类沉底、其余保持随机",
+      "rules": [
+        {
+          "id": "culture-top",
+          "label": "文化 / 人文类置顶",
+          "weight": 100,
+          "priority": 10,
+          "match": {
+            "cat1": ["文学", "历史", "社会文化", "哲学宗教", "艺术", "人物传记", "精品小说", "政治军事", "漫画", "男生小说"]
+          }
+        },
+        {
+          "id": "culture-text",
+          "label": "人文关键词置顶（类目缺失时的兜底）",
+          "weight": 80,
+          "priority": 5,
+          "match": {
+            "text_any": ["文化", "诗词", "散文", "文学", "美学", "文明史", "哲学", "艺术史", "史记", "游记", "轻游记"]
+          }
+        },
+        {
+          "id": "computer-cat",
+          "label": "计算机类目沉底",
+          "weight": -100,
+          "priority": 30,
+          "match": { "cat1": ["计算机"] }
+        },
+        {
+          "id": "computer-slug",
+          "label": "计算机 / 编程类沉底（slug 拼音兜底）",
+          "weight": -98,
+          "priority": 25,
+          "match": {
+            "slug_any": ["java", "javascript", "typescript", "python", "spring", "netty", "kubernetes", "docker", "elasticsearch", "rocketmq", "dubbo", "service-mesh", "redis", "mysql", "bian-cheng", "dai-ma", "suan-fa", "ji-suan-ji", "cheng-xu-yuan", "shu-ju-ku", "cao-zuo-xi-tong", "wei-fu-wu", "fen-bu-shi", "huan-cun", "jia-gou"]
+          }
+        },
+        {
+          "id": "computer-text",
+          "label": "计算机 / 编程类沉底（标题关键词兜底）",
+          "weight": -95,
+          "priority": 20,
+          "match": {
+            "text_any": ["编程", "程序设计", "代码", "算法", "计算机", "程序员", "软件开发", "数据结构", "操作系统", "微服务", "分布式"]
+          }
+        },
+        {
+          "id": "book-override",
+          "label": "单书权重覆盖（填 slug 即可强制置顶/沉底，priority 最高）",
+          "weight": 0,
+          "priority": 100,
+          "match": {
+            "slug_eq": "__fill_me__"
+          }
+        }
+      ]
+    },
+    "series": {
+      "enabled": true,
+      "desc": "系列 Tab：轻游记模块置顶。容器级 DOM 重排（不是数组重排），动态插组后自动复排",
+      "containers": [
+        {
+          "selector": "#reading-panel-series .set-groups",
+          "item": ".set-group",
+          "rules": [
+            {
+              "id": "qingyouji-group",
+              "label": "轻游记 23 册分组置顶",
+              "weight": 1000,
+              "priority": 100,
+              "match": { "attr": { "data-units": "qingyouji" } }
+            },
+            {
+              "id": "qingyouji-group-text",
+              "label": "轻游记分组（标题兜底）",
+              "weight": 900,
+              "priority": 50,
+              "match": { "text_any": ["轻游记"] }
+            }
+          ]
+        },
+        {
+          "selector": "#reading-panel-series .archive-grid[aria-label='系列导览']",
+          "item": ".series-preview",
+          "rules": [
+            {
+              "id": "qingyouji-preview",
+              "label": "轻游记（系列）导览卡置顶",
+              "weight": 1000,
+              "priority": 100,
+              "match": { "text_any": ["轻游记"] }
+            }
+          ]
+        }
+      ]
+    },
+    "modules": {
+      "enabled": false,
+      "desc": "详情页模块权重（容器 #rdBody，按 data-key）。引擎已支持，页面引入 weights.js 即可用；默认关闭以免影响既有阅读页。示例：{\"id\":\"guide-first\",\"weight\":100,\"priority\":10,\"match\":{\"attr\":{\"data-key\":\"merged-guide\"}}}",
+      "containers": [
+        {
+          "selector": "#rdBody",
+          "item": "section[aria-labelledby], section[data-key]",
+          "rules": []
+        }
+      ]
+    },
+    "elements": {
+      "enabled": true,
+      "desc": "任意元素权重：填 selector(容器) + item(子元素) + rules 即可对任意 DOM 生效，无需改代码",
+      "containers": []
+    }
+  }
+}

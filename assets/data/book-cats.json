@@ -1,15 +1,47 @@
 {
- "built_at": "2026-11-01T19:00:00+08",
- "source": "weread shelf book_meta",
- "note": "books: slug -> [一级, 二级]; titles: 归一化书名 -> [一级, 二级]; 缺项即未分类 | 2026-11-01 18:59 撤销「自己上传」屏蔽，相关书恢复上架；仅保留「计算机」类目屏蔽。",
+ "built_at": "2026-11-13T21:46:13+08:00",
+ "source": "weread /api/books + 标题关键词启发式",
+ "note": "books: slug -> [一级, 二级]; titles: 归一化书名 -> [一级, 二级]。由 tools/build_cats.py 生成，勿手改。",
+ "stats": {
+  "经济理财": 160,
+  "其他": 97,
+  "文学": 91,
+  "历史": 73,
+  "计算机": 28,
+  "精品小说": 26,
+  "社会文化": 21,
+  "个人成长": 12,
+  "政治军事": 12,
+  "科学技术": 4,
+  "生活百科": 3,
+  "教育学习": 3,
+  "心理": 2,
+  "人物传记": 2,
+  "哲学宗教": 2,
+  "漫画": 1,
+  "男生小说": 1,
+  "艺术": 1
+ },
  "books": {
-  "-li-shi-de-wen-du--xi-lie-quan-7-ce": [
-   "历史",
-   "历史读物"
+  "-shu-zi-you-min-quan-qiu-chuang-ye-": [
+   "经济理财",
+   "投资"
+  ],
+  "-wen-gao": [
+   "其他",
+   "未分类"
+  ],
+  "-yao-yuan-de-jiu-shi-zhu--zai-shuo-shen-me": [
+   "其他",
+   "未分类"
   ],
   "100-ge-ren-sheng-yi-yuan": [
    "文学",
    "散文杂著"
+  ],
+  "1984": [
+   "其他",
+   "未分类"
   ],
   "35-sui-hou--wo-wu-lu-ke-tui-": [
    "精品小说",
@@ -19,23 +51,59 @@
    "心理",
    "积极心理学"
   ],
-  "ai-lve-te-bo-lang-li-lun": [
-   "经济理财",
-   "理财"
+  "a-lei-tai-de-jiao-luo": [
+   "文学",
+   "文学"
+  ],
+  "ai--ji-wei-jiu-yu-sheng-hua-wei-ji": [
+   "其他",
+   "未分类"
+  ],
+  "ai-long-ma-si-ke-chuan": [
+   "其他",
+   "未分类"
+  ],
+  "ai-mei-xiao-zha--xu-zhi-mo-zhi-lu-xiao-man-shu": [
+   "文学",
+   "经典作品"
   ],
   "alaska-qingyouji": [
    "文学",
    "纪实文学"
   ],
-  "ao-wei-er-shu-ping-quan-ji--quan-ji-": [
+  "an-zhi-shi-ji-qi-ren-zhi-ru-he-dian-fu-shang-ye-he-she-hui": [
+   "经济理财",
+   "投资"
+  ],
+  "ao-gu-si-dou-cong-ge-ming-zhe-dao-huang-di": [
+   "历史",
+   "历史读物"
+  ],
+  "ao-si-man-di-guo-de-shuai-wang-yi-zhan-zhong-dong-1914-1920": [
+   "历史",
+   "历史读物"
+  ],
+  "ao-si-wei-xin-yi-bu-li-shi": [
+   "历史",
+   "历史读物"
+  ],
+  "ao-wei-er-shu-ping-quan-ji": [
    "文学",
    "文学鉴赏"
   ],
-  "ba-fei-te-he-cha-li--mang-ge-nei-bu-jiang-hua": [
+  "arctic-qingyouji": [
+   "文学",
+   "纪实文学"
+  ],
+  "ba-bu-ya-xin-ji-nei-ya--sheng-zhe-chi-xia-shi-z": [
+   "文学",
+   "游记"
+  ],
+  "ba-fei-te-he-cha-li-mang-ge-nei-bu-jiang-hua": [
    "经济理财",
    "财经"
   ],
-  "ba-fei-te-mu-hou-zhi-nang--cha-li--mang-ge-chu": [
+  "ba-fei-te-mu-hou-zhi-nang": [
    "经济理财",
    "商业"
   ],
@@ -51,43 +119,115 @@
    "经济理财",
    "管理"
   ],
+  "ba-yue-pao-huo": [
+   "其他",
+   "未分类"
+  ],
+  "bai-nian-di-guo-qi-shi-lu-xi-te-lei-yu-20-shi-ji-de-guo": [
+   "历史",
+   "历史读物"
+  ],
+  "bai-sui-ren-sheng-chang-shou-shi-dai-de-sheng-huo-he-gong-zuo": [
+   "其他",
+   "未分类"
+  ],
   "bai-wan-fu-weng-kuai-che-dao": [
    "经济理财",
    "财经"
+  ],
+  "bai-ye-xing": [
+   "其他",
+   "未分类"
   ],
   "bai-yin-shi-dai": [
    "精品小说",
    "社会小说"
   ],
+  "bai-zhan-ting-de-dian-feng-cong-guang-fu-shi-dai-dao-man-qi-ke-e": [
+   "历史",
+   "历史读物"
+  ],
+  "bai-zhan-ting-de-shuai-wang-cong-xi-la-jun-zhu-dao-su-dan-fu-yon": [
+   "历史",
+   "历史读物"
+  ],
+  "bai-zhan-ting-de-xin-sheng-cong-la-ding-shi-jie-dao-dong-fang-di": [
+   "历史",
+   "历史读物"
+  ],
+  "bai-zhan-ting-san-bu-qu": [
+   "历史",
+   "历史读物"
+  ],
+  "baikal-qingyouji": [
+   "文学",
+   "纪实文学"
+  ],
   "ban-sheng-yuan": [
    "精品小说",
    "影视原著"
   ],
-  "ban-xiao-shi-man-hua-gu-shi-ci-xi-lie-quan-ji-": [
+  "ban-xiao-shi-man-hua-gu-shi-ci-xi-lie-quan-ji": [
    "文学",
    "古代诗词"
   ],
-  "bao-geng--jiu-jiu-nao-zi-ba": [
+  "bao-geng": [
    "文学",
    "经典作品"
   ],
-  "bei-ji--shi-jie-shang-zui-leng-de-di-fang--yi": [
-   "文学",
-   "纪实文学"
+  "bao-lie-wei-lai-she-hui-de-9-da-sheng-cun-yuan-ze": [
+   "社会文化",
+   "社会"
   ],
   "bei-jia-er-hu--lang-fei-shi-jian-mei-guan-xi-": [
    "文学",
    "纪实文学"
   ],
+  "bei-pai-dao-mu-bi-ji": [
+   "男生小说",
+   "悬疑灵异"
+  ],
   "bei-zhui-gan-de-jing-ji-ti": [
    "经济理财",
    "理财"
   ],
-  "bi-de--lin-qi-de-cheng-gong-tou-zi--dian-cang": [
+  "bi-de-lin-qi-de-cheng-gong-tou-zi": [
    "经济理财",
    "理财"
   ],
-  "bu-xiang-shang-ban--zai-ba-li-gong-yuan-shai-ta": [
+  "bian-liang-kan-jian-zhong-guo-she-hui-xiao-qu-shi": [
+   "社会文化",
+   "社会"
+  ],
+  "bing-fa-mo-shi-yu-ying-yong-shi-jian": [
+   "计算机",
+   "编程开发"
+  ],
+  "bloomberg-businessweek-usa-february-26-2024": [
+   "其他",
+   "未分类"
+  ],
+  "bu-da-pei-si-wang-shi-leng-zhan-shi-qi-yi-ge-dong-ou-jia-ting-de": [
+   "历史",
+   "历史读物"
+  ],
+  "bu-gan-xie-dai-man-de-la-de-zong-tong-sui-yue": [
+   "计算机",
+   "编程开发"
+  ],
+  "bu-huo--na-xie-wo-xi-wang-zi-ji-40-chu-tou-zhi": [
+   "个人成长",
+   "励志成长"
+  ],
+  "bu-lei-dun-sen-lin-huo-bi-zhan": [
+   "经济理财",
+   "投资"
+  ],
+  "bu-ru-ren-xing-guo-sheng-huo-jing-dian-ban": [
+   "其他",
+   "未分类"
+  ],
+  "bu-xiang-shang-ban-zai-ba-li-gong-yuan-shai-tai-yang-qin": [
    "文学",
    "纪实文学"
   ],
@@ -95,23 +235,23 @@
    "文学",
    "散文杂著"
   ],
-  "cai-fu-shi-ren-zhi-de-bian-xian--quan-xin-sheng": [
+  "cai-fu-shi-ren-zhi-de-bian-xian": [
    "经济理财",
    "理财"
   ],
-  "cai-lan-jing-dian-sheng-huo-mei-xue-xi-lie--tao": [
+  "cai-lan-jing-dian-sheng-huo-mei-xue-xi-lie": [
    "文学",
    "散文杂著"
   ],
   "cai-wu-bao-biao-fen-xi-yu-gu-piao-gu-zhi--di-2": [
    "经济理财",
-   "理财"
+   "投资"
   ],
   "cai-wu-gui-ji--ru-he-shi-bie-cai-wu-bao-gao-zho": [
    "经济理财",
    "财经"
   ],
-  "cai-wu-zi-you-zhi-lu--quan-san-ce-": [
+  "cai-wu-zi-you-zhi-lu": [
    "经济理财",
    "理财"
   ],
@@ -119,49 +259,85 @@
    "经济理财",
    "财经"
   ],
+  "camino-qingyouji": [
+   "文学",
+   "游记"
+  ],
+  "can-lan-qian-yang": [
+   "其他",
+   "未分类"
+  ],
+  "canary-qingyouji": [
+   "文学",
+   "游记"
+  ],
+  "cang-lang-zhi-shui": [
+   "其他",
+   "未分类"
+  ],
   "cang-sang-shi-nian": [
    "精品小说",
    "年代小说"
   ],
-  "ceng-guo-fan-chuan--zhang-hong-jie-quan-xin-zen": [
+  "cao-yu-he-zhong-hua-wen-ming-4000-nian-rong-he-shi": [
+   "历史",
+   "历史读物"
+  ],
+  "ceng-guo-fan-chuan": [
    "历史",
    "中国古代"
   ],
-  "cha-li--mang-ge-de-tou-zi-luo-ji": [
+  "cha-li-mang-ge-de-tou-zi-luo-ji": [
    "经济理财",
    "理财"
   ],
-  "chang-qi-de-li-liang--ru-he-gou-jian-ke-chi-xu": [
+  "chan-yu-mo-tuo-che-wei-xiu-yi-shu": [
+   "精品小说",
+   "治愈小说"
+  ],
+  "chang-an-de-li-zhi--tong-ming-ying-shi-yuan-zhu": [
+   "其他",
+   "未分类"
+  ],
+  "chao-ji-ban-tu-quan-qiu-gong-ying-lian-chao-ji-cheng-shi-yu-xin-": [
    "经济理财",
    "财经"
   ],
-  "chang-qi-you-nai-xin--mei-tuan-de-cheng-zhang-y": [
-   "经济理财",
-   "财经"
-  ],
-  "chao-ji-ban-tu--quan-qiu-gong-ying-lian--chao": [
-   "经济理财",
-   "财经"
-  ],
-  "chao-tu-jie-ji-jian-ou-zhou-shi--ou-zhou-li-shi": [
+  "chao-tu-jie-ji-jian-ou-zhou-shi": [
    "历史",
    "世界史"
   ],
-  "cheng-nan-jiu-shi--ren-wen-she--yu-wen-yue-du": [
+  "cheng-nan-jiu-shi": [
    "文学",
    "经典作品"
   ],
-  "cheng-wei-ya-shi-lan-dai--guan-fang-shou-quan-": [
+  "cheng-xu-yuan-chao-qiang-da-nao": [
+   "计算机",
+   "编程开发"
+  ],
+  "chong-xin-li-jie-chuang-ye-yi-ge-chuang-ye-zhe-de-tu-zhong-si-ka": [
    "经济理财",
-   "商业"
+   "投资"
+  ],
+  "chuan-yue-tu-ku-man-si-tan": [
+   "其他",
+   "未分类"
   ],
   "chuan-yue-zhong-ya": [
    "文学",
    "纪实文学"
   ],
-  "cong-0-dao-1-kai-qi-shang-ye-yu-wei-lai-de-mi-m": [
-   "经济理财",
-   "管理"
+  "chuang-shi-ji-cong-xi-bao-dao-wen-ming-she-hui-de-shen-ceng-qi-y": [
+   "历史",
+   "历史读物"
+  ],
+  "chuang-zao-ri-ben-1853-1964": [
+   "其他",
+   "未分类"
+  ],
+  "chun-zhi-ji-di-yi-ci-shi-jie-da-zhan-he-xian-dai-de-kai-duan": [
+   "其他",
+   "未分类"
   ],
   "cong-bao-biao-kan-qi-ye--shu-zi-bei-hou-de-mi": [
    "经济理财",
@@ -179,37 +355,45 @@
    "经济理财",
    "理财"
   ],
+  "cun-zai-yu-tou-zi": [
+   "经济理财",
+   "财经"
+  ],
   "cun-zai-zhu-yi-wu-li-xue": [
    "科学技术",
    "自然科学"
   ],
-  "da-er-wen-dao--ta-shuo-41-sui-xiang-huan-yi-zho": [
-   "文学",
-   "纪实文学"
+  "da-duan-lie-ren-lei-ben-xing-yu-she-hui-zhi-xu-de-chong-jian": [
+   "社会文化",
+   "社会"
   ],
-  "da-hua-zhong-guo-yi-shu-shi--quan-xin-xiu-ding": [
+  "da-hua-zhong-guo-yi-shu-shi": [
    "艺术",
    "理论"
   ],
-  "da-kong-tou": [
-   "经济理财",
-   "财经"
-  ],
-  "da-ming-wang-chao-1566-quan-ji-": [
+  "da-ming-wang-chao-1566": [
    "历史",
    "历史小说"
   ],
-  "da-qian-xi-si--you-xiu-tou-zi-zhe-ru-he-si-kao": [
+  "da-nao-shi-tai-shi-guang-ji": [
+   "社会文化",
+   "社会"
+  ],
+  "da-qian-xi-si": [
    "经济理财",
    "理财"
   ],
-  "da-shuai-tui--hong-guan-jing-ji-xue-de-sheng-be": [
+  "da-shuai-tui": [
    "经济理财",
    "财经"
   ],
   "da-ying-bo-wu-guan-shi-jie-jian-shi": [
    "历史",
    "世界史"
+  ],
+  "da-zhuan-xiang-shi-jie-ru-he-bu-ru-xian-dai": [
+   "其他",
+   "未分类"
   ],
   "da-zhuan-zhe--xian-dai-zhai-wu-yu-ke-chi-xu-de": [
    "经济理财",
@@ -219,11 +403,23 @@
    "文学",
    "文学鉴赏"
   ],
+  "dai-ma-jing-jin-zhi-lu": [
+   "计算机",
+   "编程开发"
+  ],
   "dai-wei-si-wang-chao": [
    "社会文化",
    "社科"
   ],
-  "dang-dai-zhong-guo-jie-ji-jie-ceng-bian-dong-19": [
+  "dang--can-que--yu-jian--wan-zheng--zhu-de": [
+   "文学",
+   "纪实文学"
+  ],
+  "dang-an-yi-bu-ge-ren-shi": [
+   "历史",
+   "历史读物"
+  ],
+  "dang-dai-zhong-guo-jie-ji-jie-ceng-bian-dong": [
    "社会文化",
    "社科"
   ],
@@ -231,7 +427,7 @@
    "精品小说",
    "治愈小说"
   ],
-  "dang-ren-shen-me-dou-bu-xiang-yao--jiu-yong-you": [
+  "darwin-island-qingyouji": [
    "文学",
    "纪实文学"
   ],
@@ -239,41 +435,93 @@
    "政治军事",
    "政治"
   ],
-  "di-guo-de-nian-dai-18751914": [
+  "di-guo-de-nian-dai": [
    "历史",
    "世界史"
+  ],
+  "di-ju-qi-shi-er-lve--pu-tong-ren-ju-cai-dian": [
+   "个人成长",
+   "认知思维"
+  ],
+  "di-yi-xing-yuan-li--pu-tong-ren-de-ren-sheng-ga": [
+   "其他",
+   "未分类"
   ],
   "di-yu-wang-she-hui--sang-shi-da-zhi-shi-dai-": [
    "社会文化",
    "社科"
   ],
-  "di-zao-he-ping-1919-ba-li-he-hui-ji-qi-kai-qi-d": [
+  "di-zao-he-ping": [
    "历史",
    "世界史"
+  ],
+  "di-zhong-hai-shi-shi-san-bu-qu": [
+   "经济理财",
+   "投资"
   ],
   "ding-jia-wei-lai--han-dong-hua-er-jie-de-liang": [
    "经济理财",
    "财经"
   ],
-  "dong-dang-de-shi-jie--feng-xian--ren-xing-yu-w": [
+  "dong-mu-chang": [
+   "其他",
+   "未分类"
+  ],
+  "dong-wu-nong-chang": [
+   "其他",
+   "未分类"
+  ],
+  "dong-yin-du-gong-si-ju-e-shang-ye-zi-ben-zhi-xing-shuai": [
+   "经济理财",
+   "投资"
+  ],
+  "downmagaz-net": [
+   "其他",
+   "未分类"
+  ],
+  "du-dong--yi-jiao-yi-wei-sheng--jian-li-ni-de": [
    "经济理财",
    "财经"
   ],
-  "dong-wu-jing-shen": [
-   "经济理财",
-   "财经"
-  ],
-  "du-jin-zhe--chang-qi-zi-ben-guan-li-gong-si-de": [
+  "du-jin-zhe": [
    "经济理财",
    "管理"
+  ],
+  "du-mao-xuan--zou-chu-ren-sheng-kun-ju": [
+   "其他",
+   "未分类"
   ],
   "du-shen-shu-xue-jia--zhan-sheng-la-si-wei-jia-s": [
    "经济理财",
    "财经"
   ],
-  "dui-chong-ji-jin-feng-yun-lu-1-dong-xie-xi-du": [
+  "du-zhe": [
+   "其他",
+   "未分类"
+  ],
+  "du-zhe-yuan-chuang-ban": [
+   "其他",
+   "未分类"
+  ],
+  "duan-bi-shang-de-hua-duo-ren-sheng-yu-fa-lv-de-qi-huan-lian-jin-": [
+   "社会文化",
+   "社会"
+  ],
+  "dui-chong-ji-jin-feng-yun-lu-1": [
    "经济理财",
    "理财"
+  ],
+  "egypt-qingyouji": [
+   "文学",
+   "游记"
+  ],
+  "el-salvador-qingyouji": [
+   "文学",
+   "游记"
+  ],
+  "elasticsearch-yuan-ma-jie-xi-yu-you-hua-shi-zhan": [
+   "计算机",
+   "编程开发"
   ],
   "elephant-qingyouji": [
    "文学",
@@ -283,55 +531,87 @@
    "精品小说",
    "纪实小说"
   ],
-  "fan-cui-ruo--cong-bu-que-ding-xing-zhong-huo-yi": [
+  "er-yue-he-shuo-fan-fu": [
+   "其他",
+   "未分类"
+  ],
+  "fa-zhi-de-xi-jie": [
+   "社会文化",
+   "社会"
+  ],
+  "fan-cui-ruo": [
    "个人成长",
    "人生哲学"
   ],
-  "fan-rong-yu-ting-zhi--ri-ben-jing-ji-fa-zhan-he": [
+  "fan-rong-luo-mu--ri-ben-yi-dai-ren-de-chen-tong": [
    "经济理财",
    "财经"
+  ],
+  "fang-si-qi-de-chu-lian-le-yuan--jing-bian-ban-": [
+   "其他",
+   "未分类"
   ],
   "fei-teng-shi-wu-nian--zhong-guo-hu-lian-wang-19": [
    "经济理财",
    "商业"
   ],
+  "fei-zhou-wai-pai-shi-lu--gao-xin-xia-de-wei-xia": [
+   "文学",
+   "纪实文学"
+  ],
+  "fen-bu-shi-zhong-jian-jian-ji-shu-shi-zhan": [
+   "计算机",
+   "编程开发"
+  ],
   "fen-xi-yu-si-kao--huang-qi-fan-de-fu-dan-jing-j": [
    "经济理财",
    "财经"
+  ],
+  "feng-tang-cheng-shi-xin-fa": [
+   "经济理财",
+   "管理"
   ],
   "fu-guo-de-wei-shan--zi-you-mao-yi-de-mi-si-yu-z": [
    "经济理财",
    "财经"
   ],
-  "fu-jia-mei-guo--wo-er-ma-chuang-shi-ren-shan-mu": [
-   "经济理财",
-   "商业"
-  ],
   "fu-lan-ke-lin-zi-zhuan": [
    "人物传记",
    "传记综合"
   ],
-  "fu-li-lv": [
+  "fu-li-de-li-liang-10-nian-10-bei-de-tou-zi-si-k": [
    "经济理财",
    "财经"
   ],
-  "fu-li-xin-tu--yi-ge-zhi-ye-tou-zi-ren-de-si-kao": [
+  "fu-li-xin-tu": [
    "经济理财",
    "理财"
+  ],
+  "fu-pan": [
+   "经济理财",
+   "投资"
   ],
   "fu-za-shi-jie-de-ming-bai-ren": [
    "个人成长",
    "人生哲学"
   ],
-  "gao-pin-jiao-yi-yuan--hua-er-jie-de-su-du-you-x": [
-   "经济理财",
-   "财经"
+  "gambia-qingyouji": [
+   "文学",
+   "游记"
+  ],
+  "gao-ke-yong-ke-shen-suo-wei-fu-wu-jia-gou": [
+   "计算机",
+   "编程开发"
+  ],
+  "gao-xing-jia-bi-ren-sheng-zhi-nan": [
+   "其他",
+   "未分类"
   ],
   "gao-zeng-zhang-ke-ji-gu-tou-zi-fa": [
    "经济理财",
    "理财"
   ],
-  "ge-ming-de-nian-dai-17891848": [
+  "ge-ming-de-nian-dai": [
    "历史",
    "世界史"
   ],
@@ -339,11 +619,11 @@
    "经济理财",
    "财经"
   ],
-  "gong-ying-lian-de-san-dao-fang-xian--xu-qiu-yu": [
+  "gong-ying-lian-de-san-dao-fang-xian": [
    "经济理财",
    "管理"
   ],
-  "gu-piao-ji-ben-mian-fen-xi-qing-dan--jing-zhun": [
+  "gu-piao-ji-ben-mian-fen-xi-qing-dan": [
    "经济理财",
    "理财"
   ],
@@ -351,17 +631,13 @@
    "经济理财",
    "理财"
   ],
-  "gu-shi-bai-nian-qi-shi-lu": [
-   "经济理财",
-   "财经"
-  ],
-  "gu-shi-ci-li-de-kuai-yi-ren-sheng--qiao--zhe-c": [
+  "gu-shi-ci-li-de-kuai-yi-ren-sheng": [
    "文学",
    "古代诗词"
   ],
-  "gu-shou--ce-lve-tou-zi--tan-xun-zhai-quan-yu": [
+  "gu-shou--tou-zi-zhi-nan": [
    "经济理财",
-   "理财"
+   "投资"
   ],
   "gu-zhi--nan-dian--jie-jue-fang-an-ji-xiang-gua": [
    "经济理财",
@@ -371,23 +647,59 @@
    "经济理财",
    "理财"
   ],
-  "guai-dan-xing-wei-xue--quan-si-ce--xin-ban-": [
+  "guai-dan-xing-wei-xue": [
    "心理",
    "社会心理学"
+  ],
+  "guang-rong-yu-meng-xiang-1": [
+   "其他",
+   "未分类"
+  ],
+  "guang-rong-yu-meng-xiang-2": [
+   "其他",
+   "未分类"
+  ],
+  "guang-rong-yu-meng-xiang-3": [
+   "其他",
+   "未分类"
+  ],
+  "guang-rong-yu-meng-xiang-4": [
+   "其他",
+   "未分类"
   ],
   "gun-xue-qiu--ba-fei-te-he-ta-de-cai-fu-ren-shen": [
    "经济理财",
    "商业"
   ],
-  "hai-gui-jiao-yi-fa-ze--zhen-cang-ban-": [
+  "guo-dong-ji--ming-jia-si-ji-san-wen-ji-": [
+   "文学",
+   "散文杂著"
+  ],
+  "guo-jia-gou-jian-21-shi-ji-de-guo-jia-zhi-li-yu-shi-jie-zhi-xu": [
+   "计算机",
+   "编程开发"
+  ],
+  "guo-min-dang-gao-ceng-de-pai-xi-zheng-zhi-xiu-ding-ben-jiang-jie": [
+   "社会文化",
+   "社会"
+  ],
+  "hai-gui-jiao-yi-fa-ze": [
    "经济理财",
    "财经"
+  ],
+  "hai-yang-di-guo-yi-bu-hai-yang-zheng-fu-shi": [
+   "经济理财",
+   "投资"
+  ],
+  "he-yi-wei-fu--ying-xiang-bi-ci-yi-sheng-de-fu-z": [
+   "教育学习",
+   "育儿"
   ],
   "hei-shi-de-xuan-ze--kan-hei-shi-ru-he-ying-dui": [
    "经济理财",
    "财经"
   ],
-  "hei-tian-e--ru-he-ying-dui-bu-ke-yu-zhi-de-wei": [
+  "hei-tian-e": [
    "经济理财",
    "管理"
   ],
@@ -395,21 +707,25 @@
    "文学",
    "外国文学"
   ],
+  "hong-lou-meng": [
+   "其他",
+   "未分类"
+  ],
+  "hong-se-zi-ben--zhong-guo-de-fei-fan-jue-qi-yu": [
+   "经济理财",
+   "投资"
+  ],
   "hou-zhen-xiang-shi-dai": [
    "社会文化",
    "社科"
   ],
-  "hua-er-jie-cao-pan-shou-ri-ji--di-2-ban-": [
+  "hua-er-jie-de-wu-li-xue": [
    "经济理财",
-   "理财"
+   "投资"
   ],
-  "hua-er-jie-chuan-qi": [
-   "男生小说",
-   "都市小说"
-  ],
-  "hua-er-jie-jin-rong-tou-zi-qi-shi-lu--tao-zhuan": [
+  "hua-er-jie-you-ling": [
    "经济理财",
-   "商业"
+   "投资"
   ],
   "hua-er-jie-zheng-quan-fen-xi--gu-piao-fen-xi-yu": [
    "经济理财",
@@ -423,27 +739,79 @@
    "文学",
    "经典作品"
   ],
-  "hui-lv-xia-die-zhi-hou--ri-yuan-bian-zhi-de-hon": [
+  "hui-fang-li-shi-xin-dong-ou-zhi-lv": [
+   "历史",
+   "历史读物"
+  ],
+  "hui-lv-xia-die-zhi-hou": [
    "经济理财",
    "财经"
   ],
-  "huo-bi-cong-na-li-lai-": [
+  "huo-bi-wei-lai": [
    "经济理财",
    "财经"
   ],
-  "huo-bi-wei-lai--cong-jin-ben-wei-dao-qu-kuai-li": [
+  "huo-bi-zhan-zheng": [
    "经济理财",
    "财经"
   ],
-  "huo-bi-zhan-zheng--quan-5-ce-": [
+  "huo-bi-zhan-zheng-sheng-ji-ban-1": [
    "经济理财",
-   "财经"
+   "投资"
+  ],
+  "huo-bi-zhan-zheng-sheng-ji-ban-2-jin-quan-tian-xia": [
+   "经济理财",
+   "投资"
+  ],
+  "huo-bi-zhan-zheng-sheng-ji-ban-3-jin-rong-gao-bian-jiang": [
+   "经济理财",
+   "投资"
+  ],
+  "huo-bi-zhan-zheng-sheng-ji-ban-4-zhan-guo-shi-dai": [
+   "经济理财",
+   "投资"
+  ],
+  "huo-bi-zhan-zheng-sheng-ji-ban-5-shan-yu-yu-lai": [
+   "经济理财",
+   "投资"
+  ],
+  "huo-zhe": [
+   "文学",
+   "纪实文学"
+  ],
+  "huo-zhe-hui-lai-de-nan-ren-yi-ge-pu-tong-ri-ben-bing-de-er-zhan-": [
+   "历史",
+   "历史读物"
+  ],
+  "indonesia-qingyouji": [
+   "文学",
+   "游记"
+  ],
+  "java-9-mo-kuai-hua-kai-fa": [
+   "计算机",
+   "编程开发"
+  ],
+  "java-bian-cheng-de-luo-ji": [
+   "计算机",
+   "编程开发"
+  ],
+  "java-bian-cheng-fang-fa-lun": [
+   "计算机",
+   "编程开发"
+  ],
+  "java-she-ji-mo-shi-ji-shi-jian": [
+   "计算机",
+   "编程开发"
+  ],
+  "java-yi-bu-bian-cheng-shi-zhan": [
+   "计算机",
+   "编程开发"
   ],
   "ji-ceng-zhong-guo-de-yun-xing-luo-ji": [
    "政治军事",
    "政治"
   ],
-  "ji-duan-de-nian-dai-19141991": [
+  "ji-duan-de-nian-dai": [
    "历史",
    "世界史"
   ],
@@ -451,9 +819,25 @@
    "精品小说",
    "社会小说"
   ],
-  "ji-yi-mo-fa-shi--xue-xi-kao-shi-shi-yong-ji-yi": [
+  "ji-yi-mo-fa-shi": [
    "个人成长",
    "认知思维"
+  ],
+  "jia-gu-wen-er-zhan-shi": [
+   "历史",
+   "历史读物"
+  ],
+  "jia-gu-wen-shi-jie-shi": [
+   "历史",
+   "历史读物"
+  ],
+  "jia-gu-wen-xi-fang-tong-shi": [
+   "历史",
+   "历史读物"
+  ],
+  "jia-gu-wen-zhan-zheng-de-zhen-xiang": [
+   "历史",
+   "历史读物"
   ],
   "jia-zhi-gui-lv": [
    "经济理财",
@@ -471,43 +855,71 @@
    "经济理财",
    "理财"
   ],
-  "jiao-yi-de-shi-jie--jin-qian--quan-li-yu-da-zo": [
-   "经济理财",
-   "财经"
-  ],
   "jiao-yi-xin-li-fen-xi": [
    "经济理财",
    "理财"
   ],
-  "jie-gou-xing-gai-ge": [
+  "jiao-yi-yuan-de-zi-wo-xiu-yang--zhong-guo-ding": [
    "经济理财",
-   "财经"
+   "商业"
   ],
-  "jie-ke--zou-200-gong-li-qu-jian-yi-zuo-cheng-": [
+  "jiao-zong-yu-mo-suo-li-ni-bi-hu-shi-yi-shi-yu-fa-xi-si-jue-qi-mi": [
+   "历史",
+   "历史读物"
+  ],
+  "jie-ji-shi-dai": [
+   "文学",
+   "文学"
+  ],
+  "jie-ke-qingyouji": [
    "文学",
    "纪实文学"
+  ],
+  "jin-gang-jing--yuan-wen-yuan-yi-yu-xin-yi-xin-j": [
+   "其他",
+   "未分类"
   ],
   "jin-long-yu-bei-hou-de-liang-you-di-guo": [
    "经济理财",
    "管理"
   ],
-  "jin-qian-yong-bu-mian--zi-ben-shi-jie-de-an-liu": [
+  "jin-ping-mei--zhong-shu-feng-shuo-jing-dian-1": [
+   "其他",
+   "未分类"
+  ],
+  "jin-qian-yong-bu-mian": [
    "经济理财",
    "财经"
   ],
-  "jin-rong-de-ben-zhi--bo-nan-ke-si-jiang-mei-lia": [
+  "jin-ri-jian-shi-ren-lei-ming-yun-da-yi-ti": [
+   "历史",
+   "历史读物"
+  ],
+  "jin-rong-de-ben-zhi": [
    "经济理财",
    "财经"
   ],
-  "jin-rong-lian-jin-shu--ling-quan-qiu-tou-zi-zhe": [
+  "jin-rong-guai-jie": [
+   "经济理财",
+   "投资"
+  ],
+  "jin-rong-jia--jiao-fu--jin-rong-ban--mei-guo": [
+   "经济理财",
+   "投资"
+  ],
+  "jin-rong-zhi-wang--hui-le-shi-jie-de-yin-hang-j": [
    "经济理财",
    "财经"
   ],
-  "jin-rong-zhou-qi": [
-   "经济理财",
-   "理财"
+  "jin-tian-ye-yao-hao-hao-chi-fan-jing-dian-ban": [
+   "其他",
+   "未分类"
   ],
-  "jing-hua-yan-yun--quan-ji--ji-nian-dian-cang": [
+  "jin-yu-tie-bi-si-mai-bu-lai-xi-luo-de-yu-de-yi-zhi-di-guo-de-jia": [
+   "历史",
+   "历史读物"
+  ],
+  "jing-hua-yan-yun": [
    "精品小说",
    "社会小说"
   ],
@@ -519,23 +931,43 @@
    "经济理财",
    "商业"
   ],
-  "jing-zheng-you-shi--tou-shi-qi-ye-hu-cheng-he": [
-   "经济理财",
-   "管理"
+  "jiu-pian-xue": [
+   "其他",
+   "未分类"
   ],
-  "jing-zheng-zhan-lve": [
+  "ju-wai-ren--sa-te--yi-bu-li-xing-yu-jing-dian": [
+   "其他",
+   "未分类"
+  ],
+  "jun-wang-de-chuan-qi": [
+   "历史",
+   "历史读物"
+  ],
+  "kai-en-si-la-si-ji-ha-ye-ke-jing-ji-si-xiang-ru-he-ying": [
    "经济理财",
-   "商业"
+   "投资"
+  ],
+  "kai-zhe-fang-che--qu-gu-dai-tao-huang-zhong-tia": [
+   "历史",
+   "历史读物"
   ],
   "kan-dong-shi-jie-ge-ju-de-di-yi-ben-shu": [
    "政治军事",
    "政治"
   ],
-  "kan-dong-shi-jie-ge-ju-de-di-yi-ben-shu-2-da-gu": [
+  "kan-dong-shi-jie-ge-ju-de-di-yi-ben-shu-2": [
    "政治军事",
    "政治"
   ],
-  "kong-tou-da-shi--bai-nian-lai-quan-qiu-gu-shi-l": [
+  "ke-li-mi-ya-zhan-zheng-bei-yi-wang-de-di-guo-bo-yi": [
+   "历史",
+   "历史读物"
+  ],
+  "king-return-dalrymple": [
+   "历史",
+   "历史读物"
+  ],
+  "kong-tou-da-shi": [
    "经济理财",
    "理财"
   ],
@@ -543,39 +975,79 @@
    "经济理财",
    "管理"
   ],
-  "kuan-ke--hua-er-jie-ding-ji-shu-liang-jin-rong": [
+  "kuai-le-de-si--guo-mai-jing-dian-": [
+   "其他",
+   "未分类"
+  ],
+  "kuan-ke": [
    "经济理财",
    "商业"
   ],
-  "kuan-ke-ren-sheng--cong-wu-li-xue-jia-dao-shu-l": [
+  "kuan-ke-ren-sheng": [
    "经济理财",
    "财经"
   ],
-  "kuang-biao--zhang-yi--zhang-song-wen-zhu-yan-t": [
+  "kuang-biao": [
    "精品小说",
    "影视原著"
   ],
-  "kuang-ye-ren-sheng--ji-mu--luo-jie-si-de-quan": [
+  "kuang-ye-ren-sheng": [
    "经济理财",
    "理财"
+  ],
+  "kuang-ye-zhi-xin--qing-xing-sheng-huo-de-di-cen": [
+   "其他",
+   "未分类"
+  ],
+  "kubernetes-quan-wei-zhi-nan": [
+   "计算机",
+   "编程开发"
+  ],
+  "kun-zai-di-ceng-de-ren": [
+   "精品小说",
+   "纪实小说"
+  ],
+  "kyoto-temple-qingyouji": [
+   "文学",
+   "纪实文学"
+  ],
+  "la-ding-mei-zhou-bei-qie-kai-de-xue-guan": [
+   "其他",
+   "未分类"
   ],
   "lao-zi-yu-xi-fang-zhe-xue--zhong-xi-zhe-xue-de": [
    "哲学宗教",
    "东方哲学"
   ],
+  "leng-zhi-shi-1000-wen": [
+   "科学技术",
+   "科学科普"
+  ],
   "li-dai-jing-ji-bian-ge-de-shi": [
    "经济理财",
-   "财经"
+   "投资"
   ],
-  "li-guang-yao-lun-zhong-guo-yu-shi-jie": [
-   "政治军事",
-   "政治"
+  "li-juan-a-lei-tai-xi-lie-dian-cang-he-ji": [
+   "文学",
+   "文学"
   ],
-  "li-xiang-guo-yi-cong-xi-lie-tao-zhuang-036-050-c": [
+  "li-shi-de-wen-du-xi-lie-quan-7-ce": [
+   "历史",
+   "历史读物"
+  ],
+  "li-shi-de-zhong-jie-yu-zui-hou-de-ren": [
+   "历史",
+   "历史读物"
+  ],
+  "li-shi-gao-shou-de-po-ju-shu--qing-li-shi-": [
+   "历史",
+   "历史读物"
+  ],
+  "li-xiang-guo-yi-cong-xi-lie-tao-zhuang-036-050-ce": [
    "历史",
    "世界史"
   ],
-  "li-xiang-guo-yi-cong-xi-lie-tao-zhuang-11-ce-03": [
+  "li-xiang-guo-yi-cong-xi-lie-tao-zhuang-11-ce": [
    "历史",
    "世界史"
   ],
@@ -583,61 +1055,133 @@
    "历史",
    "世界史"
   ],
+  "liang-ci-quan-qiu-da-wei-ji-de-bi-jiao-yan-jiu": [
+   "经济理财",
+   "投资"
+  ],
+  "liang-jian--tong-ming-dian-shi-ju-yuan-zhu-": [
+   "其他",
+   "未分类"
+  ],
+  "liang-jin-bei-ge--quan-san-ce-": [
+   "其他",
+   "未分类"
+  ],
+  "ling-nian-1945-xian-dai-shi-jie-dan-sheng-de-shi-ke": [
+   "其他",
+   "未分类"
+  ],
   "ling-shou-de-zhe-xue": [
    "经济理财",
    "商业"
   ],
-  "ling-xia-yi-du-2014": [
+  "ling-xia-yi-du": [
    "文学",
    "散文杂著"
   ],
-  "lun-di-guo--mei-guo--zhan-zheng-he-shi-jie-ba": [
+  "local-lao-gong-jian-chi-fang-jia-hui-die": [
+   "经济理财",
+   "投资"
+  ],
+  "local-shen-hua-de-po-mie-flp713": [
+   "其他",
+   "未分类"
+  ],
+  "local-tianya-006-china-housing-outlook-2005-2006": [
+   "经济理财",
+   "投资"
+  ],
+  "local-tianya-008-four-principles-lower-housing-prices": [
+   "经济理财",
+   "投资"
+  ],
+  "local-tianya-129-inner-strife-rigid-china": [
+   "其他",
+   "未分类"
+  ],
+  "local-yin-wei-jian-dapeng": [
+   "其他",
+   "未分类"
+  ],
+  "local-zhi-ye-gui-hua-niao-shu": [
+   "其他",
+   "未分类"
+  ],
+  "long-cang": [
+   "其他",
+   "未分类"
+  ],
+  "lou-ta-zhi-hou--cong-ri-ben-jing-yan-kan-zhong": [
+   "经济理财",
+   "财经"
+  ],
+  "lun-da-zhan-lve": [
+   "其他",
+   "未分类"
+  ],
+  "lun-di-guo": [
    "社会文化",
    "社科"
   ],
-  "lun-zhong-guo": [
-   "政治军事",
-   "政治"
-  ],
-  "luo-ji-si-wei-jian-shu-ji-jin--tao-zhuang-gong": [
+  "luo-ji-si-wei-jian-shu-ji-jin": [
    "经济理财",
    "理财"
+  ],
+  "ma-ju-qiao-de-shi-jian--qing-hua-bo-shi-de-ri-j": [
+   "文学",
+   "纪实文学"
+  ],
+  "ma-ke--tu-wen-duan-pian-xiao-shuo-ji": [
+   "文学",
+   "文学"
   ],
   "mai-fang-rang-ri-ben-ren-xing-fu-le-ma--yi-wen": [
    "社会文化",
    "社科"
   ],
+  "mai-ken-xi-jie-gou-hua-zhan-lve-si-wei": [
+   "其他",
+   "未分类"
+  ],
   "man-bu-hua-er-jie--yuan-shu-di-11-ban-": [
    "经济理财",
    "财经"
+  ],
+  "man-hua-ke-pu--bi-zhi-shi-you-qu-de-leng-zhi-sh": [
+   "漫画",
+   "科普漫画"
   ],
   "man-man-bian-fu": [
    "经济理财",
    "财经"
   ],
-  "mang-ge-zhi-dao--cha-li--mang-ge-gu-dong-hui": [
-   "经济理财",
-   "商业"
+  "man-man-zi-you-lu-man-de-la-zi-zhuan": [
+   "文学",
+   "文学"
   ],
-  "mao-ze-dong-chuan--quan-wei-jing-zhuang-ban-": [
+  "mao-ze-dong-chuan": [
    "政治军事",
    "政治"
   ],
-  "mao-ze-dong-shi-ci-xin-shang--da-zi-ben-": [
+  "mao-ze-dong-shi-ci-xin-shang": [
    "文学",
    "文学鉴赏"
   ],
-  "mei-guo-de-gu-shi--qi-ce-tao-zhuang-": [
+  "mao-ze-dong-shi-ci-xin-shang--da-zi-ben-": [
+   "文学",
+   "文学"
+  ],
+  "mei-guo-de-gu-shi": [
    "历史",
    "世界史"
   ],
-  "mei-guo-jing-ji-zhi-biao-tu-jie": [
+  "mei-lian-chu": [
    "经济理财",
    "财经"
   ],
-  "mei-lian-chu-2019-nian-sheng-ji-ban--jing-zhu": [
-   "经济理财",
-   "财经"
+  "mei-se-wu-shuang": [
+   "其他",
+   "未分类"
   ],
   "mei-shan-yu-yu-xue-yi-jing-zhi-ba-zi-ming-li": [
    "哲学宗教",
@@ -647,7 +1191,15 @@
    "文学",
    "散文杂著"
   ],
-  "meng-li-hua-luo-zhi-duo-shao-2023-ban-": [
+  "mei-you-kuan-shu-jiu-mei-you-wei-lai": [
+   "其他",
+   "未分类"
+  ],
+  "mei-you-shen-me-liao-bu-qi": [
+   "其他",
+   "未分类"
+  ],
+  "meng-li-hua-luo-zhi-duo-shao": [
    "文学",
    "散文杂著"
   ],
@@ -659,9 +1211,41 @@
    "经济理财",
    "财经"
   ],
+  "mian-xiang-yue-jian-dan-yue-shi-yong": [
+   "其他",
+   "未分类"
+  ],
   "miao-qu-heng-sheng-de-guo-zhai-qi-huo--gen-xiao": [
    "经济理财",
    "理财"
+  ],
+  "ming-yun-100-wen": [
+   "其他",
+   "未分类"
+  ],
+  "ming-zhi-tian-huang-1852-1912": [
+   "历史",
+   "历史读物"
+  ],
+  "na-ta-sha-zhi-wu-e-luo-si-wen-hua-shi": [
+   "历史",
+   "历史读物"
+  ],
+  "nan-jing-1937-xue-zhan-wei-cheng": [
+   "其他",
+   "未分类"
+  ],
+  "nan-jing-da-tu-sha": [
+   "其他",
+   "未分类"
+  ],
+  "netty-jin-jie-zhi-lu": [
+   "计算机",
+   "编程开发"
+  ],
+  "ni-bu-zhi-dao-de-javascript": [
+   "计算机",
+   "编程开发"
   ],
   "ni-dang-xiang-niao-fei-wang-ni-de-shan": [
    "文学",
@@ -671,25 +1255,45 @@
    "精品小说",
    "纪实小说"
   ],
-  "niu-jin-tong-shi-ke--gai-lv": [
+  "niu-jin-tong-shi-ke": [
    "科学技术",
    "自然科学"
   ],
-  "ou-zhou-jian-shi--tao-zhuang-gong-2-ce-": [
+  "norway-night": [
+   "文学",
+   "游记"
+  ],
+  "nuo-wei-ji-ye-qingyouji": [
+   "文学",
+   "游记"
+  ],
+  "others-hometown-qingyouji": [
+   "文学",
+   "纪实文学"
+  ],
+  "ou-zhou-jian-shi": [
    "历史",
    "世界史"
   ],
-  "pu-tong-ren-de-san-zhuang-sheng-huo--wei-xin-du": [
-   "精品小说",
-   "纪实小说"
+  "paris-park-qingyouji": [
+   "文学",
+   "纪实文学"
   ],
-  "qi-quan--yan-sheng-pin-yu-dui-chong--di-2-ban": [
-   "经济理财",
-   "财经"
+  "pdf-wen-gao": [
+   "其他",
+   "未分类"
+  ],
+  "ping-mian-guo": [
+   "其他",
+   "未分类"
+  ],
+  "pu-tong-ren-de-san-zhuang-sheng-huo": [
+   "其他",
+   "未分类"
   ],
   "qi-quan-tou-zi-ce-lve--yuan-shu-di-5-ban-": [
    "经济理财",
-   "理财"
+   "投资"
   ],
   "qian-li-ming-gao": [
    "社会文化",
@@ -699,17 +1303,73 @@
    "文学",
    "散文杂著"
   ],
-  "qiong-cha-li-bao-dian--cha-li--mang-ge-zhi-hui": [
-   "个人成长",
-   "励志成长"
+  "quan-qiu-tong-shi": [
+   "历史",
+   "历史读物"
   ],
   "ren-jian-cao-mu": [
    "文学",
    "散文杂著"
   ],
-  "ri-ben-la-zhu-tu-ji-shu--gu-lao-dong-fang-tou-z": [
+  "ren-jian-kuai-le-xiao-mai-bu--ming-jia-san-wen": [
+   "文学",
+   "散文杂著"
+  ],
+  "ren-lei-jian-shi-cong-dong-wu-dao-shang-di-jing-zhuang-ban": [
+   "历史",
+   "历史读物"
+  ],
+  "ren-lei-jian-shi-xin-ban-cong-dong-wu-dao-shang-di": [
+   "历史",
+   "历史读物"
+  ],
+  "ren-sheng": [
+   "经济理财",
+   "商业"
+  ],
+  "ren-sheng-bu-bi-you-yi-yi--you-yi-si-jiu-gou-le": [
+   "文学",
+   "散文杂著"
+  ],
+  "ren-sheng-di-tu-zhi-wai--chong-qi-zhi-wo-lai-re": [
+   "精品小说",
+   "纪实小说"
+  ],
+  "ren-sheng-hai-hai": [
+   "其他",
+   "未分类"
+  ],
+  "ren-yi-dan-kai-le-qiao--ren-sheng-jiu-kai-le-gu": [
+   "个人成长",
+   "人生哲学"
+  ],
+  "ren-zhi-jue-xing--kai-qi-zi-wo-gai-bian-de-yuan": [
+   "其他",
+   "未分类"
+  ],
+  "ri-ben-la-zhu-tu-ji-shu": [
    "经济理财",
    "财经"
+  ],
+  "ri-ben-pao-mo-hou-de-san-shi-nian--fu-yu-she-hu": [
+   "社会文化",
+   "社会"
+  ],
+  "ri-ben-zhi-jing-ri-ben-wen-hua-zhong-de-ying-xiong-yu-e-ren": [
+   "社会文化",
+   "社会"
+  ],
+  "ri-chang-kai-yun-de-xuan-xue-shu-150-ze": [
+   "生活百科",
+   "命理"
+  ],
+  "rites-of-spring-eksteins": [
+   "计算机",
+   "编程开发"
+  ],
+  "rocketmq-shi-zhan-yu-yuan-li-jie-xi": [
+   "计算机",
+   "编程开发"
   ],
   "rui-xing-shan-dian-zhan": [
    "经济理财",
@@ -719,31 +1379,75 @@
    "精品小说",
    "青春文学"
   ],
-  "san-shi-er-li--qing-jing-dian-": [
+  "san-shi-er-li": [
    "精品小说",
    "社会小说"
+  ],
+  "san-ti-quan-ji--quan-san-ce-": [
+   "文学",
+   "文学"
   ],
   "serbia-qingyouji": [
    "文学",
    "纪实文学"
   ],
+  "service-mesh-wei-fu-wu-jia-gou-she-ji": [
+   "计算机",
+   "编程开发"
+  ],
   "shan-ju-za-yi": [
    "精品小说",
    "纪实小说"
   ],
-  "shang-ye-de-ben-zhi-he-hu-lian-wang": [
-   "经济理财",
-   "商业"
+  "shang-hui-feng-yun-15-juan-": [
+   "历史",
+   "历史小说"
+  ],
+  "shang-jie-2026-nian-di-10-qi-": [
+   "其他",
+   "未分类"
   ],
   "shang-ye-de-ben-zhi-he-hu-lian-wang--di-2-ban": [
    "经济理财",
    "商业"
   ],
-  "shang-ye-qian-he-zi-de-si-fang-tan-hua--xiang-n": [
+  "shang-ye-qian-he-zi-de-si-fang-tan-hua": [
    "社会文化",
    "社科"
   ],
-  "shi-jian-de-mei-gui--quan-xin-sheng-ji-ban-": [
+  "shao-nian-gong--zhong-guo-shi-fu-zi-guan-xi": [
+   "精品小说",
+   "青春文学"
+  ],
+  "shen-du-pou-xi-apachedubbo-he-xin-ji-shu-nei-mu": [
+   "计算机",
+   "编程开发"
+  ],
+  "shen-ru-fen-bu-shi-huan-cun": [
+   "计算机",
+   "编程开发"
+  ],
+  "shen-ru-li-jie-typescript": [
+   "计算机",
+   "编程开发"
+  ],
+  "shen-ru-qian-chu-spring-boot-2-x": [
+   "计算机",
+   "编程开发"
+  ],
+  "sheng-huo-de-fu-bi--ou-heng-li-duan-pian-xiao-s": [
+   "文学",
+   "外国文学"
+  ],
+  "sheng-huo-yu-ming-yun--tong-ming-e-ju-yuan-zhu": [
+   "历史",
+   "历史小说"
+  ],
+  "sheng-jing-yu-li-jian-ying-guo-he-ba-le-si-tan-cong-qing-tong-sh": [
+   "其他",
+   "未分类"
+  ],
+  "shi-jian-de-mei-gui": [
    "经济理财",
    "理财"
   ],
@@ -755,23 +1459,55 @@
    "经济理财",
    "财经"
   ],
-  "shi-nian-lun-hui--cong-ya-zhou-dao-quan-qiu-de": [
+  "shi-jing": [
+   "文学",
+   "文学"
+  ],
+  "shi-nian-lun-hui": [
    "经济理财",
    "财经"
   ],
-  "shi-you-de-shi-dai--quan-liang-ce-": [
+  "shi-qu-de-er-shi-nian--shi-zhou-nian-zhen-cang": [
+   "经济理财",
+   "财经"
+  ],
+  "shi-ri-shi-nian-1932-1942-nian-mei-guo-zhu-ri-da-shi-yue-se-fu-c": [
+   "其他",
+   "未分类"
+  ],
+  "shi-shi": [
+   "其他",
+   "未分类"
+  ],
+  "shi-shi-ji-dian-fu-wu-yi-ming-zhi-de-shi-nian-de-zheng-zhi-xie-z": [
+   "历史",
+   "历史读物"
+  ],
+  "shi-yi-shen-jia-qian-jin-po-chan-hou--mei-you-z": [
+   "文学",
+   "纪实文学"
+  ],
+  "shi-you-de-shi-dai": [
    "科学技术",
    "工业技术"
   ],
-  "shuo-huang-zhe-de-pu-ke-pai--zhong-xin-shang-ye": [
-   "经济理财",
-   "财经"
+  "shi-zhan-java-gao-bing-fa-cheng-xu-she-ji": [
+   "计算机",
+   "编程开发"
   ],
-  "si-chou-zhi-lu--yi-bu-quan-xin-de-shi-jie-shi": [
+  "shou-xi-yu-yi--shen-yi-guan-chang-liu-kai-shan": [
+   "其他",
+   "未分类"
+  ],
+  "si-chou-zhi-lu": [
    "历史",
    "世界史"
   ],
-  "si-zhe-cong-bu-shuo-huang--fa-yi-gu-shi-ji": [
+  "si-shi-sui-cai-ming-bai-de-shi-hen-bu-de-san-shi-sui-jiu": [
+   "其他",
+   "未分类"
+  ],
+  "si-zhe-cong-bu-shuo-huang": [
    "文学",
    "纪实文学"
   ],
@@ -779,41 +1515,105 @@
    "生活百科",
    "命理"
   ],
+  "south-africa-qingyouji": [
+   "文学",
+   "游记"
+  ],
+  "spain-qingyouji": [
+   "文学",
+   "纪实文学"
+  ],
+  "spring-5-qi-ye-ji-kai-fa-shi-zhan": [
+   "计算机",
+   "编程开发"
+  ],
+  "spring-cloud-wei-fu-wu-jia-gou-jin-jie": [
+   "计算机",
+   "编程开发"
+  ],
+  "spring-data-jpa-cong-ru-men-dao-jing-tong": [
+   "计算机",
+   "编程开发"
+  ],
+  "spring-shi-zhan": [
+   "计算机",
+   "编程开发"
+  ],
   "su-dong-po-xin-chuan": [
    "历史",
    "中国古代"
   ],
-  "sui-ji-man-bu-de-sha-gua": [
-   "经济理财",
-   "财经"
+  "suo-luo-si-lian-jin-shu-da-quan-ji": [
+   "文学",
+   "文学"
   ],
-  "ta-de-guo-2014": [
+  "ta-de-guo": [
    "精品小说",
    "社会小说"
   ],
-  "ta-ying-xiang-le-zhong-guo--chen-yun": [
+  "ta-gai-bian-le-zhong-guo": [
+   "其他",
+   "未分类"
+  ],
+  "ta-ying-xiang-le-zhong-guo": [
    "人物传记",
    "军政领袖"
   ],
-  "tang-mu--suo-ya-li-xian-ji": [
+  "ta-ying-xiang-le-zhong-guo--chen-yun": [
+   "其他",
+   "未分类"
+  ],
+  "tang-mu-suo-ya-li-xian-ji": [
    "文学",
    "世界名著"
   ],
-  "tao-bu-kai-de-jing-ji-zhou-qi--tao-zhuang-gong": [
+  "tao-bu-kai-de-jing-ji-zhou-qi": [
    "经济理财",
    "财经"
   ],
-  "tao-dong-zhou-qi-lun--jing-ji-zhou-qi-jue-ding": [
+  "tao-dong-zhou-qi-lun": [
    "经济理财",
    "财经"
+  ],
+  "temple-life-qingyouji": [
+   "文学",
+   "游记"
   ],
   "teng-xun-chuan-1998-2016-zhong-guo-hu-lian-wang": [
    "经济理财",
    "商业"
   ],
+  "the-swerve-greenblatt": [
+   "其他",
+   "未分类"
+  ],
+  "tian-mu-hong-chen--yao-yuan-de-jiu-shi-zhu--z": [
+   "其他",
+   "未分类"
+  ],
+  "tian-ya-chuang-fu--gei-pu-tong-ren-de-88-ge-cai": [
+   "经济理财",
+   "理财"
+  ],
+  "tian-ya-shen-tie": [
+   "个人成长",
+   "人生哲学"
+  ],
+  "tian-ya-shen-tie-jue-shi-yin-xue": [
+   "个人成长",
+   "人生哲学"
+  ],
+  "tian-ya-shen-tie-zhi-hui-da-quan": [
+   "其他",
+   "未分类"
+  ],
   "tiao-zhe-ti-ta-wu-qu-shang-ban": [
    "经济理财",
    "财经"
+  ],
+  "tmp-ab6fdc06215208b720cb1858fd8c40ac0da68c51f1b2b3b8": [
+   "其他",
+   "未分类"
   ],
   "tou-guo-di-li-kan-li-shi-xi-lie--quan-3-ce-": [
    "历史",
@@ -823,11 +1623,11 @@
    "经济理财",
    "理财"
   ],
-  "tou-zi-jin-zhi-diao-cha--tou-zi-luo-ji--jin-di": [
+  "tou-zi-de-yuan-li": [
    "经济理财",
-   "管理"
+   "财经"
   ],
-  "tou-zi-xiang-ge-li-yi-yang-de-qi-ye": [
+  "tou-zi-jin-zhi-diao-cha--tou-zi-luo-ji--jin-di": [
    "经济理财",
    "管理"
   ],
@@ -836,6 +1636,10 @@
    "财经"
   ],
   "tou-zi-zhe-de-di-ren": [
+   "经济理财",
+   "理财"
+  ],
+  "tou-zi-zhe-de-di-ren-zhu-ning-pdf": [
    "经济理财",
    "理财"
   ],
@@ -851,11 +1655,7 @@
    "经济理财",
    "财经"
   ],
-  "tou-zi-zui-zhong-yao-de-shi--quan-xin-sheng-ji": [
-   "经济理财",
-   "理财"
-  ],
-  "tu-er-qi--huan-ge-di-fang-tang-ping--qing-you": [
+  "tu-er-qi-qingyouji": [
    "文学",
    "纪实文学"
   ],
@@ -863,25 +1663,57 @@
    "文学",
    "纪实文学"
   ],
+  "ushuaia-qingyouji": [
+   "文学",
+   "游记"
+  ],
   "wa-er-deng-hu": [
    "文学",
    "散文杂著"
   ],
-  "wei-da-de-bo-yi--hua-er-jie-jin-rong-di-guo-de": [
+  "wang-de-gui-cheng-a-fu-han-zhan-ji-1839-1842": [
+   "历史",
+   "历史读物"
+  ],
+  "want-nothing-qingyouji": [
+   "文学",
+   "纪实文学"
+  ],
+  "wei-cheng": [
+   "其他",
+   "未分类"
+  ],
+  "wei-da-de-bo-yi": [
    "经济理财",
    "财经"
   ],
-  "wei-da-de-bo-yi--zhen-cang-ban-": [
-   "经济理财",
-   "财经"
+  "wei-da-de-hai-quan-er-ce-di-zhong-hai-ren-lei-shi": [
+   "历史",
+   "历史读物"
   ],
   "wei-jing-ren-de-shi-jie": [
    "历史",
    "世界史"
   ],
+  "wei-lai-jian-shi": [
+   "历史",
+   "历史读物"
+  ],
+  "wei-lai-jian-shi-cong-zhi-ren-dao-zhi-shen": [
+   "历史",
+   "历史读物"
+  ],
+  "wei-liao-zhong-guo-yuan-yi-bu-zi-zhuan": [
+   "文学",
+   "文学"
+  ],
   "wei-shen-me-shi-zhong-guo": [
    "政治军事",
    "政治"
+  ],
+  "wen-hua-ku-lv": [
+   "社会文化",
+   "社会"
   ],
   "wen-ming--xian-dai-hua--jia-zhi-tou-zi-yu-zhon": [
    "经济理财",
@@ -891,23 +1723,47 @@
    "政治军事",
    "政治"
   ],
+  "wen-ming-xian-dai-hua-jia-zhi-tou-zi-yu-zhong-guo": [
+   "经济理财",
+   "理财"
+  ],
   "wo-cai-bu-xiang-zuo-jia-wu--quan-wang-pou-xi-yi": [
    "精品小说",
    "女性小说"
   ],
-  "wo-di-jing-ji-xue-1-xiang-jing-ji-xue-jia-na-ya": [
+  "wo-cong-liang-shan-lai": [
+   "文学",
+   "纪实文学"
+  ],
+  "wo-dang-shang-di-na-xie-shi-er": [
+   "其他",
+   "未分类"
+  ],
+  "wo-di-jing-ji-xue-1": [
    "经济理财",
    "财经"
   ],
-  "wo-lun--ba-fei-te-de--men--bo-ke-xi-er-jing": [
-   "经济理财",
-   "管理"
+  "wo-jue-ding-huo-de-you-qu": [
+   "其他",
+   "未分类"
+  ],
+  "wo-men-de-hou-ren-lei-wei-lai-sheng-wu-ji-shu-ge-ming-de-hou-guo": [
+   "历史",
+   "历史读物"
+  ],
+  "wo-men-sa": [
+   "其他",
+   "未分类"
   ],
   "wo-shi-luo-hua-sheng-de-nv-er": [
    "精品小说",
    "纪实小说"
   ],
-  "wo-zai-jing-du-si-miao-chao-jing--qing-you-ji-": [
+  "wo-zai-fa-yuan-kan-re-nao": [
+   "精品小说",
+   "纪实小说"
+  ],
+  "wo-zai-jing-du-si-miao-chao-jing-qingyouji": [
    "文学",
    "纪实文学"
   ],
@@ -923,13 +1779,21 @@
    "个人成长",
    "人在职场"
   ],
-  "xi-ban-ya--zai-zhe--you-ren-hou-hui-you-ren-yu": [
-   "文学",
-   "纪实文学"
+  "xi-da-duo--ming-jia-yi--shen-du-zhu-shi--ren": [
+   "其他",
+   "未分类"
   ],
   "xi-fang-bo-yi-wang-shi": [
    "历史",
    "世界史"
+  ],
+  "xi-jie-ru-he-qing-song-ying-xiang-ta-ren": [
+   "其他",
+   "未分类"
+  ],
+  "xi-la-ren-de-gu-shi-quan-san-ce": [
+   "历史",
+   "历史读物"
   ],
   "xi-la-wen-ming-3000-nian": [
    "历史",
@@ -939,31 +1803,43 @@
    "历史",
    "历史小说"
   ],
+  "xian-yi-nu-ma-shao-nian-shi": [
+   "文学",
+   "文学鉴赏"
+  ],
   "xian-yi-nu-ma-shao-nian-shi--tang-song-shi-ren": [
    "文学",
    "文学鉴赏"
   ],
-  "xiao-xing-de-cai-wu-si-wei-ke": [
-   "经济理财",
-   "管理"
+  "xiao-ao-gu-shi": [
+   "文学",
+   "文学"
   ],
-  "xin-mai-ju-zhe-yan--di-er-ban-": [
+  "xiao-tiao-zhong-de-sheng-cun-zhi-hui--ri-ben-": [
    "经济理财",
    "财经"
+  ],
+  "xiao-xiang-ren-jia--tong-ming-ying-shi-yuan-zhu": [
+   "其他",
+   "未分类"
   ],
   "xin-pian-zhan-zheng--shi-jie-zui-guan-jian-ji-s": [
    "经济理财",
    "财经"
   ],
-  "xing-dong-de-yong-qi--jin-rong-wei-ji-ji-qi-yu": [
+  "xin-ren-she-hui-mei-de-yu-chuang-zao-jing-ji-fan-rong": [
    "经济理财",
-   "理财"
+   "投资"
   ],
-  "xiong-nian--jing-dian-mei-ju--huo-xian--yuan": [
+  "xinjiang-qingyouji": [
+   "文学",
+   "游记"
+  ],
+  "xiong-nian": [
    "精品小说",
    "纪实小说"
   ],
-  "xue-qiu-zhuan-kan--te-bie-ban--duan-yong-ping": [
+  "xue-qiu-zhuan-kan-te-bie-ban": [
    "经济理财",
    "理财"
   ],
@@ -971,13 +1847,13 @@
    "精品小说",
    "年代小说"
   ],
-  "xue-wang-guan--mei-gui-zhan-zheng": [
+  "xue-tang-mi-ma": [
+   "其他",
+   "未分类"
+  ],
+  "xue-wang-guan": [
    "历史",
    "历史读物"
-  ],
-  "ya-ma-xun-bian-nian-shi": [
-   "经济理财",
-   "商业"
   ],
   "ya-zhou-cai-wu-hei-dong--jie-mi-ya-zhou-cai-wu": [
    "经济理财",
@@ -987,7 +1863,7 @@
    "经济理财",
    "商业"
   ],
-  "yan-ye-qi-sheng-zuo-pin--wen-yi-fu-xing-de-gu-s": [
+  "yan-ye-qi-sheng-zuo-pin": [
    "历史",
    "世界史"
   ],
@@ -999,7 +1875,11 @@
    "历史",
    "世界史"
   ],
-  "ye-men--dang-yi-qun-ren-bu-xiang-lian-ai--jie": [
+  "ye-men-qingyouji": [
+   "文学",
+   "纪实文学"
+  ],
+  "yemen-qingyouji": [
    "文学",
    "纪实文学"
   ],
@@ -1007,35 +1887,47 @@
    "经济理财",
    "财经"
   ],
+  "yi-dao-guan-tu--shen-yi-guan-chang-liu-feng-she": [
+   "其他",
+   "未分类"
+  ],
+  "yi-di-ji-mao--dian-cang-ban-": [
+   "文学",
+   "文学"
+  ],
+  "yi-ge-a-fu-han-nv-ren-de-lai-xin--qing-ji-shi-": [
+   "文学",
+   "纪实文学"
+  ],
   "yi-ge-jing-ji-sha-shou-de-zi-bai": [
    "经济理财",
    "财经"
+  ],
+  "yi-ge-nv-ren-yi-sheng-de-er-shi-si-xiao-shi--ta": [
+   "其他",
+   "未分类"
   ],
   "yi-hai-shi-bei": [
    "文学",
    "散文杂著"
   ],
-  "yi-jiao-yi-wei-sheng--mai-chu-de-yi-shu--zhe": [
+  "yi-jiao-yi-wei-sheng": [
+   "经济理财",
+   "财经"
+  ],
+  "yi-jiao-yi-wei-sheng-ii": [
    "经济理财",
    "理财"
   ],
-  "yi-jiao-yi-wei-sheng--yuan-shu-di-2-ban-": [
-   "经济理财",
-   "财经"
-  ],
-  "yi-ke-jing-ji-xue": [
-   "经济理财",
-   "财经"
-  ],
-  "yi-li-wei-li--cai-zheng-guan-xi-yu-di-fang-zhen": [
-   "经济理财",
-   "财经"
+  "yi-ju-ding-yi-wan-ju-2022-xin-ban-": [
+   "其他",
+   "未分类"
   ],
   "yi-ri-wei-jing--jing-ji-xia-xing-qi-chuan-yue-z": [
    "经济理财",
    "财经"
   ],
-  "yi-se-lie--yi-ge-min-zu-de-chong-sheng": [
+  "yi-se-lie": [
    "历史",
    "世界史"
   ],
@@ -1047,10 +1939,6 @@
    "经济理财",
    "商业"
   ],
-  "yi-wang-da-jin--bei-zuo-si-yu-ya-ma-xun-shi-dai": [
-   "经济理财",
-   "商业"
-  ],
   "yi-xiao-shi-man-hua-chan-lun-shi-zhan-fa": [
    "经济理财",
    "理财"
@@ -1059,31 +1947,43 @@
    "教育学习",
    "外语"
   ],
+  "yong-di-yi-xing-yuan-li-du-dong-ri-chang-50-ge": [
+   "其他",
+   "未分类"
+  ],
   "yong-jing-ji-si-wei-kan-dong-shi-jie-ge-ju": [
    "经济理财",
    "财经"
   ],
-  "yu-ba-fei-te-gong-jin-wu-can-shi--wo-dun-wu-dao": [
+  "yong-zheng-di-zhong-guo-de-du-cai-jun-zhu": [
+   "其他",
+   "未分类"
+  ],
+  "yu-ce": [
    "经济理财",
-   "理财"
+   "商业"
+  ],
+  "yu-dian-qiu": [
+   "其他",
+   "未分类"
   ],
   "yu-ji-bu-zai-lai": [
    "文学",
    "散文杂著"
   ],
-  "yuan-ze": [
-   "经济理财",
-   "管理"
+  "yuan-ni-cheng-wei-zui-hao-de-nv-zi-jing-dian-ban": [
+   "其他",
+   "未分类"
   ],
-  "yuan-ze--hui-ben-ban--han-ying-dui-zhao-": [
+  "yuan-ze": [
    "教育学习",
    "育儿"
   ],
-  "yuan-ze--ying-dui-bian-hua-zhong-de-shi-jie-zhi": [
-   "经济理财",
-   "财经"
+  "yue-liang-yu-liu-bian-shi": [
+   "其他",
+   "未分类"
   ],
-  "za-de-wen-2014": [
+  "za-de-wen": [
    "文学",
    "散文杂著"
   ],
@@ -1091,7 +1991,15 @@
    "文学",
    "纪实文学"
   ],
-  "zai-zhong-dong--ji-shi-xing-le": [
+  "zai-si-wang-pang-bian-zuo-yi-hui-er--shi-ze-gua": [
+   "社会文化",
+   "社科"
+  ],
+  "zai-xia-jiang-de-zhuan-wan-chu--chen-xing-jia-r": [
+   "其他",
+   "未分类"
+  ],
+  "zai-zhong-dong-ji-shi-xing-le": [
    "精品小说",
    "纪实小说"
   ],
@@ -1107,6 +2015,10 @@
    "经济理财",
    "财经"
   ],
+  "zhan-zheng-qiang-pao-yu-xuan-piao": [
+   "历史",
+   "历史读物"
+  ],
   "zheng-fu-shi-chang-de-ren-eepeek-chuang-shi": [
    "经济理财",
    "商业"
@@ -1115,11 +2027,19 @@
    "经济理财",
    "理财"
   ],
-  "zheng-zhi-zhi-xu-de-qi-yuan--cong-qian-ren-lei": [
+  "zheng-zhi-zhi-xu-de-qi-yuan": [
    "政治军事",
    "政治"
   ],
-  "zhi-chang-shi-nian--yi-ge-nv-sheng-de-tui-bian": [
+  "zheng-zhi-zhi-xu-de-qi-yuan-cong-qian-ren-lei-shi-dai-dao-fa-guo": [
+   "政治军事",
+   "政治"
+  ],
+  "zheng-zhi-zhi-xu-yu-zheng-zhi-shuai-bai-cong-gong-ye-ge-ming-dao": [
+   "历史",
+   "历史读物"
+  ],
+  "zhi-chang-shi-nian": [
    "精品小说",
    "纪实小说"
   ],
@@ -1127,39 +2047,67 @@
    "个人成长",
    "励志成长"
   ],
+  "zhi-liu-lang-de-mu-qin--zuo-shang-huo-che-qu-xi": [
+   "文学",
+   "散文杂著"
+  ],
   "zhi-nei-shi-chang--zhong-guo-guo-jia-zhu-dao-xi": [
    "经济理财",
    "财经"
+  ],
+  "zhi-neng-shang-ye": [
+   "经济理财",
+   "投资"
   ],
   "zhi-shen-shi-nei--zhong-guo-zheng-fu-yu-jing-ji": [
    "经济理财",
    "财经"
   ],
-  "zhi-sun--ru-he-ke-fu-tan-lan-he-kong-ju": [
+  "zhi-sun": [
    "经济理财",
    "财经"
   ],
-  "zhong-dong-da-li-shi--tao-zhuang-gong-5-ce-": [
+  "zhi-sun--ru-he-ke-fu-tan-lan-he-kong-ju": [
+   "其他",
+   "未分类"
+  ],
+  "zhong-dong-da-li-shi": [
    "历史",
    "世界史"
   ],
-  "zhong-guo-de-xuan-ze--zhong-mei-bo-yi-yu-zhan-l": [
+  "zhong-guo-1945-zhong-guo-ge-ming-yu-mei-guo-de-jue-ze": [
+   "历史",
+   "历史读物"
+  ],
+  "zhong-guo-de-xuan-ze": [
    "政治军事",
    "政治"
   ],
   "zhong-guo-ding-ji-si-mu-fang-tan-lu": [
-   "经济理财",
-   "财经"
+   "其他",
+   "未分类"
   ],
   "zhong-guo-jue-qi-bu-ke-cheng-shou-zhi-cuo": [
    "经济理财",
    "财经"
   ],
-  "zhong-guo-li-dai-zheng-zhi-de-shi--han-ying-dui": [
+  "zhong-guo-li-dai-zheng-zhi-de-shi": [
    "历史",
    "中国古代"
   ],
-  "zhong-zou-san-mao-zhi-lu--wo-men-huo-zai-xian-z": [
+  "zhong-guo-she-hui-ge-jie-ceng-fen-xi": [
+   "社会文化",
+   "社科"
+  ],
+  "zhong-guo-wei-shen-me-bu-tong--chuan-yue-li-shi": [
+   "政治军事",
+   "政治"
+  ],
+  "zhong-guo-zhi-yi-fei-xing-zai-zhan-zheng-huang-yan-luo-man-shi-h": [
+   "文学",
+   "经典作品"
+  ],
+  "zhong-zou-san-mao-zhi-lu-qingyouji": [
    "文学",
    "纪实文学"
   ],
@@ -1167,11 +2115,19 @@
    "经济理财",
    "财经"
   ],
-  "zhou-qi--gu-zhi-yu-ren-xing": [
-   "经济理财",
-   "理财"
+  "zhu-mu-lang-ma-feng--deng-ding-shi-ke-yi-xuan-z": [
+   "文学",
+   "纪实文学"
   ],
-  "zhuan-ye-tou-ji-yuan-li--dian-cang-ban-": [
+  "zhu-tui-ru-he-zuo-chu-you-guan-jian-kang-cai-fu-yu-xing-fu-de-zu": [
+   "经济理财",
+   "投资"
+  ],
+  "zhu-xiao-fang-zi-de-nv-ren": [
+   "其他",
+   "未分类"
+  ],
+  "zhuan-ye-tou-ji-yuan-li": [
    "经济理财",
    "理财"
   ],
@@ -1179,11 +2135,15 @@
    "精品小说",
    "社会小说"
   ],
-  "zi-ben-de-nian-dai-18481875": [
+  "zi-ben-de-nian-dai": [
    "历史",
    "世界史"
   ],
-  "zi-ben-zhi-wang--jing-dian-ban-": [
+  "zi-ben-zhi-dou-21-shi-ji-de-li-de-mei-hao-yu-ye-man": [
+   "其他",
+   "未分类"
+  ],
+  "zi-ben-zhi-wang": [
    "经济理财",
    "财经"
   ],
@@ -1191,15 +2151,27 @@
    "经济理财",
    "财经"
   ],
+  "zi-si-de-ji-yin-40-zhou-nian-zeng-ding-jing-zhuang-ban": [
+   "其他",
+   "未分类"
+  ],
+  "zou-ye-lu-qing-fang-sheng-ge-chang": [
+   "其他",
+   "未分类"
+  ],
   "zui-di-ceng-de-shi-yi-ren": [
    "社会文化",
    "社科"
+  ],
+  "zui-nie-de-bao-ying-de-guo-he-ri-ben-de-zhan-zheng-ji-yi": [
+   "历史",
+   "历史读物"
   ],
   "zui-yu-fa--tuo-si-tuo-ye-fu-si-ji-wen-ji-2015": [
    "文学",
    "外国文学"
   ],
-  "zuo-kong--fan-zuo-kong--xin-xi-pi-lu-wei-du-d": [
+  "zuo-kong-vs-fan-zuo-kong": [
    "经济理财",
    "管理"
   ],
@@ -1221,9 +2193,129 @@
    "心理",
    "积极心理学"
   ],
+  "bingfamoshiyuyingyongshijian": [
+   "计算机",
+   "编程开发"
+  ],
+  "caiwubaobiaofenxiyugupiaoguzhidi2": [
+   "经济理财",
+   "投资"
+  ],
+  "daimajingjinzhilu": [
+   "计算机",
+   "编程开发"
+  ],
+  "elasticsearchyuanmajiexiyuyouhuashizhan": [
+   "计算机",
+   "编程开发"
+  ],
+  "fenbushizhongjianjianjishushizhan": [
+   "计算机",
+   "编程开发"
+  ],
+  "gaokeyongkeshensuoweifuwujiagou": [
+   "计算机",
+   "编程开发"
+  ],
+  "java9mokuaihuakaifa": [
+   "计算机",
+   "编程开发"
+  ],
+  "javabianchengdeluoji": [
+   "计算机",
+   "编程开发"
+  ],
+  "javabianchengfangfalun": [
+   "计算机",
+   "编程开发"
+  ],
+  "javashejimoshijishijian": [
+   "计算机",
+   "编程开发"
+  ],
+  "javayibubianchengshizhan": [
+   "计算机",
+   "编程开发"
+  ],
+  "kubernetesquanweizhinan": [
+   "计算机",
+   "编程开发"
+  ],
+  "lidaijingjibiangedeshi": [
+   "经济理财",
+   "投资"
+  ],
+  "maozedongshicixinshangdaziben": [
+   "文学",
+   "文学"
+  ],
+  "nettyjinjiezhilu": [
+   "计算机",
+   "编程开发"
+  ],
+  "nibuzhidaodejavascript": [
+   "计算机",
+   "编程开发"
+  ],
+  "qiquantouzicelveyuanshudi5ban": [
+   "经济理财",
+   "投资"
+  ],
+  "rocketmqshizhanyuyuanlijiexi": [
+   "计算机",
+   "编程开发"
+  ],
+  "servicemeshweifuwujiagousheji": [
+   "计算机",
+   "编程开发"
+  ],
+  "shendupouxiapachedubbohexinjishuneimu": [
+   "计算机",
+   "编程开发"
+  ],
+  "shenrufenbushihuancun": [
+   "计算机",
+   "编程开发"
+  ],
+  "shenrulijietypescript": [
+   "计算机",
+   "编程开发"
+  ],
+  "shenruqianchuspringboot2x": [
+   "计算机",
+   "编程开发"
+  ],
+  "shizhanjavagaobingfachengxusheji": [
+   "计算机",
+   "编程开发"
+  ],
+  "spring5qiyejikaifashizhan": [
+   "计算机",
+   "编程开发"
+  ],
+  "springcloudweifuwujiagoujinjie": [
+   "计算机",
+   "编程开发"
+  ],
+  "springdatajpacongrumendaojingtong": [
+   "计算机",
+   "编程开发"
+  ],
+  "springshizhan": [
+   "计算机",
+   "编程开发"
+  ],
   "一个经济杀手的自白": [
    "经济理财",
    "财经"
+  ],
+  "一个阿富汗女人的来信轻纪实": [
+   "文学",
+   "纪实文学"
+  ],
+  "一地鸡毛典藏版": [
+   "文学",
+   "文学"
   ],
   "一小时漫画缠论实战法": [
    "经济理财",
@@ -1241,13 +2333,9 @@
    "个人成长",
    "励志成长"
   ],
-  "一网打尽贝佐斯与亚马逊时代": [
-   "经济理财",
-   "商业"
-  ],
-  "一课经济学": [
-   "经济理财",
-   "财经"
+  "三体全集全三册": [
+   "文学",
+   "文学"
   ],
   "三十而立轻经典": [
    "精品小说",
@@ -1261,13 +2349,25 @@
    "社会文化",
    "社科"
   ],
+  "不惑那些我希望自己40出头知道的事": [
+   "个人成长",
+   "励志成长"
+  ],
+  "不想上班在巴黎公园晒太阳": [
+   "文学",
+   "纪实文学"
+  ],
   "不想上班在巴黎公园晒太阳轻游记": [
    "文学",
    "纪实文学"
   ],
-  "与巴菲特共进午餐时我顿悟到的5个真理探寻财富智慧与价值投资的转变之旅": [
-   "经济理财",
-   "理财"
+  "不想上班就去新疆轻游记": [
+   "文学",
+   "游记"
+  ],
+  "不敢懈怠曼德拉的总统岁月": [
+   "计算机",
+   "编程开发"
   ],
   "专业投机原理典藏版": [
    "经济理财",
@@ -1281,13 +2381,33 @@
    "个人成长",
    "励志成长"
   ],
+  "东印度公司巨额商业资本之兴衰": [
+   "经济理财",
+   "投资"
+  ],
   "丝绸之路一部全新的世界史": [
    "历史",
    "世界史"
   ],
+  "两次全球大危机的比较研究": [
+   "经济理财",
+   "投资"
+  ],
   "中东大历史套装共5册": [
    "历史",
    "世界史"
+  ],
+  "中国1945中国革命与美国的抉择": [
+   "历史",
+   "历史读物"
+  ],
+  "中国为什么不同穿越历史理解我们身处的时代": [
+   "政治军事",
+   "政治"
+  ],
+  "中国之翼飞行在战争、谎言、罗曼史和大冒险的黄金时代": [
+   "文学",
+   "经典作品"
   ],
   "中国历代政治得失汉英对照博雅双语名家名作": [
    "历史",
@@ -1297,25 +2417,41 @@
    "经济理财",
    "财经"
   ],
+  "中国楼市2005及2006年楼市之展望": [
+   "经济理财",
+   "投资"
+  ],
   "中国的选择中美博弈与战略抉择": [
    "政治军事",
    "政治"
   ],
-  "中国顶级私募访谈录": [
-   "经济理财",
-   "财经"
+  "中国社会各阶层分析": [
+   "社会文化",
+   "社科"
   ],
   "为什么是中国": [
    "政治军事",
    "政治"
   ],
-  "也门当一群人不想恋爱结婚生子轻游记": [
+  "乌斯怀亚在世界的尽头相遇轻游记": [
+   "文学",
+   "游记"
+  ],
+  "也门当一群人不想恋爱、结婚、生子": [
    "文学",
    "纪实文学"
   ],
-  "买房让日本人幸福了吗译文坐标": [
+  "也门当一群人不想恋爱、结婚、生子轻游记": [
+   "文学",
+   "纪实文学"
+  ],
+  "买房让日本人幸福了吗": [
    "社会文化",
    "社科"
+  ],
+  "事实即颠覆无以名之的十年的政治写作": [
+   "历史",
+   "历史读物"
   ],
   "二手时间": [
    "精品小说",
@@ -1333,7 +2469,7 @@
    "经济理财",
    "财经"
   ],
-  "亚马逊编年史": [
+  "交易员的自我修养中国顶级交易员访谈实录雨雷在路上中国顶级交易员访谈丛书": [
    "经济理财",
    "商业"
   ],
@@ -1341,13 +2477,37 @@
    "经济理财",
    "理财"
   ],
-  "交易的世界金钱权力与大宗商品交易商": [
-   "经济理财",
-   "财经"
-  ],
   "京华烟云全集纪念典藏版": [
    "精品小说",
    "社会小说"
+  ],
+  "人一旦开了窍人生就开了挂": [
+   "个人成长",
+   "人生哲学"
+  ],
+  "人生": [
+   "经济理财",
+   "商业"
+  ],
+  "人生不必有意义有意思就够了": [
+   "文学",
+   "散文杂著"
+  ],
+  "人生地图之外重启之我来人间打副本": [
+   "精品小说",
+   "纪实小说"
+  ],
+  "人类简史从动物到上帝精装版": [
+   "历史",
+   "历史读物"
+  ],
+  "人类简史新版从动物到上帝": [
+   "历史",
+   "历史读物"
+  ],
+  "人间快乐小卖部名家散文集": [
+   "文学",
+   "散文杂著"
   ],
   "人间草木": [
    "文学",
@@ -1357,9 +2517,9 @@
    "文学",
    "纪实文学"
   ],
-  "从0到1开启商业与未来的秘密": [
-   "经济理财",
-   "管理"
+  "今日简史人类命运大议题": [
+   "历史",
+   "历史读物"
   ],
   "从总账到总监cfo的独家财务笔记": [
    "经济理财",
@@ -1389,10 +2549,6 @@
    "经济理财",
    "财经"
   ],
-  "以利为利财政关系与地方政府行为": [
-   "经济理财",
-   "财经"
-  ],
   "以日为镜经济下行期穿越指南": [
    "经济理财",
    "财经"
@@ -1413,25 +2569,29 @@
    "经济理财",
    "管理"
   ],
-  "伟大的博弈华尔街金融帝国的崛起": [
-   "经济理财",
-   "财经"
-  ],
   "伟大的博弈珍藏版": [
    "经济理财",
    "财经"
+  ],
+  "伟大的海全二册地中海人类史": [
+   "历史",
+   "历史读物"
   ],
   "估值的艺术110个解读案例": [
    "经济理财",
    "理财"
   ],
-  "估值难点解决方案及相关案例原书第3版": [
+  "估值难点、解决方案及相关案例原书第3版": [
    "经济理财",
    "财经"
   ],
   "低欲望社会丧失大志时代的新国富论": [
    "社会文化",
    "社科"
+  ],
+  "何以为父影响彼此一生的父子关系": [
+   "教育学习",
+   "育儿"
   ],
   "你也只活了一次凭什么说我选择的人生是错的": [
    "精品小说",
@@ -1441,9 +2601,13 @@
    "文学",
    "散文杂著"
   ],
-  "供应链的三道防线需求预测库存计划供应链执行": [
+  "供应链的三道防线需求预测、库存计划、供应链执行": [
    "经济理财",
    "管理"
+  ],
+  "信任社会美德与创造经济繁荣": [
+   "经济理财",
+   "投资"
   ],
   "债务危机": [
    "经济理财",
@@ -1453,9 +2617,37 @@
    "经济理财",
    "管理"
   ],
+  "克里米亚战争被遗忘的帝国博弈": [
+   "历史",
+   "历史读物"
+  ],
+  "全球通史": [
+   "历史",
+   "历史读物"
+  ],
+  "全面阐述降低房价的四项基本原则": [
+   "经济理财",
+   "投资"
+  ],
   "共同基金常识10周年纪念版": [
    "经济理财",
    "财经"
+  ],
+  "冈比亚有精灵的地方住着一群被误读的人轻游记": [
+   "文学",
+   "游记"
+  ],
+  "冯唐成事心法": [
+   "经济理财",
+   "管理"
+  ],
+  "冷知识1000问": [
+   "科学技术",
+   "科学科普"
+  ],
+  "凯恩斯、拉斯基、哈耶克经济思想如何影响世界": [
+   "经济理财",
+   "投资"
   ],
   "凶年经典美剧火线原著": [
    "精品小说",
@@ -1465,19 +2657,27 @@
    "经济理财",
    "财经"
   ],
+  "创世记从细胞到文明社会的深层起源": [
+   "历史",
+   "历史读物"
+  ],
   "制内市场中国国家主导型政治经济学": [
    "经济理财",
    "财经"
   ],
-  "动物精神": [
+  "助推如何做出有关健康、财富与幸福的最佳决策": [
    "经济理财",
-   "财经"
-  ],
-  "动荡的世界风险人性与未来的前景": [
-   "经济理财",
-   "财经"
+   "投资"
   ],
   "北极世界上最冷的地方一无所有但极致快乐轻游记": [
+   "文学",
+   "纪实文学"
+  ],
+  "北派盗墓笔记": [
+   "男生小说",
+   "悬疑灵异"
+  ],
+  "十亿身家千金破产后没有真正保值的东西轻访谈": [
    "文学",
    "纪实文学"
   ],
@@ -1497,45 +2697,41 @@
    "精品小说",
    "影视原著"
   ],
-  "华尔街传奇": [
-   "男生小说",
-   "都市小说"
-  ],
-  "华尔街操盘手日记第2版": [
+  "华尔街幽灵": [
    "经济理财",
-   "理财"
+   "投资"
   ],
   "华尔街证券分析股票分析与公司估值原书第2版": [
    "经济理财",
    "理财"
   ],
-  "华尔街金融投资启示录套装6册": [
-   "经济理财",
-   "商业"
-  ],
   "华杉讲透孙子兵法": [
    "政治军事",
    "军事"
+  ],
+  "南非这里有3000克拉的钻石和随时丧命的街头轻游记": [
+   "文学",
+   "游记"
   ],
   "卧底经济学1像经济学家那样思考": [
    "经济理财",
    "财经"
   ],
-  "历代经济变革得失": [
-   "经济理财",
-   "财经"
+  "印尼1000年的原始部落死人和活人一起生活轻游记": [
+   "文学",
+   "游记"
   ],
   "历史的温度系列全7册": [
    "历史",
    "历史读物"
   ],
-  "原则": [
-   "经济理财",
-   "管理"
+  "历史的终结与最后的人": [
+   "历史",
+   "历史读物"
   ],
-  "原则应对变化中的世界秩序": [
-   "经济理财",
-   "财经"
+  "历史高手的破局术轻历史": [
+   "历史",
+   "历史读物"
   ],
   "原则绘本版汉英对照": [
    "教育学习",
@@ -1545,6 +2741,10 @@
    "个人成长",
    "人生哲学"
   ],
+  "变量看见中国社会小趋势": [
+   "社会文化",
+   "社会"
+  ],
   "古诗词里的快意人生瞧这才是风流": [
    "文学",
    "古代诗词"
@@ -1552,6 +2752,10 @@
   "后真相时代": [
    "社会文化",
    "社科"
+  ],
+  "君王的传奇东西方两大帝王的史话套装书全2册甲骨文系列雍正帝+奥古斯都": [
+   "历史",
+   "历史读物"
   ],
   "吴劲草讲消费行业发现生活中的长线大牛股": [
    "经济理财",
@@ -1561,25 +2765,37 @@
    "经济理财",
    "财经"
   ],
-  "周期估值与人性": [
-   "经济理财",
-   "理财"
-  ],
-  "商业的本质和互联网": [
-   "经济理财",
-   "商业"
-  ],
   "商业的本质和互联网第2版": [
    "经济理财",
    "商业"
+  ],
+  "商会风云15卷": [
+   "历史",
+   "历史小说"
   ],
   "四柱实用预测学精髓": [
    "生活百科",
    "命理"
   ],
-  "固收+策略投资探寻债券与股票的平衡术": [
+  "回访历史新东欧之旅": [
+   "历史",
+   "历史读物"
+  ],
+  "困在底层的人": [
+   "精品小说",
+   "纪实小说"
+  ],
+  "固收+投资指南": [
    "经济理财",
-   "理财"
+   "投资"
+  ],
+  "国家构建21世纪的国家治理与世界秩序": [
+   "计算机",
+   "编程开发"
+  ],
+  "国民党高层的派系政治修订本蒋介石最高领袖地位的确立": [
+   "社会文化",
+   "社会"
   ],
   "土耳其换个地方躺平轻游记": [
    "文学",
@@ -1593,9 +2809,33 @@
    "文学",
    "纪实文学"
   ],
+  "在加纳利群岛练习独处轻游记": [
+   "文学",
+   "游记"
+  ],
+  "在死亡旁边坐一会儿十则关于告别的故事": [
+   "社会文化",
+   "社科"
+  ],
+  "地中海史诗三部曲1453君士坦丁堡之战+海洋帝国+财富之城共3册": [
+   "经济理财",
+   "投资"
+  ],
+  "地局七十二略普通人聚财奠定基业": [
+   "个人成长",
+   "认知思维"
+  ],
+  "埃及女人和骆驼都无法掌握自己的命运轻游记": [
+   "文学",
+   "游记"
+  ],
   "城南旧事人文社语文阅读推荐丛书": [
    "文学",
    "经典作品"
+  ],
+  "城市太吵我住进寺庙轻游记": [
+   "文学",
+   "游记"
   ],
   "基层中国的运行逻辑": [
    "政治军事",
@@ -1609,21 +2849,33 @@
    "经济理财",
    "理财"
   ],
+  "复利的力量10年10倍的投资思考与实践": [
+   "经济理财",
+   "财经"
+  ],
   "复杂世界的明白人": [
    "个人成长",
    "人生哲学"
+  ],
+  "复盘一个经济学家对宏观经济的另类解读": [
+   "经济理财",
+   "投资"
   ],
   "夜来香开花的时候": [
    "文学",
    "散文杂著"
   ],
+  "大断裂人类本性与社会秩序的重建": [
+   "社会文化",
+   "社会"
+  ],
   "大明王朝1566全集": [
    "历史",
    "历史小说"
   ],
-  "大空头": [
-   "经济理财",
-   "财经"
+  "大脑是台时光机关于时间感知的脑洞大开之作横跨神经科学、心理学、哲学、数学、物理、生物等领域打开你对世界的崭新认知神经现实、酷炫脑、远读重洋、科幻世界、未来事务管理局、赛凡科幻空间、国家天文台屈艳博士联袂推荐": [
+   "社会文化",
+   "社会"
   ],
   "大英博物馆世界简史": [
    "历史",
@@ -1641,17 +2893,53 @@
    "经济理财",
    "财经"
   ],
-  "大钱细思优秀投资者如何思考和决断": [
+  "大钱细思优秀投资者如何思考和决断华章经典富达低价股基金掌舵人长期战胜市场之道彼得林奇、赛斯卡拉曼、比尔米勒投资巨擘联合推荐在不确定的市场中保持理性在逆势中保持坚守的勇气华章经典金融投资": [
    "经济理财",
    "理财"
+  ],
+  "天涯创富给普通人的88个财富忠告": [
+   "经济理财",
+   "理财"
+  ],
+  "天涯神贴": [
+   "个人成长",
+   "人生哲学"
+  ],
+  "天涯神贴绝世隐学": [
+   "个人成长",
+   "人生哲学"
+  ],
+  "失去的二十年十周年珍藏版": [
+   "经济理财",
+   "财经"
+  ],
+  "奥古斯都从革命者到皇帝": [
+   "历史",
+   "历史读物"
   ],
   "奥威尔书评全集全集": [
    "文学",
    "文学鉴赏"
   ],
+  "奥斯曼帝国的衰亡一战中东19141920": [
+   "历史",
+   "历史读物"
+  ],
+  "奥斯维辛一部历史": [
+   "历史",
+   "历史读物"
+  ],
   "妙趣横生的国债期货跟小船学国债期货交易": [
    "经济理财",
    "理财"
+  ],
+  "娜塔莎之舞俄罗斯文化史": [
+   "历史",
+   "历史读物"
+  ],
+  "存在与投资": [
+   "经济理财",
+   "财经"
   ],
   "存在主义物理学": [
    "科学技术",
@@ -1677,17 +2965,21 @@
    "经济理财",
    "财经"
   ],
-  "富甲美国沃尔玛创始人山姆沃尔顿自传": [
-   "经济理财",
-   "商业"
-  ],
   "对冲基金风云录1东邪西毒": [
    "经济理财",
    "理财"
   ],
+  "少年宫中国式父子关系": [
+   "精品小说",
+   "青春文学"
+  ],
   "山居杂忆": [
    "精品小说",
    "纪实小说"
+  ],
+  "巴布亚新几内亚生者吃下逝者食人旧俗里的爱与告别轻游记": [
+   "文学",
+   "游记"
   ],
   "巴菲特之道原书第3版": [
    "经济理财",
@@ -1709,6 +3001,18 @@
    "经济理财",
    "理财"
   ],
+  "布达佩斯往事冷战时期一个东欧家庭的秘密档案": [
+   "历史",
+   "历史读物"
+  ],
+  "布雷顿森林货币战美元如何统治世界": [
+   "经济理财",
+   "投资"
+  ],
+  "希腊人的故事全三册": [
+   "历史",
+   "历史读物"
+  ],
   "希腊文明3000年": [
    "历史",
    "历史读物"
@@ -1717,17 +3021,25 @@
    "历史",
    "世界史"
   ],
+  "开着房车去古代逃荒种田吧": [
+   "历史",
+   "历史读物"
+  ],
   "当人什么都不想要就拥有了一切轻游记": [
    "文学",
    "纪实文学"
   ],
-  "当代中国阶级阶层变动19782018": [
+  "当代中国阶级阶层变动1978～2018": [
    "社会文化",
    "社科"
   ],
   "当尼采哭泣": [
    "精品小说",
    "治愈小说"
+  ],
+  "当残缺遇见完整朱德庸夫妇的40年婚姻轻纪实": [
+   "文学",
+   "纪实文学"
   ],
   "彼得林奇的成功投资典藏版": [
    "经济理财",
@@ -1737,7 +3049,7 @@
    "经济理财",
    "商业"
   ],
-  "怎样用常识做股票一个特别成功的价值投资者的策略分析决策和情绪增订版": [
+  "怎样用常识做股票一个特别成功的价值投资者的策略、分析、决策和情绪增订版": [
    "经济理财",
    "财经"
   ],
@@ -1753,17 +3065,25 @@
    "经济理财",
    "财经"
   ],
-  "成为雅诗兰黛官方授权": [
-   "经济理财",
-   "商业"
+  "我从凉山来": [
+   "文学",
+   "纪实文学"
   ],
-  "我只是喜欢不稳定的人生轻游记": [
+  "我们的后人类未来生物技术革命的后果": [
+   "历史",
+   "历史读物"
+  ],
+  "我只是喜欢不稳定的人生": [
    "文学",
    "纪实文学"
   ],
   "我在京都寺庙抄经轻游记": [
    "文学",
    "纪实文学"
+  ],
+  "我在法院看热闹": [
+   "精品小说",
+   "纪实小说"
   ],
   "我才不想做家务全网剖析隐形家务最彻底的一本书": [
    "精品小说",
@@ -1772,6 +3092,10 @@
   "我是落花生的女儿": [
    "精品小说",
    "纪实小说"
+  ],
+  "战争、枪炮与选票": [
+   "历史",
+   "历史读物"
   ],
   "战后日本经济史": [
    "经济理财",
@@ -1793,23 +3117,23 @@
    "经济理财",
    "财经"
   ],
-  "投资像格力一样的企业": [
+  "投资尽职调查投资逻辑、尽调方法、实战案例": [
    "经济理财",
    "管理"
   ],
-  "投资尽职调查投资逻辑尽调方法实战案例": [
+  "投资的原理": [
    "经济理财",
-   "管理"
-  ],
-  "投资最重要的事全新升级版": [
-   "经济理财",
-   "理财"
+   "财经"
   ],
   "投资的方法来自华尔街的金融投资课": [
    "经济理财",
    "理财"
   ],
   "投资者的敌人": [
+   "经济理财",
+   "理财"
+  ],
+  "投资者的敌人朱宁pdf": [
    "经济理财",
    "理财"
   ],
@@ -1821,9 +3145,33 @@
    "经济理财",
    "财经"
   ],
+  "拜占庭三部曲拜占庭的新生+拜占庭的巅峰+拜占庭的衰亡共3册": [
+   "历史",
+   "历史读物"
+  ],
+  "拜占庭的巅峰从光复时代到曼齐刻尔特": [
+   "历史",
+   "历史读物"
+  ],
+  "拜占庭的新生从拉丁世界到东方帝国": [
+   "历史",
+   "历史读物"
+  ],
+  "拜占庭的衰亡从希腊君主到苏丹附庸": [
+   "历史",
+   "历史读物"
+  ],
+  "挪威极夜独处时才能成为自己轻游记": [
+   "文学",
+   "游记"
+  ],
   "捷克走200公里去见一座城轻游记": [
    "文学",
    "纪实文学"
+  ],
+  "政治秩序与政治衰败从工业革命到民主全球化": [
+   "历史",
+   "历史读物"
   ],
   "政治秩序的起源从前人类时代到法国大革命": [
    "政治军事",
@@ -1833,7 +3181,19 @@
    "经济理财",
    "理财"
   ],
-  "文明现代化价值投资与中国": [
+  "教宗与墨索里尼庇护十一世与法西斯崛起秘史": [
+   "历史",
+   "历史读物"
+  ],
+  "数字游民全球创业": [
+   "经济理财",
+   "投资"
+  ],
+  "文化苦旅": [
+   "社会文化",
+   "社会"
+  ],
+  "文明、现代化、价值投资与中国": [
    "经济理财",
    "理财"
   ],
@@ -1841,13 +3201,25 @@
    "政治军事",
    "政治"
   ],
-  "新卖桔者言第二版": [
-   "经济理财",
-   "财经"
+  "断臂上的花朵人生与法律的奇幻炼金术": [
+   "社会文化",
+   "社会"
   ],
   "无师自通风水运程": [
    "生活百科",
    "命理"
+  ],
+  "日常开运的玄学术150则": [
+   "生活百科",
+   "命理"
+  ],
+  "日本之镜日本文化中的英雄与恶人": [
+   "社会文化",
+   "社会"
+  ],
+  "日本泡沫后的三十年富裕社会的慢性病": [
+   "社会文化",
+   "社会"
   ],
   "日本蜡烛图技术古老东方投资术的现代指南": [
    "经济理财",
@@ -1861,13 +3233,21 @@
    "经济理财",
    "理财"
   ],
+  "明治天皇18521912": [
+   "历史",
+   "历史读物"
+  ],
   "昨日的世界": [
    "文学",
    "外国文学"
   ],
-  "普通人的散装生活微信读书出品": [
-   "精品小说",
-   "纪实小说"
+  "智能商业": [
+   "经济理财",
+   "投资"
+  ],
+  "暗知识机器认知如何颠覆商业和社会": [
+   "经济理财",
+   "投资"
   ],
   "曾国藩传张宏杰全新增补版": [
    "历史",
@@ -1877,29 +3257,41 @@
    "社会文化",
    "社科"
   ],
-  "期权投资策略原书第5版": [
-   "经济理财",
-   "理财"
+  "朝圣之路即使失去所有你也要走自己的路轻游记": [
+   "文学",
+   "游记"
   ],
-  "期权衍生品与对冲第2版": [
-   "经济理财",
-   "财经"
+  "未了中国缘一部自传": [
+   "文学",
+   "文学"
+  ],
+  "未来简史": [
+   "历史",
+   "历史读物"
+  ],
+  "未来简史从智人到智神": [
+   "历史",
+   "历史读物"
   ],
   "杂的文2014": [
    "文学",
    "散文杂著"
   ],
-  "李光耀论中国与世界": [
-   "政治军事",
-   "政治"
+  "李娟阿勒泰系列典藏合集": [
+   "文学",
+   "文学"
   ],
-  "极端的年代19141991": [
+  "极端的年代1914～1991": [
    "历史",
    "世界史"
   ],
   "查理芒格的投资逻辑": [
    "经济理财",
    "理财"
+  ],
+  "档案一部个人史": [
+   "历史",
+   "历史读物"
   ],
   "梅山渝羽学易经之八字命理": [
    "哲学宗教",
@@ -1910,6 +3302,10 @@
    "散文杂著"
   ],
   "棉花帝国一部资本主义全球史": [
+   "经济理财",
+   "财经"
+  ],
+  "楼塌之后从日本经验看中国房市未来": [
    "经济理财",
    "财经"
   ],
@@ -1953,10 +3349,6 @@
    "文学",
    "世界名著"
   ],
-  "沃伦巴菲特的ceo们伯克希尔经理人的经营秘诀": [
-   "经济理财",
-   "管理"
-  ],
   "沧桑十年": [
    "精品小说",
    "年代小说"
@@ -1964,6 +3356,22 @@
   "沸腾十五年中国互联网19952009修订版": [
    "经济理财",
    "商业"
+  ],
+  "法治的细节": [
+   "社会文化",
+   "社会"
+  ],
+  "活着": [
+   "文学",
+   "纪实文学"
+  ],
+  "活着回来的男人一个普通日本兵的二战及战后生命史": [
+   "历史",
+   "历史读物"
+  ],
+  "海洋帝国一部海洋征服史1453+海洋帝国+财富之城+伟大的海全五册": [
+   "经济理财",
+   "投资"
   ],
   "海龟交易法则珍藏版": [
    "经济理财",
@@ -1981,7 +3389,15 @@
    "经济理财",
    "财经"
   ],
-  "激流三部曲家春秋": [
+  "漫漫自由路曼德拉自传": [
+   "文学",
+   "文学"
+  ],
+  "漫画科普比知识有趣的冷知识2": [
+   "漫画",
+   "科普漫画"
+  ],
+  "激流三部曲家、春、秋": [
    "精品小说",
    "社会小说"
   ],
@@ -1989,13 +3405,29 @@
    "文学",
    "经典作品"
   ],
+  "爆裂未来社会的9大生存原则": [
+   "社会文化",
+   "社会"
+  ],
+  "爱眉小札徐志摩致陆小曼书信": [
+   "文学",
+   "经典作品"
+  ],
   "牛津通识课概率": [
    "科学技术",
    "自然科学"
   ],
-  "狂飙张译张颂文主演同名电视剧原著": [
+  "狂飙张译、张颂文主演同名电视剧原著": [
    "精品小说",
    "影视原著"
+  ],
+  "王的归程阿富汗战记18391842": [
+   "历史",
+   "历史读物"
+  ],
+  "珠穆朗玛峰登顶是可以选择的活着却是必须的轻游记": [
+   "文学",
+   "纪实文学"
   ],
   "理想国译丛系列套装036050册套装15册": [
    "历史",
@@ -2017,9 +3449,33 @@
    "文学",
    "散文杂著"
   ],
+  "生活与命运同名俄剧原著": [
+   "历史",
+   "历史小说"
+  ],
+  "生活的伏笔欧亨利短篇小说精选": [
+   "文学",
+   "外国文学"
+  ],
   "用经济思维看懂世界格局": [
    "经济理财",
    "财经"
+  ],
+  "甲骨文世界史大转向＋王的归程＋春之祭＋伟大的海＋东印度公司全6册": [
+   "历史",
+   "历史读物"
+  ],
+  "甲骨文二战史全6册": [
+   "历史",
+   "历史读物"
+  ],
+  "甲骨文战争的真相走进那场改变世界的战争布达佩斯之围+民族国家间的和平与战争+隐形军队+1941德国走向失败的那一年+杀戮与文化全6册": [
+   "历史",
+   "历史读物"
+  ],
+  "甲骨文西方通史": [
+   "历史",
+   "历史读物"
   ],
   "白银时代": [
    "精品小说",
@@ -2028,6 +3484,10 @@
   "百万富翁快车道": [
    "经济理财",
    "财经"
+  ],
+  "百年帝国启示录​希特勒与20世纪德国+民主德国的秘密读者+自由的权利+铁幕欧洲之新生+德意志文化共5册": [
+   "历史",
+   "历史读物"
   ],
   "盐野七生作品文艺复兴的故事全六册": [
    "历史",
@@ -2049,9 +3509,13 @@
    "科学技术",
    "工业技术"
   ],
-  "穷查理宝典查理芒格智慧箴言录全新增订本": [
-   "个人成长",
-   "励志成长"
+  "禅与摩托车维修艺术": [
+   "精品小说",
+   "治愈小说"
+  ],
+  "程序员超强大脑": [
+   "计算机",
+   "编程开发"
   ],
   "空头大师百年来全球股市猎杀者": [
    "经济理财",
@@ -2061,17 +3525,21 @@
    "文学",
    "纪实文学"
   ],
-  "竞争优势透视企业护城河": [
-   "经济理财",
-   "管理"
+  "笑傲股市原书第4版典藏版": [
+   "文学",
+   "文学"
   ],
-  "竞争战略": [
-   "经济理财",
-   "商业"
+  "索罗斯炼金术大全集超值白金版": [
+   "文学",
+   "文学"
   ],
-  "繁荣与停滞日本经济发展和转型": [
+  "繁荣落幕日本一代人的沉痛记忆": [
    "经济理财",
    "财经"
+  ],
+  "红色资本中国的非凡崛起与脆弱的金融基础": [
+   "经济理财",
+   "投资"
   ],
   "经济学的思维方式第13版": [
    "经济理财",
@@ -2080,10 +3548,6 @@
   "经营者的财务金三角": [
    "经济理财",
    "商业"
-  ],
-  "结构性改革": [
-   "经济理财",
-   "财经"
   ],
   "维京人的世界": [
    "历史",
@@ -2101,6 +3565,10 @@
    "文学",
    "外国文学"
   ],
+  "罪孽的报应德国和日本的战争记忆": [
+   "历史",
+   "历史读物"
+  ],
   "置身事内中国政府与经济发展": [
    "经济理财",
    "财经"
@@ -2108,10 +3576,6 @@
   "美国的故事七册套装": [
    "历史",
    "世界史"
-  ],
-  "美国经济指标图解": [
-   "经济理财",
-   "财经"
   ],
   "美联储2019年升级版精装": [
    "经济理财",
@@ -2133,14 +3597,6 @@
    "经济理财",
    "理财"
   ],
-  "肖星的财务思维课": [
-   "经济理财",
-   "管理"
-  ],
-  "股市百年启示录": [
-   "经济理财",
-   "财经"
-  ],
   "股票作手回忆录": [
    "经济理财",
    "理财"
@@ -2153,17 +3609,13 @@
    "经济理财",
    "商业"
   ],
-  "艺海拾贝": [
+  "致流浪的母亲坐上火车去新疆": [
    "文学",
    "散文杂著"
   ],
-  "艾略特波浪理论": [
-   "经济理财",
-   "理财"
-  ],
-  "芒格之道查理芒格股东会讲话19872022": [
-   "经济理财",
-   "商业"
+  "艺海拾贝": [
+   "文学",
+   "散文杂著"
   ],
   "芯片战争世界最关键技术的争夺战财之道丛书": [
    "经济理财",
@@ -2177,6 +3629,22 @@
    "教育学习",
    "外语"
   ],
+  "草与禾中华文明4000年融合史": [
+   "历史",
+   "历史读物"
+  ],
+  "華爾街的物理學": [
+   "经济理财",
+   "投资"
+  ],
+  "萧条中的生存智慧日本失去的三十年生存启示录": [
+   "经济理财",
+   "财经"
+  ],
+  "萨尔瓦多我们厌倦的平凡生活是他们渴望的未来轻游记": [
+   "文学",
+   "游记"
+  ],
   "蔡澜经典生活美学系列套装共5册": [
    "文学",
    "散文杂著"
@@ -2185,13 +3653,9 @@
    "历史",
    "历史读物"
   ],
-  "血色浪漫刘烨孙俪主演同名电视剧原著": [
+  "血色浪漫": [
    "精品小说",
    "年代小说"
-  ],
-  "行动的勇气金融危机及其余波回忆录": [
-   "经济理财",
-   "理财"
   ],
   "被追赶的经济体": [
    "经济理财",
@@ -2205,7 +3669,7 @@
    "历史",
    "历史小说"
   ],
-  "西班牙在这有人后悔有人圆梦轻游记": [
+  "西班牙在这有人后悔有人圆梦": [
    "文学",
    "纪实文学"
   ],
@@ -2213,11 +3677,7 @@
    "个人成长",
    "认知思维"
   ],
-  "论中国": [
-   "政治军事",
-   "政治"
-  ],
-  "论帝国美国战争和世界霸权": [
+  "论帝国美国、战争和世界霸权": [
    "社会文化",
    "社科"
   ],
@@ -2225,21 +3685,21 @@
    "经济理财",
    "理财"
   ],
-  "说谎者的扑克牌中信商业经典": [
+  "诗经彩图精装": [
+   "文学",
+   "文学"
+  ],
+  "读懂以交易为生建立你的交易规则轻理财": [
    "经济理财",
    "财经"
+  ],
+  "贝加尔湖": [
+   "文学",
+   "纪实文学"
   ],
   "贝加尔湖浪费时间没关系无意义的人生也很美轻游记": [
    "文学",
    "纪实文学"
-  ],
-  "负利率": [
-   "经济理财",
-   "财经"
-  ],
-  "财务报表分析与股票估值第2版": [
-   "经济理财",
-   "理财"
   ],
   "财务自由之路全三册": [
    "经济理财",
@@ -2257,13 +3717,29 @@
    "经济理财",
    "财经"
   ],
-  "货币从哪里来": [
-   "经济理财",
-   "财经"
-  ],
   "货币战争全5册": [
    "经济理财",
    "财经"
+  ],
+  "货币战争升级版1": [
+   "经济理财",
+   "投资"
+  ],
+  "货币战争升级版2金权天下": [
+   "经济理财",
+   "投资"
+  ],
+  "货币战争升级版3金融高边疆": [
+   "经济理财",
+   "投资"
+  ],
+  "货币战争升级版4战国时代": [
+   "经济理财",
+   "投资"
+  ],
+  "货币战争升级版5山雨欲来": [
+   "经济理财",
+   "投资"
   ],
   "货币未来从金本位到区块链": [
    "经济理财",
@@ -2293,7 +3769,7 @@
    "历史",
    "世界史"
   ],
-  "超级版图全球供应链超级城市与新商业文明的崛起": [
+  "超级版图全球供应链、超级城市与新商业文明的崛起": [
    "经济理财",
    "财经"
   ],
@@ -2304,6 +3780,10 @@
   "达尔文岛他说41岁想换一种人生轻游记": [
    "文学",
    "纪实文学"
+  ],
+  "过冬记名家四季散文集": [
+   "文学",
+   "散文杂著"
   ],
   "迷失的盛宴中国保险史19782014": [
    "经济理财",
@@ -2321,7 +3801,7 @@
    "历史",
    "历史地理"
   ],
-  "遗忘之地阿拉斯加轻游记": [
+  "遗忘之地阿拉斯加": [
    "文学",
    "纪实文学"
   ],
@@ -2329,17 +3809,29 @@
    "政治军事",
    "政治"
   ],
+  "重新理解创业一个创业者的途中思考": [
+   "经济理财",
+   "投资"
+  ],
   "重走三毛之路我们活在现在不活在将来轻游记": [
    "文学",
    "纪实文学"
   ],
-  "金融周期": [
-   "经济理财",
-   "理财"
+  "金与铁俾斯麦、布莱希罗德与德意志帝国的建立": [
+   "历史",
+   "历史读物"
   ],
-  "金融炼金术令全球投资者醍醐灌顶的著作": [
+  "金融之王毁了世界的银行家": [
    "经济理财",
    "财经"
+  ],
+  "金融家|教父": [
+   "经济理财",
+   "投资"
+  ],
+  "金融怪杰华尔街的顶级交易员典藏版": [
+   "经济理财",
+   "投资"
   ],
   "金融的本质伯南克四讲美联储中英双语版": [
    "经济理财",
@@ -2353,17 +3845,13 @@
    "经济理财",
    "管理"
   ],
-  "长期有耐心美团的成长与进化逻辑": [
-   "经济理财",
-   "财经"
+  "阶级时代为什么不平等至关重要套装共10册逃离不平等该如何做着眼于人与人之间的关系我们有多种不同的理由来反对不平等": [
+   "文学",
+   "文学"
   ],
-  "长期的力量如何构建可持续的价值投资盈利体系": [
-   "经济理财",
-   "财经"
-  ],
-  "随机漫步的傻瓜": [
-   "经济理财",
-   "财经"
+  "阿勒泰的角落": [
+   "文学",
+   "文学"
   ],
   "雨季不再来": [
    "文学",
@@ -2385,27 +3873,39 @@
    "文学",
    "散文杂著"
   ],
+  "非洲外派实录高薪下的危险轻纪实": [
+   "文学",
+   "纪实文学"
+  ],
   "革命的年代17891848": [
    "历史",
    "世界史"
   ],
+  "预测经济、周期与市场泡沫中国著名投资策略师预测经济、市场、周期的逻辑和方法对于投资者、策略师、经济学家、金融从业者、散户来说都是值得学习、具有指导意义和实践价值的一本书": [
+   "经济理财",
+   "商业"
+  ],
+  "马克吐温短篇小说集": [
+   "文学",
+   "文学"
+  ],
+  "马驹桥的时间清华博士的日结手记": [
+   "文学",
+   "纪实文学"
+  ],
   "高增长科技股投资法": [
    "经济理财",
    "理财"
-  ],
-  "高频交易员华尔街的速度游戏": [
-   "经济理财",
-   "财经"
   ],
   "鲜衣怒马少年时唐宋诗人的诗酒江湖": [
    "文学",
    "文学鉴赏"
   ],
   "黄金时代": [
-   "精品小说",
-   "社会小说"
+   "文学",
+   "经典作品"
   ],
-  "黑天鹅如何应对不可预知的未来": [
+  "黑天鹅": [
    "经济理财",
    "管理"
   ],

@@ -50,6 +50,12 @@
       var j = Math.floor(r() * (i + 1));
       var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
     }
+    /* 权重（2026-11-13）：规则在 assets/data/weights.json，改配置不改代码。
+       先随机打散，再按类目分桶：文化/人文置顶、计算机沉底、其余保持这副随机牌。
+       配置是异步到达的；未就绪时返回纯随机，就绪后 reweight() 会重排一次。 */
+    if (window.WeReadWeights && window.WeReadWeights.ready) {
+      return window.WeReadWeights.sort(arr, 'home');
+    }
     return arr;
   }
 
@@ -370,6 +376,21 @@
   function relayout() {
     for (var i = 0; i < states.length; i++) layout(states[i]);
   }
+
+  /* 权重配置异步到达后，对已建立的网格重排 s.cards 快照（不动 DOM 顺序，
+     只改数组 → applyPg 重算分页 → relayout 重排瀑布流位置）。
+     中间池保持上一次 scatter 的随机序，用户不会看到「刷新一次跳一次」。 */
+  function reweight() {
+    if (!window.WeReadWeights || !window.WeReadWeights.ready) return;
+    for (var i = 0; i < states.length; i++) {
+      var s = states[i];
+      if (!s.pure) continue;
+      s.cards = window.WeReadWeights.sort(s.cards, 'home');
+      applyPg(s);
+      paintFoot(s);
+    }
+    relayout();
+  }
   function schedule() {
     if (raf) return;
     raf = requestAnimationFrame(function () { raf = 0; relayout(); });
@@ -435,4 +456,8 @@
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
   else boot();
+
+  // 权重 JSON 到达后（可能晚于首屏）自动重排一次；配置改了也无需改这里。
+  if (window.WeReadWeights) window.WeReadWeights.onReady(reweight);
+  // 系列/任意元素权重的 DOM 重排同样等配置就绪；weights.js 已自行触发。
 })();
