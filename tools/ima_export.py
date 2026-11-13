@@ -130,7 +130,8 @@ def fetch_remote(slug: str) -> str | None:
     try:
         r = _session().get(url, timeout=20)
         if r.status_code == 200 and len(r.content) > 2000:
-            return r.text
+            # 必须显式按 UTF-8 解码：CDN 不带 charset，requests 会猜成 ISO-8859-1 → 全是乱码
+            return r.content.decode("utf-8", "ignore")
         return None
     except Exception:
         return None
@@ -248,7 +249,8 @@ def render(card: dict, mods: dict[str, str], toc: list[str], cat: list[str],
         "| 项 | 值 |",
         "|---|---|",
         f"| 类目 | {' / '.join(x for x in cat if x) or '未分类'} |",
-        f"| 卡片状态 | {audit.get('status', '?')}（{len(present)} 个标准模块） |",
+        f"| slug | `{slug}` |",
+        f"| 卡片状态 | {audit.get('status', '?')}（{len(present)} 个标准模块：{', '.join(present)}） |",
         f"| 最近更新 | {date_str or '—'} |",
         f"| 站点原文 | {url} |",
         "",
@@ -269,20 +271,9 @@ def render(card: dict, mods: dict[str, str], toc: list[str], cat: list[str],
         idx += 1
     if toc:
         body += [f"## {idx:02d} 章节目录", "", "\n".join(toc), ""]
-    fm = [
-        "---",
-        f"slug: {slug}",
-        f"title: {title}",
-        f"cat1: {cat[0] if cat else ''}",
-        f"cat2: {cat[1] if len(cat) > 1 else ''}",
-        f"status: {audit.get('status', '')}",
-        f"modules: {','.join(present)}",
-        f"updated: {date_str}",
-        f"source: {url}",
-        "---",
-        "",
-    ]
-    md = "\n".join(fm + head + body).rstrip() + "\n"
+    # 不写 YAML front matter：IMA 会把文件开头当 introduction 展示，
+    # front matter 会占满摘要位。元信息改放正文表格，检索同样能读到。
+    md = "\n".join(head + body).rstrip() + "\n"
     return md, hashlib.sha1((TEMPLATE_VER + md).encode("utf-8")).hexdigest()[:16]
 
 
@@ -431,16 +422,22 @@ def main():
     # 索引与说明
     order = ["文学", "历史", "社会文化", "哲学宗教", "艺术", "人物传记", "精品小说",
              "政治军事", "经济理财", "计算机", "其他"]
+    # 索引刻意做小而精：列出类目与计数、每类 4 本代表，避免全量书名把检索结果挤满。
+    n_cards = sum(len(v) for v in cat_index.values())
     lines = ["# we-read 书卡总索引", "",
-             f"> 共 {len(cards_mf)} 本｜更新 {datetime.now().strftime('%Y-%m-%d %H:%M')}｜"
-             f"站点 {SITE}", "", "按类目分组；点书名进站点原文，书卡在同名 Markdown 里。", ""]
+             f"> {n_cards} 本｜{len(cat_index)} 个类目｜更新 {datetime.now().strftime('%Y-%m-%d')}｜"
+             f"整站 {SITE}", "",
+             "每本书一张书卡，文件名 `<类目>·<书名>.md`。本页只做导航，不承担检索。", ""]
     for c1 in order + sorted(set(cat_index) - set(order)):
         rows = cat_index.get(c1)
         if not rows:
             continue
-        lines += [f"## {c1}（{len(rows)}）", ""]
-        for title, slug, fn in sorted(rows):
-            lines.append(f"- 《{title}》 — `{slug}` — {SITE}/reading-notes/books/{slug}/combined.html")
+        lines.append(f"## {c1}（{len(rows)} 本）")
+        lines.append("")
+        for title, slug, fn in sorted(rows)[:4]:
+            lines.append(f"- 《{title}》")
+        if len(rows) > 4:
+            lines.append(f"- …其余 {len(rows) - 4} 本见「书卡」文件夹（文件名以「{c1}·」开头）")
         lines.append("")
     (IMA_DIR / "00-总索引.md").write_text("\n".join(lines), "utf-8")
 

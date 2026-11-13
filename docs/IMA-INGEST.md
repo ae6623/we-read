@@ -11,7 +11,7 @@
 ```
 IMA 知识库：we-read
 ├── 00-字段说明.md                 ← 字段含义 + 提问范例（给 AI 检索时定锚）
-├── 00-总索引.md                   ← 518 本按类目分组：书名 / slug / 站点链接
+├── 00-总索引.md                   ← 导航页：类目 + 计数 + 每类 4 本示例（刻意做小）
 └── 📁 书卡/
     ├── 文学·1984.md
     ├── 经济理财·证券分析：投资者的圣经.md
@@ -48,7 +48,7 @@ reading-notes/books/<slug>/combined-data.html    站点结构化卡片（最多 
         │   · merged_guide 只取章节目录骨架（章名 + 小节数/要点数），
         │     不搬 70KB 的逐章原文 —— 书卡是索引，不是全文复制
         ▼
-ima/cards/<类目>·<书名>.md        中位 13KB / 最大 26KB / 最小 2.3KB
+ima/cards/<类目>·<书名>.md        中位 5.2KB / 最大 10.3KB / 最小 1.5KB
         │
         │  tools/ima_upload.py
         │   · create_media → COS 预签名 PUT → add_knowledge(folder=书卡)
@@ -161,7 +161,7 @@ python3 tools/ima_upload.py --dry-run --limit 10     # 只看要传什么
 | 导出成功 | 518 本（15 本无 `combined-data`：空目录 / 归档书） |
 | 去重合并 | 6 组（同书长短两个 slug，保留内容更全的） |
 | 最终入库 | **512 张书卡** + 2 个索引文件 |
-| 卡片体积 | 最小 2.3KB / 中位 13KB / 最大 26KB |
+| 卡片体积 | 最小 1.5KB / 中位 5.2KB / 最大 10.3KB（去 front matter 与重复说明后） |
 | 类目分布 | 经济理财 155 · 文学 90 · 其他 85 · 历史 73 · 计算机 27 · 精品小说 24 · 社会文化 21 · 个人成长 12 · 政治军事 12 · 其余 9 类共 20 |
 
 未入库的 15 本：`-shu-zi-you-min-quan-qiu-chuang-ye-`、`-wen-gao`、`chan-yu-mo-tuo-che-wei-xiu-yi-shu`、
@@ -193,6 +193,14 @@ python3 tools/ima_upload.py --dry-run --limit 10     # 只看要传什么
    刚传完立刻提问可能检不到，等 1~2 分钟。
 4. **章节目录只到「章名 + 规模」**，不含逐章要点。要逐章内容请直接看站点
    `combined.html` 的 AI领读模块 —— 书卡定位是检索层，不是全文层。
+5. **编码坑（踩过）**：`cdn.js-dev.cn` 不返回 charset，`requests` 会按 ISO-8859-1 解码，
+   中文全变 `ä¸å¥è¯`。必须 `r.content.decode('utf-8')`。第一轮 463 张卡因此全是乱码，
+   已重生成重传 —— 以后加新数据源，先抽查一张卡的中文再批量跑。
+6. **front matter 坑（踩过）**：IMA 把文件开头当 `introduction` 展示在检索结果里。
+   写 YAML front matter 会让摘要位全是 `slug: xxx`。已改为「元信息放正文表格」，
+   文件第一行就是 `# 《书名》`，第二行一句话主旨。
+7. **索引要小**：`00-总索引.md` 最初列了全部 518 个书名（95KB），结果任何检索都把它顶到
+   前几名。已改成「类目 + 计数 + 每类 4 本示例」，只做导航。
 
 ---
 

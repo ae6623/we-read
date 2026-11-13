@@ -30,20 +30,23 @@ def _post(payload, timeout=90, allow_empty=False):
         raw = r.read().decode("utf-8", "ignore")
     if allow_empty and not raw.strip():
         return {}
-    # 兼容 SSE 与纯 JSON 两种响应
+    # 兼容 SSE 与纯 JSON；服务端返回的是「data: + 多行格式化 JSON」，
+    # 逐行 json.loads 会失败，所以直接定位第一个 JSON 对象用 raw_decode 吃完整块。
     out = None
-    for line in raw.splitlines():
-        line = line.strip()
-        if not line or line.startswith(":") or line.startswith("id:") or line.startswith("event:"):
-            continue
-        if line.startswith("data:"):
-            line = line[5:].strip()
+    decoder = json.JSONDecoder()
+    idx = 0
+    while True:
+        p = raw.find('{"jsonrpc"', idx)
+        if p < 0:
+            break
         try:
-            obj = json.loads(line)
+            obj, end = decoder.raw_decode(raw[p:])
         except Exception:
+            idx = p + 10
             continue
-        if isinstance(obj, dict) and obj.get("id") == payload.get("id"):
+        if isinstance(obj, dict) and ("result" in obj or "error" in obj):
             out = obj
+        idx = p + max(end, 1)
     if out is None:
         raise RuntimeError("MCP 无响应: " + raw[:300])
     if "error" in out:
@@ -62,10 +65,19 @@ def init():
 
 
 def call(tool: str, args: dict, timeout=90):
-    global _MID
+    global _MID, _SESSION
+    payload = {"jsonrpc": "2.0", "id": _MID + 1, "method": "tools/call",
+               "params": {"name": tool, "arguments": args}}
     _MID += 1
-    return _post({"jsonrpc": "2.0", "id": _MID, "method": "tools/call",
-                  "params": {"name": tool, "arguments": args}}, timeout=timeout)
+    try:
+        return _post(payload, timeout=timeout)
+    except RuntimeError:
+        # 会话过期时网关返回空 body → 重连一次再试
+        _SESSION = None
+        init()
+        _MID += 1
+        payload["id"] = _MID
+        return _post(payload, timeout=timeout)
 
 
 def text_of(result: dict) -> str:
