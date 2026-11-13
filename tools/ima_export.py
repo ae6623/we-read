@@ -240,7 +240,23 @@ def render(card: dict, mods: dict[str, str], toc: list[str], cat: list[str],
     url = f"{SITE}/reading-notes/books/{slug}/combined.html"
     present = [k for k, _ in MOD_TITLES if mods.get(k)]
     one = as_markdown(clip(strip_meta(mods.get("oneline", "").replace("一句话主旨", "", 1)), 400))
-    one = re.sub(r"^#+\s*", "", one).replace("\n\n", " ").strip() or "（暂无一句话主旨）"
+    one = re.sub(r"^#+\s*", "", one).replace("\n\n", " ").strip()
+    if not one:
+        # 108 本书的 oneline 本身就是「共 N 章、逐字取自大纲」的结构统计，
+        # 过滤掉后没有主旨 → 用结构脉络的分组名兜底，比空着有信息量。
+        vs = [x.strip() for x in strip_meta(mods.get("views", "")).split("\n")
+              if x.strip()
+              and not x.strip().startswith("——")
+              and not x.strip().startswith("核心观点")
+              and not re.match(r"^第\s*[0-9一二三四五六七八九十]+", x.strip())
+              and len(x.strip()) <= 20]
+        if vs:
+            one = "全书主线：" + "、".join(vs[:3])
+        elif toc:
+            names = [re.sub(r"^-\s*\d+\s*", "", t).split("　")[0] for t in toc[:3]]
+            one = f"全书 {len(toc)} 章：" + "、".join(names)
+        else:
+            one = "站点未生成一句话主旨，见下方结构脉络"
     head = [
         f"# 《{title}》",
         "",
