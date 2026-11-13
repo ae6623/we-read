@@ -32,7 +32,7 @@ ROOT = Path(__file__).resolve().parent.parent
 IMA_DIR = ROOT / "ima"
 MANIFEST = IMA_DIR / "manifest.json"
 KB_NAME = "we-read"
-FOLDER_NAME = "书卡笔记"
+FOLDER_NAME = "书卡笔记v2"
 MIME = {"md": "text/markdown"}
 
 

@@ -43,7 +43,7 @@ CARDS = IMA_DIR / "cards"
 MANIFEST = IMA_DIR / "manifest.json"
 PENDING = IMA_DIR / "pending.json"
 SITE = "https://reader.js-dev.cn"
-TEMPLATE_VER = "imacard-v2"          # 卡片渲染规则变更时 +1，触发全量重写
+TEMPLATE_VER = "imacard-v5"          # 卡片渲染规则变更时 +1，触发全量重写
 MAX_SECTION = 2600                   # 单模块正文上限（字符）
 MAX_TOC = 80                         # 章节目录最多列多少章
 MAX_SEC = 4                          # 每章最多展开多少小节
@@ -142,7 +142,7 @@ def fetch_remote(slug: str) -> str | None:
 # ---------------------------------------------------------------- HTML → 模块文本
 
 def sections(html: str) -> dict[str, str]:
-    """按 data-key 切 section，返回 {key: 纯文本}（不依赖 bs4，正则+去标签）。"""
+    """按 data-key 切 section，直接渲染成 Markdown（保留层级，不再压成一段）。"""
     from bs4 import BeautifulSoup
     soup = BeautifulSoup(html, "html.parser")
     out = {}
@@ -150,10 +150,165 @@ def sections(html: str) -> dict[str, str]:
         k = sec.get("data-key")
         if not k:
             continue
+        if k == "merged_guide":          # 章节树单独走 guide_tree
+            continue
         for bad in sec.find_all(["style", "script"]):
             bad.decompose()
-        out[k] = sec.get_text("\n", strip=True)
+        md = render_section(sec)
+        if not md:                       # 结构识别失败的老卡片，退回扁平文本
+            md = as_markdown(strip_meta(sec.get_text("\n", strip=True)))
+        if md:
+            out[k] = md
     return out
+
+
+def _li_rest(li, b) -> str:
+    """li 里去掉粗体标签后的余下文本（保留「——」这类破折号）。"""
+    from bs4 import BeautifulSoup
+    s = BeautifulSoup(str(li), "html.parser")
+    bb = s.find("b")
+    if bb:
+        bb.extract()
+    return s.get_text(" ", strip=True)
+
+
+def _blocks(el) -> list[tuple]:
+    """把模块拆成块序列：('quote',原句,出处) / ('qa',问,答) / ('li_b',粗体,余文) / ('li',文本,'') / ('p',文本,'')。"""
+    out = []
+    for c in el.find_all(recursive=False):
+        name, cls = c.name, " ".join(c.get("class") or [])
+        if name in ("style", "script", "h1", "h2", "h3", "summary"):
+            continue
+        if name == "p" and ("mmx-mod-note" in cls or cls in ("small", "note")):
+            continue
+        if name in ("ul", "ol"):
+            for li in c.find_all("li", recursive=False):
+                bq = li.find("blockquote")
+                if bq:
+                    cite = li.find("cite")
+                    out.append(("quote", bq.get_text(" ", strip=True),
+                                cite.get_text(" ", strip=True) if cite else ""))
+                    continue
+                b = li.find("b")
+                if b:
+                    out.append(("li_b", b.get_text(" ", strip=True), _li_rest(li, b)))
+                else:
+                    out.append(("li", li.get_text(" ", strip=True), ""))
+            continue
+        if name == "div":
+            if "mmx-qa" in cls:
+                q, a = c.select_one(".mmx-q"), c.select_one(".mmx-a")
+                if q:
+                    out.append(("qa", q.get_text(" ", strip=True),
+                                a.get_text(" ", strip=True) if a else ""))
+                    continue
+            out += _blocks(c)            # 包了一层的容器，递归展开
+            continue
+        t = c.get_text(" ", strip=True)
+        if t:
+            out.append(("p", t, ""))
+    return out
+
+
+_MARK = re.compile(r"【([^】]{2,12})】")
+_SOFT = re.compile(r"\s+(?=(?:存疑|取舍|商榷|反驳|补充|延伸)\s*·\s)")
+
+
+def _explode(t: str) -> list[tuple[str, str]]:
+    """把一段长文按内嵌标记拆成 [(标签, 正文)]。
+
+    站点里「更高维度」常用【书中主张】【外部证据】【综合分析】写三段式论证，
+    「深读」用「存疑 ·」「取舍 ·」写判断，全塞在一个 <p> 里手机上就是一堵墙。
+    有 ≥2 个标记才拆，正常段落原样返回。
+    """
+    marks = list(_MARK.finditer(t))
+    if len(marks) >= 2:
+        out = []
+        pre = t[:marks[0].start()].strip()
+        if pre:
+            out.append(("", pre))
+        for i, m in enumerate(marks):
+            end = marks[i + 1].start() if i + 1 < len(marks) else len(t)
+            body = t[m.end():end].strip()
+            if body:
+                out.append((m.group(1).strip(), body))
+        return out or [("", t.strip())]
+    segs = [s.strip() for s in _SOFT.split(t) if s.strip()]
+    if len(segs) >= 2:
+        return [("", s) for s in segs]
+    return [("", t.strip())]
+
+
+def render_section(sec) -> str:
+    """模块正文 → Markdown 层级列表，和「章节目录」同一套缩进读法。
+
+    旧版把所有行 get_text 后交给 as_markdown 合并，10 条金句会被拼成一个
+    大段落、5 组问答也会粘成一坨，手机上一屏全是密不透风的字。现在按
+    DOM 语义还原层级：
+      - 原文金句：出处章名作父节点，逐条原句作子节点
+      - 核心追问 / AI 问书：问题加粗作父节点，回答作子节点
+      - 结构化观点：粗体主题 + 一句说明压成一行
+      - 论述段（更高维度 / 当年与今天）：一段一块，空行分隔
+    """
+    lines, last_cite = [], None
+    for kind, a, b in _blocks(sec):
+        a = (a or "").strip()
+        if kind != "quote":
+            last_cite = None
+        if not a:
+            continue
+        if _is_meta(a):
+            continue
+        if kind == "quote":
+            if b and b != last_cite:
+                lines.append(f"- **{b}**")
+                last_cite = b
+            lines.append(("  " if b else "") + f"- {a}")
+        elif kind == "qa":
+            lines.append(f"- **{a}**")
+            parts = _explode(b)
+            if len(parts) > 1:
+                for lab, body in parts:
+                    lines.append(f"  - " + (f"**{lab}** · " if lab else "") + body)
+            elif b.strip():
+                lines.append(f"  - {b.strip()}")
+        elif kind == "li_b":
+            rest = (b or "").strip()
+            if rest and not re.match(r"^[—\-－–:：]", rest):
+                rest = "：" + rest
+            lines.append(f"- **{a}**{rest}")
+        elif kind == "li":
+            lines.append(f"- {a}")
+        else:
+            # 论述段：段首「小标题：」抽出来当父节点；【书中主张】这类标记拆成兄弟子节点，
+            # 这样「更高维度 / 当年与今天 / 精读判断」也是层级列表，不再是整屏密排文字
+            parts = _explode(a)
+            if len(parts) > 1:
+                for lab, body in parts:
+                    if lab:
+                        lines.append(f"- **{lab}**")
+                        lines.append(f"  - {body}")
+                    else:
+                        m2 = re.match(r"^([^：:。！？；，]{2,18})[：:]\s*(.+)$", body, re.S)
+                        if m2:
+                            lines.append(f"- **{m2.group(1).strip()}**")
+                            lines.append(f"  - {m2.group(2).strip()}")
+                        else:
+                            lines.append(f"- {body}")
+                continue
+            m = re.match(r"^([^：:。！？；，]{2,18})[：:]\s*(.+)$", a, re.S)
+            if m:
+                lines.append(f"- **{m.group(1).strip()}**")
+                lines.append(f"  - {m.group(2).strip()}")
+            else:
+                if lines and lines[-1] != "":
+                    lines.append("")
+                lines.append(a)
+                lines.append("")
+    while lines and lines[-1] == "":
+        lines.pop()
+    return re.sub(r"\n{3,}", "\n\n", "\n".join(lines))
+
 
 
 def guide_tree(html: str) -> list[dict]:
@@ -227,6 +382,17 @@ def clip(text: str, limit: int = MAX_SECTION) -> str:
 _META_HEAD = re.compile(r"^(本页|下方|以下|按全书|按章节|按主干|跨章|逐章|取自|（来自|\(来自|全书篇目|共\s*\d+\s*章|本书共)")
 _META_HINT = ("由模型", "由云端", "由 AI", "AI 阅读流程", "非读后感", "结构化重算",
               "结构重算", "占位", "摘自", "替代原先", "逐字取自", "未做人工解读", "按章序折成")
+
+
+def _is_meta(t: str) -> bool:
+    """块级判断：这行是「模块自带的说明文字」而不是正文。"""
+    s = (t or "").strip()
+    if not s or s.startswith(("-", "#", "**", "|", ">")):
+        return False
+    if len(s) <= 140 and (bool(_META_HEAD.match(s)) or any(h in s for h in _META_HINT)):
+        return True
+    # 「本页基于…模块二次整理」这类免责/来源说明常常很长，单独再放一次
+    return len(s) <= 520 and bool(_META_HEAD.match(s))
 
 
 def strip_meta(text: str) -> str:
@@ -343,22 +509,20 @@ def _toc_tree(tree: list[dict]) -> list[str]:
 
 
 def render(card: dict, mods: dict[str, str], tree: list[dict], cat: list[str],
-           audit: dict, date_str: str, bookid: str = "") -> tuple[str, str]:
+           audit: dict, date_str: str, bookid: str = "", cover: str = "") -> tuple[str, str]:
     title = card["title"]
     slug = card["slug"]
     url = f"{SITE}/reading-notes/books/{slug}/combined.html"
     present = [k for k, _ in MOD_TITLES if mods.get(k)]
-    one = as_markdown(clip(strip_meta(mods.get("oneline", "").replace("一句话主旨", "", 1)), 400))
-    one = re.sub(r"^#+\s*", "", one).replace("\n\n", " ").strip()
+    one = re.sub(r"[*`#>]", "", mods.get("oneline", "").replace("一句话主旨", "", 1)).strip()
+    one = re.sub(r"\s+", " ", one.split("\n")[0].lstrip("- ").strip()) if one else ""
+    one = clip(one, 240)
     if not one:
         # 108 本书的 oneline 本身就是「共 N 章、逐字取自大纲」的结构统计，
         # 过滤掉后没有主旨 → 用结构脉络的分组名兜底，比空着有信息量。
-        vs = [x.strip() for x in strip_meta(mods.get("views", "")).split("\n")
-              if x.strip()
-              and not x.strip().startswith("——")
-              and not x.strip().startswith("核心观点")
-              and not re.match(r"^第\s*[0-9一二三四五六七八九十]+", x.strip())
-              and len(x.strip()) <= 20]
+        vs = [m.group(1).strip() for m in
+              (re.match(r"^-\s+\*\*(.+?)\*\*", x.strip()) for x in mods.get("views", "").split("\n"))
+              if m and len(m.group(1).strip()) <= 20]
         if vs:
             one = "全书主线：" + "、".join(vs[:3])
         elif tree:
@@ -368,6 +532,7 @@ def render(card: dict, mods: dict[str, str], tree: list[dict], cat: list[str],
     head = [
         f"# 《{title}》",
         "",
+        *( [f"![《{title}》封面]({cover})", ""] if cover else [] ),
         f"> {one}",
         "",
         "| 项 | 值 |",
@@ -400,10 +565,9 @@ def render(card: dict, mods: dict[str, str], tree: list[dict], cat: list[str],
         if not txt:
             continue
         txt = re.sub(r"^%s\s*" % re.escape(label), "", txt).strip()
-        txt = strip_meta(txt)
         if not txt:
             continue
-        body += [f"## {idx:02d} {label}", "", clip(as_markdown(txt)), ""]
+        body += [f"## {idx:02d} {label}", "", clip(txt), ""]
         idx += 1
 
     if tree:
@@ -449,6 +613,7 @@ def main():
 
     index = load_index_cards()
     _catf = load_json("assets/data/book-cats.json", {})
+    covers = load_json("assets/data/covers.json", {}).get("covers", {})
     cats = _catf.get("books", {})
     bookids = _catf.get("ids", {})
     audit = load_json("assets/data/template-audit.json", {}).get("books", {})
@@ -485,7 +650,7 @@ def main():
             return {"slug": slug, "error": f"parse:{e}"}
         cat = cats.get(slug) or ["其他", "未分类"]
         md, h = render(card, mods, tree, cat, audit.get(slug, {}) or {},
-                       card.get("date", ""), bookids.get(slug, ""))
+                       card.get("date", ""), bookids.get(slug, ""), covers.get(slug, ""))
         return {"slug": slug, "md": md, "hash": h, "cat": cat, "src": src,
                 "mods": len([k for k, _ in MOD_TITLES if mods.get(k)]), "size": len(md)}
 
