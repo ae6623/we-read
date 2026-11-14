@@ -48,6 +48,11 @@ jobs:
         run: |
           python3 scripts/check-agent-dashboard.py
           python3 scripts/check-team-book-links.py
+      # 防止新书壳页回退到旧版 reader js（章节知识导图会消失）。
+      # 真相源 assets/data/reader-js.json，守卫从 git tree 读全站 543 本，
+      # 任何一本引用不一致就阻断部署。
+      - name: Verify reader JS version across all book shells
+        run: python3 scripts/check_reader_js.py
       - name: Stage publishable site (drop unused fonts / PDFs / dev dirs)
         run: python3 scripts/stage_pages.py
       - name: Configure Pages

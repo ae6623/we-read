@@ -265,14 +265,39 @@ curl -s -o /dev/null -w "%{http_code}" \
 |---|---|---|
 | 1 | 云端 compose（outline / overview / mindmap / modules / publish） | 站点仓出现 `compose: <slug> 整书产物` 提交 |
 | 2 | `/api/combine` 产出合并页并发布 | 线上 `combined-data.html` 返回 200 |
-| 3 | `python3 scripts/ima/ima_sync.py --book <slug>` | 输出「增量：待上传 1 张」并上传成功 |
-| 4 | `python3 scripts/ima/ima_check.py --strict` | ✅ 全部对齐（站点有卡、md 与入库记录都在） |
-| 5 | `python3 scripts/ima/ima_verify.py --wait 20` | `media_state=2`；解析是异步慢队列，约 8 条 / 75s |
-| 6 | 若出现「内容已删除」/ 空摘要 | 说明同条目曾被 REPLACE 破坏，见 4.3，删旧条目重传 |
+| 3 | `python3 scripts/check_reader_js.py` | ✅ 新书壳页引用当前 reader js（含章节知识导图），无版本回退 |
+| 4 | `python3 scripts/ima/ima_sync.py --book <slug>` | 输出「增量：待上传 1 张」并上传成功 |
+| 5 | `python3 scripts/ima/ima_check.py --strict` | ✅ 全部对齐（站点有卡、md 与入库记录都在） |
+| 6 | `python3 scripts/ima/ima_verify.py --wait 20` | `media_state=2`；解析是异步慢队列，约 8 条 / 75s |
+| 7 | 若出现「内容已删除」/ 空摘要 | 说明同条目曾被 REPLACE 破坏，见 4.3，删旧条目重传 |
 
-**每产出一本书，第 3–4 步必做**；`ima_check.py --strict` 可直接挂 CI，站点有卡而
+**每产出一本书，第 3–5 步必做**；`ima_check.py --strict` 可直接挂 CI，站点有卡而
 台账无记录就失败。漏同步不用逐本补：跑 `python3 scripts/ima/ima_sync.py`（不带
 `--book`）会全量增量扫描，自动把缺的补上。模板升级走 `--full`。
+
+**第 3 步为什么必需（2026-11-14 血的教训）**：站点壳页 `combined.html` 里的
+`reader-<日期>.js` 决定书卡有没有「章节知识导图」（可下钻 / 可放大）。产出模板曾把
+旧版本 `reader-20261110.js` 写死，导致**新产出的书全部回退、没有导图**，而存量书
+早已切换，肉眼很难发现。现在有双重保障：
+
+- **真相源**：`assets/data/reader-js.json` 的 `current` 是唯一权威值；引擎仓
+  `overview_gen/combine_page.py` 的 `READER_JS` 会读它（云端读不到时回退内置常量）。
+- **守卫**：`scripts/check_reader_js.py` 从 git tree 读全站 543 本壳页，任一引用与
+  `current` 不符就退出 1；已挂进 `.github/workflows/pages.yml` 部署前校验，**版本
+  回退直接阻断发布**。
+
+升级 reader JS 的 SOP（改名换 key，不能覆盖同名文件——CDN 是 `max-age=31536000`）：
+
+```bash
+# 1. 新文件 assets/js/reader-<新日期>.js（含新功能），先提交入库
+# 2. 改 assets/data/reader-js.json 的 current 与 history
+python3 scripts/upgrade_reader_js.py --to reader-<新日期>.js --dry-run   # 看影响面
+python3 scripts/upgrade_reader_js.py --to reader-<新日期>.js --push       # 全量切换+提交+推送
+python3 scripts/check_reader_js.py --online                              # 验收（含 CDN 200）
+```
+
+`upgrade_reader_js.py` 走 git 对象层，**不检出几百 MB 内容**，543 本秒级完成；自带
+`.git/reader_js_upgrade.json` 断点，掉线后 `--resume --push` 续跑，不重复不遗漏。
 
 > 归档书例外：`progress=0` 的书微信读书大纲接口返空，不排产、没有 combined-data，
 > 自然也不会生成 md。默认模式下 `ima_check.py` 把它们列为 ⚠️ 提示；但 SOP 第 4 步

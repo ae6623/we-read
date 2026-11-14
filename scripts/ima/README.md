@@ -2,6 +2,10 @@
 
 > 唯一入口目录。站点每产出一本新书，`combined-data.html` 上线后必须跑这里的同步，
 > IMA 知识库 `we-read` 里才会多出对应的书卡 md。
+>
+> 另一条链路别漏：书卡**壳页**的 reader js 版本由 `scripts/check_reader_js.py` 验收
+> （真相源 `assets/data/reader-js.json`），决定线上书卡有没有「章节知识导图」。
+> 完整新书 SOP 见 `docs/IMA-INGEST.md` §4.2：先跑壳页守卫，再跑本目录的 IMA 同步。
 
 ## 一条命令
 

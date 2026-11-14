@@ -67,6 +67,8 @@ cd /tmp/we-read-auto && git pull --rebase origin main   # 生成程序（远程�
 | AI 问书 / 自测内容 | 本文 §AI 内容生产 | `python3 tools/ai_draft.py --dump <slug>` → `--fill <slug> --answers <json>` |
 | 新书书卡 → IMA 知识库同步 | `docs/IMA-INGEST.md` §4.2、引擎仓 `HANDOVER.md` §0.18 | `python3 scripts/ima/ima_sync.py --book <slug>` |
 | 同步验收（站点有卡、md 不能缺） | 同上 | `python3 scripts/ima/ima_check.py --strict` |
+| 书卡壳页 reader js 版本验收（防导图丢失） | `assets/data/reader-js.json`、§硬规则 4 | `python3 scripts/check_reader_js.py` |
+| reader js 升级 / 全站壳页版本切换 | `scripts/upgrade_reader_js.py` | `python3 scripts/upgrade_reader_js.py --to reader-<日期>.js --push` |
 
 **书卡产出的硬规则（每本新书必做）**
 
@@ -78,6 +80,12 @@ cd /tmp/we-read-auto && git pull --rebase origin main   # 生成程序（远程�
    `ima_sync.py` 全量增量扫描兜底自动补齐。
 3. IMA 脚本只在 `scripts/ima/`，不要在 `tools/` 下另建副本；台账
    `ima/manifest.json` 必须入库（记录 `ima_media_id`，增量判定靠它）。
+4. **新书上线后跑 `python3 scripts/check_reader_js.py`**：全站壳页必须引用
+   `assets/data/reader-js.json` 的 `current`（当前含章节知识导图）。产出模板曾写死
+   旧版 `reader-20261110.js`，导致新书回退、导图消失。守卫已挂进
+   `.github/workflows/pages.yml` 部署前校验，版本不一致会**直接阻断发布**。
+   升级 JS 只能换**新文件名**（CDN `max-age=31536000`，同名覆盖一年不生效），
+   再按 `docs/IMA-INGEST.md` §4.2 的 SOP 跑 `upgrade_reader_js.py` 全量切换。
 
 **拆书/系列任务的硬规则**
 
