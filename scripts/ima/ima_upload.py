@@ -13,7 +13,7 @@
   python3 scripts/ima/ima_upload.py --replace                  # 已入库的也重传（同名覆盖）
 
 模板升级试推（推到新文件夹、且不污染台账）：
-  python3 scripts/ima/ima_upload.py --folder 书卡笔记v3 \
+  python3 scripts/ima/ima_upload.py --folder 书卡笔记v4 \
       --books 1984,yi-sheng-de-du-shu-ji-hua --no-manifest
 
 台账：ima/manifest.json 的 cards[slug].ima_media_id / synced_at / hash
@@ -36,7 +36,7 @@ ROOT = Path(__file__).resolve().parents[2]
 IMA_DIR = ROOT / "ima"
 MANIFEST = IMA_DIR / "manifest.json"
 KB_NAME = "we-read"
-FOLDER_NAME = "书卡笔记v2"
+FOLDER_NAME = "书卡笔记v3"
 MIME = {"md": "text/markdown"}
 
 

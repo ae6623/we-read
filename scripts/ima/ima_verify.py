@@ -10,7 +10,7 @@ parse_progress=0，看起来像失败，其实 5~10 分钟后会自己转成 2/1
   python3 scripts/ima/ima_verify.py                 # 看一眼当前状态分布
   python3 scripts/ima/ima_verify.py --wait 20       # 最多等 20 分钟，边等边报
   python3 scripts/ima/ima_verify.py --list-bad      # 列出仍失败的条目名
-  python3 scripts/ima/ima_verify.py --folder 书卡笔记v3 --wait 10   # 校验新文件夹
+  python3 scripts/ima/ima_verify.py --folder 书卡笔记v4 --wait 10   # 校验新文件夹
 """
 from __future__ import annotations
 
@@ -26,7 +26,7 @@ import ima_client as ima  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
 KB = "ima_kb_Z69gwh6y"
-FOLDER_NAME = "书卡笔记v2"
+FOLDER_NAME = "书卡笔记v3"
 
 
 def folder_id(kb: str, name: str = FOLDER_NAME) -> str:
