@@ -7,8 +7,8 @@
 所以先跑这个脚本把命中结果落成 assets/data/covers.json，导出器只读表。
 
 用法：
-  python3 tools/build_covers.py            # 只探未记录的
-  python3 tools/build_covers.py --force    # 全量重探
+  python3 scripts/ima/build_covers.py            # 只探未记录的
+  python3 scripts/ima/build_covers.py --force    # 全量重探
 """
 from __future__ import annotations
 
@@ -21,7 +21,7 @@ from datetime import datetime
 from pathlib import Path
 from urllib.parse import quote
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parents[2]
 CDN = "https://cdn.js-dev.cn/assets/covers"
 OUT = ROOT / "assets" / "data" / "covers.json"
 

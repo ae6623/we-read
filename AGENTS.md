@@ -65,6 +65,19 @@ cd /tmp/we-read-auto && git pull --rebase origin main   # 生成程序（远程�
 | 拆书成系列 / 系列页维护 | `note-spec/set-series.md` | `python3 tools/series.py --set <slug>` |
 | 全量系列体检 | 同上 | `python3 tools/series.py --audit` |
 | AI 问书 / 自测内容 | 本文 §AI 内容生产 | `python3 tools/ai_draft.py --dump <slug>` → `--fill <slug> --answers <json>` |
+| 新书书卡 → IMA 知识库同步 | `docs/IMA-INGEST.md` §4.2、引擎仓 `HANDOVER.md` §0.18 | `python3 scripts/ima/ima_sync.py --book <slug>` |
+| 同步验收（站点有卡、md 不能缺） | 同上 | `python3 scripts/ima/ima_check.py --strict` |
+
+**书卡产出的硬规则（每本新书必做）**
+
+1. 云端 `compose` **不产 `combined-data.html`**（只发 mindmap / outline / overview /
+   modules）。必须再跑 `POST /api/combine {"slugs":"<slug>"}` 产出 `combined.html` +
+   `combined-data.html` 并发布到站点仓，线上返回 200 后才具备同步 IMA 的前提。
+2. 上线后跑 `python3 scripts/ima/ima_sync.py --book <slug>`，再跑
+   `python3 scripts/ima/ima_check.py --strict` 验收。漏同步由不带 `--book` 的
+   `ima_sync.py` 全量增量扫描兜底自动补齐。
+3. IMA 脚本只在 `scripts/ima/`，不要在 `tools/` 下另建副本；台账
+   `ima/manifest.json` 必须入库（记录 `ima_media_id`，增量判定靠它）。
 
 **拆书/系列任务的硬规则**
 

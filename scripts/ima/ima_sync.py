@@ -9,10 +9,10 @@
 串成一条命令，靠 ima/manifest.json 的 hash 判断增量。
 
 用法
-  python3 tools/ima_sync.py                 # 增量同步（推荐，日常就跑这个）
-  python3 tools/ima_sync.py --full          # 强制全部重生成 + 补传缺失
-  python3 tools/ima_sync.py --book <slug>   # 只同步一本（新书产出后单独补）
-  python3 tools/ima_sync.py --dry-run       # 只算增量，不写不打
+  python3 scripts/ima/ima_sync.py                 # 增量同步（推荐，日常就跑这个）
+  python3 scripts/ima/ima_sync.py --full          # 强制全部重生成 + 补传缺失
+  python3 scripts/ima/ima_sync.py --book <slug>   # 只同步一本（新书产出后单独补）
+  python3 scripts/ima/ima_sync.py --dry-run       # 只算增量，不写不打
 
 同步规则（重要）
   1. 只上传台账里「没有 ima_media_id」或「hash 变了」的卡；
@@ -29,7 +29,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parents[2]
 IMA_DIR = ROOT / "ima"
 TOOLS = Path(__file__).resolve().parent
 sys.path.insert(0, str(TOOLS))

@@ -4,11 +4,11 @@
 供 IMA 知识库「we-read」入库，支持增量。
 
 用法：
-  python3 tools/ima_export.py --dry-run              # 只统计，不写盘
-  python3 tools/ima_export.py --limit 20             # 只导前 20 本（按首页顺序）
-  python3 tools/ima_export.py --only-cat 经济理财     # 只导某类目
-  python3 tools/ima_export.py --local-only           # 只用本地已检出目录（离线）
-  python3 tools/ima_export.py --force                # 忽略 hash，全部重写
+  python3 scripts/ima/ima_export.py --dry-run              # 只统计，不写盘
+  python3 scripts/ima/ima_export.py --limit 20             # 只导前 20 本（按首页顺序）
+  python3 scripts/ima/ima_export.py --only-cat 经济理财     # 只导某类目
+  python3 scripts/ima/ima_export.py --local-only           # 只用本地已检出目录（离线）
+  python3 scripts/ima/ima_export.py --force                # 忽略 hash，全部重写
 
 产物：
   ima/cards/<类目>·<书名>.md    每本一个文件（≤ ~10KB，去掉样式的纯结构化文本）
@@ -36,7 +36,7 @@ from datetime import datetime
 from pathlib import Path
 from urllib.parse import quote
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parents[2]
 BOOKS = ROOT / "reading-notes" / "books"
 IMA_DIR = ROOT / "ima"
 CARDS = IMA_DIR / "cards"

@@ -40,7 +40,7 @@ IMA 知识库：we-read
 ```
 reading-notes/books/<slug>/combined-data.html    站点结构化卡片（最多 11 个模块）
         │
-        │  tools/ima_export.py
+        │  scripts/ima/ima_export.py
         │   · 按 data-key 切模块：oneline / views / deepread / top10 /
         │     coreask / aiask / higher / verify / thennow / merged_guide
         │   · 去 <style>、去「本页由 AI 生成…」这类每张卡重复的元说明
@@ -50,7 +50,7 @@ reading-notes/books/<slug>/combined-data.html    站点结构化卡片（最多 
         ▼
 ima/cards/<类目>·<书名>.md        中位 5.2KB / 最大 10.3KB / 最小 1.5KB
         │
-        │  tools/ima_upload.py
+        │  scripts/ima/ima_upload.py
         │   · create_media → COS 预签名 PUT → add_knowledge(folder=书卡)
         │   · 失败重试 3 次（指数退避），并发 4
         ▼
@@ -109,7 +109,7 @@ IMA 知识库 we-read（写入即自动解析，parse_progress 100%）
 - 域名必须用 **cdn.js-dev.cn**（`assets/js/reader.js` 里的 `coverSrc()` 同款），
   `reader.js-dev.cn/assets/covers/...` 虽然也能通、内容一致，但走的是站点主域，
   换成对象存储域名更稳；
-- 索引表 `assets/data/covers.json`（`tools/build_covers.py` 生成，539/543 命中），
+- 索引表 `assets/data/covers.json`（`scripts/ima/build_covers.py` 生成，539/543 命中），
   导出时只读表、不逐本探测；
 - **只能用 Markdown 图片语法**。实测 `<p align="center"><img ...></p>` 会让 IMA 的
   md 解析器直接卡在 `media_state=1`（内容永远为空），整条书卡等于没入库；
@@ -208,7 +208,7 @@ IMA 的 MCP 没有「生成导图」接口，所以导图由我们在导出阶�
 
 ```bash
 cd /root/we-read-site
-python3 tools/ima_sync.py            # 增量：导出 → 补传 → 刷索引
+python3 scripts/ima/ima_sync.py            # 增量：导出 → 补传 → 刷索引
 ```
 
 `ima_sync.py` 依次做三件事，任何一步失败即中止：
@@ -221,17 +221,38 @@ python3 tools/ima_sync.py            # 增量：导出 → 补传 → 刷索引
 
 ### 4.2 新书产出 → 书卡同步（SOP）
 
+**前置（最容易漏，2026-11-14 实测）**：云端 `compose` 只产
+`mindmap / outline / overview / modules`，**不产 `combined-data.html`**，而 IMA 导出
+完全依赖它 —— 11-14 新产的两本书线上 `combined-data.html` 都是 404。必须先跑合并页：
+
+```bash
+# compose 完成后单独跑合并页（只写引擎仓，不自动 publish）
+curl -X POST -H "X-Agent-Name: workbuddy-cloud-luoyuJi" \
+     -H "Content-Type: application/json" -d '{"slugs":"<slug>"}' \
+     https://weread-cloud-probe.app.workbuddy.host/api/combine
+# 进度：GET /api/combine/status
+# 然后把 combined.html / combined-data.html 发布到站点仓，验收：
+curl -s -o /dev/null -w "%{http_code}" \
+     https://reader.js-dev.cn/reading-notes/books/<slug>/combined-data.html   # 必须 200
+```
+
 站点新增一本书的标准动作，按顺序做，不要跳：
 
 | 步骤 | 动作 | 验收 |
 |---|---|---|
-| 1 | 引擎产出 `combined-data.html` 并推站点仓 | `https://reader.js-dev.cn/reading-notes/books/<slug>/combined-data.html` 200 |
-| 2 | CDN 同步后跑 `python3 tools/ima_sync.py --book <slug>` | 输出「增量：待上传 1 张」并上传成功 |
-| 3 | 等 1~2 分钟，IMA 内搜书名 | `media_state=2`、`parse_progress=100`、摘要位是中文一句话主旨 |
-| 4 | 若第 3 步是「内容已删除」/ 空摘要 | 说明同条目已被 REPLACE 破坏，见 4.3，删掉旧条目重传 |
+| 1 | 云端 compose（outline / overview / mindmap / modules / publish） | 站点仓出现 `compose: <slug> 整书产物` 提交 |
+| 2 | `/api/combine` 产出合并页并发布 | 线上 `combined-data.html` 返回 200 |
+| 3 | `python3 scripts/ima/ima_sync.py --book <slug>` | 输出「增量：待上传 1 张」并上传成功 |
+| 4 | `python3 scripts/ima/ima_check.py --strict` | ✅ 全部对齐（站点有卡、md 与入库记录都在） |
+| 5 | `python3 scripts/ima/ima_verify.py --wait 20` | `media_state=2`；解析是异步慢队列，约 8 条 / 75s |
+| 6 | 若出现「内容已删除」/ 空摘要 | 说明同条目曾被 REPLACE 破坏，见 4.3，删旧条目重传 |
 
-批量重产（如模板升级）不逐本跑，直接 `python3 tools/ima_sync.py --full`
-（强制全站重生成，再补传缺失）。
+**每产出一本书，第 3–4 步必做**；`ima_check.py --strict` 可直接挂 CI，站点有卡而
+台账无记录就失败。漏同步不用逐本补：跑 `python3 scripts/ima/ima_sync.py`（不带
+`--book`）会全量增量扫描，自动把缺的补上。模板升级走 `--full`。
+
+> 归档书例外：`progress=0` 的书微信读书大纲接口返空，不排产、没有 combined-data，
+> `ima_check.py` 把它们列为 ⚠️ 提示（22 本）而非硬错误。
 
 ### 4.3 三条硬规则（都是踩过的坑）
 
@@ -247,9 +268,9 @@ python3 tools/ima_sync.py            # 增量：导出 → 补传 → 刷索引
 ### 4.4 其它常用组合
 
 ```bash
-python3 tools/ima_export.py --only-cat 计算机     # 只重生成某类目
-python3 tools/ima_upload.py --dry-run --limit 10  # 只看要传什么
-python3 tools/ima_sync.py --full                  # 模板升级后全量重建
+python3 scripts/ima/ima_export.py --only-cat 计算机     # 只重生成某类目
+python3 scripts/ima/ima_upload.py --dry-run --limit 10  # 只看要传什么
+python3 scripts/ima/ima_sync.py --full                  # 模板升级后全量重建
 ```
 
 ---
@@ -275,9 +296,9 @@ python3 tools/ima_sync.py --full                  # 模板升级后全量重建
 
 | 文件 | 作用 |
 |---|---|
-| `tools/ima_export.py` | HTML → 结构化 Markdown，出 `ima/cards/`、`manifest.json`、`pending.json`、两份索引 |
-| `tools/ima_upload.py` | 按 pending 批量上传（create_media → PUT → add_knowledge），回写 media_id |
-| `tools/ima_client.py` | 直连本机 IMA 连接器的最小 MCP 客户端（initialize / tools/call，兼容 SSE 响应） |
+| `scripts/ima/ima_export.py` | HTML → 结构化 Markdown，出 `ima/cards/`、`manifest.json`、`pending.json`、两份索引 |
+| `scripts/ima/ima_upload.py` | 按 pending 批量上传（create_media → PUT → add_knowledge），回写 media_id |
+| `scripts/ima/ima_client.py` | 直连本机 IMA 连接器的最小 MCP 客户端（initialize / tools/call，兼容 SSE 响应） |
 
 > `ima_client.py` 里的地址 `http://ima.agent-gateway.auth-proxy.local/mcp` 只在本机
 > （带 IMA 连接器的工作环境）可达。换环境要么改成对应网关地址，要么改用 Agent 的 MCP 工具逐条调。
@@ -316,7 +337,7 @@ python3 -c "import json;m=json.load(open('ima/manifest.json'))['cards'];print(le
 
 # 2) 知识库内实际条数
 python3 - <<'EOF'
-import sys,json; sys.path.insert(0,'tools'); import ima_client as ima
+import sys,json; sys.path.insert(0,'scripts/ima'); import ima_client as ima
 ima.init()
 r=ima.call("get_knowledge_list",{"knowledge_base_id":"ima_kb_Z69gwh6y",
           "folder_id":"folder_7527070271816810","limit":5})

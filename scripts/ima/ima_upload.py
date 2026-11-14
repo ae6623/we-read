@@ -2,15 +2,15 @@
 # -*- coding: utf-8 -*-
 """把 ima/cards/*.md 批量入库到 IMA 知识库「we-read」，支持增量与重跑。
 
-依赖：tools/ima_client.py（直连本机 IMA 连接器的 MCP 端点）。
+依赖：scripts/ima/ima_client.py（直连本机 IMA 连接器的 MCP 端点）。
 
 用法：
-  python3 tools/ima_upload.py --dry-run                  # 只看要传什么
-  python3 tools/ima_upload.py --limit 5                  # 先传 5 本试水
-  python3 tools/ima_upload.py --cat 经济理财             # 只传某类目
-  python3 tools/ima_upload.py                            # 传 pending.json 里的全部
-  python3 tools/ima_upload.py --all-missing              # 不看 pending，传所有未入库的
-  python3 tools/ima_upload.py --replace                  # 已入库的也重传（同名覆盖）
+  python3 scripts/ima/ima_upload.py --dry-run                  # 只看要传什么
+  python3 scripts/ima/ima_upload.py --limit 5                  # 先传 5 本试水
+  python3 scripts/ima/ima_upload.py --cat 经济理财             # 只传某类目
+  python3 scripts/ima/ima_upload.py                            # 传 pending.json 里的全部
+  python3 scripts/ima/ima_upload.py --all-missing              # 不看 pending，传所有未入库的
+  python3 scripts/ima/ima_upload.py --replace                  # 已入库的也重传（同名覆盖）
 
 台账：ima/manifest.json 的 cards[slug].ima_media_id / synced_at / hash
 """
@@ -28,7 +28,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import ima_client as ima  # noqa: E402
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parents[2]
 IMA_DIR = ROOT / "ima"
 MANIFEST = IMA_DIR / "manifest.json"
 KB_NAME = "we-read"
