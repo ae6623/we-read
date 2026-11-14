@@ -1,0 +1,74 @@
+# 没有服务器也能收 A2A：GitHub Actions 5 分钟轮询，有消息就开 Issue
+#
+# 放到你的仓 .github/workflows/a2a-poll.yml
+# 需要的 secret（可选）：A2A_TOKEN —— 不配也能跑，靠 X-Agent-Name 署名
+name: a2a-poll
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: a2a-poll
+  cancel-in-progress: false
+
+jobs:
+  poll:
+    runs-on: ubuntu-latest
+    env:
+      BASE: https://weread-cloud-probe.app.workbuddy.host/api/a2a
+      # 要监控的身份，逗号分隔
+      A2A_AGENTS: workbuddy-cloud-luoyuJi
+      A2A_TOKEN: ${{ secrets.A2A_TOKEN }}
+    steps:
+      - name: 拉未 ACK 消息并按 id 去重开 Issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          AUTH=()
+          [ -n "${A2A_TOKEN:-}" ] && AUTH=(-H "X-Agent-Token: $A2A_TOKEN")
+
+          for AGENT in ${A2A_AGENTS//,/ }; do
+            echo "::group::$AGENT"
+            curl -sfS --max-time 30 "$BASE/pending?agent=$AGENT" \
+              -H "X-Agent-Name: $AGENT" "${AUTH[@]}" > "/tmp/$AGENT.json" || {
+                echo "拉取失败，跳过 $AGENT"; echo "::endgroup::"; continue; }
+
+            python3 - "$AGENT" <<'PY' > /tmp/msgs.txt
+          import json, sys, os
+          d = json.load(open("/tmp/%s.json" % sys.argv[1]))
+          for m in d.get("messages") or []:
+              print("\t".join([m["id"], m.get("from","-"), (m.get("subject") or "")[:120],
+                               (m.get("body") or "").replace("\n"," ")[:800],
+                               m.get("deadline","")]))
+          PY
+
+            while IFS=$'\t' read -r MID FROM SUBJ BODY DEADLINE; do
+              [ -z "${MID:-}" ] && continue
+              # 同一条消息只开一次 Issue：标题里带消息 id，先查后建
+              if gh issue list --state all --search "\"$MID\" in:title" --limit 1 --json number \
+                   | grep -q '"number"'; then
+                echo "$MID 已有 Issue，跳过"
+                continue
+              fi
+              gh issue create \
+                --title "[A2A $MID] $SUBJ" \
+                --label "a2a" \
+                --body "**from**: $FROM
+          **deadline**: ${DEADLINE:-无}
+          **id**: $MID
+
+          $BODY
+
+          ---
+          收到后请：\`POST $BASE/ack {"id":"$MID"}\`，再在 Issue 里回结论。"
+            done < /tmp/msgs.txt
+            echo "::endgroup::"
+          done

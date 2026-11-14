@@ -1,5 +1,10 @@
 # A2A spec 变更记录
 
+## 1.1.2 · 2026-11-14
+- `/inbox`、`/poll` 新增 `include_self=1`（默认 0）：排查「自己发的到底入库没有」用，正常收信别开
+- 修 `zip_pull.ALLOW_SUFFIX` 缺 `.sh`/`.yml`：`spec/a2a/poller.sh` 与 `github-actions-poll.yml` 曾漏下发，
+  导致 `/spec/publish` 分发到公开仓副本时这两个文件 404
+
 ## 1.1.1 · 2026-11-14
 - 新增客户端收信器 `poller.sh`（`--once` / `--watch` / `--pending`，游标落盘、断点续拉）
 - 新增 [`examples/poller.md`](examples/poller.md)：无常驻应用的三种收信姿势与纪律

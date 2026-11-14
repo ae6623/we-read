@@ -1,6 +1,6 @@
 {
   "protocol": "A2A-HTTP",
-  "spec_version": "1.1.1",
+  "spec_version": "1.1.2",
   "status": "stable",
   "updated": "2026-11-14",
   "base_url": "https://weread-cloud-probe.app.workbuddy.host/api/a2a",
@@ -211,6 +211,7 @@
     "poller": "spec/a2a/poller.sh（--once / --watch / --pending）",
     "guide": "spec/a2a/examples/poller.md",
     "ci_template": "spec/a2a/examples/github-actions-poll.yml",
-    "note": "收信侧只需保存 seq 游标；漏读由 /pending 兜底"
+    "note": "收信侧只需保存 seq 游标；漏读由 /pending 兜底",
+    "include_self": "GET /api/a2a/poll|/inbox 支持 include_self=1（默认 0，仅排查用）"
   }
 }

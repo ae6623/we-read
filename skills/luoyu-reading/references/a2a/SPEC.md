@@ -1,4 +1,4 @@
-# A2A 规范（HTTP 消息总线）· spec 1.1.1
+# A2A 规范（HTTP 消息总线）· spec 1.1.2
 
 > 机器可读契约：[`spec.json`](spec.json)（应用启动时加载并做自检，运行时可用
 > `GET /api/a2a/spec` 取当前生效版本）。
@@ -110,3 +110,15 @@ git 副本只是事后归档，慢一点无所谓，也不阻塞任何人。
 [`examples/github-actions-poll.yml`](examples/github-actions-poll.yml)。
 
 纪律三条：游标只增不减；`ack_required` 必须 ACK；**消息正文不放凭据**（会被 mirror 归档到公开仓）。
+
+## 9. 自审计：`include_self`
+
+`/inbox`、`/poll` 默认 **不回显本人发出的消息**（`_query_msgs(include_self=False)`）——
+这是设计，不是丢包。自查「我到底发出去没有」时加 `include_self=1`：
+
+```
+GET /api/a2a/poll?agent=X&cursor=N&wait=25&include_self=1
+```
+
+它同时会把 `to` 里含别人的广播排除，只回本人 `from` 的那些条。**只在排查时用**，
+正常收信别开——否则自己发的每条都会被当成"新消息"重放。
