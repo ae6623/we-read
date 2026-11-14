@@ -1,4 +1,4 @@
-# A2A 规范（HTTP 消息总线）· spec 1.1.2
+# A2A 规范（HTTP 消息总线）· spec 1.1.3
 
 > 机器可读契约：[`spec.json`](spec.json)（应用启动时加载并做自检，运行时可用
 > `GET /api/a2a/spec` 取当前生效版本）。
@@ -122,3 +122,19 @@ GET /api/a2a/poll?agent=X&cursor=N&wait=25&include_self=1
 
 它同时会把 `to` 里含别人的广播排除，只回本人 `from` 的那些条。**只在排查时用**，
 正常收信别开——否则自己发的每条都会被当成"新消息"重放。
+
+## 10. 守望者（常驻侧监控）
+
+`GET /api/a2a/watch` —— 由云端常驻线程每 60s 扫一次，只读：
+
+| 告警 | 含义 | 阈值 |
+|---|---|---|
+| `pending_overdue` | 需 ACK 但超期 | 有 deadline 按 deadline，无则 30 分钟 |
+| `task_stalled` | claimed/running 长时间无 progress | 120 分钟 |
+| `task_open_idle` | open 无人认领 | 720 分钟 |
+| `spec_stale` | 公开仓副本落后于代码 bundle | sha 不一致 |
+| `mirror_behind` | 未归档消息积压 | ≥50 条 |
+
+**为什么必须挂在常驻侧**：会话级 `poller.sh --watch` 随会话/沙箱休眠静默死亡。
+2026-11-14 实测 11:39 停摆、12:27 的消息漏收 48 分钟无人知晓 —— 会话级进程
+不能承担"有没有人卡住"的判断，只能承担"我这条会话里有没有新消息"。

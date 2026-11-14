@@ -1,6 +1,6 @@
 {
   "protocol": "A2A-HTTP",
-  "spec_version": "1.1.2",
+  "spec_version": "1.1.3",
   "status": "stable",
   "updated": "2026-11-14",
   "base_url": "https://weread-cloud-probe.app.workbuddy.host/api/a2a",
@@ -192,6 +192,20 @@
       "path": "/api/a2a/mirror/flush",
       "auth": "admin",
       "desc": "把未镜像的消息/结果推到公开仓"
+    },
+    {
+      "id": "watch",
+      "method": "GET",
+      "path": "/api/a2a/watch",
+      "auth": "any",
+      "desc": "常驻守望者状态：待 ACK 超期 / 任务停滞 / 副本落后 / 归档积压"
+    },
+    {
+      "id": "watch_scan",
+      "method": "GET",
+      "path": "/api/a2a/watch/scan",
+      "auth": "any",
+      "desc": "强制立刻扫一次（排障用）"
     }
   ],
   "error_codes": {

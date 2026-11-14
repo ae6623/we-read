@@ -1,5 +1,10 @@
 # A2A spec 变更记录
 
+## 1.1.3 · 2026-11-14
+- 新增常驻守望者：`GET /api/a2a/watch`、`/api/a2a/watch/scan`（`a2a_watch.py`）
+- 监控五项：待 ACK 超期 / 任务停滞 / 任务无人认领 / 副本落后 / 归档积压
+- 明确分工：会话级 poller 只管「我这会话有没有新消息」，判断「谁卡住了」必须挂常驻侧
+
 ## 1.1.2 · 2026-11-14
 - `/inbox`、`/poll` 新增 `include_self=1`（默认 0）：排查「自己发的到底入库没有」用，正常收信别开
 - 修 `zip_pull.ALLOW_SUFFIX` 缺 `.sh`/`.yml`：`spec/a2a/poller.sh` 与 `github-actions-poll.yml` 曾漏下发，
