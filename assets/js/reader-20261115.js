@@ -695,7 +695,7 @@
   }
 
   function openSvgModal() {
-    var src = q('#mod-svg svg');
+    var src = q('#mod-svg svg.mmx-mind') || q('#mod-svg svg');
     if (!src) {                              // 本书没有结构导图 → 退回锚点跳转
       var sec = q('#mod-svg');
       if (sec) sec.scrollIntoView({ behavior: 'smooth' });
@@ -728,7 +728,7 @@
       a._rdSvgHook = true;
       a.addEventListener('click', function (e) { e.preventDefault(); openSvgModal(); });
     });
-    var svg = q('#mod-svg svg');
+    var svg = q('#mod-svg svg.mmx-mind');
     if (svg) {
       svg.style.cursor = 'zoom-in';
       svg.addEventListener('click', openSvgModal);   // 每次渲染都是新节点，不会重复挂
@@ -925,20 +925,24 @@
       .catch(function () { applyEvidence({}); });
   }
 
-  /* ── 章节知识导图（IMA v6 同款）────────────────────────────────────
-     结构导图模块原本是「可下钻树 + 折叠静态全图」，这里在它最上方追加一张
-     「章节知识导图」：矩形根节点 + Google 浅蓝/浅绿交替的矩形分支，
-     数据与 IMA 书卡「01 知识导图」同源（AI领读的 details.mmx-cn 章节树）。
+  /* ── 章节知识导图（可下钻 / 可放大）──────────────────────────────
+     结构导图模块最上方追加一张「章节知识导图」，与 IMA v6 书卡
+     「01 知识导图」同源（AI领读的 details.mmx-cn 章节树）。
 
-     设计约束：
-       · 纯静态 SVG，不引 mermaid、不请求新数据文件、不改 combined-data.html；
-       · sec.insertBefore(fig, firstChild) —— 原有 .mmx-tree / .mmx-overview
-         以及原 SVG 一个节点都不动；
+       · 三级可下钻：书名 → 章 → 小节；点章卡片展开 / 收起该章小节；
+       · 透明背景：figure 不套白底和边框，卡片用半透明 Google 蓝绿，
+         文字继承 currentColor —— 奶油 / 浅色 / 深色主题都融得进去；
+       · 可放大：点图内空白或右上「放大」→ 全屏弹层，✕ / 遮罩 / Esc 关闭
+         （复用结构导图的 rdSvgModal，弹层里同样能点开小节）；
+       · 原结构导图（.mmx-tree / .mmx-overview / svg.mmx-mind）一个节点不动；
        · 章节 > 12 时只画前 12 章并标注余量，与 IMA 卡片口径一致；
-       · 幂等：SPA 翻页会重跑 render()，已注入则跳过。
-     只有引用 reader-20261114.js 的壳页才生效，便于两本试点。          */
-  var KM_BLUE = '#E8F0FE', KM_GREEN = '#E6F4EA', KM_LINE = '#BDC1C6',
-      KM_INK = '#174EA6', KM_BORDER = '#4285F4', KM_MUTE = '#5F6C7B';
+       · 幂等：SPA 翻页会重跑 render()，已注入则跳过。              */
+  var KM_MAX_CH = 12;
+  var KM_BLUE = '#1a73e8', KM_CARD_B = 'rgba(66,133,244,.10)',
+      KM_CARD_G = 'rgba(52,168,83,.11)', KM_BORDER_B = 'rgba(66,133,244,.38)',
+      KM_BORDER_G = 'rgba(52,168,83,.36)', KM_SEC = 'rgba(120,128,140,.12)',
+      KM_SEC_BORDER = 'rgba(120,128,140,.26)';
+  var kmState = null;   // {data, open, fig, modalHost}
 
   function kmEsc(s) {
     return String(s == null ? '' : s)
@@ -949,98 +953,250 @@
     s = String(s == null ? '' : s).replace(/\s+/g, ' ').trim();
     return s.length > n ? s.slice(0, n - 1) + '…' : s;
   }
+
+  /* 章节树：章 = details.mmx-cn，小节 = 其下 div.sec > h4 */
   function kmChapters() {
     var mg = document.querySelector('section[data-key="merged_guide"]');
     if (!mg) return null;
     var ds = mg.querySelectorAll('details.mmx-cn');
     if (!ds.length) return null;
     var items = [];
-    for (var i = 0; i < ds.length && items.length < 12; i++) {
-      var sm = ds[i].querySelector('summary');
+    for (var i = 0; i < ds.length && items.length < KM_MAX_CH; i++) {
+      var d = ds[i], sm = d.querySelector('summary');
       if (!sm) continue;
       var no = sm.querySelector('.mmx-no'), nm = sm.querySelector('.mmx-name');
-      var label = (((no && no.textContent) || '') + ' ' + ((nm && nm.textContent) || ''))
-        .replace(/›/g, '').replace(/\s+/g, ' ').trim();
-      if (!label) label = (sm.textContent || '').replace(/›/g, '').replace(/\s+/g, ' ').trim();
-      if (!label) continue;
-      var h4 = ds[i].querySelector('div.sec h4');
-      items.push({ label: label, sub: ((h4 && h4.textContent) || '').replace(/\s+/g, ' ').trim() });
+      var num = ((no && no.textContent) || '').replace(/\s+/g, '');
+      var name = ((nm && nm.textContent) || '').replace(/\s+/g, ' ').trim();
+      if (!name) {
+        name = (sm.textContent || '').replace(/›/g, '').replace(/\s+/g, ' ').trim();
+        num = '';
+      }
+      if (!name) continue;
+      var secs = [], hs = d.querySelectorAll('div.sec h4');
+      for (var j = 0; j < hs.length; j++) {
+        var t = (hs[j].textContent || '').replace(/\s+/g, ' ').trim();
+        if (t) secs.push(t);
+      }
+      items.push({ num: num, name: name, secs: secs });
     }
     return { items: items, total: ds.length };
   }
-  function kmSvg(title, data) {
+
+  function kmSvg(data, open) {
     var items = data.items, n = items.length;
     if (!n) return '';
-    var W = 760, PAD = 22, ROOT_H = 54, CARD_H = 56, GAP = 12;
-    var two = n > 3;
-    var per = two ? Math.ceil(n / 2) : n;
-    var colW = two ? (W - PAD * 2) / 2 : (W - PAD * 2);
+    var W = 900, PAD = 40, ROOT_H = 52, CH_H = 54, SEC_H = 32, SEC_GAP = 6;
+    var GAPY = 14, MID = 110, IND = 32;
+    var ncol = n > 3 ? 2 : 1;
+    var colW = ncol === 2 ? (W - PAD * 2 - MID) / 2 : (W - PAD * 2);
+    var per = Math.ceil(n / ncol);
     var y0 = PAD + ROOT_H + 40;
-    var H = y0 + per * (CARD_H + GAP) - GAP + PAD;
-    var rootW = Math.min(420, W - PAD * 2), rootX = (W - rootW) / 2, cx = W / 2;
-    var o = [];
-    o.push('<svg class="wr-kmap-svg" viewBox="0 0 ' + W + ' ' + H + '" '
-      + 'xmlns="http://www.w3.org/2000/svg" role="img" '
-      + 'aria-label="' + kmEsc(title) + ' 章节知识导图" '
-      + 'style="display:block;width:100%;height:auto;font-family:Noto Sans SC,PingFang SC,Microsoft YaHei,sans-serif">');
+    var cx = W / 2, rootW = Math.min(440, W - PAD * 2), rootX = (W - rootW) / 2;
+
+    var colX = [], trunk = [], colY = [], lastMid = [];
+    for (var c = 0; c < ncol; c++) {
+      var x0 = ncol === 2 ? (c === 0 ? PAD : W - PAD - colW) : PAD;
+      colX.push(x0);
+      /* 主干放在两列「内侧」：左列主干在右边缘外，右列主干在左边缘外 → 根居中、完全对称 */
+      trunk.push(ncol === 2 ? (c === 0 ? x0 + colW + 14 : x0 - 14) : x0 - 16);
+      colY.push(y0);
+      lastMid.push(y0 + CH_H / 2);
+    }
+
+    var pos = [];
+    for (var i = 0; i < n; i++) {
+      var col = Math.min(ncol - 1, Math.floor(i / per));
+      var it = items[i], isOpen = !!open[i];
+      var extra = isOpen ? (it.secs.length ? it.secs.length * (SEC_H + SEC_GAP) + 4 : 26) : 0;
+      var y = colY[col], h = CH_H + extra;
+      pos.push({ col: col, y: y, h: h, open: isOpen, it: it });
+      lastMid[col] = y + CH_H / 2;
+      colY[col] = y + h + GAPY;
+    }
+    var H = Math.max.apply(null, colY) - GAPY + PAD;
     var hubY = y0 - 20;
-    o.push('<path d="M' + cx + ' ' + (PAD + ROOT_H) + ' L' + cx + ' ' + hubY
-      + '" stroke="' + KM_LINE + '" stroke-width="1.6" fill="none"/>');
-    var colX = [], ncol = two ? 2 : 1;
-    for (var c = 0; c < ncol; c++) colX.push(PAD + c * colW + 10);
-    if (two) {
-      o.push('<path d="M' + colX[0] + ' ' + hubY + ' L' + colX[1] + ' ' + hubY
-        + '" stroke="' + KM_LINE + '" stroke-width="1.6" fill="none"/>');
+    var o = [];
+
+    o.push('<svg class="wr-kmap-svg" viewBox="0 0 ' + W + ' ' + H + '" '
+      + 'xmlns="http://www.w3.org/2000/svg" role="img" aria-label="章节知识导图" '
+      + 'style="display:block;width:100%;height:auto;font-family:Noto Sans SC,PingFang SC,Microsoft YaHei,sans-serif">');
+    o.push('<style>.wr-kmap-svg text{fill:currentColor}'
+      + '.wr-kmap-ch{cursor:pointer}'
+      + '.wr-kmap-ch:hover rect{stroke-width:2}'
+      + '.wr-kmap-svg .km-line{stroke:currentColor;stroke-opacity:.28;fill:none}'
+      + '</style>');
+
+    /* 根 → 分叉横梁 → 两列主干 */
+    o.push('<path class="km-line" d="M' + cx + ' ' + (PAD + ROOT_H) + ' L' + cx + ' ' + hubY
+      + '" stroke-width="1.8"/>');
+    if (ncol === 2) {
+      o.push('<path class="km-line" d="M' + trunk[0] + ' ' + hubY + ' L' + trunk[1] + ' ' + hubY
+        + '" stroke-width="1.8"/>');
+    } else {
+      o.push('<path class="km-line" d="M' + cx + ' ' + hubY + ' L' + trunk[0] + ' ' + hubY
+        + '" stroke-width="1.8"/>');
     }
-    var lastY = y0 + (per - 1) * (CARD_H + GAP) + CARD_H / 2;
-    for (var c2 = 0; c2 < colX.length; c2++) {
-      o.push('<path d="M' + colX[c2] + ' ' + hubY + ' L' + colX[c2] + ' ' + lastY
-        + '" stroke="' + KM_LINE + '" stroke-width="1.6" fill="none"/>');
+    for (var c2 = 0; c2 < ncol; c2++) {
+      o.push('<path class="km-line" d="M' + trunk[c2] + ' ' + hubY + ' L' + trunk[c2] + ' '
+        + lastMid[c2] + '" stroke-width="1.8"/>');
     }
-    for (var i2 = 0; i2 < n; i2++) {
-      var col = two ? Math.floor(i2 / per) : 0;
-      var row = two ? i2 % per : i2;
-      var x = PAD + col * colW + 22, y = y0 + row * (CARD_H + GAP);
-      var w = colW - 30, fill = i2 % 2 === 0 ? KM_BLUE : KM_GREEN;
-      o.push('<path d="M' + colX[col] + ' ' + (y + CARD_H / 2) + ' L' + x + ' '
-        + (y + CARD_H / 2) + '" stroke="' + KM_LINE + '" stroke-width="1.4" fill="none"/>');
-      o.push('<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + CARD_H
-        + '" rx="8" fill="' + fill + '" stroke="' + KM_BORDER + '" stroke-width="1"/>');
-      o.push('<text x="' + (x + 12) + '" y="' + (y + 23) + '" font-size="13.5" '
-        + 'font-weight="700" fill="' + KM_INK + '">' + kmEsc(kmClip(items[i2].label, 24)) + '</text>');
-      if (items[i2].sub) {
-        o.push('<text x="' + (x + 12) + '" y="' + (y + 42) + '" font-size="11" fill="'
-          + KM_MUTE + '">' + kmEsc(kmClip(items[i2].sub, 30)) + '</text>');
+
+    for (var k = 0; k < n; k++) {
+      var p = pos[k], it2 = p.it, top = p.y, mid = p.y + CH_H / 2;
+      var x = colX[p.col], w = colW, tr = trunk[p.col];
+      var fill = k % 2 === 0 ? KM_CARD_B : KM_CARD_G;
+      var bd = k % 2 === 0 ? KM_BORDER_B : KM_BORDER_G;
+
+      o.push('<g class="wr-kmap-ch" data-i="' + k + '" tabindex="0" role="button" '
+        + 'aria-expanded="' + (p.open ? 'true' : 'false') + '" '
+        + 'aria-label="' + kmEsc(it2.name) + '，' + it2.secs.length + ' 个小节">');
+      o.push('<path class="km-line" d="M' + tr + ' ' + mid + ' L'
+        + (p.col === 0 && ncol === 2 ? x + w : ncol === 2 ? x : x - 0) + ' ' + mid
+        + '" stroke-width="1.4"/>');
+      o.push('<rect x="' + x + '" y="' + top + '" width="' + w + '" height="' + CH_H
+        + '" rx="9" fill="' + fill + '" stroke="' + bd + '" stroke-width="1"/>');
+      if (it2.num) {
+        o.push('<text x="' + (x + 14) + '" y="' + (top + 34) + '" font-size="13" font-weight="700" '
+          + 'fill-opacity=".72">' + kmEsc(kmClip(it2.num, 4)) + '</text>');
+      }
+      o.push('<text x="' + (x + (it2.num ? 40 : 14)) + '" y="' + (top + 34) + '" '
+        + 'font-size="13.5" font-weight="700">' + kmEsc(kmClip(it2.name, 18)) + '</text>');
+      if (it2.secs.length) {
+        o.push('<text x="' + (x + w - 32) + '" y="' + (top + 34) + '" text-anchor="end" '
+          + 'font-size="11.5" fill-opacity=".5">' + it2.secs.length + ' 节</text>');
+      }
+      o.push('<text x="' + (x + w - 14) + '" y="' + (top + 34) + '" text-anchor="middle" '
+        + 'font-size="11" fill-opacity=".5">' + (p.open ? '▾' : '▸') + '</text>');
+      o.push('</g>');
+
+      /* 三级：本章小节（统一从卡片左侧缩进，竖线把章和小节串起来） */
+      if (p.open) {
+        if (!it2.secs.length) {
+          o.push('<text x="' + (x + 16) + '" y="' + (top + CH_H + 20) + '" '
+            + 'font-size="12" fill-opacity=".5">本章暂无可展开的小节</text>');
+        } else {
+          var svTop = top + CH_H + 4;
+          var svLast = svTop + (it2.secs.length - 1) * (SEC_H + SEC_GAP) + SEC_H / 2;
+          var vx = x + 14;
+          o.push('<path class="km-line" d="M' + vx + ' ' + (top + CH_H) + ' L' + vx + ' '
+            + svLast + '" stroke-width="1.3" stroke-opacity=".2"/>');
+          for (var s = 0; s < it2.secs.length; s++) {
+            var sy = svTop + s * (SEC_H + SEC_GAP), sm2 = sy + SEC_H / 2;
+            o.push('<path class="km-line" d="M' + vx + ' ' + sm2 + ' L' + (vx + IND - 14) + ' '
+              + sm2 + '" stroke-width="1.2" stroke-opacity=".2"/>');
+            o.push('<circle cx="' + vx + '" cy="' + sm2 + '" r="2.4" fill="currentColor" '
+              + 'fill-opacity=".32"/>');
+            o.push('<rect x="' + (x + IND) + '" y="' + sy + '" width="' + (w - IND) + '" height="'
+              + SEC_H + '" rx="7" fill="' + KM_SEC + '" stroke="' + KM_SEC_BORDER + '" stroke-width="1"/>');
+            o.push('<text x="' + (x + IND + 12) + '" y="' + (sy + 21) + '" font-size="12" '
+              + 'fill-opacity=".86">' + kmEsc(kmClip(it2.secs[s], 22)) + '</text>');
+          }
+        }
       }
     }
-    o.push('<rect x="' + rootX + '" y="' + PAD + '" width="' + rootW + '" height="'
-      + ROOT_H + '" rx="10" fill="' + KM_BORDER + '"/>');
-    o.push('<text x="' + cx + '" y="' + (PAD + 34) + '" text-anchor="middle" '
-      + 'font-size="17" font-weight="700" fill="#fff">《'
-      + kmEsc(kmClip(title, 20)) + '》</text>');
+
+    o.push('<rect x="' + rootX + '" y="' + PAD + '" width="' + rootW + '" height="' + ROOT_H
+      + '" rx="10" fill="' + KM_BLUE + '"/>');
+    o.push('<text x="' + cx + '" y="' + (PAD + 33) + '" text-anchor="middle" font-size="17" '
+      + 'font-weight="700" fill="#fff">《' + kmEsc(kmClip(data.title, 20)) + '》</text>');
     if (data.total > n) {
-      o.push('<text x="' + (W - PAD) + '" y="' + (H - 6) + '" text-anchor="end" '
-        + 'font-size="10.5" fill="' + KM_MUTE + '">另 ' + (data.total - n)
-        + ' 章见 AI领读 / 章节目录</text>');
+      o.push('<text x="' + (W - PAD) + '" y="' + (H - 6) + '" text-anchor="end" font-size="10.5" '
+        + 'fill-opacity=".45">另 ' + (data.total - n) + ' 章见 AI领读 / 章节目录</text>');
     }
     o.push('</svg>');
     return o.join('');
   }
+
+  /* 渲染 + 绑定：host 可以是页内 figure 的 body，也可以是弹层 holder */
+  function kmPaint(host) {
+    if (!host || !kmState) return;
+    host.innerHTML = kmSvg(kmState.data, kmState.open);
+    var svg = host.querySelector('svg.wr-kmap-svg');
+    if (!svg) return;
+    var gs = svg.querySelectorAll('g.wr-kmap-ch');
+    for (var i = 0; i < gs.length; i++) {
+      (function (g) {
+        var idx = parseInt(g.getAttribute('data-i'), 10) || 0;
+        function act(e) { e.stopPropagation(); kmToggle(idx); }
+        g.addEventListener('click', act);
+        g.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); act(e); }
+        });
+      })(gs[i]);
+    }
+    /* 点卡片以外区域 → 放大（弹层内不重复放大） */
+    svg.addEventListener('click', function (e) {
+      var inCard = e.target && e.target.closest && e.target.closest('g.wr-kmap-ch');
+      if (!inCard && host === kmState.fig) kmOpenBig();
+    });
+  }
+
+  function kmToggle(i) {
+    if (!kmState) return;
+    kmState.open[i] = !kmState.open[i];
+    kmPaint(kmState.fig);
+    var m = document.getElementById('rdSvgModal');
+    if (m && !m.hidden && kmState.modalHost) {
+      kmPaint(kmState.modalHost);
+      kmFit(kmState.modalHost);
+    }
+  }
+
+  function kmFit(host) {
+    var svg = host && host.querySelector('svg.wr-kmap-svg');
+    if (!svg) return;
+    var vb = (svg.getAttribute('viewBox') || '').trim().split(/[\s,]+/);
+    var W = parseFloat(vb[2]), H = parseFloat(vb[3]);
+    if (!(W > 0 && H > 0)) return;
+    var availW = Math.min(window.innerWidth - 32, 1040);
+    var s = Math.min(availW / W, 1.55);      // 只按宽度缩放，变高时纵向滚动
+    svg.style.width = Math.round(W * s) + 'px';
+    svg.style.height = Math.round(H * s) + 'px';
+  }
+
+  function kmOpenBig() {
+    if (!kmState || !kmState.data) return;
+    var m = ensureSvgModal();
+    var holder = q('.rd-svg-holder', m);
+    if (!holder) return;
+    holder.innerHTML = '';
+    m.hidden = false;
+    kmState.modalHost = holder;
+    kmPaint(holder);
+    kmFit(holder);
+  }
+
   function injectKnowledgeMap() {
     var sec = document.querySelector('section#mod-svg')
       || document.querySelector('section[data-key="svg"]');
     if (!sec || sec.querySelector('.wr-kmap')) return;
     var data = kmChapters();
     if (!data || !data.items.length) return;
-    var title = (document.title || '').split('｜')[0].replace(/[《》]/g, '').trim() || '本书';
+    data.title = (document.title || '').split('｜')[0].replace(/[《》]/g, '').trim() || '本书';
+    kmState = { data: data, open: {}, fig: null, modalHost: null };
+
     var fig = document.createElement('figure');
     fig.className = 'wr-kmap';
-    fig.setAttribute('style', 'margin:0 0 20px;padding:14px 14px 10px;'
-      + 'border:1px solid #D2E3FC;border-radius:12px;background:#FBFDFF;');
-    fig.innerHTML = '<figcaption style="margin:0 0 10px;font-size:12px;font-weight:700;'
-      + 'letter-spacing:.04em;color:#174EA6">知识导图 · 章节脉络</figcaption>'
-      + kmSvg(title, data);
+    /* 透明背景：不设底色/边框，避免和奶油/深色主题打架 */
+    fig.setAttribute('style', 'margin:0 0 22px;padding:0;border:0;background:none;');
+    fig.innerHTML =
+      '<figcaption style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;'
+        + 'margin:0 0 10px;font-size:12px;font-weight:700;letter-spacing:.04em;'
+        + 'color:var(--ink,#24312e);opacity:.82">'
+        + '<span>知识导图 · 章节脉络</span>'
+        + '<span style="font-weight:400;opacity:.62">点章节展开小节 · 点空白放大</span>'
+        + '<button type="button" class="wr-kmap-zoom" style="margin-left:auto;'
+          + 'padding:4px 10px;border:1px solid var(--line,#e5e0d6);border-radius:999px;'
+          + 'background:transparent;color:inherit;font:inherit;font-weight:600;'
+          + 'cursor:zoom-in">⤢ 放大</button>'
+        + '</figcaption>'
+        + '<div class="wr-kmap-body"></div>';
     sec.insertBefore(fig, sec.firstChild);
+
+    kmState.fig = q('.wr-kmap-body', fig);
+    kmPaint(kmState.fig);
+    var btn = q('.wr-kmap-zoom', fig);
+    if (btn) btn.addEventListener('click', function (e) { e.preventDefault(); kmOpenBig(); });
   }
 
   /* ── 上一篇 / 下一篇 ─────────────────────────────────────────────
