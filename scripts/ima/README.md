@@ -24,6 +24,22 @@ python3 scripts/ima/ima_check.py                # 验收：站点有书卡但 md
 | `build_covers.py` | 探测站点封面，生成 `assets/data/covers.json` 索引 |
 | `ima_check.py` | 验收守卫：站点书卡数 vs IMA md 数，缺哪本直接点名 |
 
+## 模板升级试推（不污染台账）
+
+模板大版本升级后，先推 2 本到**新建的空文件夹**让用户在 App 里确认渲染效果，确认后再全量重传。`--no-manifest` 保证试推不会把新文件夹的卡误记为已同步（台账仍指向旧文件夹里的卡）：
+
+```bash
+python3 scripts/ima/ima_upload.py --folder 书卡笔记v3 \
+    --books 1984,yi-sheng-de-du-shu-ji-hua --no-manifest --skip-existing
+python3 scripts/ima/ima_verify.py --folder 书卡笔记v3 --wait 10
+```
+
+| 参数 | 作用 |
+|---|---|
+| `--folder <名称>` | 目标文件夹，默认 `书卡笔记v2`；`ima_verify.py` 同样支持 |
+| `--books <slug,slug>` | 只推指定 slug，忽略 pending 与台账已入库状态 |
+| `--no-manifest` | 不回写 `manifest.json`（试推专用） |
+
 ## 三条硬规则（都是踩过的坑）
 
 1. **禁用 `DUPLICATE_NAME_STRATEGY_REPLACE`**：同名 REPLACE 会让服务端把旧条目内容清空、

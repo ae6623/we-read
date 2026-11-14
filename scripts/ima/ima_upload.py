@@ -12,6 +12,10 @@
   python3 scripts/ima/ima_upload.py --all-missing              # 不看 pending，传所有未入库的
   python3 scripts/ima/ima_upload.py --replace                  # 已入库的也重传（同名覆盖）
 
+模板升级试推（推到新文件夹、且不污染台账）：
+  python3 scripts/ima/ima_upload.py --folder 书卡笔记v3 \
+      --books 1984,yi-sheng-de-du-shu-ji-hua --no-manifest
+
 台账：ima/manifest.json 的 cards[slug].ima_media_id / synced_at / hash
 """
 from __future__ import annotations
@@ -54,14 +58,14 @@ def resolve_kb() -> str:
     raise SystemExit(f"没找到知识库 {KB_NAME}")
 
 
-def resolve_folder(kb_id: str) -> str:
-    """在知识库根下找「书卡」文件夹；没有就返回空（传根目录）。"""
+def resolve_folder(kb_id: str, name: str = FOLDER_NAME) -> str:
+    """在知识库根下找指定文件夹；没有就返回空（传根目录）。"""
     r = ima.call("get_knowledge_list", {"knowledge_base_id": kb_id, "limit": 50})
     d = json.loads(ima.text_of(r))
     for it in d.get("knowledge_list", []):
-        if it.get("media_type") == 99 and it.get("title") == FOLDER_NAME:
+        if it.get("media_type") == 99 and it.get("title") == name:
             return it["media_id"]
-    print(f"⚠️ 根目录没有「{FOLDER_NAME}」文件夹，将传到根目录")
+    print(f"⚠️ 根目录没有「{name}」文件夹，将传到根目录")
     return ""
 
 
@@ -127,32 +131,45 @@ def main():
     ap.add_argument("--workers", type=int, default=2)
     ap.add_argument("--skip-existing", action="store_true",
                     help="跳过文件夹里已存在的同名文件（避免 SAVE 生成 _时间戳 副本）")
+    ap.add_argument("--folder", default=FOLDER_NAME,
+                    help=f"目标文件夹名（默认 {FOLDER_NAME}；模板升级试推可指向新文件夹）")
+    ap.add_argument("--books", default="",
+                    help="只推指定 slug（逗号分隔），忽略 pending 与台账已入库状态")
+    ap.add_argument("--no-manifest", action="store_true",
+                    help="试推模式：不回写 manifest.json（避免把新文件夹的卡误记为已同步）")
     args = ap.parse_args()
 
     mf = load_manifest()
     cards = mf["cards"]
 
-    if args.all_missing:
-        todo = [s for s, e in cards.items() if not e.get("ima_media_id")]
+    if args.books:
+        # 定向直推：模板升级试推 / 单本补传，不受 pending 与台账状态影响
+        todo = [s.strip() for s in args.books.split(",") if s.strip()]
+        missing = [s for s in todo if s not in cards]
+        if missing:
+            raise SystemExit(f"台账里没有这些 slug: {missing}")
     else:
-        pend_path = IMA_DIR / "pending.json"
-        if pend_path.exists():
-            todo = [x["slug"] for x in json.loads(pend_path.read_text("utf-8"))["items"]]
+        if args.all_missing:
+            todo = [s for s, e in cards.items() if not e.get("ima_media_id")]
         else:
-            todo = list(cards)
-    if args.cat:
-        todo = [s for s in todo if cards.get(s, {}).get("cat1") == args.cat]
-    if args.replace is False and not args.all_missing:
-        todo = [s for s in todo if not cards.get(s, {}).get("ima_media_id") or args.replace]
-    if args.limit:
-        todo = todo[: args.limit]
+            pend_path = IMA_DIR / "pending.json"
+            if pend_path.exists():
+                todo = [x["slug"] for x in json.loads(pend_path.read_text("utf-8"))["items"]]
+            else:
+                todo = list(cards)
+        if args.cat:
+            todo = [s for s in todo if cards.get(s, {}).get("cat1") == args.cat]
+        if args.replace is False and not args.all_missing:
+            todo = [s for s in todo if not cards.get(s, {}).get("ima_media_id") or args.replace]
+        if args.limit:
+            todo = todo[: args.limit]
 
     files = []
     for s in todo:
         f = cards.get(s, {}).get("file")
         if f and (ROOT / f).exists():
             files.append((s, ROOT / f))
-    print(f"待上传 {len(files)} 本")
+    print(f"待上传 {len(files)} 本 → 文件夹「{args.folder}」")
     if args.dry_run:
         for s, p in files[:10]:
             print(f"  {p.name}  {p.stat().st_size}B  [{cards[s].get('cat1')}]")
@@ -160,7 +177,7 @@ def main():
 
     ima.init()
     kb = resolve_kb()
-    folder = resolve_folder(kb)
+    folder = resolve_folder(kb, args.folder)
     print(f"知识库 {kb}｜文件夹 {folder or '（根）'}")
     if args.skip_existing and folder:
         have = folder_titles(kb, folder)
@@ -180,13 +197,14 @@ def main():
                 r = upload_one(kb, folder, p, args.replace)
                 time.sleep(0.25)
                 with lock:
-                    e = cards.setdefault(s, {})
-                    e["ima_media_id"] = r["media_id"]
-                    e["synced_at"] = datetime.now().astimezone().isoformat(timespec="seconds")
+                    if not args.no_manifest:
+                        e = cards.setdefault(s, {})
+                        e["ima_media_id"] = r["media_id"]
+                        e["synced_at"] = datetime.now().astimezone().isoformat(timespec="seconds")
                     ok += 1
-                    if ok % 10 == 0:
+                    print(f"  ✓ {ok}/{len(files)}  {p.name[:40]}  -> {r['media_id'][-12:]}  ({time.time()-t0:.0f}s)")
+                    if ok % 10 == 0 and not args.no_manifest:
                         save_manifest(mf)
-                        print(f"  ✓ {ok}/{len(files)}  {p.name[:40]}  ({time.time()-t0:.0f}s)")
                 return
             except Exception as ex:
                 if attempt == 3:
@@ -199,7 +217,10 @@ def main():
     with ThreadPoolExecutor(max_workers=args.workers) as ex:
         list(ex.map(job, files))
 
-    save_manifest(mf)
+    if args.no_manifest:
+        print("（--no-manifest：manifest.json 未改动）")
+    else:
+        save_manifest(mf)
     print(f"\n完成：成功 {ok}｜失败 {fail}｜耗时 {time.time()-t0:.0f}s")
 
 

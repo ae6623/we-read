@@ -10,6 +10,7 @@ parse_progress=0，看起来像失败，其实 5~10 分钟后会自己转成 2/1
   python3 scripts/ima/ima_verify.py                 # 看一眼当前状态分布
   python3 scripts/ima/ima_verify.py --wait 20       # 最多等 20 分钟，边等边报
   python3 scripts/ima/ima_verify.py --list-bad      # 列出仍失败的条目名
+  python3 scripts/ima/ima_verify.py --folder 书卡笔记v3 --wait 10   # 校验新文件夹
 """
 from __future__ import annotations
 
@@ -28,13 +29,13 @@ KB = "ima_kb_Z69gwh6y"
 FOLDER_NAME = "书卡笔记v2"
 
 
-def folder_id(kb: str) -> str:
+def folder_id(kb: str, name: str = FOLDER_NAME) -> str:
     r = ima.call("get_knowledge_list", {"knowledge_base_id": kb, "limit": 50})
     d = json.loads(ima.text_of(r))
     for it in d.get("knowledge_list", []):
-        if it.get("media_type") == 99 and it.get("title") == FOLDER_NAME:
+        if it.get("media_type") == 99 and it.get("title") == name:
             return it["media_id"]
-    raise SystemExit(f"没找到文件夹 {FOLDER_NAME}")
+    raise SystemExit(f"没找到文件夹 {name}")
 
 
 def items(kb: str, fid: str) -> list[dict]:
@@ -58,16 +59,19 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--wait", type=int, default=0, help="最多等多少分钟（每 60s 复查一次）")
     ap.add_argument("--list-bad", action="store_true")
+    ap.add_argument("--folder", default=FOLDER_NAME, help=f"要校验的文件夹名（默认 {FOLDER_NAME}）")
     args = ap.parse_args()
 
     ima.init()
-    fid = folder_id(KB)
+    fid = folder_id(KB, args.folder)
     deadline = time.time() + args.wait * 60
     while True:
         rows = items(KB, fid)
         c = Counter(r.get("media_state") for r in rows)
         bad = [r for r in rows if r.get("media_state") != 2]
-        print(f"[{time.strftime('%H:%M:%S')}] 共 {len(rows)} 条｜state 分布 {dict(c)}｜未完成 {len(bad)}")
+        print(f"[{time.strftime('%H:%M:%S')}] 「{args.folder}」共 {len(rows)} 条｜state 分布 {dict(c)}｜未完成 {len(bad)}")
+        for r in rows[:10]:
+            print(f"    state={r.get('media_state')} progress={r.get('parse_progress')} {r.get('title')}")
         if not bad or time.time() >= deadline or not args.wait:
             break
         time.sleep(60)
