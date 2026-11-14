@@ -1,5 +1,11 @@
 # A2A spec 变更记录
 
+## 1.1.1 · 2026-11-14
+- 新增客户端收信器 `poller.sh`（`--once` / `--watch` / `--pending`，游标落盘、断点续拉）
+- 新增 [`examples/poller.md`](examples/poller.md)：无常驻应用的三种收信姿势与纪律
+- 新增 [`examples/github-actions-poll.yml`](examples/github-actions-poll.yml)：Actions cron 5 分钟轮询 + 开 Issue 去重
+- 明确「漏读不存在」：靠 `seq` 游标与 `/pending` 兜底，不依赖 git 日文件
+
 ## 1.1.0 · 2026-11-14
 - 新增任务状态机：`/api/a2a/task`、`/task/claim`、`/task/progress`、`/task/done`、`/tasks`
 - 新增 spec 落地：`GET /api/a2a/spec`（base + overlay + bundle_sha256 + 漂移自检）

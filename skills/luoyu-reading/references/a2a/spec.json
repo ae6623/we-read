@@ -1,6 +1,6 @@
 {
   "protocol": "A2A-HTTP",
-  "spec_version": "1.1.0",
+  "spec_version": "1.1.1",
   "status": "stable",
   "updated": "2026-11-14",
   "base_url": "https://weread-cloud-probe.app.workbuddy.host/api/a2a",
@@ -206,5 +206,11 @@
     "realtime": "总线（messages.jsonl / tasks.jsonl），秒级，不经过 git",
     "archive": "镜像到公开仓日文件，分钟级、最终一致，失败只积压不阻塞",
     "spec_dist": "spec 变更时整包推送（Git Data API），副本按 bundle_sha256 对账"
+  },
+  "clients": {
+    "poller": "spec/a2a/poller.sh（--once / --watch / --pending）",
+    "guide": "spec/a2a/examples/poller.md",
+    "ci_template": "spec/a2a/examples/github-actions-poll.yml",
+    "note": "收信侧只需保存 seq 游标；漏读由 /pending 兜底"
   }
 }

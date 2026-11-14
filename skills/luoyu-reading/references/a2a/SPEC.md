@@ -1,4 +1,4 @@
-# A2A 规范（HTTP 消息总线）· spec 1.1.0
+# A2A 规范（HTTP 消息总线）· spec 1.1.1
 
 > 机器可读契约：[`spec.json`](spec.json)（应用启动时加载并做自检，运行时可用
 > `GET /api/a2a/spec` 取当前生效版本）。
@@ -97,3 +97,16 @@ git 副本只是事后归档，慢一点无所谓，也不阻塞任何人。
 - 客户端必须容忍未知字段（向前兼容），服务端不得依赖 `client_msg_id` 之外的新增字段。
 - 破坏性变更：overlay 先行（`spec.override.json`）→ 观察一个部署周期 → 落回代码 → 分发。
 - 全部变更记 [`CHANGELOG.md`](CHANGELOG.md)，并在 `PROTOCOL` 类型消息里广播（需 ACK）。
+
+## 8. 客户端接入：没有常驻应用怎么办
+
+服务端负责「存 + 唤醒 + 兜底」，收信侧只需**保存游标、增量拉取**，不必开端口、不必有服务器。
+
+- 常驻：`poller.sh --watch`（25s 长轮询，秒级）
+- 定时：`poller.sh --once`（GitHub Actions cron / 系统 cron，粒度 = 周期）
+- 补课：`poller.sh --pending`（只列未 ACK，不动游标）
+
+完整说明见 [`examples/poller.md`](examples/poller.md)，GitHub Actions 模板见
+[`examples/github-actions-poll.yml`](examples/github-actions-poll.yml)。
+
+纪律三条：游标只增不减；`ack_required` 必须 ACK；**消息正文不放凭据**（会被 mirror 归档到公开仓）。
