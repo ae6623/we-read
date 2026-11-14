@@ -43,7 +43,7 @@ CARDS = IMA_DIR / "cards"
 MANIFEST = IMA_DIR / "manifest.json"
 PENDING = IMA_DIR / "pending.json"
 SITE = "https://reader.js-dev.cn"
-TEMPLATE_VER = "imacard-v5"          # 卡片渲染规则变更时 +1，触发全量重写
+TEMPLATE_VER = "imacard-v6"          # 卡片渲染规则变更时 +1，触发全量重写
 MAX_SECTION = 2600                   # 单模块正文上限（字符）
 MAX_TOC = 80                         # 章节目录最多列多少章
 MAX_SEC = 4                          # 每章最多展开多少小节
@@ -154,9 +154,14 @@ def sections(html: str) -> dict[str, str]:
             continue
         for bad in sec.find_all(["style", "script"]):
             bad.decompose()
-        md = render_section(sec)
-        if not md:                       # 结构识别失败的老卡片，退回扁平文本
+        if k == "oneline":
+            # 一句话主旨是标题下的「> 摘要」，不是正文模块，保持纯文本；
+            # 若也套两层列表，render() 取首行只会拿到「要点 1」，主旨会丢。
             md = as_markdown(strip_meta(sec.get_text("\n", strip=True)))
+        else:
+            md = render_section(sec)
+            if not md:                   # 结构识别失败的老卡片，退回扁平文本
+                md = as_markdown(strip_meta(sec.get_text("\n", strip=True)))
         if md:
             out[k] = md
     return out
@@ -239,75 +244,130 @@ def _explode(t: str) -> list[tuple[str, str]]:
     return [("", t.strip())]
 
 
-def render_section(sec) -> str:
-    """模块正文 → Markdown 层级列表，和「章节目录」同一套缩进读法。
+_SENT_END = re.compile(r"(?<=[。！？；;!?])")
+_HEAD_LABEL = re.compile(r"^([^：:。！？；，]{2,18})[：:]\s*(.+)$", re.S)
+_SOFT_LABEL = re.compile(r"^([\u4e00-\u9fa5]{2,6})\s*·\s*(.+)$", re.S)
 
-    旧版把所有行 get_text 后交给 as_markdown 合并，10 条金句会被拼成一个
-    大段落、5 组问答也会粘成一坨，手机上一屏全是密不透风的字。现在按
-    DOM 语义还原层级：
-      - 原文金句：出处章名作父节点，逐条原句作子节点
-      - 核心追问 / AI 问书：问题加粗作父节点，回答作子节点
-      - 结构化观点：粗体主题 + 一句说明压成一行
-      - 论述段（更高维度 / 当年与今天）：一段一块，空行分隔
+
+def _emit(lines: list[str], parent: str, children: list[str]) -> None:
+    """所有模块唯一的出口：一个加粗父节点 + 至少一条缩进子节点。
+
+    用户要求「所有模块都应该是统一的样式」——02–09 节一律两层列表，
+    与最后一节「章节目录」的缩进读法一致。不再允许裸段落、
+    「- **主题**：说明」这种压成单行的写法，或没有子节点的平铺列表。
     """
-    lines, last_cite = [], None
+    parent = re.sub(r"\s+", " ", (parent or "").strip())
+    children = [re.sub(r"\s+", " ", str(c).strip()) for c in children if str(c).strip()]
+    if not children:
+        # 极少见（如回答为空的问答）：把内容降级成子节点，父节点退化为「要点」
+        children = [parent] if parent else []
+        parent = "要点"
+    if not parent and not children:
+        return
+    lines.append(f"- **{parent or '要点'}**")
+    for c in children:
+        lines.append(f"  - {c}")
+
+
+def _split_sentences(t: str) -> list[str]:
+    """纯论述段按句拆成多条子节点；过短碎片并入前一条，避免出现半截话。"""
+    segs = [s.strip() for s in _SENT_END.split(t) if s.strip()]
+    out: list[str] = []
+    for s in segs:
+        if out and len(s) < 14:
+            out[-1] += s
+        else:
+            out.append(s)
+    return out or [t.strip()]
+
+
+def _label_of(body: str) -> tuple[str, str]:
+    """从一段文字里认出「小标题：正文」或「存疑 · 正文」，返回 (标签, 正文)。
+
+    认不出就返回空标签，由调用方决定用序号父节点。
+    """
+    m = _HEAD_LABEL.match(body)
+    if m:
+        return m.group(1).strip(), m.group(2).strip()
+    m = _SOFT_LABEL.match(body)
+    if m and m.group(1) in ("存疑", "取舍", "商榷", "反驳", "补充", "延伸", "一句话判断", "判断"):
+        return m.group(1), m.group(2).strip()
+    return "", body.strip()
+
+
+def render_section(sec) -> str:
+    """所有正文模块 → 统一的「加粗父节点 + 缩进子节点」两层列表（v6）。
+
+    各 DOM 块如何映射到父子（结构完全一致，只有父节点名称来源不同）：
+
+    | 块 | 父节点 | 子节点 |
+    |---|---|---|
+    | quote | 出处章名（连续同出处合并） | 逐条原句 |
+    | qa | 问句 | 回答（按【标记】/存疑· 再拆多条） |
+    | li_b | 粗体主题 | 余文按句拆 |
+    | li | 要点 N | 原文按句拆 |
+    | p（含【标记】/小标题） | 标记/小标题 | 正文按句拆 |
+    | p（纯论述） | 首句或要点 N | 余句 |
+    """
+    lines: list[str] = []
+    pending: tuple[str, list[str]] | None = None
+    n_plain = 0
+
+    def flush_quote():
+        nonlocal pending
+        if pending:
+            _emit(lines, pending[0] or "原文金句", pending[1])
+            pending = None
+
+    def seq() -> str:
+        nonlocal n_plain
+        n_plain += 1
+        return f"要点 {n_plain}"
+
+    def plain(text: str) -> None:
+        """无语义标签的块：尽量用「标签：正文」当父子，否则用序号父节点。"""
+        lab, body = _label_of(text)
+        if lab:
+            _emit(lines, lab, _split_sentences(body))
+        else:
+            _emit(lines, seq(), _split_sentences(text))
+
     for kind, a, b in _blocks(sec):
         a = (a or "").strip()
+        if not a or _is_meta(a):
+            continue
         if kind != "quote":
-            last_cite = None
-        if not a:
-            continue
-        if _is_meta(a):
-            continue
+            flush_quote()
+
         if kind == "quote":
-            if b and b != last_cite:
-                lines.append(f"- **{b}**")
-                last_cite = b
-            lines.append(("  " if b else "") + f"- {a}")
+            cite = (b or "").strip()
+            if pending and pending[0] == cite:
+                pending[1].append(a)
+            else:
+                flush_quote()
+                pending = (cite, [a])
         elif kind == "qa":
-            lines.append(f"- **{a}**")
             parts = _explode(b)
-            if len(parts) > 1:
-                for lab, body in parts:
-                    lines.append(f"  - " + (f"**{lab}** · " if lab else "") + body)
-            elif b.strip():
-                lines.append(f"  - {b.strip()}")
+            kids = [(f"**{lab}** · " if lab else "") + body for lab, body in parts]
+            kids = [k for k in kids if k.strip()]
+            _emit(lines, a, kids)
         elif kind == "li_b":
-            rest = (b or "").strip()
-            if rest and not re.match(r"^[—\-－–:：]", rest):
-                rest = "：" + rest
-            lines.append(f"- **{a}**{rest}")
+            rest = re.sub(r"^[—－–\-:：\s]+", "", (b or "").strip())
+            _emit(lines, a, _split_sentences(rest) if rest else [])
         elif kind == "li":
-            lines.append(f"- {a}")
+            plain(a)
         else:
-            # 论述段：段首「小标题：」抽出来当父节点；【书中主张】这类标记拆成兄弟子节点，
-            # 这样「更高维度 / 当年与今天 / 精读判断」也是层级列表，不再是整屏密排文字
             parts = _explode(a)
             if len(parts) > 1:
                 for lab, body in parts:
                     if lab:
-                        lines.append(f"- **{lab}**")
-                        lines.append(f"  - {body}")
+                        _emit(lines, lab, _split_sentences(body))
                     else:
-                        m2 = re.match(r"^([^：:。！？；，]{2,18})[：:]\s*(.+)$", body, re.S)
-                        if m2:
-                            lines.append(f"- **{m2.group(1).strip()}**")
-                            lines.append(f"  - {m2.group(2).strip()}")
-                        else:
-                            lines.append(f"- {body}")
+                        plain(body)
                 continue
-            m = re.match(r"^([^：:。！？；，]{2,18})[：:]\s*(.+)$", a, re.S)
-            if m:
-                lines.append(f"- **{m.group(1).strip()}**")
-                lines.append(f"  - {m.group(2).strip()}")
-            else:
-                if lines and lines[-1] != "":
-                    lines.append("")
-                lines.append(a)
-                lines.append("")
-    while lines and lines[-1] == "":
-        lines.pop()
-    return re.sub(r"\n{3,}", "\n\n", "\n".join(lines))
+            plain(a)
+    flush_quote()
+    return "\n".join(lines).strip()
 
 
 
@@ -377,6 +437,23 @@ def clip(text: str, limit: int = MAX_SECTION) -> str:
     if pos > limit * 0.6:
         cut = cut[: pos + 1]
     return cut.rstrip() + "\n\n…（原文更长，完整内容见站点）"
+
+
+def clip_list(text: str, limit: int = MAX_SECTION) -> str:
+    """正文模块专用裁剪：截断必须落在完整的子节点行上，避免父节点悬空。
+
+    提示行用 `> ` 引用格式，不产生裸段落 —— 所有模块保持「父子两层」统一样式，
+    超长模块也一样。只给 02–09 节用；一句话主旨是纯文本，仍走 clip()。
+    """
+    text = re.sub(r"\n{3,}", "\n\n", (text or "").strip())
+    if len(text) <= limit:
+        return text
+    lines = text[:limit].split("\n")
+    while lines and not lines[-1].startswith("  - "):
+        lines.pop()
+    if not lines:  # 极端情况：limit 内一个完整子节点都没有
+        return text[:limit].rstrip() + "\n\n> …（原文更长，完整内容见站点）"
+    return "\n".join(lines).rstrip() + "\n\n> …（原文更长，完整内容见站点）"
 
 
 _META_HEAD = re.compile(r"^(本页|下方|以下|按全书|按章节|按主干|跨章|逐章|取自|（来自|\(来自|全书篇目|共\s*\d+\s*章|本书共)")
@@ -567,7 +644,7 @@ def render(card: dict, mods: dict[str, str], tree: list[dict], cat: list[str],
         txt = re.sub(r"^%s\s*" % re.escape(label), "", txt).strip()
         if not txt:
             continue
-        body += [f"## {idx:02d} {label}", "", clip(txt), ""]
+        body += [f"## {idx:02d} {label}", "", clip_list(txt), ""]
         idx += 1
 
     if tree:
