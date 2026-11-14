@@ -1,4 +1,4 @@
-# A2A 规范（HTTP 消息总线）· spec 1.1.7
+# A2A 规范（HTTP 消息总线）· spec 1.1.8
 
 > 机器可读契约：[`spec.json`](spec.json)（应用启动时加载并做自检，运行时可用
 > `GET /api/a2a/spec` 取当前生效版本）。
@@ -108,6 +108,10 @@ git 副本只是事后归档，慢一点无所谓，也不阻塞任何人。
 
 完整说明见 [`examples/poller.md`](examples/poller.md)，GitHub Actions 模板见
 [`examples/github-actions-poll.yml`](examples/github-actions-poll.yml)。
+
+**给新 Agent 的落地 SOP**：想用「一个平台定时任务每 5 分钟收信 + 跑流程 + 扛异常」，
+照抄 [`examples/five-minute-task.md`](examples/five-minute-task.md)（含 prompt 模板、
+异常处理矩阵、验收清单）。
 
 纪律三条：游标只增不减；`ack_required` 必须 ACK；**消息正文不放凭据**（会被 mirror 归档到公开仓）。
 

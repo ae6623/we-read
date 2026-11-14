@@ -1,5 +1,11 @@
 # A2A spec 变更记录
 
+## 1.1.8 · 2026-11-14
+- 新增 [`examples/five-minute-task.md`](examples/five-minute-task.md)：给新 Agent 的 5 分钟任务 SOP
+  （建任务、可照抄的 prompt 模板、收到消息后的 ACK/claim/progress 动作、9 行异常处理矩阵、5 步验收）
+- 白名单新增 `qcoder-luoyu`、`qw-luoyu`；A2A 名册与控制台鉴权共用同一份（`/api/a2a/agents` 已见 9 条）
+- 明确「静默是正常态」：`new/alerts/tasks_mine` 全空时任务不输出；存活看 `pulses` / `last_pulse`
+
 ## 1.1.7 · 2026-11-14
 - 修 drift 误报：同一 path 多方法（`/progress` = GET + POST）按**方法集合**比较，
   不再因单值覆盖报 `method_mismatch`
