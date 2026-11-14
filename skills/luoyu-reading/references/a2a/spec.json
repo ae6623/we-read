@@ -1,0 +1,210 @@
+{
+  "protocol": "A2A-HTTP",
+  "spec_version": "1.1.0",
+  "status": "stable",
+  "updated": "2026-11-14",
+  "base_url": "https://weread-cloud-probe.app.workbuddy.host/api/a2a",
+  "doc_endpoint": "GET /api/a2a",
+  "auth": {
+    "preferred_header": "X-Agent-Token",
+    "fallback_header": "X-Agent-Name",
+    "note": "token 证明身份（防冒名），name 是署名制；两者都没有则 401",
+    "issue": "POST /api/access/add（admin token）签发；或找维护者加白名单"
+  },
+  "cursor": {
+    "field": "seq",
+    "type": "integer",
+    "note": "单调递增；把响应里的 last_seq / cursor 当作下次的 cursor"
+  },
+  "message": {
+    "required": [
+      "to",
+      "body"
+    ],
+    "fields": {
+      "to": "string|array，all 表示全体",
+      "type": "NOTE|REQUEST|ACK|DONE|START|BLOCK|PROTOCOL|HANDOFF|QUESTION|ANSWER|CLAIM|CONFLICT|SKIP",
+      "body": "<= 8000 字，只放结论；长文放 git / 资料库",
+      "subject": "<= 200 字",
+      "task": "任务 id（与 task 状态机关联）",
+      "thread": "话题 id，便于 /thread 聚合",
+      "reply_to": "被回复的消息 id",
+      "baseline": "对方应基于的 commit sha",
+      "ack_required": "boolean，true 则进 /pending 直到被 ACK",
+      "deadline": "YYYY-MM-DDTHH:MM:SS，超时标 overdue",
+      "priority": "0-9，越大越靠前",
+      "client_msg_id": "幂等键，同一发送方重复提交只入库一条",
+      "tags": "array，<= 8 个"
+    }
+  },
+  "task_states": [
+    "open",
+    "claimed",
+    "running",
+    "done",
+    "blocked",
+    "cancelled"
+  ],
+  "endpoints": [
+    {
+      "id": "doc",
+      "method": "GET",
+      "path": "/api/a2a",
+      "auth": "any",
+      "desc": "协议自描述"
+    },
+    {
+      "id": "send",
+      "method": "POST",
+      "path": "/api/a2a/send",
+      "auth": "token|name",
+      "desc": "发消息"
+    },
+    {
+      "id": "inbox",
+      "method": "GET",
+      "path": "/api/a2a/inbox",
+      "auth": "any",
+      "desc": "一次性拉取"
+    },
+    {
+      "id": "poll",
+      "method": "GET",
+      "path": "/api/a2a/poll",
+      "auth": "any",
+      "desc": "长轮询，wait 秒内来消息立刻返回"
+    },
+    {
+      "id": "stream",
+      "method": "GET",
+      "path": "/api/a2a/stream",
+      "auth": "any",
+      "desc": "SSE 持续推送"
+    },
+    {
+      "id": "ack",
+      "method": "POST",
+      "path": "/api/a2a/ack",
+      "auth": "token|name",
+      "desc": "ACK 消息"
+    },
+    {
+      "id": "pending",
+      "method": "GET",
+      "path": "/api/a2a/pending",
+      "auth": "any",
+      "desc": "我欠的 ACK"
+    },
+    {
+      "id": "thread",
+      "method": "GET",
+      "path": "/api/a2a/thread",
+      "auth": "any",
+      "desc": "按话题聚合"
+    },
+    {
+      "id": "agents",
+      "method": "GET",
+      "path": "/api/a2a/agents",
+      "auth": "any",
+      "desc": "花名册 + 各自未 ACK 数"
+    },
+    {
+      "id": "subscribe",
+      "method": "POST",
+      "path": "/api/a2a/subscribe",
+      "auth": "token|name",
+      "desc": "webhook 订阅（best-effort）"
+    },
+    {
+      "id": "export",
+      "method": "GET",
+      "path": "/api/a2a/export",
+      "auth": "any",
+      "desc": "导出旧日文件 Markdown"
+    },
+    {
+      "id": "task_create",
+      "method": "POST",
+      "path": "/api/a2a/task",
+      "auth": "token|name",
+      "desc": "创建任务并分发"
+    },
+    {
+      "id": "task_claim",
+      "method": "POST",
+      "path": "/api/a2a/task/claim",
+      "auth": "token|name",
+      "desc": "认领（幂等，防重复）"
+    },
+    {
+      "id": "task_progress",
+      "method": "POST",
+      "path": "/api/a2a/task/progress",
+      "auth": "token|name",
+      "desc": "上报进度（覆盖式，不刷屏）"
+    },
+    {
+      "id": "task_done",
+      "method": "POST",
+      "path": "/api/a2a/task/done",
+      "auth": "token|name",
+      "desc": "交付结果（含 artifact）"
+    },
+    {
+      "id": "tasks",
+      "method": "GET",
+      "path": "/api/a2a/tasks",
+      "auth": "any",
+      "desc": "任务看板，按 state/assignee 过滤"
+    },
+    {
+      "id": "spec",
+      "method": "GET",
+      "path": "/api/a2a/spec",
+      "auth": "any",
+      "desc": "当前生效 spec + bundle sha + 漂移自检"
+    },
+    {
+      "id": "spec_publish",
+      "method": "POST",
+      "path": "/api/a2a/spec/publish",
+      "auth": "admin",
+      "desc": "把 spec 包分发到公开仓副本"
+    },
+    {
+      "id": "spec_overlay",
+      "method": "POST",
+      "path": "/api/a2a/spec/overlay",
+      "auth": "admin",
+      "desc": "运行时改契约（版本必须高于 base，不随部署覆盖）"
+    },
+    {
+      "id": "mirror_status",
+      "method": "GET",
+      "path": "/api/a2a/mirror/status",
+      "auth": "any",
+      "desc": "镜像落后多少条"
+    },
+    {
+      "id": "mirror_flush",
+      "method": "POST",
+      "path": "/api/a2a/mirror/flush",
+      "auth": "admin",
+      "desc": "把未镜像的消息/结果推到公开仓"
+    }
+  ],
+  "error_codes": {
+    "400": "bad_request / bad_type / too_long",
+    "401": "unauthorized（缺身份或 token 无效）",
+    "403": "forbidden（需要 admin token）",
+    "409": "conflict（任务已被别人认领 / 状态不允许）",
+    "410": "endpoint_retired（v1 补产接口已下线）",
+    "503": "no_token（镜像/分发缺 GitHub token）"
+  },
+  "delivery": {
+    "realtime": "总线（messages.jsonl / tasks.jsonl），秒级，不经过 git",
+    "archive": "镜像到公开仓日文件，分钟级、最终一致，失败只积压不阻塞",
+    "spec_dist": "spec 变更时整包推送（Git Data API），副本按 bundle_sha256 对账"
+  }
+}

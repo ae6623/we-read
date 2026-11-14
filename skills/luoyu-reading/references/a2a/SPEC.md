@@ -1,0 +1,99 @@
+# A2A 规范（HTTP 消息总线）· spec 1.1.0
+
+> 机器可读契约：[`spec.json`](spec.json)（应用启动时加载并做自检，运行时可用
+> `GET /api/a2a/spec` 取当前生效版本）。
+> 本文件是**唯一规范来源**，公开仓 `we-read` 下的副本由应用分发，**不要在那里手改**。
+
+---
+
+## 1. 定位
+
+A2A = agent 之间的消息与任务总线。它是**运行时服务**，不是 git 仓库：
+
+- 消息存在应用运行时目录（`weread-data/a2a/*.jsonl`），不进 git、不随部署覆盖。
+- 服务与应用同进程部署（`a2a_hub.py` 以 blueprint 挂在 `web_app`），平台只有一个端口。
+- git 只承担**归档**：需要给只能读公开仓的 agent 看的内容，由应用镜像过去，最终一致。
+
+这样分工的原因：git 版 A2A 把"发一条消息"变成了"提交一次代码"，于是必然出现
+漏读、延迟、rebase 撞车、历史被覆盖。**消息走 HTTP，代码才走 git。**
+
+## 2. 三件东西，别混
+
+| 名字 | 是什么 | 存在哪 | 更新频率 |
+|---|---|---|---|
+| **spec** | 协议契约（本目录） | 仓 `we-read-auto/spec/a2a/` | 改协议时 |
+| **bundle** | spec 的整包快照（spec + 文档 + 客户端） | 公开仓副本目录 | 每次 `spec/publish` |
+| **mirror** | 消息/任务结果的归档副本 | 公开仓日文件 | 定时或手动 flush |
+
+三者的版本对账全靠一个值：`bundle_sha256`（bundle 内所有文件的排序拼接哈希）。
+`GET /api/a2a/spec` 返回它，副本目录 `INDEX.md` 顶部也写它，对不上就是过期。
+
+## 3. 最小可用流程
+
+```bash
+export A2A_AGENT=<你的身份>
+export A2A_TOKEN=<你的 token>
+CLI="python a2a_cli.py"
+
+$CLI poll --wait 25                       # 会话开始：有消息立刻拿（长轮询）
+$CLI send --to agent2 --type REQUEST --body "核对 14 本 combined" --ack
+$CLI ack m000001 --note "已核对"
+$CLI watch --wait 55                      # 常驻：来一条打一条，退出即通知
+```
+
+没有 token 也能读（带 `X-Agent-Name` 署名），但**发消息建议用 token**，否则谁都能冒名。
+
+## 4. 任务状态机（1.1.0 新增）
+
+```
+open ──claim──> claimed ──progress──> running ──done──> done
+  │                │                     │
+  └────────────────┴────────────blocked──┘
+                   └──cancel──> cancelled
+```
+
+| 动作 | 端点 | 语义 |
+|---|---|---|
+| 分发 | `POST /api/a2a/task` | 建任务，`assignees` 多人；同时广播一条 `REQUEST` 消息 |
+| 认领 | `POST /api/a2a/task/claim` | **幂等且互斥**：已被别人认领返回 409，避免两人干一件事 |
+| 进度 | `POST /api/a2a/task/progress` | 覆盖式写 `progress` 字段，**不产生消息**，避免刷屏 |
+| 交付 | `POST /api/a2a/task/done` | 写 `result` + `artifacts`（commit / url / 文件），状态转 `done` |
+| 看板 | `GET /api/a2a/tasks?state=open&assignee=X` | 一屏看全，不用翻 git |
+
+**这就是"结果怎么及时更新"的答案**：结果挂在 task 上、写进总线，秒级可见。
+git 副本只是事后归档，慢一点无所谓，也不阻塞任何人。
+
+## 5. 分发与镜像（应用侧调不了 git 怎么办）
+
+应用进程没有 git 二进制（云端沙箱不通 `github.com:443`），但**通 `api.github.com`**。
+所以分发与回写全部走 GitHub REST（项目内 `gh_api.py` 已封装，含 blob/tree/commit/ref 乐观锁）：
+
+1. **spec 分发** `POST /api/a2a/spec/publish`
+   - 读 `spec/a2a/**` + 根目录 `a2a_cli.py` → 算 `bundle_sha256` → 一次
+     `publish_paths()` 提交到公开仓约定目录 → 写 `mirror.json`（bundle sha / 远端 commit / 时间）。
+   - 幂等：bundle sha 未变则直接返回 `unchanged`，不产生空提交。
+2. **结果镜像** `POST /api/a2a/mirror/flush`（或定时）
+   - 取 `seq > published_seq` 的消息与任务结果 → 聚合成一个 markdown 块 →
+     **一次**提交追加到公开仓当日日文件（不是每条一次 commit）。
+   - 成功后推进 `published_seq`；失败只积压，`/api/a2a/mirror/status` 显示 `behind` 条数。
+3. **失败兜底**：没有 token → `503 no_token`（提示在 `config.json` 配 `shared.token`）；
+   网络失败 → 退避重试 3 次，仍失败保留 outbox，人工 `/mirror/flush` 可补。
+
+## 6. spec 落地与漂移自检
+
+应用启动时：
+
+1. 读 `spec/a2a/spec.json`（base），校验必填字段；
+2. 读运行时 overlay `weread-data/a2a/spec.override.json`（API 可写，不随部署丢），
+   `spec_version` 必须大于 base 才生效；
+3. 把 `endpoints` 与实际 Flask 路由逐条比对，缺失/多余都记进 `drift` 列表，
+   在 `GET /api/a2a/spec` 里暴露。
+
+**契约和实现不一致会被看见**，而不是等下游调通了才发现。
+
+## 7. 版本与兼容
+
+- `spec_version`：`主.次.修订`；**新增端点/字段 = 次版本**，改语义/删字段 = 主版本。
+- 客户端必须容忍未知字段（向前兼容），服务端不得依赖 `client_msg_id` 之外的新增字段。
+- 破坏性变更：overlay 先行（`spec.override.json`）→ 观察一个部署周期 → 落回代码 → 分发。
+- 全部变更记 [`CHANGELOG.md`](CHANGELOG.md)，并在 `PROTOCOL` 类型消息里广播（需 ACK）。
