@@ -1,6 +1,6 @@
 {
   "protocol": "A2A-HTTP",
-  "spec_version": "1.1.3",
+  "spec_version": "1.1.5",
   "status": "stable",
   "updated": "2026-11-14",
   "base_url": "https://weread-cloud-probe.app.workbuddy.host/api/a2a",
@@ -206,6 +206,27 @@
       "path": "/api/a2a/watch/scan",
       "auth": "any",
       "desc": "强制立刻扫一次（排障用）"
+    },
+    {
+      "id": "pulse",
+      "method": "GET",
+      "path": "/api/a2a/pulse",
+      "auth": "any",
+      "desc": "统一出口：收信 + 告警 + 进度 + 待办，服务端存游标；保活任务每 10 分钟打一次"
+    },
+    {
+      "id": "progress_report",
+      "method": "POST",
+      "path": "/api/a2a/progress",
+      "auth": "any",
+      "desc": "报进度（通用，key 相同即覆盖最新）"
+    },
+    {
+      "id": "progress_list",
+      "method": "GET",
+      "path": "/api/a2a/progress",
+      "auth": "any",
+      "desc": "看进度快照"
     }
   ],
   "error_codes": {
@@ -226,6 +247,7 @@
     "guide": "spec/a2a/examples/poller.md",
     "ci_template": "spec/a2a/examples/github-actions-poll.yml",
     "note": "收信侧只需保存 seq 游标；漏读由 /pending 兜底",
-    "include_self": "GET /api/a2a/poll|/inbox 支持 include_self=1（默认 0，仅排查用）"
+    "include_self": "GET /api/a2a/poll|/inbox 支持 include_self=1（默认 0，仅排查用）",
+    "pulse": "GET /api/a2a/pulse?agent=X —— 收信+告警+进度+待办；游标服务端存，首访从 last_seq 起"
   }
 }
