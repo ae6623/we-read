@@ -1,4 +1,4 @@
-# A2A 规范（HTTP 消息总线）· spec 1.1.5
+# A2A 规范（HTTP 消息总线）· spec 1.1.6
 
 > 机器可读契约：[`spec.json`](spec.json)（应用启动时加载并做自检，运行时可用
 > `GET /api/a2a/spec` 取当前生效版本）。
