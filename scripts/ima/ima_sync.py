@@ -19,7 +19,9 @@
   2. 上传永远用 SAVE，且先用 --skip-existing 跳过文件夹里已有同名文件 ——
      REPLACE 会让服务端把旧条目清空、新条目另立，列表里留下
      「当前内容已删除」的空壳（2026-11-14 踩过，512 条里 328 条中招）；
-  3. 索引（00-总索引 / 00-字段说明）每次都刷，保持导航最新。
+  3. 本地索引（00-总索引 / 00-字段说明）每次由导出器重写，保持最新；
+     IMA 侧因没有 update 接口，只在库内缺这份文件时才上传，避免堆 _时间戳 副本。
+     索引内容要更新，走 ima_index.py --upload（换名或先删旧文件）。
 """
 from __future__ import annotations
 
@@ -48,7 +50,12 @@ def pending_count() -> int:
 
 
 def push_index() -> None:
-    """把两份索引刷到知识库根目录（同名时 SAVE 会生成副本，所以先看有没有）。"""
+    """把两份索引刷到知识库根目录。
+
+    本地索引由 ima_export.py 每次同步时重写（全量逐本含网址，见 ima_index.py）。
+    但 IMA 没有 update 接口：同名再传走 SAVE 只会多一份 _时间戳 副本，
+    REPLACE 又会留下「当前内容已删除」空壳。所以库内已有同名时只跳过。
+    """
     import ima_client as ima
     import ima_upload as up
 
@@ -60,7 +67,7 @@ def push_index() -> None:
         if not p.exists():
             continue
         if name in have:
-            print(f"  索引 {name} 已在库内，跳过（内容更新请先在 App 删除旧版）")
+            print(f"  索引 {name} 已在库内，跳过（IMA 无更新接口；内容变更请跑 ima_index.py --upload）")
             continue
         r = up.upload_one(kb, "", p, replace=False)
         print(f"  索引 {name} -> {r['media_id'][-12:]}")

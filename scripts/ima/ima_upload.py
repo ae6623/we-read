@@ -70,10 +70,17 @@ def resolve_folder(kb_id: str, name: str = FOLDER_NAME) -> str:
 
 
 def folder_titles(kb_id: str, folder_id: str) -> set:
-    """拉文件夹里已存在的文件名，用于跳过重复上传（SAVE 会给副本加时间戳后缀）。"""
+    """拉文件夹（或根目录）里已存在的文件名，用于跳过重复上传。
+
+    folder_id="" 表示根层。以前写成 `while folder_id and ...`，空串会直接
+    跳过循环 → 根目录永远返回空集，ima_sync.push_index() 因此每次同步都
+    重复上传一份 00-总索引.md，库里堆出了 _时间戳 副本。已修（2026-11-14）。
+    """
     out, cur, pages = set(), "", 0
-    while folder_id and pages < 20:
-        a = {"knowledge_base_id": kb_id, "folder_id": folder_id, "limit": 50}
+    while pages < 20:
+        a = {"knowledge_base_id": kb_id, "limit": 50}
+        if folder_id:
+            a["folder_id"] = folder_id
         if cur:
             a["cursor"] = cur
         d = json.loads(ima.text_of(ima.call("get_knowledge_list", a)))
@@ -89,9 +96,11 @@ def folder_titles(kb_id: str, folder_id: str) -> set:
     return out
 
 
-def upload_one(kb_id: str, folder_id: str, path: Path, replace: bool) -> dict:
+def upload_one(kb_id: str, folder_id: str, path: Path, replace: bool,
+               file_name: str = "") -> dict:
+    """上传单个文件。file_name 可覆盖落库名（索引脚本用，让库内名与本地名解耦）。"""
     raw = path.read_bytes()
-    name = path.name
+    name = file_name or path.name
     c = ima.call("create_media", {
         "knowledge_base_id": kb_id, "file_name": name, "file_size": len(raw),
         "file_ext": "md", "content_type": MIME["md"], "apply_upload_mode": 1,

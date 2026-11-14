@@ -14,7 +14,7 @@
   ima/cards/<类目>·<书名>.md    每本一个文件（≤ ~10KB，去掉样式的纯结构化文本）
   ima/manifest.json             增量台账：slug / hash / cat / status / ima_media_id / synced_at
   ima/pending.json              本次需要上传的清单（脚本不直连 IMA，由 Agent 按此上传）
-  ima/00-总索引.md               全站书单总索引（按类目分组）
+  ima/00-总索引.md               全站书单总索引（全量逐本 · 含站点网址，逻辑见 ima_index.py）
   ima/00-字段说明.md             给 IMA 检索用的结构说明
 
 增量逻辑：
@@ -808,27 +808,11 @@ def main():
         e.pop("duplicate_of", None)
         cat_index.setdefault(c1, []).append((r["_title"], r["slug"], path.name))
 
-    # 索引与说明
-    order = ["文学", "历史", "社会文化", "哲学宗教", "艺术", "人物传记", "精品小说",
-             "政治军事", "经济理财", "计算机", "其他"]
-    # 索引刻意做小而精：列出类目与计数、每类 4 本代表，避免全量书名把检索结果挤满。
-    n_cards = sum(len(v) for v in cat_index.values())
-    lines = ["# we-read 书卡总索引", "",
-             f"> {n_cards} 本｜{len(cat_index)} 个类目｜更新 {datetime.now().strftime('%Y-%m-%d')}｜"
-             f"整站 {SITE}", "",
-             "每本书一张书卡，文件名 `<类目>·<书名>.md`。本页只做导航，不承担检索。", ""]
-    for c1 in order + sorted(set(cat_index) - set(order)):
-        rows = cat_index.get(c1)
-        if not rows:
-            continue
-        lines.append(f"## {c1}（{len(rows)} 本）")
-        lines.append("")
-        for title, slug, fn in sorted(rows)[:4]:
-            lines.append(f"- 《{title}》")
-        if len(rows) > 4:
-            lines.append(f"- …其余 {len(rows) - 4} 本见「书卡」文件夹（文件名以「{c1}·」开头）")
-        lines.append("")
-    (IMA_DIR / "00-总索引.md").write_text("\n".join(lines), "utf-8")
+    # 索引与说明：全量逐本 + 站点网址。单一真相源在 ima_index.py，
+    # 独立脚本（ima_index.py --check/--upload）与这里共用 build_index()，格式不会漂移。
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from ima_index import build_index
+    (IMA_DIR / "00-总索引.md").write_text(build_index(cards_mf), "utf-8")
 
     (IMA_DIR / "00-字段说明.md").write_text("""# we-read 书卡 · 字段与读法说明
 

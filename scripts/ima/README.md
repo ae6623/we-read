@@ -22,6 +22,7 @@ python3 scripts/ima/ima_check.py                # 验收：站点有书卡但 md
 |---|---|
 | `ima_client.py` | 最小 MCP 客户端，直连本机 IMA 连接器（initialize / tools/call，兼容 SSE 多行 JSON） |
 | `ima_export.py` | `combined-data.html` → 结构化 Markdown；写 `ima/cards/`、`manifest.json`、`pending.json`、两份索引 |
+| `ima_index.py` | 全量总索引（523 本逐本含站点网址）的生成 / 网址校验 / 上传；`ima_export.py` 也调它的 `build_index()` |
 | `ima_upload.py` | 按 pending 批量上传（create_media → COS PUT → add_knowledge），回写 media_id |
 | `ima_sync.py` | 导出 → 补传 → 刷索引，串成一条命令 |
 | `ima_verify.py` | 轮询知识库 `media_state`，解析是异步慢队列，别刚传完就判失败 |
@@ -59,4 +60,24 @@ python3 scripts/ima/ima_verify.py --folder 书卡笔记v4 --wait 10
 `<p align="center"><img ...></p>` 会让 IMA 的 md 解析器卡在 `media_state=1`，
 整条书卡内容永远为空。
 
-完整方案、字段口径、新书产出 SOP 见 `docs/IMA-INGEST.md`。
+## 全量总索引（含每本网址）
+
+`00-总索引.md` 从 2026-11-14 起改为**全量 523 本 + 逐本站点详情页网址**，
+不再只列每类 4 本代表。生成逻辑在 `ima_index.py`，导出器每次同步都会刷新本地这份。
+
+```bash
+python3 scripts/ima/ima_index.py                  # 只生成本地 ima/00-总索引.md
+python3 scripts/ima/ima_index.py --check-all     # 生成 + 全量校验 523 条 URL 可达
+python3 scripts/ima/ima_index.py --upload        # 生成 + 上传到 IMA 根目录
+```
+
+落库名默认 `00-总索引·全量网址.md`（与旧精简版不重名，SAVE 不会加时间戳后缀）。
+
+⚠️ **IMA 没有 delete / update 接口**，这份索引无法原地更新：
+- 新书上线后本地索引自动带上新书，但 IMA 里那份不会变；
+- 要让 IMA 同步，先在 App 删掉旧的 `00-总索引·全量网址.md` 再跑 `--upload`；
+- 根目录里 `00-总索引.md`(512 本精简)、`00-总索引_261114094220.md`(523 本精简)、
+  `00-字段说明_261114094222.md` 三份旧副本同样只能在 App 手工删除。全删干净后，
+  可用 `--upload --name 00-总索引.md` 让根目录只留一份权威总索引。
+
+完整方案、字段口径、新书产出 SOP 见 `docs/IMA-INGEST.md` §4.1 / §七.8。
