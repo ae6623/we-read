@@ -102,9 +102,10 @@ def main():
     others = [p for p in allf if p not in htmls]
     print(f"清单 {len(allf)}（html {len(htmls)} / 其它 {len(others)}）", flush=True)
 
-    # 非 html 文件的 blob 与 tip 无关，先算好
+    # 所有文件的「整文件 blob」先算好（与 tip 无关）。
+    # htmls 里服务端尚不存在的全新页面不能段合并，需要这份整文件 blob 兜底。
     sha_map = {}
-    for p in others:
+    for p in allf:
         f = ROOT / p
         if f.exists():
             sha_map[p] = g("hash-object", "-w", str(f))
@@ -221,8 +222,12 @@ def main():
         # 构造 index：一次批量写入
         g("read-tree", tip)
         entries = [f"100644 {sha_map[p]}\t{p}" for p in others if p in sha_map]
+        # 服务端已存在的页面：用段合并结果（只换 svg 段，保留服务端其它模块）
         entries += [f"100644 {cache[(tmap[p], p)]}\t{p}" for p in htmls
                     if tmap.get(p) and (tmap[p], p) in cache]
+        # 服务端尚不存在的全新页面：整文件加入（否则会被静默丢弃、不进 commit）
+        entries += [f"100644 {sha_map[p]}\t{p}" for p in htmls
+                    if not tmap.get(p) and p in sha_map]
         r = run(["update-index", "--index-info"], env=E,
                 inp="\n".join(entries) + "\n", to=60)
         if r.returncode:
