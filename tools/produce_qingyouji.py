@@ -8,6 +8,7 @@
   reading-notes/books/<slug>/combined-data.html  10 模块领读（fill_combined_modules.assemble）
   reading-notes/books/<slug>/combined.html       reader 页（gen_reader_page）
   _data/books/<slug>.json                        书架/系列登记
+  assets/covers/<slug>.jpg                       官方封面（manifest 的 cover；缺省则沿用已有文件）
   assets/data/hero.json                          ids 登记（slug→bookId）
 
 前置：
@@ -31,9 +32,11 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "tools"))
 import fetch_outline_api as fo          # noqa: E402
 import fill_combined_modules as F        # noqa: E402
+import check_covers as C                 # noqa: E402  封面下载/校验（与提交前守卫同实现）
 
 BOOKS = ROOT / "reading-notes" / "books"
 DATA_BOOKS = ROOT / "_data" / "books"
+COVERS = ROOT / "assets" / "covers"
 HERO = ROOT / "assets" / "data" / "hero.json"
 CACHE = Path("/tmp/outline_cache")
 CST = timezone(timedelta(hours=8))
@@ -111,10 +114,18 @@ def load_llm(slug: str, llm_path: str | None):
 
 
 def produce(slug: str, book_id: str, title: str, llm_path: str | None = None,
-            no_hero: bool = False) -> dict:
+            no_hero: bool = False, cover_url: str | None = None) -> dict:
     chapters = load_chapters(book_id)
     if not chapters:
         return {"slug": slug, "ok": False, "why": "无可用官方AI大纲缓存"}
+    # 封面：从书单的官方 cover URL 落盘到 assets/covers/<slug>.jpg（s_→t9_ 高清）。
+    # 缺封面不会让站点报错，但书卡会静默退回渐变占位 —— 必须当作生产的一环，
+    # 且由下方 cover_ok 硬断言卡住，禁止「有笔记没封面」进 main。
+    cover_note = "no-cover-url"
+    if cover_url and not C.cover_ok(COVERS / f"{slug}.jpg"):
+        cover_note = C.fetch_cover(slug, cover_url, COVERS)
+    elif C.cover_ok(COVERS / f"{slug}.jpg"):
+        cover_note = "exists"
     n_ch = write_outline(slug, title, book_id, chapters)
     write_book_meta(slug, title, book_id)
     if not no_hero:
@@ -143,11 +154,14 @@ def produce(slug: str, book_id: str, title: str, llm_path: str | None = None,
     if reader_exists:
         rp = (BOOKS / slug / "combined.html").read_text(encoding="utf-8", errors="ignore")
         reader_js_ok = f'src="{F.reader_js_url()}"' in rp
-    ok = rc == 0 and len(set(keys)) >= 9 and reader_exists and reader_js_ok
+    # 封面硬闸门：assets/covers/<slug>.jpg 必须是有效 JPEG，否则 ok=False
+    cover_ok = C.cover_ok(COVERS / f"{slug}.jpg")
+    ok = rc == 0 and len(set(keys)) >= 9 and reader_exists and reader_js_ok and cover_ok
     return {"slug": slug, "ok": ok, "chapters": n_ch,
             "data_keys": sorted(set(keys)), "n_keys": len(set(keys)),
             "reader": reader_exists, "reader_js_ok": reader_js_ok,
             "reader_js_url": F.reader_js_url() if reader_exists else "",
+            "cover_ok": cover_ok, "cover": cover_note,
             "llm": "精写" if load_llm(slug, llm_path) else "兜底"}
 
 
@@ -157,6 +171,7 @@ def main() -> int:
     ap.add_argument("--book-id")
     ap.add_argument("--title")
     ap.add_argument("--llm")
+    ap.add_argument("--cover", help="微信读书官方封面 URL（自动落盘 assets/covers/<slug>.jpg）")
     ap.add_argument("--manifest")
     ap.add_argument("--batch", help="只跑 manifest 里该批次号")
     ap.add_argument("--no-hero", action="store_true", help="跳过 hero 登记（并行派工时用，避免写冲突）")
@@ -175,14 +190,16 @@ def main() -> int:
             rows = [r for r in rows if str(r.get("batch")) == a.batch]
         ok = 0
         for r in rows:
-            res = produce(r["slug"], str(r["bookId"]), r["title"], no_hero=True)
+            res = produce(r["slug"], str(r["bookId"]), r["title"], no_hero=True,
+                          cover_url=r.get("cover"))
             ok += 1 if res["ok"] else 0
             print(("[OK] " if res["ok"] else "[FAIL] ") + json.dumps(res, ensure_ascii=False), flush=True)
         print(f"\n批次 {a.batch or 'ALL'}：成功 {ok}/{len(rows)}")
         return 0
 
     assert a.slug and a.book_id and a.title, "需 --slug --book-id --title"
-    res = produce(a.slug, a.book_id, a.title, a.llm, no_hero=a.no_hero)
+    res = produce(a.slug, a.book_id, a.title, a.llm, no_hero=a.no_hero,
+                  cover_url=a.cover)
     print(json.dumps(res, ensure_ascii=False, indent=1))
     return 0 if res["ok"] else 1
 
