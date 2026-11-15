@@ -1,5 +1,12 @@
 # we-read：阅读笔记归档
 
+> **🔴 开工第 0 步：先读 [`流程.md`](流程.md)**（2026-11-15 用户定调，最高优先级）。
+> 四步不得跳步：① 先更新最新 git 代码 → ② 写需求 MD 并更新解决方案 → ③ openspec 拆解 → ④ 最后合并提交。
+> 需求与产出文档按 `we-read-auto/docs/requirements/<日期>/<需求短名>/` 归档；commit message 带 `[需求归档]` 前缀。
+> 引擎仓真相源：[`ae6623/we-read-auto/流程.md`](https://github.com/ae6623/we-read-auto/blob/main/流程.md)；
+> 改流程只改引擎仓那份，再同步本副本 + 广播 A2A。
+> 本仓的 A2A 事件板在 `skills/luoyu-reading/references/agent-communication/`，只有进 `main` 的提交才算事件。
+
 一个无需构建工具的静态阅读笔记站点，可直接通过 GitHub Pages 发布。主页提供轻量搜索，笔记与整书汇编使用分开的目录和模板。
 
 > **⚠ 开发这个读书项目的人 / agent，动手前先读 [`AGENTS.md`](AGENTS.md)。这是准入条件，不是可选读物。**
