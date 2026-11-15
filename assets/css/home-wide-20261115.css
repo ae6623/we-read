@@ -1,0 +1,40 @@
+/* home-wide.css — 大屏（≥1200px）放宽容器与列数（2026-11-15）
+ *
+ * 为什么单独成一个文件：cdn.js-dev.cn 上的 CSS 是长缓存，同名覆盖边缘不一定
+ * 失效（与 AGENTS.md「升级 JS 只能换新文件名」同一个坑），大屏规则单独成文件、
+ * 用新 key 上线最稳。加载顺序：必须是 index.html CSS 链的最后一个，
+ * 靠「同特异性 + 后加载」覆盖 site.css / homepage-reading.css 里的 1080px。
+ *
+ * 用户口径（2026-11-15）：
+ *   一排一 → 二、一排二 → 四、一排三 → 六；容器同步放宽 1080 → 1240 / 1640。
+ *
+ * 覆盖清单（每个都是别处写死的 1080px / 3 列上限）：
+ *   .layout / .hero-inner / .site-footer   —— site.css 固定 1080px
+ *   details.reading-explanation.reading-bar —— 「上善若水」理念条，homepage-reading.css
+ *                                              里写死 max-width:1080px，选择器特异性
+ *                                              (0,2,1)，必须同特异性覆盖（首版漏了它）
+ *   .archive-grid / .overview-entries 列数  —— 首页真源在 home-feed.js 的 JS 上限，
+ *                                              CSS 这层是兜底
+ *
+ * ≤1199px 完全不受影响；移动端（≤680px）行为不变。
+ */
+
+@media (min-width:1200px){
+  .layout,.hero-inner,.site-footer{max-width:1240px}
+  details.reading-explanation.reading-bar{max-width:1240px}
+
+  html[data-cols="1"] .archive-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+  html[data-cols="2"] .archive-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;}
+  html[data-cols="3"] .archive-grid{grid-template-columns:repeat(6,minmax(0,1fr))!important;}
+  html[data-cols="1"] .overview-entries{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+  html[data-cols="2"] .overview-entries{grid-template-columns:repeat(4,minmax(0,1fr))!important;}
+  html[data-cols="3"] .overview-entries{grid-template-columns:repeat(6,minmax(0,1fr))!important;}
+  /* 归档 / 即将上线在 data-cols=3 时固定两列，大屏翻倍到四列 */
+  html[data-cols="3"] #reading-panel-archive .archive-grid,
+  html[data-cols="3"] #panel-soon .archive-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;}
+}
+
+@media (min-width:1680px){
+  .layout,.hero-inner,.site-footer{max-width:1640px}
+  details.reading-explanation.reading-bar{max-width:1640px}
+}

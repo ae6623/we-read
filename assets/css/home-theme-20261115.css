@@ -618,25 +618,3 @@ html[data-cols="3"] #panel-whole .card-cover-title{display:none;}
 @media(prefers-reduced-motion:reduce){
   .card-cover:not(.has-img)::before{animation:none;}
 }
-
-/* ── 大屏适配（2026-11-15）────────────────────────────────────────
-   用户反馈「宽屏之下太窄」：内容原固定 1080px 居中，超宽屏两侧大片空白。
-   约定：一排一→二、一排二→四、一排三→六，容器同步放宽。
-   本文件在 index.html 的 CSS 链里最后加载，同特异性可覆盖 site.css 的
-   .layout / .hero-inner / .site-footer{max-width:1080px}，故无需改 site.css。
-   仅 ≥1200px 生效；小屏与移动端（≤680px）行为完全不变。            */
-@media (min-width:1200px){
-  .layout,.hero-inner,.site-footer{max-width:1240px}
-  html[data-cols="1"] .archive-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
-  html[data-cols="2"] .archive-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;}
-  html[data-cols="3"] .archive-grid{grid-template-columns:repeat(6,minmax(0,1fr))!important;}
-  html[data-cols="1"] .overview-entries{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
-  html[data-cols="2"] .overview-entries{grid-template-columns:repeat(4,minmax(0,1fr))!important;}
-  html[data-cols="3"] .overview-entries{grid-template-columns:repeat(6,minmax(0,1fr))!important;}
-  /* 归档 / 即将上线在 data-cols=3 时固定两列，大屏翻倍到四列 */
-  html[data-cols="3"] #reading-panel-archive .archive-grid,
-  html[data-cols="3"] #panel-soon .archive-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;}
-}
-@media (min-width:1680px){
-  .layout,.hero-inner,.site-footer{max-width:1640px}
-}
