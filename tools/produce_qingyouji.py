@@ -134,15 +134,20 @@ def produce(slug: str, book_id: str, title: str, llm_path: str | None = None,
         ct = cp.read_text(encoding="utf-8", errors="ignore")
         ct = ct.replace(F.FALLBACK_TAG, "（基于本书 AI 大纲自主整理 · 未亲读原书）")
         cp.write_text(ct, encoding="utf-8", newline="\n")
-    # 校验
+    # 校验（含 reader JS 版本硬闸门：模板必须从单一真源生成，防旧模板混入 main）
     cd = (BOOKS / slug / "combined-data.html").read_text(encoding="utf-8", errors="ignore")
     import re
     keys = re.findall(r'data-key="([a-z_]+)"', cd)
     reader_exists = (BOOKS / slug / "combined.html").exists()
-    ok = rc == 0 and len(set(keys)) >= 9 and reader_exists
+    reader_js_ok = False
+    if reader_exists:
+        rp = (BOOKS / slug / "combined.html").read_text(encoding="utf-8", errors="ignore")
+        reader_js_ok = f'src="{F.reader_js_url()}"' in rp
+    ok = rc == 0 and len(set(keys)) >= 9 and reader_exists and reader_js_ok
     return {"slug": slug, "ok": ok, "chapters": n_ch,
             "data_keys": sorted(set(keys)), "n_keys": len(set(keys)),
-            "reader": reader_exists,
+            "reader": reader_exists, "reader_js_ok": reader_js_ok,
+            "reader_js_url": F.reader_js_url() if reader_exists else "",
             "llm": "精写" if load_llm(slug, llm_path) else "兜底"}
 
 

@@ -41,6 +41,27 @@ STANDARD_ALL = ORDER
 GROUP = 7  # 每多少章切一段主干（与 gen_mindmap.structural_batch 默认一致）
 FALLBACK_TAG = "（Agent 兜底生成 · 基于大纲、未亲读）"
 
+# reader JS 单一版本真相源。CDN 长缓存（max-age=31536000），升级必须换文件名换 key，
+# 禁止在模板里硬编码 reader.js 相对路径或 ?v= 版本号——那是 2026-11-15 补产 80 本
+# 把旧模板带进 main、导致云端发布守卫三次失败的根因。
+READER_JS_MANIFEST = ROOT / "assets" / "data" / "reader-js.json"
+
+
+def reader_js_url() -> str:
+    """返回 reader 页应引用的唯一 URL：cdn_prefix + current。
+
+    任何能生成 combined.html 的入口都必须调用本函数，不得自带模板常量。
+    """
+    if not READER_JS_MANIFEST.exists():
+        raise RuntimeError(
+            f"缺版本真相源 {READER_JS_MANIFEST}：本地工作副本落后，禁止用旧副本生产。"
+            "先同步最新 main 的 assets/data/reader-js.json 再开工")
+    d = json.loads(READER_JS_MANIFEST.read_text(encoding="utf-8"))
+    cur, prefix = d.get("current"), d.get("cdn_prefix")
+    if not cur or not prefix:
+        raise RuntimeError(f"reader-js.json 缺 current/cdn_prefix: {READER_JS_MANIFEST}")
+    return prefix.rstrip("/") + "/" + cur
+
 
 # ---------------------------------------------------------------- 解析
 def chapters_of(slug: str) -> list:
@@ -121,7 +142,7 @@ if(c.pm)d.style.setProperty('--pm',c.pm);}}catch(e){{}}}})();
 <script>window.goatcounter={{no_onload:true}};</script>
 <script data-goatcounter="https://ae6623.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <script src="../../../assets/js/home-track.js?v=20261102h"></script>
-<script src="../../../assets/js/reader.js?v=20261106b"></script>
+<script src="{reader_js}"></script>
 </body>
 </html>
 """
@@ -148,7 +169,8 @@ def gen_reader_page(slug: str) -> bool:
                     '</svg></a>') \
         if (BOOKS / slug / "outline.html").exists() else ""
     page.write_text(
-        READER_TPL.format(slug=slug, title=H.escape(meta["title"]), outline_link=outline_link),
+        READER_TPL.format(slug=slug, title=H.escape(meta["title"]),
+                          outline_link=outline_link, reader_js=reader_js_url()),
         encoding="utf-8")
     return True
 
