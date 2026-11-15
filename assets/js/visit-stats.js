@@ -1,6 +1,6 @@
 /*!
  * visit-stats.js — we-read 访问统计徽章（首页 + 书籍详情页通用）
- * v3 · 2026-11-05
+ * v4 · 2026-11-15
  *
  * ── 两个数字分别是哪来的 ────────────────────────────────────
  *  访问次数（次访问 / 次阅读）
@@ -23,6 +23,11 @@
  *    现在直接向 ae6623.goatcounter.com/count 打像素。
  * 3) 只在主详情页 combined.html 上报/+1，overview/outline/mindmap 等子页面
  *    只读不报，否则一次阅读会被记成好几次。
+ * 4) v4（2026-11-15）：Abacus 是境外第三方（Fly.io + Valkey），实测响应时间
+ *    1.5s ~ 25s 且间歇 500 / 超时；v3 的 4000ms 窗口几乎必然把它掐断，于是
+ *    「次访问」降级成 GoatCounter 访客数，数字凭空少一千多。现改为 20000ms +
+ *    localStorage 缓存上次成功值：失败时先显示缓存的真实值，不降到 UV。
+ *    只缓存真实读到的值，不本地累加、不假造增长。
  *
  * ── 引入方式（放 </body> 前，相对路径按文件深度调整）─────────
  *   <script src="https://cdn.js-dev.cn/assets/js/visit-stats.js?v=20261105a" defer></script>
@@ -51,24 +56,47 @@
       .catch(function () { return null; });
   }
 
+  /* ---------- localStorage 兜底（v4）----------
+     成功时缓存 Abacus 的真实值；失败时拿它顶上，避免「次访问」直接降级成
+     GoatCounter 访客数。缓存 key 带 namespace+key，site 与各本书互不串。 */
+  var LS = '__wr_abacus_';
+  function cacheKey(key) { return LS + NS + '/' + key; }
+  function cacheGet(key) {
+    try {
+      var v = parseInt(localStorage.getItem(cacheKey(key)), 10);
+      return isFinite(v) && v > 0 ? v : null;
+    } catch (e) { return null; }
+  }
+  function cacheSet(key, v) {
+    try { localStorage.setItem(cacheKey(key), String(v)); } catch (e) {}
+  }
+  /* 先拿缓存值把数字填上，别让用户等 20 秒看「–」；真实值到了再覆盖 */
+  function paintCached(id, key, uv) {
+    var c = cacheGet(key);
+    if (c != null) put(id, String(c + (uv || 0)));
+  }
+
   /* ---------- Abacus：访问次数，每次调用 +1 ---------- */
   function abacusHit(key) {
-    if (!window.fetch) return Promise.resolve(null);
+    var cached = cacheGet(key);
+    if (!window.fetch) return Promise.resolve(cached);
     var opt = { credentials: 'omit', cache: 'no-store' };
     var ctrl = null, timer = null;
     if (window.AbortController) {
       ctrl = new AbortController();
       opt.signal = ctrl.signal;
-      timer = setTimeout(function () { try { ctrl.abort(); } catch (e) {} }, 4000);
+      /* v3 是 4000ms；实测该服务常见 10~21s，放宽到 20000ms */
+      timer = setTimeout(function () { try { ctrl.abort(); } catch (e) {} }, 20000);
     }
     return fetch(ABACUS + '/hit/' + NS + '/' + encodeURIComponent(key), opt)
       .then(function (r) { return r.json(); })
       .then(function (d) {
         if (timer) clearTimeout(timer);
         var n = parseInt(d && d.value, 10);
-        return isFinite(n) ? n : null;
+        if (isFinite(n) && n > 0) { cacheSet(key, n); return n; }
+        return cached;
       })
-      .catch(function () { if (timer) clearTimeout(timer); return null; });
+      .catch(function () { if (timer) clearTimeout(timer); return cached; });
   }
 
   /* ---------- 上报事件：直接打像素，不依赖 count.js ---------- */
@@ -169,6 +197,7 @@
   function fillHomePv() {
     gcStat('/TOTAL').then(function (uv) {
       if (uv != null) put('gc_site_uv_num', String(uv));
+      paintCached('gc_site_pv_num', 'site', uv);
       abacusHit('site').then(function (n) {
         if (n != null) put('gc_site_pv_num', String(n + (uv || 0)));
         else if (uv != null) put('gc_site_pv_num', String(uv));
@@ -197,6 +226,7 @@
     gcStat('/TOTAL').then(function (n) {
       uvSite = n;
       put('wr_site_uv', n == null ? null : String(n));
+      paintCached('wr_site_pv', 'site', uvSite);
       abacusHit('site').then(function (v) {
         if (v != null) put('wr_site_pv', String(v + (uvSite || 0)));
         else if (uvSite != null) put('wr_site_pv', String(uvSite));   /* 降级：至少不空 */
@@ -207,6 +237,7 @@
       uvBook = n;
       put('wr_book_uv', n == null ? null : String(n));
       if (!isMainDetail()) return;   /* 子页面不 +1，避免一次阅读被算多次 */
+      paintCached('wr_book_pv', 'book-' + slug, uvBook);
       abacusHit('book-' + slug).then(function (v) {
         if (v != null) put('wr_book_pv', String(v + (uvBook || 0)));
         else if (uvBook != null) put('wr_book_pv', String(uvBook));
