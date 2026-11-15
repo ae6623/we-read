@@ -181,7 +181,7 @@
     spy(links);
     hookSvgModal();
     initMindTree();
-    injectKnowledgeMap();   // 结构导图模块最上方追加「章节知识导图」，原结构不动
+    loadStructV2();         // 结构导图 v2（独立模块）；CDN 漏传时 onerror 自动回退老章节脉络
     pnRender();
   }
 
@@ -1164,6 +1164,46 @@
     kmState.modalHost = holder;
     kmPaint(holder);
     kmFit(holder);
+  }
+
+  /* ── 结构导图 v2 加载器（2026-11-15）────────────────────────────
+     老 injectKnowledgeMap() / kmSvg() / initMindTree() 一行不动，留作回退。
+     v2 是独立文件，负责四级章节树 + 老样式扁平 SVG 退场；新样式
+     （svg.mmx-mind）由 initMindTree 照常接管，v2 不碰。
+
+     为什么默认不再插老图：老 3 级图会先出现、再被 v2 换掉，闪一下。
+     onerror 必须回退 —— CDN 是独立对象存储，同步时若漏传 v2 文件，
+     页面仍要有章节脉络，不能开天窗。
+     SPA 翻页会重跑 render()，用 structV2State 保证脚本只加载一次。      */
+  var STRUCT_V2_URL = 'https://cdn.js-dev.cn/assets/js/structure-map-v2.js';
+  var structV2State = 0;   // 0=未加载 1=加载中/已就绪 2=失败（永久回退老图）
+
+  function loadStructV2() {
+    if (window.__RD_STRUCT_V2_OFF__) { injectKnowledgeMap(); return; }
+    var v2 = window.__RD_STRUCT_V2__;
+    if (structV2State === 1) {
+      if (v2 && v2.render) v2.render();     // SPA 翻页：用新 DOM 重渲染
+      return;                              // 仍在加载中时，onload 会补一次
+    }
+    if (structV2State === 2) { injectKnowledgeMap(); return; }
+    structV2State = 1;
+    var s = document.createElement('script');
+    s.src = STRUCT_V2_URL;
+    s.async = false;
+    s.onload = function () {
+      var m = window.__RD_STRUCT_V2__;
+      if (m && m.render) {
+        try { m.render(); } catch (e) { injectKnowledgeMap(); }
+      } else {
+        structV2State = 2;
+        injectKnowledgeMap();
+      }
+    };
+    s.onerror = function () {
+      structV2State = 2;
+      injectKnowledgeMap();               // 回退：老 3 级章节脉络
+    };
+    (document.head || document.documentElement).appendChild(s);
   }
 
   function injectKnowledgeMap() {
