@@ -1,0 +1,642 @@
+/* home-theme.css — 首页阅读偏好：字号 / 段距 / 四主题
+ *
+ * 与书页共用同一套偏好（localStorage `rd-cfg`）：
+ *   在书页把字号调小、切到夜间，回到首页也是同样的字号和主题。
+ * 默认值刻意与书页区分：书页从「夜里读长文」出发默认夜间；首页是书架索引，
+ * 默认保持纸感米白 —— 用户没主动选过，就不要替他决定。
+ *
+ * 变量名与 site.css / reader.css 完全一致（--paper/--card/--ink/--muted/--line/
+ * --green/--green2/--sage/--gold），所以只要覆盖这一组，整站配色一起走。
+ */
+
+/* ── 1. 字号与节奏：整页跟着 --fs 缩放，间距跟着 --pm 走 ───────────── */
+:root{
+  --fs:.76;   /* 首页默认比书页（.94）再小：卡片是索引，不是正文 */
+  --pm:1;     /* 默认紧凑：卡片间隙、分组间距全部收一档 */
+}
+html{font-size:calc(16px*var(--fs));}
+body{font-size:1rem;line-height:1.72;}
+
+/* ── 2. 四套主题变量 ────────────────────────────────────────────── */
+:root,html[data-theme=cream]{
+  --paper:#f6f3ed;--card:#fffefa;--ink:#24312e;--muted:#69766f;
+  --green:#244b40;--green2:#315e50;--sage:#dce8df;--gold:#bf8247;--line:#e5e0d6;
+  --soft:#58665e;          /* 正文次级文字 */
+  --soft2:#65716b;         /* 卡片摘要 */
+  --input:#fffefa;         /* 输入框 / 胶囊底色 */
+  --wash:#f3f6f1;          /* 理念条 / 浅色分区底 */
+  --shadow:36,49,46;
+}
+html[data-theme=light]{
+  --paper:#ffffff;--card:#ffffff;--ink:#242b28;--muted:#6b756f;
+  --green:#1f4a3e;--green2:#2b5a4b;--sage:#e6efe7;--gold:#b4762f;--line:#e7e7e2;
+  --soft:#4f5b54;--soft2:#5c6760;--input:#ffffff;--wash:#f5f8f4;--shadow:36,49,46;
+}
+html[data-theme=green]{
+  --paper:#cfe8d2;--card:#eef7ef;--ink:#2f4237;--muted:#5d7c67;
+  --green:#1e4d37;--green2:#2c6b4e;--sage:#b7dfc0;--gold:#96662f;--line:#b9dcc0;
+  --soft:#3b5446;--soft2:#44604f;--input:#f6fbf7;--wash:#dcefdf;--shadow:30,60,44;
+}
+html[data-theme=dark]{
+  --paper:#15171a;--card:#1f2226;--ink:#c9ced4;--muted:#8a919a;
+  --green:#93c8a8;--green2:#a8d8bb;--sage:#274234;--gold:#bf8247;--line:#34383f;
+  --soft:#a9b1b8;--soft2:#9aa2aa;--input:#262a2f;--wash:#1c2224;--shadow:0,0,0;
+}
+
+/* ── 3. 字号收小：卡片是索引，不是正文 ──────────────────────────── */
+h2{font-size:1.5rem;line-height:1.4;}
+.archive-card h3{font-size:.98rem;line-height:1.52;margin:5px 0 0;}
+/* 书名里偶有 `tmp_xxx` 这类没有断点的长 token，会把整页顶出横向滚动条 */
+.archive-card h3,.card-title-link,.archive-card p{overflow-wrap:anywhere;}
+.archive-card p{font-size:.76rem;line-height:1.58;margin:0 0 8px;}
+.archive-card{min-height:0;padding:14px 16px 12px;}
+.card-top{font-size:.72rem;}
+.type-tag{font-size:.67rem;padding:2px 9px;}
+.updated-time{font-size:.64rem;}
+.card-link,.download-link{font-size:.78rem;}
+.card-dates .cd-label{font-size:.68rem;}
+.card-dates a{font-size:.72rem;padding:5px 10px;}
+.archive-count strong{font-size:1.75rem;}
+.reading-tabs button{font-size:.92rem;min-height:42px;padding:8px 18px;}
+.subtabs button{font-size:.86rem;padding:8px 15px;}
+.panel-title{font-size:1.18rem;}
+.panel-intro{font-size:.86rem;}
+.reading-group-title{font-size:1.08rem;}
+.reading-group-title span{font-size:.74rem;}
+.group-note{font-size:.78rem;}
+.overview-entries strong{font-size:1.02rem;}
+.overview-entries span{font-size:.78rem;}
+.principles h2{font-size:1.18rem;}
+.principles p:last-child{font-size:.84rem;}
+.series-preview h3{font-size:1.12rem;}
+.series-preview>p:not(.eyebrow):not(.series-author){font-size:.84rem;}
+.reading-explanation .hero-description,.reading-bar-body .hero-description{font-size:.84rem;}
+details.reading-bar>summary{font-size:.88rem;padding:11px 20px;}
+.reading-bar-label{font-size:.76rem;}
+.visit-badge-num{font-size:1.2rem;}
+
+/* 桌面：卡片宽（500px 上下），字号小到 8px 就发飘，这里回一档；
+   但不要再给 min-height —— 内容只有书名 + 一行元信息，撑高就是中间一大块白。 */
+@media(min-width:900px){
+  .archive-card{padding:15px 18px 12px;min-height:0;}
+  .archive-card h3{font-size:1.06rem;line-height:1.46;}
+  .card-author{font-size:.74rem;}
+  .card-foot{gap:8px;}
+  .card-foot .card-meta{font-size:.7rem;}
+  .archive-card .card-top time{font-size:.74rem;}
+}
+
+/* ── 4. 颜色重映射：把散落的硬编码浅色挂到变量上 ────────────────── */
+.toolbar input,.shelf-search-pop,.shelf-search-pop input,.shelf-filter-pop,
+.card-dates a,.reading-tabs button.tab-search-toggle,
+.reading-tabs button.tab-filter-toggle,details.reading-explanation summary,
+.subtabs button[aria-selected="true"],.archive-card{
+  background:var(--card);color:var(--ink);
+}
+.shelf-filter-pop,.shelf-search-pop{border-color:var(--line);}
+.sf-field,.shelf-filter-pop .sf-field{background:var(--input);border-color:var(--line);color:var(--ink);}
+.shelf-filter-pop select{background:var(--input);border-color:var(--line);color:var(--ink);}
+.shelf-filter-pop select:focus{border-color:var(--green2);box-shadow:0 0 0 3px var(--sage);}
+.shelf-filter-pop .sf-clear{background:var(--sage);border-color:var(--line);color:var(--muted);}
+.shelf-filter-pop .sf-clear:hover{border-color:var(--green2);color:var(--green);}
+.shelf-filter-pop select option{background:var(--card);color:var(--ink);}
+.card-dates a:hover{background:var(--sage);border-color:var(--green2);color:var(--green);}
+.archive-card p,.series-preview>p:not(.eyebrow):not(.series-author),
+.reading-explanation .hero-description,.reading-bar-body .hero-description,
+.principles p:last-child{color:var(--soft2);}
+.type-tag{background:var(--sage);color:var(--green);}
+.type-tag-gold{background:#f3e9da;color:#795633;}
+.type-tag-sage{background:#e7ece6;color:#59675c;}
+.card-link-strong{color:#8b6338;border-bottom-color:#d9b98c;}
+.card-link-green{color:var(--green2);border-bottom-color:var(--sage);}
+.principles{background:var(--sage);}
+/* 原规则是 details.reading-explanation.reading-bar，特异性更高，必须同名覆盖 */
+details.reading-explanation.reading-bar{background:var(--wash);
+  border-top-color:var(--line);border-bottom-color:var(--line);}
+.subtabs .count{background:var(--card);color:var(--green2);}
+.subtabs button[aria-selected="true"] .count{background:var(--sage);color:var(--green);}
+details.reading-bar>summary{color:var(--ink);}
+.reading-bar-label{color:var(--green2);}
+.reading-bar-body .hero-description+.hero-description{border-left-color:var(--line);}
+.visit-badge{background:linear-gradient(180deg,var(--card),var(--wash));border-color:var(--line);}
+.visit-badge-num{color:var(--gold);}
+.visit-badge-unit{color:var(--muted);}
+.visit-badge-div{background:var(--line);}
+.archive-card.featured{background:linear-gradient(145deg,var(--card),var(--wash));border-color:var(--line);}
+
+/* ── 5. 夜间专项：让深底上的层级还成立 ─────────────────────────── */
+html[data-theme=dark] .hero{background:linear-gradient(120deg,#101d19,#1a3129 62%,#2b3b34);}
+html[data-theme=dark] .archive-card{box-shadow:0 4px 16px rgba(0,0,0,.28);}
+html[data-theme=dark] .archive-card:hover{box-shadow:0 10px 24px rgba(0,0,0,.36);}
+html[data-theme=dark] .reading-tabs button[aria-selected="true"]{color:#15171a;}
+html[data-theme=dark] .subtabs{box-shadow:inset 0 0 0 1px rgba(255,255,255,.04);}
+html[data-theme=dark] .subtabs button[aria-selected="true"]{box-shadow:0 2px 8px rgba(0,0,0,.35);}
+html[data-theme=dark] .card-dates a:hover{background:var(--sage);color:var(--ink);}
+html[data-theme=dark] .type-tag-gold{background:#33291c;color:#d9a76b;}
+html[data-theme=dark] .type-tag-sage{background:#232a26;color:#a3ada6;}
+html[data-theme=dark] .card-link-strong{color:#d0a06a;border-bottom-color:#6d5233;}
+html[data-theme=dark] .toolbar input:focus,
+html[data-theme=dark] .shelf-search-pop input:focus{box-shadow:0 0 0 3px rgba(147,200,168,.18);border-color:var(--green2);}
+html[data-theme=dark] .visit-badge{box-shadow:0 2px 9px rgba(0,0,0,.35);}
+html[data-theme=dark] .site-footer{border-top-color:var(--line);}
+html[data-theme=dark] body{color-scheme:dark;}
+
+/* ── 6. 段距：卡片间隙与分组间距跟着 --pm 呼吸 ──────────────────── */
+.archive-grid{gap:calc(12px*var(--pm));}
+/* 网格项默认 min-width:auto，长书名会把 1fr 撑破容器（手机上卡片右侧被切）；
+   显式归零让卡片老实待在列宽里，文字该换行就换行。 */
+.archive-card,.overview-entries a,.series-preview{min-width:0;}
+.archive-card>*{min-width:0;}
+.reading-group{margin:calc(20px*var(--pm)) 0 calc(26px*var(--pm));}
+.overview-entries{gap:calc(12px*var(--pm));}
+.reading-panel+.reading-panel{margin-top:calc(32px*var(--pm));}
+
+/* ── 7. 工具栏：页签靠左、操作靠右（查找 ｜ 显示 用一条线分开） ───── */
+/* 页签按内容宽度排。之前 `flex:1` 拉满整行，三个短词被摊得很开，
+   看着像「居中」，右侧按钮也被顶到最边上，两边都不好点。 */
+.reading-tabs{justify-content:flex-start;gap:3px;margin:0 0 12px;padding:0 0 8px;}
+.reading-tabs button{flex:0 0 auto;min-width:0;min-height:32px;padding:6px 12px;
+  font-size:.84rem;border-radius:9px;}
+
+/* 右侧 4 个圆钮统一尺寸 */
+.reading-tabs button.tab-filter-toggle,
+.reading-tabs button.tab-search-toggle,
+.reading-tabs button.tab-tool-toggle{align-self:center;flex:0 0 auto;
+  width:34px;height:34px;min-height:34px;padding:0;border:1px solid var(--line);border-radius:999px;
+  background:var(--card);color:var(--muted);cursor:pointer;
+  display:inline-flex;align-items:center;justify-content:center;
+  transition:background .18s ease,border-color .18s ease,color .18s ease;}
+.reading-tabs button.tab-filter-toggle:hover,
+.reading-tabs button.tab-search-toggle:hover,
+.reading-tabs button.tab-tool-toggle:hover{background:var(--sage);border-color:var(--green2);color:var(--green);}
+.reading-tabs button.tab-filter-toggle[aria-expanded="true"],
+.reading-tabs button.tab-search-toggle[aria-expanded="true"],
+.reading-tabs button.tab-tool-toggle[aria-expanded="true"],
+.reading-tabs button.tab-tool-toggle[aria-pressed="true"]{background:var(--green);border-color:var(--green);color:#fff;}
+.reading-tabs button.tab-tool-toggle svg{display:block;width:17px;height:17px;
+  fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.reading-tabs button.rd-aa{font:700 12px/1 var(--sans);letter-spacing:.02em;}
+
+/* 分组：筛选 / 搜索 是「找」，列数 / Aa 是「显示」。
+   四个圆钮平铺时看着像同类事，其实一半是弹层、一半是持久开关，
+   拉一条竖线把语义断开，用户才知道哪两个会改版式。 */
+.reading-tabs button.tab-filter-toggle{margin-left:auto;position:relative;}
+.reading-tabs button.tab-search-toggle,
+.reading-tabs button.tab-tool-toggle{margin-left:6px;}
+.reading-tabs button.tab-filter-toggle::before{content:"";position:absolute;
+  left:-8px;top:50%;width:1px;height:16px;margin-top:-8px;background:var(--muted);opacity:.4;}
+
+/* 列数钮的高亮让位给图标：一排一/一排二 看图形就够，绿色实心会把工具栏衬得太花 */
+.reading-tabs button#rdCols[aria-pressed="true"],
+html[data-theme=dark] .reading-tabs button#rdCols[aria-pressed="true"]{
+  background:var(--card);border-color:var(--line);color:var(--muted);}
+.reading-tabs button#rdCols[aria-pressed="true"]:hover{background:var(--sage);color:var(--green);}
+
+/* 列数图标跟着 data-cols 走（默认一排三） */
+#rdCols svg{display:none}
+html[data-cols="1"] #rdCols .ic-cols-1{display:block}
+html[data-cols="2"] #rdCols .ic-cols-2{display:block}
+html[data-cols="3"] #rdCols .ic-cols-3{display:block}
+
+/* 面板：贴在 Aa 正下方，右对齐（与搜索/筛选浮层同一套位置） */
+#rdPanel{position:absolute;top:calc(100% + 8px);right:0;z-index:30;
+  background:var(--card);border:1px solid var(--line);border-radius:13px;padding:11px 13px;
+  box-shadow:0 12px 30px rgba(var(--shadow),.24);display:grid;gap:8px;min-width:224px;}
+#rdPanel[hidden]{display:none;}
+#rdPanel .rd-row{display:flex;gap:6px;align-items:center;justify-content:space-between;}
+#rdPanel .rd-row>span{font-size:.72rem;color:var(--muted);flex:none;}
+#rdPanel .rd-btns{display:flex;gap:5px;}
+#rdPanel button{font:600 12px/1.4 var(--sans);color:var(--ink);background:var(--input);
+  border:1px solid var(--line);border-radius:7px;padding:4px 9px;cursor:pointer;}
+#rdPanel button:hover{border-color:var(--green);color:var(--green);}
+#rdPanel button[aria-pressed="true"]{border-color:var(--green);color:var(--green);background:var(--sage);}
+
+/* ── 8. 卡片：藏起徽章与旧入口，底部换「作者 + 操作」 ─────────────── */
+/* 全书视角徽章、精读/AI 大纲入口暂时不用：DOM 保留，将来改一行 CSS 就能放回 */
+.archive-card .type-tag,.archive-card .card-actions{display:none;}
+/* 徽章藏掉后，只剩一个日期或干脆空的顶栏就别占位了 */
+@supports selector(:has(*)){
+  .archive-card .card-top:not(:has(time, .subtle)){display:none;}
+}
+.archive-card{position:relative;}
+.card-foot{display:flex;align-items:center;gap:7px;margin-top:auto;min-height:22px;padding-top:3px;}
+.card-author{font-size:.7rem;color:var(--muted);min-width:0;flex:1 1 auto;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.card-author:empty{display:none;}
+/* 章节数 / 笔记条数：原来是书名下面独占一行、靠左，白占一行高度；
+   挪到底部右侧当「卡片元信息」，和日期（右上）连成右侧信息列。 */
+.card-foot .card-meta{margin:0 0 0 auto;flex:0 0 auto;max-width:56%;
+  font:600 .66rem/1.25 var(--sans);letter-spacing:.01em;color:var(--muted);
+  font-variant-numeric:tabular-nums;white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis;}
+/* 没有 meta 的卡片（描述型段落没被搬走）兜底：⋯ 自己靠右 */
+@supports selector(:has(*)){
+  .card-foot:not(:has(.card-meta)) .card-more{margin-left:auto;}
+}.card-more{margin-left:6px;flex:none;display:inline-flex;align-items:center;justify-content:center;
+  width:24px;height:24px;padding:0;border:1px solid transparent;border-radius:8px;
+  background:transparent;color:var(--muted);cursor:pointer;transition:background .15s,color .15s;}
+.card-more svg{width:16px;height:16px;fill:currentColor;}
+.card-more:hover,.card-more[aria-expanded="true"]{background:var(--sage);color:var(--green);border-color:var(--line);}
+.card-menu{position:fixed;right:12px;bottom:48px;z-index:200;min-width:120px;
+  background:var(--card);border:1px solid var(--line);border-radius:11px;padding:5px;
+  box-shadow:0 10px 26px rgba(var(--shadow),.24);display:grid;gap:2px;}
+.card-menu[hidden]{display:none;}
+.card-menu button{display:flex;align-items:center;gap:8px;width:100%;padding:7px 9px;
+  border:0;border-radius:7px;background:transparent;color:var(--ink);
+  font:600 .78rem/1.4 var(--sans);text-align:left;cursor:pointer;}
+.card-menu button:hover{background:var(--sage);color:var(--green);}
+.card-menu button svg{width:14px;height:14px;flex:none;}
+.card-menu button[data-act="fav"][aria-checked="true"]{color:var(--gold);}
+.card-menu button[data-act="fav"][aria-checked="true"] svg{fill:var(--gold);stroke:var(--gold);}
+.archive-card.is-fav .card-more{color:var(--gold);}
+.archive-card.is-fav{box-shadow:inset 0 0 0 1px rgba(191,130,71,.45);}
+
+/* ── 10a. 卡片封面（真封面 assets/covers/<slug>.jpg，404 回落主题绿占位） ──
+   书架主卡（#panel-whole）三档版式：
+     一排二 → 海报化：封面铺满整卡，文字叠图上（底部压暗渐变保证可读）；
+     一排一 → 封面置左竖版（30/43），文字在右；
+     一排三 → 封面置顶竖版，文字在图下。
+   归档 / 即将上线维持「图上文下」的普通卡。 */
+.card-body{display:flex;flex-direction:column;flex:1 1 auto;min-width:0;}
+.card-cover{position:relative;width:100%;aspect-ratio:5/3;border-radius:8px;overflow:hidden;
+  background:linear-gradient(155deg,var(--green2,#315e50),var(--green,#244b40));
+  box-shadow:0 1px 4px rgba(0,0,0,.14);flex:none;}
+.card-cover-title{position:absolute;inset:0;z-index:1;display:flex;align-items:center;justify-content:center;
+  color:rgba(255,255,255,.94);font:600 1.35rem/1 var(--serif);letter-spacing:.16em;
+  text-shadow:0 1px 3px rgba(0,0,0,.28);pointer-events:none;}
+.card-cover.has-img .card-cover-title{display:none;}
+.card-cover-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;
+  opacity:0;transition:opacity .4s ease;}
+.card-cover.has-img .card-cover-img{opacity:1;}
+
+/* —— 一排二：海报化，封面铺满整卡、文字叠图上（第 19 批：高度还原 30/43 完整海报不裁切） —— */
+html[data-cols="2"] .archive-card{display:flex;flex-direction:column;}
+html[data-cols="2"] .card-cover{margin-bottom:10px;}
+html[data-cols="2"] #panel-whole .archive-card{position:relative;display:block;overflow:hidden;
+  aspect-ratio:30/43;padding:0;border:none;}
+html[data-cols="2"] #panel-whole .card-cover{position:absolute;inset:0;width:100%;height:100%;
+  aspect-ratio:auto;border-radius:0;box-shadow:none;margin:0;}
+html[data-cols="2"] #panel-whole .card-cover-title{font-size:2rem;}
+html[data-cols="2"] #panel-whole .card-body{position:absolute;left:0;right:0;bottom:0;z-index:2;
+  padding:36px 12px 10px;color:#fff;
+  background:linear-gradient(180deg,rgba(10,16,14,0),rgba(10,16,14,.15) 32%,rgba(10,16,14,.78));}
+html[data-cols="2"] #panel-whole .archive-card h3{color:#fff;display:-webkit-box;
+  -webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+html[data-cols="2"] #panel-whole .card-top time{color:rgba(255,255,255,.85);}
+html[data-cols="2"] #panel-whole .card-author{color:rgba(255,255,255,.82);}
+html[data-cols="2"] #panel-whole .card-foot .card-meta{color:rgba(255,255,255,.82);}
+html[data-cols="2"] #panel-whole .card-more{color:#fff;}
+
+/* —— 一排一：封面置左竖版，文字在右 —— */
+html[data-cols="1"] #panel-whole .archive-card{display:flex;flex-direction:row;align-items:stretch;
+  gap:12px;padding:12px;position:relative;}
+html[data-cols="1"] #panel-whole .card-cover{flex:0 0 96px;width:96px;aspect-ratio:30/43;
+  border-radius:8px;margin:0;}
+html[data-cols="1"] #panel-whole .card-cover-title{font-size:1.05rem;letter-spacing:.1em;}
+html[data-cols="1"] #panel-whole .card-body{flex:1 1 auto;min-width:0;justify-content:center;}
+
+/* —— 一排三：封面置顶竖版 —— */
+html[data-cols="3"] #panel-whole .archive-card{display:flex;flex-direction:column;padding:8px 8px 9px;}
+html[data-cols="3"] #panel-whole .card-cover{display:block;aspect-ratio:30/43;border-radius:8px;
+  margin:0 0 7px;}
+html[data-cols="3"] #panel-whole .card-cover-title{font-size:.9rem;letter-spacing:.1em;}
+
+/* 列数切换：force 覆盖 site.css 的媒体查询 */
+html[data-cols="1"] .archive-grid{grid-template-columns:minmax(0,1fr)!important;}
+html[data-cols="2"] .archive-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+html[data-cols="3"] .archive-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;}
+html[data-cols="1"] .overview-entries{grid-template-columns:minmax(0,1fr)!important;}
+html[data-cols="2"] .overview-entries{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+html[data-cols="3"] .overview-entries{grid-template-columns:repeat(3,minmax(0,1fr))!important;}
+/* 「即将上线」「归档」固定两列：前者只有标题 + 一句说明，三列跨列全是空白；
+   后者卡里嵌「阅读入口」折叠块，三列会把入口压成竖排字 */
+html[data-cols="3"] #reading-panel-archive .archive-grid,
+html[data-cols="3"] #panel-soon .archive-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+
+/* 「系列」面板跟随右上角列数按钮；没选过时由 JS 初始化成一排二。
+   这里只保留系列卡自身的间距，不再写死列数，否则按钮点了没反应 */
+#reading-panel-series .series-preview .card-top{margin:8px 0 12px;}
+
+/* ── 一排三：112px 窄卡 → 不显示封面/作者，但把间距、字号放宽防拥挤 ── */
+html[data-cols="3"] .archive-grid{gap:16px 12px!important;}
+html[data-cols="3"] .archive-card{padding:12px 12px 10px;}
+html[data-cols="3"] .archive-card h3{font-size:.92rem;line-height:1.5;margin:6px 0 0;}
+html[data-cols="3"] .archive-card .card-top{margin-bottom:2px;}
+html[data-cols="3"] .archive-card .card-top time{font-size:.68rem;letter-spacing:.01em;}
+/* 只在小屏隐藏：那条规则是为一排三 ≈112px 的窄卡写的，平板/PC 三列
+   卡宽 300px+，再藏封面就只剩一堆书名，整块像目录不像书卡 */
+@media(max-width:680px){
+  html[data-cols="3"] .card-cover{display:none;}
+  html[data-cols="3"] .card-author{display:none;}
+}
+html[data-cols="3"] .card-foot{flex-wrap:wrap;gap:3px 5px;padding-top:5px;}
+/* 章节数回到右下 */
+html[data-cols="3"] .card-foot .card-meta{order:1;margin-left:auto;max-width:100%;font-size:.64rem;}
+html[data-cols="3"] .card-more{order:2;width:22px;height:22px;margin-left:2px;}
+html[data-cols="3"] .card-more svg{width:14px;height:14px;}
+
+@media(max-width:680px){
+  /* 3 个页签 + 4 个圆钮，一行放得下；页签不再拉满 */
+  .reading-tabs{gap:2px;margin-bottom:10px;padding-bottom:7px;}
+  .reading-tabs button{font-size:.8rem;padding:5px 10px;min-height:30px;}
+  .reading-tabs button.tab-filter-toggle,
+  .reading-tabs button.tab-search-toggle,
+  .reading-tabs button.tab-tool-toggle{width:32px;height:32px;min-height:32px;}
+  .reading-tabs button.tab-search-toggle,
+  .reading-tabs button.tab-tool-toggle{margin-left:5px;}
+  .reading-tabs button.tab-tool-toggle svg{width:15px;height:15px;}
+  .reading-tabs button.rd-aa{font-size:11px;}
+  .reading-tabs button.tab-filter-toggle::before{left:-6px;height:14px;margin-top:-7px;}
+  #rdPanel{left:auto;right:0;min-width:0;width:min(268px,calc(100vw - 36px));}
+  .archive-card{min-height:0;padding:10px 12px 8px;}
+}
+@media(prefers-reduced-motion:reduce){
+  .archive-card,.series-preview{transition:none;}
+}
+
+/* 轻提示（收藏/分享反馈）：底部居中胶囊，1.8s 自动消失 */
+.rd-toast{position:fixed;left:50%;bottom:calc(26px + env(safe-area-inset-bottom));
+  transform:translate(-50%,10px);z-index:80;background:var(--ink);color:var(--paper);
+  padding:8px 16px;border-radius:999px;font:600 .78rem/1.4 var(--sans);
+  box-shadow:0 8px 22px rgba(var(--shadow),.28);opacity:0;pointer-events:none;
+  transition:opacity .2s ease,transform .2s ease;max-width:80vw;text-align:center;}
+.rd-toast.is-on{opacity:1;transform:translate(-50%,0);}
+@media(prefers-reduced-motion:reduce){.rd-toast{transition:none;}}
+
+/* ── 9. 卡片日期挪到右上角 ────────────────────────────────────── */
+/* 徽章藏掉后 card-top 里只剩日期，原来靠左，和书名抢视线；
+   挪到右上角当「角标」用，一眼扫时间、不看正文。 */
+.archive-card .card-top{justify-content:flex-end;min-height:0;margin:0 0 1px;gap:6px;}
+.archive-card .card-top time{font:600 .72rem/1.1 var(--sans);letter-spacing:.05em;
+  color:var(--muted);font-variant-numeric:tabular-nums;background:none;border:0;padding:0;}
+
+/* ── 10. 瀑布流 + 分页 ────────────────────────────────────────── */
+/* 卡片改为绝对定位后由 home-feed.js 摆放，这里只保证不参与文档流、
+   不被 site.css 的 min-height 撑高。 */
+.archive-grid>.archive-card{left:0;top:0;}
+/* 下面的列数版式规则（html[data-cols=N] .archive-card）比这两条选择器权重高，
+   会把分页藏起来的卡和搜索 hidden 的卡重新显示出来 —— 必须 !important 压住。 */
+.archive-card[data-pg="off"],.archive-card[hidden]{display:none!important;}
+
+.feed-foot{display:flex;justify-content:center;padding:calc(14px*var(--pm)) 0 2px;}
+.feed-more{font:600 .76rem/1.4 var(--sans);color:var(--green);background:var(--card);
+  border:1px solid var(--line);border-radius:999px;padding:8px 18px;cursor:pointer;
+  transition:background .18s ease,border-color .18s ease;}
+.feed-more:hover{background:var(--sage);border-color:var(--green2);}
+.feed-more span{color:var(--muted);font-weight:400;margin-left:6px;font-size:.68rem;
+  font-variant-numeric:tabular-nums;}
+.feed-end{margin:0;color:var(--muted);font-size:.68rem;letter-spacing:.12em;}
+@media(max-width:680px){
+  .feed-more{font-size:.72rem;padding:7px 15px;}
+}
+
+/* ── 11. 顶部压缩：让第一排卡片能挤进首屏 ───────────────────────── */
+.hero{min-height:0;}
+.hero-inner{padding:40px 28px 34px;}
+.hero-brand{margin-bottom:10px;}
+.hero .eyebrow{font-size:.6rem;letter-spacing:.16em;margin:0;}
+.hero h1{font-size:clamp(1.9rem,3.2vw,2.9rem);line-height:1.26;margin:12px 0 10px;}
+.hero-copy{font-size:.9rem;line-height:1.7;}
+details.reading-bar{margin:8px auto 4px;}
+
+@media(max-width:680px){
+  .hero-inner{padding:18px 16px 16px;}
+  .hero-brand{font-size:.9rem;margin-bottom:4px;padding:4px 0;margin-top:-2px;}
+  .hero .eyebrow{font-size:.55rem;letter-spacing:.13em;margin-top:6px;}
+  .hero h1{font-size:1.66rem;line-height:1.3;margin:7px 0 7px;}
+  .hero h1 span{border-bottom-width:3px;padding-bottom:2px;}
+  .hero-copy{font-size:.74rem;line-height:1.55;max-width:none;}
+  .hero-mark{font-size:8.5rem;top:auto;bottom:-16px;right:-12px;}
+  details.reading-bar>summary{padding:8px 16px;}
+  .reading-bar-label{font-size:.72rem;}
+}
+
+/* 主体上边距也跟着收：整条「页头 → 理念条 → 工具栏 → 卡片」压缩到一屏能看见两排 */
+.layout{padding:24px 28px 56px;}
+@media(max-width:680px){
+  .layout{padding:14px 14px 34px;}
+  .reading-module{padding-top:0;}
+}
+
+/* 再压一点：手机上去掉与品牌行重复的英文 eyebrow，子分段也收一档 */
+@media(max-width:680px){
+  .hero .eyebrow{display:none;}
+  .subtabs{padding:3px;margin:0 0 12px;}
+  .subtabs button{padding:7px 8px;font-size:.8rem;}
+  .subtabs .count{margin-left:5px;padding:0 7px;font-size:.68rem;line-height:1.6;}
+}
+.feed-note{margin:0;color:var(--muted);font-size:.72rem;letter-spacing:.02em;}
+.feed-note span{color:var(--line);margin-left:4px;font-variant-numeric:tabular-nums;}
+
+/* ── 系列 Tab：套装拆册的单册卡片（平铺，不做折叠） ── */
+.set-units{margin-top:30px;padding-top:22px;border-top:1px solid var(--line);}
+.set-units-head{display:flex;align-items:baseline;gap:6px 14px;flex-wrap:wrap;margin:0 0 14px;}
+.set-units-head h2{margin:0;font-size:1.3rem;}
+.set-units-intro{margin:0;color:var(--muted);font-size:.84rem;line-height:1.7;}
+.set-groups{display:grid;grid-template-columns:1fr;gap:14px;}
+.set-group{border:1px solid var(--line);border-radius:14px;background:var(--card);padding:0 18px 16px;}
+.set-group-head{display:flex;align-items:center;gap:10px;padding:14px 0 10px;list-style:none;
+  font:600 1rem/1.5 var(--serif);color:var(--green);}
+.set-group-count{font:600 .72rem/1 var(--sans);color:#7a6a52;background:#f3e9da;border-radius:99px;padding:4px 9px;}
+.set-units-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;padding:0;}
+/* 系列组里的卡是从书架瀑布流「搬家」过来的（homepage-reading.js），
+   搬之前带 position:absolute + left/top/width。如果清理时序输给 home-feed 的重排，
+   这些卡会脱离网格流浮在页面上、互相叠住。这里强制交回 CSS 网格兜底。 */
+.set-units-grid > .archive-card{position:static!important;left:auto!important;top:auto!important;width:auto!important;}
+/* ── 宽屏：单册区跟随右上角列数按钮 ────────────────────────────────
+   之前这里写死 auto-fill 240px，平板/PC 上点「一排一」毫无反应
+   （书架变一排一，系列卡仍然三列）。680px 以下仍固定两列，
+   因为手机点一排一等于一张卡占满屏，翻十张就到底了。 */
+@media(min-width:681px){
+  html[data-cols="1"] .set-units-grid{grid-template-columns:minmax(0,1fr);}
+  html[data-cols="2"] .set-units-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+  html[data-cols="3"] .set-units-grid{grid-template-columns:repeat(3,minmax(0,1fr));}
+  /* 一排一：1000px 宽的卡配 30:43 竖版封面会有 1400px 高，一屏只放得下一张。
+     改成左封面 + 右信息的横条，一行能扫五六本。 */
+  /* 一排一：左封面 + 右信息横条。home-card.js 运行时会把除封面外的子节点
+     包进 .card-body，所以文本是一个整体，可直接垂直居中（align-content 对
+     多行轨道无效，必须用 .card-body 这个单一 flex 容器来居中）。卡片限宽
+     居中，避免 1440px 屏上变成 1300px 长条、右侧大片空白。 */
+  /* width:100% 必须显式给：grid item 一旦有 margin-inline:auto，
+     浏览器就取消 stretch，宽度退化成 max-content（实测 374px），
+     卡片缩成中间一根窄柱子，右侧留白比卡片还宽。 */
+  html[data-cols="1"] .set-units-grid .archive-card{
+    --unit-cover:clamp(120px,13vw,168px);
+    display:grid;grid-template-columns:var(--unit-cover) minmax(0,1fr);
+    column-gap:24px;align-items:center;
+    width:100%!important;max-width:950px;margin-inline:auto;
+    padding:16px 24px 16px 18px;
+  }
+  html[data-cols="1"] .set-units-grid .archive-card .card-cover{
+    grid-column:1;grid-row:1;width:var(--unit-cover);margin:0;align-self:center;
+  }
+  /* 一排一时卡片有 700px 宽的文字区，却只有「书名 + 作者」两行，
+     全都挤在左边，右边空得像张白纸。这里改成「书名 / 作者」左栏 +
+     日期右栏，日期给整行一个右侧锚点，横条才站得住。 */
+  html[data-cols="1"] .set-units-grid .archive-card .card-body{
+    grid-column:2;grid-row:1;min-width:0;
+    display:grid;grid-template-columns:minmax(0,1fr) auto;
+    grid-template-areas:"title date" "meta meta";
+    column-gap:24px;row-gap:8px;align-content:center;
+  }
+  /* 书名和日期之间用点线连起来（目录页的做法）：
+     一排一的书名大多只占半行，右边空着只剩一个孤零零的日期；
+     点线把这段空白变成引导线，横条才像一条完整的目录行。 */
+  html[data-cols="1"] .set-units-grid .archive-card h3{
+    grid-area:title;font-size:1.12rem;line-height:1.6;margin:0;
+    display:flex;align-items:baseline;min-width:0;
+  }
+  html[data-cols="1"] .set-units-grid .archive-card h3 .card-title-link{flex:0 1 auto;min-width:0;}
+  html[data-cols="1"] .set-units-grid .archive-card h3::after{
+    content:"";flex:1 1 auto;min-width:24px;margin:0 0 .34em 14px;
+    border-bottom:1px dashed var(--line,#ded9cb);
+  }
+  html[data-cols="1"] .set-units-grid .archive-card .card-top{
+    grid-area:date;margin:0;justify-content:flex-end;align-self:start;
+  }
+  html[data-cols="1"] .set-units-grid .archive-card .card-top time{font-size:.76rem;}
+  html[data-cols="1"] .set-units-grid .archive-card .card-foot{
+    grid-area:meta;margin:0;
+  }
+  /* 作者行：作者与「AI 笔记」都按内容宽排在一起；
+     .card-author 默认 flex:1 1 auto 会撑满整行，把标签顶到最右缘 */
+  html[data-cols="1"] .set-units-grid .archive-card .card-foot{justify-content:flex-start;gap:12px;}
+  html[data-cols="1"] .set-units-grid .archive-card .card-foot .card-meta{margin-left:0;}
+  html[data-cols="1"] .set-units-grid .archive-card .card-foot .card-author{flex:0 0 auto;}
+}
+/* 单册卡直接复用 archive-card：封面由 home-card.js 按 data-slug 注入，
+   作者/章数走 card-foot，和轻游记的卡是同一套版式。这里只收紧内边距。 */
+.set-units-grid .unit-card{min-height:0;padding:14px 14px 12px;}
+/* 这里是竖版书封（30/43），不能用首页 5/3 的横版裁切，否则书名被切掉 */
+.set-units-grid .unit-card .card-cover{aspect-ratio:30/43;margin-bottom:9px;}
+.set-units-grid .unit-card h3{font-size:1.02rem;line-height:1.5;margin:8px 0 0;}
+@media(max-width:680px){
+  .set-units-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;}
+  .set-units-grid .unit-card{padding:9px 9px 8px;}
+  .set-units-grid .unit-card h3{font-size:.84rem;line-height:1.42;margin:5px 0 0;}
+  .set-units-grid .unit-card .card-author{font-size:.66rem;}
+  .set-units-grid .unit-card .card-meta{font-size:.6rem;}
+  .set-group{padding:0 12px 12px;}
+  .set-units-head h2{font-size:1.15rem;}
+}
+
+/* ── 老内核兜底：不支持 aspect-ratio（Chrome < 88 / 旧 Android WebView）──
+   这些浏览器忽略 aspect-ratio，封面高度算成 0；「一排二」的海报卡里
+   封面和文字全是绝对定位，整张卡高度也是 0 —— 一屏下去全是空白，
+   只剩底部的「下滑继续」。这里用 padding-top 撑高（百分比按容器宽度算）。 */
+@supports not (aspect-ratio: 1 / 1){
+  .card-cover{padding-top:60%;}                                  /* 5:3 横版 */
+  html[data-cols="2"] #panel-whole .card-cover{padding-top:0;}   /* 海报卡里绝对定位铺满，不能再吃 padding */
+  html[data-cols="1"] #panel-whole .card-cover{padding-top:0;height:138px;} /* 固定 96px 宽 → 96×43/30 */
+  html[data-cols="3"] #panel-whole .card-cover{padding-top:143.33%;}        /* 30:43 竖版 */
+  .set-units-grid .unit-card .card-cover{padding-top:143.33%;}
+  /* 海报卡本体：用伪元素撑出 30:43 的高度 */
+  html[data-cols="2"] #panel-whole .archive-card::before{content:"";display:block;padding-top:143.33%;}
+}
+
+/* ── 系列 Tab：分组标题吸顶 ────────────────────────────────────────
+   轻游记 23 册、甲骨文 30 册这种长组，滚下去就不知道在看哪个系列了。
+   标题用 sticky 钉在顶部（top:0 因为没有别的常驻吸顶栏），
+   滚动时加 .is-stuck 补一层投影 + 半透明底，避免和卡片糊在一起。 */
+.set-group-head{
+  position:sticky;top:0;z-index:12;
+  margin:0 -18px;padding:13px 18px 11px;
+  background:var(--card,#fff);
+  border-radius:14px 14px 0 0;
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  transition:box-shadow .18s ease,background .18s ease;
+}
+.set-group-head.is-stuck{
+  box-shadow:0 10px 20px -14px rgba(23,40,33,.55);
+  background:color-mix(in srgb,var(--card,#fff) 86%,transparent);
+}
+.set-group-head .set-group-name{letter-spacing:.01em;}
+@media(max-width:680px){
+  .set-group-head{margin:0 -12px;padding:11px 12px 9px;font-size:.95rem;}
+}
+
+/* ── 无封面兜底：按 slug 取色相的深色渐变 + 斜细纹 ────────────────
+   真封面 404 时不再只剩一块纯绿板，而是像样的一张「素封」：
+   完整书名居中、下方 WE READ 小字，色相按书哈希铺开，避免整页同色。 */
+.card-cover{
+  background:linear-gradient(158deg,
+    hsl(var(--cv-h,166) 27% 24%) 0%,
+    hsl(calc(var(--cv-h,166) + 16) 33% 11%) 100%);
+}
+.card-cover::after{
+  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  background-image:repeating-linear-gradient(114deg,rgba(255,255,255,.05) 0 1px,transparent 1px 6px);
+  opacity:.6;transition:opacity .3s ease;
+}
+.card-cover.has-img::after{opacity:0;}
+.card-cover-full{position:absolute;inset:0;z-index:1;display:none;flex-direction:column;
+  align-items:center;justify-content:center;gap:10px;padding:18px 15px;text-align:center;
+  color:rgba(255,255,255,.95);pointer-events:none;}
+.card-cover-full b{font:600 1rem/1.55 var(--serif);letter-spacing:.04em;max-width:100%;
+  display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden;}
+.card-cover-full i{font:400 .58rem/1 var(--sans);letter-spacing:.3em;font-style:normal;
+  color:rgba(255,255,255,.5);}
+.card-cover.has-img .card-cover-full{display:none!important;}
+/* 竖版卡（套装单册 / 一排三）字号和位置都容得下完整书名 */
+.set-units-grid .unit-card .card-cover-full,
+html[data-cols="3"] #panel-whole .card-cover-full{display:flex;}
+.set-units-grid .unit-card .card-cover-title,
+html[data-cols="3"] #panel-whole .card-cover-title{display:none;}
+
+/* 系列组（JS 由 series.json 生成）复用单册区的框与吸顶头：
+   .reading-group 的上下 margin 会把网格撑开，这里抹平 */
+.set-group.series-group{margin:0;}
+.set-group.series-group .set-group-name{color:var(--green);text-decoration:none;font:600 1rem/1.5 var(--serif);}
+.set-group.series-group .set-group-name:hover{text-decoration:underline;}
+
+/* 从书架/精读搬进来的卡也走竖版书封：不限定 .unit-card，
+   否则这些卡保留 5:3 横版封面，和同组单册卡高度对不齐 */
+.set-units-grid .archive-card .card-cover{aspect-ratio:30/43;margin-bottom:9px;}
+/* 这类卡带着类型标签 + 导语段，比单册卡高一大截；正文限两行，整行对齐 */
+.set-units-grid .archive-card .card-body>p:not(.card-meta):not(.reader-meta){
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+  margin:6px 0 0;font-size:.8rem;line-height:1.55;color:var(--muted);
+}
+.set-units-grid .archive-card .reader-meta{margin:4px 0 0;font-size:.72rem;}
+
+/* ── 封面加载中的反光扫过 ────────────────────────────────────────
+   封面是 lazy 图，滚动到才下载；冷缓存时要等 1–2 秒。
+   这段时间卡片本来就显示素封（书名 + WE READ），加一道扫光，
+   让它看起来是「正在加载」而不是「这张图没了」。 */
+.card-cover:not(.has-img)::before{
+  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:linear-gradient(100deg,transparent 18%,rgba(255,255,255,.055) 38%,
+    rgba(255,255,255,.11) 50%,rgba(255,255,255,.055) 62%,transparent 82%);
+  background-size:240% 100%;background-repeat:no-repeat;
+  animation:cv-sheen 1.7s linear infinite;
+}
+.card-cover.has-img::before{display:none;}
+@keyframes cv-sheen{
+  0%{background-position:130% 0;}
+  100%{background-position:-130% 0;}
+}
+@media(prefers-reduced-motion:reduce){
+  .card-cover:not(.has-img)::before{animation:none;}
+}
+
+/* ── 大屏适配（2026-11-15）────────────────────────────────────────
+   用户反馈「宽屏之下太窄」：内容原固定 1080px 居中，超宽屏两侧大片空白。
+   约定：一排一→二、一排二→四、一排三→六，容器同步放宽。
+   本文件在 index.html 的 CSS 链里最后加载，同特异性可覆盖 site.css 的
+   .layout / .hero-inner / .site-footer{max-width:1080px}，故无需改 site.css。
+   仅 ≥1200px 生效；小屏与移动端（≤680px）行为完全不变。            */
+@media (min-width:1200px){
+  .layout,.hero-inner,.site-footer{max-width:1240px}
+  html[data-cols="1"] .archive-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+  html[data-cols="2"] .archive-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;}
+  html[data-cols="3"] .archive-grid{grid-template-columns:repeat(6,minmax(0,1fr))!important;}
+  html[data-cols="1"] .overview-entries{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+  html[data-cols="2"] .overview-entries{grid-template-columns:repeat(4,minmax(0,1fr))!important;}
+  html[data-cols="3"] .overview-entries{grid-template-columns:repeat(6,minmax(0,1fr))!important;}
+  /* 归档 / 即将上线在 data-cols=3 时固定两列，大屏翻倍到四列 */
+  html[data-cols="3"] #reading-panel-archive .archive-grid,
+  html[data-cols="3"] #panel-soon .archive-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;}
+}
+@media (min-width:1680px){
+  .layout,.hero-inner,.site-footer{max-width:1640px}
+}
