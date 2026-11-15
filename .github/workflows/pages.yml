@@ -38,6 +38,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      # 同名覆盖 jpg 时 Kodo 源站已换新对象，但边缘节点 max-age=31536000
+      # 仍吐旧图（含合成素封）。放在 checkout 之后立刻刷：刷新只要几秒，
+      # 不等十几分钟的 Pages 部署，也避开补产任务频繁推送导致的 cancel。
+      - name: Refresh CDN cache (overwritten covers)
+        if: hashFiles('assets/data/cdn-refresh.txt') != ''
+        run: |
+          pip install qiniu
+          export QINIU_AK="${{ secrets.QINIU_AK }}"
+          export QINIU_SK="${{ secrets.QINIU_SK }}"
+          python scripts/refresh_cdn.py --file assets/data/cdn-refresh.txt
+        continue-on-error: true
       - name: Generate public reading room state
         run: python3 scripts/build-agent-dashboard.py
       - name: Generate public reading progress page
