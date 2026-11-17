@@ -28,8 +28,9 @@
   --accent:oklch(0.58 0.105 60);
   --accent-soft:oklch(0.90 0.035 70);
 
-  --card-w:clamp(272px,27.5vw,364px);
-  --card-h:min(78vh,684px);
+  --card-w:clamp(300px,29vw,432px);
+  --card-h:min(calc(var(--card-w) * 1.66),84vh);
+  --card-h:min(calc(var(--card-w) * 1.66),84svh);
   --gap:clamp(2px,0.6vw,10px);
 
   --ease:cubic-bezier(.22,1,.36,1);
@@ -135,7 +136,7 @@ body::after{
 
 /* ============ 封面舞台：模糊底 + 清晰书封 ============ */
 .stage{
-  position:relative;flex:0 0 36%;overflow:hidden;
+  position:relative;flex:0 0 44%;overflow:hidden;
   /* 纯色底按封面主色相铺，非活动卡不画模糊图也有统一色调 */
   background:oklch(0.81 0.032 var(--h,60));
   display:grid;place-items:center;
@@ -203,33 +204,72 @@ body::after{
   display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
 }
 
-/* ============ 同书单接着读 ============ */
+/* ============ 关联阅读：横向轨道 ============ */
 .more{
-  flex:1 1 auto;min-height:0;margin:2.8cqw 5cqw 0;padding-top:2.4cqw;
+  flex:1 1 0;min-height:0;margin:2.6cqw 0 0;padding:2.2cqw 0 1.4cqw;
   border-top:1px solid var(--line);
   display:flex;flex-direction:column;justify-content:center;
 }
 .more .cap{
+  padding:0 5cqw;
   font-size:max(2.2cqw,9px);letter-spacing:.12em;color:var(--ink-faint);
   display:flex;justify-content:space-between;align-items:baseline;gap:2cqw;
 }
-.more .cap em{font-family:var(--font-latin);font-style:normal;font-size:2.15cqw;color:var(--accent);flex:none}
-.more .row{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5cqw;margin-top:1.6cqw}
-.more .mini{min-width:0}
+.more .cap em{
+  font-family:var(--font-latin);font-style:normal;
+  font-size:max(1.95cqw,8.5px);color:var(--accent);flex:none;letter-spacing:.04em;
+}
+
+/* 轨道高度跟着卡内剩余空间走，封面再按高度反推宽度：
+   卡高一点封面就大一点，不会像固定宽度那样在下方留一大块空 */
+.more .row{
+  flex:1 1 auto;min-height:0;
+  display:flex;align-items:stretch;gap:1.7cqw;
+  margin-top:1.5cqw;padding:1px 5cqw 2px;
+  overflow-x:auto;overflow-y:hidden;
+  scroll-snap-type:x mandatory;
+  overscroll-behavior-x:contain;
+  touch-action:pan-x;
+  scrollbar-width:none;-ms-overflow-style:none;
+  -webkit-overflow-scrolling:touch;
+  cursor:grab;
+}
+.more .row::-webkit-scrollbar{display:none}
+.more .row.is-drag{cursor:grabbing;scroll-snap-type:none}
+.more .mini{
+  flex:0 0 auto;height:100%;aspect-ratio:.78;
+  display:flex;flex-direction:column;text-decoration:none;border-radius:2px;
+  scroll-snap-align:start;overflow:hidden;
+  transition:transform .2s var(--ease);
+}
+.more .mini:hover{transform:translateY(-2px)}
+.more .mini:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 .more .mini .th{
-  position:relative;width:100%;aspect-ratio:1/1.3;border-radius:2px;overflow:hidden;
+  position:relative;flex:1 1 0;min-height:0;width:100%;
+  border-radius:2px;overflow:hidden;
   background:oklch(0.88 0.015 78);
-  box-shadow:0 2px 6px rgba(0,0,0,.14);
+  box-shadow:0 2px 6px rgba(0,0,0,.16);
 }
 .more .mini .th img{width:100%;height:100%;object-fit:cover;display:block}
+/* 关联标签：直接说明「为什么推这本」，别让人以为随机塞的 */
+.more .mini .tg{
+  position:absolute;left:0;top:0;
+  font-size:max(1.55cqw,7px);line-height:1;letter-spacing:.02em;
+  padding:.65cqw .9cqw;border-radius:0 0 3px 0;
+  color:oklch(0.95 0.006 82);background:oklch(0.22 0.012 62 / .62);
+}
+.more .mini .tg.is-author{background:oklch(0.44 0.11 44 / .86)}
+.more .mini .tg.is-step{background:oklch(0.38 0.07 150 / .82)}
 .more .mini .nm{
-  margin-top:.8cqw;font-size:max(2.1cqw,9px);line-height:1.38;color:var(--ink-soft);opacity:.9;
+  flex:0 0 auto;width:100%;
+  margin-top:.7cqw;font-size:max(1.95cqw,8.5px);line-height:1.34;
+  color:var(--ink-soft);opacity:.9;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
 
 /* ============ 卡底 ============ */
 .foot{
-  flex:0 0 auto;margin:2cqw 5cqw 0;padding:2.2cqw 0 2.8cqw;
+  flex:0 0 auto;margin:1.2cqw 5cqw 0;padding:2.2cqw 0 2.8cqw;
   border-top:1px solid var(--line);
   display:flex;align-items:center;justify-content:space-between;gap:2.4cqw;
 }
@@ -315,9 +355,10 @@ body::after{
   .titleblock h3{font-size:6.6cqw;line-height:1.2}
   .why{padding:2.2cqw 4.6cqw 0}
   .why p{font-size:2.95cqw;line-height:1.74}
-  .more{margin:2cqw 4.6cqw 0;padding-top:2cqw}
-  .more .row{gap:1.3cqw;margin-top:1.4cqw}
-  .more .mini .th{aspect-ratio:1/1.26}
+  .more{margin:2cqw 0 0;padding-top:2cqw}
+  .more .cap{padding:0 4.6cqw}
+  .more .row{gap:1.6cqw;margin-top:1.4cqw;padding:1px 4.6cqw 2px}
+  .more .mini{max-width:44cqw}
   .foot{margin:1.8cqw 4.6cqw 0;padding:2cqw 0 2.4cqw}
   .go{padding:1.5cqw 2.6cqw;font-size:2.6cqw}
   .controls{gap:9px;padding:7px 16px 12px}
@@ -340,8 +381,8 @@ body::after{
   .stage{flex:0 0 44%}
   .titleblock h3{font-size:7cqw}
   .why p{-webkit-line-clamp:2;font-size:3.05cqw}
-  .more .mini .th{aspect-ratio:1/1.2}
-  .more .mini .nm{font-size:2.15cqw}
+  .more .mini{max-width:40cqw}
+  .more .mini .nm{font-size:max(2cqw,8.5px)}
   .masthead{padding:12px 14px 2px}
   .controls{padding:4px 12px 10px}
 }
@@ -350,10 +391,11 @@ body::after{
   .stage{flex:0 0 40%}
   .cover-wrap{height:84%}
   .titleblock h3{font-size:6.4cqw}
-  .more{margin:1.6cqw 4.6cqw 0;padding-top:1.6cqw}
-  .more .row{margin-top:1cqw}
+  .more{margin:1.6cqw 0 0;padding-top:1.6cqw}
+  .more .cap{padding:0 4.6cqw}
+  .more .row{margin-top:1cqw;padding:1px 4.6cqw 2px}
+  .more .mini{max-width:36cqw}
   .more .mini .nm{display:none}
-  .more .mini .th{aspect-ratio:1/1.24}
   .foot{margin-top:1.4cqw}
 }
 @media (prefers-reduced-motion:reduce){
@@ -404,7 +446,7 @@ body::after{
   var mastBar=document.getElementById("mastBar");
   var mastSeas=document.getElementById("mastSeas");
 
-  var cards=[], paths=[], els=[], active=0, pathPos=[], warmed={};
+  var cards=[], paths=[], pool=[], els=[], active=0, pathPos=[], warmed={};
 
   function esc(s){
     return String(s==null?"":s).replace(/[&<>"']/g,function(c){
@@ -420,10 +462,16 @@ body::after{
   }
 
   function cardHTML(c){
-    var sib=(c.sib||[]).map(function(idx){
-      var s=cards[idx];if(!s) return "";
-      return '<div class="mini"><div class="th"><img data-src="'+esc(s.cover)+'" alt="'+esc(s.t)+'" loading="lazy" decoding="async"></div>'+
-             '<div class="nm">'+esc(s.t)+'</div></div>';
+    var tags=c.sibTag||[];
+    var sib=(c.sib||[]).map(function(idx,k){
+      var s=pool[idx];if(!s) return "";
+      var tg=tags[k]||"";
+      var cls=tg==="同作者"?" is-author":(tg==="同一步"?" is-step":"");
+      return '<a class="mini" href="book.html?slug='+esc(s.s)+'">'+
+             '<div class="th"><img data-src="'+esc(s.cv)+'" alt="'+esc(s.t)+'" loading="lazy" decoding="async">'+
+               (tg?'<span class="tg'+cls+'">'+esc(tg)+'</span>':'')+
+             '</div>'+
+             '<div class="nm">'+esc(s.t)+'</div></a>';
     }).join("");
     var progTxt=c.fin?"已读毕":(c.prog>0?"已读 "+c.prog+"%":"未开卷");
     return '<div class="paper">'+
@@ -451,15 +499,15 @@ body::after{
         '<p>'+esc(c.w)+'</p>'+
       '</div>'+
       '<div class="more">'+
-        '<div class="cap"><span>同一书单 · 接着读</span><em>'+c.pi+' / '+c.pn+'</em></div>'+
-        '<div class="row">'+(sib||'<div class="mini"></div><div class="mini"></div><div class="mini"></div>')+'</div>'+
+        '<div class="cap"><span>关联阅读</span><em>'+(c.sib||[]).length+' 本 · 滑动 →</em></div>'+
+        '<div class="row">'+(sib||'<div class="mini"><div class="th"></div></div>')+'</div>'+
       '</div>'+
       '<div class="foot">'+
         '<div class="bar">'+
           '<div class="track"><i style="width:'+Math.max(2,c.prog)+'%"></i></div>'+
           '<div class="leg"><span>'+esc(c.cat||c.f)+'</span><span>'+progTxt+'</span></div>'+
         '</div>'+
-        '<a class="go" href="'+esc(c.href)+'">领读 →</a>'+
+        '<a class="go" href="list.html?id='+esc(c.p)+'&book='+esc(c.slug)+'">领读 →</a>'+
       '</div>'+
     '</div>';
   }
@@ -475,7 +523,10 @@ body::after{
       el.dataset.index=i;
       el.setAttribute("role","button");
       el.setAttribute("aria-label","第 "+(i+1)+" 张："+c.t);
-      el.addEventListener("click",function(){ if(i!==active) go(i); });
+      el.addEventListener("click",function(e){
+        if(e.target.closest("a")) return;   // 链接自己走，别顺带切卡
+        if(i!==active) go(i);
+      });
       el.addEventListener("keydown",function(e){
         if(e.key==="Enter"||e.key===" "){ e.preventDefault(); if(i!==active) go(i); }
       });
@@ -585,6 +636,7 @@ body::after{
   function go(i){
     var n=cards.length;
     active=((i%n)+n)%n;
+    try{ history.replaceState(null,"","#"+String(active+1)); }catch(e){}
     layout();
   }
 
@@ -613,25 +665,68 @@ body::after{
     });
   }
 
-  // 滚轮 / 触摸
+  // 滚轮 / 触摸 / 轨道拖拽
+  // 卡片里多了一条横向轨道，手势得先让轨道用：轨道上滑 = 横着翻书，
+  // 滑到头再继续才翻下一张卡，不然想看完最后一本关联书会直接跳卡。
   var lock=false;
+  function railOf(e){
+    return e.target&&e.target.closest?e.target.closest(".row"):null;
+  }
   function wheel(e){
+    var row=railOf(e);
+    if(row){
+      var d=Math.abs(e.deltaX)>Math.abs(e.deltaY)?e.deltaX:e.deltaY;
+      var max=row.scrollWidth-row.clientWidth;
+      var atEnd=row.scrollLeft>=max-2, atStart=row.scrollLeft<=2;
+      if(!((d>0&&atEnd)||(d<0&&atStart))){
+        e.preventDefault();
+        row.scrollLeft+=d;
+        return;
+      }
+    }
     if(lock) return;
     if(Math.abs(e.deltaY)<8&&Math.abs(e.deltaX)<8) return;
     lock=true;
     setTimeout(function(){lock=false;},320);
     if(e.deltaY>0||e.deltaX>0) go(active+1); else go(active-1);
   }
-  gallery.addEventListener("wheel",wheel,{passive:true});
+  gallery.addEventListener("wheel",wheel,{passive:false});
 
-  var tx=0,ty=0;
+  var tx=0,ty=0,inRail=false;
   gallery.addEventListener("touchstart",function(e){
+    inRail=!!railOf(e);
     tx=e.touches[0].clientX;ty=e.touches[0].clientY;
   },{passive:true});
   gallery.addEventListener("touchend",function(e){
+    if(inRail){ inRail=false; return; }   // 轨道内滑动交给浏览器原生横向滚动
     var dx=e.changedTouches[0].clientX-tx, dy=e.changedTouches[0].clientY-ty;
     if(Math.abs(dx)>44&&Math.abs(dx)>Math.abs(dy)) go(active+(dx<0?1:-1));
   },{passive:true});
+
+  // 桌面没有触摸屏，用鼠标拖轨道
+  var dragRow=null, dragX=0, dragL=0, dragMoved=false;
+  gallery.addEventListener("pointerdown",function(e){
+    var row=railOf(e);
+    if(!row||e.pointerType==="touch") return;
+    dragRow=row; dragX=e.clientX; dragL=row.scrollLeft; dragMoved=false;
+    row.classList.add("is-drag");
+  });
+  window.addEventListener("pointermove",function(e){
+    if(!dragRow) return;
+    var dx=e.clientX-dragX;
+    if(Math.abs(dx)>3) dragMoved=true;
+    dragRow.scrollLeft=dragL-dx;
+  });
+  window.addEventListener("pointerup",function(){
+    if(!dragRow) return;
+    dragRow.classList.remove("is-drag");
+    dragRow=null;
+    setTimeout(function(){ dragMoved=false; },0);
+  });
+  // 拖完手一松会落到链接上，别让它顺势跳走
+  gallery.addEventListener("click",function(e){
+    if(dragMoved){ e.preventDefault(); e.stopPropagation(); }
+  },true);
 
   document.getElementById("next").addEventListener("click",function(){go(active+1)});
   document.getElementById("prev").addEventListener("click",function(){go(active-1)});
@@ -652,10 +747,15 @@ body::after{
   fetch("cards.json",{cache:"no-cache"})
     .then(function(r){ if(!r.ok) throw new Error("HTTP "+r.status); return r.json(); })
     .then(function(d){
-      cards=d.cards||[]; paths=d.paths||[];
+      cards=d.cards||[]; paths=d.paths||[]; pool=d.pool||[];
       if(!cards.length) throw new Error("cards 为空");
       loading.classList.add("hide");
       dotsFor();
+      var m=location.hash.match(/^#(\d+)$/);
+      if(m){
+        var k=parseInt(m[1],10)-1;
+        if(k>=0&&k<cards.length) active=k;
+      }
       render();
     })
     .catch(function(e){ fail(esc(e.message||String(e))); });

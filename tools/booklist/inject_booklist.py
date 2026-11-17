@@ -181,8 +181,9 @@ def build_panel(paths):
     out.append('<span class="bl-ch-eyebrow">Gallery · 画廊式书卡</span>')
     out.append('<span class="bl-ch-title">书卡频道</span>')
     n_books = len({it["s"] for p in paths for st in p["stages"] for it in st["items"]})
-    out.append('<span class="bl-ch-desc">%d 条主题书单 · %d 本书 —— '
-               '一张卡一本书，封面配色带，横向翻过去</span>' % (len(paths), n_books))
+    out.append('<span class="bl-ch-desc">%d 条书单 · %d 本书 —— '
+               '一张卡一本书，卡里还挂着十几本关联书目，顺着读下去</span>'
+               % (len(paths), n_books))
     out.append('<span class="bl-ch-go">进入 →</span>')
     out.append('</a>')
 

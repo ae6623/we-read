@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>书卡详情 · 书卡频道</title>
+<link rel="stylesheet" href="app.css">
+<style>
+.hero{
+  display:grid;grid-template-columns:clamp(120px,22vw,196px) 1fr;
+  gap:clamp(16px,3vw,32px);align-items:start;
+  padding:clamp(10px,2vh,22px) 0 clamp(20px,3vh,32px);
+  border-bottom:1px solid oklch(0.3 0.014 62);
+}
+.cover{
+  position:relative;width:100%;aspect-ratio:3/4.16;border-radius:4px;overflow:hidden;
+  background:oklch(0.3 0.02 62);
+  box-shadow:0 22px 44px rgba(0,0,0,.5),0 4px 12px rgba(0,0,0,.36);
+}
+.cover img{position:relative;z-index:1;width:100%;height:100%;object-fit:cover;display:block}
+.cover .ph{
+  position:absolute;inset:0;display:grid;place-items:center;padding:12px;
+  font-family:var(--font-display);font-weight:700;font-size:15px;line-height:1.4;
+  text-align:center;color:oklch(0.88 0.02 72);
+  background:linear-gradient(160deg,oklch(0.34 0.03 62),oklch(0.22 0.03 62));
+}
+.meta{min-width:0;display:flex;flex-direction:column;gap:0}
+.meta .row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:11px}
+h1{
+  font-family:var(--font-display);font-weight:700;
+  font-size:clamp(21px,3.2vw,34px);line-height:1.32;letter-spacing:.02em;
+}
+.by{margin-top:9px;font-size:13px;color:oklch(0.7 0.016 66);letter-spacing:.03em}
+.by::before{content:"— ";color:oklch(0.6 0.05 70)}
+.why{
+  margin-top:16px;padding:12px 15px;border-radius:6px;
+  background:oklch(0.235 0.014 62);border-left:2px solid oklch(0.62 0.06 72);
+}
+.why .lb{
+  font-family:var(--font-latin);font-style:italic;font-size:11px;letter-spacing:.12em;
+  color:oklch(0.68 0.06 72);margin-bottom:5px;
+}
+.why p{font-size:13.5px;line-height:1.85;color:oklch(0.84 0.014 74)}
+.belong{margin-top:14px;font-size:12.5px;line-height:1.8;color:oklch(0.62 0.014 66)}
+.belong a{color:oklch(0.8 0.05 72);text-decoration:none;border-bottom:1px solid oklch(0.8 0.05 72 / .35)}
+.belong a:hover{border-bottom-color:oklch(0.8 0.05 72)}
+.progline{display:flex;align-items:center;gap:10px;margin-top:14px}
+.progline .bar{flex:0 1 180px;height:3px;background:oklch(0.3 0.012 62);border-radius:2px;overflow:hidden}
+.progline .bar i{display:block;height:100%;background:oklch(0.68 0.07 72)}
+.progline span{font-size:11.5px;color:oklch(0.62 0.014 66);letter-spacing:.04em}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+
+.rel{padding-top:clamp(20px,3vh,30px)}
+.rel-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:14px}
+.rel-head h2{
+  font-family:var(--font-display);font-weight:700;font-size:16px;letter-spacing:.06em;
+}
+.rel-head em{
+  font-family:var(--font-latin);font-style:normal;font-size:11.5px;
+  color:oklch(0.62 0.014 66);letter-spacing:.05em;
+}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:14px 12px}
+@media (max-width:430px){ .grid{grid-template-columns:repeat(auto-fill,minmax(82px,1fr));gap:13px 10px} }
+.rk{display:block;text-decoration:none;min-width:0}
+.rk .th{
+  position:relative;width:100%;aspect-ratio:1/1.38;border-radius:3px;overflow:hidden;
+  background:oklch(0.3 0.02 62);box-shadow:0 4px 12px rgba(0,0,0,.35);
+  transition:transform .22s var(--ease);
+}
+.rk:hover .th{transform:translateY(-3px)}
+.rk:focus-visible .th{outline:2px solid var(--paper);outline-offset:3px}
+.rk .th img{position:relative;z-index:1;width:100%;height:100%;object-fit:cover;display:block}
+.rk .tg{
+  position:absolute;left:0;top:0;padding:3px 5px;border-radius:0 0 3px 0;
+  font-size:9.5px;line-height:1;color:oklch(0.95 0.006 82);background:oklch(0.22 0.012 62 / .72);
+}
+.rk .tg.is-author{background:oklch(0.44 0.11 44 / .88)}
+.rk .tg.is-step{background:oklch(0.38 0.07 150 / .84)}
+.rk .nm{
+  margin-top:6px;font-size:11.5px;line-height:1.38;color:oklch(0.8 0.014 72);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.rk:hover .nm{color:var(--paper)}
+
+@media (max-width:560px){
+  .hero{grid-template-columns:1fr;gap:18px}
+  .cover{width:min(52vw,180px);margin:0 auto}
+  .meta{text-align:center}
+  .meta .row{justify-content:center}
+  .by{margin-top:8px}
+  .why{text-align:left}
+  .progline{justify-content:center}
+  .actions{justify-content:center}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <a class="back" href="index.html" id="back">← 返回</a>
+    <div class="topmark" id="mark"></div>
+  </div>
+  <div id="app"><div class="loading">LOADING…</div></div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var app=document.getElementById("app");
+  var qs=new URLSearchParams(location.search);
+  var slug=qs.get("slug")||"";
+
+  function esc(s){
+    return String(s==null?"":s).replace(/[&<>"']/g,function(c){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
+    });
+  }
+  function err(msg){
+    app.innerHTML='<div class="errbox">这本书没找到。<br>'+esc(msg)+
+      '<br><br><a style="color:#e8d8bc" href="index.html">回书卡频道</a></div>';
+  }
+
+  document.getElementById("back").addEventListener("click",function(e){
+    if(history.length>1&&document.referrer){ e.preventDefault(); history.back(); }
+  });
+
+  fetch("cards.json",{cache:"no-cache"})
+    .then(function(r){ if(!r.ok) throw new Error("HTTP "+r.status); return r.json(); })
+    .then(function(d){
+      var cards=d.cards||[], pool=d.pool||[], paths=d.paths||[];
+      var cardBy={}, poolBy={}, pathBy={};
+      cards.forEach(function(c){ cardBy[c.slug]=c; });
+      pool.forEach(function(p,i){ poolBy[p.s]=i; });
+      paths.forEach(function(p){ pathBy[p.id]=p; });
+      render(cards,pool,cardBy,poolBy,pathBy);
+    })
+    .catch(function(e){ err(e.message); });
+
+  // 关联：书单内的书用生成好的 sib；书架里没进书单的书，现场按分类相似度挑
+  function related(slug,cards,pool,cardBy,poolBy){
+    var me=cardBy[slug];
+    if(me&&me.sib&&me.sib.length){
+      return me.sib.map(function(idx,k){
+        var b=pool[idx]; if(!b) return null;
+        return {b:b,tag:(me.sibTag||[])[k]||""};
+      }).filter(Boolean);
+    }
+    var self=poolBy[slug]===undefined?null:pool[poolBy[slug]];
+    if(!self) return [];
+    var sc=[];
+    pool.forEach(function(b){
+      if(b.s===slug) return;
+      var s=0,tag="";
+      if(self.a&&b.a&&self.a===b.a){ s=6; tag="同作者"; }
+      if(self.c&&b.c===self.c){ s+=3.6; tag=tag||"同题材"; }
+      else if(self.c&&b.c&&self.c.split("-")[0]===b.c.split("-")[0]){ s+=2; tag=tag||"同领域"; }
+      if(s>0.5) sc.push({s:s,b:b,tag:tag});
+    });
+    sc.sort(function(x,y){ return y.s-x.s; });
+    return sc.slice(0,14).map(function(x){ return {b:x.b,tag:x.tag}; });
+  }
+
+  function render(cards,pool,cardBy,poolBy,pathBy){
+    var c=cardBy[slug]||null;
+    var b=c||(poolBy[slug]!==undefined?pool[poolBy[slug]]:null);
+    if(!b){ err("没有 slug="+slug); return; }
+
+    var title=c?c.t:b.t;
+    var author=c?c.a:(b.a||"");
+    var cat=(c?(c.cat||c.f):b.c)||"";
+    var cover=c?c.cover:b.cv;
+    var href=c?c.href:b.h;
+    var why=c?c.w:"";
+    var prog=c?(c.prog||0):0;
+    var fin=c?!!c.fin:false;
+    var p=c?pathBy[c.p]:null;
+
+    document.title=title+" · 书卡详情";
+    document.getElementById("mark").innerHTML='<b>'+esc(cat||"书卡")+'</b>';
+
+    var progTxt=fin?"已读毕":(prog>0?"已读 "+prog+"%":"还没开卷");
+
+    var html='<div class="hero">'+
+      '<div class="cover">'+
+        '<div class="ph">'+esc(title)+'</div>'+
+        '<img src="'+esc(cover)+'" alt="'+esc(title)+' 封面" decoding="async" onerror="this.style.display=&#39;none&#39;">'+
+      '</div>'+
+      '<div class="meta">'+
+        '<div class="row">'+
+          (cat?'<span class="chip">'+esc(cat)+'</span>':'')+
+          (c?'<span class="chip">阶段 '+c.st+' / '+c.stn+'</span>':'<span class="chip">书架</span>')+
+        '</div>'+
+        '<h1>'+esc(title)+'</h1>'+
+        (author?'<div class="by">'+esc(author)+'</div>':'')+
+        (why?'<div class="why"><div class="lb">Why this one</div><p>'+esc(why)+'</p></div>':'')+
+        (p?'<div class="belong">出自书单 · <a href="list.html?id='+encodeURIComponent(p.id)+'&book='+encodeURIComponent(slug)+'">'+esc(p.title)+'</a></div>':'')+
+        '<div class="progline">'+
+          '<div class="bar"><i style="width:'+Math.max(2,prog)+'%"></i></div>'+
+          '<span>'+progTxt+'</span>'+
+        '</div>'+
+        '<div class="actions">'+
+          '<a class="btn btn-primary" href="'+esc(href)+'">领读全文 →</a>'+
+          (p?'<a class="btn btn-ghost" href="list.html?id='+encodeURIComponent(p.id)+'&book='+encodeURIComponent(slug)+'">看整条书单</a>':'')+
+        '</div>'+
+      '</div>'+
+    '</div>';
+
+    var rel=related(slug,cards,pool,cardBy,poolBy);
+    if(rel.length){
+      html+='<section class="rel">'+
+        '<div class="rel-head"><h2>关联阅读</h2><em>'+rel.length+' 本 · 按关联度排</em></div>'+
+        '<div class="grid">';
+      rel.forEach(function(r){
+        var tag=r.tag||"";
+        var cls=tag==="同作者"?" is-author":(tag==="同一步"?" is-step":"");
+        html+='<a class="rk" href="book.html?slug='+encodeURIComponent(r.b.s)+'">'+
+          '<div class="th"><img src="'+esc(r.b.cv)+'" alt="'+esc(r.b.t)+'" loading="lazy" decoding="async" onerror="this.style.display=&#39;none&#39;">'+
+            (tag?'<span class="tg'+cls+'">'+esc(tag)+'</span>':'')+
+          '</div>'+
+          '<div class="nm">'+esc(r.b.t)+'</div></a>';
+      });
+      html+='</div></section>';
+    }
+
+    html+='<div class="footnav">'+
+      '<a class="btn btn-primary" href="index.html">回书卡频道</a>'+
+      '<a class="btn btn-ghost" href="'+esc(href)+'">直接读这本</a>'+
+      '</div>';
+
+    app.innerHTML=html;
+  }
+})();
+</script>
+</body>
+</html>
