@@ -28,9 +28,9 @@
   --accent:oklch(0.58 0.105 60);
   --accent-soft:oklch(0.90 0.035 70);
 
-  --card-w:min(clamp(320px,34vw,620px),calc(80vh / 1.66));
+  --card-w:min(clamp(320px,34vw,620px),calc(78vh / 1.66));
   --card-h:calc(var(--card-w) * 1.66);
-  --card-w:min(clamp(320px,34vw,620px),calc(80svh / 1.66));
+  --card-w:min(clamp(320px,34vw,620px),calc(78svh / 1.66));
   --card-h:calc(var(--card-w) * 1.66);
   --gap:clamp(2px,0.6vw,10px);
 
@@ -160,7 +160,7 @@ body::after{
 }
 .stage-wash{position:absolute;inset:0;background:linear-gradient(118deg,var(--accent-soft) 0%,transparent 58%);opacity:.22;mix-blend-mode:screen}
 .cover-wrap{
-  position:relative;z-index:2;height:76%;width:auto;aspect-ratio:3/4.16;
+  display:block;position:relative;z-index:2;height:76%;width:auto;aspect-ratio:3/4.16;
   border-radius:2px;overflow:hidden;
   box-shadow:0 18px 34px rgba(0,0,0,.6),0 3px 9px rgba(0,0,0,.4),0 0 0 1px rgba(255,255,255,.3);
   transform:rotate(-1.4deg);
@@ -396,8 +396,9 @@ body::after{
 .go:hover{filter:brightness(1.12);transform:translateY(-1px)}
 .go:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 
-/* 非活动卡不响应链接 */
-.card:not(.is-active) .go{pointer-events:none}
+/* 非活动卡不响应链接：点侧卡是「切到这张」，不是「跳走」 */
+.card:not(.is-active) .go,
+.card:not(.is-active) .cover-wrap{pointer-events:none}
 
 /* ============ Controls ============ */
 .controls{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:clamp(8px,1.4vh,14px);padding:clamp(8px,1.6vh,18px) 20px clamp(14px,2.6vh,28px)}
@@ -437,9 +438,9 @@ body::after{
 
 @media (max-width:760px){
   :root{
-    --card-w:min(84vw,352px);
-    --card-h:min(calc(var(--card-w) * 1.78),74vh);
-    --card-h:min(calc(var(--card-w) * 1.78),74svh);
+    --card-w:min(93vw,404px);
+    --card-h:min(calc(var(--card-w) * 1.92),86vh);
+    --card-h:min(calc(var(--card-w) * 1.92),86svh);
     --gap:6px;
   }
   /* 移动端关掉 3D 透视，只留平面位移，省一次矩阵运算与合成 */
@@ -467,14 +468,14 @@ body::after{
   .more .mini{width:22cqw}
   .foot{margin:1.8cqw 4.6cqw 0;padding:2cqw 0 2.4cqw}
   .go{padding:1.5cqw 2.6cqw;font-size:2.6cqw}
-  .controls{gap:9px;padding:7px 16px 12px}
-  .navrow{gap:14px}
-  .nav{width:36px;height:36px;font-size:17px}
+  .controls{gap:7px;padding:4px 14px 8px}
+  .navrow{gap:12px}
+  .nav{width:32px;height:32px;font-size:16px}
   .next-word{font-size:12px;letter-spacing:.3em}
   .dots{gap:4px;max-width:88vw}
   .dots button{width:12px}
   .dots button.on{width:20px}
-  .hint{font-size:10.5px;letter-spacing:.03em;line-height:1.5;padding:0 8px}
+  .hint{display:none}
   .hint .h-wide{display:none}
   .hint .h-narrow{display:inline}
 }
@@ -487,9 +488,9 @@ body::after{
 }
 @media (max-width:430px){
   :root{
-    --card-w:84vw;
-    --card-h:min(calc(var(--card-w) * 1.82),74vh);
-    --card-h:min(calc(var(--card-w) * 1.82),74svh);
+    --card-w:93vw;
+    --card-h:min(calc(var(--card-w) * 1.92),86vh);
+    --card-h:min(calc(var(--card-w) * 1.92),86svh);
   }
   .titleblock h3{font-size:7cqw}
   .why p{-webkit-line-clamp:2;font-size:3.05cqw}
@@ -638,10 +639,11 @@ body::after{
       '<div class="stage">'+
         (lead?'<div class="stage-bg" data-bg="'+esc(lead.cover)+'"></div>':'')+
         '<div class="stage-tint"></div><div class="stage-wash"></div>'+
-        (lead?'<div class="cover-wrap" style="--h:'+lead.hue+'">'+
+        (lead?'<a class="cover-wrap" href="book.html?slug='+esc(lead.slug)+'" style="--h:'+lead.hue+'"'+
+          ' title="'+esc(lead.t)+'" aria-label="读《'+esc(lead.t)+'》">'+
           '<div class="cover-ph">'+esc(lead.t)+'</div>'+
           '<img data-src="'+esc(lead.cover)+'" alt="'+esc(lead.t)+' 封面" loading="lazy" decoding="async">'+
-        '</div>':'')+
+        '</a>':'')+
         '<div class="stage-title">'+
           '<h3>'+esc(c.main)+'</h3>'+
           '<div class="s">'+esc(c.sub)+'</div>'+

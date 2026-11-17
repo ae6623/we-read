@@ -367,8 +367,8 @@ h1{
     var catTxt=(cat||"书架").replace(/-/g," · ");
     parts.push('<b>'+esc(catTxt)+'</b>');
     if(p&&p.field&&p.field!==catTxt&&p.field!==cat) parts.push('<span>'+esc(p.field)+'</span>');
-    if(c&&c.pn) parts.push('<span>书单第 '+(c.pi||0)+' / '+c.pn+' 本</span>');
-    if(c&&c.stn) parts.push('<span>阶段 '+c.st+' / '+c.stn+'</span>');
+    if(c&&c.pn) parts.push('<span>第 '+(c.pi||0)+' / '+c.pn+' 本</span>');
+    if(c&&c.stn) parts.push('<span>第 '+c.st+' / '+c.stn+' 步</span>');
     var kicker=parts.join('<span class="dot"></span>');
 
     // 进度：一条横线贯穿正文栏
