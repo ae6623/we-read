@@ -423,7 +423,7 @@ h1{
             (tag?'<span class="tg'+cls+'">'+esc(tag)+'</span>':'')+
           '</div>'+
           '<div class="nm">'+esc(r.b.t)+'</div>'+
-          '<div class="au">'+esc(shortName(r.b.a))+'</div></a>';
+          '<div class="au">'+esc(shortName(r.b.a)||String(r.b.c||"").replace(/-/g," · "))+'</div></a>';
       });
       html+='</div></section>';
     }
