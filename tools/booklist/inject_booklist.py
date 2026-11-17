@@ -123,9 +123,30 @@ def build_css():
 #reading-panel-booklist .bl-book-w{font:.66rem/1.4 var(--sans);color:var(--muted);
   display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 #reading-panel-booklist .bl-foot{margin:16px 2px 0;font:.71rem/1.7 var(--sans);color:var(--muted)}
+/* 频道入口卡（2026-11-17 新增）：指向 channel/ 画廊式书卡页。
+   用 --green 做整块底色 + 白字，与 .bl-filter[aria-pressed=true] 同一套做法，
+   四套主题下都成立；不写死色值，避免 dark 主题里对比度反转。 */
+#reading-panel-booklist .bl-channel{display:grid;grid-template-columns:1fr auto;gap:3px 16px;align-items:center;
+  margin:10px 0 18px;padding:15px 17px;border-radius:14px;text-decoration:none;background:var(--green);
+  box-shadow:0 4px 16px rgba(var(--shadow),.16);
+  transition:transform .18s ease,box-shadow .18s ease}
+#reading-panel-booklist .bl-channel:hover,
+#reading-panel-booklist .bl-channel:focus-visible{transform:translateY(-2px);box-shadow:0 9px 22px rgba(var(--shadow),.24)}
+#reading-panel-booklist .bl-ch-eyebrow{grid-column:1;font:600 .64rem/1 var(--sans);letter-spacing:.1em;
+  text-transform:uppercase;color:rgba(255,255,255,.66)}
+#reading-panel-booklist .bl-ch-title{grid-column:1;margin:6px 0 0;font:700 1.1rem/1.35 var(--serif);color:#fff}
+#reading-panel-booklist .bl-ch-desc{grid-column:1;font:.75rem/1.6 var(--sans);color:rgba(255,255,255,.82)}
+#reading-panel-booklist .bl-ch-go{grid-column:2;grid-row:1/4;font:600 .77rem/1 var(--sans);color:#fff;
+  border:1px solid rgba(255,255,255,.5);border-radius:999px;padding:8px 15px;white-space:nowrap}
+#reading-panel-booklist .bl-channel:hover .bl-ch-go,
+#reading-panel-booklist .bl-channel:focus-visible .bl-ch-go{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.78)}
 @media(max-width:760px){
   #reading-panel-booklist .bl-stages{grid-template-columns:1fr;gap:10px}
   #reading-panel-booklist .bl-stage + .bl-stage::before{content:"↓";left:auto;right:14px;top:-15px}
+}
+@media(max-width:560px){
+  #reading-panel-booklist .bl-channel{grid-template-columns:1fr}
+  #reading-panel-booklist .bl-ch-go{grid-column:1;grid-row:auto;justify-self:start;margin-top:11px}
 }
 </style>"""
 
@@ -152,6 +173,17 @@ def build_panel(paths):
     out.append('<p class="bl-hint">书名可直接点进本书笔记页（优先最新版全书领读）；封面缺失时显示书名占位。'
                '程度：<b>入门</b> 零基础起步 · <b>通识</b> 搭完整脉络 · <b>进阶</b> 已有基础往深走。</p>')
     out.append('</div>')
+
+    # 频道入口（2026-11-17 新增）：放在图例之后、路径之前，先给一个「换种看法」的出口。
+    # 目标是 channel/index.html，用相对路径，与站内 reading-notes/books/... 同一约定，
+    # 这样 reader.js-dev.cn 根域与 ae6623.github.io/we-read 子路径下都不会错位。
+    out.append('<a class="bl-channel" href="channel/">')
+    out.append('<span class="bl-ch-eyebrow">Gallery · 画廊式书卡</span>')
+    out.append('<span class="bl-ch-title">书卡频道</span>')
+    out.append('<span class="bl-ch-desc">意式极简 · 田园风格 · 中古艺术 —— '
+               '按气质挑书，横向翻卡，一屏看完整一套</span>')
+    out.append('<span class="bl-ch-go">进入 →</span>')
+    out.append('</a>')
 
     out.append('<ul class="bl-filters" role="group" aria-label="按程度筛选书单">')
     labels = [("all", "全部"), ("start", "入门"), ("gen", "通识"), ("adv", "进阶")]
