@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>/* 跟随首页 Aa 主题：rd-cfg.theme（cream/light/green/dark），首屏先上色再渲染，避免闪 */
+try{var _c=JSON.parse(localStorage.getItem('rd-cfg')||'{}');document.documentElement.dataset.theme=_c.theme||'cream';}catch(e){document.documentElement.dataset.theme='cream';}
+</script>
 <title>书卡频道 · 美学书单</title>
 <meta name="description" content="17 条主题书单、166 本书。一条书单一张卡，封面在上、三步在下，一屏看一步，任意一本都能点进全书领读。">
 <style>
@@ -34,24 +37,77 @@
   --card-h:calc(var(--card-w) * 1.66);
   --gap:clamp(2px,0.6vw,10px);
 
+  /* 页面级语义色：卡片内部照旧用 --paper/--ink，页面外壳跟主题走 */
+  --fg:var(--paper);
+  --edge:oklch(0.55 0.02 62 /.45);
+  --edge-hover:oklch(0.9 0.02 80 /.12);
+  --chip-bg:oklch(0.19 0.016 62 /.72);
+  --bar-track:oklch(0.55 0.02 62 /.18);
+  --toast-bg:rgba(20,16,12,.92);
+  --toast-fg:oklch(0.88 0.015 70);
+  --wash:radial-gradient(120% 90% at 50% 42%,oklch(0.26 0.022 66) 0%,oklch(0.19 0.016 62) 42%,var(--bg-deep) 100%);
+  --noise:.16;
+
   --ease:cubic-bezier(.22,1,.36,1);
+}
+
+/* ============ 跟随首页 Aa 主题（rd-cfg.theme） ============
+   dark 沿用原暖黑画廊；cream / light / green 换成对应纸底，
+   卡片本身仍是纸质白，只有页面外壳（底色、刊头、控件）跟着变。 */
+html[data-theme="cream"]{
+  --bg:#f4f0e8;--bg-deep:#e8e2d4;
+  --fg:#24312e;--edge:rgba(36,49,46,.26);--edge-hover:rgba(36,49,46,.07);
+  --chip-bg:rgba(255,254,250,.9);--bar-track:rgba(36,49,46,.16);
+  --toast-bg:rgba(255,254,250,.95);--toast-fg:#24312e;
+  --wash:radial-gradient(120% 90% at 50% 42%,#fdfbf7 0%,#f2ede3 44%,#e6dfd1 100%);
+  --noise:.05;
+}
+html[data-theme="light"]{
+  --bg:#f3f3f0;--bg-deep:#e7e7e3;
+  --fg:#242b28;--edge:rgba(36,43,40,.24);--edge-hover:rgba(36,43,40,.06);
+  --chip-bg:rgba(255,255,255,.92);--bar-track:rgba(36,43,40,.15);
+  --toast-bg:rgba(255,255,255,.96);--toast-fg:#242b28;
+  --wash:radial-gradient(120% 90% at 50% 42%,#fdfdfc 0%,#f1f1ee 44%,#e5e5e1 100%);
+  --noise:.04;
+}
+html[data-theme="green"]{
+  --bg:#d6e9d8;--bg-deep:#c2ddc6;
+  --fg:#1d3a2b;--edge:rgba(29,58,43,.28);--edge-hover:rgba(29,58,43,.08);
+  --chip-bg:rgba(246,252,246,.9);--bar-track:rgba(29,58,43,.18);
+  --toast-bg:rgba(246,252,246,.95);--toast-fg:#1d3a2b;
+  --wash:radial-gradient(120% 90% at 50% 42%,#e9f5ea 0%,#d3e7d5 44%,#bcd9c0 100%);
+  --noise:.05;
+}
+html[data-theme="cream"],html[data-theme="light"]{
+  --paper-shadow:0 30px 64px -18px rgba(58,48,32,.42),0 6px 16px rgba(58,48,32,.16);
+}
+html[data-theme="green"]{
+  --paper-shadow:0 30px 64px -18px rgba(24,48,32,.4),0 6px 16px rgba(24,48,32,.14);
+}
+html[data-theme="dark"]{
+  --bg:oklch(0.165 0.014 62);--bg-deep:oklch(0.135 0.012 60);
+  --fg:oklch(0.958 0.013 82);--edge:oklch(0.55 0.02 62 /.45);--edge-hover:oklch(0.9 0.02 80 /.12);
+  --chip-bg:oklch(0.19 0.016 62 /.72);--bar-track:oklch(0.55 0.02 62 /.18);
+  --toast-bg:rgba(20,16,12,.92);--toast-fg:oklch(0.88 0.015 70);
+  --wash:radial-gradient(120% 90% at 50% 42%,oklch(0.26 0.022 66) 0%,oklch(0.19 0.016 62) 42%,oklch(0.135 0.012 60) 100%);
+  --noise:.16;
 }
 
 /* 返回书单Tab：桌面在刊头，手机浮在左上角 */
 .backpill{
   display:inline-flex;align-items:center;gap:6px;flex:none;
   font-family:var(--font-latin);font-size:12.5px;letter-spacing:.04em;
-  color:var(--paper);text-decoration:none;
-  border:1px solid oklch(0.55 0.02 62 /.45);border-radius:999px;padding:6px 13px 6px 10px;
+  color:var(--fg);text-decoration:none;
+  border:1px solid var(--edge);border-radius:999px;padding:6px 13px 6px 10px;
   transition:background .25s ease,border-color .25s ease,transform .25s var(--ease);
   white-space:nowrap;
 }
-.backpill:hover{background:oklch(0.9 0.02 80 /.12);border-color:var(--paper);transform:translateX(-2px)}
-.backpill:focus-visible{outline:2px solid var(--paper);outline-offset:3px}
+.backpill:hover{background:var(--edge-hover);border-color:var(--fg);transform:translateX(-2px)}
+.backpill:focus-visible{outline:2px solid var(--fg);outline-offset:3px}
 .m-back{
   position:absolute;top:10px;left:10px;z-index:40;display:none;
   font-size:12px;padding:5px 11px 5px 8px;
-  background:oklch(0.19 0.016 62 /.72);backdrop-filter:blur(6px);
+  background:var(--chip-bg);color:var(--fg);backdrop-filter:blur(6px);
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
@@ -59,7 +115,7 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none}
 body{
   position:fixed;inset:0;width:100%;
   background:var(--bg);
-  color:var(--paper);
+  color:var(--fg);
   font-family:var(--font-body);
   overflow:hidden;
   -webkit-font-smoothing:antialiased;
@@ -67,10 +123,10 @@ body{
 }
 body::before{
   content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
-  background:radial-gradient(120% 90% at 50% 42%,oklch(0.26 0.022 66) 0%,oklch(0.19 0.016 62) 42%,var(--bg-deep) 100%);
+  background:var(--wash);
 }
 body::after{
-  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.16;
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:var(--noise);
   background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/></svg>");
 }
 
@@ -88,13 +144,13 @@ body::after{
 .brand{display:flex;align-items:baseline;gap:12px;min-width:0}
 .brand .mark{
   font-family:var(--font-latin);font-style:italic;font-size:clamp(20px,2.1vw,27px);
-  letter-spacing:.02em;color:var(--paper);white-space:nowrap;
+  letter-spacing:.02em;color:var(--fg);white-space:nowrap;
 }
 .brand .cn{font-size:clamp(11px,1.05vw,14px);letter-spacing:.22em;color:var(--ink-faint);white-space:nowrap}
 .mast-num{display:flex;align-items:center;gap:14px;font-family:var(--font-latin)}
 .mast-num .cur{font-size:clamp(19px,1.8vw,24px);letter-spacing:.06em}
 .mast-num .sep{width:clamp(46px,6vw,84px);height:1px;background:var(--ink-faint);opacity:.5;position:relative}
-.mast-num .sep i{position:absolute;left:0;top:-1px;height:3px;background:var(--paper);transition:left .62s var(--ease),width .62s var(--ease)}
+.mast-num .sep i{position:absolute;left:0;top:-1px;height:3px;background:var(--fg);transition:left .62s var(--ease),width .62s var(--ease)}
 .mast-num .tot{font-size:clamp(13px,1.2vw,16px);color:var(--ink-faint)}
 .mast-seas{
   display:none;   /* 与卡内书单名重复，还和右上角的播放键抢位置 */
@@ -142,7 +198,7 @@ body::after{
   background:var(--paper);color:var(--ink);
   border-radius:5px;overflow:hidden;
   container-type:inline-size;
-  box-shadow:0 26px 60px rgba(0,0,0,.46),0 3px 10px rgba(0,0,0,.3);
+  box-shadow:var(--paper-shadow,0 26px 60px rgba(0,0,0,.46),0 3px 10px rgba(0,0,0,.3));
   display:flex;flex-direction:column;
 }
 .spine{position:absolute;left:0;top:0;bottom:0;width:1.2cqw;background:var(--accent);z-index:3}
@@ -425,15 +481,15 @@ body::after{
 .autobar{
   position:relative;display:block;
   width:100%;height:2px;border:none;padding:0;border-radius:2px;flex:none;
-  background:oklch(0.55 0.02 62 /.18);overflow:visible;cursor:pointer;
+  background:var(--bar-track);overflow:visible;cursor:pointer;
   opacity:0;transition:opacity .4s ease;
 }
 /* 2px 的线不好点，往上下一共撑出 28px 的热区，但看不见 */
 .autobar::before{content:"";position:absolute;left:-18px;right:-18px;top:-13px;bottom:-13px}
-.autobar:focus-visible{outline:1px solid var(--paper);outline-offset:6px}
+.autobar:focus-visible{outline:1px solid var(--fg);outline-offset:6px}
 .autobar.is-run,.autobar.is-paused{opacity:1}
 .autobar i{
-  display:block;width:100%;height:100%;background:var(--paper);opacity:.9;
+  display:block;width:100%;height:100%;background:var(--fg);opacity:.9;
   transform:scaleX(0);transform-origin:left center;
 }
 .autobar.is-run i{animation:autoFill var(--auto-ms,8000ms) linear forwards}
@@ -455,13 +511,13 @@ body::after{
 .hint{display:none}
 .nav{
   width:clamp(38px,4vw,48px);height:clamp(38px,4vw,48px);border-radius:50%;
-  border:1px solid oklch(0.55 0.02 62 /.5);background:transparent;color:var(--paper);
+  border:1px solid var(--edge);background:transparent;color:var(--fg);
   font-size:19px;cursor:pointer;display:grid;place-items:center;
   transition:background .3s ease,border-color .3s ease,transform .3s var(--ease);
 }
-.nav:hover{background:oklch(0.9 0.02 80 /.12);border-color:var(--paper);transform:translateY(-2px)}
+.nav:hover{background:var(--edge-hover);border-color:var(--fg);transform:translateY(-2px)}
 .nav:active{transform:translateY(0) scale(.94)}
-.nav:focus-visible{outline:2px solid var(--paper);outline-offset:3px}
+.nav:focus-visible{outline:2px solid var(--fg);outline-offset:3px}
 /* 自动轮播开关：比翻页按钮低一档，不抢主操作 */
 .nav-auto{width:36px;height:36px;opacity:.5}
 .nav-auto:hover{opacity:1}
@@ -469,15 +525,15 @@ body::after{
 .nav-auto[aria-pressed="false"]{opacity:.38}
 .nav-auto svg{display:block;width:12px;height:12px}
 .next-word{font-family:var(--font-display);font-size:clamp(13px,1.15vw,15px);letter-spacing:.4em;color:var(--ink-faint);border:none;background:none;cursor:pointer;padding:6px 0 6px .4em;transition:color .3s ease}
-.next-word:hover{color:var(--paper)}
-.next-word:focus-visible{outline:2px solid var(--paper);outline-offset:4px}
+.next-word:hover{color:var(--fg)}
+.next-word:focus-visible{outline:2px solid var(--fg);outline-offset:4px}
 .dots{display:flex;gap:9px;align-items:center;flex-wrap:wrap;justify-content:center;max-width:min(92vw,760px)}
 .dots button{
-  width:22px;height:3px;border:none;background:oklch(0.55 0.02 62 /.4);cursor:pointer;padding:0;
+  width:22px;height:3px;border:none;background:var(--bar-track);cursor:pointer;padding:0;
   transition:background .3s ease,width .4s var(--ease);
 }
-.dots button.on{width:40px;background:var(--paper)}
-.dots button:focus-visible{outline:2px solid var(--paper);outline-offset:4px}
+.dots button.on{width:40px;background:var(--fg)}
+.dots button:focus-visible{outline:2px solid var(--fg);outline-offset:4px}
 .hint{font-family:var(--font-latin);font-style:italic;font-size:11px;letter-spacing:.08em;color:oklch(0.5 0.015 62);text-align:center}
 .hint b{font-style:normal;color:oklch(0.72 0.015 62)}
 .hint .h-narrow{display:none}
@@ -487,8 +543,8 @@ body::after{
   position:fixed;left:50%;bottom:clamp(16px,3vh,32px);z-index:60;
   transform:translateX(-50%) translateY(6px);
   padding:7px 14px;border-radius:999px;
-  background:rgba(20,16,12,.92);border:1px solid oklch(0.55 0.02 62 /.4);
-  color:oklch(0.88 0.015 70);font-size:12.5px;letter-spacing:.06em;white-space:nowrap;
+  background:var(--toast-bg);border:1px solid var(--edge);
+  color:var(--toast-fg);font-size:12.5px;letter-spacing:.06em;white-space:nowrap;
   opacity:0;pointer-events:none;transition:opacity .26s ease,transform .26s var(--ease);
 }
 .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
@@ -527,7 +583,8 @@ body::after{
   .mast-num .cur{font-size:17px}
   .mast-num .sep{width:40px}
   .mast-num .tot{font-size:12px}
-  .card{transform:translateX(calc(var(--rel,0) * (var(--card-w) + var(--gap)))) scale(var(--sc,1))}
+  /* 邻卡只退 .92 张卡宽：内缘恰好贴着主卡边，露一条窄边给「还能滑」的暗示 */
+  .card{transform:translateX(calc(var(--rel,0) * var(--card-w) * .92)) scale(var(--sc,1))}
   /* 封面按舞台高度定尺寸，永远不溢出被裁；剩余高度给「接着读」 */
     .stage-num{font-size:10.5cqw;bottom:2.6cqw}
   .titleblock{padding:3cqw 4.6cqw 0}
@@ -821,8 +878,8 @@ body::after{
 
     var w,h;
     if(gw<=760){
-      // 手机：只留左右 10px 给翻页动画看，上下几乎贴边
-      w=gw-20; h=gh-14;
+      // 手机：左右各留 22px，主卡窄一档，两侧邻卡能露出一条被遮罩的边，提示可滑
+      w=gw-44; h=gh-24;
       if(h<w*1.7){ h=Math.min(w*1.7,gh-14); w=h/1.7; }   // 横屏：先保高度
       if(h>w*2.34) h=w*2.34;                              // 别把卡拉成面条
     }else{
@@ -837,8 +894,7 @@ body::after{
 
   function layout(){
     var n=cards.length, half=n/2;
-    // 桌面上相邻卡不再隐身：留在身后盖一层遮罩，一眼就看出这是一摞可以翻的卡
-    var wide=gallery.clientWidth>760;
+    // 相邻卡不再隐身：留在身后盖一层遮罩，一眼就看出这是一摞可以翻的卡
     els.forEach(function(el,i){
       var rel=i-active;
       if(rel>half) rel-=n;
@@ -855,7 +911,7 @@ body::after{
         el.className="card is-near";
         el.style.setProperty("--sc",.84);el.style.setProperty("--ry",(rel>0?-7:7)+"deg");
         el.style.zIndex=9;
-        el.style.visibility="visible";el.style.opacity=wide?1:0;el.style.pointerEvents="none";
+        el.style.visibility="visible";el.style.opacity=1;el.style.pointerEvents="none";
         el.setAttribute("aria-pressed","false");
       }else if(abs===2){
         el.className="card is-side";

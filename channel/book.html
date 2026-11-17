@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>/* 跟随首页 Aa 主题：rd-cfg.theme（cream/light/green/dark） */
+try{var _c=JSON.parse(localStorage.getItem('rd-cfg')||'{}');document.documentElement.dataset.theme=_c.theme||'cream';}catch(e){document.documentElement.dataset.theme='cream';}
+</script>
 <title>书卡详情 · 书卡频道</title>
 <link rel="stylesheet" href="app.css">
 <style>
@@ -248,6 +251,22 @@ h1{
   .rk{width:80px}
   .rk .nm{font-size:10px}
 }
+/* ===== 浅色主题：纸底深墨，跟首页 Aa 的 cream / light / green 对齐 ===== */
+html:not([data-theme="dark"]){--rule:#e4ded1}
+html:not([data-theme="dark"]) .by{color:#5b6a63}
+html:not([data-theme="dark"]) .why{background:linear-gradient(100deg,#fbf7ee 0%,#f5efe2 100%);border-left-color:#c08a4a}
+html:not([data-theme="dark"]) .why p{color:#33443c}
+html:not([data-theme="dark"]) .why .lb{color:#8a744f}
+html:not([data-theme="dark"]) .prog .bar{background:#e3ddd0}
+html:not([data-theme="dark"]) .prog .top b{color:#24312e}
+html:not([data-theme="dark"]) .goal{color:#4c5a54}
+html:not([data-theme="dark"]) .rk .nm{color:#33443c}
+html:not([data-theme="dark"]) .rk .au{color:#7a877f}
+html:not([data-theme="dark"]) .cover{box-shadow:0 22px 44px -12px rgba(58,48,32,.4),0 5px 14px rgba(58,48,32,.16),0 0 0 1px rgba(36,49,46,.08)}
+html:not([data-theme="dark"]) .pb .th{box-shadow:0 3px 9px rgba(58,48,32,.2)}
+html:not([data-theme="dark"]) .rk .th{box-shadow:0 8px 20px -6px rgba(58,48,32,.32),0 2px 6px rgba(58,48,32,.14)}
+html:not([data-theme="dark"]) .rk:hover .th{box-shadow:0 18px 34px -8px rgba(58,48,32,.4),0 4px 12px rgba(58,48,32,.2)}
+html:not([data-theme="dark"]) .sec-head{border-bottom-color:#e4ded1}
 @media (prefers-reduced-motion:reduce){
   .rk .th,.pb{transition-duration:.01ms}
 }

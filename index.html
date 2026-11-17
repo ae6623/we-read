@@ -160,18 +160,34 @@
   #reading-panel-booklist .bl-stages{grid-template-columns:1fr;gap:10px}
   #reading-panel-booklist .bl-stage + .bl-stage::before{content:"↓";left:auto;right:14px;top:-15px}
 }
-@media(max-width:560px){
-  #reading-panel-booklist .bl-frame{height:min(74vh,660px);min-height:480px}
-  #reading-panel-booklist .bl-frame-open{top:8px;right:10px}
+/* 书单卡画廊入口：不再 iframe 内嵌（内嵌会让 iframe 导航污染顶层历史，
+   详情页返回时叠出「双首页」），改为新标签打开，配色直接吃站内主题变量。 */
+#reading-panel-booklist .bl-entry{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,.65fr);
+  gap:clamp(16px,4vw,44px);align-items:center;
+  background:var(--card);border:1px solid var(--line);border-radius:16px;
+  padding:clamp(18px,3.2vw,34px);box-shadow:0 6px 22px rgba(var(--shadow),.07)}
+#reading-panel-booklist .bl-entry-eyebrow{font:600 .68rem/1 var(--sans);letter-spacing:.18em;color:var(--green);margin:0 0 10px}
+#reading-panel-booklist .bl-entry h3{font:700 clamp(1.02rem,2.2vw,1.3rem)/1.45 var(--serif);color:var(--ink);margin:0 0 8px}
+#reading-panel-booklist .bl-entry-copy{font-size:.84rem;line-height:1.8;color:var(--muted);margin:0 0 16px;max-width:32em}
+#reading-panel-booklist .bl-entry-go{display:inline-flex;align-items:center;gap:8px;
+  font:600 .84rem/1 var(--sans);color:#fff;background:var(--green);border:1px solid var(--green);
+  border-radius:999px;padding:11px 20px;text-decoration:none;transition:.15s}
+#reading-panel-booklist .bl-entry-go:hover{background:var(--green2);border-color:var(--green2);transform:translateY(-1px)}
+#reading-panel-booklist .bl-entry-go:focus-visible{outline:2px solid var(--green2);outline-offset:3px}
+#reading-panel-booklist .bl-entry-tip{font:.72rem/1.7 var(--sans);color:var(--muted);margin:10px 0 0}
+#reading-panel-booklist .bl-entry-art{position:relative;height:clamp(176px,23vw,232px)}
+#reading-panel-booklist .bl-entry-card{position:absolute;top:50%;left:50%;width:clamp(88px,10.5vw,128px);
+  aspect-ratio:3/4.16;border-radius:3px;overflow:hidden;background:var(--sage);
+  box-shadow:0 14px 28px rgba(var(--shadow),.28);border:1px solid rgba(255,255,255,.55)}
+#reading-panel-booklist .bl-entry-card img{width:100%;height:100%;object-fit:cover;display:block}
+#reading-panel-booklist .bl-entry-card.c1{transform:translate(-50%,-50%) rotate(-2deg);z-index:3}
+#reading-panel-booklist .bl-entry-card.c2{transform:translate(-84%,-50%) rotate(-8deg) translateY(6px);z-index:2}
+#reading-panel-booklist .bl-entry-card.c3{transform:translate(-16%,-50%) rotate(7deg) translateY(8px);z-index:1}
+@media(max-width:640px){
+  #reading-panel-booklist .bl-entry{grid-template-columns:1fr;gap:14px}
+  #reading-panel-booklist .bl-entry-art{order:-1;height:164px}
+  #reading-panel-booklist .bl-entry-card{width:80px}
 }
-#reading-panel-booklist .bl-frame-wrap{position:relative;margin:2px 0 10px}
-#reading-panel-booklist .bl-frame{display:block;width:100%;height:min(78vh,760px);min-height:520px;
-  border:1px solid var(--line);border-radius:14px;background:#171310}
-#reading-panel-booklist .bl-frame-open{position:absolute;top:10px;right:12px;z-index:2;
-  font:600 .72rem/1 var(--sans);color:#f3ead8;text-decoration:none;
-  background:rgba(20,16,12,.72);border:1px solid rgba(255,255,255,.22);border-radius:999px;
-  padding:6px 12px;backdrop-filter:blur(6px);transition:.15s}
-#reading-panel-booklist .bl-frame-open:hover{background:rgba(20,16,12,.92)}
 </style>
 <!-- booklist:end -->
 </head><body><a class="skip-link" href="#main">跳到内容</a><header class="hero"><div class="hero-inner"><nav class="office-entry-nav" aria-label="首页快捷入口"><a class="office-entry" href="agent-room/index.html" aria-label="进入像素阅读室" title="进入像素阅读室"><svg class="office-entry-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="28" viewBox="0 0 24 28" aria-hidden="true" focusable="false"><use href="#ic-1"/></svg></a></nav><a class="hero-brand" href="brand/index.html"><svg class="hero-mark-icon" viewBox="24 13 72 95" aria-hidden="true" focusable="false"><use href="#ic-2"/></svg><span class="hero-name">落雨<i>·</i>阅读札记</span><small>LUOYU · AI READING NOTES</small></a><p class="eyebrow">WE READ · READING ARCHIVE</p><h1>读过的书，<br><span>留下自己的注脚。</span></h1><p class="hero-copy hero-quote"><q>尽信书，则不如无书。</q>——<cite><a href="https://www.chinakongzi.org/kzsf/lsjd/mengzi/200711/t20071120_28410.htm" aria-label="查看《孟子·尽心下》原文">《孟子·尽心下》</a></cite></p></div><div class="hero-sketch" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 300" focusable="false"><use href="#ic-3"/></svg></div><div class="hero-mark" aria-hidden="true">阅</div></header><details class="reading-explanation reading-bar" aria-label="上善若水" data-explain-fold data-module="reading-bar"><summary><span class="reading-bar-label">上善若水</span></summary><div class="reading-bar-body"><p class="hero-description">个人认知有限，AI认知无限，我们要借着 AI 的海量多维知识库，搭配睿智书评与今日观古的宝贵经验，让作者的思路与我们的当下思考🤔，强制进行关联，让我们的认知得到生产力级别的精进。</p><p class="hero-description">书分多种，长篇短篇各有千秋，几十万字的书需要AI站在高维去降维打击，几千字需要站在低维去向上补齐，我们个人的知识储备有限，但是可以利用ai回测书本与作者隔空对话，复刻整书的灵魂，知道他在写书的过去预判的现在是否正确，正确有何思路，不正确有何输入，思考，无所不能。</p></div></details><main id="main" class="layout"><div class="reading-module" data-reading-module><div class="reading-tabs-wrap"><div class="reading-tabs" data-tablist aria-label="阅读内容" hidden><button type="button" id="reading-tab-overview" data-panel="reading-panel-overview" aria-label="书架">书架</button><button type="button" id="reading-tab-series" data-panel="reading-panel-series" aria-label="系列">系列</button><button type="button" id="reading-tab-archive" data-panel="reading-panel-archive" aria-label="归档">归档</button><!-- booklist:begin -->
@@ -5396,11 +5412,21 @@
 <section id="reading-panel-booklist" class="reading-panel" aria-label="书单">
 <div class="bl-head">
 <h2>书单 · 书卡画廊</h2>
-<p>一条书单一张卡，三步摊开、每本都能点进去读。卡片会自己轮动——先翻步骤 ①②③，轮完翻下一张书单；也可以左右滑动或点两侧翻卡，点书封直接进全书领读。</p>
+<p>一条书单一张卡，三步摊开、每本都能点进去读。画廊会自己轮转——先翻步骤 ①②③，轮完翻下一张书单；也能左右滑动翻卡，点书封直接进全书领读。</p>
 </div>
-<div class="bl-frame-wrap">
-<iframe class="bl-frame" src="channel/" title="书单 · 书卡画廊" loading="lazy" scrolling="no"></iframe>
-<a class="bl-frame-open" href="channel/" target="_blank" rel="noopener">全屏打开 ↗</a>
+<div class="bl-entry">
+<div class="bl-entry-txt">
+<p class="bl-entry-eyebrow">GALLERY · 一屏一张卡</p>
+<h3>17 条书单，一条一张卡</h3>
+<p class="bl-entry-copy">封面在上、三步在下，点书封直接进全书领读；桌面和手机都能左右翻。</p>
+<a class="bl-entry-go" href="channel/" target="_blank" rel="noopener">打开书单卡画廊 <span aria-hidden="true">↗</span></a>
+<p class="bl-entry-tip">新标签打开，不打断当前页</p>
+</div>
+<div class="bl-entry-art" aria-hidden="true">
+<span class="bl-entry-card c3"><img src="https://cdn.js-dev.cn/assets/covers/zhou-qi.jpg" alt="" loading="lazy"></span>
+<span class="bl-entry-card c2"><img src="https://cdn.js-dev.cn/assets/covers/jin-rong-zhi-wang--hui-le-shi-jie-de-yin-hang-j.jpg" alt="" loading="lazy"></span>
+<span class="bl-entry-card c1"><img src="https://cdn.js-dev.cn/assets/covers/jing-ji-xue-de-si-wei-fang-shi--di-13-ban.jpg" alt="" loading="lazy"></span>
+</div>
 </div>
 </section>
 <!-- booklist:end -->

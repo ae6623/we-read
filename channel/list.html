@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>/* 跟随首页 Aa 主题 */
+try{var _c=JSON.parse(localStorage.getItem('rd-cfg')||'{}');document.documentElement.dataset.theme=_c.theme||'cream';}catch(e){document.documentElement.dataset.theme='cream';}
+</script>
 <title>书单详情 · 书卡频道</title>
 <link rel="stylesheet" href="app.css">
 <style>
@@ -41,6 +44,9 @@
   font-size:22px;line-height:1;color:oklch(0.94 0.012 80);letter-spacing:0;
   position:relative;top:-1px;
 }
+/* 浅色主题：数字与分隔线换成深墨，别让浅字压在米白底上 */
+html:not([data-theme="dark"]) .stats i{color:#24312e}
+html:not([data-theme="dark"]) .stats span{border-right-color:#e0dacd;color:#5b6a63}
 
 /* ============ 阶段 ============ */
 .stage{padding:clamp(26px,4vh,40px) 0 0}
