@@ -432,19 +432,8 @@ body::after{
   color:#fdf6ea;background:oklch(0.3 0.04 60 /.78);
   padding:.35cqw .8cqw;border-radius:0 0 0 2px;
 }
-/* 一阶段不足 4 本时，空出来的那格放「进入下一步」，既不空也不抢戏 */
-.sb-next{flex:1 1 0;width:auto;min-width:0;background:none;border:none;padding:0;font-family:inherit;cursor:pointer;text-align:center}
-.sb-next .th{
-  height:29.4cqw;border:1px dashed oklch(0.74 0.02 70);background:transparent;box-shadow:none;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.1cqw;
-  color:var(--ink-faint);
-  transition:border-color .22s ease,background .22s ease;
-}
-.sb-next .th::before{content:"↳";font-size:5.2cqw;line-height:1;color:var(--accent);opacity:.62}
-.sb-next .tx{font-size:2.1cqw;line-height:1.42;padding:0 1.2cqw;max-height:2.84em;overflow:hidden}
-.sb-next .nm{color:var(--accent);opacity:1}
-.sb-next:hover .th{border-color:var(--accent);background:oklch(0.955 0.012 80)}
-.sb-next:focus-visible .th{outline:2px solid var(--accent);outline-offset:2px}
+/* 一阶段不足 4 本：书居中排开，不补假卡（虚线占位卡像封面加载失败） */
+.books.is-short{justify-content:center}
 
 .sb .nm{
   margin-top:.6cqw;font-size:2.15cqw;line-height:1.36;color:var(--ink-soft);
@@ -731,24 +720,11 @@ body::after{
     tip.textContent=st.tip||"";
     tip.classList.toggle("is-empty",!st.tip);
     var bx=el.querySelector(".books");
+    // 不足 4 本就只摆真实的书：之前塞的「下一步」虚线占位卡看着像封面加载失败
     var html=st.books.map(bookHTML).join("");
-    if(st.books.length<4){
-      var nx=c.stages[k+1];
-      html+='<button class="sb sb-next" type="button" data-next="'+(nx?(k+1):-1)+'"'+
-            ' aria-label="'+(nx?('进入第 '+(k+2)+' 步：'+esc(nx.name)):'查看完整书单')+'">'+
-              '<div class="th"><span class="tx">'+(nx?esc(nx.name):'看完整书单')+'</span></div>'+
-              '<div class="nm">'+(nx?('下一步 →'):('全部 '+c.n+' 本 →'))+'</div>'+
-            '</button>';
-    }
     bx.innerHTML=html;
     bx.scrollLeft=0;
-    var nxEl=bx.querySelector(".sb-next");
-    if(nxEl) nxEl.addEventListener("click",function(e){
-      e.stopPropagation();
-      var t=+nxEl.dataset.next;
-      if(t>=0) paintStep(el,t);
-      else location.href="list.html?id="+encodeURIComponent(c.id);
-    });
+    bx.classList.toggle("is-short",st.books.length<4);
     [].forEach.call(el.querySelectorAll(".tab"),function(b,j){
       b.classList.toggle("on",j===k);
       b.setAttribute("aria-selected",String(j===k));
@@ -878,10 +854,11 @@ body::after{
 
     var w,h;
     if(gw<=760){
-      // 手机：左右各留 22px，主卡窄一档，两侧邻卡能露出一条被遮罩的边，提示可滑
-      w=gw-44; h=gh-24;
+      // 手机：主卡收窄到视口的 78%，两侧各留约 11% 给邻卡露脸——
+      // 邻卡位移 .92 张卡宽、缩放 .84，内缘正好贴住主卡边（.92-.42=.5），留白全归邻卡
+      w=gw*.78; h=gh-24;
       if(h<w*1.7){ h=Math.min(w*1.7,gh-14); w=h/1.7; }   // 横屏：先保高度
-      if(h>w*2.34) h=w*2.34;                              // 别把卡拉成面条
+      if(h>w*2.45) h=w*2.45;                              // 别把卡拉成面条
     }else{
       // 桌面：高度吃满（扣掉上方页码和下方控件），宽度按竖版比例反推
       var ratio=1.78;
