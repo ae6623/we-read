@@ -38,6 +38,9 @@ LEVELS = {
     "gen": ("通识", "搭完整脉络"),
     "adv": ("进阶", "已有基础往深走"),
 }
+# 书单扩容时 levelKey 写成了两套（general / mid 夹在 gen / adv 里），
+# 不归一的话筛选按钮会少算、面板渲染直接 KeyError。
+LEVEL_ALIAS = {"general": "gen", "mid": "adv", "beginner": "start"}
 
 # 与「已阅」rd-recent 相同的封面占位配色
 COVER_HUES = [162, 186, 205, 28, 36, 12, 258, 340]
@@ -182,7 +185,7 @@ def build_panel(paths):
     out.append('<span class="bl-ch-title">书卡频道</span>')
     n_books = len({it["s"] for p in paths for st in p["stages"] for it in st["items"]})
     out.append('<span class="bl-ch-desc">%d 条书单 · %d 本书 —— '
-               '一张卡一本书，卡里还挂着十几本关联书目，顺着读下去</span>'
+               '一张卡一条书单，三步摊开、每本都能点进去读</span>'
                % (len(paths), n_books))
     out.append('<span class="bl-ch-go">进入 →</span>')
     out.append('</a>')
@@ -307,6 +310,8 @@ def main():
         orig = f.read()
     with open(args.data, encoding="utf-8") as f:
         paths = json.load(f)
+    for p in paths:
+        p["levelKey"] = LEVEL_ALIAS.get(p["levelKey"], p["levelKey"])
 
     stripped = strip_all(orig)
     if args.remove:

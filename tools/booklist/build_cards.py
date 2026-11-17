@@ -11,9 +11,13 @@
 
 产出
   channel/cards.json          频道页 fetch 的数据源
-    count / paths / cards[] / pool[]
+    count / paths / cards[] / pool[] / lists[]
+  lists[] 是频道页真正渲染的卡：一张卡 = 一条书单，卡内按三个阶段列出全部
+    书目。之前一卡一本书，同一条书单的十本被拆开摊在画廊里，翻着像同一个
+    主题反复出现，也看不出「第几步」。
+  cards[] 保留一卡一本的形态，给 book.html（书卡详情）取 sib 关联书用。
   pool[] 是全库可访问书目（书单内 + 书架其余），只带渲染必需字段，
-    cards[].sib 存的是 pool 下标，卡内「关联阅读」横向轨道从这里取书，
+    cards[].sib 存的是 pool 下标，书卡详情的「关联阅读」从这里取书，
     这样一本书能挂十几本真正相关的书，而不是只有同阶段的 3 本。
   tools/booklist/notes_index.json  笔记页探测缓存（slug → combined/overview），
     避免每次重跑都打 400 多次网络。
@@ -439,6 +443,64 @@ def main():
         "stages": path_stages.get(p["id"], []),
     } for p in paths]
 
+    # ---- 书单卡：频道页的主卡单位 --------------------------------------
+    # 之前一卡一本书，同一条书单的 10 本被拆开摊在画廊里，翻着像同一个主题
+    # 反复出现，而且看不出「第几步」。改成一卡 = 一条书单，卡内按阶段列出
+    # 全部书目，卡与卡之间才是书单之间的衔接，步骤关系就落在卡里了。
+    by_slug = {c["slug"]: c for c in cards}
+    # 书单排序：钱 → 判断力 → 社会 → 商业 → 历史 → 文学，一条从具体到宏观
+    # 再到审美的路。原来是按写完的先后拼的，中国史夹在投资和周期中间，翻过去断档。
+    LIST_ORDER = [
+        "finance-base", "stock-value", "cycle-crisis", "macro-policy",
+        "corp-finance", "market-game", "money-personal",
+        "thinking-basics", "society-observe", "business-management",
+        "china-history", "world-history-modern", "world-us-history",
+        "world-civilization",
+        "literature-cn", "literature-documentary", "literature-essay",
+    ]
+
+    def split_title(t):
+        for sep in ("·", "："):
+            i = t.find(sep)
+            if i > 0:
+                return t[:i].strip(), t[i + 1:].strip()
+        return t, ""
+
+    paths_sorted = sorted(
+        paths,
+        key=lambda p: LIST_ORDER.index(p["id"]) if p["id"] in LIST_ORDER
+        else len(LIST_ORDER))
+
+    lists_out = []
+    for p in paths_sorted:
+        sts = []
+        for si, st in enumerate(p["stages"], 1):
+            books = []
+            for it in st["items"]:
+                c = by_slug.get(it["s"])
+                if not c:
+                    continue
+                books.append({k: c[k] for k in
+                              ("slug", "t", "a", "cover", "w", "prog", "fin", "hue")})
+            if books:
+                sts.append({"i": si, "name": st.get("name", ""),
+                            "aim": st.get("aim", ""), "tip": st.get("tip", ""),
+                            "books": books})
+        if not sts:
+            continue
+        allb = [b for s in sts for b in s["books"]]
+        main, sub = split_title(p["title"])
+        lists_out.append({
+            "id": p["id"], "field": p["field"], "level": p["level"],
+            "title": p["title"], "main": main, "sub": sub, "goal": p["goal"],
+            "n": len(allb), "nsteps": len(sts),
+            "read": sum(1 for b in allb if b["prog"] > 0),
+            "hue": allb[0]["hue"],
+            "stages": sts,
+        })
+    print("书单卡 %d 张，共 %d 本" % (
+        len(lists_out), sum(l["n"] for l in lists_out)))
+
     # pool 只输出前端渲染要用的字段，c1/c2/st/tFull 是算法中间量，不进 JSON
     pool_out = [{"s": p["slug"], "t": p["t"], "a": p["a"], "c": p["cat"],
                  "cv": p["cover"], "h": p["href"], "in": p["inPath"]}
@@ -450,6 +512,7 @@ def main():
         "paths": paths_out,
         "pool": pool_out,
         "cards": cards,
+        "lists": lists_out,
     }
     os.makedirs(os.path.dirname(a.out), exist_ok=True)
     with open(a.out, "w", encoding="utf-8") as f:

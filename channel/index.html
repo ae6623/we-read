@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>书卡频道 · 美学书单</title>
-<meta name="description" content="把本站已归档的 166 本书，按 17 条主题书单排成可翻页的书卡。每张卡都能点进全书领读。">
+<meta name="description" content="17 条主题书单、166 本书，一条书单一张卡，卡里按三个步骤摊开。任意一本都能点进全书领读。">
 <style>
 /* ============ Design Tokens ============ */
 :root{
@@ -268,6 +268,66 @@ body::after{
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
 
+/* ============ 书单卡：一卡一条书单，卡内三个阶段 ============ */
+.lhead{flex:0 0 auto;padding:0 5cqw}
+.ltitle{
+  font-family:var(--font-display);font-weight:700;color:var(--ink);
+  font-size:8.2cqw;line-height:1.14;letter-spacing:.01em;
+}
+.lsub{font-size:3.4cqw;color:var(--accent);margin-top:.9cqw;letter-spacing:.05em}
+.lgoal{
+  margin-top:1.5cqw;font-size:2.6cqw;line-height:1.58;color:var(--ink-soft);
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+
+.steps{
+  flex:1 1 auto;min-height:0;
+  display:flex;flex-direction:column;justify-content:space-between;
+  padding:2.2cqw 5cqw 0;
+}
+.step{flex:0 0 auto}
+.step-h{display:flex;align-items:baseline;gap:1.3cqw}
+.step-n{flex:none;font-family:var(--font-latin);font-size:2.5cqw;color:var(--accent);letter-spacing:.08em}
+.step-name{
+  flex:1;min-width:0;font-size:2.85cqw;font-weight:600;color:var(--ink);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.step-c{flex:none;font-size:2.25cqw;color:var(--ink-faint);letter-spacing:.06em}
+.step-aim{
+  margin:.55cqw 0 1.1cqw;font-size:2.35cqw;color:var(--ink-faint);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.step-b{
+  display:flex;gap:1.5cqw;justify-content:space-between;
+  overflow-x:auto;overflow-y:hidden;
+  overscroll-behavior-x:contain;
+  scrollbar-width:none;-ms-overflow-style:none;
+  -webkit-overflow-scrolling:touch;
+}
+.step-b::-webkit-scrollbar{display:none}
+.sb{flex:0 0 auto;width:calc((100% - 12cqw) / 4);text-decoration:none}
+.sb .th{
+  position:relative;width:100%;aspect-ratio:3/4.16;
+  border-radius:2px;overflow:hidden;
+  background:oklch(0.87 0.03 var(--h,60));
+  box-shadow:0 2px 5px rgba(0,0,0,.16);
+  transition:transform .2s var(--ease);
+}
+.sb .th img{width:100%;height:100%;object-fit:cover;display:block}
+.sb:hover .th{transform:translateY(-2px)}
+.sb .bd{
+  position:absolute;right:0;top:0;
+  font-family:var(--font-latin);font-size:max(1.75cqw,7.5px);letter-spacing:.04em;
+  color:#fdf6ea;background:oklch(0.3 0.04 60 /.78);
+  padding:.35cqw .8cqw;border-radius:0 0 0 2px;
+}
+.sb .nm{
+  margin-top:.6cqw;font-size:2.15cqw;line-height:1.36;color:var(--ink-soft);
+  height:1.36em;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;
+}
+.sb:hover .nm{color:var(--accent)}
+.sb:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
 /* ============ 卡底 ============ */
 .foot{
   flex:0 0 auto;margin:0 5cqw;padding:3cqw 0 3.6cqw;
@@ -365,9 +425,9 @@ body::after{
   .navrow{gap:14px}
   .nav{width:36px;height:36px;font-size:17px}
   .next-word{font-size:12px;letter-spacing:.3em}
-  .dots{gap:7px;max-width:88vw}
-  .dots button{width:16px}
-  .dots button.on{width:28px}
+  .dots{gap:4px;max-width:88vw}
+  .dots button{width:12px}
+  .dots button.on{width:20px}
   .hint{font-size:10.5px;letter-spacing:.03em;line-height:1.5;padding:0 8px}
   .hint .h-wide{display:none}
   .hint .h-narrow{display:inline}
@@ -446,7 +506,7 @@ body::after{
   var mastBar=document.getElementById("mastBar");
   var mastSeas=document.getElementById("mastSeas");
 
-  var cards=[], paths=[], pool=[], els=[], active=0, pathPos=[], warmed={};
+  var cards=[], paths=[], pool=[], els=[], active=0, warmed={};
 
   function esc(s){
     return String(s==null?"":s).replace(/[&<>"']/g,function(c){
@@ -461,68 +521,65 @@ body::after{
     return "oklch(0.90 0.032 "+c.hue+")";
   }
 
+  var STEPNUM=["①","②","③","④","⑤"];
   function cardHTML(c){
-    var tags=c.sibTag||[];
-    var sib=(c.sib||[]).map(function(idx,k){
-      var s=pool[idx];if(!s) return "";
-      var tg=tags[k]||"";
-      var cls=tg==="同作者"?" is-author":(tg==="同一步"?" is-step":"");
-      return '<a class="mini" href="book.html?slug='+esc(s.s)+'">'+
-             '<div class="th"><img data-src="'+esc(s.cv)+'" alt="'+esc(s.t)+'" loading="lazy" decoding="async">'+
-               (tg?'<span class="tg'+cls+'">'+esc(tg)+'</span>':'')+
-             '</div>'+
-             '<div class="nm">'+esc(s.t)+'</div></a>';
+    var steps=c.stages.map(function(st){
+      var books=st.books.map(function(b){
+        var flag=b.fin?'<span class="bd">读毕</span>'
+          :(b.prog>0?'<span class="bd">'+b.prog+'%</span>':'');
+        return '<a class="sb" href="book.html?slug='+esc(b.slug)+'" title="'+esc(b.t)+'" aria-label="'+esc(b.t)+'">'+
+               '<div class="th" style="--h:'+b.hue+'">'+
+                 '<img data-src="'+esc(b.cover)+'" alt="'+esc(b.t)+' 封面" loading="lazy" decoding="async">'+
+                 flag+
+               '</div>'+
+               '<div class="nm">'+esc(b.t)+'</div></a>';
+      }).join("");
+      return '<section class="step">'+
+        '<div class="step-h">'+
+          '<span class="step-n">'+(STEPNUM[st.i-1]||st.i)+'</span>'+
+          '<span class="step-name">'+esc(st.name)+'</span>'+
+          '<span class="step-c">'+st.books.length+' 本</span>'+
+        '</div>'+
+        '<div class="step-aim">'+esc(st.aim)+'</div>'+
+        '<div class="step-b">'+books+'</div>'+
+      '</section>';
     }).join("");
-    var progTxt=c.fin?"已读毕":(c.prog>0?"已读 "+c.prog+"%":"未开卷");
+    var pct=c.n?Math.round(c.read/c.n*100):0;
     return '<div class="paper">'+
       '<div class="spine"></div>'+
       '<div class="card-head">'+
-        '<div class="issue">NO.<b>'+String(c.i).padStart(2,"0")+'</b> &nbsp;·&nbsp; '+esc(c.f)+' &nbsp;·&nbsp; '+esc(c.l)+'</div>'+
+        '<div class="issue">NO.<b>'+String(c._i).padStart(2,"0")+'</b> &nbsp;·&nbsp; '+esc(c.field)+' &nbsp;·&nbsp; '+esc(c.level)+'</div>'+
         '<div class="dotrow"><i></i><i></i><i></i></div>'+
       '</div>'+
-      '<div class="stage">'+
-        '<div class="stage-bg" data-bg="'+esc(c.cover)+'"></div>'+
-        '<div class="stage-tint"></div><div class="stage-wash"></div>'+
-        '<div class="cover-wrap" style="--h:'+c.hue+'">'+
-          '<div class="cover-ph">'+esc(c.t)+'</div>'+
-          '<img data-src="'+esc(c.cover)+'" alt="'+esc(c.t)+' 封面" loading="lazy" decoding="async">'+
-        '</div>'+
-        '<div class="stage-num">'+String(c.i).padStart(2,"0")+'</div>'+
-        '<div class="badge">阶段 '+c.st+' / '+c.stn+'</div>'+
+      '<div class="lhead">'+
+        '<h3 class="ltitle">'+esc(c.main)+'</h3>'+
+        '<div class="lsub">'+esc(c.sub)+'</div>'+
+        '<p class="lgoal">'+esc(c.goal)+'</p>'+
       '</div>'+
-      '<div class="titleblock">'+
-        '<h3>'+esc(c.t)+'</h3>'+
-        '<div class="by'+(c.a?"":" is-empty")+'">'+esc(c.a||"")+'</div>'+
-      '</div>'+
-      '<div class="why">'+
-        '<div class="label">Why this one</div>'+
-        '<p>'+esc(c.w)+'</p>'+
-      '</div>'+
-      '<div class="more">'+
-        '<div class="cap"><span>关联阅读</span><em>'+(c.sib||[]).length+' 本 · 滑动 →</em></div>'+
-        '<div class="row">'+(sib||'<div class="mini"><div class="th"></div></div>')+'</div>'+
-      '</div>'+
+      '<div class="steps">'+steps+'</div>'+
       '<div class="foot">'+
         '<div class="bar">'+
-          '<div class="track"><i style="width:'+Math.max(2,c.prog)+'%"></i></div>'+
-          '<div class="leg"><span>'+esc((c.cat||c.f||"").replace(/-/g," · "))+'</span><span>'+progTxt+'</span></div>'+
+          '<div class="track"><i style="width:'+(pct?Math.max(3,pct):0)+'%"></i></div>'+
+          '<div class="leg"><span>'+c.n+' 本 · '+c.nsteps+' 步</span>'+
+            '<span>'+(c.read?("开卷 "+c.read+" / "+c.n):"未开卷")+'</span></div>'+
         '</div>'+
-        '<a class="go" href="list.html?id='+esc(c.p)+'&book='+esc(c.slug)+'">领读 →</a>'+
+        '<a class="go" href="list.html?id='+esc(c.id)+'">领读 →</a>'+
       '</div>'+
     '</div>';
   }
 
-  /* 85 张卡不一次性建内容：先只建空壳，进入可视窗口（|rel|<=2）才填 HTML。
+  /* 卡片不一次性建内容：先只建空壳，进入可视窗口（|rel|<=2）才填 HTML。
      这样首屏只解析 5 张卡的字符串，翻一页只解析 1 张，移动端不会卡在首帧。 */
   function build(){
     var frag=document.createDocumentFragment();
     cards.forEach(function(c,i){
+      c._i=i+1;
       var el=document.createElement("article");
       el.className="card is-far";
       el.tabIndex=-1;
       el.dataset.index=i;
       el.setAttribute("role","button");
-      el.setAttribute("aria-label","第 "+(i+1)+" 张："+c.t);
+      el.setAttribute("aria-label","第 "+(i+1)+" 个书单："+c.title);
       el.addEventListener("click",function(e){
         if(e.target.closest("a")) return;   // 链接自己走，别顺带切卡
         if(i!==active) go(i);
@@ -543,9 +600,9 @@ body::after{
     el.style.setProperty("--accent-soft",accentSoft(c));
     el.style.setProperty("--h",c.hue);
     el.innerHTML=cardHTML(c);
-    // 新填的卡轨道回到最左，否则沿用上一张的滚动位置，首图会被切掉一截
-    var rw=el.querySelector(".more .row");
-    if(rw) rw.scrollLeft=0;
+    // 阶段轨道回到最左，否则沿用上一张的滚动位置，首图会被切掉一截
+    var rws=el.querySelectorAll(".step-b");
+    for(var k=0;k<rws.length;k++) rws[k].scrollLeft=0;
     el.dataset.filled=i;
   }
 
@@ -624,16 +681,15 @@ body::after{
     var w=100/n;
     mastBar.style.width=w+"%";
     mastBar.style.left=(active*w)+"%";
-    mastSeas.innerHTML="<b>"+esc(c.f)+"</b> · "+esc(c.pt);
-    var d=pathPos[active];
+    mastSeas.innerHTML="<b>"+esc(c.field)+"</b> · "+esc(c.main);
     [].forEach.call(dotsBox.children,function(b,j){
-      b.classList.toggle("on",j===d);
-      b.setAttribute("aria-selected",String(j===d));
+      b.classList.toggle("on",j===active);
+      b.setAttribute("aria-selected",String(j===active));
     });
     document.getElementById("hintW").innerHTML =
-      "<b>"+esc(c.pt)+"</b> &nbsp;·&nbsp; "+c.pi+" / "+c.pn+" 本 &nbsp;·&nbsp; ← → 翻页 · 滚轮 · 手指滑动";
+      "<b>"+esc(c.main)+"</b> &nbsp;·&nbsp; "+c.n+" 本 · "+c.nsteps+" 步 &nbsp;·&nbsp; ← → 翻页 · 滚轮 · 手指滑动";
     document.getElementById("hintN").textContent =
-      "第 "+c.pi+" / "+c.pn+" 本 · 左右滑动";
+      c.n+" 本 · "+c.nsteps+" 步 · 左右滑动";
   }
 
   function go(i){
@@ -649,31 +705,23 @@ body::after{
   }
 
   function dotsFor(){
-    // 每条书单一个章节点，点一下跳到该单第一本
-    pathPos=[];
-    var order=[];
-    cards.forEach(function(c){ if(order.indexOf(c.p)<0) order.push(c.p); });
-    cards.forEach(function(c){ pathPos.push(order.indexOf(c.p)); });
-
-    paths.forEach(function(p,j){
+    // 一个点对应一条书单
+    cards.forEach(function(c,j){
       var b=document.createElement("button");
       b.type="button";
-      b.title=p.field+" · "+p.title;
-      b.setAttribute("aria-label",p.field+"："+p.title+"（"+p.n+" 本）");
-      b.addEventListener("click",function(){
-        var idx=cards.findIndex(function(c){return c.p===p.id;});
-        if(idx>=0) go(idx);
-      });
+      b.title=c.field+" · "+c.title;
+      b.setAttribute("aria-label",c.field+"："+c.title+"（"+c.n+" 本 · "+c.nsteps+" 步）");
+      b.addEventListener("click",function(){ go(j); });
       dotsBox.appendChild(b);
     });
   }
 
   // 滚轮 / 触摸 / 轨道拖拽
-  // 卡片里多了一条横向轨道，手势得先让轨道用：轨道上滑 = 横着翻书，
-  // 滑到头再继续才翻下一张卡，不然想看完最后一本关联书会直接跳卡。
+  // 卡片里每个阶段一条横向轨道，手势得先让轨道用：轨道上滑 = 横着翻书，
+  // 滑到头再继续才翻下一张卡，不然想看完这一阶段的最后一本会直接跳卡。
   var lock=false;
   function railOf(e){
-    return e.target&&e.target.closest?e.target.closest(".row"):null;
+    return e.target&&e.target.closest?e.target.closest(".step-b"):null;
   }
   function wheel(e){
     var row=railOf(e);
@@ -780,8 +828,8 @@ body::after{
   fetch("cards.json",{cache:"no-cache"})
     .then(function(r){ if(!r.ok) throw new Error("HTTP "+r.status); return r.json(); })
     .then(function(d){
-      cards=d.cards||[]; paths=d.paths||[]; pool=d.pool||[];
-      if(!cards.length) throw new Error("cards 为空");
+      cards=d.lists||[]; paths=d.paths||[]; pool=d.pool||[];
+      if(!cards.length) throw new Error("lists 为空，重跑 build_cards.py");
       loading.classList.add("hide");
       dotsFor();
       var m=location.hash.match(/^#(\d+)$/);
