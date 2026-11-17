@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>书卡频道 · 美学书单</title>
+<style>
+/* ============ Design Tokens ============ */
+:root{
+  --font-display:"Noto Serif CJK SC","Songti SC","STSong",serif;
+  --font-body:"Noto Serif CJK SC","Songti SC",serif;
+  --font-latin:Georgia,"Times New Roman",serif;
+
+  /* 暖黑画廊背景，避纯黑 */
+  --bg:oklch(0.165 0.014 62);
+  --bg-deep:oklch(0.135 0.012 60);
+  --bg-grain:oklch(0.9 0.02 80);
+
+  /* 纸质卡片，避纯白 */
+  --paper:oklch(0.958 0.013 82);
+  --paper-2:oklch(0.925 0.016 78);
+  --ink:oklch(0.30 0.022 58);
+  --ink-soft:oklch(0.50 0.018 62);
+  --ink-faint:oklch(0.66 0.014 70);
+  --line:oklch(0.87 0.018 74);
+
+  /* 三种气质主题色 */
+  --t1:oklch(0.60 0.060 72);   /* 极简 暖灰褐 */
+  --t1-soft:oklch(0.88 0.035 78);
+  --t2:oklch(0.70 0.115 74);   /* 田园 焦糖 */
+  --t2-soft:oklch(0.90 0.055 80);
+  --t3:oklch(0.44 0.062 156);  /* 中古 墨绿 */
+  --t3-soft:oklch(0.86 0.035 150);
+
+  --card-w:clamp(272px,27.5vw,364px);
+  --card-h:min(78vh,684px);
+  --gap:clamp(2px,0.6vw,10px);
+
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  background:var(--bg);
+  color:var(--paper);
+  font-family:var(--font-body);
+  overflow:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+/* 背景：暖黑径向光 + 极细噪点，避免死黑平板 */
+body::before{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(120% 90% at 50% 42%,oklch(0.26 0.022 66) 0%,oklch(0.19 0.016 62) 42%,var(--bg-deep) 100%);
+}
+body::after{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.16;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/></svg>");
+}
+
+.app{position:relative;z-index:1;height:100dvh;display:flex;flex-direction:column}
+
+/* ============ Masthead ============ */
+.masthead{
+  flex:0 0 auto;
+  display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
+  padding:clamp(14px,2.4vh,26px) clamp(20px,4vw,56px) clamp(6px,1vh,12px);
+}
+.brand{display:flex;align-items:baseline;gap:12px}
+.brand .mark{
+  font-family:var(--font-latin);font-style:italic;font-size:clamp(20px,2.1vw,27px);
+  letter-spacing:.02em;color:var(--paper);
+}
+.brand .cn{font-size:clamp(11px,1.05vw,14px);letter-spacing:.22em;color:var(--ink-faint);white-space:nowrap}
+.mast-num{display:flex;align-items:center;gap:14px;font-family:var(--font-latin)}
+.mast-num .cur{font-size:clamp(19px,1.8vw,24px);letter-spacing:.06em}
+.mast-num .sep{width:clamp(46px,6vw,84px);height:1px;background:var(--ink-faint);opacity:.5;position:relative}
+.mast-num .sep i{position:absolute;left:0;top:-1px;height:3px;background:var(--paper);transition:left .62s var(--ease)}
+.mast-num .tot{font-size:clamp(13px,1.2vw,16px);color:var(--ink-faint)}
+.mast-seas{justify-self:end;font-family:var(--font-latin);font-style:italic;font-size:clamp(12px,1.05vw,14px);letter-spacing:.08em;color:var(--ink-faint)}
+
+/* ============ Gallery ============ */
+.gallery{
+  position:relative;flex:1;min-height:0;
+  perspective:1700px;
+}
+
+.card{
+  --accent:var(--t1);--accent-soft:var(--t1-soft);
+  position:absolute;top:50%;left:50%;
+  width:var(--card-w);height:var(--card-h);
+  margin-left:calc(var(--card-w)/-2);
+  margin-top:calc(var(--card-h)/-2);
+  border-radius:5px;
+  transform-style:preserve-3d;
+  transition:transform .66s var(--ease),opacity .5s ease,filter .5s ease;
+  cursor:pointer;
+  will-change:transform;
+  outline:none;
+}
+.card[data-theme="2"]{--accent:var(--t2);--accent-soft:var(--t2-soft)}
+.card[data-theme="3"]{--accent:var(--t3);--accent-soft:var(--t3-soft)}
+
+.card.is-active{transform:translateX(0) scale(1) rotateY(0deg);z-index:5;filter:none;opacity:1}
+.card.is-prev{transform:translateX(calc(-1*(var(--card-w) + var(--gap)))) scale(.9) rotateY(8deg);z-index:3;filter:brightness(.6) saturate(.8);opacity:.8}
+.card.is-next{transform:translateX(calc(var(--card-w) + var(--gap))) scale(.9) rotateY(-8deg);z-index:3;filter:brightness(.6) saturate(.8);opacity:.8}
+.card.is-far{transform:translateX(calc(-2.1*(var(--card-w) + var(--gap)))) scale(.72);z-index:1;opacity:0;pointer-events:none}
+.card:focus-visible .paper{box-shadow:0 0 0 3px var(--bg),0 0 0 5px var(--accent-soft),0 30px 70px rgba(0,0,0,.5)}
+
+.paper{
+  position:relative;width:100%;height:100%;
+  background:var(--paper);color:var(--ink);
+  border-radius:5px;overflow:hidden;
+  container-type:inline-size;
+  box-shadow:0 26px 60px rgba(0,0,0,.46),0 3px 10px rgba(0,0,0,.3);
+  display:flex;flex-direction:column;
+}
+
+/* 卡内刊头 */
+.card-head{
+  flex:0 0 auto;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:3.4cqw 5cqw 2.6cqw;
+}
+.issue{font-family:var(--font-latin);font-size:3cqw;letter-spacing:.22em;color:var(--ink-soft)}
+.issue b{color:var(--accent);font-weight:400}
+.dotrow{display:flex;gap:1.5cqw}
+.dotrow i{width:1.5cqw;height:1.5cqw;border-radius:50%;background:var(--line)}
+.dotrow i:nth-child(1){background:var(--accent)}
+
+/* 氛围大图 + 错落大字 */
+.hero{position:relative;flex:0 0 43%;overflow:hidden;background:var(--paper-2)}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 46%;}
+.hero .tint{position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,16,12,.05) 0%,rgba(20,16,12,.10) 40%,rgba(20,16,12,.34) 100%);mix-blend-mode:multiply}
+.hero .wash{position:absolute;inset:0;background:linear-gradient(120deg,var(--accent-soft) 0%,transparent 62%);opacity:.5;mix-blend-mode:screen}
+.hero-type{position:absolute;left:5.4cqw;top:6.5cqw;color:#fbf5ea;text-shadow:0 2px 18px rgba(0,0,0,.42)}
+.hero-type .l1,.hero-type .l2{font-family:var(--font-display);font-weight:700;font-size:11.6cqw;line-height:1.06;letter-spacing:.14em;display:block}
+.hero-type .l2{margin-top:.4cqw}
+.hero-type .spread{font-family:var(--font-display);font-weight:700;font-size:11.6cqw;line-height:1;letter-spacing:.62em;display:block;margin-top:3.2cqw;padding-left:.4cqw}
+.hero-en{position:absolute;left:5.6cqw;bottom:4.4cqw;font-family:var(--font-latin);font-style:italic;font-size:2.7cqw;letter-spacing:.12em;color:#f4ead9;opacity:.9}
+.hero-idx{position:absolute;right:4.4cqw;top:4.2cqw;font-family:var(--font-latin);font-size:2.8cqw;letter-spacing:.1em;color:#f6edde;opacity:.85;border:1px solid rgba(246,237,222,.6);padding:1cqw 1.8cqw;border-radius:2px}
+
+/* 四宫格书封 */
+.swatches{flex:0 0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:1.4cqw;padding:3.2cqw 5cqw 2.8cqw;border-bottom:1px solid var(--line)}
+.sw{display:flex;flex-direction:column;gap:1.4cqw;min-width:0}
+.sw .band{height:1cqw;border-radius:1px;background:var(--band)}
+.sw .thumb{position:relative;width:100%;aspect-ratio:1/1.18;border-radius:2px;overflow:hidden;background:var(--paper-2)}
+.sw .thumb img{width:100%;height:100%;object-fit:cover}
+.sw .cap{font-size:2.55cqw;letter-spacing:.08em;color:var(--ink-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* 内容模块 1 */
+.mod-a{flex:0 0 auto;display:flex;gap:3.6cqw;padding:3.6cqw 5cqw 3cqw;align-items:flex-start}
+.mod-a .lead{flex:0 0 46%}
+.mod-a .lead h3{font-family:var(--font-display);font-size:6.4cqw;font-weight:700;line-height:1.1;letter-spacing:.05em;color:var(--ink)}
+.mod-a .lead .sub{font-family:var(--font-latin);font-style:italic;font-size:2.6cqw;letter-spacing:.1em;color:var(--accent);margin-top:1.2cqw}
+.mod-a .lead .kicker{font-size:2.35cqw;letter-spacing:.16em;color:var(--ink-faint);margin-top:1.8cqw}
+.mod-a .desc{flex:1;font-size:2.75cqw;line-height:1.85;color:var(--ink-soft);text-align:justify}
+.mod-a .desc .thumb{position:absolute}
+.mod-a .desc p{position:relative;padding-left:.2cqw}
+
+/* 内容模块 2（横向图文） */
+.mod-b{flex:1 1 auto;min-height:0;margin:0 5cqw 4cqw;border-top:1px solid var(--line);padding-top:3cqw;display:flex;gap:3.2cqw;align-items:center}
+.mod-b .photo{flex:0 0 33%;aspect-ratio:1/1;border-radius:2px;overflow:hidden;background:var(--paper-2)}
+.mod-b .photo img{width:100%;height:100%;object-fit:cover}
+.mod-b .txt{min-width:0}
+.mod-b .txt .tag{display:inline-block;font-family:var(--font-latin);font-size:2.2cqw;letter-spacing:.14em;color:var(--paper);background:var(--accent);padding:.7cqw 1.6cqw;border-radius:2px}
+.mod-b .txt h4{font-family:var(--font-display);font-size:4.4cqw;font-weight:700;letter-spacing:.06em;color:var(--ink);margin:1.6cqw 0 1cqw}
+.mod-b .txt p{font-size:2.5cqw;line-height:1.72;color:var(--ink-soft)}
+
+/* 卡片底部书脊色 */
+.spine{position:absolute;left:0;top:0;bottom:0;width:1.2cqw;background:var(--accent)}
+
+/* ============ Controls ============ */
+.controls{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:clamp(8px,1.4vh,14px);padding:clamp(8px,1.6vh,18px) 20px clamp(14px,2.6vh,28px)}
+.navrow{display:flex;align-items:center;gap:clamp(12px,2.4vw,26px)}
+.nav{
+  width:clamp(38px,4vw,48px);height:clamp(38px,4vw,48px);border-radius:50%;
+  border:1px solid oklch(0.55 0.02 62 /.5);background:transparent;color:var(--paper);
+  font-size:19px;cursor:pointer;display:grid;place-items:center;
+  transition:background .3s ease,border-color .3s ease,transform .3s var(--ease);
+}
+.nav:hover{background:oklch(0.9 0.02 80 /.12);border-color:var(--paper);transform:translateY(-2px)}
+.nav:active{transform:translateY(0) scale(.94)}
+.nav:focus-visible{outline:2px solid var(--paper);outline-offset:3px}
+.next-word{font-family:var(--font-display);font-size:clamp(13px,1.15vw,15px);letter-spacing:.4em;color:var(--ink-faint);border:none;background:none;cursor:pointer;padding:6px 0 6px .4em;transition:color .3s ease}
+.next-word:hover{color:var(--paper)}
+.next-word:focus-visible{outline:2px solid var(--paper);outline-offset:4px}
+.dots{display:flex;gap:9px;align-items:center}
+.dots button{width:22px;height:3px;border:none;background:oklch(0.55 0.02 62 /.4);cursor:pointer;padding:0;transition:background .3s ease,width .4s var(--ease)}
+.dots button.on{width:40px;background:var(--paper)}
+.hint{font-family:var(--font-latin);font-style:italic;font-size:11px;letter-spacing:.1em;color:oklch(0.5 0.015 62)}
+
+@media (max-width:760px){
+  :root{--card-w:min(80vw,340px);--card-h:min(66vh,600px);--gap:8px}
+  .card.is-prev{filter:brightness(.5);opacity:.6}
+  .card.is-next{filter:brightness(.5);opacity:.6}
+  .mast-seas{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .card,.nav,.dots button,.mast-num .sep i{transition-duration:.01ms}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <header class="masthead">
+    <div class="brand">
+      <span class="mark">The Reading Edit</span>
+      <span class="cn">书卡频道</span>
+    </div>
+    <div class="mast-num">
+      <span class="cur" id="mastCur">02</span>
+      <span class="sep"><i id="mastBar"></i></span>
+      <span class="tot">03</span>
+    </div>
+    <div class="mast-seas">Curated · Autumn 2026</div>
+  </header>
+
+  <main class="gallery" id="gallery" aria-label="书卡画廊，使用左右方向键切换">
+
+    <!-- 卡片 1 · 极简 -->
+    <article class="card" data-index="0" data-theme="1" tabindex="0" role="button" aria-label="书卡 1：意式极简">
+      <div class="paper">
+        <div class="spine"></div>
+        <div class="card-head">
+          <div class="issue">NO.<b>01</b> &nbsp;·&nbsp; 极简</div>
+          <div class="dotrow"><i></i><i></i><i></i></div>
+        </div>
+        <div class="hero">
+          <img src="assets/hero-minimal.jpg" alt="极简主义室内风格氛围">
+          <div class="tint"></div><div class="wash"></div>
+          <div class="hero-type">
+            <span class="l1">意式</span>
+            <span class="l2">极简</span>
+            <span class="spread">美　学</span>
+          </div>
+          <div class="hero-en">The Art of Less</div>
+          <div class="hero-idx">01 / 03</div>
+        </div>
+        <div class="swatches">
+          <div class="sw"><div class="band" style="--band:var(--t1)"></div><div class="thumb"><img src="assets/books-pale.jpg" alt="留白"></div><div class="cap">留白</div></div>
+          <div class="sw"><div class="band" style="--band:oklch(0.72 0.04 70)"></div><div class="thumb"><img src="assets/books-stack-color.jpg" alt="物性"></div><div class="cap">物性</div></div>
+          <div class="sw"><div class="band" style="--band:oklch(0.5 0.03 60)"></div><div class="thumb"><img src="assets/books-shelf.jpg" alt="静默"></div><div class="cap">静默</div></div>
+          <div class="sw"><div class="band" style="--band:oklch(0.8 0.03 80)"></div><div class="thumb"><img src="assets/books-desk.jpg" alt="秩序"></div><div class="cap">秩序</div></div>
+        </div>
+        <div class="mod-a">
+          <div class="lead">
+            <h3>意式极简</h3>
+            <div class="sub">Reduce / Refine</div>
+            <div class="kicker">精选 · 七册</div>
+          </div>
+          <div class="desc"><p>把多余的层层剥去，剩下的每一件都值得凝视。为喜欢克制的人挑的七本书，从设计读到生活。</p></div>
+        </div>
+        <div class="mod-b">
+          <div class="photo"><img src="assets/detail-stool.jpg" alt="极简家具细节"></div>
+          <div class="txt">
+            <span class="tag">枕边书单 · 07</span>
+            <h4>少，而更好</h4>
+            <p>让「留白」成为一种可以被阅读的日常。</p>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 卡片 2 · 田园 -->
+    <article class="card" data-index="1" data-theme="2" tabindex="0" role="button" aria-label="书卡 2：田园风格">
+      <div class="paper">
+        <div class="spine"></div>
+        <div class="card-head">
+          <div class="issue">NO.<b>02</b> &nbsp;·&nbsp; 田园</div>
+          <div class="dotrow"><i></i><i></i><i></i></div>
+        </div>
+        <div class="hero">
+          <img src="assets/hero-pastoral.jpg" alt="田园自然风格氛围">
+          <div class="tint"></div><div class="wash"></div>
+          <div class="hero-type">
+            <span class="l1">田园</span>
+            <span class="l2">风格</span>
+            <span class="spread">美　学</span>
+          </div>
+          <div class="hero-en">Pastoral Notes</div>
+          <div class="hero-idx">02 / 03</div>
+        </div>
+        <div class="swatches">
+          <div class="sw"><div class="band" style="--band:var(--t2)"></div><div class="thumb"><img src="assets/books-nightstand.jpg" alt="草木"></div><div class="cap">草木</div></div>
+          <div class="sw"><div class="band" style="--band:oklch(0.8 0.09 85)"></div><div class="thumb"><img src="assets/books-desk.jpg" alt="四季"></div><div class="cap">四季</div></div>
+          <div class="sw"><div class="band" style="--band:oklch(0.62 0.08 70)"></div><div class="thumb"><img src="assets/books-pale.jpg" alt="乡居"></div><div class="cap">乡居</div></div>
+          <div class="sw"><div class="band" style="--band:oklch(0.78 0.06 95)"></div><div class="thumb"><img src="assets/books-shelf.jpg" alt="慢生活"></div><div class="cap">慢</div></div>
+        </div>
+        <div class="mod-a">
+          <div class="lead">
+            <h3>田园诗篇</h3>
+            <div class="sub">Slow / Grow</div>
+            <div class="kicker">精选 · 九册</div>
+          </div>
+          <div class="desc"><p>泥土、植物与旧木的气味，被写进书页里。给想在城市里种一座花园的人，一份关于四时节律的阅读。</p></div>
+        </div>
+        <div class="mod-b">
+          <div class="photo"><img src="assets/detail-chair.jpg" alt="田园风格座椅细节"></div>
+          <div class="txt">
+            <span class="tag">自然文学 · 09</span>
+            <h4>在四季里漫游</h4>
+            <p>重新学会观察一朵花的开放与凋落。</p>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 卡片 3 · 中古 -->
+    <article class="card" data-index="2" data-theme="3" tabindex="0" role="button" aria-label="书卡 3：中古美学">
+      <div class="paper">
+        <div class="spine"></div>
+        <div class="card-head">
+          <div class="issue">NO.<b>03</b> &nbsp;·&nbsp; 中古</div>
+          <div class="dotrow"><i></i><i></i><i></i></div>
+        </div>
+        <div class="hero">
+          <img src="assets/hero-midcentury.jpg" alt="中古艺术风格氛围">
+          <div class="tint"></div><div class="wash"></div>
+          <div class="hero-type">
+            <span class="l1">中古</span>
+            <span class="l2">艺术</span>
+            <span class="spread">美　学</span>
+          </div>
+          <div class="hero-en">Mid-Century Echoes</div>
+          <div class="hero-idx">03 / 03</div>
+        </div>
+        <div class="swatches">
+          <div class="sw"><div class="band" style="--band:var(--t3)"></div><div class="thumb"><img src="assets/books-library.jpg" alt="复古"></div><div class="cap">复古</div></div>
+          <div class="sw"><div class="band" style="--band:oklch(0.58 0.06 60)"></div><div class="thumb"><img src="assets/books-desk.jpg" alt="木质"></div><div class="cap">木质</div></div>
+          <div class="sw"><div class="band" style="--band:oklch(0.7 0.07 78)"></div><div class="thumb"><img src="assets/books-stack-color.jpg" alt="曲线"></div><div class="cap">曲线</div></div>
+          <div class="sw"><div class="band" style="--band:oklch(0.52 0.04 150)"></div><div class="thumb"><img src="assets/books-shelf.jpg" alt="光"></div><div class="cap">光</div></div>
+        </div>
+        <div class="mod-a">
+          <div class="lead">
+            <h3>中古回响</h3>
+            <div class="sub">Form / Function</div>
+            <div class="kicker">精选 · 六册</div>
+          </div>
+          <div class="desc"><p>柚木、黄铜与有机曲线，半个世纪前的审美至今仍在发光。读懂何为不过时的好设计，以及它背后的时代。</p></div>
+        </div>
+        <div class="mod-b">
+          <div class="photo"><img src="assets/detail-living.jpg" alt="中古风格客厅细节"></div>
+          <div class="txt">
+            <span class="tag">设计经典 · 06</span>
+            <h4>黄金年代</h4>
+            <p>走进战后设计的黄金时代，看形式如何追随功能。</p>
+          </div>
+        </div>
+      </div>
+    </article>
+
+  </main>
+
+  <footer class="controls">
+    <div class="navrow">
+      <button class="nav" id="prev" aria-label="上一张书卡">‹</button>
+      <button class="next-word" id="nextWord" aria-label="下一张书卡">下一页</button>
+      <button class="nav" id="next" aria-label="下一张书卡">›</button>
+    </div>
+    <div class="dots" id="dots" role="tablist" aria-label="选择书卡">
+      <button class="on" aria-label="第 1 张" aria-selected="true"></button>
+      <button aria-label="第 2 张" aria-selected="false"></button>
+      <button aria-label="第 3 张" aria-selected="false"></button>
+    </div>
+    <div class="hint">← → 翻页 &nbsp;·&nbsp; 点击卡片切换</div>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  const cards=[...document.querySelectorAll('.card')];
+  const dots=[...document.querySelectorAll('#dots button')];
+  const bar=document.getElementById('mastBar');
+  const cur=document.getElementById('mastCur');
+  const n=cards.length;
+  let active=1; // 从中间那张开始，还原参考图构图
+
+  function render(){
+    cards.forEach((card,i)=>{
+      const rel=i-active;
+      card.classList.remove('is-active','is-prev','is-next','is-far');
+      if(rel===0) card.classList.add('is-active');
+      else if(rel===-1) card.classList.add('is-prev');
+      else if(rel===1) card.classList.add('is-next');
+      else card.classList.add('is-far');
+      card.setAttribute('aria-pressed', String(rel===0));
+    });
+    dots.forEach((d,i)=>{d.classList.toggle('on',i===active);d.setAttribute('aria-selected',String(i===active))});
+    cur.textContent=String(active+1).padStart(2,'0');
+    bar.style.left=(active/(n-1)*100)+'%';
+    bar.style.width=(100/(n-1))+'%';
+  }
+  function go(i){active=(i%n+n)%n;render()}
+  function next(){go(active+1)}
+  function prev(){go(active-1)}
+
+  document.getElementById('next').addEventListener('click',next);
+  document.getElementById('prev').addEventListener('click',prev);
+  document.getElementById('nextWord').addEventListener('click',next);
+  dots.forEach((d,i)=>d.addEventListener('click',()=>go(i)));
+  cards.forEach((c,i)=>{
+    c.addEventListener('click',()=>{if(i!==active) go(i)});
+    c.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();if(i!==active)go(i)}});
+  });
+  document.addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'){e.preventDefault();next()}
+    else if(e.key==='ArrowLeft'){e.preventDefault();prev()}
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
