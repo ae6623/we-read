@@ -31,6 +31,10 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import tools.engine  # noqa: E402,F401
 
 BASE = os.environ.get("A2A_BASE", "https://weread-cloud-probe.app.workbuddy.host").rstrip("/")
 ROOT = BASE + "/api/a2a"
