@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>书卡频道 · 美学书单</title>
+<meta name="description" content="把本站已归档的 85 本书，按 9 条主题书单排成可翻页的书卡。每张卡都能点进全书领读。">
 <style>
 /* ============ Design Tokens ============ */
 :root{
@@ -14,7 +15,6 @@
   /* 暖黑画廊背景，避纯黑 */
   --bg:oklch(0.165 0.014 62);
   --bg-deep:oklch(0.135 0.012 60);
-  --bg-grain:oklch(0.9 0.02 80);
 
   /* 纸质卡片，避纯白 */
   --paper:oklch(0.958 0.013 82);
@@ -24,13 +24,9 @@
   --ink-faint:oklch(0.66 0.014 70);
   --line:oklch(0.87 0.018 74);
 
-  /* 三种气质主题色 */
-  --t1:oklch(0.60 0.060 72);   /* 极简 暖灰褐 */
-  --t1-soft:oklch(0.88 0.035 78);
-  --t2:oklch(0.70 0.115 74);   /* 田园 焦糖 */
-  --t2-soft:oklch(0.90 0.055 80);
-  --t3:oklch(0.44 0.062 156);  /* 中古 墨绿 */
-  --t3-soft:oklch(0.86 0.035 150);
+  /* 每张卡的主色由封面主色相注入 */
+  --accent:oklch(0.58 0.105 60);
+  --accent-soft:oklch(0.90 0.035 70);
 
   --card-w:clamp(272px,27.5vw,364px);
   --card-h:min(78vh,684px);
@@ -48,65 +44,73 @@ body{
   overflow:hidden;
   -webkit-font-smoothing:antialiased;
 }
-/* 背景：暖黑径向光 + 极细噪点，避免死黑平板 */
 body::before{
   content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
-  background:
-    radial-gradient(120% 90% at 50% 42%,oklch(0.26 0.022 66) 0%,oklch(0.19 0.016 62) 42%,var(--bg-deep) 100%);
+  background:radial-gradient(120% 90% at 50% 42%,oklch(0.26 0.022 66) 0%,oklch(0.19 0.016 62) 42%,var(--bg-deep) 100%);
 }
 body::after{
   content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.16;
   background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/></svg>");
 }
 
-.app{position:relative;z-index:1;height:100dvh;display:flex;flex-direction:column}
+.app{position:relative;z-index:1;height:100vh;height:100dvh;display:flex;flex-direction:column}
 
 /* ============ Masthead ============ */
 .masthead{
   flex:0 0 auto;
   display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
   padding:clamp(14px,2.4vh,26px) clamp(20px,4vw,56px) clamp(6px,1vh,12px);
+  gap:12px;
 }
-.brand{display:flex;align-items:baseline;gap:12px}
+.brand{display:flex;align-items:baseline;gap:12px;min-width:0}
 .brand .mark{
   font-family:var(--font-latin);font-style:italic;font-size:clamp(20px,2.1vw,27px);
-  letter-spacing:.02em;color:var(--paper);
+  letter-spacing:.02em;color:var(--paper);white-space:nowrap;
 }
 .brand .cn{font-size:clamp(11px,1.05vw,14px);letter-spacing:.22em;color:var(--ink-faint);white-space:nowrap}
 .mast-num{display:flex;align-items:center;gap:14px;font-family:var(--font-latin)}
 .mast-num .cur{font-size:clamp(19px,1.8vw,24px);letter-spacing:.06em}
 .mast-num .sep{width:clamp(46px,6vw,84px);height:1px;background:var(--ink-faint);opacity:.5;position:relative}
-.mast-num .sep i{position:absolute;left:0;top:-1px;height:3px;background:var(--paper);transition:left .62s var(--ease)}
+.mast-num .sep i{position:absolute;left:0;top:-1px;height:3px;background:var(--paper);transition:left .62s var(--ease),width .62s var(--ease)}
 .mast-num .tot{font-size:clamp(13px,1.2vw,16px);color:var(--ink-faint)}
-.mast-seas{justify-self:end;font-family:var(--font-latin);font-style:italic;font-size:clamp(12px,1.05vw,14px);letter-spacing:.08em;color:var(--ink-faint)}
+.mast-seas{
+  justify-self:end;font-family:var(--font-latin);font-style:italic;
+  font-size:clamp(11px,1.05vw,14px);letter-spacing:.06em;color:var(--ink-faint);
+  max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right;
+}
+.mast-seas b{font-style:normal;font-weight:400;color:oklch(0.78 0.02 70)}
 
 /* ============ Gallery ============ */
-.gallery{
-  position:relative;flex:1;min-height:0;
-  perspective:1700px;
-}
+.gallery{position:relative;flex:1;min-height:0;perspective:1700px}
 
 .card{
-  --accent:var(--t1);--accent-soft:var(--t1-soft);
   position:absolute;top:50%;left:50%;
   width:var(--card-w);height:var(--card-h);
   margin-left:calc(var(--card-w)/-2);
   margin-top:calc(var(--card-h)/-2);
   border-radius:5px;
   transform-style:preserve-3d;
-  transition:transform .66s var(--ease),opacity .5s ease,filter .5s ease;
-  cursor:pointer;
-  will-change:transform;
-  outline:none;
+  transform:translateX(calc(var(--rel,0) * (var(--card-w) + var(--gap)))) scale(var(--sc,1)) rotateY(var(--ry,0deg));
+  transition:transform .6s var(--ease),opacity .42s ease,visibility .42s;
+  cursor:pointer;outline:none;
+  contain:layout style;
 }
-.card[data-theme="2"]{--accent:var(--t2);--accent-soft:var(--t2-soft)}
-.card[data-theme="3"]{--accent:var(--t3);--accent-soft:var(--t3-soft)}
-
-.card.is-active{transform:translateX(0) scale(1) rotateY(0deg);z-index:5;filter:none;opacity:1}
-.card.is-prev{transform:translateX(calc(-1*(var(--card-w) + var(--gap)))) scale(.9) rotateY(8deg);z-index:3;filter:brightness(.6) saturate(.8);opacity:.8}
-.card.is-next{transform:translateX(calc(var(--card-w) + var(--gap))) scale(.9) rotateY(-8deg);z-index:3;filter:brightness(.6) saturate(.8);opacity:.8}
-.card.is-far{transform:translateX(calc(-2.1*(var(--card-w) + var(--gap)))) scale(.72);z-index:1;opacity:0;pointer-events:none}
+/* 用遮罩代替 filter：filter 过渡要逐帧重绘整棵子树，移动端必卡 */
+.card::after{
+  content:"";position:absolute;inset:0;z-index:9;border-radius:5px;
+  background:#0e0b08;opacity:0;pointer-events:none;
+  transition:opacity .42s ease;
+}
+.card.is-near::after{opacity:.24}
+.card.is-side::after{opacity:.5}
+.card.is-far{visibility:hidden;opacity:0;pointer-events:none;content-visibility:hidden}
+.card.is-side{opacity:.3;pointer-events:none}
 .card:focus-visible .paper{box-shadow:0 0 0 3px var(--bg),0 0 0 5px var(--accent-soft),0 30px 70px rgba(0,0,0,.5)}
+/* 只有中间那张画模糊底色：5 张同时 blur 是移动端最大的掉帧来源 */
+.card:not(.is-active) .stage-bg{display:none}
+.card:not(.is-active) .stage-num{display:none}
+.card.is-active .stage-bg{animation:bgIn .5s ease both}
+@keyframes bgIn{from{opacity:0}to{opacity:1}}
 
 .paper{
   position:relative;width:100%;height:100%;
@@ -116,60 +120,135 @@ body::after{
   box-shadow:0 26px 60px rgba(0,0,0,.46),0 3px 10px rgba(0,0,0,.3);
   display:flex;flex-direction:column;
 }
+.spine{position:absolute;left:0;top:0;bottom:0;width:1.2cqw;background:var(--accent);z-index:3}
 
 /* 卡内刊头 */
 .card-head{
-  flex:0 0 auto;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:3.4cqw 5cqw 2.6cqw;
+  flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;
+  padding:3.4cqw 5cqw 2.4cqw;
 }
-.issue{font-family:var(--font-latin);font-size:3cqw;letter-spacing:.22em;color:var(--ink-soft)}
+.issue{font-family:var(--font-latin);font-size:max(2.9cqw,9.5px);letter-spacing:.18em;color:var(--ink-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .issue b{color:var(--accent);font-weight:400}
-.dotrow{display:flex;gap:1.5cqw}
+.dotrow{display:flex;gap:1.5cqw;flex:none}
 .dotrow i{width:1.5cqw;height:1.5cqw;border-radius:50%;background:var(--line)}
 .dotrow i:nth-child(1){background:var(--accent)}
 
-/* 氛围大图 + 错落大字 */
-.hero{position:relative;flex:0 0 43%;overflow:hidden;background:var(--paper-2)}
-.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 46%;}
-.hero .tint{position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,16,12,.05) 0%,rgba(20,16,12,.10) 40%,rgba(20,16,12,.34) 100%);mix-blend-mode:multiply}
-.hero .wash{position:absolute;inset:0;background:linear-gradient(120deg,var(--accent-soft) 0%,transparent 62%);opacity:.5;mix-blend-mode:screen}
-.hero-type{position:absolute;left:5.4cqw;top:6.5cqw;color:#fbf5ea;text-shadow:0 2px 18px rgba(0,0,0,.42)}
-.hero-type .l1,.hero-type .l2{font-family:var(--font-display);font-weight:700;font-size:11.6cqw;line-height:1.06;letter-spacing:.14em;display:block}
-.hero-type .l2{margin-top:.4cqw}
-.hero-type .spread{font-family:var(--font-display);font-weight:700;font-size:11.6cqw;line-height:1;letter-spacing:.62em;display:block;margin-top:3.2cqw;padding-left:.4cqw}
-.hero-en{position:absolute;left:5.6cqw;bottom:4.4cqw;font-family:var(--font-latin);font-style:italic;font-size:2.7cqw;letter-spacing:.12em;color:#f4ead9;opacity:.9}
-.hero-idx{position:absolute;right:4.4cqw;top:4.2cqw;font-family:var(--font-latin);font-size:2.8cqw;letter-spacing:.1em;color:#f6edde;opacity:.85;border:1px solid rgba(246,237,222,.6);padding:1cqw 1.8cqw;border-radius:2px}
+/* ============ 封面舞台：模糊底 + 清晰书封 ============ */
+.stage{
+  position:relative;flex:0 0 36%;overflow:hidden;
+  /* 纯色底按封面主色相铺，非活动卡不画模糊图也有统一色调 */
+  background:oklch(0.81 0.032 var(--h,60));
+  display:grid;place-items:center;
+}
+.stage-bg{
+  position:absolute;inset:-14%;background-size:cover;background-position:center;
+  filter:blur(24px) saturate(1.55) brightness(.72);transform:scale(1.12);
+}
+.stage-tint{
+  position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(18,14,10,.22) 0%,rgba(18,14,10,.04) 48%,rgba(18,14,10,.34) 100%);
+}
+.stage-wash{position:absolute;inset:0;background:linear-gradient(118deg,var(--accent-soft) 0%,transparent 58%);opacity:.22;mix-blend-mode:screen}
+.cover-wrap{
+  position:relative;width:45%;aspect-ratio:3/4.16;
+  border-radius:2px;overflow:hidden;
+  box-shadow:0 16px 30px rgba(0,0,0,.55),0 3px 8px rgba(0,0,0,.36),0 0 0 1px rgba(255,255,255,.16);
+  transform:rotate(-1.4deg);
+  background:oklch(0.86 0.02 76);
+}
+.cover-wrap img{position:absolute;inset:0;z-index:2;width:100%;height:100%;object-fit:cover;display:block}
+.cover-ph{
+  position:absolute;inset:0;z-index:1;display:grid;place-items:center;padding:8%;
+  background:linear-gradient(160deg,oklch(0.87 0.032 var(--h,60)),oklch(0.74 0.055 var(--h,60)));
+  color:oklch(0.28 0.03 60);font-family:var(--font-display);font-weight:700;
+  font-size:4.2cqw;line-height:1.34;letter-spacing:.04em;text-align:center;
+}
+.cover-wrap.has-img .cover-ph{display:none}
 
-/* 四宫格书封 */
-.swatches{flex:0 0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:1.4cqw;padding:3.2cqw 5cqw 2.8cqw;border-bottom:1px solid var(--line)}
-.sw{display:flex;flex-direction:column;gap:1.4cqw;min-width:0}
-.sw .band{height:1cqw;border-radius:1px;background:var(--band)}
-.sw .thumb{position:relative;width:100%;aspect-ratio:1/1.18;border-radius:2px;overflow:hidden;background:var(--paper-2)}
-.sw .thumb img{width:100%;height:100%;object-fit:cover}
-.sw .cap{font-size:2.55cqw;letter-spacing:.08em;color:var(--ink-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* 舞台上的角标 */
+.badge{
+  position:absolute;right:4.4cqw;bottom:4.2cqw;
+  font-family:var(--font-latin);font-size:max(2.5cqw,9px);letter-spacing:.14em;
+  color:#f8f0e2;background:rgba(20,15,10,.5);border:1px solid rgba(248,240,226,.36);
+  padding:1.1cqw 2cqw;border-radius:2px;
+}
+.stage-num{
+  position:absolute;left:4.4cqw;bottom:3cqw;
+  font-family:var(--font-latin);font-size:11cqw;line-height:.86;
+  color:#f8f0e2;opacity:.2;letter-spacing:-.02em;
+}
 
-/* 内容模块 1 */
-.mod-a{flex:0 0 auto;display:flex;gap:3.6cqw;padding:3.6cqw 5cqw 3cqw;align-items:flex-start}
-.mod-a .lead{flex:0 0 46%}
-.mod-a .lead h3{font-family:var(--font-display);font-size:6.4cqw;font-weight:700;line-height:1.1;letter-spacing:.05em;color:var(--ink)}
-.mod-a .lead .sub{font-family:var(--font-latin);font-style:italic;font-size:2.6cqw;letter-spacing:.1em;color:var(--accent);margin-top:1.2cqw}
-.mod-a .lead .kicker{font-size:2.35cqw;letter-spacing:.16em;color:var(--ink-faint);margin-top:1.8cqw}
-.mod-a .desc{flex:1;font-size:2.75cqw;line-height:1.85;color:var(--ink-soft);text-align:justify}
-.mod-a .desc .thumb{position:absolute}
-.mod-a .desc p{position:relative;padding-left:.2cqw}
+/* ============ 书名区 ============ */
+.titleblock{flex:0 0 auto;padding:3.4cqw 5cqw 0}
+.titleblock h3{
+  font-family:var(--font-display);font-weight:700;
+  font-size:6.2cqw;line-height:1.22;letter-spacing:.02em;color:var(--ink);
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+.titleblock .by{
+  margin-top:1.5cqw;font-size:max(2.55cqw,9.5px);letter-spacing:.04em;color:var(--ink-soft);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:.82;
+}
+.titleblock .by::before{content:"— ";color:var(--accent)}
+.titleblock .by.is-empty{display:none}
 
-/* 内容模块 2（横向图文） */
-.mod-b{flex:1 1 auto;min-height:0;margin:0 5cqw 4cqw;border-top:1px solid var(--line);padding-top:3cqw;display:flex;gap:3.2cqw;align-items:center}
-.mod-b .photo{flex:0 0 33%;aspect-ratio:1/1;border-radius:2px;overflow:hidden;background:var(--paper-2)}
-.mod-b .photo img{width:100%;height:100%;object-fit:cover}
-.mod-b .txt{min-width:0}
-.mod-b .txt .tag{display:inline-block;font-family:var(--font-latin);font-size:2.2cqw;letter-spacing:.14em;color:var(--paper);background:var(--accent);padding:.7cqw 1.6cqw;border-radius:2px}
-.mod-b .txt h4{font-family:var(--font-display);font-size:4.4cqw;font-weight:700;letter-spacing:.06em;color:var(--ink);margin:1.6cqw 0 1cqw}
-.mod-b .txt p{font-size:2.5cqw;line-height:1.72;color:var(--ink-soft)}
+/* ============ 荐语 ============ */
+.why{flex:0 0 auto;padding:2.6cqw 5cqw 0}
+.why .label{
+  font-family:var(--font-latin);font-style:italic;font-size:max(2.15cqw,9px);
+  letter-spacing:.1em;color:var(--accent);margin-bottom:.9cqw;
+}
+.why p{
+  font-size:2.8cqw;line-height:1.78;color:var(--ink-soft);text-align:justify;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
+}
 
-/* 卡片底部书脊色 */
-.spine{position:absolute;left:0;top:0;bottom:0;width:1.2cqw;background:var(--accent)}
+/* ============ 同书单接着读 ============ */
+.more{
+  flex:1 1 auto;min-height:0;margin:2.8cqw 5cqw 0;padding-top:2.4cqw;
+  border-top:1px solid var(--line);
+  display:flex;flex-direction:column;justify-content:center;
+}
+.more .cap{
+  font-size:max(2.2cqw,9px);letter-spacing:.12em;color:var(--ink-faint);
+  display:flex;justify-content:space-between;align-items:baseline;gap:2cqw;
+}
+.more .cap em{font-family:var(--font-latin);font-style:normal;font-size:2.15cqw;color:var(--accent);flex:none}
+.more .row{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5cqw;margin-top:1.6cqw}
+.more .mini{min-width:0}
+.more .mini .th{
+  position:relative;width:100%;aspect-ratio:1/1.3;border-radius:2px;overflow:hidden;
+  background:oklch(0.88 0.015 78);
+  box-shadow:0 2px 6px rgba(0,0,0,.14);
+}
+.more .mini .th img{width:100%;height:100%;object-fit:cover;display:block}
+.more .mini .nm{
+  margin-top:.8cqw;font-size:max(2.1cqw,9px);line-height:1.38;color:var(--ink-soft);opacity:.9;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+
+/* ============ 卡底 ============ */
+.foot{
+  flex:0 0 auto;margin:2cqw 5cqw 0;padding:2.2cqw 0 2.8cqw;
+  border-top:1px solid var(--line);
+  display:flex;align-items:center;justify-content:space-between;gap:2.4cqw;
+}
+.bar{flex:1;min-width:0}
+.bar .track{height:2px;background:var(--line);position:relative;border-radius:2px;overflow:hidden}
+.bar .track i{position:absolute;left:0;top:0;bottom:0;background:var(--accent);border-radius:2px}
+.bar .leg{display:flex;justify-content:space-between;gap:1.4cqw;margin-top:1.2cqw;font-size:max(2cqw,8.5px);color:var(--ink-faint);letter-spacing:.03em}
+.bar .leg span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.go{
+  flex:none;font-family:var(--font-latin);font-size:2.4cqw;letter-spacing:.05em;
+  color:var(--paper);background:var(--accent);text-decoration:none;
+  padding:1.6cqw 2.4cqw;border-radius:2px;white-space:nowrap;
+  transition:filter .25s ease,transform .25s var(--ease);
+}
+.go:hover{filter:brightness(1.12);transform:translateY(-1px)}
+.go:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+
+/* 非活动卡不响应链接 */
+.card:not(.is-active) .go{pointer-events:none}
 
 /* ============ Controls ============ */
 .controls{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:clamp(8px,1.4vh,14px);padding:clamp(8px,1.6vh,18px) 20px clamp(14px,2.6vh,28px)}
@@ -186,19 +265,99 @@ body::after{
 .next-word{font-family:var(--font-display);font-size:clamp(13px,1.15vw,15px);letter-spacing:.4em;color:var(--ink-faint);border:none;background:none;cursor:pointer;padding:6px 0 6px .4em;transition:color .3s ease}
 .next-word:hover{color:var(--paper)}
 .next-word:focus-visible{outline:2px solid var(--paper);outline-offset:4px}
-.dots{display:flex;gap:9px;align-items:center}
-.dots button{width:22px;height:3px;border:none;background:oklch(0.55 0.02 62 /.4);cursor:pointer;padding:0;transition:background .3s ease,width .4s var(--ease)}
+.dots{display:flex;gap:9px;align-items:center;flex-wrap:wrap;justify-content:center;max-width:min(92vw,760px)}
+.dots button{
+  width:22px;height:3px;border:none;background:oklch(0.55 0.02 62 /.4);cursor:pointer;padding:0;
+  transition:background .3s ease,width .4s var(--ease);
+}
 .dots button.on{width:40px;background:var(--paper)}
-.hint{font-family:var(--font-latin);font-style:italic;font-size:11px;letter-spacing:.1em;color:oklch(0.5 0.015 62)}
+.dots button:focus-visible{outline:2px solid var(--paper);outline-offset:4px}
+.hint{font-family:var(--font-latin);font-style:italic;font-size:11px;letter-spacing:.08em;color:oklch(0.5 0.015 62);text-align:center}
+.hint b{font-style:normal;color:oklch(0.72 0.015 62)}
+.hint .h-narrow{display:none}
+
+/* ============ 装载 / 兜底 ============ */
+.loading{
+  position:absolute;inset:0;display:grid;place-items:center;
+  font-family:var(--font-latin);font-style:italic;font-size:13px;letter-spacing:.24em;
+  color:oklch(0.55 0.015 62);
+}
+.loading.hide{display:none}
+.err{max-width:460px;text-align:center;line-height:1.9;font-size:14px;color:oklch(0.7 0.02 62)}
+.err code{font-family:ui-monospace,Menlo,monospace;font-size:12px;color:oklch(0.78 0.05 70)}
 
 @media (max-width:760px){
-  :root{--card-w:min(80vw,340px);--card-h:min(66vh,600px);--gap:8px}
-  .card.is-prev{filter:brightness(.5);opacity:.6}
-  .card.is-next{filter:brightness(.5);opacity:.6}
+  :root{
+    --card-w:min(84vw,352px);
+    --card-h:min(calc(var(--card-w) * 1.78),74vh);
+    --card-h:min(calc(var(--card-w) * 1.78),74svh);
+    --gap:6px;
+  }
+  /* 移动端关掉 3D 透视，只留平面位移，省一次矩阵运算与合成 */
+  .gallery{perspective:none}
+  .masthead{grid-template-columns:1fr auto;padding:14px 18px 4px;gap:8px}
+  .brand{gap:8px;min-width:0}
+  .brand .mark{font-size:15px;white-space:nowrap}
+  .brand .cn{font-size:10.5px;letter-spacing:.16em}
   .mast-seas{display:none}
+  .mast-num{gap:10px;justify-self:end}
+  .mast-num .cur{font-size:17px}
+  .mast-num .sep{width:40px}
+  .mast-num .tot{font-size:12px}
+  .card{transform:translateX(calc(var(--rel,0) * (var(--card-w) + var(--gap)))) scale(var(--sc,1))}
+  /* 封面按舞台高度定尺寸，永远不溢出被裁；剩余高度给「接着读」 */
+  .stage{flex:0 0 42%;min-height:0}
+  .cover-wrap{height:86%;width:auto;aspect-ratio:3/4.16}
+  .more{flex:1 1 0}
+  .stage-num{font-size:10.5cqw;bottom:2.6cqw}
+  .badge{font-size:2.7cqw;right:4cqw;bottom:3.8cqw}
+  .titleblock{padding:3cqw 4.6cqw 0}
+  .titleblock h3{font-size:6.6cqw;line-height:1.2}
+  .why{padding:2.2cqw 4.6cqw 0}
+  .why p{font-size:2.95cqw;line-height:1.74}
+  .more{margin:2cqw 4.6cqw 0;padding-top:2cqw}
+  .more .row{gap:1.3cqw;margin-top:1.4cqw}
+  .more .mini .th{aspect-ratio:1/1.26}
+  .foot{margin:1.8cqw 4.6cqw 0;padding:2cqw 0 2.4cqw}
+  .go{padding:1.5cqw 2.6cqw;font-size:2.6cqw}
+  .controls{gap:9px;padding:7px 16px 12px}
+  .navrow{gap:14px}
+  .nav{width:36px;height:36px;font-size:17px}
+  .next-word{font-size:12px;letter-spacing:.3em}
+  .dots{gap:7px;max-width:88vw}
+  .dots button{width:16px}
+  .dots button.on{width:28px}
+  .hint{font-size:10.5px;letter-spacing:.03em;line-height:1.5;padding:0 8px}
+  .hint .h-wide{display:none}
+  .hint .h-narrow{display:inline}
+}
+@media (max-width:430px){
+  :root{
+    --card-w:84vw;
+    --card-h:min(calc(var(--card-w) * 1.82),74vh);
+    --card-h:min(calc(var(--card-w) * 1.82),74svh);
+  }
+  .stage{flex:0 0 44%}
+  .titleblock h3{font-size:7cqw}
+  .why p{-webkit-line-clamp:2;font-size:3.05cqw}
+  .more .mini .th{aspect-ratio:1/1.2}
+  .more .mini .nm{font-size:2.15cqw}
+  .masthead{padding:12px 14px 2px}
+  .controls{padding:4px 12px 10px}
+}
+@media (max-width:360px){
+  /* 极窄屏不砍掉「接着读」，只把它压成纯图条，避免卡底出现大片空白 */
+  .stage{flex:0 0 40%}
+  .cover-wrap{height:84%}
+  .titleblock h3{font-size:6.4cqw}
+  .more{margin:1.6cqw 4.6cqw 0;padding-top:1.6cqw}
+  .more .row{margin-top:1cqw}
+  .more .mini .nm{display:none}
+  .more .mini .th{aspect-ratio:1/1.24}
+  .foot{margin-top:1.4cqw}
 }
 @media (prefers-reduced-motion:reduce){
-  .card,.nav,.dots button,.mast-num .sep i{transition-duration:.01ms}
+  .card,.nav,.dots button,.mast-num .sep i,.go{transition-duration:.01ms}
 }
 </style>
 </head>
@@ -211,147 +370,15 @@ body::after{
       <span class="cn">书卡频道</span>
     </div>
     <div class="mast-num">
-      <span class="cur" id="mastCur">02</span>
+      <span class="cur" id="mastCur">01</span>
       <span class="sep"><i id="mastBar"></i></span>
-      <span class="tot">03</span>
+      <span class="tot" id="mastTot">--</span>
     </div>
-    <div class="mast-seas">Curated · Autumn 2026</div>
+    <div class="mast-seas" id="mastSeas">Curated · Autumn 2026</div>
   </header>
 
   <main class="gallery" id="gallery" aria-label="书卡画廊，使用左右方向键切换">
-
-    <!-- 卡片 1 · 极简 -->
-    <article class="card" data-index="0" data-theme="1" tabindex="0" role="button" aria-label="书卡 1：意式极简">
-      <div class="paper">
-        <div class="spine"></div>
-        <div class="card-head">
-          <div class="issue">NO.<b>01</b> &nbsp;·&nbsp; 极简</div>
-          <div class="dotrow"><i></i><i></i><i></i></div>
-        </div>
-        <div class="hero">
-          <img src="assets/hero-minimal.jpg" alt="极简主义室内风格氛围">
-          <div class="tint"></div><div class="wash"></div>
-          <div class="hero-type">
-            <span class="l1">意式</span>
-            <span class="l2">极简</span>
-            <span class="spread">美　学</span>
-          </div>
-          <div class="hero-en">The Art of Less</div>
-          <div class="hero-idx">01 / 03</div>
-        </div>
-        <div class="swatches">
-          <div class="sw"><div class="band" style="--band:var(--t1)"></div><div class="thumb"><img src="assets/books-pale.jpg" alt="留白"></div><div class="cap">留白</div></div>
-          <div class="sw"><div class="band" style="--band:oklch(0.72 0.04 70)"></div><div class="thumb"><img src="assets/books-stack-color.jpg" alt="物性"></div><div class="cap">物性</div></div>
-          <div class="sw"><div class="band" style="--band:oklch(0.5 0.03 60)"></div><div class="thumb"><img src="assets/books-shelf.jpg" alt="静默"></div><div class="cap">静默</div></div>
-          <div class="sw"><div class="band" style="--band:oklch(0.8 0.03 80)"></div><div class="thumb"><img src="assets/books-desk.jpg" alt="秩序"></div><div class="cap">秩序</div></div>
-        </div>
-        <div class="mod-a">
-          <div class="lead">
-            <h3>意式极简</h3>
-            <div class="sub">Reduce / Refine</div>
-            <div class="kicker">精选 · 七册</div>
-          </div>
-          <div class="desc"><p>把多余的层层剥去，剩下的每一件都值得凝视。为喜欢克制的人挑的七本书，从设计读到生活。</p></div>
-        </div>
-        <div class="mod-b">
-          <div class="photo"><img src="assets/detail-stool.jpg" alt="极简家具细节"></div>
-          <div class="txt">
-            <span class="tag">枕边书单 · 07</span>
-            <h4>少，而更好</h4>
-            <p>让「留白」成为一种可以被阅读的日常。</p>
-          </div>
-        </div>
-      </div>
-    </article>
-
-    <!-- 卡片 2 · 田园 -->
-    <article class="card" data-index="1" data-theme="2" tabindex="0" role="button" aria-label="书卡 2：田园风格">
-      <div class="paper">
-        <div class="spine"></div>
-        <div class="card-head">
-          <div class="issue">NO.<b>02</b> &nbsp;·&nbsp; 田园</div>
-          <div class="dotrow"><i></i><i></i><i></i></div>
-        </div>
-        <div class="hero">
-          <img src="assets/hero-pastoral.jpg" alt="田园自然风格氛围">
-          <div class="tint"></div><div class="wash"></div>
-          <div class="hero-type">
-            <span class="l1">田园</span>
-            <span class="l2">风格</span>
-            <span class="spread">美　学</span>
-          </div>
-          <div class="hero-en">Pastoral Notes</div>
-          <div class="hero-idx">02 / 03</div>
-        </div>
-        <div class="swatches">
-          <div class="sw"><div class="band" style="--band:var(--t2)"></div><div class="thumb"><img src="assets/books-nightstand.jpg" alt="草木"></div><div class="cap">草木</div></div>
-          <div class="sw"><div class="band" style="--band:oklch(0.8 0.09 85)"></div><div class="thumb"><img src="assets/books-desk.jpg" alt="四季"></div><div class="cap">四季</div></div>
-          <div class="sw"><div class="band" style="--band:oklch(0.62 0.08 70)"></div><div class="thumb"><img src="assets/books-pale.jpg" alt="乡居"></div><div class="cap">乡居</div></div>
-          <div class="sw"><div class="band" style="--band:oklch(0.78 0.06 95)"></div><div class="thumb"><img src="assets/books-shelf.jpg" alt="慢生活"></div><div class="cap">慢</div></div>
-        </div>
-        <div class="mod-a">
-          <div class="lead">
-            <h3>田园诗篇</h3>
-            <div class="sub">Slow / Grow</div>
-            <div class="kicker">精选 · 九册</div>
-          </div>
-          <div class="desc"><p>泥土、植物与旧木的气味，被写进书页里。给想在城市里种一座花园的人，一份关于四时节律的阅读。</p></div>
-        </div>
-        <div class="mod-b">
-          <div class="photo"><img src="assets/detail-chair.jpg" alt="田园风格座椅细节"></div>
-          <div class="txt">
-            <span class="tag">自然文学 · 09</span>
-            <h4>在四季里漫游</h4>
-            <p>重新学会观察一朵花的开放与凋落。</p>
-          </div>
-        </div>
-      </div>
-    </article>
-
-    <!-- 卡片 3 · 中古 -->
-    <article class="card" data-index="2" data-theme="3" tabindex="0" role="button" aria-label="书卡 3：中古美学">
-      <div class="paper">
-        <div class="spine"></div>
-        <div class="card-head">
-          <div class="issue">NO.<b>03</b> &nbsp;·&nbsp; 中古</div>
-          <div class="dotrow"><i></i><i></i><i></i></div>
-        </div>
-        <div class="hero">
-          <img src="assets/hero-midcentury.jpg" alt="中古艺术风格氛围">
-          <div class="tint"></div><div class="wash"></div>
-          <div class="hero-type">
-            <span class="l1">中古</span>
-            <span class="l2">艺术</span>
-            <span class="spread">美　学</span>
-          </div>
-          <div class="hero-en">Mid-Century Echoes</div>
-          <div class="hero-idx">03 / 03</div>
-        </div>
-        <div class="swatches">
-          <div class="sw"><div class="band" style="--band:var(--t3)"></div><div class="thumb"><img src="assets/books-library.jpg" alt="复古"></div><div class="cap">复古</div></div>
-          <div class="sw"><div class="band" style="--band:oklch(0.58 0.06 60)"></div><div class="thumb"><img src="assets/books-desk.jpg" alt="木质"></div><div class="cap">木质</div></div>
-          <div class="sw"><div class="band" style="--band:oklch(0.7 0.07 78)"></div><div class="thumb"><img src="assets/books-stack-color.jpg" alt="曲线"></div><div class="cap">曲线</div></div>
-          <div class="sw"><div class="band" style="--band:oklch(0.52 0.04 150)"></div><div class="thumb"><img src="assets/books-shelf.jpg" alt="光"></div><div class="cap">光</div></div>
-        </div>
-        <div class="mod-a">
-          <div class="lead">
-            <h3>中古回响</h3>
-            <div class="sub">Form / Function</div>
-            <div class="kicker">精选 · 六册</div>
-          </div>
-          <div class="desc"><p>柚木、黄铜与有机曲线，半个世纪前的审美至今仍在发光。读懂何为不过时的好设计，以及它背后的时代。</p></div>
-        </div>
-        <div class="mod-b">
-          <div class="photo"><img src="assets/detail-living.jpg" alt="中古风格客厅细节"></div>
-          <div class="txt">
-            <span class="tag">设计经典 · 06</span>
-            <h4>黄金年代</h4>
-            <p>走进战后设计的黄金时代，看形式如何追随功能。</p>
-          </div>
-        </div>
-      </div>
-    </article>
-
+    <div class="loading" id="loading">SETTING THE TYPE …</div>
   </main>
 
   <footer class="controls">
@@ -360,58 +387,278 @@ body::after{
       <button class="next-word" id="nextWord" aria-label="下一张书卡">下一页</button>
       <button class="nav" id="next" aria-label="下一张书卡">›</button>
     </div>
-    <div class="dots" id="dots" role="tablist" aria-label="选择书卡">
-      <button class="on" aria-label="第 1 张" aria-selected="true"></button>
-      <button aria-label="第 2 张" aria-selected="false"></button>
-      <button aria-label="第 3 张" aria-selected="false"></button>
-    </div>
-    <div class="hint">← → 翻页 &nbsp;·&nbsp; 点击卡片切换</div>
+    <div class="dots" id="dots" role="tablist" aria-label="按书单跳转"></div>
+    <div class="hint"><span class="h-wide" id="hintW">← → 翻页 &nbsp;·&nbsp; 点击两侧卡片切换</span><span class="h-narrow" id="hintN">左右滑动翻页</span></div>
   </footer>
 
 </div>
 
 <script>
 (function(){
-  const cards=[...document.querySelectorAll('.card')];
-  const dots=[...document.querySelectorAll('#dots button')];
-  const bar=document.getElementById('mastBar');
-  const cur=document.getElementById('mastCur');
-  const n=cards.length;
-  let active=1; // 从中间那张开始，还原参考图构图
+  "use strict";
+  var gallery=document.getElementById("gallery");
+  var loading=document.getElementById("loading");
+  var dotsBox=document.getElementById("dots");
+  var mastCur=document.getElementById("mastCur");
+  var mastTot=document.getElementById("mastTot");
+  var mastBar=document.getElementById("mastBar");
+  var mastSeas=document.getElementById("mastSeas");
+
+  var cards=[], paths=[], els=[], active=0, pathPos=[], warmed={};
+
+  function esc(s){
+    return String(s==null?"":s).replace(/[&<>"']/g,function(c){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
+    });
+  }
+
+  function accent(c){
+    return "oklch(0.58 0.105 "+c.hue+")";
+  }
+  function accentSoft(c){
+    return "oklch(0.90 0.032 "+c.hue+")";
+  }
+
+  function cardHTML(c){
+    var sib=(c.sib||[]).map(function(idx){
+      var s=cards[idx];if(!s) return "";
+      return '<div class="mini"><div class="th"><img data-src="'+esc(s.cover)+'" alt="'+esc(s.t)+'" loading="lazy" decoding="async"></div>'+
+             '<div class="nm">'+esc(s.t)+'</div></div>';
+    }).join("");
+    var progTxt=c.fin?"已读毕":(c.prog>0?"已读 "+c.prog+"%":"未开卷");
+    return '<div class="paper">'+
+      '<div class="spine"></div>'+
+      '<div class="card-head">'+
+        '<div class="issue">NO.<b>'+String(c.i).padStart(2,"0")+'</b> &nbsp;·&nbsp; '+esc(c.f)+' &nbsp;·&nbsp; '+esc(c.l)+'</div>'+
+        '<div class="dotrow"><i></i><i></i><i></i></div>'+
+      '</div>'+
+      '<div class="stage">'+
+        '<div class="stage-bg" data-bg="'+esc(c.cover)+'"></div>'+
+        '<div class="stage-tint"></div><div class="stage-wash"></div>'+
+        '<div class="cover-wrap" style="--h:'+c.hue+'">'+
+          '<div class="cover-ph">'+esc(c.t)+'</div>'+
+          '<img data-src="'+esc(c.cover)+'" alt="'+esc(c.t)+' 封面" loading="lazy" decoding="async">'+
+        '</div>'+
+        '<div class="stage-num">'+String(c.i).padStart(2,"0")+'</div>'+
+        '<div class="badge">阶段 '+c.st+' / '+c.stn+'</div>'+
+      '</div>'+
+      '<div class="titleblock">'+
+        '<h3>'+esc(c.t)+'</h3>'+
+        '<div class="by'+(c.a?"":" is-empty")+'">'+esc(c.a||"")+'</div>'+
+      '</div>'+
+      '<div class="why">'+
+        '<div class="label">Why this one</div>'+
+        '<p>'+esc(c.w)+'</p>'+
+      '</div>'+
+      '<div class="more">'+
+        '<div class="cap"><span>同一书单 · 接着读</span><em>'+c.pi+' / '+c.pn+'</em></div>'+
+        '<div class="row">'+(sib||'<div class="mini"></div><div class="mini"></div><div class="mini"></div>')+'</div>'+
+      '</div>'+
+      '<div class="foot">'+
+        '<div class="bar">'+
+          '<div class="track"><i style="width:'+Math.max(2,c.prog)+'%"></i></div>'+
+          '<div class="leg"><span>'+esc(c.cat||c.f)+'</span><span>'+progTxt+'</span></div>'+
+        '</div>'+
+        '<a class="go" href="'+esc(c.href)+'">领读 →</a>'+
+      '</div>'+
+    '</div>';
+  }
+
+  /* 85 张卡不一次性建内容：先只建空壳，进入可视窗口（|rel|<=2）才填 HTML。
+     这样首屏只解析 5 张卡的字符串，翻一页只解析 1 张，移动端不会卡在首帧。 */
+  function build(){
+    var frag=document.createDocumentFragment();
+    cards.forEach(function(c,i){
+      var el=document.createElement("article");
+      el.className="card is-far";
+      el.tabIndex=-1;
+      el.dataset.index=i;
+      el.setAttribute("role","button");
+      el.setAttribute("aria-label","第 "+(i+1)+" 张："+c.t);
+      el.addEventListener("click",function(){ if(i!==active) go(i); });
+      el.addEventListener("keydown",function(e){
+        if(e.key==="Enter"||e.key===" "){ e.preventDefault(); if(i!==active) go(i); }
+      });
+      frag.appendChild(el);
+      els.push(el);
+    });
+    gallery.appendChild(frag);
+  }
+
+  function fill(el,i){
+    if(el.dataset.filled===String(i)) return;
+    var c=cards[i];
+    el.style.setProperty("--accent",accent(c));
+    el.style.setProperty("--accent-soft",accentSoft(c));
+    el.style.setProperty("--h",c.hue);
+    el.innerHTML=cardHTML(c);
+    el.dataset.filled=i;
+  }
+
+  function ensureImg(el){
+    var imgs=el.querySelectorAll("img[data-src]");
+    for(var k=0;k<imgs.length;k++){
+      var im=imgs[k];
+      if(!im.src){
+        im.addEventListener("load",function(){
+          var w=this.parentNode;
+          if(w&&w.classList&&w.classList.contains("cover-wrap")) w.classList.add("has-img");
+        });
+        im.addEventListener("error",function(){
+          var w=this.parentNode;
+          if(w&&w.classList&&w.classList.contains("cover-wrap")) w.classList.remove("has-img");
+        });
+        im.src=im.getAttribute("data-src");
+        im.removeAttribute("data-src");
+      }
+    }
+    var bg=el.querySelector(".stage-bg[data-bg]");
+    if(bg&&!bg.style.backgroundImage){
+      bg.style.backgroundImage='url("'+bg.getAttribute("data-bg")+'")';
+      bg.removeAttribute("data-bg");
+    }
+  }
+
+  function layout(){
+    var n=cards.length, half=n/2;
+    els.forEach(function(el,i){
+      var rel=i-active;
+      if(rel>half) rel-=n;
+      if(rel<-half) rel+=n;
+      var abs=Math.abs(rel);
+      el.style.setProperty("--rel",rel);
+      if(abs===0){
+        el.className="card is-active";
+        el.style.setProperty("--sc",1);el.style.setProperty("--ry","0deg");
+        el.style.zIndex=10;
+        el.style.visibility="visible";el.style.opacity=1;el.style.pointerEvents="auto";
+        el.setAttribute("aria-pressed","true");
+      }else if(abs===1){
+        el.className="card is-near";
+        el.style.setProperty("--sc",.89);el.style.setProperty("--ry",(rel>0?-9:9)+"deg");
+        el.style.zIndex=9;
+        el.style.visibility="visible";el.style.opacity=.85;el.style.pointerEvents="auto";
+        el.setAttribute("aria-pressed","false");
+      }else if(abs===2){
+        el.className="card is-side";
+        el.style.setProperty("--sc",.76);el.style.setProperty("--ry",(rel>0?-12:12)+"deg");
+        el.style.zIndex=8;
+        el.style.visibility="visible";el.style.opacity=.26;el.style.pointerEvents="none";
+        el.setAttribute("aria-pressed","false");
+      }else{
+        el.className="card is-far";
+        el.style.setProperty("--sc",.7);
+        el.style.zIndex=1;el.style.pointerEvents="none";
+        el.setAttribute("aria-pressed","false");
+      }
+      if(abs<=2){ fill(el,i); ensureImg(el); }
+      el.tabIndex = abs===0 ? 0 : -1;
+    });
+    // 提前把下一张的图拉进缓存，翻页不白屏（用脱离文档的 Image 预热，不动 DOM 里的 img）
+    var ahead=(active+1)%n, prev=(active-1+n)%n;
+    [ahead,prev].forEach(function(k){
+      var el=els[k];
+      if(!el) return;
+      el.querySelectorAll("img[data-src]").forEach(function(im){
+        var u=im.getAttribute("data-src");
+        if(u&&!warmed[u]){ warmed[u]=1; var w=new Image(); w.decoding="async"; w.src=u; }
+      });
+    });
+    var c=cards[active];
+    mastCur.textContent=String(active+1).padStart(2,"0");
+    mastTot.textContent=String(n).padStart(2,"0");
+    var w=100/n;
+    mastBar.style.width=w+"%";
+    mastBar.style.left=(active*w)+"%";
+    mastSeas.innerHTML="<b>"+esc(c.f)+"</b> · "+esc(c.pt);
+    var d=pathPos[active];
+    [].forEach.call(dotsBox.children,function(b,j){
+      b.classList.toggle("on",j===d);
+      b.setAttribute("aria-selected",String(j===d));
+    });
+    document.getElementById("hintW").innerHTML =
+      "<b>"+esc(c.pt)+"</b> &nbsp;·&nbsp; "+c.pi+" / "+c.pn+" 本 &nbsp;·&nbsp; ← → 翻页 · 滚轮 · 手指滑动";
+    document.getElementById("hintN").textContent =
+      "第 "+c.pi+" / "+c.pn+" 本 · 左右滑动";
+  }
+
+  function go(i){
+    var n=cards.length;
+    active=((i%n)+n)%n;
+    layout();
+  }
 
   function render(){
-    cards.forEach((card,i)=>{
-      const rel=i-active;
-      card.classList.remove('is-active','is-prev','is-next','is-far');
-      if(rel===0) card.classList.add('is-active');
-      else if(rel===-1) card.classList.add('is-prev');
-      else if(rel===1) card.classList.add('is-next');
-      else card.classList.add('is-far');
-      card.setAttribute('aria-pressed', String(rel===0));
-    });
-    dots.forEach((d,i)=>{d.classList.toggle('on',i===active);d.setAttribute('aria-selected',String(i===active))});
-    cur.textContent=String(active+1).padStart(2,'0');
-    bar.style.left=(active/(n-1)*100)+'%';
-    bar.style.width=(100/(n-1))+'%';
+    build();
+    layout();
   }
-  function go(i){active=(i%n+n)%n;render()}
-  function next(){go(active+1)}
-  function prev(){go(active-1)}
 
-  document.getElementById('next').addEventListener('click',next);
-  document.getElementById('prev').addEventListener('click',prev);
-  document.getElementById('nextWord').addEventListener('click',next);
-  dots.forEach((d,i)=>d.addEventListener('click',()=>go(i)));
-  cards.forEach((c,i)=>{
-    c.addEventListener('click',()=>{if(i!==active) go(i)});
-    c.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();if(i!==active)go(i)}});
-  });
-  document.addEventListener('keydown',e=>{
-    if(e.key==='ArrowRight'){e.preventDefault();next()}
-    else if(e.key==='ArrowLeft'){e.preventDefault();prev()}
+  function dotsFor(){
+    // 每条书单一个章节点，点一下跳到该单第一本
+    pathPos=[];
+    var order=[];
+    cards.forEach(function(c){ if(order.indexOf(c.p)<0) order.push(c.p); });
+    cards.forEach(function(c){ pathPos.push(order.indexOf(c.p)); });
+
+    paths.forEach(function(p,j){
+      var b=document.createElement("button");
+      b.type="button";
+      b.title=p.field+" · "+p.title;
+      b.setAttribute("aria-label",p.field+"："+p.title+"（"+p.n+" 本）");
+      b.addEventListener("click",function(){
+        var idx=cards.findIndex(function(c){return c.p===p.id;});
+        if(idx>=0) go(idx);
+      });
+      dotsBox.appendChild(b);
+    });
+  }
+
+  // 滚轮 / 触摸
+  var lock=false;
+  function wheel(e){
+    if(lock) return;
+    if(Math.abs(e.deltaY)<8&&Math.abs(e.deltaX)<8) return;
+    lock=true;
+    setTimeout(function(){lock=false;},320);
+    if(e.deltaY>0||e.deltaX>0) go(active+1); else go(active-1);
+  }
+  gallery.addEventListener("wheel",wheel,{passive:true});
+
+  var tx=0,ty=0;
+  gallery.addEventListener("touchstart",function(e){
+    tx=e.touches[0].clientX;ty=e.touches[0].clientY;
+  },{passive:true});
+  gallery.addEventListener("touchend",function(e){
+    var dx=e.changedTouches[0].clientX-tx, dy=e.changedTouches[0].clientY-ty;
+    if(Math.abs(dx)>44&&Math.abs(dx)>Math.abs(dy)) go(active+(dx<0?1:-1));
+  },{passive:true});
+
+  document.getElementById("next").addEventListener("click",function(){go(active+1)});
+  document.getElementById("prev").addEventListener("click",function(){go(active-1)});
+  document.getElementById("nextWord").addEventListener("click",function(){go(active+1)});
+  document.addEventListener("keydown",function(e){
+    if(e.key==="ArrowRight"||e.key==="PageDown"){e.preventDefault();go(active+1);}
+    else if(e.key==="ArrowLeft"||e.key==="PageUp"){e.preventDefault();go(active-1);}
+    else if(e.key==="Home"){e.preventDefault();go(0);}
+    else if(e.key==="End"){e.preventDefault();go(cards.length-1);}
   });
 
-  render();
+  function fail(msg){
+    loading.classList.remove("hide");
+    loading.innerHTML='<div class="err">书卡数据没装上。<br>'+msg+
+      '<br><br><code>python3 tools/booklist/build_cards.py</code></div>';
+  }
+
+  fetch("cards.json",{cache:"no-cache"})
+    .then(function(r){ if(!r.ok) throw new Error("HTTP "+r.status); return r.json(); })
+    .then(function(d){
+      cards=d.cards||[]; paths=d.paths||[];
+      if(!cards.length) throw new Error("cards 为空");
+      loading.classList.add("hide");
+      dotsFor();
+      render();
+    })
+    .catch(function(e){ fail(esc(e.message||String(e))); });
 })();
 </script>
 </body>
