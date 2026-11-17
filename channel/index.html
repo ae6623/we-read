@@ -37,7 +37,7 @@
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%}
+html,body{height:100%;overscroll-behavior:none}
 body{
   background:var(--bg);
   color:var(--paper);
@@ -695,16 +695,46 @@ body::after{
   }
   gallery.addEventListener("wheel",wheel,{passive:false});
 
-  var tx=0,ty=0,inRail=false;
-  gallery.addEventListener("touchstart",function(e){
-    inRail=!!railOf(e);
-    tx=e.touches[0].clientX;ty=e.touches[0].clientY;
-  },{passive:true});
-  gallery.addEventListener("touchend",function(e){
-    if(inRail){ inRail=false; return; }   // 轨道内滑动交给浏览器原生横向滚动
-    var dx=e.changedTouches[0].clientX-tx, dy=e.changedTouches[0].clientY-ty;
-    if(Math.abs(dx)>44&&Math.abs(dx)>Math.abs(dy)) go(active+(dx<0?1:-1));
-  },{passive:true});
+  // 手势挂整页而不是只挂 gallery：右滑常常从卡片左侧的空白处、甚至页头起步，
+  // 摸不到 gallery 就等于把这一下白送给浏览器的「右滑返回上一页」。
+  // 判定为横向翻卡后立刻 preventDefault，把控制权从浏览器手里抢回来。
+  // 轨道内先让浏览器原生滚（滚起来才有卡位感），滚到头再继续同向滑就接管翻卡——
+  // 不然轨道停在最左时右滑没得滚，手势会整个被浏览器当成返回。
+  var tx=0,ty=0,inRail=false,tAxis=0,tRow=null;
+  // tAxis 0=待判 1=横着翻卡 2=竖直放行 -1=多指
+  function tStart(e){
+    if(e.touches.length>1){ tAxis=-1; return; }
+    tRow=railOf(e); inRail=!!tRow;
+    tx=e.touches[0].clientX;ty=e.touches[0].clientY;tAxis=0;
+  }
+  function tMove(e){
+    if(tAxis===2) return;
+    if(tAxis===-1){ if(e.touches.length<2) tAxis=0; else return; }
+    var t=e.touches[0], dx=t.clientX-tx, dy=t.clientY-ty;
+    if(!tAxis){
+      if(Math.abs(dx)<12&&Math.abs(dy)<12) return;
+      tAxis=Math.abs(dx)>Math.abs(dy)?1:2;
+      if(tAxis===2) return;
+    }
+    if(inRail){
+      var max=tRow.scrollWidth-tRow.clientWidth;
+      var stuck=max<=2||(dx<0?tRow.scrollLeft>=max-2:tRow.scrollLeft<=2);
+      if(!stuck) return;                 // 还滚得动，交给原生滚动
+      inRail=false;                      // 滑到头了，接过来翻卡
+    }
+    if(e.cancelable) e.preventDefault();
+  }
+  function tEnd(e){
+    if(tAxis===1&&!inRail){
+      var dx=e.changedTouches[0].clientX-tx, dy=e.changedTouches[0].clientY-ty;
+      if(Math.abs(dx)>44&&Math.abs(dx)>Math.abs(dy)) go(active+(dx<0?1:-1));
+    }
+    inRail=false;tAxis=0;tRow=null;
+  }
+  document.addEventListener("touchstart",tStart,{passive:true});
+  document.addEventListener("touchmove",tMove,{passive:false});
+  document.addEventListener("touchend",tEnd,{passive:true});
+  document.addEventListener("touchcancel",function(){ inRail=false;tAxis=0;tRow=null; },{passive:true});
 
   // 桌面没有触摸屏，用鼠标拖轨道
   var dragRow=null, dragX=0, dragL=0, dragMoved=false;
