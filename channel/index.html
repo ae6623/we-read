@@ -38,13 +38,15 @@
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;overscroll-behavior:none}
+html,body{height:100%;overflow:hidden;overscroll-behavior:none}
 body{
+  position:fixed;inset:0;width:100%;
   background:var(--bg);
   color:var(--paper);
   font-family:var(--font-body);
   overflow:hidden;
   -webkit-font-smoothing:antialiased;
+  touch-action:pan-x;
 }
 body::before{
   content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
@@ -58,12 +60,14 @@ body::after{
 .app{position:relative;z-index:1;height:100vh;height:100dvh;display:flex;flex-direction:column}
 
 /* ============ Masthead ============ */
+/* 页头页脚都浮在画面上：它们占高度，卡片就永远长不到满屏 */
 .masthead{
-  flex:0 0 auto;
+  position:absolute;top:0;left:0;right:0;z-index:30;
   display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
-  padding:clamp(14px,2.4vh,26px) clamp(20px,4vw,56px) clamp(6px,1vh,12px);
-  gap:12px;
+  padding:clamp(12px,2vh,22px) clamp(20px,4vw,56px) 0;
+  gap:12px;pointer-events:none;
 }
+.masthead>*{pointer-events:auto}
 .brand{display:flex;align-items:baseline;gap:12px;min-width:0}
 .brand .mark{
   font-family:var(--font-latin);font-style:italic;font-size:clamp(20px,2.1vw,27px);
@@ -76,6 +80,7 @@ body::after{
 .mast-num .sep i{position:absolute;left:0;top:-1px;height:3px;background:var(--paper);transition:left .62s var(--ease),width .62s var(--ease)}
 .mast-num .tot{font-size:clamp(13px,1.2vw,16px);color:var(--ink-faint)}
 .mast-seas{
+  display:none;   /* 与卡内书单名重复，还和右上角的播放键抢位置 */
   justify-self:end;font-family:var(--font-latin);font-style:italic;
   font-size:clamp(11px,1.05vw,14px);letter-spacing:.06em;color:var(--ink-faint);
   max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right;
@@ -139,7 +144,7 @@ body::after{
   /* 纯色底按封面主色相铺，非活动卡不画模糊图也有统一色调 */
   background:oklch(0.81 0.032 var(--h,60));
   display:flex;align-items:flex-start;justify-content:center;
-  padding-top:2.6cqw;
+  padding-top:2.2cqw;
 }
 .stage-bg{
   position:absolute;inset:-14%;background-size:cover;background-position:center;
@@ -148,7 +153,7 @@ body::after{
 /* 书封底色千差万别，浅色封面上白字会糊：底部压一层渐隐黑，跟封面无关 */
 .stage::after{
   content:"";position:absolute;left:0;right:0;bottom:0;height:46%;z-index:1;
-  background:linear-gradient(to top,rgba(14,10,7,.84) 0%,rgba(14,10,7,.5) 42%,rgba(14,10,7,0) 100%);
+  background:linear-gradient(to top,rgba(14,10,7,.92) 0%,rgba(14,10,7,.6) 34%,rgba(14,10,7,.12) 62%,rgba(14,10,7,0) 100%);
   pointer-events:none;
 }
 .stage-tint{
@@ -157,7 +162,10 @@ body::after{
 }
 .stage-wash{position:absolute;inset:0;background:linear-gradient(118deg,var(--accent-soft) 0%,transparent 58%);opacity:.22;mix-blend-mode:screen}
 .cover-wrap{
-  display:block;position:relative;z-index:2;height:76%;width:auto;aspect-ratio:3/4.16;
+  /* 高度按「舞台高 - 书名区」算，不按百分比：卡宽一变大，百分比算出来的封面
+     就会长到书名底下，宽屏上几乎贴字 */
+  display:block;position:relative;z-index:2;
+  height:calc(100% - 27cqw);max-height:88%;width:auto;aspect-ratio:3/4.16;
   border-radius:2px;overflow:hidden;
   box-shadow:0 18px 34px rgba(0,0,0,.6),0 3px 9px rgba(0,0,0,.4),0 0 0 1px rgba(255,255,255,.3);
   transform:rotate(-1.4deg);
@@ -398,10 +406,14 @@ body::after{
 /* ============ 自动轮播进度：贴画廊底边，不占布局高度 ============ */
 .dotwrap{display:flex;flex-direction:column;align-items:center;gap:5px;max-width:min(92vw,760px)}
 .autobar{
-  width:100%;height:2px;border-radius:2px;flex:none;
-  background:oklch(0.55 0.02 62 /.18);overflow:hidden;pointer-events:none;
+  position:relative;display:block;
+  width:100%;height:2px;border:none;padding:0;border-radius:2px;flex:none;
+  background:oklch(0.55 0.02 62 /.18);overflow:visible;cursor:pointer;
   opacity:0;transition:opacity .4s ease;
 }
+/* 2px 的线不好点，往上下一共撑出 28px 的热区，但看不见 */
+.autobar::before{content:"";position:absolute;left:-18px;right:-18px;top:-13px;bottom:-13px}
+.autobar:focus-visible{outline:1px solid var(--paper);outline-offset:6px}
 .autobar.is-run,.autobar.is-paused{opacity:1}
 .autobar i{
   display:block;width:100%;height:100%;background:var(--paper);opacity:.9;
@@ -412,8 +424,18 @@ body::after{
 @keyframes autoFill{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 
 /* ============ Controls ============ */
-.controls{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:clamp(8px,1.4vh,14px);padding:clamp(8px,1.6vh,18px) 20px clamp(14px,2.6vh,28px)}
-.navrow{display:flex;align-items:center;gap:clamp(12px,2.4vw,26px)}
+/* 控件整层铺在画面上，不占任何高度：卡片因此能长到贴近视口上下沿 */
+.controls{position:absolute;inset:0;z-index:30;pointer-events:none}
+.controls>*{pointer-events:auto}
+.navrow{display:contents}
+.nav-edge{position:absolute;top:50%;margin-top:-22px;width:44px;height:44px}
+#prev{left:clamp(8px,2vw,26px)}
+#next{right:clamp(8px,2vw,26px)}
+#nextWord{display:none}
+.nav-auto{position:absolute;right:clamp(8px,2vw,26px);top:clamp(8px,2vh,20px)}
+.dotwrap{position:absolute;left:0;right:0;bottom:clamp(8px,1.6vh,16px);max-width:none}
+.dots{max-width:min(60vw,560px)}
+.hint{display:none}
 .nav{
   width:clamp(38px,4vw,48px);height:clamp(38px,4vw,48px);border-radius:50%;
   border:1px solid oklch(0.55 0.02 62 /.5);background:transparent;color:var(--paper);
@@ -424,10 +446,11 @@ body::after{
 .nav:active{transform:translateY(0) scale(.94)}
 .nav:focus-visible{outline:2px solid var(--paper);outline-offset:3px}
 /* 自动轮播开关：比翻页按钮低一档，不抢主操作 */
-.nav-auto{width:clamp(30px,3vw,36px);height:clamp(30px,3vw,36px);opacity:.6;margin-left:6px}
+.nav-auto{width:36px;height:36px;opacity:.5}
+.nav-auto:hover{opacity:1}
 .nav-auto:hover{opacity:1}
 .nav-auto[aria-pressed="false"]{opacity:.38}
-.nav-auto svg{display:block;width:10px;height:10px}
+.nav-auto svg{display:block;width:12px;height:12px}
 .next-word{font-family:var(--font-display);font-size:clamp(13px,1.15vw,15px);letter-spacing:.4em;color:var(--ink-faint);border:none;background:none;cursor:pointer;padding:6px 0 6px .4em;transition:color .3s ease}
 .next-word:hover{color:var(--paper)}
 .next-word:focus-visible{outline:2px solid var(--paper);outline-offset:4px}
@@ -443,6 +466,16 @@ body::after{
 .hint .h-narrow{display:none}
 
 /* ============ 装载 / 兜底 ============ */
+.toast{
+  position:fixed;left:50%;bottom:clamp(16px,3vh,32px);z-index:60;
+  transform:translateX(-50%) translateY(6px);
+  padding:7px 14px;border-radius:999px;
+  background:rgba(20,16,12,.92);border:1px solid oklch(0.55 0.02 62 /.4);
+  color:oklch(0.88 0.015 70);font-size:12.5px;letter-spacing:.06em;white-space:nowrap;
+  opacity:0;pointer-events:none;transition:opacity .26s ease,transform .26s var(--ease);
+}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+
 .loading{
   position:absolute;inset:0;display:grid;place-items:center;
   font-family:var(--font-latin);font-style:italic;font-size:13px;letter-spacing:.24em;
@@ -461,6 +494,11 @@ body::after{
   }
   /* 移动端关掉 3D 透视，只留平面位移，省一次矩阵运算与合成 */
   .gallery{perspective:none}
+  /* 手机上不要页头页脚：屏幕本来就窄，全部让给书卡。
+     只留卡底那条进度线，它同时是「暂停/继续」的开关。 */
+  .masthead{display:none}
+  .navrow,.hint,.dots{display:none}
+  .dotwrap{position:absolute;left:50%;bottom:3px;width:min(38vw,150px);gap:0;transform:translateX(-50%)}
   .masthead{grid-template-columns:1fr auto;padding:14px 18px 4px;gap:8px}
   .brand{gap:8px;min-width:0}
   .brand .mark{font-size:15px;white-space:nowrap}
@@ -551,13 +589,13 @@ body::after{
 
   <footer class="controls">
     <div class="navrow">
-      <button class="nav" id="prev" aria-label="上一张书卡">‹</button>
+      <button class="nav nav-edge" id="prev" aria-label="上一张书卡">‹</button>
       <button class="next-word" id="nextWord" aria-label="下一张书卡">下一页</button>
-      <button class="nav" id="next" aria-label="下一张书卡">›</button>
+      <button class="nav nav-edge" id="next" aria-label="下一张书卡">›</button>
       <button class="nav nav-auto" id="autoBtn" aria-label="暂停自动轮播" aria-pressed="true"></button>
     </div>
     <div class="dotwrap">
-      <div class="autobar" id="autobar" aria-hidden="true"><i></i></div>
+      <button class="autobar" id="autobar" type="button" aria-label="暂停自动翻页"><i></i></button>
       <div class="dots" id="dots" role="tablist" aria-label="按书单跳转"></div>
     </div>
     <div class="hint"><span class="h-wide" id="hintW">← → 翻页 &nbsp;·&nbsp; 点击两侧卡片切换</span><span class="h-narrow" id="hintN">左右滑动翻页</span></div>
@@ -642,7 +680,7 @@ body::after{
     var lead=(c.stages[0]&&c.stages[0].books[0])||null;
     var tabs=c.stages.map(function(st,k){
       // 按钮上只放短名（冒号前那半截），全名留给 aria-label 和下方的阶段标题
-      var shortName=String(st.name).split(/[：:]/)[0];
+      var shortName=String(st.name).split(/[：:，,]/)[0];
       return '<button class="tab'+(k===0?" on":"")+'" type="button" role="tab" data-step="'+k+'"'+
              ' aria-selected="'+(k===0)+'" aria-label="第 '+(k+1)+' 步 '+esc(st.name)+'，'+st.books.length+' 本">'+
              '<i>'+(STEPNUM[k]||(k+1))+'</i><span>'+esc(shortName)+'</span><em>'+st.books.length+'</em>'+
@@ -753,15 +791,24 @@ body::after{
   /* 卡片按画廊的实际可用区域定尺寸：高度吃满，宽度按比例反推。
      原来用 vh/vw 猜，安卓浏览器的地址栏一收起就对不上，上下永远差一截。 */
   function sizeCard(){
+    // .app 高度按真实视口写死：iOS 的 100dvh 在地址栏收放时会滞后，卡片跟着抖
+    var appEl=document.querySelector(".app");
+    if(appEl) appEl.style.height=window.innerHeight+"px";
     var gw=gallery.clientWidth, gh=gallery.clientHeight;
     if(!gw||!gh) return;
-    var wide=gw>760;
-    var ratio=wide?1.66:1.92;
-    var padY=wide?10:6;
-    var padX=wide?0:9;
-    var h=gh-padY*2;
-    var w=Math.min(gw-padX*2,h/ratio);
-    h=w*ratio;                       // 宽被屏幕卡住时按比例缩回来，别把卡拉变形
+
+    var w,h;
+    if(gw<=760){
+      // 手机：只留左右 10px 给翻页动画看，上下几乎贴边
+      w=gw-20; h=gh-14;
+      if(h<w*1.7){ h=Math.min(w*1.7,gh-14); w=h/1.7; }   // 横屏：先保高度
+      if(h>w*2.34) h=w*2.34;                              // 别把卡拉成面条
+    }else{
+      // 桌面：高度吃满（扣掉上方页码和下方控件），宽度按竖版比例反推
+      var ratio=1.78;
+      h=Math.min(gh-100,gw*0.56*ratio);
+      w=h/ratio;
+    }
     gallery.style.setProperty("--card-w",w.toFixed(1)+"px");
     gallery.style.setProperty("--card-h",h.toFixed(1)+"px");
   }
@@ -862,6 +909,7 @@ body::after{
     autoBtn.innerHTML=autoOn?ICON_PAUSE:ICON_PLAY;
     autoBtn.setAttribute("aria-pressed",String(autoOn));
     autoBtn.setAttribute("aria-label",autoOn?"暂停自动轮播":"开始自动轮播");
+    autoBar.setAttribute("aria-label",autoOn?"暂停自动翻页":"开始自动翻页");
   }
 
   function autoCycle(){            // 从 0 起播一轮
@@ -985,11 +1033,14 @@ body::after{
     }
     if(e.cancelable) e.preventDefault();
   }
+  var swipeLock=0;
   function tEnd(e){
     if(tAxis===1&&!inRail){
       var dx=e.changedTouches[0].clientX-tx, dy=e.changedTouches[0].clientY-ty;
       if(Math.abs(dx)>44&&Math.abs(dx)>Math.abs(dy)) go(active+(dx<0?1:-1));
     }
+    var tt=e.changedTouches[0];
+    if(tt&&(Math.abs(tt.clientX-tx)>10||Math.abs(tt.clientY-ty)>10)) swipeLock=Date.now()+400;
     inRail=false;tAxis=0;tRow=null;
   }
   document.addEventListener("touchstart",tStart,{passive:true});
@@ -1019,8 +1070,36 @@ body::after{
   });
   // 拖完手一松会落到链接上，别让它顺势跳走
   gallery.addEventListener("click",function(e){
-    if(dragMoved){ e.preventDefault(); e.stopPropagation(); }
+    if(dragMoved||Date.now()<swipeLock){ e.preventDefault(); e.stopPropagation(); }
   },true);
+
+  // 点卡片两侧的空白也能翻页：桌面上想翻页时手很容易落在书上，一点就跳到详情页
+  gallery.addEventListener("click",function(e){
+    if(e.target.closest(".card")) return;
+    if(gallery.clientWidth<=760) return;
+    go(active+(e.clientX<window.innerWidth/2?-1:1));
+  });
+
+  // 手机上没有按钮了，双击卡面空白处开关自动轮播（书封链接照常跳转）
+  var toastEl=document.createElement("div");
+  toastEl.className="toast";
+  document.body.appendChild(toastEl);
+  var toastT=null;
+  function say(t){
+    toastEl.textContent=t;
+    toastEl.classList.add("on");
+    clearTimeout(toastT);
+    toastT=setTimeout(function(){ toastEl.classList.remove("on"); },1300);
+  }
+  autoBar.addEventListener("click",function(e){
+    e.stopPropagation();
+    autoOn=!autoOn;
+    paintAutoBtn();
+    idleHold=false; hovering=false; clearTimeout(idleT);
+    clearTimeout(idleT);
+    if(autoOn) autoCycle(); else autoBar.classList.remove("is-run","is-paused");
+    say(autoOn?"自动翻页已开启":"自动翻页已暂停");
+  });
 
   document.getElementById("next").addEventListener("click",function(){go(active+1)});
   document.getElementById("prev").addEventListener("click",function(){go(active-1)});
