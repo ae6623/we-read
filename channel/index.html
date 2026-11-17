@@ -227,7 +227,8 @@ body::after{
   display:flex;align-items:stretch;gap:1.7cqw;
   margin-top:1.5cqw;padding:1px 5cqw 2px;
   overflow-x:auto;overflow-y:hidden;
-  scroll-snap-type:x mandatory;
+  scroll-snap-type:x proximity;
+  scroll-padding-inline:5cqw;
   overscroll-behavior-x:contain;
   touch-action:pan-x;
   scrollbar-width:none;-ms-overflow-style:none;
@@ -237,15 +238,15 @@ body::after{
 .more .row::-webkit-scrollbar{display:none}
 .more .row.is-drag{cursor:grabbing;scroll-snap-type:none}
 .more .mini{
-  flex:0 0 auto;height:100%;aspect-ratio:.78;
+  flex:0 0 auto;width:18.5cqw;
   display:flex;flex-direction:column;text-decoration:none;border-radius:2px;
-  scroll-snap-align:start;overflow:hidden;
+  scroll-snap-align:start;
   transition:transform .2s var(--ease);
 }
 .more .mini:hover{transform:translateY(-2px)}
 .more .mini:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 .more .mini .th{
-  position:relative;flex:1 1 0;min-height:0;width:100%;
+  position:relative;width:100%;aspect-ratio:3/4.16;
   border-radius:2px;overflow:hidden;
   background:oklch(0.88 0.015 78);
   box-shadow:0 2px 6px rgba(0,0,0,.16);
@@ -269,8 +270,7 @@ body::after{
 
 /* ============ 卡底 ============ */
 .foot{
-  flex:0 0 auto;margin:1.2cqw 5cqw 0;padding:2.2cqw 0 2.8cqw;
-  border-top:1px solid var(--line);
+  flex:0 0 auto;margin:0 5cqw;padding:2.4cqw 0 2.8cqw;
   display:flex;align-items:center;justify-content:space-between;gap:2.4cqw;
 }
 .bar{flex:1;min-width:0}
@@ -358,7 +358,7 @@ body::after{
   .more{margin:2cqw 0 0;padding-top:2cqw}
   .more .cap{padding:0 4.6cqw}
   .more .row{gap:1.6cqw;margin-top:1.4cqw;padding:1px 4.6cqw 2px}
-  .more .mini{max-width:44cqw}
+  .more .mini{width:22cqw}
   .foot{margin:1.8cqw 4.6cqw 0;padding:2cqw 0 2.4cqw}
   .go{padding:1.5cqw 2.6cqw;font-size:2.6cqw}
   .controls{gap:9px;padding:7px 16px 12px}
@@ -381,7 +381,7 @@ body::after{
   .stage{flex:0 0 44%}
   .titleblock h3{font-size:7cqw}
   .why p{-webkit-line-clamp:2;font-size:3.05cqw}
-  .more .mini{max-width:40cqw}
+  .more .mini{width:24cqw}
   .more .mini .nm{font-size:max(2cqw,8.5px)}
   .masthead{padding:12px 14px 2px}
   .controls{padding:4px 12px 10px}
@@ -394,7 +394,7 @@ body::after{
   .more{margin:1.6cqw 0 0;padding-top:1.6cqw}
   .more .cap{padding:0 4.6cqw}
   .more .row{margin-top:1cqw;padding:1px 4.6cqw 2px}
-  .more .mini{max-width:36cqw}
+  .more .mini{width:26cqw}
   .more .mini .nm{display:none}
   .foot{margin-top:1.4cqw}
 }
@@ -505,7 +505,7 @@ body::after{
       '<div class="foot">'+
         '<div class="bar">'+
           '<div class="track"><i style="width:'+Math.max(2,c.prog)+'%"></i></div>'+
-          '<div class="leg"><span>'+esc(c.cat||c.f)+'</span><span>'+progTxt+'</span></div>'+
+          '<div class="leg"><span>'+esc((c.cat||c.f||"").replace(/-/g," · "))+'</span><span>'+progTxt+'</span></div>'+
         '</div>'+
         '<a class="go" href="list.html?id='+esc(c.p)+'&book='+esc(c.slug)+'">领读 →</a>'+
       '</div>'+
@@ -543,6 +543,9 @@ body::after{
     el.style.setProperty("--accent-soft",accentSoft(c));
     el.style.setProperty("--h",c.hue);
     el.innerHTML=cardHTML(c);
+    // 新填的卡轨道回到最左，否则沿用上一张的滚动位置，首图会被切掉一截
+    var rw=el.querySelector(".more .row");
+    if(rw) rw.scrollLeft=0;
     el.dataset.filled=i;
   }
 

@@ -6,91 +6,250 @@
 <title>书卡详情 · 书卡频道</title>
 <link rel="stylesheet" href="app.css">
 <style>
+/* ============================================================
+   书卡详情 · 版式规范
+   ------------------------------------------------------------
+   容器      1120px（内容 1024），与画廊的"一屏一卡"同源，
+             详情页横向铺开，退一档但不掉档
+   栏宽      12 栏 / 24px gutter，实际只用两栏：封面栏 268 + 正文栏
+   字号阶梯  46 / 34 / 17 / 14 / 12 / 11 —— 六档，不再出现 13.5/11.5 这类中间值
+   行高      标题 1.28，正文 1.9，小字 1.6
+   间距      4 的倍数：8 / 12 / 16 / 24 / 32 / 48 / 64
+   圆角      封面 3px、卡片 2px、胶囊 999 —— 只有三种
+   阴影      只有两级：封面投影 / 悬停抬升
+   ============================================================ */
+
+.wrap{max-width:1120px;padding:0 clamp(18px,4vw,44px) 72px}
+
+/* ============ Hero ============ */
 .hero{
-  display:grid;grid-template-columns:clamp(120px,22vw,196px) 1fr;
-  gap:clamp(16px,3vw,32px);align-items:start;
-  padding:clamp(10px,2vh,22px) 0 clamp(20px,3vh,32px);
-  border-bottom:1px solid oklch(0.3 0.014 62);
+  display:grid;
+  grid-template-columns:clamp(200px,23vw,268px) minmax(0,1fr);
+  gap:clamp(24px,4.4vw,64px);
+  padding:clamp(16px,3vh,36px) 0 clamp(30px,5vh,56px);
+  align-items:stretch;
+  border-bottom:1px solid oklch(0.28 0.013 62);
+}
+
+/* 封面栏：光晕用封面色相，跟画廊里那张卡的气场接上 */
+.stage{position:relative;display:flex;align-items:flex-start}
+.stage .glow{
+  position:absolute;inset:-18% -22% -10%;
+  background:radial-gradient(60% 52% at 46% 34%,
+    oklch(0.52 0.09 var(--h,66) / .5) 0%,transparent 72%);
+  filter:blur(28px);pointer-events:none;
 }
 .cover{
-  position:relative;width:100%;aspect-ratio:3/4.16;border-radius:4px;overflow:hidden;
+  position:relative;width:100%;aspect-ratio:3/4.16;border-radius:3px;overflow:hidden;
   background:oklch(0.3 0.02 62);
-  box-shadow:0 22px 44px rgba(0,0,0,.5),0 4px 12px rgba(0,0,0,.36);
+  box-shadow:0 26px 52px -12px rgba(0,0,0,.62),0 6px 16px rgba(0,0,0,.4),
+             0 0 0 1px rgba(255,255,255,.07);
 }
 .cover img{position:relative;z-index:1;width:100%;height:100%;object-fit:cover;display:block}
 .cover .ph{
-  position:absolute;inset:0;display:grid;place-items:center;padding:12px;
-  font-family:var(--font-display);font-weight:700;font-size:15px;line-height:1.4;
+  position:absolute;inset:0;display:grid;place-items:center;padding:14px;
+  font-family:var(--font-display);font-weight:700;font-size:16px;line-height:1.42;
   text-align:center;color:oklch(0.88 0.02 72);
-  background:linear-gradient(160deg,oklch(0.34 0.03 62),oklch(0.22 0.03 62));
+  background:linear-gradient(160deg,oklch(0.34 0.03 var(--h,62)),oklch(0.22 0.03 var(--h,62)));
 }
-.meta{min-width:0;display:flex;flex-direction:column;gap:0}
-.meta .row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:11px}
-h1{
-  font-family:var(--font-display);font-weight:700;
-  font-size:clamp(21px,3.2vw,34px);line-height:1.32;letter-spacing:.02em;
-}
-.by{margin-top:9px;font-size:13px;color:oklch(0.7 0.016 66);letter-spacing:.03em}
-.by::before{content:"— ";color:oklch(0.6 0.05 70)}
-.why{
-  margin-top:16px;padding:12px 15px;border-radius:6px;
-  background:oklch(0.235 0.014 62);border-left:2px solid oklch(0.62 0.06 72);
-}
-.why .lb{
-  font-family:var(--font-latin);font-style:italic;font-size:11px;letter-spacing:.12em;
-  color:oklch(0.68 0.06 72);margin-bottom:5px;
-}
-.why p{font-size:13.5px;line-height:1.85;color:oklch(0.84 0.014 74)}
-.belong{margin-top:14px;font-size:12.5px;line-height:1.8;color:oklch(0.62 0.014 66)}
-.belong a{color:oklch(0.8 0.05 72);text-decoration:none;border-bottom:1px solid oklch(0.8 0.05 72 / .35)}
-.belong a:hover{border-bottom-color:oklch(0.8 0.05 72)}
-.progline{display:flex;align-items:center;gap:10px;margin-top:14px}
-.progline .bar{flex:0 1 180px;height:3px;background:oklch(0.3 0.012 62);border-radius:2px;overflow:hidden}
-.progline .bar i{display:block;height:100%;background:oklch(0.68 0.07 72)}
-.progline span{font-size:11.5px;color:oklch(0.62 0.014 66);letter-spacing:.04em}
-.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
 
-.rel{padding-top:clamp(20px,3vh,30px)}
-.rel-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:14px}
-.rel-head h2{
-  font-family:var(--font-display);font-weight:700;font-size:16px;letter-spacing:.06em;
+/* 正文栏 */
+.meta{min-width:0;display:flex;flex-direction:column;padding-top:2px}
+.kicker{
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  font-family:var(--font-latin);font-size:11px;letter-spacing:.2em;
+  text-transform:uppercase;color:oklch(0.6 0.015 66);
 }
-.rel-head em{
+.kicker .dot{width:3px;height:3px;border-radius:50%;background:oklch(0.5 0.02 66);flex:none}
+.kicker b{font-weight:400;color:oklch(0.76 0.02 70);letter-spacing:.14em}
+
+h1{
+  margin-top:16px;
+  font-family:var(--font-display);font-weight:700;
+  font-size:clamp(27px,3.4vw,44px);line-height:1.28;letter-spacing:.015em;
+  text-wrap:balance;
+}
+.by{margin-top:12px;font-size:14px;line-height:1.6;color:oklch(0.7 0.016 66);letter-spacing:.03em}
+.by::before{content:"— ";color:oklch(0.56 0.06 72)}
+
+/* 荐语：引号压在左上，正文首行缩进避开 */
+.why{
+  position:relative;margin-top:clamp(18px,3vh,28px);
+  width:fit-content;max-width:min(100%,540px);
+  padding:18px 24px 18px 32px;border-radius:2px;
+  background:linear-gradient(100deg,oklch(0.245 0.016 64) 0%,oklch(0.215 0.013 62) 100%);
+  border-left:2px solid oklch(0.6 0.075 70);
+}
+.why .q{
+  position:absolute;left:9px;top:8px;
+  font-family:var(--font-latin);font-size:30px;line-height:1;
+  color:oklch(0.62 0.075 70 / .55);
+}
+.why p{font-size:14.5px;line-height:1.92;color:oklch(0.88 0.012 76);text-wrap:pretty}
+.why .lb{
+  margin-top:10px;font-family:var(--font-latin);font-style:italic;
+  font-size:11px;letter-spacing:.14em;color:oklch(0.56 0.05 70);
+}
+
+/* 进度：一条横贯正文栏，比三格数字省一半高度，读起来也更像「读到哪儿」 */
+.prog{margin-top:clamp(20px,3.2vh,30px)}
+.prog .top{
+  display:flex;align-items:baseline;justify-content:space-between;gap:12px;
+  font-size:12px;letter-spacing:.08em;color:oklch(0.6 0.014 66);
+}
+.prog .top b{
+  font-family:var(--font-latin);font-weight:400;font-size:19px;
+  color:oklch(0.93 0.012 80);letter-spacing:.01em;
+}
+.prog .bar{
+  margin-top:9px;height:3px;border-radius:2px;overflow:hidden;
+  background:oklch(0.31 0.012 62);
+}
+.prog .bar i{
+  display:block;height:100%;border-radius:2px;
+  background:linear-gradient(90deg,oklch(0.62 0.075 68),oklch(0.78 0.075 76));
+  transition:width .6s var(--ease);
+}
+
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:auto;padding-top:clamp(20px,3.2vh,30px)}
+.actions .btn{padding:11px 22px;font-size:13px}
+
+/* ============ 区块通用头 ============ */
+.sec{padding-top:clamp(30px,4.6vh,52px)}
+.sec-head{
+  display:flex;align-items:baseline;gap:14px;margin-bottom:18px;
+  padding-bottom:12px;border-bottom:1px solid oklch(0.27 0.013 62);
+}
+.sec-head .no{
+  font-family:var(--font-latin);font-size:12px;letter-spacing:.12em;
+  color:oklch(0.5 0.02 64);flex:none;
+}
+.sec-head h2{
+  font-family:var(--font-display);font-weight:700;
+  font-size:17px;letter-spacing:.08em;flex:none;
+}
+.sec-head em{
   font-family:var(--font-latin);font-style:normal;font-size:11.5px;
-  color:oklch(0.62 0.014 66);letter-spacing:.05em;
+  letter-spacing:.1em;color:oklch(0.56 0.014 66);
 }
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:14px 12px}
-@media (max-width:430px){ .grid{grid-template-columns:repeat(auto-fill,minmax(82px,1fr));gap:13px 10px} }
+.sec-head .more{
+  margin-left:auto;flex:none;font-size:12px;letter-spacing:.06em;
+  color:oklch(0.78 0.05 72);text-decoration:none;
+  border-bottom:1px solid oklch(0.78 0.05 72 / .35);padding-bottom:1px;
+}
+.sec-head .more:hover{border-bottom-color:oklch(0.78 0.05 72)}
+
+/* ============ 书单轨迹：整条单铺开，当前书高亮 ============ */
+.strip{
+  display:flex;gap:clamp(8px,1.2vw,14px);overflow-x:auto;padding:2px 2px 10px;
+  scroll-snap-type:x proximity;scrollbar-width:none;-ms-overflow-style:none;
+}
+.strip::-webkit-scrollbar{display:none}
+/* 一本 flex 一份，书少时自动摊开铺满一行；超过 12 本才横向滚 */
+.pb{
+  flex:1 1 0;min-width:54px;max-width:104px;
+  text-decoration:none;scroll-snap-align:start;
+  opacity:.4;transition:opacity .25s ease,transform .25s var(--ease);
+}
+.pb:hover{opacity:.82;transform:translateY(-2px)}
+.pb.on{opacity:1;transform:translateY(-3px)}
+.pb .th{
+  position:relative;width:100%;aspect-ratio:3/4.16;border-radius:2px;overflow:hidden;
+  background:oklch(0.32 0.02 62);box-shadow:0 3px 9px rgba(0,0,0,.34);
+}
+.pb.on .th{outline:1.5px solid oklch(0.78 0.07 72);outline-offset:2px}
+.pb .th img{position:relative;z-index:1;width:100%;height:100%;object-fit:cover;display:block}
+.pb .n{
+  margin-top:5px;font-family:var(--font-latin);font-size:9.5px;
+  letter-spacing:.1em;color:oklch(0.56 0.014 66);text-align:center;
+}
+
+.goal{
+  margin-top:16px;font-size:13px;line-height:1.95;
+  color:oklch(0.68 0.015 68);max-width:82ch;
+}
+.goal span{
+  display:inline-block;margin-right:10px;
+  font-size:11px;letter-spacing:.14em;
+  color:oklch(0.58 0.05 70);
+  border:1px solid oklch(0.4 0.03 66 / .6);border-radius:2px;
+  padding:1px 7px;vertical-align:1px;white-space:nowrap;
+}
+
+/* ============ 关联阅读：5 列书卡墙 ============ */
+.grid{
+  display:grid;gap:clamp(20px,2.6vw,30px) clamp(12px,1.7vw,20px);
+  grid-template-columns:repeat(5,minmax(0,1fr));
+}
+@media (max-width:1000px){ .grid{grid-template-columns:repeat(4,minmax(0,1fr))} }
+@media (max-width:760px){ .grid{grid-template-columns:repeat(3,minmax(0,1fr))} }
+
 .rk{display:block;text-decoration:none;min-width:0}
 .rk .th{
-  position:relative;width:100%;aspect-ratio:1/1.38;border-radius:3px;overflow:hidden;
-  background:oklch(0.3 0.02 62);box-shadow:0 4px 12px rgba(0,0,0,.35);
-  transition:transform .22s var(--ease);
+  position:relative;width:100%;aspect-ratio:3/4.16;border-radius:3px;overflow:hidden;
+  background:oklch(0.3 0.02 62);
+  box-shadow:0 8px 20px -6px rgba(0,0,0,.55),0 2px 6px rgba(0,0,0,.3);
+  transition:transform .26s var(--ease),box-shadow .26s ease;
 }
-.rk:hover .th{transform:translateY(-3px)}
+.rk:hover .th{transform:translateY(-4px);box-shadow:0 18px 34px -8px rgba(0,0,0,.62),0 4px 12px rgba(0,0,0,.4)}
 .rk:focus-visible .th{outline:2px solid var(--paper);outline-offset:3px}
 .rk .th img{position:relative;z-index:1;width:100%;height:100%;object-fit:cover;display:block}
 .rk .tg{
-  position:absolute;left:0;top:0;padding:3px 5px;border-radius:0 0 3px 0;
-  font-size:9.5px;line-height:1;color:oklch(0.95 0.006 82);background:oklch(0.22 0.012 62 / .72);
+  position:absolute;left:0;top:0;z-index:2;
+  padding:3px 5px;border-radius:0 0 3px 0;
+  font-size:9px;line-height:1;letter-spacing:.04em;
+  color:oklch(0.96 0.006 82);background:oklch(0.18 0.01 62 / .58);
+  opacity:.66;transition:opacity .22s ease;
 }
-.rk .tg.is-author{background:oklch(0.44 0.11 44 / .88)}
-.rk .tg.is-step{background:oklch(0.38 0.07 150 / .84)}
+.rk:hover .tg,.rk:focus-visible .tg{opacity:1}
+.rk .tg.is-author{background:oklch(0.46 0.115 46 / .92)}
+.rk .tg.is-step{background:oklch(0.4 0.075 150 / .9)}
 .rk .nm{
-  margin-top:6px;font-size:11.5px;line-height:1.38;color:oklch(0.8 0.014 72);
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  margin-top:9px;font-size:12.5px;line-height:1.45;color:oklch(0.86 0.012 74);
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+  /* 定高两行：书名一行的和两行的卡底边才对得齐 */
+  min-height:2.9em;
 }
 .rk:hover .nm{color:var(--paper)}
+.rk .au{
+  margin-top:4px;font-size:11px;line-height:1.4;min-height:1.4em;
+  color:oklch(0.55 0.013 66);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
 
-@media (max-width:560px){
-  .hero{grid-template-columns:1fr;gap:18px}
-  .cover{width:min(52vw,180px);margin:0 auto}
-  .meta{text-align:center}
-  .meta .row{justify-content:center}
-  .by{margin-top:8px}
-  .why{text-align:left}
-  .progline{justify-content:center}
-  .actions{justify-content:center}
+/* ============ 移动端 ============ */
+@media (max-width:760px){
+  .hero{grid-template-columns:1fr;gap:22px;padding-bottom:26px}
+  .stage{justify-content:center}
+  .cover{width:min(54vw,200px);flex:none}
+  .stage .glow{inset:-14% -30% -8%}
+  .meta{text-align:left}
+  h1{font-size:clamp(26px,7.4vw,34px);margin-top:12px}
+  .why{padding:16px 18px 16px 28px;width:auto}
+  .why p{font-size:13.5px}
+  .facts{padding-top:18px}
+  .fact i{font-size:20px}
+  .fact .bar{width:72px}
+  .fact{padding-right:18px;margin-right:18px}
+  .pb{flex:0 0 auto;width:56px}
+}
+@media (max-width:430px){
+  /* 手机上 2 列 × 15 本要滑 4 屏才看完，压成 3 列，一屏能看到 9 本 */
+  .grid{gap:16px 10px}
+  /* 112px 的封面，标签一占就是三分之一，这个尺寸下让位给封面 */
+  .rk .tg{display:none}
+  .rk .nm{font-size:11.5px;margin-top:7px}
+  .rk .au{font-size:10px;margin-top:3px}
+  .actions{gap:8px}
+  .actions .btn{flex:1 1 auto;justify-content:center;padding:11px 14px}
+  .sec-head{flex-wrap:wrap;gap:8px 12px}
+}
+@media (max-width:360px){
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 10px}
+  .rk .nm{font-size:12px}
+}
+@media (prefers-reduced-motion:reduce){
+  .rk .th,.pb{transition-duration:.01ms}
 }
 </style>
 </head>
@@ -118,6 +277,11 @@ h1{
   function err(msg){
     app.innerHTML='<div class="errbox">这本书没找到。<br>'+esc(msg)+
       '<br><br><a style="color:#e8d8bc" href="index.html">回书卡频道</a></div>';
+  }
+  function shortName(a){
+    a=String(a||"").replace(/^\s*\[[^\]]*\]\s*/,"").trim();
+    var parts=a.split(/\s+(?=\[)/).filter(Boolean);
+    return parts.length>2?parts.slice(0,2).join(" ")+" 等":a;
   }
 
   document.getElementById("back").addEventListener("click",function(e){
@@ -147,11 +311,11 @@ h1{
     }
     var self=poolBy[slug]===undefined?null:pool[poolBy[slug]];
     if(!self) return [];
-    var sc=[];
+    var sc=[], selfName=shortName(self.a);
     pool.forEach(function(b){
       if(b.s===slug) return;
       var s=0,tag="";
-      if(self.a&&b.a&&self.a===b.a){ s=6; tag="同作者"; }
+      if(selfName&&b.a&&shortName(b.a)===selfName){ s=6; tag="同作者"; }
       if(self.c&&b.c===self.c){ s+=3.6; tag=tag||"同题材"; }
       else if(self.c&&b.c&&self.c.split("-")[0]===b.c.split("-")[0]){ s+=2; tag=tag||"同领域"; }
       if(s>0.5) sc.push({s:s,b:b,tag:tag});
@@ -166,7 +330,7 @@ h1{
     if(!b){ err("没有 slug="+slug); return; }
 
     var title=c?c.t:b.t;
-    var author=c?c.a:(b.a||"");
+    var author=shortName(c?c.a:(b.a||""));
     var cat=(c?(c.cat||c.f):b.c)||"";
     var cover=c?c.cover:b.cv;
     var href=c?c.href:b.h;
@@ -174,41 +338,82 @@ h1{
     var prog=c?(c.prog||0):0;
     var fin=c?!!c.fin:false;
     var p=c?pathBy[c.p]:null;
+    var hue=c?c.hue:null;
 
     document.title=title+" · 书卡详情";
-    document.getElementById("mark").innerHTML='<b>'+esc(cat||"书卡")+'</b>';
+    document.getElementById("mark").innerHTML='<b>'+esc(cat||"书卡")+'</b> · 书卡详情';
 
-    var progTxt=fin?"已读毕":(prog>0?"已读 "+prog+"%":"还没开卷");
+    var progTxt=fin?"已读毕":(prog>0?"在读":"未开卷");
 
-    var html='<div class="hero">'+
-      '<div class="cover">'+
-        '<div class="ph">'+esc(title)+'</div>'+
-        '<img src="'+esc(cover)+'" alt="'+esc(title)+' 封面" decoding="async" onerror="this.style.display=&#39;none&#39;">'+
+    // 书单轨迹：整条单按阶段顺序铺开，标出当前这本的位次
+    var strip="", stripNo=0;
+    if(p&&p.stages){
+      p.stages.forEach(function(st){
+        st.slugs.forEach(function(sl){
+          stripNo++;
+          var pb=cardBy[sl]||null;
+          var cv=pb?pb.cover:(poolBy[sl]!==undefined?pool[poolBy[sl]].cv:"");
+          var on=sl===slug;
+          strip+='<a class="pb'+(on?" on":"")+'" href="book.html?slug='+encodeURIComponent(sl)+'"'+
+                 (on?' aria-current="page"':'')+' title="'+esc(pb?pb.t:sl)+'">'+
+                 '<div class="th"><img src="'+esc(cv)+'" alt="" loading="lazy" decoding="async" onerror="this.style.display=&#39;none&#39;"></div>'+
+                 '<div class="n">'+String(stripNo).padStart(2,"0")+'</div></a>';
+        });
+      });
+    }
+
+    // kicker：分类 · 书单位次 · 阶段，同一项只出现一次
+    var parts=[];
+    var catTxt=(cat||"书架").replace(/-/g," · ");
+    parts.push('<b>'+esc(catTxt)+'</b>');
+    if(p&&p.field&&p.field!==catTxt&&p.field!==cat) parts.push('<span>'+esc(p.field)+'</span>');
+    if(c&&c.pn) parts.push('<span>书单第 '+(c.pi||0)+' / '+c.pn+' 本</span>');
+    if(c&&c.stn) parts.push('<span>阶段 '+c.st+' / '+c.stn+'</span>');
+    var kicker=parts.join('<span class="dot"></span>');
+
+    // 进度：一条横线贯穿正文栏
+    var progBlock='<div class="prog">'+
+      '<div class="top"><span>阅读进度 · '+progTxt+'</span><b>'+prog+'%</b></div>'+
+      '<div class="bar"><i style="width:'+(prog>0?Math.max(3,prog):0)+'%"></i></div>'+
+    '</div>';
+
+    var html='<section class="hero">'+
+      '<div class="stage">'+
+        '<div class="glow" style="--h:'+(hue==null?66:hue)+'"></div>'+
+        '<div class="cover" style="--h:'+(hue==null?62:hue)+'">'+
+          '<div class="ph">'+esc(title)+'</div>'+
+          '<img src="'+esc(cover)+'" alt="'+esc(title)+' 封面" decoding="async" onerror="this.style.display=&#39;none&#39;">'+
+        '</div>'+
       '</div>'+
       '<div class="meta">'+
-        '<div class="row">'+
-          (cat?'<span class="chip">'+esc(cat)+'</span>':'')+
-          (c?'<span class="chip">阶段 '+c.st+' / '+c.stn+'</span>':'<span class="chip">书架</span>')+
-        '</div>'+
+        '<div class="kicker">'+kicker+'</div>'+
         '<h1>'+esc(title)+'</h1>'+
         (author?'<div class="by">'+esc(author)+'</div>':'')+
-        (why?'<div class="why"><div class="lb">Why this one</div><p>'+esc(why)+'</p></div>':'')+
-        (p?'<div class="belong">出自书单 · <a href="list.html?id='+encodeURIComponent(p.id)+'&book='+encodeURIComponent(slug)+'">'+esc(p.title)+'</a></div>':'')+
-        '<div class="progline">'+
-          '<div class="bar"><i style="width:'+Math.max(2,prog)+'%"></i></div>'+
-          '<span>'+progTxt+'</span>'+
-        '</div>'+
+        (why?'<div class="why"><span class="q">“</span><p>'+esc(why)+'</p><div class="lb">Why this one</div></div>':'')+
+        progBlock+
         '<div class="actions">'+
           '<a class="btn btn-primary" href="'+esc(href)+'">领读全文 →</a>'+
           (p?'<a class="btn btn-ghost" href="list.html?id='+encodeURIComponent(p.id)+'&book='+encodeURIComponent(slug)+'">看整条书单</a>':'')+
         '</div>'+
       '</div>'+
-    '</div>';
+    '</section>';
+
+    if(strip){
+      html+='<section class="sec">'+
+        '<div class="sec-head"><span class="no">01</span><h2>这条书单</h2>'+
+          '<em>'+esc(p.title)+' · '+p.n+' 本</em>'+
+          '<a class="more" href="list.html?id='+encodeURIComponent(p.id)+'&book='+encodeURIComponent(slug)+'">看目录 →</a>'+
+        '</div>'+
+        '<div class="strip">'+strip+'</div>';
+      if(p.goal) html+='<p class="goal"><span>书单简介</span>'+esc(p.goal)+'</p>';
+      html+='</section>';
+    }
 
     var rel=related(slug,cards,pool,cardBy,poolBy);
     if(rel.length){
-      html+='<section class="rel">'+
-        '<div class="rel-head"><h2>关联阅读</h2><em>'+rel.length+' 本 · 按关联度排</em></div>'+
+      html+='<section class="sec">'+
+        '<div class="sec-head"><span class="no">02</span><h2>关联阅读</h2>'+
+          '<em>'+rel.length+' 本 · 按关联度排</em></div>'+
         '<div class="grid">';
       rel.forEach(function(r){
         var tag=r.tag||"";
@@ -217,7 +422,8 @@ h1{
           '<div class="th"><img src="'+esc(r.b.cv)+'" alt="'+esc(r.b.t)+'" loading="lazy" decoding="async" onerror="this.style.display=&#39;none&#39;">'+
             (tag?'<span class="tg'+cls+'">'+esc(tag)+'</span>':'')+
           '</div>'+
-          '<div class="nm">'+esc(r.b.t)+'</div></a>';
+          '<div class="nm">'+esc(r.b.t)+'</div>'+
+          '<div class="au">'+esc(shortName(r.b.a))+'</div></a>';
       });
       html+='</div></section>';
     }
@@ -228,6 +434,15 @@ h1{
       '</div>';
 
     app.innerHTML=html;
+
+    // 轨迹条把当前这本滚到容器中间。
+    // 注意不能用 scrollIntoView：它会把整个文档一起滚，页面一加载就自己往上跳。
+    var on=app.querySelector(".pb.on");
+    var strip=app.querySelector(".strip");
+    if(on&&strip){
+      strip.scrollLeft=Math.max(0,
+        on.offsetLeft-(strip.clientWidth-on.offsetWidth)/2);
+    }
   }
 })();
 </script>

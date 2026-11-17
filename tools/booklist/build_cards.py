@@ -32,7 +32,7 @@
     st       阶段序号 / stn 阶段总数 / stName 阶段名
     prog     阅读进度 0-100 / fin 是否读毕
     hue      封面主色相（0-360）
-    sib      关联书在 pool 里的下标（最多 14 个，卡内横向轨道按此顺序铺）
+    sib      关联书在 pool 里的下标（最多 15 个，卡内横向轨道按此顺序铺）
     sibTag   与 sib 一一对应的关联理由：同作者 / 同一步 / 同书单 / 同题材 / 同领域
 
 用法
@@ -313,6 +313,8 @@ def main():
         return s
 
     au = [author_set(p["a"]) for p in pool]
+    # 每张卡挂几本关联书：15 正好把详情页的 5 列铺满 3 行，不留半行尾巴
+    SIB_N = 15
     QUOTA = {"同一步": 4, "同书单": 3}
 
     for i, c in enumerate(cards):
@@ -352,7 +354,7 @@ def main():
                 continue
             cnt[tag] = cnt.get(tag, 0) + 1
             picked.append((j, tag))
-            if len(picked) >= 14:
+            if len(picked) >= SIB_N:
                 break
         c["sib"] = [j for j, _ in picked]
         c["sibTag"] = [t for _, t in picked]
