@@ -37,6 +37,23 @@
   --ease:cubic-bezier(.22,1,.36,1);
 }
 
+/* 返回书单Tab：桌面在刊头，手机浮在左上角 */
+.backpill{
+  display:inline-flex;align-items:center;gap:6px;flex:none;
+  font-family:var(--font-latin);font-size:12.5px;letter-spacing:.04em;
+  color:var(--paper);text-decoration:none;
+  border:1px solid oklch(0.55 0.02 62 /.45);border-radius:999px;padding:6px 13px 6px 10px;
+  transition:background .25s ease,border-color .25s ease,transform .25s var(--ease);
+  white-space:nowrap;
+}
+.backpill:hover{background:oklch(0.9 0.02 80 /.12);border-color:var(--paper);transform:translateX(-2px)}
+.backpill:focus-visible{outline:2px solid var(--paper);outline-offset:3px}
+.m-back{
+  position:absolute;top:10px;left:10px;z-index:40;display:none;
+  font-size:12px;padding:5px 11px 5px 8px;
+  background:oklch(0.19 0.016 62 /.72);backdrop-filter:blur(6px);
+}
+
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;overflow:hidden;overscroll-behavior:none}
 body{
@@ -109,7 +126,7 @@ body::after{
   background:#0e0b08;opacity:0;pointer-events:none;
   transition:opacity .42s ease;
 }
-.card.is-near::after{opacity:.24}
+.card.is-near::after{opacity:.5}
 .card.is-side::after{opacity:.5}
 .card.is-far{visibility:hidden;opacity:0;pointer-events:none;content-visibility:hidden}
 .card.is-side{pointer-events:none}
@@ -494,6 +511,8 @@ body::after{
   }
   /* 移动端关掉 3D 透视，只留平面位移，省一次矩阵运算与合成 */
   .gallery{perspective:none}
+  /* 刊头藏起来，返回键单独浮在左上角 */
+  .m-back{display:inline-flex}
   /* 手机上不要页头页脚：屏幕本来就窄，全部让给书卡。
      只留卡底那条进度线，它同时是「暂停/继续」的开关。 */
   .masthead{display:none}
@@ -570,8 +589,11 @@ body::after{
 <body>
 <div class="app">
 
+  <a class="backpill m-back" id="backBtnM" href="../">← 书单</a>
+
   <header class="masthead">
     <div class="brand">
+      <a class="backpill" id="backBtn" href="../">← 书单</a>
       <span class="mark">The Reading Edit</span>
       <span class="cn">书卡频道</span>
     </div>
@@ -815,6 +837,8 @@ body::after{
 
   function layout(){
     var n=cards.length, half=n/2;
+    // 桌面上相邻卡不再隐身：留在身后盖一层遮罩，一眼就看出这是一摞可以翻的卡
+    var wide=gallery.clientWidth>760;
     els.forEach(function(el,i){
       var rel=i-active;
       if(rel>half) rel-=n;
@@ -831,7 +855,7 @@ body::after{
         el.className="card is-near";
         el.style.setProperty("--sc",.84);el.style.setProperty("--ry",(rel>0?-7:7)+"deg");
         el.style.zIndex=9;
-        el.style.visibility="visible";el.style.opacity=0;el.style.pointerEvents="none";
+        el.style.visibility="visible";el.style.opacity=wide?1:0;el.style.pointerEvents="none";
         el.setAttribute("aria-pressed","false");
       }else if(abs===2){
         el.className="card is-side";
@@ -877,7 +901,13 @@ body::after{
 
   function go(i){
     var n=cards.length;
+    var prev=active;
     active=((i%n)+n)%n;
+    // 换卡时步骤回到 ①：自动轮动的节奏是「①②③ → 下一张」，每次进场都从头走
+    if(active!==prev){
+      var el=els[active];
+      if(el&&el.dataset.filled!==undefined&&(+el.dataset.step||0)!==0) paintStep(el,0);
+    }
     try{ history.replaceState(null,"","#"+String(active+1)); }catch(e){}
     layout();
     autoCycle();
@@ -893,8 +923,10 @@ body::after{
 
   /* ---------- 自动轮播 ----------
      拿 CSS 动画当计时器：animationend 就是翻页信号，暂停直接 animation-play-state，
-     进度条和倒计时天然同步，不用自己算剩余时间。 */
-  var AUTO_MS=9000;
+     进度条和倒计时天然同步，不用自己算剩余时间。
+     节奏：先在当前书单里把步骤 ①②③ 各停一轮，轮完翻到下一张书单卡——
+     一进来就能看见卡在动，才知道可以左右滑。 */
+  var AUTO_MS=4200;
   var autoBar=document.getElementById("autobar");
   var autoBtn=document.getElementById("autoBtn");
   var autoFill=autoBar.querySelector("i");
@@ -932,7 +964,17 @@ body::after{
   }
 
   autoFill.addEventListener("animationend",function(){
-    if(autoOn&&!hovering&&!idleHold) go(active+1);
+    if(!autoOn||hovering||idleHold) return;
+    var el=els[active], c=cards[active];
+    if(!el||!c) return;
+    var k=+el.dataset.step||0;
+    // 步骤没轮完：在同一张卡里切下一步；轮完了：翻下一张书单卡
+    if(c.stages.length>1&&k<c.stages.length-1){
+      paintStep(el,k+1);
+      autoCycle();
+    }else{
+      go(active+1);
+    }
   });
 
   autoBtn.addEventListener("click",function(){
@@ -1100,6 +1142,22 @@ body::after{
     if(autoOn) autoCycle(); else autoBar.classList.remove("is-run","is-paused");
     say(autoOn?"自动翻页已开启":"自动翻页已暂停");
   });
+
+  // 返回书单Tab：被首页 iframe 嵌着时藏起来（外层 Tab 本身就是回程），独立打开才显示；
+  // 独立打开时优先 history.back() 回到来源页，没有来源就直接回首页书单区
+  var framed=false;
+  try{ framed=window.top!==window.self; }catch(e){ framed=true; }
+  var backLinks=[document.getElementById("backBtn"),document.getElementById("backBtnM")];
+  if(framed){
+    backLinks.forEach(function(b){ if(b) b.style.display="none"; });
+  }else{
+    backLinks.forEach(function(b){
+      if(!b) return;
+      b.addEventListener("click",function(e){
+        if(history.length>1&&document.referrer){ e.preventDefault(); history.back(); }
+      });
+    });
+  }
 
   document.getElementById("next").addEventListener("click",function(){go(active+1)});
   document.getElementById("prev").addEventListener("click",function(){go(active-1)});

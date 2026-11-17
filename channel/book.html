@@ -176,15 +176,15 @@ h1{
   padding:1px 7px;vertical-align:1px;white-space:nowrap;
 }
 
-/* ============ 关联阅读：5 列书卡墙 ============ */
+/* ============ 关联阅读：与「这条书单」的封面同一尺寸 ============ */
+/* 一本 flex 一份，缩到和上方轨迹条 .pb 一样大（54~104px），不再一卡顶半屏 */
 .grid{
-  display:grid;gap:clamp(20px,2.6vw,30px) clamp(12px,1.7vw,20px);
-  grid-template-columns:repeat(5,minmax(0,1fr));
+  display:flex;flex-wrap:wrap;gap:16px 10px;
 }
-@media (max-width:1000px){ .grid{grid-template-columns:repeat(4,minmax(0,1fr))} }
-@media (max-width:760px){ .grid{grid-template-columns:repeat(3,minmax(0,1fr))} }
-
-.rk{display:block;text-decoration:none;min-width:0}
+.rk{
+  flex:0 0 auto;width:104px;
+  display:block;text-decoration:none;
+}
 .rk .th{
   position:relative;width:100%;aspect-ratio:3/4.16;border-radius:3px;overflow:hidden;
   background:oklch(0.3 0.02 62);
@@ -205,14 +205,14 @@ h1{
 .rk .tg.is-author{background:oklch(0.46 0.115 46 / .92)}
 .rk .tg.is-step{background:oklch(0.4 0.075 150 / .9)}
 .rk .nm{
-  margin-top:9px;font-size:12.5px;line-height:1.45;color:oklch(0.86 0.012 74);
+  margin-top:6px;font-size:11px;line-height:1.42;color:oklch(0.86 0.012 74);
   display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
   /* 定高两行：书名一行的和两行的卡底边才对得齐 */
-  min-height:2.9em;
+  min-height:2.84em;
 }
 .rk:hover .nm{color:var(--paper)}
 .rk .au{
-  margin-top:4px;font-size:11px;line-height:1.4;min-height:1.4em;
+  margin-top:3px;font-size:10px;line-height:1.4;min-height:1.4em;
   color:oklch(0.55 0.013 66);
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
@@ -234,19 +234,19 @@ h1{
   .pb{flex:0 0 auto;width:56px}
 }
 @media (max-width:430px){
-  /* 手机上 2 列 × 15 本要滑 4 屏才看完，压成 3 列，一屏能看到 9 本 */
-  .grid{gap:16px 10px}
-  /* 112px 的封面，标签一占就是三分之一，这个尺寸下让位给封面 */
+  /* 手机上封面缩到 64~92px，一排能摆 4 本上下，标签让位给封面 */
+  .grid{gap:14px 8px}
+  .rk{width:88px}
   .rk .tg{display:none}
-  .rk .nm{font-size:11.5px;margin-top:7px}
-  .rk .au{font-size:10px;margin-top:3px}
+  .rk .nm{font-size:10.5px;margin-top:5px}
+  .rk .au{font-size:9.5px;margin-top:2px}
   .actions{gap:8px}
   .actions .btn{flex:1 1 auto;justify-content:center;padding:11px 14px}
   .sec-head{flex-wrap:wrap;gap:8px 12px}
 }
 @media (max-width:360px){
-  .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 10px}
-  .rk .nm{font-size:12px}
+  .rk{width:80px}
+  .rk .nm{font-size:10px}
 }
 @media (prefers-reduced-motion:reduce){
   .rk .th,.pb{transition-duration:.01ms}
