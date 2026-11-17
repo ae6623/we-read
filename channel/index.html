@@ -464,6 +464,8 @@ body::after{
 /* 非活动卡不响应链接：点侧卡是「切到这张」，不是「跳走」 */
 .card:not(.is-active) .go,
 .card:not(.is-active) .cover-wrap{pointer-events:none}
+/* 邻卡整体可点（滑过去），但内部元素不抢点击：点哪都算点这张卡 */
+.card.is-near *{pointer-events:none}
 
 /* ============ 自动轮播进度：贴画廊底边，不占布局高度 ============ */
 .dotwrap{display:flex;flex-direction:column;align-items:center;gap:5px;max-width:min(92vw,760px)}
@@ -790,11 +792,18 @@ body::after{
       el.setAttribute("role","button");
       el.setAttribute("aria-label","第 "+(i+1)+" 个书单："+c.title);
       el.addEventListener("click",function(e){
-        if(e.target.closest("a")) return;   // 链接自己走，别顺带切卡
-        if(i!==active) go(i);
+        if(e.target.closest("a")) return;   // 书封/书卡/领读链接自己走，别顺带切卡
+        if(e.target.closest(".tab")) return; // 步骤按钮自己处理
+        if(i!==active){ go(i); return; }     // 邻卡：滑到那张卡
+        // 当前卡点到空白（书名/副标题/阶段说明/页脚等）：进这张书单的详情页
+        location.href="list.html?id="+encodeURIComponent(cards[i].id);
       });
       el.addEventListener("keydown",function(e){
-        if(e.key==="Enter"||e.key===" "){ e.preventDefault(); if(i!==active) go(i); }
+        if(e.key==="Enter"||e.key===" "){
+          e.preventDefault();
+          if(i!==active) go(i);
+          else location.href="list.html?id="+encodeURIComponent(cards[i].id);
+        }
       });
       frag.appendChild(el);
       els.push(el);
@@ -888,7 +897,7 @@ body::after{
         el.className="card is-near";
         el.style.setProperty("--sc",.84);el.style.setProperty("--ry",(rel>0?-7:7)+"deg");
         el.style.zIndex=9;
-        el.style.visibility="visible";el.style.opacity=1;el.style.pointerEvents="none";
+        el.style.visibility="visible";el.style.opacity=1;el.style.pointerEvents="auto";
         el.setAttribute("aria-pressed","false");
       }else if(abs===2){
         el.className="card is-side";
