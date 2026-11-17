@@ -93,7 +93,7 @@ body::after{
   border-radius:5px;
   transform-style:preserve-3d;
   /* 相邻卡退到主卡身后只露一条边：三张并排时哪张都显小，一张独占才立得住 */
-  transform:translateX(calc(var(--rel,0) * var(--card-w) * .32)) scale(var(--sc,1)) rotateY(var(--ry,0deg));
+  transform:translateX(calc(var(--rel,0) * var(--card-w) * .56)) scale(var(--sc,1)) rotateY(var(--ry,0deg));
   transition:transform .6s var(--ease),opacity .42s ease,visibility .42s;
   cursor:pointer;outline:none;
   contain:layout style;
@@ -107,7 +107,7 @@ body::after{
 .card.is-near::after{opacity:.24}
 .card.is-side::after{opacity:.5}
 .card.is-far{visibility:hidden;opacity:0;pointer-events:none;content-visibility:hidden}
-.card.is-side{opacity:.3;pointer-events:none}
+.card.is-side{pointer-events:none}
 .card:focus-visible .paper{box-shadow:0 0 0 3px var(--bg),0 0 0 5px var(--accent-soft),0 30px 70px rgba(0,0,0,.5)}
 /* 只有中间那张画模糊底色：5 张同时 blur 是移动端最大的掉帧来源 */
 .card:not(.is-active) .stage-bg{display:none}
@@ -132,9 +132,6 @@ body::after{
 }
 .issue{font-family:var(--font-latin);font-size:max(2.9cqw,9.5px);letter-spacing:.18em;color:var(--ink-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .issue b{color:var(--accent);font-weight:400}
-.dotrow{display:flex;gap:1.5cqw;flex:none}
-.dotrow i{width:1.5cqw;height:1.5cqw;border-radius:50%;background:var(--line)}
-.dotrow i:nth-child(1){background:var(--accent)}
 
 /* ============ 封面舞台：模糊底 + 清晰书封 ============ */
 .stage{
@@ -175,12 +172,10 @@ body::after{
 }
 .cover-wrap.has-img .cover-ph{display:none}
 
-/* 舞台上的角标 */
-.badge{
-  position:absolute;right:4.4cqw;bottom:4.2cqw;z-index:3;
-  font-family:var(--font-latin);font-size:max(2.5cqw,9px);letter-spacing:.14em;
-  color:#f8f0e2;background:rgba(20,15,10,.5);border:1px solid rgba(248,240,226,.36);
-  padding:1.1cqw 2cqw;border-radius:2px;
+/* 篇幅标记放在刊头右侧：书单名最长 7 字，压图时会被它挤到换行 */
+.hd-count{
+  flex:none;font-family:var(--font-latin);font-size:max(2.6cqw,9px);letter-spacing:.12em;
+  color:var(--ink-faint);white-space:nowrap;
 }
 .stage-num{
   position:absolute;left:4.4cqw;bottom:3cqw;
@@ -400,6 +395,22 @@ body::after{
 .card:not(.is-active) .go,
 .card:not(.is-active) .cover-wrap{pointer-events:none}
 
+/* ============ 自动轮播进度：贴画廊底边，不占布局高度 ============ */
+.dotwrap{display:flex;flex-direction:column;align-items:center;gap:5px;max-width:min(92vw,760px)}
+.autobar{
+  width:100%;height:2px;border-radius:2px;flex:none;
+  background:oklch(0.55 0.02 62 /.18);overflow:hidden;pointer-events:none;
+  opacity:0;transition:opacity .4s ease;
+}
+.autobar.is-run,.autobar.is-paused{opacity:1}
+.autobar i{
+  display:block;width:100%;height:100%;background:var(--paper);opacity:.9;
+  transform:scaleX(0);transform-origin:left center;
+}
+.autobar.is-run i{animation:autoFill var(--auto-ms,8000ms) linear forwards}
+.autobar.is-paused i{animation-play-state:paused}
+@keyframes autoFill{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+
 /* ============ Controls ============ */
 .controls{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:clamp(8px,1.4vh,14px);padding:clamp(8px,1.6vh,18px) 20px clamp(14px,2.6vh,28px)}
 .navrow{display:flex;align-items:center;gap:clamp(12px,2.4vw,26px)}
@@ -412,6 +423,11 @@ body::after{
 .nav:hover{background:oklch(0.9 0.02 80 /.12);border-color:var(--paper);transform:translateY(-2px)}
 .nav:active{transform:translateY(0) scale(.94)}
 .nav:focus-visible{outline:2px solid var(--paper);outline-offset:3px}
+/* 自动轮播开关：比翻页按钮低一档，不抢主操作 */
+.nav-auto{width:clamp(30px,3vw,36px);height:clamp(30px,3vw,36px);opacity:.6;margin-left:6px}
+.nav-auto:hover{opacity:1}
+.nav-auto[aria-pressed="false"]{opacity:.38}
+.nav-auto svg{display:block;width:10px;height:10px}
 .next-word{font-family:var(--font-display);font-size:clamp(13px,1.15vw,15px);letter-spacing:.4em;color:var(--ink-faint);border:none;background:none;cursor:pointer;padding:6px 0 6px .4em;transition:color .3s ease}
 .next-word:hover{color:var(--paper)}
 .next-word:focus-visible{outline:2px solid var(--paper);outline-offset:4px}
@@ -457,7 +473,6 @@ body::after{
   .card{transform:translateX(calc(var(--rel,0) * (var(--card-w) + var(--gap)))) scale(var(--sc,1))}
   /* 封面按舞台高度定尺寸，永远不溢出被裁；剩余高度给「接着读」 */
     .stage-num{font-size:10.5cqw;bottom:2.6cqw}
-  .badge{font-size:2.7cqw;right:4cqw;bottom:3.8cqw}
   .titleblock{padding:3cqw 4.6cqw 0}
   .titleblock h3{font-size:6.6cqw;line-height:1.2}
   .why{padding:2.2cqw 4.6cqw 0}
@@ -539,8 +554,12 @@ body::after{
       <button class="nav" id="prev" aria-label="上一张书卡">‹</button>
       <button class="next-word" id="nextWord" aria-label="下一张书卡">下一页</button>
       <button class="nav" id="next" aria-label="下一张书卡">›</button>
+      <button class="nav nav-auto" id="autoBtn" aria-label="暂停自动轮播" aria-pressed="true"></button>
     </div>
-    <div class="dots" id="dots" role="tablist" aria-label="按书单跳转"></div>
+    <div class="dotwrap">
+      <div class="autobar" id="autobar" aria-hidden="true"><i></i></div>
+      <div class="dots" id="dots" role="tablist" aria-label="按书单跳转"></div>
+    </div>
     <div class="hint"><span class="h-wide" id="hintW">← → 翻页 &nbsp;·&nbsp; 点击两侧卡片切换</span><span class="h-narrow" id="hintN">左右滑动翻页</span></div>
   </footer>
 
@@ -634,7 +653,7 @@ body::after{
       '<div class="spine"></div>'+
       '<div class="card-head">'+
         '<div class="issue">NO.<b>'+String(c._i).padStart(2,"0")+'</b> &nbsp;·&nbsp; '+esc(c.field)+' &nbsp;·&nbsp; '+esc(c.level)+'</div>'+
-        '<div class="dotrow"><i></i><i></i><i></i></div>'+
+        '<div class="hd-count">'+c.n+' 本 · '+c.nsteps+' 步</div>'+
       '</div>'+
       '<div class="stage">'+
         (lead?'<div class="stage-bg" data-bg="'+esc(lead.cover)+'"></div>':'')+
@@ -648,7 +667,6 @@ body::after{
           '<h3>'+esc(c.main)+'</h3>'+
           '<div class="s">'+esc(c.sub)+'</div>'+
         '</div>'+
-        '<div class="badge">'+c.n+' 本 · '+c.nsteps+' 步</div>'+
       '</div>'+
       '<div class="tabs" role="tablist" aria-label="书单的三个步骤">'+tabs+'</div>'+
       '<div class="sinfo">'+
@@ -732,6 +750,22 @@ body::after{
     }
   }
 
+  /* 卡片按画廊的实际可用区域定尺寸：高度吃满，宽度按比例反推。
+     原来用 vh/vw 猜，安卓浏览器的地址栏一收起就对不上，上下永远差一截。 */
+  function sizeCard(){
+    var gw=gallery.clientWidth, gh=gallery.clientHeight;
+    if(!gw||!gh) return;
+    var wide=gw>760;
+    var ratio=wide?1.66:1.92;
+    var padY=wide?10:6;
+    var padX=wide?0:9;
+    var h=gh-padY*2;
+    var w=Math.min(gw-padX*2,h/ratio);
+    h=w*ratio;                       // 宽被屏幕卡住时按比例缩回来，别把卡拉变形
+    gallery.style.setProperty("--card-w",w.toFixed(1)+"px");
+    gallery.style.setProperty("--card-h",h.toFixed(1)+"px");
+  }
+
   function layout(){
     var n=cards.length, half=n/2;
     els.forEach(function(el,i){
@@ -748,15 +782,15 @@ body::after{
         el.setAttribute("aria-pressed","true");
       }else if(abs===1){
         el.className="card is-near";
-        el.style.setProperty("--sc",.86);el.style.setProperty("--ry",(rel>0?-7:7)+"deg");
+        el.style.setProperty("--sc",.84);el.style.setProperty("--ry",(rel>0?-7:7)+"deg");
         el.style.zIndex=9;
-        el.style.visibility="visible";el.style.opacity=.13;el.style.pointerEvents="auto";
+        el.style.visibility="visible";el.style.opacity=0;el.style.pointerEvents="none";
         el.setAttribute("aria-pressed","false");
       }else if(abs===2){
         el.className="card is-side";
-        el.style.setProperty("--sc",.72);el.style.setProperty("--ry",(rel>0?-12:12)+"deg");
+        el.style.setProperty("--sc",.7);el.style.setProperty("--ry",(rel>0?-12:12)+"deg");
         el.style.zIndex=8;
-        el.style.visibility="visible";el.style.opacity=.14;el.style.pointerEvents="none";
+        el.style.visibility="visible";el.style.opacity=0;el.style.pointerEvents="none";
         el.setAttribute("aria-pressed","false");
       }else{
         el.className="card is-far";
@@ -799,12 +833,89 @@ body::after{
     active=((i%n)+n)%n;
     try{ history.replaceState(null,"","#"+String(active+1)); }catch(e){}
     layout();
+    autoCycle();
+    autoSync();
   }
 
   function render(){
+    sizeCard();
     build();
     layout();
+    autoCycle();
   }
+
+  /* ---------- 自动轮播 ----------
+     拿 CSS 动画当计时器：animationend 就是翻页信号，暂停直接 animation-play-state，
+     进度条和倒计时天然同步，不用自己算剩余时间。 */
+  var AUTO_MS=9000;
+  var autoBar=document.getElementById("autobar");
+  var autoBtn=document.getElementById("autoBtn");
+  var autoFill=autoBar.querySelector("i");
+  var reduceMotion=!!(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches);
+  var autoOn=!reduceMotion;          // 系统开了「减少动态效果」就不自动播
+  var hovering=false, idleHold=false, idleT=null;
+
+  var ICON_PAUSE='<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6.6" y="4.4" width="4" height="15.2" rx="1" fill="currentColor"/><rect x="13.4" y="4.4" width="4" height="15.2" rx="1" fill="currentColor"/></svg>';
+  var ICON_PLAY='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.2v15.6L20 12z" fill="currentColor"/></svg>';
+
+  function paintAutoBtn(){
+    autoBtn.innerHTML=autoOn?ICON_PAUSE:ICON_PLAY;
+    autoBtn.setAttribute("aria-pressed",String(autoOn));
+    autoBtn.setAttribute("aria-label",autoOn?"暂停自动轮播":"开始自动轮播");
+  }
+
+  function autoCycle(){            // 从 0 起播一轮
+    autoBar.classList.remove("is-run","is-paused");
+    if(!autoOn) return;
+    autoBar.style.setProperty("--auto-ms",AUTO_MS+"ms");
+    void autoBar.offsetWidth;      // 强制回流，动画才会重跑
+    autoBar.classList.add("is-run");
+  }
+  function autoSync(){             // 按「开着没 / 鼠标在上面 / 刚操作过」决定播不播
+    if(!autoOn){ autoBar.classList.remove("is-run","is-paused"); return; }
+    if(hovering||idleHold) autoBar.classList.add("is-paused");
+    else if(autoBar.classList.contains("is-run")) autoBar.classList.remove("is-paused");
+    else autoCycle();
+  }
+  function autoHold(){             // 用户动手了：先停，静一会儿再续
+    idleHold=true; autoSync();
+    clearTimeout(idleT);
+    idleT=setTimeout(function(){ idleHold=false; autoSync(); },12000);
+  }
+
+  autoFill.addEventListener("animationend",function(){
+    if(autoOn&&!hovering&&!idleHold) go(active+1);
+  });
+
+  autoBtn.addEventListener("click",function(){
+    autoOn=!autoOn;
+    paintAutoBtn();
+    idleHold=false; hovering=false;
+    clearTimeout(idleT);
+    if(autoOn) autoCycle(); else autoBar.classList.remove("is-run","is-paused");
+  });
+  paintAutoBtn();
+
+  // 鼠标停在卡上就停：桌面端鼠标常驻，不停的话永远轮不到下一页
+  gallery.addEventListener("pointerenter",function(e){
+    if(e.pointerType==="touch") return;
+    hovering=true; autoSync();
+  });
+  gallery.addEventListener("pointerleave",function(e){
+    if(e.pointerType==="touch") return;
+    hovering=false; autoSync();
+  });
+  gallery.addEventListener("pointerdown",autoHold);
+  gallery.addEventListener("pointerup",function(e){
+    if(e.pointerType==="touch") autoHold();
+  });
+  gallery.addEventListener("wheel",autoHold,{passive:true});
+  document.addEventListener("touchstart",autoHold,{passive:true});
+  autoBtn.addEventListener("pointerdown",function(e){ e.stopPropagation(); });
+  document.addEventListener("visibilitychange",function(){
+    if(document.hidden) autoBar.classList.add("is-paused");
+    else autoSync();
+  });
 
   function dotsFor(){
     // 一个点对应一条书单
@@ -915,11 +1026,24 @@ body::after{
   document.getElementById("prev").addEventListener("click",function(){go(active-1)});
   document.getElementById("nextWord").addEventListener("click",function(){go(active+1)});
   document.addEventListener("keydown",function(e){
+    autoHold();
     if(e.key==="ArrowRight"||e.key==="PageDown"){e.preventDefault();go(active+1);}
     else if(e.key==="ArrowLeft"||e.key==="PageUp"){e.preventDefault();go(active-1);}
     else if(e.key==="Home"){e.preventDefault();go(0);}
     else if(e.key==="End"){e.preventDefault();go(cards.length-1);}
+    else if(e.key===" "||e.key==="Spacebar"){e.preventDefault();autoBtn.click();}
   });
+
+  // 窗口尺寸/横竖屏变了重新量一次：卡片高度跟着画廊走，不能靠 vh 缓存
+  var rszT=null;
+  function onResize(){
+    clearTimeout(rszT);
+    rszT=setTimeout(function(){ sizeCard(); layout(); },120);
+  }
+  window.addEventListener("resize",onResize);
+  window.addEventListener("orientationchange",onResize);
+  // 字体晚到会改变控件高度，画廊高度跟着变，量第二遍才准
+  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(onResize);
 
   function fail(msg){
     loading.classList.remove("hide");
