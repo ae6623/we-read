@@ -255,6 +255,15 @@ def main():
     else:
         note_tpl = load_note_index(sorted(shelf.keys()), a.refresh_index)
 
+    # 书单的 field 用的是「金融 / 世界史」这种细分叫法，书架 cat_l1 是「经济理财 /
+    # 历史」。不映射的话，那些没有书架分类的书（20 本）就永远匹配不到同类，
+    # 关联只能凑出三五本。
+    FIELD_L1 = {
+        "金融": "经济理财", "投资": "经济理财", "经济周期": "经济理财",
+        "中国史": "历史", "世界史": "历史",
+        "中国文学": "文学", "世界文明": "历史",
+    }
+
     pool = []
     pool_ix = {}
     for slug, meta in shelf.items():
@@ -280,11 +289,13 @@ def main():
         if c["slug"] in pool_ix:
             p = pool[pool_ix[c["slug"]]]
             p["inPath"], p["p"], p["st"] = True, c["p"], c["st"]
+            if not p["c1"]:
+                p["c1"] = FIELD_L1.get(c["f"], c["f"])
             continue
         c1, _, c2 = (c["cat"] or "").partition("-")
         pool.append({
             "slug": c["slug"], "t": c["t"], "tFull": c["tFull"], "a": c["a"],
-            "cat": c["cat"], "c1": c1, "c2": c2,
+            "cat": c["cat"], "c1": c1 or FIELD_L1.get(c["f"], c["f"]), "c2": c2,
             "cover": c["cover"], "href": c["href"],
             "inPath": True, "p": c["p"], "st": c["st"],
         })
