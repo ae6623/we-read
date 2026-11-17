@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>书卡频道 · 美学书单</title>
-<meta name="description" content="17 条主题书单、166 本书，一条书单一张卡，卡里按三个步骤摊开。任意一本都能点进全书领读。">
+<meta name="description" content="17 条主题书单、166 本书。一条书单一张卡，封面在上、三步在下，一屏看一步，任意一本都能点进全书领读。">
 <style>
 /* ============ Design Tokens ============ */
 :root{
@@ -28,9 +28,10 @@
   --accent:oklch(0.58 0.105 60);
   --accent-soft:oklch(0.90 0.035 70);
 
-  --card-w:clamp(300px,29vw,432px);
-  --card-h:min(calc(var(--card-w) * 1.66),84vh);
-  --card-h:min(calc(var(--card-w) * 1.66),84svh);
+  --card-w:min(clamp(320px,34vw,620px),calc(80vh / 1.66));
+  --card-h:calc(var(--card-w) * 1.66);
+  --card-w:min(clamp(320px,34vw,620px),calc(80svh / 1.66));
+  --card-h:calc(var(--card-w) * 1.66);
   --gap:clamp(2px,0.6vw,10px);
 
   --ease:cubic-bezier(.22,1,.36,1);
@@ -91,7 +92,8 @@ body::after{
   margin-top:calc(var(--card-h)/-2);
   border-radius:5px;
   transform-style:preserve-3d;
-  transform:translateX(calc(var(--rel,0) * (var(--card-w) + var(--gap)))) scale(var(--sc,1)) rotateY(var(--ry,0deg));
+  /* 相邻卡退到主卡身后只露一条边：三张并排时哪张都显小，一张独占才立得住 */
+  transform:translateX(calc(var(--rel,0) * var(--card-w) * .32)) scale(var(--sc,1)) rotateY(var(--ry,0deg));
   transition:transform .6s var(--ease),opacity .42s ease,visibility .42s;
   cursor:pointer;outline:none;
   contain:layout style;
@@ -136,24 +138,31 @@ body::after{
 
 /* ============ 封面舞台：模糊底 + 清晰书封 ============ */
 .stage{
-  position:relative;flex:0 0 44%;overflow:hidden;
+  position:relative;flex:1 1 auto;min-height:34%;overflow:hidden;
   /* 纯色底按封面主色相铺，非活动卡不画模糊图也有统一色调 */
   background:oklch(0.81 0.032 var(--h,60));
-  display:grid;place-items:center;
+  display:flex;align-items:flex-start;justify-content:center;
+  padding-top:2.6cqw;
 }
 .stage-bg{
   position:absolute;inset:-14%;background-size:cover;background-position:center;
   filter:blur(24px) saturate(1.55) brightness(.72);transform:scale(1.12);
 }
+/* 书封底色千差万别，浅色封面上白字会糊：底部压一层渐隐黑，跟封面无关 */
+.stage::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:46%;z-index:1;
+  background:linear-gradient(to top,rgba(14,10,7,.84) 0%,rgba(14,10,7,.5) 42%,rgba(14,10,7,0) 100%);
+  pointer-events:none;
+}
 .stage-tint{
   position:absolute;inset:0;
-  background:linear-gradient(180deg,rgba(18,14,10,.22) 0%,rgba(18,14,10,.04) 48%,rgba(18,14,10,.34) 100%);
+  background:linear-gradient(180deg,rgba(18,14,10,.3) 0%,rgba(18,14,10,.08) 42%,rgba(16,12,8,.62) 100%);
 }
 .stage-wash{position:absolute;inset:0;background:linear-gradient(118deg,var(--accent-soft) 0%,transparent 58%);opacity:.22;mix-blend-mode:screen}
 .cover-wrap{
-  position:relative;width:45%;aspect-ratio:3/4.16;
+  position:relative;z-index:2;height:76%;width:auto;aspect-ratio:3/4.16;
   border-radius:2px;overflow:hidden;
-  box-shadow:0 16px 30px rgba(0,0,0,.55),0 3px 8px rgba(0,0,0,.36),0 0 0 1px rgba(255,255,255,.16);
+  box-shadow:0 18px 34px rgba(0,0,0,.6),0 3px 9px rgba(0,0,0,.4),0 0 0 1px rgba(255,255,255,.3);
   transform:rotate(-1.4deg);
   background:oklch(0.86 0.02 76);
 }
@@ -168,7 +177,7 @@ body::after{
 
 /* 舞台上的角标 */
 .badge{
-  position:absolute;right:4.4cqw;bottom:4.2cqw;
+  position:absolute;right:4.4cqw;bottom:4.2cqw;z-index:3;
   font-family:var(--font-latin);font-size:max(2.5cqw,9px);letter-spacing:.14em;
   color:#f8f0e2;background:rgba(20,15,10,.5);border:1px solid rgba(248,240,226,.36);
   padding:1.1cqw 2cqw;border-radius:2px;
@@ -268,46 +277,72 @@ body::after{
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
 
-/* ============ 书单卡：一卡一条书单，卡内三个阶段 ============ */
-.lhead{flex:0 0 auto;padding:0 5cqw}
-.ltitle{
-  font-family:var(--font-display);font-weight:700;color:var(--ink);
-  font-size:8.2cqw;line-height:1.14;letter-spacing:.01em;
+/* ============ 书单卡：上大图、下分步 ============ */
+/* 书单名压在封面图下沿：整张卡的视觉重心是这张图，不是一排文字 */
+.stage-title{
+  position:absolute;left:5cqw;right:5cqw;bottom:3.2cqw;z-index:3;pointer-events:none;
 }
-.lsub{font-size:3.4cqw;color:var(--accent);margin-top:.9cqw;letter-spacing:.05em}
-.lgoal{
-  margin-top:1.5cqw;font-size:2.6cqw;line-height:1.58;color:var(--ink-soft);
+.stage-title h3{
+  font-family:var(--font-display);font-weight:700;
+  font-size:9.4cqw;line-height:1.08;letter-spacing:.02em;color:#fdf6ea;
+  text-shadow:0 2px 18px rgba(0,0,0,.7),0 1px 4px rgba(0,0,0,.6);
   display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
 }
+.stage-title .s{
+  margin-top:1.2cqw;font-size:2.9cqw;letter-spacing:.06em;color:rgba(253,246,234,.82);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  text-shadow:0 1px 6px rgba(0,0,0,.5);
+}
 
-.steps{
-  flex:1 1 auto;min-height:0;
-  display:flex;flex-direction:column;justify-content:space-between;
-  padding:2.2cqw 5cqw 0;
+/* 三步切换：一屏看一步，阶段名 / 目标 / 读法建议都能写全 */
+.tabs{flex:0 0 auto;display:flex;gap:1.4cqw;padding:2.8cqw 5cqw 0}
+.tab{
+  flex:1 1 0;min-width:0;
+  display:flex;align-items:center;justify-content:center;gap:.9cqw;
+  padding:1.7cqw 1cqw;border-radius:2px;cursor:pointer;
+  border:1px solid var(--line);background:transparent;
+  font-family:inherit;font-size:max(2.6cqw,10.5px);color:var(--ink-soft);
+  transition:background .22s ease,color .22s ease,border-color .22s ease;
 }
-.step{flex:0 0 auto}
-.step-h{display:flex;align-items:baseline;gap:1.3cqw}
-.step-n{flex:none;font-family:var(--font-latin);font-size:2.5cqw;color:var(--accent);letter-spacing:.08em}
-.step-name{
-  flex:1;min-width:0;font-size:2.85cqw;font-weight:600;color:var(--ink);
+.tab i{font-family:var(--font-latin);font-style:normal;font-size:2.5cqw;color:var(--accent);flex:none}
+.tab span{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tab em{font-family:var(--font-latin);font-style:normal;font-size:2cqw;color:var(--ink-faint);flex:none}
+.tab.on{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.tab.on i{color:var(--accent-soft)}
+.tab.on em{color:oklch(0.82 0.008 80)}
+.tab:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* 高度写死：切步骤时「目标」长短不一，不固定的话封面会上下跳 */
+.sinfo{flex:0 0 auto;height:17cqw;overflow:hidden;padding:2.4cqw 5cqw 0}
+.sinfo .nm{
+  font-size:2.95cqw;font-weight:600;color:var(--ink);
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
-.step-c{flex:none;font-size:2.25cqw;color:var(--ink-faint);letter-spacing:.06em}
-.step-aim{
-  margin:.55cqw 0 1.1cqw;font-size:2.35cqw;color:var(--ink-faint);
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+.sinfo .aim{
+  margin-top:.8cqw;font-size:2.55cqw;line-height:1.52;color:var(--ink-soft);
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
 }
-.step-b{
-  display:flex;gap:1.5cqw;justify-content:space-between;
+.sinfo .tip{
+  position:relative;margin-top:1.1cqw;padding-left:2.8cqw;
+  font-size:2.4cqw;line-height:1.5;color:var(--accent);
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+.sinfo .tip::before{content:"↳";position:absolute;left:0;top:0;opacity:.72}
+.sinfo .tip.is-empty{display:none}
+
+.books{
+  flex:0 0 auto;
+  display:flex;align-items:flex-start;gap:1.7cqw;
+  padding:2.6cqw 5cqw 1.2cqw;
   overflow-x:auto;overflow-y:hidden;
   overscroll-behavior-x:contain;
   scrollbar-width:none;-ms-overflow-style:none;
   -webkit-overflow-scrolling:touch;
 }
-.step-b::-webkit-scrollbar{display:none}
-.sb{flex:0 0 auto;width:calc((100% - 12cqw) / 4);text-decoration:none}
+.books::-webkit-scrollbar{display:none}
+.sb{flex:0 0 auto;width:21.2cqw;text-decoration:none}
 .sb .th{
-  position:relative;width:100%;aspect-ratio:3/4.16;
+  position:relative;width:100%;height:29.4cqw;
   border-radius:2px;overflow:hidden;
   background:oklch(0.87 0.03 var(--h,60));
   box-shadow:0 2px 5px rgba(0,0,0,.16);
@@ -321,6 +356,20 @@ body::after{
   color:#fdf6ea;background:oklch(0.3 0.04 60 /.78);
   padding:.35cqw .8cqw;border-radius:0 0 0 2px;
 }
+/* 一阶段不足 4 本时，空出来的那格放「进入下一步」，既不空也不抢戏 */
+.sb-next{flex:1 1 0;width:auto;min-width:0;background:none;border:none;padding:0;font-family:inherit;cursor:pointer;text-align:center}
+.sb-next .th{
+  height:29.4cqw;border:1px dashed oklch(0.74 0.02 70);background:transparent;box-shadow:none;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.1cqw;
+  color:var(--ink-faint);
+  transition:border-color .22s ease,background .22s ease;
+}
+.sb-next .th::before{content:"↳";font-size:5.2cqw;line-height:1;color:var(--accent);opacity:.62}
+.sb-next .tx{font-size:2.1cqw;line-height:1.42;padding:0 1.2cqw;max-height:2.84em;overflow:hidden}
+.sb-next .nm{color:var(--accent);opacity:1}
+.sb-next:hover .th{border-color:var(--accent);background:oklch(0.955 0.012 80)}
+.sb-next:focus-visible .th{outline:2px solid var(--accent);outline-offset:2px}
+
 .sb .nm{
   margin-top:.6cqw;font-size:2.15cqw;line-height:1.36;color:var(--ink-soft);
   height:1.36em;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;
@@ -406,10 +455,7 @@ body::after{
   .mast-num .tot{font-size:12px}
   .card{transform:translateX(calc(var(--rel,0) * (var(--card-w) + var(--gap)))) scale(var(--sc,1))}
   /* 封面按舞台高度定尺寸，永远不溢出被裁；剩余高度给「接着读」 */
-  .stage{flex:0 0 42%;min-height:0}
-  .cover-wrap{height:86%;width:auto;aspect-ratio:3/4.16}
-  .more{flex:1 1 0}
-  .stage-num{font-size:10.5cqw;bottom:2.6cqw}
+    .stage-num{font-size:10.5cqw;bottom:2.6cqw}
   .badge{font-size:2.7cqw;right:4cqw;bottom:3.8cqw}
   .titleblock{padding:3cqw 4.6cqw 0}
   .titleblock h3{font-size:6.6cqw;line-height:1.2}
@@ -432,13 +478,19 @@ body::after{
   .hint .h-wide{display:none}
   .hint .h-narrow{display:inline}
 }
+@media (max-width:400px){
+  /* 窄屏三步按钮最容易挤，缩字距、收内边距，别让「看市场怎么运转」断在半截 */
+  .tabs{gap:1cqw;padding:2.4cqw 4.6cqw 0}
+  .tab{padding:1.5cqw .6cqw;gap:.6cqw;font-size:max(2.35cqw,9.5px)}
+  .tab i{font-size:2.3cqw}
+  .tab em{font-size:1.9cqw}
+}
 @media (max-width:430px){
   :root{
     --card-w:84vw;
     --card-h:min(calc(var(--card-w) * 1.82),74vh);
     --card-h:min(calc(var(--card-w) * 1.82),74svh);
   }
-  .stage{flex:0 0 44%}
   .titleblock h3{font-size:7cqw}
   .why p{-webkit-line-clamp:2;font-size:3.05cqw}
   .more .mini{width:24cqw}
@@ -448,8 +500,6 @@ body::after{
 }
 @media (max-width:360px){
   /* 极窄屏不砍掉「接着读」，只把它压成纯图条，避免卡底出现大片空白 */
-  .stage{flex:0 0 40%}
-  .cover-wrap{height:84%}
   .titleblock h3{font-size:6.4cqw}
   .more{margin:1.6cqw 0 0;padding-top:1.6cqw}
   .more .cap{padding:0 4.6cqw}
@@ -522,27 +572,61 @@ body::after{
   }
 
   var STEPNUM=["①","②","③","④","⑤"];
+  function bookHTML(b){
+    var flag=b.fin?'<span class="bd">读毕</span>'
+      :(b.prog>0?'<span class="bd">'+b.prog+'%</span>':'');
+    return '<a class="sb" href="book.html?slug='+esc(b.slug)+'" title="'+esc(b.t)+'" aria-label="'+esc(b.t)+'">'+
+           '<div class="th" style="--h:'+b.hue+'">'+
+             '<img data-src="'+esc(b.cover)+'" alt="'+esc(b.t)+' 封面" loading="lazy" decoding="async">'+
+             flag+
+           '</div>'+
+           '<div class="nm">'+esc(b.t)+'</div></a>';
+  }
+  function paintStep(el,k){
+    var c=cards[+el.dataset.index];
+    if(!c||!c.stages.length) return;
+    k=Math.max(0,Math.min(k,c.stages.length-1));
+    el.dataset.step=k;
+    var st=c.stages[k];
+    el.querySelector(".sinfo .nm").textContent=st.name;
+    el.querySelector(".sinfo .aim").textContent=st.aim;
+    var tip=el.querySelector(".sinfo .tip");
+    tip.textContent=st.tip||"";
+    tip.classList.toggle("is-empty",!st.tip);
+    var bx=el.querySelector(".books");
+    var html=st.books.map(bookHTML).join("");
+    if(st.books.length<4){
+      var nx=c.stages[k+1];
+      html+='<button class="sb sb-next" type="button" data-next="'+(nx?(k+1):-1)+'"'+
+            ' aria-label="'+(nx?('进入第 '+(k+2)+' 步：'+esc(nx.name)):'查看完整书单')+'">'+
+              '<div class="th"><span class="tx">'+(nx?esc(nx.name):'看完整书单')+'</span></div>'+
+              '<div class="nm">'+(nx?('下一步 →'):('全部 '+c.n+' 本 →'))+'</div>'+
+            '</button>';
+    }
+    bx.innerHTML=html;
+    bx.scrollLeft=0;
+    var nxEl=bx.querySelector(".sb-next");
+    if(nxEl) nxEl.addEventListener("click",function(e){
+      e.stopPropagation();
+      var t=+nxEl.dataset.next;
+      if(t>=0) paintStep(el,t);
+      else location.href="list.html?id="+encodeURIComponent(c.id);
+    });
+    [].forEach.call(el.querySelectorAll(".tab"),function(b,j){
+      b.classList.toggle("on",j===k);
+      b.setAttribute("aria-selected",String(j===k));
+    });
+    ensureImg(el);
+  }
   function cardHTML(c){
-    var steps=c.stages.map(function(st){
-      var books=st.books.map(function(b){
-        var flag=b.fin?'<span class="bd">读毕</span>'
-          :(b.prog>0?'<span class="bd">'+b.prog+'%</span>':'');
-        return '<a class="sb" href="book.html?slug='+esc(b.slug)+'" title="'+esc(b.t)+'" aria-label="'+esc(b.t)+'">'+
-               '<div class="th" style="--h:'+b.hue+'">'+
-                 '<img data-src="'+esc(b.cover)+'" alt="'+esc(b.t)+' 封面" loading="lazy" decoding="async">'+
-                 flag+
-               '</div>'+
-               '<div class="nm">'+esc(b.t)+'</div></a>';
-      }).join("");
-      return '<section class="step">'+
-        '<div class="step-h">'+
-          '<span class="step-n">'+(STEPNUM[st.i-1]||st.i)+'</span>'+
-          '<span class="step-name">'+esc(st.name)+'</span>'+
-          '<span class="step-c">'+st.books.length+' 本</span>'+
-        '</div>'+
-        '<div class="step-aim">'+esc(st.aim)+'</div>'+
-        '<div class="step-b">'+books+'</div>'+
-      '</section>';
+    var lead=(c.stages[0]&&c.stages[0].books[0])||null;
+    var tabs=c.stages.map(function(st,k){
+      // 按钮上只放短名（冒号前那半截），全名留给 aria-label 和下方的阶段标题
+      var shortName=String(st.name).split(/[：:]/)[0];
+      return '<button class="tab'+(k===0?" on":"")+'" type="button" role="tab" data-step="'+k+'"'+
+             ' aria-selected="'+(k===0)+'" aria-label="第 '+(k+1)+' 步 '+esc(st.name)+'，'+st.books.length+' 本">'+
+             '<i>'+(STEPNUM[k]||(k+1))+'</i><span>'+esc(shortName)+'</span><em>'+st.books.length+'</em>'+
+             '</button>';
     }).join("");
     var pct=c.n?Math.round(c.read/c.n*100):0;
     return '<div class="paper">'+
@@ -551,16 +635,28 @@ body::after{
         '<div class="issue">NO.<b>'+String(c._i).padStart(2,"0")+'</b> &nbsp;·&nbsp; '+esc(c.field)+' &nbsp;·&nbsp; '+esc(c.level)+'</div>'+
         '<div class="dotrow"><i></i><i></i><i></i></div>'+
       '</div>'+
-      '<div class="lhead">'+
-        '<h3 class="ltitle">'+esc(c.main)+'</h3>'+
-        '<div class="lsub">'+esc(c.sub)+'</div>'+
-        '<p class="lgoal">'+esc(c.goal)+'</p>'+
+      '<div class="stage">'+
+        (lead?'<div class="stage-bg" data-bg="'+esc(lead.cover)+'"></div>':'')+
+        '<div class="stage-tint"></div><div class="stage-wash"></div>'+
+        (lead?'<div class="cover-wrap" style="--h:'+lead.hue+'">'+
+          '<div class="cover-ph">'+esc(lead.t)+'</div>'+
+          '<img data-src="'+esc(lead.cover)+'" alt="'+esc(lead.t)+' 封面" loading="lazy" decoding="async">'+
+        '</div>':'')+
+        '<div class="stage-title">'+
+          '<h3>'+esc(c.main)+'</h3>'+
+          '<div class="s">'+esc(c.sub)+'</div>'+
+        '</div>'+
+        '<div class="badge">'+c.n+' 本 · '+c.nsteps+' 步</div>'+
       '</div>'+
-      '<div class="steps">'+steps+'</div>'+
+      '<div class="tabs" role="tablist" aria-label="书单的三个步骤">'+tabs+'</div>'+
+      '<div class="sinfo">'+
+        '<div class="nm"></div><div class="aim"></div><div class="tip"></div>'+
+      '</div>'+
+      '<div class="books"></div>'+
       '<div class="foot">'+
         '<div class="bar">'+
           '<div class="track"><i style="width:'+(pct?Math.max(3,pct):0)+'%"></i></div>'+
-          '<div class="leg"><span>'+c.n+' 本 · '+c.nsteps+' 步</span>'+
+          '<div class="leg"><span>'+esc(c.field)+' · '+esc(c.level)+'</span>'+
             '<span>'+(c.read?("开卷 "+c.read+" / "+c.n):"未开卷")+'</span></div>'+
         '</div>'+
         '<a class="go" href="list.html?id='+esc(c.id)+'">领读 →</a>'+
@@ -600,9 +696,13 @@ body::after{
     el.style.setProperty("--accent-soft",accentSoft(c));
     el.style.setProperty("--h",c.hue);
     el.innerHTML=cardHTML(c);
-    // 阶段轨道回到最左，否则沿用上一张的滚动位置，首图会被切掉一截
-    var rws=el.querySelectorAll(".step-b");
-    for(var k=0;k<rws.length;k++) rws[k].scrollLeft=0;
+    [].forEach.call(el.querySelectorAll(".tab"),function(b){
+      b.addEventListener("click",function(e){
+        e.stopPropagation();          // 别让点步骤顺带被当成点卡片
+        paintStep(el,+b.dataset.step);
+      });
+    });
+    paintStep(el,+el.dataset.step||0);
     el.dataset.filled=i;
   }
 
@@ -646,15 +746,15 @@ body::after{
         el.setAttribute("aria-pressed","true");
       }else if(abs===1){
         el.className="card is-near";
-        el.style.setProperty("--sc",.89);el.style.setProperty("--ry",(rel>0?-9:9)+"deg");
+        el.style.setProperty("--sc",.86);el.style.setProperty("--ry",(rel>0?-7:7)+"deg");
         el.style.zIndex=9;
-        el.style.visibility="visible";el.style.opacity=.85;el.style.pointerEvents="auto";
+        el.style.visibility="visible";el.style.opacity=.13;el.style.pointerEvents="auto";
         el.setAttribute("aria-pressed","false");
       }else if(abs===2){
         el.className="card is-side";
-        el.style.setProperty("--sc",.76);el.style.setProperty("--ry",(rel>0?-12:12)+"deg");
+        el.style.setProperty("--sc",.72);el.style.setProperty("--ry",(rel>0?-12:12)+"deg");
         el.style.zIndex=8;
-        el.style.visibility="visible";el.style.opacity=.26;el.style.pointerEvents="none";
+        el.style.visibility="visible";el.style.opacity=.14;el.style.pointerEvents="none";
         el.setAttribute("aria-pressed","false");
       }else{
         el.className="card is-far";
@@ -721,7 +821,7 @@ body::after{
   // 滑到头再继续才翻下一张卡，不然想看完这一阶段的最后一本会直接跳卡。
   var lock=false;
   function railOf(e){
-    return e.target&&e.target.closest?e.target.closest(".step-b"):null;
+    return e.target&&e.target.closest?e.target.closest(".books"):null;
   }
   function wheel(e){
     var row=railOf(e);
