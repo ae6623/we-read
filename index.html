@@ -133,6 +133,143 @@
   .sw .cell .ov{opacity:.92}
 }
 
+
+/* ============ 2026-11-18 v3：书架/系列/归档 书卡尺寸统一为系列竖版小卡 ============ */
+/* 目标：三个 Tab 的卡片外观、尺寸、列数规则完全一致，切 Tab 不再忽大忽小。
+   做法：以「系列」的 set-units-grid + unit-card 为基准，用高特异性选择器把
+   书架(#panel-whole) 与 归档(#reading-panel-archive) 的 grid/card 覆盖成同一套。 */
+
+/* —— 1. grid 容器：统一为 series 的 auto-fill 列规则、间距、去掉 feed.js 写死的固定高 —— */
+#panel-whole > .archive-grid,
+#reading-panel-archive > .archive-grid{
+  display:grid!important;
+  grid-template-columns:repeat(auto-fill,minmax(240px,1fr))!important;
+  gap:14px!important;
+  height:auto!important;
+  position:static!important;
+  align-content:start!important;
+}
+/* 大屏三档列数：与 set-units-grid 完全同步（series 在 min-width1200 用 auto-fill240）。
+   这里三档都锁成同一 auto-fill，确保切列数按钮也不会让三个 Tab  diverge。 */
+@media(min-width:1200px){
+  html[data-cols="1"] #panel-whole > .archive-grid,
+  html[data-cols="1"] #reading-panel-archive > .archive-grid,
+  html[data-cols="2"] #panel-whole > .archive-grid,
+  html[data-cols="2"] #reading-panel-archive > .archive-grid,
+  html[data-cols="3"] #panel-whole > .archive-grid,
+  html[data-cols="3"] #reading-panel-archive > .archive-grid{
+    grid-template-columns:repeat(auto-fill,minmax(240px,1fr))!important;
+  }
+}
+
+/* —— 2. 卡片本体：解除 feed.js 绝对定位 / 海报 / 横条，统一为竖版 flex 卡 —— */
+#panel-whole > .archive-grid > .archive-card,
+#reading-panel-archive > .archive-grid > .archive-card{
+  position:static!important;
+  left:auto!important;top:auto!important;right:auto!important;bottom:auto!important;
+  width:auto!important;height:auto!important;min-height:0!important;
+  margin:0!important;
+  padding:14px!important;
+  display:flex!important;flex-direction:column!important;
+  overflow:visible!important;
+  aspect-ratio:auto!important;
+  background:var(--card)!important;
+  border:1px solid var(--line)!important;
+  border-radius:12px!important;
+  box-shadow:0 4px 16px rgba(0,0,0,.28)!important;
+}
+
+/* —— 3. 封面：统一竖版 30/43、下方留白、相对定位（盖掉 absolute 铺满/横条 96px）—— */
+#panel-whole > .archive-grid .card-cover,
+#reading-panel-archive > .archive-grid .card-cover{
+  position:relative!important;
+  inset:auto!important;left:auto!important;right:auto!important;top:auto!important;bottom:auto!important;
+  flex:0 0 auto!important;
+  width:100%!important;height:auto!important;
+  aspect-ratio:30/43!important;
+  margin:0 0 9px!important;
+  border-radius:8px!important;
+  box-shadow:none!important;
+  padding-top:0!important;
+}
+#panel-whole > .archive-grid .card-cover-title,
+#reading-panel-archive > .archive-grid .card-cover-title{font-size:1rem!important}
+
+/* —— 4. 卡内文字：还原常态配色与排版（盖掉 data-cols=2 白字叠图 / data-cols=1 横排）—— */
+#panel-whole > .archive-grid .card-body,
+#reading-panel-archive > .archive-grid .card-body{
+  position:static!important;
+  inset:auto!important;left:auto!important;right:auto!important;top:auto!important;bottom:auto!important;
+  width:100%!important;min-height:0!important;
+  padding:0!important;
+  color:var(--ink)!important;
+  background:none!important;
+  display:block!important;
+  justify-content:flex-start!important;
+}
+#panel-whole > .archive-grid .archive-card h3,
+#reading-panel-archive > .archive-grid .archive-card h3{
+  font-size:1.02rem!important;line-height:1.5!important;margin:8px 0 0!important;
+  color:var(--ink)!important;
+  display:-webkit-box!important;-webkit-line-clamp:2!important;-webkit-box-orient:vertical!important;overflow:hidden!important;
+}
+#panel-whole > .archive-grid .card-top time,
+#panel-whole > .archive-grid .card-author,
+#panel-whole > .archive-grid .card-meta,
+#reading-panel-archive > .archive-grid .card-top time,
+#reading-panel-archive > .archive-grid .card-author,
+#reading-panel-archive > .archive-grid .card-meta{color:var(--muted)!important}
+
+/* —— 5. 移动端：与 series 的 2 列 / 8px 间距 / 小字号完全一致 —— */
+@media(max-width:680px){
+  #panel-whole > .archive-grid,
+  #reading-panel-archive > .archive-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:8px!important;
+    padding:0!important;
+  }
+  #panel-whole > .archive-grid > .archive-card,
+  #reading-panel-archive > .archive-grid > .archive-card{padding:9px 9px 8px!important}
+  #panel-whole > .archive-grid .card-cover,
+  #reading-panel-archive > .archive-grid .card-cover{margin:0 0 7px!important}
+  #panel-whole > .archive-grid .archive-card h3,
+  #reading-panel-archive > .archive-grid .archive-card h3{font-size:.84rem!important;line-height:1.42!important;margin:5px 0 0!important}
+  #panel-whole > .archive-grid .card-author,
+  #reading-panel-archive > .archive-grid .card-author{font-size:.66rem!important}
+  #panel-whole > .archive-grid .card-meta,
+  #reading-panel-archive > .archive-grid .card-meta{font-size:.6rem!important}
+}
+
+/* —— 6. 系列也锁定竖版小卡：切列数按钮时不再变横条，保证三 Tab 任何状态都一致 —— */
+html #reading-panel-series .set-units-grid{
+  grid-template-columns:repeat(auto-fill,minmax(240px,1fr))!important;
+  gap:14px!important;
+}
+@media(max-width:680px){
+  html #reading-panel-series .set-units-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
+}
+html[data-cols="1"] #reading-panel-series .set-units-grid .archive-card,
+html[data-cols="2"] #reading-panel-series .set-units-grid .archive-card{
+  display:flex!important;flex-direction:column!important;
+  position:static!important;left:auto!important;top:auto!important;
+  width:auto!important;height:auto!important;min-height:0!important;
+  padding:14px!important;overflow:visible!important;aspect-ratio:auto!important;
+}
+html[data-cols="1"] #reading-panel-series .set-units-grid .card-cover,
+html[data-cols="2"] #reading-panel-series .set-units-grid .card-cover{
+  flex:0 0 auto!important;position:relative!important;inset:auto!important;
+  width:100%!important;height:auto!important;aspect-ratio:30/43!important;
+  margin:0 0 9px!important;
+}
+html[data-cols="1"] #reading-panel-series .set-units-grid .card-body,
+html[data-cols="2"] #reading-panel-series .set-units-grid .card-body{
+  width:100%!important;min-height:0!important;
+}
+@media(max-width:680px){
+  html[data-cols="1"] #reading-panel-series .set-units-grid .archive-card,
+  html[data-cols="2"] #reading-panel-series .set-units-grid .archive-card{padding:9px 9px 8px!important}
+}
+
 </style><!-- booklist:begin -->
 <style id="rd-booklist-style">
 /* 书单 · 按领域走的读书路径（2026-11-11 新增，完全内联、零外部依赖）
