@@ -48,6 +48,31 @@ try{var _c=JSON.parse(localStorage.getItem('rd-cfg')||'{}');document.documentEle
   box-shadow:0 26px 52px -12px rgba(0,0,0,.62),0 6px 16px rgba(0,0,0,.4),
              0 0 0 1px rgba(255,255,255,.07);
 }
+
+/* 封面左右：上一本 / 下一本（压在书封边缘，半浮在外面） */
+.coverbox{position:relative;width:100%}
+.bnav{
+  position:absolute;top:50%;z-index:3;
+  width:38px;height:38px;border-radius:999px;
+  display:grid;place-items:center;
+  color:oklch(0.97 0.008 80);
+  background:oklch(0.19 0.012 62 / .58);
+  border:1px solid oklch(0.9 0 0 / .22);
+  box-shadow:0 6px 18px -4px rgba(0,0,0,.5);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  transform:translateY(-50%);
+  opacity:.68;
+  transition:opacity .2s ease,background .2s ease,transform .2s var(--ease);
+}
+.bnav svg{width:17px;height:17px;display:block}
+.bnav.next svg{transform:scaleX(-1)}
+.bnav.prev{left:-15px}
+.bnav.next{right:-15px}
+.bnav:hover{opacity:1;background:oklch(0.22 0.012 62 / .82)}
+.bnav.prev:hover{transform:translate(-2px,-50%)}
+.bnav.next:hover{transform:translate(2px,-50%)}
+.bnav:focus-visible{outline:2px solid var(--paper);outline-offset:3px;opacity:1}
+.bnav[aria-disabled="true"]{opacity:.16;pointer-events:none;box-shadow:none}
 .cover img{position:relative;z-index:1;width:100%;height:100%;object-fit:cover;display:block}
 .cover .ph{
   position:absolute;inset:0;display:grid;place-items:center;padding:14px;
@@ -252,7 +277,12 @@ h1{
 @media (max-width:760px){
   .hero{grid-template-columns:1fr;gap:22px;padding-bottom:26px}
   .stage{justify-content:center}
-  .cover{width:min(54vw,200px);flex:none}
+  .coverbox{width:min(54vw,200px);flex:none}
+  /* 手指目标放大到 42，别贴着屏幕边 */
+  .bnav{width:42px;height:42px;opacity:.74}
+  .bnav svg{width:19px;height:19px}
+  .bnav.prev{left:-13px}
+  .bnav.next{right:-13px}
   .stage .glow{inset:-14% -30% -8%}
   .meta{text-align:left}
   h1{font-size:clamp(26px,7.4vw,34px);margin-top:12px}
@@ -415,6 +445,32 @@ html:not([data-theme="dark"]) .sec-head{border-bottom-color:#e4ded1}
     if(c&&c.stn) parts.push('<span>第 '+c.st+' / '+c.stn+' 步</span>');
     var kicker=parts.join('<span class="dot"></span>');
 
+    // 书单顺序摊平，取前后两本 → 封面左右翻页箭头
+    var seq=[];
+    if(p&&p.stages){
+      p.stages.forEach(function(st){ (st.slugs||[]).forEach(function(sl){ seq.push(sl); }); });
+    }
+    var pIdx=seq.indexOf(slug);
+    var prevSlug=pIdx>0?seq[pIdx-1]:null;
+    var nextSlug=(pIdx>=0&&pIdx<seq.length-1)?seq[pIdx+1]:null;
+    function bookOf(sl){
+      if(!sl) return null;
+      return cardBy[sl]||(poolBy[sl]!==undefined?pool[poolBy[sl]]:null);
+    }
+    var chev='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" '+
+      'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 5.5 8 12l6.5 6.5"/></svg>';
+    function navBtn(sl,dir){
+      var lb=dir==="prev"?"上一本":"下一本";
+      if(!sl){
+        return '<span class="bnav '+dir+'" aria-disabled="true" aria-label="已经是书单的'+(dir==="prev"?"第一本":"最后一本")+'">'+chev+'</span>';
+      }
+      var ob=bookOf(sl), t=ob?(ob.t||ob.tFull||""):"";
+      return '<a class="bnav '+dir+'" href="book.html?slug='+encodeURIComponent(sl)+'" '+
+        'aria-label="'+lb+'：'+esc(t)+'" title="'+lb+' · '+esc(t)+'">'+chev+'</a>';
+    }
+    var prevBtn=pIdx>=0?navBtn(prevSlug,"prev"):"";
+    var nextBtn=pIdx>=0?navBtn(nextSlug,"next"):"";
+
     var quoteBlock=quotes.length
       ? '<div class="quotes"><div class="qh"><span>原文摘录</span><em>EXCERPTS</em></div><ul>'+
           quotes.map(function(t){return '<li>'+esc(t)+'</li>';}).join('')+
@@ -424,9 +480,13 @@ html:not([data-theme="dark"]) .sec-head{border-bottom-color:#e4ded1}
     var html='<section class="hero">'+
       '<div class="stage">'+
         '<div class="glow" style="--h:'+(hue==null?66:hue)+'"></div>'+
-        '<div class="cover" style="--h:'+(hue==null?62:hue)+'">'+
-          '<div class="ph">'+esc(title)+'</div>'+
-          '<img src="'+esc(cover)+'" alt="'+esc(title)+' 封面" decoding="async" onerror="this.style.display=&#39;none&#39;">'+
+        '<div class="coverbox">'+
+          prevBtn+
+          '<div class="cover" style="--h:'+(hue==null?62:hue)+'">'+
+            '<div class="ph">'+esc(title)+'</div>'+
+            '<img src="'+esc(cover)+'" alt="'+esc(title)+' 封面" decoding="async" onerror="this.style.display=&#39;none&#39;">'+
+          '</div>'+
+          nextBtn+
         '</div>'+
       '</div>'+
       '<div class="meta">'+
@@ -487,6 +547,16 @@ html:not([data-theme="dark"]) .sec-head{border-bottom-color:#e4ded1}
       strip.scrollLeft=Math.max(0,
         on.offsetLeft-(strip.clientWidth-on.offsetWidth)/2);
     }
+
+    // 键盘 ← → 跟封面箭头同一条路径
+    // （不接管 ↑↓：那是页面滚动，抢了反而不好翻页）
+    document.addEventListener("keydown",function(e){
+      if(e.metaKey||e.ctrlKey||e.altKey||e.shiftKey) return;
+      var t=e.target;
+      if(t&&/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)) return;
+      if(e.key==="ArrowLeft"&&prevSlug){ location.href="book.html?slug="+encodeURIComponent(prevSlug); }
+      else if(e.key==="ArrowRight"&&nextSlug){ location.href="book.html?slug="+encodeURIComponent(nextSlug); }
+    });
   }
 })();
 </script>
