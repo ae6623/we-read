@@ -143,7 +143,7 @@
 #panel-whole > .archive-grid,
 #reading-panel-archive > .archive-grid{
   display:grid!important;
-  grid-template-columns:repeat(auto-fill,minmax(240px,1fr))!important;
+  grid-template-columns:repeat(auto-fill,minmax(276px,1fr))!important;
   gap:14px!important;
   height:auto!important;
   position:static!important;
@@ -158,7 +158,7 @@
   html[data-cols="2"] #reading-panel-archive > .archive-grid,
   html[data-cols="3"] #panel-whole > .archive-grid,
   html[data-cols="3"] #reading-panel-archive > .archive-grid{
-    grid-template-columns:repeat(auto-fill,minmax(240px,1fr))!important;
+    grid-template-columns:repeat(auto-fill,minmax(276px,1fr))!important;
   }
 }
 
@@ -222,12 +222,18 @@
 
 /* —— 5. 移动端：与 series 的 2 列 / 8px 间距 / 小字号完全一致 —— */
 @media(max-width:680px){
+  /* 手机端列数跟随右上角「一排一/二/三」，不再写死 2 列 */
   #panel-whole > .archive-grid,
   #reading-panel-archive > .archive-grid{
-    grid-template-columns:repeat(2,minmax(0,1fr))!important;
     gap:8px!important;
     padding:0!important;
   }
+  html[data-cols="1"] #panel-whole > .archive-grid,
+  html[data-cols="1"] #reading-panel-archive > .archive-grid{grid-template-columns:minmax(0,1fr)!important}
+  html[data-cols="2"] #panel-whole > .archive-grid,
+  html[data-cols="2"] #reading-panel-archive > .archive-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  html[data-cols="3"] #panel-whole > .archive-grid,
+  html[data-cols="3"] #reading-panel-archive > .archive-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
   #panel-whole > .archive-grid > .archive-card,
   #reading-panel-archive > .archive-grid > .archive-card{padding:9px 9px 8px!important}
   #panel-whole > .archive-grid .card-cover,
@@ -242,11 +248,14 @@
 
 /* —— 6. 系列也锁定竖版小卡：切列数按钮时不再变横条，保证三 Tab 任何状态都一致 —— */
 html #reading-panel-series .set-units-grid{
-  grid-template-columns:repeat(auto-fill,minmax(240px,1fr))!important;
+  grid-template-columns:repeat(auto-fill,minmax(276px,1fr))!important;
   gap:14px!important;
 }
 @media(max-width:680px){
-  html #reading-panel-series .set-units-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
+  html #reading-panel-series .set-units-grid{gap:8px!important}
+  html[data-cols="1"] #reading-panel-series .set-units-grid{grid-template-columns:minmax(0,1fr)!important}
+  html[data-cols="2"] #reading-panel-series .set-units-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  html[data-cols="3"] #reading-panel-series .set-units-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
 }
 html[data-cols="1"] #reading-panel-series .set-units-grid .archive-card,
 html[data-cols="2"] #reading-panel-series .set-units-grid .archive-card{
@@ -268,6 +277,30 @@ html[data-cols="2"] #reading-panel-series .set-units-grid .card-body{
 @media(max-width:680px){
   html[data-cols="1"] #reading-panel-series .set-units-grid .archive-card,
   html[data-cols="2"] #reading-panel-series .set-units-grid .archive-card{padding:9px 9px 8px!important}
+}
+
+
+/* ============ 2026-11-18 v4：PC 书卡悬停放大 ============ */
+@media(min-width:681px){
+  #panel-whole > .archive-grid > .archive-card,
+  #reading-panel-archive > .archive-grid > .archive-card,
+  #reading-panel-series .set-units-grid > .archive-card{
+    transition:transform .22s cubic-bezier(.2,.8,.3,1),box-shadow .22s ease;
+    transform-origin:center center;
+    will-change:transform;
+  }
+  #panel-whole > .archive-grid > .archive-card:hover,
+  #reading-panel-archive > .archive-grid > .archive-card:hover,
+  #reading-panel-series .set-units-grid > .archive-card:hover{
+    transform:scale(1.09) translateY(-3px)!important;
+    z-index:40!important;
+    position:relative!important;
+    box-shadow:0 18px 42px rgba(0,0,0,.42)!important;
+  }
+  /* 保证父级 grid 不裁切放大后的卡片 */
+  #panel-whole > .archive-grid,
+  #reading-panel-archive > .archive-grid,
+  #reading-panel-series .set-units-grid{overflow:visible!important;padding:6px!important;margin:-6px!important}
 }
 
 </style><!-- booklist:begin -->
@@ -673,45 +706,6 @@ html[data-cols="2"] #reading-panel-series .set-units-grid .card-body{
 </div>
 </section>
 <section id="reading-panel-overview" class="reading-panel" aria-label="书架"><div class="subtabs" data-subtablist aria-label="全书视角 / 即将上线"><button type="button" id="subtab-whole" data-subpanel="panel-whole" aria-selected="true" aria-controls="panel-whole">全书视角</button><button type="button" id="subtab-soon" data-subpanel="panel-soon" aria-selected="false" aria-controls="panel-soon">即将上线</button></div><section id="panel-whole" class="reading-group subtab-panel" aria-label="全书视角"><div class="archive-grid" aria-label="读前内容">
-      <!-- preread-card:kua-shan-hai-14-wei-gu-dai-shi-ci-ou-xiang-de -->
-      <article class="archive-card" data-ts="2026-11-18T05:30:18" data-search="跨山海 : 14位古代诗词偶像的真实人生  AI 读书 读前通读 AI 大纲" data-mode="whole jingdu archive" data-slug="kua-shan-hai-14-wei-gu-dai-shi-ci-ou-xiang-de">
-        <div class="card-top"><span class="type-tag type-tag-gold">读前通读</span><span class="type-tag">AI 大纲</span><time datetime="2026-11-18">11.18</time></div>
-        <h3><a class="card-title-link" href="reading-notes/books/kua-shan-hai-14-wei-gu-dai-shi-ci-ou-xiang-de/mindmap.html">《跨山海 : 14位古代诗词偶像的真实人生》</a></h3>
-        <p>63 章 / 1509 条</p>
-        <div class="card-actions" hidden>
-          <a class="card-link card-link-strong" href="reading-notes/books/kua-shan-hai-14-wei-gu-dai-shi-ci-ou-xiang-de/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
-          <a class="download-link" href="reading-notes/books/kua-shan-hai-14-wei-gu-dai-shi-ci-ou-xiang-de/outline.epub" download>下载 EPUB ↓</a>
-          <a class="card-link" href="reading-notes/books/kua-shan-hai-14-wei-gu-dai-shi-ci-ou-xiang-de/overview.html">全书视角 <span aria-hidden="true">↗</span></a>
-        </div>
-        <div class="card-foot"><span class="card-author"></span><button class="card-more" type="button" aria-label="更多操作" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-9"/></svg></button><div class="card-menu" hidden><button type="button" data-act="fav"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-10"/></svg><span>收藏</span></button><button type="button" data-act="share"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-11"/></svg><span>分享</span></button></div></div>
-      </article>
-      <!-- /preread-card -->
-      <!-- preread-card:ren-sheng-de-zhen-xiang -->
-      <article class="archive-card" data-ts="2026-11-18T04:30:17" data-search="人生的真相  AI 读书 读前通读 AI 大纲" data-mode="whole jingdu archive" data-slug="ren-sheng-de-zhen-xiang">
-        <div class="card-top"><span class="type-tag type-tag-gold">读前通读</span><span class="type-tag">AI 大纲</span><time datetime="2026-11-18">11.18</time></div>
-        <h3><a class="card-title-link" href="reading-notes/books/ren-sheng-de-zhen-xiang/mindmap.html">《人生的真相》</a></h3>
-        <p>62 章 / 2218 条</p>
-        <div class="card-actions" hidden>
-          <a class="card-link card-link-strong" href="reading-notes/books/ren-sheng-de-zhen-xiang/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
-          <a class="download-link" href="reading-notes/books/ren-sheng-de-zhen-xiang/outline.epub" download>下载 EPUB ↓</a>
-          <a class="card-link" href="reading-notes/books/ren-sheng-de-zhen-xiang/overview.html">全书视角 <span aria-hidden="true">↗</span></a>
-        </div>
-        <div class="card-foot"><span class="card-author"></span><button class="card-more" type="button" aria-label="更多操作" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-9"/></svg></button><div class="card-menu" hidden><button type="button" data-act="fav"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-10"/></svg><span>收藏</span></button><button type="button" data-act="share"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-11"/></svg><span>分享</span></button></div></div>
-      </article>
-      <!-- /preread-card -->
-      <!-- preread-card:li-shi-de-jiao-luo--jiu-zhong-guo-zi-ben-jia-1 -->
-      <article class="archive-card" data-ts="2026-11-18T04:10:48" data-search="历史的角落——旧中国资本家1949年后的日常生活  AI 读书 读前通读 AI 大纲" data-mode="whole jingdu archive" data-slug="li-shi-de-jiao-luo--jiu-zhong-guo-zi-ben-jia-1">
-        <div class="card-top"><span class="type-tag type-tag-gold">读前通读</span><span class="type-tag">AI 大纲</span><time datetime="2026-11-18">11.18</time></div>
-        <h3><a class="card-title-link" href="reading-notes/books/li-shi-de-jiao-luo--jiu-zhong-guo-zi-ben-jia-1/mindmap.html">《历史的角落——旧中国资本家1949年后的日常生活》</a></h3>
-        <p>26 章 / 761 条</p>
-        <div class="card-actions" hidden>
-          <a class="card-link card-link-strong" href="reading-notes/books/li-shi-de-jiao-luo--jiu-zhong-guo-zi-ben-jia-1/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
-          <a class="download-link" href="reading-notes/books/li-shi-de-jiao-luo--jiu-zhong-guo-zi-ben-jia-1/outline.epub" download>下载 EPUB ↓</a>
-          <a class="card-link" href="reading-notes/books/li-shi-de-jiao-luo--jiu-zhong-guo-zi-ben-jia-1/overview.html">全书视角 <span aria-hidden="true">↗</span></a>
-        </div>
-        <div class="card-foot"><span class="card-author"></span><button class="card-more" type="button" aria-label="更多操作" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-9"/></svg></button><div class="card-menu" hidden><button type="button" data-act="fav"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-10"/></svg><span>收藏</span></button><button type="button" data-act="share"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-11"/></svg><span>分享</span></button></div></div>
-      </article>
-      <!-- /preread-card -->
       <!-- preread-card:niu-jin-tong-shi-ke--gai-lv -->
       <article class="archive-card" data-ts="2026-11-08T17:20:58" data-search="牛津通识课：概率  AI 读书 读前通读 AI 大纲" data-mode="whole jingdu archive" data-slug="niu-jin-tong-shi-ke--gai-lv">
         <div class="card-top"><span class="type-tag type-tag-gold">读前通读</span><span class="type-tag">AI 大纲</span><time datetime="2026-11-08">11.08</time></div>
@@ -779,11 +773,11 @@ html[data-cols="2"] #reading-panel-series .set-units-grid .card-body{
       <!-- preread-card:di-guo-de-chou-chang -->
       <article class="archive-card" data-ts="2026-11-18T07:07:55+08:00" data-search="帝国的惆怅 共 66 章 / 1498 条 AI 读书 全书视角 AI 大纲" data-mode="whole jingdu archive" data-slug="di-guo-de-chou-chang">
         <div class="card-top"><span class="type-tag type-tag-gold">全书视角</span><span class="type-tag">AI 大纲</span><time datetime="2026-11-18">11.18</time></div>
-        <h3><a class="card-title-link" href="reading-notes/books/di-guo-de-chou-chang/overview.html">《帝国的惆怅》</a></h3>
+        <h3><a class="card-title-link" href="reading-notes/books/di-guo-de-chou-chang/mindmap.html">《帝国的惆怅》</a></h3>
         <p>66 章 / 1498 条</p>
         <div class="card-actions" hidden>
           <a class="card-link card-link-green" href="reading-notes/books/di-guo-de-chou-chang/mindmap.html">精读 <span aria-hidden="true">↗</span></a>
-          <a class="card-link card-link-strong" href="reading-notes/books/di-guo-de-chou-chang/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+          
         </div>
         <div class="card-foot"><span class="card-author"></span><button class="card-more" type="button" aria-label="更多操作" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-9"/></svg></button><div class="card-menu" hidden><button type="button" data-act="fav"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-10"/></svg><span>收藏</span></button><button type="button" data-act="share"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-11"/></svg><span>分享</span></button></div></div>
       </article>
@@ -960,19 +954,6 @@ html[data-cols="2"] #reading-panel-series .set-units-grid .card-body{
         <div class="card-foot"><span class="card-author"></span><button class="card-more" type="button" aria-label="更多操作" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-9"/></svg></button><div class="card-menu" hidden><button type="button" data-act="fav"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-10"/></svg><span>收藏</span></button><button type="button" data-act="share"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-11"/></svg><span>分享</span></button></div></div>
       </article>
       <!-- /preread-card -->
-      <!-- preread-card:jing-zheng-zhan-lve -->
-      <article class="archive-card" data-ts="2026-11-14T21:17:50" data-search="竞争战略  AI 读书 读前通读 AI 大纲" data-mode="whole jingdu archive" data-slug="jing-zheng-zhan-lve">
-        <div class="card-top"><span class="type-tag type-tag-gold">读前通读</span><span class="type-tag">AI 大纲</span><time datetime="2026-11-14">11.14</time></div>
-        <h3><a class="card-title-link" href="reading-notes/books/jing-zheng-zhan-lve/mindmap.html">《竞争战略》</a></h3>
-        <p>20 章 / 803 条</p>
-        <div class="card-actions" hidden>
-          <a class="card-link card-link-strong" href="reading-notes/books/jing-zheng-zhan-lve/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
-          <a class="download-link" href="reading-notes/books/jing-zheng-zhan-lve/outline.epub" download>下载 EPUB ↓</a>
-          <a class="card-link" href="reading-notes/books/jing-zheng-zhan-lve/overview.html">全书视角 <span aria-hidden="true">↗</span></a>
-        </div>
-        <div class="card-foot"><span class="card-author"></span><button class="card-more" type="button" aria-label="更多操作" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-9"/></svg></button><div class="card-menu" hidden><button type="button" data-act="fav"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-10"/></svg><span>收藏</span></button><button type="button" data-act="share"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-11"/></svg><span>分享</span></button></div></div>
-      </article>
-      <!-- /preread-card -->
       <!-- preread-card:ta-de-guo-2014 -->
       <article class="archive-card" data-ts="2026-11-14T16:04:04" data-search="他的国（2014）  AI 读书 读前通读 AI 大纲" data-mode="whole jingdu archive" data-slug="ta-de-guo-2014">
         <div class="card-top"><span class="type-tag type-tag-gold">读前通读</span><span class="type-tag">AI 大纲</span><time datetime="2026-11-14">11.14</time></div>
@@ -986,119 +967,15 @@ html[data-cols="2"] #reading-panel-series .set-units-grid .card-body{
         <div class="card-foot"><span class="card-author"></span><button class="card-more" type="button" aria-label="更多操作" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-9"/></svg></button><div class="card-menu" hidden><button type="button" data-act="fav"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-10"/></svg><span>收藏</span></button><button type="button" data-act="share"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-11"/></svg><span>分享</span></button></div></div>
       </article>
       <!-- /preread-card -->
-      <!-- preread-card:fan-rong-yu-ting-zhi--ri-ben-jing-ji-fa-zhan-he -->
-      <article class="archive-card" data-ts="2026-11-14T05:00:23" data-search="繁荣与停滞：日本经济发展和转型  AI 读书 读前通读 AI 大纲" data-mode="whole jingdu archive" data-slug="fan-rong-yu-ting-zhi--ri-ben-jing-ji-fa-zhan-he">
-        <div class="card-top"><span class="type-tag type-tag-gold">读前通读</span><span class="type-tag">AI 大纲</span><time datetime="2026-11-14">11.14</time></div>
-        <h3><a class="card-title-link" href="reading-notes/books/fan-rong-yu-ting-zhi--ri-ben-jing-ji-fa-zhan-he/mindmap.html">《繁荣与停滞：日本经济发展和转型》</a></h3>
-        <p>115 章 / 3211 条</p>
-        <div class="card-actions" hidden>
-          <a class="card-link card-link-strong" href="reading-notes/books/fan-rong-yu-ting-zhi--ri-ben-jing-ji-fa-zhan-he/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
-          <a class="download-link" href="reading-notes/books/fan-rong-yu-ting-zhi--ri-ben-jing-ji-fa-zhan-he/outline.epub" download>下载 EPUB ↓</a>
-          <a class="card-link" href="reading-notes/books/fan-rong-yu-ting-zhi--ri-ben-jing-ji-fa-zhan-he/overview.html">全书视角 <span aria-hidden="true">↗</span></a>
-        </div>
-        <div class="card-foot"><span class="card-author"></span><button class="card-more" type="button" aria-label="更多操作" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-9"/></svg></button><div class="card-menu" hidden><button type="button" data-act="fav"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-10"/></svg><span>收藏</span></button><button type="button" data-act="share"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-11"/></svg><span>分享</span></button></div></div>
-      </article>
-      <!-- /preread-card -->
       <!-- preread-card:shi-jian-de-mei-gui--quan-xin-sheng-ji-ban- -->
       <article class="archive-card" data-ts="2026-11-14T02:06:10" data-search="时间的玫瑰（全新升级版）  AI 读书 读前通读 AI 大纲" data-mode="whole jingdu archive" data-slug="shi-jian-de-mei-gui--quan-xin-sheng-ji-ban-">
         <div class="card-top"><span class="type-tag type-tag-gold">读前通读</span><span class="type-tag">AI 大纲</span><time datetime="2026-11-14">11.14</time></div>
-        <h3><a class="card-title-link" href="reading-notes/books/shi-jian-de-mei-gui--quan-xin-sheng-ji-ban-/mindmap.html">《时间的玫瑰（全新升级版）》</a></h3>
+        <h3><a class="card-title-link" href="reading-notes/books/shi-jian-de-mei-gui/mindmap.html">《时间的玫瑰（全新升级版）》</a></h3>
         <p>44 章 / 1617 条</p>
         <div class="card-actions" hidden>
-          <a class="card-link card-link-strong" href="reading-notes/books/shi-jian-de-mei-gui--quan-xin-sheng-ji-ban-/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
-          <a class="download-link" href="reading-notes/books/shi-jian-de-mei-gui--quan-xin-sheng-ji-ban-/outline.epub" download>下载 EPUB ↓</a>
-          <a class="card-link" href="reading-notes/books/shi-jian-de-mei-gui--quan-xin-sheng-ji-ban-/overview.html">全书视角 <span aria-hidden="true">↗</span></a>
-        </div>
-        <div class="card-foot"><span class="card-author"></span><button class="card-more" type="button" aria-label="更多操作" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-9"/></svg></button><div class="card-menu" hidden><button type="button" data-act="fav"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-10"/></svg><span>收藏</span></button><button type="button" data-act="share"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-11"/></svg><span>分享</span></button></div></div>
-      </article>
-      <!-- /preread-card -->
-      <!-- preread-card:yi-ben-shu-du-dong--liao-zhai-zhi-yi- -->
-      <article class="archive-card" data-ts="2026-11-13T23:00:42" data-search="一本书读懂《聊斋志异  AI 读书 读前通读 AI 大纲" data-mode="whole jingdu archive" data-slug="yi-ben-shu-du-dong--liao-zhai-zhi-yi-">
-        <div class="card-top"><span class="type-tag type-tag-gold">读前通读</span><span class="type-tag">AI 大纲</span><time datetime="2026-11-13">11.13</time></div>
-        <h3><a class="card-title-link" href="reading-notes/books/yi-ben-shu-du-dong--liao-zhai-zhi-yi-/mindmap.html">《一本书读懂《聊斋志异》</a></h3>
-        <p>9 章 / 185 条</p>
-        <div class="card-actions" hidden>
-          <a class="card-link card-link-strong" href="reading-notes/books/yi-ben-shu-du-dong--liao-zhai-zhi-yi-/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
-          <a class="download-link" href="reading-notes/books/yi-ben-shu-du-dong--liao-zhai-zhi-yi-/outline.epub" download>下载 EPUB ↓</a>
-          <a class="card-link" href="reading-notes/books/yi-ben-shu-du-dong--liao-zhai-zhi-yi-/overview.html">全书视角 <span aria-hidden="true">↗</span></a>
-        </div>
-        <div class="card-foot"><span class="card-author"></span><button class="card-more" type="button" aria-label="更多操作" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-9"/></svg></button><div class="card-menu" hidden><button type="button" data-act="fav"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-10"/></svg><span>收藏</span></button><button type="button" data-act="share"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-11"/></svg><span>分享</span></button></div></div>
-      </article>
-      <!-- /preread-card -->
-      <!-- preread-card:gu-ren-de-huo-fa--kan-jian-zhen-zheng-de-gu-ren -->
-      <article class="archive-card" data-ts="2026-11-13T22:01:19" data-search="古人的活法（看见真正的古人日常）  AI 读书 读前通读 AI 大纲" data-mode="whole jingdu archive" data-slug="gu-ren-de-huo-fa--kan-jian-zhen-zheng-de-gu-ren">
-        <div class="card-top"><span class="type-tag type-tag-gold">读前通读</span><span class="type-tag">AI 大纲</span><time datetime="2026-11-13">11.13</time></div>
-        <h3><a class="card-title-link" href="reading-notes/books/gu-ren-de-huo-fa--kan-jian-zhen-zheng-de-gu-ren/mindmap.html">《古人的活法（看见真正的古人日常）》</a></h3>
-        <p>85 章 / 1734 条</p>
-        <div class="card-actions" hidden>
-          <a class="card-link card-link-strong" href="reading-notes/books/gu-ren-de-huo-fa--kan-jian-zhen-zheng-de-gu-ren/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
-          <a class="download-link" href="reading-notes/books/gu-ren-de-huo-fa--kan-jian-zhen-zheng-de-gu-ren/outline.epub" download>下载 EPUB ↓</a>
-          <a class="card-link" href="reading-notes/books/gu-ren-de-huo-fa--kan-jian-zhen-zheng-de-gu-ren/overview.html">全书视角 <span aria-hidden="true">↗</span></a>
-        </div>
-        <div class="card-foot"><span class="card-author"></span><button class="card-more" type="button" aria-label="更多操作" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-9"/></svg></button><div class="card-menu" hidden><button type="button" data-act="fav"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-10"/></svg><span>收藏</span></button><button type="button" data-act="share"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-11"/></svg><span>分享</span></button></div></div>
-      </article>
-      <!-- /preread-card -->
-      <!-- preread-card:zhong-guo-kao-gu-wei-jie-zhi-mi -->
-      <article class="archive-card" data-ts="2026-11-13T09:18:48" data-search="中国考古未解之谜  AI 读书 读前通读 AI 大纲" data-mode="whole jingdu archive" data-slug="zhong-guo-kao-gu-wei-jie-zhi-mi">
-        <div class="card-top"><span class="type-tag type-tag-gold">读前通读</span><span class="type-tag">AI 大纲</span><time datetime="2026-11-13">11.13</time></div>
-        <h3><a class="card-title-link" href="reading-notes/books/zhong-guo-kao-gu-wei-jie-zhi-mi/mindmap.html">《中国考古未解之谜》</a></h3>
-        <p>59 章 / 1580 条</p>
-        <div class="card-actions" hidden>
-          <a class="card-link card-link-strong" href="reading-notes/books/zhong-guo-kao-gu-wei-jie-zhi-mi/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
-          <a class="download-link" href="reading-notes/books/zhong-guo-kao-gu-wei-jie-zhi-mi/outline.epub" download>下载 EPUB ↓</a>
-          <a class="card-link" href="reading-notes/books/zhong-guo-kao-gu-wei-jie-zhi-mi/overview.html">全书视角 <span aria-hidden="true">↗</span></a>
-        </div>
-        <div class="card-foot"><span class="card-author"></span><button class="card-more" type="button" aria-label="更多操作" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-9"/></svg></button><div class="card-menu" hidden><button type="button" data-act="fav"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-10"/></svg><span>收藏</span></button><button type="button" data-act="share"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-11"/></svg><span>分享</span></button></div></div>
-      </article>
-      <!-- /preread-card -->
-      <!-- preread-card:fu-you-de-xi-guan -->
-      <article class="archive-card" data-ts="2026-11-13T06:11:33" data-search="富有的习惯  AI 读书 读前通读 AI 大纲" data-mode="whole jingdu archive" data-slug="fu-you-de-xi-guan">
-        <div class="card-top"><span class="type-tag type-tag-gold">读前通读</span><span class="type-tag">AI 大纲</span><time datetime="2026-11-13">11.13</time></div>
-        <h3><a class="card-title-link" href="reading-notes/books/fu-you-de-xi-guan/mindmap.html">《富有的习惯》</a></h3>
-        <p>14 章 / 507 条</p>
-        <div class="card-actions" hidden>
-          <a class="card-link card-link-strong" href="reading-notes/books/fu-you-de-xi-guan/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
-          <a class="download-link" href="reading-notes/books/fu-you-de-xi-guan/outline.epub" download>下载 EPUB ↓</a>
-          <a class="card-link" href="reading-notes/books/fu-you-de-xi-guan/overview.html">全书视角 <span aria-hidden="true">↗</span></a>
-        </div>
-        <div class="card-foot"><span class="card-author"></span><button class="card-more" type="button" aria-label="更多操作" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-9"/></svg></button><div class="card-menu" hidden><button type="button" data-act="fav"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-10"/></svg><span>收藏</span></button><button type="button" data-act="share"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-11"/></svg><span>分享</span></button></div></div>
-      </article>
-      <!-- /preread-card -->
-      <!-- preread-card:tu-er-qi--huan-ge-di-fang-tang-ping--qing-you -->
-      <article class="archive-card" data-ts="2026-11-13T02:00:27" data-search="土耳其：换个地方躺平（轻游记）  AI 读书 读前通读 AI 大纲" data-mode="whole jingdu archive" data-slug="tu-er-qi--huan-ge-di-fang-tang-ping--qing-you">
-        <div class="card-top"><span class="type-tag type-tag-gold">读前通读</span><span class="type-tag">AI 大纲</span><time datetime="2026-11-13">11.13</time></div>
-        <h3><a class="card-title-link" href="reading-notes/books/tu-er-qi--huan-ge-di-fang-tang-ping--qing-you/mindmap.html">《土耳其：换个地方躺平（轻游记）》</a></h3>
-        <p>5 章 / 92 条</p>
-        <div class="card-actions" hidden>
-          <a class="card-link card-link-strong" href="reading-notes/books/tu-er-qi--huan-ge-di-fang-tang-ping--qing-you/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
-          <a class="download-link" href="reading-notes/books/tu-er-qi--huan-ge-di-fang-tang-ping--qing-you/outline.epub" download>下载 EPUB ↓</a>
-          <a class="card-link" href="reading-notes/books/tu-er-qi--huan-ge-di-fang-tang-ping--qing-you/overview.html">全书视角 <span aria-hidden="true">↗</span></a>
-        </div>
-        <div class="card-foot"><span class="card-author"></span><button class="card-more" type="button" aria-label="更多操作" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-9"/></svg></button><div class="card-menu" hidden><button type="button" data-act="fav"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-10"/></svg><span>收藏</span></button><button type="button" data-act="share"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-11"/></svg><span>分享</span></button></div></div>
-      </article>
-      <!-- /preread-card -->
-      <!-- preread-card:xi-ban-ya--zai-zhe--you-ren-hou-hui-you-ren-yu -->
-      <article class="archive-card" data-ts="2026-11-13T00:01:08" data-search="西班牙：在这，有人后悔有人圆梦（轻游记）  AI 读书 读前通读 AI 大纲" data-mode="whole jingdu archive" data-slug="xi-ban-ya--zai-zhe--you-ren-hou-hui-you-ren-yu">
-        <div class="card-top"><span class="type-tag type-tag-gold">读前通读</span><span class="type-tag">AI 大纲</span><time datetime="2026-11-13">11.13</time></div>
-        <h3><a class="card-title-link" href="reading-notes/books/xi-ban-ya--zai-zhe--you-ren-hou-hui-you-ren-yu/mindmap.html">《西班牙：在这，有人后悔有人圆梦（轻游记）》</a></h3>
-        <p>2 章 / 41 条</p>
-        <div class="card-actions" hidden>
-          <a class="card-link card-link-strong" href="reading-notes/books/xi-ban-ya--zai-zhe--you-ren-hou-hui-you-ren-yu/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
-          <a class="download-link" href="reading-notes/books/xi-ban-ya--zai-zhe--you-ren-hou-hui-you-ren-yu/outline.epub" download>下载 EPUB ↓</a>
-          <a class="card-link" href="reading-notes/books/xi-ban-ya--zai-zhe--you-ren-hou-hui-you-ren-yu/overview.html">全书视角 <span aria-hidden="true">↗</span></a>
-        </div>
-        <div class="card-foot"><span class="card-author"></span><button class="card-more" type="button" aria-label="更多操作" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-9"/></svg></button><div class="card-menu" hidden><button type="button" data-act="fav"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-10"/></svg><span>收藏</span></button><button type="button" data-act="share"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-11"/></svg><span>分享</span></button></div></div>
-      </article>
-      <!-- /preread-card -->
-      <!-- preread-card:tang-shi-li-de-shi-ba-chang-lv-xing -->
-      <article class="archive-card" data-ts="2026-11-12T23:18:47" data-search="唐诗里的十八场旅行  AI 读书 读前通读 AI 大纲" data-mode="whole jingdu archive" data-slug="tang-shi-li-de-shi-ba-chang-lv-xing">
-        <div class="card-top"><span class="type-tag type-tag-gold">读前通读</span><span class="type-tag">AI 大纲</span><time datetime="2026-11-12">11.12</time></div>
-        <h3><a class="card-title-link" href="reading-notes/books/tang-shi-li-de-shi-ba-chang-lv-xing/mindmap.html">《唐诗里的十八场旅行》</a></h3>
-        <p>18 章 / 530 条</p>
-        <div class="card-actions" hidden>
-          <a class="card-link card-link-strong" href="reading-notes/books/tang-shi-li-de-shi-ba-chang-lv-xing/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
-          <a class="download-link" href="reading-notes/books/tang-shi-li-de-shi-ba-chang-lv-xing/outline.epub" download>下载 EPUB ↓</a>
-          <a class="card-link" href="reading-notes/books/tang-shi-li-de-shi-ba-chang-lv-xing/overview.html">全书视角 <span aria-hidden="true">↗</span></a>
+          <a class="card-link card-link-strong" href="reading-notes/books/shi-jian-de-mei-gui/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+          
+          <a class="card-link" href="reading-notes/books/shi-jian-de-mei-gui/overview.html">全书视角 <span aria-hidden="true">↗</span></a>
         </div>
         <div class="card-foot"><span class="card-author"></span><button class="card-more" type="button" aria-label="更多操作" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-9"/></svg></button><div class="card-menu" hidden><button type="button" data-act="fav"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-10"/></svg><span>收藏</span></button><button type="button" data-act="share"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-11"/></svg><span>分享</span></button></div></div>
       </article>
@@ -1106,12 +983,12 @@ html[data-cols="2"] #reading-panel-series .set-units-grid .card-body{
       <!-- preread-card:san-shi-er-li--qing-jing-dian- -->
       <article class="archive-card" data-ts="2026-11-12T23:08:35" data-search="三十而立（轻经典）  AI 读书 读前通读 AI 大纲" data-mode="whole jingdu archive" data-slug="san-shi-er-li--qing-jing-dian-">
         <div class="card-top"><span class="type-tag type-tag-gold">读前通读</span><span class="type-tag">AI 大纲</span><time datetime="2026-11-12">11.12</time></div>
-        <h3><a class="card-title-link" href="reading-notes/books/san-shi-er-li--qing-jing-dian-/mindmap.html">《三十而立（轻经典）》</a></h3>
+        <h3><a class="card-title-link" href="reading-notes/books/san-shi-er-li/mindmap.html">《三十而立（轻经典）》</a></h3>
         <p>7 章 / 188 条</p>
         <div class="card-actions" hidden>
-          <a class="card-link card-link-strong" href="reading-notes/books/san-shi-er-li--qing-jing-dian-/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
-          <a class="download-link" href="reading-notes/books/san-shi-er-li--qing-jing-dian-/outline.epub" download>下载 EPUB ↓</a>
-          <a class="card-link" href="reading-notes/books/san-shi-er-li--qing-jing-dian-/overview.html">全书视角 <span aria-hidden="true">↗</span></a>
+          <a class="card-link card-link-strong" href="reading-notes/books/san-shi-er-li/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+          
+          <a class="card-link" href="reading-notes/books/san-shi-er-li/overview.html">全书视角 <span aria-hidden="true">↗</span></a>
         </div>
         <div class="card-foot"><span class="card-author"></span><button class="card-more" type="button" aria-label="更多操作" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-9"/></svg></button><div class="card-menu" hidden><button type="button" data-act="fav"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-10"/></svg><span>收藏</span></button><button type="button" data-act="share"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-11"/></svg><span>分享</span></button></div></div>
       </article>
@@ -1119,25 +996,12 @@ html[data-cols="2"] #reading-panel-series .set-units-grid .card-body{
       <!-- preread-card:mao-ze-dong-chuan--quan-wei-jing-zhuang-ban- -->
       <article class="archive-card" data-ts="2026-11-12T23:00:41" data-search="毛泽东传（权威精装版）  AI 读书 读前通读 AI 大纲" data-mode="whole jingdu archive" data-slug="mao-ze-dong-chuan--quan-wei-jing-zhuang-ban-">
         <div class="card-top"><span class="type-tag type-tag-gold">读前通读</span><span class="type-tag">AI 大纲</span><time datetime="2026-11-12">11.12</time></div>
-        <h3><a class="card-title-link" href="reading-notes/books/mao-ze-dong-chuan--quan-wei-jing-zhuang-ban-/mindmap.html">《毛泽东传（权威精装版）》</a></h3>
+        <h3><a class="card-title-link" href="reading-notes/books/mao-ze-dong-chuan/mindmap.html">《毛泽东传（权威精装版）》</a></h3>
         <p>5 章 / 57 条</p>
         <div class="card-actions" hidden>
-          <a class="card-link card-link-strong" href="reading-notes/books/mao-ze-dong-chuan--quan-wei-jing-zhuang-ban-/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
-          <a class="download-link" href="reading-notes/books/mao-ze-dong-chuan--quan-wei-jing-zhuang-ban-/outline.epub" download>下载 EPUB ↓</a>
-          <a class="card-link" href="reading-notes/books/mao-ze-dong-chuan--quan-wei-jing-zhuang-ban-/overview.html">全书视角 <span aria-hidden="true">↗</span></a>
-        </div>
-        <div class="card-foot"><span class="card-author"></span><button class="card-more" type="button" aria-label="更多操作" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-9"/></svg></button><div class="card-menu" hidden><button type="button" data-act="fav"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-10"/></svg><span>收藏</span></button><button type="button" data-act="share"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-11"/></svg><span>分享</span></button></div></div>
-      </article>
-      <!-- /preread-card -->
-      <!-- preread-card:jin-rong-lian-jin-shu--ling-quan-qiu-tou-zi-zhe -->
-      <article class="archive-card" data-ts="2026-11-12T22:10:49" data-search="金融炼金术（令全球投资者醍醐灌顶的著作）  AI 读书 读前通读 AI 大纲" data-mode="whole jingdu archive" data-slug="jin-rong-lian-jin-shu--ling-quan-qiu-tou-zi-zhe">
-        <div class="card-top"><span class="type-tag type-tag-gold">读前通读</span><span class="type-tag">AI 大纲</span><time datetime="2026-11-12">11.12</time></div>
-        <h3><a class="card-title-link" href="reading-notes/books/jin-rong-lian-jin-shu--ling-quan-qiu-tou-zi-zhe/mindmap.html">《金融炼金术（令全球投资者醍醐灌顶的著作）》</a></h3>
-        <p>20 章 / 744 条</p>
-        <div class="card-actions" hidden>
-          <a class="card-link card-link-strong" href="reading-notes/books/jin-rong-lian-jin-shu--ling-quan-qiu-tou-zi-zhe/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
-          <a class="download-link" href="reading-notes/books/jin-rong-lian-jin-shu--ling-quan-qiu-tou-zi-zhe/outline.epub" download>下载 EPUB ↓</a>
-          <a class="card-link" href="reading-notes/books/jin-rong-lian-jin-shu--ling-quan-qiu-tou-zi-zhe/overview.html">全书视角 <span aria-hidden="true">↗</span></a>
+          <a class="card-link card-link-strong" href="reading-notes/books/mao-ze-dong-chuan/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+          
+          <a class="card-link" href="reading-notes/books/mao-ze-dong-chuan/overview.html">全书视角 <span aria-hidden="true">↗</span></a>
         </div>
         <div class="card-foot"><span class="card-author"></span><button class="card-more" type="button" aria-label="更多操作" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-9"/></svg></button><div class="card-menu" hidden><button type="button" data-act="fav"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-10"/></svg><span>收藏</span></button><button type="button" data-act="share"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-11"/></svg><span>分享</span></button></div></div>
       </article>
@@ -1155,28 +1019,15 @@ html[data-cols="2"] #reading-panel-series .set-units-grid .card-body{
         <div class="card-foot"><span class="card-author"></span><button class="card-more" type="button" aria-label="更多操作" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-9"/></svg></button><div class="card-menu" hidden><button type="button" data-act="fav"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-10"/></svg><span>收藏</span></button><button type="button" data-act="share"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-11"/></svg><span>分享</span></button></div></div>
       </article>
       <!-- /preread-card -->
-      <!-- preread-card:hua-er-jie-chuan-qi -->
-      <article class="archive-card" data-ts="2026-11-12T18:01:48" data-search="华尔街传奇  AI 读书 读前通读 AI 大纲" data-mode="whole jingdu archive" data-slug="hua-er-jie-chuan-qi">
-        <div class="card-top"><span class="type-tag type-tag-gold">读前通读</span><span class="type-tag">AI 大纲</span><time datetime="2026-11-12">11.12</time></div>
-        <h3><a class="card-title-link" href="reading-notes/books/hua-er-jie-chuan-qi/mindmap.html">《华尔街传奇》</a></h3>
-        <p>291 章 / 6028 条</p>
-        <div class="card-actions" hidden>
-          <a class="card-link card-link-strong" href="reading-notes/books/hua-er-jie-chuan-qi/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
-          <a class="download-link" href="reading-notes/books/hua-er-jie-chuan-qi/outline.epub" download>下载 EPUB ↓</a>
-          <a class="card-link" href="reading-notes/books/hua-er-jie-chuan-qi/overview.html">全书视角 <span aria-hidden="true">↗</span></a>
-        </div>
-        <div class="card-foot"><span class="card-author"></span><button class="card-more" type="button" aria-label="更多操作" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-9"/></svg></button><div class="card-menu" hidden><button type="button" data-act="fav"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-10"/></svg><span>收藏</span></button><button type="button" data-act="share"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-11"/></svg><span>分享</span></button></div></div>
-      </article>
-      <!-- /preread-card -->
       <!-- preread-card:lun-di-guo--mei-guo--zhan-zheng-he-shi-jie-ba -->
       <article class="archive-card" data-ts="2026-11-12T17:18:50" data-search="论帝国：美国、战争和世界霸权  AI 读书 读前通读 AI 大纲" data-mode="whole jingdu archive" data-slug="lun-di-guo--mei-guo--zhan-zheng-he-shi-jie-ba">
         <div class="card-top"><span class="type-tag type-tag-gold">读前通读</span><span class="type-tag">AI 大纲</span><time datetime="2026-11-12">11.12</time></div>
-        <h3><a class="card-title-link" href="reading-notes/books/lun-di-guo--mei-guo--zhan-zheng-he-shi-jie-ba/mindmap.html">《论帝国：美国、战争和世界霸权》</a></h3>
+        <h3><a class="card-title-link" href="reading-notes/books/lun-di-guo/mindmap.html">《论帝国：美国、战争和世界霸权》</a></h3>
         <p>10 章 / 278 条</p>
         <div class="card-actions" hidden>
-          <a class="card-link card-link-strong" href="reading-notes/books/lun-di-guo--mei-guo--zhan-zheng-he-shi-jie-ba/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
-          <a class="download-link" href="reading-notes/books/lun-di-guo--mei-guo--zhan-zheng-he-shi-jie-ba/outline.epub" download>下载 EPUB ↓</a>
-          <a class="card-link" href="reading-notes/books/lun-di-guo--mei-guo--zhan-zheng-he-shi-jie-ba/overview.html">全书视角 <span aria-hidden="true">↗</span></a>
+          <a class="card-link card-link-strong" href="reading-notes/books/lun-di-guo/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+          
+          <a class="card-link" href="reading-notes/books/lun-di-guo/overview.html">全书视角 <span aria-hidden="true">↗</span></a>
         </div>
         <div class="card-foot"><span class="card-author"></span><button class="card-more" type="button" aria-label="更多操作" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-9"/></svg></button><div class="card-menu" hidden><button type="button" data-act="fav"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-10"/></svg><span>收藏</span></button><button type="button" data-act="share"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-11"/></svg><span>分享</span></button></div></div>
       </article>
@@ -1194,28 +1045,15 @@ html[data-cols="2"] #reading-panel-series .set-units-grid .card-body{
         <div class="card-foot"><span class="card-author"></span><button class="card-more" type="button" aria-label="更多操作" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-9"/></svg></button><div class="card-menu" hidden><button type="button" data-act="fav"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-10"/></svg><span>收藏</span></button><button type="button" data-act="share"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-11"/></svg><span>分享</span></button></div></div>
       </article>
       <!-- /preread-card -->
-      <!-- preread-card:zui-dong-shu-de-ren-cai-neng-cheng-wei-ying-jia -->
-      <article class="archive-card" data-ts="2026-11-12T12:24:31" data-search="最懂输的人才能成为赢家：为什么正常的思维不会赢得交易  AI 读书 读前通读 AI 大纲" data-mode="whole jingdu archive" data-slug="zui-dong-shu-de-ren-cai-neng-cheng-wei-ying-jia">
-        <div class="card-top"><span class="type-tag type-tag-gold">读前通读</span><span class="type-tag">AI 大纲</span><time datetime="2026-11-12">11.12</time></div>
-        <h3><a class="card-title-link" href="reading-notes/books/zui-dong-shu-de-ren-cai-neng-cheng-wei-ying-jia/mindmap.html">《最懂输的人才能成为赢家：为什么正常的思维不会赢得交易》</a></h3>
-        <p>14 章 / 434 条</p>
-        <div class="card-actions" hidden>
-          <a class="card-link card-link-strong" href="reading-notes/books/zui-dong-shu-de-ren-cai-neng-cheng-wei-ying-jia/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
-          <a class="download-link" href="reading-notes/books/zui-dong-shu-de-ren-cai-neng-cheng-wei-ying-jia/outline.epub" download>下载 EPUB ↓</a>
-          <a class="card-link" href="reading-notes/books/zui-dong-shu-de-ren-cai-neng-cheng-wei-ying-jia/overview.html">全书视角 <span aria-hidden="true">↗</span></a>
-        </div>
-        <div class="card-foot"><span class="card-author"></span><button class="card-more" type="button" aria-label="更多操作" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-9"/></svg></button><div class="card-menu" hidden><button type="button" data-act="fav"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-10"/></svg><span>收藏</span></button><button type="button" data-act="share"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-11"/></svg><span>分享</span></button></div></div>
-      </article>
-      <!-- /preread-card -->
       <!-- preread-card:tao-dong-zhou-qi-lun--jing-ji-zhou-qi-jue-ding -->
       <article class="archive-card" data-ts="2026-11-12T09:18:07" data-search="涛动周期论：经济周期决定人生财富命运  AI 读书 读前通读 AI 大纲" data-mode="whole jingdu archive" data-slug="tao-dong-zhou-qi-lun--jing-ji-zhou-qi-jue-ding">
         <div class="card-top"><span class="type-tag type-tag-gold">读前通读</span><span class="type-tag">AI 大纲</span><time datetime="2026-11-12">11.12</time></div>
-        <h3><a class="card-title-link" href="reading-notes/books/tao-dong-zhou-qi-lun--jing-ji-zhou-qi-jue-ding/mindmap.html">《涛动周期论：经济周期决定人生财富命运》</a></h3>
+        <h3><a class="card-title-link" href="reading-notes/books/tao-dong-zhou-qi-lun/mindmap.html">《涛动周期论：经济周期决定人生财富命运》</a></h3>
         <p>20 章 / 1027 条</p>
         <div class="card-actions" hidden>
-          <a class="card-link card-link-strong" href="reading-notes/books/tao-dong-zhou-qi-lun--jing-ji-zhou-qi-jue-ding/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
-          <a class="download-link" href="reading-notes/books/tao-dong-zhou-qi-lun--jing-ji-zhou-qi-jue-ding/outline.epub" download>下载 EPUB ↓</a>
-          <a class="card-link" href="reading-notes/books/tao-dong-zhou-qi-lun--jing-ji-zhou-qi-jue-ding/overview.html">全书视角 <span aria-hidden="true">↗</span></a>
+          <a class="card-link card-link-strong" href="reading-notes/books/tao-dong-zhou-qi-lun/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+          
+          <a class="card-link" href="reading-notes/books/tao-dong-zhou-qi-lun/overview.html">全书视角 <span aria-hidden="true">↗</span></a>
         </div>
         <div class="card-foot"><span class="card-author"></span><button class="card-more" type="button" aria-label="更多操作" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-9"/></svg></button><div class="card-menu" hidden><button type="button" data-act="fav"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-10"/></svg><span>收藏</span></button><button type="button" data-act="share"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-11"/></svg><span>分享</span></button></div></div>
       </article>
@@ -1223,12 +1061,12 @@ html[data-cols="2"] #reading-panel-series .set-units-grid .card-body{
       <!-- preread-card:shang-ye-de-ben-zhi-he-hu-lian-wang -->
       <article class="archive-card" data-ts="2026-11-12T06:09:51" data-search="商业的本质和互联网  AI 读书 读前通读 AI 大纲" data-mode="whole jingdu archive" data-slug="shang-ye-de-ben-zhi-he-hu-lian-wang">
         <div class="card-top"><span class="type-tag type-tag-gold">读前通读</span><span class="type-tag">AI 大纲</span><time datetime="2026-11-12">11.12</time></div>
-        <h3><a class="card-title-link" href="reading-notes/books/shang-ye-de-ben-zhi-he-hu-lian-wang/mindmap.html">《商业的本质和互联网》</a></h3>
+        <h3><a class="card-title-link" href="reading-notes/books/shang-ye-de-ben-zhi-he-hu-lian-wang--di-2-ban/mindmap.html">《商业的本质和互联网》</a></h3>
         <p>60 章 / 1155 条</p>
         <div class="card-actions" hidden>
-          <a class="card-link card-link-strong" href="reading-notes/books/shang-ye-de-ben-zhi-he-hu-lian-wang/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
-          <a class="download-link" href="reading-notes/books/shang-ye-de-ben-zhi-he-hu-lian-wang/outline.epub" download>下载 EPUB ↓</a>
-          <a class="card-link" href="reading-notes/books/shang-ye-de-ben-zhi-he-hu-lian-wang/overview.html">全书视角 <span aria-hidden="true">↗</span></a>
+          <a class="card-link card-link-strong" href="reading-notes/books/shang-ye-de-ben-zhi-he-hu-lian-wang--di-2-ban/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+          <a class="download-link" href="reading-notes/books/shang-ye-de-ben-zhi-he-hu-lian-wang--di-2-ban/outline.epub" download>下载 EPUB ↓</a>
+          <a class="card-link" href="reading-notes/books/shang-ye-de-ben-zhi-he-hu-lian-wang--di-2-ban/overview.html">全书视角 <span aria-hidden="true">↗</span></a>
         </div>
         <div class="card-foot"><span class="card-author"></span><button class="card-more" type="button" aria-label="更多操作" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-9"/></svg></button><div class="card-menu" hidden><button type="button" data-act="fav"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-10"/></svg><span>收藏</span></button><button type="button" data-act="share"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-11"/></svg><span>分享</span></button></div></div>
       </article>
@@ -1259,28 +1097,15 @@ html[data-cols="2"] #reading-panel-series .set-units-grid .card-body{
         <div class="card-foot"><span class="card-author"></span><button class="card-more" type="button" aria-label="更多操作" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-9"/></svg></button><div class="card-menu" hidden><button type="button" data-act="fav"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-10"/></svg><span>收藏</span></button><button type="button" data-act="share"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-11"/></svg><span>分享</span></button></div></div>
       </article>
       <!-- /preread-card -->
-      <!-- preread-card:xiao-xing-de-cai-wu-si-wei-ke -->
-      <article class="archive-card" data-ts="2026-11-12T04:11:05" data-search="肖星的财务思维课  AI 读书 读前通读 AI 大纲" data-mode="whole jingdu archive" data-slug="xiao-xing-de-cai-wu-si-wei-ke">
-        <div class="card-top"><span class="type-tag type-tag-gold">读前通读</span><span class="type-tag">AI 大纲</span><time datetime="2026-11-12">11.12</time></div>
-        <h3><a class="card-title-link" href="reading-notes/books/xiao-xing-de-cai-wu-si-wei-ke/mindmap.html">《肖星的财务思维课》</a></h3>
-        <p>20 章 / 625 条</p>
-        <div class="card-actions" hidden>
-          <a class="card-link card-link-strong" href="reading-notes/books/xiao-xing-de-cai-wu-si-wei-ke/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
-          <a class="download-link" href="reading-notes/books/xiao-xing-de-cai-wu-si-wei-ke/outline.epub" download>下载 EPUB ↓</a>
-          <a class="card-link" href="reading-notes/books/xiao-xing-de-cai-wu-si-wei-ke/overview.html">全书视角 <span aria-hidden="true">↗</span></a>
-        </div>
-        <div class="card-foot"><span class="card-author"></span><button class="card-more" type="button" aria-label="更多操作" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-9"/></svg></button><div class="card-menu" hidden><button type="button" data-act="fav"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-10"/></svg><span>收藏</span></button><button type="button" data-act="share"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-11"/></svg><span>分享</span></button></div></div>
-      </article>
-      <!-- /preread-card -->
       <!-- preread-card:hui-lv-xia-die-zhi-hou--ri-yuan-bian-zhi-de-hon -->
       <article class="archive-card" data-ts="2026-11-12T03:00:20" data-search="汇率下跌之后：日元贬值的宏观经济启示  AI 读书 读前通读 AI 大纲" data-mode="whole jingdu archive" data-slug="hui-lv-xia-die-zhi-hou--ri-yuan-bian-zhi-de-hon">
         <div class="card-top"><span class="type-tag type-tag-gold">读前通读</span><span class="type-tag">AI 大纲</span><time datetime="2026-11-12">11.12</time></div>
-        <h3><a class="card-title-link" href="reading-notes/books/hui-lv-xia-die-zhi-hou--ri-yuan-bian-zhi-de-hon/mindmap.html">《汇率下跌之后：日元贬值的宏观经济启示》</a></h3>
+        <h3><a class="card-title-link" href="reading-notes/books/hui-lv-xia-die-zhi-hou/mindmap.html">《汇率下跌之后：日元贬值的宏观经济启示》</a></h3>
         <p>56 章 / 871 条</p>
         <div class="card-actions" hidden>
-          <a class="card-link card-link-strong" href="reading-notes/books/hui-lv-xia-die-zhi-hou--ri-yuan-bian-zhi-de-hon/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
-          <a class="download-link" href="reading-notes/books/hui-lv-xia-die-zhi-hou--ri-yuan-bian-zhi-de-hon/outline.epub" download>下载 EPUB ↓</a>
-          <a class="card-link" href="reading-notes/books/hui-lv-xia-die-zhi-hou--ri-yuan-bian-zhi-de-hon/overview.html">全书视角 <span aria-hidden="true">↗</span></a>
+          <a class="card-link card-link-strong" href="reading-notes/books/hui-lv-xia-die-zhi-hou/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+          
+          <a class="card-link" href="reading-notes/books/hui-lv-xia-die-zhi-hou/overview.html">全书视角 <span aria-hidden="true">↗</span></a>
         </div>
         <div class="card-foot"><span class="card-author"></span><button class="card-more" type="button" aria-label="更多操作" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-9"/></svg></button><div class="card-menu" hidden><button type="button" data-act="fav"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-10"/></svg><span>收藏</span></button><button type="button" data-act="share"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-11"/></svg><span>分享</span></button></div></div>
       </article>
@@ -1288,12 +1113,12 @@ html[data-cols="2"] #reading-panel-series .set-units-grid .card-body{
       <!-- preread-card:yi-jiao-yi-wei-sheng--yuan-shu-di-2-ban- -->
       <article class="archive-card" data-ts="2026-11-11T22:21:56" data-search="以交易为生（原书第2版）  AI 读书 读前通读 AI 大纲" data-mode="whole jingdu archive" data-slug="yi-jiao-yi-wei-sheng--yuan-shu-di-2-ban-">
         <div class="card-top"><span class="type-tag type-tag-gold">读前通读</span><span class="type-tag">AI 大纲</span><time datetime="2026-11-11">11.11</time></div>
-        <h3><a class="card-title-link" href="reading-notes/books/yi-jiao-yi-wei-sheng--yuan-shu-di-2-ban-/mindmap.html">《以交易为生（原书第2版）》</a></h3>
+        <h3><a class="card-title-link" href="reading-notes/books/yi-jiao-yi-wei-sheng/mindmap.html">《以交易为生（原书第2版）》</a></h3>
         <p>70 章 / 1908 条</p>
         <div class="card-actions" hidden>
-          <a class="card-link card-link-strong" href="reading-notes/books/yi-jiao-yi-wei-sheng--yuan-shu-di-2-ban-/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
-          <a class="download-link" href="reading-notes/books/yi-jiao-yi-wei-sheng--yuan-shu-di-2-ban-/outline.epub" download>下载 EPUB ↓</a>
-          <a class="card-link" href="reading-notes/books/yi-jiao-yi-wei-sheng--yuan-shu-di-2-ban-/overview.html">全书视角 <span aria-hidden="true">↗</span></a>
+          <a class="card-link card-link-strong" href="reading-notes/books/yi-jiao-yi-wei-sheng/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+          
+          <a class="card-link" href="reading-notes/books/yi-jiao-yi-wei-sheng/overview.html">全书视角 <span aria-hidden="true">↗</span></a>
         </div>
         <div class="card-foot"><span class="card-author"></span><button class="card-more" type="button" aria-label="更多操作" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-9"/></svg></button><div class="card-menu" hidden><button type="button" data-act="fav"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-10"/></svg><span>收藏</span></button><button type="button" data-act="share"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-11"/></svg><span>分享</span></button></div></div>
       </article>
@@ -1379,12 +1204,12 @@ html[data-cols="2"] #reading-panel-series .set-units-grid .card-body{
       <!-- preread-card:kan-dong-shi-jie-ge-ju-de-di-yi-ben-shu-2-da-gu -->
       <article class="archive-card" data-ts="2026-11-11T13:00:54" data-search="看懂世界格局的第一本书2：大国之略  AI 读书 读前通读 AI 大纲" data-mode="whole jingdu archive" data-slug="kan-dong-shi-jie-ge-ju-de-di-yi-ben-shu-2-da-gu">
         <div class="card-top"><span class="type-tag type-tag-gold">读前通读</span><span class="type-tag">AI 大纲</span><time datetime="2026-11-11">11.11</time></div>
-        <h3><a class="card-title-link" href="reading-notes/books/kan-dong-shi-jie-ge-ju-de-di-yi-ben-shu-2-da-gu/mindmap.html">《看懂世界格局的第一本书2：大国之略》</a></h3>
+        <h3><a class="card-title-link" href="reading-notes/books/kan-dong-shi-jie-ge-ju-de-di-yi-ben-shu/mindmap.html">《看懂世界格局的第一本书2：大国之略》</a></h3>
         <p>30 章 / 609 条</p>
         <div class="card-actions" hidden>
-          <a class="card-link card-link-strong" href="reading-notes/books/kan-dong-shi-jie-ge-ju-de-di-yi-ben-shu-2-da-gu/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
-          <a class="download-link" href="reading-notes/books/kan-dong-shi-jie-ge-ju-de-di-yi-ben-shu-2-da-gu/outline.epub" download>下载 EPUB ↓</a>
-          <a class="card-link" href="reading-notes/books/kan-dong-shi-jie-ge-ju-de-di-yi-ben-shu-2-da-gu/overview.html">全书视角 <span aria-hidden="true">↗</span></a>
+          <a class="card-link card-link-strong" href="reading-notes/books/kan-dong-shi-jie-ge-ju-de-di-yi-ben-shu/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+          
+          <a class="card-link" href="reading-notes/books/kan-dong-shi-jie-ge-ju-de-di-yi-ben-shu/overview.html">全书视角 <span aria-hidden="true">↗</span></a>
         </div>
         <div class="card-foot"><span class="card-author"></span><button class="card-more" type="button" aria-label="更多操作" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-9"/></svg></button><div class="card-menu" hidden><button type="button" data-act="fav"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-10"/></svg><span>收藏</span></button><button type="button" data-act="share"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-11"/></svg><span>分享</span></button></div></div>
       </article>
@@ -1418,12 +1243,12 @@ html[data-cols="2"] #reading-panel-series .set-units-grid .card-body{
       <!-- preread-card:ba-fei-te-mu-hou-zhi-nang--cha-li--mang-ge-chu -->
       <article class="archive-card" data-ts="2026-11-11T06:07:40" data-search="巴菲特幕后智囊：查理·芒格传  AI 读书 读前通读 AI 大纲" data-mode="whole jingdu archive" data-slug="ba-fei-te-mu-hou-zhi-nang--cha-li--mang-ge-chu">
         <div class="card-top"><span class="type-tag type-tag-gold">读前通读</span><span class="type-tag">AI 大纲</span><time datetime="2026-11-11">11.11</time></div>
-        <h3><a class="card-title-link" href="reading-notes/books/ba-fei-te-mu-hou-zhi-nang--cha-li--mang-ge-chu/mindmap.html">《巴菲特幕后智囊：查理·芒格传》</a></h3>
+        <h3><a class="card-title-link" href="reading-notes/books/ba-fei-te-mu-hou-zhi-nang/mindmap.html">《巴菲特幕后智囊：查理·芒格传》</a></h3>
         <p>21 章 / 584 条</p>
         <div class="card-actions" hidden>
-          <a class="card-link card-link-strong" href="reading-notes/books/ba-fei-te-mu-hou-zhi-nang--cha-li--mang-ge-chu/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
-          <a class="download-link" href="reading-notes/books/ba-fei-te-mu-hou-zhi-nang--cha-li--mang-ge-chu/outline.epub" download>下载 EPUB ↓</a>
-          <a class="card-link" href="reading-notes/books/ba-fei-te-mu-hou-zhi-nang--cha-li--mang-ge-chu/overview.html">全书视角 <span aria-hidden="true">↗</span></a>
+          <a class="card-link card-link-strong" href="reading-notes/books/ba-fei-te-mu-hou-zhi-nang/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+          
+          <a class="card-link" href="reading-notes/books/ba-fei-te-mu-hou-zhi-nang/overview.html">全书视角 <span aria-hidden="true">↗</span></a>
         </div>
         <div class="card-foot"><span class="card-author"></span><button class="card-more" type="button" aria-label="更多操作" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-9"/></svg></button><div class="card-menu" hidden><button type="button" data-act="fav"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-10"/></svg><span>收藏</span></button><button type="button" data-act="share"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-11"/></svg><span>分享</span></button></div></div>
       </article>
@@ -1483,25 +1308,12 @@ html[data-cols="2"] #reading-panel-series .set-units-grid .card-body{
       <!-- preread-card:zheng-zhi-zhi-xu-de-qi-yuan--cong-qian-ren-lei -->
       <article class="archive-card" data-ts="2026-11-10T22:01:05" data-search="政治秩序的起源：从前人类时代到法国大革命  AI 读书 读前通读 AI 大纲" data-mode="whole jingdu archive" data-slug="zheng-zhi-zhi-xu-de-qi-yuan--cong-qian-ren-lei">
         <div class="card-top"><span class="type-tag type-tag-gold">读前通读</span><span class="type-tag">AI 大纲</span><time datetime="2026-11-10">11.10</time></div>
-        <h3><a class="card-title-link" href="reading-notes/books/zheng-zhi-zhi-xu-de-qi-yuan--cong-qian-ren-lei/mindmap.html">《政治秩序的起源：从前人类时代到法国大革命》</a></h3>
+        <h3><a class="card-title-link" href="reading-notes/books/zheng-zhi-zhi-xu-de-qi-yuan/mindmap.html">《政治秩序的起源：从前人类时代到法国大革命》</a></h3>
         <p>32 章 / 1157 条</p>
         <div class="card-actions" hidden>
-          <a class="card-link card-link-strong" href="reading-notes/books/zheng-zhi-zhi-xu-de-qi-yuan--cong-qian-ren-lei/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
-          <a class="download-link" href="reading-notes/books/zheng-zhi-zhi-xu-de-qi-yuan--cong-qian-ren-lei/outline.epub" download>下载 EPUB ↓</a>
-          <a class="card-link" href="reading-notes/books/zheng-zhi-zhi-xu-de-qi-yuan--cong-qian-ren-lei/overview.html">全书视角 <span aria-hidden="true">↗</span></a>
-        </div>
-        <div class="card-foot"><span class="card-author"></span><button class="card-more" type="button" aria-label="更多操作" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-9"/></svg></button><div class="card-menu" hidden><button type="button" data-act="fav"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-10"/></svg><span>收藏</span></button><button type="button" data-act="share"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-11"/></svg><span>分享</span></button></div></div>
-      </article>
-      <!-- /preread-card -->
-      <!-- preread-card:jie-ke--zou-200-gong-li-qu-jian-yi-zuo-cheng- -->
-      <article class="archive-card" data-ts="2026-11-08T23:09:26" data-search="捷克：走200公里去见一座城（轻游记）  AI 读书 读前通读 AI 大纲" data-mode="whole jingdu archive" data-slug="jie-ke--zou-200-gong-li-qu-jian-yi-zuo-cheng-">
-        <div class="card-top"><span class="type-tag type-tag-gold">读前通读</span><span class="type-tag">AI 大纲</span><time datetime="2026-11-08">11.08</time></div>
-        <h3><a class="card-title-link" href="reading-notes/books/jie-ke--zou-200-gong-li-qu-jian-yi-zuo-cheng-/mindmap.html">《捷克：走200公里去见一座城（轻游记）》</a></h3>
-        <p>6 章 / 105 条</p>
-        <div class="card-actions" hidden>
-          <a class="card-link card-link-strong" href="reading-notes/books/jie-ke--zou-200-gong-li-qu-jian-yi-zuo-cheng-/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
-          <a class="download-link" href="reading-notes/books/jie-ke--zou-200-gong-li-qu-jian-yi-zuo-cheng-/outline.epub" download>下载 EPUB ↓</a>
-          <a class="card-link" href="reading-notes/books/jie-ke--zou-200-gong-li-qu-jian-yi-zuo-cheng-/overview.html">全书视角 <span aria-hidden="true">↗</span></a>
+          <a class="card-link card-link-strong" href="reading-notes/books/zheng-zhi-zhi-xu-de-qi-yuan/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+          
+          <a class="card-link" href="reading-notes/books/zheng-zhi-zhi-xu-de-qi-yuan/overview.html">全书视角 <span aria-hidden="true">↗</span></a>
         </div>
         <div class="card-foot"><span class="card-author"></span><button class="card-more" type="button" aria-label="更多操作" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-9"/></svg></button><div class="card-menu" hidden><button type="button" data-act="fav"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-10"/></svg><span>收藏</span></button><button type="button" data-act="share"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-11"/></svg><span>分享</span></button></div></div>
       </article>
@@ -1509,12 +1321,12 @@ html[data-cols="2"] #reading-panel-series .set-units-grid .card-body{
       <!-- preread-card:ni-ye-zhi-huo-le-yi-ci--ping-shen-me-shuo-wo-xu -->
       <article class="archive-card" data-ts="2026-11-08T20:02:45" data-search="你也只活了一次，凭什么说我选择的人生是错的？  AI 读书 读前通读 AI 大纲" data-mode="whole jingdu archive" data-slug="ni-ye-zhi-huo-le-yi-ci--ping-shen-me-shuo-wo-xu">
         <div class="card-top"><span class="type-tag type-tag-gold">读前通读</span><span class="type-tag">AI 大纲</span><time datetime="2026-11-08">11.08</time></div>
-        <h3><a class="card-title-link" href="reading-notes/books/ni-ye-zhi-huo-le-yi-ci--ping-shen-me-shuo-wo-xu/mindmap.html">《你也只活了一次，凭什么说我选择的人生是错的？》</a></h3>
+        <h3><a class="card-title-link" href="reading-notes/books/ni-ye-zhi-huo-le-yi-ci-ping-shen-me-shuo-wo-xuan-ze-de-r/mindmap.html">《你也只活了一次，凭什么说我选择的人生是错的？》</a></h3>
         <p>10 章 / 304 条</p>
         <div class="card-actions" hidden>
-          <a class="card-link card-link-strong" href="reading-notes/books/ni-ye-zhi-huo-le-yi-ci--ping-shen-me-shuo-wo-xu/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
-          <a class="download-link" href="reading-notes/books/ni-ye-zhi-huo-le-yi-ci--ping-shen-me-shuo-wo-xu/outline.epub" download>下载 EPUB ↓</a>
-          <a class="card-link" href="reading-notes/books/ni-ye-zhi-huo-le-yi-ci--ping-shen-me-shuo-wo-xu/overview.html">全书视角 <span aria-hidden="true">↗</span></a>
+          <a class="card-link card-link-strong" href="reading-notes/books/ni-ye-zhi-huo-le-yi-ci-ping-shen-me-shuo-wo-xuan-ze-de-r/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+          
+          <a class="card-link" href="reading-notes/books/ni-ye-zhi-huo-le-yi-ci-ping-shen-me-shuo-wo-xuan-ze-de-r/overview.html">全书视角 <span aria-hidden="true">↗</span></a>
         </div>
         <div class="card-foot"><span class="card-author"></span><button class="card-more" type="button" aria-label="更多操作" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-9"/></svg></button><div class="card-menu" hidden><button type="button" data-act="fav"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-10"/></svg><span>收藏</span></button><button type="button" data-act="share"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-11"/></svg><span>分享</span></button></div></div>
       </article>
@@ -1522,12 +1334,12 @@ html[data-cols="2"] #reading-panel-series .set-units-grid .card-body{
       <!-- preread-card:si-chou-zhi-lu--yi-bu-quan-xin-de-shi-jie-shi -->
       <article class="archive-card" data-ts="2026-11-08T16:13:10" data-search="丝绸之路：一部全新的世界史  AI 读书 读前通读 AI 大纲" data-mode="whole jingdu archive" data-slug="si-chou-zhi-lu--yi-bu-quan-xin-de-shi-jie-shi">
         <div class="card-top"><span class="type-tag type-tag-gold">读前通读</span><span class="type-tag">AI 大纲</span><time datetime="2026-11-08">11.08</time></div>
-        <h3><a class="card-title-link" href="reading-notes/books/si-chou-zhi-lu--yi-bu-quan-xin-de-shi-jie-shi/mindmap.html">《丝绸之路：一部全新的世界史》</a></h3>
+        <h3><a class="card-title-link" href="reading-notes/books/si-chou-zhi-lu/mindmap.html">《丝绸之路：一部全新的世界史》</a></h3>
         <p>27 章 / 1026 条</p>
         <div class="card-actions" hidden>
-          <a class="card-link card-link-strong" href="reading-notes/books/si-chou-zhi-lu--yi-bu-quan-xin-de-shi-jie-shi/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
-          <a class="download-link" href="reading-notes/books/si-chou-zhi-lu--yi-bu-quan-xin-de-shi-jie-shi/outline.epub" download>下载 EPUB ↓</a>
-          <a class="card-link" href="reading-notes/books/si-chou-zhi-lu--yi-bu-quan-xin-de-shi-jie-shi/overview.html">全书视角 <span aria-hidden="true">↗</span></a>
+          <a class="card-link card-link-strong" href="reading-notes/books/si-chou-zhi-lu/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+          
+          <a class="card-link" href="reading-notes/books/si-chou-zhi-lu/overview.html">全书视角 <span aria-hidden="true">↗</span></a>
         </div>
         <div class="card-foot"><span class="card-author"></span><button class="card-more" type="button" aria-label="更多操作" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-9"/></svg></button><div class="card-menu" hidden><button type="button" data-act="fav"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-10"/></svg><span>收藏</span></button><button type="button" data-act="share"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-11"/></svg><span>分享</span></button></div></div>
       </article>
@@ -1548,12 +1360,12 @@ html[data-cols="2"] #reading-panel-series .set-units-grid .card-body{
       <!-- preread-card:da-hua-zhong-guo-yi-shu-shi--quan-xin-xiu-ding -->
       <article class="archive-card" data-ts="2026-11-08T14:09:27" data-search="大话中国艺术史（全新修订版）  AI 读书 读前通读 AI 大纲" data-mode="whole jingdu archive" data-slug="da-hua-zhong-guo-yi-shu-shi--quan-xin-xiu-ding">
         <div class="card-top"><span class="type-tag type-tag-gold">读前通读</span><span class="type-tag">AI 大纲</span><time datetime="2026-11-08">11.08</time></div>
-        <h3><a class="card-title-link" href="reading-notes/books/da-hua-zhong-guo-yi-shu-shi--quan-xin-xiu-ding/mindmap.html">《大话中国艺术史（全新修订版）》</a></h3>
+        <h3><a class="card-title-link" href="reading-notes/books/da-hua-zhong-guo-yi-shu-shi/mindmap.html">《大话中国艺术史（全新修订版）》</a></h3>
         <p>51 章 / 1278 条</p>
         <div class="card-actions" hidden>
-          <a class="card-link card-link-strong" href="reading-notes/books/da-hua-zhong-guo-yi-shu-shi--quan-xin-xiu-ding/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
-          <a class="download-link" href="reading-notes/books/da-hua-zhong-guo-yi-shu-shi--quan-xin-xiu-ding/outline.epub" download>下载 EPUB ↓</a>
-          <a class="card-link" href="reading-notes/books/da-hua-zhong-guo-yi-shu-shi--quan-xin-xiu-ding/overview.html">全书视角 <span aria-hidden="true">↗</span></a>
+          <a class="card-link card-link-strong" href="reading-notes/books/da-hua-zhong-guo-yi-shu-shi/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
+          
+          <a class="card-link" href="reading-notes/books/da-hua-zhong-guo-yi-shu-shi/overview.html">全书视角 <span aria-hidden="true">↗</span></a>
         </div>
         <div class="card-foot"><span class="card-author"></span><button class="card-more" type="button" aria-label="更多操作" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-9"/></svg></button><div class="card-menu" hidden><button type="button" data-act="fav"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-10"/></svg><span>收藏</span></button><button type="button" data-act="share"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-11"/></svg><span>分享</span></button></div></div>
       </article>
@@ -1610,28 +1422,6 @@ html[data-cols="2"] #reading-panel-series .set-units-grid .card-body{
         <div class="card-foot"><span class="card-author"></span><button class="card-more" type="button" aria-label="更多操作" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-9"/></svg></button><div class="card-menu" hidden><button type="button" data-act="fav"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-10"/></svg><span>收藏</span></button><button type="button" data-act="share"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-11"/></svg><span>分享</span></button></div></div>
       </article>
       <!-- /preread-card -->
-      <!-- preread-card:tmp-ab6fdc06215208b720cb1858fd8c40ac0da68c51f1b2b3b8 -->
-      <article class="archive-card" data-ts="2026-11-08T02:05:05" data-search="tmp ab6fdc06215208b720cb1858fd8c40ac0da68c51f1b2b3b8  AI 读书 读前通读 AI 大纲" data-mode="whole jingdu archive" data-slug="tmp-ab6fdc06215208b720cb1858fd8c40ac0da68c51f1b2b3b8">
-        <div class="card-top"><span class="type-tag type-tag-gold">读前通读</span><span class="type-tag">AI 大纲</span><time datetime="2026-11-08">11.08</time></div>
-        <h3><a class="card-title-link" href="reading-notes/books/tmp-ab6fdc06215208b720cb1858fd8c40ac0da68c51f1b2b3b8/mindmap.html">《tmp ab6fdc06215208b720cb1858fd8c40ac0da68c51f1b2b3b8》</a></h3>
-        <div class="card-actions" hidden>
-          <a class="card-link card-link-strong" href="reading-notes/books/tmp-ab6fdc06215208b720cb1858fd8c40ac0da68c51f1b2b3b8/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
-          <a class="card-link" href="reading-notes/books/tmp-ab6fdc06215208b720cb1858fd8c40ac0da68c51f1b2b3b8/overview.html">全书视角 <span aria-hidden="true">↗</span></a>
-        </div>
-        <div class="card-foot"><span class="card-author"></span><button class="card-more" type="button" aria-label="更多操作" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-9"/></svg></button><div class="card-menu" hidden><button type="button" data-act="fav"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-10"/></svg><span>收藏</span></button><button type="button" data-act="share"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-11"/></svg><span>分享</span></button></div></div>
-      </article>
-      <!-- /preread-card -->
-      <!-- preread-card:pdf-wen-gao -->
-      <article class="archive-card" data-ts="2026-11-08T02:05:05" data-search="pdf wen gao  AI 读书 读前通读 AI 大纲" data-mode="whole jingdu archive" data-slug="pdf-wen-gao">
-        <div class="card-top"><span class="type-tag type-tag-gold">读前通读</span><span class="type-tag">AI 大纲</span><time datetime="2026-11-08">11.08</time></div>
-        <h3><a class="card-title-link" href="reading-notes/books/pdf-wen-gao/mindmap.html">《pdf wen gao》</a></h3>
-        <div class="card-actions" hidden>
-          <a class="card-link card-link-strong" href="reading-notes/books/pdf-wen-gao/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
-          <a class="card-link" href="reading-notes/books/pdf-wen-gao/overview.html">全书视角 <span aria-hidden="true">↗</span></a>
-        </div>
-        <div class="card-foot"><span class="card-author"></span><button class="card-more" type="button" aria-label="更多操作" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-9"/></svg></button><div class="card-menu" hidden><button type="button" data-act="fav"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-10"/></svg><span>收藏</span></button><button type="button" data-act="share"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-11"/></svg><span>分享</span></button></div></div>
-      </article>
-      <!-- /preread-card -->
       <!-- preread-card:hong-se-zi-ben-zhong-guo-de-fei-fan-jue-qi-yu-cui-ruo-de -->
       <article class="archive-card" data-ts="2026-11-08T02:05:05" data-search="hong se zi ben zhong guo de fei fan jue qi yu cui ruo de  AI 读书 读前通读 AI 大纲" data-mode="whole jingdu archive" data-slug="hong-se-zi-ben-zhong-guo-de-fei-fan-jue-qi-yu-cui-ruo-de">
         <div class="card-top"><span class="type-tag type-tag-gold">读前通读</span><span class="type-tag">AI 大纲</span><time datetime="2026-11-08">11.08</time></div>
@@ -1639,17 +1429,6 @@ html[data-cols="2"] #reading-panel-series .set-units-grid .card-body{
         <div class="card-actions" hidden>
           <a class="card-link card-link-strong" href="reading-notes/books/hong-se-zi-ben-zhong-guo-de-fei-fan-jue-qi-yu-cui-ruo-de/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
           <a class="card-link" href="reading-notes/books/hong-se-zi-ben-zhong-guo-de-fei-fan-jue-qi-yu-cui-ruo-de/overview.html">全书视角 <span aria-hidden="true">↗</span></a>
-        </div>
-        <div class="card-foot"><span class="card-author"></span><button class="card-more" type="button" aria-label="更多操作" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-9"/></svg></button><div class="card-menu" hidden><button type="button" data-act="fav"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-10"/></svg><span>收藏</span></button><button type="button" data-act="share"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-11"/></svg><span>分享</span></button></div></div>
-      </article>
-      <!-- /preread-card -->
-      <!-- preread-card:downmagaz-net -->
-      <article class="archive-card" data-ts="2026-11-08T02:05:05" data-search="downmagaz net  AI 读书 读前通读 AI 大纲" data-mode="whole jingdu archive" data-slug="downmagaz-net">
-        <div class="card-top"><span class="type-tag type-tag-gold">读前通读</span><span class="type-tag">AI 大纲</span><time datetime="2026-11-08">11.08</time></div>
-        <h3><a class="card-title-link" href="reading-notes/books/downmagaz-net/mindmap.html">《downmagaz net》</a></h3>
-        <div class="card-actions" hidden>
-          <a class="card-link card-link-strong" href="reading-notes/books/downmagaz-net/outline.html">读前通读 · AI 大纲 <span aria-hidden="true">↗</span></a>
-          <a class="card-link" href="reading-notes/books/downmagaz-net/overview.html">全书视角 <span aria-hidden="true">↗</span></a>
         </div>
         <div class="card-foot"><span class="card-author"></span><button class="card-more" type="button" aria-label="更多操作" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-9"/></svg></button><div class="card-menu" hidden><button type="button" data-act="fav"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-10"/></svg><span>收藏</span></button><button type="button" data-act="share"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-11"/></svg><span>分享</span></button></div></div>
       </article>
