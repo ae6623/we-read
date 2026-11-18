@@ -6236,7 +6236,7 @@ function mountWall(R){
     const img=b.c?'<img loading="lazy" src="'+cover(b)+'" alt="" '+
       'onerror="this.style.display=&quot;none&quot;;var p=this.parentNode.querySelector(&#39;.ph&#39;);if(p)p.style.display=&quot;flex&quot;">':'';
     const phBlock=b.c?ph.replace('class="ph"','class="ph" style="display:none"'):ph;
-    const no=b.n?'<span class="no">收录 '+esc(b.n)+'</span>':'';
+    const no='';  /* 2026-11-18：书卡不再显示「收录 N」徽标 */
     const sub=(b.d?b.d.slice(5).replace('-','.')+' · ':'')+(b.g.length?b.g.join(' / '):(b.m||'阅读笔记'));
     const more='<div class="more"><div class="mtags">'+
       b.g.map(t=>'<span>'+esc(t)+'</span>').join('')+'</div>'+
