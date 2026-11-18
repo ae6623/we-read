@@ -331,7 +331,7 @@
 .sw .sw-bg{position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.9}
 
 /* 瀑布流容器 */
-.sw .sw-wall{position:relative;z-index:2;max-width:1720px;margin:0 auto;padding:0 6px 150px}
+.sw .sw-wall{position:relative;z-index:2;max-width:1720px;margin:0 auto;padding:0 6px 90px}
 .sw .cell{position:absolute;overflow:hidden;border-radius:3px;background:#171717;cursor:pointer;
   outline:1px solid rgba(255,255,255,.05);will-change:transform,opacity;
   transition:transform .42s cubic-bezier(.2,.8,.2,1),box-shadow .42s,opacity .35s,filter .35s,outline-color .35s}
@@ -412,12 +412,20 @@
 .sw.embedded .shelf-tab{display:none}
 
 @media(max-width:720px){
+  .sw{overflow:hidden}
   .sw .sw-head{padding:20px 16px 12px}.sw .sw-head h1{font-size:21px}
+  .sw .sw-wall{padding:0 4px 70px}
   .sw .cell .cap h3{font-size:11px}.sw .cell .cap p{font-size:9px}
-  .sw .cell:hover{transform:scale(1.16) rotate(0deg)!important}
-  .sw .detail{left:12px;right:12px;bottom:70px;top:auto;width:auto;transform:translateY(16px)}
-  .sw .detail.show{transform:translateY(0)}
-  .sw .sw-tips .tt{display:none}
+  .sw .cell .cap{left:7px;right:7px;bottom:6px}
+  .sw .cell:hover{transform:scale(1.1)!important}
+  /* 手机无 hover：邻域聚焦关闭，避免一碰就全暗 */
+  .sw .sw-wall:has(.cell:hover) .cell:not(:hover){opacity:1;filter:none}
+  /* tips 收成底部居中的小胶囊，不再 sticky 悬浮挡卡片 */
+  .sw .sw-tips{position:relative;left:auto;bottom:auto;transform:none;
+    margin:6px auto 18px;padding:7px 8px 7px 12px;gap:8px}
+  .sw .sw-tips .ico{width:18px;height:18px;font-size:10px}
+  .sw .sw-tips .tt{display:block;font-size:10px}
+  .sw .sw-tips .go{padding:5px 10px;font-size:10px}
 }
 
 /* ===== full-width: 所有 Tab 拉满 ===== */
@@ -430,6 +438,21 @@
   /* 书墙 Tab：真·出血铺满整个视口，无左右留白 */
   #reading-panel-wall.wall-panel{position:relative;left:50%;width:100vw;margin-left:-50vw}
   #reading-panel-wall .sw-wall{max-width:none}
+}
+/* 移动端：书墙满宽出血、消除黑边与横向溢出 */
+@media(max-width:999px){
+  html,body{overflow-x:hidden}
+  #reading-panel-wall.wall-panel{position:relative;left:50%;width:100vw;margin-left:-50vw}
+  #reading-panel-wall .sw{width:100%;overflow:hidden}
+  #reading-panel-wall .sw-wall{max-width:none;padding-left:4px;padding-right:4px}
+  /* 首页自带元素越界收口 */
+  .hero-mark{right:-8px!important;font-size:11rem!important}
+  #rdFab{max-width:calc(100vw - 8px)}
+}
+/* tips 在手机端取消 sticky 悬浮（覆盖 .sw.embedded 的高特异性规则） */
+@media(max-width:720px){
+  .sw.embedded .sw-tips{position:relative;left:auto;bottom:auto;right:auto;top:auto;
+    transform:none;margin:6px auto 18px}
 }
 
 </style>
@@ -6215,8 +6238,13 @@ function mountWall(R){
   const hash=s=>{let h=0;for(const c of s)h=(h*31+c.charCodeAt(0))>>>0;return h};
   let query='',shown=BOOKS.slice();
 
-  const CARD_W=()=>innerWidth<640?118:(innerWidth<1000?150:172);
   const GAP=6;
+  // 按可用宽度与期望列数反推列宽，保证卡片铺满、不留黑边
+  function grid(avail){
+    if(innerWidth<640){const cols=3;return{cols,cw:Math.floor((avail-(cols-1)*GAP)/cols)}}
+    if(innerWidth<1000){const cols=5;return{cols,cw:Math.floor((avail-(cols-1)*GAP)/cols)}}
+    const cw=172;return{cw,cols:Math.max(1,Math.floor((avail+GAP)/(cw+GAP)))};
+  }
   // 8 档高度：跨度更大，首屏明显错落
   const RATIOS=[0.58,0.66,0.74,0.84,0.95,1.08,1.28,1.5];
   function ratioOf(b){
@@ -6248,9 +6276,9 @@ function mountWall(R){
   function layout(){
     if(!shown.length){wall.innerHTML='';wall.style.height='0px';return}
     wall.innerHTML=shown.map(html).join('');
-    const cells=[...wall.children], cw=CARD_W();
+    const cells=[...wall.children];
     const avail=wall.clientWidth-12;
-    const cols=Math.max(1,Math.floor((avail+GAP)/(cw+GAP)));
+    const {cw,cols}=grid(avail);
     const rowW=cols*cw+(cols-1)*GAP;
     const startX=Math.max(6,(wall.clientWidth-rowW)/2);
     const colH=new Array(cols).fill(0);
