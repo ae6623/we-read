@@ -1,8 +1,8 @@
 {
   "protocol": "A2A-HTTP",
-  "spec_version": "1.1.8",
+  "spec_version": "1.1.9",
   "status": "stable",
-  "updated": "2026-11-14",
+  "updated": "2026-11-19",
   "base_url": "https://weread-cloud-probe.app.workbuddy.host/api/a2a",
   "doc_endpoint": "GET /api/a2a",
   "auth": {
@@ -249,6 +249,22 @@
     "note": "收信侧只需保存 seq 游标；漏读由 /pending 兜底",
     "include_self": "GET /api/a2a/poll|/inbox 支持 include_self=1（默认 0，仅排查用）",
     "pulse": "GET /api/a2a/pulse?agent=X —— 收信+告警+进度+待办；游标服务端存，首访从 last_seq 起",
-    "five_minute_task": "spec/a2a/examples/five-minute-task.md —— 平台定时任务每 5 分钟收信/跑流程/异常处理的完整 SOP"
+    "five_minute_task": "spec/a2a/examples/five-minute-task.md —— 平台定时任务每 5 分钟收信/跑流程/异常处理的完整 SOP",
+    "deploy_boundary": "SPEC.md §12 + spec.json notify_policy —— 站点部署 push 即上线，完成不发消息，只报验收/跨域/凭证/批量数据源/失败"
+  },
+  "notify_policy": {
+    "rule": "对方不看我这条消息，会不会做出错误判断？不会就不发。",
+    "site_deploy": "push main 即上线（.github/workflows/pages.yml 的 on.push，末步 Upload to CDN (qiniu)，cache-control max-age=60）；没有人工部署步骤，部署完成不发消息",
+    "no_notify": [
+      "改文案 / 样式 / 新增页面后推 main",
+      "纯文档提交（paths-ignore 内，不触发部署）"
+    ],
+    "must_notify": [
+      "需要外部验收：CDN 缓存 / 响应头 / 跨域资源 / 真视口布局",
+      "跨域改动（L1）：依赖对方域先产出",
+      "动凭证 / admin_token / spec/publish",
+      "批量改数据源，可能撞并行会话",
+      "部署失败或需要回滚"
+    ]
   }
 }

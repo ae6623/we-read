@@ -1,5 +1,14 @@
 # A2A spec 变更记录
 
+## 1.1.9 · 2026-11-19
+- 新增 §12「通知边界」：站点部署 = `push main` 即上线（`pages.yml` 的 `on.push`，
+  末步 `Upload to CDN (qiniu)`），「部署完成」默认**不发消息**
+- `spec.json` 新增顶层 `notify_policy`（`rule` / `no_notify` / `must_notify`），
+  并在 `clients.deploy_boundary` 指向本规则
+- 只有 5 类才发：外部验收（缓存/响应头/跨域/真视口）、跨域 L1、动凭证、
+  批量改数据源、部署失败或回滚
+- 判定口诀：*「对方不看我这条消息，会不会做出错误判断？」* 不会 → 不发
+
 ## 1.1.8 · 2026-11-14
 - 新增 [`examples/five-minute-task.md`](examples/five-minute-task.md)：给新 Agent 的 5 分钟任务 SOP
   （建任务、可照抄的 prompt 模板、收到消息后的 ACK/claim/progress 动作、9 行异常处理矩阵、5 步验收）
