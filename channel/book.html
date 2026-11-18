@@ -27,7 +27,8 @@ try{var _c=JSON.parse(localStorage.getItem('rd-cfg')||'{}');document.documentEle
 /* ============ Hero ============ */
 .hero{
   display:grid;
-  grid-template-columns:clamp(200px,23vw,268px) minmax(0,1fr);
+  /* 封面列 = 封面宽 + 左右各 44px 的箭头区，箭头不压在书封上 */
+  grid-template-columns:calc(clamp(200px,23vw,268px) + 88px) minmax(0,1fr);
   gap:clamp(24px,4.4vw,64px);
   padding:clamp(16px,3vh,36px) 0 clamp(30px,5vh,56px);
   align-items:stretch;
@@ -35,8 +36,8 @@ try{var _c=JSON.parse(localStorage.getItem('rd-cfg')||'{}');document.documentEle
 }
 
 /* 封面栏：光晕用封面色相，跟画廊里那张卡的气场接上 */
-.stage{position:relative;display:flex;align-items:flex-start}
-.stage .glow{
+.stage{position:relative;display:flex;align-items:flex-start;padding:0 44px}
+.coverbox .glow{
   position:absolute;inset:-18% -22% -10%;
   background:radial-gradient(60% 52% at 46% 34%,
     oklch(0.52 0.09 var(--h,66) / .5) 0%,transparent 72%);
@@ -49,30 +50,30 @@ try{var _c=JSON.parse(localStorage.getItem('rd-cfg')||'{}');document.documentEle
              0 0 0 1px rgba(255,255,255,.07);
 }
 
-/* 封面左右：上一本 / 下一本（压在书封边缘，半浮在外面） */
+/* 封面左右：上一本 / 下一本（全程在书封外的空白里，不压封面） */
 .coverbox{position:relative;width:100%}
 .bnav{
   position:absolute;top:50%;z-index:3;
   width:38px;height:38px;border-radius:999px;
   display:grid;place-items:center;
-  color:oklch(0.97 0.008 80);
-  background:oklch(0.19 0.012 62 / .58);
-  border:1px solid oklch(0.9 0 0 / .22);
-  box-shadow:0 6px 18px -4px rgba(0,0,0,.5);
-  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  color:oklch(0.73 0.012 72);
+  background:transparent;
+  border:1px solid oklch(0.85 0 0 / .16);
   transform:translateY(-50%);
-  opacity:.68;
-  transition:opacity .2s ease,background .2s ease,transform .2s var(--ease);
+  opacity:.9;
+  transition:color .2s ease,border-color .2s ease,background .2s ease,transform .2s var(--ease);
 }
 .bnav svg{width:17px;height:17px;display:block}
 .bnav.next svg{transform:scaleX(-1)}
-.bnav.prev{left:-15px}
-.bnav.next{right:-15px}
-.bnav:hover{opacity:1;background:oklch(0.22 0.012 62 / .82)}
+.bnav.prev{left:-44px}
+.bnav.next{right:-44px}
+.bnav:hover{color:oklch(0.96 0.01 80);border-color:oklch(0.95 0 0 / .34);background:oklch(1 0 0 / .05)}
 .bnav.prev:hover{transform:translate(-2px,-50%)}
 .bnav.next:hover{transform:translate(2px,-50%)}
-.bnav:focus-visible{outline:2px solid var(--paper);outline-offset:3px;opacity:1}
-.bnav[aria-disabled="true"]{opacity:.16;pointer-events:none;box-shadow:none}
+.bnav:focus-visible{outline:2px solid var(--paper);outline-offset:3px;color:oklch(0.96 0.01 80)}
+.bnav[aria-disabled="true"]{opacity:.16;pointer-events:none}
+html:not([data-theme="dark"]) .bnav{color:#7d8a83;border-color:rgba(36,49,46,.16)}
+html:not([data-theme="dark"]) .bnav:hover{color:#24312e;border-color:rgba(36,49,46,.34);background:rgba(36,49,46,.045)}
 .cover img{position:relative;z-index:1;width:100%;height:100%;object-fit:cover;display:block}
 .cover .ph{
   position:absolute;inset:0;display:grid;place-items:center;padding:14px;
@@ -276,14 +277,14 @@ h1{
 /* ============ 移动端 ============ */
 @media (max-width:760px){
   .hero{grid-template-columns:1fr;gap:22px;padding-bottom:26px}
-  .stage{justify-content:center}
+  .stage{justify-content:center;padding:0}
   .coverbox{width:min(54vw,200px);flex:none}
-  /* 手指目标放大到 42，别贴着屏幕边 */
-  .bnav{width:42px;height:42px;opacity:.74}
+  /* 手机两侧还有 95px 空间，箭头整体挪到封面外，42px 手指目标 */
+  .bnav{width:42px;height:42px}
   .bnav svg{width:19px;height:19px}
-  .bnav.prev{left:-13px}
-  .bnav.next{right:-13px}
-  .stage .glow{inset:-14% -30% -8%}
+  .bnav.prev{left:-52px}
+  .bnav.next{right:-52px}
+  .coverbox .glow{inset:-14% -30% -8%}
   .meta{text-align:left}
   h1{font-size:clamp(26px,7.4vw,34px);margin-top:12px}
   .why{padding:16px 18px 16px 28px;width:auto}
@@ -479,8 +480,8 @@ html:not([data-theme="dark"]) .sec-head{border-bottom-color:#e4ded1}
 
     var html='<section class="hero">'+
       '<div class="stage">'+
-        '<div class="glow" style="--h:'+(hue==null?66:hue)+'"></div>'+
         '<div class="coverbox">'+
+          '<div class="glow" style="--h:'+(hue==null?66:hue)+'"></div>'+
           prevBtn+
           '<div class="cover" style="--h:'+(hue==null?62:hue)+'">'+
             '<div class="ph">'+esc(title)+'</div>'+
