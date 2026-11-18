@@ -76,8 +76,8 @@
 .rd-recent-item.rd-deleting a{background:#f7e3e0;box-shadow:inset 0 0 0 1px #c8756a}
 @media(max-width:680px){.rd-recent-pop{left:0;right:0;width:auto}}
 
-/* ============ 2026-11-18 顶部重设计 + 书架卡系列化 ============ */
-/* —— 顶部：编辑部刊头 + 抽象书脊，降低高度 —— */
+/* ============ 2026-11-18 v2：还原布局 + 局部修复 ============ */
+/* —— 顶部：编辑部刊头 + 抽象书脊，降低高度（保留上轮成果）—— */
 @media (min-width:681px){
   html[data-theme] .hero{min-height:0!important;position:relative!important;
     background:radial-gradient(820px 300px at 84% 6%,rgba(224,180,95,.12),transparent 60%),
@@ -113,37 +113,17 @@
   html[data-theme] .hero .hero-sketch{display:none!important}
 }
 
-/* —— 书架 Tab(#tongDu) 卡片改用「系列 Tab」竖版小卡版式 —— */
-/* 覆盖 home-feed.js 写在 grid/card 上的绝对定位 + 固定高度，交回 CSS grid */
-#panel-whole > .archive-grid{
-  display:grid!important;grid-template-columns:repeat(auto-fill,minmax(240px,1fr))!important;
-  gap:14px!important;height:auto!important;position:static!important;
-}
-#panel-whole > .archive-grid > .archive-card{
-  position:static!important;left:auto!important;top:auto!important;width:auto!important;
-  height:auto!important;margin:0!important;min-height:0;padding:14px 14px 12px;
-  display:flex!important;flex-direction:column;
-}
-#panel-whole > .archive-grid .card-cover{
-  position:relative!important;inset:auto!important;width:100%!important;height:auto!important;
-  aspect-ratio:30/43!important;margin-bottom:9px;border-radius:8px;
-}
-#panel-whole > .archive-grid .card-body{position:static!important;inset:auto!important;display:block!important}
-#panel-whole > .archive-grid h3{font-size:1.02rem!important;line-height:1.5!important;margin:8px 0 0!important}
+/* —— 工具栏：右侧工具组整体靠右 + 温和压缩消除溢出（不压到 30px 丑态）—— */
 @media(max-width:680px){
-  #panel-whole > .archive-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
-  #panel-whole > .archive-grid > .archive-card{padding:9px 9px 8px!important}
-  #panel-whole > .archive-grid h3{font-size:.84rem!important;line-height:1.42!important;margin:5px 0 0!important}
-}
-
-/* —— 手机书墙：占位卡改浅色书页，去掉黑块感 —— */
-/* 手机端 Tab 工具栏压缩，消除横向溢出（Aa 按钮被挤出视口） */
-@media(max-width:680px){
-  .reading-tabs{gap:0!important}
-  .reading-tabs button{padding-left:8px!important;padding-right:8px!important;margin:0!important}
-  .reading-tabs .tab-tool-toggle{width:30px!important;min-width:30px!important;height:30px!important}
+  .reading-tabs{gap:1px!important}
+  .reading-tabs button{padding-left:7px!important;padding-right:7px!important}
+  .reading-tabs .tab-filter-toggle{margin-left:auto!important}
+  .reading-tabs .tab-search-toggle{margin-left:4px!important}
+  .reading-tabs .tab-tool-toggle{margin-left:4px!important}
   .reading-tabs .wall-tab-marker{display:none!important}
 }
+
+/* —— 手机书墙：占位卡改浅色书页，去黑块；保留原始随机拼块瀑布流 —— */
 @media(max-width:640px){
   .sw .cell .ph{background:linear-gradient(150deg,#e9e5da,#cfc9bb)!important;
     justify-content:flex-start!important;padding-top:22%!important;text-align:center!important}
@@ -6325,10 +6305,8 @@ function mountWall(R){
   }
   // 8 档高度：跨度更大，首屏明显错落
   const RATIOS=[0.58,0.66,0.74,0.84,0.95,1.08,1.28,1.5];
-  const MRATIOS=[0.82,0.9,0.98,1.06,1.14];   // 手机端：档位收窄，排列更整齐
   function ratioOf(b){
     const h=hash(b.s);
-    if(innerWidth<640) return MRATIOS[h%MRATIOS.length]; // 手机不跨列、不错落过大
     if(b.c && h%19===0) return 1.55;              // 宽幅 banner
     if(b.c && h%23===0 && innerWidth>=1000) return 0.52; // 超长竖幅
     return RATIOS[h%RATIOS.length];
@@ -6363,7 +6341,7 @@ function mountWall(R){
     const startX=Math.max(6,(wall.clientWidth-rowW)/2);
     const colH=new Array(cols).fill(0);
     cells.forEach((el,k)=>{
-      const b=shown[k], r=ratioOf(b), isWide=(innerWidth>=640&&r>1.2&&cols>=3);
+      const b=shown[k], r=ratioOf(b), isWide=(r>1.2&&cols>=3);
       let span=isWide?2:1, col=0, top=0, w=cw;
       if(span===2){
         let best=Infinity;
