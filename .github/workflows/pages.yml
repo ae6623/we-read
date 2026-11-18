@@ -70,7 +70,9 @@ jobs:
       - name: Verify covers and shelf health on the homepage
         run: |
           python3 tools/check_covers.py
-          python3 tools/check_shelf.py
+          # --strict：旧模板书（只有 overview.html、没跑 combine）也算失败。
+          # 2026-11-18 书架最后 22 本已全部转 combined，门禁可以收紧了。
+          python3 tools/check_shelf.py --strict
       - name: Stage publishable site (drop unused fonts / PDFs / dev dirs)
         run: python3 scripts/stage_pages.py
       - name: Configure Pages
