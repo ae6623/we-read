@@ -64,6 +64,13 @@ jobs:
       # 任何一本引用不一致就阻断部署。
       - name: Verify reader JS version across all book shells
         run: python3 scripts/check_reader_js.py
+      # 封面 / 书架体检：新书只发 outline、漏下封面，会让书架卡退化成渐变素封；
+      # 只发 overview、漏跑 combine，会让卡片停在旧模板。两者都在此阻断。
+      # 扫描范围是首页实际展示的书（书架卡 + 书墙 BOOKS），不是 hero.json 登记表。
+      - name: Verify covers and shelf health on the homepage
+        run: |
+          python3 tools/check_covers.py
+          python3 tools/check_shelf.py
       - name: Stage publishable site (drop unused fonts / PDFs / dev dirs)
         run: python3 scripts/stage_pages.py
       - name: Configure Pages

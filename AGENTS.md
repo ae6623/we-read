@@ -86,6 +86,21 @@ cd /tmp/we-read-auto && git pull --rebase origin main   # 生成程序（远程�
    `.github/workflows/pages.yml` 部署前校验，版本不一致会**直接阻断发布**。
    升级 JS 只能换**新文件名**（CDN `max-age=31536000`，同名覆盖一年不生效），
    再按 `docs/IMA-INGEST.md` §4.2 的 SOP 跑 `upgrade_reader_js.py` 全量切换。
+5. **封面与模板双闸门（每本新书必过）**：
+   ```bash
+   python3 tools/check_covers.py    # 首页每张卡都要有 assets/covers/<slug>.jpg（有效 JPEG）
+   python3 tools/check_shelf.py     # 每张卡要有封面 + 目标页存在 + 是 combined 现行模板
+   ```
+   两个都必须退出码 0 才算「这本做完了」。`check_covers.py` 的扫描范围是
+   **首页实际展示的书**（书架卡 + 书墙 `BOOKS`）∪ `hero.json` 的 `ids`——
+   只查登记表会漏掉「没登记但已上首页」的新书，2026-11-18 就是这么漏了 79 本：
+   weread-auto 大纲批只发 mindmap/outline/overview，没跑 combine、没下封面，
+   书架 62 张卡退化成渐变素封、33 本停在旧模板。**登记表是补充，产物才是真相。**
+   封面来源：微信读书公开搜索（免登录）
+   `https://weread.qq.com/web/search/global?keyword=<书名>` 返回 `bookInfo.cover`，
+   把 `/s_` 换成 `/t9_` 取 428×616 高清；下载后校验 `\xff\xd8` 且 >3KB。
+   `check_shelf.py` 的报告落 `assets/data/shelf-health.json`，`legacy_template`
+   非空说明还有书没跑 `POST /api/combine`；清零后给 CI 加 `--strict`。
 
 **拆书/系列任务的硬规则**
 

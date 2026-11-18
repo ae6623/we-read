@@ -2,9 +2,17 @@
 # -*- coding: utf-8 -*-
 """全站封面守卫 —— 与 check_reader_js.py 并列的第二道提交前闸门。
 
-真相源：`assets/data/hero.json` 的 `ids`（slug→bookId，代表已登记上架的书）
-规则：每本已登记且不在 `nocover` 白名单里的书，必须存在
+真相源（两者取并集）：
+  1. 首页**真实展示**的书 —— `index.html` 里书架卡（`<article class="archive-card"
+     data-slug>`）+ 书墙数据源 `const BOOKS=[...]` 的 `h` 字段；
+  2. `assets/data/hero.json` 的 `ids`（slug→bookId，历史已登记上架的书）。
+规则：每本出现在上述集合、且不在 `nocover` 白名单里的书，必须存在
       `assets/covers/<slug>.jpg`，且是有效 JPEG（>3KB、\xff\xd8 开头）。
+
+2026-11-18 事故（本守卫扩范围的原因）：weread-auto 大纲批一次上了 79 本，
+      只发 mindmap/outline/overview，没下封面；这批书**没有登记进 hero.json**，
+      旧版守卫只扫 hero.ids 于是全绿放行 —— 书架 62 张卡、书墙 79 张卡全部
+      退回渐变素封。守卫必须以「首页实际渲染的书」为准，登记表只能是补充。
 
 背景：2026-11-15 补产 80 本时，manifest 里 80/80 都有微信读书官方 `cover` URL，
       但生产脚本从未下载/推送封面，线上 80 张卡全部退回渐变占位（WE READ 素封）。
@@ -44,12 +52,28 @@ def root_of(a) -> Path:
     return Path(a.root).resolve() if a.root else Path(__file__).resolve().parent.parent
 
 
+def shelf_slugs(root: Path) -> set[str]:
+    """首页实际展示的书：书架卡 + 书墙 BOOKS 数据源。
+
+    只看 hero.json 会漏掉「没登记但已经上首页」的新书，那正是 2026-11-18
+    79 本缺封面事故的根因。这里直接从产物页读，产物即真相。
+    """
+    idx = root / "index.html"
+    if not idx.is_file():
+        return set()
+    h = idx.read_text(encoding="utf-8", errors="ignore")
+    out = set(re.findall(r'<article[^>]*class="archive-card[^"]*"[^>]*data-slug="([^"]+)"', h))
+    out |= set(re.findall(r'"h":"reading-notes/books/([^/"]+)/', h))
+    return {s for s in out if s}
+
+
 def registered(root: Path, files: str | None) -> list[str]:
     """返回需要检查封面的 slug 列表。"""
     hero = json.loads((root / "assets" / "data" / "hero.json").read_text(encoding="utf-8"))
     ids = hero.get("ids", {})
     nocover = set(hero.get("nocover", []))
     slugs = set(ids) if isinstance(ids, dict) else set(ids)
+    slugs |= shelf_slugs(root)
     if files:
         wanted = set()
         for line in Path(files).read_text(encoding="utf-8").splitlines():
@@ -108,7 +132,9 @@ def main() -> int:
     root = root_of(a)
     covers = root / "assets" / "covers"
     slugs = registered(root, a.files)
-    print(f"扫描范围 = {len(slugs)} 本已登记书（root={root}）", flush=True)
+    shelf = shelf_slugs(root)
+    print(f"扫描范围 = {len(slugs)} 本（首页书卡 {len(shelf)} 本 ∪ hero 登记）"
+          f"（root={root}）", flush=True)
 
     missing = [s for s in slugs if not cover_ok(covers / f"{s}.jpg")]
     print(f"缺封面 = {len(missing)}")
