@@ -254,7 +254,7 @@
 
 /* —— 高端交互：悬停某卡，放大成悬浮窗，其余聚焦变暗去色 —— */
 .sw .sw-wall:has(.cell:hover) .cell:not(:hover){opacity:.32;filter:grayscale(.75) brightness(.72)}
-.sw .cell:hover{transform:scale(1.34) rotate(0deg)!important;z-index:60;
+.sw .cell:hover{transform:scale(1.34)!important;z-index:60;
   box-shadow:0 34px 80px rgba(0,0,0,.92),0 0 0 1px rgba(255,255,255,.55);
   outline-color:rgba(255,255,255,.6)}
 .sw .cell:hover img{transform:scale(1.08)}
@@ -308,6 +308,13 @@
   .sw .sw-tips .tt{display:none}
 }
 
+/* ===== book-wall full-bleed ===== */
+@media(min-width:1000px){
+  html,body{overflow-x:hidden}
+  #reading-panel-wall.wall-panel{position:relative;left:50%;width:100vw;margin-left:-50vw}
+  #reading-panel-wall .sw-wall{max-width:none}
+}
+
 </style>
 <!-- booklist:end -->
 </head><body><a class="skip-link" href="#main">跳到内容</a><header class="hero"><div class="hero-inner"><nav class="office-entry-nav" aria-label="首页快捷入口"><a class="office-entry" href="agent-room/index.html" aria-label="进入像素阅读室" title="进入像素阅读室"><svg class="office-entry-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="28" viewBox="0 0 24 28" aria-hidden="true" focusable="false"><use href="#ic-1"/></svg></a></nav><a class="hero-brand" href="brand/index.html"><svg class="hero-mark-icon" viewBox="24 13 72 95" aria-hidden="true" focusable="false"><use href="#ic-2"/></svg><span class="hero-name">落雨<i>·</i>阅读札记</span><small>LUOYU · AI READING NOTES</small></a><p class="eyebrow">WE READ · READING ARCHIVE</p><h1>读过的书，<br><span>留下自己的注脚。</span></h1><p class="hero-copy hero-quote"><q>尽信书，则不如无书。</q>——<cite><a href="https://www.chinakongzi.org/kzsf/lsjd/mengzi/200711/t20071120_28410.htm" aria-label="查看《孟子·尽心下》原文">《孟子·尽心下》</a></cite></p></div><div class="hero-sketch" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 300" focusable="false"><use href="#ic-3"/></svg></div><div class="hero-mark" aria-hidden="true">阅</div></header><details class="reading-explanation reading-bar" aria-label="上善若水" data-explain-fold data-module="reading-bar"><summary><span class="reading-bar-label">上善若水</span></summary><div class="reading-bar-body"><p class="hero-description">个人认知有限，AI认知无限，我们要借着 AI 的海量多维知识库，搭配睿智书评与今日观古的宝贵经验，让作者的思路与我们的当下思考🤔，强制进行关联，让我们的认知得到生产力级别的精进。</p><p class="hero-description">书分多种，长篇短篇各有千秋，几十万字的书需要AI站在高维去降维打击，几千字需要站在低维去向上补齐，我们个人的知识储备有限，但是可以利用ai回测书本与作者隔空对话，复刻整书的灵魂，知道他在写书的过去预判的现在是否正确，正确有何思路，不正确有何输入，思考，无所不能。</p></div></details><main id="main" class="layout"><div class="reading-module" data-reading-module><div class="reading-tabs-wrap"><div class="reading-tabs" data-tablist aria-label="阅读内容" hidden><button type="button" id="reading-tab-wall" data-panel="reading-panel-wall" aria-label="书墙">书墙</button>
@@ -324,18 +331,9 @@
 <div class="empty">没有找到匹配的书</div>
 <div class="sw-tips">
   <span class="ico">i</span>
-  <span class="tt"><b>悬停</b>放大预览 · <b>点击</b>翻开笔记 · <b>滚动</b>浏览</span>
+  <span class="tt"><b>悬停</b>放大预览 · <b>点击</b>打开笔记 · <b>滚动</b>浏览</span>
   <button class="sw-go" type="button">随机一本</button>
 </div>
-<aside class="detail" role="dialog" aria-label="书籍详情">
-  <button class="d-x" aria-label="关闭">×</button>
-  <div class="d-no">BOOK</div>
-  <div class="d-media"></div>
-  <h3 class="d-title"></h3>
-  <div class="d-meta"></div>
-  <div class="d-tags"></div>
-  <a class="d-open" href="#" target="_blank" rel="noopener">打开笔记 ↗</a>
-</aside>
 
 </div>
 </section>
@@ -6110,7 +6108,6 @@ function mountWall(R){
     if(b.c && h%23===0 && innerWidth>=1000) return 0.52; // 超长竖幅
     return RATIOS[h%RATIOS.length];
   }
-  function tiltOf(b){return ((hash(b.s)%21)-10)*0.24} // -2.4°~2.4°
   function phInner(b){
     return '<div class="zi">'+esc(b.t.replace(/[《》]/g,'').slice(0,1))+'</div>'+
       '<div class="ln"></div><div class="tt">'+esc(b.t.replace(/[《》]/g,''))+'</div>';
@@ -6127,8 +6124,7 @@ function mountWall(R){
       (b.m?'<div class="mdesc">'+esc(b.m)+'</div>':'')+
       '<span class="mopen">打开笔记 ↗</span></div>';
     const isBanner=ratioOf(b)>1.2;
-    return '<div class="cell'+(isBanner?' banner':'')+'" data-i="'+b.i+'" '+
-      'style="transform:rotate('+tiltOf(b).toFixed(2)+'deg)">'+phBlock+img+no+
+    return '<div class="cell'+(isBanner?' banner':'')+'" data-i="'+b.i+'">'+phBlock+img+no+
       '<div class="ov"></div><div class="cap"><h3>《'+esc(b.t)+'》</h3><p>'+esc(sub)+'</p>'+more+'</div></div>';
   }
 
@@ -6166,25 +6162,15 @@ function mountWall(R){
     layout();
   }
 
-  const detail=q('.detail');
   function open(b){
-    q('.d-no').textContent='BOOK '+String(b.i+1).padStart(3,'0')+' / '+BOOKS.length;
-    q('.d-title').textContent='《'+b.t+'》';
-    q('.d-meta').textContent=(b.m||'条目信息未记录')+'　'+(b.d||'');
-    q('.d-tags').innerHTML=b.g.map(t=>'<span>'+esc(t)+'</span>').join('');
-    q('.d-media').innerHTML=b.c
-      ? '<img class="cv" src="'+cover(b)+'" alt="" onerror="this.style.background=\'#222\'">'
-      : '<div class="cv" style="background:linear-gradient(150deg,#3a3a38,#141414)"></div>';
-    q('.d-open').href=b.h||'#';
-    detail.classList.add('show');
+    const url=(b.h&&b.h!=='#')?b.h:'';
+    if(url)window.open(url,'_blank','noopener');
   }
-  function close(){detail.classList.remove('show')}
 
   const handlers=[];
   function on(el,ev,fn){el.addEventListener(ev,fn);handlers.push([el,ev,fn])}
   on(wall,'click',e=>{const c=e.target.closest('.cell');if(c)open(BOOKS[+c.dataset.i])});
   const inp=q('.sw-search input');if(inp)on(inp,'input',e=>{query=e.target.value;apply()});
-  on(q('.d-x'),'click',close);
   function pick(){return BOOKS[Math.floor(Math.random()*BOOKS.length)]}
   const go=q('.sw-go');if(go)on(go,'click',()=>open(pick()));
   // 外部搜索框驱动（独立页顶栏 / 首页 own-search 均可）：全局带 data-sw-search 的输入框
@@ -6237,5 +6223,5 @@ function mountDust(canvas){
 
 window.__mountWall=function(n){return mountWall(n||document.getElementById("swRoot"))};
 </script>
-<script>window.addEventListener("DOMContentLoaded",function(){if(window.__mountWall)window.__mountWall(document.getElementById("swRoot"));});</script>
+<script>window.addEventListener("DOMContentLoaded",function(){if(window.__mountWall)window.__mountWall(document.getElementById("swRoot"));/* 默认激活「书墙」Tab：等外链 JS 的 activate(defaultIndex) 跑完再切换 */setTimeout(function(){var t=document.getElementById("reading-tab-wall");if(t){t.click();t.scrollIntoView&&t.scrollIntoView({block:"nearest"});}},120);});</script>
 </body></html>
