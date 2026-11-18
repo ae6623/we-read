@@ -201,13 +201,18 @@ h1{
 }
 
 /* ============ 关联阅读：与「这条书单」的封面同一尺寸 ============ */
-/* 一本 flex 一份，缩到和上方轨迹条 .pb 一样大（54~104px），不再一卡顶半屏 */
+/* 用 grid 等分列宽，卡片随容器自适应，右边不会剩一条固定空白 */
 .grid{
-  display:flex;flex-wrap:wrap;gap:16px 10px;
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(78px,1fr));
+  gap:16px 10px;
 }
 .rk{
-  flex:0 0 auto;width:104px;
-  display:block;text-decoration:none;
+  display:block;min-width:0;
+  text-decoration:none;
+}
+@media (min-width:761px){
+  .grid{grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:16px 12px}
 }
 .rk .th{
   position:relative;width:100%;aspect-ratio:3/4.16;border-radius:3px;overflow:hidden;
@@ -231,6 +236,8 @@ h1{
 .rk .nm{
   margin-top:6px;font-size:11px;line-height:1.42;color:oklch(0.86 0.012 74);
   display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+  /* 两行均衡断行，别出现「一共七个字 + 末行孤零零一个字」 */
+  text-wrap:balance;
   /* 定高两行：书名一行的和两行的卡底边才对得齐 */
   min-height:2.84em;
 }
@@ -258,9 +265,8 @@ h1{
   .pb{flex:0 0 auto;width:56px}
 }
 @media (max-width:430px){
-  /* 手机上封面缩到 64~92px，一排能摆 4 本上下，标签让位给封面 */
+  /* 手机上封面 80~90px，一排 4 本，标签让位给封面 */
   .grid{gap:14px 8px}
-  .rk{width:88px}
   .rk .tg{display:none}
   .rk .nm{font-size:10.5px;margin-top:5px}
   .rk .au{font-size:9.5px;margin-top:2px}
@@ -269,7 +275,7 @@ h1{
   .sec-head{flex-wrap:wrap;gap:8px 12px}
 }
 @media (max-width:360px){
-  .rk{width:80px}
+  .grid{grid-template-columns:repeat(auto-fill,minmax(72px,1fr))}
   .rk .nm{font-size:10px}
 }
 /* ===== 浅色主题：纸底深墨，跟首页 Aa 的 cream / light / green 对齐 ===== */
