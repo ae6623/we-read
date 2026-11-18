@@ -49,6 +49,17 @@ try{var _c=JSON.parse(localStorage.getItem('rd-cfg')||'{}');document.documentEle
   box-shadow:0 26px 52px -12px rgba(0,0,0,.62),0 6px 16px rgba(0,0,0,.4),
              0 0 0 1px rgba(255,255,255,.07);
 }
+/* 封面上可点：跟「领读全文」同一个去处 */
+a.cover{display:block;text-decoration:none;color:inherit;cursor:pointer}
+a.cover::after{
+  content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
+  border-radius:3px;box-shadow:inset 0 0 0 1px rgba(255,255,255,0);
+  transition:box-shadow .32s ease;
+}
+a.cover:hover::after,a.cover:focus-visible::after{box-shadow:inset 0 0 0 1px rgba(226,201,159,.5)}
+a.cover:hover img{transform:scale(1.028)}
+a.cover:focus-visible{outline:2px solid var(--paper);outline-offset:4px}
+@media (prefers-reduced-motion:reduce){a.cover:hover img{transform:none}}
 
 /* 封面左右：上一本 / 下一本（全程在书封外的空白里，不压封面） */
 .coverbox{position:relative;width:100%}
@@ -333,7 +344,7 @@ html:not([data-theme="dark"]) .sec-head{border-bottom-color:#e4ded1}
 /* ===== 站内换卡：不刷新页面，内容淡入 180ms ===== */
 @keyframes cardIn{from{opacity:.25;transform:translateY(5px)}to{opacity:1;transform:none}}
 #app.swap{animation:cardIn .18s var(--ease) both}
-.cover img{opacity:0;transition:opacity .22s ease}
+.cover img{opacity:0;transition:opacity .22s ease,transform .5s var(--ease)}
 .cover img.ok{opacity:1}
 @media (prefers-reduced-motion:reduce){
   .rk .th,.pb{transition-duration:.01ms}
@@ -549,10 +560,12 @@ html:not([data-theme="dark"]) .sec-head{border-bottom-color:#e4ded1}
         '<div class="coverbox">'+
           '<div class="glow" style="--h:'+(hue==null?66:hue)+'"></div>'+
           prevBtn+
-          '<div class="cover" style="--h:'+(hue==null?62:hue)+'">'+
+          '<a class="cover" '+(href?'href="'+esc(href)+'" ':'')+
+            'aria-label="'+esc(title)+(href?' · 打开笔记':'')+'"'+(href?' title="打开笔记：'+esc(title)+'"':'')+
+            ' style="--h:'+(hue==null?62:hue)+'">'+
             '<div class="ph">'+esc(title)+'</div>'+
             '<img src="'+esc(cover)+'" alt="'+esc(title)+' 封面" decoding="async" onerror="this.style.display=&#39;none&#39;">'+
-          '</div>'+
+          '</a>'+
           nextBtn+
         '</div>'+
       '</div>'+

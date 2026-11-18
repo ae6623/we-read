@@ -12,13 +12,12 @@ try{var _c=JSON.parse(localStorage.getItem('rd-cfg')||'{}');document.documentEle
 /* ============================================================
    书单详情 · 版式规范
    ------------------------------------------------------------
-   容器 1040：比画廊 1120 略收，因为这里是阅读型页面
-   栅格 3 列 —— 数据里 15 个阶段正好 3 本，3 列一排就齐；2 列会排成
-        2+1 右边空半块，4 列又让 3 本的那排空一列
+   容器 1320：与书卡详情同一个宽度，宽屏不吃亏；栅格仍 3 列 ——
+        数据里 15 个阶段正好 3 本，3 列一排就齐；4 列会空一列
    字号 36 / 20 / 14.5 / 12 / 11 —— 五档，与书卡详情同源
    ============================================================ */
 
-.wrap{max-width:1040px}
+.wrap{max-width:1320px;padding:0 clamp(18px,4vw,56px) 72px}
 
 /* ============ 封面区 ============ */
 .hero{padding:clamp(8px,1.6vh,18px) 0 clamp(20px,3.2vh,32px);border-bottom:1px solid oklch(0.28 0.013 62)}
@@ -146,6 +145,17 @@ html[data-theme="dark"] .bk:hover{background:#24282d;border-color:#4a5058}
   font-size:9.5px;letter-spacing:.06em;
   background:oklch(0.6 0.08 72);color:oklch(0.16 0.02 60);
   vertical-align:2px;
+}
+
+/* 宽屏：三列吃满 1320，卡片内部同步放大，别让每格 400px 却只配 74px 封面 */
+@media (min-width:1100px){
+  .bk{padding:14px 16px;gap:15px}
+  .bk-cover{width:86px}
+  .bk-t{font-size:15.5px}
+  .bk-a{font-size:11.5px}
+  .bk-w{font-size:12.5px;-webkit-line-clamp:3}
+  .stage-head h2{font-size:21px}
+  .hero .goal{max-width:78ch;font-size:14.5px}
 }
 
 @media (max-width:560px){
