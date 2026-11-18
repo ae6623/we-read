@@ -47,6 +47,22 @@ try{var _c=JSON.parse(localStorage.getItem('rd-cfg')||'{}');document.documentEle
 /* 浅色主题：数字与分隔线换成深墨，别让浅字压在米白底上 */
 html:not([data-theme="dark"]) .stats i{color:#24312e}
 html:not([data-theme="dark"]) .stats span{border-right-color:#e0dacd;color:#5b6a63}
+/* ===== 浅色主题：书卡从深色书脊换成纸白，与首页 Aa 一致 ===== */
+html:not([data-theme="dark"]) .bk{border-color:#e5e0d6;background:#fffefa}
+html:not([data-theme="dark"]) .bk:hover{border-color:#cdc5b6;background:#fff}
+html:not([data-theme="dark"]) .bk.is-current{border-color:#bf8247;background:#fffaf0;box-shadow:inset 0 0 0 1px rgba(191,130,71,.25)}
+html:not([data-theme="dark"]) .bk-t{color:#24312e}
+html:not([data-theme="dark"]) .bk-a{color:#6b756f}
+html:not([data-theme="dark"]) .bk-w{color:#4c5a54}
+html:not([data-theme="dark"]) .bk-bar{background:#e7e2d6}
+html:not([data-theme="dark"]) .bk-pg{color:#6b756f}
+html:not([data-theme="dark"]) .stage-tip{background:#efe9df;color:#4c5a54}
+html:not([data-theme="dark"]) .stage-tip b{color:#24312e}
+html:not([data-theme="dark"]) .stage-aim{color:#4c5a54}
+html:not([data-theme="dark"]) .bk:focus-visible{outline-color:#24312e}
+/* 夜间：书卡底色也换成首页 --card 的冷灰，别在纯黑底上留一块暖褐 */
+html[data-theme="dark"] .bk{background:#1f2226;border-color:#34383f}
+html[data-theme="dark"] .bk:hover{background:#24282d;border-color:#4a5058}
 
 /* ============ 阶段 ============ */
 .stage{padding:clamp(26px,4vh,40px) 0 0}

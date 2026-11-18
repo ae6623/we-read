@@ -114,6 +114,27 @@ h1{
   transition:width .6s var(--ease);
 }
 
+/* 原文摘录：替代原来的阅读进度条，2~3 句原句，引号压左侧 */
+.quotes{margin-top:clamp(18px,3vh,28px)}
+.quotes .qh{
+  display:flex;align-items:baseline;gap:10px;
+  font-size:12px;letter-spacing:.1em;color:var(--ink-faint);
+}
+.quotes .qh em{
+  font-family:var(--font-latin);font-style:normal;
+  font-size:10.5px;letter-spacing:.16em;opacity:.72;
+}
+.quotes ul{margin:10px 0 0;padding:0;list-style:none;display:grid;gap:7px}
+.quotes li{
+  position:relative;padding-left:17px;font-size:13.5px;line-height:1.88;
+  color:var(--fg);text-wrap:pretty;
+}
+.quotes li::before{
+  content:"“";position:absolute;left:0;top:-3px;
+  font-family:var(--font-latin);font-size:21px;line-height:1;
+  color:#bf8247;opacity:.62;
+}
+
 .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:auto;padding-top:clamp(20px,3.2vh,30px)}
 .actions .btn{padding:11px 22px;font-size:13px}
 
@@ -354,15 +375,13 @@ html:not([data-theme="dark"]) .sec-head{border-bottom-color:#e4ded1}
     var cover=c?c.cover:b.cv;
     var href=c?c.href:b.h;
     var why=c?c.w:"";
-    var prog=c?(c.prog||0):0;
-    var fin=c?!!c.fin:false;
+    // 原文摘录：构建期从 combined-data.html 的 ul.quote 里提好，页面不再额外请求
+    var quotes=(c&&c.q&&c.q.length?c.q:((b&&b.q)||[])).slice(0,3);
     var p=c?pathBy[c.p]:null;
     var hue=c?c.hue:null;
 
     document.title=title+" · 书卡详情";
     document.getElementById("mark").innerHTML='<b>'+esc(cat||"书卡")+'</b> · 书卡详情';
-
-    var progTxt=fin?"已读毕":(prog>0?"在读":"未开卷");
 
     // 书单轨迹：整条单按阶段顺序铺开，标出当前这本的位次
     var strip="", stripNo=0;
@@ -390,11 +409,11 @@ html:not([data-theme="dark"]) .sec-head{border-bottom-color:#e4ded1}
     if(c&&c.stn) parts.push('<span>第 '+c.st+' / '+c.stn+' 步</span>');
     var kicker=parts.join('<span class="dot"></span>');
 
-    // 进度：一条横线贯穿正文栏
-    var progBlock='<div class="prog">'+
-      '<div class="top"><span>阅读进度 · '+progTxt+'</span><b>'+prog+'%</b></div>'+
-      '<div class="bar"><i style="width:'+(prog>0?Math.max(3,prog):0)+'%"></i></div>'+
-    '</div>';
+    var quoteBlock=quotes.length
+      ? '<div class="quotes"><div class="qh"><span>原文摘录</span><em>EXCERPTS</em></div><ul>'+
+          quotes.map(function(t){return '<li>'+esc(t)+'</li>';}).join('')+
+        '</ul></div>'
+      : '';
 
     var html='<section class="hero">'+
       '<div class="stage">'+
@@ -409,7 +428,7 @@ html:not([data-theme="dark"]) .sec-head{border-bottom-color:#e4ded1}
         '<h1>'+esc(title)+'</h1>'+
         (author?'<div class="by">'+esc(author)+'</div>':'')+
         (why?'<div class="why"><span class="q">“</span><p>'+esc(why)+'</p><div class="lb">Why this one</div></div>':'')+
-        progBlock+
+        quoteBlock+
         '<div class="actions">'+
           '<a class="btn btn-primary" href="'+esc(href)+'">领读全文 →</a>'+
           (p?'<a class="btn btn-ghost" href="list.html?id='+encodeURIComponent(p.id)+'&book='+encodeURIComponent(slug)+'">看整条书单</a>':'')+

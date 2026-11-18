@@ -16,7 +16,7 @@ try{var _c=JSON.parse(localStorage.getItem('rd-cfg')||'{}');document.documentEle
   --font-latin:Georgia,"Times New Roman",serif;
 
   /* 暖黑画廊背景，避纯黑 */
-  --bg:oklch(0.165 0.014 62);
+  --bg:#15171a;
   --bg-deep:oklch(0.135 0.012 60);
 
   /* 纸质卡片，避纯白 */
@@ -45,8 +45,8 @@ try{var _c=JSON.parse(localStorage.getItem('rd-cfg')||'{}');document.documentEle
   --bar-track:oklch(0.55 0.02 62 /.18);
   --toast-bg:rgba(20,16,12,.92);
   --toast-fg:oklch(0.88 0.015 70);
-  --wash:radial-gradient(120% 90% at 50% 42%,oklch(0.26 0.022 66) 0%,oklch(0.19 0.016 62) 42%,var(--bg-deep) 100%);
-  --noise:.16;
+  --wash:none;
+  --noise:.04;
 
   --ease:cubic-bezier(.22,1,.36,1);
 }
@@ -55,28 +55,25 @@ try{var _c=JSON.parse(localStorage.getItem('rd-cfg')||'{}');document.documentEle
    dark 沿用原暖黑画廊；cream / light / green 换成对应纸底，
    卡片本身仍是纸质白，只有页面外壳（底色、刊头、控件）跟着变。 */
 html[data-theme="cream"]{
-  --bg:#f4f0e8;--bg-deep:#e8e2d4;
-  --fg:#24312e;--edge:rgba(36,49,46,.26);--edge-hover:rgba(36,49,46,.07);
+  --bg:#f6f3ed;--bg-deep:#efe9df;
+  --fg:#24312e;--edge:#e5e0d6;--edge-hover:#dce8df;
   --chip-bg:rgba(255,254,250,.9);--bar-track:rgba(36,49,46,.16);
   --toast-bg:rgba(255,254,250,.95);--toast-fg:#24312e;
-  --wash:radial-gradient(120% 90% at 50% 42%,#fdfbf7 0%,#f2ede3 44%,#e6dfd1 100%);
-  --noise:.05;
+  --wash:none;--noise:.04;
 }
 html[data-theme="light"]{
-  --bg:#f3f3f0;--bg-deep:#e7e7e3;
-  --fg:#242b28;--edge:rgba(36,43,40,.24);--edge-hover:rgba(36,43,40,.06);
+  --bg:#ffffff;--bg-deep:#f6f7f4;
+  --fg:#242b28;--edge:#e7e7e2;--edge-hover:#e6efe7;
   --chip-bg:rgba(255,255,255,.92);--bar-track:rgba(36,43,40,.15);
   --toast-bg:rgba(255,255,255,.96);--toast-fg:#242b28;
-  --wash:radial-gradient(120% 90% at 50% 42%,#fdfdfc 0%,#f1f1ee 44%,#e5e5e1 100%);
-  --noise:.04;
+  --wash:none;--noise:.03;
 }
 html[data-theme="green"]{
-  --bg:#d6e9d8;--bg-deep:#c2ddc6;
-  --fg:#1d3a2b;--edge:rgba(29,58,43,.28);--edge-hover:rgba(29,58,43,.08);
-  --chip-bg:rgba(246,252,246,.9);--bar-track:rgba(29,58,43,.18);
-  --toast-bg:rgba(246,252,246,.95);--toast-fg:#1d3a2b;
-  --wash:radial-gradient(120% 90% at 50% 42%,#e9f5ea 0%,#d3e7d5 44%,#bcd9c0 100%);
-  --noise:.05;
+  --bg:#cfe8d2;--bg-deep:#c3dfc7;
+  --fg:#2f4237;--edge:#b9dcc0;--edge-hover:#b7dfc0;
+  --chip-bg:rgba(246,252,246,.9);--bar-track:rgba(47,66,55,.18);
+  --toast-bg:rgba(246,252,246,.95);--toast-fg:#2f4237;
+  --wash:none;--noise:.04;
 }
 html[data-theme="cream"],html[data-theme="light"]{
   --paper-shadow:0 30px 64px -18px rgba(58,48,32,.42),0 6px 16px rgba(58,48,32,.16);
@@ -85,12 +82,11 @@ html[data-theme="green"]{
   --paper-shadow:0 30px 64px -18px rgba(24,48,32,.4),0 6px 16px rgba(24,48,32,.14);
 }
 html[data-theme="dark"]{
-  --bg:oklch(0.165 0.014 62);--bg-deep:oklch(0.135 0.012 60);
-  --fg:oklch(0.958 0.013 82);--edge:oklch(0.55 0.02 62 /.45);--edge-hover:oklch(0.9 0.02 80 /.12);
-  --chip-bg:oklch(0.19 0.016 62 /.72);--bar-track:oklch(0.55 0.02 62 /.18);
-  --toast-bg:rgba(20,16,12,.92);--toast-fg:oklch(0.88 0.015 70);
-  --wash:radial-gradient(120% 90% at 50% 42%,oklch(0.26 0.022 66) 0%,oklch(0.19 0.016 62) 42%,oklch(0.135 0.012 60) 100%);
-  --noise:.16;
+  --bg:#15171a;--bg-deep:#101214;
+  --fg:#c9ced4;--edge:#34383f;--edge-hover:#274234;
+  --chip-bg:rgba(31,34,38,.86);--bar-track:rgba(255,255,255,.14);
+  --toast-bg:rgba(31,34,38,.94);--toast-fg:#c9ced4;
+  --wash:none;--noise:.04;
 }
 
 /* 返回书单Tab：桌面在刊头，手机浮在左上角 */

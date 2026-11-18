@@ -6,8 +6,8 @@
   --font-body:"Noto Serif CJK SC","Songti SC",serif;
   --font-latin:Georgia,"Times New Roman",serif;
 
-  --bg:oklch(0.165 0.014 62);
-  --bg-deep:oklch(0.135 0.012 60);
+  --bg:#15171a;
+  --bg-deep:#101214;
   --paper:oklch(0.958 0.013 82);
   --paper-2:oklch(0.925 0.016 78);
   --ink:oklch(0.30 0.022 58);
@@ -18,47 +18,54 @@
   --accent-soft:oklch(0.90 0.035 70);
 
   /* 页面级语义色：正文 --fg、描边 --edge，跟首页 Aa 主题切 */
-  --fg:var(--paper);
-  --edge:oklch(0.55 0.02 62 /.45);
-  --edge-hover:oklch(0.9 0.02 80 /.12);
-  --wash:radial-gradient(120% 90% at 50% 0%,oklch(0.26 0.022 66) 0%,oklch(0.19 0.016 62) 44%,var(--bg-deep) 100%);
-  --topbar:linear-gradient(180deg,oklch(0.19 0.016 62 / .96) 0%,oklch(0.19 0.016 62 / .82) 70%,transparent 100%);
+  --fg:#c9ced4;
+  --edge:#34383f;
+  --edge-hover:#274234;
+  --wash:none;
+  --topbar:linear-gradient(180deg,rgba(21,23,26,.96) 0%,rgba(21,23,26,.84) 70%,rgba(21,23,26,0) 100%);
   --noise:.14;
 
   --ease:cubic-bezier(.22,1,.36,1);
 }
 
-/* ============ 跟随首页 Aa 主题（rd-cfg.theme） ============ */
+/* ============ 跟随首页 Aa 主题（rd-cfg.theme） ============
+   色值直接取 home-theme-20261115.css 的 --paper / --ink / --line / --muted / --green，
+   不再自己调近似色；页面是纯色底（--wash:none），与首页 body 完全一致。 */
 html[data-theme="cream"]{
-  --bg:#f4f0e8;--bg-deep:#e8e2d4;--fg:#24312e;
-  --edge:rgba(36,49,46,.26);--edge-hover:rgba(36,49,46,.07);
-  --ink-faint:#7a877f;
-  --wash:radial-gradient(120% 90% at 50% 0%,#fdfbf7 0%,#f2ede3 46%,#e6dfd1 100%);
-  --topbar:linear-gradient(180deg,rgba(244,240,232,.97) 0%,rgba(244,240,232,.86) 70%,rgba(244,240,232,0) 100%);
-  --noise:.05;
+  --bg:#f6f3ed;--bg-deep:#efe9df;--fg:#24312e;
+  --edge:#e5e0d6;--edge-hover:#dce8df;
+  --ink-faint:#69766f;
+  --green:#244b40;--green2:#315e50;--sage:#dce8df;
+  --wash:none;
+  --topbar:linear-gradient(180deg,rgba(246,243,237,.96) 0%,rgba(246,243,237,.86) 70%,rgba(246,243,237,0) 100%);
+  --noise:.03;
 }
 html[data-theme="light"]{
-  --bg:#f3f3f0;--bg-deep:#e7e7e3;--fg:#242b28;
-  --edge:rgba(36,43,40,.24);--edge-hover:rgba(36,43,40,.06);
-  --ink-faint:#7b857f;
-  --wash:radial-gradient(120% 90% at 50% 0%,#fdfdfc 0%,#f1f1ee 46%,#e5e5e1 100%);
-  --topbar:linear-gradient(180deg,rgba(243,243,240,.97) 0%,rgba(243,243,240,.86) 70%,rgba(243,243,240,0) 100%);
-  --noise:.04;
+  --bg:#ffffff;--bg-deep:#f6f7f4;--fg:#242b28;
+  --edge:#e7e7e2;--edge-hover:#e6efe7;
+  --ink-faint:#6b756f;
+  --green:#1f4a3e;--green2:#2b5a4b;--sage:#e6efe7;
+  --wash:none;
+  --topbar:linear-gradient(180deg,rgba(255,255,255,.97) 0%,rgba(255,255,255,.88) 70%,rgba(255,255,255,0) 100%);
+  --noise:.02;
 }
 html[data-theme="green"]{
-  --bg:#d6e9d8;--bg-deep:#c2ddc6;--fg:#1d3a2b;
-  --edge:rgba(29,58,43,.28);--edge-hover:rgba(29,58,43,.08);
+  --bg:#cfe8d2;--bg-deep:#c3dfc7;--fg:#2f4237;
+  --edge:#b9dcc0;--edge-hover:#b7dfc0;
   --ink-faint:#5d7c67;
-  --wash:radial-gradient(120% 90% at 50% 0%,#e9f5ea 0%,#d3e7d5 46%,#bcd9c0 100%);
-  --topbar:linear-gradient(180deg,rgba(214,233,216,.97) 0%,rgba(214,233,216,.86) 70%,rgba(214,233,216,0) 100%);
-  --noise:.05;
+  --green:#1e4d37;--green2:#2c6b4e;--sage:#b7dfc0;
+  --wash:none;
+  --topbar:linear-gradient(180deg,rgba(207,232,210,.97) 0%,rgba(207,232,210,.88) 70%,rgba(207,232,210,0) 100%);
+  --noise:.03;
 }
 html[data-theme="dark"]{
-  --bg:oklch(0.165 0.014 62);--bg-deep:oklch(0.135 0.012 60);--fg:oklch(0.958 0.013 82);
-  --edge:oklch(0.55 0.02 62 /.45);--edge-hover:oklch(0.9 0.02 80 /.12);
-  --wash:radial-gradient(120% 90% at 50% 0%,oklch(0.26 0.022 66) 0%,oklch(0.19 0.016 62) 44%,oklch(0.135 0.012 60) 100%);
-  --topbar:linear-gradient(180deg,oklch(0.19 0.016 62 / .96) 0%,oklch(0.19 0.016 62 / .82) 70%,transparent 100%);
-  --noise:.14;
+  --bg:#15171a;--bg-deep:#101214;--fg:#c9ced4;
+  --edge:#34383f;--edge-hover:#274234;
+  --ink-faint:#8a919a;
+  --green:#93c8a8;--green2:#a8d8bb;--sage:#274234;
+  --wash:none;
+  --topbar:linear-gradient(180deg,rgba(21,23,26,.96) 0%,rgba(21,23,26,.84) 70%,rgba(21,23,26,0) 100%);
+  --noise:.04;
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
@@ -129,8 +136,10 @@ body::after{
   border-radius:999px;padding:10px 20px;
   transition:transform .22s var(--ease),background .22s ease,border-color .22s ease;
 }
-.btn-primary{background:var(--paper);color:var(--ink);border:1px solid var(--paper)}
-.btn-primary:hover{transform:translateY(-2px);background:#fff}
+/* 主操作实心高亮：直接用主题绿（首页主按钮同款），不再是一张白纸 */
+.btn-primary{background:var(--green);color:var(--bg);border:1px solid var(--green);font-weight:600;
+  box-shadow:0 8px 22px -10px rgba(20,40,32,.55)}
+.btn-primary:hover{transform:translateY(-2px);background:var(--green2);border-color:var(--green2)}
 .btn-ghost{color:var(--fg);border:1px solid var(--edge);background:transparent}
 .btn-ghost:hover{background:var(--edge-hover);border-color:var(--fg);transform:translateY(-2px)}
 .btn:focus-visible{outline:2px solid var(--fg);outline-offset:3px}
