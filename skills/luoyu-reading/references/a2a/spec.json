@@ -1,6 +1,6 @@
 {
   "protocol": "A2A-HTTP",
-  "spec_version": "1.1.9",
+  "spec_version": "1.1.10",
   "status": "stable",
   "updated": "2026-11-19",
   "base_url": "https://weread-cloud-probe.app.workbuddy.host/api/a2a",
@@ -266,5 +266,28 @@
       "批量改数据源，可能撞并行会话",
       "部署失败或需要回滚"
     ]
+  },
+  "session_continuity": {
+    "rule": "开工第一步先读回本会话档案，再推理；每轮把结论落盘，别从头重新推理。",
+    "path": "docs/sessions/<YYYYMMDD-HHMM-xxxx>.md",
+    "tool": "tools/session_log.py",
+    "commands": [
+      "new --topic",
+      "append --role user|assistant --text",
+      "brief --rounds N",
+      "list",
+      "use",
+      "current"
+    ],
+    "per_round": [
+      "用户原话 append --role user",
+      "收尾 append --role assistant：结论｜动作｜实测｜待办"
+    ],
+    "never_record": [
+      "token/口令/cookie/私钥",
+      "整屏日志",
+      "大段代码"
+    ],
+    "doc": "docs/SESSION.md"
   }
 }

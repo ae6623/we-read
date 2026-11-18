@@ -1,5 +1,11 @@
 # A2A spec 变更记录
 
+## 1.1.10 · 2026-11-19
+- 新增 §13「会话续接」：开工先 `tools/session_log.py brief` 读回本会话前几轮，再推理；
+  每轮把用户原话与「结论｜动作｜实测｜待办」追加到 `docs/sessions/<session_id>.md`，收工随代码提交
+- `spec.json` 新增顶层 `session_continuity`（定位用）
+- 边界：档案是草稿纸，不替代需求归档与 A2A；档案里的数字带时间，涉及线上状态动手前仍要重测
+
 ## 1.1.9 · 2026-11-19
 - 新增 §12「通知边界」：站点部署 = `push main` 即上线（`pages.yml` 的 `on.push`，
   末步 `Upload to CDN (qiniu)`），「部署完成」默认**不发消息**
