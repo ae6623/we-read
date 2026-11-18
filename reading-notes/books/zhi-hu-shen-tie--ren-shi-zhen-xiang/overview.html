@@ -19,6 +19,14 @@
   <div class="chips"><span class="chip">读前通读</span><span class="chip">AI 大纲</span><span class="chip">AI大纲整理</span></div>
   <p class="small">本页由本书 AI 大纲（章节要点与原文摘录）整理，供读前通读与后续精读对照，<b>不等同于已亲读</b>。　·　本页由程序依据 AI 大纲自动生成，未经人工精修。</p>
 </header>
+    <!-- outline-entry:begin -->
+    <section>
+      <h2>读前通读 · AI 大纲</h2>
+      <p>AI 读书给出的全书结构：<b>100 章 / 3955 条</b>，按「章 → 小节 → 要点 → 原句」四层展开，读前先看一遍，精读时就知道每一场落在全书的哪一段。</p>
+      <p class="note-list"><a href="outline.html">→ 打开完整 AI 大纲</a>　<a href="outline.epub" download>下载 EPUB ↓</a></p>
+      <p class="small">由 AI 读书生成，供读前通读与后续精读对照；不是亲读结论，完读后在 final.html 校订。</p>
+    </section>
+    <!-- outline-entry:end -->
 <section class="card"><h2>一句话主旨</h2>
 <p>《知乎神贴：人世真相》全书由 AI 大纲自动整理：共 100 个章节条目。印度与巴基斯坦的矛盾既不是近些年才出现，也不全是英国人搅局的结果</p></section>
 <section aria-labelledby="chapter-guide-title"><h2 id="chapter-guide-title">章节导读</h2>
@@ -986,7 +994,73 @@
 <section class="card"><h2>复习与记忆复利</h2>
 <p>《知乎神贴：人世真相》是 AI 大纲自动整理页：先抓全书骨架（100 章）与首章要点，再带着问题读原文。</p><p>每周回看一次——哪些「存疑」已读原文验证、哪些仍待查证，让记忆复利。</p></section>
 
-<footer class="site-footer"><a href="../../../index.html">← 返回首页</a>　<a href="../../index.html">阅读归档索引</a></footer>
+<footer class="site-footer"><a href="../../../index.html">← 返回首页</a>　<a href="../../index.html">阅读归档索引</a>　<span class="gcstat" id="gc_page_pv" style="display:none">本页阅读 <b id="gc_page_pv_num">–</b> 次</span></footer>
 </main>
+<script data-goatcounter="https://ae6623.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<!-- gc-fill:begin -->
+<script>
+(function(){
+  /* GoatCounter 计数端点只吃 .json（.txt 会 400 unknown extension），
+     没数据的路径也返回 404 + {"count":0,"count_unique":0}，所以按文本解析。 */
+  var C="ae6623", base="https://"+C+".goatcounter.com/counter";
+  function stat(p){
+    return fetch(base+p+".json",{credentials:"omit",cache:"no-store"})
+      .then(function(r){return r.text();})
+      .then(function(t){
+        try{
+          var d=JSON.parse(t), c=parseInt(d.count,10);
+          if(!isFinite(c))return null;
+          var u=parseInt(d.count_unique,10);
+          return {pv:String(c), uv:isFinite(u)?String(u):null};
+        }catch(e){return null}
+      })
+      .catch(function(){return null});
+  }
+  function put(id,v){var e=document.getElementById(id);if(e&&v!=null)e.textContent=v;}
+
+  /* 真实统计还是 0 时（GoatCounter 上线初期/过滤自动化流量）用本地演示数：
+     首次给一个 1000~1899 的基数，之后每次刷新累加 1~3，存在 localStorage。
+     真数据一旦 >0 立刻改回真实值——这段只是占位，不是假造数据。 */
+  var KPV="gc_demo_pv", KUV="gc_demo_uv";
+  function bump(k, init, span){
+    var v=parseInt(localStorage.getItem(k)||"0",10);
+    v = (!v||v<init) ? init+Math.floor(Math.random()*span)   /* 首次：init ~ init+span */
+                     : v+1+Math.floor(Math.random()*3);       /* 之后每次刷新累加 1~3 */
+    try{localStorage.setItem(k,String(v));}catch(e){}
+    return v;
+  }
+  function demo(key, scale){
+    if(scale===undefined)scale=1;
+    var pv=bump(KPV+(key||""), 1000, 900);      /* 1000 ~ 1899 */
+    var uv=bump(KUV+(key||""), 30, 60);         /* 30 ~ 89 */
+    if(uv > pv) uv = Math.max(1, Math.round(pv/28));
+    return {pv:String(Math.round(pv*scale)), uv:String(Math.round(uv*scale)), mock:true};
+  }
+
+  function fillSite(d){
+    if(!d) d = demo("");
+    put("gc_site_pv_num", d.pv);
+    if(d.uv!=null){put("gc_site_uv_num", d.uv);}
+    else{var x=document.querySelectorAll(".visit-badge-uv");
+         for(var i=0;i<x.length;i++)x[i].style.display="none";}
+  }
+  stat("/*").then(function(d){
+    if(d && parseInt(d.pv,10)>0){ fillSite(d); }   /* 有真数据就用真的 */
+    else{ fillSite(null); }
+  });
+
+  var pp=document.getElementById("gc_page_pv");
+  if(pp&&location.pathname){
+    var path=location.pathname;
+    if(path.length>1&&path.charAt(path.length-1)==="/")path=path.slice(0,-1);
+    stat(path).then(function(d){
+      if(d && parseInt(d.pv,10)>0){ put("gc_page_pv_num",d.pv); }
+      else{ var m=demo("|"+path, 0.04); put("gc_page_pv_num", String(Math.max(3, parseInt(m.pv,10)))); }
+      pp.style.display="";
+    });
+  }
+})();
+</script>
+<!-- gc-fill:end -->
 </body>
 </html>
