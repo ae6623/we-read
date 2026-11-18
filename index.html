@@ -189,6 +189,118 @@
   #reading-panel-booklist .bl-entry-card{width:80px}
 }
 
+/* ===== hero redesign ===== */
+/* ============================================================
+   hero-redesign — 编辑部刊头风格重设计（覆盖 homepage-hero.css / site.css）
+   仅作用于首页 .hero，保留全部语义与入口，不动外链文件。
+   ============================================================ */
+@media (min-width:681px){
+  html[data-theme] .hero{
+    min-height:340px;
+    background:
+      radial-gradient(900px 320px at 82% 18%, rgba(224,180,95,.16), transparent 62%),
+      linear-gradient(118deg,#122b25 0%,#1d4439 54%,#2c5749 100%)!important;
+    overflow:hidden;
+  }
+  html[data-theme] .hero::before{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
+                     linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+    background-size:46px 46px;
+    mask-image:linear-gradient(90deg,transparent,#000 60%,transparent);
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 60%,transparent);
+  }
+  html[data-theme] .hero-inner{
+    max-width:1240px;
+    padding:44px 0 40px;
+    display:grid;
+    grid-template-columns:auto 1fr;
+    grid-template-areas:"nav nav" "brand brand" "eyebrow art" "title art" "quote art";
+    column-gap:40px;
+  }
+  /* 顶部快捷入口：推到右上角，做成精致图标按钮 */
+  html[data-theme] .hero .office-entry-nav{
+    grid-area:nav;position:absolute;top:30px;right:0;margin:0;
+  }
+  html[data-theme] .hero .office-entry{
+    display:grid;place-items:center;width:42px;height:42px;border-radius:50%;
+    border:1px solid rgba(226,201,159,.5);background:rgba(255,255,255,.05);
+    transition:background .2s,border-color .2s,transform .2s;
+  }
+  html[data-theme] .hero .office-entry:hover{background:rgba(226,201,159,.18);border-color:#e2c99f;transform:translateY(-2px)}
+  html[data-theme] .hero .office-entry-icon{width:20px;height:24px}
+
+  /* 品牌行：细金线分隔，字距拉开 */
+  html[data-theme] .hero .hero-brand{
+    grid-area:brand;gap:12px;margin:0 0 26px;
+    font:600 .92rem/1 var(--serif);letter-spacing:.16em;color:#f0e6cf;
+    padding-bottom:20px;position:relative;width:100%;
+  }
+  html[data-theme] .hero .hero-brand::after{
+    content:"";position:absolute;left:0;bottom:0;width:56px;height:1px;background:linear-gradient(90deg,#e2c99f,transparent);
+  }
+  html[data-theme] .hero .hero-mark-icon{width:20px;height:27px}
+  html[data-theme] .hero .hero-brand small{
+    font:600 .58rem/1 var(--sans);letter-spacing:.28em;color:#a9c0b4;margin-left:6px;
+  }
+
+  /* 眉题：前置短线，弱化 insignia */
+  html[data-theme] .hero .eyebrow{
+    grid-area:eyebrow;align-self:end;
+    font:.64rem/1 ui-monospace,monospace;letter-spacing:.32em;color:#bcd0c3;
+    margin:0 0 12px;display:flex;align-items:center;gap:12px;
+  }
+  html[data-theme] .hero .eyebrow::before{content:"";width:26px;height:1px;background:#d9b26a}
+
+  /* 主标题：加大、收紧行距、金色词，去掉笨重下划线改为细金点 */
+  html[data-theme] .hero h1{
+    grid-area:title;align-self:start;
+    font:600 clamp(2.6rem,5vw,4.1rem)/1.18 var(--serif);
+    letter-spacing:.02em;margin:0;color:#f6f1e6;
+  }
+  html[data-theme] .hero h1 span{
+    color:#e6c68f;border-bottom:0;padding-bottom:0;position:relative;white-space:nowrap;
+  }
+  html[data-theme] .hero h1 span::after{
+    content:"";position:absolute;left:2px;right:2px;bottom:-8px;height:2px;
+    background:linear-gradient(90deg,#e6c68f,rgba(230,198,143,.15));
+  }
+
+  /* 引言：独立引用块、缩小、降权 */
+  html[data-theme] .hero .hero-copy.hero-quote{
+    grid-area:quote;align-self:start;
+    max-width:520px;margin:26px 0 0;
+    font:.86rem/1.7 var(--serif);color:#b9c9be;
+    padding-left:14px;border-left:2px solid rgba(217,178,106,.55);
+  }
+  html[data-theme] .hero .hero-quote q{color:#dfe8df;font-style:normal}
+  html[data-theme] .hero .hero-quote cite{color:#9fb4a7;font-style:normal}
+  html[data-theme] .hero .hero-quote a{color:#d9b26a;text-decoration:none;border-bottom:1px solid rgba(217,178,106,.4)}
+
+  /* 右侧插画：放大、定位到标题右侧，提升质感 */
+  html[data-theme] .hero .hero-sketch{
+    grid-area:art;align-self:center;justify-self:end;
+    position:relative;right:auto;top:auto;width:min(360px,32vw);
+    opacity:.95;transform:translateY(-6px);
+  }
+  /* 巨大“阅”水印：移到右侧更淡、不抢戏 */
+  html[data-theme] .hero .hero-mark{
+    right:4%;top:-40px;font-size:24rem;color:rgba(255,255,255,.055);transform:rotate(8deg);
+  }
+}
+/* 移动端：仅做配色与字阶微调，布局沿用原文件 */
+@media (max-width:680px){
+  html[data-theme] .hero{
+    background:radial-gradient(500px 220px at 85% 10%,rgba(224,180,95,.14),transparent 60%),
+               linear-gradient(118deg,#122b25,#1d4439 60%,#2c5749)!important;
+  }
+  html[data-theme] .hero .hero-brand{padding-bottom:14px}
+  html[data-theme] .hero .hero-brand::after{content:"";position:absolute;left:0;bottom:0;width:44px;height:1px;background:linear-gradient(90deg,#e2c99f,transparent)}
+  html[data-theme] .hero .hero-brand small{display:none}
+  html[data-theme] .hero h1 span{border-bottom:0;padding-bottom:0;color:#e6c68f}
+  html[data-theme] .hero .hero-quote{border-left:2px solid rgba(217,178,106,.55);padding-left:12px}
+}
+
 /* ===== book-wall component ===== */
 
 .sw{--ink:#0a0a0a;--paper:#f2f0ea;--muted:#8f8f8a;--line:rgba(255,255,255,.16);
@@ -253,7 +365,7 @@
   color:#0a0a0a;background:#f2f0ea;padding:4px 10px;border-radius:3px}
 
 /* —— 高端交互：悬停某卡，放大成悬浮窗，其余聚焦变暗去色 —— */
-.sw .sw-wall:has(.cell:hover) .cell:not(:hover){opacity:.32;filter:grayscale(.75) brightness(.72)}
+.sw .sw-wall:has(.cell:hover) .cell:not(:hover){opacity:.72;filter:grayscale(.28) brightness(.94)}
 .sw .cell:hover{transform:scale(1.34)!important;z-index:60;
   box-shadow:0 34px 80px rgba(0,0,0,.92),0 0 0 1px rgba(255,255,255,.55);
   outline-color:rgba(255,255,255,.6)}
@@ -308,9 +420,14 @@
   .sw .sw-tips .tt{display:none}
 }
 
-/* ===== book-wall full-bleed ===== */
+/* ===== full-width: 所有 Tab 拉满 ===== */
 @media(min-width:1000px){
   html,body{overflow-x:hidden}
+  /* 通用容器：1240/1640 → 近全宽，各 Tab 内容区一并拉满 */
+  .layout,.hero-inner,.site-footer,
+  details.reading-explanation.reading-bar{max-width:calc(100vw - 64px)!important;margin-left:auto!important;margin-right:auto!important}
+  .layout{padding-left:20px;padding-right:20px}
+  /* 书墙 Tab：真·出血铺满整个视口，无左右留白 */
   #reading-panel-wall.wall-panel{position:relative;left:50%;width:100vw;margin-left:-50vw}
   #reading-panel-wall .sw-wall{max-width:none}
 }
