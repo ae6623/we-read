@@ -12,8 +12,8 @@ try{var _c=JSON.parse(localStorage.getItem('rd-cfg')||'{}');document.documentEle
 /* ============================================================
    书卡详情 · 版式规范
    ------------------------------------------------------------
-   容器      1120px（内容 1024），与画廊的"一屏一卡"同源，
-             详情页横向铺开，退一档但不掉档
+   容器      1320px（内容约 1208），宽屏把横向空间吃满，
+             避免正文挤在中间一窄条
    栏宽      12 栏 / 24px gutter，实际只用两栏：封面栏 268 + 正文栏
    字号阶梯  46 / 34 / 17 / 14 / 12 / 11 —— 六档，不再出现 13.5/11.5 这类中间值
    行高      标题 1.28，正文 1.9，小字 1.6
@@ -22,13 +22,13 @@ try{var _c=JSON.parse(localStorage.getItem('rd-cfg')||'{}');document.documentEle
    阴影      只有两级：封面投影 / 悬停抬升
    ============================================================ */
 
-.wrap{max-width:1120px;padding:0 clamp(18px,4vw,44px) 72px}
+.wrap{max-width:1320px;padding:0 clamp(18px,4vw,56px) 72px}
 
 /* ============ Hero ============ */
 .hero{
   display:grid;
-  /* 封面列 = 封面宽 + 左右各 44px 的箭头区，箭头不压在书封上 */
-  grid-template-columns:calc(clamp(200px,23vw,268px) + 88px) minmax(0,1fr);
+  /* 封面列 = 封面宽 + 左右各 70px 的箭头区，箭头离书封有一臂距离 */
+  grid-template-columns:calc(clamp(200px,23vw,268px) + 140px) minmax(0,1fr);
   gap:clamp(24px,4.4vw,64px);
   padding:clamp(16px,3vh,36px) 0 clamp(30px,5vh,56px);
   align-items:stretch;
@@ -36,7 +36,7 @@ try{var _c=JSON.parse(localStorage.getItem('rd-cfg')||'{}');document.documentEle
 }
 
 /* 封面栏：光晕用封面色相，跟画廊里那张卡的气场接上 */
-.stage{position:relative;display:flex;align-items:flex-start;padding:0 44px}
+.stage{position:relative;display:flex;align-items:flex-start;padding:0 70px}
 .coverbox .glow{
   position:absolute;inset:-18% -22% -10%;
   background:radial-gradient(60% 52% at 46% 34%,
@@ -65,8 +65,8 @@ try{var _c=JSON.parse(localStorage.getItem('rd-cfg')||'{}');document.documentEle
 }
 .bnav svg{width:17px;height:17px;display:block}
 .bnav.next svg{transform:scaleX(-1)}
-.bnav.prev{left:-44px}
-.bnav.next{right:-44px}
+.bnav.prev{left:-70px}
+.bnav.next{right:-70px}
 .bnav:hover{color:oklch(0.96 0.01 80);border-color:oklch(0.95 0 0 / .34);background:oklch(1 0 0 / .05)}
 .bnav.prev:hover{transform:translate(-2px,-50%)}
 .bnav.next:hover{transform:translate(2px,-50%)}
@@ -104,7 +104,7 @@ h1{
 /* 荐语：引号压在左上，正文首行缩进避开 */
 .why{
   position:relative;margin-top:clamp(18px,3vh,28px);
-  width:fit-content;max-width:min(100%,540px);
+  width:fit-content;max-width:min(100%,560px);
   padding:18px 24px 18px 32px;border-radius:2px;
   background:linear-gradient(100deg,oklch(0.245 0.016 64) 0%,oklch(0.215 0.013 62) 100%);
   border-left:2px solid oklch(0.6 0.075 70);
@@ -141,7 +141,7 @@ h1{
 }
 
 /* 原文摘录：替代原来的阅读进度条，2~3 句原句，引号压左侧 */
-.quotes{margin-top:clamp(18px,3vh,28px)}
+.quotes{margin-top:clamp(18px,3vh,28px);max-width:680px}
 .quotes .qh{
   display:flex;align-items:baseline;gap:10px;
   font-size:12px;letter-spacing:.1em;color:var(--ink-faint);
@@ -240,6 +240,9 @@ h1{
 @media (min-width:761px){
   .grid{grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:16px 12px}
 }
+@media (min-width:1100px){
+  .pb{max-width:116px}
+}
 .rk .th{
   position:relative;width:100%;aspect-ratio:3/4.16;border-radius:3px;overflow:hidden;
   background:oklch(0.3 0.02 62);
@@ -282,8 +285,8 @@ h1{
   /* 手机两侧还有 95px 空间，箭头整体挪到封面外，42px 手指目标 */
   .bnav{width:42px;height:42px}
   .bnav svg{width:19px;height:19px}
-  .bnav.prev{left:-52px}
-  .bnav.next{right:-52px}
+  .bnav.prev{left:-70px}
+  .bnav.next{right:-70px}
   .coverbox .glow{inset:-14% -30% -8%}
   .meta{text-align:left}
   h1{font-size:clamp(26px,7.4vw,34px);margin-top:12px}
@@ -306,6 +309,8 @@ h1{
   .sec-head{flex-wrap:wrap;gap:8px 12px}
 }
 @media (max-width:360px){
+  .bnav.prev{left:-62px}
+  .bnav.next{right:-62px}
   .grid{grid-template-columns:repeat(auto-fill,minmax(72px,1fr))}
   .rk .nm{font-size:10px}
 }
@@ -325,8 +330,15 @@ html:not([data-theme="dark"]) .pb .th{box-shadow:0 3px 9px rgba(58,48,32,.2)}
 html:not([data-theme="dark"]) .rk .th{box-shadow:0 8px 20px -6px rgba(58,48,32,.32),0 2px 6px rgba(58,48,32,.14)}
 html:not([data-theme="dark"]) .rk:hover .th{box-shadow:0 18px 34px -8px rgba(58,48,32,.4),0 4px 12px rgba(58,48,32,.2)}
 html:not([data-theme="dark"]) .sec-head{border-bottom-color:#e4ded1}
+/* ===== 站内换卡：不刷新页面，内容淡入 180ms ===== */
+@keyframes cardIn{from{opacity:.25;transform:translateY(5px)}to{opacity:1;transform:none}}
+#app.swap{animation:cardIn .18s var(--ease) both}
+.cover img{opacity:0;transition:opacity .22s ease}
+.cover img.ok{opacity:1}
 @media (prefers-reduced-motion:reduce){
   .rk .th,.pb{transition-duration:.01ms}
+  #app.swap{animation:none}
+  .cover img{transition-duration:.01ms}
 }
 </style>
 </head>
@@ -343,8 +355,11 @@ html:not([data-theme="dark"]) .sec-head{border-bottom-color:#e4ded1}
 (function(){
   "use strict";
   var app=document.getElementById("app");
-  var qs=new URLSearchParams(location.search);
-  var slug=qs.get("slug")||"";
+  var mark=document.getElementById("mark");
+
+  // 卡片 / 书架 / 书单一次取全：站内换书不再请求，也不再刷新页面
+  var cards=[], pool=[], paths=[], cardBy={}, poolBy={}, pathBy={};
+  var cur="", nav={prev:null,next:null}, spaSteps=0, ready=false;
 
   function esc(s){
     return String(s==null?"":s).replace(/[&<>"']/g,function(c){
@@ -352,6 +367,7 @@ html:not([data-theme="dark"]) .sec-head{border-bottom-color:#e4ded1}
     });
   }
   function err(msg){
+    nav={prev:null,next:null};
     app.innerHTML='<div class="errbox">这本书没找到。<br>'+esc(msg)+
       '<br><br><a style="color:#e8d8bc" href="index.html">回书卡频道</a></div>';
   }
@@ -360,37 +376,88 @@ html:not([data-theme="dark"]) .sec-head{border-bottom-color:#e4ded1}
     var parts=a.split(/\s+(?=\[)/).filter(Boolean);
     return parts.length>2?parts.slice(0,2).join(" ")+" 等":a;
   }
+  function readSlug(){
+    try{ return new URLSearchParams(location.search).get("slug")||""; }catch(e){ return ""; }
+  }
+  function bookOf(sl){
+    if(!sl) return null;
+    return cardBy[sl]||(poolBy[sl]!==undefined?pool[poolBy[sl]]:null);
+  }
 
+  /* 返回：站内换书不再新增整页历史，所以直接回来源页（书单/频道） */
+  var exitUrl=(function(){
+    var ref=document.referrer||"";
+    return /\/channel\/list\.html/.test(ref)?ref:"index.html";
+  })();
   document.getElementById("back").addEventListener("click",function(e){
-    if(history.length>1&&document.referrer){ e.preventDefault(); history.back(); }
+    if(spaSteps===0&&history.length>1&&document.referrer){ e.preventDefault(); history.back(); return; }
+    e.preventDefault();
+    location.href=exitUrl;
+  });
+
+  /* 站内换书：拦掉整页跳转，只重渲染内容区 */
+  app.addEventListener("click",function(e){
+    if(e.defaultPrevented||e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey) return;
+    var a=e.target&&e.target.closest?e.target.closest("a[href]"):null;
+    if(!a||!app.contains(a)) return;
+    var m=/^book\.html\?slug=([^&]+)$/.exec(a.getAttribute("href")||"");
+    if(!m) return;
+    e.preventDefault();
+    go(decodeURIComponent(m[1]));
+  });
+
+  window.addEventListener("popstate",function(){
+    if(spaSteps>0) spaSteps--;
+    var sl=readSlug();
+    if(ready&&sl) render(sl);
+  });
+
+  document.addEventListener("keydown",function(e){
+    if(e.metaKey||e.ctrlKey||e.altKey||e.shiftKey) return;
+    var t=e.target;
+    if(t&&/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)) return;
+    if(e.key==="ArrowLeft"&&nav.prev){ e.preventDefault(); go(nav.prev); }
+    else if(e.key==="ArrowRight"&&nav.next){ e.preventDefault(); go(nav.next); }
   });
 
   fetch("cards.json",{cache:"no-cache"})
     .then(function(r){ if(!r.ok) throw new Error("HTTP "+r.status); return r.json(); })
     .then(function(d){
-      var cards=d.cards||[], pool=d.pool||[], paths=d.paths||[];
-      var cardBy={}, poolBy={}, pathBy={};
+      cards=d.cards||[]; pool=d.pool||[]; paths=d.paths||[];
       cards.forEach(function(c){ cardBy[c.slug]=c; });
       pool.forEach(function(p,i){ poolBy[p.s]=i; });
       paths.forEach(function(p){ pathBy[p.id]=p; });
-      render(cards,pool,cardBy,poolBy,pathBy);
+      ready=true;
+      render(readSlug());
     })
     .catch(function(e){ err(e.message); });
 
+  function go(sl){
+    if(!sl||sl===cur) return;
+    try{
+      history.pushState({slug:sl},"","book.html?slug="+encodeURIComponent(sl));
+      spaSteps++;
+    }catch(e){
+      location.href="book.html?slug="+encodeURIComponent(sl); return;
+    }
+    render(sl);
+    window.scrollTo(0,0);
+  }
+
   // 关联：书单内的书用生成好的 sib；书架里没进书单的书，现场按分类相似度挑
-  function related(slug,cards,pool,cardBy,poolBy){
-    var me=cardBy[slug];
+  function related(sl){
+    var me=cardBy[sl];
     if(me&&me.sib&&me.sib.length){
       return me.sib.map(function(idx,k){
         var b=pool[idx]; if(!b) return null;
         return {b:b,tag:(me.sibTag||[])[k]||""};
       }).filter(Boolean);
     }
-    var self=poolBy[slug]===undefined?null:pool[poolBy[slug]];
+    var self=poolBy[sl]===undefined?null:pool[poolBy[sl]];
     if(!self) return [];
     var sc=[], selfName=shortName(self.a);
     pool.forEach(function(b){
-      if(b.s===slug) return;
+      if(b.s===sl) return;
       var s=0,tag="";
       if(selfName&&b.a&&shortName(b.a)===selfName){ s=6; tag="同作者"; }
       if(self.c&&b.c===self.c){ s+=3.6; tag=tag||"同题材"; }
@@ -401,10 +468,11 @@ html:not([data-theme="dark"]) .sec-head{border-bottom-color:#e4ded1}
     return sc.slice(0,14).map(function(x){ return {b:x.b,tag:x.tag}; });
   }
 
-  function render(cards,pool,cardBy,poolBy,pathBy){
-    var c=cardBy[slug]||null;
-    var b=c||(poolBy[slug]!==undefined?pool[poolBy[slug]]:null);
-    if(!b){ err("没有 slug="+slug); return; }
+  function render(sl){
+    cur=sl;
+    var c=cardBy[sl]||null;
+    var b=c||(poolBy[sl]!==undefined?pool[poolBy[sl]]:null);
+    if(!b){ err("没有 slug="+sl); return; }
 
     var title=c?c.t:b.t;
     var author=shortName(c?c.a:(b.a||""));
@@ -418,19 +486,19 @@ html:not([data-theme="dark"]) .sec-head{border-bottom-color:#e4ded1}
     var hue=c?c.hue:null;
 
     document.title=title+" · 书卡详情";
-    document.getElementById("mark").innerHTML='<b>'+esc(cat||"书卡")+'</b> · 书卡详情';
+    mark.innerHTML='<b>'+esc(cat||"书卡")+'</b> · 书卡详情';
 
     // 书单轨迹：整条单按阶段顺序铺开，标出当前这本的位次
     var strip="", stripNo=0;
     if(p&&p.stages){
       p.stages.forEach(function(st){
-        st.slugs.forEach(function(sl){
+        st.slugs.forEach(function(s){
           stripNo++;
-          var pb=cardBy[sl]||null;
-          var cv=pb?pb.cover:(poolBy[sl]!==undefined?pool[poolBy[sl]].cv:"");
-          var on=sl===slug;
-          strip+='<a class="pb'+(on?" on":"")+'" href="book.html?slug='+encodeURIComponent(sl)+'"'+
-                 (on?' aria-current="page"':'')+' title="'+esc(pb?pb.t:sl)+'">'+
+          var pb=cardBy[s]||null;
+          var cv=pb?pb.cover:(poolBy[s]!==undefined?pool[poolBy[s]].cv:"");
+          var on=s===sl;
+          strip+='<a class="pb'+(on?" on":"")+'" href="book.html?slug='+encodeURIComponent(s)+'"'+
+                 (on?' aria-current="page"':'')+' title="'+esc(pb?pb.t:s)+'">'+
                  '<div class="th"><img src="'+esc(cv)+'" alt="" loading="lazy" decoding="async" onerror="this.style.display=&#39;none&#39;"></div>'+
                  '<div class="n">'+String(stripNo).padStart(2,"0")+'</div></a>';
         });
@@ -449,24 +517,22 @@ html:not([data-theme="dark"]) .sec-head{border-bottom-color:#e4ded1}
     // 书单顺序摊平，取前后两本 → 封面左右翻页箭头
     var seq=[];
     if(p&&p.stages){
-      p.stages.forEach(function(st){ (st.slugs||[]).forEach(function(sl){ seq.push(sl); }); });
+      p.stages.forEach(function(st){ (st.slugs||[]).forEach(function(x){ seq.push(x); }); });
     }
-    var pIdx=seq.indexOf(slug);
+    var pIdx=seq.indexOf(sl);
     var prevSlug=pIdx>0?seq[pIdx-1]:null;
     var nextSlug=(pIdx>=0&&pIdx<seq.length-1)?seq[pIdx+1]:null;
-    function bookOf(sl){
-      if(!sl) return null;
-      return cardBy[sl]||(poolBy[sl]!==undefined?pool[poolBy[sl]]:null);
-    }
+    nav={prev:prevSlug,next:nextSlug};
+
     var chev='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" '+
       'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 5.5 8 12l6.5 6.5"/></svg>';
-    function navBtn(sl,dir){
+    function navBtn(s,dir){
       var lb=dir==="prev"?"上一本":"下一本";
-      if(!sl){
+      if(!s){
         return '<span class="bnav '+dir+'" aria-disabled="true" aria-label="已经是书单的'+(dir==="prev"?"第一本":"最后一本")+'">'+chev+'</span>';
       }
-      var ob=bookOf(sl), t=ob?(ob.t||ob.tFull||""):"";
-      return '<a class="bnav '+dir+'" href="book.html?slug='+encodeURIComponent(sl)+'" '+
+      var ob=bookOf(s), t=ob?(ob.t||ob.tFull||""):"";
+      return '<a class="bnav '+dir+'" href="book.html?slug='+encodeURIComponent(s)+'" '+
         'aria-label="'+lb+'：'+esc(t)+'" title="'+lb+' · '+esc(t)+'">'+chev+'</a>';
     }
     var prevBtn=pIdx>=0?navBtn(prevSlug,"prev"):"";
@@ -498,7 +564,7 @@ html:not([data-theme="dark"]) .sec-head{border-bottom-color:#e4ded1}
         quoteBlock+
         '<div class="actions">'+
           '<a class="btn btn-primary" href="'+esc(href)+'">领读全文 →</a>'+
-          (p?'<a class="btn btn-ghost" href="list.html?id='+encodeURIComponent(p.id)+'&book='+encodeURIComponent(slug)+'">看整条书单</a>':'')+
+          (p?'<a class="btn btn-ghost" href="list.html?id='+encodeURIComponent(p.id)+'&book='+encodeURIComponent(sl)+'">看整条书单</a>':'')+
         '</div>'+
       '</div>'+
     '</section>';
@@ -507,14 +573,14 @@ html:not([data-theme="dark"]) .sec-head{border-bottom-color:#e4ded1}
       html+='<section class="sec">'+
         '<div class="sec-head"><span class="no">01</span><h2>这条书单</h2>'+
           '<em>'+esc(p.title)+' · '+p.n+' 本</em>'+
-          '<a class="more" href="list.html?id='+encodeURIComponent(p.id)+'&book='+encodeURIComponent(slug)+'">看目录 →</a>'+
+          '<a class="more" href="list.html?id='+encodeURIComponent(p.id)+'&book='+encodeURIComponent(sl)+'">看目录 →</a>'+
         '</div>'+
         '<div class="strip">'+strip+'</div>';
       if(p.goal) html+='<p class="goal"><span>书单简介</span>'+esc(p.goal)+'</p>';
       html+='</section>';
     }
 
-    var rel=related(slug,cards,pool,cardBy,poolBy);
+    var rel=related(sl);
     if(rel.length){
       html+='<section class="sec">'+
         '<div class="sec-head"><span class="no">02</span><h2>关联阅读</h2>'+
@@ -540,24 +606,27 @@ html:not([data-theme="dark"]) .sec-head{border-bottom-color:#e4ded1}
 
     app.innerHTML=html;
 
+    // 换卡入场：同一个节点重播动画，不做整页刷新
+    app.classList.remove("swap");
+    void app.offsetWidth;
+    app.classList.add("swap");
+
+    // 封面图淡入，切换时不会先白一下
+    var im=app.querySelector(".cover img");
+    if(im){
+      var ok=function(){ im.classList.add("ok"); };
+      if(im.complete&&im.naturalWidth) ok();
+      else im.addEventListener("load",ok);
+    }
+
     // 轨迹条把当前这本滚到容器中间。
     // 注意不能用 scrollIntoView：它会把整个文档一起滚，页面一加载就自己往上跳。
     var on=app.querySelector(".pb.on");
-    var strip=app.querySelector(".strip");
-    if(on&&strip){
-      strip.scrollLeft=Math.max(0,
-        on.offsetLeft-(strip.clientWidth-on.offsetWidth)/2);
+    var stripEl=app.querySelector(".strip");
+    if(on&&stripEl){
+      stripEl.scrollLeft=Math.max(0,
+        on.offsetLeft-(stripEl.clientWidth-on.offsetWidth)/2);
     }
-
-    // 键盘 ← → 跟封面箭头同一条路径
-    // （不接管 ↑↓：那是页面滚动，抢了反而不好翻页）
-    document.addEventListener("keydown",function(e){
-      if(e.metaKey||e.ctrlKey||e.altKey||e.shiftKey) return;
-      var t=e.target;
-      if(t&&/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)) return;
-      if(e.key==="ArrowLeft"&&prevSlug){ location.href="book.html?slug="+encodeURIComponent(prevSlug); }
-      else if(e.key==="ArrowRight"&&nextSlug){ location.href="book.html?slug="+encodeURIComponent(nextSlug); }
-    });
   }
 })();
 </script>
