@@ -1154,7 +1154,16 @@ function mountWall(R){
   const cover=b=>'https://cdn.js-dev.cn/assets/covers/'+b.s+'.jpg';
   const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
   const hash=s=>{let h=0;for(const c of s)h=(h*31+c.charCodeAt(0))>>>0;return h};
-  let query='',shown=BOOKS.slice();
+  /* 书墙打散：按 slug 做确定性伪随机排序，同一本书位置固定（刷新不乱跳），
+     但相邻格不再是同系列/同日期，一眼看去是散的。书架/归档是静态列表，不动。 */
+  const wallRank=s=>{
+    let x=hash(s)^0x9e3779b9;
+    x=Math.imul(x^(x>>>16),0x21f0aaad);
+    x=Math.imul(x^(x>>>15),0x735a2d97);
+    return (x^(x>>>15))>>>0;
+  };
+  const wallOrder=BOOKS.slice().sort((a,b)=>wallRank(a.s)-wallRank(b.s));
+  let query='',shown=wallOrder;
     /* 2026-11-19 书墙 v4：拼块相册墙。
      每本书按 slug 稳定分到一档比例 —— 正方形、横长方形、竖长方形，
      偶尔一块两格宽的横条、一条竖长条。图片 cover 铺满，书名压底部渐变。
@@ -1228,7 +1237,7 @@ function mountWall(R){
   }
   function apply(){
     const qq=query.trim().toLowerCase();
-    shown=BOOKS.filter(b=>!qq||b.t.toLowerCase().includes(qq)||
+    shown=wallOrder.filter(b=>!qq||b.t.toLowerCase().includes(qq)||
       b.g.some(t=>t.toLowerCase().includes(qq))||b.m.toLowerCase().includes(qq));
     const cnt=q('.sw-count');if(cnt)cnt.textContent=shown.length;
     const empty=q('.empty');if(empty)empty.style.display=shown.length?'none':'block';
