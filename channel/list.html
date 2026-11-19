@@ -214,9 +214,12 @@ html:not([data-theme="dark"]) .bk.is-focus{animation-name:bkFlashLight}
       '<br><br><a style="color:#e8d8bc" href="index.html">回书卡频道</a></div>';
   }
 
-  // 从频道页点进来时优先退回上一步，位置和当前那张卡都能保住
+  // 只有从频道页点进来才退回上一步（能保住列表位置）。
+  // 从书卡点封面进来的情况必须走 href 回频道页 —— 否则 book 的返回指向 list、
+  // list 的返回又 back 到 book，两个页面互指就是死循环。
   document.getElementById("back").addEventListener("click",function(e){
-    if(history.length>1&&document.referrer){ e.preventDefault(); history.back(); }
+    var ref=document.referrer||"";
+    if(history.length>1&&/\/channel\/(index\.html)?$/.test(ref)){ e.preventDefault(); history.back(); }
   });
 
   fetch("cards.json",{cache:"no-cache"})

@@ -356,7 +356,7 @@ html:not([data-theme="dark"]) .sec-head{border-bottom-color:#e4ded1}
 <body>
 <div class="wrap">
   <div class="topbar">
-    <a class="back" href="index.html" id="back">← 返回</a>
+    <a class="back" href="../index.html" id="back">← 返回</a>
     <div class="topmark" id="mark"></div>
   </div>
   <div id="app"><div class="loading">LOADING…</div></div>
@@ -370,7 +370,7 @@ html:not([data-theme="dark"]) .sec-head{border-bottom-color:#e4ded1}
 
   // 卡片 / 书架 / 书单一次取全：站内换书不再请求，也不再刷新页面
   var cards=[], pool=[], paths=[], cardBy={}, poolBy={}, pathBy={};
-  var cur="", nav={prev:null,next:null}, spaSteps=0, ready=false;
+  var cur="", nav={prev:null,next:null}, ready=false;
 
   function esc(s){
     return String(s==null?"":s).replace(/[&<>"']/g,function(c){
@@ -395,15 +395,18 @@ html:not([data-theme="dark"]) .sec-head{border-bottom-color:#e4ded1}
     return cardBy[sl]||(poolBy[sl]!==undefined?pool[poolBy[sl]]:null);
   }
 
-  /* 返回：站内换书不再新增整页历史，所以直接回来源页（书单/频道） */
+  /* 返回：确定性离开书卡。
+     1) 从书单页点封面进来 -> 回那条书单（保留它自己的定位）；
+     2) 其余（首页、频道页、分享链接、直接打开）-> 一律回站点首页。
+     不用 history.back()：站内换书 pushState 过后，历史里会有好几条 book.html，
+     back 只会在书卡之间来回跳，看起来像死循环。replace 也不给历史再添一条。 */
   var exitUrl=(function(){
     var ref=document.referrer||"";
-    return /\/channel\/list\.html/.test(ref)?ref:"index.html";
+    return /\/channel\/list\.html/.test(ref)?ref:"../index.html";
   })();
   document.getElementById("back").addEventListener("click",function(e){
-    if(spaSteps===0&&history.length>1&&document.referrer){ e.preventDefault(); history.back(); return; }
     e.preventDefault();
-    location.href=exitUrl;
+    location.replace(exitUrl);
   });
 
   /* 站内换书：拦掉整页跳转，只重渲染内容区 */
@@ -418,7 +421,6 @@ html:not([data-theme="dark"]) .sec-head{border-bottom-color:#e4ded1}
   });
 
   window.addEventListener("popstate",function(){
-    if(spaSteps>0) spaSteps--;
     var sl=readSlug();
     if(ready&&sl) render(sl);
   });
@@ -446,8 +448,9 @@ html:not([data-theme="dark"]) .sec-head{border-bottom-color:#e4ded1}
   function go(sl){
     if(!sl||sl===cur) return;
     try{
-      history.pushState({slug:sl},"","book.html?slug="+encodeURIComponent(sl));
-      spaSteps++;
+      // 用 replace 而不是 push：书卡里连翻十本也只占一条历史，
+      // 浏览器返回键一下就能离开书卡，不会在书卡之间来回跳。
+      history.replaceState({slug:sl},"","book.html?slug="+encodeURIComponent(sl));
     }catch(e){
       location.href="book.html?slug="+encodeURIComponent(sl); return;
     }
