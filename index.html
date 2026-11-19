@@ -232,25 +232,41 @@ html #reading-panel-series .set-units-grid{
   html[data-cols="3"] #reading-panel-series .set-units-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
 }
 html[data-cols="1"] #reading-panel-series .set-units-grid .archive-card,
-html[data-cols="2"] #reading-panel-series .set-units-grid .archive-card{
+html[data-cols="2"] #reading-panel-series .set-units-grid .archive-card,
+html[data-cols="3"] #reading-panel-series .set-units-grid .archive-card{
   display:flex!important;flex-direction:column!important;
   position:static!important;left:auto!important;top:auto!important;
   width:auto!important;height:auto!important;min-height:0!important;
   padding:14px!important;overflow:visible!important;aspect-ratio:auto!important;
 }
 html[data-cols="1"] #reading-panel-series .set-units-grid .card-cover,
-html[data-cols="2"] #reading-panel-series .set-units-grid .card-cover{
+html[data-cols="2"] #reading-panel-series .set-units-grid .card-cover,
+html[data-cols="3"] #reading-panel-series .set-units-grid .card-cover{
   flex:0 0 auto!important;position:relative!important;inset:auto!important;
   width:100%!important;height:auto!important;aspect-ratio:30/43!important;
   margin:0 0 9px!important;
 }
 html[data-cols="1"] #reading-panel-series .set-units-grid .card-body,
-html[data-cols="2"] #reading-panel-series .set-units-grid .card-body{
+html[data-cols="2"] #reading-panel-series .set-units-grid .card-body,
+html[data-cols="3"] #reading-panel-series .set-units-grid .card-body{
   width:100%!important;min-height:0!important;
 }
 @media(max-width:680px){
   html[data-cols="1"] #reading-panel-series .set-units-grid .archive-card,
   html[data-cols="2"] #reading-panel-series .set-units-grid .archive-card{padding:9px 9px 8px!important}
+  html[data-cols="3"] #reading-panel-series .set-units-grid .archive-card{padding:6px 6px 5px!important}
+  html[data-cols="3"] #reading-panel-series .set-units-grid .card-cover{margin:0 0 6px!important}
+  html[data-cols="3"] #reading-panel-series .set-units-grid .card-title{font-size:11.5px!important;line-height:1.35!important}
+}
+/* 2026-11-19：一排三原来把封面 display:none 掉，卡片只剩书名，认不出是哪本书。
+   三列虽然窄，封面仍是最高效的识别线索 —— 恢复，比例沿用 30/43。 */
+/* 只管手机：一排三原来把封面 display:none 掉，卡片只剩书名，认不出是哪本书。
+   PC 三列每列近 400px，藏封面是有意的紧凑设计，不动。 */
+@media(max-width:680px){
+  html[data-cols="3"] .card-cover.has-img{display:block!important}
+  html[data-cols="3"] .card-cover.has-img .card-cover-img{
+    display:block!important;width:100%!important;height:100%!important;object-fit:cover!important;
+  }
 }
 /* ============ 2026-11-18 v4：PC 书卡悬停放大 ============ */
 @media(min-width:681px){

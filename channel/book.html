@@ -494,6 +494,9 @@ html:not([data-theme="dark"]) .sec-head{border-bottom-color:#e4ded1}
     // 原文摘录：构建期从 combined-data.html 的 ul.quote 里提好，页面不再额外请求
     var quotes=(c&&c.q&&c.q.length?c.q:((b&&b.q)||[])).slice(0,3);
     var p=c?pathBy[c.p]:null;
+    // 封面点击 = 回到这条书单，并把当前这本滚到视野里（与「看整条书单」同一个去处）
+    var listHref=p?'list.html?id='+encodeURIComponent(p.id)+'&book='+encodeURIComponent(sl):'';
+    var coverHref=listHref||href||'';
     var hue=c?c.hue:null;
 
     document.title=title+" · 书卡详情";
@@ -560,8 +563,9 @@ html:not([data-theme="dark"]) .sec-head{border-bottom-color:#e4ded1}
         '<div class="coverbox">'+
           '<div class="glow" style="--h:'+(hue==null?66:hue)+'"></div>'+
           prevBtn+
-          '<a class="cover" '+(href?'href="'+esc(href)+'" ':'')+
-            'aria-label="'+esc(title)+(href?' · 打开笔记':'')+'"'+(href?' title="打开笔记：'+esc(title)+'"':'')+
+          '<a class="cover" '+(coverHref?'href="'+esc(coverHref)+'" ':'')+
+            'aria-label="'+esc(title)+(listHref?' · 在书单中定位':(href?' · 打开笔记':''))+'"'+
+            (coverHref?' title="'+(listHref?'在书单中定位：':'打开笔记：')+esc(title)+'"':'')+
             ' style="--h:'+(hue==null?62:hue)+'">'+
             '<div class="ph">'+esc(title)+'</div>'+
             '<img src="'+esc(cover)+'" alt="'+esc(title)+' 封面" decoding="async" onerror="this.style.display=&#39;none&#39;">'+

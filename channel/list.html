@@ -105,6 +105,18 @@ html[data-theme="dark"] .bk:hover{background:#24282d;border-color:#4a5058}
   background:oklch(0.245 0.016 64);
   box-shadow:inset 0 0 0 1px oklch(0.66 0.06 72 / .3);
 }
+/* 从书卡点「封面 / 看整条书单」进来时，当前这本来一下呼吸，眼睛能立刻找到 */
+@keyframes bkFlash{
+  0%,100%{box-shadow:inset 0 0 0 1px oklch(0.66 0.06 72 / .3),0 0 0 0 oklch(0.72 0.09 76 / 0)}
+  38%{box-shadow:inset 0 0 0 1px oklch(0.74 0.1 76 / .85),0 0 0 7px oklch(0.74 0.1 76 / .14)}
+}
+.bk.is-focus{animation:bkFlash 1.15s ease 2}
+html:not([data-theme="dark"]) .bk.is-focus{animation-name:bkFlashLight}
+@keyframes bkFlashLight{
+  0%,100%{box-shadow:inset 0 0 0 1px rgba(191,130,71,.25),0 0 0 0 rgba(191,130,71,0)}
+  38%{box-shadow:inset 0 0 0 1px rgba(191,130,71,.7),0 0 0 7px rgba(191,130,71,.12)}
+}
+@media(prefers-reduced-motion:reduce){.bk.is-focus{animation:none!important;box-shadow:inset 0 0 0 1px oklch(0.72 0.09 76 / .8)}}
 .bk-cover{
   position:relative;flex:none;width:74px;aspect-ratio:3/4.16;
   border-radius:3px;overflow:hidden;background:oklch(0.3 0.02 62);
@@ -293,11 +305,23 @@ html[data-theme="dark"] .bk:hover{background:#24282d;border-color:#4a5058}
 
     app.innerHTML=html;
 
-    // 带 book 参数进来时把当前这本滚到视野里（只滚窗口，不影响别的）
+    // 带 book 参数进来时，把当前这本放到视野中间，并让它呼吸两下
     var cur=app.querySelector(".bk.is-current");
-    if(cur&&cur.scrollIntoView){
-      var y=cur.getBoundingClientRect().top+window.pageYOffset-140;
-      window.scrollTo(0,y);
+    if(cur){
+      var align=function(){
+        var h=cur.offsetHeight||160;
+        var off=Math.max(72,(window.innerHeight-h)/2-40);
+        var y=cur.getBoundingClientRect().top+window.pageYOffset-off;
+        window.scrollTo(0,Math.max(0,y));
+      };
+      align();
+      requestAnimationFrame(align);
+      // 封面是懒加载，图到了布局会变，再校两次，保证落点仍是它
+      setTimeout(align,280);
+      setTimeout(align,700);
+      window.addEventListener("load",align,{once:true});
+      cur.classList.add("is-focus");
+      setTimeout(function(){cur.classList.remove("is-focus");},2600);
     }
   }
 })();
