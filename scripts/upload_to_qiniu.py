@@ -40,13 +40,43 @@ UC_HOST = "https://uc.qbox.me"
 """七牛上传（官方 SDK）。需要先 `pip install qiniu`。"""
 
 
-def upload_one(auth, bucket: str, key: str, path: Path) -> None:
+def _remote_size(auth, bucket: str, key: str):
+    """查远端对象大小；不存在或查询失败返回 None。"""
+    from qiniu import BucketManager
+
+    ret, info = BucketManager(auth).stat(bucket, key)
+    if info.status_code == 200 and ret:
+        return ret.get("fsize")
+    return None
+
+
+def upload_one(auth, bucket: str, key: str, path: Path, attempts: int = 3) -> None:
+    """上传单个对象，幂等。
+
+    614 = 对象已存在（七牛对同 key 同内容返回 614，不当失败）。
+    部署是幂等的：远端大小与本地一致就视为成功，否则才算真失败。
+    其余错误（网络/5xx）指数退避重试，重试耗尽才抛。
+    """
     from qiniu import put_file_v2
 
-    token = auth.upload_token(bucket, key, 3600)
-    ret, info = put_file_v2(token, key, str(path))
-    if info.status_code != 200 or not ret or ret.get("key") != key:
-        raise RuntimeError(f"{key}: HTTP {info.status_code} {getattr(info, 'error', '')}".strip())
+    local_size = path.stat().st_size
+    last = ""
+    for attempt in range(attempts):
+        token = auth.upload_token(bucket, key, 3600)
+        ret, info = put_file_v2(token, key, str(path))
+        if info.status_code == 200 and ret and ret.get("key") == key:
+            return
+        if info.status_code == 614:
+            remote = _remote_size(auth, bucket, key)
+            if remote == local_size:
+                return
+            raise RuntimeError(
+                f"{key}: 已存在但大小不一致（远端 {remote} / 本地 {local_size}）"
+            )
+        last = f"HTTP {info.status_code} {getattr(info, 'error', '')}".strip()
+        if attempt + 1 < attempts:
+            time.sleep(2 * (attempt + 1))
+    raise RuntimeError(f"{key}: {last}")
 
 
 def collect(directory: Path, includes: list[str]) -> list[tuple[str, Path]]:
@@ -102,13 +132,14 @@ def main() -> int:
             try:
                 future.result()
             except Exception as error:  # noqa: BLE001
-                failed.append((key, str(error)[:80]))
+                failed.append((key, str(error)[:160]))
 
     ok = len(files) - len(failed)
     print(f"完成 {ok}/{len(files)}")
     if failed:
         for key, reason in failed[:10]:
-            print(f"  ! {key}: {reason}")
+            # reason 已含 key（upload_one 拼的），别重复打两遍路径
+            print(f"  ! {reason}" if reason.startswith(key) else f"  ! {key}: {reason}")
         return 1
     print(f"示例 URL: {args.domain.rstrip('/')}/{args.prefix.strip('/')}/<文件名>".replace("//<", "/<"))
     return 0
