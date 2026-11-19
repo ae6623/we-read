@@ -876,6 +876,7 @@ body::after{
 
   function layout(){
     var n=cards.length, half=n/2;
+    if(!n) return;            // 数据还没到就被 resize / 字体 ready 叫醒，别去读 cards[active]
     // 相邻卡不再隐身：留在身后盖一层遮罩，一眼就看出这是一摞可以翻的卡
     els.forEach(function(el,i){
       var rel=i-active;
