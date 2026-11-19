@@ -200,31 +200,3 @@ on:
 而线上早已是目标版本 `c0f2f90`/`109f1fa`——那轮消息里的「部署」动作实际不存在，
 对方做的只是「核对线上 = main」并回执。
 
-## 13. 会话续接：开工先读回，每轮落盘
-
-会话一断就从头重新推理，是**记忆没落地**，不是模型慢。同一件事论证两遍、同一个数字实测两遍、
-甚至推翻上一轮已拍板的结论，都是这条缺失的症状。
-
-**约定**（引擎仓 `ae6623/we-read-auto`）：
-
-| 时机 | 动作 |
-|---|---|
-| 开工第一条命令 | `python3 tools/session_log.py brief --rounds 6`；无档案才 `new --topic "..."` |
-| 每轮 | 用户原话 `append --role user`；收尾 `append --role assistant --text "结论｜动作｜实测｜待办"` |
-| 收工 / 交接 | 补「下一步」，`docs/sessions/*.md` 随代码一起 commit + push |
-
-档案：`docs/sessions/<YYYYMMDD-HHMM-xxxx>.md`（私有仓），头部 `session_id / started / agent / cwd / topic`，
-一轮一个 `## HH:MM · 角色` 小节。
-
-**记什么**：结论、判定、被否方案与原因、实测数字（sha / 字节数 / 状态码 / 时间）、改动文件、
-未决项与下一步。
-**不记什么**：token / 口令 / cookie / 私钥；整屏日志（留关键 3–5 行）；大段代码（写路径 + 行号）。
-
-**边界三条**：
-
-1. 会话档案是**草稿纸**，不替代 `docs/requirements/` 归档，也不替代 A2A；它只解决「我上一轮想到哪」。
-2. 档案里的结论**带时间**；超过一天的数字、涉及线上状态的判断，动手前仍要重测，不许拿旧结论当现状。
-3. A2A 管**跨 agent**（「有事要你知道」），会话档案管**单会话**（「我上一轮想到哪」），两者不互相替代。
-
-**已落地**：`docs/SESSION.md`（正文）、`tools/session_log.py`（零依赖脚本，`new/append/brief/list/use/current`）、
-`AGENTS.md` 铁律⑬、`流程.md` 第 0 步。
