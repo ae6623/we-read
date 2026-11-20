@@ -53,7 +53,7 @@ DENY_EXACT = {
 def build_arch() -> list[tuple[Path, str]]:
     out = []
     for f in ["HANDOVER.md", "AGENTS.md", "ARCHITECTURE.md", "README.md", "流程.md",
-              "START-HERE.md", "DEPLOY.md", "a2a.md", "A2A-AGENT2.md", "A2A-WEREAD-AUTO2.md"]:
+              "START-HERE.md", "DEPLOY.md", "DEPLOY-CDN.md", "a2a.md", "A2A-AGENT2.md", "A2A-WEREAD-AUTO2.md"]:
         p = ENGINE / f
         if p.is_file():
             out.append((p, f"架构·{f}"))

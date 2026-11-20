@@ -75,7 +75,7 @@ def collect() -> list[dict]:
     rows = []
     # ── 架构类（与 ima_docs_upload.py build_arch 同口径）──
     arch_top = ["HANDOVER.md", "AGENTS.md", "ARCHITECTURE.md", "README.md", "流程.md",
-                "START-HERE.md", "DEPLOY.md", "a2a.md", "A2A-AGENT2.md", "A2A-WEREAD-AUTO2.md"]
+                "START-HERE.md", "DEPLOY.md", "DEPLOY-CDN.md", "a2a.md", "A2A-AGENT2.md", "A2A-WEREAD-AUTO2.md"]
     arch_files = []
     for f in arch_top:
         p = ENGINE / f
