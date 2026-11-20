@@ -1,7 +1,7 @@
 {
-  "current": "reader-20261120.js",
+  "current": "reader-20261121.js",
   "cdn_prefix": "https://cdn.js-dev.cn/assets/js/",
-  "feature": "书名入口统一跳微信读书网页搜索页（按书名搜），不再依赖 bookId：794 本里 380 本原本没有 bookId、书名点了没反应；书卡详情页书名同样接上",
+  "feature": "书名入口统一跳微信读书网页搜索页（按书名搜），不再依赖 bookId；修复 h1 被标题重写抹掉链接、SPA 换书后搜索词还停在上本书的问题",
   "updated": "2026-11-20",
   "note": "单一版本真相源。升级 JS 时改这里 + 引擎仓 overview_gen/combine_page.py 的 READER_JS 常量，再跑 scripts/upgrade_reader_js.py 全量切换。JS 走 CDN 长缓存（max-age=31536000），必须用新文件名换 key，不能覆盖同名文件。structure-map-v2 模块的 URL 硬编码在 reader JS 的 STRUCT_V2_URL，改 v2 内容时要同步换 v2 文件名。",
   "history": [
@@ -40,7 +40,13 @@
     {
       "ver": "reader-20261120.js",
       "from": "2026-11-20",
-      "note": "书名统一跳微信读书搜索页：有/无 bookId 都能点，去掉 weread:// 协议与 1.5s 兜底；无封面降级版式的 header 书名一并接上；换文件名绕开 CDN 长缓存"
+      "note": "书名统一跳微信读书搜索页：有/无 bookId 都能点，去掉 weread:// 协议与 1.5s 兜底；无封面降级版式的 header 书名一并接上；换文件名绕开 CDN 长缓存",
+      "until": "2026-11-20"
+    },
+    {
+      "ver": "reader-20261121.js",
+      "from": "2026-11-20",
+      "note": "修复书名链接被 renderChips 重写 h1 抹掉（无封面降级版式点不动）、SPA 换书后 href 仍指上一本：armTitleLink 改读节点文本，goBook 先换 body 元信息再 render"
     }
   ]
 }
