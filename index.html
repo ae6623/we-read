@@ -1335,7 +1335,7 @@ function mountWall(R){
     return (x^(x>>>15))>>>0;
   };
   const wallOrder=BOOKS.slice().sort((a,b)=>wallRank(a.s)-wallRank(b.s));
-  let query='',shown=wallOrder;
+  let query='',homeQuery='',shown=wallOrder,homeCat1='',homeCat2='',homeCatMap=null;
     /* 2026-11-19 书墙 v4：拼块相册墙。
      每本书按 slug 稳定分到一档比例 —— 正方形、横长方形、竖长方形，
      偶尔一块两格宽的横条、一条竖长条。图片 cover 铺满，书名压底部渐变。
@@ -1407,10 +1407,26 @@ function mountWall(R){
     });
     wall.style.height=(Math.max(...colH)-g)+'px';
   }
+  /* 分类筛选从源头过滤：控制面板漏斗选分类后，homepage-reading.js 调 __wallSetFilter
+     把一级/二级+slug→分类映射传进来，这里直接按 book.s 过滤 shown，
+     layout() 用 filtered shown 整墙重绘，被筛掉的书根本不渲染（不再靠 hidden 被 innerHTML 冲掉）。 */
+  function catOf(b){
+    const pair=homeCatMap&&homeCatMap[b.s];
+    return pair||['',''];
+  }
   function apply(){
     const qq=query.trim().toLowerCase();
-    shown=wallOrder.filter(b=>!qq||b.t.toLowerCase().includes(qq)||
-      b.g.some(t=>t.toLowerCase().includes(qq))||b.m.toLowerCase().includes(qq));
+    shown=wallOrder.filter(b=>{
+      const textOk=!qq||b.t.toLowerCase().includes(qq)||
+        b.g.some(t=>t.toLowerCase().includes(qq))||b.m.toLowerCase().includes(qq);
+      if(!textOk)return false;
+      if(homeCat1||homeCat2){
+        const p=catOf(b);
+        if(homeCat1&&p[0]!==homeCat1)return false;
+        if(homeCat2&&(p[1]||'')!==homeCat2)return false;
+      }
+      return true;
+    });
     const cnt=q('.sw-count');if(cnt)cnt.textContent=shown.length;
     const empty=q('.empty');if(empty)empty.style.display=shown.length?'none':'block';
     layout();
@@ -1439,6 +1455,11 @@ function mountWall(R){
     obs.observe(panel,{attributes:true,attributeFilter:['hidden']});
     if(!panel.hidden && wall.clientWidth>0)layout();
   }
+  // 供控制面板分类筛选从源头过滤（外链 homepage-reading.js 通过 __wallSetFilter 调）
+  window.__wallFilterAPI=function(c1,c2,map){
+    homeCat1=c1||'';homeCat2=c2||'';homeCatMap=map||null;
+    apply();
+  };
   return ()=>{handlers.forEach(([e,v,f])=>e.removeEventListener(v,f));clearTimeout(rt);
     removeEventListener('resize',rsz);if(obs)obs.disconnect()};
 }
@@ -1471,6 +1492,15 @@ function mountDust(canvas){
     addEventListener('resize',()=>{cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix();r.setSize(innerWidth,innerHeight)});
   }catch(e){canvas.style.display='none'}
 }
+/* 控制面板分类筛选驱动书墙：homepage-reading.js 选定分类后调用此接口。
+   catMap 形如 {slug:[一级,二级]}，与 assets/data/book-cats.json 的 books 同构。
+   mountWall 内部 apply() 按它从源头过滤 shown，避免 hidden 被整墙重绘冲掉。 */
+window.__wallSetFilter=function(cat1,cat2,catMap){
+  if(!window.__wallFilterAPI)return false;
+  window.__wallFilterAPI(cat1||'',cat2||'',catMap||null);
+  return true;
+};
+window.__wallFilterAPI=null;
 window.__mountWall=function(n){return mountWall(n||document.getElementById("swRoot"))};
 </script><script>window.addEventListener("DOMContentLoaded",function(){if(window.__mountWall)window.__mountWall(document.getElementById("swRoot"));/* 默认激活「书墙」Tab：等外链 JS 的 activate(defaultIndex) 跑完再切换 */setTimeout(function(){if(location.hash.slice(1))return;var t=document.getElementById("reading-tab-wall");if(t){t.click();t.scrollIntoView&&t.scrollIntoView({block:"nearest"});}},120);});</script><script>/* 顶部背景轮播：首图随机、其余空闲预载；每张淡出→淡入切换，间隔与推镜方向都随机 */
 (function(){

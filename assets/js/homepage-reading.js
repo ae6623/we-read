@@ -114,9 +114,12 @@
 
   const applySearch = () => {
     if (!searchPanel || !searchInput) return;
-    // 书墙 cell 由 mountWall() 在 DOMContentLoaded 后异步渲染，快照可能滞后：
-    // 每次筛选时按当前面板实时重取，确保 cell 一定进入 searchCards
-    if (searchPanel.querySelector('.sw-wall')) {
+    const isWall = !!searchPanel.querySelector('.sw-wall');
+    // 书墙是独立渲染系统（index.html 的 mountWall，layout() 用 innerHTML 整墙重绘），
+    // 靠 card.hidden 隐藏会被重绘冲掉。改为把分类条件从源头传给 mountWall 过滤 shown。
+    if (isWall) {
+      if (window.__wallSetFilter) window.__wallSetFilter(catL1, catL2, catSlug);
+      // 关键词搜索仍走 cell.hidden（mountWall 不重建时有效）；其筛选结果也读回书墙状态栏
       searchCards = [...searchPanel.querySelectorAll('.archive-card, .series-preview, .sw-wall .cell')];
     }
     if (catPanel !== searchPanel) { // 换页签：分类项与计数跟着该页签的卡片重算
