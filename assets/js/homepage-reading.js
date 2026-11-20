@@ -112,6 +112,11 @@
 
   const applySearch = () => {
     if (!searchPanel || !searchInput) return;
+    // 书墙 cell 由 mountWall() 在 DOMContentLoaded 后异步渲染，快照可能滞后：
+    // 每次筛选时按当前面板实时重取，确保 cell 一定进入 searchCards
+    if (searchPanel.querySelector('.sw-wall')) {
+      searchCards = [...searchPanel.querySelectorAll('.archive-card, .series-preview, .sw-wall .cell')];
+    }
     if (catPanel !== searchPanel) { // 换页签：分类项与计数跟着该页签的卡片重算
       catPanel = searchPanel;
       if (catLoaded) rebuildCatOptions();
