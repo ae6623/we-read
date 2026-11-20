@@ -137,7 +137,18 @@
   };
 
   const setSearchPanel = (panel) => {
-    if (!panel || panel === searchPanel) return;
+    if (!panel) return;
+    // 同一面板也重抓一次书墙 cell：它是 DOMContentLoaded 后才渲染的，
+    // 首次快照可能为空（导致"全部分类(0)"），点开筛选时再抓就能拿到
+    if (panel === searchPanel) {
+      const fresh = [...panel.querySelectorAll('.archive-card, .series-preview, .sw-wall .cell')];
+      if (fresh.length !== searchCards.length) {
+        searchCards = fresh;
+        if (catLoaded) rebuildCatOptions();
+        applySearch();
+      }
+      return;
+    }
     if (searchPanel) { // 复位上一个面板的过滤痕迹，避免筛选串台
       searchCards.forEach((card) => { card.hidden = false; });
       searchPanel.querySelectorAll('.reading-group:not(.subtab-panel)').forEach((group) => { group.hidden = false; });
@@ -362,6 +373,11 @@
         catTitle = (data && data.titles) || {};
         catLoaded = true;
         catOfCard = new WeakMap();      // 之前的空映射作废，重算
+        // 书墙 cell 是 DOMContentLoaded 后 __mountWall() 才渲染的，
+        // 首次 setSearchPanel 抓快照时可能还没有 cell → 这里按当前面板重抓一次
+        if (searchPanel) {
+          searchCards = [...searchPanel.querySelectorAll('.archive-card, .series-preview, .sw-wall .cell')];
+        }
         rebuildCatOptions();
         applySearch();
       })
