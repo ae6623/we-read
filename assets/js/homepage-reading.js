@@ -145,7 +145,10 @@
       if (oldEmpty) oldEmpty.hidden = true;
     }
     searchPanel = panel;
-    searchCards = [...panel.querySelectorAll('.archive-card, .series-preview')];
+    // 书墙 cell（运行时渲染）也纳入筛选：它们带 data-slug，和 .archive-card 共用 cardCat/applySearch
+    searchCards = [...panel.querySelectorAll('.archive-card, .series-preview, .sw-wall .cell')];
+    // 切到书墙后 cell 才渲染完，分类下拉要等它们出现再重算
+    if (panel.querySelector('.sw-wall') && catLoaded) rebuildCatOptions();
     applySearch();
   };
 
@@ -222,11 +225,16 @@
   function cardCat(card) {
     if (catOfCard.has(card)) return catOfCard.get(card);
     let pair = ['', ''];
-    const a = card.querySelector('a[href*="reading-notes/books/"]');
-    const m = a ? (a.getAttribute('href') || '').match(/reading-notes\/books\/([^\/]+)\//) : null;
-    if (m) {
-      const slug = decodeURIComponent(m[1]);
-      if (catSlug[slug]) pair = catSlug[slug];
+    // 书墙 cell：没有 <a href>，只有 data-slug（mountWall 渲染时写入）
+    const ds = card.getAttribute && card.getAttribute('data-slug');
+    if (ds && catSlug[ds]) pair = catSlug[ds];
+    if (!pair[0]) {
+      const a = card.querySelector('a[href*="reading-notes/books/"]');
+      const m = a ? (a.getAttribute('href') || '').match(/reading-notes\/books\/([^\/]+)\//) : null;
+      if (m) {
+        const slug = decodeURIComponent(m[1]);
+        if (catSlug[slug]) pair = catSlug[slug];
+      }
     }
     if (!pair[0]) {
       const t = card.querySelector('.card-title-link, .book-jd-link, h3 a, h3');
