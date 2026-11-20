@@ -73,6 +73,9 @@ def build_req() -> list[tuple[Path, str]]:
     for p in sorted(reqroot.rglob("*.md")):
         if p.name == "README.md":
             name = "需求·归档规范README.md"
+        elif p.parent == reqroot:
+            # requirements 根目录的汇总/规范类文档，用干净落库名（不带日期/短名）
+            name = f"需求·{p.name}"
         else:
             rel = p.relative_to(reqroot)
             parts = rel.parts  # (日期, 需求短名, 文件)
