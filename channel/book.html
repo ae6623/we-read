@@ -109,6 +109,17 @@ h1{
   font-size:clamp(27px,3.4vw,44px);line-height:1.28;letter-spacing:.015em;
   text-wrap:balance;
 }
+/* 书名即入口：统一跳微信读书搜索页（不依赖 bookId，任何书都点得动） */
+h1 a{color:inherit;text-decoration:none;transition:color .16s ease}
+h1 a::after{
+  content:"↗";display:inline-block;margin-left:.28em;
+  font:400 .5em/1 var(--sans);vertical-align:.34em;opacity:.5;
+  transition:opacity .16s ease;
+}
+h1 a:hover,h1 a:focus-visible{color:#e2c99f}
+h1 a:hover::after,h1 a:focus-visible::after{opacity:.95}
+h1 a:focus-visible{outline:2px solid #b08a3e;outline-offset:4px;border-radius:4px}
+html:not([data-theme="dark"]) h1 a:hover,html:not([data-theme="dark"]) h1 a:focus-visible{color:#8a6a2e}
 .by{margin-top:12px;font-size:14px;line-height:1.6;color:oklch(0.7 0.016 66);letter-spacing:.03em}
 .by::before{content:"— ";color:oklch(0.56 0.06 72)}
 
@@ -984,7 +995,8 @@ html:not([data-theme="dark"]) .bk-btns button[aria-pressed="true"]{background:#3
       '</div>'+
       '<div class="meta">'+
         '<div class="kicker">'+kicker+'</div>'+
-        '<h1>'+esc(title)+'</h1>'+
+        '<h1><a href="https://weread.qq.com/web/search/books?keyword='+
+          encodeURIComponent(title)+'" title="在微信读书搜索：'+esc(title)+'">'+esc(title)+'</a></h1>'+
         (author?'<div class="by">'+esc(author)+'</div>':'')+
         (why?'<div class="why"><span class="q">“</span><p>'+esc(why)+'</p><div class="lb">Why this one</div></div>':'')+
         quoteBlock+
