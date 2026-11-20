@@ -290,6 +290,16 @@ html[data-cols="3"] #reading-panel-series .set-units-grid .card-body{
   #reading-panel-archive > .archive-grid,
   #reading-panel-series .set-units-grid{overflow:visible!important;padding:6px!important;margin:-6px!important}
 }
+/* —— 修复：本块多处 display:flex!important 会盖掉筛选/搜索/分页的 hidden，
+   被隐藏的卡仍显示（线上"选社科却出现美股70年"即此因）。同特异度压制。 —— */
+#panel-whole > .archive-grid > .archive-card[hidden],
+#panel-whole > .archive-grid > .archive-card[data-pg="off"],
+#reading-panel-archive > .archive-grid > .archive-card[hidden],
+#reading-panel-archive > .archive-grid > .archive-card[data-pg="off"],
+#reading-panel-series .set-units-grid > .archive-card[hidden],
+#reading-panel-series .set-units-grid > .archive-card[data-pg="off"]{
+  display:none!important;
+}
 </style><!-- booklist:begin --><style id="rd-booklist-style">
 /* 书单 · 按领域走的读书路径（2026-11-11 新增，完全内联、零外部依赖）
    沿用 Aa / 已阅 面板的主题变量（--card/--ink/--muted/--line/--sage/--green），
