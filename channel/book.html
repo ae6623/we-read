@@ -120,8 +120,38 @@ h1 a:hover,h1 a:focus-visible{color:#e2c99f}
 h1 a:hover::after,h1 a:focus-visible::after{opacity:.95}
 h1 a:focus-visible{outline:2px solid #b08a3e;outline-offset:4px;border-radius:4px}
 html:not([data-theme="dark"]) h1 a:hover,html:not([data-theme="dark"]) h1 a:focus-visible{color:#8a6a2e}
-.by{margin-top:12px;font-size:14px;line-height:1.6;color:oklch(0.7 0.016 66);letter-spacing:.03em}
+/* 书名下一行：作者在左，两个主入口在右（金色实心 + 描边），
+   「领读全文」藏到页面底部没人看见，挪上来并改叫 AI阅读 / AI听书 */
+.metahead{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:12px}
+.metahead .by{margin-top:0;flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.by{font-size:14px;line-height:1.6;color:oklch(0.7 0.016 66);letter-spacing:.03em}
 .by::before{content:"— ";color:oklch(0.56 0.06 72)}
+.h1cta{display:flex;align-items:center;gap:8px;margin-left:auto;flex:none}
+.h1cta .cta{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:9px 16px;border-radius:999px;cursor:pointer;text-decoration:none;
+  font:600 13px/1 var(--sans);letter-spacing:.02em;border:1px solid transparent;
+  -webkit-tap-highlight-color:transparent;
+  transition:transform .16s var(--ease),background .16s ease,border-color .16s ease,box-shadow .16s ease;
+}
+.h1cta .cta-emoji{font-size:16px;line-height:1;transform:translateY(.5px)}
+.h1cta .cta-read{
+  background:#b08a3e;color:#1b150c;
+  box-shadow:0 8px 20px -8px rgba(176,138,62,.85);
+}
+.h1cta .cta-read:hover{background:#c39a49;transform:translateY(-1px);box-shadow:0 10px 24px -8px rgba(192,150,69,.9)}
+.h1cta .cta-listen{background:transparent;color:inherit;border-color:oklch(0.62 0.05 72 / .55)}
+.h1cta .cta-listen:hover{border-color:#c39a49;color:#e2c99f;transform:translateY(-1px)}
+.h1cta .cta:active{transform:translateY(0)}
+.h1cta .cta:focus-visible{outline:2px solid #e2c99f;outline-offset:3px}
+html:not([data-theme="dark"]) .h1cta .cta-listen{border-color:oklch(0.62 0.05 72 / .45);color:inherit}
+html:not([data-theme="dark"]) .h1cta .cta-listen:hover{color:#8a6a2e;border-color:#8a6a2e}
+@media (max-width:640px){
+  .metahead{gap:10px}
+  .metahead .by{flex-basis:100%;white-space:normal;overflow:visible}
+  .h1cta{flex-basis:100%;margin-left:0;justify-content:flex-end}
+  .h1cta .cta{padding:9px 15px;font-size:12.5px}
+}
 
 /* 荐语：引号压在左上，正文首行缩进避开 */
 .why{
@@ -896,7 +926,13 @@ html:not([data-theme="dark"]) .bk-btns button[aria-pressed="true"]{background:#3
       });
     }
     build();
-    return {load:load};
+    /* AI听书：从书名下方直接开播。正在播时再点不打断（只提示），
+       避免「AI听书」这个标签点一下反而暂停。 */
+    function play(){
+      if(!chunks.length){ sub('正文还在准备…'); return; }
+      if(!playing) toggle(); else sub('正在朗读全文 · 播放条上可暂停');
+    }
+    return {load:load,play:play};
   })();
 
   function render(sl){
@@ -997,13 +1033,21 @@ html:not([data-theme="dark"]) .bk-btns button[aria-pressed="true"]{background:#3
         '<div class="kicker">'+kicker+'</div>'+
         '<h1><a href="https://weread.qq.com/web/search/books?keyword='+
           encodeURIComponent(title)+'" title="在微信读书搜索：'+esc(title)+'">'+esc(title)+'</a></h1>'+
-        (author?'<div class="by">'+esc(author)+'</div>':'')+
+        '<div class="metahead">'+
+          (author?'<div class="by">'+esc(author)+'</div>':'')+
+          '<div class="h1cta">'+
+            '<a class="cta cta-read" href="'+esc(href)+'" aria-label="AI 阅读：打开《'+esc(title)+'》全书领读">'+
+              '<span class="cta-emoji" aria-hidden="true">👉</span>AI阅读</a>'+
+            '<button type="button" class="cta cta-listen" id="ctaListen" aria-label="AI 听书：朗读《'+esc(title)+'》全文">'+
+              '<span class="cta-emoji" aria-hidden="true">👉</span>AI听书</button>'+
+          '</div>'+
+        '</div>'+
+        
         (why?'<div class="why"><span class="q">“</span><p>'+esc(why)+'</p><div class="lb">Why this one</div></div>':'')+
         quoteBlock+
-        '<div class="actions">'+
-          '<a class="btn btn-primary" href="'+esc(href)+'">领读全文 →</a>'+
-          (p?'<a class="btn btn-ghost" href="list.html?id='+encodeURIComponent(p.id)+'&book='+encodeURIComponent(sl)+'">看整条书单</a>':'')+
-        '</div>'+
+        (p?'<div class="actions">'+
+          '<a class="btn btn-ghost" href="list.html?id='+encodeURIComponent(p.id)+'&book='+encodeURIComponent(sl)+'">看整条书单 →</a>'+
+        '</div>':'')+
       '</div>'+
     '</section>';
 
@@ -1065,6 +1109,12 @@ html:not([data-theme="dark"]) .bk-btns button[aria-pressed="true"]{background:#3
       stripEl.scrollLeft=Math.max(0,
         on.offsetLeft-(stripEl.clientWidth-on.offsetWidth)/2);
     }
+
+    // 书名下方的「AI听书」：直接开播底部播放器
+    var ctaL=document.getElementById('ctaListen');
+    if(ctaL) ctaL.addEventListener('click',function(){
+      if(Dock.play) Dock.play(); else location.href=href;
+    });
 
     // 底部全文朗读播放器：跟随当前书切换，后台预合成首块
     Dock.load(sl,title,cover,c||b,href);
