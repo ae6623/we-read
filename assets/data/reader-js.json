@@ -1,7 +1,7 @@
 {
-  "current": "reader-20261124.js",
+  "current": "reader-20261125.js",
   "cdn_prefix": "https://cdn.js-dev.cn/assets/js/",
-  "feature": "换书（SPA 无刷新）后底部听书胶囊同步新书名与封面并复位播放；领读页书名居中置顶可点跳微信读书搜索页",
+  "feature": "书卡详情页书名移到页面顶部居中、点击跳微信读书搜索页；领读页标题位置还原为顶部固定条（撤掉墙顶居中版本）",
   "updated": "2026-11-20",
   "note": "单一版本真相源。升级 JS 时改这里 + 引擎仓 overview_gen/combine_page.py 的 READER_JS 常量，再跑 scripts/upgrade_reader_js.py 全量切换。JS 走 CDN 长缓存（max-age=31536000），必须用新文件名换 key，不能覆盖同名文件。structure-map-v2 模块的 URL 硬编码在 reader JS 的 STRUCT_V2_URL，改 v2 内容时要同步换 v2 文件名。",
   "history": [
@@ -64,7 +64,13 @@
     {
       "ver": "reader-20261124.js",
       "from": "2026-11-20",
-      "note": "换书后胶囊标题/封面同步 + 停掉上一本朗读、进度归零；修 goBook 里 detail.title 引用未定义变量 bt（构造事件时抛错，wr:bookchange 从未派发）"
+      "note": "换书后胶囊标题/封面同步 + 停掉上一本朗读、进度归零；修 goBook 里 detail.title 引用未定义变量 bt（构造事件时抛错，wr:bookchange 从未派发）",
+      "until": "2026-11-20"
+    },
+    {
+      "ver": "reader-20261125.js",
+      "from": "2026-11-20",
+      "note": "撤掉 22/23 版把书名搬到海报墙顶部居中的改动，书名回到 #rdTopTitle 固定条（21 版原样）；保留 24 版的换书后胶囊同步与 wr:bookchange 修复，另给 renderChips 补 #rdTopTitle h1 选择器，换书时顶部书名也能更新"
     }
   ]
 }

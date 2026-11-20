@@ -30,7 +30,7 @@ try{var _c=JSON.parse(localStorage.getItem('rd-cfg')||'{}');document.documentEle
   /* 封面列 = 封面宽 + 左右各 70px 的箭头区，箭头离书封有一臂距离 */
   grid-template-columns:calc(clamp(200px,23vw,268px) + 140px) minmax(0,1fr);
   gap:clamp(24px,4.4vw,64px);
-  padding:clamp(16px,3vh,36px) 0 clamp(30px,5vh,56px);
+  padding:clamp(10px,1.8vh,22px) 0 clamp(30px,5vh,56px);
   align-items:stretch;
   border-bottom:1px solid oklch(0.28 0.013 62);
 }
@@ -120,6 +120,15 @@ h1 a:hover,h1 a:focus-visible{color:#e2c99f}
 h1 a:hover::after,h1 a:focus-visible::after{opacity:.95}
 h1 a:focus-visible{outline:2px solid #b08a3e;outline-offset:4px;border-radius:4px}
 html:not([data-theme="dark"]) h1 a:hover,html:not([data-theme="dark"]) h1 a:focus-visible{color:#8a6a2e}
+
+/* 页面顶部书名：封面之上、居中一行。点书名 = 微信读书搜索这本书，
+   与领读页（reader.js 的墙顶书名）同一套口径，不依赖 bookId */
+.bk-head{padding:clamp(2px,1.4vh,12px) 0 clamp(10px,2.2vh,20px);text-align:center}
+.bk-head h1{
+  margin:0 auto;display:block;max-width:min(100%,920px);
+  font-size:clamp(26px,3.2vw,42px);line-height:1.24;
+  text-wrap:balance;
+}
 /* 书名下一行：作者一行、入口一排，全部左对齐，跟书名同一条竖线起头。
    三个入口的视觉权重依次递减：金色实心（AI阅读）→ 描边（AI听书）→ 文字链（查看书单），
    权重靠「填充 / 描边 / 纯文字」区分，不靠三个一样的胶囊并排。 */
@@ -400,7 +409,7 @@ html:not([data-theme="dark"]) .cta-list:hover{color:#8a6a2e}
   .bnav.next{right:-70px}
   .coverbox .glow{inset:-14% -30% -8%}
   .meta{text-align:left}
-  h1{font-size:clamp(26px,7.4vw,34px);margin-top:12px}
+  .bk-head h1{font-size:clamp(26px,7.4vw,34px)}
   .why{padding:16px 18px 16px 28px;width:auto}
   .why p{font-size:13.5px}
   .facts{padding-top:18px}
@@ -1087,7 +1096,9 @@ html:not([data-theme="dark"]) .bk-btns button[aria-pressed="true"]{background:#3
         '<path d="M9.5 5.5 16 12l-6.5 6.5"/></svg>'
     };
 
-    var html='<section class="hero">'+
+    var html='<div class="bk-head"><h1><a href="https://weread.qq.com/web/search/books?keyword='+
+        encodeURIComponent(title)+'" title="在微信读书搜索：'+esc(title)+'">'+esc(title)+'</a></h1></div>'+
+      '<section class="hero">'+
       '<div class="stage">'+
         '<div class="coverbox">'+
           '<div class="glow" style="--h:'+(hue==null?66:hue)+'"></div>'+
@@ -1104,8 +1115,6 @@ html:not([data-theme="dark"]) .bk-btns button[aria-pressed="true"]{background:#3
       '</div>'+
       '<div class="meta">'+
         '<div class="kicker">'+kicker+'</div>'+
-        '<h1><a href="https://weread.qq.com/web/search/books?keyword='+
-          encodeURIComponent(title)+'" title="在微信读书搜索：'+esc(title)+'">'+esc(title)+'</a></h1>'+
         (author?'<div class="by">'+esc(author)+'</div>':'')+
         '<div class="cta-row">'+
           '<a class="cta cta-read" href="'+esc(href)+'" aria-label="AI 阅读：打开《'+esc(title)+'》全书领读">'+
