@@ -25,6 +25,7 @@ import os
 import re
 import subprocess
 import sys
+from urllib.parse import quote
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SITE = os.path.abspath(os.path.join(HERE, "..", ".."))
@@ -78,6 +79,30 @@ def resolve_href(slug, u):
     return u or (book + "combined.html")
 
 
+_CHANNEL = None
+
+
+def channel_slugs():
+    """channel/cards.json 里能渲染书卡详情的书（cards + pool）。
+    不在这个集合里的书没法走 book.html，只能直接开笔记页。"""
+    global _CHANNEL
+    if _CHANNEL is None:
+        try:
+            d = json.load(open(os.path.join(SITE, "channel", "cards.json"), encoding="utf-8"))
+            _CHANNEL = {c["slug"] for c in d.get("cards", [])} | {p["s"] for p in d.get("pool", [])}
+        except Exception:
+            _CHANNEL = set()
+    return _CHANNEL
+
+
+def card_href(slug, u):
+    """书单里的书先落到「书卡详情」承接页，再一键进全书领读；
+    承接页拿不到的书才回退到 direct 笔记页。"""
+    if slug in channel_slugs():
+        return "channel/book.html?slug=%s&from=booklist" % quote(slug, safe="")
+    return resolve_href(slug, u)
+
+
 def build_css():
     return CS + """
 /* 画廊入口下面的「就地书单」：与上方跳转卡是同一件事的两种读法，
@@ -123,7 +148,7 @@ def build_list(paths):
     out = [PB]
     out.append('<div class="bl-sub">')
     out.append('<h3>全部 %d 条路径 · 就在这里读</h3>' % len(paths))
-    out.append('<p>不想开新页的话，往下直接看：三步顺序、每步书目都在，点书名进全书领读。</p>')
+    out.append('<p>不想开新页的话，往下直接看：三步顺序、每步书目都在；点书名先进书卡详情，再一键进全书领读。</p>')
     out.append('</div>')
 
     out.append('<div class="bl-toolbar">')
@@ -162,10 +187,10 @@ def build_list(paths):
             out.append('<ul class="bl-books">')
             for it in s["items"]:
                 slug, title, why = it["s"], it["t"], it["w"]
-                href = resolve_href(slug, it.get("u"))
+                href = card_href(slug, it.get("u"))
                 cover = "https://cdn.js-dev.cn/assets/covers/%s.jpg" % slug
                 out.append('<li class="bl-book" data-bl-slug="%s">' % esc(slug))
-                out.append('<a href="%s" title="%s · 打开本书笔记页">' % (esc(href), esc(title)))
+                out.append('<a href="%s" title="%s · 打开书卡详情">' % (esc(href), esc(title)))
                 out.append('<span class="bl-cover" style="--cv-h:%d">' % hue(slug))
                 out.append('<span class="bl-cover-ph" aria-hidden="true">%s</span>' % esc(short_title(title)))
                 out.append('<img src="%s" alt="" loading="lazy" decoding="async" draggable="false" '
@@ -307,7 +332,11 @@ def main():
     for p in paths:
         for st in p["stages"]:
             for it in st["items"]:
-                if resolve_href(it["s"], it.get("u")) not in git_files():
+                h = card_href(it["s"], it.get("u"))
+                if h.startswith("channel/"):
+                    if it["s"] not in channel_slugs():
+                        missing.append(it["s"])
+                elif h not in git_files():
                     missing.append(it["s"])
     print("链接目标缺失: %d %s" % (len(missing), missing[:3]))
 

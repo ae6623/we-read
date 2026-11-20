@@ -9,6 +9,8 @@
     ['reading-tab-overview', 'tongDu'],
     ['reading-tab-series', 'xiLie'],
     ['reading-tab-archive', 'guiDang'],
+    // 书单 tab：从书卡详情「返回」时落到 ../index.html#shuDan，直接回到书单列表
+    ['reading-tab-booklist', 'shuDan'],
   ]);
   // 2026-11-01 撤掉「精读」页签（书架卡片里已有精读入口），老链接 #jingDu 并回书架
   const legacyHash = { jingDu: 'tongDu' };

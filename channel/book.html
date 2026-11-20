@@ -352,89 +352,135 @@ html:not([data-theme="dark"]) .sec-head{border-bottom-color:#e4ded1}
   .cover img{transition-duration:.01ms}
 }
 
-/* ============ 底部全文朗读播放器（常驻 · 默认静默） ============
-   形态取自播客迷你播放器：封面 + 书名 + 倍速 + 播放键，顶沿一条进度线。
-   用墨色玻璃质感，跟书卡封面的暖金是一个气场；浅色主题另给纸底版本。 */
+/* ============ 底部全文朗读播放器 ============
+   规格与全书领读页（combined.html）的胶囊完全一致：40 方封面 + 倍速 + 设置 + 金色播放键，
+   顶沿一条 2px 进度线。点按钮以外的地方 = 进全书领读，
+   两页之间因此是「同一个组件换了个位置」，不突兀。 */
 body{padding-bottom:104px}
 .audio-dock{
   position:fixed;left:50%;bottom:max(14px,env(safe-area-inset-bottom,0px));
   transform:translateX(-50%);z-index:60;
-  width:min(560px,calc(100vw - 28px));
-  display:flex;align-items:center;gap:12px;
-  padding:9px 12px 9px 10px;border-radius:16px;overflow:hidden;
-  background:rgba(24,26,29,.9);
-  -webkit-backdrop-filter:blur(18px) saturate(1.35);backdrop-filter:blur(18px) saturate(1.35);
-  border:1px solid rgba(255,255,255,.13);
-  box-shadow:0 18px 44px -12px rgba(0,0,0,.62),0 2px 10px rgba(0,0,0,.4);
-  color:#e9e2d6;
+  width:min(440px,calc(100vw - 24px));box-sizing:border-box;
+  display:flex;align-items:center;gap:10px;
+  padding:8px 10px 8px 8px;border-radius:14px;overflow:hidden;
+  background:rgba(31,34,38,.9);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 12px 32px rgba(0,0,0,.34);
+  font:12px/1.4 system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+  color:#e8e6e0;cursor:pointer;
   animation:dockIn .42s var(--ease) both;
 }
 @keyframes dockIn{from{opacity:0;transform:translate(-50%,18px)}to{opacity:1;transform:translate(-50%,0)}}
 .audio-dock .ad-progress{
   position:absolute;left:0;top:0;height:2px;width:100%;
-  background:rgba(255,255,255,.09);
+  background:rgba(136,136,136,.2);
 }
 .audio-dock .ad-progress i{
-  display:block;height:100%;width:0;border-radius:0 2px 2px 0;
-  background:linear-gradient(90deg,#b08a3e,#e6cc97);transition:width .25s linear;
+  display:block;height:100%;width:0;background:#b08a3e;transition:width .25s linear;
 }
 .ad-cover{
-  width:42px;height:56px;flex:none;border-radius:4px;overflow:hidden;
-  background:linear-gradient(160deg,#3a3026,#241d16);
-  box-shadow:0 2px 8px rgba(0,0,0,.5);
+  width:40px;height:40px;flex:none;border-radius:8px;overflow:hidden;position:relative;
+  background:linear-gradient(135deg,#3a4a42,#1e2a24);
+  box-shadow:0 2px 8px rgba(0,0,0,.4);
 }
 .ad-cover img{width:100%;height:100%;object-fit:cover;display:block}
-.ad-meta{min-width:0;flex:1;display:flex;flex-direction:column;gap:3px}
+.ad-meta{flex:1 1 auto;min-width:0}
 .ad-title{
-  font-family:var(--font-display);font-size:14px;font-weight:700;line-height:1.3;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#f1eadc;
+  font-size:13px;font-weight:600;line-height:1.4;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:inherit;
 }
 .ad-sub{
-  font-family:var(--font-latin);font-size:10.5px;letter-spacing:.04em;
-  color:rgba(233,226,214,.6);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  font-size:11px;opacity:.72;margin-top:2px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
-.ad-ctl{display:flex;align-items:center;gap:6px;flex:none}
-.ad-rate,.ad-play{
-  border:0;cursor:pointer;display:grid;place-items:center;
-  transition:transform .18s var(--ease),background .2s ease,opacity .2s ease;
+.ad-rate,.ad-set,.ad-play{
+  border:0;cursor:pointer;display:grid;place-items:center;flex:none;
+  transition:opacity .2s ease,background .2s ease,transform .18s var(--ease);
+  -webkit-tap-highlight-color:transparent;
 }
 .ad-rate{
-  min-width:38px;height:30px;padding:0 7px;border-radius:999px;
-  background:rgba(255,255,255,.08);color:#dcc79f;
-  font-family:var(--font-latin);font-size:11px;letter-spacing:.02em;
+  min-width:38px;height:30px;padding:0 6px;border-radius:8px;
+  border:1px solid rgba(136,136,136,.38);background:transparent;color:inherit;
+  font-weight:600;font-size:11px;line-height:1;letter-spacing:.02em;
 }
-.ad-rate:hover{background:rgba(255,255,255,.16)}
-.ad-play{width:38px;height:38px;border-radius:999px;background:#c9a55c;color:#1a150e;
-  box-shadow:0 4px 14px -4px rgba(201,165,92,.7)}
-.ad-play:hover:not(:disabled){transform:scale(1.06);background:#d9bb85}
+.ad-rate:hover{background:rgba(255,255,255,.1)}
+.ad-set{
+  width:26px;height:30px;padding:0;background:transparent;color:inherit;
+  opacity:.62;font-size:15px;line-height:1;
+}
+.ad-set:hover{opacity:1}
+.ad-play{
+  width:38px;height:38px;border-radius:50%;background:#b08a3e;color:#fff;
+  box-shadow:0 4px 14px -4px rgba(176,138,62,.7);
+}
+.ad-play:hover:not(:disabled){background:#c09645;transform:scale(1.04)}
 .ad-play svg{width:16px;height:16px;display:block}
-.ad-rate:focus-visible,.ad-play:focus-visible{outline:2px solid #e6cc97;outline-offset:2px}
+.ad-rate:focus-visible,.ad-set:focus-visible,.ad-play:focus-visible{outline:2px solid #e6cc97;outline-offset:2px}
 .ad-play:disabled{opacity:.5;cursor:wait}
 html:not([data-theme="dark"]) .audio-dock{
-  background:rgba(252,250,245,.94);border-color:rgba(36,49,46,.14);color:#24312e;
-  box-shadow:0 18px 44px -14px rgba(58,48,32,.32),0 2px 10px rgba(58,48,32,.14);
+  background:rgba(255,253,246,.96);border-color:rgba(36,75,64,.18);color:#3b453e;
+  box-shadow:0 12px 30px rgba(60,50,30,.16);
 }
-html:not([data-theme="dark"]) .ad-title{color:#24312e}
-html:not([data-theme="dark"]) .ad-sub{color:#6b756f}
-html:not([data-theme="dark"]) .ad-rate{background:rgba(36,49,46,.07);color:#3a5a4a}
-html:not([data-theme="dark"]) .ad-rate:hover{background:rgba(36,49,46,.13)}
 html:not([data-theme="dark"]) .audio-dock .ad-progress{background:rgba(36,49,46,.1)}
-/* 手机：浏览器底部操作栏（地址栏/工具栏）不计入 safe-area-inset，
-   env() 常返回 0，贴底 14px 会被盖住 → 整体抬高，页面底部留白同步加大。 */
+html:not([data-theme="dark"]) .ad-rate{border-color:rgba(36,75,64,.28)}
+html:not([data-theme="dark"]) .ad-rate:hover{background:rgba(36,75,64,.08)}
+html:not([data-theme="dark"]) .ad-play{background:#b08a3e;color:#fff}
+
+/* ===== 阅读设置（Aa）：字号 / 段距 / 主题 =====
+   ⚙ 从播放条弹出，落在播放条正上方；选完立即生效，配置写 bk-cfg，
+   主题与首页 Aa 共用 rd-cfg.theme，切页不会跳回默认。 */
+.bk-panel{
+  position:fixed;left:50%;transform:translateX(-50%);
+  bottom:calc(78px + env(safe-area-inset-bottom,0px));z-index:61;
+  width:min(440px,calc(100vw - 24px));box-sizing:border-box;
+  padding:10px 14px 12px;border-radius:14px;
+  background:rgba(31,34,38,.96);border:1px solid rgba(255,255,255,.14);
+  -webkit-backdrop-filter:blur(18px) saturate(1.2);backdrop-filter:blur(18px) saturate(1.2);
+  box-shadow:0 18px 44px -12px rgba(0,0,0,.6);
+  color:#e8e6e0;font:12px/1.5 system-ui,-apple-system,"PingFang SC",sans-serif;
+  animation:panelIn .18s var(--ease) both;
+}
+@keyframes panelIn{from{opacity:0;transform:translate(-50%,8px)}to{opacity:1;transform:translate(-50%,0)}}
+.bk-panel[hidden]{display:none}
+.bk-row{display:flex;align-items:center;gap:10px;padding:6px 0}
+.bk-row + .bk-row{border-top:1px solid rgba(255,255,255,.08)}
+.bk-lb{width:32px;flex:none;opacity:.6;font-size:11px;letter-spacing:.06em}
+.bk-btns{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
+.bk-btns button{
+  min-width:40px;padding:6px 10px;border-radius:8px;cursor:pointer;
+  border:1px solid rgba(255,255,255,.18);background:transparent;color:inherit;
+  font-weight:600;font-size:11.5px;line-height:1.2;transition:.15s;
+}
+.bk-btns button:hover{border-color:rgba(226,201,159,.6);color:#f0e6cf}
+.bk-btns button[aria-pressed="true"]{background:#b08a3e;border-color:#b08a3e;color:#1a150e}
+html:not([data-theme="dark"]) .bk-panel{
+  background:rgba(255,253,246,.98);border-color:rgba(36,75,64,.16);color:#24312e;
+  box-shadow:0 18px 40px -14px rgba(58,48,32,.32);
+}
+html:not([data-theme="dark"]) .bk-row + .bk-row{border-top-color:rgba(36,75,64,.1)}
+html:not([data-theme="dark"]) .bk-btns button{border-color:rgba(36,75,64,.2)}
+html:not([data-theme="dark"]) .bk-btns button[aria-pressed="true"]{background:#3a5a4a;border-color:#3a5a4a;color:#fff}
+/* 手机：浏览器底部操作栏不计入 safe-area-inset，整体上抬 */
 @media (max-width:760px){
   body{padding-bottom:180px}
   .audio-dock{bottom:calc(72px + env(safe-area-inset-bottom,0px))}
+  .bk-panel{bottom:calc(136px + env(safe-area-inset-bottom,0px))}
 }
 @media (max-width:430px){
-  .audio-dock{gap:10px;padding:8px 10px 8px 8px;border-radius:14px}
-  .ad-cover{width:36px;height:48px}
-  .ad-title{font-size:13px}
-  .ad-play{width:36px;height:36px}
-  .ad-rate{min-width:34px;height:28px;font-size:10px}
+  /* 只收间距，按钮尺寸与全书领读页保持同规格 */
+  .audio-dock{gap:8px;padding:7px 9px 7px 7px;border-radius:13px}
 }
 @media (prefers-reduced-motion:reduce){
-  .audio-dock{animation:none}
+  .audio-dock,.bk-panel{animation:none}
   .ad-play:hover:not(:disabled){transform:none}
+}
+/* 正文响应 Aa：字号与段距都乘系数，默认 1 与设计稿一致 */
+.why p{font-size:calc(14.5px * var(--bk-fs,1));line-height:calc(1.92 * var(--bk-lh,1))}
+.quotes li{font-size:calc(13.5px * var(--bk-fs,1));line-height:calc(1.88 * var(--bk-lh,1))}
+.goal{font-size:calc(13px * var(--bk-fs,1));line-height:calc(1.95 * var(--bk-lh,1))}
+@media (max-width:760px){
+  .why p{font-size:calc(13.5px * var(--bk-fs,1))}
 }
 </style>
 </head>
@@ -447,9 +493,68 @@ html:not([data-theme="dark"]) .audio-dock .ad-progress{background:rgba(36,49,46,
   <div id="app"><div class="loading">LOADING…</div></div>
 </div>
 
+<div class="bk-panel" id="bkPanel" hidden role="dialog" aria-label="阅读设置">
+  <div class="bk-row"><span class="bk-lb">字号</span><span class="bk-btns">
+    <button type="button" data-bk="fs-">A−</button><button type="button" data-bk="fs+">A＋</button></span></div>
+  <div class="bk-row"><span class="bk-lb">段距</span><span class="bk-btns">
+    <button type="button" data-bk="lh-">紧</button><button type="button" data-bk="lh0">中</button><button type="button" data-bk="lh+">松</button></span></div>
+  <div class="bk-row"><span class="bk-lb">主题</span><span class="bk-btns">
+    <button type="button" data-bk="th-cream">米白</button><button type="button" data-bk="th-light">纯白</button><button type="button" data-bk="th-green">护眼</button><button type="button" data-bk="th-dark">夜间</button></span></div>
+</div>
+
 <script>
 (function(){
   "use strict";
+
+  /* 阅读设置（Aa）：字号 / 段距 / 主题。
+     ⚙ 从底部播放条弹出、落在播放条正上方；配置存 bk-cfg，
+     主题与首页 Aa 共用 rd-cfg.theme，两处切换互相同步。 */
+  var BkAa=(function(){
+    var P=document.getElementById('bkPanel');
+    var cfg={fs:1,lh:1};
+    try{var o=JSON.parse(localStorage.getItem('bk-cfg')||'{}');
+      if(o&&o.fs)cfg.fs=o.fs; if(o&&o.lh)cfg.lh=o.lh;}catch(e){}
+    var FS=[0.92,1,1.08,1.16,1.26], LH=[0.9,1,1.12];
+    function at(arr,v){var i=arr.indexOf(v);return i<0?1:i;}
+    function apply(){
+      document.documentElement.style.setProperty('--bk-fs',String(cfg.fs));
+      document.documentElement.style.setProperty('--bk-lh',String(cfg.lh));
+      try{localStorage.setItem('bk-cfg',JSON.stringify(cfg));}catch(e){}
+      var th=document.documentElement.dataset.theme||'cream';
+      var bs=P?P.querySelectorAll('[data-bk^="th-"]'):[];
+      for(var i=0;i<bs.length;i++){
+        bs[i].setAttribute('aria-pressed',bs[i].getAttribute('data-bk').slice(3)===th?'true':'false');
+      }
+    }
+    if(!P) return {toggle:function(){},close:function(){}};
+    P.addEventListener('click',function(e){
+      var b=e.target.closest?e.target.closest('[data-bk]'):null; if(!b)return;
+      var k=b.getAttribute('data-bk');
+      if(k==='fs-') cfg.fs=FS[Math.max(0,at(FS,cfg.fs)-1)];
+      else if(k==='fs+') cfg.fs=FS[Math.min(FS.length-1,at(FS,cfg.fs)+1)];
+      else if(k==='lh-') cfg.lh=LH[Math.max(0,at(LH,cfg.lh)-1)];
+      else if(k==='lh+') cfg.lh=LH[Math.min(LH.length-1,at(LH,cfg.lh)+1)];
+      else if(k==='lh0') cfg.lh=1;
+      else if(k.indexOf('th-')===0){
+        var t=k.slice(3);
+        document.documentElement.dataset.theme=t;
+        try{var c=JSON.parse(localStorage.getItem('rd-cfg')||'{}');c.theme=t;
+          localStorage.setItem('rd-cfg',JSON.stringify(c));}catch(err){}
+      }
+      apply();
+    });
+    document.addEventListener('click',function(e){
+      if(P.hidden)return;
+      if(e.target.closest&&(e.target.closest('#bkPanel')||e.target.closest('.ad-set')))return;
+      P.hidden=true;
+    });
+    apply();
+    return {
+      toggle:function(){P.hidden=!P.hidden;if(!P.hidden)apply();},
+      close:function(){P.hidden=true;}
+    };
+  })();
+  window.BkAa=BkAa;
   var app=document.getElementById("app");
   var mark=document.getElementById("mark");
 
@@ -485,12 +590,31 @@ html:not([data-theme="dark"]) .audio-dock .ad-progress{background:rgba(36,49,46,
      2) 其余（首页、频道页、分享链接、直接打开）-> 一律回站点首页。
      不用 history.back()：站内换书 pushState 过后，历史里会有好几条 book.html，
      back 只会在书卡之间来回跳，看起来像死循环。replace 也不给历史再添一条。 */
+  /* 返回：按来源回各自的入口。
+     1) 从首页书单 tab 点进来（?from=booklist）-> 回首页并停在书单 tab；
+        站内换书会 replaceState 掉查询串，所以来源同时记进 sessionStorage；
+     2) 老的频道列表页（channel/list.html）-> 回那条列表；
+     3) 书卡画廊（channel/）-> 回画廊；
+     4) 其余（首页、分享链接、直接打开）-> 回首页。
+     不用 history.back()：站内换书只 replace 不 push，back 的落点不可靠。 */
+  var BACK_KEY="bk-from";
+  function readFrom(){
+    try{
+      var q=new URLSearchParams(location.search).get("from");
+      if(q){ try{sessionStorage.setItem(BACK_KEY,q);}catch(e){} return q; }
+      return sessionStorage.getItem(BACK_KEY)||"";
+    }catch(e){ return ""; }
+  }
   var exitUrl=(function(){
-    var ref=document.referrer||"";
-    return /\/channel\/list\.html/.test(ref)?ref:"../index.html";
+    var ref=document.referrer||"", from=readFrom();
+    if(from==="booklist") return "../index.html#shuDan";
+    if(/\/channel\/list\.html/.test(ref)) return ref;
+    if(/\/channel\/(index\.html)?(\?[^#]*)?$/.test(ref)) return "index.html";
+    return "../index.html";
   })();
   document.getElementById("back").addEventListener("click",function(e){
     e.preventDefault();
+    try{sessionStorage.removeItem(BACK_KEY);}catch(err){}
     location.replace(exitUrl);
   });
 
@@ -574,7 +698,7 @@ html:not([data-theme="dark"]) .audio-dock .ad-progress{background:rgba(36,49,46,
   var Dock=(function(){
     var TTS='https://a32eb29ccf0373711.app.workbuddy.host/tts?sharecode=N3AWQXFAIQ';
     var RATES=[1,1.25,1.5,2],ri=0;
-    var el=null,coverEl,titleEl,subEl,playEl,rateEl,barEl,audio=null;
+    var el=null,coverEl,titleEl,subEl,playEl,rateEl,setEl,barEl,audio=null,dockHref='';
     var chunks=[],ci=0,curSlug='',playing=false,useLocal=false;
     var cache={},pending={};
 
@@ -590,18 +714,32 @@ html:not([data-theme="dark"]) .audio-dock .ad-progress{background:rgba(36,49,46,
       el.innerHTML='<div class="ad-progress"><i></i></div>'+
         '<div class="ad-cover"></div>'+
         '<div class="ad-meta"><div class="ad-title"></div><div class="ad-sub">准备全文…</div></div>'+
-        '<div class="ad-ctl"><button class="ad-rate" type="button" aria-label="播放速度">1×</button>'+
-        '<button class="ad-play" type="button" aria-label="播放" disabled>'+ic(false)+'</button></div>';
+        '<button class="ad-rate" type="button" aria-label="播放速度" title="播放速度">1×</button>'+
+        '<button class="ad-set" type="button" aria-label="阅读设置" title="字号 / 段距 / 主题">⚙</button>'+
+        '<button class="ad-play" type="button" aria-label="播放" disabled>'+ic(false)+'</button>';
       document.body.appendChild(el);
       coverEl=el.querySelector('.ad-cover');titleEl=el.querySelector('.ad-title');
       subEl=el.querySelector('.ad-sub');playEl=el.querySelector('.ad-play');
       rateEl=el.querySelector('.ad-rate');barEl=el.querySelector('.ad-progress i');
+      setEl=el.querySelector('.ad-set');
       playEl.addEventListener('click',toggle);
       rateEl.addEventListener('click',function(){
         ri=(ri+1)%RATES.length;rateEl.textContent=RATES[ri]+'×';
         if(audio)audio.playbackRate=RATES[ri];
       });
-      el.addEventListener('click',function(e){e.stopPropagation();});
+      /* ⚙ 打开阅读设置（字号/段距/主题），和全书领读页的 Aa 是同一件事 */
+      setEl.addEventListener('click',function(e){
+        e.stopPropagation();
+        if(window.BkAa) window.BkAa.toggle();
+      });
+      /* 点播放条上「按钮以外」的地方：进全书领读。
+         这样两页的播放器是同一个组件，位置不同而已，跳转不突兀。 */
+      el.addEventListener('click',function(e){
+        e.stopPropagation();
+        if(e.target.closest('button')) return;
+        if(dockHref) location.href=dockHref;
+      });
+      el.title='点这里进全书领读';
     }
     function sub(t){if(subEl)subEl.textContent=t;}
     function bar(p){if(barEl)barEl.style.width=(Math.min(1,Math.max(0,p))*100)+'%';}
@@ -731,9 +869,9 @@ html:not([data-theme="dark"]) .audio-dock .ad-progress{background:rgba(36,49,46,
             .catch(function(){cb(fallback(card));});
         });
     }
-    function load(slug,title,cover,card){
+    function load(slug,title,cover,card,href){
       build();halt();
-      curSlug=slug;ci=0;chunks=[];useLocal=false;bar(0);
+      curSlug=slug;ci=0;chunks=[];useLocal=false;bar(0);dockHref=href||'';
       titleEl.textContent=title||'全书朗读';
       coverEl.innerHTML=cover?'<img src="'+esc(cover)+'" alt="" onerror="this.style.display=&#39;none&#39;">':'';
       playEl.disabled=true;playEl.innerHTML=ic(false);playEl.setAttribute('aria-label','播放');
@@ -742,7 +880,7 @@ html:not([data-theme="dark"]) .audio-dock .ad-progress{background:rgba(36,49,46,
         if(slug!==curSlug)return;
         chunks=chunk(text);
         if(!chunks.length){sub('暂无可朗读的正文');return;}
-        playEl.disabled=false;sub('点击播放 · 全文朗读');
+        playEl.disabled=false;sub('点播放听全文 · 点这里进领读');
         prefetch(0); /* 后台提前合成首块 → 点播放时秒开 */
       });
     }
@@ -917,7 +1055,7 @@ html:not([data-theme="dark"]) .audio-dock .ad-progress{background:rgba(36,49,46,
     }
 
     // 底部全文朗读播放器：跟随当前书切换，后台预合成首块
-    Dock.load(sl,title,cover,c||b);
+    Dock.load(sl,title,cover,c||b,href);
   }
 })();
 </script>
