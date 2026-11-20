@@ -120,37 +120,89 @@ h1 a:hover,h1 a:focus-visible{color:#e2c99f}
 h1 a:hover::after,h1 a:focus-visible::after{opacity:.95}
 h1 a:focus-visible{outline:2px solid #b08a3e;outline-offset:4px;border-radius:4px}
 html:not([data-theme="dark"]) h1 a:hover,html:not([data-theme="dark"]) h1 a:focus-visible{color:#8a6a2e}
-/* 书名下一行：作者在左，两个主入口在右（金色实心 + 描边），
-   「领读全文」藏到页面底部没人看见，挪上来并改叫 AI阅读 / AI听书 */
-.metahead{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:12px}
-.metahead .by{margin-top:0;flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.by{font-size:14px;line-height:1.6;color:oklch(0.7 0.016 66);letter-spacing:.03em}
+/* 书名下一行：作者一行、入口一排，全部左对齐，跟书名同一条竖线起头。
+   三个入口的视觉权重依次递减：金色实心（AI阅读）→ 描边（AI听书）→ 文字链（查看书单），
+   权重靠「填充 / 描边 / 纯文字」区分，不靠三个一样的胶囊并排。 */
+.by{font-size:14px;line-height:1.6;color:oklch(0.7 0.016 66);letter-spacing:.03em;margin-top:10px}
 .by::before{content:"— ";color:oklch(0.56 0.06 72)}
-.h1cta{display:flex;align-items:center;gap:8px;margin-left:auto;flex:none}
-.h1cta .cta{
-  display:inline-flex;align-items:center;gap:5px;
-  padding:9px 16px;border-radius:999px;cursor:pointer;text-decoration:none;
-  font:600 13px/1 var(--sans);letter-spacing:.02em;border:1px solid transparent;
+
+.cta-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:16px}
+.cta{
+  display:inline-flex;align-items:center;justify-content:center;gap:7px;
+  min-height:38px;padding:0 16px;border-radius:999px;
+  font-family:var(--font-body);font-weight:600;font-size:13px;line-height:1;
+  letter-spacing:.06em;
+  text-decoration:none;cursor:pointer;border:1px solid transparent;
   -webkit-tap-highlight-color:transparent;
-  transition:transform .16s var(--ease),background .16s ease,border-color .16s ease,box-shadow .16s ease;
+  transition:transform .18s var(--ease),background .18s ease,border-color .18s ease,
+             box-shadow .18s ease,color .18s ease;
 }
-.h1cta .cta-emoji{font-size:16px;line-height:1;transform:translateY(.5px)}
-.h1cta .cta-read{
-  background:#b08a3e;color:#1b150c;
-  box-shadow:0 8px 20px -8px rgba(176,138,62,.85);
+.cta .ico{width:16px;height:16px;flex:none;display:block}
+.cta .ico-emoji{font-size:16px;line-height:1;transform:translateY(.5px);transition:transform .18s var(--ease);
+  /* 强制单色字形的 👉：在金色底上比彩色 emoji 干净，也不受各平台 emoji 字体影响 */
+  font-variant-emoji:text}
+/* 进场时轻轻戳两下：只有 AI阅读 有这个动作，一眼就知道点哪儿 */
+.cta-read .ico-emoji{animation:ctaNudge 1.5s var(--ease) .5s 1}
+@keyframes ctaNudge{
+  0%,55%,100%{transform:translate(0,.5px)}
+  65%{transform:translate(3px,.5px)}
+  78%{transform:translate(0,.5px)}
+  89%{transform:translate(2px,.5px)}
 }
-.h1cta .cta-read:hover{background:#c39a49;transform:translateY(-1px);box-shadow:0 10px 24px -8px rgba(192,150,69,.9)}
-.h1cta .cta-listen{background:transparent;color:inherit;border-color:oklch(0.62 0.05 72 / .55)}
-.h1cta .cta-listen:hover{border-color:#c39a49;color:#e2c99f;transform:translateY(-1px)}
-.h1cta .cta:active{transform:translateY(0)}
-.h1cta .cta:focus-visible{outline:2px solid #e2c99f;outline-offset:3px}
-html:not([data-theme="dark"]) .h1cta .cta-listen{border-color:oklch(0.62 0.05 72 / .45);color:inherit}
-html:not([data-theme="dark"]) .h1cta .cta-listen:hover{color:#8a6a2e;border-color:#8a6a2e}
+.cta .chev{width:11px;height:11px;flex:none;opacity:.65;transition:transform .18s var(--ease),opacity .18s ease}
+.cta:active{transform:translateY(0) scale(.985)}
+.cta:focus-visible{outline:2px solid #e2c99f;outline-offset:3px}
+
+/* 主入口：金色实心，顶边一道高光让胶囊立起来 */
+.cta-read{
+  color:#221a0c;
+  background:linear-gradient(180deg,#c9a45c 0%,#a98233 100%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.34),0 8px 20px -8px rgba(176,138,62,.9);
+}
+.cta-read:hover{
+  background:linear-gradient(180deg,#d7b269 0%,#b88e3a 100%);
+  transform:translateY(-1px);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 12px 26px -8px rgba(192,150,69,.95);
+}
+.cta-read:hover .ico-emoji{transform:translate(2px,.5px)}
+
+/* 次入口：描边 + 极淡底色，跟主入口同高但明显不抢戏 */
+.cta-listen{color:#ecdfc4;background:rgba(255,255,255,.045);border-color:rgba(226,201,159,.42)}
+.cta-listen:hover{
+  color:#f7eeda;border-color:rgba(226,201,159,.8);
+  background:rgba(226,201,159,.1);transform:translateY(-1px);
+}
+
+/* 第三入口：纯文字链，前面一道竖线跟两个按钮隔开，读作「附加入口」。
+   竖线和链接包在同一个 flex 组里 —— 换行时整组一起掉下去，不会留下孤零零一道竖线 */
+.cta-tail{display:inline-flex;align-items:center;gap:8px}
+.cta-sep{width:1px;height:16px;flex:none;
+  background:oklch(0.68 0.02 70 / .3)}
+.cta-list{color:oklch(0.74 0.02 70);background:transparent;padding:0 2px;gap:6px}
+.cta-list:hover{color:#e8d3a6}
+.cta-list:hover .chev{transform:translateX(2px);opacity:1}
+.cta-list:focus-visible{outline-offset:4px}
+
+html:not([data-theme="dark"]) .cta-read{color:#241d0f}
+html:not([data-theme="dark"]) .cta-listen{
+  color:#3b4a43;background:rgba(36,75,64,.04);border-color:rgba(36,75,64,.24);
+}
+html:not([data-theme="dark"]) .cta-listen:hover{
+  color:#8a6a2e;border-color:rgba(138,106,46,.62);background:rgba(138,106,46,.08);
+}
+html:not([data-theme="dark"]) .cta-sep{background:rgba(36,49,46,.2)}
+html:not([data-theme="dark"]) .cta-list{color:#5b6a63}
+html:not([data-theme="dark"]) .cta-list:hover{color:#8a6a2e}
 @media (max-width:640px){
-  .metahead{gap:10px}
-  .metahead .by{flex-basis:100%;white-space:normal;overflow:visible}
-  .h1cta{flex-basis:100%;margin-left:0;justify-content:flex-end}
-  .h1cta .cta{padding:9px 15px;font-size:12.5px}
+  .by{margin-top:9px}
+  .cta-row{gap:7px;margin-top:14px}
+  /* 只收内边距，不改高度和字号：手机上仍是 38px 的手指目标 */
+  .cta{padding:0 14px;font-size:12.5px}
+  .cta-list{padding:0 2px}
+}
+@media (prefers-reduced-motion:reduce){
+  .cta-read .ico-emoji{animation:none}
+  .cta:hover,.cta-read:hover{transform:none}
 }
 
 /* 荐语：引号压在左上，正文首行缩进避开 */
@@ -212,9 +264,6 @@ html:not([data-theme="dark"]) .h1cta .cta-listen:hover{color:#8a6a2e;border-colo
   font-family:var(--font-latin);font-size:21px;line-height:1;
   color:#bf8247;opacity:.62;
 }
-
-.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:auto;padding-top:clamp(20px,3.2vh,30px)}
-.actions .btn{padding:11px 22px;font-size:13px}
 
 /* ============ 区块通用头 ============ */
 .sec{padding-top:clamp(30px,4.6vh,52px)}
@@ -329,6 +378,16 @@ html:not([data-theme="dark"]) .h1cta .cta-listen:hover{color:#8a6a2e;border-colo
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
 
+/* ============ 平板（761~980）：把封面两侧的箭头边距收窄 ============
+   窄屏两栏时，「封面 + 140px 箭头区」会把正文栏压得太窄，
+   三个入口只好折行。箭头本来就不必离书封一臂远，收窄后一行放得下。 */
+@media (min-width:761px) and (max-width:980px){
+  .hero{grid-template-columns:calc(clamp(200px,23vw,268px) + 96px) minmax(0,1fr);gap:clamp(20px,2.6vw,34px)}
+  .stage{padding:0 48px}
+  .bnav.prev{left:-48px}
+  .bnav.next{right:-48px}
+}
+
 /* ============ 移动端 ============ */
 @media (max-width:760px){
   .hero{grid-template-columns:1fr;gap:22px;padding-bottom:26px}
@@ -356,8 +415,6 @@ html:not([data-theme="dark"]) .h1cta .cta-listen:hover{color:#8a6a2e;border-colo
   .rk .tg{display:none}
   .rk .nm{font-size:10.5px;margin-top:5px}
   .rk .au{font-size:9.5px;margin-top:2px}
-  .actions{gap:8px}
-  .actions .btn{flex:1 1 auto;justify-content:center;padding:11px 14px}
   .sec-head{flex-wrap:wrap;gap:8px 12px}
 }
 @media (max-width:360px){
@@ -1014,6 +1071,22 @@ html:not([data-theme="dark"]) .bk-btns button[aria-pressed="true"]{background:#3
         '</ul></div>'
       : '';
 
+    /* 入口图标：AI听书用耳机（动作是「听」），查看书单用目录线，行尾一个箭头。
+       只有 AI阅读 保留 👉 —— 它是主语，其余两个用图形说明各自干什么。 */
+    var ICO={
+      listen:'<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" '+
+        'stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+
+        '<path d="M4 13.5v-1.5a8 8 0 0 1 16 0v1.5"/>'+
+        '<path d="M4 13.6h2.1a1 1 0 0 1 1 1v3.3a1 1 0 0 1-1 1H5.2A1.2 1.2 0 0 1 4 17.7z"/>'+
+        '<path d="M20 13.6h-2.1a1 1 0 0 0-1 1v3.3a1 1 0 0 0 1 1h.9a1.2 1.2 0 0 0 1.2-1.2z"/></svg>',
+      list:'<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" '+
+        'stroke-width="1.9" stroke-linecap="round" aria-hidden="true">'+
+        '<path d="M4 6.5h10M4 12h10M4 17.5h6"/></svg>',
+      chev:'<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" '+
+        'stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+
+        '<path d="M9.5 5.5 16 12l-6.5 6.5"/></svg>'
+    };
+
     var html='<section class="hero">'+
       '<div class="stage">'+
         '<div class="coverbox">'+
@@ -1033,21 +1106,20 @@ html:not([data-theme="dark"]) .bk-btns button[aria-pressed="true"]{background:#3
         '<div class="kicker">'+kicker+'</div>'+
         '<h1><a href="https://weread.qq.com/web/search/books?keyword='+
           encodeURIComponent(title)+'" title="在微信读书搜索：'+esc(title)+'">'+esc(title)+'</a></h1>'+
-        '<div class="metahead">'+
-          (author?'<div class="by">'+esc(author)+'</div>':'')+
-          '<div class="h1cta">'+
-            '<a class="cta cta-read" href="'+esc(href)+'" aria-label="AI 阅读：打开《'+esc(title)+'》全书领读">'+
-              '<span class="cta-emoji" aria-hidden="true">👉</span>AI阅读</a>'+
-            '<button type="button" class="cta cta-listen" id="ctaListen" aria-label="AI 听书：朗读《'+esc(title)+'》全文">'+
-              '<span class="cta-emoji" aria-hidden="true">👉</span>AI听书</button>'+
-          '</div>'+
+        (author?'<div class="by">'+esc(author)+'</div>':'')+
+        '<div class="cta-row">'+
+          '<a class="cta cta-read" href="'+esc(href)+'" aria-label="AI 阅读：打开《'+esc(title)+'》全书领读">'+
+            '<span class="ico-emoji" aria-hidden="true">👉</span>AI阅读</a>'+
+          '<button type="button" class="cta cta-listen" id="ctaListen" aria-label="AI 听书：朗读《'+esc(title)+'》全文">'+
+            ICO.listen+'AI听书</button>'+
+          (listHref?'<span class="cta-tail">'+
+            '<span class="cta-sep" aria-hidden="true"></span>'+
+            '<a class="cta cta-list" href="'+esc(listHref)+'" aria-label="查看《'+esc(p?p.title:title)+'》这条书单">'+
+              ICO.list+'查看书单'+ICO.chev+'</a></span>':'')+
         '</div>'+
         
         (why?'<div class="why"><span class="q">“</span><p>'+esc(why)+'</p><div class="lb">Why this one</div></div>':'')+
         quoteBlock+
-        (p?'<div class="actions">'+
-          '<a class="btn btn-ghost" href="list.html?id='+encodeURIComponent(p.id)+'&book='+encodeURIComponent(sl)+'">看整条书单 →</a>'+
-        '</div>':'')+
       '</div>'+
     '</section>';
 
