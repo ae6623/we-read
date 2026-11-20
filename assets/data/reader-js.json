@@ -1,7 +1,7 @@
 {
-  "current": "reader-20261123.js",
+  "current": "reader-20261124.js",
   "cdn_prefix": "https://cdn.js-dev.cn/assets/js/",
-  "feature": "领读页书名居中置顶（浅色封面上加柔光暗雾，始终清晰），书名即入口跳微信读书搜索页，与书卡详情页同款 ↗",
+  "feature": "换书（SPA 无刷新）后底部听书胶囊同步新书名与封面并复位播放；领读页书名居中置顶可点跳微信读书搜索页",
   "updated": "2026-11-20",
   "note": "单一版本真相源。升级 JS 时改这里 + 引擎仓 overview_gen/combine_page.py 的 READER_JS 常量，再跑 scripts/upgrade_reader_js.py 全量切换。JS 走 CDN 长缓存（max-age=31536000），必须用新文件名换 key，不能覆盖同名文件。structure-map-v2 模块的 URL 硬编码在 reader JS 的 STRUCT_V2_URL，改 v2 内容时要同步换 v2 文件名。",
   "history": [
@@ -58,7 +58,13 @@
     {
       "ver": "reader-20261123.js",
       "from": "2026-11-20",
-      "note": "书名底部加一团跟随文字的柔光暗雾 + 墙顶渐变加深：白底/浅色封面被模糊放大后底子很亮，22 版的米白书名会发飘；样式仍随 JS 注入，不动 reader.css"
+      "note": "书名底部加一团跟随文字的柔光暗雾 + 墙顶渐变加深：白底/浅色封面被模糊放大后底子很亮，22 版的米白书名会发飘；样式仍随 JS 注入，不动 reader.css",
+      "until": "2026-11-20"
+    },
+    {
+      "ver": "reader-20261124.js",
+      "from": "2026-11-20",
+      "note": "换书后胶囊标题/封面同步 + 停掉上一本朗读、进度归零；修 goBook 里 detail.title 引用未定义变量 bt（构造事件时抛错，wr:bookchange 从未派发）"
     }
   ]
 }
