@@ -313,6 +313,12 @@ def main():
     for p in paths:
         p["levelKey"] = LEVEL_ALIAS.get(p["levelKey"], p["levelKey"])
 
+    # 2026-11-20 起首页书单 tab 改由 inject_paths.py 维护（画廊入口 + 就地列表）。
+    # 本脚本会整体重建 booklist 块、把 bl-entry 入口一起删掉，遇到新版结构直接拒绝。
+    if 'class="bl-entry"' in orig and not args.remove:
+        raise SystemExit("检测到新版「画廊入口 + 就地列表」结构，请在书单路径页用 "
+                         "tools/booklist/inject_paths.py；本脚本仅用于老版全量重建。")
+
     stripped = strip_all(orig)
     if args.remove:
         new = stripped
