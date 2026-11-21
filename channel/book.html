@@ -104,14 +104,14 @@ html:not([data-theme="dark"]) .bnav:hover{color:#24312e;border-color:rgba(36,49,
 .kicker b{font-weight:400;color:oklch(0.76 0.02 70);letter-spacing:.14em}
 
 /* 书名与作者同处一行：书名是入口（跳微信读书搜索），字号跟作者一致，
-   靠暖金色 + 右侧微读图标区分，不再在页面顶部单独占一大行。
+   靠暖金色 + 行首的微读图标区分，不再在页面顶部单独占一大行。
    点书名 = 微信读书搜索这本书，不依赖 bookId，任何书都点得动 */
 .by{
   display:flex;align-items:center;flex-wrap:wrap;gap:8px;
   font-size:14px;line-height:1.7;color:oklch(0.7 0.016 66);letter-spacing:.03em;
   margin-top:10px;
 }
-.by::before{content:"—";color:oklch(0.56 0.06 72);margin-right:2px}
+/* 以前行首是一道长破折号；现在微信读书图标顶到最前面，破折号就成了多余的第二笔，去掉 */
 /* 语义上仍是页面的 h1（SEO / 读屏），视觉上只是行内一个 14px 链接 */
 .by-h{margin:0;font:inherit;line-height:inherit;letter-spacing:inherit;display:inline-flex;align-items:center}
 .by-t{
@@ -119,7 +119,7 @@ html:not([data-theme="dark"]) .bnav:hover{color:#24312e;border-color:rgba(36,49,
   color:#f4dda9;font-weight:600;text-decoration:none;transition:color .16s ease;
 }
 html:not([data-theme="dark"]) .by-t{color:#8a5f18}
-/* 书名下一条暖金细线：只画字，不画右侧微读图标（图标是 flex 项，
+/* 书名下一条暖金细线：只画字，不画前面那个微读图标（图标是 flex 项，
    text-decoration 不会跨 flex 项传播）。 */
 .by-t .by-tx{
   text-decoration:underline;
@@ -144,19 +144,19 @@ html:not([data-theme="dark"]) .by-t:hover,html:not([data-theme="dark"]) .by-t:fo
 /* 书名从页顶收回正文列后，hero 自己担起与导航之间的呼吸 */
 .hero{padding-top:clamp(18px,3vh,34px)}
 
-/* 那一排入口：金色实心（AI阅读）→ 描边（AI听书）→ 文字链（查看书单），
-   权重靠「填充 / 描边 / 纯文字」区分，不靠三个一样的胶囊并排。 */
+/* 那一排入口：不用三个胶囊，也不用三个方块堆在一起。
+   只留一个金色实心方块（唯一的主入口），另两个收成「图标 + 文字」的轻链接，
+   一重两轻，视线自然落到 AI阅读 上；方角 3px 圆角跟封面、卡片的圆角语言一致。 */
 
-.cta-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:16px}
+.cta-row{display:flex;align-items:center;flex-wrap:wrap;gap:8px 20px;margin-top:20px}
 .cta{
   display:inline-flex;align-items:center;justify-content:center;gap:7px;
-  min-height:38px;padding:0 16px;border-radius:999px;
+  min-height:44px;padding:0 4px;
   font-family:var(--font-body);font-weight:600;font-size:13px;line-height:1;
   letter-spacing:.06em;
-  text-decoration:none;cursor:pointer;border:1px solid transparent;
+  text-decoration:none;cursor:pointer;border:0;background:none;color:oklch(0.78 0.02 74);
   -webkit-tap-highlight-color:transparent;
-  transition:transform .18s var(--ease),background .18s ease,border-color .18s ease,
-             box-shadow .18s ease,color .18s ease;
+  transition:color .18s ease,background .18s ease;
 }
 .cta .ico{width:16px;height:16px;flex:none;display:block}
 .cta .ico-emoji{font-size:16px;line-height:1;transform:translateY(.5px);transition:transform .18s var(--ease);
@@ -170,60 +170,39 @@ html:not([data-theme="dark"]) .by-t:hover,html:not([data-theme="dark"]) .by-t:fo
   78%{transform:translate(0,.5px)}
   89%{transform:translate(2px,.5px)}
 }
-.cta .chev{width:11px;height:11px;flex:none;opacity:.65;transition:transform .18s var(--ease),opacity .18s ease}
-.cta:active{transform:translateY(0) scale(.985)}
-.cta:focus-visible{outline:2px solid #e2c99f;outline-offset:3px}
+.cta .chev{width:11px;height:11px;flex:none;opacity:.6;transition:transform .18s var(--ease),opacity .18s ease}
+.cta:focus-visible{outline:2px solid #b08a3e;outline-offset:3px;border-radius:3px}
 
-/* 主入口：金色实心，顶边一道高光让胶囊立起来 */
+/* 主入口：全页唯一一个实心方块，3px 圆角跟封面一致 */
 .cta-read{
-  color:#221a0c;
+  color:#231b0c;padding:0 20px;border-radius:3px;
   background:linear-gradient(180deg,#c9a45c 0%,#a98233 100%);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.34),0 8px 20px -8px rgba(176,138,62,.9);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 12px 24px -14px rgba(176,138,62,.8);
 }
-.cta-read:hover{
-  background:linear-gradient(180deg,#d7b269 0%,#b88e3a 100%);
-  transform:translateY(-1px);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 12px 26px -8px rgba(192,150,69,.95);
-}
+.cta-read:hover{background:linear-gradient(180deg,#d8b46b 0%,#b8903d 100%)}
+.cta-read:active{background:linear-gradient(180deg,#bd9a52 0%,#9c7629 100%)}
 .cta-read:hover .ico-emoji{transform:translate(2px,.5px)}
 
-/* 次入口：描边 + 极淡底色，跟主入口同高但明显不抢戏 */
-.cta-listen{color:#ecdfc4;background:rgba(255,255,255,.045);border-color:rgba(226,201,159,.42)}
-.cta-listen:hover{
-  color:#f7eeda;border-color:rgba(226,201,159,.8);
-  background:rgba(226,201,159,.1);transform:translateY(-1px);
-}
-
-/* 第三入口：纯文字链，前面一道竖线跟两个按钮隔开，读作「附加入口」。
-   竖线和链接包在同一个 flex 组里 —— 换行时整组一起掉下去，不会留下孤零零一道竖线 */
-.cta-tail{display:inline-flex;align-items:center;gap:8px}
-.cta-sep{width:1px;height:16px;flex:none;
-  background:oklch(0.68 0.02 70 / .3)}
-.cta-list{color:oklch(0.74 0.02 70);background:transparent;padding:0 2px;gap:6px}
-.cta-list:hover{color:#e8d3a6}
+/* 次级入口：没有框，只有图标和字，靠字色深浅分先后 */
+.cta-listen{color:oklch(0.82 0.018 76)}
+.cta-listen:hover{color:#fff4dd}
+.cta-list{font-weight:500;color:oklch(0.76 0.02 74)}
+.cta-list:hover{color:#f0dfba}
 .cta-list:hover .chev{transform:translateX(2px);opacity:1}
-.cta-list:focus-visible{outline-offset:4px}
 
 html:not([data-theme="dark"]) .cta-read{color:#241d0f}
-html:not([data-theme="dark"]) .cta-listen{
-  color:#3b4a43;background:rgba(36,75,64,.04);border-color:rgba(36,75,64,.24);
-}
-html:not([data-theme="dark"]) .cta-listen:hover{
-  color:#8a6a2e;border-color:rgba(138,106,46,.62);background:rgba(138,106,46,.08);
-}
-html:not([data-theme="dark"]) .cta-sep{background:rgba(36,49,46,.2)}
-html:not([data-theme="dark"]) .cta-list{color:#5b6a63}
-html:not([data-theme="dark"]) .cta-list:hover{color:#8a6a2e}
+html:not([data-theme="dark"]) .cta-listen{color:#3f4f47}
+html:not([data-theme="dark"]) .cta-listen:hover{color:#6b4f18}
+html:not([data-theme="dark"]) .cta-list{color:#5f6f67}
+html:not([data-theme="dark"]) .cta-list:hover{color:#7a5c1f}
 @media (max-width:640px){
   .by{margin-top:9px}
-  .cta-row{gap:7px;margin-top:14px}
-  /* 只收内边距，不改高度和字号：手机上仍是 38px 的手指目标 */
-  .cta{padding:0 14px;font-size:12.5px}
-  .cta-list{padding:0 2px}
+  .cta-row{gap:8px 16px;margin-top:16px}
+  .cta{font-size:12.5px}
+  .cta-read{padding:0 18px}
 }
 @media (prefers-reduced-motion:reduce){
   .cta-read .ico-emoji{animation:none}
-  .cta:hover,.cta-read:hover{transform:none}
 }
 
 /* 荐语：引号压在左上，正文首行缩进避开 */
@@ -427,7 +406,7 @@ html:not([data-theme="dark"]) .cta-list:hover{color:#8a6a2e}
      「· 作者」孤零零掉到第二行。改成两行：书名一行、作者一行，
      同时去掉行首的 — 和 ·，不留悬空标点 */
   .by{flex-direction:column;align-items:flex-start;gap:3px}
-  .by::before,.by-a::before{display:none}
+  .by-a::before{display:none}
   .why{padding:16px 18px 16px 28px;width:auto}
   .why p{font-size:13.5px}
   .facts{padding-top:18px}
@@ -1144,7 +1123,7 @@ html:not([data-theme="dark"]) .bk-btns button[aria-pressed="true"]{background:#3
         '<div class="by">'+
           '<h1 class="by-h"><a class="by-t" href="https://weread.qq.com/web/search/books?keyword='+encodeURIComponent(title)+
             '" title="在微信读书搜索：'+esc(title)+'" aria-label="在微信读书搜索《'+esc(title)+'》">'+
-            '<span class="by-tx">'+esc(ttl)+'</span>'+ICO.weread+'</a></h1>'+
+            ICO.weread+'<span class="by-tx">'+esc(ttl)+'</span></a></h1>'+
           (author?'<span class="by-a">'+esc(author)+'</span>':'')+
         '</div>'+
         '<div class="cta-row">'+
@@ -1152,10 +1131,8 @@ html:not([data-theme="dark"]) .bk-btns button[aria-pressed="true"]{background:#3
             '<span class="ico-emoji" aria-hidden="true">👉</span>AI阅读</a>'+
           '<button type="button" class="cta cta-listen" id="ctaListen" aria-label="AI 听书：朗读《'+esc(title)+'》全文">'+
             ICO.listen+'AI听书</button>'+
-          (listHref?'<span class="cta-tail">'+
-            '<span class="cta-sep" aria-hidden="true"></span>'+
-            '<a class="cta cta-list" href="'+esc(listHref)+'" aria-label="查看《'+esc(p?p.title:title)+'》这条书单">'+
-              ICO.list+'查看书单'+ICO.chev+'</a></span>':'')+
+          (listHref?'<a class="cta cta-list" href="'+esc(listHref)+'" aria-label="查看《'+esc(p?p.title:title)+'》这条书单">'+
+              ICO.list+'查看书单'+ICO.chev+'</a>':'')+
         '</div>'+
         
         (why?'<div class="why"><span class="q">“</span><p>'+esc(why)+'</p><div class="lb">Why this one</div></div>':'')+
