@@ -103,37 +103,36 @@ html:not([data-theme="dark"]) .bnav:hover{color:#24312e;border-color:rgba(36,49,
 .kicker .dot{width:3px;height:3px;border-radius:50%;background:oklch(0.5 0.02 66);flex:none}
 .kicker b{font-weight:400;color:oklch(0.76 0.02 70);letter-spacing:.14em}
 
-h1{
-  margin-top:16px;
-  font-family:var(--font-display);font-weight:700;
-  font-size:clamp(27px,3.4vw,44px);line-height:1.28;letter-spacing:.015em;
-  text-wrap:balance;
+/* 书名与作者同处一行：书名是入口（跳微信读书搜索），字号跟作者一致，
+   靠暖金色 + 右侧微读图标区分，不再在页面顶部单独占一大行。
+   点书名 = 微信读书搜索这本书，不依赖 bookId，任何书都点得动 */
+.by{
+  display:flex;align-items:center;flex-wrap:wrap;gap:8px;
+  font-size:14px;line-height:1.7;color:oklch(0.7 0.016 66);letter-spacing:.03em;
+  margin-top:10px;
 }
-/* 书名即入口：统一跳微信读书搜索页（不依赖 bookId，任何书都点得动） */
-h1 a{color:inherit;text-decoration:none;transition:color .16s ease}
-h1 a::after{
-  content:"↗";display:inline-block;margin-left:.28em;
-  font:400 .5em/1 var(--sans);vertical-align:.34em;opacity:.5;
-  transition:opacity .16s ease;
+.by::before{content:"—";color:oklch(0.56 0.06 72);margin-right:2px}
+/* 语义上仍是页面的 h1（SEO / 读屏），视觉上只是行内一个 14px 链接 */
+.by-h{margin:0;font:inherit;line-height:inherit;letter-spacing:inherit;display:inline-flex;align-items:center}
+.by-t{
+  display:inline-flex;align-items:center;gap:6px;
+  color:#e6d2a8;font-weight:500;text-decoration:none;transition:color .16s ease;
 }
-h1 a:hover,h1 a:focus-visible{color:#e2c99f}
-h1 a:hover::after,h1 a:focus-visible::after{opacity:.95}
-h1 a:focus-visible{outline:2px solid #b08a3e;outline-offset:4px;border-radius:4px}
-html:not([data-theme="dark"]) h1 a:hover,html:not([data-theme="dark"]) h1 a:focus-visible{color:#8a6a2e}
+html:not([data-theme="dark"]) .by-t{color:#8a6a2e}
+.by-t .wr-ico{
+  width:14px;height:14px;flex:none;color:#4aa97c;transform:translateY(.5px);
+  transition:color .16s ease,transform .16s ease;
+}
+.by-t:hover,.by-t:focus-visible{color:#f2dfb9}
+html:not([data-theme="dark"]) .by-t:hover,html:not([data-theme="dark"]) .by-t:focus-visible{color:#6d5322}
+.by-t:hover .wr-ico,.by-t:focus-visible .wr-ico{color:#63c795}
+.by-t:focus-visible{outline:2px solid #b08a3e;outline-offset:3px;border-radius:4px}
+.by-a::before{content:"·";margin-right:8px;color:oklch(0.5 0.02 66)}
+/* 书名从页顶收回正文列后，hero 自己担起与导航之间的呼吸 */
+.hero{padding-top:clamp(18px,3vh,34px)}
 
-/* 页面顶部书名：封面之上、居中一行。点书名 = 微信读书搜索这本书，
-   与领读页（reader.js 的墙顶书名）同一套口径，不依赖 bookId */
-.bk-head{padding:clamp(2px,1.4vh,12px) 0 clamp(10px,2.2vh,20px);text-align:center}
-.bk-head h1{
-  margin:0 auto;display:block;max-width:min(100%,920px);
-  font-size:clamp(26px,3.2vw,42px);line-height:1.24;
-  text-wrap:balance;
-}
-/* 书名下一行：作者一行、入口一排，全部左对齐，跟书名同一条竖线起头。
-   三个入口的视觉权重依次递减：金色实心（AI阅读）→ 描边（AI听书）→ 文字链（查看书单），
+/* 那一排入口：金色实心（AI阅读）→ 描边（AI听书）→ 文字链（查看书单），
    权重靠「填充 / 描边 / 纯文字」区分，不靠三个一样的胶囊并排。 */
-.by{font-size:14px;line-height:1.6;color:oklch(0.7 0.016 66);letter-spacing:.03em;margin-top:10px}
-.by::before{content:"— ";color:oklch(0.56 0.06 72)}
 
 .cta-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:16px}
 .cta{
@@ -409,7 +408,6 @@ html:not([data-theme="dark"]) .cta-list:hover{color:#8a6a2e}
   .bnav.next{right:-70px}
   .coverbox .glow{inset:-14% -30% -8%}
   .meta{text-align:left}
-  .bk-head h1{font-size:clamp(26px,7.4vw,34px)}
   .why{padding:16px 18px 16px 28px;width:auto}
   .why p{font-size:13.5px}
   .facts{padding-top:18px}
@@ -1091,14 +1089,16 @@ html:not([data-theme="dark"]) .bk-btns button[aria-pressed="true"]{background:#3
       list:'<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" '+
         'stroke-width="1.9" stroke-linecap="round" aria-hidden="true">'+
         '<path d="M4 6.5h10M4 12h10M4 17.5h6"/></svg>',
+      weread:'<svg class="wr-ico" viewBox="0 0 24 24" aria-hidden="true">'+
+        '<rect x="2.4" y="2.4" width="19.2" height="19.2" rx="5.2" fill="currentColor"/>'+
+        '<path d="M12 8.5c-1.05-.78-2.45-1.13-4.15-1.03v7.9c1.7-.1 3.1.24 4.15 1.03 1.05-.79 2.45-1.13 4.15-1.03v-7.9c-1.7-.1-3.1.25-4.15 1.03Z" fill="#fff" opacity=".96"/>'+
+        '<path d="M12 8.5v7.86" stroke="currentColor" stroke-width="1.05" stroke-linecap="round"/></svg>',
       chev:'<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" '+
         'stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+
         '<path d="M9.5 5.5 16 12l-6.5 6.5"/></svg>'
     };
 
-    var html='<div class="bk-head"><h1><a href="https://weread.qq.com/web/search/books?keyword='+
-        encodeURIComponent(title)+'" title="在微信读书搜索：'+esc(title)+'">'+esc(title)+'</a></h1></div>'+
-      '<section class="hero">'+
+    var html='<section class="hero">'+
       '<div class="stage">'+
         '<div class="coverbox">'+
           '<div class="glow" style="--h:'+(hue==null?66:hue)+'"></div>'+
@@ -1115,7 +1115,12 @@ html:not([data-theme="dark"]) .bk-btns button[aria-pressed="true"]{background:#3
       '</div>'+
       '<div class="meta">'+
         '<div class="kicker">'+kicker+'</div>'+
-        (author?'<div class="by">'+esc(author)+'</div>':'')+
+        '<div class="by">'+
+          '<h1 class="by-h"><a class="by-t" href="https://weread.qq.com/web/search/books?keyword='+encodeURIComponent(title)+
+            '" title="在微信读书搜索：'+esc(title)+'" aria-label="在微信读书搜索《'+esc(title)+'》">'+
+            esc(title)+ICO.weread+'</a></h1>'+
+          (author?'<span class="by-a">'+esc(author)+'</span>':'')+
+        '</div>'+
         '<div class="cta-row">'+
           '<a class="cta cta-read" href="'+esc(href)+'" aria-label="AI 阅读：打开《'+esc(title)+'》全书领读">'+
             '<span class="ico-emoji" aria-hidden="true">👉</span>AI阅读</a>'+
