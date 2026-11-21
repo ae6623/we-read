@@ -134,6 +134,15 @@
 .reading-tabs button.tab-search-toggle[aria-expanded="true"]{background:var(--green);border-color:var(--green);color:#fff}
 .reading-tabs button.tab-search-toggle svg{display:block;width:17px;height:17px;
   fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+/* 有关键词/分类正在生效时，按钮右上角留一个小金点。
+   收起浮层不再清空筛选，所以必须有「看得见的过滤状态」，否则用户会以为
+   书墙莫名其妙少了一半书。 */
+.reading-tabs button.tab-search-toggle{position:relative}
+.reading-tabs button.tab-search-toggle.is-filtering::after{
+  content:"";position:absolute;top:4px;right:4px;width:5px;height:5px;border-radius:50%;
+  background:#cf8a2c;box-shadow:0 0 0 1.5px #fffefa}
+.reading-tabs button.tab-search-toggle.is-filtering[aria-expanded="true"]::after{
+  box-shadow:0 0 0 1.5px var(--green)}
 .shelf-search-pop{position:absolute;top:calc(100% + 8px);right:0;z-index:20;
   display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end;
   padding:10px 14px;border:1px solid var(--line);border-radius:12px;background:#fffefa;

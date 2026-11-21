@@ -116,9 +116,22 @@ html:not([data-theme="dark"]) .bnav:hover{color:#24312e;border-color:rgba(36,49,
 .by-h{margin:0;font:inherit;line-height:inherit;letter-spacing:inherit;display:inline-flex;align-items:center}
 .by-t{
   display:inline-flex;align-items:center;gap:6px;
-  color:#e6d2a8;font-weight:500;text-decoration:none;transition:color .16s ease;
+  color:#f4dda9;font-weight:600;text-decoration:none;transition:color .16s ease;
 }
-html:not([data-theme="dark"]) .by-t{color:#8a6a2e}
+html:not([data-theme="dark"]) .by-t{color:#8a5f18}
+/* 书名下一条暖金细线：只画字，不画右侧微读图标（图标是 flex 项，
+   text-decoration 不会跨 flex 项传播）。 */
+.by-t .by-tx{
+  text-decoration:underline;
+  text-decoration-color:rgba(244,221,169,.58);
+  text-decoration-thickness:1px;
+  text-underline-offset:4px;
+  transition:text-decoration-color .16s ease,text-decoration-thickness .16s ease;
+}
+html:not([data-theme="dark"]) .by-t .by-tx{text-decoration-color:rgba(138,95,24,.5)}
+.by-t:hover .by-tx,.by-t:focus-visible .by-tx{
+  text-decoration-color:currentColor;text-decoration-thickness:1.5px;
+}
 .by-t .wr-ico{
   width:14px;height:14px;flex:none;color:#4aa97c;transform:translateY(.5px);
   transition:color .16s ease,transform .16s ease;
@@ -1118,7 +1131,7 @@ html:not([data-theme="dark"]) .bk-btns button[aria-pressed="true"]{background:#3
         '<div class="by">'+
           '<h1 class="by-h"><a class="by-t" href="https://weread.qq.com/web/search/books?keyword='+encodeURIComponent(title)+
             '" title="在微信读书搜索：'+esc(title)+'" aria-label="在微信读书搜索《'+esc(title)+'》">'+
-            esc(title)+ICO.weread+'</a></h1>'+
+            '<span class="by-tx">'+esc(title)+'</span>'+ICO.weread+'</a></h1>'+
           (author?'<span class="by-a">'+esc(author)+'</span>':'')+
         '</div>'+
         '<div class="cta-row">'+

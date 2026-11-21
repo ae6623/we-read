@@ -28,3 +28,8 @@
 
 # 2026-11-21：部署链路改造（Pages/CDN 并行、七牛增量、stage 硬链）上线后
 # 触发一次完整部署做验证；本段无待刷新路径。
+
+# 2026-11-26：首页搜索记忆（关键词 + Tab 持久化）上线。
+# index.html 引用改指 homepage-reading-20261126.js（新文件，首访即回源）；
+# homepage-reading.css 同名覆盖加了「筛选中」小金点，长缓存必须精确刷两域。
+/assets/css/homepage-reading.css
