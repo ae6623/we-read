@@ -1,0 +1,404 @@
+/* home-card.js — 卡片操作区（收藏 / 分享）
+ *
+ * 每张卡右下角一个 ⋯，点开是「收藏 / 分享」。
+ * 收藏只存本地（localStorage `rd-fav`），不动服务端；分享优先调系统面板，
+ * 不支持就复制链接。没有依赖，失败都静默降级。
+ *
+ * 为什么菜单打开时要挂到 <body>：卡片 hover 有 transform，fixed 会退化成
+ * 「相对卡片定位」，菜单位置就全乱了；挂到 body 才是真正的视口坐标。
+ */
+(function () {
+  'use strict';
+
+  var KEY = 'rd-fav';
+  var items = [];
+
+  function load() {
+    try {
+      var v = JSON.parse(localStorage.getItem(KEY) || '[]');
+      return Array.isArray(v) ? v : [];
+    } catch (e) { return []; }
+  }
+  function save(list) {
+    try { localStorage.setItem(KEY, JSON.stringify(list)); } catch (e) {}
+  }
+
+  function track(p, t) { if (window.rdTrack) window.rdTrack(p, t); }
+
+  function titleOf(card) {
+    var h = card.querySelector('h3');
+    return ((h ? h.textContent : '') || '').trim().slice(0, 40) || keyOf(card);
+  }
+
+  function keyOf(card) {
+    if (card.dataset.slug) return card.dataset.slug;
+    var a = card.querySelector('.card-title-link, .book-jd-link, h3 a');
+    return a ? a.getAttribute('href') : (card.querySelector('h3') || {}).textContent || '';
+  }
+
+  var toastEl, toastTimer;
+  function toast(msg) {
+    if (!toastEl) {
+      toastEl = document.createElement('div');
+      toastEl.className = 'rd-toast';
+      toastEl.setAttribute('role', 'status');
+      toastEl.setAttribute('aria-live', 'polite');
+      document.body.appendChild(toastEl);
+    }
+    toastEl.textContent = msg;
+    toastEl.classList.add('is-on');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toastEl.classList.remove('is-on'); }, 1800);
+  }
+
+  function closeAll(except) {
+    items.forEach(function (it) {
+      if (it === except) return;
+      it.menu.hidden = true;
+      it.more.setAttribute('aria-expanded', 'false');
+    });
+  }
+
+  function paint(it, fav) {
+    var btn = it.menu.querySelector('[data-act="fav"]');
+    if (btn) {
+      btn.setAttribute('aria-checked', fav ? 'true' : 'false');
+      var s = btn.querySelector('span');
+      if (s) s.textContent = fav ? '已收藏' : '收藏';
+    }
+    it.card.classList.toggle('is-fav', fav);
+  }
+
+  function share(it) {
+    var a = it.card.querySelector('.card-title-link, .book-jd-link, h3 a');
+    var title = ((it.card.querySelector('h3') || {}).textContent || document.title).trim();
+    var url = a ? new URL(a.getAttribute('href'), location.href).href : location.href;
+
+    if (navigator.share) {
+      navigator.share({ title: title, url: url }).catch(function () {});
+      return;
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(
+        function () { toast('链接已复制'); },
+        function () { toast('复制失败，可长按书名复制'); }
+      );
+      return;
+    }
+    toast(url);
+  }
+
+  /* ── 章节数搬到卡片右下 ─────────────────────────────────────────
+     原来「34 章 / 790 条」在书名下面独占一行、靠左，白吃一行高度；
+     挪到 card-foot 右侧后：日期在右上、章节数在右下，元信息连成一条右列，
+     书名单独占中间，卡片也能矮掉一行（瀑布流靠这个错落）。 */
+  var META_RE = /^\s*[\d,]+\s*章(\s*\/\s*[\d,]+\s*条)?\s*$/;
+
+  function moveMeta() {
+    var cards = document.querySelectorAll('.archive-card');
+    for (var i = 0; i < cards.length; i++) {
+      var card = cards[i];
+      if (card.querySelector('.card-meta')) continue;
+      var foot = card.querySelector('.card-foot');
+      if (!foot) continue;
+      var ps = card.querySelectorAll('p');
+      for (var j = 0; j < ps.length; j++) {
+        var p = ps[j];
+        // 只搬纯元信息；描述型段落（系列 / 归档卡）留在原位，别把正文塞进底栏
+        if (!META_RE.test((p.textContent || '').trim())) continue;
+        p.classList.add('card-meta');
+        var more = foot.querySelector('.card-more');
+        foot.insertBefore(p, more || null);
+        break;
+      }
+    }
+  }
+
+  /* ── 卡片封面（一排一 / 一排二才显示，一排三隐藏） ──────────────
+     库里目前没有书籍封面图（只有 epub），所以默认渲染「按 slug 哈希上色的占位封面 +
+     书名」，让用户先看到带封面的版式效果。若日后把真封面放到 assets/covers/<slug>.jpg，
+     <img> 会自动盖上去、占位层透明退场（onerror 移除）。 */
+  /* 兜底色相：真封面 404 时用这套颜色铺渐变，按 slug 哈希分散，
+     不让整页兜底封面挤在同一个绿上（一眼看出是「没图」）。 */
+  var COVER_HUES = [162, 186, 205, 28, 36, 12, 258, 340];
+
+  function coverHue(s) {
+    var n = 0;
+    for (var i = 0; i < s.length; i++) n = (n * 31 + s.charCodeAt(i)) % 9973;
+    return COVER_HUES[n % COVER_HUES.length];
+  }
+
+  function addCovers() {
+    var cards = document.querySelectorAll('.archive-card');
+    for (var i = 0; i < cards.length; i++) {
+      var card = cards[i];
+      if (card.querySelector('.card-cover')) continue;
+      var slug = card.dataset.slug || '';
+      var h3 = card.querySelector('h3');
+      var title = ((h3 ? h3.textContent : '') || '').trim();
+      var cover = document.createElement('div');
+      cover.className = 'card-cover';
+      if (slug) cover.style.setProperty('--cv-h', coverHue(slug));
+      if (title) {
+        var t = document.createElement('span');
+        t.className = 'card-cover-title';
+        // 只当「书封题字」用：去掉书名号等前导标点后取前两个字，完整书名在下方 h3
+        t.textContent = title.replace(/^[\s《〈“"'「【·—-]+/, '').slice(0, 2);
+        cover.appendChild(t);
+
+        // 竖版卡空间够，兜底时直接写完整书名（海报卡仍用两字题字）
+        var full = document.createElement('span');
+        full.className = 'card-cover-full';
+        var fb = document.createElement('b');
+        fb.textContent = title.replace(/^[\s《〈“"'「【]+/, '').replace(/[》〉”"'」】\s]+$/, '');
+        var fi = document.createElement('i');
+        fi.textContent = 'WE READ';
+        full.appendChild(fb);
+        full.appendChild(fi);
+        cover.appendChild(full);
+      }
+      if (slug) {
+        var img = document.createElement('img');
+        img.className = 'card-cover-img';
+        // 首屏（DOM 前 30 张，覆盖首两屏）立刻并发加载：弱网下 lazy 会把
+        // 占位封面晾很久，用户看到的就是「好多兜底」。其余仍走 lazy。
+        if (i < 30) {
+          img.loading = 'eager';
+          img.fetchPriority = 'high';
+        } else {
+          img.loading = 'lazy';
+        }
+        img.decoding = 'async';
+        img.alt = title;
+        img.dataset.slug = slug;
+        // 同源优先：reader.js-dev.cn 本身就是 CDN 镜像，同源省掉一次
+        // DNS + TLS 握手（弱网下这一步往往比下载 20KB 的 JPEG 还慢）；
+        // 同源失败再回退独立的 cdn.js-dev.cn，两条都不通才保留文字封面。
+        var backup = 'https://cdn.js-dev.cn/assets/covers/' + slug + '.jpg';
+        img.dataset.backup = backup;
+        img.src = '/assets/covers/' + slug + '.jpg';
+        // 立即把绝对地址写进 localStorage（详情页直接复用，缓存命中秒出图）
+        try { localStorage.setItem('rdCover:' + slug, backup); } catch (e) {}
+        img.addEventListener('error', function () {
+          if (this.dataset.backup && this.src.indexOf('cdn.js-dev.cn') === -1) {
+            this.src = this.dataset.backup;
+            return;
+          }
+          this.remove();
+        });
+        // 真封面加载成功 → 隐藏占位题字，只留图。
+        // 循环用 var，闭包里不能引用 slug/cover（会全指到最后一轮），
+        // 一律从 this / dataset 取。
+        img.addEventListener('load', function () {
+          var c = this.closest('.card-cover');
+          if (c) c.classList.add('has-img');
+          try {
+            localStorage.setItem('rdCover:' + (this.dataset.slug || ''),
+              this.currentSrc || this.src);
+          } catch (e) {}
+        });
+        /* 先入 DOM 再补查：命中缓存的图会在 appendChild 之前就把 load 事件排队，
+           那一刻 img 还不在文档里，closest('.card-cover') 拿到 null → has-img 永远加不上，
+           卡片就一直停在绿色题字占位（线上很多卡就是这么空着的）。 */
+        cover.appendChild(img);
+        // naturalWidth>0 就够：渐进式 JPEG 会在 complete=false 时已解出尺寸，
+        // 这时图已经在画了，兜底文字应该立刻退场，不用等整张下完
+        if (img.naturalWidth > 0) cover.classList.add('has-img');
+      }      // 把除封面外的所有子节点（含隐藏的 ⋯ 菜单）包进 card-body，
+      // 方便「封面置顶（一排二）/ 封面置左（一排一）」两种版式切换
+      var body = document.createElement('div');
+      body.className = 'card-body';
+      while (card.firstChild) body.appendChild(card.firstChild);
+      card.appendChild(cover);
+      card.appendChild(body);
+    }
+  }
+
+  /* ── 封面补挂 has-img ────────────────────────────────────────────
+     lazy 图在切 Tab、滚到视口、CDN 回源慢这几种情况下，load 事件的时机
+     和 addCovers 的执行顺序对不上：图已经 complete & naturalWidth>0 了，
+     has-img 却没挂上，卡片就一直停在兜底素封上（线上出现的「贝加尔湖变纯色块」
+     就是这个）。这里做两级兜底：轮询扫 + 滚动后再扫，谁加载完给谁补上。 */
+  function watchCovers() {
+    function sweep() {
+      var covers = document.querySelectorAll('.card-cover:not(.has-img)');
+      var pending = 0;
+      for (var i = 0; i < covers.length; i++) {
+        var im = covers[i].querySelector('img');
+        if (!im) continue;
+        if (im.naturalWidth > 0) covers[i].classList.add('has-img');
+        else pending++;
+      }
+      return pending;
+    }
+
+    var tries = 0;
+    // 弱网 / CDN 冷回源时，lazy 图可能几十秒后才陆续 complete；原来 40 次
+    // （16 秒）就停，之后只剩 document 捕获兜底。放宽到 2 分钟，覆盖绝大多数
+    // 慢加载场景，代价只是一个轻量空轮询。
+    var timer = setInterval(function () {
+      tries++;
+      if (sweep() === 0 || tries > 300) clearInterval(timer);
+    }, 400);
+
+    // 滚到新的一屏、切页签之后都补一次（rAF 节流，跟随滚动不额外开销）
+    var ticking = false;
+    function later() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () { ticking = false; sweep(); });
+    }
+    window.addEventListener('scroll', later, { passive: true });
+
+    /* 2026-11-21：系列 / 归档这类隐藏 panel 里的封面图是 loading=lazy，
+       panel 隐藏时浏览器根本不加载，用户切过去看到的就是一屏「纯文字占位」，
+       要等滚到视口才逐张变图，很丑。切 tab 时把目标 panel 内所有封面图
+       主动提升为 eager 立即加载，配合下面的 sweep 补挂 has-img —— 封面文件
+       本身都在 CDN（真图），这样切过去就是整屏真封面。 */
+    function eagerPanel(panelId) {
+      var panel = document.getElementById(panelId);
+      if (!panel) return;
+      var imgs = panel.querySelectorAll('img.card-cover-img[loading="lazy"]');
+      for (var i = 0; i < imgs.length; i++) {
+        imgs[i].loading = 'eager';
+        imgs[i].fetchPriority = 'high';
+        // 已写死 src 的静态卡：确认 src 真正生效（隐藏期可能未装载）
+        var s = imgs[i].getAttribute('src');
+        if (s && imgs[i].src !== imgs[i].dataset.backup) imgs[i].src = s;
+      }
+    }
+    Array.prototype.forEach.call(document.querySelectorAll('[data-panel]'), function (tab) {
+      tab.addEventListener('click', function () {
+        var pid = tab.getAttribute('data-panel');
+        if (pid) eagerPanel(pid);
+        setTimeout(sweep, 60); setTimeout(sweep, 600); setTimeout(sweep, 1500);
+      });
+    });
+    // sub-tab（全书视角 / 即将上线）同理
+    Array.prototype.forEach.call(document.querySelectorAll('[data-subpanel]'), function (tab) {
+      tab.addEventListener('click', function () {
+        var pid = tab.getAttribute('data-subpanel');
+        if (pid) eagerPanel(pid);
+        setTimeout(sweep, 60); setTimeout(sweep, 600);
+      });
+    });
+
+    /* 最可靠的一招：在 document 上捕获所有 img 的 load。
+       轮询会在「当前没有 pending」时停掉，而 lazy 图往往在这之后才陆续加载完
+       （切页签、慢慢滚下去、CDN 冷回源），那时已经没人给它补 has-img 了。
+       捕获阶段的 load 不冒泡也能收到，任何时刻加载完都逃不掉。 */
+    document.addEventListener('load', function (e) {
+      var t = e.target;
+      if (!t || t.tagName !== 'IMG') return;
+      var c = t.closest && t.closest('.card-cover');
+      if (c) c.classList.add('has-img');
+    }, true);
+  }
+
+  function boot() {
+    moveMeta();
+    addCovers();
+    watchCovers();
+    var favs = load();
+
+    items = Array.prototype.slice.call(document.querySelectorAll('.archive-card'))
+      .map(function (card) {
+        var more = card.querySelector('.card-more');
+        var menu = card.querySelector('.card-menu');
+        return more && menu ? { card: card, more: more, menu: menu, key: keyOf(card) } : null;
+      })
+      .filter(Boolean);
+
+    items.forEach(function (it) {
+      var card = it.card, more = it.more, menu = it.menu, k = it.key;
+
+      paint(it, favs.indexOf(k) >= 0);
+
+      function place() {
+        var r = more.getBoundingClientRect();
+        // 按钮滚出视口就别挂着，避免菜单飘在空白处
+        if (r.bottom < 4 || r.top > window.innerHeight - 4) {
+          menu.hidden = true;
+          more.setAttribute('aria-expanded', 'false');
+          return;
+        }
+        var mh = menu.offsetHeight, gap = 6;
+        var below = window.innerHeight - r.bottom;
+        var top = below > mh + gap + 8 ? r.bottom + gap : r.top - mh - gap;
+        top = Math.max(8, Math.min(top, window.innerHeight - mh - 8));
+        menu.style.top = top + 'px';
+        menu.style.bottom = 'auto';           // CSS 里有兜底 bottom，不清掉会把高度压成 0
+        menu.style.right = Math.max(8, window.innerWidth - r.right) + 'px';
+      }
+      menu._place = place;
+
+      more.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var open = menu.hidden;
+        closeAll(it);
+        if (open && menu.parentNode !== document.body) document.body.appendChild(menu);
+        menu.hidden = !open;
+        more.setAttribute('aria-expanded', open ? 'true' : 'false');
+        if (open) {
+          place();
+          // 页面开了平滑滚动时，点按瞬间拿到的位置可能是动画中间态，补两帧校正
+          requestAnimationFrame(place);
+          setTimeout(place, 240);
+          var first = menu.querySelector('button');
+          if (first) first.focus({ preventScroll: true });
+        }
+      });
+
+      menu.addEventListener('click', function (e) {
+        var b = e.target.closest ? e.target.closest('button[data-act]') : null;
+        if (!b) return;
+        e.stopPropagation();
+        var act = b.getAttribute('data-act');
+        if (act === 'fav') {
+          var list = load();
+          var i = list.indexOf(k);
+          var on = i < 0;
+          if (on) { list.push(k); paint(it, true); toast('已收藏'); }
+          else { list.splice(i, 1); paint(it, false); toast('已取消收藏'); }
+          save(list);
+          track('/ev/fav/' + (on ? 'on' : 'off') + '/' + k, (on ? '收藏 · ' : '取消收藏 · ') + titleOf(it.card));
+        } else if (act === 'share') {
+          share(it);
+          track('/ev/share/' + k, '分享 · ' + titleOf(it.card));
+        }
+        menu.hidden = true;
+        more.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest || !e.target.closest('.card-more, .card-menu')) closeAll(null);
+    });
+
+    /* 点书名 = 打开这本书 → 上报一条，用来算「曝光→打开」的转化 */
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest ? e.target.closest('.card-title-link, .book-jd-link') : null;
+      if (!a) return;
+      var card = a.closest ? a.closest('.archive-card') : null;
+      var k = card ? keyOf(card) : a.getAttribute('href');
+      track('/ev/open/' + k, '打开 · ' + (card ? titleOf(card) : k));
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeAll(null);
+    });
+
+    // 菜单是 fixed 的：滚动/缩放时跟着按钮走，而不是直接收起
+    //（收起会让「点菜单项时浏览器微滚动」变成点不中）
+    function follow() {
+      items.forEach(function (it) {
+        if (!it.menu.hidden) it.menu._place();
+      });
+    }
+    window.addEventListener('scroll', follow, { passive: true });
+    window.addEventListener('resize', follow);
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
+})();
