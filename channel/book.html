@@ -107,7 +107,9 @@ html:not([data-theme="dark"]) .bnav:hover{color:#24312e;border-color:rgba(36,49,
    靠暖金色 + 行首的微读图标区分，不再在页面顶部单独占一大行。
    点书名 = 微信读书搜索这本书，不依赖 bookId，任何书都点得动 */
 .by{
-  display:flex;align-items:center;flex-wrap:wrap;gap:8px;
+  display:flex;align-items:center;flex-wrap:wrap;gap:6px 10px;
+  /* 跟原文摘录同宽：作者推到这条线的右端，右边缘和摘录块对齐 */
+  max-width:680px;
   font-size:14px;line-height:1.7;color:oklch(0.7 0.016 66);letter-spacing:.03em;
   margin-top:10px;
 }
@@ -140,7 +142,7 @@ html:not([data-theme="dark"]) .by-t .by-tx{text-decoration-color:rgba(138,95,24,
 html:not([data-theme="dark"]) .by-t:hover,html:not([data-theme="dark"]) .by-t:focus-visible{color:#6d5322}
 .by-t:hover .wr-ico,.by-t:focus-visible .wr-ico{transform:translateY(.5px) scale(1.08)}
 .by-t:focus-visible{outline:2px solid #b08a3e;outline-offset:3px;border-radius:4px}
-.by-a::before{content:"·";margin-right:8px;color:oklch(0.5 0.02 66)}
+.by-a{margin-left:auto;min-width:0;font-size:13px;letter-spacing:.02em;text-align:right}
 /* 书名从页顶收回正文列后，hero 自己担起与导航之间的呼吸 */
 .hero{padding-top:clamp(18px,3vh,34px)}
 
@@ -402,12 +404,7 @@ html:not([data-theme="dark"]) .cta-list:hover{color:#7a5c1f}
   .bnav.next{right:-70px}
   .coverbox .glow{inset:-14% -30% -8%}
   .meta{text-align:left}
-  /* 手机上一行塞不下「《书名》+ 图标 + 作者」，书名加书名号后更容易挤成
-     「· 作者」孤零零掉到第二行。改成两行：书名一行、作者一行，
-     同时去掉行首的 — 和 ·，不留悬空标点 */
-  .by{flex-direction:column;align-items:flex-start;gap:3px}
-  .by-a::before{display:none}
-  .why{padding:16px 18px 16px 28px;width:auto}
+    .why{padding:16px 18px 16px 28px;width:auto}
   .why p{font-size:13.5px}
   .facts{padding-top:18px}
   .fact i{font-size:20px}
@@ -460,7 +457,8 @@ html:not([data-theme="dark"]) .sec-head{border-bottom-color:#e4ded1}
    规格与全书领读页（combined.html）的胶囊完全一致：40 方封面 + 倍速 + 设置 + 金色播放键，
    顶沿一条 2px 进度线。点按钮以外的地方 = 进全书领读，
    两页之间因此是「同一个组件换了个位置」，不突兀。 */
-body{padding-bottom:104px}
+/* 播放器默认吸底（首屏渲染前还没插槽时用它兜底），
+   一旦被塞进正文里的 .dock-slot，就变成「原文摘录」下面的一块。 */
 .audio-dock{
   position:fixed;left:50%;bottom:max(14px,env(safe-area-inset-bottom,0px));
   transform:translateX(-50%);z-index:60;
@@ -565,9 +563,25 @@ html:not([data-theme="dark"]) .bk-panel{
 html:not([data-theme="dark"]) .bk-row + .bk-row{border-top-color:rgba(36,75,64,.1)}
 html:not([data-theme="dark"]) .bk-btns button{border-color:rgba(36,75,64,.2)}
 html:not([data-theme="dark"]) .bk-btns button[aria-pressed="true"]{background:#3a5a4a;border-color:#3a5a4a;color:#fff}
-/* 手机：浏览器底部操作栏不计入 safe-area-inset，整体上抬 */
+/* 正文里的播放器：不再吸底，跟着内容排在「原文摘录」下面 */
+.dock-slot{position:relative;margin-top:20px}
+.dock-slot .audio-dock{
+  position:static;left:auto;bottom:auto;transform:none;
+  width:100%;max-width:680px;
+  padding:8px 12px 8px 8px;border-radius:12px;
+  animation:dockInS .34s var(--ease) both;
+}
+@keyframes dockInS{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
+/* Aa 面板跟着播放器走：落在它正上方，而不是屏幕底部 */
+.dock-slot .bk-panel{
+  position:absolute;left:0;right:0;bottom:calc(100% + 10px);
+  width:auto;transform:none;
+  animation:panelInS .18s var(--ease) both;
+}
+.dock-slot .bk-panel{background:#1f2227}
+html:not([data-theme="dark"]) .dock-slot .bk-panel{background:#fffdf6}
+@keyframes panelInS{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 @media (max-width:760px){
-  body{padding-bottom:180px}
   .audio-dock{bottom:calc(72px + env(safe-area-inset-bottom,0px))}
   .bk-panel{bottom:calc(136px + env(safe-area-inset-bottom,0px))}
 }
@@ -632,6 +646,7 @@ html:not([data-theme="dark"]) .bk-btns button[aria-pressed="true"]{background:#3
     }
     if(!P) return {toggle:function(){},close:function(){}};
     P.addEventListener('click',function(e){
+      e.stopPropagation(); /* 面板现在挂在播放条里面，别让点击冒泡成「进全书领读」 */
       var b=e.target.closest?e.target.closest('[data-bk]'):null; if(!b)return;
       var k=b.getAttribute('data-bk');
       if(k==='fs-') cfg.fs=FS[Math.max(0,at(FS,cfg.fs)-1)];
@@ -973,8 +988,17 @@ html:not([data-theme="dark"]) .bk-btns button[aria-pressed="true"]{background:#3
             .catch(function(){cb(fallback(card));});
         });
     }
+    /* 播放器挂进正文里的插槽（「原文摘录」下面）。换书时整段重渲染，
+       插槽是新的节点，所以每次 load 都重新认领一次；没有插槽就继续吸底。 */
+    function mount(){
+      var slot=document.getElementById('dockSlot');
+      if(!slot)return;
+      if(el.parentNode!==slot)slot.appendChild(el);
+      var P=document.getElementById('bkPanel');
+      if(P&&P.parentNode!==slot)slot.appendChild(P);
+    }
     function load(slug,title,cover,card,href){
-      build();halt();
+      build();mount();halt();
       curSlug=slug;ci=0;chunks=[];useLocal=false;bar(0);dockHref=href||'';
       titleEl.textContent=title||'全书朗读';
       coverEl.innerHTML=cover?'<img src="'+esc(cover)+'" alt="" onerror="this.style.display=&#39;none&#39;">':'';
@@ -1137,6 +1161,7 @@ html:not([data-theme="dark"]) .bk-btns button[aria-pressed="true"]{background:#3
         
         (why?'<div class="why"><span class="q">“</span><p>'+esc(why)+'</p><div class="lb">Why this one</div></div>':'')+
         quoteBlock+
+        '<div class="dock-slot" id="dockSlot"></div>'+
       '</div>'+
     '</section>';
 
