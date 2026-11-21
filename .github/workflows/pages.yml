@@ -135,6 +135,8 @@ jobs:
             echo "::warning::Pages artifact 不可读，本次跳过 CDN 同步"
           fi
       - name: Upload to CDN (qiniu, incremental)
+        # CDN 是国内加速副线：它抖动不该把已经发好的 Pages 主站标成红。
+        continue-on-error: true
         run: |
           if [ ! -d _site ] || [ -z "$(ls -A _site)" ]; then
             echo "无产物，跳过"
@@ -143,4 +145,4 @@ jobs:
           pip install qiniu
           export QINIU_AK="${{ secrets.QINIU_AK }}"
           export QINIU_SK="${{ secrets.QINIU_SK }}"
-          python scripts/upload_to_qiniu.py --bucket we-read-assets --dir _site --workers 16
+          python scripts/upload_to_qiniu.py --bucket we-read-assets --dir _site --workers 8

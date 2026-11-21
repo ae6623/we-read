@@ -92,13 +92,20 @@ def remote_meta(auth, bucket: str, keys: list[str], chunk: int = 500) -> dict:
     用七牛 batch 接口，500 个 key 一次请求；比逐个 stat 快两个数量级。
     batch 部分失败（对象不存在）时对应项 code=612，直接跳过。
     """
-    from qiniu import BucketManager, build_batch_stat
+    from qiniu import BucketManager
+
+    try:  # 部分 SDK 版本把 build_batch_stat 收进了 storage 子模块
+        from qiniu import build_batch_stat
+    except ImportError:  # pragma: no cover
+        build_batch_stat = None
 
     manager = BucketManager(auth)
     out: dict = {}
     for i in range(0, len(keys), chunk):
         part = keys[i:i + chunk]
         try:
+            if build_batch_stat is None:
+                raise RuntimeError("no build_batch_stat")
             res = manager.batch(build_batch_stat(bucket, part))
         except Exception:  # noqa: BLE001  SDK 版本差异/接口抖动 → 退回逐个 stat
             for key in part:
@@ -204,7 +211,12 @@ def main() -> int:
     # 674MB 重传一遍；改成长轮询 stat 后，日常一次提交通常只传几 MB。
     if args.incremental:
         t0 = time.time()
-        meta = remote_meta(auth, args.bucket, keys) if keys else {}
+        try:
+            meta = remote_meta(auth, args.bucket, keys) if keys else {}
+        except Exception as error:  # noqa: BLE001
+            # 增量只是省流量，不能因为它失败就整条链路红：退回全量上传
+            print(f"[warn] 远端比对失败（{error}），本次改为全量上传")
+            meta = {}
         todo, skipped_bytes = [], 0
         with ThreadPoolExecutor(max_workers=min(16, args.workers * 2)) as pool:
             etags = dict(zip(keys, pool.map(lambda k: local_etag(by_key[k]), keys)))
@@ -219,7 +231,7 @@ def main() -> int:
         print(
             f"增量检查 {len(keys)} 个对象（{time.time() - t0:.1f}s）："
             f"未变 {len(keys) - len(todo)} 个 / 跳过 {skipped_bytes / 1024 / 1024:.1f} MB，"
-            f"待传 {len(todo)} 个"
+            f"待传 {len(todo)} 个", flush=True
         )
         files = todo
         if not files:
