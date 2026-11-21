@@ -105,8 +105,9 @@ jobs:
           error_count: 30
 
   # ── 3. 七牛 CDN：与 Pages 并行，且只传变化的文件 ──────────────────
-  # upload_to_qiniu.py 现在会先 batch stat 拉远端 (fsize, hash)，和本地
-  # etag 比对一致就跳过。日常一次提交通常只传几 MB，而不是 674MB 全 PUT。
+  # upload_to_qiniu.py 先用 CDN 的 HEAD 批量取 (size, etag)（并发 48，不鉴权、
+  # 不查 region，5700 个对象约 20s），和本地 qetag 比对，一致就跳过；
+  # 日常一次提交通常只传几 MB，而不是 674MB 全 PUT。
   deploy-cdn:
     needs: build
     runs-on: ubuntu-latest

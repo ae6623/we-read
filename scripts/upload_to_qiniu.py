@@ -86,6 +86,37 @@ def local_etag(path: Path) -> str | None:
     return base64.urlsafe_b64encode(raw).decode()
 
 
+def remote_meta_http(domain: str, keys: list[str], workers: int = 48) -> dict:
+    """用 CDN 的 HEAD 拿 (size, etag)。
+
+    比走七牛管理接口快一个数量级：不用鉴权、不查 region、命中边缘缓存几十毫秒，
+    而且它反映的正是「读者现在拿到的那份」——CDN 里有旧缓存就当没变，反而安全。
+    """
+    import urllib.parse
+
+    base = domain.rstrip("/")
+    out: dict = {}
+
+    def one(key: str):
+        url = base + "/" + urllib.parse.quote(key, safe="/")
+        try:
+            req = urllib.request.Request(url, method="HEAD")
+            with urllib.request.urlopen(req, timeout=15) as resp:
+                etag = (resp.headers.get("etag") or "").strip('"')
+                size = resp.headers.get("content-length")
+                if etag and size:
+                    return key, (int(size), etag)
+        except Exception:  # noqa: BLE001  404 / 超时 / 被墙都按「不存在」处理
+            pass
+        return key, None
+
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        for key, meta in pool.map(one, keys):
+            if meta:
+                out[key] = meta
+    return out
+
+
 def remote_meta(auth, bucket: str, keys: list[str], chunk: int = 500) -> dict:
     """批量查远端 {key: (fsize, hash)}，只返回存在的对象。
 
@@ -211,12 +242,20 @@ def main() -> int:
     # 674MB 重传一遍；改成长轮询 stat 后，日常一次提交通常只传几 MB。
     if args.incremental:
         t0 = time.time()
-        try:
-            meta = remote_meta(auth, args.bucket, keys) if keys else {}
-        except Exception as error:  # noqa: BLE001
-            # 增量只是省流量，不能因为它失败就整条链路红：退回全量上传
-            print(f"[warn] 远端比对失败（{error}），本次改为全量上传")
-            meta = {}
+        meta = {}
+        if keys:
+            try:
+                meta = remote_meta_http(args.domain, keys, workers=min(64, max(16, args.workers * 6)))
+            except Exception as error:  # noqa: BLE001
+                print(f"[warn] CDN HEAD 比对失败（{error}）", flush=True)
+            # HEAD 命中率过低（域名不可达 / 全 404）就退回管理接口批量 stat
+            if len(meta) * 5 < len(keys):
+                try:
+                    meta = remote_meta(auth, args.bucket, keys)
+                except Exception as error:  # noqa: BLE001
+                    # 增量只是省流量，不能因为它失败就整条链路红：退回全量上传
+                    print(f"[warn] 远端比对失败（{error}），本次改为全量上传", flush=True)
+                    meta = {}
         todo, skipped_bytes = [], 0
         with ThreadPoolExecutor(max_workers=min(16, args.workers * 2)) as pool:
             etags = dict(zip(keys, pool.map(lambda k: local_etag(by_key[k]), keys)))
