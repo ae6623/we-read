@@ -214,6 +214,11 @@ def main():
     assert h.count('id="panel-whole"') == 1
     assert h.count('id="archive-grid"') == 1
     assert h.count('id="pending-grid"') == 1
+    # 事故防线（2026-11-21）：section_bounds 以 `id="panel-soon"` 划界时，
+    # 拼回曾把开标签的 `<section ` 吃掉，结果是 `</article>id="panel-soon"…`
+    # 变成页面上的纯文本，「即将上线」整块漏出来，书墙/书架全乱。
+    assert h.count('<section id="panel-soon"') == 1, "panel-soon 开标签被吃掉"
+    assert '</article>id="panel-soon"' not in h, "panel-soon 结构损坏"
     print("断言通过")
 
     if args.dry_run:
