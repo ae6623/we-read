@@ -1,0 +1,176 @@
+/* ============================================================
+   home-ui-20261121.css — 首页「工具栏弹层」与「页脚」统一组件层
+
+   为什么单独一个文件：旧规则散落在 site.css / homepage-reading.css /
+   shelf-filter.css / index.html 内联 <style> 四处，改一处漏一处（东缺西补）。
+   本文件在 </head> 前最后加载，集中覆盖这两块的最终表现。
+
+   两个目标（2026-11-21 用户反馈）：
+   1) 搜索/筛选弹层做成全局统一组件：从 absolute 浮层改为文档流内面板，
+      展开时把下方书卡「推下去」而不是「盖上去」，书架/书墙/系列/归档一致。
+   2) 页脚重新设计：CSS Grid 网格，图标与文字规整对齐，不再松散堆叠。
+   ============================================================ */
+
+/* ── 1. 工具栏弹层组件：搜索 / 筛选 ─────────────────────────────
+   旧实现 position:absolute + top:calc(100%+8px)，脱离文档流，
+   结果面板浮在书卡上：书架压住第一排标题、书墙压住第一排封面。
+   改成 static 进文档流后，面板撑开 .reading-tabs-wrap，
+   下面的 .reading-panel 被自然推下，两者不再重叠。 */
+.reading-module .shelf-search-pop,
+.reading-module .shelf-filter-pop{
+  position:static !important;
+  top:auto !important; right:auto !important; left:auto !important; bottom:auto !important;
+  inset:auto !important;
+  z-index:auto !important;
+  width:100% !important;
+  max-width:none !important;
+  margin:0 0 14px !important;
+  padding:12px 14px !important;
+  border:1px solid var(--line) !important;
+  border-radius:14px !important;
+  background:var(--card, #fffefa) !important;
+  box-shadow:0 3px 14px #24312e0c !important;
+  display:flex !important;
+  align-items:center !important;
+  gap:10px !important;
+  flex-wrap:wrap !important;
+  justify-content:flex-start !important;
+}
+
+/* 关键：上面用了 display:flex!important，会盖掉全局 [hidden]{display:none!important}，
+   导致两个面板同时展开。这里显式补回隐藏态，保证开关互斥。 */
+.reading-module .shelf-search-pop[hidden],
+.reading-module .shelf-filter-pop[hidden]{display:none !important}
+
+/* 搜索框：输入框吃满主区，状态文字在手机端单独一行，不再挤在右边贴边 */
+.reading-module .shelf-search-pop input{
+  flex:1 1 260px !important;
+  min-width:0 !important;
+  border:1px solid var(--line) !important;
+  border-radius:999px !important;
+  background:var(--bg, #fffefa) !important;
+  padding:10px 16px !important;
+  font:inherit !important;
+  font-size:.9rem !important;
+  color:var(--ink) !important;
+}
+/* 聚焦用柔和绿色描边，去掉全局 focus-visible 的金框+外扩
+   （旧实现那条金边 offset 4px 溢出圆角，看着像「代码溢出」） */
+.reading-module .shelf-search-pop input:focus,
+.reading-module .shelf-search-pop input:focus-visible{
+  outline:none !important;
+  border-color:#72927e !important;
+  box-shadow:0 0 0 3px #dce8df !important;
+}
+.reading-module .shelf-search-pop .search-status{
+  flex:0 0 auto !important;
+  font-size:.78rem !important;
+  color:var(--muted) !important;
+  white-space:nowrap !important;
+}
+.reading-module .shelf-search-pop .search-status:empty{display:none !important}
+
+/* 筛选面板：一级/二级/清除在一行，状态说明在下一行 */
+.reading-module .shelf-filter-pop .sf-field{display:inline-flex;align-items:center;gap:6px}
+.reading-module .shelf-filter-pop select{
+  border:1px solid var(--line) !important;
+  border-radius:999px !important;
+  background:var(--bg, #fffefa) !important;
+  padding:8px 14px !important;
+  font:inherit !important;
+  font-size:.86rem !important;
+  color:var(--ink) !important;
+}
+.reading-module .shelf-filter-pop .sf-clear{
+  border:1px solid var(--line) !important;
+  border-radius:999px !important;
+  background:var(--bg, #f6f6f2) !important;
+  padding:8px 16px !important;
+  font:inherit !important;
+  font-size:.86rem !important;
+  color:var(--muted) !important;
+  cursor:pointer !important;
+}
+.reading-module .shelf-filter-pop .sf-status{
+  flex:1 1 100% !important;
+  margin:0 !important;
+  font-size:.78rem !important;
+  color:var(--muted) !important;
+}
+
+@media(max-width:680px){
+  .reading-module .shelf-search-pop{padding:11px 12px !important;gap:8px 10px !important}
+  .reading-module .shelf-search-pop input{flex:1 1 100% !important;padding:9px 13px !important;font-size:.84rem !important}
+  .reading-module .shelf-search-pop .search-status{flex:0 0 100% !important;text-align:right !important}
+}
+
+/* ── 2. 页脚组件：Grid 网格，图标/文字/二维码规整对齐 ──────────── */
+.site-footer{
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) auto !important;
+  grid-template-areas:
+    "brand qr"
+    "info  qr"
+    "entry entry" !important;
+  align-items:center !important;
+  align-content:center !important;
+  gap:10px 22px !important;
+  max-width:1080px !important;
+  margin:0 auto !important;
+  padding:24px 28px 30px !important;
+  text-align:left !important;
+}
+
+/* 让 .footer-brand 的两个子元素直接参与页脚网格 */
+.site-footer .footer-brand{display:contents !important}
+.site-footer .footer-brand-text{
+  grid-area:brand !important;
+  align-self:end !important;
+  font:600 1.05rem/1.35 var(--serif) !important;
+  color:var(--green) !important;
+  letter-spacing:.02em !important;
+}
+.site-footer .footer-brand-text strong{font-weight:600 !important}
+.site-footer .footer-qr{
+  grid-area:qr !important;
+  align-self:center !important;
+  justify-self:end !important;
+  width:84px !important; height:84px !important;
+  padding:5px !important;
+  border:1px solid var(--line) !important;
+  border-radius:12px !important;
+  background:#fff !important;
+}
+.site-footer .footer-info{
+  grid-area:info !important;
+  align-self:start !important;
+  display:flex !important;
+  flex-direction:column !important;
+  gap:2px !important;
+  text-align:left !important;
+  font-size:.78rem !important;
+  line-height:1.6 !important;
+}
+.site-footer .office-entry-nav{
+  grid-area:entry !important;
+  justify-self:start !important;
+  justify-content:flex-start !important;
+  margin:2px 0 0 !important;
+  padding-top:12px !important;
+  border-top:1px solid var(--line) !important;
+  width:100% !important;
+}
+
+@media(max-width:720px){
+  .site-footer{
+    grid-template-columns:minmax(0,1fr) auto !important;
+    grid-template-areas:
+      "brand qr"
+      "info  qr"
+      "entry entry" !important;
+    gap:8px 16px !important;
+    padding:22px 18px 26px !important;
+  }
+  .site-footer .footer-qr{width:74px !important;height:74px !important}
+  .site-footer .footer-info{font-size:.76rem !important}
+}
