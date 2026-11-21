@@ -36,6 +36,11 @@ HTML = os.path.join(ROOT, "index.html")
 TAG_RE = re.compile(r"</?(?:section|div)\b")
 CARD_RE_TMPL = (r'(?:[ \t]*<!--\s*preread-card:[^\s]*\s*-->\s*)?'
                 r'<article\b[^>]*data-slug="%s"[^>]*>.*?</article>')
+# 不带具体 slug 的通用版（分组/统计用）。必须与 CARD_RE_TMPL 同样吃掉卡片前的
+# preread-card 注释：否则「分组拿到的卡片串」与「cut_cards 切出来的卡片串」不相等，
+# keep 判定失效，同一张卡会被同时留在原处又追加到归档（article 数量凭空 +N）。
+CARD_RE_ANY = (r'(?:[ \t]*<!--\s*preread-card:[^\s]*\s*-->\s*)?'
+               r'<article\b[^>]*data-slug="[^"]*"[^>]*>.*?</article>')
 
 
 def section_bounds(h, marker, end_marker):
@@ -123,7 +128,7 @@ def main():
     archive = h[ags:age]
 
     # 书架卡片按 slug 分组
-    shelf_cards = list(re.finditer(r"<article\b[^>]*data-slug=\"[^\"]*\"[^>]*>.*?</article>", whole, re.S))
+    shelf_cards = list(re.finditer(CARD_RE_ANY, whole, re.S))
     groups = {}
     for m in shelf_cards:
         info = card_info(m.group(0))
@@ -167,8 +172,8 @@ def main():
     print("小计:", len(moved))
 
     # ── 判定归档→书架 ──────────────────────────────────────
-    arc_all = (list(re.finditer(r"<article\b[^>]*data-slug=\"[^\"]*\"[^>]*>.*?</article>", pending, re.S))
-               + list(re.finditer(r"<article\b[^>]*data-slug=\"[^\"]*\"[^>]*>.*?</article>", archive, re.S)))
+    arc_all = (list(re.finditer(CARD_RE_ANY, pending, re.S))
+               + list(re.finditer(CARD_RE_ANY, archive, re.S)))
     if args.archive_to_shelf is not None:
         back_slugs = set(args.archive_to_shelf)
     else:
