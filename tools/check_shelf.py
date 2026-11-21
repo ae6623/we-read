@@ -75,6 +75,19 @@ def generation(bdir: Path) -> str:
     return "missing"
 
 
+def nocover_set(root: Path) -> set[str]:
+    """hero.json 里正式登记「确实没有封面」的书。
+
+    check_covers 早就认这份名单（本地自建书、微读书库里查不到的条目），
+    check_shelf 却没读 —— 同一本书一个门禁绿、一个门禁红，白名单形同虚设。
+    """
+    try:
+        data = json.loads((root / "assets" / "data" / "hero.json").read_text(encoding="utf-8"))
+        return set(data.get("nocover") or [])
+    except Exception:  # noqa: BLE001
+        return set()
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--root", help="仓库根目录（默认脚本上一级）")
@@ -84,11 +97,12 @@ def main() -> int:
 
     root = Path(a.root).resolve() if a.root else Path(__file__).resolve().parent.parent
     covers = root / "assets" / "covers"
+    exempt = nocover_set(root)
     cards = shelf_cards(root)
     no_cover, broken, legacy, stub = [], [], [], []
     for c in cards:
         slug = c["slug"]
-        if not cover_ok(covers / f"{slug}.jpg"):
+        if slug not in exempt and not cover_ok(covers / f"{slug}.jpg"):
             no_cover.append(c)
         href = c["href"]
         if href.startswith(BOOKS + "/"):
