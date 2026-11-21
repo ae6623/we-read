@@ -50,6 +50,76 @@ def _remote_size(auth, bucket: str, key: str):
     return None
 
 
+def local_etag(path: Path) -> str | None:
+    """七牛对象 etag（qetag v1），与 stat 返回的 hash 可直接比对。
+
+    优先用 SDK（保证与 put_file_v2 的分片规则一致）；SDK 缺失时按官方
+    算法自算：单块 0x16 + sha1(data)；多块 0x96 + sha1(concat(sha1(block)))。
+
+    注意：>4MB 的文件若当年是用非 4MB 分片传的，etag 会对不上 —— 那种
+    情况下这里只会「多传一次」，不会误跳过，安全方向是对的。
+    """
+    try:
+        from qiniu import etag as _etag
+
+        return _etag(str(path))
+    except Exception:  # noqa: BLE001
+        pass
+
+    import base64
+    import hashlib
+
+    block = 4 * 1024 * 1024
+    digests = []
+    with path.open("rb") as f:
+        while True:
+            chunk = f.read(block)
+            if not chunk:
+                break
+            digests.append(hashlib.sha1(chunk).digest())
+    if not digests:
+        digests = [hashlib.sha1(b"").digest()]
+    if len(digests) == 1:
+        raw = b"\x16" + digests[0]
+    else:
+        raw = b"\x96" + hashlib.sha1(b"".join(digests)).digest()
+    return base64.urlsafe_b64encode(raw).decode()
+
+
+def remote_meta(auth, bucket: str, keys: list[str], chunk: int = 500) -> dict:
+    """批量查远端 {key: (fsize, hash)}，只返回存在的对象。
+
+    用七牛 batch 接口，500 个 key 一次请求；比逐个 stat 快两个数量级。
+    batch 部分失败（对象不存在）时对应项 code=612，直接跳过。
+    """
+    from qiniu import BucketManager, build_batch_stat
+
+    manager = BucketManager(auth)
+    out: dict = {}
+    for i in range(0, len(keys), chunk):
+        part = keys[i:i + chunk]
+        try:
+            res = manager.batch(build_batch_stat(bucket, part))
+        except Exception:  # noqa: BLE001  SDK 版本差异/接口抖动 → 退回逐个 stat
+            for key in part:
+                ret, info = manager.stat(bucket, key)
+                if info.status_code == 200 and ret:
+                    out[key] = (ret.get("fsize"), ret.get("hash"))
+            continue
+        # SDK 7.18 返回 list[dict]，老版本返回 (rets, infos) —— 两种都接
+        if isinstance(res, list) and (not res or isinstance(res[0], dict)):
+            for key, item in zip(part, res):
+                if isinstance(item, dict) and item.get("code") == 200 and item.get("data"):
+                    data = item["data"]
+                    out[key] = (data.get("fsize"), data.get("hash"))
+        elif isinstance(res, tuple) and len(res) == 2:
+            rets, infos = res
+            for key, ret, info in zip(part, rets, infos):
+                if info.status_code == 200 and ret and ret.get("code", 200) == 200:
+                    out[key] = (ret.get("fsize"), ret.get("hash"))
+    return out
+
+
 def upload_one(auth, bucket: str, key: str, path: Path, attempts: int = 3) -> None:
     """上传单个对象，幂等。
 
@@ -98,6 +168,11 @@ def main() -> int:
     parser.add_argument("--include", nargs="*", default=[], help="只传匹配的文件，如 '*.jpg' '**/*.png'")
     parser.add_argument("--workers", type=int, default=8)
     parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument(
+        "--no-incremental", dest="incremental", action="store_false",
+        help="关闭增量：无条件重传所有文件（默认先比对远端 hash，只传变化）",
+    )
+    parser.set_defaults(incremental=True)
     parser.add_argument("--domain", default="https://cdn.js-dev.cn", help="用于打印访问 URL")
     args = parser.parse_args()
 
@@ -121,11 +196,41 @@ def main() -> int:
     from qiniu import Auth
 
     auth = Auth(ak, sk)
+    keys = [f"{args.prefix}/{key}".replace("//", "/").lstrip("/") for key, _ in files]
+    by_key = {k: p for (_, p), k in zip(files, keys)}
+
+    # ── 增量：先批量拉远端 (size, hash)，一致的文件直接跳过 ──────────────
+    # 旧逻辑是「每个文件 PUT 一遍、撞 614 才算已存在」，等于每次把整站
+    # 674MB 重传一遍；改成长轮询 stat 后，日常一次提交通常只传几 MB。
+    if args.incremental:
+        t0 = time.time()
+        meta = remote_meta(auth, args.bucket, keys) if keys else {}
+        todo, skipped_bytes = [], 0
+        with ThreadPoolExecutor(max_workers=min(16, args.workers * 2)) as pool:
+            etags = dict(zip(keys, pool.map(lambda k: local_etag(by_key[k]), keys)))
+        for key in keys:
+            path = by_key[key]
+            size = path.stat().st_size
+            remote = meta.get(key)
+            if remote and remote[0] == size and remote[1] and remote[1] == etags[key]:
+                skipped_bytes += size
+                continue
+            todo.append((key, path))
+        print(
+            f"增量检查 {len(keys)} 个对象（{time.time() - t0:.1f}s）："
+            f"未变 {len(keys) - len(todo)} 个 / 跳过 {skipped_bytes / 1024 / 1024:.1f} MB，"
+            f"待传 {len(todo)} 个"
+        )
+        files = todo
+        if not files:
+            print("全部已是最新，跳过上传")
+            return 0
+
     failed = []
     with ThreadPoolExecutor(max_workers=args.workers) as pool:
         futures = {}
-        for key, path in files:
-            object_key = f"{args.prefix}/{key}".replace("//", "/").lstrip("/")
+        for object_key in [k for k, _ in files]:
+            path = by_key[object_key]
             futures[pool.submit(upload_one, auth, args.bucket, object_key, path)] = object_key
         for future in as_completed(futures):
             key = futures[future]

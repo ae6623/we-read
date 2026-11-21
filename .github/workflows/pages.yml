@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     # Pages 每次部署都是整包上传（没有增量发布），这些路径不进站点产物，
-    # 改动它们时没有必要重传 360MB。
+    # 改动它们时没有必要重传 674MB。
     paths-ignore:
       - 'skills/**'
       - 'scripts/**'
@@ -26,14 +26,18 @@ permissions:
 
 concurrency:
   group: pages
-  # 站点约 674MB，单次部署要十几分钟；新推送不能把快完成的部署取消掉。
-  cancel-in-progress: true
+  # 关键：不能 cancel in progress。
+  # 站点 674MB 单次要十几分钟，补产任务常常一分钟内连推三四个 commit；
+  # 一旦 cancel，前一次永远跑不完，只有最后一次能落地 —— 表现就是
+  # 「推了半天线上还是旧的」，而且每次重跑都要重新拉 674MB。
+  cancel-in-progress: false
 
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  # ── 1. 校验 + 打产物：全流程只跑一次 ──────────────────────────────
+  # 以前 stage / 门禁 / CDN 上传都串在一个 job 里：Pages 部署（十分钟级）
+  # 跑完才轮到七牛全量 PUT，两段最慢的活叠在一起。
+  # 现在产物只打一次，Pages 与 CDN 两条腿并行。
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -60,7 +64,7 @@ jobs:
           python3 scripts/check-agent-dashboard.py
           python3 scripts/check-team-book-links.py
       # 防止新书壳页回退到旧版 reader js（章节知识导图会消失）。
-      # 真相源 assets/data/reader-js.json，守卫从 git tree 读全站 543 本，
+      # 真相源 assets/data/reader-js.json，守卫从 git tree 读全站壳页，
       # 任何一本引用不一致就阻断部署。
       - name: Verify reader JS version across all book shells
         run: python3 scripts/check_reader_js.py
@@ -75,12 +79,23 @@ jobs:
           python3 tools/check_shelf.py --strict
       - name: Stage publishable site (drop unused fonts / PDFs / dev dirs)
         run: python3 scripts/stage_pages.py
-      - name: Configure Pages
-        uses: actions/configure-pages@v5
-      - name: Upload static site
+      # 只存一份 674MB：CDN 那条腿直接复用 Pages 的 artifact，
+      # 不再额外 upload-artifact 一份（Actions 存储额度 500MB，双份会超）。
+      - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: _site
+
+  # ── 2. Pages 主站：保持全量发布（GitHub 没有增量接口）─────────────
+  deploy-pages:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
@@ -88,9 +103,44 @@ jobs:
           # 默认 10 分钟对 674MB 的站点不够，放宽到 30 分钟。
           timeout: 1800000
           error_count: 30
-      - name: Upload to CDN (qiniu)
+
+  # ── 3. 七牛 CDN：与 Pages 并行，且只传变化的文件 ──────────────────
+  # upload_to_qiniu.py 现在会先 batch stat 拉远端 (fsize, hash)，和本地
+  # etag 比对一致就跳过。日常一次提交通常只传几 MB，而不是 674MB 全 PUT。
+  deploy-cdn:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      # 只要脚本，不拉 674MB 仓库（sparse checkout 秒级）。
+      - name: Checkout scripts only
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            scripts
+          sparse-checkout-cone-mode: false
+      # 复用 Pages 的 artifact（内含 artifact.tar），解出来即可，不重复存储。
+      - name: Download Pages artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: github-pages
+          path: _art
+      - name: Unpack
         run: |
+          # Pages artifact 正常是 artifact.tar；万一取不到（过期/被清理），
+          # 只告警不红：Pages 主站照常发布，CDN 下次再补。
+          if [ -f _art/artifact.tar ]; then
+            mkdir -p _site
+            tar -xf _art/artifact.tar -C _site
+          else
+            echo "::warning::Pages artifact 不可读，本次跳过 CDN 同步"
+          fi
+      - name: Upload to CDN (qiniu, incremental)
+        run: |
+          if [ ! -d _site ] || [ -z "$(ls -A _site)" ]; then
+            echo "无产物，跳过"
+            exit 0
+          fi
           pip install qiniu
           export QINIU_AK="${{ secrets.QINIU_AK }}"
           export QINIU_SK="${{ secrets.QINIU_SK }}"
-          python scripts/upload_to_qiniu.py --bucket we-read-assets --dir _site
+          python scripts/upload_to_qiniu.py --bucket we-read-assets --dir _site --workers 16

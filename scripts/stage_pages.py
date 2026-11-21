@@ -18,6 +18,7 @@
 from __future__ import annotations
 
 import argparse
+import os
 import shutil
 import sys
 from pathlib import Path
@@ -80,6 +81,10 @@ def walk(root: Path):
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--report", action="store_true")
+    parser.add_argument(
+        "--copy", action="store_true",
+        help="逐字节拷贝（默认在支持硬链接的文件系统上用硬链，674MB 秒级就位）",
+    )
     args = parser.parse_args()
 
     files = list(walk(ROOT))
@@ -115,7 +120,16 @@ def main() -> int:
                 shaved += len(text) - len(trimmed)
                 dest.write_text(trimmed, encoding="utf-8", newline="")
                 continue
-        shutil.copy2(path, dest)
+        if args.copy:
+            shutil.copy2(path, dest)
+        else:
+            # 同一块盘上建硬链：5000+ 个文件、674MB 不用真的复制一遍。
+            # _site 只会被 upload-pages-artifact / 七牛上传读取，不会写回，
+            # 共享 inode 是安全的；文件系统不支持（跨盘、某些 overlayfs）就退回拷贝。
+            try:
+                os.link(path, dest)
+            except OSError:
+                shutil.copy2(path, dest)
 
     for required in ("index.html", "assets/css/site.css", "reading-notes/index.html"):
         if not (OUT / required).exists():
